@@ -9,9 +9,37 @@
         @apply body_3_r flex items-center leading-[22px] text-[var(--gray8)];
       }
     }
+  }
+}
 
-    .knowledge_box {
-      @apply h-[50px] w-full bg-black;
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.knowledge {
+        .tit_box {
+          @apply flex items-center justify-between;
+          strong {
+            @apply body_3_r text-[vars(--gray9)];
+          }
+          a {
+            @apply label_12_500 flex items-center leading-[20px] text-[var(--gray8)];
+            svg {
+              @apply ml-[4px;];
+            }
+          }
+        }
+        .empty {
+          @apply mt-[16px] rounded-[8px] border-[1px] border-solid border-[var(--gray4)] pb-[24px];
+          & > div {
+            & > div {
+              @apply mt-[12px];
+              button {
+                @apply px-[12px] py-[6px] leading-[20px];
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

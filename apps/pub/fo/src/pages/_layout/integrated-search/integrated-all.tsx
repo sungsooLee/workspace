@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { isMobile } from 'react-device-detect';
-import { Dropdown, Button, EmptyText } from '@learnway/ui';
-import { IcoArray, IcoDotpoints, IcoArrowForward } from '@learnway/icons';
+import { Button } from '@learnway/ui';
 import {
-  Arrays,
-  Filter,
   IntegratedSearchProcedure,
   IntegratedSearchShorts,
   IntegratedSearchChannel,

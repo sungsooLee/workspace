@@ -49,6 +49,7 @@ import { Route as LayoutMySettingSnsImport } from './pages/_layout/my/setting-sn
 import { Route as LayoutMyMembershipSecessionImport } from './pages/_layout/my/membership-secession'
 import { Route as LayoutMyInformationChangeImport } from './pages/_layout/my/information-change'
 import { Route as LayoutIntegratedSearchIntegratedSearchmImport } from './pages/_layout/integrated-search/integrated-search_m'
+import { Route as LayoutIntegratedSearchIntegratedProcedureMImport } from './pages/_layout/integrated-search/integrated-procedure-m'
 import { Route as LayoutIntegratedSearchIntegratedProcedureImport } from './pages/_layout/integrated-search/integrated-procedure'
 import { Route as LayoutIntegratedSearchIntegratedAllMImport } from './pages/_layout/integrated-search/integrated-all-m'
 import { Route as LayoutIntegratedSearchIntegratedAllImport } from './pages/_layout/integrated-search/integrated-all'
@@ -335,6 +336,13 @@ const LayoutIntegratedSearchIntegratedSearchmRoute =
   LayoutIntegratedSearchIntegratedSearchmImport.update({
     id: '/integrated-search/integrated-search_m',
     path: '/integrated-search/integrated-search_m',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutIntegratedSearchIntegratedProcedureMRoute =
+  LayoutIntegratedSearchIntegratedProcedureMImport.update({
+    id: '/integrated-search/integrated-procedure-m',
+    path: '/integrated-search/integrated-procedure-m',
     getParentRoute: () => LayoutRoute,
   } as any)
 
@@ -1278,6 +1286,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutIntegratedSearchIntegratedProcedureImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/integrated-search/integrated-procedure-m': {
+      id: '/_layout/integrated-search/integrated-procedure-m'
+      path: '/integrated-search/integrated-procedure-m'
+      fullPath: '/integrated-search/integrated-procedure-m'
+      preLoaderRoute: typeof LayoutIntegratedSearchIntegratedProcedureMImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/integrated-search/integrated-search_m': {
       id: '/_layout/integrated-search/integrated-search_m'
       path: '/integrated-search/integrated-search_m'
@@ -1511,6 +1526,7 @@ interface LayoutRouteChildren {
   LayoutIntegratedSearchIntegratedAllRoute: typeof LayoutIntegratedSearchIntegratedAllRoute
   LayoutIntegratedSearchIntegratedAllMRoute: typeof LayoutIntegratedSearchIntegratedAllMRoute
   LayoutIntegratedSearchIntegratedProcedureRoute: typeof LayoutIntegratedSearchIntegratedProcedureRoute
+  LayoutIntegratedSearchIntegratedProcedureMRoute: typeof LayoutIntegratedSearchIntegratedProcedureMRoute
   LayoutIntegratedSearchIntegratedSearchmRoute: typeof LayoutIntegratedSearchIntegratedSearchmRoute
   LayoutMyInformationChangeRoute: typeof LayoutMyInformationChangeRoute
   LayoutMyMembershipSecessionRoute: typeof LayoutMyMembershipSecessionRoute
@@ -1547,6 +1563,8 @@ const LayoutRouteChildren: LayoutRouteChildren = {
     LayoutIntegratedSearchIntegratedAllMRoute,
   LayoutIntegratedSearchIntegratedProcedureRoute:
     LayoutIntegratedSearchIntegratedProcedureRoute,
+  LayoutIntegratedSearchIntegratedProcedureMRoute:
+    LayoutIntegratedSearchIntegratedProcedureMRoute,
   LayoutIntegratedSearchIntegratedSearchmRoute:
     LayoutIntegratedSearchIntegratedSearchmRoute,
   LayoutMyInformationChangeRoute: LayoutMyInformationChangeRoute,
@@ -1658,6 +1676,7 @@ export interface FileRoutesByFullPath {
   '/integrated-search/integrated-all': typeof LayoutIntegratedSearchIntegratedAllRoute
   '/integrated-search/integrated-all-m': typeof LayoutIntegratedSearchIntegratedAllMRoute
   '/integrated-search/integrated-procedure': typeof LayoutIntegratedSearchIntegratedProcedureRoute
+  '/integrated-search/integrated-procedure-m': typeof LayoutIntegratedSearchIntegratedProcedureMRoute
   '/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearchmRoute
   '/my/information-change': typeof LayoutMyInformationChangeRoute
   '/my/membership-secession': typeof LayoutMyMembershipSecessionRoute
@@ -1752,6 +1771,7 @@ export interface FileRoutesByTo {
   '/integrated-search/integrated-all': typeof LayoutIntegratedSearchIntegratedAllRoute
   '/integrated-search/integrated-all-m': typeof LayoutIntegratedSearchIntegratedAllMRoute
   '/integrated-search/integrated-procedure': typeof LayoutIntegratedSearchIntegratedProcedureRoute
+  '/integrated-search/integrated-procedure-m': typeof LayoutIntegratedSearchIntegratedProcedureMRoute
   '/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearchmRoute
   '/my/information-change': typeof LayoutMyInformationChangeRoute
   '/my/membership-secession': typeof LayoutMyMembershipSecessionRoute
@@ -1850,6 +1870,7 @@ export interface FileRoutesById {
   '/_layout/integrated-search/integrated-all': typeof LayoutIntegratedSearchIntegratedAllRoute
   '/_layout/integrated-search/integrated-all-m': typeof LayoutIntegratedSearchIntegratedAllMRoute
   '/_layout/integrated-search/integrated-procedure': typeof LayoutIntegratedSearchIntegratedProcedureRoute
+  '/_layout/integrated-search/integrated-procedure-m': typeof LayoutIntegratedSearchIntegratedProcedureMRoute
   '/_layout/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearchmRoute
   '/_layout/my/information-change': typeof LayoutMyInformationChangeRoute
   '/_layout/my/membership-secession': typeof LayoutMyMembershipSecessionRoute
@@ -1946,6 +1967,7 @@ export interface FileRouteTypes {
     | '/integrated-search/integrated-all'
     | '/integrated-search/integrated-all-m'
     | '/integrated-search/integrated-procedure'
+    | '/integrated-search/integrated-procedure-m'
     | '/integrated-search/integrated-search_m'
     | '/my/information-change'
     | '/my/membership-secession'
@@ -2039,6 +2061,7 @@ export interface FileRouteTypes {
     | '/integrated-search/integrated-all'
     | '/integrated-search/integrated-all-m'
     | '/integrated-search/integrated-procedure'
+    | '/integrated-search/integrated-procedure-m'
     | '/integrated-search/integrated-search_m'
     | '/my/information-change'
     | '/my/membership-secession'
@@ -2135,6 +2158,7 @@ export interface FileRouteTypes {
     | '/_layout/integrated-search/integrated-all'
     | '/_layout/integrated-search/integrated-all-m'
     | '/_layout/integrated-search/integrated-procedure'
+    | '/_layout/integrated-search/integrated-procedure-m'
     | '/_layout/integrated-search/integrated-search_m'
     | '/_layout/my/information-change'
     | '/_layout/my/membership-secession'
@@ -2270,6 +2294,7 @@ export const routeTree = rootRoute
         "/_layout/integrated-search/integrated-all",
         "/_layout/integrated-search/integrated-all-m",
         "/_layout/integrated-search/integrated-procedure",
+        "/_layout/integrated-search/integrated-procedure-m",
         "/_layout/integrated-search/integrated-search_m",
         "/_layout/my/information-change",
         "/_layout/my/membership-secession",
@@ -2606,6 +2631,10 @@ export const routeTree = rootRoute
     },
     "/_layout/integrated-search/integrated-procedure": {
       "filePath": "_layout/integrated-search/integrated-procedure.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/integrated-search/integrated-procedure-m": {
+      "filePath": "_layout/integrated-search/integrated-procedure-m.tsx",
       "parent": "/_layout"
     },
     "/_layout/integrated-search/integrated-search_m": {

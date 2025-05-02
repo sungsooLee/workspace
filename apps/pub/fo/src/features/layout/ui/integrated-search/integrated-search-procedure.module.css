@@ -40,7 +40,7 @@
           strong {
             @apply body_3_r text-[vars(--gray9)];
           }
-          button {
+          a {
             @apply label_12_500 flex items-center leading-[20px] text-[var(--gray8)];
             svg {
               @apply ml-[4px;];
@@ -48,6 +48,7 @@
           }
         }
         .list {
+          @apply mt-0;
           .list_box > div {
             @apply m-0 w-[calc((100%/2)-8px)];
           }
