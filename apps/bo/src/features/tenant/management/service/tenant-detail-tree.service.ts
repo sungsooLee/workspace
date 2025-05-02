@@ -13,6 +13,15 @@ export const getAllTreeKeys = (treeData: TreeNode[]) => {
   };
   return getAllKeys(treeData);
 };
+const getAllChildrens = (nodes: TreeNode[], contains: TreeNode[] = []) => {
+  for (const node of nodes) {
+    contains.push(node);
+    if (node.children && node.children.length > 0) {
+      getAllChildrens(node.children, contains);
+    }
+  }
+  return contains;
+};
 
 const getAllParentAndChildrenByKey = (
   nodes: TreeNode[],
@@ -23,8 +32,11 @@ const getAllParentAndChildrenByKey = (
     const currentNodes = [...contains, node];
     if (node.key === key) {
       console.log(currentNodes);
+
       if (node.children && node.children?.length > 0) {
-        currentNodes.push(...node.children);
+        getAllChildrens(node.children, currentNodes);
+
+        console.log(currentNodes);
       }
       return currentNodes;
     }
@@ -38,8 +50,19 @@ const getAllParentAndChildrenByKey = (
   return contains;
 };
 
+export const getNodeByKey = (nodes: TreeNode[], key: number | string): TreeNode | undefined => {
+  for (const node of nodes) {
+    if (node.key === key) {
+      return node;
+    }
+    if (node.children && node.children?.length > 0) {
+      return getNodeByKey(node.children, key);
+    }
+  }
+  return undefined;
+};
+
 export const getAllParentAndAllChildById = (nodes: TreeNode[], key: number | string) => {
-  console.log(nodes);
   return getAllParentAndChildrenByKey(nodes, key);
 };
 
@@ -78,7 +101,11 @@ export const getFirstExpandKeys = (treeData: TreeNode[]) => {
     return firstLevelKeys;
   }
 };
-
+/**
+ * Tenant Menu를 TreeNode 로 변환 하는 함수
+ * @param apiData
+ * @returns 변환된 TreeNode
+ */
 export const transformApiDataToTreeData = (apiData: any) => {
   // 단일 노드인 경우 배열로 감싸기
   const dataArray = Array.isArray(apiData) ? apiData : [apiData];
@@ -127,4 +154,41 @@ export const transformApiDataToTreeData = (apiData: any) => {
   };
 
   return transform(dataArray);
+};
+
+export const moveNodeCheck = (events: any) => {
+  console.log(events);
+  switch (events.position) {
+    case 'BEFORE':
+      if (events.sourceNode.level === events.targetNode.level) {
+        return {
+          tenantMappingMenuId: events.sourceNode.tenantMappingMenuId,
+          destinationParentId: events.targetNode.parentKey,
+          sortSeq: events.targetNode.sortOrder - 1,
+          menuScopeCode: '',
+        };
+      }
+      break;
+    case 'INSIDE':
+      if (events.sourceNode.level === events.targetNode.level + 1) {
+        return {
+          tenantMappingMenuId: events.sourceNode.tenantMappingMenuId,
+          destinationParentId: events.targetNode.key,
+          sortSeq: 1,
+          menuScopeCode: '',
+        };
+      }
+      break;
+    case 'AFTER':
+      if (events.sourceNode.level === events.targetNode.level) {
+        return {
+          tenantMappingMenuId: events.sourceNode.tenantMappingMenuId,
+          destinationParentId: events.targetNode.parentKey,
+          sortSeq: events.targetNode.sortOrder + 1,
+          menuScopeCode: '',
+        };
+      }
+      break;
+  }
+  return undefined;
 };

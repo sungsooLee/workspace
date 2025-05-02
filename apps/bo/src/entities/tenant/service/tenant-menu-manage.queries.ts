@@ -27,4 +27,7 @@ export const mutateOptions = {
   createMenuTenent: () => ({
     mutationFn: (payload: any) => TenantMenuManageService.createMenuTenant(payload),
   }),
+  changeMenuTenentDnd: () => ({
+    mutationFn: (payload: any) => TenantMenuManageService.changeMenuTenantDnd(payload),
+  }),
 };

@@ -27,10 +27,11 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { TenantDetailMenuMappingModal } from './tenant-detail-menu-mapping-modal';
 /** Hook 정의 */
 import {
-  useMenuTenantManageDetail,
+  useFetchMenuTenantDetail,
   useFetchMenuTenantMappingTree,
   useDeleteMenuTenent,
   useUpdateMenuTenant,
+  useChangeMenuTenentDnd,
 } from '@entities/tenant/service/tenant-menu-manage.hook';
 /** method import */
 import { findMenuPathById } from '@features/platform/menu/service/menu.service';
@@ -38,7 +39,14 @@ import {
   transformApiDataToTreeData,
   getFirstExpandKeys,
   getAllTreeKeys,
+  getNodeByKey,
+  moveNodeCheck,
 } from '../service/tenant-detail-tree.service';
+
+const DIVICE_NAME = {
+  PC: 'PC',
+  Mobile: 'Mobile',
+};
 
 const FORM_MODE = {
   NONE: 'NONE',
@@ -61,23 +69,42 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
   const { open: openModal, confirm: openConfirm } = useModal();
 
   // fetch data
-  const { data: detailData } = useMenuTenantManageDetail(selectedNode?.menuId || '');
-  console.log(menuScope);
-  const { data: menuData, refetch } = useFetchMenuTenantMappingTree(tenantId, menuScope);
+  const { data: detailData, refetch: refetchDetail } = useFetchMenuTenantDetail(
+    selectedNode?.tenantMappingMenuId || undefined,
+  );
+
+  const { data: menuData } = useFetchMenuTenantMappingTree(tenantId, menuScope);
 
   //
   const { delete: deleteMenuTenent } = useDeleteMenuTenent(tenantId, menuScope, {});
   const { update: updateMenuTenent } = useUpdateMenuTenant(tenantId, menuScope, {});
+  const { change: changeMenuPosition } = useChangeMenuTenentDnd(tenantId, menuScope, {});
 
   const handleExpandChange = (keys: string[]) => {
     setExpandedKeys(keys);
   };
   const handleSelectedNodeChange = (node: TreeNode | null) => {
-    setSelectedNode(node);
-    if (node) {
-      setFormMode(FORM_MODE.VIEW);
-    } else {
-      setFormMode(FORM_MODE.NONE);
+    if (node && node.key !== '1') {
+      setSelectedNode(node);
+      if (node) {
+        setFormMode(FORM_MODE.VIEW);
+      } else {
+        setFormMode(FORM_MODE.NONE);
+      }
+    }
+  };
+  const handleTreeAction = (events: any) => {
+    switch (events.type) {
+      case 'NODE_MOVE':
+        {
+          const payload = moveNodeCheck(events);
+          if (payload) {
+            payload.menuScopeCode = menuScope;
+
+            changeMenuPosition(payload);
+          }
+        }
+        break;
     }
   };
   const handleTenantDetailMenuMapping = async () => {
@@ -101,7 +128,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
       onClose: (value: boolean) => {
         if (value) {
           const payload = { ...selectedNode };
-          console.log('date!', payload);
+          console.log('delete!', payload);
           deleteMenuTenent(payload);
           setFormMode(FORM_MODE.NONE);
         }
@@ -115,10 +142,16 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
       content: <p>{t('입력한 정보로 저장됩니다.')}</p>,
       onClose: (value: boolean) => {
         if (value) {
-          const payload = { ...selectedNode };
-          console.log('date!', payload);
-          updateMenuTenent(payload);
-          setFormMode(FORM_MODE.NONE);
+          const payload = { ...getValues() };
+          payload.isWebExposed = payload.deviceNames.includes(DIVICE_NAME.PC);
+          payload.isMobileExposed = payload.deviceNames.includes(DIVICE_NAME.Mobile);
+          payload.tenantId = tenantId;
+          payload.parentMenuId = payload.parentId;
+          updateMenuTenent(payload, {
+            onSuccess: () => {
+              refetchDetail();
+            },
+          });
         }
       },
     });
@@ -140,15 +173,13 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
 
   useEffect(() => {
     if (detailData) {
-      console.log(detailData);
-      const parentNode = findParentNode(treeData, detailData?.menuId.toString());
       const location = findMenuPathById(treeData, detailData?.menuId);
       const deviceNames = [];
       if (detailData.isWebExposed) {
-        deviceNames.push('PC');
+        deviceNames.push(DIVICE_NAME.PC);
       }
       if (detailData.isMobileExposed) {
-        deviceNames.push('Mobile');
+        deviceNames.push(DIVICE_NAME.Mobile);
       }
       fetchData({
         ...detailData,
@@ -202,6 +233,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
               data={treeData}
               selectedNode={selectedNode}
               expandedKeys={expandedKeys}
+              onAction={handleTreeAction}
               onExpandedKeysChange={handleExpandChange}
               onSelectedNodeChange={handleSelectedNodeChange}
             />
@@ -210,7 +242,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
       </div>
       <div className={cn(layoutStyles.inner, layoutStyles.type_progress)}>
         <div className={titleStyles.title_wrap}>
-          <h3 className={titleStyles.title}>{'메뉴 정보'}</h3>
+          <h3 className={titleStyles.title}>{t('메뉴 정보')}</h3>
           <div className={layoutStyles.btn_wrap}>
             <Button
               variant="text"
@@ -335,6 +367,12 @@ const formConfig: DynamicFormConfig = {
       value: '',
     },
     {
+      name: 'parentId',
+      type: 'hidden',
+      format: 'number',
+      value: 0,
+    },
+    {
       name: 'parentName',
       type: 'text',
       label: t('상위메뉴명'),
@@ -386,8 +424,8 @@ const formConfig: DynamicFormConfig = {
       value: [],
       checkGroupConfig: { allCheck: false },
       options: [
-        { label: t('PC'), value: 'PC' },
-        { label: t('모바일'), value: 'Mobile' },
+        { label: t('PC'), value: DIVICE_NAME.PC },
+        { label: t('모바일'), value: DIVICE_NAME.Mobile },
       ],
     },
     {
@@ -432,7 +470,7 @@ const columns = [
   }),
   columnHelper.accessor('Delete', {
     cell: (info) => info.getValue(),
-    header: '삭제',
+    header: t('삭제'),
     size: 100,
     enableGrouping: false,
     meta: {

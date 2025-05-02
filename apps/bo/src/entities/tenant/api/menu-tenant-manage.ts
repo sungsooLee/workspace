@@ -8,7 +8,8 @@ export default class TenantMenuManageService {
    * @param payload
    * @returns
    */
-  static updateMenuTenant(payload: any) {
+  static updateMenuTenant(payload: any): Promise<any> {
+    console.log(payload);
     const tenantMappingMenuId = payload.tenantMappingMenuId;
     const reqbody = createTenantMenuCreateByAny(payload);
     return httpService.put<any>(`${PMSApiPrefix()}/menus/tenant/${tenantMappingMenuId}`, reqbody);
@@ -19,7 +20,7 @@ export default class TenantMenuManageService {
    * @param payload
    * @returns
    */
-  static createMenuTenant(payload: any) {
+  static createMenuTenant(payload: any): Promise<any> {
     const reqbody = [];
     for (const item of payload.contents) {
       const menu = createTenantMenuCreateByAny(item);
@@ -35,6 +36,7 @@ export default class TenantMenuManageService {
    * @returns
    */
   static deleteMenuTenant(payload: any): Promise<any> {
+    console.log(payload);
     return httpService.delete<any>(`${PMSApiPrefix()}/menus/tenant/${payload.tenantMappingMenuId}`);
   }
 
@@ -60,6 +62,12 @@ export default class TenantMenuManageService {
       menuScope: menuScope,
     });
   }
+
+  static changeMenuTenantDnd(payload: any): Promise<any> {
+    const tenantMappingMenuId = payload.tenantMappingMenuId;
+    const reqBody = createTenantMenuDnd(payload);
+    return httpService.post<any>(`${PMSApiPrefix()}/menus/tenant/${tenantMappingMenuId}`, reqBody);
+  }
 }
 
 /* 
@@ -70,47 +78,18 @@ function createTenantMenuCreateByAny(data: any) {
     menuId: data.menuId,
     sortOrder: data.sortOrder,
     isUsed: data.isUsed,
-    isDeleted: data.isDeleted,
     isMobileExposed: data.isMobileExposed,
     isWebExposed: data.isWebExposed,
-    tenantId: data.tenantId,
-    menuCode: data.menuCode,
-    path: data.path,
-    depth: data.depth,
-    isShortCutArea: data.isShortCutArea,
-    isPersoninfoInclusion: data.isPersoninfoInclusion,
     menuScope: data.menuScope,
-    menuStartDate: data.menuStartDate,
-    menuEndDate: data.menuEndDate,
-    parentId: data.parentId,
+    tenantId: data.tenantId,
+    parentMenuId: data.parentMenuId,
   };
 }
 
-export interface MenuInfo {
-  menuId: number;
-  menuCode: string;
-  menuName: string;
-  path: string;
-  depth: number;
-  sortOrder: number;
-  isShortCutArea: boolean;
-  isUsed: boolean;
-  isDeleted: boolean;
-  isPersoninfoInclusion: boolean;
-  isMobileExposed: boolean;
-  isWebExposed: boolean;
-  menuDesc: string;
-  isHiddenMenu: boolean;
-  parentId: number;
-  parentCode: string;
-  parentName: string;
-  apiMappingMenuList: ApiMappingMenuList[];
-}
-
-export interface ApiMappingMenuList {
-  apiMappingMenuId: number;
-  apiId: number;
-  apiUuid: string;
-  menuId: number;
-  apiName: string;
+function createTenantMenuDnd(data: any) {
+  return {
+    destinationParentId: data.destinationParentId,
+    sortSeq: data.sortSeq,
+    menuScopeCode: data.menuScopeCode,
+  };
 }

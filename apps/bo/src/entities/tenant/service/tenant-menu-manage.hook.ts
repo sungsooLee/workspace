@@ -4,13 +4,14 @@ import {
   tenantMenuManageQueryOptions as queryOptions,
   mutateOptions,
 } from './tenant-menu-manage.queries';
+import { Variable } from 'lucide-react';
 
 export function useFetchMenuTenantMappingTree(tenantId: number, deviceType: string) {
   return useQuery(queryOptions.tree(tenantId, deviceType));
 }
 
-export function useMenuTenantManageDetail(menuId: number) {
-  return useQuery({ ...queryOptions.detail(menuId), enabled: !!menuId });
+export function useFetchMenuTenantDetail(tenantMappingMenuId: any) {
+  return useQuery({ ...queryOptions.detail(tenantMappingMenuId), enabled: !!tenantMappingMenuId });
 }
 
 export function useCreateMenuTenant(tenantId: number, menuScope: string, options: any) {
@@ -84,6 +85,30 @@ export function useDeleteMenuTenent(tenantId: number, menuScope: string, options
 
   return {
     delete: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
+export function useChangeMenuTenentDnd(tenantId: number, menuScope: string, options: any) {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    ...mutateOptions.changeMenuTenentDnd(),
+    onSuccess: async (data, variables, context) => {
+      await queryClient.invalidateQueries({ queryKey: [queryKeys.tree, tenantId, menuScope] });
+
+      // 외부에서 제공된 onSuccess 콜백이 있으면 실행
+      if (options.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...options,
+  });
+  return {
+    change: (payload: any, callback?: any) => {
       mutation.mutate(payload, callback);
     },
     isSuccess: mutation.isSuccess,

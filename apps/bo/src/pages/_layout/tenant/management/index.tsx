@@ -87,6 +87,21 @@ function RouteComponent() {
         tenure: '재직',
         roleStatus: '정상',
       },
+      {
+        id: '1',
+        tenantId: 2,
+        tenantName: '테넌트B 2',
+        tenantSite: '/abcdefg',
+        channelName: '내 관리 채널명',
+        company: '현대자동차',
+        tenantOwner: '경영지원팀',
+        hrdOwner: '테넌트 담당자',
+        companyNumber: '1234567',
+        name: '김현대',
+        roleTerm: '2025-01-03 ~ 2025-01-03',
+        tenure: '재직',
+        roleStatus: '정상',
+      },
     ],
 
     pagination: {

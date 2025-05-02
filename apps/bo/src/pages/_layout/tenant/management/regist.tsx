@@ -23,13 +23,15 @@ import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-butt
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 
 import { useCreateTenant } from '@entities/tenant/service/tenant.hook';
+import { UserInquiryModal } from '@shared/ui/modal/user-inquiry-modal';
+import { LearningResourceProductionGuideModal } from '@features/learning/learning-resource/learning-resource-production-guide-modal';
 export const Route = createFileRoute('/_layout/tenant/management/regist')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   const router = useRouter();
-  const { confirm: openConfirm } = useModal();
+  const { open: openModal, confirm: openConfirm } = useModal();
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
     useDynamicForm(formConfig);
   const { create } = useCreateTenant({});
@@ -42,6 +44,8 @@ function RouteComponent() {
     console.log('=>', values);
   };
   const handleResetButtonClick = () => {
+    openModal({ content: <UserInquiryModal />, width: 'xl' });
+
     console.log('click reset');
   };
   const handleOnSubmit = async (data: any) => {
@@ -53,6 +57,7 @@ function RouteComponent() {
       create(payload);
     }
   };
+
   return (
     <PageContainer>
       <ContentsButtons>
