@@ -54,7 +54,7 @@
     @apply py-[16px];
   }
   .attach_area {
-    @apply relative;
+    @apply relative flex h-full items-center;
     .btn_file {
       @apply flex w-full flex-col p-[32px] leading-normal;
       .file_title {

@@ -54,17 +54,19 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel }) => {
             <p className={popupStyles.text}>{'파일은 최대 1개, 4G 이하로 업로드 가능합니다.'}</p>
           </div>
           <div className={popupStyles.pop_contents}>
-            <DndFileProgress
-              files={files}
-              maxFileCount={maxFileCount}
-              maxFileSize={maxFileSize}
-              addFiles={addFiles}
-              acceptFiles={acceptFiles}
-              onRemove={onRemove}
-              onPause={onPause}
-              onResume={onResume}
-              onRetry={onRetry}
-            />
+            <div className="dnd_file_wrap">
+              <DndFileProgress
+                files={files}
+                maxFileCount={maxFileCount}
+                maxFileSize={maxFileSize}
+                addFiles={addFiles}
+                acceptFiles={acceptFiles}
+                onRemove={onRemove}
+                onPause={onPause}
+                onResume={onResume}
+                onRetry={onRetry}
+              />
+            </div>
             <p className={cn(popupStyles.sub_text, popupStyles.dot)}>
               {'업로드된 동영상은 학습자원목록에서 조회가능합니다.'}
             </p>
