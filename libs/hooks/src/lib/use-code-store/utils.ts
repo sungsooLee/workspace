@@ -1,7 +1,7 @@
 import { CODE_GROUP_TYPE } from './constants';
 import { httpService } from '@learnway/shared';
 import { Code } from './types';
-import { codeOptions } from './options';
+import { codeOptions } from './config';
 
 /**
  * 기본 코드 조회 함수

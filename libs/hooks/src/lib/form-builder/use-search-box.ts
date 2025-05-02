@@ -1,9 +1,9 @@
 import { DynamicFormProvider, SearchBoxConfig, UseSearchBoxReturn } from './type';
 import { useForm } from 'react-hook-form';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useMemo, useRef, useState } from 'react';
 import { extractSearchBoxDefaultValues } from './util';
-import { ValidatorConfig, ValidatorFormat } from '@learnway/shared';
-
+import { buildJodObject, ValidatorConfig, ValidatorFormat } from '@learnway/shared';
+import { zodResolver } from '@hookform/resolvers/zod';
 /**
  * 동적 으로 검색 영역에 대한 지원을 하는 훅 (useSearchBox)
  *
@@ -15,61 +15,77 @@ const useSearchBoxHook = <T extends SearchBoxConfig>(config: T): UseSearchBoxRet
   const defaultValues = extractSearchBoxDefaultValues(config);
   // 원본값 상태 관리
   const [originalValues, setOriginalValues] = useState(defaultValues);
-
   const validator = useMemo<ValidatorConfig>(() => {
-    const { builders, validator = {} } = config; // validator가 없으면 빈 객체로 설정
-    return builders.reduce((acc, builder) => {
+    const { builders, validator = {} } = config;
+
+    const flattenBuilders = (list: any[]): any[] => {
+      const result: any[] = [];
+      list.forEach((item) => {
+        if (Array.isArray(item)) {
+          result.push(...flattenBuilders(item));
+        } else if (item.type === 'group' && Array.isArray(item.builders)) {
+          result.push(...flattenBuilders(item.builders));
+        } else {
+          result.push(item);
+        }
+      });
+      return result;
+    };
+
+    const flatBuilders = flattenBuilders(builders);
+
+    return flatBuilders.reduce((acc, builder) => {
       const key = builder.name;
+      if (!key) return acc;
+
       const analogyFormat = typeof builder.value as ValidatorFormat;
       let format = builder.format || analogyFormat;
 
       const existingValidator = validator[key] as any;
-      if (existingValidator && existingValidator.format) {
+      if (existingValidator?.format) {
         format = existingValidator.format;
       }
+
       acc[key] = {
         format,
         required: { required: false },
       };
+
       if (existingValidator) {
         if (typeof existingValidator === 'boolean') {
-          acc[key] = {
-            ...acc[key],
-            required: { required: existingValidator },
-          };
+          acc[key].required = { required: existingValidator };
         } else if (typeof existingValidator.required === 'function') {
-          acc[key] = {
-            ...acc[key],
-            required: { required: true, fn: existingValidator.required },
-          };
+          acc[key].required = { required: true, fn: existingValidator.required };
         } else if (typeof existingValidator === 'object') {
-          acc[key] = {
-            ...acc[key],
-            required: {
-              required: existingValidator['required'] ?? false,
-              ...(existingValidator['required']['fn'] && {
-                fn: existingValidator['required']['fn'],
-              }),
-              ...(existingValidator['required']['message'] && {
-                message: existingValidator['required']['message'],
-              }),
-              ...(existingValidator['required']['path'] && {
-                path: existingValidator['required']['path'],
-              }),
-            },
-            ...(existingValidator['conditions'] && {
-              conditions: existingValidator['conditions'],
+          acc[key].required = {
+            required: existingValidator.required ?? false,
+            ...(existingValidator.required?.fn && { fn: existingValidator.required.fn }),
+            ...(existingValidator.required?.message && {
+              message: existingValidator.required.message,
+            }),
+            ...(existingValidator.required?.path && {
+              path: existingValidator.required.path,
             }),
           };
+          if (existingValidator.conditions) {
+            acc[key].conditions = existingValidator.conditions;
+          }
         }
       }
+
       return acc;
     }, {} as ValidatorConfig);
-  }, []);
+  }, [config]);
 
+  // Zod 스키마 생성 (유효성 검증 스키마)
+  const schema = buildJodObject(validator);
   const methods = useForm({
     defaultValues,
+    resolver: zodResolver(schema),
   });
+
+  // 각 필드의 DOM 노드를 저장할 ref 객체
+  const fieldRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const {
     control,
