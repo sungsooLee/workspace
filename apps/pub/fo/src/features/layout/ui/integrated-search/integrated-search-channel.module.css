@@ -1,6 +1,15 @@
 /*  */
 .start {
   &.channel {
+    .tit_box {
+      @apply mb-[16px] flex w-full items-center justify-between;
+      strong {
+        @apply title_5_b text-[var(--gray9)];
+      }
+      a {
+        @apply body_3_r flex items-center leading-[22px] text-[var(--gray8)];
+      }
+    }
     .channel_box {
       @apply h-[50px] w-full bg-black;
     }

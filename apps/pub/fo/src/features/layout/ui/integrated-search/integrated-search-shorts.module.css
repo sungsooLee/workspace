@@ -1,8 +1,37 @@
 /*  */
 .start {
   &.shorts {
+    .tit_box {
+      @apply mb-[16px] flex w-full items-center justify-between;
+      strong {
+        @apply title_5_b text-[var(--gray9)];
+      }
+      a {
+        @apply body_3_r flex items-center leading-[22px] text-[var(--gray8)];
+      }
+    }
     .shorts_box {
       @apply h-[50px] w-full bg-black;
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.shorts {
+        .empty {
+          @apply mt-[16px] rounded-[8px] border-[1px] border-solid border-[var(--gray4)] pb-[24px];
+          & > div {
+            & > div {
+              @apply mt-[12px];
+              button {
+                @apply px-[12px] py-[6px] leading-[20px];
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
