@@ -1,10 +1,20 @@
-import React, { FC, FormEvent, KeyboardEvent, useMemo, useState } from 'react';
+import React, {
+  FC,
+  FormEvent,
+  KeyboardEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { Button, DynamicFormField } from '@learnway/ui';
 import { searchFieldConfig } from './search-field-config';
 import { SearchBoxProps } from './type';
 import { cn } from '@learnway/shared';
-import { IcoArrowDownDouble, IcoRefresh02, IcoSearch } from '@learnway/icons';
+import { IcoArrowDownDouble, IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
+import styles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import { t } from 'i18next';
 
 /**
  * 검색 박스 컴포넌트 ( config 에 의거해 자동 렌더링 됨 )
@@ -13,7 +23,7 @@ import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.m
  * @param onSearch - 검색 실행 시 호출될 함수
  */
 const SearchBoxComponent: FC<SearchBoxProps> = ({ provider, onSearch }) => {
-  const { builders: initBuilders, onFormChange, onSubmit, control, ...props } = provider;
+  const { builders: initBuilders, onFormChange, onSubmit, control, formState, ...props } = provider;
   // expand 버튼 상태 관리 (접기/펼치기)
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -100,16 +110,23 @@ const SearchBoxComponent: FC<SearchBoxProps> = ({ provider, onSearch }) => {
     <div className={searchStyles.item} key={item.name}>
       <label htmlFor={item.name} className={searchStyles.label}>
         <span className={searchStyles.text}>{item.label}</span>
+        {control.isFieldRequired(item.name) && (
+          <span className={cn(searchStyles.status, searchStyles.required)}>
+            <IcoFormRequired width={12} height={12} />
+          </span>
+        )}
       </label>
       <div className={searchStyles.box}>
         <DynamicFormField
           control={control}
           name={item.name}
+          formState={formState}
           {...item}
           {...props}
           component={renderSearchField(item)}
         />
       </div>
+      {getError(item)}
     </div>
   );
 
@@ -141,6 +158,25 @@ const SearchBoxComponent: FC<SearchBoxProps> = ({ provider, onSearch }) => {
       </div>
     );
   };
+
+  const getError = useCallback(
+    (item: any) => {
+      const error = formState.errors[item.name];
+      let errorMessage: string | undefined;
+      const message = error?.message;
+      if (typeof message === 'string') {
+        errorMessage = message;
+
+        if (errorMessage.indexOf('{{label}}') > -1 && item.label) {
+          errorMessage = errorMessage.replace('{{label}}', t(item.label));
+        }
+      }
+      return errorMessage ? (
+        <p className={cn(searchStyles.guide_text, searchStyles.error)}>{t(errorMessage)}</p>
+      ) : null;
+    },
+    [formState],
+  );
 
   return (
     <form onSubmit={handleFormSubmit} onKeyDown={handleKeyDown}>

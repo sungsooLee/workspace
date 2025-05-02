@@ -36,14 +36,16 @@ function RouteComponent() {
     switch (typeResult) {
       // 동영상
       case LEARNING_TYPE.VIDEO: {
-        /*const videoUploadResult = await openModal({
-          content: <LearningResourceFileUploadModal />,
-          width: 'lg',
-        });*/
-        const data = await openModal({
+        const channelInfo = await openModal({
           content: <ChannelChoiceModal />,
         });
-        console.log('data => ', data);
+        if (channelInfo) {
+          const videoUploadResult = await openModal({
+            content: <LearningResourceFileUploadModal channel={channelInfo} />,
+            width: 'lg',
+          });
+        }
+
         //router.navigate({ to: '/learning/resource/video/view', state: { permission: 'WRITE' } });
         break;
       }
@@ -107,6 +109,10 @@ function RouteComponent() {
     setDisplayContent(true);
   };
 
+  const handleOnSearch = (data: Record<string, any>) => {
+    console.log('search', data);
+  };
+
   return (
     <PageContainer displayContent={displayContent}>
       <ContentsButtons>
@@ -115,7 +121,7 @@ function RouteComponent() {
         </Button>
       </ContentsButtons>
       <MainContents>
-        <SearchBox provider={searchProvider} />
+        <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
       </MainContents>
     </PageContainer>
   );
@@ -187,4 +193,7 @@ const searchConfig: any = {
       },
     ],
   ],
+  validator: {
+    tenant: true,
+  },
 };

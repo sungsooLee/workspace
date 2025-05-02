@@ -84,9 +84,6 @@ const useSearchBoxHook = <T extends SearchBoxConfig>(config: T): UseSearchBoxRet
     resolver: zodResolver(schema),
   });
 
-  // 각 필드의 DOM 노드를 저장할 ref 객체
-  const fieldRefs = useRef<Record<string, HTMLDivElement | null>>({});
-
   const {
     control,
     handleSubmit,
@@ -165,10 +162,20 @@ const useSearchBoxHook = <T extends SearchBoxConfig>(config: T): UseSearchBoxRet
     handleFocus(fieldName);
   };
 
+  /**
+   * 필수값 확인 함수
+   * @param fieldName
+   */
+  const isFieldRequired = (fieldName: string): boolean => {
+    const config = validator[fieldName];
+    if (!config || typeof config.required !== 'object' || config.required === null) return false;
+    return config.required.required || false;
+  };
+
   // control 확장: 기본 control에 isFieldRequired 메서드 추가
   const extendedControl: DynamicFormProvider['control'] = {
     ...control,
-    isFieldRequired: (fieldName: string) => false,
+    isFieldRequired,
   };
 
   /**
