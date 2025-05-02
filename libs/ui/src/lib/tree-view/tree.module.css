@@ -24,9 +24,9 @@
             @apply !h-[20px] !min-w-[34px] !px-0;
           }
         }
-        &:not(.root_menu) {
+        /* &:not(.root_menu) {
           @apply bg-[url(../../assets/images/bg/bg_tree_line.png)] bg-[10px_auto] bg-[left_6px_top_12px] bg-no-repeat !pl-[18px];
-        }
+        } */
         &.root_menu {
           .tree_menu {
             @apply mr-0;
@@ -37,16 +37,16 @@
         }
         & + .tree_children {
           .tree_item .tree_inner {
-            @apply bg-[left_6px_top_12px] !pl-[18px];
+            @apply bg-[left_6px_top_12px];
             & + .tree_children {
               .tree_item .tree_inner {
-                @apply bg-[left_26px_top_12px] !pl-[38px];
+                @apply bg-[left_26px_top_12px] !pl-[28px];
                 & + .tree_children {
                   .tree_item .tree_inner {
-                    @apply bg-[left_46px_top_12px] !pl-[58px];
+                    @apply bg-[left_46px_top_12px] !pl-[56px];
                     & + .tree_children {
                       .tree_item .tree_inner {
-                        @apply bg-[left_66px_top_12px] !pl-[78px];
+                        @apply bg-[left_66px_top_12px] !pl-[84px];
                       }
                     }
                   }
