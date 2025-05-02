@@ -10,17 +10,17 @@ function RouteComponent() {
     {
       title: 'Tab A',
       key: 'a',
-      content: '',
+      content: 'Tab A',
     },
     {
       title: 'Tab B',
       key: 'b',
-      content: '',
+      content: 'Tab B',
     },
     {
       title: 'Tab C',
       key: 'c',
-      content: '',
+      content: 'Tab C',
     },
   ];
   return (

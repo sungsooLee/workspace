@@ -1,10 +1,13 @@
 .start {
-  @apply flex h-[76px] w-full items-center justify-between rounded-[8px] bg-[#F6F8FD] px-[24px];
+  @apply relative w-full;
   .stepper_tabs {
-    @apply flex max-w-[calc(100%-140px)];
+    @apply flex w-full;
+    [role='tablist'] {
+      @apply !pr-[140px];
+    }
   }
   .page_wrap {
-    @apply flex w-[130px] shrink-0 items-center justify-end;
+    @apply absolute right-0 top-[24px] flex w-[130px] items-center justify-end;
     button {
       @apply !min-w-[40px];
     }

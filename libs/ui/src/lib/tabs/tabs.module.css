@@ -180,6 +180,9 @@
       }
     }
     &.sub-progress {
+      [role='tablist'] {
+        @apply flex h-[76px] w-full items-center rounded-[8px] bg-[#F6F8FD] px-[24px];
+      }
       button {
         @apply button_bo_2_r inline-flex items-center text-[var(--gray8)];
         &::before {
