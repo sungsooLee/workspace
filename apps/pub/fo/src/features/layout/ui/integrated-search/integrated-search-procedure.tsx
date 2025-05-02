@@ -55,9 +55,6 @@ const IntegratedSearchProcedureComponent = () => {
           footer={isMobile ? <Button variant={'primary'} size={'sm'} label={'교육요청'} /> : ''}
         />
       </div>
-
-      {/* 검색 있음 */}
-      <div className={styles.procedure_box}></div>
     </div>
   );
 };

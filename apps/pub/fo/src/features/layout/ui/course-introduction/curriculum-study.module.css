@@ -20,24 +20,27 @@
               .subject {
                 @apply body_3_r inline-block flex-1 flex-[6] flex-shrink-0 pr-[20px] leading-[22px] text-[var(--gray7)];
               }
-              .stats {
-                @apply body_3_r flex w-full flex-[3] items-center justify-center gap-[8px] text-center text-[var(--gray7)];
-                em {
-                  &.learning {
-                    @apply text-[var(--secondary3)];
+              .stats_div {
+                @apply flex w-full flex-[3] items-center justify-center;
+                .stats {
+                  @apply body_3_r flex w-full flex-[3] items-center justify-center gap-[8px] text-center text-[var(--gray7)];
+                  em {
+                    &.learning {
+                      @apply text-[var(--secondary3)];
+                    }
                   }
-                }
-                button {
-                  @apply text-[1.2rem] text-[var(--gray7)];
-                  svg {
-                    @apply h-[12px] w-[12px] rotate-[-90deg] stroke-[var(--gray7)];
+                  button {
+                    @apply text-[1.2rem] text-[var(--gray7)];
+                    svg {
+                      @apply h-[12px] w-[12px] rotate-[-90deg] stroke-[var(--gray7)];
+                    }
+                  }
+                  .btn {
+                    @apply w-[73px] flex-[1] flex-shrink-0;
                   }
                 }
               }
 
-              .btn {
-                @apply w-[73px] flex-[1] flex-shrink-0;
-              }
               &.ing {
                 @apply bg-[var(--secondary5)];
               }
@@ -46,6 +49,55 @@
         }
         & + li {
           @apply border-t-[1px] border-solid border-[var(--gray5)];
+        }
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.curriculum {
+        & > ol {
+          & > li {
+            .tit_box {
+              strong {
+              }
+              span {
+              }
+            }
+            .txt_box {
+              ul {
+                li {
+                  @apply flex-col items-start justify-start;
+                  .subject {
+                  }
+                  .stats_div {
+                    @apply mt-[4px];
+                    .stats {
+                      @apply flex items-center justify-start;
+                      em {
+                        @apply body_4_r;
+                        &.learning {
+                        }
+                      }
+                      button {
+                        svg {
+                        }
+                      }
+                      .btn {
+                      }
+                      &.ing {
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            & + li {
+            }
+          }
         }
       }
     }

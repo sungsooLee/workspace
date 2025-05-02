@@ -24,6 +24,10 @@
   @screen mobile {
     .start {
       .tit_box {
+        @apply h-[24px];
+        [class*='nlp-select__control'] {
+          @apply !min-h-[20px];
+        }
         h3 {
           @apply title_6_b;
         }

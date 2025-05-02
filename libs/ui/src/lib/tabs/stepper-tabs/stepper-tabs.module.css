@@ -1,3 +1,18 @@
 .start {
- 
+  @apply flex h-[76px] w-full items-center justify-between rounded-[8px] bg-[#F6F8FD] px-[24px];
+  .stepper_tabs {
+    @apply flex max-w-[calc(100%-140px)];
+  }
+  .page_wrap {
+    @apply flex w-[130px] shrink-0 items-center justify-end;
+    button {
+      @apply !min-w-[40px];
+    }
+    .page_index {
+      @apply body_4_r flex w-[46px] items-center justify-center text-[var(--gray8)];
+      .current_index {
+        @apply body_4_b mr-[2px] font-bold text-[var(--gray8)];
+      }
+    }
+  }
 }

@@ -173,7 +173,7 @@ import bulletStyles from '../../../shared/ui/list/bullet.module.css'; 예시 페
         <div className="flex_box">
           <div className="desc w-[360px]">
             <div className={`${tableListStyles.start} ${tableListStyles.table_list}`}>
-              <div className={tableListStyles.list}>
+              <div className={tableListStyles.list_row}>
                 <span className={tableListStyles.tit}>총점</span>
                 <div className={tableListStyles.row}>
                   <span className={tableListStyles.dt}>이수기준</span>
@@ -193,7 +193,7 @@ import bulletStyles from '../../../shared/ui/list/bullet.module.css'; 예시 페
                 </div>
               </div>
 
-              <div className={tableListStyles.list}>
+              <div className={tableListStyles.list_row}>
                 <span className={tableListStyles.tit}>진도/출석</span>
                 <div className={tableListStyles.row}>
                   <span className={tableListStyles.dt}>이수기준</span>
@@ -223,7 +223,7 @@ import tableListStyles from '../../../../shared/ui/list/table-list.module.css'; 
 
 // 사용 예제
 <div className={\`\${tableListStyles.start} \${tableListStyles.table_list}\`}>
-  <div className={tableListStyles.list}>
+  <div className={tableListStyles.list_row}>
     <span className={tableListStyles.tit}>총점</span>
     <div className={tableListStyles.row}>
       <span className={tableListStyles.dt}>이수기준</span>
@@ -243,7 +243,7 @@ import tableListStyles from '../../../../shared/ui/list/table-list.module.css'; 
     </div>
   </div>
 
-  <div className={tableListStyles.list}>
+  <div className={tableListStyles.list_row}>
     <span className={tableListStyles.tit}>진도/출석</span>
     <div className={tableListStyles.row}>
       <span className={tableListStyles.dt}>이수기준</span>
