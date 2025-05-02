@@ -20,6 +20,9 @@
         }
         .btn_area {
           @apply ml-auto;
+          .btn_select {
+            @apply !h-[20px] !min-w-[34px] !px-0;
+          }
         }
         &:not(.root_menu) {
           @apply bg-[url(../../assets/images/bg/bg_tree_line.png)] bg-[10px_auto] bg-[left_6px_top_12px] bg-no-repeat !pl-[18px];

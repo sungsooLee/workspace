@@ -534,7 +534,7 @@ const TreeNodeComponent = ({
           <div className={styles.drag_wrap}>
             {nodeButtons && (
               <div
-                className={`mr-2 flex space-x-1 transition-opacity duration-150 ${isHovered || level === 0 ? 'opacity-100' : 'invisible opacity-0'}`}
+                className={`flex space-x-1 transition-opacity duration-150 ${isHovered || level === 0 ? 'opacity-100' : 'invisible opacity-0'}`}
                 onClick={(e) => e.stopPropagation()}
               >
                 {nodeButtons(enhanceNode, level)}
@@ -542,7 +542,7 @@ const TreeNodeComponent = ({
             )}
             {level >= 1 && (
               <span
-                className={`ml-2 flex items-center justify-center text-5xl transition-opacity ${isDragAndDropMode && isActuallyDraggable ? 'cursor-grab' : 'cursor-pointer'}`}
+                className={`flex items-center justify-center text-5xl transition-opacity ${isDragAndDropMode && isActuallyDraggable ? 'cursor-grab' : 'cursor-pointer'}`}
                 draggable={true}
                 onDragStart={handleDragStart}
               >
