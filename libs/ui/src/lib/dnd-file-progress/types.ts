@@ -8,4 +8,5 @@ export interface DndFileProgressProps {
   acceptFiles: string[];
   maxFileCount: number;
   maxFileSize: number;
+  wrapSize?: string;
 }

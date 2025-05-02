@@ -32,6 +32,7 @@ const DndFileProgressComponent: FC<DndFileProgressProps> = ({
   acceptFiles,
   maxFileCount,
   maxFileSize,
+  wrapSize,
 }) => {
   const acceptFileString = useMemo(() => {
     if (!acceptFiles) return '';
@@ -209,7 +210,7 @@ const DndFileProgressComponent: FC<DndFileProgressProps> = ({
 
   return (
     <div className={cn(styles.start, styles.wrap)}>
-      <div className={cn(styles.file_wrap, styles.type_excel)}>
+      <div className={cn(styles.file_wrap, styles.type_excel, wrapSize && styles[wrapSize])}>
         {files.length === 0 && (
           <div className={styles.attach_area} {...getRootProps()}>
             <Button className={styles.btn_file}>
