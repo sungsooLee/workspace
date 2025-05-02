@@ -175,14 +175,26 @@
 }
 .point {
   @apply justify-center rounded-[4px] border-[1px] border-solid border-[var(--primary2)] bg-[var(--white)] text-[var(--primary2)];
+  svg {
+    @apply stroke-[(--primary2)];
+  }
   &:hover {
     @apply border-[1px] border-solid border-[var(--primary3)] text-[var(--primary3)];
+    svg {
+      @apply stroke-[(--primary3)];
+    }
   }
   &:active {
     @apply border-[1px] border-solid border-[var(--primary1)] text-[var(--primary1)];
+    svg {
+      @apply stroke-[(--primary2)];
+    }
   }
   &:disabled {
     @apply border-[1px] border-solid border-[var(--gray2)] bg-[var(--gray2)] text-[var(--gray6)];
+    svg {
+      @apply stroke-[(--gray6)];
+    }
   }
 }
 .text {
