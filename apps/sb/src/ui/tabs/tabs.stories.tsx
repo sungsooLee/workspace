@@ -124,7 +124,7 @@ TemplateButton.storyName = '앵커 탭';
 export const TemplateStepper: any = (args: any) => {
   return (
     <>
-      <StepperTabs type={'progress'} items={items} />
+      <StepperTabs type={'sub-progress'} items={items} />
     </>
   );
 };
