@@ -7,6 +7,9 @@ import { cn } from '@learnway/shared';
 // style
 import styles from './pop-image-preview.module.css';
 
+/* images */
+import mapImg from '../../../assets/images/temp/img_temp_map.jpg';
+
 export const Route = createFileRoute('/_layout/common/pop-image-preview')({
   component: RouteComponent,
 });
@@ -17,7 +20,9 @@ function RouteComponent() {
     return (
       <ModalContainer>
         <ModalBody>
-          <div className={cn(styles.start, styles.img_wrap)}></div>
+          <div className={cn(styles.start, styles.img_wrap)}>
+            <img src={mapImg} alt="" />
+          </div>
         </ModalBody>
       </ModalContainer>
     );

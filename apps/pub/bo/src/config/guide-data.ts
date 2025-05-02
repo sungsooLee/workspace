@@ -59,7 +59,7 @@ export const guideData = [
     pageId: 'common/pop-image-preview',
     screenId: 'NLP_BO_PMS_1100_05_02',
     pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-05-02',
     lastUpdateDate: '',
     remarks: '', // 비고
   },
