@@ -90,12 +90,12 @@ export const TabsComponent = forwardRef<
       // 현재 탭이 없거나 동일한 탭 클릭 시 무시
       if (!value || value === nextValue) return;
 
-      // 탭 클릭 비활성화 여부 true 설정
+      // 탭 클릭 비활성화 여부 true 설정시 click, 결과가 ture면 탭 작동 안함
       if (clickDisabled) {
         return;
       }
 
-      // 탭 변경 가능 여부 확인 (비동기 가능) 설정 안하면 무조건 true
+      // 탭 변경 가능 여부 확인 (비동기 가능) 설정 안하면 무조건 true, 결과가 false면 탭 작동 안함
       if (!(await (onBeforeTabChange?.(value, nextValue) ?? true))) {
         return;
       }
