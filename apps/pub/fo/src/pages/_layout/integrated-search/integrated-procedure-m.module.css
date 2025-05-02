@@ -76,6 +76,9 @@
             }
           }
         }
+        .pagenation {
+          @apply mt-[24px];
+        }
         & + div {
           @apply mt-[32px];
         }

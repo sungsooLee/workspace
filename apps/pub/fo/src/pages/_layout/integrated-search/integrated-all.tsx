@@ -12,6 +12,8 @@ import {
   IntegratedSearchButton,
 } from '../../../features/layout';
 
+import { IcoArrowForward } from '@learnway/icons';
+
 import styles from './integrated-all.module.css';
 
 import ImgNotice from '@learnway/styles/fo/assets/images/thumb/img_notice_01.png';
@@ -29,13 +31,6 @@ function RouteComponent() {
     } else {
       setListUi('vertical'); // 세로형
     }
-  };
-
-  // 과정 탭 소팅 필터
-  const [selectedValues, setSelectedValues] = useState<string[]>(['20개씩']);
-  const arrays = {
-    items: ['정확도순', '최신순'],
-    initialSelectedItem: 0, // 초기 선택값
   };
 
   const [activeButton, setActiveButton] = useState<number>(0);
@@ -81,31 +76,73 @@ function RouteComponent() {
         <div className={styles.result_wrap}>
           {/* 과정 컨텐츠 */}
           <div>
+            <div className={styles.tit_box}>
+              <strong>과정</strong>
+              <Link to="">
+                과정 더보기
+                <IcoArrowForward width={16} height={16} stroke="#131c30" />
+              </Link>
+            </div>
             <IntegratedSearchProcedure />
           </div>
 
           {/* 숏츠 컨텐츠 */}
           <div>
+            <div className={styles.tit_box}>
+              <strong>숏츠</strong>
+              <Link to="">
+                숏츠 더보기
+                <IcoArrowForward width={16} height={16} stroke="#131c30" />
+              </Link>
+            </div>
             <IntegratedSearchShorts />
           </div>
 
           {/* 채널 컨텐츠 */}
           <div>
+            <div className={styles.tit_box}>
+              <strong>채널</strong>
+              <Link to="">
+                채널 더보기
+                <IcoArrowForward width={16} height={16} stroke="#131c30" />
+              </Link>
+            </div>
             <IntegratedSearchChannel />
           </div>
 
           {/* 러닝랩 컨텐츠 */}
           <div>
+            <div className={styles.tit_box}>
+              <strong>러닝랩</strong>
+              <Link to="">
+                러닝랩 더보기
+                <IcoArrowForward width={16} height={16} stroke="#131c30" />
+              </Link>
+            </div>
             <IntegratedSearchRunning />
           </div>
 
           {/* 지식공유 컨텐츠 */}
           <div>
+            <div className={styles.tit_box}>
+              <strong>지식공유</strong>
+              <Link to="">
+                지식공유 더보기
+                <IcoArrowForward width={16} height={16} stroke="#131c30" />
+              </Link>
+            </div>
             <IntegratedSearchKnowledge />
           </div>
 
           {/* 코칭 컨텐츠 */}
           <div>
+            <div className={styles.tit_box}>
+              <strong>코칭</strong>
+              <Link to="">
+                코칭 더보기
+                <IcoArrowForward width={16} height={16} stroke="#131c30" />
+              </Link>
+            </div>
             <IntegratedSearchCoaching />
           </div>
         </div>

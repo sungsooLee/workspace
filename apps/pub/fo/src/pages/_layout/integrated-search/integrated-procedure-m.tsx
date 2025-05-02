@@ -1,15 +1,8 @@
 import React, { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Button, Dropdown } from '@learnway/ui';
-import {
-  IntegratedSearchButton,
-  IntegratedSearchProcedure,
-  IntegratedSearchShorts,
-  IntegratedSearchChannel,
-  IntegratedSearchRunning,
-  IntegratedSearchKnowledge,
-  IntegratedSearchCoaching,
-} from '../../../features/layout';
+import { cn } from '@learnway/shared';
+import { Button, Dropdown, Pagination } from '@learnway/ui';
+import { IntegratedSearchButton, IntegratedSearchProcedure } from '../../../features/layout';
 import { IcoArray, IcoDotpoints, IcoFilter } from '@learnway/icons';
 
 import styles from './integrated-procedure-m.module.css';
@@ -44,6 +37,12 @@ function RouteComponent() {
     } else {
       setListUi('vertical'); // 세로형
     }
+  };
+
+  // pagenation
+  const [page, setPage] = React.useState(1);
+  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
   };
 
   return (
@@ -113,22 +112,16 @@ function RouteComponent() {
 
       <div className={styles.result_wrap}>
         {/* 과정 컨텐츠 */}
-        <IntegratedSearchProcedure />
-
-        {/* 숏츠 컨텐츠 */}
-        <IntegratedSearchShorts />
-
-        {/* 채널 컨텐츠 */}
-        <IntegratedSearchChannel />
-
-        {/* 러닝랩 컨텐츠 */}
-        <IntegratedSearchRunning />
-
-        {/* 지식공유 컨텐츠 */}
-        <IntegratedSearchKnowledge />
-
-        {/* 코칭 컨텐츠 */}
-        <IntegratedSearchCoaching />
+        <div>
+          <IntegratedSearchProcedure />
+          {/* pagination */}
+          <Pagination
+            className={cn(styles.pagenation, styles.paginationItem)}
+            count={3}
+            page={page}
+            onChange={handlePageChange}
+          />
+        </div>
       </div>
     </div>
   );
