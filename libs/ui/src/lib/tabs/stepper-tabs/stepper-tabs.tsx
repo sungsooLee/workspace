@@ -47,22 +47,22 @@ export const StepperTabsComponent = forwardRef<
   };
 
   return (
-    <div className={cn('nlp--sub-progress-tabs', styles.start, 'flex')}>
-      <div className={'flex-1'}>
+    <div className={cn('nlp--sub-progress-tabs', styles.start)}>
+      <div className={styles.stepper_tabs}>
         <Tabs {...props} items={items} selectedTabKey={currentKey} onTabChange={handleTabChange} />
       </div>
-      <div className={'flex w-48 items-center justify-between'}>
+      <div className={styles.page_wrap}>
         <Button
           variant={'gray'}
-          size={'sm'}
+          size={'xs'}
           label={'이전'}
           disabled={isFirst}
           onClick={goToPrevious}
         />
-        <p>
-          {currentIndex + 1} / {totalTabSize}
+        <p className={styles.page_index}>
+          <strong className={styles.current_index}>{currentIndex + 1}</strong> /{totalTabSize}
         </p>
-        <Button variant={'gray'} size={'sm'} label={'다음'} disabled={isLast} onClick={goToNext} />
+        <Button variant={'gray'} size={'xs'} label={'다음'} disabled={isLast} onClick={goToNext} />
       </div>
     </div>
   );

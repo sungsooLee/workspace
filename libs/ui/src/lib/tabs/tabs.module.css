@@ -179,6 +179,23 @@
         }
       }
     }
+    &.sub-progress {
+      button {
+        @apply button_bo_2_r inline-flex items-center text-[var(--gray8)];
+        &::before {
+          @apply mr-[4px] h-[12px] w-[12px] overflow-hidden rounded-[6px] bg-[var(--gray5)] content-[''];
+        }
+        &:not(:first-child) {
+          @apply ml-[12px] bg-transparent bg-[url('../../assets/images/bg/bg_sub_progress_line.png')] bg-[46px_auto] bg-[position:left_center] bg-no-repeat pl-[60px] content-[''];
+        }
+        &[aria-selected='true'] {
+          @apply text-[#0093BC];
+          &::before {
+            @apply bg-[var(--secondary1)];
+          }
+        }
+      }
+    }
     &.segment {
       & > .list {
         @apply flex;
