@@ -49,7 +49,13 @@ export const StepperTabsComponent = forwardRef<
   return (
     <div className={cn('nlp--sub-progress-tabs', styles.start, 'flex')}>
       <div className={'flex-1'}>
-        <Tabs {...props} items={items} selectedTabKey={currentKey} onTabChange={handleTabChange} />
+        <Tabs
+          {...props}
+          items={items}
+          selectedTabKey={currentKey}
+          clickDisabled
+          onTabChange={handleTabChange}
+        />
       </div>
       <div className={'flex w-48 items-center justify-between'}>
         <Button

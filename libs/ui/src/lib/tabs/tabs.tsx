@@ -7,22 +7,38 @@ import styles from './tabs.module.css';
 import { Badge } from '../badge/badge';
 
 export interface TabItemProps {
+  /** 탭에 표시될 제목 */
   title: string;
+  /** 탭의 고유 키 (value) */
   key: string;
+  /** 카운트 표시 여부 */
   count?: boolean;
+  /** 표시할 숫자 카운트 */
   number?: string;
+  /** 알림 표시 여부 */
   alarm?: boolean;
+  /** 탭 내용 */
   content?: React.ReactNode;
 }
 
 export interface TabsComponentProps extends React.ComponentProps<typeof Primitive.Root> {
+  /** 탭 아이템 배열 */
   items: Array<TabItemProps>;
+  /** 추가적인 CSS 클래스 이름 */
   className?: string;
+  /** 탭의 스타일 유형 */
   type?: 'line' | 'fill' | 'round' | 'segment' | 'progress' | 'sub-progress';
+  /** 탭의 색상 테마 */
   variant?: 'primary' | 'secondary' | 'gray'; // gray는 line형
+  /** 탭의 크기 */
   size?: 'sm' | 'md';
+  /** 접근성을 위한 ARIA 레이블 */
   ariaLabel?: string;
-  selectedTabKey?: string; // 최초 렌더링 이후 tab 조작 필요시 사용
+  /** 외부에서 탭을 제어하기 위한 초기 선택된 탭 키 */
+  selectedTabKey?: string;
+  /** 탭 클릭 비활성화 여부 (true 설정시 클릭 기능만 작동하지 않음, 스타일은 disabled 처리 안함)  */
+  clickDisabled?: boolean;
+  /** 탭 변경 시 호출되는 콜백 함수 (새로운 탭의 key를 인자로 받음) */
   onTabChange?: (value: string) => void;
   /**
    * 탭 변경 시도 시 호출됩니다.
@@ -49,6 +65,7 @@ export const TabsComponent = forwardRef<
       type,
       ariaLabel,
       selectedTabKey,
+      clickDisabled,
       onTabChange,
       onBeforeTabChange,
       ...props
@@ -73,7 +90,12 @@ export const TabsComponent = forwardRef<
       // 현재 탭이 없거나 동일한 탭 클릭 시 무시
       if (!value || value === nextValue) return;
 
-      // 탭 변경 가능 여부 확인 (비동기 가능)
+      // 탭 클릭 비활성화 여부 true 설정
+      if (clickDisabled) {
+        return;
+      }
+
+      // 탭 변경 가능 여부 확인 (비동기 가능) 설정 안하면 무조건 true
       if (!(await (onBeforeTabChange?.(value, nextValue) ?? true))) {
         return;
       }
