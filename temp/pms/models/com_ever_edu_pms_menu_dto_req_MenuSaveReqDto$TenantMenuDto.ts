@@ -35,10 +35,6 @@ export type com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$TenantMenuDto = {
      * 부모메뉴ID
      */
     parentMenuId?: number | null;
-    /**
-     * 부모맵핑메뉴ID
-     */
-    parentTenantMappingMenuId?: number | null;
 };
 export namespace com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$TenantMenuDto {
     /**

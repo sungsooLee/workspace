@@ -195,7 +195,7 @@ export class BoExcelFileTestTestApiService {
     }
     /**
      * S3 템플릿 파일 다운로드 요청
-     * S3 템플릿 파일 다운로드 요청한다. <br>- csv_read_sample_lang_code.csv <br>- excel_read_sample_lang_code.xlsx <br>- excel_read_sample_user.xlsx <br>- jxls_template_sample_01.xlsx<br>- jxls_template_lang_code.xlsx<br>- jxls_template_user.xlsx
+     * S3 템플릿 파일 다운로드 요청한다. <br><br><b>템플릿 파일명</b>: <br>- csv_read_sample_lang_code.csv <br>- excel_read_sample_lang_code.xlsx <br>- excel_read_sample_user.xlsx <br>- jxls_template_sample_01.xlsx<br>- jxls_template_lang_code.xlsx<br>- jxls_template_user.xlsx
      * @param fileName 템플릿 파일명 <br>- csv_read_sample_lang_code.csv <br>- excel_read_sample_lang_code.xlsx <br>- excel_read_sample_user.xlsx <br>- jxls_template_sample_01.xlsx <br>- jxls_template_lang_code.xlsx<br>- jxls_template_user.xlsx
      * @returns any OK
      * @throws ApiError
