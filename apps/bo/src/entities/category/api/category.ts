@@ -28,11 +28,11 @@ export default class CategoryService {
       categoryCode,
       categoryContent,
     };
-    return httpService.post<any>(`${LMSApiPrefix()}/category/${id}/update`, body);
+    return httpService.put<any>(`${LMSApiPrefix()}/category/${id}/update`, body);
   }
 
   static deleteCategory(categoryId: string) {
-    return httpService.post<any>(`${LMSApiPrefix()}/category/${categoryId}/delete`, {});
+    return httpService.delete<any>(`${LMSApiPrefix()}/category/${categoryId}/delete`, {});
   }
 
   static moveCategory({ id, destinationParentId, sortSeq }: CategoryMove) {
@@ -40,7 +40,7 @@ export default class CategoryService {
       destinationParentId,
       sortSeq,
     };
-    return httpService.post<any>(`${LMSApiPrefix()}/category/${id}/dnd`, body);
+    return httpService.put<any>(`${LMSApiPrefix()}/category/${id}/dnd`, body);
   }
 
   static existsCategory(code: string) {
