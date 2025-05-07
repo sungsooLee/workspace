@@ -11,7 +11,8 @@ import {
   useUpdateTenantCategory,
   useMoveTenantCategory,
 } from '@entities/tenant/service/tenant-category.hook';
-import { transformApiDataToTreeData } from '@features/category/service/category.service';
+//import { transformApiDataToTreeData } from '@features/category/service/category.service';
+import { transformApiDataToTreeData } from '@features/platform/category';
 import TenentCategoryView from '@features/tenant/management/ui/tenant-detail-category-view';
 import { TenantCategoryTree } from './tenant-detail-category-tree';
 
