@@ -3,7 +3,7 @@ import { t } from 'i18next';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import { Tabs } from '@learnway/ui';
 
-import { SectionLayout } from './components/section-layout';
+import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 import { TenantDetailLearningRoleList } from './tenant-detail-learning-role-list';
 import { TenantDetailLearningRoleView } from './tenant-detail-learning-role-view';
 import { TenantDetailLeaningRoleMenu } from './tenant-detail-learning-role-menu';

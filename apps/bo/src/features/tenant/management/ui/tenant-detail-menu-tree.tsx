@@ -61,7 +61,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
   const [treeData, setTreeData] = useState([]);
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [isInitMode, setIsInitMode] = useState(true);
-  const tenantId = routerState.location.state?.tenantId || '1';
+  const tenantId = routerState.location.state?.tenantId;
 
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, control } =
     useDynamicForm(formConfig);
@@ -73,12 +73,23 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
     selectedNode?.tenantMappingMenuId || undefined,
   );
 
-  const { data: menuData } = useFetchMenuTenantMappingTree(tenantId, menuScope);
+  const { data: menuData, refetch: refetchMenuTree } = useFetchMenuTenantMappingTree(
+    tenantId,
+    menuScope,
+  );
 
   //
-  const { delete: deleteMenuTenent } = useDeleteMenuTenent(tenantId, menuScope, {});
+  const { delete: deleteMenuTenent } = useDeleteMenuTenent(tenantId, menuScope, {
+    onSuccess: () => {
+      refetchMenuTree();
+    },
+  });
   const { update: updateMenuTenent } = useUpdateMenuTenant(tenantId, menuScope, {});
-  const { change: changeMenuPosition } = useChangeMenuTenentDnd(tenantId, menuScope, {});
+  const { change: changeMenuPosition } = useChangeMenuTenentDnd(tenantId, menuScope, {
+    onSuccess: () => {
+      refetchMenuTree();
+    },
+  });
 
   const handleExpandChange = (keys: string[]) => {
     setExpandedKeys(keys);
@@ -100,7 +111,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
           const payload = moveNodeCheck(events);
           if (payload) {
             payload.menuScopeCode = menuScope;
-
+            console.log(payload);
             changeMenuPosition(payload);
           }
         }

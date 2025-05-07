@@ -52,7 +52,11 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
       refetch();
     },
   });
-  const { change: changeMenuPosition } = useChangeMenuTenentDnd(tenantId, menuScopeCode, {});
+  const { change: changeMenuPosition } = useChangeMenuTenentDnd(tenantId, menuScopeCode, {
+    onSuccess: () => {
+      refetch();
+    },
+  });
   const { delete: deleteMenuTenent } = useDeleteMenuTenent(tenantId, menuScopeCode, {
     onSuccess: () => {
       refetch();

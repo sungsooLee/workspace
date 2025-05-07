@@ -157,14 +157,14 @@ export const transformApiDataToTreeData = (apiData: any) => {
 };
 
 export const moveNodeCheck = (events: any) => {
-  console.log(events);
+  console.log('devents ', events);
   switch (events.position) {
     case 'BEFORE':
       if (events.sourceNode.level === events.targetNode.level) {
         return {
           tenantMappingMenuId: events.sourceNode.tenantMappingMenuId,
           destinationParentId: events.targetNode.parentKey,
-          sortSeq: events.targetNode.sortOrder - 1,
+          sortOrder: events.targetNode.sortOrder - 1,
           menuScopeCode: '',
         };
       }
@@ -174,7 +174,7 @@ export const moveNodeCheck = (events: any) => {
         return {
           tenantMappingMenuId: events.sourceNode.tenantMappingMenuId,
           destinationParentId: events.targetNode.key,
-          sortSeq: 1,
+          sortOrder: 1,
           menuScopeCode: '',
         };
       }
@@ -184,7 +184,7 @@ export const moveNodeCheck = (events: any) => {
         return {
           tenantMappingMenuId: events.sourceNode.tenantMappingMenuId,
           destinationParentId: events.targetNode.parentKey,
-          sortSeq: events.targetNode.sortOrder + 1,
+          sortOrder: events.targetNode.sortOrder + 1,
           menuScopeCode: '',
         };
       }
