@@ -92,7 +92,7 @@ function createTenantMenuCreateByAny(data: any) {
 function createTenantMenuDnd(data: any) {
   return {
     destinationParentId: data.destinationParentId,
-    sortSeq: data.sortSeq,
+    sortOrder: data.sortOrder,
     menuScopeCode: data.menuScopeCode,
   };
 }
