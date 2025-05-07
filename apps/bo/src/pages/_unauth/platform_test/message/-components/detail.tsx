@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Button, ContentsRow, DynamicFormField, useModal } from '@learnway/ui';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 
@@ -9,10 +9,12 @@ import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import { FormInfoArea } from '@shared/ui/form/components/form-info-area';
 import {
+  queryOptions,
   useCreateLabelMessage,
   useFetchLabelMessage,
   useUpdateLabelMessage,
 } from '@entities/label-messages';
+import { DuplicateCheckInput } from '@features/platform/category';
 
 interface MessageDetailProps {
   /**
@@ -31,7 +33,16 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
   const { t } = useTranslation();
   const [isCreateMode, setIsCreateMode] = React.useState(true);
   const { confirm: openConfirm } = useModal();
-  const { provider, onSubmit, onFormChange, getValues, fetchData } = useDynamicForm(formConfig);
+  const {
+    provider,
+    onSubmit,
+    onFormChange,
+    getValues,
+    fetchData,
+    clearFormError,
+    setFormError,
+    onFormValid,
+  } = useDynamicForm(formConfig);
   const { data } = useFetchLabelMessage(labelMessageId);
   const formDisabled = labelMessageId === 0;
 
@@ -63,7 +74,8 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
     setIsCreateMode(isCreate);
     // 생성 모드는 폼 내용 초기화
     if (isCreate) {
-      onFormChange();
+      onFormChange({});
+      fetchData({});
     }
   }, [labelMessageId]);
 
@@ -71,8 +83,13 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
    * 조회된 데이터를 폼에 반영합니다.
    */
   useEffect(() => {
-    data && fetchData(data);
-  }, [data]);
+    const d = {
+      ...data,
+      labelMessageId, // TODO: formConfig 에 hidden 설정했지만 featchData 에 값 넣지 않으면 validation 에러나서 임시로 넣음, form 문의 필요
+    };
+    fetchData(d);
+    // fetchData(data || {});
+  }, [data, labelMessageId]);
 
   /**
    * 다국어 관리 페이지로 이동합니다.
@@ -100,9 +117,36 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
       ...data,
       labelMessageId: isCreateMode ? '' : data?.labelMessageId,
     };
+
+    //
+    if (!isValidDuplicate) {
+      alert('xxxx');
+      return;
+    }
+
     if (await openConfirm(t('LABEL.confirm.save.title'))) {
       isCreateMode ? create(payload) : update(payload);
     }
+  };
+
+  const [isValidDuplicate, setIsValidDuplicate] = useState(false);
+  // const [codeCheckState, setCodeCheckState] = useState<'none' | 'success' | 'duplicate' | 'error'>(
+  //   'duplicate',
+  // );
+  const handleCodeChange = (newCode: string) => {
+    // 코드가 변경됐을 경우에만 중복 체크 필요
+    // onFormChange({
+    //   isDuplicateMultilingulKey: true,
+    // });
+    // setCodeCheckState('none');
+    // const isChanged = isFieldChanged('code', newCode);
+    // if (onFormChange) {
+    //   // 코드가 변경됐을 경우에만 중복 체크 필요
+    //   onFormChange({
+    //     isDuplicateMenuCode: !isChanged && mode === 'view',
+    //   });
+    //   setCodeCheckState(!isChanged && mode === 'view' ? 'success' : 'none');
+    // }
   };
 
   return (
@@ -112,6 +156,13 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
         underLine
         actionNode={
           <div className={layoutStyles.btn_wrap}>
+            <Button
+              variant="gray"
+              size="sm"
+              label={'XX'}
+              onClick={() => console.log(onFormValid())}
+              // onClick={() => console.log(getValues())}
+            />
             <Button
               variant="save"
               size="sm"
@@ -132,7 +183,21 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
         {/*메세지코드*/}
         <ContentsRow>
           <FormRow provider={provider}>
-            <DynamicFormField name={'labelMessageMultilingulKey'} disabled={formDisabled} />
+            <DynamicFormField name={'labelMessageMultilingulKey'} disabled={formDisabled}>
+              <DuplicateCheckInput
+                idKey={'labelMessageId'}
+                query={queryOptions.all}
+                errorMessage={t('LABEL.form.validation.needInput', {
+                  code: t('LABEL.form.label.labelMessageCode'),
+                })}
+                clearFormError={clearFormError}
+                disabled={formDisabled}
+                // codeCheckState={codeCheckState}
+                handleCodeChange={handleCodeChange}
+                setFormError={setFormError}
+                onSucess={(isValid: boolean) => setIsValidDuplicate(isValid)}
+              />
+            </DynamicFormField>
           </FormRow>
         </ContentsRow>
         {/*메세지*/}
@@ -189,7 +254,7 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'labelMessageMultilingulKey',
       label: t('LABEL.form.label.labelMessageCode'),
-      type: 'text',
+      type: 'custom',
       value: '',
       maxLength: 150,
     },
@@ -220,6 +285,12 @@ const formConfig: DynamicFormConfig = {
       format: 'number',
       type: 'hidden',
       value: '',
+    },
+    {
+      name: 'duplicateCheck',
+      format: 'boolean',
+      type: 'hidden',
+      value: false,
     },
   ],
   validator: {
