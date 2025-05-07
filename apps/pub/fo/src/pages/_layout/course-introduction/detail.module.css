@@ -43,13 +43,33 @@
         .acc_package {
           & > div {
             & > button {
-              @apply py-0;
+              @apply relative max-h-none py-0 pr-[30px];
+              & > span {
+                @apply px-0;
+              }
               & + div {
                 @apply bg-inherit;
               }
+              & > svg {
+                @apply absolute right-0 top-0 mt-0 h-[20px] w-[20px] stroke-[var(--gray7)];
+              }
             }
             & + div {
-              @apply mt-[16px] border-t-[1px] border-solid border-[#d9d9d9] pt-[16px];
+              @apply mt-[16px] border-t-[1px] border-solid border-[var(--gray3)] pt-[16px];
+            }
+          }
+          .sub_package_title {
+            & > div {
+              & > div {
+                & > div:nth-child(1) {
+                  @apply w-[120px];
+                }
+                & > div {
+                  & > p {
+                    @apply body_3_r max-h-none whitespace-normal;
+                  }
+                }
+              }
             }
           }
         }
@@ -83,6 +103,22 @@
       }
       .course_btn_wrap {
         @apply sticky -bottom-[24px] left-0 -mb-[24px] -ml-[24px] w-[calc(100%+48px)] bg-white p-[24px];
+      }
+      .procedure_box {
+        li {
+          & > div {
+            & > div {
+              & > div:nth-child(1) {
+                @apply w-[120px];
+              }
+              & > div {
+                & > p {
+                  @apply !body_3_r !line-clamp-2 !whitespace-normal;
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

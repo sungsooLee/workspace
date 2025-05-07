@@ -46,7 +46,7 @@
       .text_box {
         @apply mt-[16px] overflow-hidden;
         .type {
-          @apply flex items-center;
+          @apply mb-[6px] flex items-center;
           span {
             @apply body_4_r text-[var(--gray7)];
             & + span {
@@ -61,7 +61,7 @@
           }
         }
         .text {
-          @apply body_1_r mt-[6px] line-clamp-2 max-h-[64px] overflow-hidden text-ellipsis leading-[32px] text-[var(--gray9)];
+          @apply body_1_r line-clamp-2 max-h-[64px] overflow-hidden text-ellipsis leading-[32px] text-[var(--gray9)];
         }
         .ico_box {
           @apply mt-[4px] flex items-center;

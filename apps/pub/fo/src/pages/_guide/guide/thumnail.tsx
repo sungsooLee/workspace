@@ -15,12 +15,6 @@ export const Route = createFileRoute('/_guide/guide/thumnail')({
 });
 
 function RouteComponent() {
-  // 썸네일 라벨
-  const label = [
-    { text: 'New', color: '#00afd5' },
-    { text: '접수중', color: '#06226a' },
-    { text: 'D-7', color: '#ff4646' },
-  ];
   // 썸네일 찜
   const [icoHeart, setIcoHeart] = useState(true);
   const handleHeartClick = () => {
@@ -59,11 +53,9 @@ function RouteComponent() {
                 {/* img */}
                 <div className={thumnailStyles.img_box}>
                   <ul className={thumnailStyles.label}>
-                    {label.map((labels, index) => (
-                      <li key={index} style={{ backgroundColor: labels.color }}>
-                        {labels.text}
-                      </li>
-                    ))}
+                    <li style={{ backgroundColor: '#00afd5' }}>New</li>
+                    <li style={{ backgroundColor: '#06226a' }}>접수중</li>
+                    <li style={{ backgroundColor: '#ff4646' }}>D-7</li>
                   </ul>
                   <div className={thumnailStyles.img}>
                     <img src={listImage1} alt="" />
@@ -169,12 +161,6 @@ import {
  import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
 import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 
-  // 썸네일 라벨
-  const label = [
-    { text: 'New', color: '#00afd5' },
-    { text: '접수중', color: '#06226a' },
-    { text: 'D-7', color: '#ff4646' },
-  ];
   // 썸네일 찜
   const [icoHeart, setIcoHeart] = useState(true);
   const handleHeartClick = () => {
@@ -200,11 +186,9 @@ import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_
     {/* img */}
     <div className={thumnailStyles.img_box}>
       <ul className={thumnailStyles.label}>
-        {label.map((labels, index) => (
-          <li key={index} style={{ backgroundColor: labels.color }}>
-            {labels.text}
-          </li>
-        ))}
+        <li style={{ backgroundColor: '#00afd5' }}>New</li>
+        <li style={{ backgroundColor: '#06226a' }}>접수중</li>
+        <li style={{ backgroundColor: '#ff4646' }}>D-7</li>
       </ul>
       <div className={thumnailStyles.img}>
         <img src={listImage1} alt="" />
@@ -320,11 +304,9 @@ import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_
                 {/* img */}
                 <div className={thumnailStyles.img_box}>
                   <ul className={thumnailStyles.label}>
-                    {label.map((labels, index) => (
-                      <li key={index} style={{ backgroundColor: labels.color }}>
-                        {labels.text}
-                      </li>
-                    ))}
+                    <li style={{ backgroundColor: '#00afd5' }}>New</li>
+                    <li style={{ backgroundColor: '#06226a' }}>접수중</li>
+                    <li style={{ backgroundColor: '#ff4646' }}>D-7</li>
                   </ul>
                   <div className={thumnailStyles.img}>
                     <img src={listImage1} alt="" />
@@ -430,12 +412,6 @@ import {
  import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
 import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 
-// 썸네일 라벨
-  const label = [
-    { text: 'New', color: '#00afd5' },
-    { text: '접수중', color: '#06226a' },
-    { text: 'D-7', color: '#ff4646' },
-  ];
   // 썸네일 찜
   const [icoHeart, setIcoHeart] = useState(true);
   const handleHeartClick = () => {
@@ -461,11 +437,9 @@ import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_
     {/* img */}
     <div className={thumnailStyles.img_box}>
       <ul className={thumnailStyles.label}>
-        {label.map((labels, index) => (
-          <li key={index} style={{ backgroundColor: labels.color }}>
-            {labels.text}
-          </li>
-        ))}
+        <li style={{ backgroundColor: '#00afd5' }}>New</li>
+        <li style={{ backgroundColor: '#06226a' }}>접수중</li>
+        <li style={{ backgroundColor: '#ff4646' }}>D-7</li>
       </ul>
       <div className={thumnailStyles.img}>
         <img src={listImage1} alt="" />
