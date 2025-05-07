@@ -55,7 +55,9 @@ const TenantCategoryTreeComponent: FC<any> = ({
   const handleTreeAction = (event: TreeEventPayload) => {
     switch (event.type) {
       case 'NODE_SELECT':
-        onNodeClick(event.node);
+        if (event.node.depth > 0) {
+          onNodeClick(event.node);
+        }
         break;
       case 'NODE_MOVE': {
         const nodeInfo = event;
@@ -64,12 +66,25 @@ const TenantCategoryTreeComponent: FC<any> = ({
           nodeInfo.position === 'INSIDE'
             ? nodeInfo.targetNode?.depth + 1
             : nodeInfo.targetNode?.depth;
+        const parentKey =
+          nodeInfo.position === 'INSIDE'
+            ? nodeInfo.targetNode?.key
+            : nodeInfo.targetNode?.parentKey;
         if (nodeInfo.sourceNode.depth !== targetDepth) {
           alert(
             '동일한 레벨 내에서만 매핑 및 이동이 가능합니다. src:' +
               nodeInfo.sourceNode.depth +
               '/dest:' +
               targetDepth,
+          );
+          return false;
+        }
+        if (nodeInfo.sourceNode.parentKey !== parentKey) {
+          alert(
+            '동일한 부모 카테고리에만 매핑 및 이동이 가능합니다. src:' +
+              nodeInfo.sourceNode.parentKey +
+              '/dest:' +
+              parentKey,
           );
           return false;
         }
@@ -143,7 +158,7 @@ const TenantCategoryTreeComponent: FC<any> = ({
             onAction={handleTreeAction}
             type={'SAME_LEVEL_ONLY'}
             selectedNode={selectedNode}
-            onSelectedNodeChange={handleSelectedNodeChange}
+            //onSelectedNodeChange={handleSelectedNodeChange}
           />
         </TreeContainer>
       </div>

@@ -110,6 +110,7 @@ const TenantDetailCategoryMappingModalComponent: FC<any> = ({ tenantId, onNodeCh
     const nodeInfo = event;
     const sourceNode = event.sourceNode;
     const targetNode = event.targetNode;
+    if (nodeInfo.type === 'NODE_SELECT') return false;
     console.log('### event', event);
     console.log('### sourceNode', sourceNode);
     console.log('### targetNode', targetNode);
@@ -140,6 +141,15 @@ const TenantDetailCategoryMappingModalComponent: FC<any> = ({ tenantId, onNodeCh
       );
       return false;
     }
+    if (sourceNode.parentKey !== parentKey) {
+      alert(
+        '동일한 부모 카테고리에만 매핑 및 이동이 가능합니다. src:' +
+          sourceNode.parentKey +
+          '/dest:' +
+          parentKey,
+      );
+      return false;
+    }
     const sourceCategoryId = sourceNode.key;
     switch (nodeInfo.type) {
       case 'NODE_COPY':
@@ -147,7 +157,7 @@ const TenantDetailCategoryMappingModalComponent: FC<any> = ({ tenantId, onNodeCh
           return false;
         }
         if (tenantCategoryTreeAllKeys.includes(sourceCategoryId)) {
-          alert('이미 있음');
+          alert('이미 매핑된 카테고리입니다.');
           return false;
         }
         excutable = mappingTenantCategory;

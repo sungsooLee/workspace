@@ -12,7 +12,7 @@ import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic
 import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
 import { FormRow, ContentsHistoryInfoFormField } from '@shared/ui';
 
-import { findMenuPathById } from '@features/category/service/category.service';
+//import { findMenuPathById } from '@features/category/service/category.service';
 import { useFetchTenantCategoryDetail } from '@entities/tenant/service/tenant-category.hook';
 import { TenantCategoryUpdate } from 'src/types/entities/tenant-category';
 import { ReceiptRussianRuble } from 'lucide-react';

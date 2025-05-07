@@ -13,7 +13,7 @@ import {
 } from '@entities/tenant/service/tenant-category.hook';
 //import { transformApiDataToTreeData } from '@features/category/service/category.service';
 import { transformApiDataToTreeData } from '@features/platform/category';
-import TenentCategoryView from '@features/tenant/management/ui/tenant-detail-category-view';
+import TenantCategoryView from '@features/tenant/management/ui/tenant-detail-category-view';
 import { TenantCategoryTree } from './tenant-detail-category-tree';
 
 type mode = 'init' | 'add' | 'view';
@@ -157,7 +157,7 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
         />
       )}
       {selectedNode ? (
-        <TenentCategoryView
+        <TenantCategoryView
           tenantId={tenantId}
           treeData={treeData}
           selectedNode={selectedNode}
@@ -174,7 +174,7 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
           }}
         />
       ) : (
-        <TenentCategoryView
+        <TenantCategoryView
           tenantId={tenantId}
           treeData={treeData}
           selectedNode={null}
