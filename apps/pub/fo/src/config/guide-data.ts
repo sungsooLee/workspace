@@ -1182,7 +1182,7 @@ export const guideData = [
     screenId: 'NLP_FO_CLA_1000',
     screenName: '강의실_홈(대시보드)',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
+    pageId: 'course-introduction/detail',
     pageType: 'Page',
     completionDate: '2025-04-30',
     lastUpdateDate: '',
@@ -1318,18 +1318,18 @@ export const guideData = [
     pageType: '',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '개발에서 진행',
     cancel: true,
   },
   {
     screenId: 'NLP_FO_CLA_MA_1000',
     screenName: 'M_강의실_홈(대시보드)',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'course-introduction/detail-m',
+    pageType: 'Page',
+    completionDate: '2025-04-30	',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '/features/layout/ui/course-introduction/dashboard.tsx',
   },
   {
     screenId: 'NLP_FO_CLA_MA_1001',
@@ -1387,9 +1387,9 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: '',
     pageType: '',
-    completionDate: '',
+    completionDate: '2025-05-07',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '자료실 파일 다운로드',
   },
   {
     screenId: 'NLP_FO_CLA_MA_1007',
@@ -1397,9 +1397,9 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: '',
     pageType: '',
-    completionDate: '',
+    completionDate: '2025-05-07',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '자료실 파일 다운로드',
   },
   {
     screenId: 'NLP_FO_CLA_MA_1008',
@@ -1493,7 +1493,7 @@ export const guideData = [
     pageType: '',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '개발에서 진행',
     cancel: true,
   },
   {
