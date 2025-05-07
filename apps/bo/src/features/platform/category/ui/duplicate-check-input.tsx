@@ -10,7 +10,7 @@ interface DuplicateCheckInputProps extends BaseFormFieldProps {
   query: any;
   onInputChange: (newValue: any) => void;
   errorMessage: string;
-  onSucess?: (isValid: boolean) => void;
+  onSuccess?: (isValid: boolean) => void;
   onError?: () => void;
 }
 
@@ -30,7 +30,7 @@ export const DuplicateCheckInput = forwardRef<HTMLDivElement, DuplicateCheckInpu
       setFormError,
       query,
       errorMessage,
-      onSucess,
+      onSuccess,
       onError,
       setValue,
       idKey,
@@ -115,7 +115,7 @@ export const DuplicateCheckInput = forwardRef<HTMLDivElement, DuplicateCheckInpu
         // onChangeGuideText('');
       }
 
-      onSucess?.(isValid);
+      onSuccess?.(isValid);
     };
 
     const checkDuplicate = async (idValue: any, checkValue: string) => {
@@ -131,23 +131,16 @@ export const DuplicateCheckInput = forwardRef<HTMLDivElement, DuplicateCheckInpu
     };
 
     const handleChange = (e: any) => {
-      const isChange = lastValidValue;
-      if (isChange) {
-        setFormError(
-          name,
-          t('LABEL.form.validation.duplicated', { code: t('LABEL.form.label.labelMessageCode') }),
-        );
-      }
+      console.log('handleChange');
     };
 
     const handleBlur = (e: any) => {
-      console.log('handlerBlur');
-      const newValue = e.target.value;
-      const isChanged = newValue !== lastValidValue;
-      if (isChanged) {
-        setFormError(name, '중복 체크 필요');
-      }
-
+      // console.log('handlerBlur');
+      // const newValue = e.target.value;
+      // const isChanged = newValue !== lastValidValue;
+      // if (isChanged) {
+      //   setFormError(name, '중복 체크 필요');
+      // }
       // clearFormError(name);
       // setCodeCheckState('none');
     };
