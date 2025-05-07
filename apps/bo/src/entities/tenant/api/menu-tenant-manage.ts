@@ -66,7 +66,10 @@ export default class TenantMenuManageService {
   static changeMenuTenantDnd(payload: any): Promise<any> {
     const tenantMappingMenuId = payload.tenantMappingMenuId;
     const reqBody = createTenantMenuDnd(payload);
-    return httpService.post<any>(`${PMSApiPrefix()}/menus/tenant/${tenantMappingMenuId}`, reqBody);
+    return httpService.post<any>(
+      `${PMSApiPrefix()}/menus/tenant/${tenantMappingMenuId}/dnd`,
+      reqBody,
+    );
   }
 }
 
