@@ -1,7 +1,7 @@
 // BaseForm.stories.tsx
 import React, { useRef } from 'react';
 import type { Meta } from '@storybook/react';
-import { ModalWrapper, Tabs, useModal } from '@learnway/ui';
+import { ModalWrapper, StepperTabs, Tabs, useModal } from '@learnway/ui';
 
 export default {
   title: 'Components/Tabs',
@@ -35,7 +35,30 @@ const items = [
 
 // Tabs
 export const Template: any = (args: any) => {
-  return <Tabs type={'fill'} size={'md'} items={items} />;
+  return (
+    <div className={'space-y-20'}>
+      <div>
+        <h1 className={'mb-3 text-3xl font-bold italic'}>type : fill</h1>
+        <Tabs type={'fill'} size={'md'} items={items} />
+      </div>
+      <div>
+        <h1 className={'mb-3 text-3xl font-bold italic'}>type : line</h1>
+        <Tabs type={'line'} size={'md'} items={items} />
+      </div>
+      <div>
+        <h1 className={'mb-3 text-3xl font-bold italic'}>type : round</h1>
+        <Tabs type={'round'} size={'md'} items={items} />
+      </div>
+      <div>
+        <h1 className={'mb-3 text-3xl font-bold italic'}>type : progress</h1>
+        <Tabs type={'progress'} size={'md'} items={items} />
+      </div>
+      <div>
+        <h1 className={'mb-3 text-3xl font-bold italic'}>type : sub-progress</h1>
+        <Tabs type={'sub-progress'} size={'md'} items={items} />
+      </div>
+    </div>
+  );
 };
 Template.storyName = 'Tabs';
 
@@ -85,10 +108,6 @@ export const TemplateButton: any = (args: any) => {
             title: 'Tab B',
             key: 'b',
           },
-          {
-            title: 'Tab C',
-            key: 'c',
-          },
         ]}
         onTabChange={handleTabChange}
       />
@@ -104,6 +123,16 @@ export const TemplateButton: any = (args: any) => {
   );
 };
 TemplateButton.storyName = '앵커 탭';
+
+// Stepper Tab
+export const TemplateStepper: any = (args: any) => {
+  return (
+    <>
+      <StepperTabs type={'sub-progress'} items={items} />
+    </>
+  );
+};
+TemplateStepper.storyName = 'Stepper Tab';
 
 //
 // export const TemplateSelectTab: any = (args: any) => {

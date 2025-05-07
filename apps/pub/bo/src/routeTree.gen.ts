@@ -85,6 +85,8 @@ import { Route as LayoutLearningFileUploadImport } from './pages/_layout/learnin
 import { Route as LayoutContentsLayoutImport } from './pages/_layout/contents/layout'
 import { Route as LayoutCommonPopUserSearchCheckImport } from './pages/_layout/common/pop-user-search-check'
 import { Route as LayoutCommonPopUserSearchImport } from './pages/_layout/common/pop-user-search'
+import { Route as LayoutCommonPopUserGroupSearchImport } from './pages/_layout/common/pop-user-group-search'
+import { Route as LayoutCommonPopImagePreviewImport } from './pages/_layout/common/pop-image-preview'
 import { Route as LayoutCommonPopExcelUploadImport } from './pages/_layout/common/pop-excel-upload'
 import { Route as LayoutCommonPopCategorySelectImport } from './pages/_layout/common/pop-category-select'
 import { Route as GuideGuideWordWrapImport } from './pages/_guide/guide/word-wrap'
@@ -96,6 +98,7 @@ import { Route as GuideGuideTestImport } from './pages/_guide/guide/test'
 import { Route as GuideGuideTabsImport } from './pages/_guide/guide/tabs'
 import { Route as GuideGuideTableImport } from './pages/_guide/guide/table'
 import { Route as GuideGuideSwitchImport } from './pages/_guide/guide/switch'
+import { Route as GuideGuideStepperTabsImport } from './pages/_guide/guide/stepper-tabs'
 import { Route as GuideGuideStepperImport } from './pages/_guide/guide/stepper'
 import { Route as GuideGuideSpinnerImport } from './pages/_guide/guide/spinner'
 import { Route as GuideGuideSelectImport } from './pages/_guide/guide/select'
@@ -607,6 +610,20 @@ const LayoutCommonPopUserSearchRoute = LayoutCommonPopUserSearchImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutCommonPopUserGroupSearchRoute =
+  LayoutCommonPopUserGroupSearchImport.update({
+    id: '/common/pop-user-group-search',
+    path: '/common/pop-user-group-search',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutCommonPopImagePreviewRoute =
+  LayoutCommonPopImagePreviewImport.update({
+    id: '/common/pop-image-preview',
+    path: '/common/pop-image-preview',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
 const LayoutCommonPopExcelUploadRoute = LayoutCommonPopExcelUploadImport.update(
   {
     id: '/common/pop-excel-upload',
@@ -673,6 +690,12 @@ const GuideGuideTableRoute = GuideGuideTableImport.update({
 const GuideGuideSwitchRoute = GuideGuideSwitchImport.update({
   id: '/guide/switch',
   path: '/guide/switch',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideStepperTabsRoute = GuideGuideStepperTabsImport.update({
+  id: '/guide/stepper-tabs',
+  path: '/guide/stepper-tabs',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -1358,6 +1381,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideStepperImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/stepper-tabs': {
+      id: '/_guide/guide/stepper-tabs'
+      path: '/guide/stepper-tabs'
+      fullPath: '/guide/stepper-tabs'
+      preLoaderRoute: typeof GuideGuideStepperTabsImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/switch': {
       id: '/_guide/guide/switch'
       path: '/guide/switch'
@@ -1433,6 +1463,20 @@ declare module '@tanstack/react-router' {
       path: '/common/pop-excel-upload'
       fullPath: '/common/pop-excel-upload'
       preLoaderRoute: typeof LayoutCommonPopExcelUploadImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/common/pop-image-preview': {
+      id: '/_layout/common/pop-image-preview'
+      path: '/common/pop-image-preview'
+      fullPath: '/common/pop-image-preview'
+      preLoaderRoute: typeof LayoutCommonPopImagePreviewImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/common/pop-user-group-search': {
+      id: '/_layout/common/pop-user-group-search'
+      path: '/common/pop-user-group-search'
+      fullPath: '/common/pop-user-group-search'
+      preLoaderRoute: typeof LayoutCommonPopUserGroupSearchImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/common/pop-user-search': {
@@ -1841,6 +1885,7 @@ interface GuideRouteChildren {
   GuideGuideSelectRoute: typeof GuideGuideSelectRoute
   GuideGuideSpinnerRoute: typeof GuideGuideSpinnerRoute
   GuideGuideStepperRoute: typeof GuideGuideStepperRoute
+  GuideGuideStepperTabsRoute: typeof GuideGuideStepperTabsRoute
   GuideGuideSwitchRoute: typeof GuideGuideSwitchRoute
   GuideGuideTableRoute: typeof GuideGuideTableRoute
   GuideGuideTabsRoute: typeof GuideGuideTabsRoute
@@ -1890,6 +1935,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideSelectRoute: GuideGuideSelectRoute,
   GuideGuideSpinnerRoute: GuideGuideSpinnerRoute,
   GuideGuideStepperRoute: GuideGuideStepperRoute,
+  GuideGuideStepperTabsRoute: GuideGuideStepperTabsRoute,
   GuideGuideSwitchRoute: GuideGuideSwitchRoute,
   GuideGuideTableRoute: GuideGuideTableRoute,
   GuideGuideTabsRoute: GuideGuideTabsRoute,
@@ -1910,6 +1956,8 @@ interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutCommonPopCategorySelectRoute: typeof LayoutCommonPopCategorySelectRoute
   LayoutCommonPopExcelUploadRoute: typeof LayoutCommonPopExcelUploadRoute
+  LayoutCommonPopImagePreviewRoute: typeof LayoutCommonPopImagePreviewRoute
+  LayoutCommonPopUserGroupSearchRoute: typeof LayoutCommonPopUserGroupSearchRoute
   LayoutCommonPopUserSearchRoute: typeof LayoutCommonPopUserSearchRoute
   LayoutCommonPopUserSearchCheckRoute: typeof LayoutCommonPopUserSearchCheckRoute
   LayoutContentsLayoutRoute: typeof LayoutContentsLayoutRoute
@@ -1961,6 +2009,8 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutCommonPopCategorySelectRoute: LayoutCommonPopCategorySelectRoute,
   LayoutCommonPopExcelUploadRoute: LayoutCommonPopExcelUploadRoute,
+  LayoutCommonPopImagePreviewRoute: LayoutCommonPopImagePreviewRoute,
+  LayoutCommonPopUserGroupSearchRoute: LayoutCommonPopUserGroupSearchRoute,
   LayoutCommonPopUserSearchRoute: LayoutCommonPopUserSearchRoute,
   LayoutCommonPopUserSearchCheckRoute: LayoutCommonPopUserSearchCheckRoute,
   LayoutContentsLayoutRoute: LayoutContentsLayoutRoute,
@@ -2091,6 +2141,7 @@ export interface FileRoutesByFullPath {
   '/guide/select': typeof GuideGuideSelectRoute
   '/guide/spinner': typeof GuideGuideSpinnerRoute
   '/guide/stepper': typeof GuideGuideStepperRoute
+  '/guide/stepper-tabs': typeof GuideGuideStepperTabsRoute
   '/guide/switch': typeof GuideGuideSwitchRoute
   '/guide/table': typeof GuideGuideTableRoute
   '/guide/tabs': typeof GuideGuideTabsRoute
@@ -2102,6 +2153,8 @@ export interface FileRoutesByFullPath {
   '/guide/word-wrap': typeof GuideGuideWordWrapRoute
   '/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/common/pop-excel-upload': typeof LayoutCommonPopExcelUploadRoute
+  '/common/pop-image-preview': typeof LayoutCommonPopImagePreviewRoute
+  '/common/pop-user-group-search': typeof LayoutCommonPopUserGroupSearchRoute
   '/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
   '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
@@ -2213,6 +2266,7 @@ export interface FileRoutesByTo {
   '/guide/select': typeof GuideGuideSelectRoute
   '/guide/spinner': typeof GuideGuideSpinnerRoute
   '/guide/stepper': typeof GuideGuideStepperRoute
+  '/guide/stepper-tabs': typeof GuideGuideStepperTabsRoute
   '/guide/switch': typeof GuideGuideSwitchRoute
   '/guide/table': typeof GuideGuideTableRoute
   '/guide/tabs': typeof GuideGuideTabsRoute
@@ -2224,6 +2278,8 @@ export interface FileRoutesByTo {
   '/guide/word-wrap': typeof GuideGuideWordWrapRoute
   '/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/common/pop-excel-upload': typeof LayoutCommonPopExcelUploadRoute
+  '/common/pop-image-preview': typeof LayoutCommonPopImagePreviewRoute
+  '/common/pop-user-group-search': typeof LayoutCommonPopUserGroupSearchRoute
   '/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
   '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
@@ -2338,6 +2394,7 @@ export interface FileRoutesById {
   '/_guide/guide/select': typeof GuideGuideSelectRoute
   '/_guide/guide/spinner': typeof GuideGuideSpinnerRoute
   '/_guide/guide/stepper': typeof GuideGuideStepperRoute
+  '/_guide/guide/stepper-tabs': typeof GuideGuideStepperTabsRoute
   '/_guide/guide/switch': typeof GuideGuideSwitchRoute
   '/_guide/guide/table': typeof GuideGuideTableRoute
   '/_guide/guide/tabs': typeof GuideGuideTabsRoute
@@ -2349,6 +2406,8 @@ export interface FileRoutesById {
   '/_guide/guide/word-wrap': typeof GuideGuideWordWrapRoute
   '/_layout/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/_layout/common/pop-excel-upload': typeof LayoutCommonPopExcelUploadRoute
+  '/_layout/common/pop-image-preview': typeof LayoutCommonPopImagePreviewRoute
+  '/_layout/common/pop-user-group-search': typeof LayoutCommonPopUserGroupSearchRoute
   '/_layout/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
   '/_layout/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/_layout/contents/layout': typeof LayoutContentsLayoutRoute
@@ -2462,6 +2521,7 @@ export interface FileRouteTypes {
     | '/guide/select'
     | '/guide/spinner'
     | '/guide/stepper'
+    | '/guide/stepper-tabs'
     | '/guide/switch'
     | '/guide/table'
     | '/guide/tabs'
@@ -2473,6 +2533,8 @@ export interface FileRouteTypes {
     | '/guide/word-wrap'
     | '/common/pop-category-select'
     | '/common/pop-excel-upload'
+    | '/common/pop-image-preview'
+    | '/common/pop-user-group-search'
     | '/common/pop-user-search'
     | '/common/pop-user-search-check'
     | '/contents/layout'
@@ -2583,6 +2645,7 @@ export interface FileRouteTypes {
     | '/guide/select'
     | '/guide/spinner'
     | '/guide/stepper'
+    | '/guide/stepper-tabs'
     | '/guide/switch'
     | '/guide/table'
     | '/guide/tabs'
@@ -2594,6 +2657,8 @@ export interface FileRouteTypes {
     | '/guide/word-wrap'
     | '/common/pop-category-select'
     | '/common/pop-excel-upload'
+    | '/common/pop-image-preview'
+    | '/common/pop-user-group-search'
     | '/common/pop-user-search'
     | '/common/pop-user-search-check'
     | '/contents/layout'
@@ -2706,6 +2771,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/select'
     | '/_guide/guide/spinner'
     | '/_guide/guide/stepper'
+    | '/_guide/guide/stepper-tabs'
     | '/_guide/guide/switch'
     | '/_guide/guide/table'
     | '/_guide/guide/tabs'
@@ -2717,6 +2783,8 @@ export interface FileRouteTypes {
     | '/_guide/guide/word-wrap'
     | '/_layout/common/pop-category-select'
     | '/_layout/common/pop-excel-upload'
+    | '/_layout/common/pop-image-preview'
+    | '/_layout/common/pop-user-group-search'
     | '/_layout/common/pop-user-search'
     | '/_layout/common/pop-user-search-check'
     | '/_layout/contents/layout'
@@ -2859,6 +2927,7 @@ export const routeTree = rootRoute
         "/_guide/guide/select",
         "/_guide/guide/spinner",
         "/_guide/guide/stepper",
+        "/_guide/guide/stepper-tabs",
         "/_guide/guide/switch",
         "/_guide/guide/table",
         "/_guide/guide/tabs",
@@ -2879,6 +2948,8 @@ export const routeTree = rootRoute
         "/_layout/",
         "/_layout/common/pop-category-select",
         "/_layout/common/pop-excel-upload",
+        "/_layout/common/pop-image-preview",
+        "/_layout/common/pop-user-group-search",
         "/_layout/common/pop-user-search",
         "/_layout/common/pop-user-search-check",
         "/_layout/contents/layout",
@@ -3176,6 +3247,10 @@ export const routeTree = rootRoute
       "filePath": "_guide/guide/stepper.tsx",
       "parent": "/_guide"
     },
+    "/_guide/guide/stepper-tabs": {
+      "filePath": "_guide/guide/stepper-tabs.tsx",
+      "parent": "/_guide"
+    },
     "/_guide/guide/switch": {
       "filePath": "_guide/guide/switch.tsx",
       "parent": "/_guide"
@@ -3218,6 +3293,14 @@ export const routeTree = rootRoute
     },
     "/_layout/common/pop-excel-upload": {
       "filePath": "_layout/common/pop-excel-upload.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/common/pop-image-preview": {
+      "filePath": "_layout/common/pop-image-preview.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/common/pop-user-group-search": {
+      "filePath": "_layout/common/pop-user-group-search.tsx",
       "parent": "/_layout"
     },
     "/_layout/common/pop-user-search": {

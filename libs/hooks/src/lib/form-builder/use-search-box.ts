@@ -1,8 +1,9 @@
 import { DynamicFormProvider, SearchBoxConfig, UseSearchBoxReturn } from './type';
 import { useForm } from 'react-hook-form';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useMemo, useRef, useState } from 'react';
 import { extractSearchBoxDefaultValues } from './util';
-
+import { buildJodObject, ValidatorConfig, ValidatorFormat } from '@learnway/shared';
+import { zodResolver } from '@hookform/resolvers/zod';
 /**
  * 동적 으로 검색 영역에 대한 지원을 하는 훅 (useSearchBox)
  *
@@ -14,8 +15,73 @@ const useSearchBoxHook = <T extends SearchBoxConfig>(config: T): UseSearchBoxRet
   const defaultValues = extractSearchBoxDefaultValues(config);
   // 원본값 상태 관리
   const [originalValues, setOriginalValues] = useState(defaultValues);
+  const validator = useMemo<ValidatorConfig>(() => {
+    const { builders, validator = {} } = config;
+
+    const flattenBuilders = (list: any[]): any[] => {
+      const result: any[] = [];
+      list.forEach((item) => {
+        if (Array.isArray(item)) {
+          result.push(...flattenBuilders(item));
+        } else if (item.type === 'group' && Array.isArray(item.builders)) {
+          result.push(...flattenBuilders(item.builders));
+        } else {
+          result.push(item);
+        }
+      });
+      return result;
+    };
+
+    const flatBuilders = flattenBuilders(builders);
+
+    return flatBuilders.reduce((acc, builder) => {
+      const key = builder.name;
+      if (!key) return acc;
+
+      const analogyFormat = typeof builder.value as ValidatorFormat;
+      let format = builder.format || analogyFormat;
+
+      const existingValidator = validator[key] as any;
+      if (existingValidator?.format) {
+        format = existingValidator.format;
+      }
+
+      acc[key] = {
+        format,
+        required: { required: false },
+      };
+
+      if (existingValidator) {
+        if (typeof existingValidator === 'boolean') {
+          acc[key].required = { required: existingValidator };
+        } else if (typeof existingValidator.required === 'function') {
+          acc[key].required = { required: true, fn: existingValidator.required };
+        } else if (typeof existingValidator === 'object') {
+          acc[key].required = {
+            required: existingValidator.required ?? false,
+            ...(existingValidator.required?.fn && { fn: existingValidator.required.fn }),
+            ...(existingValidator.required?.message && {
+              message: existingValidator.required.message,
+            }),
+            ...(existingValidator.required?.path && {
+              path: existingValidator.required.path,
+            }),
+          };
+          if (existingValidator.conditions) {
+            acc[key].conditions = existingValidator.conditions;
+          }
+        }
+      }
+
+      return acc;
+    }, {} as ValidatorConfig);
+  }, [config]);
+
+  // Zod 스키마 생성 (유효성 검증 스키마)
+  const schema = buildJodObject(validator);
   const methods = useForm({
     defaultValues,
+    resolver: zodResolver(schema),
   });
 
   const {
@@ -96,10 +162,20 @@ const useSearchBoxHook = <T extends SearchBoxConfig>(config: T): UseSearchBoxRet
     handleFocus(fieldName);
   };
 
+  /**
+   * 필수값 확인 함수
+   * @param fieldName
+   */
+  const isFieldRequired = (fieldName: string): boolean => {
+    const config = validator[fieldName];
+    if (!config || typeof config.required !== 'object' || config.required === null) return false;
+    return config.required.required || false;
+  };
+
   // control 확장: 기본 control에 isFieldRequired 메서드 추가
   const extendedControl: DynamicFormProvider['control'] = {
     ...control,
-    isFieldRequired: (fieldName: string) => false,
+    isFieldRequired,
   };
 
   /**

@@ -1,23 +1,21 @@
 import React, { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
+import { cn } from '@learnway/shared';
 import { isMobile } from 'react-device-detect';
-import { Dropdown, Button, EmptyText } from '@learnway/ui';
-import { IcoArray, IcoDotpoints, IcoArrowForward } from '@learnway/icons';
+import { Dropdown, Button, Pagination } from '@learnway/ui';
+import { IcoArray, IcoDotpoints } from '@learnway/icons';
 import {
   Arrays,
   Filter,
   IntegratedSearchProcedure,
-  IntegratedSearchShorts,
-  IntegratedSearchChannel,
-  IntegratedSearchRunning,
-  IntegratedSearchKnowledge,
-  IntegratedSearchCoaching,
   IntegratedSearchButton,
 } from '../../../features/layout';
 
-import styles from './integrated-search.module.css';
+import styles from './integrated-procedure.module.css';
 
-export const Route = createFileRoute('/_layout/integrated-search/integrated-search')({
+import ImgNotice from '@learnway/styles/fo/assets/images/thumb/img_notice_01.png';
+
+export const Route = createFileRoute('/_layout/integrated-search/integrated-procedure')({
   component: RouteComponent,
 });
 
@@ -50,7 +48,12 @@ function RouteComponent() {
       { title: '지식공유', count: '0' },
       { title: '코칭', count: '200' },
     ],
-    // initialSelectedButton: 0, // 초기값
+  };
+
+  // pagenation
+  const [page, setPage] = React.useState(1);
+  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
   };
 
   return (
@@ -108,77 +111,35 @@ function RouteComponent() {
           </div>
         </div>
 
-        {/* 전체 검색결과 없음 */}
-        <div className={styles.empty}>
-          <EmptyText
-            hideTitle
-            size="lg"
-            description={'검색 결과를 찾을 수 없습니다.'}
-            footer={isMobile ? <Button variant={'primary'} size={'lg'} label={'교육요청'} /> : ''}
-          />
-        </div>
-
         {/* result content */}
         <div className={styles.result_wrap}>
+          {/* 과정 컨텐츠 */}
           <div>
-            <div className={styles.tit_box}>
-              <strong>과정</strong>
-              <Button onClick={() => setActiveButton(1)}>
-                과정 더보기
-                <IcoArrowForward width={16} height={16} stroke="#131c30" />
-              </Button>
-            </div>
             <IntegratedSearchProcedure />
+            {/* pagination */}
+            <Pagination
+              className={cn(styles.pagenation, styles.paginationItem)}
+              count={3}
+              page={page}
+              onChange={handlePageChange}
+            />
           </div>
-          <div>
-            <div className={styles.tit_box}>
-              <strong>숏츠</strong>
-              <Button onClick={() => setActiveButton(2)}>
-                숏츠 더보기
-                <IcoArrowForward width={16} height={16} stroke="#131c30" />
-              </Button>
-            </div>
-            <IntegratedSearchShorts />
+        </div>
+
+        {/* 안내영역 */}
+        <div className={styles.notice}>
+          <img src={ImgNotice} alt="" />
+          <div className={styles.txt_box}>
+            <strong>“파이썬” 관련해 만족할 만한 결과를 찾지 못하셨나요?</strong>
+            <p>필요한 교육 과정이나 채널이 있다면 요청해 주세요.</p>
           </div>
-          <div>
-            <div className={styles.tit_box}>
-              <strong>채널</strong>
-              <Button onClick={() => setActiveButton(3)}>
-                채널 더보기
-                <IcoArrowForward width={16} height={16} stroke="#131c30" />
-              </Button>
-            </div>
-            <IntegratedSearchChannel />
-          </div>
-          <div>
-            <div className={styles.tit_box}>
-              <strong>러닝랩</strong>
-              <Button onClick={() => setActiveButton(4)}>
-                러닝랩 더보기
-                <IcoArrowForward width={16} height={16} stroke="#131c30" />
-              </Button>
-            </div>
-            <IntegratedSearchRunning />
-          </div>
-          <div>
-            <div className={styles.tit_box}>
-              <strong>지식공유</strong>
-              <Button onClick={() => setActiveButton(5)}>
-                지식공유 더보기
-                <IcoArrowForward width={16} height={16} stroke="#131c30" />
-              </Button>
-            </div>
-            <IntegratedSearchKnowledge />
-          </div>
-          <div>
-            <div className={styles.tit_box}>
-              <strong>코칭</strong>
-              <Button onClick={() => setActiveButton(6)}>
-                코칭 더보기
-                <IcoArrowForward width={16} height={16} stroke="#131c30" />
-              </Button>
-            </div>
-            <IntegratedSearchCoaching />
+          <div className={styles.btn_box}>
+            <Button variant="gray" size="lg">
+              교육 요청
+            </Button>
+            <Button variant="gray" size="lg">
+              채널 요청
+            </Button>
           </div>
         </div>
       </div>

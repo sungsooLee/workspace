@@ -16,10 +16,6 @@ export type com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$TenantMenuDto = {
      */
     isUsed?: boolean | null;
     /**
-     * 삭제여부
-     */
-    isDeleted?: boolean | null;
-    /**
      * 모바일노출여부
      */
     isMobileExposed?: boolean | null;
@@ -32,41 +28,13 @@ export type com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$TenantMenuDto = {
      */
     tenantId?: number | null;
     /**
-     * 메뉴CODE
-     */
-    menuCode?: string | null;
-    /**
-     * 경로
-     */
-    path?: string | null;
-    /**
-     * 뎁스
-     */
-    depth?: number | null;
-    /**
-     * 바로가기영역여부
-     */
-    isShortCutArea?: boolean | null;
-    /**
-     * 개인정보포함여부
-     */
-    isPersoninfoInclusion?: boolean | null;
-    /**
      * 메뉴scope (FO/BO/EX)
      */
     menuScope?: com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$TenantMenuDto.menuScope | null;
     /**
-     * 메뉴 노출 시작일
+     * 부모메뉴ID
      */
-    menuStartDate?: string | null;
-    /**
-     * 메뉴 노출 종료일
-     */
-    menuEndDate?: string | null;
-    /**
-     * 부모ID
-     */
-    parentId?: number | null;
+    parentMenuId?: number | null;
 };
 export namespace com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$TenantMenuDto {
     /**

@@ -143,9 +143,21 @@ export interface GridBoxProps<T extends object = object>
 
   /**
    * 추가 버튼 표시 여부를 나타내는 boolean 값입니다.
-   * `true`로 설정하면 전체 추가 버튼이 표시됩니다.
+   * `true`로 설정하면 추가 버튼이 표시됩니다.
    */
   showAdd?: boolean;
+
+  /**
+   * 행추가 버튼 표시 여부를 나타내는 boolean 값입니다.
+   * `true`로 설정하면 행추가 버튼이 표시됩니다.
+   */
+  showAddRow?: boolean;
+
+  /**
+   * 행삭제 버튼 표시 여부를 나타내는 boolean 값입니다.
+   * `true`로 설정하면 행삭제 버튼이 표시됩니다.
+   */
+  showRemoveRow?: boolean;
 
   /**
    * 좌측 타이틀 영역 커스텀 (전체 카운트와 가이드 텍스트 중간 영역)
@@ -163,7 +175,7 @@ export interface GridBoxProps<T extends object = object>
   data?: T[];
 
   /**
-   * 추가 버튼 클릭 핸들러
+   * 행추가 버튼 클릭 핸들러
    */
   onAddClick?: () => void;
 

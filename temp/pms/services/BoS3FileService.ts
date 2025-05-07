@@ -39,7 +39,7 @@ export class BoS3FileService {
     }
     /**
      * S3 멀티파트 업로드 완료 요청
-     * S3 멀티파트 업로드 완료를 요청한다.<br> 단일 파일 업로드의 경우(uploadId 없음) 호출 할 필요 없다.
+     * S3 멀티파트 업로드 완료를 요청한다.<br>단일 파일 업로드의 경우(uploadId 없음) 호출 할 필요 없다.
      * @param uploadId S3 업로드Id
      * @param key S3 키, S3 파일 경로로 사용<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)
      * @param requestBody

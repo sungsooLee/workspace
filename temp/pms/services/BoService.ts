@@ -2,16 +2,13 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_enums_EnumValue } from '../models/com_ever_edu_enums_EnumValue';
 import type { com_ever_edu_global_excel_dto_res_ExcelValidationResDto } from '../models/com_ever_edu_global_excel_dto_res_ExcelValidationResDto';
 import type { com_ever_edu_pms_channel_dto_req_ChannelAcceptListReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelAcceptListReqDto';
 import type { com_ever_edu_pms_channel_dto_req_ChannelRequestApprovalReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelRequestApprovalReqDto';
 import type { com_ever_edu_pms_channel_dto_req_ChannelRequestListReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelRequestListReqDto';
 import type { com_ever_edu_pms_channel_dto_req_ChannelSaveReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelSaveReqDto';
-import type { com_ever_edu_pms_channel_dto_req_ChannelSearchReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelSearchReqDto';
 import type { com_ever_edu_pms_channel_dto_res_ChannelRandomUrlResDto } from '../models/com_ever_edu_pms_channel_dto_res_ChannelRandomUrlResDto';
 import type { com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto } from '../models/com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto';
-import type { com_ever_edu_pms_channel_dto_res_ChannelResDto } from '../models/com_ever_edu_pms_channel_dto_res_ChannelResDto';
 import type { com_ever_edu_pms_common_cd_dto_req_CommonCdGroupSaveReqDto } from '../models/com_ever_edu_pms_common_cd_dto_req_CommonCdGroupSaveReqDto';
 import type { com_ever_edu_pms_common_cd_dto_req_CommonCdGroupSearchReqDto$SearchByAdmin } from '../models/com_ever_edu_pms_common_cd_dto_req_CommonCdGroupSearchReqDto$SearchByAdmin';
 import type { com_ever_edu_pms_common_cd_dto_req_CommonCdSaveReqDto } from '../models/com_ever_edu_pms_common_cd_dto_req_CommonCdSaveReqDto';
@@ -19,12 +16,9 @@ import type { com_ever_edu_pms_common_cd_dto_req_CommonCdSearchReqDto$SearchByAd
 import type { com_ever_edu_pms_common_cd_dto_req_CommonCdUpdateReqDto } from '../models/com_ever_edu_pms_common_cd_dto_req_CommonCdUpdateReqDto';
 import type { com_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$DetailOnAdmin';
 import type { com_ever_edu_pms_common_cd_dto_res_CommonCdResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_common_cd_dto_res_CommonCdResDto$DetailOnAdmin';
-import type { com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto } from '../models/com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto';
 import type { com_ever_edu_pms_company_dto_req_CompanyCreateReqDto } from '../models/com_ever_edu_pms_company_dto_req_CompanyCreateReqDto';
 import type { com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto } from '../models/com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto';
 import type { com_ever_edu_pms_company_dto_res_CompanyResDto } from '../models/com_ever_edu_pms_company_dto_res_CompanyResDto';
-import type { com_ever_edu_pms_educationplace_dto_req_EducationPlaceHistoryReqDto } from '../models/com_ever_edu_pms_educationplace_dto_req_EducationPlaceHistoryReqDto';
-import type { com_ever_edu_pms_educationplace_dto_req_EducationPlaceReqDto } from '../models/com_ever_edu_pms_educationplace_dto_req_EducationPlaceReqDto';
 import type { com_ever_edu_pms_educationplace_dto_req_EducationPlaceSaveReqDto } from '../models/com_ever_edu_pms_educationplace_dto_req_EducationPlaceSaveReqDto';
 import type { com_ever_edu_pms_educationplace_dto_req_EducationPlaceUpdateReqDto } from '../models/com_ever_edu_pms_educationplace_dto_req_EducationPlaceUpdateReqDto';
 import type { com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto } from '../models/com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto';
@@ -91,6 +85,7 @@ import type { com_ever_edu_pms_widget_dto_req_WidgetSearchReqDto$SearchByAdmin }
 import type { com_ever_edu_pms_widget_dto_res_WidgetResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_widget_dto_res_WidgetResDto$DetailOnAdmin';
 import type { org_springdoc_core_converters_models_Pageable } from '../models/org_springdoc_core_converters_models_Pageable';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelRequestListResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelRequestListResDto';
+import type { org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$ListOnAdmin';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_res_CommonCdResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_res_CommonCdResDto$ListOnAdmin';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyResDto';
@@ -411,7 +406,7 @@ export class BoService {
     }
     /**
      * 다국어 목록 조회
-     * 다국어 목록 조회
+     * 다국어 목록 조회<br><br><b>페이징 정보</b>: <br> - totalElements: 쿼리 결과물의 전체 데이터 갯수 <br> - totalPages: 페이징하였을 때 나오는 총 페이지의 갯수 <br> - size: 페이지 당 데이터 수 설정 값(rows per page) <br> - numberOfElements: 페이지에 존재하는 요소의 갯수(최대 size와 동일) <br> - number: 요소를 가져온 페이지의 번호. 0 ~
      * @param pageable
      * @param params
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin OK
@@ -1140,30 +1135,6 @@ export class BoService {
         });
     }
     /**
-     * 채널 신규 등록
-     * 채널 신규 등록정보를 저장한다.
-     * @param requestBody
-     * @returns com_ever_edu_pms_channel_dto_req_ChannelSaveReqDto OK
-     * @throws ApiError
-     */
-    public static registerEducationPlace(
-        requestBody: com_ever_edu_pms_channel_dto_req_ChannelSaveReqDto,
-    ): CancelablePromise<com_ever_edu_pms_channel_dto_req_ChannelSaveReqDto> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/admin/api/v1',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
      * 사용자 조회(목록)
      * 사용자를 목록을 조회한다.
      * @param pageable
@@ -1573,22 +1544,22 @@ export class BoService {
         });
     }
     /**
-     * 테넌트메뉴 등록
-     * 테넌트메뉴를 등록한다.
-     * @param tenantId
+     * 테넌트메뉴 순서변경
+     * 테넌트메뉴 순서변경
+     * @param tenantMappingMenuId
      * @param requestBody
-     * @returns com_ever_edu_pms_menu_dto_res_MenuResDto$DetailOnAdmin OK
+     * @returns number OK
      * @throws ApiError
      */
-    public static saveMenu(
-        tenantId: number,
-        requestBody: com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$TenantMenuDto,
-    ): CancelablePromise<com_ever_edu_pms_menu_dto_res_MenuResDto$DetailOnAdmin> {
+    public static updateTenantMenuDnD(
+        tenantMappingMenuId: number,
+        requestBody: com_ever_edu_pms_menu_dto_req_TenantMenuDnDRequestDto,
+    ): CancelablePromise<number> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/admin/api/v1/menus/tenant/{tenantId}',
+            url: '/admin/api/v1/menus/tenant/{tenantMappingMenuId}/dnd',
             path: {
-                'tenantId': tenantId,
+                'tenantMappingMenuId': tenantMappingMenuId,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -1602,25 +1573,22 @@ export class BoService {
         });
     }
     /**
-     * 테넌트메뉴 순서변경
-     * 테넌트메뉴 순서변경
+     * 테넌트메뉴 등록
+     * 테넌트메뉴를 등록한다.
      * @param tenantId
-     * @param menuId
      * @param requestBody
-     * @returns number OK
+     * @returns any OK
      * @throws ApiError
      */
-    public static updateTenantMenuDnD(
+    public static saveMenu(
         tenantId: number,
-        menuId: number,
-        requestBody: com_ever_edu_pms_menu_dto_req_TenantMenuDnDRequestDto,
-    ): CancelablePromise<number> {
+        requestBody: Array<com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$TenantMenuDto>,
+    ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/admin/api/v1/menus/tenant/{tenantId}/menu/{menuId}/dnd',
+            url: '/admin/api/v1/menus/tenant/{tenantId}',
             path: {
                 'tenantId': tenantId,
-                'menuId': menuId,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -1687,7 +1655,7 @@ export class BoService {
     }
     /**
      * 라벨/메세지 목록 조회
-     * 라벨/메세지 목록 조회
+     * 라벨/메세지 목록 조회<br><br><b>페이징 정보</b>: <br> - totalElements: 쿼리 결과물의 전체 데이터 갯수 <br> - totalPages: 페이징하였을 때 나오는 총 페이지의 갯수 <br> - size: 페이지 당 데이터 수 설정 값(rows per page) <br> - numberOfElements: 페이지에 존재하는 요소의 갯수(최대 size와 동일) <br> - number: 요소를 가져온 페이지의 번호. 0 ~
      * @param pageable
      * @param params
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$ListOnAdmin OK
@@ -1912,21 +1880,30 @@ export class BoService {
     /**
      * 교육장소 목록 조회
      * 교육장소 목록 정보를 조회한다.
-     * @param pageable
-     * @param paramDto
+     * @param page Zero-based page index (0..N)
+     * @param size The size of the page to be returned
+     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param isReservationUsed 예약사용여부
+     * @param isUsed 사용여부
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto OK
      * @throws ApiError
      */
     public static getEducationPlaceList1(
-        pageable: org_springdoc_core_converters_models_Pageable,
-        paramDto: com_ever_edu_pms_educationplace_dto_req_EducationPlaceReqDto,
+        page?: number,
+        size: number = 10,
+        sort?: Array<string>,
+        isReservationUsed?: string,
+        isUsed?: string,
     ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/education/place',
             query: {
-                'pageable': pageable,
-                'paramDto': paramDto,
+                'page': page,
+                'size': size,
+                'sort': sort,
+                'isReservationUsed': isReservationUsed,
+                'isUsed': isUsed,
             },
             errors: {
                 400: `Bad Request`,
@@ -1944,7 +1921,7 @@ export class BoService {
      * @returns com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto OK
      * @throws ApiError
      */
-    public static registerEducationPlace1(
+    public static registerEducationPlace(
         requestBody: com_ever_edu_pms_educationplace_dto_req_EducationPlaceSaveReqDto,
     ): CancelablePromise<com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto> {
         return __request(OpenAPI, {
@@ -1963,7 +1940,7 @@ export class BoService {
     }
     /**
      * 회사 목록 조회
-     * 회사 목록 정보를 조회한다.
+     * 회사 목록 정보를 조회한다.<br><br><b>페이징 정보</b>: <br> - totalElements: 쿼리 결과물의 전체 데이터 갯수 <br> - totalPages: 페이징하였을 때 나오는 총 페이지의 갯수 <br> - size: 페이지 당 데이터 수 설정 값(rows per page) <br> - numberOfElements: 페이지에 존재하는 요소의 갯수(최대 size와 동일) <br> - number: 요소를 가져온 페이지의 번호. 0 ~
      * @param pageable
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyResDto OK
      * @throws ApiError
@@ -2012,7 +1989,7 @@ export class BoService {
     }
     /**
      * 공통코드 목록 조회
-     * 공통코드 목록 조회
+     * 공통코드 목록 조회<br><br><b>페이징 정보</b>: <br> - totalElements: 쿼리 결과물의 전체 데이터 갯수 <br> - totalPages: 페이징하였을 때 나오는 총 페이지의 갯수 <br> - size: 페이지 당 데이터 수 설정 값(rows per page) <br> - numberOfElements: 페이지에 존재하는 요소의 갯수(최대 size와 동일) <br> - number: 요소를 가져온 페이지의 번호. 0 ~
      * @param pageable
      * @param params
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_res_CommonCdResDto$ListOnAdmin OK
@@ -2064,7 +2041,7 @@ export class BoService {
     }
     /**
      * 공통코드그룹 목록 조회
-     * 공통코드그룹 목록 조회
+     * 공통코드그룹 목록 조회<br><br><b>페이징 정보</b>: <br> - totalElements: 쿼리 결과물의 전체 데이터 갯수 <br> - totalPages: 페이징하였을 때 나오는 총 페이지의 갯수 <br> - size: 페이지 당 데이터 수 설정 값(rows per page) <br> - numberOfElements: 페이지에 존재하는 요소의 갯수(최대 size와 동일) <br> - number: 요소를 가져온 페이지의 번호. 0 ~
      * @param pageable
      * @param params
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$ListOnAdmin OK
@@ -2103,6 +2080,70 @@ export class BoService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/admin/api/v1/code-groups',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 채널 조회
+     * 테넌트의 채널목록을 조회한다.
+     * @param page Zero-based page index (0..N)
+     * @param size The size of the page to be returned
+     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param tenantId 테넌트 Id
+     * @param channelName 채널 명
+     * @param isUsed 채널 사용여부
+     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelResDto OK
+     * @throws ApiError
+     */
+    public static findContents1(
+        page?: number,
+        size: number = 10,
+        sort?: Array<string>,
+        tenantId?: string,
+        channelName?: string,
+        isUsed?: string,
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/channel',
+            query: {
+                'page': page,
+                'size': size,
+                'sort': sort,
+                'tenantId': tenantId,
+                'channelName': channelName,
+                'isUsed': isUsed,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 채널 신규 등록
+     * 채널 신규 등록정보를 저장한다.
+     * @param requestBody
+     * @returns com_ever_edu_pms_channel_dto_req_ChannelSaveReqDto OK
+     * @throws ApiError
+     */
+    public static registerEducationPlace1(
+        requestBody: com_ever_edu_pms_channel_dto_req_ChannelSaveReqDto,
+    ): CancelablePromise<com_ever_edu_pms_channel_dto_req_ChannelSaveReqDto> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/channel',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -2245,7 +2286,7 @@ export class BoService {
     }
     /**
      * 위젯 전체 조회
-     * 위젯 전체를 반환한다.
+     * 위젯 전체를 반환한다.<br><br><b>페이징 정보</b>: <br> - totalElements: 쿼리 결과물의 전체 데이터 갯수 <br> - totalPages: 페이징하였을 때 나오는 총 페이지의 갯수 <br> - size: 페이지 당 데이터 수 설정 값(rows per page) <br> - numberOfElements: 페이지에 존재하는 요소의 갯수(최대 size와 동일) <br> - number: 요소를 가져온 페이지의 번호. 0 ~
      * @param pageable
      * @param params
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_widget_dto_res_WidgetResDto$ListOnAdmin OK
@@ -2991,21 +3032,39 @@ export class BoService {
     /**
      * 교육장소 이력 목록 조회
      * 교육장소 이력 목록 정보를 조회한다.
-     * @param pageable
-     * @param paramDto
+     * @param page Zero-based page index (0..N)
+     * @param size The size of the page to be returned
+     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param educationPlaceHistoryUuid
+     * @param tentantName 테넌트명
+     * @param managerName 담당자
+     * @param managerId 아이디(이메일)
+     * @param educationHistoryTypecd 이력구분코드
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceHistoryResDto OK
      * @throws ApiError
      */
     public static getEducationPlaceHistoryList(
-        pageable: org_springdoc_core_converters_models_Pageable,
-        paramDto: com_ever_edu_pms_educationplace_dto_req_EducationPlaceHistoryReqDto,
+        page?: number,
+        size: number = 10,
+        sort?: Array<string>,
+        educationPlaceHistoryUuid?: string,
+        tentantName?: string,
+        managerName?: string,
+        managerId?: string,
+        educationHistoryTypecd?: string,
     ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceHistoryResDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/education/place/history',
             query: {
-                'pageable': pageable,
-                'paramDto': paramDto,
+                'page': page,
+                'size': size,
+                'sort': sort,
+                'educationPlaceHistoryUuid': educationPlaceHistoryUuid,
+                'tentantName': tentantName,
+                'managerName': managerName,
+                'managerId': managerId,
+                'educationHistoryTypecd': educationHistoryTypecd,
             },
             errors: {
                 400: `Bad Request`,
@@ -3031,175 +3090,6 @@ export class BoService {
             url: '/admin/api/v1/companies/brn/{brn}',
             path: {
                 'brn': brn,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 공통 코드 단건 조회(셀렉트박스 노출용)
-     * 공통 코드 단건을 조회하여 반환한다.
-     * @param groupId 그룹코드ID
-     * @returns com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto OK
-     * @throws ApiError
-     */
-    public static getCodeList1(
-        groupId: string,
-    ): CancelablePromise<Array<com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto>> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/code',
-            query: {
-                'groupId': groupId,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 공통 코드 다건 조회(셀렉트박스 노출용)
-     * 공통 코드 다건을 조회하여 반환한다.
-     * @param groupIds 1개 이상의 그룹코드ID를","로 연결하여 전달
-     * @returns com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto OK
-     * @throws ApiError
-     */
-    public static getMultiCodeList1(
-        groupIds: string,
-    ): CancelablePromise<Record<string, Array<com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto>>> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/code/groups',
-            query: {
-                'groupIds': groupIds,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 공통 Enum코드 다건 조회
-     * 존재하는 enum code를 찾아 반환한다.
-     * @param enumNames 1개 이상의 Enum 이름을 ","로 연결하여 전달, 미지정 시 전체
-     * @returns com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto OK
-     * @throws ApiError
-     */
-    public static getEnumCodeList1(
-        enumNames?: string,
-    ): CancelablePromise<Record<string, Array<com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto>>> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/code/enums',
-            query: {
-                'enumNames': enumNames,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 공통 코드(enum) 목록 조회
-     * 등록된 모든 enum의 이름을 반환한다.
-     * @returns string OK
-     * @throws ApiError
-     */
-    public static findAllEnums(): CancelablePromise<Array<string>> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/code-groups/enums',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 공통 Enum코드 다건 조회(셀렉트박스 노출용)
-     * 존재하는 enum code를 찾아 반환한다.
-     * @param enumNames 1개 이상의 Enum 이름을 ","로 연결하여 전달
-     * @returns com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto OK
-     * @throws ApiError
-     */
-    public static getEnumCodeList2(
-        enumNames: string,
-    ): CancelablePromise<Record<string, Array<com_ever_edu_pms_common_cd_dto_res_CommonCodeValueResDto>>> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/code-groups/enums/{enumNames}',
-            path: {
-                'enumNames': enumNames,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 공통 코드(enum) 단건 조회
-     * 존재하는 enum을 찾아 반환한다.
-     * @param enumName
-     * @returns com_ever_edu_enums_EnumValue OK
-     * @throws ApiError
-     */
-    public static findEnum(
-        enumName: string,
-    ): CancelablePromise<Record<string, Array<com_ever_edu_enums_EnumValue>>> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/code-groups/enum/{enumName}',
-            path: {
-                'enumName': enumName,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 채널 조회
-     * 테넌트의 채널목록을 조회한다.
-     * @param channelSearchReqDto
-     * @returns com_ever_edu_pms_channel_dto_res_ChannelResDto OK
-     * @throws ApiError
-     */
-    public static findContents1(
-        channelSearchReqDto: com_ever_edu_pms_channel_dto_req_ChannelSearchReqDto,
-    ): CancelablePromise<Array<com_ever_edu_pms_channel_dto_res_ChannelResDto>> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/channel',
-            query: {
-                'channelSearchReqDto': channelSearchReqDto,
             },
             errors: {
                 400: `Bad Request`,
@@ -3284,20 +3174,26 @@ export class BoService {
     /**
      * 채널신청 목록 조회
      * 채널신청 목록 정보를 조회한다.
-     * @param pageable
      * @param paramDto
+     * @param page Zero-based page index (0..N)
+     * @param size The size of the page to be returned
+     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelRequestListResDto OK
      * @throws ApiError
      */
     public static selectChannelRequestList(
-        pageable: org_springdoc_core_converters_models_Pageable,
         paramDto: com_ever_edu_pms_channel_dto_req_ChannelRequestListReqDto,
+        page?: number,
+        size: number = 10,
+        sort?: Array<string>,
     ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelRequestListResDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/channel/request',
             query: {
-                'pageable': pageable,
+                'page': page,
+                'size': size,
+                'sort': sort,
                 'paramDto': paramDto,
             },
             errors: {
@@ -3312,20 +3208,26 @@ export class BoService {
     /**
      * 채널접수 목록 조회(팝업용)
      * 채널접수 목록 중 접수(승이)되어 채널 생성전 목록 정보를 조회한다.
-     * @param pageable
      * @param paramDto
+     * @param page Zero-based page index (0..N)
+     * @param size The size of the page to be returned
+     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelRequestListResDto OK
      * @throws ApiError
      */
     public static selectChannelAcceptList(
-        pageable: org_springdoc_core_converters_models_Pageable,
         paramDto: com_ever_edu_pms_channel_dto_req_ChannelAcceptListReqDto,
+        page?: number,
+        size: number = 10,
+        sort?: Array<string>,
     ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelRequestListResDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/channel/request/accept',
             query: {
-                'pageable': pageable,
+                'page': page,
+                'size': size,
+                'sort': sort,
                 'paramDto': paramDto,
             },
             errors: {

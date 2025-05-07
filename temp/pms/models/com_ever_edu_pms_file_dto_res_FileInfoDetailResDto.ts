@@ -26,11 +26,11 @@ export type com_ever_edu_pms_file_dto_res_FileInfoDetailResDto = {
      */
     detailPath?: string;
     /**
-     * 파일유형 Enum(FileType) - IMAGE|VIDEO|DOC|TXT|WEB|ZIP|ETC
+     * 파일유형. 코드그룹(pms.file.FileType) - IMAGE|VIDEO|DOC|TXT|WEB|ZIP|ETC
      */
     fileType?: com_ever_edu_pms_file_dto_res_FileInfoDetailResDto.fileType;
     /**
-     * 업로드 상태 Enum(FileUploadStatus) - COMPLETE|ONGOING(파일 후속 처리 상태)|FAIL(파일 후속 처리 실패)
+     * 업로드 상태. 코드그룹(pms.file.FileUploadStatus) - COMPLETE|ONGOING(파일 후속 처리 상태)|FAIL(파일 후속 처리 실패)
      */
     uploadStatus?: com_ever_edu_pms_file_dto_res_FileInfoDetailResDto.uploadStatus;
     /**
@@ -44,7 +44,7 @@ export type com_ever_edu_pms_file_dto_res_FileInfoDetailResDto = {
 };
 export namespace com_ever_edu_pms_file_dto_res_FileInfoDetailResDto {
     /**
-     * 파일유형 Enum(FileType) - IMAGE|VIDEO|DOC|TXT|WEB|ZIP|ETC
+     * 파일유형. 코드그룹(pms.file.FileType) - IMAGE|VIDEO|DOC|TXT|WEB|ZIP|ETC
      */
     export enum fileType {
         IMAGE = 'IMAGE',
@@ -56,7 +56,7 @@ export namespace com_ever_edu_pms_file_dto_res_FileInfoDetailResDto {
         ETC = 'ETC',
     }
     /**
-     * 업로드 상태 Enum(FileUploadStatus) - COMPLETE|ONGOING(파일 후속 처리 상태)|FAIL(파일 후속 처리 실패)
+     * 업로드 상태. 코드그룹(pms.file.FileUploadStatus) - COMPLETE|ONGOING(파일 후속 처리 상태)|FAIL(파일 후속 처리 실패)
      */
     export enum uploadStatus {
         COMPLETE = 'COMPLETE',

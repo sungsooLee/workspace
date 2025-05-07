@@ -181,6 +181,12 @@ content: (
             <Tabs selectedTabKey={selectedTabKey} items={items} type="progress" size="sm" />
           </div>
         </div>
+        <h3 className="guide_tit3">Tabs sub progress Case</h3>
+        <div className="flex_box">
+          <div className="desc w-full">
+            <Tabs selectedTabKey={selectedTabKey} items={items} type="sub-progress" />
+          </div>
+        </div>
         <h3 className="guide_tit3">Tabs segment(size : sm) Case</h3>
         <div className="flex_box">
           <div className="desc w-full">

@@ -579,21 +579,21 @@ export const guideData = [
     screenId: 'NLP_FO_USE_1001',
     screenName: '통합검색결과_전체 TAB',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: 'integrated-search/integrated-search',
+    pageId: 'integrated-search/integrated-all',
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '- 연관 검색어 related-search.tsx\n- 썸네일 컴포넌트 대기중',
+    remarks: '- 연관 검색어 related-search.tsx\n- 다른 탭 컨펌 x',
   },
   {
     screenId: 'NLP_FO_USE_1002',
     screenName: '통합검색결과_과정 TAB',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: 'integrated-search/integrated-search',
+    pageId: 'integrated-search/integrated-procedure',
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '- integrated-search-procedure.tsx\n- 썸네일 컴포넌트 대기중',
+    remarks: '- integrated-procedure.tsx',
   },
   {
     screenId: 'NLP_FO_USE_MA_1010',

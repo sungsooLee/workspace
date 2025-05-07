@@ -249,10 +249,10 @@ function RouteComponent() {
                   </div>
                 </div>
               </div>
+              <p className={cn(styles.guide_text, styles.error)}>
+                {'업로드된 동영상은 학습자원목록에서 조회가능합니다.'}
+              </p>
             </div>
-            <p className={cn(styles.guide_text, styles.error)}>
-              {'업로드된 동영상은 학습자원목록에서 조회가능합니다.'}
-            </p>
           </div>
         </ModalBody>
         <ModalFooter>

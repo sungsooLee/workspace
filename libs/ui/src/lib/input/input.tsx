@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useState } from 'react';
+import { forwardRef, useState } from 'react';
 import { NumericFormat, PatternFormat } from 'react-number-format';
 import { NumericFormatProps } from 'react-number-format/types/types';
 import { Button } from '../button/button';
@@ -56,7 +56,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       showSearchIcon,
       iconType = 'search',
       onEnterKeyDown,
-      maxLength = 0,
+      maxLength,
       ...props
     },
     ref,
@@ -114,7 +114,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
               handleInputChange(values.value);
             }}
             disabled={disabled}
-            maxLength={maxLength > 0 ? maxLength : undefined}
+            maxLength={maxLength}
           />
         ) : type === 'mask' ? (
           <PatternFormat
@@ -132,7 +132,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             onValueChange={(values) => {
               handleInputChange(values.value);
             }}
-            maxLength={maxLength > 0 ? maxLength : undefined}
+            maxLength={maxLength}
           />
         ) : (
           <input
@@ -163,7 +163,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
               event.stopPropagation();
               handleInputChange(event?.target?.value);
             }}
-            maxLength={maxLength > 0 ? maxLength : undefined}
+            maxLength={maxLength}
           />
         )}
 
@@ -185,7 +185,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
           {/* 단위 */}
           {unitText && <div className={styles.unit}>{unitText}</div>}
           {/* 입력글자수/최대입력가능글자수 */}
-          {!hideInputLength && maxLength > 0 && type === 'text' && (
+          {!hideInputLength && maxLength && type === 'text' && (
             <div
               className={styles.count}
             >{`${(value?.toString() || '').length} / ${maxLength}`}</div>

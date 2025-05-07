@@ -1,4 +1,12 @@
-import { Button, List, ModalBody, ModalContainer, ModalFooter, useModal } from '@learnway/ui';
+import {
+  Button,
+  List,
+  ModalBody,
+  ModalContainer,
+  ModalTitle,
+  ModalFooter,
+  useModal,
+} from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-search.module.css';
 import { t } from 'i18next';
 import React, { useState } from 'react';
@@ -69,11 +77,9 @@ const ChannelChoicePopupComponent = () => {
 
   return (
     <ModalContainer>
+      <ModalTitle>{'등록 채널을 선택하세요.'}</ModalTitle>
       <ModalBody>
         <div className={popupStyles.wrap}>
-          <div className={popupStyles.title_wrap}>
-            <h2 className={popupStyles.title}>{'등록 채널을 선택하세요.'}</h2>
-          </div>
           <div className={cn(styles.start, styles.wrap)}>
             <div className={styles.contents}>
               {/* form */}
@@ -83,6 +89,7 @@ const ChannelChoicePopupComponent = () => {
                   value={option}
                   options={options}
                   onOptionSelect={(option) => setOption(option)}
+                  hideBorder
                 />
               </div>
             </div>
