@@ -40,7 +40,6 @@ export const Template: any = (args: any) => {
   ] as ColumnDef<any, unknown>[];
   return (
     <TransferGrid
-      {...args}
       gridData={dummyData}
       columns={columns}
       rowKey={'id'}

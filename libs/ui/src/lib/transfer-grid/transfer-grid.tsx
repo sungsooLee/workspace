@@ -34,8 +34,8 @@ export interface TransferGridImperative {
 
 const TransferGridComponent = (
   {
-    hideRowSelectionCheckBox = false,
-    showNumberingColumn = true,
+    hideRowSelectionCheckBox = true,
+    showNumberingColumn = false,
     gridData = [],
     columns,
     rowKey,
@@ -63,6 +63,7 @@ const TransferGridComponent = (
     {
       accessorKey: 'select-col',
       header: ({ table }) => t('선택'),
+      size: 94,
       meta: {
         headerAlign: 'left',
         cellAlign: 'center',
@@ -97,6 +98,7 @@ const TransferGridComponent = (
     {
       accessorKey: 'select-col',
       header: ({ table }) => t('삭제'),
+      size: 94,
       meta: {
         headerAlign: 'left',
         cellAlign: 'center',
