@@ -11,7 +11,7 @@ import {
   IcoPlay,
 } from '@learnway/icons';
 
-import ThumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
+import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
 import styles from './detail_m.module.css';
 
 import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
@@ -177,45 +177,45 @@ function RouteComponent() {
               {/* thumnail module */}
               <div
                 className={cn(
-                  ThumnailStyles.start,
-                  ThumnailStyles.thumbnail,
-                  direction && ThumnailStyles[direction],
+                  thumnailStyles.start,
+                  thumnailStyles.thumbnail,
+                  direction && thumnailStyles[direction],
                 )}
               >
                 {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-                <Link to="" className={ThumnailStyles.link}></Link>
+                <Link to="" className={thumnailStyles.link}></Link>
 
-                <div className={ThumnailStyles.thumnail_box}>
+                <div className={thumnailStyles.thumnail_box}>
                   {/* img */}
-                  <div className={ThumnailStyles.img_box}>
-                    <ul className={ThumnailStyles.label}>
+                  <div className={thumnailStyles.img_box}>
+                    <ul className={thumnailStyles.label}>
                       {label.map((labels, index) => (
                         <li key={index} style={{ backgroundColor: labels.color }}>
                           {labels.text}
                         </li>
                       ))}
                     </ul>
-                    <div className={ThumnailStyles.img}>
+                    <div className={thumnailStyles.img}>
                       <img src={listImage1} alt="" />
                       {/* play img */}
-                      <div className={ThumnailStyles.img_play}>
+                      <div className={thumnailStyles.img_play}>
                         <img src={playImg} alt="" />
                       </div>
                     </div>
                   </div>
                   {/* txt */}
-                  <div className={ThumnailStyles.text_box}>
-                    <div className={ThumnailStyles.type}>
+                  <div className={thumnailStyles.text_box}>
+                    <div className={thumnailStyles.type}>
                       {/* type */}
-                      <span className={ThumnailStyles.txt}>동영상</span>
-                      <span className={ThumnailStyles.time}>
+                      <span className={thumnailStyles.txt}>동영상</span>
+                      <span className={thumnailStyles.time}>
                         {/* time icon */}
                         <IcoPlay width={12} height={12} fill="#6f798b" />
                         {/* time */}
                         04:59
                       </span>
                     </div>
-                    <p className={ThumnailStyles.text}>필수개발과정</p>
+                    <p className={thumnailStyles.text}>필수개발과정</p>
                   </div>
                 </div>
               </div>
@@ -224,45 +224,45 @@ function RouteComponent() {
               {/* thumnail module */}
               <div
                 className={cn(
-                  ThumnailStyles.start,
-                  ThumnailStyles.thumbnail,
-                  direction && ThumnailStyles[direction],
+                  thumnailStyles.start,
+                  thumnailStyles.thumbnail,
+                  direction && thumnailStyles[direction],
                 )}
               >
                 {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-                <Link to="" className={ThumnailStyles.link}></Link>
+                <Link to="" className={thumnailStyles.link}></Link>
 
-                <div className={ThumnailStyles.thumnail_box}>
+                <div className={thumnailStyles.thumnail_box}>
                   {/* img */}
-                  <div className={ThumnailStyles.img_box}>
-                    <ul className={ThumnailStyles.label}>
+                  <div className={thumnailStyles.img_box}>
+                    <ul className={thumnailStyles.label}>
                       {label.map((labels, index) => (
                         <li key={index} style={{ backgroundColor: labels.color }}>
                           {labels.text}
                         </li>
                       ))}
                     </ul>
-                    <div className={ThumnailStyles.img}>
+                    <div className={thumnailStyles.img}>
                       <img src={listImage1} alt="" />
                       {/* play img */}
-                      <div className={ThumnailStyles.img_play}>
+                      <div className={thumnailStyles.img_play}>
                         <img src={playImg} alt="" />
                       </div>
                     </div>
                   </div>
                   {/* txt */}
-                  <div className={ThumnailStyles.text_box}>
-                    <div className={ThumnailStyles.type}>
+                  <div className={thumnailStyles.text_box}>
+                    <div className={thumnailStyles.type}>
                       {/* type */}
-                      <span className={ThumnailStyles.txt}>동영상</span>
-                      <span className={ThumnailStyles.time}>
+                      <span className={thumnailStyles.txt}>동영상</span>
+                      <span className={thumnailStyles.time}>
                         {/* time icon */}
                         <IcoPlay width={12} height={12} fill="#6f798b" />
                         {/* time */}
                         04:59
                       </span>
                     </div>
-                    <p className={ThumnailStyles.text}>필수개발과정</p>
+                    <p className={thumnailStyles.text}>필수개발과정</p>
                   </div>
                 </div>
               </div>
@@ -271,45 +271,45 @@ function RouteComponent() {
               {/* thumnail module */}
               <div
                 className={cn(
-                  ThumnailStyles.start,
-                  ThumnailStyles.thumbnail,
-                  direction && ThumnailStyles[direction],
+                  thumnailStyles.start,
+                  thumnailStyles.thumbnail,
+                  direction && thumnailStyles[direction],
                 )}
               >
                 {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-                <Link to="" className={ThumnailStyles.link}></Link>
+                <Link to="" className={thumnailStyles.link}></Link>
 
-                <div className={ThumnailStyles.thumnail_box}>
+                <div className={thumnailStyles.thumnail_box}>
                   {/* img */}
-                  <div className={ThumnailStyles.img_box}>
-                    <ul className={ThumnailStyles.label}>
+                  <div className={thumnailStyles.img_box}>
+                    <ul className={thumnailStyles.label}>
                       {label.map((labels, index) => (
                         <li key={index} style={{ backgroundColor: labels.color }}>
                           {labels.text}
                         </li>
                       ))}
                     </ul>
-                    <div className={ThumnailStyles.img}>
+                    <div className={thumnailStyles.img}>
                       <img src={listImage1} alt="" />
                       {/* play img */}
-                      <div className={ThumnailStyles.img_play}>
+                      <div className={thumnailStyles.img_play}>
                         <img src={playImg} alt="" />
                       </div>
                     </div>
                   </div>
                   {/* txt */}
-                  <div className={ThumnailStyles.text_box}>
-                    <div className={ThumnailStyles.type}>
+                  <div className={thumnailStyles.text_box}>
+                    <div className={thumnailStyles.type}>
                       {/* type */}
-                      <span className={ThumnailStyles.txt}>동영상</span>
-                      <span className={ThumnailStyles.time}>
+                      <span className={thumnailStyles.txt}>동영상</span>
+                      <span className={thumnailStyles.time}>
                         {/* time icon */}
                         <IcoPlay width={12} height={12} fill="#6f798b" />
                         {/* time */}
                         04:59
                       </span>
                     </div>
-                    <p className={ThumnailStyles.text}>필수개발과정</p>
+                    <p className={thumnailStyles.text}>필수개발과정</p>
                   </div>
                 </div>
               </div>
@@ -318,45 +318,45 @@ function RouteComponent() {
               {/* thumnail module */}
               <div
                 className={cn(
-                  ThumnailStyles.start,
-                  ThumnailStyles.thumbnail,
-                  direction && ThumnailStyles[direction],
+                  thumnailStyles.start,
+                  thumnailStyles.thumbnail,
+                  direction && thumnailStyles[direction],
                 )}
               >
                 {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-                <Link to="" className={ThumnailStyles.link}></Link>
+                <Link to="" className={thumnailStyles.link}></Link>
 
-                <div className={ThumnailStyles.thumnail_box}>
+                <div className={thumnailStyles.thumnail_box}>
                   {/* img */}
-                  <div className={ThumnailStyles.img_box}>
-                    <ul className={ThumnailStyles.label}>
+                  <div className={thumnailStyles.img_box}>
+                    <ul className={thumnailStyles.label}>
                       {label.map((labels, index) => (
                         <li key={index} style={{ backgroundColor: labels.color }}>
                           {labels.text}
                         </li>
                       ))}
                     </ul>
-                    <div className={ThumnailStyles.img}>
+                    <div className={thumnailStyles.img}>
                       <img src={listImage1} alt="" />
                       {/* play img */}
-                      <div className={ThumnailStyles.img_play}>
+                      <div className={thumnailStyles.img_play}>
                         <img src={playImg} alt="" />
                       </div>
                     </div>
                   </div>
                   {/* txt */}
-                  <div className={ThumnailStyles.text_box}>
-                    <div className={ThumnailStyles.type}>
+                  <div className={thumnailStyles.text_box}>
+                    <div className={thumnailStyles.type}>
                       {/* type */}
-                      <span className={ThumnailStyles.txt}>동영상</span>
-                      <span className={ThumnailStyles.time}>
+                      <span className={thumnailStyles.txt}>동영상</span>
+                      <span className={thumnailStyles.time}>
                         {/* time icon */}
                         <IcoPlay width={12} height={12} fill="#6f798b" />
                         {/* time */}
                         04:59
                       </span>
                     </div>
-                    <p className={ThumnailStyles.text}>필수개발과정</p>
+                    <p className={thumnailStyles.text}>필수개발과정</p>
                   </div>
                 </div>
               </div>

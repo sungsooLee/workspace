@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { cn } from '@learnway/shared';
 import { Button } from '@learnway/ui';
 
-import ThumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
+import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
 
 import { IcoPlay, IcoRating, IcoHeart, IcoEye, IcoPhone02, IcoMonitor01 } from '@learnway/icons';
 
@@ -35,7 +35,7 @@ function RouteComponent() {
     <div>
       <h2 className="guide_tit2">썸네일 Page Component</h2>
       <p className="loc css">
-        import ThumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
+        import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
       </p>
       <p className="loc react">
         <Link to="/category/detail">예제링크</Link>
@@ -47,37 +47,37 @@ function RouteComponent() {
           <div className="desc">
             <div
               className={cn(
-                ThumnailStyles.start,
-                ThumnailStyles.thumbnail,
-                ThumnailStyles.vertical,
+                thumnailStyles.start,
+                thumnailStyles.thumbnail,
+                thumnailStyles.vertical,
               )}
             >
               {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-              <Link to="" className={ThumnailStyles.link}></Link>
+              <Link to="" className={thumnailStyles.link}></Link>
 
-              <div className={ThumnailStyles.thumnail_box}>
+              <div className={thumnailStyles.thumnail_box}>
                 {/* img */}
-                <div className={ThumnailStyles.img_box}>
-                  <ul className={ThumnailStyles.label}>
+                <div className={thumnailStyles.img_box}>
+                  <ul className={thumnailStyles.label}>
                     {label.map((labels, index) => (
                       <li key={index} style={{ backgroundColor: labels.color }}>
                         {labels.text}
                       </li>
                     ))}
                   </ul>
-                  <div className={ThumnailStyles.img}>
+                  <div className={thumnailStyles.img}>
                     <img src={listImage1} alt="" />
                     {/* play img */}
-                    <div className={ThumnailStyles.img_play}>
+                    <div className={thumnailStyles.img_play}>
                       <img src={playImg} alt="" />
                     </div>
                   </div>
 
-                  <div className={ThumnailStyles.heart}>
+                  <div className={thumnailStyles.heart}>
                     <Button
                       className={cn(
-                        ThumnailStyles.btn_heart,
-                        icoHeart === true ? ThumnailStyles.active : '',
+                        thumnailStyles.btn_heart,
+                        icoHeart === true ? thumnailStyles.active : '',
                       )}
                       onClick={handleHeartClick}
                     >
@@ -91,58 +91,58 @@ function RouteComponent() {
                   </div>
                 </div>
                 {/* txt */}
-                <div className={ThumnailStyles.text_box}>
-                  <div className={ThumnailStyles.type}>
+                <div className={thumnailStyles.text_box}>
+                  <div className={thumnailStyles.type}>
                     {/* type */}
-                    <span className={ThumnailStyles.txt}>동영상</span>
-                    <span className={ThumnailStyles.time}>
+                    <span className={thumnailStyles.txt}>동영상</span>
+                    <span className={thumnailStyles.time}>
                       {/* time icon */}
                       <IcoPlay width={12} height={12} fill="#6f798b" />
                       {/* time */}
                       04:59
                     </span>
                   </div>
-                  <p className={ThumnailStyles.text}>필수개발과정</p>
+                  <p className={thumnailStyles.text}>필수개발과정</p>
 
-                  <div className={ThumnailStyles.ico_box}>
-                    <span className={ThumnailStyles.ico_rating}>
-                      <IcoRating className={ThumnailStyles.ico}></IcoRating>
+                  <div className={thumnailStyles.ico_box}>
+                    <span className={thumnailStyles.ico_rating}>
+                      <IcoRating className={thumnailStyles.ico}></IcoRating>
                       {/* rating */}
-                      <span className={ThumnailStyles.txt}>4.2</span>
+                      <span className={thumnailStyles.txt}>4.2</span>
                     </span>
-                    <span className={ThumnailStyles.ico_heart}>
+                    <span className={thumnailStyles.ico_heart}>
                       <IcoHeart
-                        className={ThumnailStyles.ico}
+                        className={thumnailStyles.ico}
                         fill="none"
                         stroke="#a9afb8"
                       ></IcoHeart>
                       {/* heart */}
-                      <span className={ThumnailStyles.txt}>33</span>
+                      <span className={thumnailStyles.txt}>33</span>
                     </span>
-                    <span className={ThumnailStyles.ico_eye}>
-                      <IcoEye className={ThumnailStyles.ico} fill="none" stroke="#a9afb8" />
+                    <span className={thumnailStyles.ico_eye}>
+                      <IcoEye className={thumnailStyles.ico} fill="none" stroke="#a9afb8" />
                       {/* eye */}
-                      <span className={ThumnailStyles.txt}>55</span>
+                      <span className={thumnailStyles.txt}>55</span>
                     </span>
                   </div>
 
-                  <div className={ThumnailStyles.related_box}>
-                    <span className={ThumnailStyles.related}>
-                      <IcoPhone02 className={ThumnailStyles.ico} fill="none" stroke="#4c515e" />
-                      <span className={ThumnailStyles.txt}>모바일전용</span>
+                  <div className={thumnailStyles.related_box}>
+                    <span className={thumnailStyles.related}>
+                      <IcoPhone02 className={thumnailStyles.ico} fill="none" stroke="#4c515e" />
+                      <span className={thumnailStyles.txt}>모바일전용</span>
                     </span>
-                    <span className={ThumnailStyles.related}>
-                      <IcoMonitor01 className={ThumnailStyles.ico} fill="none" stroke="#4c515e" />
-                      <span className={ThumnailStyles.txt}>사내IP전용</span>
+                    <span className={thumnailStyles.related}>
+                      <IcoMonitor01 className={thumnailStyles.ico} fill="none" stroke="#4c515e" />
+                      <span className={thumnailStyles.txt}>사내IP전용</span>
                     </span>
-                    <span className={ThumnailStyles.related}>
-                      <span className={ThumnailStyles.txt}>#AI기술</span>
+                    <span className={thumnailStyles.related}>
+                      <span className={thumnailStyles.txt}>#AI기술</span>
                     </span>
-                    <span className={ThumnailStyles.related}>
-                      <span className={ThumnailStyles.txt}>#AI기술</span>
+                    <span className={thumnailStyles.related}>
+                      <span className={thumnailStyles.txt}>#AI기술</span>
                     </span>
-                    <span className={ThumnailStyles.related}>
-                      <span className={ThumnailStyles.txt}>#AI기술</span>
+                    <span className={thumnailStyles.related}>
+                      <span className={thumnailStyles.txt}>#AI기술</span>
                     </span>
                   </div>
                 </div>
@@ -155,7 +155,7 @@ function RouteComponent() {
           <pre className="code_block">
             <code>{`// 기본 호출방법
 import { Link } from '@tanstack/react-router';
-import ThumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
+import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
 import { cn } from '@learnway/shared';
 import { Button } from '@learnway/ui';
 import {
@@ -188,37 +188,37 @@ import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_
 // 사용 예제
 <div
   className={cn(
-    ThumnailStyles.start,
-    ThumnailStyles.thumbnail,
-    ThumnailStyles.vertical,
+    thumnailStyles.start,
+    thumnailStyles.thumbnail,
+    thumnailStyles.vertical,
   )}
 >
   {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-  <Link to="" className={ThumnailStyles.link}></Link>
+  <Link to="" className={thumnailStyles.link}></Link>
 
-  <div className={ThumnailStyles.thumnail_box}>
+  <div className={thumnailStyles.thumnail_box}>
     {/* img */}
-    <div className={ThumnailStyles.img_box}>
-      <ul className={ThumnailStyles.label}>
+    <div className={thumnailStyles.img_box}>
+      <ul className={thumnailStyles.label}>
         {label.map((labels, index) => (
           <li key={index} style={{ backgroundColor: labels.color }}>
             {labels.text}
           </li>
         ))}
       </ul>
-      <div className={ThumnailStyles.img}>
+      <div className={thumnailStyles.img}>
         <img src={listImage1} alt="" />
         {/* play img */}
-        <div className={ThumnailStyles.img_play}>
+        <div className={thumnailStyles.img_play}>
           <img src={playImg} alt="" />
         </div>
       </div>
 
-      <div className={ThumnailStyles.heart}>
+      <div className={thumnailStyles.heart}>
         <Button
           className={cn(
-            ThumnailStyles.btn_heart,
-            icoHeart === true ? ThumnailStyles.active : ""
+            thumnailStyles.btn_heart,
+            icoHeart === true ? thumnailStyles.active : ""
           )}
           onClick={handleHeartClick}
         >
@@ -232,66 +232,66 @@ import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_
       </div>
     </div>
     {/* txt */}
-    <div className={ThumnailStyles.text_box}>
-      <div className={ThumnailStyles.type}>
+    <div className={thumnailStyles.text_box}>
+      <div className={thumnailStyles.type}>
         {/* type */}
-        <span className={ThumnailStyles.txt}>동영상</span>
-        <span className={ThumnailStyles.time}>
+        <span className={thumnailStyles.txt}>동영상</span>
+        <span className={thumnailStyles.time}>
           {/* time icon */}
           <IcoPlay width={12} height={12} fill="#6f798b" />
           {/* time */}
           04:59
         </span>
       </div>
-      <p className={ThumnailStyles.text}>필수개발과정</p>
+      <p className={thumnailStyles.text}>필수개발과정</p>
 
-      <div className={ThumnailStyles.ico_box}>
-        <span className={ThumnailStyles.ico_rating}>
-          <IcoRating className={ThumnailStyles.ico}></IcoRating>
+      <div className={thumnailStyles.ico_box}>
+        <span className={thumnailStyles.ico_rating}>
+          <IcoRating className={thumnailStyles.ico}></IcoRating>
           {/* rating */}
-          <span className={ThumnailStyles.txt}>4.2</span>
+          <span className={thumnailStyles.txt}>4.2</span>
         </span>
-        <span className={ThumnailStyles.ico_heart}>
+        <span className={thumnailStyles.ico_heart}>
           <IcoHeart
-            className={ThumnailStyles.ico}
+            className={thumnailStyles.ico}
             fill="none"
             stroke="#a9afb8"
           ></IcoHeart>
           {/* heart */}
-          <span className={ThumnailStyles.txt}>33</span>
+          <span className={thumnailStyles.txt}>33</span>
         </span>
-        <span className={ThumnailStyles.ico_eye}>
-          <IcoEye className={ThumnailStyles.ico} fill="none" stroke="#a9afb8" />
+        <span className={thumnailStyles.ico_eye}>
+          <IcoEye className={thumnailStyles.ico} fill="none" stroke="#a9afb8" />
           {/* eye */}
-          <span className={ThumnailStyles.txt}>55</span>
+          <span className={thumnailStyles.txt}>55</span>
         </span>
       </div>
 
-      <div className={ThumnailStyles.related_box}>
-        <span className={ThumnailStyles.related}>
+      <div className={thumnailStyles.related_box}>
+        <span className={thumnailStyles.related}>
           <IcoPhone02
-            className={ThumnailStyles.ico}
+            className={thumnailStyles.ico}
             fill="none"
             stroke="#4c515e"
           />
-          <span className={ThumnailStyles.txt}>모바일전용</span>
+          <span className={thumnailStyles.txt}>모바일전용</span>
         </span>
-        <span className={ThumnailStyles.related}>
+        <span className={thumnailStyles.related}>
           <IcoMonitor01
-            className={ThumnailStyles.ico}
+            className={thumnailStyles.ico}
             fill="none"
             stroke="#4c515e"
           />
-          <span className={ThumnailStyles.txt}>사내IP전용</span>
+          <span className={thumnailStyles.txt}>사내IP전용</span>
         </span>
-        <span className={ThumnailStyles.related}>
-          <span className={ThumnailStyles.txt}>#AI기술</span>
+        <span className={thumnailStyles.related}>
+          <span className={thumnailStyles.txt}>#AI기술</span>
         </span>
-        <span className={ThumnailStyles.related}>
-          <span className={ThumnailStyles.txt}>#AI기술</span>
+        <span className={thumnailStyles.related}>
+          <span className={thumnailStyles.txt}>#AI기술</span>
         </span>
-        <span className={ThumnailStyles.related}>
-          <span className={ThumnailStyles.txt}>#AI기술</span>
+        <span className={thumnailStyles.related}>
+          <span className={thumnailStyles.txt}>#AI기술</span>
         </span>
       </div>
     </div>
@@ -308,37 +308,37 @@ import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_
           <div className="desc">
             <div
               className={cn(
-                ThumnailStyles.start,
-                ThumnailStyles.thumbnail,
-                ThumnailStyles.horizontal,
+                thumnailStyles.start,
+                thumnailStyles.thumbnail,
+                thumnailStyles.horizontal,
               )}
             >
               {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-              <Link to="" className={ThumnailStyles.link}></Link>
+              <Link to="" className={thumnailStyles.link}></Link>
 
-              <div className={ThumnailStyles.thumnail_box}>
+              <div className={thumnailStyles.thumnail_box}>
                 {/* img */}
-                <div className={ThumnailStyles.img_box}>
-                  <ul className={ThumnailStyles.label}>
+                <div className={thumnailStyles.img_box}>
+                  <ul className={thumnailStyles.label}>
                     {label.map((labels, index) => (
                       <li key={index} style={{ backgroundColor: labels.color }}>
                         {labels.text}
                       </li>
                     ))}
                   </ul>
-                  <div className={ThumnailStyles.img}>
+                  <div className={thumnailStyles.img}>
                     <img src={listImage1} alt="" />
                     {/* play img */}
-                    <div className={ThumnailStyles.img_play}>
+                    <div className={thumnailStyles.img_play}>
                       <img src={playImg} alt="" />
                     </div>
                   </div>
 
-                  <div className={ThumnailStyles.heart}>
+                  <div className={thumnailStyles.heart}>
                     <Button
                       className={cn(
-                        ThumnailStyles.btn_heart,
-                        icoHeart === true ? ThumnailStyles.active : '',
+                        thumnailStyles.btn_heart,
+                        icoHeart === true ? thumnailStyles.active : '',
                       )}
                       onClick={handleHeartClick}
                     >
@@ -352,58 +352,58 @@ import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_
                   </div>
                 </div>
                 {/* txt */}
-                <div className={ThumnailStyles.text_box}>
-                  <div className={ThumnailStyles.type}>
+                <div className={thumnailStyles.text_box}>
+                  <div className={thumnailStyles.type}>
                     {/* type */}
-                    <span className={ThumnailStyles.txt}>동영상</span>
-                    <span className={ThumnailStyles.time}>
+                    <span className={thumnailStyles.txt}>동영상</span>
+                    <span className={thumnailStyles.time}>
                       {/* time icon */}
                       <IcoPlay width={12} height={12} fill="#6f798b" />
                       {/* time */}
                       04:59
                     </span>
                   </div>
-                  <p className={ThumnailStyles.text}>필수개발과정</p>
+                  <p className={thumnailStyles.text}>필수개발과정</p>
 
-                  <div className={ThumnailStyles.ico_box}>
-                    <span className={ThumnailStyles.ico_rating}>
-                      <IcoRating className={ThumnailStyles.ico}></IcoRating>
+                  <div className={thumnailStyles.ico_box}>
+                    <span className={thumnailStyles.ico_rating}>
+                      <IcoRating className={thumnailStyles.ico}></IcoRating>
                       {/* rating */}
-                      <span className={ThumnailStyles.txt}>4.2</span>
+                      <span className={thumnailStyles.txt}>4.2</span>
                     </span>
-                    <span className={ThumnailStyles.ico_heart}>
+                    <span className={thumnailStyles.ico_heart}>
                       <IcoHeart
-                        className={ThumnailStyles.ico}
+                        className={thumnailStyles.ico}
                         fill="none"
                         stroke="#a9afb8"
                       ></IcoHeart>
                       {/* heart */}
-                      <span className={ThumnailStyles.txt}>33</span>
+                      <span className={thumnailStyles.txt}>33</span>
                     </span>
-                    <span className={ThumnailStyles.ico_eye}>
-                      <IcoEye className={ThumnailStyles.ico} fill="none" stroke="#a9afb8" />
+                    <span className={thumnailStyles.ico_eye}>
+                      <IcoEye className={thumnailStyles.ico} fill="none" stroke="#a9afb8" />
                       {/* eye */}
-                      <span className={ThumnailStyles.txt}>55</span>
+                      <span className={thumnailStyles.txt}>55</span>
                     </span>
                   </div>
 
-                  <div className={ThumnailStyles.related_box}>
-                    <span className={ThumnailStyles.related}>
-                      <IcoPhone02 className={ThumnailStyles.ico} fill="none" stroke="#4c515e" />
-                      <span className={ThumnailStyles.txt}>모바일전용</span>
+                  <div className={thumnailStyles.related_box}>
+                    <span className={thumnailStyles.related}>
+                      <IcoPhone02 className={thumnailStyles.ico} fill="none" stroke="#4c515e" />
+                      <span className={thumnailStyles.txt}>모바일전용</span>
                     </span>
-                    <span className={ThumnailStyles.related}>
-                      <IcoMonitor01 className={ThumnailStyles.ico} fill="none" stroke="#4c515e" />
-                      <span className={ThumnailStyles.txt}>사내IP전용</span>
+                    <span className={thumnailStyles.related}>
+                      <IcoMonitor01 className={thumnailStyles.ico} fill="none" stroke="#4c515e" />
+                      <span className={thumnailStyles.txt}>사내IP전용</span>
                     </span>
-                    <span className={ThumnailStyles.related}>
-                      <span className={ThumnailStyles.txt}>#AI기술</span>
+                    <span className={thumnailStyles.related}>
+                      <span className={thumnailStyles.txt}>#AI기술</span>
                     </span>
-                    <span className={ThumnailStyles.related}>
-                      <span className={ThumnailStyles.txt}>#AI기술</span>
+                    <span className={thumnailStyles.related}>
+                      <span className={thumnailStyles.txt}>#AI기술</span>
                     </span>
-                    <span className={ThumnailStyles.related}>
-                      <span className={ThumnailStyles.txt}>#AI기술</span>
+                    <span className={thumnailStyles.related}>
+                      <span className={thumnailStyles.txt}>#AI기술</span>
                     </span>
                   </div>
                 </div>
@@ -416,7 +416,7 @@ import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_
           <pre className="code_block">
             <code>{`// 기본 호출방법
 import { Link } from '@tanstack/react-router';
-import ThumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
+import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
 import { cn } from '@learnway/shared';
 import { Button } from '@learnway/ui';
 import {
@@ -449,37 +449,37 @@ import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_
 // 사용 예제
 <div
   className={cn(
-    ThumnailStyles.start,
-    ThumnailStyles.thumbnail,
-    ThumnailStyles.horizontal,
+    thumnailStyles.start,
+    thumnailStyles.thumbnail,
+    thumnailStyles.horizontal,
   )}
 >
   {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-  <Link to="" className={ThumnailStyles.link}></Link>
+  <Link to="" className={thumnailStyles.link}></Link>
 
-  <div className={ThumnailStyles.thumnail_box}>
+  <div className={thumnailStyles.thumnail_box}>
     {/* img */}
-    <div className={ThumnailStyles.img_box}>
-      <ul className={ThumnailStyles.label}>
+    <div className={thumnailStyles.img_box}>
+      <ul className={thumnailStyles.label}>
         {label.map((labels, index) => (
           <li key={index} style={{ backgroundColor: labels.color }}>
             {labels.text}
           </li>
         ))}
       </ul>
-      <div className={ThumnailStyles.img}>
+      <div className={thumnailStyles.img}>
         <img src={listImage1} alt="" />
         {/* play img */}
-        <div className={ThumnailStyles.img_play}>
+        <div className={thumnailStyles.img_play}>
           <img src={playImg} alt="" />
         </div>
       </div>
 
-      <div className={ThumnailStyles.heart}>
+      <div className={thumnailStyles.heart}>
         <Button
           className={cn(
-            ThumnailStyles.btn_heart,
-            icoHeart === true ? ThumnailStyles.active : ""
+            thumnailStyles.btn_heart,
+            icoHeart === true ? thumnailStyles.active : ""
           )}
           onClick={handleHeartClick}
         >
@@ -493,66 +493,66 @@ import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_
       </div>
     </div>
     {/* txt */}
-    <div className={ThumnailStyles.text_box}>
-      <div className={ThumnailStyles.type}>
+    <div className={thumnailStyles.text_box}>
+      <div className={thumnailStyles.type}>
         {/* type */}
-        <span className={ThumnailStyles.txt}>동영상</span>
-        <span className={ThumnailStyles.time}>
+        <span className={thumnailStyles.txt}>동영상</span>
+        <span className={thumnailStyles.time}>
           {/* time icon */}
           <IcoPlay width={12} height={12} fill="#6f798b" />
           {/* time */}
           04:59
         </span>
       </div>
-      <p className={ThumnailStyles.text}>필수개발과정</p>
+      <p className={thumnailStyles.text}>필수개발과정</p>
 
-      <div className={ThumnailStyles.ico_box}>
-        <span className={ThumnailStyles.ico_rating}>
-          <IcoRating className={ThumnailStyles.ico}></IcoRating>
+      <div className={thumnailStyles.ico_box}>
+        <span className={thumnailStyles.ico_rating}>
+          <IcoRating className={thumnailStyles.ico}></IcoRating>
           {/* rating */}
-          <span className={ThumnailStyles.txt}>4.2</span>
+          <span className={thumnailStyles.txt}>4.2</span>
         </span>
-        <span className={ThumnailStyles.ico_heart}>
+        <span className={thumnailStyles.ico_heart}>
           <IcoHeart
-            className={ThumnailStyles.ico}
+            className={thumnailStyles.ico}
             fill="none"
             stroke="#a9afb8"
           ></IcoHeart>
           {/* heart */}
-          <span className={ThumnailStyles.txt}>33</span>
+          <span className={thumnailStyles.txt}>33</span>
         </span>
-        <span className={ThumnailStyles.ico_eye}>
-          <IcoEye className={ThumnailStyles.ico} fill="none" stroke="#a9afb8" />
+        <span className={thumnailStyles.ico_eye}>
+          <IcoEye className={thumnailStyles.ico} fill="none" stroke="#a9afb8" />
           {/* eye */}
-          <span className={ThumnailStyles.txt}>55</span>
+          <span className={thumnailStyles.txt}>55</span>
         </span>
       </div>
 
-      <div className={ThumnailStyles.related_box}>
-        <span className={ThumnailStyles.related}>
+      <div className={thumnailStyles.related_box}>
+        <span className={thumnailStyles.related}>
           <IcoPhone02
-            className={ThumnailStyles.ico}
+            className={thumnailStyles.ico}
             fill="none"
             stroke="#4c515e"
           />
-          <span className={ThumnailStyles.txt}>모바일전용</span>
+          <span className={thumnailStyles.txt}>모바일전용</span>
         </span>
-        <span className={ThumnailStyles.related}>
+        <span className={thumnailStyles.related}>
           <IcoMonitor01
-            className={ThumnailStyles.ico}
+            className={thumnailStyles.ico}
             fill="none"
             stroke="#4c515e"
           />
-          <span className={ThumnailStyles.txt}>사내IP전용</span>
+          <span className={thumnailStyles.txt}>사내IP전용</span>
         </span>
-        <span className={ThumnailStyles.related}>
-          <span className={ThumnailStyles.txt}>#AI기술</span>
+        <span className={thumnailStyles.related}>
+          <span className={thumnailStyles.txt}>#AI기술</span>
         </span>
-        <span className={ThumnailStyles.related}>
-          <span className={ThumnailStyles.txt}>#AI기술</span>
+        <span className={thumnailStyles.related}>
+          <span className={thumnailStyles.txt}>#AI기술</span>
         </span>
-        <span className={ThumnailStyles.related}>
-          <span className={ThumnailStyles.txt}>#AI기술</span>
+        <span className={thumnailStyles.related}>
+          <span className={thumnailStyles.txt}>#AI기술</span>
         </span>
       </div>
     </div>
