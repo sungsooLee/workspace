@@ -2,6 +2,8 @@ import { useTranslation } from 'react-i18next';
 import { Button, ContentsRow, DynamicFormField, useModal } from '@learnway/ui';
 import React, { useEffect } from 'react';
 import { useRouter } from '@tanstack/react-router';
+import { useQueryClient } from '@tanstack/react-query';
+
 import { t } from 'i18next';
 
 import { DuplicateCheckInputFormField, FormRow, FormSubTitle } from '@shared/ui/form';
@@ -30,6 +32,7 @@ interface MessageDetailProps {
 const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetailProps) => {
   const router = useRouter();
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
   const [isCreateMode, setIsCreateMode] = React.useState(true);
   const { confirm: openConfirm } = useModal();
   const { provider, onSubmit, onFormChange, getValues, fetchData, clearFormError } =
@@ -60,7 +63,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
   useEffect(() => {
     console.log('labelMessageId', labelMessageId);
     // 생성 모드 (labelMessageId 음수인 경우, 부모창에서 추가 버튼 눌렀을때 음수로 설정)
-    const isCreate = labelMessageId < 0;
+    const isCreate = labelMessageId <= 0;
     // set state
     setIsCreateMode(isCreate);
     // 생성 모드는 폼 내용 초기화
@@ -126,15 +129,13 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
    * @returns {Promise<boolean>} 중복이 없으면 `true`, 중복이 있거나 검사 오류 시 `false`를 반환하는 Promise입니다.
    */
   const checkDuplicate = async () => {
-    const key = 'labelMessageMultilingulKey';
-    const value = getValues()?.[key];
     const params = {
-      [key]: value,
+      labelMessageMultilingulKey: getValues()?.labelMessageMultilingulKey,
     };
-    // const result = (await queryClient.fetchQuery(query(params))) as any;
-    const result = value?.length === 1 ? { content: [] } : { content: [1] };
+    const result = (await queryClient.fetchQuery(queryOptions.all(params))) as any;
+    // const result = getValues()?.labelMessageMultilingulKey?.length === 1 ? { content: [] } : { content: [1] };
     const content = result?.content;
-    const isValid = content?.filter((d: any) => d[key] !== value)?.length === 0;
+    const isValid = content?.filter((d: any) => d?.labelMessageId !== getValues()?.labelMessageId)?.length === 0;
     console.log({ params, result, isValid });
     return isValid;
   };
@@ -194,7 +195,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
                 variant="point"
                 size="sm"
                 label={t('LABEL.button.multilingualManage')}
-                disabled={!getValues('labelMessageId')}
+                disabled={isCreateMode}
                 onClick={handleMultilingualManageClick}
               />
             </FormInfoArea>

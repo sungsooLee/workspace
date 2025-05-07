@@ -1,4 +1,4 @@
-import { forwardRef, useEffect } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { BaseFormFieldProps, useDynamicFormContext } from '@learnway/hooks';
@@ -31,6 +31,7 @@ export const DuplicateCheckInputFormField = forwardRef<
   ) => {
     const { t } = useTranslation();
     const { onChangeGuideText } = useDynamicFormContext();
+    const [lastDuplicateText, setLastDuplicateText] = useState(value);
 
     useEffect(() => {
       return () => {
@@ -56,6 +57,7 @@ export const DuplicateCheckInputFormField = forwardRef<
 
       changeGuideText(isValid);
       onSuccess?.(isValid, checkValue);
+      setLastDuplicateText(checkValue);
     };
 
     /**
