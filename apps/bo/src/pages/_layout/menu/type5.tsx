@@ -214,6 +214,11 @@ const formConfig: DynamicFormConfig = {
       type: 'switch',
       format: 'boolean', // 기본 string
       value: false,
+      switchConfig: {
+        guideText: (value) => {
+          return value ? 'true' : 'false';
+        },
+      },
     },
     {
       label: '외부 업체명',
