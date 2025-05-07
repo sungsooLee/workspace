@@ -6,14 +6,14 @@ import type { com_ever_edu_pms_terms_dto_res_TermsResDto$ListOnAdmin } from './c
 import type { org_springdoc_core_converters_models_SortObject } from './org_springdoc_core_converters_models_SortObject';
 import type { PageableObject } from './PageableObject';
 export type org_springframework_data_domain_PageCom_ever_edu_pms_terms_dto_res_TermsResDto$ListOnAdmin = {
-    totalPages?: number;
     totalElements?: number;
+    totalPages?: number;
     size?: number;
     content?: Array<com_ever_edu_pms_terms_dto_res_TermsResDto$ListOnAdmin>;
     number?: number;
     sort?: Array<org_springdoc_core_converters_models_SortObject>;
-    numberOfElements?: number;
     pageable?: PageableObject;
+    numberOfElements?: number;
     first?: boolean;
     last?: boolean;
     empty?: boolean;

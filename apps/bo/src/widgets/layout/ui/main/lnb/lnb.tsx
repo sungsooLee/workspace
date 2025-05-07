@@ -84,7 +84,9 @@ function LNBComponent() {
             onClick={() => handleOpenAll()}
           >
             <span className={styles.lnb_title_text}>
-              {t(`MENU.${activeMenuDepth[0].menuCode}`)}
+              {import.meta.env.VITE_LANGUAGE_DEV === 'true'
+                ? t(`${activeMenuDepth[0].menuName}`)
+                : t(`MENU.${activeMenuDepth[0].menuCode}`)}
             </span>
             <IcoArrowDown width={16} height={16} stroke="#131C30" />
           </Button>

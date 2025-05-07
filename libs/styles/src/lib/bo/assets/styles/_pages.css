@@ -102,6 +102,11 @@ h4.auth--title {
   @apply mt-[16px];
 }
 
+/* dnd file wrap */
+.dnd_file_wrap > div > div {
+  @apply !h-[320px];
+}
+
 /* title */
 .nlp--tabs + .title_wrap {
   @apply !border-t-0 !pt-0;

@@ -1,18 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { cn } from '@learnway/shared';
-import { isMobile } from 'react-device-detect';
-import { Button, EmptyText, Pagination } from '@learnway/ui';
 import { ThumnailList } from '../../../../features/layout';
 
 import styles from './integrated-search-procedure.module.css';
 
 const IntegratedSearchProcedureComponent = () => {
-  // pagenation
-  const [page, setPage] = React.useState(1);
-  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value);
-  };
-
   // list (가로형, 세로형) 변경
   const [listUi, setListUi] = useState('vertical');
   const list_ui = () => {
@@ -37,24 +29,17 @@ const IntegratedSearchProcedureComponent = () => {
           <ThumnailList direction={listUi}></ThumnailList>
           <ThumnailList direction={listUi}></ThumnailList>
         </div>
-        {/* pagination */}
-        <Pagination
-          className={cn(styles.pagenation, styles.paginationItem)}
-          count={3}
-          page={page}
-          onChange={handlePageChange}
-        />
       </div>
 
       {/* 검색결과 없음 */}
-      <div className={styles.empty}>
+      {/* <div className={styles.empty}>
         <EmptyText
           hideTitle
           size="lg"
           description={'검색 결과를 찾을 수 없습니다.'}
           footer={isMobile ? <Button variant={'primary'} size={'sm'} label={'교육요청'} /> : ''}
         />
-      </div>
+      </div> */}
     </div>
   );
 };

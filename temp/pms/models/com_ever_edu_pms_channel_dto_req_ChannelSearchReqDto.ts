@@ -11,5 +11,9 @@ export type com_ever_edu_pms_channel_dto_req_ChannelSearchReqDto = {
      * 채널 명
      */
     channelName?: string;
+    /**
+     * 채널 사용여부
+     */
+    isUsed?: boolean;
 };
 

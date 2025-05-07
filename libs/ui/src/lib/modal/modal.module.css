@@ -75,11 +75,11 @@
       }
     }
     .content_body {
-      @apply h-full max-h-none border-t-[1px] border-solid border-[var(--gray3)];
+      @apply h-full max-h-none !pt-[64px];
       [class*='nlp--modal-content'] {
         @apply h-full w-full;
         [class*='modal-content'] {
-          @apply h-full max-h-full p-0 !pt-[64px];
+          @apply h-full max-h-full border-t-[1px] border-solid border-[var(--gray3)] p-0;
         }
       }
     }

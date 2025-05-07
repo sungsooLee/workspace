@@ -59,9 +59,18 @@ export const guideData = [
     pageId: 'common/pop-image-preview',
     screenId: 'NLP_BO_PMS_1100_05_02',
     pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-05-02',
     lastUpdateDate: '',
     remarks: '', // 비고
+  },
+  {
+    screenName: '공통/유저 그룹 조회',
+    pageId: 'common/pop-user-group-search',
+    screenId: 'NLP_BO_TMS_1100_01',
+    pageType: 'Pop-up',
+    completionDate: '2025-05-02',
+    lastUpdateDate: '',
+    remarks: '트리는 화면 영역 확인용', // 비고
   },
   {
     screenName: '로그인',

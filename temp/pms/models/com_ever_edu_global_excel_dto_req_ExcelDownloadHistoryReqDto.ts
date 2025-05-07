@@ -12,11 +12,11 @@ export type com_ever_edu_global_excel_dto_req_ExcelDownloadHistoryReqDto = {
      */
     menuId: number;
     /**
-     * 사유 유형코드(그룹코드 : "A0001")
+     * 사유 유형코드(그룹코드 : pms.excel.DownloadReasonTypeCode) - AFFAIRS|LEGAL_REQUEST|OUTSIDE_SUBMIT|RND|ETC
      */
-    downloadReasonType: string;
+    downloadReasonType: com_ever_edu_global_excel_dto_req_ExcelDownloadHistoryReqDto.downloadReasonType;
     /**
-     * 사유유형 별 상세유형코드. <br>- 업무목적 상세유형코드(그룹코드 : "A0002") <br>- 법적·행정적요구 상세유형코드(그룹코드 : "A0003") <br>- 외부제출및협업 상세유형코드(그룹코드 : "A0004") <br>- 연구및개발 상세유형코드(그룹코드 : "A0005") <br>- 기타(직접 입력) 상세유형코드(그룹코드 : "A0006")
+     * 사유유형 별 상세유형코드. <br>- 업무목적 상세유형코드(그룹코드 : pms.excel.DownloadAffairsReasonTypeCode) <br>- 법적·행정적요구 상세유형코드(그룹코드 : pms.excel.DownloadLegalRequestReasonTypeCode) <br>- 외부제출및협업 상세유형코드(그룹코드 : pms.excel.DownloadOutsideSubmitReasonTypeCode) <br>- 연구및개발 상세유형코드(그룹코드 : pms.excel.DownloadRndReasonTypeCode) <br>- 기타(직접 입력) 상세유형코드(그룹코드 : pms.excel.DownloadEtcReasonTypeCode)
      */
     downloadDetailReasonType: string;
     /**
@@ -32,4 +32,16 @@ export type com_ever_edu_global_excel_dto_req_ExcelDownloadHistoryReqDto = {
      */
     createdBy?: string;
 };
+export namespace com_ever_edu_global_excel_dto_req_ExcelDownloadHistoryReqDto {
+    /**
+     * 사유 유형코드(그룹코드 : pms.excel.DownloadReasonTypeCode) - AFFAIRS|LEGAL_REQUEST|OUTSIDE_SUBMIT|RND|ETC
+     */
+    export enum downloadReasonType {
+        AFFAIRS = 'AFFAIRS',
+        LEGAL_REQUEST = 'LEGAL_REQUEST',
+        OUTSIDE_SUBMIT = 'OUTSIDE_SUBMIT',
+        RND = 'RND',
+        ETC = 'ETC',
+    }
+}
 

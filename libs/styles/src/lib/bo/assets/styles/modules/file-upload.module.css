@@ -42,19 +42,22 @@
     }
   }
   .file_wrap {
-    @apply scrollbar relative h-auto max-h-[340px] items-center overflow-y-auto overflow-x-hidden rounded-[8px] border-[1px] border-solid border-[var(--gray4)];
+    @apply scrollbar relative h-auto max-h-[320px] items-center overflow-y-auto overflow-x-hidden rounded-[8px] border-[1px] border-solid border-[var(--gray4)];
     &.type_excel {
       @apply h-[168px];
     }
     &.error {
       @apply border-solid border-[var(--status1)];
     }
+    &.lg {
+      @apply h-[320px];
+    }
   }
   .upload_status {
     @apply py-[16px];
   }
   .attach_area {
-    @apply relative;
+    @apply relative flex h-full items-center;
     .btn_file {
       @apply flex w-full flex-col p-[32px] leading-normal;
       .file_title {

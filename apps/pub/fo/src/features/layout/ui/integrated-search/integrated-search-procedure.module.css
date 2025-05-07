@@ -14,18 +14,10 @@
       .list_box.horizontal {
         & > div {
           & + div {
-            @apply mt-[54px];
+            @apply mt-[24px] border-t-[1px] border-solid border-[var(--gray5)] pt-[24px];
           }
         }
       }
-
-      .pagenation {
-        @apply mt-[40px];
-      }
-    }
-
-    .empty {
-      @apply mt-[54px] rounded-[8px];
     }
   }
 }
@@ -34,8 +26,20 @@
   @screen mobile {
     .start {
       &.procedure {
+        .list {
+          @apply mt-0;
+          .list_box > div {
+            @apply m-0 w-[calc((100%/2)-8px)];
+          }
+          .list_box > div:nth-child(2n) {
+            @apply ml-[16px];
+          }
+          .list_box > div:nth-child(n + 3) {
+            @apply mt-[32px];
+          }
+        }
         .empty {
-          @apply mt-[16px] border-[1px] border-solid border-[var(--gray4)] pb-[24px];
+          @apply mt-[16px] rounded-[8px] border-[1px] border-solid border-[var(--gray4)] pb-[24px];
           & > div {
             & > div {
               @apply mt-[12px];

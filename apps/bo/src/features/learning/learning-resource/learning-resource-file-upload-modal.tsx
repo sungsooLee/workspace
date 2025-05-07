@@ -64,6 +64,7 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel }) => {
               onPause={onPause}
               onResume={onResume}
               onRetry={onRetry}
+              wrapSize={'lg'}
             />
             <p className={cn(popupStyles.sub_text, popupStyles.dot)}>
               {'업로드된 동영상은 학습자원목록에서 조회가능합니다.'}

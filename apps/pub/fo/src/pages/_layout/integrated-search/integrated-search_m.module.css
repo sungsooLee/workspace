@@ -13,7 +13,7 @@
             p {
               @apply body_3_r leading-[22px] text-[var(--gray9)];
               a {
-                @apply label_12_500 mt-[8px] inline-block text-[var(--gray8)];
+                @apply label_12_500 mt-[8px] inline-block text-[var(--gray8)] underline underline-offset-[4px];
               }
             }
           }
@@ -23,7 +23,7 @@
             @apply body_2_b text-[var(--gray9)];
           }
           .txt2 {
-            @apply body_3_r mt-[8px] text-[var(--gray7)];
+            @apply body_3_b mt-[8px] text-[var(--gray7)];
           }
           a {
             @apply label_12_500 mt-[8px] inline-block text-[var(--secondary3)] underline decoration-[var(secondary3)] underline-offset-[4px];
