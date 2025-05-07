@@ -1,7 +1,7 @@
 import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Button, Grid, GridBoxProps, GridImperative } from '@learnway/ui';
-import { IcoDownload, IcoMinus, IcoSetting, IcoPlus } from '@learnway/icons';
+import { IcoDownload, IcoMinus } from '@learnway/icons';
 import styles from './grid-box.module.css';
 import { cn } from '@learnway/shared';
 import { useTranslation } from 'react-i18next';
@@ -60,6 +60,7 @@ const GridBoxComponent = <T extends object>(
             return info.getValue();
           },
           header: column.label,
+          size: column.size,
           // 다른 컬럼 옵션들 (sortingFn, filterFn 등) 필요시 추가
         });
       });

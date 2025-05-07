@@ -166,6 +166,7 @@
         "labelMessageCode": "라벨/메세지 코드",
         "createdBy": "등록자",
         "createdDate": "등록일",
+        "useYn": "사용여부",
         "updatedBy": "수정자",
         "updatedDate": "수정일"
       },

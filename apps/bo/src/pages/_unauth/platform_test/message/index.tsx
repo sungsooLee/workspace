@@ -12,6 +12,7 @@ import { queryOptions } from '@entities/label-messages/service/label-messages.qu
 import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { LabelMessagesQueryParams } from '@types';
+import { DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
 
 export const Route = createFileRoute('/_unauth/platform_test/message/')({
   component: RouteComponent,
@@ -112,6 +113,7 @@ function RouteComponent() {
 const searchConfig: any = {
   builders: [
     [
+      // 분류
       {
         name: 'labelMessageType',
         type: 'dropdown',
@@ -123,18 +125,21 @@ const searchConfig: any = {
           { value: 'MESSAGE', label: '메세지' },
         ],
       },
+      // 라벨/메세지 코드
       {
         name: 'labelMessageMultilingulKey',
         type: 'text',
         label: t('LABEL.form.label.labelMessageCode'),
         value: '',
       },
+      // 라벨/메세지
       {
         name: 'labelMessageName',
         type: 'text',
         label: t('LABEL.form.label.labelMessage'),
         value: '',
       },
+      // 사용여부
       {
         name: 'isUsed',
         type: 'dropdown',
@@ -153,18 +158,50 @@ const searchConfig: any = {
 const gridConfig = {
   query: queryOptions.all<LabelMessagesQueryParams>,
   // data: [
-  //   { labelMessageId: 1, labelMessageType: 'a', labelMessageMultilingulKey: 'a' },
-  //   { labelMessageId: 2, labelMessageType: 'a2', labelMessageMultilingulKey: 'a2' },
+  //   {
+  //     labelMessageId: 1,
+  //     labelMessageMultilingulKey: 'aaa',
+  //     labelMessageType: 'LABEL',
+  //     labelMessageName: 'aa544',
+  //     labelMessageDesc: 'bbb22',
+  //     isUsed: false,
+  //     createdBy: '9488404@ict-companion.com',
+  //     createdDate: '2025-04-22T22:32:42.684Z',
+  //     lastModifiedBy: '9488404@ict-companion.com',
+  //     modifiedDate: '2025-05-02T00:43:24.852Z',
+  //   },
   // ],
   columns: [
-    { name: 'labelMessageType', label: () => t('LABEL.grid.column.type') },
+    // 분류
+    { name: 'labelMessageType', label: () => t('LABEL.grid.column.type'), size: 100 },
+    // 라벨/메세지 코드
     {
       name: 'labelMessageMultilingulKey',
       label: t('LABEL.grid.column.labelMessageCode'),
+      size: 200,
     },
-    { name: 'labelMessageName', label: t('LABEL.grid.column.labelMessage') },
-    { name: 'createdBy', label: t('LABEL.grid.column.createdBy') },
-    { name: 'createdDate', label: t('LABEL.grid.column.createdDate') },
+    // 라벨/메세지
+    { name: 'labelMessageName', label: t('LABEL.grid.column.labelMessage'), size: 200 },
+    // 사용여부
+    {
+      name: 'isUsed',
+      label: t('LABEL.grid.column.useYn'),
+      size: 104,
+      render: (info: any) => (info.getValue() ? 'Y' : 'N'),
+    },
+    // 등록자
+    {
+      name: 'createdBy',
+      size: 139,
+      label: t('LABEL.grid.column.createdBy'),
+    },
+    // 등록일
+    {
+      name: 'createdDate',
+      label: t('LABEL.grid.column.createdDate'),
+      size: 200,
+      render: (info: any) => formatDate(info.getValue(), DATE_TIME_FORMAT.DATETIME_SEC),
+    },
   ],
   pagination: {
     pageSize: 10,
