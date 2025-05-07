@@ -45,7 +45,7 @@ function RouteComponent() {
    * @param {any} row - 선택된 행 데이터
    */
   const handleGridRowSelect = (row: any) => {
-    setSelectedLabelMessageId(row?.labelMessageId);
+    row && setSelectedLabelMessageId(row?.labelMessageId);
   };
 
   /**

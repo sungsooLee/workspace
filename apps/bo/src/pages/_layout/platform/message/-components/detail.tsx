@@ -1,10 +1,12 @@
 import { useTranslation } from 'react-i18next';
 import { Button, ContentsRow, DynamicFormField, useModal } from '@learnway/ui';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from '@tanstack/react-router';
+import { useQueryClient } from '@tanstack/react-query';
+
 import { t } from 'i18next';
 
-import { FormRow, FormSubTitle } from '@shared/ui/form';
+import { DuplicateCheckInputFormField, FormRow, FormSubTitle } from '@shared/ui/form';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import { FormInfoArea } from '@shared/ui/form/components/form-info-area';
@@ -14,7 +16,6 @@ import {
   useFetchLabelMessage,
   useUpdateLabelMessage,
 } from '@entities/label-messages';
-import { DuplicateCheckInput } from '@features/platform/category';
 
 interface MessageDetailProps {
   /**
@@ -31,9 +32,10 @@ interface MessageDetailProps {
 const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetailProps) => {
   const router = useRouter();
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
   const [isCreateMode, setIsCreateMode] = React.useState(true);
   const { confirm: openConfirm } = useModal();
-  const { provider, onSubmit, onFormChange, getValues, fetchData, clearFormError, setFormError } =
+  const { provider, onSubmit, onFormChange, getValues, fetchData, clearFormError } =
     useDynamicForm(formConfig);
   const { data } = useFetchLabelMessage(labelMessageId);
   const formDisabled = labelMessageId === 0;
@@ -61,7 +63,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
   useEffect(() => {
     console.log('labelMessageId', labelMessageId);
     // 생성 모드 (labelMessageId 음수인 경우, 부모창에서 추가 버튼 눌렀을때 음수로 설정)
-    const isCreate = labelMessageId < 0;
+    const isCreate = labelMessageId <= 0;
     // set state
     setIsCreateMode(isCreate);
     // 생성 모드는 폼 내용 초기화
@@ -75,9 +77,15 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
    * 조회된 데이터를 폼에 반영합니다.
    */
   useEffect(() => {
-    fetchData(data || {});
-    // data && fetchData(data);
-  }, [data]);
+    const d = {
+      ...data,
+      // 중복체크를 위해 설정
+      labelMessageId, // TODO: formConfig 에 hidden 설정했지만 featchData 에 값 넣지 않으면 validation 에러나서 임시로 넣음, form 문의 필요
+      lastDuplicateText: data?.labelMessageMultilingulKey || '',
+      isDuplicateCheck: !isCreateMode,
+    };
+    fetchData(d);
+  }, [data, labelMessageId, isCreateMode]);
 
   /**
    * 다국어 관리 페이지로 이동합니다.
@@ -106,36 +114,30 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
       labelMessageId: isCreateMode ? '' : data?.labelMessageId,
     };
 
-    //
-    if (!isValidDuplicate) {
-      alert('xxxx')
-    }
-
-
     if (await openConfirm(t('LABEL.confirm.save.title'))) {
       isCreateMode ? create(payload) : update(payload);
     }
   };
 
-  const [isValidDuplicate, setIsValidDuplicate] = useState(false);
-  // const [codeCheckState, setCodeCheckState] = useState<'none' | 'success' | 'duplicate' | 'error'>(
-  //   'duplicate',
-  // );
-  const handleCodeChange = (newCode: string) => {
-    // 코드가 변경됐을 경우에만 중복 체크 필요
-    // onFormChange({
-    //   isDuplicateMultilingulKey: true,
-    // });
-    // setCodeCheckState('none');
-
-    // const isChanged = isFieldChanged('code', newCode);
-    // if (onFormChange) {
-    //   // 코드가 변경됐을 경우에만 중복 체크 필요
-    //   onFormChange({
-    //     isDuplicateMenuCode: !isChanged && mode === 'view',
-    //   });
-    //   setCodeCheckState(!isChanged && mode === 'view' ? 'success' : 'none');
-    // }
+  /**
+   * 입력된 값에 대한 중복 여부를 비동기적으로 확인합니다.
+   * 특정 키(`labelMessageMultilingulKey`)를 사용하여 서버에 중복 검사를 요청하고,
+   * 검사 결과를 기반으로 유효성 여부를 반환합니다.
+   *
+   * @async
+   * @function checkDuplicate
+   * @returns {Promise<boolean>} 중복이 없으면 `true`, 중복이 있거나 검사 오류 시 `false`를 반환하는 Promise입니다.
+   */
+  const checkDuplicate = async () => {
+    const params = {
+      labelMessageMultilingulKey: getValues()?.labelMessageMultilingulKey,
+    };
+    const result = (await queryClient.fetchQuery(queryOptions.all(params))) as any;
+    // const result = getValues()?.labelMessageMultilingulKey?.length === 1 ? { content: [] } : { content: [1] };
+    const content = result?.content;
+    const isValid = content?.filter((d: any) => d?.labelMessageId !== getValues()?.labelMessageId)?.length === 0;
+    console.log({ params, result, isValid });
+    return isValid;
   };
 
   return (
@@ -145,6 +147,12 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
         underLine
         actionNode={
           <div className={layoutStyles.btn_wrap}>
+            <Button
+              variant="gray"
+              size="sm"
+              label={'XX'}
+              onClick={() => console.log(getValues())}
+            />
             <Button
               variant="save"
               size="sm"
@@ -166,16 +174,14 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
         <ContentsRow>
           <FormRow provider={provider}>
             <DynamicFormField name={'labelMessageMultilingulKey'} disabled={formDisabled}>
-              <DuplicateCheckInput
-                idKey={'labelMessageId'}
+              <DuplicateCheckInputFormField
                 query={queryOptions.all}
-                errorMessage={t('LABEL.form.validation.needInput', { code: t('LABEL.form.label.labelMessageCode') })}
                 clearFormError={clearFormError}
+                duplicationCheckFn={checkDuplicate}
                 disabled={formDisabled}
-                // codeCheckState={codeCheckState}
-                handleCodeChange={handleCodeChange}
-                setFormError={setFormError}
-                onSucess={(isValid: boolean) => setIsValidDuplicate(isValid)}
+                onSuccess={(isValid: boolean, checkValue: string) => {
+                  onFormChange({ isDuplicateCheck: isValid, lastDuplicateText: checkValue });
+                }}
               />
             </DynamicFormField>
           </FormRow>
@@ -189,7 +195,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
                 variant="point"
                 size="sm"
                 label={t('LABEL.button.multilingualManage')}
-                disabled={!getValues('labelMessageId')}
+                disabled={isCreateMode}
                 onClick={handleMultilingualManageClick}
               />
             </FormInfoArea>
@@ -265,7 +271,19 @@ const formConfig: DynamicFormConfig = {
       format: 'number',
       type: 'hidden',
       value: '',
-    }
+    },
+    {
+      name: 'isDuplicateCheck',
+      format: 'boolean',
+      type: 'hidden',
+      value: false,
+    },
+    {
+      name: 'lastDuplicateText',
+      format: 'string',
+      type: 'hidden',
+      value: '',
+    },
   ],
   validator: {
     labelMessageType: {
@@ -276,6 +294,24 @@ const formConfig: DynamicFormConfig = {
     },
     labelMessageName: {
       required: true,
+    },
+    isDuplicateCheck: {
+      required: false,
+      conditions: [
+        // 중복체크 하지 않았을때 or 중복체크 후 값 변경 후 중복체크 하지 않았을때
+        {
+          fn: (values) => {
+            return (
+              !values?.isDuplicateCheck ||
+              values?.labelMessageMultilingulKey !== values?.lastDuplicateText
+            );
+          },
+          message: t('LABEL.form.validation.check', {
+            code: t('LABEL.form.label.labelMessageCode'),
+          }),
+          path: 'labelMessageMultilingulKey',
+        },
+      ],
     },
   },
 };
