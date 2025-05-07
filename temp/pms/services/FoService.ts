@@ -7,7 +7,6 @@ import type { com_ever_edu_pms_channel_dto_req_ChannelSearchReqDto } from '../mo
 import type { com_ever_edu_pms_channel_dto_res_ChannelResDto } from '../models/com_ever_edu_pms_channel_dto_res_ChannelResDto';
 import type { com_ever_edu_pms_channel_entity_ChannelRequestEntity } from '../models/com_ever_edu_pms_channel_entity_ChannelRequestEntity';
 import type { com_ever_edu_pms_company_dto_res_CompanyResDto } from '../models/com_ever_edu_pms_company_dto_res_CompanyResDto';
-import type { com_ever_edu_pms_educationplace_dto_req_EducationPlaceReqDto } from '../models/com_ever_edu_pms_educationplace_dto_req_EducationPlaceReqDto';
 import type { com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto } from '../models/com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto';
 import type { com_ever_edu_pms_menu_dto_res_MenuTreeDto } from '../models/com_ever_edu_pms_menu_dto_res_MenuTreeDto';
 import type { com_ever_edu_pms_notification_dto_req_AlarmSendReqDto } from '../models/com_ever_edu_pms_notification_dto_req_AlarmSendReqDto';
@@ -29,7 +28,6 @@ import type { com_ever_edu_pms_user_dto_res_ConfirmPasswordResDto } from '../mod
 import type { com_ever_edu_pms_user_dto_res_FindMyIdResDto } from '../models/com_ever_edu_pms_user_dto_res_FindMyIdResDto';
 import type { com_ever_edu_pms_user_dto_res_IsEmailExistsResDto } from '../models/com_ever_edu_pms_user_dto_res_IsEmailExistsResDto';
 import type { com_ever_edu_pms_user_dto_res_UserResDto } from '../models/com_ever_edu_pms_user_dto_res_UserResDto';
-import type { org_springdoc_core_converters_models_Pageable } from '../models/org_springdoc_core_converters_models_Pageable';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto';
 import type { org_springframework_web_servlet_mvc_method_annotation_SseEmitter } from '../models/org_springframework_web_servlet_mvc_method_annotation_SseEmitter';
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -678,21 +676,30 @@ export class FoService {
     /**
      * 교육장소 목록 조회
      * 교육장소 목록 정보를 조회한다.
-     * @param pageable
-     * @param paramDto
+     * @param page Zero-based page index (0..N)
+     * @param size The size of the page to be returned
+     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param isReservationUsed 예약사용여부
+     * @param isUsed 사용여부
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto OK
      * @throws ApiError
      */
     public static getEducationPlaceList(
-        pageable: org_springdoc_core_converters_models_Pageable,
-        paramDto: com_ever_edu_pms_educationplace_dto_req_EducationPlaceReqDto,
+        page?: number,
+        size: number = 10,
+        sort?: Array<string>,
+        isReservationUsed?: string,
+        isUsed?: string,
     ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/user/api/v1/education/place',
             query: {
-                'pageable': pageable,
-                'paramDto': paramDto,
+                'page': page,
+                'size': size,
+                'sort': sort,
+                'isReservationUsed': isReservationUsed,
+                'isUsed': isUsed,
             },
             errors: {
                 400: `Bad Request`,

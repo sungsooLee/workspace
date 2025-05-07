@@ -167,9 +167,9 @@ export class FoFileService {
      * @param page 페이징 처리를 위한 페이지 번호. 0 ~
      * @param size 페이징 처리를 위한 페이지 size. 10(최소값) ~
      * @param sort 페이징 처리를 위한 sort
-     * @param uploadType 파일업로드유형, enum(FileUploadType) - ATTATCH|CONTENTS
-     * @param affairsType 파일업무유형, enum(FileAffairsType) - LMS|PMS|CMS
-     * @param reposType 저정소유형, enum(RepositoryType) - S3(기본)|HMG
+     * @param uploadType 파일업로드유형, 코드그룹(pms.file.FileUploadType) - ATTATCH|CONTENTS
+     * @param affairsType 파일업무유형, 코드그룹(pms.file.FileAffairsType) - LMS|PMS|CMS
+     * @param reposType 저정소유형, 코드그룹(pms.file.RepositoryType) - S3(기본)|HMG
      * @param isDeleted 삭제여부
      * @param isUsed 사용여부
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_FileGroupInfoResDto OK

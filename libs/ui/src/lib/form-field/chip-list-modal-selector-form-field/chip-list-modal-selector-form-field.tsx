@@ -56,15 +56,28 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
       !isDuplicated && setSelectedChipOptions([...selectedChipOptions, newOption]);
     };
 
+    // Modal Data - Array
+    const appendSelectedChipOptionsByArray = (newOption: any) => {
+      const key = chipListProps?.valueField || 'value';
+      const current = selectedChipOptions.map((d) => d[key]);
+      const newOptionList = newOption.filter((n: any) => !current.includes(n[key]));
+      setSelectedChipOptions([...selectedChipOptions, ...newOptionList]);
+    };
+
     const handleSearchClick = async () => {
       const data = await openModal(modalConfig);
       console.log('modal data', data);
-      data && appendSelectedChipOptions(data);
+      if (Array.isArray(data)) {
+        appendSelectedChipOptionsByArray(data);
+      } else {
+        data && appendSelectedChipOptions(data);
+      }
       modalConfig?.onClose?.(data); // form config 에서 onClose 설정한 경우 callback 실행
     };
 
     const handlerChipDelete = (option: any) => {
-      const newOptions = selectedChipOptions?.filter((d) => d.value !== option.value);
+      const key = chipListProps?.valueField || 'value';
+      const newOptions = selectedChipOptions?.filter((d) => d[key] !== option[key]);
       setSelectedChipOptions(newOptions);
       console.log('handlerChipDelete', newOptions);
     };
