@@ -10,6 +10,7 @@ import { ScopeRadioGroup } from './scope-radio-group';
 import { SectionLayout } from '../../../../widgets/layout/ui/container/section-layout/section-layout';
 import { useState } from 'react';
 import { roleTreeMockData } from '../../../../entities/mock/role';
+import { useFetchRole, useFetchRoles } from '../../../../entities/role/service/role-manage.hook';
 
 const FORM_MODE = {
   NONE: 'NONE',
@@ -21,6 +22,7 @@ const FORM_MODE = {
 const Role = ({ type }: any) => {
   const { provider, onSubmit, clearFormError, fetchData } = useDynamicForm(formConfig);
   const getRoles = () => roleTreeMockData;
+  const { data } = useFetchRoles();
 
   const [formMode, setFormMode] = useState(FORM_MODE.NONE);
   const [selectedRoleId, setSelectedRoleId] = useState<any>(null);
@@ -76,7 +78,7 @@ const Role = ({ type }: any) => {
   return (
     <SectionLayout contentsRatio={'thirty'}>
       <TreeBox
-        data={getRoles()}
+        data={data}
         initLevel={2}
         treeId={'1'}
         showSearchKeyword
