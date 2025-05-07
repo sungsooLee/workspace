@@ -148,12 +148,6 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
         actionNode={
           <div className={layoutStyles.btn_wrap}>
             <Button
-              variant="gray"
-              size="sm"
-              label={'XX'}
-              onClick={() => console.log(getValues())}
-            />
-            <Button
               variant="save"
               size="sm"
               type={'submit'}
