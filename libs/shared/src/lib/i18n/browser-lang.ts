@@ -1,7 +1,4 @@
 export const getBrowserLang = () => {
-  if (typeof window === 'undefined' || typeof window.navigator === 'undefined') {
-    return undefined;
-  }
   //
   // let browserLang: any = window.navigator.languages ? window.navigator.languages[0] : null;
   // browserLang =
@@ -20,7 +17,7 @@ export const getBrowserLang = () => {
   //
   // console.log('> browserLang:', browserLang);
   // return browserLang;
-  return 'KO';
+  return 'ko';
 };
 
 export const getBrowserNation = () => {

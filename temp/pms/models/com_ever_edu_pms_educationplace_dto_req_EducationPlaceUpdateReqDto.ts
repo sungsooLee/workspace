@@ -11,7 +11,7 @@ export type com_ever_edu_pms_educationplace_dto_req_EducationPlaceUpdateReqDto =
     educationPlaceCodeName: string;
     isReservationUsed: boolean;
     mapImageFileGroupId?: number;
-    mapImgLinkContent?: string;
+    mapImageLinkContent?: string;
     educationPlaceRemarkContent?: string;
     isUsed: boolean;
 };

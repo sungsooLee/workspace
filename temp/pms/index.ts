@@ -12,7 +12,7 @@ export type { com_ever_edu_global_dto_ResponseDtoCom_ever_edu_pms_authorization_
 export type { com_ever_edu_global_dto_ResponseDtoJava_lang_Long } from './models/com_ever_edu_global_dto_ResponseDtoJava_lang_Long';
 export type { com_ever_edu_global_dto_ResponseDtoOrg_springframework_data_domain_PageCom_ever_edu_pms_authorization_dto_res_AuthorizationResDto$ListOnAdminDto } from './models/com_ever_edu_global_dto_ResponseDtoOrg_springframework_data_domain_PageCom_ever_edu_pms_authorization_dto_res_AuthorizationResDto$ListOnAdminDto';
 export type { com_ever_edu_global_dto_ResponseDtoOrg_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_UserResDto } from './models/com_ever_edu_global_dto_ResponseDtoOrg_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_UserResDto';
-export type { com_ever_edu_global_excel_dto_req_ExcelDownloadHistoryReqDto } from './models/com_ever_edu_global_excel_dto_req_ExcelDownloadHistoryReqDto';
+export { com_ever_edu_global_excel_dto_req_ExcelDownloadHistoryReqDto } from './models/com_ever_edu_global_excel_dto_req_ExcelDownloadHistoryReqDto';
 export type { com_ever_edu_global_excel_dto_res_ExcelFileHistoryResDto } from './models/com_ever_edu_global_excel_dto_res_ExcelFileHistoryResDto';
 export type { com_ever_edu_global_excel_dto_res_ExcelValidationResDto } from './models/com_ever_edu_global_excel_dto_res_ExcelValidationResDto';
 export type { com_ever_edu_global_exception_dto_ErrorResponse } from './models/com_ever_edu_global_exception_dto_ErrorResponse';
@@ -45,6 +45,7 @@ export type { com_ever_edu_pms_channel_dto_req_ChannelRequestSaveReqDto } from '
 export type { com_ever_edu_pms_channel_dto_req_ChannelSaveReqDto } from './models/com_ever_edu_pms_channel_dto_req_ChannelSaveReqDto';
 export type { com_ever_edu_pms_channel_dto_req_ChannelSearchReqDto } from './models/com_ever_edu_pms_channel_dto_req_ChannelSearchReqDto';
 export type { com_ever_edu_pms_channel_dto_req_ChannelTenantReqDto } from './models/com_ever_edu_pms_channel_dto_req_ChannelTenantReqDto';
+export type { com_ever_edu_pms_channel_dto_res_ChannelMappingTenantResDto } from './models/com_ever_edu_pms_channel_dto_res_ChannelMappingTenantResDto';
 export type { com_ever_edu_pms_channel_dto_res_ChannelRandomUrlResDto } from './models/com_ever_edu_pms_channel_dto_res_ChannelRandomUrlResDto';
 export { com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto } from './models/com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto';
 export { com_ever_edu_pms_channel_dto_res_ChannelRequestListResDto } from './models/com_ever_edu_pms_channel_dto_res_ChannelRequestListResDto';
@@ -65,8 +66,6 @@ export { com_ever_edu_pms_company_dto_res_CompanyResDto } from './models/com_eve
 export { com_ever_edu_pms_company_entity_CompanyAdditionalEntity } from './models/com_ever_edu_pms_company_entity_CompanyAdditionalEntity';
 export { com_ever_edu_pms_company_entity_CompanyEntity } from './models/com_ever_edu_pms_company_entity_CompanyEntity';
 export type { com_ever_edu_pms_company_entity_DeptEntity } from './models/com_ever_edu_pms_company_entity_DeptEntity';
-export { com_ever_edu_pms_educationplace_dto_req_EducationPlaceHistoryReqDto } from './models/com_ever_edu_pms_educationplace_dto_req_EducationPlaceHistoryReqDto';
-export type { com_ever_edu_pms_educationplace_dto_req_EducationPlaceReqDto } from './models/com_ever_edu_pms_educationplace_dto_req_EducationPlaceReqDto';
 export { com_ever_edu_pms_educationplace_dto_req_EducationPlaceSaveReqDto } from './models/com_ever_edu_pms_educationplace_dto_req_EducationPlaceSaveReqDto';
 export type { com_ever_edu_pms_educationplace_dto_req_EducationPlaceTenantReqDto } from './models/com_ever_edu_pms_educationplace_dto_req_EducationPlaceTenantReqDto';
 export { com_ever_edu_pms_educationplace_dto_req_EducationPlaceUpdateReqDto } from './models/com_ever_edu_pms_educationplace_dto_req_EducationPlaceUpdateReqDto';
@@ -101,7 +100,7 @@ export type { com_ever_edu_pms_menu_dto_req_FavoritesMenuSaveReqDto } from './mo
 export { com_ever_edu_pms_menu_dto_req_MenuDnDRequestDto } from './models/com_ever_edu_pms_menu_dto_req_MenuDnDRequestDto';
 export { com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$MenuDto } from './models/com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$MenuDto';
 export { com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$TenantMenuDto } from './models/com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$TenantMenuDto';
-export type { com_ever_edu_pms_menu_dto_req_TenantMenuDnDRequestDto } from './models/com_ever_edu_pms_menu_dto_req_TenantMenuDnDRequestDto';
+export { com_ever_edu_pms_menu_dto_req_TenantMenuDnDRequestDto } from './models/com_ever_edu_pms_menu_dto_req_TenantMenuDnDRequestDto';
 export type { com_ever_edu_pms_menu_dto_res_FavoritesMenuResDto$DetailOnAdmin } from './models/com_ever_edu_pms_menu_dto_res_FavoritesMenuResDto$DetailOnAdmin';
 export type { com_ever_edu_pms_menu_dto_res_FavoritesMenuResDto$ListOnAdmin } from './models/com_ever_edu_pms_menu_dto_res_FavoritesMenuResDto$ListOnAdmin';
 export type { com_ever_edu_pms_menu_dto_res_MenuResDto } from './models/com_ever_edu_pms_menu_dto_res_MenuResDto';
@@ -196,6 +195,7 @@ export type { org_springdoc_core_converters_models_Pageable } from './models/org
 export type { org_springdoc_core_converters_models_SortObject } from './models/org_springdoc_core_converters_models_SortObject';
 export type { org_springframework_data_domain_PageCom_ever_edu_pms_authorization_dto_res_AuthorizationResDto$ListOnAdminDto } from './models/org_springframework_data_domain_PageCom_ever_edu_pms_authorization_dto_res_AuthorizationResDto$ListOnAdminDto';
 export type { org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelRequestListResDto } from './models/org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelRequestListResDto';
+export type { org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelResDto } from './models/org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelResDto';
 export type { org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$ListOnAdmin } from './models/org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$ListOnAdmin';
 export type { org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_res_CommonCdResDto$ListOnAdmin } from './models/org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_res_CommonCdResDto$ListOnAdmin';
 export type { org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyResDto } from './models/org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyResDto';

@@ -11,7 +11,7 @@ export default class RoleManagerService {
    * @returns 역할 목록 트리
    */
   static fetchRoles(): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/roles/tree`);
+    return httpService.get<any>(`${PMSApiPrefix()}/roles`);
   }
 
   /**

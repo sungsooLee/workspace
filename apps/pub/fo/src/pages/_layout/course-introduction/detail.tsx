@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
+import { cn } from '@learnway/shared';
 import {
   Button,
   Tabs,
@@ -11,7 +12,7 @@ import {
   Textarea,
   Panel,
 } from '@learnway/ui';
-import { IcoHeart, IcoUser01, IcoStar, IcoCaution, IcoClock01 } from '@learnway/icons';
+import { IcoHeart, IcoUser01, IcoStar, IcoCaution, IcoClock01, IcoPlay } from '@learnway/icons';
 import {
   CourseDashboard,
   CourseIntroduction,
@@ -24,6 +25,7 @@ import pageContentsStyles from '../../_page-contents.module.css';
 import definitionListStyles from './definition-list.module.css';
 import packageInformationStyles from './package-information.module.css';
 import lectureStyles from './lecture.module.css';
+import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
 
 import styles from './detail.module.css';
 
@@ -31,6 +33,7 @@ import styles from './detail.module.css';
 import bnrImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 import logoHyundai from '@learnway/styles/fo/assets/images/common/logo_hyundai.png';
 import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
+import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 
 export const Route = createFileRoute('/_layout/course-introduction/detail')({
   component: RouteComponent,
@@ -75,7 +78,34 @@ function RouteComponent() {
       value: 'a',
       title: (
         <div className={styles.sub_package_title}>
-          <strong>패키지 1</strong>
+          <div
+            className={cn(
+              thumnailStyles.start,
+              thumnailStyles.thumbnail,
+              thumnailStyles.horizontal,
+            )}
+          >
+            {/* link (찜 기능과 겹침으로 따로 빠짐) */}
+            <Link to="" className={thumnailStyles.link}></Link>
+
+            <div className={thumnailStyles.thumnail_box}>
+              {/* img */}
+              <div className={thumnailStyles.img_box}>
+                <ul className={thumnailStyles.label}>
+                  <li style={{ backgroundColor: '#00afd5' }}>New</li>
+                </ul>
+                <div className={thumnailStyles.img}>
+                  <img src={listImage1} alt="" />
+                </div>
+              </div>
+              {/* txt */}
+              <div className={thumnailStyles.text_box}>
+                <p className={thumnailStyles.text}>
+                  필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       ),
       children: (
@@ -91,7 +121,32 @@ function RouteComponent() {
       value: 'b',
       title: (
         <div className={styles.sub_package_title}>
-          <strong>패키지 2</strong>
+          <div
+            className={cn(
+              thumnailStyles.start,
+              thumnailStyles.thumbnail,
+              thumnailStyles.horizontal,
+            )}
+          >
+            {/* link (찜 기능과 겹침으로 따로 빠짐) */}
+            <Link to="" className={thumnailStyles.link}></Link>
+
+            <div className={thumnailStyles.thumnail_box}>
+              {/* img */}
+              <div className={thumnailStyles.img_box}>
+                <ul className={thumnailStyles.label}>
+                  <li style={{ backgroundColor: '#00afd5' }}>New</li>
+                </ul>
+                <div className={thumnailStyles.img}>
+                  <img src={listImage1} alt="" />
+                </div>
+              </div>
+              {/* txt */}
+              <div className={thumnailStyles.text_box}>
+                <p className={thumnailStyles.text}>필수개발과정</p>
+              </div>
+            </div>
+          </div>
         </div>
       ),
       children: <div className={styles.sub_package_content}>Content B</div>,
@@ -400,7 +455,51 @@ function RouteComponent() {
                 연관 과정<em>20</em>
               </strong>
             </div>
-            <div className={styles.procedure_box}>contents</div>
+            <ul className={styles.procedure_box}>
+              <li>
+                {/* thumnail module */}
+                <div
+                  className={cn(
+                    thumnailStyles.start,
+                    thumnailStyles.thumbnail,
+                    thumnailStyles.horizontal,
+                  )}
+                >
+                  {/* link (찜 기능과 겹침으로 따로 빠짐) */}
+                  <Link to="" className={thumnailStyles.link}></Link>
+
+                  <div className={thumnailStyles.thumnail_box}>
+                    {/* img */}
+                    <div className={thumnailStyles.img_box}>
+                      <ul className={thumnailStyles.label}>
+                        <li style={{ backgroundColor: '#00afd5' }}>New</li>
+                      </ul>
+                      <div className={thumnailStyles.img}>
+                        <img src={listImage1} alt="" />
+                        {/* play img */}
+                        <div className={thumnailStyles.img_play}>
+                          <img src={playImg} alt="" />
+                        </div>
+                      </div>
+                    </div>
+                    {/* txt */}
+                    <div className={thumnailStyles.text_box}>
+                      <div className={thumnailStyles.type}>
+                        {/* type */}
+                        <span className={thumnailStyles.txt}>동영상</span>
+                        <span className={thumnailStyles.time}>
+                          {/* time icon */}
+                          <IcoPlay width={12} height={12} fill="#6f798b" />
+                          {/* time */}
+                          04:59
+                        </span>
+                      </div>
+                      <p className={thumnailStyles.text}>필수개발과정</p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
