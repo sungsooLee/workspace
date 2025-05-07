@@ -2,11 +2,18 @@ import { t } from 'i18next';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
-import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
+import {
+  Button,
+  ModalBody,
+  ModalContainer,
+  ModalFooter,
+  ModalTitle,
+  ShuttleGridToGrid,
+  ShuttleGridToGridImperative,
+  useModal,
+} from '@learnway/ui';
 
 import { SearchBox } from '@shared/ui/search-box';
-
-import { TransferGrid, TransferGridImperative } from '@learnway/ui';
 import { IcoRefresh02 } from '@learnway/icons';
 
 import { useRef, useState } from 'react';
@@ -21,7 +28,7 @@ const dummyData = Array(10)
   }));
 
 const CompanyShuttleComponent = () => {
-  const ref = useRef<TransferGridImperative>(null);
+  const ref = useRef<ShuttleGridToGridImperative>(null);
 
   const { close } = useModal();
 
@@ -77,7 +84,7 @@ const CompanyShuttleComponent = () => {
       <ModalTitle>{t('회사 선택')}</ModalTitle>
       <ModalBody>
         <SearchBox provider={sProvider} onSearch={handleOnSearch} />
-        <TransferGrid
+        <ShuttleGridToGrid
           ref={ref}
           onChange={(data: any) => {
             console.log('data :::: ', data);

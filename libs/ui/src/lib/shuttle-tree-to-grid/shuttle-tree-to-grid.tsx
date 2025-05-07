@@ -2,7 +2,7 @@ import React, { forwardRef, useEffect, useRef, useState } from 'react';
 
 import { cn } from '@learnway/shared';
 
-import styles from './transfer-tree-grid.module.css';
+import styles from './shuttle-tree-to-grid.module.css';
 import { Button } from '../button/button';
 import { ColumnDef } from '@tanstack/react-table';
 import { TreeView } from '../tree-view/tree';
@@ -10,7 +10,7 @@ import { IcoChevronLeft, IcoChevronRight } from '@learnway/icons';
 import { GridBox } from '../grid/grid-box';
 import { GridImperative } from '../grid/types';
 
-export interface TransferTreeGridProps {
+export interface ShuttleTreeToGridProps {
   columns: ColumnDef<object>[]; // 그리드 컬럼
   treeData: any; // 그리드 데이터
   rowKey: string;
@@ -20,7 +20,7 @@ export interface TransferTreeGridProps {
   onChange?: (newGridData: any) => void;
 }
 
-const TransferTreeGridComponent = forwardRef<HTMLElement, TransferTreeGridProps>(
+const ShuttleTreeToGridComponent = forwardRef<HTMLElement, ShuttleTreeToGridProps>(
   (
     {
       treeData: ownerTreeData = [],
@@ -84,7 +84,7 @@ const TransferTreeGridComponent = forwardRef<HTMLElement, TransferTreeGridProps>
         className={cn(
           styles.start,
           className,
-          'nlp--transfer-grid',
+          'nlp--ShuttleTreeToGrid',
           'flex h-[300px] flex-row bg-amber-100',
         )}
       >
@@ -126,4 +126,4 @@ const TransferTreeGridComponent = forwardRef<HTMLElement, TransferTreeGridProps>
   },
 );
 
-export const TransferTreeGrid = TransferTreeGridComponent;
+export const ShuttleTreeToGrid = ShuttleTreeToGridComponent;

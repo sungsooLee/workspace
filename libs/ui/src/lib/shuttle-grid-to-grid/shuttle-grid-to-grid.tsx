@@ -4,14 +4,14 @@ import { t } from 'i18next';
 import { cn } from '@learnway/shared';
 import { GridBoxProps } from '@learnway/ui';
 
-import styles from './transfer-grid.module.css';
+import styles from './shuttle-grid-to-grid.module.css';
 import { Button } from '../button/button';
 import { ColumnDef } from '@tanstack/react-table';
 import { IcoNarrowRight } from '@learnway/icons';
 import { GridBox } from '../grid/grid-box';
 import { GridImperative } from '../grid/types';
 
-export interface TransferGridProps
+export interface ShuttleGridToGridProps
   extends Pick<GridBoxProps, 'hideRowSelectionCheckBox' | 'showNumberingColumn'> {
   columns: ColumnDef<any, unknown>[]; // 그리드 컬럼
   gridData: any; // 그리드 데이터
@@ -25,14 +25,14 @@ export interface TransferGridProps
 /**
  * 컴포넌트의 외부에서 호출 가능한 명령형 메서드를 정의하는 인터페이스입니다.
  */
-export interface TransferGridImperative {
+export interface ShuttleGridToGridImperative {
   /**
    * 선택 상태를 초기화하는 메서드입니다.
    */
   resetSelection: () => void;
 }
 
-const TransferGridComponent = (
+const ShuttleGridToGridComponent = (
   {
     hideRowSelectionCheckBox = true,
     showNumberingColumn = false,
@@ -43,8 +43,8 @@ const TransferGridComponent = (
     leftTitle,
     rightTitle,
     onChange,
-  }: TransferGridProps,
-  ref: React.Ref<TransferGridImperative>,
+  }: ShuttleGridToGridProps,
+  ref: React.Ref<ShuttleGridToGridImperative>,
 ) => {
   const [leftGridData, setLeftGridData] = useState<any>(gridData);
   const [rightGridData, setRightGridData] = useState<any>([]);
@@ -141,7 +141,7 @@ const TransferGridComponent = (
   }, [rightGridData]);
 
   return (
-    <div className={cn(styles.start, styles.transfer_grid, className, 'nlp--transfer-grid')}>
+    <div className={cn(styles.start, styles.transfer_grid, className, 'nlp--shuttle-grid-to-grid')}>
       {/* left grid */}
       <div className={styles.grid_wrap}>
         <GridBox
@@ -176,4 +176,4 @@ const TransferGridComponent = (
   );
 };
 
-export const TransferGrid = forwardRef(TransferGridComponent);
+export const ShuttleGridToGrid = forwardRef(ShuttleGridToGridComponent);
