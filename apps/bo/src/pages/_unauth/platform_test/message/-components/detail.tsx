@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 
-import { FormRow, FormSubTitle } from '@shared/ui/form';
+import { DuplicateCheckInputFormField, FormRow, FormSubTitle } from '@shared/ui/form';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import { FormInfoArea } from '@shared/ui/form/components/form-info-area';
@@ -14,7 +14,6 @@ import {
   useFetchLabelMessage,
   useUpdateLabelMessage,
 } from '@entities/label-messages';
-import { DuplicateCheckInput } from '@features/platform/category';
 
 interface MessageDetailProps {
   /**
@@ -174,7 +173,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
         <ContentsRow>
           <FormRow provider={provider}>
             <DynamicFormField name={'labelMessageMultilingulKey'} disabled={formDisabled}>
-              <DuplicateCheckInput
+              <DuplicateCheckInputFormField
                 query={queryOptions.all}
                 clearFormError={clearFormError}
                 duplicationCheckFn={checkDuplicate}

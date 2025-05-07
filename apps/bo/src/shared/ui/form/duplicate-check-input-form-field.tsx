@@ -1,17 +1,20 @@
-import { forwardRef } from 'react';
+import { forwardRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { BaseFormFieldProps, useDynamicFormContext } from '@learnway/hooks';
 import { Button, Input } from '@learnway/ui';
 
-interface DuplicateCheckInputProps extends BaseFormFieldProps {
+interface DuplicateCheckInputFormFieldProps extends BaseFormFieldProps {
   idKey: string;
   query: any;
   duplicationCheckFn: () => Promise<boolean>;
   onSuccess?: (isValid: boolean, checkValue: string) => void;
 }
 
-export const DuplicateCheckInput = forwardRef<HTMLDivElement, DuplicateCheckInputProps>(
+export const DuplicateCheckInputFormField = forwardRef<
+  HTMLDivElement,
+  DuplicateCheckInputFormFieldProps
+>(
   (
     {
       name,
@@ -29,6 +32,20 @@ export const DuplicateCheckInput = forwardRef<HTMLDivElement, DuplicateCheckInpu
     const { t } = useTranslation();
     const { onChangeGuideText } = useDynamicFormContext();
 
+    useEffect(() => {
+      return () => {
+        onChangeGuideText('');
+      };
+    }, [onChangeGuideText]);
+
+    /**
+     * 중복 확인 버튼 클릭 시 호출되는 비동기 함수입니다.
+     * 입력된 값을 가져와 `duplicationCheckFn` prop으로 전달된 함수를 실행하고,
+     * 결과를 바탕으로 안내 메시지를 업데이트하고 `onSuccess` 콜백 함수를 호출합니다.
+     * @async
+     * @function handleCheckClick
+     * @returns {void}
+     */
     const handleCheckClick = async () => {
       const checkValue = getValues()?.[name];
 
@@ -41,6 +58,12 @@ export const DuplicateCheckInput = forwardRef<HTMLDivElement, DuplicateCheckInpu
       onSuccess?.(isValid, checkValue);
     };
 
+    /**
+     * 중복 확인 결과에 따라 안내 메시지를 업데이트하는 함수입니다.
+     * @function changeGuideText
+     * @param {boolean} isValid - 중복 여부 (true: 중복 없음, false: 중복 있음)
+     * @returns {void}
+     */
     const changeGuideText = (isValid: boolean) => {
       if (isValid) {
         // 사용할 수 있는 **입니다.
