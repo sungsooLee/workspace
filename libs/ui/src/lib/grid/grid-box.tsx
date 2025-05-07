@@ -249,7 +249,7 @@ const GridBoxComponent = <T extends object>(
         data={props.data ?? data ?? []}
         columns={props.columns ?? girdColumns ?? []}
         showNumberingColumn={showNumberingColumn}
-        hideRowSelectionCheckBox={showNumberingColumn} // 체크박스 숨김 (numbering 사용시)
+        hideRowSelectionCheckBox={showNumberingColumn || props.hideRowSelectionCheckBox} // 체크박스 숨김 (numbering 사용시)
         pagination={paginationProps}
       />
     </div>
