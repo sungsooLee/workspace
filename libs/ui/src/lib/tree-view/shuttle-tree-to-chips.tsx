@@ -2,23 +2,30 @@ import { useState } from 'react';
 import { TreeNode } from './type';
 import { Button } from '../button/button';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import styles from './tree.module.css'; // Tree module CSS
 import { cn } from '@learnway/shared';
 import { TreeView } from './tree';
-import { useModal } from '../modal/modal.hook';
 import { IcoXclose, IcoNarrowRight } from '@learnway/icons';
 
-export const ShuttleTreeWithChips = ({
+type Props = {
+  title: string;
+  selectedItems: TreeNode[];
+  sourceData: any;
+  onItemsChange: (newItems: TreeNode[]) => void;
+  searchKeyword?: string;
+  onCustomNodeClick: (node: TreeNode) => void;
+};
+
+export const ShuttleTreeToChips = ({
+  title,
   sourceData,
   selectedItems,
   onItemsChange,
   searchKeyword,
   onCustomNodeClick,
   ...otherProps
-}: any) => {
+}: Props) => {
   // 내부 상태 관리 (필요한 경우)
   const [internalSelectedItems, setInternalSelectedItems] = useState(selectedItems || []);
   const [expandSource, setExpandSource] = useState<boolean>(true);
@@ -74,7 +81,7 @@ export const ShuttleTreeWithChips = ({
     <div className={cn(layoutStyles.start, layoutStyles.wrap, layoutStyles.pop_layout)}>
       <div className={layoutStyles.inner}>
         <div className={titleStyles.title_wrap}>
-          <h3 className={titleStyles.title}>{'API 목록'}</h3>
+          <h3 className={titleStyles.title}>{title}</h3>
           <div className={layoutStyles.btn_wrap}>
             <Button
               variant="text"
@@ -133,7 +140,7 @@ export const ShuttleTreeWithChips = ({
       </div>
       <div className={layoutStyles.inner}>
         <div className={titleStyles.title_wrap}>
-          <h3 className={titleStyles.title}>{'API 목록'}</h3>
+          <h3 className={titleStyles.title}>{title}</h3>
           <div className={layoutStyles.btn_wrap}>
             <Button
               variant="text"

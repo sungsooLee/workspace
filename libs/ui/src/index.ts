@@ -144,7 +144,7 @@ export * from './lib/tree-view/tree';
 export * from './lib/tree-view/tree.service';
 export * from './lib/tree-view/tree.context';
 export * from './lib/tree-view/type';
-export * from './lib/tree-view/shuttle-tree';
+export * from './lib/tree-view/shuttle-tree-to-chips';
 export * from './lib/tree-view/tree-box';
 
 // textarea
