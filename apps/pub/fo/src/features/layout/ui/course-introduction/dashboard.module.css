@@ -44,6 +44,30 @@
           }
         }
       }
+
+      .sub_contents {
+        @apply visible relative mt-[16px] pb-[28px] pt-[28px];
+        &::after {
+          @apply absolute left-0 top-0 -mx-[20px] h-[12px] w-[calc(100%+40px)] bg-[var(--gray2)] content-[''];
+        }
+        .sub_box {
+          .tit_box {
+            @apply mb-[8px];
+            strong {
+              @apply title_6_b inline-block text-[var(--gray9)];
+              em {
+                @apply title_6_b ml-[4px] inline-block text-[#00afd5];
+              }
+            }
+          }
+          + .sub_box {
+            @apply relative mt-[24px] pt-[24px];
+            &::before {
+              @apply absolute left-0 top-0 -mx-[20px] h-[1px] w-[calc(100%+40px)] bg-[var(--gray3)] content-[''];
+            }
+          }
+        }
+      }
     }
   }
 }
