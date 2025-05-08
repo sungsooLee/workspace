@@ -12,6 +12,7 @@ import {
 } from './type';
 import {
   calculateTargetIndex,
+  findNodeByKey,
   findNodePath,
   getNodeLevel,
   insertNodeAtPosition,
@@ -514,7 +515,7 @@ const TreeNodeComponent = ({
           <span className={cn(styles.folder_wrap)}>
             {enhanceNode && enhanceNode?.apiNodeType === 'API' ? (
               <IcoFile01 width={'16'} height={'16'} stroke={'#131C30'} fill={'none'} />
-            ) : isExpanded && enhanceNode.children ? (
+            ) : isExpanded && enhanceNode.children && enhanceNode.children.length > 0 ? (
               <IcoFolderOpen stroke="#131C30" className={styles.icon_folder} />
             ) : (
               <IcoFolder stroke="#131C30" className={styles.icon_folder} />
@@ -831,8 +832,31 @@ const TreeView = ({
       const positionInfo = calculateTargetIndex(treeData, targetNode, dropPosition);
       targetIndex = positionInfo.index;
       targetParentKey = positionInfo.parentKey;
+
+      const sourceParentKey = sourceNode.parentKey || sourceNode.parentId;
+      // 같은 부모 내에서 이동하는 경우만 조정
+      if (sourceParentKey == targetParentKey) {
+        // 소스 노드의 현재 인덱스 찾기
+        let sourceNodeIndex = -1;
+        const siblings =
+          targetParentKey === null
+            ? treeData
+            : findNodeByKey(treeData, targetParentKey)?.children || [];
+
+        for (let i = 0; i < siblings.length; i++) {
+          if (siblings[i].key === sourceNode.key) {
+            sourceNodeIndex = i;
+            break;
+          }
+        }
+
+        // 앞에서 뒤로 이동하는 경우 (소스 인덱스가 타겟 인덱스보다 작을 때)
+        if (sourceNodeIndex !== -1 && sourceNodeIndex < targetIndex) {
+          // 앞에서 뒤로 이동할 때는 인덱스를 1 감소시켜야 함
+          targetIndex--;
+        }
+      }
     } else {
-      // 트리의 루트 레벨에 추가하는 경우 (마지막 위치)
       targetIndex = treeData.length;
     }
 

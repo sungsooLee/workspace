@@ -4,6 +4,7 @@ import { cn } from '@learnway/shared';
 import { Button } from '@learnway/ui';
 
 import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
+import thumnailImgStyles from '../../../shared/ui/thumnail/thumnail-img.module.css';
 
 import { IcoPlay, IcoRating, IcoHeart, IcoEye, IcoPhone02, IcoMonitor01 } from '@learnway/icons';
 
@@ -29,6 +30,8 @@ function RouteComponent() {
       <h2 className="guide_tit2">썸네일 Page Component</h2>
       <p className="loc css">
         import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
+        <br />
+        import thumnailImgStyles from '../../../shared/ui/thumnail/thumnail-img.module.css';
       </p>
       <p className="loc react">
         <Link to="/category/detail">예제링크</Link>
@@ -50,17 +53,17 @@ function RouteComponent() {
 
               <div className={thumnailStyles.thumnail_box}>
                 {/* img */}
-                <div className={thumnailStyles.img_box}>
-                  <ul className={thumnailStyles.label}>
+                <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                  <ul className={thumnailImgStyles.label}>
                     <li style={{ backgroundColor: '#00afd5' }}>New</li>
                     <li style={{ backgroundColor: '#06226a' }}>접수중</li>
                     <li style={{ backgroundColor: '#ff4646' }}>D-7</li>
                   </ul>
-                  <div className={thumnailStyles.img}>
+                  <div className={thumnailImgStyles.img}>
                     <img src={listImage1} alt="" />
                   </div>
 
-                  <div className={thumnailStyles.heart}>
+                  <div className={thumnailImgStyles.heart}>
                     <Button
                       className={cn(
                         thumnailStyles.btn_heart,
@@ -143,6 +146,7 @@ function RouteComponent() {
             <code>{`// 기본 호출방법
 import { Link } from '@tanstack/react-router';
 import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
+import thumnailImgStyles from '../../../shared/ui/thumnail/thumnail-img.module.css';
 import { cn } from '@learnway/shared';
 import { Button } from '@learnway/ui';
 import {
@@ -177,34 +181,37 @@ import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_
   <Link to="" className={thumnailStyles.link}></Link>
 
   <div className={thumnailStyles.thumnail_box}>
-    {/* img */}
-    <div className={thumnailStyles.img_box}>
-      <ul className={thumnailStyles.label}>
-        <li style={{ backgroundColor: '#00afd5' }}>New</li>
-        <li style={{ backgroundColor: '#06226a' }}>접수중</li>
-        <li style={{ backgroundColor: '#ff4646' }}>D-7</li>
-      </ul>
-      <div className={thumnailStyles.img}>
-        <img src={listImage1} alt="" />
-      </div>
+    {
+  /* img */
+}
+<div className={\`\${thumnailImgStyles.start} \${thumnailImgStyles.img_box}\`}>
+  <ul className={thumnailImgStyles.label}>
+    <li style={{ backgroundColor: "#00afd5" }}>New</li>
+    <li style={{ backgroundColor: "#06226a" }}>접수중</li>
+    <li style={{ backgroundColor: "#ff4646" }}>D-7</li>
+  </ul>
+  <div className={thumnailImgStyles.img}>
+    <img src={listImage1} alt="" />
+  </div>
 
-      <div className={thumnailStyles.heart}>
-        <Button
-          className={cn(
-            thumnailStyles.btn_heart,
-            icoHeart === true ? thumnailStyles.active : ""
-          )}
-          onClick={handleHeartClick}
-        >
-          <IcoHeart
-            width={24}
-            height={24}
-            fill={icoHeart === true ? "#fff" : "none"}
-            stroke="#fff"
-          ></IcoHeart>
-        </Button>
-      </div>
-    </div>
+  <div className={thumnailImgStyles.heart}>
+    <Button
+      className={cn(
+        thumnailStyles.btn_heart,
+        icoHeart === true ? thumnailStyles.active : ""
+      )}
+      onClick={handleHeartClick}
+    >
+      <IcoHeart
+        width={24}
+        height={24}
+        fill={icoHeart === true ? "#fff" : "none"}
+        stroke="#fff"
+      ></IcoHeart>
+    </Button>
+  </div>
+</div>;
+
     {/* txt */}
     <div className={thumnailStyles.text_box}>
       <div className={thumnailStyles.type}>
@@ -292,17 +299,17 @@ import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_
 
               <div className={thumnailStyles.thumnail_box}>
                 {/* img */}
-                <div className={thumnailStyles.img_box}>
-                  <ul className={thumnailStyles.label}>
+                <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                  <ul className={thumnailImgStyles.label}>
                     <li style={{ backgroundColor: '#00afd5' }}>New</li>
                     <li style={{ backgroundColor: '#06226a' }}>접수중</li>
                     <li style={{ backgroundColor: '#ff4646' }}>D-7</li>
                   </ul>
-                  <div className={thumnailStyles.img}>
+                  <div className={thumnailImgStyles.img}>
                     <img src={listImage1} alt="" />
                   </div>
 
-                  <div className={thumnailStyles.heart}>
+                  <div className={thumnailImgStyles.heart}>
                     <Button
                       className={cn(
                         thumnailStyles.btn_heart,
@@ -385,6 +392,7 @@ import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_
             <code>{`// 기본 호출방법
 import { Link } from '@tanstack/react-router';
 import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
+import thumnailImgStyles from '../../../shared/ui/thumnail/thumnail-img.module.css';
 import { cn } from '@learnway/shared';
 import { Button } from '@learnway/ui';
 import {
@@ -420,28 +428,28 @@ import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_
 
   <div className={thumnailStyles.thumnail_box}>
     {/* img */}
-    <div className={thumnailStyles.img_box}>
-      <ul className={thumnailStyles.label}>
+    <div className={\`\${thumnailImgStyles.start} \${thumnailImgStyles.img_box}\`}>
+      <ul className={thumnailImgStyles.label}>
         <li style={{ backgroundColor: '#00afd5' }}>New</li>
         <li style={{ backgroundColor: '#06226a' }}>접수중</li>
         <li style={{ backgroundColor: '#ff4646' }}>D-7</li>
       </ul>
-      <div className={thumnailStyles.img}>
+      <div className={thumnailImgStyles.img}>
         <img src={listImage1} alt="" />
       </div>
 
-      <div className={thumnailStyles.heart}>
+      <div className={thumnailImgStyles.heart}>
         <Button
           className={cn(
             thumnailStyles.btn_heart,
-            icoHeart === true ? thumnailStyles.active : ""
+            icoHeart === true ? thumnailStyles.active : '',
           )}
           onClick={handleHeartClick}
         >
           <IcoHeart
             width={24}
             height={24}
-            fill={icoHeart === true ? "#fff" : "none"}
+            fill={icoHeart === true ? '#fff' : 'none'}
             stroke="#fff"
           ></IcoHeart>
         </Button>

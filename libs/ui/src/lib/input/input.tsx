@@ -28,6 +28,7 @@ export interface InputProps extends Omit<NumericFormatProps, 'type'> {
   showSearchIcon?: boolean; // 검색 아이콘 표시 유무
   iconType?: 'search' | 'tree'; // 아이콘 타입 선택
   onEnterKeyDown?: () => void; // 엔터 키 입력 callback, 검색 아이콘 클릭 했을때 해당 callback 호출
+  onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
   //
 }
 
@@ -57,6 +58,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       iconType = 'search',
       onEnterKeyDown,
       maxLength,
+      onFocus,
       ...props
     },
     ref,
@@ -72,8 +74,9 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       onChange?.(changeEvent);
     };
 
-    const handleInputFocus = () => {
+    const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
       setIsFocused(true);
+      onFocus?.(event);
     };
 
     const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {

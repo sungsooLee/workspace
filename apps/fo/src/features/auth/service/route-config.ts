@@ -59,20 +59,19 @@ function authorization({ location, context }: { location: ParsedLocation; contex
 export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
   return {
     beforeLoad: ({ location, context, params, search, preload, route }: any) => {
-      // 인증 정보 확인
-      if (routeConfig?.authorization) {
-        try {
-          authorization({ location, context });
-        } catch (e) {
-          if (e === ERROR.PAGE_ACCESS_RIGHTS) {
-            throw redirect({ to: '/' });
-          } else {
-            throw redirect({ to: '/login', search: { redirect: location.pathname } });
-          }
-        }
-      }
-
-      return { ...context, state: location?.state }; // context 정보 확장
+      //   // 인증 정보 확인
+      //   if (routeConfig?.authorization) {
+      //     try {
+      //       authorization({ location, context });
+      //     } catch (e) {
+      //       if (e === ERROR.PAGE_ACCESS_RIGHTS) {
+      //         throw redirect({ to: '/' });
+      //       } else {
+      //         throw redirect({ to: '/login', search: { redirect: location.pathname } });
+      //       }
+      //     }
+      //   }
+      //   return { ...context, state: location?.state }; // context 정보 확장
     },
     loader: ({ location, context, params, search, preload, route, ...props }: any) => {
       // 기타 validation
