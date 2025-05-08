@@ -243,6 +243,7 @@ const GridBoxComponent = <T extends object>(
               variant="outline"
               size="sm"
               label={t('행삭제')}
+              icon={<IcoMinus width={16} height={16} stroke={'#4C515E'} />}
               onClick={handleRemoveRowClick}
             />
           )}
