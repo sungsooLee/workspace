@@ -678,7 +678,7 @@
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
               "isShortCutArea": false,
-              "path": "/platform/system/translation",
+              "path": "/platform/system/multilingual",
               "parentNode": {
                 "title": "플랫폼 시스템 관리",
                 "roles": "ROLE_ADMIN",
@@ -1700,7 +1700,7 @@
           "roles": "ROLE_ADMIN",
           "tenantName": "현대자동차",
           "isShortCutArea": false,
-          "path": "/platform/system/translation",
+          "path": "/platform/system/multilingual",
           "parentNode": {
             "title": "플랫폼 시스템 관리",
             "roles": "ROLE_ADMIN",

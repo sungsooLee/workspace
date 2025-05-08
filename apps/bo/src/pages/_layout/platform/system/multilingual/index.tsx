@@ -13,9 +13,8 @@ import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-butt
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { translationQueryOptions } from '@entities/translation/service/translation.queries';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { SearchBoxConfig, SelectOption, useSearchBox } from '@learnway/hooks';
+import { CODE_GROUP, SearchBoxConfig, SelectOption, useSearchBox } from '@learnway/hooks';
 import { SearchBox } from '@shared/ui/search-box';
-import { CODE_GROUP } from '@learnway/config';
 import { CellContext } from '@tanstack/react-table';
 import { useTranslation } from '@entities/translation/service/translation.hook';
 import { t } from 'i18next';
@@ -82,10 +81,24 @@ function RouteComponent() {
   return (
     <PageContainer>
       <ContentsButtons>
-        <Button type="button" variant="point" size="sm">
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          onClick={() => {
+            router.navigate({ to: '/platform/menu' });
+          }}
+        >
           메뉴 관리
         </Button>
-        <Button type="button" variant="point" size="sm">
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          onClick={() => {
+            router.navigate({ to: '/platform/category' });
+          }}
+        >
           카테고리 관리
         </Button>
         <Button
@@ -94,7 +107,7 @@ function RouteComponent() {
           size="sm"
           onClick={() => {
             router.navigate({
-              to: '/platform/common-code',
+              to: '/platform/code/common-code-group',
             });
           }}
         >
@@ -139,10 +152,10 @@ const searchConfig: SearchBoxConfig = {
         type: 'dropdown',
         label: '분류',
         value: 'LABEL',
-        options: [],
+        options: [{ value: '', label: 'LABEL.all' }],
         optionsConfig: {
           type: 'self',
-          codeGroup: CODE_GROUP.MULTILINGUAL_KEY_TYPE_CODE,
+          codeGroup: CODE_GROUP['pms.multilingual.KeyTypeCode'],
         },
       },
       {
@@ -150,27 +163,27 @@ const searchConfig: SearchBoxConfig = {
         type: 'dropdown',
         label: '번역언어',
         value: 'en',
-        options: [],
+        options: [{ value: '', label: 'LABEL.all' }],
         optionsConfig: {
           type: 'self',
-          codeGroup: CODE_GROUP.MULTILINGUAL,
+          codeGroup: CODE_GROUP['pms.multilingual.LanguageType'],
           excludeValues: ['kr'],
           filter: {
             target: 'keyType',
-            value: 'MENU',
+            value: 'HRD_CENTER_MENU',
             fn: (options: SelectOption[]) => options.filter((option) => option.value === 'en'),
           },
         },
       },
       {
-        name: 'translationYn',
+        name: 'isTranslated',
         type: 'dropdown',
         label: '번역상태',
         value: '',
         options: [
-          { value: '', label: '전체' },
-          { value: 'Y', label: '번역완료' },
-          { value: 'N', label: '번역필요' },
+          { value: '', label: 'LABEL.all' },
+          { value: 'true', label: 'pms.multilingual.Is_Translation.true' },
+          { value: 'false', label: 'pms.multilingual.Is_Translation.false' },
         ],
       },
     ],
@@ -189,6 +202,10 @@ const searchConfig: SearchBoxConfig = {
       },
     ],
   ],
+  validator: {
+    keyType: true,
+    targetLocale: true,
+  },
 };
 
 const gridConfig = {
