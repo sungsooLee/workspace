@@ -1,7 +1,7 @@
 import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Button, Grid, GridBoxProps, GridImperative } from '@learnway/ui';
-import { IcoDownload, IcoMinus, IcoUploadCloud } from '@learnway/icons';
+import { IcoDownload, IcoMinus, IcoUploadCloud, IcoPlus } from '@learnway/icons';
 import styles from './grid-box.module.css';
 import { cn } from '@learnway/shared';
 import { useTranslation } from 'react-i18next';
