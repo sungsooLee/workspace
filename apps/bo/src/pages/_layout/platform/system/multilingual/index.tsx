@@ -119,7 +119,7 @@ function RouteComponent() {
           size="sm"
           onClick={() => {
             router.navigate({
-              to: '/platform/system/label',
+              to: '/platform/message',
             });
           }}
         >
