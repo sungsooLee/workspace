@@ -57,13 +57,11 @@ const UserGroupComponent: FC<{}> = ({}) => {
   };
   return (
     <ShuttleTreeToChips
+      treeId="tree"
       sourceData={treeData}
       selectedItems={selectedItems}
       onItemsChange={handleSelectedItemsChange}
       title={'타이틀'}
-      onCustomNodeClick={function (node: TreeNode): void {
-        throw new Error('Function not implemented.');
-      }}
     />
   );
 };
