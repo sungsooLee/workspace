@@ -56,7 +56,7 @@
     "cdGroupName": "그룹 명",
     "isUsed": "사용",
     "cdName": "코드 명",
-    "cdGroupAbbreviatonEnglishName": "그룹코드 약어영문",
+    "cdGroupAbbreviationEnglishName": "그룹코드 약어영문",
     "cdGroupContent": "내용",
     "cdSeq": "순서",
     "cdContent": "내용",
@@ -66,6 +66,12 @@
     "referenceVal4": "참고 4",
     "cdId": "코드",
     "page": {
+      "title": {
+        "menuManage": "메뉴 관리",
+        "commonCdGroupManage": "공통코드그룹관리",
+        "commonCdManage": "공통코드관리",
+        "programManage": "플랫폼 API 관리"
+      },
       "category": {
         "title": "공통 카테고리 목록"
       },
@@ -138,15 +144,34 @@
       "previousTerms": "이전 {{type}} 보기",
       "remainingTime": "남은시간",
       "applicationDateTime": "신청일시",
-      "lastChangeDate": "마지막 변경일"
+      "lastChangeDate": "마지막 변경일",
+      "autoNumbering": "자동 채번",
+      "cdGroupId": "그룹코드",
+      "cdGroupName": "그룹 명",
+      "isUsed": "사용",
+      "cdName": "코드 명",
+      "cdGroup": "코드그룹",
+      "cdGroupAbbreviationEnglishName": "그룹코드 약어영문",
+      "cdGroupContent": "내용",
+      "cdSeq": "순서",
+      "cdContent": "내용",
+      "referenceVal1": "참고 1",
+      "referenceVal2": "참고 2",
+      "referenceVal3": "참고 3",
+      "referenceVal4": "참고 4",
+      "cdId": "코드",
+      "enable": "사용",
+      "disable": "미사용",
+      "learnerMenu": "학습자 메뉴",
+      "hrdCenterMenu": "HRD센터 메뉴"
     },
     "link": {
       "multilingual": "다국어관리"
     },
     "grid": {
       "title": {
-        "list": "목록",
-        "courseList": "과정 목록"
+        "commonCdGroupList": "공통코드그룹목록",
+        "commonCdList": "공통코드 목록"
       },
       "header": {
         "all": "전체",
@@ -160,7 +185,9 @@
         "csvDownload": "CSV 다운로드",
         "csvUpload": "CSV 업로드",
         "selectAll": "전체 선택",
-        "removeAll": "전체 삭제"
+        "removeAll": "전체 삭제",
+        "list": "목록",
+        "courseList": "과정 목록"
       },
       "column": {
         "no": "NO.",
@@ -173,6 +200,7 @@
         "useYn": "사용여부",
         "updatedBy": "수정자",
         "updatedDate": "수정일",
+        "modifiedDate": "최종수정 일자",
         "channel": "채널",
         "tenant": "테넌트",
         "courseType": "과정유형",
@@ -185,7 +213,8 @@
         "preview": "미리보기",
         "urlGeneration": "URL 생성"
       },
-      "emptyText": "조회 결과가 없습니다."
+      "emptyText": "조회 결과가 없습니다.",
+      "searchFirst": "{{list}}을 먼저 검색해주세요."
     },
     "tree": {
       "select": "선택",
@@ -259,6 +288,7 @@
       "rejected": "반려",
       "multilingualManage": "다국어 관리",
       "duplication": "중복",
+      "commonCdGroupList": "공통코드그룹목록",
       "courseOpen": "과정 개설"
     },
     "confirm": {
@@ -273,6 +303,9 @@
       "delete": {
         "title": "삭제 하시겠습니까?",
         "message": "하위 {{type}} 존재 시 모두 삭제되며, 삭제 후 복구할 수 없습니다."
+      },
+      "reset:": {
+        "title": "초기화 하시겠습니까?"
       }
     }
   }

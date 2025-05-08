@@ -106,6 +106,20 @@
       }
     }
   }
+  .select_row_radio {
+    @apply relative flex h-full w-full items-center justify-center;
+    &.checked {
+      input[type='radio'] {
+        @apply border-[var(--secondary1)];
+      }
+      &::after {
+        @apply absolute left-1/2 top-1/2 h-[10px] w-[10px] -translate-x-1/2 -translate-y-1/2 rounded-[5px] bg-[var(--secondary1)] content-[''];
+      }
+    }
+    input[type='radio'] {
+      @apply h-[20px] w-[20px] appearance-none overflow-hidden rounded-[10px] border border-solid border-[var(--gray5)];
+    }
+  }
   .empty_message_container {
     @apply absolute left-0 top-1/2 mt-[25px] -translate-y-1/2;
   }

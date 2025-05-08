@@ -1,7 +1,17 @@
 import { useState } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { ChipList, SelectOption, Accordion, Button } from '@learnway/ui';
-import { IcoHeart, IcoUser01, IcoArrowDown } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import {
+  IcoHeart,
+  IcoUser01,
+  IcoArrowDown,
+  IcoPlay,
+  IcoRating,
+  IcoEye,
+  IcoPhone02,
+  IcoMonitor01,
+} from '@learnway/icons';
 import { MobileView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
 
@@ -12,10 +22,12 @@ import {
 import operatorStyles from './operator.module.css';
 import definitionListStyles from './definition-list.module.css';
 import packageInformationStyles from './package-information.module.css';
+import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
+import thumnailImgStyles from '../../../shared/ui/thumnail/thumnail-img.module.css';
 import styles from './package-m.module.css';
 
 // 예시 이미지
-import bnrImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
+import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 import package1 from '@learnway/styles/fo/assets/images/temp/img_package_01.png';
 import logoHyundai from '@learnway/styles/fo/assets/images/common/logo_hyundai.png';
 
@@ -29,6 +41,16 @@ function RouteComponent() {
     { label: '디지털혁신', value: 'B' },
     { label: '정보보안기술', value: 'C' },
   ];
+
+  // 썸네일 찜
+  const [icoHeart, setIcoHeart] = useState(true);
+  const handleHeartClick = () => {
+    if (icoHeart === true) {
+      setIcoHeart(false);
+    } else {
+      setIcoHeart(true);
+    }
+  };
 
   // 패키지 자세한 정보 아코디언
   const [packageInformation, setPackageInformation] = useState(true);
@@ -49,7 +71,168 @@ function RouteComponent() {
           </p>
         </div>
       ),
-      children: <div className={styles.sub_package_content}>Content A</div>,
+      children: (
+        <div className={styles.sub_package_content}>
+          <ul>
+            <li>
+              {/* thumnail module */}
+              <div
+                className={cn(
+                  thumnailStyles.start,
+                  thumnailStyles.thumbnail,
+                  thumnailStyles.vertical,
+                )}
+              >
+                {/* link (찜 기능과 겹침으로 따로 빠짐) */}
+                <Link to="" className={thumnailStyles.link}></Link>
+
+                <div className={thumnailStyles.thumnail_box}>
+                  {/* img */}
+                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                    <ul className={thumnailImgStyles.label}>
+                      <li style={{ backgroundColor: '#00afd5' }}>New</li>
+                    </ul>
+                    <div className={thumnailImgStyles.img}>
+                      <img src={listImage1} alt="" />
+                    </div>
+                  </div>
+                  {/* txt */}
+                  <div className={thumnailStyles.text_box}>
+                    <div className={thumnailStyles.type}>
+                      {/* type */}
+                      <span className={thumnailStyles.txt}>동영상</span>
+                      <span className={thumnailStyles.time}>
+                        {/* time icon */}
+                        <IcoPlay width={12} height={12} fill="#6f798b" />
+                        {/* time */}
+                        04:59
+                      </span>
+                    </div>
+                    <p className={thumnailStyles.text}>필수개발과정</p>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              {/* thumnail module */}
+              <div
+                className={cn(
+                  thumnailStyles.start,
+                  thumnailStyles.thumbnail,
+                  thumnailStyles.vertical,
+                )}
+              >
+                {/* link (찜 기능과 겹침으로 따로 빠짐) */}
+                <Link to="" className={thumnailStyles.link}></Link>
+
+                <div className={thumnailStyles.thumnail_box}>
+                  {/* img */}
+                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                    <ul className={thumnailImgStyles.label}>
+                      <li style={{ backgroundColor: '#00afd5' }}>New</li>
+                    </ul>
+                    <div className={thumnailImgStyles.img}>
+                      <img src={listImage1} alt="" />
+                    </div>
+                  </div>
+                  {/* txt */}
+                  <div className={thumnailStyles.text_box}>
+                    <div className={thumnailStyles.type}>
+                      {/* type */}
+                      <span className={thumnailStyles.txt}>동영상</span>
+                      <span className={thumnailStyles.time}>
+                        {/* time icon */}
+                        <IcoPlay width={12} height={12} fill="#6f798b" />
+                        {/* time */}
+                        04:59
+                      </span>
+                    </div>
+                    <p className={thumnailStyles.text}>필수개발과정</p>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              {/* thumnail module */}
+              <div
+                className={cn(
+                  thumnailStyles.start,
+                  thumnailStyles.thumbnail,
+                  thumnailStyles.vertical,
+                )}
+              >
+                {/* link (찜 기능과 겹침으로 따로 빠짐) */}
+                <Link to="" className={thumnailStyles.link}></Link>
+
+                <div className={thumnailStyles.thumnail_box}>
+                  {/* img */}
+                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                    <ul className={thumnailImgStyles.label}>
+                      <li style={{ backgroundColor: '#00afd5' }}>New</li>
+                    </ul>
+                    <div className={thumnailImgStyles.img}>
+                      <img src={listImage1} alt="" />
+                    </div>
+                  </div>
+                  {/* txt */}
+                  <div className={thumnailStyles.text_box}>
+                    <div className={thumnailStyles.type}>
+                      {/* type */}
+                      <span className={thumnailStyles.txt}>동영상</span>
+                      <span className={thumnailStyles.time}>
+                        {/* time icon */}
+                        <IcoPlay width={12} height={12} fill="#6f798b" />
+                        {/* time */}
+                        04:59
+                      </span>
+                    </div>
+                    <p className={thumnailStyles.text}>필수개발과정</p>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              {/* thumnail module */}
+              <div
+                className={cn(
+                  thumnailStyles.start,
+                  thumnailStyles.thumbnail,
+                  thumnailStyles.vertical,
+                )}
+              >
+                {/* link (찜 기능과 겹침으로 따로 빠짐) */}
+                <Link to="" className={thumnailStyles.link}></Link>
+
+                <div className={thumnailStyles.thumnail_box}>
+                  {/* img */}
+                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                    <ul className={thumnailImgStyles.label}>
+                      <li style={{ backgroundColor: '#00afd5' }}>New</li>
+                    </ul>
+                    <div className={thumnailImgStyles.img}>
+                      <img src={listImage1} alt="" />
+                    </div>
+                  </div>
+                  {/* txt */}
+                  <div className={thumnailStyles.text_box}>
+                    <div className={thumnailStyles.type}>
+                      {/* type */}
+                      <span className={thumnailStyles.txt}>동영상</span>
+                      <span className={thumnailStyles.time}>
+                        {/* time icon */}
+                        <IcoPlay width={12} height={12} fill="#6f798b" />
+                        {/* time */}
+                        04:59
+                      </span>
+                    </div>
+                    <p className={thumnailStyles.text}>필수개발과정</p>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      ),
     },
     {
       value: 'b',
@@ -65,14 +248,175 @@ function RouteComponent() {
           </p>
         </div>
       ),
-      children: <div className={styles.sub_package_content}>Content B</div>,
+      children: (
+        <div className={styles.sub_package_content}>
+          <ul>
+            <li>
+              {/* thumnail module */}
+              <div
+                className={cn(
+                  thumnailStyles.start,
+                  thumnailStyles.thumbnail,
+                  thumnailStyles.vertical,
+                )}
+              >
+                {/* link (찜 기능과 겹침으로 따로 빠짐) */}
+                <Link to="" className={thumnailStyles.link}></Link>
+
+                <div className={thumnailStyles.thumnail_box}>
+                  {/* img */}
+                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                    <ul className={thumnailImgStyles.label}>
+                      <li style={{ backgroundColor: '#00afd5' }}>New</li>
+                    </ul>
+                    <div className={thumnailImgStyles.img}>
+                      <img src={listImage1} alt="" />
+                    </div>
+                  </div>
+                  {/* txt */}
+                  <div className={thumnailStyles.text_box}>
+                    <div className={thumnailStyles.type}>
+                      {/* type */}
+                      <span className={thumnailStyles.txt}>동영상</span>
+                      <span className={thumnailStyles.time}>
+                        {/* time icon */}
+                        <IcoPlay width={12} height={12} fill="#6f798b" />
+                        {/* time */}
+                        04:59
+                      </span>
+                    </div>
+                    <p className={thumnailStyles.text}>필수개발과정</p>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              {/* thumnail module */}
+              <div
+                className={cn(
+                  thumnailStyles.start,
+                  thumnailStyles.thumbnail,
+                  thumnailStyles.vertical,
+                )}
+              >
+                {/* link (찜 기능과 겹침으로 따로 빠짐) */}
+                <Link to="" className={thumnailStyles.link}></Link>
+
+                <div className={thumnailStyles.thumnail_box}>
+                  {/* img */}
+                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                    <ul className={thumnailImgStyles.label}>
+                      <li style={{ backgroundColor: '#00afd5' }}>New</li>
+                    </ul>
+                    <div className={thumnailImgStyles.img}>
+                      <img src={listImage1} alt="" />
+                    </div>
+                  </div>
+                  {/* txt */}
+                  <div className={thumnailStyles.text_box}>
+                    <div className={thumnailStyles.type}>
+                      {/* type */}
+                      <span className={thumnailStyles.txt}>동영상</span>
+                      <span className={thumnailStyles.time}>
+                        {/* time icon */}
+                        <IcoPlay width={12} height={12} fill="#6f798b" />
+                        {/* time */}
+                        04:59
+                      </span>
+                    </div>
+                    <p className={thumnailStyles.text}>필수개발과정</p>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              {/* thumnail module */}
+              <div
+                className={cn(
+                  thumnailStyles.start,
+                  thumnailStyles.thumbnail,
+                  thumnailStyles.vertical,
+                )}
+              >
+                {/* link (찜 기능과 겹침으로 따로 빠짐) */}
+                <Link to="" className={thumnailStyles.link}></Link>
+
+                <div className={thumnailStyles.thumnail_box}>
+                  {/* img */}
+                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                    <ul className={thumnailImgStyles.label}>
+                      <li style={{ backgroundColor: '#00afd5' }}>New</li>
+                    </ul>
+                    <div className={thumnailImgStyles.img}>
+                      <img src={listImage1} alt="" />
+                    </div>
+                  </div>
+                  {/* txt */}
+                  <div className={thumnailStyles.text_box}>
+                    <div className={thumnailStyles.type}>
+                      {/* type */}
+                      <span className={thumnailStyles.txt}>동영상</span>
+                      <span className={thumnailStyles.time}>
+                        {/* time icon */}
+                        <IcoPlay width={12} height={12} fill="#6f798b" />
+                        {/* time */}
+                        04:59
+                      </span>
+                    </div>
+                    <p className={thumnailStyles.text}>필수개발과정</p>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              {/* thumnail module */}
+              <div
+                className={cn(
+                  thumnailStyles.start,
+                  thumnailStyles.thumbnail,
+                  thumnailStyles.vertical,
+                )}
+              >
+                {/* link (찜 기능과 겹침으로 따로 빠짐) */}
+                <Link to="" className={thumnailStyles.link}></Link>
+
+                <div className={thumnailStyles.thumnail_box}>
+                  {/* img */}
+                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                    <ul className={thumnailImgStyles.label}>
+                      <li style={{ backgroundColor: '#00afd5' }}>New</li>
+                    </ul>
+                    <div className={thumnailImgStyles.img}>
+                      <img src={listImage1} alt="" />
+                    </div>
+                  </div>
+                  {/* txt */}
+                  <div className={thumnailStyles.text_box}>
+                    <div className={thumnailStyles.type}>
+                      {/* type */}
+                      <span className={thumnailStyles.txt}>동영상</span>
+                      <span className={thumnailStyles.time}>
+                        {/* time icon */}
+                        <IcoPlay width={12} height={12} fill="#6f798b" />
+                        {/* time */}
+                        04:59
+                      </span>
+                    </div>
+                    <p className={thumnailStyles.text}>필수개발과정</p>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      ),
     },
   ];
 
   return (
     <div className={`${styles.start} ${styles.package_wrap}`}>
       <div className={styles.thumbnail_img}>
-        <img src={bnrImage1} alt="" />
+        <img src={listImage1} alt="" />
       </div>
 
       <div className={styles.sub_box}>

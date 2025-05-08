@@ -5,7 +5,7 @@
       @apply w-full;
       .thumnail_box {
         @apply flex;
-        .img_box {
+        [class*='img_box'] {
           @apply w-[237px];
         }
         .text_box {
@@ -21,22 +21,6 @@
       @apply absolute left-0 top-0 z-[1] h-full w-full;
     }
     .thumnail_box {
-      .img_box {
-        @apply relative;
-        .img {
-          @apply relative overflow-hidden rounded-[8px];
-        }
-        .label {
-          @apply absolute left-[8px] top-[8px] z-[1] flex;
-          li {
-            @apply label_3_r mr-0 inline-block w-auto rounded-[4px] p-[4.5px] pl-[6px] pr-[6px] text-white;
-            & + li {
-              @apply ml-[4px];
-            }
-          }
-        }
-      }
-
       .text_box {
         @apply mt-[16px] overflow-hidden;
         .type {
@@ -102,12 +86,6 @@
           &::after {
             @apply absolute right-0 top-0 h-[100%] w-[40px] bg-gradient-to-r from-white/0 to-white content-[''];
           }
-        }
-      }
-      .heart {
-        @apply absolute bottom-[16px] right-[16px] z-[2] h-[24px] w-[24px] text-[0];
-        button {
-          @apply !p-0;
         }
       }
     }

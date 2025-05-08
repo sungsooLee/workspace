@@ -1,6 +1,6 @@
 import { memo, useState, useRef } from 'react';
 import { Link } from '@tanstack/react-router';
-import styles from './search.module.css';
+import styles from '@learnway/styles/fo/features/layout/ui/search.module.css';
 import { Input, Button } from '@learnway/ui';
 import { IcoSearch } from '@learnway/icons';
 

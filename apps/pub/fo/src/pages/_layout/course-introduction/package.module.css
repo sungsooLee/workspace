@@ -92,7 +92,7 @@
         @apply pl-[32px];
         & > ul {
           @apply mt-[16px];
-          li {
+          & > li {
             @apply mr-[16px] inline-block w-[calc((100%-32px)/3)];
             & > div {
               @apply w-full;

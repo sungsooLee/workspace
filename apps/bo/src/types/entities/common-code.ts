@@ -1,13 +1,13 @@
 export interface CommonCodeGroup {
   cdGroupId: string;
   cdGroupName: string;
-  cdGroupAbbreviatonEnglishName: string;
+  cdGroupAbbreviationEnglishName: string;
   cdGroupContent: string;
   isUsed: boolean;
 }
 
 export interface CommonCode
-  extends Omit<CommonCodeGroup, 'cdGroupAbbreviatonEnglishName' | 'cdGroupContent'> {
+  extends Omit<CommonCodeGroup, 'cdGroupAbbreviationEnglishName' | 'cdGroupContent'> {
   cdId: string;
   cdName: string;
   cdContent: string;

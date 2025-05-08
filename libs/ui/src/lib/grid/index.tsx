@@ -175,10 +175,7 @@ const GridComponent = forwardRef(
             .getSelectedRowModel()
             .rows.find((d) => d.original === row.original);
           return (
-            <div
-              className={cn('select_row_radio', checked && 'checked')}
-              style={{ width: '100%', textAlign: 'center', paddingRight: 0 }}
-            >
+            <div className={cn(styles.select_row_radio, checked && styles.checked)}>
               <input
                 type="radio"
                 name="select-row"

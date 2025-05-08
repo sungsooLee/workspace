@@ -10,9 +10,11 @@ import {
   IcoDotpoints,
   IcoPlay,
 } from '@learnway/icons';
-import { CategoryFilterPopupM } from '../../../features/layout';
+import { CategoryDepthPopupM, FilterPopup } from '../../../features/layout';
 
 import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
+import thumnailImgStyles from '../../../shared/ui/thumnail/thumnail-img.module.css';
+
 import styles from './detail_m.module.css';
 
 import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
@@ -91,7 +93,8 @@ function RouteComponent() {
 
       <div className={styles.gray_box}>
         <div className={styles.box}>
-          <Dropdown
+          {/* 분류가 1개인 경우 */}
+          {/* <Dropdown
             className={styles.select}
             options={[
               { value: 'a', label: '분류선택' },
@@ -105,17 +108,19 @@ function RouteComponent() {
             ]}
             value={divisionValues}
             onChange={(selected) => setDivisionValues(selected)}
-          />
-
+          /> */}
+          {/* 분류가 2개 이상인 경우 */}
           <Button
+            className={styles.btn_drop}
             onClick={() =>
               openModal({
                 width: 'm_bottom_sheet',
-                content: <CategoryFilterPopupM />,
+                content: <CategoryDepthPopupM />,
               })
             }
           >
-            모달 팝업 열기
+            분류선택
+            <IcoArrowDown width={16} height={16} stroke="#131c30" />
           </Button>
         </div>
         <div className={styles.box}>
@@ -124,7 +129,15 @@ function RouteComponent() {
           </ContentsRow>
 
           <div className={styles.filter_wrap}>
-            <Button className={cn(styles.btn_filter, selectCheck === true ? styles.selected : '')}>
+            <Button
+              className={cn(styles.btn_filter, selectCheck === true ? styles.selected : '')}
+              onClick={() =>
+                openModal({
+                  width: 'm_bottom_sheet',
+                  content: <FilterPopup />,
+                })
+              }
+            >
               <IcoFilter
                 width={20}
                 height={20}
@@ -198,11 +211,11 @@ function RouteComponent() {
 
                 <div className={thumnailStyles.thumnail_box}>
                   {/* img */}
-                  <div className={thumnailStyles.img_box}>
-                    <ul className={thumnailStyles.label}>
+                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                    <ul className={thumnailImgStyles.label}>
                       <li style={{ backgroundColor: '#00afd5' }}>New</li>
                     </ul>
-                    <div className={thumnailStyles.img}>
+                    <div className={thumnailImgStyles.img}>
                       <img src={listImage1} alt="" />
                     </div>
                   </div>
@@ -237,11 +250,11 @@ function RouteComponent() {
 
                 <div className={thumnailStyles.thumnail_box}>
                   {/* img */}
-                  <div className={thumnailStyles.img_box}>
-                    <ul className={thumnailStyles.label}>
+                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                    <ul className={thumnailImgStyles.label}>
                       <li style={{ backgroundColor: '#00afd5' }}>New</li>
                     </ul>
-                    <div className={thumnailStyles.img}>
+                    <div className={thumnailImgStyles.img}>
                       <img src={listImage1} alt="" />
                     </div>
                   </div>
@@ -276,11 +289,11 @@ function RouteComponent() {
 
                 <div className={thumnailStyles.thumnail_box}>
                   {/* img */}
-                  <div className={thumnailStyles.img_box}>
-                    <ul className={thumnailStyles.label}>
+                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                    <ul className={thumnailImgStyles.label}>
                       <li style={{ backgroundColor: '#00afd5' }}>New</li>
                     </ul>
-                    <div className={thumnailStyles.img}>
+                    <div className={thumnailImgStyles.img}>
                       <img src={listImage1} alt="" />
                     </div>
                   </div>
@@ -315,11 +328,11 @@ function RouteComponent() {
 
                 <div className={thumnailStyles.thumnail_box}>
                   {/* img */}
-                  <div className={thumnailStyles.img_box}>
-                    <ul className={thumnailStyles.label}>
+                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                    <ul className={thumnailImgStyles.label}>
                       <li style={{ backgroundColor: '#00afd5' }}>New</li>
                     </ul>
-                    <div className={thumnailStyles.img}>
+                    <div className={thumnailImgStyles.img}>
                       <img src={listImage1} alt="" />
                     </div>
                   </div>

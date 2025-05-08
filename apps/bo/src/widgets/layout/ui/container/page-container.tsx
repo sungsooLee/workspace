@@ -1,7 +1,7 @@
 import { Children, FC, isValidElement, ReactNode, useState, useEffect, useRef } from 'react';
 import { useCreation } from 'ahooks';
 import { last } from 'lodash';
-
+import { t } from 'i18next';
 import { cn } from '@learnway/shared';
 import { Button } from '@learnway/ui';
 import { IcoStar, IcoArrowLineTop } from '@learnway/icons';
@@ -128,7 +128,7 @@ const PageContainerComponent: FC<{
         {/* title_wrap */}
         <div className={cn(styles.title_wrap, 'title_wrap')}>
           <h3 className={styles.title}>
-            {title}
+            {t(title)}
             {showFavoriteButton && (
               <Button
                 className={cn(styles.btn_favorites, isFavorite ? styles.active : '')}

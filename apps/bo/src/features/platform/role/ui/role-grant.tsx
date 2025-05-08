@@ -1,5 +1,3 @@
-// const
-
 import { Button, GridBox, TreeBox, TreeNode } from '@learnway/ui';
 import { SectionLayout } from '../../../../widgets/layout/ui/container/section-layout/section-layout';
 import { roleTreeMockData } from '../../../../entities/mock/role';

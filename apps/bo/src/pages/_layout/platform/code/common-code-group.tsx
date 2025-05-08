@@ -14,7 +14,7 @@ export const Route = createFileRoute('/_layout/platform/code/common-code-group')
   component: RouteComponent,
   ...pageRouteConfig({
     meta: {
-      title: '공통코드그룹관리',
+      title: 'LABEL.page.title.commonCdGroupManage',
     },
   }),
 });
@@ -39,6 +39,8 @@ function RouteComponent() {
     isUsed: '',
   });
 
+  const [isSearched, setIsSearched] = useState(false);
+
   const handlePageChange = (newPage: number) => {
     setPageState({ ...pageState, page: newPage });
   };
@@ -62,6 +64,7 @@ function RouteComponent() {
       cdGroupName: data.cdGroupName || '',
       isUsed: data.isUsed || '',
     });
+    setIsSearched(true);
   };
 
   const handleGridStateChange = (newState: GridState) => {
@@ -98,7 +101,8 @@ function RouteComponent() {
             ...searchParams,
             sort: sortState.sort,
           }}
-          onStateChange={handleGridStateChange} // 이 부분 추가
+          onStateChange={handleGridStateChange}
+          isSearched={isSearched}
         />
       </MainContents>
     </PageContainer>

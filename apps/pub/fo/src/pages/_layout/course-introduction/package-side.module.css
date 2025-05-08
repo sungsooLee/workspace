@@ -1,0 +1,54 @@
+/* 사이드 패키지 */
+
+.start {
+  &.package {
+    .package_box {
+      .acc_package {
+        & > div {
+          & > button {
+            @apply relative max-h-none py-0 pr-[30px];
+            & > span {
+              @apply px-0;
+            }
+            & + div {
+              @apply bg-inherit;
+            }
+            & > svg {
+              @apply absolute right-0 top-0 mt-0 h-[20px] w-[20px] stroke-[var(--gray7)];
+            }
+          }
+          & + div {
+            @apply mt-[16px] border-t-[1px] border-solid border-[var(--gray3)] pt-[16px];
+          }
+        }
+        .sub_package_title {
+          & > div {
+            & > div {
+              & > div:nth-child(1) {
+                @apply w-[120px];
+              }
+              & > div {
+                & > p {
+                  @apply body_3_r max-h-none !whitespace-normal break-words;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.sub_package_content {
+  @apply relative mt-[16px] pl-[26px];
+  &::before {
+    @apply absolute left-[8px] top-0 h-full w-[2px] bg-[var(--gray4)] content-[''];
+  }
+  p {
+    @apply body_3_r text-[var(--gray9)];
+    & + p {
+      @apply mt-[16px];
+    }
+  }
+}

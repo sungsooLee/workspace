@@ -8,13 +8,11 @@ import {
   DynamicFormField,
   findNodePath,
   findParentNode,
-  TreeContainer,
+  TreeBox,
   TreeEventPayload,
   TreeNode,
-  TreeView,
   useModal,
 } from '@learnway/ui';
-import { cn } from '@learnway/shared';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
@@ -28,6 +26,7 @@ import {
   useProgramHook,
 } from '../../../../entities/program/service/program-manage.hook';
 import { transformApiDataToApiTreeData } from '../../menu/service/menu.service';
+import { SectionLayout } from '../../../../widgets/layout/ui/container/section-layout/section-layout';
 
 const FORM_MODE = {
   NONE: 'NONE',
@@ -97,7 +96,7 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
         const newNode = findNodeByApiId(transformedData, lastCreateApiId);
         if (newNode) {
           const nodePath = findNodePath(transformedData, lastCreateApiId);
-
+          console.log(newNode);
           if (nodePath) {
             setExpandedKeys((prev) => {
               const combined = [...new Set([...prev, ...nodePath])];
@@ -105,6 +104,7 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
             });
 
             setSelectedNode(newNode);
+
             setLastCreateApiId(null);
           }
         }
@@ -134,6 +134,7 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
     formConfig.builders.forEach((item) => {
       initData[item.name] = item.value;
     });
+
     fetchData({
       ...initData,
       fullPath: node?.fullPath,
@@ -172,21 +173,20 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
           const payload = {
             apiUuid: nodeInfo.sourceNode.apiUuid,
             destinationParentId: nodeInfo.targetNode?.apiId,
-            sortSeq: nodeInfo.targetIndex ? nodeInfo.targetIndex + 1 : 1,
+            // sortSeq: nodeInfo.targetIndex ? nodeInfo.targetIndex + 1 : 1,
+            sortOrder: 1,
+            apiScopeCode: menuScope,
           };
           dnd(payload);
-        }
-        //BEFORE 혹은 AFTER 이면 부모 노드가 타겟 되어야함.
-        else {
-          const targetIndex = nodeInfo.targetIndex || 0;
-          if (targetIndex >= 0) {
-            const payload = {
-              apiUuid: nodeInfo.sourceNode.apiUuid,
-              destinationParentId: nodeInfo.targetNode?.parentId,
-              sortSeq: targetIndex + 1,
-            };
-            dnd(payload);
-          }
+        } else {
+          const targetIndex = nodeInfo.targetIndex!;
+          const payload = {
+            apiUuid: nodeInfo.sourceNode.apiUuid,
+            destinationParentId: nodeInfo.targetNode?.parentId,
+            sortOrder: targetIndex + 1,
+            apiScopeCode: menuScope,
+          };
+          dnd(payload);
         }
         break;
       }
@@ -194,6 +194,7 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
   };
 
   const handleSelectedNodeChange = (node: TreeNode | null) => {
+    console.log(node);
     setSelectedNode(node);
     if (node) {
       setFormMode(FORM_MODE.VIEW);
@@ -202,11 +203,19 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
     }
   };
 
+  const handleReset = async () => {
+    //
+    const isReset = await openConfirm({
+      title: t('LABEL.confirm.reset.title'),
+    });
+    if (isReset) onFormChange();
+  };
+
   const handleOnSubmit = (node: any) => {
     if (formMode === FORM_MODE.VIEW) {
       openConfirm({
-        title: '수정 하시겠습니까?',
-        content: <p>입력한 정보로 저장됩니다.</p>,
+        title: t('LABEL.confirm.modify.title'),
+        content: t('LABEL.confirm.modify.message'),
         onClose: (value: boolean) => {
           if (value) {
             update(
@@ -224,12 +233,12 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
       });
     } else if (formMode === FORM_MODE.ADD) {
       openConfirm({
-        title: '저장 하시겠습니까?',
-        content: <p>입력한 정보로 저장됩니다.</p>,
+        title: t('LABEL.confirm.save.title'),
+        content: t('LABEL.confirm.save.message'),
         onClose: (value: boolean) => {
           if (value) {
             create(
-              { ...node, apiScope: menuScope },
+              { ...node, apiScope: menuScope, sortOrder: 1 },
               {
                 onSuccess: (data: any) => {
                   if (data && data.apiId) {
@@ -245,58 +254,24 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
   };
 
   return (
-    <div className={cn(layoutStyles.start, layoutStyles.wrap)}>
-      <div className={layoutStyles.inner}>
-        <div className={titleStyles.title_wrap}>
-          <h3 className={titleStyles.title}>{'목록'}</h3>
-          <div className={layoutStyles.btn_wrap}>
-            <Button
-              variant="text"
-              size="sm"
-              className={layoutStyles.btn_text}
-              onClick={() => {
-                if (treeData) {
-                  const allKeys = handleExpandAll(treeData);
-                  handleExpandChange(allKeys);
-                }
-              }}
-            >
-              {'전체펼침'}
-            </Button>
-            <Button
-              variant="text"
-              size="sm"
-              className={layoutStyles.btn_text}
-              onClick={() => {
-                const firstKeys = getFirstExpandKeys(treeData);
-                handleExpandChange(firstKeys || []);
-              }}
-            >
-              {'전체닫기'}
-            </Button>
-          </div>
-        </div>
-        <div className={layoutStyles.inner_contents}>
-          <TreeContainer>
-            <TreeView
-              data={treeData}
-              treeId={'program-tree'}
-              expandedKeys={expandedKeys}
-              onExpandedKeysChange={handleExpandChange}
-              nodeButtons={renderNodeButtons}
-              onAction={handleTreeAction}
-              type={'DRAG_DROP'}
-              selectedNode={selectedNode}
-              onSelectedNodeChange={handleSelectedNodeChange}
-            />
-          </TreeContainer>
-        </div>
-      </div>
+    <SectionLayout contentsRatio={'half'}>
+      <TreeBox
+        data={treeData}
+        treeId={'program-tree'}
+        expandedKeys={expandedKeys}
+        onExpandedKeysChange={handleExpandChange}
+        renderNodeButtons={renderNodeButtons}
+        onAction={handleTreeAction}
+        type={'DRAG_DROP'}
+        selectedNode={selectedNode}
+        initLevel={2}
+        handleSelectedNodeChange={handleSelectedNodeChange}
+      />
       <div className={layoutStyles.inner}>
         <form onSubmit={onSubmit(handleOnSubmit)}>
           <div className={titleStyles.title_wrap}>
             <h3 className={titleStyles.title}>
-              {menuScope === 'FO' ? '학습자 API 정보' : 'HRD센터 API 정보'}
+              {menuScope === 'FO' ? t('학습자 API 정보') : t('HRD센터 API 정보')}
             </h3>
             <div className={layoutStyles.btn_wrap}>
               <Button
@@ -304,10 +279,10 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
                 variant="text"
                 size="sm"
                 className={layoutStyles.btn_text}
-                onClick={() => onFormChange()}
+                onClick={handleReset}
                 disabled={FORM_MODE.NONE === formMode}
               >
-                초기화
+                {t('LABEL.button.reset')}
               </Button>
               <Button
                 variant="text"
@@ -318,10 +293,10 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
                   deleteProgram(selectedNode?.apiUuid);
                 }}
               >
-                삭제
+                {t('LABEL.button.delete')}
               </Button>
               <Button type="submit" variant="save" size="sm" disabled={FORM_MODE.NONE === formMode}>
-                저장
+                {t('LABEL.button.save')}
               </Button>
             </div>
           </div>
@@ -382,7 +357,7 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
           </div>
         </form>
       </div>
-    </div>
+    </SectionLayout>
   );
 };
 
