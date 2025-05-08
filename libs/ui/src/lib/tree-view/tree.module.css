@@ -24,6 +24,9 @@
             @apply !h-[20px] !min-w-[34px] !px-0;
           }
         }
+        .folder_wrap {
+          @apply mr-[6px];
+        }
         /* &:not(.root_menu) {
           @apply bg-[url(../../assets/images/bg/bg_tree_line.png)] bg-[10px_auto] bg-[left_6px_top_12px] bg-no-repeat !pl-[18px];
         } */
@@ -43,13 +46,13 @@
             @apply bg-[left_6px_top_12px];
             & + .tree_children {
               .tree_item .tree_inner {
-                @apply bg-[left_26px_top_12px] !pl-[56px];
+                @apply bg-[left_26px_top_12px] !pl-[28px];
                 & + .tree_children {
                   .tree_item .tree_inner {
-                    @apply bg-[left_46px_top_12px] !pl-[84px];
+                    @apply bg-[left_46px_top_12px] !pl-[56px];
                     & + .tree_children {
                       .tree_item .tree_inner {
-                        @apply bg-[left_66px_top_12px] !pl-[112px];
+                        @apply bg-[left_66px_top_12px] !pl-[84px];
                       }
                     }
                   }
