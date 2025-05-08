@@ -105,10 +105,11 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
     switch (events.type) {
       case 'NODE_MOVE':
         {
+          console.log('devents ', events);
           const payload = moveNodeCheck(events);
           if (payload) {
             payload.menuScopeCode = menuScope;
-            console.log(payload);
+            console.log('dsend', payload);
             changeMenuPosition(payload);
           }
         }
@@ -118,7 +119,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
   const handleTenantDetailMenuMapping = async () => {
     const modalScope = menuScope;
     const modalTenantId = tenantId;
-    const selectTenantDetailMenu = await openModal({
+    await openModal({
       content: <TenantDetailMenuMappingModal menuScopeCode={modalScope} tenantId={modalTenantId} />,
       width: 'xl',
     });
@@ -170,7 +171,6 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
       prevDataRef.current = menuData;
       console.log(menuData);
       const transformedData = transformApiDataToTreeData(menuData);
-      console.log(transformedData);
       setTreeData(transformedData);
       if (transformedData && transformedData.length > 0 && expandedKeys.length === 0) {
         const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
@@ -311,7 +311,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'menuDesc'} disabled={true} />
+              <DynamicFormField name={'menuDesc'} disabled={FORM_MODE.NONE === formMode} />
             </FormRow>
           </ContentsRow>
           <ContentsRow type={'horizontal'}>
@@ -403,6 +403,7 @@ const formConfig: DynamicFormConfig = {
       type: 'textarea',
       label: t('설명'),
       value: '',
+      size: 50,
     },
     {
       name: 'isHiddenMenu',
@@ -420,7 +421,7 @@ const formConfig: DynamicFormConfig = {
       name: 'isUsed',
       type: 'switch',
       label: t('사용여부'),
-      value: false,
+      value: true,
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },

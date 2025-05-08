@@ -28,10 +28,19 @@ export const Route = createFileRoute('/_layout/tenant/management/regist')({
 function RouteComponent() {
   const router = useRouter();
   const { open: openModal, confirm: openConfirm } = useModal();
-  const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
-    useDynamicForm(formConfig);
+  const {
+    provider,
+    fetchData,
+    onSubmit,
+    onFormValid,
+    onFormChange,
+    getValues,
+    clearFormError,
+    setFormError,
+  } = useDynamicForm(formConfig);
   const { create } = useCreateTenant({});
 
+  const formRef = useRef<HTMLFormElement>(null);
   const handleListButtonClick = () => {
     router.navigate({ to: '/tenant/management' });
   };
@@ -39,19 +48,24 @@ function RouteComponent() {
   const handleCheckChange = (values: any[]) => {
     console.log('=>', values);
   };
+  const handleSaveButtonClick = async () => {
+    const form = formRef.current;
+    if (form) {
+      form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+    }
+  };
   const handleResetButtonClick = () => {
-    openModal({ content: <UserInquiryModal />, width: 'xl' });
-
     console.log('click reset');
   };
+
   const handleOnSubmit = async (data: any) => {
     console.log('data {} => ', data);
     const payload = {
       ...data,
     };
-    if (await openConfirm('저장 하시겠습니까?')) {
-      create(payload);
-    }
+    // if (await openConfirm('저장 하시겠습니까?')) {
+    //   //create(payload);
+    // }
   };
 
   return (
@@ -66,21 +80,20 @@ function RouteComponent() {
         <Button onClick={handleResetButtonClick} variant="point" size="sm">
           {t('초기화')}
         </Button>
-        <Button variant="primary" size="sm">
+        <Button variant="primary" size="sm" onClick={handleSaveButtonClick}>
           {t('저장')}
         </Button>
       </ContentsButtons>
       <MainContents>
-        <form onSubmit={onSubmit(handleOnSubmit)}>
+        <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
           <div className="title_wrap">
             <strong className="title">{'기본 정보'}</strong>
           </div>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'tenantName'} />
-              <Button variant="gray" size="sm">
-                {'중복'}
-              </Button>
+              <DynamicFormField name={'tenantName'}>
+                <DuplicateCheckInputFormField />
+              </DynamicFormField>
             </FormRow>
           </ContentsRow>
           <ContentsRow>
@@ -102,7 +115,7 @@ function RouteComponent() {
                   modalConfig={{
                     title: '',
                     width: 'xl',
-                    content: <TenantManagerModal />,
+                    content: <HrdUserInquiryModal />,
                   }}
                 />
               </DynamicFormField>
@@ -157,7 +170,7 @@ function RouteComponent() {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'language'} onCheckedChange={handleCheckChange} />
+              <DynamicFormField name={'language'} />
             </FormRow>
           </ContentsRow>
         </form>
@@ -170,24 +183,32 @@ const formConfig: DynamicFormConfig = {
   builders: [
     {
       name: 'tenantName',
-      type: 'text',
+      type: 'custom',
       label: t('테넌트명'),
       value: '',
+      format: 'object',
       placeholder: '',
+      maxLength: 150,
+      fields: {
+        checkState: 'checkState',
+        fieldValue: 'tenantName',
+      },
     },
+    { name: 'checkState', type: 'custom', fromat: 'text', value: '123' },
     {
       label: t('테넌트 로고 (Size : 000x000)'),
       name: 'tenantLogo',
       type: 'custom',
       format: 'array',
       value: [],
-      tooltip: '테넌트에 사용할 로고로 파일 1개만 등록할 수 있습니다.',
+      tooltip: t('테넌트에 사용할 로고로 파일 1개만 등록할 수 있습니다.'),
     },
     {
       name: 'managerName',
       label: t('테넌트 담당자'),
       type: 'custom',
       value: '',
+      placeholder: t('담당자를 선택해주세요.'),
     },
     {
       name: 'tenantJungsanTag',
@@ -202,8 +223,9 @@ const formConfig: DynamicFormConfig = {
       label: t('회사 선택'),
       type: 'custom',
       value: '',
-      tooltip:
+      tooltip: t(
         '테넌트 소속 회사를 여러개 선택할 수 있습니다. 회사가 여러 개인 경우 회사별로 개별 설정이 필요합니다.',
+      ),
     },
     {
       name: 'isUsed',
@@ -211,12 +233,13 @@ const formConfig: DynamicFormConfig = {
       label: t('사용 여부'),
       value: true,
       format: 'boolean',
-      tooltip:
+      tooltip: t(
         '테넌트 사용이 ON이면 학습자 사이트에 로그인 할 수 있으며, OFF이면 로그인 할 수 없습니다.',
+      ),
       switchConfig: {
         label: (value: boolean) => (value ? '사용' : '미사용'),
       },
-      guideText: '테넌트 사용 여부를 설정할 수 있습니다.',
+      guideText: t('테넌트 사용 여부를 설정할 수 있습니다.'),
     },
     {
       name: 'description',
@@ -231,9 +254,10 @@ const formConfig: DynamicFormConfig = {
       type: 'checkbox-group',
       label: t('디바이스'),
       format: 'array',
-      tooltip:
+      tooltip: t(
         'PC, 모바일, APP 모두 사용가능하며 과정 등록 시 PC, 모바일 학습 여부를 설정할 수 있습니다.',
-      value: ['all', 'isWebExposed', 'isMobileExposed', 'isAppExposed'],
+      ),
+      value: ['isWebExposed', 'isMobileExposed', 'isAppExposed'],
       options: [
         {
           value: 'isWebExposed',
@@ -255,7 +279,9 @@ const formConfig: DynamicFormConfig = {
       type: 'checkbox-group',
       label: t('언어'),
       format: 'array',
-      tooltip: '테넌트에서 사용할 언어를 선택하고, 선택한 언어에서 다국어 설정을 할 수 있습니다.',
+      tooltip: t(
+        '테넌트에서 사용할 언어를 선택하고, 선택한 언어에서 다국어 설정을 할 수 있습니다.',
+      ),
       value: ['ko', 'en'],
       options: [
         { value: 'ko', label: '한국어' },
@@ -263,9 +289,19 @@ const formConfig: DynamicFormConfig = {
         { value: 'ne', label: '네팔어' },
         { value: 'ms', label: '말레이어' },
         { value: 'vi', label: '베트남어' },
-        { value: 'es', label: '스페인어' },
+        { value: 'a1', label: '스페인어1' },
+        { value: 'a2', label: '스페인어2' },
+        { value: 'a3', label: '스페인어3' },
+        { value: 'a4', label: '스페인어4' },
+        { value: 'a5', label: '스페인어5' },
+        { value: 'a6', label: '스페인어6' },
+        { value: 'a7', label: '스페인어7' },
+        { value: 'a8', label: '스페인어8' },
+        { value: 'a9', label: '스페인어9' },
       ],
-      showSelectAll: true,
+      checkGroupConfig: {
+        allCheck: true,
+      },
     },
     {
       name: 'useCategory',
@@ -273,7 +309,7 @@ const formConfig: DynamicFormConfig = {
       label: t('카테고리 사용 여부'),
       format: 'array',
       tooltip: '테넌트 - 카테고리 관리에서 사용할 카테고리를 선택할 수 있습니다',
-      value: ['all', 'common', 'tenant'],
+      value: ['common', 'tenant'],
       options: [
         {
           value: 'common',
@@ -288,37 +324,52 @@ const formConfig: DynamicFormConfig = {
     },
   ],
   validator: {
-    tenantName: { required: true },
-    tenantLogo: { required: true },
-    managerName: { required: true },
-    tenantJungsanTag: { required: true },
-    company: { required: true },
-    isUsed: { required: true },
-    device: {
-      required: {
-        fn: (values) => {
-          return (
-            !values.isMobileExposed && !values.isWebExposed && !values.isAppExposed && !values.all
-          );
-        },
-        message: t('1개 이상 선택하세요.'),
-      },
-    },
-    useCategory: {
-      required: {
-        fn: (values) => {
-          return !values.common && !values.tenant && !values.all;
-        },
-        message: t('1개 이상 선택하세요.'),
-      },
-    },
-    language: {
-      required: {
-        fn: (values) => {
-          return !values.common && !values.tenant && !values.all;
-        },
-        message: t('1개 이상 선택하세요.'),
-      },
-    },
+    // tenantName: {
+    //   required: {
+    //     fn: (values) => {
+    //       console.log('tenantName', values);
+    //       return false;
+    //     },
+    //     message: '중복 확인 하세요',
+    //   },
+    // },
+    // tenantLogo: {
+    //   required: {
+    //     fn: (values) => {
+    //       return false;
+    //     },
+    //     message: 'ddddd',
+    //   },
+    // },
+    // managerName: { required: true },
+    // tenantJungsanTag: { required: true },
+    // company: { required: true },
+    // isUsed: { required: true },
+    // device: {
+    //   required: {
+    //     fn: (values) => {
+    //       return (
+    //         !values.isMobileExposed && !values.isWebExposed && !values.isAppExposed && !values.all
+    //       );
+    //     },
+    //     message: t('1개 이상 선택하세요.'),
+    //   },
+    // },
+    // useCategory: {
+    //   required: {
+    //     fn: (values) => {
+    //       return !values.common && !values.tenant && !values.all;
+    //     },
+    //     message: t('1개 이상 선택하세요.'),
+    //   },
+    // },
+    // language: {
+    //   required: {
+    //     fn: (values) => {
+    //       return !values.common && !values.tenant && !values.all;
+    //     },
+    //     message: t('1개 이상 선택하세요.'),
+    //   },
+    // },
   },
 };
