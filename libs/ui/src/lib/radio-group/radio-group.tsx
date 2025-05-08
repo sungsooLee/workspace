@@ -29,7 +29,6 @@ const RadioGroupComponent = forwardRef<
       size,
       orientation = 'horizontal',
       name,
-      cols,
       ...props
     },
     ref,
