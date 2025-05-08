@@ -281,7 +281,7 @@ export const guideData = [
     pageId: 'my/information-change',
     pageType: 'Pop-up',
     completionDate: '2025-03-27',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-05-08',
     remarks: '- phone-change-popup.tsx',
   },
   {
