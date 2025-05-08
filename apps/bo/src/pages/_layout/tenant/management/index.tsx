@@ -22,15 +22,10 @@ export const Route = createFileRoute('/_layout/tenant/management/')({
 });
 
 function RouteComponent() {
-  // grid
-  const [pageIndex, setPageIndex] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
-
   const router = useRouter();
 
   const gridConfig = {
     query: tenantQueryOptions.all,
-    // query: '',
     columns: [
       {
         name: 'no1',
@@ -141,32 +136,6 @@ function RouteComponent() {
     </PageContainer>
   );
 }
-
-const options = [
-  { value: 'option1', label: '전체' },
-  { value: 'option2', label: '옵션 2' },
-  { value: 'option3', label: '옵션 3' },
-];
-const options2 = [
-  { value: 'option1', label: '전체' },
-  { value: 'option2', label: '옵션 2' },
-  { value: 'option3', label: '옵션 3' },
-];
-const options3 = [
-  { value: 'option1', label: '전체' },
-  { value: 'option2', label: '옵션 2' },
-  { value: 'option3', label: '옵션 3' },
-];
-const options4 = [
-  { value: 'option1', label: '전체' },
-  { value: 'option2', label: '옵션 2' },
-  { value: 'option3', label: '옵션 3' },
-];
-const options5 = [
-  { value: 'option1', label: '전체' },
-  { value: 'option2', label: '옵션 2' },
-  { value: 'option3', label: '옵션 3' },
-];
 
 const searchConfig: SearchBoxConfig = {
   builders: [

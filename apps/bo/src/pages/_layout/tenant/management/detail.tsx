@@ -24,6 +24,7 @@ export const Route = createFileRoute('/_layout/tenant/management/detail')({
 
 function RouteComponent() {
   const router = useRouter();
+  const formRef = useRef<HTMLFormElement>(null);
 
   const [selectedTabKey, setSelectedTabKey] = useState('menu01');
 
@@ -54,6 +55,45 @@ function RouteComponent() {
         alert('없음');
     }
   };
+
+  const menuItems = [
+    {
+      title: '테넌트 기본 정보',
+      key: 'menu01',
+      content: <TenantDetailBase formRef={formRef} />,
+    },
+    {
+      title: '테넌트 속성 관리',
+      key: 'menu02',
+      content: <TenantDetailAttribute />,
+    },
+    {
+      title: '테넌트 메뉴관리 메핑',
+      key: 'menu03',
+      content: <TenantDetailMenu />,
+    },
+    {
+      title: '테넌트 카테고리 관리',
+      key: 'menu04',
+      content: <TenantDetailCategory />,
+    },
+    {
+      title: '테넌트 역할 관리',
+      key: 'menu05',
+      content: <TenaTenantDetailLearningRole />,
+    },
+    {
+      title: '테넌트 위젯 관리',
+      key: 'menu06',
+      content: <TenantDetailWidget />,
+    },
+    {
+      title: '테넌트 배너 관리',
+      key: 'menu07',
+      content: <TenantDetailBanner />,
+    },
+  ];
+
   return (
     <PageContainer scrollHidden={false}>
       {selectedTabKey === 'menu01' && (
@@ -92,41 +132,3 @@ function RouteComponent() {
     </PageContainer>
   );
 }
-
-const menuItems = [
-  {
-    title: '테넌트 기본 정보',
-    key: 'menu01',
-    content: <TenantDetailBase />,
-  },
-  {
-    title: '테넌트 속성 관리',
-    key: 'menu02',
-    content: <TenantDetailAttribute />,
-  },
-  {
-    title: '테넌트 메뉴관리 메핑',
-    key: 'menu03',
-    content: <TenantDetailMenu />,
-  },
-  {
-    title: '테넌트 카테고리 관리',
-    key: 'menu04',
-    content: <TenantDetailCategory />,
-  },
-  {
-    title: '테넌트 역할 관리',
-    key: 'menu05',
-    content: <TenaTenantDetailLearningRole />,
-  },
-  {
-    title: '테넌트 위젯 관리',
-    key: 'menu06',
-    content: <TenantDetailWidget />,
-  },
-  {
-    title: '테넌트 배너 관리',
-    key: 'menu07',
-    content: <TenantDetailBanner />,
-  },
-];

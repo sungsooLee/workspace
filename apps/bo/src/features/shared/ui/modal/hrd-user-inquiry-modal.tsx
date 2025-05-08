@@ -20,7 +20,7 @@ import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-content
 
 import { usersQueryOptions } from '@entities/users/service/users.queries';
 
-const UserInquiryModalComponent: FC<any> = ({ children }) => {
+const HrdUserInquiryModalComponent: FC<any> = ({ children }) => {
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const { open: openModal, close: closeModal, confirm: openConfirm } = useModal();
@@ -59,7 +59,7 @@ const UserInquiryModalComponent: FC<any> = ({ children }) => {
   );
 };
 
-export const UserInquiryModal = UserInquiryModalComponent;
+export const HrdUserInquiryModal = HrdUserInquiryModalComponent;
 
 const gridConfig = {
   query: usersQueryOptions.all,
