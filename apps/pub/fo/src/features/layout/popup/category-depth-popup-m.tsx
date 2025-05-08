@@ -2,16 +2,16 @@ import { memo, useState } from 'react';
 import { ModalBody, ModalContainer, ModalFooter, Button, Dropdown } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 
-import styles from './category-filter-popup-m.module.css';
+import styles from './category-depth-popup-m.module.css';
 
-const CategoryFilterPopupMComponent = () => {
-  const [filter01, setFilter01] = useState<string[]>(['대분류']);
-  const [filter02, setFilter02] = useState<string[]>(['중분류']);
-  const [filter03, setFilter03] = useState<string[]>(['소분류']);
+const CategoryDepthPopupMComponent = () => {
+  const [depth01, setDepth01] = useState<string[]>(['대분류']);
+  const [depth02, setDepth02] = useState<string[]>(['중분류']);
+  const [depth03, setDepth03] = useState<string[]>(['소분류']);
   return (
     <ModalContainer>
       <ModalBody>
-        <div className={cn(styles.start, styles.filter_wrap)}>
+        <div className={cn(styles.start, styles.depth_wrap)}>
           <Dropdown
             size="lg"
             options={[
@@ -24,8 +24,8 @@ const CategoryFilterPopupMComponent = () => {
               { value: 'g', label: '포터' },
               { value: 'h', label: '캐스퍼' },
             ]}
-            value={filter01}
-            onChange={(selected) => setFilter01(selected)}
+            value={depth01}
+            onChange={(selected) => setDepth01(selected)}
           />
 
           <Dropdown
@@ -35,8 +35,8 @@ const CategoryFilterPopupMComponent = () => {
               { value: 'b', label: 'NE PE(2024)' },
               { value: 'c', label: 'NE(2021)' },
             ]}
-            value={filter02}
-            onChange={(selected) => setFilter02(selected)}
+            value={depth02}
+            onChange={(selected) => setDepth02(selected)}
           />
 
           <Dropdown
@@ -46,8 +46,8 @@ const CategoryFilterPopupMComponent = () => {
               { value: 'b', label: '상품정보' },
               { value: 'c', label: '기술정보' },
             ]}
-            value={filter03}
-            onChange={(selected) => setFilter03(selected)}
+            value={depth03}
+            onChange={(selected) => setDepth03(selected)}
           />
         </div>
       </ModalBody>
@@ -63,4 +63,4 @@ const CategoryFilterPopupMComponent = () => {
   );
 };
 
-export const CategoryFilterPopupM = memo(CategoryFilterPopupMComponent);
+export const CategoryDepthPopupM = memo(CategoryDepthPopupMComponent);
