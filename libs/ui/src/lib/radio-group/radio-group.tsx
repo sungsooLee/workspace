@@ -13,6 +13,7 @@ export interface RadioGroupComponentProps extends React.ComponentProps<typeof Pr
   size?: 'xs' | 'sm' | 'md' | 'lg'; // 12, 16, 18, 24(basic)
   onValueChange?: (value: string) => void;
   name?: string;
+  cols?: number;
 }
 
 const RadioGroupComponent = forwardRef<
@@ -28,6 +29,7 @@ const RadioGroupComponent = forwardRef<
       size,
       orientation = 'horizontal',
       name,
+      cols,
       ...props
     },
     ref,
