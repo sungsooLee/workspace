@@ -145,9 +145,6 @@
         @apply mr-[12px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
       }
     }
-    .btn_upload svg {
-      @apply rotate-180;
-    }
     .btn_excel {
       @apply text-[var(--gray9)];
     }

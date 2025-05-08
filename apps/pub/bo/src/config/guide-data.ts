@@ -627,7 +627,7 @@ export const guideData = [
     pageId: 'pms/menu-channel-detail',
     screenId: 'NLP_BO_CHN_1201',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-05-08',
     lastUpdateDate: '',
     remarks: '', // 비고
   },

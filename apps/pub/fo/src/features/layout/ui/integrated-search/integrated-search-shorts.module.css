@@ -1,5 +1,8 @@
 .start {
   &.shorts {
+    .empty {
+      @apply mt-[80px];
+    }
   }
 }
 

@@ -1,5 +1,8 @@
 .start {
   &.coaching {
+    .empty {
+      @apply mt-[80px];
+    }
   }
 }
 

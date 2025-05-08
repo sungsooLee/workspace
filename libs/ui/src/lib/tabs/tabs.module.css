@@ -48,9 +48,9 @@
             @apply ml-[32px];
           }
           &[data-state='active'] {
-            @apply font-bold text-[var(--primary2)];
+            @apply font-bold text-[var(--gray9)];
             &::before {
-              @apply absolute bottom-0 left-0 h-[3px] w-full bg-[var(--primary2)] content-[''];
+              @apply absolute bottom-0 left-0 h-[3px] w-full bg-[var(--gray9)] content-[''];
             }
           }
         }
@@ -216,7 +216,7 @@
             }
           }
           &[data-state='active'] {
-            @apply button_bo_2_b border-[1px] !border-[var(--primary1)];
+            @apply button_bo_2_b border-[1px] !border-[var(--gray9)] text-[var(--gray9)];
             & + button {
               @apply border-l-0;
             }

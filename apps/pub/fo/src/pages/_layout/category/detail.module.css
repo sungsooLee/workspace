@@ -51,18 +51,19 @@
 
   .list {
     @apply mt-[24px];
-    .list_box > div {
-      @apply mr-[20px];
+    .list_box > li {
+      @apply mr-[20px] inline-block w-[280px] align-top;
     }
-    .list_box > div:nth-child(4n) {
+    .list_box > li:nth-child(4n) {
       @apply mr-0;
     }
-    .list_box > div:nth-child(n + 5) {
+    .list_box > li:nth-child(n + 5) {
       @apply mt-[40px];
     }
     .list_box.horizontal {
-      & > div {
-        & + div {
+      & > li {
+        @apply mr-0 w-full;
+        & + li {
           @apply mt-[54px];
         }
       }
