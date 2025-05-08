@@ -1,7 +1,12 @@
 /* checkbox-group-form-field.module.css */
 .start {
   &.checkbox_list {
-    /* @apply grid w-full grid-cols-4 gap-[1.6rem]; */
-    @apply flex flex-wrap gap-[1.6rem] whitespace-normal;
+    @apply grid w-full gap-[1.6rem] whitespace-normal;
+    & > div + div {
+      @apply !ml-0;
+    }
+    &.type_flex {
+      @apply flex flex-wrap;
+    }
   }
 }

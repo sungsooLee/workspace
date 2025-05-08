@@ -281,7 +281,7 @@ export const guideData = [
     pageId: 'my/information-change',
     pageType: 'Pop-up',
     completionDate: '2025-03-27',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-05-08',
     remarks: '- phone-change-popup.tsx',
   },
   {
@@ -711,11 +711,11 @@ export const guideData = [
     screenId: 'NLP_FO_CAT_M_1002',
     screenName: 'M_카테고리_필터레이어팝업',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'category/detail_m',
+    pageType: 'Pop-up',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '- 공통 바텀 팝업 대기중(작업불가능)',
+    remarks: '- category-filter-popuo-m.tsx\n- Dropdown 안에 popover 위치 수정중',
   },
   {
     screenId: 'NLP_FO_LEC_1000',

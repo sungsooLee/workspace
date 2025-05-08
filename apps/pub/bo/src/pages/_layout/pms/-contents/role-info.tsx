@@ -240,8 +240,24 @@ const RoleInfoComponent: FC<{}> = ({}) => {
                   { value: 'option01', label: '모든 회사' },
                   { value: 'option02', label: '소속 회사' },
                   { value: 'option03', label: '직접 선택' },
+                  { value: 'option04', label: '직접 선택' },
+                  { value: 'option05', label: '직접 선택' },
+                  { value: 'option06', label: '직접 선택' },
+                  { value: 'option07', label: '직접 선택' },
+                  { value: 'option08', label: '직접 선택' },
+                  { value: 'option09', label: '직접 선택' },
+                  { value: 'option10', label: '직접 선택' },
+                  { value: 'option11', label: '직접 선택' },
+                  { value: 'option12', label: '직접 선택' },
+                  { value: 'option13', label: '직접 선택' },
+                  { value: 'option14', label: '직접 선택' },
+                  { value: 'option15', label: '직접 선택' },
+                  { value: 'option16', label: '직접 선택' },
+                  { value: 'option17', label: '직접 선택' },
+                  { value: 'option18', label: '직접 선택' },
                 ]}
                 onValueChange={handleValueChange}
+                cols={6}
               />
             </div>
           </div>
