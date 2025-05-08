@@ -111,6 +111,7 @@ export { com_ever_edu_pms_menu_dto_res_MenuTreeDto } from './models/com_ever_edu
 export type { com_ever_edu_pms_menu_dto_res_TenantMenuResDto$DetailOnAdmin } from './models/com_ever_edu_pms_menu_dto_res_TenantMenuResDto$DetailOnAdmin';
 export { com_ever_edu_pms_menu_dto_res_TenantMenuTreeDto } from './models/com_ever_edu_pms_menu_dto_res_TenantMenuTreeDto';
 export type { com_ever_edu_pms_menu_dto_res_TreeBaseDto } from './models/com_ever_edu_pms_menu_dto_res_TreeBaseDto';
+export { com_ever_edu_pms_multilingual_dto_excel_MultilingualExcelDto } from './models/com_ever_edu_pms_multilingual_dto_excel_MultilingualExcelDto';
 export { com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$SearchByAdmin } from './models/com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$SearchByAdmin';
 export { com_ever_edu_pms_multilingual_dto_req_MultilingualUpdateReqDto$MultilingualDto } from './models/com_ever_edu_pms_multilingual_dto_req_MultilingualUpdateReqDto$MultilingualDto';
 export type { com_ever_edu_pms_multilingual_dto_req_MultilingualUpdateReqDto$TranslationDto } from './models/com_ever_edu_pms_multilingual_dto_req_MultilingualUpdateReqDto$TranslationDto';

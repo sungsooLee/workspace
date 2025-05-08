@@ -41,6 +41,7 @@ import type { com_ever_edu_pms_menu_dto_res_MenuResDto$ListOnAdmin } from '../mo
 import type { com_ever_edu_pms_menu_dto_res_MenuTreeDto } from '../models/com_ever_edu_pms_menu_dto_res_MenuTreeDto';
 import type { com_ever_edu_pms_menu_dto_res_TenantMenuResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_menu_dto_res_TenantMenuResDto$DetailOnAdmin';
 import type { com_ever_edu_pms_menu_dto_res_TenantMenuTreeDto } from '../models/com_ever_edu_pms_menu_dto_res_TenantMenuTreeDto';
+import type { com_ever_edu_pms_multilingual_dto_excel_MultilingualExcelDto } from '../models/com_ever_edu_pms_multilingual_dto_excel_MultilingualExcelDto';
 import type { com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$SearchByAdmin } from '../models/com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$SearchByAdmin';
 import type { com_ever_edu_pms_multilingual_dto_req_MultilingualUpdateReqDto$MultilingualDto } from '../models/com_ever_edu_pms_multilingual_dto_req_MultilingualUpdateReqDto$MultilingualDto';
 import type { com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$DetailOnAdmin';
@@ -1441,7 +1442,7 @@ export class BoService {
      * 다국어 엑셀 업로드
      * 다국어 엑셀 업로드
      * @param formData
-     * @returns com_ever_edu_global_excel_dto_res_ExcelValidationResDto OK
+     * @returns com_ever_edu_pms_multilingual_dto_excel_MultilingualExcelDto OK
      * @throws ApiError
      */
     public static uploadExcel(
@@ -1449,10 +1450,37 @@ export class BoService {
             file: Blob;
             locale?: string;
         },
-    ): CancelablePromise<com_ever_edu_global_excel_dto_res_ExcelValidationResDto> {
+    ): CancelablePromise<Array<com_ever_edu_pms_multilingual_dto_excel_MultilingualExcelDto>> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/admin/api/v1/multilingual/excelUpload',
+            formData: formData,
+            mediaType: 'multipart/form-data',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 다국어 엑셀 업로드 유효성 검사
+     * 다국어 엑셀 업로드 유효성 검사
+     * @param formData
+     * @returns com_ever_edu_global_excel_dto_res_ExcelValidationResDto OK
+     * @throws ApiError
+     */
+    public static uploadExcelValidation(
+        formData?: {
+            file: Blob;
+        },
+    ): CancelablePromise<com_ever_edu_global_excel_dto_res_ExcelValidationResDto> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/multilingual/excelUploadValidation',
             formData: formData,
             mediaType: 'multipart/form-data',
             errors: {
