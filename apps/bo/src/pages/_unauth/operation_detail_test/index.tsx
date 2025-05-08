@@ -14,10 +14,14 @@ import { PageContainer } from '../../../widgets/layout/ui/container/page-contain
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../widgets/layout/ui/container/slot/sub-contents';
-import { LectureTypeSiteUrl } from '../../../features/operation/ui/lecture-type-site-url/lecture-type-site-url';
-import { ChannelListModal, ManagerListModal, TeacherListModal } from '../../../features/operation';
 import { FormRow } from '../../../shared/ui/form';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import {
+  ChannelListModal,
+  LectureTypeSiteUrl,
+  ManagerListModal,
+  TeacherListModal,
+} from '@features/learning/course';
 
 export const Route = createFileRoute('/_unauth/operation_detail_test/')({
   component: RouteComponent,
@@ -258,7 +262,9 @@ const formConfig: DynamicFormConfig = {
       value: ['현대자동차 A', '현대자동차 B', '현대자동차 C'],
       // placeholder: '',
       description: '',
-      showInput: true,
+      chipListConfig: {
+        showInput: true,
+      },
     },
     {
       name: '강사',

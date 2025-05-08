@@ -164,6 +164,7 @@
       },
       "column": {
         "no": "NO.",
+        "selected": "선택",
         "type": "분류",
         "labelMessage": "라벨/메세지",
         "labelMessageCode": "라벨/메세지 코드",
