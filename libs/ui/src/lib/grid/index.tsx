@@ -170,16 +170,24 @@ const GridComponent = forwardRef(
           cellAlign: 'center',
         },
         header: t('LABEL.grid.column.selected'),
-        cell: ({ row, table }) => (
-          <div style={{ width: '100%', textAlign: 'center', paddingRight: 0 }}>
-            <input
-              type="radio"
-              name="select-row"
-              checked={!!table.getSelectedRowModel().rows.find((d) => d.original === row.original)}
-              onChange={() => row.getToggleSelectedHandler()}
-            />
-          </div>
-        ),
+        cell: ({ row, table }) => {
+          const checked = !!table
+            .getSelectedRowModel()
+            .rows.find((d) => d.original === row.original);
+          return (
+            <div
+              className={cn('select_row_radio', checked && 'checked')}
+              style={{ width: '100%', textAlign: 'center', paddingRight: 0 }}
+            >
+              <input
+                type="radio"
+                name="select-row"
+                checked={checked}
+                onChange={() => row.getToggleSelectedHandler()}
+              />
+            </div>
+          );
+        },
       });
 
       // 체크박스 컬럼 생성
