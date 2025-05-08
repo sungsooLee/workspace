@@ -144,8 +144,11 @@
       "multilingual": "다국어관리"
     },
     "grid": {
-      "header": {
+      "title": {
         "list": "목록",
+        "courseList": "과정 목록"
+      },
+      "header": {
         "all": "전체",
         "selected": "선택",
         "add": "추가",
@@ -161,13 +164,26 @@
       },
       "column": {
         "no": "NO.",
+        "selected": "선택",
         "type": "분류",
         "labelMessage": "라벨/메세지",
         "labelMessageCode": "라벨/메세지 코드",
         "createdBy": "등록자",
         "createdDate": "등록일",
+        "useYn": "사용여부",
         "updatedBy": "수정자",
-        "updatedDate": "수정일"
+        "updatedDate": "수정일",
+        "channel": "채널",
+        "tenant": "테넌트",
+        "courseType": "과정유형",
+        "courseCode": "과정코드",
+        "courseName": "과정명",
+        "session": "차수",
+        "manager": "담당자",
+        "operator": "운영자",
+        "openingDate": "개설년도",
+        "preview": "미리보기",
+        "urlGeneration": "URL 생성"
       },
       "emptyText": "조회 결과가 없습니다."
     },
@@ -195,7 +211,7 @@
         "description": "설명"
       },
       "label": {
-        "type": "분류",
+        "category": "분류",
         "labelMessage": "라벨/메세지",
         "labelMessageCode": "라벨/메세지 코드",
         "label": "라벨",
@@ -204,6 +220,13 @@
         "messageCode": "메세지 코드",
         "description": "설명",
         "detailInfo": "상세정보",
+        "tenant": "테넌트",
+        "channel": "채널",
+        "courseType": "과정유형",
+        "operator": "운영자",
+        "openingDate": "개설년도",
+        "courseCode": "과정코드",
+        "courseName": "과정명",
         "useYn": "사용여부"
       },
       "validation": {
@@ -235,7 +258,8 @@
       "approval": "승인",
       "rejected": "반려",
       "multilingualManage": "다국어 관리",
-      "duplication": "중복"
+      "duplication": "중복",
+      "courseOpen": "과정 개설"
     },
     "confirm": {
       "save": {

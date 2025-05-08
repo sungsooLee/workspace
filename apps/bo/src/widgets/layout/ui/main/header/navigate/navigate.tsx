@@ -32,7 +32,9 @@ function NavigateComponent() {
                       : ''
                   }
                 >
-                  {t(`MENU.${menu.menuCode}`)}
+                  {import.meta.env.VITE_LANGUAGE_DEV === 'true'
+                    ? t(`${menu.menuName}`)
+                    : t(`MENU.${menu.menuCode}`)}
                 </Link>
               </li>
             );

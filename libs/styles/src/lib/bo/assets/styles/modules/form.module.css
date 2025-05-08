@@ -68,6 +68,21 @@
   label + .input_box {
     @apply mt-[12px];
   }
+  .file_info {
+    @apply flex items-center;
+    .icon_clip {
+      @apply ml-[8px] mr-[4px] inline-flex;
+    }
+    .file_length {
+      @apply body_bo_2_r inline-flex items-center text-[var(--gray7)];
+      .num {
+        @apply body_bo_2_b text-[var(--secondary1)];
+      }
+    }
+    .file_volume {
+      @apply body_bo_2_b ml-[8px] inline-flex items-center text-[var(--secondary1)];
+    }
+  }
   &.pd_none {
     @apply pb-[0];
   }
@@ -146,6 +161,9 @@
   }
   .btn_delete {
     @apply !ml-[16px];
+  }
+  button + .btn_delete {
+    @apply !ml-[10px];
   }
   .textarea {
     @apply !rounded-[4px];

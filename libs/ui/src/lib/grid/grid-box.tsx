@@ -1,7 +1,7 @@
 import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Button, Grid, GridBoxProps, GridImperative } from '@learnway/ui';
-import { IcoDownload, IcoMinus, IcoSetting, IcoPlus, IcoUploadCloud } from '@learnway/icons';
+import { IcoDownload, IcoMinus, IcoUploadCloud, IcoPlus } from '@learnway/icons';
 import styles from './grid-box.module.css';
 import { cn } from '@learnway/shared';
 import { useTranslation } from 'react-i18next';
@@ -60,6 +60,7 @@ const GridBoxComponent = <T extends object>(
             return info.getValue();
           },
           header: column.label,
+          size: column.size,
           // 다른 컬럼 옵션들 (sortingFn, filterFn 등) 필요시 추가
         });
       });
@@ -149,7 +150,7 @@ const GridBoxComponent = <T extends object>(
       <div className={styles.table_info}>
         <div className={styles.title_info}>
           {/* 제목 */}
-          {<div className={styles.title}>{props.title || title || t('목록')}</div>}
+          {<div className={styles.title}>{props.title || title || t('LABEL.grid.title.list')}</div>}
 
           {/* 전체 개수  */}
           {showTotalCount && (
@@ -256,7 +257,6 @@ const GridBoxComponent = <T extends object>(
         data={props.data ?? data ?? []}
         columns={props.columns ?? girdColumns ?? []}
         showNumberingColumn={showNumberingColumn}
-        hideRowSelectionCheckBox={showNumberingColumn} // 체크박스 숨김 (numbering 사용시)
         pagination={paginationProps}
       />
     </div>

@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import React, { useRef, useEffect, useState } from 'react';
 import { cn } from '@learnway/shared';
-import { Button, ContentsRow, Input, Dropdown, Pagination } from '@learnway/ui';
+import { Button, ContentsRow, Input, Dropdown, Pagination, useModal } from '@learnway/ui';
 import {
   IcoArrowDown,
   IcoArrowForward,
@@ -10,6 +10,7 @@ import {
   IcoDotpoints,
   IcoPlay,
 } from '@learnway/icons';
+import { CategoryFilterPopupM } from '../../../features/layout';
 
 import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
 import thumnailImgStyles from '../../../shared/ui/thumnail/thumnail-img.module.css';
@@ -23,6 +24,8 @@ export const Route = createFileRoute('/_layout/category/detail_m')({
 });
 
 function RouteComponent() {
+  const { open: openModal } = useModal();
+
   // dropdown
   const [divisionValues, setDivisionValues] = useState<string[]>(['분류선택']);
   const [arrayValues, setArrayValues] = useState<string[]>(['최신순']);
@@ -105,6 +108,17 @@ function RouteComponent() {
             value={divisionValues}
             onChange={(selected) => setDivisionValues(selected)}
           />
+
+          <Button
+            onClick={() =>
+              openModal({
+                width: 'm_bottom_sheet',
+                content: <CategoryFilterPopupM />,
+              })
+            }
+          >
+            모달 팝업 열기
+          </Button>
         </div>
         <div className={styles.box}>
           <ContentsRow className={styles.search}>

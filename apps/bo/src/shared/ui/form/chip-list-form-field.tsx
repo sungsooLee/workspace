@@ -1,26 +1,23 @@
 import { forwardRef } from 'react';
-import { ChipList } from '@learnway/ui';
+import { ChipList, ChipListComponentProps } from '@learnway/ui';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { BaseFormFieldProps } from '@learnway/hooks';
 
 export interface ChipListFormFieldProps extends BaseFormFieldProps<string[]> {
   limitPlaceholder?: string;
   prefixCharacter?: string;
+  chipListConfig?: ChipListComponentProps;
 }
 
 /**
- * 공통 form select chip list
+ * 공통 ChipListFormField
  * @param value
  * @param onChange
  * @param props
  * @constructor
  */
 const ChipListFormFieldComponent = forwardRef<HTMLDivElement, ChipListFormFieldProps>(
-  ({ value = [], onChange, placeHolder, limitPlaceholder }, ref) => {
-    // const handleOnChange = (chips: any) => {
-    //   const labels = chips.map((chip: SelectOption) => chip.label);
-    //   onChange(labels);
-    // };
+  ({ value = [], onChange, placeHolder, limitPlaceholder, chipListConfig }, ref) => {
     const handleAddInputEnterKeyDown = (text: string) => {
       // 중복 아닌 경우
       if (!value?.includes(text)) {
@@ -36,12 +33,11 @@ const ChipListFormFieldComponent = forwardRef<HTMLDivElement, ChipListFormFieldP
     return (
       <div ref={ref} className={formStyles.tag_wrap}>
         <ChipList
+          {...chipListConfig}
           className={formStyles.chips_wrap}
           options={value.map((val) => ({ value: val, label: val }))}
           placeholder={placeHolder}
-          showInput
           hideBorder
-          // onChange={handleOnChange}
           onAddInputEnterKeyDown={handleAddInputEnterKeyDown}
           onChipDeleteClick={handlerChipDelete}
         />

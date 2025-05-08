@@ -83,10 +83,17 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
       <div
         {...props}
         ref={ref}
-        className={cn(styles.start, styles.chips_list, className, 'nlp--chip-list', {
-          [styles.chips_box]: !hideBorder,
-          [styles.border_none]: hideBorder,
-        })}
+        className={cn(
+          'nlp--chip-list',
+          styles.start,
+          styles.chips_list,
+          className,
+          wordwrap && 'wordwrap',
+          {
+            [styles.chips_box]: !hideBorder,
+            [styles.border_none]: hideBorder,
+          },
+        )}
       >
         {/* input */}
         {showInput && (

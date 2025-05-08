@@ -128,11 +128,11 @@ export * from './lib/thumbnail/thumbnail';
 export * from './lib/thumbnail/thumbnail-list';
 export * from './lib/thumbnail/type';
 
-// transfer grid
-export * from './lib/transfer-grid/transfer-grid';
+// shuttle grid to grid
+export * from './lib/shuttle-grid-to-grid/shuttle-grid-to-grid';
 
-// transfer tree grid
-export * from './lib/transfer-tree-grid/transfer-tree-grid';
+// shuttle tree to grid
+export * from './lib/shuttle-tree-to-grid/shuttle-tree-to-grid';
 
 // tabs
 export * from './lib/tabs/tabs';
@@ -144,7 +144,7 @@ export * from './lib/tree-view/tree';
 export * from './lib/tree-view/tree.service';
 export * from './lib/tree-view/tree.context';
 export * from './lib/tree-view/type';
-export * from './lib/tree-view/shuttle-tree';
+export * from './lib/tree-view/shuttle-tree-to-chips';
 export * from './lib/tree-view/tree-box';
 
 // textarea
