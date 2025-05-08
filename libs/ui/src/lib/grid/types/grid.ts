@@ -104,6 +104,12 @@ export interface GridProps<T> {
   disabledSelectionToggle?: boolean;
 
   /**
+   * 싱글 선택 모드에서 체크박스 컬럼을 숨길지 여부를 나타내는 boolean 값입니다.
+   * `true`로 설정하면 체크박스 컬럼이 숨겨집니다.
+   */
+  hideRowSelectionRadioBox?: boolean;
+
+  /**
    * 다중 선택 모드에서 체크박스 컬럼을 숨길지 여부를 나타내는 boolean 값입니다.
    * `true`로 설정하면 체크박스 컬럼이 숨겨집니다.
    */

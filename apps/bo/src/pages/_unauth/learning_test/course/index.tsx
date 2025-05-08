@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Button, GridBox, useGridBox } from '@learnway/ui';
+import { Button, GridBox, useGridBox, useModal } from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useSearchBox } from '@learnway/hooks';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
@@ -10,6 +10,7 @@ import { queryOptions } from '@entities/label-messages/service/label-messages.qu
 import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { LabelMessagesQueryParams } from '@types';
+import { CourseTypeOptionCardModal } from '@features/learning/course';
 
 export const Route = createFileRoute('/_unauth/learning_test/course/')({
   component: RouteComponent,
@@ -17,6 +18,7 @@ export const Route = createFileRoute('/_unauth/learning_test/course/')({
 
 function RouteComponent() {
   const router = useRouter();
+  const { open: openModal } = useModal();
   const { t } = useTranslation();
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
@@ -49,8 +51,13 @@ function RouteComponent() {
   /**
    * '과정 개설' 버튼 클릭 시 호출되는 핸들러
    */
-  const handleCourseOpenClick = () => {
-    console.log('handleCourseOpenClick');
+  const handleCourseOpenClick = async () => {
+    const value = await openModal({
+      content: <CourseTypeOptionCardModal />,
+      width: 'lg', // sm(600px), md(800px), lg(1024px), xl(1400px)
+    });
+
+    // 선택한 유형의 등록 페이지로 이동
   };
 
   return (
@@ -127,6 +134,8 @@ const searchConfig: any = {
         label: t('LABEL.form.label.operator'),
         value: '',
       },
+    ],
+    [
       // 개설년도
       {
         name: 'openingDate',

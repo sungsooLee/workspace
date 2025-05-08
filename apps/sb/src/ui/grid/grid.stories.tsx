@@ -1022,7 +1022,7 @@ TemplateEditGrid.storyName = '셀 편집';
 export const TemplateColumnSize: any = (args: any) => {
   const data = [
     { name: '현대', code: 'H', code2: 'H' },
-    // { name: '현대', code: 'H', code2: 'H' },
+    { name: '현대', code: 'H', code2: 'H' },
     // { name: '현대', code: 'H', code2: 'H' },
   ];
   const columns = [
@@ -1036,7 +1036,7 @@ export const TemplateColumnSize: any = (args: any) => {
       title={'Editable Grid'}
       data={data}
       columns={columns}
-      hideRowSelectionCheckBox
+      hideRowSelectionRadioBox={false}
     />
   );
 };
