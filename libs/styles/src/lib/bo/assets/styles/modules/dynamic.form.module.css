@@ -114,6 +114,9 @@
     }
   }
 }
+[class*='nlp--contents-row'] + [class*='nlp--contents-row'] .switch_wrap .btn_switch {
+  @apply !translate-y-0;
+}
 
 .status {
   @apply ml-[2px] inline-flex align-text-top;

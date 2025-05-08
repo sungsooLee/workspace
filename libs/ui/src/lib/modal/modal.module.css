@@ -106,8 +106,11 @@
   /* mobile bottom sheet */
   &.m_bottom_sheet {
     @apply bottom-0 top-auto h-auto max-h-[calc(100%-72px)] rounded-b-none rounded-t-[16px];
+    h2 {
+      @apply absolute left-0 right-0 top-0 h-[44px] py-[16px] pb-[4px];
+    }
     [class*='modal-content'] {
-      @apply !max-h-[calc(100dvh-72px)];
+      @apply !max-h-[calc(100dvh-72px)] pt-[44px];
     }
   }
 }
