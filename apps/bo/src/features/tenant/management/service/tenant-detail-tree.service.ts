@@ -157,18 +157,22 @@ export const transformApiDataToTreeData = (apiData: any) => {
 };
 
 export const moveNodeCheck = (events: any) => {
-  console.log('devents ', events);
   switch (events.position) {
-    case 'BEFORE':
+    case 'BEFORE': {
+      let sortOrder = events.targetNode.sortOrder - 1;
+      if (events.sourceNode.sortOrder > events.targetNode.sortOrder) {
+        sortOrder++;
+      }
       if (events.sourceNode.level === events.targetNode.level) {
         return {
           tenantMappingMenuId: events.sourceNode.tenantMappingMenuId,
           destinationParentId: events.targetNode.parentKey,
-          sortOrder: events.targetNode.sortOrder - 1,
+          sortOrder: sortOrder,
           menuScopeCode: '',
         };
       }
       break;
+    }
     case 'INSIDE':
       if (events.sourceNode.level === events.targetNode.level + 1) {
         return {
@@ -180,13 +184,19 @@ export const moveNodeCheck = (events: any) => {
       }
       break;
     case 'AFTER':
-      if (events.sourceNode.level === events.targetNode.level) {
-        return {
-          tenantMappingMenuId: events.sourceNode.tenantMappingMenuId,
-          destinationParentId: events.targetNode.parentKey,
-          sortOrder: events.targetNode.sortOrder + 1,
-          menuScopeCode: '',
-        };
+      {
+        let sortOrder = events.targetNode.sortOrder + 1;
+        if (events.sourceNode.sortOrder < events.targetNode.sortOrder) {
+          sortOrder--;
+        }
+        if (events.sourceNode.level === events.targetNode.level) {
+          return {
+            tenantMappingMenuId: events.sourceNode.tenantMappingMenuId,
+            destinationParentId: events.targetNode.parentKey,
+            sortOrder: sortOrder,
+            menuScopeCode: '',
+          };
+        }
       }
       break;
   }
