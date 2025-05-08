@@ -1,22 +1,21 @@
 import { memo, useState } from 'react';
-import { ModalBody, ModalContainer, ModalTitle, ModalFooter, Button, Dropdown } from '@learnway/ui';
+import { ModalBody, ModalContainer, ModalFooter, Button, Dropdown } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 
-import styles from './notification-popup-m.module.css';
+import styles from './category-filter-popup-m.module.css';
 
 const CategoryFilterPopupMComponent = () => {
-  const [divisionValues, setDivisionValues] = useState<string[]>(['분류선택']);
+  const [filter01, setFilter01] = useState<string[]>(['대분류']);
+  const [filter02, setFilter02] = useState<string[]>(['중분류']);
+  const [filter03, setFilter03] = useState<string[]>(['소분류']);
   return (
     <ModalContainer>
-      <ModalTitle>
-        <></>
-      </ModalTitle>
       <ModalBody>
-        <div className={cn(styles.start, styles.alarm_wrap)}>
+        <div className={cn(styles.start, styles.filter_wrap)}>
           <Dropdown
-            className={styles.select}
+            size="lg"
             options={[
-              { value: 'a', label: '분류선택' },
+              { value: 'a', label: '대분류' },
               { value: 'b', label: 'ST1' },
               { value: 'c', label: '아이오닉 6' },
               { value: 'd', label: '아이오닉 5' },
@@ -25,8 +24,30 @@ const CategoryFilterPopupMComponent = () => {
               { value: 'g', label: '포터' },
               { value: 'h', label: '캐스퍼' },
             ]}
-            value={divisionValues}
-            onChange={(selected) => setDivisionValues(selected)}
+            value={filter01}
+            onChange={(selected) => setFilter01(selected)}
+          />
+
+          <Dropdown
+            size="lg"
+            options={[
+              { value: 'a', label: '중분류' },
+              { value: 'b', label: 'NE PE(2024)' },
+              { value: 'c', label: 'NE(2021)' },
+            ]}
+            value={filter02}
+            onChange={(selected) => setFilter02(selected)}
+          />
+
+          <Dropdown
+            size="lg"
+            options={[
+              { value: 'a', label: '소분류' },
+              { value: 'b', label: '상품정보' },
+              { value: 'c', label: '기술정보' },
+            ]}
+            value={filter03}
+            onChange={(selected) => setFilter03(selected)}
           />
         </div>
       </ModalBody>
