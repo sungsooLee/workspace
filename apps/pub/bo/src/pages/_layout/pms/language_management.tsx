@@ -238,7 +238,8 @@ function RouteComponent() {
               columns={columns}
               tableMode={true}
               title={'목록'}
-              showExcelDownload={true}
+              showExcelDownload
+              showUpload
               pagination={{
                 pageSize,
                 pageIndex,

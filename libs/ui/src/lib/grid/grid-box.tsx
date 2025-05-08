@@ -1,7 +1,7 @@
 import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Button, Grid, GridBoxProps, GridImperative } from '@learnway/ui';
-import { IcoDownload, IcoMinus, IcoSetting, IcoPlus } from '@learnway/icons';
+import { IcoDownload, IcoMinus, IcoSetting, IcoPlus, IcoUploadCloud } from '@learnway/icons';
 import styles from './grid-box.module.css';
 import { cn } from '@learnway/shared';
 import { useTranslation } from 'react-i18next';
@@ -195,7 +195,7 @@ const GridBoxComponent = <T extends object>(
               size="xs"
               className={styles.btn_upload}
               label={t('LABEL.grid.header.excelUpload')}
-              icon={<IcoDownload width={16} height={16} stroke={'#3e4550'} />}
+              icon={<IcoUploadCloud width={16} height={16} stroke={'#4C515E'} />}
             />
           )}
           {/* 엑셀다운로드 */}
@@ -205,7 +205,7 @@ const GridBoxComponent = <T extends object>(
               size="xs"
               className={styles.btn_excel}
               label={t('LABEL.grid.header.excelDownload')}
-              icon={<IcoDownload width={16} height={16} stroke={'#3e4550'} />}
+              icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
             />
           )}
           {/* 컬럼 설정 */}
