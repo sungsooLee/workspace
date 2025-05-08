@@ -10,6 +10,7 @@ import { Footer } from '../../ui/main/footer/footer';
 import { MobileContainerHeader } from './container/container-header';
 
 import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/layout.module.css';
+import { SearchOverlay } from '../../../../features/layout/m.ui/search/search-panel';
 
 interface LayoutComponentProps {
   children: ReactNode;
@@ -26,6 +27,7 @@ function LayoutComponent({ children }: LayoutComponentProps) {
       <main>{children}</main>
       {meta?.mobile?.showMainFooter && <Footer />}
       {meta?.mobile?.showFooter && <MobileFooter />}
+      <SearchOverlay />
     </div>
   );
 }

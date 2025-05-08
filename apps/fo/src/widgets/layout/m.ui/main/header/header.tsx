@@ -6,7 +6,7 @@ import { cn } from '@learnway/shared';
 import { useFetchAuthUser } from '@learnway/auth';
 
 import { Language, NotificationButton, TenantButton } from '../../../../../features/platform';
-import { Logo, MobileNavigateButton } from '../../../../../features/layout';
+import { Logo, MobileNavigateButton, Search } from '../../../../../features/layout';
 import { useLogoutUser } from '@learnway/auth';
 import { useFetchTenantByUser } from '../../../../../entities/tenant';
 

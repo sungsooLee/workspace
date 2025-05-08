@@ -88,6 +88,7 @@ export * from './lib/modal/modal-container';
 export * from './lib/modal/modal-wrapper';
 export * from './lib/stores/useModalStore';
 export * from './lib/stores/useToastStore';
+export * from './lib/stores/useSearchStore';
 // option card
 export * from './lib/option-card/option-card';
 

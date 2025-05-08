@@ -136,7 +136,7 @@ const MenuViewComponent: FC<any> = ({
   const handleReset = async () => {
     // onFormChange();
     const isReset = await openConfirm({
-      title: '초기화 하시겠습니까?',
+      title: t('LABEL.confirm.reset.title'),
     });
     if (isReset) onFormChange();
   };

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { t } from 'i18next';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { Button, findNodePath, Tabs, TreeNode, useModal } from '@learnway/ui';
-import { cn } from '@learnway/shared';
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
@@ -14,7 +14,6 @@ import {
   useMoveMenu,
   useUpdateMenu,
 } from '../../../../entities/menu/service/menu-manage.hook';
-
 import { pageRouteConfig } from '../../../../features/auth';
 import {
   findNodeByMenuId,
@@ -23,12 +22,13 @@ import {
 import { MenuTree } from '../../../../features/platform/menu/ui/menu-tree';
 import MenuViewComponent from '../../../../features/platform/menu/ui/menu-view';
 import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/contents-buttons';
+import { SectionLayout } from '../../../../widgets/layout/ui/container/section-layout/section-layout';
 
 export const Route = createFileRoute('/_layout/platform/menu/')({
   component: RouteComponent,
   ...pageRouteConfig({
     meta: {
-      title: '메뉴 관리',
+      title: 'LABEL.page.title.menuManage',
     },
   }),
 });
@@ -100,11 +100,17 @@ function RouteComponent() {
   };
 
   // 노드 순서 변경
-  const handleNodeMove = (menuId: number, destinationParentId: number, sortSeq: number) => {
+  const handleNodeMove = (
+    menuId: number,
+    destinationParentId: number,
+    sortOrder: number,
+    menuScopeCode: string,
+  ) => {
     const payload = {
       menuId,
       destinationParentId,
-      sortSeq,
+      sortOrder,
+      menuScopeCode,
     };
     moveMenu(payload);
   };
@@ -122,8 +128,8 @@ function RouteComponent() {
   // 메뉴 저장 핸들러
   const handleSave = (payload: any) => {
     openConfirm({
-      title: '저장 하시겠습니까?',
-      content: <p>입력한 정보로 저장됩니다.</p>,
+      title: t('LABEL.confirm.save.title'),
+      content: t('LABEL.confirm.save.message'),
       onClose: (value: boolean) => {
         if (value) {
           create(payload, {
@@ -141,8 +147,8 @@ function RouteComponent() {
 
   const handleUpdate = (payload: any) => {
     openConfirm({
-      title: '수정 하시겠습니까?',
-      content: <p>입력한 정보로 저장됩니다.</p>,
+      title: t('LABEL.confirm.modify.title'),
+      content: t('LABEL.confirm.modify.message'),
       onClose: (value: boolean) => {
         if (value) {
           updateMenu(payload, {
@@ -165,13 +171,8 @@ function RouteComponent() {
   const handleDelete = (payload: any) => {
     //TODO: 삭제 이전에 해당 메뉴 테넌트 사용 여부 체크.
     openConfirm({
-      title: '삭제 하시겠습니까?',
-      content: (
-        <>
-          <p>하위 카테고리 존재 시 모두 삭제되며,</p>
-          <p>삭제 후 복구할 수 없습니다.</p>
-        </>
-      ),
+      title: t('LABEL.confirm.delete.title'),
+      content: t('LABEL.confirm.delete.message', { type: '메뉴' }),
       onClose: (value: boolean) => {
         if (value) {
           deleteMenu(payload);
@@ -183,7 +184,7 @@ function RouteComponent() {
 
   const renderTabContent = (tabKey: string) => {
     return (
-      <div className={cn(layoutStyles.start, layoutStyles.wrap)}>
+      <SectionLayout contentsRatio={'half'}>
         {treeData && (
           <MenuTree
             treeData={treeData}
@@ -229,7 +230,7 @@ function RouteComponent() {
             }}
           />
         )}
-      </div>
+      </SectionLayout>
     );
   };
 
@@ -256,12 +257,12 @@ function RouteComponent() {
 
   const items = [
     {
-      title: '학습자 메뉴',
+      title: t('LABEL.common.learnerMenu'),
       key: 'FO',
       content: renderTabContent('FO'),
     },
     {
-      title: 'HRD센터 메뉴',
+      title: t('LABEL.common.hrdCenterMenu'),
       key: 'BO',
       content: renderTabContent('BO'),
     },
@@ -278,12 +279,15 @@ function RouteComponent() {
             router.navigate({
               to: '/platform/system/multilingual',
               state: {
-                keyType: selectedTabKey === 'FO' ? 'LEARNER_MENU' : 'HRD_CENTER_MENU',
+                keyType:
+                  selectedTabKey === 'FO'
+                    ? t('LABEL.common.learnerMenu')
+                    : t('LABEL.common.hrdCenterMenu'),
               },
             });
           }}
         >
-          다국어관리
+          {t('LABEL.button.multilingualManage')}
         </Button>
       </ContentsButtons>
       <MainContents>

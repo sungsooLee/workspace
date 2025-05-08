@@ -5,7 +5,7 @@ import { trim } from 'lodash';
 import { cn, DATE_TIME_FORMAT, formatISODateString } from '@learnway/shared';
 import { createColumnHelper } from '@tanstack/react-table';
 import { useRouter } from '@tanstack/react-router';
-
+import { IcoPlus } from '@learnway/icons';
 import {
   Button,
   ContentsRow,
@@ -16,6 +16,7 @@ import {
   useModal,
 } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
@@ -48,50 +49,38 @@ const columns = [
   columnHelper.accessor('cdGroupId', {
     cell: (info) => info.getValue(),
     enablePinning: true,
-    header: '그룹코드',
+    header: t('LABEL.common.cdGroupId'),
   }),
   columnHelper.accessor('cdGroupName', {
     cell: (info) => info.getValue(),
     enablePinning: true,
-    header: '그룹 명',
+    header: t('LABEL.common.cdGroupName'),
   }),
   columnHelper.accessor('cdId', {
     cell: (info) => info.getValue(),
-    header: '코드',
+    header: t('LABEL.common.cdId'),
   }),
   columnHelper.accessor('cdName', {
     cell: (info) => info.getValue(),
-    header: '코드 명',
+    header: t('LABEL.common.cdName'),
   }),
   columnHelper.accessor('cdSeq', {
     cell: (info) => info.getValue(),
-    header: '순서',
+    header: t('LABEL.common.cdSeq'),
   }),
   columnHelper.accessor('isUsed', {
     cell: (info) => {
       return <p>{info.getValue() === true ? 'Y' : 'N'}</p>;
     },
-    header: '코드사용',
+    header: t('LABEL.common.isUsed'),
   }),
   columnHelper.accessor('cdContent', {
     cell: (info) => info.getValue(),
-    header: '내용',
-  }),
-  columnHelper.accessor('createdDate', {
-    cell: (info) => formatISODateString(info.getValue(), DATE_TIME_FORMAT.DATETIME_SEC),
-    header: '최초등록 일자',
-  }),
-  columnHelper.accessor('createdBy', {
-    cell: (info) => info.getValue(),
-    header: '최초등록자',
+    header: t('LABEL.common.cdContent'),
   }),
   columnHelper.accessor('modifiedDate', {
     cell: (info) => formatISODateString(info.getValue(), DATE_TIME_FORMAT.DATETIME_SEC),
-    header: '최종수정 일자',
-  }),
-  columnHelper.accessor('lastModifiedBy', {
-    cell: (info) => info.getValue(),
-    header: '최종수정자',
+    header: t('LABEL.grid.column.modifiedDate'),
   }),
 ];
 
@@ -129,18 +118,17 @@ const CommonCodeGridComponent = ({
   const [formMode, setFormMode] = useState(FORM_MODE.NONE);
   const [selectedRow, setSelectedRow] = useState<CommonCode | null>(null);
   const [dataProcessed, setDataProcessed] = useState(false);
-
   const { alert: openAlert, confirm: openConfirm } = useModal();
 
   const { provider, onSubmit, fetchData, clearFormError, onFormChange, getValues, formState } =
     useDynamicForm(formConfig);
   const { create: createCode } = useCreateCommonCode({
     onSuccess: (data: any) => {
-      openAlert({
-        title: '완료되었습니다.',
-        content: '요청하신 작업이 정상적으로 완료되었습니다.',
-      });
-      console.log(data);
+      // openAlert({
+      //   title: '완료되었습니다.',
+      //   content: '요청하신 작업이 정상적으로 완료되었습니다.',
+      // });
+      // console.log(data);
 
       if (data) {
         afterCreateOrUpdateCommonCodeGroup(data);
@@ -158,10 +146,10 @@ const CommonCodeGridComponent = ({
   });
   const { update: updateCode } = useUpdateCommonCode({
     onSuccess: (data: any) => {
-      openAlert({
-        title: '완료되었습니다.',
-        content: '요청하신 작업이 정상적으로 완료되었습니다.',
-      });
+      // openAlert({
+      //   title: '완료되었습니다.',
+      //   content: '요청하신 작업이 정상적으로 완료되었습니다.',
+      // });
       if (data) {
         afterCreateOrUpdateCommonCodeGroup(data);
       }
@@ -261,38 +249,26 @@ const CommonCodeGridComponent = ({
 
     if (formMode === FORM_MODE.ADD) {
       const isAdd = await openConfirm({
-        title: '요청하신 정보 추가하시겠습니까?',
-        content: '요청하신 정보를 정확히 확인 후 등록하세요',
+        title: t('LABEL.confirm.save.title'),
+        content: t('LABEL.confirm.save.message'),
       });
       if (isAdd) {
         const createPayload = {
           ...formData,
           cdSeq: formData.cdSeq === '' ? null : Number(formData.cdSeq),
-          translations: [
-            {
-              locale: 'ko',
-              translation: formData.cdName,
-            },
-          ],
         };
         createCode(createPayload);
       }
     } else if (formMode === FORM_MODE.VIEW) {
       const isUpdate = await openConfirm({
-        title: '적용하시겠습니까?',
-        content: '요청하신 정보를 정확히 확인 후 저장하세요.',
+        title: t('LABEL.confirm.modify.title'),
+        content: t('LABEL.confirm.modify.message'),
       });
 
       if (isUpdate) {
         const updatePayload = {
           ...formData,
           cdSeq: formData.cdSeq === '' ? null : Number(formData.cdSeq),
-          translations: [
-            {
-              locale: 'ko',
-              translation: formData.cdName,
-            },
-          ],
         };
         updateCode(updatePayload);
       }
@@ -338,7 +314,7 @@ const CommonCodeGridComponent = ({
               columns={columns}
               height={350}
               showTotalCount={true}
-              title={t('공통코드 목록')}
+              title={t('LABEL.grid.title.commonCdList')}
               pagination={{
                 pageIndex: page,
                 pageSize: size,
@@ -349,19 +325,13 @@ const CommonCodeGridComponent = ({
               columnPinning={{ columns: ['numbering', 'cdGroupId', 'cdGroupName'] }}
               onRowSelect={handleRowSelect}
               emptyMessage={
-                state.cdGroupId === '' ? '코드그룹을 먼저 검색해주세요.' : '조회 결과가 없습니다.'
+                state.cdGroupId === ''
+                  ? t('LABEL.grid.searchFirst', { list: t('LABEL.common.cdGroup') })
+                  : t('LABEL.grid.emptyText')
               }
               onStateChange={handleStateChange}
               showNumberingColumn={true}
-            />
-          </div>
-        </div>
-
-        <div className={layoutStyles.inner}>
-          <form onSubmit={onSubmit(handleOnSubmit)}>
-            <div className={titleStyles.title_wrap}>
-              <h3 className={titleStyles.title}>{'상세정보'}</h3>
-              <div className={layoutStyles.btn_wrap}>
+              customButtonNode={
                 <Button
                   variant="text"
                   size="sm"
@@ -369,15 +339,26 @@ const CommonCodeGridComponent = ({
                   onClick={handleAddMode}
                   disabled={trim(state.cdGroupId) === ''}
                 >
-                  추가
+                  <IcoPlus width={16} height={16} stroke="#131C30" />
+                  {t('LABEL.button.add')}
                 </Button>
+              }
+            />
+          </div>
+        </div>
+
+        <div className={layoutStyles.inner}>
+          <form onSubmit={onSubmit(handleOnSubmit)}>
+            <div className={titleStyles.title_wrap}>
+              <h3 className={titleStyles.title}>{t('LABEL.form.label.detailInfo')}</h3>
+              <div className={layoutStyles.btn_wrap}>
                 <Button
                   type="submit"
                   variant="save"
                   size="sm"
                   disabled={formMode === FORM_MODE.NONE}
                 >
-                  저장
+                  {t('LABEL.button.save')}
                 </Button>
               </div>
             </div>
@@ -416,7 +397,7 @@ const CommonCodeGridComponent = ({
                     }}
                     disabled={isFormDisabled}
                   >
-                    다국어관리
+                    {t('LABEL.button.multilingualManage')}
                   </Button>
                 </FormRow>
               </ContentsRow>

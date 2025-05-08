@@ -1,10 +1,10 @@
-import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
+import { useEffect, useState } from 'react';
+import { t } from 'i18next';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { Button, GridState } from '@learnway/ui';
 
-import { t } from 'i18next';
 import { pageRouteConfig } from '../../../../features/auth';
 import { SearchBoxConfig, useCurrentRoute, useSearchBox } from '@learnway/hooks';
-import { useEffect, useState } from 'react';
 import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
 import { SearchBox } from '../../../../shared/ui/search-box';
@@ -16,7 +16,8 @@ export const Route = createFileRoute('/_layout/platform/code/common-code')({
   component: RouteComponent,
   ...pageRouteConfig({
     meta: {
-      title: '공통코드관리',
+      title: 'LABEL.page.title.commonCdManage',
+      // title: '공통코드관리',
     },
   }),
 });
@@ -113,7 +114,7 @@ function RouteComponent() {
               });
             }}
           >
-            다국어관리
+            {t('LABEL.button.multilingualManage')}
           </Button>
           <Button
             type="button"
@@ -125,7 +126,7 @@ function RouteComponent() {
               })
             }
           >
-            공통코드그룹목록
+            {t('LABEL.button.commonCdGroupList')}
           </Button>
         </ContentsButtons>
         <MainContents>
@@ -157,14 +158,34 @@ const searchConfig: SearchBoxConfig = {
         type: 'text',
         label: t('LABEL.cdGroupId'),
         value: '',
+        disabled: true,
       },
       {
-        name: 'cdGroupName',
+        type: 'group',
+        builders: [
+          {
+            name: 'cdGroupName',
+            type: 'text',
+            label: t('LABEL.cdGroupName'),
+            value: '',
+            disabled: true,
+          },
+          {
+            name: 'cdId',
+            type: 'text',
+            label: t('LABEL.cdId'),
+            value: '',
+          },
+        ],
+      },
+    ],
+    [
+      {
+        name: 'cdName',
         type: 'text',
-        label: t('LABEL.cdGroupName'),
+        label: t('LABEL.cdName'),
         value: '',
       },
-
       {
         name: 'isUsed',
         type: 'dropdown',
@@ -175,13 +196,6 @@ const searchConfig: SearchBoxConfig = {
           { value: 'true', label: t('사용') },
           { value: 'false', label: t('미사용') },
         ],
-      },
-
-      {
-        name: 'cdName',
-        type: 'text',
-        label: t('LABEL.cdName'),
-        value: '',
       },
     ],
   ],
