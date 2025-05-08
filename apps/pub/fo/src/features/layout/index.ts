@@ -51,5 +51,4 @@ export * from './popup/address-confirmation-popup';
 export * from './popup/accepting-popup';
 export * from './popup/course-selection-popup';
 export * from './ui/course-introduction/course-fixed-button';
-export * from './popup/category-filter-popup-m';
 export * from './popup/category-depth-popup-m';

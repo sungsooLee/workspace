@@ -10,7 +10,7 @@ import {
   IcoDotpoints,
   IcoPlay,
 } from '@learnway/icons';
-import { CategoryFilterPopupM, CategoryDepthPopupM } from '../../../features/layout';
+import { CategoryDepthPopupM, FilterPopup } from '../../../features/layout';
 
 import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
 import thumnailImgStyles from '../../../shared/ui/thumnail/thumnail-img.module.css';
@@ -134,7 +134,7 @@ function RouteComponent() {
               onClick={() =>
                 openModal({
                   width: 'm_bottom_sheet',
-                  content: <CategoryFilterPopupM />,
+                  content: <FilterPopup />,
                 })
               }
             >
