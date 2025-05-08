@@ -11,6 +11,7 @@ import {
   ChangePasswordFormField,
   WithdrawMembershipButton,
   useFetchAuthUser,
+  useUserDetail,
 } from '@learnway/auth';
 
 import { MAIN_CONTAINERS } from '../../../../widgets/layout';
@@ -21,6 +22,7 @@ import { FormRow, NoticeBox } from '../../../../shared/ui';
 
 import styles from '@learnway/styles/fo/pages/_layout/my-page/privacy/change-information.module.css';
 
+import { useCurrentRoute } from '@learnway/hooks';
 export const Route = createFileRoute('/_layout/my-page/privacy/')({
   component: RouteComponent,
   ...pageRouteConfig({
@@ -39,11 +41,19 @@ export const Route = createFileRoute('/_layout/my-page/privacy/')({
 });
 
 function RouteComponent() {
+  const { meta, state } = useCurrentRoute();
+
+  console.log('meta', meta);
+  console.log('state', state);
+
   const { t } = useTranslation();
   const { provider, onSubmit, onFormChange, control, getValues, setFormError, fetchData } =
     useDynamicForm(authFormConfig);
 
   const { data: authUser } = useFetchAuthUser();
+  const { data: userDetail } = useUserDetail();
+
+  console.log('userDetail :: ', userDetail);
 
   useEffect(() => {
     if (!authUser) {
