@@ -117,7 +117,7 @@
       }
     }
     input[type='radio'] {
-      @apply h-[16px] w-[16px] appearance-none overflow-hidden rounded-[8px] border border-solid border-[var(--gray5)];
+      @apply h-[20px] w-[20px] appearance-none overflow-hidden rounded-[10px] border border-solid border-[var(--gray5)];
     }
   }
   .empty_message_container {
