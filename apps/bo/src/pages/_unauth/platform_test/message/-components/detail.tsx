@@ -227,7 +227,7 @@ const formConfig: DynamicFormConfig = {
   builders: [
     {
       name: 'labelMessageType',
-      label: t('LABEL.form.label.type'),
+      label: t('LABEL.form.label.category'),
       type: 'radio-group',
       format: 'string',
       options: [

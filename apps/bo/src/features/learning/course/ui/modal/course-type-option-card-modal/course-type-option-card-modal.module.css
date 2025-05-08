@@ -1,10 +1,7 @@
 .wrap {
     @apply relative;
     .title {
-        @apply title_bo_3_b text-center;
-    }
-    .text {
-        @apply body_bo_2_r mt-[4px] text-center text-[var(--gray8)];
+        @apply title_bo_3_b;
     }
     .select_wrap {
         @apply mt-[50px];

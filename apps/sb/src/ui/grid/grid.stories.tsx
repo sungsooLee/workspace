@@ -1022,7 +1022,7 @@ TemplateEditGrid.storyName = '셀 편집';
 export const TemplateColumnSize: any = (args: any) => {
   const data = [
     { name: '현대', code: 'H', code2: 'H' },
-    // { name: '현대', code: 'H', code2: 'H' },
+    { name: '현대', code: 'H', code2: 'H' },
     // { name: '현대', code: 'H', code2: 'H' },
   ];
   const columns = [
@@ -1030,7 +1030,15 @@ export const TemplateColumnSize: any = (args: any) => {
     { accessorKey: 'code', maxSize: 100 },
     { accessorKey: 'code2', size: undefined },
   ];
-  return <GridBox title={'Editable Grid'} data={data} columns={columns} hideRowSelectionCheckBox />;
+  return (
+    <GridBox
+      showNumberingColumn
+      title={'Editable Grid'}
+      data={data}
+      columns={columns}
+      hideRowSelectionRadioBox={false}
+    />
+  );
 };
 TemplateColumnSize.storyName = '컬럼 사이즈';
 

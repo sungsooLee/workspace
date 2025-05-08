@@ -117,7 +117,7 @@ const searchConfig: any = {
       {
         name: 'labelMessageType',
         type: 'dropdown',
-        label: t('LABEL.form.label.type'),
+        label: t('LABEL.form.label.category'),
         value: '',
         options: [
           { value: '', label: '전체' },
