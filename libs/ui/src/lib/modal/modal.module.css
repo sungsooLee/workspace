@@ -105,7 +105,10 @@
   }
   /* mobile bottom sheet */
   &.m_bottom_sheet {
-    @apply bottom-0 top-auto h-[calc(100%-72px)] max-h-[calc(100%-72px)] rounded-b-none rounded-t-[16px];
+    @apply bottom-0 top-auto h-auto max-h-[calc(100%-72px)] rounded-b-none rounded-t-[16px];
+    [class*='modal-content'] {
+      @apply !max-h-[calc(100dvh-72px)];
+    }
   }
 }
 .md,
