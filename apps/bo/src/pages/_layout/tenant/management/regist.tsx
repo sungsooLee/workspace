@@ -1,15 +1,11 @@
-import { useState } from 'react';
 import { t } from 'i18next';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { cn } from '@/libs/shared/src';
-
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import {
-  ContentsRow,
   Button,
   ChipListModalSelectorFormField,
+  ContentsRow,
   DynamicFormField,
   useModal,
 } from '@learnway/ui';
@@ -24,7 +20,7 @@ import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 
 import { useCreateTenant } from '@entities/tenant/service/tenant.hook';
 import { UserInquiryModal } from '@shared/ui/modal/user-inquiry-modal';
-import { LearningResourceProductionGuideModal } from '@features/learning/learning-resource/learning-resource-production-guide-modal';
+
 export const Route = createFileRoute('/_layout/tenant/management/regist')({
   component: RouteComponent,
 });
@@ -252,9 +248,7 @@ const formConfig: DynamicFormConfig = {
           label: 'APP',
         },
       ],
-      checkGroupConfig: {
-        allCheck: true,
-      },
+      showSelectAll: true,
     },
     {
       name: 'language',
@@ -271,9 +265,7 @@ const formConfig: DynamicFormConfig = {
         { value: 'vi', label: '베트남어' },
         { value: 'es', label: '스페인어' },
       ],
-      checkGroupConfig: {
-        allCheck: true,
-      },
+      showSelectAll: true,
     },
     {
       name: 'useCategory',
@@ -292,9 +284,7 @@ const formConfig: DynamicFormConfig = {
           label: '테넌트 카테고리',
         },
       ],
-      checkGroupConfig: {
-        allCheck: true,
-      },
+      showSelectAll: true,
     },
   ],
   validator: {

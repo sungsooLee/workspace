@@ -7,12 +7,10 @@ import {
   Button,
   ContentsRow,
   DynamicFormField,
-  findParentNode,
+  GridBox,
   TreeContainer,
-  TreeEventPayload,
   TreeNode,
   TreeView,
-  GridBox,
   useModal,
 } from '@learnway/ui';
 
@@ -20,27 +18,26 @@ import { cn } from '@learnway/shared';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import { FormRow, ContentsHistoryInfoFormField } from '@shared/ui';
+import { ContentsHistoryInfoFormField, FormRow } from '@shared/ui';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 import { TenantDetailMenuMappingModal } from './tenant-detail-menu-mapping-modal';
 /** Hook 정의 */
 import {
+  useChangeMenuTenentDnd,
+  useDeleteMenuTenent,
   useFetchMenuTenantDetail,
   useFetchMenuTenantMappingTree,
-  useDeleteMenuTenent,
   useUpdateMenuTenant,
-  useChangeMenuTenentDnd,
 } from '@entities/tenant/service/tenant-menu-manage.hook';
 /** method import */
 import { findMenuPathById } from '@features/platform/menu/service/menu.service';
 import {
-  transformApiDataToTreeData,
-  getFirstExpandKeys,
   getAllTreeKeys,
-  getNodeByKey,
+  getFirstExpandKeys,
   moveNodeCheck,
+  transformApiDataToTreeData,
 } from '../service/tenant-detail-tree.service';
 
 const DIVICE_NAME = {
@@ -433,7 +430,6 @@ const formConfig: DynamicFormConfig = {
       type: 'checkbox-group',
       label: t('디바이스 노출 여부'),
       value: [],
-      checkGroupConfig: { allCheck: false },
       options: [
         { label: t('PC'), value: DIVICE_NAME.PC },
         { label: t('모바일'), value: DIVICE_NAME.Mobile },
