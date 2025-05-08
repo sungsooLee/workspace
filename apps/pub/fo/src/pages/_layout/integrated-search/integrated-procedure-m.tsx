@@ -29,6 +29,9 @@ function RouteComponent() {
   const [arrayValues, setArrayValues] = useState<string[]>(['최신순']);
   const [countValues, setCountValues] = useState<string[]>(['20개씩']);
 
+  // filter 선택된 값이 있으면 true 변경
+  const [selectCheck, setSelectCheck] = useState(true);
+
   // list (가로형, 세로형) 변경
   const [listUi, setListUi] = useState('horizontal');
   const list_ui = () => {
@@ -101,7 +104,7 @@ function RouteComponent() {
               </div>
 
               <div className={styles.box}>
-                <Button>
+                <Button className={cn(selectCheck === true ? styles.selected : '')}>
                   <IcoFilter width={20} height={20} stroke="#4c515e" fill="none" />
                 </Button>
               </div>

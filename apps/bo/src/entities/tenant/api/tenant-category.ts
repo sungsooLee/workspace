@@ -20,21 +20,21 @@ export default class TenantCategoryService {
   }
 
   static updateTenantCategory(payload: any) {
-    return httpService.post<any>(
+    return httpService.put<any>(
       `${LMSApiPrefix()}/tenant/${payload.tenantId}/category/${payload.categoryId}/update`,
       payload.data,
     );
   }
 
   static deleteTenantCategory(payload: any) {
-    return httpService.post<any>(
+    return httpService.delete<any>(
       `${LMSApiPrefix()}/tenant/${payload.tenantId}/category/${payload.categoryId}/delete`,
       {},
     );
   }
 
   static moveTenantCategory(payload: any) {
-    return httpService.post<any>(
+    return httpService.put<any>(
       `${LMSApiPrefix()}/tenant/${payload.tenantId}/category/${payload.categoryId}/dnd`,
       payload.data,
     );

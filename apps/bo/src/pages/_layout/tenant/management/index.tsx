@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { IcoRefresh02, IcoSearch } from '@learnway/icons';
@@ -25,17 +25,12 @@ function RouteComponent() {
   // grid
   const [pageIndex, setPageIndex] = useState(0);
   const [pageSize, setPageSize] = useState(10);
-  const [selectedValues, setSelectedValues] = useState<string[]>([]);
-  const [selectedValues2, setSelectedValues2] = useState<string[]>([]);
-  const [selectedValues3, setSelectedValues3] = useState<string[]>([]);
-  const [selectedValues4, setSelectedValues4] = useState<string[]>([]);
-  const [selectedValues5, setSelectedValues5] = useState<string[]>([]);
 
   const router = useRouter();
 
   const gridConfig = {
-    // query: tenantOptions.all,
-    query: '',
+    query: tenantQueryOptions.all,
+    // query: '',
     columns: [
       {
         name: 'no1',
@@ -92,6 +87,21 @@ function RouteComponent() {
         tenure: '재직',
         roleStatus: '정상',
       },
+      {
+        id: '1',
+        tenantId: 2,
+        tenantName: '테넌트B 2',
+        tenantSite: '/abcdefg',
+        channelName: '내 관리 채널명',
+        company: '현대자동차',
+        tenantOwner: '경영지원팀',
+        hrdOwner: '테넌트 담당자',
+        companyNumber: '1234567',
+        name: '김현대',
+        roleTerm: '2025-01-03 ~ 2025-01-03',
+        tenure: '재직',
+        roleStatus: '정상',
+      },
     ],
 
     pagination: {
@@ -102,50 +112,33 @@ function RouteComponent() {
   };
 
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
-  const { gridFetch } = useGridBox(gridConfig, getValues);
+  const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
 
   // useDynamicForm(formConfig);
 
-  const handleOnSearch = (data: any) => {
-    console.log(data);
-  };
+  const handleOnSearch = useCallback((data: any) => {
+    gridFetch(data);
+  }, []);
+  const handleNewTenant = useCallback(async () => {
+    if (!data) return;
+  }, [data]);
 
   return (
-    <form className="form_row">
-      <PageContainer>
-        <ContentsButtons>
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={() => router.navigate({ to: '/tenant/management/regist' })}
-          >
-            등록
-          </Button>
-        </ContentsButtons>
-        <MainContents>
-          <div className={cn(searchStyles.start, searchStyles.wrap)}>
-            <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
-          </div>
-          <div className={cn(boxStyles.start, boxStyles.inner)}>
-            <div className="grid_wrap">
-              <GridBox
-                config={gridConfig}
-                height={440}
-                showColumnSettings={false}
-                pagination={{
-                  pageSize,
-                  pageIndex,
-                  totalRows: 100,
-                  onPageChange: setPageIndex,
-                  onPageSizeChange: setPageSize,
-                }}
-                title="타이틀"
-              />
-            </div>
-          </div>
-        </MainContents>
-      </PageContainer>
-    </form>
+    <PageContainer>
+      <ContentsButtons>
+        <Button
+          variant="primary"
+          size="sm"
+          onClick={() => router.navigate({ to: '/tenant/management/regist' })}
+        >
+          등록
+        </Button>
+      </ContentsButtons>
+      <MainContents>
+        <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
+        <GridBox config={gConfig} />
+      </MainContents>
+    </PageContainer>
   );
 }
 

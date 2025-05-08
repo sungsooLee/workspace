@@ -9,6 +9,10 @@ const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, any>(
     ref,
   ) => {
     const [allCheck, setAllCheck] = useState(false);
+    const disabledCheckBox = checkGroupConfig?.disabledCheckBox
+      ? checkGroupConfig?.disabledCheckBox
+      : [];
+
     const handleCheckChange = (checked: boolean, checkedValue: string) => {
       let checkedValues = [...value];
       if (checked && !checkedValues.includes(checkedValue)) {
@@ -27,7 +31,7 @@ const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, any>(
       if (checked) {
         onChange(options.map((option: any) => option.value));
       } else {
-        onChange([]);
+        onChange(disabledCheckBox);
       }
     };
     useEffect(() => {
@@ -40,7 +44,12 @@ const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, any>(
     return (
       <div ref={ref} className={cn(styles.start, styles.checkbox_list)}>
         {checkGroupConfig?.allCheck && (
-          <Checkbox checked={allCheck} label={'전체'} onCheckedChange={handleAllCheckChange} />
+          <Checkbox
+            checked={allCheck}
+            label={'전체'}
+            onCheckedChange={handleAllCheckChange}
+            disabled={props.disabled}
+          />
         )}
         {options &&
           options.map((item: any) => (
@@ -51,6 +60,7 @@ const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, any>(
                 {...props}
                 label={item.label}
                 hideLabel={!item.label}
+                disabled={props.disabled ? props.disabled : disabledCheckBox.includes(item.value)}
               />
             </Fragment>
           ))}

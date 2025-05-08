@@ -11,8 +11,9 @@ import {
   useUpdateTenantCategory,
   useMoveTenantCategory,
 } from '@entities/tenant/service/tenant-category.hook';
-import { transformApiDataToTreeData } from '@features/category/service/category.service';
-import TenentCategoryView from '@features/tenant/management/ui/tenant-detail-category-view';
+//import { transformApiDataToTreeData } from '@features/category/service/category.service';
+import { transformApiDataToTreeData } from '@features/platform/category';
+import TenantCategoryView from '@features/tenant/management/ui/tenant-detail-category-view';
 import { TenantCategoryTree } from './tenant-detail-category-tree';
 
 type mode = 'init' | 'add' | 'view';
@@ -118,6 +119,11 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
     setExpandedKeys(keys);
   };
 
+  const handleNodeChange = () => {
+    refetch();
+    setMode('init');
+  };
+
   const handleDelete = (payload: any) => {
     openConfirm({
       title: '삭제 하시겠습니까?',
@@ -147,10 +153,11 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
           expandedKeys={expandedKeys}
           onExpandChange={handleExpandChange}
           selectedKey={selectedNode?.key}
+          onNodeChange={handleNodeChange}
         />
       )}
       {selectedNode ? (
-        <TenentCategoryView
+        <TenantCategoryView
           tenantId={tenantId}
           treeData={treeData}
           selectedNode={selectedNode}
@@ -167,7 +174,7 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
           }}
         />
       ) : (
-        <TenentCategoryView
+        <TenantCategoryView
           tenantId={tenantId}
           treeData={treeData}
           selectedNode={null}

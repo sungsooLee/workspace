@@ -12,7 +12,7 @@ import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic
 import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
 import { FormRow, ContentsHistoryInfoFormField } from '@shared/ui';
 
-import { findMenuPathById } from '@features/category/service/category.service';
+//import { findMenuPathById } from '@features/category/service/category.service';
 import { useFetchTenantCategoryDetail } from '@entities/tenant/service/tenant-category.hook';
 import { TenantCategoryUpdate } from 'src/types/entities/tenant-category';
 import { ReceiptRussianRuble } from 'lucide-react';
@@ -103,7 +103,7 @@ const TenantCategoryViewComponent: FC<any> = ({
         categoryCode: data!.categoryCode,
         categoryContent: data!.categoryContent,
         isUsed: node.isUsed,
-        whiteList: data!.whiteList.combines,
+        whiteList: data!.whiteList?.combines,
       };
       console.log('## body :: ', body);
       onUpdate({
@@ -117,7 +117,10 @@ const TenantCategoryViewComponent: FC<any> = ({
 
   const handleDelete = () => {
     if (!selectedNode) return;
-    onDelete(selectedNode.id);
+    const payload: any = {};
+    payload.tenantId = tenantId;
+    payload.categoryId = selectedNode.id;
+    onDelete(payload);
   };
 
   return (

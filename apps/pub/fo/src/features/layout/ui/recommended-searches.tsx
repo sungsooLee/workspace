@@ -14,12 +14,12 @@ const RecommendedSearchesCompoment = ({ className }: RecommendedSearchesProps) =
         <strong>추천 검색어</strong>
       </div>
       <div className={styles.recommended_box}>
-        <Button>기업경영</Button>
+        <Button className={styles.ellipsis}>기업경영기업경영경영</Button>
         <Button>Ai교육</Button>
         <Button>IT</Button>
-        <Button>마케팅 및 세일즈</Button>
+        <Button className={styles.ellipsis}>마케팅 및 세일즈</Button>
         <Button>상품/자동차기술</Button>
-        <Button>Business Trend</Button>
+        <Button className={styles.ellipsis}>Business Trend</Button>
         <Button>성희롱 예방</Button>
         <Button>GCSO(H)</Button>
         <Button>파이썬</Button>

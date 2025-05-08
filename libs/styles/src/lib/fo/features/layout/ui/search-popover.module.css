@@ -33,7 +33,7 @@
           & + div {
             @apply relative mt-[24px] pt-[36px];
             &::before {
-              @apply absolute -left-[20px] top-0 h-[12px] w-[100dvw] bg-[var(--gray1)] content-[''];
+              @apply absolute -left-[20px] top-0 h-[12px] w-[calc(100%+40px)] bg-[var(--gray1)] content-[''];
             }
           }
         }
@@ -50,7 +50,7 @@
               @apply relative mt-[24px] pt-[36px];
             }
             &::before {
-              @apply absolute -left-[20px] top-0 h-[12px] w-[100dvw] bg-[var(--gray1)] content-[''];
+              @apply absolute -left-[20px] top-0 h-[12px] w-[calc(100%+40px)] bg-[var(--gray1)] content-[''];
             }
           }
         }

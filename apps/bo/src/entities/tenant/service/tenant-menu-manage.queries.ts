@@ -1,9 +1,8 @@
 import TenantMenuManageService from '../api/menu-tenant-manage';
-import MenuMangerService from '../../menu/api/menu-manage';
 
 export const queryKeys = {
   tree: ['menu-tenant-manage'] as const,
-  detail: (menuId: string) => [...queryKeys.tree, menuId] as const,
+  detail: (tenantMappingMenuId: number) => [...queryKeys.tree, tenantMappingMenuId] as const,
 };
 
 export const tenantMenuManageQueryOptions = {
@@ -12,9 +11,9 @@ export const tenantMenuManageQueryOptions = {
     queryKey: [...queryKeys.tree, tenantId, menuScope],
     queryFn: () => TenantMenuManageService.findMenuTenantMappingTree(tenantId, menuScope),
   }),
-  detail: (menuId: string) => ({
-    queryKey: [...queryKeys.detail(menuId)],
-    queryFn: () => MenuMangerService.fetchMenuDetail(menuId),
+  detail: (tenantMappingMenuId: number) => ({
+    queryKey: [...queryKeys.detail(tenantMappingMenuId)],
+    queryFn: () => TenantMenuManageService.findMenuTenantDetail(tenantMappingMenuId),
   }),
 };
 
@@ -27,5 +26,8 @@ export const mutateOptions = {
   }),
   createMenuTenent: () => ({
     mutationFn: (payload: any) => TenantMenuManageService.createMenuTenant(payload),
+  }),
+  changeMenuTenentDnd: () => ({
+    mutationFn: (payload: any) => TenantMenuManageService.changeMenuTenantDnd(payload),
   }),
 };

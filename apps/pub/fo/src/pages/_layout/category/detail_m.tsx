@@ -45,8 +45,6 @@ function RouteComponent() {
       setDirection('vertical'); // 세로형
     }
   };
-  // 썸네일 라벨
-  const label = [{ text: 'New', color: '#00afd5' }];
 
   return (
     <div className={`${styles.start} ${styles.detail_m}`}>
@@ -189,11 +187,7 @@ function RouteComponent() {
                   {/* img */}
                   <div className={thumnailStyles.img_box}>
                     <ul className={thumnailStyles.label}>
-                      {label.map((labels, index) => (
-                        <li key={index} style={{ backgroundColor: labels.color }}>
-                          {labels.text}
-                        </li>
-                      ))}
+                      <li style={{ backgroundColor: '#00afd5' }}>New</li>
                     </ul>
                     <div className={thumnailStyles.img}>
                       <img src={listImage1} alt="" />
@@ -236,11 +230,7 @@ function RouteComponent() {
                   {/* img */}
                   <div className={thumnailStyles.img_box}>
                     <ul className={thumnailStyles.label}>
-                      {label.map((labels, index) => (
-                        <li key={index} style={{ backgroundColor: labels.color }}>
-                          {labels.text}
-                        </li>
-                      ))}
+                      <li style={{ backgroundColor: '#00afd5' }}>New</li>
                     </ul>
                     <div className={thumnailStyles.img}>
                       <img src={listImage1} alt="" />
@@ -283,11 +273,7 @@ function RouteComponent() {
                   {/* img */}
                   <div className={thumnailStyles.img_box}>
                     <ul className={thumnailStyles.label}>
-                      {label.map((labels, index) => (
-                        <li key={index} style={{ backgroundColor: labels.color }}>
-                          {labels.text}
-                        </li>
-                      ))}
+                      <li style={{ backgroundColor: '#00afd5' }}>New</li>
                     </ul>
                     <div className={thumnailStyles.img}>
                       <img src={listImage1} alt="" />
@@ -330,11 +316,7 @@ function RouteComponent() {
                   {/* img */}
                   <div className={thumnailStyles.img_box}>
                     <ul className={thumnailStyles.label}>
-                      {label.map((labels, index) => (
-                        <li key={index} style={{ backgroundColor: labels.color }}>
-                          {labels.text}
-                        </li>
-                      ))}
+                      <li style={{ backgroundColor: '#00afd5' }}>New</li>
                     </ul>
                     <div className={thumnailStyles.img}>
                       <img src={listImage1} alt="" />

@@ -13,6 +13,87 @@ export const getAllTreeKeys = (treeData: TreeNode[]) => {
   };
   return getAllKeys(treeData);
 };
+const getAllChildrens = (nodes: TreeNode[], contains: TreeNode[] = []) => {
+  for (const node of nodes) {
+    contains.push(node);
+    if (node.children && node.children.length > 0) {
+      getAllChildrens(node.children, contains);
+    }
+  }
+  return contains;
+};
+
+const getAllParentAndChildrenByKey = (
+  nodes: TreeNode[],
+  key: number | string,
+  contains: TreeNode[] = [],
+) => {
+  for (const node of nodes) {
+    const currentNodes = [...contains, node];
+    if (node.key === key) {
+      console.log(currentNodes);
+
+      if (node.children && node.children?.length > 0) {
+        getAllChildrens(node.children, currentNodes);
+
+        console.log(currentNodes);
+      }
+      return currentNodes;
+    }
+    if (node.children && node.children.length > 0) {
+      const result: TreeNode[] = getAllParentAndChildrenByKey(node.children, key, currentNodes);
+      if (result.length > currentNodes.length) {
+        return result;
+      }
+    }
+  }
+  return contains;
+};
+
+export const getNodeByKey = (nodes: TreeNode[], key: number | string): TreeNode | undefined => {
+  for (const node of nodes) {
+    if (node.key === key) {
+      return node;
+    }
+    if (node.children && node.children?.length > 0) {
+      return getNodeByKey(node.children, key);
+    }
+  }
+  return undefined;
+};
+
+export const getAllParentAndAllChildById = (nodes: TreeNode[], key: number | string) => {
+  return getAllParentAndChildrenByKey(nodes, key);
+};
+
+export const findMenuPathById = (
+  nodes: TreeNode[],
+  menuId: number | string,
+  titles: string[] = [],
+): string => {
+  const targetId = menuId.toString();
+
+  for (const node of nodes) {
+    // 현재 노드의 제목을 임시 경로에 추가
+    const currentTitles = [...titles, node.title || 'Unnamed'];
+
+    // 현재 노드가 대상 노드인지 확인
+    if (node.menuId && node.menuId.toString() === targetId) {
+      return currentTitles.join(' > ');
+    }
+
+    // 자식 노드가 있으면 재귀적으로 검색
+    if (node.children && node.children.length > 0) {
+      const result = findMenuPathById(node.children, menuId, currentTitles);
+      if (result) {
+        return result;
+      }
+    }
+  }
+
+  // 노드를 찾지 못한 경우
+  return '';
+};
 
 export const getFirstExpandKeys = (treeData: TreeNode[]) => {
   if (treeData && treeData.length > 0) {
@@ -20,7 +101,11 @@ export const getFirstExpandKeys = (treeData: TreeNode[]) => {
     return firstLevelKeys;
   }
 };
-
+/**
+ * Tenant Menu를 TreeNode 로 변환 하는 함수
+ * @param apiData
+ * @returns 변환된 TreeNode
+ */
 export const transformApiDataToTreeData = (apiData: any) => {
   // 단일 노드인 경우 배열로 감싸기
   const dataArray = Array.isArray(apiData) ? apiData : [apiData];
@@ -69,4 +154,41 @@ export const transformApiDataToTreeData = (apiData: any) => {
   };
 
   return transform(dataArray);
+};
+
+export const moveNodeCheck = (events: any) => {
+  console.log('devents ', events);
+  switch (events.position) {
+    case 'BEFORE':
+      if (events.sourceNode.level === events.targetNode.level) {
+        return {
+          tenantMappingMenuId: events.sourceNode.tenantMappingMenuId,
+          destinationParentId: events.targetNode.parentKey,
+          sortOrder: events.targetNode.sortOrder - 1,
+          menuScopeCode: '',
+        };
+      }
+      break;
+    case 'INSIDE':
+      if (events.sourceNode.level === events.targetNode.level + 1) {
+        return {
+          tenantMappingMenuId: events.sourceNode.tenantMappingMenuId,
+          destinationParentId: events.targetNode.key,
+          sortOrder: 1,
+          menuScopeCode: '',
+        };
+      }
+      break;
+    case 'AFTER':
+      if (events.sourceNode.level === events.targetNode.level) {
+        return {
+          tenantMappingMenuId: events.sourceNode.tenantMappingMenuId,
+          destinationParentId: events.targetNode.parentKey,
+          sortOrder: events.targetNode.sortOrder + 1,
+          menuScopeCode: '',
+        };
+      }
+      break;
+  }
+  return undefined;
 };
