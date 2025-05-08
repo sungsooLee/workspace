@@ -24,6 +24,7 @@ import {
 } from '@learnway/icons';
 
 import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
+import thumnailImgStyles from '../../../shared/ui/thumnail/thumnail-img.module.css';
 import styles from './detail.module.css';
 
 import bnrCImage1 from '@learnway/styles/fo/assets/images/banner/banner_category_01.png';
@@ -203,17 +204,17 @@ function RouteComponent() {
 
                 <div className={thumnailStyles.thumnail_box}>
                   {/* img */}
-                  <div className={thumnailStyles.img_box}>
-                    <ul className={thumnailStyles.label}>
+                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                    <ul className={thumnailImgStyles.label}>
                       <li style={{ backgroundColor: '#00afd5' }}>New</li>
                       <li style={{ backgroundColor: '#06226a' }}>접수중</li>
                       <li style={{ backgroundColor: '#ff4646' }}>D-7</li>
                     </ul>
-                    <div className={thumnailStyles.img}>
+                    <div className={thumnailImgStyles.img}>
                       <img src={listImage1} alt="" />
                     </div>
 
-                    <div className={thumnailStyles.heart}>
+                    <div className={thumnailImgStyles.heart}>
                       <Button
                         className={cn(
                           thumnailStyles.btn_heart,
@@ -303,17 +304,17 @@ function RouteComponent() {
 
                 <div className={thumnailStyles.thumnail_box}>
                   {/* img */}
-                  <div className={thumnailStyles.img_box}>
-                    <ul className={thumnailStyles.label}>
+                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                    <ul className={thumnailImgStyles.label}>
                       <li style={{ backgroundColor: '#00afd5' }}>New</li>
                       <li style={{ backgroundColor: '#06226a' }}>접수중</li>
                       <li style={{ backgroundColor: '#ff4646' }}>D-7</li>
                     </ul>
-                    <div className={thumnailStyles.img}>
+                    <div className={thumnailImgStyles.img}>
                       <img src={listImage1} alt="" />
                     </div>
 
-                    <div className={thumnailStyles.heart}>
+                    <div className={thumnailImgStyles.heart}>
                       <Button
                         className={cn(
                           thumnailStyles.btn_heart,
@@ -403,17 +404,17 @@ function RouteComponent() {
 
                 <div className={thumnailStyles.thumnail_box}>
                   {/* img */}
-                  <div className={thumnailStyles.img_box}>
-                    <ul className={thumnailStyles.label}>
+                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                    <ul className={thumnailImgStyles.label}>
                       <li style={{ backgroundColor: '#00afd5' }}>New</li>
                       <li style={{ backgroundColor: '#06226a' }}>접수중</li>
                       <li style={{ backgroundColor: '#ff4646' }}>D-7</li>
                     </ul>
-                    <div className={thumnailStyles.img}>
+                    <div className={thumnailImgStyles.img}>
                       <img src={listImage1} alt="" />
                     </div>
 
-                    <div className={thumnailStyles.heart}>
+                    <div className={thumnailImgStyles.heart}>
                       <Button
                         className={cn(
                           thumnailStyles.btn_heart,
@@ -503,17 +504,17 @@ function RouteComponent() {
 
                 <div className={thumnailStyles.thumnail_box}>
                   {/* img */}
-                  <div className={thumnailStyles.img_box}>
-                    <ul className={thumnailStyles.label}>
+                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                    <ul className={thumnailImgStyles.label}>
                       <li style={{ backgroundColor: '#00afd5' }}>New</li>
                       <li style={{ backgroundColor: '#06226a' }}>접수중</li>
                       <li style={{ backgroundColor: '#ff4646' }}>D-7</li>
                     </ul>
-                    <div className={thumnailStyles.img}>
+                    <div className={thumnailImgStyles.img}>
                       <img src={listImage1} alt="" />
                     </div>
 
-                    <div className={thumnailStyles.heart}>
+                    <div className={thumnailImgStyles.heart}>
                       <Button
                         className={cn(
                           thumnailStyles.btn_heart,

@@ -12,6 +12,8 @@ import {
 } from '@learnway/icons';
 
 import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
+import thumnailImgStyles from '../../../shared/ui/thumnail/thumnail-img.module.css';
+
 import styles from './detail_m.module.css';
 
 import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
@@ -184,11 +186,11 @@ function RouteComponent() {
 
                 <div className={thumnailStyles.thumnail_box}>
                   {/* img */}
-                  <div className={thumnailStyles.img_box}>
-                    <ul className={thumnailStyles.label}>
+                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                    <ul className={thumnailImgStyles.label}>
                       <li style={{ backgroundColor: '#00afd5' }}>New</li>
                     </ul>
-                    <div className={thumnailStyles.img}>
+                    <div className={thumnailImgStyles.img}>
                       <img src={listImage1} alt="" />
                     </div>
                   </div>
@@ -223,11 +225,11 @@ function RouteComponent() {
 
                 <div className={thumnailStyles.thumnail_box}>
                   {/* img */}
-                  <div className={thumnailStyles.img_box}>
-                    <ul className={thumnailStyles.label}>
+                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                    <ul className={thumnailImgStyles.label}>
                       <li style={{ backgroundColor: '#00afd5' }}>New</li>
                     </ul>
-                    <div className={thumnailStyles.img}>
+                    <div className={thumnailImgStyles.img}>
                       <img src={listImage1} alt="" />
                     </div>
                   </div>
@@ -262,11 +264,11 @@ function RouteComponent() {
 
                 <div className={thumnailStyles.thumnail_box}>
                   {/* img */}
-                  <div className={thumnailStyles.img_box}>
-                    <ul className={thumnailStyles.label}>
+                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                    <ul className={thumnailImgStyles.label}>
                       <li style={{ backgroundColor: '#00afd5' }}>New</li>
                     </ul>
-                    <div className={thumnailStyles.img}>
+                    <div className={thumnailImgStyles.img}>
                       <img src={listImage1} alt="" />
                     </div>
                   </div>
@@ -301,11 +303,11 @@ function RouteComponent() {
 
                 <div className={thumnailStyles.thumnail_box}>
                   {/* img */}
-                  <div className={thumnailStyles.img_box}>
-                    <ul className={thumnailStyles.label}>
+                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                    <ul className={thumnailImgStyles.label}>
                       <li style={{ backgroundColor: '#00afd5' }}>New</li>
                     </ul>
-                    <div className={thumnailStyles.img}>
+                    <div className={thumnailImgStyles.img}>
                       <img src={listImage1} alt="" />
                     </div>
                   </div>

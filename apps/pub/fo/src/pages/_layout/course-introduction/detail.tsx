@@ -26,6 +26,9 @@ import definitionListStyles from './definition-list.module.css';
 import packageInformationStyles from './package-information.module.css';
 import lectureStyles from './lecture.module.css';
 import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
+import thumnailImgStyles from '../../../shared/ui/thumnail/thumnail-img.module.css';
+import packageSideStyles from './package-side.module.css';
+import relatedSideStyles from './related-side.module.css';
 
 import styles from './detail.module.css';
 
@@ -77,7 +80,7 @@ function RouteComponent() {
     {
       value: 'a',
       title: (
-        <div className={styles.sub_package_title}>
+        <div className={packageSideStyles.sub_package_title}>
           <div
             className={cn(
               thumnailStyles.start,
@@ -90,11 +93,11 @@ function RouteComponent() {
 
             <div className={thumnailStyles.thumnail_box}>
               {/* img */}
-              <div className={thumnailStyles.img_box}>
-                <ul className={thumnailStyles.label}>
+              <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                <ul className={thumnailImgStyles.label}>
                   <li style={{ backgroundColor: '#00afd5' }}>New</li>
                 </ul>
-                <div className={thumnailStyles.img}>
+                <div className={thumnailImgStyles.img}>
                   <img src={listImage1} alt="" />
                 </div>
               </div>
@@ -109,7 +112,7 @@ function RouteComponent() {
         </div>
       ),
       children: (
-        <div className={styles.sub_package_content}>
+        <div className={packageSideStyles.sub_package_content}>
           <p>필수 개발 과정 Spring Framework활한 OpenAPI 서비스 개발</p>
           <p>필수 개발 과정 Spring Framework활한 OpenAPI 서비스 개발</p>
           <p>필수 개발 과정 Spring Framework활한 OpenAPI 서비스 개발</p>
@@ -120,7 +123,7 @@ function RouteComponent() {
     {
       value: 'b',
       title: (
-        <div className={styles.sub_package_title}>
+        <div className={packageSideStyles.sub_package_title}>
           <div
             className={cn(
               thumnailStyles.start,
@@ -133,11 +136,11 @@ function RouteComponent() {
 
             <div className={thumnailStyles.thumnail_box}>
               {/* img */}
-              <div className={thumnailStyles.img_box}>
-                <ul className={thumnailStyles.label}>
+              <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                <ul className={thumnailImgStyles.label}>
                   <li style={{ backgroundColor: '#00afd5' }}>New</li>
                 </ul>
-                <div className={thumnailStyles.img}>
+                <div className={thumnailImgStyles.img}>
                   <img src={listImage1} alt="" />
                 </div>
               </div>
@@ -149,7 +152,7 @@ function RouteComponent() {
           </div>
         </div>
       ),
-      children: <div className={styles.sub_package_content}>Content B</div>,
+      children: <div className={packageSideStyles.sub_package_content}>Content B</div>,
     },
   ];
 
@@ -431,17 +434,19 @@ function RouteComponent() {
           </div>
 
           {/* 패키지 */}
-          <div className={styles.sub_box}>
+          <div
+            className={`${packageSideStyles.start} ${packageSideStyles.package} ${styles.sub_box} `}
+          >
             <div className={styles.tit_box}>
               <strong>
                 패키지<em>10</em>
               </strong>
             </div>
-            <div className={styles.package_box}>
+            <div className={packageSideStyles.package_box}>
               <Accordion
                 items={accordionValueItems}
                 value={accordionValue}
-                className={styles.acc_package}
+                className={packageSideStyles.acc_package}
                 onValueChange={(value) => setAccordionValue(value as string)}
                 type={'multiple'}
               />
@@ -449,13 +454,15 @@ function RouteComponent() {
           </div>
 
           {/* 연관 과정 */}
-          <div className={styles.sub_box}>
+          <div
+            className={`${relatedSideStyles.start} ${relatedSideStyles.related} ${styles.sub_box} `}
+          >
             <div className={styles.tit_box}>
               <strong>
                 연관 과정<em>20</em>
               </strong>
             </div>
-            <ul className={styles.procedure_box}>
+            <ul className={relatedSideStyles.procedure_box}>
               <li>
                 {/* thumnail module */}
                 <div
@@ -470,11 +477,11 @@ function RouteComponent() {
 
                   <div className={thumnailStyles.thumnail_box}>
                     {/* img */}
-                    <div className={thumnailStyles.img_box}>
-                      <ul className={thumnailStyles.label}>
+                    <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                      <ul className={thumnailImgStyles.label}>
                         <li style={{ backgroundColor: '#00afd5' }}>New</li>
                       </ul>
-                      <div className={thumnailStyles.img}>
+                      <div className={thumnailImgStyles.img}>
                         <img src={listImage1} alt="" />
                       </div>
                     </div>
