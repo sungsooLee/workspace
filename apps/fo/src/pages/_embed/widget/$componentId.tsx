@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 import { useCurrentRoute } from '@learnway/hooks';
 
-import { WidgetContainer } from '../../../widgets/platform';
+import { WidgetContainer } from '../../../widgets/main/dashboard';
 
 export const Route = createFileRoute('/_embed/widget/$componentId')({
   component: RouteComponent,

@@ -579,21 +579,21 @@ export const guideData = [
     screenId: 'NLP_FO_USE_1001',
     screenName: '통합검색결과_전체 TAB',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: 'integrated-search/integrated-search',
+    pageId: 'integrated-search/integrated-all',
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '- 연관 검색어 related-search.tsx\n- 썸네일 컴포넌트 대기중',
+    remarks: '- 연관 검색어 related-search.tsx\n- 다른 탭 컨펌 x',
   },
   {
     screenId: 'NLP_FO_USE_1002',
     screenName: '통합검색결과_과정 TAB',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: 'integrated-search/integrated-search',
+    pageId: 'integrated-search/integrated-procedure',
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '- integrated-search-procedure.tsx\n- 썸네일 컴포넌트 대기중',
+    remarks: '- integrated-procedure.tsx',
   },
   {
     screenId: 'NLP_FO_USE_MA_1010',
@@ -662,9 +662,8 @@ export const guideData = [
     pageId: 'category/detail',
     pageType: 'Page',
     completionDate: '2025-03-14',
-    lastUpdateDate: '',
-    remarks:
-      'NLP_FO_CAT_1000 (레이어창 카테고리) 포함\nNLP_FO_CAT_1002 (필터 레이어팝업) 포함\n썸네일 공통검포넌트 미작업으로 작업 불가능',
+    lastUpdateDate: '2025-04-30',
+    remarks: 'NLP_FO_CAT_1000 (레이어창 카테고리) 포함\nNLP_FO_CAT_1002 (필터 레이어팝업) 포함',
   },
   {
     screenId: 'NLP_FO_CAT_1003',
@@ -703,8 +702,8 @@ export const guideData = [
     pageId: 'category/detail_m',
     pageType: 'Page',
     completionDate: '2025-03-14',
-    lastUpdateDate: '',
-    remarks: '- 썸네일 공통 컴포넌트 대기중',
+    lastUpdateDate: '2025-04-30',
+    remarks: '',
   },
   {
     screenId: 'NLP_FO_CAT_M_1002',
@@ -773,9 +772,9 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'course-introduction/detail',
     pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-04-29',
     lastUpdateDate: '',
-    remarks: '- education-place-popup.tsx\n- tooltip 공통컴포넌트 수정중',
+    remarks: '- education-place-popup.tsx\n- popover가 modal 보다 아래에 있어서 공통 문의중',
   },
   {
     screenId: 'NLP_FO_LEC_1004',
@@ -904,9 +903,9 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'course-introduction/detail-m',
     pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-04-29',
     lastUpdateDate: '',
-    remarks: '- education-place-popup.tsx\n- tooltip 공통컴포넌트 수정중',
+    remarks: '- education-place-popup.tsx\n- popover가 modal 보다 아래에 있어서 공통 문의중',
   },
   {
     screenId: 'NLP_FO_LEC_MA_1006',
@@ -1184,10 +1183,10 @@ export const guideData = [
     screenName: '강의실_홈(대시보드)',
     layoutType: '', // 자동 분리됨 작성x
     pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageType: 'Page',
+    completionDate: '2025-04-30',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '/features/layout/ui/course-introduction/dashboard.tsx',
   },
   {
     screenId: 'NLP_FO_CLA_1001',

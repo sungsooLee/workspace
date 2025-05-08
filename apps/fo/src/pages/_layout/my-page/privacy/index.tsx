@@ -1,27 +1,37 @@
 import { useEffect } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
 
-import { Avatar, ContentsRow, DynamicFormField, PhoneNumber } from '@learnway/ui';
+import { Avatar, ContentsRow, DynamicFormField } from '@learnway/ui';
 import { IcoImage01 } from '@learnway/icons';
 import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 import {
   ChangeUserIdFormField,
   ChangePhoneNumberFormField,
+  ChangePasswordFormField,
+  WithdrawMembershipButton,
   useFetchAuthUser,
 } from '@learnway/auth';
 
 import { MAIN_CONTAINERS } from '../../../../widgets/layout';
 import { pageRouteConfig } from '../../../../features/auth';
+import { AvataFallback } from '../../../../features/layout';
 
 import { FormRow, NoticeBox } from '../../../../shared/ui';
 
-import styles from './information-change.module.css';
+import styles from '@learnway/styles/fo/pages/_layout/my-page/privacy/change-information.module.css';
 
 export const Route = createFileRoute('/_layout/my-page/privacy/')({
   component: RouteComponent,
   ...pageRouteConfig({
+    validateState: {
+      confirmPassword: {
+        format: 'string',
+        required: true,
+      },
+    },
     meta: {
-      title: '개인정보변경',
+      title: 'LABEL.common.changeInformation',
       mobile: { showHeader: false, showFooter: false, showMainFooter: false },
       container: MAIN_CONTAINERS.MY_PAGE,
     },
@@ -29,6 +39,7 @@ export const Route = createFileRoute('/_layout/my-page/privacy/')({
 });
 
 function RouteComponent() {
+  const { t } = useTranslation();
   const { provider, onSubmit, onFormChange, control, getValues, setFormError, fetchData } =
     useDynamicForm(authFormConfig);
 
@@ -57,7 +68,11 @@ function RouteComponent() {
         <div className={styles.avata_img}>
           {/* 사진 */}
           <div className={styles.avata_box}>
-            <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
+            <Avatar
+              imageUrl={authUser?.avataImage}
+              className={styles.info_avata}
+              fallback={<AvataFallback name={authUser?.name} />}
+            />
             <div className={styles.file}>
               <label htmlFor="file">
                 <IcoImage01 width={24} height={24} stroke="#06226a" fill="none"></IcoImage01>
@@ -88,7 +103,7 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'password'}>
-                <ChangeUserIdFormField />
+                <ChangePasswordFormField />
               </DynamicFormField>
             </FormRow>
           </ContentsRow>
@@ -120,6 +135,26 @@ function RouteComponent() {
             </FormRow>
           </ContentsRow>
         </div>
+      </div>
+
+      <NoticeBox title={t('LABEL.common.caution')} className={styles.notice}>
+        <dd>{t('LABEL.message.cautionChangeInformationHsw')}</dd>
+        <dd>
+          {t('LABEL.message.cautionChangeInformationDdms')}{' '}
+          <Link to={'/'}>{t('LABEL.common.goToDdms')} &#62;</Link>
+        </dd>
+      </NoticeBox>
+
+      <div className={styles.bullet_notice}>
+        <dl>
+          <dt>{t('LABEL.common.withdrawMembership')}</dt>
+          <dd>{t('LABEL.message.cautionWithdrawMembership01')}</dd>
+          <dd>{t('LABEL.message.cautionWithdrawMembership02')}</dd>
+          <dd>
+            {t('LABEL.message.cautionWithdrawMembership03')}
+            <WithdrawMembershipButton />
+          </dd>
+        </dl>
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ export type com_ever_edu_pms_educationplace_dto_res_EducationPlaceHistoryResDto 
     historyId?: number;
     educationPlaceId?: number;
     educationHistoryTypecd?: com_ever_edu_pms_educationplace_dto_res_EducationPlaceHistoryResDto.educationHistoryTypecd;
-    uuid?: string;
+    educationPlaceHistoryUuid?: string;
     educationPlaceTypecd?: com_ever_edu_pms_educationplace_dto_res_EducationPlaceHistoryResDto.educationPlaceTypecd;
     educationPlaceCode?: string;
     educationPlaceCodeName?: string;

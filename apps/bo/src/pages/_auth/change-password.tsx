@@ -9,7 +9,7 @@ export const Route = createFileRoute('/_auth/change-password')({
   ...pageRouteConfig({
     authorization: true,
     meta: {
-      title: 'LABEL.PASSWORD_CHANGE',
+      title: 'LABEL.common.passwordChange',
     },
   }),
 });

@@ -1,4 +1,5 @@
 import { memo, useEffect, useRef, useState } from 'react';
+import { MobileView, BrowserView, isMobile } from 'react-device-detect';
 import { cn } from '@learnway/shared';
 import {
   ModalBody,
@@ -11,6 +12,7 @@ import {
 } from '@learnway/ui';
 import styles from './notice-detail-popup.module.css';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import tableListStyles from '../../../shared/ui/list/table-list.module.css';
 
 const NoticeDetailPopupComponent = () => {
   const { open: openModal, close: closeModal } = useModal();
@@ -56,7 +58,36 @@ const NoticeDetailPopupComponent = () => {
       <ModalBody>
         <div className={styles.start}>
           <div className={styles.table_wrap}>
-            <TableBox data={data} columns={columns} tableMode={true} />
+            <BrowserView>
+              <TableBox data={data} columns={columns} tableMode={true} />
+            </BrowserView>
+
+            <MobileView>
+              <div className={`${tableListStyles.start} ${tableListStyles.table_list}`}>
+                <div className={tableListStyles.list_row}>
+                  <div className={`${tableListStyles.row} ${tableListStyles.col}`}>
+                    <span className={tableListStyles.dt}>상태</span>
+                    <span className={tableListStyles.dd}>완료</span>
+                  </div>
+                  <div className={`${tableListStyles.row} ${tableListStyles.col}`}>
+                    <span className={tableListStyles.dt}>접속회수</span>
+                    <span className={tableListStyles.dd}>4</span>
+                  </div>
+                  <div className={`${tableListStyles.row} ${tableListStyles.col}`}>
+                    <span className={tableListStyles.dt}>접속로그</span>
+                    <span className={tableListStyles.dd}>
+                      26-03-03 11:24pm ~ 26-03-03 11:28pm
+                      <br />
+                      26-03-04 12:24pm ~ 26-03-04 12:28pm
+                      <br />
+                      26-03-04 12:24pm ~ 26-03-01 10:29am
+                      <br />
+                      26-03-01 11:24am ~ 26-03-01 11:34am
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </MobileView>
           </div>
           <p className={styles.text_info}>관련된 안내 멘트가 있다면 오도록 합니다.</p>
         </div>

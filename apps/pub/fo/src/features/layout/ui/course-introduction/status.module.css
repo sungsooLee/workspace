@@ -1,6 +1,7 @@
 /* 대시보드 진행상황 */
 .start {
   .panel_degreey {
+    @apply rounded-[8px];
     .list {
       @apply flex items-center justify-between p-[16px];
       .date_status {
@@ -12,11 +13,30 @@
             &::before {
               @apply absolute left-0 top-[4px] block h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
             }
+            &.time {
+              @apply text-[var(--status1)];
+            }
           }
           + .date_box {
             @apply ml-[24px];
           }
         }
+      }
+      h3 {
+        @apply body_2_b;
+      }
+    }
+    &.completed {
+      @apply bg-[var(--secondary6)];
+      h3 {
+        @apply text-[var(--secondary3)];
+      }
+    }
+
+    &.incomplete {
+      @apply bg-[var(--secondary8)];
+      h3 {
+        @apply text-[var(--status1)];
       }
     }
 
@@ -30,90 +50,172 @@
       }
     }
   }
+  .progress_box {
+    @apply mt-[16px] w-full;
+  }
+  .progress_rate {
+    @apply flex items-center justify-between p-[16px];
+    [class*='progress_wrap'] {
+      @apply w-full;
+    }
+    h3 {
+      @apply mr-[24px] flex-shrink-0 basis-[94px];
+    }
+    .progress_bar {
+      @apply flex-1 border border-solid border-[var(--gray3)] bg-[var(--gray3)];
+    }
+
+    .info {
+      @apply basis-[50px] text-right;
+      .progress {
+        @apply title_6_b ml-[20px] inline-block text-[var(--secondary3)];
+      }
+    }
+  }
 
   .status_box {
-    @apply mt-[8px];
-    .progress_rate {
-      @apply flex items-center justify-between;
-      > div {
-        @apply w-full;
-      }
-      .progress_bar {
-        @apply flex-1 border border-solid border-[var(--gray5)] bg-[var(--white)];
-      }
-      .info {
-        @apply mr-[6px] flex w-[160px] items-center justify-end text-right;
-        .txt {
-          @apply body_3_r inline-block pl-[30px] text-left text-[var(--gray8)];
+    @apply mt-[16px];
+    .status_table {
+      @apply px-[16px] pb-[16px] pt-[8px];
+    }
+    .btn_action {
+      @apply border-t-[1px] border-solid border-[var(--gray3)];
+      button {
+        @apply flex h-[40px] w-full items-center justify-center;
+        span {
+          @apply body_3_r text-[var(--gray8)];
         }
-        .progress {
-          @apply title_6_b ml-[20px] inline-block text-[var(--secondary3)];
+        svg {
+          @apply ml-[3px];
+        }
+        &.active {
+          svg {
+            @apply rotate-180;
+          }
         }
       }
     }
     .status_list {
-      @apply mt-[16px] flex items-center justify-between gap-[16px];
+      @apply relative flex items-start justify-between gap-[16px] p-[16px];
+
       .status_info {
-        @apply w-full text-center;
-        .tt {
-          @apply body_4_r inline-flex h-[29px] w-full items-center justify-center rounded-tl-[8px] rounded-tr-[8px] bg-[var(--gray4)] text-center text-[var(--gray9)];
+        @apply relative w-full text-center before:content-[''];
+        &::before {
+          @apply absolute left-0 top-0 h-[82px] w-[1px] bg-[var(--gray5)];
         }
-        .score {
-          @apply title_4_b flex h-[79px] items-center justify-center gap-[8px] rounded-bl-[8px] rounded-br-[8px] bg-[var(--white)] text-[var(--primary4)];
-          .ico {
-            @apply inline-flex h-[30px] w-[30px] items-center justify-center rounded-full;
-            svg {
-              @apply h-[18px] w-[18px];
-            }
+        &:first-child::before {
+          @apply hidden;
+        }
+        .tt {
+          @apply label_bo_1_r inline-flex h-[24px] items-center justify-center rounded-[12px] bg-[var(--primary5)] px-[12px] text-center text-[var(--primary1)];
+        }
+        .score_box {
+          @apply title_4_b mt-[8px] flex flex-col items-center justify-center text-[var(--primary4)];
+
+          .score {
+            @apply flex gap-[8px];
           }
+          svg {
+            @apply mt-[8px];
+          }
+        }
+        .default {
+          @apply body_4_r block w-full text-[12px] text-[var(--gray9)];
         }
       }
     }
   }
-  /* 학습전 */
-  &.status_before {
-    .panel_degreey {
-      @apply border-[var(--gray5)] bg-[var(--white)];
-      .list {
-        .date {
-          @apply text-[var(--gray7)];
-        }
-      }
+}
 
-      h3 {
-        @apply text-[var(--gray7)];
-        .ico {
-          @apply bg-[var(--gray5)];
-        }
-      }
-    }
-
-    .status_box {
-      @apply border-[var(--gray5)] bg-[var(--gray1)];
-      .progress_rate {
-        .progress_bar {
-          @apply border-[var(--gray5)] bg-[var(--white)];
-        }
-        .info {
-          .txt {
-            @apply text-[var(--gray8)];
-          }
-          .progress {
-            @apply text-[var(--secondary3)];
-          }
-        }
-      }
-      .status_list {
-        .status_info {
-          .tt {
-          }
-          .score {
-            @apply text-[var(--primary4)];
-            .ico {
-              @apply bg-[var(--gray4)];
-              svg {
-                @apply stroke-[var(--gray7)];
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      .panel_degreey {
+        .list {
+          @apply flex-col items-start;
+          .date_status {
+            @apply flex-col items-start;
+            .date_box {
+              @apply mt-[8px];
+              .date {
+                &::before {
+                }
               }
+              + .date_box {
+                @apply ml-0 mt-[4px];
+              }
+            }
+          }
+        }
+        &.completed {
+          h3 {
+          }
+        }
+
+        &.incomplete {
+          h3 {
+          }
+        }
+
+        h3 {
+          @apply body_3_b;
+          .ico {
+            svg {
+            }
+          }
+        }
+      }
+      .progress_box {
+      }
+      .progress_rate {
+        [class*='progress_wrap'] {
+        }
+        h3 {
+          @apply body_3_b basis-[60px];
+        }
+        .progress_bar {
+        }
+
+        .info {
+          .progress {
+            @apply ml-[16px];
+          }
+        }
+      }
+
+      .status_box {
+        .status_table {
+        }
+        .btn_action {
+          button {
+            span {
+            }
+            svg {
+            }
+            &.active {
+              svg {
+              }
+            }
+          }
+        }
+        .status_list {
+          @apply flex-wrap justify-center gap-0;
+          .status_info {
+            @apply mb-[16px] h-[82px] w-1/2;
+            &::before {
+            }
+            &:nth-child(odd)::before {
+              @apply hidden;
+            }
+            .tt {
+            }
+            .score_box {
+              .score {
+              }
+              svg {
+              }
+            }
+            .default {
             }
           }
         }

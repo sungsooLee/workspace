@@ -65,71 +65,23 @@ function RouteComponent() {
       </div>
 
       <div className={styles.result_wrap}>
-        <div>
-          <div className={styles.tit_box}>
-            <strong>과정</strong>
-            <Button onClick={() => setActiveButton(1)}>
-              과정 더보기
-              <IcoArrowForward width={16} height={16} stroke="#131c30" />
-            </Button>
-          </div>
-          <IntegratedSearchProcedure />
-        </div>
+        {/* 과정 컨텐츠 */}
+        <IntegratedSearchProcedure />
 
-        <div>
-          <div className={styles.tit_box}>
-            <strong>숏츠</strong>
-            <Button onClick={() => setActiveButton(1)}>
-              숏츠 더보기
-              <IcoArrowForward width={16} height={16} stroke="#131c30" />
-            </Button>
-          </div>
-          <IntegratedSearchShorts />
-        </div>
+        {/* 숏츠 컨텐츠 */}
+        <IntegratedSearchShorts />
 
-        <div>
-          <div className={styles.tit_box}>
-            <strong>채널</strong>
-            <Button onClick={() => setActiveButton(1)}>
-              채널 더보기
-              <IcoArrowForward width={16} height={16} stroke="#131c30" />
-            </Button>
-          </div>
-          <IntegratedSearchChannel />
-        </div>
+        {/* 채널 컨텐츠 */}
+        <IntegratedSearchChannel />
 
-        <div>
-          <div className={styles.tit_box}>
-            <strong>러닝랩</strong>
-            <Button onClick={() => setActiveButton(1)}>
-              러닝랩 더보기
-              <IcoArrowForward width={16} height={16} stroke="#131c30" />
-            </Button>
-          </div>
-          <IntegratedSearchRunning />
-        </div>
+        {/* 러닝랩 컨텐츠 */}
+        <IntegratedSearchRunning />
 
-        <div>
-          <div className={styles.tit_box}>
-            <strong>지식공유</strong>
-            <Button onClick={() => setActiveButton(1)}>
-              지식공유 더보기
-              <IcoArrowForward width={16} height={16} stroke="#131c30" />
-            </Button>
-          </div>
-          <IntegratedSearchKnowledge />
-        </div>
+        {/* 지식공유 컨텐츠 */}
+        <IntegratedSearchKnowledge />
 
-        <div>
-          <div className={styles.tit_box}>
-            <strong>코칭</strong>
-            <Button onClick={() => setActiveButton(1)}>
-              코칭 더보기
-              <IcoArrowForward width={16} height={16} stroke="#131c30" />
-            </Button>
-          </div>
-          <IntegratedSearchCoaching />
-        </div>
+        {/* 코칭 컨텐츠 */}
+        <IntegratedSearchCoaching />
       </div>
     </div>
   );

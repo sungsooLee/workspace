@@ -28,7 +28,7 @@ export const Route = createFileRoute('/_auth/login')({
       mobile: {
         showHeader: true,
       },
-      title: 'LABEL.LOGIN_WELCOME_MESSAGE',
+      title: 'LABEL.common.loginWelcomeMessage',
       container: AUTH_CONTAINERS.LOGIN,
     },
   }),
@@ -104,18 +104,18 @@ function RouteComponent() {
             </FormRow>
             {/*<Link to="/progress-status">진행 현황</Link>*/}
             <div className={styles.info}>
-              <Link to="/search-account">{t('LABEL.ACCOUNT_PASSWORD_SEARCH')}</Link>
+              <Link to="/search-account">{t('LABEL.common.accountPasswordSearch')}</Link>
             </div>
           </ContentsRow>
 
           <div className={styles.btn_box}>
             <Button type="submit" size="xl" variant="primary" className={styles.btn}>
-              {t('LABEL.LOGIN')}
+              {t('LABEL.common.login')}
             </Button>
           </div>
 
           <div className={styles.sns_login}>
-            <h3 className={styles.tit_sns}>{t('LABEL.소셜 로그인')}</h3>
+            <h3 className={styles.tit_sns}>{t('LABEL.common.socialLogin')}</h3>
             <ul className={styles.list}>
               <li>
                 <Button>
@@ -133,15 +133,15 @@ function RouteComponent() {
                 </Button>
               </li>
             </ul>
-            <div className={styles.noti}>{t('MESSAGE.LOGIN_GUIDE')}</div>
+            <div className={styles.noti}>{t('LABEL.message.loginGuide')}</div>
           </div>
         </div>
 
         <div className={styles.login_guide}>
           <span>
-            <Link to="/signup-progress">{t('LABEL.회원 가입 현황')}</Link>
-            {/*<Link to="/signup">{t('LABEL.회원가입')}</Link>*/}
-            <Link to="/login">{t('LABEL.회원가입')}</Link>
+            <Link to="/signup-progress">{t('LABEL.common.membershipStatus')}</Link>
+            {/*<Link to="/signup">{t('LABEL.common.joinTheMembership')}</Link>*/}
+            <Link to="/login">{t('LABEL.common.joinTheMembership')}</Link>
           </span>
         </div>
       </div>
@@ -154,7 +154,7 @@ const loginFormConfig: DynamicFormConfig = {
     {
       name: 'username',
       type: 'text',
-      label: 'LABEL.아이디(이메일)',
+      label: 'LABEL.common.account(email)',
       value: '',
       placeholder: '아아디/이메일을 입력하세요',
       description: '기본 메세지',
@@ -163,7 +163,7 @@ const loginFormConfig: DynamicFormConfig = {
     {
       name: 'password',
       type: 'text',
-      label: 'LABEL.비밀번호',
+      label: 'LABEL.common.password',
       maxLength: 10,
       value: '',
       placeholder: '비밀번호를 입력하세요',
@@ -172,7 +172,7 @@ const loginFormConfig: DynamicFormConfig = {
       name: 'saveId',
       type: 'checkbox',
       checkConfig: {
-        label: 'LABEL.아이디 저장',
+        label: 'LABEL.common.saveAccount',
       },
       value: false,
     },

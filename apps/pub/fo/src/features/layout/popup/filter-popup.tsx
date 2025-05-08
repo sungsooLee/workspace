@@ -216,11 +216,18 @@ const FilterPopupComponent = () => {
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button variant={'gray'} size={'lg'} onClick={() => closeModal()}>
+        <Button
+          className={styles.btn_reset}
+          variant={'gray'}
+          size={'lg'}
+          onClick={() => closeModal()}
+        >
           <IcoRefresh02 width={20} height={20} stroke="#4c515e" fill="none"></IcoRefresh02>
           초기화
         </Button>
-        <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
+        <Button variant={'primary'} size={'lg'} onClick={() => closeModal()}>
+          적용
+        </Button>
       </ModalFooter>
     </ModalContainer>
   );

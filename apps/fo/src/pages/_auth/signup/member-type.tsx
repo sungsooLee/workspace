@@ -74,7 +74,7 @@ function RouteComponent() {
                   label: (
                     <div>
                       <IcoBuilding01 width={48} height={48} className="ico1" />
-                      <span>{t('LABEL.일반 회원')}</span>
+                      <span>{t('LABEL.common.generalMember')}</span>
                     </div>
                   ),
                 },
@@ -84,7 +84,7 @@ function RouteComponent() {
                     /* 퍼블수정 20250317 : ico2 추가 */
                     <div>
                       <IcoOverseasDealer width={48} height={48} className="ico2" />
-                      <span>{t('LABEL.HTA/HTACV 이용자')}</span>
+                      <span>{t('LABEL.common.HTA/HTACVUsers')}</span>
                     </div>
                   ),
                 },
@@ -94,14 +94,14 @@ function RouteComponent() {
             />
           </div>
 
-          <NoticeBox title={t('LABEL.CAUTION')} className={styles.signup_noti}>
+          <NoticeBox title={t('LABEL.common.caution')} className={styles.signup_noti}>
             <dd>{t('MESSAGE.CAUTION_MEMBER_TYPE_01')}</dd>
             <dd>{t('MESSAGE.CAUTION_MEMBER_TYPE_02')}</dd>
           </NoticeBox>
 
           <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="gray" size="xl" onClick={() => handleCancel()}>
-              {t('LABEL.CANCEL')}
+              {t('LABEL.common.cancel')}
             </Button>
             <Button variant="primary" size="xl" onClick={() => handleOk()}>
               {t('LABEL.OK')}

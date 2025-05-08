@@ -1,12 +1,49 @@
 .start {
   @apply pt-[26px];
-  .title_box {
+  .tit_box {
     @apply mb-[8px] flex h-[40px] items-center justify-between;
-    h2 {
+    h3 {
       @apply title_5_b text-[var(--gray9)];
     }
     [class*='nlp--dropdown-text'] {
       @apply !w-[250px] flex-initial;
+    }
+  }
+
+  .info_box {
+    @apply mt-[40px];
+    &.pds {
+      button {
+        @apply w-[100px];
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      .tit_box {
+        @apply h-[24px];
+        [class*='nlp-select__control'] {
+          @apply !min-h-[20px];
+        }
+        h3 {
+          @apply title_6_b;
+        }
+        [class*='nlp--dropdown-text'] {
+          @apply !w-[210px] flex-initial;
+        }
+      }
+
+      .info_box {
+        @apply mt-[32px];
+        &.pds {
+          button {
+            @apply w-[82px];
+          }
+        }
+      }
     }
   }
 }

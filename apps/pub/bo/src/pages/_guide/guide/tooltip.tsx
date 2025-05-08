@@ -15,7 +15,7 @@ function RouteComponent() {
   //   );
   return (
     <div>
-      <h2 className="guide_tit2">Tootip Component Guide</h2>
+      <h2 className="guide_tit2">Tooltip Component Guide</h2>
       <p className="loc react">/libs/ui/src/lib/tooltip/tooltip.tsx</p>
       <p className="info">
         마우스 오버시 툴팁 노출

@@ -741,7 +741,7 @@ function RouteComponent() {
             </label>
             <div className={formStyles.input_box}>
               <div className={dynamicFormStyles.check_wrap}>
-                <CheckboxGroupFormField
+                {/* <CheckboxGroupFormField
                   options={[
                     { value: 'all', label: '전체' },
                     { value: 'pc', label: 'PC' },
@@ -749,7 +749,7 @@ function RouteComponent() {
                     { value: 'app', label: 'APP' },
                   ]}
                   value={['all']}
-                />
+                /> */}
               </div>
             </div>
           </div>
@@ -776,14 +776,14 @@ function RouteComponent() {
             </label>
             <div className={formStyles.input_box}>
               <div className={dynamicFormStyles.check_wrap}>
-                <CheckboxGroupFormField
+                {/* <CheckboxGroupFormField
                   options={[
                     { value: 'all', label: '전체' },
                     { value: 'common', label: '공통 카테고리' },
                     { value: 'tenant', label: '테넌트 카테고리' },
                   ]}
                   value={['all', 'common', 'tenant']}
-                />
+                /> */}
               </div>
             </div>
           </div>
@@ -812,7 +812,7 @@ function RouteComponent() {
             </label>
             <div className={formStyles.input_box}>
               <div className={dynamicFormStyles.check_wrap}>
-                <CheckboxGroupFormField
+                {/* <CheckboxGroupFormField
                   options={[
                     { value: 'a', label: '전체' },
                     { value: 'b', label: '한국어' },
@@ -825,7 +825,7 @@ function RouteComponent() {
                     { value: 'i', label: '영어' },
                   ]}
                   value={['all', 'common', 'tenant']}
-                />
+                /> */}
               </div>
             </div>
           </div>

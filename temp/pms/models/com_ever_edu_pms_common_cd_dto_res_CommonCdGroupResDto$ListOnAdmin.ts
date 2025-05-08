@@ -5,7 +5,7 @@
 export type com_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$ListOnAdmin = {
     cdGroupId?: string;
     cdGroupName?: string;
-    cdGroupAbbreviatonEnglishName?: string;
+    cdGroupAbbreviationEnglishName?: string;
     cdGroupContent?: string;
     isUsed?: boolean;
     createdBy?: string;

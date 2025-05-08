@@ -1,0 +1,21 @@
+.start {
+  @apply relative w-full;
+  .stepper_tabs {
+    @apply flex w-full;
+    [role='tablist'] {
+      @apply !pr-[160px];
+    }
+  }
+  .page_wrap {
+    @apply absolute right-[24px] top-[24px] flex w-[130px] items-center justify-end;
+    button {
+      @apply !min-w-[40px];
+    }
+    .page_index {
+      @apply body_4_r flex w-[46px] items-center justify-center text-[var(--gray8)];
+      .current_index {
+        @apply body_4_b mr-[2px] font-bold text-[var(--gray8)];
+      }
+    }
+  }
+}

@@ -63,10 +63,12 @@ import { Route as LayoutPmsMenuPlatformImport } from './pages/_layout/pms/menu-p
 import { Route as LayoutPmsMenuManagementImport } from './pages/_layout/pms/menu-management'
 import { Route as LayoutPmsMenuEducationRegisterDetailImport } from './pages/_layout/pms/menu-education-register-detail'
 import { Route as LayoutPmsMenuEducationLocationManagementImport } from './pages/_layout/pms/menu-education-location-management'
+import { Route as LayoutPmsMenuChannelRegisterImport } from './pages/_layout/pms/menu-channel-register'
 import { Route as LayoutPmsMenuChannelOpenManagementImport } from './pages/_layout/pms/menu-channel-open-management'
 import { Route as LayoutPmsMenuChannelOpenDetailManagementImport } from './pages/_layout/pms/menu-channel-open-detail-management'
 import { Route as LayoutPmsMenuChannelManagementImport } from './pages/_layout/pms/menu-channel-management'
 import { Route as LayoutPmsMenuChannelDetailManagementImport } from './pages/_layout/pms/menu-channel-detail-management'
+import { Route as LayoutPmsMenuChannelDetailImport } from './pages/_layout/pms/menu-channel-detail'
 import { Route as LayoutPmsLanguagemanagementImport } from './pages/_layout/pms/language_management'
 import { Route as LayoutPmsCategoryMenagementImport } from './pages/_layout/pms/category-menagement'
 import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
@@ -83,6 +85,8 @@ import { Route as LayoutLearningFileUploadImport } from './pages/_layout/learnin
 import { Route as LayoutContentsLayoutImport } from './pages/_layout/contents/layout'
 import { Route as LayoutCommonPopUserSearchCheckImport } from './pages/_layout/common/pop-user-search-check'
 import { Route as LayoutCommonPopUserSearchImport } from './pages/_layout/common/pop-user-search'
+import { Route as LayoutCommonPopUserGroupSearchImport } from './pages/_layout/common/pop-user-group-search'
+import { Route as LayoutCommonPopImagePreviewImport } from './pages/_layout/common/pop-image-preview'
 import { Route as LayoutCommonPopExcelUploadImport } from './pages/_layout/common/pop-excel-upload'
 import { Route as LayoutCommonPopCategorySelectImport } from './pages/_layout/common/pop-category-select'
 import { Route as GuideGuideWordWrapImport } from './pages/_guide/guide/word-wrap'
@@ -94,6 +98,7 @@ import { Route as GuideGuideTestImport } from './pages/_guide/guide/test'
 import { Route as GuideGuideTabsImport } from './pages/_guide/guide/tabs'
 import { Route as GuideGuideTableImport } from './pages/_guide/guide/table'
 import { Route as GuideGuideSwitchImport } from './pages/_guide/guide/switch'
+import { Route as GuideGuideStepperTabsImport } from './pages/_guide/guide/stepper-tabs'
 import { Route as GuideGuideStepperImport } from './pages/_guide/guide/stepper'
 import { Route as GuideGuideSpinnerImport } from './pages/_guide/guide/spinner'
 import { Route as GuideGuideSelectImport } from './pages/_guide/guide/select'
@@ -458,6 +463,13 @@ const LayoutPmsMenuEducationLocationManagementRoute =
     getParentRoute: () => LayoutRoute,
   } as any)
 
+const LayoutPmsMenuChannelRegisterRoute =
+  LayoutPmsMenuChannelRegisterImport.update({
+    id: '/pms/menu-channel-register',
+    path: '/pms/menu-channel-register',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
 const LayoutPmsMenuChannelOpenManagementRoute =
   LayoutPmsMenuChannelOpenManagementImport.update({
     id: '/pms/menu-channel-open-management',
@@ -485,6 +497,14 @@ const LayoutPmsMenuChannelDetailManagementRoute =
     path: '/pms/menu-channel-detail-management',
     getParentRoute: () => LayoutRoute,
   } as any)
+
+const LayoutPmsMenuChannelDetailRoute = LayoutPmsMenuChannelDetailImport.update(
+  {
+    id: '/pms/menu-channel-detail',
+    path: '/pms/menu-channel-detail',
+    getParentRoute: () => LayoutRoute,
+  } as any,
+)
 
 const LayoutPmsLanguagemanagementRoute =
   LayoutPmsLanguagemanagementImport.update({
@@ -590,6 +610,20 @@ const LayoutCommonPopUserSearchRoute = LayoutCommonPopUserSearchImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutCommonPopUserGroupSearchRoute =
+  LayoutCommonPopUserGroupSearchImport.update({
+    id: '/common/pop-user-group-search',
+    path: '/common/pop-user-group-search',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutCommonPopImagePreviewRoute =
+  LayoutCommonPopImagePreviewImport.update({
+    id: '/common/pop-image-preview',
+    path: '/common/pop-image-preview',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
 const LayoutCommonPopExcelUploadRoute = LayoutCommonPopExcelUploadImport.update(
   {
     id: '/common/pop-excel-upload',
@@ -656,6 +690,12 @@ const GuideGuideTableRoute = GuideGuideTableImport.update({
 const GuideGuideSwitchRoute = GuideGuideSwitchImport.update({
   id: '/guide/switch',
   path: '/guide/switch',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideStepperTabsRoute = GuideGuideStepperTabsImport.update({
+  id: '/guide/stepper-tabs',
+  path: '/guide/stepper-tabs',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -1341,6 +1381,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideStepperImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/stepper-tabs': {
+      id: '/_guide/guide/stepper-tabs'
+      path: '/guide/stepper-tabs'
+      fullPath: '/guide/stepper-tabs'
+      preLoaderRoute: typeof GuideGuideStepperTabsImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/switch': {
       id: '/_guide/guide/switch'
       path: '/guide/switch'
@@ -1416,6 +1463,20 @@ declare module '@tanstack/react-router' {
       path: '/common/pop-excel-upload'
       fullPath: '/common/pop-excel-upload'
       preLoaderRoute: typeof LayoutCommonPopExcelUploadImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/common/pop-image-preview': {
+      id: '/_layout/common/pop-image-preview'
+      path: '/common/pop-image-preview'
+      fullPath: '/common/pop-image-preview'
+      preLoaderRoute: typeof LayoutCommonPopImagePreviewImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/common/pop-user-group-search': {
+      id: '/_layout/common/pop-user-group-search'
+      path: '/common/pop-user-group-search'
+      fullPath: '/common/pop-user-group-search'
+      preLoaderRoute: typeof LayoutCommonPopUserGroupSearchImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/common/pop-user-search': {
@@ -1530,6 +1591,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutPmsLanguagemanagementImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/pms/menu-channel-detail': {
+      id: '/_layout/pms/menu-channel-detail'
+      path: '/pms/menu-channel-detail'
+      fullPath: '/pms/menu-channel-detail'
+      preLoaderRoute: typeof LayoutPmsMenuChannelDetailImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/pms/menu-channel-detail-management': {
       id: '/_layout/pms/menu-channel-detail-management'
       path: '/pms/menu-channel-detail-management'
@@ -1556,6 +1624,13 @@ declare module '@tanstack/react-router' {
       path: '/pms/menu-channel-open-management'
       fullPath: '/pms/menu-channel-open-management'
       preLoaderRoute: typeof LayoutPmsMenuChannelOpenManagementImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/pms/menu-channel-register': {
+      id: '/_layout/pms/menu-channel-register'
+      path: '/pms/menu-channel-register'
+      fullPath: '/pms/menu-channel-register'
+      preLoaderRoute: typeof LayoutPmsMenuChannelRegisterImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/pms/menu-education-location-management': {
@@ -1810,6 +1885,7 @@ interface GuideRouteChildren {
   GuideGuideSelectRoute: typeof GuideGuideSelectRoute
   GuideGuideSpinnerRoute: typeof GuideGuideSpinnerRoute
   GuideGuideStepperRoute: typeof GuideGuideStepperRoute
+  GuideGuideStepperTabsRoute: typeof GuideGuideStepperTabsRoute
   GuideGuideSwitchRoute: typeof GuideGuideSwitchRoute
   GuideGuideTableRoute: typeof GuideGuideTableRoute
   GuideGuideTabsRoute: typeof GuideGuideTabsRoute
@@ -1859,6 +1935,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideSelectRoute: GuideGuideSelectRoute,
   GuideGuideSpinnerRoute: GuideGuideSpinnerRoute,
   GuideGuideStepperRoute: GuideGuideStepperRoute,
+  GuideGuideStepperTabsRoute: GuideGuideStepperTabsRoute,
   GuideGuideSwitchRoute: GuideGuideSwitchRoute,
   GuideGuideTableRoute: GuideGuideTableRoute,
   GuideGuideTabsRoute: GuideGuideTabsRoute,
@@ -1879,6 +1956,8 @@ interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutCommonPopCategorySelectRoute: typeof LayoutCommonPopCategorySelectRoute
   LayoutCommonPopExcelUploadRoute: typeof LayoutCommonPopExcelUploadRoute
+  LayoutCommonPopImagePreviewRoute: typeof LayoutCommonPopImagePreviewRoute
+  LayoutCommonPopUserGroupSearchRoute: typeof LayoutCommonPopUserGroupSearchRoute
   LayoutCommonPopUserSearchRoute: typeof LayoutCommonPopUserSearchRoute
   LayoutCommonPopUserSearchCheckRoute: typeof LayoutCommonPopUserSearchCheckRoute
   LayoutContentsLayoutRoute: typeof LayoutContentsLayoutRoute
@@ -1895,10 +1974,12 @@ interface LayoutRouteChildren {
   LayoutMenu8Menu9Route: typeof LayoutMenu8Menu9Route
   LayoutPmsCategoryMenagementRoute: typeof LayoutPmsCategoryMenagementRoute
   LayoutPmsLanguagemanagementRoute: typeof LayoutPmsLanguagemanagementRoute
+  LayoutPmsMenuChannelDetailRoute: typeof LayoutPmsMenuChannelDetailRoute
   LayoutPmsMenuChannelDetailManagementRoute: typeof LayoutPmsMenuChannelDetailManagementRoute
   LayoutPmsMenuChannelManagementRoute: typeof LayoutPmsMenuChannelManagementRoute
   LayoutPmsMenuChannelOpenDetailManagementRoute: typeof LayoutPmsMenuChannelOpenDetailManagementRoute
   LayoutPmsMenuChannelOpenManagementRoute: typeof LayoutPmsMenuChannelOpenManagementRoute
+  LayoutPmsMenuChannelRegisterRoute: typeof LayoutPmsMenuChannelRegisterRoute
   LayoutPmsMenuEducationLocationManagementRoute: typeof LayoutPmsMenuEducationLocationManagementRoute
   LayoutPmsMenuEducationRegisterDetailRoute: typeof LayoutPmsMenuEducationRegisterDetailRoute
   LayoutPmsMenuManagementRoute: typeof LayoutPmsMenuManagementRoute
@@ -1928,6 +2009,8 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutCommonPopCategorySelectRoute: LayoutCommonPopCategorySelectRoute,
   LayoutCommonPopExcelUploadRoute: LayoutCommonPopExcelUploadRoute,
+  LayoutCommonPopImagePreviewRoute: LayoutCommonPopImagePreviewRoute,
+  LayoutCommonPopUserGroupSearchRoute: LayoutCommonPopUserGroupSearchRoute,
   LayoutCommonPopUserSearchRoute: LayoutCommonPopUserSearchRoute,
   LayoutCommonPopUserSearchCheckRoute: LayoutCommonPopUserSearchCheckRoute,
   LayoutContentsLayoutRoute: LayoutContentsLayoutRoute,
@@ -1946,6 +2029,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutMenu8Menu9Route: LayoutMenu8Menu9Route,
   LayoutPmsCategoryMenagementRoute: LayoutPmsCategoryMenagementRoute,
   LayoutPmsLanguagemanagementRoute: LayoutPmsLanguagemanagementRoute,
+  LayoutPmsMenuChannelDetailRoute: LayoutPmsMenuChannelDetailRoute,
   LayoutPmsMenuChannelDetailManagementRoute:
     LayoutPmsMenuChannelDetailManagementRoute,
   LayoutPmsMenuChannelManagementRoute: LayoutPmsMenuChannelManagementRoute,
@@ -1953,6 +2037,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
     LayoutPmsMenuChannelOpenDetailManagementRoute,
   LayoutPmsMenuChannelOpenManagementRoute:
     LayoutPmsMenuChannelOpenManagementRoute,
+  LayoutPmsMenuChannelRegisterRoute: LayoutPmsMenuChannelRegisterRoute,
   LayoutPmsMenuEducationLocationManagementRoute:
     LayoutPmsMenuEducationLocationManagementRoute,
   LayoutPmsMenuEducationRegisterDetailRoute:
@@ -2056,6 +2141,7 @@ export interface FileRoutesByFullPath {
   '/guide/select': typeof GuideGuideSelectRoute
   '/guide/spinner': typeof GuideGuideSpinnerRoute
   '/guide/stepper': typeof GuideGuideStepperRoute
+  '/guide/stepper-tabs': typeof GuideGuideStepperTabsRoute
   '/guide/switch': typeof GuideGuideSwitchRoute
   '/guide/table': typeof GuideGuideTableRoute
   '/guide/tabs': typeof GuideGuideTabsRoute
@@ -2067,6 +2153,8 @@ export interface FileRoutesByFullPath {
   '/guide/word-wrap': typeof GuideGuideWordWrapRoute
   '/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/common/pop-excel-upload': typeof LayoutCommonPopExcelUploadRoute
+  '/common/pop-image-preview': typeof LayoutCommonPopImagePreviewRoute
+  '/common/pop-user-group-search': typeof LayoutCommonPopUserGroupSearchRoute
   '/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
   '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
@@ -2083,10 +2171,12 @@ export interface FileRoutesByFullPath {
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/pms/category-menagement': typeof LayoutPmsCategoryMenagementRoute
   '/pms/language_management': typeof LayoutPmsLanguagemanagementRoute
+  '/pms/menu-channel-detail': typeof LayoutPmsMenuChannelDetailRoute
   '/pms/menu-channel-detail-management': typeof LayoutPmsMenuChannelDetailManagementRoute
   '/pms/menu-channel-management': typeof LayoutPmsMenuChannelManagementRoute
   '/pms/menu-channel-open-detail-management': typeof LayoutPmsMenuChannelOpenDetailManagementRoute
   '/pms/menu-channel-open-management': typeof LayoutPmsMenuChannelOpenManagementRoute
+  '/pms/menu-channel-register': typeof LayoutPmsMenuChannelRegisterRoute
   '/pms/menu-education-location-management': typeof LayoutPmsMenuEducationLocationManagementRoute
   '/pms/menu-education-register-detail': typeof LayoutPmsMenuEducationRegisterDetailRoute
   '/pms/menu-management': typeof LayoutPmsMenuManagementRoute
@@ -2176,6 +2266,7 @@ export interface FileRoutesByTo {
   '/guide/select': typeof GuideGuideSelectRoute
   '/guide/spinner': typeof GuideGuideSpinnerRoute
   '/guide/stepper': typeof GuideGuideStepperRoute
+  '/guide/stepper-tabs': typeof GuideGuideStepperTabsRoute
   '/guide/switch': typeof GuideGuideSwitchRoute
   '/guide/table': typeof GuideGuideTableRoute
   '/guide/tabs': typeof GuideGuideTabsRoute
@@ -2187,6 +2278,8 @@ export interface FileRoutesByTo {
   '/guide/word-wrap': typeof GuideGuideWordWrapRoute
   '/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/common/pop-excel-upload': typeof LayoutCommonPopExcelUploadRoute
+  '/common/pop-image-preview': typeof LayoutCommonPopImagePreviewRoute
+  '/common/pop-user-group-search': typeof LayoutCommonPopUserGroupSearchRoute
   '/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
   '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
@@ -2203,10 +2296,12 @@ export interface FileRoutesByTo {
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/pms/category-menagement': typeof LayoutPmsCategoryMenagementRoute
   '/pms/language_management': typeof LayoutPmsLanguagemanagementRoute
+  '/pms/menu-channel-detail': typeof LayoutPmsMenuChannelDetailRoute
   '/pms/menu-channel-detail-management': typeof LayoutPmsMenuChannelDetailManagementRoute
   '/pms/menu-channel-management': typeof LayoutPmsMenuChannelManagementRoute
   '/pms/menu-channel-open-detail-management': typeof LayoutPmsMenuChannelOpenDetailManagementRoute
   '/pms/menu-channel-open-management': typeof LayoutPmsMenuChannelOpenManagementRoute
+  '/pms/menu-channel-register': typeof LayoutPmsMenuChannelRegisterRoute
   '/pms/menu-education-location-management': typeof LayoutPmsMenuEducationLocationManagementRoute
   '/pms/menu-education-register-detail': typeof LayoutPmsMenuEducationRegisterDetailRoute
   '/pms/menu-management': typeof LayoutPmsMenuManagementRoute
@@ -2299,6 +2394,7 @@ export interface FileRoutesById {
   '/_guide/guide/select': typeof GuideGuideSelectRoute
   '/_guide/guide/spinner': typeof GuideGuideSpinnerRoute
   '/_guide/guide/stepper': typeof GuideGuideStepperRoute
+  '/_guide/guide/stepper-tabs': typeof GuideGuideStepperTabsRoute
   '/_guide/guide/switch': typeof GuideGuideSwitchRoute
   '/_guide/guide/table': typeof GuideGuideTableRoute
   '/_guide/guide/tabs': typeof GuideGuideTabsRoute
@@ -2310,6 +2406,8 @@ export interface FileRoutesById {
   '/_guide/guide/word-wrap': typeof GuideGuideWordWrapRoute
   '/_layout/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/_layout/common/pop-excel-upload': typeof LayoutCommonPopExcelUploadRoute
+  '/_layout/common/pop-image-preview': typeof LayoutCommonPopImagePreviewRoute
+  '/_layout/common/pop-user-group-search': typeof LayoutCommonPopUserGroupSearchRoute
   '/_layout/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
   '/_layout/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/_layout/contents/layout': typeof LayoutContentsLayoutRoute
@@ -2326,10 +2424,12 @@ export interface FileRoutesById {
   '/_layout/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/_layout/pms/category-menagement': typeof LayoutPmsCategoryMenagementRoute
   '/_layout/pms/language_management': typeof LayoutPmsLanguagemanagementRoute
+  '/_layout/pms/menu-channel-detail': typeof LayoutPmsMenuChannelDetailRoute
   '/_layout/pms/menu-channel-detail-management': typeof LayoutPmsMenuChannelDetailManagementRoute
   '/_layout/pms/menu-channel-management': typeof LayoutPmsMenuChannelManagementRoute
   '/_layout/pms/menu-channel-open-detail-management': typeof LayoutPmsMenuChannelOpenDetailManagementRoute
   '/_layout/pms/menu-channel-open-management': typeof LayoutPmsMenuChannelOpenManagementRoute
+  '/_layout/pms/menu-channel-register': typeof LayoutPmsMenuChannelRegisterRoute
   '/_layout/pms/menu-education-location-management': typeof LayoutPmsMenuEducationLocationManagementRoute
   '/_layout/pms/menu-education-register-detail': typeof LayoutPmsMenuEducationRegisterDetailRoute
   '/_layout/pms/menu-management': typeof LayoutPmsMenuManagementRoute
@@ -2421,6 +2521,7 @@ export interface FileRouteTypes {
     | '/guide/select'
     | '/guide/spinner'
     | '/guide/stepper'
+    | '/guide/stepper-tabs'
     | '/guide/switch'
     | '/guide/table'
     | '/guide/tabs'
@@ -2432,6 +2533,8 @@ export interface FileRouteTypes {
     | '/guide/word-wrap'
     | '/common/pop-category-select'
     | '/common/pop-excel-upload'
+    | '/common/pop-image-preview'
+    | '/common/pop-user-group-search'
     | '/common/pop-user-search'
     | '/common/pop-user-search-check'
     | '/contents/layout'
@@ -2448,10 +2551,12 @@ export interface FileRouteTypes {
     | '/menu8/menu9'
     | '/pms/category-menagement'
     | '/pms/language_management'
+    | '/pms/menu-channel-detail'
     | '/pms/menu-channel-detail-management'
     | '/pms/menu-channel-management'
     | '/pms/menu-channel-open-detail-management'
     | '/pms/menu-channel-open-management'
+    | '/pms/menu-channel-register'
     | '/pms/menu-education-location-management'
     | '/pms/menu-education-register-detail'
     | '/pms/menu-management'
@@ -2540,6 +2645,7 @@ export interface FileRouteTypes {
     | '/guide/select'
     | '/guide/spinner'
     | '/guide/stepper'
+    | '/guide/stepper-tabs'
     | '/guide/switch'
     | '/guide/table'
     | '/guide/tabs'
@@ -2551,6 +2657,8 @@ export interface FileRouteTypes {
     | '/guide/word-wrap'
     | '/common/pop-category-select'
     | '/common/pop-excel-upload'
+    | '/common/pop-image-preview'
+    | '/common/pop-user-group-search'
     | '/common/pop-user-search'
     | '/common/pop-user-search-check'
     | '/contents/layout'
@@ -2567,10 +2675,12 @@ export interface FileRouteTypes {
     | '/menu8/menu9'
     | '/pms/category-menagement'
     | '/pms/language_management'
+    | '/pms/menu-channel-detail'
     | '/pms/menu-channel-detail-management'
     | '/pms/menu-channel-management'
     | '/pms/menu-channel-open-detail-management'
     | '/pms/menu-channel-open-management'
+    | '/pms/menu-channel-register'
     | '/pms/menu-education-location-management'
     | '/pms/menu-education-register-detail'
     | '/pms/menu-management'
@@ -2661,6 +2771,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/select'
     | '/_guide/guide/spinner'
     | '/_guide/guide/stepper'
+    | '/_guide/guide/stepper-tabs'
     | '/_guide/guide/switch'
     | '/_guide/guide/table'
     | '/_guide/guide/tabs'
@@ -2672,6 +2783,8 @@ export interface FileRouteTypes {
     | '/_guide/guide/word-wrap'
     | '/_layout/common/pop-category-select'
     | '/_layout/common/pop-excel-upload'
+    | '/_layout/common/pop-image-preview'
+    | '/_layout/common/pop-user-group-search'
     | '/_layout/common/pop-user-search'
     | '/_layout/common/pop-user-search-check'
     | '/_layout/contents/layout'
@@ -2688,10 +2801,12 @@ export interface FileRouteTypes {
     | '/_layout/menu8/menu9'
     | '/_layout/pms/category-menagement'
     | '/_layout/pms/language_management'
+    | '/_layout/pms/menu-channel-detail'
     | '/_layout/pms/menu-channel-detail-management'
     | '/_layout/pms/menu-channel-management'
     | '/_layout/pms/menu-channel-open-detail-management'
     | '/_layout/pms/menu-channel-open-management'
+    | '/_layout/pms/menu-channel-register'
     | '/_layout/pms/menu-education-location-management'
     | '/_layout/pms/menu-education-register-detail'
     | '/_layout/pms/menu-management'
@@ -2812,6 +2927,7 @@ export const routeTree = rootRoute
         "/_guide/guide/select",
         "/_guide/guide/spinner",
         "/_guide/guide/stepper",
+        "/_guide/guide/stepper-tabs",
         "/_guide/guide/switch",
         "/_guide/guide/table",
         "/_guide/guide/tabs",
@@ -2832,6 +2948,8 @@ export const routeTree = rootRoute
         "/_layout/",
         "/_layout/common/pop-category-select",
         "/_layout/common/pop-excel-upload",
+        "/_layout/common/pop-image-preview",
+        "/_layout/common/pop-user-group-search",
         "/_layout/common/pop-user-search",
         "/_layout/common/pop-user-search-check",
         "/_layout/contents/layout",
@@ -2848,10 +2966,12 @@ export const routeTree = rootRoute
         "/_layout/menu8/menu9",
         "/_layout/pms/category-menagement",
         "/_layout/pms/language_management",
+        "/_layout/pms/menu-channel-detail",
         "/_layout/pms/menu-channel-detail-management",
         "/_layout/pms/menu-channel-management",
         "/_layout/pms/menu-channel-open-detail-management",
         "/_layout/pms/menu-channel-open-management",
+        "/_layout/pms/menu-channel-register",
         "/_layout/pms/menu-education-location-management",
         "/_layout/pms/menu-education-register-detail",
         "/_layout/pms/menu-management",
@@ -3127,6 +3247,10 @@ export const routeTree = rootRoute
       "filePath": "_guide/guide/stepper.tsx",
       "parent": "/_guide"
     },
+    "/_guide/guide/stepper-tabs": {
+      "filePath": "_guide/guide/stepper-tabs.tsx",
+      "parent": "/_guide"
+    },
     "/_guide/guide/switch": {
       "filePath": "_guide/guide/switch.tsx",
       "parent": "/_guide"
@@ -3169,6 +3293,14 @@ export const routeTree = rootRoute
     },
     "/_layout/common/pop-excel-upload": {
       "filePath": "_layout/common/pop-excel-upload.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/common/pop-image-preview": {
+      "filePath": "_layout/common/pop-image-preview.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/common/pop-user-group-search": {
+      "filePath": "_layout/common/pop-user-group-search.tsx",
       "parent": "/_layout"
     },
     "/_layout/common/pop-user-search": {
@@ -3235,6 +3367,10 @@ export const routeTree = rootRoute
       "filePath": "_layout/pms/language_management.tsx",
       "parent": "/_layout"
     },
+    "/_layout/pms/menu-channel-detail": {
+      "filePath": "_layout/pms/menu-channel-detail.tsx",
+      "parent": "/_layout"
+    },
     "/_layout/pms/menu-channel-detail-management": {
       "filePath": "_layout/pms/menu-channel-detail-management.tsx",
       "parent": "/_layout"
@@ -3249,6 +3385,10 @@ export const routeTree = rootRoute
     },
     "/_layout/pms/menu-channel-open-management": {
       "filePath": "_layout/pms/menu-channel-open-management.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/menu-channel-register": {
+      "filePath": "_layout/pms/menu-channel-register.tsx",
       "parent": "/_layout"
     },
     "/_layout/pms/menu-education-location-management": {

@@ -46,8 +46,11 @@ const ChangePhoneNumberModalComponent = ({ widget }: { widget: any }) => {
 
     updatePhoneNumber(payload, {
       onSuccess: async (d, variables, context) => {
-        await alert('LABEL.UPDATE_PHONE_NUMBER_RESULT_MESSAGE');
-        closeModal();
+        await alert('LABEL.message.updatePhoneNumberResultMessage');
+        closeModal({
+          number: variables.newPhoneNumber,
+          nationCode: variables.newPhoneNumberNationCode,
+        });
       },
     });
   };
@@ -55,15 +58,15 @@ const ChangePhoneNumberModalComponent = ({ widget }: { widget: any }) => {
   return (
     <form onSubmit={onSubmit(handleOnSubmit)} className="form_row">
       <ModalContainer>
-        <ModalTitle>{t('LABEL.PHONE_NUMBER_UPDATE')}</ModalTitle>
+        <ModalTitle>{t('LABEL.common.phoneNumberChange')}</ModalTitle>
 
         <ModalBody>
-          <ContentsRow>
+          <ContentsRow type="no_line">
             <FormRow provider={provider}>
               <DynamicFormField name={'currentPhoneNumber'} />
             </FormRow>
           </ContentsRow>
-          <ContentsRow>
+          <ContentsRow type="no_line">
             <FormRow provider={provider}>
               <DynamicFormField name={'newPhoneNumber'} />
             </FormRow>
@@ -71,12 +74,12 @@ const ChangePhoneNumberModalComponent = ({ widget }: { widget: any }) => {
         </ModalBody>
         <ModalFooter>
           <Button
-            label={t('LABEL.CANCEL')}
+            label={t('LABEL.common.cancel')}
             variant={'gray'}
             size={'lg'}
             onClick={() => closeModal()}
           />
-          <Button label={t('LABEL.UPDATE')} variant={'primary'} size={'lg'} type="submit" />
+          <Button label={t('LABEL.common.update')} variant={'primary'} size={'lg'} type="submit" />
         </ModalFooter>
       </ModalContainer>
     </form>
@@ -90,9 +93,9 @@ const phoneNumberFormConfig: DynamicFormConfig = {
     {
       name: 'currentPhoneNumber',
       type: 'phone-number',
-      label: 'LABEL.CURRENT_PHONE_NUMBER',
+      label: 'LABEL.common.currentPhoneNumber',
       value: '',
-      placeholder: 'LABEL.CURRENT_PHONE_NUMBER',
+      placeholder: 'LABEL.common.currentPhoneNumber',
       fields: {
         nationCode: 'currentPhoneNumberNationCode',
         number: 'currentPhoneNumber',
@@ -107,9 +110,9 @@ const phoneNumberFormConfig: DynamicFormConfig = {
     {
       name: 'newPhoneNumber',
       type: 'phone-number',
-      label: 'LABEL.NEW_PHONE_NUMBER',
+      label: 'LABEL.common.newPhoneNumber',
       value: '',
-      placeholder: 'LABEL.NEW_PHONE_NUMBER',
+      placeholder: 'LABEL.common.newPhoneNumber',
       fields: {
         nationCode: 'newPhoneNumberNationCode',
         number: 'newPhoneNumber',

@@ -29,6 +29,15 @@
         @apply !text-[var(--gray5)];
       }
     }
+    [class*='info_text'] {
+      @apply button_bo_2_r text-[var(--gray8)];
+      & + button {
+        @apply ml-[16px];
+      }
+    }
+    [role='radiogroup'] + button {
+      @apply ml-[16px];
+    }
     &.line {
       @apply border-b-[1px] border-solid border-[var(--gray4)] pb-[12px];
     }

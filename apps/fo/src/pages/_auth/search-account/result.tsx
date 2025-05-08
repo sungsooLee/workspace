@@ -14,7 +14,7 @@ export const Route = createFileRoute('/_auth/search-account/result')({
       },
     },
     meta: {
-      title: 'LABEL.ACCOUNT_SEARCH',
+      title: 'LABEL.common.accountSearch',
     },
   }),
 });

@@ -163,13 +163,13 @@ export class FoFileService {
     }
     /**
      * 파일그룹 목록 조회
-     * 파일그룹 목록을 조회한다.
+     * 파일그룹 목록을 조회한다.<br><br><b>페이징 정보</b>: <br> - totalElements: 쿼리 결과물의 전체 데이터 갯수 <br> - totalPages: 페이징하였을 때 나오는 총 페이지의 갯수 <br> - size: 페이지 당 데이터 수 설정 값(rows per page) <br> - numberOfElements: 페이지에 존재하는 요소의 갯수(최대 size와 동일) <br> - number: 요소를 가져온 페이지의 번호. 0 ~
      * @param page 페이징 처리를 위한 페이지 번호. 0 ~
      * @param size 페이징 처리를 위한 페이지 size. 10(최소값) ~
      * @param sort 페이징 처리를 위한 sort
-     * @param uploadType 파일업로드유형, ATTATCH|CONTENTS
-     * @param affairsType 파일업무유형, LMS|PMS|CMS
-     * @param reposType 저정소유형, S3(기본)|HMG
+     * @param uploadType 파일업로드유형, 코드그룹(pms.file.FileUploadType) - ATTATCH|CONTENTS
+     * @param affairsType 파일업무유형, 코드그룹(pms.file.FileAffairsType) - LMS|PMS|CMS
+     * @param reposType 저정소유형, 코드그룹(pms.file.RepositoryType) - S3(기본)|HMG
      * @param isDeleted 삭제여부
      * @param isUsed 사용여부
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_FileGroupInfoResDto OK

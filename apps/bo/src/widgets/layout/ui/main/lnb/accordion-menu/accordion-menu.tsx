@@ -56,7 +56,9 @@ const AccordionMenuComponent = ({
         value: menu.key,
         title: (
           <span className={active ? styles.active : ''} onClick={() => handleNavigate(menu)}>
-            {t(`MENU.${menu.menuCode}`)}
+            {import.meta.env.VITE_LANGUAGE_DEV === 'true'
+              ? t(`${menu.menuName}`)
+              : t(`MENU.${menu.menuCode}`)}
           </span>
         ),
         children: menu?.children && <AccordionMenu menus={menu?.children} depth={depth + 1} />,

@@ -55,6 +55,24 @@ export const guideData = [
     remarks: '작업 완료', // 비고
   },
   {
+    screenName: '공통/파일 업로드_이미지 미리보기',
+    pageId: 'common/pop-image-preview',
+    screenId: 'NLP_BO_PMS_1100_05_02',
+    pageType: 'Pop-up',
+    completionDate: '2025-05-02',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
+    screenName: '공통/유저 그룹 조회',
+    pageId: 'common/pop-user-group-search',
+    screenId: 'NLP_BO_TMS_1100_01',
+    pageType: 'Pop-up',
+    completionDate: '2025-05-02',
+    lastUpdateDate: '',
+    remarks: '트리는 화면 영역 확인용', // 비고
+  },
+  {
     screenName: '로그인',
     pageId: 'login',
     screenId: 'NLP_BO_LOG_1000',
@@ -573,7 +591,7 @@ export const guideData = [
     pageId: 'pms/menu-channel-open-detail-management',
     screenId: 'NLP_BO_CHN_1402',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-04-30',
     lastUpdateDate: '',
     remarks: '개발 확인 후 작업 예정', // 비고
   },
@@ -582,7 +600,7 @@ export const guideData = [
     pageId: 'pms/menu-channel-management',
     screenId: 'NLP_BO_CHN_1000',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-04-29',
     lastUpdateDate: '',
     remarks: '', // 비고
   },
@@ -591,7 +609,7 @@ export const guideData = [
     pageId: 'pms/menu-channel-register',
     screenId: 'NLP_BO_CHN_1001',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-04-29',
     lastUpdateDate: '',
     remarks: '', // 비고
   },
@@ -606,7 +624,7 @@ export const guideData = [
   },
   {
     screenName: 'PMS/채널상세_채널기본정보(Tab)',
-    pageId: 'pms/menu-channel-register',
+    pageId: 'pms/menu-channel-detail',
     screenId: 'NLP_BO_CHN_1201',
     pageType: 'Page',
     completionDate: '',

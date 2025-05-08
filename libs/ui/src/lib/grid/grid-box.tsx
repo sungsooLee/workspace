@@ -1,7 +1,7 @@
 import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Button, Grid, GridBoxProps, GridImperative } from '@learnway/ui';
-import { IcoDownload, IcoMinus, IcoSetting } from '@learnway/icons';
+import { IcoDownload, IcoMinus } from '@learnway/icons';
 import styles from './grid-box.module.css';
 import { cn } from '@learnway/shared';
 import { useTranslation } from 'react-i18next';
@@ -26,6 +26,8 @@ const GridBoxComponent = <T extends object>(
     showSelectAll,
     showDeleteAll,
     showAdd,
+    showAddRow,
+    showRemoveRow,
     titleCustomNode,
     customButtonNode,
     guideText,
@@ -58,6 +60,7 @@ const GridBoxComponent = <T extends object>(
             return info.getValue();
           },
           header: column.label,
+          size: column.size,
           // 다른 컬럼 옵션들 (sortingFn, filterFn 등) 필요시 추가
         });
       });
@@ -77,11 +80,25 @@ const GridBoxComponent = <T extends object>(
     () => {
       // 그리드 선택 초기화
       gridRef.current?.resetRowSelection();
-      // call onAddClick
+      // callback
       onAddClick?.();
     },
     [gridRef, onAddClick], // 의존성 배열: gridFetch와 page 객체 참조
   );
+
+  /**
+   * 행추가 버튼 클릭
+   */
+  const handleAddRowClick = useCallback(() => {
+    console.log('행추가');
+  }, []);
+
+  /**
+   * 행삭제 버튼 클릭
+   */
+  const handleRemoveRowClick = useCallback(() => {
+    console.log('행삭제');
+  }, []);
 
   /**
    * 페이지 이동 핸들러
@@ -138,7 +155,8 @@ const GridBoxComponent = <T extends object>(
           {/* 전체 개수  */}
           {showTotalCount && (
             <div className={styles.sub_info}>
-              {t('전체')} <strong className={styles.num}>{data?.length}</strong>
+              {t('LABEL.grid.header.all')}{' '}
+              <strong className={styles.num}>{data?.length || 0}</strong>
             </div>
           )}
           {/* 좌측 타이틀 영역 커스텀 (전체 카운트와 가이드 텍스트 중간 영역) */}
@@ -157,7 +175,7 @@ const GridBoxComponent = <T extends object>(
               variant="text"
               size="xs"
               className={styles.btn_all_select}
-              label={t('전체 선택')}
+              label={t('LABEL.grid.header.selectAll')}
               icon={<IcoMinus width={16} height={16} stroke={'#131C30'} />}
             />
           )}
@@ -167,7 +185,7 @@ const GridBoxComponent = <T extends object>(
               variant="text"
               size="xs"
               className={styles.btn_all_delete}
-              label={t('전체 삭제')}
+              label={t('LABEL.grid.header.removeAll')}
               icon={<IcoMinus width={16} height={16} stroke={'#131C30'} />}
             />
           )}
@@ -177,7 +195,7 @@ const GridBoxComponent = <T extends object>(
               variant="text"
               size="xs"
               className={styles.btn_upload}
-              label={t('CSV업로드')}
+              label={t('LABEL.grid.header.excelUpload')}
               icon={<IcoDownload width={16} height={16} stroke={'#3e4550'} />}
             />
           )}
@@ -187,23 +205,41 @@ const GridBoxComponent = <T extends object>(
               variant="text"
               size="xs"
               className={styles.btn_excel}
-              label={t('엑셀다운로드')}
+              label={t('LABEL.grid.header.excelDownload')}
               icon={<IcoDownload width={16} height={16} stroke={'#3e4550'} />}
             />
           )}
           {/* 컬럼 설정 */}
-          {showColumnSettings && (
+          {/*{showColumnSettings && (*/}
+          {/*  <Button*/}
+          {/*    variant="outline"*/}
+          {/*    size="sm"*/}
+          {/*    label={t('LABEL.grid.header.columnSetting}*/}
+          {/*    icon={<IcoSetting width={16} height={16} stroke="#131C30" />}*/}
+          {/*    className="btn_setting"*/}
+          {/*  />*/}
+          {/*)}*/}
+          {/* 추가 */}
+          {showAdd && (
             <Button
               variant="outline"
               size="sm"
-              label={t('항목설정')}
-              icon={<IcoSetting width={16} height={16} stroke="#131C30" />}
-              className="btn_setting"
+              label={t('LABEL.grid.header.add')}
+              onClick={handleAddClick}
             />
           )}
-          {/* 추가 */}
-          {showAdd && (
-            <Button variant="outline" size="sm" label={t('추가')} onClick={handleAddClick} />
+          {/* 행추가 */}
+          {showAddRow && (
+            <Button variant="outline" size="sm" label={t('행추가')} onClick={handleAddRowClick} />
+          )}
+          {/* 행삭제 */}
+          {showRemoveRow && (
+            <Button
+              variant="outline"
+              size="sm"
+              label={t('행삭제')}
+              onClick={handleRemoveRowClick}
+            />
           )}
         </div>
       </div>
@@ -214,7 +250,7 @@ const GridBoxComponent = <T extends object>(
         data={props.data ?? data ?? []}
         columns={props.columns ?? girdColumns ?? []}
         showNumberingColumn={showNumberingColumn}
-        hideRowSelectionCheckBox={showNumberingColumn} // 체크박스 숨김 (numbering 사용시)
+        hideRowSelectionCheckBox={showNumberingColumn || props.hideRowSelectionCheckBox} // 체크박스 숨김 (numbering 사용시)
         pagination={paginationProps}
       />
     </div>

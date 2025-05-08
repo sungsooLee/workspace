@@ -1,10 +1,12 @@
-import { FileItem } from '@learnway/hooks';
-
 export interface DndFileProgressProps {
-  files: FileItem[];
+  files: any;
   onRemove: (fileId: string) => void;
-  onCancel: (fileId: string) => void;
   onRetry: (fileId: string) => void;
   addFiles: (files: File[]) => void;
-  multiple?: boolean;
+  onPause: (id: string) => void;
+  onResume: (id: string) => void;
+  acceptFiles: string[];
+  maxFileCount: number;
+  maxFileSize: number;
+  wrapSize?: string;
 }

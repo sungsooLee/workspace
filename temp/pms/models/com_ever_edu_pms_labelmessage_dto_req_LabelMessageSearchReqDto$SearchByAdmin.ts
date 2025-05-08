@@ -4,7 +4,7 @@
 /* eslint-disable */
 export type com_ever_edu_pms_labelmessage_dto_req_LabelMessageSearchReqDto$SearchByAdmin = {
     /**
-     * 라벨/메세지 다국어키
+     * 라벨/메세지 코드
      */
     labelMessageMultilingulKey?: string | null;
     /**

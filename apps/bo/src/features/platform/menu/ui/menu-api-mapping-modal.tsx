@@ -5,7 +5,7 @@ import {
   ModalContainer,
   ModalFooter,
   ModalTitle,
-  ShuttleTreeWithChips,
+  ShuttleTreeToChips,
   TreeNode,
   useModal,
 } from '@learnway/ui';
@@ -61,7 +61,8 @@ const MenuApiMappingModalComponent = ({ menuScopeCode, selectedApiKeys }: any) =
       <ModalBody>
         <div className={styles.wrap}>
           <div className={styles.pop_contents}>
-            <ShuttleTreeWithChips
+            <ShuttleTreeToChips
+              title="API 목록"
               sourceData={treeData as TreeNode[]}
               selectedItems={selectedItems}
               onItemsChange={handleSelectedItemsChange}
@@ -71,12 +72,12 @@ const MenuApiMappingModalComponent = ({ menuScopeCode, selectedApiKeys }: any) =
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button variant={'gray'} size={'md'} onClick={close}>
+        <Button variant={'gray'} size={'lg'} onClick={close}>
           취소
         </Button>
         <Button
           variant={'primary'}
-          size={'md'}
+          size={'lg'}
           onClick={() => {
             close(selectedItems);
           }}

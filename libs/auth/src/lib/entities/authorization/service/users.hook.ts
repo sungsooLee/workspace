@@ -88,3 +88,37 @@ export function useUpdateUser() {
     },
   };
 }
+
+export function useDeleteUser(mutationOptions = {}) {
+  const queryClient = useQueryClient();
+
+  const { mutateAsync, isSuccess, isError } = useMutation({
+    ...mutateOptions.deleteUser(),
+    //onSuccess: async (data: any, variables, context) => {},
+    ...mutationOptions,
+  });
+
+  return {
+    remove: (callback?: MutateCallback<any>) => {
+      return mutateAsync(undefined, callback);
+    },
+    isSuccess,
+    isError,
+  };
+}
+
+export function useVerifyPassword(mutationOptions = {}) {
+  const { mutateAsync, isSuccess, isError } = useMutation({
+    ...mutateOptions.verifyPassword(),
+    //onSuccess: async (data: any, variables, context) => {},
+    ...mutationOptions,
+  });
+
+  return {
+    verify: (payload: string, callback?: MutateCallback<any>) => {
+      return mutateAsync(payload, callback);
+    },
+    isSuccess,
+    isError,
+  };
+}

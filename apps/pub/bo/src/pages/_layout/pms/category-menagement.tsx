@@ -6,7 +6,7 @@ import { ContentsHistoryInfoFormField } from '../../../../../../bo/src/shared/ui
 /* style  */
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import titleStyles from './title.module.css'; // 타이틀 css
+import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css'; // 타이틀 css
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 
 import { Button, ContentsRow, Textarea, Input } from '@learnway/ui';

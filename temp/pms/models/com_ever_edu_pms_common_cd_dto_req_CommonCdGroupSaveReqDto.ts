@@ -10,7 +10,7 @@ export type com_ever_edu_pms_common_cd_dto_req_CommonCdGroupSaveReqDto = {
     /**
      * 코드그룹약어영어명
      */
-    cdGroupAbbreviatonEnglishName: string;
+    cdGroupAbbreviationEnglishName: string;
     /**
      * 코드그룹내용
      */

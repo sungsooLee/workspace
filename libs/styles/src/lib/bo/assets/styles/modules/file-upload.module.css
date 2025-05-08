@@ -31,27 +31,33 @@
           @apply ml-[10px];
         }
       }
+      button {
+        @apply min-w-[45px];
+      }
       .btn_delete {
         &:disabled {
-          @apply !min-w-[65px];
+          @apply !min-w-[45px];
         }
       }
     }
   }
   .file_wrap {
-    @apply scrollbar relative h-[320px] items-center overflow-y-auto overflow-x-hidden rounded-[8px] border-[1px] border-solid border-[var(--gray4)];
+    @apply scrollbar relative h-auto max-h-[320px] items-center overflow-y-auto overflow-x-hidden rounded-[8px] border-[1px] border-solid border-[var(--gray4)];
     &.type_excel {
       @apply h-[168px];
     }
     &.error {
       @apply border-solid border-[var(--status1)];
     }
+    &.lg {
+      @apply h-[320px];
+    }
   }
   .upload_status {
     @apply py-[16px];
   }
   .attach_area {
-    @apply relative;
+    @apply relative flex h-full items-center;
     .btn_file {
       @apply flex w-full flex-col p-[32px] leading-normal;
       .file_title {
@@ -143,7 +149,7 @@
       }
     }
     .btn_attach {
-      @apply relative ml-[8px] !w-[65px] shrink-0;
+      @apply relative ml-[8px] !w-[65px] shrink-0 px-0;
       .input_file {
         @apply absolute left-0 top-0 h-full w-full cursor-pointer bg-transparent opacity-0;
       }
@@ -165,6 +171,12 @@
           @apply text-[var(--status1)];
         }
       }
+    }
+    .title_info {
+      @apply flex items-center;
+    }
+    .btn_wrap {
+      @apply ml-auto mt-0 flex items-center;
     }
   }
 

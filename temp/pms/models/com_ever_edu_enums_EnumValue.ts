@@ -3,23 +3,12 @@
 /* tslint:disable */
 /* eslint-disable */
 export type com_ever_edu_enums_EnumValue = {
-    key?: string;
-    value?: string;
-    cdGroupId?: number;
-    cdId?: number;
+    cdGroupId?: string;
+    cdId?: string;
     cdName?: string;
-    cdSeq?: number;
-    cdDescription?: string;
-    applyDatetime?: string;
-    isValidated?: boolean;
-    referenceVal1?: string;
-    referenceVal2?: string;
-    referenceVal3?: string;
-    referenceVal4?: string;
-    referenceVal5?: string;
-    createdBy?: string;
-    lastModifiedBy?: string;
-    createdDate?: string;
-    modifiedDate?: string;
+    cdContent?: string;
+    multilingualKey?: string;
+    referenceVal1?: Record<string, any>;
+    isUsed?: boolean;
 };
 

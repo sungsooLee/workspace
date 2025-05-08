@@ -60,11 +60,17 @@ const PhoneNumberFormFieldComponent = forwardRef<HTMLDivElement, PhoneNumberForm
             openModal({
               width: isMobile ? undefined : 'sm',
               content: <ChangePhoneNumberModal widget={{}} />,
+              onClose: (data: any) => {
+                if (!data) {
+                  return;
+                }
+                handleOnChange(data);
+              },
             });
           }}
           disabled={disabled}
         >
-          {t('LABEL.PHONE_NUMBER_UPDATE')}
+          {t('LABEL.common.phoneNumberChange')}
         </Button>
       </>
     );

@@ -1,37 +1,53 @@
 /* section-layout.module.css */
 .start {
-  @apply flex w-full flex-wrap items-stretch;
+  @apply relative flex w-full flex-wrap items-stretch;
   & > div {
-    @apply pr-[32px];
     &:not(:first-child) {
-      @apply relative flex-grow pl-[32px] pr-0;
-      &::before {
-        @apply absolute left-0 top-0 h-full w-[1px] bg-[var(--gray5)] content-[''];
-      }
+      @apply relative;
     }
   }
   &.half {
+    @apply justify-between;
     & > div {
-      @apply w-1/2;
+      @apply w-[calc((100%-64px)/2)];
+    }
+    &::before {
+      @apply absolute left-1/2 top-[32px] h-[calc(100%-32px)] w-[1px] -translate-x-1/2 bg-[var(--gray4)] content-[''];
     }
   }
   &.thirty {
+    @apply justify-between;
+    &::before {
+      @apply absolute left-[452px] top-0 h-[calc(100%-32px)] w-[1px] bg-[var(--gray4)] content-[''];
+    }
     & > div {
-      @apply w-[calc(100%-452px)];
+      @apply scrollbar h-[calc(100vh-412px)] w-[calc(100%-485px)] overflow-hidden overflow-y-auto pb-[32px];
       &:first-child {
-        @apply w-[452px];
+        @apply w-[420px];
       }
     }
   }
   &.third_children {
     & > div {
-      @apply min-h-[calc(100vh-446px)] w-[calc((100%-452px)/2)] pr-[32px];
+      @apply scrollbar ml-[32px] h-[calc(100vh-414px)] w-[calc((100%-486px)/2)] flex-row overflow-y-auto pr-[32px];
       &:nth-child(1) {
-        @apply shrink-0 basis-[452px];
+        @apply ml-0 shrink-0 basis-[420px] px-0;
+        & + div {
+          @apply pl-[32px] pr-0;
+        }
       }
       &:nth-last-child(1) {
-        @apply pr-0;
+        @apply !pr-0 pl-[32px];
       }
+      /* &::after {
+        @apply absolute left-[452px] top-0 h-[calc(100%-32px)] w-[1px] bg-[var(--gray4)] content-[''];
+      } */
+    }
+    &::before {
+      @apply absolute left-[452px] top-0 flex h-[calc(100%-32px)] w-[1px] bg-[var(--gray4)] content-[''];
+    }
+    &::after {
+      @apply absolute right-[calc((100%-486px)/2)] top-0 flex h-[calc(100%-32px)] w-[1px] bg-[var(--gray4)] content-[''];
     }
   }
   &.line {

@@ -14,11 +14,15 @@ export const Route = createFileRoute('/_layout/menu/type6')({
 });
 
 function RouteComponent() {
-  const thumbnailRef = useRef(null);
+  const thumbnailRef = useRef<HTMLInputElement>(null);
   const [imageUrl, setImageUrl] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
-  const { addFiles, files } = useS3Uploader({ s3Path: 'upload/leaning/resource/video' });
-  const { addFiles: thumbnailAddFiles, files: thumbnailFiles } = useS3Uploader({
+  const { addFiles, files, stats } = useS3Uploader({ s3Path: 'upload/leaning/resource/video' });
+  const {
+    addFiles: thumbnailAddFiles,
+    files: thumbnailFiles,
+    stats: thumbnailStats,
+  } = useS3Uploader({
     s3Path: 'public/thumbnail',
   });
   const { open: openModal } = useModal();
@@ -40,15 +44,18 @@ function RouteComponent() {
   };
 
   useEffect(() => {
-    console.log('files {} =>', thumbnailFiles);
-    const file = thumbnailFiles.find((file) => file.status === 'completed');
-    if (file) {
-      setImageUrl(
-        'http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/' +
-          file.key,
-      );
+    console.log('stats => ', thumbnailStats);
+    if (thumbnailStats.status === 'completed') {
+      console.log('thumbnailFiles =>', thumbnailFiles);
+      const file = thumbnailFiles[0];
+      if (file) {
+        setImageUrl(
+          'http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/' +
+            file.key,
+        );
+      }
     }
-  }, [thumbnailAddFiles]);
+  }, [thumbnailStats]);
 
   const handleExcelUploadModal = async () => {
     await openModal({

@@ -54,9 +54,7 @@ function RouteComponent() {
                   <label htmlFor="name-label" className={searchStyles.label}>
                     <span className={searchStyles.text}>타이틀</span>
                     {/* 필수 케이스 */}
-                    <span
-                      className={cn(searchStyles.status, searchStyles.required, searchStyles.error)}
-                    >
+                    <span className={cn(searchStyles.status, searchStyles.required)}>
                       <IcoFormRequired width={12} height={12} />
                     </span>
                   </label>
@@ -67,7 +65,6 @@ function RouteComponent() {
                       onChange={(selected) => setSelectedValues(selected)}
                       variant="default"
                       size={'sm'}
-                      className="error"
                     />
                   </div>
                   <p className={cn(searchStyles.guide_text, searchStyles.error)}>기본 메시지</p>
