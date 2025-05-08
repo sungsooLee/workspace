@@ -135,7 +135,8 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
     const result = (await queryClient.fetchQuery(queryOptions.all(params))) as any;
     // const result = getValues()?.labelMessageMultilingulKey?.length === 1 ? { content: [] } : { content: [1] };
     const content = result?.content;
-    const isValid = content?.filter((d: any) => d?.labelMessageId !== getValues()?.labelMessageId)?.length === 0;
+    const isValid =
+      content?.filter((d: any) => d?.labelMessageId !== getValues()?.labelMessageId)?.length === 0;
     console.log({ params, result, isValid });
     return isValid;
   };
@@ -222,7 +223,7 @@ const formConfig: DynamicFormConfig = {
   builders: [
     {
       name: 'labelMessageType',
-      label: t('LABEL.form.label.type'),
+      label: t('LABEL.form.label.category'),
       type: 'radio-group',
       format: 'string',
       options: [

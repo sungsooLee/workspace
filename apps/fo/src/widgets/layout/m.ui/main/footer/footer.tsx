@@ -5,13 +5,18 @@ import { Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 
 import { Language } from '../../../../../features/platform';
-import { Button } from '@learnway/ui';
+import { Button, useSearchStore } from '@learnway/ui';
 import { IcoHome03, IcoDotpoints, IcoSearch, IcoMybook, IcoEye } from '@learnway/icons';
 
 import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/footer/footer.module.css';
 
 function FooterComponent() {
   const { t } = useTranslation();
+  const openSearch = useSearchStore((state) => state.openSearch);
+
+  const handleSearchClick = () => {
+    openSearch();
+  };
 
   return (
     <div className={`${styles.start} ${styles.footer_fixed}`}>
@@ -30,7 +35,7 @@ function FooterComponent() {
             </Button>
           </li>
           <li>
-            <Button>
+            <Button onClick={handleSearchClick}>
               <IcoSearch width={24} height={24} stroke="#131C30" />
               <span>검색</span>
             </Button>

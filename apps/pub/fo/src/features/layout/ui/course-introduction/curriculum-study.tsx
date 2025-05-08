@@ -36,7 +36,7 @@ const CurriculumStudyComponent = ({ className }: CurriculumStudyProps) => {
                         })
                       }
                     >
-                      학습이력 <IcoArrowDown />
+                      학습이력
                     </Button>
                   </span>
                   {/* 학습전 variant="line" 학습중 variant="primary" */}
@@ -59,7 +59,7 @@ const CurriculumStudyComponent = ({ className }: CurriculumStudyProps) => {
                         })
                       }
                     >
-                      학습이력 <IcoArrowDown />
+                      학습이력
                     </Button>
                   </span>
                   <Button variant="primary" size={isMobile ? 'ts' : 'sm'} className={styles.btn}>
@@ -103,7 +103,7 @@ const CurriculumStudyComponent = ({ className }: CurriculumStudyProps) => {
                         })
                       }
                     >
-                      학습이력 <IcoArrowDown />
+                      학습이력
                     </Button>
                   </span>
                   {/* 학습전 variant="line" 학습중 variant="primary" */}
@@ -126,7 +126,7 @@ const CurriculumStudyComponent = ({ className }: CurriculumStudyProps) => {
                         })
                       }
                     >
-                      학습이력 <IcoArrowDown />
+                      학습이력
                     </Button>
                   </span>
                   <Button variant="primary" size={isMobile ? 'ts' : 'sm'} className={styles.btn}>

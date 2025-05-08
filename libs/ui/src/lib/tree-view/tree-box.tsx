@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { cn } from '@learnway/shared';
-
+import { t } from 'i18next';
 import { TreeView } from './tree';
 import { getAllKeysByTree, getKeysByLevel } from './tree.service';
 import { TreeContainer } from './tree.context';
@@ -9,9 +9,9 @@ import { Button } from '../button/button';
 import { Input } from '../input/input';
 
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 import subTitleStyles from '@learnway/styles/bo/assets/styles/modules/form-sub-title.module.css';
+
 const TreeBoxComponent = <T extends object>(
   {
     treeId,
@@ -26,6 +26,7 @@ const TreeBoxComponent = <T extends object>(
     handleSelectedNodeChange,
     type,
     customButtonNode,
+    selectedNode,
     ...props
   }: any,
   // ref: React.Ref
@@ -33,13 +34,26 @@ const TreeBoxComponent = <T extends object>(
   const [searchKeyword, setSearchKeyword] = useState('');
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
 
-  // 컴포넌트 마운트 시 initLevel prop으로 내려준 레벨로 펼침 상태 설정
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  // 컴포넌트 마운트 시 초기 한 번만 initLevel prop으로 내려준 레벨로 펼침 상태 설정
   useEffect(() => {
-    if (data && initLevel) {
+    if (
+      data &&
+      Array.isArray(data) &&
+      data.length > 0 &&
+      initLevel !== undefined &&
+      !isInitialized
+    ) {
       const initialExpandedKeys = getKeysByLevel(data, initLevel);
-      setExpandedKeys(initialExpandedKeys);
+
+      if (initialExpandedKeys && initialExpandedKeys.length > 0) {
+        setExpandedKeys(initialExpandedKeys);
+        setIsInitialized(true);
+      }
     }
-  }, [data, initLevel]);
+  }, [data, initLevel, isInitialized]);
+
   return (
     <div className={cn(styles.start, styles.wrap)}>
       <div
@@ -76,11 +90,10 @@ const TreeBoxComponent = <T extends object>(
                   if (data) {
                     const allKeys = getAllKeysByTree(data);
                     setExpandedKeys(allKeys);
-                    // handleExpandChange(allKeys);
                   }
                 }}
               >
-                {'전체펼침'}
+                {t('LABEL.tree.expand')}
               </Button>
               <Button
                 variant="text"
@@ -91,7 +104,7 @@ const TreeBoxComponent = <T extends object>(
                   setExpandedKeys(closeLevelKeys || []);
                 }}
               >
-                {'전체닫기'}
+                {t('LABEL.tree.closed')}
               </Button>
             </>
           )}
@@ -110,6 +123,7 @@ const TreeBoxComponent = <T extends object>(
             type={type}
             clientTree={clientTree}
             onSelectedNodeChange={handleSelectedNodeChange}
+            selectedNode={selectedNode}
           />
         </TreeContainer>
       </div>

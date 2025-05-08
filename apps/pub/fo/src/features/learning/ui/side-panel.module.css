@@ -1,7 +1,7 @@
 .start {
-  @apply fixed right-[45px] top-[200px] flex;
+  @apply fixed right-[45px] top-1/2 flex -translate-y-1/2;
   &.active {
-    @apply relative right-[inherit] top-[inherit] h-full bg-white;
+    @apply relative right-[inherit] top-[inherit] h-full -translate-y-0 bg-white;
     .panel {
       @apply flex flex-col justify-between;
       .menu {

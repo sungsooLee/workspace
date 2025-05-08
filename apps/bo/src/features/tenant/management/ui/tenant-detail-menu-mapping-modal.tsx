@@ -20,10 +20,17 @@ import popContentsStyles from './pop-contents-layout.module.css';
 import { transformApiDataToTreeData } from '@features/tenant/management/service/tenant-detail-tree.service';
 import { useMenuManageFetchTree } from '@entities/menu/service/menu-manage.hook';
 import {
-  useMenuTenantMappingTreeFetch,
+  useFetchMenuTenantMappingTree,
   useCreateMenuTenant,
+  useDeleteMenuTenent,
+  useChangeMenuTenentDnd,
 } from '@entities/tenant/service/tenant-menu-manage.hook';
-import { getFirstExpandKeys, getAllTreeKeys } from '../service/tenant-detail-tree.service';
+import {
+  getAllParentAndAllChildById,
+  getFirstExpandKeys,
+  getAllTreeKeys,
+  moveNodeCheck,
+} from '../service/tenant-detail-tree.service';
 
 const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantId }) => {
   const [baseMenuTreeData, setBaseMenuTreeData] = useState([]);
@@ -34,14 +41,27 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
   const [menuTreeExpandedKeys, setMenuTreeExpandedKeys] = useState<string[]>([]);
   const [menuTreeAllKeys, setMenuTreeAllKeys] = useState<string[]>([]);
 
-  const { open: openModal, close: closeModal } = useModal();
+  const { open: openModal, confirm: openConfirm, close: closeModal } = useModal();
 
-  console.log('menu Scope = ' + menuScopeCode);
   const { data: baseMenuDB } = useMenuManageFetchTree(menuScopeCode, 'ko');
 
-  const { data: menuDB, refetch } = useMenuTenantMappingTreeFetch(tenantId, menuScopeCode);
+  const { data: menuDB, refetch } = useFetchMenuTenantMappingTree(tenantId, menuScopeCode);
 
-  const { create: tentantMenuCreate } = useCreateMenuTenant(tenantId, menuScopeCode, {});
+  const { create: tentantMenuCreate } = useCreateMenuTenant(tenantId, menuScopeCode, {
+    onSuccess: () => {
+      refetch();
+    },
+  });
+  const { change: changeMenuPosition } = useChangeMenuTenentDnd(tenantId, menuScopeCode, {
+    onSuccess: () => {
+      refetch();
+    },
+  });
+  const { delete: deleteMenuTenent } = useDeleteMenuTenent(tenantId, menuScopeCode, {
+    onSuccess: () => {
+      refetch();
+    },
+  });
 
   const handleBaseMenuTreeExpandChange = (keys: string[]) => {
     if (keys && keys.length > 0) {
@@ -55,7 +75,6 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
   };
 
   const handleTargetAction = async (event: any) => {
-    console.log(event);
     switch (event.type) {
       case 'NODE_COPY':
         console.log(event);
@@ -65,13 +84,30 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
             alert('이미 있음');
             return false;
           }
-          const reqBody: any = JSON.parse(JSON.stringify(event.sourceNode));
-          reqBody.tenantId = tenantId;
-          reqBody.menuScope = menuScopeCode;
-          reqBody.parentId = event.sourceNode.parentKey;
-          reqBody.menuStartDate = '2025-01-01 00:00:00';
-          reqBody.menuEndDate = '9999-12-31 23:59:59';
-          tentantMenuCreate(reqBody);
+          const allPostMenus = getAllParentAndAllChildById(baseMenuTreeData, sourceMenuId);
+          const contents = [];
+          for (const item of allPostMenus) {
+            if (!menuTreeAllKeys.includes(item.key)) {
+              const reqMenu: any = JSON.parse(JSON.stringify(item));
+              reqMenu.tenantId = tenantId;
+              reqMenu.menuScope = menuScopeCode;
+              reqMenu.parentMenuId = item.parentId;
+              contents.push(reqMenu);
+            }
+          }
+
+          const payload = { tenantId: tenantId, contents: [...contents] };
+          console.log(payload);
+          tentantMenuCreate(payload);
+        }
+        break;
+      case 'NODE_MOVE':
+        if (event.treeId === 'mapping-tenant-menu-tree') {
+          const payload = moveNodeCheck(event);
+          if (payload) {
+            payload.menuScopeCode = menuScopeCode;
+            changeMenuPosition(payload);
+          }
         }
 
         break;
@@ -98,20 +134,26 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
     // useCreateMenuTenant(payload.sourceNode, {});
   };
 
-  const renderBaseSelectButtons = (node: TreeNode, level: number) => {
-    return (
-      <div className={'gap-10px flex'}>
-        <div className={'flex items-center'}>
-          {level == 0 ? (
-            ''
-          ) : (
-            <Button variant="gray2" size={'xs'} type={'button'}>
-              {t('선택')}
-            </Button>
-          )}
-        </div>
-      </div>
-    );
+  const handleDeleteButtonClick = (node: TreeNode, level: number) => {
+    openConfirm({
+      title: t('삭제 하시겠습니까?'),
+      content: (
+        <>
+          <p>{t('하위 메뉴 존재 시 모두 삭제되며,')}</p>
+          <p>{t('삭제 후 복구할 수 없습니다.')}</p>
+        </>
+      ),
+      onClose: (value: boolean) => {
+        if (value) {
+          const payload = { ...node };
+          if (menuTreeExpandedKeys.includes(node.key)) {
+            const expandedKeys = [...menuTreeExpandedKeys.filter((value) => value !== node.key)];
+            setMenuTreeExpandedKeys(expandedKeys);
+          }
+          deleteMenuTenent(payload);
+        }
+      },
+    });
   };
 
   const renderMenuDeleteButtons = (node: TreeNode, level: number) => (
@@ -120,7 +162,14 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
         {level == 0 ? (
           ''
         ) : (
-          <Button variant="gray2" size={'xs'} type={'button'}>
+          <Button
+            variant="gray2"
+            size={'xs'}
+            type={'button'}
+            onClick={() => {
+              handleDeleteButtonClick(node, level);
+            }}
+          >
             {t('삭제')}
           </Button>
         )}
@@ -147,12 +196,12 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
       const transformedData = transformApiDataToTreeData(menuDB);
       console.log(transformedData);
       setMenuTreeData(transformedData);
-      if (transformedData && transformedData.length > 0 && menuTreeExpandedKeys.length === 0) {
+      if (transformedData && transformedData.length > 0 && menuTreeExpandedKeys.length == 0) {
         const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
         setMenuTreeExpandedKeys(firstLevelKeys);
-        const allKeys = getAllTreeKeys(transformedData);
-        setMenuTreeAllKeys(allKeys);
       }
+      const allKeys = getAllTreeKeys(transformedData);
+      setMenuTreeAllKeys(allKeys);
     }
   }, [menuDB]);
 
@@ -168,9 +217,11 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
               <div className={popContentsStyles.inner_contents}>
                 {/* 시작 */}
                 <div className={titleStyles.title_wrap}>
-                  <h3 className={titleStyles.title}>{t('메뉴매핑 목록')}</h3>
-                  <strong className={titleStyles.sub_title}>전체</strong>
-                  <span className={titleStyles.num}>{baseMenuAllKeys?.length - 1}</span>
+                  <div className={titleStyles.title_area}>
+                    <h3 className={titleStyles.title}>{t('메뉴매핑 목록')}</h3>
+                    <strong className={titleStyles.sub_title}>전체</strong>
+                    <span className={titleStyles.num}>{baseMenuAllKeys?.length - 1}</span>
+                  </div>
                   <div className={layoutStyles.btn_wrap}>
                     <Button
                       variant="text"
@@ -226,9 +277,11 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
               <div className={popContentsStyles.inner_contents}>
                 {/* 시작 */}
                 <div className={titleStyles.title_wrap}>
-                  <h3 className={titleStyles.title}>{t('메뉴매핑 선택')}</h3>
-                  <strong className={titleStyles.sub_title}>전체</strong>
-                  <span className={titleStyles.num}>{baseMenuAllKeys?.length - 1}</span>
+                  <div className={titleStyles.title_area}>
+                    <h3 className={titleStyles.title}>{t('메뉴매핑 선택')}</h3>
+                    <strong className={titleStyles.sub_title}>{t('전체')}</strong>
+                    <span className={titleStyles.num}>{menuTreeAllKeys?.length - 1}</span>
+                  </div>
                   <div className={layoutStyles.btn_wrap}>
                     <Button
                       variant="text"
@@ -259,7 +312,7 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
                 <div className={layoutStyles.inner_contents}>
                   <TreeView
                     treeId="mapping-tenant-menu-tree"
-                    type={'DRAG_DROP'}
+                    type={'SAME_LEVEL_ONLY'}
                     data={menuTreeData}
                     nodeButtons={renderMenuDeleteButtons}
                     onAction={handleTargetAction}
@@ -276,8 +329,8 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
         </TreeContainer>
       </ModalBody>
       <ModalFooter>
-        <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
-        <Button label={'적용'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
+        {/* <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={() => closeModal()} /> */}
+        <Button label={t('확인')} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
       </ModalFooter>
     </ModalContainer>
   );

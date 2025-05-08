@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { t } from 'i18next';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { cn } from '@/libs/shared/src';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
@@ -11,6 +11,7 @@ import {
   Button,
   ChipListModalSelectorFormField,
   DynamicFormField,
+  useModal,
 } from '@learnway/ui';
 import { FormRow } from '@shared/ui';
 import { ThumbnailUploaderFormField } from '@features/learning';
@@ -18,22 +19,63 @@ import { DynamicFormConfig, useDynamicForm } from '@/libs/hooks/src';
 import { TenantManagerModal } from '@features/tenant/management/ui/tenant-manager-modal';
 import { CompanyModal } from '@features/tenant/management/ui/company-modal';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
+import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
+import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 
+import { useCreateTenant } from '@entities/tenant/service/tenant.hook';
+import { UserInquiryModal } from '@shared/ui/modal/user-inquiry-modal';
+import { LearningResourceProductionGuideModal } from '@features/learning/learning-resource/learning-resource-production-guide-modal';
 export const Route = createFileRoute('/_layout/tenant/management/regist')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const router = useRouter();
+  const { open: openModal, confirm: openConfirm } = useModal();
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
     useDynamicForm(formConfig);
+  const { create } = useCreateTenant({});
+
+  const handleListButtonClick = () => {
+    router.navigate({ to: '/tenant/management' });
+  };
 
   const handleCheckChange = (values: any[]) => {
     console.log('=>', values);
   };
+  const handleResetButtonClick = () => {
+    openModal({ content: <UserInquiryModal />, width: 'xl' });
+
+    console.log('click reset');
+  };
+  const handleOnSubmit = async (data: any) => {
+    console.log('data {} => ', data);
+    const payload = {
+      ...data,
+    };
+    if (await openConfirm('저장 하시겠습니까?')) {
+      create(payload);
+    }
+  };
+
   return (
-    <form className="form_row">
-      <PageContainer>
-        <MainContents>
+    <PageContainer>
+      <ContentsButtons>
+        <LinkBox>
+          <Button onClick={handleListButtonClick} variant="point" size="sm">
+            {t('목록')}
+          </Button>
+        </LinkBox>
+
+        <Button onClick={handleResetButtonClick} variant="point" size="sm">
+          {t('초기화')}
+        </Button>
+        <Button variant="primary" size="sm">
+          {t('저장')}
+        </Button>
+      </ContentsButtons>
+      <MainContents>
+        <form onSubmit={onSubmit(handleOnSubmit)}>
           <div className="title_wrap">
             <strong className="title">{'기본 정보'}</strong>
           </div>
@@ -122,9 +164,9 @@ function RouteComponent() {
               <DynamicFormField name={'language'} onCheckedChange={handleCheckChange} />
             </FormRow>
           </ContentsRow>
-        </MainContents>
-      </PageContainer>
-    </form>
+        </form>
+      </MainContents>
+    </PageContainer>
   );
 }
 
@@ -198,10 +240,6 @@ const formConfig: DynamicFormConfig = {
       value: ['all', 'isWebExposed', 'isMobileExposed', 'isAppExposed'],
       options: [
         {
-          value: 'all',
-          label: '전체',
-        },
-        {
           value: 'isWebExposed',
           label: 'PC',
         },
@@ -214,6 +252,9 @@ const formConfig: DynamicFormConfig = {
           label: 'APP',
         },
       ],
+      checkGroupConfig: {
+        allCheck: true,
+      },
     },
     {
       name: 'language',
@@ -223,7 +264,6 @@ const formConfig: DynamicFormConfig = {
       tooltip: '테넌트에서 사용할 언어를 선택하고, 선택한 언어에서 다국어 설정을 할 수 있습니다.',
       value: ['ko', 'en'],
       options: [
-        { value: 'all', label: '전체' },
         { value: 'ko', label: '한국어' },
         { value: 'en', label: '영어' },
         { value: 'ne', label: '네팔어' },
@@ -231,6 +271,9 @@ const formConfig: DynamicFormConfig = {
         { value: 'vi', label: '베트남어' },
         { value: 'es', label: '스페인어' },
       ],
+      checkGroupConfig: {
+        allCheck: true,
+      },
     },
     {
       name: 'useCategory',
@@ -241,10 +284,6 @@ const formConfig: DynamicFormConfig = {
       value: ['all', 'common', 'tenant'],
       options: [
         {
-          value: 'all',
-          label: '전체',
-        },
-        {
           value: 'common',
           label: '공통 카테고리',
         },
@@ -253,6 +292,9 @@ const formConfig: DynamicFormConfig = {
           label: '테넌트 카테고리',
         },
       ],
+      checkGroupConfig: {
+        allCheck: true,
+      },
     },
   ],
   validator: {

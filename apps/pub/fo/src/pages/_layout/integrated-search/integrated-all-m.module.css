@@ -1,5 +1,6 @@
 .start {
   &.integrated {
+    @apply pb-[32px];
     .classify_wrap {
       @apply px-[20px];
       .result_txt_box {

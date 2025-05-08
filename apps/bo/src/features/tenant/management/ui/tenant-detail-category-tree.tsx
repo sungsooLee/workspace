@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useRouterState } from '@tanstack/react-router';
 import {
   Button,
   findNodeByKey,
@@ -6,19 +7,26 @@ import {
   TreeEventPayload,
   TreeNode,
   TreeView,
+  useModal,
 } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
+import { TenantDetailCategoryMappingModal } from './tenant-detail-category-mapping-modal';
 
 const TenantCategoryTreeComponent: FC<any> = ({
   treeData,
   onNodeClick,
   onNodeMove,
+  onNodeChange,
   expandedKeys,
   onExpandChange,
   selectedKey,
 }) => {
+  const routerState = useRouterState();
+  const { open: openModal, confirm: openConfirm } = useModal();
+  const tenantId = routerState.location.state?.tenantId || '1';
+
   const handleExpandAll = (expand: boolean) => {
     if (expand) {
       // 모든 노드 키 수집
@@ -47,11 +55,39 @@ const TenantCategoryTreeComponent: FC<any> = ({
   const handleTreeAction = (event: TreeEventPayload) => {
     switch (event.type) {
       case 'NODE_SELECT':
-        onNodeClick(event.node);
+        if (event.node.depth > 0) {
+          onNodeClick(event.node);
+        }
         break;
       case 'NODE_MOVE': {
         const nodeInfo = event;
-        console.log(event);
+        console.log('### event', event);
+        const targetDepth =
+          nodeInfo.position === 'INSIDE'
+            ? nodeInfo.targetNode?.depth + 1
+            : nodeInfo.targetNode?.depth;
+        const parentKey =
+          nodeInfo.position === 'INSIDE'
+            ? nodeInfo.targetNode?.key
+            : nodeInfo.targetNode?.parentKey;
+        if (nodeInfo.sourceNode.depth !== targetDepth) {
+          alert(
+            '동일한 레벨 내에서만 매핑 및 이동이 가능합니다. src:' +
+              nodeInfo.sourceNode.depth +
+              '/dest:' +
+              targetDepth,
+          );
+          return false;
+        }
+        if (nodeInfo.sourceNode.parentKey !== parentKey) {
+          alert(
+            '동일한 부모 카테고리에만 매핑 및 이동이 가능합니다. src:' +
+              nodeInfo.sourceNode.parentKey +
+              '/dest:' +
+              parentKey,
+          );
+          return false;
+        }
         if (nodeInfo.position === 'INSIDE') {
           onNodeMove(nodeInfo.sourceNode.menuId, nodeInfo.targetNode?.menuId, nodeInfo.targetIndex);
         }
@@ -67,6 +103,21 @@ const TenantCategoryTreeComponent: FC<any> = ({
         break;
       }
     }
+  };
+
+  const handleTenantDetailCategoryMapping = async () => {
+    const modalTenantId = tenantId;
+    const selectTenantDetailCategory = await openModal({
+      content: (
+        <TenantDetailCategoryMappingModal
+          tenantId={modalTenantId}
+          onNodeChange={() => {
+            if (onNodeChange) onNodeChange();
+          }}
+        />
+      ),
+      width: 'xl',
+    });
   };
 
   const selectedNode = selectedKey ? findNodeByKey(treeData, selectedKey) : null;
@@ -92,7 +143,7 @@ const TenantCategoryTreeComponent: FC<any> = ({
           >
             {'전체닫기'}
           </Button>
-          <Button variant="save" size="sm">
+          <Button variant="save" size="sm" onClick={() => handleTenantDetailCategoryMapping()}>
             {'카테고리 매핑'}
           </Button>
         </div>
@@ -107,7 +158,7 @@ const TenantCategoryTreeComponent: FC<any> = ({
             onAction={handleTreeAction}
             type={'SAME_LEVEL_ONLY'}
             selectedNode={selectedNode}
-            onSelectedNodeChange={handleSelectedNodeChange}
+            //onSelectedNodeChange={handleSelectedNodeChange}
           />
         </TreeContainer>
       </div>

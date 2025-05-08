@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-
+import { t } from 'i18next';
 import { Tabs } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 
@@ -16,7 +16,7 @@ export const Route = createFileRoute('/_layout/platform/program/')({
   component: RouteComponent,
   ...pageRouteConfig({
     meta: {
-      title: '플랫폼 API 관리',
+      title: 'LABEL.page.title.programManage',
     },
   }),
 });
@@ -32,12 +32,12 @@ function RouteComponent() {
   };
   const items = [
     {
-      title: '학습자 메뉴',
+      title: t('LABEL.common.learnerMenu'),
       key: 'FO',
       content: renderTabContent('FO'),
     },
     {
-      title: 'HRD센터 메뉴',
+      title: t('LABEL.common.hrdCenterMenu'),
       key: 'BO',
       content: renderTabContent('BO'),
     },

@@ -1,7 +1,16 @@
 import { useState } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { ChipList, SelectOption, Accordion, Button } from '@learnway/ui';
-import { IcoHeart, IcoUser01 } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import {
+  IcoHeart,
+  IcoUser01,
+  IcoPlay,
+  IcoRating,
+  IcoEye,
+  IcoPhone02,
+  IcoMonitor01,
+} from '@learnway/icons';
 import {
   CourseFixedButton, // 수강신청 버튼
 } from '../../../features/layout';
@@ -10,13 +19,15 @@ import pageContentsStyles from '../../_page-contents.module.css';
 import operatorStyles from './operator.module.css';
 import definitionListStyles from './definition-list.module.css';
 import packageInformationStyles from './package-information.module.css';
+import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
+import thumnailImgStyles from '../../../shared/ui/thumnail/thumnail-img.module.css';
+
 import styles from './package.module.css';
 
 // 이미지
-import bnrImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
+import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 import package1 from '@learnway/styles/fo/assets/images/temp/img_package_01.png';
 import logoHyundai from '@learnway/styles/fo/assets/images/common/logo_hyundai.png';
-import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
 
 export const Route = createFileRoute('/_layout/course-introduction/package')({
   component: RouteComponent,
@@ -28,6 +39,16 @@ function RouteComponent() {
     { label: '디지털혁신', value: 'B' },
     { label: '정보보안기술', value: 'C' },
   ];
+
+  // 썸네일 찜
+  const [icoHeart, setIcoHeart] = useState(true);
+  const handleHeartClick = () => {
+    if (icoHeart === true) {
+      setIcoHeart(false);
+    } else {
+      setIcoHeart(true);
+    }
+  };
 
   const [value2, setValue2] = useState<string>('');
   const dummyItems2 = [
@@ -45,7 +66,312 @@ function RouteComponent() {
           </p>
         </div>
       ),
-      children: <div className={styles.sub_package_content}>Content A</div>,
+      children: (
+        <div className={styles.sub_package_content}>
+          <ul>
+            <li>
+              {/* thumnail module */}
+              <div
+                className={cn(
+                  thumnailStyles.start,
+                  thumnailStyles.thumbnail,
+                  thumnailStyles.vertical,
+                )}
+              >
+                {/* link (찜 기능과 겹침으로 따로 빠짐) */}
+                <Link to="" className={thumnailStyles.link}></Link>
+
+                <div className={thumnailStyles.thumnail_box}>
+                  {/* img */}
+                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                    <ul className={thumnailImgStyles.label}>
+                      <li style={{ backgroundColor: '#00afd5' }}>New</li>
+                      <li style={{ backgroundColor: '#06226a' }}>접수중</li>
+                      <li style={{ backgroundColor: '#ff4646' }}>D-7</li>
+                    </ul>
+                    <div className={thumnailImgStyles.img}>
+                      <img src={listImage1} alt="" />
+                    </div>
+
+                    <div className={thumnailImgStyles.heart}>
+                      <Button
+                        className={cn(
+                          thumnailStyles.btn_heart,
+                          icoHeart === true ? thumnailStyles.active : '',
+                        )}
+                        onClick={handleHeartClick}
+                      >
+                        <IcoHeart
+                          width={24}
+                          height={24}
+                          fill={icoHeart === true ? '#fff' : 'none'}
+                          stroke="#fff"
+                        ></IcoHeart>
+                      </Button>
+                    </div>
+                  </div>
+                  {/* txt */}
+                  <div className={thumnailStyles.text_box}>
+                    <div className={thumnailStyles.type}>
+                      {/* type */}
+                      <span className={thumnailStyles.txt}>동영상</span>
+                      <span className={thumnailStyles.time}>
+                        {/* time icon */}
+                        <IcoPlay width={12} height={12} fill="#6f798b" />
+                        {/* time */}
+                        04:59
+                      </span>
+                    </div>
+                    <p className={thumnailStyles.text}>필수개발과정</p>
+
+                    <div className={thumnailStyles.ico_box}>
+                      <span className={thumnailStyles.ico_rating}>
+                        <IcoRating className={thumnailStyles.ico}></IcoRating>
+                        {/* rating */}
+                        <span className={thumnailStyles.txt}>4.2</span>
+                      </span>
+                      <span className={thumnailStyles.ico_heart}>
+                        <IcoHeart
+                          className={thumnailStyles.ico}
+                          fill="none"
+                          stroke="#a9afb8"
+                        ></IcoHeart>
+                        {/* heart */}
+                        <span className={thumnailStyles.txt}>33</span>
+                      </span>
+                      <span className={thumnailStyles.ico_eye}>
+                        <IcoEye className={thumnailStyles.ico} fill="none" stroke="#a9afb8" />
+                        {/* eye */}
+                        <span className={thumnailStyles.txt}>55</span>
+                      </span>
+                    </div>
+
+                    <div className={thumnailStyles.related_box}>
+                      <span className={thumnailStyles.related}>
+                        <IcoPhone02 className={thumnailStyles.ico} fill="none" stroke="#4c515e" />
+                        <span className={thumnailStyles.txt}>모바일전용</span>
+                      </span>
+                      <span className={thumnailStyles.related}>
+                        <IcoMonitor01 className={thumnailStyles.ico} fill="none" stroke="#4c515e" />
+                        <span className={thumnailStyles.txt}>사내IP전용</span>
+                      </span>
+                      <span className={thumnailStyles.related}>
+                        <span className={thumnailStyles.txt}>#AI기술</span>
+                      </span>
+                      <span className={thumnailStyles.related}>
+                        <span className={thumnailStyles.txt}>#AI기술</span>
+                      </span>
+                      <span className={thumnailStyles.related}>
+                        <span className={thumnailStyles.txt}>#AI기술</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              {/* thumnail module */}
+              <div
+                className={cn(
+                  thumnailStyles.start,
+                  thumnailStyles.thumbnail,
+                  thumnailStyles.vertical,
+                )}
+              >
+                {/* link (찜 기능과 겹침으로 따로 빠짐) */}
+                <Link to="" className={thumnailStyles.link}></Link>
+
+                <div className={thumnailStyles.thumnail_box}>
+                  {/* img */}
+                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                    <ul className={thumnailImgStyles.label}>
+                      <li style={{ backgroundColor: '#00afd5' }}>New</li>
+                      <li style={{ backgroundColor: '#06226a' }}>접수중</li>
+                      <li style={{ backgroundColor: '#ff4646' }}>D-7</li>
+                    </ul>
+                    <div className={thumnailImgStyles.img}>
+                      <img src={listImage1} alt="" />
+                    </div>
+
+                    <div className={thumnailImgStyles.heart}>
+                      <Button
+                        className={cn(
+                          thumnailStyles.btn_heart,
+                          icoHeart === true ? thumnailStyles.active : '',
+                        )}
+                        onClick={handleHeartClick}
+                      >
+                        <IcoHeart
+                          width={24}
+                          height={24}
+                          fill={icoHeart === true ? '#fff' : 'none'}
+                          stroke="#fff"
+                        ></IcoHeart>
+                      </Button>
+                    </div>
+                  </div>
+                  {/* txt */}
+                  <div className={thumnailStyles.text_box}>
+                    <div className={thumnailStyles.type}>
+                      {/* type */}
+                      <span className={thumnailStyles.txt}>동영상</span>
+                      <span className={thumnailStyles.time}>
+                        {/* time icon */}
+                        <IcoPlay width={12} height={12} fill="#6f798b" />
+                        {/* time */}
+                        04:59
+                      </span>
+                    </div>
+                    <p className={thumnailStyles.text}>필수개발과정</p>
+
+                    <div className={thumnailStyles.ico_box}>
+                      <span className={thumnailStyles.ico_rating}>
+                        <IcoRating className={thumnailStyles.ico}></IcoRating>
+                        {/* rating */}
+                        <span className={thumnailStyles.txt}>4.2</span>
+                      </span>
+                      <span className={thumnailStyles.ico_heart}>
+                        <IcoHeart
+                          className={thumnailStyles.ico}
+                          fill="none"
+                          stroke="#a9afb8"
+                        ></IcoHeart>
+                        {/* heart */}
+                        <span className={thumnailStyles.txt}>33</span>
+                      </span>
+                      <span className={thumnailStyles.ico_eye}>
+                        <IcoEye className={thumnailStyles.ico} fill="none" stroke="#a9afb8" />
+                        {/* eye */}
+                        <span className={thumnailStyles.txt}>55</span>
+                      </span>
+                    </div>
+
+                    <div className={thumnailStyles.related_box}>
+                      <span className={thumnailStyles.related}>
+                        <IcoPhone02 className={thumnailStyles.ico} fill="none" stroke="#4c515e" />
+                        <span className={thumnailStyles.txt}>모바일전용</span>
+                      </span>
+                      <span className={thumnailStyles.related}>
+                        <IcoMonitor01 className={thumnailStyles.ico} fill="none" stroke="#4c515e" />
+                        <span className={thumnailStyles.txt}>사내IP전용</span>
+                      </span>
+                      <span className={thumnailStyles.related}>
+                        <span className={thumnailStyles.txt}>#AI기술</span>
+                      </span>
+                      <span className={thumnailStyles.related}>
+                        <span className={thumnailStyles.txt}>#AI기술</span>
+                      </span>
+                      <span className={thumnailStyles.related}>
+                        <span className={thumnailStyles.txt}>#AI기술</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              {/* thumnail module */}
+              <div
+                className={cn(
+                  thumnailStyles.start,
+                  thumnailStyles.thumbnail,
+                  thumnailStyles.vertical,
+                )}
+              >
+                {/* link (찜 기능과 겹침으로 따로 빠짐) */}
+                <Link to="" className={thumnailStyles.link}></Link>
+
+                <div className={thumnailStyles.thumnail_box}>
+                  {/* img */}
+                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                    <ul className={thumnailImgStyles.label}>
+                      <li style={{ backgroundColor: '#00afd5' }}>New</li>
+                      <li style={{ backgroundColor: '#06226a' }}>접수중</li>
+                      <li style={{ backgroundColor: '#ff4646' }}>D-7</li>
+                    </ul>
+                    <div className={thumnailImgStyles.img}>
+                      <img src={listImage1} alt="" />
+                    </div>
+
+                    <div className={thumnailImgStyles.heart}>
+                      <Button
+                        className={cn(
+                          thumnailStyles.btn_heart,
+                          icoHeart === true ? thumnailStyles.active : '',
+                        )}
+                        onClick={handleHeartClick}
+                      >
+                        <IcoHeart
+                          width={24}
+                          height={24}
+                          fill={icoHeart === true ? '#fff' : 'none'}
+                          stroke="#fff"
+                        ></IcoHeart>
+                      </Button>
+                    </div>
+                  </div>
+                  {/* txt */}
+                  <div className={thumnailStyles.text_box}>
+                    <div className={thumnailStyles.type}>
+                      {/* type */}
+                      <span className={thumnailStyles.txt}>동영상</span>
+                      <span className={thumnailStyles.time}>
+                        {/* time icon */}
+                        <IcoPlay width={12} height={12} fill="#6f798b" />
+                        {/* time */}
+                        04:59
+                      </span>
+                    </div>
+                    <p className={thumnailStyles.text}>필수개발과정</p>
+
+                    <div className={thumnailStyles.ico_box}>
+                      <span className={thumnailStyles.ico_rating}>
+                        <IcoRating className={thumnailStyles.ico}></IcoRating>
+                        {/* rating */}
+                        <span className={thumnailStyles.txt}>4.2</span>
+                      </span>
+                      <span className={thumnailStyles.ico_heart}>
+                        <IcoHeart
+                          className={thumnailStyles.ico}
+                          fill="none"
+                          stroke="#a9afb8"
+                        ></IcoHeart>
+                        {/* heart */}
+                        <span className={thumnailStyles.txt}>33</span>
+                      </span>
+                      <span className={thumnailStyles.ico_eye}>
+                        <IcoEye className={thumnailStyles.ico} fill="none" stroke="#a9afb8" />
+                        {/* eye */}
+                        <span className={thumnailStyles.txt}>55</span>
+                      </span>
+                    </div>
+
+                    <div className={thumnailStyles.related_box}>
+                      <span className={thumnailStyles.related}>
+                        <IcoPhone02 className={thumnailStyles.ico} fill="none" stroke="#4c515e" />
+                        <span className={thumnailStyles.txt}>모바일전용</span>
+                      </span>
+                      <span className={thumnailStyles.related}>
+                        <IcoMonitor01 className={thumnailStyles.ico} fill="none" stroke="#4c515e" />
+                        <span className={thumnailStyles.txt}>사내IP전용</span>
+                      </span>
+                      <span className={thumnailStyles.related}>
+                        <span className={thumnailStyles.txt}>#AI기술</span>
+                      </span>
+                      <span className={thumnailStyles.related}>
+                        <span className={thumnailStyles.txt}>#AI기술</span>
+                      </span>
+                      <span className={thumnailStyles.related}>
+                        <span className={thumnailStyles.txt}>#AI기술</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      ),
     },
     {
       value: 'b',
@@ -61,7 +387,261 @@ function RouteComponent() {
           </p>
         </div>
       ),
-      children: <div className={styles.sub_package_content}>Content B</div>,
+      children: (
+        <div className={styles.sub_package_content}>
+          <ul>
+            <li>
+              {/* thumnail module */}
+              <div
+                className={cn(
+                  thumnailStyles.start,
+                  thumnailStyles.thumbnail,
+                  thumnailStyles.vertical,
+                )}
+              >
+                {/* link (찜 기능과 겹침으로 따로 빠짐) */}
+                <Link to="" className={thumnailStyles.link}></Link>
+
+                <div className={thumnailStyles.thumnail_box}>
+                  {/* img */}
+                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                    <ul className={thumnailImgStyles.label}>
+                      <li style={{ backgroundColor: '#00afd5' }}>New</li>
+                      <li style={{ backgroundColor: '#06226a' }}>접수중</li>
+                      <li style={{ backgroundColor: '#ff4646' }}>D-7</li>
+                    </ul>
+                    <div className={thumnailImgStyles.img}>
+                      <img src={listImage1} alt="" />
+                    </div>
+                  </div>
+                  {/* txt */}
+                  <div className={thumnailStyles.text_box}>
+                    <div className={thumnailStyles.type}>
+                      {/* type */}
+                      <span className={thumnailStyles.txt}>동영상</span>
+                      <span className={thumnailStyles.time}>
+                        {/* time icon */}
+                        <IcoPlay width={12} height={12} fill="#6f798b" />
+                        {/* time */}
+                        04:59
+                      </span>
+                    </div>
+                    <p className={thumnailStyles.text}>필수개발과정</p>
+
+                    <div className={thumnailStyles.ico_box}>
+                      <span className={thumnailStyles.ico_rating}>
+                        <IcoRating className={thumnailStyles.ico}></IcoRating>
+                        {/* rating */}
+                        <span className={thumnailStyles.txt}>4.2</span>
+                      </span>
+                      <span className={thumnailStyles.ico_heart}>
+                        <IcoHeart
+                          className={thumnailStyles.ico}
+                          fill="none"
+                          stroke="#a9afb8"
+                        ></IcoHeart>
+                        {/* heart */}
+                        <span className={thumnailStyles.txt}>33</span>
+                      </span>
+                      <span className={thumnailStyles.ico_eye}>
+                        <IcoEye className={thumnailStyles.ico} fill="none" stroke="#a9afb8" />
+                        {/* eye */}
+                        <span className={thumnailStyles.txt}>55</span>
+                      </span>
+                    </div>
+
+                    <div className={thumnailStyles.related_box}>
+                      <span className={thumnailStyles.related}>
+                        <IcoPhone02 className={thumnailStyles.ico} fill="none" stroke="#4c515e" />
+                        <span className={thumnailStyles.txt}>모바일전용</span>
+                      </span>
+                      <span className={thumnailStyles.related}>
+                        <IcoMonitor01 className={thumnailStyles.ico} fill="none" stroke="#4c515e" />
+                        <span className={thumnailStyles.txt}>사내IP전용</span>
+                      </span>
+                      <span className={thumnailStyles.related}>
+                        <span className={thumnailStyles.txt}>#AI기술</span>
+                      </span>
+                      <span className={thumnailStyles.related}>
+                        <span className={thumnailStyles.txt}>#AI기술</span>
+                      </span>
+                      <span className={thumnailStyles.related}>
+                        <span className={thumnailStyles.txt}>#AI기술</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              {/* thumnail module */}
+              <div
+                className={cn(
+                  thumnailStyles.start,
+                  thumnailStyles.thumbnail,
+                  thumnailStyles.vertical,
+                )}
+              >
+                {/* link (찜 기능과 겹침으로 따로 빠짐) */}
+                <Link to="" className={thumnailStyles.link}></Link>
+
+                <div className={thumnailStyles.thumnail_box}>
+                  {/* img */}
+                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                    <ul className={thumnailImgStyles.label}>
+                      <li style={{ backgroundColor: '#00afd5' }}>New</li>
+                      <li style={{ backgroundColor: '#06226a' }}>접수중</li>
+                      <li style={{ backgroundColor: '#ff4646' }}>D-7</li>
+                    </ul>
+                    <div className={thumnailImgStyles.img}>
+                      <img src={listImage1} alt="" />
+                    </div>
+                  </div>
+                  {/* txt */}
+                  <div className={thumnailStyles.text_box}>
+                    <div className={thumnailStyles.type}>
+                      {/* type */}
+                      <span className={thumnailStyles.txt}>동영상</span>
+                      <span className={thumnailStyles.time}>
+                        {/* time icon */}
+                        <IcoPlay width={12} height={12} fill="#6f798b" />
+                        {/* time */}
+                        04:59
+                      </span>
+                    </div>
+                    <p className={thumnailStyles.text}>필수개발과정</p>
+
+                    <div className={thumnailStyles.ico_box}>
+                      <span className={thumnailStyles.ico_rating}>
+                        <IcoRating className={thumnailStyles.ico}></IcoRating>
+                        {/* rating */}
+                        <span className={thumnailStyles.txt}>4.2</span>
+                      </span>
+                      <span className={thumnailStyles.ico_heart}>
+                        <IcoHeart
+                          className={thumnailStyles.ico}
+                          fill="none"
+                          stroke="#a9afb8"
+                        ></IcoHeart>
+                        {/* heart */}
+                        <span className={thumnailStyles.txt}>33</span>
+                      </span>
+                      <span className={thumnailStyles.ico_eye}>
+                        <IcoEye className={thumnailStyles.ico} fill="none" stroke="#a9afb8" />
+                        {/* eye */}
+                        <span className={thumnailStyles.txt}>55</span>
+                      </span>
+                    </div>
+
+                    <div className={thumnailStyles.related_box}>
+                      <span className={thumnailStyles.related}>
+                        <IcoPhone02 className={thumnailStyles.ico} fill="none" stroke="#4c515e" />
+                        <span className={thumnailStyles.txt}>모바일전용</span>
+                      </span>
+                      <span className={thumnailStyles.related}>
+                        <IcoMonitor01 className={thumnailStyles.ico} fill="none" stroke="#4c515e" />
+                        <span className={thumnailStyles.txt}>사내IP전용</span>
+                      </span>
+                      <span className={thumnailStyles.related}>
+                        <span className={thumnailStyles.txt}>#AI기술</span>
+                      </span>
+                      <span className={thumnailStyles.related}>
+                        <span className={thumnailStyles.txt}>#AI기술</span>
+                      </span>
+                      <span className={thumnailStyles.related}>
+                        <span className={thumnailStyles.txt}>#AI기술</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              {/* thumnail module */}
+              <div
+                className={cn(
+                  thumnailStyles.start,
+                  thumnailStyles.thumbnail,
+                  thumnailStyles.vertical,
+                )}
+              >
+                {/* link (찜 기능과 겹침으로 따로 빠짐) */}
+                <Link to="" className={thumnailStyles.link}></Link>
+
+                <div className={thumnailStyles.thumnail_box}>
+                  {/* img */}
+                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                    <ul className={thumnailImgStyles.label}>
+                      <li style={{ backgroundColor: '#00afd5' }}>New</li>
+                      <li style={{ backgroundColor: '#06226a' }}>접수중</li>
+                      <li style={{ backgroundColor: '#ff4646' }}>D-7</li>
+                    </ul>
+                    <div className={thumnailImgStyles.img}>
+                      <img src={listImage1} alt="" />
+                    </div>
+                  </div>
+                  {/* txt */}
+                  <div className={thumnailStyles.text_box}>
+                    <div className={thumnailStyles.type}>
+                      {/* type */}
+                      <span className={thumnailStyles.txt}>동영상</span>
+                      <span className={thumnailStyles.time}>
+                        {/* time icon */}
+                        <IcoPlay width={12} height={12} fill="#6f798b" />
+                        {/* time */}
+                        04:59
+                      </span>
+                    </div>
+                    <p className={thumnailStyles.text}>필수개발과정</p>
+
+                    <div className={thumnailStyles.ico_box}>
+                      <span className={thumnailStyles.ico_rating}>
+                        <IcoRating className={thumnailStyles.ico}></IcoRating>
+                        {/* rating */}
+                        <span className={thumnailStyles.txt}>4.2</span>
+                      </span>
+                      <span className={thumnailStyles.ico_heart}>
+                        <IcoHeart
+                          className={thumnailStyles.ico}
+                          fill="none"
+                          stroke="#a9afb8"
+                        ></IcoHeart>
+                        {/* heart */}
+                        <span className={thumnailStyles.txt}>33</span>
+                      </span>
+                      <span className={thumnailStyles.ico_eye}>
+                        <IcoEye className={thumnailStyles.ico} fill="none" stroke="#a9afb8" />
+                        {/* eye */}
+                        <span className={thumnailStyles.txt}>55</span>
+                      </span>
+                    </div>
+
+                    <div className={thumnailStyles.related_box}>
+                      <span className={thumnailStyles.related}>
+                        <IcoPhone02 className={thumnailStyles.ico} fill="none" stroke="#4c515e" />
+                        <span className={thumnailStyles.txt}>모바일전용</span>
+                      </span>
+                      <span className={thumnailStyles.related}>
+                        <IcoMonitor01 className={thumnailStyles.ico} fill="none" stroke="#4c515e" />
+                        <span className={thumnailStyles.txt}>사내IP전용</span>
+                      </span>
+                      <span className={thumnailStyles.related}>
+                        <span className={thumnailStyles.txt}>#AI기술</span>
+                      </span>
+                      <span className={thumnailStyles.related}>
+                        <span className={thumnailStyles.txt}>#AI기술</span>
+                      </span>
+                      <span className={thumnailStyles.related}>
+                        <span className={thumnailStyles.txt}>#AI기술</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      ),
     },
   ];
 
@@ -72,15 +652,7 @@ function RouteComponent() {
         {/* main content */}
         <div className={pageContentsStyles.main_contents}>
           <div className={styles.thumbnail_img}>
-            {/* 플레이 버튼 o */}
-            <Button>
-              <img src={bnrImage1} alt="" />
-              <div className={styles.img_play}>
-                <img src={playImg} alt="" />
-              </div>
-            </Button>
-            {/* 플레이 버튼 x */}
-            {/* <img src={bnrImage1} alt="" /> */}
+            <img src={listImage1} alt="" />
           </div>
           <div className={styles.package_txt_box}>
             <strong>패키지소개</strong>

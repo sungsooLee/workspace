@@ -1,0 +1,9 @@
+.start {
+  &.filter_wrap {
+    & > div {
+      & + div {
+        @apply mt-[16px];
+      }
+    }
+  }
+}

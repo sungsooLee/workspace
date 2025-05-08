@@ -1,7 +1,7 @@
 import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Button, Grid, GridBoxProps, GridImperative } from '@learnway/ui';
-import { IcoDownload, IcoMinus } from '@learnway/icons';
+import { IcoDownload, IcoMinus, IcoUploadCloud, IcoPlus } from '@learnway/icons';
 import styles from './grid-box.module.css';
 import { cn } from '@learnway/shared';
 import { useTranslation } from 'react-i18next';
@@ -150,7 +150,7 @@ const GridBoxComponent = <T extends object>(
       <div className={styles.table_info}>
         <div className={styles.title_info}>
           {/* 제목 */}
-          {<div className={styles.title}>{props.title || title || t('목록')}</div>}
+          {<div className={styles.title}>{props.title || title || t('LABEL.grid.title.list')}</div>}
 
           {/* 전체 개수  */}
           {showTotalCount && (
@@ -196,7 +196,7 @@ const GridBoxComponent = <T extends object>(
               size="xs"
               className={styles.btn_upload}
               label={t('LABEL.grid.header.excelUpload')}
-              icon={<IcoDownload width={16} height={16} stroke={'#3e4550'} />}
+              icon={<IcoUploadCloud width={16} height={16} stroke={'#4C515E'} />}
             />
           )}
           {/* 엑셀다운로드 */}
@@ -206,7 +206,7 @@ const GridBoxComponent = <T extends object>(
               size="xs"
               className={styles.btn_excel}
               label={t('LABEL.grid.header.excelDownload')}
-              icon={<IcoDownload width={16} height={16} stroke={'#3e4550'} />}
+              icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
             />
           )}
           {/* 컬럼 설정 */}
@@ -230,7 +230,13 @@ const GridBoxComponent = <T extends object>(
           )}
           {/* 행추가 */}
           {showAddRow && (
-            <Button variant="outline" size="sm" label={t('행추가')} onClick={handleAddRowClick} />
+            <Button
+              variant="outline"
+              size="sm"
+              label={t('행추가')}
+              icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
+              onClick={handleAddRowClick}
+            />
           )}
           {/* 행삭제 */}
           {showRemoveRow && (
@@ -238,6 +244,7 @@ const GridBoxComponent = <T extends object>(
               variant="outline"
               size="sm"
               label={t('행삭제')}
+              icon={<IcoMinus width={16} height={16} stroke={'#4C515E'} />}
               onClick={handleRemoveRowClick}
             />
           )}
@@ -250,7 +257,6 @@ const GridBoxComponent = <T extends object>(
         data={props.data ?? data ?? []}
         columns={props.columns ?? girdColumns ?? []}
         showNumberingColumn={showNumberingColumn}
-        hideRowSelectionCheckBox={showNumberingColumn || props.hideRowSelectionCheckBox} // 체크박스 숨김 (numbering 사용시)
         pagination={paginationProps}
       />
     </div>

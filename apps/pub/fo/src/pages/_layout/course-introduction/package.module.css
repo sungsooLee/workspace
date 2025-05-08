@@ -90,6 +90,21 @@
       }
       .sub_package_content {
         @apply pl-[32px];
+        & > ul {
+          @apply mt-[16px];
+          & > li {
+            @apply mr-[16px] inline-block w-[calc((100%-32px)/3)];
+            & > div {
+              @apply w-full;
+            }
+            &:nth-child(3n) {
+              @apply mr-0;
+            }
+            &:nth-child(n + 4) {
+              @apply mt-[32px];
+            }
+          }
+        }
       }
 
       button {

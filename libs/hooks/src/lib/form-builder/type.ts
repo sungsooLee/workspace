@@ -67,6 +67,7 @@ export type FormConfig =
       type: 'switch';
       switchConfig?: {
         label: string | ((value: boolean, getValues: UseFormReturn['getValues']) => string);
+        guideText?: (value: boolean, getValues: UseFormReturn['getValues']) => string;
       };
     })
   | (BaseFormFieldConfigProps<boolean> & {

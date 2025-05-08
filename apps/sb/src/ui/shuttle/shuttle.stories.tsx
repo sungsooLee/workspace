@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import type { Meta } from '@storybook/react';
 import {
   ShuttleGridToGrid,
+  ShuttleTreeToChips,
   ShuttleTreeToGrid,
   TreeBox,
   TreeContainer,
@@ -202,3 +203,53 @@ export const TemplateTreeToTree: any = (args: any) => {
   );
 };
 TemplateTreeToTree.storyName = 'Tree To Tree';
+
+// ShuttleTreeToChips
+export const TemplateTreeToChips = () => {
+  const treeData = [
+    {
+      key: 'source-1',
+      title: '소스 루트',
+      children: [
+        {
+          key: 'source-1-1',
+          title: '드래그 가능 노드',
+          children: [
+            { key: 'source-1-1-1', title: '일반 노드 1' },
+            { key: 'source-1-1-2', title: '일반 노드 2' },
+          ],
+        },
+        {
+          key: 'source-1-2',
+          title: '드래그 불가 노드',
+          constraints: {
+            drag: false,
+          },
+        },
+        {
+          key: 'source-1-3',
+          title: '드롭 불가 노드',
+          constraints: {
+            drop: false,
+          },
+        },
+      ],
+    },
+  ];
+
+  const [selectedItems, setSelectedItems] = useState<TreeNode[]>([]);
+  const handleSelectedItemsChange = (items: TreeNode[]) => {
+    setSelectedItems(items);
+  };
+
+  return (
+    <ShuttleTreeToChips
+      treeId="api-list-tree"
+      title="TITLE"
+      sourceData={treeData as TreeNode[]}
+      selectedItems={selectedItems}
+      onItemsChange={handleSelectedItemsChange}
+    />
+  );
+};
+TemplateTreeToChips.storyName = 'Tree To Chips';
