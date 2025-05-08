@@ -30,7 +30,9 @@ function BreadcrumbsComponent() {
                   className={matchRoute({ to: menu?.path }) ? styles.active : ''}
                 >
                   <IcoArrowForward width={12} height={12} stroke="#131C30" />
-                  {t(`MENU.${menu.menuCode}`)}
+                  {import.meta.env.VITE_LANGUAGE_DEV === 'true'
+                    ? t(`${menu.menuName}`)
+                    : t(`MENU.${menu.menuCode}`)}
                 </Link>
               </li>
             );

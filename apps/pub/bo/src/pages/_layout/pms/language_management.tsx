@@ -38,7 +38,6 @@ function RouteComponent() {
   const columnHelper = createColumnHelper<any>();
   const data: any[] = [
     {
-      number: '1',
       sort: '메세지',
       code: 'MESAGE00001',
       standard: '알바니아 국가 코드',
@@ -53,15 +52,6 @@ function RouteComponent() {
   const [pageIndex, setPageIndex] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const columns = [
-    columnHelper.accessor('number', {
-      cell: (info) => info.getValue(),
-      header: 'NO.',
-      enableGrouping: false,
-      meta: {
-        headerAlign: 'center', // 헤더 정렬
-        cellAlign: 'center', // 셀 정렬
-      },
-    }),
     columnHelper.accessor('sort', {
       cell: (info) => info.getValue(),
       header: '분류',
@@ -238,7 +228,9 @@ function RouteComponent() {
               columns={columns}
               tableMode={true}
               title={'목록'}
-              showExcelDownload={true}
+              showNumberingColumn
+              showExcelDownload
+              showUpload
               pagination={{
                 pageSize,
                 pageIndex,

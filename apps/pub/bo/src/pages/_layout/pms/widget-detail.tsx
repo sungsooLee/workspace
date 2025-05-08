@@ -224,16 +224,23 @@ function RouteComponent() {
               </label>
               <div className={formStyles.input_box}>
                 <div className={dynamicFormStyles.check_wrap}>
-                  {/*                   
                   <CheckboxGroupFormField
                     options={[
                       { value: 'all', label: '전체' },
                       { value: 'pc', label: 'PC' },
                       { value: 'mobile', label: 'Mobile' },
+                      { value: '1', label: '선택1' },
+                      { value: '2', label: '선택2' },
+                      { value: '3', label: '선택3' },
+                      { value: '4', label: '선택4' },
+                      { value: '5', label: '선택5' },
+                      { value: '6', label: '선택6' },
+                      { value: '7', label: '선택7' },
+                      { value: '8', label: '선택8' },
                     ]}
                     value={['all']}
-                    disabled
-                  /> */}
+                    cols={5}
+                  />
                 </div>
               </div>
             </div>

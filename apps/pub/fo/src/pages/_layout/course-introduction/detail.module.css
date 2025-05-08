@@ -31,6 +31,7 @@
         @apply mt-[24px];
       }
       .tit_box {
+        @apply mb-[8px];
         strong {
           @apply title_6_b inline-block text-[var(--gray9)];
           em {
@@ -38,22 +39,7 @@
           }
         }
       }
-      .package_box {
-        @apply mt-[8px];
-        .acc_package {
-          & > div {
-            & > button {
-              @apply py-0;
-              & + div {
-                @apply bg-inherit;
-              }
-            }
-            & + div {
-              @apply mt-[16px] border-t-[1px] border-solid border-[#d9d9d9] pt-[16px];
-            }
-          }
-        }
-      }
+
       .sub_package_content {
         @apply relative mt-[16px] pl-[26px];
         &::before {

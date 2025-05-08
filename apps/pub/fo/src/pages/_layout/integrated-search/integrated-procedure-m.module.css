@@ -1,5 +1,6 @@
 .start {
   &.integrated {
+    @apply pb-[32px];
     .classify_wrap {
       @apply px-[20px];
       .result_txt_box {
@@ -54,6 +55,14 @@
               }
               .count {
                 @apply w-[80px];
+              }
+              button {
+                @apply relative;
+                &.selected {
+                  &::after {
+                    @apply absolute -right-[2px] -top-[2px] h-[8px] w-[8px] rounded-[50%] bg-[var(--secondary1)] content-[''];
+                  }
+                }
               }
             }
           }

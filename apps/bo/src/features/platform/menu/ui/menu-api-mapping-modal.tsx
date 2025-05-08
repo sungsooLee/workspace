@@ -5,7 +5,7 @@ import {
   ModalContainer,
   ModalFooter,
   ModalTitle,
-  ShuttleTreeWithChips,
+  ShuttleTreeToChips,
   TreeNode,
   useModal,
 } from '@learnway/ui';
@@ -61,7 +61,9 @@ const MenuApiMappingModalComponent = ({ menuScopeCode, selectedApiKeys }: any) =
       <ModalBody>
         <div className={styles.wrap}>
           <div className={styles.pop_contents}>
-            <ShuttleTreeWithChips
+            <ShuttleTreeToChips
+              treeId="api-list-tree"
+              title="API 목록"
               sourceData={treeData as TreeNode[]}
               selectedItems={selectedItems}
               onItemsChange={handleSelectedItemsChange}

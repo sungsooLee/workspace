@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { t } from 'i18next';
 
 import { NoticeBox } from '@shared/ui/';
-import { SectionLayout } from './components/section-layout';
+import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 
 /* contents */
 import { TenantDetailWidgetList } from './tenant-detail-widget-list';

@@ -30,7 +30,7 @@
                     }
                   }
                   button {
-                    @apply text-[1.2rem] text-[var(--gray7)];
+                    @apply text-[1.2rem] text-[var(--gray7)] underline;
                     svg {
                       @apply h-[12px] w-[12px] rotate-[-90deg] stroke-[var(--gray7)];
                     }

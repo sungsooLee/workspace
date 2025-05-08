@@ -10,6 +10,7 @@ import {
   ContentsRow,
   Input,
   PhoneNumber,
+  InputTimer,
 } from '@learnway/ui';
 
 import { IcoFormRequired } from '@learnway/icons';
@@ -66,6 +67,27 @@ const PhoneChangePopupComponent = () => {
                 <p className={cn(formStyles.guide_text, formStyles.error)}>
                   휴대폰번호를 다시 확인해 주세요.
                 </p>
+              </div>
+            </ContentsRow>
+
+            {/* 인증번호 */}
+            {/* 퍼블수정 20250508 : 인증번호 추가 */}
+            <ContentsRow>
+              <div className={formStyles.form_item}>
+                <div className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>인증번호</span>
+                  <span className={cn(formStyles.status, formStyles.required)}>
+                    <IcoFormRequired width={10} height={10} />
+                  </span>
+                </div>
+                <div className={`${formStyles.input_box} ${styles.phone_box}`}>
+                  <InputTimer
+                    startTimer={1}
+                    initialTime={180}
+                    placeholder={'인증번호입력'}
+                    resetLabel={'재전송'}
+                  />
+                </div>
               </div>
             </ContentsRow>
           </div>

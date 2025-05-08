@@ -5,10 +5,23 @@ import styles from './checkbox-group-form-field.module.css';
 
 const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, any>(
   (
-    { value = [], onChange, checkLabel: label, options = [], name, checkGroupConfig, ...props },
+    {
+      value = [],
+      onChange,
+      checkLabel: label,
+      options = [],
+      name,
+      cols,
+      checkGroupConfig,
+      ...props
+    },
     ref,
   ) => {
     const [allCheck, setAllCheck] = useState(false);
+    const disabledCheckBox = checkGroupConfig?.disabledCheckBox
+      ? checkGroupConfig?.disabledCheckBox
+      : [];
+
     const handleCheckChange = (checked: boolean, checkedValue: string) => {
       let checkedValues = [...value];
       if (checked && !checkedValues.includes(checkedValue)) {
@@ -27,7 +40,7 @@ const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, any>(
       if (checked) {
         onChange(options.map((option: any) => option.value));
       } else {
-        onChange([]);
+        onChange(disabledCheckBox);
       }
     };
     useEffect(() => {
@@ -38,9 +51,22 @@ const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, any>(
       }
     }, [value]);
     return (
-      <div ref={ref} className={cn(styles.start, styles.checkbox_list)}>
+      <div
+        ref={ref}
+        className={cn(
+          styles.start,
+          styles.checkbox_list,
+          !cols && !checkGroupConfig?.allCheck && styles.type_flex,
+        )}
+        style={cols ? { gridTemplateColumns: `repeat(${cols}, 1fr)` } : undefined}
+      >
         {checkGroupConfig?.allCheck && (
-          <Checkbox checked={allCheck} label={'전체'} onCheckedChange={handleAllCheckChange} />
+          <Checkbox
+            checked={allCheck}
+            label={'전체'}
+            onCheckedChange={handleAllCheckChange}
+            disabled={props.disabled}
+          />
         )}
         {options &&
           options.map((item: any) => (
@@ -51,6 +77,8 @@ const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, any>(
                 {...props}
                 label={item.label}
                 hideLabel={!item.label}
+                cols={cols}
+                disabled={props.disabled ? props.disabled : disabledCheckBox.includes(item.value)}
               />
             </Fragment>
           ))}

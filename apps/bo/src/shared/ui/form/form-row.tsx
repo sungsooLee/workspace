@@ -12,7 +12,6 @@ import {
 import { formFieldConfig } from './form-field-config';
 import { FormGuideText } from './form-guide-text';
 import { useTranslation } from 'react-i18next';
-import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 
 /**
  * FormRowComponent

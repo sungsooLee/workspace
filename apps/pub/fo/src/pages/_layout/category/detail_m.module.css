@@ -86,8 +86,8 @@
     .list {
       @apply mt-[16px];
       .list_box {
-        & > div {
-          @apply w-[calc((100%/2)-8px)];
+        & > li {
+          @apply inline-block w-[calc((100%/2)-8px)] align-top;
           &:nth-child(2n) {
             @apply ml-[16px];
           }
@@ -96,9 +96,9 @@
           }
         }
         &.horizontal {
-          & > div {
+          & > li {
             @apply !ml-0 w-full;
-            & + div {
+            & + li {
               @apply !mt-[24px];
             }
           }

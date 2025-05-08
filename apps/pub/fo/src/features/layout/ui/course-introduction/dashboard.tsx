@@ -298,6 +298,8 @@ const CourseDashboardCompoment = () => {
               </div>
             </Panel>
           </div>
+
+          {/* sub content */}
         </div>
       </div>
     </div>

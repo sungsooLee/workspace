@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { useEffect, useState } from 'react';
-import { ShuttleTreeWithChips, TreeNode } from '@learnway/ui';
+import { ShuttleTreeToChips, TreeNode } from '@learnway/ui';
 
 const UserGroupComponent: FC<{}> = ({}) => {
   const sampleData: TreeNode[] = [
@@ -51,15 +51,19 @@ const UserGroupComponent: FC<{}> = ({}) => {
   ];
   const [treeData, setTreeData] = useState<TreeNode[]>(sampleData);
 
-  const [selectedItems, setSelectedItems] = useState<TreeNode[]>();
+  const [selectedItems, setSelectedItems] = useState<TreeNode[]>([]);
   const handleSelectedItemsChange = (items: TreeNode[]) => {
     setSelectedItems(items);
   };
   return (
-    <ShuttleTreeWithChips
+    <ShuttleTreeToChips
       sourceData={treeData}
       selectedItems={selectedItems}
       onItemsChange={handleSelectedItemsChange}
+      title={'타이틀'}
+      onCustomNodeClick={function (node: TreeNode): void {
+        throw new Error('Function not implemented.');
+      }}
     />
   );
 };

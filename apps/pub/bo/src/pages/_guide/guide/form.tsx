@@ -14,8 +14,16 @@ import {
   Checkbox,
   ContentsRow,
   InputTimer,
+  DndFileProgress,
 } from '@learnway/ui';
-import { IcoFormRequired, IcoArrowDown, IcoAlertCircle, IcoCloseCircle } from '@learnway/icons';
+import {
+  IcoFormRequired,
+  IcoArrowDown,
+  IcoAlertCircle,
+  IcoCloseCircle,
+  IcoPaperClip,
+} from '@learnway/icons';
+import { useS3Uploader } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
 import { ContentsHistoryInfoFormField } from '../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
@@ -46,6 +54,15 @@ function RouteComponent() {
     { label: '현대자동차 B', value: 'B' },
     { label: '현대자동차 C', value: 'C' },
   ];
+
+  const acceptFiles = ['PNG, JPG, GIF, PDF'];
+  const maxFileCount = 0;
+  const maxFileSize = 1024 * 1024 * 50;
+  const { stats, files, addFiles, onPause, onRetry, onResume, onRemove } = useS3Uploader({
+    s3Path: 'upload/leaning/resource/video',
+    maxFileCount,
+    acceptFiles,
+  });
   return (
     <div>
       <h2 className="guide_tit2">Form Guide</h2>
@@ -86,6 +103,57 @@ import formStyles from '../../assets/styles/modules/form.module.css';
       </div>
       <h3 className="guide_tit3">Form 예제</h3>
       <form className="form_row">
+        {/* 퍼블수정 2025-05-08 : 케이스 추가 S */}
+        <ContentsRow type={'horizontal'}>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>파일 올리기</span>
+              <span className={formStyles.file_info}>
+                <IcoPaperClip
+                  width={'16'}
+                  height={'17'}
+                  stroke={'#131C30'}
+                  className={formStyles.icon_clip}
+                />
+                <span className={formStyles.file_length}>
+                  <strong className={formStyles.num}>0</strong>
+                  {'개'}
+                </span>
+                <span className={formStyles.file_volume}>
+                  <em className={formStyles.volume}>0</em>
+                  {'KB'}
+                </span>
+              </span>
+            </label>
+            <div className={formStyles.input_box}>
+              <span className={formStyles.sub_text}>{'최대 파일 사이즈 50MB'}</span>
+              <Button variant={'line'} size={'sm'} className={formStyles.btn_add}>
+                {'추가'}
+              </Button>
+              <Button variant={'line'} size={'sm'} className={formStyles.btn_save}>
+                {'저장'}
+              </Button>
+              <Button variant={'line'} size={'sm'} disabled className={formStyles.btn_delete}>
+                {'삭제'}
+              </Button>
+            </div>
+          </div>
+        </ContentsRow>
+        <div className={dynamicFormStyles.dnd_wrap}>
+          <DndFileProgress
+            files={files}
+            maxFileCount={maxFileCount}
+            maxFileSize={maxFileSize}
+            addFiles={addFiles}
+            acceptFiles={acceptFiles}
+            onRemove={onRemove}
+            onPause={onPause}
+            onResume={onResume}
+            onRetry={onRetry}
+          />
+        </div>
+        {/* 퍼블수정 2025-05-08 : 케이스 추가 E */}
         {/* row */}
         <ContentsRow>
           {/* form_item */}

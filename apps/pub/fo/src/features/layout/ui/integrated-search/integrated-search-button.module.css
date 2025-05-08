@@ -6,7 +6,7 @@
       &::before {
         @apply absolute bottom-0 left-0 h-px w-full bg-[var(--gray3)] content-[''];
       }
-      button {
+      a {
         @apply button_2_r flex h-[56px] items-center whitespace-nowrap align-top text-[var(--gray7)];
         span {
           @apply button_2_r ml-[4px] inline-block text-[var(--gray6)];
@@ -20,7 +20,7 @@
             @apply button_2_b text-[var(--secondary1)];
           }
         }
-        & + button {
+        & + a {
           @apply !ml-[40px];
         }
       }
@@ -35,11 +35,11 @@
         @apply overflow-x-scroll;
         .btn_box {
           @apply w-fit px-[20px];
-          button {
+          a {
             span {
               @apply hidden;
             }
-            & + button {
+            & + a {
               @apply !ml-[32px];
             }
           }

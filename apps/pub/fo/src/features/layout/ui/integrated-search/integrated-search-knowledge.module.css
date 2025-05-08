@@ -1,5 +1,8 @@
 .start {
   &.knowledge {
+    .empty {
+      @apply mt-[80px];
+    }
   }
 }
 

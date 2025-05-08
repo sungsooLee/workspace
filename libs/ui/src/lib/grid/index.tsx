@@ -50,7 +50,7 @@ import { DropdownOption } from '../type';
 
 import styles from './grid.module.css';
 import { isEmpty } from 'lodash';
-import { useTranslation } from 'react-i18next'; // grid module CSS
+import { useTranslation } from 'react-i18next';
 
 const GridComponent = forwardRef(
   <T extends object>(
@@ -60,6 +60,7 @@ const GridComponent = forwardRef(
       height = 240,
       multiple,
       disabledSelectionToggle,
+      hideRowSelectionRadioBox = true,
       hideRowSelectionCheckBox,
       hideHeader,
       showNumberingColumn,
@@ -156,9 +157,39 @@ const GridComponent = forwardRef(
           pagination ? pagination.pageIndex * pagination.pageSize + row.index + 1 : row.index + 1,
       });
 
+      // 라디오 컬럼 생성
+      const createSingleRadioColumn = (): ColumnDef<T> => ({
+        id: 'select-radio',
+        size: 50,
+        maxSize: 50,
+        minSize: 50,
+        enablePinning: true,
+        meta: {
+          align: 'center',
+          headerAlign: 'center',
+          cellAlign: 'center',
+        },
+        header: t('LABEL.grid.column.selected'),
+        cell: ({ row, table }) => {
+          const checked = !!table
+            .getSelectedRowModel()
+            .rows.find((d) => d.original === row.original);
+          return (
+            <div className={cn(styles.select_row_radio, checked && styles.checked)}>
+              <input
+                type="radio"
+                name="select-row"
+                checked={checked}
+                onChange={() => row.getToggleSelectedHandler()}
+              />
+            </div>
+          );
+        },
+      });
+
       // 체크박스 컬럼 생성
       const createMultipleCheckColumn = (): ColumnDef<T> => ({
-        id: 'select',
+        id: 'select-check',
         size: 50,
         maxSize: 50,
         minSize: 50,
@@ -194,13 +225,17 @@ const GridComponent = forwardRef(
       });
 
       let finalColumns = [...columns];
-      // 다중 선택 모드 && 체크박스 컬럼이 숨겨지지 않은 경우 체크박스 컬럼 포함
-      if (multiple && !hideRowSelectionCheckBox) {
-        finalColumns = [createMultipleCheckColumn(), ...finalColumns];
-      }
       // numbering 컬럼
       if (showNumberingColumn) {
         finalColumns = [createNumberingColumn(), ...finalColumns];
+      }
+      // 싱글 선택 모드 && 라디오 컬럼이 숨겨지지 않은 경우 라디오 컬럼 포함
+      if (!multiple && !hideRowSelectionRadioBox) {
+        finalColumns = [createSingleRadioColumn(), ...finalColumns];
+      }
+      // 다중 선택 모드 && 체크박스 컬럼이 숨겨지지 않은 경우 체크박스 컬럼 포함
+      if (multiple && !hideRowSelectionCheckBox) {
+        finalColumns = [createMultipleCheckColumn(), ...finalColumns];
       }
       return finalColumns;
     }, [columns, multiple, hideRowSelectionCheckBox]);
@@ -341,6 +376,8 @@ const GridComponent = forwardRef(
       },
       // defaultColumn,
     });
+
+    console.log('table.getSelectedRowModel()', table.getSelectedRowModel());
 
     // 가상 스크롤 관련 설정
     const { rows } = table.getRowModel();

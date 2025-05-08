@@ -34,13 +34,15 @@ const IntegratedSearchButtonComponent = ({
     <div className={cn(styles.start, styles.integrated_button, className)}>
       <div className={styles.btn_box}>
         {tabButton.items.map((item, index) => (
-          <Button
+          <Link
+            to=""
             key={index}
             className={activeButton === index ? styles.active : ''}
-            onClick={() => handleButtonClick(index)}>
+            onClick={() => handleButtonClick(index)}
+          >
             {item.title}
             <span>{item.count}</span>
-          </Button>
+          </Link>
         ))}
       </div>
     </div>

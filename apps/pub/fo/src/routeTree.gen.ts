@@ -68,6 +68,7 @@ import { Route as LayoutCategoryDetailmImport } from './pages/_layout/category/d
 import { Route as LayoutCategoryDetailImport } from './pages/_layout/category/detail'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
 import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip'
+import { Route as GuideGuideThumnailImport } from './pages/_guide/guide/thumnail'
 import { Route as GuideGuideTextareaImport } from './pages/_guide/guide/textarea'
 import { Route as GuideGuideTabsImport } from './pages/_guide/guide/tabs'
 import { Route as GuideGuideTableImport } from './pages/_guide/guide/table'
@@ -463,6 +464,12 @@ const GuideGuideTypographyRoute = GuideGuideTypographyImport.update({
 const GuideGuideTooltipRoute = GuideGuideTooltipImport.update({
   id: '/guide/tooltip',
   path: '/guide/tooltip',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideThumnailRoute = GuideGuideThumnailImport.update({
+  id: '/guide/thumnail',
+  path: '/guide/thumnail',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -1160,6 +1167,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideTextareaImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/thumnail': {
+      id: '/_guide/guide/thumnail'
+      path: '/guide/thumnail'
+      fullPath: '/guide/thumnail'
+      preLoaderRoute: typeof GuideGuideThumnailImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/tooltip': {
       id: '/_guide/guide/tooltip'
       path: '/guide/tooltip'
@@ -1457,6 +1471,7 @@ interface GuideRouteChildren {
   GuideGuideTableRoute: typeof GuideGuideTableRoute
   GuideGuideTabsRoute: typeof GuideGuideTabsRoute
   GuideGuideTextareaRoute: typeof GuideGuideTextareaRoute
+  GuideGuideThumnailRoute: typeof GuideGuideThumnailRoute
   GuideGuideTooltipRoute: typeof GuideGuideTooltipRoute
   GuideGuideTypographyRoute: typeof GuideGuideTypographyRoute
   GuideGuideIndexRoute: typeof GuideGuideIndexRoute
@@ -1501,6 +1516,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideTableRoute: GuideGuideTableRoute,
   GuideGuideTabsRoute: GuideGuideTabsRoute,
   GuideGuideTextareaRoute: GuideGuideTextareaRoute,
+  GuideGuideThumnailRoute: GuideGuideThumnailRoute,
   GuideGuideTooltipRoute: GuideGuideTooltipRoute,
   GuideGuideTypographyRoute: GuideGuideTypographyRoute,
   GuideGuideIndexRoute: GuideGuideIndexRoute,
@@ -1658,6 +1674,7 @@ export interface FileRoutesByFullPath {
   '/guide/table': typeof GuideGuideTableRoute
   '/guide/tabs': typeof GuideGuideTabsRoute
   '/guide/textarea': typeof GuideGuideTextareaRoute
+  '/guide/thumnail': typeof GuideGuideThumnailRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/category/detail': typeof LayoutCategoryDetailRoute
@@ -1753,6 +1770,7 @@ export interface FileRoutesByTo {
   '/guide/table': typeof GuideGuideTableRoute
   '/guide/tabs': typeof GuideGuideTabsRoute
   '/guide/textarea': typeof GuideGuideTextareaRoute
+  '/guide/thumnail': typeof GuideGuideThumnailRoute
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/category/detail': typeof LayoutCategoryDetailRoute
@@ -1852,6 +1870,7 @@ export interface FileRoutesById {
   '/_guide/guide/table': typeof GuideGuideTableRoute
   '/_guide/guide/tabs': typeof GuideGuideTabsRoute
   '/_guide/guide/textarea': typeof GuideGuideTextareaRoute
+  '/_guide/guide/thumnail': typeof GuideGuideThumnailRoute
   '/_guide/guide/tooltip': typeof GuideGuideTooltipRoute
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
   '/_layout/category/detail': typeof LayoutCategoryDetailRoute
@@ -1949,6 +1968,7 @@ export interface FileRouteTypes {
     | '/guide/table'
     | '/guide/tabs'
     | '/guide/textarea'
+    | '/guide/thumnail'
     | '/guide/tooltip'
     | '/guide/typography'
     | '/category/detail'
@@ -2043,6 +2063,7 @@ export interface FileRouteTypes {
     | '/guide/table'
     | '/guide/tabs'
     | '/guide/textarea'
+    | '/guide/thumnail'
     | '/guide/tooltip'
     | '/guide/typography'
     | '/category/detail'
@@ -2140,6 +2161,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/table'
     | '/_guide/guide/tabs'
     | '/_guide/guide/textarea'
+    | '/_guide/guide/thumnail'
     | '/_guide/guide/tooltip'
     | '/_guide/guide/typography'
     | '/_layout/category/detail'
@@ -2269,6 +2291,7 @@ export const routeTree = rootRoute
         "/_guide/guide/table",
         "/_guide/guide/tabs",
         "/_guide/guide/textarea",
+        "/_guide/guide/thumnail",
         "/_guide/guide/tooltip",
         "/_guide/guide/typography",
         "/_guide/guide/"
@@ -2559,6 +2582,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/textarea": {
       "filePath": "_guide/guide/textarea.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/thumnail": {
+      "filePath": "_guide/guide/thumnail.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/tooltip": {
