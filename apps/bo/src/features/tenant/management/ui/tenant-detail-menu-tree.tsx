@@ -121,7 +121,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
   const handleTenantDetailMenuMapping = async () => {
     const modalScope = menuScope;
     const modalTenantId = tenantId;
-    const selectTenantDetailMenu = await openModal({
+    await openModal({
       content: <TenantDetailMenuMappingModal menuScopeCode={modalScope} tenantId={modalTenantId} />,
       width: 'xl',
     });
@@ -314,7 +314,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'menuDesc'} disabled={true} />
+              <DynamicFormField name={'menuDesc'} disabled={FORM_MODE.NONE === formMode} />
             </FormRow>
           </ContentsRow>
           <ContentsRow type={'horizontal'}>
@@ -406,6 +406,7 @@ const formConfig: DynamicFormConfig = {
       type: 'textarea',
       label: t('설명'),
       value: '',
+      size: 50,
     },
     {
       name: 'isHiddenMenu',

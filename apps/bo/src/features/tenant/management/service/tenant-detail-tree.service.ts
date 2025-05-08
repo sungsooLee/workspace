@@ -164,7 +164,7 @@ export const moveNodeCheck = (events: any) => {
         return {
           tenantMappingMenuId: events.sourceNode.tenantMappingMenuId,
           destinationParentId: events.targetNode.parentKey,
-          sortOrder: events.targetNode.sortOrder - 1,
+          sortOrder: events.targetNode.sortOrder,
           menuScopeCode: '',
         };
       }
