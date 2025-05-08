@@ -1032,7 +1032,6 @@ export const TemplateColumnSize: any = (args: any) => {
   ];
   return (
     <GridBox
-      showNumberingColumn
       title={'Editable Grid'}
       data={data}
       columns={columns}

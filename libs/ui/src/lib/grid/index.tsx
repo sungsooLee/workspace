@@ -169,6 +169,7 @@ const GridComponent = forwardRef(
           headerAlign: 'center',
           cellAlign: 'center',
         },
+        header: t('LABEL.grid.column.selected'),
         cell: ({ row, table }) => (
           <div style={{ width: '100%', textAlign: 'center', paddingRight: 0 }}>
             <input
