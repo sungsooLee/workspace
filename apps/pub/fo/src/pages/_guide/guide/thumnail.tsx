@@ -7,7 +7,6 @@ import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
 
 import { IcoPlay, IcoRating, IcoHeart, IcoEye, IcoPhone02, IcoMonitor01 } from '@learnway/icons';
 
-import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
 import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 
 export const Route = createFileRoute('/_guide/guide/thumnail')({
@@ -59,10 +58,6 @@ function RouteComponent() {
                   </ul>
                   <div className={thumnailStyles.img}>
                     <img src={listImage1} alt="" />
-                    {/* play img */}
-                    <div className={thumnailStyles.img_play}>
-                      <img src={playImg} alt="" />
-                    </div>
                   </div>
 
                   <div className={thumnailStyles.heart}>
@@ -158,7 +153,6 @@ import {
   IcoPhone02,
   IcoMonitor01,
 } from '@learnway/icons';
- import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
 import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 
   // 썸네일 찜
@@ -192,10 +186,6 @@ import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_
       </ul>
       <div className={thumnailStyles.img}>
         <img src={listImage1} alt="" />
-        {/* play img */}
-        <div className={thumnailStyles.img_play}>
-          <img src={playImg} alt="" />
-        </div>
       </div>
 
       <div className={thumnailStyles.heart}>
@@ -310,10 +300,6 @@ import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_
                   </ul>
                   <div className={thumnailStyles.img}>
                     <img src={listImage1} alt="" />
-                    {/* play img */}
-                    <div className={thumnailStyles.img_play}>
-                      <img src={playImg} alt="" />
-                    </div>
                   </div>
 
                   <div className={thumnailStyles.heart}>
@@ -409,7 +395,6 @@ import {
   IcoPhone02,
   IcoMonitor01,
 } from '@learnway/icons';
- import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
 import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 
   // 썸네일 찜
@@ -443,10 +428,6 @@ import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_
       </ul>
       <div className={thumnailStyles.img}>
         <img src={listImage1} alt="" />
-        {/* play img */}
-        <div className={thumnailStyles.img_play}>
-          <img src={playImg} alt="" />
-        </div>
       </div>
 
       <div className={thumnailStyles.heart}>

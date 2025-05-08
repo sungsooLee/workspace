@@ -10,7 +10,6 @@ import { IcoPlay, IcoRating, IcoHeart, IcoEye, IcoPhone02, IcoMonitor01 } from '
 import thumnailStyles from '../../../../shared/ui/thumnail/thumnail.module.css';
 import styles from './integrated-search-procedure.module.css';
 
-import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
 import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 
 const IntegratedSearchProcedureComponent = () => {
@@ -55,10 +54,6 @@ const IntegratedSearchProcedureComponent = () => {
                     </ul>
                     <div className={thumnailStyles.img}>
                       <img src={listImage1} alt="" />
-                      {/* play img */}
-                      <div className={thumnailStyles.img_play}>
-                        <img src={playImg} alt="" />
-                      </div>
                     </div>
 
                     <div className={thumnailStyles.heart}>
@@ -159,10 +154,6 @@ const IntegratedSearchProcedureComponent = () => {
                     </ul>
                     <div className={thumnailStyles.img}>
                       <img src={listImage1} alt="" />
-                      {/* play img */}
-                      <div className={thumnailStyles.img_play}>
-                        <img src={playImg} alt="" />
-                      </div>
                     </div>
 
                     <div className={thumnailStyles.heart}>
@@ -263,10 +254,6 @@ const IntegratedSearchProcedureComponent = () => {
                     </ul>
                     <div className={thumnailStyles.img}>
                       <img src={listImage1} alt="" />
-                      {/* play img */}
-                      <div className={thumnailStyles.img_play}>
-                        <img src={playImg} alt="" />
-                      </div>
                     </div>
 
                     <div className={thumnailStyles.heart}>
@@ -367,10 +354,6 @@ const IntegratedSearchProcedureComponent = () => {
                     </ul>
                     <div className={thumnailStyles.img}>
                       <img src={listImage1} alt="" />
-                      {/* play img */}
-                      <div className={thumnailStyles.img_play}>
-                        <img src={playImg} alt="" />
-                      </div>
                     </div>
 
                     <div className={thumnailStyles.heart}>
@@ -475,10 +458,6 @@ const IntegratedSearchProcedureComponent = () => {
                     </ul>
                     <div className={thumnailStyles.img}>
                       <img src={listImage1} alt="" />
-                      {/* play img */}
-                      <div className={thumnailStyles.img_play}>
-                        <img src={playImg} alt="" />
-                      </div>
                     </div>
                   </div>
                   {/* txt */}
@@ -518,10 +497,6 @@ const IntegratedSearchProcedureComponent = () => {
                     </ul>
                     <div className={thumnailStyles.img}>
                       <img src={listImage1} alt="" />
-                      {/* play img */}
-                      <div className={thumnailStyles.img_play}>
-                        <img src={playImg} alt="" />
-                      </div>
                     </div>
                   </div>
                   {/* txt */}

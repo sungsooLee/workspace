@@ -30,9 +30,9 @@ import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
 import styles from './detail.module.css';
 
 // 이미지
+import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
 import bnrImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 import logoHyundai from '@learnway/styles/fo/assets/images/common/logo_hyundai.png';
-import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
 import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 
 export const Route = createFileRoute('/_layout/course-introduction/detail')({
@@ -293,14 +293,14 @@ function RouteComponent() {
         <div className={pageContentsStyles.main_contents}>
           <div className={styles.thumbnail_img}>
             {/* 플레이 버튼 o */}
-            {/* <Button>
+            <Button>
               <img src={bnrImage1} alt="" />
               <div className={styles.img_play}>
                 <img src={playImg} alt="" />
               </div>
-            </Button> */}
+            </Button>
             {/* 플레이 버튼 x */}
-            <img src={bnrImage1} alt="" />
+            {/* <img src={bnrImage1} alt="" /> */}
           </div>
 
           <div className={styles.tab_wrap}>
@@ -476,10 +476,6 @@ function RouteComponent() {
                       </ul>
                       <div className={thumnailStyles.img}>
                         <img src={listImage1} alt="" />
-                        {/* play img */}
-                        <div className={thumnailStyles.img_play}>
-                          <img src={playImg} alt="" />
-                        </div>
                       </div>
                     </div>
                     {/* txt */}

@@ -26,7 +26,6 @@ import styles from './package.module.css';
 import bnrImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 import package1 from '@learnway/styles/fo/assets/images/temp/img_package_01.png';
 import logoHyundai from '@learnway/styles/fo/assets/images/common/logo_hyundai.png';
-import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
 
 export const Route = createFileRoute('/_layout/course-introduction/package')({
   component: RouteComponent,
@@ -90,10 +89,6 @@ function RouteComponent() {
                     </ul>
                     <div className={thumnailStyles.img}>
                       <img src={bnrImage1} alt="" />
-                      {/* play img */}
-                      <div className={thumnailStyles.img_play}>
-                        <img src={playImg} alt="" />
-                      </div>
                     </div>
 
                     <div className={thumnailStyles.heart}>
@@ -194,10 +189,6 @@ function RouteComponent() {
                     </ul>
                     <div className={thumnailStyles.img}>
                       <img src={bnrImage1} alt="" />
-                      {/* play img */}
-                      <div className={thumnailStyles.img_play}>
-                        <img src={playImg} alt="" />
-                      </div>
                     </div>
 
                     <div className={thumnailStyles.heart}>
@@ -298,10 +289,6 @@ function RouteComponent() {
                     </ul>
                     <div className={thumnailStyles.img}>
                       <img src={bnrImage1} alt="" />
-                      {/* play img */}
-                      <div className={thumnailStyles.img_play}>
-                        <img src={playImg} alt="" />
-                      </div>
                     </div>
 
                     <div className={thumnailStyles.heart}>
@@ -423,10 +410,6 @@ function RouteComponent() {
                     </ul>
                     <div className={thumnailStyles.img}>
                       <img src={bnrImage1} alt="" />
-                      {/* play img */}
-                      <div className={thumnailStyles.img_play}>
-                        <img src={playImg} alt="" />
-                      </div>
                     </div>
 
                     <div className={thumnailStyles.heart}>
@@ -527,10 +510,6 @@ function RouteComponent() {
                     </ul>
                     <div className={thumnailStyles.img}>
                       <img src={bnrImage1} alt="" />
-                      {/* play img */}
-                      <div className={thumnailStyles.img_play}>
-                        <img src={playImg} alt="" />
-                      </div>
                     </div>
 
                     <div className={thumnailStyles.heart}>
@@ -631,10 +610,6 @@ function RouteComponent() {
                     </ul>
                     <div className={thumnailStyles.img}>
                       <img src={bnrImage1} alt="" />
-                      {/* play img */}
-                      <div className={thumnailStyles.img_play}>
-                        <img src={playImg} alt="" />
-                      </div>
                     </div>
 
                     <div className={thumnailStyles.heart}>
@@ -726,15 +701,7 @@ function RouteComponent() {
         {/* main content */}
         <div className={pageContentsStyles.main_contents}>
           <div className={styles.thumbnail_img}>
-            {/* 플레이 버튼 o */}
-            <Button>
-              <img src={bnrImage1} alt="" />
-              <div className={styles.img_play}>
-                <img src={playImg} alt="" />
-              </div>
-            </Button>
-            {/* 플레이 버튼 x */}
-            {/* <img src={bnrImage1} alt="" /> */}
+            <img src={bnrImage1} alt="" />
           </div>
           <div className={styles.package_txt_box}>
             <strong>패키지소개</strong>

@@ -14,7 +14,6 @@ import {
 import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
 import styles from './detail_m.module.css';
 
-import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
 import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 
 export const Route = createFileRoute('/_layout/category/detail_m')({
@@ -191,10 +190,6 @@ function RouteComponent() {
                     </ul>
                     <div className={thumnailStyles.img}>
                       <img src={listImage1} alt="" />
-                      {/* play img */}
-                      <div className={thumnailStyles.img_play}>
-                        <img src={playImg} alt="" />
-                      </div>
                     </div>
                   </div>
                   {/* txt */}
@@ -234,10 +229,6 @@ function RouteComponent() {
                     </ul>
                     <div className={thumnailStyles.img}>
                       <img src={listImage1} alt="" />
-                      {/* play img */}
-                      <div className={thumnailStyles.img_play}>
-                        <img src={playImg} alt="" />
-                      </div>
                     </div>
                   </div>
                   {/* txt */}
@@ -277,10 +268,6 @@ function RouteComponent() {
                     </ul>
                     <div className={thumnailStyles.img}>
                       <img src={listImage1} alt="" />
-                      {/* play img */}
-                      <div className={thumnailStyles.img_play}>
-                        <img src={playImg} alt="" />
-                      </div>
                     </div>
                   </div>
                   {/* txt */}
@@ -320,10 +307,6 @@ function RouteComponent() {
                     </ul>
                     <div className={thumnailStyles.img}>
                       <img src={listImage1} alt="" />
-                      {/* play img */}
-                      <div className={thumnailStyles.img_play}>
-                        <img src={playImg} alt="" />
-                      </div>
                     </div>
                   </div>
                   {/* txt */}

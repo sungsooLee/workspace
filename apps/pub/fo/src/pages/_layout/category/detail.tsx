@@ -26,7 +26,6 @@ import {
 import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
 import styles from './detail.module.css';
 
-import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
 import bnrCImage1 from '@learnway/styles/fo/assets/images/banner/banner_category_01.png';
 import bnrCImage2 from '@learnway/styles/fo/assets/images/banner/banner_category_02.png';
 import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
@@ -212,10 +211,6 @@ function RouteComponent() {
                     </ul>
                     <div className={thumnailStyles.img}>
                       <img src={listImage1} alt="" />
-                      {/* play img */}
-                      <div className={thumnailStyles.img_play}>
-                        <img src={playImg} alt="" />
-                      </div>
                     </div>
 
                     <div className={thumnailStyles.heart}>
@@ -316,10 +311,6 @@ function RouteComponent() {
                     </ul>
                     <div className={thumnailStyles.img}>
                       <img src={listImage1} alt="" />
-                      {/* play img */}
-                      <div className={thumnailStyles.img_play}>
-                        <img src={playImg} alt="" />
-                      </div>
                     </div>
 
                     <div className={thumnailStyles.heart}>
@@ -420,10 +411,6 @@ function RouteComponent() {
                     </ul>
                     <div className={thumnailStyles.img}>
                       <img src={listImage1} alt="" />
-                      {/* play img */}
-                      <div className={thumnailStyles.img_play}>
-                        <img src={playImg} alt="" />
-                      </div>
                     </div>
 
                     <div className={thumnailStyles.heart}>
@@ -524,10 +511,6 @@ function RouteComponent() {
                     </ul>
                     <div className={thumnailStyles.img}>
                       <img src={listImage1} alt="" />
-                      {/* play img */}
-                      <div className={thumnailStyles.img_play}>
-                        <img src={playImg} alt="" />
-                      </div>
                     </div>
 
                     <div className={thumnailStyles.heart}>
