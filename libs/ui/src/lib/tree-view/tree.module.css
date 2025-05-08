@@ -46,13 +46,30 @@
             @apply bg-[left_6px_top_12px];
             & + .tree_children {
               .tree_item .tree_inner {
-                @apply bg-[left_26px_top_12px] !pl-[28px];
+                @apply bg-[left_26px_top_12px] !pl-[56px];
+                & > .has_children {
+                  @apply left-[28px];
+                }
                 & + .tree_children {
                   .tree_item .tree_inner {
-                    @apply bg-[left_46px_top_12px] !pl-[56px];
+                    @apply bg-[left_46px_top_12px] !pl-[84px];
+                    & > .has_children {
+                      @apply left-[56px];
+                    }
                     & + .tree_children {
                       .tree_item .tree_inner {
-                        @apply bg-[left_66px_top_12px] !pl-[84px];
+                        @apply bg-[left_66px_top_12px] !pl-[112px];
+                        & > .has_children {
+                          @apply left-[84px];
+                        }
+                        & + .tree_children {
+                          .tree_item .tree_inner {
+                            @apply bg-[left_66px_top_12px] !pl-[140px];
+                            & > .has_children {
+                              @apply left-[112px];
+                            }
+                          }
+                        }
                       }
                     }
                   }
