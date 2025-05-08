@@ -132,6 +132,10 @@
   @apply w-full;
 }
 
+.dnd_wrap {
+  @apply my-[16px];
+}
+
 /* inputbox size case */
 .w_half {
   @apply flex-[0_0_calc(50%-20px)];
