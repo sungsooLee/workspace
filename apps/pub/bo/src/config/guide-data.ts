@@ -9,15 +9,15 @@
 // lastUpdateDate: 수정일
 // remarks: 비고
 export const guideData = [
-  {
-    screenName: '컨텐츠 레이아웃(상단 Tab)',
-    pageId: 'contents/layout',
-    screenId: '',
-    pageType: 'Page',
-    completionDate: '',
-    lastUpdateDate: '',
-    remarks: '작업중', // 비고
-  },
+  // {
+  //   screenName: '컨텐츠 레이아웃(상단 Tab)',
+  //   pageId: 'contents/layout',
+  //   screenId: '',
+  //   pageType: 'Page',
+  //   completionDate: '',
+  //   lastUpdateDate: '',
+  //   remarks: '작업중', // 비고
+  // },
   {
     screenName: '공통/공통기능_유저검색 외 공통팝업(텝)',
     pageId: 'common/pop-user-search',
