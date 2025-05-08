@@ -1030,7 +1030,15 @@ export const TemplateColumnSize: any = (args: any) => {
     { accessorKey: 'code', maxSize: 100 },
     { accessorKey: 'code2', size: undefined },
   ];
-  return <GridBox title={'Editable Grid'} data={data} columns={columns} hideRowSelectionCheckBox />;
+  return (
+    <GridBox
+      showNumberingColumn
+      title={'Editable Grid'}
+      data={data}
+      columns={columns}
+      hideRowSelectionCheckBox
+    />
+  );
 };
 TemplateColumnSize.storyName = '컬럼 사이즈';
 

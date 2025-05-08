@@ -65,6 +65,11 @@ export const TemplateListWordwrap: any = (args: any) => {
     console.log('handleAddInputEnterKeyDown', text);
     setOptions([...options, { label: text, value: text }]);
   };
+  const handlerChipDelete = (option: any) => {
+    const newOptions = options?.filter((d) => d.value !== option.value);
+    setOptions(newOptions);
+    console.log('handlerChipDelete', option);
+  };
   return (
     <>
       <Button label={'SET'} onClick={() => setOptions([{ label: '현대자동차 C', value: 'C' }])} />
@@ -74,6 +79,7 @@ export const TemplateListWordwrap: any = (args: any) => {
         wordwrap
         onChipClick={handleChipClick}
         onAddInputEnterKeyDown={handleAddInputEnterKeyDown}
+        onChipDeleteClick={handlerChipDelete}
       />
     </>
   );

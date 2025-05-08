@@ -150,7 +150,7 @@ const GridBoxComponent = <T extends object>(
       <div className={styles.table_info}>
         <div className={styles.title_info}>
           {/* 제목 */}
-          {<div className={styles.title}>{props.title || title || t('목록')}</div>}
+          {<div className={styles.title}>{props.title || title || t('LABEL.grid.title.list')}</div>}
 
           {/* 전체 개수  */}
           {showTotalCount && (
@@ -250,7 +250,6 @@ const GridBoxComponent = <T extends object>(
         data={props.data ?? data ?? []}
         columns={props.columns ?? girdColumns ?? []}
         showNumberingColumn={showNumberingColumn}
-        hideRowSelectionCheckBox={showNumberingColumn || props.hideRowSelectionCheckBox} // 체크박스 숨김 (numbering 사용시)
         pagination={paginationProps}
       />
     </div>
