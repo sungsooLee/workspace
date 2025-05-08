@@ -1,5 +1,5 @@
+import type { TreeNode, TreeProps } from './type';
 import { useState } from 'react';
-import { TreeNode } from './type';
 import { Button } from '../button/button';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
@@ -8,13 +8,11 @@ import { cn } from '@learnway/shared';
 import { TreeView } from './tree';
 import { IcoXclose, IcoNarrowRight } from '@learnway/icons';
 
-type Props = {
+type Props = Pick<TreeProps, 'onCustomNodeClick' | 'treeId' | 'searchKeyword'> & {
   title: string;
   selectedItems: TreeNode[];
   sourceData: any;
   onItemsChange: (newItems: TreeNode[]) => void;
-  searchKeyword?: string;
-  onCustomNodeClick: (node: TreeNode) => void;
 };
 
 export const ShuttleTreeToChips = ({
