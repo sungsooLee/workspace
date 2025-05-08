@@ -13,6 +13,7 @@
       }
       .list_box.horizontal {
         & > li {
+          @apply w-full;
           & + li {
             @apply mt-[24px] border-t-[1px] border-solid border-[var(--gray5)] pt-[24px];
           }
@@ -39,6 +40,16 @@
           }
           .list_box > li:nth-child(n + 3) {
             @apply mt-[32px];
+          }
+          .list_box.horizontal > li {
+            @apply m-0 mt-[24px] w-full border-none pt-0;
+            & > div {
+              & > div {
+                & > div:nth-child(1) {
+                  @apply w-[120px];
+                }
+              }
+            }
           }
         }
         .empty {

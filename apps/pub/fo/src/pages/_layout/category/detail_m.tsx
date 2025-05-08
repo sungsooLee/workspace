@@ -10,7 +10,7 @@ import {
   IcoDotpoints,
   IcoPlay,
 } from '@learnway/icons';
-import { CategoryFilterPopupM } from '../../../features/layout';
+import { CategoryFilterPopupM, CategoryDepthPopupM } from '../../../features/layout';
 
 import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
 import thumnailImgStyles from '../../../shared/ui/thumnail/thumnail-img.module.css';
@@ -93,7 +93,8 @@ function RouteComponent() {
 
       <div className={styles.gray_box}>
         <div className={styles.box}>
-          <Dropdown
+          {/* 분류가 1개인 경우 */}
+          {/* <Dropdown
             className={styles.select}
             options={[
               { value: 'a', label: '분류선택' },
@@ -107,17 +108,19 @@ function RouteComponent() {
             ]}
             value={divisionValues}
             onChange={(selected) => setDivisionValues(selected)}
-          />
-
+          /> */}
+          {/* 분류가 2개 이상인 경우 */}
           <Button
+            className={styles.btn_drop}
             onClick={() =>
               openModal({
                 width: 'm_bottom_sheet',
-                content: <CategoryFilterPopupM />,
+                content: <CategoryDepthPopupM />,
               })
             }
           >
-            모달 팝업 열기
+            분류선택
+            <IcoArrowDown width={16} height={16} stroke="#131c30" />
           </Button>
         </div>
         <div className={styles.box}>
@@ -126,7 +129,15 @@ function RouteComponent() {
           </ContentsRow>
 
           <div className={styles.filter_wrap}>
-            <Button className={cn(styles.btn_filter, selectCheck === true ? styles.selected : '')}>
+            <Button
+              className={cn(styles.btn_filter, selectCheck === true ? styles.selected : '')}
+              onClick={() =>
+                openModal({
+                  width: 'm_bottom_sheet',
+                  content: <CategoryFilterPopupM />,
+                })
+              }
+            >
               <IcoFilter
                 width={20}
                 height={20}
