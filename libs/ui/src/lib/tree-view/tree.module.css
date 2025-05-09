@@ -17,6 +17,9 @@
         @apply relative flex min-h-[40px] items-center pl-[28px];
         .drag_wrap {
           @apply ml-auto flex items-center;
+          & > div {
+            @apply mr-[8px];
+          }
         }
         .btn_area {
           @apply ml-auto;
