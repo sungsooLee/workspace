@@ -234,6 +234,7 @@ function RouteComponent() {
                           variant="default"
                           placeholder="선택"
                           size={'sm'}
+                          isMulti
                         />
                       </div>
                     </div>
