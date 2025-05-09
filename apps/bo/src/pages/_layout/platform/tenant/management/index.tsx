@@ -125,7 +125,7 @@ function RouteComponent() {
         <Button
           variant="primary"
           size="sm"
-          onClick={() => router.navigate({ to: '/platfomr/tenant/management/regist' })}
+          onClick={() => router.navigate({ to: '/platform/tenant/management/regist' })}
         >
           등록
         </Button>
