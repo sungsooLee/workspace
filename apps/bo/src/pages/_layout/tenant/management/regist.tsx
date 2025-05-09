@@ -25,30 +25,24 @@ import {
   DuplicateCheckInputFormField,
 } from '@features/tenant/management/ui/duplicate-check-input-form-field';
 import TenantService from '@entities/tenant/api/tenant';
+import { z as baseZ } from 'zod';
+
 export const Route = createFileRoute('/_layout/tenant/management/regist')({
   component: RouteComponent,
 });
 
 const duplicateCheck = async (value: string) => {
   const result: any = await TenantService.fetchAllTenant({ tenantName: value });
-  console.log('duplicateCheck', result);
-  if (result.content || result.content.length > 0) return DuplicateState.duplicated;
-  else return DuplicateState.success;
+
+  return DuplicateState.ok;
+  // if (result.content || result.content.length > 0) return DuplicateState.duplicated;
+  // else return DuplicateState.ok;
 };
 
 function RouteComponent() {
   const router = useRouter();
   const { open: openModal, confirm: openConfirm } = useModal();
-  const {
-    provider,
-    fetchData,
-    onSubmit,
-    onFormValid,
-    onFormChange,
-    getValues,
-    clearFormError,
-    setFormError,
-  } = useDynamicForm(formConfig);
+  const { provider, onSubmit, onFormChange } = useDynamicForm(formConfig);
   const { create } = useCreateTenant({});
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -56,9 +50,6 @@ function RouteComponent() {
     router.navigate({ to: '/tenant/management' });
   };
 
-  const handleCheckChange = (values: any[]) => {
-    console.log('=>', values);
-  };
   const handleSaveButtonClick = async () => {
     const form = formRef.current;
     if (form) {
@@ -66,17 +57,19 @@ function RouteComponent() {
     }
   };
   const handleResetButtonClick = () => {
-    console.log('click reset');
+    onFormChange();
   };
 
   const handleOnSubmit = async (data: any) => {
     console.log('data {} => ', data);
     const payload = {
       ...data,
+      tenantName: data.tenantName.fieldValue,
     };
-    // if (await openConfirm('저장 하시겠습니까?')) {
-    //   //create(payload);
-    // }
+    console.log('data {} => ', payload);
+    if (await openConfirm('저장 하시겠습니까?')) {
+      create(payload);
+    }
   };
 
   return (
@@ -98,7 +91,7 @@ function RouteComponent() {
       <MainContents>
         <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
           <div className="title_wrap">
-            <strong className="title">{'기본 정보'}</strong>
+            <strong className="title">{t('기본 정보')}</strong>
           </div>
           <ContentsRow>
             <FormRow provider={provider}>
@@ -167,7 +160,7 @@ function RouteComponent() {
             </FormRow>
           </ContentsRow>
           <div className="title_wrap no_line">
-            <strong className="title">{'시스템 설정'}</strong>
+            <strong className="title">{t('시스템 설정')}</strong>
           </div>
           <ContentsRow>
             <FormRow provider={provider}>
@@ -196,16 +189,11 @@ const formConfig: DynamicFormConfig = {
       name: 'tenantName',
       type: 'custom',
       label: t('테넌트명'),
-      value: '',
+      value: { fieldValue: '', checkState: DuplicateState.needInput },
       format: 'object',
       placeholder: '',
       maxLength: 150,
-      fields: {
-        checkState: 'checkState',
-        fieldValue: 'tenantName',
-      },
     },
-    { name: 'checkState', type: 'custom', fromat: 'text', value: '123' },
     {
       label: t('테넌트 로고 (Size : 000x000)'),
       name: 'tenantLogo',
@@ -335,27 +323,42 @@ const formConfig: DynamicFormConfig = {
   ],
   validator: {
     tenantName: {
-      required: {
-        fn: (values) => {
-          const checkState = values.tenantName.checkState;
+      format: 'object',
+      required: true,
+      conditions: [
+        {
+          fn: (values) => {
+            const fieldValue = values.tenantName.fieldValue;
+            if (fieldValue === '') return true;
+            return false;
+          },
+          message: t('LABEL.form.validation.needInput', { code: t('테넌트명') }),
+        },
+        {
+          fn: (values: Record<string, any>) =>
+            values.tenantName.checkState === DuplicateState.check ||
+            values.tenantName.checkState === DuplicateState.needInput,
+          message: t('LABEL.form.validation.check', { code: t('테넌트명') }),
+        },
+        {
+          fn: (values: Record<string, any>) =>
+            values.tenantName.checkState === DuplicateState.duplicated,
+          message: t('LABEL.form.validation.duplicated', { code: t('테넌트명') }),
+        },
+      ],
+    },
 
-          if (checkState === DuplicateState.success) return true;
-          return false;
-        },
-        message: t('중복 확인 하세요'),
-      },
-    },
-    tenantLogo: {
-      required: {
-        fn: (values) => {
-          return false;
-        },
-        message: 'ddddd',
-      },
-    },
-    managerName: { required: true },
-    tenantJungsanTag: { required: true },
-    company: { required: true },
+    // tenantLogo: {
+    //   required: {
+    //     fn: (values) => {
+    //       return false;
+    //     },
+    //     message: 'ddddd',
+    //   },
+    // },
+    // managerName: { required: true },
+    // tenantJungsanTag: { required: true },
+    // company: { required: true },
     isUsed: { required: true },
     device: {
       required: {

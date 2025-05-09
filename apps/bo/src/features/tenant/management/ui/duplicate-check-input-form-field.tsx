@@ -5,9 +5,11 @@ import { BaseFormFieldProps, useDynamicFormContext } from '@learnway/hooks';
 import { Button, Input } from '@learnway/ui';
 
 export enum DuplicateState {
-  success = 'success',
+  needInput = 'needInput', // 최초 등록 상태인 경우 사용
+  okStart = 'okStart', // 수정인 경우 okStart로 되어 있어야 함.
+  ok = 'ok',
   duplicated = 'duplicated',
-  notcheck = 'notcheck',
+  check = 'check', // 입력이 발생 되면 check 상태로 변경
 }
 export type DuplicateField = {
   checkState: DuplicateState;
@@ -20,6 +22,14 @@ interface DuplicateCheckInputFormFieldPros<T = any> extends BaseFormFieldProps {
    * @returns
    */
   onDuplicationCheck: (value: string) => Promise<DuplicateState>;
+  dupConfig?: {
+    langCode: {
+      ok: string; // 언어 코드
+      duplicated: string;
+      reCheck: string;
+      needInput: string;
+    };
+  };
 }
 
 export const DuplicateCheckInputFormField = forwardRef<
@@ -27,36 +37,67 @@ export const DuplicateCheckInputFormField = forwardRef<
   DuplicateCheckInputFormFieldPros<DuplicateField>
 >(
   (
-    { label, value, name, onChange, onDuplicationCheck, setFormError, maxLength, ...props },
+    {
+      control,
+      label,
+      value,
+      name,
+      onChange,
+      onDuplicationCheck,
+      setFormError,
+      maxLength,
+      dupConfig = {
+        langCode: {
+          ok: 'LABEL.form.validation.ok',
+          duplicated: 'LABEL.form.validation.duplicated',
+          reCheck: 'LABEL.form.validation.reCheck',
+          needInput: 'LABEL.form.validation.needInput',
+        },
+      },
+      ...props
+    },
     ref,
   ) => {
     const { t } = useTranslation();
-    const { onChangeGuideText } = useDynamicFormContext();
+    const { guideText, onChangeGuideText } = useDynamicFormContext();
     const [editionValue, setEditionValue] = useState<DuplicateField>(value);
 
+    //console.log('control', control);
     const handleChangeField = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setEditionValue({ ...editionValue, fieldValue: e.target.value });
+      if (
+        editionValue.checkState === DuplicateState.ok ||
+        editionValue.checkState === DuplicateState.okStart
+      ) {
+        onChangeGuideText(
+          <span style={{ color: 'red' }}>{t(dupConfig.langCode.reCheck, { code: label })}</span>,
+        );
+        setEditionValue({ checkState: DuplicateState.check, fieldValue: e.target.value });
+      } else {
+        setEditionValue({ ...editionValue, fieldValue: e.target.value });
+      }
     };
 
     const handleButtonClick = () => {
+      if (!editionValue.fieldValue) {
+        control.setError(name, { message: t(dupConfig.langCode.needInput, { code: label }) });
+        return;
+      }
       if (onDuplicationCheck) {
         const prom = onDuplicationCheck(editionValue.fieldValue);
         prom
           .then((state) => {
             switch (state) {
-              case DuplicateState.success:
+              case DuplicateState.ok:
                 onChangeGuideText(
-                  <span style={{ color: 'red' }}>
-                    {t('LABEL.form.validation.duplicated', { code: label })}
+                  <span style={{ color: 'blue' }}>
+                    {t(dupConfig.langCode.ok, { code: label })}
                   </span>,
-                ); //이미 사용 중인 메뉴 코드입니다.
+                );
                 break;
               case DuplicateState.duplicated:
-                onChangeGuideText(
-                  <span style={{ color: 'red' }}>
-                    {t('LABEL.form.validation.duplicated', { code: label })}
-                  </span>,
-                ); //이미 사용 중인 메뉴 코드입니다.
+                control.setError(name, {
+                  message: t(dupConfig.langCode.duplicated, { code: label }),
+                });
                 break;
               default:
                 break;
@@ -64,12 +105,8 @@ export const DuplicateCheckInputFormField = forwardRef<
             setEditionValue({ ...editionValue, checkState: state });
           })
           .catch((error) => {
-            onChangeGuideText(
-              <span style={{ color: 'red' }}>
-                {t('LABEL.form.validation.reCheck', { code: label })}
-              </span>,
-            );
-            setEditionValue({ ...editionValue, checkState: DuplicateState.notcheck });
+            control.setError(name, { message: t(dupConfig.langCode.reCheck, { code: label }) });
+            setEditionValue({ ...editionValue, checkState: DuplicateState.check });
           });
       }
     };
@@ -83,9 +120,13 @@ export const DuplicateCheckInputFormField = forwardRef<
 
     useEffect(() => {
       if (!value || isEqual(value, editionValue)) {
+        if (guideText && !control.getFieldState(name).isDirty) {
+          onChangeGuideText('');
+        }
         return;
       }
-      setEditionValue(value);
+
+      setEditionValue(!value.checkState ? value : { ...value, checkState: DuplicateState.check });
     }, [value]);
 
     return (
@@ -97,7 +138,10 @@ export const DuplicateCheckInputFormField = forwardRef<
           size="sm"
           label={t('LABEL.button.duplication')}
           onClick={handleButtonClick}
-          disabled={editionValue.checkState === DuplicateState.success}
+          disabled={
+            editionValue.checkState === DuplicateState.ok ||
+            editionValue.checkState === DuplicateState.okStart
+          }
         />
       </div>
     );

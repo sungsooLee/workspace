@@ -12,7 +12,8 @@ export default class TenantService {
   }
 
   static createTenant(payload: any) {
-    return httpService.post<Tenant>(`${PMSApiPrefix()}/tenants`, payload);
+    const reqbody = genTenantCreate(payload);
+    return httpService.post<Tenant>(`${PMSApiPrefix()}/tenants`, reqbody);
   }
 
   static updateTenant(payload: any) {
@@ -22,4 +23,13 @@ export default class TenantService {
   static deleteTenant(id: number) {
     return httpService.post<Tenant>(`${PMSApiPrefix()}/tenants`, { id });
   }
+}
+
+function genTenantCreate(payload: any) {
+  return {
+    tenantName: payload.tenantName,
+    windowTitle: '',
+    logoImageUrl: '',
+    loginImageUrl: '',
+  };
 }
