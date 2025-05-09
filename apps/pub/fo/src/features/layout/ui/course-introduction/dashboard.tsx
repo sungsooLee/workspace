@@ -3,7 +3,7 @@ import { MobileView, BrowserView, isMobile } from 'react-device-detect';
 import { Link, useRouter } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { IcoArrowDown, IcoCaution03, IcoPlay } from '@learnway/icons';
-import { Button, Dropdown, Panel, Progress, useModal, TableBox, Accordion } from '@learnway/ui';
+import { Button, Panel, Progress, useModal, TableBox, Accordion, Popover } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import styles from './dashboard.module.css';
 import statusStyles from './status.module.css';
@@ -13,16 +13,20 @@ import packageSideStyles from '../../../../pages/_layout/course-introduction/pac
 import relatedSideStyles from '../../../../pages/_layout/course-introduction/related-side.module.css';
 import pdsStyles from './pds.module.css';
 import tableListStyles from '../../../../shared/ui/list/table-list.module.css';
+import dropdownPopoverStyles from '../../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
 import { CurriculumStudy } from '../../../../features/layout';
 
 import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
-
+const DropdownPopoverCompoment = () => {
+  return (
+    <div className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}>
+      <Button>1차 | 25-03-01 ~ 26-03-31</Button>
+      <Button>2차 | 25-03-01 ~ 26-03-31</Button>
+    </div>
+  );
+};
 const CourseDashboardCompoment = () => {
   const [selectedValues, setSelectedValues] = useState<null>(null);
-  const options = [
-    { value: 'option1', label: '1차 | 25-03-01 ~ 26-03-31' },
-    { value: 'option2', label: '2차 | 25-03-01 ~ 26-03-31' },
-  ];
 
   const progress = 80;
 
@@ -169,16 +173,16 @@ const CourseDashboardCompoment = () => {
     <div className={styles.start}>
       <div className={styles.tit_box}>
         <h3>대시보드</h3>
-        <Dropdown
-          options={options}
-          value={selectedValues}
-          onChange={(selected) => setSelectedValues(selected)}
-          placeholder="차수보기"
-          variant="text"
-          isMulti={false}
-          size={'lg'}
-          menu-portal-text
-        />
+        <Popover
+          popoverContent={<DropdownPopoverCompoment />}
+          className={`${dropdownPopoverStyles.btn} ${dropdownPopoverStyles.text}`}
+          side="bottom"
+          align="end"
+          sideOffset={10}
+        >
+          <span>{'차수보기'}</span>
+          <IcoArrowDown width={16} height={16} stroke="#131C30" />
+        </Popover>
       </div>
 
       <div className={statusStyles.start}>
