@@ -13,7 +13,7 @@ function RouteComponent() {
   const TabContents = () => {
     return (
       <ModalContainer>
-        <ModalTitle>{'위젯 미리보기'}</ModalTitle>
+        <ModalTitle>{'채널 접수 조회'}</ModalTitle>
         <ModalBody>
           <div></div>
         </ModalBody>
