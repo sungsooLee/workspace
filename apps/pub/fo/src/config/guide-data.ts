@@ -1563,8 +1563,8 @@ export const guideData = [
     screenId: 'NLP_FO_CLA_1027',
     screenName: '강의실_학습창_웹_갤러리',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'gallery',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',

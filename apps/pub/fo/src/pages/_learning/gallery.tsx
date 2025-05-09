@@ -4,9 +4,12 @@ import { Pagination, Carousel, Button } from '@learnway/ui';
 
 import styles from './gallery.module.css';
 
+import { IcoArrowBackward } from '@learnway/icons';
+
 // 예시 이미지
 import bnrImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 import bnrImage2 from '@learnway/styles/fo/assets/images/temp/img_discrimination.png';
+import backImage from '@learnway/styles/fo/assets/images/temp/img_gallery_back.jpg';
 
 export const Route = createFileRoute('/_learning/gallery')({
   component: RouteComponent,
@@ -95,12 +98,25 @@ function RouteComponent() {
 
   return (
     <div className={`${styles.start} ${styles.gallery_wrap}`}>
+      {/* background */}
+      <div className={styles.background}>
+        <img src={backImage} alt="" />
+        <div className={styles.black}></div>
+      </div>
       <div className={styles.photo_wrap}>
         <div className={styles.photo}>
-          <Button>
+          <Button className={styles.img}>
             <img src={photoArray[mainImgIndex]} alt="" />
           </Button>
+          {/* prev, next button */}
+          <Button className={styles.btn_prev}>
+            <IcoArrowBackward width={40} height={40} stroke="#fff" />
+          </Button>
+          <Button className={styles.btn_next}>
+            <IcoArrowBackward width={40} height={40} stroke="#fff" />
+          </Button>
         </div>
+        {/* swiper */}
         <div className={styles.swiper}>
           <Carousel
             ref={swiperRef}
