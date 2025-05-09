@@ -636,7 +636,7 @@ export const guideData = [
     pageId: 'pms/pop-channel-search',
     screenId: 'NLP_BO_CHN_1200',
     pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-05-09',
     lastUpdateDate: '',
     remarks: '', // 비고
   },
