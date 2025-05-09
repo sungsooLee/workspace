@@ -1,76 +1,103 @@
 import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useWatch } from 'react-hook-form';
-import { useQueryClient } from '@tanstack/react-query';
 import { isEqual } from 'lodash';
 import { BaseFormFieldProps, useDynamicFormContext } from '@learnway/hooks';
 import { Button, Input } from '@learnway/ui';
 
-type DuplicateField = {
-  checkState: string;
+export enum DuplicateState {
+  success = 'success',
+  duplicated = 'duplicated',
+  notcheck = 'notcheck',
+}
+export type DuplicateField = {
+  checkState: DuplicateState;
   fieldValue: string;
 };
+interface DuplicateCheckInputFormFieldPros<T = any> extends BaseFormFieldProps {
+  /**
+   * string
+   * @param value
+   * @returns
+   */
+  onDuplicationCheck: (value: string) => Promise<DuplicateState>;
+}
 
-export const DuplicateCheckInputFormField = forwardRef<HTMLDivElement, BaseFormFieldProps>(
+export const DuplicateCheckInputFormField = forwardRef<
+  HTMLDivElement,
+  DuplicateCheckInputFormFieldPros<DuplicateField>
+>(
   (
-    {
-      name,
-      value,
-      control,
-      onChange,
-      onFormChange,
-      fields = { checkState: 'checkState', fieldValue: 'fieldValue' },
-    },
+    { label, value, name, onChange, onDuplicationCheck, setFormError, maxLength, ...props },
     ref,
   ) => {
     const { t } = useTranslation();
-    const [fieldValue, setFieldValue] = useState<string>('');
-    const [checkState, setCheckState] = useState('');
-    const checkStateField = useWatch({ control, name: 'managerName' });
+    const { onChangeGuideText } = useDynamicFormContext();
+    const [editionValue, setEditionValue] = useState<DuplicateField>(value);
 
-    console.log('watch', fields.checkState, checkStateField);
     const handleChangeField = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setFieldValue(e.target.value);
+      setEditionValue({ ...editionValue, fieldValue: e.target.value });
     };
 
     const handleButtonClick = () => {
-      setCheckState('click');
+      if (onDuplicationCheck) {
+        const prom = onDuplicationCheck(editionValue.fieldValue);
+        prom
+          .then((state) => {
+            switch (state) {
+              case DuplicateState.success:
+                onChangeGuideText(
+                  <span style={{ color: 'red' }}>
+                    {t('LABEL.form.validation.duplicated', { code: label })}
+                  </span>,
+                ); //이미 사용 중인 메뉴 코드입니다.
+                break;
+              case DuplicateState.duplicated:
+                onChangeGuideText(
+                  <span style={{ color: 'red' }}>
+                    {t('LABEL.form.validation.duplicated', { code: label })}
+                  </span>,
+                ); //이미 사용 중인 메뉴 코드입니다.
+                break;
+              default:
+                break;
+            }
+            setEditionValue({ ...editionValue, checkState: state });
+          })
+          .catch((error) => {
+            onChangeGuideText(
+              <span style={{ color: 'red' }}>
+                {t('LABEL.form.validation.reCheck', { code: label })}
+              </span>,
+            );
+            setEditionValue({ ...editionValue, checkState: DuplicateState.notcheck });
+          });
+      }
     };
 
     useEffect(() => {
-      if (isEqual(value, fieldValue)) {
+      if (isEqual(value, editionValue)) {
         return;
       }
-      //onFormChange({ tenantName: { a: fieldValue } });
-      onChange(fieldValue);
-    }, [fieldValue]);
-    useEffect(() => {
-      onFormChange({ [fields.checkState]: checkState });
-    }, [checkState]);
+      onChange?.(editionValue);
+    }, [editionValue]);
 
     useEffect(() => {
-      if (typeof value === 'string') {
-        if (!value || value === fieldValue) {
-          return;
-        }
-        setFieldValue(value);
-      } else {
-        if (!value.kkk || value.kkk === fieldValue) {
-          return;
-        }
-        setFieldValue(value.kkk);
+      if (!value || isEqual(value, editionValue)) {
+        return;
       }
+      setEditionValue(value);
     }, [value]);
 
     return (
-      <div className="flex w-full gap-x-2" ref={ref}>
-        <Input value={fieldValue} onChange={handleChangeField} />
+      <div className="flex w-full gap-x-2">
+        <Input value={editionValue.fieldValue} onChange={handleChangeField} maxLength={maxLength} />
         <Button
           type="button"
           variant="gray"
           size="sm"
           label={t('LABEL.button.duplication')}
           onClick={handleButtonClick}
+          disabled={editionValue.checkState === DuplicateState.success}
         />
       </div>
     );

@@ -1,29 +1,40 @@
+import { useState, useRef } from 'react';
 import { t } from 'i18next';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import {
+  ContentsRow,
   Button,
   ChipListModalSelectorFormField,
-  ContentsRow,
   DynamicFormField,
   useModal,
 } from '@learnway/ui';
 import { FormRow } from '@shared/ui';
 import { ThumbnailUploaderFormField } from '@features/learning';
 import { DynamicFormConfig, useDynamicForm } from '@/libs/hooks/src';
-import { TenantManagerModal } from '@features/tenant/management/ui/tenant-manager-modal';
 import { CompanyModal } from '@features/tenant/management/ui/company-modal';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 
 import { useCreateTenant } from '@entities/tenant/service/tenant.hook';
-import { UserInquiryModal } from '@shared/ui/modal/user-inquiry-modal';
-
+import { HrdUserInquiryModal } from '@features/shared/ui/modal/hrd-user-inquiry-modal';
+import {
+  DuplicateState,
+  DuplicateCheckInputFormField,
+} from '@features/tenant/management/ui/duplicate-check-input-form-field';
+import TenantService from '@entities/tenant/api/tenant';
 export const Route = createFileRoute('/_layout/tenant/management/regist')({
   component: RouteComponent,
 });
+
+const duplicateCheck = async (value: string) => {
+  const result: any = await TenantService.fetchAllTenant({ tenantName: value });
+  console.log('duplicateCheck', result);
+  if (result.content || result.content.length > 0) return DuplicateState.duplicated;
+  else return DuplicateState.success;
+};
 
 function RouteComponent() {
   const router = useRouter();
@@ -92,7 +103,7 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name={'tenantName'}>
-                <DuplicateCheckInputFormField />
+                <DuplicateCheckInputFormField onDuplicationCheck={duplicateCheck} />
               </DynamicFormField>
             </FormRow>
           </ContentsRow>
@@ -284,8 +295,8 @@ const formConfig: DynamicFormConfig = {
       ),
       value: ['ko', 'en'],
       options: [
-        { value: 'ko', label: '한국어' },
-        { value: 'en', label: '영어' },
+        { value: 'ko', label: '한국어', disabled: true },
+        { value: 'en', label: '영어', disabled: true },
         { value: 'ne', label: '네팔어' },
         { value: 'ms', label: '말레이어' },
         { value: 'vi', label: '베트남어' },
@@ -299,9 +310,8 @@ const formConfig: DynamicFormConfig = {
         { value: 'a8', label: '스페인어8' },
         { value: 'a9', label: '스페인어9' },
       ],
-      checkGroupConfig: {
-        allCheck: true,
-      },
+      showSelectAll: true,
+      cols: 6,
     },
     {
       name: 'useCategory',
@@ -324,52 +334,54 @@ const formConfig: DynamicFormConfig = {
     },
   ],
   validator: {
-    // tenantName: {
-    //   required: {
-    //     fn: (values) => {
-    //       console.log('tenantName', values);
-    //       return false;
-    //     },
-    //     message: '중복 확인 하세요',
-    //   },
-    // },
-    // tenantLogo: {
-    //   required: {
-    //     fn: (values) => {
-    //       return false;
-    //     },
-    //     message: 'ddddd',
-    //   },
-    // },
-    // managerName: { required: true },
-    // tenantJungsanTag: { required: true },
-    // company: { required: true },
-    // isUsed: { required: true },
-    // device: {
-    //   required: {
-    //     fn: (values) => {
-    //       return (
-    //         !values.isMobileExposed && !values.isWebExposed && !values.isAppExposed && !values.all
-    //       );
-    //     },
-    //     message: t('1개 이상 선택하세요.'),
-    //   },
-    // },
-    // useCategory: {
-    //   required: {
-    //     fn: (values) => {
-    //       return !values.common && !values.tenant && !values.all;
-    //     },
-    //     message: t('1개 이상 선택하세요.'),
-    //   },
-    // },
-    // language: {
-    //   required: {
-    //     fn: (values) => {
-    //       return !values.common && !values.tenant && !values.all;
-    //     },
-    //     message: t('1개 이상 선택하세요.'),
-    //   },
-    // },
+    tenantName: {
+      required: {
+        fn: (values) => {
+          const checkState = values.tenantName.checkState;
+
+          if (checkState === DuplicateState.success) return true;
+          return false;
+        },
+        message: t('중복 확인 하세요'),
+      },
+    },
+    tenantLogo: {
+      required: {
+        fn: (values) => {
+          return false;
+        },
+        message: 'ddddd',
+      },
+    },
+    managerName: { required: true },
+    tenantJungsanTag: { required: true },
+    company: { required: true },
+    isUsed: { required: true },
+    device: {
+      required: {
+        fn: (values) => {
+          return (
+            !values.isMobileExposed && !values.isWebExposed && !values.isAppExposed && !values.all
+          );
+        },
+        message: t('1개 이상 선택하세요.'),
+      },
+    },
+    useCategory: {
+      required: {
+        fn: (values) => {
+          return !values.common && !values.tenant && !values.all;
+        },
+        message: t('1개 이상 선택하세요.'),
+      },
+    },
+    language: {
+      required: {
+        fn: (values) => {
+          return !values.common && !values.tenant && !values.all;
+        },
+        message: t('1개 이상 선택하세요.'),
+      },
+    },
   },
 };
