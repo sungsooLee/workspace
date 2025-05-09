@@ -380,6 +380,24 @@ export const guideData = [
     remarks: '작업 완료', // 비고
   },
   {
+    screenName: 'CMS/학습자원조회',
+    pageId: 'learning/test-management',
+    screenId: 'NLP_BO_CMS_1001',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '5/12 진행예정', // 비고
+  },
+  {
+    screenName: 'CMS/시험관리',
+    pageId: 'learning/test-management',
+    screenId: 'NLP_BO_CMS_1032',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '5/12 진행예정', // 비고
+  },
+  {
     screenName: 'PMS/플랫폼관리_회사/조직관리',
     pageId: 'pms/menu-platform-company-detail',
     screenId: 'NLP_BO_TMS_1302',

@@ -715,7 +715,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '- category-filter-popuo-m.tsx\n- Dropdown 안에 popover 위치 수정중',
+    remarks: '- filter-popup.tsx',
   },
   {
     screenId: 'NLP_FO_LEC_1000',

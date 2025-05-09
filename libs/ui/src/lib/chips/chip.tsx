@@ -68,7 +68,7 @@ const ChipComponent = forwardRef<HTMLElement, ChipComponentProps>(
 
         {/* label */}
         <Button className={cn(styles.label, isButtonMode && styles.button_mode)}>
-          {option[labelField]}
+          {option?.[labelField] || option}
         </Button>
 
         {/* close button */}

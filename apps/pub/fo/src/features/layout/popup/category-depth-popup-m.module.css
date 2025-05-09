@@ -1,5 +1,5 @@
 .start {
-  &.filter_wrap {
+  &.depth_wrap {
     & > div {
       & + div {
         @apply mt-[16px];

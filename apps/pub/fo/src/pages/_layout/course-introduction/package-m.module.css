@@ -81,6 +81,18 @@
       }
       .sub_package_content {
         @apply pl-[32px];
+        & > ul {
+          @apply mt-[16px];
+          & > li {
+            @apply inline-block w-[calc((100%-16px)/2)] align-top;
+            &:nth-child(2n) {
+              @apply ml-[16px];
+            }
+            &:nth-child(n + 3) {
+              @apply mt-[32px];
+            }
+          }
+        }
       }
 
       button {

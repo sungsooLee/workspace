@@ -309,10 +309,12 @@ const formConfig: DynamicFormConfig = {
       format: 'array',
       options: Array(10)
         .fill(null)
-        .map((d, i) => ({ value: `value${i}`, label: `label${i}` })),
-      value: [],
+        .map((d, i) => ({ value: `value${i}`, label: `label${i}`, disabled: i === 1 })),
+      value: ['value1'],
       placeholder: '',
       description: '',
+      showSelectAll: true,
+      cols: 4,
     },
     {
       name: 'managerId',
@@ -341,13 +343,10 @@ const formConfig: DynamicFormConfig = {
       type: 'chip-list',
       label: t('테넌트 - 우측 액션버튼 + chip list'),
       format: 'array',
-      value: [],
+      value: [{ label: 'AA', value: 'value1' }],
       placeholder: '',
       description: '',
-      options: [
-        { value: 'tenant1', label: 'Tenant A' },
-        { value: 'tenant2', label: 'Tenant B' },
-      ],
+      chipListConfig: {},
     },
     {
       name: '공개범위',

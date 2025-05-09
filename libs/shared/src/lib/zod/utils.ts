@@ -75,7 +75,7 @@ export const buildJodObject = (validator: ValidatorConfig): ZodSchema => {
         schema = z.array(z.any());
         break;
       case 'object':
-        schema = z.object({});
+        schema = z.any();
         break;
       case 'email': {
         schema = z.string();
