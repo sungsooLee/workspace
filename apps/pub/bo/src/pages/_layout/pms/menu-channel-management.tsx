@@ -254,7 +254,7 @@ function RouteComponent() {
                       <div className={searchStyles.box}>
                         <div className={searchStyles.datepicker_wrap}>
                           <DatePicker displayType={'day'} size={'md'} placeholder={'0000-00-00'} />
-                          <span className={searchStyles.dash}></span>
+                          <span className={searchStyles.hyphen}>-</span>
                           <DatePicker displayType={'day'} size={'md'} placeholder={'0000-00-00'} />
                         </div>
                       </div>
