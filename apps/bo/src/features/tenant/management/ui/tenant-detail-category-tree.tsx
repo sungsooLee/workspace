@@ -76,21 +76,11 @@ const TenantCategoryTreeComponent: FC<any> = ({
             ? nodeInfo.targetNode?.key
             : nodeInfo.targetNode?.parentKey;
         if (nodeInfo.sourceNode.depth !== targetDepth) {
-          alert(
-            '동일한 레벨 내에서만 매핑 및 이동이 가능합니다. src:' +
-              nodeInfo.sourceNode.depth +
-              '/dest:' +
-              targetDepth,
-          );
+          alert(t('LABEL.alert.movableSameLevel'));
           return false;
         }
         if (nodeInfo.sourceNode.parentKey !== parentKey) {
-          alert(
-            '동일한 부모 카테고리에만 매핑 및 이동이 가능합니다. src:' +
-              nodeInfo.sourceNode.parentKey +
-              '/dest:' +
-              parentKey,
-          );
+          alert(t('LABEL.alert.movableSameParent', { type: t('LABEL.common.category') }));
           return false;
         }
         if (nodeInfo.position === 'INSIDE') {
@@ -140,7 +130,9 @@ const TenantCategoryTreeComponent: FC<any> = ({
               type={'button'}
               disabled={level === 5}
             >
-              {node.depth === 0 ? t('테넌트 카테고리 추가') : t('하위 테넌트 카테고리 추가')}
+              {node.depth === 0
+                ? t('LABEL.tree.add', { type: t('LABEL.common.tenantCategory') })
+                : t('LABEL.tree.depthAdd', { type: t('LABEL.common.tenantCategory') })}
             </Button>
           </div>
         </div>
@@ -152,7 +144,7 @@ const TenantCategoryTreeComponent: FC<any> = ({
   return (
     <div className={cn(layoutStyles.inner, layoutStyles.type_progress2)}>
       <div className={titleStyles.title_wrap}>
-        <h3 className={titleStyles.title}>{'테넌트 카테고리 목록'}</h3>
+        <h3 className={titleStyles.title}>{t('LABEL.page.tenantCategory.title')}</h3>
         <div className={layoutStyles.btn_wrap}>
           <Button
             variant="text"
@@ -177,7 +169,7 @@ const TenantCategoryTreeComponent: FC<any> = ({
               onClick={() => handleTenantDetailCategoryMapping()}
               disabled={!useCommonMapping}
             >
-              {'카테고리 매핑'}
+              {t('LABEL.tree.mapping', { type: t('LABEL.common.code.category') })}
             </Button>
           )}
         </div>

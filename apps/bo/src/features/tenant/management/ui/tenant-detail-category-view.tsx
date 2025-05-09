@@ -406,12 +406,12 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'isUsed',
       type: 'switch',
-      label: t('사용 여부'),
+      label: t('LABEL.form.label.useYn'),
       value: false,
       format: 'boolean',
-      tooltip: '테넌트 - 카테고리 관리에서 사용할 카테고리를 선택할 수 있습니다.',
+      tooltip: t('LABEL.form.tooltip.tenantCategoryIsUsed'),
       switchConfig: {
-        label: (value: boolean) => (value ? '사용' : '미사용'),
+        label: (value: boolean) => (value ? t('LABEL.common.enable') : t('LABEL.common.disable')),
       },
     },
     {
