@@ -95,6 +95,7 @@ const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, CheckboxGroup
             checked={allCheck}
             label={'전체'}
             onCheckedChange={handleAllCheckChange}
+            disabled={disabled}
           />
         )}
         {options?.map((item: any) => (
