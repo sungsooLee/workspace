@@ -29,7 +29,7 @@ function RouteComponent() {
   const [pageSize, setPageSize] = useState(10);
   const data: any[] = [
     {
-      type: '동영상    ',
+      type: '동영상',
       name: (
         // <Link to={'/'} className="link">
         //   학습자원명

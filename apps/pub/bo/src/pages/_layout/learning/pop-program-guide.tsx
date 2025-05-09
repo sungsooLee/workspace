@@ -19,11 +19,45 @@ function RouteComponent() {
   const { open: openModal, close: closeModal } = useModal();
   const GuideContent = () => {
     // grid
-    const [pageIndex, setPageIndex] = useState(0);
-    const [pageSize, setPageSize] = useState(10);
     const data: any[] = [
       {
         fileName: 'TOAST 프로그램 설치파일',
+        download: (
+          // <Link to={'/'} className="link">
+          //   다운로드
+          // </Link>
+          <Button className="link" label={'다운로드'} />
+        ),
+      },
+      {
+        fileName: 'TOAST 이북 제작 가이드',
+        download: (
+          // <Link to={'/'} className="link">
+          //   다운로드
+          // </Link>
+          <Button className="link" label={'다운로드'} />
+        ),
+      },
+      {
+        fileName: '스콤 제작 가이드',
+        download: (
+          // <Link to={'/'} className="link">
+          //   다운로드
+          // </Link>
+          <Button className="link" label={'다운로드'} />
+        ),
+      },
+      {
+        fileName: '이러닝 개발 표준 가이드',
+        download: (
+          // <Link to={'/'} className="link">
+          //   다운로드
+          // </Link>
+          <Button className="link" label={'다운로드'} />
+        ),
+      },
+      {
+        fileName: '이러닝 개발 필수 스크립트',
         download: (
           // <Link to={'/'} className="link">
           //   다운로드
@@ -39,7 +73,7 @@ function RouteComponent() {
       columnHelper.accessor('fileName', {
         cell: (info) => info.getValue(),
         header: '파일명',
-        size: 516,
+        size: 510,
         enableGrouping: false,
       }),
       columnHelper.accessor('download', {
@@ -59,13 +93,6 @@ function RouteComponent() {
               columns={columns}
               height={370}
               showColumnSettings={false}
-              pagination={{
-                pageSize,
-                pageIndex,
-                totalRows: 100,
-                onPageChange: setPageIndex,
-                onPageSizeChange: setPageSize,
-              }}
               title="공유현황"
             />
           </div>

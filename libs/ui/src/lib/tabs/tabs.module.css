@@ -196,6 +196,9 @@
               @apply bg-[var(--secondary1)];
             }
           }
+          &.cursor_none {
+            @apply !cursor-auto;
+          }
         }
       }
     }

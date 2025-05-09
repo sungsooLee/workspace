@@ -386,7 +386,16 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '5/12 진행예정', // 비고
+    remarks: '5/12 부터 진행예정', // 비고
+  },
+  {
+    screenName: 'CMS/학습자원조회_수정자 정보',
+    pageId: 'learning/pop-program-guide',
+    screenId: 'NLP_BO_CMS_1055',
+    pageType: 'Pop-up',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '5/12 부터 진행예정', // 비고
   },
   {
     screenName: 'CMS/학습자원조회_제작프로그램/가이드 다운로드',
@@ -395,7 +404,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '5/12 진행예정', // 비고
+    remarks: '5/12 부터 진행예정', // 비고
   },
   {
     screenName: 'CMS/시험관리',
@@ -404,7 +413,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '5/12 진행예정', // 비고
+    remarks: '5/12 부터 진행예정', // 비고
   },
   {
     screenName: 'PMS/플랫폼관리_회사/조직관리',
