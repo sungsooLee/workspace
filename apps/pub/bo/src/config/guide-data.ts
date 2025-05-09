@@ -390,7 +390,7 @@ export const guideData = [
   },
   {
     screenName: 'CMS/학습자원조회_수정자 정보',
-    pageId: 'learning/pop-program-guide',
+    pageId: 'learning/pop-modifier-info',
     screenId: 'NLP_BO_CMS_1055',
     pageType: 'Pop-up',
     completionDate: '',
