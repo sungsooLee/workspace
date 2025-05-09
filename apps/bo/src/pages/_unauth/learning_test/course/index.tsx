@@ -52,9 +52,18 @@ function RouteComponent() {
    * '과정 개설' 버튼 클릭 시 호출되는 핸들러
    */
   const handleCourseOpenClick = async () => {
-    const value = await openModal({
+    const { value } = await openModal({
       content: <CourseTypeOptionCardModal />,
       width: 'lg', // sm(600px), md(800px), lg(1024px), xl(1400px)
+    });
+
+    console.log(value);
+
+    router.navigate({
+      to: '/platform/system/multilingual',
+      state: {
+        courseType: 'CATEGORY', // 다국어 분류 - 공통코드
+      },
     });
 
     // 선택한 유형의 등록 페이지로 이동
