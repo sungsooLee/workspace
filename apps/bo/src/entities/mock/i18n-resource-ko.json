@@ -163,7 +163,8 @@
       "enable": "사용",
       "disable": "미사용",
       "learnerMenu": "학습자 메뉴",
-      "hrdCenterMenu": "HRD센터 메뉴"
+      "hrdCenterMenu": "HRD센터 메뉴",
+      "categoryInfo": "카테고리 정보"
     },
     "link": {
       "multilingual": "다국어관리"
@@ -256,7 +257,8 @@
         "openingDate": "개설년도",
         "courseCode": "과정코드",
         "courseName": "과정명",
-        "useYn": "사용여부"
+        "useYn": "사용여부",
+        "userGroupSetting": "유저그룹 설정"
       },
       "validation": {
         "needInput": "{{code}}를 입력해 주세요.",
@@ -306,6 +308,12 @@
       },
       "reset:": {
         "title": "초기화 하시겠습니까?"
+      }
+    },
+    "alert": {
+      "delete": {
+        "title": "삭제할 수 없습니다.",
+        "message": "하위 {{type}} 존재 시 삭제할 수 없습니다."
       }
     }
   }

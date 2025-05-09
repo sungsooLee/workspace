@@ -10,6 +10,7 @@ import {
   useFetchTenantCategory,
   useUpdateTenantCategory,
   useMoveTenantCategory,
+  useCreateTenantCategory,
 } from '@entities/tenant/service/tenant-category.hook';
 //import { transformApiDataToTreeData } from '@features/category/service/category.service';
 import { transformApiDataToTreeData } from '@features/platform/category';
@@ -49,6 +50,7 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
   });
 
   const { update: updateTenantCategory } = useUpdateTenantCategory(tenantId, {});
+  const { create: createTenantCategory } = useCreateTenantCategory(tenantId, {});
 
   const { move: moveTenantCategory } = useMoveTenantCategory(tenantId, {
     onSuccess: async (data: any) => {
@@ -97,24 +99,40 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
     });
   };
 
+  const handleNodeAdd = (node: TreeNode) => {
+    setSelectedNode(node);
+    setMode('add');
+    setExpandedKeys([...expandedKeys, node.key]);
+  };
+
+  const handleSave = (payload: any) => {
+    openConfirm({
+      title: '저장 하시겠습니까?',
+      content: <p>입력한 정보로 저장됩니다.</p>,
+      onClose: (value: boolean) => {
+        if (value) {
+          createTenantCategory(payload, {
+            onSuccess: (data: any) => {
+              console.log('#### success', data);
+              refetch();
+            },
+          });
+        }
+      },
+    });
+  };
+
   const handleUpdate = (payload: any) => {
     console.log('>> payload', payload);
     openConfirm({
       title: '저장 하시겠습니까?',
-      content: (
-        <>
-          <p>입력한 정보로 저장됩니다.</p>
-        </>
-      ),
+      content: <p>입력한 정보로 저장됩니다.</p>,
       onClose: (value: boolean) => {
         if (value) {
           updateTenantCategory(payload, {
             onSuccess: (data: any) => {
               console.log('#### success', data);
               refetch();
-            },
-            onError: (error: unknown) => {
-              console.log('#### error', error);
             },
           });
         }
@@ -153,6 +171,7 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
           isTenantManager={isTenantManager}
           onNodeClick={handleNodeClick}
           onNodeMove={handleNodeMove}
+          onNodeAdd={handleNodeAdd}
           expandedKeys={expandedKeys}
           onExpandChange={handleExpandChange}
           selectedKey={selectedNode?.key}
@@ -171,6 +190,7 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
           isTenantManager={isTenantManager}
           useCommonMapping={useCommonMapping}
           useTenantMapping={useTenantMapping}
+          onSave={handleSave}
           onReset={handleReset}
           onUpdate={handleUpdate}
           onDelete={handleDelete}

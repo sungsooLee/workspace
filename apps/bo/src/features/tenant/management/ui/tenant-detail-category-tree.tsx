@@ -26,6 +26,7 @@ const TenantCategoryTreeComponent: FC<any> = ({
   useCommonMapping,
   useTenantMapping,
   isTenantManager,
+  onNodeAdd,
 }) => {
   const routerState = useRouterState();
   const { open: openModal, confirm: openConfirm } = useModal();
@@ -111,7 +112,7 @@ const TenantCategoryTreeComponent: FC<any> = ({
 
   const handleTenantDetailCategoryMapping = async () => {
     const modalTenantId = tenantId;
-    const selectTenantDetailCategory = await openModal({
+    await openModal({
       content: (
         <TenantDetailCategoryMappingModal
           tenantId={modalTenantId}
@@ -124,31 +125,26 @@ const TenantCategoryTreeComponent: FC<any> = ({
     });
   };
 
-  const renderButtons = (node: TreeNode, level: number) => {
-    if (isTenantManager && useTenantMapping && node.depth < 5) {
-      if (node.depth == 0) {
-        return (
-          <div className={'gap-10px flex'}>
-            <div className={'flex items-center'}>
-              <Button variant="gray2" size={'xs'} type={'button'}>
-                {t('테넌트 카테고리 추가')}
-              </Button>
-            </div>
+  const renderNodeButtons = (node: TreeNode, level: number) => {
+    if ((node.depth === 0 || node.categoryType === 'TENANT') && isTenantManager && useTenantMapping)
+      return (
+        <div className={'gap-10px flex'}>
+          <div className={'flex items-center'}>
+            <Button
+              onClick={(e) => {
+                e.stopPropagation();
+                onNodeAdd(node);
+              }}
+              variant="gray2"
+              size={'xs'}
+              type={'button'}
+              disabled={level === 5}
+            >
+              {node.depth === 0 ? t('테넌트 카테고리 추가') : t('하위 테넌트 카테고리 추가')}
+            </Button>
           </div>
-        );
-      } else if (node.categoryType === 'TENANT') {
-        // TODO. hover시에만 나오는데??
-        return (
-          <div className={'gap-10px flex'}>
-            <div className={'flex items-center'}>
-              <Button variant="gray2" size={'xs'} type={'button'}>
-                {t('하위 테넌트 카테고리 추가')}
-              </Button>
-            </div>
-          </div>
-        );
-      }
-    }
+        </div>
+      );
   };
 
   const selectedNode = selectedKey ? findNodeByKey(treeData, selectedKey) : null;
@@ -164,7 +160,7 @@ const TenantCategoryTreeComponent: FC<any> = ({
             className={layoutStyles.btn_text}
             onClick={() => handleExpandAll(true)}
           >
-            {'전체펼침'}
+            {t('LABEL.tree.expand')}
           </Button>
           <Button
             variant="text"
@@ -172,7 +168,7 @@ const TenantCategoryTreeComponent: FC<any> = ({
             className={layoutStyles.btn_text}
             onClick={() => handleExpandAll(false)}
           >
-            {'전체닫기'}
+            {t('LABEL.tree.closed')}
           </Button>
           {!isTenantManager && (
             <Button
@@ -196,7 +192,7 @@ const TenantCategoryTreeComponent: FC<any> = ({
             onAction={handleTreeAction}
             type={'SAME_LEVEL_ONLY'}
             selectedNode={selectedNode}
-            nodeButtons={renderButtons}
+            nodeButtons={renderNodeButtons}
             //onSelectedNodeChange={handleSelectedNodeChange}
           />
         </TreeContainer>

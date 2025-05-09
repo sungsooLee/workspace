@@ -10,7 +10,7 @@ import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inn
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 
-import { DuplicateCodeGuideText } from '@features/platform/category';
+import { DuplicateCodeGuideText, findMenuPathById } from '@features/platform/category';
 import { useFetchTenantCategoryDetail } from '@entities/tenant/service/tenant-category.hook';
 import { useFetchUserGroups } from '@entities/users/service/user-groups.hook';
 import { TenantCategoryCreate, TenantCategoryUpdate } from 'src/types/entities/tenant-category';
@@ -59,7 +59,10 @@ const TenantCategoryViewComponent: FC<any> = ({
   useEffect(() => {
     console.log('## selectedNode :: ', selectedNode);
     setIsTenantManagerUpdatable(
-      isTenantManager && useTenantMapping && selectedNode?.categoryType === 'TENANT',
+      isTenantManager &&
+        useTenantMapping &&
+        (selectedNode?.categoryType === 'TENANT' ||
+          (mode === 'add' && selectedNode?.categoryType === 'ROOT')),
     );
     if (isInitMode || isRoot) setIsUsedDisabled(true);
     else if (isTenantManager && selectedNode?.categoryType === 'COMMON') setIsUsedDisabled(true);
@@ -103,7 +106,24 @@ const TenantCategoryViewComponent: FC<any> = ({
         initialFromValuesRef.current = { ...initialData };
       }
     } else if (mode === 'add' && selectedNode) {
+      console.log('### add node', selectedNode);
       // TODO. 카테고리 추가 구현
+      initialFromValuesRef.current = null;
+      const location = findMenuPathById(treeData, selectedNode?.menuId);
+      const initialData = {
+        location: location,
+        code: '',
+        categoryName: '',
+        categoryContent: '',
+        isUsed: true,
+        key: '',
+        parentKey: selectedNode.key,
+        parentCategoryName: selectedNode.name,
+        sortSeq: selectedNode?.children?.length ?? 0 + 1,
+        userGroups: [],
+        isDuplicateCode: false,
+      };
+      fetchData(initialData);
     } else if (mode === 'init') {
       const initialData = {
         location: '',
@@ -152,72 +172,72 @@ const TenantCategoryViewComponent: FC<any> = ({
     console.log('## node :: ', node);
     console.log('## mode :: ', mode);
     console.log('## data :: ', data);
+    const isCodeChanged = isFieldChanged('code', node.code);
+    if (isCodeChanged) {
+      // "{{code}}의 중복 여부를 확인해 주세요."
+      if (codeCheckState === 'none') {
+        setFormError?.(
+          'code',
+          t('LABEL.form.validation.check', { code: t('LABEL.form.input.categoryCode') }),
+        );
+        return;
+      }
+
+      //  '이미 사용 중인 {{code}} 코드입니다.'
+      if (!isSuccessCodeCheck || codeCheckState === 'duplicate') {
+        setFormError?.(
+          'code',
+          t('LABEL.form.validation.duplicated', { code: t('LABEL.form.input.categoryCode') }),
+        );
+        return;
+      }
+    }
+
     const userGroups = node.userGroups.map((n: { value: number }) => ({
       combineType: 'USER_GROUP',
       combineValue: n.value,
     }));
 
     if (mode === 'view') {
-      const isCodeChanged = isFieldChanged('code', node.code);
-      if (!isCodeChanged) {
-        const body: TenantCategoryUpdate = {
-          name: node.categoryName,
-          categoryCode: node.code,
-          categoryContent: node.categoryContent,
-          isUsed: node.isUsed,
-          whiteList: userGroups,
-        };
-        console.log('## body :: ', body);
-        onUpdate({
-          tenantId: tenantId,
-          categoryId: data!.categoryId,
-          data: body,
-        });
-        return;
-      }
-    }
-
-    // "{{code}}의 중복 여부를 확인해 주세요."
-    if (codeCheckState === 'none') {
-      setFormError?.(
-        'code',
-        t('LABEL.form.validation.check', { code: t('LABEL.form.input.categoryCode') }),
-      );
+      const body: TenantCategoryUpdate = {
+        name: node.categoryName,
+        categoryCode: node.code,
+        categoryContent: node.categoryContent,
+        isUsed: node.isUsed,
+        whiteList: userGroups,
+      };
+      console.log('## body :: ', body);
+      onUpdate({
+        tenantId: tenantId,
+        categoryId: data!.categoryId,
+        data: body,
+      });
       return;
+    } else if (mode === 'add') {
+      // TODO. 테넌트 카테고리는 사용여부 전송 안한다면 true인 상태로 disable 처리?
+      const body: TenantCategoryCreate = {
+        name: node.categoryName,
+        categoryCode: node.code,
+        categoryContent: node.categoryContent,
+        categoryType: 'TENANT',
+        sortSeq: node.sortSeq,
+        parentId: node.parentKey,
+        whiteList: userGroups,
+      };
+      console.log('## body :: ', body);
+      onSave({
+        tenantId: tenantId,
+        data: body,
+      });
     }
-
-    //  '이미 사용 중인 {{code}} 코드입니다.'
-    if (!isSuccessCodeCheck || codeCheckState === 'duplicate') {
-      setFormError?.(
-        'code',
-        t('LABEL.form.validation.duplicated', { code: t('LABEL.form.input.categoryCode') }),
-      );
-      return;
-    }
-
-    // TODO. 테넌트 카테고리는 사용여부 전송 안한다면 true인 상태로 disable 처리?
-    const body: TenantCategoryCreate = {
-      name: node.categoryName,
-      categoryCode: node.code,
-      categoryContent: node.categoryContent,
-      categoryType: 'TENANT',
-      sortSeq: node.sortSeq,
-      parentId: node.parentKey,
-      whiteList: userGroups,
-    };
-    console.log('## body :: ', body);
-    onSave({
-      tenantId: tenantId,
-      data: body,
-    });
   };
 
   const handleDelete = () => {
     if (!selectedNode) return;
     if (selectedNode.children) {
       openAlert({
-        title: '삭제할 수 없습니다.',
-        content: '하위 카테고리가 존재 시 삭제할 수 없습니다.',
+        title: t('LABEL.alert.delete.title'),
+        content: t('LABEL.alert.delete.message', { code: t('LABEL.common.code.category') }),
       });
       return false;
     }
@@ -231,7 +251,7 @@ const TenantCategoryViewComponent: FC<any> = ({
     <div className={cn(layoutStyles.inner, layoutStyles.type_progress2)}>
       <form onSubmit={onSubmit(handleOnSubmit)}>
         <div className={titleStyles.title_wrap}>
-          <h3 className={titleStyles.title}>{'카테고리 정보'}</h3>
+          <h3 className={titleStyles.title}>{t('LABEL.common.categoryInfo')}</h3>
           <div className={layoutStyles.btn_wrap}>
             <Button
               variant="text"
@@ -333,7 +353,7 @@ const TenantCategoryViewComponent: FC<any> = ({
             <FormRow provider={provider}>
               <FormInfoArea>
                 <Button variant="gray" size="sm" disabled={isInitMode || isRoot}>
-                  추가
+                  {t('LABEL.button.add')}
                 </Button>
               </FormInfoArea>
               <DynamicFormField name={'userGroups'} disabled={isInitMode || isRoot} />
@@ -373,7 +393,7 @@ const formConfig: DynamicFormConfig = {
       label: t('LABEL.form.input.categoryCode'),
       value: '',
       placeholder: '',
-      maxLength: 15,
+      maxLength: 20,
     },
     {
       name: 'categoryName',
@@ -404,7 +424,7 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'userGroups',
       type: 'chip-list',
-      label: t('유저그룹 설정'),
+      label: t('LABEL.form.label.userGroupSetting'),
       format: 'array',
       placeholder: '',
       description: '',
@@ -421,6 +441,18 @@ const formConfig: DynamicFormConfig = {
       type: 'hidden',
       format: 'boolean',
       value: false,
+    },
+    {
+      label: 'sortSeq',
+      name: 'sortSeq',
+      type: 'hidden',
+      value: 0,
+    },
+    {
+      name: 'parentKey',
+      type: 'text',
+      label: 'parentKey',
+      value: '',
     },
   ],
   validator: {
