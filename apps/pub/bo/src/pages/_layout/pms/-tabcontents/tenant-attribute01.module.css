@@ -1,3 +1,6 @@
 /* tenant-attribute01.module.css */
 .start {
+  [class*='title_wrap'] {
+    @apply mt-[8px];
+  }
 }
