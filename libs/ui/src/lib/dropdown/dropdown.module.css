@@ -55,11 +55,25 @@
   }
   &[class*='nlp--dropdown-text'] {
     [class*='nlp-select__control'] {
-      @apply !border-0 !px-0;
-      [class*='css-1dimb5e-singleValue'],
-      [class*='nlp-select__placeholder'] {
-        @apply !body_3_r text-right text-[var(--gray8)];
+      @apply h-[32px];
+      [class*='nlp-select__value-container'] {
+        @apply relative !flex max-h-[32px] w-full py-0;
+        .container {
+          @apply flex h-[30px] items-center;
+          span {
+            @apply input_bo_1_r text-[var(--gray9)];
+          }
+        }
+        input {
+          @apply sr-only;
+        }
       }
+      [class*='nlp-select__indicators'] {
+        @apply h-[32px] max-h-[32px];
+      }
+    }
+    [class*='focused'] [class*='nlp-select__control'] {
+      @apply border-[var(--gray7)];
     }
   }
   &[class*='error'] {
@@ -165,9 +179,7 @@
   @apply pointer-events-auto !z-[151];
   [class*='menu-portal-variant-text'] {
     [class*='nlp-select__menu'] {
-      @apply !border-0 !shadow-[0px_2px_6px_rgba(0,0,0,0.09)];
       [class*='nlp-select__menu-list'] {
-        @apply !px-[8px] !py-[8px];
       }
     }
   }

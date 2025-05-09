@@ -231,7 +231,7 @@ function RouteComponent() {
                           options={options}
                           value={selectedValues3}
                           onChange={(selected) => setSelectedValues3(selected)}
-                          variant="default"
+                          variant={'text'}
                           placeholder="선택"
                           size={'sm'}
                           isMulti

@@ -79,6 +79,7 @@ import { Route as LayoutLearningPopupUploadImport } from './pages/_layout/learni
 import { Route as LayoutLearningPopupLearningSettingImport } from './pages/_layout/learning/popup-learningSetting'
 import { Route as LayoutLearningPopupLearningRegisterationImport } from './pages/_layout/learning/popup-learningRegisteration'
 import { Route as LayoutLearningPopupFileuploadImport } from './pages/_layout/learning/popup-fileupload'
+import { Route as LayoutLearningPopProgramGuideImport } from './pages/_layout/learning/pop-program-guide'
 import { Route as LayoutLearningMediaRegisterImport } from './pages/_layout/learning/mediaRegister'
 import { Route as LayoutLearningMediaDetailImport } from './pages/_layout/learning/mediaDetail'
 import { Route as LayoutLearningLearningSearchImport } from './pages/_layout/learning/learningSearch'
@@ -570,6 +571,13 @@ const LayoutLearningPopupFileuploadRoute =
   LayoutLearningPopupFileuploadImport.update({
     id: '/learning/popup-fileupload',
     path: '/learning/popup-fileupload',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutLearningPopProgramGuideRoute =
+  LayoutLearningPopProgramGuideImport.update({
+    id: '/learning/pop-program-guide',
+    path: '/learning/pop-program-guide',
     getParentRoute: () => LayoutRoute,
   } as any)
 
@@ -1550,6 +1558,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutLearningMediaRegisterImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/learning/pop-program-guide': {
+      id: '/_layout/learning/pop-program-guide'
+      path: '/learning/pop-program-guide'
+      fullPath: '/learning/pop-program-guide'
+      preLoaderRoute: typeof LayoutLearningPopProgramGuideImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/learning/popup-fileupload': {
       id: '/_layout/learning/popup-fileupload'
       path: '/learning/popup-fileupload'
@@ -1995,6 +2010,7 @@ interface LayoutRouteChildren {
   LayoutLearningLearningSearchRoute: typeof LayoutLearningLearningSearchRoute
   LayoutLearningMediaDetailRoute: typeof LayoutLearningMediaDetailRoute
   LayoutLearningMediaRegisterRoute: typeof LayoutLearningMediaRegisterRoute
+  LayoutLearningPopProgramGuideRoute: typeof LayoutLearningPopProgramGuideRoute
   LayoutLearningPopupFileuploadRoute: typeof LayoutLearningPopupFileuploadRoute
   LayoutLearningPopupLearningRegisterationRoute: typeof LayoutLearningPopupLearningRegisterationRoute
   LayoutLearningPopupLearningSettingRoute: typeof LayoutLearningPopupLearningSettingRoute
@@ -2051,6 +2067,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutLearningLearningSearchRoute: LayoutLearningLearningSearchRoute,
   LayoutLearningMediaDetailRoute: LayoutLearningMediaDetailRoute,
   LayoutLearningMediaRegisterRoute: LayoutLearningMediaRegisterRoute,
+  LayoutLearningPopProgramGuideRoute: LayoutLearningPopProgramGuideRoute,
   LayoutLearningPopupFileuploadRoute: LayoutLearningPopupFileuploadRoute,
   LayoutLearningPopupLearningRegisterationRoute:
     LayoutLearningPopupLearningRegisterationRoute,
@@ -2197,6 +2214,7 @@ export interface FileRoutesByFullPath {
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
   '/learning/mediaRegister': typeof LayoutLearningMediaRegisterRoute
+  '/learning/pop-program-guide': typeof LayoutLearningPopProgramGuideRoute
   '/learning/popup-fileupload': typeof LayoutLearningPopupFileuploadRoute
   '/learning/popup-learningRegisteration': typeof LayoutLearningPopupLearningRegisterationRoute
   '/learning/popup-learningSetting': typeof LayoutLearningPopupLearningSettingRoute
@@ -2324,6 +2342,7 @@ export interface FileRoutesByTo {
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
   '/learning/mediaRegister': typeof LayoutLearningMediaRegisterRoute
+  '/learning/pop-program-guide': typeof LayoutLearningPopProgramGuideRoute
   '/learning/popup-fileupload': typeof LayoutLearningPopupFileuploadRoute
   '/learning/popup-learningRegisteration': typeof LayoutLearningPopupLearningRegisterationRoute
   '/learning/popup-learningSetting': typeof LayoutLearningPopupLearningSettingRoute
@@ -2454,6 +2473,7 @@ export interface FileRoutesById {
   '/_layout/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/_layout/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
   '/_layout/learning/mediaRegister': typeof LayoutLearningMediaRegisterRoute
+  '/_layout/learning/pop-program-guide': typeof LayoutLearningPopProgramGuideRoute
   '/_layout/learning/popup-fileupload': typeof LayoutLearningPopupFileuploadRoute
   '/_layout/learning/popup-learningRegisteration': typeof LayoutLearningPopupLearningRegisterationRoute
   '/_layout/learning/popup-learningSetting': typeof LayoutLearningPopupLearningSettingRoute
@@ -2583,6 +2603,7 @@ export interface FileRouteTypes {
     | '/learning/learningSearch'
     | '/learning/mediaDetail'
     | '/learning/mediaRegister'
+    | '/learning/pop-program-guide'
     | '/learning/popup-fileupload'
     | '/learning/popup-learningRegisteration'
     | '/learning/popup-learningSetting'
@@ -2709,6 +2730,7 @@ export interface FileRouteTypes {
     | '/learning/learningSearch'
     | '/learning/mediaDetail'
     | '/learning/mediaRegister'
+    | '/learning/pop-program-guide'
     | '/learning/popup-fileupload'
     | '/learning/popup-learningRegisteration'
     | '/learning/popup-learningSetting'
@@ -2837,6 +2859,7 @@ export interface FileRouteTypes {
     | '/_layout/learning/learningSearch'
     | '/_layout/learning/mediaDetail'
     | '/_layout/learning/mediaRegister'
+    | '/_layout/learning/pop-program-guide'
     | '/_layout/learning/popup-fileupload'
     | '/_layout/learning/popup-learningRegisteration'
     | '/_layout/learning/popup-learningSetting'
@@ -3004,6 +3027,7 @@ export const routeTree = rootRoute
         "/_layout/learning/learningSearch",
         "/_layout/learning/mediaDetail",
         "/_layout/learning/mediaRegister",
+        "/_layout/learning/pop-program-guide",
         "/_layout/learning/popup-fileupload",
         "/_layout/learning/popup-learningRegisteration",
         "/_layout/learning/popup-learningSetting",
@@ -3381,6 +3405,10 @@ export const routeTree = rootRoute
     },
     "/_layout/learning/mediaRegister": {
       "filePath": "_layout/learning/mediaRegister.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/learning/pop-program-guide": {
+      "filePath": "_layout/learning/pop-program-guide.tsx",
       "parent": "/_layout"
     },
     "/_layout/learning/popup-fileupload": {
