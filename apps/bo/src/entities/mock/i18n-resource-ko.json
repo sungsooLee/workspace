@@ -256,7 +256,8 @@
         "openingDate": "개설년도",
         "courseCode": "과정코드",
         "courseName": "과정명",
-        "useYn": "사용여부"
+        "useYn": "사용여부",
+        "select": "선택"
       },
       "validation": {
         "needInput": "{{code}}를 입력해 주세요.",
@@ -277,6 +278,7 @@
       "ok": "확인",
       "cancel": "취소",
       "save": "저장",
+      "deploy": "배포",
       "delete": "삭제",
       "deleteAll": "전체삭제",
       "add": "추가",
@@ -308,48 +310,88 @@
       "reset:": {
         "title": "초기화 하시겠습니까?"
       }
+    },
+    "platform": {
+      "system": {
+        "multilingual": {
+          "keyType": "분류",
+          "translationLanguage": "번역언어",
+          "translationStatus": "번역상태",
+          "code": "코드",
+          "multilingualKey": "코드 (메뉴 코드/카테고리 코드/공통코드/라벨 코드/메세지 코드)",
+          "translation": "기준명 (메뉴명/카테고리명/공통코드명/라벨명/메세지명)",
+          "baseLanguage": "번역명(한국어)",
+          "targetLanguage": "번역명(번역언어)",
+          "totalTranslatedCount": "번역완료",
+          "platform-message": "라벨/메세지 관리",
+          "platform-code-common-code-group": "공통코드 관리",
+          "platform-category": "카테고리 관리",
+          "platform-menu": "메뉴 관리",
+          "save-content": "화면에 노출된 번역 언어만 저장됩니다.",
+          "placeholder": {
+            "multilingualKey": {
+              "default": "코드를 입력하세요.",
+              "HRD_CENTER_MENU": "메뉴 코드를 입력하세요.",
+              "LEARNER_MENU": "메뉴 코드를 입력하세요.",
+              "LABEL": "라벨 코드를 입력하세요.",
+              "COMMON_CODE": "공통코드 key 를 입력하세요.",
+              "CATEGORY": "카테고리 코드를 입력하세요.",
+              "MESSAGE": "메세지 코드를 입력하세요."
+            },
+            "translation": {
+              "default": "기준명을 입력하세요.",
+              "HRD_CENTER_MENU": "메뉴명을 입력하세요.",
+              "LEARNER_MENU": "메뉴명을 입력하세요.",
+              "LABEL": "라벨명을 입력하세요.",
+              "COMMON_CODE": "공통코드를 입력하세요.",
+              "CATEGORY": "카테고리 명을 입력하세요.",
+              "MESSAGE": "메세지를 입력하세요."
+            }
+          }
+        }
+      }
     }
   },
   "pms.multilingual.KeyTypeCode": {
     "HRD_CENTER_MENU": "HRD 센터 메뉴",
-    "LABEL" : "라벨",
+    "LABEL": "라벨",
     "COMMON_CODE": "공통코드",
     "LEARNER_MENU": "학습자 메뉴",
     "CATEGORY": "카테고리",
     "MESSAGE": "메세지"
   },
   "pms.multilingual.LanguageType": {
-    "zh":"중국어",
-    "es":"스페인어",
-    "en":"영어",
-    "hi":"힌디어",
-    "ar":"아랍어",
-    "bn":"벵골어",
-    "pt":"포르투갈어",
-    "ru":"러시아어",
-    "ja":"일본어",
-    "de":"독일어",
-    "fr":"프랑스어",
-    "ur":"우르두어",
-    "id":"인도네시아어",
-    "vi":"베트남어",
-    "ko":"한국어",
-    "it":"이탈리아어",
-    "tr":"터키어",
-    "fa":"페르시아어",
-    "pl":"폴란드어",
-    "nl":"네덜란드어",
-    "th":"태국어",
-    "ms":"말레이어",
-    "ro":"루마니아어",
-    "he":"히브리어",
-    "uk":"우크라이나어",
-    "hu":"헝가리어",
-    "cs":"체코어",
-    "el":"그리스어"
+    "zh": "중국어",
+    "es": "스페인어",
+    "en": "영어",
+    "hi": "힌디어",
+    "ar": "아랍어",
+    "bn": "벵골어",
+    "pt": "포르투갈어",
+    "ru": "러시아어",
+    "ja": "일본어",
+    "de": "독일어",
+    "fr": "프랑스어",
+    "ur": "우르두어",
+    "id": "인도네시아어",
+    "vi": "베트남어",
+    "ko": "한국어",
+    "it": "이탈리아어",
+    "tr": "터키어",
+    "fa": "페르시아어",
+    "pl": "폴란드어",
+    "nl": "네덜란드어",
+    "th": "태국어",
+    "ms": "말레이어",
+    "ro": "루마니아어",
+    "he": "히브리어",
+    "uk": "우크라이나어",
+    "hu": "헝가리어",
+    "cs": "체코어",
+    "el": "그리스어"
   },
   "pms.multilingual.Is_Translation": {
-    "true":"번역완료",
-    "false":"번역필요"
+    "true": "번역완료",
+    "false": "번역필요"
   }
 }

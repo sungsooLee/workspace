@@ -398,7 +398,7 @@ const MenuViewComponent: FC<any> = ({
                     to: '/platform/system/multilingual',
                     state: {
                       keyType: menuScope === 'FO' ? 'LEARNER_MENU' : 'HRD_CENTER_MENU',
-                      multilinguaKey: menuCode,
+                      multilingualKey: menuCode,
                       translation: menuName,
                     },
                   });

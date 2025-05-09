@@ -279,10 +279,7 @@ function RouteComponent() {
             router.navigate({
               to: '/platform/system/multilingual',
               state: {
-                keyType:
-                  selectedTabKey === 'FO'
-                    ? t('LABEL.common.learnerMenu')
-                    : t('LABEL.common.hrdCenterMenu'),
+                keyType: selectedTabKey === 'FO' ? 'LEARNER_MENU' : 'HRD_CENTER_MENU',
               },
             });
           }}

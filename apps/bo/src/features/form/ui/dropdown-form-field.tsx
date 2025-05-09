@@ -6,13 +6,13 @@ import { useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useQueryClient } from '@tanstack/react-query';
 
-interface DropdownFormField extends BaseFormFieldProps<string> {
+interface DropdownFormFieldType extends BaseFormFieldProps<string> {
   options: DropdownOption[];
   optionsConfig?: OptionsConfig;
   dropdownConfig?: DropdownComponentProps;
 }
 
-const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormField>(
+const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormFieldType>(
   ({ control, value, onChange, options: initOptions, optionsConfig, dropdownConfig }, ref) => {
     const { getCode } = useCodeStore();
     const [options, setOptions] = useState<DropdownOption[]>([]);
@@ -37,7 +37,6 @@ const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormField>
       if (optionsConfig.type === 'self') {
         if (optionsConfig.codeGroup) {
           const codes = await getCode(optionsConfig.codeGroup);
-          console.log('codes => ', codes);
           newOptions = [...newOptions, ...codes];
         } else if (optionsConfig.api) {
           const result = await queryClient.fetchQuery(optionsConfig.api());
