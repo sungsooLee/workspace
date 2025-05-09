@@ -218,6 +218,7 @@ const PrimitiveComponent = forwardRef<any, ReactSelectComponentProps>(
             DropdownIndicator: dropdownIndicator,
             ClearIndicator: clearIndicator,
             MenuPortal,
+            ValueContainer: CustomValueContainer,
           }}
           menuPortalTarget={document.body}
           closeMenuOnSelect={!isMulti}

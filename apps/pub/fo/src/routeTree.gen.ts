@@ -105,6 +105,7 @@ import { Route as GuideGuideChipsImport } from './pages/_guide/guide/chips'
 import { Route as GuideGuideCheckboxImport } from './pages/_guide/guide/checkbox'
 import { Route as GuideGuideCarouselImport } from './pages/_guide/guide/carousel'
 import { Route as GuideGuideButtonsImport } from './pages/_guide/guide/buttons'
+import { Route as GuideGuideBannerImport } from './pages/_guide/guide/banner'
 import { Route as GuideGuideBadgeImport } from './pages/_guide/guide/badge'
 import { Route as GuideGuideAlertImport } from './pages/_guide/guide/alert'
 
@@ -689,6 +690,12 @@ const GuideGuideButtonsRoute = GuideGuideButtonsImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const GuideGuideBannerRoute = GuideGuideBannerImport.update({
+  id: '/guide/banner',
+  path: '/guide/banner',
+  getParentRoute: () => GuideRoute,
+} as any)
+
 const GuideGuideBadgeRoute = GuideGuideBadgeImport.update({
   id: '/guide/badge',
   path: '/guide/badge',
@@ -913,6 +920,13 @@ declare module '@tanstack/react-router' {
       path: '/guide/badge'
       fullPath: '/guide/badge'
       preLoaderRoute: typeof GuideGuideBadgeImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/banner': {
+      id: '/_guide/guide/banner'
+      path: '/guide/banner'
+      fullPath: '/guide/banner'
+      preLoaderRoute: typeof GuideGuideBannerImport
       parentRoute: typeof GuideImport
     }
     '/_guide/guide/buttons': {
@@ -1435,6 +1449,7 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 interface GuideRouteChildren {
   GuideGuideAlertRoute: typeof GuideGuideAlertRoute
   GuideGuideBadgeRoute: typeof GuideGuideBadgeRoute
+  GuideGuideBannerRoute: typeof GuideGuideBannerRoute
   GuideGuideButtonsRoute: typeof GuideGuideButtonsRoute
   GuideGuideCarouselRoute: typeof GuideGuideCarouselRoute
   GuideGuideCheckboxRoute: typeof GuideGuideCheckboxRoute
@@ -1480,6 +1495,7 @@ interface GuideRouteChildren {
 const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideAlertRoute: GuideGuideAlertRoute,
   GuideGuideBadgeRoute: GuideGuideBadgeRoute,
+  GuideGuideBannerRoute: GuideGuideBannerRoute,
   GuideGuideButtonsRoute: GuideGuideButtonsRoute,
   GuideGuideCarouselRoute: GuideGuideCarouselRoute,
   GuideGuideCheckboxRoute: GuideGuideCheckboxRoute,
@@ -1638,6 +1654,7 @@ export interface FileRoutesByFullPath {
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
   '/guide/badge': typeof GuideGuideBadgeRoute
+  '/guide/banner': typeof GuideGuideBannerRoute
   '/guide/buttons': typeof GuideGuideButtonsRoute
   '/guide/carousel': typeof GuideGuideCarouselRoute
   '/guide/checkbox': typeof GuideGuideCheckboxRoute
@@ -1734,6 +1751,7 @@ export interface FileRoutesByTo {
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
   '/guide/badge': typeof GuideGuideBadgeRoute
+  '/guide/banner': typeof GuideGuideBannerRoute
   '/guide/buttons': typeof GuideGuideButtonsRoute
   '/guide/carousel': typeof GuideGuideCarouselRoute
   '/guide/checkbox': typeof GuideGuideCheckboxRoute
@@ -1834,6 +1852,7 @@ export interface FileRoutesById {
   '/_layout/': typeof LayoutIndexRoute
   '/_guide/guide/alert': typeof GuideGuideAlertRoute
   '/_guide/guide/badge': typeof GuideGuideBadgeRoute
+  '/_guide/guide/banner': typeof GuideGuideBannerRoute
   '/_guide/guide/buttons': typeof GuideGuideButtonsRoute
   '/_guide/guide/carousel': typeof GuideGuideCarouselRoute
   '/_guide/guide/checkbox': typeof GuideGuideCheckboxRoute
@@ -1932,6 +1951,7 @@ export interface FileRouteTypes {
     | '/'
     | '/guide/alert'
     | '/guide/badge'
+    | '/guide/banner'
     | '/guide/buttons'
     | '/guide/carousel'
     | '/guide/checkbox'
@@ -2027,6 +2047,7 @@ export interface FileRouteTypes {
     | '/'
     | '/guide/alert'
     | '/guide/badge'
+    | '/guide/banner'
     | '/guide/buttons'
     | '/guide/carousel'
     | '/guide/checkbox'
@@ -2125,6 +2146,7 @@ export interface FileRouteTypes {
     | '/_layout/'
     | '/_guide/guide/alert'
     | '/_guide/guide/badge'
+    | '/_guide/guide/banner'
     | '/_guide/guide/buttons'
     | '/_guide/guide/carousel'
     | '/_guide/guide/checkbox'
@@ -2255,6 +2277,7 @@ export const routeTree = rootRoute
       "children": [
         "/_guide/guide/alert",
         "/_guide/guide/badge",
+        "/_guide/guide/banner",
         "/_guide/guide/buttons",
         "/_guide/guide/carousel",
         "/_guide/guide/checkbox",
@@ -2438,6 +2461,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/badge": {
       "filePath": "_guide/guide/badge.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/banner": {
+      "filePath": "_guide/guide/banner.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/buttons": {

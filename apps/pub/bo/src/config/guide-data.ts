@@ -389,6 +389,15 @@ export const guideData = [
     remarks: '5/12 진행예정', // 비고
   },
   {
+    screenName: 'CMS/학습자원조회_제작프로그램/가이드 다운로드',
+    pageId: 'learning/pop-program-guide',
+    screenId: 'NLP_BO_CMS_1056',
+    pageType: 'Pop-up',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '5/12 진행예정', // 비고
+  },
+  {
     screenName: 'CMS/시험관리',
     pageId: 'learning/test-management',
     screenId: 'NLP_BO_CMS_1032',

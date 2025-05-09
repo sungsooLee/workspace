@@ -13,6 +13,7 @@ import {
 
 import { IcoArrowForward } from '@learnway/icons';
 
+import bannerStyles from '../../../shared/ui/visual/banner.module.css';
 import styles from './integrated-all-m.module.css';
 
 export const Route = createFileRoute('/_layout/integrated-search/integrated-all-m')({
@@ -135,6 +136,26 @@ function RouteComponent() {
             </Link>
           </div>
           <IntegratedSearchCoaching />
+        </div>
+      </div>
+
+      {/* banner module */}
+      <div className={`${bannerStyles.start} ${bannerStyles.banner} ${styles.banner}`}>
+        <div className={bannerStyles.txt_box}>
+          <strong>
+            “파이썬” 관련해
+            <br />
+            만족할 만한 결과를 찾지 못하셨나요?
+          </strong>
+          <p>필요한 교육 과정이나 채널이 있다면 요청해 주세요.</p>
+        </div>
+        <div className={bannerStyles.btn_box}>
+          <Button variant="gray" size="sm">
+            교육 요청
+          </Button>
+          <Button variant="gray" size="sm">
+            채널 요청
+          </Button>
         </div>
       </div>
     </div>
