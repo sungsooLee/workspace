@@ -37,7 +37,7 @@ const GridBoxComponent = <T extends object>(
   ref: React.Ref<GridImperative>,
 ) => {
   const { t } = useTranslation();
-  const { data = props.data, page, totalRows, gridFetch, columns, title } = config;
+  const { data = props.data, page, totalRows, gridFetch, columns, title, onDataChange } = config;
   const columnHelper = createColumnHelper<any>();
   const gridRef = useRef<GridImperative>(null);
 
@@ -254,6 +254,7 @@ const GridBoxComponent = <T extends object>(
       <Grid
         {...props}
         ref={gridRef}
+        onChange={onDataChange}
         data={props.data ?? data ?? []}
         columns={props.columns ?? girdColumns ?? []}
         showNumberingColumn={showNumberingColumn}

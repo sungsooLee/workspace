@@ -70,6 +70,7 @@ export interface GridBoxConfig {
    */
   hasData?: boolean;
 
+  onDataChange: (data: any) => void;
   /**
    * 페이지네이션 상태 객체 (선택적)입니다.
    * 현재 페이지 정보 등을 포함합니다.

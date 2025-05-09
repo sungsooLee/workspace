@@ -5,9 +5,14 @@ import { useWatch } from 'react-hook-form';
 import { t } from 'i18next';
 
 const InputFormFieldComponent = forwardRef<HTMLInputElement, BaseFormFieldProps<string>>(
-  ({ formState, control, customConfig, getValues, ...props }, ref) => {
+  ({ formState, control, customConfig, getValues, onChange, value, ...props }, ref) => {
     const placeholderWatch = useWatch({ control, name: customConfig?.placeholder?.target || '' });
     const [inputProps, setInputProps] = useState<any>(props);
+
+    const handleOnChange = (e: any) => {
+      console.log('e => ', e);
+      onChange(e.target.value);
+    };
 
     useEffect(() => {
       if (customConfig?.placeholder?.target && customConfig?.placeholder?.placeholder) {
@@ -38,7 +43,7 @@ const InputFormFieldComponent = forwardRef<HTMLInputElement, BaseFormFieldProps<
         }));
       }
     }, []);
-    return <Input ref={ref} {...inputProps} />;
+    return <Input ref={ref} {...inputProps} value={value} onChange={handleOnChange} />;
   },
 );
 
