@@ -125,6 +125,7 @@ export { ReactComponent as IcoBoxPlus } from './lib/ic_box_plus.svg';
 export { ReactComponent as IcoMessageText } from './lib/ic_message-text-square.svg';
 export { ReactComponent as IcoMove01 } from './lib/ic_move_01.svg';
 export { ReactComponent as IcoFile01 } from './lib/ic_file_01.svg'; // tree file
+export { ReactComponent as IcoCopy } from './lib/ic_copy.svg'; // copy
 export { ReactComponent as IcoLearning01 } from './lib/ic_learning_01.svg'; // learning 1
 export { ReactComponent as IcoLearning02 } from './lib/ic_learning_02.svg'; // learning 2
 export { ReactComponent as IcoLearning03 } from './lib/ic_learning_03.svg'; // learning 3

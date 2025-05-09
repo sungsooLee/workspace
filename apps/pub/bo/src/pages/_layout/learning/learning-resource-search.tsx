@@ -8,8 +8,10 @@ import {
   IcoClipboard,
   IcoClock01,
   IcoFormRequired,
+  IcoDownload,
+  IcoCopy,
 } from '@learnway/icons';
-import { Button, Input, GridBox, Dropdown } from '@learnway/ui';
+import { Button, Input, GridBox, Dropdown, Checkbox } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 
 /* style */
@@ -349,6 +351,7 @@ function RouteComponent() {
                 height={440}
                 showColumnSettings={false}
                 showNumberingColumn
+                showExcelDownload
                 columnPinning={{ columns: ['numbering', 'type', 'name'] }}
                 pagination={{
                   pageSize,
@@ -357,7 +360,21 @@ function RouteComponent() {
                   onPageChange: setPageIndex,
                   onPageSizeChange: setPageSize,
                 }}
-                title="접수 목록"
+                title="목록"
+                customButtonNode={
+                  <>
+                    <Checkbox label={'나의 학습자원'} size={'md'} />
+                    <Button
+                      label={'프로그램/가이드 다운로드'}
+                      icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
+                    />
+                    <Button label={'일괄설정'} variant={'text'} />
+                    <Button
+                      label={'복사'}
+                      icon={<IcoCopy width={16} height={16} stroke={'#131c30'} />}
+                    />
+                  </>
+                }
               />
             </div>
           </div>
