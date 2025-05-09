@@ -82,6 +82,7 @@ import { Route as LayoutLearningPopupFileuploadImport } from './pages/_layout/le
 import { Route as LayoutLearningMediaRegisterImport } from './pages/_layout/learning/mediaRegister'
 import { Route as LayoutLearningMediaDetailImport } from './pages/_layout/learning/mediaDetail'
 import { Route as LayoutLearningLearningSearchImport } from './pages/_layout/learning/learningSearch'
+import { Route as LayoutLearningLearningResourceSearchImport } from './pages/_layout/learning/learning-resource-search'
 import { Route as LayoutLearningFileUploadImport } from './pages/_layout/learning/file-upload'
 import { Route as LayoutContentsLayoutImport } from './pages/_layout/contents/layout'
 import { Route as LayoutCommonPopUserSearchCheckImport } from './pages/_layout/common/pop-user-search-check'
@@ -589,6 +590,13 @@ const LayoutLearningLearningSearchRoute =
   LayoutLearningLearningSearchImport.update({
     id: '/learning/learningSearch',
     path: '/learning/learningSearch',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutLearningLearningResourceSearchRoute =
+  LayoutLearningLearningResourceSearchImport.update({
+    id: '/learning/learning-resource-search',
+    path: '/learning/learning-resource-search',
     getParentRoute: () => LayoutRoute,
   } as any)
 
@@ -1514,6 +1522,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutLearningFileUploadImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/learning/learning-resource-search': {
+      id: '/_layout/learning/learning-resource-search'
+      path: '/learning/learning-resource-search'
+      fullPath: '/learning/learning-resource-search'
+      preLoaderRoute: typeof LayoutLearningLearningResourceSearchImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/learning/learningSearch': {
       id: '/_layout/learning/learningSearch'
       path: '/learning/learningSearch'
@@ -1976,6 +1991,7 @@ interface LayoutRouteChildren {
   LayoutCommonPopUserSearchCheckRoute: typeof LayoutCommonPopUserSearchCheckRoute
   LayoutContentsLayoutRoute: typeof LayoutContentsLayoutRoute
   LayoutLearningFileUploadRoute: typeof LayoutLearningFileUploadRoute
+  LayoutLearningLearningResourceSearchRoute: typeof LayoutLearningLearningResourceSearchRoute
   LayoutLearningLearningSearchRoute: typeof LayoutLearningLearningSearchRoute
   LayoutLearningMediaDetailRoute: typeof LayoutLearningMediaDetailRoute
   LayoutLearningMediaRegisterRoute: typeof LayoutLearningMediaRegisterRoute
@@ -2030,6 +2046,8 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutCommonPopUserSearchCheckRoute: LayoutCommonPopUserSearchCheckRoute,
   LayoutContentsLayoutRoute: LayoutContentsLayoutRoute,
   LayoutLearningFileUploadRoute: LayoutLearningFileUploadRoute,
+  LayoutLearningLearningResourceSearchRoute:
+    LayoutLearningLearningResourceSearchRoute,
   LayoutLearningLearningSearchRoute: LayoutLearningLearningSearchRoute,
   LayoutLearningMediaDetailRoute: LayoutLearningMediaDetailRoute,
   LayoutLearningMediaRegisterRoute: LayoutLearningMediaRegisterRoute,
@@ -2175,6 +2193,7 @@ export interface FileRoutesByFullPath {
   '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
+  '/learning/learning-resource-search': typeof LayoutLearningLearningResourceSearchRoute
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
   '/learning/mediaRegister': typeof LayoutLearningMediaRegisterRoute
@@ -2301,6 +2320,7 @@ export interface FileRoutesByTo {
   '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
+  '/learning/learning-resource-search': typeof LayoutLearningLearningResourceSearchRoute
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
   '/learning/mediaRegister': typeof LayoutLearningMediaRegisterRoute
@@ -2430,6 +2450,7 @@ export interface FileRoutesById {
   '/_layout/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/_layout/contents/layout': typeof LayoutContentsLayoutRoute
   '/_layout/learning/file-upload': typeof LayoutLearningFileUploadRoute
+  '/_layout/learning/learning-resource-search': typeof LayoutLearningLearningResourceSearchRoute
   '/_layout/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/_layout/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
   '/_layout/learning/mediaRegister': typeof LayoutLearningMediaRegisterRoute
@@ -2558,6 +2579,7 @@ export interface FileRouteTypes {
     | '/common/pop-user-search-check'
     | '/contents/layout'
     | '/learning/file-upload'
+    | '/learning/learning-resource-search'
     | '/learning/learningSearch'
     | '/learning/mediaDetail'
     | '/learning/mediaRegister'
@@ -2683,6 +2705,7 @@ export interface FileRouteTypes {
     | '/common/pop-user-search-check'
     | '/contents/layout'
     | '/learning/file-upload'
+    | '/learning/learning-resource-search'
     | '/learning/learningSearch'
     | '/learning/mediaDetail'
     | '/learning/mediaRegister'
@@ -2810,6 +2833,7 @@ export interface FileRouteTypes {
     | '/_layout/common/pop-user-search-check'
     | '/_layout/contents/layout'
     | '/_layout/learning/file-upload'
+    | '/_layout/learning/learning-resource-search'
     | '/_layout/learning/learningSearch'
     | '/_layout/learning/mediaDetail'
     | '/_layout/learning/mediaRegister'
@@ -2976,6 +3000,7 @@ export const routeTree = rootRoute
         "/_layout/common/pop-user-search-check",
         "/_layout/contents/layout",
         "/_layout/learning/file-upload",
+        "/_layout/learning/learning-resource-search",
         "/_layout/learning/learningSearch",
         "/_layout/learning/mediaDetail",
         "/_layout/learning/mediaRegister",
@@ -3340,6 +3365,10 @@ export const routeTree = rootRoute
     },
     "/_layout/learning/file-upload": {
       "filePath": "_layout/learning/file-upload.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/learning/learning-resource-search": {
+      "filePath": "_layout/learning/learning-resource-search.tsx",
       "parent": "/_layout"
     },
     "/_layout/learning/learningSearch": {

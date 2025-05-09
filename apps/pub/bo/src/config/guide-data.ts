@@ -362,7 +362,7 @@ export const guideData = [
     remarks: '작업 완료', // 비고
   },
   {
-    screenName: 'CMS/학습자원조회',
+    screenName: 'CMS/학습자원등록_학습자원조회',
     pageId: 'learning/learningSearch',
     screenId: '',
     pageType: 'Page',
@@ -381,7 +381,7 @@ export const guideData = [
   },
   {
     screenName: 'CMS/학습자원조회',
-    pageId: 'learning/test-management',
+    pageId: 'learning/learning-resource-search',
     screenId: 'NLP_BO_CMS_1001',
     pageType: 'Page',
     completionDate: '',

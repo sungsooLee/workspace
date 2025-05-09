@@ -47,6 +47,9 @@
           }
           [class*='link'] {
             @apply !body_bo_2_r text-[var(--gray7)] underline;
+            & + [class*='link'] {
+              @apply ml-[6px];
+            }
           }
           [class*='nlp--input'] {
             input {
@@ -66,6 +69,12 @@
             @apply mt-[4px] !h-[24px];
             [class*='datepicker_input'] {
               @apply !h-[24px];
+            }
+          }
+          [class*='icon_wrap'] {
+            @apply body_bo_2_r flex items-center text-[var(--gray7)];
+            svg {
+              @apply mr-[6px];
             }
           }
 
