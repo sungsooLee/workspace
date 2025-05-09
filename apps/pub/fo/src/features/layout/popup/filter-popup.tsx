@@ -1,6 +1,7 @@
 import { memo, useState } from 'react';
 import { OptionCard, OptionCardItem } from '@learnway/ui';
-import { getRandomId } from '@learnway/shared';
+import { isMobile } from 'react-device-detect';
+
 import { cn } from '@learnway/shared';
 // 퍼블수정 20250314 import modal추가
 import {
@@ -73,9 +74,9 @@ const FilterPopupComponent = () => {
             <li>
               <strong className={styles.tit}>강의유형</strong>
               <div className={styles.filter_box}>
-                {/* 퍼블수정 20250331 : option 추가 */}
+                {/* 퍼블수정 20250508 : mobile에서 2개씩 */}
                 <OptionCard
-                  cols={4}
+                  cols={isMobile ? 2 : 4}
                   options={filter}
                   multiple
                   value={filterValue}
@@ -88,9 +89,9 @@ const FilterPopupComponent = () => {
             <li>
               <strong className={styles.tit}>수강신청</strong>
               <div className={styles.filter_box}>
-                {/* 퍼블수정 20250331 : option 추가 */}
+                {/* 퍼블수정 20250508 : mobile에서 2개씩 */}
                 <OptionCard
-                  cols={4}
+                  cols={isMobile ? 2 : 4}
                   options={filter2}
                   multiple
                   value={filterValue2}
@@ -103,9 +104,9 @@ const FilterPopupComponent = () => {
             <li>
               <strong className={styles.tit}>학습시간</strong>
               <div className={styles.filter_box}>
-                {/* 퍼블수정 20250331 : option 추가 */}
+                {/* 퍼블수정 20250508 : mobile에서 2개씩 */}
                 <OptionCard
-                  cols={4}
+                  cols={isMobile ? 2 : 4}
                   options={filter3}
                   multiple
                   value={filterValue3}
@@ -118,9 +119,9 @@ const FilterPopupComponent = () => {
             <li>
               <strong className={styles.tit}>교육기간</strong>
               <div className={styles.filter_box}>
-                {/* 퍼블수정 20250331 : option 추가 */}
+                {/* 퍼블수정 20250508 : mobile에서 2개씩 */}
                 <OptionCard
-                  cols={4}
+                  cols={isMobile ? 2 : 4}
                   options={filter4}
                   multiple
                   value={filterValue4}
@@ -133,9 +134,9 @@ const FilterPopupComponent = () => {
             <li>
               <strong className={styles.tit}>난이도</strong>
               <div className={styles.filter_box}>
-                {/* 퍼블수정 20250331 : option 추가 */}
+                {/* 퍼블수정 20250508 : mobile에서 2개씩 */}
                 <OptionCard
-                  cols={4}
+                  cols={isMobile ? 2 : 4}
                   options={filter5}
                   multiple
                   value={filterValue5}
@@ -149,7 +150,7 @@ const FilterPopupComponent = () => {
               <strong className={styles.tit}>언어</strong>
               <div className={styles.filter_box}>
                 <OptionCard
-                  cols={4}
+                  cols={isMobile ? 2 : 4}
                   options={filter5}
                   multiple
                   value={filterValue5}
@@ -164,7 +165,7 @@ const FilterPopupComponent = () => {
               <strong className={styles.tit}>언어</strong>
               <div className={styles.filter_box}>
                 <OptionCard
-                  cols={4}
+                  cols={isMobile ? 2 : 4}
                   options={filter5}
                   multiple
                   value={filterValue5}
@@ -178,7 +179,7 @@ const FilterPopupComponent = () => {
               <strong className={styles.tit}>언어</strong>
               <div className={styles.filter_box}>
                 <OptionCard
-                  cols={4}
+                  cols={isMobile ? 2 : 4}
                   options={filter5}
                   multiple
                   value={filterValue5}
@@ -192,7 +193,7 @@ const FilterPopupComponent = () => {
               <strong className={styles.tit}>언어</strong>
               <div className={styles.filter_box}>
                 <OptionCard
-                  cols={4}
+                  cols={isMobile ? 2 : 4}
                   options={filter5}
                   multiple
                   value={filterValue5}
