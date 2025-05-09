@@ -249,9 +249,15 @@ function RouteComponent() {
                   <div className={searchStyles.inner}>
                     <div className={searchStyles.item}>
                       <label htmlFor="name-channel" className={searchStyles.label}>
-                        <span className={searchStyles.text}>채널상태</span>
+                        <span className={searchStyles.text}>등록기간</span>
                       </label>
-                      <div className={searchStyles.box}></div>
+                      <div className={searchStyles.box}>
+                        <div className={searchStyles.datepicker_wrap}>
+                          <DatePicker displayType={'day'} size={'md'} placeholder={'0000-00-00'} />
+                          <span className={searchStyles.dash}></span>
+                          <DatePicker displayType={'day'} size={'md'} placeholder={'0000-00-00'} />
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div className={searchStyles.inner}>
