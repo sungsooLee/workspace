@@ -2,7 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { Button, GridBox, Tooltip } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { useState } from 'react';
-import { IcoDownload, IcoInfoCircle } from '@learnway/icons';
+import { IcoDownload, IcoInfoCircle, IcoClock01, IcoClipboard } from '@learnway/icons';
 import { WordWrap } from './-component/word-wrap';
 
 export const Route = createFileRoute('/_guide/guide/grid')({
@@ -157,13 +157,14 @@ function RouteComponent() {
         </Button>
       ),
       course: (
-        <Tooltip
-          side="bottom"
-          align="end"
-          content={'과정명과정명과정명과정명과정명과정명과정명 전체노출툴팁입니다'}
-        >
-          {'과정명'}
-        </Tooltip>
+        <>
+          <Link to={'/'} className="link">
+            미리보기
+          </Link>
+          <Link to={'/'} className="link">
+            문항관리
+          </Link>
+        </>
       ),
       link: (
         <Button size={'xs'} className="link_icon" onlyIcon>
@@ -194,13 +195,49 @@ function RouteComponent() {
         </Button>
       ),
       course: (
-        <Tooltip
-          side="bottom"
-          align="end"
-          content={'과정명과정명과정명과정명과정명과정명과정명 전체노출툴팁입니다'}
-        >
-          {'과정명'}
-        </Tooltip>
+        <span className="icon_wrap">
+          <IcoClipboard width={'16'} height={'16'} />
+          {'20개'}
+        </span>
+      ),
+      link: (
+        <Button size={'xs'} className="link_icon" onlyIcon>
+          <IcoInfoCircle width={16} height={16} stroke={'#4C515E'} fill={'none'} />
+        </Button>
+      ),
+    },
+    {
+      firstName: 'tandy',
+      lastName: 'miller',
+      age: 40,
+      visits: 40,
+      status: 'Inactive',
+      progress: 80,
+      preview: (
+        <>
+          <Link to={'/'} className="link">
+            미리보기
+          </Link>
+          <Link to={'/'} className="link">
+            문항관리
+          </Link>
+        </>
+      ),
+      download: (
+        <Button className="download" onlyIcon>
+          <IcoDownload width={16} height={16} stroke={'#747D91'} />
+        </Button>
+      ),
+      procedure: (
+        <Button size={'xs'} className="btn_table" variant={'gray2'}>
+          {'과정개설'}
+        </Button>
+      ),
+      course: (
+        <span className="icon_wrap">
+          <IcoClock01 width={'16'} height={'16'} stroke={'#4c515e'} />
+          {'02:00:00'}
+        </span>
       ),
       link: (
         <Button size={'xs'} className="link_icon" onlyIcon>

@@ -10,7 +10,7 @@
         border-color: var(--secondary1);
       }
       & ~ .label {
-        @apply !font-bold;
+        @apply !font-bold tracking-tighter;
       }
     }
     &.round {

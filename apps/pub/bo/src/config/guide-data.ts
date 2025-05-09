@@ -362,7 +362,7 @@ export const guideData = [
     remarks: '작업 완료', // 비고
   },
   {
-    screenName: 'CMS/학습자원조회',
+    screenName: 'CMS/학습자원등록_학습자원조회',
     pageId: 'learning/learningSearch',
     screenId: '',
     pageType: 'Page',
@@ -378,6 +378,24 @@ export const guideData = [
     completionDate: '2025-03-20',
     lastUpdateDate: '',
     remarks: '작업 완료', // 비고
+  },
+  {
+    screenName: 'CMS/학습자원조회',
+    pageId: 'learning/learning-resource-search',
+    screenId: 'NLP_BO_CMS_1001',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '5/12 진행예정', // 비고
+  },
+  {
+    screenName: 'CMS/시험관리',
+    pageId: 'learning/test-management',
+    screenId: 'NLP_BO_CMS_1032',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '5/12 진행예정', // 비고
   },
   {
     screenName: 'PMS/플랫폼관리_회사/조직관리',
@@ -469,15 +487,15 @@ export const guideData = [
     lastUpdateDate: '',
     remarks: '', // 비고
   },
-  {
-    screenName: 'PMS/플랫폼관리_언어관리_다국어관리_메시지번역',
-    pageId: 'pms/language_translation_management',
-    screenId: 'NLP_BO_PMS_1422_02',
-    pageType: 'Page',
-    completionDate: '',
-    lastUpdateDate: '',
-    remarks: '', // 비고
-  },
+  // {
+  //   screenName: 'PMS/플랫폼관리_언어관리_다국어관리_메시지번역',
+  //   pageId: 'pms/language_translation_management',
+  //   screenId: 'NLP_BO_PMS_1422_02',
+  //   pageType: 'Page',
+  //   completionDate: '',
+  //   lastUpdateDate: '',
+  //   remarks: '', // 비고
+  // },
   // {
   //   screenName: 'PMS/플랫폼관리_라벨/메시지 관리',
   //   pageId: 'pms/',
@@ -618,7 +636,7 @@ export const guideData = [
     pageId: 'pms/pop-channel-search',
     screenId: 'NLP_BO_CHN_1200',
     pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-05-09',
     lastUpdateDate: '',
     remarks: '', // 비고
   },
