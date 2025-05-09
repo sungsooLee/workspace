@@ -55,7 +55,7 @@ function RouteComponent() {
                     <span className={searchStyles.text}>타이틀</span>
                     {/* 필수 케이스 */}
                     <span className={cn(searchStyles.status, searchStyles.required)}>
-                      <IcoFormRequired width={12} height={12} />
+                      <IcoFormRequired width={8} height={8} />
                     </span>
                   </label>
                   <div className={searchStyles.box}>

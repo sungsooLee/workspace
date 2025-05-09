@@ -196,7 +196,7 @@ function RouteComponent() {
       ),
       course: (
         <span className="icon_wrap">
-          <IcoClipboard width={'16'} height={'16'} />
+          <IcoClipboard width={16} height={16} />
           {'20개'}
         </span>
       ),
@@ -235,7 +235,7 @@ function RouteComponent() {
       ),
       course: (
         <span className="icon_wrap">
-          <IcoClock01 width={'16'} height={'16'} stroke={'#4c515e'} />
+          <IcoClock01 width={16} height={16} stroke={'#4c515e'} />
           {'02:00:00'}
         </span>
       ),
