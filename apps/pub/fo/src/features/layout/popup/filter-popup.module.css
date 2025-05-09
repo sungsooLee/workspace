@@ -1,4 +1,5 @@
 .start {
+  @apply relative;
   .filter_wrap {
     li {
       & + li {
@@ -8,11 +9,11 @@
         @apply mt-[8px];
         button {
           span {
-            @apply !text-[var(--gray8)];
+            @apply !button_3_r !text-[var(--gray8)];
           }
           &[class*='active'] {
             span {
-              @apply !font-bold !text-[var(--primary1)];
+              @apply !button_3_b !text-[var(--primary1)];
             }
           }
         }
@@ -26,7 +27,10 @@
       & > div {
         @apply !mt-0;
         button {
-          @apply !font-normal;
+          @apply bg-white !font-normal !leading-[20px] text-[var(--primary2)];
+          svg {
+            @apply h-[16px] w-[16px] stroke-[var(--primary2)];
+          }
         }
       }
     }
@@ -36,5 +40,36 @@
 .btn_reset {
   svg {
     @apply mr-[4px];
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      .filter_wrap {
+        li {
+          .tit {
+            @apply body_3_b text-[var(--gray8)];
+          }
+          .filter_box {
+            & > div {
+              @apply gap-[8px];
+            }
+          }
+        }
+      }
+      .look {
+        @apply w-full overflow-x-scroll py-[12px];
+        & > div {
+          @apply w-fit;
+          & > div {
+            @apply flex-nowrap whitespace-nowrap;
+          }
+        }
+      }
+    }
+    .btn_reset {
+      @apply max-w-[104px];
+    }
   }
 }

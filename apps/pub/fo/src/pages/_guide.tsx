@@ -65,6 +65,7 @@ function RouteComponent() {
         { label: '프로필', path: '/guide/operator' },
         { label: '리스트', path: '/guide/list' },
         { label: '썸네일', path: '/guide/thumnail' },
+        { label: '배너', path: '/guide/banner' },
       ],
     },
   ];

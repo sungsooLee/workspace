@@ -53,5 +53,8 @@
         }
       }
     }
+    .banner {
+      @apply mx-[20px] mt-[32px];
+    }
   }
 }

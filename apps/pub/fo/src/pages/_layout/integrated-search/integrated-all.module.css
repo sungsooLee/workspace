@@ -69,23 +69,8 @@
         }
       }
     }
-    .notice {
-      @apply mt-[60px] flex items-center rounded-[16px] bg-[var(--gray1)] px-[24px] py-[16px];
-      img {
-        @apply h-[80px] w-[80px];
-      }
-      .txt_box {
-        @apply ml-[8px] flex-1;
-        strong {
-          @apply title_6_b leading-[22px] text-[var(--gray8)];
-        }
-        p {
-          @apply body_4_r mt-[4px] leading-[19px] text-[var(--gray7)];
-        }
-      }
-      .btn_box {
-        @apply ml-[16px];
-      }
+    .banner {
+      @apply mt-[60px];
     }
   }
 }

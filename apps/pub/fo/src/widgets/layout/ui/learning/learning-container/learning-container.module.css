@@ -6,6 +6,9 @@
       .learning_contents {
         @apply flex-1;
       }
+      .side_panel {
+        @apply relative z-[10];
+      }
     }
   }
 }

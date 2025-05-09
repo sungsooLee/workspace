@@ -94,7 +94,7 @@ function RouteComponent() {
           size="sm"
           onClick={() => {
             router.navigate({
-              to: '/platform/common-code',
+              to: '/platform/code/common-code',
             });
           }}
         >

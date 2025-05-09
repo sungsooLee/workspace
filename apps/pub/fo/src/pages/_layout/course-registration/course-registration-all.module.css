@@ -20,6 +20,9 @@
             & > div {
               @apply pb-0;
             }
+            & + div {
+              @apply mt-[16px];
+            }
           }
           .input_box {
             @apply items-start;

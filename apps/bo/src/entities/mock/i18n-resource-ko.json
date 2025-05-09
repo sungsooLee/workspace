@@ -175,6 +175,7 @@
     },
     "grid": {
       "title": {
+        "courseList": "과정 목록",
         "commonCdGroupList": "공통코드그룹목록",
         "commonCdList": "공통코드 목록"
       },
