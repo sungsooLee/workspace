@@ -24,7 +24,6 @@
     .tab_wrap {
       & > div {
         & > div {
-          @apply overflow-hidden;
           &:nth-child(1) {
             @apply -mx-[20px] w-[calc(100%+40px)] px-[20px];
           }
