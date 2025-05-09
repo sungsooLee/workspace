@@ -1,8 +1,8 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Button, GridBox, Tooltip } from '@learnway/ui';
+import { Button, GridBox, Tooltip, Checkbox } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { useState } from 'react';
-import { IcoDownload, IcoInfoCircle, IcoClock01, IcoClipboard } from '@learnway/icons';
+import { IcoDownload, IcoInfoCircle, IcoClock01, IcoClipboard, IcoCopy } from '@learnway/icons';
 import { WordWrap } from './-component/word-wrap';
 
 export const Route = createFileRoute('/_guide/guide/grid')({
@@ -196,7 +196,7 @@ function RouteComponent() {
       ),
       course: (
         <span className="icon_wrap">
-          <IcoClipboard width={'16'} height={'16'} />
+          <IcoClipboard width={16} height={16} />
           {'20개'}
         </span>
       ),
@@ -235,7 +235,7 @@ function RouteComponent() {
       ),
       course: (
         <span className="icon_wrap">
-          <IcoClock01 width={'16'} height={'16'} stroke={'#4c515e'} />
+          <IcoClock01 width={16} height={16} stroke={'#4c515e'} />
           {'02:00:00'}
         </span>
       ),
@@ -406,6 +406,17 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
             </div>
           }
           guideText={'텍스트'}
+          customButtonNode={
+            <>
+              <Checkbox label={'나의 학습자원'} size={'md'} />
+              <Button
+                label={'프로그램/가이드 다운로드'}
+                icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
+              />
+              <Button label={'일괄설정'} variant={'text'} />
+              <Button label={'복사'} icon={<IcoCopy width={16} height={16} stroke={'#131c30'} />} />
+            </>
+          }
         />
       </div>
     </div>

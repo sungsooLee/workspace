@@ -2,8 +2,16 @@ import { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { cn } from '@learnway/shared';
-import { IcoRefresh02, IcoSearch, IcoClipboard, IcoClock01 } from '@learnway/icons';
-import { Button, Input, GridBox } from '@learnway/ui';
+import {
+  IcoRefresh02,
+  IcoSearch,
+  IcoClipboard,
+  IcoClock01,
+  IcoFormRequired,
+  IcoDownload,
+  IcoCopy,
+} from '@learnway/icons';
+import { Button, Input, GridBox, Dropdown, Checkbox } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 
 /* style */
@@ -149,6 +157,19 @@ function RouteComponent() {
       size: 104,
     }),
   ] as ColumnDef<any, unknown>[];
+
+  // dropdown
+  const [selectedValues, setSelectedValues] = useState<null>(null);
+  const [selectedValues2, setSelectedValues2] = useState<null>(null);
+  const [selectedValues3, setSelectedValues3] = useState<null>(null);
+  const [selectedValues4, setSelectedValues4] = useState<null>(null);
+  const [selectedValues5, setSelectedValues5] = useState<null>(null);
+  const [selectedValues6, setSelectedValues6] = useState<null>(null);
+  const options = [
+    { value: 'option1', label: '전체' },
+    { value: 'option2', label: '옵션 2' },
+    { value: 'option3', label: '옵션 3' },
+  ];
   return (
     <form className="form_row">
       <PageContainer>
@@ -161,30 +182,140 @@ function RouteComponent() {
                   <div className={searchStyles.inner}>
                     <div className={searchStyles.item}>
                       <label htmlFor="name-1" className={searchStyles.label}>
-                        <span className={searchStyles.text}>채널명</span>
+                        <span className={searchStyles.text}>테넌트</span>
+                        {/* 필수 케이스 */}
+                        <span className={cn(searchStyles.status, searchStyles.required)}>
+                          <IcoFormRequired width={8} height={8} />
+                        </span>
                       </label>
                       <div className={searchStyles.box}>
-                        <Input type={'text'} placeholder={'입력'} id={'name-1'} />
+                        <Dropdown
+                          options={options}
+                          value={selectedValues}
+                          onChange={(selected) => setSelectedValues(selected)}
+                          variant="default"
+                          placeholder="선택"
+                          size={'sm'}
+                        />
                       </div>
                     </div>
                   </div>
                   <div className={searchStyles.inner}>
                     <div className={searchStyles.item}>
                       <label htmlFor="name-2" className={searchStyles.label}>
-                        <span className={searchStyles.text}>접수ID</span>
+                        <span className={searchStyles.text}>채널</span>
+                        {/* 필수 케이스 */}
+                        <span className={cn(searchStyles.status, searchStyles.required)}>
+                          <IcoFormRequired width={8} height={8} />
+                        </span>
                       </label>
                       <div className={searchStyles.box}>
-                        <Input type={'text'} placeholder={'입력'} id={'name-2'} />
+                        <Dropdown
+                          options={options}
+                          value={selectedValues2}
+                          onChange={(selected) => setSelectedValues2(selected)}
+                          variant="default"
+                          placeholder="선택"
+                          size={'sm'}
+                        />
                       </div>
                     </div>
                   </div>
                   <div className={searchStyles.inner}>
                     <div className={searchStyles.item}>
                       <label htmlFor="name-3" className={searchStyles.label}>
-                        <span className={searchStyles.text}>신청자</span>
+                        <span className={searchStyles.text}>유형</span>
                       </label>
                       <div className={searchStyles.box}>
-                        <Input type={'text'} placeholder={'입력'} id={'name-3'} />
+                        <Dropdown
+                          options={options}
+                          value={selectedValues3}
+                          onChange={(selected) => setSelectedValues3(selected)}
+                          variant="default"
+                          placeholder="선택"
+                          size={'sm'}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className={searchStyles.inner}>
+                    <div className={searchStyles.item}>
+                      <label htmlFor="name-4" className={searchStyles.label}>
+                        <span className={searchStyles.text}>학습자원명</span>
+                      </label>
+                      <div className={searchStyles.box}>
+                        <Input type={'text'} placeholder={'입력'} id={'name-4'} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className={searchStyles.item_wrap}>
+                  <div className={searchStyles.inner}>
+                    <div className={searchStyles.item}>
+                      <label htmlFor="name-5" className={searchStyles.label}>
+                        <span className={searchStyles.text}>외주여부</span>
+                        {/* 필수 케이스 */}
+                        <span className={cn(searchStyles.status, searchStyles.required)}>
+                          <IcoFormRequired width={8} height={8} />
+                        </span>
+                      </label>
+                      <div className={searchStyles.box}>
+                        <Dropdown
+                          options={options}
+                          value={selectedValues4}
+                          onChange={(selected) => setSelectedValues4(selected)}
+                          variant="default"
+                          placeholder="선택"
+                          size={'sm'}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className={searchStyles.inner}>
+                    <div className={searchStyles.item}>
+                      <label htmlFor="name-6" className={searchStyles.label}>
+                        <span className={searchStyles.text}>사용가능</span>
+                        {/* 필수 케이스 */}
+                        <span className={cn(searchStyles.status, searchStyles.required)}>
+                          <IcoFormRequired width={8} height={8} />
+                        </span>
+                      </label>
+                      <div className={searchStyles.box}>
+                        <Dropdown
+                          options={options}
+                          value={selectedValues5}
+                          onChange={(selected) => setSelectedValues5(selected)}
+                          variant="default"
+                          placeholder="선택"
+                          size={'sm'}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className={searchStyles.inner}>
+                    <div className={searchStyles.item}>
+                      <label htmlFor="name-7" className={searchStyles.label}>
+                        <span className={searchStyles.text}>교육활용</span>
+                      </label>
+                      <div className={searchStyles.box}>
+                        <Dropdown
+                          options={options}
+                          value={selectedValues6}
+                          onChange={(selected) => setSelectedValues6(selected)}
+                          variant="default"
+                          placeholder="선택"
+                          size={'sm'}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className={searchStyles.inner}>
+                    <div className={searchStyles.item}>
+                      <label htmlFor="name-8" className={searchStyles.label}>
+                        <span className={searchStyles.text}>담당자</span>
+                      </label>
+                      <div className={searchStyles.box}>
+                        <Input type={'text'} placeholder={'입력'} id={'name-8'} />
                       </div>
                     </div>
                   </div>
@@ -220,6 +351,7 @@ function RouteComponent() {
                 height={440}
                 showColumnSettings={false}
                 showNumberingColumn
+                showExcelDownload
                 columnPinning={{ columns: ['numbering', 'type', 'name'] }}
                 pagination={{
                   pageSize,
@@ -228,7 +360,21 @@ function RouteComponent() {
                   onPageChange: setPageIndex,
                   onPageSizeChange: setPageSize,
                 }}
-                title="접수 목록"
+                title="목록"
+                customButtonNode={
+                  <>
+                    <Checkbox label={'나의 학습자원'} size={'md'} />
+                    <Button
+                      label={'프로그램/가이드 다운로드'}
+                      icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
+                    />
+                    <Button label={'일괄설정'} variant={'text'} />
+                    <Button
+                      label={'복사'}
+                      icon={<IcoCopy width={16} height={16} stroke={'#131c30'} />}
+                    />
+                  </>
+                }
               />
             </div>
           </div>
