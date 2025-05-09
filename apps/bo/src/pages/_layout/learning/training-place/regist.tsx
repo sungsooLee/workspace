@@ -189,12 +189,12 @@ const formConfig: DynamicFormConfig = {
       label: t('구분'),
       value: '',
       options: [
-        { label: '선택', value: '' },
-        { value: 'campus', label: t('캠퍼스') },
-        { value: 'option1', label: t('서비스기술교육') },
-        { value: 'option2', label: t('생기클러스터') },
-        { value: 'external', label: t('외부') },
-        { value: 'overseas', label: t('해외') },
+        { value: '', label: t('전체') },
+        { value: 'CAMPUS', label: t('캠퍼스') },
+        { value: 'SERVISE_TECH', label: t('서비스기술교육') },
+        { value: 'ME_CLUSTER', label: t('생기클러스터') },
+        { value: 'OUTSIDE', label: t('외부') },
+        { value: 'ABROAD', label: t('해외') },
       ],
     },
     {
@@ -222,7 +222,7 @@ const formConfig: DynamicFormConfig = {
       type: 'text',
       label: t('링크 주소'),
       value: '',
-      placeholder: 'http:// 또는 https:// 전체 URL을 입력하세요.',
+      placeholder: '전체 URL을 입력하세요. (예 : https:// campus.hyundai.com/doejf.log/map.jpg)',
     },
     {
       name: 'description',

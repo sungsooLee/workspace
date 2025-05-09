@@ -44,7 +44,7 @@ const TenantDetailCategoryMappingModalComponent: FC<any> = ({ tenantId, onNodeCh
   );
   const [tenantCategoryTreeAllKeys, setTenantCategoryTreeAllKeys] = useState<string[]>([]);
 
-  const { open: openModal, close: closeModal, confirm: openConfirm } = useModal();
+  const { open: openModal, close: closeModal, confirm: openConfirm, alert: openAlert } = useModal();
 
   const { data: commonCategories } = useFetchCategory();
   const { data: tenantCategories, refetch } = useFetchTenantCategory(tenantId);
@@ -87,14 +87,16 @@ const TenantDetailCategoryMappingModalComponent: FC<any> = ({ tenantId, onNodeCh
   };
 
   const handleDeleteTenantCategory = (node: TreeNode) => {
+    if (node.children) {
+      openAlert({
+        title: '삭제할 수 없습니다.',
+        content: '하위 카테고리가 존재 시 삭제할 수 없습니다.',
+      });
+      return false;
+    }
     openConfirm({
       title: '삭제 하시겠습니까?',
-      content: (
-        <>
-          <p>하위 카테고리 존재 시 모두 삭제되며,</p>
-          <p>삭제 후 복구할 수 없습니다.</p>
-        </>
-      ),
+      content: <p>삭제 후 복구할 수 없습니다.</p>,
       onClose: (value: boolean) => {
         if (value) {
           const payload: any = {};

@@ -203,11 +203,11 @@ const searchConfig: SearchBoxConfig = {
         value: '',
         options: [
           { value: '', label: t('전체') },
-          { value: 'campus', label: t('캠퍼스') },
-          { value: 'option1', label: t('서비스기술교육') },
-          { value: 'option2', label: t('생기클러스터') },
-          { value: 'external', label: t('외부') },
-          { value: 'overseas', label: t('해외') },
+          { value: 'CAMPUS', label: t('캠퍼스') },
+          { value: 'SERVISE_TECH', label: t('서비스기술교육') },
+          { value: 'ME_CLUSTER', label: t('생기클러스터') },
+          { value: 'OUTSIDE', label: t('외부') },
+          { value: 'ABROAD', label: t('해외') },
         ],
       },
       {
@@ -314,37 +314,3 @@ const gridConfig = {
     totalRows: 0,
   },
 };
-
-/*
-{
-    "status": 200,
-    "data": {
-        "content": [],
-        "pageable": {
-            "pageNumber": 0,
-            "pageSize": 10,
-            "sort": {
-                "empty": false,
-                "sorted": true,
-                "unsorted": false
-            },
-            "offset": 0,
-            "paged": true,
-            "unpaged": false
-        },
-        "totalElements": 0,
-        "totalPages": 0,
-        "last": true,
-        "size": 10,
-        "number": 0,
-        "sort": {
-            "empty": false,
-            "sorted": true,
-            "unsorted": false
-        },
-        "numberOfElements": 0,
-        "first": true,
-        "empty": true
-    }
-}
-*/

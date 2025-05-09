@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
+import { t } from 'i18next';
 import { useRouterState } from '@tanstack/react-router';
 import {
   Button,
@@ -22,6 +23,9 @@ const TenantCategoryTreeComponent: FC<any> = ({
   expandedKeys,
   onExpandChange,
   selectedKey,
+  useCommonMapping,
+  useTenantMapping,
+  isTenantManager,
 }) => {
   const routerState = useRouterState();
   const { open: openModal, confirm: openConfirm } = useModal();
@@ -120,6 +124,33 @@ const TenantCategoryTreeComponent: FC<any> = ({
     });
   };
 
+  const renderButtons = (node: TreeNode, level: number) => {
+    if (isTenantManager && useTenantMapping && node.depth < 5) {
+      if (node.depth == 0) {
+        return (
+          <div className={'gap-10px flex'}>
+            <div className={'flex items-center'}>
+              <Button variant="gray2" size={'xs'} type={'button'}>
+                {t('테넌트 카테고리 추가')}
+              </Button>
+            </div>
+          </div>
+        );
+      } else if (node.categoryType === 'TENANT') {
+        // TODO. hover시에만 나오는데??
+        return (
+          <div className={'gap-10px flex'}>
+            <div className={'flex items-center'}>
+              <Button variant="gray2" size={'xs'} type={'button'}>
+                {t('하위 테넌트 카테고리 추가')}
+              </Button>
+            </div>
+          </div>
+        );
+      }
+    }
+  };
+
   const selectedNode = selectedKey ? findNodeByKey(treeData, selectedKey) : null;
 
   return (
@@ -143,9 +174,16 @@ const TenantCategoryTreeComponent: FC<any> = ({
           >
             {'전체닫기'}
           </Button>
-          <Button variant="save" size="sm" onClick={() => handleTenantDetailCategoryMapping()}>
-            {'카테고리 매핑'}
-          </Button>
+          {!isTenantManager && (
+            <Button
+              variant="save"
+              size="sm"
+              onClick={() => handleTenantDetailCategoryMapping()}
+              disabled={!useCommonMapping}
+            >
+              {'카테고리 매핑'}
+            </Button>
+          )}
         </div>
       </div>
       <div className={layoutStyles.inner_contents}>
@@ -158,6 +196,7 @@ const TenantCategoryTreeComponent: FC<any> = ({
             onAction={handleTreeAction}
             type={'SAME_LEVEL_ONLY'}
             selectedNode={selectedNode}
+            nodeButtons={renderButtons}
             //onSelectedNodeChange={handleSelectedNodeChange}
           />
         </TreeContainer>
