@@ -10,7 +10,9 @@ import {
   IcoMybook,
   IcoSurvey,
   IcoVideo01,
-  IcoVideo02,
+  IcoQuestionBank,
+  IcoLive,
+  IcoLiveHive,
 } from '@learnway/icons';
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import {
@@ -127,7 +129,7 @@ const learningTypes = [
   {
     label: '문제은행',
     value: LEARNING_TYPE.QUESTION_BANK,
-    icon: <IcoExam />,
+    icon: <IcoQuestionBank />,
     description: '설명문구2줄설명',
   },
   {
@@ -145,13 +147,13 @@ const learningTypes = [
   {
     label: '라이브',
     value: LEARNING_TYPE.LIVE,
-    icon: <IcoHomework />,
+    icon: <IcoLive />,
     description: '설명문구2줄설명',
   },
   {
     label: '라이브(HIVE)',
     value: LEARNING_TYPE.HIVE,
-    icon: <IcoHomework />,
+    icon: <IcoLiveHive />,
     description: '설명문구2줄설명',
   },
 ];

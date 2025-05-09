@@ -81,6 +81,9 @@ export { ReactComponent as IcoInfoCircle } from './lib/ic_info_circle.svg'; // l
 export { ReactComponent as IcoImage01 } from './lib/ic_image_01.svg'; // image
 export { ReactComponent as IcoVideo01 } from './lib/ic_video_recorder_01.svg'; // video
 export { ReactComponent as IcoVideo02 } from './lib/ic_video_recorder_02.svg'; // video2
+export { ReactComponent as IcoQuestionBank } from './lib/ic_questionbank.svg';
+export { ReactComponent as IcoLive } from './lib/ic_live.svg';
+export { ReactComponent as IcoLiveHive } from './lib/ic_livehive.svg';
 export { ReactComponent as IcoHtml } from './lib/ic_html.svg'; // html
 export { ReactComponent as IcoEtc } from './lib/ic_etc.svg'; // html
 export { ReactComponent as IcoUser01 } from './lib/ic_user_01.svg'; // user

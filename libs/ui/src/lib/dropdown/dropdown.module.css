@@ -144,7 +144,7 @@
 [class*='nlp-select__multi-value'] {
   @apply !m-0 flex h-[23px] items-center justify-center !rounded-full !bg-[#d8f8ff] px-[6px] !text-[14px] text-[var(--gray9)];
   & + [class*='nlp-select__multi-value'] {
-    @apply !ml-[4px] rounded-full bg-[#6f789b];
+    @apply !ml-[4px] rounded-full bg-[#6f789b] !px-0;
   }
 }
 
