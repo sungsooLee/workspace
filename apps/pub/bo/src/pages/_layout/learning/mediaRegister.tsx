@@ -41,6 +41,7 @@ import {
   ThumbnailImageUpload,
   Tooltip,
   useModal,
+  Tabs,
 } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import {
@@ -51,6 +52,7 @@ import {
   IcoSearch,
   IcoStatusFail,
 } from '@learnway/icons';
+import { FormSubTitle } from '../../../../../../bo/src/shared/ui/form';
 
 /* images */
 import mediaImg from '../../../assets/images/temp/img_temp_media.jpg';
@@ -425,11 +427,51 @@ function RouteComponent() {
   const [itemOptions, setOptions] = useState(imageOptions);
   const [value, setValue] = useState<any>();
 
+  // 퍼블수정 20240512 : 추가
+  const items = [
+    {
+      title: '일반 시험지',
+      key: 'option01',
+      content: '',
+    },
+    {
+      title: 'OMR 시험지',
+      key: 'option02',
+      content: '',
+    },
+    {
+      title: 'OX 퀴즈',
+      key: 'option03',
+      content: '',
+    },
+  ];
+
   return (
     <form className="form_row">
       <PageContainer>
         {/* main_contents */}
         <div className={styles.main_contents}>
+          {/* 퍼블수정 20240512 : 추가 S */}
+          <ContentsRow>
+            {/* form_item */}
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-type" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>시험지 유형</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              {/* 퍼블수정 20240317 : Modal 수정 S  */}
+              <div className={formStyles.input_box}>
+                <div className={dynamicFormStyles.segment_wrap}>
+                  <Tabs items={items} type="segment" size="sm" selectedTabKey={'option01'} />
+                </div>
+              </div>
+              {/* 퍼블수정 20240317 : Modal 수정 E  */}
+            </div>
+          </ContentsRow>
+          {/* 퍼블수정 20240512 : 추가 E */}
           {/* 퍼블수정 20240312 : InputModalSelectorFormField 로 수정 S  */}
           <ContentsRow>
             {/* form_item */}
@@ -454,7 +496,7 @@ function RouteComponent() {
             </div>
           </ContentsRow>
           {/* 퍼블수정 20240312 : InputModalSelectorFormField 로 수정 E  */}
-          <ContentsRow className="no_line">
+          <ContentsRow>
             {/* form_item */}
             <div className={formStyles.form_item}>
               <label htmlFor="name-1-2" className={formStyles.form_label}>
@@ -1182,6 +1224,112 @@ function RouteComponent() {
                   side="bottom"
                   align="start"
                   content={'설정된 채널에 해당 학습자원이 공유됩니다.'}
+                >
+                  <Button onlyIcon>
+                    <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
+                  </Button>
+                </Tooltip>
+              </label>
+              <div className={formStyles.input_box}>
+                <span className={formStyles.info_area}>
+                  <span className={formStyles.info_text}>
+                    채널<em>10</em>개
+                  </span>
+                  <Button variant="search" size="sm">
+                    채널선택
+                  </Button>
+                </span>
+              </div>
+            </div>
+          </ContentsRow>
+          <FormSubTitle label={'시험지 상세 설정'} />
+          <ContentsRow>
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-exam01" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>시험문항</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Input
+                  id="name-exam01"
+                  type="text"
+                  unitText={'개'}
+                  value={'5'}
+                  className={formStyles.input_time}
+                />
+              </div>
+              <p className={cn(formStyles.guide_text, formStyles.error)}>입력하세요.</p>
+            </div>
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-exam02" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>페이지별 문항수</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Input
+                  id="name-exam02"
+                  type="text"
+                  unitText={'개'}
+                  value={'5'}
+                  className={formStyles.input_time}
+                />
+              </div>
+            </div>
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-exam03" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>시험시간</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Input
+                  id="name-exam03"
+                  type="text"
+                  unitText={'개'}
+                  value={'5'}
+                  className={formStyles.input_time}
+                />
+              </div>
+            </div>
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-exam04" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>시험응시 회수</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Input
+                  id="name-exam04"
+                  type="text"
+                  unitText={'회'}
+                  value={'5'}
+                  className={formStyles.input_time}
+                />
+              </div>
+            </div>
+          </ContentsRow>
+          {/* 퍼블수정 20240512  */}
+          <ContentsRow type="horizontal">
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-examSort" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>시험분류</span>
+                <Tooltip
+                  className={formStyles.tooltip}
+                  side="bottom"
+                  align="start"
+                  content={
+                    '시험을 사전 평가, 진행단계 평가, 사후 평가로 세분화하여 분류할 수 있습니다.'
+                  }
                 >
                   <Button onlyIcon>
                     <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />

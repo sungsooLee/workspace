@@ -8,6 +8,9 @@
       @apply !border-0 !pt-0;
     }
   }
+  [class*='nlp--contents-row']:first-child {
+    @apply mt-0;
+  }
   .short {
     @apply w-[224px] !min-w-[224px] shrink-0;
   }
@@ -65,8 +68,11 @@
   @apply relative mb-[16px] border-b border-solid border-[var(--gray2)];
   & + [class*='nlp--contents-row'] {
     @apply pb-[16px];
-    & ~ [class*='nlp--contents-row'] {
+    & + [class*='nlp--contents-row'] {
       @apply pb-0;
+      & ~ [class*='nlp--contents-row'] {
+        @apply pb-[16px];
+      }
     }
   }
 }
@@ -145,4 +151,12 @@
 /* inputbox size case */
 .w_half {
   @apply flex-[0_0_calc(50%-20px)];
+}
+
+/* segment */
+.segment_wrap {
+  @apply flex-[0_0_calc(40%)];
+  [role='tablist'] {
+    @apply !mb-0;
+  }
 }

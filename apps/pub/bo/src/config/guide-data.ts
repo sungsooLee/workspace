@@ -650,22 +650,13 @@ export const guideData = [
     remarks: '작업 완료', // 비고
   },
   {
-    screenName: 'CMS/학습자원조회',
-    pageId: 'learning/learning-resource-search',
-    screenId: 'NLP_BO_CMS_1001',
-    pageType: 'Page',
-    completionDate: '2025-05-12',
-    lastUpdateDate: '',
-    remarks: '5/12 부터 진행예정', // 비고
-  },
-  {
     screenName: 'CMS/학습자원조회_제작프로그램/가이드 다운로드',
     pageId: 'learning/pop-program-guide',
     screenId: 'NLP_BO_CMS_1056',
     pageType: 'Pop-up',
     completionDate: '2025-05-12',
     lastUpdateDate: '',
-    remarks: '5/12 부터 진행예정', // 비고
+    remarks: '', // 비고
   },
   {
     screenName: 'CMS/학습자원조회_수정자 정보',
@@ -674,17 +665,26 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-05-12',
     lastUpdateDate: '',
-    remarks: '5/12 부터 진행예정', // 비고
+    remarks: '', // 비고
   },
   {
-    screenName: 'CMS/시험관리',
-    pageId: 'learning/test-management',
+    screenName: 'CMS/시험관리_학습자원조회',
+    pageId: 'learning/learning-resource-search',
     screenId: 'NLP_BO_CMS_1032',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-05-12',
     lastUpdateDate: '',
-    remarks: '5/12 부터 진행예정', // 비고
+    remarks: '', // 비고
   },
+  // {
+  //   screenName: 'CMS/시험관리',
+  //   pageId: 'learning/test-management',
+  //   screenId: 'NLP_BO_CMS_1032',
+  //   pageType: 'Page',
+  //   completionDate: '',
+  //   lastUpdateDate: '',
+  //   remarks: '5/12 부터 진행예정', // 비고
+  // },
   // {
   //   screenName: 'CMS/학습자원 조회상세(동영상)',
   //   pageId: 'learning/mediaDetail',
