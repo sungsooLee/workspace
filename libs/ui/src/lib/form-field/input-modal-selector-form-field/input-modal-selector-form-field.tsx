@@ -6,7 +6,7 @@ import { ModalConfig } from '../../modal/type';
 import { cn } from '@learnway/shared';
 import { BaseFormFieldProps } from '@learnway/hooks';
 
-interface InputModalSelectorFormFieldProps extends BaseFormFieldProps<string> {
+interface InputModalSelectorFormFieldComponentProps extends BaseFormFieldProps<string> {
   modalConfig: ModalConfig;
   input?: InputProps;
   onClick?: (value?: any) => void;
@@ -16,7 +16,7 @@ interface InputModalSelectorFormFieldProps extends BaseFormFieldProps<string> {
 
 const InputModalSelectorFormFieldComponent = forwardRef<
   HTMLInputElement,
-  InputModalSelectorFormFieldProps
+  InputModalSelectorFormFieldComponentProps
 >(
   (
     {

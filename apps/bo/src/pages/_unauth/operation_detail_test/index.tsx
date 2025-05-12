@@ -9,7 +9,6 @@ import {
   Input,
   InputModalSelectorFormField,
   ListModalSelectorFormField,
-  ThumbnailUploaderFormField,
 } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
@@ -35,35 +34,28 @@ function RouteComponent() {
     console.log('data {} => ', data);
   };
 
-  const handleValidate = (data: any) => {
-    console.log('data {} => ', data);
+  const handleValidate = () => {
+    console.log('getValues => ', getValues());
   };
 
   return (
     <form onSubmit={onSubmit(handleOnSubmit)}>
       <PageContainer>
         <ContentsButtons>
-          <Button type="submit" variant="point" size="sm">
-            과정복사
-          </Button>
-          <Button type={'button'} variant="point" size="sm">
-            임시저장
-          </Button>
-          <Button type={'button'} variant="point" size="sm">
-            작성완료
-          </Button>
-          <Button type={'button'} variant="point" size="sm">
-            미리보기
-          </Button>
-          <Button type={'button'} variant="primary" size="sm">
-            게시하기
-          </Button>
-          <Button type={'button'} variant="point" size="sm" onClick={handleOnSubmit}>
-            Form submit
-          </Button>
-          <Button type={'button'} variant="point" size="sm" onClick={handleValidate}>
-            Form 유효성 체크
-          </Button>
+          <Button type="submit" variant="point" size="sm" label={'과정복사'}/>
+
+          <Button type={'button'} variant="point" size="sm" label={'임시저장'}/>
+
+          <Button type={'button'} variant="point" size="sm" label={'작성완료'}/>
+
+          <Button type={'button'} variant="point" size="sm" label={'미리보기'}/>
+
+          <Button type={'button'} variant="primary" size="sm" label={'게시하기'}/>
+
+          <Button type={'submit'} variant="point" size="sm" label={'Form submit'} onClick={handleOnSubmit}/>
+
+          <Button type={'button'} variant="point" size="sm" label={'Form 유효성 체크'} onClick={handleValidate}/>
+
         </ContentsButtons>
         <MainContents>
           <ContentsRow>
@@ -189,11 +181,10 @@ function RouteComponent() {
               </DynamicFormField>
             </FormRow>
           </ContentsRow>
-
-            {/*썸네일*/}
+          {/* 썸네일 리스트 */}
           <ContentsRow>
             <FormRow provider={provider}>
-              <ThumbnailUploaderFormField name="thumbnails" />
+              <DynamicFormField name={'썸네일'} />
             </FormRow>
           </ContentsRow>
         </MainContents>
@@ -210,13 +201,6 @@ function RouteComponent() {
  */
 const formConfig: DynamicFormConfig = {
   builders: [
-    {
-      label: t('썸네일'),
-      name: 'thumbnails',
-      type: 'custom',
-      format: 'array',
-      value: [],
-    },
     {
       name: 'channelId',
       type: 'hidden',
@@ -369,6 +353,13 @@ const formConfig: DynamicFormConfig = {
       value: [{ targetId: 'target1', targetName: 'targetname1' }],
       placeholder: '',
       description: '',
+    },
+    {
+      name: '썸네일',
+      type: 'thumbnail-list',
+      label: t('ThumbnailListFormField'),
+      format: 'array',
+      value: [],
     },
   ],
 };
