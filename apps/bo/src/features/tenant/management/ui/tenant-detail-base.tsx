@@ -1,32 +1,23 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useState } from 'react';
 import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useRouterState } from '@tanstack/react-router';
 
 import { cn } from '@learnway/shared';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
-import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import { IcoFormRequired, IcoAlertCircle, IcoRefresh02, IcoSearch } from '@learnway/icons';
 import { TenantManagerModal } from './tenant-manager-modal';
 import { CompanyModal } from './company-modal';
 
 import {
-  ContentsRow,
   Button,
   ChipListModalSelectorFormField,
+  ContentsRow,
   DynamicFormField,
 } from '@learnway/ui';
-import { FormRow, ContentsHistoryInfoFormField } from '@shared/ui';
-import { ThumbnailUploaderFormField } from '@features/learning';
+import { ContentsHistoryInfoFormField, FormRow } from '@shared/ui';
 
 /* image */
-import selectedImg from '@assets/images/thumb/img_thumb_default.jpg';
 
 const TenantDetailBaseComponent: FC<any> = () => {
   const routerState = useRouterState();
@@ -62,7 +53,7 @@ const TenantDetailBaseComponent: FC<any> = () => {
       <ContentsRow>
         <FormRow provider={provider}>
           <DynamicFormField name="tenantLogo">
-            <ThumbnailUploaderFormField />
+            <DynamicFormField />
           </DynamicFormField>
         </FormRow>
       </ContentsRow>
