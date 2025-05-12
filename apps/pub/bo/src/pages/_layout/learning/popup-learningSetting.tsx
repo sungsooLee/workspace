@@ -461,7 +461,7 @@ function RouteComponent() {
         </ModalBody>
         <ModalFooter>
           <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
-          <Button label={'적용'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
+          <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
         </ModalFooter>
       </ModalContainer>
     );

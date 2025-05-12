@@ -27,7 +27,7 @@ const ModalContainerComponent: React.FC<ModalContainerProps> = ({
   useEffect(() => {
     const checkScroll = () => {
       if (contentRef.current) {
-        setIsScrollable(contentRef.current.scrollHeight > 572);
+        setIsScrollable(contentRef.current.scrollHeight > 588);
       }
     };
 

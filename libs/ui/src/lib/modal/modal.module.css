@@ -117,8 +117,11 @@
 .md,
 .lg,
 .xl {
-  [class*='modal-content'] {
-    @apply !pb-[16px];
+  [class*='nlp--modal-content'] {
+    @apply !pb-0;
+    [class*='modal-content'] {
+      @apply !pb-[16px];
+    }
   }
 }
 .btn_wrap {
