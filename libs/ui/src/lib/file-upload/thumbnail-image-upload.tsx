@@ -43,7 +43,7 @@ const ThumbnailImageUploadComponent = forwardRef<
     ref,
   ) => {
     const S3_PATH =
-      'http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com';
+      'http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/';
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const [options, setOptions] = useState<ImageOption[]>(ownerOptions);
@@ -93,7 +93,7 @@ const ThumbnailImageUploadComponent = forwardRef<
         const file = thumbnailFiles[0];
         if (file) {
           const newOption = {
-            id: file?.key,
+            id: file?.id,
             path: S3_PATH + file?.key,
           };
           const newOptions = [...options, newOption];
