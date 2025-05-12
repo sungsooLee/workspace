@@ -1,4 +1,5 @@
 import { FC, useEffect, useState } from 'react';
+import { t } from 'i18next';
 import { TreeNode, useModal } from '@learnway/ui';
 import { useRouterState } from '@tanstack/react-router';
 
@@ -12,7 +13,6 @@ import {
   useMoveTenantCategory,
   useCreateTenantCategory,
 } from '@entities/tenant/service/tenant-category.hook';
-//import { transformApiDataToTreeData } from '@features/category/service/category.service';
 import { transformApiDataToTreeData } from '@features/platform/category';
 import TenantCategoryView from '@features/tenant/management/ui/tenant-detail-category-view';
 import { TenantCategoryTree } from './tenant-detail-category-tree';
@@ -104,8 +104,8 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope, roleInfo }) => {
 
   const handleSave = (payload: any) => {
     openConfirm({
-      title: '저장 하시겠습니까?',
-      content: <p>입력한 정보로 저장됩니다.</p>,
+      title: t('LABEL.confirm.save.title'),
+      content: <p>{t('LABEL.confirm.save.message')}</p>,
       onClose: (value: boolean) => {
         if (value) {
           createTenantCategory(payload, {
@@ -120,8 +120,8 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope, roleInfo }) => {
 
   const handleUpdate = (payload: any) => {
     openConfirm({
-      title: '저장 하시겠습니까?',
-      content: <p>입력한 정보로 저장됩니다.</p>,
+      title: t('LABEL.confirm.modify.title'),
+      content: <p>{t('LABEL.confirm.modify.message')}</p>,
       onClose: (value: boolean) => {
         if (value) {
           updateTenantCategory(payload, {
@@ -145,8 +145,8 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope, roleInfo }) => {
 
   const handleDelete = (payload: any) => {
     openConfirm({
-      title: '삭제 하시겠습니까?',
-      content: <p>삭제 후 복구할 수 없습니다.</p>,
+      title: t('LABEL.confirm.delete.title'),
+      content: <p>{t('LABEL.confirm.delete.messageNoChildren')}</p>,
       onClose: (value: boolean) => {
         if (value) {
           deleteTenantCategory(payload);
