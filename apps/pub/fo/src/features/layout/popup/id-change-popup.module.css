@@ -30,6 +30,9 @@
           svg {
             @apply block;
           }
+          p {
+            @apply body_3_r;
+          }
         }
       }
     }

@@ -17,7 +17,11 @@ import { Route as GuideImport } from './pages/_guide'
 import { Route as AuthImport } from './pages/_auth'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
 import { Route as LearningVideoImport } from './pages/_learning/video'
+import { Route as LearningHtmlImport } from './pages/_learning/html'
 import { Route as LearningGalleryImport } from './pages/_learning/gallery'
+import { Route as LearningFileImport } from './pages/_learning/file'
+import { Route as LearningEbookImport } from './pages/_learning/ebook'
+import { Route as LearningBlogImport } from './pages/_learning/blog'
 import { Route as AuthSuccessImport } from './pages/_auth/success'
 import { Route as AuthSignupStep3EnImport } from './pages/_auth/signup-step3-en'
 import { Route as AuthSignupStep3Import } from './pages/_auth/signup-step3'
@@ -143,9 +147,33 @@ const LearningVideoRoute = LearningVideoImport.update({
   getParentRoute: () => LearningRoute,
 } as any)
 
+const LearningHtmlRoute = LearningHtmlImport.update({
+  id: '/html',
+  path: '/html',
+  getParentRoute: () => LearningRoute,
+} as any)
+
 const LearningGalleryRoute = LearningGalleryImport.update({
   id: '/gallery',
   path: '/gallery',
+  getParentRoute: () => LearningRoute,
+} as any)
+
+const LearningFileRoute = LearningFileImport.update({
+  id: '/file',
+  path: '/file',
+  getParentRoute: () => LearningRoute,
+} as any)
+
+const LearningEbookRoute = LearningEbookImport.update({
+  id: '/ebook',
+  path: '/ebook',
+  getParentRoute: () => LearningRoute,
+} as any)
+
+const LearningBlogRoute = LearningBlogImport.update({
+  id: '/blog',
+  path: '/blog',
   getParentRoute: () => LearningRoute,
 } as any)
 
@@ -887,11 +915,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSuccessImport
       parentRoute: typeof AuthImport
     }
+    '/_learning/blog': {
+      id: '/_learning/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof LearningBlogImport
+      parentRoute: typeof LearningImport
+    }
+    '/_learning/ebook': {
+      id: '/_learning/ebook'
+      path: '/ebook'
+      fullPath: '/ebook'
+      preLoaderRoute: typeof LearningEbookImport
+      parentRoute: typeof LearningImport
+    }
+    '/_learning/file': {
+      id: '/_learning/file'
+      path: '/file'
+      fullPath: '/file'
+      preLoaderRoute: typeof LearningFileImport
+      parentRoute: typeof LearningImport
+    }
     '/_learning/gallery': {
       id: '/_learning/gallery'
       path: '/gallery'
       fullPath: '/gallery'
       preLoaderRoute: typeof LearningGalleryImport
+      parentRoute: typeof LearningImport
+    }
+    '/_learning/html': {
+      id: '/_learning/html'
+      path: '/html'
+      fullPath: '/html'
+      preLoaderRoute: typeof LearningHtmlImport
       parentRoute: typeof LearningImport
     }
     '/_learning/video': {
@@ -1613,12 +1669,20 @@ const LayoutRouteWithChildren =
   LayoutRoute._addFileChildren(LayoutRouteChildren)
 
 interface LearningRouteChildren {
+  LearningBlogRoute: typeof LearningBlogRoute
+  LearningEbookRoute: typeof LearningEbookRoute
+  LearningFileRoute: typeof LearningFileRoute
   LearningGalleryRoute: typeof LearningGalleryRoute
+  LearningHtmlRoute: typeof LearningHtmlRoute
   LearningVideoRoute: typeof LearningVideoRoute
 }
 
 const LearningRouteChildren: LearningRouteChildren = {
+  LearningBlogRoute: LearningBlogRoute,
+  LearningEbookRoute: LearningEbookRoute,
+  LearningFileRoute: LearningFileRoute,
   LearningGalleryRoute: LearningGalleryRoute,
+  LearningHtmlRoute: LearningHtmlRoute,
   LearningVideoRoute: LearningVideoRoute,
 }
 
@@ -1649,7 +1713,11 @@ export interface FileRoutesByFullPath {
   '/signup-step3': typeof AuthSignupStep3Route
   '/signup-step3-en': typeof AuthSignupStep3EnRoute
   '/success': typeof AuthSuccessRoute
+  '/blog': typeof LearningBlogRoute
+  '/ebook': typeof LearningEbookRoute
+  '/file': typeof LearningFileRoute
   '/gallery': typeof LearningGalleryRoute
+  '/html': typeof LearningHtmlRoute
   '/video': typeof LearningVideoRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
@@ -1746,7 +1814,11 @@ export interface FileRoutesByTo {
   '/signup-step3': typeof AuthSignupStep3Route
   '/signup-step3-en': typeof AuthSignupStep3EnRoute
   '/success': typeof AuthSuccessRoute
+  '/blog': typeof LearningBlogRoute
+  '/ebook': typeof LearningEbookRoute
+  '/file': typeof LearningFileRoute
   '/gallery': typeof LearningGalleryRoute
+  '/html': typeof LearningHtmlRoute
   '/video': typeof LearningVideoRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
@@ -1847,7 +1919,11 @@ export interface FileRoutesById {
   '/_auth/signup-step3': typeof AuthSignupStep3Route
   '/_auth/signup-step3-en': typeof AuthSignupStep3EnRoute
   '/_auth/success': typeof AuthSuccessRoute
+  '/_learning/blog': typeof LearningBlogRoute
+  '/_learning/ebook': typeof LearningEbookRoute
+  '/_learning/file': typeof LearningFileRoute
   '/_learning/gallery': typeof LearningGalleryRoute
+  '/_learning/html': typeof LearningHtmlRoute
   '/_learning/video': typeof LearningVideoRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_guide/guide/alert': typeof GuideGuideAlertRoute
@@ -1946,7 +2022,11 @@ export interface FileRouteTypes {
     | '/signup-step3'
     | '/signup-step3-en'
     | '/success'
+    | '/blog'
+    | '/ebook'
+    | '/file'
     | '/gallery'
+    | '/html'
     | '/video'
     | '/'
     | '/guide/alert'
@@ -2042,7 +2122,11 @@ export interface FileRouteTypes {
     | '/signup-step3'
     | '/signup-step3-en'
     | '/success'
+    | '/blog'
+    | '/ebook'
+    | '/file'
     | '/gallery'
+    | '/html'
     | '/video'
     | '/'
     | '/guide/alert'
@@ -2141,7 +2225,11 @@ export interface FileRouteTypes {
     | '/_auth/signup-step3'
     | '/_auth/signup-step3-en'
     | '/_auth/success'
+    | '/_learning/blog'
+    | '/_learning/ebook'
+    | '/_learning/file'
     | '/_learning/gallery'
+    | '/_learning/html'
     | '/_learning/video'
     | '/_layout/'
     | '/_guide/guide/alert'
@@ -2355,7 +2443,11 @@ export const routeTree = rootRoute
     "/_learning": {
       "filePath": "_learning.tsx",
       "children": [
+        "/_learning/blog",
+        "/_learning/ebook",
+        "/_learning/file",
         "/_learning/gallery",
+        "/_learning/html",
         "/_learning/video"
       ]
     },
@@ -2443,8 +2535,24 @@ export const routeTree = rootRoute
       "filePath": "_auth/success.tsx",
       "parent": "/_auth"
     },
+    "/_learning/blog": {
+      "filePath": "_learning/blog.tsx",
+      "parent": "/_learning"
+    },
+    "/_learning/ebook": {
+      "filePath": "_learning/ebook.tsx",
+      "parent": "/_learning"
+    },
+    "/_learning/file": {
+      "filePath": "_learning/file.tsx",
+      "parent": "/_learning"
+    },
     "/_learning/gallery": {
       "filePath": "_learning/gallery.tsx",
+      "parent": "/_learning"
+    },
+    "/_learning/html": {
+      "filePath": "_learning/html.tsx",
       "parent": "/_learning"
     },
     "/_learning/video": {
