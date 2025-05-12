@@ -238,6 +238,13 @@
   }
 }
 
+[class*='grid_info'] {
+  @apply text-[1.2rem] text-[var(--gray7)];
+  [class*='num'] {
+    @apply text-[var(--secondary1)];
+  }
+}
+
 [class*='custom_info_wrap'] {
   @apply ml-[16px];
   [class*='table_tit'] {

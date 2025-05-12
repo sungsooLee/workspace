@@ -78,16 +78,14 @@ const UserGroupComponent: FC<{}> = ({}) => {
   ];
   const [treeData, setTreeData] = useState<TreeNode[]>(sampleData);
 
-  const [selectedItems, setSelectedItems] = useState<TreeNode[]>([]);
-  const handleSelectedItemsChange = (items: TreeNode[]) => {
-    setSelectedItems(items);
-  };
+  const [selectedItems, setSelectedItems] = useState<{ key: string; fullPath: string }[]>([]);
+
   return (
     <ShuttleTreeToChips
       treeId="tree"
       sourceData={treeData}
       selectedItems={selectedItems}
-      onItemsChange={handleSelectedItemsChange}
+      onItemsChange={setSelectedItems}
       title={'타이틀'}
     />
   );

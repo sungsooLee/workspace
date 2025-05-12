@@ -6,7 +6,7 @@ import { LinkBox } from '../../../../../widgets/layout/ui/container/slot/link-bo
 import { Button, ContentsRow, DynamicFormField, InputModalSelectorFormField } from '@learnway/ui';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../../shared/ui/form';
-import { MovieInfo, ThumbnailUploaderFormField } from '../../../../../features/learning';
+import { MovieInfo } from '../../../../../features/learning';
 import { FormDisplay } from '../../../../../features/form/ui/form-display';
 import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
 import { SubTitlesFormField } from '../../../../../features/form/ui';
@@ -42,7 +42,8 @@ function RouteComponent() {
             <Button
               variant="point"
               size="sm"
-              onClick={() => router.navigate({ to: '/learning/resource' })}>
+              onClick={() => router.navigate({ to: '/learning/resource' })}
+            >
               목록
             </Button>
           </LinkBox>
@@ -174,7 +175,7 @@ function RouteComponent() {
           <ContentsRow>
             {/*썸네일*/}
             <FormRow provider={provider}>
-              <ThumbnailUploaderFormField name="thumbnails" />
+              <DynamicFormField name="thumbnails" />
             </FormRow>
           </ContentsRow>
           <ContentsRow>
@@ -384,7 +385,7 @@ const formConfig: DynamicFormConfig = {
     {
       label: t('썸네일'),
       name: 'thumbnails',
-      type: 'custom',
+      type: 'thumbnail-list',
       format: 'array',
       value: [],
     },

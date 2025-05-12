@@ -39,7 +39,7 @@ function RouteComponent() {
       // 동영상
       case LEARNING_TYPE.VIDEO: {
         const videoUploadResult = await openModal({
-          content: <LearningResourceFileUploadModal />,
+          content: <LearningResourceFileUploadModal channel={{ channelId: '', channelName: '' }} />,
           width: 'lg',
         });
         router.navigate({ to: '/learning_test/resource/view/video' });

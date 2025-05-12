@@ -335,7 +335,7 @@
 }
 
 [class*='nlp--contents-row'] + .form_contents_wrap {
-  @apply mt-[16px];
+  @apply mt-0;
 }
 
 .form_contents_wrap {

@@ -175,6 +175,7 @@
     },
     "grid": {
       "title": {
+        "list": "목록",
         "courseList": "과정 목록",
         "commonCdGroupList": "공통코드그룹목록",
         "commonCdList": "공통코드 목록"
@@ -192,7 +193,6 @@
         "csvUpload": "CSV 업로드",
         "selectAll": "전체 선택",
         "removeAll": "전체 삭제",
-        "list": "목록",
         "courseList": "과정 목록"
       },
       "column": {

@@ -1,4 +1,4 @@
-import { httpService } from '@/libs/shared/src';
+import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
 
 export default class UserGroupsService {

@@ -40,7 +40,7 @@ const PasswordVerifyModalComponent = () => {
     if (result && data.loginFailCount >= 5) {
       logout(undefined, {
         onSuccess: () => {
-          router.navigate({ to: '/search-account?tabKey=account' });
+          router.navigate({ to: '/search-account', params: { tabKey: 'account' } });
         },
       });
     }

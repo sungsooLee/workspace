@@ -78,7 +78,8 @@ const MenuViewComponent: FC<any> = ({
           parentMenuName: data.parentCode,
           isWebExposed: data?.isWebExposed,
           isMobileExposed: data?.isMobileExposed,
-          hiddenYn: data?.hiddenYn || false,
+          isHiddenMenu: data?.isHiddenMenu || false,
+
           visible: [
             data.isWebExposed === true && 'isWebExposed',
             data.isMobileExposed === true && 'isMobileExposed',
@@ -108,7 +109,7 @@ const MenuViewComponent: FC<any> = ({
         menuDesc: '',
         isDuplicateMenuCode: false,
         visible: ['isWebExposed'],
-        hiddenYn: false,
+        isHiddenMenu: false,
         apiMappingMenuList: [],
       };
       fetchData(initialData);
@@ -126,7 +127,7 @@ const MenuViewComponent: FC<any> = ({
         menuDesc: '',
         isDuplicateMenuCode: false,
         visible: [],
-        hiddenYn: false,
+        isHiddenMenu: false,
       };
       fetchData(initialData);
     }
@@ -182,7 +183,7 @@ const MenuViewComponent: FC<any> = ({
           parentId: node.parentKey,
           menuName: node.title,
           isDeleted: false,
-          hiddenYn: node.hiddenYn,
+          isHiddenMenu: node.isHiddenMenu,
           isUsed: true,
           isWebExposed: isWebExposed,
           isMobileExposed: isMobileExposed,
@@ -212,7 +213,7 @@ const MenuViewComponent: FC<any> = ({
       menuCode: node.code,
       parentId: node.parentKey,
       isDeleted: false,
-      hiddenYn: node.hiddenYn,
+      isHiddenMenu: node.isHiddenMenu,
       isUsed: true,
       isWebExposed: isWebExposed,
       isMobileExposed: isMobileExposed,
@@ -425,7 +426,7 @@ const MenuViewComponent: FC<any> = ({
 
           <ContentsRow type={'horizontal'} className={'inactive'}>
             <FormRow provider={provider}>
-              <DynamicFormField name={'hiddenYn'} disabled={isInitMode} />
+              <DynamicFormField name={'isHiddenMenu'} disabled={isInitMode} />
             </FormRow>
           </ContentsRow>
 
@@ -535,7 +536,7 @@ const formConfig: DynamicFormConfig = {
     {
       label: t('Hidden 메뉴'),
       tooltip: 'Hidden메뉴 적용 시 메뉴에 API가 매칭 되나, 메뉴 자체는 화면에서 숨김처리가 됩니다.',
-      name: 'hiddenYn',
+      name: 'isHiddenMenu',
       type: 'switch',
       value: false,
     },

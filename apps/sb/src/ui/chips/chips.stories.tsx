@@ -75,8 +75,8 @@ export const TemplateListWordwrap: any = (args: any) => {
       <Button label={'SET'} onClick={() => setOptions([{ label: '현대자동차 C', value: 'C' }])} />
       <ChipList
         options={options}
-        showInput
         wordwrap
+        emptyMessage={'최소 1개 이상 입력해주세요'}
         onChipClick={handleChipClick}
         onAddInputEnterKeyDown={handleAddInputEnterKeyDown}
         onChipDeleteClick={handlerChipDelete}
@@ -85,3 +85,17 @@ export const TemplateListWordwrap: any = (args: any) => {
   );
 };
 TemplateListWordwrap.storyName = 'Chips List (여러줄)';
+
+// Chips List (EmptyMessage)
+export const TemplateEmptyMessage: any = (args: any) => {
+  return (
+    <>
+      <ChipList
+        options={[]}
+        wordwrap
+        emptyMessage={'추가 버튼을 눌러 학습대상(유저그룹)을 직접 선택하세요.'}
+      />
+    </>
+  );
+};
+TemplateEmptyMessage.storyName = 'Empty Message';

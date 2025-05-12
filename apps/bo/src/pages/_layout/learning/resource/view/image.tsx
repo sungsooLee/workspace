@@ -9,7 +9,6 @@ import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../..
 import {
   ResourceImageListFormField,
   SharedChannelGridFormField,
-  ThumbnailUploaderFormField,
 } from '../../../../../features/learning';
 import { FormDisplay } from '../../../../../features/form/ui/form-display';
 import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
@@ -136,9 +135,7 @@ function RouteComponent() {
           {/*썸네일*/}
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name="thumbnails">
-                <ThumbnailUploaderFormField />
-              </DynamicFormField>
+              <DynamicFormField name="thumbnails" />
             </FormRow>
           </ContentsRow>
           {/*태그*/}
@@ -332,7 +329,7 @@ const formConfig: DynamicFormConfig = {
     {
       label: t('썸네일'),
       name: 'thumbnails',
-      type: 'custom',
+      type: 'thumbnail-list',
       format: 'array',
       value: [],
     },

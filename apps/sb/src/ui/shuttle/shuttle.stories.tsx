@@ -237,10 +237,7 @@ export const TemplateTreeToChips = () => {
     },
   ];
 
-  const [selectedItems, setSelectedItems] = useState<TreeNode[]>([]);
-  const handleSelectedItemsChange = (items: TreeNode[]) => {
-    setSelectedItems(items);
-  };
+  const [selectedItems, setSelectedItems] = useState<{ key: string; fullPath: string }[]>([]);
 
   return (
     <ShuttleTreeToChips
@@ -248,7 +245,7 @@ export const TemplateTreeToChips = () => {
       title="TITLE"
       sourceData={treeData as TreeNode[]}
       selectedItems={selectedItems}
-      onItemsChange={handleSelectedItemsChange}
+      onItemsChange={setSelectedItems}
     />
   );
 };

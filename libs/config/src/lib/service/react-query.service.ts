@@ -13,30 +13,30 @@ class ReactQueryClient {
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
       retry: false,
-      staleTime: 0, 
-      cacheTime: 0, 
+      staleTime: 0,
+      cacheTime: 0,
       onError: (error: any) => {
         // 에러 발생 시 이벤트 발행
-        console.log(error);
-        const errorData = {
-          title: 'Query Error',
-          message: error?.message || '데이터를 불러오는 중 오류가 발생했습니다.',
-          status: error?.response?.status,
-          url: error?.config?.url,
-        };
-        eventService.emit(HTTP_EVENTS.REACT_QUERY_ERROR, errorData);
+        // console.log(error);
+        // const errorData = {
+        //   title: 'Query Error',
+        //   message: error?.message || '데이터를 불러오는 중 오류가 발생했습니다.',
+        //   status: error?.response?.status,
+        //   url: error?.config?.url,
+        // };
+        // eventService.emit(HTTP_EVENTS.REACT_QUERY_ERROR, errorData);
       },
     },
     mutations: {
       onError: (error: any) => {
         // 에러 발생 시 이벤트 발행
-        const errorData = {
-          title: 'Mutation Error',
-          message: error?.message || '데이터를 저장하는 중 오류가 발생했습니다.',
-          status: error?.response?.status,
-          url: error?.config?.url,
-        };
-        eventService.emit(HTTP_EVENTS.REACT_QUERY_ERROR, errorData);
+        // const errorData = {
+        //   title: 'Mutation Error',
+        //   message: error?.message || '데이터를 저장하는 중 오류가 발생했습니다.',
+        //   status: error?.response?.status,
+        //   url: error?.config?.url,
+        // };
+        // eventService.emit(HTTP_EVENTS.REACT_QUERY_ERROR, errorData);
       },
     },
   };

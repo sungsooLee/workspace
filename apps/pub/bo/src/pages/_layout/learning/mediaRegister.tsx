@@ -41,6 +41,9 @@ import {
   ThumbnailImageUpload,
   Tooltip,
   useModal,
+  Tabs,
+  RadioGroupFormField,
+  CheckboxGroupFormField,
 } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import {
@@ -51,6 +54,7 @@ import {
   IcoSearch,
   IcoStatusFail,
 } from '@learnway/icons';
+import { FormSubTitle } from '../../../../../../bo/src/shared/ui/form';
 
 /* images */
 import mediaImg from '../../../assets/images/temp/img_temp_media.jpg';
@@ -359,6 +363,9 @@ function RouteComponent() {
     3: false,
     4: false,
     5: false,
+    6: false,
+    7: false,
+    8: false,
   });
 
   // 상태 변경 함수 (Switch id에 따라 상태를 업데이트)
@@ -425,11 +432,51 @@ function RouteComponent() {
   const [itemOptions, setOptions] = useState(imageOptions);
   const [value, setValue] = useState<any>();
 
+  // 퍼블수정 20240512 : 추가
+  const items = [
+    {
+      title: '일반 시험지',
+      key: 'option01',
+      content: '',
+    },
+    {
+      title: 'OMR 시험지',
+      key: 'option02',
+      content: '',
+    },
+    {
+      title: 'OX 퀴즈',
+      key: 'option03',
+      content: '',
+    },
+  ];
+
   return (
     <form className="form_row">
       <PageContainer>
         {/* main_contents */}
         <div className={styles.main_contents}>
+          {/* 퍼블수정 20240512 : 추가 S */}
+          <ContentsRow>
+            {/* form_item */}
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-type" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>시험지 유형</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              {/* 퍼블수정 20240317 : Modal 수정 S  */}
+              <div className={formStyles.input_box}>
+                <div className={dynamicFormStyles.segment_wrap}>
+                  <Tabs items={items} type="segment" size="sm" selectedTabKey={'option01'} />
+                </div>
+              </div>
+              {/* 퍼블수정 20240317 : Modal 수정 E  */}
+            </div>
+          </ContentsRow>
+          {/* 퍼블수정 20240512 : 추가 E */}
           {/* 퍼블수정 20240312 : InputModalSelectorFormField 로 수정 S  */}
           <ContentsRow>
             {/* form_item */}
@@ -454,7 +501,7 @@ function RouteComponent() {
             </div>
           </ContentsRow>
           {/* 퍼블수정 20240312 : InputModalSelectorFormField 로 수정 E  */}
-          <ContentsRow className="no_line">
+          <ContentsRow>
             {/* form_item */}
             <div className={formStyles.form_item}>
               <label htmlFor="name-1-2" className={formStyles.form_label}>
@@ -1200,6 +1247,257 @@ function RouteComponent() {
               </div>
             </div>
           </ContentsRow>
+          <FormSubTitle label={'시험지 상세 설정'} />
+          <ContentsRow>
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-exam01" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>시험문항</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Input
+                  id="name-exam01"
+                  type="text"
+                  unitText={'개'}
+                  value={'5'}
+                  className={formStyles.input_time}
+                />
+              </div>
+              <p className={cn(formStyles.guide_text, formStyles.error)}>입력하세요.</p>
+            </div>
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-exam02" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>페이지별 문항수</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Input
+                  id="name-exam02"
+                  type="text"
+                  unitText={'개'}
+                  value={'5'}
+                  className={formStyles.input_time}
+                />
+              </div>
+            </div>
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-exam03" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>시험시간</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Input
+                  id="name-exam03"
+                  type="text"
+                  unitText={'개'}
+                  value={'5'}
+                  className={formStyles.input_time}
+                />
+              </div>
+            </div>
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-exam04" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>시험응시 회수</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Input
+                  id="name-exam04"
+                  type="text"
+                  unitText={'회'}
+                  value={'5'}
+                  className={formStyles.input_time}
+                />
+              </div>
+            </div>
+          </ContentsRow>
+          {/* 퍼블수정 20240512  */}
+          <ContentsRow type="horizontal">
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-examSort" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>시험분류</span>
+                <Tooltip
+                  className={formStyles.tooltip}
+                  side="bottom"
+                  align="start"
+                  content={
+                    '시험을 사전 평가, 진행단계 평가, 사후 평가로 세분화하여 분류할 수 있습니다.'
+                  }
+                >
+                  <Button onlyIcon>
+                    <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
+                  </Button>
+                </Tooltip>
+              </label>
+              <div className={formStyles.input_box}>
+                <Switch
+                  id="name-title"
+                  className={formStyles.btn_switch}
+                  label={checked[6] ? '사전평가' : '분류안함'}
+                  checked={checked[6]}
+                  onCheckedChange={handleCheckedChange(6)}
+                />
+              </div>
+            </div>
+          </ContentsRow>
+          {checked[6] && (
+            <div className={dynamicFormStyles.form_display}>
+              <ContentsRow>
+                <RadioGroupFormField
+                  options={[
+                    { value: 'option01', label: '사전평가' },
+                    { value: 'option02', label: '진행단계평가' },
+                    { value: 'option03', label: '사후(최종)평가' },
+                  ]}
+                />
+              </ContentsRow>
+            </div>
+          )}
+          <ContentsRow type="horizontal">
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-examGuide" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>시험 종료 안내</span>
+                <Tooltip
+                  className={formStyles.tooltip}
+                  side="bottom"
+                  align="start"
+                  content={'시험 문항을 순차적으로 풀어야된다면 문항이동 제어기능을 사용하세요. '}
+                >
+                  <Button onlyIcon>
+                    <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
+                  </Button>
+                </Tooltip>
+              </label>
+              <div className={formStyles.input_box}>
+                <Switch
+                  id="name-examGuide"
+                  className={formStyles.btn_switch}
+                  label={checked[7] ? '종료안내' : '안내안함'}
+                  checked={checked[7]}
+                  onCheckedChange={handleCheckedChange(7)}
+                />
+              </div>
+            </div>
+          </ContentsRow>
+          {checked[7] && (
+            <div className={dynamicFormStyles.form_display}>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-examEnd" className={formStyles.form_label}>
+                    <span className={formStyles.form_text}>시험시간 종료</span>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    <div className={dynamicFormStyles.w_half}>
+                      <Input
+                        id="name-exam04"
+                        type="text"
+                        unitText={'분전'}
+                        placeholder={'입력'}
+                        className={formStyles.input_time}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </ContentsRow>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-examMsg" className={formStyles.form_label}>
+                    <span className={formStyles.form_text}>종료메세지</span>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    <Textarea
+                      id={'name-examMsg'}
+                      rows={5}
+                      cols={5}
+                      maxLength={500}
+                      resize={'none'}
+                      placeholder={'입력'}
+                      size={'sm'}
+                    />
+                  </div>
+                </div>
+              </ContentsRow>
+            </div>
+          )}
+          <ContentsRow type="horizontal">
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-examResult" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>시험응시 후 결과 공개</span>
+                <Tooltip
+                  className={formStyles.tooltip}
+                  side="bottom"
+                  align="start"
+                  content={
+                    '결과 공개는 시험 응시 후 총점, 시험문항, 문항별 채점(정답을 맞췄는지 여부), 문항별 정답, 정답의 해설을 학습자에게 공개할지, 공개한다면 언제공개할지 설정합니다. '
+                  }
+                >
+                  <Button onlyIcon>
+                    <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
+                  </Button>
+                </Tooltip>
+              </label>
+              <div className={formStyles.input_box}>
+                <Switch
+                  id="name-examGuide"
+                  className={formStyles.btn_switch}
+                  label={checked[8] ? '공개' : '비공개'}
+                  checked={checked[8]}
+                  onCheckedChange={handleCheckedChange(8)}
+                />
+              </div>
+            </div>
+          </ContentsRow>
+          {checked[8] && (
+            <div className={dynamicFormStyles.form_display}>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-examResult" className={formStyles.form_label}>
+                    <span className={formStyles.form_text}>결과 공개 범위</span>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    <CheckboxGroupFormField
+                      options={[
+                        { value: 'check01', label: '총점' },
+                        { value: 'check02', label: '시험 문항' },
+                        { value: 'check03', label: '문항별 채점' },
+                        { value: 'check04', label: '문항별 정답' },
+                        { value: 'check05', label: '정답의 해설' },
+                      ]}
+                      value={['check01', 'check02']}
+                    />
+                  </div>
+                </div>
+              </ContentsRow>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-examMsg" className={formStyles.form_label}>
+                    <span className={formStyles.form_text}>결과보기 가능 시점</span>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    <RadioGroupFormField
+                      options={[
+                        { value: 'option01', label: '시험 종료 후' },
+                        { value: 'option02', label: '시험제출 후' },
+                      ]}
+                      value={'option01'}
+                    />
+                  </div>
+                </div>
+              </ContentsRow>
+            </div>
+          )}
           {/* 2025-03-07 수정 */}
           <div className={formStyles.form_contents_wrap}>
             <strong className={formStyles.tit_sub}>
