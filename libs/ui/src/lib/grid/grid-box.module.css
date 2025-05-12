@@ -127,7 +127,7 @@
     button {
       @apply button_bo_2_r !font-normal;
       svg {
-        @apply mr-[2px];
+        @apply mr-[4px];
       }
     }
     button + button {
@@ -144,6 +144,15 @@
     }
     .button_info {
       @apply flex items-center;
+      [class*='nlp--checkbox'] {
+        @apply pr-[8px];
+        & + [class*='nlp--button'] {
+          @apply ml-[8px];
+          &::before {
+            @apply mr-[12px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
+          }
+        }
+      }
     }
     &:empty {
       @apply !hidden;
@@ -226,6 +235,13 @@
         }
       }
     }
+  }
+}
+
+[class*='grid_info'] {
+  @apply text-[1.2rem] text-[var(--gray7)];
+  [class*='num'] {
+    @apply text-[var(--secondary1)];
   }
 }
 

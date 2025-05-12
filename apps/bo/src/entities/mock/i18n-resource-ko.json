@@ -75,6 +75,9 @@
       "category": {
         "title": "공통 카테고리 목록"
       },
+      "tenantCategory": {
+        "title": "테넌트 카테고리 목록"
+      },
       "menu": {}
     },
     "common": {
@@ -83,7 +86,8 @@
         "menu": "메뉴",
         "category": "카테고리",
         "tenant": "테넌트",
-        "channel": "채널"
+        "channel": "채널",
+        "tenantCategory": "테넌트 카테고리"
       },
       "login": "로그인",
       "loginExtension": "로그인연장",
@@ -163,13 +167,15 @@
       "enable": "사용",
       "disable": "미사용",
       "learnerMenu": "학습자 메뉴",
-      "hrdCenterMenu": "HRD센터 메뉴"
+      "hrdCenterMenu": "HRD센터 메뉴",
+      "categoryInfo": "카테고리 정보"
     },
     "link": {
       "multilingual": "다국어관리"
     },
     "grid": {
       "title": {
+        "courseList": "과정 목록",
         "commonCdGroupList": "공통코드그룹목록",
         "commonCdList": "공통코드 목록"
       },
@@ -221,7 +227,8 @@
       "add": "{{type}} 추가",
       "depthAdd": "하위 {{type}} 추가",
       "expand": "전체펼침",
-      "closed": "전체닫힘"
+      "closed": "전체닫힘",
+      "mapping": "{{type}} 매핑"
     },
     "form": {
       "input": {
@@ -256,7 +263,8 @@
         "openingDate": "개설년도",
         "courseCode": "과정코드",
         "courseName": "과정명",
-        "useYn": "사용여부"
+        "useYn": "사용여부",
+        "userGroupSetting": "유저그룹 설정"
       },
       "validation": {
         "needInput": "{{code}}를 입력해 주세요.",
@@ -270,6 +278,9 @@
       },
       "radio": {
         "select1": "선택1"
+      },
+      "tooltip": {
+        "tenantCategoryIsUsed": "테넌트 - 카테고리 관리에서 사용할 카테고리를 선택할 수 있습니다."
       }
     },
     "button": {
@@ -307,6 +318,14 @@
       "reset:": {
         "title": "초기화 하시겠습니까?"
       }
+    },
+    "alert": {
+      "delete": {
+        "title": "삭제할 수 없습니다.",
+        "message": "하위 {{type}} 존재 시 삭제할 수 없습니다."
+      },
+      "movableSameLevel": "동일한 레벨 내에서만 매핑 및 이동이 가능합니다.",
+      "movableSameParent": "동일한 부모 {{type}}에만 매핑 및 이동이 가능합니다."
     }
   }
 }

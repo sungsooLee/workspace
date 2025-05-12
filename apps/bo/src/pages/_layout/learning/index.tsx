@@ -4,6 +4,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import {
   Button,
   ChipListModalSelectorFormField,
+  DynamicFormField,
   Input,
   InputModalSelectorFormField,
 } from '@learnway/ui';
@@ -12,12 +13,9 @@ import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-butt
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '@widgets/layout/ui/container/slot/sub-contents';
 import { ContentsRow } from '@widgets/layout/ui/container/parts/contents-row';
-import { LectureTypeSiteUrl } from '@features/operation/ui/lecture-type-site-url/lecture-type-site-url';
-import { ManagerListModal, TeacherListModal } from '@features/operation';
-import { useDynamicForm } from '@learnway/hooks';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { FormRow } from '@shared/ui';
-import { DynamicFormField } from '@learnway/ui';
-import { DynamicFormConfig } from '@learnway/hooks';
+import { LectureTypeSiteUrl, ManagerListModal, TeacherListModal } from '@features/learning/course';
 
 export const Route = createFileRoute('/_layout/learning/')({
   component: RouteComponent,
@@ -144,7 +142,6 @@ function RouteComponent() {
                   }}
                 />
               </DynamicFormField>
-              {/*<DynamicFormField name={'연락처'}>/!*<CourseDetailForm />*!/</DynamicFormField>*/}
             </FormRow>
           </ContentsRow>
           {/* 테넌트 */}
@@ -155,7 +152,6 @@ function RouteComponent() {
           </ContentsRow>
         </MainContents>
         <SubContents>
-          {/*<CourseDetailForm setForm={setForm2} />*/}
           <Input />
         </SubContents>
       </PageContainer>

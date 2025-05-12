@@ -46,7 +46,7 @@ function RouteComponent() {
             <strong>언어 설정</strong>
             <span>
               Korean
-              <IcoArrowForward width={20} height={20} stroke="#131c30"></IcoArrowForward>
+              <IcoArrowForward width={16} height={16} stroke="#131c30"></IcoArrowForward>
             </span>
           </Link>
         </li>
@@ -64,11 +64,11 @@ function RouteComponent() {
             <span>2026-01-01 18:28</span>
           </div>
         </li>
-        <li className={styles.no_line}>
+        <li>
           <Link to={''}>
             <strong>SNS 로그인 설정</strong>
             <span>
-              네이버<IcoArrowForward width={20} height={20} stroke="#131c30"></IcoArrowForward>
+              네이버<IcoArrowForward width={16} height={16} stroke="#131c30"></IcoArrowForward>
             </span>
           </Link>
         </li>

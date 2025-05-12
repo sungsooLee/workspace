@@ -377,8 +377,6 @@ const GridComponent = forwardRef(
       // defaultColumn,
     });
 
-    console.log('table.getSelectedRowModel()', table.getSelectedRowModel());
-
     // 가상 스크롤 관련 설정
     const { rows } = table.getRowModel();
     const rowVirtualizer = useVirtualizer({

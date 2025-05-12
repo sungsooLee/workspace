@@ -20,7 +20,7 @@ function NavigateComponent() {
         <ul>
           {data?.menus?.map((menu: Menu, index: number) => {
             return (
-              <li key={menu.key}>
+              <li key={`${menu.key}_${index}`}>
                 <Link
                   to={menu.path}
                   key={menu.key}

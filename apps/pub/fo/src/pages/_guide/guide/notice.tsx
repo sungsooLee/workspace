@@ -17,6 +17,8 @@ function RouteComponent() {
       </p>
       <div className="info">
         위아래 여백은 각 모듈 css에서 정의 styles.signup_noti (이름변경 가능)
+        <br />
+        라운드 16px 일 경우 해당페이지 모듈 css에서 정의
       </div>
       <div className="group">
         <h3 className="guide_tit3">유의사항 미리보기</h3>

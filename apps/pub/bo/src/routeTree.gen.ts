@@ -79,9 +79,12 @@ import { Route as LayoutLearningPopupUploadImport } from './pages/_layout/learni
 import { Route as LayoutLearningPopupLearningSettingImport } from './pages/_layout/learning/popup-learningSetting'
 import { Route as LayoutLearningPopupLearningRegisterationImport } from './pages/_layout/learning/popup-learningRegisteration'
 import { Route as LayoutLearningPopupFileuploadImport } from './pages/_layout/learning/popup-fileupload'
+import { Route as LayoutLearningPopProgramGuideImport } from './pages/_layout/learning/pop-program-guide'
+import { Route as LayoutLearningPopModifierInfoImport } from './pages/_layout/learning/pop-modifier-info'
 import { Route as LayoutLearningMediaRegisterImport } from './pages/_layout/learning/mediaRegister'
 import { Route as LayoutLearningMediaDetailImport } from './pages/_layout/learning/mediaDetail'
 import { Route as LayoutLearningLearningSearchImport } from './pages/_layout/learning/learningSearch'
+import { Route as LayoutLearningLearningResourceSearchImport } from './pages/_layout/learning/learning-resource-search'
 import { Route as LayoutLearningFileUploadImport } from './pages/_layout/learning/file-upload'
 import { Route as LayoutContentsLayoutImport } from './pages/_layout/contents/layout'
 import { Route as LayoutCommonPopUserSearchCheckImport } from './pages/_layout/common/pop-user-search-check'
@@ -572,6 +575,20 @@ const LayoutLearningPopupFileuploadRoute =
     getParentRoute: () => LayoutRoute,
   } as any)
 
+const LayoutLearningPopProgramGuideRoute =
+  LayoutLearningPopProgramGuideImport.update({
+    id: '/learning/pop-program-guide',
+    path: '/learning/pop-program-guide',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutLearningPopModifierInfoRoute =
+  LayoutLearningPopModifierInfoImport.update({
+    id: '/learning/pop-modifier-info',
+    path: '/learning/pop-modifier-info',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
 const LayoutLearningMediaRegisterRoute =
   LayoutLearningMediaRegisterImport.update({
     id: '/learning/mediaRegister',
@@ -589,6 +606,13 @@ const LayoutLearningLearningSearchRoute =
   LayoutLearningLearningSearchImport.update({
     id: '/learning/learningSearch',
     path: '/learning/learningSearch',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutLearningLearningResourceSearchRoute =
+  LayoutLearningLearningResourceSearchImport.update({
+    id: '/learning/learning-resource-search',
+    path: '/learning/learning-resource-search',
     getParentRoute: () => LayoutRoute,
   } as any)
 
@@ -1514,6 +1538,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutLearningFileUploadImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/learning/learning-resource-search': {
+      id: '/_layout/learning/learning-resource-search'
+      path: '/learning/learning-resource-search'
+      fullPath: '/learning/learning-resource-search'
+      preLoaderRoute: typeof LayoutLearningLearningResourceSearchImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/learning/learningSearch': {
       id: '/_layout/learning/learningSearch'
       path: '/learning/learningSearch'
@@ -1533,6 +1564,20 @@ declare module '@tanstack/react-router' {
       path: '/learning/mediaRegister'
       fullPath: '/learning/mediaRegister'
       preLoaderRoute: typeof LayoutLearningMediaRegisterImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/learning/pop-modifier-info': {
+      id: '/_layout/learning/pop-modifier-info'
+      path: '/learning/pop-modifier-info'
+      fullPath: '/learning/pop-modifier-info'
+      preLoaderRoute: typeof LayoutLearningPopModifierInfoImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/learning/pop-program-guide': {
+      id: '/_layout/learning/pop-program-guide'
+      path: '/learning/pop-program-guide'
+      fullPath: '/learning/pop-program-guide'
+      preLoaderRoute: typeof LayoutLearningPopProgramGuideImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/learning/popup-fileupload': {
@@ -1976,9 +2021,12 @@ interface LayoutRouteChildren {
   LayoutCommonPopUserSearchCheckRoute: typeof LayoutCommonPopUserSearchCheckRoute
   LayoutContentsLayoutRoute: typeof LayoutContentsLayoutRoute
   LayoutLearningFileUploadRoute: typeof LayoutLearningFileUploadRoute
+  LayoutLearningLearningResourceSearchRoute: typeof LayoutLearningLearningResourceSearchRoute
   LayoutLearningLearningSearchRoute: typeof LayoutLearningLearningSearchRoute
   LayoutLearningMediaDetailRoute: typeof LayoutLearningMediaDetailRoute
   LayoutLearningMediaRegisterRoute: typeof LayoutLearningMediaRegisterRoute
+  LayoutLearningPopModifierInfoRoute: typeof LayoutLearningPopModifierInfoRoute
+  LayoutLearningPopProgramGuideRoute: typeof LayoutLearningPopProgramGuideRoute
   LayoutLearningPopupFileuploadRoute: typeof LayoutLearningPopupFileuploadRoute
   LayoutLearningPopupLearningRegisterationRoute: typeof LayoutLearningPopupLearningRegisterationRoute
   LayoutLearningPopupLearningSettingRoute: typeof LayoutLearningPopupLearningSettingRoute
@@ -2030,9 +2078,13 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutCommonPopUserSearchCheckRoute: LayoutCommonPopUserSearchCheckRoute,
   LayoutContentsLayoutRoute: LayoutContentsLayoutRoute,
   LayoutLearningFileUploadRoute: LayoutLearningFileUploadRoute,
+  LayoutLearningLearningResourceSearchRoute:
+    LayoutLearningLearningResourceSearchRoute,
   LayoutLearningLearningSearchRoute: LayoutLearningLearningSearchRoute,
   LayoutLearningMediaDetailRoute: LayoutLearningMediaDetailRoute,
   LayoutLearningMediaRegisterRoute: LayoutLearningMediaRegisterRoute,
+  LayoutLearningPopModifierInfoRoute: LayoutLearningPopModifierInfoRoute,
+  LayoutLearningPopProgramGuideRoute: LayoutLearningPopProgramGuideRoute,
   LayoutLearningPopupFileuploadRoute: LayoutLearningPopupFileuploadRoute,
   LayoutLearningPopupLearningRegisterationRoute:
     LayoutLearningPopupLearningRegisterationRoute,
@@ -2175,9 +2227,12 @@ export interface FileRoutesByFullPath {
   '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
+  '/learning/learning-resource-search': typeof LayoutLearningLearningResourceSearchRoute
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
   '/learning/mediaRegister': typeof LayoutLearningMediaRegisterRoute
+  '/learning/pop-modifier-info': typeof LayoutLearningPopModifierInfoRoute
+  '/learning/pop-program-guide': typeof LayoutLearningPopProgramGuideRoute
   '/learning/popup-fileupload': typeof LayoutLearningPopupFileuploadRoute
   '/learning/popup-learningRegisteration': typeof LayoutLearningPopupLearningRegisterationRoute
   '/learning/popup-learningSetting': typeof LayoutLearningPopupLearningSettingRoute
@@ -2301,9 +2356,12 @@ export interface FileRoutesByTo {
   '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
+  '/learning/learning-resource-search': typeof LayoutLearningLearningResourceSearchRoute
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
   '/learning/mediaRegister': typeof LayoutLearningMediaRegisterRoute
+  '/learning/pop-modifier-info': typeof LayoutLearningPopModifierInfoRoute
+  '/learning/pop-program-guide': typeof LayoutLearningPopProgramGuideRoute
   '/learning/popup-fileupload': typeof LayoutLearningPopupFileuploadRoute
   '/learning/popup-learningRegisteration': typeof LayoutLearningPopupLearningRegisterationRoute
   '/learning/popup-learningSetting': typeof LayoutLearningPopupLearningSettingRoute
@@ -2430,9 +2488,12 @@ export interface FileRoutesById {
   '/_layout/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/_layout/contents/layout': typeof LayoutContentsLayoutRoute
   '/_layout/learning/file-upload': typeof LayoutLearningFileUploadRoute
+  '/_layout/learning/learning-resource-search': typeof LayoutLearningLearningResourceSearchRoute
   '/_layout/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/_layout/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
   '/_layout/learning/mediaRegister': typeof LayoutLearningMediaRegisterRoute
+  '/_layout/learning/pop-modifier-info': typeof LayoutLearningPopModifierInfoRoute
+  '/_layout/learning/pop-program-guide': typeof LayoutLearningPopProgramGuideRoute
   '/_layout/learning/popup-fileupload': typeof LayoutLearningPopupFileuploadRoute
   '/_layout/learning/popup-learningRegisteration': typeof LayoutLearningPopupLearningRegisterationRoute
   '/_layout/learning/popup-learningSetting': typeof LayoutLearningPopupLearningSettingRoute
@@ -2558,9 +2619,12 @@ export interface FileRouteTypes {
     | '/common/pop-user-search-check'
     | '/contents/layout'
     | '/learning/file-upload'
+    | '/learning/learning-resource-search'
     | '/learning/learningSearch'
     | '/learning/mediaDetail'
     | '/learning/mediaRegister'
+    | '/learning/pop-modifier-info'
+    | '/learning/pop-program-guide'
     | '/learning/popup-fileupload'
     | '/learning/popup-learningRegisteration'
     | '/learning/popup-learningSetting'
@@ -2683,9 +2747,12 @@ export interface FileRouteTypes {
     | '/common/pop-user-search-check'
     | '/contents/layout'
     | '/learning/file-upload'
+    | '/learning/learning-resource-search'
     | '/learning/learningSearch'
     | '/learning/mediaDetail'
     | '/learning/mediaRegister'
+    | '/learning/pop-modifier-info'
+    | '/learning/pop-program-guide'
     | '/learning/popup-fileupload'
     | '/learning/popup-learningRegisteration'
     | '/learning/popup-learningSetting'
@@ -2810,9 +2877,12 @@ export interface FileRouteTypes {
     | '/_layout/common/pop-user-search-check'
     | '/_layout/contents/layout'
     | '/_layout/learning/file-upload'
+    | '/_layout/learning/learning-resource-search'
     | '/_layout/learning/learningSearch'
     | '/_layout/learning/mediaDetail'
     | '/_layout/learning/mediaRegister'
+    | '/_layout/learning/pop-modifier-info'
+    | '/_layout/learning/pop-program-guide'
     | '/_layout/learning/popup-fileupload'
     | '/_layout/learning/popup-learningRegisteration'
     | '/_layout/learning/popup-learningSetting'
@@ -2976,9 +3046,12 @@ export const routeTree = rootRoute
         "/_layout/common/pop-user-search-check",
         "/_layout/contents/layout",
         "/_layout/learning/file-upload",
+        "/_layout/learning/learning-resource-search",
         "/_layout/learning/learningSearch",
         "/_layout/learning/mediaDetail",
         "/_layout/learning/mediaRegister",
+        "/_layout/learning/pop-modifier-info",
+        "/_layout/learning/pop-program-guide",
         "/_layout/learning/popup-fileupload",
         "/_layout/learning/popup-learningRegisteration",
         "/_layout/learning/popup-learningSetting",
@@ -3342,6 +3415,10 @@ export const routeTree = rootRoute
       "filePath": "_layout/learning/file-upload.tsx",
       "parent": "/_layout"
     },
+    "/_layout/learning/learning-resource-search": {
+      "filePath": "_layout/learning/learning-resource-search.tsx",
+      "parent": "/_layout"
+    },
     "/_layout/learning/learningSearch": {
       "filePath": "_layout/learning/learningSearch.tsx",
       "parent": "/_layout"
@@ -3352,6 +3429,14 @@ export const routeTree = rootRoute
     },
     "/_layout/learning/mediaRegister": {
       "filePath": "_layout/learning/mediaRegister.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/learning/pop-modifier-info": {
+      "filePath": "_layout/learning/pop-modifier-info.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/learning/pop-program-guide": {
+      "filePath": "_layout/learning/pop-program-guide.tsx",
       "parent": "/_layout"
     },
     "/_layout/learning/popup-fileupload": {

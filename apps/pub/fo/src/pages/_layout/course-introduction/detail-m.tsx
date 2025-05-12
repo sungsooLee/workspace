@@ -36,6 +36,19 @@ function RouteComponent() {
 
   // 탭
   const [selectedTabKey, setSelectedTabKey] = useState<string>('');
+  const [selectedTabTitle, setSelectedTabTitle] = useState<number>(0);
+
+  // 탭 타이틀
+  const tabTitle = [
+    { title: '대시보드', key: 'a' },
+    { title: '과정소개', key: 'b' },
+    { title: '후기', count: '0', key: 'b' }, // 과정소개 탭 안에서 후기가 있기 때문에 key값 동일
+  ];
+  const handleTab = (key: string, index: number) => {
+    setSelectedTabKey(key);
+    setSelectedTabTitle(index);
+  };
+
   const items = [
     {
       title: '대시보드',
@@ -54,10 +67,6 @@ function RouteComponent() {
           <CourseIntroduction />
         </div>
       ),
-    },
-    {
-      title: '후기',
-      key: 'c',
     },
   ];
 
@@ -229,7 +238,21 @@ function RouteComponent() {
       </div>
 
       <div className={styles.tab_wrap}>
-        <Tabs selectedTabKey={selectedTabKey} items={items} type="line" />
+        <div className={styles.tab_title}>
+          <div className={styles.box}>
+            {tabTitle.map((item, index) => (
+              <Button
+                key={item.key}
+                className={selectedTabTitle === index ? styles.active : ''}
+                onClick={() => handleTab(item.key, index)}
+              >
+                {item.title}
+                <em>{item.count}</em>
+              </Button>
+            ))}
+          </div>
+        </div>
+        <Tabs className={styles.tab} selectedTabKey={selectedTabKey} items={items} type="line" />
       </div>
 
       {/* button fix */}

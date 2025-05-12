@@ -12,13 +12,27 @@ import {
 } from '@learnway/icons';
 
 import styles from './side-panel.module.css';
+import { ChartNoAxesColumnDecreasing } from 'lucide-react';
 
-interface SidePanelProps {
+interface ChildData {
   className?: string;
+  panelState: boolean;
 }
 
-const SidePanelComponent = ({ className }: SidePanelProps) => {
+interface SidePanelProps {
+  onValueChange: (data: ChildData) => void;
+}
+
+const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
   const [menuSelected, setMenuSelected] = useState(false);
+
+  const sendValueToParent = () => {
+    menuSelected === true ? setMenuSelected(false) : setMenuSelected(true);
+    const data: ChildData = {
+      panelState: menuSelected,
+    };
+    onValueChange(data);
+  };
 
   return (
     <div className={`${styles.start} ${menuSelected ? styles.active : ''}`}>
@@ -26,7 +40,7 @@ const SidePanelComponent = ({ className }: SidePanelProps) => {
         <div className={styles.menu_contents}>
           <div className={styles.title_box}>
             <strong>커리큘럼</strong>
-            <Button onClick={() => setMenuSelected(false)}>
+            <Button onClick={() => sendValueToParent()}>
               <IcoXclose width={24} height={24} stroke="#6f798b" />
             </Button>
           </div>
@@ -40,7 +54,7 @@ const SidePanelComponent = ({ className }: SidePanelProps) => {
       )}
       <div className={styles.panel}>
         <div className={styles.menu}>
-          <Button onClick={() => setMenuSelected(true)}>
+          <Button onClick={() => sendValueToParent()}>
             <IcoLearning01 width={32} height={32} />
             <span>커리큘럼</span>
           </Button>

@@ -124,7 +124,11 @@ export const TabsComponent = forwardRef<
         <Primitive.List className={styles.list} aria-label={ariaLabel}>
           {items.map((d: TabItemProps) => (
             <Primitive.Trigger
-              className={cn(styles.trigger, d.alarm ? styles.alarm : '')}
+              className={cn(
+                styles.trigger,
+                d.alarm ? styles.alarm : '',
+                clickDisabled && styles.cursor_none,
+              )}
               value={d.key}
               key={d.key}
             >

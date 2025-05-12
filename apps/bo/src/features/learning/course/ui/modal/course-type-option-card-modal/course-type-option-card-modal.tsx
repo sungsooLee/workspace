@@ -18,7 +18,7 @@ export interface CourseTypeOptionCardModalProps extends CommonReactElementProps 
 }
 
 /**
- * 강사 리스트
+ * 과정 유형 모달
  * @param value
  * @param onChange
  * @param props
@@ -33,8 +33,7 @@ const CourseTypeOptionCardModalComponent = forwardRef<
   const { data: optionsData }: any = getMockData();
 
   const handleCardSelect = (option: any) => {
-    console.log('----', option);
-    closeModal?.(option.value);
+    closeModal?.(option);
   };
 
   return (

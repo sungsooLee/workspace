@@ -713,7 +713,7 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'category/detail_m',
     pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-05-09',
     lastUpdateDate: '',
     remarks: '- filter-popup.tsx',
   },
@@ -725,7 +725,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '- introduction.tsx\n- 썸네일 공통 컴포넌트 대기중\n- 과정소개 toastpopup 미작업',
+    remarks: '- introduction.tsx\n- 과정소개 toastpopup 미작업',
   },
   {
     screenId: 'NLP_FO_LEC_1001',
@@ -756,7 +756,7 @@ export const guideData = [
     completionDate: '',
     lastUpdateDate: '',
     remarks:
-      '- introduction.tsx\n- tooltip 확인중\n- 수강신청 불가 팝업창들 course-information-popup.tsx (반려팝업 미결정)',
+      '- introduction.tsx\n- 수강신청 불가 팝업창들 course-information-popup.tsx (반려팝업 미결정)',
   },
   {
     screenId: 'NLP_FO_LEC_1022',
@@ -845,8 +845,8 @@ export const guideData = [
     pageId: 'course-introduction/package',
     pageType: 'Page',
     completionDate: '2025-04-02',
-    lastUpdateDate: '',
-    remarks: '- package.tsx\n- 썸네일 공통검포넌트 미작업으로 작업 불가능',
+    lastUpdateDate: '2025-05-08',
+    remarks: '- package.tsx',
   },
   {
     screenId: 'NLP_FO_LEC_MA_1000',
@@ -856,7 +856,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '- introduction.tsx\n- 썸네일 공통 컴포넌트 대기중\n- 과정소개 toastpopup 미작업',
+    remarks: '- introduction.tsx\n- 과정소개 toastpopup 미작업',
   },
   {
     screenId: 'NLP_FO_LEC_MA_1001',
@@ -1563,11 +1563,11 @@ export const guideData = [
     screenId: 'NLP_FO_CLA_1027',
     screenName: '강의실_학습창_웹_갤러리',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'gallery',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- gallery.tsx\n- 축소, 확대, drag 기능 공통 요청중',
   },
   {
     screenId: 'NLP_FO_CLA_1028',

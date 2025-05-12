@@ -25,6 +25,9 @@ import {
   IcoVideo02,
   IcoSurvey,
   IcoMultiScorm,
+  IcoQuestionBank,
+  IcoLive,
+  IcoLiveHive,
   IcoHomework,
   IcoFolder,
   IcoExam,
@@ -92,21 +95,26 @@ function RouteComponent() {
     //   description: '설명문구2줄설명',
     // },
     { label: '시험지', value: getRandomId(), icon: <IcoExam />, description: '설명문구2줄설명' },
-    { label: '문제은행', value: getRandomId(), icon: <IcoExam />, description: '설명문구2줄설명' },
+    {
+      label: '문제은행',
+      value: getRandomId(),
+      icon: <IcoQuestionBank />,
+      description: '설명문구2줄설명',
+    },
     { label: '설문지', value: getRandomId(), icon: <IcoSurvey />, description: '설명문구2줄설명' },
     { label: '과제', value: getRandomId(), icon: <IcoHomework />, description: '설명문구2줄설명' },
-    {
-      label: '라이브',
-      value: getRandomId(),
-      icon: <IcoHomework />,
-      description: '설명문구2줄설명',
-    },
-    {
-      label: '라이브(LIVE)',
-      value: getRandomId(),
-      icon: <IcoHomework />,
-      description: '설명문구2줄설명',
-    },
+    // {
+    //   label: '라이브',
+    //   value: getRandomId(),
+    //   icon: <IcoLive />,
+    //   description: '설명문구2줄설명',
+    // },
+    // {
+    //   label: '라이브(HIVE)',
+    //   value: getRandomId(),
+    //   icon: <IcoLiveHive />,
+    //   description: '설명문구2줄설명',
+    // },
   ];
   // 퍼블수정 20240428 : 메뉴 수정 E
   const EbookContent = () => {

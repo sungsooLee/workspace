@@ -11,6 +11,7 @@
     button,
     a {
       @apply body_3_r text-center text-[var(--gray8)] underline;
+      text-underline-offset: 4px;
     }
   }
 

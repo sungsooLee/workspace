@@ -157,7 +157,6 @@ function RouteComponent() {
                   })}
                 />
               </DynamicFormField>
-              {/*<DynamicFormField name={'연락처'}>/!*<CourseDetailForm />*!/</DynamicFormField>*/}
             </FormRow>
           </ContentsRow>
           {/* 테넌트 */}
@@ -191,7 +190,6 @@ function RouteComponent() {
           </ContentsRow>
         </MainContents>
         <SubContents>
-          {/*<CourseDetailForm setForm={setForm2} />*/}
           <Input />
         </SubContents>
       </PageContainer>
