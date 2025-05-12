@@ -1,16 +1,22 @@
+import React, { FC, useEffect, useState } from 'react';
 import { cn } from '@learnway/shared';
 import { Button, ContentsRow, DynamicFormField, TreeBox, TreeNode } from '@learnway/ui';
 import { t } from 'i18next';
-
+import { useRouterState } from '@tanstack/react-router';
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import { FormRow, FormSubTitle } from '../../../../shared/ui';
+import { FormRow, FormSubTitle } from '@shared/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { ScopeRadioGroup } from './scope-radio-group';
-import { SectionLayout } from '../../../../widgets/layout/ui/container/section-layout/section-layout';
-import { useState } from 'react';
-import { roleTreeMockData } from '../../../../entities/mock/role';
-import { useFetchRole, useFetchRoles } from '../../../../entities/role/service/role-manage.hook';
+import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
+import { roleTreeMockData } from '@entities/mock/role';
+import { useFetchRole, useFetchRoleTree } from '@entities/role/service/role-manage.hook';
+import {
+  getAllTreeKeys,
+  getFirstExpandKeys,
+  moveNodeCheck,
+  transformRoleApiDataToTreeData,
+} from '../service/tenant-detail-tree.service';
 
 const FORM_MODE = {
   NONE: 'NONE',
@@ -19,13 +25,19 @@ const FORM_MODE = {
 };
 
 //type fo , bo
-const TenantDetailLearningRoleTreeComponent = ({ type: roleScope }: any) => {
-  const { provider, onSubmit, clearFormError, fetchData } = useDynamicForm(formConfig);
-  const getRoles = () => roleTreeMockData;
-  const { data } = useFetchRoles();
-
+const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
+  const routerState = useRouterState();
   const [formMode, setFormMode] = useState(FORM_MODE.NONE);
   const [selectedRoleId, setSelectedRoleId] = useState<any>(null);
+  const [roleTreeData, setRoleTreeData] = useState([]);
+  const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
+
+  const tenantId = routerState.location.state?.tenantId;
+  const { provider, onSubmit, clearFormError, fetchData } = useDynamicForm(formConfig);
+
+  const getRoles = () => roleTreeMockData;
+
+  const { data } = useFetchRoleTree(tenantId, siteScope);
 
   const clearAllFormErrors = () => {
     formConfig.builders.forEach((item) => clearFormError(item.name));
@@ -71,14 +83,26 @@ const TenantDetailLearningRoleTreeComponent = ({ type: roleScope }: any) => {
     });
     fetchData({
       ...initData,
+      parentId: node.key,
     });
     setFormMode(FORM_MODE.ADD);
   };
 
+  useEffect(() => {
+    if (data) {
+      const transformedData = transformRoleApiDataToTreeData(data);
+      setRoleTreeData(transformedData);
+      if (transformedData && transformedData.length > 0 && expandedKeys.length === 0) {
+        const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
+        setExpandedKeys(firstLevelKeys);
+      }
+    }
+  }, [data]);
+
   return (
     <SectionLayout contentsRatio={'thirty'}>
       <TreeBox
-        data={data}
+        data={roleTreeData}
         initLevel={2}
         treeId={'1'}
         showSearchKeyword
@@ -239,6 +263,7 @@ export const TenantDetailLearningRoleTree = TenantDetailLearningRoleTreeComponen
 
 const formConfig: DynamicFormConfig = {
   builders: [
+    { name: 'parentId', type: 'hidden', value: '' },
     {
       name: 'roleId',
       type: 'text',

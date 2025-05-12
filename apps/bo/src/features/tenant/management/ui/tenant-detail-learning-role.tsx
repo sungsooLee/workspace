@@ -3,12 +3,8 @@ import { t } from 'i18next';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import { Tabs } from '@learnway/ui';
 
-import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 import { TenantDetailLearningRoleTree } from './tenant-detail-learning-role-tree';
 import { TenantDetailLearningRoleMenu } from './tenant-detail-learning-role-menu';
-import { TenantDetailLearningRoleView } from './tenant-detail-learning-role-view';
-import { TenantDetailLearningRoleApi } from './tenant-detail-learning-role-api';
-import { TenantDetailLearningRoleSearch } from './tenant-detail-learning-role-search';
 import { TenantDetailLearningRoleGrant } from './tenant-detail-learning-role-grant';
 
 const TenantDetailLearningRoleComponent: FC<any> = () => {

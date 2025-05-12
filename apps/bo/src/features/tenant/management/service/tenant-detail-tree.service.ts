@@ -106,7 +106,7 @@ export const getFirstExpandKeys = (treeData: TreeNode[]) => {
  * @param apiData
  * @returns 변환된 TreeNode
  */
-export const transformApiDataToTreeData = (apiData: any) => {
+export const transformMenuApiDataToTreeData = (apiData: any) => {
   // 단일 노드인 경우 배열로 감싸기
   const dataArray = Array.isArray(apiData) ? apiData : [apiData];
 
@@ -189,4 +189,52 @@ export const moveNodeCheck = (events: any) => {
       break;
   }
   return undefined;
+};
+
+export const transformRoleApiDataToTreeData = (apiData: any) => {
+  // const dataArray = Array.isArray(apiData) ? apiData : [apiData];
+  const dataArray = [{ roleId: 'root', roleName: 'ROOT', children: [...apiData] }];
+
+  const transform = (nodes: any) => {
+    if (!nodes) return [];
+
+    return nodes.map((node: any) => {
+      // 새로운 노드 객체 생성
+      const transformedNode = {
+        // 필수 트리 속성
+        key: node.roleId, // menuId를 key로 사용
+        title: node.roleName, // title이 없으면 menuCode 사용
+
+        // 원본 데이터 속성 유지
+        roleId: node.roleId,
+        roleCode: node.roleCode,
+        parentRoleId: node.parentRoleId,
+        name: node.name,
+        description: node.description,
+        tenantScope: node.tenantScope,
+        tenantId: node.tenantId,
+        companyScope: node.companyScope,
+        companyIds: node.companyIds,
+        deptScope: node.deptScope,
+        deptIds: node.deptIds,
+        isUsed: node.isUsed,
+        createdBy: node.createdBy,
+        createdDate: node.createdDate,
+        lastModifiedBy: node.lastModifiedBy,
+        modifiedDate: node.modifiedDate,
+
+        parentKey: node.parentId || 'root', // parentId를 parentKey로 변환
+        children: node.children || [],
+      };
+
+      // 자식 노드가 있는 경우 재귀적으로 변환
+      if (node.children && node.children.length > 0) {
+        transformedNode.children = transform(node.children);
+      }
+
+      return transformedNode;
+    });
+  };
+
+  return transform(dataArray);
 };

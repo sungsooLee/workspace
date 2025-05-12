@@ -7,10 +7,10 @@ import {
   TreeBox,
   TreeNode,
 } from '@learnway/ui';
-import { SectionLayout } from '../../../../widgets/layout/ui/container/section-layout/section-layout';
+import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 import { CellContext, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
-import { FormSubTitle } from '../../../../shared/ui';
+import { useRouterState } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import {
   roleTreeMockData,
@@ -19,7 +19,7 @@ import {
   roleMenuMockData,
   menuApiMappingMockData,
   roleApiUsageMockData,
-} from '../../../../entities/mock/role';
+} from '@entities/mock/role';
 
 const columnHelper = createColumnHelper<any>();
 
@@ -56,6 +56,7 @@ const renderMenuButtons = (onChange: any, menuSelectionType: any) => {
 };
 
 export const TenantDetailLearningRoleMenuComponent = ({ roleScope }: any) => {
+  const routerState = useRouterState();
   const [selectedRoleId, setSelectedRoleId] = useState<string | null>(null);
   const [selectedMenuId, setSelectedMenuId] = useState<string | null>(null);
   const [menuSelectionType, setMenuSelectionType] = useState<'all' | 'custom'>('all');
@@ -64,6 +65,7 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleScope }: any) => {
   const [apiUsageState, setApiUsageState] = useState<{ [apiId: string]: boolean }>({});
   const [isDataModified, setIsDataModified] = useState<boolean>(false);
 
+  const tenantId = routerState.location.state?.tenantId;
   const getRoles = () => roleTreeMockData;
 
   const handleMenuSelectionTypeChange = (type: string) => {
