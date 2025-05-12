@@ -47,7 +47,7 @@ function RouteComponent() {
 
   const formRef = useRef<HTMLFormElement>(null);
   const handleListButtonClick = () => {
-    router.navigate({ to: '/tenant/management' });
+    router.navigate({ to: '/platform/tenant/management' });
   };
 
   const handleSaveButtonClick = async () => {

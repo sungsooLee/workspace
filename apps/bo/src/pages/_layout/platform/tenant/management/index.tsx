@@ -41,7 +41,7 @@ function RouteComponent() {
             className="link"
             onClick={() => {
               router.navigate({
-                to: '/tenant/management/detail',
+                to: '/platform/tenant/management/detail',
                 state: { tenantId: info.row.original.tenantId },
               });
             }}

@@ -4,11 +4,11 @@ import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.modu
 import { Tabs } from '@learnway/ui';
 import { TenantDetailMenuTree } from './tenant-detail-menu-tree';
 
-const TenantDetailMenuComponent: FC<any> = () => {
+const TenantDetailMenuComponent: FC<any> = ({ roleInfo }) => {
   const [selectedTabKey, setSelectedTabKey] = useState<string>('FO');
 
   const renderTabContent = () => {
-    return <TenantDetailMenuTree menuScope={selectedTabKey} />;
+    return <TenantDetailMenuTree menuScope={selectedTabKey} roleInfo={roleInfo} />;
   };
   const tabItems = [
     {

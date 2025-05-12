@@ -157,46 +157,34 @@ export const transformApiDataToTreeData = (apiData: any) => {
 };
 
 export const moveNodeCheck = (events: any) => {
+  const targetIndex = events.targetIndex + 1;
+  const retValue = {
+    tenantMappingMenuId: events.sourceNode.tenantMappingMenuId,
+    sortOrder: targetIndex,
+    menuScopeCode: '',
+  };
+
   switch (events.position) {
     case 'BEFORE': {
-      let sortOrder = events.targetNode.sortOrder - 1;
-      if (events.sourceNode.sortOrder > events.targetNode.sortOrder) {
-        sortOrder++;
-      }
       if (events.sourceNode.level === events.targetNode.level) {
-        return {
-          tenantMappingMenuId: events.sourceNode.tenantMappingMenuId,
-          destinationParentId: events.targetNode.parentKey,
-          sortOrder: sortOrder,
-          menuScopeCode: '',
-        };
+        return { ...retValue, destinationParentId: events.targetNode.parentKey };
       }
       break;
     }
     case 'INSIDE':
       if (events.sourceNode.level === events.targetNode.level + 1) {
         return {
-          tenantMappingMenuId: events.sourceNode.tenantMappingMenuId,
+          ...retValue,
           destinationParentId: events.targetNode.key,
-          sortOrder: 1,
-          menuScopeCode: '',
         };
       }
       break;
     case 'AFTER':
-      {
-        let sortOrder = events.targetNode.sortOrder + 1;
-        if (events.sourceNode.sortOrder < events.targetNode.sortOrder) {
-          sortOrder--;
-        }
-        if (events.sourceNode.level === events.targetNode.level) {
-          return {
-            tenantMappingMenuId: events.sourceNode.tenantMappingMenuId,
-            destinationParentId: events.targetNode.parentKey,
-            sortOrder: sortOrder,
-            menuScopeCode: '',
-          };
-        }
+      if (events.sourceNode.level === events.targetNode.level) {
+        return {
+          ...retValue,
+          destinationParentId: events.targetNode.parentKey,
+        };
       }
       break;
   }
