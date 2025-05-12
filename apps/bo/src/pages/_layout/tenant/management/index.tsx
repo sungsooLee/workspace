@@ -120,15 +120,6 @@ function RouteComponent() {
 
   return (
     <PageContainer>
-      <ContentsButtons>
-        <Button
-          variant="primary"
-          size="sm"
-          onClick={() => router.navigate({ to: '/tenant/management/regist' })}
-        >
-          등록
-        </Button>
-      </ContentsButtons>
       <MainContents>
         <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
         <GridBox config={gConfig} />
