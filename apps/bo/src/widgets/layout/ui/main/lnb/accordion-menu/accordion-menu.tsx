@@ -61,7 +61,9 @@ const AccordionMenuComponent = ({
               : t(`MENU.${menu.menuCode}`)}
           </span>
         ),
-        children: menu?.children && <AccordionMenu menus={menu?.children} depth={depth + 1} />,
+        children: menu?.children && (
+          <AccordionMenu menus={(menu?.children as Menu[]) || []} depth={depth + 1} />
+        ),
         active,
       } as AccordionItem;
     });

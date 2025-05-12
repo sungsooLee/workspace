@@ -12,7 +12,7 @@ import {
 } from '@learnway/ui';
 import { FormRow } from '@shared/ui';
 import { ThumbnailUploaderFormField } from '@features/learning';
-import { DynamicFormConfig, useDynamicForm } from '@/libs/hooks/src';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { CompanyModal } from '@features/tenant/management/ui/company-modal';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';

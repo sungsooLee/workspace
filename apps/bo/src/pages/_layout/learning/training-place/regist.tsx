@@ -31,9 +31,8 @@ import {
 } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { useDynamicForm } from '@/libs/hooks/src';
+import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 import { FormRow } from '@shared/ui';
-import { DynamicFormConfig } from '@/libs/hooks/src';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 
