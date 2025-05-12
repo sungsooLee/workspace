@@ -65,6 +65,9 @@
   @apply relative mb-[16px] border-b border-solid border-[var(--gray2)];
   & + [class*='nlp--contents-row'] {
     @apply pb-[16px];
+    & ~ [class*='nlp--contents-row'] {
+      @apply pb-0;
+    }
   }
 }
 
