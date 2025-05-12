@@ -16,7 +16,7 @@ import { TenantDetailCategory } from '@features/tenant/management/ui/tenant-deta
 // import { TenantDetailAttribute } from '@features/tenant/management/ui/tenant-detail-attribute';
 // import { TenantDetailWidget } from '@features/tenant/management/ui/tenant-detail-widget';
 // import { TenantDetailBanner } from '@features/tenant/management/ui/tenant-detail-banner';
-import { TenaTenantDetailLearningRole } from '@features/tenant/management/ui/tenant-detail-learning-role';
+import { TenantDetailLearningRole } from '@features/tenant/management/ui/tenant-detail-learning-role';
 
 export const Route = createFileRoute('/_layout/platform/tenant/management/detail')({
   component: RouteComponent,
@@ -75,7 +75,7 @@ function RouteComponent() {
     {
       title: '테넌트 역할 관리',
       key: 'menu04',
-      content: <TenaTenantDetailLearningRole roleInfo={'PLATFORM'} />,
+      content: <TenantDetailLearningRole roleInfo={'PLATFORM'} />,
     },
     {
       title: '테넌트 디자인/테마 관리',

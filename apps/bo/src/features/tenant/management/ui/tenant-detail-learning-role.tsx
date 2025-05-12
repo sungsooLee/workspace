@@ -93,4 +93,4 @@ const TenantDetailLearningRoleComponent: FC<any> = () => {
   );
 };
 
-export const TenaTenantDetailLearningRole = TenantDetailLearningRoleComponent;
+export const TenantDetailLearningRole = TenantDetailLearningRoleComponent;
