@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { GridBoxConfig, useGridBoxConfig } from './types';
+import { PMSApiPrefix } from '@learnway/config';
+import { UseFormReturn } from 'react-hook-form';
 
-const useGridBoxHook = (config: useGridBoxConfig, getData?: any) => {
+const useGridBoxHook = (config: useGridBoxConfig, getData?: UseFormReturn['getValues']) => {
   const queryClient = useQueryClient();
-  const [gridConfig, setGridConfig] = useState<GridBoxConfig>(config);
+
+  const [gridConfig, setGridConfig] = useState<GridBoxConfig>(config as any);
 
   const handleExternalGridDataFetch = async (params?: any, page?: any) => {
     const result = (await queryClient.fetchQuery(config.query({ ...params, ...page }))) as any;
@@ -27,7 +30,7 @@ const useGridBoxHook = (config: useGridBoxConfig, getData?: any) => {
     }
   };
   const handleGridDataFetch = (page: any) => {
-    handleExternalGridDataFetch(getData(), page);
+    handleExternalGridDataFetch(getData ? getData() : {}, page);
   };
 
   const onDataChange = (data: any) => {

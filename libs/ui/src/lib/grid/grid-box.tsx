@@ -1,10 +1,20 @@
-import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
+import { FC, forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
 import { createColumnHelper } from '@tanstack/react-table';
-import { Button, Grid, GridBoxProps, GridImperative } from '@learnway/ui';
+import {
+  Button,
+  ExcelConfig,
+  getAllKeysByTree,
+  Grid,
+  GridBoxProps,
+  GridImperative,
+} from '@learnway/ui';
 import { IcoDownload, IcoMinus, IcoUploadCloud, IcoPlus } from '@learnway/icons';
 import styles from './grid-box.module.css';
-import { cn } from '@learnway/shared';
+import { cn, fileDownload } from '@learnway/shared';
 import { useTranslation } from 'react-i18next';
+import { t } from 'i18next';
+import { PMSApiPrefix } from '@learnway/config';
+import { UseFormReturn } from 'react-hook-form';
 
 /**
  * 다양한 설정 옵션을 통해 재사용 가능한 표 컴포넌트(Grid)를 구성합니다.
@@ -17,6 +27,7 @@ import { useTranslation } from 'react-i18next';
  */
 const GridBoxComponent = <T extends object>(
   {
+    // @ts-ignore
     config = {},
     showTotalCount = true,
     showSelectedCount,
@@ -37,7 +48,17 @@ const GridBoxComponent = <T extends object>(
   ref: React.Ref<GridImperative>,
 ) => {
   const { t } = useTranslation();
-  const { data = props.data, page, totalRows, gridFetch, columns, title, onDataChange } = config;
+  const {
+    data = props.data,
+    page,
+    totalRows,
+    gridFetch,
+    columns,
+    title,
+    onDataChange,
+    excel,
+    getParams,
+  } = config;
   const columnHelper = createColumnHelper<any>();
   const gridRef = useRef<GridImperative>(null);
 
@@ -190,25 +211,7 @@ const GridBoxComponent = <T extends object>(
             />
           )}
           {/* 업로드 */}
-          {showUpload && (
-            <Button
-              variant="text"
-              size="xs"
-              className={styles.btn_upload}
-              label={t('LABEL.grid.header.excelUpload')}
-              icon={<IcoUploadCloud width={16} height={16} stroke={'#4C515E'} />}
-            />
-          )}
-          {/* 엑셀다운로드 */}
-          {showExcelDownload && (
-            <Button
-              variant="text"
-              size="xs"
-              className={styles.btn_excel}
-              label={t('LABEL.grid.header.excelDownload')}
-              icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
-            />
-          )}
+          <ExcelButtons config={excel} getParams={getParams} />
           {/* 컬럼 설정 */}
           {/*{showColumnSettings && (*/}
           {/*  <Button*/}
@@ -264,3 +267,50 @@ const GridBoxComponent = <T extends object>(
   );
 };
 export const GridBox = forwardRef(GridBoxComponent);
+/**
+ * Excel 관련 버튼을 Excel Config 기준으로 렌더링 합니다.
+ * @param config
+ * @param getParams
+ * @constructor
+ */
+const ExcelButtons: FC<{ config?: ExcelConfig; getParams?: UseFormReturn['getValues'] }> = ({
+  config,
+  getParams,
+}) => {
+  if (!config) return <></>;
+  const { upload, download, form } = config;
+
+  const handleExcelDownload = async () => {
+    const params = getParams ? getParams() : {};
+    // http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/pms-module/admin/api/v1/multilingual/exportExcel
+    // http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/pms-module/admin/api/v1/multilingual/exportExcel
+    //await fileDownload(`${PMSApiPrefix()}/multilingual/exportExcel`, params);
+    await fileDownload(`${PMSApiPrefix()}/multilingual/exportExcel`, params);
+  };
+
+  return (
+    <>
+      {/* 업로드 */}
+      {upload && (
+        <Button
+          variant="text"
+          size="xs"
+          className={styles.btn_upload}
+          label={t('LABEL.grid.header.excelUpload')}
+          icon={<IcoUploadCloud width={16} height={16} stroke={'#4C515E'} />}
+        />
+      )}
+      {/* 엑셀다운로드 */}
+      {download && (
+        <Button
+          variant="text"
+          size="xs"
+          className={styles.btn_excel}
+          label={t('LABEL.grid.header.excelDownload')}
+          icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
+          onClick={handleExcelDownload}
+        />
+      )}
+    </>
+  );
+};

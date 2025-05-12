@@ -10,7 +10,6 @@ import { PMSApiPrefix } from '@learnway/config';
  */
 const defaultFetchCodeGroup = async <K extends CODE_GROUP_TYPE>(group: K): Promise<Code[K]> => {
   const response = await httpService.get<any>(`${PMSApiPrefix()}/enum/${group}`);
-  console.log('response => ', response);
   if (response && response[0] && response[0][group]) {
     return response[0][group].map((item: CodeApiType) => ({
       value: item.cdId,

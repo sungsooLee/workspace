@@ -318,6 +318,7 @@
           "translationLanguage": "번역언어",
           "translationStatus": "번역상태",
           "code": "코드",
+          "currentTranslationLanguage": "번역중인 언어",
           "multilingualKey": "코드 (메뉴 코드/카테고리 코드/공통코드/라벨 코드/메세지 코드)",
           "translation": "기준명 (메뉴명/카테고리명/공통코드명/라벨명/메세지명)",
           "baseLanguage": "번역명(한국어)",

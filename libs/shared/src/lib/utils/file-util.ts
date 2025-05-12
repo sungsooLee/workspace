@@ -19,9 +19,14 @@ export const getFileResponse = (response: any) => {
 type FileResponse = ReturnType<typeof getFileResponse>;
 
 export const fileDownload = async (url: string, params = {}, options = {}, payload = {}) => {
+  const buildParams = Object.fromEntries(
+    Object.entries(params).filter(
+      ([_, value]) => value !== null && value !== undefined && value !== '',
+    ),
+  );
   const response = await httpService.get<FileResponse>(
     url,
-    params,
+    buildParams,
     { ...options, responseType: 'blob' },
     payload,
   );

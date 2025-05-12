@@ -4,7 +4,9 @@ import {
   EditInputCell,
   EditTextareaCell,
   GridBox,
+  GridBoxConfig,
   useGridBox,
+  useGridBoxConfig,
   useModal,
 } from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
@@ -43,7 +45,7 @@ function RouteComponent() {
     [gConfig.totalRows, currentTargetLocale],
   );
   // 번역완료
-  const [successTranslationCount, setSuccessTranslationCount] = useState<number>(1);
+  const [successTranslationCount, setSuccessTranslationCount] = useState<number>(0);
   /**
    * @param data
    */
@@ -59,7 +61,7 @@ function RouteComponent() {
    *  번역본 S3 배포
    */
   const handleDeployMultilingual = () => {
-    window.alert('준비중입니다.');
+    alert('준비중입니다.');
   };
 
   /**
@@ -90,21 +92,22 @@ function RouteComponent() {
     update(uploadData);
   }, [data]);
 
-  useEffect(() => {
+  const init = async () => {
     if (state.keyType && state.multilingualKey) {
       onFormChange({
         keyType: state.keyType,
         multilingualKey: state.multilingualKey || '',
         translation: state.translation || '',
+        targetLocale: 'en',
       });
-      onFormValid();
-      handleOnSearch(getValues());
+      if (await onFormValid()) {
+        handleOnSearch(getValues());
+      }
     }
-  }, []);
-
+  };
   useEffect(() => {
-    console.log('data => ', data);
-  }, [data]);
+    init();
+  }, []);
   return (
     <PageContainer>
       <ContentsButtons>
@@ -159,9 +162,7 @@ function RouteComponent() {
           variant="primary"
           disabled={isSaveDisable}
           size="sm"
-          onClick={() => {
-            setSuccessTranslationCount((state) => state * 2);
-          }}
+          onClick={handleDeployMultilingual}
         >
           {t('LABEL.button.deploy')}
         </Button>
@@ -177,16 +178,22 @@ function RouteComponent() {
       </ContentsButtons>
       <MainContents>
         <SearchBox provider={sProvider} onSearch={handleOnSearch} />
-        {currentTargetLocale}
-        {successTranslationCount}
         <GridBox
           config={gConfig}
           titleCustomNode={
             <div className={styles.sub_info}>
               {t('pms.multilingual.Is_Translation.true')}{' '}
               <strong className={styles.num}>{successTranslationCount}</strong>
+              <span className={'ml-10 font-light'}>
+                {t('LABEL.platform.system.multilingual.currentTranslationLanguage')} :{' '}
+                {currentTargetLocale
+                  ? t(`pms.multilingual.LanguageType.${currentTargetLocale}`)
+                  : ''}
+              </span>
             </div>
           }
+          showExcelDownload={true}
+          showUpload={true}
         />
       </MainContents>
     </PageContainer>
@@ -279,7 +286,15 @@ const searchConfig: SearchBoxConfig = {
   },
 };
 
-const gridConfig = {
+const gridConfig: useGridBoxConfig = {
+  excel: {
+    upload: '',
+    download: '/multilingual/exportExcel',
+    form: {
+      xlsx: '',
+      csv: '',
+    },
+  },
   query: translationQueryOptions.all,
   columns: [
     {
