@@ -1567,7 +1567,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- gallery.tsx\n- 축소, 확대, drag 기능 공통 요청중',
   },
   {
     screenId: 'NLP_FO_CLA_1028',

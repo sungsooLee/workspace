@@ -60,7 +60,7 @@
         @apply !h-auto w-[calc(50%-48px)];
       }
       .transfer_arrow {
-        @apply absolute left-1/2 top-1/2 z-[1] flex h-[40px] w-[40px] shrink-0 -translate-x-1/2 -translate-y-1/2 items-center justify-center bg-white content-[''];
+        @apply absolute left-1/2 top-[250px] z-[1] flex h-[40px] w-[40px] shrink-0 -translate-x-1/2 items-center justify-center bg-white content-[''];
       }
     }
   }

@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC, ReactNode, useRef, useState, useEffect } from 'react';
 import * as Primitive from '@radix-ui/react-dialog';
 import { cn, getSlot } from '@learnway/shared';
 import styles from './modal-container.module.css';
@@ -21,6 +21,21 @@ const ModalContainerComponent: React.FC<ModalContainerProps> = ({
   const BodySlot = getSlot(children, ModalBody);
   const FooterSlot = getSlot(children, ModalFooter);
 
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [isScrollable, setIsScrollable] = useState(false);
+
+  useEffect(() => {
+    const checkScroll = () => {
+      if (contentRef.current) {
+        setIsScrollable(contentRef.current.scrollHeight > 588);
+      }
+    };
+
+    checkScroll();
+    window.addEventListener('resize', checkScroll);
+    return () => window.removeEventListener('resize', checkScroll);
+  }, [children]);
+
   return (
     <div className={cn(styles.start, className, 'nlp--modal-content')}>
       {/* title */}
@@ -30,7 +45,12 @@ const ModalContainerComponent: React.FC<ModalContainerProps> = ({
         <Primitive.Description className={styles.description}>{DescSlot}</Primitive.Description>
       )}
       {/* body */}
-      <div className={cn(styles.contents, 'modal-content')}>{BodySlot}</div>
+      <div
+        ref={contentRef}
+        className={cn(styles.contents, isScrollable && styles.scrolled, 'modal-content')}
+      >
+        {BodySlot}
+      </div>
       {/* footer */}
       {FooterSlot && <div className={styles.footer}>{FooterSlot}</div>}
     </div>

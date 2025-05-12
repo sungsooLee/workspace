@@ -86,4 +86,5 @@ const PopoverRoot = PopoverComponent;
 export const Popover = Object.assign(PopoverRoot, {
   Trigger: Primitive.PopoverTrigger,
   Content: Primitive.PopoverContent,
+  Close: Primitive.Close,
 });
