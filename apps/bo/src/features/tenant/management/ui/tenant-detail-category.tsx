@@ -19,7 +19,7 @@ import { TenantCategoryTree } from './tenant-detail-category-tree';
 
 type mode = 'init' | 'add' | 'view';
 
-const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
+const TenantDetailCategoryComponent: FC<any> = ({ menuScope, roleInfo }) => {
   const [treeData, setTreeData] = useState();
 
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
@@ -38,8 +38,8 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
   const useCommonMapping = true;
   // TODO. 테넌트 상세 조회 후, 테넌트 카테고리 사용 여부
   const useTenantMapping = true;
-  // TODO. 사용자가 테넌트 관리자인 경우
-  const isTenantManager = true;
+  // 테넌트 관리자 여부
+  const isTenantManager = roleInfo === 'PLATFORM' ? false : true;
 
   // delete
   const { delete: deleteTenantCategory } = useDeleteTenantCategory(tenantId, {
@@ -64,7 +64,6 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
   useEffect(() => {
     if (data !== null && data !== undefined) {
       const transformedData = transformApiDataToTreeData(data);
-      console.log('## transformedData :: ', transformedData);
 
       setTreeData(transformedData);
 
@@ -80,7 +79,6 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
   };
 
   const handleNodeClick = (node: TreeNode) => {
-    console.log('## click');
     setMode('view');
     setSelectedNode(node);
   };
@@ -91,7 +89,6 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
       destinationParentId,
       sortSeq: sortSeq + 1,
     };
-    console.log('## payload', payload);
     moveTenantCategory({
       tenantId: tenantId,
       categoryId: id,
@@ -113,7 +110,6 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
         if (value) {
           createTenantCategory(payload, {
             onSuccess: (data: any) => {
-              console.log('#### success', data);
               refetch();
             },
           });
@@ -123,7 +119,6 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
   };
 
   const handleUpdate = (payload: any) => {
-    console.log('>> payload', payload);
     openConfirm({
       title: '저장 하시겠습니까?',
       content: <p>입력한 정보로 저장됩니다.</p>,
@@ -131,7 +126,6 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
         if (value) {
           updateTenantCategory(payload, {
             onSuccess: (data: any) => {
-              console.log('#### success', data);
               refetch();
             },
           });
@@ -155,7 +149,6 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope }) => {
       content: <p>삭제 후 복구할 수 없습니다.</p>,
       onClose: (value: boolean) => {
         if (value) {
-          console.log('date!', payload);
           deleteTenantCategory(payload);
           setMode('init');
         }

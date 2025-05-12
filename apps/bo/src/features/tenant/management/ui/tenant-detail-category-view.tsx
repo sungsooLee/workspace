@@ -42,7 +42,7 @@ const TenantCategoryViewComponent: FC<any> = ({
   const { data } = useFetchTenantCategoryDetail(tenantId, selectedNode?.menuId || '');
   const { data: userGroups } = useFetchUserGroups();
 
-  const { provider, fetchData, onSubmit, onFormChange, setFormError, clearFormError, getValues } =
+  const { provider, fetchData, onSubmit, onFormChange, setFormError, clearFormError } =
     useDynamicForm(formConfig);
   const { alert: openAlert } = useModal();
   const [isTenantManagerUpdatable, setIsTenantManagerUpdatable] = useState(false);
@@ -64,7 +64,7 @@ const TenantCategoryViewComponent: FC<any> = ({
         (selectedNode?.categoryType === 'TENANT' ||
           (mode === 'add' && selectedNode?.categoryType === 'ROOT')),
     );
-    if (isInitMode || isRoot) setIsUsedDisabled(true);
+    if (isInitMode || (isRoot && mode !== 'add')) setIsUsedDisabled(true);
     else if (isTenantManager && selectedNode?.categoryType === 'COMMON') setIsUsedDisabled(true);
     else setIsUsedDisabled(false);
 
@@ -88,8 +88,9 @@ const TenantCategoryViewComponent: FC<any> = ({
             },
           );
         }
+        const location = findMenuPathById(treeData, selectedNode?.menuId);
         const initialData = {
-          location: data?.categoryPath,
+          location: location,
           code: data?.categoryCode,
           categoryName: data?.categoryName,
           categoryContent: data?.categoryContent,
@@ -97,7 +98,7 @@ const TenantCategoryViewComponent: FC<any> = ({
           key: selectedNode.key,
           parentKey: selectedNode.parentKey,
           parentCategoryName: selectedNode.parentMenuName,
-          sortSeq: selectedNode?.children?.length ?? 0 + 1,
+          sortSeq: (selectedNode?.children?.length ?? 0) + 1,
           userGroups: mappedUserGroups,
           isDuplicateCode: true,
         };
@@ -106,8 +107,6 @@ const TenantCategoryViewComponent: FC<any> = ({
         initialFromValuesRef.current = { ...initialData };
       }
     } else if (mode === 'add' && selectedNode) {
-      console.log('### add node', selectedNode);
-      // TODO. 카테고리 추가 구현
       initialFromValuesRef.current = null;
       const location = findMenuPathById(treeData, selectedNode?.menuId);
       const initialData = {
@@ -119,7 +118,7 @@ const TenantCategoryViewComponent: FC<any> = ({
         key: '',
         parentKey: selectedNode.key,
         parentCategoryName: selectedNode.name,
-        sortSeq: selectedNode?.children?.length ?? 0 + 1,
+        sortSeq: (selectedNode?.children?.length ?? 0) + 1,
         userGroups: [],
         isDuplicateCode: false,
       };
@@ -169,9 +168,6 @@ const TenantCategoryViewComponent: FC<any> = ({
   };
 
   const handleOnSubmit = (node: any) => {
-    console.log('## node :: ', node);
-    console.log('## mode :: ', mode);
-    console.log('## data :: ', data);
     const isCodeChanged = isFieldChanged('code', node.code);
     if (isCodeChanged) {
       // "{{code}}의 중복 여부를 확인해 주세요."
@@ -206,7 +202,6 @@ const TenantCategoryViewComponent: FC<any> = ({
         isUsed: node.isUsed,
         whiteList: userGroups,
       };
-      console.log('## body :: ', body);
       onUpdate({
         tenantId: tenantId,
         categoryId: data!.categoryId,
@@ -214,7 +209,6 @@ const TenantCategoryViewComponent: FC<any> = ({
       });
       return;
     } else if (mode === 'add') {
-      // TODO. 테넌트 카테고리는 사용여부 전송 안한다면 true인 상태로 disable 처리?
       const body: TenantCategoryCreate = {
         name: node.categoryName,
         categoryCode: node.code,
@@ -223,8 +217,8 @@ const TenantCategoryViewComponent: FC<any> = ({
         sortSeq: node.sortSeq,
         parentId: node.parentKey,
         whiteList: userGroups,
+        isUsed: node.isUsed,
       };
-      console.log('## body :: ', body);
       onSave({
         tenantId: tenantId,
         data: body,
@@ -301,8 +295,6 @@ const TenantCategoryViewComponent: FC<any> = ({
                   checkExists={(data: string) => {
                     checkExists(data, {
                       onSuccess: (data: any) => {
-                        console.log('#### success', data);
-
                         const isUnique = data;
                         setIsSuccessCodeCheck(isUnique);
                         setCodeCheckState(isUnique ? 'success' : 'duplicate');
@@ -312,7 +304,6 @@ const TenantCategoryViewComponent: FC<any> = ({
                         });
                       },
                       onError: () => {
-                        console.log('#### error');
                         setIsSuccessCodeCheck(false);
                         setCodeCheckState('error');
                         onFormChange?.({ isDuplicateCode: false });

@@ -66,7 +66,6 @@ const TenantCategoryTreeComponent: FC<any> = ({
         break;
       case 'NODE_MOVE': {
         const nodeInfo = event;
-        console.log('### event', event);
         const targetDepth =
           nodeInfo.position === 'INSIDE'
             ? nodeInfo.targetNode?.depth + 1
@@ -131,8 +130,8 @@ const TenantCategoryTreeComponent: FC<any> = ({
               disabled={level === 5}
             >
               {node.depth === 0
-                ? t('LABEL.tree.add', { type: t('LABEL.common.tenantCategory') })
-                : t('LABEL.tree.depthAdd', { type: t('LABEL.common.tenantCategory') })}
+                ? t('LABEL.tree.add', { type: t('LABEL.common.code.tenantCategory') })
+                : t('LABEL.tree.depthAdd', { type: t('LABEL.common.code.tenantCategory') })}
             </Button>
           </div>
         </div>
