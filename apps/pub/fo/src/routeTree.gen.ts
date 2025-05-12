@@ -18,6 +18,8 @@ import { Route as AuthImport } from './pages/_auth'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
 import { Route as LearningVideoImport } from './pages/_learning/video'
 import { Route as LearningGalleryImport } from './pages/_learning/gallery'
+import { Route as LearningFileImport } from './pages/_learning/file'
+import { Route as LearningEbookImport } from './pages/_learning/ebook'
 import { Route as AuthSuccessImport } from './pages/_auth/success'
 import { Route as AuthSignupStep3EnImport } from './pages/_auth/signup-step3-en'
 import { Route as AuthSignupStep3Import } from './pages/_auth/signup-step3'
@@ -146,6 +148,18 @@ const LearningVideoRoute = LearningVideoImport.update({
 const LearningGalleryRoute = LearningGalleryImport.update({
   id: '/gallery',
   path: '/gallery',
+  getParentRoute: () => LearningRoute,
+} as any)
+
+const LearningFileRoute = LearningFileImport.update({
+  id: '/file',
+  path: '/file',
+  getParentRoute: () => LearningRoute,
+} as any)
+
+const LearningEbookRoute = LearningEbookImport.update({
+  id: '/ebook',
+  path: '/ebook',
   getParentRoute: () => LearningRoute,
 } as any)
 
@@ -887,6 +901,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSuccessImport
       parentRoute: typeof AuthImport
     }
+    '/_learning/ebook': {
+      id: '/_learning/ebook'
+      path: '/ebook'
+      fullPath: '/ebook'
+      preLoaderRoute: typeof LearningEbookImport
+      parentRoute: typeof LearningImport
+    }
+    '/_learning/file': {
+      id: '/_learning/file'
+      path: '/file'
+      fullPath: '/file'
+      preLoaderRoute: typeof LearningFileImport
+      parentRoute: typeof LearningImport
+    }
     '/_learning/gallery': {
       id: '/_learning/gallery'
       path: '/gallery'
@@ -1613,11 +1641,15 @@ const LayoutRouteWithChildren =
   LayoutRoute._addFileChildren(LayoutRouteChildren)
 
 interface LearningRouteChildren {
+  LearningEbookRoute: typeof LearningEbookRoute
+  LearningFileRoute: typeof LearningFileRoute
   LearningGalleryRoute: typeof LearningGalleryRoute
   LearningVideoRoute: typeof LearningVideoRoute
 }
 
 const LearningRouteChildren: LearningRouteChildren = {
+  LearningEbookRoute: LearningEbookRoute,
+  LearningFileRoute: LearningFileRoute,
   LearningGalleryRoute: LearningGalleryRoute,
   LearningVideoRoute: LearningVideoRoute,
 }
@@ -1649,6 +1681,8 @@ export interface FileRoutesByFullPath {
   '/signup-step3': typeof AuthSignupStep3Route
   '/signup-step3-en': typeof AuthSignupStep3EnRoute
   '/success': typeof AuthSuccessRoute
+  '/ebook': typeof LearningEbookRoute
+  '/file': typeof LearningFileRoute
   '/gallery': typeof LearningGalleryRoute
   '/video': typeof LearningVideoRoute
   '/': typeof LayoutIndexRoute
@@ -1746,6 +1780,8 @@ export interface FileRoutesByTo {
   '/signup-step3': typeof AuthSignupStep3Route
   '/signup-step3-en': typeof AuthSignupStep3EnRoute
   '/success': typeof AuthSuccessRoute
+  '/ebook': typeof LearningEbookRoute
+  '/file': typeof LearningFileRoute
   '/gallery': typeof LearningGalleryRoute
   '/video': typeof LearningVideoRoute
   '/': typeof LayoutIndexRoute
@@ -1847,6 +1883,8 @@ export interface FileRoutesById {
   '/_auth/signup-step3': typeof AuthSignupStep3Route
   '/_auth/signup-step3-en': typeof AuthSignupStep3EnRoute
   '/_auth/success': typeof AuthSuccessRoute
+  '/_learning/ebook': typeof LearningEbookRoute
+  '/_learning/file': typeof LearningFileRoute
   '/_learning/gallery': typeof LearningGalleryRoute
   '/_learning/video': typeof LearningVideoRoute
   '/_layout/': typeof LayoutIndexRoute
@@ -1946,6 +1984,8 @@ export interface FileRouteTypes {
     | '/signup-step3'
     | '/signup-step3-en'
     | '/success'
+    | '/ebook'
+    | '/file'
     | '/gallery'
     | '/video'
     | '/'
@@ -2042,6 +2082,8 @@ export interface FileRouteTypes {
     | '/signup-step3'
     | '/signup-step3-en'
     | '/success'
+    | '/ebook'
+    | '/file'
     | '/gallery'
     | '/video'
     | '/'
@@ -2141,6 +2183,8 @@ export interface FileRouteTypes {
     | '/_auth/signup-step3'
     | '/_auth/signup-step3-en'
     | '/_auth/success'
+    | '/_learning/ebook'
+    | '/_learning/file'
     | '/_learning/gallery'
     | '/_learning/video'
     | '/_layout/'
@@ -2355,6 +2399,8 @@ export const routeTree = rootRoute
     "/_learning": {
       "filePath": "_learning.tsx",
       "children": [
+        "/_learning/ebook",
+        "/_learning/file",
         "/_learning/gallery",
         "/_learning/video"
       ]
@@ -2442,6 +2488,14 @@ export const routeTree = rootRoute
     "/_auth/success": {
       "filePath": "_auth/success.tsx",
       "parent": "/_auth"
+    },
+    "/_learning/ebook": {
+      "filePath": "_learning/ebook.tsx",
+      "parent": "/_learning"
+    },
+    "/_learning/file": {
+      "filePath": "_learning/file.tsx",
+      "parent": "/_learning"
     },
     "/_learning/gallery": {
       "filePath": "_learning/gallery.tsx",
