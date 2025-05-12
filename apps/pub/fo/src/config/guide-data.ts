@@ -1583,21 +1583,21 @@ export const guideData = [
     screenId: 'NLP_FO_CLA_1028',
     screenName: '강의실_학습창_웹_블로그',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'blog',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- blog.tsx',
   },
   {
     screenId: 'NLP_FO_CLA_1029',
     screenName: '강의실_학습창_웹_HTML',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'html',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- html.tsx',
   },
   {
     screenId: 'NLP_FO_CLA_1030',

@@ -16,8 +16,8 @@ import { Route as LayoutImport } from './pages/_layout'
 import { Route as GuideImport } from './pages/_guide'
 import { Route as AuthImport } from './pages/_auth'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
-import { Route as LearningWebImport } from './pages/_learning/web'
 import { Route as LearningVideoImport } from './pages/_learning/video'
+import { Route as LearningHtmlImport } from './pages/_learning/html'
 import { Route as LearningGalleryImport } from './pages/_learning/gallery'
 import { Route as LearningFileImport } from './pages/_learning/file'
 import { Route as LearningEbookImport } from './pages/_learning/ebook'
@@ -141,15 +141,15 @@ const LayoutIndexRoute = LayoutIndexImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
-const LearningWebRoute = LearningWebImport.update({
-  id: '/web',
-  path: '/web',
-  getParentRoute: () => LearningRoute,
-} as any)
-
 const LearningVideoRoute = LearningVideoImport.update({
   id: '/video',
   path: '/video',
+  getParentRoute: () => LearningRoute,
+} as any)
+
+const LearningHtmlRoute = LearningHtmlImport.update({
+  id: '/html',
+  path: '/html',
   getParentRoute: () => LearningRoute,
 } as any)
 
@@ -943,18 +943,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearningGalleryImport
       parentRoute: typeof LearningImport
     }
+    '/_learning/html': {
+      id: '/_learning/html'
+      path: '/html'
+      fullPath: '/html'
+      preLoaderRoute: typeof LearningHtmlImport
+      parentRoute: typeof LearningImport
+    }
     '/_learning/video': {
       id: '/_learning/video'
       path: '/video'
       fullPath: '/video'
       preLoaderRoute: typeof LearningVideoImport
-      parentRoute: typeof LearningImport
-    }
-    '/_learning/web': {
-      id: '/_learning/web'
-      path: '/web'
-      fullPath: '/web'
-      preLoaderRoute: typeof LearningWebImport
       parentRoute: typeof LearningImport
     }
     '/_layout/': {
@@ -1673,8 +1673,8 @@ interface LearningRouteChildren {
   LearningEbookRoute: typeof LearningEbookRoute
   LearningFileRoute: typeof LearningFileRoute
   LearningGalleryRoute: typeof LearningGalleryRoute
+  LearningHtmlRoute: typeof LearningHtmlRoute
   LearningVideoRoute: typeof LearningVideoRoute
-  LearningWebRoute: typeof LearningWebRoute
 }
 
 const LearningRouteChildren: LearningRouteChildren = {
@@ -1682,8 +1682,8 @@ const LearningRouteChildren: LearningRouteChildren = {
   LearningEbookRoute: LearningEbookRoute,
   LearningFileRoute: LearningFileRoute,
   LearningGalleryRoute: LearningGalleryRoute,
+  LearningHtmlRoute: LearningHtmlRoute,
   LearningVideoRoute: LearningVideoRoute,
-  LearningWebRoute: LearningWebRoute,
 }
 
 const LearningRouteWithChildren = LearningRoute._addFileChildren(
@@ -1717,8 +1717,8 @@ export interface FileRoutesByFullPath {
   '/ebook': typeof LearningEbookRoute
   '/file': typeof LearningFileRoute
   '/gallery': typeof LearningGalleryRoute
+  '/html': typeof LearningHtmlRoute
   '/video': typeof LearningVideoRoute
-  '/web': typeof LearningWebRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
   '/guide/badge': typeof GuideGuideBadgeRoute
@@ -1818,8 +1818,8 @@ export interface FileRoutesByTo {
   '/ebook': typeof LearningEbookRoute
   '/file': typeof LearningFileRoute
   '/gallery': typeof LearningGalleryRoute
+  '/html': typeof LearningHtmlRoute
   '/video': typeof LearningVideoRoute
-  '/web': typeof LearningWebRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
   '/guide/badge': typeof GuideGuideBadgeRoute
@@ -1923,8 +1923,8 @@ export interface FileRoutesById {
   '/_learning/ebook': typeof LearningEbookRoute
   '/_learning/file': typeof LearningFileRoute
   '/_learning/gallery': typeof LearningGalleryRoute
+  '/_learning/html': typeof LearningHtmlRoute
   '/_learning/video': typeof LearningVideoRoute
-  '/_learning/web': typeof LearningWebRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_guide/guide/alert': typeof GuideGuideAlertRoute
   '/_guide/guide/badge': typeof GuideGuideBadgeRoute
@@ -2026,8 +2026,8 @@ export interface FileRouteTypes {
     | '/ebook'
     | '/file'
     | '/gallery'
+    | '/html'
     | '/video'
-    | '/web'
     | '/'
     | '/guide/alert'
     | '/guide/badge'
@@ -2126,8 +2126,8 @@ export interface FileRouteTypes {
     | '/ebook'
     | '/file'
     | '/gallery'
+    | '/html'
     | '/video'
-    | '/web'
     | '/'
     | '/guide/alert'
     | '/guide/badge'
@@ -2229,8 +2229,8 @@ export interface FileRouteTypes {
     | '/_learning/ebook'
     | '/_learning/file'
     | '/_learning/gallery'
+    | '/_learning/html'
     | '/_learning/video'
-    | '/_learning/web'
     | '/_layout/'
     | '/_guide/guide/alert'
     | '/_guide/guide/badge'
@@ -2447,8 +2447,8 @@ export const routeTree = rootRoute
         "/_learning/ebook",
         "/_learning/file",
         "/_learning/gallery",
-        "/_learning/video",
-        "/_learning/web"
+        "/_learning/html",
+        "/_learning/video"
       ]
     },
     "/_auth/agreement-privacy": {
@@ -2551,12 +2551,12 @@ export const routeTree = rootRoute
       "filePath": "_learning/gallery.tsx",
       "parent": "/_learning"
     },
-    "/_learning/video": {
-      "filePath": "_learning/video.tsx",
+    "/_learning/html": {
+      "filePath": "_learning/html.tsx",
       "parent": "/_learning"
     },
-    "/_learning/web": {
-      "filePath": "_learning/web.tsx",
+    "/_learning/video": {
+      "filePath": "_learning/video.tsx",
       "parent": "/_learning"
     },
     "/_layout/": {
