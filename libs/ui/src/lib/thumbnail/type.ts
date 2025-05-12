@@ -3,4 +3,18 @@ export interface ImageOption {
   path: string;
   checked?: boolean; // 체크 여부
   readonly?: boolean; // 삭제, 체크 불가 여부
+
+  // 파일 업로드 return type 모두 다 붙여넣음 사용 여부에 따라 수정 예정..
+  file?: File
+  uploadType?: string
+  extension?: string
+  s3FileName?: string
+  fileName?: string
+  size?: number
+  displaySize?: string
+  progress?: number
+  status?: string
+  key?: string
+  parts?: any[]
+  contentType?: string
 }
