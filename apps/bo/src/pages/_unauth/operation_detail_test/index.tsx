@@ -9,6 +9,7 @@ import {
   Input,
   InputModalSelectorFormField,
   ListModalSelectorFormField,
+  ThumbnailUploaderFormField,
 } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
@@ -188,6 +189,13 @@ function RouteComponent() {
               </DynamicFormField>
             </FormRow>
           </ContentsRow>
+
+            {/*썸네일*/}
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <ThumbnailUploaderFormField name="thumbnails" />
+            </FormRow>
+          </ContentsRow>
         </MainContents>
         <SubContents>
           <Input />
@@ -202,6 +210,13 @@ function RouteComponent() {
  */
 const formConfig: DynamicFormConfig = {
   builders: [
+    {
+      label: t('썸네일'),
+      name: 'thumbnails',
+      type: 'custom',
+      format: 'array',
+      value: [],
+    },
     {
       name: 'channelId',
       type: 'hidden',

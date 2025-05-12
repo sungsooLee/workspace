@@ -37,7 +37,7 @@ const GridBoxComponent = <T extends object>(
   ref: React.Ref<GridImperative>,
 ) => {
   const { t } = useTranslation();
-  const { data = props.data, page, totalRows, gridFetch, columns, title } = config;
+  const { data = props.data, page, totalRows, totalElements, gridFetch, columns, title } = config;
   const columnHelper = createColumnHelper<any>();
   const gridRef = useRef<GridImperative>(null);
 
@@ -156,7 +156,7 @@ const GridBoxComponent = <T extends object>(
           {showTotalCount && (
             <div className={styles.sub_info}>
               {t('LABEL.grid.header.all')}{' '}
-              <strong className={styles.num}>{totalRows || data?.length || 0}</strong>
+              <strong className={styles.num}>{totalElements || data?.length || 0}</strong>
             </div>
           )}
           {/* 좌측 타이틀 영역 커스텀 (전체 카운트와 가이드 텍스트 중간 영역) */}
