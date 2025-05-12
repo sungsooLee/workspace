@@ -114,7 +114,7 @@
     }
   }
 }
-.md,
+/* .md,
 .lg,
 .xl {
   [class*='nlp--modal-content'] {
@@ -123,7 +123,7 @@
       @apply !pb-[16px];
     }
   }
-}
+} */
 .btn_wrap {
   button {
     @apply !min-w-[80px];
