@@ -1,0 +1,5 @@
+.start {
+  &.web {
+    @apply flex min-h-[100dvh] items-center bg-[var(--gray9)];
+  }
+}
