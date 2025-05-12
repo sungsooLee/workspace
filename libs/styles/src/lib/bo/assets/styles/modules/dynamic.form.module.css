@@ -65,7 +65,7 @@
 }
 
 .form_display {
-  @apply relative mb-[16px] border-b border-solid border-[var(--gray2)];
+  @apply relative mb-[16px];
   & + [class*='nlp--contents-row'] {
     @apply pb-[16px];
     & + [class*='nlp--contents-row'] {
@@ -75,6 +75,15 @@
       }
     }
   }
+  [class*='nlp--contents-row']:nth-last-child(1) {
+    & > div {
+      @apply pb-0;
+    }
+  }
+}
+
+.limit_box {
+  @apply flex-[];
 }
 
 .box {

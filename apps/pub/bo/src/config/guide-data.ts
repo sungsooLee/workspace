@@ -627,9 +627,9 @@ export const guideData = [
     pageId: 'learning/mediaRegister',
     screenId: '',
     pageType: 'Page',
-    completionDate: '2025-03-06',
-    lastUpdateDate: '2025-03-18',
-    remarks: '작업 완료', // 비고
+    completionDate: '2025-05-12',
+    lastUpdateDate: '2025-05-12',
+    remarks: '5/12 새로운 케이스 추가', // 비고
   },
   {
     screenName: 'CMS/학습자원등록_학습자원조회',
