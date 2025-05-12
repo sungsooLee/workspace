@@ -103,18 +103,18 @@ function RouteComponent() {
     },
     { label: '설문지', value: getRandomId(), icon: <IcoSurvey />, description: '설명문구2줄설명' },
     { label: '과제', value: getRandomId(), icon: <IcoHomework />, description: '설명문구2줄설명' },
-    {
-      label: '라이브',
-      value: getRandomId(),
-      icon: <IcoLive />,
-      description: '설명문구2줄설명',
-    },
-    {
-      label: '라이브(HIVE)',
-      value: getRandomId(),
-      icon: <IcoLiveHive />,
-      description: '설명문구2줄설명',
-    },
+    // {
+    //   label: '라이브',
+    //   value: getRandomId(),
+    //   icon: <IcoLive />,
+    //   description: '설명문구2줄설명',
+    // },
+    // {
+    //   label: '라이브(HIVE)',
+    //   value: getRandomId(),
+    //   icon: <IcoLiveHive />,
+    //   description: '설명문구2줄설명',
+    // },
   ];
   // 퍼블수정 20240428 : 메뉴 수정 E
   const EbookContent = () => {

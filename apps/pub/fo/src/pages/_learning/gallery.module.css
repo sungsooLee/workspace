@@ -13,7 +13,7 @@
     .photo_wrap {
       @apply relative z-[2] h-[100dvh] w-full overflow-hidden pb-[156px] pt-[112px];
       .photo {
-        @apply relative flex items-center text-center;
+        @apply relative mr-[120px] flex items-center text-center;
         .img {
           @apply mx-auto overflow-hidden;
           img {
@@ -21,10 +21,10 @@
           }
         }
         .btn_prev {
-          @apply absolute left-[40px] top-1/2 -translate-y-1/2;
+          @apply absolute left-[40px] top-1/2 m-0 -translate-y-1/2;
         }
         .btn_next {
-          @apply absolute right-[40px] top-1/2 -translate-y-1/2;
+          @apply absolute right-[40px] top-1/2 m-0 -translate-y-1/2;
           svg {
             @apply rotate-180;
           }
@@ -42,6 +42,23 @@
             img {
               @apply mx-auto max-h-[80px] max-w-[80px] object-contain;
             }
+          }
+        }
+      }
+    }
+  }
+}
+
+[class*='panel_active'] {
+  .start {
+    &.gallery_wrap {
+      .photo_wrap {
+        .photo {
+          @apply mr-0;
+        }
+        .swiper {
+          & > div {
+            @apply mx-[42px] max-w-[calc(100%-550px-84px)];
           }
         }
       }

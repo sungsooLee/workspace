@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
@@ -8,7 +9,6 @@ import {
   ContentsRow,
   DatePicker,
   Dropdown,
-  DropdownOption,
   GridBox,
   Input,
   InputModalSelectorFormField,
@@ -24,6 +24,7 @@ import {
 } from '@learnway/ui';
 import { IcoAlertCircle, IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';
 import { cn } from '@learnway/shared';
+import { FormSubTitle } from '../../../../../../bo/src/shared/ui';
 
 /* CSS */
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form module css
@@ -65,8 +66,8 @@ function RouteComponent() {
   const columns = [
     columnHelper.accessor('item', {
       cell: (info) => info.getValue(),
-      header: '적용 항목',
-      size: 224,
+      header: '전체',
+      size: 220,
       enableGrouping: false,
       meta: {
         headerAlign: 'left', // 헤더만 가운데 정렬
@@ -214,26 +215,26 @@ function RouteComponent() {
           <div className={cn(popLayoutstyles.start, popLayoutstyles.wrap)}>
             <div className={popLayoutstyles.contents}>
               <div className={popLayoutstyles.left_contents}>
-                <strong className={popLayoutstyles.title}>{'일괄설정 항목'}</strong>
                 {/* settimg-item.module.css */}
                 <div className={styles.start}>
-                  <p className={styles.guide}>
-                    {'일괄설정 대상 동영상'} <span className={styles.num}>{'10'}</span>
-                    {'건'}
-                    <IcoFormRequired width={12} height={12} className={styles.icon} />
-                  </p>
                   <GridBox
                     data={data}
                     columns={columns}
-                    title="일괄설정 항목선택"
+                    title="일괄설정 항목"
                     showColumnSettings={false}
                     multiple={true}
+                    showTotalCount={false}
                     className={styles.grid}
+                    customButtonNode={
+                      <p className="grid_info">
+                        대상동영상 <span className="num">10</span>건
+                      </p>
+                    }
                   />
                 </div>
               </div>
               <div className={popLayoutstyles.main_contents}>
-                <strong className={popLayoutstyles.title}>{'설정'}</strong>
+                <FormSubTitle label={'타이틀'} />
                 <ContentsRow>
                   <div className={formStyles.form_item}>
                     <label htmlFor="name-manager" className={formStyles.form_label}>
@@ -250,6 +251,7 @@ function RouteComponent() {
                           width: 'md',
                           content: <ModalManagerContent />,
                         }}
+                        placeholder={'담당자를 선택하세요.'}
                       />
                     </div>
                     {/* 퍼블수정 20240317 : Modal 수정 E  */}
@@ -349,31 +351,6 @@ function RouteComponent() {
                     <p className={formStyles.guide_text}>
                       해당 학습자원으로 교육 과정을 개설할 수
                       {checked[2] ? '있습니다.' : '없습니다.'}
-                    </p>
-                  </div>
-                </ContentsRow>
-                <ContentsRow type="horizontal">
-                  {/* Textarea type */}
-                  <div className={formStyles.form_item}>
-                    <label htmlFor="name-conjugation2" className={formStyles.form_label}>
-                      <span className={formStyles.form_text}>보안콘텐츠 여부</span>
-                      {/* 필수 케이스 */}
-                      <span className={cn(formStyles.status, formStyles.required)}>
-                        <IcoFormRequired width={12} height={12} />
-                      </span>
-                    </label>
-                    <div className={formStyles.input_box}>
-                      <Switch
-                        id="name-use2"
-                        className={dynamicFormStyles.btn_switch}
-                        label={checked[3] ? '보안 적용' : '보안 미적용'}
-                        checked={checked[3]}
-                        onCheckedChange={handleCheckedChange(3)}
-                      />
-                    </div>
-                    <p className={formStyles.guide_text}>
-                      동영상에 워터마크가 제공되고, DRM 솔루션 적용 및 화면캡쳐 방지 기능이 적용되어
-                      동영상 보안을 강화할수 {checked[3] ? '있습니다.' : '없습니다.'}
                     </p>
                   </div>
                 </ContentsRow>
@@ -484,7 +461,7 @@ function RouteComponent() {
         </ModalBody>
         <ModalFooter>
           <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
-          <Button label={'적용'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
+          <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
         </ModalFooter>
       </ModalContainer>
     );

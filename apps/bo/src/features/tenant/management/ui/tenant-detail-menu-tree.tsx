@@ -51,7 +51,7 @@ const FORM_MODE = {
   ADD: 'ADD',
 };
 
-const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
+const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
   const routerState = useRouterState();
   const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
   const [formMode, setFormMode] = useState(FORM_MODE.NONE);
@@ -228,9 +228,11 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
             >
               {t('전체닫기')}
             </Button>
-            <Button variant="save" size="sm" onClick={() => handleTenantDetailMenuMapping()}>
-              {t('메뉴 맵핑')}
-            </Button>
+            {roleInfo === 'PLATFORM' && (
+              <Button variant="save" size="sm" onClick={() => handleTenantDetailMenuMapping()}>
+                {t('메뉴 맵핑')}
+              </Button>
+            )}
           </div>
         </div>
         <div className={layoutStyles.inner_contents}>

@@ -7,7 +7,7 @@
       tr {
         @apply flex w-full border-b-[1px] border-solid !border-[var(--gray4)] bg-[var(--gray1)];
         th.thead_th {
-          @apply bg-[var(--gray1)];
+          @apply !border-b-0 bg-[var(--gray1)];
           .th_wrap {
             @apply h-full;
             .th_cell {
@@ -30,7 +30,7 @@
     }
     tbody {
       tr {
-        @apply h-auto !min-h-[40px] border-b border-solid border-[var(--gray2)];
+        @apply !h-[40px] !min-h-[40px] border-b border-solid border-[var(--gray2)];
         td {
           @apply body_bo_2_r line-clamp-1 h-full text-ellipsis whitespace-nowrap px-[8px] py-[8px] align-middle text-[var(--gray7)];
           [class*='nlp--button'] {

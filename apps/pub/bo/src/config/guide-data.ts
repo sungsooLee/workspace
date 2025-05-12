@@ -384,16 +384,7 @@ export const guideData = [
     pageId: 'learning/learning-resource-search',
     screenId: 'NLP_BO_CMS_1001',
     pageType: 'Page',
-    completionDate: '',
-    lastUpdateDate: '',
-    remarks: '5/12 부터 진행예정', // 비고
-  },
-  {
-    screenName: 'CMS/학습자원조회_수정자 정보',
-    pageId: 'learning/pop-modifier-info',
-    screenId: 'NLP_BO_CMS_1055',
-    pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-05-12',
     lastUpdateDate: '',
     remarks: '5/12 부터 진행예정', // 비고
   },
@@ -402,7 +393,7 @@ export const guideData = [
     pageId: 'learning/pop-program-guide',
     screenId: 'NLP_BO_CMS_1056',
     pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-05-12',
     lastUpdateDate: '',
     remarks: '5/12 부터 진행예정', // 비고
   },
@@ -411,7 +402,16 @@ export const guideData = [
     pageId: 'learning/test-management',
     screenId: 'NLP_BO_CMS_1032',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-05-12',
+    lastUpdateDate: '',
+    remarks: '5/12 부터 진행예정', // 비고
+  },
+  {
+    screenName: 'CMS/학습자원조회_수정자 정보',
+    pageId: 'learning/pop-modifier-info',
+    screenId: 'NLP_BO_CMS_1055',
+    pageType: 'Pop-up',
+    completionDate: '2025-05-12',
     lastUpdateDate: '',
     remarks: '5/12 부터 진행예정', // 비고
   },
