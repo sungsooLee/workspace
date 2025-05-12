@@ -13,6 +13,7 @@ import { ChipListFormField } from './chip-list-form-field';
 import { PhoneNumberFormField } from './phone-number-form-filed';
 import { DropdownFormField } from '../../../features/form/ui';
 import { CheckBoxFormField } from './checkbox-form-field';
+import { ThumbnailListFormField } from './thumbnail-list-form-field';
 
 export const formFieldConfig: FormFieldConfig = {
   text: Input,
@@ -28,4 +29,5 @@ export const formFieldConfig: FormFieldConfig = {
   translationBox: FormTranslationBox,
   'phone-number': PhoneNumberFormField,
   'chip-list': ChipListFormField,
+  'thumbnail-list': ThumbnailListFormField,
 };

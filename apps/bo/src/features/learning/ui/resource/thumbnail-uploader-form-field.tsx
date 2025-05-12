@@ -1,22 +1,33 @@
-import { FC } from 'react';
-import { ThumbnailImageUpload } from '@learnway/ui';
+import React, { forwardRef } from 'react';
+import { InputProps, ThumbnailImageUpload } from '@learnway/ui';
 import { ImageOption } from '@/libs/ui/src/lib/thumbnail/type';
-import defaultImg from '../../../../assets/images/thumb/img_thumb_default.jpg';
+import { BaseFormFieldProps } from '@learnway/hooks';
+import { ModalConfig } from '@/libs/ui/src/lib/modal/type';
 
-const ThumbnailUploaderFormFieldComponent: FC<any> = () => {
-  return (
-    <ThumbnailImageUpload
-      options={[
-        /* 동영상 추출 전 */
-        // { id: '1', path: defaultImg },
-        /* 동영상 추출 후 */
-        { id: '1', path: 'https://picsum.photos/200' },
-        { id: '6', path: defaultImg } /* default 추천 썸네일 */,
-      ]}
-      // onChange={(options: ImageOption[]) => console.log('onChange', options)}
-      onCheckedChange={(options: ImageOption[]) => console.log('onCheckedChange', options)}
-    />
-  );
-};
+interface ThumbnailListFormFieldProps extends BaseFormFieldProps<ImageOption[]> {
+  modalConfig: ModalConfig;
+  input?: InputProps;
+  onClick?: (value?: any) => void;
+  /** modalData 에서 받은 내용의 조작을 위한 함수 - onFormChange(modalData) 시 사용 */
+  transformModalData?: (modalData?: any) => void;
+}
 
-export const ThumbnailUploaderFormField = ThumbnailUploaderFormFieldComponent;
+const ThumbnailListFormFieldComponent = forwardRef<HTMLDivElement, ThumbnailListFormFieldProps>(
+  ({ value, onChange }, ref) => {
+    const handleChange = (options: ImageOption[]) => {
+      onChange?.(options);
+    };
+
+    return (
+      <ThumbnailImageUpload
+        options={value}
+        onChange={handleChange}
+        // onImageSelect={handlerImageSelect}
+        // onChange={(options: ImageOption[]) => console.log('onChange', options)}
+        // onCheckedChange={(options: ImageOption[]) => console.log('onCheckedChange', options)}
+      />
+    );
+  },
+);
+
+export const ThumbnailListFormField = ThumbnailListFormFieldComponent;

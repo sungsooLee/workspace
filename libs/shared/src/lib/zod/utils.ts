@@ -100,6 +100,9 @@ export const buildJodObject = (validator: ValidatorConfig): ZodSchema => {
         conditionsSuperRefine = [...conditionsSuperRefine, ...getValidateConfigPhoneNumber(key)];
         break;
       }
+      case 'thumbnail-list':
+        schema = z.any();
+        break;
       default:
         throw new Error(`Unsupported type: ${config.format}`);
     }
