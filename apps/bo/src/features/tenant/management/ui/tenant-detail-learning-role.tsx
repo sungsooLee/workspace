@@ -14,32 +14,32 @@ const TenantDetailLearningRoleComponent: FC<any> = () => {
     {
       title: t('학습자 역할정보'),
       key: 'FO-ROLE',
-      content: <TenantDetailLearningRoleTree roleScope={'FO'} />,
+      content: <TenantDetailLearningRoleTree siteScope={'FO'} />,
     },
     {
       title: t('학습자 메뉴설정'),
       key: 'FO-MENU',
-      content: <TenantDetailLearningRoleMenu roleScope={'FO'} />,
+      content: <TenantDetailLearningRoleMenu siteScope={'FO'} />,
     },
     {
       title: t('학습자 역할부여'),
       key: 'FO-ROLE-SET',
-      content: <TenantDetailLearningRoleGrant roleScope={'FO'} />,
+      content: <TenantDetailLearningRoleGrant siteScope={'FO'} />,
     },
     {
       title: t('HRD센터 역할정보'),
       key: 'BO-ROLE',
-      content: <TenantDetailLearningRoleTree roleScope={'BO'} />,
+      content: <TenantDetailLearningRoleTree siteScope={'BO'} />,
     },
     {
       title: t('HRD센터 메뉴설정'),
       key: 'BO-MENU',
-      content: <TenantDetailLearningRoleMenu roleScope={'BO'} />,
+      content: <TenantDetailLearningRoleMenu siteScope={'BO'} />,
     },
     {
       title: t('HRD센터 역할부여'),
       key: 'BO-ROLE-SET',
-      content: <TenantDetailLearningRoleGrant roleScope={'BO'} />,
+      content: <TenantDetailLearningRoleGrant siteScope={'BO'} />,
     },
   ];
 
