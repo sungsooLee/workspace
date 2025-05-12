@@ -4,7 +4,7 @@ import { ImageOption } from '@/libs/ui/src/lib/thumbnail/type';
 import { BaseFormFieldProps } from '@learnway/hooks';
 import { ModalConfig } from '@/libs/ui/src/lib/modal/type';
 
-interface ThumbnailUploaderFormFieldProps extends BaseFormFieldProps<ImageOption[]> {
+interface ThumbnailListFormFieldProps extends BaseFormFieldProps<ImageOption[]> {
   modalConfig: ModalConfig;
   input?: InputProps;
   onClick?: (value?: any) => void;
@@ -12,23 +12,22 @@ interface ThumbnailUploaderFormFieldProps extends BaseFormFieldProps<ImageOption
   transformModalData?: (modalData?: any) => void;
 }
 
-const ThumbnailUploaderFormFieldComponent = forwardRef<
-  HTMLDivElement,
-  ThumbnailUploaderFormFieldProps
->(({ value, onChange }, ref) => {
-  const handleChange = (options: ImageOption[]) => {
-    onChange?.(options);
-  };
+const ThumbnailListFormFieldComponent = forwardRef<HTMLDivElement, ThumbnailListFormFieldProps>(
+  ({ value, onChange }, ref) => {
+    const handleChange = (options: ImageOption[]) => {
+      onChange?.(options);
+    };
 
-  return (
-    <ThumbnailImageUpload
-      options={value}
-      onChange={handleChange}
-      // onImageSelect={handlerImageSelect}
-      // onChange={(options: ImageOption[]) => console.log('onChange', options)}
-      // onCheckedChange={(options: ImageOption[]) => console.log('onCheckedChange', options)}
-    />
-  );
-});
+    return (
+      <ThumbnailImageUpload
+        options={value}
+        onChange={handleChange}
+        // onImageSelect={handlerImageSelect}
+        // onChange={(options: ImageOption[]) => console.log('onChange', options)}
+        // onCheckedChange={(options: ImageOption[]) => console.log('onCheckedChange', options)}
+      />
+    );
+  },
+);
 
-export const ThumbnailUploaderFormField = ThumbnailUploaderFormFieldComponent;
+export const ThumbnailListFormField = ThumbnailListFormFieldComponent;

@@ -7,6 +7,7 @@ export * from './switch-form-field';
 export * from './form-row';
 export * from './contents-history-info-form-field';
 export * from './duplicate-check-input-form-field';
+export * from './thumbnail-list-form-field';
 // components
 export { FormGuideText } from './components/form-guide-text';
 export { FormInfoArea } from './components/form-info-area';
