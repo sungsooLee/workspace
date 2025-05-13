@@ -300,7 +300,8 @@
       "multilingualManage": "다국어 관리",
       "duplication": "중복",
       "commonCdGroupList": "공통코드그룹목록",
-      "courseOpen": "과정 개설"
+      "courseOpen": "과정 개설",
+      "preview": "미리보기"
     },
     "confirm": {
       "save": {
