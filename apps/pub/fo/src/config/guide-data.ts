@@ -1504,7 +1504,7 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'video',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-05-12',
     lastUpdateDate: '',
     remarks: '- video.tsx',
   },
@@ -1555,9 +1555,9 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'ebook',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-05-12',
     lastUpdateDate: '',
-    remarks: '- ebook.tsx',
+    remarks: '- ebook.tsx\n- 개발화면 확인 필요',
   },
   {
     screenId: 'NLP_FO_CLA_1045',
@@ -1565,7 +1565,7 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'file',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-05-12',
     lastUpdateDate: '',
     remarks: '- file.tsx',
   },
@@ -1585,9 +1585,9 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'blog',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-05-13',
     lastUpdateDate: '',
-    remarks: '- blog.tsx',
+    remarks: '- blog.tsx\n- 개발화면 확인 필요',
   },
   {
     screenId: 'NLP_FO_CLA_1029',
@@ -1595,9 +1595,9 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'html',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-05-13',
     lastUpdateDate: '',
-    remarks: '- html.tsx',
+    remarks: '- html.tsx\n- 개발화면 확인 필요',
   },
   {
     screenId: 'NLP_FO_CLA_1030',
@@ -1624,11 +1624,11 @@ export const guideData = [
     screenId: 'NLP_FO_CLA_MA_1025',
     screenName: 'M_강의실_학습창_동영상',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: 'Pop-up',
-    completionDate: '',
+    pageId: 'video-m',
+    pageType: 'Page',
+    completionDate: '2025-05-13',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- video-m.tsx',
   },
 
   {

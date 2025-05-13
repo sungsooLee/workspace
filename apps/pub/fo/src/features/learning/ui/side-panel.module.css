@@ -44,3 +44,35 @@
     }
   }
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      @apply fixed bottom-0 left-0 right-0 top-[inherit] w-full translate-x-0 translate-y-0;
+      .panel {
+        @apply w-full shadow-[-2px_0px_6px_rgba(0,0,0,0.1)];
+        .menu {
+          @apply flex rounded-none px-0 pb-0 pt-[16px] shadow-none;
+          button {
+            @apply m-0 flex flex-1 items-center;
+            span {
+              @apply body_3_r mt-[8px];
+            }
+          }
+        }
+        .control {
+          @apply mt-[8px] flex w-full items-start rounded-none pb-[16px] pt-[8px] shadow-none;
+          button {
+            @apply m-0 h-[48px] flex-1 flex-row items-center justify-center rounded-[8px] border-[1px] border-solid border-[var(--gray6)];
+            span {
+              @apply button_2_r mt-0;
+            }
+            & + button {
+              @apply !ml-[8px];
+            }
+          }
+        }
+      }
+    }
+  }
+}

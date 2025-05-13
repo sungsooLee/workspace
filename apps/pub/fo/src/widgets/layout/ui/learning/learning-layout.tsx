@@ -16,9 +16,7 @@ interface LearningLayoutComponentProps {
 function LearningLayoutComponent({ children }: LearningLayoutComponentProps) {
   return (
     <>
-      <BrowserView>
-        <LearningHeader />
-      </BrowserView>
+      <LearningHeader />
 
       <div className={`${styles.start} ${styles.container}`}>
         <div className={styles.inner}>
