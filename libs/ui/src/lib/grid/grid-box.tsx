@@ -61,6 +61,7 @@ const GridBoxComponent = <T extends object>(
     onDataChange,
     excel,
     getParams,
+    totalElements,
   } = config;
   const columnHelper = createColumnHelper<any>();
   const gridRef = useRef<GridImperative>(null);

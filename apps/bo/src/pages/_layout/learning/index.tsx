@@ -13,7 +13,6 @@ import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-butt
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '@widgets/layout/ui/container/slot/sub-contents';
 import { ContentsRow } from '@widgets/layout/ui/container/parts/contents-row';
-import { useDynamicForm } from '@learnway/hooks';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { FormRow } from '@shared/ui';
 import { LectureTypeSiteUrl, ManagerListModal, TeacherListModal } from '@features/learning/course';
