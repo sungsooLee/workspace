@@ -7,7 +7,7 @@ import { GridBox, useGridBox } from '@learnway/ui';
 
 export const OrganizationTable = () => {
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
-  const { gridFetch } = useGridBox(gridConfig, getValues);
+  const { config, gridFetch } = useGridBox(gridConfig, getValues);
 
   const handleOnSearch = useCallback((data: any) => {
     console.log('OrganizationRight : handleOnSearch', data);
@@ -17,7 +17,7 @@ export const OrganizationTable = () => {
   return (
     <>
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
-      <GridBox config={gridConfig} />
+      <GridBox config={config} />
     </>
   );
 };

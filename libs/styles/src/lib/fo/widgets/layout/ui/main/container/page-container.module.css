@@ -4,6 +4,6 @@
     @apply relative pb-[80px] pt-[16px];
   }
   .title {
-    @apply title_4_b pb-[16px];
+    @apply title_4_b pb-[16px] pt-[24px];
   }
 }

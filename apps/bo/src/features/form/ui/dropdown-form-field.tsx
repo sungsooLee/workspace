@@ -1,19 +1,20 @@
 import React, { forwardRef, useEffect, useState } from 'react';
-import { BaseFormFieldProps, OptionsConfig, SelectOption } from '@learnway/hooks';
+import { BaseFormFieldProps, OptionsConfig, SelectOption, useCodeStore } from '@learnway/hooks';
 import { Dropdown, DropdownComponentProps, DropdownOption } from '@learnway/ui';
 import { useFetchCodeGroups } from '../../../entities/platform';
 import { useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useQueryClient } from '@tanstack/react-query';
 
-interface DropdownFormField extends BaseFormFieldProps<string> {
+interface DropdownFormFieldType extends BaseFormFieldProps<string> {
   options: DropdownOption[];
   optionsConfig?: OptionsConfig;
   dropdownConfig?: DropdownComponentProps;
 }
 
-const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormField>(
+const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormFieldType>(
   ({ control, value, onChange, options: initOptions, optionsConfig, dropdownConfig }, ref) => {
+    const { getCode } = useCodeStore();
     const [options, setOptions] = useState<DropdownOption[]>([]);
     const { data: codeData } = useFetchCodeGroups();
     const { t } = useTranslation();
@@ -35,15 +36,8 @@ const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormField>
       let newOptions = [...initOptions];
       if (optionsConfig.type === 'self') {
         if (optionsConfig.codeGroup) {
-          const codes = (codeData as any)[optionsConfig.codeGroup]?.codes || [];
-          newOptions = [
-            ...newOptions,
-            ...codes.map((code: any) => ({
-              ...code,
-              value: code.code,
-              label: t(code.name || ''),
-            })),
-          ];
+          const codes = await getCode(optionsConfig.codeGroup);
+          newOptions = [...newOptions, ...codes];
         } else if (optionsConfig.api) {
           const result = await queryClient.fetchQuery(optionsConfig.api());
           // callback이 있으면 적용, 없으면 그대로 추가
@@ -106,7 +100,7 @@ const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormField>
           {...dropdownConfig}
           ref={ref}
           value={value}
-          options={options}
+          options={options.map((option) => ({ ...option, label: t(option.label || '') }))}
           onChange={onChange}
         />
       )

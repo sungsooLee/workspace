@@ -13,7 +13,7 @@ export type com_ever_edu_lms_badge_dto_req_BadgeComponentSaveReqDto = {
     /**
      * 뱃지 내 순서
      */
-    sortSeq?: number;
+    sortOrder?: number;
     /**
      * 뱃지 내 과정 or 시험 mapping Id
      */

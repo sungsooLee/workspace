@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto } from './com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto';
+import type { com_ever_edu_lms_course_dto_res_CourseResDto$TagNameWrapper } from './com_ever_edu_lms_course_dto_res_CourseResDto$TagNameWrapper';
 export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
     /**
      * 사용 여부
@@ -118,6 +119,10 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
     textbookPurchaseAllocationRate?: number;
     contentPurchaseCost?: number;
     contentPurchaseAllocationRatio?: number;
+    /**
+     * 태그 이름 목록
+     */
+    tagNames?: Array<com_ever_edu_lms_course_dto_res_CourseResDto$TagNameWrapper>;
 };
 export namespace com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin {
     export enum wizardStep {

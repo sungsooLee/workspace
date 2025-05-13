@@ -43,15 +43,15 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
     const { close: closeModal } = useModal();
 
     // description scroll check Start
-    const MAX_HEIGHT = 160;
+    const MAX_HEIGHT = 60;
 
-    const descriptionRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
     const [isScrolled, setIsScrolled] = useState(false);
 
     useEffect(() => {
       const checkHeight = () => {
-        if (descriptionRef.current) {
-          setIsScrolled(descriptionRef.current.scrollHeight > MAX_HEIGHT);
+        if (contentRef.current) {
+          setIsScrolled(contentRef.current.scrollHeight > MAX_HEIGHT);
         }
       };
 
@@ -60,8 +60,8 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
 
       // ResizeObserver로 크기 변화 감지
       const observer = new ResizeObserver(checkHeight);
-      if (descriptionRef.current) {
-        observer.observe(descriptionRef.current);
+      if (contentRef.current) {
+        observer.observe(contentRef.current);
       }
 
       return () => observer.disconnect();
@@ -126,7 +126,9 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
         </ModalTitle>
         {content && (
           <ModalBody>
-            <div className={styles.content}>{isString(content) ? t(content) : content}</div>
+            <div ref={contentRef} className={cn(styles.content, isScrolled && styles.scrolled)}>
+              {isString(content) ? t(content) : content}
+            </div>
           </ModalBody>
         )}
         <ModalFooter>

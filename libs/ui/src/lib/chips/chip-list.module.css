@@ -80,3 +80,7 @@
     @apply ml-[2px] h-auto w-[12px];
   }
 }
+
+.empty_message {
+  @apply body_bo_2_r w-full py-[43px] text-center text-[var(--gray7)];
+}

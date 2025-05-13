@@ -623,7 +623,7 @@ export const guideData = [
     remarks: '완료', // 비고
   },
   {
-    screenName: 'CMS/학습자원등록 동영상 등록',
+    screenName: 'CMS/학습자원등록 동영상 등록(시험관리 포함)',
     pageId: 'learning/mediaRegister',
     screenId: '',
     pageType: 'Page',
@@ -675,6 +675,15 @@ export const guideData = [
     completionDate: '2025-05-12',
     lastUpdateDate: '',
     remarks: '', // 비고
+  },
+  {
+    screenName: 'CMS/시험관리_시험지상세',
+    pageId: 'learning/testDetail',
+    screenId: 'NLP_BO_CMS_1203',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '진행중', // 비고
   },
   // {
   //   screenName: 'CMS/시험관리',

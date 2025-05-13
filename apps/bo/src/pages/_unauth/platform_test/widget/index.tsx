@@ -19,7 +19,7 @@ export const Route = createFileRoute('/_unauth/platform_test/widget/')({
 function RouteComponent() {
   const router = useRouter();
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
-  const { gridFetch } = useGridBox(gridConfig, getValues);
+  const { config, gridFetch } = useGridBox(gridConfig, getValues);
 
   /**
    * 학습 컨텐츠를 등록하기 위한 Dialog 호출
@@ -41,7 +41,7 @@ function RouteComponent() {
       </ContentsButtons>
       <MainContents>
         <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
-        <GridBox config={gridConfig} />
+        <GridBox config={config} />
       </MainContents>
     </PageContainer>
   );

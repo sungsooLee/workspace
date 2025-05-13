@@ -16,6 +16,16 @@ export interface CodeStore {
   reset: () => void;
 }
 
+export interface CodeApiType {
+  cdGroupId: string;
+  cdId: string;
+  cdName: string;
+  cdContent: string;
+  multilingualKey: string;
+  referenceVal1: string;
+  isUsed: true;
+}
+
 export type CodeApiConfig = {
   [K in CODE_GROUP_TYPE]: {
     api?: () => Promise<CodeOption[]>;

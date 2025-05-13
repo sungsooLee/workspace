@@ -13,6 +13,7 @@ import { cn } from '@learnway/shared';
 import { UploadFile } from '@learnway/hooks';
 import { useDropzone } from 'react-dropzone';
 import { DndFileProgressProps } from './types';
+import { t } from 'i18next';
 
 // 바이트를 자동 포맷된 문자열로 변환
 export const dpSize = (bytes: number, digits = 2): string => {
@@ -33,6 +34,8 @@ const DndFileProgressComponent: FC<DndFileProgressProps> = ({
   maxFileCount,
   maxFileSize,
   wrapSize,
+  guideText,
+  errorMessage,
 }) => {
   const acceptFileString = useMemo(() => {
     if (!acceptFiles) return '';
@@ -207,20 +210,18 @@ const DndFileProgressComponent: FC<DndFileProgressProps> = ({
     // 파일 상태에 따른 컴포넌트 반환 (일치하지 않는 상태는 기본 상태로 처리)
     return statusMap[file.status] || statusMap.default;
   };
-
+  console.log('errorMessage => ', errorMessage);
   return (
     <div className={cn(styles.start, styles.wrap)}>
-      <div className={cn(styles.file_wrap, styles.type_excel, wrapSize && styles[wrapSize])}>
+      <div className={cn(styles.file_wrap, errorMessage && styles.error)}>
         {files.length === 0 && (
           <div className={styles.attach_area} {...getRootProps()}>
             <Button className={styles.btn_file}>
               <IcoUploadCloud width={'40'} height={'40'} stroke={'#131C30'} />
               <strong className={styles.file_title}>
-                {'영역을 클릭하거나 파일을 마우스로 끌어놓으세요'}
+                {t('LABEL.message.upload.uploadDescription')}
               </strong>
-              <span
-                className={styles.file_guide}
-              >{`${acceptFileString} ${maxFileCount === 1 ? ` / 최대 1개 파일` : ''} ${maxFileSize ? `/ Max file size : ${dpSize(maxFileSize)}` : ''} `}</span>
+              <span className={styles.file_guide}>{`${acceptFileString}`}</span>
               <input {...getInputProps()} accept={acceptFileString} />
             </Button>
           </div>
@@ -245,6 +246,11 @@ const DndFileProgressComponent: FC<DndFileProgressProps> = ({
           </div>
         )}
       </div>
+      {(guideText || errorMessage) && (
+        <p className={cn(styles.guide_text, errorMessage && styles.error)}>
+          {errorMessage || guideText}
+        </p>
+      )}
     </div>
   );
 };

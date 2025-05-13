@@ -64,6 +64,8 @@ export { com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep3 
 export { com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep4 } from './models/com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep4';
 export { com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep5 } from './models/com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep5';
 export { com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnUser } from './models/com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnUser';
+export type { com_ever_edu_lms_course_dto_res_CourseResDto$TagNameWrapper } from './models/com_ever_edu_lms_course_dto_res_CourseResDto$TagNameWrapper';
+export type { com_ever_edu_lms_course_dto_res_CourseResDto$TagNameWrapper_WizardStep5 } from './models/com_ever_edu_lms_course_dto_res_CourseResDto$TagNameWrapper_WizardStep5';
 export type { com_ever_edu_lms_course_dto_res_SequenceListResDto$OnAdmin } from './models/com_ever_edu_lms_course_dto_res_SequenceListResDto$OnAdmin';
 export { com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser } from './models/com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser';
 export type { com_ever_edu_lms_course_dto_res_SequenceResDto$onAdmin } from './models/com_ever_edu_lms_course_dto_res_SequenceResDto$onAdmin';

@@ -4,6 +4,10 @@
 /* eslint-disable */
 export type com_ever_edu_pms_role_dto_req_RoleUpdateReqDto = {
     /**
+     * 사이트 구분
+     */
+    siteScope?: com_ever_edu_pms_role_dto_req_RoleUpdateReqDto.siteScope;
+    /**
      * 부모 역할 ID
      */
     parentRoleId?: number;
@@ -53,6 +57,13 @@ export type com_ever_edu_pms_role_dto_req_RoleUpdateReqDto = {
     isUsed?: boolean;
 };
 export namespace com_ever_edu_pms_role_dto_req_RoleUpdateReqDto {
+    /**
+     * 사이트 구분
+     */
+    export enum siteScope {
+        FO = 'FO',
+        BO = 'BO',
+    }
     /**
      * 테넌트 적용 범위
      */

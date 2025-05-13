@@ -1411,7 +1411,7 @@ function RouteComponent() {
                   </div>
                 </div>
               </ContentsRow>
-              <ContentsRow>
+              <ContentsRow className="no_line">
                 <div className={formStyles.form_item}>
                   <label htmlFor="name-examMsg" className={formStyles.form_label}>
                     <span className={formStyles.form_text}>종료메세지</span>
