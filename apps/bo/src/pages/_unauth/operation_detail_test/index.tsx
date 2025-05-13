@@ -34,35 +34,39 @@ function RouteComponent() {
     console.log('data {} => ', data);
   };
 
-  const handleValidate = (data: any) => {
-    console.log('data {} => ', data);
+  const handleValidate = () => {
+    console.log('getValues => ', getValues());
   };
 
   return (
     <form onSubmit={onSubmit(handleOnSubmit)}>
       <PageContainer>
         <ContentsButtons>
-          <Button type="submit" variant="point" size="sm">
-            과정복사
-          </Button>
-          <Button type={'button'} variant="point" size="sm">
-            임시저장
-          </Button>
-          <Button type={'button'} variant="point" size="sm">
-            작성완료
-          </Button>
-          <Button type={'button'} variant="point" size="sm">
-            미리보기
-          </Button>
-          <Button type={'button'} variant="primary" size="sm">
-            게시하기
-          </Button>
-          <Button type={'button'} variant="point" size="sm" onClick={handleOnSubmit}>
-            Form submit
-          </Button>
-          <Button type={'button'} variant="point" size="sm" onClick={handleValidate}>
-            Form 유효성 체크
-          </Button>
+          <Button type="submit" variant="point" size="sm" label={'과정복사'} />
+
+          <Button type={'button'} variant="point" size="sm" label={'임시저장'} />
+
+          <Button type={'button'} variant="point" size="sm" label={'작성완료'} />
+
+          <Button type={'button'} variant="point" size="sm" label={'미리보기'} />
+
+          <Button type={'button'} variant="primary" size="sm" label={'게시하기'} />
+
+          <Button
+            type={'submit'}
+            variant="point"
+            size="sm"
+            label={'Form submit'}
+            onClick={handleOnSubmit}
+          />
+
+          <Button
+            type={'button'}
+            variant="point"
+            size="sm"
+            label={'Form 유효성 체크'}
+            onClick={handleValidate}
+          />
         </ContentsButtons>
         <MainContents>
           <ContentsRow>
@@ -157,7 +161,6 @@ function RouteComponent() {
                   })}
                 />
               </DynamicFormField>
-              {/*<DynamicFormField name={'연락처'}>/!*<CourseDetailForm />*!/</DynamicFormField>*/}
             </FormRow>
           </ContentsRow>
           {/* 테넌트 */}
@@ -189,9 +192,14 @@ function RouteComponent() {
               </DynamicFormField>
             </FormRow>
           </ContentsRow>
+          {/* 썸네일 리스트 */}
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'썸네일'} />
+            </FormRow>
+          </ContentsRow>
         </MainContents>
         <SubContents>
-          {/*<CourseDetailForm setForm={setForm2} />*/}
           <Input />
         </SubContents>
       </PageContainer>
@@ -263,7 +271,7 @@ const formConfig: DynamicFormConfig = {
       // placeholder: '',
       description: '',
       chipListConfig: {
-        showInput: true,
+        emptyMessage: 'XCXC',
       },
     },
     {
@@ -309,10 +317,12 @@ const formConfig: DynamicFormConfig = {
       format: 'array',
       options: Array(10)
         .fill(null)
-        .map((d, i) => ({ value: `value${i}`, label: `label${i}` })),
-      value: [],
+        .map((d, i) => ({ value: `value${i}`, label: `label${i}`, disabled: i === 1 })),
+      value: ['value1'],
       placeholder: '',
       description: '',
+      showSelectAll: true,
+      cols: 4,
     },
     {
       name: 'managerId',
@@ -341,13 +351,10 @@ const formConfig: DynamicFormConfig = {
       type: 'chip-list',
       label: t('테넌트 - 우측 액션버튼 + chip list'),
       format: 'array',
-      value: [],
+      value: [{ label: 'AA', value: 'value1' }],
       placeholder: '',
       description: '',
-      options: [
-        { value: 'tenant1', label: 'Tenant A' },
-        { value: 'tenant2', label: 'Tenant B' },
-      ],
+      chipListConfig: {},
     },
     {
       name: '공개범위',
@@ -357,6 +364,13 @@ const formConfig: DynamicFormConfig = {
       value: [{ targetId: 'target1', targetName: 'targetname1' }],
       placeholder: '',
       description: '',
+    },
+    {
+      name: '썸네일',
+      type: 'thumbnail-list',
+      label: t('ThumbnailListFormField'),
+      format: 'array',
+      value: [],
     },
   ],
 };

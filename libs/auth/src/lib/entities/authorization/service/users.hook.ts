@@ -5,7 +5,7 @@ import { cookieService } from '@learnway/shared';
 import type { MutateCallback } from '@learnway/shared';
 import type { PhoneNumberValue } from '@learnway/ui';
 
-import { mutateOptions } from './users.queries';
+import { mutateOptions, queryOptions } from './users.queries';
 import { useUpdateAuthUser } from './authorization.hook';
 
 import type { AuthUser, Tenant } from '../../../types';
@@ -17,6 +17,14 @@ interface phoneNumberPayload {
   currentPhoneNumberNationCode?: string;
   newPhoneNumber: string;
   newPhoneNumberNationCode?: string;
+}
+interface SMSPayload {
+  name: string;
+  birthday: string;
+  phoneNumber: string;
+}
+interface SMSVerifytPayload extends SMSPayload {
+  verificationCode: string;
 }
 
 export function useUpdatePhoneNumber(mutationOptions = {}) {
@@ -38,6 +46,44 @@ export function useUpdatePhoneNumber(mutationOptions = {}) {
       payload: phoneNumberPayload,
       callback?: MutateOptions<unknown, unknown, phoneNumberPayload>,
     ) => {
+      mutate(payload, callback);
+    },
+    isSuccess,
+    isError,
+  };
+}
+export function useVerifySMS(mutationOptions = {}) {
+  const { mutate, isSuccess, isError } = useMutation({
+    ...mutateOptions.verifySMS(),
+    onSuccess: async (data: any, variables, context) => {
+      // TODO
+    },
+    ...mutationOptions,
+  });
+
+  return {
+    verify: (
+      payload: SMSVerifytPayload,
+      callback?: MutateOptions<unknown, unknown, SMSVerifytPayload>,
+    ) => {
+      mutate(payload, callback);
+    },
+    isSuccess,
+    isError,
+  };
+}
+
+export function useSendVerifySMS(mutationOptions = {}) {
+  const { mutate, isSuccess, isError } = useMutation({
+    ...mutateOptions.sendVerifySMS(),
+    onSuccess: async (data: any, variables, context) => {
+      // TODO
+    },
+    ...mutationOptions,
+  });
+
+  return {
+    send: (payload: SMSPayload, callback?: MutateOptions<unknown, unknown, SMSPayload>) => {
       mutate(payload, callback);
     },
     isSuccess,
@@ -107,6 +153,10 @@ export function useDeleteUser(mutationOptions = {}) {
   };
 }
 
+export function useUserDetail() {
+  return useQuery(queryOptions.detail());
+}
+
 export function useVerifyPassword(mutationOptions = {}) {
   const { mutateAsync, isSuccess, isError } = useMutation({
     ...mutateOptions.verifyPassword(),
@@ -115,7 +165,7 @@ export function useVerifyPassword(mutationOptions = {}) {
   });
 
   return {
-    verify: (payload: string, callback?: MutateCallback<any>) => {
+    verify: (payload: any, callback?: MutateCallback<any>) => {
       return mutateAsync(payload, callback);
     },
     isSuccess,

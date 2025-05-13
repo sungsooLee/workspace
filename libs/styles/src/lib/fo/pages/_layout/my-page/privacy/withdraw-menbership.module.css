@@ -19,7 +19,7 @@
         ul {
           @apply mb-[16px] border-b-[1px] border-solid border-[var(--gray3)] pb-[16px];
           li {
-            @apply body_4_r relative flex justify-between pl-[10px] leading-[19px] text-[var(--gray7)];
+            @apply body_3_r relative flex justify-between pl-[10px] leading-[19px] text-[var(--gray7)];
             &::before {
               @apply absolute left-0 top-[8px] h-[4px] w-[4px] rounded-[50%] bg-[var(--gray6)] content-[''];
             }
@@ -44,7 +44,12 @@
     .start {
       &.secession {
         .box {
-          @apply border-none pt-0;
+          @apply mt-0 border-none pt-0;
+          .confirm {
+            p {
+              @apply body_3_r;
+            }
+          }
           .bullet_notice {
             @apply mt-[24px] rounded-[8px] border-[1px] border-solid border-[var(--gray4)] p-[24px];
             ul {

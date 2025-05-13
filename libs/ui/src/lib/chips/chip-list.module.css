@@ -12,9 +12,17 @@
     }
   }
   &.chips_box {
-    @apply min-h-[3.2rem] min-w-full rounded-[4px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] p-[12px] pt-[6px];
+    @apply min-h-[3.2rem] min-w-full rounded-[4px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] px-[12px] pb-[6px] pt-[6px];
     .input_chips {
       @apply border-0 pl-0;
+    }
+    &[class*='wordwrap'] {
+      [class*='nlp--input'] + div {
+        @apply pb-[6px];
+        &:empty {
+          @apply !hidden;
+        }
+      }
     }
     &.border_none {
       @apply border-0;
@@ -71,4 +79,8 @@
   .close {
     @apply ml-[2px] h-auto w-[12px];
   }
+}
+
+.empty_message {
+  @apply body_bo_2_r w-full py-[43px] text-center text-[var(--gray7)];
 }

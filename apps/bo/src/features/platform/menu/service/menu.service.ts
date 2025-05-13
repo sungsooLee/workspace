@@ -35,6 +35,7 @@ export const transformApiDataToTreeData = (apiData: any) => {
         isWebExposed: node.isWebExposed,
         isMobileExposed: node.isMobileExposed,
         isShortCutArea: node.isShortCutArea,
+        isHiddenMenu: node.isHiddenMenu,
 
         children: node.children || [],
       };

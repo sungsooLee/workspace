@@ -50,15 +50,21 @@ export const PopoverContent = () => {
       </div>
       <ul className={styles.info_list}>
         <li>
-          <Link to={''}>개인정보 변경</Link>
+          <Link to={''}>나의 정보</Link>
         </li>
         <li>
-          <Link to={''}>프로필 작성</Link>
+          <Link to={''}>나의 권한</Link>
+        </li>
+        <li>
+          <Link to={''}>문의하기 ITSM</Link>
         </li>
       </ul>
-      <Button className={styles.btn_log} variant="text" onClick={() => logout()}>
-        <IcLogOut01 width={20} height={20} stroke="#3E4550" /> <span>로그아웃</span>
-      </Button>
+      <div className={styles.logout_wrap}>
+        <Button className={styles.btn_log} variant="text" onClick={() => logout()}>
+          <IcLogOut01 width={20} height={20} stroke="#3E4550" /> <span>로그아웃</span>
+        </Button>
+        <p className={styles.customer_info}>{'고객센터 02-6296-6789'}</p>
+      </div>
     </div>
   );
 };

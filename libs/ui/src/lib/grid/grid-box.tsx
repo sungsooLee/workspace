@@ -44,7 +44,8 @@ const GridBoxComponent = <T extends object>(
     customButtonNode,
     guideText,
     onAddClick,
-
+    clientSideFiltering,
+    clientSideSorting,
     ...props
   }: GridBoxProps<T>,
   ref: React.Ref<GridImperative>,
@@ -179,7 +180,7 @@ const GridBoxComponent = <T extends object>(
           {showTotalCount && (
             <div className={styles.sub_info}>
               {t('LABEL.grid.header.all')}{' '}
-              <strong className={styles.num}>{data?.length || 0}</strong>
+              <strong className={styles.num}>{totalElements || data?.length || 0}</strong>
             </div>
           )}
           {/* 좌측 타이틀 영역 커스텀 (전체 카운트와 가이드 텍스트 중간 영역) */}
@@ -264,6 +265,8 @@ const GridBoxComponent = <T extends object>(
         columns={props.columns ?? girdColumns ?? []}
         showNumberingColumn={showNumberingColumn}
         pagination={paginationProps}
+        clientSideSorting={clientSideSorting}
+        clientSideFiltering={clientSideFiltering}
       />
     </div>
   );

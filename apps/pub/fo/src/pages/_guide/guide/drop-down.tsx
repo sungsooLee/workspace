@@ -108,47 +108,6 @@ function RouteComponent() {
       </div>
 
       <div className="group">
-        <h3 className="guide_tit3">Text (variant="Text")</h3>
-        <div className="flex_box">
-          <div className="desc w-full">
-            <Dropdown
-              options={options}
-              value={selectedValues}
-              onChange={(selected) => setSelectedValues(selected)}
-              placeholder="선택"
-              label="Text 형태"
-              variant="text"
-              isMulti={false}
-              size={'lg'}
-            />
-          </div>
-        </div>
-      </div>
-      <div className="code_example">
-        <pre className="code_block">
-          <code>
-            {`// 적용방법(예시)
-      const [selectedValues2, setSelectedValues2] = useState<string[]>([]);
-      const otherOptions = [
-        { value: 'option1', label: '옵션 1' },
-        { value: 'option2', label: '옵션 2' },
-        { value: 'option3', label: '옵션 3' },
-        { value: 'option4', label: '옵션 4' },
-      ];
-      <Dropdown
-        options={otherOptions}
-        value={selectedValues2}
-        onChange={(selected) => setSelectedValues2(selected)}
-        placeholder="선택"
-        variant="Text"
-        isMulti={false}
-        size={'lg'}
-      />`}
-          </code>
-        </pre>
-      </div>
-
-      <div className="group">
         <h3 className="guide_tit3">다중 선택시 (isMulti=true)</h3>
         <div className="flex_box">
           <div className="desc w-full">

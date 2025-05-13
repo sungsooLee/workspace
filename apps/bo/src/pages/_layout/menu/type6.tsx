@@ -7,7 +7,7 @@ import { ExcelUploadModal } from '@features/shared';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { httpService } from '@learnway/shared';
-import { fileDownload } from '@/libs/shared/src/lib/utils/file-util';
+import { fileDownload } from '@learnway/shared';
 
 export const Route = createFileRoute('/_layout/menu/type6')({
   component: RouteComponent,

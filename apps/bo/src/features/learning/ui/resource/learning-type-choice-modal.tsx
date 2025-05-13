@@ -10,7 +10,9 @@ import {
   IcoMybook,
   IcoSurvey,
   IcoVideo01,
-  IcoVideo02,
+  IcoQuestionBank,
+  IcoLive,
+  IcoLiveHive,
 } from '@learnway/icons';
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import {
@@ -86,7 +88,14 @@ const learningTypes = [
     description: '1개 동영상 업로드',
   },
   {
-    label: 'HTML 동영상',
+    label: '이북',
+    value: LEARNING_TYPE.E_BOOK,
+    icon: <IcoMybook />,
+    description: '설명문구2줄설명',
+  },
+  { label: '스콤', value: LEARNING_TYPE.SCORM, icon: <IcoEtc />, description: '설명문구2줄설명' },
+  {
+    label: 'HTML',
     value: LEARNING_TYPE.HTML_VIDEO,
     icon: <IcoHtml />,
     description: '설명 문구는 최대 2줄까지 노출됩니다. ',
@@ -97,7 +106,6 @@ const learningTypes = [
     icon: <IcoImage01 />,
     description: '설명 문구는 최대 2줄까지 노출됩니다. ',
   },
-  { label: '기타', value: getRandomId(), icon: <IcoEtc />, description: '설명문구2줄설명' },
   {
     label: '외부 링크',
     value: LEARNING_TYPE.EXTERNAL_LINK,
@@ -111,13 +119,7 @@ const learningTypes = [
     description: '설명문구2줄설명',
   },
   { label: '블로그', value: getRandomId(), icon: <IcoBlog />, description: '설명문구2줄설명' },
-  {
-    label: '이북',
-    value: LEARNING_TYPE.E_BOOK,
-    icon: <IcoMybook />,
-    description: '설명문구2줄설명',
-  },
-  { label: '스콤', value: LEARNING_TYPE.SCORM, icon: <IcoEtc />, description: '설명문구2줄설명' },
+
   {
     label: '시험지',
     value: LEARNING_TYPE.TEST_PAGER,
@@ -127,13 +129,7 @@ const learningTypes = [
   {
     label: '문제은행',
     value: LEARNING_TYPE.QUESTION_BANK,
-    icon: <IcoExam />,
-    description: '설명문구2줄설명',
-  },
-  {
-    label: '설문지',
-    value: LEARNING_TYPE.SURVEY,
-    icon: <IcoSurvey />,
+    icon: <IcoQuestionBank />,
     description: '설명문구2줄설명',
   },
   {
@@ -143,15 +139,22 @@ const learningTypes = [
     description: '설명문구2줄설명',
   },
   {
+    label: '설문지',
+    value: LEARNING_TYPE.SURVEY,
+    icon: <IcoSurvey />,
+    description: '설명문구2줄설명',
+  },
+  { label: '기타', value: getRandomId(), icon: <IcoEtc />, description: '설명문구2줄설명' },
+  {
     label: '라이브',
     value: LEARNING_TYPE.LIVE,
-    icon: <IcoHomework />,
+    icon: <IcoLive />,
     description: '설명문구2줄설명',
   },
   {
     label: '라이브(HIVE)',
     value: LEARNING_TYPE.HIVE,
-    icon: <IcoHomework />,
+    icon: <IcoLiveHive />,
     description: '설명문구2줄설명',
   },
 ];

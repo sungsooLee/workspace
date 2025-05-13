@@ -5,7 +5,7 @@ import { Link } from '@tanstack/react-router';
 
 import { Button, ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui';
 
-import { useFetchAuthUser } from '@learnway/auth';
+import { Menu, useFetchAuthUser } from '@learnway/auth';
 
 import { useMenuHierarchy } from '../../../../entities/menu';
 
@@ -76,7 +76,7 @@ const NavigateModalComponent = () => {
                 </div>
                 {menu?.children && menu?.children?.length > 0 && (
                   <ul className={styles.gnb_list}>
-                    {menu?.children.map((subMenu) => (
+                    {(menu?.children as Menu[]).map((subMenu) => (
                       <li>
                         <Link to={subMenu.path}>{t(`MENU.${subMenu.menuCode}`)}</Link>
                       </li>

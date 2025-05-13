@@ -26,6 +26,7 @@ const InputModalSelectorFormFieldComponent = forwardRef<
       value,
       readOnly = true,
       disabled = true,
+      placeholder,
       onChange,
       onFormChange,
       transformModalData,
@@ -46,8 +47,16 @@ const InputModalSelectorFormFieldComponent = forwardRef<
       <div
         className={cn(styles.start, styles.search_wrap, 'nlp--input-modal-selector-form-field')}
         role="button"
-        onClick={() => handleClick()}>
-        <Input {...inputProps} ref={ref} value={value} readOnly={readOnly} showSearchIcon />
+        onClick={() => handleClick()}
+      >
+        <Input
+          {...inputProps}
+          ref={ref}
+          value={value}
+          readOnly={readOnly}
+          placeholder={placeholder}
+          showSearchIcon
+        />
       </div>
     );
   },

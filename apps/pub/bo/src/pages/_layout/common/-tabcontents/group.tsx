@@ -14,7 +14,34 @@ const UserGroupComponent: FC<{}> = ({}) => {
           title: 'Child 1',
           isUsed: true,
           children: [
-            { key: '1-1-1', title: 'Grandchild 1', isUsed: true },
+            {
+              key: '1-1-1',
+              title: 'Grandchild 1',
+              isUsed: true,
+              children: [
+                { key: '2-1-1', title: 'Grandchild-1', isUsed: true },
+                { key: '2-1-2', title: 'Grandchild-2', isUsed: false },
+                {
+                  key: '2-1-3',
+                  title: 'Grandchild-3',
+                  isUsed: false,
+                  children: [
+                    { key: '3-1-1', title: 'Grandchild-1-1', isUsed: true },
+                    { key: '3-1-2', title: 'Grandchild-1-2', isUsed: false },
+                    {
+                      key: '3-1-3',
+                      title: 'Grandchild-1-3',
+                      isUsed: false,
+                      children: [
+                        { key: '4-1-1', title: 'Grandchild-1-1-1', isUsed: true },
+                        { key: '4-1-2', title: 'Grandchild-1-2-2', isUsed: false },
+                        { key: '4-1-3', title: 'Grandchild-1-3-3', isUsed: false },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
             { key: '1-1-2', title: 'Grandchild 2', isUsed: false },
           ],
         },
@@ -51,19 +78,15 @@ const UserGroupComponent: FC<{}> = ({}) => {
   ];
   const [treeData, setTreeData] = useState<TreeNode[]>(sampleData);
 
-  const [selectedItems, setSelectedItems] = useState<TreeNode[]>([]);
-  const handleSelectedItemsChange = (items: TreeNode[]) => {
-    setSelectedItems(items);
-  };
+  const [selectedItems, setSelectedItems] = useState<{ key: string; fullPath: string }[]>([]);
+
   return (
     <ShuttleTreeToChips
+      treeId="tree"
       sourceData={treeData}
       selectedItems={selectedItems}
-      onItemsChange={handleSelectedItemsChange}
+      onItemsChange={setSelectedItems}
       title={'타이틀'}
-      onCustomNodeClick={function (node: TreeNode): void {
-        throw new Error('Function not implemented.');
-      }}
     />
   );
 };

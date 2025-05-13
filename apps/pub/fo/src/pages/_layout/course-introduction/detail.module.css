@@ -15,6 +15,36 @@
         @apply w-full overflow-hidden rounded-[16px];
       }
     }
+    .tab_wrap {
+      .tab_title {
+        .box {
+          @apply flex w-full items-start border-b-[1px] border-solid border-[var(--gray3)];
+        }
+        button {
+          @apply button_2_r relative h-[56px] py-[16px] text-[var(--gray7)];
+          em {
+            @apply ml-[4px] inline-block text-[var(--gray6)];
+          }
+          &.active {
+            @apply !button_2_b text-[var(--gray9)];
+            em {
+              @apply text-[var(--secondary1)];
+            }
+            &::after {
+              @apply absolute -bottom-[1px] left-0 h-[2px] w-full bg-[var(--gray9)] content-[''];
+            }
+          }
+          & + button {
+            @apply ml-[40px];
+          }
+        }
+      }
+      .tab {
+        & > div:nth-child(1) {
+          @apply hidden;
+        }
+      }
+    }
     .package_txt_box {
       @apply mt-[34px];
       strong {

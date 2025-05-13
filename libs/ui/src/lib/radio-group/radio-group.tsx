@@ -53,7 +53,7 @@ const RadioGroupComponent = forwardRef<
                 key={uniqueId}
                 className={styles.item}
                 value={option.value}
-                id={option.value}
+                id={uniqueId}
                 disabled={disabled}
               >
                 <Primitive.Indicator className={styles.indicator} />

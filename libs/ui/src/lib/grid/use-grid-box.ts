@@ -26,6 +26,7 @@ const useGridBoxHook = (config: useGridBoxConfig, getData?: UseFormReturn['getVa
           },
         }),
         totalRows: result?.totalPages ? result.totalPages : result.content.length,
+        totalElements: result?.totalElements || 0,
       }));
     }
   };

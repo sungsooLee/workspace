@@ -2,21 +2,31 @@ import { memo, useState, useEffect, useRef } from 'react';
 import { MobileView, BrowserView, isMobile } from 'react-device-detect';
 import { Link, useRouter } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { IcoArrowDown, IcoCaution03, IcoDownload } from '@learnway/icons';
-import { Button, Dropdown, Panel, Progress, useModal, TableBox } from '@learnway/ui';
+import { IcoArrowDown, IcoCaution03, IcoPlay } from '@learnway/icons';
+import { Button, Panel, Progress, useModal, TableBox, Accordion, Popover } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import styles from './dashboard.module.css';
 import statusStyles from './status.module.css';
+import thumnailStyles from '../../../../shared/ui/thumnail/thumnail.module.css';
+import thumnailImgStyles from '../../../../shared/ui/thumnail/thumnail-img.module.css';
+import packageSideStyles from '../../../../pages/_layout/course-introduction/package-side.module.css';
+import relatedSideStyles from '../../../../pages/_layout/course-introduction/related-side.module.css';
 import pdsStyles from './pds.module.css';
 import tableListStyles from '../../../../shared/ui/list/table-list.module.css';
+import dropdownPopoverStyles from '../../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
 import { CurriculumStudy } from '../../../../features/layout';
 
+import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
+const DropdownPopoverCompoment = () => {
+  return (
+    <div className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}>
+      <Button>1차 | 25-03-01 ~ 26-03-31</Button>
+      <Button>2차 | 25-03-01 ~ 26-03-31</Button>
+    </div>
+  );
+};
 const CourseDashboardCompoment = () => {
   const [selectedValues, setSelectedValues] = useState<null>(null);
-  const options = [
-    { value: 'option1', label: '1차 | 25-03-01 ~ 26-03-31' },
-    { value: 'option2', label: '2차 | 25-03-01 ~ 26-03-31' },
-  ];
 
   const progress = 80;
 
@@ -77,20 +87,102 @@ const CourseDashboardCompoment = () => {
     }),
   ] as ColumnDef<any, unknown>[];
 
+  // 패키지 아코디언
+  const [accordionValue, setAccordionValue] = useState<string>('');
+  const accordionValueItems = [
+    {
+      value: 'a',
+      title: (
+        <div className={packageSideStyles.sub_package_title}>
+          <div
+            className={cn(
+              thumnailStyles.start,
+              thumnailStyles.thumbnail,
+              thumnailStyles.horizontal,
+            )}
+          >
+            {/* link (찜 기능과 겹침으로 따로 빠짐) */}
+            <Link to="" className={thumnailStyles.link}></Link>
+
+            <div className={thumnailStyles.thumnail_box}>
+              {/* img */}
+              <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                <ul className={thumnailImgStyles.label}>
+                  <li style={{ backgroundColor: '#00afd5' }}>New</li>
+                </ul>
+                <div className={thumnailImgStyles.img}>
+                  <img src={listImage1} alt="" />
+                </div>
+              </div>
+              {/* txt */}
+              <div className={thumnailStyles.text_box}>
+                <p className={thumnailStyles.text}>
+                  필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+      children: (
+        <div className={packageSideStyles.sub_package_content}>
+          <p>필수 개발 과정 Spring Framework활한 OpenAPI 서비스 개발</p>
+          <p>필수 개발 과정 Spring Framework활한 OpenAPI 서비스 개발</p>
+          <p>필수 개발 과정 Spring Framework활한 OpenAPI 서비스 개발</p>
+          <p>필수 개발 과정 Spring Framework활한 OpenAPI 서비스 개발</p>
+        </div>
+      ),
+    },
+    {
+      value: 'b',
+      title: (
+        <div className={packageSideStyles.sub_package_title}>
+          <div
+            className={cn(
+              thumnailStyles.start,
+              thumnailStyles.thumbnail,
+              thumnailStyles.horizontal,
+            )}
+          >
+            {/* link (찜 기능과 겹침으로 따로 빠짐) */}
+            <Link to="" className={thumnailStyles.link}></Link>
+
+            <div className={thumnailStyles.thumnail_box}>
+              {/* img */}
+              <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                <ul className={thumnailImgStyles.label}>
+                  <li style={{ backgroundColor: '#00afd5' }}>New</li>
+                </ul>
+                <div className={thumnailImgStyles.img}>
+                  <img src={listImage1} alt="" />
+                </div>
+              </div>
+              {/* txt */}
+              <div className={thumnailStyles.text_box}>
+                <p className={thumnailStyles.text}>필수개발과정</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+      children: <div className={packageSideStyles.sub_package_content}>Content B</div>,
+    },
+  ];
+
   return (
     <div className={styles.start}>
       <div className={styles.tit_box}>
         <h3>대시보드</h3>
-        <Dropdown
-          options={options}
-          value={selectedValues}
-          onChange={(selected) => setSelectedValues(selected)}
-          placeholder="차수보기"
-          variant="text"
-          isMulti={false}
-          size={'lg'}
-          menu-portal-text
-        />
+        <Popover
+          popoverContent={<DropdownPopoverCompoment />}
+          className={`${dropdownPopoverStyles.btn} ${dropdownPopoverStyles.text}`}
+          side="bottom"
+          align="end"
+          sideOffset={10}
+        >
+          <span>{'차수보기'}</span>
+          <IcoArrowDown width={16} height={16} stroke="#131C30" />
+        </Popover>
       </div>
 
       <div className={statusStyles.start}>
@@ -298,9 +390,84 @@ const CourseDashboardCompoment = () => {
               </div>
             </Panel>
           </div>
-
-          {/* sub content */}
         </div>
+
+        <MobileView>
+          {/* sub content */}
+          <div className={styles.sub_contents}>
+            {/* 패키지 */}
+            <div
+              className={`${packageSideStyles.start} ${packageSideStyles.package} ${styles.sub_box} `}
+            >
+              <div className={styles.tit_box}>
+                <strong>
+                  패키지<em>10</em>
+                </strong>
+              </div>
+              <div className={packageSideStyles.package_box}>
+                <Accordion
+                  items={accordionValueItems}
+                  value={accordionValue}
+                  className={packageSideStyles.acc_package}
+                  onValueChange={(value) => setAccordionValue(value as string)}
+                  type={'multiple'}
+                />
+              </div>
+            </div>
+
+            {/* 연관 과정 */}
+            <div
+              className={`${relatedSideStyles.start} ${relatedSideStyles.related} ${styles.sub_box} `}
+            >
+              <div className={styles.tit_box}>
+                <strong>
+                  연관 과정<em>20</em>
+                </strong>
+              </div>
+              <ul className={relatedSideStyles.procedure_box}>
+                <li>
+                  {/* thumnail module */}
+                  <div
+                    className={cn(
+                      thumnailStyles.start,
+                      thumnailStyles.thumbnail,
+                      thumnailStyles.horizontal,
+                    )}
+                  >
+                    {/* link (찜 기능과 겹침으로 따로 빠짐) */}
+                    <Link to="" className={thumnailStyles.link}></Link>
+
+                    <div className={thumnailStyles.thumnail_box}>
+                      {/* img */}
+                      <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                        <ul className={thumnailImgStyles.label}>
+                          <li style={{ backgroundColor: '#00afd5' }}>New</li>
+                        </ul>
+                        <div className={thumnailImgStyles.img}>
+                          <img src={listImage1} alt="" />
+                        </div>
+                      </div>
+                      {/* txt */}
+                      <div className={thumnailStyles.text_box}>
+                        <div className={thumnailStyles.type}>
+                          {/* type */}
+                          <span className={thumnailStyles.txt}>동영상</span>
+                          <span className={thumnailStyles.time}>
+                            {/* time icon */}
+                            <IcoPlay width={12} height={12} fill="#6f798b" />
+                            {/* time */}
+                            04:59
+                          </span>
+                        </div>
+                        <p className={thumnailStyles.text}>필수개발과정</p>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </MobileView>
       </div>
     </div>
   );

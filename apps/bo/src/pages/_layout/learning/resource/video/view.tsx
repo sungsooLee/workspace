@@ -6,7 +6,7 @@ import { PageContainer } from '../../../../../widgets/layout/ui/container/page-c
 import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
-import { MovieInfo, ThumbnailUploaderFormField } from '../../../../../features/learning';
+import { MovieInfo } from '../../../../../features/learning';
 import { ChannelChoiceModal, ManagerChoiceModal } from '../../../../../features/shared';
 import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
 import {
@@ -20,7 +20,7 @@ import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../..
 import { SubTitlesFormField } from '../../../../../features/form/ui';
 import { LinkBox } from '../../../../../widgets/layout/ui/container/slot/link-box';
 import { useTranslation } from 'react-i18next';
-import * as process from 'node:process';
+
 export const Route = createFileRoute('/_layout/learning/resource/video/view')({
   component: RouteComponent,
 });
@@ -177,7 +177,7 @@ function RouteComponent() {
           <ContentsRow>
             {/*썸네일*/}
             <FormRow provider={provider}>
-              <ThumbnailUploaderFormField name="thumbnails" />
+              <DynamicFormField name="thumbnails" />
             </FormRow>
           </ContentsRow>
           <ContentsRow>
@@ -385,7 +385,7 @@ const formConfig: DynamicFormConfig = {
     {
       label: t('썸네일'),
       name: 'thumbnails',
-      type: 'custom',
+      type: 'thumbnail-list',
       format: 'array',
       value: [],
     },

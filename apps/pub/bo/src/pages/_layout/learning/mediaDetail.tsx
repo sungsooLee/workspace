@@ -5,7 +5,7 @@ import {
   Input,
   Button,
   Textarea,
-  Select,
+  Dropdown,
   Tooltip,
   ChipList,
   SelectOption,

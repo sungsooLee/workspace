@@ -7,12 +7,10 @@ import {
   Button,
   ContentsRow,
   DynamicFormField,
-  findParentNode,
+  GridBox,
   TreeContainer,
-  TreeEventPayload,
   TreeNode,
   TreeView,
-  GridBox,
   useModal,
 } from '@learnway/ui';
 
@@ -20,27 +18,26 @@ import { cn } from '@learnway/shared';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import { FormRow, ContentsHistoryInfoFormField } from '@shared/ui';
+import { ContentsHistoryInfoFormField, FormRow } from '@shared/ui';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 import { TenantDetailMenuMappingModal } from './tenant-detail-menu-mapping-modal';
 /** Hook 정의 */
 import {
+  useChangeMenuTenentDnd,
+  useDeleteMenuTenent,
   useFetchMenuTenantDetail,
   useFetchMenuTenantMappingTree,
-  useDeleteMenuTenent,
   useUpdateMenuTenant,
-  useChangeMenuTenentDnd,
 } from '@entities/tenant/service/tenant-menu-manage.hook';
 /** method import */
 import { findMenuPathById } from '@features/platform/menu/service/menu.service';
 import {
-  transformApiDataToTreeData,
-  getFirstExpandKeys,
   getAllTreeKeys,
-  getNodeByKey,
+  getFirstExpandKeys,
   moveNodeCheck,
+  transformMenuApiDataToTreeData,
 } from '../service/tenant-detail-tree.service';
 
 const DIVICE_NAME = {
@@ -54,7 +51,7 @@ const FORM_MODE = {
   ADD: 'ADD',
 };
 
-const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
+const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
   const routerState = useRouterState();
   const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
   const [formMode, setFormMode] = useState(FORM_MODE.NONE);
@@ -108,10 +105,11 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
     switch (events.type) {
       case 'NODE_MOVE':
         {
+          console.log('devents ', events);
           const payload = moveNodeCheck(events);
           if (payload) {
             payload.menuScopeCode = menuScope;
-            console.log(payload);
+            console.log('dsend', payload);
             changeMenuPosition(payload);
           }
         }
@@ -121,7 +119,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
   const handleTenantDetailMenuMapping = async () => {
     const modalScope = menuScope;
     const modalTenantId = tenantId;
-    const selectTenantDetailMenu = await openModal({
+    await openModal({
       content: <TenantDetailMenuMappingModal menuScopeCode={modalScope} tenantId={modalTenantId} />,
       width: 'xl',
     });
@@ -172,8 +170,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
     if (menuData) {
       prevDataRef.current = menuData;
       console.log(menuData);
-      const transformedData = transformApiDataToTreeData(menuData);
-      console.log(transformedData);
+      const transformedData = transformMenuApiDataToTreeData(menuData);
       setTreeData(transformedData);
       if (transformedData && transformedData.length > 0 && expandedKeys.length === 0) {
         const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
@@ -231,9 +228,11 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
             >
               {t('전체닫기')}
             </Button>
-            <Button variant="save" size="sm" onClick={() => handleTenantDetailMenuMapping()}>
-              {t('메뉴 맵핑')}
-            </Button>
+            {roleInfo === 'PLATFORM' && (
+              <Button variant="save" size="sm" onClick={() => handleTenantDetailMenuMapping()}>
+                {t('메뉴 맵핑')}
+              </Button>
+            )}
           </div>
         </div>
         <div className={layoutStyles.inner_contents}>
@@ -314,7 +313,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'menuDesc'} disabled={true} />
+              <DynamicFormField name={'menuDesc'} disabled={FORM_MODE.NONE === formMode} />
             </FormRow>
           </ContentsRow>
           <ContentsRow type={'horizontal'}>
@@ -406,6 +405,7 @@ const formConfig: DynamicFormConfig = {
       type: 'textarea',
       label: t('설명'),
       value: '',
+      size: 50,
     },
     {
       name: 'isHiddenMenu',
@@ -423,7 +423,7 @@ const formConfig: DynamicFormConfig = {
       name: 'isUsed',
       type: 'switch',
       label: t('사용여부'),
-      value: false,
+      value: true,
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
@@ -433,7 +433,6 @@ const formConfig: DynamicFormConfig = {
       type: 'checkbox-group',
       label: t('디바이스 노출 여부'),
       value: [],
-      checkGroupConfig: { allCheck: false },
       options: [
         { label: t('PC'), value: DIVICE_NAME.PC },
         { label: t('모바일'), value: DIVICE_NAME.Mobile },

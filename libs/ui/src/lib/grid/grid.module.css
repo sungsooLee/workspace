@@ -3,22 +3,25 @@
   @apply scrollbar relative box-border overflow-auto border border-solid border-[var(--gray5)];
   table {
     thead {
-      @apply sticky top-0 z-[1];
+      @apply sticky top-0 z-[1] !h-[39px] w-full bg-[var(--gray1)];
       tr {
-        @apply flex w-full border-b-[1px] border-solid !border-[var(--gray4)] bg-[var(--gray1)];
+        @apply flex;
         th.thead_th {
-          @apply bg-[var(--gray1)];
+          @apply !h-[39px] !border-b-0 bg-[var(--gray1)];
           .th_wrap {
-            @apply h-full;
+            @apply !h-[39px];
             .th_cell {
-              @apply body_bo_4_b flex min-h-[40px] items-center px-[8px] text-[var(--gray8)];
+              @apply body_bo_4_b flex min-h-[39px] items-center px-[8px] text-[var(--gray8)];
               .icon_up,
               .icon_down,
               .btn_filter {
                 @apply ml-auto;
               }
-              .icon_down {
+              .icon_up {
                 @apply rotate-180;
+              }
+              [class*='nlp--checkbox'] {
+                @apply mt-[5px];
               }
             }
           }
@@ -27,10 +30,13 @@
           }
         }
       }
+      &::after {
+        @apply sticky left-0 top-[40px] flex h-[1px] w-full bg-[var(--gray4)] content-[''];
+      }
     }
     tbody {
       tr {
-        @apply h-auto !min-h-[40px] border-b border-solid border-[var(--gray2)];
+        @apply !h-[40px] !min-h-[40px] border-b border-solid border-[var(--gray2)];
         td {
           @apply body_bo_2_r line-clamp-1 h-full text-ellipsis whitespace-nowrap px-[8px] py-[8px] align-middle text-[var(--gray7)];
           [class*='nlp--button'] {
@@ -47,6 +53,9 @@
           }
           [class*='link'] {
             @apply !body_bo_2_r text-[var(--gray7)] underline;
+            & + [class*='link'] {
+              @apply ml-[6px];
+            }
           }
           [class*='nlp--input'] {
             input {
@@ -66,6 +75,12 @@
             @apply mt-[4px] !h-[24px];
             [class*='datepicker_input'] {
               @apply !h-[24px];
+            }
+          }
+          [class*='icon_wrap'] {
+            @apply body_bo_2_r flex items-center text-[var(--gray7)];
+            svg {
+              @apply mr-[6px];
             }
           }
 
@@ -117,7 +132,7 @@
       }
     }
     input[type='radio'] {
-      @apply h-[16px] w-[16px] appearance-none overflow-hidden rounded-[8px] border border-solid border-[var(--gray5)];
+      @apply h-[20px] w-[20px] appearance-none overflow-hidden rounded-[10px] border border-solid border-[var(--gray5)];
     }
   }
   .empty_message_container {
@@ -287,7 +302,8 @@
   }
 }
 .td_pinned_left {
-  @apply !z-[3] bg-white;
+  @apply !z-[3] !h-[40px] bg-white;
+  border-bottom: 1px solid var(--gray2) !important;
   &.td_pinned_last {
     border-right: 1px solid var(--gray5) !important;
   }

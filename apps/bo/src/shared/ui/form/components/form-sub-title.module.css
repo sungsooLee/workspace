@@ -41,5 +41,8 @@
     &.line {
       @apply border-b-[1px] border-solid border-[var(--gray4)] pb-[12px];
     }
+    & + [class*='nlp--contents-row'] {
+      @apply mt-[16px];
+    }
   }
 }

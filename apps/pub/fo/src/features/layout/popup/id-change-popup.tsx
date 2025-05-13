@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { cn } from '@learnway/shared';
+import { isMobile } from 'react-device-detect';
 import {
   ModalBody,
   ModalContainer,
@@ -32,11 +33,11 @@ const IdChangePopupComponent = () => {
       <ModalBody>
         <div className={`${styles.start} ${styles.id_change}`}>
           <div className={styles.confirm}>
-            <IcoSucess02 width={32} height={32} stroke="#a9afb8"></IcoSucess02>
+            {/* 2025-05-12 mobile에서만 노출 및 문구 수정 */}
+            {isMobile && <IcoSucess02 width={32} height={32} stroke="#a9afb8"></IcoSucess02>}
             <p>
-              개인정보를 변경 하시려면
-              <br />
-              비밀번호를 확인해주세요.
+              이메일 본인인증 후<br />
+              메일 아이디를 변경 할 수 있습니다.
             </p>
           </div>
           <div className={styles.input_box}>

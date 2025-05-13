@@ -1,21 +1,32 @@
 import { ReactNode, useState } from 'react';
 import { useLocation } from '@tanstack/react-router';
+import { cn } from '@learnway/shared';
 
 import { MobileView, BrowserView } from 'react-device-detect';
-import { SidePanel, SidePanelDetail } from '../../../../../features/learning';
+import { SidePanel } from '../../../../../features/learning';
 import styles from './learning-container.module.css';
+import { ChartNoAxesColumnDecreasing } from 'lucide-react';
 
 interface LearningContainerComponentProps {
   children: ReactNode;
 }
 
+interface ChildData {
+  panelState: boolean;
+}
+
 function LearningContainerComponent({ children }: LearningContainerComponentProps) {
+  const [childInfo, setChildInfo] = useState<boolean>();
+  const handleChildData = (data: ChildData) => {
+    setChildInfo(data.panelState);
+  };
+
   return (
     <div className={`${styles.start} ${styles.learning_container}`}>
-      <div className={`${styles.learning_area}`}>
-        <div className={styles.learning_contents}>{children}</div>
+      <div className={`${styles.learning_area} ${childInfo === false && styles.panel_active}`}>
+        <div className={`${styles.learning_contents}`}>{children}</div>
         <div className={styles.side_panel}>
-          <SidePanel />
+          <SidePanel onValueChange={handleChildData} />
         </div>
       </div>
     </div>

@@ -11,6 +11,7 @@ function RouteComponent() {
       <h2 className="guide_tit2">Switch Component Guide</h2>
       <p className="loc react">/libs/ui/src/lib/switch/switch.tsx</p>
       <p className="info">Side : 'left' | 'right'</p>
+      <p className="info">PC : 세로 28px / Mobile : 세로 20px (반응형처리)</p>
       <div className="code_example">
         <pre className="code_block">
           <code>

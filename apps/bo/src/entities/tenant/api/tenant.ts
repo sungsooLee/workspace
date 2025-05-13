@@ -5,14 +5,15 @@ import { Tenant } from '../../../types/entities/tenant';
 
 export default class TenantService {
   static fetchAllTenant(payload: any) {
-    return httpService.get<Tenant>(`${PMSApiPrefix()}/tenants/`, payload);
+    return httpService.get<any>(`${PMSApiPrefix()}/tenants`, payload);
   }
   static fetchTenant(id: number) {
     return httpService.get<Tenant>(`${PMSApiPrefix()}/tenants/${id}`);
   }
 
   static createTenant(payload: any) {
-    return httpService.post<Tenant>(`${PMSApiPrefix()}/tenants`, payload);
+    const reqbody = genTenantCreate(payload);
+    return httpService.post<Tenant>(`${PMSApiPrefix()}/tenants`, reqbody);
   }
 
   static updateTenant(payload: any) {
@@ -22,4 +23,13 @@ export default class TenantService {
   static deleteTenant(id: number) {
     return httpService.post<Tenant>(`${PMSApiPrefix()}/tenants`, { id });
   }
+}
+
+function genTenantCreate(payload: any) {
+  return {
+    tenantName: payload.tenantName,
+    windowTitle: '',
+    logoImageUrl: '',
+    loginImageUrl: '',
+  };
 }

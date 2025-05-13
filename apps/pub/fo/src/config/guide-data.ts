@@ -271,7 +271,7 @@ export const guideData = [
     pageId: 'my/information-change',
     pageType: 'Pop-up',
     completionDate: '2025-03-26',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-05-12',
     remarks: '- id-change-popup.tsx',
   },
   {
@@ -593,7 +593,7 @@ export const guideData = [
     pageId: 'integrated-search/integrated-procedure',
     pageType: 'Page',
     completionDate: '2025-05-07',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-05-13',
     remarks: '- integrated-procedure.tsx',
   },
   {
@@ -644,7 +644,7 @@ export const guideData = [
     pageId: 'integrated-search/integrated-procedure-m',
     pageType: 'Page',
     completionDate: '2025-05-07',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-05-13',
     remarks: '- integrated-procedure-m.tsx',
   },
   {
@@ -664,7 +664,7 @@ export const guideData = [
     pageId: 'category/detail',
     pageType: 'Page',
     completionDate: '2025-03-14',
-    lastUpdateDate: '2025-04-30',
+    lastUpdateDate: '2025-05-13',
     remarks: 'NLP_FO_CAT_1000 (레이어창 카테고리) 포함\nNLP_FO_CAT_1002 (필터 레이어팝업) 포함',
   },
   {
@@ -674,7 +674,7 @@ export const guideData = [
     pageId: 'category/detail',
     pageType: 'Page',
     completionDate: '2025-03-14',
-    lastUpdateDate: '2025-05-07',
+    lastUpdateDate: '2025-05-13',
     remarks: '',
   },
   {
@@ -704,8 +704,8 @@ export const guideData = [
     pageId: 'category/detail_m',
     pageType: 'Page',
     completionDate: '2025-03-14',
-    lastUpdateDate: '2025-04-30',
-    remarks: '',
+    lastUpdateDate: '2025-05-13',
+    remarks: '- 분류 바텀팝업 안 dropdown 화면넘어가는 이슈 공통 요청중',
   },
   {
     screenId: 'NLP_FO_CAT_M_1002',
@@ -713,9 +713,9 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'category/detail_m',
     pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-05-09',
     lastUpdateDate: '',
-    remarks: '- category-filter-popuo-m.tsx\n- Dropdown 안에 popover 위치 수정중',
+    remarks: '- filter-popup.tsx',
   },
   {
     screenId: 'NLP_FO_LEC_1000',
@@ -725,7 +725,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '- introduction.tsx\n- 썸네일 공통 컴포넌트 대기중\n- 과정소개 toastpopup 미작업',
+    remarks: '- introduction.tsx\n- 과정소개 toastpopup 미작업',
   },
   {
     screenId: 'NLP_FO_LEC_1001',
@@ -756,7 +756,7 @@ export const guideData = [
     completionDate: '',
     lastUpdateDate: '',
     remarks:
-      '- introduction.tsx\n- tooltip 확인중\n- 수강신청 불가 팝업창들 course-information-popup.tsx (반려팝업 미결정)',
+      '- introduction.tsx\n- 수강신청 불가 팝업창들 course-information-popup.tsx (반려팝업 미결정)',
   },
   {
     screenId: 'NLP_FO_LEC_1022',
@@ -845,8 +845,8 @@ export const guideData = [
     pageId: 'course-introduction/package',
     pageType: 'Page',
     completionDate: '2025-04-02',
-    lastUpdateDate: '',
-    remarks: '- package.tsx\n- 썸네일 공통검포넌트 미작업으로 작업 불가능',
+    lastUpdateDate: '2025-05-08',
+    remarks: '- package.tsx',
   },
   {
     screenId: 'NLP_FO_LEC_MA_1000',
@@ -856,7 +856,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '- introduction.tsx\n- 썸네일 공통 컴포넌트 대기중\n- 과정소개 toastpopup 미작업',
+    remarks: '- introduction.tsx\n- 과정소개 toastpopup 미작업',
   },
   {
     screenId: 'NLP_FO_LEC_MA_1001',
@@ -1502,11 +1502,11 @@ export const guideData = [
     screenId: 'NLP_FO_CLA_1025',
     screenName: '강의실_학습창_동영상',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'video',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- video.tsx',
   },
   {
     screenId: 'NLP_FO_CLA_1041',
@@ -1553,41 +1553,51 @@ export const guideData = [
     screenId: 'NLP_FO_CLA_1026',
     screenName: '강의실_학습창_이북',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'ebook',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- ebook.tsx',
+  },
+  {
+    screenId: 'NLP_FO_CLA_1045',
+    screenName: '강의실_학습창_파일',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: 'file',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '- file.tsx',
   },
   {
     screenId: 'NLP_FO_CLA_1027',
     screenName: '강의실_학습창_웹_갤러리',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'gallery',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- gallery.tsx\n- 축소, 확대, drag 기능 공통 요청중',
   },
   {
     screenId: 'NLP_FO_CLA_1028',
     screenName: '강의실_학습창_웹_블로그',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'blog',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- blog.tsx',
   },
   {
     screenId: 'NLP_FO_CLA_1029',
     screenName: '강의실_학습창_웹_HTML',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'html',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- html.tsx',
   },
   {
     screenId: 'NLP_FO_CLA_1030',
@@ -1624,6 +1634,16 @@ export const guideData = [
   {
     screenId: 'NLP_FO_CLA_MA_1026',
     screenName: 'M_강의실_학습창_이북',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Pop-up',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    screenId: 'NLP_FO_CLA_MA_1045',
+    screenName: 'M_강의실_학습창_파일',
     layoutType: '', // 자동 분리됨 작성x
     pageId: '',
     pageType: 'Pop-up',

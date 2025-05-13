@@ -1,0 +1,9 @@
+.start {
+  &.depth_wrap {
+    & > div {
+      & + div {
+        @apply mt-[16px];
+      }
+    }
+  }
+}

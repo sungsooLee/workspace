@@ -18,7 +18,7 @@ import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.mod
 import { cn } from '@learnway/shared';
 import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
 import { SearchBox } from '@shared/ui/search-box';
-import { useSearchBox, SearchBoxConfig } from '@/libs/hooks/src';
+import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';

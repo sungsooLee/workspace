@@ -7,6 +7,7 @@ import type { Menu } from '@learnway/auth';
 import styles from './navigate-hover.module.css';
 
 import { useMenuHierarchy } from '../../../../../../entities/menu/service/menu.service';
+import { Hierarchy } from '@learnway/shared';
 
 interface NavigateHoverComponentProps {
   onClose: () => void;
@@ -43,11 +44,13 @@ function NavigateHoverComponent({ isOpen, onClose }: NavigateHoverComponentProps
 
               {menu.children && menu.children.length > 0 && (
                 <ul className={styles.list}>
-                  {menu.children.map((subMenu: Menu, subIndex: number) => (
-                    <li key={subIndex}>
-                      <Link to={subMenu.path}>{t(`MENU.${subMenu.menuCode}`)}</Link>
-                    </li>
-                  ))}
+                  {(menu.children as Menu[]).map((subMenu: Menu, subIndex: number) => {
+                    return (
+                      <li key={subIndex}>
+                        <Link to={subMenu.path}>{t(`MENU.${subMenu.menuCode}`)}</Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               )}
             </div>

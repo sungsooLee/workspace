@@ -22,9 +22,36 @@
       }
     }
     .tab_wrap {
-      & > div {
+      @apply relative;
+      .tab_title {
+        @apply sticky left-0 top-[56px] z-[1] -mx-[20px] w-[calc(100%+40px)] overflow-x-scroll bg-white;
+        .box {
+          @apply flex h-auto w-fit min-w-full whitespace-nowrap border-b-[1px] border-solid border-[var(--gray3)] px-[20px];
+        }
+        button {
+          @apply button_2_r relative h-[56px] whitespace-nowrap py-[16px] text-[var(--gray7)];
+          em {
+            @apply ml-[4px] inline-block text-[var(--gray6)];
+          }
+          &.active {
+            @apply !button_2_b text-[var(--gray9)];
+            em {
+              @apply text-[var(--secondary1)];
+            }
+            &::after {
+              @apply absolute -bottom-[1px] left-0 h-[2px] w-full bg-[var(--gray9)] content-[''];
+            }
+          }
+          & + button {
+            @apply ml-[40px];
+          }
+        }
+      }
+      .tab {
+        & > div:nth-child(1) {
+          @apply hidden;
+        }
         & > div {
-          @apply overflow-hidden;
           &:nth-child(1) {
             @apply -mx-[20px] w-[calc(100%+40px)] px-[20px];
           }

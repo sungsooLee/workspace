@@ -1,0 +1,5 @@
+.nlp--checkbox {
+  label {
+    @apply !text-[1.4rem];
+  }
+}

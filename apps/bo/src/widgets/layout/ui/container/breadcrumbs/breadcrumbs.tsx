@@ -1,9 +1,9 @@
-import { memo, useState } from 'react';
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useMatchRoute } from '@tanstack/react-router';
 
-import { useActiveMenuDepthState, Menu } from '@learnway/auth';
-import { IcoHome02, IcoArrowForward } from '@learnway/icons';
+import { Menu, useActiveMenuDepthState } from '@learnway/auth';
+import { IcoArrowForward, IcoHome02 } from '@learnway/icons';
 
 import styles from './breadcrumbs.module.css';
 
@@ -31,7 +31,7 @@ function BreadcrumbsComponent() {
                 >
                   <IcoArrowForward width={12} height={12} stroke="#131C30" />
                   {import.meta.env.VITE_LANGUAGE_DEV === 'true'
-                    ? t(`${menu.menuName}`)
+                    ? t(`${menu.menuCode}`) // t(`${menu.menuName}`)
                     : t(`MENU.${menu.menuCode}`)}
                 </Link>
               </li>

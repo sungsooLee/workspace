@@ -6,13 +6,14 @@ export const roleQueryKeys = {
   roles: ['roles'] as const,
   menus: ['menus'] as const,
   apis: ['apis'] as const,
+  tree: ['tree'] as const,
 };
 
 export const roleManagerQueryOptions = {
   // 모든 역할 목록 트리 조회
-  allRoles: () => ({
+  allRoles: (tenantId: number, siteScope: string) => ({
     queryKey: [...roleQueryKeys.all, ...roleQueryKeys.roles],
-    queryFn: async () => RoleManagerService.fetchRoles(),
+    queryFn: async () => RoleManagerService.fetchRoles(tenantId, siteScope),
   }),
 
   // 특정 역할 조회
@@ -47,6 +48,11 @@ export const roleManagerQueryOptions = {
     queryKey: [...roleQueryKeys.all, ...roleQueryKeys.roles, roleId, ...roleQueryKeys.apis],
     queryFn: async () => RoleManagerService.fetchRoleApis(roleId),
     enabled: !!roleId,
+  }),
+  // 역할 트리 조회
+  getRoleTree: (tenantId: number, siteScope: string) => ({
+    queryKey: [roleQueryKeys.all, roleQueryKeys.tree, tenantId, siteScope],
+    queryFn: async () => RoleManagerService.fetchRoleTree(tenantId, siteScope),
   }),
 };
 

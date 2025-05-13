@@ -53,6 +53,7 @@ export { ReactComponent as IcoTooltipArrow } from './lib/ic_tooltip_arrow.svg'; 
 export { ReactComponent as IcoCloseCircle } from './lib/ic_close_circle.svg'; // close circle 24*24
 export { ReactComponent as IcLogOut01 } from './lib/ic_log_out_01.svg'; // logout
 export { ReactComponent as IcoUploadCloud } from './lib/ic_upload_cloud.svg'; // file upload 24*24
+export { ReactComponent as IcoClipboard } from './lib/ic_clipboard.svg';
 export { ReactComponent as IcoLoading } from './lib/ic_loading.svg'; // file loading 24*24
 export { ReactComponent as IcoTrash03 } from './lib/ic_trash_03.svg'; // trash
 export { ReactComponent as IcoCalendar01 } from './lib/ic_calendar_01.svg'; // calrendar
@@ -80,6 +81,9 @@ export { ReactComponent as IcoInfoCircle } from './lib/ic_info_circle.svg'; // l
 export { ReactComponent as IcoImage01 } from './lib/ic_image_01.svg'; // image
 export { ReactComponent as IcoVideo01 } from './lib/ic_video_recorder_01.svg'; // video
 export { ReactComponent as IcoVideo02 } from './lib/ic_video_recorder_02.svg'; // video2
+export { ReactComponent as IcoQuestionBank } from './lib/ic_questionbank.svg';
+export { ReactComponent as IcoLive } from './lib/ic_live.svg';
+export { ReactComponent as IcoLiveHive } from './lib/ic_livehive.svg';
 export { ReactComponent as IcoHtml } from './lib/ic_html.svg'; // html
 export { ReactComponent as IcoEtc } from './lib/ic_etc.svg'; // html
 export { ReactComponent as IcoUser01 } from './lib/ic_user_01.svg'; // user
@@ -124,6 +128,7 @@ export { ReactComponent as IcoBoxPlus } from './lib/ic_box_plus.svg';
 export { ReactComponent as IcoMessageText } from './lib/ic_message-text-square.svg';
 export { ReactComponent as IcoMove01 } from './lib/ic_move_01.svg';
 export { ReactComponent as IcoFile01 } from './lib/ic_file_01.svg'; // tree file
+export { ReactComponent as IcoCopy } from './lib/ic_copy.svg'; // copy
 export { ReactComponent as IcoLearning01 } from './lib/ic_learning_01.svg'; // learning 1
 export { ReactComponent as IcoLearning02 } from './lib/ic_learning_02.svg'; // learning 2
 export { ReactComponent as IcoLearning03 } from './lib/ic_learning_03.svg'; // learning 3

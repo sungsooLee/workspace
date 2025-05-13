@@ -75,7 +75,7 @@ export const buildJodObject = (validator: ValidatorConfig): ZodSchema => {
         schema = z.array(z.any());
         break;
       case 'object':
-        schema = z.object({});
+        schema = z.any();
         break;
       case 'email': {
         schema = z.string();
@@ -100,6 +100,9 @@ export const buildJodObject = (validator: ValidatorConfig): ZodSchema => {
         conditionsSuperRefine = [...conditionsSuperRefine, ...getValidateConfigPhoneNumber(key)];
         break;
       }
+      case 'thumbnail-list':
+        schema = z.any();
+        break;
       default:
         throw new Error(`Unsupported type: ${config.format}`);
     }

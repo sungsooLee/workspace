@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
+import { t } from 'i18next';
 import { useRouterState } from '@tanstack/react-router';
 import {
   Button,
@@ -22,6 +23,10 @@ const TenantCategoryTreeComponent: FC<any> = ({
   expandedKeys,
   onExpandChange,
   selectedKey,
+  useCommonMapping,
+  useTenantMapping,
+  isTenantManager,
+  onNodeAdd,
 }) => {
   const routerState = useRouterState();
   const { open: openModal, confirm: openConfirm } = useModal();
@@ -61,7 +66,6 @@ const TenantCategoryTreeComponent: FC<any> = ({
         break;
       case 'NODE_MOVE': {
         const nodeInfo = event;
-        console.log('### event', event);
         const targetDepth =
           nodeInfo.position === 'INSIDE'
             ? nodeInfo.targetNode?.depth + 1
@@ -71,21 +75,11 @@ const TenantCategoryTreeComponent: FC<any> = ({
             ? nodeInfo.targetNode?.key
             : nodeInfo.targetNode?.parentKey;
         if (nodeInfo.sourceNode.depth !== targetDepth) {
-          alert(
-            '동일한 레벨 내에서만 매핑 및 이동이 가능합니다. src:' +
-              nodeInfo.sourceNode.depth +
-              '/dest:' +
-              targetDepth,
-          );
+          alert(t('LABEL.alert.movableSameLevel'));
           return false;
         }
         if (nodeInfo.sourceNode.parentKey !== parentKey) {
-          alert(
-            '동일한 부모 카테고리에만 매핑 및 이동이 가능합니다. src:' +
-              nodeInfo.sourceNode.parentKey +
-              '/dest:' +
-              parentKey,
-          );
+          alert(t('LABEL.alert.movableSameParent', { type: t('LABEL.common.category') }));
           return false;
         }
         if (nodeInfo.position === 'INSIDE') {
@@ -107,7 +101,7 @@ const TenantCategoryTreeComponent: FC<any> = ({
 
   const handleTenantDetailCategoryMapping = async () => {
     const modalTenantId = tenantId;
-    const selectTenantDetailCategory = await openModal({
+    await openModal({
       content: (
         <TenantDetailCategoryMappingModal
           tenantId={modalTenantId}
@@ -120,12 +114,36 @@ const TenantCategoryTreeComponent: FC<any> = ({
     });
   };
 
+  const renderNodeButtons = (node: TreeNode, level: number) => {
+    if ((node.depth === 0 || node.categoryType === 'TENANT') && isTenantManager && useTenantMapping)
+      return (
+        <div className={'gap-10px flex'}>
+          <div className={'flex items-center'}>
+            <Button
+              onClick={(e) => {
+                e.stopPropagation();
+                onNodeAdd(node);
+              }}
+              variant="gray2"
+              size={'xs'}
+              type={'button'}
+              disabled={level === 5}
+            >
+              {node.depth === 0
+                ? t('LABEL.tree.add', { type: t('LABEL.common.code.tenantCategory') })
+                : t('LABEL.tree.depthAdd', { type: t('LABEL.common.code.tenantCategory') })}
+            </Button>
+          </div>
+        </div>
+      );
+  };
+
   const selectedNode = selectedKey ? findNodeByKey(treeData, selectedKey) : null;
 
   return (
     <div className={cn(layoutStyles.inner, layoutStyles.type_progress2)}>
       <div className={titleStyles.title_wrap}>
-        <h3 className={titleStyles.title}>{'테넌트 카테고리 목록'}</h3>
+        <h3 className={titleStyles.title}>{t('LABEL.page.tenantCategory.title')}</h3>
         <div className={layoutStyles.btn_wrap}>
           <Button
             variant="text"
@@ -133,7 +151,7 @@ const TenantCategoryTreeComponent: FC<any> = ({
             className={layoutStyles.btn_text}
             onClick={() => handleExpandAll(true)}
           >
-            {'전체펼침'}
+            {t('LABEL.tree.expand')}
           </Button>
           <Button
             variant="text"
@@ -141,11 +159,18 @@ const TenantCategoryTreeComponent: FC<any> = ({
             className={layoutStyles.btn_text}
             onClick={() => handleExpandAll(false)}
           >
-            {'전체닫기'}
+            {t('LABEL.tree.closed')}
           </Button>
-          <Button variant="save" size="sm" onClick={() => handleTenantDetailCategoryMapping()}>
-            {'카테고리 매핑'}
-          </Button>
+          {!isTenantManager && (
+            <Button
+              variant="save"
+              size="sm"
+              onClick={() => handleTenantDetailCategoryMapping()}
+              disabled={!useCommonMapping}
+            >
+              {t('LABEL.tree.mapping', { type: t('LABEL.common.code.category') })}
+            </Button>
+          )}
         </div>
       </div>
       <div className={layoutStyles.inner_contents}>
@@ -158,6 +183,7 @@ const TenantCategoryTreeComponent: FC<any> = ({
             onAction={handleTreeAction}
             type={'SAME_LEVEL_ONLY'}
             selectedNode={selectedNode}
+            nodeButtons={renderNodeButtons}
             //onSelectedNodeChange={handleSelectedNodeChange}
           />
         </TreeContainer>

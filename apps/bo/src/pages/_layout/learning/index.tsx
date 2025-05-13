@@ -4,6 +4,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import {
   Button,
   ChipListModalSelectorFormField,
+  DynamicFormField,
   Input,
   InputModalSelectorFormField,
 } from '@learnway/ui';
@@ -13,9 +14,9 @@ import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '@widgets/layout/ui/container/slot/sub-contents';
 import { ContentsRow } from '@widgets/layout/ui/container/parts/contents-row';
 import { useDynamicForm } from '@learnway/hooks';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { FormRow } from '@shared/ui';
-import { DynamicFormField } from '@learnway/ui';
-import { DynamicFormConfig } from '@learnway/hooks';
+import { LectureTypeSiteUrl, ManagerListModal, TeacherListModal } from '@features/learning/course';
 
 export const Route = createFileRoute('/_layout/learning/')({
   component: RouteComponent,
@@ -34,7 +35,127 @@ function RouteComponent() {
 
   return (
     <form onSubmit={onSubmit(handleOnSubmit)}>
-      <PageContainer>LEANING</PageContainer>
+      q
+      <PageContainer>
+        <ContentsButtons>
+          <Button type="submit" variant="point" size="sm">
+            과정복사
+          </Button>
+          <Button type={'button'} variant="point" size="sm">
+            임시저장
+          </Button>
+          <Button type={'button'} variant="point" size="sm">
+            작성완료
+          </Button>
+          <Button type={'button'} variant="point" size="sm">
+            미리보기
+          </Button>
+          <Button type={'button'} variant="primary" size="sm">
+            게시하기
+          </Button>
+          <Button type={'button'} variant="point" size="sm" onClick={handleOnSubmit}>
+            Form submit
+          </Button>
+          <Button type={'button'} variant="point" size="sm" onClick={handleValidate}>
+            Form 유효성 체크
+          </Button>
+        </ContentsButtons>
+        <MainContents>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'channel'} />
+            </FormRow>
+          </ContentsRow>
+          {/* 강의유형 */}
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'강의유형'}>
+                <LectureTypeSiteUrl />
+              </DynamicFormField>
+            </FormRow>
+          </ContentsRow>
+          {/* 과정명 */}
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'과정명'} />
+            </FormRow>
+          </ContentsRow>
+          {/* 과정내용 */}
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'과정내용'} />
+            </FormRow>
+          </ContentsRow>
+          {/* 대표이미지 */}
+          {/* TODO: className 제거 */}
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'대표이미지'} />
+            </FormRow>
+          </ContentsRow>
+          {/* 강의유형 */}
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'강의유형'} />
+            </FormRow>
+          </ContentsRow>
+          {/* 태그 */}
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'태그'} />
+            </FormRow>
+          </ContentsRow>
+          {/* 강사 */}
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'강사'}>
+                <ChipListModalSelectorFormField
+                  modalConfig={{ content: <TeacherListModal /> }}
+                  chipList={{
+                    labelField: 'name',
+                    valueField: 'value',
+                    hideBorder: true,
+                  }}
+                />
+              </DynamicFormField>
+            </FormRow>
+          </ContentsRow>
+          {/* 난이도 */}
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'난이도'} />
+            </FormRow>
+          </ContentsRow>
+          {/* 강의실설정 */}
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'강의실설정'} />
+            </FormRow>
+          </ContentsRow>
+          {/* 운영자 & 연락처 */}
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'운영자'}>
+                <InputModalSelectorFormField
+                  modalConfig={{
+                    title: t('운영자 목록'),
+                    content: <ManagerListModal />,
+                  }}
+                />
+              </DynamicFormField>
+            </FormRow>
+          </ContentsRow>
+          {/* 테넌트 */}
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'테넌트'} />
+            </FormRow>
+          </ContentsRow>
+        </MainContents>
+        <SubContents>
+          <Input />
+        </SubContents>
+      </PageContainer>
     </form>
   );
 }

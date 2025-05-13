@@ -453,32 +453,12 @@ const IntegratedSearchProcedureComponent = () => {
 
                 <div className={thumnailStyles.thumnail_box}>
                   {/* img */}
-                  {/* img */}
                   <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
                     <ul className={thumnailImgStyles.label}>
                       <li style={{ backgroundColor: '#00afd5' }}>New</li>
-                      <li style={{ backgroundColor: '#06226a' }}>접수중</li>
-                      <li style={{ backgroundColor: '#ff4646' }}>D-7</li>
                     </ul>
                     <div className={thumnailImgStyles.img}>
                       <img src={listImage1} alt="" />
-                    </div>
-
-                    <div className={thumnailImgStyles.heart}>
-                      <Button
-                        className={cn(
-                          thumnailStyles.btn_heart,
-                          icoHeart === true ? thumnailStyles.active : '',
-                        )}
-                        onClick={handleHeartClick}
-                      >
-                        <IcoHeart
-                          width={24}
-                          height={24}
-                          fill={icoHeart === true ? '#fff' : 'none'}
-                          stroke="#fff"
-                        ></IcoHeart>
-                      </Button>
                     </div>
                   </div>
                   {/* txt */}
@@ -515,28 +495,9 @@ const IntegratedSearchProcedureComponent = () => {
                   <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
                     <ul className={thumnailImgStyles.label}>
                       <li style={{ backgroundColor: '#00afd5' }}>New</li>
-                      <li style={{ backgroundColor: '#06226a' }}>접수중</li>
-                      <li style={{ backgroundColor: '#ff4646' }}>D-7</li>
                     </ul>
                     <div className={thumnailImgStyles.img}>
                       <img src={listImage1} alt="" />
-                    </div>
-
-                    <div className={thumnailImgStyles.heart}>
-                      <Button
-                        className={cn(
-                          thumnailStyles.btn_heart,
-                          icoHeart === true ? thumnailStyles.active : '',
-                        )}
-                        onClick={handleHeartClick}
-                      >
-                        <IcoHeart
-                          width={24}
-                          height={24}
-                          fill={icoHeart === true ? '#fff' : 'none'}
-                          stroke="#fff"
-                        ></IcoHeart>
-                      </Button>
                     </div>
                   </div>
                   {/* txt */}

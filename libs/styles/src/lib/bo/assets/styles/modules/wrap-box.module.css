@@ -4,3 +4,8 @@
     @apply -mx-[32px] mt-[16px] border-t border-solid border-[#d6dae1] p-[32px];
   }
 }
+[class*='nlp--modal-content'] .start {
+  &.inner {
+    @apply !mx-0 !px-0;
+  }
+}

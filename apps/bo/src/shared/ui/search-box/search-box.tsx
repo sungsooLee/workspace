@@ -112,7 +112,7 @@ const SearchBoxComponent: FC<SearchBoxProps> = ({ provider, onSearch }) => {
         <span className={searchStyles.text}>{t(item.label)}</span>
         {control.isFieldRequired(item.name) && (
           <span className={cn(searchStyles.status, searchStyles.required)}>
-            <IcoFormRequired width={12} height={12} />
+            <IcoFormRequired width={8} height={8} />
           </span>
         )}
       </label>

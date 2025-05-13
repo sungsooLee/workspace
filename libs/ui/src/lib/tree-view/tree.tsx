@@ -125,7 +125,10 @@ const TreeNodeComponent = ({
   const hasChildren = enhanceNode.children && enhanceNode.children.length > 0;
   const isExpanded = expandedKeys.includes(enhanceNode.key);
   const isDragAndDropMode =
-    treeType === 'DRAG_DROP' || treeType === 'SAME_LEVEL_ONLY' || treeType === 'SAME_PARENT_ONLY';
+    treeType === 'DEFAULT' ||
+    treeType === 'DRAG_DROP' ||
+    treeType === 'SAME_LEVEL_ONLY' ||
+    treeType === 'SAME_PARENT_ONLY';
 
   // 드롭 위치가 유효한지 확인
   const isValidDropPosition = useCallback(() => {
@@ -204,49 +207,6 @@ const TreeNodeComponent = ({
       </>
     );
   };
-
-  // 노드 스타일 계산
-  // const getNodeStyle = () => {
-  //   const styles = [
-  //     `${dropPosition === 'INSIDE' ? 'bg-[var(--gray1)]' : ''}
-  //       ${isDragging ? 'opacity-50 bg-[var(--gray1)]' : ''}`,
-  //   ];
-  //   // 선택 스타일
-  //   if (selectedNode && selectedNode.key === enhanceNode.key) {
-  //     styles.push('bg-[var(--gray1)]');
-  //   }
-
-  //   // 드롭 위치 스타일
-  //   if (dropPosition === 'INSIDE') {
-  //     styles.push(isValidDropPosition() ? 'bg-blue-50' : 'bg-red-50');
-  //   }
-
-  //   // 제약 조건 스타일
-  //   if (enhanceNode.constraints?.drag === false) {
-  //     styles.push('border-l-4 border-red-300');
-  //   }
-  //   if (enhanceNode.constraints?.drop === false) {
-  //     styles.push('border-l-4 border-yellow-300');
-  //   }
-  //   if (enhanceNode.constraints?.drag === false && enhanceNode.constraints?.drop === false) {
-  //     styles.push('bg-gray-50');
-  //   }
-  //   if (enhanceNode.constraints?.drag === false || enhanceNode.constraints?.drop === false) {
-  //     styles.push('opacity-75');
-  //   } else {
-  //     styles.push('');
-  //   }
-  //   // 검색 하이라이트
-  //   if (
-  //     searchKeyword &&
-  //     enhanceNode.title &&
-  //     enhanceNode.title.toLowerCase().includes(searchKeyword.toLowerCase())
-  //   ) {
-  //     styles.push('bg-yellow-50');
-  //   }
-
-  //   return styles.join(' ');
-  // };
 
   const nodeStyle = useMemo(() => {
     const styles = [];

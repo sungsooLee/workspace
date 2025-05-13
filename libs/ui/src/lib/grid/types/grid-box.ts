@@ -82,6 +82,11 @@ export interface GridBoxConfig {
   totalRows?: number;
 
   /**
+   * Grid에 표시될 전체 행 개수 (page 객체 외부에 별도로 있을 경우)입니다.
+   */
+  totalElements?: number;
+
+  /**
    * 데이터를 다시 불러오는 함수 (선택적)입니다.
    * 페이지 변경, 검색 등 데이터 갱신이 필요할 때 호출됩니다.
    */
@@ -213,4 +218,7 @@ export interface GridBoxProps<T extends object = object>
    */
   showNumberingColumn?: boolean;
   columns?: any[];
+
+  clientSideSorting?: boolean;
+  clientSideFiltering?: boolean;
 }
