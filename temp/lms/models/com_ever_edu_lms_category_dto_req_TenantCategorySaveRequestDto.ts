@@ -8,7 +8,6 @@ export type com_ever_edu_lms_category_dto_req_TenantCategorySaveRequestDto = {
     categoryCode: string;
     categoryContent?: string;
     isUsed?: boolean;
-    sortSeq?: number;
     parentId?: number;
     whiteList?: Array<com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto>;
 };

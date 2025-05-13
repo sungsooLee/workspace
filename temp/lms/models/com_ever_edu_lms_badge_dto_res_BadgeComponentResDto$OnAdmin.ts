@@ -6,7 +6,7 @@ export type com_ever_edu_lms_badge_dto_res_BadgeComponentResDto$OnAdmin = {
     badgeComponentId?: number;
     badgeComponentType?: com_ever_edu_lms_badge_dto_res_BadgeComponentResDto$OnAdmin.badgeComponentType;
     mappingId?: number;
-    sortSeq?: number;
+    sortOrder?: number;
 };
 export namespace com_ever_edu_lms_badge_dto_res_BadgeComponentResDto$OnAdmin {
     export enum badgeComponentType {

@@ -62,6 +62,7 @@ import type { com_ever_edu_pms_notification_dto_res_PeriodicEmailResDto$DetailOn
 import type { com_ever_edu_pms_role_dto_req_RoleCreateReqDto } from '../models/com_ever_edu_pms_role_dto_req_RoleCreateReqDto';
 import type { com_ever_edu_pms_role_dto_req_RoleUpdateReqDto } from '../models/com_ever_edu_pms_role_dto_req_RoleUpdateReqDto';
 import type { com_ever_edu_pms_role_dto_res_RoleResDto } from '../models/com_ever_edu_pms_role_dto_res_RoleResDto';
+import type { com_ever_edu_pms_role_dto_res_RoleTreeResDto } from '../models/com_ever_edu_pms_role_dto_res_RoleTreeResDto';
 import type { com_ever_edu_pms_terms_dto_req_TermsSaveReqDto$TermsDto } from '../models/com_ever_edu_pms_terms_dto_req_TermsSaveReqDto$TermsDto';
 import type { com_ever_edu_pms_terms_dto_req_TermsSearchReqDto$SearchByAdmin } from '../models/com_ever_edu_pms_terms_dto_req_TermsSearchReqDto$SearchByAdmin';
 import type { com_ever_edu_pms_terms_dto_res_TermsResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_terms_dto_res_TermsResDto$DetailOnAdmin';
@@ -1402,12 +1403,14 @@ export class BoService {
      * 역할 목록 정보를 조회한다.
      * @param pageable
      * @param tenantId
+     * @param siteScope
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleResDto OK
      * @throws ApiError
      */
     public static getRoleList(
         pageable: org_springdoc_core_converters_models_Pageable,
         tenantId: number,
+        siteScope: 'FO' | 'BO',
     ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleResDto> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -1415,6 +1418,7 @@ export class BoService {
             query: {
                 'pageable': pageable,
                 'tenantId': tenantId,
+                'siteScope': siteScope,
             },
             errors: {
                 400: `Bad Request`,
@@ -2600,6 +2604,34 @@ export class BoService {
             query: {
                 'pageable': pageable,
                 'params': params,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 역할 트리 조회
+     * 역할 트리를 조회한다.
+     * @param tenantId
+     * @param siteScope
+     * @returns com_ever_edu_pms_role_dto_res_RoleTreeResDto OK
+     * @throws ApiError
+     */
+    public static getRoleTree(
+        tenantId: number,
+        siteScope: 'FO' | 'BO',
+    ): CancelablePromise<Array<com_ever_edu_pms_role_dto_res_RoleTreeResDto>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/roles/tree',
+            query: {
+                'tenantId': tenantId,
+                'siteScope': siteScope,
             },
             errors: {
                 400: `Bad Request`,

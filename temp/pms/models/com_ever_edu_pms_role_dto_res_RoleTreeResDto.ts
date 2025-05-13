@@ -2,11 +2,15 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type com_ever_edu_pms_role_dto_req_RoleCreateReqDto = {
+export type com_ever_edu_pms_role_dto_res_RoleTreeResDto = {
     /**
-     * 사이트 구분
+     * 역할 ID
      */
-    siteScope?: com_ever_edu_pms_role_dto_req_RoleCreateReqDto.siteScope;
+    roleId?: number;
+    /**
+     * 역할 코드
+     */
+    roleCode?: string;
     /**
      * 부모 역할 ID
      */
@@ -14,7 +18,7 @@ export type com_ever_edu_pms_role_dto_req_RoleCreateReqDto = {
     /**
      * 이름
      */
-    name: string;
+    name?: string;
     /**
      * 설명
      */
@@ -22,7 +26,7 @@ export type com_ever_edu_pms_role_dto_req_RoleCreateReqDto = {
     /**
      * 테넌트 적용 범위
      */
-    tenantScope?: com_ever_edu_pms_role_dto_req_RoleCreateReqDto.tenantScope;
+    tenantScope?: com_ever_edu_pms_role_dto_res_RoleTreeResDto.tenantScope;
     /**
      * 테넌트 ID
      */
@@ -30,7 +34,7 @@ export type com_ever_edu_pms_role_dto_req_RoleCreateReqDto = {
     /**
      * 회사 적용 범위
      */
-    companyScope?: com_ever_edu_pms_role_dto_req_RoleCreateReqDto.companyScope;
+    companyScope?: com_ever_edu_pms_role_dto_res_RoleTreeResDto.companyScope;
     /**
      * 회사 ID
      */
@@ -38,7 +42,7 @@ export type com_ever_edu_pms_role_dto_req_RoleCreateReqDto = {
     /**
      * 채널 적용 범위
      */
-    channelScope?: com_ever_edu_pms_role_dto_req_RoleCreateReqDto.channelScope;
+    channelScope?: com_ever_edu_pms_role_dto_res_RoleTreeResDto.channelScope;
     /**
      * 채널 ID
      */
@@ -46,7 +50,7 @@ export type com_ever_edu_pms_role_dto_req_RoleCreateReqDto = {
     /**
      * 팀 적용 범위
      */
-    deptScope?: com_ever_edu_pms_role_dto_req_RoleCreateReqDto.deptScope;
+    deptScope?: com_ever_edu_pms_role_dto_res_RoleTreeResDto.deptScope;
     /**
      * 조직 ID
      */
@@ -55,15 +59,28 @@ export type com_ever_edu_pms_role_dto_req_RoleCreateReqDto = {
      * 사용여부
      */
     isUsed?: boolean;
-};
-export namespace com_ever_edu_pms_role_dto_req_RoleCreateReqDto {
     /**
-     * 사이트 구분
+     * 등록자ID
      */
-    export enum siteScope {
-        FO = 'FO',
-        BO = 'BO',
-    }
+    createdBy?: string;
+    /**
+     * 등록일시
+     */
+    createdDate?: string;
+    /**
+     * 최종수정자ID
+     */
+    lastModifiedBy?: string;
+    /**
+     * 최종수정일시
+     */
+    modifiedDate?: string;
+    /**
+     * Children
+     */
+    children?: Array<com_ever_edu_pms_role_dto_res_RoleTreeResDto>;
+};
+export namespace com_ever_edu_pms_role_dto_res_RoleTreeResDto {
     /**
      * 테넌트 적용 범위
      */

@@ -6,6 +6,7 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2 = {
     wizardStep: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2.wizardStep;
     courseType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2.courseType;
     courseSubType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2.courseSubType;
+    primaryKitId: number;
 };
 export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2 {
     export enum wizardStep {

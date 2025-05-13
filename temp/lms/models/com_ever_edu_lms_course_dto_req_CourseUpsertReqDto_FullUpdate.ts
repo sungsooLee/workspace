@@ -29,6 +29,7 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate = {
     coordinatorName: string;
     operatorId: number;
     operatorName: string;
+    primaryKitId: number;
     isEnrollRequired: boolean;
     approvalLineType?: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.approvalLineType;
     isMaxEnrollQuotaRestricted?: boolean;

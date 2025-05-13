@@ -7,7 +7,6 @@ export type com_ever_edu_lms_category_dto_req_CategoryMasterSaveRequestDto = {
     categoryCode: string;
     categoryContent?: string;
     categoryType: com_ever_edu_lms_category_dto_req_CategoryMasterSaveRequestDto.categoryType;
-    sortSeq?: number;
     parentId?: number;
 };
 export namespace com_ever_edu_lms_category_dto_req_CategoryMasterSaveRequestDto {

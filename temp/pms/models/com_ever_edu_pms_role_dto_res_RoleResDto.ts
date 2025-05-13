@@ -12,6 +12,10 @@ export type com_ever_edu_pms_role_dto_res_RoleResDto = {
      */
     roleCode?: string;
     /**
+     * 사이트 구분
+     */
+    siteScope?: com_ever_edu_pms_role_dto_res_RoleResDto.siteScope;
+    /**
      * 부모 역할 ID
      */
     parentRoleId?: number;
@@ -77,6 +81,13 @@ export type com_ever_edu_pms_role_dto_res_RoleResDto = {
     modifiedDate?: string;
 };
 export namespace com_ever_edu_pms_role_dto_res_RoleResDto {
+    /**
+     * 사이트 구분
+     */
+    export enum siteScope {
+        FO = 'FO',
+        BO = 'BO',
+    }
     /**
      * 테넌트 적용 범위
      */

@@ -2,10 +2,15 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { com_ever_edu_lms_course_dto_res_CourseResDto$TagNameWrapper_WizardStep5 } from './com_ever_edu_lms_course_dto_res_CourseResDto$TagNameWrapper_WizardStep5';
 export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep5 = {
     wizardStep?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep5.wizardStep;
     courseType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep5.courseType;
     courseSubType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep5.courseSubType;
+    /**
+     * 태그 이름 목록
+     */
+    tagNames?: Array<com_ever_edu_lms_course_dto_res_CourseResDto$TagNameWrapper_WizardStep5>;
 };
 export namespace com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep5 {
     export enum wizardStep {
