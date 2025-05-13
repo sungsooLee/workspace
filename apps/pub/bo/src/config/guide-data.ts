@@ -623,7 +623,7 @@ export const guideData = [
     remarks: '완료', // 비고
   },
   {
-    screenName: 'CMS/학습자원등록 동영상 등록',
+    screenName: 'CMS/학습자원등록 동영상 등록(시험관리 포함)',
     pageId: 'learning/mediaRegister',
     screenId: '',
     pageType: 'Page',
