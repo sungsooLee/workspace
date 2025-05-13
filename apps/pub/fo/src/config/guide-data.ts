@@ -271,7 +271,7 @@ export const guideData = [
     pageId: 'my/information-change',
     pageType: 'Pop-up',
     completionDate: '2025-03-26',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-05-12',
     remarks: '- id-change-popup.tsx',
   },
   {
@@ -1502,11 +1502,11 @@ export const guideData = [
     screenId: 'NLP_FO_CLA_1025',
     screenName: '강의실_학습창_동영상',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'video',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- video.tsx',
   },
   {
     screenId: 'NLP_FO_CLA_1041',
@@ -1553,11 +1553,21 @@ export const guideData = [
     screenId: 'NLP_FO_CLA_1026',
     screenName: '강의실_학습창_이북',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'ebook',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- ebook.tsx',
+  },
+  {
+    screenId: 'NLP_FO_CLA_1045',
+    screenName: '강의실_학습창_파일',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: 'file',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '- file.tsx',
   },
   {
     screenId: 'NLP_FO_CLA_1027',
@@ -1573,21 +1583,21 @@ export const guideData = [
     screenId: 'NLP_FO_CLA_1028',
     screenName: '강의실_학습창_웹_블로그',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'blog',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- blog.tsx',
   },
   {
     screenId: 'NLP_FO_CLA_1029',
     screenName: '강의실_학습창_웹_HTML',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
+    pageId: 'html',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- html.tsx',
   },
   {
     screenId: 'NLP_FO_CLA_1030',
@@ -1624,6 +1634,16 @@ export const guideData = [
   {
     screenId: 'NLP_FO_CLA_MA_1026',
     screenName: 'M_강의실_학습창_이북',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Pop-up',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    screenId: 'NLP_FO_CLA_MA_1045',
+    screenName: 'M_강의실_학습창_파일',
     layoutType: '', // 자동 분리됨 작성x
     pageId: '',
     pageType: 'Pop-up',

@@ -44,7 +44,12 @@
     .start {
       &.secession {
         .box {
-          @apply border-none pt-0;
+          @apply mt-0 border-none pt-0;
+          .confirm {
+            p {
+              @apply body_3_r;
+            }
+          }
           .bullet_notice {
             @apply mt-[24px] rounded-[8px] border-[1px] border-solid border-[var(--gray4)] p-[24px];
             ul {

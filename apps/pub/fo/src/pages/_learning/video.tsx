@@ -12,6 +12,7 @@ export const Route = createFileRoute('/_learning/video')({
 function RouteComponent() {
   return (
     <div className={styles.start}>
+      {/* 예시 이미지 */}
       <img src={bnrImage1} alt="" />
     </div>
   );

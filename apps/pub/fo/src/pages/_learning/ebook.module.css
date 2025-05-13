@@ -1,0 +1,5 @@
+.start {
+  &.ebook {
+    @apply w-full;
+  }
+}

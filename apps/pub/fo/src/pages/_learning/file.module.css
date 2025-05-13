@@ -1,0 +1,17 @@
+.start {
+  &.file {
+    @apply relative h-[100dvh] w-full overflow-hidden bg-black;
+    .file_box {
+      @apply absolute left-1/2 top-1/2 flex w-[780px] -translate-x-1/2 -translate-y-1/2 items-center rounded-[8px] border-[1px] border-solid border-[var(--gray5)] bg-white px-[16px] py-[20px];
+      p {
+        @apply body_2_r flex-1 text-[var(--gray8)];
+      }
+      span {
+        @apply body_3_r ml-[24px] inline-block text-[var(--gray8)];
+      }
+      button {
+        @apply ml-[24px];
+      }
+    }
+  }
+}

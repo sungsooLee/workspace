@@ -93,6 +93,7 @@ const ThumbnailImageUploadComponent = forwardRef<
         const file = thumbnailFiles[0];
         if (file) {
           const newOption = {
+            ...file,
             id: file?.id,
             path: S3_PATH + file?.key,
           };

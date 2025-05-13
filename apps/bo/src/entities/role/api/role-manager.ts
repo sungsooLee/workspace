@@ -10,8 +10,11 @@ export default class RoleManagerService {
    * 역할 목록 트리 조회
    * @returns 역할 목록 트리
    */
-  static fetchRoles(): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/roles`);
+  static fetchRoles(tenantId: number, siteScope: string): Promise<any> {
+    return httpService.get<any>(`${PMSApiPrefix()}/roles`, {
+      tenantId: tenantId,
+      siteScope: siteScope,
+    });
   }
 
   /**
@@ -103,5 +106,12 @@ export default class RoleManagerService {
    */
   static fetchRoleApis(roleId: string): Promise<any> {
     return httpService.get<any>(`${PMSApiPrefix()}/roles/${roleId}/apis`);
+  }
+
+  static fetchRoleTree(tenantId: number, siteScope: string) {
+    return httpService.get<any>(`${PMSApiPrefix()}/roles/tree`, {
+      tenantId: tenantId,
+      siteScope: siteScope,
+    });
   }
 }

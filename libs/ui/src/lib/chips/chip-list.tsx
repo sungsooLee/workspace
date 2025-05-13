@@ -21,6 +21,12 @@ export interface ChipListComponentProps extends Omit<ChipComponentProps, 'option
   visibleCount?: number;
   /** chips wordwrap 여부 */
   wordwrap?: boolean;
+  /** empty message */
+  emptyMessage?: string | React.ReactNode;
+  /** label field */
+  labelField?: string;
+  /** value field */
+  valueField?: string;
   /** chip 클릭시 호출 */
   onChipClick?: (option: any) => void;
   /** chip 삭제 버튼 클릭시 호출 */
@@ -43,6 +49,7 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
       size,
       hideBorder,
       visibleCount = 10000,
+      emptyMessage,
       wordwrap = false,
       labelField = 'label',
       valueField = 'value',
@@ -58,6 +65,7 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
     const overCount = options?.length - visibleCount;
     const isOverCount = overCount > 0;
     const displayOptions = isOverCount ? options?.slice(0, visibleCount) : [...options];
+    const isShowEmptyMessage = !displayOptions?.length && emptyMessage && !showInput;
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
       setInputValue(event.target.value);
@@ -95,8 +103,11 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
           },
         )}
       >
+        {/* empty message */}
+        {isShowEmptyMessage && <div className={styles.empty_message}>{emptyMessage}</div>}
+
         {/* input */}
-        {showInput && (
+        {!isShowEmptyMessage && showInput && (
           <Input
             className={styles.input_chips}
             placeholder={placeholder}
@@ -109,35 +120,37 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
 
         {/* TODO: orientation(vertical, horizontal) style 처리 필요 */}
         {/* chips wrapper */}
-        <div className={cn(styles.chips_wapper, orientation && styles[orientation])}>
-          {displayOptions?.map((option) => (
-            <Chip
-              {...props}
-              size={size}
-              key={option[valueField]}
-              option={option}
-              labelField={labelField}
-              valueField={valueField}
-              className={cn(styles.btn_chips, size && styles[size], type && styles[type])}
-              onClick={onChipClick && handleChipClick}
-              onDelete={handleChipDelete}
-            />
-          ))}
-          {/* 최대 표시 개수 초과 했을때 */}
-          {isOverCount && (
-            <Popover
-              popoverContent={
-                <ChipListMoreContent
-                  options={options}
-                  labelField={labelField}
-                  valueField={valueField}
-                />
-              }
-            >
-              <Button label={`...+(${overCount})`} size={'md'} variant={'gray2'} />
-            </Popover>
-          )}
-        </div>
+        {!isShowEmptyMessage && (
+          <div className={cn(styles.chips_wapper, orientation && styles[orientation])}>
+            {displayOptions?.map((option) => (
+              <Chip
+                {...props}
+                size={size}
+                key={option[valueField]}
+                option={option}
+                labelField={labelField}
+                valueField={valueField}
+                className={cn(styles.btn_chips, size && styles[size], type && styles[type])}
+                onClick={onChipClick && handleChipClick}
+                onDelete={handleChipDelete}
+              />
+            ))}
+            {/* 최대 표시 개수 초과 했을때 */}
+            {isOverCount && (
+              <Popover
+                popoverContent={
+                  <ChipListMoreContent
+                    options={options}
+                    labelField={labelField}
+                    valueField={valueField}
+                  />
+                }
+              >
+                <Button label={`...+(${overCount})`} size={'md'} variant={'gray2'} />
+              </Popover>
+            )}
+          </div>
+        )}
       </div>
     );
   },

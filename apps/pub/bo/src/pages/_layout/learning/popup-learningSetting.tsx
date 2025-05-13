@@ -350,7 +350,7 @@ function RouteComponent() {
                     </div>
                     <p className={formStyles.guide_text}>
                       해당 학습자원으로 교육 과정을 개설할 수
-                      {checked[2] ? '있습니다.' : '없습니다.'}
+                      {checked[2] ? ' 있습니다.' : ' 없습니다.'}
                     </p>
                   </div>
                 </ContentsRow>

@@ -22,7 +22,7 @@ const FORM_MODE = {
 const Role = ({ type }: any) => {
   const { provider, onSubmit, clearFormError, fetchData } = useDynamicForm(formConfig);
   const getRoles = () => roleTreeMockData;
-  const { data } = useFetchRoles();
+  const { data } = useFetchRoles(1, 'FO');
 
   const [formMode, setFormMode] = useState(FORM_MODE.NONE);
   const [selectedRoleId, setSelectedRoleId] = useState<any>(null);

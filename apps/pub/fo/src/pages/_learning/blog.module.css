@@ -1,0 +1,8 @@
+.start {
+  &.blog {
+    .header_color {
+      @apply absolute left-0 top-0 -z-[1] h-[112px] w-full bg-gradient-to-t from-[#131c30]/0 to-[#131c30];
+    }
+    @apply mx-auto mb-[120px] mt-[150px] w-[1180px];
+  }
+}

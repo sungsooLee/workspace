@@ -42,20 +42,31 @@ function RouteComponent() {
     <form onSubmit={onSubmit(handleOnSubmit)}>
       <PageContainer>
         <ContentsButtons>
-          <Button type="submit" variant="point" size="sm" label={'과정복사'}/>
+          <Button type="submit" variant="point" size="sm" label={'과정복사'} />
 
-          <Button type={'button'} variant="point" size="sm" label={'임시저장'}/>
+          <Button type={'button'} variant="point" size="sm" label={'임시저장'} />
 
-          <Button type={'button'} variant="point" size="sm" label={'작성완료'}/>
+          <Button type={'button'} variant="point" size="sm" label={'작성완료'} />
 
-          <Button type={'button'} variant="point" size="sm" label={'미리보기'}/>
+          <Button type={'button'} variant="point" size="sm" label={'미리보기'} />
 
-          <Button type={'button'} variant="primary" size="sm" label={'게시하기'}/>
+          <Button type={'button'} variant="primary" size="sm" label={'게시하기'} />
 
-          <Button type={'submit'} variant="point" size="sm" label={'Form submit'} onClick={handleOnSubmit}/>
+          <Button
+            type={'submit'}
+            variant="point"
+            size="sm"
+            label={'Form submit'}
+            onClick={handleOnSubmit}
+          />
 
-          <Button type={'button'} variant="point" size="sm" label={'Form 유효성 체크'} onClick={handleValidate}/>
-
+          <Button
+            type={'button'}
+            variant="point"
+            size="sm"
+            label={'Form 유효성 체크'}
+            onClick={handleValidate}
+          />
         </ContentsButtons>
         <MainContents>
           <ContentsRow>
@@ -260,7 +271,7 @@ const formConfig: DynamicFormConfig = {
       // placeholder: '',
       description: '',
       chipListConfig: {
-        showInput: true,
+        emptyMessage: 'XCXC',
       },
     },
     {

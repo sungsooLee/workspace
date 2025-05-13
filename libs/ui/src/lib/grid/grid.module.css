@@ -3,15 +3,15 @@
   @apply scrollbar relative box-border overflow-auto border border-solid border-[var(--gray5)];
   table {
     thead {
-      @apply sticky top-0 z-[1];
+      @apply sticky top-0 z-[1] !h-[39px] w-full bg-[var(--gray1)];
       tr {
-        @apply flex w-full border-b-[1px] border-solid !border-[var(--gray4)] bg-[var(--gray1)];
+        @apply flex;
         th.thead_th {
-          @apply !border-b-0 bg-[var(--gray1)];
+          @apply !h-[39px] !border-b-0 bg-[var(--gray1)];
           .th_wrap {
-            @apply h-full;
+            @apply !h-[39px];
             .th_cell {
-              @apply body_bo_4_b flex min-h-[40px] items-center px-[8px] text-[var(--gray8)];
+              @apply body_bo_4_b flex min-h-[39px] items-center px-[8px] text-[var(--gray8)];
               .icon_up,
               .icon_down,
               .btn_filter {
@@ -20,12 +20,18 @@
               .icon_up {
                 @apply rotate-180;
               }
+              [class*='nlp--checkbox'] {
+                @apply mt-[5px];
+              }
             }
           }
           & + .thead_th {
             @apply border-l-[1px] border-solid border-[var(--gray3)];
           }
         }
+      }
+      &::after {
+        @apply sticky left-0 top-[40px] flex h-[1px] w-full bg-[var(--gray4)] content-[''];
       }
     }
     tbody {

@@ -1,17 +1,16 @@
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import { t } from 'i18next';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import {
-  ContentsRow,
   Button,
   ChipListModalSelectorFormField,
+  ContentsRow,
   DynamicFormField,
   useModal,
 } from '@learnway/ui';
 import { FormRow } from '@shared/ui';
-import { ThumbnailUploaderFormField } from '@features/learning';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { CompanyModal } from '@features/tenant/management/ui/company-modal';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
@@ -21,11 +20,10 @@ import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 import { useCreateTenant } from '@entities/tenant/service/tenant.hook';
 import { HrdUserInquiryModal } from '@features/shared/ui/modal/hrd-user-inquiry-modal';
 import {
-  DuplicateState,
   DuplicateCheckInputFormField,
+  DuplicateState,
 } from '@features/tenant/management/ui/duplicate-check-input-form-field';
 import TenantService from '@entities/tenant/api/tenant';
-import { z as baseZ } from 'zod';
 
 export const Route = createFileRoute('/_layout/platform/tenant/management/regist')({
   component: RouteComponent,
@@ -47,7 +45,7 @@ function RouteComponent() {
 
   const formRef = useRef<HTMLFormElement>(null);
   const handleListButtonClick = () => {
-    router.navigate({ to: '/tenant/management' });
+    router.navigate({ to: '/platform/tenant/management' });
   };
 
   const handleSaveButtonClick = async () => {
@@ -103,7 +101,7 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider}>
               <DynamicFormField name="tenantLogo">
-                <ThumbnailUploaderFormField />
+                <DynamicFormField />
               </DynamicFormField>
             </FormRow>
           </ContentsRow>
