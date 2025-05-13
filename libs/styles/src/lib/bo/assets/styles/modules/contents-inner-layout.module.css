@@ -65,6 +65,15 @@
     }
   }
 }
+.grid_layout_wrap {
+  @apply flex w-full flex-wrap justify-between;
+  & > div:first-child {
+    @apply w-[360px] shrink-0;
+    & + div {
+      @apply w-[calc(100%-392px)];
+    }
+  }
+}
 .btn_wrap {
   @apply inline-flex items-center;
   button {

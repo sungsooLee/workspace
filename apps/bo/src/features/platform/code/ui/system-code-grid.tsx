@@ -17,7 +17,7 @@ const listGridColumns = () => {
         <div style={{ whiteSpace: 'normal', overflow: 'visible' }}>{getValue()}</div>
       ),
       header: t('그룹코드'),
-      size: 300,
+      size: 280,
     }),
   ];
 };
@@ -115,7 +115,7 @@ const SystemCodeGridComponent = ({ data }: any) => {
     <div className={cn(boxStyles.start, boxStyles.inner)}>
       <div className={cn(layoutStyles.start, layoutStyles.wrap, layoutStyles.ratio_third)}>
         <div className={cn(layoutStyles.inner, layoutStyles.scrollHidden)}>
-          <div className="flex h-full flex-row space-x-5">
+          <div className={layoutStyles.grid_layout_wrap}>
             <GridBox
               ref={listGridRef}
               data={data || []}
