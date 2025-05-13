@@ -7,11 +7,11 @@
         @apply h-auto w-full;
       }
       .black {
-        @apply absolute left-0 top-0 z-[1] h-full w-full bg-black opacity-80;
+        @apply absolute left-0 top-0 h-full w-full bg-black opacity-80;
       }
     }
     .photo_wrap {
-      @apply relative z-[2] h-[100dvh] w-full overflow-hidden pb-[156px] pt-[112px];
+      @apply relative h-[100dvh] w-full overflow-hidden pb-[156px] pt-[112px];
       .photo {
         @apply relative mr-[120px] flex items-center text-center;
         .img {

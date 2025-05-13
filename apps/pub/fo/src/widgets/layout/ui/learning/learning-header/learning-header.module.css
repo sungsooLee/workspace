@@ -1,6 +1,6 @@
 .start {
   &.learning_header {
-    @apply fixed left-[0] top-[0] h-[112px] w-full;
+    @apply fixed left-[0] top-[0] z-[1] h-[112px] w-full;
     .header_area {
       @apply flex items-center px-[40px] pt-[24px];
       .btn_back {
@@ -8,6 +8,22 @@
       }
       h1 {
         @apply title_3_b text-white;
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.learning_header {
+        @apply h-[56px];
+        .header_area {
+          @apply px-[14px] py-[16px];
+          h1 {
+            @apply body_2_b leading-[24px] text-[var(--gray9)];
+          }
+        }
       }
     }
   }
