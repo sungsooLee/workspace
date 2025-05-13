@@ -25,7 +25,7 @@ const BasicInfoComponent = forwardRef<HTMLDivElement, BasicInfoProps>(({ dynamic
   };
 
   return (
-    <>
+    <div ref={ref}>
       {/*강의 유형*/}
       <ContentsRow>
         <FormRow provider={provider}>
@@ -34,6 +34,10 @@ const BasicInfoComponent = forwardRef<HTMLDivElement, BasicInfoProps>(({ dynamic
               modalConfig={{
                 content: <ChannelListModal />,
               }}
+              transformModalData={(modalData: any) => ({
+                '강의 유형': modalData?.channelName,
+                '강의 유형 아이디': modalData?.channelId,
+              })}
             />
           </DynamicFormField>
         </FormRow>
@@ -184,7 +188,7 @@ const BasicInfoComponent = forwardRef<HTMLDivElement, BasicInfoProps>(({ dynamic
           <DynamicFormField name={'담당자 연락처'} />
         </FormRow>
       </ContentsRow>
-    </>
+    </div>
   );
 });
 

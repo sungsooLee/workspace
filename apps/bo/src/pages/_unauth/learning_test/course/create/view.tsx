@@ -17,13 +17,26 @@ export const Route = createFileRoute('/_unauth/learning_test/course/create/view'
 function RouteComponent() {
   const [formConfig, setFormConfig] = useState<DynamicFormConfig>(formConfigBasic);
   const dynamicForm = useDynamicForm(formConfig);
-  const { provider, onSubmit, control, getValues } = useDynamicForm(formConfig);
+  const { provider, onSubmit, control, getValues } = dynamicForm; //useDynamicForm(formConfig);
 
-  const handleOnSubmit = (data: any) => {
-    console.log('data {} => ', data);
+  const handleImport = () => {
+    console.log('handleImportCourse');
   };
 
-  const handleValidate = (data: any) => {
+  const handleCopy = () => {
+    console.log('handleCopyCourse');
+  };
+
+  const handleExport = () => {
+    console.log('handleExportCourse');
+  };
+
+  const handlePreview = () => {
+    console.log('handleImportCourse');
+    console.log('getValues', getValues());
+  };
+
+  const handleOnSubmit = (data: any) => {
     console.log('data {} => ', data);
   };
 
@@ -78,11 +91,29 @@ function RouteComponent() {
   return (
     <PageContainer>
       <ContentsButtons>
-        <Button type="button" variant="point" size="sm" label={'과정 가져오기'} />
-        <Button type="button" variant="point" size="sm" label={'과정 복사'} />
-        <Button type="button" variant="point" size="sm" label={'과정 내보내기'} />
-        <Button type="button" variant="point" size="sm" label={'미리보기'} />
-        <Button type="submit" variant="point" size="sm" label={'저장'} />
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          label={'과정 가져오기'}
+          onClick={handleImport}
+        />
+        <Button type="button" variant="point" size="sm" label={'과정 복사'} onClick={handleCopy} />
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          label={'과정 내보내기'}
+          onClick={handleExport}
+        />
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          label={'미리보기'}
+          onClick={handlePreview}
+        />
+        <Button type="submit" variant="primary" size="sm" label={'저장'} />
       </ContentsButtons>
       <MainContents>
         <StepperTabs

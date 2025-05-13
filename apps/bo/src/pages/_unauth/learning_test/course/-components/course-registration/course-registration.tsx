@@ -20,7 +20,7 @@ const CourseRegistrationComponent = forwardRef<HTMLDivElement, CourseRegistratio
     };
 
     return (
-      <>
+      <div ref={ref}>
         {/*강의 유형*/}
         <ContentsRow>
           <FormRow provider={provider}>
@@ -33,7 +33,7 @@ const CourseRegistrationComponent = forwardRef<HTMLDivElement, CourseRegistratio
             </DynamicFormField>
           </FormRow>
         </ContentsRow>
-      </>
+      </div>
     );
   },
 );

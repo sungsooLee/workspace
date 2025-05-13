@@ -10,6 +10,12 @@ export const formConfig: DynamicFormConfig = {
       label: '강의 유형',
       value: '',
     },
+    // 강의 유형 ID
+    {
+      name: '강의 유형 아이디',
+      type: 'hidden',
+      value: '',
+    },
     // 강의 세부 요청
     {
       name: '강의 세부 요청',
