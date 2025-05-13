@@ -50,7 +50,16 @@
       "validationConfirmPassword": "새로운 비밀번호를 다시 확인해 주세요.",
       "cancelConfirm": "취소하시겠습니까?",
       "loginExtensionAlert": "로그인 시간을 연장하시겠습니까?",
-      "passwordNotChangedGuide": "비밀번호를 변경하지 않으면 로그아웃됩니다.\n서비스를 이용하려면 비밀번호를 변경해 주세요."
+      "passwordNotChangedGuide": "비밀번호를 변경하지 않으면 로그아웃됩니다.\n서비스를 이용하려면 비밀번호를 변경해 주세요.",
+      "upload" : {
+        "uploadDescription": "영역을 클릭하거나 파일을 마우스로 끌어 놓으세요"
+      },
+      "learningResourceFileUploadModal"  :{
+        "uploaderLabel" :  "파일은 1개당 최대 4GB 이하로 가능 합니다.",
+        "uploaderGuideText" :  "업로드된 동영상은 학습자원목록에서 조회가능합니다.",
+        "sizeError": "4GB 이하의 파일을 업로드 하세요.",
+        "extensionError": "지원하는 형식의 파일을 업로드 하세요."
+      }
     },
     "cdGroupId": "그룹코드",
     "cdGroupName": "그룹 명",

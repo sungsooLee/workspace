@@ -178,7 +178,7 @@ function RouteComponent() {
           <div className={cn(boxStyles.start, boxStyles.inner)}>
             <div className="grid_wrap">
               <GridBox
-                config={gridConfig}
+                config={gConfig}
                 /*columns={columns}*/
                 height={440}
                 showColumnSettings={false}

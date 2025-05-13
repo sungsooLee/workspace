@@ -288,7 +288,7 @@ const searchConfig: SearchBoxConfig = {
 
 const gridConfig: useGridBoxConfig = {
   excel: {
-    upload: '',
+    upload: '/jjjjjj/',
     download: '/multilingual/exportExcel',
     form: {
       xlsx: '',

@@ -7,6 +7,7 @@ import {
   Grid,
   GridBoxProps,
   GridImperative,
+  useModal,
 } from '@learnway/ui';
 import { IcoDownload, IcoMinus, IcoUploadCloud, IcoPlus } from '@learnway/icons';
 import styles from './grid-box.module.css';
@@ -43,6 +44,7 @@ const GridBoxComponent = <T extends object>(
     customButtonNode,
     guideText,
     onAddClick,
+
     ...props
   }: GridBoxProps<T>,
   ref: React.Ref<GridImperative>,
@@ -278,14 +280,16 @@ const ExcelButtons: FC<{ config?: ExcelConfig; getParams?: UseFormReturn['getVal
   getParams,
 }) => {
   if (!config) return <></>;
+  const { open: openModal } = useModal();
   const { upload, download, form } = config;
 
   const handleExcelDownload = async () => {
     const params = getParams ? getParams() : {};
-    // http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/pms-module/admin/api/v1/multilingual/exportExcel
-    // http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/pms-module/admin/api/v1/multilingual/exportExcel
-    //await fileDownload(`${PMSApiPrefix()}/multilingual/exportExcel`, params);
     await fileDownload(`${PMSApiPrefix()}/multilingual/exportExcel`, params);
+  };
+
+  const handleExcelUpload = async () => {
+    //excelUpload || excelUpload();
   };
 
   return (
@@ -297,7 +301,9 @@ const ExcelButtons: FC<{ config?: ExcelConfig; getParams?: UseFormReturn['getVal
           size="xs"
           className={styles.btn_upload}
           label={t('LABEL.grid.header.excelUpload')}
-          icon={<IcoUploadCloud width={16} height={16} stroke={'#4C515E'} />}
+          icon={
+            <IcoUploadCloud width={16} height={16} stroke={'#4C515E'} onClick={handleExcelUpload} />
+          }
         />
       )}
       {/* 엑셀다운로드 */}

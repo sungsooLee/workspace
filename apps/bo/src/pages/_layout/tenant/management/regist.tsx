@@ -23,8 +23,8 @@ import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-butt
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 
 import { useCreateTenant } from '@entities/tenant/service/tenant.hook';
-import { UserInquiryModal } from '@shared/ui/modal/user-inquiry-modal';
 import { LearningResourceProductionGuideModal } from '@features/learning/learning-resource/learning-resource-production-guide-modal';
+import { UserInquiryModal } from '@features/shared/ui/modal/hrd-user-inquiry-modal';
 export const Route = createFileRoute('/_layout/tenant/management/regist')({
   component: RouteComponent,
 });

@@ -3,9 +3,9 @@ import { ContentsRow } from '../../../layout/ui/container/parts/contents-row';
 import { t } from 'i18next';
 import { Button, DynamicFormField } from '@learnway/ui';
 import { z } from 'zod';
-import { LectureTypeSiteUrl } from '../../../../features/operation/ui/lecture-type-site-url/lecture-type-site-url';
 import { FormRow } from '../../../../shared/ui/form';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { LectureTypeSiteUrl } from '@features/learning/course';
 
 // TODO : form 공통 영역으로 이동
 export interface FormProps {

@@ -8,11 +8,13 @@ import {
   useModal,
   Button,
   GridBox,
+  useGridBox,
 } from '@learnway/ui';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 
 const LearningResourceProductionGuideModalComponent: FC<any> = () => {
   const { open: openModal, close: closeModal, confirm: openConfirm } = useModal();
+  const { config } = useGridBox(gridConfig);
   return (
     <ModalContainer>
       <ModalTitle>{t('프로그램/가이드 다운로드')}</ModalTitle>
@@ -20,7 +22,7 @@ const LearningResourceProductionGuideModalComponent: FC<any> = () => {
         <div className={popupStyles.wrap}>
           <div className={popupStyles.container}>
             <GridBox
-              config={gridConfig}
+              config={config}
               height={310}
               showColumnSettings={false}
               showTotalCount={true}
@@ -50,6 +52,7 @@ const handleDownload = (fileName: string, fileUrl: string) => {
 };
 
 const gridConfig = {
+  query: '',
   data: [
     {
       fileName: t('테스트 문서 1'),

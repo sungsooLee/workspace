@@ -27,7 +27,7 @@ import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.m
 const TenantManagerModalComponent = () => {
   const { close: closeModal } = useModal();
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);
-  const { gridFetch } = useGridBox(gridConfig, getValues);
+  const { config, gridFetch } = useGridBox(gridConfig, getValues);
 
   const handleOnSearch = (data: any) => {
     console.log(data);
@@ -125,7 +125,7 @@ const TenantManagerModalComponent = () => {
 
           <div className={popupStyles.container}>
             <GridBox
-              config={gridConfig}
+              config={config}
               columns={columns}
               height={310}
               showColumnSettings={false}

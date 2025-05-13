@@ -27,7 +27,7 @@ import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.m
 const CompanyModalComponent = forwardRef((props, ref) => {
   const { close: closeModal } = useModal();
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);
-  const { gridFetch } = useGridBox(gridConfig, getValues);
+  const { config, gridFetch } = useGridBox(gridConfig, getValues);
 
   const [selectedRow, setSelectedRow] = useState();
 
@@ -125,7 +125,7 @@ const CompanyModalComponent = forwardRef((props, ref) => {
           <div className={popupStyles.container}>
             <GridBox
               onRowSelect={handleRowSelect}
-              config={gridConfig}
+              config={config}
               columns={columns}
               height={380}
               showColumnSettings={false}

@@ -9,4 +9,6 @@ export interface DndFileProgressProps {
   maxFileCount: number;
   maxFileSize: number;
   wrapSize?: string;
+  guideText?: string;
+  errorMessage?: string;
 }

@@ -32,7 +32,7 @@ function RouteComponent() {
       content: <LearningTypeChoiceModal />,
       width: 'lg',
     })) as LEARNING_TYPE;
-    console.log('typeResult => ', typeResult);
+
     switch (typeResult) {
       // 동영상
       case LEARNING_TYPE.VIDEO: {
@@ -41,7 +41,9 @@ function RouteComponent() {
         });
         if (channelInfo) {
           const videoUploadResult = await openModal({
-            content: <LearningResourceFileUploadModal channel={channelInfo} />,
+            content: (
+              <LearningResourceFileUploadModal channel={channelInfo} type={LEARNING_TYPE.VIDEO} />
+            ),
             width: 'lg',
           });
         }
@@ -195,5 +197,6 @@ const searchConfig: any = {
   ],
   validator: {
     tenant: true,
+    config: MainContents,
   },
 };
