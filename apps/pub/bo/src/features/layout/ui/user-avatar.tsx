@@ -4,6 +4,9 @@ import { Avatar, Button, Popover, useModal } from '@learnway/ui';
 import { IcLogOut01 } from '@learnway/icons';
 import styles from './user-avatar.module.css';
 
+/* company logo image */
+import imgLogo from '../../../assets/images/temp/img_temp_company_logo.png';
+
 const PopoverContent = () => {
   const { alert: openAlert } = useModal();
   const [hasAvataImage] = useState<boolean>(true); // 아바타 이미지 없는 경우(true/false)
@@ -40,12 +43,22 @@ const PopoverContent = () => {
       <div className={styles.profile_info}>
         <div className={styles.avata_img}>
           {hasAvataImage ? (
-            <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
+            <>
+              <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
+              <span className={styles.logo_wrap}>
+                <img src={imgLogo} alt="" className={styles.logo_img} />
+              </span>
+            </>
           ) : (
             // 아바타 이미지 없는 경우 CASE
-            <span className={styles.name}>
-              <em className={styles.text}>{'김'}</em>
-            </span>
+            <>
+              <span className={styles.name}>
+                <em className={styles.text}>{'김'}</em>
+              </span>
+              <span className={styles.logo_wrap}>
+                <img src={imgLogo} alt="" className={styles.logo_img} />
+              </span>
+            </>
           )}
         </div>
         <div className={styles.profile}>
