@@ -1,8 +1,7 @@
-import { ContentsRow, DynamicFormField, InputModalSelectorFormField } from '@learnway/ui';
+import { ContentsRow, DynamicFormField } from '@learnway/ui';
 import React, { forwardRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormRow } from '@shared/ui';
-import { ChannelListModal } from '@features/learning/course';
 import { UseDynamicFormResult } from '@learnway/hooks';
 
 interface CourseRegistrationProps {
@@ -21,26 +20,15 @@ const CourseRegistrationComponent = forwardRef<HTMLDivElement, CourseRegistratio
 
     useEffect(() => {
       console.log('CourseRegistrationComponent init');
-      fetchData({});
+      // fetchData({});
     }, []);
 
     return (
       <div ref={ref}>
-        <button onClick={() => console.log('click')}>XX</button>
-        {/*강의 유형*/}
-        <ContentsRow>
+        {/*수강신청여부*/}
+        <ContentsRow type="horizontal">
           <FormRow provider={provider}>
-            <DynamicFormField name={'강의 유형'}>
-              <InputModalSelectorFormField
-                modalConfig={{
-                  content: <ChannelListModal />,
-                }}
-                transformModalData={(modalData: any) => ({
-                  '강의 유형': modalData?.channelName,
-                  '강의 유형 아이디': modalData?.channelId,
-                })}
-              />
-            </DynamicFormField>
+            <DynamicFormField name={'수강신청여부'} />
           </FormRow>
         </ContentsRow>
       </div>

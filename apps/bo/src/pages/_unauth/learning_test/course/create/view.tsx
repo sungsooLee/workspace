@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Button, StepperTabs } from '@learnway/ui';
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { BasicInfo } from './-components/basic-info/basic-info';
-import { formConfig as formConfigBasic } from './-components/basic-info/form-config';
-import { CourseRegistration } from './-components/course-registration/course-registration';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { formConfig as formConfigCourse } from '@pages/_unauth/learning_test/course/-components/course-registration/form-config';
+import { BasicInfo } from '../-components/basic-info/basic-info';
+import { formConfig as formConfigBasic } from '../-components/basic-info/form-config';
+import { CourseRegistration } from '../-components/course-registration/course-registration';
+import { formConfig as formConfigCourse } from '../-components/course-registration/form-config';
 
 export const Route = createFileRoute('/_unauth/learning_test/course/create/view')({
   component: RouteComponent,
@@ -19,8 +19,11 @@ function RouteComponent() {
   const dynamicForm = useDynamicForm(formConfig);
   const { provider, onSubmit, control, getValues, fetchData } = dynamicForm; //useDynamicForm(formConfig);
 
+  const [test, setTest] = React.useState<any>('');
+
   const handleImport = () => {
     console.log('handleImportCourse');
+    setTest((state: any) => state + '.');
   };
 
   const handleCopy = () => {
@@ -52,33 +55,36 @@ function RouteComponent() {
     }
   };
 
-  const tabItems = [
-    {
-      title: '기본정보',
-      key: 'a',
-      content: <BasicInfo dynamicForm={dynamicForm} />,
-    },
-    {
-      title: '수강신청 설정',
-      key: 'b',
-      content: <CourseRegistration dynamicForm={dynamicForm} />,
-    },
-    {
-      title: '커리큘럼 설정',
-      key: 'c',
-      content: <h2>Tab C content</h2>,
-    },
-    {
-      title: '상세정보 설정',
-      key: 'd',
-      content: <h2>Tab C content</h2>,
-    },
-    {
-      title: '강의 게시 설정',
-      key: 'e',
-      content: <h2>Tab C content</h2>,
-    },
-  ];
+  const tabItems = useMemo(
+    () => [
+      {
+        title: '기본정보',
+        key: 'a',
+        content: <BasicInfo dynamicForm={dynamicForm} />,
+      },
+      {
+        title: '수강신청 설정',
+        key: 'b',
+        content: <CourseRegistration dynamicForm={dynamicForm} />,
+      },
+      {
+        title: '커리큘럼 설정',
+        key: 'c',
+        content: <h2>Tab C content</h2>,
+      },
+      {
+        title: '상세정보 설정',
+        key: 'd',
+        content: <h2>Tab C content</h2>,
+      },
+      {
+        title: '강의 게시 설정',
+        key: 'e',
+        content: <h2>Tab C content</h2>,
+      },
+    ],
+    [],
+  );
 
   return (
     <form onSubmit={onSubmit(handleOnSubmit)}>

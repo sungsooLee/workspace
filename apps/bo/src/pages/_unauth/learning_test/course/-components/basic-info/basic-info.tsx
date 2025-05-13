@@ -26,7 +26,7 @@ const BasicInfoComponent = forwardRef<HTMLDivElement, BasicInfoProps>(({ dynamic
 
   useEffect(() => {
     console.log('BasicInfoComponent init');
-    fetchData({});
+    // fetchData({});
   }, []);
 
   return (

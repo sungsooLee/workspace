@@ -95,7 +95,7 @@ export const formConfig: DynamicFormConfig = {
           value: '4',
         },
       ],
-      value: [],
+      value: '',
       placeholder: '',
       description: '',
     },
