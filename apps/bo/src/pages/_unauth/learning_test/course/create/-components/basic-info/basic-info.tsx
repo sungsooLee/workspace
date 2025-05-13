@@ -6,10 +6,11 @@ import {
   InputModalSelectorFormField,
 } from '@learnway/ui';
 import React, { forwardRef, useEffect } from 'react';
-import { UseDynamicFormResult } from '@learnway/hooks';
+import { useDynamicForm, UseDynamicFormResult } from '@learnway/hooks';
 import { useTranslation } from 'react-i18next';
 import { FormRow, FormSubTitle } from '@shared/ui';
 import { ChannelListModal, TeacherListModal } from '@features/learning/course';
+import { formConfig } from './form-config';
 
 interface BasicInfoProps {
   dynamicForm: UseDynamicFormResult;
@@ -17,8 +18,8 @@ interface BasicInfoProps {
 
 const BasicInfoComponent = forwardRef<HTMLDivElement, BasicInfoProps>(({ dynamicForm }, ref) => {
   const { t } = useTranslation();
-  const { provider, getValues, fetchData } = dynamicForm;
-  // const { provider, getValues, onSubmit } = useDynamicForm(formConfig);
+  // const { provider, getValues, fetchData } = dynamicForm;
+  const { provider, getValues, onSubmit, fetchData } = useDynamicForm(formConfig);
 
   const handleOnSubmit = (data: any) => {
     console.log('data {} => ', data);
@@ -26,7 +27,7 @@ const BasicInfoComponent = forwardRef<HTMLDivElement, BasicInfoProps>(({ dynamic
 
   useEffect(() => {
     console.log('BasicInfoComponent init');
-    fetchData({});
+    // fetchData({});
   }, []);
 
   return (

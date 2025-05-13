@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, StepperTabs } from '@learnway/ui';
 import { createFileRoute } from '@tanstack/react-router';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { BasicInfo } from '../-components/basic-info/basic-info';
-import { formConfig as formConfigBasic } from '../-components/basic-info/form-config';
-import { CourseRegistration } from '../-components/course-registration/course-registration';
-import { formConfig as formConfigCourse } from '../-components/course-registration/form-config';
+import { BasicInfo } from './-components/basic-info/basic-info';
+import { formConfig as formConfigBasic } from './-components/basic-info/form-config';
+import { CourseRegistration } from './-components/course-registration/course-registration';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { formConfig as formConfigCourse } from '@pages/_unauth/learning_test/course/-components/course-registration/form-config';
 
 export const Route = createFileRoute('/_unauth/learning_test/course/create/view')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const [formConfig, setFormConfig] = useState<DynamicFormConfig>(formConfigBasic);
+  // const [formConfig, setFormConfig] = useState<DynamicFormConfig>(formConfigBasic);
   const dynamicForm = useDynamicForm(formConfig);
-  const { provider, onSubmit, control, getValues } = dynamicForm; //useDynamicForm(formConfig);
+  const { provider, onSubmit, control, getValues, fetchData } = dynamicForm; //useDynamicForm(formConfig);
 
   const handleImport = () => {
     console.log('handleImportCourse');
@@ -44,11 +44,11 @@ function RouteComponent() {
     console.log('activeKey', activeKey);
     // 기본정보
     if (activeKey === 'a') {
-      setFormConfig(formConfigBasic);
+      // setFormConfig(formConfigBasic);
     }
     // 수강신청 설정
     else if (activeKey === 'b') {
-      setFormConfig(formConfigCourse);
+      // setFormConfig(formConfigCourse);
     }
   };
 
@@ -56,20 +56,12 @@ function RouteComponent() {
     {
       title: '기본정보',
       key: 'a',
-      content: (
-        <form onSubmit={onSubmit(handleOnSubmit)}>
-          <BasicInfo dynamicForm={dynamicForm} />
-        </form>
-      ),
+      content: <BasicInfo dynamicForm={dynamicForm} />,
     },
     {
       title: '수강신청 설정',
       key: 'b',
-      content: (
-        <form onSubmit={onSubmit(handleOnSubmit)}>
-          <CourseRegistration dynamicForm={dynamicForm} />
-        </form>
-      ),
+      content: <CourseRegistration dynamicForm={dynamicForm} />,
     },
     {
       title: '커리큘럼 설정',
@@ -89,40 +81,55 @@ function RouteComponent() {
   ];
 
   return (
-    <PageContainer>
-      <ContentsButtons>
-        <Button
-          type="button"
-          variant="point"
-          size="sm"
-          label={'과정 가져오기'}
-          onClick={handleImport}
-        />
-        <Button type="button" variant="point" size="sm" label={'과정 복사'} onClick={handleCopy} />
-        <Button
-          type="button"
-          variant="point"
-          size="sm"
-          label={'과정 내보내기'}
-          onClick={handleExport}
-        />
-        <Button
-          type="button"
-          variant="point"
-          size="sm"
-          label={'미리보기'}
-          onClick={handlePreview}
-        />
-        <Button type="submit" variant="primary" size="sm" label={'저장'} />
-      </ContentsButtons>
-      <MainContents>
-        <StepperTabs
-          type={'sub-progress'}
-          size={'md'}
-          items={tabItems}
-          onTabChange={handleTabChange}
-        />
-      </MainContents>
-    </PageContainer>
+    <form onSubmit={onSubmit(handleOnSubmit)}>
+      <PageContainer>
+        <ContentsButtons>
+          <Button
+            type="button"
+            variant="point"
+            size="sm"
+            label={'과정 가져오기'}
+            onClick={handleImport}
+          />
+          <Button
+            type="button"
+            variant="point"
+            size="sm"
+            label={'과정 복사'}
+            onClick={handleCopy}
+          />
+          <Button
+            type="button"
+            variant="point"
+            size="sm"
+            label={'과정 내보내기'}
+            onClick={handleExport}
+          />
+          <Button
+            type="button"
+            variant="point"
+            size="sm"
+            label={'미리보기'}
+            onClick={handlePreview}
+          />
+          <Button type="submit" variant="primary" size="sm" label={'저장'} />
+        </ContentsButtons>
+        <MainContents>
+          <StepperTabs
+            type={'sub-progress'}
+            size={'md'}
+            items={tabItems}
+            onTabChange={handleTabChange}
+          />
+        </MainContents>
+      </PageContainer>
+    </form>
   );
 }
+
+const formConfig: DynamicFormConfig = {
+  builders: [
+    ...formConfigBasic.builders, // 기본정보
+    ...formConfigCourse.builders, // 수강신청 설정
+  ],
+};

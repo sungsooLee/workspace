@@ -5,6 +5,7 @@ import { useModal } from '../../modal/modal.hook';
 import { ModalConfig } from '../../modal/type';
 import { cn } from '@learnway/shared';
 import { BaseFormFieldProps } from '@learnway/hooks';
+import { t } from 'i18next';
 
 interface InputModalSelectorFormFieldComponentProps extends BaseFormFieldProps<string> {
   /** 모달 설정 */
@@ -26,7 +27,7 @@ const InputModalSelectorFormFieldComponent = forwardRef<
       value,
       readOnly = true,
       disabled = true,
-      placeholder,
+      placeholder = t('LABEL.form.input.select'),
       onChange,
       onFormChange,
       transformModalData,

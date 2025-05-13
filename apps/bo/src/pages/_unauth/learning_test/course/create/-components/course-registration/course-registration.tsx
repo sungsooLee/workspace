@@ -13,7 +13,7 @@ const CourseRegistrationComponent = forwardRef<HTMLDivElement, CourseRegistratio
   ({ dynamicForm }, ref) => {
     const { t } = useTranslation();
     const { provider, getValues, fetchData } = dynamicForm;
-    // const { provider, getValues, onSubmit } = useDynamicForm(formConfig);
+    // const { provider, getValues, onSubmit, fetchData } = useDynamicForm(formConfig);
 
     const handleOnSubmit = (data: any) => {
       console.log('data {} => ', data);
@@ -21,12 +21,18 @@ const CourseRegistrationComponent = forwardRef<HTMLDivElement, CourseRegistratio
 
     useEffect(() => {
       console.log('CourseRegistrationComponent init');
-      fetchData({});
+      // fetchData({});
     }, []);
 
     return (
       <div ref={ref}>
         <button onClick={() => console.log('click')}>XX</button>
+        {/*수강신청여부*/}
+        <ContentsRow type="horizontal">
+          <FormRow provider={provider}>
+            <DynamicFormField name={'isCourseApply'} />
+          </FormRow>
+        </ContentsRow>
         {/*강의 유형*/}
         <ContentsRow>
           <FormRow provider={provider}>

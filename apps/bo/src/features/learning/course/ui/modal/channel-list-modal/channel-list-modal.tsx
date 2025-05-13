@@ -68,6 +68,10 @@ const getMockData = () => {
   return {
     data: Array(5)
       .fill(null)
-      .map((d, i) => ({ channelId: `channel_id${i}`, channelName: `channel_name${i}` })),
+      .map((d, i) => ({
+        channelId: `channel_id${i}`,
+        channelName: `channel_name${i}`,
+        etc: 'etc',
+      })),
   };
 };
