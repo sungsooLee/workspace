@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { t } from 'i18next';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { Button, findNodePath, Tabs, TreeNode, useModal } from '@learnway/ui';
+import { Button, findNodePath, Tabs, TreeBox, TreeNode, useModal } from '@learnway/ui';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
@@ -95,8 +95,10 @@ function RouteComponent() {
 
   // 노드 클릭
   const handleNodeClick = (node: TreeNode) => {
-    setMode('view');
     setSelectedNode(node);
+    if (node) {
+      setMode('view');
+    }
   };
 
   // 노드 순서 변경
@@ -169,10 +171,9 @@ function RouteComponent() {
   };
 
   const handleDelete = (payload: any) => {
-    //TODO: 삭제 이전에 해당 메뉴 테넌트 사용 여부 체크.
     openConfirm({
       title: t('LABEL.confirm.delete.title'),
-      content: t('LABEL.confirm.delete.message', { type: '메뉴' }),
+      content: t('LABEL.confirm.delete.message', { type: t('LABEL.common.code.menu') }),
       onClose: (value: boolean) => {
         if (value) {
           deleteMenu(payload);

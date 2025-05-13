@@ -2,7 +2,15 @@ import React, { FC, useEffect, useState } from 'react';
 import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@learnway/shared';
-import { Button, ContentsRow, DynamicFormField, GridBox, TreeNode, useModal } from '@learnway/ui';
+import {
+  Button,
+  ContentsRow,
+  DynamicFormField,
+  findNodeByKey,
+  GridBox,
+  TreeNode,
+  useModal,
+} from '@learnway/ui';
 import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { DuplicateCodeGuideText } from './menu-code-input';
@@ -189,7 +197,7 @@ const MenuViewComponent: FC<any> = ({
           isMobileExposed: isMobileExposed,
           menuDesc: node.menuDesc,
           isPersoninfoInclusion: node.isPersoninfoInclusion,
-          sortOrder: 1,
+          sortOrder: node.sortOrder,
           path: node.url,
           menuScope: menuScope,
           apiMappingMenuList: apiMappingKeys,
@@ -209,6 +217,10 @@ const MenuViewComponent: FC<any> = ({
       setFormError?.('code', '이미 사용 중인 메뉴 코드입니다.');
       return;
     }
+
+    //새로 노드 추가인 경우 추가 하려는 노드의 상위를 찾고
+    //상위 노드의 자식 갯수 + 1 -> sortOrder
+    const parentNode = findNodeByKey(treeData, node.parentKey);
     const tmpData = {
       menuCode: node.code,
       parentId: node.parentKey,
@@ -219,7 +231,8 @@ const MenuViewComponent: FC<any> = ({
       isMobileExposed: isMobileExposed,
       menuDesc: node.menuDesc,
       isPersoninfoInclusion: node.isPersoninfoInclusion,
-      sortOrder: 1,
+      sortOrder:
+        parentNode?.children && parentNode.children.length > 0 ? parentNode.children.length + 1 : 1,
       path: node.url,
       menuScope: menuScope,
       menuName: node.title,

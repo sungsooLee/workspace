@@ -19,7 +19,7 @@ export const Route = createFileRoute('/_layout/platform/code/system-code')({
 });
 
 function RouteComponent() {
-  const { provider: sProvider } = useSearchBox(searchConfig);
+  const { provider: sProvider, getValues } = useSearchBox(searchConfig);
 
   const { data } = useSystemCodeList();
 
@@ -30,16 +30,42 @@ function RouteComponent() {
       const transformedData = data.map((item: string) => ({
         enumNames: item,
       }));
-      setListData(transformedData);
+      setFilteredData(transformedData);
     }
   }, [data]);
+
+  const [filteredData, setFilteredData] = useState([]);
+
+  // 데이터 변환 및 초기 설정
+  useEffect(() => {
+    if (data) {
+      const transformedData = data.map((item: string) => ({
+        enumNames: item,
+      }));
+      setListData(transformedData);
+      setFilteredData(transformedData);
+    }
+  }, [data]);
+
+  // 검색 처리 함수
+  const handleSearch = (values: any) => {
+    const value = values.enumName || '';
+    if (!value.trim()) {
+      setFilteredData(listData);
+    } else {
+      const filtered = listData.filter((item: any) =>
+        item.enumNames.toLowerCase().includes(value.toLowerCase()),
+      );
+      setFilteredData(filtered);
+    }
+  };
 
   return (
     <div>
       <PageContainer scrollHidden={true}>
         <MainContents>
-          <SearchBox provider={sProvider} onSearch={() => console.log('~')} />
-          <SystemCodeGrid data={listData || []} />
+          <SearchBox provider={sProvider} onSearch={handleSearch} />
+          <SystemCodeGrid data={filteredData || []} />
         </MainContents>
       </PageContainer>
     </div>

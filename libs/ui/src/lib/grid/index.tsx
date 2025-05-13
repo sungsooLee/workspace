@@ -16,7 +16,9 @@ import {
   flexRender,
   getCoreRowModel,
   getExpandedRowModel,
+  getFilteredRowModel,
   getGroupedRowModel,
+  getSortedRowModel,
   GroupingState,
   OnChangeFn,
   PaginationState,
@@ -77,6 +79,8 @@ const GridComponent = forwardRef(
       emptyMessage,
       variant = 'line',
       autoSelectFirstRow,
+      clientSideFiltering,
+      clientSideSorting,
     }: GridProps<T>,
     ref: any,
   ) => {
@@ -153,8 +157,15 @@ const GridComponent = forwardRef(
         meta: {
           cellAlign: 'center',
         },
+        enableSorting: true,
+        accessorFn: (row, index) => index,
+
         cell: ({ row }: any) =>
-          pagination ? pagination.pageIndex * pagination.pageSize + row.index + 1 : row.index + 1,
+          pagination ? (
+            <p>{pagination.pageIndex * pagination.pageSize + row.index + 1}</p>
+          ) : (
+            <p>{row.index + 1}</p>
+          ),
       });
 
       // 라디오 컬럼 생성
@@ -357,11 +368,12 @@ const GridComponent = forwardRef(
       enableExpanding: true,
       enablePinning: true,
       //// 클라이언트 사이드 처리 ///////
-      // getFilteredRowModel: getFilteredRowModel(), // 클라이언트 사이드 필터링 (api로만 필터링하려면 제외)
-      // getSortedRowModel: getSortedRowModel(), // 클라이언트 사이드 소팅 (소팅 서버 로직일 경우에 제외)
+      ...(clientSideFiltering && { getFilteredRowModel: getFilteredRowModel() }),
+      ...(clientSideSorting && { getSortedRowModel: getSortedRowModel() }),
+      // getSortedRowModel: getSortedRowModel(),
       //// 서버 사이드 처리 //////
-      manualSorting: true, // 서버 소팅일 경우 포함.
-      manualFiltering: true, // 서버 필터일 경우 포함.
+      manualSorting: !clientSideSorting, // 클라이언트 사이드 정렬이면 false, 서버 사이드면 true
+      manualFiltering: !clientSideFiltering, // 클라이언트 사이드 필터링이면 false, 서버 사이드면 true
       manualPagination: true, //서버 페이지네이션 처리
       // manualGrouping: true,  // 서버 그루핑. 그루핑 데이터 자체를 서버에서 내려줘야됨.
       // manualExpanding: true,

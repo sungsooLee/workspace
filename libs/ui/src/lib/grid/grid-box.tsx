@@ -32,6 +32,8 @@ const GridBoxComponent = <T extends object>(
     customButtonNode,
     guideText,
     onAddClick,
+    clientSideFiltering,
+    clientSideSorting,
     ...props
   }: GridBoxProps<T>,
   ref: React.Ref<GridImperative>,
@@ -258,6 +260,8 @@ const GridBoxComponent = <T extends object>(
         columns={props.columns ?? girdColumns ?? []}
         showNumberingColumn={showNumberingColumn}
         pagination={paginationProps}
+        clientSideSorting={clientSideSorting}
+        clientSideFiltering={clientSideFiltering}
       />
     </div>
   );

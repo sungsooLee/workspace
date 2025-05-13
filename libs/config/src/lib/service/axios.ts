@@ -2,7 +2,7 @@ import axios from 'axios';
 import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { isFunction } from 'lodash';
 
-import { httpService, HttpMethod } from '@learnway/shared';
+import { httpService, HttpMethod, eventService } from '@learnway/shared';
 
 import { tokenService } from './token.service';
 import { OAuthApiPrefix } from '../service/config.service';
@@ -14,6 +14,31 @@ interface axiosConfig {
 export function initAxios(extendConfig?: axiosConfig) {
   axios.defaults.withCredentials = true;
   axios.defaults.baseURL = import.meta.env.VITE_AXIOS_BASE_URL;
+
+  // 로그인 페이지 경로 생성 함수
+  const getLoginPath = () => {
+    // window.__ENV__가 있고 BASE_PATH가 설정되어 있으면 사용
+    if (typeof window !== 'undefined' && (window as any).__ENV__?.BASE_PATH) {
+      // 앞에 슬래시가 있으면 그대로 사용, 없으면 추가
+      const basePath = (window as any).__ENV__.BASE_PATH.startsWith('/')
+        ? (window as any).__ENV__.BASE_PATH
+        : `/${(window as any).__ENV__.BASE_PATH}`;
+
+      return `${basePath}/login`;
+    }
+
+    // 환경 변수에서 BASE_PATH 가져오기 (환경에 따라 다름)
+    const basePath = import.meta.env.VITE_BO_BASE_PATH || import.meta.env.VITE_FO_BASE_PATH || '';
+
+    // 빈 문자열이거나 슬래시로 시작하지 않으면 슬래시 추가
+    const formattedBasePath = basePath
+      ? basePath.startsWith('/')
+        ? basePath
+        : `/${basePath}`
+      : '';
+
+    return `${formattedBasePath}/login`;
+  };
 
   const interceptors = {
     request: {
@@ -37,6 +62,17 @@ export function initAxios(extendConfig?: axiosConfig) {
         // error
         if (errorResponse?.status === 401) {
           return await reissueProccess(error);
+        }
+
+        if (errorResponse?.status === 412) {
+          tokenService.clear();
+
+          if (typeof window !== 'undefined') {
+            const loginPath = getLoginPath();
+            window.location.href = loginPath;
+          }
+
+          return Promise.reject(error);
         }
 
         if (extendConfig?.onRejected && isFunction(extendConfig?.onRejected)) {

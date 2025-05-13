@@ -70,6 +70,8 @@ export interface GridBoxConfig {
    */
   hasData?: boolean;
 
+  totalElements?: number;
+
   /**
    * 페이지네이션 상태 객체 (선택적)입니다.
    * 현재 페이지 정보 등을 포함합니다.
@@ -184,4 +186,7 @@ export interface GridBoxProps<T extends object = object>
    */
   showNumberingColumn?: boolean;
   columns?: any[];
+
+  clientSideSorting?: boolean;
+  clientSideFiltering?: boolean;
 }
