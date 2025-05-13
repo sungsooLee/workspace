@@ -683,7 +683,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '', // 비고
+    remarks: '진행중', // 비고
   },
   // {
   //   screenName: 'CMS/시험관리',
