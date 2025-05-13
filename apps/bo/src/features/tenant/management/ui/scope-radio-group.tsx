@@ -1,21 +1,23 @@
 import { forwardRef } from 'react';
 import { RadioGroup } from '@learnway/ui';
+import { EnFormMode, EnTenantScope, EnCompanyScope, EnChannelScope, EnDeptScope } from '@types';
 
 export const ScopeRadioGroup = forwardRef<HTMLDivElement, any>(
   ({ value, name, onChange, options, ...props }, ref) => {
     //직접 선택 값 확인...(개선 필요해보임)
     const isDirect =
-      (name === 'companyScopes' && value === '3') ||
-      ((name === 'channelScopes' || name === 'teamScopes') && value === '4');
+      (name === 'companyScope' && value === EnCompanyScope.MANUAL) ||
+      (name === 'channelScope' && value === EnChannelScope.MANUAL) ||
+      (name === 'deptScope' && value === EnDeptScope.MANUAL);
     const renderSelectionComponent = () => {
       if (!isDirect) return null;
 
       switch (name) {
-        case 'companyScopes':
+        case 'companyScope':
           return <>회사 선택 컴포넌트</>;
-        case 'channelScopes':
+        case 'channelScope':
           return <>채널 선택 컴포넌트</>;
-        case 'teamScopes':
+        case 'deptScope':
           return <>팀 선택 컴포넌트</>;
       }
     };

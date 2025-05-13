@@ -38,7 +38,10 @@ const TenantManagmentListComponent = () => {
             onClick={() => {
               router.navigate({
                 to: '/platform/tenant/management/detail',
-                state: { tenantId: info.row.original.tenantId },
+                state: {
+                  tenantId: info.row.original.tenantId,
+                  tenantName: info.row.original.tenantName,
+                },
               });
             }}
           >
@@ -50,18 +53,26 @@ const TenantManagmentListComponent = () => {
         name: 'tenantSite',
         label: t('테넌트 사이트'),
         render: (info: any) => (
-          <Link to={info.getValue()} className="link">
-            {info.getValue()}
+          <Link to={info.row.original.tenantSite} className="link">
+            {info.row.original.tenantId}
           </Link>
         ),
       },
-      { name: 'company', label: t('회사') },
+      {
+        name: 'companyTenantList',
+        label: t('회사'),
+        render: (info: any) => {
+          console.log(info.row.original.companyTenantList);
+          //if (info.row.original.companyTenantList.length > 0)
+          return <> companyList </>;
+        },
+      },
       { name: 'hrdOwner', label: '테넌트 담당자' },
       { name: 'companyNumber', label: '사용여부' },
-      { name: 'name', label: '등록자' },
-      { name: 'roleTerm', label: '등록일시' },
-      { name: 'tenure', label: '수정자' },
-      { name: 'roleStatus', label: '수정일시' },
+      { name: 'createdBy', label: '등록자' },
+      { name: 'createdDate', label: '등록일시' },
+      { name: 'lastModifiedBy', label: '수정자' },
+      { name: 'modifiedDate', label: '수정일시' },
     ],
     data: [],
 

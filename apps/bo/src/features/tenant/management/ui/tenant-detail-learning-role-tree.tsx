@@ -17,22 +17,38 @@ import {
   moveNodeCheck,
   transformRoleApiDataToTreeData,
 } from '../service/tenant-detail-tree.service';
-
-const FORM_MODE = {
-  NONE: 'NONE',
-  VIEW: 'VIEW',
-  ADD: 'ADD',
-};
+import { EnFormMode, EnTenantScope, EnCompanyScope, EnChannelScope, EnDeptScope } from '@types';
 
 //type fo , bo
 const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
   const routerState = useRouterState();
-  const [formMode, setFormMode] = useState(FORM_MODE.NONE);
+  const [formMode, setFormMode] = useState(EnFormMode.NONE);
   const [selectedRoleId, setSelectedRoleId] = useState<any>(null);
   const [roleTreeData, setRoleTreeData] = useState([]);
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
 
   const tenantId = routerState.location.state?.tenantId;
+  const tenantName = routerState.location.state?.tenantName;
+
+  const formConfig = { ...formBaseConfig };
+
+  formConfig.builders.push({
+    name: 'tenantScope',
+    type: 'radio-group',
+    label: t('테넌트 적용 범위'),
+    value: EnTenantScope.ALL,
+    options: [
+      {
+        value: EnTenantScope.ALL,
+        label: t('모든 테넌트'),
+      },
+      {
+        value: EnTenantScope.CURRENT_TENANT,
+        label: tenantName,
+      },
+    ],
+  });
+
   const { provider, onSubmit, clearFormError, fetchData } = useDynamicForm(formConfig);
 
   const getRoles = () => roleTreeMockData;
@@ -71,7 +87,7 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
   const handleRoleSelect = (node: TreeNode) => {
     console.log(node);
     setSelectedRoleId(node);
-    if (formMode !== FORM_MODE.VIEW) setFormMode(FORM_MODE.VIEW);
+    if (formMode !== EnFormMode.VIEW) setFormMode(EnFormMode.VIEW);
   };
 
   // 추가 버튼
@@ -81,11 +97,12 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
     formConfig.builders.forEach((item) => {
       initData[item.name] = item.value;
     });
+
     fetchData({
       ...initData,
       parentId: node.key,
     });
-    setFormMode(FORM_MODE.ADD);
+    setFormMode(EnFormMode.ADD);
   };
 
   useEffect(() => {
@@ -110,7 +127,7 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
         renderNodeButtons={renderNodeButtons}
         handleSelectedNodeChange={handleRoleSelect}
         clientTree
-        type={'DRAG_DROP'}
+        type={'DEFAULT'}
       />
       <div className={cn(styles.start, styles.wrap)}>
         <div className={cn(layoutStyles.inner)}>
@@ -124,21 +141,21 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
                     variant={'text'}
                     size={'sm'}
                     className="btn_text"
-                    disabled={formMode === FORM_MODE.NONE}
+                    disabled={formMode === EnFormMode.NONE}
                   />
                   <Button
                     label={'삭제'}
                     variant={'text'}
                     size={'sm'}
                     className="btn_text"
-                    disabled={formMode !== FORM_MODE.VIEW}
+                    disabled={formMode !== EnFormMode.VIEW}
                   />
                   <Button
                     label={'저장'}
                     variant={'save'}
                     size={'sm'}
                     type="submit"
-                    disabled={formMode === FORM_MODE.NONE}
+                    disabled={formMode === EnFormMode.NONE}
                   />
                 </>
               }
@@ -157,41 +174,41 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
               <ContentsRow>
                 <FormRow provider={provider}>
                   <DynamicFormField
-                    name={'roleName'}
+                    name={'name'}
                     maxLength={40}
-                    disabled={formMode === FORM_MODE.NONE}
+                    disabled={formMode === EnFormMode.NONE}
                   />
                 </FormRow>
               </ContentsRow>
               <ContentsRow>
                 <FormRow provider={provider}>
                   <DynamicFormField
-                    name={'roleDesc'}
+                    name={'description'}
                     maxLength={300}
-                    disabled={formMode === FORM_MODE.NONE}
+                    disabled={formMode === EnFormMode.NONE}
                   />
                 </FormRow>
               </ContentsRow>
               <ContentsRow>
                 <FormRow provider={provider}>
-                  <DynamicFormField name={'tenantScopes'} disabled={formMode === FORM_MODE.NONE} />
+                  <DynamicFormField name={'tenantScope'} disabled={formMode === EnFormMode.NONE} />
                 </FormRow>
               </ContentsRow>
               <ContentsRow>
                 <FormRow provider={provider}>
-                  <DynamicFormField name={'companyScopes'} disabled={formMode === FORM_MODE.NONE}>
+                  <DynamicFormField name={'companyScopes'} disabled={formMode === EnFormMode.NONE}>
                     <ScopeRadioGroup
                       options={[
                         {
-                          value: 'all',
+                          value: EnCompanyScope.ALL,
                           label: t('모든 회사'),
                         },
                         {
-                          value: '2',
+                          value: EnCompanyScope.CURRENT_COMPANY,
                           label: t('소속 회사'),
                         },
                         {
-                          value: '3',
+                          value: EnCompanyScope.MANUAL,
                           label: t('직접 선택'),
                         },
                       ]}
@@ -201,7 +218,7 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
               </ContentsRow>
               <ContentsRow>
                 <FormRow provider={provider}>
-                  <DynamicFormField name={'channelScopes'} disabled={formMode === FORM_MODE.NONE}>
+                  <DynamicFormField name={'channelScopes'} disabled={formMode === EnFormMode.NONE}>
                     <ScopeRadioGroup
                       options={[
                         {
@@ -227,7 +244,7 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
               </ContentsRow>
               <ContentsRow>
                 <FormRow provider={provider}>
-                  <DynamicFormField name={'teamScopes'} disabled={formMode === FORM_MODE.NONE}>
+                  <DynamicFormField name={'teamScopes'} disabled={formMode === EnFormMode.NONE}>
                     <ScopeRadioGroup
                       options={[
                         {
@@ -261,7 +278,7 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
 
 export const TenantDetailLearningRoleTree = TenantDetailLearningRoleTreeComponent;
 
-const formConfig: DynamicFormConfig = {
+const formBaseConfig: DynamicFormConfig = {
   builders: [
     { name: 'parentId', type: 'hidden', value: '' },
     {
@@ -277,50 +294,38 @@ const formConfig: DynamicFormConfig = {
       value: '',
     },
     {
-      name: 'roleName',
+      name: 'name',
       type: 'text',
       label: t('역할명'),
       value: '',
     },
     {
-      name: 'roleDesc',
+      name: 'description',
       type: 'textarea',
       label: t('역할 설명'),
       value: '',
     },
     {
-      name: 'tenantScopes',
-      type: 'radio-group',
-      label: t('테넌트 적용 범위'),
-      value: 'all',
-      options: [
-        {
-          value: 'all',
-          label: t('모든 테넌트'),
-        },
-      ],
-    },
-    {
-      name: 'companyScopes',
+      name: 'companyScope',
       type: 'custom',
       label: t('회사 적용 범위'),
-      value: 'all',
+      value: EnCompanyScope.ALL,
     },
     {
-      name: 'channelScopes',
+      name: 'channelScope',
       type: 'custom',
       label: t('채널 적용 범위'),
-      value: 'all',
+      value: EnChannelScope.ALL,
     },
     {
-      name: 'teamScopes',
+      name: 'deptScope',
       type: 'custom',
       label: t('팀 적용 범위'),
-      value: 'all',
+      value: EnDeptScope.ALL,
     },
   ],
   validator: {
-    roleName: {
+    name: {
       required: true,
     },
   },
