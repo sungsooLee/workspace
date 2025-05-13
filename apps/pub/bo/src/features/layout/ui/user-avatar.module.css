@@ -36,8 +36,17 @@
         }
       }
     }
+    .logout_wrap {
+      @apply flex w-full flex-1 items-center justify-between border-t-[1px] border-solid border-[var(--gray3)] px-[24px] py-[20px];
+      .btn_log {
+        @apply w-auto;
+      }
+      .customer_info {
+        @apply button_4_r text-[var(--gray6)];
+      }
+    }
     .btn_log {
-      @apply button_2_r flex w-full items-center border-x-0 border-b-0 border-t border-solid border-t-[var(--gray3)] px-[24px] py-[20px];
+      @apply button_2_r flex w-full items-center;
       svg {
         @apply mr-[10px];
       }
