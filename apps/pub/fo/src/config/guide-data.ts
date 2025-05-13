@@ -593,7 +593,7 @@ export const guideData = [
     pageId: 'integrated-search/integrated-procedure',
     pageType: 'Page',
     completionDate: '2025-05-07',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-05-13',
     remarks: '- integrated-procedure.tsx',
   },
   {
@@ -644,7 +644,7 @@ export const guideData = [
     pageId: 'integrated-search/integrated-procedure-m',
     pageType: 'Page',
     completionDate: '2025-05-07',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-05-13',
     remarks: '- integrated-procedure-m.tsx',
   },
   {
@@ -664,7 +664,7 @@ export const guideData = [
     pageId: 'category/detail',
     pageType: 'Page',
     completionDate: '2025-03-14',
-    lastUpdateDate: '2025-04-30',
+    lastUpdateDate: '2025-05-13',
     remarks: 'NLP_FO_CAT_1000 (레이어창 카테고리) 포함\nNLP_FO_CAT_1002 (필터 레이어팝업) 포함',
   },
   {
@@ -674,7 +674,7 @@ export const guideData = [
     pageId: 'category/detail',
     pageType: 'Page',
     completionDate: '2025-03-14',
-    lastUpdateDate: '2025-05-07',
+    lastUpdateDate: '2025-05-13',
     remarks: '',
   },
   {
@@ -704,8 +704,8 @@ export const guideData = [
     pageId: 'category/detail_m',
     pageType: 'Page',
     completionDate: '2025-03-14',
-    lastUpdateDate: '2025-04-30',
-    remarks: '',
+    lastUpdateDate: '2025-05-13',
+    remarks: '- 분류 바텀팝업 안 dropdown 화면넘어가는 이슈 공통 요청중',
   },
   {
     screenId: 'NLP_FO_CAT_M_1002',

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { isMobile } from 'react-device-detect';
-import { Dropdown, Button, Pagination } from '@learnway/ui';
-import { IcoArray, IcoDotpoints } from '@learnway/icons';
+import { Popover, Button, Pagination } from '@learnway/ui';
+import { IcoArray, IcoDotpoints, IcoArrowDown } from '@learnway/icons';
 import {
   Arrays,
   Filter,
@@ -11,6 +11,7 @@ import {
   IntegratedSearchButton,
 } from '../../../features/layout';
 
+import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
 import styles from './integrated-procedure.module.css';
 
 import ImgNotice from '@learnway/styles/fo/assets/images/thumb/img_notice_01.png';
@@ -31,7 +32,6 @@ function RouteComponent() {
   };
 
   // 과정 탭 소팅 필터
-  const [selectedValues, setSelectedValues] = useState<string[]>(['20개씩']);
   const arrays = {
     items: ['정확도순', '최신순'],
     initialSelectedItem: 0, // 초기 선택값
@@ -48,6 +48,17 @@ function RouteComponent() {
       { title: '지식공유', count: '0' },
       { title: '코칭', count: '200' },
     ],
+  };
+
+  // 퍼블수정 20250513 : popover 추가
+  const DropdownPopoverCompoment = () => {
+    return (
+      <div className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}>
+        <Button>20개씩</Button>
+        <Button>50개씩</Button>
+        <Button>80개씩</Button>
+      </div>
+    );
   };
 
   // pagenation
@@ -80,16 +91,17 @@ function RouteComponent() {
               <div className={styles.classify}>
                 <Arrays arraysData={arrays}></Arrays>
                 <div className={styles.box}>
-                  <Dropdown
-                    variant="text"
-                    options={[
-                      { value: '20', label: '20개씩' },
-                      { value: '50', label: '50개씩' },
-                      { value: '80', label: '80개씩' },
-                    ]}
-                    value={selectedValues}
-                    onChange={(selected) => setSelectedValues(selected)}
-                  />
+                  {/* 퍼블수정 20250513 : dropdown > popover로 변경 */}
+                  <Popover
+                    popoverContent={<DropdownPopoverCompoment />}
+                    className={`${dropdownPopoverStyles.btn} ${dropdownPopoverStyles.text}`}
+                    side="bottom"
+                    align="end"
+                    sideOffset={10}
+                  >
+                    <span>{'20개씩'}</span>
+                    <IcoArrowDown width={16} height={16} stroke="#131C30" />
+                  </Popover>
                 </div>
                 <div className={styles.box}>
                   <Button onClick={list_ui}>
