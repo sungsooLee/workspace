@@ -676,6 +676,15 @@ export const guideData = [
     lastUpdateDate: '',
     remarks: '', // 비고
   },
+  {
+    screenName: 'CMS/시험관리_시험지상세',
+    pageId: 'learning/testDetail',
+    screenId: 'NLP_BO_CMS_1203',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
   // {
   //   screenName: 'CMS/시험관리',
   //   pageId: 'learning/test-management',
