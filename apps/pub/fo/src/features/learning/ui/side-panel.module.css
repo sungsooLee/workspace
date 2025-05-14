@@ -24,6 +24,9 @@
         & + button {
           @apply mt-[24px];
         }
+        &:disabled {
+          @apply opacity-50;
+        }
       }
     }
     .control {
