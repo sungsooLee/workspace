@@ -1,9 +1,11 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { FC } from 'react';
+import { Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { FormSubTitle } from '../../../../../../../bo/src/shared/ui/form';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { ContentsRow, Tabs, TableBox, Input } from '@learnway/ui';
+import { ContentsRow, Tabs, TableBox, Input, RadioGroupFormField } from '@learnway/ui';
+import { IcoMenu01 } from '@learnway/icons';
 
 /* styles */
 import styles from './test-detail.module.css';
@@ -99,6 +101,85 @@ const QuestionInfoComponent: FC<{}> = ({}) => {
       },
     }),
   ] as ColumnDef<any, unknown>[];
+
+  const data2: any[] = [
+    {
+      question: (
+        <Link to={'/'} className="link">
+          미리보기
+        </Link>
+      ),
+      questionType: '객관식',
+      level: '상',
+      number: '3',
+      useable: (
+        <RadioGroupFormField
+          options={[
+            { value: 'option01', label: '사용' },
+            { value: 'option02', label: '미사용' },
+          ]}
+        />
+      ),
+      orderChange: <IcoMenu01 width={24} height={24} fill="#A9AFB8" stroke="#4c515e" />,
+    },
+  ];
+
+  const columns2 = [
+    columnHelper.accessor('question', {
+      cell: (info) => info.getValue(),
+      header: '문항',
+      enableGrouping: false,
+      meta: {
+        headerAlign: 'center', // 헤더 정렬
+        cellAlign: 'left', // 셀 정렬
+      },
+    }),
+    columnHelper.accessor('questionType', {
+      cell: (info) => info.getValue(),
+      header: '문항유형',
+      enableGrouping: false,
+      meta: {
+        headerAlign: 'center', // 헤더 정렬
+        cellAlign: 'left', // 셀 정렬
+      },
+    }),
+    columnHelper.accessor('level', {
+      cell: (info) => info.getValue(),
+      header: '난이도',
+      enableGrouping: false,
+      meta: {
+        headerAlign: 'center', // 헤더 정렬
+        cellAlign: 'center', // 셀 정렬
+      },
+    }),
+    columnHelper.accessor('number', {
+      cell: (info) => info.getValue(),
+      header: '보기수',
+      enableGrouping: false,
+      meta: {
+        headerAlign: 'center', // 헤더 정렬
+        cellAlign: 'center', // 셀 정렬
+      },
+    }),
+    columnHelper.accessor('useable', {
+      cell: (info) => info.getValue(),
+      header: '사용',
+      enableGrouping: false,
+      meta: {
+        headerAlign: 'center', // 헤더 정렬
+        cellAlign: 'left', // 셀 정렬
+      },
+    }),
+    columnHelper.accessor('orderChange', {
+      cell: (info) => info.getValue(),
+      header: '순서변경',
+      enableGrouping: false,
+      meta: {
+        headerAlign: 'center', // 헤더 정렬
+        cellAlign: 'center', // 셀 정렬
+      },
+    }),
+  ] as ColumnDef<any, unknown>[];
   return (
     <div className={styles.wrap}>
       <FormSubTitle label={'기본정보'} />
@@ -163,6 +244,24 @@ const QuestionInfoComponent: FC<{}> = ({}) => {
               <span className="count_info">{'5'}</span>
             </div>
           }
+          className={styles.info_table}
+        />
+        <TableBox
+          data={data2}
+          columns={columns2}
+          tableMode={true}
+          multiple
+          showNumberingColumn
+          hideRowSelectionCheckBox={false}
+          titleCustomNode={
+            <div className="custom_info_wrap">
+              <strong className="table_tit font-normal">{'문항목록'}</strong>
+              <strong className="table_tit font-normal">{'전체'}</strong>
+              <span className="count_info">{'5'}</span>
+            </div>
+          }
+          showExcelDownload
+          className={styles.list_table}
         />
       </div>
     </div>

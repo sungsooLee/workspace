@@ -690,9 +690,9 @@ export const guideData = [
     pageId: 'learning/testDetail',
     screenId: 'NLP_BO_CMS_1203',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-05-14',
     lastUpdateDate: '',
-    remarks: '진행중', // 비고
+    remarks: '', // 비고
   },
   // {
   //   screenName: 'CMS/시험관리',
