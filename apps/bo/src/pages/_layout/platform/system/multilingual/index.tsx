@@ -4,7 +4,6 @@ import {
   EditInputCell,
   EditTextareaCell,
   GridBox,
-  GridBoxConfig,
   useGridBox,
   useGridBoxConfig,
   useModal,
@@ -150,7 +149,7 @@ function RouteComponent() {
             size="sm"
             onClick={() => {
               router.navigate({
-                to: '/platform/message',
+                to: '/platform/label-message',
               });
             }}
           >

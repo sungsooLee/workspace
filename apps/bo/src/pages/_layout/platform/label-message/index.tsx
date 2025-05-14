@@ -13,7 +13,7 @@ import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { LabelMessagesQueryParams } from '@types';
 
-export const Route = createFileRoute('/_layout/platform/message/')({
+export const Route = createFileRoute('/_layout/platform/label-message/')({
   component: RouteComponent,
 });
 

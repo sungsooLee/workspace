@@ -146,7 +146,7 @@ export const munu = [
   },
   {
     screenName: '라벨/메시지 관리',
-    pageId: 'platform/message',
+    pageId: 'platform/label-message',
     screenId: '-',
     pageType: 'Page',
     completionDate: '-',
