@@ -1,5 +1,5 @@
 .start {
-  &.ebook {
+  &.blog {
     @apply pb-[150px];
   }
 }

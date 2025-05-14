@@ -1669,22 +1669,22 @@ export const guideData = [
     screenId: 'NLP_FO_CLA_MA_1028',
     screenName: 'M_강의실_학습창_웹_블로그',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: 'Pop-up',
+    pageId: 'blog-m',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- blog-m.tsx',
   },
 
   {
     screenId: 'NLP_FO_CLA_MA_1029',
     screenName: 'M_강의실_학습창_웹_HTML',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: 'Pop-up',
+    pageId: 'html-m',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- html-m.tsx',
   },
 
   {
