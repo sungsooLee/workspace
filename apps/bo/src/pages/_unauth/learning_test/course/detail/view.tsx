@@ -16,6 +16,7 @@ export const Route = createFileRoute('/_unauth/learning_test/course/detail/view'
 
 function RouteComponent() {
   const dynamicForm = useDynamicForm(formConfig);
+  const { provider, onSubmit, control, getValues } = dynamicForm;
   // const { provider, onSubmit, control, getValues } = useDynamicForm(formConfig);
 
   const BasicInfoRef = useRef<HTMLDivElement>(null);
@@ -35,6 +36,7 @@ function RouteComponent() {
 
   const handlePreview = () => {
     console.log('handleImportCourse');
+    console.log('getValues', getValues());
   };
 
   const handleOnSubmit = (data: any) => {

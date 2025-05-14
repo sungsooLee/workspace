@@ -84,7 +84,7 @@ const BasicInfoComponent = forwardRef<HTMLDivElement, BasicInfoProps>(({ dynamic
       {/*과정명*/}
       <ContentsRow>
         <FormRow provider={provider}>
-          <DynamicFormField name={'과정명'} />
+          <DynamicFormField name={'과정명'} disabled={getValues()?.['교육 목표'] === 'a'} />
         </FormRow>
       </ContentsRow>
       {/*교육 목표*/}
