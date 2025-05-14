@@ -99,6 +99,10 @@
         "tenantCategory": "테넌트 카테고리"
       },
       "login": "로그인",
+      "logout": "로그아웃",
+      "myInfo": "나의 정보",
+      "myRole": "나의 권한",
+      "itsm": "문의하기 ITSM",
       "loginExtension": "로그인연장",
       "caution": "유의사항",
       "resend": "재전송",
@@ -329,8 +333,12 @@
         "title": "삭제 하시겠습니까?",
         "message": "하위 {{type}} 존재 시 모두 삭제되며, 삭제 후 복구할 수 없습니다."
       },
-      "reset:": {
+      "reset": {
         "title": "초기화 하시겠습니까?"
+      },
+      "logout": {
+        "title": "로그아웃 하시겠습니까?",
+        "message": "로그아웃을 하면 다시 로그인해야 서비스를 이용할 수 있습니다.\n확인 버튼을 클릭하면 로그아웃 됩니다."
       }
     },
     "platform": {
