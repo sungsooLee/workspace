@@ -7,9 +7,9 @@ export interface SortResponse {
 }
 
 export interface PaginationRequest {
-  page: number;
-  size: number;
-  sort: string[];
+  page?: number;
+  size?: number;
+  sort?: string[];
 }
 
 export interface PaginationResponse<T> {
