@@ -20,7 +20,7 @@ export default class FileManagerService {
   }
   // 파일 그룹 및 1개 이상의 파일 정보 생성
   static createFileGroupFiles(groupFiles: CreateFileGroupFilesInfoReq): Promise<GroupFileInfo> {
-    return httpService.post<GroupFileInfo>(`${PMSApiPrefix()}/group/files`, groupFiles);
+    return httpService.post<GroupFileInfo>(`${PMSApiPrefix()}/file/group/files`, groupFiles);
   }
   // 파일정보 삭제
   static deleteFileInfo(fileUuid: string) {

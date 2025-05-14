@@ -9,7 +9,7 @@ import {
   UppyUpload,
   useModal,
 } from '@learnway/ui';
-import { useFileManager, useS3Uploader } from '@learnway/hooks';
+import { CreateFileGroupFilesInfoReq, useFileManager, useS3Uploader } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { cn } from '@learnway/shared';
 import { LEARNING_TYPE } from '@learnway/config';
@@ -66,7 +66,7 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
     });
   };
 
-  const initFileInfo = useCallback(() => {
+  const initFileInfo = useCallback(async () => {
     const createFiles = files
       .filter((file) => file.status === 'completed')
       .map((file) => {
@@ -83,8 +83,22 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
         fileSize: number;
         detailPath?: string;
       }*/
-        return {};
+        return {
+          uploadType: 'CONTENTS',
+          affairsType: 'PMS',
+          reposType: 'S3',
+          languageCode: 'ko',
+          detailPath: file.detailPath,
+          basicPath: file.basicPath,
+          files: {
+            originalFileName: file.fileName,
+            serverFileName: file.s3FileName,
+            fileSize: file.size,
+          },
+        };
       });
+    const response = await createFileGroupFiles(createFiles[0] as CreateFileGroupFilesInfoReq[]);
+    console.log('response => ', response);
     console.log('createFiles => ', createFiles);
   }, [files]);
 

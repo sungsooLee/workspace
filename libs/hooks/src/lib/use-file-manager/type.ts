@@ -1,5 +1,6 @@
 export type UPLOAD_TYPE = 'CONTENTS' | 'ATTACH';
 export type AFFAIRS_TYPE = 'PMS' | 'CMS' | 'LMS';
+export type REPOS_TYPE = 'S3';
 
 // 공통 파일 속성
 export interface BaseFileInfo {
@@ -13,7 +14,7 @@ export interface BaseFileInfo {
 export interface BaseGroupInfo {
   uploadType: UPLOAD_TYPE;
   affairsType: AFFAIRS_TYPE;
-  reposType: 'S3';
+  reposType: REPOS_TYPE;
   basicPath: string;
   languageCode: string;
 }
