@@ -1,5 +1,5 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import {
   Button,
@@ -11,12 +11,15 @@ import {
   ContentsRow,
   RadioGroupFormField,
   Textarea,
+  Switch,
+  Input,
 } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import { FormSubTitle } from '../../../../../../bo/src/shared/ui/form';
 import { IcoFormRequired } from '@learnway/icons';
 
 /* style */
+import uploadStyles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
@@ -29,6 +32,12 @@ export const Route = createFileRoute('/_layout/learning/popup-question-detail')(
 function RouteComponent() {
   const { open: openModal, close: closeModal } = useModal();
   const QuestionAddContent = () => {
+    const [checked, setChecked] = useState<{ [key: number]: boolean }>({
+      1: false,
+    });
+    const handleCheckedChange = (id: number) => (checked: boolean) => {
+      setChecked((prev) => ({ ...prev, [id]: checked }));
+    };
     return (
       <ModalContainer>
         <ModalTitle>{'문항추가'}</ModalTitle>
@@ -104,6 +113,46 @@ function RouteComponent() {
             <ContentsRow>
               {/* form_item */}
               <div className={formStyles.form_item}>
+                <label htmlFor="name-type2-1" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>문항유형</span>
+                  {/* 필수 케이스 */}
+                  <span className={cn(formStyles.status, formStyles.required)}>
+                    <IcoFormRequired width={12} height={12} />
+                  </span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Input
+                    type={'text'}
+                    placeholder={'입력'}
+                    id="name-type2-1"
+                    value={'입력'}
+                    disabled
+                  />
+                </div>
+              </div>
+              {/* form_item */}
+              <div className={formStyles.form_item}>
+                <label htmlFor="name-type2-2" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>난이도</span>
+                  {/* 필수 케이스 */}
+                  <span className={cn(formStyles.status, formStyles.required)}>
+                    <IcoFormRequired width={12} height={12} />
+                  </span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Input
+                    type={'text'}
+                    placeholder={'입력'}
+                    id="name-type2-2"
+                    value={'입력'}
+                    disabled
+                  />
+                </div>
+              </div>
+            </ContentsRow>
+            <ContentsRow>
+              {/* form_item */}
+              <div className={formStyles.form_item}>
                 <label htmlFor="name-type3" className={formStyles.form_label}>
                   <span className={formStyles.form_text}>문항</span>
                   {/* 필수 케이스 */}
@@ -141,6 +190,50 @@ function RouteComponent() {
                 </div>
               </div>
             </ContentsRow>
+            <ContentsRow type="horizontal">
+              {/* form_item */}
+              <div className={formStyles.form_item}>
+                <label htmlFor="name-type5" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>첨부파일</span>
+                  {/* <Tooltip
+                    className={formStyles.tooltip}
+                    side="bottom"
+                    align="start"
+                    content={'사용기한 내 콘텐츠 공유/교육자원활용이 가능합니다.'}
+                  >
+                    <Button onlyIcon>
+                      <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
+                    </Button>
+                  </Tooltip> */}
+                </label>
+                <div className={formStyles.input_box}>
+                  <Switch
+                    id="switch01"
+                    className={formStyles.btn_switch}
+                    label={checked[1] ? '파일추가' : '파일없음'}
+                    checked={checked[1]}
+                    onCheckedChange={handleCheckedChange(1)}
+                  />
+                </div>
+              </div>
+            </ContentsRow>
+            {checked[1] && (
+              <div className={dynamicFormStyles.form_display}>
+                <div className={cn(uploadStyles.start, uploadStyles.wrap)}>
+                  <div className={uploadStyles.upload_single}>
+                    <div className={uploadStyles.view_file}>
+                      <div className={uploadStyles.attach_area}>
+                        <p className={uploadStyles.text}>버튼을 클릭하여 파일을 추가하세요.</p>
+                      </div>
+                    </div>
+                    <Button className={uploadStyles.btn_attach} size={'sm'} variant={'gray'}>
+                      <input type="file" className={uploadStyles.input_file} />
+                      {'파일첨부'}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </ModalBody>
         <ModalFooter>
