@@ -36,7 +36,7 @@
       }
     }
     & + [class*='title_wrap'] {
-      @apply !mt-[32px] !border-0 pt-0;
+      @apply !mt-[32px] !border-t-0 pt-0;
     }
   }
 }

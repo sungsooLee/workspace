@@ -694,6 +694,15 @@ export const guideData = [
     lastUpdateDate: '',
     remarks: '', // 비고
   },
+  {
+    screenName: 'CMS/시험관리_문항상세',
+    pageId: 'learning/popup-question-detail',
+    screenId: 'NLP_BO_CMS_1215',
+    pageType: 'Pop-up',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
   // {
   //   screenName: 'CMS/시험관리',
   //   pageId: 'learning/test-management',

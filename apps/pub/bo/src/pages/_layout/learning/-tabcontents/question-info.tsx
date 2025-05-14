@@ -106,7 +106,7 @@ const QuestionInfoComponent: FC<{}> = ({}) => {
     {
       question: (
         <Link to={'/'} className="link">
-          미리보기
+          문항내용
         </Link>
       ),
       questionType: '객관식',
