@@ -11,7 +11,7 @@ import { useModal } from '@learnway/ui';
  */
 export function useFetchCourses(
   params: CourseQueryParams,
-): UseQueryResult<PaginationResponse<Course[]>, Error> {
+): UseQueryResult<PaginationResponse<Course>, Error> {
   return useQuery(queryOptions.all(params));
 }
 

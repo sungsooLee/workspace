@@ -1,5 +1,6 @@
 import CourseService from '../api/course';
-import { Course, CourseQueryParams } from '../../../types';
+import { Course, CourseQueryParams, LabelMessage, PaginationResponse } from '../../../types';
+import LabelMessagesService from '@entities/label-messages/api/label-messages';
 
 export const queryKeys = {
   all: ['courses'] as const,
@@ -7,9 +8,9 @@ export const queryKeys = {
 };
 
 export const queryOptions = {
-  all: (params: CourseQueryParams) => ({
+  all: <T = Course>(params: CourseQueryParams) => ({
     queryKey: queryKeys.all,
-    queryFn: () => CourseService.fetchAll(params),
+    queryFn: async (): Promise<PaginationResponse<T>> => CourseService.fetchAll(params),
   }),
   get: (id: number) => ({
     queryKey: queryKeys.get(id),
