@@ -35,15 +35,10 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope, roleInfo }) => {
 
   const { data, refetch } = useFetchTenantCategory(tenantId);
   const { data: tenant } = useFetchTenant(tenantId);
+  console.log('### tenant', tenant);
 
-  // TODO. 테넌트 상세 조회 후, 공통 카테고리 사용 여부
-  let useCommonMapping = true;
-  // TODO. 테넌트 상세 조회 후, 테넌트 카테고리 사용 여부
-  let useTenantMapping = true;
   // 테넌트 관리자 여부
   const isTenantManager = roleInfo === 'PLATFORM' ? false : true;
-
-  console.log('#### tenant', tenant);
 
   // delete
   const { delete: deleteTenantCategory } = useDeleteTenantCategory(tenantId, {
@@ -76,11 +71,7 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope, roleInfo }) => {
         setExpandedKeys(firstLevelKeys);
       }
     }
-    if (tenant) {
-      useCommonMapping = tenant.isCommonCategory;
-      useTenantMapping = tenant.isTenantCategory;
-    }
-  }, [data, tenant]);
+  }, [data]);
 
   const handleReset = () => {
     setMode('init');
@@ -177,8 +168,8 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope, roleInfo }) => {
           onExpandChange={handleExpandChange}
           selectedKey={selectedNode?.key}
           onNodeChange={handleNodeChange}
-          useCommonMapping={useCommonMapping}
-          useTenantMapping={useTenantMapping}
+          useCommonMapping={tenant?.isCommonCategory}
+          useTenantMapping={tenant?.isTenantCategory}
         />
       )}
       {selectedNode ? (
@@ -189,8 +180,8 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope, roleInfo }) => {
           menu
           mode={mode}
           isTenantManager={isTenantManager}
-          useCommonMapping={useCommonMapping}
-          useTenantMapping={useTenantMapping}
+          useCommonMapping={tenant?.isCommonCategory}
+          useTenantMapping={tenant?.isTenantCategory}
           onSave={handleSave}
           onReset={handleReset}
           onUpdate={handleUpdate}
@@ -210,8 +201,8 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope, roleInfo }) => {
           menu
           mode="init"
           isTenantManager={isTenantManager}
-          useCommonMapping={useCommonMapping}
-          useTenantMapping={useTenantMapping}
+          useCommonMapping={tenant?.isCommonCategory}
+          useTenantMapping={tenant?.isTenantCategory}
           onUpdate={handleUpdate}
           onDelete={handleDelete}
           onCancel={() => {

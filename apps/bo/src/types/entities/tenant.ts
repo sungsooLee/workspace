@@ -1,7 +1,29 @@
 export interface Tenant {
-  id: number;
-  name: string;
-  windowTitle: string;
+  tenantId: number;
+  tenantName: string;
   logoImageUrl: string;
-  loginImageUrl: string;
+  tenantRoleList: TenantRole[];
+  tenantBillingTag: string;
+  companyTenantList: TenantCompany[];
+  isUsed: boolean;
+  tenantDesc: string;
+  isPc: boolean;
+  isMobile: boolean;
+  isApp: boolean;
+  isCommonCategory: boolean;
+  isTenantCategory: boolean;
+}
+
+export interface TenantRole {
+  tenantId: number;
+  roleId: number;
+  roleCode: string;
+  roleName: string;
+}
+
+export interface TenantCompany {
+  tenantId: number;
+  companyId: number;
+  companyCode: string;
+  companyName: string;
 }
