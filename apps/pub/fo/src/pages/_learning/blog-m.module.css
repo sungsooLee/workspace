@@ -1,5 +1,5 @@
 .start {
-  &.video {
+  &.blog {
     @apply pb-[150px];
   }
 }

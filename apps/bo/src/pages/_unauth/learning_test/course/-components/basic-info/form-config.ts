@@ -10,6 +10,12 @@ export const formConfig: DynamicFormConfig = {
       label: '강의 유형',
       value: '',
     },
+    // 강의 유형 ID
+    {
+      name: '강의 유형 아이디',
+      type: 'hidden',
+      value: '',
+    },
     // 강의 세부 요청
     {
       name: '강의 세부 요청',
@@ -60,7 +66,23 @@ export const formConfig: DynamicFormConfig = {
       description: '',
     },
     // 학습 대상
+    {
+      name: '학습 대상',
+      type: 'textarea',
+      label: t('학습 대상'),
+      value: '',
+      placeholder: '',
+      description: '',
+    },
     // 과정 요약
+    {
+      name: '과정 요약',
+      type: 'textarea',
+      label: t('과정 요약'),
+      value: '',
+      placeholder: '',
+      description: '',
+    },
     // 난이도
     {
       name: '난이도',
@@ -89,7 +111,7 @@ export const formConfig: DynamicFormConfig = {
           value: '4',
         },
       ],
-      value: [],
+      value: '',
       placeholder: '',
       description: '',
     },
@@ -99,14 +121,13 @@ export const formConfig: DynamicFormConfig = {
       type: 'checkbox-group',
       label: '테넌트',
       format: 'array',
-      options: Array(10)
-        .fill(null)
-        .map((d, i) => ({ value: `value${i}`, label: `label${i}`, disabled: i === 1 })),
-      value: ['value1'],
+      options: [
+        { value: 'tenant1', label: '테넌트1' },
+        { value: 'tenant2', label: '테넌트2' },
+      ],
+      value: ['tenant1', 'tenant2'],
       placeholder: '',
       description: '',
-      showSelectAll: true,
-      cols: 4,
     },
     // 카테고리
     {
@@ -117,22 +138,18 @@ export const formConfig: DynamicFormConfig = {
       value: ['현대자동차 A', '현대자동차 B', '현대자동차 C'],
       // placeholder: '',
       description: '',
-      chipListConfig: {
-        showInput: true,
-      },
+      chipListConfig: {},
     },
     // 학습대상(유저그룹)
     {
-      name: '태그',
+      name: '학습대상',
       type: 'chip-list',
-      label: '태그',
+      label: '학습대상',
       format: 'array',
       value: ['현대자동차 A', '현대자동차 B', '현대자동차 C'],
       // placeholder: '',
       description: '',
-      chipListConfig: {
-        showInput: true,
-      },
+      chipListConfig: {},
     },
     // 담당자
     {

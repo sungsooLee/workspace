@@ -35,6 +35,9 @@
         & > div {
           @apply mx-auto w-auto max-w-[1300px];
         }
+        [class*='swiper-wrapper'] {
+          @apply flex items-center;
+        }
         [class*='swiper-slide'] {
           @apply h-[80px] w-[80px];
           button {
@@ -42,6 +45,9 @@
             img {
               @apply mx-auto max-h-[80px] max-w-[80px] object-contain;
             }
+          }
+          &[class*='swiper-slide-active'] {
+            @apply h-[100px] w-[100px] border-[10px] border-solid border-[var(--secondary1)];
           }
         }
       }

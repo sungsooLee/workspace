@@ -7,7 +7,7 @@ import blogImg from '@learnway/styles/fo/assets/images/temp/img_blog.png';
 
 export const Route = createFileRoute('/_learning/blog')({
   component: RouteComponent,
-});
+});                                                                                                                                                                                                                                                                                                                                                                                                                          
 
 function RouteComponent() {
   return (

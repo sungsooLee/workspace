@@ -11,8 +11,8 @@ export function useFetchRoles(tenantId: number, siteScope: string) {
   return useQuery(queryOptions.allRoles(tenantId, siteScope));
 }
 
-export function useFetchRole(roleId: string) {
-  return useQuery({ ...queryOptions.getRole(roleId), enabled: !!roleId });
+export function useFetchRole(roleCode: string) {
+  return useQuery({ ...queryOptions.getRole(roleCode), enabled: !!roleCode });
 }
 
 export function useFetchMenus() {
@@ -133,8 +133,8 @@ export const useRoleManager = (options: RoleHookOptions = {}) => {
     createRoleMutate(roleData, callbacks);
   };
 
-  const handleDeleteRole = (roleId: string, callbacks?: any) => {
-    deleteRoleMutate(roleId, callbacks);
+  const handleDeleteRole = (roleCode: string, callbacks?: any) => {
+    deleteRoleMutate(roleCode, callbacks);
   };
 
   const handleUpdateRole = (roleData: any, callbacks?: any) => {

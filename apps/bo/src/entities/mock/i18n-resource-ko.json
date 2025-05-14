@@ -257,6 +257,7 @@
         "categoryCodeName": "카테고리명",
         "categoryParentName": "상위 카테고리명",
         "categoryLocation": "카테고리 위치",
+        "select": "선택",
         "description": "설명"
       },
       "label": {

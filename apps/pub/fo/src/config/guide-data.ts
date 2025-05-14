@@ -1506,7 +1506,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '2025-05-12',
     lastUpdateDate: '',
-    remarks: '- video.tsx',
+    remarks: '- video.tsx\n- 다음 강의(modal) next-learning-popup.tsx',
   },
   {
     screenId: 'NLP_FO_CLA_1041',
@@ -1608,6 +1608,7 @@ export const guideData = [
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_CLA_1031',
@@ -1618,6 +1619,7 @@ export const guideData = [
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',
+    cancel: true,
   },
 
   {
@@ -1635,54 +1637,54 @@ export const guideData = [
     screenId: 'NLP_FO_CLA_MA_1026',
     screenName: 'M_강의실_학습창_이북',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: 'Pop-up',
-    completionDate: '',
+    pageId: 'ebook-m',
+    pageType: 'Page',
+    completionDate: '2025-05-14',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- ebook-m.tsx',
   },
   {
     screenId: 'NLP_FO_CLA_MA_1045',
     screenName: 'M_강의실_학습창_파일',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: 'Pop-up',
-    completionDate: '',
+    pageId: 'file-m',
+    pageType: 'Page',
+    completionDate: '2025-05-14',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- file-m.tsx',
   },
 
   {
     screenId: 'NLP_FO_CLA_MA_1027',
     screenName: 'M_강의실_학습창_웹_갤러리',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: 'Pop-up',
-    completionDate: '',
+    pageId: 'gallery-m',
+    pageType: 'Page',
+    completionDate: '2025-05-14',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- gallery-m.tsx',
   },
 
   {
     screenId: 'NLP_FO_CLA_MA_1028',
     screenName: 'M_강의실_학습창_웹_블로그',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: 'Pop-up',
+    pageId: 'blog-m',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- blog-m.tsx',
   },
 
   {
     screenId: 'NLP_FO_CLA_MA_1029',
     screenName: 'M_강의실_학습창_웹_HTML',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: 'Pop-up',
+    pageId: 'html-m',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- html-m.tsx',
   },
 
   {
@@ -1694,6 +1696,7 @@ export const guideData = [
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',
+    cancel: true,
   },
 
   {
@@ -1705,6 +1708,7 @@ export const guideData = [
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',
+    cancel: true,
   },
 
   {
