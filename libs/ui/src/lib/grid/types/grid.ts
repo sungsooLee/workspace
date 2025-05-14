@@ -234,6 +234,9 @@ export interface GridProps<T> {
    * data 변경시 그리드의 첫번째 행을 자동으로 선택해주기 위해 사용
    */
   autoSelectFirstRow?: boolean;
+
+  clientSideSorting?: boolean;
+  clientSideFiltering?: boolean;
 }
 
 /**

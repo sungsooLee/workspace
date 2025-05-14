@@ -94,6 +94,7 @@ const useSearchBoxHook = <T extends SearchBoxConfig>(config: T): UseSearchBoxRet
     setError,
     clearErrors,
     setValue,
+    trigger,
   } = methods;
 
   /**
@@ -200,6 +201,7 @@ const useSearchBoxHook = <T extends SearchBoxConfig>(config: T): UseSearchBoxRet
       originalValues,
       onSubmit: formSubmit,
     },
+    onFormValid: trigger,
     fetchData,
     setFormError,
     getValues,

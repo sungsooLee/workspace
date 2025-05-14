@@ -40,6 +40,7 @@ export interface UploadFile {
   parts: UploadPart[]; // 멀티 part 시 사용
   contentType?: string;
   controller?: AbortController; // fetch 취소를 위해 사용
+  message?: string;
 }
 
 export interface UseUploadQueueConfig {

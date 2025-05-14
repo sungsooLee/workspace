@@ -12,3 +12,5 @@ export * from './lib/use-s3-uploader/types';
 export * from './lib/use-code-store/use-code-store';
 export * from './lib/router/page-route.state';
 export * from './lib/router/router.hook';
+export * from './lib/use-code-store/use-code-store';
+export * from './lib/use-code-store/constants';

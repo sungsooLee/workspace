@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { createFileRoute, useRouter, Link } from '@tanstack/react-router';
+import { createFileRoute, useRouter, Link, useSearch } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { isEmpty } from 'lodash';
 
@@ -33,6 +33,8 @@ export const Route = createFileRoute('/_auth/login')({
 function RouteComponent() {
   const { t } = useTranslation();
   const router = useRouter();
+  const params = Route.useParams();
+  const search = Route.useSearch();
 
   const { provider, onSubmit, onFormChange, control } = useDynamicForm(detailConfig);
 
@@ -54,8 +56,7 @@ function RouteComponent() {
       onSuccess: async (data) => {
         const locale = data?.locale;
         locale && (await setLanguage(locale));
-
-        router.navigate({ to: '/' });
+        router.navigate({ to: search.redirect || '/' });
       },
     });
   };

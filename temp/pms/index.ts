@@ -157,8 +157,8 @@ export type { com_ever_edu_pms_security_JsonUsernamePasswordAuthenticationFilter
 export type { com_ever_edu_pms_tenant_dto_req_TenantCreateReqDto } from './models/com_ever_edu_pms_tenant_dto_req_TenantCreateReqDto';
 export type { com_ever_edu_pms_tenant_dto_req_TenantSearchReqDto$SearchByAdmin } from './models/com_ever_edu_pms_tenant_dto_req_TenantSearchReqDto$SearchByAdmin';
 export type { com_ever_edu_pms_tenant_dto_req_TenantUpdateReqDto } from './models/com_ever_edu_pms_tenant_dto_req_TenantUpdateReqDto';
-export type { com_ever_edu_pms_tenant_dto_res_TenantResDto } from './models/com_ever_edu_pms_tenant_dto_res_TenantResDto';
 export type { com_ever_edu_pms_tenant_dto_res_TenantResDto$CompanyResDto } from './models/com_ever_edu_pms_tenant_dto_res_TenantResDto$CompanyResDto';
+export type { com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin } from './models/com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin';
 export type { com_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin } from './models/com_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin';
 export type { com_ever_edu_pms_tenant_dto_res_TenantResDto$RoleResDto } from './models/com_ever_edu_pms_tenant_dto_res_TenantResDto$RoleResDto';
 export { com_ever_edu_pms_terms_dto_req_TermsSaveReqDto$TermsDto } from './models/com_ever_edu_pms_terms_dto_req_TermsSaveReqDto$TermsDto';

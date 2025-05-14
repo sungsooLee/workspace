@@ -193,7 +193,7 @@ export const moveNodeCheck = (events: any) => {
 
 export const transformRoleApiDataToTreeData = (apiData: any) => {
   // const dataArray = Array.isArray(apiData) ? apiData : [apiData];
-  const dataArray = [{ roleId: 'root', roleName: 'ROOT', children: [...apiData] }];
+  const dataArray = [{ roleId: 'root', name: 'ROOT', children: [...apiData] }];
 
   const transform = (nodes: any) => {
     if (!nodes) return [];
@@ -203,7 +203,7 @@ export const transformRoleApiDataToTreeData = (apiData: any) => {
       const transformedNode = {
         // 필수 트리 속성
         key: node.roleId, // menuId를 key로 사용
-        title: node.roleName, // title이 없으면 menuCode 사용
+        title: node.name, // title이 없으면 menuCode 사용
 
         // 원본 데이터 속성 유지
         roleId: node.roleId,

@@ -5,7 +5,7 @@
 import type { com_ever_edu_pms_tenant_dto_req_TenantCreateReqDto } from '../models/com_ever_edu_pms_tenant_dto_req_TenantCreateReqDto';
 import type { com_ever_edu_pms_tenant_dto_req_TenantSearchReqDto$SearchByAdmin } from '../models/com_ever_edu_pms_tenant_dto_req_TenantSearchReqDto$SearchByAdmin';
 import type { com_ever_edu_pms_tenant_dto_req_TenantUpdateReqDto } from '../models/com_ever_edu_pms_tenant_dto_req_TenantUpdateReqDto';
-import type { com_ever_edu_pms_tenant_dto_res_TenantResDto } from '../models/com_ever_edu_pms_tenant_dto_res_TenantResDto';
+import type { com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin';
 import type { org_springdoc_core_converters_models_Pageable } from '../models/org_springdoc_core_converters_models_Pageable';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin';
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -14,12 +14,12 @@ import { request as __request } from '../core/request';
 export class TenantControllerService {
     /**
      * @param tenantId
-     * @returns com_ever_edu_pms_tenant_dto_res_TenantResDto OK
+     * @returns com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin OK
      * @throws ApiError
      */
     public static getTenant(
         tenantId: number,
-    ): CancelablePromise<com_ever_edu_pms_tenant_dto_res_TenantResDto> {
+    ): CancelablePromise<com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/tenants/{tenantId}',
@@ -38,13 +38,13 @@ export class TenantControllerService {
     /**
      * @param tenantId
      * @param requestBody
-     * @returns com_ever_edu_pms_tenant_dto_res_TenantResDto OK
+     * @returns com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin OK
      * @throws ApiError
      */
     public static updateTenant(
         tenantId: number,
         requestBody: com_ever_edu_pms_tenant_dto_req_TenantUpdateReqDto,
-    ): CancelablePromise<com_ever_edu_pms_tenant_dto_res_TenantResDto> {
+    ): CancelablePromise<com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin> {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/admin/api/v1/tenants/{tenantId}',
@@ -113,12 +113,12 @@ export class TenantControllerService {
     }
     /**
      * @param requestBody
-     * @returns com_ever_edu_pms_tenant_dto_res_TenantResDto OK
+     * @returns com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin OK
      * @throws ApiError
      */
     public static createTenant(
         requestBody: com_ever_edu_pms_tenant_dto_req_TenantCreateReqDto,
-    ): CancelablePromise<com_ever_edu_pms_tenant_dto_res_TenantResDto> {
+    ): CancelablePromise<com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/admin/api/v1/tenants',

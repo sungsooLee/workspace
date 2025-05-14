@@ -191,14 +191,14 @@
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
               "isShortCutArea": false,
-              "path": "/platform/system/translation"
+              "path": "/platform/system/multilingual"
             },
             {
               "title": "다국어 등록",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
               "isShortCutArea": false,
-              "path": "/platform/system/translation/view"
+              "path": "/platform/system/multilingual/view"
             }
           ],
           "tenantName": "현대자동차",

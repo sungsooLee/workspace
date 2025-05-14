@@ -1,0 +1,21 @@
+/* test-detail.module.css */
+.wrap {
+  & > [class*='notice'] {
+    @apply mb-[32px] mt-[8px];
+  }
+  .row_wrap {
+    @apply flex w-full flex-wrap justify-between;
+    .main_container {
+      @apply flex-none basis-[calc(100%-337px)] items-stretch;
+    }
+    .sub_container {
+      @apply relative flex-none basis-[305px] items-stretch pl-[32px];
+      [class*='title_wrap'] {
+        @apply mb-0;
+      }
+      &::before {
+        @apply absolute left-0 top-0 h-full w-[1px] bg-[var(--gray4)] content-[''];
+      }
+    }
+  }
+}

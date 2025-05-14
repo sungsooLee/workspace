@@ -16,6 +16,7 @@ import { Route as LayoutImport } from './pages/_layout'
 import { Route as GuideImport } from './pages/_guide'
 import { Route as AuthImport } from './pages/_auth'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
+import { Route as LearningVideoMImport } from './pages/_learning/video-m'
 import { Route as LearningVideoImport } from './pages/_learning/video'
 import { Route as LearningHtmlImport } from './pages/_learning/html'
 import { Route as LearningGalleryImport } from './pages/_learning/gallery'
@@ -139,6 +140,12 @@ const LayoutIndexRoute = LayoutIndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LayoutRoute,
+} as any)
+
+const LearningVideoMRoute = LearningVideoMImport.update({
+  id: '/video-m',
+  path: '/video-m',
+  getParentRoute: () => LearningRoute,
 } as any)
 
 const LearningVideoRoute = LearningVideoImport.update({
@@ -957,6 +964,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearningVideoImport
       parentRoute: typeof LearningImport
     }
+    '/_learning/video-m': {
+      id: '/_learning/video-m'
+      path: '/video-m'
+      fullPath: '/video-m'
+      preLoaderRoute: typeof LearningVideoMImport
+      parentRoute: typeof LearningImport
+    }
     '/_layout/': {
       id: '/_layout/'
       path: '/'
@@ -1675,6 +1689,7 @@ interface LearningRouteChildren {
   LearningGalleryRoute: typeof LearningGalleryRoute
   LearningHtmlRoute: typeof LearningHtmlRoute
   LearningVideoRoute: typeof LearningVideoRoute
+  LearningVideoMRoute: typeof LearningVideoMRoute
 }
 
 const LearningRouteChildren: LearningRouteChildren = {
@@ -1684,6 +1699,7 @@ const LearningRouteChildren: LearningRouteChildren = {
   LearningGalleryRoute: LearningGalleryRoute,
   LearningHtmlRoute: LearningHtmlRoute,
   LearningVideoRoute: LearningVideoRoute,
+  LearningVideoMRoute: LearningVideoMRoute,
 }
 
 const LearningRouteWithChildren = LearningRoute._addFileChildren(
@@ -1719,6 +1735,7 @@ export interface FileRoutesByFullPath {
   '/gallery': typeof LearningGalleryRoute
   '/html': typeof LearningHtmlRoute
   '/video': typeof LearningVideoRoute
+  '/video-m': typeof LearningVideoMRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
   '/guide/badge': typeof GuideGuideBadgeRoute
@@ -1820,6 +1837,7 @@ export interface FileRoutesByTo {
   '/gallery': typeof LearningGalleryRoute
   '/html': typeof LearningHtmlRoute
   '/video': typeof LearningVideoRoute
+  '/video-m': typeof LearningVideoMRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
   '/guide/badge': typeof GuideGuideBadgeRoute
@@ -1925,6 +1943,7 @@ export interface FileRoutesById {
   '/_learning/gallery': typeof LearningGalleryRoute
   '/_learning/html': typeof LearningHtmlRoute
   '/_learning/video': typeof LearningVideoRoute
+  '/_learning/video-m': typeof LearningVideoMRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_guide/guide/alert': typeof GuideGuideAlertRoute
   '/_guide/guide/badge': typeof GuideGuideBadgeRoute
@@ -2028,6 +2047,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/html'
     | '/video'
+    | '/video-m'
     | '/'
     | '/guide/alert'
     | '/guide/badge'
@@ -2128,6 +2148,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/html'
     | '/video'
+    | '/video-m'
     | '/'
     | '/guide/alert'
     | '/guide/badge'
@@ -2231,6 +2252,7 @@ export interface FileRouteTypes {
     | '/_learning/gallery'
     | '/_learning/html'
     | '/_learning/video'
+    | '/_learning/video-m'
     | '/_layout/'
     | '/_guide/guide/alert'
     | '/_guide/guide/badge'
@@ -2448,7 +2470,8 @@ export const routeTree = rootRoute
         "/_learning/file",
         "/_learning/gallery",
         "/_learning/html",
-        "/_learning/video"
+        "/_learning/video",
+        "/_learning/video-m"
       ]
     },
     "/_auth/agreement-privacy": {
@@ -2557,6 +2580,10 @@ export const routeTree = rootRoute
     },
     "/_learning/video": {
       "filePath": "_learning/video.tsx",
+      "parent": "/_learning"
+    },
+    "/_learning/video-m": {
+      "filePath": "_learning/video-m.tsx",
       "parent": "/_learning"
     },
     "/_layout/": {

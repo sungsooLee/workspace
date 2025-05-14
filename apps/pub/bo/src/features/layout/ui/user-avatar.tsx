@@ -4,14 +4,17 @@ import { Avatar, Button, Popover, useModal } from '@learnway/ui';
 import { IcLogOut01 } from '@learnway/icons';
 import styles from './user-avatar.module.css';
 
+/* company logo image */
+import imgLogo from '../../../assets/images/temp/img_temp_company_logo.png';
+
 const PopoverContent = () => {
   const { alert: openAlert } = useModal();
   const [hasAvataImage] = useState<boolean>(true); // 아바타 이미지 없는 경우(true/false)
 
   const handleClickAlert1 = () => {
     openAlert({
-      title: <></>,
-      description: <>로그아웃 하시겠습니까?</>,
+      title: '',
+      content: <>로그아웃 하시겠습니까?</>,
     });
   };
 
@@ -36,15 +39,26 @@ const PopoverContent = () => {
 
   return (
     <div className={`${styles.start} ${styles.avata_area}`}>
+      {/* 퍼블수정 20240513 : 수정 S */}
       <div className={styles.profile_info}>
         <div className={styles.avata_img}>
           {hasAvataImage ? (
-            <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
+            <>
+              <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
+              <span className={styles.logo_wrap}>
+                <img src={imgLogo} alt="" className={styles.logo_img} />
+              </span>
+            </>
           ) : (
             // 아바타 이미지 없는 경우 CASE
-            <span className={styles.name}>
-              <em className={styles.text}>{'김'}</em>
-            </span>
+            <>
+              <span className={styles.name}>
+                <em className={styles.text}>{'김'}</em>
+              </span>
+              <span className={styles.logo_wrap}>
+                <img src={imgLogo} alt="" className={styles.logo_img} />
+              </span>
+            </>
           )}
         </div>
         <div className={styles.profile}>
@@ -55,15 +69,22 @@ const PopoverContent = () => {
       </div>
       <ul className={styles.info_list}>
         <li>
-          <Link to={''}>개인정보 변경</Link>
+          <Link to={''}>나의 정보</Link>
         </li>
         <li>
-          <Link to={''}>프로필 작성</Link>
+          <Link to={''}>나의 권한</Link>
+        </li>
+        <li>
+          <Link to={''}>문의하기 ITSM</Link>
         </li>
       </ul>
-      <Button className={styles.btn_log} variant="text" onClick={() => handleClickAlert2()}>
-        <IcLogOut01 width={20} height={20} stroke="#3E4550" /> <span>로그아웃</span>
-      </Button>
+      <div className={styles.logout_wrap}>
+        <Button className={styles.btn_log} variant="text" onClick={() => handleClickAlert2()}>
+          <IcLogOut01 width={20} height={20} stroke="#3E4550" /> <span>로그아웃</span>
+        </Button>
+        <p className={styles.customer_info}>{'고객센터 02-6296-6789'}</p>
+      </div>
+      {/* 퍼블수정 20240513 : 수정 E */}
     </div>
   );
 };
@@ -77,7 +98,8 @@ const AvatarCompoment = () => {
       className={styles.btn_avatar}
       side="bottom"
       align="end"
-      sideOffset={10}>
+      sideOffset={10}
+    >
       {hasAvataImage ? (
         <Avatar imageUrl="https://github.com/shadcn.png" />
       ) : (

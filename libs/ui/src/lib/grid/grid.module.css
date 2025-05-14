@@ -17,7 +17,7 @@
               .btn_filter {
                 @apply ml-auto;
               }
-              .icon_down {
+              .icon_up {
                 @apply rotate-180;
               }
               [class*='nlp--checkbox'] {
