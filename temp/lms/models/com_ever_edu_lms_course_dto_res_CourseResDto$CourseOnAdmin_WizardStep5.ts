@@ -7,10 +7,14 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardSte
     wizardStep?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep5.wizardStep;
     courseType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep5.courseType;
     courseSubType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep5.courseSubType;
+    thumbnailGroupId?: number;
+    primaryThumbnailId?: number;
     /**
      * 태그 이름 목록
      */
     tagNames?: Array<com_ever_edu_lms_course_dto_res_CourseResDto$TagNameWrapper_WizardStep5>;
+    courseValidityStartDate?: string;
+    courseValidityEndDate?: string;
 };
 export namespace com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep5 {
     export enum wizardStep {

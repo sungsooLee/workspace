@@ -3,10 +3,12 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_WizardStep1 } from './com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_WizardStep1';
+import type { com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto_WizardStep1 } from './com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto_WizardStep1';
 export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep1 = {
     wizardStep?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep1.wizardStep;
     courseType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep1.courseType;
     courseSubType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep1.courseSubType;
+    language?: string;
     channelId?: number;
     courseName?: string;
     courseSummary?: string;
@@ -15,12 +17,19 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardSte
     trainingTarget?: string;
     trainingLevelType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep1.trainingLevelType;
     tenantIds?: Array<number>;
-    categoryIds?: Array<number>;
+    primaryCategoryId?: number;
+    /**
+     * 카테고리 경로 노출
+     */
+    categories?: Array<com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto_WizardStep1>;
+    isWhiteList?: boolean;
     whiteList?: Array<com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_WizardStep1>;
     coordinatorId?: number;
     coordinatorName?: string;
+    coordinatorTelNo?: string;
     operatorId?: number;
     operatorName?: string;
+    operatorTelNo?: string;
 };
 export namespace com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep1 {
     export enum wizardStep {

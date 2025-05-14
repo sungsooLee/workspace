@@ -14,8 +14,6 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate = {
      */
     isPublished: boolean;
     wizardStep: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.wizardStep;
-    courseType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.courseType;
-    courseSubType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.courseSubType;
     courseName: string;
     courseSummary: string;
     courseGoal: string;
@@ -24,12 +22,14 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate = {
     trainingLevelType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.trainingLevelType;
     tenantIds: Array<number>;
     categoryIds: Array<number>;
+    isWhiteList?: boolean;
     whiteList?: Array<com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_FullUpdate>;
     coordinatorId: number;
     coordinatorName: string;
+    coordinatorTelNo: string;
     operatorId: number;
     operatorName: string;
-    primaryKitId: number;
+    operatorTelNo: string;
     isEnrollRequired: boolean;
     approvalLineType?: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.approvalLineType;
     isMaxEnrollQuotaRestricted?: boolean;
@@ -50,6 +50,7 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate = {
      * 수강신청 단계에서 레벨테스트를 과정마다할 지 차수마다 할 지
      */
     langLevelTestScopeType?: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.langLevelTestScopeType;
+    primaryKitId: number;
     deviceRestrictType?: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.deviceRestrictType;
     learningRestrictTimeType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.learningRestrictTimeType;
     /**
@@ -118,10 +119,14 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate = {
     textbookPurchaseAllocationRate?: number;
     contentPurchaseCost?: number;
     contentPurchaseAllocationRatio?: number;
+    thumbnailGroupId?: number;
+    primaryThumbnailId?: number;
     /**
      * 태그 이름 목록
      */
     tagNames: Array<com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TagNameWrapper_FullUpdate>;
+    courseValidityStartDate: string;
+    courseValidityEndDate: string;
 };
 export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate {
     export enum wizardStep {
@@ -131,25 +136,6 @@ export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate {
         STEP4 = 'STEP4',
         STEP5 = 'STEP5',
         FULL_UPDATE = 'FULL_UPDATE',
-    }
-    export enum courseType {
-        ELEARNING = 'ELEARNING',
-        CLASS = 'CLASS',
-        LIVE = 'LIVE',
-        EXAM = 'EXAM',
-        SURVEY = 'SURVEY',
-        PACKAGE = 'PACKAGE',
-    }
-    export enum courseSubType {
-        SANGSI_LEARN = 'SANGSI_LEARN',
-        NORMAL = 'NORMAL',
-        SANGSI_ENROLL = 'SANGSI_ENROLL',
-        FACE_TO_FACE = 'FACE_TO_FACE',
-        NONE_FACE_TO_FACE = 'NONE_FACE_TO_FACE',
-        HYBRID = 'HYBRID',
-        LIVE = 'LIVE',
-        EXAM = 'EXAM',
-        SURVEY = 'SURVEY',
     }
     export enum trainingLevelType {
         NONE = 'NONE',

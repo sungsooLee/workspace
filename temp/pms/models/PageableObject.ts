@@ -7,8 +7,8 @@ export type PageableObject = {
     offset?: number;
     sort?: Array<org_springdoc_core_converters_models_SortObject>;
     pageSize?: number;
-    paged?: boolean;
     pageNumber?: number;
+    paged?: boolean;
     unpaged?: boolean;
 };
 
