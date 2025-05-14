@@ -1,6 +1,5 @@
 import { memo } from 'react';
 import { ModalBody, ModalContainer, ModalTitle, ModalFooter, Button } from '@learnway/ui';
-// 커밋 테스트
 import { IcoRefresh02, IcoPrevNext } from '@learnway/icons';
 
 import styles from './next-learning-popup.module.css';
