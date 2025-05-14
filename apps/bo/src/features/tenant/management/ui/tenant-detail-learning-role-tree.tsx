@@ -5,12 +5,15 @@ import { t } from 'i18next';
 import { useRouterState } from '@tanstack/react-router';
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import { FormRow, FormSubTitle } from '@shared/ui';
+import { FormRow, ContentsHistoryInfoFormField, FormSubTitle } from '@shared/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { ScopeRadioGroup } from './scope-radio-group';
 import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
-import { roleTreeMockData } from '@entities/mock/role';
-import { useFetchRole, useFetchRoleTree } from '@entities/role/service/role-manage.hook';
+import {
+  useFetchRole,
+  useFetchRoleTree,
+  useRoleManager,
+} from '@entities/role/service/role-manage.hook';
 import {
   getAllTreeKeys,
   getFirstExpandKeys,
@@ -23,7 +26,7 @@ import { EnFormMode, EnTenantScope, EnCompanyScope, EnChannelScope, EnDeptScope 
 const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
   const routerState = useRouterState();
   const [formMode, setFormMode] = useState(EnFormMode.NONE);
-  const [selectedRoleId, setSelectedRoleId] = useState<any>(null);
+  const [selectedRoleNode, setSelectedRoleNode] = useState<any>(null);
   const [roleTreeData, setRoleTreeData] = useState([]);
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
 
@@ -49,49 +52,53 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
     ],
   });
 
+  const { createRole, updateRole, deleteRole } = useRoleManager({
+    onRoleDeleteSuccess: () => {
+      refetch();
+    },
+    onRoleCreateSuccess: () => {
+      refetch();
+    },
+    onRoleUpdateSuccess: () => {
+      refetch();
+    },
+  });
   const { provider, onSubmit, clearFormError, fetchData } = useDynamicForm(formConfig);
-
-  const getRoles = () => roleTreeMockData;
-
-  const { data } = useFetchRoleTree(tenantId, siteScope);
+  const { data, refetch } = useFetchRoleTree(tenantId, siteScope);
+  const { data: roleDetail } = useFetchRole(selectedRoleNode?.roleCode || undefined);
 
   const clearAllFormErrors = () => {
     formConfig.builders.forEach((item) => clearFormError(item.name));
   };
 
   const handleOnSubmit = async (formData: any) => {
-    console.log(formData);
-  };
+    const parentRoleId = formData.parentRoleId === 'root' ? undefined : formData.parentRoleId;
+    const payload = {
+      ...formData,
+      tenantId: tenantId,
+      siteScope: siteScope,
+      parentRoleId: parentRoleId,
+    };
+    console.log(payload);
+    switch (formMode) {
+      case EnFormMode.ADD:
+        createRole(payload);
+        break;
 
-  const renderNodeButtons = (node: TreeNode, level: number) => {
-    return (
-      <div className={'gap-10px flex'}>
-        <div className={'flex items-center'}>
-          <Button
-            onClick={(e) => {
-              e.stopPropagation();
-              addNode(node);
-            }}
-            variant="gray2"
-            size={'xs'}
-            type={'button'}
-          >
-            {level === 0 ? '역할 추가' : '하위 역할 추가'}
-          </Button>
-        </div>
-      </div>
-    );
+      case EnFormMode.VIEW:
+        updateRole(payload);
+        break;
+    }
   };
 
   // handle 역할 트리 노드 클릭
   const handleRoleSelect = (node: TreeNode) => {
-    console.log(node);
-    setSelectedRoleId(node);
+    setSelectedRoleNode(node);
     if (formMode !== EnFormMode.VIEW) setFormMode(EnFormMode.VIEW);
   };
 
   // 추가 버튼
-  const addNode = (node: any) => {
+  const handlerAddButionClick = (node: any) => {
     clearAllFormErrors();
     const initData: { [key: string]: any } = {};
     formConfig.builders.forEach((item) => {
@@ -100,9 +107,15 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
 
     fetchData({
       ...initData,
-      parentId: node.key,
+      parentRoleId: node.key.toString(),
     });
     setFormMode(EnFormMode.ADD);
+  };
+
+  const handleDeleteButtonClick = () => {
+    setFormMode(EnFormMode.NONE);
+    setSelectedRoleNode(null);
+    deleteRole(selectedRoleNode.roleCode);
   };
 
   useEffect(() => {
@@ -115,6 +128,34 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
       }
     }
   }, [data]);
+
+  useEffect(() => {
+    if (roleDetail) {
+      const parentRoleId = roleDetail.parentRoleId ? roleDetail.parentRoleId.toString() : 'root';
+      fetchData({ ...roleDetail, parentRoleId: parentRoleId });
+      setFormMode(EnFormMode.VIEW);
+    }
+  }, [roleDetail]);
+
+  const renderNodeButtons = (node: TreeNode, level: number) => {
+    return (
+      <div className={'gap-10px flex'}>
+        <div className={'flex items-center'}>
+          <Button
+            onClick={(e) => {
+              e.stopPropagation();
+              handlerAddButionClick(node);
+            }}
+            variant="gray2"
+            size={'xs'}
+            type={'button'}
+          >
+            {level === 0 ? '역할 추가' : '하위 역할 추가'}
+          </Button>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <SectionLayout contentsRatio={'thirty'}>
@@ -148,7 +189,12 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
                     variant={'text'}
                     size={'sm'}
                     className="btn_text"
-                    disabled={formMode !== EnFormMode.VIEW}
+                    disabled={
+                      formMode !== EnFormMode.VIEW ||
+                      selectedRoleNode?.key === 'root' ||
+                      selectedRoleNode?.children.length > 0
+                    }
+                    onClick={handleDeleteButtonClick}
                   />
                   <Button
                     label={'저장'}
@@ -168,7 +214,7 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
                 </FormRow>
 
                 <FormRow provider={provider}>
-                  <DynamicFormField name={'roleCd'} disabled={true} />
+                  <DynamicFormField name={'roleCode'} disabled={true} />
                 </FormRow>
               </ContentsRow>
               <ContentsRow>
@@ -196,7 +242,7 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
               </ContentsRow>
               <ContentsRow>
                 <FormRow provider={provider}>
-                  <DynamicFormField name={'companyScopes'} disabled={formMode === EnFormMode.NONE}>
+                  <DynamicFormField name={'companyScope'} disabled={formMode === EnFormMode.NONE}>
                     <ScopeRadioGroup
                       options={[
                         {
@@ -218,23 +264,23 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
               </ContentsRow>
               <ContentsRow>
                 <FormRow provider={provider}>
-                  <DynamicFormField name={'channelScopes'} disabled={formMode === EnFormMode.NONE}>
+                  <DynamicFormField name={'channelScope'} disabled={formMode === EnFormMode.NONE}>
                     <ScopeRadioGroup
                       options={[
                         {
-                          value: 'all',
+                          value: EnChannelScope.ALL,
                           label: t('모든 채널'),
                         },
                         {
-                          value: '2',
+                          value: EnChannelScope.CURRENT_COMPANY,
                           label: t('소속 채널'),
                         },
                         {
-                          value: '3',
+                          value: EnChannelScope.CURRENT_COMPANY_INCLUSIVE,
                           label: t('소속 채널(하위 채널 포함)'),
                         },
                         {
-                          value: '4',
+                          value: EnChannelScope.MANUAL,
                           label: t('직접 선택'),
                         },
                       ]}
@@ -244,23 +290,23 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
               </ContentsRow>
               <ContentsRow>
                 <FormRow provider={provider}>
-                  <DynamicFormField name={'teamScopes'} disabled={formMode === EnFormMode.NONE}>
+                  <DynamicFormField name={'deptScope'} disabled={formMode === EnFormMode.NONE}>
                     <ScopeRadioGroup
                       options={[
                         {
-                          value: 'all',
+                          value: EnDeptScope.ALL,
                           label: t('모든 팀'),
                         },
                         {
-                          value: '2',
+                          value: EnDeptScope.CURRENT_TEAM,
                           label: t('소속 팀'),
                         },
                         {
-                          value: '3',
+                          value: EnDeptScope.CURRENT_TEAM_INCLUSIVE,
                           label: t('소속 팀(하위 팀 포함)'),
                         },
                         {
-                          value: '4',
+                          value: EnDeptScope.MANUAL,
                           label: t('직접 선택'),
                         },
                       ]}
@@ -268,6 +314,12 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
                   </DynamicFormField>
                 </FormRow>
               </ContentsRow>
+              <ContentsRow type={'horizontal'}>
+                <FormRow provider={provider}>
+                  <DynamicFormField name={'isUsed'} disabled={formMode === EnFormMode.NONE} />
+                </FormRow>
+              </ContentsRow>
+              <ContentsHistoryInfoFormField />
             </div>
           </form>
         </div>
@@ -280,15 +332,16 @@ export const TenantDetailLearningRoleTree = TenantDetailLearningRoleTreeComponen
 
 const formBaseConfig: DynamicFormConfig = {
   builders: [
-    { name: 'parentId', type: 'hidden', value: '' },
+    { name: 'parentRoleId', type: 'hidden', value: '', format: 'string' },
     {
       name: 'roleId',
       type: 'text',
+      format: 'number',
       label: t('역할 ID'),
       value: '',
     },
     {
-      name: 'roleCd',
+      name: 'roleCode',
       type: 'text',
       label: t('역할 코드'),
       value: '',
@@ -311,22 +364,45 @@ const formBaseConfig: DynamicFormConfig = {
       label: t('회사 적용 범위'),
       value: EnCompanyScope.ALL,
     },
+    { name: 'companyIds', type: 'custom', value: [] },
     {
       name: 'channelScope',
       type: 'custom',
       label: t('채널 적용 범위'),
       value: EnChannelScope.ALL,
     },
+    { name: 'channelIds', type: 'custom', value: [] },
     {
       name: 'deptScope',
       type: 'custom',
       label: t('팀 적용 범위'),
       value: EnDeptScope.ALL,
     },
+    { name: 'deptIds', type: 'custom', value: [] },
+    {
+      name: 'isUsed',
+      type: 'switch',
+      label: t('사용여부'),
+      value: false,
+      switchConfig: {
+        label: (value: boolean) => (value ? t('사용함') : t('사용안함')),
+      },
+    },
   ],
   validator: {
+    parentRoleId: {
+      required: {
+        fn: (values) => {
+          return false;
+        },
+      },
+    },
     name: {
       required: true,
     },
+    tenantScope: { required: true },
+    companyScope: { required: true },
+    channelScope: { required: true },
+    deptScope: { required: true },
   },
 };
