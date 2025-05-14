@@ -30,7 +30,7 @@ import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-content
 import popSearchStyles from '@learnway/styles/bo/assets/styles/modules/popup-search.module.css';
 
 /* images */
-import mediaImg from '../../../../assets/images/temp/img_temp_media.jpg';
+import previewImg from '../../../../assets/images/temp/img_exam_basic.jpg';
 
 const TestInfoComponent: FC<{}> = ({}) => {
   const { close: closeModal } = useModal();
@@ -426,9 +426,9 @@ const TestInfoComponent: FC<{}> = ({}) => {
               </li>
             ))}
           </ul>
-          {/* media(비디오 영역) */}
+          {/* 이미지 영역 */}
           <div className={movieInfoStyles.media}>
-            <img src={mediaImg} width="100%" alt="" />
+            <img src={previewImg} width="100%" alt="" />
           </div>
         </div>
       </div>

@@ -73,6 +73,15 @@ export const guideData = [
     remarks: '트리는 화면 영역 확인용', // 비고
   },
   {
+    screenName: '공통/GNB_프로필_나의정보',
+    pageId: 'common/profile-myinfo',
+    screenId: 'NLP_BO_COM_1002',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
     screenName: '로그인',
     pageId: 'login',
     screenId: 'NLP_BO_LOG_1000',
