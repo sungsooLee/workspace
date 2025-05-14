@@ -1506,7 +1506,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '2025-05-12',
     lastUpdateDate: '',
-    remarks: '- video.tsx',
+    remarks: '- video.tsx\n- 다음 강의(modal) next-learning-popup.tsx',
   },
   {
     screenId: 'NLP_FO_CLA_1041',
@@ -1608,6 +1608,7 @@ export const guideData = [
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_CLA_1031',
@@ -1618,6 +1619,7 @@ export const guideData = [
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',
+    cancel: true,
   },
 
   {
@@ -1694,6 +1696,7 @@ export const guideData = [
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',
+    cancel: true,
   },
 
   {
@@ -1705,6 +1708,7 @@ export const guideData = [
     completionDate: '',
     lastUpdateDate: '',
     remarks: '',
+    cancel: true,
   },
 
   {

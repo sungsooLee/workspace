@@ -3,7 +3,7 @@ import { ModalBody, ModalContainer, ModalTitle, ModalFooter, Button } from '@lea
 
 import { IcoRefresh02, IcoPrevNext } from '@learnway/icons';
 
-import styles from './next-learning.module.css';
+import styles from './next-learning-popup.module.css';
 
 const NextLearningPopupComponent = () => {
   return (
