@@ -4,7 +4,7 @@ import { UseQueryOptions } from '@tanstack/react-query';
 
 export const queryKeys = {
   all: ['label-messages'] as const,
-  detail: (id: number) => [...queryKeys.all, id] as const,
+  detail: (id: number) => ['label-message', id] as const,
 };
 
 export const queryOptions = {

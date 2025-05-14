@@ -1,30 +1,30 @@
 import CourseService from '../api/course';
-import { CourseResponse, CoursesRequest } from '../../../types';
+import { Course, CourseQueryParams } from '../../../types';
 
 export const queryKeys = {
-  all: ['course-all'] as const,
-  get: ['course'] as const,
+  all: ['courses'] as const,
+  get: (id: number) => ['course', id] as const,
 };
 
 export const queryOptions = {
-  all: (params: CoursesRequest) => ({
+  all: (params: CourseQueryParams) => ({
     queryKey: queryKeys.all,
-    queryFn: () => CourseService.fetchCourses(params),
+    queryFn: () => CourseService.fetchAll(params),
   }),
-  get: (id: string) => ({
-    queryKey: queryKeys.get,
-    queryFn: () => CourseService.fetchCourse(id),
+  get: (id: number) => ({
+    queryKey: queryKeys.get(id),
+    queryFn: () => CourseService.fetch(id),
   }),
 };
 
 export const mutateOptions = {
   create: () => ({
-    mutationFn: (payload: CourseResponse) => CourseService.createCourse(payload),
+    mutationFn: (payload: Course) => CourseService.create(payload),
   }),
   update: () => ({
-    mutationFn: (payload: CourseResponse) => CourseService.updateCourse(payload),
+    mutationFn: (payload: Course) => CourseService.update(payload),
   }),
   delete: () => ({
-    mutationFn: (id: string) => CourseService.deleteCourse(id),
+    mutationFn: (id: number) => CourseService.delete(id),
   }),
 };
