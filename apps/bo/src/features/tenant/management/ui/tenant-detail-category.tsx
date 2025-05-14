@@ -13,6 +13,7 @@ import {
   useMoveTenantCategory,
   useCreateTenantCategory,
 } from '@entities/tenant/service/tenant-category.hook';
+import { useFetchTenant } from '@entities/tenant';
 import { transformApiDataToTreeData } from '@features/platform/category';
 import TenantCategoryView from '@features/tenant/management/ui/tenant-detail-category-view';
 import { TenantCategoryTree } from './tenant-detail-category-tree';
@@ -33,13 +34,16 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope, roleInfo }) => {
   const tenantId = routerState.location.state?.tenantId || '1';
 
   const { data, refetch } = useFetchTenantCategory(tenantId);
+  const { data: tenant } = useFetchTenant(tenantId);
 
   // TODO. 테넌트 상세 조회 후, 공통 카테고리 사용 여부
-  const useCommonMapping = true;
+  let useCommonMapping = true;
   // TODO. 테넌트 상세 조회 후, 테넌트 카테고리 사용 여부
-  const useTenantMapping = true;
+  let useTenantMapping = true;
   // 테넌트 관리자 여부
   const isTenantManager = roleInfo === 'PLATFORM' ? false : true;
+
+  console.log('#### tenant', tenant);
 
   // delete
   const { delete: deleteTenantCategory } = useDeleteTenantCategory(tenantId, {
@@ -72,7 +76,11 @@ const TenantDetailCategoryComponent: FC<any> = ({ menuScope, roleInfo }) => {
         setExpandedKeys(firstLevelKeys);
       }
     }
-  }, [data]);
+    if (tenant) {
+      useCommonMapping = tenant.isCommonCategory;
+      useTenantMapping = tenant.isTenantCategory;
+    }
+  }, [data, tenant]);
 
   const handleReset = () => {
     setMode('init');
