@@ -21,4 +21,9 @@
   .tab_select {
     @apply max-w-[360px];
   }
+  .table_wrap {
+    table thead tr th:first-child {
+      @apply w-[270px];
+    }
+  }
 }

@@ -1,7 +1,7 @@
 /* table.module.css */
 .start {
   &.wrap {
-    @apply border-t-[2px] border-solid border-[var(--gray9)] pt-[8px];
+    @apply border-t-[1px] border-solid border-[var(--gray9)] pt-[8px];
     table {
       @apply w-full table-fixed border-collapse;
       caption {

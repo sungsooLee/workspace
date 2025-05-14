@@ -287,7 +287,7 @@ const TestInfoComponent: FC<{}> = ({}) => {
       />
       <div className={styles.row_wrap}>
         <div className={styles.main_container}>
-          <FormSubTitle label={' 기본 정보'} />
+          <FormSubTitle label={'기본 정보'} />
           <ContentsRow>
             {/* form_item */}
             <div className={formStyles.form_item}>

@@ -29,19 +29,41 @@ const QuestionInfoComponent: FC<{}> = ({}) => {
   const columnHelper = createColumnHelper<any>();
   const data: any[] = [
     {
-      Sort: <strong>PC</strong>,
-      ComponentId: <Input value={'dsbdbshjdbshbd'} disabled />,
+      type: <strong>객관식</strong>,
+      levelHigh: <Input value={'0'} disabled />,
+      levelMiddle: <Input value={'0'} disabled />,
+      levelLow: <Input value={'0'} disabled />,
     },
     {
-      Sort: <strong>Mobile</strong>,
-      ComponentId: <Input value={'dsbdbshjdbshbd'} disabled />,
+      type: <strong>OX</strong>,
+      levelHigh: <Input value={'0'} disabled />,
+      levelMiddle: <Input value={'0'} disabled />,
+      levelLow: <Input value={'0'} disabled />,
+    },
+    {
+      type: <strong>다답식</strong>,
+      levelHigh: <Input value={'0'} disabled />,
+      levelMiddle: <Input value={'0'} disabled />,
+      levelLow: <Input value={'0'} disabled />,
+    },
+    {
+      type: <strong>단답식</strong>,
+      levelHigh: <Input value={'0'} disabled />,
+      levelMiddle: <Input value={'0'} disabled />,
+      levelLow: <Input value={'0'} disabled />,
+    },
+    {
+      type: <strong>주관식</strong>,
+      levelHigh: <Input value={'0'} disabled />,
+      levelMiddle: <Input value={'0'} disabled />,
+      levelLow: <Input value={'0'} disabled />,
     },
   ];
 
   const columns = [
-    columnHelper.accessor('Sort', {
+    columnHelper.accessor('type', {
       cell: (info) => info.getValue(),
-      header: '구분',
+      header: '문항유형',
       enableGrouping: false,
       size: 100,
       meta: {
@@ -49,9 +71,27 @@ const QuestionInfoComponent: FC<{}> = ({}) => {
         cellAlign: 'left', // 셀 정렬
       },
     }),
-    columnHelper.accessor('ComponentId', {
+    columnHelper.accessor('levelHigh', {
       cell: (info) => info.getValue(),
-      header: '컴포넌트 ID',
+      header: '문항수(난이도 상)',
+      enableGrouping: false,
+      meta: {
+        headerAlign: 'center', // 헤더 정렬
+        cellAlign: 'left', // 셀 정렬
+      },
+    }),
+    columnHelper.accessor('levelMiddle', {
+      cell: (info) => info.getValue(),
+      header: '문항수(난이도 중)',
+      enableGrouping: false,
+      meta: {
+        headerAlign: 'center', // 헤더 정렬
+        cellAlign: 'left', // 셀 정렬
+      },
+    }),
+    columnHelper.accessor('levelLow', {
+      cell: (info) => info.getValue(),
+      header: '문항수(난이도 하)',
       enableGrouping: false,
       meta: {
         headerAlign: 'center', // 헤더 정렬
@@ -108,7 +148,22 @@ const QuestionInfoComponent: FC<{}> = ({}) => {
         </div>
       </ContentsRow>
       <div className={styles.table_wrap}>
-        <TableBox data={data} columns={columns} tableMode={true} title={'컴포넌트 ID'} />
+        <TableBox
+          data={data}
+          columns={columns}
+          tableMode={true}
+          titleCustomNode={
+            <div className="custom_info_wrap">
+              <strong className="table_tit font-normal">{'문항현황'}</strong>
+              <strong className="table_tit font-normal">{'시험지 문항수'}</strong>
+              <span className="count_info">{'5'}</span>
+              <strong className="table_tit font-normal">{'선택 문항수'}</strong>
+              <span className="count_info point">{'5'}</span>
+              <strong className="table_tit font-normal">{'문항 당 배점'}</strong>
+              <span className="count_info">{'5'}</span>
+            </div>
+          }
+        />
       </div>
     </div>
   );
