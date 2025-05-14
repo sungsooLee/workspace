@@ -2,7 +2,7 @@ import { S3UploaderConfig, UploadFile, UploadStatus } from './types';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useUploadTask } from './use-upload-task';
 import { resumeUpload, startUpload } from './upload-manger';
-import { getRandomId } from '@learnway/shared';
+import { formatDate, getRandomId } from '@learnway/shared';
 import { formatFileSize, normalizePath, updateFile } from './utils';
 import { abortMultiPartUpload } from './api';
 const DEFAULT_MULTIPART_THRESHOLD = 10 * 1204 * 1024;
@@ -100,11 +100,14 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
       await onRemove();
     }
     const newFiles = files.map((file) => {
+      const detailPath = formatDate(new Date()).replace(/-/g, '/');
+      console.log('detailPath =>', detailPath);
       const id = getRandomId(); // 각 파일에 고유 ID 생성
       const fileName = file.name;
       const extension = fileName.split('.').pop() || ''; // 파일 확장자 추출
       const s3FileName = id + '.' + extension.toLowerCase(); // S3 파일 이름 생성
-      const key = normalizePath(s3Path) + s3FileName; // S3 KEY 경로 설정
+      const key = normalizePath(s3Path) + detailPath + '/' + s3FileName; // S3 KEY 경로 설정
+      console.log('key =>', key);
       const size = file.size;
       const uploadType = size > multipartThreshold ? 'multi-part' : 'single-part'; // 업로드 방식 결정
       return {
@@ -120,6 +123,8 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
         status: 'validating', // 업로드 대기 상태
         key,
         parts: [], // 멀티파트 정보
+        basicPath: normalizePath(s3Path),
+        detailPath: detailPath,
       };
     }) as UploadFile[];
     // files 상태에 파일 추가
