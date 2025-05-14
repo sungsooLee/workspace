@@ -1635,32 +1635,32 @@ export const guideData = [
     screenId: 'NLP_FO_CLA_MA_1026',
     screenName: 'M_강의실_학습창_이북',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: 'Pop-up',
-    completionDate: '',
+    pageId: 'ebook-m',
+    pageType: 'Page',
+    completionDate: '2025-05-14',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- ebook-m.tsx',
   },
   {
     screenId: 'NLP_FO_CLA_MA_1045',
     screenName: 'M_강의실_학습창_파일',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: 'Pop-up',
-    completionDate: '',
+    pageId: 'file-m',
+    pageType: 'Page',
+    completionDate: '2025-05-14',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- file-m.tsx',
   },
 
   {
     screenId: 'NLP_FO_CLA_MA_1027',
     screenName: 'M_강의실_학습창_웹_갤러리',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: 'Pop-up',
-    completionDate: '',
+    pageId: 'gallery-m',
+    pageType: 'Page',
+    completionDate: '2025-05-14',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- gallery-m.tsx',
   },
 
   {

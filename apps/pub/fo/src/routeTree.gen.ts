@@ -19,8 +19,11 @@ import { Route as LayoutIndexImport } from './pages/_layout/index'
 import { Route as LearningVideoMImport } from './pages/_learning/video-m'
 import { Route as LearningVideoImport } from './pages/_learning/video'
 import { Route as LearningHtmlImport } from './pages/_learning/html'
+import { Route as LearningGalleryMImport } from './pages/_learning/gallery-m'
 import { Route as LearningGalleryImport } from './pages/_learning/gallery'
+import { Route as LearningFileMImport } from './pages/_learning/file-m'
 import { Route as LearningFileImport } from './pages/_learning/file'
+import { Route as LearningEbookMImport } from './pages/_learning/ebook-m'
 import { Route as LearningEbookImport } from './pages/_learning/ebook'
 import { Route as LearningBlogImport } from './pages/_learning/blog'
 import { Route as AuthSuccessImport } from './pages/_auth/success'
@@ -160,15 +163,33 @@ const LearningHtmlRoute = LearningHtmlImport.update({
   getParentRoute: () => LearningRoute,
 } as any)
 
+const LearningGalleryMRoute = LearningGalleryMImport.update({
+  id: '/gallery-m',
+  path: '/gallery-m',
+  getParentRoute: () => LearningRoute,
+} as any)
+
 const LearningGalleryRoute = LearningGalleryImport.update({
   id: '/gallery',
   path: '/gallery',
   getParentRoute: () => LearningRoute,
 } as any)
 
+const LearningFileMRoute = LearningFileMImport.update({
+  id: '/file-m',
+  path: '/file-m',
+  getParentRoute: () => LearningRoute,
+} as any)
+
 const LearningFileRoute = LearningFileImport.update({
   id: '/file',
   path: '/file',
+  getParentRoute: () => LearningRoute,
+} as any)
+
+const LearningEbookMRoute = LearningEbookMImport.update({
+  id: '/ebook-m',
+  path: '/ebook-m',
   getParentRoute: () => LearningRoute,
 } as any)
 
@@ -936,6 +957,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearningEbookImport
       parentRoute: typeof LearningImport
     }
+    '/_learning/ebook-m': {
+      id: '/_learning/ebook-m'
+      path: '/ebook-m'
+      fullPath: '/ebook-m'
+      preLoaderRoute: typeof LearningEbookMImport
+      parentRoute: typeof LearningImport
+    }
     '/_learning/file': {
       id: '/_learning/file'
       path: '/file'
@@ -943,11 +971,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearningFileImport
       parentRoute: typeof LearningImport
     }
+    '/_learning/file-m': {
+      id: '/_learning/file-m'
+      path: '/file-m'
+      fullPath: '/file-m'
+      preLoaderRoute: typeof LearningFileMImport
+      parentRoute: typeof LearningImport
+    }
     '/_learning/gallery': {
       id: '/_learning/gallery'
       path: '/gallery'
       fullPath: '/gallery'
       preLoaderRoute: typeof LearningGalleryImport
+      parentRoute: typeof LearningImport
+    }
+    '/_learning/gallery-m': {
+      id: '/_learning/gallery-m'
+      path: '/gallery-m'
+      fullPath: '/gallery-m'
+      preLoaderRoute: typeof LearningGalleryMImport
       parentRoute: typeof LearningImport
     }
     '/_learning/html': {
@@ -1685,8 +1727,11 @@ const LayoutRouteWithChildren =
 interface LearningRouteChildren {
   LearningBlogRoute: typeof LearningBlogRoute
   LearningEbookRoute: typeof LearningEbookRoute
+  LearningEbookMRoute: typeof LearningEbookMRoute
   LearningFileRoute: typeof LearningFileRoute
+  LearningFileMRoute: typeof LearningFileMRoute
   LearningGalleryRoute: typeof LearningGalleryRoute
+  LearningGalleryMRoute: typeof LearningGalleryMRoute
   LearningHtmlRoute: typeof LearningHtmlRoute
   LearningVideoRoute: typeof LearningVideoRoute
   LearningVideoMRoute: typeof LearningVideoMRoute
@@ -1695,8 +1740,11 @@ interface LearningRouteChildren {
 const LearningRouteChildren: LearningRouteChildren = {
   LearningBlogRoute: LearningBlogRoute,
   LearningEbookRoute: LearningEbookRoute,
+  LearningEbookMRoute: LearningEbookMRoute,
   LearningFileRoute: LearningFileRoute,
+  LearningFileMRoute: LearningFileMRoute,
   LearningGalleryRoute: LearningGalleryRoute,
+  LearningGalleryMRoute: LearningGalleryMRoute,
   LearningHtmlRoute: LearningHtmlRoute,
   LearningVideoRoute: LearningVideoRoute,
   LearningVideoMRoute: LearningVideoMRoute,
@@ -1731,8 +1779,11 @@ export interface FileRoutesByFullPath {
   '/success': typeof AuthSuccessRoute
   '/blog': typeof LearningBlogRoute
   '/ebook': typeof LearningEbookRoute
+  '/ebook-m': typeof LearningEbookMRoute
   '/file': typeof LearningFileRoute
+  '/file-m': typeof LearningFileMRoute
   '/gallery': typeof LearningGalleryRoute
+  '/gallery-m': typeof LearningGalleryMRoute
   '/html': typeof LearningHtmlRoute
   '/video': typeof LearningVideoRoute
   '/video-m': typeof LearningVideoMRoute
@@ -1833,8 +1884,11 @@ export interface FileRoutesByTo {
   '/success': typeof AuthSuccessRoute
   '/blog': typeof LearningBlogRoute
   '/ebook': typeof LearningEbookRoute
+  '/ebook-m': typeof LearningEbookMRoute
   '/file': typeof LearningFileRoute
+  '/file-m': typeof LearningFileMRoute
   '/gallery': typeof LearningGalleryRoute
+  '/gallery-m': typeof LearningGalleryMRoute
   '/html': typeof LearningHtmlRoute
   '/video': typeof LearningVideoRoute
   '/video-m': typeof LearningVideoMRoute
@@ -1939,8 +1993,11 @@ export interface FileRoutesById {
   '/_auth/success': typeof AuthSuccessRoute
   '/_learning/blog': typeof LearningBlogRoute
   '/_learning/ebook': typeof LearningEbookRoute
+  '/_learning/ebook-m': typeof LearningEbookMRoute
   '/_learning/file': typeof LearningFileRoute
+  '/_learning/file-m': typeof LearningFileMRoute
   '/_learning/gallery': typeof LearningGalleryRoute
+  '/_learning/gallery-m': typeof LearningGalleryMRoute
   '/_learning/html': typeof LearningHtmlRoute
   '/_learning/video': typeof LearningVideoRoute
   '/_learning/video-m': typeof LearningVideoMRoute
@@ -2043,8 +2100,11 @@ export interface FileRouteTypes {
     | '/success'
     | '/blog'
     | '/ebook'
+    | '/ebook-m'
     | '/file'
+    | '/file-m'
     | '/gallery'
+    | '/gallery-m'
     | '/html'
     | '/video'
     | '/video-m'
@@ -2144,8 +2204,11 @@ export interface FileRouteTypes {
     | '/success'
     | '/blog'
     | '/ebook'
+    | '/ebook-m'
     | '/file'
+    | '/file-m'
     | '/gallery'
+    | '/gallery-m'
     | '/html'
     | '/video'
     | '/video-m'
@@ -2248,8 +2311,11 @@ export interface FileRouteTypes {
     | '/_auth/success'
     | '/_learning/blog'
     | '/_learning/ebook'
+    | '/_learning/ebook-m'
     | '/_learning/file'
+    | '/_learning/file-m'
     | '/_learning/gallery'
+    | '/_learning/gallery-m'
     | '/_learning/html'
     | '/_learning/video'
     | '/_learning/video-m'
@@ -2467,8 +2533,11 @@ export const routeTree = rootRoute
       "children": [
         "/_learning/blog",
         "/_learning/ebook",
+        "/_learning/ebook-m",
         "/_learning/file",
+        "/_learning/file-m",
         "/_learning/gallery",
+        "/_learning/gallery-m",
         "/_learning/html",
         "/_learning/video",
         "/_learning/video-m"
@@ -2566,12 +2635,24 @@ export const routeTree = rootRoute
       "filePath": "_learning/ebook.tsx",
       "parent": "/_learning"
     },
+    "/_learning/ebook-m": {
+      "filePath": "_learning/ebook-m.tsx",
+      "parent": "/_learning"
+    },
     "/_learning/file": {
       "filePath": "_learning/file.tsx",
       "parent": "/_learning"
     },
+    "/_learning/file-m": {
+      "filePath": "_learning/file-m.tsx",
+      "parent": "/_learning"
+    },
     "/_learning/gallery": {
       "filePath": "_learning/gallery.tsx",
+      "parent": "/_learning"
+    },
+    "/_learning/gallery-m": {
+      "filePath": "_learning/gallery-m.tsx",
       "parent": "/_learning"
     },
     "/_learning/html": {
