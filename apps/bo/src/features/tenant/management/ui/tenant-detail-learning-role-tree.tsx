@@ -249,7 +249,7 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
                   <DynamicFormField name={'tenantScope'} disabled={formMode === EnFormMode.NONE} />
                 </FormRow>
               </ContentsRow>
-              <ContentsRow className={'no_line'}>
+              <ContentsRow>
                 <FormRow provider={provider}>
                   <DynamicFormField name={'companyScope'} disabled={formMode === EnFormMode.NONE} />
                 </FormRow>
@@ -258,7 +258,7 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
                 provider={provider}
                 dependencies={[{ name: 'companyScope', value: EnCompanyScope.MANUAL }]}
               >
-                <ContentsRow className={'no_line'}>
+                <div className="chiplist_modal_wrap">
                   <FormRow provider={provider}>
                     <DynamicFormField name={'companyIds'}>
                       <ChipListModalSelectorFormField
@@ -275,7 +275,7 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
                       />
                     </DynamicFormField>
                   </FormRow>
-                </ContentsRow>
+                </div>
               </FormDisplay>
               <ContentsRow>
                 <FormRow provider={provider}>
@@ -286,7 +286,7 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
                 provider={provider}
                 dependencies={[{ name: 'channelScope', value: EnChannelScope.MANUAL }]}
               >
-                <ContentsRow className={'no_line'}>
+                <div className="chiplist_modal_wrap">
                   <FormRow provider={provider}>
                     <DynamicFormField name={'channelIds'}>
                       <ChipListModalSelectorFormField
@@ -303,7 +303,7 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
                       />
                     </DynamicFormField>
                   </FormRow>
-                </ContentsRow>
+                </div>
               </FormDisplay>
               <ContentsRow>
                 <FormRow provider={provider}>
@@ -317,7 +317,7 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
                 provider={provider}
                 dependencies={[{ name: 'deptScope', value: EnDeptScope.MANUAL }]}
               >
-                <ContentsRow className={'no_line'}>
+                <div className="chiplist_modal_wrap">
                   <FormRow provider={provider}>
                     <DynamicFormField name={'deptIds'}>
                       <ChipListModalSelectorFormField
@@ -334,7 +334,7 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
                       />
                     </DynamicFormField>
                   </FormRow>
-                </ContentsRow>
+                </div>
               </FormDisplay>
               <ContentsRow type={'horizontal'}>
                 <FormRow provider={provider}>
