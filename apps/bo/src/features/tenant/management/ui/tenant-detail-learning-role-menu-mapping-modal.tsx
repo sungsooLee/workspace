@@ -17,8 +17,6 @@ import { IcoNarrowRight } from '@learnway/icons';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import popContentsStyles from './pop-contents-layout.module.css';
-import { transformMenuApiDataToTreeData } from '@features/tenant/management/service/tenant-detail-tree.service';
-import { useMenuManageFetchTree } from '@entities/menu/service/menu-manage.hook';
 import {
   useFetchMenuTenantMappingTree,
   useCreateMenuTenant,
@@ -30,46 +28,37 @@ import {
   getFirstExpandKeys,
   getAllTreeKeys,
   moveNodeCheck,
+  transformRoleMenuApiDataToTreeData,
+  transformMenuApiDataToTreeData,
 } from '../service/tenant-detail-tree.service';
 
-const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantId }) => {
-  const [baseMenuTreeData, setBaseMenuTreeData] = useState([]);
-  const [baseMenuTreeExpandedKeys, setBaseMenuTreeExpandedKeys] = useState<string[]>([]);
-  const [baseMenuAllKeys, setBaseMenuAllKeys] = useState<string[]>([]);
-  const [menuTreeData, setMenuTreeData] = useState([]);
-  const [menuTreeExpandedKeys, setMenuTreeExpandedKeys] = useState<string[]>([]);
-  const [menuTreeAllKeys, setMenuTreeAllKeys] = useState<string[]>([]);
+const TenantDetailLearningRoleMenuMappingModalComponent: FC<any> = ({
+  siteScope,
+  tenantId,
+  roleId,
+}) => {
+  const [tenantMenuTree, setTenantMenuTree] = useState([]);
+  const [tenantMenuTreeExpandedKeys, setTenantMenuTreeExpandedKeys] = useState<string[]>([]);
+  const [tenantMenuTreeAllKeys, setTenantMenuTreeAllKeys] = useState<string[]>([]);
+
+  const [roleMenuTree, setRoleMenuTree] = useState([]);
+  const [roleMenuTreeExpandedKeys, setRoleMenuTreeExpandedKeys] = useState<string[]>([]);
+  const [roleMenuTreeAllKeys, setRoleMenuTreeAllKeys] = useState<string[]>([]);
 
   const { open: openModal, confirm: openConfirm, close: closeModal } = useModal();
 
-  const { data: baseMenuDB } = useMenuManageFetchTree(menuScopeCode, 'ko');
+  const { data: tenantMenuData } = useFetchMenuTenantMappingTree(tenantId, siteScope);
 
-  const { data: menuDB, refetch } = useFetchMenuTenantMappingTree(tenantId, menuScopeCode);
+  const roleMenuData = {};
 
-  const { create: tentantMenuCreate } = useCreateMenuTenant(tenantId, menuScopeCode, {
-    onSuccess: () => {
-      refetch();
-    },
-  });
-  const { change: changeMenuPosition } = useChangeMenuTenentDnd(tenantId, menuScopeCode, {
-    onSuccess: () => {
-      refetch();
-    },
-  });
-  const { delete: deleteMenuTenent } = useDeleteMenuTenent(tenantId, menuScopeCode, {
-    onSuccess: () => {
-      refetch();
-    },
-  });
-
-  const handleBaseMenuTreeExpandChange = (keys: string[]) => {
+  const handleTenantMenuTreeExpandChange = (keys: string[]) => {
     if (keys && keys.length > 0) {
-      setBaseMenuTreeExpandedKeys(keys);
+      setTenantMenuTreeExpandedKeys(keys);
     }
   };
-  const handleMenuTreeExpandChange = (keys: string[]) => {
+  const handleRoleMenuTreeExpandChange = (keys: string[]) => {
     if (keys && keys.length > 0) {
-      setMenuTreeExpandedKeys(keys);
+      setRoleMenuTreeExpandedKeys(keys);
     }
   };
 
@@ -79,17 +68,17 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
         console.log(event);
         if (event.sourceTreeId === 'mapping-menu-tree') {
           const sourceMenuId = event.sourceNode.key;
-          if (menuTreeAllKeys.includes(sourceMenuId)) {
+          if (roleMenuTreeAllKeys.includes(sourceMenuId)) {
             alert('이미 있음');
             return false;
           }
-          const allPostMenus = getAllParentAndAllChildById(baseMenuTreeData, sourceMenuId);
+          const allPostMenus = getAllParentAndAllChildById(roleMenuTree, sourceMenuId);
           const contents = [];
           for (const item of allPostMenus) {
-            if (!menuTreeAllKeys.includes(item.key)) {
+            if (!roleMenuTreeAllKeys.includes(item.key)) {
               const reqMenu: any = JSON.parse(JSON.stringify(item));
               reqMenu.tenantId = tenantId;
-              reqMenu.menuScope = menuScopeCode;
+              reqMenu.menuScope = siteScope;
               reqMenu.parentMenuId = item.parentId;
               contents.push(reqMenu);
             }
@@ -97,40 +86,13 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
 
           const payload = { tenantId: tenantId, contents: [...contents] };
           console.log(payload);
-          tentantMenuCreate(payload);
+          // tentantMenuCreate(payload);
         }
         break;
-      case 'NODE_MOVE':
-        if (event.treeId === 'mapping-tenant-menu-tree') {
-          const payload = moveNodeCheck(event);
-          if (payload) {
-            payload.menuScopeCode = menuScopeCode;
-            changeMenuPosition(payload);
-          }
-        }
 
-        break;
       default:
         break;
-      //     onNodeClick(event.node);
-      //     break;
-      //   case 'NODE_MOVE': {
-      //     const nodeInfo = event;
-      //     if (nodeInfo.position === 'INSIDE') {
-      //       onNodeMove(
-      //         nodeInfo.sourceNode.menuId,
-      //         nodeInfo.targetNode?.menuId,
-      //         nodeInfo.targetIndex ? nodeInfo.targetIndex : 1,
-      //       );
-      //     } else {
-      //       const targetIndex = nodeInfo.targetIndex || 1;
-      //       onNodeMove(nodeInfo.sourceNode.menuId, nodeInfo.targetNode?.parentKey, targetIndex);
-      //     }
-
-      //     break;
     }
-
-    // useCreateMenuTenant(payload.sourceNode, {});
   };
 
   const handleDeleteButtonClick = (node: TreeNode, level: number) => {
@@ -145,11 +107,13 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
       onClose: (value: boolean) => {
         if (value) {
           const payload = { ...node };
-          if (menuTreeExpandedKeys.includes(node.key)) {
-            const expandedKeys = [...menuTreeExpandedKeys.filter((value) => value !== node.key)];
-            setMenuTreeExpandedKeys(expandedKeys);
+          if (tenantMenuTreeExpandedKeys.includes(node.key)) {
+            const expandedKeys = [
+              ...tenantMenuTreeExpandedKeys.filter((value) => value !== node.key),
+            ];
+            setRoleMenuTreeExpandedKeys(expandedKeys);
           }
-          deleteMenuTenent(payload);
+          //deleteMenuTenent(payload);
         }
       },
     });
@@ -176,39 +140,37 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
     </div>
   );
 
-  useEffect(() => {
-    if (baseMenuDB) {
-      console.log(baseMenuDB);
-      const transformedData = transformMenuApiDataToTreeData(baseMenuDB);
-      setBaseMenuTreeData(transformedData);
-      if (transformedData && transformedData.length > 0) {
-        const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
-        setBaseMenuTreeExpandedKeys(firstLevelKeys);
-        const allKeys = getAllTreeKeys(transformedData);
-        setBaseMenuAllKeys(allKeys);
-      }
-    }
-  }, [baseMenuDB]);
+  // useEffect(() => {
+  //   if (roleMenuData) {
+  //     console.log(roleMenuData);
+  //     const transformedData = transformRoleMenuApiDataToTreeData(roleMenuData);
+  //     setRoleMenuTree(transformedData);
+  //     if (transformedData && transformedData.length > 0) {
+  //       const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
+  //       setRoleMenuTreeExpandedKeys(firstLevelKeys);
+  //       const allKeys = getAllTreeKeys(transformedData);
+  //       setRoleMenuTreeAllKeys(allKeys);
+  //     }
+  //   }
+  // }, [roleMenuData]);
 
   useEffect(() => {
-    if (menuDB) {
-      const transformedData = transformMenuApiDataToTreeData(menuDB);
+    if (tenantMenuData) {
+      const transformedData = transformMenuApiDataToTreeData(tenantMenuData);
       console.log(transformedData);
-      setMenuTreeData(transformedData);
-      if (transformedData && transformedData.length > 0 && menuTreeExpandedKeys.length == 0) {
+      setTenantMenuTree(transformedData);
+      if (transformedData && transformedData.length > 0 && tenantMenuTreeExpandedKeys.length == 0) {
         const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
-        setMenuTreeExpandedKeys(firstLevelKeys);
+        setTenantMenuTreeExpandedKeys(firstLevelKeys);
       }
       const allKeys = getAllTreeKeys(transformedData);
-      setMenuTreeAllKeys(allKeys);
+      setTenantMenuTreeAllKeys(allKeys);
     }
-  }, [menuDB]);
+  }, [tenantMenuData]);
 
   return (
     <ModalContainer>
-      <ModalTitle>
-        {menuScopeCode === 'FO' ? t('학습자 메뉴추가') : t('HRD센터 메뉴추가')}
-      </ModalTitle>
+      <ModalTitle>{t('메뉴선택')}</ModalTitle>
       <ModalBody>
         <TreeContainer>
           <div className={cn(popContentsStyles.start, popContentsStyles.wrap)}>
@@ -217,9 +179,9 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
                 {/* 시작 */}
                 <div className={titleStyles.title_wrap}>
                   <div className={titleStyles.title_area}>
-                    <h3 className={titleStyles.title}>{t('메뉴매핑 목록')}</h3>
-                    <strong className={titleStyles.sub_title}>전체</strong>
-                    <span className={titleStyles.num}>{baseMenuAllKeys?.length - 1}</span>
+                    <h3 className={titleStyles.title}>{t('메뉴 목록')}</h3>
+                    <strong className={titleStyles.sub_title}>{t('전체')}</strong>
+                    <span className={titleStyles.num}>{tenantMenuTreeAllKeys?.length - 1}</span>
                   </div>
                   <div className={layoutStyles.btn_wrap}>
                     <Button
@@ -227,9 +189,9 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
                       size="sm"
                       className={layoutStyles.btn_text}
                       onClick={() => {
-                        if (baseMenuTreeData) {
-                          const allKeys = getAllTreeKeys(baseMenuTreeData);
-                          handleBaseMenuTreeExpandChange(allKeys);
+                        if (roleMenuTree) {
+                          const allKeys = getAllTreeKeys(roleMenuTree);
+                          handleTenantMenuTreeExpandChange(allKeys);
                         }
                       }}
                     >
@@ -240,8 +202,8 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
                       size="sm"
                       className={layoutStyles.btn_text}
                       onClick={() => {
-                        const firstKeys = getFirstExpandKeys(menuTreeData);
-                        handleBaseMenuTreeExpandChange(firstKeys || []);
+                        const firstKeys = getFirstExpandKeys(tenantMenuTree);
+                        handleTenantMenuTreeExpandChange(firstKeys || []);
                       }}
                     >
                       {t('전체닫기')}
@@ -252,11 +214,11 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
                   <TreeView
                     treeId="mapping-menu-tree"
                     type={'DRAG_DROP'}
-                    data={baseMenuTreeData}
+                    data={tenantMenuTree}
                     // nodeButtons={renderBaseSelectButtons}
                     // selectedNode={selectedNode}
-                    expandedKeys={baseMenuTreeExpandedKeys}
-                    onExpandedKeysChange={handleBaseMenuTreeExpandChange}
+                    expandedKeys={tenantMenuTreeExpandedKeys}
+                    onExpandedKeysChange={handleTenantMenuTreeExpandChange}
                     //onSelectedNodeChange={handleSelectedNodeChange}
                   />
                 </div>
@@ -279,7 +241,7 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
                   <div className={titleStyles.title_area}>
                     <h3 className={titleStyles.title}>{t('메뉴매핑 선택')}</h3>
                     <strong className={titleStyles.sub_title}>{t('전체')}</strong>
-                    <span className={titleStyles.num}>{menuTreeAllKeys?.length - 1}</span>
+                    <span className={titleStyles.num}>{roleMenuTreeAllKeys?.length - 1}</span>
                   </div>
                   <div className={layoutStyles.btn_wrap}>
                     <Button
@@ -287,9 +249,9 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
                       size="sm"
                       className={layoutStyles.btn_text}
                       onClick={() => {
-                        if (menuTreeData) {
-                          const allKeys = getAllTreeKeys(menuTreeData);
-                          handleMenuTreeExpandChange(allKeys);
+                        if (tenantMenuTree) {
+                          const allKeys = getAllTreeKeys(tenantMenuTree);
+                          handleRoleMenuTreeExpandChange(allKeys);
                         }
                       }}
                     >
@@ -300,8 +262,8 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
                       size="sm"
                       className={layoutStyles.btn_text}
                       onClick={() => {
-                        const firstKeys = getFirstExpandKeys(menuTreeData);
-                        handleMenuTreeExpandChange(firstKeys || []);
+                        const firstKeys = getFirstExpandKeys(tenantMenuTree);
+                        handleRoleMenuTreeExpandChange(firstKeys || []);
                       }}
                     >
                       {t('전체닫기')}
@@ -312,11 +274,11 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
                   <TreeView
                     treeId="mapping-tenant-menu-tree"
                     type={'SAME_LEVEL_ONLY'}
-                    data={menuTreeData}
+                    data={roleMenuTree}
                     nodeButtons={renderMenuDeleteButtons}
                     onAction={handleTargetAction}
-                    expandedKeys={menuTreeExpandedKeys}
-                    onExpandedKeysChange={handleMenuTreeExpandChange}
+                    expandedKeys={roleMenuTreeExpandedKeys}
+                    onExpandedKeysChange={handleRoleMenuTreeExpandChange}
                     // onSelectedNodeChange={handleSelectedNodeChange}
                   />
                 </div>
@@ -335,4 +297,5 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
   );
 };
 
-export const TenantDetailMenuMappingModal = TenantDetailMenuMappingModalComponent;
+export const TenantDetailLearningRoleMenuMappingModal =
+  TenantDetailLearningRoleMenuMappingModalComponent;

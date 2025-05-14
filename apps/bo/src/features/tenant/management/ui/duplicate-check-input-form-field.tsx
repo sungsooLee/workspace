@@ -44,7 +44,6 @@ export const DuplicateCheckInputFormField = forwardRef<
       name,
       onChange,
       onDuplicationCheck,
-      setFormError,
       maxLength,
       dupConfig = {
         langCode: {
@@ -68,6 +67,9 @@ export const DuplicateCheckInputFormField = forwardRef<
         editionValue.checkState === DuplicateState.ok ||
         editionValue.checkState === DuplicateState.okStart
       ) {
+        if (control.getFieldState(name).error?.message) {
+          control.setError(name, {});
+        }
         onChangeGuideText(
           <span style={{ color: 'red' }}>{t(dupConfig.langCode.reCheck, { code: label })}</span>,
         );
@@ -88,6 +90,9 @@ export const DuplicateCheckInputFormField = forwardRef<
           .then((state) => {
             switch (state) {
               case DuplicateState.ok:
+                if (control.getFieldState(name).error?.message) {
+                  control.setError(name, {});
+                }
                 onChangeGuideText(
                   <span style={{ color: 'blue' }}>
                     {t(dupConfig.langCode.ok, { code: label })}

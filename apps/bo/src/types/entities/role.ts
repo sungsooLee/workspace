@@ -2,7 +2,8 @@
  * 역할 정보
  */
 export interface Role {
-  roleUuid?: string;
+  roleId?: string;
+  roleCode?: string;
   roleName: string;
   roleDesc?: string;
   parentRoleUuid?: string;
