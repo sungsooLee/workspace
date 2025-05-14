@@ -2,14 +2,16 @@ import type { UseMutationResult, UseQueryResult } from '@tanstack/react-query';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { mutateOptions, queryOptions } from './course.queries';
-import { Course, CourseQueryParams, MutationHookOptions } from '../../../types';
+import { Course, CourseQueryParams, MutationHookOptions, PaginationResponse } from '../../../types';
 import { useModal } from '@learnway/ui';
 
 /**
  * 모든 코스 목록을 가져오는 쿼리 훅.
  * @param params - 코스 목록 조회 쿼리 파라미터.
  */
-export function useFetchCourses(params: CourseQueryParams): UseQueryResult<Course[], Error> {
+export function useFetchCourses(
+  params: CourseQueryParams,
+): UseQueryResult<PaginationResponse<Course[]>, Error> {
   return useQuery(queryOptions.all(params));
 }
 

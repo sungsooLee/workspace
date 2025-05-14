@@ -1,6 +1,11 @@
 import { useMutation, UseMutationResult, useQuery, UseQueryResult } from '@tanstack/react-query';
 import { mutateOptions, queryOptions } from './label-messages.queries';
-import { LabelMessage, LabelMessagesQueryParams, MutationHookOptions } from '@types';
+import {
+  LabelMessage,
+  LabelMessagesQueryParams,
+  MutationHookOptions,
+  PaginationResponse,
+} from '@types';
 import { useModal } from '@learnway/ui';
 
 /**
@@ -11,7 +16,7 @@ import { useModal } from '@learnway/ui';
  */
 export const useFetchLabelMessages = (
   queryParam?: LabelMessagesQueryParams,
-): UseQueryResult<LabelMessage[], Error> => {
+): UseQueryResult<PaginationResponse<LabelMessage[]>, Error> => {
   return useQuery(queryOptions.all(queryParam));
 };
 
