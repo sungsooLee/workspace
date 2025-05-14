@@ -18,4 +18,38 @@
       }
     }
   }
+  .tab_select {
+    @apply max-w-[360px];
+  }
+  .table_wrap {
+    .info_table {
+      table thead tr th:first-child {
+        @apply w-[270px];
+      }
+    }
+    .list_table {
+      table {
+        thead tr th {
+          &:nth-child(1),
+          &:nth-child(2) {
+            @apply w-[64px] px-0 !text-center;
+          }
+          &:nth-last-child(1),
+          &:nth-last-child(3),
+          &:nth-last-child(4) {
+            @apply w-[104px];
+          }
+        }
+        tbody tr td {
+          &:nth-child(1),
+          &:nth-child(2) {
+            @apply px-0;
+          }
+        }
+      }
+    }
+    & > div + div {
+      @apply mt-[32px];
+    }
+  }
 }

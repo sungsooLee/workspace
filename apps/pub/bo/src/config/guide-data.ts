@@ -73,6 +73,15 @@ export const guideData = [
     remarks: '트리는 화면 영역 확인용', // 비고
   },
   {
+    screenName: '공통/GNB_프로필_나의정보',
+    pageId: 'common/profile-myinfo',
+    screenId: 'NLP_BO_COM_1002',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
     screenName: '로그인',
     pageId: 'login',
     screenId: 'NLP_BO_LOG_1000',
@@ -681,9 +690,18 @@ export const guideData = [
     pageId: 'learning/testDetail',
     screenId: 'NLP_BO_CMS_1203',
     pageType: 'Page',
+    completionDate: '2025-05-14',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
+    screenName: 'CMS/시험관리_문항상세',
+    pageId: 'learning/popup-question-detail',
+    screenId: 'NLP_BO_CMS_1215',
+    pageType: 'Pop-up',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '진행중', // 비고
+    remarks: '', // 비고
   },
   // {
   //   screenName: 'CMS/시험관리',

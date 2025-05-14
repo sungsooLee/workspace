@@ -24,6 +24,9 @@
         & + button {
           @apply mt-[24px];
         }
+        &:disabled {
+          @apply opacity-50;
+        }
       }
     }
     .control {
@@ -61,7 +64,7 @@
           }
         }
         .control {
-          @apply mt-[8px] flex w-full items-start rounded-none pb-[16px] pt-[8px] shadow-none;
+          @apply mt-0 flex w-full items-start rounded-none pb-[16px] pt-[16px] shadow-none;
           button {
             @apply m-0 h-[48px] flex-1 flex-row items-center justify-center rounded-[8px] border-[1px] border-solid border-[var(--gray6)];
             span {

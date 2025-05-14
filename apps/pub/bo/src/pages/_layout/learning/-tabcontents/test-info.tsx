@@ -30,7 +30,7 @@ import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-content
 import popSearchStyles from '@learnway/styles/bo/assets/styles/modules/popup-search.module.css';
 
 /* images */
-import mediaImg from '../../../../assets/images/temp/img_temp_media.jpg';
+import previewImg from '../../../../assets/images/temp/img_exam_basic.jpg';
 
 const TestInfoComponent: FC<{}> = ({}) => {
   const { close: closeModal } = useModal();
@@ -287,7 +287,7 @@ const TestInfoComponent: FC<{}> = ({}) => {
       />
       <div className={styles.row_wrap}>
         <div className={styles.main_container}>
-          <FormSubTitle label={' 기본 정보'} />
+          <FormSubTitle label={'기본 정보'} />
           <ContentsRow>
             {/* form_item */}
             <div className={formStyles.form_item}>
@@ -298,13 +298,11 @@ const TestInfoComponent: FC<{}> = ({}) => {
                   <IcoFormRequired width={12} height={12} />
                 </span>
               </label>
-              {/* 퍼블수정 20240317 : Modal 수정 S  */}
               <div className={formStyles.input_box}>
                 <div className={dynamicFormStyles.segment_wrap}>
                   <Tabs items={items} type="segment" size="sm" selectedTabKey={'option01'} />
                 </div>
               </div>
-              {/* 퍼블수정 20240317 : Modal 수정 E  */}
             </div>
           </ContentsRow>
           <ContentsRow>
@@ -426,9 +424,9 @@ const TestInfoComponent: FC<{}> = ({}) => {
               </li>
             ))}
           </ul>
-          {/* media(비디오 영역) */}
+          {/* 이미지 영역 */}
           <div className={movieInfoStyles.media}>
-            <img src={mediaImg} width="100%" alt="" />
+            <img src={previewImg} width="100%" alt="" />
           </div>
         </div>
       </div>
