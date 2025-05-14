@@ -1,6 +1,5 @@
 import CourseService from '../api/course';
 import { Course, CourseQueryParams, LabelMessage, PaginationResponse } from '../../../types';
-import LabelMessagesService from '@entities/label-messages/api/label-messages';
 
 export const queryKeys = {
   all: ['courses'] as const,
