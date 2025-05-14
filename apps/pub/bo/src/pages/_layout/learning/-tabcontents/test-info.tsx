@@ -298,13 +298,11 @@ const TestInfoComponent: FC<{}> = ({}) => {
                   <IcoFormRequired width={12} height={12} />
                 </span>
               </label>
-              {/* 퍼블수정 20240317 : Modal 수정 S  */}
               <div className={formStyles.input_box}>
                 <div className={dynamicFormStyles.segment_wrap}>
                   <Tabs items={items} type="segment" size="sm" selectedTabKey={'option01'} />
                 </div>
               </div>
-              {/* 퍼블수정 20240317 : Modal 수정 E  */}
             </div>
           </ContentsRow>
           <ContentsRow>
