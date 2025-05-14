@@ -1,6 +1,13 @@
 import React, { FC, useEffect, useState } from 'react';
 import { cn } from '@learnway/shared';
-import { Button, ContentsRow, DynamicFormField, TreeBox, TreeNode } from '@learnway/ui';
+import {
+  Button,
+  ContentsRow,
+  DynamicFormField,
+  TreeBox,
+  TreeNode,
+  ChipListModalSelectorFormField,
+} from '@learnway/ui';
 import { t } from 'i18next';
 import { useRouterState } from '@tanstack/react-router';
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
@@ -20,7 +27,9 @@ import {
   moveNodeCheck,
   transformRoleApiDataToTreeData,
 } from '../service/tenant-detail-tree.service';
+import { FormDisplay } from '@features/form/ui/form-display';
 import { EnFormMode, EnTenantScope, EnCompanyScope, EnChannelScope, EnDeptScope } from '@types';
+import { CompanyModal } from './company-modal';
 
 //type fo , bo
 const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
@@ -240,80 +249,93 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
                   <DynamicFormField name={'tenantScope'} disabled={formMode === EnFormMode.NONE} />
                 </FormRow>
               </ContentsRow>
-              <ContentsRow>
+              <ContentsRow className={'no_line'}>
                 <FormRow provider={provider}>
-                  <DynamicFormField name={'companyScope'} disabled={formMode === EnFormMode.NONE}>
-                    <ScopeRadioGroup
-                      options={[
-                        {
-                          value: EnCompanyScope.ALL,
-                          label: t('모든 회사'),
-                        },
-                        {
-                          value: EnCompanyScope.CURRENT_COMPANY,
-                          label: t('소속 회사'),
-                        },
-                        {
-                          value: EnCompanyScope.MANUAL,
-                          label: t('직접 선택'),
-                        },
-                      ]}
-                    />
-                  </DynamicFormField>
+                  <DynamicFormField name={'companyScope'} disabled={formMode === EnFormMode.NONE} />
                 </FormRow>
               </ContentsRow>
+              <FormDisplay
+                provider={provider}
+                dependencies={[{ name: 'companyScope', value: EnCompanyScope.MANUAL }]}
+              >
+                <ContentsRow className={'no_line'}>
+                  <FormRow provider={provider}>
+                    <DynamicFormField name={'companyIds'}>
+                      <ChipListModalSelectorFormField
+                        chipList={{
+                          labelField: 'name',
+                          valueField: 'value',
+                          hideBorder: true,
+                        }}
+                        modalConfig={{
+                          title: '',
+                          width: 'xl',
+                          content: <CompanyModal />,
+                        }}
+                      />
+                    </DynamicFormField>
+                  </FormRow>
+                </ContentsRow>
+              </FormDisplay>
               <ContentsRow>
                 <FormRow provider={provider}>
-                  <DynamicFormField name={'channelScope'} disabled={formMode === EnFormMode.NONE}>
-                    <ScopeRadioGroup
-                      options={[
-                        {
-                          value: EnChannelScope.ALL,
-                          label: t('모든 채널'),
-                        },
-                        {
-                          value: EnChannelScope.CURRENT_COMPANY,
-                          label: t('소속 채널'),
-                        },
-                        {
-                          value: EnChannelScope.CURRENT_COMPANY_INCLUSIVE,
-                          label: t('소속 채널(하위 채널 포함)'),
-                        },
-                        {
-                          value: EnChannelScope.MANUAL,
-                          label: t('직접 선택'),
-                        },
-                      ]}
-                    />
-                  </DynamicFormField>
+                  <DynamicFormField name={'channelScope'} disabled={formMode === EnFormMode.NONE} />
                 </FormRow>
               </ContentsRow>
+              <FormDisplay
+                provider={provider}
+                dependencies={[{ name: 'channelScope', value: EnChannelScope.MANUAL }]}
+              >
+                <ContentsRow className={'no_line'}>
+                  <FormRow provider={provider}>
+                    <DynamicFormField name={'channelIds'}>
+                      <ChipListModalSelectorFormField
+                        chipList={{
+                          labelField: 'name',
+                          valueField: 'value',
+                          hideBorder: true,
+                        }}
+                        modalConfig={{
+                          title: '',
+                          width: 'xl',
+                          content: <CompanyModal />,
+                        }}
+                      />
+                    </DynamicFormField>
+                  </FormRow>
+                </ContentsRow>
+              </FormDisplay>
               <ContentsRow>
                 <FormRow provider={provider}>
-                  <DynamicFormField name={'deptScope'} disabled={formMode === EnFormMode.NONE}>
-                    <ScopeRadioGroup
-                      options={[
-                        {
-                          value: EnDeptScope.ALL,
-                          label: t('모든 팀'),
-                        },
-                        {
-                          value: EnDeptScope.CURRENT_TEAM,
-                          label: t('소속 팀'),
-                        },
-                        {
-                          value: EnDeptScope.CURRENT_TEAM_INCLUSIVE,
-                          label: t('소속 팀(하위 팀 포함)'),
-                        },
-                        {
-                          value: EnDeptScope.MANUAL,
-                          label: t('직접 선택'),
-                        },
-                      ]}
-                    />
-                  </DynamicFormField>
+                  <DynamicFormField
+                    name={'deptScope'}
+                    disabled={formMode === EnFormMode.NONE}
+                  ></DynamicFormField>
                 </FormRow>
               </ContentsRow>
+              <FormDisplay
+                provider={provider}
+                dependencies={[{ name: 'deptScope', value: EnDeptScope.MANUAL }]}
+              >
+                <ContentsRow className={'no_line'}>
+                  <FormRow provider={provider}>
+                    <DynamicFormField name={'deptIds'}>
+                      <ChipListModalSelectorFormField
+                        chipList={{
+                          labelField: 'name',
+                          valueField: 'value',
+                          hideBorder: true,
+                        }}
+                        modalConfig={{
+                          title: '',
+                          width: 'xl',
+                          content: <CompanyModal />,
+                        }}
+                      />
+                    </DynamicFormField>
+                  </FormRow>
+                </ContentsRow>
+              </FormDisplay>
               <ContentsRow type={'horizontal'}>
                 <FormRow provider={provider}>
                   <DynamicFormField name={'isUsed'} disabled={formMode === EnFormMode.NONE} />
@@ -360,23 +382,73 @@ const formBaseConfig: DynamicFormConfig = {
     },
     {
       name: 'companyScope',
-      type: 'custom',
+      type: 'radio-group',
       label: t('회사 적용 범위'),
       value: EnCompanyScope.ALL,
+      options: [
+        {
+          value: EnCompanyScope.ALL,
+          label: t('모든 회사'),
+        },
+        {
+          value: EnCompanyScope.CURRENT_COMPANY,
+          label: t('소속 회사'),
+        },
+        {
+          value: EnCompanyScope.MANUAL,
+          label: t('직접 선택'),
+        },
+      ],
     },
     { name: 'companyIds', type: 'custom', value: [] },
     {
       name: 'channelScope',
-      type: 'custom',
+      type: 'radio-group',
       label: t('채널 적용 범위'),
       value: EnChannelScope.ALL,
+      options: [
+        {
+          value: EnChannelScope.ALL,
+          label: t('모든 채널'),
+        },
+        {
+          value: EnChannelScope.CURRENT_COMPANY,
+          label: t('소속 채널'),
+        },
+        {
+          value: EnChannelScope.CURRENT_COMPANY_INCLUSIVE,
+          label: t('소속 채널(하위 채널 포함)'),
+        },
+        {
+          value: EnChannelScope.MANUAL,
+          label: t('직접 선택'),
+        },
+      ],
     },
     { name: 'channelIds', type: 'custom', value: [] },
     {
       name: 'deptScope',
-      type: 'custom',
+      type: 'radio-group',
       label: t('팀 적용 범위'),
       value: EnDeptScope.ALL,
+      options: [
+        {
+          value: EnDeptScope.ALL,
+          label: t('모든 팀'),
+        },
+        {
+          value: EnDeptScope.CURRENT_TEAM,
+          label: t('소속 팀'),
+        },
+        {
+          value: EnDeptScope.CURRENT_TEAM_INCLUSIVE,
+          label: t('소속 팀(하위 팀 포함)'),
+        },
+        {
+          value: EnDeptScope.MANUAL,
+          label: t('직접 선택'),
+        },
+      ],
     },
     { name: 'deptIds', type: 'custom', value: [] },
     {
