@@ -1,6 +1,6 @@
 import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
-import { LabelMessage, LabelMessagesQueryParams } from '@types';
+import { LabelMessage, LabelMessagesQueryParams, PaginationResponse } from '@types';
 
 /**
  * 라벨 메시지 관련 API 요청을 처리하는 서비스 클래스.
@@ -11,8 +11,10 @@ export default class LabelMessagesService {
    * @param [params] - 조회 파라미터 (선택 사항).
    * @returns 라벨 메시지 목록 Promise.
    */
-  static async fetchAll<T = LabelMessage>(params?: LabelMessagesQueryParams): Promise<T[]> {
-    return httpService.get<T[]>(`${PMSApiPrefix()}/label-messages`, params);
+  static async fetchAll<T = LabelMessage>(
+    params?: LabelMessagesQueryParams,
+  ): Promise<PaginationResponse<T>> {
+    return httpService.get<PaginationResponse<T>>(`${PMSApiPrefix()}/label-messages`, params);
     // return new Promise((resolve) => resolve(Mock)); // Mock 코드는 주석 처리 또는 삭제 필요
   }
 

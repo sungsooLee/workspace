@@ -8,7 +8,6 @@ export * from './program';
 export * from './react-query';
 export * from './role';
 export * from './sequence';
-export * from './sort';
 export * from './tenant-category';
 export * from './tenant';
 export * from './widgets';
