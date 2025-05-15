@@ -27,7 +27,10 @@
     }
     &.hide_outline {
       .content {
-        @apply !max-w-full rounded-none border-0 bg-transparent p-0;
+        @apply !max-w-[calc(100vw-80px)] rounded-none border-0 bg-transparent p-0;
+        & > div {
+          @apply !max-w-[calc(100vw-80px)];
+        }
       }
     }
   }
