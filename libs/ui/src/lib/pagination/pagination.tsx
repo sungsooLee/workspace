@@ -82,7 +82,7 @@ const PaginationComponent = forwardRef<HTMLDivElement, PaginationComponentProps>
             />
           ))}
         </div>
-        <span className={styles.count_wrap}>{`${currentPage + 1} / ${totalPages} page`}</span>
+        <span className={styles.count_wrap}>{`${currentPage + 1} / ${totalPages}`}</span>
       </div>
     );
   },

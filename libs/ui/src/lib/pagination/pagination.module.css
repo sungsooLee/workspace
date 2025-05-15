@@ -4,7 +4,7 @@
 .pagination {
   @apply relative flex justify-center;
   .select_area {
-    @apply min-w-[100px];
+    @apply min-w-[82px];
   }
   .page_num {
     @apply mx-auto flex h-[32px] items-center;
