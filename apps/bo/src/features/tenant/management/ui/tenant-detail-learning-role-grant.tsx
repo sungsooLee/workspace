@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { Button, GridBox, TreeBox, TreeNode } from '@learnway/ui';
 import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 import { t } from 'i18next';
@@ -66,7 +66,7 @@ const columns = [
   }),
 ];
 
-const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any) => {
+const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, ref: any) => {
   const routerState = useRouterState();
 
   const [roleTree, setRoleTree] = useState<any>(null);
@@ -78,6 +78,13 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any) =>
 
   const { provider: sProvider } = useSearchBox(searchConfig);
   const { data: roleData } = useFetchRoleTree(tenantId, siteScope);
+
+  useImperativeHandle(ref, () => ({
+    showAlertModify: () => {
+      console.log('grant ' + siteScope);
+      return true;
+    },
+  }));
 
   const handleRoleSelect = (node: TreeNode) => {
     console.log(node);
@@ -150,7 +157,7 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any) =>
     </SectionLayout>
   );
 };
-export const TenantDetailLearningRoleGrant = TenantDetailLearningRoleGrantComponent;
+export const TenantDetailLearningRoleGrant = forwardRef(TenantDetailLearningRoleGrantComponent);
 const formConfig: DynamicFormConfig = {
   builders: [
     // {

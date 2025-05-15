@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, forwardRef, useEffect, useState, useImperativeHandle } from 'react';
 import { cn } from '@learnway/shared';
 import {
   Button,
@@ -32,7 +32,7 @@ import { CompanyShuttleModal, ChannelChoiceModal } from '@features/shared';
 import { isEqual } from 'lodash';
 
 //type fo , bo
-const TenantDetailLearningRoleTreeComponent: FC<any> = ({ roleInfo, siteScope }: any) => {
+const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref: any) => {
   const routerState = useRouterState();
   const [formMode, setFormMode] = useState(EnFormMode.NONE);
   const [selectedRoleNode, setSelectedRoleNode] = useState<any>(null);
@@ -81,6 +81,13 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ roleInfo, siteScope }:
     formConfig.builders.forEach((item) => clearFormError(item.name));
   };
 
+  useImperativeHandle(ref, () => ({
+    showAlertModify: () => {
+      console.log('tree ' + siteScope);
+      return true;
+    },
+  }));
+
   const handleOnSubmit = async (formData: any) => {
     const parentRoleId = formData.parentRoleId === 'root' ? undefined : formData.parentRoleId;
     const payload = {
@@ -89,7 +96,6 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ roleInfo, siteScope }:
       siteScope: siteScope,
       parentRoleId: parentRoleId,
     };
-    console.log(payload);
     if (payload.companyScope !== EnCompanyScope.MANUAL) payload.companyIds = [];
     if (payload.channelScope !== EnChannelScope.MANUAL) payload.channelIds = [];
     if (payload.deptScope !== EnDeptScope.MANUAL) payload.deptIds = [];
@@ -374,7 +380,7 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ roleInfo, siteScope }:
   );
 };
 
-export const TenantDetailLearningRoleTree = TenantDetailLearningRoleTreeComponent;
+export const TenantDetailLearningRoleTree = forwardRef(TenantDetailLearningRoleTreeComponent);
 
 const formBaseConfig: DynamicFormConfig = {
   builders: [

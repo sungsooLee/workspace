@@ -1,3 +1,4 @@
+import { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import {
   Button,
   Checkbox,
@@ -12,7 +13,7 @@ import { SectionLayout } from '@widgets/layout/ui/container/section-layout/secti
 import { CellContext, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useRouterState } from '@tanstack/react-router';
-import { useEffect, useState } from 'react';
+
 import { TenantDetailLearningRoleMenuMappingModal } from './tenant-detail-learning-role-menu-mapping-modal';
 import {
   useFetchRole,
@@ -46,7 +47,7 @@ const columns = [
   }),
 ];
 
-export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: any) => {
+export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: any, ref: any) => {
   const routerState = useRouterState();
 
   const [roleTree, setRoleTree] = useState<any>(null);
@@ -65,6 +66,13 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
   const { open: openModal, confirm: openConfirm } = useModal();
 
   const { data: roleData } = useFetchRoleTree(tenantId, siteScope);
+
+  useImperativeHandle(ref, () => ({
+    showAlertModify: () => {
+      console.log('menu ' + siteScope);
+      return true;
+    },
+  }));
 
   const handleMenuSelectionTypeChange = (type: string) => {
     setMenuSelectionType(type === 'option01' ? 'all' : 'custom');
@@ -230,4 +238,4 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
   );
 };
 
-export const TenantDetailLearningRoleMenu = TenantDetailLearningRoleMenuComponent;
+export const TenantDetailLearningRoleMenu = forwardRef(TenantDetailLearningRoleMenuComponent);
