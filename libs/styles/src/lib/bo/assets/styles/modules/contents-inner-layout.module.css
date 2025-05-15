@@ -63,6 +63,11 @@
         @apply absolute left-1/2 top-[250px] z-[1] flex h-[40px] w-[40px] shrink-0 -translate-x-1/2 items-center justify-center bg-white content-[''];
       }
     }
+    [class*='section_layout'] {
+      & > div::before {
+        @apply hidden;
+      }
+    }
   }
 }
 .grid_layout_wrap {
