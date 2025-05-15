@@ -44,41 +44,36 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
     ref,
   ) => {
     const { open: openModal } = useModal();
-    const [selectedChipOptions, setSelectedChipOptions] = useState<any[]>(value);
-
-    useEffect(() => {
-      ownerOnChange?.(selectedChipOptions);
-    }, [selectedChipOptions]);
 
     const appendSelectedChipOptions = (newOption: any) => {
       const key = chipListProps?.valueField || 'value';
-      const isDuplicated = !!selectedChipOptions?.find((d) => d[key] === newOption[key]); // 새로 등록하는 chip 중복 여부
-      !isDuplicated && setSelectedChipOptions([...selectedChipOptions, newOption]);
+      const isDuplicated = !!value?.find((d: any) => d[key] === newOption[key]); // 새로 등록하는 chip 중복 여부
+      !isDuplicated && ownerOnChange?.([...value, newOption]);
     };
-
     // Modal Data - Array
     const appendSelectedChipOptionsByArray = (newOption: any) => {
       const key = chipListProps?.valueField || 'value';
-      const current = selectedChipOptions.map((d) => d[key]);
+      const current = value.map((d: any) => d[key]);
       const newOptionList = newOption.filter((n: any) => !current.includes(n[key]));
-      setSelectedChipOptions([...selectedChipOptions, ...newOptionList]);
+      ownerOnChange?.([...value, ...newOptionList]);
     };
 
     const handleSearchClick = async () => {
       const data = await openModal(modalConfig);
-      console.log('modal data', data);
+
       if (Array.isArray(data)) {
         appendSelectedChipOptionsByArray(data);
       } else {
         data && appendSelectedChipOptions(data);
       }
+
       modalConfig?.onClose?.(data); // form config 에서 onClose 설정한 경우 callback 실행
     };
 
     const handlerChipDelete = (option: any) => {
       const key = chipListProps?.valueField || 'value';
-      const newOptions = selectedChipOptions?.filter((d) => d[key] !== option[key]);
-      setSelectedChipOptions(newOptions);
+      const newOptions = value?.filter((d: any) => d[key] !== option[key]);
+      ownerOnChange?.(newOptions);
       console.log('handlerChipDelete', newOptions);
     };
 
@@ -95,7 +90,7 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
           {...chipListProps}
           size={'xs'}
           hideBorder
-          options={selectedChipOptions}
+          options={value}
           onChipDeleteClick={handlerChipDelete}
         />
         <Button
