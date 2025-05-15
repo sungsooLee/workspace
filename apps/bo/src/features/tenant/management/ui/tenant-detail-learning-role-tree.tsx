@@ -222,6 +222,7 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ roleInfo, siteScope }:
                     size={'sm'}
                     className="btn_text"
                     disabled={
+                      !roleInfo ||
                       formMode !== EnFormMode.VIEW ||
                       selectedRoleNode?.key === 'root' ||
                       selectedRoleNode?.children.length > 0
@@ -254,7 +255,7 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ roleInfo, siteScope }:
                   <DynamicFormField
                     name={'name'}
                     maxLength={40}
-                    disabled={formMode === EnFormMode.NONE}
+                    disabled={formMode === EnFormMode.NONE || !roleInfo}
                   />
                 </FormRow>
               </ContentsRow>
@@ -263,7 +264,7 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ roleInfo, siteScope }:
                   <DynamicFormField
                     name={'description'}
                     maxLength={300}
-                    disabled={formMode === EnFormMode.NONE}
+                    disabled={formMode === EnFormMode.NONE || !roleInfo}
                   />
                 </FormRow>
               </ContentsRow>
@@ -480,7 +481,7 @@ const formBaseConfig: DynamicFormConfig = {
         },
       ],
     },
-    { name: 'deptIds', type: 'custom', value: [] },
+    { name: 'deptIds', label: '', type: 'custom', value: [] },
     {
       name: 'isUsed',
       type: 'switch',
@@ -506,5 +507,29 @@ const formBaseConfig: DynamicFormConfig = {
     companyScope: { required: true },
     channelScope: { required: true },
     deptScope: { required: true },
+    companyIds: {
+      required: {
+        fn: (value) => {
+          return value.companyScope === EnCompanyScope.MANUAL && value.companyIds?.length <= 0;
+        },
+        message: t('회사를 선택 하세요.'),
+      },
+    },
+    channelIds: {
+      required: {
+        fn: (value) => {
+          return value.channelScope === EnChannelScope.MANUAL && value.channelIds?.length <= 0;
+        },
+        message: t('채널을 선택 하세요.'),
+      },
+    },
+    deptIds: {
+      required: {
+        fn: (value) => {
+          return value.deptScope === EnDeptScope.MANUAL && value.deptIds?.length <= 0;
+        },
+        message: t('팀을 선택 하세요.'),
+      },
+    },
   },
 };
