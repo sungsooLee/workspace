@@ -21,7 +21,7 @@ export const Route = createFileRoute('/_layout/platform/code/system-code')({
 function RouteComponent() {
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);
 
-  const { data } = useSystemCodeList();
+  const { data, hasPermission } = useSystemCodeList();
 
   const [listData, setListData] = useState([]);
 

@@ -16,6 +16,14 @@ export const queryKeys = {
     [...queryKeys.all, 'detail', cdGroupId, cdId] as const,
 };
 
+export const apiKeys = {
+  list: 'commonCode.list',
+  detail: 'commonCode.detail',
+  create: 'commonCode.create',
+  update: 'commonCode.update',
+  delete: 'commonCode.delete',
+} as const;
+
 export const commonCodeQueryOptions = {
   list: (
     page: number,
