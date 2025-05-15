@@ -1,0 +1,13 @@
+/* profile-myinfo.module.css */
+.start {
+  @apply flex w-full flex-wrap justify-between;
+  & > div {
+    @apply items-stretch rounded-[8px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] p-[32px];
+    &.profile_wrap {
+      @apply w-[342px] shrink-0;
+    }
+    &.info_wrap {
+      @apply flex-grow;
+    }
+  }
+}

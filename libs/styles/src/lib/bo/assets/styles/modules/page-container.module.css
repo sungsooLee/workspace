@@ -25,6 +25,11 @@
     .content {
       @apply box-border flex w-full items-stretch overflow-x-hidden rounded-[8px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] p-[32px];
     }
+    &.hide_outline {
+      .content {
+        @apply !max-w-full rounded-none border-0 bg-transparent p-0;
+      }
+    }
   }
 
   /* btn_wrap */
