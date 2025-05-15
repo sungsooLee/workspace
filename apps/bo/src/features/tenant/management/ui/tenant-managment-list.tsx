@@ -98,7 +98,11 @@ const TenantManagmentListComponent = () => {
   return (
     <>
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
-      <GridBox config={gConfig} />
+      <div className={cn(boxStyles.start, boxStyles.inner)}>
+        <div className="grid_wrap">
+          <GridBox config={gConfig} />
+        </div>
+      </div>
     </>
   );
 };
