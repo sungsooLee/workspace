@@ -124,12 +124,6 @@ const CommonCodeGridComponent = ({
     useDynamicForm(formConfig);
   const { create: createCode } = useCreateCommonCode({
     onSuccess: (data: any) => {
-      // openAlert({
-      //   title: '완료되었습니다.',
-      //   content: '요청하신 작업이 정상적으로 완료되었습니다.',
-      // });
-      // console.log(data);
-
       if (data) {
         afterCreateOrUpdateCommonCodeGroup(data);
       }

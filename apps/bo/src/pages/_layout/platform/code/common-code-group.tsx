@@ -50,12 +50,19 @@ function RouteComponent() {
   };
 
   const { data: commonCodeGroupListData } = useCommonCodeGroupList(
-    pageState.page,
-    pageState.size,
-    sortState.sort,
-    searchParams.cdGroupId,
-    searchParams.cdGroupName,
-    searchParams.isUsed,
+    {
+      page: pageState.page,
+      size: pageState.size,
+      sort: sortState.sort,
+      cdGroupId: searchParams.cdGroupId,
+      cdGroupName: searchParams.cdGroupName,
+      isUsed: searchParams.isUsed,
+    },
+    {
+      onSuccess: (data: any) => {
+        console.log(data);
+      },
+    },
   );
 
   const handleOnSearch = (data: any) => {

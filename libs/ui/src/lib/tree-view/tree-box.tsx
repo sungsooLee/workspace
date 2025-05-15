@@ -27,32 +27,70 @@ const TreeBoxComponent = <T extends object>(
     type,
     customButtonNode,
     selectedNode,
+    expandedKeys: externalExpandedKeys, //외부에서 전달받은 expandedKeys
+    onExpandedKeysChange,
     ...props
   }: any,
   // ref: React.Ref
 ) => {
   const [searchKeyword, setSearchKeyword] = useState('');
-  const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
+  const [internalExpandedKeys, setInternalExpandedKeys] = useState<string[]>([]);
+
+  const hasExternalKeys = externalExpandedKeys !== undefined && externalExpandedKeys !== null;
+
+  // 실제 사용할 expandedKeys 결정
+  const expandedKeys = hasExternalKeys ? externalExpandedKeys : internalExpandedKeys;
+
+  const handleExpandedKeysChange = (keys: string[]) => {
+    if (onExpandedKeysChange && hasExternalKeys) {
+      // 외부 제어 모드
+      onExpandedKeysChange(keys);
+    } else {
+      // 내부 제어 모드
+      setInternalExpandedKeys(keys);
+    }
+  };
 
   const [isInitialized, setIsInitialized] = useState(false);
 
   // 컴포넌트 마운트 시 초기 한 번만 initLevel prop으로 내려준 레벨로 펼침 상태 설정
   useEffect(() => {
-    if (
-      data &&
-      Array.isArray(data) &&
-      data.length > 0 &&
-      initLevel !== undefined &&
-      !isInitialized
-    ) {
-      const initialExpandedKeys = getKeysByLevel(data, initLevel);
+    // 이미 초기화되었거나 외부 키가 제공된 경우 초기화 건너뛰기
+    if (isInitialized) {
+      return;
+    }
 
+    if (data && Array.isArray(data) && data.length > 0 && initLevel !== undefined) {
+      const initialExpandedKeys = getKeysByLevel(data, initLevel);
+      console.log(initialExpandedKeys);
       if (initialExpandedKeys && initialExpandedKeys.length > 0) {
-        setExpandedKeys(initialExpandedKeys);
+        // 외부 제어 모드
+        if (hasExternalKeys) {
+          if (!externalExpandedKeys || externalExpandedKeys.length === 0) {
+            onExpandedKeysChange?.(initialExpandedKeys);
+          }
+        } else {
+          // 내부 제어 모드
+          setInternalExpandedKeys(initialExpandedKeys);
+        }
+
         setIsInitialized(true);
       }
     }
-  }, [data, initLevel, isInitialized]);
+  }, [data, initLevel, isInitialized, hasExternalKeys]);
+
+  // 버튼 핸들러
+  const handleExpandAll = () => {
+    if (data) {
+      const allKeys = getAllKeysByTree(data);
+      handleExpandedKeysChange(allKeys);
+    }
+  };
+
+  const handleCollapseToLevel = () => {
+    const closeLevelKeys = getKeysByLevel(data, closeLevel ?? 1);
+    handleExpandedKeysChange(closeLevelKeys || []);
+  };
 
   return (
     <div className={cn(styles.start, styles.wrap)}>
@@ -88,8 +126,7 @@ const TreeBoxComponent = <T extends object>(
                 className={layoutStyles.btn_text}
                 onClick={() => {
                   if (data) {
-                    const allKeys = getAllKeysByTree(data);
-                    setExpandedKeys(allKeys);
+                    handleExpandAll();
                   }
                 }}
               >
@@ -100,8 +137,7 @@ const TreeBoxComponent = <T extends object>(
                 size="sm"
                 className={layoutStyles.btn_text}
                 onClick={() => {
-                  const closeLevelKeys = getKeysByLevel(data, closeLevel ?? 1);
-                  setExpandedKeys(closeLevelKeys || []);
+                  handleCollapseToLevel();
                 }}
               >
                 {t('LABEL.tree.closed')}
@@ -117,7 +153,7 @@ const TreeBoxComponent = <T extends object>(
             treeId={treeId}
             searchKeyword={searchKeyword}
             expandedKeys={expandedKeys}
-            onExpandedKeysChange={setExpandedKeys}
+            onExpandedKeysChange={handleExpandedKeysChange}
             nodeButtons={renderNodeButtons}
             onAction={onAction}
             type={type}

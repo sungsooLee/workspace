@@ -10,19 +10,33 @@ import {
   queryKeys,
   commonCodeQueryOptions as queryOptions,
 } from './common-code.queries';
+import { createAuthorizedQueryHook } from '../../../shared/lib/use-authorized-query';
+import { apiKeys } from './system-code.queries';
+import CommonCodeService from '../api/common-code';
 
 // 코드 목록 조회
-export function useCommonCodeList(
-  page: number,
-  size: number,
-  sort: string,
-  cdGroupId = '',
-  cdGroupName = '',
-  isUsed = '',
-  cdName = '',
-) {
-  return useQuery(queryOptions.list(page, size, sort, cdGroupId, cdGroupName, isUsed, cdName));
-}
+export const useCommonCodeList = createAuthorizedQueryHook(
+  apiKeys.list,
+  (params: {
+    page: number;
+    size: number;
+    sort: string;
+    cdGroupId?: string;
+    cdGroupName?: string;
+    isUsed?: string;
+    cdName?: string;
+  }) => queryKeys.list(params),
+  (params) => () =>
+    CommonCodeService.fetchCodes(
+      params.page,
+      params.size,
+      params.sort,
+      params.cdGroupId,
+      params.cdGroupName,
+      params.isUsed,
+      params.cdName,
+    ),
+);
 
 export function useCommonCodeDetail(cdGroupId: string, cdId: string) {
   return useQuery({
