@@ -89,6 +89,7 @@ import { Route as LayoutLearningLearningSearchImport } from './pages/_layout/lea
 import { Route as LayoutLearningLearningResourceSearchImport } from './pages/_layout/learning/learning-resource-search'
 import { Route as LayoutLearningFileUploadImport } from './pages/_layout/learning/file-upload'
 import { Route as LayoutContentsLayoutImport } from './pages/_layout/contents/layout'
+import { Route as LayoutCommonProfileMyinfoImport } from './pages/_layout/common/profile-myinfo'
 import { Route as LayoutCommonPopUserSearchCheckImport } from './pages/_layout/common/pop-user-search-check'
 import { Route as LayoutCommonPopUserSearchImport } from './pages/_layout/common/pop-user-search'
 import { Route as LayoutCommonPopUserGroupSearchImport } from './pages/_layout/common/pop-user-group-search'
@@ -640,6 +641,12 @@ const LayoutLearningFileUploadRoute = LayoutLearningFileUploadImport.update({
 const LayoutContentsLayoutRoute = LayoutContentsLayoutImport.update({
   id: '/contents/layout',
   path: '/contents/layout',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutCommonProfileMyinfoRoute = LayoutCommonProfileMyinfoImport.update({
+  id: '/common/profile-myinfo',
+  path: '/common/profile-myinfo',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -1539,6 +1546,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCommonPopUserSearchCheckImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/common/profile-myinfo': {
+      id: '/_layout/common/profile-myinfo'
+      path: '/common/profile-myinfo'
+      fullPath: '/common/profile-myinfo'
+      preLoaderRoute: typeof LayoutCommonProfileMyinfoImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/contents/layout': {
       id: '/_layout/contents/layout'
       path: '/contents/layout'
@@ -2048,6 +2062,7 @@ interface LayoutRouteChildren {
   LayoutCommonPopUserGroupSearchRoute: typeof LayoutCommonPopUserGroupSearchRoute
   LayoutCommonPopUserSearchRoute: typeof LayoutCommonPopUserSearchRoute
   LayoutCommonPopUserSearchCheckRoute: typeof LayoutCommonPopUserSearchCheckRoute
+  LayoutCommonProfileMyinfoRoute: typeof LayoutCommonProfileMyinfoRoute
   LayoutContentsLayoutRoute: typeof LayoutContentsLayoutRoute
   LayoutLearningFileUploadRoute: typeof LayoutLearningFileUploadRoute
   LayoutLearningLearningResourceSearchRoute: typeof LayoutLearningLearningResourceSearchRoute
@@ -2107,6 +2122,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutCommonPopUserGroupSearchRoute: LayoutCommonPopUserGroupSearchRoute,
   LayoutCommonPopUserSearchRoute: LayoutCommonPopUserSearchRoute,
   LayoutCommonPopUserSearchCheckRoute: LayoutCommonPopUserSearchCheckRoute,
+  LayoutCommonProfileMyinfoRoute: LayoutCommonProfileMyinfoRoute,
   LayoutContentsLayoutRoute: LayoutContentsLayoutRoute,
   LayoutLearningFileUploadRoute: LayoutLearningFileUploadRoute,
   LayoutLearningLearningResourceSearchRoute:
@@ -2259,6 +2275,7 @@ export interface FileRoutesByFullPath {
   '/common/pop-user-group-search': typeof LayoutCommonPopUserGroupSearchRoute
   '/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
   '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
+  '/common/profile-myinfo': typeof LayoutCommonProfileMyinfoRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/learning/learning-resource-search': typeof LayoutLearningLearningResourceSearchRoute
@@ -2390,6 +2407,7 @@ export interface FileRoutesByTo {
   '/common/pop-user-group-search': typeof LayoutCommonPopUserGroupSearchRoute
   '/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
   '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
+  '/common/profile-myinfo': typeof LayoutCommonProfileMyinfoRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/learning/learning-resource-search': typeof LayoutLearningLearningResourceSearchRoute
@@ -2524,6 +2542,7 @@ export interface FileRoutesById {
   '/_layout/common/pop-user-group-search': typeof LayoutCommonPopUserGroupSearchRoute
   '/_layout/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
   '/_layout/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
+  '/_layout/common/profile-myinfo': typeof LayoutCommonProfileMyinfoRoute
   '/_layout/contents/layout': typeof LayoutContentsLayoutRoute
   '/_layout/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/_layout/learning/learning-resource-search': typeof LayoutLearningLearningResourceSearchRoute
@@ -2657,6 +2676,7 @@ export interface FileRouteTypes {
     | '/common/pop-user-group-search'
     | '/common/pop-user-search'
     | '/common/pop-user-search-check'
+    | '/common/profile-myinfo'
     | '/contents/layout'
     | '/learning/file-upload'
     | '/learning/learning-resource-search'
@@ -2787,6 +2807,7 @@ export interface FileRouteTypes {
     | '/common/pop-user-group-search'
     | '/common/pop-user-search'
     | '/common/pop-user-search-check'
+    | '/common/profile-myinfo'
     | '/contents/layout'
     | '/learning/file-upload'
     | '/learning/learning-resource-search'
@@ -2919,6 +2940,7 @@ export interface FileRouteTypes {
     | '/_layout/common/pop-user-group-search'
     | '/_layout/common/pop-user-search'
     | '/_layout/common/pop-user-search-check'
+    | '/_layout/common/profile-myinfo'
     | '/_layout/contents/layout'
     | '/_layout/learning/file-upload'
     | '/_layout/learning/learning-resource-search'
@@ -3090,6 +3112,7 @@ export const routeTree = rootRoute
         "/_layout/common/pop-user-group-search",
         "/_layout/common/pop-user-search",
         "/_layout/common/pop-user-search-check",
+        "/_layout/common/profile-myinfo",
         "/_layout/contents/layout",
         "/_layout/learning/file-upload",
         "/_layout/learning/learning-resource-search",
@@ -3453,6 +3476,10 @@ export const routeTree = rootRoute
     },
     "/_layout/common/pop-user-search-check": {
       "filePath": "_layout/common/pop-user-search-check.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/common/profile-myinfo": {
+      "filePath": "_layout/common/profile-myinfo.tsx",
       "parent": "/_layout"
     },
     "/_layout/contents/layout": {

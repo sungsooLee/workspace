@@ -77,7 +77,7 @@ export const guideData = [
     pageId: 'common/profile-myinfo',
     screenId: 'NLP_BO_COM_1002',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-05-15',
     lastUpdateDate: '',
     remarks: '', // 비고
   },

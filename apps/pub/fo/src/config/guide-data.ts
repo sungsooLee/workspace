@@ -977,7 +977,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '2025-04-03',
     lastUpdateDate: '',
-    remarks: '- package-m.tsx\n- 썸네일 공통검포넌트 미작업으로 작업 불가능',
+    remarks: '- package-m.tsx',
   },
   {
     screenId: 'NLP_FO_LEC_1015',
