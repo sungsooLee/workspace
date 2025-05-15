@@ -1660,9 +1660,9 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'gallery-m',
     pageType: 'Page',
-    completionDate: '2025-05-14',
+    completionDate: '',
     lastUpdateDate: '',
-    remarks: '- gallery-m.tsx',
+    remarks: '- gallery-m.tsx\n- 축소, 확대, drag 기능 공통 요청중',
   },
 
   {
@@ -1671,9 +1671,9 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'blog-m',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-05-15',
     lastUpdateDate: '',
-    remarks: '- blog-m.tsx',
+    remarks: '- blog-m.tsx\n- 개발화면 확인 필요',
   },
 
   {
@@ -1682,7 +1682,7 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'html-m',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-05-15',
     lastUpdateDate: '',
     remarks: '- html-m.tsx',
   },
