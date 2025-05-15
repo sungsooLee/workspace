@@ -14,7 +14,7 @@ import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import { FormRow, ContentsHistoryInfoFormField, FormSubTitle } from '@shared/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { ScopeRadioGroup } from './scope-radio-group';
+// import { ScopeRadioGroup } from './scope-radio-group';
 import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 import {
   useFetchRole,
