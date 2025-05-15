@@ -29,6 +29,7 @@ import {
 import { FormDisplay } from '@features/form/ui/form-display';
 import { EnFormMode, EnTenantScope, EnCompanyScope, EnChannelScope, EnDeptScope } from '@types';
 import { CompanyShuttleModal, ChannelChoiceModal } from '@features/shared';
+import { isEqual } from 'lodash';
 
 //type fo , bo
 const TenantDetailLearningRoleTreeComponent: FC<any> = ({ roleInfo, siteScope }: any) => {
@@ -71,7 +72,8 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ roleInfo, siteScope }:
       refetch();
     },
   });
-  const { provider, onSubmit, clearFormError, fetchData } = useDynamicForm(formConfig);
+  const { provider, onSubmit, clearFormError, fetchData, onFormChange } =
+    useDynamicForm(formConfig);
   const { data, refetch } = useFetchRoleTree(tenantId, siteScope);
   const { data: roleDetail } = useFetchRole(selectedRoleNode?.roleCode || undefined);
 
@@ -88,6 +90,9 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ roleInfo, siteScope }:
       parentRoleId: parentRoleId,
     };
     console.log(payload);
+    if (payload.companyScope !== EnCompanyScope.MANUAL) payload.companyIds = [];
+    if (payload.channelScope !== EnChannelScope.MANUAL) payload.channelIds = [];
+    if (payload.deptScope !== EnDeptScope.MANUAL) payload.deptIds = [];
     switch (formMode) {
       case EnFormMode.ADD:
         createRole(payload);
@@ -101,8 +106,23 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ roleInfo, siteScope }:
 
   // handle 역할 트리 노드 클릭
   const handleRoleSelect = (node: TreeNode) => {
-    setSelectedRoleNode(node);
-    if (formMode !== EnFormMode.VIEW) setFormMode(EnFormMode.VIEW);
+    if (node.key !== 'root') {
+      setSelectedRoleNode(node);
+      if (formMode !== EnFormMode.VIEW) setFormMode(EnFormMode.VIEW);
+    }
+    // else {
+    //   if (isEqual(provider.originalValues, provider.getValues())) {
+    //     clearAllFormErrors();
+    //     const initData: { [key: string]: any } = {};
+    //     formConfig.builders.forEach((item) => {
+    //       initData[item.name] = item.value;
+    //     });
+    //     fetchData(initData);
+    //     setFormMode(EnFormMode.NONE);
+    //   } else {
+    //     alert('다른 자료');
+    //   }
+    // }
   };
 
   // 추가 버튼
@@ -175,10 +195,11 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ roleInfo, siteScope }:
         treeId={'1'}
         showSearchKeyword
         title={'역할 목록'}
+        selectedNode={selectedRoleNode}
         renderNodeButtons={renderNodeButtons}
         handleSelectedNodeChange={handleRoleSelect}
         clientTree
-        type={'DEFAULT'}
+        type="SHUTTLE_LIST"
       />
       <div className={cn(styles.start, styles.wrap)}>
         <div className={cn(layoutStyles.inner)}>
@@ -193,6 +214,7 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ roleInfo, siteScope }:
                     size={'sm'}
                     className="btn_text"
                     disabled={formMode === EnFormMode.NONE}
+                    onClick={() => onFormChange()}
                   />
                   <Button
                     label={'삭제'}
@@ -255,29 +277,29 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ roleInfo, siteScope }:
                   <DynamicFormField name={'companyScope'} disabled={formMode === EnFormMode.NONE} />
                 </FormRow>
               </ContentsRow>
-              {/* <FormDisplay
+              <FormDisplay
                 provider={provider}
                 dependencies={[{ name: 'companyScope', value: EnCompanyScope.MANUAL }]}
-              > */}
-              <div className="chiplist_modal_wrap">
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'companyIds'}>
-                    <ChipListModalSelectorFormField
-                      modalConfig={{
-                        content: <CompanyShuttleModal />,
-                        title: '',
-                        width: 'xl',
-                      }}
-                      chipList={{
-                        labelField: 'company',
-                        valueField: 'id',
-                        wordwrap: true,
-                      }}
-                    />
-                  </DynamicFormField>
-                </FormRow>
-              </div>
-              {/* </FormDisplay> */}
+              >
+                <div className="chiplist_modal_wrap">
+                  <FormRow provider={provider}>
+                    <DynamicFormField name={'companyIds'}>
+                      <ChipListModalSelectorFormField
+                        modalConfig={{
+                          content: <CompanyShuttleModal />,
+                          title: '',
+                          width: 'xl',
+                        }}
+                        chipList={{
+                          labelField: 'company',
+                          valueField: 'id',
+                          wordwrap: true,
+                        }}
+                      />
+                    </DynamicFormField>
+                  </FormRow>
+                </div>
+              </FormDisplay>
               <ContentsRow>
                 <FormRow provider={provider}>
                   <DynamicFormField name={'channelScope'} disabled={formMode === EnFormMode.NONE} />
@@ -355,7 +377,7 @@ export const TenantDetailLearningRoleTree = TenantDetailLearningRoleTreeComponen
 
 const formBaseConfig: DynamicFormConfig = {
   builders: [
-    { name: 'parentRoleId', type: 'hidden', value: '', format: 'string' },
+    { name: 'parentRoleId', label: '', type: 'hidden', value: '', format: 'string' },
     {
       name: 'roleId',
       type: 'text',
@@ -403,9 +425,10 @@ const formBaseConfig: DynamicFormConfig = {
     },
     {
       name: 'companyIds',
+      label: '',
       type: 'custom',
       format: 'array',
-      value: [{ company: 'aa', id: '21' }],
+      value: [],
       placeholder: '',
     },
     {
@@ -432,7 +455,7 @@ const formBaseConfig: DynamicFormConfig = {
         },
       ],
     },
-    { name: 'channelIds', type: 'custom', value: [] },
+    { name: 'channelIds', label: '', type: 'custom', value: [] },
     {
       name: 'deptScope',
       type: 'radio-group',

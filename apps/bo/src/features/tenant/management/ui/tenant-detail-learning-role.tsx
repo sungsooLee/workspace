@@ -7,39 +7,39 @@ import { TenantDetailLearningRoleTree } from './tenant-detail-learning-role-tree
 import { TenantDetailLearningRoleMenu } from './tenant-detail-learning-role-menu';
 import { TenantDetailLearningRoleGrant } from './tenant-detail-learning-role-grant';
 
-const TenantDetailLearningRoleComponent: FC<any> = () => {
+const TenantDetailLearningRoleComponent: FC<any> = ({ roleInfo }) => {
   const [selectedTabKey, setSelectedTabKey] = useState<string>('FO-ROLE');
 
   const tabItems = [
     {
       title: t('학습자 역할정보'),
       key: 'FO-ROLE',
-      content: <TenantDetailLearningRoleTree siteScope={'FO'} />,
+      content: <TenantDetailLearningRoleTree roleInfo={roleInfo} siteScope={'FO'} />,
     },
     {
       title: t('학습자 메뉴설정'),
       key: 'FO-MENU',
-      content: <TenantDetailLearningRoleMenu siteScope={'FO'} />,
+      content: <TenantDetailLearningRoleMenu roleInfo={roleInfo} siteScope={'FO'} />,
     },
     {
       title: t('학습자 역할부여'),
       key: 'FO-ROLE-SET',
-      content: <TenantDetailLearningRoleGrant siteScope={'FO'} />,
+      content: <TenantDetailLearningRoleGrant roleInfo={roleInfo} siteScope={'FO'} />,
     },
     {
       title: t('HRD센터 역할정보'),
       key: 'BO-ROLE',
-      content: <TenantDetailLearningRoleTree siteScope={'BO'} />,
+      content: <TenantDetailLearningRoleTree roleInfo={roleInfo} siteScope={'BO'} />,
     },
     {
       title: t('HRD센터 메뉴설정'),
       key: 'BO-MENU',
-      content: <TenantDetailLearningRoleMenu siteScope={'BO'} />,
+      content: <TenantDetailLearningRoleMenu roleInfo={roleInfo} siteScope={'BO'} />,
     },
     {
       title: t('HRD센터 역할부여'),
       key: 'BO-ROLE-SET',
-      content: <TenantDetailLearningRoleGrant siteScope={'BO'} />,
+      content: <TenantDetailLearningRoleGrant roleInfo={roleInfo} siteScope={'BO'} />,
     },
   ];
 

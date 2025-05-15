@@ -1,6 +1,6 @@
+import { useState, useEffect } from 'react';
 import { Button, GridBox, TreeBox, TreeNode } from '@learnway/ui';
 import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
-import { roleTreeMockData } from '@entities/mock/role';
 import { t } from 'i18next';
 import { useRouterState } from '@tanstack/react-router';
 
@@ -12,7 +12,17 @@ import { SearchBox } from '../../../../shared/ui/search-box';
 import { IcoFormRequired, IcoMinus, IcoPlus } from '@learnway/icons';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import { createColumnHelper } from '@tanstack/react-table';
-import { useState } from 'react';
+import {
+  getAllTreeKeys,
+  getFirstExpandKeys,
+  moveNodeCheck,
+  transformRoleApiDataToTreeData,
+} from '../service/tenant-detail-tree.service';
+import {
+  useFetchRole,
+  useFetchRoleTree,
+  useRoleManager,
+} from '@entities/role/service/role-manage.hook';
 
 const columnHelper = createColumnHelper<any>();
 
@@ -56,25 +66,39 @@ const columns = [
   }),
 ];
 
-const TenantDetailLearningRoleGrantComponent = ({ type: roleScope }: any) => {
+const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any) => {
   const routerState = useRouterState();
 
   const [roleTree, setRoleTree] = useState<any>(null);
   const [roleTreeExpandedKeys, setRoleTreeExpandedKeys] = useState<string[]>([]);
+  const [selectedRole, setSelectedRole] = useState<any>(null);
+
+  const tenantId = routerState.location.state?.tenantId;
+  const tenantName = routerState.location.state?.tenantName;
 
   const { provider: sProvider } = useSearchBox(searchConfig);
-  const roles = () => roleTreeMockData;
-  const [selectedRoleId, setSelectedRoleId] = useState<any>(null);
+  const { data: roleData } = useFetchRoleTree(tenantId, siteScope);
 
   const handleRoleSelect = (node: TreeNode) => {
     console.log(node);
-    setSelectedRoleId(node);
+    setSelectedRole(node);
   };
+
+  useEffect(() => {
+    if (roleData) {
+      const transformedData = transformRoleApiDataToTreeData(roleData);
+      setRoleTree(transformedData);
+      if (transformedData && transformedData.length > 0 && roleTreeExpandedKeys.length === 0) {
+        const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
+        setRoleTreeExpandedKeys(firstLevelKeys);
+      }
+    }
+  }, [roleData]);
 
   return (
     <SectionLayout contentsRatio={'thirty'}>
       <TreeBox
-        data={roles()}
+        data={roleTree}
         initLevel={2}
         treeId={'1'}
         showSearchKeyword

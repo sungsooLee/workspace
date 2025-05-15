@@ -1,11 +1,9 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 
 import { useRouter } from '@tanstack/react-router';
 
-import { cn } from '@learnway/shared';
-
-import { Button, GridBox, useGridBox, Input, DynamicFormField, Dropdown } from '@learnway/ui';
+import { Button } from '@learnway/ui';
 
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
