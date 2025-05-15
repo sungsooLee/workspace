@@ -6,13 +6,18 @@
     &:not(:first-child) {
       @apply relative flex-grow pl-[32px] pr-0;
       &::before {
-        @apply absolute left-0 top-0 h-full w-[1px] bg-[var(--gray5)] content-[''];
+        @apply absolute left-0 top-0 h-full w-[1px] bg-[var(--gray4)] content-[''];
       }
     }
   }
   &.half {
     & > div {
       @apply w-1/2;
+      &:not(:first-child) {
+        form > div + div {
+          @apply mt-[16px];
+        }
+      }
     }
   }
   &.thirty {
