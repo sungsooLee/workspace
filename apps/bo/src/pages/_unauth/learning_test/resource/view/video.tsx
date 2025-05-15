@@ -6,7 +6,7 @@ import { PageContainer } from '../../../../../widgets/layout/ui/container/page-c
 import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
-import { MovieInfo, ThumbnailUploaderFormField } from '../../../../../features/learning';
+import { MovieInfo } from '../../../../../features/learning';
 import { ChannelChoiceModal, ManagerChoiceModal } from '../../../../../features/shared';
 
 import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
@@ -42,7 +42,8 @@ function RouteComponent() {
             <Button
               variant="point"
               size="sm"
-              onClick={() => router.navigate({ to: '/learning/resource' })}>
+              onClick={() => router.navigate({ to: '/learning/resource' })}
+            >
               목록
             </Button>
           </LinkBox>
@@ -128,7 +129,8 @@ function RouteComponent() {
           {/*외주개발업체 상세*/}
           <FormDisplay
             provider={provider}
-            dependencies={[{ name: 'isExternalDevelopmentCompany', value: true }]}>
+            dependencies={[{ name: 'isExternalDevelopmentCompany', value: true }]}
+          >
             <ContentsRow>
               {/*외부개발업체*/}
               <FormRow provider={provider}>
@@ -158,7 +160,7 @@ function RouteComponent() {
           <ContentsRow>
             {/*썸네일*/}
             <FormRow provider={provider}>
-              <ThumbnailUploaderFormField name="thumbnails" />
+              <DynamicFormField name="thumbnails" />
             </FormRow>
           </ContentsRow>
           <ContentsRow>
@@ -357,7 +359,7 @@ const formConfig: DynamicFormConfig = {
     {
       label: t('썸네일'),
       name: 'thumbnails',
-      type: 'custom',
+      type: 'thumbnail-list',
       format: 'array',
       value: [],
     },

@@ -9,6 +9,7 @@ import {
   ContentsRow,
   Carousel,
   EmptyText,
+  Popover,
 } from '@learnway/ui';
 import { isMobile } from 'react-device-detect';
 import { Arrays, Filter } from '../../../features/layout';
@@ -21,8 +22,10 @@ import {
   IcoEye,
   IcoPhone02,
   IcoMonitor01,
+  IcoArrowDown,
 } from '@learnway/icons';
 
+import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
 import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
 import thumnailImgStyles from '../../../shared/ui/thumnail/thumnail-img.module.css';
 import styles from './detail.module.css';
@@ -59,7 +62,17 @@ function RouteComponent() {
   const [searchValues01, setSearchValues01] = useState<string[]>(['대분류']);
   const [searchValues02, setSearchValues02] = useState<string[]>(['중분류']);
   const [searchValues03, setSearchValues03] = useState<string[]>(['소분류']);
-  const [countValues, setCountValues] = useState<string[]>(['20개씩']);
+
+  // 퍼블수정 20250513 : popover 추가
+  const DropdownPopoverCompoment = () => {
+    return (
+      <div className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}>
+        <Button>20개씩</Button>
+        <Button>50개씩</Button>
+        <Button>80개씩</Button>
+      </div>
+    );
+  };
 
   const arrays = {
     items: ['최신순', '과정명순', '조회순'],
@@ -163,16 +176,17 @@ function RouteComponent() {
             {/* 퍼블수정 20250313 : arraysData 데이터 삽입 */}
             <Arrays arraysData={arrays} className={styles.array}></Arrays>
             <div className={styles.box}>
-              <Dropdown
-                variant="text"
-                options={[
-                  { value: '20', label: '20개씩' },
-                  { value: '50', label: '50개씩' },
-                  { value: '80', label: '80개씩' },
-                ]}
-                value={countValues}
-                onChange={(selected) => setCountValues(selected)}
-              />
+              {/* 퍼블수정 20250513 : dropdown > popover로 변경 */}
+              <Popover
+                popoverContent={<DropdownPopoverCompoment />}
+                className={`${dropdownPopoverStyles.btn} ${dropdownPopoverStyles.text}`}
+                side="bottom"
+                align="end"
+                sideOffset={10}
+              >
+                <span>{'20개씩'}</span>
+                <IcoArrowDown width={16} height={16} stroke="#131C30" />
+              </Popover>
             </div>
             <div className={styles.box}>
               <Button onClick={list_ui}>

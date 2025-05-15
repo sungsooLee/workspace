@@ -7,12 +7,12 @@ import {
 import { useModal } from '@learnway/ui';
 
 // 실제 API 데이터를 가져오는 훅
-export function useFetchRoles() {
-  return useQuery(queryOptions.allRoles());
+export function useFetchRoles(tenantId: number, siteScope: string) {
+  return useQuery(queryOptions.allRoles(tenantId, siteScope));
 }
 
-export function useFetchRole(roleId: string) {
-  return useQuery({ ...queryOptions.getRole(roleId), enabled: !!roleId });
+export function useFetchRole(roleCode: string) {
+  return useQuery({ ...queryOptions.getRole(roleCode), enabled: !!roleCode });
 }
 
 export function useFetchMenus() {
@@ -29,6 +29,10 @@ export function useFetchMenuApis(menuId: string) {
 
 export function useFetchRoleApis(roleId: string) {
   return useQuery({ ...queryOptions.getRoleApis(roleId), enabled: !!roleId });
+}
+
+export function useFetchRoleTree(tenantId: number, siteScope: string) {
+  return useQuery({ ...queryOptions.getRoleTree(tenantId, siteScope) });
 }
 
 // 실제 API를 사용하는 훅
@@ -129,8 +133,8 @@ export const useRoleManager = (options: RoleHookOptions = {}) => {
     createRoleMutate(roleData, callbacks);
   };
 
-  const handleDeleteRole = (roleId: string, callbacks?: any) => {
-    deleteRoleMutate(roleId, callbacks);
+  const handleDeleteRole = (roleCode: string, callbacks?: any) => {
+    deleteRoleMutate(roleCode, callbacks);
   };
 
   const handleUpdateRole = (roleData: any, callbacks?: any) => {

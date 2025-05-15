@@ -18,6 +18,8 @@ import {
   useUpdateCommonCodGroup,
 } from '../../../../entities/common-code/service/common-code-group.hook';
 import { ContentsHistoryInfoFormField, FormRow } from '../../../../shared/ui';
+import { useQueryClient } from '@tanstack/react-query';
+import { queryKeys } from '../../../../entities/common-code/service/common-code-group.queries';
 
 // 폼 관련 필드 목록
 const FORM_FIELDS = [
@@ -66,10 +68,8 @@ const CommonCodeGroupGridComponent = ({
 
   const { provider, onSubmit, fetchData, clearFormError, onFormChange, getValues, formState } =
     useDynamicForm(formConfig);
-  const { create: createCodeGroup } = useCreateCommonCodeGroup({
-    onSuccess: (data: any) => {
-      //
-    },
+
+  const { mutate: createCodeGroup } = useCreateCommonCodeGroup({
     queryParams: {
       page,
       size,
@@ -79,10 +79,7 @@ const CommonCodeGroupGridComponent = ({
       isUsed: state.isUsed,
     },
   });
-  const { update: updateCodeGroup } = useUpdateCommonCodGroup({
-    onSuccess: (data: any) => {
-      //
-    },
+  const { mutate: updateCodeGroup } = useUpdateCommonCodGroup({
     queryParams: {
       page,
       size,

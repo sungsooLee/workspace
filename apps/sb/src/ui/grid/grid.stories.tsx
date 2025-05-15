@@ -10,7 +10,7 @@ import {
 } from '@tanstack/react-table';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { ReactQueryConfigProvider } from '@learnway/config';
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import {
   Button,
   CustomCell,
@@ -1030,6 +1030,9 @@ export const TemplateColumnSize: any = (args: any) => {
     { accessorKey: 'code', maxSize: 100 },
     { accessorKey: 'code2', size: undefined },
   ];
+  useEffect(() => {
+    console.log('data', data);
+  }, [data]);
   return (
     <GridBox
       title={'Editable Grid'}

@@ -13,20 +13,31 @@ import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 import { TenantDetailMenu } from '@features/tenant/management/ui/tenant-detail-menu';
 import { TenantDetailBase } from '@features/tenant/management/ui/tenant-detail-base';
 import { TenantDetailCategory } from '@features/tenant/management/ui/tenant-detail-category';
-// import { TenantDetailAttribute } from '@features/tenant/management/ui/tenant-detail-attribute';
-// import { TenantDetailWidget } from '@features/tenant/management/ui/tenant-detail-widget';
-// import { TenantDetailBanner } from '@features/tenant/management/ui/tenant-detail-banner';
-import { TenaTenantDetailLearningRole } from '@features/tenant/management/ui/tenant-detail-learning-role';
+import { TenantDetailAttribute } from '@features/tenant/management/ui/tenant-detail-attribute';
+import { TenantDetailWidget } from '@features/tenant/management/ui/tenant-detail-widget';
+import { TenantDetailBanner } from '@features/tenant/management/ui/tenant-detail-banner';
+import { TenantDetailLearningRole } from '@features/tenant/management/ui/tenant-detail-learning-role';
 
 export const Route = createFileRoute('/_layout/platform/tenant/management/detail')({
   component: RouteComponent,
 });
-
+enum TabKeyList {
+  base = 'base',
+  attribute = 'attribute',
+  menu = 'menu',
+  category = 'category',
+  learningRole = 'learningRole',
+  widget = 'widget',
+  banner = 'banner',
+  theme = 'theme',
+}
+const buttonShowTabs: string[] = [TabKeyList.base, TabKeyList.attribute];
 function RouteComponent() {
   const router = useRouter();
-  const formRef = useRef<HTMLFormElement>(null);
+  const formBaseRef = useRef<HTMLFormElement>(null);
+  const formAttrRef = useRef<HTMLFormElement>(null);
 
-  const [selectedTabKey, setSelectedTabKey] = useState('menu01');
+  const [selectedTabKey, setSelectedTabKey] = useState<string>(TabKeyList.base);
 
   const handleTabChange = (tabKey: string) => {
     if (tabKey !== selectedTabKey) {
@@ -39,17 +50,11 @@ function RouteComponent() {
 
   const handleResetButtonClick = () => {
     switch (selectedTabKey) {
-      case 'menu01':
-        alert('menu01');
+      case TabKeyList.base:
+        alert(TabKeyList.base);
         break;
-      case 'menu02':
-        alert('menu02');
-        break;
-      case 'menu03':
-        alert('menu03');
-        break;
-      case 'menu04':
-        alert('menu04');
+      case TabKeyList.attribute:
+        alert(TabKeyList.attribute);
         break;
       default:
         alert('없음');
@@ -59,34 +64,49 @@ function RouteComponent() {
   const menuItems = [
     {
       title: '테넌트 기본 정보',
-      key: 'menu01',
-      content: <TenantDetailBase formRef={formRef} roleInfo={'PLATFORM'} />,
+      key: TabKeyList.base,
+      content: <TenantDetailBase formRef={formBaseRef} roleInfo={'PLATFORM'} />,
     },
     {
-      title: '테넌트 메뉴관리',
-      key: 'menu02',
+      title: '테넌트 속성 관리',
+      key: TabKeyList.attribute,
+      content: <TenantDetailAttribute formRef={formAttrRef} roleInfo={'PLATFORM'} />,
+    },
+    {
+      title: '테넌트 메뉴관리 매핑',
+      key: TabKeyList.menu,
       content: <TenantDetailMenu roleInfo={'PLATFORM'} />,
     },
     {
       title: '테넌트 카테고리 관리',
-      key: 'menu03',
+      key: TabKeyList.category,
       content: <TenantDetailCategory roleInfo={'PLATFORM'} />,
     },
     {
       title: '테넌트 역할 관리',
-      key: 'menu04',
-      content: <TenaTenantDetailLearningRole roleInfo={'PLATFORM'} />,
+      key: TabKeyList.learningRole,
+      content: <TenantDetailLearningRole roleInfo={'PLATFORM'} />,
+    },
+    {
+      title: '테넌트 위젯 관리',
+      key: TabKeyList.widget,
+      content: <TenantDetailWidget roleInfo={'PLATFORM'} />,
+    },
+    {
+      title: '테넌트 배너 관리',
+      key: TabKeyList.banner,
+      content: <TenantDetailBanner roleInfo={'PLATFORM'} />,
     },
     {
       title: '테넌트 디자인/테마 관리',
-      key: 'menu05',
+      key: TabKeyList.theme,
       content: '테넌트 디자인/테마 관리',
     },
   ];
 
   return (
     <PageContainer scrollHidden={false}>
-      {selectedTabKey === 'menu01' && (
+      {buttonShowTabs.includes(selectedTabKey) && (
         <ContentsButtons>
           <LinkBox>
             <Button onClick={handleListButtonClick} variant="point" size="sm">
@@ -102,7 +122,7 @@ function RouteComponent() {
           </Button>
         </ContentsButtons>
       )}
-      {selectedTabKey !== 'menu01' && (
+      {!buttonShowTabs.includes(selectedTabKey) && (
         <ContentsButtons>
           <Button onClick={handleListButtonClick} variant="point" size="sm">
             목록
@@ -115,7 +135,7 @@ function RouteComponent() {
           type="progress"
           size="sm"
           className={styles.progress_wrap}
-          selectedTabKey={'menu01'}
+          selectedTabKey={selectedTabKey}
           onTabChange={handleTabChange}
         />
       </MainContents>

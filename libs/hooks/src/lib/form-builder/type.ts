@@ -275,6 +275,14 @@ export type ErrorState = {
   message?: string;
 };
 
+type CustomConfig = {
+  // 2025-05-29 , 다른 field 값에 따라 placeholder 가 변경되어야 하는 요건이 있어서 추가함
+  placeholder?: {
+    target: string;
+    placeholder: string | ((data: Record<string, any>) => string);
+  };
+};
+
 // 공통으로 넘겨줄 props 정의
 export interface BaseFormFieldProps<T = any> {
   control: UseFormReturn['control'];
@@ -286,6 +294,7 @@ export interface BaseFormFieldProps<T = any> {
   onChangeInfoArea: (children: ReactNode) => void;
   onFormChange: (values: Record<string, any>) => void;
   getValues: UseFormReturn['getValues'];
+  customConfig: CustomConfig;
   [key: string]: any;
 }
 
@@ -467,6 +476,8 @@ export type UseSearchBoxReturn = {
    */
   onFormChange: (values?: Record<string, any>) => void;
 
+  /** 현재 폼 유효성 강제 체크 하기 */
+  onFormValid: UseFormReturn['trigger'];
   /**
    * 특정 필드에 포커스를 설정하는 함수
    *

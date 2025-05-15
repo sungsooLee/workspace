@@ -5,7 +5,7 @@ import {
   DynamicFormField,
   InputModalSelectorFormField,
 } from '@learnway/ui';
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import { UseDynamicFormResult } from '@learnway/hooks';
 import { useTranslation } from 'react-i18next';
 import { FormRow, FormSubTitle } from '@shared/ui';
@@ -17,29 +17,36 @@ interface BasicInfoProps {
 
 const BasicInfoComponent = forwardRef<HTMLDivElement, BasicInfoProps>(({ dynamicForm }, ref) => {
   const { t } = useTranslation();
-  const { provider, getValues } = dynamicForm;
+  const { provider, getValues, fetchData } = dynamicForm;
   // const { provider, getValues, onSubmit } = useDynamicForm(formConfig);
 
   const handleOnSubmit = (data: any) => {
     console.log('data {} => ', data);
   };
 
+  useEffect(() => {
+    console.log('BasicInfoComponent init');
+    // fetchData({});
+  }, []);
+
   return (
-    <>
-      {/*강의 유형*/}
+    <div ref={ref}>
       <ContentsRow>
+        {/*강의 유형*/}
         <FormRow provider={provider}>
           <DynamicFormField name={'강의 유형'}>
             <InputModalSelectorFormField
               modalConfig={{
                 content: <ChannelListModal />,
               }}
+              transformModalData={(modalData: any) => ({
+                '강의 유형': modalData?.channelName,
+                '강의 유형 아이디': modalData?.channelId,
+              })}
             />
           </DynamicFormField>
         </FormRow>
-      </ContentsRow>
-      {/*강의 세부 요청*/}
-      <ContentsRow>
+        {/*강의 세부 요청*/}
         <FormRow provider={provider}>
           <DynamicFormField name={'강의 세부 요청'}>
             <InputModalSelectorFormField
@@ -49,9 +56,7 @@ const BasicInfoComponent = forwardRef<HTMLDivElement, BasicInfoProps>(({ dynamic
             />
           </DynamicFormField>
         </FormRow>
-      </ContentsRow>
-      {/*채널*/}
-      <ContentsRow>
+        {/*채널*/}
         <FormRow provider={provider}>
           <DynamicFormField name={'채널'}>
             <InputModalSelectorFormField
@@ -79,7 +84,7 @@ const BasicInfoComponent = forwardRef<HTMLDivElement, BasicInfoProps>(({ dynamic
       {/*과정명*/}
       <ContentsRow>
         <FormRow provider={provider}>
-          <DynamicFormField name={'과정명'} />
+          <DynamicFormField name={'과정명'} disabled={getValues()?.['교육 목표'] === 'a'} />
         </FormRow>
       </ContentsRow>
       {/*교육 목표*/}
@@ -184,7 +189,7 @@ const BasicInfoComponent = forwardRef<HTMLDivElement, BasicInfoProps>(({ dynamic
           <DynamicFormField name={'담당자 연락처'} />
         </FormRow>
       </ContentsRow>
-    </>
+    </div>
   );
 });
 

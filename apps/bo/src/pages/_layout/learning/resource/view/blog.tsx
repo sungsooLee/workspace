@@ -6,10 +6,7 @@ import { PageContainer } from '../../../../../widgets/layout/ui/container/page-c
 import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
-import {
-  SharedChannelGridFormField,
-  ThumbnailUploaderFormField,
-} from '../../../../../features/learning';
+import { SharedChannelGridFormField } from '../../../../../features/learning';
 import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
 import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
 import { FormDisplay } from '../../../../../features/form/ui/form-display';
@@ -39,7 +36,8 @@ function RouteComponent() {
             <Button
               variant="point"
               size="sm"
-              onClick={() => router.navigate({ to: '/learning/resource' })}>
+              onClick={() => router.navigate({ to: '/learning/resource' })}
+            >
               목록
             </Button>
           </LinkBox>
@@ -123,7 +121,8 @@ function RouteComponent() {
           {/*외주개발업체정보 상세*/}
           <FormDisplay
             provider={provider}
-            dependencies={[{ name: 'isExternalDevelopmentCompany', value: true }]}>
+            dependencies={[{ name: 'isExternalDevelopmentCompany', value: true }]}
+          >
             {/*외부개발업체*/}
             <ContentsRow>
               <FormRow provider={provider}>
@@ -158,9 +157,7 @@ function RouteComponent() {
           {/*썸네일*/}
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name="thumbnails">
-                <ThumbnailUploaderFormField />
-              </DynamicFormField>
+              <DynamicFormField name="thumbnails" />
             </FormRow>
           </ContentsRow>
           {/*태그*/}
@@ -358,7 +355,7 @@ const formConfig: DynamicFormConfig = {
     {
       label: t('썸네일'),
       name: 'thumbnails',
-      type: 'custom',
+      type: 'thumbnail-list',
       format: 'array',
       value: [],
     },

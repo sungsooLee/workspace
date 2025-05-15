@@ -1,8 +1,6 @@
-import { PaginationResponse } from './pagination';
-import { SortResponse } from './sort';
-import { CourseResponse } from './course';
+import { SortResponse } from './api';
 
-export interface SequencesRequest extends PaginationResponse {
+export interface SequencesRequest {
   eduYear: number;
   courseId: number;
 }
@@ -21,7 +19,7 @@ export interface SequencesResponse {
   number: number;
   sort: SortResponse[];
   numberOfElements: number;
-  pageable: PaginationResponse;
+  pageable: any;
   first: boolean;
   last: boolean;
   empty: boolean;
@@ -36,6 +34,6 @@ export interface SequenceResponse {
   isDeleted: boolean;
   maxQuota: number;
   remainingQuota: number;
-  course: CourseResponse;
+  course: any;
   coordinatorId: number;
 }

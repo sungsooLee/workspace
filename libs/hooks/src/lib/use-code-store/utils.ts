@@ -1,14 +1,23 @@
 import { CODE_GROUP_TYPE } from './constants';
 import { httpService } from '@learnway/shared';
-import { Code } from './types';
+import { Code, CodeApiType } from './types';
 import { codeOptions } from './config';
+import { PMSApiPrefix } from '@learnway/config';
 
 /**
  * 기본 코드 조회 함수
  * @param group
  */
 const defaultFetchCodeGroup = async <K extends CODE_GROUP_TYPE>(group: K): Promise<Code[K]> => {
-  return await httpService.get(`/api/code/${group}`);
+  const response = await httpService.get<any>(`${PMSApiPrefix()}/enum/${group}`);
+  if (response && response[0] && response[0][group]) {
+    return response[0][group].map((item: CodeApiType) => ({
+      value: item.cdId,
+      label: item.multilingualKey || item.cdName,
+      ...item,
+    }));
+  }
+  return [];
 };
 
 /**
@@ -17,12 +26,14 @@ const defaultFetchCodeGroup = async <K extends CODE_GROUP_TYPE>(group: K): Promi
  * @param group
  */
 export const fetchCodeGroup = async <K extends CODE_GROUP_TYPE>(group: K): Promise<Code[K]> => {
-  const { api = undefined, options = [] } = codeOptions[group];
+  const codeOption = codeOptions[group];
+  const customApi = codeOption?.api;
+  const customOptions = codeOption?.options || [];
   try {
-    const response = api ? await api() : await defaultFetchCodeGroup(group);
-    return [...options, ...(response as Code[K])];
+    const response = customApi ? await customApi() : await defaultFetchCodeGroup(group);
+    return [...customOptions, ...(response as Code[K])];
   } catch (e: any) {
     console.error(e);
-    return [...options];
+    return [...customOptions];
   }
 };

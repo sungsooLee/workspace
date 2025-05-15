@@ -1,34 +1,93 @@
-/* eslint-disable @nx/enforce-module-boundaries */
-import { FC, useState } from 'react';
+import { Button, GridBox, TreeBox, TreeNode } from '@learnway/ui';
+import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
+import { roleTreeMockData } from '@entities/mock/role';
+import { t } from 'i18next';
+import { useRouterState } from '@tanstack/react-router';
+
+import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 import { cn } from '@learnway/shared';
-import { FormSubTitle } from '@shared/ui/form';
-import { Button, ContentsRow, Input, Dropdown } from '@learnway/ui';
-import { ContentsHistoryInfoFormField } from '@shared/ui/form/contents-history-info-form-field';
-import { IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';
-
-/* style */
-import styles from './role-info.module.css';
+import { FormSubTitle } from '@shared/ui';
+import { DynamicFormConfig, useSearchBox } from '@learnway/hooks';
+import { SearchBox } from '../../../../shared/ui/search-box';
+import { IcoFormRequired, IcoMinus, IcoPlus } from '@learnway/icons';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
+import { createColumnHelper } from '@tanstack/react-table';
+import { useState } from 'react';
 
-const TenantDetailLearningRoleGrantComponent: FC<any> = ({ menuScope }) => {
-  const [selectedValues, setSelectedValues] = useState<string[]>([]);
-  const options = [
-    { value: 'option1', label: '전체' },
-    { value: 'option2', label: '옵션 2' },
-    { value: 'option3', label: '옵션 3' },
-  ];
+const columnHelper = createColumnHelper<any>();
+
+// 속성명 변경 필요
+const columns = [
+  columnHelper.accessor('1', {
+    cell: (info) => info.getValue(),
+    header: '분류',
+  }),
+  columnHelper.accessor('2', {
+    cell: (info) => info.getValue(),
+    header: '회사',
+  }),
+  columnHelper.accessor('3', {
+    cell: (info) => info.getValue(),
+    header: '조직',
+  }),
+  columnHelper.accessor('4', {
+    cell: (info) => info.getValue(),
+    header: '이름',
+  }),
+  columnHelper.accessor('5', {
+    cell: (info) => info.getValue(),
+    header: '사용자ID',
+  }),
+  columnHelper.accessor('6', {
+    cell: (info) => info.getValue(),
+    header: '사용',
+  }),
+  columnHelper.accessor('7', {
+    cell: (info) => info.getValue(),
+    header: '권한시작일',
+  }),
+  columnHelper.accessor('8', {
+    cell: (info) => info.getValue(),
+    header: '권한종료일',
+  }),
+  columnHelper.accessor('1', {
+    cell: (info) => info.getValue(),
+    header: '데이터 접근 범위',
+  }),
+];
+
+const TenantDetailLearningRoleGrantComponent = ({ type: roleScope }: any) => {
+  const routerState = useRouterState();
+
+  const [roleTree, setRoleTree] = useState<any>(null);
+  const [roleTreeExpandedKeys, setRoleTreeExpandedKeys] = useState<string[]>([]);
+
+  const { provider: sProvider } = useSearchBox(searchConfig);
+  const roles = () => roleTreeMockData;
+  const [selectedRoleId, setSelectedRoleId] = useState<any>(null);
+
+  const handleRoleSelect = (node: TreeNode) => {
+    console.log(node);
+    setSelectedRoleId(node);
+  };
+
   return (
-    <div className={cn(styles.start, styles.wrap)}>
-      <FormSubTitle
-        label={'역할 정보'}
-        actionNode={<Button label={'저장'} variant={'save'} size={'sm'} />}
-        underLine={true}
+    <SectionLayout contentsRatio={'thirty'}>
+      <TreeBox
+        data={roles()}
+        initLevel={2}
+        treeId={'1'}
+        showSearchKeyword
+        title={'역할 목록'}
+        handleSelectedNodeChange={handleRoleSelect}
       />
-      <div className={styles.contents_wrap}>
-        {/* search-box */}
-        <ContentsRow>
-          {/* form_item */}
+      <div className={cn(styles.start, styles.wrap)}>
+        <FormSubTitle
+          label={'역할 정보'}
+          actionNode={<Button label={'저장'} variant={'save'} size={'sm'} />}
+          underLine={true}
+        />
+        <div className={styles.contents_wrap}>
           <div className={formStyles.form_item}>
             <label htmlFor="name-id" className={formStyles.form_label}>
               <span className={formStyles.form_text}>{'개별사용자 역할부여'}</span>
@@ -37,108 +96,85 @@ const TenantDetailLearningRoleGrantComponent: FC<any> = ({ menuScope }) => {
                 <IcoFormRequired width={12} height={12} />
               </span>
             </label>
-            <div className={formStyles.input_box}>
-              {/* 4개인 CASE */}
-              <div className={cn(searchStyles.start, searchStyles.wrap)}>
-                <div className={searchStyles.contents}>
-                  <div className={searchStyles.item_row}>
-                    <div className={searchStyles.item_wrap}>
-                      <div className={searchStyles.inner}>
-                        <div className={searchStyles.item}>
-                          <label htmlFor="name-label" className={searchStyles.label}>
-                            <span className={searchStyles.text}>회사</span>
-                          </label>
-                          <div className={searchStyles.box}>
-                            <Dropdown
-                              options={options}
-                              value={selectedValues}
-                              onChange={(selected) => setSelectedValues(selected)}
-                              variant="default"
-                              size={'sm'}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className={searchStyles.inner}>
-                        <div className={searchStyles.item}>
-                          <label htmlFor="name-label2" className={searchStyles.label}>
-                            <span className={searchStyles.text}>조직</span>
-                          </label>
-                          <div className={searchStyles.box}>
-                            <Dropdown
-                              options={options}
-                              value={selectedValues}
-                              onChange={(selected) => setSelectedValues(selected)}
-                              variant="default"
-                              size={'sm'}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className={searchStyles.inner}>
-                        <div className={searchStyles.item}>
-                          <label htmlFor="name-label3" className={searchStyles.label}>
-                            <span className={searchStyles.text}>호칭</span>
-                          </label>
-                          <div className={searchStyles.box}>
-                            <Dropdown
-                              options={options}
-                              value={selectedValues}
-                              onChange={(selected) => setSelectedValues(selected)}
-                              variant="default"
-                              size={'sm'}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className={searchStyles.inner}>
-                        <div className={searchStyles.item}>
-                          <label htmlFor="name-label4" className={searchStyles.label}>
-                            <span className={searchStyles.text}>이름</span>
-                          </label>
-                          <div className={searchStyles.box}>
-                            <Dropdown
-                              options={options}
-                              value={selectedValues}
-                              onChange={(selected) => setSelectedValues(selected)}
-                              variant="default"
-                              size={'sm'}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className={searchStyles.btn_box}>
-                    <Button
-                      type="button"
-                      className={searchStyles.btn_refresh}
-                      variant="search"
-                      size="sm"
-                      onlyIcon
-                    >
-                      <IcoRefresh02 className={searchStyles.icon_refresh} />
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="search"
-                      size="sm"
-                      className={searchStyles.btn_search}
-                    >
-                      <IcoSearch className={searchStyles.icon_sm_search} />
-                      조회
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <SearchBox provider={sProvider} onSearch={(data: any) => console.log(data)} />
+            <GridBox
+              data={[]}
+              columns={columns}
+              title={t('사용자 목록')}
+              showTotalCount={true}
+              multiple={true}
+              showNumberingColumn={true}
+              customButtonNode={
+                <>
+                  <Button label={'일괄적용'} variant={'text'} size={'sm'} className="btn_text" />
+
+                  <Button variant={'text'} size={'sm'} className="btn_text">
+                    <IcoMinus width={16} height={16} stroke={'#131C30'} />
+                    삭제
+                  </Button>
+                  <Button variant={'text'} size={'sm'} className="btn_text">
+                    <IcoPlus width={16} height={16} stroke={'#131C30'} />
+                    추가
+                  </Button>
+                </>
+              }
+            />
+            <div>유저 그룹 역할 부여 컴포넌트...</div>
           </div>
-        </ContentsRow>
-        <ContentsHistoryInfoFormField />
+        </div>
       </div>
-    </div>
+    </SectionLayout>
   );
 };
-
-TenantDetailLearningRoleGrantComponent.displayName = 'RoleGrant';
 export const TenantDetailLearningRoleGrant = TenantDetailLearningRoleGrantComponent;
+const formConfig: DynamicFormConfig = {
+  builders: [
+    // {
+    //     name: ''
+    // }
+  ],
+};
+
+// 셀렉박스의 경우에 공통 코드 ?? 아니면 선택할 수 있는 셀렉 박스?
+const searchConfig: any = {
+  builders: [
+    [
+      {
+        name: 'company',
+        type: 'dropdown',
+        label: t('회사'),
+        value: '',
+        options: [{ value: '', label: t('선택') }],
+        optionsConfig: {
+          //
+        },
+      },
+      {
+        name: 'dept',
+        type: 'dropdown',
+        label: t('조직'),
+        value: '',
+        options: [{ value: '', label: t('선택') }],
+        optionsConfig: {
+          //
+        },
+      },
+      {
+        name: 'dept2',
+        type: 'dropdown',
+        label: t('호칭'),
+        value: '',
+        options: [{ value: '', label: t('선택') }],
+        optionsConfig: {
+          //
+        },
+      },
+      {
+        name: 'name',
+        type: 'text',
+        label: t('이름'),
+        value: '',
+      },
+    ],
+  ],
+};

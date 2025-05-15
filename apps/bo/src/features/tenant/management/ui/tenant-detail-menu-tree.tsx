@@ -37,7 +37,7 @@ import {
   getAllTreeKeys,
   getFirstExpandKeys,
   moveNodeCheck,
-  transformApiDataToTreeData,
+  transformMenuApiDataToTreeData,
 } from '../service/tenant-detail-tree.service';
 
 const DIVICE_NAME = {
@@ -170,7 +170,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
     if (menuData) {
       prevDataRef.current = menuData;
       console.log(menuData);
-      const transformedData = transformApiDataToTreeData(menuData);
+      const transformedData = transformMenuApiDataToTreeData(menuData);
       setTreeData(transformedData);
       if (transformedData && transformedData.length > 0 && expandedKeys.length === 0) {
         const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);

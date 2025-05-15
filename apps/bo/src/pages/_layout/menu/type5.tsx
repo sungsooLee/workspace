@@ -16,6 +16,7 @@ import { buildJodObject } from '@learnway/shared';
 import { SubTitlesFormField } from '../../../features/form/ui';
 import React, { forwardRef, useState } from 'react';
 import { FormInfoArea } from '@shared/ui/form/components/form-info-area';
+import { t } from 'i18next';
 
 export const Route = createFileRoute('/_layout/menu/type5')({
   component: RouteComponent,
@@ -118,6 +119,12 @@ function RouteComponent() {
               </DynamicFormField>
             </FormRow>
           </ContentsRow>
+          <ContentsRow>
+            {/*testChip*/}
+            <FormRow provider={provider}>
+              <DynamicFormField name={'testChip'} />
+            </FormRow>
+          </ContentsRow>
         </MainContents>
       </PageContainer>
     </form>
@@ -210,6 +217,11 @@ const formConfig: DynamicFormConfig = {
       type: 'switch',
       format: 'boolean', // 기본 string
       value: false,
+      switchConfig: {
+        guideText: (value) => {
+          return value ? 'true' : 'false';
+        },
+      },
     },
     {
       label: '외부 업체명',
@@ -238,6 +250,16 @@ const formConfig: DynamicFormConfig = {
       type: 'custom',
       format: 'string', // 기본 string
       value: '',
+    },
+    {
+      name: 'testChip',
+      type: 'chip-list',
+      label: t('테넌트 - 우측 액션버튼 + chip list'),
+      format: 'array',
+      value: ['A', 'B', 'C'],
+      placeholder: '',
+      description: '',
+      chipListConfig: {},
     },
   ],
   validator: {

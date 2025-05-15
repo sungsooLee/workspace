@@ -6,20 +6,21 @@ export const roleQueryKeys = {
   roles: ['roles'] as const,
   menus: ['menus'] as const,
   apis: ['apis'] as const,
+  tree: ['tree'] as const,
 };
 
 export const roleManagerQueryOptions = {
   // 모든 역할 목록 트리 조회
-  allRoles: () => ({
+  allRoles: (tenantId: number, siteScope: string) => ({
     queryKey: [...roleQueryKeys.all, ...roleQueryKeys.roles],
-    queryFn: async () => RoleManagerService.fetchRoles(),
+    queryFn: async () => RoleManagerService.fetchRoles(tenantId, siteScope),
   }),
 
   // 특정 역할 조회
-  getRole: (roleId: string) => ({
-    queryKey: [...roleQueryKeys.all, ...roleQueryKeys.roles, roleId],
-    queryFn: async () => RoleManagerService.fetchRole(roleId),
-    enabled: !!roleId,
+  getRole: (roleCode: string) => ({
+    queryKey: [...roleQueryKeys.all, ...roleQueryKeys.roles, roleCode],
+    queryFn: async () => RoleManagerService.fetchRole(roleCode),
+    enabled: !!roleCode,
   }),
 
   // 모든 메뉴 목록 트리 조회
@@ -48,6 +49,11 @@ export const roleManagerQueryOptions = {
     queryFn: async () => RoleManagerService.fetchRoleApis(roleId),
     enabled: !!roleId,
   }),
+  // 역할 트리 조회
+  getRoleTree: (tenantId: number, siteScope: string) => ({
+    queryKey: [roleQueryKeys.all, roleQueryKeys.tree, tenantId, siteScope],
+    queryFn: async () => RoleManagerService.fetchRoleTree(tenantId, siteScope),
+  }),
 };
 
 export const roleMutateOptions = {
@@ -58,7 +64,7 @@ export const roleMutateOptions = {
 
   // 역할 삭제
   deleteRole: () => ({
-    mutationFn: (roleId: string) => RoleManagerService.deleteRole(roleId),
+    mutationFn: (roleCode: string) => RoleManagerService.deleteRole(roleCode),
   }),
 
   // 역할 수정

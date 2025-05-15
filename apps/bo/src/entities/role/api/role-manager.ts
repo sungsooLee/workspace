@@ -10,17 +10,20 @@ export default class RoleManagerService {
    * 역할 목록 트리 조회
    * @returns 역할 목록 트리
    */
-  static fetchRoles(): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/roles`);
+  static fetchRoles(tenantId: number, siteScope: string): Promise<any> {
+    return httpService.get<any>(`${PMSApiPrefix()}/roles`, {
+      tenantId: tenantId,
+      siteScope: siteScope,
+    });
   }
 
   /**
    * 특정 역할 조회
-   * @param roleId 역할 ID
+   * @param roleCode 역할 코드
    * @returns 역할 정보
    */
-  static fetchRole(roleId: string): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/roles/${roleId}`);
+  static fetchRole(roleCode: string): Promise<any> {
+    return httpService.get<any>(`${PMSApiPrefix()}/roles/${roleCode}`);
   }
 
   /**
@@ -34,11 +37,11 @@ export default class RoleManagerService {
 
   /**
    * 역할 삭제
-   * @param roleId 역할 ID
+   * @param roleCode 역할 ID
    * @returns 삭제 결과
    */
-  static deleteRole(roleId: string): Promise<any> {
-    return httpService.delete<any>(`${PMSApiPrefix()}/roles/${roleId}`);
+  static deleteRole(roleCode: string): Promise<any> {
+    return httpService.delete<any>(`${PMSApiPrefix()}/roles/${roleCode}`);
   }
 
   /**
@@ -47,7 +50,7 @@ export default class RoleManagerService {
    * @returns 수정된 역할 정보
    */
   static updateRole(payload: Role): Promise<any> {
-    return httpService.put<Role>(`${PMSApiPrefix()}/roles/${payload.roleUuid}`, payload);
+    return httpService.put<Role>(`${PMSApiPrefix()}/roles/${payload.roleCode}`, payload);
   }
 
   /**
@@ -103,5 +106,12 @@ export default class RoleManagerService {
    */
   static fetchRoleApis(roleId: string): Promise<any> {
     return httpService.get<any>(`${PMSApiPrefix()}/roles/${roleId}/apis`);
+  }
+
+  static fetchRoleTree(tenantId: number, siteScope: string) {
+    return httpService.get<any>(`${PMSApiPrefix()}/roles/tree`, {
+      tenantId: tenantId,
+      siteScope: siteScope,
+    });
   }
 }

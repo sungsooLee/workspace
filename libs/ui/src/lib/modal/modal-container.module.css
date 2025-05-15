@@ -1,6 +1,3 @@
-.start {
-  @apply overflow-hidden;
-}
 .overlay {
   background-color: transparent;
   position: fixed;

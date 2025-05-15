@@ -28,8 +28,16 @@ export default class TenantService {
 function genTenantCreate(payload: any) {
   return {
     tenantName: payload.tenantName,
-    windowTitle: '',
-    logoImageUrl: '',
-    loginImageUrl: '',
+    logoImageUrl: payload.logoImageUrl,
+    tenantMappingRoleList: payload.tenantMappingRoleList,
+    tenantBillingTag: payload.tenantBillingTag,
+    isUsed: payload.isUsed,
+    tenantDesc: payload.tenantDesc,
+    isPc: payload.isPc,
+    isMobile: payload.isMobile,
+    isApp: payload.isApp,
+    isCommonCategory: payload.isCommonCategory,
+    isTenantCategory: payload.isTenantCategory,
+    tenantMappingLanguageTypeList: payload.tenantMappingLanguageTypeList,
   };
 }

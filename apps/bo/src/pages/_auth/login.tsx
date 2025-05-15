@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { createFileRoute, useRouter, Link } from '@tanstack/react-router';
+import { createFileRoute, useRouter, Link, useSearch } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { isEmpty } from 'lodash';
 
@@ -18,6 +18,7 @@ import { AUTH_CONTAINERS } from '../../widgets/layout';
 import authStyles from './auth.module.css';
 import styles from '@learnway/styles/bo/pages/_auth/login.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import { usePermissionStore } from '../../shared/lib/permission-store';
 
 export const Route = createFileRoute('/_auth/login')({
   component: RouteComponent,
@@ -33,6 +34,8 @@ export const Route = createFileRoute('/_auth/login')({
 function RouteComponent() {
   const { t } = useTranslation();
   const router = useRouter();
+  const params = Route.useParams();
+  const search = Route.useSearch();
 
   const { provider, onSubmit, onFormChange, control } = useDynamicForm(detailConfig);
 
@@ -54,8 +57,10 @@ function RouteComponent() {
       onSuccess: async (data) => {
         const locale = data?.locale;
         locale && (await setLanguage(locale));
+        router.navigate({ to: search.redirect || '/' });
 
-        router.navigate({ to: '/' });
+        // 임시 : 사용 가능한 API 목록 fetch
+        await usePermissionStore.getState().fetchPermissions();
       },
     });
   };

@@ -24,6 +24,7 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
     multipartThreshold = DEFAULT_MULTIPART_THRESHOLD,
     s3Path,
     maxFileCount = 1,
+    maxFileSize = -1,
     acceptFiles = [],
   } = config;
 
@@ -60,6 +61,8 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
       ) {
         if (statusCount.failed === files.length) {
           status = 'failed';
+        } else if (statusCount['validating-error'] === files.length) {
+          status = 'validating-error';
         } else {
           status = 'completed';
         }
@@ -182,10 +185,20 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
     const validatingFiles = files.filter((f) => f.status === 'validating'); // 유효성 상태의 파일만 처리
     if (validatingFiles.length === 0) return;
     validatingFiles.forEach((file) => {
-      const isError = false;
+      let isError = false;
+      let message = '';
+      if (maxFileSize > 0 && file.file.size > maxFileSize) {
+        isError = true;
+        message = 'size error';
+      }
+      if (acceptFiles.length > 0 && !acceptFiles.includes(file.extension.toUpperCase())) {
+        isError = true;
+        message = 'extension error';
+      }
       setFiles((prev) =>
         updateFile(prev, file.id, {
           status: isError ? 'validating-error' : 'idle',
+          message,
         }),
       );
     });

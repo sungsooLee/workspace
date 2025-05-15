@@ -3,22 +3,25 @@
   @apply scrollbar relative box-border overflow-auto border border-solid border-[var(--gray5)];
   table {
     thead {
-      @apply sticky top-0 z-[1];
+      @apply sticky top-0 z-[1] !h-[39px] w-full bg-[var(--gray1)];
       tr {
-        @apply flex w-full border-b-[1px] border-solid !border-[var(--gray4)] bg-[var(--gray1)];
+        @apply flex;
         th.thead_th {
-          @apply !border-b-0 bg-[var(--gray1)];
+          @apply !h-[39px] !border-b-0 bg-[var(--gray1)];
           .th_wrap {
-            @apply h-full;
+            @apply !h-[39px];
             .th_cell {
-              @apply body_bo_4_b flex min-h-[40px] items-center px-[8px] text-[var(--gray8)];
+              @apply body_bo_4_b flex min-h-[39px] items-center px-[8px] text-[var(--gray8)];
               .icon_up,
               .icon_down,
               .btn_filter {
                 @apply ml-auto;
               }
-              .icon_down {
+              .icon_up {
                 @apply rotate-180;
+              }
+              [class*='nlp--checkbox'] {
+                @apply mt-[5px];
               }
             }
           }
@@ -26,6 +29,9 @@
             @apply border-l-[1px] border-solid border-[var(--gray3)];
           }
         }
+      }
+      &::after {
+        @apply sticky left-0 top-[40px] flex h-[1px] w-full bg-[var(--gray4)] content-[''];
       }
     }
     tbody {
@@ -243,6 +249,9 @@
           svg {
             @apply hidden;
           }
+          [role='checkbox'] svg {
+            @apply block;
+          }
           &:not(:first-child) {
             @apply border-l-[1px] border-[var(--gray4)];
           }
@@ -258,6 +267,9 @@
           @apply body_bo_2_r !table-cell !h-[52px] !min-h-[52px] break-all border-b-[1px] border-solid border-[var(--gray4)] px-[24px] py-[9px] text-center align-middle;
           &:not(:first-child) {
             @apply border-l-[1px] border-[var(--gray4)];
+          }
+          svg {
+            @apply inline-block;
           }
         }
       }
@@ -289,17 +301,16 @@
 .th_pinned_left {
   @apply !sticky left-0 !z-[3] bg-[var(--gray1)];
   &.th_pinned_last {
-    border-right: 1px solid var(--gray5) !important;
+    @apply border-r-[1px] border-solid border-[var(--gray5)];
   }
   & + .thead_th:not(.th_pinned_left) {
     @apply !border-l-0;
   }
 }
 .td_pinned_left {
-  @apply !z-[3] !h-[40px] bg-white;
-  border-bottom: 1px solid var(--gray2) !important;
+  @apply !z-[3] !h-[40px] border-b-[1px] border-solid border-[var(--gray2)] bg-white;
   &.td_pinned_last {
-    border-right: 1px solid var(--gray5) !important;
+    @apply border-r-[1px] border-solid border-[var(--gray2)];
   }
   & + td:not(.td_pinned_left) {
     @apply !border-l-0;
