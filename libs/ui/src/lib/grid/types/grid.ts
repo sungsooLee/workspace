@@ -141,7 +141,7 @@ export interface GridProps<T> {
     pageIndex: number;
 
     /**
-     * 전체 행의 개수입니다.
+     * 전체 페이지 개수입니다.
      */
     totalRows: number;
 

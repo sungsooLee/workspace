@@ -218,6 +218,8 @@ export default function usePagination(props: UsePaginationProps) {
 
   return {
     items,
+    currentPage: page,
+    totalPages: count,
     ...other,
   };
 }

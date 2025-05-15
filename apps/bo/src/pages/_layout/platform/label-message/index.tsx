@@ -18,8 +18,8 @@ export const Route = createFileRoute('/_layout/platform/label-message/')({
 });
 
 function RouteComponent() {
-  const router = useRouter();
   const { t } = useTranslation();
+  const router = useRouter();
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
   const [selectedLabelMessageId, setSelectedLabelMessageId] = useState<number>(0);

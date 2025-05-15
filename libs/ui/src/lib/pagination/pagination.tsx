@@ -6,12 +6,13 @@ import styles from './pagination.module.css';
 
 import usePagination from './pagination.hook';
 import { PaginationItem } from './Pagination-item';
+import { Dropdown } from '../dropdown/dropdown';
+import { DropdownOption } from '../type';
 
 export interface PaginationComponentProps {
   className?: string;
   hideNextButton?: boolean;
   hidePrevButton?: boolean;
-  onChange?: (event: React.ChangeEvent<unknown>, value: number) => void;
   showFirstButton?: boolean;
   showLastButton?: boolean;
   page?: number; // 현제 페이지
@@ -22,6 +23,11 @@ export interface PaginationComponentProps {
   color?: string; // 버튼 color
   disabled?: boolean;
   variant?: string;
+  /**
+   * 페이지 크기 선택 옵션 배열입니다.
+   */
+  pageSizeOptions?: number[];
+  onChange?: (event: React.ChangeEvent<unknown>, value: number) => void;
   // prop 자세한 내용은 https://mui.com/material-ui/react-pagination/#api 참조
 }
 
@@ -29,29 +35,63 @@ const PaginationComponent = forwardRef<HTMLDivElement, PaginationComponentProps>
   (
     {
       className,
+      page = 0,
       color = 'standard',
       disabled = false,
       size = 'medium',
       variant = 'text',
+      pageSizeOptions = [10, 20, 50, 100],
       ...props
     },
     ref,
   ) => {
-    const { items } = usePagination({ ...props, componentName: 'Pagination' });
-    console.log(items);
+    const { items, currentPage, totalPages } = usePagination({
+      ...props,
+      componentName: 'Pagination',
+    });
+
+    console.log({ items, currentPage, totalPages });
+
+    const options: DropdownOption[] = pageSizeOptions?.map((size) => ({
+      value: size.toString(),
+      label: `${size}개씩 보기`,
+    }));
+
+    const handleChange = (value?: DropdownOption) => {
+      if (value) {
+        // onPageSizeChange(Number(value));
+      }
+    };
 
     return (
-      <div ref={ref} className={cn(styles.root, styles.pagination, className, 'nlp--pagination')}>
-        {items.map((item: any, index: number) => (
-          <PaginationItem
-            key={index}
-            {...item}
-            color={color}
-            size={size}
-            variant={variant}
-            className={styles.btn_number}
-          />
-        ))}
+      <div
+        ref={ref}
+        className={cn(
+          styles.root,
+          styles.pagination,
+          className,
+          'nlp--pagination',
+          'flex flex-row',
+        )}
+      >
+        <div className={'w-[100px]'}>
+          <Dropdown value={page.toString()} onChange={handleChange} options={options} />
+        </div>
+        {/* 페이지 번호들 */}
+        <div>
+          {items.map((item: any, index: number) => (
+            <PaginationItem
+              key={index}
+              {...item}
+              page={page}
+              color={color}
+              size={size}
+              variant={variant}
+              className={styles.btn_number}
+            />
+          ))}
+        </div>
+        <span className={styles.count_wrap}>{`${currentPage + 1} / ${totalPages}  Page`}</span>
       </div>
     );
   },

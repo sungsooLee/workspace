@@ -8,7 +8,7 @@ import {
   RowSelectionState,
   SortingState,
 } from '@tanstack/react-table';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { ReactQueryConfigProvider } from '@learnway/config';
 import React, { ReactNode, useEffect, useState } from 'react';
 import {
@@ -29,6 +29,7 @@ import {
 } from '@learnway/ui';
 import { IcoDownload, IcoSetting } from '@learnway/icons';
 import { getRandomId } from '@learnway/shared';
+import { PaginationResponse } from '../../../../bo/src/types';
 
 export default {
   title: 'Components/Grid',
@@ -474,7 +475,50 @@ export const WithInfiniteScroll: Story = {
 };
 
 // 페이지네이션용 mock API
-const fetchPaginatedData = async ({
+const fetchPaginatedData = (size: number): PaginationResponse<any> => {
+  const content = Array(size)
+    .fill({})
+    .map((_, index) => ({
+      firstName: `firstName ${index}`,
+      lastName: `lastName ${index}`,
+      age: `age ${index}`,
+      visits: `visits ${index}`,
+      status: `status ${index}`,
+      progress: `progress ${index}`,
+      preview: `preview ${index}`,
+      download: (
+        <Button className="download" onlyIcon>
+          <IcoDownload width={16} height={16} stroke={'#747D91'} />
+        </Button>
+      ),
+    }));
+
+  return {
+    totalPages: 10,
+    totalElements: size,
+    size: 10,
+    content,
+    number: 1,
+    numberOfElements: 1,
+    first: true,
+    last: false,
+    empty: false,
+    pageable: {
+      offset: 0,
+      pageSize: 10,
+      paged: true,
+      pageNumber: 0,
+      unpaged: false,
+      sort: {
+        sorted: false,
+        unsorted: true,
+        empty: true,
+      },
+    },
+  };
+};
+
+const fetchPaginatedData2 = async ({
   pageIndex,
   pageSize,
   tableState,
@@ -523,11 +567,9 @@ const PaginationTable = () => {
     filters: [] as ColumnFiltersState,
   });
 
-  const { data, isFetching } = useQuery({
-    queryKey: ['PersonEntity', pageIndex, pageSize, tableState] as const,
-    queryFn: () => fetchPaginatedData({ pageIndex, pageSize, tableState }),
-    placeholderData: keepPreviousData,
-  });
+  const response: PaginationResponse<Person> = fetchPaginatedData(100);
+
+  console.log(response);
 
   const handleStateChange = (newState: GridState) => {
     setTableState((prev) => ({
@@ -540,14 +582,13 @@ const PaginationTable = () => {
   return (
     <div className="p-4">
       <GridBox
-        data={data?.data ?? []}
+        data={response.content}
         columns={columns}
         onStateChange={handleStateChange}
-        isLoading={isFetching}
         pagination={{
           pageSize,
           pageIndex,
-          totalRows: data?.meta.totalRows ?? 0,
+          totalRows: 300,
           onPageChange: setPageIndex,
           onPageSizeChange: setPageSize,
         }}

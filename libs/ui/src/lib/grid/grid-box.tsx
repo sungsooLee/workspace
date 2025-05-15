@@ -1,15 +1,15 @@
-import { FC, forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
+import React, { FC, forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
 import { createColumnHelper } from '@tanstack/react-table';
 import {
   Button,
   ExcelConfig,
-  getAllKeysByTree,
   Grid,
   GridBoxProps,
   GridImperative,
+  Pagination,
   useModal,
 } from '@learnway/ui';
-import { IcoDownload, IcoMinus, IcoUploadCloud, IcoPlus } from '@learnway/icons';
+import { IcoDownload, IcoMinus, IcoPlus, IcoUploadCloud } from '@learnway/icons';
 import styles from './grid-box.module.css';
 import { cn, fileDownload } from '@learnway/shared';
 import { useTranslation } from 'react-i18next';
@@ -269,6 +269,14 @@ const GridBoxComponent = <T extends object>(
         clientSideSorting={clientSideSorting}
         clientSideFiltering={clientSideFiltering}
       />
+      {/* 페이지네이션 */}
+      {paginationProps && (
+        <Pagination
+          count={paginationProps.totalRows}
+          page={paginationProps.pageIndex}
+          onChange={(event: React.ChangeEvent<unknown>, value: number) => console.log(event, value)}
+        />
+      )}
     </div>
   );
 };
