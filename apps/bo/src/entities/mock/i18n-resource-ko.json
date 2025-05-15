@@ -51,12 +51,12 @@
       "cancelConfirm": "취소하시겠습니까?",
       "loginExtensionAlert": "로그인 시간을 연장하시겠습니까?",
       "passwordNotChangedGuide": "비밀번호를 변경하지 않으면 로그아웃됩니다.\n서비스를 이용하려면 비밀번호를 변경해 주세요.",
-      "upload" : {
+      "upload": {
         "uploadDescription": "영역을 클릭하거나 파일을 마우스로 끌어 놓으세요"
       },
-      "learningResourceFileUploadModal"  :{
-        "uploaderLabel" :  "파일은 1개당 최대 4GB 이하로 가능 합니다.",
-        "uploaderGuideText" :  "업로드된 동영상은 학습자원목록에서 조회가능합니다.",
+      "learningResourceFileUploadModal": {
+        "uploaderLabel": "파일은 1개당 최대 4GB 이하로 가능 합니다.",
+        "uploaderGuideText": "업로드된 동영상은 학습자원목록에서 조회가능합니다.",
         "sizeError": "4GB 이하의 파일을 업로드 하세요.",
         "extensionError": "지원하는 형식의 파일을 업로드 하세요."
       }
@@ -88,6 +88,18 @@
         "title": "테넌트 카테고리 목록"
       },
       "menu": {}
+    },
+    "modal": {
+      "addressSearch": {
+        "title": "주소 찾기",
+        "placeholder": "도로명, 지번, 건물명 검색",
+        "zipCodePrefix": "우 ",
+        "guideText": "이렇게 검색해보세요!",
+        "roadAddress": "도로명 + 건물번호",
+        "jibunAddress": "동/읍/면/리 + 번지",
+        "sampleRoadAddress": "예) 테헤란로 510, 샘플하나더",
+        "sampleJibunAddress": "예) 삼성동 171-2, 샘플 하나더"
+      }
     },
     "common": {
       "code": {
@@ -314,7 +326,9 @@
       "duplication": "중복",
       "commonCdGroupList": "공통코드그룹목록",
       "courseOpen": "과정 개설",
-      "preview": "미리보기"
+      "preview": "미리보기",
+      "retrieve": "검색",
+      "select": "선택"
     },
     "all": "전체",
     "confirm": {

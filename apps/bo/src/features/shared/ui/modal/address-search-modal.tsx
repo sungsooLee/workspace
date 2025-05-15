@@ -1,8 +1,16 @@
-import React, { useEffect, useState, FC } from 'react';
+import React, { FC, memo, useState, useEffect } from 'react';
+import { cn } from '@learnway/shared';
 import { t } from 'i18next';
-import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
-import { SearchBox } from '@shared/ui/search-box';
-import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
+import {
+  ModalBody,
+  ModalContainer,
+  ModalTitle,
+  ContentsRow,
+  Input,
+  Button,
+  Pagination,
+  useModal,
+} from '@learnway/ui';
 import {
   IcoChevronLeft,
   IcoChevronLeftDouble,
@@ -10,19 +18,20 @@ import {
   IcoChevronRightDouble,
 } from '@/libs/icons/src';
 
-import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
+import styles from './address-search-modal.module.css';
 
 const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
   const { close } = useModal();
 
-  const { provider: sProvider, getValues } = useSearchBox(searchConfig);
+  const [searchValue, setSearchValue] = useState('');
   const [searchResult, setSearchResult] = useState<any[]>([]);
-
-  const [pageIndex, setPageIndex] = useState(1);
+  const [pageIndex, setPageIndex] = useState(0);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [totalRows, setTotalRows] = useState(0);
+  const [totalPage, setTotalPage] = useState(0);
 
-  const PAGE_SIZE = 10;
+  const PAGE_SIZE = 3;
 
   useEffect(() => {
     if (searchKeyword && searchKeyword.length > 0) {
@@ -30,12 +39,20 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
     }
   }, [pageIndex, searchKeyword]);
 
-  const handleOnSearch = async (data: any) => {
-    console.log('data', data);
-    if (data.searchString.trim().length > 0) {
-      setSearchKeyword(data.searchString.trim());
+  const handleOnSearch = async () => {
+    if (searchValue.trim().length > 0) {
+      setSearchKeyword(searchValue.trim());
       setPageIndex(0);
+    } else {
+      setSearchKeyword('');
+      setPageIndex(0);
+      setTotalRows(0);
     }
+  };
+
+  const handleInputChange = (e: any) => {
+    const value = e.target.value;
+    setSearchValue(value);
   };
 
   const searchAddress = async (currentPage: number, keyword: string) => {
@@ -63,6 +80,9 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
       setSearchResult([]);
     }
     setTotalRows(data.results.common.totalCount);
+    setTotalPage(Math.ceil(data.results.common.totalCount / PAGE_SIZE));
+    console.log('### totalRows', totalRows);
+    console.log('### totalPage', totalPage);
   };
 
   const handleSelect = (item: any) => {
@@ -70,74 +90,116 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
     close();
   };
 
-  const onPageChange = (index: number) => {
-    setPageIndex(index);
+  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPageIndex(value - 1);
   };
 
+  /*
   const renderPagination = () => {
-    const totalPages = Math.ceil(totalRows / PAGE_SIZE);
-    console.log('### totalPages', totalPages);
     return (
-      <div onClick={(e) => e.stopPropagation()}>
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className={cn(styles.root, styles.pagination, 'nlp--pagination')}
+      >
         <div>
-          <Button onClick={() => onPageChange(0)} disabled={pageIndex === 0} onlyIcon>
+          <Button onClick={() => handlePageChange(0)} disabled={pageIndex === 0} onlyIcon>
             {<IcoChevronLeftDouble width={32} height={32} fill="#4C515E" />}
           </Button>
-          <Button onClick={() => onPageChange(pageIndex - 1)} disabled={pageIndex === 0}>
+          <Button onClick={() => handlePageChange(pageIndex - 1)} disabled={pageIndex === 0}>
             {<IcoChevronLeft width={32} height={32} fill="#4C515E" />}
           </Button>
 
-          {/* 페이지 번호들 */}
           <div>
-            {Array.from({ length: totalPages }, (_, i) => (
-              <Button key={i} onClick={() => onPageChange(i)}>
+            {Array.from({ length: totalPage }, (_, i) => (
+              <Button key={i} onClick={() => handlePageChange(i)}>
                 {i + 1}
               </Button>
             ))}
           </div>
 
           <Button
-            onClick={() => onPageChange(pageIndex + 1)}
-            disabled={pageIndex >= totalPages - 1}
+            onClick={() => handlePageChange(pageIndex + 1)}
+            disabled={pageIndex >= totalPage - 1}
           >
             {<IcoChevronRight width={32} height={32} fill="#4C515E" />}
           </Button>
           <Button
-            onClick={() => onPageChange(totalPages - 1)}
-            disabled={pageIndex >= totalPages - 1}
+            onClick={() => handlePageChange(totalPage - 1)}
+            disabled={pageIndex >= totalPage - 1}
           >
             {<IcoChevronRightDouble width={32} height={32} fill="#4C515E" />}
           </Button>
         </div>
       </div>
     );
-  };
+  };*/
 
   return (
     <ModalContainer>
-      <ModalTitle>주소 찾기</ModalTitle>
+      <ModalTitle>{t('LABEL.modal.addressSearch.title')}</ModalTitle>
       <ModalBody>
-        <div className={popupStyles.wrap}>
-          <SearchBox provider={sProvider} onSearch={handleOnSearch} />
-          {searchResult.length > 0 &&
-            searchResult.map((item) => (
-              <div>
-                <div>{item.roadAddr}</div>
-                <div>{item.jibunAddr}</div>
-                <div>
-                  우 {item.zipNo}{' '}
-                  <Button
-                    variant={'gray'}
-                    size={'sm'}
-                    style={{ float: 'right' }}
-                    onClick={() => handleSelect(item)}
-                  >
-                    선택
+        <div className={`${styles.start} ${styles.address}`}>
+          <div className={styles.input_box}>
+            <ContentsRow>
+              <div className={formStyles.form_item}>
+                <div className={formStyles.input_box}>
+                  <Input
+                    id="searchWord"
+                    type="text"
+                    placeholder={t('LABEL.modal.addressSearch.placeholder')}
+                    value={searchValue}
+                    onChange={handleInputChange}
+                  />
+                  <Button variant="primary" size="lg" onClick={handleOnSearch}>
+                    {t('LABEL.button.retrieve')}
                   </Button>
                 </div>
               </div>
-            ))}
-          {searchResult.length > 0 && renderPagination()}
+            </ContentsRow>
+          </div>
+          {totalRows > 0 ? (
+            <div className={styles.address_list}>
+              <ul>
+                {searchResult.length > 0 &&
+                  searchResult.map((item) => (
+                    <li>
+                      <Button onClick={() => handleSelect(item)}>
+                        <p>
+                          <strong>{item.roadAddr}</strong>
+                          <span>{item.jibunAddr}</span>
+                          <span>
+                            {t('LABEL.modal.addressSearch.zipCodePrefix')}
+                            {item.zipNo}
+                          </span>
+                        </p>
+                        <span>{t('LABEL.button.select')}</span>
+                      </Button>
+                    </li>
+                  ))}
+              </ul>
+              {/**renderPagination()*/}
+              <Pagination
+                className={styles.pagenation}
+                count={totalPage}
+                page={pageIndex + 1}
+                onChange={handlePageChange}
+              />
+            </div>
+          ) : (
+            <div className={styles.example_box}>
+              <p>{t('LABEL.modal.addressSearch.guideText')}</p>
+              <div className={styles.box}>
+                <dl>
+                  <dt>{t('LABEL.modal.addressSearch.roadAddress')}</dt>
+                  <dd>{t('LABEL.modal.addressSearch.sampleRoadAddress')}</dd>
+                </dl>
+                <dl>
+                  <dt>{t('LABEL.modal.addressSearch.jibunAddress')}</dt>
+                  <dd>{t('LABEL.modal.addressSearch.sampleJibunAddress')}</dd>
+                </dl>
+              </div>
+            </div>
+          )}
         </div>
       </ModalBody>
     </ModalContainer>
@@ -145,19 +207,3 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
 };
 
 export const AddressSearchModal = AddressSearchModalComponent;
-
-const searchConfig: SearchBoxConfig = {
-  builders: [
-    [
-      {
-        name: 'searchString',
-        type: 'text',
-        label: t('검색어'),
-        value: '',
-      },
-    ],
-  ],
-  validator: {
-    searchString: true,
-  },
-};
