@@ -22,6 +22,7 @@ function SectionLayoutComponent({
         contentsRatio ? styles[contentsRatio] : styles.half,
         isLineVisible && styles.line,
         className,
+        'section_layout',
       )}
     >
       {children}

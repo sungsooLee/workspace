@@ -24,7 +24,8 @@ function LayoutComponent() {
     if (!tenant) {
       return;
     }
-    document.title = tenant.windowTitle;
+    // TODO 테넌트 윈도우 타이틀 확인
+    // document.title = tenant.windowTitle;
   }, [tenant]);
 
   return (
