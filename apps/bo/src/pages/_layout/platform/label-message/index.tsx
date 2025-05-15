@@ -92,7 +92,7 @@ function RouteComponent() {
           <GridBox
             config={gConfig}
             title={t('목록')}
-            height={440}
+            height={400}
             showAdd
             showNumberingColumn
             autoSelectFirstRow

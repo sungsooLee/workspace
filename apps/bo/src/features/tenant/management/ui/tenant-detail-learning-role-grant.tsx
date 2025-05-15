@@ -1,11 +1,12 @@
 import { Button, GridBox, TreeBox, TreeNode } from '@learnway/ui';
-import { SectionLayout } from '../../../../widgets/layout/ui/container/section-layout/section-layout';
-import { roleTreeMockData } from '../../../../entities/mock/role';
+import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
+import { roleTreeMockData } from '@entities/mock/role';
 import { t } from 'i18next';
+import { useRouterState } from '@tanstack/react-router';
 
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 import { cn } from '@learnway/shared';
-import { FormSubTitle } from '../../../../shared/ui';
+import { FormSubTitle } from '@shared/ui';
 import { DynamicFormConfig, useSearchBox } from '@learnway/hooks';
 import { SearchBox } from '../../../../shared/ui/search-box';
 import { IcoFormRequired, IcoMinus, IcoPlus } from '@learnway/icons';
@@ -56,6 +57,11 @@ const columns = [
 ];
 
 const TenantDetailLearningRoleGrantComponent = ({ type: roleScope }: any) => {
+  const routerState = useRouterState();
+
+  const [roleTree, setRoleTree] = useState<any>(null);
+  const [roleTreeExpandedKeys, setRoleTreeExpandedKeys] = useState<string[]>([]);
+
   const { provider: sProvider } = useSearchBox(searchConfig);
   const roles = () => roleTreeMockData;
   const [selectedRoleId, setSelectedRoleId] = useState<any>(null);

@@ -25,6 +25,14 @@
     .content {
       @apply box-border flex w-full items-stretch overflow-x-hidden rounded-[8px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] p-[32px];
     }
+    &.hide_outline {
+      .content {
+        @apply !max-w-[calc(100vw-80px)] rounded-none border-0 bg-transparent p-0;
+        & > div {
+          @apply !max-w-[calc(100vw-80px)];
+        }
+      }
+    }
   }
 
   /* btn_wrap */

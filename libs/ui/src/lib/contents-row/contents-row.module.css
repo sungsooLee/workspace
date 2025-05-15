@@ -61,6 +61,9 @@
       @apply w-full !flex-none;
     }
   }
+  & + [class*='title_wrap'] + .horizontal {
+    @apply !pb-[16px];
+  }
 }
 [class*='title_wrap'] + .row {
   &.horizontal {

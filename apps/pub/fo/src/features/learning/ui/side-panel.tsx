@@ -10,7 +10,7 @@ import {
   IcoPrevNext,
   IcoXclose,
 } from '@learnway/icons';
-import { CurriculumPopup } from '../../../features/learning';
+import { CurriculumPopup, NextLearningPopup } from '../../../features/learning';
 
 import styles from './side-panel.module.css';
 import { ChartNoAxesColumnDecreasing } from 'lucide-react';
@@ -94,11 +94,18 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
           </Button>
         </div>
         <div className={styles.control}>
-          <Button>
+          <Button disabled>
             <IcoPrevPlay width={isMobile ? 20 : 32} height={isMobile ? 20 : 32} />
             <span>이전</span>
           </Button>
-          <Button>
+          <Button
+            onClick={() =>
+              openModal({
+                width: 's',
+                content: <NextLearningPopup />,
+              })
+            }
+          >
             <IcoPrevNext width={isMobile ? 20 : 32} height={isMobile ? 20 : 32} />
             <span>다음</span>
           </Button>

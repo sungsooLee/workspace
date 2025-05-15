@@ -7,7 +7,7 @@ import { ContentsHistoryInfoFormField } from '../../../../../../../bo/src/shared
 import { IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';
 
 /* style */
-import styles from './role-info.module.css';
+import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
 
