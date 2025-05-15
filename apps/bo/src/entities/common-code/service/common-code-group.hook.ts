@@ -1,148 +1,78 @@
+import { QueryClient, useQuery } from '@tanstack/react-query';
 import {
-  MutateOptions,
-  useMutation,
-  UseMutationOptions,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
-import {
+  apiKeys,
   mutateOptions,
   queryKeys,
   commonCodeGroupQueryOptions as queryOptions,
 } from './common-code-group.queries';
+import CommonCodeGroupService from '../api/common-code-group';
+
 import { CreateCommonCodeGroup } from '../../../types/entities/common-code';
-import { isError } from 'lodash';
+import {
+  createAuthorizedMutationHook,
+  createAuthorizedQueryHook,
+} from '../../../shared/lib/use-authorized-query';
 
 // 코드 그룹 목록 조회 훅
-export function useCommonCodeGroupList(
-  page: number,
-  size: number,
-  sort: string,
-  cdGroupId = '',
-  cdGroupName = '',
-  isUsed = '',
-) {
-  return useQuery(queryOptions.list(page, size, sort, cdGroupId, cdGroupName, isUsed));
-}
+export const useCommonCodeGroupList = createAuthorizedQueryHook(
+  apiKeys.list,
+  (params: {
+    page: number;
+    size: number;
+    sort: string;
+    cdGroupId: string;
+    cdGroupName: string;
+    isUsed: string;
+  }) => queryKeys.list(params),
+  (params) => () =>
+    CommonCodeGroupService.fetchCodeGroups(
+      params.page,
+      params.size,
+      params.sort,
+      params.cdGroupId,
+      params.cdGroupName,
+      params.isUsed,
+    ),
+);
+
+export const invalidations = {
+  afterMutate: async (
+    queryClient: QueryClient,
+    data: any,
+    variables: CreateCommonCodeGroup,
+    context: unknown,
+    queryParams?: any,
+  ) => {
+    if (queryParams) {
+      await queryClient.invalidateQueries({
+        queryKey: queryKeys.list(queryParams),
+      });
+    } else {
+      await queryClient.invalidateQueries({
+        queryKey: queryKeys.all,
+      });
+    }
+
+    if (data && data.cdGroupId) {
+      await queryClient.invalidateQueries({
+        queryKey: queryKeys.detail(data.cdGroupId),
+      });
+    }
+  },
+};
 
 export function useCommonCodeGroupDetail(cdGroupId: string) {
   return useQuery({ ...queryOptions.detail(cdGroupId), enabled: !!cdGroupId });
 }
 
-export function useCreateCommonCodeGroup({
-  onSuccess,
-  onError,
-  queryParams, // 쿼리 무효화에 사용될 파라미터
-  ...rest
-}: {
-  onSuccess?: (data: any, variables: CreateCommonCodeGroup, context: unknown) => void;
-  onError?: (error: Error, variables: CreateCommonCodeGroup, context: unknown) => void;
-  queryParams?: {
-    page: number;
-    size: number;
-    sort: string;
-    cdGroupId?: string;
-    cdGroupName?: string;
-    isUsed?: string;
-  };
-} & Omit<
-  UseMutationOptions<any, Error, CreateCommonCodeGroup, unknown>,
-  'mutationFn' | 'onSuccess' | 'onError'
-> = {}) {
-  const queryClient = useQueryClient();
+export const useCreateCommonCodeGroup = createAuthorizedMutationHook(
+  apiKeys.create,
+  mutateOptions.create,
+  invalidations.afterMutate,
+);
 
-  const mutation = useMutation<any, Error, CreateCommonCodeGroup>({
-    ...mutateOptions.create(),
-    onSuccess: async (data, variables, context) => {
-      if (queryParams) {
-        console.log(queryParams);
-        await queryClient.invalidateQueries({
-          queryKey: queryKeys.list(queryParams),
-        });
-      } else {
-        await queryClient.invalidateQueries({
-          queryKey: queryKeys.all,
-        });
-      }
-
-      if (onSuccess) {
-        onSuccess(data, variables, context);
-      }
-    },
-    onError,
-    ...rest,
-  });
-
-  return {
-    create: (
-      payload: CreateCommonCodeGroup,
-      callback?: MutateOptions<any, Error, CreateCommonCodeGroup, unknown>,
-    ) => {
-      mutation.mutate(payload, callback);
-    },
-    isSuccess: mutation.isSuccess,
-    isError: mutation.isError,
-    data: mutation.data,
-  };
-}
-
-export function useUpdateCommonCodGroup({
-  onSuccess,
-  onError,
-  queryParams,
-  ...rest
-}: {
-  onSuccess?: (data: any, variables: CreateCommonCodeGroup, context: unknown) => void;
-  onError?: (data: Error, variabels: CreateCommonCodeGroup, context: unknown) => void;
-  queryParams?: {
-    page: number;
-    size: number;
-    sort: string;
-    cdGroupId?: string;
-    cdGroupName?: string;
-    isUsed?: string;
-  };
-} & Omit<
-  UseMutationOptions<any, Error, CreateCommonCodeGroup, unknown>,
-  'mutationFn' | 'onSuccess' | 'onError'
-> = {}) {
-  const queryClient = useQueryClient();
-
-  const mutation = useMutation<any, Error, CreateCommonCodeGroup>({
-    ...mutateOptions.update(),
-    onSuccess: async (data, variables, context) => {
-      if (queryParams) {
-        await queryClient.invalidateQueries({
-          queryKey: queryKeys.list(queryParams),
-        });
-      } else {
-        await queryClient.invalidateQueries({
-          queryKey: queryKeys.all,
-        });
-      }
-
-      // 2. 명시적으로 detail 쿼리도 무효화
-      await queryClient.invalidateQueries({
-        queryKey: queryKeys.detail(data.cdGroupId),
-      });
-
-      if (onSuccess) {
-        onSuccess(data, variables, context);
-      }
-    },
-    onError,
-    ...rest,
-  });
-
-  return {
-    update: (
-      payload: CreateCommonCodeGroup,
-      callback?: MutateOptions<any, Error, CreateCommonCodeGroup, unknown>,
-    ) => {
-      mutation.mutate(payload, callback);
-    },
-    isSuccess: mutation.isSuccess,
-    isError: mutation.isError,
-    data: mutation.data,
-  };
-}
+export const useUpdateCommonCodGroup = createAuthorizedMutationHook(
+  apiKeys.update,
+  mutateOptions.update,
+  invalidations.afterMutate,
+);

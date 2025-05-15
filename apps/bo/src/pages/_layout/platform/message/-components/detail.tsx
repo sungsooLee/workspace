@@ -188,7 +188,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
               {/* 다국어 관리 : 수정 모드에서만 활성화 */}
               <Button
                 variant="point"
-                size="sm"
+                size="xs"
                 label={t('LABEL.button.multilingualManage')}
                 disabled={isCreateMode}
                 onClick={handleMultilingualManageClick}

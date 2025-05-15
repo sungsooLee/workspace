@@ -1,0 +1,55 @@
+/* profile-myinfo.module.css */
+.start {
+  @apply flex w-full flex-wrap justify-between;
+  & > div {
+    @apply items-stretch rounded-[8px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] p-[32px];
+    &.profile_wrap {
+      @apply w-[342px] shrink-0;
+    }
+    &.info_wrap {
+      @apply ml-[24px] flex-1;
+    }
+  }
+  .avata_wrap {
+    @apply relative mx-auto mt-[16px] h-[120px] w-[212px];
+    .info_avata {
+      @apply absolute left-0 top-0 z-[1] h-[120px] w-[120px] bg-transparent p-[6px];
+      img {
+        @apply h-full w-full overflow-hidden rounded-full border border-solid border-transparent;
+      }
+    }
+    .logo_wrap {
+      @apply absolute right-0 top-0 z-0 h-[120px] w-[120px] shrink-0 p-[6px];
+      .logo_img {
+        @apply h-full w-full overflow-hidden rounded-full border border-solid border-[var(--gray2)];
+      }
+    }
+    .name {
+      @apply absolute left-0 top-0 z-[1] flex h-[120px] w-[120px] bg-transparent p-[6px];
+      .text {
+        @apply title_3_b flex h-full w-full items-center justify-center overflow-hidden rounded-full border border-solid border-transparent bg-[#00AFD5] text-white;
+      }
+    }
+  }
+  .name_wrap {
+    @apply mb-[32px] mt-[40px] flex flex-col flex-wrap text-center;
+    .name {
+      @apply title_bo_3_b text-[var(--gray9)];
+    }
+    .eng_name {
+      @apply body_bo_1_r mt-[2px] text-[var(--gray7)];
+    }
+  }
+  .list li {
+    @apply border-t-[1px] border-solid border-[var(--gray2)] py-[18px];
+    .title {
+      @apply body_bo_2_r text-[var(--gray6)];
+    }
+    .text {
+      @apply body_bo_2_r mt-[4px] text-[var(--gray9)];
+    }
+    &:nth-last-child(1) {
+      @apply pb-0;
+    }
+  }
+}
