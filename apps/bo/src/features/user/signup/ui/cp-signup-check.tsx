@@ -9,21 +9,19 @@ import { FormRow } from '@shared/ui';
 import { useDynamicForm } from '@/libs/hooks/src/lib/form-builder/use-dynamic-form';
 import { DynamicFormConfig } from '@/libs/hooks/src/lib/form-builder/type';
 import { useDynamicFormContext } from '@learnway/hooks';
-import { useCPStore } from '@features/user/signup/store/use-cp-store';
+import { useSignupStore } from '@features/user/signup/store/use-signup-store';
+import { cpItems } from '@features/user/signup/ui/signup-select';
+import { useRouter } from '@tanstack/react-router';
 
 // TODO API
 export const CPSignupCheck = () => {
-  const items = [
-    { label: '회원유형선택', subLabel: '', value: 'step1' },
-    { label: '사업자 정보 조회', subLabel: '', value: 'step2' },
-    { label: '회원정보입력', subLabel: '', value: 'step3' },
-  ];
+  const router = useRouter();
 
   const [isSuccess, setIsSuccess] = useState(false);
 
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
     useDynamicForm(formConfig);
-  const { setPage, setBusinessCode } = useCPStore((state) => state);
+  const { setBusinessCode, setCpPage, reset } = useSignupStore((state) => state);
 
   const handleOnSubmit = (data: any) => {
     console.log(data);
@@ -50,13 +48,21 @@ export const CPSignupCheck = () => {
     );
   }
 
+  const handleCancel = () => {
+    router.navigate({ to: '/login' });
+  };
+
+  const handleNext = () => {
+    isSuccess && setCpPage('signup');
+  };
+
   return (
     <form onSubmit={onSubmit(handleOnSubmit)}>
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.signup_step}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
           <div className={styles.signup_info}>
             <div className={styles.step_box}>
-              <Stepper items={items} variant="check" selectedStep="step2" />
+              <Stepper items={cpItems} variant="check" selectedStep="step2" />
             </div>
           </div>
 
@@ -68,17 +74,10 @@ export const CPSignupCheck = () => {
             </FormRow>
           </ContentsRow>
           <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
-            <Button variant="gray" size="xl">
+            <Button variant="gray" size="xl" onClick={handleCancel}>
               취소
             </Button>
-            <Button
-              variant="primary"
-              size="xl"
-              disabled={false}
-              onClick={() => {
-                setPage('signup');
-              }}
-            >
+            <Button variant="primary" size="xl" disabled={!isSuccess} onClick={handleNext}>
               다음
             </Button>
           </div>

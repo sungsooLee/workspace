@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { pageRouteConfig } from '@features/auth/index';
 import { CPSignupCheck, CPSignupForm } from '@features/user/signup';
-import { CPSignupType } from '@types';
-import { useCPStore } from '@features/user/signup/store/use-cp-store';
+import { useSignupStore } from '@features/user/signup/store/use-signup-store';
 
 export const Route = createFileRoute('/_auth/signup/cp')({
   component: RouteComponent,
@@ -15,16 +14,14 @@ export const Route = createFileRoute('/_auth/signup/cp')({
 });
 
 function RouteComponent() {
-  const { businessCode, page, reset } = useCPStore((state) => state);
+  const { businessCode, cpPage, reset } = useSignupStore((state) => state);
 
   useEffect(() => {
     reset();
   }, []);
-  console.log('aaa', businessCode);
-  console.log('bbb', page);
 
   function render() {
-    switch (page) {
+    switch (cpPage) {
       case 'check':
         return <CPSignupCheck />;
       case 'signup':

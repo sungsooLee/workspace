@@ -50,6 +50,7 @@ interface AuthFormComponentProps {
   defaultValues?: AuthFormData;
   onSuccess?: (authData: any) => void;
   onCancel?: () => void;
+  noticeBoxLabel?: string;
 }
 
 function AuthFormComponent({
@@ -57,6 +58,7 @@ function AuthFormComponent({
   includeUserId = false,
   onSuccess,
   onCancel,
+  noticeBoxLabel = 'LABEL.message.searchAccountNotice', // 본인 명의의 인증 수단 정보를 정확히 입력해 주세요.
 }: AuthFormComponentProps) {
   const { t } = useTranslation();
 
@@ -278,7 +280,7 @@ function AuthFormComponent({
       )}
 
       <NoticeBox title={t('LABEL.common.caution')} className={styles.signup_noti}>
-        <dd>{t('LABEL.message.searchAccountNotice')}</dd>
+        <dd>{t(noticeBoxLabel)}</dd>
       </NoticeBox>
 
       <MobileResponsiveContainerFooter>

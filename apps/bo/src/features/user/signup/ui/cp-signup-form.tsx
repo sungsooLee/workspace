@@ -16,19 +16,24 @@ import {
 import styles from './cp-signup-form.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import { useCPStore } from '@features/user/signup/store/use-cp-store';
+import { useSignupStore } from '@features/user/signup/store/use-signup-store';
+import { cpItems } from '@features/user/signup/ui/signup-select';
+import { useRouter } from '@tanstack/react-router';
 
 export const CPSignupForm = () => {
-  const { page, businessCode } = useCPStore((state) => state);
+  const router = useRouter();
 
-  console.log('page', page);
-  console.log('businessCode', businessCode);
+  const handleCancel = () => {
+    router.navigate({ to: '/login' });
+  };
 
-  const items = [
-    { label: '회원유형선택', subLabel: '', value: 'step1' },
-    { label: '사업자 정보 조회', subLabel: '', value: 'step2' },
-    { label: '회원정보입력', subLabel: '', value: 'step3' },
-  ];
+  const handleNext = () => {
+    // selectedValue === 'type1' && router.navigate({ to: '/signup/cp' });
+    // selectedValue === 'type2' && router.navigate({ to: '/signup/admin' });
+  };
+
+  const { businessCode, setCpPage } = useSignupStore((state) => state);
+
   const handleChange = (event: SelectOption) => {
     console.log(event);
   };
@@ -39,7 +44,7 @@ export const CPSignupForm = () => {
         <div className={cn(styles.auth_box, 'auth--box')}>
           <div className={styles.signup_info}>
             <div className={styles.step_box}>
-              <Stepper items={items} onChange={handleChange} variant="check" selectedStep="step3" />
+              <Stepper items={cpItems} variant="check" selectedStep="step3" />
             </div>
           </div>
 
@@ -370,10 +375,10 @@ export const CPSignupForm = () => {
           </div>
 
           <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
-            <Button variant="gray" size="xl">
+            <Button variant="gray" size="xl" onClick={handleCancel}>
               취소
             </Button>
-            <Button variant="primary" size="xl">
+            <Button variant="primary" size="xl" onClick={() => setCpPage('complate')}>
               확인
             </Button>
           </div>
