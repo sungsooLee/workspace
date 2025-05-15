@@ -64,21 +64,12 @@ const PaginationComponent = forwardRef<HTMLDivElement, PaginationComponentProps>
     };
 
     return (
-      <div
-        ref={ref}
-        className={cn(
-          styles.root,
-          styles.pagination,
-          className,
-          'nlp--pagination',
-          'flex flex-row',
-        )}
-      >
-        <div className={'w-[100px]'}>
+      <div ref={ref} className={cn(styles.root, styles.pagination, className, 'nlp--pagination')}>
+        <div className={styles.select_area}>
           <Dropdown value={page.toString()} onChange={handleChange} options={options} />
         </div>
         {/* 페이지 번호들 */}
-        <div>
+        <div className={styles.page_num}>
           {items.map((item: any, index: number) => (
             <PaginationItem
               key={index}
@@ -91,7 +82,7 @@ const PaginationComponent = forwardRef<HTMLDivElement, PaginationComponentProps>
             />
           ))}
         </div>
-        <span className={styles.count_wrap}>{`${currentPage + 1} / ${totalPages}  Page`}</span>
+        <span className={styles.count_wrap}>{`${currentPage + 1} / ${totalPages} page`}</span>
       </div>
     );
   },
