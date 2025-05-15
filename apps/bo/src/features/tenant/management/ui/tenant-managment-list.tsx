@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { FC, useState, useCallback } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { IcoRefresh02, IcoSearch } from '@learnway/icons';
@@ -18,7 +18,7 @@ import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-butt
 
 import { tenantQueryOptions } from '@entities/tenant/service/tenant.queries';
 
-const TenantManagmentListComponent = () => {
+const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
   const router = useRouter();
 
   const gridConfig = {
@@ -37,7 +37,7 @@ const TenantManagmentListComponent = () => {
             className="link"
             onClick={() => {
               router.navigate({
-                to: '/platform/tenant/management/detail',
+                to: `${rootPath}/tenant/management/detail`,
                 state: {
                   tenantId: info.row.original.tenantId,
                   tenantName: info.row.original.tenantName,

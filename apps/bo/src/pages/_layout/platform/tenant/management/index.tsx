@@ -30,7 +30,7 @@ function RouteComponent() {
         </Button>
       </ContentsButtons>
       <MainContents>
-        <TenantManagmentList />
+        <TenantManagmentList rootPath="/platform" />
       </MainContents>
     </PageContainer>
   );
