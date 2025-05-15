@@ -26,6 +26,7 @@ export { com_ever_edu_lms_badge_dto_res_BadgeResDto$OnAdmin } from './models/com
 export { com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto } from './models/com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto';
 export { com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_FullUpdate } from './models/com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_FullUpdate';
 export { com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_WizardStep1 } from './models/com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_WizardStep1';
+export { com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_WizardStepNew } from './models/com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_WizardStepNew';
 export { com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteMappingReqDto } from './models/com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteMappingReqDto';
 export { com_ever_edu_lms_blackwhite_dto_res_BlackAndWhiteDto$Combine } from './models/com_ever_edu_lms_blackwhite_dto_res_BlackAndWhiteDto$Combine';
 export { com_ever_edu_lms_blackwhite_dto_res_BlackAndWhiteDto$GroupDto } from './models/com_ever_edu_lms_blackwhite_dto_res_BlackAndWhiteDto$GroupDto';
@@ -38,6 +39,8 @@ export type { com_ever_edu_lms_category_dto_req_TenantCategorySaveRequestDto } f
 export type { com_ever_edu_lms_category_dto_req_TenantCategoryUpdateRequestDto } from './models/com_ever_edu_lms_category_dto_req_TenantCategoryUpdateRequestDto';
 export type { com_ever_edu_lms_category_dto_res_CategoryMasterDto } from './models/com_ever_edu_lms_category_dto_res_CategoryMasterDto';
 export { com_ever_edu_lms_category_dto_res_CategoryMasterTreeDto } from './models/com_ever_edu_lms_category_dto_res_CategoryMasterTreeDto';
+export type { com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto } from './models/com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto';
+export type { com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto_WizardStep1 } from './models/com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto_WizardStep1';
 export type { com_ever_edu_lms_category_dto_res_TenantCategoryDto } from './models/com_ever_edu_lms_category_dto_res_TenantCategoryDto';
 export { com_ever_edu_lms_category_dto_res_TenantCategoryTreeDto } from './models/com_ever_edu_lms_category_dto_res_TenantCategoryTreeDto';
 export type { com_ever_edu_lms_category_dto_res_TreeBaseDto } from './models/com_ever_edu_lms_category_dto_res_TreeBaseDto';
@@ -47,6 +50,7 @@ export { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2 } from '
 export { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep3 } from './models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep3';
 export { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 } from './models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4';
 export { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep5 } from './models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep5';
+export { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew } from './models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew';
 export type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TagNameWrapper_FullUpdate } from './models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TagNameWrapper_FullUpdate';
 export type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TagNameWrapper_WizardStep5 } from './models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TagNameWrapper_WizardStep5';
 export { com_ever_edu_lms_course_dto_req_SequenceSaveReqDto } from './models/com_ever_edu_lms_course_dto_req_SequenceSaveReqDto';
@@ -64,6 +68,8 @@ export { com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep3 
 export { com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep4 } from './models/com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep4';
 export { com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep5 } from './models/com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep5';
 export { com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnUser } from './models/com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnUser';
+export { com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto } from './models/com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto';
+export { com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto_WizardStep4 } from './models/com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto_WizardStep4';
 export type { com_ever_edu_lms_course_dto_res_CourseResDto$TagNameWrapper } from './models/com_ever_edu_lms_course_dto_res_CourseResDto$TagNameWrapper';
 export type { com_ever_edu_lms_course_dto_res_CourseResDto$TagNameWrapper_WizardStep5 } from './models/com_ever_edu_lms_course_dto_res_CourseResDto$TagNameWrapper_WizardStep5';
 export type { com_ever_edu_lms_course_dto_res_SequenceListResDto$OnAdmin } from './models/com_ever_edu_lms_course_dto_res_SequenceListResDto$OnAdmin';

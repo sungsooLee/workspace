@@ -5,12 +5,14 @@ import { useModal } from '../../modal/modal.hook';
 import { ModalConfig } from '../../modal/type';
 import { cn } from '@learnway/shared';
 import { BaseFormFieldProps } from '@learnway/hooks';
+import { t } from 'i18next';
 
 interface InputModalSelectorFormFieldComponentProps extends BaseFormFieldProps<string> {
+  /** 모달 설정 */
   modalConfig: ModalConfig;
-  input?: InputProps;
-  onClick?: (value?: any) => void;
-  /** modalData 에서 받은 내용의 조작을 위한 함수 - onFormChange(modalData) 시 사용 */
+  /** 입력 필드 Props */
+  inputProps?: InputProps;
+  /** 모달 데이터 변환 함수 (onFormChange 시 사용) */
   transformModalData?: (modalData?: any) => void;
 }
 
@@ -20,13 +22,12 @@ const InputModalSelectorFormFieldComponent = forwardRef<
 >(
   (
     {
-      onClick,
-      input: inputProps = {},
+      inputProps = {},
       modalConfig,
       value,
       readOnly = true,
       disabled = true,
-      placeholder,
+      placeholder = t('LABEL.form.input.select'),
       onChange,
       onFormChange,
       transformModalData,
@@ -63,5 +64,3 @@ const InputModalSelectorFormFieldComponent = forwardRef<
 );
 
 export const InputModalSelectorFormField = InputModalSelectorFormFieldComponent;
-
-const convertF = (data: any) => {};

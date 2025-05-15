@@ -7,8 +7,6 @@ export type com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$DetailOnAdm
     multilingualId?: number;
     multilingualKey?: string;
     keyType?: com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$DetailOnAdmin.keyType;
-    messageDesc?: string;
-    isUsed?: boolean;
     translations?: Array<com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$TranslationDto>;
 };
 export namespace com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$DetailOnAdmin {

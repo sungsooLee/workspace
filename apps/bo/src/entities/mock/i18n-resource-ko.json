@@ -253,6 +253,7 @@
         "categoryCodeName": "카테고리명",
         "categoryParentName": "상위 카테고리명",
         "categoryLocation": "카테고리 위치",
+        "select": "선택",
         "description": "설명"
       },
       "label": {
@@ -312,7 +313,8 @@
       "multilingualManage": "다국어 관리",
       "duplication": "중복",
       "commonCdGroupList": "공통코드그룹목록",
-      "courseOpen": "과정 개설"
+      "courseOpen": "과정 개설",
+      "preview": "미리보기"
     },
     "all": "전체",
     "confirm": {

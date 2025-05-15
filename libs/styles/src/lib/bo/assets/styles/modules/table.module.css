@@ -1,7 +1,7 @@
 /* table.module.css */
 .start {
   &.wrap {
-    @apply border-t-[2px] border-solid border-[var(--gray9)] pt-[8px];
+    @apply border-t-[1px] border-solid border-[var(--gray9)] pt-[8px];
     table {
       @apply w-full table-fixed border-collapse;
       caption {
@@ -10,19 +10,13 @@
       tbody {
         tr {
           th {
-            @apply body_bo_2_b h-[56px] border-t-[1px] border-solid border-[var(--gray2)] py-[14px] text-left align-middle text-[var(--gray7)];
+            @apply body_bo_2_r h-[56px] border-b-[1px] border-solid border-[var(--gray2)] py-[14px] pr-[24px] text-left align-middle text-[var(--gray6)];
             &.align_top {
               @apply align-top;
             }
           }
           td {
-            @apply body_bo_2_r border-t-[1px] border-solid border-[var(--gray2)] py-[12px] align-middle;
-          }
-          &:first-child {
-            th,
-            td {
-              @apply border-0;
-            }
+            @apply body_bo_2_r border-b-[1px] border-solid border-[var(--gray2)] py-[12px] align-middle;
           }
         }
       }
@@ -42,7 +36,7 @@
       }
     }
     & + [class*='title_wrap'] {
-      @apply !mt-[32px] !border-0;
+      @apply !mt-[32px] !border-t-0 pt-0;
     }
   }
 }

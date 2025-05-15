@@ -17,10 +17,10 @@ export const roleManagerQueryOptions = {
   }),
 
   // 특정 역할 조회
-  getRole: (roleId: string) => ({
-    queryKey: [...roleQueryKeys.all, ...roleQueryKeys.roles, roleId],
-    queryFn: async () => RoleManagerService.fetchRole(roleId),
-    enabled: !!roleId,
+  getRole: (roleCode: string) => ({
+    queryKey: [...roleQueryKeys.all, ...roleQueryKeys.roles, roleCode],
+    queryFn: async () => RoleManagerService.fetchRole(roleCode),
+    enabled: !!roleCode,
   }),
 
   // 모든 메뉴 목록 트리 조회
@@ -64,7 +64,7 @@ export const roleMutateOptions = {
 
   // 역할 삭제
   deleteRole: () => ({
-    mutationFn: (roleId: string) => RoleManagerService.deleteRole(roleId),
+    mutationFn: (roleCode: string) => RoleManagerService.deleteRole(roleCode),
   }),
 
   // 역할 수정

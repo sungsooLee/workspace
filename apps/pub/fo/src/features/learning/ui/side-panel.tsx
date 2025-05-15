@@ -1,5 +1,5 @@
 import { memo, useState } from 'react';
-import { Button } from '@learnway/ui';
+import { Button, useModal } from '@learnway/ui';
 import { isMobile } from 'react-device-detect';
 import {
   IcoLearning01,
@@ -10,6 +10,7 @@ import {
   IcoPrevNext,
   IcoXclose,
 } from '@learnway/icons';
+import { CurriculumPopup, NextLearningPopup } from '../../../features/learning';
 
 import styles from './side-panel.module.css';
 import { ChartNoAxesColumnDecreasing } from 'lucide-react';
@@ -24,6 +25,8 @@ interface SidePanelProps {
 }
 
 const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
+  const { open: openModal } = useModal();
+
   const [menuSelected, setMenuSelected] = useState(false);
 
   const sendValueToParent = () => {
@@ -59,10 +62,24 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
 
       <div className={styles.panel}>
         <div className={styles.menu}>
-          <Button onClick={() => sendValueToParent()}>
-            <IcoLearning01 width={isMobile ? 24 : 32} height={isMobile ? 24 : 32} />
-            <span>커리큘럼</span>
-          </Button>
+          {isMobile ? (
+            <Button
+              onClick={() =>
+                openModal({
+                  width: 'm_full',
+                  content: <CurriculumPopup />,
+                })
+              }
+            >
+              <IcoLearning01 width={isMobile ? 24 : 32} height={isMobile ? 24 : 32} />
+              <span>커리큘럼</span>
+            </Button>
+          ) : (
+            <Button onClick={() => sendValueToParent()}>
+              <IcoLearning01 width={isMobile ? 24 : 32} height={isMobile ? 24 : 32} />
+              <span>커리큘럼</span>
+            </Button>
+          )}
           <Button>
             <IcoLearning02 width={isMobile ? 24 : 32} height={isMobile ? 24 : 32} />
             <span>내노트</span>
@@ -77,11 +94,18 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
           </Button>
         </div>
         <div className={styles.control}>
-          <Button>
+          <Button disabled>
             <IcoPrevPlay width={isMobile ? 20 : 32} height={isMobile ? 20 : 32} />
             <span>이전</span>
           </Button>
-          <Button>
+          <Button
+            onClick={() =>
+              openModal({
+                width: 's',
+                content: <NextLearningPopup />,
+              })
+            }
+          >
             <IcoPrevNext width={isMobile ? 20 : 32} height={isMobile ? 20 : 32} />
             <span>다음</span>
           </Button>

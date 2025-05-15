@@ -36,7 +36,6 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
   const [baseMenuTreeData, setBaseMenuTreeData] = useState([]);
   const [baseMenuTreeExpandedKeys, setBaseMenuTreeExpandedKeys] = useState<string[]>([]);
   const [baseMenuAllKeys, setBaseMenuAllKeys] = useState<string[]>([]);
-  const [baseMenuTreeSelectedNode, setBaseMenuTreeSelectedNode] = useState<TreeNode | null>(null);
   const [menuTreeData, setMenuTreeData] = useState([]);
   const [menuTreeExpandedKeys, setMenuTreeExpandedKeys] = useState<string[]>([]);
   const [menuTreeAllKeys, setMenuTreeAllKeys] = useState<string[]>([]);
@@ -328,10 +327,10 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
           </div>
         </TreeContainer>
       </ModalBody>
-      <ModalFooter>
-        {/* <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={() => closeModal()} /> */}
+      {/* <ModalFooter>
+        <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
         <Button label={t('확인')} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
-      </ModalFooter>
+      </ModalFooter> */}
     </ModalContainer>
   );
 };

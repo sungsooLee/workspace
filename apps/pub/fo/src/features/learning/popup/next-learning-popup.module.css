@@ -1,0 +1,26 @@
+.start {
+  &.learning {
+    @apply title_6_b text-[var(--gray8)];
+  }
+}
+.btn_refresh {
+  @apply flex items-center;
+  span {
+    @apply body_3_r leading-[22px] text-[var(--gray7)];
+  }
+  svg {
+    @apply mr-[8px];
+  }
+}
+.btn_learning {
+  @apply flex items-center;
+  span {
+    @apply body_3_r leading-[22px] text-white;
+  }
+  svg {
+    @apply ml-[8px] !stroke-white;
+    path {
+      @apply stroke-white;
+    }
+  }
+}

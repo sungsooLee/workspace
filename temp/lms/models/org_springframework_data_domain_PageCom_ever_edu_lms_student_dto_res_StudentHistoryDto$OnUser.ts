@@ -12,8 +12,8 @@ export type org_springframework_data_domain_PageCom_ever_edu_lms_student_dto_res
     content?: Array<com_ever_edu_lms_student_dto_res_StudentHistoryDto$OnUser>;
     number?: number;
     sort?: Array<org_springdoc_core_converters_models_SortObject>;
-    pageable?: PageableObject;
     numberOfElements?: number;
+    pageable?: PageableObject;
     first?: boolean;
     last?: boolean;
     empty?: boolean;

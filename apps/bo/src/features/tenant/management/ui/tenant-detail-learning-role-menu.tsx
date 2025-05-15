@@ -6,20 +6,27 @@ import {
   RadioGroupFormField,
   TreeBox,
   TreeNode,
+  useModal,
 } from '@learnway/ui';
 import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 import { CellContext, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useRouterState } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
+import { TenantDetailLearningRoleMenuMappingModal } from './tenant-detail-learning-role-menu-mapping-modal';
 import {
-  roleTreeMockData,
-  menuTreeMockData,
-  apiListMockData,
-  roleMenuMockData,
-  menuApiMappingMockData,
-  roleApiUsageMockData,
-} from '@entities/mock/role';
+  useFetchRole,
+  useFetchRoleTree,
+  useRoleManager,
+} from '@entities/role/service/role-manage.hook';
+
+import {
+  getAllTreeKeys,
+  getFirstExpandKeys,
+  moveNodeCheck,
+  transformRoleApiDataToTreeData,
+} from '../service/tenant-detail-tree.service';
+import { EnFormMode, EnTenantScope, EnCompanyScope, EnChannelScope, EnDeptScope } from '@types';
 
 const columnHelper = createColumnHelper<any>();
 
@@ -39,26 +46,13 @@ const columns = [
   }),
 ];
 
-const renderMenuButtons = (onChange: any, menuSelectionType: any) => {
-  return (
-    <>
-      <RadioGroupFormField
-        options={[
-          { value: 'option01', label: '모든 메뉴/API' },
-          { value: 'option02', label: '직접 선택' },
-        ]}
-        onChange={onChange}
-        value={menuSelectionType === 'all' ? 'option01' : 'option02'}
-      />
-      <Button label={'메뉴선택'} variant={'gray2'} size={'sm'} />
-    </>
-  );
-};
-
-export const TenantDetailLearningRoleMenuComponent = ({ roleScope }: any) => {
+export const TenantDetailLearningRoleMenuComponent = ({ siteScope }: any) => {
   const routerState = useRouterState();
-  const [selectedRoleId, setSelectedRoleId] = useState<string | null>(null);
-  const [selectedMenuId, setSelectedMenuId] = useState<string | null>(null);
+
+  const [roleTree, setRoleTree] = useState<any>(null);
+  const [roleTreeExpandedKeys, setRoleTreeExpandedKeys] = useState<string[]>([]);
+  const [selectedRole, setSelectedRole] = useState<any>(null);
+  const [selectedMenu, setSelectedMenu] = useState<any>(null);
   const [menuSelectionType, setMenuSelectionType] = useState<'all' | 'custom'>('all');
   const [roleMenuTree, setRoleMenuTree] = useState<TreeNode[]>([]);
   const [apiGridData, setApiGridData] = useState<any[]>([]);
@@ -66,7 +60,11 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleScope }: any) => {
   const [isDataModified, setIsDataModified] = useState<boolean>(false);
 
   const tenantId = routerState.location.state?.tenantId;
-  const getRoles = () => roleTreeMockData;
+  const tenantName = routerState.location.state?.tenantName;
+
+  const { open: openModal, confirm: openConfirm } = useModal();
+
+  const { data: roleData } = useFetchRoleTree(tenantId, siteScope);
 
   const handleMenuSelectionTypeChange = (type: string) => {
     setMenuSelectionType(type === 'option01' ? 'all' : 'custom');
@@ -74,40 +72,43 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleScope }: any) => {
 
   // 선택된 역할에 할당된 메뉴 ID 목록 가져오기
   const getRoleMenuIds = (roleId: string) => {
-    return roleMenuMockData[roleId] || [];
+    return [];
   };
 
   // 선택된 메뉴에 속한 API ID 목록 가져오기
   const getMenuApiIds = (menuId: string) => {
-    return menuApiMappingMockData[menuId] || [];
+    return [];
   };
 
   // 역할의 API 사용 여부 데이터 가져오기
   const getRoleApiUsage = (roleId: string) => {
-    return roleApiUsageMockData[roleId] || {};
+    return {};
   };
 
-  const handleRoleSelect = (roleId: string) => {
-    // 변경 사항이 있는 경우 확인 메시지 표시
-    // if (isDataModified && !confirm('저장되지 않은 변경 사항이 있습니다. 계속 진행하시겠습니까?')) {
-    //   return;
-    // }
-
-    setSelectedRoleId(roleId);
-    setSelectedMenuId(null);
+  const handleRoleSelect = (node: TreeNode) => {
+    setSelectedRole(node);
+    setSelectedMenu(null);
     setIsDataModified(false);
-
-    // 역할에 할당된 메뉴 트리 생성
-    const menuTree = generateRoleMenuTree(roleId);
-    setRoleMenuTree(menuTree);
-
-    // 역할의 API 사용 여부 상태 설정
-    const roleApiUsage = getRoleApiUsage(roleId);
-    setApiUsageState(roleApiUsage);
   };
 
   const handleMenuSelect = (menuId: string) => {
-    setSelectedMenuId(menuId);
+    setSelectedMenu(menuId);
+  };
+
+  const handleRoleMenuMapping = async () => {
+    const modalScope = siteScope;
+    const modalTenantId = tenantId;
+    const modalRoleId = selectedRole.roleId;
+    await openModal({
+      content: (
+        <TenantDetailLearningRoleMenuMappingModal
+          siteScope={modalScope}
+          tenantId={modalTenantId}
+          roleId={modalRoleId}
+        />
+      ),
+      width: 'xl',
+    });
   };
 
   // API 사용 여부 체크박스 변경 핸들러
@@ -129,7 +130,7 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleScope }: any) => {
 
   // 저장 버튼 클릭 핸들러
   const handleSaveClick = () => {
-    if (!selectedRoleId) {
+    if (!selectedRole) {
       alert('역할을 선택해주세요.');
       return;
     }
@@ -144,33 +145,6 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleScope }: any) => {
   // 역할에 할당된 메뉴 트리 생성
   const generateRoleMenuTree = (roleId: string) => {
     const assignedMenuIds = getRoleMenuIds(roleId);
-
-    if (assignedMenuIds.length === 0) {
-      return [];
-    }
-
-    // 할당된 메뉴만 포함하는 새로운 트리 생성
-    const filterAndMarkAssignedMenus = (nodes: TreeNode[]): TreeNode[] => {
-      const result: TreeNode[] = [];
-
-      for (const node of nodes) {
-        const isAssigned = assignedMenuIds.includes(node.key);
-
-        const filteredChildren = node.children ? filterAndMarkAssignedMenus(node.children) : [];
-
-        if (isAssigned || filteredChildren.length > 0) {
-          result.push({
-            ...node,
-            isUsed: isAssigned,
-            children: filteredChildren,
-          });
-        }
-      }
-
-      return result;
-    };
-
-    return filterAndMarkAssignedMenus(menuTreeMockData);
   };
 
   const getAllMenuApiIdsForRole = (roleId: string) => {
@@ -185,57 +159,55 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleScope }: any) => {
     return Array.from(apiIds);
   };
 
-  const calculateApiGridData = () => {
-    if (!selectedRoleId) {
-      return [];
+  useEffect(() => {
+    if (roleData) {
+      const transformedData = transformRoleApiDataToTreeData(roleData);
+      setRoleTree(transformedData);
+      if (transformedData && transformedData.length > 0 && roleTreeExpandedKeys.length === 0) {
+        const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
+        setRoleTreeExpandedKeys(firstLevelKeys);
+      }
     }
-
-    // 역할의 API 사용 여부 데이터
-    const roleApiUsage = apiUsageState;
-
-    if (menuSelectionType === 'all') {
-      // '모든 메뉴/API' 선택 시 역할에 할당된 모든 메뉴의 API 표시
-      const allApiIds = getAllMenuApiIdsForRole(selectedRoleId);
-
-      return apiListMockData
-        .filter((api: any) => allApiIds.includes(api.apiId))
-        .map((api: any) => ({
-          ...api,
-          isUsed: roleApiUsage[api.apiId] || false,
-        }));
-    } else if (selectedMenuId) {
-      // '직접 선택' 시 선택된 메뉴의 API만 표시
-      const menuApiIds = getMenuApiIds(selectedMenuId);
-
-      return apiListMockData
-        .filter((api: any) => menuApiIds.includes(api.apiId))
-        .map((api: any) => ({
-          ...api,
-          isUsed: roleApiUsage[api.apiId] || false,
-        }));
-    }
-
-    return [];
-  };
-
+  }, [roleData]);
   // 상태 변경 시 API 그리드 데이터 업데이트
   useEffect(() => {
-    if (selectedRoleId) {
-      const newApiGridData = calculateApiGridData();
-      setApiGridData(newApiGridData);
+    if (selectedRole) {
+      setApiGridData([]);
     }
-  }, [selectedRoleId, selectedMenuId, menuSelectionType, apiUsageState]);
+  }, [selectedRole, selectedMenu, menuSelectionType, apiUsageState]);
+
+  const renderMenuButtons = (onChange: any, menuSelectionType: any) => {
+    return (
+      <>
+        {/* <RadioGroupFormField
+          options={[
+            { value: 'option01', label: '모든 메뉴/API' },
+            { value: 'option02', label: '직접 선택' },
+          ]}
+          onChange={onChange}
+          value={menuSelectionType === 'all' ? 'option01' : 'option02'}
+        /> */}
+        <Button
+          label={'메뉴선택'}
+          variant={'gray2'}
+          size={'sm'}
+          onClick={handleRoleMenuMapping}
+          disabled={!selectedRole}
+        />
+      </>
+    );
+  };
 
   return (
     <SectionLayout contentsRatio={'third_children'}>
       <TreeBox
-        data={getRoles()}
+        data={roleTree}
         initLevel={2}
         treeId={'1'}
         showSearchKeyword
         type={'DEFAULT'}
         title={'역할 목록'}
-        handleSelectedNodeChange={(node: any) => handleRoleSelect(node.key)}
+        handleSelectedNodeChange={handleRoleSelect}
       />
       <TreeBox
         data={roleMenuTree}
@@ -255,7 +227,7 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleScope }: any) => {
           <Button
             variant="text"
             onClick={handleSaveClick}
-            disabled={!selectedRoleId || !isDataModified}
+            disabled={!selectedRole || !isDataModified}
           >
             저장
           </Button>
