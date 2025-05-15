@@ -145,8 +145,8 @@ export default function usePagination(props: UsePaginationProps) {
   // Basic list of items to render
   // for example itemList = ['first', 'previous', 1, 'ellipsis', 4, 5, 6, 'ellipsis', 10, 'next', 'last']
   const itemList = [
-    ...(showFirstButton ? ['first'] : []),
-    ...(hidePrevButton ? [] : ['previous']),
+    ...(showFirstButton && page > 1 ? ['first'] : []),
+    ...(hidePrevButton || page === 1 ? [] : ['previous']),
     ...startPages,
 
     // Start ellipsis
@@ -169,8 +169,8 @@ export default function usePagination(props: UsePaginationProps) {
         : []),
 
     ...endPages,
-    ...(hideNextButton ? [] : ['next']),
-    ...(showLastButton ? ['last'] : []),
+    ...(hideNextButton || page === count ? [] : ['next']),
+    ...(showLastButton && page < count ? ['last'] : []),
   ];
 
   // Map the button type to its page number

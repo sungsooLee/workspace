@@ -11,15 +11,26 @@ import {
   Pagination,
   useModal,
 } from '@learnway/ui';
-import {
-  IcoChevronLeft,
-  IcoChevronLeftDouble,
-  IcoChevronRight,
-  IcoChevronRightDouble,
-} from '@/libs/icons/src';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from './address-search-modal.module.css';
+
+const PAGE_SIZE = 3;
+// SQL 예약어 필터링
+const RESERVED_WORD_SQL = [
+  'OR',
+  'SELECT',
+  'INSERT',
+  'DELETE',
+  'UPDATE',
+  'CREATE',
+  'DROP',
+  'EXEC',
+  'UNION',
+  'FETCH',
+  'DECLARE',
+  'TRUNCATE',
+];
 
 const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
   const { close } = useModal();
@@ -30,8 +41,7 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [totalRows, setTotalRows] = useState(0);
   const [totalPage, setTotalPage] = useState(0);
-
-  const PAGE_SIZE = 3;
+  const [errorCode, setErrorCode] = useState('0');
 
   useEffect(() => {
     if (searchKeyword && searchKeyword.length > 0) {
@@ -40,9 +50,12 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
   }, [pageIndex, searchKeyword]);
 
   const handleOnSearch = async () => {
-    if (searchValue.trim().length > 0) {
-      setSearchKeyword(searchValue.trim());
-      setPageIndex(0);
+    if (searchValue.length > 0) {
+      if (new RegExp(/[%=><]/).test(searchValue)) setErrorCode('E0013');
+      else {
+        setSearchKeyword(searchValue);
+        setPageIndex(0);
+      }
     } else {
       setSearchKeyword('');
       setPageIndex(0);
@@ -50,9 +63,20 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
     }
   };
 
+  const removeReservedWords = (input: string) => {
+    let replaced = input;
+    RESERVED_WORD_SQL.map((word) => {
+      const regExp = new RegExp(word, 'gi');
+      if (regExp.test(input)) {
+        replaced = input.replace(word, '');
+      }
+    });
+    return replaced;
+  };
+
   const handleInputChange = (e: any) => {
     const value = e.target.value;
-    setSearchValue(value);
+    setSearchValue(removeReservedWords(value).trim());
   };
 
   const searchAddress = async (currentPage: number, keyword: string) => {
@@ -79,10 +103,9 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
     } else {
       setSearchResult([]);
     }
+    setErrorCode(data.results.common.errorCode);
     setTotalRows(data.results.common.totalCount);
     setTotalPage(Math.ceil(data.results.common.totalCount / PAGE_SIZE));
-    console.log('### totalRows', totalRows);
-    console.log('### totalPage', totalPage);
   };
 
   const handleSelect = (item: any) => {
@@ -134,6 +157,14 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
     );
   };*/
 
+  const getError = () => {
+    return errorCode !== '0' ? (
+      <p className={cn(formStyles.guide_text, formStyles.error)}>
+        {t('LABEL.modal.addressSearch.error.' + errorCode.toLowerCase())}
+      </p>
+    ) : null;
+  };
+
   return (
     <ModalContainer>
       <ModalTitle>{t('LABEL.modal.addressSearch.title')}</ModalTitle>
@@ -154,6 +185,7 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
                     {t('LABEL.button.retrieve')}
                   </Button>
                 </div>
+                {getError()}
               </div>
             </ContentsRow>
           </div>
