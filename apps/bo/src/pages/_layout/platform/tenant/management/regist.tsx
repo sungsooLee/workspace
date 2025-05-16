@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { t } from 'i18next';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 
@@ -9,10 +9,10 @@ import {
   ContentsRow,
   DynamicFormField,
   useModal,
+  CheckboxGroupFormField,
 } from '@learnway/ui';
 import { FormRow, ThumbnailListFormField } from '@shared/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { CompanyModal } from '@features/tenant/management/ui/company-modal';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
@@ -24,6 +24,7 @@ import {
   DuplicateState,
 } from '@features/tenant/management/ui/duplicate-check-input-form-field';
 import { pageRouteConfig } from '@features/auth';
+import { CompanyChoiceModal } from '@features/shared';
 import TenantService from '@entities/tenant/api/tenant';
 import {
   CODE_GROUP,
@@ -32,6 +33,7 @@ import {
   SelectOption,
   useCodeStore,
 } from '@learnway/hooks';
+import { isEqual } from 'lodash';
 
 export const Route = createFileRoute('/_layout/platform/tenant/management/regist')({
   component: RouteComponent,
@@ -41,6 +43,11 @@ export const Route = createFileRoute('/_layout/platform/tenant/management/regist
     },
   }),
 });
+
+const defaultLangOptions = [
+  { value: 'ko', label: '한국어', disabled: true },
+  { value: 'en', label: '영어', disabled: true },
+];
 
 const duplicateCheck = async (value: string) => {
   const result: any = await TenantService.fetchAllTenant({ tenantName: value });
@@ -61,8 +68,9 @@ enum EnUseCategory {
 
 function RouteComponent() {
   const router = useRouter();
+  const [languageTypeList, setLanguageTypeList] = useState<any[]>(defaultLangOptions);
   const { open: openModal, confirm: openConfirm } = useModal();
-  const { provider, onSubmit, onFormChange } = useDynamicForm(formConfig);
+  const { control, provider, onSubmit, onFormChange, formState } = useDynamicForm(formConfig);
   const { create } = useCreateTenant({});
   const { getCode } = useCodeStore();
 
@@ -100,6 +108,28 @@ function RouteComponent() {
       create(payload);
     }
   };
+  const init = async () => {
+    const data = await getCode(CODE_GROUP['pms.multilingual.LanguageType']);
+    const newOptions = data
+      .filter((i) => {
+        return i.value !== 'ko' && i.value !== 'en';
+      })
+      .map((item) => {
+        return { label: item.cdContent, value: item.value };
+      });
+    console.log('new', newOptions);
+    const newValues = [...defaultLangOptions, ...newOptions];
+    console.log('aaaa', newValues);
+    if (!isEqual(newValues, languageTypeList)) {
+      setLanguageTypeList([...defaultLangOptions, ...newOptions]);
+    }
+  };
+
+  init();
+
+  useEffect(() => {
+    console.log('formState', formState.isDirty);
+  }, [formState.isDirty]);
 
   return (
     <PageContainer>
@@ -165,13 +195,13 @@ function RouteComponent() {
                 <ChipListModalSelectorFormField
                   chipList={{
                     labelField: 'name',
-                    valueField: 'value',
+                    valueField: 'companyId',
                     hideBorder: true,
                   }}
                   modalConfig={{
                     title: '',
                     width: 'xl',
-                    content: <CompanyModal />,
+                    content: <CompanyChoiceModal />,
                   }}
                 />
               </DynamicFormField>
@@ -203,7 +233,9 @@ function RouteComponent() {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'tenantMappingLanguageTypeList'} />
+              <DynamicFormField name={'tenantMappingLanguageTypeList'}>
+                <CheckboxGroupFormField options={languageTypeList} />
+              </DynamicFormField>
             </FormRow>
           </ContentsRow>
         </form>
@@ -232,10 +264,11 @@ const formConfig: DynamicFormConfig = {
       tooltip: t('테넌트에 사용할 로고로 파일 1개만 등록할 수 있습니다.'),
     },
     {
-      name: 'managerName',
+      name: 'tenantMappingRoleList',
       label: t('테넌트 담당자'),
       type: 'custom',
-      value: '',
+      format: 'array',
+      value: [],
       placeholder: t('담당자를 선택해주세요.'),
     },
     {
@@ -247,10 +280,10 @@ const formConfig: DynamicFormConfig = {
       maxLength: 150,
     },
     {
-      name: 'company',
+      name: 'companyTenantList',
       label: t('회사 선택'),
       type: 'custom',
-      value: '',
+      value: [],
       tooltip: t(
         '테넌트 소속 회사를 여러개 선택할 수 있습니다. 회사가 여러 개인 경우 회사별로 개별 설정이 필요합니다.',
       ),
@@ -304,7 +337,7 @@ const formConfig: DynamicFormConfig = {
     },
     {
       name: 'tenantMappingLanguageTypeList',
-      type: 'checkbox-group',
+      type: 'custom',
       label: t('언어'),
       format: 'array',
       tooltip: t(
@@ -343,42 +376,46 @@ const formConfig: DynamicFormConfig = {
     },
   ],
   validator: {
-    tenantName: {
-      format: 'object',
+    // tenantName: {
+    //   format: 'object',
+    //   required: true,
+    //   conditions: [
+    //     {
+    //       fn: (values) => {
+    //         const fieldValue = values.tenantName.fieldValue;
+    //         if (fieldValue === '') return true;
+    //         return false;
+    //       },
+    //       message: t('LABEL.form.validation.needInput', { code: t('테넌트명') }),
+    //     },
+    //     {
+    //       fn: (values: Record<string, any>) =>
+    //         values.tenantName.checkState === DuplicateState.check ||
+    //         values.tenantName.checkState === DuplicateState.needInput,
+    //       message: t('LABEL.form.validation.check', { code: t('테넌트명') }),
+    //     },
+    //     {
+    //       fn: (values: Record<string, any>) =>
+    //         values.tenantName.checkState === DuplicateState.duplicated,
+    //       message: t('LABEL.form.validation.duplicated', { code: t('테넌트명') }),
+    //     },
+    //   ],
+    // },
+
+    logoImageUrl: {
       required: true,
       conditions: [
         {
           fn: (values) => {
-            const fieldValue = values.tenantName.fieldValue;
-            if (fieldValue === '') return true;
+            if (values.logoImageUrl.length == 0) return true;
             return false;
           },
-          message: t('LABEL.form.validation.needInput', { code: t('테넌트명') }),
-        },
-        {
-          fn: (values: Record<string, any>) =>
-            values.tenantName.checkState === DuplicateState.check ||
-            values.tenantName.checkState === DuplicateState.needInput,
-          message: t('LABEL.form.validation.check', { code: t('테넌트명') }),
-        },
-        {
-          fn: (values: Record<string, any>) =>
-            values.tenantName.checkState === DuplicateState.duplicated,
-          message: t('LABEL.form.validation.duplicated', { code: t('테넌트명') }),
+          message: t('테넌트 로고 이미지를 등록 해주세요.'),
         },
       ],
     },
-
-    // tenantLogo: {
-    //   required: {
-    //     fn: (values) => {
-    //       return false;
-    //     },
-    //     message: 'ddddd',
-    //   },
-    // },
     // managerName: { required: true },
-    // tenantJungsanTag: { required: true },
+    tenantBillingTag: { required: true },
     // company: { required: true },
     isUsed: { required: true },
     device: {
