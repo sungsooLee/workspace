@@ -1,0 +1,776 @@
+import React, { FC, useEffect, useMemo, useState } from 'react';
+import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
+import {
+  Button,
+  ContentsRow,
+  DynamicFormField,
+  useModal,
+  Input,
+  Textarea,
+  Switch,
+  RadioGroupFormField,
+  ChipListModalSelectorFormField,
+  Tabs,
+  useGridBox,
+  GridBox,
+} from '@learnway/ui';
+import { FormInfoArea, FormRow, ContentsHistoryInfoFormField } from '@shared/ui';
+
+import { cn } from '@learnway/shared';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import styles from './channel-detail-base.module.css';
+
+import { IcoFormRequired } from '@/libs/icons/src';
+
+const ChannelDetailBaseComponent: FC<any> = () => {
+  const { t } = useTranslation();
+  const { provider, fetchData, onSubmit, onFormChange, setFormError, clearFormError } =
+    useDynamicForm(formConfig);
+
+  const gridConfig = {
+    query: '',
+    data: [
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+      {
+        name: '김현대',
+        company: '현대자동차',
+        workPlace: '경영지원본부',
+        dept: '경영지원실',
+        affiliation: '경영지원1팀',
+        appellation: '경영지원1팀',
+        employeeNumber: '1234567',
+        tenure: '재직',
+        stateCode: '정상',
+      },
+    ],
+    columns: [
+      {
+        name: 'no1',
+        label: 'NO.',
+        type: 'numbering',
+      },
+      {
+        name: 'name',
+        label: '이름',
+      },
+      { name: 'company', label: t('회사') },
+      { name: 'workPlace', label: '본부/사업부' },
+      { name: 'dept', label: '부서' },
+      { name: 'affiliation', label: '소속' },
+      { name: 'appellation', label: '호칭' },
+      { name: 'employeeNumber', label: '사번' },
+      { name: 'tenure', label: '재직여부' },
+      { name: 'stateCode', label: '계정상태' },
+    ],
+    pagination: {
+      pageSize: 10,
+      pageIndex: 0,
+      totalRows: 33,
+    },
+  };
+
+  const { config: userListGridConfig } = useGridBox(gridConfig);
+  const { config: userRestraintGridConfig } = useGridBox(gridConfig);
+
+  const [pageIndex, setPageIndex] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+
+  const [selectedTabKey] = useState<string>('USER_GROUP_LIST');
+  const items = [
+    {
+      title: '유저그룹 설정',
+      key: 'USER_GROUP_LIST',
+      content: (
+        <FormRow provider={provider}>
+          <FormInfoArea>
+            <Button variant="text" size="sm">
+              + {t('LABEL.button.add')}
+            </Button>
+          </FormInfoArea>
+          <DynamicFormField name={'userGroups'} />
+        </FormRow>
+      ),
+    },
+    {
+      title: '직접 설정',
+      key: 'USER_LIST',
+      content: (
+        <GridBox
+          title={'대상자 목록'}
+          multiple={true}
+          config={userListGridConfig}
+          showNumberingColumn={true}
+          pagination={{
+            pageSize: 10,
+            pageIndex: 0,
+            totalRows: 33,
+            onPageChange: setPageIndex,
+            onPageSizeChange: setPageSize,
+          }}
+          height={439}
+        />
+      ),
+    },
+    {
+      title: '학습자 제외 설정',
+      key: 'USER_RESTRAINT_LIST',
+      content: (
+        <GridBox
+          title={'대상자 목록'}
+          multiple={true}
+          config={userRestraintGridConfig}
+          showNumberingColumn={true}
+          pagination={{
+            pageSize: 10,
+            pageIndex: 0,
+            totalRows: 33,
+            onPageChange: setPageIndex,
+            onPageSizeChange: setPageSize,
+          }}
+          height={439}
+        />
+      ),
+    },
+  ];
+
+  return (
+    <div className={cn(styles.start, styles.wrap)}>
+      <ContentsRow>
+        <FormRow provider={provider}>
+          <DynamicFormField name={'channelId'} disabled={true} />
+          <p className={formStyles.info_text}>{'(접수ID 45785566322)'}</p>
+        </FormRow>
+      </ContentsRow>
+      <ContentsRow>
+        <FormRow provider={provider}>
+          <DynamicFormField name={'channelName'} />
+        </FormRow>
+      </ContentsRow>
+      <ContentsRow>
+        <FormRow provider={provider}>
+          <DynamicFormField name={'channelLearningContent'} resize="none" size="sm" />
+        </FormRow>
+        <FormRow provider={provider}>
+          <DynamicFormField name={'channelPurposeContent'} resize="none" size="sm" />
+        </FormRow>
+      </ContentsRow>
+      <ContentsRow>
+        <FormRow provider={provider}>
+          <DynamicFormField name={'channelMainLinkContent'} />
+          <Button variant={'gray'} size={'sm'}>
+            {'중복확인'}
+          </Button>
+          <Button variant={'gray'} size={'sm'}>
+            {'자동생성'}
+          </Button>
+        </FormRow>
+      </ContentsRow>
+      <ContentsRow type={'horizontal'}>
+        <FormRow provider={provider} className={formStyles.direction_col}>
+          <DynamicFormField name={'isSecretChannel'} />
+        </FormRow>
+        <FormRow provider={provider}>
+          <DynamicFormField name={'isSecureChannel'} />
+        </FormRow>
+      </ContentsRow>
+      <ContentsRow>
+        <FormRow provider={provider}>
+          <DynamicFormField name={'channelOwnerId'}>
+            <ChipListModalSelectorFormField
+              chipList={{
+                labelField: 'name',
+                valueField: 'value',
+                hideBorder: true,
+              }}
+              modalConfig={{
+                title: '',
+                width: 'xl',
+                //content: <TenantManagerModal />,
+              }}
+            />
+          </DynamicFormField>
+        </FormRow>
+      </ContentsRow>
+      {/** 플랫폼 담당자만 노출 */}
+      <ContentsRow>
+        <FormRow provider={provider}>
+          <DynamicFormField name={'isUniversalChannel'} />
+        </FormRow>
+      </ContentsRow>
+      {/** 플랫폼 담당자만 노출 */}
+      <ContentsRow>
+        <FormRow provider={provider}>
+          <DynamicFormField name={'isAllTenant'} />
+        </FormRow>
+      </ContentsRow>
+      {/** 플랫폼 담당자가 직접 선택 or 테넌트 관리자만 노출 */}
+      <ContentsRow>
+        <FormRow provider={provider}>
+          <DynamicFormField name={'tenantList'}>
+            <ChipListModalSelectorFormField
+              chipList={{
+                labelField: 'name',
+                valueField: 'value',
+                hideBorder: true,
+              }}
+              modalConfig={{
+                title: '',
+                width: 'xl',
+                //content: <TenantModal />,
+              }}
+            />
+          </DynamicFormField>
+        </FormRow>
+      </ContentsRow>
+
+      <ContentsRow>
+        <FormRow provider={provider}>
+          <DynamicFormField name={'courseAvailableSetting'}>
+            <ChipListModalSelectorFormField
+              chipList={{
+                labelField: 'name',
+                valueField: 'value',
+                hideBorder: true,
+              }}
+              modalConfig={{
+                title: '',
+                width: 'xl',
+                //content: <TenantModal />,
+              }}
+            />
+          </DynamicFormField>
+        </FormRow>
+      </ContentsRow>
+
+      <ContentsRow>
+        <FormRow provider={provider}>
+          <DynamicFormField name={'channelUserSetting'}>
+            <Tabs
+              selectedTabKey={selectedTabKey}
+              items={items}
+              type="round"
+              className={styles.tab_wrap}
+            />
+          </DynamicFormField>
+        </FormRow>
+      </ContentsRow>
+
+      <ContentsHistoryInfoFormField />
+    </div>
+  );
+};
+
+export const ChannelDetailBase = ChannelDetailBaseComponent;
+
+const formConfig: DynamicFormConfig = {
+  builders: [
+    {
+      name: 'channelId',
+      type: 'text',
+      label: t('채널ID'),
+      value: '',
+      placeholder: '',
+    },
+    {
+      name: 'channelName',
+      type: 'text',
+      label: t('채널명'),
+      value: '',
+      placeholder: '',
+      maxLength: 40,
+    },
+    {
+      name: 'channelLearningContent',
+      type: 'textarea',
+      label: t('채널 학습대상'),
+      value: '',
+      placeholder: '',
+      maxLength: 2000,
+    },
+    {
+      name: 'channelPurposeContent',
+      type: 'textarea',
+      label: t('채널 운영목적'),
+      value: '',
+      placeholder: '',
+      maxLength: 2000,
+    },
+    {
+      name: 'channelMainLinkContent',
+      type: 'text',
+      label: t('채널주소'),
+      value: '',
+      placeholder: '',
+    },
+    {
+      name: 'isSecretChannel',
+      type: 'radio-group',
+      label: t('채널구분'),
+      value: 'N',
+      options: [
+        {
+          value: 'N',
+          label: t('공개'),
+        },
+        {
+          value: 'Y',
+          label: t('비밀'),
+        },
+      ],
+    },
+    {
+      name: 'isSecureChannel',
+      type: 'switch',
+      label: t('보안 채널 여부'),
+      value: true,
+      placeholder: '',
+      switchConfig: {
+        label: (value: boolean) => (value ? '보안 적용' : '보안 미적용'),
+        guideText: (value: boolean) =>
+          value
+            ? t('보안채널 설정 시 학습자원의 불법 배포와 보안 위협에 강합니다.')
+            : t('보안채널 미 설정 시 학습자원의 불법 배포와 보안 위협에 취약합니다.'),
+      },
+    },
+    {
+      name: 'channelOwnerId',
+      label: t('채널 소유자'),
+      type: 'custom',
+      value: '',
+      placeholder: '이름 / 소속 / 팀명',
+    },
+    {
+      name: 'isUniversalChannel',
+      type: 'radio-group',
+      label: t('채널유형'),
+      value: 'N',
+      options: [
+        {
+          value: 'Y',
+          label: t('유니버설'),
+        },
+        {
+          value: 'N',
+          label: t('일반'),
+        },
+      ],
+    },
+    {
+      name: 'isAllTenant',
+      type: 'radio-group',
+      label: t('테넌트 선택'),
+      value: 'N',
+      options: [
+        {
+          value: 'Y',
+          label: t('모든 테넌트'),
+        },
+        {
+          value: 'N',
+          label: t('직접 선택'),
+        },
+      ],
+    },
+    {
+      name: 'tenantList',
+      label: t('테넌트 목록'),
+      type: 'custom',
+      value: '',
+    },
+    {
+      name: 'courseAvailableSetting',
+      label: t('과정 사용 가능한 설정'),
+      type: 'custom',
+      value: '',
+    },
+    {
+      name: 'channelUserSetting',
+      label: t('학습 대상자 설정'),
+      type: 'custom',
+      value: '',
+    },
+    {
+      name: 'userGroups',
+      type: 'chip-list',
+      label: t('LABEL.form.label.userGroupSetting'),
+      format: 'array',
+      placeholder: '',
+      description: '',
+      value: [],
+      chipListConfig: {
+        showInput: false,
+        labelField: 'label',
+        valueField: 'value',
+        wordwrap: true,
+      },
+    },
+  ],
+  validator: {
+    channelName: true,
+    channelMainLinkContent: true,
+    isSecretChannel: true,
+    isSecureChannel: true,
+    isUniversalChannel: true,
+    isAllTenant: true,
+    tenantList: true,
+    courseAvailableSetting: true,
+    channelUserSetting: true,
+    userGroups: true,
+  },
+};

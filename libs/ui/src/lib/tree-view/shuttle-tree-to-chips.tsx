@@ -10,9 +10,9 @@ import { IcoXclose, IcoNarrowRight } from '@learnway/icons';
 
 type Props = Pick<TreeProps, 'onCustomNodeClick' | 'treeId' | 'searchKeyword'> & {
   title: string;
-  selectedItems: TreeNode[];
+  selectedItems: any[]; // 추후 수정 필요 현재 key, FullPath만 받아서 필요한 정보 못 갖고옴.
   sourceData: any;
-  onItemsChange: (newItems: TreeNode[]) => void;
+  onItemsChange: (newItems: { key: string; fullPath: string }[]) => void;
 };
 
 export const ShuttleTreeToChips = ({
@@ -33,7 +33,7 @@ export const ShuttleTreeToChips = ({
 
   // 항목 제거 핸들러
   const handleRemoveItem = (item: TreeNode) => {
-    const newItems = actualSelectedItems.filter((i: TreeNode) => i.key !== item.key);
+    const newItems = actualSelectedItems.filter((i) => i.key !== item.key);
     setInternalSelectedItems(newItems);
     onItemsChange?.(newItems);
   };
@@ -66,7 +66,7 @@ export const ShuttleTreeToChips = ({
 
     // 이미 선택된 항목 필터링
     const filteredNodesToAdd = nodesToAdd.filter(
-      (n) => !actualSelectedItems.some((item: TreeNode) => item.key === n.key),
+      (n) => !actualSelectedItems.some((item) => item.key === n.key),
     );
 
     // 새 항목 추가
@@ -110,9 +110,7 @@ export const ShuttleTreeToChips = ({
           expandTrigger={expandSource}
           onCustomNodeClick={onCustomNodeClick}
           nodeButtons={(node) => {
-            const isAlreadySelected = actualSelectedItems.some(
-              (item: TreeNode) => item.key === node.key,
-            );
+            const isAlreadySelected = actualSelectedItems.some((item) => item.key === node.key);
 
             return (
               <Button
@@ -154,7 +152,7 @@ export const ShuttleTreeToChips = ({
           {actualSelectedItems.length === 0 ? (
             <div className={styles.no_data}>선택된 항목이 없습니다.</div>
           ) : (
-            actualSelectedItems.map((item: any) => (
+            actualSelectedItems.map((item) => (
               <div key={item.key} className={styles.selected_item}>
                 <span className={styles.selected_text}>{item.fullPath}</span>
                 <Button onClick={() => handleRemoveItem(item)} className={styles.btn_close}>

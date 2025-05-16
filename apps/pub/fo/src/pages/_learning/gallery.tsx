@@ -16,7 +16,11 @@ export const Route = createFileRoute('/_learning/gallery')({
 });
 
 function RouteComponent() {
+  // swiper
   const swiperRef = useRef<any>(null);
+
+  // swiper slide 개수
+  const [swiperCount, setSwiperCount] = useState<number>(0);
 
   // 메인 사진 이미지 넘버
   const [mainImgIndex, setMainImgIndex] = useState<number>(0);
@@ -96,6 +100,22 @@ function RouteComponent() {
     swiperRef.current.slideTo(current.clickedIndex);
   };
 
+  // 스와이퍼 prev 클릭
+  const handlePrevClick = () => {
+    if (mainImgIndex - 1 >= 0) {
+      setMainImgIndex(mainImgIndex - 1);
+      swiperRef.current.slideTo(mainImgIndex - 1);
+    }
+  };
+
+  // 스와이퍼 next 클릭
+  const handleNextClick = () => {
+    if (mainImgIndex + 1 < swiperCount) {
+      setMainImgIndex(mainImgIndex + 1);
+      swiperRef.current.slideTo(mainImgIndex + 1);
+    }
+  };
+
   return (
     <div className={`${styles.start} ${styles.gallery_wrap}`}>
       {/* background */}
@@ -109,10 +129,10 @@ function RouteComponent() {
             <img src={photoArray[mainImgIndex]} alt="" />
           </Button>
           {/* prev, next button */}
-          <Button className={styles.btn_prev}>
+          <Button className={styles.btn_prev} onClick={() => handlePrevClick()}>
             <IcoArrowBackward width={40} height={40} stroke="#fff" />
           </Button>
-          <Button className={styles.btn_next}>
+          <Button className={styles.btn_next} onClick={() => handleNextClick()}>
             <IcoArrowBackward width={40} height={40} stroke="#fff" />
           </Button>
         </div>
@@ -126,6 +146,7 @@ function RouteComponent() {
             slidesPerView="auto"
             centeredSlides={true}
             onSwiper={(swiper) => {
+              setSwiperCount(swiper.slides.length);
               swiperRef.current = swiper;
             }}
             onSlideChange={(swiper) => handlePhothChange(swiper.realIndex)}

@@ -16,7 +16,7 @@ export const Route = createFileRoute('/_unauth/platform_test/company/company/')(
 function RouteComponent() {
   const router = useRouter();
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
-  const { gridFetch } = useGridBox(gridConfig, getValues);
+  const { config, gridFetch } = useGridBox(gridConfig, getValues);
 
   const handleBulkRegister = async () => {
     console.log('handleBulkRegister');
@@ -51,7 +51,7 @@ function RouteComponent() {
       </ContentsButtons>
       <MainContents>
         <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
-        <GridBox config={gridConfig} />
+        <GridBox config={config} />
       </MainContents>
     </PageContainer>
   );

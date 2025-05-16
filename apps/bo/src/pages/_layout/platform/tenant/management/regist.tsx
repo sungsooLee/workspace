@@ -1,18 +1,17 @@
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import { t } from 'i18next';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import {
-  ContentsRow,
   Button,
   ChipListModalSelectorFormField,
+  ContentsRow,
   DynamicFormField,
   useModal,
 } from '@learnway/ui';
-import { FormRow } from '@shared/ui';
-import { ThumbnailUploaderFormField } from '@features/learning';
-import { DynamicFormConfig, useDynamicForm } from '@/libs/hooks/src';
+import { FormRow, ThumbnailListFormField } from '@shared/ui';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { CompanyModal } from '@features/tenant/management/ui/company-modal';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
@@ -21,33 +20,55 @@ import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 import { useCreateTenant } from '@entities/tenant/service/tenant.hook';
 import { HrdUserInquiryModal } from '@features/shared/ui/modal/hrd-user-inquiry-modal';
 import {
-  DuplicateState,
   DuplicateCheckInputFormField,
+  DuplicateState,
 } from '@features/tenant/management/ui/duplicate-check-input-form-field';
+import { pageRouteConfig } from '@features/auth';
 import TenantService from '@entities/tenant/api/tenant';
-import { z as baseZ } from 'zod';
+import {
+  CODE_GROUP,
+  BaseFormFieldProps,
+  OptionsConfig,
+  SelectOption,
+  useCodeStore,
+} from '@learnway/hooks';
 
 export const Route = createFileRoute('/_layout/platform/tenant/management/regist')({
   component: RouteComponent,
+  ...pageRouteConfig({
+    meta: {
+      title: 'LABEL.page.title.tenant.managemant',
+    },
+  }),
 });
 
 const duplicateCheck = async (value: string) => {
   const result: any = await TenantService.fetchAllTenant({ tenantName: value });
 
-  return DuplicateState.ok;
-  // if (result.content || result.content.length > 0) return DuplicateState.duplicated;
-  // else return DuplicateState.ok;
+  if (result.content && result.content.length > 0) return DuplicateState.duplicated;
+  else return DuplicateState.ok;
 };
+enum EnDeviceType {
+  isPc = 'isPc',
+  isMobile = 'isMobile',
+  isApp = 'isApp',
+}
+
+enum EnUseCategory {
+  isCommonCategory = 'isCommonCategory',
+  isTenantCategory = 'isTenantCategory',
+}
 
 function RouteComponent() {
   const router = useRouter();
   const { open: openModal, confirm: openConfirm } = useModal();
   const { provider, onSubmit, onFormChange } = useDynamicForm(formConfig);
   const { create } = useCreateTenant({});
+  const { getCode } = useCodeStore();
 
   const formRef = useRef<HTMLFormElement>(null);
   const handleListButtonClick = () => {
-    router.navigate({ to: '/tenant/management' });
+    router.navigate({ to: '/platform/tenant/management' });
   };
 
   const handleSaveButtonClick = async () => {
@@ -62,11 +83,19 @@ function RouteComponent() {
 
   const handleOnSubmit = async (data: any) => {
     console.log('data {} => ', data);
+    const logoImageUrl = data.logoImageUrl?.length > 0 ? data.logoImageUrl[0].path : '';
+
     const payload = {
       ...data,
       tenantName: data.tenantName.fieldValue,
+      logoImageUrl: logoImageUrl,
+      isPc: data.device.includes(EnDeviceType.isPc),
+      isMobile: data.device.includes(EnDeviceType.isMobile),
+      isApp: data.device.includes(EnDeviceType.isApp),
+      isCommonCategory: data.useCategory.includes(EnUseCategory.isCommonCategory),
+      isTenantCategory: data.useCategory.includes(EnUseCategory.isTenantCategory),
     };
-    console.log('data {} => ', payload);
+    console.log('payload {} => ', payload);
     if (await openConfirm('저장 하시겠습니까?')) {
       create(payload);
     }
@@ -102,8 +131,8 @@ function RouteComponent() {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name="tenantLogo">
-                <ThumbnailUploaderFormField />
+              <DynamicFormField name="logoImageUrl">
+                <ThumbnailListFormField />
               </DynamicFormField>
             </FormRow>
           </ContentsRow>
@@ -127,7 +156,7 @@ function RouteComponent() {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'tenantJungsanTag'} />
+              <DynamicFormField name={'tenantBillingTag'} />
             </FormRow>
           </ContentsRow>
           <ContentsRow>
@@ -156,7 +185,7 @@ function RouteComponent() {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'description'} resize="none" />
+              <DynamicFormField name={'tenantDesc'} resize={'none'} />
             </FormRow>
           </ContentsRow>
           <div className="title_wrap no_line">
@@ -174,7 +203,7 @@ function RouteComponent() {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'language'} />
+              <DynamicFormField name={'tenantMappingLanguageTypeList'} />
             </FormRow>
           </ContentsRow>
         </form>
@@ -196,7 +225,7 @@ const formConfig: DynamicFormConfig = {
     },
     {
       label: t('테넌트 로고 (Size : 000x000)'),
-      name: 'tenantLogo',
+      name: 'logoImageUrl',
       type: 'custom',
       format: 'array',
       value: [],
@@ -210,7 +239,7 @@ const formConfig: DynamicFormConfig = {
       placeholder: t('담당자를 선택해주세요.'),
     },
     {
-      name: 'tenantJungsanTag',
+      name: 'tenantBillingTag',
       type: 'text',
       label: t('테넌트 정산 태그'),
       value: '',
@@ -241,7 +270,7 @@ const formConfig: DynamicFormConfig = {
       guideText: t('테넌트 사용 여부를 설정할 수 있습니다.'),
     },
     {
-      name: 'description',
+      name: 'tenantDesc',
       type: 'textarea',
       label: t('설명'),
       value: '',
@@ -256,25 +285,25 @@ const formConfig: DynamicFormConfig = {
       tooltip: t(
         'PC, 모바일, APP 모두 사용가능하며 과정 등록 시 PC, 모바일 학습 여부를 설정할 수 있습니다.',
       ),
-      value: ['isWebExposed', 'isMobileExposed', 'isAppExposed'],
+      value: [EnDeviceType.isPc, EnDeviceType.isMobile, EnDeviceType.isApp],
       options: [
         {
-          value: 'isWebExposed',
           label: 'PC',
+          value: EnDeviceType.isPc,
         },
         {
-          value: 'isMobileExposed',
           label: 'Mobile',
+          value: EnDeviceType.isMobile,
         },
         {
-          value: 'isAppExposed',
-          label: 'APP',
+          label: 'App',
+          value: EnDeviceType.isApp,
         },
       ],
       showSelectAll: true,
     },
     {
-      name: 'language',
+      name: 'tenantMappingLanguageTypeList',
       type: 'checkbox-group',
       label: t('언어'),
       format: 'array',
@@ -285,19 +314,11 @@ const formConfig: DynamicFormConfig = {
       options: [
         { value: 'ko', label: '한국어', disabled: true },
         { value: 'en', label: '영어', disabled: true },
-        { value: 'ne', label: '네팔어' },
-        { value: 'ms', label: '말레이어' },
-        { value: 'vi', label: '베트남어' },
-        { value: 'a1', label: '스페인어1' },
-        { value: 'a2', label: '스페인어2' },
-        { value: 'a3', label: '스페인어3' },
-        { value: 'a4', label: '스페인어4' },
-        { value: 'a5', label: '스페인어5' },
-        { value: 'a6', label: '스페인어6' },
-        { value: 'a7', label: '스페인어7' },
-        { value: 'a8', label: '스페인어8' },
-        { value: 'a9', label: '스페인어9' },
       ],
+      optionsConfig: {
+        type: 'self',
+        codeGroup: CODE_GROUP['pms.multilingual.LanguageType'],
+      },
       showSelectAll: true,
       cols: 6,
     },
@@ -307,14 +328,14 @@ const formConfig: DynamicFormConfig = {
       label: t('카테고리 사용 여부'),
       format: 'array',
       tooltip: '테넌트 - 카테고리 관리에서 사용할 카테고리를 선택할 수 있습니다',
-      value: ['common', 'tenant'],
+      value: [EnUseCategory.isCommonCategory, EnUseCategory.isTenantCategory],
       options: [
         {
-          value: 'common',
+          value: EnUseCategory.isCommonCategory,
           label: '공통 카테고리',
         },
         {
-          value: 'tenant',
+          value: EnUseCategory.isTenantCategory,
           label: '테넌트 카테고리',
         },
       ],
@@ -364,7 +385,9 @@ const formConfig: DynamicFormConfig = {
       required: {
         fn: (values) => {
           return (
-            !values.isMobileExposed && !values.isWebExposed && !values.isAppExposed && !values.all
+            !values[EnDeviceType.isApp] &&
+            !values[EnDeviceType.isMobile] &&
+            !values[EnDeviceType.isPc]
           );
         },
         message: t('1개 이상 선택하세요.'),
@@ -373,15 +396,15 @@ const formConfig: DynamicFormConfig = {
     useCategory: {
       required: {
         fn: (values) => {
-          return !values.common && !values.tenant && !values.all;
+          return !values[EnUseCategory.isCommonCategory] && !values[EnUseCategory.isTenantCategory];
         },
         message: t('1개 이상 선택하세요.'),
       },
     },
-    language: {
+    tenantMappingLanguageTypeList: {
       required: {
         fn: (values) => {
-          return !values.common && !values.tenant && !values.all;
+          return values.tenantMappingLanguageTypeList.length === 0;
         },
         message: t('1개 이상 선택하세요.'),
       },

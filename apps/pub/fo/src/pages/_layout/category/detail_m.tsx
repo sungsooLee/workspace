@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import React, { useRef, useEffect, useState } from 'react';
 import { cn } from '@learnway/shared';
-import { Button, ContentsRow, Input, Dropdown, Pagination, useModal } from '@learnway/ui';
+import { Button, ContentsRow, Input, Dropdown, Pagination, useModal, Popover } from '@learnway/ui';
 import {
   IcoArrowDown,
   IcoArrowForward,
@@ -12,6 +12,7 @@ import {
 } from '@learnway/icons';
 import { CategoryDepthPopupM, FilterPopup } from '../../../features/layout';
 
+import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
 import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
 import thumnailImgStyles from '../../../shared/ui/thumnail/thumnail-img.module.css';
 
@@ -28,8 +29,28 @@ function RouteComponent() {
 
   // dropdown
   const [divisionValues, setDivisionValues] = useState<string[]>(['분류선택']);
-  const [arrayValues, setArrayValues] = useState<string[]>(['최신순']);
-  const [countValues, setCountValues] = useState<string[]>(['20개씩']);
+
+  // 퍼블수정 20250513 : popover 추가
+  const DropdownPopoverCompoment = () => {
+    return (
+      <div className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}>
+        <Button>최신순</Button>
+        <Button>과정명순</Button>
+        <Button>조회순</Button>
+      </div>
+    );
+  };
+
+  // 퍼블수정 20250513 : popover 추가
+  const DropdownPopoverCompoment2 = () => {
+    return (
+      <div className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}>
+        <Button>20개씩</Button>
+        <Button>50개씩</Button>
+        <Button>80개씩</Button>
+      </div>
+    );
+  };
 
   // 필터 선택된 값이 있으면 true 변경
   const [selectCheck, setSelectCheck] = useState(true);
@@ -158,29 +179,30 @@ function RouteComponent() {
           </div>
           <div className={styles.right}>
             <div className={styles.box}>
-              <Dropdown
-                className={styles.array}
-                variant="text"
-                options={[
-                  { value: 'a', label: '최신순' },
-                  { value: 'b', label: '과정명순' },
-                  { value: 'c', label: '조회순' },
-                ]}
-                value={arrayValues}
-                onChange={(selected) => setArrayValues(selected)}
-              />
+              {/* 퍼블수정 20250513 : dropdown > popover로 변경 */}
+              <Popover
+                popoverContent={<DropdownPopoverCompoment />}
+                className={`${dropdownPopoverStyles.btn} ${dropdownPopoverStyles.text}`}
+                side="bottom"
+                align="end"
+                sideOffset={10}
+              >
+                <span>{'최신순'}</span>
+                <IcoArrowDown width={16} height={16} stroke="#131C30" />
+              </Popover>
             </div>
             <div className={styles.box}>
-              <Dropdown
-                variant="text"
-                options={[
-                  { value: '20', label: '20개씩' },
-                  { value: '50', label: '50개씩' },
-                  { value: '80', label: '80개씩' },
-                ]}
-                value={countValues}
-                onChange={(selected) => setCountValues(selected)}
-              />
+              {/* 퍼블수정 20250513 : dropdown > popover로 변경 */}
+              <Popover
+                popoverContent={<DropdownPopoverCompoment2 />}
+                className={`${dropdownPopoverStyles.btn} ${dropdownPopoverStyles.text}`}
+                side="bottom"
+                align="end"
+                sideOffset={10}
+              >
+                <span>{'20개씩'}</span>
+                <IcoArrowDown width={16} height={16} stroke="#131C30" />
+              </Popover>
             </div>
             <div className={styles.box}>
               <Button onClick={list_ui}>

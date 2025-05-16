@@ -35,6 +35,7 @@ export const transformApiDataToTreeData = (apiData: any) => {
         isWebExposed: node.isWebExposed,
         isMobileExposed: node.isMobileExposed,
         isShortCutArea: node.isShortCutArea,
+        isHiddenMenu: node.isHiddenMenu,
 
         children: node.children || [],
       };
@@ -145,10 +146,10 @@ export const transformTreeDataToApiFormat = (treeData: any) => {
  */
 export const findMenuPathById = (
   nodes: TreeNode[],
-  menuId: number | string,
+  menuId?: number | string,
   titles: string[] = [],
 ): string => {
-  const targetId = menuId.toString();
+  const targetId = menuId?.toString();
 
   for (const node of nodes) {
     // 현재 노드의 제목을 임시 경로에 추가

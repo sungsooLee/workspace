@@ -1,0 +1,5 @@
+.start {
+  &.video {
+    @apply pb-[150px];
+  }
+}

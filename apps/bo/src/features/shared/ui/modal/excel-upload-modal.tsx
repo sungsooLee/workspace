@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css';
 import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
@@ -19,6 +19,29 @@ const ExcelUploadModalComponent = () => {
   });
 
   const { close: closeModal } = useModal();
+
+  /*
+  useEffect(() => {
+    if (stats.status === 'validating-error' && files.length === 1) {
+      if (files[0].message === 'size error') {
+        setErrorMessage('LABEL.message.learningResourceFileUploadModal.sizeError');
+      }
+      if (files[0].message === 'extension error') {
+        setErrorMessage(t('LABEL.message.learningResourceFileUploadModal.extensionError'));
+      }
+      onRemove();
+    }
+  }, [stats]);
+
+  * */
+  useEffect(() => {
+    if (stats.status === 'complete') {
+      //이때 파일 객체의 첫번째 값을 가져오면 된다.
+      /*const form = new FormData();
+      form.append('file', files[0]);*/
+    }
+  }, []);
+
   return (
     <ModalContainer>
       <ModalTitle>엑셀 업로드</ModalTitle>
@@ -70,16 +93,6 @@ const ExcelUploadModalComponent = () => {
               {stats.status === 'idle' && (
                 <p className={styles.status_text}>{'상단 영역에 데이터를 업로드하세요.'}</p>
               )}
-
-              {/*<p className={styles.status_text}>{`${'{12행}'} 데이터를 확인해 주세요.`}</p>
-              <p className={styles.status_text}>{`${'{20행}'} 데이터를 확인해 주세요.`}</p>
-              <p className={styles.status_text}>{`${'{30행}'} 데이터를 확인해 주세요.`}</p>
-              <p className={styles.status_text}>{`${'{40행}'} 데이터를 확인해 주세요.`}</p>
-              <p className={styles.status_text}>{`${'{40행}'} 데이터를 확인해 주세요.`}</p>
-              <p className={styles.status_text}>{`${'{40행}'} 데이터를 확인해 주세요.`}</p>
-              <p className={styles.status_text}>{`${'{40행}'} 데이터를 확인해 주세요.`}</p>
-              <p className={styles.status_text}>{`${'{40행}'} 데이터를 확인해 주세요.`}</p>
-              <p className={styles.status_text}>{`${'{40행}'} 데이터를 확인해 주세요.`}</p>*/}
             </div>
             <NoticeBox
               iconVisible={false}

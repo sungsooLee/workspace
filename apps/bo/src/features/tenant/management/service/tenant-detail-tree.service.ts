@@ -106,7 +106,40 @@ export const getFirstExpandKeys = (treeData: TreeNode[]) => {
  * @param apiData
  * @returns 변환된 TreeNode
  */
-export const transformApiDataToTreeData = (apiData: any) => {
+export const transformMenuApiDataToTreeData = (apiData: any) => {
+  // 단일 노드인 경우 배열로 감싸기
+  const dataArray = Array.isArray(apiData) ? apiData : [apiData];
+
+  // 재귀적으로 데이터 구조 변환
+  const transform = (nodes: any) => {
+    if (!nodes) return [];
+
+    return nodes.map((node: any) => {
+      // 새로운 노드 객체 생성
+
+      const transformedNode = {
+        ...node,
+
+        // 필수 트리 속성
+        key: node.menuId.toString(), // menuId를 key로 사용
+        title: node.menuName || node.menuCode, // title이 없으면 menuCode 사용
+        parentKey: node.parentId?.toString(), // parentId를 parentKey로 변환
+        children: node.children || [],
+      };
+
+      // 자식 노드가 있는 경우 재귀적으로 변환
+      if (node.children && node.children.length > 0) {
+        transformedNode.children = transform(node.children);
+      }
+
+      return transformedNode;
+    });
+  };
+
+  return transform(dataArray);
+};
+
+export const transformRoleMenuApiDataToTreeData = (apiData: any) => {
   // 단일 노드인 경우 배열로 감싸기
   const dataArray = Array.isArray(apiData) ? apiData : [apiData];
 
@@ -117,29 +150,10 @@ export const transformApiDataToTreeData = (apiData: any) => {
     return nodes.map((node: any) => {
       // 새로운 노드 객체 생성
       const transformedNode = {
+        ...node,
         // 필수 트리 속성
-        key: node.menuId.toString(), // menuId를 key로 사용
-        title: node.menuName || node.menuCode, // title이 없으면 menuCode 사용
-
-        // 원본 데이터 속성 유지
-        menuId: node.menuId,
-        sortOrder: node.sortOrder,
-        isUsed: node.isUsed, // isUsed을 isUsed로 변환
-        isDeleted: node.isDeleted,
-        isMobileExposed: node.isMobileExposed,
-        isWebExposed: node.isWebExposed,
-        tenantId: node.tenantId,
-        menuCode: node.menuCode,
-        path: node.path,
-        depth: node.depth,
-        isShortCutArea: node.isShortCutArea,
-        isPersoninfoInclusion: node.isPersoninfoInclusion,
-        menuScope: node.menuScope,
-        menuStartDate: node.menuStartDate,
-        menuEndDate: node.menuEndDate,
-        parentId: node.parentId,
-        tenantMappingMenuId: node.tenantMappingMenuId,
-
+        key: node.menuId, // menuId를 key로 사용
+        title: node.menuName, // title이 없으면 menuCode 사용
         parentKey: node.parentId?.toString(), // parentId를 parentKey로 변환
         children: node.children || [],
       };
@@ -157,48 +171,67 @@ export const transformApiDataToTreeData = (apiData: any) => {
 };
 
 export const moveNodeCheck = (events: any) => {
+  const targetIndex = events.targetIndex + 1;
+  const retValue = {
+    tenantMappingMenuId: events.sourceNode.tenantMappingMenuId,
+    sortOrder: targetIndex,
+    menuScopeCode: '',
+  };
+
   switch (events.position) {
     case 'BEFORE': {
-      let sortOrder = events.targetNode.sortOrder - 1;
-      if (events.sourceNode.sortOrder > events.targetNode.sortOrder) {
-        sortOrder++;
-      }
       if (events.sourceNode.level === events.targetNode.level) {
-        return {
-          tenantMappingMenuId: events.sourceNode.tenantMappingMenuId,
-          destinationParentId: events.targetNode.parentKey,
-          sortOrder: sortOrder,
-          menuScopeCode: '',
-        };
+        return { ...retValue, destinationParentId: events.targetNode.parentKey };
       }
       break;
     }
     case 'INSIDE':
       if (events.sourceNode.level === events.targetNode.level + 1) {
         return {
-          tenantMappingMenuId: events.sourceNode.tenantMappingMenuId,
+          ...retValue,
           destinationParentId: events.targetNode.key,
-          sortOrder: 1,
-          menuScopeCode: '',
         };
       }
       break;
     case 'AFTER':
-      {
-        let sortOrder = events.targetNode.sortOrder + 1;
-        if (events.sourceNode.sortOrder < events.targetNode.sortOrder) {
-          sortOrder--;
-        }
-        if (events.sourceNode.level === events.targetNode.level) {
-          return {
-            tenantMappingMenuId: events.sourceNode.tenantMappingMenuId,
-            destinationParentId: events.targetNode.parentKey,
-            sortOrder: sortOrder,
-            menuScopeCode: '',
-          };
-        }
+      if (events.sourceNode.level === events.targetNode.level) {
+        return {
+          ...retValue,
+          destinationParentId: events.targetNode.parentKey,
+        };
       }
       break;
   }
   return undefined;
+};
+
+export const transformRoleApiDataToTreeData = (apiData: any) => {
+  // const dataArray = Array.isArray(apiData) ? apiData : [apiData];
+  const dataArray = [{ roleId: 'root', name: 'ROOT', children: [...apiData] }];
+
+  const transform = (nodes: any) => {
+    if (!nodes) return [];
+
+    return nodes.map((node: any) => {
+      // 새로운 노드 객체 생성
+      const transformedNode = {
+        ...node,
+        // 필수 트리 속성
+        key: node.roleId, // menuId를 key로 사용
+        title: node.name, // title이 없으면 menuCode 사용
+
+        parentKey: node.parentId || 'root', // parentId를 parentKey로 변환
+        children: node.children || [],
+      };
+
+      // 자식 노드가 있는 경우 재귀적으로 변환
+      if (node.children && node.children.length > 0) {
+        transformedNode.children = transform(node.children);
+      }
+
+      return transformedNode;
+    });
+  };
+
+  return transform(dataArray);
 };

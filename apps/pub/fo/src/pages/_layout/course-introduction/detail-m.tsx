@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
-import { Button, Tabs, useModal, Textarea } from '@learnway/ui';
-import { IcoHeart, IcoUser01, IcoArrowDown } from '@learnway/icons';
+import { createFileRoute, Link } from '@tanstack/react-router';
+import { cn } from '@learnway/shared';
+import { Button, Tabs, useModal, Textarea, Accordion } from '@learnway/ui';
+import { IcoHeart, IcoUser01, IcoArrowDown, IcoPlay } from '@learnway/icons';
 import { MobileView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
 
@@ -12,6 +13,10 @@ import {
   CourseFixedButton, // 수강신청 버튼
 } from '../../../features/layout';
 
+import packageSideStyles from './package-side.module.css';
+import relatedSideStyles from './related-side.module.css';
+import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
+import thumnailImgStyles from '../../../shared/ui/thumnail/thumnail-img.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import definitionListStyles from './definition-list.module.css';
 import packageInformationStyles from './package-information.module.css';
@@ -161,6 +166,88 @@ function RouteComponent() {
     });
   };
 
+  // 패키지 아코디언
+  const [accordionValue, setAccordionValue] = useState<string>('');
+  const accordionValueItems = [
+    {
+      value: 'a',
+      title: (
+        <div className={packageSideStyles.sub_package_title}>
+          <div
+            className={cn(
+              thumnailStyles.start,
+              thumnailStyles.thumbnail,
+              thumnailStyles.horizontal,
+            )}
+          >
+            {/* link (찜 기능과 겹침으로 따로 빠짐) */}
+            <Link to="" className={thumnailStyles.link}></Link>
+
+            <div className={thumnailStyles.thumnail_box}>
+              {/* img */}
+              <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                <ul className={thumnailImgStyles.label}>
+                  <li style={{ backgroundColor: '#00afd5' }}>New</li>
+                </ul>
+                <div className={thumnailImgStyles.img}>
+                  <img src={bnrImage1} alt="" />
+                </div>
+              </div>
+              {/* txt */}
+              <div className={thumnailStyles.text_box}>
+                <p className={thumnailStyles.text}>
+                  필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+      children: (
+        <div className={packageSideStyles.sub_package_content}>
+          <p>필수 개발 과정 Spring Framework활한 OpenAPI 서비스 개발</p>
+          <p>필수 개발 과정 Spring Framework활한 OpenAPI 서비스 개발</p>
+          <p>필수 개발 과정 Spring Framework활한 OpenAPI 서비스 개발</p>
+          <p>필수 개발 과정 Spring Framework활한 OpenAPI 서비스 개발</p>
+        </div>
+      ),
+    },
+    {
+      value: 'b',
+      title: (
+        <div className={packageSideStyles.sub_package_title}>
+          <div
+            className={cn(
+              thumnailStyles.start,
+              thumnailStyles.thumbnail,
+              thumnailStyles.horizontal,
+            )}
+          >
+            {/* link (찜 기능과 겹침으로 따로 빠짐) */}
+            <Link to="" className={thumnailStyles.link}></Link>
+
+            <div className={thumnailStyles.thumnail_box}>
+              {/* img */}
+              <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                <ul className={thumnailImgStyles.label}>
+                  <li style={{ backgroundColor: '#00afd5' }}>New</li>
+                </ul>
+                <div className={thumnailImgStyles.img}>
+                  <img src={bnrImage1} alt="" />
+                </div>
+              </div>
+              {/* txt */}
+              <div className={thumnailStyles.text_box}>
+                <p className={thumnailStyles.text}>필수개발과정</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+      children: <div className={packageSideStyles.sub_package_content}>Content B</div>,
+    },
+  ];
+
   return (
     <div className={`${styles.start} ${styles.package_wrap}`}>
       <div className={styles.thumbnail_img}>
@@ -253,6 +340,81 @@ function RouteComponent() {
           </div>
         </div>
         <Tabs className={styles.tab} selectedTabKey={selectedTabKey} items={items} type="line" />
+      </div>
+
+      {/* sub content */}
+      <div className={styles.sub_contents}>
+        {/* 패키지 */}
+        <div
+          className={`${packageSideStyles.start} ${packageSideStyles.package} ${styles.sub_box} `}
+        >
+          <div className={styles.tit_box}>
+            <strong>
+              패키지<em>10</em>
+            </strong>
+          </div>
+          <div className={packageSideStyles.package_box}>
+            <Accordion
+              items={accordionValueItems}
+              value={accordionValue}
+              className={packageSideStyles.acc_package}
+              onValueChange={(value) => setAccordionValue(value as string)}
+              type={'multiple'}
+            />
+          </div>
+        </div>
+
+        {/* 연관 과정 */}
+        <div
+          className={`${relatedSideStyles.start} ${relatedSideStyles.related} ${styles.sub_box} `}
+        >
+          <div className={styles.tit_box}>
+            <strong>
+              연관 과정<em>20</em>
+            </strong>
+          </div>
+          <ul className={relatedSideStyles.procedure_box}>
+            <li>
+              {/* thumnail module */}
+              <div
+                className={cn(
+                  thumnailStyles.start,
+                  thumnailStyles.thumbnail,
+                  thumnailStyles.horizontal,
+                )}
+              >
+                {/* link (찜 기능과 겹침으로 따로 빠짐) */}
+                <Link to="" className={thumnailStyles.link}></Link>
+
+                <div className={thumnailStyles.thumnail_box}>
+                  {/* img */}
+                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                    <ul className={thumnailImgStyles.label}>
+                      <li style={{ backgroundColor: '#00afd5' }}>New</li>
+                    </ul>
+                    <div className={thumnailImgStyles.img}>
+                      <img src={bnrImage1} alt="" />
+                    </div>
+                  </div>
+                  {/* txt */}
+                  <div className={thumnailStyles.text_box}>
+                    <div className={thumnailStyles.type}>
+                      {/* type */}
+                      <span className={thumnailStyles.txt}>동영상</span>
+                      <span className={thumnailStyles.time}>
+                        {/* time icon */}
+                        <IcoPlay width={12} height={12} fill="#6f798b" />
+                        {/* time */}
+                        04:59
+                      </span>
+                    </div>
+                    <p className={thumnailStyles.text}>필수개발과정</p>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
 
       {/* button fix */}

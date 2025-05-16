@@ -22,6 +22,7 @@ import { ContentsHistoryInfoFormField, FormRow } from '@shared/ui';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
+import { EnFormMode } from '@types';
 import { TenantDetailMenuMappingModal } from './tenant-detail-menu-mapping-modal';
 /** Hook 정의 */
 import {
@@ -37,7 +38,7 @@ import {
   getAllTreeKeys,
   getFirstExpandKeys,
   moveNodeCheck,
-  transformApiDataToTreeData,
+  transformMenuApiDataToTreeData,
 } from '../service/tenant-detail-tree.service';
 
 const DIVICE_NAME = {
@@ -45,19 +46,13 @@ const DIVICE_NAME = {
   Mobile: 'Mobile',
 };
 
-const FORM_MODE = {
-  NONE: 'NONE',
-  VIEW: 'VIEW',
-  ADD: 'ADD',
-};
-
-const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
+const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
   const routerState = useRouterState();
   const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
-  const [formMode, setFormMode] = useState(FORM_MODE.NONE);
+  const [formMode, setFormMode] = useState(EnFormMode.NONE);
   const [treeData, setTreeData] = useState([]);
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
-  const [isInitMode, setIsInitMode] = useState(true);
+  const [apiMappingMenuList, setApiMappingMenuList] = useState([]);
   const tenantId = routerState.location.state?.tenantId;
 
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, control } =
@@ -95,9 +90,9 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
     if (node && node.key !== '1') {
       setSelectedNode(node);
       if (node) {
-        setFormMode(FORM_MODE.VIEW);
+        setFormMode(EnFormMode.VIEW);
       } else {
-        setFormMode(FORM_MODE.NONE);
+        setFormMode(EnFormMode.NONE);
       }
     }
   };
@@ -139,7 +134,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
           const payload = { ...selectedNode };
           console.log('delete!', payload);
           deleteMenuTenent(payload);
-          setFormMode(FORM_MODE.NONE);
+          setFormMode(EnFormMode.NONE);
         }
       },
     });
@@ -170,7 +165,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
     if (menuData) {
       prevDataRef.current = menuData;
       console.log(menuData);
-      const transformedData = transformApiDataToTreeData(menuData);
+      const transformedData = transformMenuApiDataToTreeData(menuData);
       setTreeData(transformedData);
       if (transformedData && transformedData.length > 0 && expandedKeys.length === 0) {
         const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
@@ -189,12 +184,13 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
       if (detailData.isMobileExposed) {
         deviceNames.push(DIVICE_NAME.Mobile);
       }
+      setApiMappingMenuList(detailData.apiMappingMenuList);
       fetchData({
         ...detailData,
         deviceNames: deviceNames,
         location: location,
       });
-      setFormMode(FORM_MODE.VIEW);
+      setFormMode(EnFormMode.VIEW);
     }
   }, [detailData]);
 
@@ -228,9 +224,11 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
             >
               {t('전체닫기')}
             </Button>
-            <Button variant="save" size="sm" onClick={() => handleTenantDetailMenuMapping()}>
-              {t('메뉴 맵핑')}
-            </Button>
+            {roleInfo === 'PLATFORM' && (
+              <Button variant="save" size="sm" onClick={() => handleTenantDetailMenuMapping()}>
+                {t('메뉴 맵핑')}
+              </Button>
+            )}
           </div>
         </div>
         <div className={layoutStyles.inner_contents}>
@@ -257,7 +255,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
               size="sm"
               className={layoutStyles.btn_text}
               onClick={() => onFormChange()}
-              disabled={FORM_MODE.NONE === formMode}
+              disabled={EnFormMode.NONE === formMode}
             >
               {t('초기화')}
             </Button>
@@ -265,7 +263,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
               variant="text"
               size="sm"
               className={layoutStyles.btn_text}
-              disabled={FORM_MODE.VIEW !== formMode}
+              disabled={EnFormMode.VIEW !== formMode}
               onClick={handleDeleteMenuTenant}
             >
               {t('삭제')}
@@ -273,7 +271,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
             <Button
               variant="save"
               size="sm"
-              disabled={FORM_MODE.NONE === formMode}
+              disabled={EnFormMode.NONE === formMode}
               onClick={handleUpdateMenuTenant}
             >
               {t('저장')}
@@ -311,7 +309,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'menuDesc'} disabled={FORM_MODE.NONE === formMode} />
+              <DynamicFormField name={'menuDesc'} disabled={EnFormMode.NONE === formMode} />
             </FormRow>
           </ContentsRow>
           <ContentsRow type={'horizontal'}>
@@ -321,7 +319,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={`deviceNames`} disabled={FORM_MODE.NONE === formMode}>
+              <DynamicFormField name={`deviceNames`} disabled={EnFormMode.NONE === formMode}>
                 <FormTranslationBox />
               </DynamicFormField>
             </FormRow>
@@ -333,7 +331,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope }) => {
           </ContentsRow>
           <ContentsRow type={'horizontal'}>
             <FormRow provider={provider}>
-              <DynamicFormField name={'isUsed'} disabled={FORM_MODE.NONE === formMode} />
+              <DynamicFormField name={'isUsed'} disabled={EnFormMode.NONE === formMode} />
             </FormRow>
           </ContentsRow>
           <ContentsRow>

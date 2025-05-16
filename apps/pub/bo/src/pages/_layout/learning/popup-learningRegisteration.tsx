@@ -48,6 +48,13 @@ function RouteComponent() {
       icon: <IcoVideo01 />,
       description: '1개 동영상 업로드',
     },
+    {
+      label: '이북',
+      value: getRandomId(),
+      icon: <IcoMybook />,
+      description: '설명문구2줄설명',
+    },
+    { label: '스콤', value: getRandomId(), icon: <IcoFolder />, description: '설명문구2줄설명' },
     // {
     //   label: '멀티 동영상',
     //   value: getRandomId(),
@@ -56,7 +63,7 @@ function RouteComponent() {
     //     '설명 문구는 최대 2줄까지 노출됩니다. 설명문구2줄설명 문구는 최대 2줄까지 노출됩니다. 설명문구2줄',
     // },
     {
-      label: 'HTML 동영상',
+      label: 'HTML',
       value: getRandomId(),
       icon: <IcoHtml />,
       description: '설명 문구는 최대 2줄까지 노출됩니다. ',
@@ -67,7 +74,6 @@ function RouteComponent() {
       icon: <IcoImage01 />,
       description: '설명 문구는 최대 2줄까지 노출됩니다. ',
     },
-    { label: '기타', value: getRandomId(), icon: <IcoEtc />, description: '설명문구2줄설명' },
     {
       label: '외부 링크',
       value: getRandomId(),
@@ -80,14 +86,9 @@ function RouteComponent() {
       icon: <IcoEntrust />,
       description: '설명문구2줄설명',
     },
+
     { label: '블로그', value: getRandomId(), icon: <IcoBlog />, description: '설명문구2줄설명' },
-    {
-      label: '이북',
-      value: getRandomId(),
-      icon: <IcoMybook />,
-      description: '설명문구2줄설명',
-    },
-    { label: '스콤', value: getRandomId(), icon: <IcoFolder />, description: '설명문구2줄설명' },
+
     // {
     //   label: '멀티 스콤',
     //   value: getRandomId(),
@@ -101,20 +102,21 @@ function RouteComponent() {
       icon: <IcoQuestionBank />,
       description: '설명문구2줄설명',
     },
-    { label: '설문지', value: getRandomId(), icon: <IcoSurvey />, description: '설명문구2줄설명' },
     { label: '과제', value: getRandomId(), icon: <IcoHomework />, description: '설명문구2줄설명' },
-    {
-      label: '라이브',
-      value: getRandomId(),
-      icon: <IcoLive />,
-      description: '설명문구2줄설명',
-    },
-    {
-      label: '라이브(HIVE)',
-      value: getRandomId(),
-      icon: <IcoLiveHive />,
-      description: '설명문구2줄설명',
-    },
+    { label: '설문지', value: getRandomId(), icon: <IcoSurvey />, description: '설명문구2줄설명' },
+    { label: '기타', value: getRandomId(), icon: <IcoEtc />, description: '설명문구2줄설명' },
+    // {
+    //   label: '라이브',
+    //   value: getRandomId(),
+    //   icon: <IcoLive />,
+    //   description: '설명문구2줄설명',
+    // },
+    // {
+    //   label: '라이브(HIVE)',
+    //   value: getRandomId(),
+    //   icon: <IcoLiveHive />,
+    //   description: '설명문구2줄설명',
+    // },
   ];
   // 퍼블수정 20240428 : 메뉴 수정 E
   const EbookContent = () => {

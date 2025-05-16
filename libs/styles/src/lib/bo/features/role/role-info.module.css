@@ -2,8 +2,16 @@
 .start {
   .contents_wrap {
     @apply scrollbar block h-[calc(100vh-506px)] w-full min-w-0 overflow-y-auto overflow-x-hidden pb-[16px];
-    [class*='nlp--contents-row'] [class*='nlp--switch'] {
-      @apply translate-y-0;
+    [class*='nlp--contents-row'] {
+      [class*='nlp--switch'] {
+        @apply translate-y-0;
+      }
+      & + [class*='chiplist_modal_wrap'] {
+        @apply pb-0;
+      }
+      & + [class*='history_info_wrap'] {
+        @apply mt-[16px];
+      }
     }
     [class*='history_info_wrap'] {
       @apply mt-[24px];

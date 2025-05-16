@@ -2,12 +2,15 @@
   &.learning_container {
     @apply flex;
     .learning_area {
-      @apply flex w-full;
+      @apply block w-full;
       .learning_contents {
         @apply flex-1;
       }
       .side_panel {
         @apply relative z-[10];
+      }
+      &.panel_active {
+        @apply flex;
       }
     }
   }

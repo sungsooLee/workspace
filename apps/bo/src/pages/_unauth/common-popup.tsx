@@ -1,11 +1,12 @@
 import { t } from 'i18next';
 import { createFileRoute } from '@tanstack/react-router';
-import { CompanyChoiceModal, CompanyShuttleModal } from '@features/shared';
+import { CompanyChoiceModal, CompanyShuttleModal, AddressSearchModal } from '@features/shared';
 import {
   Button,
   ChipListModalSelectorFormField,
   ContentsRow,
   DynamicFormField,
+  useModal,
 } from '@learnway/ui';
 
 import styles from '@learnway/styles/bo/pages/_auth/login.module.css';
@@ -24,10 +25,23 @@ export const Route = createFileRoute('/_unauth/common-popup')({
 });
 
 function RouteComponent() {
-  const { provider, onSubmit, control, getValues } = useDynamicForm(formConfig);
+  const { open } = useModal();
+  const { provider, onSubmit, control, getValues, fetchData } = useDynamicForm(formConfig);
 
   const handleOnSubmit = (data: any) => {
     console.log('data {} => ', data);
+  };
+
+  const handleAddressSearchResult = (address: any) => {
+    console.log('address', address);
+    fetchData({ zipCode: address.zipNo, defaultAddress: address.roadAddr });
+  };
+
+  const handleAddressSearch = () => {
+    open({
+      width: 's',
+      content: <AddressSearchModal onSelect={handleAddressSearchResult} />,
+    });
   };
 
   return (
@@ -86,6 +100,15 @@ function RouteComponent() {
               </DynamicFormField>
             </FormRow>
           </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'zipCode'} disabled={true} />
+              <DynamicFormField name={'defaultAddress'} disabled={true} />
+              <Button variant={'gray'} size={'sm'} onClick={handleAddressSearch}>
+                {'우편번호찾기'}
+              </Button>
+            </FormRow>
+          </ContentsRow>
         </MainContents>
         <SubContents>
           <div>서브영역</div>
@@ -117,6 +140,20 @@ const formConfig: DynamicFormConfig = {
       value: [],
       placeholder: '',
       description: '',
+    },
+    {
+      name: 'zipCode',
+      type: 'text',
+      label: t('주소'),
+      value: '',
+      placeholder: '우편번호',
+    },
+    {
+      name: 'defaultAddress',
+      type: 'text',
+      label: t('주소'),
+      value: '',
+      placeholder: '기본주소',
     },
   ],
 };

@@ -16,8 +16,18 @@ import { Route as LayoutImport } from './pages/_layout'
 import { Route as GuideImport } from './pages/_guide'
 import { Route as AuthImport } from './pages/_auth'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
+import { Route as LearningVideoMImport } from './pages/_learning/video-m'
 import { Route as LearningVideoImport } from './pages/_learning/video'
+import { Route as LearningHtmlMImport } from './pages/_learning/html-m'
+import { Route as LearningHtmlImport } from './pages/_learning/html'
+import { Route as LearningGalleryMImport } from './pages/_learning/gallery-m'
 import { Route as LearningGalleryImport } from './pages/_learning/gallery'
+import { Route as LearningFileMImport } from './pages/_learning/file-m'
+import { Route as LearningFileImport } from './pages/_learning/file'
+import { Route as LearningEbookMImport } from './pages/_learning/ebook-m'
+import { Route as LearningEbookImport } from './pages/_learning/ebook'
+import { Route as LearningBlogMImport } from './pages/_learning/blog-m'
+import { Route as LearningBlogImport } from './pages/_learning/blog'
 import { Route as AuthSuccessImport } from './pages/_auth/success'
 import { Route as AuthSignupStep3EnImport } from './pages/_auth/signup-step3-en'
 import { Route as AuthSignupStep3Import } from './pages/_auth/signup-step3'
@@ -137,15 +147,75 @@ const LayoutIndexRoute = LayoutIndexImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LearningVideoMRoute = LearningVideoMImport.update({
+  id: '/video-m',
+  path: '/video-m',
+  getParentRoute: () => LearningRoute,
+} as any)
+
 const LearningVideoRoute = LearningVideoImport.update({
   id: '/video',
   path: '/video',
   getParentRoute: () => LearningRoute,
 } as any)
 
+const LearningHtmlMRoute = LearningHtmlMImport.update({
+  id: '/html-m',
+  path: '/html-m',
+  getParentRoute: () => LearningRoute,
+} as any)
+
+const LearningHtmlRoute = LearningHtmlImport.update({
+  id: '/html',
+  path: '/html',
+  getParentRoute: () => LearningRoute,
+} as any)
+
+const LearningGalleryMRoute = LearningGalleryMImport.update({
+  id: '/gallery-m',
+  path: '/gallery-m',
+  getParentRoute: () => LearningRoute,
+} as any)
+
 const LearningGalleryRoute = LearningGalleryImport.update({
   id: '/gallery',
   path: '/gallery',
+  getParentRoute: () => LearningRoute,
+} as any)
+
+const LearningFileMRoute = LearningFileMImport.update({
+  id: '/file-m',
+  path: '/file-m',
+  getParentRoute: () => LearningRoute,
+} as any)
+
+const LearningFileRoute = LearningFileImport.update({
+  id: '/file',
+  path: '/file',
+  getParentRoute: () => LearningRoute,
+} as any)
+
+const LearningEbookMRoute = LearningEbookMImport.update({
+  id: '/ebook-m',
+  path: '/ebook-m',
+  getParentRoute: () => LearningRoute,
+} as any)
+
+const LearningEbookRoute = LearningEbookImport.update({
+  id: '/ebook',
+  path: '/ebook',
+  getParentRoute: () => LearningRoute,
+} as any)
+
+const LearningBlogMRoute = LearningBlogMImport.update({
+  id: '/blog-m',
+  path: '/blog-m',
+  getParentRoute: () => LearningRoute,
+} as any)
+
+const LearningBlogRoute = LearningBlogImport.update({
+  id: '/blog',
+  path: '/blog',
   getParentRoute: () => LearningRoute,
 } as any)
 
@@ -887,6 +957,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSuccessImport
       parentRoute: typeof AuthImport
     }
+    '/_learning/blog': {
+      id: '/_learning/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof LearningBlogImport
+      parentRoute: typeof LearningImport
+    }
+    '/_learning/blog-m': {
+      id: '/_learning/blog-m'
+      path: '/blog-m'
+      fullPath: '/blog-m'
+      preLoaderRoute: typeof LearningBlogMImport
+      parentRoute: typeof LearningImport
+    }
+    '/_learning/ebook': {
+      id: '/_learning/ebook'
+      path: '/ebook'
+      fullPath: '/ebook'
+      preLoaderRoute: typeof LearningEbookImport
+      parentRoute: typeof LearningImport
+    }
+    '/_learning/ebook-m': {
+      id: '/_learning/ebook-m'
+      path: '/ebook-m'
+      fullPath: '/ebook-m'
+      preLoaderRoute: typeof LearningEbookMImport
+      parentRoute: typeof LearningImport
+    }
+    '/_learning/file': {
+      id: '/_learning/file'
+      path: '/file'
+      fullPath: '/file'
+      preLoaderRoute: typeof LearningFileImport
+      parentRoute: typeof LearningImport
+    }
+    '/_learning/file-m': {
+      id: '/_learning/file-m'
+      path: '/file-m'
+      fullPath: '/file-m'
+      preLoaderRoute: typeof LearningFileMImport
+      parentRoute: typeof LearningImport
+    }
     '/_learning/gallery': {
       id: '/_learning/gallery'
       path: '/gallery'
@@ -894,11 +1006,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearningGalleryImport
       parentRoute: typeof LearningImport
     }
+    '/_learning/gallery-m': {
+      id: '/_learning/gallery-m'
+      path: '/gallery-m'
+      fullPath: '/gallery-m'
+      preLoaderRoute: typeof LearningGalleryMImport
+      parentRoute: typeof LearningImport
+    }
+    '/_learning/html': {
+      id: '/_learning/html'
+      path: '/html'
+      fullPath: '/html'
+      preLoaderRoute: typeof LearningHtmlImport
+      parentRoute: typeof LearningImport
+    }
+    '/_learning/html-m': {
+      id: '/_learning/html-m'
+      path: '/html-m'
+      fullPath: '/html-m'
+      preLoaderRoute: typeof LearningHtmlMImport
+      parentRoute: typeof LearningImport
+    }
     '/_learning/video': {
       id: '/_learning/video'
       path: '/video'
       fullPath: '/video'
       preLoaderRoute: typeof LearningVideoImport
+      parentRoute: typeof LearningImport
+    }
+    '/_learning/video-m': {
+      id: '/_learning/video-m'
+      path: '/video-m'
+      fullPath: '/video-m'
+      preLoaderRoute: typeof LearningVideoMImport
       parentRoute: typeof LearningImport
     }
     '/_layout/': {
@@ -1613,13 +1753,33 @@ const LayoutRouteWithChildren =
   LayoutRoute._addFileChildren(LayoutRouteChildren)
 
 interface LearningRouteChildren {
+  LearningBlogRoute: typeof LearningBlogRoute
+  LearningBlogMRoute: typeof LearningBlogMRoute
+  LearningEbookRoute: typeof LearningEbookRoute
+  LearningEbookMRoute: typeof LearningEbookMRoute
+  LearningFileRoute: typeof LearningFileRoute
+  LearningFileMRoute: typeof LearningFileMRoute
   LearningGalleryRoute: typeof LearningGalleryRoute
+  LearningGalleryMRoute: typeof LearningGalleryMRoute
+  LearningHtmlRoute: typeof LearningHtmlRoute
+  LearningHtmlMRoute: typeof LearningHtmlMRoute
   LearningVideoRoute: typeof LearningVideoRoute
+  LearningVideoMRoute: typeof LearningVideoMRoute
 }
 
 const LearningRouteChildren: LearningRouteChildren = {
+  LearningBlogRoute: LearningBlogRoute,
+  LearningBlogMRoute: LearningBlogMRoute,
+  LearningEbookRoute: LearningEbookRoute,
+  LearningEbookMRoute: LearningEbookMRoute,
+  LearningFileRoute: LearningFileRoute,
+  LearningFileMRoute: LearningFileMRoute,
   LearningGalleryRoute: LearningGalleryRoute,
+  LearningGalleryMRoute: LearningGalleryMRoute,
+  LearningHtmlRoute: LearningHtmlRoute,
+  LearningHtmlMRoute: LearningHtmlMRoute,
   LearningVideoRoute: LearningVideoRoute,
+  LearningVideoMRoute: LearningVideoMRoute,
 }
 
 const LearningRouteWithChildren = LearningRoute._addFileChildren(
@@ -1649,8 +1809,18 @@ export interface FileRoutesByFullPath {
   '/signup-step3': typeof AuthSignupStep3Route
   '/signup-step3-en': typeof AuthSignupStep3EnRoute
   '/success': typeof AuthSuccessRoute
+  '/blog': typeof LearningBlogRoute
+  '/blog-m': typeof LearningBlogMRoute
+  '/ebook': typeof LearningEbookRoute
+  '/ebook-m': typeof LearningEbookMRoute
+  '/file': typeof LearningFileRoute
+  '/file-m': typeof LearningFileMRoute
   '/gallery': typeof LearningGalleryRoute
+  '/gallery-m': typeof LearningGalleryMRoute
+  '/html': typeof LearningHtmlRoute
+  '/html-m': typeof LearningHtmlMRoute
   '/video': typeof LearningVideoRoute
+  '/video-m': typeof LearningVideoMRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
   '/guide/badge': typeof GuideGuideBadgeRoute
@@ -1746,8 +1916,18 @@ export interface FileRoutesByTo {
   '/signup-step3': typeof AuthSignupStep3Route
   '/signup-step3-en': typeof AuthSignupStep3EnRoute
   '/success': typeof AuthSuccessRoute
+  '/blog': typeof LearningBlogRoute
+  '/blog-m': typeof LearningBlogMRoute
+  '/ebook': typeof LearningEbookRoute
+  '/ebook-m': typeof LearningEbookMRoute
+  '/file': typeof LearningFileRoute
+  '/file-m': typeof LearningFileMRoute
   '/gallery': typeof LearningGalleryRoute
+  '/gallery-m': typeof LearningGalleryMRoute
+  '/html': typeof LearningHtmlRoute
+  '/html-m': typeof LearningHtmlMRoute
   '/video': typeof LearningVideoRoute
+  '/video-m': typeof LearningVideoMRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
   '/guide/badge': typeof GuideGuideBadgeRoute
@@ -1847,8 +2027,18 @@ export interface FileRoutesById {
   '/_auth/signup-step3': typeof AuthSignupStep3Route
   '/_auth/signup-step3-en': typeof AuthSignupStep3EnRoute
   '/_auth/success': typeof AuthSuccessRoute
+  '/_learning/blog': typeof LearningBlogRoute
+  '/_learning/blog-m': typeof LearningBlogMRoute
+  '/_learning/ebook': typeof LearningEbookRoute
+  '/_learning/ebook-m': typeof LearningEbookMRoute
+  '/_learning/file': typeof LearningFileRoute
+  '/_learning/file-m': typeof LearningFileMRoute
   '/_learning/gallery': typeof LearningGalleryRoute
+  '/_learning/gallery-m': typeof LearningGalleryMRoute
+  '/_learning/html': typeof LearningHtmlRoute
+  '/_learning/html-m': typeof LearningHtmlMRoute
   '/_learning/video': typeof LearningVideoRoute
+  '/_learning/video-m': typeof LearningVideoMRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_guide/guide/alert': typeof GuideGuideAlertRoute
   '/_guide/guide/badge': typeof GuideGuideBadgeRoute
@@ -1946,8 +2136,18 @@ export interface FileRouteTypes {
     | '/signup-step3'
     | '/signup-step3-en'
     | '/success'
+    | '/blog'
+    | '/blog-m'
+    | '/ebook'
+    | '/ebook-m'
+    | '/file'
+    | '/file-m'
     | '/gallery'
+    | '/gallery-m'
+    | '/html'
+    | '/html-m'
     | '/video'
+    | '/video-m'
     | '/'
     | '/guide/alert'
     | '/guide/badge'
@@ -2042,8 +2242,18 @@ export interface FileRouteTypes {
     | '/signup-step3'
     | '/signup-step3-en'
     | '/success'
+    | '/blog'
+    | '/blog-m'
+    | '/ebook'
+    | '/ebook-m'
+    | '/file'
+    | '/file-m'
     | '/gallery'
+    | '/gallery-m'
+    | '/html'
+    | '/html-m'
     | '/video'
+    | '/video-m'
     | '/'
     | '/guide/alert'
     | '/guide/badge'
@@ -2141,8 +2351,18 @@ export interface FileRouteTypes {
     | '/_auth/signup-step3'
     | '/_auth/signup-step3-en'
     | '/_auth/success'
+    | '/_learning/blog'
+    | '/_learning/blog-m'
+    | '/_learning/ebook'
+    | '/_learning/ebook-m'
+    | '/_learning/file'
+    | '/_learning/file-m'
     | '/_learning/gallery'
+    | '/_learning/gallery-m'
+    | '/_learning/html'
+    | '/_learning/html-m'
     | '/_learning/video'
+    | '/_learning/video-m'
     | '/_layout/'
     | '/_guide/guide/alert'
     | '/_guide/guide/badge'
@@ -2355,8 +2575,18 @@ export const routeTree = rootRoute
     "/_learning": {
       "filePath": "_learning.tsx",
       "children": [
+        "/_learning/blog",
+        "/_learning/blog-m",
+        "/_learning/ebook",
+        "/_learning/ebook-m",
+        "/_learning/file",
+        "/_learning/file-m",
         "/_learning/gallery",
-        "/_learning/video"
+        "/_learning/gallery-m",
+        "/_learning/html",
+        "/_learning/html-m",
+        "/_learning/video",
+        "/_learning/video-m"
       ]
     },
     "/_auth/agreement-privacy": {
@@ -2443,12 +2673,52 @@ export const routeTree = rootRoute
       "filePath": "_auth/success.tsx",
       "parent": "/_auth"
     },
+    "/_learning/blog": {
+      "filePath": "_learning/blog.tsx",
+      "parent": "/_learning"
+    },
+    "/_learning/blog-m": {
+      "filePath": "_learning/blog-m.tsx",
+      "parent": "/_learning"
+    },
+    "/_learning/ebook": {
+      "filePath": "_learning/ebook.tsx",
+      "parent": "/_learning"
+    },
+    "/_learning/ebook-m": {
+      "filePath": "_learning/ebook-m.tsx",
+      "parent": "/_learning"
+    },
+    "/_learning/file": {
+      "filePath": "_learning/file.tsx",
+      "parent": "/_learning"
+    },
+    "/_learning/file-m": {
+      "filePath": "_learning/file-m.tsx",
+      "parent": "/_learning"
+    },
     "/_learning/gallery": {
       "filePath": "_learning/gallery.tsx",
       "parent": "/_learning"
     },
+    "/_learning/gallery-m": {
+      "filePath": "_learning/gallery-m.tsx",
+      "parent": "/_learning"
+    },
+    "/_learning/html": {
+      "filePath": "_learning/html.tsx",
+      "parent": "/_learning"
+    },
+    "/_learning/html-m": {
+      "filePath": "_learning/html-m.tsx",
+      "parent": "/_learning"
+    },
     "/_learning/video": {
       "filePath": "_learning/video.tsx",
+      "parent": "/_learning"
+    },
+    "/_learning/video-m": {
+      "filePath": "_learning/video-m.tsx",
       "parent": "/_learning"
     },
     "/_layout/": {

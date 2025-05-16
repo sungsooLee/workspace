@@ -28,6 +28,7 @@ export interface TenantCategoryCreate {
   categoryType: string;
   sortSeq: number;
   parentId: number;
+  isUsed: boolean;
   whiteList: Combine[];
 }
 

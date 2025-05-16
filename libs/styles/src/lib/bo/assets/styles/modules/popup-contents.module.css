@@ -1,4 +1,4 @@
-/* popup-learningRegisteration.module.css */
+/* popup-contents.module.css */
 .wrap {
   @apply relative;
   .title_wrap {
@@ -27,6 +27,9 @@
         }
       }
     }
+  }
+  .form_title_line {
+    @apply !border-[var(--gray9)];
   }
 }
 .selected_area {

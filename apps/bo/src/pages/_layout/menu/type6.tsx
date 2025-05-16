@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useS3Uploader } from '@learnway/hooks';
+import { CODE_GROUP, useCodeStore, useS3Uploader } from '@learnway/hooks';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { Button, ContentsRow, useModal } from '@learnway/ui';
 import { LearningTypeChoiceModal } from '@features/learning';
@@ -7,13 +7,14 @@ import { ExcelUploadModal } from '@features/shared';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { httpService } from '@learnway/shared';
-import { fileDownload } from '@/libs/shared/src/lib/utils/file-util';
+import { fileDownload } from '@learnway/shared';
 
 export const Route = createFileRoute('/_layout/menu/type6')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { getCode } = useCodeStore();
   const thumbnailRef = useRef<HTMLInputElement>(null);
   const [imageUrl, setImageUrl] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
@@ -70,6 +71,17 @@ function RouteComponent() {
       { keyTypeCode: 'LABEL', locale: 'en' },
     );
   };
+
+  const codeStore = async () => {
+    console.log(
+      'cms.content.ContentsTypeCode => ',
+      await getCode(CODE_GROUP['cms.content.ContentsTypeCode']),
+    );
+  };
+
+  useEffect(() => {
+    codeStore();
+  }, []);
   return (
     <PageContainer>
       <MainContents>
@@ -78,6 +90,9 @@ function RouteComponent() {
         </ContentsRow>
         <ContentsRow>
           <Button onClick={handleExcelUploadModal}>엑셀 업로드</Button>
+        </ContentsRow>
+        <ContentsRow>
+          <Button onClick={codeStore}>코드 조회</Button>
         </ContentsRow>
         <ContentsRow>
           <input

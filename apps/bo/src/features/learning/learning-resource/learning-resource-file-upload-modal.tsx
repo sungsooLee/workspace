@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
   Button,
   DndFileProgress,
@@ -12,38 +12,71 @@ import {
 import { useS3Uploader } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { cn } from '@learnway/shared';
+import { LEARNING_TYPE } from '@learnway/config';
+import { t } from 'i18next';
+import { ChannelChoiceModal } from '@features/shared';
 
 interface Props {
   channel: {
     channelId: string;
     channelName: string;
   };
+  type: LEARNING_TYPE;
 }
+const acceptFiles = {
+  [LEARNING_TYPE.VIDEO]: [
+    'MP4',
+    'WMV',
+    'TS',
+    'AVI',
+    'MKV',
+    'MTS',
+    'MOV',
+    'MXF',
+    'MPEG',
+    'MPG',
+    'WEBM',
+    'ASF',
+    'SKM',
+    'K3G',
+  ],
+};
 
-const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel }) => {
-  const { close } = useModal();
-  const acceptFiles = ['xlsx'];
+const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) => {
+  const { close, open } = useModal();
   const maxFileCount = 1;
   const maxFileSize = 1024 * 1024 * 10;
   const { stats, files, addFiles, onPause, onRetry, onResume, onRemove } = useS3Uploader({
     s3Path: 'upload/leaning/resource/video',
     maxFileCount,
-    acceptFiles,
+    acceptFiles: acceptFiles[type],
   });
+  const [errorMessage, setErrorMessage] = useState('');
 
+  const handleAddFiles = (files: File[]) => {
+    setErrorMessage('');
+    addFiles(files);
+  };
+
+  const handleEncoding = async () => {
+    const channelInfo = await open({
+      content: <ChannelChoiceModal />,
+    });
+  };
+
+  useEffect(() => {
+    if (stats.status === 'validating-error' && files.length === 1) {
+      if (files[0].message === 'size error') {
+        setErrorMessage('LABEL.message.learningResourceFileUploadModal.sizeError');
+      }
+      if (files[0].message === 'extension error') {
+        setErrorMessage(t('LABEL.message.learningResourceFileUploadModal.extensionError'));
+      }
+      onRemove();
+    }
+  }, [stats]);
   return (
     <ModalContainer>
-      {/*<DndFileProgress
-              files={files}
-              addFiles={addFiles}
-              onRetry={onRetry}
-              onCancel={onCancel}
-              onRemove={onRemove}
-              multiple
-            />
-            <p className={styles.guide_text}>
-              {'업로드된 동영상은 학습자원목록에서 조회가능합니다.'}
-            </p>*/}
       <ModalTitle>{'파일 업로드'}</ModalTitle>
       <ModalBody>
         <div className={popupStyles.wrap}>
@@ -51,29 +84,37 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel }) => {
             <p className={popupStyles.selected_text}>{channel.channelName}</p>
           </div>
           <div className={popupStyles.title_wrap}>
-            <p className={popupStyles.text}>{'파일은 최대 1개, 4G 이하로 업로드 가능합니다.'}</p>
+            <p className={popupStyles.text}>
+              {t('LABEL.message.learningResourceFileUploadModal.uploaderLabel')}
+            </p>
           </div>
           <div className={popupStyles.pop_contents}>
             <DndFileProgress
               files={files}
               maxFileCount={maxFileCount}
               maxFileSize={maxFileSize}
-              addFiles={addFiles}
-              acceptFiles={acceptFiles}
+              addFiles={handleAddFiles}
+              acceptFiles={acceptFiles[type]}
               onRemove={onRemove}
               onPause={onPause}
               onResume={onResume}
               onRetry={onRetry}
+              guideText={t('LABEL.message.learningResourceFileUploadModal.uploaderGuideText')}
+              errorMessage={errorMessage}
               wrapSize={'lg'}
             />
-            <p className={cn(popupStyles.sub_text, popupStyles.dot)}>
-              {'업로드된 동영상은 학습자원목록에서 조회가능합니다.'}
-            </p>
           </div>
         </div>
       </ModalBody>
       <ModalFooter>
         <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => close()} />
+        <Button
+          label={'확인'}
+          variant={'primary'}
+          disabled={stats.status !== 'complete'}
+          size={'lg'}
+          onClick={handleEncoding}
+        />
       </ModalFooter>
     </ModalContainer>
   );

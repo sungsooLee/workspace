@@ -14,7 +14,7 @@ export interface Menu extends Hierarchy<Menu> {
   menuDesc: string;
   hiddenYn: boolean;
   parentId: number;
-  children?: Menu[];
+  menuName: string;
 }
 
 export interface FetchMenusParams {

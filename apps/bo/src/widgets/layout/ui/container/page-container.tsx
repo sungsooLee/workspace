@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Children, FC, isValidElement, ReactNode, useState, useEffect, useRef } from 'react';
 import { useCreation } from 'ahooks';
 import { last } from 'lodash';
@@ -28,6 +29,7 @@ const PageContainerComponent: FC<{
   notice?: boolean; // 화면내에 Notice 있는 경우
   tabs?: boolean; // 컨텐츠 상단에 tab 있는 경우
   scrollHidden?: boolean; // 컨텐츠 안에 스크롤인 경우
+  hideOutLine?: boolean; // 공통 > 나의 정보 화면(외곽라인,bg 없는 경우)
 }> = ({
   children,
   displayContent = true,
@@ -35,6 +37,7 @@ const PageContainerComponent: FC<{
   notice = false,
   tabs = false,
   scrollHidden = false,
+  hideOutLine = false,
 }) => {
   const { meta } = useCurrentRoute();
   const [activeMenuDepth] = useActiveMenuDepthState();
@@ -61,7 +64,7 @@ const PageContainerComponent: FC<{
     if (scrollContainerRef.current) {
       const scrollTop = scrollContainerRef.current.scrollTop;
       setScrollPosition(scrollTop);
-      scrollTop > 0
+      scrollTop > scrollPosition
         ? document.body.classList.add('scrolled')
         : document.body.classList.remove('scrolled');
     }
@@ -79,7 +82,6 @@ const PageContainerComponent: FC<{
         container.removeEventListener('scroll', handleScroll);
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -97,9 +99,21 @@ const PageContainerComponent: FC<{
     // 창 크기 조정 시에도 체크할 수 있도록 이벤트 리스너 추가
     window.addEventListener('resize', checkScroll);
 
+    const observer = new MutationObserver(checkScroll);
+    if (scrollContainerRef.current) {
+      observer.observe(scrollContainerRef.current, {
+        childList: true,
+        subtree: true,
+        attributes: true, // 크기 변화와 같은 속성 변경을 감지
+      });
+    }
+
     // 클린업
     return () => {
       window.removeEventListener('resize', checkScroll);
+      if (scrollContainerRef.current) {
+        observer.disconnect();
+      }
     };
   }, [hasScroll]);
 
@@ -155,6 +169,7 @@ const PageContainerComponent: FC<{
               tabs && 'tab_visible',
               notice && 'notice_visible',
               scrollHidden && 'scroll_hidden',
+              hideOutLine && styles.hide_outline,
               'content_wrap',
             )}
           >

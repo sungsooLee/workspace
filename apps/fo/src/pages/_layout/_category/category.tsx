@@ -16,8 +16,6 @@ export const Route = createFileRoute('/_layout/_category/category')({
 
 function RouteComponent() {
   // const { categoryId } = Route.useParams();
-  const { state } = Route.useRouteContext();
-  console.log('state', state);
 
   const items = [
     <Link to="">

@@ -1,7 +1,19 @@
+import { UseFormReturn } from 'react-hook-form';
 import { GridProps } from './grid';
 import React from 'react';
 
+export interface ExcelConfig {
+  upload?: string; // uploadUrl
+  download?: string; // downloadUrl
+  form?: {
+    // 양식 관련 정보
+    xlsx: string; // xlsx form download url
+    csv: string; // csv download url
+  };
+}
+
 /**
+ * TODO. GridBox 내의 기능이 확정되지 않아 useGridBox 와 GridBox 에 대한 Config 를 분리해놨는데 확정 된다면 합치는게 좋을꺼 같습니다.
  * useGridBox 훅에 전달되는 config 객체의 타입을 정의합니다.
  * 훅이 데이터 페칭 로직을 수행하는 데 필요한 정보를 담고 있습니다.
  */
@@ -21,6 +33,16 @@ export interface useGridBoxConfig {
    * Grid에 표시될 컬럼들의 정의 배열입니다.
    */
   columns: any[]; // 실제 컬럼 정의 객체들의 배열 타입으로 명확히 하는 것이 좋습니다. 예: ColumnDef<T>[];
+
+  /**
+   * Grid에 표시될 데이터 배열입니다.
+   */
+  data?: any[]; // 실제 행 데이터 객체들의 배열 타입으로 명확히 하는 것이 좋습니다. 예: T[];
+
+  /**
+   * Excel 업로드 다운로드에 대한 기능 정의
+   */
+  excel?: ExcelConfig;
 
   /**
    * 데이터 페칭 시 사용될 페이지네이션 상태 객체 (선택적)입니다.
@@ -60,6 +82,11 @@ export interface GridBoxConfig {
   totalRows?: number;
 
   /**
+   * Grid에 표시될 전체 행 개수 (page 객체 외부에 별도로 있을 경우)입니다.
+   */
+  totalElements?: number;
+
+  /**
    * 데이터를 다시 불러오는 함수 (선택적)입니다.
    * 페이지 변경, 검색 등 데이터 갱신이 필요할 때 호출됩니다.
    */
@@ -70,6 +97,13 @@ export interface GridBoxConfig {
    */
   hasData?: boolean;
 
+  onDataChange: (data: any) => void;
+
+  getParams?: UseFormReturn['getValues'];
+  /**
+   * Excel 업로드 다운로드에 대한 기능 정의
+   */
+  excel?: ExcelConfig;
   /**
    * 페이지네이션 상태 객체 (선택적)입니다.
    * 현재 페이지 정보 등을 포함합니다.
@@ -184,4 +218,7 @@ export interface GridBoxProps<T extends object = object>
    */
   showNumberingColumn?: boolean;
   columns?: any[];
+
+  clientSideSorting?: boolean;
+  clientSideFiltering?: boolean;
 }

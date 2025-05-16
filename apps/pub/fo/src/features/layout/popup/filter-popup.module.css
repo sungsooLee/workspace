@@ -1,12 +1,16 @@
 .start {
-  @apply relative;
+  @apply relative -m-[32px] flex max-h-[587px] flex-col overflow-hidden;
   .filter_wrap {
+    @apply overflow-x-hidden overflow-y-scroll p-[32px];
     li {
       & + li {
         @apply mt-[16px];
       }
       .filter_box {
         @apply mt-[8px];
+        & > div {
+          @apply gap-[8px];
+        }
         button {
           span {
             @apply !button_3_r !text-[var(--gray8)];
@@ -22,7 +26,7 @@
   }
 
   .look {
-    @apply sticky bottom-0 left-0 -mx-[32px] box-content w-[calc(100%+64px)] translate-y-[17px] border-y-[1px] border-solid border-[var(--gray5)] bg-[var(--gray1)] px-[32px] py-[20px];
+    @apply w-full flex-1 border-y-[1px] border-solid border-[var(--gray5)] bg-[var(--gray1)] px-[32px] py-[20px];
     .chip_list {
       & > div {
         @apply !mt-0;
@@ -46,20 +50,17 @@
 :global(body.mobile) {
   @screen mobile {
     .start {
+      @apply -mx-[20px] -my-[16px] flex !max-h-[calc(100dvh-72px-44px-80px)] flex-col;
       .filter_wrap {
+        @apply flex-1 overflow-y-auto px-[20px] py-[16px];
         li {
           .tit {
             @apply body_3_b text-[var(--gray8)];
           }
-          .filter_box {
-            & > div {
-              @apply gap-[8px];
-            }
-          }
         }
       }
       .look {
-        @apply w-full overflow-x-scroll py-[12px];
+        @apply w-full flex-none overflow-x-auto overflow-y-hidden px-[20px] py-[12px];
         & > div {
           @apply w-fit;
           & > div {

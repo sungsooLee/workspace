@@ -16,13 +16,13 @@ import styles from '@learnway/styles/fo/pages/_auth/search-account/search-accoun
 export function SearchAccountPage({ route }: any) {
   const { t } = useTranslation();
 
-  const { search } = useCurrentRoute(route);
+  const { params } = useCurrentRoute(route);
   const router = useRouter();
   const { alert } = useModal();
 
   const [defaultAuthValues, setDefaultAuthValues] = useState<AuthFormData>();
   const [selectedTabKey, setSelectedTabKey] = useState<'account' | 'password'>(
-    search?.tabKey ?? 'account',
+    params?.tabKey ?? 'account',
   );
 
   const { asyncFetch: asyncFetchEmail } = useAsyncFetchEmail();

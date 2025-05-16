@@ -1,28 +1,23 @@
 import { useState, useEffect } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { cn } from '@/libs/shared/src';
+import { cn } from '@learnway/shared';
 
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { Dropdown, Button, Input } from '@/libs/ui/src';
-import { IcoInfoCircle } from '@/libs/icons/src';
+import { Dropdown, Button, Input, GridBox, useGridBox } from '@learnway/ui';
+import { IcoInfoCircle } from '@learnway/icons';
 import { createColumnHelper } from '@tanstack/react-table';
 import { ColumnDef } from '@tanstack/react-table';
-import { IcoRefresh02, IcoSearch } from '@/libs/icons/src';
-import { GridBox } from '@/libs/ui/src';
 import { useRouter } from '@tanstack/react-router';
 
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { SearchBox } from '@shared/ui/search-box';
-import { useSearchBox } from '@/libs/hooks/src';
-import { SearchBoxConfig } from '@/libs/hooks/src';
+import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
 import { trainingPlaceQueryOptions } from '@entities/training-place/service/training-place.queries';
 import { useCallback } from 'react';
-import { useGridBox } from '@/libs/ui/src';
 
 export const Route = createFileRoute('/_layout/learning/training-place/')({
   component: RouteComponent,
@@ -178,7 +173,7 @@ function RouteComponent() {
           <div className={cn(boxStyles.start, boxStyles.inner)}>
             <div className="grid_wrap">
               <GridBox
-                config={gridConfig}
+                config={gConfig}
                 /*columns={columns}*/
                 height={440}
                 showColumnSettings={false}

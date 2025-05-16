@@ -17,7 +17,7 @@ import { IcoNarrowRight } from '@learnway/icons';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import popContentsStyles from './pop-contents-layout.module.css';
-import { transformApiDataToTreeData } from '@features/tenant/management/service/tenant-detail-tree.service';
+import { transformMenuApiDataToTreeData } from '@features/tenant/management/service/tenant-detail-tree.service';
 import { useMenuManageFetchTree } from '@entities/menu/service/menu-manage.hook';
 import {
   useFetchMenuTenantMappingTree,
@@ -36,7 +36,6 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
   const [baseMenuTreeData, setBaseMenuTreeData] = useState([]);
   const [baseMenuTreeExpandedKeys, setBaseMenuTreeExpandedKeys] = useState<string[]>([]);
   const [baseMenuAllKeys, setBaseMenuAllKeys] = useState<string[]>([]);
-  const [baseMenuTreeSelectedNode, setBaseMenuTreeSelectedNode] = useState<TreeNode | null>(null);
   const [menuTreeData, setMenuTreeData] = useState([]);
   const [menuTreeExpandedKeys, setMenuTreeExpandedKeys] = useState<string[]>([]);
   const [menuTreeAllKeys, setMenuTreeAllKeys] = useState<string[]>([]);
@@ -180,7 +179,7 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
   useEffect(() => {
     if (baseMenuDB) {
       console.log(baseMenuDB);
-      const transformedData = transformApiDataToTreeData(baseMenuDB);
+      const transformedData = transformMenuApiDataToTreeData(baseMenuDB);
       setBaseMenuTreeData(transformedData);
       if (transformedData && transformedData.length > 0) {
         const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
@@ -193,7 +192,7 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
 
   useEffect(() => {
     if (menuDB) {
-      const transformedData = transformApiDataToTreeData(menuDB);
+      const transformedData = transformMenuApiDataToTreeData(menuDB);
       console.log(transformedData);
       setMenuTreeData(transformedData);
       if (transformedData && transformedData.length > 0 && menuTreeExpandedKeys.length == 0) {
@@ -328,10 +327,10 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
           </div>
         </TreeContainer>
       </ModalBody>
-      <ModalFooter>
-        {/* <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={() => closeModal()} /> */}
+      {/* <ModalFooter>
+        <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
         <Button label={t('확인')} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
-      </ModalFooter>
+      </ModalFooter> */}
     </ModalContainer>
   );
 };

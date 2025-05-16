@@ -189,6 +189,9 @@ const LearningMenuComponent: FC<{}> = ({}) => {
                   maxLength={20}
                   disabled
                 />
+                <Button variant="gray" size="sm">
+                  {'다국어 관리'}
+                </Button>
               </div>
             </div>
           </ContentsRow>
