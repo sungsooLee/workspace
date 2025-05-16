@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { memo, ReactNode, useState, useEffect, useRef } from 'react';
 import { Link } from '@tanstack/react-router';
 // import { useTranslation } from 'react-i18next';
@@ -37,7 +38,7 @@ function PageContainerComponent({
     if (scrollContainerRef.current) {
       const scrollTop = scrollContainerRef.current.scrollTop;
       setScrollPosition(scrollTop);
-      scrollTop > 0
+      scrollTop > scrollPosition
         ? document.body.classList.add('scrolled')
         : document.body.classList.remove('scrolled');
     }
@@ -72,9 +73,21 @@ function PageContainerComponent({
     // 창 크기 조정 시에도 체크할 수 있도록 이벤트 리스너 추가
     window.addEventListener('resize', checkScroll);
 
+    const observer = new MutationObserver(checkScroll);
+    if (scrollContainerRef.current) {
+      observer.observe(scrollContainerRef.current, {
+        childList: true,
+        subtree: true,
+        attributes: true, // 크기 변화와 같은 속성 변경을 감지
+      });
+    }
+
     // 클린업
     return () => {
       window.removeEventListener('resize', checkScroll);
+      if (scrollContainerRef.current) {
+        observer.disconnect();
+      }
     };
   }, [hasScroll]);
 
