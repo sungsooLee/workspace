@@ -24,7 +24,7 @@ import {
   DuplicateState,
 } from '@features/tenant/management/ui/duplicate-check-input-form-field';
 import { pageRouteConfig } from '@features/auth';
-import { CompanyChoiceModal } from '@features/shared';
+import { CompanyChoiceModal, CompanyShuttleModal } from '@features/shared';
 import TenantService from '@entities/tenant/api/tenant';
 import {
   CODE_GROUP,
@@ -102,6 +102,7 @@ function RouteComponent() {
       isApp: data.device.includes(EnDeviceType.isApp),
       isCommonCategory: data.useCategory.includes(EnUseCategory.isCommonCategory),
       isTenantCategory: data.useCategory.includes(EnUseCategory.isTenantCategory),
+      companyTenantList: data.companyTenantList.map((i: any) => i.companyId),
     };
     console.log('payload {} => ', payload);
     if (await openConfirm('저장 하시겠습니까?')) {
@@ -191,7 +192,7 @@ function RouteComponent() {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'company'}>
+              <DynamicFormField name={'companyTenantList'}>
                 <ChipListModalSelectorFormField
                   chipList={{
                     labelField: 'name',
@@ -201,7 +202,7 @@ function RouteComponent() {
                   modalConfig={{
                     title: '',
                     width: 'xl',
-                    content: <CompanyChoiceModal />,
+                    content: <CompanyShuttleModal />,
                   }}
                 />
               </DynamicFormField>
