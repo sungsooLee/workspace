@@ -16,7 +16,13 @@
         .file_length {
           @apply body_bo_2_r inline-flex items-center text-[var(--gray7)];
           .num {
-            @apply body_bo_2_b text-[var(--secondary1)];
+            @apply body_bo_2_r text-[var(--secondary1)];
+          }
+          .slash {
+            @apply body_bo_2_r text-[var(--secondary1)];
+          }
+          .length {
+            @apply body_bo_2_r text-[var(--secondary1)];
           }
         }
         .file_volume {
