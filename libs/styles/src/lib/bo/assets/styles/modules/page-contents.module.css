@@ -2,7 +2,7 @@
 .main_contents {
   @apply box-border min-h-full flex-grow;
   [role='tablist']:first-child {
-    @apply mb-[24px];
+    @apply mb-[32px];
   }
 }
 .sub_contents {

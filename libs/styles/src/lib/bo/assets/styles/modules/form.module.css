@@ -65,6 +65,11 @@
   .form_item {
     @apply pb-0;
   }
+  .input_box {
+    [class*='nlp--input'] + [class*='nlp--button'] {
+      @apply !px-[10px];
+    }
+  }
   label + .input_box {
     @apply mt-[12px];
   }
@@ -422,4 +427,14 @@ hr.divider {
 
 [class*='lnb-open'] .input_box {
   @apply !max-w-[calc(100vw-420px)];
+}
+
+[class*='nlp--contents-row'] {
+  [class*='form_item'] {
+    [class*='input_box'] {
+      & > button {
+        @apply !px-[10px];
+      }
+    }
+  }
 }
