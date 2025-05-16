@@ -52,32 +52,41 @@ build:
 deploy:
   stage: deploy
   # image: docker
-  # AWS CLI가 설치된 Python 이미지 사용 (alternative)
-  image: python:3.9-alpine
+  image: node:18
+
   dependencies: # build 단계의 artifacts 를 사용.
     - build
-  before_script:
-    # Docker 이미지에서 권한 문제를 해결하기 위해 필요한 패키지 설치
-    - apk add --no-cache --update python3 py3-pip
-    - pip3 install --no-cache-dir awscli
-    # AWS 자격 증명 설정
-    - aws configure set aws_access_key_id ${AWS_ACCESS_KEY_ID}
-    - aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY}
   # before_script:
   #   - apk update
   #   - apk add --no-cache aws-cli
   #   - echo "AWS CLI version:"
   #   - aws --version
+  # script:
+  #   - echo "AWS CLI Version:"
+  #   - aws --version
+  #   - echo "Configuring AWS credentials..."
+  #   - aws configure list
+  #   - echo "Syncing to S3..."
+  #   - aws s3 sync dist/apps/fo s3://${S3_BUCKET}/fo --delete
+  #   - aws s3 sync dist/apps/bo s3://${S3_BUCKET}/bo --delete
+  #   - aws s3 sync dist/apps/pb-fo s3://${S3_BUCKET}/pb-fo --delete
+  #   - aws s3 sync dist/apps/pb-bo s3://${S3_BUCKET}/pb-bo --delete
+  before_script:
+    - npm init -y
+    - npm install aws-sdk dotenv mime-types
+    # GitLab CI/CD 변수로부터 .env 파일 생성
+    - |
+      cat > .env << EOF
+      AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID_DEV}
+      AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY_DEV}
+      S3_BUCKET=${S3_BUCKET_DEV}
+      AWS_REGION=ap-northeast-2
+      # 옵션: 배포 전 기존 파일 삭제 여부
+      CLEAN_DEPLOY=true
+      EOF
+
   script:
-    - echo "AWS CLI Version:"
-    - aws --version
-    - echo "Configuring AWS credentials..."
-    - aws configure list
-    - echo "Syncing to S3..."
-    - aws s3 sync dist/apps/fo s3://${S3_BUCKET}/fo --delete
-    - aws s3 sync dist/apps/bo s3://${S3_BUCKET}/bo --delete
-    - aws s3 sync dist/apps/pb-fo s3://${S3_BUCKET}/pb-fo --delete
-    - aws s3 sync dist/apps/pb-bo s3://${S3_BUCKET}/pb-bo --delete
+    - node deploy-script.js
   rules:
     - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH =~ /^build-.*/'
       variables:
