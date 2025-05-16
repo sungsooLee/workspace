@@ -174,8 +174,8 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
   const renderNodeButtons = (node: TreeNode, level: number) => {
     if (roleInfo)
       return (
-        <div className={'gap-10px flex'}>
-          <div className={'flex items-center'}>
+        <div className="gap-10px flex">
+          <div className="flex items-center">
             <Button
               onClick={(e) => {
                 e.stopPropagation();
@@ -198,9 +198,9 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
       <TreeBox
         data={roleTreeData}
         initLevel={2}
-        treeId={'1'}
+        treeId="1"
         showSearchKeyword
-        title={'역할 목록'}
+        title={t('역할 목록')}
         selectedNode={selectedRoleNode}
         renderNodeButtons={renderNodeButtons}
         handleSelectedNodeChange={handleRoleSelect}
@@ -211,21 +211,21 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
         <div className={cn(layoutStyles.inner)}>
           <form onSubmit={onSubmit(handleOnSubmit)}>
             <FormSubTitle
-              label={'역할 정보'}
+              label={t('역할 정보')}
               actionNode={
                 <>
                   <Button
-                    label={'초기화'}
-                    variant={'text'}
-                    size={'sm'}
+                    label={t('초기화')}
+                    variant="text"
+                    size="sm"
                     className="btn_text"
                     disabled={formMode === EnFormMode.NONE}
                     onClick={() => onFormChange()}
                   />
                   <Button
-                    label={'삭제'}
-                    variant={'text'}
-                    size={'sm'}
+                    label={t('삭제')}
+                    variant="text"
+                    size="sm"
                     className="btn_text"
                     disabled={
                       !roleInfo ||
@@ -236,9 +236,9 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                     onClick={handleDeleteButtonClick}
                   />
                   <Button
-                    label={'저장'}
-                    variant={'save'}
-                    size={'sm'}
+                    label={t('저장')}
+                    variant="save"
+                    size="sm"
                     type="submit"
                     disabled={formMode === EnFormMode.NONE}
                   />
@@ -249,17 +249,17 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
             <div className={styles.contents_wrap}>
               <ContentsRow>
                 <FormRow provider={provider}>
-                  <DynamicFormField name={'roleId'} disabled={true} />
+                  <DynamicFormField name="roleId" disabled={true} />
                 </FormRow>
 
                 <FormRow provider={provider}>
-                  <DynamicFormField name={'roleCode'} disabled={true} />
+                  <DynamicFormField name="roleCode" disabled={true} />
                 </FormRow>
               </ContentsRow>
               <ContentsRow>
                 <FormRow provider={provider}>
                   <DynamicFormField
-                    name={'name'}
+                    name="name"
                     maxLength={40}
                     disabled={formMode === EnFormMode.NONE || !roleInfo}
                   />
@@ -268,7 +268,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
               <ContentsRow>
                 <FormRow provider={provider}>
                   <DynamicFormField
-                    name={'description'}
+                    name="description"
                     maxLength={300}
                     disabled={formMode === EnFormMode.NONE || !roleInfo}
                   />
@@ -276,12 +276,12 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
               </ContentsRow>
               <ContentsRow>
                 <FormRow provider={provider}>
-                  <DynamicFormField name={'tenantScope'} disabled={formMode === EnFormMode.NONE} />
+                  <DynamicFormField name="tenantScope" disabled={formMode === EnFormMode.NONE} />
                 </FormRow>
               </ContentsRow>
               <ContentsRow>
                 <FormRow provider={provider}>
-                  <DynamicFormField name={'companyScope'} disabled={formMode === EnFormMode.NONE} />
+                  <DynamicFormField name="companyScope" disabled={formMode === EnFormMode.NONE} />
                 </FormRow>
               </ContentsRow>
               <FormDisplay
@@ -290,7 +290,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
               >
                 <div className="chiplist_modal_wrap">
                   <FormRow provider={provider}>
-                    <DynamicFormField name={'companyIds'}>
+                    <DynamicFormField name="companyIds">
                       <ChipListModalSelectorFormField
                         modalConfig={{
                           content: <CompanyShuttleModal />,
@@ -298,8 +298,8 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                           width: 'xl',
                         }}
                         chipList={{
-                          labelField: 'company',
-                          valueField: 'id',
+                          labelField: 'name',
+                          valueField: 'companyId',
                           wordwrap: true,
                         }}
                       />
@@ -309,7 +309,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
               </FormDisplay>
               <ContentsRow>
                 <FormRow provider={provider}>
-                  <DynamicFormField name={'channelScope'} disabled={formMode === EnFormMode.NONE} />
+                  <DynamicFormField name="channelScope" disabled={formMode === EnFormMode.NONE} />
                 </FormRow>
               </ContentsRow>
               <FormDisplay
@@ -318,7 +318,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
               >
                 <div className="chiplist_modal_wrap">
                   <FormRow provider={provider}>
-                    <DynamicFormField name={'channelIds'}>
+                    <DynamicFormField name="channelIds">
                       <ChipListModalSelectorFormField
                         chipList={{
                           labelField: 'name',
@@ -338,7 +338,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
               <ContentsRow>
                 <FormRow provider={provider}>
                   <DynamicFormField
-                    name={'deptScope'}
+                    name="deptScope"
                     disabled={formMode === EnFormMode.NONE}
                   ></DynamicFormField>
                 </FormRow>
@@ -349,7 +349,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
               >
                 <div className="chiplist_modal_wrap">
                   <FormRow provider={provider}>
-                    <DynamicFormField name={'deptIds'}>
+                    <DynamicFormField name="deptIds">
                       <ChipListModalSelectorFormField
                         chipList={{
                           labelField: 'name',
@@ -366,9 +366,9 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                   </FormRow>
                 </div>
               </FormDisplay>
-              <ContentsRow type={'horizontal'}>
+              <ContentsRow type="horizontal">
                 <FormRow provider={provider}>
-                  <DynamicFormField name={'isUsed'} disabled={formMode === EnFormMode.NONE} />
+                  <DynamicFormField name="isUsed" disabled={formMode === EnFormMode.NONE} />
                 </FormRow>
               </ContentsRow>
               <ContentsHistoryInfoFormField />

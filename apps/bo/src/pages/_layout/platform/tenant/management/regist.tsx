@@ -118,9 +118,7 @@ function RouteComponent() {
       .map((item) => {
         return { label: item.cdContent, value: item.value };
       });
-    console.log('new', newOptions);
     const newValues = [...defaultLangOptions, ...newOptions];
-    console.log('aaaa', newValues);
     if (!isEqual(newValues, languageTypeList)) {
       setLanguageTypeList([...defaultLangOptions, ...newOptions]);
     }
@@ -155,7 +153,7 @@ function RouteComponent() {
           </div>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'tenantName'}>
+              <DynamicFormField name="tenantName">
                 <DuplicateCheckInputFormField onDuplicationCheck={duplicateCheck} />
               </DynamicFormField>
             </FormRow>
@@ -169,7 +167,7 @@ function RouteComponent() {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'managerName'}>
+              <DynamicFormField name="managerName">
                 <ChipListModalSelectorFormField
                   chipList={{
                     labelField: 'name',
@@ -187,12 +185,12 @@ function RouteComponent() {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'tenantBillingTag'} />
+              <DynamicFormField name="tenantBillingTag" />
             </FormRow>
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'companyTenantList'}>
+              <DynamicFormField name="companyTenantList">
                 <ChipListModalSelectorFormField
                   chipList={{
                     labelField: 'name',
@@ -209,14 +207,14 @@ function RouteComponent() {
             </FormRow>
           </ContentsRow>
 
-          <ContentsRow type={'horizontal'}>
+          <ContentsRow type="horizontal">
             <FormRow provider={provider}>
-              <DynamicFormField name={'isUsed'} />
+              <DynamicFormField name="isUsed" />
             </FormRow>
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'tenantDesc'} resize={'none'} />
+              <DynamicFormField name="tenantDesc" resize="none" />
             </FormRow>
           </ContentsRow>
           <div className="title_wrap no_line">
@@ -224,17 +222,17 @@ function RouteComponent() {
           </div>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'device'} disabled={true} />
+              <DynamicFormField name="device" disabled={true} />
             </FormRow>
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'useCategory'} />
+              <DynamicFormField name="useCategory" />
             </FormRow>
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'tenantMappingLanguageTypeList'}>
+              <DynamicFormField name="tenantMappingLanguageTypeList">
                 <CheckboxGroupFormField options={languageTypeList} />
               </DynamicFormField>
             </FormRow>
