@@ -398,6 +398,7 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
             onPageChange: setPageIndex,
             onPageSizeChange: setPageSize,
           }}
+          columnPinning={{ columns: ['firstName', 'lastName'] }}
           title="타이틀"
           titleCustomNode={
             <div className="custom_info_wrap">
