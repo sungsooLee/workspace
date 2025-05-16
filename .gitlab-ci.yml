@@ -3,7 +3,7 @@ default:
     - docker
 
 stages:
-  # - build
+  - build
   - deploy
 
 # pnpm 관련 캐시 설정
