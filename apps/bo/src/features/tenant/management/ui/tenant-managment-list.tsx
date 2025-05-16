@@ -62,13 +62,29 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
         name: 'companyTenantList',
         label: t('회사'),
         render: (info: any) => {
-          console.log(info.row.original.companyTenantList);
-          //if (info.row.original.companyTenantList.length > 0)
-          return <> companyList </>;
+          const companyNames = info.row.original.companyTenantList.map((item: any) => {
+            return item.companyName;
+          });
+          return companyNames.toString();
         },
       },
-      { name: 'hrdOwner', label: '테넌트 담당자' },
-      { name: 'companyNumber', label: '사용여부' },
+      {
+        name: 'tenantRoleList',
+        label: t('테넌트 담당자'),
+        render: (info: any) => {
+          const tenantRoleList = info.row.original.tenantRoleList.map((item: any) => {
+            return item.roleName;
+          });
+          return tenantRoleList.toString();
+        },
+      },
+      {
+        name: 'isUsed',
+        label: '사용여부',
+        render: (info: any) => {
+          return info.row.original.isUsed ? t('LABEL.common.enable') : t('LABEL.common.disable');
+        },
+      },
       { name: 'createdBy', label: '등록자' },
       { name: 'createdDate', label: '등록일시' },
       { name: 'lastModifiedBy', label: '수정자' },
@@ -79,7 +95,7 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
     pagination: {
       pageSize: 10,
       pageIndex: 0,
-      totalRows: 0,
+      totalRows: 100,
     },
   };
 
@@ -91,9 +107,6 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
   const handleOnSearch = useCallback((data: any) => {
     gridFetch(data);
   }, []);
-  const handleNewTenant = useCallback(async () => {
-    if (!data) return;
-  }, [data]);
 
   return (
     <>
@@ -113,99 +126,56 @@ const searchConfig: SearchBoxConfig = {
   builders: [
     [
       {
-        name: 'tenant',
-        type: 'dropdown',
+        name: 'tenantName',
+        type: 'text',
         label: t('테넌트명'),
+        format: 'object',
         value: '',
-        options: [
-          { value: 'tenantA', label: t('테넌트A') },
-          { value: 'tenantB', label: t('테넌트B') },
-          { value: 'tenantC', label: t('테넌트C') },
-          { value: 'tenantD', label: t('테넌트D') },
-          { value: 'tenantE', label: t('테넌트E') },
-          { value: 'tenantF', label: t('테넌트F') },
-        ],
-        dropdownConfig: {
-          // onChange: () => {
-          //   return '';
-          // },
-          isSearchable: true,
-          placeholder: '입력 선택',
-        },
       },
       {
-        name: 'company',
-        type: 'dropdown',
+        name: 'companyName',
+        type: 'text',
         label: t('회사명'),
         value: '',
-        options: [
-          { value: 'companyA', label: t('회사A') },
-          { value: 'companyB', label: t('회사B') },
-          { value: 'companyC', label: t('회사C') },
-          { value: 'companyD', label: t('회사D') },
-          { value: 'companyE', label: t('회사E') },
-          { value: 'companyF', label: t('회사F') },
-        ],
-        dropdownConfig: {
-          // onChange: () => {
-          //   return '';
-          // },
-          isSearchable: true,
-          placeholder: '입력 선택',
-        },
+        // options: [
+        //   { value: 'companyA', label: t('회사A') },
+        //   { value: 'companyB', label: t('회사B') },
+        //   { value: 'companyC', label: t('회사C') },
+        //   { value: 'companyD', label: t('회사D') },
+        //   { value: 'companyE', label: t('회사E') },
+        //   { value: 'companyF', label: t('회사F') },
+        // ],
+        // dropdownConfig: {
+        //   // onChange: () => {
+        //   //   return '';
+        //   // },
+        //   isSearchable: true,
+        //   placeholder: '입력 선택',
+        // },
       },
       {
-        name: 'tenantOwner',
-        type: 'dropdown',
+        name: 'tenantMappingRoleName',
+        type: 'text',
         label: t('테넌트담당자'),
         value: '',
-        options: [
-          { value: 'tenantOwner', label: t('회사A') },
-          { value: 'companyB', label: t('회사B') },
-          { value: 'companyC', label: t('회사C') },
-          { value: 'companyD', label: t('회사D') },
-          { value: 'companyE', label: t('회사E') },
-          { value: 'companyF', label: t('회사F') },
-        ],
-        dropdownConfig: {
-          // onChange: () => {
-          //   return '';
-          // },
-          isSearchable: true,
-          placeholder: '입력 선택',
-        },
       },
     ],
     [
       {
-        name: 'companyOwner',
-        type: 'dropdown',
+        name: 'tenantMappingCompanyName',
+        type: 'text',
         label: t('회사 담당자'),
         value: '',
-        options: [
-          { value: 'companyOwner1', label: t('회사담당1') },
-          { value: 'companyOwner2', label: t('회사담당2') },
-          { value: 'companyOwner3', label: t('회사담당3') },
-          { value: 'companyOwner4', label: t('회사담당4') },
-          { value: 'companyOwner5', label: t('회사담당5') },
-        ],
-        dropdownConfig: {
-          // onChange: () => {
-          //   return '';
-          // },
-          isSearchable: true,
-          placeholder: '입력 선택',
-        },
       },
       {
-        name: 'useable',
+        name: 'isUsed',
         type: 'dropdown',
-        label: t('사용여부'),
-        value: 'ALL',
+        label: t('LABEL.isUsed'),
+        value: '',
         options: [
-          { value: 'ALL', label: t('전체') },
-          { value: 'Y', label: t('사용') },
-          { value: 'N', label: t('미사용') },
+          { value: '', label: t('전체') },
+          { value: 'true', label: t('사용') },
+          { value: 'false', label: t('미사용') },
         ],
       },
     ],
