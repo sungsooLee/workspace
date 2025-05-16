@@ -53,3 +53,4 @@ storybook-static
 **/routeTree.gen.ts
 
 .history/
+.vscode/launch.json
