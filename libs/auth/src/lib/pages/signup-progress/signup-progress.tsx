@@ -68,9 +68,7 @@ export function SignupProgressPage({ route }: any) {
 
           <div className={cn(styles.auth_form, 'no_line', 'col')}>
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'email'} />
-              </FormRow>
+              <FormRow provider={provider} name={'email'} />
             </ContentsRow>
           </div>
 

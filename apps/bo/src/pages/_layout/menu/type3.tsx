@@ -141,20 +141,12 @@ function RouteComponent() {
           </ContentsButtons>
           <MainContents>
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'channel'} />
-              </FormRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'channel2'} />
-              </FormRow>
+              <FormRow provider={provider} name={'channel'} />
+              <FormRow provider={provider} name={'channel2'} />
             </ContentsRow>
 
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'custom'}>
-                  <CustomFormField />
-                </DynamicFormField>
-              </FormRow>
+              <FormRow provider={provider} name={'custom'} element={<CustomFormField />} />
             </ContentsRow>
           </MainContents>
           <SubContents>

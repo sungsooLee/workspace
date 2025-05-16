@@ -81,6 +81,7 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
   const schema = buildJodObject(validator);
   // react-hook-form 훅 초기화
   const methods = useForm({
+    mode: 'onSubmit',
     defaultValues,
     resolver: zodResolver(schema),
   });

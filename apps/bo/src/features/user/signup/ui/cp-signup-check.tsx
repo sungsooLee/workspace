@@ -68,8 +68,7 @@ export const CPSignupCheck = () => {
 
           <h4 className={cn(styles.title, 'auth--title')}>{'협력업체 사업자 정보 조회'}</h4>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'businessCode'} />
+            <FormRow provider={provider} name={'businessCode'}>
               <BussnessCodeCheckButton success={isSuccess} />
             </FormRow>
           </ContentsRow>

@@ -5,9 +5,11 @@ import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import {
   Button,
+  CheckboxGroupFormField,
   ChipListModalSelectorFormField,
   ContentsRow,
   DynamicFormField,
+  TextareaFormField,
   useModal,
 } from '@learnway/ui';
 import { FormRow, ThumbnailListFormField } from '@shared/ui';
@@ -123,22 +125,20 @@ function RouteComponent() {
             <strong className="title">{t('기본 정보')}</strong>
           </div>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'tenantName'}>
-                <DuplicateCheckInputFormField onDuplicationCheck={duplicateCheck} />
-              </DynamicFormField>
-            </FormRow>
+            <FormRow
+              provider={provider}
+              name={'tenantName'}
+              element={<DuplicateCheckInputFormField onDuplicationCheck={duplicateCheck} />}
+            />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name="logoImageUrl">
-                <ThumbnailListFormField />
-              </DynamicFormField>
-            </FormRow>
+            <FormRow provider={provider} name="logoImageUrl" element={<ThumbnailListFormField />} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'managerName'}>
+            <FormRow
+              provider={provider}
+              name={'managerName'}
+              element={
                 <ChipListModalSelectorFormField
                   chipList={{
                     labelField: 'name',
@@ -151,17 +151,17 @@ function RouteComponent() {
                     content: <HrdUserInquiryModal />,
                   }}
                 />
-              </DynamicFormField>
-            </FormRow>
+              }
+            />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'tenantBillingTag'} />
-            </FormRow>
+            <FormRow provider={provider} name={'tenantBillingTag'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'company'}>
+            <FormRow
+              provider={provider}
+              name={'company'}
+              element={
                 <ChipListModalSelectorFormField
                   chipList={{
                     labelField: 'name',
@@ -174,37 +174,35 @@ function RouteComponent() {
                     content: <CompanyModal />,
                   }}
                 />
-              </DynamicFormField>
-            </FormRow>
+              }
+            />
           </ContentsRow>
 
           <ContentsRow type={'horizontal'}>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'isUsed'} />
-            </FormRow>
+            <FormRow provider={provider} name={'isUsed'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'tenantDesc'} resize={'none'} />
-            </FormRow>
+            <FormRow
+              provider={provider}
+              name={'tenantDesc'}
+              element={<TextareaFormField resize={'none'} />}
+            />
           </ContentsRow>
           <div className="title_wrap no_line">
             <strong className="title">{t('시스템 설정')}</strong>
           </div>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'device'} disabled={true} />
-            </FormRow>
+            <FormRow
+              provider={provider}
+              name={'device'}
+              element={<CheckboxGroupFormField disabled={true} />}
+            />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'useCategory'} />
-            </FormRow>
+            <FormRow provider={provider} name={'useCategory'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'tenantMappingLanguageTypeList'} />
-            </FormRow>
+            <FormRow provider={provider} name={'tenantMappingLanguageTypeList'} />
           </ContentsRow>
         </form>
       </MainContents>

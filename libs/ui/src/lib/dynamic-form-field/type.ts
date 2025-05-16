@@ -1,9 +1,9 @@
 import { UseFormReturn } from 'react-hook-form';
-import { ComponentType, ReactNode } from 'react';
+import { ComponentType, ReactElement, ReactNode } from 'react';
 export interface DynamicFormFieldProps {
   control?: UseFormReturn['control'];
   name?: string;
-  component?: ComponentType<any>;
+  component: ComponentType<any> | ReactElement;
   children?: ReactNode;
   [key: string]: any;
 }

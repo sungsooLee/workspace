@@ -139,19 +139,17 @@ const ChangePhoneNumberModalComponent = ({ widget }: { widget: any }) => {
 
         <ModalBody>
           <ContentsRow type="no_line">
-            <FormRow provider={provider}>
-              <DynamicFormField name={'currentPhoneNumber'} />
-            </FormRow>
+            <FormRow provider={provider} name={'currentPhoneNumber'} />
           </ContentsRow>
           <ContentsRow type="no_line">
-            <FormRow provider={provider}>
-              <DynamicFormField name={'newPhoneNumber'} />
-            </FormRow>
+            <FormRow provider={provider} name={'newPhoneNumber'} />
           </ContentsRow>
           {sendedVerifyNumber && (
             <ContentsRow type="no_line">
-              <FormRow provider={provider}>
-                <DynamicFormField name={'verificationCode'}>
+              <FormRow
+                provider={provider}
+                name={'verificationCode'}
+                element={
                   <InputTimer
                     initialTime={TIME_LIMIT_VERIFY}
                     startTimer={verifyTimer}
@@ -164,8 +162,8 @@ const ChangePhoneNumberModalComponent = ({ widget }: { widget: any }) => {
                     )}
                     disabled={verifyTimer === 0}
                   />
-                </DynamicFormField>
-              </FormRow>
+                }
+              />
             </ContentsRow>
           )}
         </ModalBody>

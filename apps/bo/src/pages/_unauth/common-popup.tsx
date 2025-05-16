@@ -6,6 +6,7 @@ import {
   ChipListModalSelectorFormField,
   ContentsRow,
   DynamicFormField,
+  Input,
   useModal,
 } from '@learnway/ui';
 
@@ -65,8 +66,10 @@ function RouteComponent() {
             </div>
           </div>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'companyModal'}>
+            <FormRow
+              provider={provider}
+              name={'companyModal'}
+              element={
                 <ChipListModalSelectorFormField
                   modalConfig={{
                     content: <CompanyChoiceModal />,
@@ -79,12 +82,14 @@ function RouteComponent() {
                     wordwrap: true,
                   }}
                 />
-              </DynamicFormField>
-            </FormRow>
+              }
+            />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'companyShuttle'}>
+            <FormRow
+              provider={provider}
+              name={'companyShuttle'}
+              element={
                 <ChipListModalSelectorFormField
                   modalConfig={{
                     content: <CompanyShuttleModal />,
@@ -97,13 +102,16 @@ function RouteComponent() {
                     wordwrap: true,
                   }}
                 />
-              </DynamicFormField>
-            </FormRow>
+              }
+            />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'zipCode'} disabled={true} />
-              <DynamicFormField name={'defaultAddress'} disabled={true} />
+            <FormRow provider={provider} name={'zipCode'} element={<Input disabled={true} />} />
+            <FormRow
+              provider={provider}
+              name={'defaultAddress'}
+              element={<Input disabled={true} />}
+            >
               <Button variant={'gray'} size={'sm'} onClick={handleAddressSearch}>
                 {'우편번호찾기'}
               </Button>

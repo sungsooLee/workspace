@@ -35,9 +35,7 @@ export function AdminSignupIdCheck() {
           <h4 className={cn(styles.title, 'auth--title')}>{'아이디 확인'}</h4>
           <div className={cn(styles.auth_form, 'no_line', 'col')}>
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'email'} />
-              </FormRow>
+              <FormRow provider={provider} name={'email'} />
             </ContentsRow>
           </div>
           <div className={`${noticeBoxStyles.start} ${styles.signup_noti}`}>

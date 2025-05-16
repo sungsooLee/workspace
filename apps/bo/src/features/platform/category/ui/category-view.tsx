@@ -3,7 +3,7 @@ import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from '@tanstack/react-router';
 
-import { Button, ContentsRow, DynamicFormField } from '@learnway/ui';
+import { Button, ContentsRow, DynamicFormField, Input, TextareaFormField } from '@learnway/ui';
 import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
@@ -239,21 +239,23 @@ const CategoryViewComponent: FC<any> = ({
         {/* 폼 필드 - location (비활성화 상태) */}
         <div className={layoutStyles.inner_contents}>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'location'} disabled={true} />
-            </FormRow>
+            <FormRow provider={provider} name={'location'} element={<Input disabled={true} />} />
           </ContentsRow>
 
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'parentMenuName'} disabled={true} />
-            </FormRow>
+            <FormRow
+              provider={provider}
+              name={'parentMenuName'}
+              element={<Input disabled={true} />}
+            />
           </ContentsRow>
 
           {/* 폼 필드 - code */}
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'code'} disabled={mode === 'view' && isRoot}>
+            <FormRow
+              provider={provider}
+              name={'code'}
+              element={
                 <DuplicateCodeGuideText
                   clearFormError={clearFormError}
                   checkExists={(data: string) => {
@@ -283,17 +285,17 @@ const CategoryViewComponent: FC<any> = ({
                   handleCodeChange={handleCodeChange}
                   setFormError={setFormError}
                 />
-              </DynamicFormField>
-            </FormRow>
+              }
+            />
           </ContentsRow>
 
           {/* 폼 필드 - title */}
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField
-                name={'name'}
-                disabled={isInitMode || (mode === 'view' && isRoot)}
-              />
+            <FormRow
+              provider={provider}
+              name={'name'}
+              element={<Input disabled={isInitMode || (mode === 'view' && isRoot)} />}
+            >
               <Button
                 type="button"
                 variant="point"
@@ -319,12 +321,11 @@ const CategoryViewComponent: FC<any> = ({
 
           {/* 폼 필드 - description */}
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField
-                name={'categoryContent'}
-                disabled={isInitMode || (mode === 'view' && isRoot)}
-              />
-            </FormRow>
+            <FormRow
+              provider={provider}
+              name={'categoryContent'}
+              element={<TextareaFormField disabled={isInitMode || (mode === 'view' && isRoot)} />}
+            />
           </ContentsRow>
         </div>
       </form>

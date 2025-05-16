@@ -14,6 +14,7 @@ import {
   Tabs,
   useGridBox,
   GridBox,
+  TextareaFormField,
 } from '@learnway/ui';
 import { FormInfoArea, FormRow, ContentsHistoryInfoFormField } from '@shared/ui';
 
@@ -437,13 +438,12 @@ const ChannelDetailBaseComponent: FC<any> = () => {
       title: '유저그룹 설정',
       key: 'USER_GROUP_LIST',
       content: (
-        <FormRow provider={provider}>
+        <FormRow provider={provider} name={'userGroups'}>
           <FormInfoArea>
             <Button variant="text" size="sm">
               + {t('LABEL.button.add')}
             </Button>
           </FormInfoArea>
-          <DynamicFormField name={'userGroups'} />
         </FormRow>
       ),
     },
@@ -492,27 +492,27 @@ const ChannelDetailBaseComponent: FC<any> = () => {
   return (
     <div className={cn(styles.start, styles.wrap)}>
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'channelId'} disabled={true} />
+        <FormRow provider={provider} name={'channelId'} element={<Input disabled={true} />}>
           <p className={formStyles.info_text}>{'(접수ID 45785566322)'}</p>
         </FormRow>
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'channelName'} />
-        </FormRow>
+        <FormRow provider={provider} name={'channelName'} />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'channelLearningContent'} resize="none" size="sm" />
-        </FormRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'channelPurposeContent'} resize="none" size="sm" />
-        </FormRow>
+        <FormRow
+          provider={provider}
+          name={'channelLearningContent'}
+          element={<TextareaFormField resize="none" size="sm" />}
+        />
+        <FormRow
+          provider={provider}
+          name={'channelPurposeContent'}
+          element={<TextareaFormField resize="none" size="sm" />}
+        />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'channelMainLinkContent'} />
+        <FormRow provider={provider} name={'channelMainLinkContent'}>
           <Button variant={'gray'} size={'sm'}>
             {'중복확인'}
           </Button>
@@ -522,16 +522,18 @@ const ChannelDetailBaseComponent: FC<any> = () => {
         </FormRow>
       </ContentsRow>
       <ContentsRow type={'horizontal'}>
-        <FormRow provider={provider} className={formStyles.direction_col}>
-          <DynamicFormField name={'isSecretChannel'} />
-        </FormRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'isSecureChannel'} />
-        </FormRow>
+        <FormRow
+          provider={provider}
+          className={formStyles.direction_col}
+          name={'isSecretChannel'}
+        />
+        <FormRow provider={provider} name={'isSecureChannel'} />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'channelOwnerId'}>
+        <FormRow
+          provider={provider}
+          name={'channelOwnerId'}
+          element={
             <ChipListModalSelectorFormField
               chipList={{
                 labelField: 'name',
@@ -544,25 +546,23 @@ const ChannelDetailBaseComponent: FC<any> = () => {
                 //content: <TenantManagerModal />,
               }}
             />
-          </DynamicFormField>
-        </FormRow>
+          }
+        />
       </ContentsRow>
       {/** 플랫폼 담당자만 노출 */}
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'isUniversalChannel'} />
-        </FormRow>
+        <FormRow provider={provider} name={'isUniversalChannel'} />
       </ContentsRow>
       {/** 플랫폼 담당자만 노출 */}
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'isAllTenant'} />
-        </FormRow>
+        <FormRow provider={provider} name={'isAllTenant'} />
       </ContentsRow>
       {/** 플랫폼 담당자가 직접 선택 or 테넌트 관리자만 노출 */}
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'tenantList'}>
+        <FormRow
+          provider={provider}
+          name={'tenantList'}
+          element={
             <ChipListModalSelectorFormField
               chipList={{
                 labelField: 'name',
@@ -575,13 +575,15 @@ const ChannelDetailBaseComponent: FC<any> = () => {
                 //content: <TenantModal />,
               }}
             />
-          </DynamicFormField>
-        </FormRow>
+          }
+        ></FormRow>
       </ContentsRow>
 
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'courseAvailableSetting'}>
+        <FormRow
+          provider={provider}
+          name={'courseAvailableSetting'}
+          element={
             <ChipListModalSelectorFormField
               chipList={{
                 labelField: 'name',
@@ -594,21 +596,23 @@ const ChannelDetailBaseComponent: FC<any> = () => {
                 //content: <TenantModal />,
               }}
             />
-          </DynamicFormField>
-        </FormRow>
+          }
+        />
       </ContentsRow>
 
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'channelUserSetting'}>
+        <FormRow
+          provider={provider}
+          name={'channelUserSetting'}
+          element={
             <Tabs
               selectedTabKey={selectedTabKey}
               items={items}
               type="round"
               className={styles.tab_wrap}
             />
-          </DynamicFormField>
-        </FormRow>
+          }
+        />
       </ContentsRow>
 
       <ContentsHistoryInfoFormField />

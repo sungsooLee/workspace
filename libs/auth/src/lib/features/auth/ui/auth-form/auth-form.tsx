@@ -3,9 +3,8 @@ import { useBoolean, useCounter } from 'react-use';
 import { useWatch } from 'react-hook-form';
 import { isFunction, isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { MobileView, BrowserView } from 'react-device-detect';
 
-import { Button, ContentsRow, InputTimer, DynamicFormField } from '@learnway/ui';
+import { Button, ContentsRow, InputTimer } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 
@@ -113,7 +112,8 @@ function AuthFormComponent({
     };
 
     if (data.authToolType === 'PHONE') {
-      sendVerifyPhone(
+      handleSendVerifySuccess();
+      /*sendVerifyPhone(
         {
           ...payload,
           phoneNumber: data.phoneNumber,
@@ -122,7 +122,7 @@ function AuthFormComponent({
         {
           onSuccess: handleSendVerifySuccess,
         },
-      );
+      );*/
     } else {
       sendVerifyEmail(
         { ...payload, email: data.email },
@@ -219,53 +219,38 @@ function AuthFormComponent({
   return (
     <form onSubmit={onSubmit(handleOnSubmit)} className="form_row">
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'authToolType'}>
-            {/*<AuthToolFormField value={authTool} onChange={(value) => handleOnChangeAuthTool(value)} />*/}
-            <AuthToolFormField />
-          </DynamicFormField>
-        </FormRow>
+        <FormRow provider={provider} name={'authToolType'} element={<AuthToolFormField />} />
       </ContentsRow>
 
       <div className={cn(styles.auth_form, 'no_line', 'col')}>
         {includeUserId && (
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'userId'}>
-                <VerifyUserIdFormField />
-              </DynamicFormField>
-            </FormRow>
+            <FormRow provider={provider} name={'userId'} element={<VerifyUserIdFormField />} />
           </ContentsRow>
         )}
         <ContentsRow>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'name'} />
-          </FormRow>
+          <FormRow provider={provider} name={'name'} />
         </ContentsRow>
         <ContentsRow>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'birthday'} />
-          </FormRow>
+          <FormRow provider={provider} name={'birthday'} />
         </ContentsRow>
         {authToolType === 'PHONE' ? (
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'phoneNumber'}></DynamicFormField>
-            </FormRow>
+            <FormRow provider={provider} name={'phoneNumber'} />
           </ContentsRow>
         ) : (
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'email'} />
-            </FormRow>
+            <FormRow provider={provider} name={'email'} />
           </ContentsRow>
         )}
       </div>
 
       {sendedVerifyNumber && (
         <ContentsRow>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'verificationCode'}>
+          <FormRow
+            provider={provider}
+            name={'verificationCode'}
+            element={
               <InputTimer
                 initialTime={TIME_LIMIT_VERIFY}
                 startTimer={verifyTimer}
@@ -274,8 +259,8 @@ function AuthFormComponent({
                 resetLabel={t('LABEL.common.resend')}
                 disabled={verifyTimer === 0}
               />
-            </DynamicFormField>
-          </FormRow>
+            }
+          />
         </ContentsRow>
       )}
 
@@ -295,6 +280,7 @@ function AuthFormComponent({
               </Button>
             ) : (
               <Button
+                type={'button'}
                 variant="primary"
                 size="xl"
                 onClick={() => handleSendVerify()}
@@ -392,7 +378,6 @@ const authFormConfig: DynamicFormConfig = {
       format: 'string',
       required: {
         fn: (data) => {
-          console.log('userId', data);
           return data.includeUserId;
         },
       },

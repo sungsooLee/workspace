@@ -1,7 +1,9 @@
 import {
+  Component,
   FormEvent,
   FormEventHandler,
   ForwardRefExoticComponent,
+  ReactElement,
   ReactNode,
   RefAttributes,
   RefObject,
@@ -308,8 +310,11 @@ export type FormFieldConfig = Record<string, FormFieldProps<any>>;
 export interface FormRowProps {
   className?: string;
   provider: DynamicFormProvider;
-  children: ReactNode;
-  name?: string;
+  children?: ReactNode;
+  name: string;
+  element?: ReactElement;
+  formFieldConfig: FormFieldConfig;
+  style?: 'bo' | 'fo';
 }
 
 /*===================================

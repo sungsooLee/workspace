@@ -7,12 +7,14 @@ import {
   TreeBox,
   TreeNode,
   ChipListModalSelectorFormField,
+  Input,
+  RadioGroupFormField,
 } from '@learnway/ui';
 import { t } from 'i18next';
 import { useRouterState } from '@tanstack/react-router';
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import { FormRow, ContentsHistoryInfoFormField, FormSubTitle } from '@shared/ui';
+import { FormRow, ContentsHistoryInfoFormField, FormSubTitle, SwitchFormField } from '@shared/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 import {
@@ -248,49 +250,61 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
             />
             <div className={styles.contents_wrap}>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'roleId'} disabled={true} />
-                </FormRow>
+                <FormRow provider={provider} name={'roleId'} element={<Input disabled={true} />} />
 
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'roleCode'} disabled={true} />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'roleCode'}
+                  element={<Input disabled={true} />}
+                />
               </ContentsRow>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField
-                    name={'name'}
-                    maxLength={40}
-                    disabled={formMode === EnFormMode.NONE || !roleInfo}
-                  />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'name'}
+                  element={
+                    <Input maxLength={40} disabled={formMode === EnFormMode.NONE || !roleInfo} />
+                  }
+                />
               </ContentsRow>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField
-                    name={'description'}
-                    maxLength={300}
-                    disabled={formMode === EnFormMode.NONE || !roleInfo}
-                  />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'description'}
+                  element={
+                    <Input maxLength={300} disabled={formMode === EnFormMode.NONE || !roleInfo} />
+                  }
+                />
+              </ContentsRow>
+              RadioGroupFormField
+              <ContentsRow>
+                radio-group
+                <FormRow
+                  provider={provider}
+                  name={'tenantScope'}
+                  element={
+                    <RadioGroupFormField maxLength={300} disabled={formMode === EnFormMode.NONE} />
+                  }
+                />
               </ContentsRow>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'tenantScope'} disabled={formMode === EnFormMode.NONE} />
-                </FormRow>
-              </ContentsRow>
-              <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'companyScope'} disabled={formMode === EnFormMode.NONE} />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'companyScope'}
+                  element={
+                    <RadioGroupFormField maxLength={300} disabled={formMode === EnFormMode.NONE} />
+                  }
+                />
               </ContentsRow>
               <FormDisplay
                 provider={provider}
                 dependencies={[{ name: 'companyScope', value: EnCompanyScope.MANUAL }]}
               >
                 <div className="chiplist_modal_wrap">
-                  <FormRow provider={provider}>
-                    <DynamicFormField name={'companyIds'}>
+                  <FormRow
+                    provider={provider}
+                    name={'companyIds'}
+                    element={
                       <ChipListModalSelectorFormField
                         modalConfig={{
                           content: <CompanyShuttleModal />,
@@ -303,22 +317,28 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                           wordwrap: true,
                         }}
                       />
-                    </DynamicFormField>
-                  </FormRow>
+                    }
+                  />
                 </div>
               </FormDisplay>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'channelScope'} disabled={formMode === EnFormMode.NONE} />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'channelScope'}
+                  element={
+                    <RadioGroupFormField maxLength={300} disabled={formMode === EnFormMode.NONE} />
+                  }
+                />
               </ContentsRow>
               <FormDisplay
                 provider={provider}
                 dependencies={[{ name: 'channelScope', value: EnChannelScope.MANUAL }]}
               >
                 <div className="chiplist_modal_wrap">
-                  <FormRow provider={provider}>
-                    <DynamicFormField name={'channelIds'}>
+                  <FormRow
+                    provider={provider}
+                    name={'channelIds'}
+                    element={
                       <ChipListModalSelectorFormField
                         chipList={{
                           labelField: 'name',
@@ -331,25 +351,26 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                           content: <ChannelChoiceModal />,
                         }}
                       />
-                    </DynamicFormField>
-                  </FormRow>
+                    }
+                  />
                 </div>
               </FormDisplay>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField
-                    name={'deptScope'}
-                    disabled={formMode === EnFormMode.NONE}
-                  ></DynamicFormField>
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'deptScope'}
+                  element={<RadioGroupFormField disabled={formMode === EnFormMode.NONE} />}
+                />
               </ContentsRow>
               <FormDisplay
                 provider={provider}
                 dependencies={[{ name: 'deptScope', value: EnDeptScope.MANUAL }]}
               >
                 <div className="chiplist_modal_wrap">
-                  <FormRow provider={provider}>
-                    <DynamicFormField name={'deptIds'}>
+                  <FormRow
+                    provider={provider}
+                    name={'dipsIds'}
+                    element={
                       <ChipListModalSelectorFormField
                         chipList={{
                           labelField: 'name',
@@ -362,14 +383,16 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                           content: <ChannelChoiceModal />,
                         }}
                       />
-                    </DynamicFormField>
-                  </FormRow>
+                    }
+                  />
                 </div>
               </FormDisplay>
               <ContentsRow type={'horizontal'}>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'isUsed'} disabled={formMode === EnFormMode.NONE} />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'isUsed'}
+                  element={<SwitchFormField disabled={formMode === EnFormMode.NONE} />}
+                />
               </ContentsRow>
               <ContentsHistoryInfoFormField />
             </div>
