@@ -3,7 +3,7 @@ default:
     - docker
 
 stages:
-  - build
+  # - build
   - deploy
 
 # pnpm 관련 캐시 설정
@@ -52,10 +52,17 @@ build:
 deploy:
   stage: deploy
   # image: docker
-  # AWS CLI가 이미 설치된 이미지를 사용
-  image: amazon/aws-cli:latest
+  # AWS CLI가 설치된 Python 이미지 사용 (alternative)
+  image: python:3.9-alpine
   dependencies: # build 단계의 artifacts 를 사용.
     - build
+  before_script:
+    # Docker 이미지에서 권한 문제를 해결하기 위해 필요한 패키지 설치
+    - apk add --no-cache --update python3 py3-pip
+    - pip3 install --no-cache-dir awscli
+    # AWS 자격 증명 설정
+    - aws configure set aws_access_key_id ${AWS_ACCESS_KEY_ID}
+    - aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY}
   # before_script:
   #   - apk update
   #   - apk add --no-cache aws-cli
