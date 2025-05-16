@@ -135,6 +135,7 @@ export const MenuManage = ({ menuScope }: any) => {
         isMobileExposed: node.deviceNames.includes(DEVICE_NAME.Mobile),
         apiMappingMenuList: apiMappingKeys,
         sortOrder: node.sortOrder,
+        menuScope: menuScope,
       };
       update(updateData);
     } else if (formMode === FORM_MODE.ADD) {
