@@ -22,6 +22,7 @@ import {
   IcoRefresh,
   IcoComplete02,
   IcoPause,
+  IcoAlertCircle,
 } from '@learnway/icons';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
@@ -288,6 +289,8 @@ function RouteComponent() {
             />
             <span className={styles.file_length}>
               <strong className={styles.num}>0</strong>
+              <span className={styles.slash}>/</span>
+              <span className={styles.length}>10</span>
               {'개'}
             </span>
             <span className={styles.file_volume}>
@@ -297,7 +300,10 @@ function RouteComponent() {
           </span>
         </div>
         <div className={styles.btn_area}>
-          <span className={styles.info_text}>{'최대 파일 사이즈 50MB'}</span>
+          <p className={styles.file_text}>
+            <IcoAlertCircle width={16} height={17} fill="#A9AFB8" />
+            <span className={styles.info_text}>{`최대 ${'00'}개, 최대 파일 사이즈 ${'50'}MB`}</span>
+          </p>
           <Button variant={'line'} size={'sm'} className={styles.btn_add}>
             {'추가'}
           </Button>
