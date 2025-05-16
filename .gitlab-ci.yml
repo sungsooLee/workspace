@@ -51,14 +51,16 @@ build:
       - dist/apps/pb-bo
 deploy:
   stage: deploy
-  image: docker
+  # image: docker
+  # AWS CLI가 이미 설치된 이미지를 사용
+  image: amazon/aws-cli:latest
   dependencies: # build 단계의 artifacts 를 사용.
     - build
-  before_script:
-    - apk update
-    - apk add --no-cache aws-cli
-    - echo "AWS CLI version:"
-    - aws --version
+  # before_script:
+  #   - apk update
+  #   - apk add --no-cache aws-cli
+  #   - echo "AWS CLI version:"
+  #   - aws --version
   script:
     - echo "AWS CLI Version:"
     - aws --version
