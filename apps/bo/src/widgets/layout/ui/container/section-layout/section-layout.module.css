@@ -44,6 +44,12 @@
         @apply pr-0;
       }
     }
+    &::before {
+      @apply left-[453px];
+    }
+    &::after {
+      @apply absolute left-[calc(((100%-452px)/2)+452px)] top-0 h-full w-[1px] bg-[var(--gray4)] content-[''];
+    }
   }
   &.line {
     @apply mt-[32px] border-t-[1px] border-solid border-[var(--gray2)] pt-[32px];
