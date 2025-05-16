@@ -3,6 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto } from './com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto';
+import type { com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto } from './com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto';
+import type { com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto } from './com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto';
 import type { com_ever_edu_lms_course_dto_res_CourseResDto$TagNameWrapper } from './com_ever_edu_lms_course_dto_res_CourseResDto$TagNameWrapper';
 export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
     /**
@@ -16,6 +18,7 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
     wizardStep?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.wizardStep;
     courseType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.courseType;
     courseSubType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.courseSubType;
+    language?: string;
     channelId?: number;
     courseName?: string;
     courseSummary?: string;
@@ -24,13 +27,20 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
     trainingTarget?: string;
     trainingLevelType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.trainingLevelType;
     tenantIds?: Array<number>;
-    categoryIds?: Array<number>;
+    primaryCategoryId?: number;
+    /**
+     * 카테고리 경로 노출
+     */
+    categories?: Array<com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto>;
+    isWhiteList?: boolean;
     whiteList?: Array<com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto>;
     coordinatorId?: number;
     coordinatorName?: string;
+    coordinatorTelNo?: string;
     operatorId?: number;
     operatorName?: string;
-    primaryKitId?: number;
+    operatorTelNo?: string;
+    hasConfigEnroll?: boolean;
     isEnrollRequired?: boolean;
     approvalLineType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.approvalLineType;
     isMaxEnrollQuotaRestricted?: boolean;
@@ -51,6 +61,8 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
      * 수강신청 단계에서 레벨테스트를 과정마다할 지 차수마다 할 지
      */
     langLevelTestScopeType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.langLevelTestScopeType;
+    primaryKitId?: number;
+    hasConfigLearnControl?: boolean;
     deviceRestrictType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.deviceRestrictType;
     learningRestrictTimeType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.learningRestrictTimeType;
     /**
@@ -89,8 +101,8 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
      */
     isSecurityAgreementEnable?: boolean;
     learningSpaceType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.learningSpaceType;
-    preRequisiteCourseIds?: Array<number>;
-    relatedCourseIds?: Array<number>;
+    preRequisiteCourse?: Array<com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto>;
+    relatedCourse?: Array<com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto>;
     /**
      * 학습자가 댓글 등록이 가능한지
      */
@@ -119,10 +131,14 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
     textbookPurchaseAllocationRate?: number;
     contentPurchaseCost?: number;
     contentPurchaseAllocationRatio?: number;
+    thumbnailGroupId?: number;
+    primaryThumbnailId?: number;
     /**
      * 태그 이름 목록
      */
     tagNames?: Array<com_ever_edu_lms_course_dto_res_CourseResDto$TagNameWrapper>;
+    courseValidityStartDate?: string;
+    courseValidityEndDate?: string;
 };
 export namespace com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin {
     export enum wizardStep {

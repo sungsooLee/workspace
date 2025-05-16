@@ -124,12 +124,6 @@ const CommonCodeGridComponent = ({
     useDynamicForm(formConfig);
   const { create: createCode } = useCreateCommonCode({
     onSuccess: (data: any) => {
-      // openAlert({
-      //   title: '완료되었습니다.',
-      //   content: '요청하신 작업이 정상적으로 완료되었습니다.',
-      // });
-      // console.log(data);
-
       if (data) {
         afterCreateOrUpdateCommonCodeGroup(data);
       }
@@ -305,14 +299,21 @@ const CommonCodeGridComponent = ({
 
   return (
     <div className={cn(boxStyles.start, boxStyles.inner)}>
-      <div className={cn(layoutStyles.start, layoutStyles.wrap, layoutStyles.ratio_third)}>
+      <div
+        className={cn(
+          layoutStyles.start,
+          layoutStyles.wrap,
+          layoutStyles.ratio_third,
+          layoutStyles.common_code,
+        )}
+      >
         <div className={cn(layoutStyles.inner, layoutStyles.scrollHidden)}>
           <div className={layoutStyles.inner_contents}>
             <GridBox
               ref={gridRef}
               data={data || []}
               columns={columns}
-              height={350}
+              height={320}
               showTotalCount={true}
               title={t('LABEL.grid.title.commonCdList')}
               pagination={{

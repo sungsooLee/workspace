@@ -18,6 +18,7 @@ import { AUTH_CONTAINERS } from '../../widgets/layout';
 import authStyles from './auth.module.css';
 import styles from '@learnway/styles/bo/pages/_auth/login.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import { usePermissionStore } from '../../shared/lib/permission-store';
 
 export const Route = createFileRoute('/_auth/login')({
   component: RouteComponent,
@@ -57,6 +58,9 @@ function RouteComponent() {
         const locale = data?.locale;
         locale && (await setLanguage(locale));
         router.navigate({ to: search.redirect || '/' });
+
+        // 임시 : 사용 가능한 API 목록 fetch
+        await usePermissionStore.getState().fetchPermissions();
       },
     });
   };

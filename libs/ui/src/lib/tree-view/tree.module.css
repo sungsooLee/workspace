@@ -123,7 +123,7 @@
 }
 
 .no_data {
-  @apply body_bo_2_r flex h-full w-full items-center justify-center text-[var(--gray7)];
+  @apply body_bo_2_r flex w-full items-center justify-center pt-[100px] text-[var(--gray6)];
 }
 
 .data_wrap {

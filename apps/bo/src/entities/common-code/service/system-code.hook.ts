@@ -1,11 +1,15 @@
-import { useQuery } from '@tanstack/react-query';
+import { queryKeys, apiKeys } from './system-code.queries';
+import { createAuthorizedQueryHook } from '../../../shared/lib/use-authorized-query';
+import SystemCodeService from '../api/system-code';
 
-import { systemCodeQueryOptions as queryOptions } from './system-code.queries';
+export const useSystemCodeList = createAuthorizedQueryHook(
+  apiKeys.list,
+  () => queryKeys.list,
+  () => () => SystemCodeService.fetchCodes(),
+);
 
-export function useSystemCodeList() {
-  return useQuery({ ...queryOptions.list() });
-}
-
-export function useSystemCodeDetail(enumName: string) {
-  return useQuery({ ...queryOptions.detail(enumName), enabled: Boolean(enumName) });
-}
+export const useSystemCodeDetail = createAuthorizedQueryHook(
+  apiKeys.detail,
+  (enumName: string) => queryKeys.detail(enumName),
+  (enumName) => () => SystemCodeService.fetchCode(enumName),
+);

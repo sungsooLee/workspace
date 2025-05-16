@@ -13,11 +13,9 @@ const columnHelper = createColumnHelper<any>();
 const listGridColumns = () => {
   return [
     columnHelper.accessor('enumNames', {
-      cell: ({ getValue }) => (
-        <div style={{ whiteSpace: 'normal', overflow: 'visible' }}>{getValue()}</div>
-      ),
+      cell: ({ getValue }) => getValue(),
       header: t('그룹코드'),
-      size: 300,
+      size: 280,
     }),
   ];
 };
@@ -25,34 +23,22 @@ const listGridColumns = () => {
 const detailGridColumns = () => {
   return [
     columnHelper.accessor('cdId', {
-      cell: ({ getValue }) => (
-        <div style={{ whiteSpace: 'normal', overflow: 'visible' }}>{getValue()}</div>
-      ),
+      cell: ({ getValue }) => getValue(),
       header: t('코드'),
       size: 150,
     }),
     columnHelper.accessor('cdName', {
-      cell: ({ getValue }) => (
-        <div style={{ whiteSpace: 'normal', overflow: 'visible' }}>{getValue()}</div>
-      ),
+      cell: ({ getValue }) => getValue(),
       header: t('코드명'),
       size: 150,
     }),
     columnHelper.accessor('cdContent', {
-      cell: ({ getValue }) => (
-        <div style={{ whiteSpace: 'normal', overflow: 'visible', wordBreak: 'break-all' }}>
-          {getValue()}
-        </div>
-      ),
+      cell: ({ getValue }) => getValue(),
       header: t('코드설명'),
       size: 250,
     }),
     columnHelper.accessor('multilingualKey', {
-      cell: ({ getValue }) => (
-        <div style={{ whiteSpace: 'normal', overflow: 'visible', wordBreak: 'break-all' }}>
-          {getValue()}
-        </div>
-      ),
+      cell: ({ getValue }) => getValue(),
       header: t('다국어키'),
       size: 280,
     }),
@@ -65,7 +51,10 @@ const SystemCodeGridComponent = ({ data }: any) => {
   const [selectedRow, setSelectedRow] = useState<any>(null);
   const [selectedDetailRow, setSelectedDetailRow] = useState<any>(null);
   const [formattedDetailData, setFormattedDetailData] = useState<any>([]);
-  const { data: detailData } = useSystemCodeDetail(selectedRow?.enumNames || '');
+  const { data: detailData } = useSystemCodeDetail(selectedRow?.enumNames);
+  // const { data: detailData } = useSystemCodeDetail(selectedRow?.enumNames || '', {
+  //   enabled: Boolean(selectedRow?.enumNames),
+  // });
   const { provider, onSubmit, fetchData, clearFormError, onFormChange, getValues, formState } =
     useDynamicForm(formConfig);
 
@@ -115,7 +104,7 @@ const SystemCodeGridComponent = ({ data }: any) => {
     <div className={cn(boxStyles.start, boxStyles.inner)}>
       <div className={cn(layoutStyles.start, layoutStyles.wrap, layoutStyles.ratio_third)}>
         <div className={cn(layoutStyles.inner, layoutStyles.scrollHidden)}>
-          <div className="flex h-full flex-row space-x-5">
+          <div className={layoutStyles.grid_layout_wrap}>
             <GridBox
               ref={listGridRef}
               data={data || []}
@@ -124,6 +113,7 @@ const SystemCodeGridComponent = ({ data }: any) => {
               showNumberingColumn={true}
               clientSideSorting={true}
               height={350}
+              title={'enum 그룹 목록'}
             />
             <GridBox
               ref={detailGridRef}
@@ -133,6 +123,7 @@ const SystemCodeGridComponent = ({ data }: any) => {
               onRowSelect={handleDetailRowSelect}
               clientSideSorting={true}
               height={350}
+              title={'enum 목록'}
             />
           </div>
         </div>

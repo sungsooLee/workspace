@@ -248,10 +248,16 @@
 [class*='custom_info_wrap'] {
   @apply ml-[16px];
   [class*='table_tit'] {
-    @apply title_bo_4_b text-[var(--gray9)];
+    @apply body_2_b inline-flex items-center text-[var(--gray9)];
+    &:not(:first-child)::before {
+      @apply mx-[12px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
+    }
   }
   [class*='count_info'] {
-    @apply title_bo_4_b ml-[6px] text-[var(--secondary1)];
+    @apply body_2_b ml-[6px] inline-flex items-center text-[var(--secondary1)];
+    &[class*='point'] {
+      @apply text-[var(--status1)];
+    }
   }
 }
 

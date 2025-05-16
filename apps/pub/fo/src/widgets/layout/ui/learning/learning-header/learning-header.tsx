@@ -14,7 +14,11 @@ function LearningHeaderComponent() {
     <div className={`${styles.start} ${styles.learning_header}`}>
       <header className={styles.header_area}>
         <Button className={styles.btn_back}>
-          <IcoArrowBackward width={40} height={40} stroke="#fff"></IcoArrowBackward>
+          <IcoArrowBackward
+            width={isMobile ? 24 : 40}
+            height={isMobile ? 24 : 40}
+            stroke={isMobile ? '#000' : '#fff'}
+          ></IcoArrowBackward>
         </Button>
         <h1>레슨명</h1>
       </header>

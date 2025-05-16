@@ -19,11 +19,11 @@ export default class RoleManagerService {
 
   /**
    * 특정 역할 조회
-   * @param roleId 역할 ID
+   * @param roleCode 역할 코드
    * @returns 역할 정보
    */
-  static fetchRole(roleId: string): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/roles/${roleId}`);
+  static fetchRole(roleCode: string): Promise<any> {
+    return httpService.get<any>(`${PMSApiPrefix()}/roles/${roleCode}`);
   }
 
   /**
@@ -32,16 +32,16 @@ export default class RoleManagerService {
    * @returns 생성된 역할 정보
    */
   static createRole(payload: Role): Promise<any> {
-    return httpService.post<Role>(`${PMSApiPrefix()}/roles`, payload);
+    return httpService.post<Role>(`${PMSApiPrefix()}/roles`, genCreateRole(payload));
   }
 
   /**
    * 역할 삭제
-   * @param roleId 역할 ID
+   * @param roleCode 역할 ID
    * @returns 삭제 결과
    */
-  static deleteRole(roleId: string): Promise<any> {
-    return httpService.delete<any>(`${PMSApiPrefix()}/roles/${roleId}`);
+  static deleteRole(roleCode: string): Promise<any> {
+    return httpService.delete<any>(`${PMSApiPrefix()}/roles/${roleCode}`);
   }
 
   /**
@@ -50,7 +50,7 @@ export default class RoleManagerService {
    * @returns 수정된 역할 정보
    */
   static updateRole(payload: Role): Promise<any> {
-    return httpService.put<Role>(`${PMSApiPrefix()}/roles/${payload.roleUuid}`, payload);
+    return httpService.put<Role>(`${PMSApiPrefix()}/roles/${payload.roleCode}`, payload);
   }
 
   /**
@@ -114,4 +114,20 @@ export default class RoleManagerService {
       siteScope: siteScope,
     });
   }
+}
+
+function genCreateRole(payload: any) {
+  const retval = { ...payload };
+
+  //Object 를 id 값으로 전달 하도록 변경
+  if (retval.companyIds?.length > 0) {
+    retval.companyIds = retval.companyIds.map((item: any) => item.companyId);
+  }
+  if (retval.channelIds?.length > 0) {
+    retval.channelIds = retval.channelIds.map((item: any) => item.channelId);
+  }
+  if (retval.deptIds?.length > 0) {
+    retval.deptIds = retval.deptIds.map((item: any) => item.deptIds);
+  }
+  return retval;
 }

@@ -5,8 +5,7 @@
 import type { com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_WizardStep1 } from './com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_WizardStep1';
 export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1 = {
     wizardStep: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1.wizardStep;
-    courseType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1.courseType;
-    courseSubType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1.courseSubType;
+    language: string;
     channelId: number;
     courseName: string;
     courseSummary: string;
@@ -20,8 +19,10 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1 = {
     whiteList?: Array<com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_WizardStep1>;
     coordinatorId: number;
     coordinatorName: string;
+    coordinatorTelNo: string;
     operatorId: number;
     operatorName: string;
+    operatorTelNo: string;
 };
 export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1 {
     export enum wizardStep {
@@ -31,25 +32,6 @@ export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1 
         STEP4 = 'STEP4',
         STEP5 = 'STEP5',
         FULL_UPDATE = 'FULL_UPDATE',
-    }
-    export enum courseType {
-        ELEARNING = 'ELEARNING',
-        CLASS = 'CLASS',
-        LIVE = 'LIVE',
-        EXAM = 'EXAM',
-        SURVEY = 'SURVEY',
-        PACKAGE = 'PACKAGE',
-    }
-    export enum courseSubType {
-        SANGSI_LEARN = 'SANGSI_LEARN',
-        NORMAL = 'NORMAL',
-        SANGSI_ENROLL = 'SANGSI_ENROLL',
-        FACE_TO_FACE = 'FACE_TO_FACE',
-        NONE_FACE_TO_FACE = 'NONE_FACE_TO_FACE',
-        HYBRID = 'HYBRID',
-        LIVE = 'LIVE',
-        EXAM = 'EXAM',
-        SURVEY = 'SURVEY',
     }
     export enum trainingLevelType {
         NONE = 'NONE',

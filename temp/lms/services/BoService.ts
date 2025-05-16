@@ -30,6 +30,7 @@ import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2 } f
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep3 } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep3';
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4';
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep5 } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep5';
+import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew';
 import type { com_ever_edu_lms_course_dto_req_SequenceSaveReqDto$Class } from '../models/com_ever_edu_lms_course_dto_req_SequenceSaveReqDto$Class';
 import type { com_ever_edu_lms_course_dto_req_SequenceSaveReqDto$ELearning } from '../models/com_ever_edu_lms_course_dto_req_SequenceSaveReqDto$ELearning';
 import type { com_ever_edu_lms_course_dto_req_SequenceSearchReqDto$ByAdmin } from '../models/com_ever_edu_lms_course_dto_req_SequenceSearchReqDto$ByAdmin';
@@ -946,14 +947,14 @@ export class BoService {
         });
     }
     /**
-     * 과정 생성 마법사의 탄생
-     * 과정 생성 마법사의 시작입니다.
+     * 과정 생성 마법사 시작
+     * 과정 생성 마법사 최초 저장 api 입니다.
      * @param requestBody
      * @returns number OK
      * @throws ApiError
      */
     public static newWizard(
-        requestBody: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1,
+        requestBody: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -1211,6 +1212,31 @@ export class BoService {
             url: '/admin/api/v1/tenant/{tenantId}/category/tree',
             path: {
                 'tenantId': tenantId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 과정 생성 카테고리 팝업
+     * 과정 생성 시 카테고리 추가를 위한 팝업 용도 입니다.
+     * @param tenantIds
+     * @returns com_ever_edu_lms_category_dto_res_TenantCategoryTreeDto OK
+     * @throws ApiError
+     */
+    public static findTenantsCategoryTree(
+        tenantIds: Array<number>,
+    ): CancelablePromise<com_ever_edu_lms_category_dto_res_TenantCategoryTreeDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/tenant/{tenantIds}/category/tree/popup',
+            path: {
+                'tenantIds': tenantIds,
             },
             errors: {
                 400: `Bad Request`,

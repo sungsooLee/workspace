@@ -28,6 +28,7 @@ const PageContainerComponent: FC<{
   notice?: boolean; // 화면내에 Notice 있는 경우
   tabs?: boolean; // 컨텐츠 상단에 tab 있는 경우
   scrollHidden?: boolean; // 컨텐츠 안에 스크롤인 경우
+  hideOutLine?: boolean; // 공통 > 나의 정보 화면(외곽라인,bg 없는 경우)
 }> = ({
   children,
   displayContent = true,
@@ -35,6 +36,7 @@ const PageContainerComponent: FC<{
   notice = false,
   tabs = false,
   scrollHidden = false,
+  hideOutLine = false,
 }) => {
   const { meta } = useCurrentRoute();
   const [activeMenuDepth] = useActiveMenuDepthState();
@@ -155,6 +157,7 @@ const PageContainerComponent: FC<{
               tabs && 'tab_visible',
               notice && 'notice_visible',
               scrollHidden && 'scroll_hidden',
+              hideOutLine && styles.hide_outline,
               'content_wrap',
             )}
           >

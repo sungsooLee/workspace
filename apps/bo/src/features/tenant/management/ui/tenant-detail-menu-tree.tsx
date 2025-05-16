@@ -22,6 +22,7 @@ import { ContentsHistoryInfoFormField, FormRow } from '@shared/ui';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
+import { EnFormMode } from '@types';
 import { TenantDetailMenuMappingModal } from './tenant-detail-menu-mapping-modal';
 /** Hook 정의 */
 import {
@@ -45,19 +46,13 @@ const DIVICE_NAME = {
   Mobile: 'Mobile',
 };
 
-const FORM_MODE = {
-  NONE: 'NONE',
-  VIEW: 'VIEW',
-  ADD: 'ADD',
-};
-
 const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
   const routerState = useRouterState();
   const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
-  const [formMode, setFormMode] = useState(FORM_MODE.NONE);
+  const [formMode, setFormMode] = useState(EnFormMode.NONE);
   const [treeData, setTreeData] = useState([]);
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
-  const [isInitMode, setIsInitMode] = useState(true);
+  const [apiMappingMenuList, setApiMappingMenuList] = useState([]);
   const tenantId = routerState.location.state?.tenantId;
 
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, control } =
@@ -95,9 +90,9 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
     if (node && node.key !== '1') {
       setSelectedNode(node);
       if (node) {
-        setFormMode(FORM_MODE.VIEW);
+        setFormMode(EnFormMode.VIEW);
       } else {
-        setFormMode(FORM_MODE.NONE);
+        setFormMode(EnFormMode.NONE);
       }
     }
   };
@@ -139,7 +134,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
           const payload = { ...selectedNode };
           console.log('delete!', payload);
           deleteMenuTenent(payload);
-          setFormMode(FORM_MODE.NONE);
+          setFormMode(EnFormMode.NONE);
         }
       },
     });
@@ -189,12 +184,13 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
       if (detailData.isMobileExposed) {
         deviceNames.push(DIVICE_NAME.Mobile);
       }
+      setApiMappingMenuList(detailData.apiMappingMenuList);
       fetchData({
         ...detailData,
         deviceNames: deviceNames,
         location: location,
       });
-      setFormMode(FORM_MODE.VIEW);
+      setFormMode(EnFormMode.VIEW);
     }
   }, [detailData]);
 
@@ -259,7 +255,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
               size="sm"
               className={layoutStyles.btn_text}
               onClick={() => onFormChange()}
-              disabled={FORM_MODE.NONE === formMode}
+              disabled={EnFormMode.NONE === formMode}
             >
               {t('초기화')}
             </Button>
@@ -267,7 +263,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
               variant="text"
               size="sm"
               className={layoutStyles.btn_text}
-              disabled={FORM_MODE.VIEW !== formMode}
+              disabled={EnFormMode.VIEW !== formMode}
               onClick={handleDeleteMenuTenant}
             >
               {t('삭제')}
@@ -275,7 +271,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
             <Button
               variant="save"
               size="sm"
-              disabled={FORM_MODE.NONE === formMode}
+              disabled={EnFormMode.NONE === formMode}
               onClick={handleUpdateMenuTenant}
             >
               {t('저장')}
@@ -313,7 +309,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'menuDesc'} disabled={FORM_MODE.NONE === formMode} />
+              <DynamicFormField name={'menuDesc'} disabled={EnFormMode.NONE === formMode} />
             </FormRow>
           </ContentsRow>
           <ContentsRow type={'horizontal'}>
@@ -323,7 +319,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={`deviceNames`} disabled={FORM_MODE.NONE === formMode}>
+              <DynamicFormField name={`deviceNames`} disabled={EnFormMode.NONE === formMode}>
                 <FormTranslationBox />
               </DynamicFormField>
             </FormRow>
@@ -335,7 +331,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
           </ContentsRow>
           <ContentsRow type={'horizontal'}>
             <FormRow provider={provider}>
-              <DynamicFormField name={'isUsed'} disabled={FORM_MODE.NONE === formMode} />
+              <DynamicFormField name={'isUsed'} disabled={EnFormMode.NONE === formMode} />
             </FormRow>
           </ContentsRow>
           <ContentsRow>

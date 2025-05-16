@@ -16,10 +16,28 @@ export const Route = createFileRoute('/_unauth/learning_test/course/detail/view'
 
 function RouteComponent() {
   const dynamicForm = useDynamicForm(formConfig);
+  const { provider, onSubmit, control, getValues } = dynamicForm;
   // const { provider, onSubmit, control, getValues } = useDynamicForm(formConfig);
 
   const BasicInfoRef = useRef<HTMLDivElement>(null);
   const CourseRegistrationRef = useRef<HTMLDivElement>(null);
+
+  const handleImport = () => {
+    console.log('handleImportCourse');
+  };
+
+  const handleCopy = () => {
+    console.log('handleCopyCourse');
+  };
+
+  const handleExport = () => {
+    console.log('handleExportCourse');
+  };
+
+  const handlePreview = () => {
+    console.log('handleImportCourse');
+    console.log('getValues', getValues());
+  };
 
   const handleOnSubmit = (data: any) => {
     console.log('data {} => ', data);
@@ -70,11 +88,29 @@ function RouteComponent() {
   return (
     <PageContainer>
       <ContentsButtons>
-        <Button type="button" variant="point" size="sm" label={'과정 가져오기'} />
-        <Button type="button" variant="point" size="sm" label={'과정 복사'} />
-        <Button type="button" variant="point" size="sm" label={'과정 내보내기'} />
-        <Button type="button" variant="point" size="sm" label={'미리보기'} />
-        <Button type="submit" variant="point" size="sm" label={'저장'} />
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          label={'과정 가져오기'}
+          onClick={handleImport}
+        />
+        <Button type="button" variant="point" size="sm" label={'과정 복사'} onClick={handleCopy} />
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          label={'과정 내보내기'}
+          onClick={handleExport}
+        />
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          label={'미리보기'}
+          onClick={handlePreview}
+        />
+        <Button type="submit" variant="primary" size="sm" label={'저장'} />
       </ContentsButtons>
       <MainContents>
         <Tabs type={'sub-progress'} size={'md'} items={tabItems} onTabChange={handleTabChange} />

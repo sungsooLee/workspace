@@ -2788,6 +2788,31 @@ export class BoService {
         });
     }
     /**
+     * 다국어 번역상태 팝업 조회
+     * 다국어 번역상태 팝업 조회
+     * @param multilingualId
+     * @returns com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$DetailOnAdmin OK
+     * @throws ApiError
+     */
+    public static getTranslationStatus(
+        multilingualId: number,
+    ): CancelablePromise<com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$DetailOnAdmin> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/multilingual/{multilingualId}/language-statuses',
+            path: {
+                'multilingualId': multilingualId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * s3 다국어 json 파일 확인
      * s3에 생성된 json 파일 확인
      * @param locale

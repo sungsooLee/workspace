@@ -2,10 +2,12 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto_WizardStep4 } from './com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto_WizardStep4';
 export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep4 = {
     wizardStep?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep4.wizardStep;
     courseType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep4.courseType;
     courseSubType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep4.courseSubType;
+    hasConfigLearnControl?: boolean;
     deviceRestrictType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep4.deviceRestrictType;
     learningRestrictTimeType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep4.learningRestrictTimeType;
     /**
@@ -44,8 +46,8 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardSte
      */
     isSecurityAgreementEnable?: boolean;
     learningSpaceType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep4.learningSpaceType;
-    preRequisiteCourseIds?: Array<number>;
-    relatedCourseIds?: Array<number>;
+    preRequisiteCourse?: Array<com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto_WizardStep4>;
+    relatedCourse?: Array<com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto_WizardStep4>;
     /**
      * 학습자가 댓글 등록이 가능한지
      */

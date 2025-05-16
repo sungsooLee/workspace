@@ -13,6 +13,7 @@ import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-content
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import fileUploadStyles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
 import { ChipListModalSelectorFormField } from '@learnway/ui';
+import { AddressSearchModal } from '@features/shared';
 
 import {
   Button,
@@ -48,8 +49,21 @@ function RouteComponent() {
     { value: 'option3', label: '옵션 3' },
   ];
 
+  const { open } = useModal();
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
     useDynamicForm(formConfig);
+
+  const handleAddressSearchResult = (address: any) => {
+    console.log('address', address);
+    fetchData({ zipCode: address.zipNo, address1: address.roadAddr });
+  };
+
+  const handleAddressSearch = () => {
+    open({
+      width: 's',
+      content: <AddressSearchModal onSelect={handleAddressSearchResult} />,
+    });
+  };
 
   return (
     <form className="form_row">
@@ -158,6 +172,18 @@ function RouteComponent() {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
+              <DynamicFormField name={'zipCode'} disabled={true} />
+              <DynamicFormField name={'address1'} disabled={true} />
+              <Button variant={'gray'} size={'sm'} onClick={handleAddressSearch}>
+                {'우편번호찾기'}
+              </Button>
+            </FormRow>
+            <FormRow provider={provider}>
+              <DynamicFormField name={'address2'} />
+            </FormRow>
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider}>
               <DynamicFormField name={'description'} size="sm" resize="none" />
             </FormRow>
           </ContentsRow>
@@ -251,6 +277,27 @@ const formConfig: DynamicFormConfig = {
         { value: 'Y', label: '사용 가능' },
         { value: 'N', label: '사용 불가' },
       ],
+    },
+    {
+      name: 'zipCode',
+      type: 'text',
+      label: t('주소'),
+      value: '',
+      placeholder: '우편번호',
+    },
+    {
+      name: 'address1',
+      type: 'text',
+      label: t('주소'),
+      value: '',
+      placeholder: '기본주소',
+    },
+    {
+      name: 'address2',
+      type: 'text',
+      label: '',
+      value: '',
+      placeholder: '',
     },
   ],
   validator: {

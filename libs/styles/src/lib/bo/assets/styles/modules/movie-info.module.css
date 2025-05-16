@@ -20,6 +20,9 @@
       }
     }
   }
+  & + .media {
+    @apply mt-[16px];
+  }
 }
 
 /* info_list */
