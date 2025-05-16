@@ -125,46 +125,6 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
     setPageIndex(value - 1);
   };
 
-  /*
-  const renderPagination = () => {
-    return (
-      <div
-        onClick={(e) => e.stopPropagation()}
-        className={cn(styles.root, styles.pagination, 'nlp--pagination')}
-      >
-        <div>
-          <Button onClick={() => handlePageChange(0)} disabled={pageIndex === 0} onlyIcon>
-            {<IcoChevronLeftDouble width={32} height={32} fill="#4C515E" />}
-          </Button>
-          <Button onClick={() => handlePageChange(pageIndex - 1)} disabled={pageIndex === 0}>
-            {<IcoChevronLeft width={32} height={32} fill="#4C515E" />}
-          </Button>
-
-          <div>
-            {Array.from({ length: totalPage }, (_, i) => (
-              <Button key={i} onClick={() => handlePageChange(i)}>
-                {i + 1}
-              </Button>
-            ))}
-          </div>
-
-          <Button
-            onClick={() => handlePageChange(pageIndex + 1)}
-            disabled={pageIndex >= totalPage - 1}
-          >
-            {<IcoChevronRight width={32} height={32} fill="#4C515E" />}
-          </Button>
-          <Button
-            onClick={() => handlePageChange(totalPage - 1)}
-            disabled={pageIndex >= totalPage - 1}
-          >
-            {<IcoChevronRightDouble width={32} height={32} fill="#4C515E" />}
-          </Button>
-        </div>
-      </div>
-    );
-  };*/
-
   const getError = () => {
     return errorCode !== '0' ? (
       <p className={cn(formStyles.guide_text, formStyles.error)}>
@@ -202,7 +162,7 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
               <ul>
                 {searchResult.length > 0 &&
                   searchResult.map((item) => (
-                    <li>
+                    <li key={item.bdMgtSn}>
                       <Button onClick={() => handleSelect(item)}>
                         <p>
                           <strong>{item.roadAddr}</strong>
@@ -219,7 +179,6 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
                     </li>
                   ))}
               </ul>
-              {/**renderPagination()*/}
               <Pagination
                 className={styles.pagenation}
                 count={totalPages}

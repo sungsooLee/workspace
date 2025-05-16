@@ -1,6 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { mutateOptions, queryKeys } from './training-place.queries';
+import { queryOptions, mutateOptions, queryKeys } from './training-place.queries';
+
+export function useFetchTraningPlaces(params: any) {
+  return useQuery(queryOptions.all(params));
+}
+
+export function useFetchTraningPlace(educationPlaceId: number) {
+  return useQuery({ ...queryOptions.detail(educationPlaceId) });
+}
 
 export function useCreateTraningPlace(options: any) {
   const mutation = useMutation({

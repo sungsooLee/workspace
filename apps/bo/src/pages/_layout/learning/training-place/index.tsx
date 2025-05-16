@@ -160,7 +160,11 @@ function RouteComponent() {
           <Button
             variant="primary"
             size="sm"
-            onClick={() => router.navigate({ to: '/learning/training-place/regist' })}
+            onClick={() =>
+              router.navigate({
+                to: '/learning/training-place/regist',
+              })
+            }
           >
             등록
           </Button>

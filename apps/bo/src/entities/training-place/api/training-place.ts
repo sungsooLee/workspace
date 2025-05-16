@@ -7,6 +7,10 @@ export default class TrainingPlaceService {
     return httpService.get<any>(`${PMSApiPrefix()}/education/place`, params);
   }
 
+  static fetchTrainingPlace(id: number) {
+    return httpService.get<any>(`${PMSApiPrefix()}/education/place/${id}`);
+  }
+
   static createTrainingPlace(payload: any) {
     return httpService.post<any>(`${PMSApiPrefix()}/education/place`, payload);
   }
