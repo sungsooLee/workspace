@@ -4,7 +4,7 @@ import { getQuerySkipToken } from '@learnway/shared';
 
 export const queryKeys = {
   all: ['training-place-all'] as const,
-  detail: (educationPlaceId: number) => [...queryKeys.all, educationPlaceId] as const,
+  detail: (uuid: string) => [...queryKeys.all, uuid] as const,
 };
 
 export const queryOptions = {
@@ -14,11 +14,11 @@ export const queryOptions = {
     cacheTime: 0,
     staleTime: 0,
   }),
-  detail: (educationPlaceId?: number) =>
-    educationPlaceId
+  detail: (uuid?: string) =>
+    uuid
       ? {
-          queryKey: queryKeys.detail(educationPlaceId),
-          queryFn: (): Promise<any> => TrainingPlaceService.fetchTrainingPlace(educationPlaceId),
+          queryKey: queryKeys.detail(uuid),
+          queryFn: (): Promise<any> => TrainingPlaceService.fetchTrainingPlace(uuid),
         }
       : getQuerySkipToken<any>(),
 };
@@ -26,5 +26,8 @@ export const queryOptions = {
 export const mutateOptions = {
   create: () => ({
     mutationFn: (payload: any) => TrainingPlaceService.createTrainingPlace(payload),
+  }),
+  update: () => ({
+    mutationFn: (payload: any) => TrainingPlaceService.updateTrainigPlace(payload),
   }),
 };

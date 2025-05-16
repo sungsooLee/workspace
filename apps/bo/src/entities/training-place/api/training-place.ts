@@ -7,11 +7,18 @@ export default class TrainingPlaceService {
     return httpService.get<any>(`${PMSApiPrefix()}/education/place`, params);
   }
 
-  static fetchTrainingPlace(id: number) {
-    return httpService.get<any>(`${PMSApiPrefix()}/education/place/${id}`);
+  static fetchTrainingPlace(uuid: string) {
+    return httpService.get<any>(`${PMSApiPrefix()}/education/place/${uuid}`);
   }
 
   static createTrainingPlace(payload: any) {
     return httpService.post<any>(`${PMSApiPrefix()}/education/place`, payload);
+  }
+
+  static updateTrainigPlace(payload: any) {
+    return httpService.put<any>(
+      `${PMSApiPrefix()}/education/place/${payload.educationPlaceUuid}`,
+      payload,
+    );
   }
 }

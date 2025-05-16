@@ -1,8 +1,8 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { t } from 'i18next';
-import { createFileRoute, useRouterState } from '@tanstack/react-router';
+import { useRouter } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { IcoRefresh02, IcoSearch, IcoFormRequired, IcoTrash03, IcoPpt } from '@learnway/icons';
+import { IcoTrash03, IcoPpt } from '@learnway/icons';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsHistoryInfoFormField, FormSubTitle } from '@shared/ui';
 
@@ -20,18 +20,72 @@ import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-butt
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 
 import {
-  useCreateTraningPlace,
-  useFetchTraningPlace,
+  useCreateTrainingPlace,
+  useFetchTrainingPlace,
+  useUpdateTrainingPlace,
 } from '@entities/training-place/service/training-place.hook';
 
-const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeId }) => {
-  const { open: openModal, confirm: openConfirm } = useModal();
-  const { provider, fetchData, onSubmit, getValues } = useDynamicForm(formConfig);
+const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
+  const router = useRouter();
 
-  const { create: createTraningPlace } = useCreateTraningPlace({});
+  const { open: openModal, confirm: openConfirm } = useModal();
+  const { provider, fetchData, onSubmit, getValues, onFormChange } = useDynamicForm(formConfig);
+
+  const { create: createTraningPlace } = useCreateTrainingPlace({});
+  const { update: updateTrainingPlace } = useUpdateTrainingPlace({});
+
+  const { data, refetch } = useFetchTrainingPlace(placeUUID);
+
+  useEffect(() => {
+    if (mode === 'add') {
+      // TODO. 테넌트 조회 적용 이전
+      const initialData = {
+        educationPlaceType: '',
+        educationPlaceCode: '',
+        educationPlaceName: '',
+        tenantList: [
+          {
+            name: '현대제철',
+            value: 1,
+          },
+        ],
+        linkAddress: '',
+        educationPlaceRemarkContent: '',
+        isReservationUsed: 'Y',
+        isUsed: 'Y',
+        zipNo: '',
+        address: '',
+        addressDetail: '',
+      };
+      fetchData(initialData);
+    } else if (mode === 'view' && data) {
+      const initialData = {
+        educationPlaceType: data.educationPlaceTypecd,
+        educationPlaceCode: data.educationPlaceCode,
+        educationPlaceName: data.educationPlaceCodeName,
+        tenantList: data.tenantList.map((d: any) => ({ name: d.tenantName, value: d.tenantId })),
+        linkAddress: data.mapImageLinkContent,
+        educationPlaceRemarkContent: data.educationPlaceRemarkContent,
+        isReservationUsed: data.isReservationUsed ? 'Y' : 'N',
+        isUsed: data.isUsed ? 'Y' : 'N',
+        zipNo: data.zipNo,
+        address: data.addr,
+        addressDetail: data.addrDetail,
+      };
+      fetchData(initialData);
+    }
+  }, [data]);
+
+  const handleListButtonClick = () => {
+    router.navigate({ to: '/learning/training-place' });
+  };
+
+  const handleResetButtonClick = () => {
+    onFormChange();
+  };
 
   const handleAddressSearchResult = (address: any) => {
-    fetchData({ ...getValues(), zipNo: address.zipNo, address1: address.roadAddr });
+    fetchData({ ...getValues(), zipNo: address.zipNo, address: address.roadAddr });
   };
 
   const handleAddressSearch = () => {
@@ -42,7 +96,6 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeId }) => {
   };
 
   const handleOnSubmit = (node: any) => {
-    console.log('### handleOnSubmit node', node);
     openConfirm({
       title: t('LABEL.confirm.save.title'),
       content: <p>{t('LABEL.confirm.save.message')}</p>,
@@ -53,20 +106,32 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeId }) => {
             educationPlaceCode: node.educationPlaceCode,
             educationPlaceCodeName: node.educationPlaceName,
             tenantList: node.tenantList.map((item: any) => ({ tenantId: item.value })),
+            mapImageLinkContent: node.linkAddress,
             isReservationUsed: node.isReservationUsed === 'Y' ? true : false,
             zipNo: node.zipNo,
-            addr: node.address1,
-            addrDetail: node.address2,
+            addr: node.address,
+            addrDetail: node.addressDetail,
             educationPlaceRemarkContent: node.educationPlaceRemarkContent,
             isUsed: node.isUsed === 'Y' ? true : false,
           };
-          createTraningPlace(payload, {
-            onSuccess: (data: any) => {
-              console.log('createTraningPlace response', data);
-              const educationPlaceId = data.educationPlaceId;
-              //refetch();
-            },
-          });
+          if (mode === 'add') {
+            createTraningPlace(payload, {
+              onSuccess: (data: any) => {
+                placeUUID = data.educationPlaceUuid;
+                refetch();
+                mode = 'view';
+              },
+            });
+          } else if (mode === 'view') {
+            updateTrainingPlace(
+              { ...payload, educationPlaceUuid: placeUUID },
+              {
+                onSuccess: (data: any) => {
+                  refetch();
+                },
+              },
+            );
+          }
         }
       },
     });
@@ -77,20 +142,20 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeId }) => {
       <PageContainer>
         <ContentsButtons>
           <LinkBox>
-            <Button variant="point" size="sm">
-              {t('목록')}
+            <Button variant="point" size="sm" onClick={handleListButtonClick}>
+              {t('LABEL.button.list')}
             </Button>
           </LinkBox>
 
-          <Button variant="point" size="sm">
-            {t('초기화')}
+          <Button variant="point" size="sm" onClick={handleResetButtonClick}>
+            {t('LABEL.button.reset')}
           </Button>
           <Button type="submit" variant="primary" size="sm">
-            {t('저장')}
+            {t('LABEL.button.save')}
           </Button>
         </ContentsButtons>
         <MainContents>
-          <FormSubTitle label={'교육장소 정보 '} />
+          <FormSubTitle label={'LABEL.common.trainingPlaceInfo'} />
           <ContentsRow>
             <FormRow provider={provider} className={dynamicFormStyles.w_half}>
               <DynamicFormField name={'educationPlaceType'} />
@@ -127,7 +192,9 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeId }) => {
             {/* form_item */}
             <div className={formStyles.form_item}>
               <label htmlFor="name-map" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>약도 이미지 첨부</span>
+                <span className={formStyles.form_text}>
+                  {t('LABEL.form.label.mapImageAttachment')}
+                </span>
               </label>
               <div className={formStyles.input_box}>
                 <div className={cn(fileUploadStyles.start, fileUploadStyles.wrap)}>
@@ -135,12 +202,14 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeId }) => {
                   <div className={fileUploadStyles.upload_single}>
                     <div className={fileUploadStyles.view_file}>
                       <div className={fileUploadStyles.attach_area}>
-                        <p className={fileUploadStyles.text}>버튼 클릭 후 파일을 첨부하세요.</p>
+                        <p className={fileUploadStyles.text}>
+                          {t('LABEL.form.guideText.clickToAttachFile')}
+                        </p>
                       </div>
                     </div>
                     <Button className={fileUploadStyles.btn_attach} size={'sm'} variant={'gray'}>
                       <input type="file" className={fileUploadStyles.input_file} />
-                      {'파일첨부'}
+                      {t('LABEL.button.attachFile')}
                     </Button>
                   </div>
                   <div className={fileUploadStyles.upload_single}>
@@ -161,15 +230,13 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeId }) => {
                     </div>
                     <Button className={fileUploadStyles.btn_attach} size={'sm'} variant={'gray'}>
                       <input type="file" className={fileUploadStyles.input_file} />
-                      {'파일첨부'}
+                      {t('LABEL.button.attachFile')}
                     </Button>
                   </div>
                 </div>
               </div>
               <p className={cn(formStyles.guide_text)}>
-                {
-                  '※ 첨부파일은 png, jpg, gif 형식만 업로드 가능하며, 이미지 사이즈는 500 X 500으로 업로드해 주세요.'
-                }
+                {t('LABEL.form.guideText.mapImageAttachment')}
               </p>
             </div>
             {/* form_item */}
@@ -188,7 +255,7 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeId }) => {
                     className={dynamicFormStyles.post_input}
                   />
                   <DynamicFormField
-                    name={'address1'}
+                    name={'address'}
                     disabled={true}
                     className={dynamicFormStyles.address_input}
                   />
@@ -196,12 +263,15 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeId }) => {
                     className={dynamicFormStyles.btn_find}
                     variant={'gray'}
                     size={'sm'}
-                    onClick={() => handleAddressSearch()}
+                    onClick={handleAddressSearch}
                   >
-                    {'우편번호찾기'}
+                    {t('LABEL.button.searchZipNo')}
                   </Button>
                 </div>
-                <DynamicFormField name={'address2'} className={dynamicFormStyles.detail_address} />
+                <DynamicFormField
+                  name={'addressDetail'}
+                  className={dynamicFormStyles.detail_address}
+                />
               </div>
             </FormRow>
           </ContentsRow>
@@ -236,7 +306,7 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'educationPlaceType',
       type: 'dropdown',
-      label: t('구분'),
+      label: t('LABEL.form.label.division'),
       value: '',
       options: [
         { value: '', label: t('전체') },
@@ -250,80 +320,80 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'educationPlaceCode',
       type: 'text',
-      label: t('장소 코드'),
+      label: t('LABEL.form.label.placeCode'),
       value: '',
-      placeholder: '입력',
+      placeholder: '',
     },
     {
       name: 'educationPlaceName',
       type: 'text',
-      label: t('장소 명'),
+      label: t('LABEL.form.label.placeName'),
       value: '',
-      placeholder: '입력',
+      placeholder: '',
     },
     {
       name: 'tenantList',
       type: 'custom',
-      label: t('테넌트 명'),
-      value: [{ name: '현대제철', value: 1 }],
+      label: t('LABEL.form.label.tenantName'),
+      value: [],
       format: 'array',
     },
     {
       name: 'linkAddress',
       type: 'text',
-      label: t('링크 주소'),
+      label: t('LABEL.form.label.linkAddress'),
       value: '',
-      placeholder: '전체 URL을 입력하세요. (예 : https:// campus.hyundai.com/doejf.log/map.jpg)',
+      placeholder: t('LABEL.form.placeholder.linkAddress'),
     },
     {
       name: 'educationPlaceRemarkContent',
       type: 'textarea',
-      label: t('비고'),
+      label: t('LABEL.form.label.note'),
       value: '',
       maxLength: 2000,
-      placeholder: '비고 내용을 입력하세요.',
-      guideText: '※ 사용자에게 노출되지 않습니다.',
+      placeholder: t('LABEL.form.placeholder.note'),
+      guideText: t('LABEL.form.guideText.notVisibleToUsers'),
     },
     {
       name: 'isReservationUsed',
       type: 'radio-group',
-      label: t('예약 가능'),
+      label: t('LABEL.form.label.isReservationUsed'),
       value: 'Y',
       options: [
-        { value: 'Y', label: '예약 가능' },
-        { value: 'N', label: '예약 불가' },
+        { value: 'Y', label: t('LABEL.form.radio.reservationAvailable') },
+        { value: 'N', label: t('LABEL.form.radio.reservationNotAvailable') },
       ],
     },
     {
       name: 'isUsed',
       type: 'radio-group',
-      label: t('사용 가능'),
+      label: t('LABEL.form.label.isUsed'),
       value: 'Y',
       options: [
-        { value: 'Y', label: '사용 가능' },
-        { value: 'N', label: '사용 불가' },
+        { value: 'Y', label: t('LABEL.form.radio.usable') },
+        { value: 'N', label: t('LABEL.form.radio.unusable') },
       ],
     },
     {
       name: 'zipNo',
       type: 'text',
-      label: t('주소'),
+      label: t('LABEL.form.label.address'),
       value: '',
-      placeholder: '우편번호',
+      placeholder: t('LABEL.form.placeholder.zipNo'),
     },
     {
-      name: 'address1',
+      name: 'address',
       type: 'text',
-      label: t('주소'),
+      label: t('LABEL.form.label.address'),
       value: '',
-      placeholder: '기본주소',
+      placeholder: t('LABEL.form.placeholder.address'),
     },
     {
-      name: 'address2',
+      name: 'addressDetail',
       type: 'text',
       label: '',
       value: '',
-      placeholder: '',
+      placeholder: t('LABEL.form.placeholder.addressDetail'),
     },
   ],
   validator: {
@@ -333,7 +403,7 @@ const formConfig: DynamicFormConfig = {
     tenantList: true,
     isUsed: true,
     zipNo: true,
-    address1: true,
-    address2: true,
+    address: true,
+    addressDetail: true,
   },
 };
