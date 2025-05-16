@@ -65,6 +65,9 @@ function RouteComponent() {
       content: <h2>Tab E content</h2>,
     },
   ];
+  const handleValueChange = (key: string) => {
+    console.log(key);
+  };
   return (
     <div>
       <h2 className="guide_tit2">Tabs Component Guide</h2>
@@ -130,7 +133,12 @@ content: (
         <h3 className="guide_tit3">Tabs fill Case</h3>
         <div className="flex_box">
           <div className="desc w-full">
-            <Tabs selectedTabKey={selectedTabKey} items={items} type="fill" />
+            <Tabs
+              selectedTabKey={selectedTabKey}
+              items={items}
+              type="fill"
+              onTabChange={handleValueChange}
+            />
           </div>
         </div>
         <h3 className="guide_tit3">Tabs fill(primary) Case</h3>
