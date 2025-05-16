@@ -198,10 +198,12 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
                       <Button onClick={() => handleSelect(item)}>
                         <p>
                           <strong>{item.roadAddr}</strong>
-                          <span>{item.jibunAddr}</span>
-                          <span>
-                            {t('LABEL.modal.addressSearch.zipCodePrefix')}
-                            {item.zipNo}
+                          <span className={styles.info_box}>
+                            <span>{item.jibunAddr}</span>
+                            <span className={styles.info_post}>
+                              {t('LABEL.modal.addressSearch.zipCodePrefix')}
+                              {item.zipNo}
+                            </span>
                           </span>
                         </p>
                         <span>{t('LABEL.button.select')}</span>
