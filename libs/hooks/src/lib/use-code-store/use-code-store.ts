@@ -26,7 +26,7 @@ export const useCodeStore = create<CodeStore>((set, get) => ({
       if (cached && cached.length > 0) {
         return cached;
       }
-      data = await fetchCodeGroup(group);
+      data = await fetchCodeGroup(group, filter);
       get().setCode(group, data);
       return data;
     }

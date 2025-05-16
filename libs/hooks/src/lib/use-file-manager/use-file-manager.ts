@@ -10,7 +10,7 @@ import {
 
 /**
  * BE 에 S3 업로드 된 파일에대 한 파일 그룹 및 파일 정보 등록 요청 hook
- */ 1;
+ */
 const useFileManagerHook = () => {
   // 파일 정보 생성
   const createFileInfo = (fileInfo: CreateFileInfoReq): Promise<FileInfo> => {
