@@ -15,7 +15,10 @@ import {
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from './address-search-modal.module.css';
 
+// 페이지별 게시 수
 const PAGE_SIZE = 3;
+// 행안부 API가 허용하는 최대 조회 건수
+const MAX_TOTAL_ROWS = 9000;
 // SQL 예약어 필터링
 const RESERVED_WORD_SQL = [
   'OR',
@@ -40,7 +43,7 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
   const [pageIndex, setPageIndex] = useState(0);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [totalRows, setTotalRows] = useState(0);
-  const [totalPage, setTotalPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
   const [errorCode, setErrorCode] = useState('0');
 
   useEffect(() => {
@@ -103,9 +106,14 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
     } else {
       setSearchResult([]);
     }
+    const totalCount =
+      data.results.common.totalCount > MAX_TOTAL_ROWS
+        ? MAX_TOTAL_ROWS
+        : data.results.common.totalCount;
+    const totalPages = Math.ceil(totalCount / PAGE_SIZE);
     setErrorCode(data.results.common.errorCode);
-    setTotalRows(data.results.common.totalCount);
-    setTotalPage(Math.ceil(data.results.common.totalCount / PAGE_SIZE));
+    setTotalRows(totalCount);
+    setTotalPages(totalPages);
   };
 
   const handleSelect = (item: any) => {
@@ -212,7 +220,7 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
               {/**renderPagination()*/}
               <Pagination
                 className={styles.pagenation}
-                count={totalPage}
+                count={totalPages}
                 page={pageIndex + 1}
                 onChange={handlePageChange}
               />

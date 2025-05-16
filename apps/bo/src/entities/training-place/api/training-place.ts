@@ -6,4 +6,8 @@ export default class TrainingPlaceService {
     console.log('params => ', params);
     return httpService.get<any>(`${PMSApiPrefix()}/education/place`, params);
   }
+
+  static createTrainingPlace(payload: any) {
+    return httpService.post<any>(`${PMSApiPrefix()}/education/place`, payload);
+  }
 }

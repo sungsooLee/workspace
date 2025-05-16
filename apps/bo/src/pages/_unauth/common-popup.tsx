@@ -39,7 +39,7 @@ function RouteComponent() {
 
   const handleAddressSearch = () => {
     open({
-      width: 's',
+      width: 'sm',
       content: <AddressSearchModal onSelect={handleAddressSearchResult} />,
     });
   };

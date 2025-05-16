@@ -6,67 +6,96 @@ import { IcoRefresh02, IcoSearch, IcoFormRequired, IcoTrash03, IcoPpt } from '@l
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsHistoryInfoFormField, FormSubTitle } from '@shared/ui';
 
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
-import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import fileUploadStyles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
 import { ChipListModalSelectorFormField } from '@learnway/ui';
 import { AddressSearchModal } from '@features/shared';
 
-import {
-  Button,
-  Input,
-  Dropdown,
-  ContentsRow,
-  InputModalSelectorFormField,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-  DynamicFormField,
-  Textarea,
-  RadioGroupFormField,
-} from '@learnway/ui';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { Button, ContentsRow, useModal, DynamicFormField } from '@learnway/ui';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 import { FormRow } from '@shared/ui';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
+import { useCreateTraningPlace } from '@entities/training-place/service/training-place.hook';
 
 export const Route = createFileRoute('/_layout/learning/training-place/regist')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const [selectedValues, setSelectedValues] = useState<string[]>([]);
-  const options = [
-    { value: 'option1', label: '전체' },
-    { value: 'option2', label: '옵션 2' },
-    { value: 'option3', label: '옵션 3' },
-  ];
-
-  const { open } = useModal();
+  const { open: openModal, confirm: openConfirm } = useModal();
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
     useDynamicForm(formConfig);
 
+  const { create: createTraningPlace } = useCreateTraningPlace({});
+
   const handleAddressSearchResult = (address: any) => {
     console.log('address', address);
-    fetchData({ zipCode: address.zipNo, address1: address.roadAddr });
+    fetchData({ zipNo: address.zipNo, address1: address.roadAddr });
   };
 
   const handleAddressSearch = () => {
-    open({
-      width: 's',
+    openModal({
+      width: 'sm',
       content: <AddressSearchModal onSelect={handleAddressSearchResult} />,
     });
   };
 
+  const handleOnSubmit = (node: any) => {
+    console.log('### handleOnSubmit node', node);
+    /*
+    {
+      "educationPlaceType": "CAMPUS",
+      "educationPlaceCode": "ssdsd",
+      "educationPlaceName": "sdsd",
+      "tenantList": [
+          {
+              "name": "현대제철",
+              "value": 1
+          }
+      ],
+      "linkAddress": "",
+      "educationPlaceRemarkContent": "test",
+      "isReservationUsed": "N",
+      "isUsed": "N",
+      "zipNo": "07283",
+      "address1": "서울특별시 영등포구 문래로4길 4 (문래동6가)",
+      "address2": ""
+  }
+  */
+    openConfirm({
+      title: t('LABEL.confirm.save.title'),
+      content: <p>{t('LABEL.confirm.save.message')}</p>,
+      onClose: (value: boolean) => {
+        if (value) {
+          const payload = {
+            educationPlaceTypecd: node.educationPlaceType,
+            educationPlaceCode: node.educationPlaceCode,
+            educationPlaceCodeName: node.educationPlaceName,
+            tenantList: node.tenantList.map((item: any) => ({ tenantId: item.value })),
+            isReservationUsed: node.isReservationUsed === 'Y' ? true : false,
+            zipNo: node.zipNo,
+            addr: node.address1,
+            addrDetail: node.address2,
+            educationPlaceRemarkContent: node.educationPlaceRemarkContent,
+            isUsed: node.isUsed === 'Y' ? true : false,
+          };
+          createTraningPlace(payload, {
+            onSuccess: (data: any) => {
+              console.log('createTraningPlace response', data);
+              const educationPlaceId = data.educationPlaceId;
+              //refetch();
+            },
+          });
+        }
+      },
+    });
+  };
+
   return (
-    <form className="form_row">
+    <form className="form_row" onSubmit={onSubmit(handleOnSubmit)}>
       <PageContainer>
         <ContentsButtons>
           <LinkBox>
@@ -78,7 +107,7 @@ function RouteComponent() {
           <Button variant="point" size="sm">
             {t('초기화')}
           </Button>
-          <Button variant="primary" size="sm">
+          <Button type="submit" variant="primary" size="sm">
             {t('저장')}
           </Button>
         </ContentsButtons>
@@ -86,20 +115,20 @@ function RouteComponent() {
           <FormSubTitle label={'교육장소 정보 '} />
           <ContentsRow>
             <FormRow provider={provider} className={dynamicFormStyles.w_half}>
-              <DynamicFormField name={'placeDivision'} />
+              <DynamicFormField name={'educationPlaceType'} />
             </FormRow>
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider} className={dynamicFormStyles.w_half}>
-              <DynamicFormField name={'placeCode'} />
+              <DynamicFormField name={'educationPlaceCode'} />
             </FormRow>
             <FormRow provider={provider} className={dynamicFormStyles.w_half}>
-              <DynamicFormField name={'placeName'} />
+              <DynamicFormField name={'educationPlaceName'} />
             </FormRow>
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'tenantName'}>
+              <DynamicFormField name={'tenantList'}>
                 <ChipListModalSelectorFormField
                   chipList={{
                     labelField: 'name',
@@ -172,7 +201,7 @@ function RouteComponent() {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'zipCode'} disabled={true} />
+              <DynamicFormField name={'zipNo'} disabled={true} />
               <DynamicFormField name={'address1'} disabled={true} />
               <Button variant={'gray'} size={'sm'} onClick={handleAddressSearch}>
                 {'우편번호찾기'}
@@ -184,7 +213,7 @@ function RouteComponent() {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'description'} size="sm" resize="none" />
+              <DynamicFormField name={'educationPlaceRemarkContent'} size="sm" resize="none" />
             </FormRow>
           </ContentsRow>
 
@@ -209,7 +238,7 @@ function RouteComponent() {
 const formConfig: DynamicFormConfig = {
   builders: [
     {
-      name: 'placeDivision',
+      name: 'educationPlaceType',
       type: 'dropdown',
       label: t('구분'),
       value: '',
@@ -223,24 +252,25 @@ const formConfig: DynamicFormConfig = {
       ],
     },
     {
-      name: 'placeCode',
+      name: 'educationPlaceCode',
       type: 'text',
       label: t('장소 코드'),
       value: '',
       placeholder: '입력',
     },
     {
-      name: 'placeName',
+      name: 'educationPlaceName',
       type: 'text',
       label: t('장소 명'),
       value: '',
       placeholder: '입력',
     },
     {
-      name: 'tenantName',
+      name: 'tenantList',
       type: 'custom',
       label: t('테넌트 명'),
-      value: '',
+      value: [{ name: '현대제철', value: 1 }],
+      format: 'array',
     },
     {
       name: 'linkAddress',
@@ -250,7 +280,7 @@ const formConfig: DynamicFormConfig = {
       placeholder: '전체 URL을 입력하세요. (예 : https:// campus.hyundai.com/doejf.log/map.jpg)',
     },
     {
-      name: 'description',
+      name: 'educationPlaceRemarkContent',
       type: 'textarea',
       label: t('비고'),
       value: '',
@@ -279,7 +309,7 @@ const formConfig: DynamicFormConfig = {
       ],
     },
     {
-      name: 'zipCode',
+      name: 'zipNo',
       type: 'text',
       label: t('주소'),
       value: '',
@@ -301,10 +331,10 @@ const formConfig: DynamicFormConfig = {
     },
   ],
   validator: {
-    placeDivision: { required: true },
-    placeCode: { required: true },
-    placeName: { required: true },
-    tenantName: { required: true },
+    educationPlaceType: { required: true },
+    educationPlaceCode: { required: true },
+    educationPlaceName: { required: true },
+    tenantList: { required: true },
     isUsed: { required: true },
   },
 };
