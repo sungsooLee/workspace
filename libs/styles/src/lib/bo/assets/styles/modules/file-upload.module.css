@@ -26,11 +26,18 @@
           }
         }
         .file_volume {
-          @apply body_bo_2_b ml-[8px] inline-flex items-center text-[var(--secondary1)];
+          @apply body_bo_2_r ml-[8px] inline-flex items-center text-[var(--secondary1)];
         }
       }
     }
     .btn_area {
+      @apply flex items-center;
+      .file_text {
+        @apply mr-[10px] flex items-center;
+        svg {
+          @apply mr-[6px];
+        }
+      }
       .info_text {
         @apply body_bo_4_r text-[var(--gray6)];
         & + button {
