@@ -172,3 +172,23 @@
     @apply !mb-0;
   }
 }
+
+/* address */
+.address_wrap {
+  @apply flex w-full;
+  .info_address {
+    @apply flex flex-1 items-center;
+    [class*='nlp--input'] {
+      @apply ml-[8px] flex-grow;
+      &:first-child {
+        @apply ml-0 w-[120px] shrink-0;
+      }
+    }
+    .btn_find {
+      @apply ml-[8px] w-[94px] shrink-0;
+    }
+  }
+  .detail_address {
+    @apply ml-[40px] flex-1;
+  }
+}

@@ -25,7 +25,7 @@ import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-content
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
 import { queryOptions as companyQueryOptions } from '@entities/companies/service/companies.queries';
 
-const CompanyModalComponent = forwardRef((props, ref) => {
+const UserModalComponent = forwardRef((props, ref) => {
   const { close: closeModal } = useModal();
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);
   const { config, gridFetch } = useGridBox(gridConfig, getValues);
@@ -51,46 +51,6 @@ const CompanyModalComponent = forwardRef((props, ref) => {
   // grid
   const [pageIndex, setPageIndex] = useState(0);
   const [pageSize, setPageSize] = useState(10);
-
-  const columnHelper = createColumnHelper<any>();
-  const columns = [
-    columnHelper.accessor('companyType', {
-      cell: (info) => info.getValue(),
-      header: '회사구분',
-      enableGrouping: false,
-      size: 210,
-    }),
-    columnHelper.accessor('name', {
-      cell: (info) => info.getValue(),
-      header: '회사',
-      size: 240,
-      enableGrouping: false,
-    }),
-    columnHelper.accessor('rpsntrName', {
-      cell: (info) => info.getValue(),
-      header: '대표자',
-      size: 150,
-      enableGrouping: false,
-    }),
-    columnHelper.accessor('brn', {
-      cell: (info) => info.getValue(),
-      header: '사업자 등록번호',
-      size: 220,
-      enableGrouping: false,
-    }),
-    columnHelper.accessor('callNumber', {
-      cell: (info) => info.getValue(),
-      header: '대표 전화',
-      size: 220,
-      enableGrouping: false,
-    }),
-    columnHelper.accessor('email', {
-      cell: (info) => info.getValue(),
-      header: '대표 이메일',
-      size: 240,
-      enableGrouping: false,
-    }),
-  ] as ColumnDef<any, unknown>[];
 
   /**
    * @param data
@@ -124,33 +84,42 @@ const CompanyModalComponent = forwardRef((props, ref) => {
   );
 });
 
-export const CompanyChoiceModal = CompanyModalComponent;
+export const UserChoiceModal = UserModalComponent;
 
 const searchConfig: SearchBoxConfig = {
   builders: [
     [
       {
-        name: 'name',
+        name: 'compayId',
         type: 'text',
-        label: t('회사명'),
+        label: t('회사'),
         value: '',
       },
       {
-        name: 'companyCode',
+        name: 'opt1',
         type: 'text',
-        label: t('회사코드'),
+        label: t('본부/사업부'),
         value: '',
       },
       {
-        name: 'useYn',
-        type: 'dropdown',
-        label: t('LABEL.isUsed'),
+        name: 'num',
+        type: 'text',
+        label: t('소속'),
         value: '',
-        options: [
-          { value: '', label: t('전체') },
-          { value: 'true', label: t('사용') },
-          { value: 'false', label: t('미사용') },
-        ],
+      },
+    ],
+    [
+      {
+        name: 'userNo',
+        type: 'text',
+        label: t('사번'),
+        value: '',
+      },
+      {
+        name: 'userName',
+        type: 'text',
+        label: t('이름'),
+        value: '',
       },
     ],
   ],
@@ -172,3 +141,49 @@ const gridConfig = {
     totalRows: 2,
   },
 };
+
+const columnHelper = createColumnHelper<any>();
+const columns = [
+  columnHelper.accessor('companyName', {
+    cell: (info) => info.getValue(),
+    header: '회사',
+    enableGrouping: false,
+    size: 210,
+  }),
+  columnHelper.accessor('deptName', {
+    cell: (info) => info.getValue(),
+    header: '본부/사업부',
+    size: 240,
+    enableGrouping: false,
+  }),
+  columnHelper.accessor('dept2', {
+    cell: (info) => info.getValue(),
+    header: '소속',
+    size: 150,
+    enableGrouping: false,
+  }),
+  columnHelper.accessor('userNo', {
+    cell: (info) => info.getValue(),
+    header: '사번',
+    size: 220,
+    enableGrouping: false,
+  }),
+  columnHelper.accessor('userName', {
+    cell: (info) => info.getValue(),
+    header: '이름',
+    size: 220,
+    enableGrouping: false,
+  }),
+  columnHelper.accessor('opt2', {
+    cell: (info) => info.getValue(),
+    header: '재직여부',
+    size: 240,
+    enableGrouping: false,
+  }),
+  columnHelper.accessor('opt3', {
+    cell: (info) => info.getValue(),
+    header: '계정상태',
+    size: 240,
+    enableGrouping: false,
+  }),
+] as ColumnDef<any, unknown>[];

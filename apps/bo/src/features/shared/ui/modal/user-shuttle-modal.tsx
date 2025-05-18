@@ -19,7 +19,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { queryOptions as companyQueryOptions } from '@entities/companies/service/companies.queries';
 import { Company } from '@types';
 
-const CompanyShuttleComponent = () => {
+const UserShuttleComponent = () => {
   const ref = useRef<ShuttleGridToGridImperative>(null);
 
   const [option, setOption] = useState<any>();
@@ -91,27 +91,33 @@ const CompanyShuttleComponent = () => {
   );
 };
 
-export const CompanyShuttleModal = CompanyShuttleComponent;
+export const UserShuttleModal = UserShuttleComponent;
 
 const searchConfig: SearchBoxConfig = {
   builders: [
     [
       {
-        name: 'tenantName',
+        name: 'companyId',
         type: 'text',
-        label: t('테넌트명'),
+        label: t('회사'),
         value: '',
       },
       {
-        name: 'channelId',
+        name: 'deptId',
         type: 'text',
-        label: t('채널'),
+        label: t('소속'),
         value: '',
       },
       {
-        name: 'name',
+        name: 'userNo',
         type: 'text',
-        label: t('회사명'),
+        label: t('사번'),
+        value: '',
+      },
+      {
+        name: 'userName',
+        type: 'text',
+        label: t('이름'),
         value: '',
       },
     ],
@@ -120,13 +126,13 @@ const searchConfig: SearchBoxConfig = {
 
 const columnHelper = createColumnHelper();
 const columns = [
-  columnHelper.accessor('companyId', {
-    header: t('회사구분'),
+  columnHelper.accessor('companyName', {
+    header: t('회사'),
     size: 132,
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor('name', {
-    header: t('회사'),
+  columnHelper.accessor('deptName', {
+    header: t('소속'),
     size: 132,
     cell: (info) => info.getValue(),
     meta: {
@@ -134,13 +140,13 @@ const columns = [
       cellAlign: 'left', // 셀은 오른쪽 정렬
     },
   }),
-  columnHelper.accessor('companyCode', {
-    header: t('회사코드'),
+  columnHelper.accessor('userNo', {
+    header: t('사번'),
     size: 132,
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor('ownerTel', {
-    header: t('대표전화'),
+  columnHelper.accessor('userName', {
+    header: t('이름'),
     size: 132,
     cell: (info) => info.getValue(),
   }),

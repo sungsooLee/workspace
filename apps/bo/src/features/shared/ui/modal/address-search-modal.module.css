@@ -38,6 +38,15 @@
             > span {
               @apply button_5_r inline-block rounded-[4px] border-[1px] border-solid border-[var(--gray6)] px-[8px] py-[4px] text-[var(--gray8)];
             }
+            .info_box {
+              @apply mt-[4px] flex items-center;
+              .info_post {
+                @apply inline-flex items-center;
+                &::before {
+                  @apply mx-[8px] h-[12px] w-[1px] bg-[var(--gray3)] content-[''];
+                }
+              }
+            }
           }
           & + li {
             @apply mt-[16px];
@@ -47,6 +56,9 @@
       .pagenation {
         @apply mt-[16px];
       }
+    }
+    [class*='nlp--contents-row'] [class*='nlp--input'] input {
+      @apply min-h-[40px];
     }
   }
 }

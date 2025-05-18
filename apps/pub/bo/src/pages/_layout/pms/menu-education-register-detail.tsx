@@ -376,15 +376,52 @@ function RouteComponent() {
             </div>
             {/* form_item */}
             <div className={formStyles.form_item}>
-              <label htmlFor="name-address" className={formStyles.form_label}>
+              <label htmlFor="name-linkAddress" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>링크 주소</span>
               </label>
               <div className={formStyles.input_box}>
                 <Input
-                  id="name-address"
+                  id="name-linkAddress"
                   type="text"
                   placeholder="http:// 또는 https:// 전체 URL을 입력하세요."
                 />
+              </div>
+            </div>
+          </ContentsRow>
+          {/* 퍼블수정 20240516 : 주소찾기 추가 */}
+          <ContentsRow>
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-address" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>주소</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <div className={dynamicFormStyles.address_wrap}>
+                  <div className={dynamicFormStyles.info_address}>
+                    <Input
+                      id="name-address"
+                      type="text"
+                      placeholder="입력"
+                      disabled
+                      className={dynamicFormStyles.post_input}
+                    />
+                    <Input
+                      type="text"
+                      placeholder="입력"
+                      disabled
+                      className={dynamicFormStyles.address_input}
+                    />
+                    <Button className={dynamicFormStyles.btn_find} size={'sm'} variant={'gray'}>
+                      {'우편번호찾기'}
+                    </Button>
+                  </div>
+                  <div className={dynamicFormStyles.detail_address}>
+                    <Input type="text" placeholder="입력" />
+                  </div>
+                </div>
               </div>
             </div>
           </ContentsRow>

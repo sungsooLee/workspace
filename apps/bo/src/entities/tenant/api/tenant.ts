@@ -31,6 +31,7 @@ function genTenantCreate(payload: any) {
     logoImageUrl: payload.logoImageUrl,
     tenantMappingRoleList: payload.tenantMappingRoleList,
     tenantBillingTag: payload.tenantBillingTag,
+    companyTenantList: payload.companyTenantList,
     isUsed: payload.isUsed,
     tenantDesc: payload.tenantDesc,
     isPc: payload.isPc,

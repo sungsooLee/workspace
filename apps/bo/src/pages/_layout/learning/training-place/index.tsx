@@ -16,7 +16,7 @@ import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
-import { trainingPlaceQueryOptions } from '@entities/training-place/service/training-place.queries';
+import { queryOptions as trainingPlaceQueryOptions } from '@entities/training-place/service/training-place.queries';
 import { useCallback } from 'react';
 
 export const Route = createFileRoute('/_layout/learning/training-place/')({
@@ -160,7 +160,11 @@ function RouteComponent() {
           <Button
             variant="primary"
             size="sm"
-            onClick={() => router.navigate({ to: '/learning/training-place/regist' })}
+            onClick={() =>
+              router.navigate({
+                to: '/learning/training-place/regist',
+              })
+            }
           >
             등록
           </Button>

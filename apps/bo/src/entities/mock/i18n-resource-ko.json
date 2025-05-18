@@ -208,7 +208,8 @@
       "disable": "미사용",
       "learnerMenu": "학습자 메뉴",
       "hrdCenterMenu": "HRD센터 메뉴",
-      "categoryInfo": "카테고리 정보"
+      "categoryInfo": "카테고리 정보",
+      "trainingPlaceInfo": "교육장소 정보"
     },
     "link": {
       "multilingual": "다국어관리"
@@ -306,8 +307,17 @@
         "courseName": "과정명",
         "useYn": "사용여부",
         "userGroupSetting": "유저그룹 설정",
-        "useYn": "사용여부",
-        "select": "선택"
+        "select": "선택",
+        "mapImageAttachment": "약도 이미지 첨부",
+        "division": "구분",
+        "placeCode": "장소 코드",
+        "placeName": "장소 명",
+        "tenantName": "테넌트 명",
+        "linkAddress": "링크 주소",
+        "note": "비고",
+        "isReservationUsed": "예약 가능",
+        "isUsed": "사용 가능",
+        "address": "주소"
       },
       "validation": {
         "needInput": "{{code}}를 입력해 주세요.",
@@ -320,10 +330,26 @@
         "idSave": "아이디 저장"
       },
       "radio": {
-        "select1": "선택1"
+        "select1": "선택1",
+        "reservationAvailable": "예약 가능",
+        "reservationNotAvailable": "예약 불가",
+        "usable": "사용 가능",
+        "unusable": "사용 불가"
       },
       "tooltip": {
         "tenantCategoryIsUsed": "테넌트 - 카테고리 관리에서 사용할 카테고리를 선택할 수 있습니다."
+      },
+      "guideText": {
+        "mapImageAttachment": "※ 첨부파일은 png, jpg, gif 형식만 업로드 가능하며, 이미지 사이즈는 500 X 500으로 업로드해 주세요.",
+        "clickToAttachFile": "버튼 클릭 후 파일을 첨부하세요.",
+        "notVisibleToUsers": "※ 사용자에게 노출되지 않습니다."
+      },
+      "placeholder": {
+        "linkAddress": "전체 URL을 입력하세요. (예 : https:// campus.hyundai.com/doejf.log/map.jpg)",
+        "note": "비고 내용을 입력하세요.",
+        "zipNo": "우편번호",
+        "address": "기본주소",
+        "addressDetail": "상세주소"
       }
     },
     "button": {
@@ -347,7 +373,9 @@
       "courseOpen": "과정 개설",
       "preview": "미리보기",
       "retrieve": "검색",
-      "select": "선택"
+      "select": "선택",
+      "attachFile": "파일첨부",
+      "searchZipNo": "우편번호찾기"
     },
     "all": "전체",
     "confirm": {

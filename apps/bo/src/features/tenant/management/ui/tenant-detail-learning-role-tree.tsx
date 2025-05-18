@@ -176,8 +176,8 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
   const renderNodeButtons = (node: TreeNode, level: number) => {
     if (roleInfo)
       return (
-        <div className={'gap-10px flex'}>
-          <div className={'flex items-center'}>
+        <div className="gap-10px flex">
+          <div className="flex items-center">
             <Button
               onClick={(e) => {
                 e.stopPropagation();
@@ -200,9 +200,9 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
       <TreeBox
         data={roleTreeData}
         initLevel={2}
-        treeId={'1'}
+        treeId="1"
         showSearchKeyword
-        title={'역할 목록'}
+        title={t('역할 목록')}
         selectedNode={selectedRoleNode}
         renderNodeButtons={renderNodeButtons}
         handleSelectedNodeChange={handleRoleSelect}
@@ -213,21 +213,21 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
         <div className={cn(layoutStyles.inner)}>
           <form onSubmit={onSubmit(handleOnSubmit)}>
             <FormSubTitle
-              label={'역할 정보'}
+              label={t('역할 정보')}
               actionNode={
                 <>
                   <Button
-                    label={'초기화'}
-                    variant={'text'}
-                    size={'sm'}
+                    label={t('초기화')}
+                    variant="text"
+                    size="sm"
                     className="btn_text"
                     disabled={formMode === EnFormMode.NONE}
                     onClick={() => onFormChange()}
                   />
                   <Button
-                    label={'삭제'}
-                    variant={'text'}
-                    size={'sm'}
+                    label={t('삭제')}
+                    variant="text"
+                    size="sm"
                     className="btn_text"
                     disabled={
                       !roleInfo ||
@@ -238,9 +238,9 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                     onClick={handleDeleteButtonClick}
                   />
                   <Button
-                    label={'저장'}
-                    variant={'save'}
-                    size={'sm'}
+                    label={t('저장')}
+                    variant="save"
+                    size="sm"
                     type="submit"
                     disabled={formMode === EnFormMode.NONE}
                   />
@@ -312,8 +312,8 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                           width: 'xl',
                         }}
                         chipList={{
-                          labelField: 'company',
-                          valueField: 'id',
+                          labelField: 'name',
+                          valueField: 'companyId',
                           wordwrap: true,
                         }}
                       />

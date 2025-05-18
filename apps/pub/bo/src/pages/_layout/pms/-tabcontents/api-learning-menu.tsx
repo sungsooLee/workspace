@@ -7,7 +7,7 @@ import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import { Button, ContentsRow, Textarea, Switch, Input, RadioGroupFormField } from '@learnway/ui';
-import { IcoFormRequired } from '@learnway/icons';
+import { IcoFormRequired, IcoMinus } from '@learnway/icons';
 const ApiLearningMenuComponent: FC<{}> = ({}) => {
   // switch : 보안콘텐츠 여부
   const [checked, setChecked] = useState<{ [key: number]: boolean }>({
@@ -41,7 +41,13 @@ const ApiLearningMenuComponent: FC<{}> = ({}) => {
             <Button variant="text" size="sm" className={layoutStyles.btn_text} disabled>
               {'초기화'}
             </Button>
-            <Button variant="text" size="sm" className={layoutStyles.btn_text} disabled>
+            <Button
+              variant="text"
+              size="sm"
+              className={layoutStyles.btn_text}
+              disabled
+              icon={<IcoMinus width={16} height={16} stroke={'#4C515E'} />}
+            >
               {'삭제'}
             </Button>
             <Button variant="save" size="sm" disabled>
@@ -73,10 +79,6 @@ const ApiLearningMenuComponent: FC<{}> = ({}) => {
             <div className={formStyles.form_item}>
               <label htmlFor="name-menu2" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>{'상위 API명'}</span>
-                {/* 필수 케이스 */}
-                <span className={cn(formStyles.status, formStyles.required)}>
-                  <IcoFormRequired width={12} height={12} />
-                </span>
               </label>
               <div className={formStyles.input_box}>
                 <Input
@@ -118,10 +120,6 @@ const ApiLearningMenuComponent: FC<{}> = ({}) => {
             <div className={formStyles.form_item}>
               <label htmlFor="name-method" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>{'API Method 구분'}</span>
-                {/* 필수 케이스 */}
-                <span className={cn(formStyles.status, formStyles.required)}>
-                  <IcoFormRequired width={12} height={12} />
-                </span>
               </label>
               <div className={formStyles.input_box}>
                 <div className={dynamicFormStyles.radio_wrap}>
