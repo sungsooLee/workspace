@@ -72,22 +72,7 @@ const TenantModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
       {
         name: 'tenantName',
         label: t('테넌트명'),
-        render: (info: any) => (
-          <Button
-            className="link"
-            onClick={() => {
-              router.navigate({
-                to: `${rootPath}/tenant/management/detail`,
-                state: {
-                  tenantId: info.row.original.tenantId,
-                  tenantName: info.row.original.tenantName,
-                },
-              });
-            }}
-          >
-            {info.row.original.tenantName}
-          </Button>
-        ),
+        render: (info: any) => info.row.original.tenantName,
       },
       {
         name: 'companyTenantList',

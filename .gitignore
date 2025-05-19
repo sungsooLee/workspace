@@ -54,5 +54,3 @@ storybook-static
 
 .history/
 .vscode/launch.json
-.husky/pre-commit
-.gitignore
