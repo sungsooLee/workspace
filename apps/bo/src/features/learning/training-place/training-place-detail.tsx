@@ -14,7 +14,7 @@ import { AddressSearchModal } from '@features/shared';
 
 import { Button, ContentsRow, useModal, DynamicFormField, Input } from '@learnway/ui';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
+import { useDynamicForm, DynamicFormConfig, CODE_GROUP } from '@learnway/hooks';
 import { FormRow } from '@shared/ui';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
@@ -161,7 +161,6 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
               provider={provider}
               className={dynamicFormStyles.w_half}
               name={'educationPlaceType'}
-              element={<input />}
             />
           </ContentsRow>
           <ContentsRow>
@@ -169,13 +168,11 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
               provider={provider}
               className={dynamicFormStyles.w_half}
               name={'educationPlaceCode'}
-              element={<input />}
             />
             <FormRow
               provider={provider}
               className={dynamicFormStyles.w_half}
               name={'educationPlaceName'}
-              element={<input />}
             />
           </ContentsRow>
           <ContentsRow>
@@ -291,7 +288,7 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
             <FormRow
               provider={provider}
               name={'educationPlaceRemarkContent'}
-              element={<TextareaFormField resize="none" size="sm" />}
+              element={<Textarea resize="none" size="sm" />}
             />
           </ContentsRow>
 
@@ -322,14 +319,9 @@ const formConfig: DynamicFormConfig = {
       type: 'dropdown',
       label: t('LABEL.form.label.division'),
       value: '',
-      options: [
-        { value: '', label: t('전체') },
-        { value: 'CAMPUS', label: t('캠퍼스') },
-        { value: 'SERVISE_TECH', label: t('서비스기술교육') },
-        { value: 'ME_CLUSTER', label: t('생기클러스터') },
-        { value: 'OUTSIDE', label: t('외부') },
-        { value: 'ABROAD', label: t('해외') },
-      ],
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.education.EducationPlaceType'],
+      },
     },
     {
       name: 'educationPlaceCode',
