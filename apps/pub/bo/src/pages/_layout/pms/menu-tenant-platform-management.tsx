@@ -61,7 +61,6 @@ function RouteComponent() {
   const [pageSize, setPageSize] = useState(10);
   const data: any[] = [
     {
-      order: '1',
       tenantName: <Button className="link">테넌트명1</Button>,
       tenantSite: (
         <Link to="/" className="link">
@@ -78,7 +77,6 @@ function RouteComponent() {
       modificationDate: '2025-01-01 07:12',
     },
     {
-      order: '2',
       tenantName: <Button className="link">테넌트명2</Button>,
       tenantSite: (
         <Link to="/" className="link">
@@ -99,17 +97,6 @@ function RouteComponent() {
   const columnHelper = createColumnHelper<any>();
 
   const columns = [
-    columnHelper.accessor('order', {
-      cell: (info) => info.getValue(),
-      header: 'NO.',
-      footer: (props) => `Total: ${props.table.getRowModel().rows.length}`,
-      size: 64,
-      meta: {
-        headerAlign: 'left',
-        cellAlign: 'center',
-      },
-      enableGrouping: false,
-    }),
     columnHelper.accessor('tenantName', {
       cell: (info) => info.getValue(),
       header: '테넌트명',
@@ -291,6 +278,7 @@ function RouteComponent() {
                 columns={columns}
                 height={440}
                 showColumnSettings={false}
+                showNumberingColumn={true}
                 pagination={{
                   pageSize,
                   pageIndex,

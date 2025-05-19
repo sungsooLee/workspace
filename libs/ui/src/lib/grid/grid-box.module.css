@@ -105,6 +105,12 @@
       .guide_text {
         @apply ml-[16px] text-[1.4rem] font-normal leading-[1.4rem] text-[var(--gray7)];
       }
+      .custom_node {
+        @apply text-[1.4rem] font-normal leading-[1.4rem] text-[var(--gray7)];
+        [class*='normal_text'] {
+          @apply ml-[16px] font-normal;
+        }
+      }
     }
     .title {
       @apply title_bo_4_b text-[var(--gray9)];

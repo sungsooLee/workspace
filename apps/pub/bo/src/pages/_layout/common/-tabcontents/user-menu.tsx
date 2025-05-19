@@ -21,7 +21,6 @@ const UserMenuComponent: FC<{}> = ({}) => {
   const [pageSize, setPageSize] = useState(10);
   const data: any[] = [
     {
-      count: '1',
       company: '현대자동차',
       part: '경영지원본부',
       team: '경영지원1팀',
@@ -31,7 +30,6 @@ const UserMenuComponent: FC<{}> = ({}) => {
       accountStatus: '정상',
     },
     {
-      count: '2',
       company: '현대자동차',
       part: '경영지원본부',
       team: '경영지원2팀',
@@ -41,7 +39,6 @@ const UserMenuComponent: FC<{}> = ({}) => {
       accountStatus: '정상',
     },
     {
-      count: '3',
       company: '현대자동차',
       part: '경영지원본부',
       team: '경영지원2팀',
@@ -51,7 +48,6 @@ const UserMenuComponent: FC<{}> = ({}) => {
       accountStatus: '정상',
     },
     {
-      count: '4',
       company: '현대자동차',
       part: '경영지원본부',
       team: '경영지원2팀',
@@ -61,7 +57,6 @@ const UserMenuComponent: FC<{}> = ({}) => {
       accountStatus: '정상',
     },
     {
-      count: '5',
       company: '현대자동차',
       part: '경영지원본부',
       team: '경영지원2팀',
@@ -71,7 +66,6 @@ const UserMenuComponent: FC<{}> = ({}) => {
       accountStatus: '정상',
     },
     {
-      count: '6',
       company: '현대자동차',
       part: '경영지원본부',
       team: '경영지원2팀',
@@ -81,7 +75,6 @@ const UserMenuComponent: FC<{}> = ({}) => {
       accountStatus: '정상',
     },
     {
-      count: '7',
       company: '현대자동차',
       part: '경영지원본부',
       team: '경영지원2팀',
@@ -91,7 +84,6 @@ const UserMenuComponent: FC<{}> = ({}) => {
       accountStatus: '정상',
     },
     {
-      count: '8',
       company: '현대자동차',
       part: '경영지원본부',
       team: '경영지원2팀',
@@ -101,7 +93,6 @@ const UserMenuComponent: FC<{}> = ({}) => {
       accountStatus: '정상',
     },
     {
-      count: '9',
       company: '현대자동차',
       part: '경영지원본부',
       team: '경영지원2팀',
@@ -111,7 +102,6 @@ const UserMenuComponent: FC<{}> = ({}) => {
       accountStatus: '정상',
     },
     {
-      count: '10',
       company: '현대자동차',
       part: '경영지원본부',
       team: '경영지원2팀',
@@ -125,16 +115,6 @@ const UserMenuComponent: FC<{}> = ({}) => {
   const columnHelper = createColumnHelper<any>();
 
   const columns = [
-    columnHelper.accessor('count', {
-      cell: (info) => info.getValue(),
-      header: 'NO.',
-      meta: {
-        headerAlign: 'left', // 헤더 정렬
-        cellAlign: 'center', // 셀 정렬
-      },
-      enableGrouping: false,
-      size: 64,
-    }),
     columnHelper.accessor('company', {
       cell: (info) => info.getValue(),
       header: '회사',
@@ -274,6 +254,7 @@ const UserMenuComponent: FC<{}> = ({}) => {
           columns={columns}
           showSelectedCount={true}
           showColumnSettings={false}
+          showNumberingColumn={true}
           height={200}
           pagination={{
             pageSize,

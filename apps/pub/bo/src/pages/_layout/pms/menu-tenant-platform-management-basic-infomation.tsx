@@ -78,7 +78,6 @@ function RouteComponent() {
     const [pageSize, setPageSize] = useState(10);
     const data: any[] = [
       {
-        order: '1',
         companySort: '그룹사',
         company: '현대차',
         owner: '김현대',
@@ -87,7 +86,6 @@ function RouteComponent() {
         email: 'asdfged@gmail.com',
       },
       {
-        order: '2',
         companySort: '그룹사',
         company: '현대차',
         owner: '김현대',
@@ -98,16 +96,6 @@ function RouteComponent() {
     ];
 
     const columns = [
-      columnHelper.accessor('order', {
-        cell: (info) => info.getValue(),
-        header: 'NO.',
-        size: 64,
-        meta: {
-          headerAlign: 'left',
-          cellAlign: 'center',
-        },
-        enableGrouping: false,
-      }),
       columnHelper.accessor('companySort', {
         cell: (info) => info.getValue(),
         header: '회사구분',
@@ -216,6 +204,7 @@ function RouteComponent() {
                 columns={columns}
                 height={380}
                 showColumnSettings={false}
+                showNumberingColumn={true}
                 pagination={{
                   pageSize,
                   pageIndex,
@@ -483,10 +472,13 @@ function RouteComponent() {
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button variant={'gray'} size={'lg'} onClick={() => closeModal()}>
-            <IcoRefresh02 width={16} height={16} className="icon_refresh" />
-            {'초기화'}
-          </Button>
+          <Button
+            icon={<IcoRefresh02 width={16} height={16} className="icon_refresh" />}
+            variant={'gray'}
+            size={'lg'}
+            onClick={() => closeModal()}
+            label={'초기화'}
+          />
           <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
           <Button label={'적용'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
         </ModalFooter>

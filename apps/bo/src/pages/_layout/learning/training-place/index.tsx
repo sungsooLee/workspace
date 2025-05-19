@@ -234,7 +234,8 @@ const gridConfig = {
       name: 'map',
       label: '약도',
       render: (info: any) => {
-        const disabled = info.row.original.mapImageFileInfo?.files?.length > 0 ? false : true;
+        //const disabled = info.row.original.mapImageFileInfo?.files?.length > 0 ? false : true;
+        const disabled = !info.row.original.isUsed;
         return (
           <Link to={'/'} className="link" disabled={disabled}>
             약도보기
@@ -249,7 +250,7 @@ const gridConfig = {
       render: (info: any) => {
         //const disabled = info.row.original.mapImageLinkContent?.length > 0 ? false : true;
         //const mapLink = info.row.original.mapImageLinkContent;
-        const disabled = false;
+        const disabled = !info.row.original.isUsed;
         const mapLink = 'https://www.naver.com';
         return (
           <Button
@@ -267,6 +268,9 @@ const gridConfig = {
         );
       },
       size: 90,
+      meta: {
+        cellAlign: 'center',
+      },
     },
     {
       name: 'createdDate',
@@ -297,5 +301,12 @@ const gridConfig = {
     pageSize: 10,
     pageIndex: 0,
     totalRows: 0,
+  },
+  excel: {
+    download: '',
+    form: {
+      xlsx: '',
+      csv: '',
+    },
   },
 };

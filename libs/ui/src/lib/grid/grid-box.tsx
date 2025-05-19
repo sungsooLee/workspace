@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { FC, forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
 import { createColumnHelper } from '@tanstack/react-table';
 import {
@@ -185,7 +187,7 @@ const GridBoxComponent = <T extends object>(
             </div>
           )}
           {/* 좌측 타이틀 영역 커스텀 (전체 카운트와 가이드 텍스트 중간 영역) */}
-          {titleCustomNode && <div>{titleCustomNode}</div>}
+          {titleCustomNode && <div className={styles.custom_node}>{titleCustomNode}</div>}
 
           {/* 가이드 텍스트 */}
           <p className={styles.guide_text}>{guideText}</p>
@@ -201,7 +203,7 @@ const GridBoxComponent = <T extends object>(
               size="xs"
               className={styles.btn_all_select}
               label={t('LABEL.grid.header.selectAll')}
-              icon={<IcoMinus width={16} height={16} stroke={'#131C30'} />}
+              icon={<IcoPlus width={16} height={16} stroke={'#131C30'} />}
             />
           )}
           {/* 전체 삭제 */}
