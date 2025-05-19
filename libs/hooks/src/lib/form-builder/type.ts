@@ -333,6 +333,7 @@ export type ApiCallback<T> = (response: any) => SelectOption[];
 export interface OptionsConfig<T = any> {
   codeGroup?: CODE_GROUP_TYPE; // 옵션을 가져오기 위한 코드 그룹.
   options?: SelectOption[]; // 미리 정의된 정적 옵션
+  [key: string]: any; // TODO. 기존 소스 에러 방지를 위해 추가해 둠
 }
 // TODO. Form 은 외부에서 주입이 가능하지만 SearchBox 는 외부 주입이 불가능 하므로 아래와 같은
 // TODO. 옵션을 이용하던지 SearchBox에서 외부 options 를 주입하는 방식도 좋아 보입니다.
