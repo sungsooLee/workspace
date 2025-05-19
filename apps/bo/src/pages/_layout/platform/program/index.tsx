@@ -11,6 +11,7 @@ import { pageRouteConfig } from '../../../../features/auth';
 import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
 import { ProgramTree } from '../../../../features/platform/program/ui/program-tree';
+import { SectionLayout } from '../../../../widgets/layout/ui/container/section-layout/section-layout';
 
 export const Route = createFileRoute('/_layout/platform/program/')({
   component: RouteComponent,
@@ -25,9 +26,9 @@ function RouteComponent() {
   const [selectedTabKey, setSelectedTabKey] = useState<string>('FO');
   const renderTabContent = (tabKey: string) => {
     return (
-      <div className={cn(layoutStyles.start, layoutStyles.wrap)}>
+      <SectionLayout contentsRatio={'half'}>
         <ProgramTree menuScope={selectedTabKey} />
-      </div>
+      </SectionLayout>
     );
   };
   const items = [
