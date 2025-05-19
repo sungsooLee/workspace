@@ -307,5 +307,7 @@ const formConfig: DynamicFormConfig = {
     placeName: { required: true },
     tenantName: { required: true },
     isUsed: { required: true },
+    address1: true,
+    address2: true,
   },
 };
