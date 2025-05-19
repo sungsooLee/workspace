@@ -377,7 +377,7 @@ const GridComponent = forwardRef(
       manualPagination: true, //서버 페이지네이션 처리
       // manualGrouping: true,  // 서버 그루핑. 그루핑 데이터 자체를 서버에서 내려줘야됨.
       // manualExpanding: true,
-      pageCount: pagination ? Math.ceil(pagination.totalRows / pagination.pageSize) : undefined,
+      // pageCount: pagination ? Math.ceil(pagination.totalRows / pagination.pageSize) : undefined,
       //고유 ID 부여, 페이지네이션에서 selected row를 위해서
       getRowId: (row: T, index: number) => {
         return `${pagination?.pageIndex ?? 0}-${index}`;
@@ -760,7 +760,7 @@ const GridComponent = forwardRef(
         pageSizeOptions = [10, 20, 50, 100],
       } = pagination;
 
-      const options: DropdownOption[] = pageSizeOptions.map((size) => ({
+      const options: DropdownOption[] = pageSizeOptions.map((size: number) => ({
         value: size.toString(),
         label: `${size}개씩 보기`,
       }));

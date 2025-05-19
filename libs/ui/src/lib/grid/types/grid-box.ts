@@ -262,7 +262,7 @@ export interface GridBoxPagination {
   /**
    * 전체 페이지 개수입니다.
    */
-  totalRows: number;
+  totalPages: number;
 
   /**
    * 한 페이지에 표시할 데이터 개수
@@ -275,6 +275,11 @@ export interface GridBoxPagination {
   pageIndex?: number;
 
   /**
+   * 페이지 크기 선택 옵션 배열입니다.
+   */
+  pageSizeOptions?: number[];
+
+  /**
    * 페이지 변경 시 호출되는 콜백 함수입니다.
    * @param {number} pageIndex 변경된 페이지 인덱스
    */
@@ -285,9 +290,4 @@ export interface GridBoxPagination {
    * @param {number} pageSize 변경된 페이지 크기
    */
   onPageSizeChange?: (pageSize: number) => void;
-
-  /**
-   * 페이지 크기 선택 옵션 배열입니다.
-   */
-  pageSizeOptions?: number[];
 }

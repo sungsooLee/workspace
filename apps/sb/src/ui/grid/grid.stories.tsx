@@ -546,7 +546,7 @@ const PaginationTable = () => {
         onStateChange={handleStateChange}
         pagination={{
           pageNumber,
-          totalRows: 300,
+          totalPages: 300,
           onPageChange: (newPageNumber: number) => {
             setPageNumber(newPageNumber);
           },

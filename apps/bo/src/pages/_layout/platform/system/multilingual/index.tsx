@@ -8,13 +8,12 @@ import {
   useGridBoxConfig,
   useModal,
 } from '@learnway/ui';
-import { cn } from '@learnway/shared';
+import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { translationQueryOptions } from '@entities/translation/service/translation.queries';
-import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { CODE_GROUP, SearchBoxConfig, SelectOption, useSearchBox } from '@learnway/hooks';
 import { SearchBox } from '@shared/ui/search-box';
 import { CellContext } from '@tanstack/react-table';
@@ -42,8 +41,8 @@ function RouteComponent() {
   const router = useRouter();
   const [currentTargetLocale, setCurrentTargetLocale] = useState<string>('');
   const isSaveDisable = useMemo(
-    () => gConfig.totalRows === 0 || currentTargetLocale === '',
-    [gConfig.totalRows, currentTargetLocale],
+    () => gConfig.totalElements === 0 || currentTargetLocale === '',
+    [gConfig.totalElements, currentTargetLocale],
   );
   // 번역완료
   const [successTranslationCount, setSuccessTranslationCount] = useState<number>(0);

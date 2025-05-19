@@ -23,12 +23,19 @@ const useGridBoxHook = (config: useGridBoxConfig, getData?: UseFormReturn['getVa
             pageSize: result.pageable.pageSize,
             pageIndex: result.pageable.pageNumber || 0,
             pageNumber: result.pageable.pageNumber || 0,
-            totalRows: result.totalElements,
+            totalRows: result.totalPages,
           },
         }),
-        // totalRows: result?.totalPages ? result.totalPages : result.content.length,
-        totalRows: result?.totalElements || 0,
+        totalRows: result?.totalPages || 0,
         totalElements: result?.totalElements || 0,
+        // pagination 컴포넌트용 (테스트 후 위 내용 삭제..)
+        pagination: {
+          pageNumber: result.pageable?.pageNumber || 0,
+          totalPages: result.pageable?.totalPages || 0,
+          pageSize: result.pageable?.pageSize || 10,
+          totalElements: result?.totalElements || 0,
+          onPageChange: (newPage: number) => handleGridDataFetch({ page: newPage }),
+        },
       }));
     }
   };
