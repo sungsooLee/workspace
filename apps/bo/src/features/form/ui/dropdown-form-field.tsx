@@ -1,98 +1,20 @@
-import React, { forwardRef, useEffect, useState } from 'react';
-import { BaseFormFieldProps, OptionsConfig, SelectOption, useCodeStore } from '@learnway/hooks';
-import { Dropdown, DropdownComponentProps, DropdownOption } from '@learnway/ui';
-import { useFetchCodeGroups } from '../../../entities/platform';
-import { useWatch } from 'react-hook-form';
+import React, { forwardRef } from 'react';
+import { BaseFormFieldProps, OptionsConfig, SelectOption, useFormOptions } from '@learnway/hooks';
+import { Dropdown, DropdownComponentProps } from '@learnway/ui';
 import { useTranslation } from 'react-i18next';
-import { useQueryClient } from '@tanstack/react-query';
 
 interface DropdownFormFieldType extends BaseFormFieldProps<string> {
-  options: DropdownOption[];
+  options: SelectOption[];
   optionsConfig?: OptionsConfig;
   dropdownConfig?: DropdownComponentProps;
 }
 
 const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormFieldType>(
-  ({ control, value, onChange, options: initOptions, optionsConfig, dropdownConfig }, ref) => {
-    const { getCode } = useCodeStore();
-    const [options, setOptions] = useState<DropdownOption[]>([]);
-    const { data: codeData } = useFetchCodeGroups();
+  ({ value, onChange, options: initOptions, optionsConfig, dropdownConfig }, ref) => {
+    console.log('initOptions => ', initOptions);
+    console.log('optionsConfig => ', optionsConfig);
+    const options = useFormOptions({ options: initOptions, optionsConfig });
     const { t } = useTranslation();
-    const queryClient = useQueryClient();
-    const filterWatchedValue = useWatch({
-      control,
-      name: optionsConfig?.filter?.target || '',
-    });
-    const watchedValue = useWatch({
-      control,
-      name: optionsConfig?.target || '',
-    });
-
-    const init = async () => {
-      if (!optionsConfig) {
-        setOptions(initOptions);
-        return;
-      }
-      let newOptions = [...initOptions];
-      if (optionsConfig.type === 'self') {
-        if (optionsConfig.codeGroup) {
-          const codes = await getCode(optionsConfig.codeGroup);
-          newOptions = [...newOptions, ...codes];
-        } else if (optionsConfig.api) {
-          const result = await queryClient.fetchQuery(optionsConfig.api());
-          // callback이 있으면 적용, 없으면 그대로 추가
-          newOptions = optionsConfig.callback
-            ? [...newOptions, ...optionsConfig.callback(result)]
-            : Array.isArray(result)
-              ? [...newOptions, ...result]
-              : (() => {
-                  console.error('The response is not an array; a callback function is required.');
-                  return newOptions;
-                })();
-        }
-      } else if (optionsConfig.type === 'target' && watchedValue) {
-        if (optionsConfig.options) {
-          newOptions = [...optionsConfig.options];
-        }
-        // target 타입의 경우: watchedValue에 따라 아이템 변경
-        if (optionsConfig.codeGroup) {
-          const parentCodes = (codeData as any)[optionsConfig.codeGroup]?.codes || [];
-          const findParent = (
-            parentCodes.find((pc: any) => pc.code === watchedValue)?.codes || []
-          ).map((code: any) => ({ value: code.code, label: code.name }));
-          newOptions = [...newOptions, ...findParent];
-        } else if (optionsConfig.api) {
-          const result = await queryClient.fetchQuery(optionsConfig.api(watchedValue));
-
-          // callback이 있으면 적용, 없으면 그대로 추가
-          newOptions = optionsConfig.callback
-            ? [...newOptions, ...optionsConfig.callback(result)]
-            : Array.isArray(result)
-              ? [...newOptions, ...result]
-              : (() => {
-                  console.error('The response is not an array; a callback function is required.');
-                  return newOptions;
-                })();
-        }
-      }
-      if (
-        filterWatchedValue &&
-        optionsConfig?.filter &&
-        filterWatchedValue === optionsConfig.filter.value
-      ) {
-        newOptions = optionsConfig.filter.fn(newOptions as SelectOption[]) as SelectOption[];
-        const currentValue = newOptions.find((option) => option.value === value);
-        if (!currentValue) {
-          onChange(newOptions[0]?.value);
-        }
-      }
-      const excludeValues = optionsConfig.excludeValues || [];
-      setOptions(newOptions.filter((option) => !excludeValues.includes(option.value)));
-    };
-
-    useEffect(() => {
-      init();
-    }, [watchedValue, filterWatchedValue]);
 
     return (
       options?.length > 0 && (
