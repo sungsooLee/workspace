@@ -5,7 +5,6 @@
 import type { com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_WizardStepNew } from './com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_WizardStepNew';
 export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew = {
     courseType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew.courseType;
-    courseSubType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew.courseSubType;
     language: string;
     channelId: number;
     courseName: string;
@@ -29,18 +28,6 @@ export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNe
     export enum courseType {
         ELEARNING = 'ELEARNING',
         CLASS = 'CLASS',
-        LIVE = 'LIVE',
-        EXAM = 'EXAM',
-        SURVEY = 'SURVEY',
-        PACKAGE = 'PACKAGE',
-    }
-    export enum courseSubType {
-        SANGSI_LEARN = 'SANGSI_LEARN',
-        NORMAL = 'NORMAL',
-        SANGSI_ENROLL = 'SANGSI_ENROLL',
-        FACE_TO_FACE = 'FACE_TO_FACE',
-        NONE_FACE_TO_FACE = 'NONE_FACE_TO_FACE',
-        HYBRID = 'HYBRID',
         LIVE = 'LIVE',
         EXAM = 'EXAM',
         SURVEY = 'SURVEY',

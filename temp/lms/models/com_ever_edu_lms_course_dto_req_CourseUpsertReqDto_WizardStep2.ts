@@ -17,11 +17,11 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2 = {
     isDuplicateEnrollAllowed?: boolean;
     isScheduleConflictAllowed?: boolean;
     /**
-     * 수강신청 단계에서 배송지 수집을 과정마다할 지 차수마다 할 지
+     * 수강신청 단계에서 배송지 수집을 과정마다할 지 차수마다 할 지 (lms.course.BookDeliveryInfoScopeType)
      */
     bookDeliveryInfoScopeType?: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2.bookDeliveryInfoScopeType;
     /**
-     * 수강신청 단계에서 레벨테스트를 과정마다할 지 차수마다 할 지
+     * 수강신청 단계에서 레벨테스트를 과정마다할 지 차수마다 할 지 (lms.course.LangLevelTestScopeType)
      */
     langLevelTestScopeType?: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2.langLevelTestScopeType;
 };
@@ -50,7 +50,7 @@ export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2 
         MAIL_SEND = 'MAIL_SEND',
     }
     /**
-     * 수강신청 단계에서 배송지 수집을 과정마다할 지 차수마다 할 지
+     * 수강신청 단계에서 배송지 수집을 과정마다할 지 차수마다 할 지 (lms.course.BookDeliveryInfoScopeType)
      */
     export enum bookDeliveryInfoScopeType {
         NONE = 'NONE',
@@ -58,7 +58,7 @@ export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2 
         PER_SEQ = 'PER_SEQ',
     }
     /**
-     * 수강신청 단계에서 레벨테스트를 과정마다할 지 차수마다 할 지
+     * 수강신청 단계에서 레벨테스트를 과정마다할 지 차수마다 할 지 (lms.course.LangLevelTestScopeType)
      */
     export enum langLevelTestScopeType {
         NONE = 'NONE',
