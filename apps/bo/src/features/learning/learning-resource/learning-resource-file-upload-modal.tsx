@@ -70,19 +70,6 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
     const createFiles = files
       .filter((file) => file.status === 'completed')
       .map((file) => {
-        /*
-      uploadType: UPLOAD_TYPE;
-      affairsType: AFFAIRS_TYPE;
-      reposType: 'S3';
-      basicPath: string;
-      languageCode: string;
-      detailPath: string;
-      files : {
-        originalFileName: string;
-        serverFileName: string;
-        fileSize: number;
-        detailPath?: string;
-      }*/
         return {
           uploadType: 'CONTENTS',
           affairsType: 'PMS',

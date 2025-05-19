@@ -28,7 +28,7 @@ export default defineConfig(({ mode }) => {
       react(),
       nxViteTsPaths(),
       nxCopyAssetsPlugin(['*.md']),
-      !isTest && TanStackRouterVite(),
+      !isTest && TanStackRouterVite({ autoCodeSplitting: true }),
       svgr(),
     ],
     // Uncomment this if you are using workers.

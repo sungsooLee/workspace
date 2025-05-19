@@ -11,4 +11,5 @@ export * from './sequence';
 export * from './signup';
 export * from './tenant-category';
 export * from './tenant';
+export * from './user';
 export * from './widgets';

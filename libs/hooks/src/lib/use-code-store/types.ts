@@ -28,7 +28,7 @@ export interface CodeApiType {
 
 export type CodeApiConfig = {
   [K in CODE_GROUP_TYPE]: {
-    api?: () => Promise<CodeOption[]>;
+    api?: (() => Promise<CodeOption[]>) | 'default';
     options?: CodeOption[];
     name?: string;
     description?: string;
