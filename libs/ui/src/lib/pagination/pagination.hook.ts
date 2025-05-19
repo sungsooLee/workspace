@@ -107,7 +107,6 @@ export default function usePagination(props: UsePaginationProps) {
   });
 
   const handleClick = (event: any, value: any) => {
-    console.log(value);
     if (!pageProp) {
       setPageState(value);
     }
@@ -211,9 +210,7 @@ export default function usePagination(props: UsePaginationProps) {
   const items = itemList.map((item) => {
     return typeof item === 'number'
       ? {
-          onClick: (event: any) => {
-            handleClick(event, item);
-          },
+          onClick: (event: any) => handleClick(event, item),
           type: 'page',
           page: item,
           selected: item === page,
@@ -221,9 +218,7 @@ export default function usePagination(props: UsePaginationProps) {
           'aria-current': item === page ? 'page' : undefined,
         }
       : {
-          onClick: (event: any) => {
-            handleClick(event, buttonPage(item));
-          },
+          onClick: (event: any) => handleClick(event, buttonPage(item)),
           type: item,
           page: buttonPage(item),
           selected: false,
