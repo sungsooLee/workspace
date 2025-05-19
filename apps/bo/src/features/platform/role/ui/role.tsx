@@ -1,5 +1,14 @@
 import { cn } from '@learnway/shared';
-import { Button, ContentsRow, DynamicFormField, TreeBox, TreeNode } from '@learnway/ui';
+import {
+  Button,
+  ContentsRow,
+  DynamicFormField,
+  Input,
+  RadioGroupFormField,
+  TextareaFormField,
+  TreeBox,
+  TreeNode,
+} from '@learnway/ui';
 import { t } from 'i18next';
 
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
@@ -122,40 +131,37 @@ const Role = ({ type }: any) => {
             />
             <div className={styles.contents_wrap}>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'roleId'} disabled={true} />
-                </FormRow>
-
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'roleCd'} disabled={true} />
-                </FormRow>
+                <FormRow provider={provider} name={'roleId'} element={<Input disabled={true} />} />
+                <FormRow provider={provider} name={'roleCd'} element={<Input disabled={true} />} />
               </ContentsRow>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField
-                    name={'roleName'}
-                    maxLength={40}
-                    disabled={formMode === FORM_MODE.NONE}
-                  />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'roleName'}
+                  element={<Input maxLength={40} disabled={formMode === FORM_MODE.NONE} />}
+                />
               </ContentsRow>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField
-                    name={'roleDesc'}
-                    maxLength={300}
-                    disabled={formMode === FORM_MODE.NONE}
-                  />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'roleDesc'}
+                  element={
+                    <TextareaFormField maxLength={300} disabled={formMode === FORM_MODE.NONE} />
+                  }
+                />
               </ContentsRow>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'tenantScopes'} disabled={formMode === FORM_MODE.NONE} />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'roleDesc'}
+                  element={<RadioGroupFormField disabled={formMode === FORM_MODE.NONE} />}
+                />
               </ContentsRow>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'companyScopes'} disabled={formMode === FORM_MODE.NONE}>
+                <FormRow
+                  provider={provider}
+                  name={'companyScopes'}
+                  element={
                     <ScopeRadioGroup
                       options={[
                         {
@@ -172,13 +178,16 @@ const Role = ({ type }: any) => {
                         },
                       ]}
                     />
-                  </DynamicFormField>
-                </FormRow>
+                  }
+                />
               </ContentsRow>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'channelScopes'} disabled={formMode === FORM_MODE.NONE}>
+                <FormRow
+                  provider={provider}
+                  name={'channelScopes'}
+                  element={
                     <ScopeRadioGroup
+                      disabled={formMode === FORM_MODE.NONE}
                       options={[
                         {
                           value: 'all',
@@ -198,13 +207,16 @@ const Role = ({ type }: any) => {
                         },
                       ]}
                     />
-                  </DynamicFormField>
-                </FormRow>
+                  }
+                />
               </ContentsRow>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'teamScopes'} disabled={formMode === FORM_MODE.NONE}>
+                <FormRow
+                  provider={provider}
+                  name={'teamScopes'}
+                  element={
                     <ScopeRadioGroup
+                      disabled={formMode === FORM_MODE.NONE}
                       options={[
                         {
                           value: 'all',
@@ -224,8 +236,8 @@ const Role = ({ type }: any) => {
                         },
                       ]}
                     />
-                  </DynamicFormField>
-                </FormRow>
+                  }
+                />
               </ContentsRow>
             </div>
           </form>

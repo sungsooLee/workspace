@@ -133,34 +133,38 @@ const SystemCodeGridComponent = ({ data }: any) => {
             <FormSubTitle label={'enum 코드 정보'} underLine={true} />
             <div className={layoutStyles.inner_contents}>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'cdGroupId'} disabled={true} />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'cdGroupId'}
+                  element={<Input disabled={true} />}
+                />
               </ContentsRow>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'cdId'} disabled={true} />
-                </FormRow>
+                <FormRow provider={provider} name={'cdId'} element={<Input disabled={true} />} />
               </ContentsRow>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'cdName'} disabled={true} />
-                </FormRow>
+                <FormRow provider={provider} name={'cdName'} element={<Input disabled={true} />} />
               </ContentsRow>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'cdContent'} disabled={true} />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'cdContent'}
+                  element={<Input disabled={true} />}
+                />
               </ContentsRow>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'multilingualKey'} disabled={true} />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'multilingualKey'}
+                  element={<Input disabled={true} />}
+                />
               </ContentsRow>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'referenceVal1'} disabled={true} />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'referenceVal1'}
+                  element={<Input disabled={true} />}
+                />
               </ContentsRow>
             </div>
           </form>

@@ -116,18 +116,16 @@ const ChangeUserIdModalComponent = ({ widget }: { widget: any }) => {
           </EmbededAlert>
 
           <ContentsRow type="no_line">
-            <FormRow provider={provider}>
-              <DynamicFormField name={'currentEmail'} />
-            </FormRow>
+            <FormRow provider={provider} name={'currentEmail'} />
           </ContentsRow>
           <ContentsRow type="no_line">
-            <FormRow provider={provider}>
-              <DynamicFormField name={'email'} />
-            </FormRow>
+            <FormRow provider={provider} name={'email'} />
           </ContentsRow>
           <ContentsRow type="no_line">
-            <FormRow provider={provider}>
-              <DynamicFormField name={'verificationCode'}>
+            <FormRow
+              provider={provider}
+              name={'verificationCode'}
+              element={
                 <InputTimer
                   initialTime={TIME_LIMIT_VERIFY}
                   startTimer={verifyTimer}
@@ -138,8 +136,8 @@ const ChangeUserIdModalComponent = ({ widget }: { widget: any }) => {
                   )}
                   disabled={verifyTimer === 0}
                 />
-              </DynamicFormField>
-            </FormRow>
+              }
+            />
           </ContentsRow>
         </ModalBody>
         <ModalFooter>

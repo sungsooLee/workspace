@@ -6,6 +6,7 @@ import {
   ChipListModalSelectorFormField,
   ContentsRow,
   DynamicFormField,
+  Input,
   useModal,
 } from '@learnway/ui';
 
@@ -66,8 +67,10 @@ function RouteComponent() {
             </div>
           </div>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'companyModal'}>
+            <FormRow
+              provider={provider}
+              name={'companyModal'}
+              element={
                 <ChipListModalSelectorFormField
                   modalConfig={{
                     content: <CompanyChoiceModal />,
@@ -80,12 +83,14 @@ function RouteComponent() {
                     wordwrap: true,
                   }}
                 />
-              </DynamicFormField>
-            </FormRow>
+              }
+            />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'companyShuttle'}>
+            <FormRow
+              provider={provider}
+              name={'companyShuttle'}
+              element={
                 <ChipListModalSelectorFormField
                   modalConfig={{
                     content: <CompanyShuttleModal />,
@@ -98,36 +103,19 @@ function RouteComponent() {
                     wordwrap: true,
                   }}
                 />
-              </DynamicFormField>
-            </FormRow>
+              }
+            />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <div className={dynamicFormStyles.address_wrap}>
-                <div className={dynamicFormStyles.info_address}>
-                  <DynamicFormField
-                    name={'zipNo'}
-                    disabled={true}
-                    className={dynamicFormStyles.post_input}
-                  />
-                  <DynamicFormField
-                    name={'address'}
-                    disabled={true}
-                    className={dynamicFormStyles.address_input}
-                  />
-                  <Button
-                    className={dynamicFormStyles.btn_find}
-                    variant={'gray'}
-                    size={'sm'}
-                    onClick={handleAddressSearch}
-                  >
-                    {t('LABEL.button.searchZipNo')}
-                  </Button>
-                </div>
-                <div className={dynamicFormStyles.detail_address}>
-                  <DynamicFormField name={'addressDetail'} />
-                </div>
-              </div>
+            <FormRow provider={provider} name={'zipCode'} element={<Input disabled={true} />} />
+            <FormRow
+              provider={provider}
+              name={'defaultAddress'}
+              element={<Input disabled={true} />}
+            >
+              <Button variant={'gray'} size={'sm'} onClick={handleAddressSearch}>
+                {'우편번호찾기'}
+              </Button>
             </FormRow>
           </ContentsRow>
         </MainContents>

@@ -1,14 +1,16 @@
 import React, { FC, useEffect, useState } from 'react';
 import { t } from 'i18next';
 import { useRouterState } from '@tanstack/react-router';
-
 import { FormTranslationBox } from '@features/platform/ui/platform/system/translation/form-translation-box';
 
 import {
   Button,
+  CheckboxGroupFormField,
   ContentsRow,
   DynamicFormField,
   GridBox,
+  Input,
+  TextareaFormField,
   TreeContainer,
   TreeNode,
   TreeView,
@@ -19,9 +21,9 @@ import { cn } from '@learnway/shared';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import { ContentsHistoryInfoFormField, FormRow } from '@shared/ui';
+import { ContentsHistoryInfoFormField, FormRow, SwitchFormField } from '@shared/ui';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 import { EnFormMode } from '@types';
 import { TenantDetailMenuMappingModal } from './tenant-detail-menu-mapping-modal';
@@ -42,14 +44,10 @@ import {
   transformMenuApiDataToTreeData,
 } from '../service/tenant-detail-tree.service';
 
-// import { BaseFormFieldProps, useDynamicFormContext } from '@learnway/hooks';
-import { useTabContainStatusContext } from '@learnway/hooks';
-import { ApiInfoModal } from '@features/platform/menu/ui/api-info-modal';
-
-enum EnDeviceName {
-  PC = 'PC',
-  Mobile = 'Mobile',
-}
+const DIVICE_NAME = {
+  PC: 'PC',
+  Mobile: 'Mobile',
+};
 
 const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
   const routerState = useRouterState();
@@ -60,27 +58,22 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
   const [apiMappingMenuList, setApiMappingMenuList] = useState([]);
   const tenantId = routerState.location.state?.tenantId;
 
-  const {
-    provider,
-    fetchData,
-    onSubmit,
-    onFormChange,
-    getValues,
-    formState,
-    clearFormError,
-    control,
-  } = useDynamicForm(formConfig);
-  const { onChangeDirtyForm } = useTabContainStatusContext();
+  const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, control } =
+    useDynamicForm(formConfig);
+  const prevDataRef = React.useRef(null);
   const { open: openModal, confirm: openConfirm } = useModal();
 
   // fetch data
   const { data: detailData, refetch: refetchDetail } = useFetchMenuTenantDetail(
     selectedNode?.tenantMappingMenuId || undefined,
   );
+
   const { data: menuData, refetch: refetchMenuTree } = useFetchMenuTenantMappingTree(
     tenantId,
     menuScope,
   );
+
+  //
   const { delete: deleteMenuTenent } = useDeleteMenuTenent(tenantId, menuScope, {
     onSuccess: () => {
       refetchMenuTree();
@@ -92,7 +85,6 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
       refetchMenuTree();
     },
   });
-  const columnHelper = createColumnHelper<any>();
 
   const handleExpandChange = (keys: string[]) => {
     setExpandedKeys(keys);
@@ -158,8 +150,8 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
       onClose: (value: boolean) => {
         if (value) {
           const payload = { ...getValues() };
-          payload.isWebExposed = payload.deviceNames.includes(EnDeviceName.PC);
-          payload.isMobileExposed = payload.deviceNames.includes(EnDeviceName.Mobile);
+          payload.isWebExposed = payload.deviceNames.includes(DIVICE_NAME.PC);
+          payload.isMobileExposed = payload.deviceNames.includes(DIVICE_NAME.Mobile);
           payload.tenantId = tenantId;
           payload.parentMenuId = payload.parentId;
           updateMenuTenent(payload, {
@@ -174,6 +166,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
 
   useEffect(() => {
     if (menuData) {
+      prevDataRef.current = menuData;
       console.log(menuData);
       const transformedData = transformMenuApiDataToTreeData(menuData);
       setTreeData(transformedData);
@@ -189,10 +182,10 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
       const location = findMenuPathById(treeData, detailData?.menuId);
       const deviceNames = [];
       if (detailData.isWebExposed) {
-        deviceNames.push(EnDeviceName.PC);
+        deviceNames.push(DIVICE_NAME.PC);
       }
       if (detailData.isMobileExposed) {
-        deviceNames.push(EnDeviceName.Mobile);
+        deviceNames.push(DIVICE_NAME.Mobile);
       }
       setApiMappingMenuList(detailData.apiMappingMenuList);
       fetchData({
@@ -203,72 +196,6 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
       setFormMode(EnFormMode.VIEW);
     }
   }, [detailData]);
-
-  console.log('formDirty1', formState.isDirty);
-  useEffect(() => {
-    console.log('formDirty', formState.isDirty);
-    // onChangeDirtyForm(formState.isDirty);
-  }, [formState]);
-
-  const columns = [
-    columnHelper.accessor('apiName', {
-      cell: (info) => info.getValue(),
-      header: t('분류'),
-      size: 120,
-      meta: {
-        headerAlign: 'left', // 헤더만 가운데 정렬
-        cellAlign: 'left', // 셀은 오른쪽 정렬
-      },
-    }),
-    columnHelper.accessor('apiId', {
-      cell: (info: CellContext<any, string>) => {
-        const rowData = info.row.original;
-        return (
-          <p
-            className="cursor-pointer underline"
-            onClick={() => {
-              openModal({
-                content: <ApiInfoModal apiId={rowData.apiUuid} />,
-                width: 's',
-                closeOnOutsideClick: true,
-              });
-            }}
-          >
-            {info.getValue()}
-          </p>
-        );
-      },
-      header: 'API',
-      size: 490,
-    }),
-    columnHelper.accessor('Delete', {
-      cell: (info) => {
-        return (
-          <Button
-            onClick={() => {
-              const rowData = info.row.original;
-              const currentApiList = getValues('apiMappingMenuList') || [];
-              const updatedApiList = currentApiList.filter(
-                (item: any) => item.apiId !== rowData.apiId,
-              );
-              fetchData({ ...getValues(), apiMappingMenuList: updatedApiList });
-            }}
-            variant="gray2"
-            size={'xs'}
-            type={'button'}
-          >
-            삭제
-          </Button>
-        );
-      },
-      header: '삭제',
-      size: 100,
-      meta: {
-        headerAlign: 'left', // 헤더만 가운데 정렬
-        cellAlign: 'center', // 셀은 오른쪽 정렬
-      },
-    }),
-  ] as ColumnDef<any, unknown>[];
 
   return (
     <div className={cn(layoutStyles.start, layoutStyles.wrap)}>
@@ -356,71 +283,72 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
         </div>
         <div className={layoutStyles.inner_contents}>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name="location" disabled={true} />
-            </FormRow>
+            <FormRow provider={provider} name={'location'} element={<Input disabled={true} />} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name="parentName" disabled={true} />
-            </FormRow>
+            <FormRow provider={provider} name={'parentName'} element={<Input disabled={true} />} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name="menuCode" disabled={true} />
+            <FormRow provider={provider} name={'menuCode'} element={<Input disabled={true} />}>
               <Button variant="gray" size="sm" disabled>
                 {t('중복')}
               </Button>
             </FormRow>
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name="menuName" disabled={true} />
-            </FormRow>
+            <FormRow provider={provider} name={'menuName'} element={<Input disabled={true} />} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name="path" disabled={true} />
-            </FormRow>
+            <FormRow provider={provider} name={'path'} element={<Input disabled={true} />} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name="menuDesc" disabled={EnFormMode.NONE === formMode} />
-            </FormRow>
+            <FormRow
+              provider={provider}
+              name={'menuDesc'}
+              element={<TextareaFormField disabled={true} />}
+            />
           </ContentsRow>
           <ContentsRow type={'horizontal'}>
-            <FormRow provider={provider}>
-              <DynamicFormField name="isHiddenMenu" disabled={true} />
-            </FormRow>
+            <FormRow
+              provider={provider}
+              name={'menuDesc'}
+              element={<SwitchFormField disabled={true} />}
+            />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name="deviceNames" disabled={EnFormMode.NONE === formMode}>
-                <FormTranslationBox />
-              </DynamicFormField>
-            </FormRow>
+            <FormRow
+              provider={provider}
+              name={'deviceNames'}
+              element={<CheckboxGroupFormField disabled={EnFormMode.NONE === formMode} />}
+            />
           </ContentsRow>
-          <ContentsRow type="horizontal">
-            <FormRow provider={provider}>
-              <DynamicFormField name="isPersoninfoInclusion" disabled={true} />
-            </FormRow>
+          <ContentsRow type={'horizontal'}>
+            <FormRow
+              provider={provider}
+              name={'isPersoninfoInclusion'}
+              element={<SwitchFormField disabled={true} />}
+            />
           </ContentsRow>
-          <ContentsRow type="horizontal">
-            <FormRow provider={provider}>
-              <DynamicFormField name="isUsed" disabled={EnFormMode.NONE === formMode} />
-            </FormRow>
+          <ContentsRow type={'horizontal'}>
+            <FormRow
+              provider={provider}
+              name={'isUsed'}
+              element={<SwitchFormField disabled={EnFormMode.NONE === formMode} />}
+            />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name="apiMappingMenuList">
+            <FormRow
+              provider={provider}
+              name={'apiMappingMenuList'}
+              element={
                 <GridBox
                   data={getValues('apiMappingMenuList') || []}
                   columns={columns}
                   showTotalCount={true}
                   title={t('API')}
                 />
-              </DynamicFormField>
-            </FormRow>
+              }
+            />
           </ContentsRow>
           <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
             <ContentsHistoryInfoFormField />
@@ -506,8 +434,8 @@ const formConfig: DynamicFormConfig = {
       label: t('디바이스 노출 여부'),
       value: [],
       options: [
-        { label: t('PC'), value: EnDeviceName.PC },
-        { label: t('모바일'), value: EnDeviceName.Mobile },
+        { label: t('PC'), value: DIVICE_NAME.PC },
+        { label: t('모바일'), value: DIVICE_NAME.Mobile },
       ],
     },
     {
@@ -521,7 +449,6 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'apiMappingMenuList',
       type: 'custom',
-      format: 'array',
       value: [],
     },
   ],
@@ -530,3 +457,35 @@ const formConfig: DynamicFormConfig = {
     deviceNames: { required: true },
   },
 };
+
+//Column Helper 정의
+const columnHelper = createColumnHelper<any>();
+
+const columns = [
+  columnHelper.accessor('Sort', {
+    cell: (info) => info.getValue(),
+    header: t('분류'),
+    size: 120,
+    enableGrouping: false,
+    meta: {
+      headerAlign: 'left', // 헤더만 가운데 정렬
+      cellAlign: 'left', // 셀은 오른쪽 정렬
+    },
+  }),
+  columnHelper.accessor('API', {
+    cell: (info) => info.getValue(),
+    header: 'API',
+    size: 490,
+    enableGrouping: false,
+  }),
+  columnHelper.accessor('Delete', {
+    cell: (info) => info.getValue(),
+    header: t('삭제'),
+    size: 100,
+    enableGrouping: false,
+    meta: {
+      headerAlign: 'left', // 헤더만 가운데 정렬
+      cellAlign: 'center', // 셀은 오른쪽 정렬
+    },
+  }),
+] as ColumnDef<any, unknown>[];

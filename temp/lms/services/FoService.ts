@@ -4,6 +4,7 @@
 /* eslint-disable */
 import type { com_ever_edu_lms_category_dto_res_TenantCategoryTreeDto } from '../models/com_ever_edu_lms_category_dto_res_TenantCategoryTreeDto';
 import type { com_ever_edu_lms_course_dto_res_CourseLikesResDto } from '../models/com_ever_edu_lms_course_dto_res_CourseLikesResDto';
+import type { com_ever_edu_lms_course_dto_res_CourseResDto$CourseIntroductionOnUser } from '../models/com_ever_edu_lms_course_dto_res_CourseResDto$CourseIntroductionOnUser';
 import type { com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser } from '../models/com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser';
 import type { com_ever_edu_lms_course_dto_res_SequenceResDto$onUser } from '../models/com_ever_edu_lms_course_dto_res_SequenceResDto$onUser';
 import type { com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByUser } from '../models/com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByUser';
@@ -12,6 +13,9 @@ import type { com_ever_edu_lms_enroll_dto_req_EnrollSearchDto$SearchByUser } fro
 import type { com_ever_edu_lms_enroll_dto_res_EnrollResDto$DetailOnUser } from '../models/com_ever_edu_lms_enroll_dto_res_EnrollResDto$DetailOnUser';
 import type { com_ever_edu_lms_search_course_dto_req_CourseSearchReqDto$OnUser } from '../models/com_ever_edu_lms_search_course_dto_req_CourseSearchReqDto$OnUser';
 import type { com_ever_edu_lms_search_course_dto_res_CourseSearchResDto$OnUser } from '../models/com_ever_edu_lms_search_course_dto_res_CourseSearchResDto$OnUser';
+import type { com_ever_edu_lms_search_logs_dto_req_SearchLogRequestDto } from '../models/com_ever_edu_lms_search_logs_dto_req_SearchLogRequestDto';
+import type { com_ever_edu_lms_search_logs_dto_res_SearchLogPopularResponseDto } from '../models/com_ever_edu_lms_search_logs_dto_res_SearchLogPopularResponseDto';
+import type { com_ever_edu_lms_search_logs_dto_res_SearchLogResponseDto } from '../models/com_ever_edu_lms_search_logs_dto_res_SearchLogResponseDto';
 import type { com_ever_edu_lms_student_dto_req_StudentSearchDto$SearchByUser } from '../models/com_ever_edu_lms_student_dto_req_StudentSearchDto$SearchByUser';
 import type { org_springdoc_core_converters_models_Pageable } from '../models/org_springdoc_core_converters_models_Pageable';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_enroll_dto_res_EnrollResDto$onUserList } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_enroll_dto_res_EnrollResDto$onUserList';
@@ -20,6 +24,50 @@ import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class FoService {
+    /**
+     * 타이탄 테스트
+     * 한 테넌트 내의 인기 검색어 10개를 보여준다.
+     * @returns string OK
+     * @throws ApiError
+     */
+    public static test(): CancelablePromise<string> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/search-logs',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 한 사용자의 검색을 저장하는 행위이다. 각 사용자별로 저장한다.
+     * 사용자가 검색어를 입력할때 마다 테넌트별 사용자의 검색어 정보를 저장한다..
+     * @param requestBody
+     * @returns string OK
+     * @throws ApiError
+     */
+    public static saveSearchLogs(
+        requestBody: com_ever_edu_lms_search_logs_dto_req_SearchLogRequestDto,
+    ): CancelablePromise<string> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/user/api/v1/search-logs',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
     /**
      * 수강신청 내역 단건 확인
      * 로그인된 학습자만 실행 가능
@@ -103,7 +151,7 @@ export class FoService {
      */
     public static unlike(
         courseUuid: string,
-        courseType: 'ELEARNING' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY' | 'PACKAGE',
+        courseType: 'ELEARNING' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -133,7 +181,7 @@ export class FoService {
      */
     public static findCourseLikesByCourseTsId(
         courseUuid: string,
-        courseType: 'ELEARNING' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY' | 'PACKAGE',
+        courseType: 'ELEARNING' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
     ): CancelablePromise<com_ever_edu_lms_course_dto_res_CourseLikesResDto> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -163,7 +211,7 @@ export class FoService {
      */
     public static like(
         courseUuid: string,
-        courseType: 'ELEARNING' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY' | 'PACKAGE',
+        courseType: 'ELEARNING' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -246,7 +294,7 @@ export class FoService {
      */
     public static findBySequenceNo(
         courseSequenceUuid: string,
-        courseType: 'ELEARNING' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY' | 'PACKAGE',
+        courseType: 'ELEARNING' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
     ): CancelablePromise<com_ever_edu_lms_course_dto_res_SequenceResDto$onUser> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -256,6 +304,59 @@ export class FoService {
             },
             query: {
                 'courseType': courseType,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 한 테넌트별 한 사용자의 최근 검색어 조회
+     * 한 테넌트별 한 사용자의 최근 10개 검색어를 조회합니다.
+     * @param tenantUuid
+     * @param userUuid
+     * @returns com_ever_edu_lms_search_logs_dto_res_SearchLogResponseDto OK
+     * @throws ApiError
+     */
+    public static getRecentSearchLogs(
+        tenantUuid: string,
+        userUuid: string,
+    ): CancelablePromise<Array<com_ever_edu_lms_search_logs_dto_res_SearchLogResponseDto>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/search-logs/{tenantUuid}/{userUuid}/recent',
+            path: {
+                'tenantUuid': tenantUuid,
+                'userUuid': userUuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 한 테넌트별 상위 인기 검색어 10개 조회
+     * 한 테넌트 내의 인기 검색어 10개를 보여준다.
+     * @param tenantUuid
+     * @returns com_ever_edu_lms_search_logs_dto_res_SearchLogPopularResponseDto OK
+     * @throws ApiError
+     */
+    public static getPopularSearchLogs(
+        tenantUuid: string,
+    ): CancelablePromise<Array<com_ever_edu_lms_search_logs_dto_res_SearchLogPopularResponseDto>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/search-logs/{tenantUuid}/popular-logs',
+            path: {
+                'tenantUuid': tenantUuid,
             },
             errors: {
                 400: `Bad Request`,
@@ -284,6 +385,31 @@ export class FoService {
             query: {
                 'pageable': pageable,
                 'params': params,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 과정 조회
+     * 과정 id를 통해 조회한다.
+     * @param courseUuid
+     * @returns com_ever_edu_lms_course_dto_res_CourseResDto$CourseIntroductionOnUser OK
+     * @throws ApiError
+     */
+    public static findByCourseId(
+        courseUuid: string,
+    ): CancelablePromise<com_ever_edu_lms_course_dto_res_CourseResDto$CourseIntroductionOnUser> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/course/{courseUuid}',
+            path: {
+                'courseUuid': courseUuid,
             },
             errors: {
                 400: `Bad Request`,
@@ -330,7 +456,7 @@ export class FoService {
     public static search(
         request: com_ever_edu_lms_search_course_dto_req_CourseSearchReqDto$OnUser,
         pageable: org_springdoc_core_converters_models_Pageable,
-        courseType?: 'ELEARNING' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY' | 'PACKAGE',
+        courseType?: 'ELEARNING' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
         enrollmentType?: 'ENROLL_DONE' | 'ENROLL_REQUEST' | 'CANCEL_DONE',
     ): CancelablePromise<Array<com_ever_edu_lms_search_course_dto_res_CourseSearchResDto$OnUser>> {
         return __request(OpenAPI, {
@@ -341,6 +467,65 @@ export class FoService {
                 'courseType': courseType,
                 'enrollmentType': enrollmentType,
                 'pageable': pageable,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 한 테넌트별 한 사용자가 검색한 검색어를 모두 삭제한다.
+     * 한 테넌트별 한 사용자의 검색어를 모두 삭제 처리한다.
+     * @param tenantUuid
+     * @param userUuid
+     * @returns string OK
+     * @throws ApiError
+     */
+    public static deleteSearchLogs(
+        tenantUuid: string,
+        userUuid: string,
+    ): CancelablePromise<string> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/user/api/v1/search-logs/{tenantUuid}/{userUuid}',
+            path: {
+                'tenantUuid': tenantUuid,
+                'userUuid': userUuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 한 테넌트별 한 사용자의 하나의 검색어 삭제
+     * 한 테넌트별 한 사용자의 하나의 검색어 삭제한다
+     * @param tenantUuid
+     * @param userUuid
+     * @param keyword
+     * @returns string OK
+     * @throws ApiError
+     */
+    public static deleteSearchLog(
+        tenantUuid: string,
+        userUuid: string,
+        keyword: string,
+    ): CancelablePromise<string> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/user/api/v1/search-logs/{tenantUuid}/{userUuid}/{keyword}',
+            path: {
+                'tenantUuid': tenantUuid,
+                'userUuid': userUuid,
+                'keyword': keyword,
             },
             errors: {
                 400: `Bad Request`,

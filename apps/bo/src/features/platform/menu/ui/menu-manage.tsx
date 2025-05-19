@@ -5,10 +5,13 @@ import { useRouter } from '@tanstack/react-router';
 
 import {
   Button,
+  CheckboxGroupFormField,
   ContentsRow,
   DynamicFormField,
   findNodePath,
   GridBox,
+  Input,
+  TextareaFormField,
   TreeBox,
   TreeEventPayload,
   TreeNode,
@@ -35,7 +38,7 @@ import {
   useMoveMenu,
   useUpdateMenu,
 } from '../../../../entities/menu';
-import { ContentsHistoryInfoFormField, FormRow } from '../../../../shared/ui';
+import { ContentsHistoryInfoFormField, FormRow, SwitchFormField } from '../../../../shared/ui';
 
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
@@ -505,21 +508,23 @@ export const MenuManage = ({ menuScope }: any) => {
 
           <div className={layoutStyles.inner_contents}>
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'location'} disabled={true} />
-              </FormRow>
+              <FormRow provider={provider} name={'location'} element={<Input disabled={true} />} />
             </ContentsRow>
 
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'parentCode'} disabled={true} />
-              </FormRow>
+              <FormRow
+                provider={provider}
+                name={'parentCode'}
+                element={<Input disabled={true} />}
+              />
             </ContentsRow>
 
             {/* 폼 필드 - code */}
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'code'}>
+              <FormRow
+                provider={provider}
+                name={'code'}
+                element={
                   <DuplicateCodeGuideText
                     clearFormError={clearFormError}
                     checkExistsMenu={checkExistsMenu}
@@ -530,14 +535,17 @@ export const MenuManage = ({ menuScope }: any) => {
                     setFormError={setFormError}
                     menuScope={menuScope}
                   />
-                </DynamicFormField>
-              </FormRow>
+                }
+              />
             </ContentsRow>
 
             {/* 폼 필드 - title */}
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'menuName'} disabled={formMode === FORM_MODE.NONE} />
+              <FormRow
+                provider={provider}
+                name={'menuName'}
+                element={<Input disabled={formMode === FORM_MODE.NONE} />}
+              >
                 <Button
                   type="button"
                   variant="gray"
@@ -563,41 +571,50 @@ export const MenuManage = ({ menuScope }: any) => {
 
             {/* 폼 필드 - url */}
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'path'} disabled={formMode === FORM_MODE.NONE} />
-              </FormRow>
+              <FormRow
+                provider={provider}
+                name={'location'}
+                element={<Input disabled={formMode === FORM_MODE.NONE} />}
+              />
             </ContentsRow>
 
             {/* 폼 필드 - description */}
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'menuDesc'} disabled={formMode === FORM_MODE.NONE} />
-              </FormRow>
+              <FormRow
+                provider={provider}
+                name={'location'}
+                element={<TextareaFormField disabled={formMode === FORM_MODE.NONE} />}
+              />
             </ContentsRow>
 
             <ContentsRow type={'horizontal'} className={'inactive'}>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'isHiddenMenu'} disabled={formMode === FORM_MODE.NONE} />
-              </FormRow>
+              <FormRow
+                provider={provider}
+                name={'isHiddenMenu'}
+                element={<SwitchFormField disabled={formMode === FORM_MODE.NONE} />}
+              />
             </ContentsRow>
 
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'deviceNames'} disabled={formMode === FORM_MODE.NONE} />
-              </FormRow>
+              <FormRow
+                provider={provider}
+                name={'deviceNames'}
+                element={<CheckboxGroupFormField disabled={formMode === FORM_MODE.NONE} />}
+              />
             </ContentsRow>
 
             <ContentsRow type={'horizontal'} className={'inactive'}>
-              <FormRow provider={provider}>
-                <DynamicFormField
-                  name={'isPersoninfoInclusion'}
-                  disabled={formMode === FORM_MODE.NONE}
-                />
-              </FormRow>
+              <FormRow
+                provider={provider}
+                name={'isPersoninfoInclusion'}
+                element={<SwitchFormField disabled={formMode === FORM_MODE.NONE} />}
+              />
             </ContentsRow>
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'apiMappingMenuList'}>
+              <FormRow
+                provider={provider}
+                name={'apiMappingMenuList'}
+                element={
                   <GridBox
                     data={getValues('apiMappingMenuList') || []}
                     columns={columns}
@@ -614,8 +631,8 @@ export const MenuManage = ({ menuScope }: any) => {
                       </Button>
                     }
                   />
-                </DynamicFormField>
-              </FormRow>
+                }
+              />
             </ContentsRow>
             <ContentsRow className={cn(formStyles.no_line, formStyles.space)}>
               <ContentsHistoryInfoFormField />

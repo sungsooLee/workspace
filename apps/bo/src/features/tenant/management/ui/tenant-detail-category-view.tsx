@@ -1,8 +1,8 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
-import { Button, ContentsRow, DynamicFormField, useModal } from '@learnway/ui';
-import { FormInfoArea, FormRow, ContentsHistoryInfoFormField } from '@shared/ui';
+import { Button, ContentsRow, DynamicFormField, Input, Textarea, useModal } from '@learnway/ui';
+import { FormInfoArea, FormRow, ContentsHistoryInfoFormField, ChipListFormField } from '@shared/ui';
 
 import { cn } from '@learnway/shared';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
@@ -277,19 +277,21 @@ const TenantCategoryViewComponent: FC<any> = ({
         </div>
         <div className={layoutStyles.inner_contents}>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'location'} disabled={true} />
-            </FormRow>
+            <FormRow provider={provider} name={'location'} element={<Input disabled={true} />} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'parentCategoryName'} disabled={true} />
-            </FormRow>
+            <FormRow
+              provider={provider}
+              name={'parentCategoryName'}
+              element={<Input disabled={true} />}
+            />
           </ContentsRow>
 
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'code'} disabled={!isTenantManagerUpdatable}>
+            <FormRow
+              provider={provider}
+              name={'code'}
+              element={
                 <DuplicateCodeGuideText
                   clearFormError={clearFormError}
                   checkExists={(data: string) => {
@@ -316,38 +318,43 @@ const TenantCategoryViewComponent: FC<any> = ({
                   handleCodeChange={handleCodeChange}
                   setFormError={setFormError}
                 />
-              </DynamicFormField>
-            </FormRow>
+              }
+            />
           </ContentsRow>
 
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'categoryName'} disabled={!isTenantManagerUpdatable} />
-            </FormRow>
+            <FormRow
+              provider={provider}
+              name={'categoryName'}
+              element={<Input disabled={!isTenantManagerUpdatable} />}
+            />
           </ContentsRow>
           <ContentsRow type={'horizontal'}>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'isUsed'} disabled={isUsedDisabled} />
-            </FormRow>
+            <FormRow
+              provider={provider}
+              name={'isUsed'}
+              element={<Input disabled={isUsedDisabled} />}
+            />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField
-                name={'categoryContent'}
-                disabled={!isTenantManagerUpdatable}
-                resize="none"
-              />
-            </FormRow>
+            <FormRow
+              provider={provider}
+              name={'categoryContent'}
+              element={<Textarea disabled={!isTenantManagerUpdatable} resize="none" />}
+            />
           </ContentsRow>
           {/** TODO. 공통 컴포넌트 및 유저그룹 팝업 작업 후 수정 */}
           <ContentsRow>
-            <FormRow provider={provider}>
+            <FormRow
+              provider={provider}
+              name={'userGroups'}
+              element={<ChipListFormField disabled={isInitMode || isRoot} />}
+            >
               <FormInfoArea>
                 <Button variant="gray" size="sm" disabled={isInitMode || isRoot}>
                   {t('LABEL.button.add')}
                 </Button>
               </FormInfoArea>
-              <DynamicFormField name={'userGroups'} disabled={isInitMode || isRoot} />
             </FormRow>
           </ContentsRow>
 

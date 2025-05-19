@@ -1,18 +1,7 @@
-import { Children, FC, memo } from 'react';
-import { useTranslation } from 'react-i18next';
-
-import { cn } from '@learnway/shared';
-import styles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
-import { Button, Tooltip } from '@learnway/ui';
-import {
-  DynamicFormContextProvider,
-  FormRowProps,
-  useFormRow,
-  useDynamicFormContext,
-} from '@learnway/hooks';
+import React, { FC, memo } from 'react';
+import { BaseFormRow } from '@learnway/ui';
+import { FormRowProps as BaseFormRowProps } from '@learnway/hooks';
 import { formFieldConfig } from '../form-field-config';
-import { FormGuideText } from '../form-guide-text';
 
 /**
  * FormRowComponent
@@ -27,90 +16,18 @@ import { FormGuideText } from '../form-guide-text';
  * @param children - 폼 필드들 (DynamicFormField 포함)
  * @param name - 명시적으로 지정한 name (없으면 내부의 첫번째 DynamicFormField의 name 사용)
  */
-const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, name }) => {
+type FormRowProps = Omit<BaseFormRowProps, 'formFieldConfig'>;
+const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, name, element }) => {
   return (
-    <DynamicFormContextProvider>
-      <DynamicFormContainer
-        className={className}
-        provider={provider}
-        children={children}
-        name={name}
-      />
-    </DynamicFormContextProvider>
+    <BaseFormRow
+      provider={provider}
+      name={name}
+      formFieldConfig={formFieldConfig}
+      className={className}
+      children={children}
+      element={element}
+    />
   );
 };
 
 export const FormRow = memo(FormRowComponent);
-
-const DynamicFormContainer: FC<FormRowProps> = ({ className, provider, children, name }) => {
-  const { t } = useTranslation();
-  const { formName, rootConfig, isRequired, error, fieldRefs, renderFormRowContent } = useFormRow(
-    provider,
-    children,
-    name,
-  );
-  const { guideText, infoArea } = useDynamicFormContext();
-  /*
-  // TODO.. 불필요한 리렌더링 해결 해야함
-  const DynamicComponent = useMemo(
-    () => Children.map(children, (child) => renderFormRowContent(child, formFieldConfig)),
-    [],
-  );*/
-  return (
-    <div
-      className={cn(styles.form_item, className)}
-      ref={(node) => {
-        if (fieldRefs.current) {
-          fieldRefs.current[formName] = node as HTMLElement | null;
-        }
-      }}
-    >
-      {/* 레이블 렌더링 */}
-      {rootConfig.label && (
-        <label htmlFor={formName} className={cn(styles.form_label, 'dynamic-form-field-label')}>
-          <span className={styles.form_text}>{t(rootConfig.label)}</span>
-          {isRequired && (
-            <span
-              className={cn(styles.status, {
-                [styles.error]: error.isError, // 에러 발생 시 에러 스타일 적용
-                [styles.required]: !error.isError, // 에러가 없으면 필수 스타일 적용
-              })}
-            >
-              <IcoFormRequired width={8} height={8} />
-            </span>
-          )}
-          {rootConfig.tooltip && (
-            <Tooltip
-              className={styles.tooltip}
-              side="right"
-              align="start"
-              content={rootConfig.tooltip}
-            >
-              <Button onlyIcon>
-                <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
-              </Button>
-            </Tooltip>
-          )}
-          {rootConfig.subText && <span className={styles.sub_text}>{rootConfig.subText}</span>}
-        </label>
-      )}
-      {/* 입력 영역: children을 순회하며 필요한 변환(renderChild) 적용 */}
-      <div className={styles.input_box}>
-        {Children.map(children, (child) => renderFormRowContent(child, formFieldConfig))}
-      </div>
-
-      {/* 안내 텍스트 또는 에러 메시지 렌더링 */}
-      {!error.isError &&
-        (guideText ? (
-          <FormGuideText>{guideText}</FormGuideText>
-        ) : (
-          rootConfig.guideText && <FormGuideText>{rootConfig.guideText}</FormGuideText>
-        ))}
-      {error.isError && (
-        <p className={cn(styles.guide_text, styles.error, 'dynamic-form-field-error')}>
-          {t(error.message as any)}
-        </p>
-      )}
-    </div>
-  );
-};

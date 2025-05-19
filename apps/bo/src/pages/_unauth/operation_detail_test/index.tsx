@@ -70,59 +70,44 @@ function RouteComponent() {
         </ContentsButtons>
         <MainContents>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'channelName'}>
+            <FormRow
+              provider={provider}
+              name={'channelName'}
+              element={
                 <InputModalSelectorFormField
                   modalConfig={{
                     content: <ChannelListModal />,
                   }}
                 />
-              </DynamicFormField>
-            </FormRow>
+              }
+            />
           </ContentsRow>
           {/* 강의유형 */}
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'강의유형'}>
-                <LectureTypeSiteUrl />
-              </DynamicFormField>
-            </FormRow>
+            <FormRow provider={provider} name={'강의유형'} element={<LectureTypeSiteUrl />} />
           </ContentsRow>
           {/* 과정명 */}
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'과정명'} />
-            </FormRow>
+            <FormRow provider={provider} name={'과정명'} />
           </ContentsRow>
           {/* 과정내용 */}
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'과정내용'} />
-            </FormRow>
+            <FormRow provider={provider} name={'과정내용'} />
           </ContentsRow>
           {/* 대표이미지 */}
           {/* TODO: className 제거 */}
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'대표이미지'} />
-            </FormRow>
+            <FormRow provider={provider} name={'대표이미지'} />
           </ContentsRow>
-          {/* 강의유형 */}
-          {/*<ContentsRow>*/}
-          {/*  <FormRow provider={provider}>*/}
-          {/*    <DynamicFormField name={'강의유형'} />*/}
-          {/*  </FormRow>*/}
-          {/*</ContentsRow>*/}
-          {/*/!* 태그 *!/*/}
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'태그'} />
-            </FormRow>
+            <FormRow provider={provider} name={'태그'} />
           </ContentsRow>
           {/* 강사 */}
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'강사'}>
+            <FormRow
+              provider={provider}
+              name={'강사'}
+              element={
                 <ChipListModalSelectorFormField
                   modalConfig={{ content: <TeacherListModal channelId={getValues()?.channelId} /> }}
                   chipList={{
@@ -132,25 +117,23 @@ function RouteComponent() {
                   }}
                   actionNode={<Button variant="text" size="sm" label={t('추가')} />}
                 />
-              </DynamicFormField>
-            </FormRow>
+              }
+            />
           </ContentsRow>
           {/* 난이도 */}
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'난이도'} />
-            </FormRow>
+            <FormRow provider={provider} name={'난이도'} />
           </ContentsRow>
           {/* 강의실설정 */}
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'강의실설정'} />
-            </FormRow>
+            <FormRow provider={provider} name={'강의실설정'} />
           </ContentsRow>
           {/* 운영자 & 연락처 */}
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'managerName'}>
+            <FormRow
+              provider={provider}
+              name={'managerName'}
+              element={
                 <InputModalSelectorFormField
                   modalConfig={{
                     content: <ManagerListModal />,
@@ -160,19 +143,19 @@ function RouteComponent() {
                     managerName: modalData?.name,
                   })}
                 />
-              </DynamicFormField>
-            </FormRow>
+              }
+            />
           </ContentsRow>
           {/* 테넌트 */}
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'테넌트'} />
-            </FormRow>
+            <FormRow provider={provider} name={'테넌트'} />
           </ContentsRow>
           {/* 공개범위 */}
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'공개범위'}>
+            <FormRow
+              provider={provider}
+              name={'공개범위'}
+              element={
                 <ListModalSelectorFormField
                   modalConfig={{
                     content: <ManagerListModal />,
@@ -189,14 +172,12 @@ function RouteComponent() {
                     valueField: 'targetId',
                   }}
                 />
-              </DynamicFormField>
-            </FormRow>
+              }
+            />
           </ContentsRow>
           {/* 썸네일 리스트 */}
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'썸네일'} />
-            </FormRow>
+            <FormRow provider={provider} name={'썸네일'} />
           </ContentsRow>
         </MainContents>
         <SubContents>

@@ -11,9 +11,13 @@ import { CompanyModal } from './company-modal';
 
 import {
   Button,
+  CheckboxGroupFormField,
   ChipListModalSelectorFormField,
   ContentsRow,
   DynamicFormField,
+  Input,
+  Textarea,
+  TextareaFormField,
 } from '@learnway/ui';
 import { ContentsHistoryInfoFormField, FormRow } from '@shared/ui';
 
@@ -43,23 +47,20 @@ const TenantDetailBaseComponent: FC<any> = () => {
         <strong className="title">{'기본 정보'}</strong>
       </div>
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'tenantName'} />
+        <FormRow provider={provider} name={'tenantName'}>
           <Button variant="gray" size="sm">
             {'중복'}
           </Button>
         </FormRow>
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name="tenantLogo">
-            <DynamicFormField />
-          </DynamicFormField>
-        </FormRow>
+        <FormRow provider={provider} name="tenantLogo" />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'managerName'}>
+        <FormRow
+          provider={provider}
+          name={'managerName'}
+          element={
             <ChipListModalSelectorFormField
               chipList={{
                 labelField: 'name',
@@ -72,17 +73,17 @@ const TenantDetailBaseComponent: FC<any> = () => {
                 content: <TenantManagerModal />,
               }}
             />
-          </DynamicFormField>
-        </FormRow>
+          }
+        />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'tenantJungsanTag'} />
-        </FormRow>
+        <FormRow provider={provider} name={'tenantJungsanTag'} />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'company'}>
+        <FormRow
+          provider={provider}
+          name={'company'}
+          element={
             <ChipListModalSelectorFormField
               chipList={{
                 labelField: 'name',
@@ -95,37 +96,35 @@ const TenantDetailBaseComponent: FC<any> = () => {
                 content: <CompanyModal />,
               }}
             />
-          </DynamicFormField>
-        </FormRow>
+          }
+        />
       </ContentsRow>
 
       <ContentsRow type={'horizontal'}>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'isUsed'} />
-        </FormRow>
+        <FormRow provider={provider} name={'isUsed'} />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'description'} resize="none" />
-        </FormRow>
+        <FormRow
+          provider={provider}
+          name={'description'}
+          element={<TextareaFormField resize={'none'} />}
+        />
       </ContentsRow>
       <div className="title_wrap no_line">
         <strong className="title">{'시스템 설정'}</strong>
       </div>
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'device'} disabled={true} />
-        </FormRow>
+        <FormRow
+          provider={provider}
+          name={'device'}
+          element={<CheckboxGroupFormField disabled={true} />}
+        />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'useCategory'} />
-        </FormRow>
+        <FormRow provider={provider} name={'useCategory'} />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'language'} />
-        </FormRow>
+        <FormRow provider={provider} name={'language'} />
       </ContentsRow>
       <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
         <ContentsHistoryInfoFormField />

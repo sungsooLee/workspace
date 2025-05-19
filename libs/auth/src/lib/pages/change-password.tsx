@@ -76,19 +76,13 @@ export function ChangePasswordPage({ route }: any) {
 
           <div className={cn(styles.auth_form, 'no_line', 'col')}>
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'oldPassword'} />
-              </FormRow>
+              <FormRow provider={provider} name={'oldPassword'} />
             </ContentsRow>
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'password'} />
-              </FormRow>
+              <FormRow provider={provider} name={'password'} />
             </ContentsRow>
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'confirm_password'} />
-              </FormRow>
+              <FormRow provider={provider} name={'confirm_password'} />
             </ContentsRow>
           </div>
 

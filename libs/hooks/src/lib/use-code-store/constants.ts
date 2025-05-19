@@ -86,5 +86,6 @@ export const CODE_GROUP = {
   'pms.terms.TermsTypeCode': 'pms.terms.TermsTypeCode',
   'pms.user.UserState': 'pms.user.UserState',
   'vps.video.FfmpegTaskType': 'vps.video.FfmpegTaskType',
+  'manual.code': 'manual.code',
 };
 export type CODE_GROUP_TYPE = (typeof CODE_GROUP)[keyof typeof CODE_GROUP];

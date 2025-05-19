@@ -8,6 +8,7 @@ import {
   ChipListModalSelectorFormField,
   ContentsRow,
   DynamicFormField,
+  TextareaFormField,
   useModal,
   CheckboxGroupFormField,
 } from '@learnway/ui';
@@ -152,22 +153,20 @@ function RouteComponent() {
             <strong className="title">{t('기본 정보')}</strong>
           </div>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name="tenantName">
-                <DuplicateCheckInputFormField onDuplicationCheck={duplicateCheck} />
-              </DynamicFormField>
-            </FormRow>
+            <FormRow
+              provider={provider}
+              name={'tenantName'}
+              element={<DuplicateCheckInputFormField onDuplicationCheck={duplicateCheck} />}
+            />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name="logoImageUrl">
-                <ThumbnailListFormField />
-              </DynamicFormField>
-            </FormRow>
+            <FormRow provider={provider} name="logoImageUrl" element={<ThumbnailListFormField />} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name="managerName">
+            <FormRow
+              provider={provider}
+              name={'managerName'}
+              element={
                 <ChipListModalSelectorFormField
                   chipList={{
                     labelField: 'name',
@@ -180,17 +179,17 @@ function RouteComponent() {
                     content: <HrdUserInquiryModal />,
                   }}
                 />
-              </DynamicFormField>
-            </FormRow>
+              }
+            />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name="tenantBillingTag" />
-            </FormRow>
+            <FormRow provider={provider} name={'tenantBillingTag'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name="companyTenantList">
+            <FormRow
+              provider={provider}
+              name={'company'}
+              element={
                 <ChipListModalSelectorFormField
                   chipList={{
                     labelField: 'name',
@@ -203,39 +202,35 @@ function RouteComponent() {
                     content: <CompanyShuttleModal />,
                   }}
                 />
-              </DynamicFormField>
-            </FormRow>
+              }
+            />
           </ContentsRow>
 
-          <ContentsRow type="horizontal">
-            <FormRow provider={provider}>
-              <DynamicFormField name="isUsed" />
-            </FormRow>
+          <ContentsRow type={'horizontal'}>
+            <FormRow provider={provider} name={'isUsed'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name="tenantDesc" resize="none" />
-            </FormRow>
+            <FormRow
+              provider={provider}
+              name={'tenantDesc'}
+              element={<TextareaFormField resize={'none'} />}
+            />
           </ContentsRow>
           <div className="title_wrap no_line">
             <strong className="title">{t('시스템 설정')}</strong>
           </div>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name="device" disabled={true} />
-            </FormRow>
+            <FormRow
+              provider={provider}
+              name={'device'}
+              element={<CheckboxGroupFormField disabled={true} />}
+            />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name="useCategory" />
-            </FormRow>
+            <FormRow provider={provider} name={'useCategory'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name="tenantMappingLanguageTypeList">
-                <CheckboxGroupFormField options={languageTypeList} />
-              </DynamicFormField>
-            </FormRow>
+            <FormRow provider={provider} name={'tenantMappingLanguageTypeList'} />
           </ContentsRow>
         </form>
       </MainContents>
@@ -263,11 +258,10 @@ const formConfig: DynamicFormConfig = {
       tooltip: t('테넌트에 사용할 로고로 파일 1개만 등록할 수 있습니다.'),
     },
     {
-      name: 'tenantMappingRoleList',
+      name: 'managerName',
       label: t('테넌트 담당자'),
       type: 'custom',
-      format: 'array',
-      value: [],
+      value: '',
       placeholder: t('담당자를 선택해주세요.'),
     },
     {
@@ -279,10 +273,10 @@ const formConfig: DynamicFormConfig = {
       maxLength: 150,
     },
     {
-      name: 'companyTenantList',
+      name: 'company',
       label: t('회사 선택'),
       type: 'custom',
-      value: [],
+      value: '',
       tooltip: t(
         '테넌트 소속 회사를 여러개 선택할 수 있습니다. 회사가 여러 개인 경우 회사별로 개별 설정이 필요합니다.',
       ),
@@ -336,7 +330,7 @@ const formConfig: DynamicFormConfig = {
     },
     {
       name: 'tenantMappingLanguageTypeList',
-      type: 'custom',
+      type: 'checkbox-group',
       label: t('언어'),
       format: 'array',
       tooltip: t(

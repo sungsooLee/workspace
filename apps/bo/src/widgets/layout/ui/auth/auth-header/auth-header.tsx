@@ -15,7 +15,13 @@ function AuthHeaderComponent() {
     <div className={`${styles.start} ${styles.header_auth}`}>
       <header className={styles.header_area}>
         <h1>
-          <Logo theme={meta?.container === AUTH_CONTAINERS.LOGIN ? 'login' : 'main'} />
+          <Logo
+            theme={
+              meta?.container === AUTH_CONTAINERS.LOGIN || AUTH_CONTAINERS.AUTH_PROGRESS
+                ? 'login'
+                : 'main'
+            }
+          />
         </h1>
         <Language className="auth_language" />
       </header>
