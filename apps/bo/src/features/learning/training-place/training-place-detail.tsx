@@ -156,7 +156,7 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
         </ContentsButtons>
         <MainContents>
           <FormSubTitle label={'LABEL.common.trainingPlaceInfo'} />
-          <ContentsRow>
+          {/* <ContentsRow>
             <FormRow provider={provider} className={dynamicFormStyles.w_half}>
               <DynamicFormField name={'educationPlaceType'} />
             </FormRow>
@@ -189,7 +189,6 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
           </ContentsRow>
 
           <ContentsRow>
-            {/* form_item */}
             <div className={formStyles.form_item}>
               <label htmlFor="name-map" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>
@@ -198,7 +197,6 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
               </label>
               <div className={formStyles.input_box}>
                 <div className={cn(fileUploadStyles.start, fileUploadStyles.wrap)}>
-                  {/* 첨부 전 */}
                   <div className={fileUploadStyles.upload_single}>
                     <div className={fileUploadStyles.view_file}>
                       <div className={fileUploadStyles.attach_area}>
@@ -239,7 +237,6 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
                 {t('LABEL.form.guideText.mapImageAttachment')}
               </p>
             </div>
-            {/* form_item */}
             <FormRow provider={provider} className={dynamicFormStyles.w_half}>
               <DynamicFormField name={'linkAddress'} />
             </FormRow>
@@ -291,7 +288,7 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
 
           <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
             <ContentsHistoryInfoFormField />
-          </ContentsRow>
+          </ContentsRow> */}
         </MainContents>
       </PageContainer>
     </form>

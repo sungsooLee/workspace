@@ -97,7 +97,8 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
           },
         };
       });
-    const response = await createFileGroupFiles(createFiles[0] as CreateFileGroupFilesInfoReq[]);
+    // const response = await createFileGroupFiles(createFiles[0] as CreateFileGroupFilesInfoReq[]);
+    const response = await createFileGroupFiles(createFiles[0] as any); // 타입 에러 수정 필요
     console.log('response => ', response);
     console.log('createFiles => ', createFiles);
   }, [files]);

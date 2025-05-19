@@ -16,7 +16,13 @@ import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-butt
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { translationQueryOptions } from '@entities/translation/service/translation.queries';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { CODE_GROUP, SearchBoxConfig, SelectOption, useSearchBox } from '@learnway/hooks';
+import {
+  CODE_GROUP,
+  SearchBoxConfig,
+  SelectOption,
+  useCurrentRoute,
+  useSearchBox,
+} from '@learnway/hooks';
 import { SearchBox } from '@shared/ui/search-box';
 import { CellContext } from '@tanstack/react-table';
 import { useTranslation } from '@entities/translation/service/translation.hook';
@@ -36,7 +42,7 @@ type TranslationType = {
 
 function RouteComponent() {
   const { confirm, alert } = useModal();
-  const { state } = Route.useRouteContext();
+  const { state } = useCurrentRoute();
   const { provider: sProvider, getValues, onFormChange, onFormValid } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const { update } = useTranslation();
