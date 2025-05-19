@@ -194,7 +194,7 @@ function RouteComponent() {
                 <div className={styles.sub_info}>
                   {t('pms.multilingual.Is_Translation.true')}{' '}
                   <strong className={styles.num}>{successTranslationCount}</strong>
-                  <span className={'ml-10 font-light'}>
+                  <span className={'normal_text'}>
                     {t('LABEL.platform.system.multilingual.currentTranslationLanguage')} :{' '}
                     {currentTargetLocale
                       ? t(`pms.multilingual.LanguageType.${currentTargetLocale}`)
