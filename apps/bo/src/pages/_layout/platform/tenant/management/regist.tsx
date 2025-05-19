@@ -40,6 +40,7 @@ import {
   useCodeStore,
 } from '@learnway/hooks';
 import { isEqual } from 'lodash';
+import { EnDeviceType, EnUseCategory } from '@types';
 
 export const Route = createFileRoute('/_layout/platform/tenant/management/regist')({
   component: RouteComponent,
@@ -61,17 +62,6 @@ const duplicateCheck = async (tenantName: string) => {
   if (result) return DuplicateState.duplicated;
   else return DuplicateState.ok;
 };
-
-enum EnDeviceType {
-  isPc = 'isPc',
-  isMobile = 'isMobile',
-  isApp = 'isApp',
-}
-
-enum EnUseCategory {
-  isCommonCategory = 'isCommonCategory',
-  isTenantCategory = 'isTenantCategory',
-}
 
 function RouteComponent() {
   const router = useRouter();

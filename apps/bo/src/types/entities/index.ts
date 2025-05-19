@@ -3,6 +3,7 @@ export * from './category';
 export * from './common-code';
 export * from './company';
 export * from './course';
+export * from './enum';
 export * from './label-meesage';
 export * from './program';
 export * from './react-query';
