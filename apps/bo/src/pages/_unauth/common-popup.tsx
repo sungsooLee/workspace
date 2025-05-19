@@ -107,16 +107,34 @@ function RouteComponent() {
             />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider} name={'zipCode'} element={<Input disabled={true} />} />
-            <FormRow
-              provider={provider}
-              name={'defaultAddress'}
-              element={<Input disabled={true} />}
-            >
-              <Button variant={'gray'} size={'sm'} onClick={handleAddressSearch}>
-                {'우편번호찾기'}
-              </Button>
-            </FormRow>
+            <div className={dynamicFormStyles.address_wrap}>
+              <div className={dynamicFormStyles.info_address}>
+                <FormRow
+                  provider={provider}
+                  name={'zipNo'}
+                  className={dynamicFormStyles.post_input}
+                  element={<Input disabled={true} />}
+                />
+                <FormRow
+                  provider={provider}
+                  name={'address'}
+                  className={dynamicFormStyles.address_input}
+                  element={<Input disabled={true} />}
+                >
+                  <Button
+                    className={dynamicFormStyles.btn_find}
+                    variant={'gray'}
+                    size={'sm'}
+                    onClick={handleAddressSearch}
+                  >
+                    {t('LABEL.button.searchZipNo')}
+                  </Button>
+                </FormRow>
+              </div>
+              <div className={dynamicFormStyles.detail_address}>
+                <FormRow provider={provider} name={'addressDetail'} element={<Input />} />
+              </div>
+            </div>
           </ContentsRow>
         </MainContents>
         <SubContents>
