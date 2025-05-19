@@ -17,6 +17,11 @@ export interface UsePaginationProps {
    */
   count?: number;
   /**
+   * 한 페이지에 보여질 데이터의 개수입니다.
+   * @default 10
+   */
+  pageSize?: number;
+  /**
    * The page selected by default when the component is uncontrolled.
    * @default 1
    */

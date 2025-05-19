@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 
 import { cn } from '@learnway/shared';
 
@@ -35,7 +35,6 @@ const PaginationComponent = forwardRef<HTMLDivElement, PaginationComponentProps>
   (
     {
       className,
-      page = 0,
       color = 'standard',
       disabled = false,
       size = 'medium',
@@ -45,28 +44,26 @@ const PaginationComponent = forwardRef<HTMLDivElement, PaginationComponentProps>
     },
     ref,
   ) => {
+    const [pageSize, setPageSize] = useState<number>(pageSizeOptions[0]);
     const { items, currentPage, totalPages } = usePagination({
       ...props,
       componentName: 'Pagination',
     });
 
-    console.log({ items, currentPage, totalPages });
-
     const options: DropdownOption[] = pageSizeOptions?.map((size) => ({
-      value: size.toString(),
+      value: size,
       label: `${size}개씩 보기`,
     }));
+    console.log({ items, currentPage, totalPages, pageSize, options });
 
-    const handleChange = (value?: DropdownOption) => {
-      if (value) {
-        // onPageSizeChange(Number(value));
-      }
+    const handleChange = (newValue?: any) => {
+      setPageSize(newValue);
     };
 
     return (
       <div ref={ref} className={cn(styles.root, styles.pagination, className, 'nlp--pagination')}>
         <div className={styles.select_area}>
-          <Dropdown value={page.toString()} onChange={handleChange} options={options} />
+          <Dropdown value={pageSize} onChange={handleChange} options={options} />
         </div>
         {/* 페이지 번호들 */}
         <div className={styles.page_num}>
@@ -74,7 +71,6 @@ const PaginationComponent = forwardRef<HTMLDivElement, PaginationComponentProps>
             <PaginationItem
               key={index}
               {...item}
-              page={page}
               color={color}
               size={size}
               variant={variant}
