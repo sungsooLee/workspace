@@ -9,19 +9,32 @@ import { CODE_GROUP } from './constants';
  * * 초기 구성계획은 조회 후 filter 를 사용하려 했으나. API 정의가 어떻게 될지 몰라 사용하지 못했다.
  */
 export const codeOptions: CodeApiConfig = {
+  [CODE_GROUP['vps.video.FfmpegTaskType']]: {
+    api: 'default',
+    options: [
+      {
+        value: '01',
+        label: 'FfmpegTaskType 01',
+      },
+      {
+        value: '02',
+        label: 'FfmpegTaskType 02',
+      },
+    ],
+  },
   [CODE_GROUP['manual.code']]: {
     options: [
       {
         value: '01',
-        label: '1번 옵션',
+        label: 'DEFAULT 호출 1번 옵션',
       },
       {
         value: '02',
-        label: '2번 옵션',
+        label: 'DEFAULT 호출 2번 옵션',
       },
       {
         value: '03',
-        label: '3번 옵션',
+        label: 'DEFAULT 호출 3번 옵션',
       },
     ],
   },

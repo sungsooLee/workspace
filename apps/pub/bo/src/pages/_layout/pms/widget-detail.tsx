@@ -49,16 +49,6 @@ function RouteComponent() {
   const columnHelper = createColumnHelper<any>();
 
   const columns = [
-    columnHelper.accessor('Number', {
-      cell: (info) => info.getValue(),
-      header: 'NO.',
-      size: 64,
-      enableGrouping: false,
-      meta: {
-        headerAlign: 'center', // 헤더 정렬
-        cellAlign: 'center', // 셀 정렬
-      },
-    }),
     columnHelper.accessor('TenantName', {
       cell: (info) => info.getValue(),
       header: '테넌트명',
@@ -146,7 +136,7 @@ function RouteComponent() {
       enableGrouping: false,
       meta: {
         headerAlign: 'center', // 헤더 정렬
-        cellAlign: 'center', // 셀 정렬
+        cellAlign: 'left', // 셀 정렬
       },
     }),
     columnHelper.accessor('ComponentId', {
@@ -305,7 +295,7 @@ function RouteComponent() {
                 </span>
               </label>
               <div className={formStyles.input_box}>
-                <TableBox data={data2} columns={columns2} tableMode={true} />
+                <TableBox data={data2} columns={columns2} tableMode={true} showTotalCount={false} />
               </div>
             </div>
           </ContentsRow>
@@ -316,6 +306,8 @@ function RouteComponent() {
                 columns={columns}
                 title="테넌트 정보(해당 위젯을 사용하는 테넌트)"
                 showColumnSettings={false}
+                showNumberingColumn
+                showTotalCount={false}
               />
             </div>
           </ContentsRow>

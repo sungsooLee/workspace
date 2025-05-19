@@ -54,7 +54,6 @@ function RouteComponent() {
   const [pageSize, setPageSize] = useState(10);
   const data: any[] = [
     {
-      order: '1',
       groupCode: '7000',
       groupCodeName: '그룹코드명',
       groupCodeNameEng: 'Cell Text',
@@ -67,7 +66,6 @@ function RouteComponent() {
       lastModifier: '김현대',
     },
     {
-      order: '2',
       groupCode: '7000',
       groupCodeName: '그룹코드명',
       groupCodeNameEng: 'Cell Text',
@@ -80,7 +78,6 @@ function RouteComponent() {
       lastModifier: '김현대',
     },
     {
-      order: '3',
       groupCode: '7000',
       groupCodeName: '그룹코드명',
       groupCodeNameEng: 'Cell Text',
@@ -93,7 +90,6 @@ function RouteComponent() {
       lastModifier: '김현대',
     },
     {
-      order: '4',
       groupCode: '7000',
       groupCodeName: '그룹코드명',
       groupCodeNameEng: 'Cell Text',
@@ -106,7 +102,6 @@ function RouteComponent() {
       lastModifier: '김현대',
     },
     {
-      order: '5',
       groupCode: '7000',
       groupCodeName: '그룹코드명',
       groupCodeNameEng: 'Cell Text',
@@ -119,7 +114,6 @@ function RouteComponent() {
       lastModifier: '김현대',
     },
     {
-      order: '6',
       groupCode: '7000',
       groupCodeName: '그룹코드명',
       groupCodeNameEng: 'Cell Text',
@@ -132,7 +126,6 @@ function RouteComponent() {
       lastModifier: '김현대',
     },
     {
-      order: '7',
       groupCode: '7000',
       groupCodeName: '그룹코드명',
       groupCodeNameEng: 'Cell Text',
@@ -145,7 +138,6 @@ function RouteComponent() {
       lastModifier: '김현대',
     },
     {
-      order: '8',
       groupCode: '7000',
       groupCodeName: '그룹코드명',
       groupCodeNameEng: 'Cell Text',
@@ -158,7 +150,6 @@ function RouteComponent() {
       lastModifier: '김현대',
     },
     {
-      order: '9',
       groupCode: '7000',
       groupCodeName: '그룹코드명',
       groupCodeNameEng: 'Cell Text',
@@ -175,16 +166,6 @@ function RouteComponent() {
   const columnHelper = createColumnHelper<any>();
 
   const columns = [
-    columnHelper.accessor('order', {
-      cell: (info) => info.getValue(),
-      header: 'NO.',
-      size: 64,
-      meta: {
-        headerAlign: 'left',
-        cellAlign: 'center',
-      },
-      enableGrouping: false,
-    }),
     columnHelper.accessor('groupCode', {
       cell: (info) => info.getValue(),
       header: '그룹코드',
@@ -334,6 +315,7 @@ function RouteComponent() {
                     columns={columns}
                     height={350}
                     showColumnSettings={false}
+                    showNumberingColumn={true}
                     pagination={{
                       pageSize,
                       pageIndex,

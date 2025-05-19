@@ -72,7 +72,6 @@ function RouteComponent() {
     const [pageSize, setPageSize] = useState(10);
     const data: any[] = [
       {
-        order: '1',
         companySort: '그룹사',
         company: '현대차',
         owner: '김현대',
@@ -81,7 +80,6 @@ function RouteComponent() {
         email: 'asdfged@gmail.com',
       },
       {
-        order: '2',
         companySort: '그룹사',
         company: '현대차',
         owner: '김현대',
@@ -92,16 +90,6 @@ function RouteComponent() {
     ];
 
     const columns = [
-      columnHelper.accessor('order', {
-        cell: (info) => info.getValue(),
-        header: 'NO.',
-        size: 64,
-        meta: {
-          headerAlign: 'left',
-          cellAlign: 'center',
-        },
-        enableGrouping: false,
-      }),
       columnHelper.accessor('companySort', {
         cell: (info) => info.getValue(),
         header: '회사구분',
@@ -210,6 +198,7 @@ function RouteComponent() {
                 columns={columns}
                 height={380}
                 showColumnSettings={false}
+                showNumberingColumn={true}
                 pagination={{
                   pageSize,
                   pageIndex,

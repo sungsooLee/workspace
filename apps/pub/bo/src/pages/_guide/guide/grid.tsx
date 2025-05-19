@@ -408,6 +408,7 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
             <div className="custom_info_wrap">
               <strong className="table_tit">{'타이틀'}</strong>
               <span className="count_info">{'5'}</span>
+              <span className="normal_text">{'텍스트'}</span>
             </div>
           }
           guideText={'텍스트'}

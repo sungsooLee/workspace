@@ -237,7 +237,7 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
   };
 
   return (
-    <SectionLayout contentsRatio={'half'}>
+    <>
       <TreeBox
         title={menuScope === 'FO' ? t('학습자 API 목록') : t('HRD센터 API 목록')}
         data={treeData}
@@ -346,7 +346,7 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
           </div>
         </form>
       </div>
-    </SectionLayout>
+    </>
   );
 };
 
