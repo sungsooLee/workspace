@@ -1,0 +1,17 @@
+.start {
+  &.history_wrap {
+    .list_flex {
+      @apply mt-[33px] flex items-center justify-between;
+      .btn {
+        svg {
+          @apply h-[20px] w-[20px] stroke-[#00AFD5];
+        }
+      }
+    }
+    .list_info {
+    }
+    .search_date {
+      @apply mt-[24px];
+    }
+  }
+}

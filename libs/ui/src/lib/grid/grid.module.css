@@ -51,10 +51,17 @@
               }
             }
           }
+          [class*='nlp--button']:disabled svg {
+            @apply stroke-[#d6dae1];
+          }
           [class*='link'] {
             @apply !body_bo_2_r text-[var(--gray7)] underline;
             & + [class*='link'] {
               @apply ml-[6px];
+            }
+            &:disabled,
+            &[aria-disabled='true'] {
+              @apply border-[var(--gray5)] text-[var(--gray5)];
             }
           }
           [class*='nlp--input'] {

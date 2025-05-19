@@ -4,17 +4,25 @@ import {
   EditInputCell,
   EditTextareaCell,
   GridBox,
+  GridBoxConfig,
   useGridBox,
   useGridBoxConfig,
   useModal,
 } from '@learnway/ui';
-import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import { cn } from '@learnway/shared';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { translationQueryOptions } from '@entities/translation/service/translation.queries';
-import { CODE_GROUP, SearchBoxConfig, SelectOption, useSearchBox } from '@learnway/hooks';
+import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import {
+  CODE_GROUP,
+  SearchBoxConfig,
+  SelectOption,
+  useCurrentRoute,
+  useSearchBox,
+} from '@learnway/hooks';
 import { SearchBox } from '@shared/ui/search-box';
 import { CellContext } from '@tanstack/react-table';
 import { useTranslation } from '@entities/translation/service/translation.hook';
@@ -34,15 +42,15 @@ type TranslationType = {
 
 function RouteComponent() {
   const { confirm, alert } = useModal();
-  const { state } = Route.useRouteContext();
+  const { state } = useCurrentRoute();
   const { provider: sProvider, getValues, onFormChange, onFormValid } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const { update } = useTranslation();
   const router = useRouter();
   const [currentTargetLocale, setCurrentTargetLocale] = useState<string>('');
   const isSaveDisable = useMemo(
-    () => gConfig.totalElements === 0 || currentTargetLocale === '',
-    [gConfig.totalElements, currentTargetLocale],
+    () => gConfig.totalRows === 0 || currentTargetLocale === '',
+    [gConfig.totalRows, currentTargetLocale],
   );
   // 번역완료
   const [successTranslationCount, setSuccessTranslationCount] = useState<number>(0);
@@ -150,7 +158,7 @@ function RouteComponent() {
             size="sm"
             onClick={() => {
               router.navigate({
-                to: '/platform/label-message',
+                to: '/platform/message',
               });
             }}
           >
@@ -186,7 +194,7 @@ function RouteComponent() {
                 <div className={styles.sub_info}>
                   {t('pms.multilingual.Is_Translation.true')}{' '}
                   <strong className={styles.num}>{successTranslationCount}</strong>
-                  <span className={'ml-10 font-light'}>
+                  <span className={'normal_text'}>
                     {t('LABEL.platform.system.multilingual.currentTranslationLanguage')} :{' '}
                     {currentTargetLocale
                       ? t(`pms.multilingual.LanguageType.${currentTargetLocale}`)
@@ -212,9 +220,8 @@ const searchConfig: SearchBoxConfig = {
         type: 'dropdown',
         label: 'LABEL.platform.system.multilingual.keyType',
         value: '',
-        options: [{ value: '', label: 'LABEL.form.label.select' }],
         optionsConfig: {
-          type: 'self',
+          options: [{ value: '', label: 'LABEL.form.label.select' }],
           codeGroup: CODE_GROUP['pms.multilingual.KeyTypeCode'],
         },
       },
@@ -223,16 +230,17 @@ const searchConfig: SearchBoxConfig = {
         type: 'dropdown',
         label: 'LABEL.platform.system.multilingual.translationLanguage',
         value: '',
-        options: [{ value: '', label: 'LABEL.form.label.select' }],
+
         optionsConfig: {
-          type: 'self',
+          options: [{ value: '', label: 'LABEL.form.label.select' }],
           codeGroup: CODE_GROUP['pms.multilingual.LanguageType'],
+          /*type: 'self',
           excludeValues: ['kr'],
           filter: {
             target: 'keyType',
             value: 'HRD_CENTER_MENU',
             fn: (options: SelectOption[]) => options.filter((option) => option.value === 'en'),
-          },
+          },*/
         },
       },
       {

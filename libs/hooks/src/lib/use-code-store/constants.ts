@@ -87,5 +87,7 @@ export const CODE_GROUP = {
   'pms.user.UserState': 'pms.user.UserState',
   'vps.video.FfmpegTaskType': 'vps.video.FfmpegTaskType',
   'manual.code': 'manual.code',
+  'manual.code2': 'manual.code2',
+  'manual.tenant': 'manual.tenant',
 };
 export type CODE_GROUP_TYPE = (typeof CODE_GROUP)[keyof typeof CODE_GROUP];

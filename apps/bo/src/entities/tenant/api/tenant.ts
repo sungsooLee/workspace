@@ -2,13 +2,24 @@ import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
 
 import { Tenant } from '../../../types/entities/tenant';
+import { PageableContent } from '@types';
 
 export default class TenantService {
-  static fetchAllTenant(payload: any) {
-    return httpService.get<any>(`${PMSApiPrefix()}/tenants`, payload);
+  static fetchTenant(tenantId: number) {
+    return httpService.get<any>(`${PMSApiPrefix()}/tenants/${tenantId}`);
   }
-  static fetchTenant(id: number) {
-    return httpService.get<Tenant>(`${PMSApiPrefix()}/tenants/${id}`);
+
+  static updateTenant(payload: any) {
+    const tenantId = payload.tenantId;
+    return httpService.put<Tenant>(`${PMSApiPrefix()}/tenants/${tenantId}`, payload);
+  }
+
+  static deleteTenant(tenantId: number) {
+    return httpService.delete<Tenant>(`${PMSApiPrefix()}/tenants${tenantId}`);
+  }
+
+  static fetchListTenant(payload: any) {
+    return httpService.get<PageableContent<any>>(`${PMSApiPrefix()}/tenants`);
   }
 
   static createTenant(payload: any) {
@@ -16,12 +27,17 @@ export default class TenantService {
     return httpService.post<Tenant>(`${PMSApiPrefix()}/tenants`, reqbody);
   }
 
-  static updateTenant(payload: any) {
-    return httpService.post<Tenant>(`${PMSApiPrefix()}/tenants`, payload);
+  static existTenant(name: string) {
+    return httpService.get<boolean>(`${PMSApiPrefix()}/tenants/exists`, { name: name });
   }
 
-  static deleteTenant(id: number) {
-    return httpService.post<Tenant>(`${PMSApiPrefix()}/tenants`, { id });
+  //전체 목록 가지고 오기 임시 (size 값으로)
+  static async fetchAllTenant() {
+    const data = await httpService.get<PageableContent<any>>(`${PMSApiPrefix()}/tenants`, {
+      size: 100000,
+    });
+
+    return data.content;
   }
 }
 

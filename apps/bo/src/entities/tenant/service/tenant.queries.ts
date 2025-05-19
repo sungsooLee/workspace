@@ -7,13 +7,18 @@ import { Tenant } from '../../../types/entities/tenant';
 
 export const queryKeys = {
   all: ['tenants'] as const,
-  detail: (tenantId: number) => [...queryKeys.all, tenantId] as const,
+  list: ['tenants-page'] as const,
+  detail: (tenantId: number) => [...queryKeys.list, tenantId] as const,
 };
 
 export const tenantQueryOptions = {
-  all: (params: any) => ({
+  all: () => ({
     queryKey: queryKeys.all,
-    queryFn: () => TenantService.fetchAllTenant(params),
+    queryFn: async (): Promise<any> => TenantService.fetchAllTenant(),
+  }),
+  list: (params: any) => ({
+    queryKey: queryKeys.list,
+    queryFn: () => TenantService.fetchListTenant(params),
     cacheTime: 0,
     staleTime: 0,
   }),

@@ -1,0 +1,5 @@
+.start {
+  .tab_list {
+    @apply mb-[33px];
+  }
+}

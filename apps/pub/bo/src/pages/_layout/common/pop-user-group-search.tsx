@@ -65,9 +65,8 @@ function RouteComponent() {
             size={'lg'}
             icon={<IcoRefresh02 width={16} height={16} className="icon_refresh" />}
             onClick={() => closeModal()}
-          >
-            {'초기화'}
-          </Button>
+            label={'초기화'}
+          />
           <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
           <Button label={'적용'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
         </ModalFooter>

@@ -9,7 +9,7 @@ import { ContentsHistoryInfoFormField, FormSubTitle } from '@shared/ui';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import fileUploadStyles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
-import { ChipListModalSelectorFormField } from '@learnway/ui';
+import { ChipListModalSelectorFormField, Textarea, TextareaFormField } from '@learnway/ui';
 import { AddressSearchModal } from '@features/shared';
 
 import { Button, ContentsRow, useModal, DynamicFormField, Input } from '@learnway/ui';
@@ -157,21 +157,32 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
         <MainContents>
           <FormSubTitle label={'LABEL.common.trainingPlaceInfo'} />
           <ContentsRow>
-            <FormRow provider={provider} className={dynamicFormStyles.w_half}>
-              <DynamicFormField name={'educationPlaceType'} />
-            </FormRow>
+            <FormRow
+              provider={provider}
+              className={dynamicFormStyles.w_half}
+              name={'educationPlaceType'}
+              element={<input />}
+            />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider} className={dynamicFormStyles.w_half}>
-              <DynamicFormField name={'educationPlaceCode'} />
-            </FormRow>
-            <FormRow provider={provider} className={dynamicFormStyles.w_half}>
-              <DynamicFormField name={'educationPlaceName'} />
-            </FormRow>
+            <FormRow
+              provider={provider}
+              className={dynamicFormStyles.w_half}
+              name={'educationPlaceCode'}
+              element={<input />}
+            />
+            <FormRow
+              provider={provider}
+              className={dynamicFormStyles.w_half}
+              name={'educationPlaceName'}
+              element={<input />}
+            />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'tenantList'}>
+            <FormRow
+              provider={provider}
+              name={'tenantList'}
+              element={
                 <ChipListModalSelectorFormField
                   chipList={{
                     labelField: 'name',
@@ -184,12 +195,11 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
                     content: '',
                   }}
                 />
-              </DynamicFormField>
-            </FormRow>
+              }
+            />
           </ContentsRow>
 
           <ContentsRow>
-            {/* form_item */}
             <div className={formStyles.form_item}>
               <label htmlFor="name-map" className={formStyles.form_label}>
                 <span className={formStyles.form_text}>
@@ -198,7 +208,6 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
               </label>
               <div className={formStyles.input_box}>
                 <div className={cn(fileUploadStyles.start, fileUploadStyles.wrap)}>
-                  {/* 첨부 전 */}
                   <div className={fileUploadStyles.upload_single}>
                     <div className={fileUploadStyles.view_file}>
                       <div className={fileUploadStyles.attach_area}>
@@ -240,25 +249,29 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
               </p>
             </div>
             {/* form_item */}
-            <FormRow provider={provider} className={dynamicFormStyles.w_half}>
-              <DynamicFormField name={'linkAddress'} />
-            </FormRow>
+            <FormRow
+              provider={provider}
+              className={dynamicFormStyles.w_half}
+              name={'linkAddress'}
+              element={<Input />}
+            />
           </ContentsRow>
 
           <ContentsRow>
-            <FormRow provider={provider}>
-              <div className={dynamicFormStyles.address_wrap}>
-                <div className={dynamicFormStyles.info_address}>
-                  <DynamicFormField
-                    name={'zipNo'}
-                    disabled={true}
-                    className={dynamicFormStyles.post_input}
-                  />
-                  <DynamicFormField
-                    name={'address'}
-                    disabled={true}
-                    className={dynamicFormStyles.address_input}
-                  />
+            <div className={dynamicFormStyles.address_wrap}>
+              <div className={dynamicFormStyles.info_address}>
+                <FormRow
+                  provider={provider}
+                  name={'zipNo'}
+                  className={dynamicFormStyles.post_input}
+                  element={<Input disabled={true} />}
+                />
+                <FormRow
+                  provider={provider}
+                  name={'address'}
+                  className={dynamicFormStyles.address_input}
+                  element={<Input disabled={true} />}
+                >
                   <Button
                     className={dynamicFormStyles.btn_find}
                     variant={'gray'}
@@ -267,27 +280,28 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
                   >
                     {t('LABEL.button.searchZipNo')}
                   </Button>
-                </div>
-                <DynamicFormField
-                  name={'addressDetail'}
-                  className={dynamicFormStyles.detail_address}
-                />
+                </FormRow>
               </div>
-            </FormRow>
+              <div className={dynamicFormStyles.detail_address}>
+                <FormRow provider={provider} name={'addressDetail'} element={<Input />} />
+              </div>
+            </div>
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'educationPlaceRemarkContent'} size="sm" resize="none" />
-            </FormRow>
+            <FormRow
+              provider={provider}
+              name={'educationPlaceRemarkContent'}
+              element={<TextareaFormField resize="none" size="sm" />}
+            />
           </ContentsRow>
 
           <ContentsRow>
-            <FormRow provider={provider} className={dynamicFormStyles.w_half}>
-              <DynamicFormField name={'isReservationUsed'} />
-            </FormRow>
-            <FormRow provider={provider} className={dynamicFormStyles.w_half}>
-              <DynamicFormField name={'isUsed'} />
-            </FormRow>
+            <FormRow
+              provider={provider}
+              className={dynamicFormStyles.w_half}
+              name={'isReservationUsed'}
+            />
+            <FormRow provider={provider} className={dynamicFormStyles.w_half} name={'isUsed'} />
           </ContentsRow>
 
           <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>

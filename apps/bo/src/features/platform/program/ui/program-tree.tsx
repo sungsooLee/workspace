@@ -139,6 +139,7 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
             variant="gray2"
             size={'xs'}
             type={'button'}
+            disabled={node.apiNodeType === 'API'}
           >
             {level === 0 ? 'API 추가' : '하위 API 추가'}
           </Button>
@@ -236,8 +237,9 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
   };
 
   return (
-    <SectionLayout contentsRatio={'half'}>
+    <>
       <TreeBox
+        title={menuScope === 'FO' ? t('학습자 API 목록') : t('HRD센터 API 목록')}
         data={treeData}
         treeId={'program-tree'}
         expandedKeys={expandedKeys}
@@ -318,7 +320,7 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
               <ContentsRow>
                 <FormRow
                   provider={provider}
-                  name={'apiName'}
+                  name={'apiDesc'}
                   element={<TextareaFormField disabled={FORM_MODE.NONE === formMode} />}
                 />
               </ContentsRow>
@@ -344,7 +346,7 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
           </div>
         </form>
       </div>
-    </SectionLayout>
+    </>
   );
 };
 
