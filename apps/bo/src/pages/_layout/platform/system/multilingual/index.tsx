@@ -220,9 +220,8 @@ const searchConfig: SearchBoxConfig = {
         type: 'dropdown',
         label: 'LABEL.platform.system.multilingual.keyType',
         value: '',
-        options: [{ value: '', label: 'LABEL.form.label.select' }],
         optionsConfig: {
-          type: 'self',
+          options: [{ value: '', label: 'LABEL.form.label.select' }],
           codeGroup: CODE_GROUP['pms.multilingual.KeyTypeCode'],
         },
       },
@@ -231,16 +230,17 @@ const searchConfig: SearchBoxConfig = {
         type: 'dropdown',
         label: 'LABEL.platform.system.multilingual.translationLanguage',
         value: '',
-        options: [{ value: '', label: 'LABEL.form.label.select' }],
+
         optionsConfig: {
-          type: 'self',
+          options: [{ value: '', label: 'LABEL.form.label.select' }],
           codeGroup: CODE_GROUP['pms.multilingual.LanguageType'],
+          /*type: 'self',
           excludeValues: ['kr'],
           filter: {
             target: 'keyType',
             value: 'HRD_CENTER_MENU',
             fn: (options: SelectOption[]) => options.filter((option) => option.value === 'en'),
-          },
+          },*/
         },
       },
       {

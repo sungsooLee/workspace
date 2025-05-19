@@ -9,7 +9,7 @@
           &:hover,
           &:active,
           &[class*='active'] {
-            @apply font-bold;
+            @apply title_bo_4_b;
           }
         }
       }

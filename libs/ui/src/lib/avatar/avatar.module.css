@@ -1,32 +1,9 @@
 .start {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  vertical-align: middle;
-  overflow: hidden;
-  user-select: none;
-  width: 32px;
-  height: 32px;
-  border-radius: 100%;
-  background-color: var(--primary);
-
+  @apply flex h-[32px] w-[32px] items-center justify-center overflow-hidden rounded-[16px] bg-[var(--secondary1)];
   .image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: inherit;
+    @apply h-full w-full object-cover;
   }
-
   .fallback {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: white;
-    color: var(--primary);
-    font-size: 15px;
-    line-height: 1;
-    font-weight: 500;
+    @apply body_2_b text-white;
   }
 }

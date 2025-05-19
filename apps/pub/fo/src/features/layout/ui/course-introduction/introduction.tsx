@@ -190,41 +190,7 @@ const CourseIntroductionCompoment = () => {
         </div>
       </div>
 
-      {/* 자료실 */}
-      <div className={`${styles.info_box} ${styles.pds}`}>
-        <div className={styles.tit_box}>
-          <h3>자료실</h3>
-          <Button variant="line" size={isMobile ? 'ts' : 'sm'} className={styles.btn}>
-            전체 다운로드
-          </Button>
-        </div>
-
-        <div className={pdsStyles.start}>
-          <Panel hideHeaderUnderline actions="" className="w_full" type="rounded">
-            <div className={pdsStyles.pds_box}>
-              <span className={pdsStyles.txt}>비즈니스 영어 단어&숙어집.pdf</span>
-              <div className={pdsStyles.info}>
-                <span className={pdsStyles.size}>200MB</span>
-                <Button variant="line" size={isMobile ? 'ts' : 'sm'} className={pdsStyles.btn}>
-                  다운로드
-                </Button>
-              </div>
-            </div>
-          </Panel>
-
-          <Panel hideHeaderUnderline actions="" className="w_full" type="rounded">
-            <div className={pdsStyles.pds_box}>
-              <span className={pdsStyles.txt}>비즈니스 영어 단어&숙어집.pdf</span>
-              <div className={pdsStyles.info}>
-                <span className={pdsStyles.size}>200MB</span>
-                <Button variant="line" size={isMobile ? 'ts' : 'sm'} className={pdsStyles.btn}>
-                  다운로드
-                </Button>
-              </div>
-            </div>
-          </Panel>
-        </div>
-      </div>
+      {/* 퍼블수정 20250519 : 자료실 삭제 */}
 
       {/* 다른 강의와의 차별점 */}
       <div className={styles.info_box}>

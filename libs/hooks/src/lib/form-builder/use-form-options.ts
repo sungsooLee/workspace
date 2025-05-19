@@ -15,7 +15,7 @@ const useFormOptionsHook = (options?: SelectOption[], optionsConfig?: OptionsCon
    */
   const initOptionConfig = async () => {
     if (!optionsConfig) return;
-    // ontionsConfig > options 에 등록된 값은 조회와 상관없이 앞에 선언 됩니다.
+    // optionsConfig > options 에 등록된 값은 조회와 상관없이 앞에 선언 됩니다.
     let optionConfigOptions: SelectOption[] = optionsConfig.options || [];
     if (optionsConfig.codeGroup) {
       const codeStoreOptions = await getCode(optionsConfig.codeGroup);

@@ -1,6 +1,6 @@
 .start {
   &.package_wrap {
-    @apply px-[20px] pb-[80px];
+    @apply relative px-[20px] pb-[80px];
     .thumbnail_img {
       button {
         @apply relative;
@@ -21,32 +21,31 @@
         @apply absolute bottom-0 left-0 -mx-[20px] h-[12px] w-[calc(100%+40px)] bg-[var(--gray2)] content-[''];
       }
     }
-    .tab_wrap {
-      @apply relative;
-      .tab_title {
-        @apply sticky left-0 top-[56px] z-[1] -mx-[20px] w-[calc(100%+40px)] overflow-x-scroll bg-white;
-        .box {
-          @apply flex h-auto w-fit min-w-full whitespace-nowrap border-b-[1px] border-solid border-[var(--gray3)] px-[20px];
+    .tab_title {
+      @apply sticky left-0 top-[56px] z-[10] -mx-[20px] w-[calc(100%+40px)] overflow-x-scroll bg-white;
+      .box {
+        @apply flex h-auto w-fit min-w-full whitespace-nowrap border-b-[1px] border-solid border-[var(--gray3)] px-[20px];
+      }
+      button {
+        @apply button_2_r relative h-[56px] whitespace-nowrap py-[16px] text-[var(--gray7)];
+        em {
+          @apply ml-[4px] inline-block text-[var(--gray6)];
         }
-        button {
-          @apply button_2_r relative h-[56px] whitespace-nowrap py-[16px] text-[var(--gray7)];
+        &.active {
+          @apply !button_2_b text-[var(--gray9)];
           em {
-            @apply ml-[4px] inline-block text-[var(--gray6)];
+            @apply text-[var(--secondary1)];
           }
-          &.active {
-            @apply !button_2_b text-[var(--gray9)];
-            em {
-              @apply text-[var(--secondary1)];
-            }
-            &::after {
-              @apply absolute -bottom-[1px] left-0 h-[2px] w-full bg-[var(--gray9)] content-[''];
-            }
+          &::after {
+            @apply absolute -bottom-[1px] left-0 h-[2px] w-full bg-[var(--gray9)] content-[''];
           }
-          & + button {
-            @apply ml-[40px];
-          }
+        }
+        & + button {
+          @apply ml-[40px];
         }
       }
+    }
+    .tab_wrap {
       .tab {
         & > div:nth-child(1) {
           @apply hidden;
