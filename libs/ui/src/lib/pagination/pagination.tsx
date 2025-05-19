@@ -23,11 +23,17 @@ export interface PaginationComponentProps {
   color?: string; // 버튼 color
   disabled?: boolean;
   variant?: string;
+  onChange?: (newPage: number) => void;
+  pageSize?: number;
   /**
    * 페이지 크기 선택 옵션 배열입니다.
    */
   pageSizeOptions?: number[];
-  onChange?: (newPage: number) => void;
+  /**
+   * 페이지 크기 변경 시 호출되는 콜백 함수입니다.
+   * @param {number} pageSize 변경된 페이지 크기
+   */
+  onPageSizeChange?: (pageSize: number) => void;
   // prop 자세한 내용은 https://mui.com/material-ui/react-pagination/#api 참조
 }
 
@@ -39,12 +45,14 @@ const PaginationComponent = forwardRef<HTMLDivElement, PaginationComponentProps>
       disabled = false,
       size = 'medium',
       variant = 'text',
+      pageSize,
       pageSizeOptions = [10, 20, 50, 100],
+      onPageSizeChange,
       ...props
     },
     ref,
   ) => {
-    const [pageSize, setPageSize] = useState<number>(pageSizeOptions[0]);
+    // const [pageSize, setPageSize] = useState<number>(pageSizeOptions[0]);
     const { items, pageNumber, totalPages } = usePagination({
       ...props,
       componentName: 'Pagination',
@@ -56,7 +64,8 @@ const PaginationComponent = forwardRef<HTMLDivElement, PaginationComponentProps>
     }));
 
     const handlePageSizeChange = (newValue?: any) => {
-      setPageSize(newValue);
+      // setPageSize(newValue);
+      onPageSizeChange?.(newValue);
     };
 
     console.log('pagination.tsx ', { items, pageNumber, totalPages, pageSize, options, props });

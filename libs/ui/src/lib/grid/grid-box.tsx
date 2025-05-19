@@ -146,7 +146,7 @@ const GridBoxComponent = <T extends object>(
     (pageSize: number) => {
       gridFetch?.({
         size: pageSize,
-        page: 1, // 페이지 사이즈 변경 시 첫 페이지로 이동
+        page: 0, // 페이지 사이즈 변경 시 첫 페이지로 이동
       });
     },
     [gridFetch],
@@ -292,6 +292,7 @@ const GridBoxComponent = <T extends object>(
           totalPages={paginationProps.totalPages}
           pageNumber={paginationProps.pageNumber}
           onChange={handlePageChange}
+          onPageSizeChange={handleChangePageSize}
         />
       )}
     </div>

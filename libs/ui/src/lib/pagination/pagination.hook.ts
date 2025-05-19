@@ -124,7 +124,7 @@ export default function usePagination(props: UsePaginationProps) {
     return Array.from({ length }, (_, i) => start + i);
   };
 
-  const startPages = range(0, Math.min(boundaryCount, totalPages));
+  const startPages = range(0, Math.min(boundaryCount, totalPages - 1));
   const endPages = range(Math.max(totalPages - boundaryCount + 1, boundaryCount + 1), totalPages - 1);
   // const endPages = range(Math.max(totalPages - boundaryCount + 1, boundaryCount + 1), totalPages);
 
