@@ -46,10 +46,10 @@ import {
 import { useTabContainStatusContext } from '@learnway/hooks';
 import { ApiInfoModal } from '@features/platform/menu/ui/api-info-modal';
 
-const DIVICE_NAME = {
-  PC: 'PC',
-  Mobile: 'Mobile',
-};
+enum EnDeviceName {
+  PC = 'PC',
+  Mobile = 'Mobile',
+}
 
 const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
   const routerState = useRouterState();
@@ -158,8 +158,8 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
       onClose: (value: boolean) => {
         if (value) {
           const payload = { ...getValues() };
-          payload.isWebExposed = payload.deviceNames.includes(DIVICE_NAME.PC);
-          payload.isMobileExposed = payload.deviceNames.includes(DIVICE_NAME.Mobile);
+          payload.isWebExposed = payload.deviceNames.includes(EnDeviceName.PC);
+          payload.isMobileExposed = payload.deviceNames.includes(EnDeviceName.Mobile);
           payload.tenantId = tenantId;
           payload.parentMenuId = payload.parentId;
           updateMenuTenent(payload, {
@@ -189,10 +189,10 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
       const location = findMenuPathById(treeData, detailData?.menuId);
       const deviceNames = [];
       if (detailData.isWebExposed) {
-        deviceNames.push(DIVICE_NAME.PC);
+        deviceNames.push(EnDeviceName.PC);
       }
       if (detailData.isMobileExposed) {
-        deviceNames.push(DIVICE_NAME.Mobile);
+        deviceNames.push(EnDeviceName.Mobile);
       }
       setApiMappingMenuList(detailData.apiMappingMenuList);
       fetchData({
@@ -506,8 +506,8 @@ const formConfig: DynamicFormConfig = {
       label: t('디바이스 노출 여부'),
       value: [],
       options: [
-        { label: t('PC'), value: DIVICE_NAME.PC },
-        { label: t('모바일'), value: DIVICE_NAME.Mobile },
+        { label: t('PC'), value: EnDeviceName.PC },
+        { label: t('모바일'), value: EnDeviceName.Mobile },
       ],
     },
     {
