@@ -331,17 +331,22 @@ export type ApiCallback<T> = (response: any) => SelectOption[];
  * @template T - API 응답 데이터의 타입.
  */
 export interface OptionsConfig<T = any> {
-  type?: 'self' | 'target'; // 옵션 생성 방식: 'self'는 자체 옵션, 'target'은 타 필드에 의존. 기본값 self
   codeGroup?: CODE_GROUP_TYPE; // 옵션을 가져오기 위한 코드 그룹.
-  target?: string; // 타 필드의 이름. optionsConfig가 다른 필드에 의존할 경우 사용.
   options?: SelectOption[]; // 미리 정의된 정적 옵션
-  excludeValues?: string[];
-  filter?: {
-    target: string;
-    value: string;
-    fn: (options: SelectOption[]) => SelectOption[];
-  };
 }
+// TODO. Form 은 외부에서 주입이 가능하지만 SearchBox 는 외부 주입이 불가능 하므로 아래와 같은
+// TODO. 옵션을 이용하던지 SearchBox에서 외부 options 를 주입하는 방식도 좋아 보입니다.
+// EX) options = {name : [...nameOptions], code: [...codeOptions]}
+/**
+ * target?: string; // 타 필드의 이름. optionsConfig가 다른 필드에 의존할 경우 사용.
+ * excludeValues?: string[];
+ *  type?: 'self' | 'target'; // 옵션 생성 방식: 'self'는 자체 옵션, 'target'은 타 필드에 의존. 기본값 self
+ *   filter?: {
+ *     target: string;
+ *     value: string;
+ *     fn: (options: SelectOption[]) => SelectOption[];
+ *   };
+ */
 
 /*===================================
     searchBox Type 정의

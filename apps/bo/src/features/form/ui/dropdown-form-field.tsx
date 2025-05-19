@@ -4,20 +4,17 @@ import { Dropdown, DropdownComponentProps } from '@learnway/ui';
 import { useTranslation } from 'react-i18next';
 
 interface DropdownFormFieldType extends BaseFormFieldProps<string> {
-  options: SelectOption[];
+  options?: SelectOption[];
   optionsConfig?: OptionsConfig;
   dropdownConfig?: DropdownComponentProps;
 }
 
 const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormFieldType>(
   ({ value, onChange, options: initOptions, optionsConfig, dropdownConfig }, ref) => {
-    console.log('initOptions => ', initOptions);
-    console.log('optionsConfig => ', optionsConfig);
-    const options = useFormOptions({ options: initOptions, optionsConfig });
+    const options = useFormOptions(initOptions, optionsConfig);
     const { t } = useTranslation();
-
     return (
-      options?.length > 0 && (
+      options && (
         <Dropdown
           {...dropdownConfig}
           ref={ref}
