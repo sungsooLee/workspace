@@ -121,7 +121,7 @@ export default function usePagination(props: UsePaginationProps) {
     return Array.from({ length }, (_, i) => start + i);
   };
 
-  const startPages = range(1, Math.min(boundaryCount, totalPages));
+  const startPages = range(0, Math.min(boundaryCount, totalPages));
   const endPages = range(Math.max(totalPages - boundaryCount + 1, boundaryCount + 1), totalPages);
 
   const siblingsStart = Math.max(
@@ -181,7 +181,7 @@ export default function usePagination(props: UsePaginationProps) {
   const buttonPage = (type: string) => {
     switch (type) {
       case 'first':
-        return 1;
+        return 0;
       case 'previous':
         return page - 1;
       case 'next':
@@ -197,7 +197,7 @@ export default function usePagination(props: UsePaginationProps) {
     switch (type) {
       case 'first':
       case 'previous':
-        return page === 1;
+        return page === 0;
       case 'next':
       case 'last':
         return page === totalPages;

@@ -59,8 +59,6 @@ const PaginationComponent = forwardRef<HTMLDivElement, PaginationComponentProps>
       setPageSize(newValue);
     };
 
-    const handlePageNumberChange = (pageNumber: number) => {};
-
     console.log({ items, pageNumber, totalPages, pageSize, options, props });
     return (
       <div ref={ref} className={cn(styles.root, styles.pagination, className, 'nlp--pagination')}>

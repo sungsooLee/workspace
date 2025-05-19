@@ -75,7 +75,7 @@ const PaginationItemComponent = forwardRef<HTMLButtonElement, PaginationItemComp
         icon={icon}
         onClick={() => onClick?.()}
         disabled={disabled}
-        label={type === 'page' ? String(page) : ''}
+        label={type === 'page' ? String(page + 1) : ''}
       />
     );
   },
