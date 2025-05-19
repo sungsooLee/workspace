@@ -54,6 +54,7 @@ const GridBoxComponent = <T extends object>(
   const {
     data = props.data,
     page,
+    pagination,
     totalRows,
     gridFetch,
     columns,
@@ -154,6 +155,12 @@ const GridBoxComponent = <T extends object>(
   const handlePageChange = useCallback(
     (pageNumber: number) => {
       console.log('handlePageChange', pageNumber);
+      // grid config
+      gridFetch?.({
+        size: pagination?.pageSize, // page 객체의 pageSize 사용
+        page: pageNumber,
+      });
+      // prop
       props.pagination?.onPageChange?.(pageNumber);
     },
     [props.pagination],
@@ -166,8 +173,8 @@ const GridBoxComponent = <T extends object>(
    */
   const paginationProps = useMemo(() => {
     // props.pagination이 전달되면 우선 사용
-    if (props.pagination) {
-      return props.pagination;
+    if (pagination) {
+      return pagination;
     }
     return page
       ? {
@@ -176,7 +183,8 @@ const GridBoxComponent = <T extends object>(
           onPageSizeChange: handleChangePageSize, // 메모이제이션된 핸들러 함수 전달
         }
       : undefined; // page가 falsy일 경우 undefined 반환
-  }, [page, handleChangePage, handleChangePageSize, props.pagination]);
+  }, [pagination]);
+  // }, [page, handleChangePage, handleChangePageSize, props.pagination, pagination]);
 
   console.log('grid-box ::', { paginationProps });
 

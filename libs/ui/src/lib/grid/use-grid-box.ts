@@ -31,8 +31,8 @@ const useGridBoxHook = (config: useGridBoxConfig, getData?: UseFormReturn['getVa
         // pagination 컴포넌트용 (테스트 후 위 내용 삭제..)
         pagination: {
           pageNumber: result.pageable?.pageNumber || 0,
-          totalPages: result.pageable?.totalPages || 0,
           pageSize: result.pageable?.pageSize || 10,
+          totalPages: result?.totalPages || 0,
           totalElements: result?.totalElements || 0,
           onPageChange: (newPage: number) => handleGridDataFetch({ page: newPage }),
         },

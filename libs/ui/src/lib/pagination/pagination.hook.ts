@@ -88,7 +88,7 @@ export default function usePagination(props: UsePaginationProps) {
     siblingCount = 1,
     componentName = 'usePagination',
     totalPages = 1,
-    defaultPage = 1,
+    defaultPage = 0,
     disabled = false,
     hideNextButton = false,
     hidePrevButton = false,
@@ -98,6 +98,8 @@ export default function usePagination(props: UsePaginationProps) {
     showLastButton = true,
     ...other
   } = props;
+
+  console.log('pagination.hook ', {pageProp})
 
   const [page, setPageState] = useControlled({
     controlled: pageProp,
@@ -118,11 +120,13 @@ export default function usePagination(props: UsePaginationProps) {
   // https://dev.to/namirsab/comment/2050
   const range = (start: number, end: number) => {
     const length = end - start + 1;
+    // const length = end - start;
     return Array.from({ length }, (_, i) => start + i);
   };
 
   const startPages = range(0, Math.min(boundaryCount, totalPages));
-  const endPages = range(Math.max(totalPages - boundaryCount + 1, boundaryCount + 1), totalPages);
+  const endPages = range(Math.max(totalPages - boundaryCount + 1, boundaryCount + 1), totalPages - 1);
+  // const endPages = range(Math.max(totalPages - boundaryCount + 1, boundaryCount + 1), totalPages);
 
   const siblingsStart = Math.max(
     Math.min(

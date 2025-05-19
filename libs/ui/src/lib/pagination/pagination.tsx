@@ -59,7 +59,7 @@ const PaginationComponent = forwardRef<HTMLDivElement, PaginationComponentProps>
       setPageSize(newValue);
     };
 
-    console.log({ items, pageNumber, totalPages, pageSize, options, props });
+    console.log('pagination.tsx ', { items, pageNumber, totalPages, pageSize, options, props });
     return (
       <div ref={ref} className={cn(styles.root, styles.pagination, className, 'nlp--pagination')}>
         <div className={styles.select_area}>
