@@ -9,7 +9,6 @@ import { IcoPlus } from '@learnway/icons';
 import {
   Button,
   ContentsRow,
-  DynamicFormField,
   GridBox,
   GridImperative,
   GridState,
@@ -318,8 +317,7 @@ const CommonCodeGridComponent = ({
               showTotalCount={true}
               title={t('LABEL.grid.title.commonCdList')}
               pagination={{
-                pageIndex: page,
-                pageSize: size,
+                pageNumber: page,
                 totalRows: totalRows || 0,
                 onPageChange: onPageChange,
                 onPageSizeChange: onPageSizeChange,

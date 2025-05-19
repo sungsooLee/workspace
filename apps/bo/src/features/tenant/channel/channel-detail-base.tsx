@@ -1,32 +1,22 @@
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import {
   Button,
-  ContentsRow,
-  DynamicFormField,
-  useModal,
-  Input,
-  Textarea,
-  Switch,
-  RadioGroupFormField,
   ChipListModalSelectorFormField,
-  Tabs,
-  useGridBox,
+  ContentsRow,
   GridBox,
+  Input,
+  Tabs,
   TextareaFormField,
+  useGridBox,
 } from '@learnway/ui';
-import { FormInfoArea, FormRow, ContentsHistoryInfoFormField } from '@shared/ui';
+import { ContentsHistoryInfoFormField, FormInfoArea, FormRow } from '@shared/ui';
 
 import { cn } from '@learnway/shared';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import styles from './channel-detail-base.module.css';
-
-import { IcoFormRequired } from '@/libs/icons/src';
 
 const ChannelDetailBaseComponent: FC<any> = () => {
   const { t } = useTranslation();
@@ -457,8 +447,7 @@ const ChannelDetailBaseComponent: FC<any> = () => {
           config={userListGridConfig}
           showNumberingColumn={true}
           pagination={{
-            pageSize: 10,
-            pageIndex: 0,
+            pageNumber: 0,
             totalRows: 33,
             onPageChange: setPageIndex,
             onPageSizeChange: setPageSize,
@@ -477,8 +466,7 @@ const ChannelDetailBaseComponent: FC<any> = () => {
           config={userRestraintGridConfig}
           showNumberingColumn={true}
           pagination={{
-            pageSize: 10,
-            pageIndex: 0,
+            pageNumber: 0,
             totalRows: 33,
             onPageChange: setPageIndex,
             onPageSizeChange: setPageSize,

@@ -114,6 +114,8 @@ export interface GridBoxConfig {
     totalRows: number; // 전체 행 수 (page 객체 안에 포함될 수도 있음)
     [key: string]: any; // 필요한 다른 페이지네이션 속성
   };
+
+  pagination?: GridBoxPagination;
 }
 
 export interface GridBoxProps<T extends object = object>
@@ -225,37 +227,67 @@ export interface GridBoxProps<T extends object = object>
   /**
    * 페이지네이션 관련 설정을 포함하는 객체입니다.
    */
-  pagination?: {
-    /**
-     * 페이지당 표시할 행의 개수입니다.
-     */
-    pageSize: number;
+  pagination?: GridBoxPagination;
+  // pagination?: {
+  //   /**
+  //    * 현재 페이지의 인덱스입니다. (0부터 시작)
+  //    */
+  //   pageNumber: number;
+  //
+  //   /**
+  //    * 전체 페이지 개수입니다.
+  //    */
+  //   totalRows: number;
+  //
+  //   /**
+  //    * 페이지 변경 시 호출되는 콜백 함수입니다.
+  //    * @param {number} pageIndex 변경된 페이지 인덱스
+  //    */
+  //   onPageChange?: (pageIndex: number) => void;
+  //
+  //   /**
+  //    * 페이지 크기 변경 시 호출되는 콜백 함수입니다.
+  //    * @param {number} pageSize 변경된 페이지 크기
+  //    */
+  //   onPageSizeChange?: (pageSize: number) => void;
+  //
+  //   /**
+  //    * 페이지 크기 선택 옵션 배열입니다.
+  //    */
+  //   pageSizeOptions?: number[];
+  // };
+}
 
-    /**
-     * 현재 페이지의 인덱스입니다. (0부터 시작)
-     */
-    pageIndex: number;
+export interface GridBoxPagination {
+  /**
+   * 현재 페이지의 인덱스입니다. (0부터 시작)
+   */
+  pageNumber: number;
 
-    /**
-     * 전체 페이지 개수입니다.
-     */
-    totalRows: number;
+  /**
+   * 전체 페이지 개수입니다.
+   */
+  totalRows: number;
 
-    /**
-     * 페이지 변경 시 호출되는 콜백 함수입니다.
-     * @param {number} pageIndex 변경된 페이지 인덱스
-     */
-    onPageChange?: (pageIndex: number) => void;
+  /**
+   * 한 페이지에 표시할 데이터 개수
+   */
+  pageSize?: number;
 
-    /**
-     * 페이지 크기 변경 시 호출되는 콜백 함수입니다.
-     * @param {number} pageSize 변경된 페이지 크기
-     */
-    onPageSizeChange?: (pageSize: number) => void;
+  /**
+   * 페이지 변경 시 호출되는 콜백 함수입니다.
+   * @param {number} pageIndex 변경된 페이지 인덱스
+   */
+  onPageChange?: (pageIndex: number) => void;
 
-    /**
-     * 페이지 크기 선택 옵션 배열입니다.
-     */
-    pageSizeOptions?: number[];
-  };
+  /**
+   * 페이지 크기 변경 시 호출되는 콜백 함수입니다.
+   * @param {number} pageSize 변경된 페이지 크기
+   */
+  onPageSizeChange?: (pageSize: number) => void;
+
+  /**
+   * 페이지 크기 선택 옵션 배열입니다.
+   */
+  pageSizeOptions?: number[];
 }

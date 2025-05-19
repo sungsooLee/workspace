@@ -518,50 +518,9 @@ const fetchPaginatedData = (size: number): PaginationResponse<any> => {
   };
 };
 
-const fetchPaginatedData2 = async ({
-  pageIndex,
-  pageSize,
-  tableState,
-}: {
-  pageIndex: number;
-  pageSize: number;
-  tableState: any; // 추후 재정의 필요
-}): Promise<TableResponse<Person>> => {
-  await new Promise((resolve) => setTimeout(resolve, 500));
-  console.log('페이지사이즈 : ' + pageSize + ', 페이지인덱스' + pageIndex + ' !! API 호출');
-  console.log(tableState);
-  // 전체 100개의 데이터가 있다고 가정
-  const totalRows = 100;
-  const startIndex = pageIndex * pageSize;
-
-  const data = Array.from({ length: pageSize }).map((_, index) => ({
-    firstName: `Name ${startIndex + index}`,
-    lastName: `Surname ${startIndex + index}`,
-    age: Math.floor(Math.random() * 50) + 20,
-    visits: Math.floor(Math.random() * 100),
-    status: Math.random() > 0.5 ? 'Active' : 'Inactive',
-    progress: Math.floor(Math.random() * 100),
-    preview: <Button className="link">미리보기</Button>,
-    download: (
-      <Button className="download" onlyIcon>
-        <IcoDownload width={16} height={16} stroke={'#747D91'} />
-      </Button>
-    ),
-  }));
-
-  return {
-    data,
-    meta: {
-      totalRows,
-      hasNextPage: startIndex + pageSize < totalRows,
-    },
-  };
-};
-
 // 페이지네이션 테이블 컴포넌트
 const PaginationTable = () => {
-  const [pageIndex, setPageIndex] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageNumber, setPageNumber] = useState(0);
   const [tableState, setTableState] = useState({
     sorting: [] as SortingState,
     filters: [] as ColumnFiltersState,
@@ -586,12 +545,11 @@ const PaginationTable = () => {
         columns={columns}
         onStateChange={handleStateChange}
         pagination={{
-          pageSize,
-          pageIndex,
+          pageNumber,
           totalRows: 300,
-          onPageChange: (pageIndex: number) => {
-            setPageIndex(pageIndex);
-          },
+          // onPageChange: (newPageNumber: number) => {
+          //   setPageNumber(newPageNumber);
+          // },
         }}
         multiple={true}
       />
