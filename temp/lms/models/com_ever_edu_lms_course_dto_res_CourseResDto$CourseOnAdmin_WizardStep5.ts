@@ -5,10 +5,10 @@
 import type { com_ever_edu_lms_course_dto_res_CourseResDto$TagNameWrapper_WizardStep5 } from './com_ever_edu_lms_course_dto_res_CourseResDto$TagNameWrapper_WizardStep5';
 export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep5 = {
     wizardStep?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep5.wizardStep;
+    courseId?: number;
     courseType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep5.courseType;
-    courseSubType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep5.courseSubType;
-    thumbnailGroupId?: number;
-    primaryThumbnailId?: number;
+    thumbnailFileGroupId?: number;
+    primaryThumbnailFileId?: number;
     /**
      * 태그 이름 목록
      */
@@ -28,18 +28,6 @@ export namespace com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_Wiza
     export enum courseType {
         ELEARNING = 'ELEARNING',
         CLASS = 'CLASS',
-        LIVE = 'LIVE',
-        EXAM = 'EXAM',
-        SURVEY = 'SURVEY',
-        PACKAGE = 'PACKAGE',
-    }
-    export enum courseSubType {
-        SANGSI_LEARN = 'SANGSI_LEARN',
-        NORMAL = 'NORMAL',
-        SANGSI_ENROLL = 'SANGSI_ENROLL',
-        FACE_TO_FACE = 'FACE_TO_FACE',
-        NONE_FACE_TO_FACE = 'NONE_FACE_TO_FACE',
-        HYBRID = 'HYBRID',
         LIVE = 'LIVE',
         EXAM = 'EXAM',
         SURVEY = 'SURVEY',

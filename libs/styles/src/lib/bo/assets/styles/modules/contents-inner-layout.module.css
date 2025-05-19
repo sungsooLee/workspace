@@ -99,5 +99,8 @@
         @apply mr-[16px] inline-flex h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
       }
     }
+    svg {
+      @apply mr-[4px];
+    }
   }
 }

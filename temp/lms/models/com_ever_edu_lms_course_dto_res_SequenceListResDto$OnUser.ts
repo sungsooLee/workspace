@@ -35,7 +35,6 @@ export namespace com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser {
         LIVE = 'LIVE',
         EXAM = 'EXAM',
         SURVEY = 'SURVEY',
-        PACKAGE = 'PACKAGE',
     }
     export enum enrollQueueStatus {
         QUEUE = 'QUEUE',

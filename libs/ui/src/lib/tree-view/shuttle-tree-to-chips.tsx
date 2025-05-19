@@ -10,7 +10,7 @@ import { IcoXclose, IcoNarrowRight } from '@learnway/icons';
 
 type Props = Pick<TreeProps, 'onCustomNodeClick' | 'treeId' | 'searchKeyword'> & {
   title: string;
-  selectedItems: { key: string; fullPath: string }[];
+  selectedItems: any[]; // 추후 수정 필요 현재 key, FullPath만 받아서 필요한 정보 못 갖고옴.
   sourceData: any;
   onItemsChange: (newItems: { key: string; fullPath: string }[]) => void;
 };
@@ -65,9 +65,9 @@ export const ShuttleTreeToChips = ({
     }
 
     // 이미 선택된 항목 필터링
-    const filteredNodesToAdd = nodesToAdd
-      .filter((n) => !actualSelectedItems.some((item) => item.key === n.key))
-      .map(({ key, fullPath }) => ({ key, fullPath }));
+    const filteredNodesToAdd = nodesToAdd.filter(
+      (n) => !actualSelectedItems.some((item) => item.key === n.key),
+    );
 
     // 새 항목 추가
     const newItems = [...actualSelectedItems, ...filteredNodesToAdd];

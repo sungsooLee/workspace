@@ -5,9 +5,12 @@ import { FormTranslationBox } from '@features/platform/ui/platform/system/transl
 
 import {
   Button,
+  CheckboxGroupFormField,
   ContentsRow,
   DynamicFormField,
   GridBox,
+  Input,
+  TextareaFormField,
   TreeContainer,
   TreeNode,
   TreeView,
@@ -18,10 +21,11 @@ import { cn } from '@learnway/shared';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import { ContentsHistoryInfoFormField, FormRow } from '@shared/ui';
+import { ContentsHistoryInfoFormField, FormRow, SwitchFormField } from '@shared/ui';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
+import { EnFormMode } from '@types';
 import { TenantDetailMenuMappingModal } from './tenant-detail-menu-mapping-modal';
 /** Hook 정의 */
 import {
@@ -45,19 +49,13 @@ const DIVICE_NAME = {
   Mobile: 'Mobile',
 };
 
-const FORM_MODE = {
-  NONE: 'NONE',
-  VIEW: 'VIEW',
-  ADD: 'ADD',
-};
-
 const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
   const routerState = useRouterState();
   const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
-  const [formMode, setFormMode] = useState(FORM_MODE.NONE);
+  const [formMode, setFormMode] = useState(EnFormMode.NONE);
   const [treeData, setTreeData] = useState([]);
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
-  const [isInitMode, setIsInitMode] = useState(true);
+  const [apiMappingMenuList, setApiMappingMenuList] = useState([]);
   const tenantId = routerState.location.state?.tenantId;
 
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, control } =
@@ -95,9 +93,9 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
     if (node && node.key !== '1') {
       setSelectedNode(node);
       if (node) {
-        setFormMode(FORM_MODE.VIEW);
+        setFormMode(EnFormMode.VIEW);
       } else {
-        setFormMode(FORM_MODE.NONE);
+        setFormMode(EnFormMode.NONE);
       }
     }
   };
@@ -139,7 +137,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
           const payload = { ...selectedNode };
           console.log('delete!', payload);
           deleteMenuTenent(payload);
-          setFormMode(FORM_MODE.NONE);
+          setFormMode(EnFormMode.NONE);
         }
       },
     });
@@ -189,12 +187,13 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
       if (detailData.isMobileExposed) {
         deviceNames.push(DIVICE_NAME.Mobile);
       }
+      setApiMappingMenuList(detailData.apiMappingMenuList);
       fetchData({
         ...detailData,
         deviceNames: deviceNames,
         location: location,
       });
-      setFormMode(FORM_MODE.VIEW);
+      setFormMode(EnFormMode.VIEW);
     }
   }, [detailData]);
 
@@ -259,7 +258,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
               size="sm"
               className={layoutStyles.btn_text}
               onClick={() => onFormChange()}
-              disabled={FORM_MODE.NONE === formMode}
+              disabled={EnFormMode.NONE === formMode}
             >
               {t('초기화')}
             </Button>
@@ -267,7 +266,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
               variant="text"
               size="sm"
               className={layoutStyles.btn_text}
-              disabled={FORM_MODE.VIEW !== formMode}
+              disabled={EnFormMode.VIEW !== formMode}
               onClick={handleDeleteMenuTenant}
             >
               {t('삭제')}
@@ -275,7 +274,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
             <Button
               variant="save"
               size="sm"
-              disabled={FORM_MODE.NONE === formMode}
+              disabled={EnFormMode.NONE === formMode}
               onClick={handleUpdateMenuTenant}
             >
               {t('저장')}
@@ -284,71 +283,72 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
         </div>
         <div className={layoutStyles.inner_contents}>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'location'} disabled={true} />
-            </FormRow>
+            <FormRow provider={provider} name={'location'} element={<Input disabled={true} />} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'parentName'} disabled={true} />
-            </FormRow>
+            <FormRow provider={provider} name={'parentName'} element={<Input disabled={true} />} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'menuCode'} disabled={true} />
+            <FormRow provider={provider} name={'menuCode'} element={<Input disabled={true} />}>
               <Button variant="gray" size="sm" disabled>
                 {t('중복')}
               </Button>
             </FormRow>
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'menuName'} disabled={true} />
-            </FormRow>
+            <FormRow provider={provider} name={'menuName'} element={<Input disabled={true} />} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'path'} disabled={true} />
-            </FormRow>
+            <FormRow provider={provider} name={'path'} element={<Input disabled={true} />} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'menuDesc'} disabled={FORM_MODE.NONE === formMode} />
-            </FormRow>
+            <FormRow
+              provider={provider}
+              name={'menuDesc'}
+              element={<TextareaFormField disabled={true} />}
+            />
           </ContentsRow>
           <ContentsRow type={'horizontal'}>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'isHiddenMenu'} disabled={true} />
-            </FormRow>
+            <FormRow
+              provider={provider}
+              name={'menuDesc'}
+              element={<SwitchFormField disabled={true} />}
+            />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={`deviceNames`} disabled={FORM_MODE.NONE === formMode}>
-                <FormTranslationBox />
-              </DynamicFormField>
-            </FormRow>
+            <FormRow
+              provider={provider}
+              name={'deviceNames'}
+              element={<CheckboxGroupFormField disabled={EnFormMode.NONE === formMode} />}
+            />
           </ContentsRow>
           <ContentsRow type={'horizontal'}>
-            <FormRow provider={provider}>
-              <DynamicFormField name="isPersoninfoInclusion" disabled={true} />
-            </FormRow>
+            <FormRow
+              provider={provider}
+              name={'isPersoninfoInclusion'}
+              element={<SwitchFormField disabled={true} />}
+            />
           </ContentsRow>
           <ContentsRow type={'horizontal'}>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'isUsed'} disabled={FORM_MODE.NONE === formMode} />
-            </FormRow>
+            <FormRow
+              provider={provider}
+              name={'isUsed'}
+              element={<SwitchFormField disabled={EnFormMode.NONE === formMode} />}
+            />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'apiMappingMenuList'}>
+            <FormRow
+              provider={provider}
+              name={'apiMappingMenuList'}
+              element={
                 <GridBox
                   data={getValues('apiMappingMenuList') || []}
                   columns={columns}
                   showTotalCount={true}
                   title={t('API')}
                 />
-              </DynamicFormField>
-            </FormRow>
+              }
+            />
           </ContentsRow>
           <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
             <ContentsHistoryInfoFormField />

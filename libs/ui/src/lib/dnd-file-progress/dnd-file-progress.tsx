@@ -210,7 +210,6 @@ const DndFileProgressComponent: FC<DndFileProgressProps> = ({
     // 파일 상태에 따른 컴포넌트 반환 (일치하지 않는 상태는 기본 상태로 처리)
     return statusMap[file.status] || statusMap.default;
   };
-  console.log('errorMessage => ', errorMessage);
   return (
     <div className={cn(styles.start, styles.wrap)}>
       <div className={cn(styles.file_wrap, errorMessage && styles.error)}>

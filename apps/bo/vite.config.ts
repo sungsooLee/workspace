@@ -22,6 +22,14 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 4200,
       host: 'localhost',
+      proxy: {
+        '/juso-api': {
+          target: 'https://business.juso.go.kr',
+          changeOrigin: true,
+          secure: false,
+          rewrite: (path) => path.replace(/^\/juso-api/, ''),
+        },
+      },
     },
     preview: {
       port: 4300,

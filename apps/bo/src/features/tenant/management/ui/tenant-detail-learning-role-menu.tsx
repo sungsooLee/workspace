@@ -1,3 +1,4 @@
+import { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import {
   Button,
   Checkbox,
@@ -12,7 +13,7 @@ import { SectionLayout } from '@widgets/layout/ui/container/section-layout/secti
 import { CellContext, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useRouterState } from '@tanstack/react-router';
-import { useEffect, useState } from 'react';
+
 import { TenantDetailLearningRoleMenuMappingModal } from './tenant-detail-learning-role-menu-mapping-modal';
 import {
   useFetchRole,
@@ -46,7 +47,7 @@ const columns = [
   }),
 ];
 
-export const TenantDetailLearningRoleMenuComponent = ({ siteScope }: any) => {
+export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: any, ref: any) => {
   const routerState = useRouterState();
 
   const [roleTree, setRoleTree] = useState<any>(null);
@@ -65,6 +66,13 @@ export const TenantDetailLearningRoleMenuComponent = ({ siteScope }: any) => {
   const { open: openModal, confirm: openConfirm } = useModal();
 
   const { data: roleData } = useFetchRoleTree(tenantId, siteScope);
+
+  useImperativeHandle(ref, () => ({
+    showAlertModify: () => {
+      console.log('menu ' + siteScope);
+      return true;
+    },
+  }));
 
   const handleMenuSelectionTypeChange = (type: string) => {
     setMenuSelectionType(type === 'option01' ? 'all' : 'custom');
@@ -175,18 +183,10 @@ export const TenantDetailLearningRoleMenuComponent = ({ siteScope }: any) => {
       setApiGridData([]);
     }
   }, [selectedRole, selectedMenu, menuSelectionType, apiUsageState]);
-
+  console.log('1234', roleInfo);
   const renderMenuButtons = (onChange: any, menuSelectionType: any) => {
-    return (
-      <>
-        {/* <RadioGroupFormField
-          options={[
-            { value: 'option01', label: '모든 메뉴/API' },
-            { value: 'option02', label: '직접 선택' },
-          ]}
-          onChange={onChange}
-          value={menuSelectionType === 'all' ? 'option01' : 'option02'}
-        /> */}
+    if (roleInfo)
+      return (
         <Button
           label={'메뉴선택'}
           variant={'gray2'}
@@ -194,8 +194,8 @@ export const TenantDetailLearningRoleMenuComponent = ({ siteScope }: any) => {
           onClick={handleRoleMenuMapping}
           disabled={!selectedRole}
         />
-      </>
-    );
+      );
+    return <Button></Button>;
   };
 
   return (
@@ -205,7 +205,7 @@ export const TenantDetailLearningRoleMenuComponent = ({ siteScope }: any) => {
         initLevel={2}
         treeId={'1'}
         showSearchKeyword
-        type={'DEFAULT'}
+        type={'SHUTTLE_LIST'}
         title={'역할 목록'}
         handleSelectedNodeChange={handleRoleSelect}
       />
@@ -213,8 +213,8 @@ export const TenantDetailLearningRoleMenuComponent = ({ siteScope }: any) => {
         data={roleMenuTree}
         initLevel={2}
         treeId={'2'}
-        showSearchKeyword
         title={'메뉴 설정'}
+        type={'SHUTTLE_LIST'}
         handleSelectedNodeChange={(node: any) => handleMenuSelect(node.key)}
         customButtonNode={renderMenuButtons(handleMenuSelectionTypeChange, menuSelectionType)}
       />
@@ -238,4 +238,4 @@ export const TenantDetailLearningRoleMenuComponent = ({ siteScope }: any) => {
   );
 };
 
-export const TenantDetailLearningRoleMenu = TenantDetailLearningRoleMenuComponent;
+export const TenantDetailLearningRoleMenu = forwardRef(TenantDetailLearningRoleMenuComponent);

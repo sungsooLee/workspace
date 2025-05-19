@@ -32,9 +32,9 @@ export const normalizePath = (path: string) => {
     path = path.slice(1);
   }
 
-  // 끝에 '/'가 없으면 추가
-  if (!path.endsWith('/')) {
-    path += '/';
+  // 끝에 '/'가 있으면 삭제
+  if (path.endsWith('/')) {
+    path = path.slice(0, -1);
   }
 
   return path;

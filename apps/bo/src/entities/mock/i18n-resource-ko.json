@@ -11,6 +11,7 @@
   "MESSAGE": {},
   "LABEL": {
     "message": {
+      "adminSignupNotice": "본인인증 후 관리자 권한 신청을 할 수 있습니다.",
       "searchAccountNotice": "본인 명의의 인증 수단 정보를 정확히 입력해 주세요.",
       "searchAccountResult": "입력하신 정보로 가입된 아이디는\n 아래와 같습니다.",
       "changePasswordSuccess": "비밀번호가 변경되었습니다.",
@@ -51,12 +52,12 @@
       "cancelConfirm": "취소하시겠습니까?",
       "loginExtensionAlert": "로그인 시간을 연장하시겠습니까?",
       "passwordNotChangedGuide": "비밀번호를 변경하지 않으면 로그아웃됩니다.\n서비스를 이용하려면 비밀번호를 변경해 주세요.",
-      "upload" : {
+      "upload": {
         "uploadDescription": "영역을 클릭하거나 파일을 마우스로 끌어 놓으세요"
       },
-      "learningResourceFileUploadModal"  :{
-        "uploaderLabel" :  "파일은 1개당 최대 4GB 이하로 가능 합니다.",
-        "uploaderGuideText" :  "업로드된 동영상은 학습자원목록에서 조회가능합니다.",
+      "learningResourceFileUploadModal": {
+        "uploaderLabel": "파일은 1개당 최대 4GB 이하로 가능 합니다.",
+        "uploaderGuideText": "업로드된 동영상은 학습자원목록에서 조회가능합니다.",
         "sizeError": "4GB 이하의 파일을 업로드 하세요.",
         "extensionError": "지원하는 형식의 파일을 업로드 하세요."
       }
@@ -89,6 +90,32 @@
       },
       "menu": {}
     },
+    "modal": {
+      "addressSearch": {
+        "title": "주소 찾기",
+        "placeholder": "도로명, 지번, 건물명 검색",
+        "zipCodePrefix": "우 ",
+        "guideText": "이렇게 검색해보세요!",
+        "roadAddress": "도로명 + 건물번호",
+        "jibunAddress": "동/읍/면/리 + 번지",
+        "sampleRoadAddress": "예) 테헤란로 510, 샘플하나더",
+        "sampleJibunAddress": "예) 삼성동 171-2, 샘플 하나더",
+        "error": {
+          "e0001": "승인되지 않은 KEY 입니다. 관리자에게 문의해 주세요.",
+          "e0005": "검색어를 입력해주세요.",
+          "e0006": "시도명으로는 검색이 불가합니다.",
+          "e0008": "검색어는 두글자 이상 입력되어야 합니다.",
+          "e0009": "숫자만으로는 검색이 불가합니다.",
+          "e0010": "80글자를 초과한 검색어는 검색이 불가합니다.",
+          "e0011": "10자리를 초과하는 숫자가 포함된 검색어는 검색이 불가합니다.",
+          "e0012": "특수문자와 숫자만으로 이루어진 검색어는 검색이 불가합니다.",
+          "e0013": "특수문자를 제거 후 검색합니다.",
+          "e0014": "개발승인키 기간이 만료되어 서비스를 이용하실 수 없습니다. 관리자에게 문의해 주세요.",
+          "e0015": "검색결과가 9천건이 초과하는 검색은 불가합니다.",
+          "-999": "시스템 에러가 발생했습니다. 관리자에게 문의해 주세요."
+        }
+      }
+    },
     "common": {
       "code": {
         "common": "공통",
@@ -99,6 +126,10 @@
         "tenantCategory": "테넌트 카테고리"
       },
       "login": "로그인",
+      "logout": "로그아웃",
+      "myInfo": "나의 정보",
+      "myRole": "나의 권한",
+      "itsm": "문의하기 ITSM",
       "loginExtension": "로그인연장",
       "caution": "유의사항",
       "resend": "재전송",
@@ -177,7 +208,8 @@
       "disable": "미사용",
       "learnerMenu": "학습자 메뉴",
       "hrdCenterMenu": "HRD센터 메뉴",
-      "categoryInfo": "카테고리 정보"
+      "categoryInfo": "카테고리 정보",
+      "trainingPlaceInfo": "교육장소 정보"
     },
     "link": {
       "multilingual": "다국어관리"
@@ -275,8 +307,17 @@
         "courseName": "과정명",
         "useYn": "사용여부",
         "userGroupSetting": "유저그룹 설정",
-        "useYn": "사용여부",
-        "select": "선택"
+        "select": "선택",
+        "mapImageAttachment": "약도 이미지 첨부",
+        "division": "구분",
+        "placeCode": "장소 코드",
+        "placeName": "장소 명",
+        "tenantName": "테넌트 명",
+        "linkAddress": "링크 주소",
+        "note": "비고",
+        "isReservationUsed": "예약 가능",
+        "isUsed": "사용 가능",
+        "address": "주소"
       },
       "validation": {
         "needInput": "{{code}}를 입력해 주세요.",
@@ -289,10 +330,26 @@
         "idSave": "아이디 저장"
       },
       "radio": {
-        "select1": "선택1"
+        "select1": "선택1",
+        "reservationAvailable": "예약 가능",
+        "reservationNotAvailable": "예약 불가",
+        "usable": "사용 가능",
+        "unusable": "사용 불가"
       },
       "tooltip": {
         "tenantCategoryIsUsed": "테넌트 - 카테고리 관리에서 사용할 카테고리를 선택할 수 있습니다."
+      },
+      "guideText": {
+        "mapImageAttachment": "※ 첨부파일은 png, jpg, gif 형식만 업로드 가능하며, 이미지 사이즈는 500 X 500으로 업로드해 주세요.",
+        "clickToAttachFile": "버튼 클릭 후 파일을 첨부하세요.",
+        "notVisibleToUsers": "※ 사용자에게 노출되지 않습니다."
+      },
+      "placeholder": {
+        "linkAddress": "전체 URL을 입력하세요. (예 : https:// campus.hyundai.com/doejf.log/map.jpg)",
+        "note": "비고 내용을 입력하세요.",
+        "zipNo": "우편번호",
+        "address": "기본주소",
+        "addressDetail": "상세주소"
       }
     },
     "button": {
@@ -314,7 +371,11 @@
       "duplication": "중복",
       "commonCdGroupList": "공통코드그룹목록",
       "courseOpen": "과정 개설",
-      "preview": "미리보기"
+      "preview": "미리보기",
+      "retrieve": "검색",
+      "select": "선택",
+      "attachFile": "파일첨부",
+      "searchZipNo": "우편번호찾기"
     },
     "all": "전체",
     "confirm": {
@@ -330,8 +391,12 @@
         "title": "삭제 하시겠습니까?",
         "message": "하위 {{type}} 존재 시 모두 삭제되며, 삭제 후 복구할 수 없습니다."
       },
-      "reset:": {
+      "reset": {
         "title": "초기화 하시겠습니까?"
+      },
+      "logout": {
+        "title": "로그아웃 하시겠습니까?",
+        "message": "로그아웃을 하면 다시 로그인해야 서비스를 이용할 수 있습니다.\n확인 버튼을 클릭하면 로그아웃 됩니다."
       }
     },
     "platform": {

@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { cloneElement, ComponentType, FC, isValidElement } from 'react';
 import { Controller } from 'react-hook-form';
 import { DynamicFormFieldProps } from './type';
 /**
@@ -8,26 +8,40 @@ import { DynamicFormFieldProps } from './type';
 const DynamicFormFieldComponent: FC<DynamicFormFieldProps> = ({
   control,
   name,
-  component: Component,
+  component,
   children,
   ...props
 }) => {
-  if (!control || !name || !Component) return;
+  if (!control || !name || !component) return;
   return (
     <Controller
       control={control}
       name={name}
-      render={({ field: { onChange, onBlur, value, ref } }) => (
-        <Component
-          {...props}
-          name={name}
-          onChange={onChange}
-          onBlur={onBlur}
-          value={value}
-          ref={ref}
-          control={control}
-        />
-      )}
+      render={({ field: { onChange, onBlur, value, ref } }) => {
+        if (isValidElement(component)) {
+          return cloneElement(component, {
+            ...props,
+            ref,
+            control,
+            name,
+            onChange,
+            onBlur,
+            value,
+          } as any);
+        }
+        const Component = component as ComponentType<any>;
+        return (
+          <Component
+            {...props}
+            ref={ref}
+            control={control}
+            name={name}
+            onChange={onChange}
+            onBlur={onBlur}
+            value={value}
+          />
+        );
+      }}
     />
   );
 };

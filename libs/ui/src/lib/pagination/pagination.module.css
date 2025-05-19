@@ -10,7 +10,7 @@
     @apply mx-auto flex h-[32px] items-center;
   }
   .btn_number {
-    @apply inline-flex h-[32px] w-[32px] items-center justify-center rounded-[50%];
+    @apply inline-flex h-[32px] w-auto min-w-[32px] items-center justify-center rounded-[50%] px-[5px];
     & + .btn_number {
       @apply ml-[8px];
     }

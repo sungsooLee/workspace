@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, forwardRef, useEffect, useState, useImperativeHandle } from 'react';
 import { cn } from '@learnway/shared';
 import {
   Button,
@@ -7,14 +7,15 @@ import {
   TreeBox,
   TreeNode,
   ChipListModalSelectorFormField,
+  Input,
+  RadioGroupFormField,
 } from '@learnway/ui';
 import { t } from 'i18next';
 import { useRouterState } from '@tanstack/react-router';
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import { FormRow, ContentsHistoryInfoFormField, FormSubTitle } from '@shared/ui';
+import { FormRow, ContentsHistoryInfoFormField, FormSubTitle, SwitchFormField } from '@shared/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-// import { ScopeRadioGroup } from './scope-radio-group';
 import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 import {
   useFetchRole,
@@ -29,10 +30,11 @@ import {
 } from '../service/tenant-detail-tree.service';
 import { FormDisplay } from '@features/form/ui/form-display';
 import { EnFormMode, EnTenantScope, EnCompanyScope, EnChannelScope, EnDeptScope } from '@types';
-import { CompanyModal } from './company-modal';
+import { CompanyShuttleModal, ChannelChoiceModal } from '@features/shared';
+import { isEqual } from 'lodash';
 
 //type fo , bo
-const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
+const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref: any) => {
   const routerState = useRouterState();
   const [formMode, setFormMode] = useState(EnFormMode.NONE);
   const [selectedRoleNode, setSelectedRoleNode] = useState<any>(null);
@@ -72,13 +74,21 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
       refetch();
     },
   });
-  const { provider, onSubmit, clearFormError, fetchData } = useDynamicForm(formConfig);
+  const { provider, onSubmit, clearFormError, fetchData, onFormChange } =
+    useDynamicForm(formConfig);
   const { data, refetch } = useFetchRoleTree(tenantId, siteScope);
   const { data: roleDetail } = useFetchRole(selectedRoleNode?.roleCode || undefined);
 
   const clearAllFormErrors = () => {
     formConfig.builders.forEach((item) => clearFormError(item.name));
   };
+
+  useImperativeHandle(ref, () => ({
+    showAlertModify: () => {
+      console.log('tree ' + siteScope);
+      return true;
+    },
+  }));
 
   const handleOnSubmit = async (formData: any) => {
     const parentRoleId = formData.parentRoleId === 'root' ? undefined : formData.parentRoleId;
@@ -88,7 +98,9 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
       siteScope: siteScope,
       parentRoleId: parentRoleId,
     };
-    console.log(payload);
+    if (payload.companyScope !== EnCompanyScope.MANUAL) payload.companyIds = [];
+    if (payload.channelScope !== EnChannelScope.MANUAL) payload.channelIds = [];
+    if (payload.deptScope !== EnDeptScope.MANUAL) payload.deptIds = [];
     switch (formMode) {
       case EnFormMode.ADD:
         createRole(payload);
@@ -102,8 +114,23 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
 
   // handle 역할 트리 노드 클릭
   const handleRoleSelect = (node: TreeNode) => {
-    setSelectedRoleNode(node);
-    if (formMode !== EnFormMode.VIEW) setFormMode(EnFormMode.VIEW);
+    if (node.key !== 'root') {
+      setSelectedRoleNode(node);
+      if (formMode !== EnFormMode.VIEW) setFormMode(EnFormMode.VIEW);
+    }
+    // else {
+    //   if (isEqual(provider.originalValues, provider.getValues())) {
+    //     clearAllFormErrors();
+    //     const initData: { [key: string]: any } = {};
+    //     formConfig.builders.forEach((item) => {
+    //       initData[item.name] = item.value;
+    //     });
+    //     fetchData(initData);
+    //     setFormMode(EnFormMode.NONE);
+    //   } else {
+    //     alert('다른 자료');
+    //   }
+    // }
   };
 
   // 추가 버튼
@@ -147,23 +174,25 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
   }, [roleDetail]);
 
   const renderNodeButtons = (node: TreeNode, level: number) => {
-    return (
-      <div className={'gap-10px flex'}>
-        <div className={'flex items-center'}>
-          <Button
-            onClick={(e) => {
-              e.stopPropagation();
-              handlerAddButionClick(node);
-            }}
-            variant="gray2"
-            size={'xs'}
-            type={'button'}
-          >
-            {level === 0 ? '역할 추가' : '하위 역할 추가'}
-          </Button>
+    if (roleInfo)
+      return (
+        <div className="gap-10px flex">
+          <div className="flex items-center">
+            <Button
+              onClick={(e) => {
+                e.stopPropagation();
+                handlerAddButionClick(node);
+              }}
+              variant="gray2"
+              size={'xs'}
+              type={'button'}
+            >
+              {level === 0 ? '역할 추가' : '하위 역할 추가'}
+            </Button>
+          </div>
         </div>
-      </div>
-    );
+      );
+    return '';
   };
 
   return (
@@ -171,34 +200,37 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
       <TreeBox
         data={roleTreeData}
         initLevel={2}
-        treeId={'1'}
+        treeId="1"
         showSearchKeyword
-        title={'역할 목록'}
+        title={t('역할 목록')}
+        selectedNode={selectedRoleNode}
         renderNodeButtons={renderNodeButtons}
         handleSelectedNodeChange={handleRoleSelect}
         clientTree
-        type={'DEFAULT'}
+        type="SHUTTLE_LIST"
       />
       <div className={cn(styles.start, styles.wrap)}>
         <div className={cn(layoutStyles.inner)}>
           <form onSubmit={onSubmit(handleOnSubmit)}>
             <FormSubTitle
-              label={'역할 정보'}
+              label={t('역할 정보')}
               actionNode={
                 <>
                   <Button
-                    label={'초기화'}
-                    variant={'text'}
-                    size={'sm'}
+                    label={t('초기화')}
+                    variant="text"
+                    size="sm"
                     className="btn_text"
                     disabled={formMode === EnFormMode.NONE}
+                    onClick={() => onFormChange()}
                   />
                   <Button
-                    label={'삭제'}
-                    variant={'text'}
-                    size={'sm'}
+                    label={t('삭제')}
+                    variant="text"
+                    size="sm"
                     className="btn_text"
                     disabled={
+                      !roleInfo ||
                       formMode !== EnFormMode.VIEW ||
                       selectedRoleNode?.key === 'root' ||
                       selectedRoleNode?.children.length > 0
@@ -206,9 +238,9 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
                     onClick={handleDeleteButtonClick}
                   />
                   <Button
-                    label={'저장'}
-                    variant={'save'}
-                    size={'sm'}
+                    label={t('저장')}
+                    variant="save"
+                    size="sm"
                     type="submit"
                     disabled={formMode === EnFormMode.NONE}
                   />
@@ -218,77 +250,95 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
             />
             <div className={styles.contents_wrap}>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'roleId'} disabled={true} />
-                </FormRow>
+                <FormRow provider={provider} name={'roleId'} element={<Input disabled={true} />} />
 
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'roleCode'} disabled={true} />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'roleCode'}
+                  element={<Input disabled={true} />}
+                />
               </ContentsRow>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField
-                    name={'name'}
-                    maxLength={40}
-                    disabled={formMode === EnFormMode.NONE}
-                  />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'name'}
+                  element={
+                    <Input maxLength={40} disabled={formMode === EnFormMode.NONE || !roleInfo} />
+                  }
+                />
               </ContentsRow>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField
-                    name={'description'}
-                    maxLength={300}
-                    disabled={formMode === EnFormMode.NONE}
-                  />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'description'}
+                  element={
+                    <Input maxLength={300} disabled={formMode === EnFormMode.NONE || !roleInfo} />
+                  }
+                />
+              </ContentsRow>
+              RadioGroupFormField
+              <ContentsRow>
+                radio-group
+                <FormRow
+                  provider={provider}
+                  name={'tenantScope'}
+                  element={
+                    <RadioGroupFormField maxLength={300} disabled={formMode === EnFormMode.NONE} />
+                  }
+                />
               </ContentsRow>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'tenantScope'} disabled={formMode === EnFormMode.NONE} />
-                </FormRow>
-              </ContentsRow>
-              <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'companyScope'} disabled={formMode === EnFormMode.NONE} />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'companyScope'}
+                  element={
+                    <RadioGroupFormField maxLength={300} disabled={formMode === EnFormMode.NONE} />
+                  }
+                />
               </ContentsRow>
               <FormDisplay
                 provider={provider}
                 dependencies={[{ name: 'companyScope', value: EnCompanyScope.MANUAL }]}
               >
                 <div className="chiplist_modal_wrap">
-                  <FormRow provider={provider}>
-                    <DynamicFormField name={'companyIds'}>
+                  <FormRow
+                    provider={provider}
+                    name={'companyIds'}
+                    element={
                       <ChipListModalSelectorFormField
-                        chipList={{
-                          labelField: 'name',
-                          valueField: 'value',
-                          hideBorder: true,
-                        }}
                         modalConfig={{
+                          content: <CompanyShuttleModal />,
                           title: '',
                           width: 'xl',
-                          content: <CompanyModal />,
+                        }}
+                        chipList={{
+                          labelField: 'name',
+                          valueField: 'companyId',
+                          wordwrap: true,
                         }}
                       />
-                    </DynamicFormField>
-                  </FormRow>
+                    }
+                  />
                 </div>
               </FormDisplay>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'channelScope'} disabled={formMode === EnFormMode.NONE} />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'channelScope'}
+                  element={
+                    <RadioGroupFormField maxLength={300} disabled={formMode === EnFormMode.NONE} />
+                  }
+                />
               </ContentsRow>
               <FormDisplay
                 provider={provider}
                 dependencies={[{ name: 'channelScope', value: EnChannelScope.MANUAL }]}
               >
                 <div className="chiplist_modal_wrap">
-                  <FormRow provider={provider}>
-                    <DynamicFormField name={'channelIds'}>
+                  <FormRow
+                    provider={provider}
+                    name={'channelIds'}
+                    element={
                       <ChipListModalSelectorFormField
                         chipList={{
                           labelField: 'name',
@@ -298,28 +348,29 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
                         modalConfig={{
                           title: '',
                           width: 'xl',
-                          content: <CompanyModal />,
+                          content: <ChannelChoiceModal />,
                         }}
                       />
-                    </DynamicFormField>
-                  </FormRow>
+                    }
+                  />
                 </div>
               </FormDisplay>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField
-                    name={'deptScope'}
-                    disabled={formMode === EnFormMode.NONE}
-                  ></DynamicFormField>
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'deptScope'}
+                  element={<RadioGroupFormField disabled={formMode === EnFormMode.NONE} />}
+                />
               </ContentsRow>
               <FormDisplay
                 provider={provider}
                 dependencies={[{ name: 'deptScope', value: EnDeptScope.MANUAL }]}
               >
                 <div className="chiplist_modal_wrap">
-                  <FormRow provider={provider}>
-                    <DynamicFormField name={'deptIds'}>
+                  <FormRow
+                    provider={provider}
+                    name={'dipsIds'}
+                    element={
                       <ChipListModalSelectorFormField
                         chipList={{
                           labelField: 'name',
@@ -329,17 +380,19 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
                         modalConfig={{
                           title: '',
                           width: 'xl',
-                          content: <CompanyModal />,
+                          content: <ChannelChoiceModal />,
                         }}
                       />
-                    </DynamicFormField>
-                  </FormRow>
+                    }
+                  />
                 </div>
               </FormDisplay>
               <ContentsRow type={'horizontal'}>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'isUsed'} disabled={formMode === EnFormMode.NONE} />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'isUsed'}
+                  element={<SwitchFormField disabled={formMode === EnFormMode.NONE} />}
+                />
               </ContentsRow>
               <ContentsHistoryInfoFormField />
             </div>
@@ -350,11 +403,11 @@ const TenantDetailLearningRoleTreeComponent: FC<any> = ({ siteScope }: any) => {
   );
 };
 
-export const TenantDetailLearningRoleTree = TenantDetailLearningRoleTreeComponent;
+export const TenantDetailLearningRoleTree = forwardRef(TenantDetailLearningRoleTreeComponent);
 
 const formBaseConfig: DynamicFormConfig = {
   builders: [
-    { name: 'parentRoleId', type: 'hidden', value: '', format: 'string' },
+    { name: 'parentRoleId', label: '', type: 'hidden', value: '', format: 'string' },
     {
       name: 'roleId',
       type: 'text',
@@ -400,7 +453,14 @@ const formBaseConfig: DynamicFormConfig = {
         },
       ],
     },
-    { name: 'companyIds', type: 'custom', value: [] },
+    {
+      name: 'companyIds',
+      label: '',
+      type: 'custom',
+      format: 'array',
+      value: [],
+      placeholder: '',
+    },
     {
       name: 'channelScope',
       type: 'radio-group',
@@ -425,7 +485,7 @@ const formBaseConfig: DynamicFormConfig = {
         },
       ],
     },
-    { name: 'channelIds', type: 'custom', value: [] },
+    { name: 'channelIds', label: '', type: 'custom', value: [] },
     {
       name: 'deptScope',
       type: 'radio-group',
@@ -450,7 +510,7 @@ const formBaseConfig: DynamicFormConfig = {
         },
       ],
     },
-    { name: 'deptIds', type: 'custom', value: [] },
+    { name: 'deptIds', label: '', type: 'custom', value: [] },
     {
       name: 'isUsed',
       type: 'switch',
@@ -476,5 +536,29 @@ const formBaseConfig: DynamicFormConfig = {
     companyScope: { required: true },
     channelScope: { required: true },
     deptScope: { required: true },
+    companyIds: {
+      required: {
+        fn: (value) => {
+          return value.companyScope === EnCompanyScope.MANUAL && value.companyIds?.length <= 0;
+        },
+        message: t('회사를 선택 하세요.'),
+      },
+    },
+    channelIds: {
+      required: {
+        fn: (value) => {
+          return value.channelScope === EnChannelScope.MANUAL && value.channelIds?.length <= 0;
+        },
+        message: t('채널을 선택 하세요.'),
+      },
+    },
+    deptIds: {
+      required: {
+        fn: (value) => {
+          return value.deptScope === EnDeptScope.MANUAL && value.deptIds?.length <= 0;
+        },
+        message: t('팀을 선택 하세요.'),
+      },
+    },
   },
 };

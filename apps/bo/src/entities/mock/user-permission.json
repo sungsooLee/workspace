@@ -1,0 +1,11 @@
+{
+  "roles": ["test-role"],
+  "menus": [],
+  "apis": [
+    { "key": "systemCode.list", "hasAccess": true },
+    { "key": "systemCode.detail", "hasAccess": true },
+    { "key": "commonCodeGroup.list", "hasAccess": true },
+    { "key": "commonCodeGroup.create", "hasAccess": true },
+    { "key": "commonCodeGroup.update", "hasAccess": true }
+  ]
+}

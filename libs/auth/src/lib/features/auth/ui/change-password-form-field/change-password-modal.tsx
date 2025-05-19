@@ -46,19 +46,13 @@ const ChangePasswordModalComponent = () => {
         <ModalTitle>{t('LABEL.common.passwordChange')}</ModalTitle>
         <ModalBody>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'oldPassword'} />
-            </FormRow>
+            <FormRow provider={provider} name={'oldPassword'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'password'} />
-            </FormRow>
+            <FormRow provider={provider} name={'password'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'confirm_password'} />
-            </FormRow>
+            <FormRow provider={provider} name={'confirm_password'} />
           </ContentsRow>
 
           <NoticeBox title={t('LABEL.common.caution')} className={styles.signup_noti}>

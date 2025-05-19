@@ -1,6 +1,6 @@
 import { useFieldArray } from 'react-hook-form';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, DynamicFormField } from '@learnway/ui';
+import { Button, DynamicFormField, Input } from '@learnway/ui';
 import { CODE_GROUP } from '@learnway/config';
 import { z } from '@learnway/shared';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
@@ -62,135 +62,37 @@ function RouteComponent() {
         </ContentsButtons>
         <MainContents>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'channel'} />
-            </FormRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'channel'} />
-            </FormRow>
+            <FormRow provider={provider} name={'channel'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'contentName'} disabled />
-            </FormRow>
+            <FormRow provider={provider} name={'contentName'} element={<Input disabled={true} />} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'language'} />
-            </FormRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'language_detail'} />
-            </FormRow>
+            <FormRow provider={provider} name={'language'} />
+            <FormRow provider={provider} name={'language_detail'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'language2'} />
-            </FormRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'language2_detail'} />
-            </FormRow>
+            <FormRow provider={provider} name={'language2'} />
+            <FormRow provider={provider} name={'language2_detail'} />
           </ContentsRow>
 
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'title'} />
-            </FormRow>
+            <FormRow provider={provider} name={'title'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'subdivision'} />
-            </FormRow>
+            <FormRow provider={provider} name={'subdivision'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'check'} />
-            </FormRow>
+            <FormRow provider={provider} name={'check'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'tenant'} />
-            </FormRow>
+            <FormRow provider={provider} name={'tenant'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <span></span>
-            </FormRow>
+            <FormRow provider={provider} name={'channel2'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'channel2'} />
-            </FormRow>
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider}>
-              <span></span>
-            </FormRow>
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider} name={'userInfos'}>
-              <div>
-                <div>
-                  <Button
-                    type={'button'}
-                    variant="gray"
-                    size="sm"
-                    onClick={() =>
-                      append({
-                        'user-age': '',
-                        'user-name': '',
-                        'user-hobby': '',
-                      })
-                    }>
-                    추가
-                  </Button>
-                </div>
-                <div>
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>이름</th>
-                        <th>나이</th>
-                        <th>취미</th>
-                        <th>삭제</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {fields.map((_, index) => (
-                        <tr key={index}>
-                          <td>
-                            <DynamicFormField name={`userInfos.${index}.user-name`} />
-                          </td>
-                          <td>
-                            <DynamicFormField
-                              provider={provider}
-                              name={`userInfos.${index}.user-age`}
-                            />
-                          </td>
-                          <td>
-                            <DynamicFormField
-                              provider={provider}
-                              name={`userInfos.${index}.user-hobby`}
-                            />
-                          </td>
-                          <td>
-                            <Button
-                              type={'button'}
-                              variant="gray"
-                              size="sm"
-                              onClick={() => remove(index)}>
-                              삭제
-                            </Button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </FormRow>
-          </ContentsRow>
-          <ContentsRow>
-            <TestComponent provider={provider} />
+            <FormRow provider={provider} name={'userInfos'} />
           </ContentsRow>
         </MainContents>
         <SubContents>
@@ -356,46 +258,6 @@ const detailConfig: DynamicFormConfig = {
       },
     },
     {
-      name: 'userInfos',
-      type: 'array',
-      label: '사용자정보모음',
-      fields: [
-        {
-          name: 'user-name',
-          type: 'text',
-        },
-        {
-          name: 'user-age',
-          type: 'text',
-        },
-        {
-          name: 'user-hobby',
-          type: 'dropdown',
-          options: [
-            {
-              value: '',
-              label: '취미를 선택해주세요',
-            },
-            {
-              value: 'soccer',
-              label: '축구',
-            },
-            {
-              value: 'basketball',
-              label: '농구',
-            },
-          ],
-        },
-      ],
-      value: [
-        {
-          'user-name': '',
-          'user-age': '',
-          'user-hobby': '',
-        },
-      ],
-    },
-    {
       name: 'eLeaning',
       type: 'text',
       label: '이러닝 카테고리',
@@ -445,24 +307,4 @@ const detailConfig: DynamicFormConfig = {
   validator: {
     /*channel2: z.string().required(),*/
   },
-};
-const TestComponent: FC<any> = ({ provider }) => {
-  return (
-    <FormRow provider={provider}>
-      <div>
-        <div className={'a'}>
-          <DynamicFormField name={'a'} />
-        </div>
-        <div className={'b'}>
-          <DynamicFormField name={'b'} />
-        </div>
-        <div className={'c'}>
-          <DynamicFormField name={'c'} />
-        </div>
-        <div className={'d'}>
-          <DynamicFormField name={'d'} />
-        </div>
-      </div>
-    </FormRow>
-  );
 };

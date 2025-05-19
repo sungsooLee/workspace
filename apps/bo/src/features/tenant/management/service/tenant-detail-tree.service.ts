@@ -116,30 +116,13 @@ export const transformMenuApiDataToTreeData = (apiData: any) => {
 
     return nodes.map((node: any) => {
       // 새로운 노드 객체 생성
+
       const transformedNode = {
+        ...node,
+
         // 필수 트리 속성
         key: node.menuId.toString(), // menuId를 key로 사용
         title: node.menuName || node.menuCode, // title이 없으면 menuCode 사용
-
-        // 원본 데이터 속성 유지
-        menuId: node.menuId,
-        sortOrder: node.sortOrder,
-        isUsed: node.isUsed, // isUsed을 isUsed로 변환
-        isDeleted: node.isDeleted,
-        isMobileExposed: node.isMobileExposed,
-        isWebExposed: node.isWebExposed,
-        tenantId: node.tenantId,
-        menuCode: node.menuCode,
-        path: node.path,
-        depth: node.depth,
-        isShortCutArea: node.isShortCutArea,
-        isPersoninfoInclusion: node.isPersoninfoInclusion,
-        menuScope: node.menuScope,
-        menuStartDate: node.menuStartDate,
-        menuEndDate: node.menuEndDate,
-        parentId: node.parentId,
-        tenantMappingMenuId: node.tenantMappingMenuId,
-
         parentKey: node.parentId?.toString(), // parentId를 parentKey로 변환
         children: node.children || [],
       };
@@ -167,13 +150,10 @@ export const transformRoleMenuApiDataToTreeData = (apiData: any) => {
     return nodes.map((node: any) => {
       // 새로운 노드 객체 생성
       const transformedNode = {
+        ...node,
         // 필수 트리 속성
         key: node.menuId, // menuId를 key로 사용
         title: node.menuName, // title이 없으면 menuCode 사용
-
-        // 원본 데이터 속성 유지
-        roleId: node.roleId,
-        menuId: node.menuId,
         parentKey: node.parentId?.toString(), // parentId를 parentKey로 변환
         children: node.children || [],
       };
@@ -235,27 +215,10 @@ export const transformRoleApiDataToTreeData = (apiData: any) => {
     return nodes.map((node: any) => {
       // 새로운 노드 객체 생성
       const transformedNode = {
+        ...node,
         // 필수 트리 속성
         key: node.roleId, // menuId를 key로 사용
         title: node.name, // title이 없으면 menuCode 사용
-
-        // 원본 데이터 속성 유지
-        roleId: node.roleId,
-        roleCode: node.roleCode,
-        parentRoleId: node.parentRoleId,
-        name: node.name,
-        description: node.description,
-        tenantScope: node.tenantScope,
-        tenantId: node.tenantId,
-        companyScope: node.companyScope,
-        companyIds: node.companyIds,
-        deptScope: node.deptScope,
-        deptIds: node.deptIds,
-        isUsed: node.isUsed,
-        createdBy: node.createdBy,
-        createdDate: node.createdDate,
-        lastModifiedBy: node.lastModifiedBy,
-        modifiedDate: node.modifiedDate,
 
         parentKey: node.parentId || 'root', // parentId를 parentKey로 변환
         children: node.children || [],

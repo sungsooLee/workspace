@@ -1,3 +1,4 @@
+import { keepPreviousData } from '@tanstack/react-query';
 import MenuMangeService from '../api/menu-manage';
 
 export const queryKeys = {
@@ -25,6 +26,7 @@ export const menuManageQueryOptions = {
   detail: (menuId: string) => ({
     queryKey: queryKeys.detail(menuId),
     queryFn: () => MenuMangeService.fetchMenuDetail(menuId),
+    placeholder: keepPreviousData,
   }),
 };
 

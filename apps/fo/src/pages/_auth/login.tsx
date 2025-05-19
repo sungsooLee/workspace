@@ -87,21 +87,15 @@ function RouteComponent() {
         <div className={cn(styles.auth_box, 'auth--box')}>
           <div className="no_line col">
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'username'} />
-              </FormRow>
+              <FormRow provider={provider} name={'username'} />
             </ContentsRow>
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'password'} />
-              </FormRow>
+              <FormRow provider={provider} name={'password'} />
             </ContentsRow>
           </div>
 
           <ContentsRow className={styles.login_info}>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'saveId'} />
-            </FormRow>
+            <FormRow provider={provider} name={'saveId'} />
             {/*<Link to="/progress-status">진행 현황</Link>*/}
             <div className={styles.info}>
               <Link to="/search-account">{t('LABEL.common.accountPasswordSearch')}</Link>

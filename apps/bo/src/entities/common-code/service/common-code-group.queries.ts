@@ -10,7 +10,6 @@ export const queryKeys = {
     cdGroupId?: string;
     cdGroupName?: string;
     isUsed?: string;
-    // cdName?: string;
   }) => [...queryKeys.all, 'list', params] as const,
   detail: (cdGroupId: string) => [...queryKeys.all, 'detail', cdGroupId] as const,
 };
@@ -51,11 +50,13 @@ export const commonCodeGroupQueryOptions = {
   }),
 };
 
+export const apiKeys = {
+  list: 'commonCodeGroup.list',
+  create: 'commonCodeGroup.create',
+  update: 'commonCodeGroup.update',
+} as const;
+
 export const mutateOptions = {
-  create: () => ({
-    mutationFn: (payload: CreateCommonCodeGroup) => CommonCodeGroupService.createCodeGroup(payload),
-  }),
-  update: () => ({
-    mutationFn: (payload: CreateCommonCodeGroup) => CommonCodeGroupService.updateCodeGroup(payload),
-  }),
+  create: () => (payload: CreateCommonCodeGroup) => CommonCodeGroupService.createCodeGroup(payload),
+  update: () => (payload: CreateCommonCodeGroup) => CommonCodeGroupService.updateCodeGroup(payload),
 };

@@ -31,15 +31,6 @@ export default class MenuMangerService {
   }
 
   /**
-   * 메뉴 트리 조회
-   * @param tenantId
-   */
-  // static fetchMenuTree(tenantId?: any): Promise<any> {
-  //   return httpService.get<any>(
-  //     `${PMSApiPrefix()}/menus${tenantId ? `?tenantId=${tenantId}` : ''}`,
-  //   );
-  // }
-  /**
    * 메뉴 중복 확인
    * @param menuCode 메뉴 코드
    */

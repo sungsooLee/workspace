@@ -96,9 +96,7 @@ const PasswordVerifyModalComponent = () => {
           </EmbededAlert>
 
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'password'} />
-            </FormRow>
+            <FormRow provider={provider} name={'password'} />
           </ContentsRow>
         </ModalBody>
         <ModalFooter>
