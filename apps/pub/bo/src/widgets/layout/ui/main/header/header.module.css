@@ -15,42 +15,16 @@
       }
     }
     .nav_area {
-      .nav {
-        ul {
-          @apply flex justify-start gap-[48px];
-          > li {
-            a {
-              @apply title_bo_4_r inline-flex h-[40px] items-center text-[var(--white)];
-              &:hover {
-                @apply font-bold;
-              }
-            }
-          }
-        }
-      }
+      @apply block;
     }
     .util {
-      @apply absolute right-[32px] top-[6px] flex items-center;
+      @apply absolute right-[36px] top-[6px] flex items-center;
       button:not(:nth-child(1)) {
         @apply ml-[20px];
       }
     }
     .quick_menu {
-      @apply absolute bottom-[8px] right-0 min-w-[344px];
-      ul {
-        @apply flex;
-        > li {
-          a {
-            @apply body_2_b inline-flex h-[40px] items-center text-[var(--white)];
-          }
-        }
-        & + button {
-          @apply body_2_b relative pl-[20px];
-          &::before {
-            @apply absolute left-0 top-1/2 -mt-[10px] h-[20px] w-[1px] bg-white font-bold opacity-15 content-[''];
-          }
-        }
-      }
+      @apply absolute bottom-[8px] right-0 min-w-[344px] pr-[32px];
     }
   }
 }
