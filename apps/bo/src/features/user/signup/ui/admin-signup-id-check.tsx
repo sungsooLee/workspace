@@ -1,5 +1,5 @@
-import { DynamicFormConfig } from '@/libs/hooks/src/lib/form-builder/type';
-import { useDynamicForm } from '@/libs/hooks/src/lib/form-builder/use-dynamic-form';
+// import { DynamicFormConfig } from '@/libs/hooks/src/lib/form-builder/type';
+import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 import { useSignupStore } from '@features/user/signup';
 import { adminItems } from '@features/user/signup/ui/signup-select';
 import { IcoCaution } from '@learnway/icons';

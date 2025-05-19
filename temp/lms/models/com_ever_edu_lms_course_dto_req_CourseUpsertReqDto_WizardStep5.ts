@@ -5,8 +5,8 @@
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TagNameWrapper_WizardStep5 } from './com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TagNameWrapper_WizardStep5';
 export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep5 = {
     wizardStep: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep5.wizardStep;
-    thumbnailGroupId?: number;
-    primaryThumbnailId?: number;
+    thumbnailFileGroupId?: number;
+    primaryThumbnailFileId?: number;
     /**
      * 태그 이름 목록
      */

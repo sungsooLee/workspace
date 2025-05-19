@@ -158,7 +158,7 @@ const DynamicFormContainer: FC<FormRowProps> = ({
           {...formConfig}
           {...provider}
           name={name}
-          component={FormConfigComponent || element}
+          component={element || FormConfigComponent}
         />
         {children}
       </div>

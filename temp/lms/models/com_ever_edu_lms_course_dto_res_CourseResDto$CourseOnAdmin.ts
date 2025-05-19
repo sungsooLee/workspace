@@ -16,8 +16,8 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
      */
     isPublished?: boolean;
     wizardStep?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.wizardStep;
+    courseId?: number;
     courseType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.courseType;
-    courseSubType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.courseSubType;
     language?: string;
     channelId?: number;
     courseName?: string;
@@ -35,12 +35,9 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
     isWhiteList?: boolean;
     whiteList?: Array<com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto>;
     coordinatorId?: number;
-    coordinatorName?: string;
     coordinatorTelNo?: string;
     operatorId?: number;
-    operatorName?: string;
     operatorTelNo?: string;
-    hasConfigEnroll?: boolean;
     isEnrollRequired?: boolean;
     approvalLineType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.approvalLineType;
     isMaxEnrollQuotaRestricted?: boolean;
@@ -87,7 +84,7 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
      * 복습 제한 여부
      */
     isReviewRestricted?: boolean;
-    maxReviewPeriod?: number;
+    maxReviewPeriodMonths?: number;
     /**
      * 캡처 방지 여부
      */
@@ -131,8 +128,8 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
     textbookPurchaseAllocationRate?: number;
     contentPurchaseCost?: number;
     contentPurchaseAllocationRatio?: number;
-    thumbnailGroupId?: number;
-    primaryThumbnailId?: number;
+    thumbnailFileGroupId?: number;
+    primaryThumbnailFileId?: number;
     /**
      * 태그 이름 목록
      */
@@ -152,18 +149,6 @@ export namespace com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin {
     export enum courseType {
         ELEARNING = 'ELEARNING',
         CLASS = 'CLASS',
-        LIVE = 'LIVE',
-        EXAM = 'EXAM',
-        SURVEY = 'SURVEY',
-        PACKAGE = 'PACKAGE',
-    }
-    export enum courseSubType {
-        SANGSI_LEARN = 'SANGSI_LEARN',
-        NORMAL = 'NORMAL',
-        SANGSI_ENROLL = 'SANGSI_ENROLL',
-        FACE_TO_FACE = 'FACE_TO_FACE',
-        NONE_FACE_TO_FACE = 'NONE_FACE_TO_FACE',
-        HYBRID = 'HYBRID',
         LIVE = 'LIVE',
         EXAM = 'EXAM',
         SURVEY = 'SURVEY',

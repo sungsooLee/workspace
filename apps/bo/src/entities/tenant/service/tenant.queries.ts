@@ -7,13 +7,14 @@ import { Tenant } from '../../../types/entities/tenant';
 
 export const queryKeys = {
   all: ['tenants'] as const,
-  detail: (tenantId: number) => [...queryKeys.all, tenantId] as const,
+  page: ['tenants-page'] as const,
+  detail: (tenantId: number) => [...queryKeys.page, tenantId] as const,
 };
 
 export const tenantQueryOptions = {
-  all: (params: any) => ({
-    queryKey: queryKeys.all,
-    queryFn: () => TenantService.fetchAllTenant(params),
+  page: (params: any) => ({
+    queryKey: queryKeys.page,
+    queryFn: () => TenantService.fetchPageTenant(params),
     cacheTime: 0,
     staleTime: 0,
   }),

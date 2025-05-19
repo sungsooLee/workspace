@@ -1,4 +1,4 @@
-import { AuthForm, AuthFormData } from '@/libs/auth/src/lib/features/auth';
+import { AuthForm, AuthFormData } from '@learnway/auth';
 import { useSignupStore } from '@features/user/signup';
 import { cn } from '@learnway/shared';
 import { Button, Stepper } from '@learnway/ui';

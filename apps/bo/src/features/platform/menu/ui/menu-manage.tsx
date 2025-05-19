@@ -573,7 +573,7 @@ export const MenuManage = ({ menuScope }: any) => {
             <ContentsRow>
               <FormRow
                 provider={provider}
-                name={'location'}
+                name={'path'}
                 element={<Input disabled={formMode === FORM_MODE.NONE} />}
               />
             </ContentsRow>
@@ -582,7 +582,7 @@ export const MenuManage = ({ menuScope }: any) => {
             <ContentsRow>
               <FormRow
                 provider={provider}
-                name={'location'}
+                name={'menuDesc'}
                 element={<TextareaFormField disabled={formMode === FORM_MODE.NONE} />}
               />
             </ContentsRow>

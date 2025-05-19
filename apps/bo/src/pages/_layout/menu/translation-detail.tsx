@@ -54,7 +54,7 @@ function RouteComponent() {
           <ContentsRow>
             <h1 className={'title_3_b'}>기본정보</h1>
           </ContentsRow>
-          <ContentsRow>
+          {/* <ContentsRow>
             <DynamicFormField provider={provider} name={'gnb'} />
           </ContentsRow>
           <ContentsRow>
@@ -70,7 +70,7 @@ function RouteComponent() {
             <ContentsRow key={tr.name}>
               <DynamicFormField provider={provider} name={tr.name} />
             </ContentsRow>
-          ))}
+          ))} */}
         </MainContents>
       </PageContainer>
     </form>

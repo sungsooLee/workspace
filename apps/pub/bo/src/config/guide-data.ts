@@ -640,15 +640,15 @@ export const guideData = [
     lastUpdateDate: '2025-05-12',
     remarks: '5/12 새로운 케이스 추가', // 비고
   },
-  {
-    screenName: 'CMS/학습자원등록_학습자원조회',
-    pageId: 'learning/learningSearch',
-    screenId: '',
-    pageType: 'Page',
-    completionDate: '2025-03-20',
-    lastUpdateDate: '',
-    remarks: '작업 완료(레이아웃)', // 비고
-  },
+  // {
+  //   screenName: 'CMS/학습자원등록_학습자원조회',
+  //   pageId: 'learning/learningSearch',
+  //   screenId: '',
+  //   pageType: 'Page',
+  //   completionDate: '',
+  //   lastUpdateDate: '',
+  //   remarks: '', // 비고
+  // },
   {
     screenName: 'CMS/학습자원 일괄설정',
     pageId: 'learning/popup-learningSetting',
