@@ -82,7 +82,9 @@ function RouteComponent() {
   ];
 
   return (
-    <PageContainer scrollHidden={false}>
+    <PageContainer
+      scrollHidden={selectedTabKey === 'attrbute' || selectedTabKey === 'widget' ? false : true}
+    >
       {selectedTabKey === 'menu01' && (
         <ContentsButtons>
           <LinkBox>
@@ -112,7 +114,7 @@ function RouteComponent() {
           type="progress"
           size="sm"
           className={styles.progress_wrap}
-          selectedTabKey={'menu01'}
+          selectedTabKey={'attrbute'}
           onTabChange={handleTabChange}
         />
       </MainContents>

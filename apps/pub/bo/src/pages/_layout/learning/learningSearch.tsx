@@ -15,7 +15,7 @@ import {
   Input,
   Dropdown,
 } from '@learnway/ui';
-import { IcoRefresh02, IcoSearch } from '@learnway/icons';
+import { IcoRefresh02, IcoSearch, IcoFormRequired } from '@learnway/icons';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
@@ -47,6 +47,10 @@ function RouteComponent() {
                     <div className={searchStyles.item}>
                       <label htmlFor="name-select1" className={searchStyles.label}>
                         <span className={searchStyles.text}>테넌트</span>
+                        {/* 필수 케이스 */}
+                        <span className={cn(searchStyles.status, searchStyles.required)}>
+                          <IcoFormRequired width={8} height={8} />
+                        </span>
                       </label>
                       <div className={searchStyles.box}>
                         <Dropdown
@@ -63,6 +67,10 @@ function RouteComponent() {
                     <div className={searchStyles.item}>
                       <label htmlFor="name-channel" className={searchStyles.label}>
                         <span className={searchStyles.text}>채널</span>
+                        {/* 필수 케이스 */}
+                        <span className={cn(searchStyles.status, searchStyles.required)}>
+                          <IcoFormRequired width={8} height={8} />
+                        </span>
                       </label>
                       <div className={searchStyles.box}>
                         <Dropdown
@@ -98,6 +106,66 @@ function RouteComponent() {
                       </label>
                       <div className={searchStyles.box}>
                         <Input id="name-course" type="text" placeholder="과정명으로 조회하세요." />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className={searchStyles.item_wrap}>
+                  <div className={searchStyles.inner}>
+                    <div className={searchStyles.item}>
+                      <label htmlFor="name-select5" className={searchStyles.label}>
+                        <span className={searchStyles.text}>외주여부</span>
+                      </label>
+                      <div className={searchStyles.box}>
+                        <Dropdown
+                          options={options}
+                          value={selectedValues}
+                          onChange={(selected) => setSelectedValues(selected)}
+                          variant="default"
+                          size={'sm'}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className={searchStyles.inner}>
+                    <div className={searchStyles.item}>
+                      <label htmlFor="name-select6" className={searchStyles.label}>
+                        <span className={searchStyles.text}>사용가능</span>
+                      </label>
+                      <div className={searchStyles.box}>
+                        <Dropdown
+                          className={searchStyles.select_option}
+                          options={[
+                            { value: 'type1', label: '전체' },
+                            { value: 'type2', label: '항목' },
+                          ]}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className={searchStyles.inner}>
+                    <div className={searchStyles.item}>
+                      <label htmlFor="name-select7" className={searchStyles.label}>
+                        <span className={searchStyles.text}>교육활용</span>
+                      </label>
+                      <div className={searchStyles.box}>
+                        <Dropdown
+                          options={options}
+                          value={selectedValues}
+                          onChange={(selected) => setSelectedValues(selected)}
+                          variant="default"
+                          size={'sm'}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className={searchStyles.inner}>
+                    <div className={searchStyles.item}>
+                      <label htmlFor="name-owner" className={searchStyles.label}>
+                        <span className={searchStyles.text}>담당자</span>
+                      </label>
+                      <div className={searchStyles.box}>
+                        <Input id="name-owner" type="text" placeholder="담당자를 입력하세요." />
                       </div>
                     </div>
                   </div>

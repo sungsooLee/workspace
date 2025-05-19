@@ -18,6 +18,9 @@
           @apply opacity-40;
         }
       }
+      img {
+        @apply opacity-40;
+      }
     }
   }
 

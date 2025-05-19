@@ -1,7 +1,7 @@
 /* test-detail.module.css */
 .wrap {
   & > [class*='notice'] {
-    @apply mb-[32px] mt-[8px];
+    @apply mb-[32px];
   }
   .row_wrap {
     @apply flex w-full flex-wrap justify-between;
