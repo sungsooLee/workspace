@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from '@tanstack/react-router';
 import { Button, Panel } from '@learnway/ui';
+import { IcoPlus } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import styles from './licenses-history.module.css';
 import searchBoxStyles from './search-box.module.css';
@@ -15,6 +16,10 @@ const LicensesHistoryComponent = () => {
             <li>자격증 취득 이력을 등록할 수 있으며, 승인 현황을 조회할 수 있습니다.</li>
           </ul>
         </div>
+        <Button variant="line" size="lg">
+          <IcoPlus width={20} height={20} stroke="#00AFD5" />
+          취득이력등록
+        </Button>
       </div>
 
       <Panel
