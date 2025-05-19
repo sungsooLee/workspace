@@ -22,6 +22,7 @@ const useGridBoxHook = (config: useGridBoxConfig, getData?: UseFormReturn['getVa
             ...state.page,
             pageSize: result.pageable.pageSize,
             pageIndex: result.pageable.pageNumber || 0,
+            pageNumber: result.pageable.pageNumber || 0,
             totalRows: result.totalElements,
           },
         }),

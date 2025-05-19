@@ -547,9 +547,9 @@ const PaginationTable = () => {
         pagination={{
           pageNumber,
           totalRows: 300,
-          // onPageChange: (newPageNumber: number) => {
-          //   setPageNumber(newPageNumber);
-          // },
+          onPageChange: (newPageNumber: number) => {
+            setPageNumber(newPageNumber);
+          },
         }}
         multiple={true}
       />

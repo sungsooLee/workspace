@@ -282,7 +282,7 @@ const GridBoxComponent = <T extends object>(
       {paginationProps && (
         <Pagination
           totalPages={paginationProps.totalRows}
-          pageNumber={paginationProps.pageIndex}
+          pageNumber={paginationProps.pageNumber}
           onChange={handlePageChange}
         />
       )}

@@ -108,12 +108,7 @@ export interface GridBoxConfig {
    * 페이지네이션 상태 객체 (선택적)입니다.
    * 현재 페이지 정보 등을 포함합니다.
    */
-  page?: {
-    pageIndex: number; // 현재 페이지 인덱스 (0부터 시작)
-    pageSize: number; // 페이지당 행 수
-    totalRows: number; // 전체 행 수 (page 객체 안에 포함될 수도 있음)
-    [key: string]: any; // 필요한 다른 페이지네이션 속성
-  };
+  page?: GridBoxPagination;
 
   pagination?: GridBoxPagination;
 }
@@ -273,6 +268,11 @@ export interface GridBoxPagination {
    * 한 페이지에 표시할 데이터 개수
    */
   pageSize?: number;
+
+  /**
+   * 한 페이지에 표시할 데이터 개수 (삭제 예정)
+   */
+  pageIndex?: number;
 
   /**
    * 페이지 변경 시 호출되는 콜백 함수입니다.
