@@ -9,12 +9,27 @@ import { useTenantAttributeCompany } from '@entities/tenant/service/tenant-attri
 const TenantDetailAttributeComponent: FC<any> = () => {
   const [selectedTabKey, setSelectedTabKey] = useState<string>('FO');
   const [companyTabItem, setCompaynTabItem] = useState<any>([]);
+  const [attributeRawData, setAttributeRawData] = useState<any>();
 
   const routerState = useRouterState();
-  const tenantId = routerState.location.state?.tenantId || '1';
+  const tenantId = routerState.location.state?.tenantId;
+  const tenantName = routerState.location.state?.tenantName;
 
   const renderTabContent = (companyId: string) => {
-    return <TenantDetailAttributeCompany tenantId={tenantId} companyId={companyId} />;
+    console.log('companyId', companyId);
+    if (!attributeRawData || !attributeRawData.companyTenantList) return '';
+    const attributeData = attributeRawData.companyTenantList.find(
+      (i: any) => i.companyId == companyId,
+    );
+    console.log('attributeData', attributeData);
+    return (
+      <TenantDetailAttributeCompany
+        tenantId={tenantId}
+        attributeData={attributeData}
+        companyId={companyId}
+        tenantName={tenantName}
+      />
+    );
   };
   const handleTabChange = (tabKey: string) => {
     if (tabKey !== selectedTabKey) {
@@ -26,23 +41,25 @@ const TenantDetailAttributeComponent: FC<any> = () => {
 
   useEffect(() => {
     if (data) {
-      const tabItems = [];
-      let tabNo = 1;
-      tabItems.push({
-        title: '현대자동차',
-        key: 'tab' + tabNo,
-        content: renderTabContent('companyId'),
-      });
-      tabNo++;
-      tabItems.push({
-        title: '기아자동차',
-        key: 'tab' + tabNo,
-        content: renderTabContent('companyId'),
-      });
-      setCompaynTabItem(tabItems);
-      setSelectedTabKey('tab1');
+      setAttributeRawData(data);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (attributeRawData) {
+      let companyId: any = null;
+      const tabItems = attributeRawData.companyTenantList.map((item: any) => {
+        if (!companyId) companyId = item.companyId;
+        return {
+          title: item.companyName,
+          key: `tab_${item.companyId}`,
+          content: renderTabContent(`${item.companyId}`),
+        };
+      });
+      setCompaynTabItem(tabItems);
+      setSelectedTabKey(`tab_${companyId}`);
+    }
+  }, [attributeRawData]);
 
   return (
     <Tabs
