@@ -30,6 +30,7 @@ export default class UsersService {
     return httpService.delete<any>(`${PMSApiPrefix()}/users/delete-account`);
   }
   static getUser() {
-    return httpService.get<any>(`${PMSApiPrefix()}/users/me`);
+    return httpService.get<any>(`/pms-module/user/api/v1/users/me`);
+    // return httpService.get<any>(`${PMSApiPrefix()}/users/me`);
   }
 }
