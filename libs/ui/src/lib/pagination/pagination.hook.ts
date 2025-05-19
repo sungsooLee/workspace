@@ -15,7 +15,7 @@ export interface UsePaginationProps {
    * The total number of pages.
    * @default 1
    */
-  count?: number;
+  totalPages?: number;
   /**
    * 한 페이지에 보여질 데이터의 개수입니다.
    * @default 10
@@ -87,7 +87,7 @@ export default function usePagination(props: UsePaginationProps) {
     boundaryCount = 1,
     siblingCount = 1,
     componentName = 'usePagination',
-    count = 1,
+    totalPages = 1,
     defaultPage = 1,
     disabled = false,
     hideNextButton = false,
@@ -122,15 +122,15 @@ export default function usePagination(props: UsePaginationProps) {
     return Array.from({ length }, (_, i) => start + i);
   };
 
-  const startPages = range(1, Math.min(boundaryCount, count));
-  const endPages = range(Math.max(count - boundaryCount + 1, boundaryCount + 1), count);
+  const startPages = range(1, Math.min(boundaryCount, totalPages));
+  const endPages = range(Math.max(totalPages - boundaryCount + 1, boundaryCount + 1), totalPages);
 
   const siblingsStart = Math.max(
     Math.min(
       // Natural start
       page - siblingCount,
       // Lower boundary when page is high
-      count - boundaryCount - siblingCount * 2 - 1,
+      totalPages - boundaryCount - siblingCount * 2 - 1,
     ),
     // Greater than startPages
     boundaryCount + 2,
@@ -144,7 +144,7 @@ export default function usePagination(props: UsePaginationProps) {
       boundaryCount + siblingCount * 2 + 2,
     ),
     // Less than endPages
-    count - boundaryCount - 1,
+    totalPages - boundaryCount - 1,
   );
 
   // Basic list of items to render
@@ -158,7 +158,7 @@ export default function usePagination(props: UsePaginationProps) {
     // eslint-disable-next-line no-nested-ternary
     ...(siblingsStart > boundaryCount + 2
       ? ['start-ellipsis']
-      : boundaryCount + 1 < count - boundaryCount
+      : boundaryCount + 1 < totalPages - boundaryCount
         ? [boundaryCount + 1]
         : []),
 
@@ -167,10 +167,10 @@ export default function usePagination(props: UsePaginationProps) {
 
     // End ellipsis
     // eslint-disable-next-line no-nested-ternary
-    ...(siblingsEnd < count - boundaryCount - 1
+    ...(siblingsEnd < totalPages - boundaryCount - 1
       ? ['end-ellipsis']
-      : count - boundaryCount > boundaryCount
-        ? [count - boundaryCount]
+      : totalPages - boundaryCount > boundaryCount
+        ? [totalPages - boundaryCount]
         : []),
 
     ...endPages,
@@ -188,7 +188,7 @@ export default function usePagination(props: UsePaginationProps) {
       case 'next':
         return page + 1;
       case 'last':
-        return count;
+        return totalPages;
       default:
         return null;
     }
@@ -201,7 +201,7 @@ export default function usePagination(props: UsePaginationProps) {
         return page === 1;
       case 'next':
       case 'last':
-        return page === count;
+        return page === totalPages;
       default:
         return false;
     }
@@ -234,7 +234,7 @@ export default function usePagination(props: UsePaginationProps) {
   return {
     items,
     currentPage: page,
-    totalPages: count,
+    totalPages: totalPages,
     ...other,
   };
 }

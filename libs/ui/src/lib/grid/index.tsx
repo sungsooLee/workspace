@@ -746,7 +746,7 @@ const GridComponent = forwardRef(
       );
     };
 
-    console.log('pagination', pagination);
+    // console.log('pagination', pagination);
     //// 페이지네이션 렌더링
     const renderPagination = () => {
       if (!pagination) return null;

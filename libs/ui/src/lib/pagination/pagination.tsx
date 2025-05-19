@@ -16,7 +16,7 @@ export interface PaginationComponentProps {
   showFirstButton?: boolean;
   showLastButton?: boolean;
   page?: number; // 현제 페이지
-  count: number; // 전체 페이지 수
+  totalPages: number; // 전체 페이지 수
   size?: string; // 버튼 size
   boundaryCount?: number; // ellipsis 전후로 표시할 page 버튼 개수
   siblingCount?: number; // 현제 페이지 전후로 표시할 page 버튼 개수
@@ -54,12 +54,12 @@ const PaginationComponent = forwardRef<HTMLDivElement, PaginationComponentProps>
       value: size,
       label: `${size}개씩 보기`,
     }));
-    console.log({ items, currentPage, totalPages, pageSize, options });
 
     const handleChange = (newValue?: any) => {
       setPageSize(newValue);
     };
 
+    console.log({ items, currentPage, totalPages, pageSize, options, props });
     return (
       <div ref={ref} className={cn(styles.root, styles.pagination, className, 'nlp--pagination')}>
         <div className={styles.select_area}>

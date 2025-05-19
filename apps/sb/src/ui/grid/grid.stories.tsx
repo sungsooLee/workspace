@@ -28,7 +28,7 @@ import {
   useModal,
 } from '@learnway/ui';
 import { IcoDownload, IcoSetting } from '@learnway/icons';
-import { getRandomId } from '@learnway/shared';
+import { DATE_TIME_FORMAT, formatDate, getRandomId } from '@learnway/shared';
 import { PaginationResponse } from '../../../../bo/src/types';
 
 export default {
@@ -1170,3 +1170,55 @@ const editGridData = Array(10)
     radio: '',
     dropdown: '',
   }));
+
+// 컬럼 유형
+export const TemplateColumnType: any = (args: any) => {
+  const data = Array(5)
+    .fill(null)
+    .map((_, i) => ({
+      id: getRandomId(),
+      text: `text_${i}`,
+      number: 10000,
+      date: new Date(),
+      button: `button_${i}`,
+      link: `link_${i}`,
+    }));
+  const columns = [
+    { accessorKey: 'text', size: 150 },
+    { accessorKey: 'number', size: 150 },
+    {
+      accessorKey: 'date',
+      size: 170,
+      cell: (info: CellContext<any, Date>) =>
+        formatDate(info.getValue(), DATE_TIME_FORMAT.DATETIME_SEC),
+    },
+    {
+      accessorKey: 'button',
+      size: 150,
+      cell: (info: CellContext<any, Date>) => {
+        return (
+          <Button
+            label={'버튼'}
+            variant={'point'}
+            size={'xs'}
+            stopPropagation
+            onClick={() => console.log('cell button click')}
+          />
+        );
+      },
+    },
+    {
+      accessorKey: 'link',
+      size: 150,
+      // cell: (info: CellContext<any, any>) => (
+      //   <Link className={'text-blue-600'} to={'/'}>
+      //     아이디 찾기
+      //   </Link>
+      // ),
+    },
+  ];
+  return (
+    <GridBox data={data} columns={columns} title={'목록'} onRowSelect={(row) => console.log(row)} />
+  );
+};
+TemplateColumnType.storyName = '컬럼 유형';

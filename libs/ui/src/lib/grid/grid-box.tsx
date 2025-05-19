@@ -170,6 +170,8 @@ const GridBoxComponent = <T extends object>(
       : undefined; // page가 falsy일 경우 undefined 반환
   }, [page, handleChangePage, handleChangePageSize, props.pagination]);
 
+  console.log('grid-box ::', { paginationProps });
+
   return (
     <div className={cn(styles.table_box)}>
       <div className={styles.table_info}>
