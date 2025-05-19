@@ -38,7 +38,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       nxViteTsPaths(),
       nxCopyAssetsPlugin(['*.md']),
-      !isTest && TanStackRouterVite(),
+      !isTest && TanStackRouterVite({ autoCodeSplitting: true }),
       viteReact(),
       svgr(),
     ],

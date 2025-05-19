@@ -38,10 +38,10 @@ build:
     - pnpm config set auto-install-peers true
   script:
     - pnpm install --no-frozen-lockfile
-    - npx nx build fo --c=${CONFIG}
-    - npx nx build bo --c=${CONFIG}
+    # - npx nx build fo --c=${CONFIG}
+    # - npx nx build bo --c=${CONFIG}
     #퍼블리싱 가이드 프로젝트
-    - npx nx build pb-fo
+    # - npx nx build pb-fo
     - npx nx build pb-bo
   artifacts:
     paths:
@@ -51,24 +51,46 @@ build:
       - dist/apps/pb-bo
 deploy:
   stage: deploy
-  image: docker
-  dependencies: # build 단계의 artifacts 를 사용.
+  # image: docker
+  # dependencies: # build 단계의 artifacts 를 사용.
+  #   - build
+  # before_script:
+  #   - apk update
+  #   - apk add --no-cache aws-cli
+  #   - echo "AWS CLI version:"
+  #   - aws --version
+  # script:
+  #   - echo "AWS CLI Version:"
+  #   - aws --version
+  #   - echo "Configuring AWS credentials..."
+  #   - aws configure list
+  #   - echo "Syncing to S3..."
+  #   - aws s3 sync dist/apps/fo s3://${S3_BUCKET}/fo --delete
+  #   - aws s3 sync dist/apps/bo s3://${S3_BUCKET}/bo --delete
+  #   - aws s3 sync dist/apps/pb-fo s3://${S3_BUCKET}/pb-fo --delete
+  #   - aws s3 sync dist/apps/pb-bo s3://${S3_BUCKET}/pb-bo --delete
+  image: amazon/aws-cli:2.15.0
+  dependencies:
     - build
-  before_script:
-    - apk update
-    - apk add --no-cache aws-cli
-    - echo "AWS CLI version:"
-    - aws --version
+  variables:
+    AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID_DEV}
+    AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY_DEV}
+    AWS_DEFAULT_REGION: ap-northeast-2
   script:
-    - echo "AWS CLI Version:"
+    # 디버그 정보 출력
+    - echo "AWS CLI 버전:"
     - aws --version
-    - echo "Configuring AWS credentials..."
-    - aws configure list
-    - echo "Syncing to S3..."
-    - aws s3 sync dist/apps/fo s3://${S3_BUCKET}/fo --delete
-    - aws s3 sync dist/apps/bo s3://${S3_BUCKET}/bo --delete
-    - aws s3 sync dist/apps/pb-fo s3://${S3_BUCKET}/pb-fo --delete
-    - aws s3 sync dist/apps/pb-bo s3://${S3_BUCKET}/pb-bo --delete
+    - echo "현재 디렉토리 구조:"
+    - ls -la
+    - echo "배포 대상 디렉토리 구조:"
+    - ls -la dist/apps/
+
+    # S3 배포 명령어
+
+    - echo "pb-bo 디렉토리 배포 중..."
+    - aws s3 sync dist/apps/pb-bo s3://${S3_BUCKET_DEV}/pb-bo --delete
+
+    - echo "배포 완료!"
   rules:
     - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH =~ /^build-.*/'
       variables:

@@ -1,0 +1,13 @@
+.start {
+  &.history_wrap {
+    .list_flex {
+      @apply flex;
+    }
+    .list_info {
+      @apply mt-[33px];
+    }
+    .search_date {
+      @apply mt-[24px];
+    }
+  }
+}

@@ -1,5 +1,4 @@
 import {
-  Component,
   FormEvent,
   FormEventHandler,
   ForwardRefExoticComponent,
@@ -9,7 +8,7 @@ import {
   RefObject,
 } from 'react';
 import { UseFormReturn } from 'react-hook-form';
-import { CODE_GROUP } from '@learnway/config';
+import { CODE_GROUP_TYPE } from '../code/constants';
 
 export interface SelectOption {
   label: string;
@@ -332,19 +331,23 @@ export type ApiCallback<T> = (response: any) => SelectOption[];
  * @template T - API 응답 데이터의 타입.
  */
 export interface OptionsConfig<T = any> {
-  type?: 'self' | 'target'; // 옵션 생성 방식: 'self'는 자체 옵션, 'target'은 타 필드에 의존. 기본값 self
-  codeGroup?: CODE_GROUP; // 옵션을 가져오기 위한 코드 그룹.
-  target?: string; // 타 필드의 이름. optionsConfig가 다른 필드에 의존할 경우 사용.
-  api?: any; // 옵션을 가져오기 위한 API 함수.
-  callback?: ApiCallback<T>; // API 응답 데이터를 SelectOption 배열로 변환하는 콜백 함수.
+  codeGroup?: CODE_GROUP_TYPE; // 옵션을 가져오기 위한 코드 그룹.
   options?: SelectOption[]; // 미리 정의된 정적 옵션
-  excludeValues?: string[];
-  filter?: {
-    target: string;
-    value: string;
-    fn: (options: SelectOption[]) => SelectOption[];
-  };
+  [key: string]: any; // TODO. 기존 소스 에러 방지를 위해 추가해 둠
 }
+// TODO. Form 은 외부에서 주입이 가능하지만 SearchBox 는 외부 주입이 불가능 하므로 아래와 같은
+// TODO. 옵션을 이용하던지 SearchBox에서 외부 options 를 주입하는 방식도 좋아 보입니다.
+// EX) options = {name : [...nameOptions], code: [...codeOptions]}
+/**
+ * target?: string; // 타 필드의 이름. optionsConfig가 다른 필드에 의존할 경우 사용.
+ * excludeValues?: string[];
+ *  type?: 'self' | 'target'; // 옵션 생성 방식: 'self'는 자체 옵션, 'target'은 타 필드에 의존. 기본값 self
+ *   filter?: {
+ *     target: string;
+ *     value: string;
+ *     fn: (options: SelectOption[]) => SelectOption[];
+ *   };
+ */
 
 /*===================================
     searchBox Type 정의
@@ -506,4 +509,9 @@ export type DynamicFormContextType = {
   infoArea: ReactNode | null; // Info Araea
   onChangeGuideText: (text: string | ReactNode) => void;
   onChangeInfoArea: (text: ReactNode | null) => void;
+};
+
+export type UseFormOptionsProps = {
+  options?: SelectOption[];
+  optionsConfig?: OptionsConfig;
 };
