@@ -16,7 +16,7 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
   const router = useRouter();
 
   const gridConfig = {
-    query: tenantQueryOptions.all,
+    query: tenantQueryOptions.page,
     columns: [
       {
         name: 'no1',

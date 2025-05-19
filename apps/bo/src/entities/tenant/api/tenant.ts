@@ -2,10 +2,14 @@ import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
 
 import { Tenant } from '../../../types/entities/tenant';
+import { PageableContent } from '@types';
 
 export default class TenantService {
+  static fetchPageTenant(payload: any) {
+    return httpService.get<PageableContent<any>>(`${PMSApiPrefix()}/tenants`);
+  }
   static fetchAllTenant(payload: any) {
-    return httpService.get<any>(`${PMSApiPrefix()}/tenants`, payload);
+    return httpService.get<any>(`${PMSApiPrefix()}/tenants`, { size: 100000 });
   }
   static fetchTenant(id: number) {
     return httpService.get<Tenant>(`${PMSApiPrefix()}/tenants/${id}`);
