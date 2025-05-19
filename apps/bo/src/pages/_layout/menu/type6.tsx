@@ -74,9 +74,13 @@ function RouteComponent() {
 
   const codeStore = async () => {
     console.log(
-      'cms.content.ContentsTypeCode => ',
-      await getCode(CODE_GROUP['cms.content.ContentsTypeCode']),
+      'pms.multilingual.LanguageType => ',
+      await getCode(CODE_GROUP['pms.multilingual.LanguageType']),
     );
+  };
+
+  const manualCodeStore = async () => {
+    console.log('manual.code => ', await getCode(CODE_GROUP['manual.code']));
   };
 
   useEffect(() => {
@@ -93,6 +97,9 @@ function RouteComponent() {
         </ContentsRow>
         <ContentsRow>
           <Button onClick={codeStore}>코드 조회</Button>
+        </ContentsRow>
+        <ContentsRow>
+          <Button onClick={manualCodeStore}>수동 조회</Button>
         </ContentsRow>
         <ContentsRow>
           <input

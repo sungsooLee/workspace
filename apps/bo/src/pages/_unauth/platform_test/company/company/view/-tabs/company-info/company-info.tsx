@@ -24,14 +24,10 @@ const CompanyInfoComponent = () => {
         }
       />
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'companyType'} />
-        </FormRow>
+        <FormRow provider={provider} name={'companyType'} />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'name'} />
-        </FormRow>
+        <FormRow provider={provider} name={'name'} />
       </ContentsRow>
     </form>
   );

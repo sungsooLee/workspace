@@ -145,8 +145,8 @@ export default function usePagination(props: UsePaginationProps) {
   // Basic list of items to render
   // for example itemList = ['first', 'previous', 1, 'ellipsis', 4, 5, 6, 'ellipsis', 10, 'next', 'last']
   const itemList = [
-    ...(showFirstButton && page > 1 ? ['first'] : []),
-    ...(hidePrevButton || page === 1 ? [] : ['previous']),
+    ...(showFirstButton ? ['first'] : []),
+    ...(hidePrevButton ? [] : ['previous']),
     ...startPages,
 
     // Start ellipsis
@@ -169,8 +169,8 @@ export default function usePagination(props: UsePaginationProps) {
         : []),
 
     ...endPages,
-    ...(hideNextButton || page === count ? [] : ['next']),
-    ...(showLastButton && page < count ? ['last'] : []),
+    ...(hideNextButton ? [] : ['next']),
+    ...(showLastButton ? ['last'] : []),
   ];
 
   // Map the button type to its page number
@@ -186,6 +186,19 @@ export default function usePagination(props: UsePaginationProps) {
         return count;
       default:
         return null;
+    }
+  };
+
+  const buttonDisabled = (type: string) => {
+    switch (type) {
+      case 'first':
+      case 'previous':
+        return page === 1;
+      case 'next':
+      case 'last':
+        return page === count;
+      default:
+        return false;
     }
   };
 
@@ -209,10 +222,7 @@ export default function usePagination(props: UsePaginationProps) {
           type: item,
           page: buttonPage(item),
           selected: false,
-          disabled:
-            disabled ||
-            (!item.includes('ellipsis') &&
-              (item === 'next' || item === 'last' ? page >= count : page <= 1)),
+          disabled: disabled || buttonDisabled(item),
         };
   });
 

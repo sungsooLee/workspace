@@ -67,15 +67,11 @@ function RouteComponent() {
         </ContentsButtons>
         <MainContents>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'channel'} />
-            </FormRow>
+            <FormRow provider={provider} name={'channel'} />
           </ContentsRow>
           <div className={'h-[800px] w-full'}></div>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'channel2'} />
-            </FormRow>
+            <FormRow provider={provider} name={'channel2'} />
           </ContentsRow>
         </MainContents>
       </PageContainer>

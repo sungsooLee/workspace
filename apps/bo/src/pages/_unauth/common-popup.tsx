@@ -6,12 +6,14 @@ import {
   ChipListModalSelectorFormField,
   ContentsRow,
   DynamicFormField,
+  Input,
   useModal,
 } from '@learnway/ui';
 
 import styles from '@learnway/styles/bo/pages/_auth/login.module.css';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
+import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
@@ -34,12 +36,12 @@ function RouteComponent() {
 
   const handleAddressSearchResult = (address: any) => {
     console.log('address', address);
-    fetchData({ zipCode: address.zipNo, defaultAddress: address.roadAddr });
+    fetchData({ zipNo: address.zipNo, address: address.roadAddr });
   };
 
   const handleAddressSearch = () => {
     open({
-      width: 's',
+      width: 'sm',
       content: <AddressSearchModal onSelect={handleAddressSearchResult} />,
     });
   };
@@ -65,8 +67,10 @@ function RouteComponent() {
             </div>
           </div>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'companyModal'}>
+            <FormRow
+              provider={provider}
+              name={'companyModal'}
+              element={
                 <ChipListModalSelectorFormField
                   modalConfig={{
                     content: <CompanyChoiceModal />,
@@ -79,12 +83,14 @@ function RouteComponent() {
                     wordwrap: true,
                   }}
                 />
-              </DynamicFormField>
-            </FormRow>
+              }
+            />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'companyShuttle'}>
+            <FormRow
+              provider={provider}
+              name={'companyShuttle'}
+              element={
                 <ChipListModalSelectorFormField
                   modalConfig={{
                     content: <CompanyShuttleModal />,
@@ -97,17 +103,38 @@ function RouteComponent() {
                     wordwrap: true,
                   }}
                 />
-              </DynamicFormField>
-            </FormRow>
+              }
+            />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'zipCode'} disabled={true} />
-              <DynamicFormField name={'defaultAddress'} disabled={true} />
-              <Button variant={'gray'} size={'sm'} onClick={handleAddressSearch}>
-                {'우편번호찾기'}
-              </Button>
-            </FormRow>
+            <div className={dynamicFormStyles.address_wrap}>
+              <div className={dynamicFormStyles.info_address}>
+                <FormRow
+                  provider={provider}
+                  name={'zipNo'}
+                  className={dynamicFormStyles.post_input}
+                  element={<Input disabled={true} />}
+                />
+                <FormRow
+                  provider={provider}
+                  name={'address'}
+                  className={dynamicFormStyles.address_input}
+                  element={<Input disabled={true} />}
+                >
+                  <Button
+                    className={dynamicFormStyles.btn_find}
+                    variant={'gray'}
+                    size={'sm'}
+                    onClick={handleAddressSearch}
+                  >
+                    {t('LABEL.button.searchZipNo')}
+                  </Button>
+                </FormRow>
+              </div>
+              <div className={dynamicFormStyles.detail_address}>
+                <FormRow provider={provider} name={'addressDetail'} element={<Input />} />
+              </div>
+            </div>
           </ContentsRow>
         </MainContents>
         <SubContents>
@@ -142,18 +169,25 @@ const formConfig: DynamicFormConfig = {
       description: '',
     },
     {
-      name: 'zipCode',
+      name: 'zipNo',
       type: 'text',
-      label: t('주소'),
+      label: t('LABEL.form.label.address'),
       value: '',
-      placeholder: '우편번호',
+      placeholder: t('LABEL.form.placeholder.zipNo'),
     },
     {
-      name: 'defaultAddress',
+      name: 'address',
       type: 'text',
-      label: t('주소'),
+      label: t('LABEL.form.label.address'),
       value: '',
-      placeholder: '기본주소',
+      placeholder: t('LABEL.form.placeholder.address'),
+    },
+    {
+      name: 'addressDetail',
+      type: 'text',
+      label: '',
+      value: '',
+      placeholder: t('LABEL.form.placeholder.addressDetail'),
     },
   ],
 };

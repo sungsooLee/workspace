@@ -15,7 +15,10 @@ import {
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from './address-search-modal.module.css';
 
+// 페이지별 게시 수
 const PAGE_SIZE = 3;
+// 행안부 API가 허용하는 최대 조회 건수
+const MAX_TOTAL_ROWS = 9000;
 // SQL 예약어 필터링
 const RESERVED_WORD_SQL = [
   'OR',
@@ -40,7 +43,7 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
   const [pageIndex, setPageIndex] = useState(0);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [totalRows, setTotalRows] = useState(0);
-  const [totalPage, setTotalPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
   const [errorCode, setErrorCode] = useState('0');
 
   useEffect(() => {
@@ -103,9 +106,14 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
     } else {
       setSearchResult([]);
     }
+    const totalCount =
+      data.results.common.totalCount > MAX_TOTAL_ROWS
+        ? MAX_TOTAL_ROWS
+        : data.results.common.totalCount;
+    const totalPages = Math.ceil(totalCount / PAGE_SIZE);
     setErrorCode(data.results.common.errorCode);
-    setTotalRows(data.results.common.totalCount);
-    setTotalPage(Math.ceil(data.results.common.totalCount / PAGE_SIZE));
+    setTotalRows(totalCount);
+    setTotalPages(totalPages);
   };
 
   const handleSelect = (item: any) => {
@@ -116,46 +124,6 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPageIndex(value - 1);
   };
-
-  /*
-  const renderPagination = () => {
-    return (
-      <div
-        onClick={(e) => e.stopPropagation()}
-        className={cn(styles.root, styles.pagination, 'nlp--pagination')}
-      >
-        <div>
-          <Button onClick={() => handlePageChange(0)} disabled={pageIndex === 0} onlyIcon>
-            {<IcoChevronLeftDouble width={32} height={32} fill="#4C515E" />}
-          </Button>
-          <Button onClick={() => handlePageChange(pageIndex - 1)} disabled={pageIndex === 0}>
-            {<IcoChevronLeft width={32} height={32} fill="#4C515E" />}
-          </Button>
-
-          <div>
-            {Array.from({ length: totalPage }, (_, i) => (
-              <Button key={i} onClick={() => handlePageChange(i)}>
-                {i + 1}
-              </Button>
-            ))}
-          </div>
-
-          <Button
-            onClick={() => handlePageChange(pageIndex + 1)}
-            disabled={pageIndex >= totalPage - 1}
-          >
-            {<IcoChevronRight width={32} height={32} fill="#4C515E" />}
-          </Button>
-          <Button
-            onClick={() => handlePageChange(totalPage - 1)}
-            disabled={pageIndex >= totalPage - 1}
-          >
-            {<IcoChevronRightDouble width={32} height={32} fill="#4C515E" />}
-          </Button>
-        </div>
-      </div>
-    );
-  };*/
 
   const getError = () => {
     return errorCode !== '0' ? (
@@ -194,7 +162,7 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
               <ul>
                 {searchResult.length > 0 &&
                   searchResult.map((item) => (
-                    <li>
+                    <li key={item.bdMgtSn}>
                       <Button onClick={() => handleSelect(item)}>
                         <p>
                           <strong>{item.roadAddr}</strong>
@@ -211,10 +179,9 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
                     </li>
                   ))}
               </ul>
-              {/**renderPagination()*/}
               <Pagination
                 className={styles.pagenation}
-                count={totalPage}
+                count={totalPages}
                 page={pageIndex + 1}
                 onChange={handlePageChange}
               />

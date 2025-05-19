@@ -111,7 +111,9 @@ const PopoverContent = () => {
         {map(PROFILE_MENU, (menu: ProfileMenu, index: number) => {
           return (
             <li key={`MY-PROFILE${index}`} onClick={menu.action}>
-              <Link to={'/'}>{t(menu.title)}</Link>
+              <Popover.Close asChild>
+                <Link to={'/'}>{t(menu.title)}</Link>
+              </Popover.Close>
             </li>
           );
         })}

@@ -169,3 +169,8 @@ export * from './lib/dynamic-form-field/type';
 export * from './lib/html-content/html-content';
 
 export * from './lib/dnd-file-progress/dnd-file-progress';
+
+// base form
+export * from './lib/base-form/base-form-row';
+export * from './lib/base-form/form-group';
+export * from './lib/base-form/form-guide-text';

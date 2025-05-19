@@ -82,6 +82,9 @@ const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, CheckboxGroup
     useEffect(() => {
       setAllCheck(value.length === options.length);
     }, [value]);
+    useEffect(() => {
+      setAllCheck(value.length === options.length);
+    }, [options]);
 
     return (
       <div

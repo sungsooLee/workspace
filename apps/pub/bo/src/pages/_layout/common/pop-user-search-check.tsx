@@ -10,8 +10,10 @@ import {
   Button,
   Dropdown,
   Input,
+  ShuttleGridToGrid,
 } from '@learnway/ui';
 import { IcoRefresh02, IcoSearch } from '@learnway/icons';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
@@ -29,6 +31,38 @@ function RouteComponent() {
     { value: 'option3', label: '옵션 3' },
   ];
   const UserSearchContent = () => {
+    const gridData = Array(5)
+      .fill(null)
+      .map((d, i) => ({
+        Company: `Company${i}`,
+        Affiliation: `Affiliation${i}`,
+        CompanyNum: `CompanyNum${i}`,
+        Name: `Name${i}`,
+        Selection: `Selection${i}`,
+      }));
+    const columnHelper = createColumnHelper();
+    const columns = [
+      columnHelper.accessor('Company', {
+        header: '회사',
+        size: 130,
+        cell: (info) => info.getValue(),
+      }),
+      columnHelper.accessor('Affiliation', {
+        header: '소속',
+        size: 130,
+        cell: (info) => info.getValue(),
+      }),
+      columnHelper.accessor('CompanyNum', {
+        header: '사번',
+        size: 130,
+        cell: (info) => info.getValue(),
+      }),
+      columnHelper.accessor('Name', {
+        header: '이름',
+        size: 130,
+        cell: (info) => info.getValue(),
+      }),
+    ] as ColumnDef<any, unknown>[];
     return (
       <ModalContainer>
         <ModalTitle>유저 조회</ModalTitle>
@@ -114,14 +148,25 @@ function RouteComponent() {
                 </div>
               </div>
             </div>
-            <div className="grid_wrap line">TransferGrid 영역(Grid height={440})</div>
+            <div className="grid_wrap line">
+              <ShuttleGridToGrid
+                gridData={gridData}
+                columns={columns}
+                leftTitle={'유저 목록'}
+                rightTitle={'유저 선택'}
+                rowKey={'test'}
+              />
+            </div>
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button variant={'gray'} size={'lg'} onClick={() => closeModal()}>
-            <IcoRefresh02 width={16} height={16} className="icon_refresh" />
-            {'초기화'}
-          </Button>
+          <Button
+            icon={<IcoRefresh02 width={16} height={16} className="icon_refresh" />}
+            variant={'gray'}
+            size={'lg'}
+            onClick={() => closeModal()}
+            label={'초기화'}
+          />
           <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
           <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
         </ModalFooter>

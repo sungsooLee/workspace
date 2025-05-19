@@ -1,20 +1,14 @@
 import { FC, useState, useCallback } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { IcoRefresh02, IcoSearch } from '@learnway/icons';
-import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 import { SearchBox } from '@shared/ui/search-box';
 import { useRouter } from '@tanstack/react-router';
 
-import { cn } from '@learnway/shared';
+import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 
-import { Button, GridBox, useGridBox, Input, DynamicFormField, Dropdown } from '@learnway/ui';
+import { Button, GridBox, useGridBox } from '@learnway/ui';
 import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 
 import { tenantQueryOptions } from '@entities/tenant/service/tenant.queries';
 
@@ -22,7 +16,7 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
   const router = useRouter();
 
   const gridConfig = {
-    query: tenantQueryOptions.all,
+    query: tenantQueryOptions.list,
     columns: [
       {
         name: 'no1',
@@ -86,16 +80,34 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
         },
       },
       { name: 'createdBy', label: '등록자' },
-      { name: 'createdDate', label: '등록일시' },
+      {
+        name: 'createdDate',
+        label: '등록일시',
+        render: (info: any) => {
+          return getDateToString(
+            new Date(info.row.original.createdDate),
+            DATE_TIME_FORMAT.DATETIME_SEC,
+          );
+        },
+      },
       { name: 'lastModifiedBy', label: '수정자' },
-      { name: 'modifiedDate', label: '수정일시' },
+      {
+        name: 'modifiedDate',
+        label: '수정일시',
+        render: (info: any) => {
+          return getDateToString(
+            new Date(info.row.original.modifiedDate),
+            DATE_TIME_FORMAT.DATETIME_SEC,
+          );
+        },
+      },
     ],
     data: [],
 
     pagination: {
       pageSize: 10,
       pageIndex: 0,
-      totalRows: 100,
+      totalRows: 0,
     },
   };
 

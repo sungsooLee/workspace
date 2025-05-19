@@ -38,52 +38,30 @@ const TenantDetailAttributeCompanyComponent: FC<any> = ({ tenantId, companyId, t
         <strong className="title">{t('테넌트 속성 관리')}</strong>
       </div>
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'tenantName'} disabled={true} />
-        </FormRow>
+        <FormRow provider={provider} name={'tenantName'} element={<Input disabled={true} />} />
       </ContentsRow>
       <div className="title_wrap no_line">
         <strong className="title">{t('과정 등록 연관 설정')}</strong>
       </div>
       <ContentsRow type="horizontal">
-        <FormRow provider={provider}>
-          <DynamicFormField name={'isCourseCommentWrite'} />
-        </FormRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'isCourseOutsideSharing'} />
-        </FormRow>
+        <FormRow provider={provider} name={'isCourseCommentWrite'} />
+        <FormRow provider={provider} name={'isCourseOutsideSharing'} />
       </ContentsRow>
       <ContentsRow type="horizontal">
-        <FormRow provider={provider}>
-          <DynamicFormField name={'isCourseApply'} />
-        </FormRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'isCourseApproval'} />
-        </FormRow>
+        <FormRow provider={provider} name={'isCourseApply'} />
+        <FormRow provider={provider} name={'isCourseApproval'} />
       </ContentsRow>
       <ContentsRow type="horizontal">
-        <FormRow provider={provider}>
-          <DynamicFormField name={'isLearningDelayedLimit'} />
-        </FormRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'isLearningTimeLimit'} />
-        </FormRow>
+        <FormRow provider={provider} name={'isLearningDelayedLimit'} />
+        <FormRow provider={provider} name={'isLearningTimeLimit'} />
       </ContentsRow>
       <ContentsRow type="horizontal">
-        <FormRow provider={provider}>
-          <DynamicFormField name={'isLearningDeviceLimit'} />
-        </FormRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'isContentSecurityApply'} />
-        </FormRow>
+        <FormRow provider={provider} name={'isLearningDeviceLimit'} />
+        <FormRow provider={provider} name={'isContentSecurityApply'} />
       </ContentsRow>
       <ContentsRow type="horizontal">
-        <FormRow provider={provider}>
-          <DynamicFormField name={'isCourseBudgetUse'} />
-        </FormRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'isCourseEmploymentInsuranceRefund'} />
-        </FormRow>
+        <FormRow provider={provider} name={'isCourseBudgetUse'} />
+        <FormRow provider={provider} name={'isCourseEmploymentInsuranceRefund'} />
       </ContentsRow>
       <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
         <ContentsHistoryInfoFormField />

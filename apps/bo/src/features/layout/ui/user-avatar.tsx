@@ -1,10 +1,12 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
+// import { t } from 'i18next';
+
 import { useRouter, Link } from '@tanstack/react-router';
 import { map } from 'lodash';
 import { useCreation } from 'ahooks';
 
-import { Avatar, Popover, Button } from '@learnway/ui';
+import { Avatar, Popover, Button, useModal } from '@learnway/ui';
 import { useFetchAuthUser, useLogoutUser, useReissue } from '@learnway/auth';
 import { IcLogOut01 } from '@learnway/icons';
 
@@ -26,11 +28,19 @@ export const AvataFallback = ({ name }: { name?: string }) => {
 
 export const PopoverContent = () => {
   const { t } = useTranslation();
-  const router = useRouter();
-
+  // const router = useRouter();
+  const { confirm: openConfirm } = useModal();
   const { logout } = useLogoutUser();
 
   const { data: authUser } = useFetchAuthUser();
+
+  const logoutAlert = async () => {
+    const feedback = await openConfirm({
+      title: t('LABEL.confirm.logout.title'),
+      content: t('LABEL.confirm.logout.message'),
+    });
+    feedback && logout();
+  };
 
   return (
     <div className={`${styles.start} ${styles.avata_area}`}>
@@ -50,18 +60,29 @@ export const PopoverContent = () => {
       </div>
       <ul className={styles.info_list}>
         <li>
-          <Link to={''}>나의 정보</Link>
+          <Popover.Close asChild>
+            <Link to="/my-page/info">{t('LABEL.common.myInfo')}</Link>
+          </Popover.Close>
         </li>
         <li>
-          <Link to={''}>나의 권한</Link>
+          <Popover.Close asChild>
+            <Link to="/my-page/role">{t('LABEL.common.myRole')}</Link>
+          </Popover.Close>
         </li>
+
         <li>
-          <Link to={''}>문의하기 ITSM</Link>
+          <Popover.Close asChild>
+            {/* <Link to={'https://naver.com'} target="_blank">
+              {t('LABEL.common.itsm')}
+            </Link> */}
+          </Popover.Close>
         </li>
       </ul>
+
       <div className={styles.logout_wrap}>
-        <Button className={styles.btn_log} variant="text" onClick={() => logout()}>
-          <IcLogOut01 width={20} height={20} stroke="#3E4550" /> <span>로그아웃</span>
+        <Button className={styles.btn_log} variant="text" onClick={logoutAlert}>
+          <IcLogOut01 width={20} height={20} stroke="#3E4550" />
+          <span>{t('LABEL.common.logout')}</span>
         </Button>
         <p className={styles.customer_info}>{'고객센터 02-6296-6789'}</p>
       </div>

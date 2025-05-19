@@ -5,9 +5,12 @@ import { FormTranslationBox } from '@features/platform/ui/platform/system/transl
 
 import {
   Button,
+  CheckboxGroupFormField,
   ContentsRow,
   DynamicFormField,
   GridBox,
+  Input,
+  TextareaFormField,
   TreeContainer,
   TreeNode,
   TreeView,
@@ -18,7 +21,7 @@ import { cn } from '@learnway/shared';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import { ContentsHistoryInfoFormField, FormRow } from '@shared/ui';
+import { ContentsHistoryInfoFormField, FormRow, SwitchFormField } from '@shared/ui';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
@@ -280,71 +283,72 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
         </div>
         <div className={layoutStyles.inner_contents}>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'location'} disabled={true} />
-            </FormRow>
+            <FormRow provider={provider} name={'location'} element={<Input disabled={true} />} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'parentName'} disabled={true} />
-            </FormRow>
+            <FormRow provider={provider} name={'parentName'} element={<Input disabled={true} />} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'menuCode'} disabled={true} />
+            <FormRow provider={provider} name={'menuCode'} element={<Input disabled={true} />}>
               <Button variant="gray" size="sm" disabled>
                 {t('중복')}
               </Button>
             </FormRow>
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'menuName'} disabled={true} />
-            </FormRow>
+            <FormRow provider={provider} name={'menuName'} element={<Input disabled={true} />} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'path'} disabled={true} />
-            </FormRow>
+            <FormRow provider={provider} name={'path'} element={<Input disabled={true} />} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'menuDesc'} disabled={EnFormMode.NONE === formMode} />
-            </FormRow>
+            <FormRow
+              provider={provider}
+              name={'menuDesc'}
+              element={<TextareaFormField disabled={true} />}
+            />
           </ContentsRow>
           <ContentsRow type={'horizontal'}>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'isHiddenMenu'} disabled={true} />
-            </FormRow>
+            <FormRow
+              provider={provider}
+              name={'menuDesc'}
+              element={<SwitchFormField disabled={true} />}
+            />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={`deviceNames`} disabled={EnFormMode.NONE === formMode}>
-                <FormTranslationBox />
-              </DynamicFormField>
-            </FormRow>
+            <FormRow
+              provider={provider}
+              name={'deviceNames'}
+              element={<CheckboxGroupFormField disabled={EnFormMode.NONE === formMode} />}
+            />
           </ContentsRow>
           <ContentsRow type={'horizontal'}>
-            <FormRow provider={provider}>
-              <DynamicFormField name="isPersoninfoInclusion" disabled={true} />
-            </FormRow>
+            <FormRow
+              provider={provider}
+              name={'isPersoninfoInclusion'}
+              element={<SwitchFormField disabled={true} />}
+            />
           </ContentsRow>
           <ContentsRow type={'horizontal'}>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'isUsed'} disabled={EnFormMode.NONE === formMode} />
-            </FormRow>
+            <FormRow
+              provider={provider}
+              name={'isUsed'}
+              element={<SwitchFormField disabled={EnFormMode.NONE === formMode} />}
+            />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'apiMappingMenuList'}>
+            <FormRow
+              provider={provider}
+              name={'apiMappingMenuList'}
+              element={
                 <GridBox
                   data={getValues('apiMappingMenuList') || []}
                   columns={columns}
                   showTotalCount={true}
                   title={t('API')}
                 />
-              </DynamicFormField>
-            </FormRow>
+              }
+            />
           </ContentsRow>
           <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
             <ContentsHistoryInfoFormField />

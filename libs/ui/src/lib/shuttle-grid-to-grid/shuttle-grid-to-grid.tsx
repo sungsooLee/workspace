@@ -46,7 +46,6 @@ const ShuttleGridToGridComponent = (
   }: ShuttleGridToGridProps,
   ref: React.Ref<ShuttleGridToGridImperative>,
 ) => {
-  const [leftGridData, setLeftGridData] = useState<any>(gridData);
   const [rightGridData, setRightGridData] = useState<any>([]);
   const leftGridRef = useRef<GridImperative>(null);
   const rightGridRef = useRef<GridImperative>(null);
@@ -147,7 +146,7 @@ const ShuttleGridToGridComponent = (
         <GridBox
           ref={leftGridRef}
           title={leftTitle}
-          data={leftGridData}
+          data={gridData}
           columns={leftGridColumns}
           multiple
           disabledSelectionToggle

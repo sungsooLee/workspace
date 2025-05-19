@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo, useState, forwardRef } from 'react';
+import React, { FC, useEffect, useMemo, useState, forwardRef, useCallback } from 'react';
 import { t } from 'i18next';
 import {
   Button,
@@ -23,6 +23,7 @@ import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
+import { queryOptions as companyQueryOptions } from '@entities/companies/service/companies.queries';
 
 const CompanyModalComponent = forwardRef((props, ref) => {
   const { close: closeModal } = useModal();
@@ -35,52 +36,43 @@ const CompanyModalComponent = forwardRef((props, ref) => {
     setSelectedRow(row);
   };
 
+  const handleOnSearch = useCallback((data: any) => {
+    gridFetch(data);
+  }, []);
+
+  const handleOnClose = () => {
+    closeModal();
+  };
+  const handleOnConfirm = () => {
+    if (!selectedRow) closeModal();
+    closeModal(selectedRow);
+  };
+
   // grid
   const [pageIndex, setPageIndex] = useState(0);
   const [pageSize, setPageSize] = useState(10);
 
   const columnHelper = createColumnHelper<any>();
-
   const columns = [
-    columnHelper.accessor('order', {
-      cell: (info) => info.getValue(),
-      header: 'NO.',
-      size: 64,
-      meta: {
-        headerAlign: 'left',
-        cellAlign: 'center',
-      },
-      enableGrouping: false,
-    }),
-    columnHelper.accessor('id', {
-      cell: (info) => info.getValue(),
-      header: 'id',
-      size: 64,
-      meta: {
-        headerAlign: 'left',
-        cellAlign: 'center',
-      },
-      enableGrouping: false,
-    }),
-    columnHelper.accessor('companySort', {
+    columnHelper.accessor('companyType', {
       cell: (info) => info.getValue(),
       header: '회사구분',
       enableGrouping: false,
       size: 210,
     }),
-    columnHelper.accessor('company', {
+    columnHelper.accessor('name', {
       cell: (info) => info.getValue(),
       header: '회사',
       size: 240,
       enableGrouping: false,
     }),
-    columnHelper.accessor('owner', {
+    columnHelper.accessor('rpsntrName', {
       cell: (info) => info.getValue(),
       header: '대표자',
       size: 150,
       enableGrouping: false,
     }),
-    columnHelper.accessor('registerNumber', {
+    columnHelper.accessor('brn', {
       cell: (info) => info.getValue(),
       header: '사업자 등록번호',
       size: 220,
@@ -103,18 +95,6 @@ const CompanyModalComponent = forwardRef((props, ref) => {
   /**
    * @param data
    */
-  const handleOnSearch = (data: any) => {
-    console.log('data', data);
-    //TODO fetch
-  };
-
-  const handleOnClose = () => {
-    closeModal();
-  };
-  const handleOnConfirm = () => {
-    if (!selectedRow) closeModal();
-    closeModal(selectedRow);
-  };
 
   return (
     <ModalContainer>
@@ -150,71 +130,43 @@ const searchConfig: SearchBoxConfig = {
   builders: [
     [
       {
-        name: 'companyDivision',
-        type: 'dropdown',
-        label: t('회사구분'),
-        format: 'array',
-        value: undefined,
-        options: [{ value: 'div', label: t('회사구분') }],
-        dropdownConfig: {
-          onChange: () => {
-            return '';
-          },
-          isSearchable: true,
-          placeholder: t('입력 선택'),
-        },
+        name: 'name',
+        type: 'text',
+        label: t('회사명'),
+        value: '',
       },
       {
-        name: 'company',
+        name: 'companyCode',
+        type: 'text',
+        label: t('회사코드'),
+        value: '',
+      },
+      {
+        name: 'useYn',
         type: 'dropdown',
-        label: t('회사'),
-        format: 'array',
-        value: undefined,
-        options: [{ value: 'div', label: t('회사') }],
-        dropdownConfig: {
-          onChange: () => {
-            return '';
-          },
-          isSearchable: true,
-          placeholder: t('입력 선택'),
-        },
+        label: t('LABEL.isUsed'),
+        value: '',
+        options: [
+          { value: '', label: t('전체') },
+          { value: 'true', label: t('사용') },
+          { value: 'false', label: t('미사용') },
+        ],
       },
     ],
   ],
 };
 
 const gridConfig = {
-  query: '',
-  data: [
-    {
-      id: 'id1',
-      order: '1',
-      companySort: '그룹사',
-      company: '현대차',
-      owner: '김현대',
-      registerNumber: '123-45-12345',
-      callNumber: '+82 2 1234-4567',
-      email: 'asdfged@gmail.com',
-    },
-    {
-      id: 'id2',
-      order: '2',
-      companySort: '그룹사',
-      company: '기아차',
-      owner: '김현대',
-      registerNumber: '123-45-12345',
-      callNumber: '+82 2 1234-4567',
-      email: 'asdfged@gmail.com',
-    },
-  ],
+  query: companyQueryOptions.all,
   columns: [
-    { name: 'companySort', label: '회사 구분' },
-    { name: 'company', label: '회사' },
-    { name: 'registerNumber', label: '사업자 등록번호' },
-    { name: 'callNumber', label: '대표 전화' },
-    { name: 'email', label: '대표 이메일' },
+    {
+      name: 'no1',
+      label: 'NO.',
+      type: 'numbering',
+    },
   ],
-  page: {
+  data: [],
+  pagination: {
     pageSize: 10,
     pageIndex: 1,
     totalRows: 2,

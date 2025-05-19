@@ -13,6 +13,7 @@ import styles from '@learnway/styles/bo/widgets/layout/ui/auth/auth-layout.modul
 
 export const AUTH_CONTAINERS = {
   LOGIN: 'login-container',
+  AUTH_PROGRESS: 'AUTH_PROGRESS',
 };
 
 interface AuthLayoutComponentProps {
@@ -32,6 +33,9 @@ function AuthLayoutComponent({ children }: AuthLayoutComponentProps) {
           <main>
             {meta?.container === AUTH_CONTAINERS.LOGIN && (
               <LoginContainer>{children}</LoginContainer>
+            )}
+            {meta?.container === AUTH_CONTAINERS.AUTH_PROGRESS && (
+              <AuthContainer>{children}</AuthContainer>
             )}
             {!meta?.container && <AuthContainer>{children}</AuthContainer>}
           </main>

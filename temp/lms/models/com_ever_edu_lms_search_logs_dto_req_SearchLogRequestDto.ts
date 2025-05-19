@@ -3,9 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export type com_ever_edu_lms_search_logs_dto_req_SearchLogRequestDto = {
-    userId?: number;
-    tenantId?: string;
-    userGroupId?: string;
+    userUuid?: string;
+    tenantUuid?: string;
     keyword?: string;
 };
 

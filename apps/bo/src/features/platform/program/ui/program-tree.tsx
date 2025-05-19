@@ -8,6 +8,9 @@ import {
   DynamicFormField,
   findNodePath,
   findParentNode,
+  Input,
+  RadioGroupFormField,
+  TextareaFormField,
   TreeBox,
   TreeEventPayload,
   TreeNode,
@@ -136,6 +139,7 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
             variant="gray2"
             size={'xs'}
             type={'button'}
+            disabled={node.apiNodeType === 'API'}
           >
             {level === 0 ? 'API 추가' : '하위 API 추가'}
           </Button>
@@ -233,8 +237,9 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
   };
 
   return (
-    <SectionLayout contentsRatio={'half'}>
+    <>
       <TreeBox
+        title={menuScope === 'FO' ? t('학습자 API 목록') : t('HRD센터 API 목록')}
         data={treeData}
         treeId={'program-tree'}
         expandedKeys={expandedKeys}
@@ -281,62 +286,67 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
           </div>
           <div className={layoutStyles.inner_contents}>
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'fullPath'} disabled={true} />
-              </FormRow>
+              <FormRow provider={provider} name={'fullPath'} element={<Input disabled={true} />} />
             </ContentsRow>
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'parentName'} disabled={true} />
-              </FormRow>
-            </ContentsRow>
-
-            <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'apiId'} disabled={true} />
-              </FormRow>
+              <FormRow
+                provider={provider}
+                name={'parentName'}
+                element={<Input disabled={true} />}
+              />
             </ContentsRow>
 
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'apiNodeType'} disabled={FORM_MODE.NONE === formMode} />
-              </FormRow>
+              <FormRow provider={provider} name={'apiId'} element={<Input disabled={true} />} />
             </ContentsRow>
 
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'apiName'} disabled={FORM_MODE.NONE === formMode} />
-              </FormRow>
+              <FormRow
+                provider={provider}
+                name={'apiNodeType'}
+                element={<RadioGroupFormField disabled={FORM_MODE.NONE === formMode} />}
+              />
+            </ContentsRow>
+
+            <ContentsRow>
+              <FormRow
+                provider={provider}
+                name={'apiName'}
+                element={<Input disabled={FORM_MODE.NONE === formMode} />}
+              />
             </ContentsRow>
 
             {apiNodeType === 'FOLDER' && (
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'apiDesc'} disabled={FORM_MODE.NONE === formMode} />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'apiDesc'}
+                  element={<TextareaFormField disabled={FORM_MODE.NONE === formMode} />}
+                />
               </ContentsRow>
             )}
             {apiNodeType === 'API' && (
               <>
                 <ContentsRow>
-                  <FormRow provider={provider}>
-                    <DynamicFormField
-                      name={'apiMethodCode'}
-                      disabled={FORM_MODE.NONE === formMode}
-                    />
-                  </FormRow>
+                  <FormRow
+                    provider={provider}
+                    name={'apiMethodCode'}
+                    element={<RadioGroupFormField disabled={FORM_MODE.NONE === formMode} />}
+                  />
                 </ContentsRow>
                 <ContentsRow>
-                  <FormRow provider={provider}>
-                    <DynamicFormField name={'apiUrl'} disabled={FORM_MODE.NONE === formMode} />
-                  </FormRow>
+                  <FormRow
+                    provider={provider}
+                    name={'apiUrl'}
+                    element={<Input disabled={FORM_MODE.NONE === formMode} />}
+                  />
                 </ContentsRow>
               </>
             )}
           </div>
         </form>
       </div>
-    </SectionLayout>
+    </>
   );
 };
 

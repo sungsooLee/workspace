@@ -30,7 +30,6 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate = {
     operatorId: number;
     operatorName: string;
     operatorTelNo: string;
-    isEnrollRequired: boolean;
     approvalLineType?: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.approvalLineType;
     isMaxEnrollQuotaRestricted?: boolean;
     maxEnrollQuota?: number;
@@ -43,15 +42,18 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate = {
     isDuplicateEnrollAllowed?: boolean;
     isScheduleConflictAllowed?: boolean;
     /**
-     * 수강신청 단계에서 배송지 수집을 과정마다할 지 차수마다 할 지
+     * 수강신청 단계에서 배송지 수집을 과정마다할 지 차수마다 할 지 (lms.course.BookDeliveryInfoScopeType)
      */
     bookDeliveryInfoScopeType?: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.bookDeliveryInfoScopeType;
     /**
-     * 수강신청 단계에서 레벨테스트를 과정마다할 지 차수마다 할 지
+     * 수강신청 단계에서 레벨테스트를 과정마다할 지 차수마다 할 지 (lms.course.LangLevelTestScopeType)
      */
     langLevelTestScopeType?: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.langLevelTestScopeType;
     primaryKitId: number;
     deviceRestrictType?: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.deviceRestrictType;
+    /**
+     * (lms.course.LearningRestrictTimeType)
+     */
     learningRestrictTimeType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.learningRestrictTimeType;
     /**
      * 1일 진도 제한
@@ -70,12 +72,15 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate = {
      * 플레이어 탐색바 제한 여부
      */
     isPlayerControlRestricted: boolean;
+    /**
+     * (cms.video.PlayBackRate)
+     */
     maxPlayBackRate?: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.maxPlayBackRate;
     /**
      * 복습 제한 여부
      */
     isReviewRestricted: boolean;
-    maxReviewPeriod?: number;
+    maxReviewPeriodMonths?: number;
     /**
      * 캡처 방지 여부
      */
@@ -88,6 +93,9 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate = {
      * 보안 서약 여부
      */
     isSecurityAgreementEnable: boolean;
+    /**
+     * (lms.course.LearningSpaceType)
+     */
     learningSpaceType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.learningSpaceType;
     preRequisiteCourseIds?: Array<number>;
     relatedCourseIds?: Array<number>;
@@ -99,6 +107,9 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate = {
      * 과정을 학습자가 공유할 수 있는지?
      */
     isSharingAllowed: boolean;
+    /**
+     * (lms.course.PassMethodType)
+     */
     passMethodType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.passMethodType;
     progressMinPassScore: number;
     examMinPassScore: number;
@@ -119,8 +130,8 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate = {
     textbookPurchaseAllocationRate?: number;
     contentPurchaseCost?: number;
     contentPurchaseAllocationRatio?: number;
-    thumbnailGroupId?: number;
-    primaryThumbnailId?: number;
+    thumbnailFileGroupId?: number;
+    primaryThumbnailFileId?: number;
     /**
      * 태그 이름 목록
      */
@@ -161,7 +172,7 @@ export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate {
         MAIL_SEND = 'MAIL_SEND',
     }
     /**
-     * 수강신청 단계에서 배송지 수집을 과정마다할 지 차수마다 할 지
+     * 수강신청 단계에서 배송지 수집을 과정마다할 지 차수마다 할 지 (lms.course.BookDeliveryInfoScopeType)
      */
     export enum bookDeliveryInfoScopeType {
         NONE = 'NONE',
@@ -169,7 +180,7 @@ export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate {
         PER_SEQ = 'PER_SEQ',
     }
     /**
-     * 수강신청 단계에서 레벨테스트를 과정마다할 지 차수마다 할 지
+     * 수강신청 단계에서 레벨테스트를 과정마다할 지 차수마다 할 지 (lms.course.LangLevelTestScopeType)
      */
     export enum langLevelTestScopeType {
         NONE = 'NONE',
@@ -181,23 +192,35 @@ export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate {
         PC = 'PC',
         MOBILE = 'MOBILE',
     }
+    /**
+     * (lms.course.LearningRestrictTimeType)
+     */
     export enum learningRestrictTimeType {
         NONE = 'NONE',
         WORK_HOURS = 'WORK_HOURS',
         OFF_HOURS = 'OFF_HOURS',
     }
+    /**
+     * (cms.video.PlayBackRate)
+     */
     export enum maxPlayBackRate {
         X1_25 = 'X1_25',
         X1_5 = 'X1_5',
         X1_75 = 'X1_75',
         X2 = 'X2',
     }
+    /**
+     * (lms.course.LearningSpaceType)
+     */
     export enum learningSpaceType {
         EXTERNAL_SITE = 'EXTERNAL_SITE',
         LEARNING_WAY = 'LEARNING_WAY',
         FACE_TO_FACE = 'FACE_TO_FACE',
         NONE_FACE_TO_FACE = 'NONE_FACE_TO_FACE',
     }
+    /**
+     * (lms.course.PassMethodType)
+     */
     export enum passMethodType {
         AUTO = 'AUTO',
         MANUAL = 'MANUAL',

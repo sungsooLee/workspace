@@ -68,62 +68,41 @@ function RouteComponent() {
         </ContentsButtons>
         <MainContents>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'email'} />
-            </FormRow>
+            <FormRow provider={provider} name={'email'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'regxName'} />
-            </FormRow>
+            <FormRow provider={provider} name={'regxName'} element={<Input />} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
+            <FormRow provider={provider} name={'channelId'}>
               <FormInfoArea>
                 <Button disabled={disable}>{disable ? '사용' : '미사용'}</Button>
               </FormInfoArea>
-              <DynamicFormField name={'channelId'} />
             </FormRow>
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'isExternalCompanyInfo'} />
-            </FormRow>
+            <FormRow provider={provider} name={'isExternalCompanyInfo'} />
           </ContentsRow>
           <FormDisplay
             provider={provider}
             dependencies={[{ name: 'isExternalCompanyInfo', value: true }]}
           >
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'externalCompanyName'} />
-              </FormRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'externalCompanyManagerName'} />
-              </FormRow>
+              <FormRow provider={provider} name={'externalCompanyName'} />
+              <FormRow provider={provider} name={'externalCompanyManagerName'} />
             </ContentsRow>
           </FormDisplay>
           <ContentsRow>
             {/*자막 목록*/}
-            <FormRow provider={provider}>
-              <DynamicFormField name={'subtitles'}>
-                <SubTitlesFormField />
-              </DynamicFormField>
-            </FormRow>
+            <FormRow provider={provider} name={'subtitles'} element={<SubTitlesFormField />} />
           </ContentsRow>
           <ContentsRow>
-            {/*자막 목록*/}
-            <FormRow provider={provider}>
-              <DynamicFormField name={'changeGuideText'}>
-                <ChangeGuidText />
-              </DynamicFormField>
-            </FormRow>
+            {/* 가이드 텍스트 변경 */}
+            <FormRow provider={provider} name={'changeGuideText'} element={<ChangeGuidText />} />
           </ContentsRow>
           <ContentsRow>
             {/*testChip*/}
-            <FormRow provider={provider}>
-              <DynamicFormField name={'testChip'} />
-            </FormRow>
+            <FormRow provider={provider} name={'testChip'} />
           </ContentsRow>
         </MainContents>
       </PageContainer>

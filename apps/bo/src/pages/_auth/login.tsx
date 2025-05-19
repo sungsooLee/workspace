@@ -70,20 +70,14 @@ function RouteComponent() {
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.login}`}>
         <div className={authStyles.auth_box}>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'username'} />
-            </FormRow>
+            <FormRow provider={provider} name={'username'} />
           </ContentsRow>
           <ContentsRow className={formStyles.no_line}>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'password'} />
-            </FormRow>
+            <FormRow provider={provider} name={'password'} />
           </ContentsRow>
 
           <ContentsRow className={cn(formStyles.no_line, styles.login_info)}>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'saveId'} />
-            </FormRow>
+            <FormRow provider={provider} name={'saveId'} />
             <div className={styles.info}>
               <Link to="/search-account">아이디 찾기</Link>
               <Link to="/search-account">비밀번호 찾기</Link>
@@ -99,8 +93,8 @@ function RouteComponent() {
 
         <div className={styles.login_guide}>
           <span>
-            <Link to="/progress-status">회원 가입 현황</Link>
-            <Link to="/progress-status">관리자 회원가입</Link>
+            <Link to="/signup-progress">회원 가입 현황</Link>
+            <Link to="/signup">관리자 회원가입</Link>
           </span>
         </div>
       </div>

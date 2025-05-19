@@ -1,6 +1,28 @@
 import { CodeApiConfig } from './types';
+import { CODE_GROUP } from './constants';
 
 /**
  * 기본 코드 조회 API 가 아닌 케이스만 작성 해준다.
+ * ** 주의 ** getCode 에는 filter 라는 항목이 존재한다. filter 가 변경 되면서 코드를 불러와야 하는 경우에는 반드시 codeOptions 에
+ * disableCache 등록을 해야지 변경된 filter 로 재조회 한다.
+ *
+ * * 초기 구성계획은 조회 후 filter 를 사용하려 했으나. API 정의가 어떻게 될지 몰라 사용하지 못했다.
  */
-export const codeOptions: CodeApiConfig = {};
+export const codeOptions: CodeApiConfig = {
+  [CODE_GROUP['manual.code']]: {
+    options: [
+      {
+        value: '01',
+        label: '1번 옵션',
+      },
+      {
+        value: '02',
+        label: '2번 옵션',
+      },
+      {
+        value: '03',
+        label: '3번 옵션',
+      },
+    ],
+  },
+};
