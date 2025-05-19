@@ -117,9 +117,7 @@ import { Panel } from '@learnway/ui';
 
 // 적용방법(예시) 
 <Panel
-  title="타이틀"
   hideHeaderUnderline
-  actions="전체 펼침"
   className="w-full"
   type="rounded_fill"
 >
