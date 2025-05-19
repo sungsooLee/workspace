@@ -12,6 +12,7 @@ import {
 import styles from '@learnway/styles/bo/pages/_auth/login.module.css';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
+import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
@@ -34,7 +35,7 @@ function RouteComponent() {
 
   const handleAddressSearchResult = (address: any) => {
     console.log('address', address);
-    fetchData({ zipCode: address.zipNo, defaultAddress: address.roadAddr });
+    fetchData({ zipNo: address.zipNo, address: address.roadAddr });
   };
 
   const handleAddressSearch = () => {
@@ -102,11 +103,31 @@ function RouteComponent() {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider}>
-              <DynamicFormField name={'zipCode'} disabled={true} />
-              <DynamicFormField name={'defaultAddress'} disabled={true} />
-              <Button variant={'gray'} size={'sm'} onClick={handleAddressSearch}>
-                {'우편번호찾기'}
-              </Button>
+              <div className={dynamicFormStyles.address_wrap}>
+                <div className={dynamicFormStyles.info_address}>
+                  <DynamicFormField
+                    name={'zipNo'}
+                    disabled={true}
+                    className={dynamicFormStyles.post_input}
+                  />
+                  <DynamicFormField
+                    name={'address'}
+                    disabled={true}
+                    className={dynamicFormStyles.address_input}
+                  />
+                  <Button
+                    className={dynamicFormStyles.btn_find}
+                    variant={'gray'}
+                    size={'sm'}
+                    onClick={handleAddressSearch}
+                  >
+                    {t('LABEL.button.searchZipNo')}
+                  </Button>
+                </div>
+                <div className={dynamicFormStyles.detail_address}>
+                  <DynamicFormField name={'addressDetail'} />
+                </div>
+              </div>
             </FormRow>
           </ContentsRow>
         </MainContents>
@@ -142,18 +163,25 @@ const formConfig: DynamicFormConfig = {
       description: '',
     },
     {
-      name: 'zipCode',
+      name: 'zipNo',
       type: 'text',
-      label: t('주소'),
+      label: t('LABEL.form.label.address'),
       value: '',
-      placeholder: '우편번호',
+      placeholder: t('LABEL.form.placeholder.zipNo'),
     },
     {
-      name: 'defaultAddress',
+      name: 'address',
       type: 'text',
-      label: t('주소'),
+      label: t('LABEL.form.label.address'),
       value: '',
-      placeholder: '기본주소',
+      placeholder: t('LABEL.form.placeholder.address'),
+    },
+    {
+      name: 'addressDetail',
+      type: 'text',
+      label: '',
+      value: '',
+      placeholder: t('LABEL.form.placeholder.addressDetail'),
     },
   ],
 };

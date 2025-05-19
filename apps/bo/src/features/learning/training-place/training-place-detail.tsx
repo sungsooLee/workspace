@@ -268,10 +268,9 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
                     {t('LABEL.button.searchZipNo')}
                   </Button>
                 </div>
-                <DynamicFormField
-                  name={'addressDetail'}
-                  className={dynamicFormStyles.detail_address}
-                />
+                <div className={dynamicFormStyles.detail_address}>
+                  <DynamicFormField name={'addressDetail'} />
+                </div>
               </div>
             </FormRow>
           </ContentsRow>
