@@ -68,9 +68,9 @@ const PaginationComponent = forwardRef<HTMLDivElement, PaginationComponentProps>
       onPageSizeChange?.(newValue);
     };
 
-    console.log('pagination.tsx ', { items, pageNumber, totalPages, pageSize, options, props });
+    console.log('pagination.tsx ', { items, pageNumber, totalPages, pageSize, options, disabled, props });
     return (
-      <div ref={ref} className={cn(styles.root, styles.pagination, className, 'nlp--pagination')}>
+      <div ref={ref} className={cn(styles.root, styles.pagination, className, disabled && 'disabled', 'nlp--pagination')}>
         <div className={styles.select_area}>
           <Dropdown value={pageSize} onChange={handlePageSizeChange} options={options} />
         </div>

@@ -163,7 +163,7 @@ const GridBoxComponent = <T extends object>(
       // prop
       props.pagination?.onPageChange?.(pageNumber);
     },
-    [props.pagination],
+    [props.pagination, pagination],
   );
 
   /**
@@ -294,8 +294,9 @@ const GridBoxComponent = <T extends object>(
         <Pagination
           totalPages={paginationProps.totalPages}
           pageNumber={paginationProps.pageNumber}
-          onChange={handlePageChange}
+          disabled={paginationProps.totalPages === 0}
           onPageSizeChange={handleChangePageSize}
+          onChange={handlePageChange}
         />
       )}
     </div>

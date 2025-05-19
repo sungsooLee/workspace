@@ -87,31 +87,31 @@ export default function usePagination(props: UsePaginationProps) {
     boundaryCount = 1,
     siblingCount = 1,
     componentName = 'usePagination',
-    totalPages = 1,
+    totalPages = 0,
     defaultPage = 0,
     disabled = false,
     hideNextButton = false,
     hidePrevButton = false,
     onChange: handleChange,
-    pageNumber: pageProp,
+    pageNumber: page = 0,
     showFirstButton = true,
     showLastButton = true,
     ...other
   } = props;
 
-  console.log('pagination.hook ', {pageProp})
+  console.log('pagination.hook ', {page});
 
-  const [page, setPageState] = useControlled({
-    controlled: pageProp,
-    default: defaultPage,
-    name: componentName,
-    state: 'page',
-  });
+  // const [page, setPageState] = useControlled({
+  //   controlled: pageProp,
+  //   default: defaultPage,
+  //   name: componentName,
+  //   state: 'page',
+  // });
 
   const handleClick = (event: any, value: any) => {
-    if (!pageProp) {
-      setPageState(value);
-    }
+    // if (!pageProp) {
+    //   setPageState(value);
+    // }
     if (handleChange) {
       handleChange(value);
     }
@@ -232,7 +232,7 @@ export default function usePagination(props: UsePaginationProps) {
 
   return {
     items,
-    pageNumber: page,
+    pageNumber: page, //page,
     totalPages: totalPages,
     ...other,
   };
