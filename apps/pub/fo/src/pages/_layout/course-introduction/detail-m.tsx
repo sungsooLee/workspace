@@ -324,21 +324,22 @@ function RouteComponent() {
         </div>
       </div>
 
-      <div className={styles.tab_wrap}>
-        <div className={styles.tab_title}>
-          <div className={styles.box}>
-            {tabTitle.map((item, index) => (
-              <Button
-                key={item.key}
-                className={selectedTabTitle === index ? styles.active : ''}
-                onClick={() => handleTab(item.key, index)}
-              >
-                {item.title}
-                <em>{item.count}</em>
-              </Button>
-            ))}
-          </div>
+      <div className={styles.tab_title}>
+        <div className={styles.box}>
+          {tabTitle.map((item, index) => (
+            <Button
+              key={item.key}
+              className={selectedTabTitle === index ? styles.active : ''}
+              onClick={() => handleTab(item.key, index)}
+            >
+              {item.title}
+              <em>{item.count}</em>
+            </Button>
+          ))}
         </div>
+      </div>
+
+      <div className={styles.tab_wrap}>
         <Tabs className={styles.tab} selectedTabKey={selectedTabKey} items={items} type="line" />
       </div>
 

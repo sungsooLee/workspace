@@ -2,16 +2,24 @@ import { forwardRef } from 'react';
 import { RadioGroup } from '../../radio-group/radio-group';
 import { cn } from '@learnway/shared';
 import styles from './radio-group-form-field.module.css';
+import { BaseFormFieldProps, OptionsConfig, SelectOption, useFormOptions } from '@learnway/hooks';
+import { t } from 'i18next';
 
-const RadioGroupFormFieldComponent = forwardRef<HTMLDivElement, any>(
-  ({ value, name, onChange, options, cols, ...props }, ref) => {
+export interface RadioGroupFormFieldProps extends BaseFormFieldProps<string> {
+  options?: SelectOption[];
+  optionsConfig?: OptionsConfig;
+}
+
+const RadioGroupFormFieldComponent = forwardRef<HTMLDivElement, RadioGroupFormFieldProps>(
+  ({ value, name, onChange, options: initOptions, optionsConfig, cols, ...props }, ref) => {
+    const options = useFormOptions(initOptions, optionsConfig);
     return (
       <RadioGroup
         ref={ref}
         value={value}
         defaultValue={value}
         onValueChange={onChange}
-        options={options.map((item: any) => ({ value: item.value, label: item.label }))}
+        options={options.map((item: any) => ({ value: item.value, label: t(item.label) }))}
         className={cn(styles.start, styles.radio_list, !cols && styles.type_flex)}
         cols={cols}
         style={cols ? { gridTemplateColumns: `repeat(${cols}, 1fr)` } : undefined}

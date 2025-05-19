@@ -66,6 +66,7 @@ import { Route as LayoutIntegratedSearchIntegratedAllImport } from './pages/_lay
 import { Route as LayoutFooterMenuPrivacyImport } from './pages/_layout/footer-menu/privacy'
 import { Route as LayoutFooterMenuOpenLicenseImport } from './pages/_layout/footer-menu/open-license'
 import { Route as LayoutFooterMenuAgreementImport } from './pages/_layout/footer-menu/agreement'
+import { Route as LayoutEduSupportEduLicensesListImport } from './pages/_layout/edu-support/edu-licenses-list'
 import { Route as LayoutCourseRegistrationCourseRegistrationTextbookImport } from './pages/_layout/course-registration/course-registration-textbook'
 import { Route as LayoutCourseRegistrationCourseRegistrationLevelImport } from './pages/_layout/course-registration/course-registration-level'
 import { Route as LayoutCourseRegistrationCourseRegistrationCompleteImport } from './pages/_layout/course-registration/course-registration-complete'
@@ -457,6 +458,13 @@ const LayoutFooterMenuAgreementRoute = LayoutFooterMenuAgreementImport.update({
   path: '/footer-menu/agreement',
   getParentRoute: () => LayoutRoute,
 } as any)
+
+const LayoutEduSupportEduLicensesListRoute =
+  LayoutEduSupportEduLicensesListImport.update({
+    id: '/edu-support/edu-licenses-list',
+    path: '/edu-support/edu-licenses-list',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 
 const LayoutCourseRegistrationCourseRegistrationTextbookRoute =
   LayoutCourseRegistrationCourseRegistrationTextbookImport.update({
@@ -1412,6 +1420,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCourseRegistrationCourseRegistrationTextbookImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/edu-support/edu-licenses-list': {
+      id: '/_layout/edu-support/edu-licenses-list'
+      path: '/edu-support/edu-licenses-list'
+      fullPath: '/edu-support/edu-licenses-list'
+      preLoaderRoute: typeof LayoutEduSupportEduLicensesListImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/footer-menu/agreement': {
       id: '/_layout/footer-menu/agreement'
       path: '/footer-menu/agreement'
@@ -1692,6 +1707,7 @@ interface LayoutRouteChildren {
   LayoutCourseRegistrationCourseRegistrationCompleteRoute: typeof LayoutCourseRegistrationCourseRegistrationCompleteRoute
   LayoutCourseRegistrationCourseRegistrationLevelRoute: typeof LayoutCourseRegistrationCourseRegistrationLevelRoute
   LayoutCourseRegistrationCourseRegistrationTextbookRoute: typeof LayoutCourseRegistrationCourseRegistrationTextbookRoute
+  LayoutEduSupportEduLicensesListRoute: typeof LayoutEduSupportEduLicensesListRoute
   LayoutFooterMenuAgreementRoute: typeof LayoutFooterMenuAgreementRoute
   LayoutFooterMenuOpenLicenseRoute: typeof LayoutFooterMenuOpenLicenseRoute
   LayoutFooterMenuPrivacyRoute: typeof LayoutFooterMenuPrivacyRoute
@@ -1726,6 +1742,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
     LayoutCourseRegistrationCourseRegistrationLevelRoute,
   LayoutCourseRegistrationCourseRegistrationTextbookRoute:
     LayoutCourseRegistrationCourseRegistrationTextbookRoute,
+  LayoutEduSupportEduLicensesListRoute: LayoutEduSupportEduLicensesListRoute,
   LayoutFooterMenuAgreementRoute: LayoutFooterMenuAgreementRoute,
   LayoutFooterMenuOpenLicenseRoute: LayoutFooterMenuOpenLicenseRoute,
   LayoutFooterMenuPrivacyRoute: LayoutFooterMenuPrivacyRoute,
@@ -1874,6 +1891,7 @@ export interface FileRoutesByFullPath {
   '/course-registration/course-registration-complete': typeof LayoutCourseRegistrationCourseRegistrationCompleteRoute
   '/course-registration/course-registration-level': typeof LayoutCourseRegistrationCourseRegistrationLevelRoute
   '/course-registration/course-registration-textbook': typeof LayoutCourseRegistrationCourseRegistrationTextbookRoute
+  '/edu-support/edu-licenses-list': typeof LayoutEduSupportEduLicensesListRoute
   '/footer-menu/agreement': typeof LayoutFooterMenuAgreementRoute
   '/footer-menu/open-license': typeof LayoutFooterMenuOpenLicenseRoute
   '/footer-menu/privacy': typeof LayoutFooterMenuPrivacyRoute
@@ -1981,6 +1999,7 @@ export interface FileRoutesByTo {
   '/course-registration/course-registration-complete': typeof LayoutCourseRegistrationCourseRegistrationCompleteRoute
   '/course-registration/course-registration-level': typeof LayoutCourseRegistrationCourseRegistrationLevelRoute
   '/course-registration/course-registration-textbook': typeof LayoutCourseRegistrationCourseRegistrationTextbookRoute
+  '/edu-support/edu-licenses-list': typeof LayoutEduSupportEduLicensesListRoute
   '/footer-menu/agreement': typeof LayoutFooterMenuAgreementRoute
   '/footer-menu/open-license': typeof LayoutFooterMenuOpenLicenseRoute
   '/footer-menu/privacy': typeof LayoutFooterMenuPrivacyRoute
@@ -2092,6 +2111,7 @@ export interface FileRoutesById {
   '/_layout/course-registration/course-registration-complete': typeof LayoutCourseRegistrationCourseRegistrationCompleteRoute
   '/_layout/course-registration/course-registration-level': typeof LayoutCourseRegistrationCourseRegistrationLevelRoute
   '/_layout/course-registration/course-registration-textbook': typeof LayoutCourseRegistrationCourseRegistrationTextbookRoute
+  '/_layout/edu-support/edu-licenses-list': typeof LayoutEduSupportEduLicensesListRoute
   '/_layout/footer-menu/agreement': typeof LayoutFooterMenuAgreementRoute
   '/_layout/footer-menu/open-license': typeof LayoutFooterMenuOpenLicenseRoute
   '/_layout/footer-menu/privacy': typeof LayoutFooterMenuPrivacyRoute
@@ -2201,6 +2221,7 @@ export interface FileRouteTypes {
     | '/course-registration/course-registration-complete'
     | '/course-registration/course-registration-level'
     | '/course-registration/course-registration-textbook'
+    | '/edu-support/edu-licenses-list'
     | '/footer-menu/agreement'
     | '/footer-menu/open-license'
     | '/footer-menu/privacy'
@@ -2307,6 +2328,7 @@ export interface FileRouteTypes {
     | '/course-registration/course-registration-complete'
     | '/course-registration/course-registration-level'
     | '/course-registration/course-registration-textbook'
+    | '/edu-support/edu-licenses-list'
     | '/footer-menu/agreement'
     | '/footer-menu/open-license'
     | '/footer-menu/privacy'
@@ -2416,6 +2438,7 @@ export interface FileRouteTypes {
     | '/_layout/course-registration/course-registration-complete'
     | '/_layout/course-registration/course-registration-level'
     | '/_layout/course-registration/course-registration-textbook'
+    | '/_layout/edu-support/edu-licenses-list'
     | '/_layout/footer-menu/agreement'
     | '/_layout/footer-menu/open-license'
     | '/_layout/footer-menu/privacy'
@@ -2554,6 +2577,7 @@ export const routeTree = rootRoute
         "/_layout/course-registration/course-registration-complete",
         "/_layout/course-registration/course-registration-level",
         "/_layout/course-registration/course-registration-textbook",
+        "/_layout/edu-support/edu-licenses-list",
         "/_layout/footer-menu/agreement",
         "/_layout/footer-menu/open-license",
         "/_layout/footer-menu/privacy",
@@ -2931,6 +2955,10 @@ export const routeTree = rootRoute
     },
     "/_layout/course-registration/course-registration-textbook": {
       "filePath": "_layout/course-registration/course-registration-textbook.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/edu-support/edu-licenses-list": {
+      "filePath": "_layout/edu-support/edu-licenses-list.tsx",
       "parent": "/_layout"
     },
     "/_layout/footer-menu/agreement": {
