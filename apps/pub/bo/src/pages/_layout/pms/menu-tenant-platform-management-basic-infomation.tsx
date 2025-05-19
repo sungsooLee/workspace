@@ -483,10 +483,13 @@ function RouteComponent() {
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button variant={'gray'} size={'lg'} onClick={() => closeModal()}>
-            <IcoRefresh02 width={16} height={16} className="icon_refresh" />
-            {'초기화'}
-          </Button>
+          <Button
+            icon={<IcoRefresh02 width={16} height={16} className="icon_refresh" />}
+            variant={'gray'}
+            size={'lg'}
+            onClick={() => closeModal()}
+            label={'초기화'}
+          />
           <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
           <Button label={'적용'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
         </ModalFooter>

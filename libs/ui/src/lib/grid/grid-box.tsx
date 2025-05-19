@@ -201,7 +201,7 @@ const GridBoxComponent = <T extends object>(
               size="xs"
               className={styles.btn_all_select}
               label={t('LABEL.grid.header.selectAll')}
-              icon={<IcoMinus width={16} height={16} stroke={'#131C30'} />}
+              icon={<IcoPlus width={16} height={16} stroke={'#131C30'} />}
             />
           )}
           {/* 전체 삭제 */}
