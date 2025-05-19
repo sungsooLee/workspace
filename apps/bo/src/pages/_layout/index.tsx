@@ -178,7 +178,43 @@ export const munu = [
     pageType: 'Page',
     completionDate: '-',
     lastUpdateDate: '-',
-    remarks: '작업 완료', // 비고
+    remarks: '작업 중(조회옵션)', // 비고
+  },
+  {
+    screenName: '플렛폼 테넌트 관리',
+    pageId: 'platform/tenant/management',
+    screenId: '-',
+    pageType: 'Page',
+    completionDate: '-',
+    lastUpdateDate: '-',
+    remarks: '작업 중',
+  },
+  {
+    screenName: '플렛폼 테넌트 등록',
+    pageId: 'platform/tenant/management/regist',
+    screenId: '-',
+    pageType: 'Page',
+    completionDate: '-',
+    lastUpdateDate: '-',
+    remarks: '작업 중',
+  },
+  {
+    screenName: '교육 장소 ',
+    pageId: 'learning/training-place',
+    screenId: '-',
+    pageType: 'Page',
+    completionDate: '-',
+    lastUpdateDate: '-',
+    remarks: '작업 중',
+  },
+  {
+    screenName: '교육 장소 등록',
+    pageId: 'learning/training-place/regist',
+    screenId: '-',
+    pageType: 'Page',
+    completionDate: '-',
+    lastUpdateDate: '-',
+    remarks: '작업 중', // 비고
   },
 ];
 
