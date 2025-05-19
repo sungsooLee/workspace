@@ -1,0 +1,7 @@
+.start {
+  &.history_wrap {
+    .list_info {
+      @apply mt-[33px];
+    }
+  }
+}
