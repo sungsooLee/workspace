@@ -26,6 +26,7 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
       className={className}
       children={children}
       element={element}
+      style={'fo'}
     />
   );
 };
