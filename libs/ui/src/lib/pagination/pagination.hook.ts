@@ -194,6 +194,19 @@ export default function usePagination(props: UsePaginationProps) {
     }
   };
 
+  const buttonDisabled = (type: string) => {
+    switch (type) {
+      case 'first':
+      case 'previous':
+        return page === 1;
+      case 'next':
+      case 'last':
+        return page === count;
+      default:
+        return false;
+    }
+  };
+
   // Convert the basic item list to PaginationItem props objects
   const items = itemList.map((item) => {
     return typeof item === 'number'
@@ -214,10 +227,7 @@ export default function usePagination(props: UsePaginationProps) {
           type: item,
           page: buttonPage(item),
           selected: false,
-          disabled:
-            disabled ||
-            (!item.includes('ellipsis') &&
-              (item === 'next' || item === 'last' ? page >= count : page <= 1)),
+          disabled: disabled || buttonDisabled(item),
         };
   });
 

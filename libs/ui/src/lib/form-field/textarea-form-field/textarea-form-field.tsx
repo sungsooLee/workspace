@@ -4,6 +4,10 @@ import { Textarea } from '../../textarea/textarea';
 export interface TextareaFormFieldProps {
   value?: any[];
   onChange?: (value: any) => void;
+  resize?: 'none' | 'both' | 'horizontal' | 'vertical';
+  disabled?: boolean;
+  maxLength?: number;
+  size?: 'xs' | 'sm' | 'md'; // textarea 높이(basic : md)
 }
 
 /**

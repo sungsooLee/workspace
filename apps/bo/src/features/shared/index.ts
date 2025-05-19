@@ -2,4 +2,7 @@ export * from './ui/modal/channel-choice-modal';
 export * from './ui/modal/manager-choice-modal';
 export * from './ui/modal/company-choice-modal';
 export * from './ui/modal/company-shuttle-modal';
+export * from './ui/modal/address-search-modal';
+export * from './ui/modal/user-choice-modal';
+export * from './ui/modal/user-shuttle-modal';
 export { ExcelUploadModal } from './ui/modal/excel-upload-modal';

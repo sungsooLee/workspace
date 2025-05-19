@@ -2,7 +2,7 @@ import { useRouter } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import { z, cn } from '@learnway/shared';
-import { Button, ContentsRow, PhoneNumber, DynamicFormField } from '@learnway/ui';
+import { Button, ContentsRow, PhoneNumber, DynamicFormField, Input } from '@learnway/ui';
 import { useDynamicForm } from '@learnway/hooks';
 
 import { FormRow, ProccessResult } from '../../shared';
@@ -28,7 +28,7 @@ export function ResultBySignupProgressPage({ route }: any) {
             title={t('LABEL.message.signupProgressResult01')}
             className={styles.success_info}
           >
-             {t('LABEL.common.applicationDateTime')} : <strong>YYYY-MM-DD</strong>
+            {t('LABEL.common.applicationDateTime')} : <strong>YYYY-MM-DD</strong>
           </ProccessResult>
 
           <h4 className={cn(styles.title, 'auth--title')}>
@@ -37,15 +37,11 @@ export function ResultBySignupProgressPage({ route }: any) {
 
           <div className="no_line col">
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'company'} disabled />
-              </FormRow>
+              <FormRow provider={provider} name={'company'} element={<Input disabled={true} />} />
             </ContentsRow>
 
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'no'} disabled />
-              </FormRow>
+              <FormRow provider={provider} name={'no'} element={<Input disabled={true} />} />
             </ContentsRow>
           </div>
 
@@ -57,29 +53,23 @@ export function ResultBySignupProgressPage({ route }: any) {
 
           <div className="no_line col">
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'id'} disabled />
-              </FormRow>
+              <FormRow provider={provider} name={'id'} element={<Input disabled={true} />} />
             </ContentsRow>
 
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'name'} disabled />
-              </FormRow>
+              <FormRow provider={provider} name={'name'} element={<Input disabled={true} />} />
             </ContentsRow>
 
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'role'} disabled />
-              </FormRow>
+              <FormRow provider={provider} name={'role'} element={<Input disabled={true} />} />
             </ContentsRow>
 
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'phoneNumber'} disabled>
-                  <PhoneNumber />
-                </DynamicFormField>
-              </FormRow>
+              <FormRow
+                provider={provider}
+                name={'phoneNumber'}
+                element={<PhoneNumber disabled={true} />}
+              />
             </ContentsRow>
           </div>
 

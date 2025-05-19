@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useSearchBox } from '@learnway/hooks';
 import { useCreation } from 'ahooks';
+import { cn } from '@learnway/shared';
 
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
 import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
@@ -12,6 +13,8 @@ import { SearchBox } from '../../../../shared/ui/search-box';
 
 import { WidgetPreviewButton } from '../../../../features/platform';
 import { GridBox, useGridBox } from '@learnway/ui';
+
+import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
 export const Route = createFileRoute('/_layout/platform/widget/')({
   component: RouteComponent,
@@ -61,16 +64,18 @@ function RouteComponent() {
     <PageContainer>
       <MainContents>
         <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
-        <div className="grid_wrap line">
-          <GridBox
-            config={gridConfig}
-            onRowSelect={(row: any) => {
-              router.navigate({
-                to: '/platform/widget/view',
-                state: { widgetCode: row?.widgetCode },
-              });
-            }}
-          />
+        <div className={cn(boxStyles.start, boxStyles.inner)}>
+          <div className="grid_wrap">
+            <GridBox
+              config={gridConfig}
+              onRowSelect={(row: any) => {
+                router.navigate({
+                  to: '/platform/widget/view',
+                  state: { widgetCode: row?.widgetCode },
+                });
+              }}
+            />
+          </div>
         </div>
       </MainContents>
     </PageContainer>

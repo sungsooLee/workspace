@@ -41,6 +41,8 @@ export interface UploadFile {
   contentType?: string;
   controller?: AbortController; // fetch 취소를 위해 사용
   message?: string;
+  basicPath: string;
+  detailPath: string;
 }
 
 export interface UseUploadQueueConfig {

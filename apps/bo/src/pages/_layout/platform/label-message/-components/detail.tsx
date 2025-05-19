@@ -1,12 +1,24 @@
 import { useTranslation } from 'react-i18next';
-import { Button, ContentsRow, DynamicFormField, useModal } from '@learnway/ui';
+import {
+  Button,
+  ContentsRow,
+  DynamicFormField,
+  RadioGroupFormField,
+  TextareaFormField,
+  useModal,
+} from '@learnway/ui';
 import React, { useEffect } from 'react';
 import { useRouter } from '@tanstack/react-router';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { t } from 'i18next';
 
-import { DuplicateCheckInputFormField, FormRow, FormSubTitle } from '@shared/ui/form';
+import {
+  DuplicateCheckInputFormField,
+  FormRow,
+  FormSubTitle,
+  SwitchFormField,
+} from '@shared/ui/form';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import { FormInfoArea } from '@shared/ui/form/components/form-info-area';
@@ -161,14 +173,18 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
       <div className="inner_contents">
         {/*분류*/}
         <ContentsRow>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'labelMessageType'} disabled={formDisabled} />
-          </FormRow>
+          <FormRow
+            provider={provider}
+            name={'labelMessageType'}
+            element={<RadioGroupFormField disabled={formDisabled} />}
+          />
         </ContentsRow>
         {/*메세지코드*/}
         <ContentsRow>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'labelMessageMultilingulKey'} disabled={formDisabled}>
+          <FormRow
+            provider={provider}
+            name={'labelMessageMultilingulKey'}
+            element={
               <DuplicateCheckInputFormField
                 query={queryOptions.all}
                 clearFormError={clearFormError}
@@ -178,12 +194,16 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
                   onFormChange({ isDuplicateCheck: isValid, lastDuplicateText: checkValue });
                 }}
               />
-            </DynamicFormField>
-          </FormRow>
+            }
+          />
         </ContentsRow>
         {/*메세지*/}
         <ContentsRow>
-          <FormRow provider={provider}>
+          <FormRow
+            provider={provider}
+            name={'labelMessageName'}
+            element={<TextareaFormField disabled={formDisabled} />}
+          >
             <FormInfoArea>
               {/* 다국어 관리 : 수정 모드에서만 활성화 */}
               <Button
@@ -194,20 +214,23 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
                 onClick={handleMultilingualManageClick}
               />
             </FormInfoArea>
-            <DynamicFormField name={'labelMessageName'} disabled={formDisabled} />
           </FormRow>
         </ContentsRow>
         {/*설명*/}
         <ContentsRow>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'labelMessageDesc'} disabled={formDisabled} />
-          </FormRow>
+          <FormRow
+            provider={provider}
+            name={'labelMessageDesc'}
+            element={<TextareaFormField disabled={formDisabled} />}
+          />
         </ContentsRow>
         {/*사용여부*/}
         <ContentsRow type={'horizontal'} className={'inactive'}>
-          <FormRow provider={provider}>
-            <DynamicFormField name={'isUsed'} disabled={formDisabled} />
-          </FormRow>
+          <FormRow
+            provider={provider}
+            name={'isUsed'}
+            element={<SwitchFormField disabled={formDisabled} />}
+          />
         </ContentsRow>
       </div>
     </form>

@@ -14,7 +14,6 @@ export namespace com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto_Wi
         LIVE = 'LIVE',
         EXAM = 'EXAM',
         SURVEY = 'SURVEY',
-        PACKAGE = 'PACKAGE',
     }
 }
 

@@ -3,6 +3,7 @@ import {
   ChipListModalSelectorFormField,
   ContentsRow,
   DynamicFormField,
+  Input,
   InputModalSelectorFormField,
 } from '@learnway/ui';
 import React, { forwardRef, useEffect } from 'react';
@@ -33,8 +34,10 @@ const BasicInfoComponent = forwardRef<HTMLDivElement, BasicInfoProps>(({ dynamic
     <div ref={ref}>
       <ContentsRow>
         {/*강의 유형*/}
-        <FormRow provider={provider}>
-          <DynamicFormField name={'강의 유형'}>
+        <FormRow
+          provider={provider}
+          name={'강의 유형'}
+          element={
             <InputModalSelectorFormField
               modalConfig={{
                 content: <ChannelListModal />,
@@ -44,91 +47,90 @@ const BasicInfoComponent = forwardRef<HTMLDivElement, BasicInfoProps>(({ dynamic
                 '강의 유형 아이디': modalData?.channelId,
               })}
             />
-          </DynamicFormField>
-        </FormRow>
+          }
+        />
         {/*강의 세부 요청*/}
-        <FormRow provider={provider}>
-          <DynamicFormField name={'강의 세부 요청'}>
+        <FormRow
+          provider={provider}
+          name={'강의 세부 요청'}
+          element={
             <InputModalSelectorFormField
               modalConfig={{
                 content: <ChannelListModal />,
               }}
             />
-          </DynamicFormField>
-        </FormRow>
+          }
+        />
         {/*채널*/}
-        <FormRow provider={provider}>
-          <DynamicFormField name={'채널'}>
+        <FormRow
+          provider={provider}
+          name={'채널'}
+          element={
             <InputModalSelectorFormField
               modalConfig={{
                 content: <ChannelListModal />,
               }}
             />
-          </DynamicFormField>
-        </FormRow>
+          }
+        />
       </ContentsRow>
       {/*과정소개 타이틀*/}
       <FormSubTitle label={t('과정소개')} />
       {/*언어 설정*/}
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'채널'}>
+        <FormRow
+          provider={provider}
+          name={'채널'}
+          element={
             <InputModalSelectorFormField
               modalConfig={{
                 content: <ChannelListModal />,
               }}
             />
-          </DynamicFormField>
-        </FormRow>
+          }
+        />
       </ContentsRow>
       {/*과정명*/}
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'과정명'} disabled={getValues()?.['교육 목표'] === 'a'} />
-        </FormRow>
+        {/* TODO. 과정명이 어떤 컴포넌트인지 추적 불가해서 일단 Input 으로 작성 합니다.*/}
+        <FormRow
+          provider={provider}
+          name={'과정명'}
+          element={<Input disabled={getValues()?.['교육 목표'] === 'a'} />}
+        />
       </ContentsRow>
       {/*교육 목표*/}
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'교육 목표'} />
-        </FormRow>
+        <FormRow provider={provider} name={'교육 목표'} />
       </ContentsRow>
       {/*교육 내용*/}
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'교육 내용'} />
-        </FormRow>
+        <FormRow provider={provider} name={'교육 내용'} />
       </ContentsRow>
       {/*학습 대상*/}
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'학습 대상'} />
-        </FormRow>
+        <FormRow provider={provider} name={'학습 대상'} />
       </ContentsRow>
       {/*과정 요약*/}
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'과정 요약'} />
-        </FormRow>
+        <FormRow provider={provider} name={'과정 요약'} />
       </ContentsRow>
       {/*공개범위 타이틀*/}
       <FormSubTitle label={t('공개범위')} />
       {/*난이도*/}
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'난이도'} />
-        </FormRow>
+        <FormRow provider={provider} name={'난이도'} />
       </ContentsRow>
       {/*테넌트*/}
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'테넌트'} />
-        </FormRow>
+        <FormRow provider={provider} name={'테넌트'} />
       </ContentsRow>
       {/*카테고리*/}
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'카테고리'}>
+        <FormRow
+          provider={provider}
+          name={'카테고리'}
+          element={
             <ChipListModalSelectorFormField
               modalConfig={{ content: <TeacherListModal channelId={getValues()?.channelId} /> }}
               chipList={{
@@ -138,13 +140,15 @@ const BasicInfoComponent = forwardRef<HTMLDivElement, BasicInfoProps>(({ dynamic
               }}
               actionNode={<Button variant="text" size="sm" label={t('추가')} />}
             />
-          </DynamicFormField>
-        </FormRow>
+          }
+        />
       </ContentsRow>
       {/*학습대상(유저그룹)*/}
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'학습대상'}>
+        <FormRow
+          provider={provider}
+          name={'학습대상'}
+          element={
             <ChipListModalSelectorFormField
               modalConfig={{ content: <TeacherListModal channelId={getValues()?.channelId} /> }}
               chipList={{
@@ -154,40 +158,36 @@ const BasicInfoComponent = forwardRef<HTMLDivElement, BasicInfoProps>(({ dynamic
               }}
               actionNode={<Button variant="text" size="sm" label={t('추가')} />}
             />
-          </DynamicFormField>
-        </FormRow>
+          }
+        />
       </ContentsRow>
       {/*과정 관리자 타이틀*/}
       <FormSubTitle label={t('과정 관리자')} />
       {/*담당자*/}
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'채널'}>
+        <FormRow
+          provider={provider}
+          name={'채널'}
+          element={
             <InputModalSelectorFormField
               modalConfig={{
                 content: <ChannelListModal />,
               }}
             />
-          </DynamicFormField>
-        </FormRow>
+          }
+        />
       </ContentsRow>
       {/*담당자 연락처*/}
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'담당자 연락처'} />
-        </FormRow>
+        <FormRow provider={provider} name={'담당자 연락처'} />
       </ContentsRow>
       {/*운영자*/}
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'운영자'} />
-        </FormRow>
+        <FormRow provider={provider} name={'운영자'} />
       </ContentsRow>
       {/*담당자 연락처*/}
       <ContentsRow>
-        <FormRow provider={provider}>
-          <DynamicFormField name={'담당자 연락처'} />
-        </FormRow>
+        <FormRow provider={provider} name={'담당자 연락처'} />
       </ContentsRow>
     </div>
   );

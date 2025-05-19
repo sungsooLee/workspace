@@ -68,14 +68,10 @@ export function ChangePasswordBySearchAccountPage({ route }: any) {
         <div className={cn(styles.auth_box, 'auth--box')}>
           <div className={cn(styles.auth_form, 'no_line', 'col')}>
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'password'} />
-              </FormRow>
+              <FormRow provider={provider} name={'password'} />
             </ContentsRow>
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'confirm_password'} />
-              </FormRow>
+              <FormRow provider={provider} name={'confirm_password'} />
             </ContentsRow>
           </div>
 

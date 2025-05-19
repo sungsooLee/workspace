@@ -32,7 +32,7 @@ export default class RoleManagerService {
    * @returns 생성된 역할 정보
    */
   static createRole(payload: Role): Promise<any> {
-    return httpService.post<Role>(`${PMSApiPrefix()}/roles`, payload);
+    return httpService.post<Role>(`${PMSApiPrefix()}/roles`, genCreateRole(payload));
   }
 
   /**
@@ -114,4 +114,20 @@ export default class RoleManagerService {
       siteScope: siteScope,
     });
   }
+}
+
+function genCreateRole(payload: any) {
+  const retval = { ...payload };
+
+  //Object 를 id 값으로 전달 하도록 변경
+  if (retval.companyIds?.length > 0) {
+    retval.companyIds = retval.companyIds.map((item: any) => item.companyId);
+  }
+  if (retval.channelIds?.length > 0) {
+    retval.channelIds = retval.channelIds.map((item: any) => item.channelId);
+  }
+  if (retval.deptIds?.length > 0) {
+    retval.deptIds = retval.deptIds.map((item: any) => item.deptIds);
+  }
+  return retval;
 }

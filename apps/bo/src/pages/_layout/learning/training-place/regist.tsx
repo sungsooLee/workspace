@@ -12,7 +12,8 @@ import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.m
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import fileUploadStyles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
-import { ChipListModalSelectorFormField } from '@learnway/ui';
+import { ChipListModalSelectorFormField, TextareaFormField } from '@learnway/ui';
+import { AddressSearchModal } from '@features/shared';
 
 import {
   Button,
@@ -48,8 +49,21 @@ function RouteComponent() {
     { value: 'option3', label: '옵션 3' },
   ];
 
+  const { open } = useModal();
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
     useDynamicForm(formConfig);
+
+  const handleAddressSearchResult = (address: any) => {
+    console.log('address', address);
+    fetchData({ zipCode: address.zipNo, address1: address.roadAddr });
+  };
+
+  const handleAddressSearch = () => {
+    open({
+      width: 's',
+      content: <AddressSearchModal onSelect={handleAddressSearchResult} />,
+    });
+  };
 
   return (
     <form className="form_row">
@@ -71,21 +85,21 @@ function RouteComponent() {
         <MainContents>
           <FormSubTitle label={'교육장소 정보 '} />
           <ContentsRow>
-            <FormRow provider={provider} className={dynamicFormStyles.w_half}>
-              <DynamicFormField name={'placeDivision'} />
-            </FormRow>
+            <FormRow
+              provider={provider}
+              className={dynamicFormStyles.w_half}
+              name={'placeDivision'}
+            />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider} className={dynamicFormStyles.w_half}>
-              <DynamicFormField name={'placeCode'} />
-            </FormRow>
-            <FormRow provider={provider} className={dynamicFormStyles.w_half}>
-              <DynamicFormField name={'placeName'} />
-            </FormRow>
+            <FormRow provider={provider} className={dynamicFormStyles.w_half} name={'placeCode'} />
+            <FormRow provider={provider} className={dynamicFormStyles.w_half} name={'placeName'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'tenantName'}>
+            <FormRow
+              provider={provider}
+              name={'tenantName'}
+              element={
                 <ChipListModalSelectorFormField
                   chipList={{
                     labelField: 'name',
@@ -98,8 +112,8 @@ function RouteComponent() {
                     content: '',
                   }}
                 />
-              </DynamicFormField>
-            </FormRow>
+              }
+            />
           </ContentsRow>
 
           <ContentsRow>
@@ -152,23 +166,36 @@ function RouteComponent() {
               </p>
             </div>
             {/* form_item */}
-            <FormRow provider={provider} className={dynamicFormStyles.w_half}>
-              <DynamicFormField name={'linkAddress'} />
-            </FormRow>
+            <FormRow
+              provider={provider}
+              className={dynamicFormStyles.w_half}
+              name={'linkAddress'}
+            />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'description'} size="sm" resize="none" />
+            <FormRow provider={provider} name={'zipCode'} element={<Input disabled={true} />} />
+            <FormRow provider={provider} name={'address1'} element={<Input disabled={true} />}>
+              <Button variant={'gray'} size={'sm'} onClick={handleAddressSearch}>
+                {'우편번호찾기'}
+              </Button>
             </FormRow>
+            <FormRow provider={provider} name={'address2'} />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name={'description'}
+              element={<TextareaFormField size="sm" resize="none" />}
+            />
           </ContentsRow>
 
           <ContentsRow>
-            <FormRow provider={provider} className={dynamicFormStyles.w_half}>
-              <DynamicFormField name={'isReservationUsed'} />
-            </FormRow>
-            <FormRow provider={provider} className={dynamicFormStyles.w_half}>
-              <DynamicFormField name={'isUsed'} />
-            </FormRow>
+            <FormRow
+              provider={provider}
+              className={dynamicFormStyles.w_half}
+              name={'isReservationUsed'}
+            />
+            <FormRow provider={provider} className={dynamicFormStyles.w_half} name={'isUsed'} />
           </ContentsRow>
 
           <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
@@ -251,6 +278,27 @@ const formConfig: DynamicFormConfig = {
         { value: 'Y', label: '사용 가능' },
         { value: 'N', label: '사용 불가' },
       ],
+    },
+    {
+      name: 'zipCode',
+      type: 'text',
+      label: t('주소'),
+      value: '',
+      placeholder: '우편번호',
+    },
+    {
+      name: 'address1',
+      type: 'text',
+      label: t('주소'),
+      value: '',
+      placeholder: '기본주소',
+    },
+    {
+      name: 'address2',
+      type: 'text',
+      label: '',
+      value: '',
+      placeholder: '',
     },
   ],
   validator: {

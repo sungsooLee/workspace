@@ -5,7 +5,7 @@ import { PMSApiPrefix } from '@learnway/config';
 export default class CompaniesService {
   // 회사 목록 조회
   static fetchAll() {
-    return httpService.get<Company[]>(`${PMSApiPrefix()}/companies`);
+    return httpService.get<any>(`${PMSApiPrefix()}/companies`);
   }
 
   // 회사 조회

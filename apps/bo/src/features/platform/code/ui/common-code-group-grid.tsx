@@ -3,7 +3,15 @@ import { t } from 'i18next';
 import { useRouter } from '@tanstack/react-router';
 import { cn, DATE_TIME_FORMAT, formatISODateString } from '@learnway/shared';
 import { createColumnHelper } from '@tanstack/react-table';
-import { Button, ContentsRow, DynamicFormField, GridBox, GridState, useModal } from '@learnway/ui';
+import {
+  Button,
+  ContentsRow,
+  DynamicFormField,
+  GridBox,
+  GridState,
+  Input,
+  useModal,
+} from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { IcoPlus } from '@learnway/icons';
 
@@ -17,7 +25,9 @@ import {
   useCreateCommonCodeGroup,
   useUpdateCommonCodGroup,
 } from '../../../../entities/common-code/service/common-code-group.hook';
-import { ContentsHistoryInfoFormField, FormRow } from '../../../../shared/ui';
+import { ContentsHistoryInfoFormField, FormRow, SwitchFormField } from '../../../../shared/ui';
+import { useQueryClient } from '@tanstack/react-query';
+import { queryKeys } from '../../../../entities/common-code/service/common-code-group.queries';
 
 // 폼 관련 필드 목록
 const FORM_FIELDS = [
@@ -66,10 +76,8 @@ const CommonCodeGroupGridComponent = ({
 
   const { provider, onSubmit, fetchData, clearFormError, onFormChange, getValues, formState } =
     useDynamicForm(formConfig);
-  const { create: createCodeGroup } = useCreateCommonCodeGroup({
-    onSuccess: (data: any) => {
-      //
-    },
+
+  const { mutate: createCodeGroup } = useCreateCommonCodeGroup({
     queryParams: {
       page,
       size,
@@ -79,10 +87,7 @@ const CommonCodeGroupGridComponent = ({
       isUsed: state.isUsed,
     },
   });
-  const { update: updateCodeGroup } = useUpdateCommonCodGroup({
-    onSuccess: (data: any) => {
-      //
-    },
+  const { mutate: updateCodeGroup } = useUpdateCommonCodGroup({
     queryParams: {
       page,
       size,
@@ -310,32 +315,39 @@ const CommonCodeGroupGridComponent = ({
             </div>
             <div className={layoutStyles.inner_contents}>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'cdGroupId'} disabled={true} />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'cdGroupId'}
+                  element={<Input disabled={true} />}
+                />
               </ContentsRow>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'cdGroupName'} disabled={isFormDisabled} />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'cdGroupName'}
+                  element={<Input disabled={isFormDisabled} />}
+                />
               </ContentsRow>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField
-                    name={'cdGroupAbbreviationEnglishName'}
-                    disabled={isFormDisabled}
-                  />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'cdGroupAbbreviationEnglishName'}
+                  element={<Input disabled={isFormDisabled} />}
+                />
               </ContentsRow>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'cdGroupContent'} disabled={isFormDisabled} />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'cdGroupContent'}
+                  element={<Input disabled={isFormDisabled} />}
+                />
               </ContentsRow>
               <ContentsRow type={'horizontal'} className={'inactive'}>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'isUsed'} disabled={isFormDisabled} />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'isUsed'}
+                  element={<SwitchFormField disabled={isFormDisabled} />}
+                />
               </ContentsRow>
 
               <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>

@@ -20,7 +20,6 @@ export namespace com_ever_edu_lms_enroll_dto_res_EnrollResDto$onUserList {
         LIVE = 'LIVE',
         EXAM = 'EXAM',
         SURVEY = 'SURVEY',
-        PACKAGE = 'PACKAGE',
     }
     export enum enrollStatusType {
         ENROLL_DONE = 'ENROLL_DONE',

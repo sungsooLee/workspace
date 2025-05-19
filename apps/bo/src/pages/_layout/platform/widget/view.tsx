@@ -76,37 +76,26 @@ function RouteComponent() {
           </ContentsButtons>
           <MainContents>
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'widgetName'} />
+              <FormRow provider={provider} name={'widgetName'}>
                 <WidgetPreviewButton widget={data as any} />
               </FormRow>
             </ContentsRow>
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'widgetDesc'} />
-              </FormRow>
+              <FormRow provider={provider} name={'widgetDesc'} />
             </ContentsRow>
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={`deviceNames`}>
-                  <FormTranslationBox />
-                </DynamicFormField>
-              </FormRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'isUsed'} />
-              </FormRow>
+              <FormRow provider={provider} name={`deviceNames`} element={<FormTranslationBox />} />
+              <FormRow provider={provider} name={'isUsed'} />
             </ContentsRow>
             <ContentsRow type="horizontal">
-              <FormRow provider={provider}>
-                <DynamicFormField name={'isSecurityContent'} />
-              </FormRow>
+              <FormRow provider={provider} name={'isSecurityContent'} />
             </ContentsRow>
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'components'}>
-                  {data?.components && <WidgetComponentTable data={data.components} />}
-                </DynamicFormField>
-              </FormRow>
+              <FormRow
+                provider={provider}
+                name={'components'}
+                element={data?.components && <WidgetComponentTable data={data.components} />}
+              />
             </ContentsRow>
             <ContentsRow>
               {data?.components && <WidgetAssignedTenantGrid data={data.tenantWidgetList} />}

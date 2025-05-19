@@ -12,7 +12,7 @@ export type Code = {
 export interface CodeStore {
   code: Partial<Code>; // 초기엔 일부만 들어올 수 있으므로 Partial
   setCode: <K extends CODE_GROUP_TYPE>(group: K, data: Code[K]) => void;
-  getCode: <K extends CODE_GROUP_TYPE>(group: K) => Promise<Code[K]>;
+  getCode: <K extends CODE_GROUP_TYPE>(group: K, filter?: Record<string, any>) => Promise<Code[K]>;
   reset: () => void;
 }
 
@@ -32,5 +32,6 @@ export type CodeApiConfig = {
     options?: CodeOption[];
     name?: string;
     description?: string;
+    disableCache?: boolean;
   };
 };

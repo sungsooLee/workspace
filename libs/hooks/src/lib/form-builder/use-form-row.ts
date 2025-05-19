@@ -91,97 +91,40 @@ const collectNames = (children: ReactNode): string[] => {
   return names;
 };
 
-export const useFormRow = (provider: DynamicFormProvider, children: ReactNode, name?: string) => {
+export const useFormRow = (provider: DynamicFormProvider, children: ReactNode, name: string) => {
   const { control, builders, formState, fieldRefs, ...providerProps } = provider;
   const { t } = useTranslation();
 
-  // children에서 name 값을 수집
-  const names = useMemo(() => collectNames(children), [children]);
-
-  // 명시적으로 지정된 name이 없으면 첫 번째 필드의 name 사용
-  const formName = name || names[0];
-
-  // 필드의 빌더 설정 가져오기
-  const rootConfig = getBuilderConfig(builders, formName);
+  const formConfig = getBuilderConfig(provider.builders, name);
 
   // 필드가 필수인지 확인
-  const isRequired = control.isFieldRequired(formName);
+  const isRequired = control.isFieldRequired(name);
 
   // 상태값 설정
   const [error, setError] = useState<ErrorState>({ isError: false });
 
-  const renderFormRowContent = (child: ReactNode, formFieldConfig: FormFieldConfig): ReactNode => {
-    if (!isValidElement(child)) return child;
-
-    if ((child.type as any).displayName === 'DynamicFormField') {
-      const formConfig = getBuilderConfig(provider.builders, child.props.name);
-
-      const FormComponent = formFieldConfig[formConfig.type as keyof typeof formFieldConfig];
-
-      // 단일 필드로 감싸는 방식: cloneElement를 사용해 추가 props를 병합.
-      return cloneElement(child, {
-        key: child.props.name,
-        ...formConfig, // 빌더 설정값 (예: label, description 등)
-        ...providerProps, // provider에서 전달받은 추가 props들
-        control, // react-hook-form control
-        name: child.props.name, // 기존의 name prop 유지
-        component:
-          FormComponent ||
-          // FormComponent가 없으면 fallback: child의 children을 클론하여 Controller에서 전달받은 props 병합
-          ((fallbackProps: any) => {
-            if (isValidElement(child.props.children)) {
-              return cloneElement(child.props.children, {
-                ...fallbackProps,
-                ...child.props.children.props,
-              });
-            }
-            return child.props.children;
-          }),
-      } as any);
-    }
-
-    if (child.props?.children) {
-      // 재귀 호출 시 props.children 사용 → children 참조 방지
-      return cloneElement(child as ReactElement, {
-        children: Children.map(child.props.children, (nestedChild) =>
-          renderFormRowContent(nestedChild, formFieldConfig),
-        ),
-      });
-    }
-
-    return child;
-  };
-
   useEffect(() => {
     // 필드별 에러 상태 파싱
-    const errorList = names
-      .filter((fieldName) => formState.errors[fieldName])
-      .map((fieldName) => formState.errors[fieldName]);
+    const message = formState.errors[name]?.message;
+    let errorMessage = '';
+    // message가 string인지 확인 후 indexOf 사용
+    if (typeof message === 'string') {
+      errorMessage = message;
 
-    let errorMessage: string | undefined;
-    if (errorList.length > 0) {
-      const message = errorList[0]?.message;
-      // message가 string인지 확인 후 indexOf 사용
-      if (typeof message === 'string') {
-        errorMessage = message;
-
-        if (errorMessage.indexOf('{{label}}') > -1 && rootConfig.label) {
-          errorMessage = errorMessage.replace('{{label}}', t(rootConfig.label));
-        }
+      if (errorMessage.indexOf('{{label}}') > -1 && formConfig.label) {
+        errorMessage = errorMessage.replace('{{label}}', t(formConfig.label));
       }
     }
-
     setError({
       isError: !!errorMessage,
       message: errorMessage,
     });
-  }, [formState.errors, names, rootConfig.label]);
+  }, [formState]);
+
   return {
     fieldRefs,
-    formName,
-    rootConfig,
+    formConfig,
     isRequired,
     error,
-    renderFormRowContent,
   };
 };

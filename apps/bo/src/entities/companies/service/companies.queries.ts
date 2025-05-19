@@ -11,7 +11,7 @@ export const queryKeys = {
 export const queryOptions = {
   all: () => ({
     queryKey: queryKeys.all,
-    queryFn: async (): Promise<Company[]> => CompaniesService.fetchAll(),
+    queryFn: async (): Promise<any> => CompaniesService.fetchAll(),
   }),
   detail: (id?: number) =>
     id

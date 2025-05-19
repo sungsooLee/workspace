@@ -54,8 +54,10 @@ function RouteComponent() {
         <MainContents>
           {/*채널*/}
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'channelName'}>
+            <FormRow
+              provider={provider}
+              name={'channelName'}
+              element={
                 <InputModalSelectorFormField
                   modalConfig={{
                     title: '',
@@ -63,26 +65,24 @@ function RouteComponent() {
                     content: <ChannelChoiceModal />,
                   }}
                 />
-              </DynamicFormField>
-            </FormRow>
+              }
+            />
           </ContentsRow>
           {/*학습자원명*/}
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'learningResourceName'} />
-            </FormRow>
+            <FormRow provider={provider} name={'learningResourceName'} />
           </ContentsRow>
           {/*학습자원 설명*/}
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'learningResourceDescription'} />
-            </FormRow>
+            <FormRow provider={provider} name={'learningResourceDescription'} />
           </ContentsRow>
           {/*담당자, 연락처*/}
           <ContentsRow>
             {/*담당자*/}
-            <FormRow provider={provider}>
-              <DynamicFormField name={'managerName'}>
+            <FormRow
+              provider={provider}
+              name={'managerName'}
+              element={
                 <InputModalSelectorFormField
                   modalConfig={{
                     title: '',
@@ -90,33 +90,28 @@ function RouteComponent() {
                     content: <ManagerChoiceModal />,
                   }}
                 />
-              </DynamicFormField>
-            </FormRow>
+              }
+            />
+
             {/*연락처*/}
-            <FormRow provider={provider}>
-              <DynamicFormField name={'contact'} />
-            </FormRow>
+            <FormRow provider={provider} name={'contact'} />
           </ContentsRow>
           {/*사용기한*/}
           <ContentsRow type={'horizontal'}>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'expirationDate'} />
-            </FormRow>
+            <FormRow provider={provider} name={'expirationDate'} />
           </ContentsRow>
           <FormDisplay provider={provider} dependencies={[{ name: 'expirationDate', value: true }]}>
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'expirationDateFrom'}>
-                  <DateRangePickerFormField />
-                </DynamicFormField>
-              </FormRow>
+              <FormRow
+                provider={provider}
+                name={'expirationDateFrom'}
+                element={<DateRangePickerFormField />}
+              />
             </ContentsRow>
           </FormDisplay>
           {/*외주개발업체 정보*/}
           <ContentsRow type={'horizontal'} className={'inactive'}>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'isExternalDevelopmentCompany'} />
-            </FormRow>
+            <FormRow provider={provider} name={'isExternalDevelopmentCompany'} />
           </ContentsRow>
           {/*외주개발업체정보 상세*/}
           <FormDisplay
@@ -125,8 +120,10 @@ function RouteComponent() {
           >
             {/*외부개발업체*/}
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'externalDevelopmentCompany'}>
+              <FormRow
+                provider={provider}
+                name={'externalDevelopmentCompany'}
+                element={
                   <InputModalSelectorFormField
                     modalConfig={{
                       title: '',
@@ -134,89 +131,65 @@ function RouteComponent() {
                       content: <ManagerChoiceModal />,
                     }}
                   />
-                </DynamicFormField>
-              </FormRow>
+                }
+              />
             </ContentsRow>
             {/*외주개발업체 담당자*/}
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'externalDevelopmentCompanyManager'} />
-              </FormRow>
+              <FormRow provider={provider} name={'externalDevelopmentCompanyManager'} />
               {/*외주개발업체 연락처*/}
-              <FormRow provider={provider}>
-                <DynamicFormField name={'externalDevelopmentCompanyContact'} />
-              </FormRow>
+              <FormRow provider={provider} name={'externalDevelopmentCompanyContact'} />
             </ContentsRow>
           </FormDisplay>
           {/* 블로그 내용 */}
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name="blogContent" />
-            </FormRow>
+            <FormRow provider={provider} name={'blogContent'} />
           </ContentsRow>
           {/*썸네일*/}
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name="thumbnails" />
-            </FormRow>
+            <FormRow provider={provider} name={'thumbnails'} />
           </ContentsRow>
           {/*태그*/}
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name="tags" />
-            </FormRow>
+            <FormRow provider={provider} name={'tags'} />
           </ContentsRow>
           {/*학습자원개요*/}
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name="learningResourceOverview" />
-            </FormRow>
+            <FormRow provider={provider} name={'learningResourceOverview'} />
           </ContentsRow>
           {/* 키워드 */}
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name="keywords" />
-            </FormRow>
+            <FormRow provider={provider} name={'keywords'} />
           </ContentsRow>
           {/* 교육지원활용 여부 */}
           <ContentsRow type={'horizontal'} className={'inactive'}>
-            <FormRow provider={provider}>
-              <DynamicFormField name="isTrainingSupport" />
-            </FormRow>
+            <FormRow provider={provider} name={'isTrainingSupport'} />
           </ContentsRow>
           {/* 보안컨텐츠 여부 */}
           <ContentsRow type={'horizontal'} className={'inactive'}>
-            <FormRow provider={provider}>
-              <DynamicFormField name="isSecurityContent" />
-            </FormRow>
+            <FormRow provider={provider} name={'isSecurityContent'} />
           </ContentsRow>
           {/* 공유채널 설정 */}
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name="sharedChannels">
-                <SharedChannelGridFormField />
-              </DynamicFormField>
-            </FormRow>
+            <FormRow
+              provider={provider}
+              name={'sharedChannels'}
+              element={<SharedChannelGridFormField />}
+            />
           </ContentsRow>
           {/* 최종확인 */}
           <FormGroup title={'최종확인'} required={true}>
             {/* 검수 확인 */}
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'isInspectionConfirmed'} />
-              </FormRow>
+              <FormRow provider={provider} name={'isInspectionConfirmed'} />
             </ContentsRow>
             {/* 저작권 확인 */}
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'isCopyrightConfirmed'} />
-              </FormRow>
+              <FormRow provider={provider} name={'isCopyrightConfirmed'} />
             </ContentsRow>
             {/* 보안 확인 */}
             <ContentsRow>
-              <FormRow provider={provider}>
-                <DynamicFormField name={'isSecurityConfirmed'} />
-              </FormRow>
+              <FormRow provider={provider} name={'isSecurityConfirmed'} />
             </ContentsRow>
           </FormGroup>
           <ContentsHistoryInfoFormField />

@@ -1,0 +1,48 @@
+.root {
+  &.title_wrap {
+    @apply flex flex-wrap justify-between;
+    .title_area {
+      @apply flex h-[32px] items-center;
+      .title {
+        @apply title_bo_4_b text-[var(--gray9)];
+      }
+      & + div {
+        @apply flex items-center justify-end;
+        [class*='nlp--input'] {
+          @apply mr-[8px] w-[120px];
+        }
+        [class*='nlp--button'] {
+          @apply w-auto flex-none;
+        }
+      }
+    }
+
+    [class*='btn_text'] {
+      @apply text-[var(--gray8)];
+      & + [class*='btn_text'] {
+        @apply relative pl-[16px];
+        &::before {
+          @apply absolute left-0 top-1/2 h-[12px] w-[1px] -translate-y-1/2 bg-[var(--gray5)] content-[''];
+        }
+      }
+      &:disabled {
+        @apply !text-[var(--gray5)];
+      }
+    }
+    [class*='info_text'] {
+      @apply button_bo_2_r text-[var(--gray8)];
+      & + button {
+        @apply ml-[16px];
+      }
+    }
+    [role='radiogroup'] + button {
+      @apply ml-[16px];
+    }
+    &.line {
+      @apply border-b-[1px] border-solid border-[var(--gray4)] pb-[12px];
+    }
+    & + [class*='nlp--contents-row'] {
+      @apply mt-[16px];
+    }
+  }
+}

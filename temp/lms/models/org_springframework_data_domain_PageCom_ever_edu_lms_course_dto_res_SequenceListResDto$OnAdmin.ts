@@ -6,8 +6,8 @@ import type { com_ever_edu_lms_course_dto_res_SequenceListResDto$OnAdmin } from 
 import type { org_springdoc_core_converters_models_SortObject } from './org_springdoc_core_converters_models_SortObject';
 import type { PageableObject } from './PageableObject';
 export type org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_SequenceListResDto$OnAdmin = {
-    totalPages?: number;
     totalElements?: number;
+    totalPages?: number;
     size?: number;
     content?: Array<com_ever_edu_lms_course_dto_res_SequenceListResDto$OnAdmin>;
     number?: number;

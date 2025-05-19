@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import {
   Button,
   DndFileProgress,
@@ -9,12 +9,13 @@ import {
   UppyUpload,
   useModal,
 } from '@learnway/ui';
-import { useS3Uploader } from '@learnway/hooks';
+import { CreateFileGroupFilesInfoReq, useFileManager, useS3Uploader } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { cn } from '@learnway/shared';
 import { LEARNING_TYPE } from '@learnway/config';
 import { t } from 'i18next';
 import { ChannelChoiceModal } from '@features/shared';
+import { AFFAIRS_TYPE, UPLOAD_TYPE } from '@/libs/hooks/src/lib/use-file-manager/type';
 
 interface Props {
   channel: {
@@ -47,10 +48,11 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
   const maxFileCount = 1;
   const maxFileSize = 1024 * 1024 * 10;
   const { stats, files, addFiles, onPause, onRetry, onResume, onRemove } = useS3Uploader({
-    s3Path: 'upload/leaning/resource/video',
+    s3Path: 'upload/leaning-resource/video/',
     maxFileCount,
     acceptFiles: acceptFiles[type],
   });
+  const { createFileGroupFiles } = useFileManager();
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleAddFiles = (files: File[]) => {
@@ -64,6 +66,42 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
     });
   };
 
+  const initFileInfo = useCallback(async () => {
+    const createFiles = files
+      .filter((file) => file.status === 'completed')
+      .map((file) => {
+        /*
+      uploadType: UPLOAD_TYPE;
+      affairsType: AFFAIRS_TYPE;
+      reposType: 'S3';
+      basicPath: string;
+      languageCode: string;
+      detailPath: string;
+      files : {
+        originalFileName: string;
+        serverFileName: string;
+        fileSize: number;
+        detailPath?: string;
+      }*/
+        return {
+          uploadType: 'CONTENTS',
+          affairsType: 'PMS',
+          reposType: 'S3',
+          languageCode: 'ko',
+          detailPath: file.detailPath,
+          basicPath: file.basicPath,
+          files: {
+            originalFileName: file.fileName,
+            serverFileName: file.s3FileName,
+            fileSize: file.size,
+          },
+        };
+      });
+    const response = await createFileGroupFiles(createFiles[0] as CreateFileGroupFilesInfoReq[]);
+    console.log('response => ', response);
+    console.log('createFiles => ', createFiles);
+  }, [files]);
+
   useEffect(() => {
     if (stats.status === 'validating-error' && files.length === 1) {
       if (files[0].message === 'size error') {
@@ -73,6 +111,9 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
         setErrorMessage(t('LABEL.message.learningResourceFileUploadModal.extensionError'));
       }
       onRemove();
+    }
+    if (stats.status === 'completed') {
+      initFileInfo();
     }
   }, [stats]);
   return (

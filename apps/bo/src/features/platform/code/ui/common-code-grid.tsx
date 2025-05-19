@@ -13,6 +13,7 @@ import {
   GridBox,
   GridImperative,
   GridState,
+  Input,
   useModal,
 } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
@@ -27,7 +28,7 @@ import {
   useUpdateCommonCode,
 } from '../../../../entities/common-code/service/common-code.hook';
 import { CommonCode } from '../../../../types/entities/common-code';
-import { ContentsHistoryInfoFormField, FormRow } from '../../../../shared/ui';
+import { ContentsHistoryInfoFormField, FormRow, SwitchFormField } from '../../../../shared/ui';
 
 // 폼 관련 필드 목록
 const FORM_FIELDS = [
@@ -124,12 +125,6 @@ const CommonCodeGridComponent = ({
     useDynamicForm(formConfig);
   const { create: createCode } = useCreateCommonCode({
     onSuccess: (data: any) => {
-      // openAlert({
-      //   title: '완료되었습니다.',
-      //   content: '요청하신 작업이 정상적으로 완료되었습니다.',
-      // });
-      // console.log(data);
-
       if (data) {
         afterCreateOrUpdateCommonCodeGroup(data);
       }
@@ -371,21 +366,25 @@ const CommonCodeGridComponent = ({
             </div>
             <div className={layoutStyles.inner_contents}>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'cdGroupId'} disabled={true} />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'cdGroupId'}
+                  element={<Input disabled={true} />}
+                />
               </ContentsRow>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'cdGroupName'} disabled={true} />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'cdGroupName'}
+                  element={<Input disabled={true} />}
+                />
               </ContentsRow>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField
-                    name={'cdId'}
-                    disabled={isFormDisabled || FORM_MODE.VIEW === formMode}
-                  />
+                <FormRow
+                  provider={provider}
+                  name={'cdGroupName'}
+                  element={<Input disabled={isFormDisabled || FORM_MODE.VIEW === formMode} />}
+                >
                   <Button
                     type="button"
                     variant="point"
@@ -409,40 +408,56 @@ const CommonCodeGridComponent = ({
                 </FormRow>
               </ContentsRow>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'cdName'} disabled={isFormDisabled} />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'cdName'}
+                  element={<Input disabled={isFormDisabled} />}
+                />
               </ContentsRow>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'cdSeq'} disabled={isFormDisabled} />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'cdSeq'}
+                  element={<Input disabled={isFormDisabled} />}
+                />
               </ContentsRow>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'cdContent'} disabled={isFormDisabled} />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'cdContent'}
+                  element={<Input disabled={isFormDisabled} />}
+                />
               </ContentsRow>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'referenceVal1'} disabled={isFormDisabled} />
-                </FormRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'referenceVal2'} disabled={isFormDisabled} />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'referenceVal1'}
+                  element={<Input disabled={isFormDisabled} />}
+                />
+                <FormRow
+                  provider={provider}
+                  name={'referenceVal2'}
+                  element={<Input disabled={isFormDisabled} />}
+                />
               </ContentsRow>
               <ContentsRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'referenceVal3'} disabled={isFormDisabled} />
-                </FormRow>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'referenceVal4'} disabled={isFormDisabled} />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'referenceVal3'}
+                  element={<Input disabled={isFormDisabled} />}
+                />
+                <FormRow
+                  provider={provider}
+                  name={'referenceVal4'}
+                  element={<Input disabled={isFormDisabled} />}
+                />
               </ContentsRow>
               <ContentsRow type={'horizontal'} className={'inactive'}>
-                <FormRow provider={provider}>
-                  <DynamicFormField name={'isUsed'} disabled={isFormDisabled} />
-                </FormRow>
+                <FormRow
+                  provider={provider}
+                  name={'isUsed'}
+                  element={<SwitchFormField disabled={isFormDisabled} />}
+                />
               </ContentsRow>
               {formMode === FORM_MODE.VIEW && (
                 <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>

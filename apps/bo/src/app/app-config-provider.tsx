@@ -69,7 +69,11 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
   }, [codeGroupData, i18nData]);
 
   if (isLoading) {
-    return <Spinner isLoading={isLoading} />;
+    return (
+      <div className="flex h-screen w-screen items-center justify-center">
+        <Spinner isLoading={isLoading} />
+      </div>
+    );
   }
 
   return children;

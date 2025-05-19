@@ -66,9 +66,6 @@ const InputTimerComponent = forwardRef<HTMLInputElement, InputTimerProps>(
       timerCounter.inc();
     }, [startTimer]);
 
-    // useEffect(() => {
-    //   console.log(value);
-    // }, [value]);
     const handleReset = () => {
       timerCounter.inc();
       onReset && onReset();
@@ -78,6 +75,7 @@ const InputTimerComponent = forwardRef<HTMLInputElement, InputTimerProps>(
       <div className={cn(styles.start, styles.input_timer)}>
         <Input
           {...props}
+          ref={ref}
           value={value}
           timerText={timerText}
           className={styles.input_area}

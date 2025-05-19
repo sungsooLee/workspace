@@ -99,50 +99,32 @@ function RouteComponent() {
         </div>
         <div className={styles.information}>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'userIdEmail'}>
-                <ChangeUserIdFormField />
-              </DynamicFormField>
-            </FormRow>
+            <FormRow provider={provider} name={'userIdEmail'} element={<ChangeUserIdFormField />} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'nameEmployeeNumber'}></DynamicFormField>
-            </FormRow>
+            <FormRow provider={provider} name={'nameEmployeeNumber'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'password'}>
-                <ChangePasswordFormField />
-              </DynamicFormField>
-            </FormRow>
+            <FormRow provider={provider} name={'password'} element={<ChangePasswordFormField />} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'company'}></DynamicFormField>
-            </FormRow>
+            <FormRow provider={provider} name={'company'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'company1'}></DynamicFormField>
-            </FormRow>
+            <FormRow provider={provider} name={'company1'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'company2'}></DynamicFormField>
-            </FormRow>
+            <FormRow provider={provider} name={'company2'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'company3'}></DynamicFormField>
-            </FormRow>
+            <FormRow provider={provider} name={'company3'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider}>
-              <DynamicFormField name={'phoneNumber'}>
-                <ChangePhoneNumberFormField />
-              </DynamicFormField>
-            </FormRow>
+            <FormRow
+              provider={provider}
+              name={'phoneNumber'}
+              element={<ChangePhoneNumberFormField />}
+            />
           </ContentsRow>
         </div>
       </div>

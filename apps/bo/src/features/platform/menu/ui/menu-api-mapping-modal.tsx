@@ -21,7 +21,7 @@ const MenuApiMappingModalComponent = ({ menuScopeCode, selectedApiKeys }: any) =
   const { data, isLoading } = useFetchPrograms(menuScopeCode);
 
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
-  const [selectedItems, setSelectedItems] = useState<{ key: string; fullPath: string }[]>([]);
+  const [selectedItems, setSelectedItems] = useState<any[]>([]);
   useEffect(() => {
     if (data) {
       const transformedData = transformApiDataToApiTreeData(data);
@@ -34,10 +34,8 @@ const MenuApiMappingModalComponent = ({ menuScopeCode, selectedApiKeys }: any) =
       console.log(transformedData);
       if (selectedApiKeys && selectedApiKeys.length > 0) {
         console.log(selectedApiKeys);
-        const selectedNodes = findNodesByKeys(transformedData, selectedApiKeys).map(
-          ({ key, fullPath }) => ({ key, fullPath }),
-        );
-        console.log(selectedNodes);
+        const selectedNodes = findNodesByKeys(transformedData, selectedApiKeys);
+        // console.log(selectedNodes);
         setSelectedItems(selectedNodes);
       }
     }
