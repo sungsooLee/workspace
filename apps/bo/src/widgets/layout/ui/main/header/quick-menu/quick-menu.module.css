@@ -1,18 +1,23 @@
 /* quick-menu.module.css */
 .start {
   .menu_wrap {
-    @apply flex;
+    @apply flex justify-end;
     .menu_list {
       @apply flex items-center justify-start;
       li {
-        &:not(:nth-child(1)) {
-          @apply ml-[28px];
-          a {
-            @apply relative px-[28px];
-            &::before {
-              @apply absolute left-0 top-1/2 -mt-[10px] h-[20px] w-[1px] bg-white opacity-15 content-[''];
-            }
+        a {
+          @apply body_2_r relative inline-flex h-[40px] items-center px-[28px] text-[var(--white)];
+        }
+        &:not(:first-child) a {
+          &::before {
+            @apply absolute left-0 top-1/2 -mt-[10px] h-[20px] w-[1px] bg-white font-bold opacity-15 content-[''];
           }
+        }
+      }
+      & + button {
+        @apply relative;
+        &::before {
+          @apply absolute left-0 top-1/2 -mt-[10px] h-[20px] w-[1px] bg-white font-bold opacity-15 content-[''];
         }
       }
     }
