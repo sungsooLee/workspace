@@ -589,8 +589,9 @@ const PaginationTable = () => {
           pageSize,
           pageIndex,
           totalRows: 300,
-          onPageChange: setPageIndex,
-          onPageSizeChange: setPageSize,
+          onPageChange: (pageIndex: number) => {
+            setPageIndex(pageIndex);
+          },
         }}
         multiple={true}
       />

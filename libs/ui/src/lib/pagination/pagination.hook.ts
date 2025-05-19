@@ -47,11 +47,11 @@ export interface UsePaginationProps {
    * @param {React.ChangeEvent<unknown>} event The event source of the callback.
    * @param {number} page The page selected.
    */
-  onChange?: (event: React.ChangeEvent<unknown>, page: number) => void;
+  onChange?: (page: number) => void;
   /**
    * The current page. Unlike `TablePagination`, which starts numbering from `0`, this pagination starts from `1`.
    */
-  page?: number;
+  pageNumber?: number;
   /**
    * If `true`, show the first-page button.
    * @default false
@@ -93,7 +93,7 @@ export default function usePagination(props: UsePaginationProps) {
     hideNextButton = false,
     hidePrevButton = false,
     onChange: handleChange,
-    page: pageProp,
+    pageNumber: pageProp,
     showFirstButton = true,
     showLastButton = true,
     ...other
@@ -112,7 +112,7 @@ export default function usePagination(props: UsePaginationProps) {
       setPageState(value);
     }
     if (handleChange) {
-      handleChange(event, value);
+      handleChange(value);
     }
   };
 
@@ -233,7 +233,7 @@ export default function usePagination(props: UsePaginationProps) {
 
   return {
     items,
-    currentPage: page,
+    pageNumber: page,
     totalPages: totalPages,
     ...other,
   };

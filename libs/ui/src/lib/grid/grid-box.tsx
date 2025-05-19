@@ -151,6 +151,14 @@ const GridBoxComponent = <T extends object>(
     [gridFetch],
   );
 
+  const handlePageChange = useCallback(
+    (pageNumber: number) => {
+      console.log('handlePageChange', pageNumber);
+      props.pagination?.onPageChange?.(pageNumber);
+    },
+    [props.pagination],
+  );
+
   /**
    * pagination 설정
    * - props로 직접 전달되면 우선 사용
@@ -267,16 +275,15 @@ const GridBoxComponent = <T extends object>(
         data={props.data ?? data ?? []}
         columns={props.columns ?? girdColumns ?? []}
         showNumberingColumn={showNumberingColumn}
-        pagination={paginationProps}
         clientSideSorting={clientSideSorting}
         clientSideFiltering={clientSideFiltering}
       />
       {/* 페이지네이션 */}
       {paginationProps && (
         <Pagination
-          count={paginationProps.totalRows}
-          page={paginationProps.pageIndex}
-          onChange={(event: React.ChangeEvent<unknown>, value: number) => console.log(event, value)}
+          totalPages={paginationProps.totalRows}
+          pageNumber={paginationProps.pageIndex}
+          onChange={handlePageChange}
         />
       )}
     </div>

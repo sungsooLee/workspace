@@ -15,7 +15,7 @@ export interface PaginationComponentProps {
   hidePrevButton?: boolean;
   showFirstButton?: boolean;
   showLastButton?: boolean;
-  page?: number; // 현제 페이지
+  pageNumber?: number; // 현제 페이지
   totalPages: number; // 전체 페이지 수
   size?: string; // 버튼 size
   boundaryCount?: number; // ellipsis 전후로 표시할 page 버튼 개수
@@ -27,7 +27,7 @@ export interface PaginationComponentProps {
    * 페이지 크기 선택 옵션 배열입니다.
    */
   pageSizeOptions?: number[];
-  onChange?: (event: React.ChangeEvent<unknown>, value: number) => void;
+  onChange?: (newPage: number) => void;
   // prop 자세한 내용은 https://mui.com/material-ui/react-pagination/#api 참조
 }
 
@@ -45,7 +45,7 @@ const PaginationComponent = forwardRef<HTMLDivElement, PaginationComponentProps>
     ref,
   ) => {
     const [pageSize, setPageSize] = useState<number>(pageSizeOptions[0]);
-    const { items, currentPage, totalPages } = usePagination({
+    const { items, pageNumber, totalPages } = usePagination({
       ...props,
       componentName: 'Pagination',
     });
@@ -55,15 +55,17 @@ const PaginationComponent = forwardRef<HTMLDivElement, PaginationComponentProps>
       label: `${size}개씩 보기`,
     }));
 
-    const handleChange = (newValue?: any) => {
+    const handlePageSizeChange = (newValue?: any) => {
       setPageSize(newValue);
     };
 
-    console.log({ items, currentPage, totalPages, pageSize, options, props });
+    const handlePageNumberChange = (pageNumber: number) => {};
+
+    console.log({ items, pageNumber, totalPages, pageSize, options, props });
     return (
       <div ref={ref} className={cn(styles.root, styles.pagination, className, 'nlp--pagination')}>
         <div className={styles.select_area}>
-          <Dropdown value={pageSize} onChange={handleChange} options={options} />
+          <Dropdown value={pageSize} onChange={handlePageSizeChange} options={options} />
         </div>
         {/* 페이지 번호들 */}
         <div className={styles.page_num}>
@@ -78,7 +80,7 @@ const PaginationComponent = forwardRef<HTMLDivElement, PaginationComponentProps>
             />
           ))}
         </div>
-        <span className={styles.count_wrap}>{`${currentPage + 1} / ${totalPages}`}</span>
+        <span className={styles.count_wrap}>{`${pageNumber + 1} / ${totalPages}`}</span>
       </div>
     );
   },
