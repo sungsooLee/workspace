@@ -16,7 +16,7 @@ export function useCreateTenant(mutationOptions = {}) {
     onSuccess: async (data: any, variables, context) => {
       // 공통 메세지 처리 등...
 
-      queryClient.invalidateQueries({ queryKey: queryKeys.page });
+      queryClient.invalidateQueries({ queryKey: queryKeys.list });
     },
     ...mutationOptions,
   });

@@ -18,7 +18,7 @@ export default class TenantService {
     return httpService.delete<Tenant>(`${PMSApiPrefix()}/tenants${tenantId}`);
   }
 
-  static fetchPageTenant(payload: any) {
+  static fetchListTenant(payload: any) {
     return httpService.get<PageableContent<any>>(`${PMSApiPrefix()}/tenants`);
   }
 
@@ -28,12 +28,16 @@ export default class TenantService {
   }
 
   static existTenant(name: string) {
-    return httpService.get<boolean>(`${PMSApiPrefix()}/tenants`, { name: name });
+    return httpService.get<boolean>(`${PMSApiPrefix()}/tenants/exists`, { name: name });
   }
 
-  //목록을 변형 하여 전체 목록 가지고 오기
-  static fetchAllTenant(payload: any) {
-    return httpService.get<any>(`${PMSApiPrefix()}/tenants`, { size: 100000 });
+  //전체 목록 가지고 오기 임시 (size 값으로)
+  static async fetchAllTenant() {
+    const data = await httpService.get<PageableContent<any>>(`${PMSApiPrefix()}/tenants`, {
+      size: 100000,
+    });
+
+    return data.content;
   }
 }
 
