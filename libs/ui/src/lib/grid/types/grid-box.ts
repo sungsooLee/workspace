@@ -117,7 +117,7 @@ export interface GridBoxConfig {
 }
 
 export interface GridBoxProps<T extends object = object>
-  extends Omit<GridProps<T>, 'data' | 'columns'> {
+  extends Omit<GridProps<T>, 'data' | 'columns' | 'pagination'> {
   /**
    * config
    */
