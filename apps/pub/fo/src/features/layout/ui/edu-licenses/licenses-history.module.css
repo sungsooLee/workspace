@@ -13,5 +13,8 @@
     .search_date {
       @apply mt-[24px];
     }
+    .content_row {
+      @apply gap-[16px];
+    }
   }
 }

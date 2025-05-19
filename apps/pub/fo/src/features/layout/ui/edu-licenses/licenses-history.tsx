@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from '@tanstack/react-router';
-import { Button, ContentsRow, Panel, DatePicker } from '@learnway/ui';
+import { Button, ContentsRow, Panel, DatePicker, Dropdown, Input } from '@learnway/ui';
 import { IcoPlus } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import styles from './licenses-history.module.css';
@@ -10,6 +10,11 @@ import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.cs
 import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic.form.module.css';
 
 const LicensesHistoryComponent = () => {
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  const options = [
+    { value: 'option1', label: '옵션 1' },
+    { value: 'option2', label: '옵션 2' },
+  ];
   return (
     <div className={`${styles.start} ${styles.history_wrap}`}>
       <div className={styles.list_flex}>
@@ -31,9 +36,47 @@ const LicensesHistoryComponent = () => {
       >
         <div className={searchBoxStyles.search_box}>
           <div className={styles.form_content}>
-            <ContentsRow>
+            <ContentsRow className={styles.content_row}>
               <div className={formStyles.form_item}>
-                <DatePicker displayType={'day'} size={'lg'} />
+                <label htmlFor="name" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>취득일자</span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <DatePicker displayType={'day'} size={'lg'} placeholder="0000.00.00" />
+                </div>
+              </div>
+
+              <div className={formStyles.form_item}>
+                <label htmlFor="name" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>승인상태</span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Dropdown
+                    options={options}
+                    value={selectedValues}
+                    onChange={(selected) => setSelectedValues(selected)}
+                    placeholder="선택"
+                    variant="default"
+                    isMulti={false}
+                    size={'lg'}
+                  />
+                </div>
+              </div>
+
+              <div className={formStyles.form_item}>
+                <label htmlFor="name" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>자격증 종목</span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Input
+                    id="nameSearch"
+                    type="text"
+                    value=""
+                    placeholder="입력"
+                    className="lg"
+                    showSearchIcon
+                  />
+                </div>
               </div>
             </ContentsRow>
           </div>
