@@ -1,4 +1,3 @@
-import { FC, forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
 import React, { FC, forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
 import { createColumnHelper } from '@tanstack/react-table';
 import {
@@ -173,18 +172,21 @@ const GridBoxComponent = <T extends object>(
    * - 없으면 config에서 받아 설정
    */
   const paginationProps = useMemo(() => {
-    // props.pagination이 전달되면 우선 사용
-    if (pagination) {
-      return pagination;
-    }
-    return page
-      ? {
-          ...page, // page 객체의 현재 상태 스프레드
-          onPageChange: handleChangePage, // 메모이제이션된 핸들러 함수 전달
-          onPageSizeChange: handleChangePageSize, // 메모이제이션된 핸들러 함수 전달
-        }
-      : undefined; // page가 falsy일 경우 undefined 반환
+    return pagination;
   }, [pagination]);
+
+  // const paginationProps = useMemo(() => {
+  //   // props.pagination이 전달되면 우선 사용
+  //   if (pagination) {
+  //     return pagination;
+  //   }
+  //   return page
+  //     ? {
+  //         ...page, // page 객체의 현재 상태 스프레드
+  //         onPageChange: handleChangePage, // 메모이제이션된 핸들러 함수 전달
+  //         onPageSizeChange: handleChangePageSize, // 메모이제이션된 핸들러 함수 전달
+  //       }
+  //     : undefined; // page가 falsy일 경우 undefined 반환
   // }, [page, handleChangePage, handleChangePageSize, props.pagination, pagination]);
 
   console.log('grid-box ::', { paginationProps });
