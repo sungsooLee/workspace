@@ -73,13 +73,10 @@ export const roleManagerQueryOptions = {
       for (const item of roleMenuApi) {
         roleMenuApiMap.set(item.apiId, item);
       }
-      return{
+      return {
         roleMenuApiList: roleMenuApiMap.keys(),
-        apiMappingMenuList: menuDetail.apiMappingMenuList.map((item: any) => {
-          item.isUsed = true; //roleMenuApiMap.has(item.apiId);
-          return item;
-        });
-      } 
+        apiMappingMenuList: menuDetail.apiMappingMenuList,
+      };
     },
     enabled: !!menuId,
   }),

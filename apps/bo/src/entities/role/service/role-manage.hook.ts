@@ -111,25 +111,6 @@ export const useRoleManager = (options: RoleHookOptions = {}) => {
     },
   });
 
-  // 역할에 메뉴 할당
-  const { mutate: assignMenusMutate } = useMutation({
-    ...mutateOptions.assignMenusToRole(),
-    onSuccess: async (data, variables, context) => {
-      showSaveComplete();
-      await queryClient.invalidateQueries({
-        queryKey: [
-          ...roleQueryKeys.all,
-          ...roleQueryKeys.roles,
-          variables.roleCode,
-          ...roleQueryKeys.menus,
-        ],
-      });
-      if (options.onMenusAssignSuccess) {
-        options.onMenusAssignSuccess(data, variables, context);
-      }
-    },
-  });
-
   // 역할에 API 할당
   const { mutate: assignApisMutate } = useMutation({
     ...mutateOptions.assignApisToRole(),
