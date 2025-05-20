@@ -81,6 +81,7 @@ const GridComponent = forwardRef(
       autoSelectFirstRow,
       clientSideFiltering,
       clientSideSorting,
+      onTableInstanceChange,
     }: GridProps<T>,
     ref: any,
   ) => {
@@ -142,6 +143,9 @@ const GridComponent = forwardRef(
           .getSelectedRowModel()
           .rows.find(({ original }: any) => original?.[idField] === idValue);
         selectedRow?.toggleSelected();
+      },
+      toggleAllRowsSelected: (selected: boolean) => {
+        table.toggleAllRowsSelected(selected);
       },
     }));
 
@@ -377,7 +381,7 @@ const GridComponent = forwardRef(
       manualPagination: true, //서버 페이지네이션 처리
       // manualGrouping: true,  // 서버 그루핑. 그루핑 데이터 자체를 서버에서 내려줘야됨.
       // manualExpanding: true,
-      pageCount: pagination ? Math.ceil(pagination.totalRows / pagination.pageSize) : undefined,
+      // pageCount: pagination ? Math.ceil(pagination.totalRows / pagination.pageSize) : undefined,
       //고유 ID 부여, 페이지네이션에서 selected row를 위해서
       getRowId: (row: T, index: number) => {
         return `${pagination?.pageIndex ?? 0}-${index}`;
@@ -433,6 +437,15 @@ const GridComponent = forwardRef(
         setRowSelection({ [firstRowId]: true });
       }
     }, [data, table, autoSelectFirstRow]);
+
+    // useReactTable 훅으로 생성된 table 인스턴스를 상위 컴포넌트로 전달
+    useEffect(() => {
+      if (onTableInstanceChange) {
+        onTableInstanceChange(table);
+      }
+      // table 인스턴스는 컴포넌트 생명주기 동안 변경되지 않으므로 의존성 배열에 포함하지 않아도 됩니다.
+      // 하지만 ESLint 규칙에 따라 포함해야 할 수도 있습니다. 필요에 따라 조정하세요.
+    }, [table, onTableInstanceChange]); // table과 콜백 함수를 의존성 배열에 추가
 
     // 컬럼 팝업에서 컬럼에 대한 항목 설정
     const handleColumnSettingsChange = (settings: ColumnSetting[]) => {
@@ -746,6 +759,7 @@ const GridComponent = forwardRef(
       );
     };
 
+    // console.log('pagination', pagination);
     //// 페이지네이션 렌더링
     const renderPagination = () => {
       if (!pagination) return null;
@@ -759,7 +773,7 @@ const GridComponent = forwardRef(
         pageSizeOptions = [10, 20, 50, 100],
       } = pagination;
 
-      const options: DropdownOption[] = pageSizeOptions.map((size) => ({
+      const options: DropdownOption[] = pageSizeOptions.map((size: number) => ({
         value: size.toString(),
         label: `${size}개씩 보기`,
       }));
@@ -834,7 +848,7 @@ const GridComponent = forwardRef(
     return (
       <>
         {renderTable()}
-        {renderPagination()}
+        {/*{renderPagination()}*/}
       </>
     );
   },

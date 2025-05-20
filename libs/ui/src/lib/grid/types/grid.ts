@@ -1,4 +1,10 @@
-import { ColumnFiltersState, RowData, SortingState, VisibilityState } from '@tanstack/react-table';
+import {
+  ColumnFiltersState,
+  RowData,
+  SortingState,
+  Table,
+  VisibilityState,
+} from '@tanstack/react-table';
 
 declare module '@tanstack/react-table' {
   /**
@@ -127,43 +133,6 @@ export interface GridProps<T> {
   hideHeader?: boolean;
 
   /**
-   * 페이지네이션 관련 설정을 포함하는 객체입니다.
-   */
-  pagination?: {
-    /**
-     * 페이지당 표시할 행의 개수입니다.
-     */
-    pageSize: number;
-
-    /**
-     * 현재 페이지의 인덱스입니다. (0부터 시작)
-     */
-    pageIndex: number;
-
-    /**
-     * 전체 행의 개수입니다.
-     */
-    totalRows: number;
-
-    /**
-     * 페이지 변경 시 호출되는 콜백 함수입니다.
-     * @param {number} pageIndex 변경된 페이지 인덱스
-     */
-    onPageChange: (pageIndex: number) => void;
-
-    /**
-     * 페이지 크기 변경 시 호출되는 콜백 함수입니다.
-     * @param {number} pageSize 변경된 페이지 크기
-     */
-    onPageSizeChange: (pageSize: number) => void;
-
-    /**
-     * 페이지 크기 선택 옵션 배열입니다.
-     */
-    pageSizeOptions?: number[];
-  };
-
-  /**
    * 정적 그룹핑 설정을 포함하는 객체입니다.
    */
   columnGrouping?: {
@@ -209,6 +178,13 @@ export interface GridProps<T> {
   onRowsSelect?: (selectedRows: any[]) => void;
 
   /**
+   * useReactTable 훅으로 생성된 table 인스턴스가 준비되었을 때 호출되는 콜백 함수입니다.
+   * 상위 컴포넌트에서 table 인스턴스를 받아 테이블 상태 및 기능을 제어할 수 있습니다.
+   * @param table - useReactTable 훅이 반환한 table 인스턴스
+   */
+  onTableInstanceChange?: (table: Table<any>) => void; // 새로운 prop 추가
+
+  /**
    * 컬럼, 그리드 설정 변경 시 호출되는 콜백 함수입니다.
    * @param {GridState} state 변경된 그리드 상태
    */
@@ -237,6 +213,44 @@ export interface GridProps<T> {
 
   clientSideSorting?: boolean;
   clientSideFiltering?: boolean;
+
+  /**
+   * 페이지네이션 관련 설정을 포함하는 객체입니다.
+   */
+  pagination?: any;
+  // pagination?: {
+  //   /**
+  //    * 페이지당 표시할 행의 개수입니다.
+  //    */
+  //   pageSize: number;
+  //
+  //   /**
+  //    * 현재 페이지의 인덱스입니다. (0부터 시작)
+  //    */
+  //   pageIndex: number;
+  //
+  //   /**
+  //    * 전체 페이지 개수입니다.
+  //    */
+  //   totalRows: number;
+  //
+  //   /**
+  //    * 페이지 변경 시 호출되는 콜백 함수입니다.
+  //    * @param {number} pageIndex 변경된 페이지 인덱스
+  //    */
+  //   onPageChange: (pageIndex: number) => void;
+  //
+  //   /**
+  //    * 페이지 크기 변경 시 호출되는 콜백 함수입니다.
+  //    * @param {number} pageSize 변경된 페이지 크기
+  //    */
+  //   onPageSizeChange: (pageSize: number) => void;
+  //
+  //   /**
+  //    * 페이지 크기 선택 옵션 배열입니다.
+  //    */
+  //   pageSizeOptions?: number[];
+  // };
 }
 
 /**
@@ -282,4 +296,9 @@ export interface GridImperative {
    * 행 토글을 위한 메서드 ( 선택, 미선택 )
    */
   toggleRowById: (idField: string, idValue: string) => void;
+
+  /**
+   * 전체 행 토글을 위한 메서드 ( 선택, 미선택 )
+   */
+  toggleAllRowsSelected: (selected: boolean) => void;
 }
