@@ -1,9 +1,10 @@
 import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
+import { PageableContent } from '@types';
 
 export default class UsersService {
-  static fetchAllUsers(params: any) {
-    return httpService.get<any>(`${PMSApiPrefix()}/users`, params);
+  static fetchListUsers(params: any) {
+    return httpService.get<PageableContent<any>>(`${PMSApiPrefix()}/users`, params);
   }
 
   static fetchUser(userId: number) {

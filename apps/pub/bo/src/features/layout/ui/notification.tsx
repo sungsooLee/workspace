@@ -81,6 +81,14 @@ const PopoverContent = () => {
       notifications.map((notif) => (notif.id === id ? { ...notif, isRead: true } : notif)),
     );
   };
+
+  const handleAllRead = () => {
+    setNotifications(notifications.map((notif) => ({ ...notif, isRead: true })));
+  };
+
+  const handleDeleteAll = () => {
+    setNotifications([]);
+  };
   return (
     <div className={cn(styles.start, styles.alarm_wrap)}>
       <div className={styles.alarm_content}>
@@ -90,8 +98,12 @@ const PopoverContent = () => {
           {/* 알림 없는 경우 미노출 */}
           {notifications.length !== 0 && (
             <div className={styles.btn_wrap}>
-              <Button className={styles.btn}>전체읽음</Button>
-              <Button className={styles.btn}>전체삭제</Button>
+              <Button className={styles.btn} onClick={handleAllRead}>
+                전체읽음
+              </Button>
+              <Button className={styles.btn} onClick={handleDeleteAll}>
+                전체삭제
+              </Button>
             </div>
           )}
         </div>

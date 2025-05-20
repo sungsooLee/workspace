@@ -219,7 +219,8 @@
         "list": "목록",
         "courseList": "과정 목록",
         "commonCdGroupList": "공통코드그룹목록",
-        "commonCdList": "공통코드 목록"
+        "commonCdList": "공통코드 목록",
+        "trainingPlaceList": "교육장소 목록"
       },
       "header": {
         "all": "전체",
@@ -258,7 +259,17 @@
         "operator": "운영자",
         "openingDate": "개설년도",
         "preview": "미리보기",
-        "urlGeneration": "URL 생성"
+        "urlGeneration": "URL 생성",
+        "division": "구분",
+        "placeName": "장소 명",
+        "isReservationUsed": "예약 가능",
+        "isUsed": "사용 가능",
+        "firstCreatedDateTime": "최초등록일시",
+        "firstCreatedBy": "최초등록자",
+        "lastModifiedDateTime": "최종수정일시",
+        "lastModifiedBy": "최종수정자",
+        "map": "약도",
+        "link": "링크"
       },
       "emptyText": "조회 결과가 없습니다.",
       "searchFirst": "{{list}}을 먼저 검색해주세요."
@@ -349,7 +360,8 @@
         "note": "비고 내용을 입력하세요.",
         "zipNo": "우편번호",
         "address": "기본주소",
-        "addressDetail": "상세주소"
+        "addressDetail": "상세주소",
+        "input": "입력"
       }
     },
     "button": {
@@ -375,7 +387,9 @@
       "retrieve": "검색",
       "select": "선택",
       "attachFile": "파일첨부",
-      "searchZipNo": "우편번호찾기"
+      "searchZipNo": "우편번호찾기",
+      "regist": "등록",
+      "viewMap": "약도보기"
     },
     "all": "전체",
     "confirm": {
@@ -490,5 +504,12 @@
   "pms.multilingual.Is_Translation": {
     "true": "번역완료",
     "false": "번역필요"
+  },
+  "pms.education.EducationPlaceType": {
+    "CAMPUS": "캠퍼스",
+    "SERVISE_TECH": "서비스기술교육",
+    "ME_CLUSTER": "생기클러스터",
+    "OUTSIDE": "외부",
+    "ABROAD": "해외"
   }
 }
