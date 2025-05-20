@@ -42,7 +42,7 @@ const PopoverContent = () => {
       {/* 퍼블수정 20240513 : 수정 S */}
       <div className={styles.profile_info}>
         <div className={styles.avata_img}>
-          {hasAvataImage ? (
+          {!hasAvataImage ? (
             <>
               <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
               <span className={styles.logo_wrap}>
