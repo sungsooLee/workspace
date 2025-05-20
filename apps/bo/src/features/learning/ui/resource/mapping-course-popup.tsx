@@ -105,7 +105,7 @@ const gridConfig = {
       name: 'leaningResourceName',
       label: t('과정명'),
       render: (info: any) => (
-        <Link className={'text-blue-600'} to={'/menu/translation-detail'}>
+        <Link className={'text-blue-600'} to={'.'}>
           학습자원명
         </Link>
       ),

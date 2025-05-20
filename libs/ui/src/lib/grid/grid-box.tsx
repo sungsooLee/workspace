@@ -1,15 +1,23 @@
-import { FC, forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
-import { createColumnHelper } from '@tanstack/react-table';
+import React, {
+  FC,
+  forwardRef,
+  useCallback,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import { createColumnHelper, Table } from '@tanstack/react-table';
 import {
   Button,
   ExcelConfig,
-  getAllKeysByTree,
   Grid,
   GridBoxProps,
   GridImperative,
+  Pagination,
   useModal,
 } from '@learnway/ui';
-import { IcoDownload, IcoMinus, IcoUploadCloud, IcoPlus } from '@learnway/icons';
+import { IcoDownload, IcoMinus, IcoPlus, IcoUploadCloud } from '@learnway/icons';
 import styles from './grid-box.module.css';
 import { cn, fileDownload } from '@learnway/shared';
 import { useTranslation } from 'react-i18next';
@@ -36,16 +44,19 @@ const GridBoxComponent = <T extends object>(
     showExcelDownload,
     showUpload,
     showSelectAll,
-    showDeleteAll,
+    showRemoveAll,
     showAdd,
     showAddRow,
+    showRemove,
     showRemoveRow,
     titleCustomNode,
     customButtonNode,
     guideText,
+    onTableInstanceChange,
     onAddClick,
-    clientSideFiltering,
-    clientSideSorting,
+    onRemoveClick,
+    onSelectAllClick,
+    onRemoveAllClick,
     ...props
   }: GridBoxProps<T>,
   ref: React.Ref<GridImperative>,
@@ -54,6 +65,7 @@ const GridBoxComponent = <T extends object>(
   const {
     data = props.data,
     page,
+    pagination,
     totalRows,
     gridFetch,
     columns,
@@ -65,6 +77,7 @@ const GridBoxComponent = <T extends object>(
   } = config;
   const columnHelper = createColumnHelper<any>();
   const gridRef = useRef<GridImperative>(null);
+  const [tableInstance, setTableInstance] = useState<Table<any>>(); // GridComponent로부터 받을 table 인스턴스를 저장할 상태
 
   useImperativeHandle(ref, () => gridRef.current as GridImperative);
 
@@ -99,6 +112,30 @@ const GridBoxComponent = <T extends object>(
     columns?.find((d: any) => d.type === 'numbering') || props.showNumberingColumn;
 
   /**
+   * 전체선택 버튼 클릭
+   */
+  const handleSelectAllClick = useCallback(
+    () => {
+      // 전체 행 선택
+      tableInstance?.toggleAllRowsSelected(true);
+    },
+    [tableInstance], // 의존성 배열: gridFetch와 page 객체 참조
+  );
+
+  /**
+   * 전체삭제 버튼 클릭
+   */
+  const handleRemoveAllClick = useCallback(
+    () => {
+      // 전체 행 선택 삭제
+      tableInstance?.toggleAllRowsSelected(false);
+      // callback
+      onRemoveAllClick?.();
+    },
+    [tableInstance, onRemoveAllClick], // 의존성 배열: gridFetch와 page 객체 참조
+  );
+
+  /**
    * 추가 버튼 클릭
    */
   const handleAddClick = useCallback(
@@ -109,6 +146,19 @@ const GridBoxComponent = <T extends object>(
       onAddClick?.();
     },
     [gridRef, onAddClick], // 의존성 배열: gridFetch와 page 객체 참조
+  );
+
+  /**
+   * 삭제 버튼 클릭
+   */
+  const handleRemoveClick = useCallback(
+    () => {
+      // 그리드 선택 초기화
+      gridRef.current?.resetRowSelection();
+      // callback
+      onRemoveClick?.();
+    },
+    [gridRef, onRemoveClick], // 의존성 배열: gridFetch와 page 객체 참조
   );
 
   /**
@@ -123,6 +173,14 @@ const GridBoxComponent = <T extends object>(
    */
   const handleRemoveRowClick = useCallback(() => {
     console.log('행삭제');
+  }, []);
+
+  // GridComponent로부터 table 인스턴스를 받았을 때 호출될 핸들러
+  const handleTableInstanceChange = useCallback((table: Table<any>) => {
+    console.log('Table instance received:', table);
+    setTableInstance(table);
+    // onTableInstanceChange callback prop
+    onTableInstanceChange?.(table);
   }, []);
 
   /**
@@ -145,10 +203,24 @@ const GridBoxComponent = <T extends object>(
     (pageSize: number) => {
       gridFetch?.({
         size: pageSize,
-        page: 1, // 페이지 사이즈 변경 시 첫 페이지로 이동
+        page: 0, // 페이지 사이즈 변경 시 첫 페이지로 이동
       });
     },
     [gridFetch],
+  );
+
+  const handlePageChange = useCallback(
+    (pageNumber: number) => {
+      console.log('handlePageChange', pageNumber);
+      // grid config
+      gridFetch?.({
+        size: pagination?.pageSize, // page 객체의 pageSize 사용
+        page: pageNumber,
+      });
+      // prop
+      props.pagination?.onPageChange?.(pageNumber);
+    },
+    [props.pagination, pagination],
   );
 
   /**
@@ -157,35 +229,43 @@ const GridBoxComponent = <T extends object>(
    * - 없으면 config에서 받아 설정
    */
   const paginationProps = useMemo(() => {
-    // props.pagination이 전달되면 우선 사용
-    if (props.pagination) {
-      return props.pagination;
-    }
-    return page
-      ? {
-          ...page, // page 객체의 현재 상태 스프레드
-          onPageChange: handleChangePage, // 메모이제이션된 핸들러 함수 전달
-          onPageSizeChange: handleChangePageSize, // 메모이제이션된 핸들러 함수 전달
-        }
-      : undefined; // page가 falsy일 경우 undefined 반환
-  }, [page, handleChangePage, handleChangePageSize, props.pagination]);
+    return pagination || props.pagination;
+  }, [pagination, props.pagination]);
+
+  // const paginationProps = useMemo(() => {
+  //   // props.pagination이 전달되면 우선 사용
+  //   if (pagination) {
+  //     return pagination;
+  //   }
+  //   return page
+  //     ? {
+  //         ...page, // page 객체의 현재 상태 스프레드
+  //         onPageChange: handleChangePage, // 메모이제이션된 핸들러 함수 전달
+  //         onPageSizeChange: handleChangePageSize, // 메모이제이션된 핸들러 함수 전달
+  //       }
+  //     : undefined; // page가 falsy일 경우 undefined 반환
+  // }, [page, handleChangePage, handleChangePageSize, props.pagination, pagination]);
+
+  console.log('grid-box ::', { paginationProps });
 
   return (
     <div className={cn(styles.table_box)}>
       <div className={styles.table_info}>
         <div className={styles.title_info}>
           {/* 제목 */}
-          {<div className={styles.title}>{props.title || title || t('LABEL.grid.title.list')}</div>}
+          <div className={styles.title}>
+            {props.title || title || t('LABEL.grid.title.list', '목록')}
+          </div>
 
           {/* 전체 개수  */}
           {showTotalCount && (
             <div className={styles.sub_info}>
-              {t('LABEL.grid.header.all')}{' '}
+              {t('LABEL.grid.header.all', '전체')}{' '}
               <strong className={styles.num}>{totalElements || data?.length || 0}</strong>
             </div>
           )}
           {/* 좌측 타이틀 영역 커스텀 (전체 카운트와 가이드 텍스트 중간 영역) */}
-          {titleCustomNode && <div>{titleCustomNode}</div>}
+          {titleCustomNode && <div className={styles.custom_node}>{titleCustomNode}</div>}
 
           {/* 가이드 텍스트 */}
           <p className={styles.guide_text}>{guideText}</p>
@@ -194,28 +274,68 @@ const GridBoxComponent = <T extends object>(
         <div className={styles.button_info}>
           {/* 외부에서 받은 커스텀 버튼 노드 */}
           {customButtonNode}
+          {/* 엑셀 버튼 */}
+          <ExcelButtons config={excel} getParams={getParams} />
           {/* 전체 선택 */}
           {showSelectAll && (
             <Button
               variant="text"
               size="xs"
               className={styles.btn_all_select}
-              label={t('LABEL.grid.header.selectAll')}
-              icon={<IcoMinus width={16} height={16} stroke={'#131C30'} />}
+              label={t('LABEL.grid.header.selectAll', '전체선택')}
+              icon={<IcoPlus width={16} height={16} stroke={'#131C30'} />}
+              onClick={handleSelectAllClick}
             />
           )}
-          {/* 전체 삭제 */}
-          {showDeleteAll && (
+          {/* 전체삭제 */}
+          {showRemoveAll && (
             <Button
               variant="text"
               size="xs"
               className={styles.btn_all_delete}
-              label={t('LABEL.grid.header.removeAll')}
+              label={t('LABEL.grid.header.removeAll', '전체삭제')}
               icon={<IcoMinus width={16} height={16} stroke={'#131C30'} />}
+              onClick={handleRemoveAllClick}
             />
           )}
-          {/* 업로드 */}
-          <ExcelButtons config={excel} getParams={getParams} />
+          {/* 추가 */}
+          {showAdd && (
+            <Button
+              variant="outline"
+              size="sm"
+              label={t('LABEL.grid.header.add', '추가')}
+              onClick={handleAddClick}
+            />
+          )}
+          {/* 삭제 */}
+          {showRemove && (
+            <Button
+              variant="outline"
+              size="sm"
+              label={t('LABEL.grid.header.remove', '삭제')}
+              onClick={handleAddClick}
+            />
+          )}
+          {/* 행추가 */}
+          {showAddRow && (
+            <Button
+              variant="outline"
+              size="sm"
+              label={t('행추가', '행추가')}
+              icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
+              onClick={handleAddRowClick}
+            />
+          )}
+          {/* 행삭제 */}
+          {showRemoveRow && (
+            <Button
+              variant="outline"
+              size="sm"
+              label={t('행삭제', '행삭제')}
+              icon={<IcoMinus width={16} height={16} stroke={'#4C515E'} />}
+              onClick={handleRemoveRowClick}
+            />
+          )}
           {/* 컬럼 설정 */}
           {/*{showColumnSettings && (*/}
           {/*  <Button*/}
@@ -227,34 +347,6 @@ const GridBoxComponent = <T extends object>(
           {/*  />*/}
           {/*)}*/}
           {/* 추가 */}
-          {showAdd && (
-            <Button
-              variant="outline"
-              size="sm"
-              label={t('LABEL.grid.header.add')}
-              onClick={handleAddClick}
-            />
-          )}
-          {/* 행추가 */}
-          {showAddRow && (
-            <Button
-              variant="outline"
-              size="sm"
-              label={t('행추가')}
-              icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
-              onClick={handleAddRowClick}
-            />
-          )}
-          {/* 행삭제 */}
-          {showRemoveRow && (
-            <Button
-              variant="outline"
-              size="sm"
-              label={t('행삭제')}
-              icon={<IcoMinus width={16} height={16} stroke={'#4C515E'} />}
-              onClick={handleRemoveRowClick}
-            />
-          )}
         </div>
       </div>
       {/* 데이터 테이블 렌더링 */}
@@ -265,10 +357,18 @@ const GridBoxComponent = <T extends object>(
         data={props.data ?? data ?? []}
         columns={props.columns ?? girdColumns ?? []}
         showNumberingColumn={showNumberingColumn}
-        pagination={paginationProps}
-        clientSideSorting={clientSideSorting}
-        clientSideFiltering={clientSideFiltering}
+        onTableInstanceChange={handleTableInstanceChange}
       />
+      {/* 페이지네이션 */}
+      {paginationProps && (
+        <Pagination
+          totalPages={paginationProps.totalPages}
+          pageNumber={paginationProps.pageNumber}
+          disabled={paginationProps.totalPages === 0}
+          onPageSizeChange={handleChangePageSize}
+          onChange={handlePageChange}
+        />
+      )}
     </div>
   );
 };
@@ -304,7 +404,7 @@ const ExcelButtons: FC<{ config?: ExcelConfig; getParams?: UseFormReturn['getVal
           variant="text"
           size="xs"
           className={styles.btn_upload}
-          label={t('LABEL.grid.header.excelUpload')}
+          label={t('LABEL.grid.header.excelUpload', '엑셀업로드')}
           icon={
             <IcoUploadCloud width={16} height={16} stroke={'#4C515E'} onClick={handleExcelUpload} />
           }
@@ -316,7 +416,7 @@ const ExcelButtons: FC<{ config?: ExcelConfig; getParams?: UseFormReturn['getVal
           variant="text"
           size="xs"
           className={styles.btn_excel}
-          label={t('LABEL.grid.header.excelDownload')}
+          label={t('LABEL.grid.header.excelDownload', '엑셀다운로드')}
           icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
           onClick={handleExcelDownload}
         />

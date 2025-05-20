@@ -21,7 +21,7 @@ function RouteComponent() {
       status: 'Active',
       progress: 50,
       preview: (
-        <Link to={'/'} className="link">
+        <Link to={'/'} className="link" disabled>
           미리보기
         </Link>
       ),
@@ -45,7 +45,7 @@ function RouteComponent() {
         </Tooltip>
       ),
       link: (
-        <Button size={'xs'} className="link_icon" onlyIcon>
+        <Button size={'xs'} className="link_icon" onlyIcon disabled>
           <IcoInfoCircle width={16} height={16} stroke={'#4C515E'} fill={'none'} />
         </Button>
       ),
@@ -342,6 +342,10 @@ function RouteComponent() {
       cell: (info) => info.getValue(),
       header: '링크',
       size: 90,
+      meta: {
+        headerAlign: 'left', // 헤더만 가운데 정렬
+        cellAlign: 'center', // 셀은 오른쪽 정렬
+      },
     }),
     columnHelper.accessor('dataRange', {
       cell: (info) => info.getValue(),
@@ -404,6 +408,7 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
             <div className="custom_info_wrap">
               <strong className="table_tit">{'타이틀'}</strong>
               <span className="count_info">{'5'}</span>
+              <span className="normal_text">{'텍스트'}</span>
             </div>
           }
           guideText={'텍스트'}

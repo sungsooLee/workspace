@@ -1,0 +1,8 @@
+.start {
+  &.img_wrap {
+    @apply flex h-full w-full items-center justify-center overflow-auto;
+    img {
+      @apply h-auto w-auto;
+    }
+  }
+}

@@ -51,9 +51,6 @@ const ThumbnailListComponent = forwardRef<HTMLDivElement, ThumbnailListComponent
           grabCursor={true}
           className={styles.thumbnail_carousel}
           // navigation={true}
-          // pagination={{
-          //   clickable: true,
-          // }}
         />
       </div>
     );

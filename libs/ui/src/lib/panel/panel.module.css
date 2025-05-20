@@ -26,5 +26,8 @@
     &.rounded {
       @apply rounded-[8px] border border-solid border-[var(--gray5)];
     }
+    &.rounded_fill {
+      @apply rounded-[16px] bg-[var(--gray1)];
+    }
   }
 }

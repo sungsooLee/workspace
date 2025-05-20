@@ -21,4 +21,8 @@ export default class TrainingPlaceService {
       payload,
     );
   }
+
+  static deleteTrainingPlace(uuid: string) {
+    return httpService.delete<any>(`${PMSApiPrefix()}/education/place/${uuid}`);
+  }
 }

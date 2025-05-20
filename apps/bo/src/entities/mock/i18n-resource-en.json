@@ -100,8 +100,8 @@
         "excelUpload": "엑셀 업로드",
         "csvDownload": "CSV 다운로드",
         "csvUpload": "CSV 업로드",
-        "selectAll": "전체 선택",
-        "removeAll": "전체 삭제"
+        "selectAll": "전체선택",
+        "removeAll": "전체삭제"
       },
       "column": {
         "no": "NO.",

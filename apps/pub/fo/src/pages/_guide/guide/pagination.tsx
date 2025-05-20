@@ -19,6 +19,7 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
+      import React from 'react';
       import { Pagination } from '@learnway/ui';
 
       const [page, setPage] = React.useState(1);

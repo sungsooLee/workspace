@@ -15,16 +15,18 @@ export function useFetchRole(roleCode: string) {
   return useQuery({ ...queryOptions.getRole(roleCode), enabled: !!roleCode });
 }
 
-export function useFetchMenus() {
-  return useQuery(queryOptions.allMenus());
+export function useFetchRoleMenus(tenantId: number, siteScope: string, roleCode: string) {
+  return useQuery({
+    ...queryOptions.getRoleMenus(tenantId, siteScope, roleCode),
+    enabled: !!roleCode,
+  });
 }
 
-export function useFetchRoleMenus(roleId: string) {
-  return useQuery({ ...queryOptions.getRoleMenus(roleId), enabled: !!roleId });
-}
-
-export function useFetchMenuApis(menuId: string) {
-  return useQuery({ ...queryOptions.getMenuApis(menuId), enabled: !!menuId });
+export function useFetchMenuApis(roleCode: string, menuId: string) {
+  return useQuery({
+    ...queryOptions.getMenuApis(roleCode, menuId),
+    enabled: !!roleCode && !!menuId,
+  });
 }
 
 export function useFetchRoleApis(roleId: string) {
@@ -35,12 +37,31 @@ export function useFetchRoleTree(tenantId: number, siteScope: string) {
   return useQuery({ ...queryOptions.getRoleTree(tenantId, siteScope) });
 }
 
+export function useCreateRoleMenu(options: any) {
+  const mutation = useMutation({
+    ...mutateOptions.assignMenusToRole(),
+    onSuccess: async (data, variables, context) => {
+      if (options.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...options,
+  });
+  return {
+    create: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
 // 실제 API를 사용하는 훅
 interface RoleHookOptions {
   onRoleCreateSuccess?: (data: any, variables: any, context: any) => void;
   onRoleUpdateSuccess?: (data: any, variables: any, context: any) => void;
   onRoleDeleteSuccess?: (data: any, variables: any, context: any) => void;
-  onMenusAssignSuccess?: (data: any, variables: any, context: any) => void;
   onApisAssignSuccess?: (data: any, variables: any, context: any) => void;
 }
 
@@ -90,25 +111,6 @@ export const useRoleManager = (options: RoleHookOptions = {}) => {
     },
   });
 
-  // 역할에 메뉴 할당
-  const { mutate: assignMenusMutate } = useMutation({
-    ...mutateOptions.assignMenusToRole(),
-    onSuccess: async (data, variables, context) => {
-      showSaveComplete();
-      await queryClient.invalidateQueries({
-        queryKey: [
-          ...roleQueryKeys.all,
-          ...roleQueryKeys.roles,
-          variables.roleId,
-          ...roleQueryKeys.menus,
-        ],
-      });
-      if (options.onMenusAssignSuccess) {
-        options.onMenusAssignSuccess(data, variables, context);
-      }
-    },
-  });
-
   // 역할에 API 할당
   const { mutate: assignApisMutate } = useMutation({
     ...mutateOptions.assignApisToRole(),
@@ -141,10 +143,6 @@ export const useRoleManager = (options: RoleHookOptions = {}) => {
     updateRoleMutate(roleData, callbacks);
   };
 
-  const handleAssignMenus = (roleId: string, menuIds: string[], callbacks?: any) => {
-    assignMenusMutate({ roleId, menuIds }, callbacks);
-  };
-
   const handleAssignApis = (roleId: string, apiIds: string[], callbacks?: any) => {
     assignApisMutate({ roleId, apiIds }, callbacks);
   };
@@ -153,7 +151,6 @@ export const useRoleManager = (options: RoleHookOptions = {}) => {
     createRole: handleCreateRole,
     deleteRole: handleDeleteRole,
     updateRole: handleUpdateRole,
-    assignMenus: handleAssignMenus,
     assignApis: handleAssignApis,
   };
 };

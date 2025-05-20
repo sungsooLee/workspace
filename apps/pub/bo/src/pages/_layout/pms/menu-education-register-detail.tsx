@@ -58,7 +58,6 @@ function RouteComponent() {
     const [pageSize, setPageSize] = useState(10);
     const data: any[] = [
       {
-        order: '1',
         record: '수정',
         name: '테넌트명1',
         owner: '김현대',
@@ -66,7 +65,6 @@ function RouteComponent() {
         date: '2025-01-01 15:15:11',
       },
       {
-        order: '2',
         record: '등록',
         name: '테넌트명1',
         owner: '김현대',
@@ -74,7 +72,6 @@ function RouteComponent() {
         date: '2025-01-01 15:15:11',
       },
       {
-        order: '3',
         record: '삭제',
         name: '테넌트명2',
         owner: '김현대',
@@ -86,17 +83,6 @@ function RouteComponent() {
     const columnHelper = createColumnHelper<any>();
 
     const columns = [
-      columnHelper.accessor('order', {
-        cell: (info) => info.getValue(),
-        header: 'NO.',
-        footer: (props) => `Total: ${props.table.getRowModel().rows.length}`,
-        size: 64,
-        meta: {
-          headerAlign: 'left',
-          cellAlign: 'center',
-        },
-        enableGrouping: false,
-      }),
       columnHelper.accessor('record', {
         cell: (info) => info.getValue(),
         header: '이력 구분',
@@ -226,6 +212,7 @@ function RouteComponent() {
                 columns={columns}
                 height={280}
                 showColumnSettings={false}
+                showNumberingColumn={true}
                 pagination={{
                   pageSize,
                   pageIndex,

@@ -70,16 +70,19 @@ export const DuplicateCheckInputFormField = forwardRef<
         if (control.getFieldState(name).error?.message) {
           control.setError(name, {});
         }
-        onChangeGuideText(
-          <span style={{ color: 'red' }}>{t(dupConfig.langCode.reCheck, { code: label })}</span>,
-        );
+        // onChangeGuideText(
+        //   <span style={{ color: 'red' }}>{t(dupConfig.langCode.reCheck, { code: label })}</span>,
+        // );
+
         setEditionValue({ checkState: DuplicateState.check, fieldValue: e.target.value });
       } else {
-        setEditionValue({ ...editionValue, fieldValue: e.target.value });
+        if (editionValue.fieldValue !== e.target.value) {
+          setEditionValue({ ...editionValue, fieldValue: e.target.value });
+        }
       }
     };
 
-    const handleButtonClick = () => {
+    const handleDupplicationCheckButtonClick = () => {
       if (!editionValue.fieldValue) {
         control.setError(name, { message: t(dupConfig.langCode.needInput, { code: label }) });
         return;
@@ -120,18 +123,20 @@ export const DuplicateCheckInputFormField = forwardRef<
       if (isEqual(value, editionValue)) {
         return;
       }
+
       onChange?.(editionValue);
     }, [editionValue]);
 
     useEffect(() => {
+      const fieldState = control.getFieldState(name);
+      if (!fieldState.isDirty && guideText) {
+        onChangeGuideText('');
+      }
       if (!value || isEqual(value, editionValue)) {
-        if (guideText && !control.getFieldState(name).isDirty) {
-          onChangeGuideText('');
-        }
+        console.log('b1', guideText);
         return;
       }
-
-      setEditionValue(!value.checkState ? value : { ...value, checkState: DuplicateState.check });
+      setEditionValue(value);
     }, [value]);
 
     return (
@@ -142,7 +147,7 @@ export const DuplicateCheckInputFormField = forwardRef<
           variant="gray"
           size="sm"
           label={t('LABEL.button.duplication')}
-          onClick={handleButtonClick}
+          onClick={handleDupplicationCheckButtonClick}
           disabled={
             editionValue.checkState === DuplicateState.ok ||
             editionValue.checkState === DuplicateState.okStart

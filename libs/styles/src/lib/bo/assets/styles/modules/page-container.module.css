@@ -37,7 +37,7 @@
 
   /* btn_wrap */
   .btn_wrap {
-    @apply flex;
+    @apply flex items-center;
     .link_box {
       @apply mr-[16px] flex items-center;
       .link {

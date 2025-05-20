@@ -28,7 +28,6 @@ function RouteComponent() {
 
   const data: any[] = [
     {
-      Number: '1',
       WidgetName: '학습현황',
       Device: '전체',
       status: '사용',
@@ -46,16 +45,6 @@ function RouteComponent() {
   const columnHelper = createColumnHelper<any>();
 
   const columns = [
-    columnHelper.accessor('Number', {
-      cell: (info) => info.getValue(),
-      header: 'No.',
-      size: 64,
-      enableGrouping: false,
-      meta: {
-        headerAlign: 'center', // 헤더만 가운데 정렬
-        cellAlign: 'center', // 셀은 오른쪽 정렬
-      },
-    }),
     columnHelper.accessor('WidgetName', {
       cell: (info) => info.getValue(),
       header: '위젯명',
@@ -171,6 +160,7 @@ function RouteComponent() {
               columns={columns}
               showSelectedCount={true}
               showColumnSettings={false}
+              showNumberingColumn={true}
               pagination={{
                 pageSize,
                 pageIndex,

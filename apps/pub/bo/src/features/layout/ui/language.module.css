@@ -1,6 +1,6 @@
 /* language.module.css */
 .btn_language {
-  @apply box-border flex min-h-[40px] min-w-[55px] items-center justify-between pl-[24px] text-[1.8rem] font-normal text-[var(--white)];
+  @apply body_2_r box-border flex min-h-[40px] min-w-[55px] items-center justify-between pl-[24px] text-[var(--white)];
   &.auth {
     @apply !text-[var(--gray7)];
   }
@@ -23,14 +23,14 @@
     .lang_list {
       @apply flex flex-wrap;
       li {
-        @apply body_3_r min-h-[62px] w-[240px];
+        @apply min-h-[62px] w-[240px];
         .btn {
-          @apply relative box-border flex h-full w-full items-center justify-start px-[20px] py-[24px] text-[1.6rem] font-normal leading-[1.4rem] text-[var(--gray10)];
+          @apply button_2_r relative box-border flex h-full w-full items-center justify-start px-[20px] py-[24px] text-[var(--gray10)];
           .icon_check {
             @apply absolute right-[24px] top-1/2 hidden -translate-x-1/2 -translate-y-1/2 rotate-0;
           }
           &.active {
-            @apply bg-[var(--secondary5)] font-bold;
+            @apply button_2_b bg-[var(--secondary5)];
             .icon_check {
               @apply block;
             }

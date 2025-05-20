@@ -52,3 +52,4 @@ export * from './popup/accepting-popup';
 export * from './popup/course-selection-popup';
 export * from './ui/course-introduction/course-fixed-button';
 export * from './popup/category-depth-popup-m';
+export * from './ui/edu-licenses/licenses-history';

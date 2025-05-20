@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { GridBoxConfig, useGridBoxConfig } from './types';
-import { PMSApiPrefix } from '@learnway/config';
 import { UseFormReturn } from 'react-hook-form';
 
 const useGridBoxHook = (config: useGridBoxConfig, getData?: UseFormReturn['getValues']) => {
@@ -10,7 +9,8 @@ const useGridBoxHook = (config: useGridBoxConfig, getData?: UseFormReturn['getVa
   const [gridConfig, setGridConfig] = useState<GridBoxConfig>(config as any);
 
   const handleExternalGridDataFetch = async (params?: any, page?: any) => {
-    const result = (await queryClient.fetchQuery(config.query({ ...params, ...page }))) as any;
+    const options = config.query({ ...params, ...page });
+    const result = (await queryClient.fetchQuery(options)) as any;
     if (result) {
       setGridConfig((state: any) => ({
         ...state,
@@ -22,11 +22,20 @@ const useGridBoxHook = (config: useGridBoxConfig, getData?: UseFormReturn['getVa
             ...state.page,
             pageSize: result.pageable.pageSize,
             pageIndex: result.pageable.pageNumber || 0,
-            totalRows: result.totalElements,
+            pageNumber: result.pageable.pageNumber || 0,
+            totalRows: result.totalPages,
           },
         }),
-        totalRows: result?.totalPages ? result.totalPages : result.content.length,
+        totalRows: result?.totalPages || 0,
         totalElements: result?.totalElements || 0,
+        // pagination 컴포넌트용 (테스트 후 위 내용 삭제..)
+        pagination: {
+          pageNumber: result.pageable?.pageNumber || 0,
+          pageSize: result.pageable?.pageSize || 10,
+          totalPages: result?.totalPages || 0,
+          totalElements: result?.totalElements || 0,
+          onPageChange: (newPage: number) => handleGridDataFetch({ page: newPage }),
+        },
       }));
     }
   };

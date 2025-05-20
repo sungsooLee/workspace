@@ -2,7 +2,8 @@ import { forwardRef, Fragment, useEffect, useState } from 'react';
 import { Checkbox, CheckboxComponentProps } from '../../checkbox/checkbox';
 import { cn } from '@learnway/shared';
 import styles from './checkbox-group-form-field.module.css';
-import { BaseFormFieldProps } from '@learnway/hooks';
+import { BaseFormFieldProps, OptionsConfig, SelectOption, useFormOptions } from '@learnway/hooks';
+import { useTranslation } from 'react-i18next';
 
 export interface CheckboxGroupFormFieldProps extends BaseFormFieldProps<string[]> {
   /** 한 줄에 표시할 체크박스 수 */
@@ -11,6 +12,8 @@ export interface CheckboxGroupFormFieldProps extends BaseFormFieldProps<string[]
   showSelectAll?: boolean;
   /** checkbox props */
   checkboxConfig?: CheckboxComponentProps;
+  options?: SelectOption[];
+  optionsConfig?: OptionsConfig;
 }
 
 const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, CheckboxGroupFormFieldProps>(
@@ -18,7 +21,8 @@ const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, CheckboxGroup
     {
       value = [],
       onChange,
-      options = [],
+      options: initOptions,
+      optionsConfig,
       cols,
       disabled,
       showSelectAll,
@@ -28,8 +32,9 @@ const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, CheckboxGroup
     ref,
   ) => {
     /** 전체 체크 상태를 관리하는 state */
+    const { t } = useTranslation();
     const [allCheck, setAllCheck] = useState(false);
-
+    const options = useFormOptions(initOptions, optionsConfig);
     const disabledCheckBox = checkGroupConfig?.disabledCheckBox
       ? checkGroupConfig?.disabledCheckBox
       : [];
@@ -107,7 +112,7 @@ const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, CheckboxGroup
               {...checkboxConfig}
               onCheckedChange={(checked: boolean) => handleCheckChange(checked, item.value)}
               checked={value.indexOf(item.value) >= 0}
-              label={item.label}
+              label={t(item.label)}
               hideLabel={!item.label}
               disabled={disabled || item.disabled}
             />

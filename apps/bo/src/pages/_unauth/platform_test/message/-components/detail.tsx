@@ -70,7 +70,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
    * 음수인 경우 생성 모드로 전환하며 폼을 초기화합니다.
    */
   useEffect(() => {
-    console.log('labelMessageId', labelMessageId);
+    // console.log('labelMessageId', labelMessageId);
     // 생성 모드 (labelMessageId 음수인 경우, 부모창에서 추가 버튼 눌렀을때 음수로 설정)
     const isCreate = labelMessageId < 0;
     // set state

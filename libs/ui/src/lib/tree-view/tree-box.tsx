@@ -93,7 +93,7 @@ const TreeBoxComponent = <T extends object>(
   };
 
   return (
-    <div className={cn(styles.start, styles.wrap)}>
+    <div className={cn(styles.wrap)}>
       <div
         className={cn(
           subTitleStyles.root,

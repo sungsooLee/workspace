@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { useEffect } from 'react';
+import { createFileRoute } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { Dropdown, Button, Input, GridBox, useGridBox } from '@learnway/ui';
-import { IcoInfoCircle } from '@learnway/icons';
+import { Button, GridBox, useGridBox, useModal } from '@learnway/ui';
+import { IcoInfoCircle, IcoDownload } from '@learnway/icons';
 import { createColumnHelper } from '@tanstack/react-table';
 import { ColumnDef } from '@tanstack/react-table';
 import { useRouter } from '@tanstack/react-router';
@@ -15,10 +15,10 @@ import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { SearchBox } from '@shared/ui/search-box';
-import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
+import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 import { queryOptions as trainingPlaceQueryOptions } from '@entities/training-place/service/training-place.queries';
 import { useCallback } from 'react';
-import { size } from 'lodash';
+import { ImagePreviewModal } from '@features/shared/ui/modal/image-preview-modal';
 
 export const Route = createFileRoute('/_layout/learning/training-place/')({
   component: RouteComponent,
@@ -27,49 +27,101 @@ export const Route = createFileRoute('/_layout/learning/training-place/')({
 function RouteComponent() {
   const router = useRouter();
 
+  const { open: openModal } = useModal();
+
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
 
   const handleOnSearch = useCallback((data: any) => {
     gridFetch(data);
   }, []);
-  /*
+
+  const downloadByUrl = (url: string) => {
+    const link = document.createElement('a');
+    link.href = url;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const columnHelper = createColumnHelper<any>();
 
   const columns = [
-    columnHelper.accessor('sort', {
-      cell: (info) => info.getValue(),
-      header: '구분',
+    columnHelper.accessor('educationPlaceTypecd', {
+      cell: (info) => t('pms.education.EducationPlaceType.' + info.getValue()),
+      header: t('LABEL.grid.column.division'),
       enableGrouping: false,
       size: 200,
     }),
-    columnHelper.accessor('spot', {
+    columnHelper.accessor('educationPlaceCodeName', {
       cell: (info) => info.getValue(),
-      header: '장소 명',
+      header: t('LABEL.grid.column.placeName'),
       size: 300,
       enableGrouping: false,
     }),
-    columnHelper.accessor('useable', {
-      cell: (info) => info.getValue(),
-      header: '사용가능',
+    columnHelper.accessor('isUsed', {
+      cell: (info) => (info.getValue() ? 'Y' : 'N'),
+      header: t('LABEL.grid.column.isUsed'),
       size: 90,
       enableGrouping: false,
     }),
-    columnHelper.accessor('reservation', {
-      cell: (info) => info.getValue(),
-      header: '예약가능',
+    columnHelper.accessor('isReservationUsed', {
+      cell: (info) => (info.getValue() ? 'Y' : 'N'),
+      header: t('LABEL.grid.column.isReservationUsed'),
       size: 90,
       enableGrouping: false,
     }),
-    columnHelper.accessor('map', {
-      cell: (info) => info.getValue(),
-      header: '약도',
+    columnHelper.accessor('mapImageFileInfo', {
+      cell: (info) => {
+        const disabled = info.row.original.mapImageFileInfo?.files?.length > 0 ? false : true;
+        const imageFileUrl =
+          'https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2';
+        return (
+          <Button
+            className="link"
+            disabled={disabled}
+            onClick={(e) => {
+              e.stopPropagation();
+              openModal({
+                width: 'full',
+                height: 'full',
+                content: <ImagePreviewModal imageUrl={imageFileUrl} />,
+                headerActionNode: (
+                  <Button onlyIcon onClick={() => downloadByUrl(imageFileUrl)}>
+                    <IcoDownload width={40} height={40} stroke="#131C30" />
+                  </Button>
+                ),
+              });
+            }}
+          >
+            {t('LABEL.button.viewMap')}
+          </Button>
+        );
+      },
+      header: t('LABEL.grid.column.map'),
       size: 90,
       enableGrouping: false,
     }),
-    columnHelper.accessor('link', {
-      cell: (info) => info.getValue(),
-      header: '링크',
+    columnHelper.accessor('mapImageLinkContent', {
+      cell: (info) => {
+        const disabled = info.row.original.mapImageLinkContent?.length > 0 ? false : true;
+        const mapLink = info.row.original.mapImageLinkContent;
+        return (
+          <Button
+            size={'xs'}
+            className="link_icon"
+            onlyIcon
+            disabled={disabled}
+            onClick={(e) => {
+              e.stopPropagation();
+              window.open(mapLink, '_blank', 'noreferrer');
+            }}
+          >
+            <IcoInfoCircle width={16} height={16} stroke={'#4C515E'} fill={'none'} />
+          </Button>
+        );
+      },
+      header: t('LABEL.grid.column.link'),
       size: 90,
       enableGrouping: false,
       meta: {
@@ -77,32 +129,34 @@ function RouteComponent() {
         cellAlign: 'center', // 셀은 오른쪽 정렬
       },
     }),
-    columnHelper.accessor('registerDate', {
-      cell: (info) => info.getValue(),
-      header: '최초등록일시',
+    columnHelper.accessor('createdDate', {
+      cell: (info) =>
+        getDateToString(new Date(info.row.original.createdDate), DATE_TIME_FORMAT.DATETIME_SEC),
+      header: t('LABEL.grid.column.firstCreatedDateTime'),
       enableGrouping: false,
       size: 190,
     }),
-    columnHelper.accessor('registerOwner', {
+    columnHelper.accessor('createdBy', {
       cell: (info) => info.getValue(),
-      header: '최초등록자',
+      header: t('LABEL.grid.column.firstCreatedBy'),
       enableGrouping: false,
       size: 100,
     }),
-    columnHelper.accessor('modificationDate', {
-      cell: (info) => info.getValue(),
-      header: '최종수정일시',
+    columnHelper.accessor('modifiedDate', {
+      cell: (info) =>
+        getDateToString(new Date(info.row.original.modifiedDate), DATE_TIME_FORMAT.DATETIME_SEC),
+      header: t('LABEL.grid.column.lastModifiedDateTime'),
       enableGrouping: false,
       size: 190,
     }),
-    columnHelper.accessor('modifier', {
+    columnHelper.accessor('lastModifiedBy', {
       cell: (info) => info.getValue(),
-      header: '최종수정자',
+      header: t('LABEL.grid.column.lastModifiedBy'),
       enableGrouping: false,
       size: 100,
     }),
   ] as ColumnDef<any, unknown>[];
-*/
+
   useEffect(() => {
     gridFetch();
   }, []);
@@ -128,7 +182,7 @@ function RouteComponent() {
             })
           }
         >
-          등록
+          {t('LABEL.button.regist')}
         </Button>
       </ContentsButtons>
       <MainContents>
@@ -140,12 +194,12 @@ function RouteComponent() {
           <div className="grid_wrap">
             <GridBox
               config={gConfig}
-              /*columns={columns}*/
+              columns={columns}
               height={440}
               showColumnSettings={false}
               showExcelDownload={true}
               onRowSelect={handleGridRowSelect}
-              title="교육장소 목록"
+              title={t('LABEL.grid.title.trainingPlaceList')}
             />
           </div>
         </div>
@@ -160,24 +214,20 @@ const searchConfig: SearchBoxConfig = {
       {
         name: 'educationPlaceTypecd',
         type: 'dropdown',
-        label: t('구분'),
+        label: t('LABEL.form.label.division'),
         value: '',
-        options: [
-          { value: '', label: t('전체') },
-          { value: 'CAMPUS', label: t('캠퍼스') },
-          { value: 'SERVISE_TECH', label: t('서비스기술교육') },
-          { value: 'ME_CLUSTER', label: t('생기클러스터') },
-          { value: 'OUTSIDE', label: t('외부') },
-          { value: 'ABROAD', label: t('해외') },
-        ],
+        optionsConfig: {
+          options: [{ value: '', label: t('LABEL.all') }],
+          codeGroup: CODE_GROUP['pms.education.EducationPlaceType'],
+        },
       },
       {
         name: 'isUsed',
         type: 'dropdown',
-        label: t('사용가능'),
+        label: t('LABEL.form.label.isUsed'),
         value: '',
         options: [
-          { value: '', label: t('전체') },
+          { value: '', label: t('LABEL.all') },
           { value: 'true', label: t('Y') },
           { value: 'false', label: t('N') },
         ],
@@ -185,10 +235,10 @@ const searchConfig: SearchBoxConfig = {
       {
         name: 'isReservationUsed',
         type: 'dropdown',
-        label: t('예약가능'),
+        label: t('LABEL.form.label.isReservationUsed'),
         value: '',
         options: [
-          { value: '', label: t('전체') },
+          { value: '', label: t('LABEL.all') },
           { value: 'true', label: t('Y') },
           { value: 'false', label: t('N') },
         ],
@@ -196,9 +246,9 @@ const searchConfig: SearchBoxConfig = {
       {
         name: 'educationPlaceCodeName',
         type: 'text',
-        label: t('장소 명'),
+        label: t('LABEL.form.label.placeName'),
         value: '',
-        placeholder: t('입력'),
+        placeholder: t('LABEL.form.placeholder.input'),
       },
     ],
   ],
@@ -212,90 +262,17 @@ const gridConfig = {
       label: 'NO.',
       type: 'numbering',
     },
-    { name: 'educationPlaceTypecd', label: '구분', size: 200 },
-    { name: 'educationPlaceCodeName', label: t('장소 명'), size: 300 },
-    {
-      name: 'isUsed',
-      label: '사용가능',
-      render: (info: any) => {
-        return info.row.original.isUsed ? 'Y' : 'N';
-      },
-      size: 90,
-    },
-    {
-      name: 'isReservationUsed',
-      label: '예약가능',
-      render: (info: any) => {
-        return info.row.original.isReservationUsed ? 'Y' : 'N';
-      },
-      size: 90,
-    },
-    {
-      name: 'map',
-      label: '약도',
-      render: (info: any) => {
-        const disabled = info.row.original.mapImageFileInfo?.files?.length > 0 ? false : true;
-        return (
-          <Link to={'/'} className="link" disabled={disabled}>
-            약도보기
-          </Link>
-        );
-      },
-      size: 90,
-    },
-    {
-      name: 'mapImageLinkContent',
-      label: '링크',
-      render: (info: any) => {
-        //const disabled = info.row.original.mapImageLinkContent?.length > 0 ? false : true;
-        //const mapLink = info.row.original.mapImageLinkContent;
-        const disabled = false;
-        const mapLink = 'https://www.naver.com';
-        return (
-          <Button
-            size={'xs'}
-            className="link_icon"
-            onlyIcon
-            disabled={disabled}
-            onClick={(e) => {
-              e.stopPropagation();
-              window.open(mapLink, '_blank', 'noreferrer');
-            }}
-          >
-            <IcoInfoCircle width={16} height={16} stroke={'#4C515E'} fill={'none'} />
-          </Button>
-        );
-      },
-      size: 90,
-    },
-    {
-      name: 'createdDate',
-      label: '최초등록일시',
-      render: (info: any) => {
-        return getDateToString(
-          new Date(info.row.original.createdDate),
-          DATE_TIME_FORMAT.DATETIME_SEC,
-        );
-      },
-      size: 190,
-    },
-    { name: 'createdBy', label: '최초등록자', size: 100 },
-    {
-      name: 'modifiedDate',
-      label: '최종수정일시',
-      render: (info: any) => {
-        return getDateToString(
-          new Date(info.row.original.modifiedDate),
-          DATE_TIME_FORMAT.DATETIME_SEC,
-        );
-      },
-      size: 190,
-    },
-    { name: 'lastModifiedBy', label: '최종수정자', size: 100 },
   ],
   pagination: {
     pageSize: 10,
     pageIndex: 0,
     totalRows: 0,
+  },
+  excel: {
+    download: '',
+    form: {
+      xlsx: '',
+      csv: '',
+    },
   },
 };

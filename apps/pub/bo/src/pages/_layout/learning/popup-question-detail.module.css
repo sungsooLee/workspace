@@ -1,0 +1,49 @@
+/* popup-question-detail.module.css */
+.start {
+  .detail_table {
+    thead tr th {
+      &:nth-child(1),
+      &:nth-child(2) {
+        @apply w-[64px] px-[10px] !text-center;
+      }
+      &:nth-last-child(1),
+      &:nth-last-child(2) {
+        @apply w-[104px] px-[10px] !text-center;
+      }
+    }
+    tbody tr td {
+      &:nth-child(1),
+      &:nth-child(2) {
+        @apply px-[5px] !text-center;
+      }
+    }
+  }
+  .detail_table02 {
+    thead tr th {
+      &:nth-child(1),
+      &:nth-child(2) {
+        @apply w-[64px] px-[10px] !text-center;
+      }
+      &:nth-last-child(1) {
+        @apply w-[104px] px-[10px] !text-center;
+      }
+    }
+    tbody tr td {
+      &:nth-child(1) {
+        @apply px-[5px] !text-center;
+      }
+    }
+  }
+  .detail_table03 {
+    thead tr th {
+      &:nth-child(1) {
+        @apply w-[64px] px-[10px] !text-center;
+      }
+    }
+    tbody tr td {
+      &:nth-child(1) {
+        @apply px-[5px] !text-center;
+      }
+    }
+  }
+}

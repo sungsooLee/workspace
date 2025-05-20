@@ -39,7 +39,6 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
   const [formMode, setFormMode] = useState(EnFormMode.NONE);
   const [selectedRoleNode, setSelectedRoleNode] = useState<any>(null);
   const [roleTreeData, setRoleTreeData] = useState([]);
-  const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
 
   const tenantId = routerState.location.state?.tenantId;
   const tenantName = routerState.location.state?.tenantName;
@@ -158,10 +157,6 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
     if (data) {
       const transformedData = transformRoleApiDataToTreeData(data);
       setRoleTreeData(transformedData);
-      if (transformedData && transformedData.length > 0 && expandedKeys.length === 0) {
-        const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
-        setExpandedKeys(firstLevelKeys);
-      }
     }
   }, [data]);
 

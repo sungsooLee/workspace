@@ -52,6 +52,7 @@ export const TemplateGridToGrid: any = (args: any) => {
       rowKey={'id'}
       leftTitle={'OOO 목록'}
       rightTitle={'OOO 목록'}
+      onSelectedChange={(selectedRows: any) => console.log(selectedRows)}
     />
   );
 };

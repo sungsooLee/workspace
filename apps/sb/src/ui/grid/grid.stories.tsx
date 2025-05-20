@@ -7,8 +7,9 @@ import {
   createColumnHelper,
   RowSelectionState,
   SortingState,
+  Table,
 } from '@tanstack/react-table';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { ReactQueryConfigProvider } from '@learnway/config';
 import React, { ReactNode, useEffect, useState } from 'react';
 import {
@@ -28,7 +29,8 @@ import {
   useModal,
 } from '@learnway/ui';
 import { IcoDownload, IcoSetting } from '@learnway/icons';
-import { getRandomId } from '@learnway/shared';
+import { DATE_TIME_FORMAT, formatDate, getRandomId, getRowSelectionByList } from '@learnway/shared';
+import { PaginationResponse } from '../../../../bo/src/types';
 
 export default {
   title: 'Components/Grid',
@@ -474,82 +476,74 @@ export const WithInfiniteScroll: Story = {
 };
 
 // 페이지네이션용 mock API
-const fetchPaginatedData = async ({
-  pageIndex,
-  pageSize,
-  tableState,
-}: {
-  pageIndex: number;
-  pageSize: number;
-  tableState: any; // 추후 재정의 필요
-}): Promise<TableResponse<Person>> => {
-  await new Promise((resolve) => setTimeout(resolve, 500));
-  console.log('페이지사이즈 : ' + pageSize + ', 페이지인덱스' + pageIndex + ' !! API 호출');
-  console.log(tableState);
-  // 전체 100개의 데이터가 있다고 가정
-  const totalRows = 100;
-  const startIndex = pageIndex * pageSize;
-
-  const data = Array.from({ length: pageSize }).map((_, index) => ({
-    firstName: `Name ${startIndex + index}`,
-    lastName: `Surname ${startIndex + index}`,
-    age: Math.floor(Math.random() * 50) + 20,
-    visits: Math.floor(Math.random() * 100),
-    status: Math.random() > 0.5 ? 'Active' : 'Inactive',
-    progress: Math.floor(Math.random() * 100),
-    preview: <Button className="link">미리보기</Button>,
-    download: (
-      <Button className="download" onlyIcon>
-        <IcoDownload width={16} height={16} stroke={'#747D91'} />
-      </Button>
-    ),
-  }));
+const fetchPaginatedData = (size: number): PaginationResponse<any> => {
+  const content = Array(size)
+    .fill({})
+    .map((_, index) => ({
+      firstName: `firstName ${index}`,
+      lastName: `lastName ${index}`,
+      age: `age ${index}`,
+      visits: `visits ${index}`,
+      status: `status ${index}`,
+      progress: `progress ${index}`,
+      preview: `preview ${index}`,
+      download: (
+        <Button className="download" onlyIcon>
+          <IcoDownload width={16} height={16} stroke={'#747D91'} />
+        </Button>
+      ),
+    }));
 
   return {
-    data,
-    meta: {
-      totalRows,
-      hasNextPage: startIndex + pageSize < totalRows,
+    totalPages: 10,
+    totalElements: size,
+    size: 10,
+    content,
+    number: 1,
+    numberOfElements: 1,
+    first: true,
+    last: false,
+    empty: false,
+    pageable: {
+      offset: 0,
+      pageSize: 10,
+      paged: true,
+      pageNumber: 0,
+      unpaged: false,
+      sort: {
+        sorted: false,
+        unsorted: true,
+        empty: true,
+      },
     },
   };
 };
 
 // 페이지네이션 테이블 컴포넌트
 const PaginationTable = () => {
-  const [pageIndex, setPageIndex] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageNumber, setPageNumber] = useState(0);
   const [tableState, setTableState] = useState({
     sorting: [] as SortingState,
     filters: [] as ColumnFiltersState,
   });
 
-  const { data, isFetching } = useQuery({
-    queryKey: ['PersonEntity', pageIndex, pageSize, tableState] as const,
-    queryFn: () => fetchPaginatedData({ pageIndex, pageSize, tableState }),
-    placeholderData: keepPreviousData,
-  });
+  const data: PaginationResponse<Person> = fetchPaginatedData(100);
 
-  const handleStateChange = (newState: GridState) => {
-    setTableState((prev) => ({
-      ...prev,
-      sorting: newState.sorting || prev.sorting,
-      filters: newState.filters || prev.filters,
-    }));
-  };
+  useEffect(() => {
+    console.log('data,', data);
+  }, [data]);
 
   return (
     <div className="p-4">
       <GridBox
-        data={data?.data ?? []}
+        data={data.content}
         columns={columns}
-        onStateChange={handleStateChange}
-        isLoading={isFetching}
         pagination={{
-          pageSize,
-          pageIndex,
-          totalRows: data?.meta.totalRows ?? 0,
-          onPageChange: setPageIndex,
-          onPageSizeChange: setPageSize,
+          pageNumber,
+          totalPages: 300,
+          onPageChange: (newPageNumber: number) => {
+            setPageNumber(newPageNumber);
+          },
         }}
         multiple={true}
       />
@@ -1069,21 +1063,21 @@ TemplateTable.storyName = '테이블 모드';
 
 // 타이틀 영역
 export const TemplateTitleArea: any = (args: any) => {
-  const data = Array(10)
-    .fill(null)
-    .map((_, i) => ({
-      id: getRandomId(),
-      name: `name_${i}`,
-      name2: `name2_${i}`,
-      name3: `name3_${i}`,
-      name4: `name4_${i}`,
-    }));
+  const [tableInstance, setTableInstance] = useState<Table<any>>(); // Grid 로부터 받을 table 인스턴스를 저장할 상태
+  const [data, setData] = useState<any[]>(dummyData());
   const columns = [
     { accessorKey: 'name', size: 300 },
     { accessorKey: 'name2', size: 300 },
     { accessorKey: 'name3', size: 300 },
     { accessorKey: 'name4', size: 300 },
   ];
+  const handlerUserRowSelect = () => {
+    if (tableInstance) {
+      const targets = data.filter((_, i) => i < 2); // 2번째 항목까지
+      const newSelection = getRowSelectionByList(tableInstance, targets, 'id');
+      tableInstance.setRowSelection(newSelection);
+    }
+  };
   return (
     <GridBox
       data={data}
@@ -1103,16 +1097,29 @@ export const TemplateTitleArea: any = (args: any) => {
       showExcelDownload
       showUpload
       showSelectAll
-      showDeleteAll
+      showRemoveAll
       customButtonNode={
-        <Button
-          variant="outline"
-          size="sm"
-          label={'화면버튼'}
-          icon={<IcoSetting width={16} height={16} stroke="#131C30" />}
-          className="btn_setting"
-        />
+        <>
+          <Button
+            variant="outline"
+            size="sm"
+            label={'초기화'}
+            icon={<IcoSetting width={16} height={16} stroke="#131C30" />}
+            className="btn_setting"
+            onClick={() => setData(dummyData())}
+          />
+          <Button
+            variant="outline"
+            size="sm"
+            label={'특정 행 선택'}
+            icon={<IcoSetting width={16} height={16} stroke="#131C30" />}
+            className="btn_setting"
+            onClick={handlerUserRowSelect}
+          />
+        </>
       }
+      onRemoveAllClick={() => setData([])}
+      onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
     />
   );
 };
@@ -1129,3 +1136,66 @@ const editGridData = Array(10)
     radio: '',
     dropdown: '',
   }));
+
+// 컬럼 유형
+export const TemplateColumnType: any = (args: any) => {
+  const data = Array(5)
+    .fill(null)
+    .map((_, i) => ({
+      id: getRandomId(),
+      text: `text_${i}`,
+      number: 10000,
+      date: new Date(),
+      button: `button_${i}`,
+      link: `link_${i}`,
+    }));
+  const columns = [
+    { accessorKey: 'text', size: 150 },
+    { accessorKey: 'number', size: 150 },
+    {
+      accessorKey: 'date',
+      size: 170,
+      cell: (info: CellContext<any, Date>) =>
+        formatDate(info.getValue(), DATE_TIME_FORMAT.DATETIME_SEC),
+    },
+    {
+      accessorKey: 'button',
+      size: 150,
+      cell: (info: CellContext<any, Date>) => {
+        return (
+          <Button
+            label={'버튼'}
+            variant={'point'}
+            size={'xs'}
+            stopPropagation
+            onClick={() => console.log('cell button click')}
+          />
+        );
+      },
+    },
+    {
+      accessorKey: 'link',
+      size: 150,
+      // cell: (info: CellContext<any, any>) => (
+      //   <Link className={'text-blue-600'} to={'/'}>
+      //     아이디 찾기
+      //   </Link>
+      // ),
+    },
+  ];
+  return (
+    <GridBox data={data} columns={columns} title={'목록'} onRowSelect={(row) => console.log(row)} />
+  );
+};
+TemplateColumnType.storyName = '컬럼 유형';
+
+const dummyData = (size = 10) =>
+  Array(size)
+    .fill(null)
+    .map((_, i) => ({
+      id: getRandomId(),
+      name: `name_${i}`,
+      name2: `name2_${i}`,
+      name3: `name3_${i}`,
+      name4: `name4_${i}`,
+    }));

@@ -30,4 +30,7 @@ export const mutateOptions = {
   update: () => ({
     mutationFn: (payload: any) => TrainingPlaceService.updateTrainigPlace(payload),
   }),
+  delete: () => ({
+    mutationFn: (payload: string) => TrainingPlaceService.deleteTrainingPlace(payload),
+  }),
 };

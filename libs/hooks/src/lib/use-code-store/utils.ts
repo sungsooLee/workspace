@@ -34,12 +34,23 @@ export const fetchCodeGroup = async <K extends CODE_GROUP_TYPE>(
   group: K,
   filter?: Record<string, any>,
 ): Promise<Code[K]> => {
-  const codeOption = codeOptions[group] || [];
-  const api = codeOption?.api || defaultFetchCodeGroup;
+  const codeOption = codeOptions[group];
+  let api;
+  if (codeOption) {
+    const codeOptionApiType = typeof codeOption.api;
+    api = codeOption ? codeOption.api : defaultFetchCodeGroup;
+    if (codeOptionApiType === 'string') {
+      api = defaultFetchCodeGroup;
+    }
+  } else {
+    console.log('group => ', group);
+    api = defaultFetchCodeGroup;
+  }
+
   const customOptions = codeOption?.options || [];
   try {
-    if (api) {
-      const response = await api(group, filter);
+    if (api && typeof api === 'function') {
+      const response = api ? await api(group, filter) : [];
       return [...customOptions, ...(response as Code[K])];
     }
     return customOptions;
