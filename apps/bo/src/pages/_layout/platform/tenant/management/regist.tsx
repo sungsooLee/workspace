@@ -70,7 +70,11 @@ function RouteComponent() {
   const { open: openModal, confirm: openConfirm } = useModal();
   const { control, provider, onSubmit, onFormChange, formState } = useDynamicForm(formConfig);
 
-  const { create } = useCreateTenant({});
+  const { create } = useCreateTenant({
+    onSuccess: async () => {
+      router.navigate({ to: '/platform/tenant/management' });
+    },
+  });
   const { getCode } = useCodeStore();
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -165,12 +169,12 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow
               provider={provider}
-              name="managerName"
+              name="tenantMappingUserList"
               element={
                 <ChipListModalSelectorFormField
                   chipList={{
                     labelField: 'name',
-                    valueField: 'id',
+                    valueField: 'userId',
                     wordwrap: true,
                   }}
                   modalConfig={{
@@ -188,7 +192,7 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow
               provider={provider}
-              name="company"
+              name="companyTenantList"
               element={
                 <ChipListModalSelectorFormField
                   chipList={{
@@ -263,11 +267,18 @@ const formConfig: DynamicFormConfig = {
       tooltip: t('테넌트에 사용할 로고로 파일 1개만 등록할 수 있습니다.'),
     },
     {
-      name: 'managerName',
+      name: 'tenantMappingUserList',
       label: t('테넌트 담당자'),
       type: 'custom',
-      value: '',
+      format: 'array',
+      value: [],
       placeholder: t('담당자를 선택해주세요.'),
+    },
+    {
+      name: 'tenantMappingRoleList',
+      type: 'custom',
+      format: 'array',
+      value: [],
     },
     {
       name: 'tenantBillingTag',
@@ -278,10 +289,11 @@ const formConfig: DynamicFormConfig = {
       maxLength: 150,
     },
     {
-      name: 'company',
+      name: 'companyTenantList',
       label: t('회사 선택'),
       type: 'custom',
-      value: '',
+      format: 'array',
+      value: [],
       tooltip: t(
         '테넌트 소속 회사를 여러개 선택할 수 있습니다. 회사가 여러 개인 경우 회사별로 개별 설정이 필요합니다.',
       ),

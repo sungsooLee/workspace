@@ -56,5 +56,6 @@ function genTenantCreate(payload: any) {
     isCommonCategory: payload.isCommonCategory,
     isTenantCategory: payload.isTenantCategory,
     tenantMappingLanguageTypeList: payload.tenantMappingLanguageTypeList,
+    tenantMappingUserList: payload.tenantMappingUserList,
   };
 }
