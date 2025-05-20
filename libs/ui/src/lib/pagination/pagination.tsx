@@ -24,11 +24,20 @@ export interface PaginationComponentProps {
   disabled?: boolean;
   variant?: string;
   onChange?: (newPage: number) => void;
+  /**
+   * 페이지 정보 사용 유무
+   */
+  hidePageInfo?: boolean;
+
   pageSize?: number;
   /**
    * 페이지 크기 선택 옵션 배열입니다.
    */
   pageSizeOptions?: number[];
+  /**
+   * 페이지 크기 선택 옵션 사용 유무
+   */
+  hidePageSizeOptions?: boolean;
   /**
    * 페이지 크기 변경 시 호출되는 콜백 함수입니다.
    * @param {number} pageSize 변경된 페이지 크기
@@ -45,8 +54,10 @@ const PaginationComponent = forwardRef<HTMLDivElement, PaginationComponentProps>
       disabled = false,
       size = 'medium',
       variant = 'text',
+      hidePageInfo,
       pageSize,
       pageSizeOptions = [10, 20, 50, 100],
+      hidePageSizeOptions,
       onPageSizeChange,
       ...props
     },
@@ -68,11 +79,11 @@ const PaginationComponent = forwardRef<HTMLDivElement, PaginationComponentProps>
       onPageSizeChange?.(newValue);
     };
 
-    console.log('pagination.tsx ', { items, pageNumber, totalPages, pageSize, options, disabled, props });
+    console.log('pagination.tsx ', { items, pageNumber, totalPages, pageSize, options, disabled: totalPages === 0, props });
     return (
-      <div ref={ref} className={cn(styles.root, styles.pagination, className, disabled && 'disabled', 'nlp--pagination')}>
+      <div ref={ref} className={cn(styles.root, styles.pagination, className, totalPages === 0 && 'disabled', 'nlp--pagination')}>
         <div className={styles.select_area}>
-          <Dropdown value={pageSize} onChange={handlePageSizeChange} options={options} />
+          {!hidePageSizeOptions && <Dropdown value={pageSize} onChange={handlePageSizeChange} options={options} />}
         </div>
         {/* 페이지 번호들 */}
         <div className={styles.page_num}>
@@ -87,7 +98,7 @@ const PaginationComponent = forwardRef<HTMLDivElement, PaginationComponentProps>
             />
           ))}
         </div>
-        <span className={styles.count_wrap}>{`${pageNumber + 1} / ${totalPages}`}</span>
+        <span className={styles.count_wrap}>{!hidePageInfo && `${pageNumber + 1} / ${totalPages}`}</span>
       </div>
     );
   },
