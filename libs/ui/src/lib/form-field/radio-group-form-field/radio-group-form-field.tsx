@@ -3,7 +3,7 @@ import { RadioGroup } from '../../radio-group/radio-group';
 import { cn } from '@learnway/shared';
 import styles from './radio-group-form-field.module.css';
 import { BaseFormFieldProps, OptionsConfig, SelectOption, useFormOptions } from '@learnway/hooks';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 export interface RadioGroupFormFieldProps extends BaseFormFieldProps<string> {
   options?: SelectOption[];
@@ -13,6 +13,7 @@ export interface RadioGroupFormFieldProps extends BaseFormFieldProps<string> {
 const RadioGroupFormFieldComponent = forwardRef<HTMLDivElement, RadioGroupFormFieldProps>(
   ({ value, name, onChange, options: initOptions, optionsConfig, cols, ...props }, ref) => {
     const options = useFormOptions(initOptions, optionsConfig);
+    const { t } = useTranslation();
     return (
       <RadioGroup
         ref={ref}
