@@ -2,7 +2,7 @@
 .start {
   .nav {
     ul {
-      @apply flex justify-start gap-[40px];
+      @apply flex gap-[48px];
       > li {
         a {
           @apply title_bo_4_r inline-flex h-[40px] items-center text-[var(--white)];
