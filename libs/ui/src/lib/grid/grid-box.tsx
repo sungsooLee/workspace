@@ -229,8 +229,8 @@ const GridBoxComponent = <T extends object>(
    * - 없으면 config에서 받아 설정
    */
   const paginationProps = useMemo(() => {
-    return pagination;
-  }, [pagination]);
+    return pagination || props.pagination;
+  }, [pagination, props.pagination]);
 
   // const paginationProps = useMemo(() => {
   //   // props.pagination이 전달되면 우선 사용
@@ -246,7 +246,7 @@ const GridBoxComponent = <T extends object>(
   //     : undefined; // page가 falsy일 경우 undefined 반환
   // }, [page, handleChangePage, handleChangePageSize, props.pagination, pagination]);
 
-  // console.log('grid-box ::', { paginationProps });
+  console.log('grid-box ::', { paginationProps });
 
   return (
     <div className={cn(styles.table_box)}>

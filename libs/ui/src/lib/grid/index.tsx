@@ -282,6 +282,7 @@ const GridComponent = forwardRef(
     const handleRowSelectionChangeForMultiple: OnChangeFn<RowSelectionState> = (updaterOrValue) => {
       const newSelection =
         typeof updaterOrValue === 'function' ? updaterOrValue(rowSelection) : updaterOrValue;
+      console.log(newSelection);
       setRowSelection(newSelection);
     };
 
