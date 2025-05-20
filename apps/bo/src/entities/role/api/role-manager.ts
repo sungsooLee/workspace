@@ -79,8 +79,8 @@ export default class RoleManagerService {
    * @param menuId 메뉴 ID
    * @returns 메뉴에 속한 API 목록
    */
-  static fetchMenuApis(menuId: string): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/menus/${menuId}/apis`);
+  static fetchRoleMenuApis(roleCode: string, menuId: string): Promise<any> {
+    return httpService.get<any>(`${PMSApiPrefix()}/roles/${roleCode}/apis`, { menuId: menuId });
   }
 
   /**

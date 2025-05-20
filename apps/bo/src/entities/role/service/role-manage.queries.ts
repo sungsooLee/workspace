@@ -1,6 +1,7 @@
 import { Role } from '../../../types/entities/role';
 import RoleManagerService from '../api/role-manager';
 import TenantMenuManageService from '@entities/tenant/api/menu-tenant-manage';
+import MenuMangerService from '@entities/menu/api/menu-manage';
 
 export const roleQueryKeys = {
   all: ['role-manager-all'] as const,
@@ -62,9 +63,24 @@ export const roleManagerQueryOptions = {
   }),
 
   // 메뉴에 속한 API 목록 조회
-  getMenuApis: (menuId: string) => ({
+  getMenuApis: (roleCode: string, menuId: string) => ({
     queryKey: [...roleQueryKeys.all, ...roleQueryKeys.menus, menuId, ...roleQueryKeys.apis],
-    queryFn: async () => RoleManagerService.fetchMenuApis(menuId),
+    queryFn: async () => {
+      const menuDetailPromise = MenuMangerService.fetchMenuDetail(menuId);
+      const roleMenuApi: any[] = await RoleManagerService.fetchRoleMenuApis(roleCode, menuId);
+      const menuDetail = await menuDetailPromise;
+      const roleMenuApiMap = new Map();
+      for (const item of roleMenuApi) {
+        roleMenuApiMap.set(item.apiId, item);
+      }
+      return{
+        roleMenuApiList: roleMenuApiMap.keys(),
+        apiMappingMenuList: menuDetail.apiMappingMenuList.map((item: any) => {
+          item.isUsed = true; //roleMenuApiMap.has(item.apiId);
+          return item;
+        });
+      } 
+    },
     enabled: !!menuId,
   }),
 

@@ -22,8 +22,11 @@ export function useFetchRoleMenus(tenantId: number, siteScope: string, roleCode:
   });
 }
 
-export function useFetchMenuApis(menuId: string) {
-  return useQuery({ ...queryOptions.getMenuApis(menuId), enabled: !!menuId });
+export function useFetchMenuApis(roleCode: string, menuId: string) {
+  return useQuery({
+    ...queryOptions.getMenuApis(roleCode, menuId),
+    enabled: !!roleCode && !!menuId,
+  });
 }
 
 export function useFetchRoleApis(roleId: string) {
@@ -59,7 +62,6 @@ interface RoleHookOptions {
   onRoleCreateSuccess?: (data: any, variables: any, context: any) => void;
   onRoleUpdateSuccess?: (data: any, variables: any, context: any) => void;
   onRoleDeleteSuccess?: (data: any, variables: any, context: any) => void;
-  onMenusAssignSuccess?: (data: any, variables: any, context: any) => void;
   onApisAssignSuccess?: (data: any, variables: any, context: any) => void;
 }
 
@@ -160,10 +162,6 @@ export const useRoleManager = (options: RoleHookOptions = {}) => {
     updateRoleMutate(roleData, callbacks);
   };
 
-  const handleAssignMenus = (roleCode: string, menuIds: number[], callbacks?: any) => {
-    assignMenusMutate({ roleCode, menuIds }, callbacks);
-  };
-
   const handleAssignApis = (roleId: string, apiIds: string[], callbacks?: any) => {
     assignApisMutate({ roleId, apiIds }, callbacks);
   };
@@ -172,7 +170,6 @@ export const useRoleManager = (options: RoleHookOptions = {}) => {
     createRole: handleCreateRole,
     deleteRole: handleDeleteRole,
     updateRole: handleUpdateRole,
-    assignMenus: handleAssignMenus,
     assignApis: handleAssignApis,
   };
 };
