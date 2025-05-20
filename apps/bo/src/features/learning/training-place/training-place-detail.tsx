@@ -9,10 +9,10 @@ import { ContentsHistoryInfoFormField, FormSubTitle } from '@shared/ui';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import fileUploadStyles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
-import { ChipListModalSelectorFormField, Textarea, TextareaFormField } from '@learnway/ui';
+import { ChipListModalSelectorFormField, Textarea } from '@learnway/ui';
 import { AddressSearchModal, TenantChoiceModal } from '@features/shared';
 
-import { Button, ContentsRow, useModal, DynamicFormField, Input } from '@learnway/ui';
+import { Button, ContentsRow, useModal, Input } from '@learnway/ui';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { useDynamicForm, DynamicFormConfig, CODE_GROUP } from '@learnway/hooks';
 import { FormRow } from '@shared/ui';
@@ -85,7 +85,6 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
   };
 
   const handleDeleteButtonClick = () => {
-    // TODO. 교육 장소 삭제
     if (pageMode === 'view') {
       openConfirm({
         title: t('LABEL.confirm.delete.title'),
@@ -442,6 +441,7 @@ const formConfig: DynamicFormConfig = {
       conditions: [
         {
           fn: (values) => {
+            if (values.linkAddress.trim().length === 0) return false;
             const pattern = new RegExp(
               '^(https?:\\/\\/)?' + // protocol
                 '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
@@ -451,7 +451,7 @@ const formConfig: DynamicFormConfig = {
                 '(\\#[-a-z\\d_]*)?$', // fragment locator
               'i',
             );
-            return !pattern.test(values.linkAddress);
+            return !pattern.test(values.linkAddress.trim());
           },
           message: t('LABEL.form.validation.invalidUrl'),
         },
