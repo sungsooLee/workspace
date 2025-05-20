@@ -1,12 +1,11 @@
 .start {
   /* breadCrumbs */
   .breadcrumbs {
-    @apply flex min-h-[40px] items-center bg-[var(--white)] pl-[24px];
-    border-bottom: 1px solid var(--gray4);
+    @apply flex min-h-[40px] items-center border-b-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] pl-[24px];
     li {
       &:nth-child(1) {
         svg {
-          @apply mr-[5px];
+          @apply mr-[6px];
           & + svg {
             @apply ml-[0];
           }
