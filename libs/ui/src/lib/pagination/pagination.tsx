@@ -79,11 +79,30 @@ const PaginationComponent = forwardRef<HTMLDivElement, PaginationComponentProps>
       onPageSizeChange?.(newValue);
     };
 
-    console.log('pagination.tsx ', { items, pageNumber, totalPages, pageSize, options, disabled: totalPages === 0, props });
+    console.log('pagination.tsx ', {
+      items,
+      pageNumber,
+      totalPages,
+      pageSize,
+      options,
+      disabled: totalPages === 0,
+      props,
+    });
     return (
-      <div ref={ref} className={cn(styles.root, styles.pagination, className, totalPages === 0 && 'disabled', 'nlp--pagination')}>
+      <div
+        ref={ref}
+        className={cn(
+          styles.root,
+          styles.pagination,
+          className,
+          totalPages === 0 && styles.disabled,
+          'nlp--pagination',
+        )}
+      >
         <div className={styles.select_area}>
-          {!hidePageSizeOptions && <Dropdown value={pageSize} onChange={handlePageSizeChange} options={options} />}
+          {!hidePageSizeOptions && (
+            <Dropdown value={pageSize} onChange={handlePageSizeChange} options={options} />
+          )}
         </div>
         {/* 페이지 번호들 */}
         <div className={styles.page_num}>
@@ -98,7 +117,9 @@ const PaginationComponent = forwardRef<HTMLDivElement, PaginationComponentProps>
             />
           ))}
         </div>
-        <span className={styles.count_wrap}>{!hidePageInfo && `${pageNumber + 1} / ${totalPages}`}</span>
+        <span className={styles.count_wrap}>
+          {!hidePageInfo && `${pageNumber + 1} / ${totalPages}`}
+        </span>
       </div>
     );
   },

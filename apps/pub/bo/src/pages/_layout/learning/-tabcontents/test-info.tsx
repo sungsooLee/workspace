@@ -690,7 +690,7 @@ const TestInfoComponent: FC<{}> = ({}) => {
                 <Switch
                   id="name-examResult"
                   className={formStyles.btn_switch}
-                  label={checked[4] ? '제어' : '제어안함'}
+                  label={checked[4] ? '공개' : '비공개'}
                   checked={checked[4]}
                   onCheckedChange={handleCheckedChange(4)}
                 />

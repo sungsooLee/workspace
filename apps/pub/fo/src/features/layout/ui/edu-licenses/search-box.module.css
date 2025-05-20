@@ -1,5 +1,5 @@
 .start {
   .search_box {
-    @apply p-[24px];
+    @apply p-[24px] pb-[8px];
   }
 }

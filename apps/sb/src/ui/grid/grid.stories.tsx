@@ -7,6 +7,7 @@ import {
   createColumnHelper,
   RowSelectionState,
   SortingState,
+  Table,
 } from '@tanstack/react-table';
 import { useQuery } from '@tanstack/react-query';
 import { ReactQueryConfigProvider } from '@learnway/config';
@@ -28,7 +29,7 @@ import {
   useModal,
 } from '@learnway/ui';
 import { IcoDownload, IcoSetting } from '@learnway/icons';
-import { DATE_TIME_FORMAT, formatDate, getRandomId } from '@learnway/shared';
+import { DATE_TIME_FORMAT, formatDate, getRandomId, getRowSelectionByList } from '@learnway/shared';
 import { PaginationResponse } from '../../../../bo/src/types';
 
 export default {
@@ -526,24 +527,17 @@ const PaginationTable = () => {
     filters: [] as ColumnFiltersState,
   });
 
-  const response: PaginationResponse<Person> = fetchPaginatedData(100);
+  const data: PaginationResponse<Person> = fetchPaginatedData(100);
 
-  console.log(response);
-
-  const handleStateChange = (newState: GridState) => {
-    setTableState((prev) => ({
-      ...prev,
-      sorting: newState.sorting || prev.sorting,
-      filters: newState.filters || prev.filters,
-    }));
-  };
+  useEffect(() => {
+    console.log('data,', data);
+  }, [data]);
 
   return (
     <div className="p-4">
       <GridBox
-        data={response.content}
+        data={data.content}
         columns={columns}
-        onStateChange={handleStateChange}
         pagination={{
           pageNumber,
           totalPages: 300,
@@ -1069,21 +1063,21 @@ TemplateTable.storyName = '테이블 모드';
 
 // 타이틀 영역
 export const TemplateTitleArea: any = (args: any) => {
-  const data = Array(10)
-    .fill(null)
-    .map((_, i) => ({
-      id: getRandomId(),
-      name: `name_${i}`,
-      name2: `name2_${i}`,
-      name3: `name3_${i}`,
-      name4: `name4_${i}`,
-    }));
+  const [tableInstance, setTableInstance] = useState<Table<any>>(); // Grid 로부터 받을 table 인스턴스를 저장할 상태
+  const [data, setData] = useState<any[]>(dummyData());
   const columns = [
     { accessorKey: 'name', size: 300 },
     { accessorKey: 'name2', size: 300 },
     { accessorKey: 'name3', size: 300 },
     { accessorKey: 'name4', size: 300 },
   ];
+  const handlerUserRowSelect = () => {
+    if (tableInstance) {
+      const targets = data.filter((_, i) => i < 2); // 2번째 항목까지
+      const newSelection = getRowSelectionByList(tableInstance, targets, 'id');
+      tableInstance.setRowSelection(newSelection);
+    }
+  };
   return (
     <GridBox
       data={data}
@@ -1105,14 +1099,27 @@ export const TemplateTitleArea: any = (args: any) => {
       showSelectAll
       showRemoveAll
       customButtonNode={
-        <Button
-          variant="outline"
-          size="sm"
-          label={'커스텀버튼'}
-          icon={<IcoSetting width={16} height={16} stroke="#131C30" />}
-          className="btn_setting"
-        />
+        <>
+          <Button
+            variant="outline"
+            size="sm"
+            label={'초기화'}
+            icon={<IcoSetting width={16} height={16} stroke="#131C30" />}
+            className="btn_setting"
+            onClick={() => setData(dummyData())}
+          />
+          <Button
+            variant="outline"
+            size="sm"
+            label={'특정 행 선택'}
+            icon={<IcoSetting width={16} height={16} stroke="#131C30" />}
+            className="btn_setting"
+            onClick={handlerUserRowSelect}
+          />
+        </>
       }
+      onRemoveAllClick={() => setData([])}
+      onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
     />
   );
 };
@@ -1181,3 +1188,14 @@ export const TemplateColumnType: any = (args: any) => {
   );
 };
 TemplateColumnType.storyName = '컬럼 유형';
+
+const dummyData = (size = 10) =>
+  Array(size)
+    .fill(null)
+    .map((_, i) => ({
+      id: getRandomId(),
+      name: `name_${i}`,
+      name2: `name2_${i}`,
+      name3: `name3_${i}`,
+      name4: `name4_${i}`,
+    }));
