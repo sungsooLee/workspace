@@ -216,7 +216,7 @@ const searchConfig: SearchBoxConfig = {
   builders: [
     [
       {
-        name: 'keyType',
+        name: 'keyTypeCode',
         type: 'dropdown',
         label: 'LABEL.platform.system.multilingual.keyType',
         value: '',
