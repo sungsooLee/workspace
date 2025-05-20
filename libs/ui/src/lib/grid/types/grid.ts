@@ -270,6 +270,16 @@ export interface GridState {
  */
 export interface GridImperative {
   /**
+   * 행 전체 선택 메서드입니다.
+   */
+  selectAllRows: () => void;
+
+  /**
+   * 행 전체 삭제 메서드입니다.
+   */
+  removeAllRows: () => void;
+
+  /**
    * 행 선택 상태를 초기화하는 메서드입니다.
    */
   resetRowSelection: () => void;

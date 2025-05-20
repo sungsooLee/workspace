@@ -27,6 +27,7 @@ export default {
 
 // ShuttleGridToGrid
 export const TemplateGridToGrid: any = (args: any) => {
+  const [selectedRows, setSelectedRows] = useState<any>([]);
   const gridData = Array(10)
     .fill(null)
     .map((d, i) => ({ id: `id${i}`, name: `name${i}` }));
@@ -50,6 +51,7 @@ export const TemplateGridToGrid: any = (args: any) => {
       gridData={gridData}
       columns={columns}
       rowKey={'id'}
+      selectedRows={selectedRows}
       leftTitle={'OOO 목록'}
       rightTitle={'OOO 목록'}
     />

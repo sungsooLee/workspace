@@ -36,14 +36,18 @@ const GridBoxComponent = <T extends object>(
     showExcelDownload,
     showUpload,
     showSelectAll,
-    showDeleteAll,
+    showRemoveAll,
     showAdd,
     showAddRow,
+    showRemove,
     showRemoveRow,
     titleCustomNode,
     customButtonNode,
     guideText,
     onAddClick,
+    onRemoveClick,
+    onSelectAllClick,
+    onRemoveAllClick,
     clientSideFiltering,
     clientSideSorting,
     ...props
@@ -100,6 +104,32 @@ const GridBoxComponent = <T extends object>(
     columns?.find((d: any) => d.type === 'numbering') || props.showNumberingColumn;
 
   /**
+   * 전체선택 버튼 클릭
+   */
+  const handleSelectAllClick = useCallback(
+    () => {
+      // 그리드 선택 초기화
+      gridRef.current?.selectAllRows();
+      // callback
+      onSelectAllClick?.();
+    },
+    [gridRef, onSelectAllClick], // 의존성 배열: gridFetch와 page 객체 참조
+  );
+
+  /**
+   * 전체삭제 버튼 클릭
+   */
+  const handleRemoveAllClick = useCallback(
+    () => {
+      // 그리드 선택 초기화
+      gridRef.current?.resetRowSelection();
+      // callback
+      onRemoveAllClick?.();
+    },
+    [gridRef, onRemoveAllClick], // 의존성 배열: gridFetch와 page 객체 참조
+  );
+
+  /**
    * 추가 버튼 클릭
    */
   const handleAddClick = useCallback(
@@ -110,6 +140,19 @@ const GridBoxComponent = <T extends object>(
       onAddClick?.();
     },
     [gridRef, onAddClick], // 의존성 배열: gridFetch와 page 객체 참조
+  );
+
+  /**
+   * 삭제 버튼 클릭
+   */
+  const handleRemoveClick = useCallback(
+    () => {
+      // 그리드 선택 초기화
+      gridRef.current?.resetRowSelection();
+      // callback
+      onRemoveClick?.();
+    },
+    [gridRef, onRemoveClick], // 의존성 배열: gridFetch와 page 객체 참조
   );
 
   /**
@@ -196,12 +239,14 @@ const GridBoxComponent = <T extends object>(
       <div className={styles.table_info}>
         <div className={styles.title_info}>
           {/* 제목 */}
-          {<div className={styles.title}>{props.title || title || t('LABEL.grid.title.list')}</div>}
+          <div className={styles.title}>
+            {props.title || title || t('LABEL.grid.title.list', '목록')}
+          </div>
 
           {/* 전체 개수  */}
           {showTotalCount && (
             <div className={styles.sub_info}>
-              {t('LABEL.grid.header.all')}{' '}
+              {t('LABEL.grid.header.all', '전체')}{' '}
               <strong className={styles.num}>{totalElements || data?.length || 0}</strong>
             </div>
           )}
@@ -221,22 +266,62 @@ const GridBoxComponent = <T extends object>(
               variant="text"
               size="xs"
               className={styles.btn_all_select}
-              label={t('LABEL.grid.header.selectAll')}
+              label={t('LABEL.grid.header.selectAll', '전체선택')}
               icon={<IcoPlus width={16} height={16} stroke={'#131C30'} />}
+              onClick={() => onSelectAllClick?.()}
             />
           )}
-          {/* 전체 삭제 */}
-          {showDeleteAll && (
+          {/* 전체삭제 */}
+          {showRemoveAll && (
             <Button
               variant="text"
               size="xs"
               className={styles.btn_all_delete}
-              label={t('LABEL.grid.header.removeAll')}
+              label={t('LABEL.grid.header.removeAll', '전체삭제')}
               icon={<IcoMinus width={16} height={16} stroke={'#131C30'} />}
+              onClick={() => onRemoveAllClick?.()}
             />
           )}
           {/* 업로드 */}
           <ExcelButtons config={excel} getParams={getParams} />
+          {/* 추가 */}
+          {showAdd && (
+            <Button
+              variant="outline"
+              size="sm"
+              label={t('LABEL.grid.header.add', '추가')}
+              onClick={handleAddClick}
+            />
+          )}
+          {/* 삭제 */}
+          {showRemove && (
+            <Button
+              variant="outline"
+              size="sm"
+              label={t('LABEL.grid.header.remove', '삭제')}
+              onClick={handleAddClick}
+            />
+          )}
+          {/* 행추가 */}
+          {showAddRow && (
+            <Button
+              variant="outline"
+              size="sm"
+              label={t('행추가', '행추가')}
+              icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
+              onClick={handleAddRowClick}
+            />
+          )}
+          {/* 행삭제 */}
+          {showRemoveRow && (
+            <Button
+              variant="outline"
+              size="sm"
+              label={t('행삭제', '행삭제')}
+              icon={<IcoMinus width={16} height={16} stroke={'#4C515E'} />}
+              onClick={handleRemoveRowClick}
+            />
+          )}
           {/* 컬럼 설정 */}
           {/*{showColumnSettings && (*/}
           {/*  <Button*/}
@@ -248,34 +333,6 @@ const GridBoxComponent = <T extends object>(
           {/*  />*/}
           {/*)}*/}
           {/* 추가 */}
-          {showAdd && (
-            <Button
-              variant="outline"
-              size="sm"
-              label={t('LABEL.grid.header.add')}
-              onClick={handleAddClick}
-            />
-          )}
-          {/* 행추가 */}
-          {showAddRow && (
-            <Button
-              variant="outline"
-              size="sm"
-              label={t('행추가')}
-              icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
-              onClick={handleAddRowClick}
-            />
-          )}
-          {/* 행삭제 */}
-          {showRemoveRow && (
-            <Button
-              variant="outline"
-              size="sm"
-              label={t('행삭제')}
-              icon={<IcoMinus width={16} height={16} stroke={'#4C515E'} />}
-              onClick={handleRemoveRowClick}
-            />
-          )}
         </div>
       </div>
       {/* 데이터 테이블 렌더링 */}
@@ -334,7 +391,7 @@ const ExcelButtons: FC<{ config?: ExcelConfig; getParams?: UseFormReturn['getVal
           variant="text"
           size="xs"
           className={styles.btn_upload}
-          label={t('LABEL.grid.header.excelUpload')}
+          label={t('LABEL.grid.header.excelUpload', '엑셀업로드')}
           icon={
             <IcoUploadCloud width={16} height={16} stroke={'#4C515E'} onClick={handleExcelUpload} />
           }
@@ -346,7 +403,7 @@ const ExcelButtons: FC<{ config?: ExcelConfig; getParams?: UseFormReturn['getVal
           variant="text"
           size="xs"
           className={styles.btn_excel}
-          label={t('LABEL.grid.header.excelDownload')}
+          label={t('LABEL.grid.header.excelDownload', '엑셀다운로드')}
           icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
           onClick={handleExcelDownload}
         />

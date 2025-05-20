@@ -1103,12 +1103,12 @@ export const TemplateTitleArea: any = (args: any) => {
       showExcelDownload
       showUpload
       showSelectAll
-      showDeleteAll
+      showRemoveAll
       customButtonNode={
         <Button
           variant="outline"
           size="sm"
-          label={'화면버튼'}
+          label={'커스텀버튼'}
           icon={<IcoSetting width={16} height={16} stroke="#131C30" />}
           className="btn_setting"
         />

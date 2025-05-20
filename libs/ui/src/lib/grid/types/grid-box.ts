@@ -170,7 +170,7 @@ export interface GridBoxProps<T extends object = object>
    * 전체 삭제 버튼 표시 여부를 나타내는 boolean 값입니다.
    * `true`로 설정하면 전체 삭제 버튼이 표시됩니다.
    */
-  showDeleteAll?: boolean;
+  showRemoveAll?: boolean;
 
   /**
    * 추가 버튼 표시 여부를 나타내는 boolean 값입니다.
@@ -183,6 +183,12 @@ export interface GridBoxProps<T extends object = object>
    * `true`로 설정하면 행추가 버튼이 표시됩니다.
    */
   showAddRow?: boolean;
+
+  /**
+   * 삭제 버튼 표시 여부를 나타내는 boolean 값입니다.
+   * `true`로 설정하면 행삭제 버튼이 표시됩니다.
+   */
+  showRemove?: boolean;
 
   /**
    * 행삭제 버튼 표시 여부를 나타내는 boolean 값입니다.
@@ -206,9 +212,24 @@ export interface GridBoxProps<T extends object = object>
   data?: T[];
 
   /**
-   * 행추가 버튼 클릭 핸들러
+   * 추가 버튼 클릭 핸들러
    */
   onAddClick?: () => void;
+
+  /**
+   * 추가 버튼 클릭 핸들러
+   */
+  onRemoveClick?: () => void;
+
+  /**
+   * 전체선택 버튼 클릭 핸들러
+   */
+  onSelectAllClick?: () => void;
+
+  /**
+   * 전체삭제 버튼 클릭 핸들러
+   */
+  onRemoveAllClick?: () => void;
 
   /**
    * Show RowIndex
