@@ -282,6 +282,7 @@ const GridComponent = forwardRef(
     const handleRowSelectionChangeForMultiple: OnChangeFn<RowSelectionState> = (updaterOrValue) => {
       const newSelection =
         typeof updaterOrValue === 'function' ? updaterOrValue(rowSelection) : updaterOrValue;
+      console.log(newSelection);
       setRowSelection(newSelection);
     };
 
@@ -435,6 +436,8 @@ const GridComponent = forwardRef(
       const firstRowId = table.getRowModel()?.rows?.[0]?.id;
       if (firstRowId && autoSelectFirstRow && !tableMode) {
         setRowSelection({ [firstRowId]: true });
+      } else {
+        table.toggleAllRowsSelected(false);
       }
     }, [data, table, autoSelectFirstRow]);
 
