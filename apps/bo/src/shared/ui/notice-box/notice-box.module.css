@@ -45,6 +45,9 @@
           }
         }
       }
+      &:not(:has(.title)) {
+        @apply flex min-h-[72px] items-center;
+      }
     }
   }
 }

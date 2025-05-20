@@ -3,15 +3,7 @@ import { t } from 'i18next';
 import { useRouter } from '@tanstack/react-router';
 import { cn, DATE_TIME_FORMAT, formatISODateString } from '@learnway/shared';
 import { createColumnHelper } from '@tanstack/react-table';
-import {
-  Button,
-  ContentsRow,
-  DynamicFormField,
-  GridBox,
-  GridState,
-  Input,
-  useModal,
-} from '@learnway/ui';
+import { Button, ContentsRow, GridBox, GridState, Input, useModal } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { IcoPlus } from '@learnway/icons';
 
@@ -26,8 +18,6 @@ import {
   useUpdateCommonCodGroup,
 } from '../../../../entities/common-code/service/common-code-group.hook';
 import { ContentsHistoryInfoFormField, FormRow, SwitchFormField } from '../../../../shared/ui';
-import { useQueryClient } from '@tanstack/react-query';
-import { queryKeys } from '../../../../entities/common-code/service/common-code-group.queries';
 
 // 폼 관련 필드 목록
 const FORM_FIELDS = [
@@ -272,8 +262,7 @@ const CommonCodeGroupGridComponent = ({
               showTotalCount={true}
               title={t('LABEL.grid.title.commonCdGroupList')}
               pagination={{
-                pageIndex: page,
-                pageSize: size,
+                pageNumber: page,
                 totalRows: totalRows || 0,
                 onPageChange: onPageChange,
                 onPageSizeChange: onPageSizeChange,

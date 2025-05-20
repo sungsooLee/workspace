@@ -1,3 +1,5 @@
+import { PaginationRequest } from './api';
+
 export interface LabelMessage {
   /**
    * 라벨/메세지 NO
@@ -41,7 +43,7 @@ export interface LabelMessage {
   modifiedDate?: string;
 }
 
-export interface LabelMessagesQueryParams {
+export interface LabelMessagesQueryParams extends PaginationRequest {
   /**
    * 라벨/메세지 다국어키
    */

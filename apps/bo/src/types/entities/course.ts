@@ -1,3 +1,5 @@
+import { PaginationRequest } from './api';
+
 export interface Course {
   /** 과정 ID */
   courseId: number;
@@ -245,37 +247,7 @@ export interface Course {
   courseValidityEndDate?: string;
 }
 
-export interface CourseResponse {
-  courseId: number;
-  courseTsid: string;
-  channelId: number;
-  channelName: string;
-  courseType: string;
-  courseName: string;
-  trainingGoals: string;
-  expectedOutcomes: string;
-  courseContent: string;
-  coordinatorId: number;
-  coordinatorName: string;
-  openingYear: number;
-  isApproved: boolean;
-  isUsed: boolean;
-  isPublished: boolean;
-  isDeleted: boolean;
-  companyId: number;
-  approvalRouteId: number;
-  trainingPlatformType: string;
-  isEnrollNeeded: boolean;
-  categories: {
-    id: number;
-    parentId: number;
-    name: string;
-    sortSeq: number;
-    categoryType: string;
-  }[];
-}
-
-export interface CourseQueryParams {
+export interface CourseQueryParams extends PaginationRequest {
   /**
    * 테넌트
    */

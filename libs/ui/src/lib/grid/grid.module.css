@@ -256,9 +256,13 @@
           svg {
             @apply hidden;
           }
-          [role='checkbox'] svg {
-            @apply block;
+          [role='checkbox'] {
+            @apply !rounded-[2px];
+            svg {
+              @apply block;
+            }
           }
+
           &:not(:first-child) {
             @apply border-l-[1px] border-[var(--gray4)];
           }
@@ -269,7 +273,7 @@
     tbody {
       @apply !h-auto !w-full;
       tr {
-        @apply !relative !h-auto !w-full !table-fixed;
+        @apply !relative !h-auto !w-full !table-fixed !bg-white;
         td {
           @apply body_bo_2_r !table-cell !h-[52px] !min-h-[52px] break-all border-b-[1px] border-solid border-[var(--gray4)] px-[24px] py-[9px] text-center align-middle;
           &:not(:first-child) {
@@ -277,6 +281,9 @@
           }
           svg {
             @apply inline-block;
+          }
+          [role='checkbox'] {
+            @apply !rounded-[2px];
           }
         }
       }

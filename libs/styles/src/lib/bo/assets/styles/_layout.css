@@ -41,12 +41,6 @@ body.scrolled {
       .util {
         @apply !hidden;
       }
-      .nav_area {
-        @apply !pt-[4px];
-      }
-      .quick_menu {
-        @apply !bottom-[4px];
-      }
     }
     .container_inner {
       @apply !min-h-[calc(100vh-50px)];

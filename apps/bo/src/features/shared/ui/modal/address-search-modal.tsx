@@ -125,8 +125,8 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
     close();
   };
 
-  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPageIndex(value - 1);
+  const handlePageChange = (pageNumber: number) => {
+    setPageIndex(pageNumber);
   };
 
   const getError = () => {
@@ -137,6 +137,9 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
     ) : null;
   };
 
+
+
+  console.log('address-seach-modal', {totalPages, pageIndex});
   return (
     <ModalContainer>
       <ModalTitle>{t('LABEL.modal.addressSearch.title')}</ModalTitle>
@@ -186,8 +189,10 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
               </ul>
               <Pagination
                 className={styles.pagenation}
-                count={totalPages}
-                page={pageIndex + 1}
+                totalPages={totalPages}
+                pageNumber={pageIndex}
+                hidePageSizeOptions
+                hidePageInfo
                 onChange={handlePageChange}
               />
             </div>

@@ -604,7 +604,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-19',
     lastUpdateDate: '',
-    remarks: '- search-popover.tsx\n- mobile popover에서 body 스크롤 문제 미결정',
+    remarks: '- search-popover.tsx\n- popover에서 body 스크롤 문제 (개발화면에서 문제해결)',
   },
   {
     screenId: 'NLP_FO_USE_MA_1011',
@@ -614,7 +614,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-19',
     lastUpdateDate: '',
-    remarks: '- auto-complete-popover.tsx\n- mobile popover에서 body 스크롤 문제 미결정',
+    remarks: '- auto-complete-popover.tsx\n- popover에서 body 스크롤 문제 (개발화면에서 문제해결)',
   },
   {
     screenId: 'NLP_FO_USE_M_1000',
@@ -685,7 +685,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-03-10',
     lastUpdateDate: '2025-03-31',
-    remarks: '- filter.tsx\n- 내용안에 포함\n- filter.tsx, filter-popup.tsx 수정 (2025-03-31)',
+    remarks: '- filter.tsx\n- 내용안에 포함',
   },
   {
     screenId: 'NLP_FO_CAT_M_1000',
@@ -1068,7 +1068,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-04-17',
     lastUpdateDate: '',
-    remarks: '- accepting-popup.tsx\n- progress 미작업',
+    remarks: '- accepting-popup.tsx\n- svg progress 미결정',
   },
   {
     screenId: 'NLP_FO_LEC_1010',
