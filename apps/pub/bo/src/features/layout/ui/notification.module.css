@@ -22,6 +22,9 @@
           @apply mr-[10px] inline-flex h-[10px] w-[1px] bg-[#d9d9d9] content-[''];
         }
       }
+      &:disabled {
+        @apply text-[var(--gray5)];
+      }
     }
   }
 }

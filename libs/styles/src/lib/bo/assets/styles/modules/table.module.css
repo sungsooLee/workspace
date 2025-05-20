@@ -10,7 +10,7 @@
       tbody {
         tr {
           th {
-            @apply body_bo_2_r h-[56px] border-b-[1px] border-solid border-[var(--gray2)] py-[14px] pr-[24px] text-left align-middle text-[var(--gray6)];
+            @apply body_bo_2_b h-[56px] border-b-[1px] border-solid border-[var(--gray2)] py-[14px] pr-[24px] text-left align-middle text-[var(--gray7)];
             &.align_top {
               @apply align-top;
             }

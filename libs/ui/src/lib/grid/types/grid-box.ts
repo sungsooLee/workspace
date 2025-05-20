@@ -108,16 +108,13 @@ export interface GridBoxConfig {
    * 페이지네이션 상태 객체 (선택적)입니다.
    * 현재 페이지 정보 등을 포함합니다.
    */
-  page?: {
-    pageIndex: number; // 현재 페이지 인덱스 (0부터 시작)
-    pageSize: number; // 페이지당 행 수
-    totalRows: number; // 전체 행 수 (page 객체 안에 포함될 수도 있음)
-    [key: string]: any; // 필요한 다른 페이지네이션 속성
-  };
+  page?: GridBoxPagination;
+
+  pagination?: GridBoxPagination;
 }
 
 export interface GridBoxProps<T extends object = object>
-  extends Omit<GridProps<T>, 'data' | 'columns'> {
+  extends Omit<GridProps<T>, 'data' | 'columns' | 'pagination'> {
   /**
    * config
    */
@@ -173,7 +170,7 @@ export interface GridBoxProps<T extends object = object>
    * 전체 삭제 버튼 표시 여부를 나타내는 boolean 값입니다.
    * `true`로 설정하면 전체 삭제 버튼이 표시됩니다.
    */
-  showDeleteAll?: boolean;
+  showRemoveAll?: boolean;
 
   /**
    * 추가 버튼 표시 여부를 나타내는 boolean 값입니다.
@@ -186,6 +183,12 @@ export interface GridBoxProps<T extends object = object>
    * `true`로 설정하면 행추가 버튼이 표시됩니다.
    */
   showAddRow?: boolean;
+
+  /**
+   * 삭제 버튼 표시 여부를 나타내는 boolean 값입니다.
+   * `true`로 설정하면 행삭제 버튼이 표시됩니다.
+   */
+  showRemove?: boolean;
 
   /**
    * 행삭제 버튼 표시 여부를 나타내는 boolean 값입니다.
@@ -209,9 +212,24 @@ export interface GridBoxProps<T extends object = object>
   data?: T[];
 
   /**
-   * 행추가 버튼 클릭 핸들러
+   * 추가 버튼 클릭 핸들러
    */
   onAddClick?: () => void;
+
+  /**
+   * 추가 버튼 클릭 핸들러
+   */
+  onRemoveClick?: () => void;
+
+  /**
+   * 전체선택 버튼 클릭 핸들러
+   */
+  onSelectAllClick?: () => void;
+
+  /**
+   * 전체삭제 버튼 클릭 핸들러
+   */
+  onRemoveAllClick?: () => void;
 
   /**
    * Show RowIndex
@@ -221,4 +239,76 @@ export interface GridBoxProps<T extends object = object>
 
   clientSideSorting?: boolean;
   clientSideFiltering?: boolean;
+
+  /**
+   * 페이지네이션 관련 설정을 포함하는 객체입니다.
+   */
+  pagination?: GridBoxPagination;
+  // pagination?: {
+  //   /**
+  //    * 현재 페이지의 인덱스입니다. (0부터 시작)
+  //    */
+  //   pageNumber: number;
+  //
+  //   /**
+  //    * 전체 페이지 개수입니다.
+  //    */
+  //   totalRows: number;
+  //
+  //   /**
+  //    * 페이지 변경 시 호출되는 콜백 함수입니다.
+  //    * @param {number} pageIndex 변경된 페이지 인덱스
+  //    */
+  //   onPageChange?: (pageIndex: number) => void;
+  //
+  //   /**
+  //    * 페이지 크기 변경 시 호출되는 콜백 함수입니다.
+  //    * @param {number} pageSize 변경된 페이지 크기
+  //    */
+  //   onPageSizeChange?: (pageSize: number) => void;
+  //
+  //   /**
+  //    * 페이지 크기 선택 옵션 배열입니다.
+  //    */
+  //   pageSizeOptions?: number[];
+  // };
+}
+
+export interface GridBoxPagination {
+  /**
+   * 현재 페이지의 인덱스입니다. (0부터 시작)
+   */
+  pageNumber: number;
+
+  /**
+   * 전체 페이지 개수입니다.
+   */
+  totalPages: number;
+
+  /**
+   * 한 페이지에 표시할 데이터 개수
+   */
+  pageSize?: number;
+
+  /**
+   * 한 페이지에 표시할 데이터 개수 (삭제 예정)
+   */
+  pageIndex?: number;
+
+  /**
+   * 페이지 크기 선택 옵션 배열입니다.
+   */
+  pageSizeOptions?: number[];
+
+  /**
+   * 페이지 변경 시 호출되는 콜백 함수입니다.
+   * @param {number} pageIndex 변경된 페이지 인덱스
+   */
+  onPageChange?: (pageIndex: number) => void;
+
+  /**
+   * 페이지 크기 변경 시 호출되는 콜백 함수입니다.
+   * @param {number} pageSize 변경된 페이지 크기
+   */
+  onPageSizeChange?: (pageSize: number) => void;
 }

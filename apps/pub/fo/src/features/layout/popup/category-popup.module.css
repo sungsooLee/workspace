@@ -5,7 +5,16 @@
       > div > div {
         @apply !w-auto;
         > span {
-          @apply h-[30px];
+          @apply h-[30px] bg-[var(--gray1)];
+          button {
+            @apply bg-inherit;
+            svg {
+              @apply h-[16px] w-[16px] stroke-[var(--gray9)];
+            }
+            &:nth-child(2) {
+              @apply h-[16px] w-[16px];
+            }
+          }
         }
       }
     }
@@ -14,8 +23,14 @@
   .category_wrap {
     @apply -mx-[20px] flex h-full pb-[30px] pt-[24px];
     .menu_list_wrap {
-      @apply h-full w-[140px] overflow-y-scroll bg-[#1e4098];
+      @apply h-full w-[140px] overflow-y-scroll;
+      .scroll_box {
+        @apply flex h-full flex-col;
+      }
       .menu_list {
+        &:nth-last-child(1) {
+          @apply flex-1;
+        }
         li {
           button {
             @apply relative w-full rounded-none;
@@ -34,25 +49,13 @@
           }
         }
         &.sec1 {
-          li {
-            button {
-              @apply bg-[var(--primary2)];
-            }
-          }
+          @apply bg-[var(--primary2)];
         }
         &.sec2 {
-          li {
-            button {
-              @apply bg-[#1e4098];
-            }
-          }
+          @apply bg-[#1e4098];
         }
-        &.sec2 {
-          li {
-            button {
-              @apply bg-[#274cac];
-            }
-          }
+        &.sec3 {
+          @apply bg-[#274cac];
         }
       }
     }

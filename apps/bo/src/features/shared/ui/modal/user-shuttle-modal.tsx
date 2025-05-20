@@ -17,7 +17,6 @@ import { SearchBox } from '@shared/ui/search-box';
 import { IcoRefresh02 } from '@learnway/icons';
 import { useQueryClient } from '@tanstack/react-query';
 import { usersQueryOptions } from '@entities/users/service/users.queries';
-import { Company } from '@types';
 
 const UserShuttleComponent = () => {
   const ref = useRef<ShuttleGridToGridImperative>(null);
@@ -56,7 +55,7 @@ const UserShuttleComponent = () => {
         <SearchBox provider={sProvider} onSearch={handleOnSearch} />
         <ShuttleGridToGrid
           ref={ref}
-          onChange={(data: any) => {
+          onSelectedChange={(data: any) => {
             setOption(data);
           }}
           showNumberingColumn={false}
