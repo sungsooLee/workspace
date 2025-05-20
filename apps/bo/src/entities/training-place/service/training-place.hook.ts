@@ -53,3 +53,25 @@ export function useUpdateTrainingPlace(options: any) {
     data: mutation.data,
   };
 }
+
+export function useDeleteTrainingPlace(options: any) {
+  const mutation = useMutation({
+    ...mutateOptions.delete(),
+    onSuccess: async (data, variables, context) => {
+      // 외부에서 제공된 onSuccess 콜백이 있으면 실행
+      if (options.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...options,
+  });
+
+  return {
+    delete: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}

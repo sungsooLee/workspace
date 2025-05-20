@@ -73,9 +73,7 @@ function RouteComponent() {
     }),
     columnHelper.accessor('mapImageFileInfo', {
       cell: (info) => {
-        console.log('===>>>', CODE_GROUP['pms.education.EducationPlaceType']);
-        //const disabled = info.row.original.mapImageFileInfo?.files?.length > 0 ? false : true;
-        const disabled = !info.row.original.isUsed;
+        const disabled = info.row.original.mapImageFileInfo?.files?.length > 0 ? false : true;
         const imageFileUrl =
           'https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2';
         return (
@@ -106,10 +104,8 @@ function RouteComponent() {
     }),
     columnHelper.accessor('mapImageLinkContent', {
       cell: (info) => {
-        //const disabled = info.row.original.mapImageLinkContent?.length > 0 ? false : true;
-        //const mapLink = info.row.original.mapImageLinkContent;
-        const disabled = !info.row.original.isUsed;
-        const mapLink = 'https://www.naver.com';
+        const disabled = info.row.original.mapImageLinkContent?.length > 0 ? false : true;
+        const mapLink = info.row.original.mapImageLinkContent;
         return (
           <Button
             size={'xs'}

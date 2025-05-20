@@ -335,7 +335,8 @@
         "reCheck": "{{code}}를 다시 확인해 주세요.",
         "duplicated": "이미 사용 중인 {{code}} 입니다.",
         "ok": "사용할 수 있는 {{code}} 입니다.",
-        "check": "{{code}}의 중복 여부를 확인해 주세요."
+        "check": "{{code}}의 중복 여부를 확인해 주세요.",
+        "invalidUrl": "URL 형식에 맞게 입력해 주세요."
       },
       "checkbox": {
         "idSave": "아이디 저장"

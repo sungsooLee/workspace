@@ -82,6 +82,10 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
     setSearchValue(removeReservedWords(value).trim());
   };
 
+  const handleInputEnterKeyDown = () => {
+    handleOnSearch();
+  };
+
   const searchAddress = async (currentPage: number, keyword: string) => {
     const formData = new FormData();
     formData.append('currentPage', currentPage.toString());
@@ -148,6 +152,7 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
                     placeholder={t('LABEL.modal.addressSearch.placeholder')}
                     value={searchValue}
                     onChange={handleInputChange}
+                    onEnterKeyDown={handleInputEnterKeyDown}
                   />
                   <Button variant="primary" size="lg" onClick={handleOnSearch}>
                     {t('LABEL.button.retrieve')}
