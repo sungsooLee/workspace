@@ -5,9 +5,15 @@
   @apply relative flex justify-center;
   .select_area {
     @apply min-w-[82px];
+    &:empty {
+      @apply !hidden;
+    }
   }
   .page_num {
     @apply mx-auto flex h-[32px] items-center;
+    button:disabled svg {
+      @apply fill-[#D6DAE1];
+    }
   }
   .btn_number {
     @apply inline-flex h-[32px] w-auto min-w-[32px] items-center justify-center rounded-[50%] px-[5px];
@@ -26,6 +32,9 @@
   }
   .count_wrap {
     @apply body_bo_2_r inline-flex h-[32px] items-center text-[#747d91];
+    &:empty {
+      @apply !hidden;
+    }
   }
 }
 [class*='grid'],
