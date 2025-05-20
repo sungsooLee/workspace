@@ -86,6 +86,8 @@ const PopoverContent = () => {
     setNotifications(notifications.map((notif) => ({ ...notif, isRead: true })));
   };
 
+  const allRead = notifications.length > 0 && notifications.every((notif) => notif.isRead);
+
   const handleDeleteAll = () => {
     setNotifications([]);
   };
@@ -98,7 +100,7 @@ const PopoverContent = () => {
           {/* 알림 없는 경우 미노출 */}
           {notifications.length !== 0 && (
             <div className={styles.btn_wrap}>
-              <Button className={styles.btn} onClick={handleAllRead}>
+              <Button className={styles.btn} onClick={handleAllRead} disabled={allRead}>
                 전체읽음
               </Button>
               <Button className={styles.btn} onClick={handleDeleteAll}>

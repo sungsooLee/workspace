@@ -48,6 +48,7 @@ function RouteComponent() {
         { label: 'Badge', path: '/guide/badge' },
         { label: 'Spinner', path: '/guide/spinner' },
         { label: 'OptionCard', path: '/guide/optionCard' },
+        { label: 'NoticeBox', path: '/guide/notice-box' },
         { label: 'Panel', path: '/guide/panel' },
         { label: 'PhoneNumber', path: '/guide/phone-number' },
         { label: 'InputTimer', path: '/guide/input-timer' },

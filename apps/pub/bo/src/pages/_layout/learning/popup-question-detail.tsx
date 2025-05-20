@@ -13,10 +13,13 @@ import {
   Textarea,
   Switch,
   Input,
+  TableBox,
+  Checkbox,
 } from '@learnway/ui';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { cn } from '@learnway/shared';
 import { FormSubTitle } from '../../../../../../bo/src/shared/ui/form';
-import { IcoFormRequired } from '@learnway/icons';
+import { IcoFormRequired, IcoMenu01 } from '@learnway/icons';
 
 /* style */
 import uploadStyles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
@@ -24,6 +27,7 @@ import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-content
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import styles from './popup-question-detail.module.css';
 
 export const Route = createFileRoute('/_layout/learning/popup-question-detail')({
   component: RouteComponent,
@@ -38,11 +42,213 @@ function RouteComponent() {
     const handleCheckedChange = (id: number) => (checked: boolean) => {
       setChecked((prev) => ({ ...prev, [id]: checked }));
     };
+    const columnHelper = createColumnHelper<any>();
+
+    // thead : 'value'
+    const data: any[] = [
+      {
+        name: (
+          <Textarea
+            rows={5}
+            cols={5}
+            maxLength={2000}
+            resize={'none'}
+            placeholder={'입력'}
+            size={'sm'}
+          />
+        ),
+        name2: (
+          <div className={uploadStyles.start}>
+            <div className={uploadStyles.upload_single}>
+              <div className={uploadStyles.view_file}>
+                <div className={uploadStyles.attach_area}>
+                  <p className={uploadStyles.text}>버튼을 클릭하여 파일을 추가하세요.</p>
+                </div>
+              </div>
+              <Button className={uploadStyles.btn_attach} size={'sm'} variant={'gray'}>
+                <input type="file" className={uploadStyles.input_file} />
+                {'파일첨부'}
+              </Button>
+            </div>
+          </div>
+        ),
+        name3: <Checkbox size={'md'} label="정답" />,
+        name4: (
+          <Button
+            onlyIcon
+            icon={<IcoMenu01 width={24} height={24} fill="#A9AFB8" stroke="#4c515e" />}
+          />
+        ),
+      },
+      {
+        name: (
+          <Textarea
+            rows={5}
+            cols={5}
+            maxLength={2000}
+            resize={'none'}
+            placeholder={'입력'}
+            size={'sm'}
+          />
+        ),
+        name2: (
+          <div className={uploadStyles.start}>
+            <div className={uploadStyles.upload_single}>
+              <div className={uploadStyles.view_file}>
+                <div className={uploadStyles.attach_area}>
+                  <p className={uploadStyles.text}>버튼을 클릭하여 파일을 추가하세요.</p>
+                </div>
+              </div>
+              <Button className={uploadStyles.btn_attach} size={'sm'} variant={'gray'}>
+                <input type="file" className={uploadStyles.input_file} />
+                {'파일첨부'}
+              </Button>
+            </div>
+          </div>
+        ),
+        name3: <Checkbox size={'md'} label="정답" />,
+        name4: (
+          <Button
+            onlyIcon
+            icon={<IcoMenu01 width={24} height={24} fill="#A9AFB8" stroke="#4c515e" />}
+          />
+        ),
+      },
+    ];
+
+    // Thead 정의
+    const columns = [
+      columnHelper.accessor('name', {
+        header: '보기',
+        cell: (info) => info.getValue(),
+        meta: {
+          headerAlign: 'center', // 헤더 정렬
+          cellAlign: 'center', // 셀 정렬
+        },
+      }),
+      columnHelper.accessor('name2', {
+        header: '첨부파일',
+        cell: (info) => info.getValue(),
+        meta: {
+          headerAlign: 'center', // 헤더 정렬
+          cellAlign: 'center', // 셀 정렬
+        },
+      }),
+      columnHelper.accessor('name3', {
+        header: '정답',
+        cell: (info) => info.getValue(),
+        meta: {
+          headerAlign: 'center', // 헤더 정렬
+          cellAlign: 'center', // 셀 정렬
+        },
+      }),
+      columnHelper.accessor('name4', {
+        header: '순서변경',
+        cell: (info) => info.getValue(),
+        meta: {
+          headerAlign: 'center', // 헤더 정렬
+          cellAlign: 'center', // 셀 정렬
+        },
+      }),
+    ] as ColumnDef<any, unknown>[];
+
+    // thead : 'value'
+    const data2: any[] = [
+      {
+        name: <Input type={'text'} placeholder={'입력'} value={'O'} readOnly />,
+        name2: (
+          <div className={uploadStyles.start}>
+            <div className={uploadStyles.upload_single}>
+              <div className={uploadStyles.view_file}>
+                <div className={uploadStyles.attach_area}>
+                  <p className={uploadStyles.text}>파일을 첨부하세요.</p>
+                </div>
+              </div>
+              <Button className={uploadStyles.btn_attach} size={'sm'} variant={'gray'}>
+                <input type="file" className={uploadStyles.input_file} />
+                {'파일첨부'}
+              </Button>
+            </div>
+          </div>
+        ),
+        name3: <Checkbox size={'md'} label="정답" />,
+      },
+      {
+        name: <Input type={'text'} placeholder={'입력'} value={'X'} readOnly />,
+        name2: (
+          <div className={uploadStyles.start}>
+            <div className={uploadStyles.upload_single}>
+              <div className={uploadStyles.view_file}>
+                <div className={uploadStyles.attach_area}>
+                  <p className={uploadStyles.text}>파일을 첨부하세요.</p>
+                </div>
+              </div>
+              <Button className={uploadStyles.btn_attach} size={'sm'} variant={'gray'}>
+                <input type="file" className={uploadStyles.input_file} />
+                {'파일첨부'}
+              </Button>
+            </div>
+          </div>
+        ),
+        name3: <Checkbox size={'md'} label="정답" />,
+      },
+    ];
+
+    // Thead 정의
+    const columns2 = [
+      columnHelper.accessor('name', {
+        header: '보기',
+        cell: (info) => info.getValue(),
+        meta: {
+          headerAlign: 'center', // 헤더 정렬
+          cellAlign: 'center', // 셀 정렬
+        },
+      }),
+      columnHelper.accessor('name2', {
+        header: '첨부파일',
+        cell: (info) => info.getValue(),
+        meta: {
+          headerAlign: 'center', // 헤더 정렬
+          cellAlign: 'center', // 셀 정렬
+        },
+      }),
+      columnHelper.accessor('name3', {
+        header: '정답',
+        cell: (info) => info.getValue(),
+        meta: {
+          headerAlign: 'center', // 헤더 정렬
+          cellAlign: 'center', // 셀 정렬
+        },
+      }),
+    ] as ColumnDef<any, unknown>[];
+
+    // thead : 'value'
+    const data3: any[] = [
+      {
+        name: <Input type={'text'} placeholder={'입력'} value={'O'} readOnly />,
+      },
+      {
+        name: <Input type={'text'} placeholder={'입력'} value={'X'} readOnly />,
+      },
+    ];
+
+    // Thead 정의
+    const columns3 = [
+      columnHelper.accessor('name', {
+        header: '보기',
+        cell: (info) => info.getValue(),
+        meta: {
+          headerAlign: 'center', // 헤더 정렬
+          cellAlign: 'center', // 셀 정렬
+        },
+      }),
+    ] as ColumnDef<any, unknown>[];
+
     return (
       <ModalContainer>
         <ModalTitle>{'문항추가'}</ModalTitle>
         <ModalBody>
-          <div className={popupStyles.wrap}>
+          <div className={cn(popupStyles.wrap, styles.start)}>
             <FormSubTitle label={'기본정보'} />
             <div className={cn(tableStyles.start, tableStyles.wrap)}>
               <table>
@@ -234,6 +440,38 @@ function RouteComponent() {
                 </div>
               </div>
             )}
+            <TableBox
+              data={data}
+              columns={columns}
+              tableMode={true}
+              showAdd={true}
+              multiple={true}
+              showNumberingColumn={true}
+              showSelectAll={true}
+              title={'보기목록'}
+              guideText={'보기의 첨부파일은 최대1개, 이미지파일만 가능합니다.'}
+              className={styles.detail_table}
+            />
+            <TableBox
+              data={data2}
+              columns={columns2}
+              tableMode={true}
+              multiple={true}
+              showNumberingColumn={true}
+              showSelectAll={true}
+              title={'보기목록'}
+              guideText={'보기의 첨부파일은 최대1개, 이미지파일만 가능합니다.'}
+              className={styles.detail_table02}
+            />
+            <TableBox
+              data={data3}
+              columns={columns3}
+              tableMode={true}
+              showNumberingColumn={true}
+              showSelectAll={true}
+              title={'보기목록'}
+              className={styles.detail_table03}
+            />
           </div>
         </ModalBody>
         <ModalFooter>
@@ -248,7 +486,7 @@ function RouteComponent() {
   useEffect(() => {
     if (!hasRun.current) {
       openModal({
-        width: 'lg', // sm(600px), md(800px), lg(1024px), xl(1400px)
+        width: 'xl', // sm(600px), md(800px), lg(1024px), xl(1400px)
         content: <QuestionAddContent />,
       });
       hasRun.current = true;
