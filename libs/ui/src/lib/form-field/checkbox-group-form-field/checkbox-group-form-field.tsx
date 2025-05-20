@@ -3,7 +3,7 @@ import { Checkbox, CheckboxComponentProps } from '../../checkbox/checkbox';
 import { cn } from '@learnway/shared';
 import styles from './checkbox-group-form-field.module.css';
 import { BaseFormFieldProps, OptionsConfig, SelectOption, useFormOptions } from '@learnway/hooks';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 export interface CheckboxGroupFormFieldProps extends BaseFormFieldProps<string[]> {
   /** 한 줄에 표시할 체크박스 수 */
@@ -32,6 +32,7 @@ const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, CheckboxGroup
     ref,
   ) => {
     /** 전체 체크 상태를 관리하는 state */
+    const { t } = useTranslation();
     const [allCheck, setAllCheck] = useState(false);
     const options = useFormOptions(initOptions, optionsConfig);
     const disabledCheckBox = checkGroupConfig?.disabledCheckBox
