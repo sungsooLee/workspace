@@ -1,7 +1,7 @@
 .start {
   /* breadCrumbs */
   .breadcrumbs {
-    @apply flex min-h-[40px] items-center border-b-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] pl-[24px];
+    @apply flex min-h-[40px] items-center border-b-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] pl-[40px];
     li {
       &:nth-child(1) {
         svg {
