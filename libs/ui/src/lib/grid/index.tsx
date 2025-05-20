@@ -81,6 +81,7 @@ const GridComponent = forwardRef(
       autoSelectFirstRow,
       clientSideFiltering,
       clientSideSorting,
+      onTableInstanceChange,
     }: GridProps<T>,
     ref: any,
   ) => {
@@ -121,10 +122,11 @@ const GridComponent = forwardRef(
      */
     useImperativeHandle(ref, () => ({
       selectAllRows: () => {
-        table.getToggleAllPageRowsSelectedHandler();
+        table.toggleAllRowsSelected(true);
+        // table.getToggleAllPageRowsSelectedHandler();
       },
       removeAllRows: () => {
-        onChange?.([]);
+        table.toggleAllRowsSelected(false);
       },
       resetRowSelection: () => {
         setRowSelection({});
@@ -148,6 +150,9 @@ const GridComponent = forwardRef(
           .getSelectedRowModel()
           .rows.find(({ original }: any) => original?.[idField] === idValue);
         selectedRow?.toggleSelected();
+      },
+      toggleAllRowsSelected: (selected: boolean) => {
+        table.toggleAllRowsSelected(selected);
       },
     }));
 
@@ -439,6 +444,15 @@ const GridComponent = forwardRef(
         setRowSelection({ [firstRowId]: true });
       }
     }, [data, table, autoSelectFirstRow]);
+
+    // useReactTable 훅으로 생성된 table 인스턴스를 상위 컴포넌트로 전달
+    useEffect(() => {
+      if (onTableInstanceChange) {
+        onTableInstanceChange(table);
+      }
+      // table 인스턴스는 컴포넌트 생명주기 동안 변경되지 않으므로 의존성 배열에 포함하지 않아도 됩니다.
+      // 하지만 ESLint 규칙에 따라 포함해야 할 수도 있습니다. 필요에 따라 조정하세요.
+    }, [table, onTableInstanceChange]); // table과 콜백 함수를 의존성 배열에 추가
 
     // 컬럼 팝업에서 컬럼에 대한 항목 설정
     const handleColumnSettingsChange = (settings: ColumnSetting[]) => {
