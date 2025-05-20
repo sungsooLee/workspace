@@ -121,13 +121,6 @@ const GridComponent = forwardRef(
      * 부모 컴포넌트에서 grid 특정 기능 수행시 필요
      */
     useImperativeHandle(ref, () => ({
-      selectAllRows: () => {
-        table.toggleAllRowsSelected(true);
-        // table.getToggleAllPageRowsSelectedHandler();
-      },
-      removeAllRows: () => {
-        table.toggleAllRowsSelected(false);
-      },
       resetRowSelection: () => {
         setRowSelection({});
       },

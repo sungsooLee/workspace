@@ -84,8 +84,8 @@ const ShuttleGridToGridComponent = (
 
   useImperativeHandle(ref, () => ({
     resetSelection: () => {
-      leftGridRef.current?.resetRowSelection();
-      setRightGridData([]);
+      // 좌측 그리드 전체 행 선택 해제, 로직 실행하면 handleLeftGridRowsSelect 실행됨
+      leftTableInstance?.setRowSelection({});
     },
   }));
 
@@ -120,7 +120,6 @@ const ShuttleGridToGridComponent = (
             size={'xs'}
             onClick={() => {
               row.toggleSelected();
-              // handleLeftRowSelect(row.original);
             }}
           />
         </div>
@@ -149,7 +148,6 @@ const ShuttleGridToGridComponent = (
             variant={'gray2'}
             size={'xs'}
             onClick={() => {
-              // row.toggleSelected();
               handleRightGridRowSelect(row.original);
             }}
           />
@@ -165,7 +163,6 @@ const ShuttleGridToGridComponent = (
    * @param selectedRows - 선택된 (또는 선택 해제된) 행의 원본 데이터
    */
   const handleLeftGridRowsSelect = (selectedRows: any) => {
-    console.log('handleLeftGridRowsSelect', selectedRows);
     setRightGridData(selectedRows);
   };
 
@@ -174,10 +171,8 @@ const ShuttleGridToGridComponent = (
    * 우측 그리드의 모든 데이터를 비웁니다.
    */
   const handleRightGridRemoveAll = () => {
-    // 좌측 그리드 선택 전체 해제
-    leftTableInstance?.toggleAllRowsSelected(false);
-    // 우측 그리드 데이터 설정
-    setRightGridData([]); // 우측 그리드 데이터 비우기
+    // 좌측 그리드 전체 행 선택 해제, 로직 실행하면 handleLeftGridRowsSelect 실행됨
+    leftTableInstance?.setRowSelection({});
   };
 
   /**
@@ -186,13 +181,11 @@ const ShuttleGridToGridComponent = (
    * @param selectedRow - 선택된 (또는 선택 해제된) 행의 원본 데이터
    */
   const handleRightGridRowSelect = (selectedRow: any) => {
-    console.log('handleRightGridRowsSelect', selectedRow);
     // 우측 그리드에서 선택한 행과 같은 내용을 좌측 그리드에서 찾는다.
     const findRow = leftTableInstance
       ?.getRowModel()
       ?.rows?.find((row) => row?.original?.[rowKey] === selectedRow?.[rowKey]);
-    console.log('handleRightGridRowsSelect.findRow', findRow);
-    // 찾은 좌측 그리드 행을 토글 해제
+    // 찾은 좌측 그리드 행 토글 해제, 로직 실행하면 handleLeftGridRowsSelect 실행됨
     findRow?.toggleSelected(false);
   };
 
