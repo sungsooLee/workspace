@@ -132,7 +132,7 @@ const GridBoxComponent = <T extends object>(
       // callback
       onRemoveAllClick?.();
     },
-    [tableInstance], // 의존성 배열: gridFetch와 page 객체 참조
+    [tableInstance, onRemoveAllClick], // 의존성 배열: gridFetch와 page 객체 참조
   );
 
   /**

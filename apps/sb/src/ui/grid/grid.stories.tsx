@@ -1063,17 +1063,8 @@ TemplateTable.storyName = '테이블 모드';
 
 // 타이틀 영역
 export const TemplateTitleArea: any = (args: any) => {
-  const [tableInstance, setTableInstance] = useState<Table<any>>(); // GridComponent로부터 받을 table 인스턴스를 저장할 상태
-
-  const data = Array(10)
-    .fill(null)
-    .map((_, i) => ({
-      id: getRandomId(),
-      name: `name_${i}`,
-      name2: `name2_${i}`,
-      name3: `name3_${i}`,
-      name4: `name4_${i}`,
-    }));
+  const [tableInstance, setTableInstance] = useState<Table<any>>(); // Grid 로부터 받을 table 인스턴스를 저장할 상태
+  const [data, setData] = useState<any[]>(dummyData());
   const columns = [
     { accessorKey: 'name', size: 300 },
     { accessorKey: 'name2', size: 300 },
@@ -1082,7 +1073,7 @@ export const TemplateTitleArea: any = (args: any) => {
   ];
   const handlerUserRowSelect = () => {
     if (tableInstance) {
-      const targets = data.filter((_, i) => i < 5); // 5번째 항목까지
+      const targets = data.filter((_, i) => i < 2); // 2번째 항목까지
       const newSelection = getRowSelectionByList(tableInstance, targets, 'id');
       tableInstance.setRowSelection(newSelection);
     }
@@ -1108,15 +1099,26 @@ export const TemplateTitleArea: any = (args: any) => {
       showSelectAll
       showRemoveAll
       customButtonNode={
-        <Button
-          variant="outline"
-          size="sm"
-          label={'특정 행 선택'}
-          icon={<IcoSetting width={16} height={16} stroke="#131C30" />}
-          className="btn_setting"
-          onClick={handlerUserRowSelect}
-        />
+        <>
+          <Button
+            variant="outline"
+            size="sm"
+            label={'초기화'}
+            icon={<IcoSetting width={16} height={16} stroke="#131C30" />}
+            className="btn_setting"
+            onClick={() => setData(dummyData())}
+          />
+          <Button
+            variant="outline"
+            size="sm"
+            label={'특정 행 선택'}
+            icon={<IcoSetting width={16} height={16} stroke="#131C30" />}
+            className="btn_setting"
+            onClick={handlerUserRowSelect}
+          />
+        </>
       }
+      onRemoveAllClick={() => setData([])}
       onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
     />
   );
@@ -1186,3 +1188,14 @@ export const TemplateColumnType: any = (args: any) => {
   );
 };
 TemplateColumnType.storyName = '컬럼 유형';
+
+const dummyData = (size = 10) =>
+  Array(size)
+    .fill(null)
+    .map((_, i) => ({
+      id: getRandomId(),
+      name: `name_${i}`,
+      name2: `name2_${i}`,
+      name3: `name3_${i}`,
+      name4: `name4_${i}`,
+    }));
