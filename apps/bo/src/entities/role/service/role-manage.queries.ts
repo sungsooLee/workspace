@@ -1,5 +1,6 @@
 import { Role } from '../../../types/entities/role';
 import RoleManagerService from '../api/role-manager';
+import TenantMenuManageService from '@entities/tenant/api/menu-tenant-manage';
 
 export const roleQueryKeys = {
   all: ['role-manager-all'] as const,
@@ -7,6 +8,19 @@ export const roleQueryKeys = {
   menus: ['menus'] as const,
   apis: ['apis'] as const,
   tree: ['tree'] as const,
+};
+
+const genRoleMenuTree = (menus: any[], roleMenu: any, contains: any[] = []) => {
+  for (const menu of menus) {
+    if (roleMenu.get(menu.menuId)) {
+      contains.push(menu);
+      if (menu.children && menu.children.length > 0) {
+        const children = genRoleMenuTree(menu.children, roleMenu);
+        menu.children = children;
+      }
+    }
+  }
+  return contains;
 };
 
 export const roleManagerQueryOptions = {
@@ -23,17 +37,28 @@ export const roleManagerQueryOptions = {
     enabled: !!roleCode,
   }),
 
-  // 모든 메뉴 목록 트리 조회
-  allMenus: () => ({
-    queryKey: [...roleQueryKeys.all, ...roleQueryKeys.menus],
-    queryFn: async () => RoleManagerService.fetchMenus(),
-  }),
-
   // 역할에 할당된 메뉴 목록 조회
-  getRoleMenus: (roleId: string) => ({
-    queryKey: [...roleQueryKeys.all, ...roleQueryKeys.roles, roleId, ...roleQueryKeys.menus],
-    queryFn: async () => RoleManagerService.fetchRoleMenus(roleId),
-    enabled: !!roleId,
+  getRoleMenus: (tenantId: number, siteScope: string, roleCode: string) => ({
+    queryKey: [...roleQueryKeys.all, ...roleQueryKeys.roles, roleCode, ...roleQueryKeys.menus],
+    queryFn: async () => {
+      const menuTreePromise = TenantMenuManageService.findMenuTenantMappingTree(
+        tenantId,
+        siteScope,
+      );
+      const roleMenus = await RoleManagerService.fetchRoleMenus(roleCode);
+      const roleMap = new Map();
+      roleMenus.forEach((item: any) => {
+        roleMap.set(item.menuId, item);
+      });
+
+      const menuData = await menuTreePromise;
+      console.log(menuData);
+      const rootMenu: any = { ...menuData };
+      rootMenu.children = genRoleMenuTree(menuData.children, roleMap);
+
+      return rootMenu;
+    },
+    enabled: !!roleCode,
   }),
 
   // 메뉴에 속한 API 목록 조회
@@ -54,6 +79,18 @@ export const roleManagerQueryOptions = {
     queryKey: [roleQueryKeys.all, roleQueryKeys.tree, tenantId, siteScope],
     queryFn: async () => RoleManagerService.fetchRoleTree(tenantId, siteScope),
   }),
+  // getRoleMenuTree: async (tenantId: number, siteScope: string, roleCode: string) => {
+  //   const menuTree = TenantMenuManageService.findMenuTenantMappingTree(tenantId, siteScope);
+  //   const roleMenus = await RoleManagerService.fetchRoleMenus(roleCode);
+  //   const roleMap = new Map();
+  //   roleMenus.forEach((item: any) => {
+  //     roleMap.set(item.menuId, item);
+  //   });
+
+  //   menuTree.then((data) => {
+  //     const rootMenu = [{ data }];
+  //   });
+  // },
 };
 
 export const roleMutateOptions = {
@@ -74,8 +111,8 @@ export const roleMutateOptions = {
 
   // 역할에 메뉴 할당
   assignMenusToRole: () => ({
-    mutationFn: ({ roleId, menuIds }: { roleId: string; menuIds: string[] }) =>
-      RoleManagerService.assignMenusToRole(roleId, menuIds),
+    mutationFn: ({ roleCode, addMenuIds }: { roleCode: string; addMenuIds: number[] }) =>
+      RoleManagerService.assignMenusToRole(roleCode, addMenuIds),
   }),
 
   // 역할에 API 할당

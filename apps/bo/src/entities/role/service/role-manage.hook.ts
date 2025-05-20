@@ -15,12 +15,11 @@ export function useFetchRole(roleCode: string) {
   return useQuery({ ...queryOptions.getRole(roleCode), enabled: !!roleCode });
 }
 
-export function useFetchMenus() {
-  return useQuery(queryOptions.allMenus());
-}
-
-export function useFetchRoleMenus(roleId: string) {
-  return useQuery({ ...queryOptions.getRoleMenus(roleId), enabled: !!roleId });
+export function useFetchRoleMenus(tenantId: number, siteScope: string, roleCode: string) {
+  return useQuery({
+    ...queryOptions.getRoleMenus(tenantId, siteScope, roleCode),
+    enabled: !!roleCode,
+  });
 }
 
 export function useFetchMenuApis(menuId: string) {
@@ -33,6 +32,26 @@ export function useFetchRoleApis(roleId: string) {
 
 export function useFetchRoleTree(tenantId: number, siteScope: string) {
   return useQuery({ ...queryOptions.getRoleTree(tenantId, siteScope) });
+}
+
+export function useCreateRoleMenu(options: any) {
+  const mutation = useMutation({
+    ...mutateOptions.assignMenusToRole(),
+    onSuccess: async (data, variables, context) => {
+      if (options.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...options,
+  });
+  return {
+    create: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
 }
 
 // 실제 API를 사용하는 훅
@@ -99,7 +118,7 @@ export const useRoleManager = (options: RoleHookOptions = {}) => {
         queryKey: [
           ...roleQueryKeys.all,
           ...roleQueryKeys.roles,
-          variables.roleId,
+          variables.roleCode,
           ...roleQueryKeys.menus,
         ],
       });
@@ -141,8 +160,8 @@ export const useRoleManager = (options: RoleHookOptions = {}) => {
     updateRoleMutate(roleData, callbacks);
   };
 
-  const handleAssignMenus = (roleId: string, menuIds: string[], callbacks?: any) => {
-    assignMenusMutate({ roleId, menuIds }, callbacks);
+  const handleAssignMenus = (roleCode: string, menuIds: number[], callbacks?: any) => {
+    assignMenusMutate({ roleCode, menuIds }, callbacks);
   };
 
   const handleAssignApis = (roleId: string, apiIds: string[], callbacks?: any) => {

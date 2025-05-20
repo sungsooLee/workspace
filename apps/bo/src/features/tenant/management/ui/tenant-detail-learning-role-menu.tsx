@@ -15,17 +15,14 @@ import { t } from 'i18next';
 import { useRouterState } from '@tanstack/react-router';
 
 import { TenantDetailLearningRoleMenuMappingModal } from './tenant-detail-learning-role-menu-mapping-modal';
-import {
-  useFetchRole,
-  useFetchRoleTree,
-  useRoleManager,
-} from '@entities/role/service/role-manage.hook';
+import { useFetchRoleTree, useFetchRoleMenus } from '@entities/role/service/role-manage.hook';
 
 import {
   getAllTreeKeys,
   getFirstExpandKeys,
   moveNodeCheck,
   transformRoleApiDataToTreeData,
+  transformMenuApiDataToTreeData,
 } from '../service/tenant-detail-tree.service';
 import { EnFormMode, EnTenantScope, EnCompanyScope, EnChannelScope, EnDeptScope } from '@types';
 
@@ -53,9 +50,11 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
   const [roleTree, setRoleTree] = useState<any>(null);
   const [roleTreeExpandedKeys, setRoleTreeExpandedKeys] = useState<string[]>([]);
   const [selectedRole, setSelectedRole] = useState<any>(null);
-  const [selectedMenu, setSelectedMenu] = useState<any>(null);
-  const [menuSelectionType, setMenuSelectionType] = useState<'all' | 'custom'>('all');
   const [roleMenuTree, setRoleMenuTree] = useState<TreeNode[]>([]);
+  const [roleMenuTreeExpandedKeys, setRoleMenuTreeExpandedKeys] = useState<string[]>([]);
+  const [selectedRoleMenu, setSelectedRoleMenu] = useState<any>(null);
+
+  const [menuSelectionType, setMenuSelectionType] = useState<'all' | 'custom'>('all');
   const [apiGridData, setApiGridData] = useState<any[]>([]);
   const [apiUsageState, setApiUsageState] = useState<{ [apiId: string]: boolean }>({});
   const [isDataModified, setIsDataModified] = useState<boolean>(false);
@@ -66,7 +65,11 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
   const { open: openModal, confirm: openConfirm } = useModal();
 
   const { data: roleData } = useFetchRoleTree(tenantId, siteScope);
-
+  const { data: roleMenuData } = useFetchRoleMenus(
+    tenantId,
+    siteScope,
+    selectedRole?.roleCode || '',
+  );
   useImperativeHandle(ref, () => ({
     showAlertModify: () => {
       console.log('menu ' + siteScope);
@@ -95,24 +98,24 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
 
   const handleRoleSelect = (node: TreeNode) => {
     setSelectedRole(node);
-    setSelectedMenu(null);
+    setSelectedRoleMenu(null);
     setIsDataModified(false);
   };
 
   const handleMenuSelect = (menuId: string) => {
-    setSelectedMenu(menuId);
+    setSelectedRoleMenu(menuId);
   };
 
   const handleRoleMenuMapping = async () => {
     const modalScope = siteScope;
     const modalTenantId = tenantId;
-    const modalRoleId = selectedRole.roleId;
+    const modalRoleCode = selectedRole.roleCode;
     await openModal({
       content: (
         <TenantDetailLearningRoleMenuMappingModal
           siteScope={modalScope}
           tenantId={modalTenantId}
-          roleId={modalRoleId}
+          roleCode={modalRoleCode}
         />
       ),
       width: 'xl',
@@ -177,12 +180,25 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
       }
     }
   }, [roleData]);
+
+  useEffect(() => {
+    if (roleMenuData) {
+      console.log('roleMenuData', roleMenuData);
+      const transformedData = transformMenuApiDataToTreeData(roleMenuData);
+      setRoleMenuTree(transformedData);
+      if (transformedData && transformedData.length > 0 && roleMenuTreeExpandedKeys.length === 0) {
+        const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
+        setRoleMenuTreeExpandedKeys(firstLevelKeys);
+      }
+    }
+  }, [roleMenuData]);
+
   // 상태 변경 시 API 그리드 데이터 업데이트
   useEffect(() => {
     if (selectedRole) {
       setApiGridData([]);
     }
-  }, [selectedRole, selectedMenu, menuSelectionType, apiUsageState]);
+  }, [selectedRole, selectedRoleMenu, menuSelectionType, apiUsageState]);
   console.log('1234', roleInfo);
   const renderMenuButtons = (onChange: any, menuSelectionType: any) => {
     if (roleInfo)
