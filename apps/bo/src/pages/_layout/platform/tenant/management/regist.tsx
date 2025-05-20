@@ -418,7 +418,7 @@ const formConfig: DynamicFormConfig = {
     },
     // managerName: { required: true },
     tenantBillingTag: { required: true },
-    // company: { required: true },
+    companyTenantList: { required: true },
     isUsed: { required: true },
     device: {
       required: {
