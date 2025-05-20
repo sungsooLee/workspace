@@ -6,15 +6,21 @@ import UsersService from '../api/users';
 
 export const queryKeys = {
   all: ['users'] as const,
+  list: ['list'] as const,
   detail: (userId: number) => [...queryKeys.all, userId] as const,
 };
 
 export const usersQueryOptions = {
   all: (params: any) => ({
     queryKey: queryKeys.all,
-    queryFn: () => UsersService.fetchAllUsers(params),
+    queryFn: () => UsersService.fetchListUsers(params),
     cacheTime: 0,
     staleTime: 0,
+  }),
+
+  list: (params: any) => ({
+    queryKey: queryKeys.list,
+    queryFn: () => UsersService.fetchListUsers(params),
   }),
   detail: (userId?: number) =>
     userId

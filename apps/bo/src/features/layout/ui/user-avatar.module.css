@@ -9,9 +9,12 @@
         .start {
           @apply h-[66px] w-[66px];
         }
+        [class*='nlp--avatar'] span {
+          @apply title_3_b;
+        }
       }
       .info_avata {
-        @apply m-auto h-[66px] w-[66px];
+        @apply m-auto h-[66px] w-[66px] rounded-full;
       }
       .profile {
         @apply m-auto max-w-[300px] px-[34px];

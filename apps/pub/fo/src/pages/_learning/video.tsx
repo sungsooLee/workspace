@@ -57,9 +57,6 @@ function RouteComponent() {
     <div className={styles.start}>
       {/* 예시 이미지 */}
       <img src={bnrImage1} alt="" />
-      <Button variant="text" onClick={() => handleServerErrorAlert()}>
-        Alert창 열기(아이콘 error)
-      </Button>
     </div>
   );
 }

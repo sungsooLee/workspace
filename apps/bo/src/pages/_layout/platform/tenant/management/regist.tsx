@@ -25,7 +25,12 @@ import {
   DuplicateState,
 } from '@features/tenant/management/ui/duplicate-check-input-form-field';
 import { pageRouteConfig } from '@features/auth';
-import { CompanyChoiceModal, CompanyShuttleModal } from '@features/shared';
+import {
+  CompanyChoiceModal,
+  CompanyShuttleModal,
+  UserChoiceModal,
+  UserShuttleModal,
+} from '@features/shared';
 import TenantService from '@entities/tenant/api/tenant';
 import {
   CODE_GROUP,
@@ -50,12 +55,13 @@ const defaultLangOptions = [
   { value: 'en', label: '영어', disabled: true },
 ];
 
-const duplicateCheck = async (value: string) => {
-  const result: any = await TenantService.fetchAllTenant({ tenantName: value });
+const duplicateCheck = async (tenantName: string) => {
+  const result: boolean = await TenantService.existTenant(tenantName);
 
-  if (result.content && result.content.length > 0) return DuplicateState.duplicated;
+  if (result) return DuplicateState.duplicated;
   else return DuplicateState.ok;
 };
+
 enum EnDeviceType {
   isPc = 'isPc',
   isMobile = 'isMobile',
@@ -70,8 +76,10 @@ enum EnUseCategory {
 function RouteComponent() {
   const router = useRouter();
   const [languageTypeList, setLanguageTypeList] = useState<any[]>(defaultLangOptions);
+  const [clasName, setClassName] = useState('');
   const { open: openModal, confirm: openConfirm } = useModal();
   const { control, provider, onSubmit, onFormChange, formState } = useDynamicForm(formConfig);
+
   const { create } = useCreateTenant({});
   const { getCode } = useCodeStore();
 
@@ -110,26 +118,28 @@ function RouteComponent() {
       create(payload);
     }
   };
-  const init = async () => {
-    const data = await getCode(CODE_GROUP['pms.multilingual.LanguageType']);
-    const newOptions = data
-      .filter((i) => {
-        return i.value !== 'ko' && i.value !== 'en';
-      })
-      .map((item) => {
-        return { label: item.cdContent, value: item.value };
-      });
-    const newValues = [...defaultLangOptions, ...newOptions];
-    if (!isEqual(newValues, languageTypeList)) {
-      setLanguageTypeList([...defaultLangOptions, ...newOptions]);
-    }
-  };
-
-  init();
 
   useEffect(() => {
     console.log('formState', formState.isDirty);
   }, [formState.isDirty]);
+
+  useEffect(() => {
+    const init = async () => {
+      const data = await getCode(CODE_GROUP['pms.multilingual.LanguageType']);
+      const newOptions = data
+        .filter((i) => {
+          return i.value !== 'ko' && i.value !== 'en';
+        })
+        .map((item) => {
+          return { label: item.cdContent, value: item.value };
+        });
+      const newValues = [...defaultLangOptions, ...newOptions];
+      if (!isEqual(newValues, languageTypeList)) {
+        setLanguageTypeList([...defaultLangOptions, ...newOptions]);
+      }
+    };
+    init();
+  }, []);
 
   return (
     <PageContainer>
@@ -155,7 +165,7 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow
               provider={provider}
-              name={'tenantName'}
+              name="tenantName"
               element={<DuplicateCheckInputFormField onDuplicationCheck={duplicateCheck} />}
             />
           </ContentsRow>
@@ -165,7 +175,7 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow
               provider={provider}
-              name={'managerName'}
+              name="managerName"
               element={
                 <ChipListModalSelectorFormField
                   chipList={{
@@ -176,19 +186,19 @@ function RouteComponent() {
                   modalConfig={{
                     title: '',
                     width: 'xl',
-                    content: <HrdUserInquiryModal />,
+                    content: <UserChoiceModal />,
                   }}
                 />
               }
             />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider} name={'tenantBillingTag'} />
+            <FormRow provider={provider} name="tenantBillingTag" />
           </ContentsRow>
           <ContentsRow>
             <FormRow
               provider={provider}
-              name={'company'}
+              name="company"
               element={
                 <ChipListModalSelectorFormField
                   chipList={{
@@ -206,14 +216,14 @@ function RouteComponent() {
             />
           </ContentsRow>
 
-          <ContentsRow type={'horizontal'}>
-            <FormRow provider={provider} name={'isUsed'} />
+          <ContentsRow type="horizontal">
+            <FormRow provider={provider} name="isUsed" />
           </ContentsRow>
           <ContentsRow>
             <FormRow
               provider={provider}
-              name={'tenantDesc'}
-              element={<TextareaFormField resize={'none'} />}
+              name="tenantDesc"
+              element={<TextareaFormField resize="none" />}
             />
           </ContentsRow>
           <div className="title_wrap no_line">
@@ -222,15 +232,20 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow
               provider={provider}
-              name={'device'}
+              name="device"
               element={<CheckboxGroupFormField disabled={true} />}
             />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider} name={'useCategory'} />
+            <FormRow provider={provider} name="useCategory" />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider} name={'tenantMappingLanguageTypeList'} />
+            <FormRow
+              provider={provider}
+              name="tenantMappingLanguageTypeList"
+              className={clasName}
+              element={<CheckboxGroupFormField options={languageTypeList} />}
+            />
           </ContentsRow>
         </form>
       </MainContents>
@@ -337,14 +352,6 @@ const formConfig: DynamicFormConfig = {
         '테넌트에서 사용할 언어를 선택하고, 선택한 언어에서 다국어 설정을 할 수 있습니다.',
       ),
       value: ['ko', 'en'],
-      options: [
-        { value: 'ko', label: '한국어', disabled: true },
-        { value: 'en', label: '영어', disabled: true },
-      ],
-      optionsConfig: {
-        type: 'self',
-        codeGroup: CODE_GROUP['pms.multilingual.LanguageType'],
-      },
       showSelectAll: true,
       cols: 6,
     },
@@ -369,31 +376,31 @@ const formConfig: DynamicFormConfig = {
     },
   ],
   validator: {
-    // tenantName: {
-    //   format: 'object',
-    //   required: true,
-    //   conditions: [
-    //     {
-    //       fn: (values) => {
-    //         const fieldValue = values.tenantName.fieldValue;
-    //         if (fieldValue === '') return true;
-    //         return false;
-    //       },
-    //       message: t('LABEL.form.validation.needInput', { code: t('테넌트명') }),
-    //     },
-    //     {
-    //       fn: (values: Record<string, any>) =>
-    //         values.tenantName.checkState === DuplicateState.check ||
-    //         values.tenantName.checkState === DuplicateState.needInput,
-    //       message: t('LABEL.form.validation.check', { code: t('테넌트명') }),
-    //     },
-    //     {
-    //       fn: (values: Record<string, any>) =>
-    //         values.tenantName.checkState === DuplicateState.duplicated,
-    //       message: t('LABEL.form.validation.duplicated', { code: t('테넌트명') }),
-    //     },
-    //   ],
-    // },
+    tenantName: {
+      format: 'object',
+      required: true,
+      conditions: [
+        {
+          fn: (values) => {
+            const fieldValue = values.tenantName.fieldValue;
+            if (fieldValue === '') return true;
+            return false;
+          },
+          message: t('LABEL.form.validation.needInput', { code: t('테넌트명') }),
+        },
+        {
+          fn: (values: Record<string, any>) =>
+            values.tenantName.checkState === DuplicateState.check ||
+            values.tenantName.checkState === DuplicateState.needInput,
+          message: t('LABEL.form.validation.check', { code: t('테넌트명') }),
+        },
+        {
+          fn: (values: Record<string, any>) =>
+            values.tenantName.checkState === DuplicateState.duplicated,
+          message: t('LABEL.form.validation.duplicated', { code: t('테넌트명') }),
+        },
+      ],
+    },
 
     logoImageUrl: {
       required: true,
