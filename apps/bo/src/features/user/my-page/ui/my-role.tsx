@@ -13,8 +13,9 @@ const MyRoleComponent = () => {
 
   const [pagination, setPagination] = useState({
     pageSize: 10,
-    pageIndex: 0,
+    pageNumber: 0,
     totalRows: 20,
+    totalPages: 10,
   });
 
   const [selectedRow, setSelectedRow] = useState<any | null>(null);

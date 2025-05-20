@@ -2,13 +2,22 @@ import { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { t } from 'i18next';
 
-import { SearchBoxConfig, useCurrentRoute, useSearchBox } from '@/libs/hooks/src';
+import {
+  DynamicFormConfig,
+  SearchBoxConfig,
+  useCurrentRoute,
+  useDynamicForm,
+  useSearchBox,
+} from '@/libs/hooks/src';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { pageRouteConfig } from '@features/auth';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
-import { Button, GridBox, useGridBox } from '@/libs/ui/src';
+import { Button, ContentsRow, GridBox, useGridBox } from '@/libs/ui/src';
 import { SearchBox } from '@shared/ui/search-box';
+import { ContentsHistoryInfoFormField, FormRow, FormSubTitle } from '@shared/ui';
+import { cn } from '@learnway/shared';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 
 export const Route = createFileRoute('/_layout/my-page/role/detail')({
   component: RouteComponent,
@@ -19,18 +28,20 @@ function RouteComponent() {
   const { state } = useCurrentRoute(Route);
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
-
+  const { provider, fetchData, onSubmit, onFormChange, clearFormError, control } =
+    useDynamicForm(formConfig);
   const [pagination, setPagination] = useState({
     pageSize: 10,
-    pageIndex: 0,
+    pageNumber: 0,
     totalRows: 20,
+    totalPages: 10,
   });
   const [selectedRow, setSelectedRow] = useState<any | null>(null);
   /**
    * @param data
    */
   const handleOnSearch = (data: any) => {
-    console.log(data);
+    console.log('handleOnSearch:: ', data);
   };
 
   console.log(' PAGE STATE :', state);
@@ -64,8 +75,65 @@ function RouteComponent() {
             },
           }}
         />
-        <form>
-          <div>폼</div>
+        <form style={{ marginTop: 20 }}>
+          <FormSubTitle label={t('역할 정보')} />
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name={'roleId'}
+              // element={<DateRangePickerFormField />}
+            />
+            <FormRow
+              provider={provider}
+              name={'roleCd'}
+              // element={<DateRangePickerFormField />}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name={'roleName'}
+              // element={<DateRangePickerFormField />}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name={'roleDescription'}
+              // element={<DateRangePickerFormField />}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name={'tenant'}
+              // element={<DateRangePickerFormField />}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name={'channel'}
+              // element={<DateRangePickerFormField />}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name={'company'}
+              // element={<DateRangePickerFormField />}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name={'team'}
+              // element={<DateRangePickerFormField />}
+            />
+          </ContentsRow>
+          <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
+            <ContentsHistoryInfoFormField />
+          </ContentsRow>
         </form>
       </MainContents>
     </PageContainer>
@@ -76,22 +144,18 @@ const searchConfig: SearchBoxConfig = {
   builders: [
     [
       {
-        name: 'tenant',
+        name: 'requestStatus',
         type: 'dropdown',
         label: t('신청상태'),
         value: '',
         options: [
           { value: '', label: t('전체') },
-          { value: 'tenantA', label: t('테넌트A') },
-          { value: 'tenantB', label: t('테넌트B') },
-          { value: 'tenantC', label: t('테넌트C') },
-          { value: 'tenantD', label: t('테넌트D') },
-          { value: 'tenantE', label: t('테넌트E') },
-          { value: 'tenantF', label: t('테넌트F') },
+          { value: '승인', label: t('승인') },
+          { value: '반려', label: t('반려') },
         ],
       },
       {
-        name: 'channel',
+        name: 'requestDate',
         type: 'date-range',
         label: t('신청일'),
         value: {
@@ -142,4 +206,70 @@ const gridConfig = {
       approveUser: '김현대',
     },
   ],
+};
+
+const formConfig: DynamicFormConfig = {
+  builders: [
+    {
+      name: 'roleId',
+      type: 'text',
+      label: t('역할ID'),
+      value: '',
+      disabled: true,
+    },
+    {
+      name: 'roleCd',
+      type: 'text',
+      label: t('역할코드'),
+      value: '',
+      disabled: true,
+    },
+    {
+      name: 'roleName',
+      type: 'text',
+      label: t('역할명'),
+      value: '',
+      disabled: true,
+    },
+    {
+      name: 'roleDescription',
+      type: 'textarea',
+      label: t('역할명'),
+      value: '설명입니다',
+      disabled: true,
+    },
+    {
+      name: 'tenant',
+      type: 'text',
+      label: t('테넌트 적용 범위'),
+      value: '',
+      disabled: true,
+    },
+    {
+      name: 'channel',
+      type: 'text',
+      label: t('채널 적용 범위'),
+      value: '',
+    },
+    {
+      name: 'company',
+      type: 'text',
+      label: t('회사 적용 범위'),
+      value: '',
+    },
+    {
+      name: 'team',
+      type: 'text',
+      label: t('팀 적용 범위'),
+      value: '',
+    },
+  ],
+  // validator: {
+  //   approveRolePeriod: {
+  //     required: true,
+  //   },
+  //   reson: {
+  //     required: true,
+  //   },
+  // },
 };
