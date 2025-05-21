@@ -6,11 +6,6 @@ import {
 } from './role-manage.queries';
 import { useModal } from '@learnway/ui';
 
-// 실제 API 데이터를 가져오는 훅
-export function useFetchRoles(tenantId: number, siteScope: string) {
-  return useQuery(queryOptions.allRoles(tenantId, siteScope));
-}
-
 export function useFetchRole(roleCode: string) {
   return useQuery({ ...queryOptions.getRole(roleCode), enabled: !!roleCode });
 }
@@ -27,10 +22,6 @@ export function useFetchMenuApis(roleCode: string, menuId: string) {
     ...queryOptions.getMenuApis(roleCode, menuId),
     enabled: !!roleCode && !!menuId,
   });
-}
-
-export function useFetchRoleApis(roleId: string) {
-  return useQuery({ ...queryOptions.getRoleApis(roleId), enabled: !!roleId });
 }
 
 export function useFetchRoleTree(tenantId: number, siteScope: string) {
