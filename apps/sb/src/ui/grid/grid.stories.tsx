@@ -930,7 +930,7 @@ export const TemplateGroupColumn: any = (args: any) => {
         { accessorKey: 'name', header: 'Group A-2' },
       ],
     },
-    { accessorKey: 'name', header: 'Column A' },
+    { accessorKey: 'name', header: 'Column A', meta: { verticalAlign: 'middle' } },
     {
       accessorKey: 'name',
       header: 'Group B',
