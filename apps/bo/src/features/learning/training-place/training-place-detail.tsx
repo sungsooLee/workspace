@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { t } from 'i18next';
 import { useRouter } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
@@ -9,12 +9,12 @@ import { ContentsHistoryInfoFormField, FormSubTitle } from '@shared/ui';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import fileUploadStyles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
-import { ChipListModalSelectorFormField, Textarea, TextareaFormField } from '@learnway/ui';
-import { AddressSearchModal } from '@features/shared';
+import { ChipListModalSelectorFormField, Textarea } from '@learnway/ui';
+import { AddressSearchModal, TenantChoiceModal } from '@features/shared';
 
-import { Button, ContentsRow, useModal, DynamicFormField, Input } from '@learnway/ui';
+import { Button, ContentsRow, useModal, Input } from '@learnway/ui';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
+import { useDynamicForm, DynamicFormConfig, CODE_GROUP } from '@learnway/hooks';
 import { FormRow } from '@shared/ui';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
@@ -23,6 +23,7 @@ import {
   useCreateTrainingPlace,
   useFetchTrainingPlace,
   useUpdateTrainingPlace,
+  useDeleteTrainingPlace,
 } from '@entities/training-place/service/training-place.hook';
 
 const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
@@ -33,22 +34,18 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
 
   const { create: createTraningPlace } = useCreateTrainingPlace({});
   const { update: updateTrainingPlace } = useUpdateTrainingPlace({});
+  const { delete: deleteTrainingPlace } = useDeleteTrainingPlace({});
 
   const { data, refetch } = useFetchTrainingPlace(placeUUID);
+  const [pageMode, setPageMode] = useState(mode);
 
   useEffect(() => {
-    if (mode === 'add') {
-      // TODO. 테넌트 조회 적용 이전
+    if (pageMode === 'add') {
       const initialData = {
         educationPlaceType: '',
         educationPlaceCode: '',
         educationPlaceName: '',
-        tenantList: [
-          {
-            name: '현대제철',
-            value: 1,
-          },
-        ],
+        tenantList: [],
         linkAddress: '',
         educationPlaceRemarkContent: '',
         isReservationUsed: 'Y',
@@ -58,12 +55,15 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
         addressDetail: '',
       };
       fetchData(initialData);
-    } else if (mode === 'view' && data) {
+    } else if (pageMode === 'view' && data) {
       const initialData = {
         educationPlaceType: data.educationPlaceTypecd,
         educationPlaceCode: data.educationPlaceCode,
         educationPlaceName: data.educationPlaceCodeName,
-        tenantList: data.tenantList.map((d: any) => ({ name: d.tenantName, value: d.tenantId })),
+        tenantList: data.tenantList.map((d: any) => ({
+          tenantName: d.tenantName,
+          tenantId: d.tenantId,
+        })),
         linkAddress: data.mapImageLinkContent,
         educationPlaceRemarkContent: data.educationPlaceRemarkContent,
         isReservationUsed: data.isReservationUsed ? 'Y' : 'N',
@@ -74,7 +74,7 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
       };
       fetchData(initialData);
     }
-  }, [data]);
+  }, [data, pageMode]);
 
   const handleListButtonClick = () => {
     router.navigate({ to: '/learning/training-place' });
@@ -82,6 +82,24 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
 
   const handleResetButtonClick = () => {
     onFormChange();
+  };
+
+  const handleDeleteButtonClick = () => {
+    if (pageMode === 'view') {
+      openConfirm({
+        title: t('LABEL.confirm.delete.title'),
+        content: <p>{t('삭제버튼을 누르면 선택하신 항목이 모두 저장되며, 복구할 수 없습니다.')}</p>,
+        onClose: (value: boolean) => {
+          if (value) {
+            deleteTrainingPlace(placeUUID, {
+              onSuccess: (data: any) => {
+                router.navigate({ to: '/learning/training-place' });
+              },
+            });
+          }
+        },
+      });
+    }
   };
 
   const handleAddressSearchResult = (address: any) => {
@@ -105,7 +123,7 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
             educationPlaceTypecd: node.educationPlaceType,
             educationPlaceCode: node.educationPlaceCode,
             educationPlaceCodeName: node.educationPlaceName,
-            tenantList: node.tenantList.map((item: any) => ({ tenantId: item.value })),
+            tenantList: node.tenantList.map((item: any) => ({ tenantId: item.tenantId })),
             mapImageLinkContent: node.linkAddress,
             isReservationUsed: node.isReservationUsed === 'Y' ? true : false,
             zipNo: node.zipNo,
@@ -114,15 +132,15 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
             educationPlaceRemarkContent: node.educationPlaceRemarkContent,
             isUsed: node.isUsed === 'Y' ? true : false,
           };
-          if (mode === 'add') {
+          if (pageMode === 'add') {
             createTraningPlace(payload, {
               onSuccess: (data: any) => {
                 placeUUID = data.educationPlaceUuid;
+                setPageMode('view');
                 refetch();
-                mode = 'view';
               },
             });
-          } else if (mode === 'view') {
+          } else if (pageMode === 'view') {
             updateTrainingPlace(
               { ...payload, educationPlaceUuid: placeUUID },
               {
@@ -147,9 +165,16 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
             </Button>
           </LinkBox>
 
-          <Button variant="point" size="sm" onClick={handleResetButtonClick}>
-            {t('LABEL.button.reset')}
-          </Button>
+          {pageMode === 'add' && (
+            <Button variant="point" size="sm" onClick={handleResetButtonClick}>
+              {t('LABEL.button.reset')}
+            </Button>
+          )}
+          {pageMode === 'view' && (
+            <Button variant="point" size="sm" onClick={handleDeleteButtonClick}>
+              {t('LABEL.button.delete')}
+            </Button>
+          )}
           <Button type="submit" variant="primary" size="sm">
             {t('LABEL.button.save')}
           </Button>
@@ -161,7 +186,6 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
               provider={provider}
               className={dynamicFormStyles.w_half}
               name={'educationPlaceType'}
-              element={<input />}
             />
           </ContentsRow>
           <ContentsRow>
@@ -169,13 +193,11 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
               provider={provider}
               className={dynamicFormStyles.w_half}
               name={'educationPlaceCode'}
-              element={<input />}
             />
             <FormRow
               provider={provider}
               className={dynamicFormStyles.w_half}
               name={'educationPlaceName'}
-              element={<input />}
             />
           </ContentsRow>
           <ContentsRow>
@@ -185,14 +207,14 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
               element={
                 <ChipListModalSelectorFormField
                   chipList={{
-                    labelField: 'name',
-                    valueField: 'value',
+                    labelField: 'tenantName',
+                    valueField: 'tenantId',
                     hideBorder: true,
                   }}
                   modalConfig={{
                     title: '',
                     width: 'xl',
-                    content: '',
+                    content: <TenantChoiceModal />,
                   }}
                 />
               }
@@ -291,7 +313,7 @@ const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
             <FormRow
               provider={provider}
               name={'educationPlaceRemarkContent'}
-              element={<TextareaFormField resize="none" size="sm" />}
+              element={<Textarea resize="none" size="sm" />}
             />
           </ContentsRow>
 
@@ -322,14 +344,9 @@ const formConfig: DynamicFormConfig = {
       type: 'dropdown',
       label: t('LABEL.form.label.division'),
       value: '',
-      options: [
-        { value: '', label: t('전체') },
-        { value: 'CAMPUS', label: t('캠퍼스') },
-        { value: 'SERVISE_TECH', label: t('서비스기술교육') },
-        { value: 'ME_CLUSTER', label: t('생기클러스터') },
-        { value: 'OUTSIDE', label: t('외부') },
-        { value: 'ABROAD', label: t('해외') },
-      ],
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.education.EducationPlaceType'],
+      },
     },
     {
       name: 'educationPlaceCode',
@@ -419,5 +436,26 @@ const formConfig: DynamicFormConfig = {
     zipNo: true,
     address: true,
     addressDetail: true,
+    linkAddress: {
+      required: false,
+      conditions: [
+        {
+          fn: (values) => {
+            if (values.linkAddress.trim().length === 0) return false;
+            const pattern = new RegExp(
+              '^(https?:\\/\\/)?' + // protocol
+                '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+                '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+                '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+                '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+                '(\\#[-a-z\\d_]*)?$', // fragment locator
+              'i',
+            );
+            return !pattern.test(values.linkAddress.trim());
+          },
+          message: t('LABEL.form.validation.invalidUrl'),
+        },
+      ],
+    },
   },
 };

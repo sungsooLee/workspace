@@ -82,6 +82,10 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
     setSearchValue(removeReservedWords(value).trim());
   };
 
+  const handleInputEnterKeyDown = () => {
+    handleOnSearch();
+  };
+
   const searchAddress = async (currentPage: number, keyword: string) => {
     const formData = new FormData();
     formData.append('currentPage', currentPage.toString());
@@ -121,8 +125,8 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
     close();
   };
 
-  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPageIndex(value - 1);
+  const handlePageChange = (pageNumber: number) => {
+    setPageIndex(pageNumber);
   };
 
   const getError = () => {
@@ -133,6 +137,9 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
     ) : null;
   };
 
+
+
+  console.log('address-seach-modal', {totalPages, pageIndex});
   return (
     <ModalContainer>
       <ModalTitle>{t('LABEL.modal.addressSearch.title')}</ModalTitle>
@@ -148,6 +155,7 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
                     placeholder={t('LABEL.modal.addressSearch.placeholder')}
                     value={searchValue}
                     onChange={handleInputChange}
+                    onEnterKeyDown={handleInputEnterKeyDown}
                   />
                   <Button variant="primary" size="lg" onClick={handleOnSearch}>
                     {t('LABEL.button.retrieve')}
@@ -181,8 +189,10 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
               </ul>
               <Pagination
                 className={styles.pagenation}
-                count={totalPages}
-                page={pageIndex + 1}
+                totalPages={totalPages}
+                pageNumber={pageIndex}
+                hidePageSizeOptions
+                hidePageInfo
                 onChange={handlePageChange}
               />
             </div>

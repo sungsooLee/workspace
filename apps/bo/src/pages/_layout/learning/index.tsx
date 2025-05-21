@@ -34,7 +34,6 @@ function RouteComponent() {
 
   return (
     <form onSubmit={onSubmit(handleOnSubmit)}>
-      q
       <PageContainer>
         <ContentsButtons>
           <Button type="submit" variant="point" size="sm">

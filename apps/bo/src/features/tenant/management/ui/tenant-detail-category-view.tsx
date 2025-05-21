@@ -1,8 +1,14 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
-import { Button, ContentsRow, DynamicFormField, Input, Textarea, useModal } from '@learnway/ui';
-import { FormInfoArea, FormRow, ContentsHistoryInfoFormField, ChipListFormField } from '@shared/ui';
+import { Button, ContentsRow, Input, Textarea, useModal } from '@learnway/ui';
+import {
+  FormInfoArea,
+  FormRow,
+  ContentsHistoryInfoFormField,
+  ChipListFormField,
+  SwitchFormField,
+} from '@shared/ui';
 
 import { cn } from '@learnway/shared';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
@@ -333,7 +339,7 @@ const TenantCategoryViewComponent: FC<any> = ({
             <FormRow
               provider={provider}
               name={'isUsed'}
-              element={<Input disabled={isUsedDisabled} />}
+              element={<SwitchFormField disabled={isUsedDisabled} />}
             />
           </ContentsRow>
           <ContentsRow>

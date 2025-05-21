@@ -26,7 +26,6 @@ function RouteComponent() {
           nlp--input 선택자
         </li>
       </ul>
-      <div className="group"></div>
     </div>
   );
 }

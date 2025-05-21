@@ -1,4 +1,4 @@
-export interface SortResponse {
+export interface SortRequest {
   direction: string;
   nullHandling: string;
   ascending: boolean;
@@ -6,10 +6,16 @@ export interface SortResponse {
   ignoreCase: boolean;
 }
 
+export interface SortResponse {
+  empty: boolean;
+  sorted: boolean;
+  unsorted: boolean;
+}
+
 export interface PaginationRequest {
-  page: number;
-  size: number;
-  sort: string[];
+  page?: number;
+  size?: number;
+  sort?: string[];
 }
 
 export interface PaginationResponse<T> {
@@ -18,17 +24,17 @@ export interface PaginationResponse<T> {
   size: number;
   content: Array<T>;
   number: number;
-  sort: SortResponse[];
   numberOfElements: number;
-  pageable: {
+  first: boolean;
+  last: boolean;
+  empty: boolean;
+  sort?: SortResponse;
+  pageable?: {
     offset: number;
-    sort: SortResponse[];
     pageSize: number;
     paged: boolean;
     pageNumber: number;
     unpaged: boolean;
+    sort: SortResponse;
   };
-  first: boolean;
-  last: boolean;
-  empty: boolean;
 }

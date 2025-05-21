@@ -3,54 +3,31 @@
   .header {
     @apply relative box-border h-[100px] min-w-[1200px] bg-[#012277] px-[32px] transition-all duration-150 ease-in-out;
     h1 {
-      @apply mt-[5px] inline-flex items-center;
+      @apply inline-flex align-top;
       img {
         @apply h-[40px] w-auto;
       }
+      [class*='nlp--logo'] {
+        @apply flex h-[50px] pt-[5px];
+      }
       .title {
-        @apply relative ml-[6px] box-border inline-flex min-h-[50px] pl-[6px] pt-[14px] text-[16px] font-bold text-white;
+        @apply relative ml-[6px] box-border inline-flex h-[40px] pl-[6px] pt-[15px] text-[16px] font-bold text-white;
         &::before {
           @apply absolute left-0 top-[33px] -mt-[12px] h-[12px] w-[1px] bg-white opacity-30 content-[''];
         }
       }
     }
     .nav_area {
-      .nav {
-        ul {
-          @apply flex justify-start gap-[48px];
-          > li {
-            a {
-              @apply title_bo_4_r inline-flex h-[40px] items-center text-[var(--white)];
-              &:hover {
-                @apply font-bold;
-              }
-            }
-          }
-        }
-      }
+      @apply flex h-[50px] items-center pr-[360px];
     }
     .util {
-      @apply absolute right-[32px] top-[6px] flex items-center;
+      @apply absolute right-[36px] top-[6px] flex items-center;
       button:not(:nth-child(1)) {
         @apply ml-[20px];
       }
     }
     .quick_menu {
-      @apply absolute bottom-[8px] right-0 min-w-[344px];
-      ul {
-        @apply flex;
-        > li {
-          a {
-            @apply body_2_b inline-flex h-[40px] items-center text-[var(--white)];
-          }
-        }
-        & + button {
-          @apply body_2_b relative pl-[20px];
-          &::before {
-            @apply absolute left-0 top-1/2 -mt-[10px] h-[20px] w-[1px] bg-white font-bold opacity-15 content-[''];
-          }
-        }
-      }
+      @apply absolute bottom-0 right-0 h-[50px] w-auto pr-[32px] pt-[5px];
     }
   }
 }

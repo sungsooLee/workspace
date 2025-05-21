@@ -56,7 +56,7 @@ const ChangePhoneNumberModalComponent = ({ widget }: { widget: any }) => {
       return;
     }
     fetchData({
-      currentPhoneNumber: userDetail.phoneNumber,
+      currentPhoneNumber: userDetail?.phoneNumber,
       currentPhoneNumberNationCode: authUser.phoneNumberNationCode,
     });
   }, [authUser]);
@@ -75,8 +75,8 @@ const ChangePhoneNumberModalComponent = ({ widget }: { widget: any }) => {
     });
 
     const payload = {
-      name: userDetail.name,
-      birthday: String(userDetail.birthday),
+      name: userDetail?.name,
+      birthday: String(userDetail?.birthday),
       phoneNumber: data.newPhoneNumber,
     };
 
@@ -99,15 +99,15 @@ const ChangePhoneNumberModalComponent = ({ widget }: { widget: any }) => {
     }
 
     const smsVerifyPayload = {
-      name: userDetail.name,
-      birthday: userDetail.birthday,
+      name: userDetail?.name,
+      birthday: userDetail?.birthday,
       verificationCode: data.verificationCode,
       phoneNumber: data.newPhoneNumber,
     };
 
     const payload = {
-      name: userDetail.name,
-      birthday: userDetail.birthday,
+      name: userDetail?.name,
+      birthday: userDetail?.birthday,
       currentPhoneNumber: data.currentPhoneNumber,
       // currentPhoneNumberNationCode: authUser.phoneNumberNationCode,
       newPhoneNumber: data.newPhoneNumber,

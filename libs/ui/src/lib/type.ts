@@ -99,7 +99,7 @@ export interface Image {
 }
 
 export interface DropdownOption {
-  value: string;
+  value: any;
   label?: string;
 }
 

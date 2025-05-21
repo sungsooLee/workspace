@@ -5,8 +5,8 @@ import { cn } from '@learnway/shared';
 import { Button } from '../button/button';
 
 import {
-  IcoChevronLeftDouble,
   IcoChevronLeft,
+  IcoChevronLeftDouble,
   IcoChevronRight,
   IcoChevronRightDouble,
   IcoMoreHorizontal,
@@ -75,9 +75,8 @@ const PaginationItemComponent = forwardRef<HTMLButtonElement, PaginationItemComp
         icon={icon}
         onClick={() => onClick?.()}
         disabled={disabled}
-      >
-        {type === 'page' && page}
-      </Button>
+        label={type === 'page' ? String(page + 1) : ''}
+      />
     );
   },
 );

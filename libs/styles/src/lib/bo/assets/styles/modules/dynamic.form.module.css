@@ -72,7 +72,6 @@
       @apply translate-y-0;
     }
     & + [class*='nlp--contents-row'] {
-      @apply pb-0;
       & ~ [class*='nlp--contents-row'] {
         @apply pb-[16px];
       }

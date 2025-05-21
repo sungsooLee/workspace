@@ -46,7 +46,6 @@ function RouteComponent() {
   const [pageSize, setPageSize] = useState(10);
   const data: any[] = [
     {
-      order: '1',
       applyId: 'IA000000',
       tenantSetting: '테넌트명',
       channelName: '채널명채널명채널명채널명',
@@ -71,17 +70,6 @@ function RouteComponent() {
   const columnHelper = createColumnHelper<any>();
 
   const columns = [
-    columnHelper.accessor('order', {
-      cell: (info) => info.getValue(),
-      header: 'NO.',
-      footer: (props) => `Total: ${props.table.getRowModel().rows.length}`,
-      size: 64,
-      meta: {
-        headerAlign: 'left',
-        cellAlign: 'center',
-      },
-      enableGrouping: false,
-    }),
     columnHelper.accessor('applyId', {
       cell: (info) => info.getValue(),
       header: '신청ID',
@@ -309,6 +297,7 @@ function RouteComponent() {
                 columns={columns}
                 height={440}
                 showColumnSettings={false}
+                showNumberingColumn={true}
                 multiple
                 guideText={'메일발송 N인 접수ID를 선택하시면 채널 등록화면으로 이동됩니다.'}
                 pagination={{

@@ -54,30 +54,24 @@ export default class RoleManagerService {
   }
 
   /**
-   * 메뉴 목록 트리 조회
-   * @returns 메뉴 목록 트리
-   */
-  static fetchMenus(): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/menus/tree`);
-  }
-
-  /**
    * 역할에 할당된 메뉴 목록 조회
-   * @param roleId 역할 ID
+   * @param roleCode 역할 ID
    * @returns 역할에 할당된 메뉴 목록
    */
-  static fetchRoleMenus(roleId: string): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/roles/${roleId}/menus`);
+  static fetchRoleMenus(roleCode: string): Promise<any> {
+    return httpService.get<any>(`${PMSApiPrefix()}/roles/${roleCode}/menus`);
   }
 
   /**
    * 역할에 메뉴 할당
-   * @param roleId 역할 ID
+   * @param roleCode 역할 ID
    * @param menuIds 메뉴 ID 배열
    * @returns 할당 결과
    */
-  static assignMenusToRole(roleId: string, menuIds: string[]): Promise<any> {
-    return httpService.post<any>(`${PMSApiPrefix()}/roles/${roleId}/menus`, { menuIds });
+  static assignMenusToRole(roleCode: string, addMenuIds: number[]): Promise<any> {
+    const payload = { addMenuIds: addMenuIds };
+    console.log('assignMenu', payload, addMenuIds);
+    return httpService.post<any>(`${PMSApiPrefix()}/roles/${roleCode}/save-menu-apis`, payload);
   }
 
   /**
@@ -85,8 +79,8 @@ export default class RoleManagerService {
    * @param menuId 메뉴 ID
    * @returns 메뉴에 속한 API 목록
    */
-  static fetchMenuApis(menuId: string): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/menus/${menuId}/apis`);
+  static fetchRoleMenuApis(roleCode: string, menuId: string): Promise<any> {
+    return httpService.get<any>(`${PMSApiPrefix()}/roles/${roleCode}/apis`, { menuId: menuId });
   }
 
   /**

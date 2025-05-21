@@ -23,7 +23,7 @@ import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
-import { queryOptions as companyQueryOptions } from '@entities/companies/service/companies.queries';
+import { usersQueryOptions } from '@entities/users/service/users.queries';
 
 const UserModalComponent = forwardRef((props, ref) => {
   const { close: closeModal } = useModal();
@@ -58,7 +58,7 @@ const UserModalComponent = forwardRef((props, ref) => {
 
   return (
     <ModalContainer>
-      <ModalTitle>회사 조회</ModalTitle>
+      <ModalTitle>{t('유저 조회')}</ModalTitle>
       <ModalBody>
         <div className={popupStyles.wrap}>
           <SearchBox provider={sProvider} onSearch={handleOnSearch} />
@@ -69,7 +69,7 @@ const UserModalComponent = forwardRef((props, ref) => {
               columns={columns}
               height={380}
               showColumnSettings={false}
-              title="타이틀"
+              title={t('유저조회목록')}
             />
           </div>
         </div>
@@ -121,19 +121,33 @@ const searchConfig: SearchBoxConfig = {
         label: t('이름'),
         value: '',
       },
+      {
+        name: 'ust',
+        type: 'text',
+        label: t('계정상태'),
+        value: '',
+        options: [
+          {
+            label: '전체',
+            value: '',
+          },
+          {
+            label: '정상',
+            value: 'open',
+          },
+          {
+            label: '잠김',
+            value: 'close',
+          },
+        ],
+      },
     ],
   ],
 };
 
 const gridConfig = {
-  query: companyQueryOptions.all,
-  columns: [
-    {
-      name: 'no1',
-      label: 'NO.',
-      type: 'numbering',
-    },
-  ],
+  query: usersQueryOptions.list,
+  columns: [],
   data: [],
   pagination: {
     pageSize: 10,
@@ -154,6 +168,12 @@ const columns = [
     cell: (info) => info.getValue(),
     header: '본부/사업부',
     size: 240,
+    enableGrouping: false,
+  }),
+  columnHelper.accessor('dep', {
+    cell: (info) => info.getValue(),
+    header: '부서',
+    size: 150,
     enableGrouping: false,
   }),
   columnHelper.accessor('dept2', {

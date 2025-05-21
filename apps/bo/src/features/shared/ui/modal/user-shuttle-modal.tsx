@@ -16,8 +16,7 @@ import {
 import { SearchBox } from '@shared/ui/search-box';
 import { IcoRefresh02 } from '@learnway/icons';
 import { useQueryClient } from '@tanstack/react-query';
-import { queryOptions as companyQueryOptions } from '@entities/companies/service/companies.queries';
-import { Company } from '@types';
+import { usersQueryOptions } from '@entities/users/service/users.queries';
 
 const UserShuttleComponent = () => {
   const ref = useRef<ShuttleGridToGridImperative>(null);
@@ -34,7 +33,7 @@ const UserShuttleComponent = () => {
    * @param data
    */
   const handleOnSearch = (data: any) => {
-    const queryPromise = queryClient.fetchQuery(companyQueryOptions.all());
+    const queryPromise = queryClient.fetchQuery(usersQueryOptions.list(data));
     queryPromise.then((data) => {
       setGrideData(data.content);
     });
@@ -51,20 +50,20 @@ const UserShuttleComponent = () => {
 
   return (
     <ModalContainer className="h-[740]">
-      <ModalTitle>{t('회사 선택')}</ModalTitle>
+      <ModalTitle>{t('유저조회')}</ModalTitle>
       <ModalBody>
         <SearchBox provider={sProvider} onSearch={handleOnSearch} />
         <ShuttleGridToGrid
           ref={ref}
-          onChange={(data: any) => {
+          onSelectedChange={(data: any) => {
             setOption(data);
           }}
           showNumberingColumn={false}
           gridData={gridData}
           columns={columns}
-          rowKey={'companyId'}
-          leftTitle={t('회사 목록')}
-          rightTitle={t('회사 선택')}
+          rowKey={'userId'}
+          leftTitle={t('유저조회목록')}
+          rightTitle={t('유저 선택')}
         />
       </ModalBody>
       <ModalFooter>

@@ -1,0 +1,37 @@
+export enum EnFormMode {
+  NONE = 'NONE',
+  VIEW = 'VIEW',
+  ADD = 'ADD',
+}
+export enum EnTenantScope {
+  ALL = 'ALL',
+  CURRENT_TENANT = 'CURRENT_TENANT',
+}
+export enum EnCompanyScope {
+  ALL = 'ALL',
+  CURRENT_COMPANY = 'CURRENT_COMPANY',
+  MANUAL = 'MANUAL',
+}
+export enum EnChannelScope {
+  ALL = 'ALL',
+  CURRENT_COMPANY = 'CURRENT_COMPANY',
+  CURRENT_COMPANY_INCLUSIVE = 'CURRENT_COMPANY_INCLUSIVE',
+  MANUAL = 'MANUAL',
+}
+export enum EnDeptScope {
+  ALL = 'ALL',
+  CURRENT_TEAM = 'CURRENT_TEAM',
+  CURRENT_TEAM_INCLUSIVE = 'CURRENT_TEAM_INCLUSIVE',
+  MANUAL = 'MANUAL',
+}
+
+export enum EnDeviceType {
+  isPc = 'isPc',
+  isMobile = 'isMobile',
+  isApp = 'isApp',
+}
+
+export enum EnUseCategory {
+  isCommonCategory = 'isCommonCategory',
+  isTenantCategory = 'isTenantCategory',
+}

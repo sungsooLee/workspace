@@ -13,24 +13,19 @@ import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.cs
 /** Hook 정의 */
 import { useTenantAttributeCompany } from '@entities/tenant/service/tenant-attribute.hook';
 
-const FORM_MODE = {
-  NONE: 'NONE',
-  VIEW: 'VIEW',
-  ADD: 'ADD',
-};
-
-const TenantDetailAttributeCompanyComponent: FC<any> = ({ tenantId, companyId, tenantName }) => {
+const TenantDetailAttributeCompanyComponent: FC<any> = ({
+  tenantId,
+  attributeData,
+  companyId,
+  tenantName,
+}) => {
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, control } =
     useDynamicForm(formConfig);
 
-  const { data } = useTenantAttributeCompany(tenantId);
-
   useEffect(() => {
-    if (data) {
-      const mockData = {};
-      fetchData(mockData);
-    }
-  }, [data]);
+    console.log(tenantName, attributeData);
+    fetchData({ attributeData, tenantName: tenantName });
+  }, []);
 
   return (
     <div>
@@ -38,30 +33,30 @@ const TenantDetailAttributeCompanyComponent: FC<any> = ({ tenantId, companyId, t
         <strong className="title">{t('테넌트 속성 관리')}</strong>
       </div>
       <ContentsRow>
-        <FormRow provider={provider} name={'tenantName'} element={<Input disabled={true} />} />
+        <FormRow provider={provider} name="tenantName" element={<Input disabled={true} />} />
       </ContentsRow>
       <div className="title_wrap no_line">
         <strong className="title">{t('과정 등록 연관 설정')}</strong>
       </div>
       <ContentsRow type="horizontal">
-        <FormRow provider={provider} name={'isCourseCommentWrite'} />
-        <FormRow provider={provider} name={'isCourseOutsideSharing'} />
+        <FormRow provider={provider} name={'isCourseCommentEnabled'} />
+        <FormRow provider={provider} name={'isCourseExternalSharingEnabled'} />
       </ContentsRow>
       <ContentsRow type="horizontal">
-        <FormRow provider={provider} name={'isCourseApply'} />
-        <FormRow provider={provider} name={'isCourseApproval'} />
+        <FormRow provider={provider} name={'isCourseEnrollmentEnabled'} />
+        <FormRow provider={provider} name={'isCourseEnrollmentApprovalEnabled'} />
       </ContentsRow>
       <ContentsRow type="horizontal">
-        <FormRow provider={provider} name={'isLearningDelayedLimit'} />
-        <FormRow provider={provider} name={'isLearningTimeLimit'} />
+        <FormRow provider={provider} name={'isLearningRegionRestricted'} />
+        <FormRow provider={provider} name={'isLearningTimeRestricted'} />
       </ContentsRow>
       <ContentsRow type="horizontal">
-        <FormRow provider={provider} name={'isLearningDeviceLimit'} />
-        <FormRow provider={provider} name={'isContentSecurityApply'} />
+        <FormRow provider={provider} name={'isLearningDeviceRestricted'} />
+        <FormRow provider={provider} name={'isContentSecurityEnabled'} />
       </ContentsRow>
       <ContentsRow type="horizontal">
-        <FormRow provider={provider} name={'isCourseBudgetUse'} />
-        <FormRow provider={provider} name={'isCourseEmploymentInsuranceRefund'} />
+        <FormRow provider={provider} name={'isCourseBudgetUsed'} />
+        <FormRow provider={provider} name={'isEmploymentInsuranceRefundEnabled'} />
       </ContentsRow>
       <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
         <ContentsHistoryInfoFormField />
@@ -79,10 +74,10 @@ const formConfig: DynamicFormConfig = {
       name: 'tenantName',
       type: 'text',
       label: t('테넌트명'),
-      value: '테넌트명 value',
+      value: '',
     },
     {
-      name: 'isCourseCommentWrite',
+      name: 'isCourseCommentEnabled',
       type: 'switch',
       label: t('과정 댓글 작성'),
       value: false,
@@ -96,7 +91,7 @@ const formConfig: DynamicFormConfig = {
       },
     },
     {
-      name: 'isCourseOutsideSharing',
+      name: 'isCourseExternalSharingEnabled',
       type: 'switch',
       label: t('과정 외부 공유'),
       value: false,
@@ -109,7 +104,7 @@ const formConfig: DynamicFormConfig = {
       },
     },
     {
-      name: 'isCourseApply',
+      name: 'isCourseEnrollmentEnabled',
       type: 'switch',
       label: t('수강신청 설정 여부'),
       value: false,
@@ -122,7 +117,7 @@ const formConfig: DynamicFormConfig = {
       },
     },
     {
-      name: 'isCourseApproval',
+      name: 'isCourseEnrollmentApprovalEnabled',
       type: 'switch',
       label: t('수강신청 승인자'),
       value: false,
@@ -135,9 +130,9 @@ const formConfig: DynamicFormConfig = {
       },
     },
     {
-      name: 'isLearningDelayedLimit',
+      name: 'isLearningRegionRestricted',
       type: 'switch',
-      label: t('학습 지연 제한'),
+      label: t('학습 지역 제한'),
       value: false,
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
@@ -148,7 +143,7 @@ const formConfig: DynamicFormConfig = {
       },
     },
     {
-      name: 'isLearningTimeLimit',
+      name: 'isLearningTimeRestricted',
       type: 'switch',
       label: t('학습 시간 제한'),
       value: false,
@@ -161,7 +156,7 @@ const formConfig: DynamicFormConfig = {
       },
     },
     {
-      name: 'isLearningDeviceLimit',
+      name: 'isLearningDeviceRestricted',
       type: 'switch',
       label: t('학습 기기 제한'),
       value: false,
@@ -174,7 +169,7 @@ const formConfig: DynamicFormConfig = {
       },
     },
     {
-      name: 'isContentSecurityApply',
+      name: 'isContentSecurityEnabled',
       type: 'switch',
       label: t('콘텐츠 보안 적용'),
       value: false,
@@ -187,7 +182,7 @@ const formConfig: DynamicFormConfig = {
       },
     },
     {
-      name: 'isCourseBudgetUse',
+      name: 'isCourseBudgetUsed',
       type: 'switch',
       label: t('과정 예산 사용'),
       value: false,
@@ -200,7 +195,7 @@ const formConfig: DynamicFormConfig = {
       },
     },
     {
-      name: 'isCourseEmploymentInsuranceRefund',
+      name: 'isEmploymentInsuranceRefundEnabled',
       type: 'switch',
       label: t('과정 고용보험 환급'),
       value: false,
@@ -215,15 +210,15 @@ const formConfig: DynamicFormConfig = {
   ],
   validator: {
     tenantName: { required: true },
-    isCourseCommentWrite: { required: true },
-    isCourseOutsideSharing: { required: true },
-    isCourseApply: { required: true },
-    isCourseApproval: { required: true },
-    isLearningDelayedLimit: { required: true },
-    isLearningTimeLimit: { required: true },
-    isLearningDeviceLimit: { required: true },
-    isContentSecurityApply: { required: true },
-    isCourseBudgetUse: { required: true },
-    isCourseEmploymentInsuranceRefund: { required: true },
+    isCourseCommentEnabled: { required: true },
+    isCourseExternalSharingEnabled: { required: true },
+    isCourseEnrollmentEnabled: { required: true },
+    isCourseEnrollmentApprovalEnabled: { required: true },
+    isLearningRegionRestricted: { required: true },
+    isLearningTimeRestricted: { required: true },
+    isLearningDeviceRestricted: { required: true },
+    isContentSecurityEnabled: { required: true },
+    isCourseBudgetUsed: { required: true },
+    isEmploymentInsuranceRefundEnabled: { required: true },
   },
 };

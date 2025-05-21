@@ -31,11 +31,12 @@ import {
   transformRoleMenuApiDataToTreeData,
   transformMenuApiDataToTreeData,
 } from '../service/tenant-detail-tree.service';
+import { useFetchRoleMenus, useCreateRoleMenu } from '@entities/role/service/role-manage.hook';
 
 const TenantDetailLearningRoleMenuMappingModalComponent: FC<any> = ({
   siteScope,
   tenantId,
-  roleId,
+  roleCode,
 }) => {
   const [tenantMenuTree, setTenantMenuTree] = useState([]);
   const [tenantMenuTreeExpandedKeys, setTenantMenuTreeExpandedKeys] = useState<string[]>([]);
@@ -48,8 +49,12 @@ const TenantDetailLearningRoleMenuMappingModalComponent: FC<any> = ({
   const { open: openModal, confirm: openConfirm, close: closeModal } = useModal();
 
   const { data: tenantMenuData } = useFetchMenuTenantMappingTree(tenantId, siteScope);
-
-  const roleMenuData = {};
+  const { data: roleMenuData, refetch } = useFetchRoleMenus(tenantId, siteScope, roleCode);
+  const { create } = useCreateRoleMenu({
+    onSuccess: () => {
+      refetch();
+    },
+  });
 
   const handleTenantMenuTreeExpandChange = (keys: string[]) => {
     if (keys && keys.length > 0) {
@@ -65,28 +70,30 @@ const TenantDetailLearningRoleMenuMappingModalComponent: FC<any> = ({
   const handleTargetAction = async (event: any) => {
     switch (event.type) {
       case 'NODE_COPY':
-        console.log(event);
+        console.log('copy ', event);
         if (event.sourceTreeId === 'mapping-menu-tree') {
           const sourceMenuId = event.sourceNode.key;
           if (roleMenuTreeAllKeys.includes(sourceMenuId)) {
             alert('이미 있음');
             return false;
           }
-          const allPostMenus = getAllParentAndAllChildById(roleMenuTree, sourceMenuId);
+          const allPostMenus = getAllParentAndAllChildById(tenantMenuTree, sourceMenuId);
           const contents = [];
           for (const item of allPostMenus) {
             if (!roleMenuTreeAllKeys.includes(item.key)) {
-              const reqMenu: any = JSON.parse(JSON.stringify(item));
-              reqMenu.tenantId = tenantId;
-              reqMenu.menuScope = siteScope;
-              reqMenu.parentMenuId = item.parentId;
-              contents.push(reqMenu);
+              contents.push(item.menuId);
             }
           }
 
-          const payload = { tenantId: tenantId, contents: [...contents] };
-          console.log(payload);
-          // tentantMenuCreate(payload);
+          const payload = {
+            roleCode: roleCode,
+            addMenuIds: [...contents],
+            removeMenuIds: [],
+            addApis: [],
+            removeApis: [],
+          };
+          console.log('save', payload);
+          create(payload);
         }
         break;
 
@@ -140,19 +147,20 @@ const TenantDetailLearningRoleMenuMappingModalComponent: FC<any> = ({
     </div>
   );
 
-  // useEffect(() => {
-  //   if (roleMenuData) {
-  //     console.log(roleMenuData);
-  //     const transformedData = transformRoleMenuApiDataToTreeData(roleMenuData);
-  //     setRoleMenuTree(transformedData);
-  //     if (transformedData && transformedData.length > 0) {
-  //       const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
-  //       setRoleMenuTreeExpandedKeys(firstLevelKeys);
-  //       const allKeys = getAllTreeKeys(transformedData);
-  //       setRoleMenuTreeAllKeys(allKeys);
-  //     }
-  //   }
-  // }, [roleMenuData]);
+  useEffect(() => {
+    console.log('roleCode', roleCode);
+    if (roleMenuData) {
+      console.log(roleMenuData);
+      const transformedData = transformRoleMenuApiDataToTreeData(roleMenuData);
+      setRoleMenuTree(transformedData);
+      if (transformedData && transformedData.length > 0) {
+        const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
+        setRoleMenuTreeExpandedKeys(firstLevelKeys);
+        const allKeys = getAllTreeKeys(transformedData);
+        setRoleMenuTreeAllKeys(allKeys);
+      }
+    }
+  }, [roleMenuData]);
 
   useEffect(() => {
     if (tenantMenuData) {

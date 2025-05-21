@@ -8,24 +8,28 @@ export function useFetchTenant(tenantId?: number) {
   return useQuery(queryOptions.detail(tenantId));
 }
 
-export function useCreateTenant(mutationOptions = {}) {
+export function useCreateTenant(options: any) {
   const queryClient = useQueryClient();
 
-  const { mutate, isSuccess, isError } = useMutation({
+  const mutation = useMutation({
     ...mutateOptions.create(),
     onSuccess: async (data: any, variables, context) => {
       // 공통 메세지 처리 등...
-
       queryClient.invalidateQueries({ queryKey: queryKeys.list });
+      console.log('aaaaaaaa');
+      if (options.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
     },
-    ...mutationOptions,
+    ...options,
   });
 
   return {
-    create: (payload: Tenant, callback?: MutateOptions<unknown, unknown, Tenant>) => {
-      mutate(payload, callback);
+    create: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
     },
-    isSuccess,
-    isError,
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
   };
 }
