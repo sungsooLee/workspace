@@ -263,7 +263,7 @@ const CommonCodeGroupGridComponent = ({
               title={t('LABEL.grid.title.commonCdGroupList')}
               pagination={{
                 pageNumber: page,
-                totalRows: totalRows || 0,
+                totalPages: totalRows || 0,
                 onPageChange: onPageChange,
                 onPageSizeChange: onPageSizeChange,
               }}

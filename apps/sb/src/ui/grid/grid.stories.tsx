@@ -540,7 +540,7 @@ const PaginationTable = () => {
         columns={columns}
         pagination={{
           pageNumber,
-          totalPages: 300,
+          totalPages: 10,
           onPageChange: (newPageNumber: number) => {
             setPageNumber(newPageNumber);
           },
