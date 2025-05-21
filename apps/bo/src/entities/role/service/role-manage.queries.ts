@@ -1,6 +1,6 @@
 import { Role } from '../../../types/entities/role';
 import RoleManagerService from '../api/role-manager';
-import TenantMenuManageService from '@entities/tenant/api/menu-tenant-manage';
+import TenantMenuManageService from '@entities/menu/api/menu-tenant-manage';
 import MenuMangerService from '@entities/menu/api/menu-manage';
 
 export const roleQueryKeys = {
@@ -126,5 +126,11 @@ export const roleMutateOptions = {
   modifyMenusAndApiToRole: () => ({
     mutationFn: ({ roleCode, body }: { roleCode: string; body: any }) =>
       RoleManagerService.modifyMenusAndApiToRole(roleCode, body),
+  }),
+
+  //역할 위치이동
+  movePosition: () => ({
+    mutationFn: ({ roleCode, body }: { roleCode: string; body: any }) =>
+      RoleManagerService.modifyRolePosition(roleCode, body),
   }),
 };

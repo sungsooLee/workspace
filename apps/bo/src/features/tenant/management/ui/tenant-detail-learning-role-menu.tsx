@@ -144,12 +144,18 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
       const removeApis = [];
       for (const apiId of changeApis) {
         if (!apiOriginalSelected?.includes(apiId)) {
-          addApis.push(apiId);
+          addApis.push({
+            menuId: selectedRoleMenu.menuId,
+            apiId: apiId,
+          });
         }
       }
       for (const apiId of apiOriginalSelected) {
         if (!changeApis.includes(apiId)) {
-          removeApis.push(apiId);
+          removeApis.push({
+            menuId: selectedRoleMenu.menuId,
+            apiId: apiId,
+          });
         }
       }
       if (addApis.length > 0 || removeApis.length > 0) {
@@ -228,10 +234,10 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
   }, [roleMenuApiData]);
 
   useEffect(() => {
-    console.log('update tableInstance');
     if (tableInstance && apiOriginalSelected) {
+      console.log('apiOriginalSelected', apiOriginalSelected);
       const targets = apiGridData.filter((item) => {
-        apiOriginalSelected?.includes(item.apiId);
+        return apiOriginalSelected?.includes(item.apiId);
       });
       const newSelection = getRowSelectionByList(tableInstance, targets, 'apiId');
       tableInstance.setRowSelection(newSelection);

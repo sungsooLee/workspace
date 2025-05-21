@@ -21,11 +21,12 @@ import {
   useFetchRole,
   useFetchRoleTree,
   useRoleManager,
+  useMovePosition,
 } from '@entities/role/service/role-manage.hook';
 import {
   getAllTreeKeys,
   getFirstExpandKeys,
-  moveNodeCheck,
+  moveRoleCheck,
   transformRoleApiDataToTreeData,
 } from '../service/tenant-detail-tree.service';
 import { FormDisplay } from '@features/form/ui/form-display';
@@ -73,6 +74,12 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
       refetch();
     },
   });
+  const { updatePosition } = useMovePosition({
+    onSuccess: () => {
+      refetch();
+    },
+  });
+
   const { provider, onSubmit, clearFormError, fetchData, onFormChange } =
     useDynamicForm(formConfig);
   const { data, refetch } = useFetchRoleTree(tenantId, siteScope);
@@ -107,6 +114,21 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
 
       case EnFormMode.VIEW:
         updateRole(payload);
+        break;
+    }
+  };
+
+  const handleTreeAction = (events: any) => {
+    switch (events.type) {
+      case 'NODE_MOVE':
+        {
+          console.log('roleev ', events);
+          const payload = moveRoleCheck(events);
+          if (payload) {
+            console.log('dsend', payload);
+            updatePosition(payload);
+          }
+        }
         break;
     }
   };
@@ -194,15 +216,16 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
     <SectionLayout contentsRatio={'thirty'}>
       <TreeBox
         data={roleTreeData}
-        initLevel={2}
         treeId="1"
+        type="SAME_LEVEL_ONLY"
+        clientTree
         showSearchKeyword
+        initLevel={2}
         title={t('역할 목록')}
+        onAction={handleTreeAction}
         selectedNode={selectedRoleNode}
         renderNodeButtons={renderNodeButtons}
         handleSelectedNodeChange={handleRoleSelect}
-        clientTree
-        type="SHUTTLE_LIST"
       />
       <div className={cn(styles.start, styles.wrap)}>
         <div className={cn(layoutStyles.inner)}>
