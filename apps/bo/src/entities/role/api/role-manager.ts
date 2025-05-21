@@ -75,6 +75,15 @@ export default class RoleManagerService {
   }
 
   /**
+   * 역할 tree 위치 이동
+   * @param roleCode
+   * @param body
+   * @returns
+   */
+  static modifyRolePosition(roleCode: string, body: any): Promise<any> {
+    return httpService.post<any>(`${PMSApiPrefix()}/roles/${roleCode}/move`, body);
+  }
+  /**
    * 메뉴에 속한 API 목록 조회
    * @param menuId 메뉴 ID
    * @returns 메뉴에 속한 API 목록
@@ -85,11 +94,11 @@ export default class RoleManagerService {
 
   /**
    * 역할에 할당된 API 목록 조회
-   * @param roleId 역할 ID
+   * @param roleCode 역할 ID
    * @returns 역할에 할당된 API 목록
    */
-  static fetchRoleApis(roleId: string): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/roles/${roleId}/apis`);
+  static fetchRoleApis(roleCode: string): Promise<any> {
+    return httpService.get<any>(`${PMSApiPrefix()}/roles/${roleCode}/apis`);
   }
 
   static fetchRoleTree(tenantId: number, siteScope: string) {

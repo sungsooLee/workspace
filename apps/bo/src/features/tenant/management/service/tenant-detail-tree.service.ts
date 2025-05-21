@@ -235,3 +235,37 @@ export const transformRoleApiDataToTreeData = (apiData: any) => {
 
   return transform(dataArray);
 };
+
+export const moveRoleCheck = (events: any) => {
+  const targetIndex = events.targetIndex + 1;
+  const retValue = {
+    roleCode: events.sourceNode.roleCode,
+    sortOrder: targetIndex,
+  };
+
+  switch (events.position) {
+    case 'BEFORE': {
+      if (events.sourceNode.level === events.targetNode.level) {
+        return { ...retValue, parentRoleId: events.targetNode.parentKey };
+      }
+      break;
+    }
+    case 'INSIDE':
+      if (events.sourceNode.level === events.targetNode.level + 1) {
+        return {
+          ...retValue,
+          parentRoleId: events.targetNode.key,
+        };
+      }
+      break;
+    case 'AFTER':
+      if (events.sourceNode.level === events.targetNode.level) {
+        return {
+          ...retValue,
+          parentRoleId: events.targetNode.parentKey,
+        };
+      }
+      break;
+  }
+  return undefined;
+};
