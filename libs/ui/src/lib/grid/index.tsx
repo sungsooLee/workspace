@@ -678,7 +678,7 @@ const GridComponent = forwardRef(
           display: 'block',
           textAlign:
             cell.column.columnDef.meta?.cellAlign || cell.column.columnDef.meta?.align || 'left',
-          verticalAlign: 'center',
+          verticalAlign: 'middle',
 
           // 고정열 스타일 추가
           position: isPinnedLeft ? 'sticky' : undefined,
