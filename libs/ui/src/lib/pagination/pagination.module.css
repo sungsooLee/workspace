@@ -37,7 +37,7 @@
     }
   }
   &.disabled {
-    @apply pointer-events-none cursor-auto opacity-0;
+    @apply pointer-events-none hidden cursor-auto opacity-0;
   }
 }
 [class*='grid'],

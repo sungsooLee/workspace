@@ -90,7 +90,7 @@ function RouteComponent() {
       cell: (info) => info.getValue(),
       header: '채널ID',
       enableGrouping: false,
-      size:110,
+      size: 110,
     }),
     columnHelper.accessor('channelName', {
       cell: (info) => info.getValue(),
@@ -206,7 +206,7 @@ function RouteComponent() {
                   </div>
                 </div>
                 <div className={searchStyles.item_wrap}>
-                <div className={searchStyles.inner}>
+                  <div className={searchStyles.inner}>
                     <div className={searchStyles.item}>
                       <label htmlFor="name-select4" className={searchStyles.label}>
                         <span className={searchStyles.text}>채널구분</span>
@@ -232,7 +232,7 @@ function RouteComponent() {
                           <DatePicker displayType={'day'} size={'md'} />
                           <span className={searchStyles.hyphen}>-</span>
                           <DatePicker displayType={'day'} size={'md'} />
-                        </div>                        
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -283,7 +283,7 @@ function RouteComponent() {
               <GridBox
                 data={data}
                 columns={columns}
-                height={440}
+                height={350}
                 showColumnSettings={false}
                 showNumberingColumn={true}
                 pagination={{

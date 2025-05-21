@@ -1,7 +1,7 @@
 /* wrap-box.module.css */
 .start {
   &.inner {
-    @apply -mx-[32px] mt-[16px] border-t border-solid border-[#d6dae1] p-[32px];
+    @apply -mx-[32px] mt-[16px] border-t border-solid border-[#d6dae1] p-[32px] pb-0;
   }
 }
 [class*='nlp--modal-content'] .start {
