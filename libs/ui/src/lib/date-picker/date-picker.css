@@ -60,6 +60,12 @@
   &:focus {
     @apply border-[#747D91];
   }
+  &:read-only {
+    @apply !border-[var(--gray1)] !bg-[var(--gray1)];
+  }
+  &:disabled {
+    @apply !border-[var(--gray1)] !bg-[var(--gray1)] !text-[var(--gray5)];
+  }
 }
 
 .react-datepicker__view-calendar-icon input {

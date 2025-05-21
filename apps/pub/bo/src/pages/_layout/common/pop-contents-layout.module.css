@@ -19,3 +19,7 @@
     }
   }
 }
+
+[class*='nlp--modal-content'] [class*='nlp--contents-row'] + [class*='title_wrap'] {
+  @apply !mt-[32px];
+}
