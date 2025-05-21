@@ -18,6 +18,8 @@ import { TenantDetailWidget } from '@features/tenant/management/ui/tenant-detail
 import { TenantDetailBanner } from '@features/tenant/management/ui/tenant-detail-banner';
 import { TenantDetailLearningRole } from '@features/tenant/management/ui/tenant-detail-learning-role';
 
+import { EnTenantDetailTabKey } from '@types';
+
 export const Route = createFileRoute('/_layout/tenant/management/detail')({
   component: RouteComponent,
 });
@@ -26,9 +28,9 @@ function RouteComponent() {
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
 
-  const [selectedTabKey, setSelectedTabKey] = useState('attrbute');
+  const [selectedTabKey, setSelectedTabKey] = useState(EnTenantDetailTabKey.attribute);
 
-  const handleTabChange = (tabKey: string) => {
+  const handleTabChange = (tabKey: EnTenantDetailTabKey) => {
     if (tabKey !== selectedTabKey) {
       setSelectedTabKey(tabKey);
     }
@@ -51,32 +53,32 @@ function RouteComponent() {
   const menuItems = [
     {
       title: '테넌트 속성 관리',
-      key: 'attrbute',
+      key: EnTenantDetailTabKey.attribute,
       content: <TenantDetailAttribute />,
     },
     {
       title: '테넌트 메뉴관리',
-      key: 'menu',
+      key: EnTenantDetailTabKey.menu,
       content: <TenantDetailMenu />,
     },
     {
       title: '테넌트 카테고리 관리',
-      key: 'category',
+      key: EnTenantDetailTabKey.category,
       content: <TenantDetailCategory />,
     },
     {
       title: '테넌트 역할 관리',
-      key: 'learningRole',
+      key: EnTenantDetailTabKey.learningRole,
       content: <TenantDetailLearningRole />,
     },
     {
       title: '테넌트 위젯 관리',
-      key: 'widget',
+      key: EnTenantDetailTabKey.widget,
       content: <TenantDetailWidget />,
     },
     {
       title: '테넌트 배너 관리',
-      key: 'banner',
+      key: EnTenantDetailTabKey.banner,
       content: <TenantDetailBanner />,
     },
   ];
