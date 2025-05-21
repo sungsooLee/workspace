@@ -150,6 +150,62 @@ function RouteComponent() {
         </div>
       </div>
 
+      {/* 2개인 CASE2 */}
+      <div className={cn(searchStyles.start, searchStyles.wrap)}>
+        <div className={searchStyles.contents}>
+          <div className={cn(searchStyles.item_row, searchStyles.item_auto)}>
+            <div className={searchStyles.item_wrap}>
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-label2" className={searchStyles.label}>
+                    <span className={searchStyles.text}>타이틀</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <Dropdown
+                      options={options}
+                      value={selectedValues}
+                      onChange={(selected) => setSelectedValues(selected)}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-label2-2" className={searchStyles.label}>
+                    <span className={searchStyles.text}>타이틀</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <div className={searchStyles.datepicker_wrap}>
+                      <DatePicker displayType={'day'} size={'md'} placeholder={'0000-00-00'} />
+                      <span className={searchStyles.hyphen}>-</span>
+                      <DatePicker displayType={'day'} size={'md'} placeholder={'0000-00-00'} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={searchStyles.btn_box}>
+            <Button
+              type="button"
+              className={searchStyles.btn_refresh}
+              variant="search"
+              size="sm"
+              onlyIcon
+            >
+              <IcoRefresh02 className={searchStyles.icon_refresh} />
+            </Button>
+            <Button type="button" variant="search" size="sm" className={searchStyles.btn_search}>
+              <IcoSearch className={searchStyles.icon_sm_search} />
+              조회
+            </Button>
+          </div>
+          {/* 퍼블수정 20240318 : item_row 추가, btn_box 위치 수정 E */}
+        </div>
+      </div>
+
       {/* 3개인 CASE */}
       <div className={cn(searchStyles.start, searchStyles.wrap)}>
         <div className={searchStyles.contents}>
