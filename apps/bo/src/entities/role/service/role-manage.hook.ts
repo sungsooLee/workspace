@@ -37,9 +37,9 @@ export function useFetchRoleTree(tenantId: number, siteScope: string) {
   return useQuery({ ...queryOptions.getRoleTree(tenantId, siteScope) });
 }
 
-export function useCreateRoleMenu(options: any) {
+export function useModifyMenusAndApiToRole(options: any) {
   const mutation = useMutation({
-    ...mutateOptions.assignMenusToRole(),
+    ...mutateOptions.modifyMenusAndApiToRole(),
     onSuccess: async (data, variables, context) => {
       if (options.onSuccess) {
         options.onSuccess(data, variables, context);
@@ -62,7 +62,6 @@ interface RoleHookOptions {
   onRoleCreateSuccess?: (data: any, variables: any, context: any) => void;
   onRoleUpdateSuccess?: (data: any, variables: any, context: any) => void;
   onRoleDeleteSuccess?: (data: any, variables: any, context: any) => void;
-  onApisAssignSuccess?: (data: any, variables: any, context: any) => void;
 }
 
 export const useRoleManager = (options: RoleHookOptions = {}) => {
@@ -111,25 +110,6 @@ export const useRoleManager = (options: RoleHookOptions = {}) => {
     },
   });
 
-  // 역할에 API 할당
-  const { mutate: assignApisMutate } = useMutation({
-    ...mutateOptions.assignApisToRole(),
-    onSuccess: async (data, variables, context) => {
-      showSaveComplete();
-      await queryClient.invalidateQueries({
-        queryKey: [
-          ...roleQueryKeys.all,
-          ...roleQueryKeys.roles,
-          variables.roleId,
-          ...roleQueryKeys.apis,
-        ],
-      });
-      if (options.onApisAssignSuccess) {
-        options.onApisAssignSuccess(data, variables, context);
-      }
-    },
-  });
-
   // 핸들러 함수들
   const handleCreateRole = (roleData: any, callbacks?: any) => {
     createRoleMutate(roleData, callbacks);
@@ -143,14 +123,9 @@ export const useRoleManager = (options: RoleHookOptions = {}) => {
     updateRoleMutate(roleData, callbacks);
   };
 
-  const handleAssignApis = (roleId: string, apiIds: string[], callbacks?: any) => {
-    assignApisMutate({ roleId, apiIds }, callbacks);
-  };
-
   return {
     createRole: handleCreateRole,
     deleteRole: handleDeleteRole,
     updateRole: handleUpdateRole,
-    assignApis: handleAssignApis,
   };
 };

@@ -68,10 +68,10 @@ export default class RoleManagerService {
    * @param menuIds 메뉴 ID 배열
    * @returns 할당 결과
    */
-  static assignMenusToRole(roleCode: string, addMenuIds: number[]): Promise<any> {
-    const payload = { addMenuIds: addMenuIds };
-    console.log('assignMenu', payload, addMenuIds);
-    return httpService.post<any>(`${PMSApiPrefix()}/roles/${roleCode}/save-menu-apis`, payload);
+  static modifyMenusAndApiToRole(roleCode: string, body: any): Promise<any> {
+    // const payload = { addMenuIds: addMenuIds };
+    // console.log('assignMenu', payload, addMenuIds);
+    return httpService.post<any>(`${PMSApiPrefix()}/roles/${roleCode}/save-menu-apis`, body);
   }
 
   /**
@@ -81,16 +81,6 @@ export default class RoleManagerService {
    */
   static fetchRoleMenuApis(roleCode: string, menuId: string): Promise<any> {
     return httpService.get<any>(`${PMSApiPrefix()}/roles/${roleCode}/apis`, { menuId: menuId });
-  }
-
-  /**
-   * 역할에 API 할당
-   * @param roleId 역할 ID
-   * @param apiIds API ID 배열
-   * @returns 할당 결과
-   */
-  static assignApisToRole(roleId: string, apiIds: string[]): Promise<any> {
-    return httpService.post<any>(`${PMSApiPrefix()}/roles/${roleId}/apis`, { apiIds });
   }
 
   /**

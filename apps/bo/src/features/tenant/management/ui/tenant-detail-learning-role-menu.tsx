@@ -1,4 +1,6 @@
 import { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
+import { t } from 'i18next';
+import { useRouterState } from '@tanstack/react-router';
 import {
   Button,
   Checkbox,
@@ -10,15 +12,16 @@ import {
   useModal,
 } from '@learnway/ui';
 import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
-import { CellContext, createColumnHelper } from '@tanstack/react-table';
-import { t } from 'i18next';
-import { useRouterState } from '@tanstack/react-router';
+import { CellContext, createColumnHelper, Table } from '@tanstack/react-table';
+import { DATE_TIME_FORMAT, formatDate, getRandomId, getRowSelectionByList } from '@learnway/shared';
 
 import { TenantDetailLearningRoleMenuMappingModal } from './tenant-detail-learning-role-menu-mapping-modal';
+
 import {
   useFetchRoleTree,
   useFetchRoleMenus,
   useFetchMenuApis,
+  useModifyMenusAndApiToRole,
 } from '@entities/role/service/role-manage.hook';
 
 import {
@@ -56,10 +59,11 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
   const [roleMenuTree, setRoleMenuTree] = useState<TreeNode[]>([]);
   const [roleMenuTreeExpandedKeys, setRoleMenuTreeExpandedKeys] = useState<string[]>([]);
   const [selectedRoleMenu, setSelectedRoleMenu] = useState<any>(null);
+  const [tableInstance, setTableInstance] = useState<Table<any>>();
 
   const [menuSelectionType, setMenuSelectionType] = useState<'all' | 'custom'>('all');
   const [apiGridData, setApiGridData] = useState<any[]>([]);
-  const [apiUsageState, setApiUsageState] = useState<{ [apiId: string]: boolean }>({});
+  const [apiOriginalSelected, setApiOriginalSelected] = useState<any[]>();
   const [isDataModified, setIsDataModified] = useState<boolean>(false);
 
   const tenantId = routerState.location.state?.tenantId;
@@ -78,6 +82,8 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
     selectedRole?.roleCode || '',
     selectedRoleMenu?.menuId || '',
   );
+
+  const { create: createApi } = useModifyMenusAndApiToRole({});
 
   const handleMenuSelectionTypeChange = (type: string) => {
     setMenuSelectionType(type === 'option01' ? 'all' : 'custom');
@@ -118,17 +124,8 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
       width: 'xl',
     });
   };
-
-  // API 사용 여부 체크박스 변경 핸들러
-  const handleApiUsageChange = (apiId: string, isChecked: boolean) => {
-    // API 사용 여부 상태 업데이트
-    setApiUsageState((prev) => ({
-      ...prev,
-      [apiId]: isChecked,
-    }));
-
-    // 변경 사항 플래그 설정
-    setIsDataModified(true);
+  const handleRightGridRowSelect = (selectedRow: any) => {
+    console.log('selectedRow', selectedRow);
   };
 
   // 저장 버튼 클릭 핸들러
@@ -137,7 +134,38 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
       alert('역할을 선택해주세요.');
       return;
     }
+    const saveRows = tableInstance?.getSelectedRowModel().rows;
 
+    if (saveRows && apiOriginalSelected) {
+      const changeApis = saveRows.map((item) => {
+        return item.original.apiId;
+      });
+      const addApis = [];
+      const removeApis = [];
+      for (const apiId of changeApis) {
+        if (!apiOriginalSelected?.includes(apiId)) {
+          addApis.push(apiId);
+        }
+      }
+      for (const apiId of apiOriginalSelected) {
+        if (!changeApis.includes(apiId)) {
+          removeApis.push(apiId);
+        }
+      }
+      if (addApis.length > 0 || removeApis.length > 0) {
+        const payload = {
+          roleCode: selectedRole.roleCode,
+          body: {
+            addMenuIds: [],
+            removeMenuIds: [],
+            addApis: addApis,
+            removeApis: removeApis,
+          },
+        };
+        console.log('payload', payload);
+        createApi(payload);
+      }
+    }
     // // 역할-API 사용 여부 데이터 업데이트
     // roleApiUsageMockData[selectedRoleId] = { ...apiUsageState };
 
@@ -193,9 +221,23 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
 
   useEffect(() => {
     if (roleMenuApiData) {
+      console.log('roleMenuApiList', roleMenuApiData.roleMenuApiList);
       setApiGridData(roleMenuApiData.apiMappingMenuList);
+      setApiOriginalSelected(roleMenuApiData.roleMenuApiList);
     }
   }, [roleMenuApiData]);
+
+  useEffect(() => {
+    console.log('update tableInstance');
+    if (tableInstance && apiOriginalSelected) {
+      const targets = apiGridData.filter((item) => {
+        apiOriginalSelected?.includes(item.apiId);
+      });
+      const newSelection = getRowSelectionByList(tableInstance, targets, 'apiId');
+      tableInstance.setRowSelection(newSelection);
+    }
+  }, [tableInstance, apiOriginalSelected]);
+
   const renderMenuButtons = (onChange: any, menuSelectionType: any) => {
     if (roleInfo)
       return (
@@ -240,12 +282,14 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
           <Button
             variant="text"
             onClick={handleSaveClick}
-            disabled={!selectedRole || !isDataModified}
+            disabled={!apiGridData || apiGridData.length === 0}
           >
             저장
           </Button>
         }
         multiple={true} // 체크박스로 직접 관리하므로 multiple 옵션 비활성화
+        onRowSelect={handleRightGridRowSelect}
+        onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
       />
     </SectionLayout>
   );
