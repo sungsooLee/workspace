@@ -24,7 +24,7 @@ const TenantDetailAttributeCompanyComponent: FC<any> = ({
 
   useEffect(() => {
     console.log(tenantName, attributeData);
-    fetchData({ attributeData, tenantName: tenantName });
+    fetchData({ ...attributeData, tenantName: tenantName });
   }, []);
 
   return (
