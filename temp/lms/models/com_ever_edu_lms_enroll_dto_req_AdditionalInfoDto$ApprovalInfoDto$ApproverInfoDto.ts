@@ -5,7 +5,7 @@
 export type com_ever_edu_lms_enroll_dto_req_AdditionalInfoDto$ApprovalInfoDto$ApproverInfoDto = {
     approvalOrder?: number;
     approverType?: com_ever_edu_lms_enroll_dto_req_AdditionalInfoDto$ApprovalInfoDto$ApproverInfoDto.approverType;
-    userUuid?: string;
+    approverUuid?: string;
 };
 export namespace com_ever_edu_lms_enroll_dto_req_AdditionalInfoDto$ApprovalInfoDto$ApproverInfoDto {
     export enum approverType {

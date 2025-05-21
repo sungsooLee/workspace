@@ -46,7 +46,7 @@ export class BoS3FileService {
      * @returns com_ever_edu_global_s3_dto_res_CompleteUploadResDto OK
      * @throws ApiError
      */
-    public static completeUpload1(
+    public static completeUpload3(
         uploadId: string,
         key: string,
         requestBody: com_ever_edu_global_s3_dto_req_CompleteUploadReqDto,

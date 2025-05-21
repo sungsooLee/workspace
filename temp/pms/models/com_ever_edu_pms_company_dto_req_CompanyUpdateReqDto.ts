@@ -39,6 +39,22 @@ export type com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto = {
      * 우편번호
      */
     postNo?: string;
+    /**
+     * 서비스 타입
+     */
+    serviceType?: com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto.serviceType;
+    /**
+     * 비용결제용 법인코드
+     */
+    paymentCompanyCode?: string;
+    /**
+     * 조직정보 수정 사용여부
+     */
+    isUseEditableDept?: boolean;
+    /**
+     * 연동시스템 사용여부
+     */
+    isUseLinkageSystem?: boolean;
 };
 export namespace com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto {
     /**
@@ -57,7 +73,17 @@ export namespace com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto {
         KIA_SALES = 'KIA_SALES',
         KIA_SERVICE = 'KIA_SERVICE',
         KIA_PRODUCTION = 'KIA_PRODUCTION',
+        CP = 'CP',
         ETC = 'ETC',
+    }
+    /**
+     * 서비스 타입
+     */
+    export enum serviceType {
+        CONSIGNMENT = 'CONSIGNMENT',
+        BASIC = 'BASIC',
+        CORE = 'CORE',
+        ENTERPRISE = 'ENTERPRISE',
     }
 }
 

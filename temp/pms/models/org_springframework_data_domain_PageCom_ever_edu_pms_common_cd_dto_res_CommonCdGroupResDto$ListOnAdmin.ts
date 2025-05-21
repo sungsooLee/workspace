@@ -12,10 +12,10 @@ export type org_springframework_data_domain_PageCom_ever_edu_pms_common_cd_dto_r
     content?: Array<com_ever_edu_pms_common_cd_dto_res_CommonCdGroupResDto$ListOnAdmin>;
     number?: number;
     sort?: Array<org_springdoc_core_converters_models_SortObject>;
-    first?: boolean;
-    last?: boolean;
     numberOfElements?: number;
     pageable?: PageableObject;
+    first?: boolean;
+    last?: boolean;
     empty?: boolean;
 };
 

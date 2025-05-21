@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { com_ever_edu_global_dto_IdNameDto } from './com_ever_edu_global_dto_IdNameDto';
 export type com_ever_edu_pms_role_dto_res_RoleTreeResDto = {
     /**
      * 역할 ID
@@ -15,6 +16,10 @@ export type com_ever_edu_pms_role_dto_res_RoleTreeResDto = {
      * 부모 역할 ID
      */
     parentRoleId?: number;
+    /**
+     * 트리 순서
+     */
+    sortOrder?: number;
     /**
      * 이름
      */
@@ -36,25 +41,25 @@ export type com_ever_edu_pms_role_dto_res_RoleTreeResDto = {
      */
     companyScope?: com_ever_edu_pms_role_dto_res_RoleTreeResDto.companyScope;
     /**
-     * 회사 ID
+     * 회사 목록
      */
-    companyIds?: Array<number>;
+    companies?: Array<com_ever_edu_global_dto_IdNameDto>;
     /**
      * 채널 적용 범위
      */
     channelScope?: com_ever_edu_pms_role_dto_res_RoleTreeResDto.channelScope;
     /**
-     * 채널 ID
+     * 채널 목록
      */
-    channelIds?: Array<number>;
+    channels?: Array<com_ever_edu_global_dto_IdNameDto>;
     /**
      * 팀 적용 범위
      */
     deptScope?: com_ever_edu_pms_role_dto_res_RoleTreeResDto.deptScope;
     /**
-     * 조직 ID
+     * 조직 목록
      */
-    deptIds?: Array<number>;
+    depts?: Array<com_ever_edu_global_dto_IdNameDto>;
     /**
      * 사용여부
      */

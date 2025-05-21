@@ -2,11 +2,14 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+/**
+ * 파일정보목록
+ */
 export type com_ever_edu_pms_file_dto_req_FileInfoReqDto = {
     /**
-     * 파일그룹 아이디
+     * 파일 업로드유형, 코드그룹(pms.file.FileUploadType) - S3_SINGLEPART|S3_MULTIPART
      */
-    groupUuid?: string;
+    fileUploadType: com_ever_edu_pms_file_dto_req_FileInfoReqDto.fileUploadType;
     /**
      * 원본파일이름
      */
@@ -19,9 +22,14 @@ export type com_ever_edu_pms_file_dto_req_FileInfoReqDto = {
      * 파일크기
      */
     fileSize?: number;
-    /**
-     * 세부경로, 3Depth 경로<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)<br>Ex&gt;upload/community/board/2025/01/02/file.ppt -&gt;/2025/01/02
-     */
-    detailPath: string;
 };
+export namespace com_ever_edu_pms_file_dto_req_FileInfoReqDto {
+    /**
+     * 파일 업로드유형, 코드그룹(pms.file.FileUploadType) - S3_SINGLEPART|S3_MULTIPART
+     */
+    export enum fileUploadType {
+        S3_SINGLEPART = 'S3_SINGLEPART',
+        S3_MULTIPART = 'S3_MULTIPART',
+    }
+}
 

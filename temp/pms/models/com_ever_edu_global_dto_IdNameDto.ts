@@ -2,10 +2,17 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type com_ever_edu_pms_file_dto_res_FileInfoDeleteResDto = {
+/**
+ * 조직 목록
+ */
+export type com_ever_edu_global_dto_IdNameDto = {
     /**
-     * 파일 삭제 결과
+     * ID
      */
-    result?: boolean;
+    id?: number;
+    /**
+     * 이름
+     */
+    name?: string;
 };
 

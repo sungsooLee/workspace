@@ -6,7 +6,7 @@ export type com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$Searc
     /**
      * 다국어 분류
      */
-    keyType?: com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$SearchByAdmin.keyType;
+    keyTypeCode?: com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$SearchByAdmin.keyTypeCode;
     /**
      * 번역 언어
      */
@@ -28,7 +28,7 @@ export namespace com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$
     /**
      * 다국어 분류
      */
-    export enum keyType {
+    export enum keyTypeCode {
         COMMON_CODE = 'COMMON_CODE',
         LEARNER_MENU = 'LEARNER_MENU',
         HRD_CENTER_MENU = 'HRD_CENTER_MENU',

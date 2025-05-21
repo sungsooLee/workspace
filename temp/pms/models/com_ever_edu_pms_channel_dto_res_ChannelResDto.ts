@@ -12,7 +12,7 @@ export type com_ever_edu_pms_channel_dto_res_ChannelResDto = {
      * 회사명
      */
     companyName?: string;
-    tenants?: Array<com_ever_edu_pms_channel_dto_res_ChannelMappingTenantResDto>;
+    tenantList?: Array<com_ever_edu_pms_channel_dto_res_ChannelMappingTenantResDto>;
     /**
      * 사용여부
      */
@@ -28,5 +28,6 @@ export type com_ever_edu_pms_channel_dto_res_ChannelResDto = {
     createdBy?: string;
     createdDate?: string;
     modifiedDate?: string;
+    tenants?: Array<com_ever_edu_pms_channel_dto_res_ChannelMappingTenantResDto>;
 };
 

@@ -46,7 +46,7 @@ export class FoS3FileService {
      * @returns com_ever_edu_global_s3_dto_res_CompleteUploadResDto OK
      * @throws ApiError
      */
-    public static completeUpload(
+    public static completeUpload1(
         uploadId: string,
         key: string,
         requestBody: com_ever_edu_global_s3_dto_req_CompleteUploadReqDto,

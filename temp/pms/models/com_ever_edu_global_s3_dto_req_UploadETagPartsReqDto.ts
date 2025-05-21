@@ -3,7 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * ETag 및 PartNumber 속성이 있는 객체 배열
+ * S3 멀티파트 업로드 ETag 및 PartNumber 정보 배열
  */
 export type com_ever_edu_global_s3_dto_req_UploadETagPartsReqDto = {
     /**

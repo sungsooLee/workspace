@@ -4,6 +4,7 @@
 /* eslint-disable */
 export type com_ever_edu_lms_enroll_dto_res_EnrollResDto$onUserList = {
     courseType?: com_ever_edu_lms_enroll_dto_res_EnrollResDto$onUserList.courseType;
+    isScheduleConflictAllowed?: boolean;
     courseUuid?: string;
     courseSequenceUuid?: string;
     courseSequenceName?: string;

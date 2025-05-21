@@ -4,7 +4,6 @@
 /* eslint-disable */
 export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep3 = {
     wizardStep: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep3.wizardStep;
-    isWhiteList?: boolean;
     primaryKitId: number;
 };
 export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep3 {

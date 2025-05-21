@@ -145,22 +145,17 @@ export class FoService {
      * 과정 좋아요 해제
      * 과정 좋아요를 해제한다.
      * @param courseUuid 과정 uuid
-     * @param courseType
      * @returns number OK
      * @throws ApiError
      */
     public static unlike(
         courseUuid: string,
-        courseType: 'ELEARNING' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/user/api/v1/course/{courseUuid}/unlike',
             path: {
                 'courseUuid': courseUuid,
-            },
-            query: {
-                'courseType': courseType,
             },
             errors: {
                 400: `Bad Request`,
@@ -175,22 +170,17 @@ export class FoService {
      * 과정 좋아요 조회
      * 과정의 좋아요 정보를 조회한다.
      * @param courseUuid 과정 uuid
-     * @param courseType
      * @returns com_ever_edu_lms_course_dto_res_CourseLikesResDto OK
      * @throws ApiError
      */
     public static findCourseLikesByCourseTsId(
         courseUuid: string,
-        courseType: 'ELEARNING' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
     ): CancelablePromise<com_ever_edu_lms_course_dto_res_CourseLikesResDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/user/api/v1/course/{courseUuid}/like',
             path: {
                 'courseUuid': courseUuid,
-            },
-            query: {
-                'courseType': courseType,
             },
             errors: {
                 400: `Bad Request`,
@@ -205,13 +195,11 @@ export class FoService {
      * 과정 좋아요
      * 과정에 좋아요를 누른다.
      * @param courseUuid 과정 uuid
-     * @param courseType
      * @returns number OK
      * @throws ApiError
      */
     public static like(
         courseUuid: string,
-        courseType: 'ELEARNING' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -219,9 +207,30 @@ export class FoService {
             path: {
                 'courseUuid': courseUuid,
             },
-            query: {
-                'courseType': courseType,
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
             },
+        });
+    }
+    /**
+     * 한 테넌트별 키워드의 자동완성 기능
+     * 한 테넌트 내의 키워드 입력시 자동 완성을 제공해주는 기능이다.
+     * @param requestBody
+     * @returns string OK
+     * @throws ApiError
+     */
+    public static saveAutoCompleteKeyword(
+        requestBody: com_ever_edu_lms_search_logs_dto_req_SearchLogRequestDto,
+    ): CancelablePromise<string> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/user/api/v1/auto-complete',
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
@@ -467,6 +476,34 @@ export class FoService {
                 'courseType': courseType,
                 'enrollmentType': enrollmentType,
                 'pageable': pageable,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 한 테넌트별 키워드의 자동완성 기능
+     * 한 테넌트 내의 키워드 입력시 자동 완성을 제공해주는 기능이다.
+     * @param tenantUuid
+     * @param keyword
+     * @returns com_ever_edu_lms_search_logs_dto_res_SearchLogResponseDto OK
+     * @throws ApiError
+     */
+    public static getKeywordAutoComplete(
+        tenantUuid: string,
+        keyword: string,
+    ): CancelablePromise<Array<com_ever_edu_lms_search_logs_dto_res_SearchLogResponseDto>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/auto-complete/{tenantUuid}/{keyword}',
+            path: {
+                'tenantUuid': tenantUuid,
+                'keyword': keyword,
             },
             errors: {
                 400: `Bad Request`,
