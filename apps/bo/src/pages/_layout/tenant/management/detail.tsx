@@ -82,9 +82,7 @@ function RouteComponent() {
   ];
 
   return (
-    <PageContainer
-      scrollHidden={selectedTabKey === 'attrbute' || selectedTabKey === 'widget' ? false : true}
-    >
+    <PageContainer scrollHidden={!['attrbute', 'widget'].includes(selectedTabKey)}>
       {selectedTabKey === 'menu01' && (
         <ContentsButtons>
           <LinkBox>

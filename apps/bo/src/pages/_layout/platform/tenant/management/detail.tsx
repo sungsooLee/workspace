@@ -103,9 +103,10 @@ function RouteComponent() {
       content: '테넌트 디자인/테마 관리',
     },
   ];
-
   return (
-    <PageContainer scrollHidden={false}>
+    <PageContainer
+      scrollHidden={['menu', 'category', 'learningRole', 'banner'].includes(selectedTabKey)}
+    >
       {buttonShowTabs.includes(selectedTabKey) && (
         <ContentsButtons>
           <LinkBox>
