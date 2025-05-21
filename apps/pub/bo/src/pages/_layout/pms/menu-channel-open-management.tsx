@@ -81,6 +81,90 @@ function RouteComponent() {
       register: '홍길동',
       registerDate: '2025-01-01 07:12',
     },
+    {
+      channelId: 'IA000000',
+      channelName: '채널명채널명채널명채널명',
+      tenant: '테넌트명1, 테넡트명2',
+      status: '미사용',
+      type: '유니버셜',
+      sort: '비밀',
+      owner: '김현대 외 1',
+      receiptId: '0000000',
+      register: '홍길동',
+      registerDate: '2025-01-01 07:12',
+    },
+    {
+      channelId: 'IA000000',
+      channelName: '채널명채널명채널명채널명',
+      tenant: '테넌트명1, 테넡트명2',
+      status: '미사용',
+      type: '유니버셜',
+      sort: '비밀',
+      owner: '김현대 외 1',
+      receiptId: '0000000',
+      register: '홍길동',
+      registerDate: '2025-01-01 07:12',
+    },
+    {
+      channelId: 'IA000000',
+      channelName: '채널명채널명채널명채널명',
+      tenant: '테넌트명1, 테넡트명2',
+      status: '미사용',
+      type: '유니버셜',
+      sort: '비밀',
+      owner: '김현대 외 1',
+      receiptId: '0000000',
+      register: '홍길동',
+      registerDate: '2025-01-01 07:12',
+    },
+    {
+      channelId: 'IA000000',
+      channelName: '채널명채널명채널명채널명',
+      tenant: '테넌트명1, 테넡트명2',
+      status: '미사용',
+      type: '유니버셜',
+      sort: '비밀',
+      owner: '김현대 외 1',
+      receiptId: '0000000',
+      register: '홍길동',
+      registerDate: '2025-01-01 07:12',
+    },
+    {
+      channelId: 'IA000000',
+      channelName: '채널명채널명채널명채널명',
+      tenant: '테넌트명1, 테넡트명2',
+      status: '미사용',
+      type: '유니버셜',
+      sort: '비밀',
+      owner: '김현대 외 1',
+      receiptId: '0000000',
+      register: '홍길동',
+      registerDate: '2025-01-01 07:12',
+    },
+    {
+      channelId: 'IA000000',
+      channelName: '채널명채널명채널명채널명',
+      tenant: '테넌트명1, 테넡트명2',
+      status: '미사용',
+      type: '유니버셜',
+      sort: '비밀',
+      owner: '김현대 외 1',
+      receiptId: '0000000',
+      register: '홍길동',
+      registerDate: '2025-01-01 07:12',
+    },
+    {
+      channelId: 'IA000000',
+      channelName: '채널명채널명채널명채널명',
+      tenant: '테넌트명1, 테넡트명2',
+      status: '미사용',
+      type: '유니버셜',
+      sort: '비밀',
+      owner: '김현대 외 1',
+      receiptId: '0000000',
+      register: '홍길동',
+      registerDate: '2025-01-01 07:12',
+    },
   ];
 
   const columnHelper = createColumnHelper<any>();
@@ -283,7 +367,7 @@ function RouteComponent() {
               <GridBox
                 data={data}
                 columns={columns}
-                height={350}
+                height={440}
                 showColumnSettings={false}
                 showNumberingColumn={true}
                 pagination={{
