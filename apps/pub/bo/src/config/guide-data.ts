@@ -699,7 +699,7 @@ export const guideData = [
     pageId: 'learning/popup-question-detail',
     screenId: 'NLP_BO_CMS_1215',
     pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-05-21',
     lastUpdateDate: '',
     remarks: '', // 비고
   },
