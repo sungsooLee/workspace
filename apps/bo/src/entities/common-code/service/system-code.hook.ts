@@ -1,15 +1,15 @@
-import { queryKeys, apiKeys } from './system-code.queries';
-import { createAuthorizedQueryHook } from '../../../shared/lib/use-authorized-query';
-import SystemCodeService from '../api/system-code';
+import { useApiQuery } from '../../../shared/lib/use-authorized-query';
+import { SystemCodeApi } from '../api/system-code';
+import { queryKeys } from './system-code.queries';
 
-export const useSystemCodeList = createAuthorizedQueryHook(
-  apiKeys.list,
-  () => queryKeys.list,
-  () => () => SystemCodeService.fetchCodes(),
-);
+export function useSystemCodeList() {
+  return useApiQuery<string[], any>(SystemCodeApi.list, undefined, queryKeys.list);
+}
 
-export const useSystemCodeDetail = createAuthorizedQueryHook(
-  apiKeys.detail,
-  (enumName: string) => queryKeys.detail(enumName),
-  (enumName) => () => SystemCodeService.fetchCode(enumName),
-);
+export function useSystemCodeDetail(enumName: string) {
+  return useApiQuery<any, { enumName: string }>(
+    SystemCodeApi.detail,
+    { enumName },
+    queryKeys.detail(enumName),
+  );
+}

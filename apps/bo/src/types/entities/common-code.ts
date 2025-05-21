@@ -1,9 +1,12 @@
 export interface CommonCodeGroup {
+  cdGroupContent: string;
   cdGroupId: string;
   cdGroupName: string;
-  cdGroupAbbreviationEnglishName: string;
-  cdGroupContent: string;
+  createdBy?: string;
+  createdDate?: string;
   isUsed: boolean;
+  lastModifiedBy?: string;
+  modifiedDate?: string;
 }
 
 export interface CommonCode

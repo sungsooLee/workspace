@@ -1,188 +1,277 @@
-import {
-  MutateOptions,
-  useMutation,
-  UseMutationOptions,
-  useQuery,
-  useQueryClient,
-  UseQueryOptions,
-  UseQueryResult,
-} from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { usePermissionStore } from './permission-store';
-import { eventService, HTTP_EVENTS } from '@learnway/shared';
+import { eventService, HTTP_EVENTS, httpService } from '@learnway/shared';
+import { PMSApiPrefix } from '../../../../../libs/config/src';
 
-export function createAuthorizedQueryHook<
-  TParams extends any[] = [],
-  TQueryFnData = unknown,
-  TError = Error,
-  TData = TQueryFnData,
-  TQueryKey extends readonly unknown[] = readonly unknown[],
->(
-  apiKey: string,
-  queryKeyFactory: (...params: TParams) => TQueryKey,
-  queryFnFactory: (...params: TParams) => () => Promise<TQueryFnData>,
-  defaultOptions: any = {},
+export type ApiMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+
+export interface ApiDefinition<TResponse = any, TParams = any, TPayload = any> {
+  key: string;
+  method: ApiMethod;
+  getFullUrl: (params?: TParams) => string;
+  description?: string;
+}
+
+export type UrlFactory<TParams> = (params?: TParams) => string;
+
+const API_REGISTRY: Record<string, ApiDefinition> = {};
+
+export function registerApi<TResponse = any, TParams = any, TPayload = any>(
+  key: string,
+  method: ApiMethod,
+  urlFactory: UrlFactory<TParams>,
+  description?: string,
+): ApiDefinition<TResponse, TParams, TPayload> {
+  const api = {
+    key,
+    method,
+    getFullUrl: urlFactory,
+    description,
+  };
+
+  if (API_REGISTRY[key]) {
+    console.warn(`API 키 '${key}'가 이미 등록되어 있습니다. 중복 등록은 무시됩니다.`);
+    return API_REGISTRY[key] as ApiDefinition<TResponse, TParams, TPayload>;
+  }
+
+  API_REGISTRY[key] = api;
+  return api;
+}
+
+export function getApiKey(key: string): ApiDefinition | undefined {
+  return API_REGISTRY[key];
+}
+
+export function getAllApis(): Record<string, ApiDefinition> {
+  return { ...API_REGISTRY };
+}
+
+// API 키 목록 타입
+export type ApiKey = keyof typeof API_REGISTRY;
+
+export function useApiQuery<TResponse = any, TParams = any, TError = Error>(
+  api: ApiDefinition,
+  params?: TParams,
+  queryKey?: readonly unknown[],
+  options?: any,
 ) {
-  return function useCustomHook(
-    ...args: any[]
-  ): UseQueryResult<TData, TError> & { hasPermission: boolean } {
-    const hasApiAccess = usePermissionStore((state) => state.hasApiAccess);
-    const initialized = usePermissionStore((state) => state.initialized);
-
-    let params: TParams = [] as unknown as TParams;
-    let options: Omit<
-      UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
-      'queryKey' | 'queryFn'
-    > = {};
-
-    // args 파싱하기
-    if (args.length === 0) {
-      // 인자 없음: params는 빈 배열, options는 빈 객체
-    } else if (args.length === 1) {
-      // 인자가 하나: 객체면 options, 아니면 params[0]로 처리
-      if (typeof args[0] === 'object' && !Array.isArray(args[0])) {
-        options = args[0];
-      } else {
-        params = [args[0]] as unknown as TParams;
-      }
-    } else {
-      // 인자가 여러 개: 마지막이 객체면 options, 나머지는 params
-      const lastArg = args[args.length - 1];
-      if (typeof lastArg === 'object' && !Array.isArray(lastArg)) {
-        options = lastArg;
-        params = args.slice(0, args.length - 1) as unknown as TParams;
-      } else {
-        params = args as unknown as TParams;
-      }
+  const hasApiAccess = usePermissionStore((state) => state.hasApiAccess);
+  const hasPermission = hasApiAccess(api.key);
+  const queryFn = async (): Promise<TResponse> => {
+    if (!hasPermission) {
+      eventService.emit(HTTP_EVENTS.REACT_QUERY_ERROR, {
+        title: 'Permission Error',
+        message: `'${api.key}' 작업 권한이 없습니다`,
+      });
+      throw new Error(`'${api.key}' 작업 권한이 없습니다`);
     }
+    const url = api.getFullUrl(params);
+    return httpService.get<TResponse>(url);
+  };
 
-    const queryKey = queryKeyFactory(...params);
-    console.log(queryKey);
-    const queryFn = queryFnFactory(...params);
-    const hasPermission = hasApiAccess(apiKey);
+  const query = useQuery({
+    queryKey,
+    queryFn,
+    enabled: options?.enabled !== false && hasPermission,
+    ...options,
+  });
 
-    const mergedOptions = {
-      ...defaultOptions,
-      ...options,
-    };
-
-    const isEnabled = initialized && hasPermission && mergedOptions.enabled !== false;
-
-    const queryResult = useQuery<TQueryFnData, TError, TData, TQueryKey>({
-      queryKey,
-      queryFn,
-      enabled: isEnabled,
-      ...mergedOptions,
-    });
-
-    return { ...queryResult, hasPermission };
+  return {
+    ...query,
+    hasPermission,
   };
 }
 
-export function createAuthorizedMutationHook<
-  TData = unknown,
-  TError = Error,
-  TVariables = void,
-  TContext = unknown,
->(
-  apiKey: string,
-  mutationFnFactory: () => (variables: TVariables) => Promise<TData>,
-  defaultInvalidation?: (
-    queryClient: ReturnType<typeof useQueryClient>,
-    data: TData,
-    variables: TVariables,
-    context: TContext,
-    queryParams?: any,
-  ) => Promise<void>,
-  defaultOptions: Omit<
-    UseMutationOptions<TData, TError, TVariables, TContext>,
-    'mutationFn' | 'onSuccess'
-  > = {},
+export function useApiMutation<TResponse = any, TPayload = any, TParams = any, TError = Error>(
+  api: ApiDefinition,
+  params?: TParams,
+  options?: {
+    onSuccess?: (data: TResponse, variables: TPayload, context: unknown) => void;
+    onError?: (error: TError, variables: TPayload, context: unknown) => void;
+    invalidateQueries?: readonly (readonly unknown[])[];
+  },
 ) {
-  return function useAuthorizedMutation(
-    options: Partial<{
-      onSuccess: (data: TData, variables: TVariables, context: TContext) => void;
-      onError: (error: TError, variables: TVariables, context: TContext) => void;
-      queryParams?: any; // 컴포넌트에서 전달할 queryParams
-    }> &
-      Omit<
-        UseMutationOptions<TData, TError, TVariables, TContext>,
-        'mutationFn' | 'onSuccess' | 'onError'
-      > = {},
-  ) {
-    const queryClient = useQueryClient();
-    const hasApiAccess = usePermissionStore((state) => state.hasApiAccess);
-    const initialized = usePermissionStore((state) => state.initialized);
-    const hasPermission = hasApiAccess(apiKey);
+  const { onSuccess, onError, invalidateQueries, ...restOptions } = options || {};
 
-    const { onSuccess, onError, queryParams, ...restOptions } = options;
+  const queryClient = useQueryClient();
+  const hasApiAccess = usePermissionStore((state) => state.hasApiAccess);
+  const hasPermission = hasApiAccess(api.key);
 
-    const handleSuccess = async (data: TData, variables: TVariables, context: TContext) => {
-      if (defaultInvalidation) {
-        await defaultInvalidation(queryClient, data, variables, context, queryParams);
+  const customMutate = (payload: TPayload, mutationOptions?: any) => {
+    if (!hasPermission) {
+      eventService.emit(HTTP_EVENTS.REACT_QUERY_ERROR, {
+        title: 'Permission Error',
+        message: `'${api.key}' 작업 권한이 없습니다`,
+      });
+
+      const error = new Error(`API 키 '${api.key}'에 대한 권한이 없습니다.`) as TError;
+
+      if (mutationOptions?.onError) {
+        mutationOptions.onError(error, payload, undefined);
+      } else if (onError) {
+        onError(error, payload, undefined);
       }
 
-      if (onSuccess) {
-        onSuccess(data, variables, context);
+      return;
+    }
+    console.log(mutationOptions);
+    mutation.mutate(payload, mutationOptions);
+  };
+
+  const customMutateAsync = async (
+    payload: TPayload,
+    mutationOptions?: any,
+  ): Promise<TResponse> => {
+    if (!hasPermission) {
+      eventService.emit(HTTP_EVENTS.REACT_QUERY_ERROR, {
+        title: 'Permission Error',
+        message: `'${api.key}' 작업 권한이 없습니다`,
+      });
+
+      const error = new Error(`API 키 '${api.key}'에 대한 권한이 없습니다.`) as TError;
+
+      if (mutationOptions?.onError) {
+        mutationOptions.onError(error, payload, undefined);
+      } else if (onError) {
+        onError(error, payload, undefined);
       }
-    };
 
-    const mergedOptions = {
-      ...defaultOptions,
-      ...restOptions,
-      onSuccess: handleSuccess,
-    };
+      return Promise.reject(error);
+    }
 
-    const mutationFn = hasPermission
-      ? mutationFnFactory()
-      : (_: TVariables) => Promise.reject(new Error(`'${apiKey}' 작업 권한이 없습니다`));
+    return mutation.mutateAsync(payload, mutationOptions);
+  };
 
-    const mutation = useMutation<TData, TError, TVariables, TContext>({
-      mutationFn,
-      ...mergedOptions,
+  const mutationFn = async (payload: TPayload): Promise<TResponse> => {
+    const urlPattern = api.getFullUrl({} as any);
+    const paramMatches = urlPattern.match(/:[a-zA-Z0-9_]+/g) || [];
+
+    const paramNames = paramMatches.map((param) => param.substring(1));
+    console.log(paramNames);
+    let actualParams = { ...(params as any) };
+    let foundParams = false;
+
+    if (payload && typeof payload === 'object' && paramNames.length > 0) {
+      for (const name of paramNames) {
+        if ((payload as any)[name] !== undefined) {
+          actualParams[name] = (payload as any)[name];
+          foundParams = true;
+        }
+      }
+    }
+
+    const url = foundParams ? api.getFullUrl(actualParams) : api.getFullUrl(params);
+
+    try {
+      let response: TResponse;
+
+      switch (api.method) {
+        case 'POST':
+          response = await httpService.post<TResponse>(url, payload);
+          break;
+        case 'PUT':
+          response = await httpService.put<TResponse>(url, payload);
+          break;
+        case 'DELETE':
+          response = await httpService.delete<TResponse>(url);
+          break;
+        case 'PATCH':
+          response = await httpService.patch<TResponse>(url, payload);
+          break;
+        default:
+          throw new Error(`메소드 '${api.method}'는 mutation에 적합하지 않습니다.`);
+      }
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  // 성공 시 처리할 작업
+  const handleSuccess = async (data: TResponse, variables: TPayload, context: unknown) => {
+    // 캐시 무효화 처리
+    if (invalidateQueries && invalidateQueries.length > 0) {
+      for (const queryKey of invalidateQueries) {
+        await queryClient.invalidateQueries({
+          queryKey: queryKey as unknown[],
+        });
+      }
+    }
+
+    if (onSuccess) {
+      onSuccess(data, variables, context);
+    }
+  };
+
+  const handleError = (error: TError, variables: TPayload, context: unknown) => {
+    if (onError) {
+      onError(error, variables, context);
+    }
+  };
+
+  const mutation = useMutation({
+    mutationFn,
+    onSuccess: handleSuccess,
+    onError: handleError,
+    ...restOptions,
+  });
+
+  return {
+    ...mutation,
+    mutate: customMutate,
+    mutateAsync: customMutateAsync,
+    hasPermission,
+  };
+}
+
+export function buildUrl(baseUrl: string, path: string, params?: Record<string, any>): string {
+  let urlPath = path;
+  const queryParams: Record<string, any> = {};
+
+  if (params) {
+    // 경로 파라미터 처리 (예: /users/:id)
+    Object.entries(params).forEach(([key, value]) => {
+      const placeholder = `:${key}`;
+      if (urlPath.includes(placeholder)) {
+        urlPath = urlPath.replace(placeholder, encodeURIComponent(String(value)));
+      } else if (value !== undefined && value !== null && value !== '') {
+        queryParams[key] = value;
+      }
+    });
+  }
+
+  let url = `${baseUrl}${urlPath}`;
+
+  if (Object.keys(queryParams).length > 0) {
+    const queryParts: string[] = [];
+
+    Object.entries(queryParams).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        value.forEach((item) => {
+          if (key === 'sort') {
+            queryParts.push(`${encodeURIComponent(key)}=${item}`);
+          } else {
+            queryParts.push(`${encodeURIComponent(key)}=${encodeURIComponent(String(item))}`);
+          }
+        });
+      } else {
+        if (key === 'sort') {
+          queryParts.push(`${encodeURIComponent(key)}=${value}`);
+        } else {
+          queryParts.push(`${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`);
+        }
+      }
     });
 
-    const mutate = (
-      variables: TVariables,
-      mutateOptions?: MutateOptions<TData, TError, TVariables, TContext>,
-    ) => {
-      if (!initialized) {
-        console.warn('권한 저장소가 초기화되지 않았습니다');
-        return;
-      }
+    if (queryParts.length > 0) {
+      url += `?${queryParts.join('&')}`;
+    }
+  }
 
-      if (!hasPermission) {
-        const error = new Error(`'${apiKey}' 작업 권한이 없습니다`) as TError;
-        eventService.emit(HTTP_EVENTS.ERROR, {
-          title: 'Request Error',
-          message: `'${apiKey}' 작업 권한이 없습니다`,
-        });
-        if (mutateOptions?.onError) {
-          mutateOptions.onError(error, variables, undefined as any);
-        } else if (options.onError) {
-          options.onError(error, variables, undefined as any);
-        }
-        return;
-      }
+  console.log(url);
+  return url;
+}
 
-      mutation.mutate(variables, mutateOptions);
-    };
-
-    const mutateAsync = async (
-      variables: TVariables,
-      mutateOptions?: MutateOptions<TData, TError, TVariables, TContext>,
-    ) => {
-      if (!initialized || !hasPermission) {
-        return Promise.reject(new Error(`'${apiKey}' 작업 권한이 없습니다`));
-      }
-
-      return mutation.mutateAsync(variables, mutateOptions);
-    };
-
-    return {
-      ...mutation,
-      mutate,
-      mutateAsync,
-      hasPermission,
-    };
-  };
+export function createPmsUrl(path: string) {
+  return (params?: Record<string, any>) => buildUrl(PMSApiPrefix(), path, params);
 }

@@ -316,15 +316,6 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
               />
             </ContentsRow>
 
-            {apiNodeType === 'FOLDER' && (
-              <ContentsRow>
-                <FormRow
-                  provider={provider}
-                  name={'apiDesc'}
-                  element={<TextareaFormField disabled={FORM_MODE.NONE === formMode} />}
-                />
-              </ContentsRow>
-            )}
             {apiNodeType === 'API' && (
               <>
                 <ContentsRow>
@@ -343,6 +334,15 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
                 </ContentsRow>
               </>
             )}
+            {/* {apiNodeType === 'FOLDER' && ( */}
+            <ContentsRow>
+              <FormRow
+                provider={provider}
+                name={'apiDesc'}
+                element={<TextareaFormField disabled={FORM_MODE.NONE === formMode} />}
+              />
+            </ContentsRow>
+            {/* )} */}
           </div>
         </form>
       </div>

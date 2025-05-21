@@ -9,11 +9,11 @@ import { IcoPlus } from '@learnway/icons';
 import {
   Button,
   ContentsRow,
-  DynamicFormField,
   GridBox,
   GridImperative,
   GridState,
   Input,
+  Textarea,
   useModal,
 } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
@@ -120,44 +120,27 @@ const CommonCodeGridComponent = ({
   const [selectedRow, setSelectedRow] = useState<CommonCode | null>(null);
   const [dataProcessed, setDataProcessed] = useState(false);
   const { alert: openAlert, confirm: openConfirm } = useModal();
+  const { showSaveComplete, showDeleteComplete, showUpdateComplete } = useModal();
 
   const { provider, onSubmit, fetchData, clearFormError, onFormChange, getValues, formState } =
     useDynamicForm(formConfig);
   const { create: createCode } = useCreateCommonCode({
-    onSuccess: (data: any) => {
-      if (data) {
-        afterCreateOrUpdateCommonCodeGroup(data);
-      }
-    },
-    queryParams: {
-      page,
-      size,
-      sort: state.sort,
-      cdGroupId: state.cdGroupId,
-      cdGroupName: state.cdGroupName,
-      isUsed: state.isUsed,
-      cdName: state.cdName,
-    },
+    page,
+    size,
+    sort: state.sort,
+    cdGroupId: state.cdGroupId,
+    cdGroupName: state.cdGroupName,
+    isUsed: state.isUsed,
+    cdName: state.cdName,
   });
-  const { update: updateCode } = useUpdateCommonCode({
-    onSuccess: (data: any) => {
-      // openAlert({
-      //   title: '완료되었습니다.',
-      //   content: '요청하신 작업이 정상적으로 완료되었습니다.',
-      // });
-      if (data) {
-        afterCreateOrUpdateCommonCodeGroup(data);
-      }
-    },
-    queryParams: {
-      page,
-      size,
-      sort: state.sort,
-      cdGroupId: state.cdGroupId,
-      cdGroupName: state.cdGroupName,
-      isUsed: state.isUsed,
-      cdName: state.cdName,
-    },
+  const { mutate: updateCode } = useUpdateCommonCode({
+    page,
+    size,
+    sort: state.sort,
+    cdGroupId: state.cdGroupId,
+    cdGroupName: state.cdGroupName,
+    isUsed: state.isUsed,
+    cdName: state.cdName,
   });
 
   const afterCreateOrUpdateCommonCodeGroup = (data: any) => {
@@ -194,8 +177,11 @@ const CommonCodeGridComponent = ({
   };
 
   const { data: detailData, isLoading } = useCommonCodeDetail(
-    selectedRow?.cdGroupId || '',
-    selectedRow?.cdId || '',
+    {
+      cdGroupId: selectedRow?.cdGroupId || '',
+      cdId: selectedRow?.cdId || '',
+    },
+    { enabled: Boolean(selectedRow?.cdGroupId) && Boolean(selectedRow?.cdId) },
   );
 
   // 추가 버튼 핸들러
@@ -252,7 +238,14 @@ const CommonCodeGridComponent = ({
           ...formData,
           cdSeq: formData.cdSeq === '' ? null : Number(formData.cdSeq),
         };
-        createCode(createPayload);
+        createCode(createPayload, {
+          onSuccess: (data: any) => {
+            showSaveComplete();
+            if (data) {
+              afterCreateOrUpdateCommonCodeGroup(data);
+            }
+          },
+        });
       }
     } else if (formMode === FORM_MODE.VIEW) {
       const isUpdate = await openConfirm({
@@ -265,7 +258,14 @@ const CommonCodeGridComponent = ({
           ...formData,
           cdSeq: formData.cdSeq === '' ? null : Number(formData.cdSeq),
         };
-        updateCode(updatePayload);
+        updateCode(updatePayload, {
+          onSuccess: (data: any) => {
+            showUpdateComplete();
+            if (data) {
+              afterCreateOrUpdateCommonCodeGroup(data);
+            }
+          },
+        });
       }
     }
 
@@ -276,7 +276,8 @@ const CommonCodeGridComponent = ({
   useEffect(() => {
     if (detailData && !isLoading && formMode === FORM_MODE.VIEW && !dataProcessed) {
       console.log(detailData);
-      fetchData({ ...detailData, cdSeq: detailData.cdSeq ? detailData.cdSeq + '' : '' });
+      const data = detailData as any;
+      fetchData({ ...data, cdSeq: data.cdSeq ? data.cdSeq + '' : '' });
       // 데이터 처리 완료 표시
       setDataProcessed(true);
     }
@@ -382,8 +383,15 @@ const CommonCodeGridComponent = ({
               <ContentsRow>
                 <FormRow
                   provider={provider}
-                  name={'cdGroupName'}
+                  name={'cdId'}
                   element={<Input disabled={isFormDisabled || FORM_MODE.VIEW === formMode} />}
+                />
+              </ContentsRow>
+              <ContentsRow>
+                <FormRow
+                  provider={provider}
+                  name={'cdName'}
+                  element={<Input disabled={isFormDisabled} />}
                 >
                   <Button
                     type="button"
@@ -410,13 +418,6 @@ const CommonCodeGridComponent = ({
               <ContentsRow>
                 <FormRow
                   provider={provider}
-                  name={'cdName'}
-                  element={<Input disabled={isFormDisabled} />}
-                />
-              </ContentsRow>
-              <ContentsRow>
-                <FormRow
-                  provider={provider}
                   name={'cdSeq'}
                   element={<Input disabled={isFormDisabled} />}
                 />
@@ -425,7 +426,7 @@ const CommonCodeGridComponent = ({
                 <FormRow
                   provider={provider}
                   name={'cdContent'}
-                  element={<Input disabled={isFormDisabled} />}
+                  element={<Textarea disabled={isFormDisabled} />}
                 />
               </ContentsRow>
               <ContentsRow>

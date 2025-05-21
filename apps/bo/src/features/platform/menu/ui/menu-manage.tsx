@@ -2,16 +2,14 @@ import { useEffect, useRef, useState } from 'react';
 import { t } from 'i18next';
 import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { useRouter } from '@tanstack/react-router';
-
 import {
   Button,
   CheckboxGroupFormField,
   ContentsRow,
-  DynamicFormField,
   findNodePath,
   GridBox,
   Input,
-  TextareaFormField,
+  Textarea,
   TreeBox,
   TreeEventPayload,
   TreeNode,
@@ -34,7 +32,7 @@ import {
   useCreateMenu,
   useDeleteMenu,
   useMenuManageDetail,
-  useMenuManageFetchTree,
+  useMenuTree,
   useMoveMenu,
   useUpdateMenu,
 } from '../../../../entities/menu';
@@ -43,6 +41,7 @@ import { ContentsHistoryInfoFormField, FormRow, SwitchFormField } from '../../..
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import { MenuDetail } from '../../../../types/entities/menu';
 
 const FORM_MODE = {
   NONE: 'NONE',
@@ -66,16 +65,34 @@ export const MenuManage = ({ menuScope }: any) => {
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [lastCreatedMenuId, setLastCreatedMenuId] = useState<string | null>(null);
   const { open: openModal, confirm: openConfirm } = useModal();
-  const prevDataRef = useRef(null);
+  const prevDataRef = useRef<any>(null);
   const router = useRouter();
+  const { showSaveComplete, showDeleteComplete, showUpdateComplete } = useModal();
 
-  const { data } = useMenuManageFetchTree(menuScope, 'ko');
-  const { data: detailData } = useMenuManageDetail(selectedNode?.menuId || '');
+  const { data } = useMenuTree(menuScope, 'ko');
+  const { data: detailData } = useMenuManageDetail(selectedNode?.menuId || '', {
+    enabled: !!selectedNode?.menuId,
+  });
 
   const { create: createMenu } = useCreateMenu({});
-  const { updateMenu } = useUpdateMenu({});
-  const { deleteMenu } = useDeleteMenu({});
-  const { moveMenu } = useMoveMenu({});
+  const { update: updateMenu } = useUpdateMenu({});
+  const { delete: deleteMenu } = useDeleteMenu({});
+  const { move: moveMenu } = useMoveMenu({});
+  const { checkExistsMenu, isLoading } = useCheckExistsMenu({
+    onSuccess: (data) => {
+      const isUnique = !data; // data가 true면 중복, false면 중복 아님
+      setIsSuccessCodeCheck(isUnique);
+      setCodeCheckState(isUnique ? 'success' : 'duplicate');
+      onFormChange?.({
+        isDuplicateMenuCode: isUnique,
+      });
+    },
+    onError: () => {
+      setIsSuccessCodeCheck(false);
+      setCodeCheckState('error');
+      onFormChange?.({ isDuplicateMenuCode: false });
+    },
+  });
 
   const {
     provider,
@@ -96,22 +113,6 @@ export const MenuManage = ({ menuScope }: any) => {
     'none',
   );
   const initialFromValuesRef = useRef<any>(null);
-
-  const { checkExistsMenu } = useCheckExistsMenu({
-    onSuccess: (data: any) => {
-      const isUnique = !data;
-      setIsSuccessCodeCheck(isUnique);
-      setCodeCheckState(isUnique ? 'success' : 'duplicate');
-      onFormChange?.({
-        isDuplicateMenuCode: isUnique,
-      });
-    },
-    onError: () => {
-      setIsSuccessCodeCheck(false);
-      setCodeCheckState('error');
-      onFormChange?.({ isDuplicateMenuCode: false });
-    },
-  });
 
   const handleOnSubmit = (node: any) => {
     const isCodeChanged = isFieldChanged('code', node.code);
@@ -193,14 +194,15 @@ export const MenuManage = ({ menuScope }: any) => {
 
   useEffect(() => {
     if (detailData) {
+      const data = detailData as MenuDetail;
       const location = selectedNode && findMenuPathById(treeData, selectedNode.menuId);
       const deviceNames = [];
-      if (detailData.isWebExposed) deviceNames.push(DEVICE_NAME.PC);
-      if (detailData.isMobileExposed) deviceNames.push(DEVICE_NAME.Mobile);
+      if (data.isWebExposed) deviceNames.push(DEVICE_NAME.PC);
+      if (data.isMobileExposed) deviceNames.push(DEVICE_NAME.Mobile);
       const formData = {
-        ...detailData,
+        ...data,
         location: location,
-        code: detailData.menuCode,
+        code: data.menuCode,
         deviceNames: deviceNames,
         isDuplicateMenuCode: true, // VIEW 모드에서는 기본적으로 중복 체크 통과
       };
@@ -333,6 +335,7 @@ export const MenuManage = ({ menuScope }: any) => {
         if (value) {
           updateMenu(payload, {
             onSuccess: async (data: any) => {
+              showUpdateComplete();
               if (data && data.menuId) {
                 setSelectedNode(null);
                 setLastCreatedMenuId(data.menuId.toString());
@@ -352,6 +355,7 @@ export const MenuManage = ({ menuScope }: any) => {
         if (value) {
           createMenu(payload, {
             onSuccess: async (data: any) => {
+              showSaveComplete();
               if (data && data.menuId) {
                 setLastCreatedMenuId(data.menuId.toString());
               }
@@ -445,6 +449,7 @@ export const MenuManage = ({ menuScope }: any) => {
         if (value && payload) {
           deleteMenu(payload, {
             onSuccess: async (data: any) => {
+              showDeleteComplete();
               setSelectedNode(null);
               clearAllFormErrors();
               const initData: { [key: string]: any } = {};
@@ -583,7 +588,7 @@ export const MenuManage = ({ menuScope }: any) => {
               <FormRow
                 provider={provider}
                 name={'menuDesc'}
-                element={<TextareaFormField disabled={formMode === FORM_MODE.NONE} />}
+                element={<Textarea disabled={formMode === FORM_MODE.NONE} />}
               />
             </ContentsRow>
 

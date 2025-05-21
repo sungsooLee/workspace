@@ -25,21 +25,13 @@ function RouteComponent() {
 
   const [listData, setListData] = useState([]);
 
-  useEffect(() => {
-    if (data) {
-      const transformedData = data.map((item: string) => ({
-        enumNames: item,
-      }));
-      setFilteredData(transformedData);
-    }
-  }, [data]);
-
   const [filteredData, setFilteredData] = useState([]);
 
   // 데이터 변환 및 초기 설정
   useEffect(() => {
-    if (data) {
-      const transformedData = data.map((item: string) => ({
+    const list = data as any;
+    if (list) {
+      const transformedData = list.map((item: string) => ({
         enumNames: item,
       }));
       setListData(transformedData);

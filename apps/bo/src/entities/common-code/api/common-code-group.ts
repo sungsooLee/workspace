@@ -1,58 +1,22 @@
-import { httpService } from '@learnway/shared';
-import { PMSApiPrefix } from '../../../../../../libs/config/src';
-import { CreateCommonCodeGroup } from '../../../types/entities/common-code';
+import { createPmsUrl, registerApi } from '../../../shared/lib/use-authorized-query';
 
 /**
  * PMS > 공통 코드 그룹 관리 API 모음
  */
-export default class CommonCodeGroupService {
-  /**
-   * 공통코드그룹 목록 조회
-   */
-  static fetchCodeGroups(
-    page: number,
-    size: number,
-    sort = '',
-    cdGroupId = '',
-    cdGroupName = '',
-    isUsed = '',
-    cdName = '',
-  ): Promise<any> {
-    const baseUrl = `${PMSApiPrefix()}/code-groups`;
 
-    // 쿼리 파라미터 객체로 전달
-    const queryParams: any = {
-      page,
-      size,
-      sort,
-      cdGroupId: cdGroupId || undefined,
-      cdGroupName: cdGroupName || undefined,
-      isUsed: isUsed !== undefined ? isUsed : undefined,
-      cdName: cdName || undefined,
-    };
-
-    // 값이 없는 파라미터 제거
-    Object.keys(queryParams).forEach(
-      (key) => queryParams[key] === undefined && delete queryParams[key],
-    );
-
-    return httpService.get(baseUrl, queryParams);
-  }
-
-  /**
-   * 공통코드그룹 단건 조회
-   * @param cdGroupId 공통 코드 그룹 번호
-   * @returns
-   */
-  static fetchCodeGroup(cdGroupId: string): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/code-groups/${cdGroupId}`);
-  }
-
-  static createCodeGroup(payload: CreateCommonCodeGroup): Promise<any> {
-    return httpService.post<any>(`${PMSApiPrefix()}/code-groups`, payload);
-  }
-
-  static updateCodeGroup(payload: CreateCommonCodeGroup): Promise<any> {
-    return httpService.put<any>(`${PMSApiPrefix()}/code-groups/${payload.cdGroupId}`, payload);
-  }
-}
+export const CommonCodeGroupApi = {
+  list: registerApi('codeGroup.list', 'GET', createPmsUrl('/code-groups'), '코드 그룹 목록 조회'),
+  detail: registerApi(
+    'codeGroup.detail',
+    'GET',
+    createPmsUrl('/code-groups/:cdGroupId'),
+    '코드 그룹 단건 조회',
+  ),
+  create: registerApi('codeGroup.create', 'POST', createPmsUrl('/code-groups'), '코드 그룹 생성'),
+  update: registerApi(
+    'codeGroup.update',
+    'PUT',
+    createPmsUrl('/code-groups/:cdGroupId'),
+    '코드 그룹 업데이트',
+  ),
+};
