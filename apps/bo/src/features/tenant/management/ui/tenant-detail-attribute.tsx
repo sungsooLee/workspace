@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect, forwardRef, useRef, useImperativeHandle } from 'react';
 import { useRouterState } from '@tanstack/react-router';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import { Tabs } from '@learnway/ui';
@@ -6,7 +6,7 @@ import { TenantDetailAttributeCompany } from './tenant-detail-attribute-company'
 /** Hook 정의 */
 import { useTenantAttributeCompany } from '@entities/tenant/service/tenant-attribute.hook';
 
-const TenantDetailAttributeComponent: FC<any> = () => {
+const TenantDetailAttributeComponent = (props: any, ref: any) => {
   const [selectedTabKey, setSelectedTabKey] = useState<string>('FO');
   const [companyTabItem, setCompaynTabItem] = useState<any>([]);
   const [attributeRawData, setAttributeRawData] = useState<any>();
@@ -14,6 +14,23 @@ const TenantDetailAttributeComponent: FC<any> = () => {
   const routerState = useRouterState();
   const tenantId = routerState.location.state?.tenantId;
   const tenantName = routerState.location.state?.tenantName;
+
+  const formRef = useRef(null);
+
+  useImperativeHandle(ref, () => ({
+    saveData() {
+      const form: any = formRef.current;
+      if (form) {
+        form.saveData();
+      }
+    },
+    clearForm() {
+      const form: any = formRef.current;
+      if (form) {
+        form.clearForm();
+      }
+    },
+  }));
 
   const renderTabContent = (companyId: string) => {
     console.log('companyId', companyId);
@@ -28,6 +45,7 @@ const TenantDetailAttributeComponent: FC<any> = () => {
         attributeData={attributeData}
         companyId={companyId}
         tenantName={tenantName}
+        ref={formRef}
       />
     );
   };
@@ -73,4 +91,4 @@ const TenantDetailAttributeComponent: FC<any> = () => {
   );
 };
 
-export const TenantDetailAttribute = TenantDetailAttributeComponent;
+export const TenantDetailAttribute = forwardRef(TenantDetailAttributeComponent);

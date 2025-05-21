@@ -33,8 +33,8 @@ const scrollHidden: string[] = [
 const buttonShowTabs: string[] = [EnTenantDetailTabKey.base, EnTenantDetailTabKey.attribute];
 function RouteComponent() {
   const router = useRouter();
-  const formBaseRef = useRef<HTMLFormElement>(null);
-  const formAttrRef = useRef<HTMLFormElement>(null);
+  const formBaseRef = useRef(1);
+  const formAttrRef = useRef(2);
 
   const [selectedTabKey, setSelectedTabKey] = useState<string>(EnTenantDetailTabKey.base);
 
@@ -47,13 +47,48 @@ function RouteComponent() {
     router.navigate({ to: '/platform/tenant/management' });
   };
 
+  const handleModifyButtonClick = () => {
+    switch (selectedTabKey) {
+      case EnTenantDetailTabKey.base:
+        {
+          console.log('formBaseRef', formBaseRef);
+          const baseTab: any = formBaseRef.current;
+          if (baseTab) {
+            baseTab.saveData();
+          }
+        }
+        break;
+      case EnTenantDetailTabKey.attribute:
+        {
+          console.log('formAtt', formAttrRef);
+          const attrTab: any = formAttrRef.current;
+          if (attrTab) {
+            attrTab.saveData();
+          }
+        }
+        break;
+      default:
+        alert('없음');
+    }
+  };
+
   const handleResetButtonClick = () => {
     switch (selectedTabKey) {
       case EnTenantDetailTabKey.base:
-        alert(EnTenantDetailTabKey.base);
+        {
+          const baseTab: any = formBaseRef.current;
+          if (baseTab) {
+            baseTab.clearForm();
+          }
+        }
         break;
       case EnTenantDetailTabKey.attribute:
-        alert(EnTenantDetailTabKey.attribute);
+        {
+          const attrTab: any = formAttrRef.current;
+          if (attrTab) {
+            attrTab.clearForm();
+          }
+        }
         break;
       default:
         alert('없음');
@@ -64,12 +99,12 @@ function RouteComponent() {
     {
       title: '테넌트 기본 정보',
       key: EnTenantDetailTabKey.base,
-      content: <TenantDetailBase formRef={formBaseRef} roleInfo={'PLATFORM'} />,
+      content: <TenantDetailBase ref={formBaseRef} roleInfo={'PLATFORM'} />,
     },
     {
       title: '테넌트 속성 관리',
       key: EnTenantDetailTabKey.attribute,
-      content: <TenantDetailAttribute formRef={formAttrRef} roleInfo={'PLATFORM'} />,
+      content: <TenantDetailAttribute ref={formAttrRef} roleInfo={'PLATFORM'} />,
     },
     {
       title: '테넌트 메뉴관리 매핑',
@@ -115,7 +150,7 @@ function RouteComponent() {
           <Button onClick={handleResetButtonClick} variant="point" size="sm">
             초기화
           </Button>
-          <Button variant="point" size="sm">
+          <Button variant="point" size="sm" onClick={handleModifyButtonClick}>
             수정
           </Button>
         </ContentsButtons>
