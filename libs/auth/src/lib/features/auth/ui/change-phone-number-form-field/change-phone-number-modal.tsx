@@ -75,7 +75,7 @@ const ChangePhoneNumberModalComponent = ({ widget }: { widget: any }) => {
         verificationCode: '',
       });
 
-      const payload: SMSPayload = {
+      const payload = {
         name: userDetail.name ?? '',
         birthday: String(userDetail.birthday ?? ''),
         phoneNumber: data.newPhoneNumber,
