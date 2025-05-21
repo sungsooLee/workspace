@@ -75,7 +75,12 @@ const AccordionMenuComponent = ({
           </span>
         ),
         children: menu?.children && (
-          <AccordionMenu menus={menu?.children} depth={depth + 1} isMockData={isMockData} />
+          <AccordionMenu
+            menus={menu?.children}
+            depth={depth + 1}
+            isMockData={isMockData}
+            onMenuClick={onMenuClick}
+          />
         ),
         active,
       } as AccordionItem;

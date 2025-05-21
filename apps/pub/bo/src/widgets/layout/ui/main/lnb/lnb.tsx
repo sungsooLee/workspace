@@ -100,15 +100,11 @@ function LNBComponent() {
   const [openAll, setOpenAll] = useState<boolean | undefined>(undefined);
   const [openAllButtonState, setOpenAllButtonState] = useState<boolean>(false);
 
+  // 목데이터 전용 설정
   const currentMenuData = MOCK_MENU_DATA;
   const [menus, setMenus] = useState<any>(currentMenuData.children);
-  const [activeMenuPath, setActiveMenuPath] = useState<string>(''); // 활성 메뉴 경로 추가
 
   const buttonClass = `${openAllButtonState ? styles.open : styles.close}`;
-
-  const handleMenuClick = (menuPath: string) => {
-    setActiveMenuPath(menuPath);
-  };
 
   // 목데이터 초기화
   useEffect(() => {
@@ -226,7 +222,6 @@ function LNBComponent() {
               openAll={openAll}
               onOpenStateAll={(e) => handleOpenStateAll(e as boolean)}
               isMockData={true} // 목데이터 사용 여부 전달
-              onMenuClick={handleMenuClick}
             />
           )}
         </div>
