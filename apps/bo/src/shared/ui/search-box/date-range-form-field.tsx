@@ -18,12 +18,13 @@ const DateRangeFormFieldComponent: FC<any> = ({ onChange, onChangeGuideText }) =
   useEffect(() => {
     console.log('onChangeGuideText => ', onChangeGuideText);
   }, []);
+
   return (
-    <>
+    <div className={searchStyles.datepicker_wrap}>
       <DatePicker onChange={handleDate} value={date} className={searchStyles.datepicker_item} />
-      <span className={searchStyles.dash}></span>
+      <span className={searchStyles.hyphen}>-</span>
       <DatePicker onChange={handleDate2} value={date2} className={searchStyles.datepicker_item} />
-    </>
+    </div>
   );
 };
 
