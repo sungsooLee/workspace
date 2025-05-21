@@ -74,7 +74,7 @@ export const roleManagerQueryOptions = {
         roleMenuApiMap.set(item.apiId, item);
       }
       return {
-        roleMenuApiList: roleMenuApiMap.keys(),
+        roleMenuApiList: [...roleMenuApiMap.keys()],
         apiMappingMenuList: menuDetail.apiMappingMenuList,
       };
     },
@@ -123,14 +123,8 @@ export const roleMutateOptions = {
   }),
 
   // 역할에 메뉴 할당
-  assignMenusToRole: () => ({
-    mutationFn: ({ roleCode, addMenuIds }: { roleCode: string; addMenuIds: number[] }) =>
-      RoleManagerService.assignMenusToRole(roleCode, addMenuIds),
-  }),
-
-  // 역할에 API 할당
-  assignApisToRole: () => ({
-    mutationFn: ({ roleId, apiIds }: { roleId: string; apiIds: string[] }) =>
-      RoleManagerService.assignApisToRole(roleId, apiIds),
+  modifyMenusAndApiToRole: () => ({
+    mutationFn: ({ roleCode, body }: { roleCode: string; body: any }) =>
+      RoleManagerService.modifyMenusAndApiToRole(roleCode, body),
   }),
 };
