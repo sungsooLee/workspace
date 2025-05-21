@@ -22,6 +22,7 @@ import {
   EditTextareaCell,
   Grid,
   GridBox,
+  GridBoxPagination,
   GridState,
   Input,
   ModalWrapper,
@@ -476,8 +477,12 @@ export const WithInfiniteScroll: Story = {
 };
 
 // 페이지네이션용 mock API
-const fetchPaginatedData = (size: number): PaginationResponse<any> => {
-  const content = Array(size)
+const fetchPaginatedData = (
+  totalElements: number,
+  pageNumber = 0,
+  pageSize = 10,
+): PaginationResponse<any> => {
+  const content = Array(pageSize)
     .fill({})
     .map((_, index) => ({
       firstName: `firstName ${index}`,
@@ -493,12 +498,11 @@ const fetchPaginatedData = (size: number): PaginationResponse<any> => {
         </Button>
       ),
     }));
-
   return {
-    totalPages: 10,
-    totalElements: size,
-    size: 10,
     content,
+    totalPages: Math.ceil(totalElements / pageSize),
+    totalElements,
+    size: 10,
     number: 1,
     numberOfElements: 1,
     first: true,
@@ -506,9 +510,9 @@ const fetchPaginatedData = (size: number): PaginationResponse<any> => {
     empty: false,
     pageable: {
       offset: 0,
-      pageSize: 10,
+      pageSize,
       paged: true,
-      pageNumber: 0,
+      pageNumber,
       unpaged: false,
       sort: {
         sorted: false,
@@ -521,32 +525,32 @@ const fetchPaginatedData = (size: number): PaginationResponse<any> => {
 
 // 페이지네이션 테이블 컴포넌트
 const PaginationTable = () => {
-  const [pageNumber, setPageNumber] = useState(0);
-  const [tableState, setTableState] = useState({
-    sorting: [] as SortingState,
-    filters: [] as ColumnFiltersState,
+  const [data, setData] = useState<PaginationResponse<Person>>();
+  const [pagination, setPagination] = useState<GridBoxPagination>({
+    pageNumber: 0,
+    pageSize: 10,
+    totalPages: 100,
+    onPageChange: (newPageNumber: number) =>
+      setPagination((state: GridBoxPagination) => ({ ...state, pageNumber: newPageNumber })),
+    onPageSizeChange: (newPageSize: number) =>
+      setPagination((state: GridBoxPagination) => ({
+        ...state,
+        pageNumber: 0,
+        pageSize: newPageSize,
+      })),
   });
-
-  const data: PaginationResponse<Person> = fetchPaginatedData(100);
-
   useEffect(() => {
-    console.log('data,', data);
-  }, [data]);
+    const response = fetchPaginatedData(
+      pagination.totalPages,
+      pagination.pageNumber,
+      pagination.pageSize,
+    );
+    setData(response);
+  }, [pagination]);
 
   return (
     <div className="p-4">
-      <GridBox
-        data={data.content}
-        columns={columns}
-        pagination={{
-          pageNumber,
-          totalPages: 10,
-          onPageChange: (newPageNumber: number) => {
-            setPageNumber(newPageNumber);
-          },
-        }}
-        multiple={true}
-      />
+      <GridBox data={data?.content} columns={columns} multiple={true} pagination={pagination} />
     </div>
   );
 };
