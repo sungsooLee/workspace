@@ -82,6 +82,15 @@ export const guideData = [
     remarks: '', // 비고
   },
   {
+    screenName: '공통/GNB_관리자 권한 연장 신청',
+    pageId: 'common/pop-admin-extension',
+    screenId: 'NLP_BO_COM_1003_01 ',
+    pageType: 'Pop-up',
+    completionDate: '2025-05-21',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
     screenName: '로그인',
     pageId: 'login',
     screenId: 'NLP_BO_LOG_1000',
