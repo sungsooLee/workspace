@@ -58,7 +58,7 @@ export function MyPage() {
           <li>
             <span className={styles.title}>{'생년월일'}</span>
             <p className={styles.text}>
-              {user?.birthday && getDateToString(String(user?.birthday))}
+              {user?.birthday && getDateToString(new Date(String(user?.birthday)))}
             </p>
           </li>
           <li>
