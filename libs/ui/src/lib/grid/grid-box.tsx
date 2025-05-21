@@ -201,12 +201,15 @@ const GridBoxComponent = <T extends object>(
    */
   const handleChangePageSize = useCallback(
     (pageSize: number) => {
+      // for use-grid-box
       gridFetch?.({
         size: pageSize,
         page: 0, // 페이지 사이즈 변경 시 첫 페이지로 이동
       });
+      // props.pagination
+      props?.pagination?.onPageSizeChange?.(pageSize);
     },
-    [gridFetch],
+    [gridFetch, props.pagination],
   );
 
   const handlePageChange = useCallback(
@@ -364,6 +367,7 @@ const GridBoxComponent = <T extends object>(
         <Pagination
           totalPages={paginationProps.totalPages}
           pageNumber={paginationProps.pageNumber}
+          pageSize={paginationProps.pageSize}
           disabled={paginationProps.totalPages === 0}
           onPageSizeChange={handleChangePageSize}
           onChange={handlePageChange}
