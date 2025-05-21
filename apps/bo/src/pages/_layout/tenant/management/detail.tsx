@@ -30,7 +30,7 @@ function RouteComponent() {
 
   const [selectedTabKey, setSelectedTabKey] = useState<string>(EnTenantDetailTabKey.attribute);
 
-  const handleTabChange = (tabKey: EnTenantDetailTabKey) => {
+  const handleTabChange = (tabKey: string) => {
     if (tabKey !== selectedTabKey) {
       setSelectedTabKey(tabKey);
     }
