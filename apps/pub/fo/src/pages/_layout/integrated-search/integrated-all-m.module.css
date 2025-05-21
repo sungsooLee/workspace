@@ -54,7 +54,7 @@
       }
     }
     .banner {
-      @apply mx-[20px] mt-[32px];
+      @apply mx-[20px] mt-[32px] w-[calc(100%-40px)];
     }
   }
 }
