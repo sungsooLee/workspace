@@ -477,11 +477,7 @@ export const WithInfiniteScroll: Story = {
 };
 
 // 페이지네이션용 mock API
-const fetchPaginatedData = (
-  totalElements: number,
-  pageNumber = 0,
-  pageSize = 10,
-): PaginationResponse<any> => {
+const fetchPaginatedData = (pageNumber = 0, pageSize = 10): PaginationResponse<any> => {
   const content = Array(pageSize)
     .fill({})
     .map((_, index) => ({
@@ -498,6 +494,7 @@ const fetchPaginatedData = (
         </Button>
       ),
     }));
+  const totalElements = 100;
   return {
     content,
     totalPages: Math.ceil(totalElements / pageSize),
@@ -540,17 +537,19 @@ const PaginationTable = () => {
       })),
   });
   useEffect(() => {
-    const response = fetchPaginatedData(
-      pagination.totalPages,
-      pagination.pageNumber,
-      pagination.pageSize,
-    );
+    const response = fetchPaginatedData(pagination.pageNumber, pagination.pageSize);
     setData(response);
   }, [pagination]);
 
   return (
     <div className="p-4">
-      <GridBox data={data?.content} columns={columns} multiple={true} pagination={pagination} />
+      <GridBox
+        data={data?.content}
+        columns={columns}
+        multiple={true}
+        pagination={pagination}
+        showNumberingColumn
+      />
     </div>
   );
 };
