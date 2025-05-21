@@ -1,8 +1,9 @@
 /* banner-list.module.css */
 .start {
   &.wrap {
+    @apply scrollbar block h-[calc(100vh-450px)] w-full min-w-0 overflow-y-auto overflow-x-hidden pb-[16px];
     .contents_wrap {
-      @apply scrollbar block h-[calc(100vh-506px)] w-full min-w-0 overflow-y-auto overflow-x-hidden pb-[16px];
+      @apply block;
     }
   }
 }
