@@ -22,12 +22,14 @@ import { TenantDetailLearningRole } from '@features/tenant/management/ui/tenant-
 export const Route = createFileRoute('/_layout/platform/tenant/management/detail')({
   component: RouteComponent,
 });
+
 const scrollHidden: string[] = [
   EnTenantDetailTabKey.menu,
   EnTenantDetailTabKey.category,
   EnTenantDetailTabKey.learningRole,
   EnTenantDetailTabKey.banner,
 ];
+
 const buttonShowTabs: string[] = [EnTenantDetailTabKey.base, EnTenantDetailTabKey.attribute];
 function RouteComponent() {
   const router = useRouter();
