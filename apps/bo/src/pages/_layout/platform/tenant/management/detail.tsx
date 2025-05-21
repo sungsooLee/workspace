@@ -22,16 +22,21 @@ import { TenantDetailLearningRole } from '@features/tenant/management/ui/tenant-
 export const Route = createFileRoute('/_layout/platform/tenant/management/detail')({
   component: RouteComponent,
 });
-
+const scrollHidden: string[] = [
+  EnTenantDetailTabKey.menu,
+  EnTenantDetailTabKey.category,
+  EnTenantDetailTabKey.learningRole,
+  EnTenantDetailTabKey.banner,
+];
 const buttonShowTabs: string[] = [EnTenantDetailTabKey.base, EnTenantDetailTabKey.attribute];
 function RouteComponent() {
   const router = useRouter();
   const formBaseRef = useRef<HTMLFormElement>(null);
   const formAttrRef = useRef<HTMLFormElement>(null);
 
-  const [selectedTabKey, setSelectedTabKey] = useState(EnTenantDetailTabKey.base);
+  const [selectedTabKey, setSelectedTabKey] = useState<string>(EnTenantDetailTabKey.base);
 
-  const handleTabChange = (tabKey: EnTenantDetailTabKey) => {
+  const handleTabChange = (tabKey: string) => {
     if (tabKey !== selectedTabKey) {
       setSelectedTabKey(tabKey);
     }
@@ -96,9 +101,7 @@ function RouteComponent() {
     },
   ];
   return (
-    <PageContainer
-      scrollHidden={['menu', 'category', 'learningRole', 'banner'].includes(selectedTabKey)}
-    >
+    <PageContainer scrollHidden={scrollHidden.includes(selectedTabKey)}>
       {buttonShowTabs.includes(selectedTabKey) && (
         <ContentsButtons>
           <LinkBox>
