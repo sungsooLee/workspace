@@ -12,9 +12,13 @@ export type com_ever_edu_pms_tenant_dto_req_TenantCreateReqDto = {
      */
     logoImageUrl?: string;
     /**
-     * 테넌트담당자목록
+     * 테넌트담당자목록(역할)
      */
     tenantMappingRoleList?: Array<number>;
+    /**
+     * 테넌트담당자목록(유저)
+     */
+    tenantMappingUserList?: Array<number>;
     /**
      * 테넌트정산태그
      */

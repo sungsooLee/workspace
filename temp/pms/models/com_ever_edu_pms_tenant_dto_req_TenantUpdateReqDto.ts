@@ -20,6 +20,10 @@ export type com_ever_edu_pms_tenant_dto_req_TenantUpdateReqDto = {
      */
     tenantMappingRoleList?: Array<number>;
     /**
+     * 테넌트담당자목록(유저)
+     */
+    tenantMappingUserList?: Array<number>;
+    /**
      * 테넌트정산태그
      */
     tenantBillingTag?: string;

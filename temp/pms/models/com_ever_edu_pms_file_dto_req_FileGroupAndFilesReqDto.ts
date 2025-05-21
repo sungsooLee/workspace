@@ -2,12 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_pms_file_dto_req_FileGroupAndFilesReqDto$FileInfoRequest } from './com_ever_edu_pms_file_dto_req_FileGroupAndFilesReqDto$FileInfoRequest';
+import type { com_ever_edu_pms_file_dto_req_FileInfoReqDto } from './com_ever_edu_pms_file_dto_req_FileInfoReqDto';
 export type com_ever_edu_pms_file_dto_req_FileGroupAndFilesReqDto = {
-    /**
-     * 업로드유형, 코드그룹(pms.file.FileUploadType) - ATTATCH|CONTENTS
-     */
-    uploadType: com_ever_edu_pms_file_dto_req_FileGroupAndFilesReqDto.uploadType;
     /**
      * 업무분류유형, 코드그룹(pms.file.FileAffairsType) - LMS|PMS|CMS
      */
@@ -31,16 +27,9 @@ export type com_ever_edu_pms_file_dto_req_FileGroupAndFilesReqDto = {
     /**
      * 파일정보목록
      */
-    files?: Array<com_ever_edu_pms_file_dto_req_FileGroupAndFilesReqDto$FileInfoRequest>;
+    files?: Array<com_ever_edu_pms_file_dto_req_FileInfoReqDto>;
 };
 export namespace com_ever_edu_pms_file_dto_req_FileGroupAndFilesReqDto {
-    /**
-     * 업로드유형, 코드그룹(pms.file.FileUploadType) - ATTATCH|CONTENTS
-     */
-    export enum uploadType {
-        ATTATCH = 'ATTATCH',
-        CONTENTS = 'CONTENTS',
-    }
     /**
      * 업무분류유형, 코드그룹(pms.file.FileAffairsType) - LMS|PMS|CMS
      */

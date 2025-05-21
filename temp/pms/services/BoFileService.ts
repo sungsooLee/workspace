@@ -4,29 +4,34 @@
 /* eslint-disable */
 import type { com_ever_edu_pms_file_dto_req_FileGroupAndFilesReqDto } from '../models/com_ever_edu_pms_file_dto_req_FileGroupAndFilesReqDto';
 import type { com_ever_edu_pms_file_dto_req_FileGroupInfoReqDto } from '../models/com_ever_edu_pms_file_dto_req_FileGroupInfoReqDto';
-import type { com_ever_edu_pms_file_dto_req_FileInfoReqDto } from '../models/com_ever_edu_pms_file_dto_req_FileInfoReqDto';
-import type { com_ever_edu_pms_file_dto_res_FileGroupInfoResDto } from '../models/com_ever_edu_pms_file_dto_res_FileGroupInfoResDto';
-import type { com_ever_edu_pms_file_dto_res_FileInfoDeleteResDto } from '../models/com_ever_edu_pms_file_dto_res_FileInfoDeleteResDto';
+import type { com_ever_edu_pms_file_dto_req_FileInfoListReqDto } from '../models/com_ever_edu_pms_file_dto_req_FileInfoListReqDto';
+import type { com_ever_edu_pms_file_dto_req_FileUploadCompleteReqDto } from '../models/com_ever_edu_pms_file_dto_req_FileUploadCompleteReqDto';
 import type { com_ever_edu_pms_file_dto_res_FileInfoDetailResDto } from '../models/com_ever_edu_pms_file_dto_res_FileInfoDetailResDto';
-import type { com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto } from '../models/com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto';
-import type { org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_FileGroupInfoResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_FileGroupInfoResDto';
+import type { com_ever_edu_pms_file_dto_res_FileUploadCompleteResDto } from '../models/com_ever_edu_pms_file_dto_res_FileUploadCompleteResDto';
+import type { com_ever_edu_pms_file_dto_res_GroupInfoResDto } from '../models/com_ever_edu_pms_file_dto_res_GroupInfoResDto';
+import type { org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_GroupInfoResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_GroupInfoResDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class BoFileService {
     /**
-     * 파일정보 생성
-     * 파일 정보를 생성한다.
+     * 파일 업로드(S3멀티파트 포함) 완료 요청
+     * 파일 업로드 완료를 요청한다.<br>S3 멀티파트 업로드의 경우 FileUploadCompleteReqDto 필수 입력항목
+     * @param fileUuid 파일 UUID
      * @param requestBody
-     * @returns com_ever_edu_pms_file_dto_res_FileInfoDetailResDto OK
+     * @returns com_ever_edu_pms_file_dto_res_FileUploadCompleteResDto OK
      * @throws ApiError
      */
-    public static createFileInfo(
-        requestBody: com_ever_edu_pms_file_dto_req_FileInfoReqDto,
-    ): CancelablePromise<com_ever_edu_pms_file_dto_res_FileInfoDetailResDto> {
+    public static completeUpload2(
+        fileUuid: string,
+        requestBody?: com_ever_edu_pms_file_dto_req_FileUploadCompleteReqDto,
+    ): CancelablePromise<com_ever_edu_pms_file_dto_res_FileUploadCompleteResDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/admin/api/v1/file',
+            url: '/admin/api/v1/file/{fileUuid}/complete',
+            path: {
+                'fileUuid': fileUuid,
+            },
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -42,12 +47,12 @@ export class BoFileService {
      * 파일그룹 정보 생성
      * 파일그룹 정보를 생성한다.
      * @param requestBody
-     * @returns com_ever_edu_pms_file_dto_res_FileGroupInfoResDto OK
+     * @returns com_ever_edu_pms_file_dto_res_GroupInfoResDto OK
      * @throws ApiError
      */
-    public static createtFileGroup1(
+    public static createFileGroup(
         requestBody: com_ever_edu_pms_file_dto_req_FileGroupInfoReqDto,
-    ): CancelablePromise<com_ever_edu_pms_file_dto_res_FileGroupInfoResDto> {
+    ): CancelablePromise<com_ever_edu_pms_file_dto_res_GroupInfoResDto> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/admin/api/v1/file/group',
@@ -63,15 +68,44 @@ export class BoFileService {
         });
     }
     /**
-     * 파일그룹 및 1개 이상의 파일 정보 생성
-     * 파일그룹 및 1개 이상의 파일 정보를 생성한다.
+     * 다건의 파일 정보 생성
+     * 기존 파일그룹에 다건의 파일 정보를 생성한다.
+     * @param groupUuid 파일그룹 UUID
      * @param requestBody
-     * @returns com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto OK
+     * @returns com_ever_edu_pms_file_dto_res_GroupInfoResDto OK
      * @throws ApiError
      */
-    public static createtFileGroupAndFiles1(
+    public static createFileInfoList1(
+        groupUuid: string,
+        requestBody: com_ever_edu_pms_file_dto_req_FileInfoListReqDto,
+    ): CancelablePromise<com_ever_edu_pms_file_dto_res_GroupInfoResDto> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/file/group/{groupUuid}/files',
+            path: {
+                'groupUuid': groupUuid,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 신규그룹 및 다건의 파일 정보 생성
+     * 파일그룹 및 다건의 파일 정보를 생성한다.
+     * @param requestBody
+     * @returns com_ever_edu_pms_file_dto_res_GroupInfoResDto OK
+     * @throws ApiError
+     */
+    public static createFileGroupAndFiles1(
         requestBody: com_ever_edu_pms_file_dto_req_FileGroupAndFilesReqDto,
-    ): CancelablePromise<com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto> {
+    ): CancelablePromise<com_ever_edu_pms_file_dto_res_GroupInfoResDto> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/admin/api/v1/file/group/files',
@@ -115,12 +149,12 @@ export class BoFileService {
      * 파일정보 삭제
      * 파일 정보를 삭제한다. isDeleletd 값 false 업데이트
      * @param fileUuid 파일 UUID
-     * @returns com_ever_edu_pms_file_dto_res_FileInfoDeleteResDto OK
+     * @returns boolean OK
      * @throws ApiError
      */
     public static deleteFileInfo1(
         fileUuid: string,
-    ): CancelablePromise<com_ever_edu_pms_file_dto_res_FileInfoDeleteResDto> {
+    ): CancelablePromise<boolean> {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/admin/api/v1/file/{fileUuid}',
@@ -168,29 +202,26 @@ export class BoFileService {
      * @param page 페이징 처리를 위한 페이지 번호. 0 ~
      * @param size 페이징 처리를 위한 페이지 size. 10(최소값) ~
      * @param sort 페이징 처리를 위한 sort
-     * @param uploadType 파일업로드유형, 코드그룹(pms.file.FileUploadType) - ATTATCH|CONTENTS
      * @param affairsType 파일업무유형, 코드그룹(pms.file.FileAffairsType) - LMS|PMS|CMS
      * @param reposType 저정소유형, 코드그룹(pms.file.RepositoryType) - S3(기본)|HMG
      * @param isDeleted 삭제여부
      * @param isUsed 사용여부
-     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_FileGroupInfoResDto OK
+     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_GroupInfoResDto OK
      * @throws ApiError
      */
     public static getFileGroupList1(
         page: any,
         size: any,
         sort: any,
-        uploadType?: any,
         affairsType?: any,
         reposType?: any,
         isDeleted?: any,
         isUsed?: any,
-    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_FileGroupInfoResDto> {
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_GroupInfoResDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/file/groups',
             query: {
-                'uploadType': uploadType,
                 'affairsType': affairsType,
                 'reposType': reposType,
                 'isDeleted': isDeleted,
@@ -209,43 +240,18 @@ export class BoFileService {
         });
     }
     /**
-     * 파일그룹 정보 조회
-     * 파일그룹 정보를 조회한다.
-     * @param groupUuid 파일 그룹 UUID
-     * @returns com_ever_edu_pms_file_dto_res_FileGroupInfoResDto OK
-     * @throws ApiError
-     */
-    public static getFileGroup1(
-        groupUuid: string,
-    ): CancelablePromise<com_ever_edu_pms_file_dto_res_FileGroupInfoResDto> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/file/group/{groupUuid}',
-            path: {
-                'groupUuid': groupUuid,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 파일그룹 파일 목록 조회
-     * 파일그룹 파일 목록을 조회한다.
-     * @param groupUuid
-     * @returns com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto OK
+     * 파일그룹 정보조회
+     * 파일그룹 및 파일 정보 목록을 조회한다.
+     * @param groupUuid 파일그룹 UUID
+     * @returns com_ever_edu_pms_file_dto_res_GroupInfoResDto OK
      * @throws ApiError
      */
     public static getGroupFileInfoList1(
         groupUuid: string,
-    ): CancelablePromise<com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto> {
+    ): CancelablePromise<com_ever_edu_pms_file_dto_res_GroupInfoResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/admin/api/v1/file/group/{groupUuid}/files',
+            url: '/admin/api/v1/file/group/{groupUuid}',
             path: {
                 'groupUuid': groupUuid,
             },

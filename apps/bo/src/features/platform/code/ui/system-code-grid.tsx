@@ -82,9 +82,10 @@ const SystemCodeGridComponent = ({ data }: any) => {
   }, [data]);
 
   useEffect(() => {
-    if (detailData && detailData.length > 0) {
+    const data = detailData as any;
+    if (data && data.length > 0) {
       const processDetailData = () => {
-        const firstItem = detailData[0]; // 객체 선택
+        const firstItem = data[0]; // 객체 선택
         if (firstItem) {
           const groupKey = Object.keys(firstItem)[0]; // 코드명
           if (groupKey && Array.isArray(firstItem[groupKey])) {

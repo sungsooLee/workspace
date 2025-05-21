@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import { useCreation } from 'ahooks';
 import { useRouterState } from '@tanstack/react-router';
 
-import { useFetchAuthUser } from '@learnway/auth';
+import { useFetchAuthUser, useFetchMenus } from '@learnway/auth';
 
-import { useFetchMenus } from '../../../entities/menu';
+// import { useFetchMenus } from '../../../entities/menu';
 import { Menu, HookData } from '../../../types';
 
 import { useActiveMenuDepthState } from '../../../features/platform';
@@ -15,7 +15,7 @@ import { useActiveMenuDepthState } from '../../../features/platform';
  */
 export function useMenuHierarchy(isShortCutArea = false): HookData<any[]> {
   const { data: authUser } = useFetchAuthUser();
-  const { data } = useFetchMenus(authUser?.activeTenant?.tenantId??0);
+  const { data } = useFetchMenus(authUser?.activeTenant?.tenantId ?? 0);
 
   return {
     data: useCreation(() => {

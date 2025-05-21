@@ -4,7 +4,11 @@ import MenuMangeService from '../api/menu-manage';
 export const queryKeys = {
   all: ['menu-manger-all'] as const,
   tree: () => [...queryKeys.all] as const,
+  menuTree: (menuScope?: string, locale?: string) =>
+    [...queryKeys.all, 'tree', menuScope, locale] as const,
   detail: (menuId: string) => ['menuId', menuId] as const,
+  checkDuplicate: (menuScopeCode: string, menuCode: string) =>
+    ['checkDuplicate', menuScopeCode, menuCode] as const,
 };
 
 export const menuManageQueryOptions = {
@@ -30,21 +34,21 @@ export const menuManageQueryOptions = {
   }),
 };
 
-export const mutateOptions = {
-  create: () => ({
-    mutationFn: (payload: any) => MenuMangeService.createMenu(payload),
-  }),
-  checkExistsMenu: () => ({
-    mutationFn: (payload: any) =>
-      MenuMangeService.existsMenu(payload.menuScopeCode, payload.menuCode),
-  }),
-  updateMenu: () => ({
-    mutationFn: (payload: any) => MenuMangeService.updateMenu(payload),
-  }),
-  deleteMenu: () => ({
-    mutationFn: (payload: any) => MenuMangeService.deleteMenu(payload),
-  }),
-  moveMenu: () => ({
-    mutationFn: (payload: any) => MenuMangeService.moveMenu(payload),
-  }),
-};
+// export const mutateOptions = {
+//   create: () => ({
+//     mutationFn: (payload: any) => MenuMangeService.createMenu(payload),
+//   }),
+//   checkExistsMenu: () => ({
+//     mutationFn: (payload: any) =>
+//       MenuMangeService.existsMenu(payload.menuScopeCode, payload.menuCode),
+//   }),
+//   updateMenu: () => ({
+//     mutationFn: (payload: any) => MenuMangeService.updateMenu(payload),
+//   }),
+//   deleteMenu: () => ({
+//     mutationFn: (payload: any) => MenuMangeService.deleteMenu(payload),
+//   }),
+//   moveMenu: () => ({
+//     mutationFn: (payload: any) => MenuMangeService.moveMenu(payload),
+//   }),
+// };

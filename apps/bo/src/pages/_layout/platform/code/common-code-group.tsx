@@ -4,7 +4,7 @@ import { PageContainer } from '../../../../widgets/layout/ui/container/page-cont
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
 import { Grid, GridState } from '@learnway/ui';
 import { pageRouteConfig } from '../../../../features/auth';
-import { useCommonCodeGroupList } from '../../../../entities/common-code/service/common-code-group.hook';
+import { useCodeGroupList } from '../../../../entities/common-code/service/common-code-group.hook';
 import { useState } from 'react';
 import { SearchBox } from '../../../../shared/ui/search-box';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
@@ -28,8 +28,8 @@ function RouteComponent() {
     size: 10,
   });
 
-  const [sortState, setSortState] = useState({
-    sort: '',
+  const [sortState, setSortState] = useState<{ sort: string[] }>({
+    sort: [],
   });
 
   // 검색 파라미터 상태
@@ -49,21 +49,14 @@ function RouteComponent() {
     setPageState({ page: 0, size: newSize });
   };
 
-  const { data: commonCodeGroupListData } = useCommonCodeGroupList(
-    {
-      page: pageState.page,
-      size: pageState.size,
-      sort: sortState.sort,
-      cdGroupId: searchParams.cdGroupId,
-      cdGroupName: searchParams.cdGroupName,
-      isUsed: searchParams.isUsed,
-    },
-    {
-      onSuccess: (data: any) => {
-        console.log(data);
-      },
-    },
-  );
+  const { data: commonCodeGroupListData } = useCodeGroupList({
+    page: pageState.page,
+    size: pageState.size,
+    sort: sortState.sort,
+    cdGroupId: searchParams.cdGroupId,
+    cdGroupName: searchParams.cdGroupName,
+    isUsed: searchParams.isUsed,
+  });
 
   const handleOnSearch = (data: any) => {
     setSearchParams({
@@ -76,20 +69,22 @@ function RouteComponent() {
 
   const handleGridStateChange = (newState: GridState) => {
     if (newState.sorting && newState.sorting.length > 0) {
-      const sortItem = newState.sorting[0];
-      const direction = sortItem.desc ? 'desc' : 'asc';
-      const sortItemNameMap: Record<string, string> = {
-        isUsed: 'commonCdGroupEntity.isUsed',
-        createdDate: 'commonCdGroupEntity.createdDate',
-        createdBy: 'commonCdGroupEntity.createdBy',
-        modifiedDate: 'commonCdGroupEntity.modifiedDate',
-        lastModifiedBy: 'commonCdGroupEntity.lastModifiedBy',
-      };
-      const sortItemName = sortItemNameMap[sortItem.id] || sortItem.id;
-      const sortValue = `${sortItemName},${direction}`;
-      setSortState({ sort: sortValue });
+      const sortItems = newState.sorting.map((sortItem) => {
+        const direction = sortItem.desc ? 'desc' : 'asc';
+        const sortItemNameMap: Record<string, string> = {
+          isUsed: 'commonCdGroupEntity.isUsed',
+          createdDate: 'commonCdGroupEntity.createdDate',
+          createdBy: 'commonCdGroupEntity.createdBy',
+          modifiedDate: 'commonCdGroupEntity.modifiedDate',
+          lastModifiedBy: 'commonCdGroupEntity.lastModifiedBy',
+        };
+        const sortItemName = sortItemNameMap[sortItem.id] || sortItem.id;
+        return `${sortItemName},${direction}`;
+      });
+
+      setSortState({ sort: sortItems });
     } else {
-      setSortState({ sort: '' });
+      setSortState({ sort: [] });
     }
   };
 
@@ -98,12 +93,12 @@ function RouteComponent() {
       <MainContents>
         <SearchBox provider={sProvider} onSearch={handleOnSearch} />
         <CommonCodeGroupGrid
-          data={commonCodeGroupListData && [...(commonCodeGroupListData.content || [])]}
+          data={commonCodeGroupListData?.content || []}
           page={pageState.page}
           size={pageState.size}
           onPageChange={handlePageChange}
           onPageSizeChange={handlePageSizeChange}
-          totalRows={commonCodeGroupListData && commonCodeGroupListData.totalElements}
+          totalRows={commonCodeGroupListData?.totalElements}
           state={{
             ...searchParams,
             sort: sortState.sort,

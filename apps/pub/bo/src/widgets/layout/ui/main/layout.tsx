@@ -18,24 +18,24 @@ function LayoutComponent({ children }: LayoutComponentProps) {
 
   const [activeMenuDepth] = useActiveMenuDepthState();
 
-  if (
-    activeMenuDepth &&
-    activeMenuDepth?.length &&
-    activeMenuDepth[0].children &&
-    activeMenuDepth[0].children?.length > 0
-  ) {
-    return (
-      <>
-        <Header />
-        <div className={cn(styles.start, styles.container)}>
-          <div className={cn(styles.container_inner, 'container_inner')}>
-            <LNB />
-            <main>{children}</main>
-          </div>
-        </div>
-      </>
-    );
-  }
+  // if (
+  //   activeMenuDepth &&
+  //   activeMenuDepth?.length &&
+  //   activeMenuDepth[0].children &&
+  //   activeMenuDepth[0].children?.length > 0
+  // ) {
+  //   return (
+  //     <>
+  //       <Header />
+  //       <div className={cn(styles.start, styles.container)}>
+  //         <div className={cn(styles.container_inner, 'container_inner')}>
+  //           <LNB />
+  //           <main>{children}</main>
+  //         </div>
+  //       </div>
+  //     </>
+  //   );
+  // }
 
   return (
     <>

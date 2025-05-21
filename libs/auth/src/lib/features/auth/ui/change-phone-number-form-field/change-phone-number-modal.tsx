@@ -70,66 +70,70 @@ const ChangePhoneNumberModalComponent = ({ widget }: { widget: any }) => {
 
     console.log('data :: ', data);
 
-    onFormChange({
-      verificationCode: '',
-    });
+    if (data && userDetail) {
+      onFormChange({
+        verificationCode: '',
+      });
 
-    const payload = {
-      name: userDetail?.name,
-      birthday: String(userDetail?.birthday),
-      phoneNumber: data.newPhoneNumber,
-    };
+      const payload = {
+        name: userDetail.name ?? '',
+        birthday: String(userDetail.birthday ?? ''),
+        phoneNumber: data.newPhoneNumber,
+      };
 
-    console.log('payload', payload);
-    // return;
-    sendVerifySMS(payload, {
-      onSuccess: () => {
-        setSendedVerifyNumber(true);
-        verifyTimerCounter.inc();
-      },
-    });
+      console.log('payload', payload);
+      // return;
+      sendVerifySMS(payload, {
+        onSuccess: () => {
+          setSendedVerifyNumber(true);
+          verifyTimerCounter.inc();
+        },
+      });
+    }
   };
 
   const handleOnSubmit = async (data: any) => {
     console.log(' handleOnSubmit data :: ', data);
 
-    const result = await onFormValid(['verificationCode', 'newPhoneNumber']);
-    if (!result) {
-      return;
+    if (data && userDetail) {
+      const result = await onFormValid(['verificationCode', 'newPhoneNumber']);
+      if (!result) {
+        return;
+      }
+
+      const smsVerifyPayload = {
+        name: userDetail.name ?? '',
+        birthday: String(userDetail.birthday ?? ''),
+        verificationCode: data.verificationCode,
+        phoneNumber: data.newPhoneNumber,
+      };
+
+      const payload = {
+        name: userDetail.name ?? '',
+        birthday: String(userDetail.birthday ?? ''),
+        currentPhoneNumber: data.currentPhoneNumber,
+        // currentPhoneNumberNationCode: authUser.phoneNumberNationCode,
+        newPhoneNumber: data.newPhoneNumber,
+        // newPhoneNumberNationCode: data.newPhoneNumberNationCode,
+      };
+
+      verifySMS(smsVerifyPayload, {
+        onSuccess: async () => {
+          updatePhoneNumber(payload, {
+            onSuccess: async (d, variables, context) => {
+              await alert('LABEL.message.updatePhoneNumberResultMessage');
+              closeModal({
+                number: variables.newPhoneNumber,
+                nationCode: variables.newPhoneNumberNationCode,
+              });
+            },
+          });
+        },
+        onError: () => {
+          setFormError('verificationCode', t('LABEL.common.invalidAuthNumber'));
+        },
+      });
     }
-
-    const smsVerifyPayload = {
-      name: userDetail?.name,
-      birthday: userDetail?.birthday,
-      verificationCode: data.verificationCode,
-      phoneNumber: data.newPhoneNumber,
-    };
-
-    const payload = {
-      name: userDetail?.name,
-      birthday: userDetail?.birthday,
-      currentPhoneNumber: data.currentPhoneNumber,
-      // currentPhoneNumberNationCode: authUser.phoneNumberNationCode,
-      newPhoneNumber: data.newPhoneNumber,
-      // newPhoneNumberNationCode: data.newPhoneNumberNationCode,
-    };
-
-    verifySMS(smsVerifyPayload, {
-      onSuccess: async () => {
-        updatePhoneNumber(payload, {
-          onSuccess: async (d, variables, context) => {
-            await alert('LABEL.message.updatePhoneNumberResultMessage');
-            closeModal({
-              number: variables.newPhoneNumber,
-              nationCode: variables.newPhoneNumberNationCode,
-            });
-          },
-        });
-      },
-      onError: () => {
-        setFormError('verificationCode', t('LABEL.common.invalidAuthNumber'));
-      },
-    });
   };
 
   return (

@@ -17,6 +17,8 @@ interface AccordionMenuComponentProps {
   depth: number;
   openAll?: boolean;
   onOpenStateAll?: (open: boolean) => void;
+  isMockData?: boolean;
+  onMenuClick?: (menuPath: string) => void;
 }
 
 const AccordionMenuComponent = ({
@@ -25,33 +27,46 @@ const AccordionMenuComponent = ({
   className,
   openAll,
   onOpenStateAll,
+  isMockData = false,
+  onMenuClick,
 }: AccordionMenuComponentProps) => {
   const [value, setValue] = useState<string[] | undefined>();
   const [activeMenuDepth] = useActiveMenuDepthState();
   const router = useRouter();
 
   /**
-   * current routing menu의 경우 accordion open
+   * 목데이터 사용 시 첫 번째 메뉴를 기본으로 열어두기
    */
   useEffect(() => {
+    if (isMockData && menus?.length > 0) {
+      // 목데이터 사용 시 첫 번째 메뉴를 기본으로 펼치기
+      setValue([menus[0].key]);
+    }
+  }, [isMockData, menus]);
+
+  /**
+   * current routing menu의 경우 accordion open (기존 로직 보존)
+   */
+  useEffect(() => {
+    // 목데이터 사용 시에는 이 로직을 건너뛰기
+    if (isMockData) {
+      return;
+    }
+
     if (!activeMenuDepth || !activeMenuDepth?.length || !activeMenuDepth?.[depth - 1]) {
       return;
     }
     setValue([...(value ?? []), activeMenuDepth[depth - 1].key]);
-  }, [activeMenuDepth, depth]);
+  }, [activeMenuDepth, depth, isMockData]);
 
-  /**
-   * active: current routing menu (4 depth에 한해 적용 - 디자인 정의)
-   * 2~3 depth의 경우 route path가 있는 경우, title click시 navigate, 없는 경우 accordion open
-   */
   const items = useCreation(() => {
-    console.log('activeMenuDepth', activeMenuDepth);
     return (menus ?? []).map((menu: Menu) => {
       const active =
-        // depth === 4 &&
+        !isMockData &&
         activeMenuDepth &&
         activeMenuDepth[depth - 1] &&
         activeMenuDepth[depth - 1]?.path === menu?.path;
+
       return {
         value: menu.key,
         title: (
@@ -59,11 +74,18 @@ const AccordionMenuComponent = ({
             {menu.title}
           </span>
         ),
-        children: menu?.children && <AccordionMenu menus={menu?.children} depth={depth + 1} />,
+        children: menu?.children && (
+          <AccordionMenu
+            menus={menu?.children}
+            depth={depth + 1}
+            isMockData={isMockData}
+            onMenuClick={onMenuClick}
+          />
+        ),
         active,
       } as AccordionItem;
     });
-  }, [menus, activeMenuDepth]);
+  }, [menus, activeMenuDepth, isMockData]);
 
   useEffect(() => {
     if (openAll === undefined) {
@@ -96,6 +118,12 @@ const AccordionMenuComponent = ({
     if (!menu?.path) {
       return;
     }
+
+    if (isMockData) {
+      console.log('Mock navigation to:', menu.path);
+      return;
+    }
+
     router.navigate({ to: menu.path });
   };
 

@@ -2,6 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { com_ever_edu_pms_channel_dto_res_ChannelLearnerUserGroupResDto } from './com_ever_edu_pms_channel_dto_res_ChannelLearnerUserGroupResDto';
+import type { com_ever_edu_pms_channel_dto_res_ChannelLearnerUserResDto } from './com_ever_edu_pms_channel_dto_res_ChannelLearnerUserResDto';
 import type { com_ever_edu_pms_channel_dto_res_ChannelMappingTenantResDto } from './com_ever_edu_pms_channel_dto_res_ChannelMappingTenantResDto';
 export type com_ever_edu_pms_channel_dto_res_ChannelDetailResDto = {
     channelId?: number;
@@ -55,10 +57,14 @@ export type com_ever_edu_pms_channel_dto_res_ChannelDetailResDto = {
      * 채널접수ID
      */
     channelAcceptId?: number;
-    tenants?: Array<com_ever_edu_pms_channel_dto_res_ChannelMappingTenantResDto>;
+    tenantList?: Array<com_ever_edu_pms_channel_dto_res_ChannelMappingTenantResDto>;
+    learnerUserGroupList?: Array<com_ever_edu_pms_channel_dto_res_ChannelLearnerUserGroupResDto>;
+    learnerUserList?: Array<com_ever_edu_pms_channel_dto_res_ChannelLearnerUserResDto>;
+    learnerRestraintUserList?: Array<com_ever_edu_pms_channel_dto_res_ChannelLearnerUserResDto>;
     createdBy?: string;
     lastModifiedBy?: string;
     createdDate?: string;
     modifiedDate?: string;
+    tenants?: Array<com_ever_edu_pms_channel_dto_res_ChannelMappingTenantResDto>;
 };
 

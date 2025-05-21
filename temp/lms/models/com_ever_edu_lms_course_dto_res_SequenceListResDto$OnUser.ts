@@ -5,18 +5,21 @@
 export type com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser = {
     courseType?: com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser.courseType;
     isDuplicateEnrollAllowed?: boolean;
+    isScheduleConflictAllowed?: boolean;
     courseSequenceName?: string;
     courseSequenceUuid?: string;
     enrollQueueId?: number;
     studentId?: number;
     enrollQueueStatus?: com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser.enrollQueueStatus;
     enrollStatus?: com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser.enrollStatus;
+    learningStartType?: com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser.learningStartType;
     enrollStartDate?: string;
     enrollEndDate?: string;
+    learningStartDate?: string;
+    learningEndDate?: string;
+    learningStartDays?: number;
     enrollCancelStartDate?: string;
     enrollCancelEndDate?: string;
-    courseSequenceStartDate?: string;
-    courseSequenceEndDate?: string;
     maxEnrollQuota?: number;
     currentEnrollCount?: number;
     maxWaitlistQuota?: number;
@@ -53,6 +56,10 @@ export namespace com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser {
         ENROLL_DONE = 'ENROLL_DONE',
         ENROLL_REQUEST = 'ENROLL_REQUEST',
         CANCEL_DONE = 'CANCEL_DONE',
+    }
+    export enum learningStartType {
+        FIXED_DATE = 'FIXED_DATE',
+        DAYS_AFTER_ENROLL = 'DAYS_AFTER_ENROLL',
     }
     export enum enrollButtonState {
         QUEUE = 'QUEUE',

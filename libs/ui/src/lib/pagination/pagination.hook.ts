@@ -1,5 +1,4 @@
 'use client';
-import useControlled from './controlled.hook';
 
 export interface UsePaginationProps {
   /**
@@ -99,7 +98,7 @@ export default function usePagination(props: UsePaginationProps) {
     ...other
   } = props;
 
-  console.log('pagination.hook ', {page});
+  console.log('pagination.hook ', { page });
 
   // const [page, setPageState] = useControlled({
   //   controlled: pageProp,
@@ -125,7 +124,10 @@ export default function usePagination(props: UsePaginationProps) {
   };
 
   const startPages = range(0, Math.min(boundaryCount, totalPages - 1));
-  const endPages = range(Math.max(totalPages - boundaryCount + 1, boundaryCount + 1), totalPages - 1);
+  const endPages = range(
+    Math.max(totalPages - boundaryCount + 1 - 1, boundaryCount + 1),
+    totalPages - 1,
+  );
   // const endPages = range(Math.max(totalPages - boundaryCount + 1, boundaryCount + 1), totalPages);
 
   const siblingsStart = Math.max(
@@ -170,11 +172,12 @@ export default function usePagination(props: UsePaginationProps) {
 
     // End ellipsis
     // eslint-disable-next-line no-nested-ternary
-    ...(siblingsEnd < totalPages - boundaryCount - 1
-      ? ['end-ellipsis']
-      : totalPages - boundaryCount > boundaryCount
-        ? [totalPages - boundaryCount]
-        : []),
+    ...(siblingsEnd < totalPages - boundaryCount - 1 ? ['end-ellipsis'] : []),
+    // ...(siblingsEnd < totalPages - boundaryCount - 1
+    //   ? ['end-ellipsis']
+    //   : totalPages - boundaryCount > boundaryCount
+    //     ? [totalPages - boundaryCount]
+    //     : []),
 
     ...endPages,
     ...(hideNextButton ? [] : ['next']),
@@ -191,7 +194,7 @@ export default function usePagination(props: UsePaginationProps) {
       case 'next':
         return page + 1;
       case 'last':
-        return totalPages;
+        return totalPages - 1;
       default:
         return null;
     }
@@ -204,7 +207,7 @@ export default function usePagination(props: UsePaginationProps) {
         return page === 0;
       case 'next':
       case 'last':
-        return page === totalPages;
+        return page === totalPages - 1;
       default:
         return false;
     }

@@ -8,7 +8,7 @@ import { SearchBoxConfig, useCurrentRoute, useSearchBox } from '@learnway/hooks'
 import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
 import { SearchBox } from '../../../../shared/ui/search-box';
-import { useCommonCodeList } from '../../../../entities/common-code/service/common-code.hook';
+import { useCodeList } from '../../../../entities/common-code/service/common-code.hook';
 import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { CommonCodeGrid } from '../../../../features/platform/code/ui/common-code-grid';
 
@@ -33,8 +33,8 @@ function RouteComponent() {
     size: 10,
   });
 
-  const [sortState, setSortState] = useState({
-    sort: '',
+  const [sortState, setSortState] = useState<{ sort: string[] }>({
+    sort: [],
   });
 
   // 검색 파라미터 상태
@@ -45,15 +45,15 @@ function RouteComponent() {
     cdName: '',
   });
 
-  const { data: commonCodeListData } = useCommonCodeList(
-    pageState.page,
-    pageState.size,
-    sortState.sort,
-    searchParams.cdGroupId,
-    searchParams.cdGroupName,
-    searchParams.isUsed,
-    searchParams.cdName,
-  );
+  const { data: commonCodeListData } = useCodeList({
+    page: pageState.page,
+    size: pageState.size,
+    sort: sortState.sort,
+    cdGroupId: searchParams.cdGroupId,
+    cdGroupName: searchParams.cdGroupName,
+    isUsed: searchParams.isUsed,
+    cdName: searchParams.cdName,
+  });
 
   const handleOnSearch = (data: any) => {
     setSearchParams({
@@ -79,21 +79,23 @@ function RouteComponent() {
 
   const handleGridStateChange = (newState: GridState) => {
     if (newState.sorting && newState.sorting.length > 0) {
-      const sortItem = newState.sorting[0];
-      const direction = sortItem.desc ? 'desc' : 'asc';
-      const sortItemNameMap: Record<string, string> = {
-        cdId: 'commonCdEntityId.cdId',
-        isUsed: 'commonCdEntity.isUsed',
-        createdDate: 'commonCdEntity.createdDate',
-        createdBy: 'commonCdEntity.createdBy',
-        modifiedDate: 'commonCdEntity.modifiedDate',
-        lastModifiedBy: 'commonCdEntity.lastModifiedBy',
-      };
-      const sortItemName = sortItemNameMap[sortItem.id] || sortItem.id;
-      const sortValue = `${sortItemName},${direction}`;
-      setSortState({ sort: sortValue });
+      const sortItems = newState.sorting.map((sortItem) => {
+        const direction = sortItem.desc ? 'desc' : 'asc';
+        const sortItemNameMap: Record<string, string> = {
+          cdId: 'commonCdEntityId.cdId',
+          isUsed: 'commonCdEntity.isUsed',
+          createdDate: 'commonCdEntity.createdDate',
+          createdBy: 'commonCdEntity.createdBy',
+          modifiedDate: 'commonCdEntity.modifiedDate',
+          lastModifiedBy: 'commonCdEntity.lastModifiedBy',
+        };
+        const sortItemName = sortItemNameMap[sortItem.id] || sortItem.id;
+        return `${sortItemName},${direction}`;
+      });
+
+      setSortState({ sort: sortItems });
     } else {
-      setSortState({ sort: '' });
+      setSortState({ sort: [] });
     }
   };
 

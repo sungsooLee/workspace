@@ -6,6 +6,21 @@
     { "key": "systemCode.detail", "hasAccess": true },
     { "key": "commonCodeGroup.list", "hasAccess": true },
     { "key": "commonCodeGroup.create", "hasAccess": true },
-    { "key": "commonCodeGroup.update", "hasAccess": true }
+    { "key": "commonCodeGroup.update", "hasAccess": true },
+    { "key": "menuManage.menuTree", "hasAccess": true },
+    { "key": "menuManage.create", "hasAccess": true },
+    { "key": "menuManage.detail", "hasAccess": true },
+    { "key": "menuManage.update", "hasAccess": true },
+    { "key": "menuManage.move", "hasAccess": true },
+    { "key": "menuManage.delete", "hasAccess": true },
+    { "key": "menuManage.checkDuplicate", "hasAccess": true },
+    { "key": "codeGroup.list", "hasAccess": true },
+    { "key": "codeGroup.detail", "hasAccess": true },
+    { "key": "codeGroup.update", "hasAccess": true },
+    { "key": "codeGroup.create", "hasAccess": true },
+    { "key": "code.list", "hasAccess": true },
+    { "key": "code.create", "hasAccess": true },
+    { "key": "code.update", "hasAccess": true },
+    { "key": "code.detail", "hasAccess": true }
   ]
 }

@@ -14,8 +14,8 @@
           }
         }
       }
-      & + button {
-        @apply relative;
+      &:not(:empty) + button {
+        @apply relative pl-[28px];
         &::before {
           @apply absolute left-0 top-1/2 -mt-[10px] h-[20px] w-[1px] bg-white font-bold opacity-15 content-[''];
         }

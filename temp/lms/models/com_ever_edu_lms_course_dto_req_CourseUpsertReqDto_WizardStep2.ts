@@ -17,13 +17,13 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2 = {
     isDuplicateEnrollAllowed?: boolean;
     isScheduleConflictAllowed?: boolean;
     /**
-     * 수강신청 단계에서 배송지 수집을 과정마다할 지 차수마다 할 지 (lms.course.BookDeliveryInfoScopeType)
+     * 수강신청 단계에서 배송지 수집 여부
      */
-    bookDeliveryInfoScopeType?: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2.bookDeliveryInfoScopeType;
+    isBookDeliveryInfoRequired?: boolean;
     /**
-     * 수강신청 단계에서 레벨테스트를 과정마다할 지 차수마다 할 지 (lms.course.LangLevelTestScopeType)
+     * 수강신청 단계에서 레벨테스트 수집 여부
      */
-    langLevelTestScopeType?: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2.langLevelTestScopeType;
+    isLangLevelTestRequired?: boolean;
 };
 export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2 {
     export enum wizardStep {
@@ -48,22 +48,6 @@ export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2 
     export enum waitListEnrollMethodType {
         ADMIN_PUSH = 'ADMIN_PUSH',
         MAIL_SEND = 'MAIL_SEND',
-    }
-    /**
-     * 수강신청 단계에서 배송지 수집을 과정마다할 지 차수마다 할 지 (lms.course.BookDeliveryInfoScopeType)
-     */
-    export enum bookDeliveryInfoScopeType {
-        NONE = 'NONE',
-        PER_COURSE = 'PER_COURSE',
-        PER_SEQ = 'PER_SEQ',
-    }
-    /**
-     * 수강신청 단계에서 레벨테스트를 과정마다할 지 차수마다 할 지 (lms.course.LangLevelTestScopeType)
-     */
-    export enum langLevelTestScopeType {
-        NONE = 'NONE',
-        PER_COURSE = 'PER_COURSE',
-        PER_SEQ = 'PER_SEQ',
     }
 }
 

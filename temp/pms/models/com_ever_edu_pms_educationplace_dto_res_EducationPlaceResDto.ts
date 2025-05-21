@@ -3,7 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { com_ever_edu_pms_educationplace_dto_res_EducationPlaceTenantResDto } from './com_ever_edu_pms_educationplace_dto_res_EducationPlaceTenantResDto';
-import type { com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto } from './com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto';
+import type { com_ever_edu_pms_file_dto_res_GroupInfoResDto } from './com_ever_edu_pms_file_dto_res_GroupInfoResDto';
 export type com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto = {
     educationPlaceId?: number;
     educationPlaceUuid?: string;
@@ -12,7 +12,7 @@ export type com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto = {
     educationPlaceCodeName?: string;
     isReservationUsed?: boolean;
     mapImageFileGroupId?: number;
-    mapImageFileInfo?: com_ever_edu_pms_file_dto_res_GroupFileInfoListResDto;
+    mapImageFileInfo?: com_ever_edu_pms_file_dto_res_GroupInfoResDto;
     mapImageLinkContent?: string;
     educationPlaceRemarkContent?: string;
     zipNo?: string;

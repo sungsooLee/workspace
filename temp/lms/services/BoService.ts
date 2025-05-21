@@ -44,6 +44,7 @@ import type { com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardS
 import type { com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep4 } from '../models/com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep4';
 import type { com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep5 } from '../models/com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep5';
 import type { com_ever_edu_lms_course_dto_res_SequenceResDto$onAdmin } from '../models/com_ever_edu_lms_course_dto_res_SequenceResDto$onAdmin';
+import type { com_ever_edu_lms_enroll_dto_event_EnrollQueueEvent } from '../models/com_ever_edu_lms_enroll_dto_event_EnrollQueueEvent';
 import type { com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByAdmin } from '../models/com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByAdmin';
 import type { com_ever_edu_lms_enroll_dto_req_EnrollReqDto$ByAdmin } from '../models/com_ever_edu_lms_enroll_dto_req_EnrollReqDto$ByAdmin';
 import type { com_ever_edu_lms_student_dto_req_StudentSearchDto$SearchByAdmin } from '../models/com_ever_edu_lms_student_dto_req_StudentSearchDto$SearchByAdmin';
@@ -931,6 +932,30 @@ export class BoService {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/admin/api/v1/enroll',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 카프카 쓰지 않고 바로 입과
+     * 바로 입과 테스트
+     * @param requestBody
+     * @returns number OK
+     * @throws ApiError
+     */
+    public static enrollTest(
+        requestBody: com_ever_edu_lms_enroll_dto_event_EnrollQueueEvent,
+    ): CancelablePromise<number> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/enroll-test',
             body: requestBody,
             mediaType: 'application/json',
             errors: {

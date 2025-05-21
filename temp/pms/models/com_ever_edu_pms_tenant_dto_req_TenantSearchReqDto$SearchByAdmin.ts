@@ -14,11 +14,11 @@ export type com_ever_edu_pms_tenant_dto_req_TenantSearchReqDto$SearchByAdmin = {
     /**
      * 테넌트담당자
      */
-    tenantMappingRoleName?: string;
+    tenantManagerName?: string;
     /**
      * 회사담당자
      */
-    tenantMappingCompanyName?: string;
+    companyManagerName?: string;
     /**
      * 사용여부
      */

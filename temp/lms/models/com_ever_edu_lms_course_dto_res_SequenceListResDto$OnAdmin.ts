@@ -4,7 +4,6 @@
 /* eslint-disable */
 export type com_ever_edu_lms_course_dto_res_SequenceListResDto$OnAdmin = {
     courseSequenceId?: number;
-    learningStartType?: com_ever_edu_lms_course_dto_res_SequenceListResDto$OnAdmin.learningStartType;
     courseSequenceName?: string;
     enrollmentStartDate?: string;
     enrollmentEndDate?: string;
@@ -13,6 +12,7 @@ export type com_ever_edu_lms_course_dto_res_SequenceListResDto$OnAdmin = {
     learningStartDays?: number;
     maxEnrollQuota?: number;
     currentEnrollCount?: number;
+    learningStartType?: com_ever_edu_lms_course_dto_res_SequenceListResDto$OnAdmin.learningStartType;
 };
 export namespace com_ever_edu_lms_course_dto_res_SequenceListResDto$OnAdmin {
     export enum learningStartType {

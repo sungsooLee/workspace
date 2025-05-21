@@ -2,20 +2,20 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_pms_file_dto_res_FileGroupInfoResDto } from './com_ever_edu_pms_file_dto_res_FileGroupInfoResDto';
+import type { com_ever_edu_pms_role_dto_res_RoleUserResDto } from './com_ever_edu_pms_role_dto_res_RoleUserResDto';
 import type { org_springdoc_core_converters_models_SortObject } from './org_springdoc_core_converters_models_SortObject';
 import type { PageableObject } from './PageableObject';
-export type org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_FileGroupInfoResDto = {
+export type org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleUserResDto = {
     totalElements?: number;
     totalPages?: number;
     size?: number;
-    content?: Array<com_ever_edu_pms_file_dto_res_FileGroupInfoResDto>;
+    content?: Array<com_ever_edu_pms_role_dto_res_RoleUserResDto>;
     number?: number;
     sort?: Array<org_springdoc_core_converters_models_SortObject>;
-    first?: boolean;
-    last?: boolean;
     numberOfElements?: number;
     pageable?: PageableObject;
+    first?: boolean;
+    last?: boolean;
     empty?: boolean;
 };
 

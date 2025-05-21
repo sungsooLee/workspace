@@ -4,10 +4,6 @@
 /* eslint-disable */
 export type com_ever_edu_pms_file_dto_req_FileGroupInfoReqDto = {
     /**
-     * 업로드유형, 코드그룹(pms.file.FileUploadType) - ATTATCH|CONTENTS
-     */
-    uploadType: com_ever_edu_pms_file_dto_req_FileGroupInfoReqDto.uploadType;
-    /**
      * 업무분류유형, 코드그룹(pms.file.FileAffairsType) - LMS|PMS|CMS
      */
     affairsType: com_ever_edu_pms_file_dto_req_FileGroupInfoReqDto.affairsType;
@@ -25,13 +21,6 @@ export type com_ever_edu_pms_file_dto_req_FileGroupInfoReqDto = {
     languageCode: string;
 };
 export namespace com_ever_edu_pms_file_dto_req_FileGroupInfoReqDto {
-    /**
-     * 업로드유형, 코드그룹(pms.file.FileUploadType) - ATTATCH|CONTENTS
-     */
-    export enum uploadType {
-        ATTATCH = 'ATTATCH',
-        CONTENTS = 'CONTENTS',
-    }
     /**
      * 업무분류유형, 코드그룹(pms.file.FileAffairsType) - LMS|PMS|CMS
      */

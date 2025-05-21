@@ -12,10 +12,10 @@ export type org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res
     content?: Array<com_ever_edu_pms_company_dto_res_CompanyResDto>;
     number?: number;
     sort?: Array<org_springdoc_core_converters_models_SortObject>;
-    first?: boolean;
-    last?: boolean;
     numberOfElements?: number;
     pageable?: PageableObject;
+    first?: boolean;
+    last?: boolean;
     empty?: boolean;
 };
 
