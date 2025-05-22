@@ -9,6 +9,7 @@ import { LNB } from './lnb/lnb';
 import { Header } from './header/header';
 
 import styles from './layout.module.css';
+import { useWindowSize } from 'react-use';
 
 interface LayoutComponentProps {
   children: ReactNode;
@@ -19,6 +20,11 @@ function LayoutComponent({ children }: LayoutComponentProps) {
 
   const { data } = useFetchAuthUser();
   const [activeMenuDepth] = useActiveMenuDepthState();
+  const { width } = useWindowSize();
+
+  if (width < 1000) {
+    return <>안내화면</>;
+  }
 
   if (
     activeMenuDepth &&

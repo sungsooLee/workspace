@@ -17,7 +17,7 @@ const TreeBoxComponent = <T extends object>(
     treeId,
     data,
     showSearchKeyword,
-    initLevel,
+    initLevel = 1,
     onAction,
     closeLevel,
     clientTree,
@@ -29,6 +29,9 @@ const TreeBoxComponent = <T extends object>(
     selectedNode,
     expandedKeys: externalExpandedKeys, //외부에서 전달받은 expandedKeys
     onExpandedKeysChange,
+    onCustomNodeClick,
+    shouldDisableClick,
+    showTotalCount,
     ...props
   }: any,
   // ref: React.Ref
@@ -93,7 +96,7 @@ const TreeBoxComponent = <T extends object>(
   };
 
   return (
-    <div className={cn(styles.wrap)}>
+    <div className={cn(styles.auth_wrap)}>
       <div
         className={cn(
           subTitleStyles.root,
@@ -160,6 +163,9 @@ const TreeBoxComponent = <T extends object>(
             clientTree={clientTree}
             onSelectedNodeChange={handleSelectedNodeChange}
             selectedNode={selectedNode}
+            onCustomNodeClick={onCustomNodeClick}
+            shouldDisableClick={shouldDisableClick}
+            // {...props}
           />
         </TreeContainer>
       </div>

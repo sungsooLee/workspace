@@ -21,7 +21,7 @@ export interface ThumbnailProps {
   /** 세로 사이즈 */
   height?: number;
   /** 아이디 */
-  id: string;
+  id?: string;
   /** 이미지 경로 */
   path: string;
   /** index 번호 (list type 에서 index 번호 확인시 사용) */

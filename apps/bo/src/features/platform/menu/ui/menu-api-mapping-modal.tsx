@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react';
 import { transformApiDataToApiTreeData, treeExpandAll } from '../service/menu.service';
 import { ApiInfoModal } from './api-info-modal';
 import { useFetchPrograms } from '../../../../entities/program/service/program-manage.hook';
+import { cn } from '@learnway/shared';
 
 const MenuApiMappingModalComponent = ({ menuScopeCode, selectedApiKeys }: any) => {
   const { open: openModal, close } = useModal();
@@ -46,7 +47,7 @@ const MenuApiMappingModalComponent = ({ menuScopeCode, selectedApiKeys }: any) =
   };
 
   const handleCustomNodeClick = (node: TreeNode) => {
-    if (node && node.apiUuid && node.level && node.level >= 1) {
+    if (node && node.apiUuid && node.level && node.level >= 1 && node.apiNodeType === 'API') {
       openModal({
         content: <ApiInfoModal apiId={node.apiUuid} />,
         width: 's',
@@ -60,10 +61,11 @@ const MenuApiMappingModalComponent = ({ menuScopeCode, selectedApiKeys }: any) =
       <ModalTitle>API 추가</ModalTitle>
       <ModalBody>
         <div className={styles.wrap}>
-          <div className={styles.pop_contents}>
+          <div className={cn(styles.pop_contents, 'h-full')}>
             <ShuttleTreeToChips
               treeId="api-list-tree"
-              title="API 목록"
+              sourceTitle="API 목록"
+              targetTitle="API 선택"
               sourceData={treeData as TreeNode[]}
               selectedItems={selectedItems}
               onItemsChange={handleSelectedItemsChange}

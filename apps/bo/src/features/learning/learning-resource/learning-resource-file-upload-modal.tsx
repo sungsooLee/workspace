@@ -15,7 +15,6 @@ import { cn } from '@learnway/shared';
 import { LEARNING_TYPE } from '@learnway/config';
 import { t } from 'i18next';
 import { ChannelChoiceModal } from '@features/shared';
-import { AFFAIRS_TYPE, UPLOAD_TYPE } from '@/libs/hooks/src/lib/use-file-manager/type';
 
 interface Props {
   channel: {

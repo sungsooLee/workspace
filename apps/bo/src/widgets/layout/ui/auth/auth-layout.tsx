@@ -10,6 +10,7 @@ import { AuthContainer } from './auth-container/auth-container';
 import { LoginContainer } from './auth-container/login-container';
 
 import styles from '@learnway/styles/bo/widgets/layout/ui/auth/auth-layout.module.css';
+import { useWindowSize } from 'react-use';
 
 export const AUTH_CONTAINERS = {
   LOGIN: 'login-container',
@@ -24,6 +25,11 @@ function AuthLayoutComponent({ children }: AuthLayoutComponentProps) {
   const { t } = useTranslation();
 
   const { meta } = useCurrentRoute();
+  const { width } = useWindowSize();
+
+  if (width < 1000) {
+    return <>안내화면</>;
+  }
 
   return (
     <>

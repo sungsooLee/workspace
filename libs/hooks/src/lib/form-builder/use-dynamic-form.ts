@@ -9,7 +9,7 @@ import {
 } from './type';
 import { extractDynamicFormDefaultValues } from './util';
 import { buildJodObject } from '@learnway/shared';
-import { ValidatorConfig, ValidatorFormat } from '@/libs/shared/src/lib/types/zod';
+import { ValidatorConfig, ValidatorFormat } from '@learnway/shared';
 
 /**
  * 주어진 폼 설정(config)을 기반으로 react-hook-form을 초기화하는 커스텀 훅.

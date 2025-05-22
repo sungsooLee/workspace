@@ -49,6 +49,7 @@ export function useSetLanguage() {
           updateLanguage(languageCode);
           await setDefaultLang(languageCode);
           setInProgress(false);
+          window.location.reload();
         });
       }
     },
