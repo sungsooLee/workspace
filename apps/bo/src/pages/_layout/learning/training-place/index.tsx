@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
@@ -17,7 +17,6 @@ import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-butt
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 import { queryOptions as trainingPlaceQueryOptions } from '@entities/training-place/service/training-place.queries';
-import { useCallback } from 'react';
 import { ImagePreviewModal } from '@features/shared/ui/modal/image-preview-modal';
 
 export const Route = createFileRoute('/_layout/learning/training-place/')({

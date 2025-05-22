@@ -513,5 +513,11 @@
     "ME_CLUSTER": "생기클러스터",
     "OUTSIDE": "외부",
     "ABROAD": "해외"
+  },
+  "pms.channel.ChannelApprovalStatus": {
+    "PENDING": "대기",
+    "ACCEPTED": "접수",
+    "APPROVED": "반려",
+    "REJECTED": "승인"
   }
 }

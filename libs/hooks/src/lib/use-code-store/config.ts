@@ -54,4 +54,16 @@ export const codeOptions: CodeApiConfig = {
     },
     disableCache: true,
   },
+  [CODE_GROUP['manual.tenant.tenantId']]: {
+    api: async () => {
+      const data: any = await httpService.get(`${PMSApiPrefix()}/tenants`, { size: 1000 });
+      return [
+        ...data.content.map((item: any) => ({
+          label: item.tenantName,
+          value: item.tenantId,
+        })),
+      ];
+    },
+    disableCache: true,
+  },
 };

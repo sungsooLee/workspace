@@ -1,6 +1,5 @@
 import React, { forwardRef, useEffect } from 'react';
-import { ThumbnailImageUpload } from '@learnway/ui'; // @learnway/ui에서 ThumbnailImageUpload 컴포넌트 import
-import { ImageOption } from '@learnway/ui'; // ImageOption 타입 import (절대 경로 사용)
+import { ImageOption, ThumbnailImageUpload } from '@learnway/ui'; // @learnway/ui에서 ThumbnailImageUpload 컴포넌트 import
 import { BaseFormFieldProps } from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
 
 /**
