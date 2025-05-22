@@ -1,8 +1,6 @@
 import { StringOrTemplateHeader } from '@tanstack/react-table';
-
 import { getQuerySkipToken } from '@learnway/shared';
-import UsersService from '../api/users';
-import { UserRes } from '@types';
+import UsersService, { UserRes } from '../api/users';
 
 export const queryKeys = {
   all: ['user'] as const,

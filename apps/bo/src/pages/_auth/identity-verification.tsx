@@ -7,9 +7,9 @@ import { pageRouteConfig } from '../../features/auth';
 export const Route = createFileRoute('/_auth/identity-verification')({
   component: RouteComponent,
   ...pageRouteConfig({
-    meta: {
-      title: '본인 인증',
-    },
+    // meta: {
+    //   title: '본인 인증',
+    // },
   }),
 });
 
