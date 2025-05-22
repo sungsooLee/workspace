@@ -12,7 +12,6 @@ import {
   CheckboxGroupFormField,
   ChipListModalSelectorFormField,
   ContentsRow,
-  DynamicFormField,
   Input,
   Textarea,
   TextareaFormField,
@@ -33,7 +32,7 @@ import {
   DuplicateCheckInputFormField,
   DuplicateState,
 } from '@features/tenant/management/ui/duplicate-check-input-form-field';
-import { useFetchTenant } from '@entities/tenant';
+import { useFetchTenant, useUpdateTenant } from '@entities/tenant';
 import TenantService from '@entities/tenant/api/tenant';
 import { EnDeviceType, EnUseCategory } from '@types';
 
@@ -61,7 +60,12 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
 
   const { t } = useTranslation();
   const { getCode } = useCodeStore();
-  const { data: tenantData } = useFetchTenant(tenantId);
+  const { data: tenantData, refetch } = useFetchTenant(tenantId);
+  const { update } = useUpdateTenant({
+    onSuccess: () => {
+      refetch();
+    },
+  });
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
     useDynamicForm(formConfig);
 
@@ -94,10 +98,11 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       isCommonCategory: data.useCategory.includes(EnUseCategory.isCommonCategory),
       isTenantCategory: data.useCategory.includes(EnUseCategory.isTenantCategory),
       companyTenantList: data.companyTenantList.map((i: any) => i.companyId),
+      tenantId: tenantId,
     };
     console.log('payload {} => ', payload);
     if (await openConfirm('저장 하시겠습니까?')) {
-      //  create(payload);
+      update(payload);
     }
   };
   // 상태 변경 함수 (Switch id에 따라 상태를 업데이트)
@@ -126,6 +131,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
           name: item.companyName,
         })),
         tenantMappingLanguageTypeList: tenantData.tenantLanguageList,
+        tenantDesc: tenantData.tenantDesc ?? '',
       });
     }
   }, [tenantData]);
