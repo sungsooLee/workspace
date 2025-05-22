@@ -34,6 +34,8 @@ export interface ThumbnailProps {
   selected?: boolean;
   /** 카운트 체크 여부 */
   count?: boolean;
+  /** 삭제 클릭 이벤트 */
+  onRemoveClick?: (checked: CheckedState) => void;
   /** 체크 변경 이벤트 */
   onCheckedChange?: (checked: CheckedState) => void;
 }
