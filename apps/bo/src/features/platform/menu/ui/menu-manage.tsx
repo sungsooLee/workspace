@@ -625,6 +625,7 @@ export const MenuManage = ({ menuScope }: any) => {
                     columns={columns}
                     showTotalCount={true}
                     title={t('API')}
+                    clientSideSorting={true}
                     customButtonNode={
                       <Button
                         variant="text"
@@ -695,7 +696,7 @@ const formConfig: DynamicFormConfig = {
       value: false,
     },
     {
-      label: t('Hidden 메뉴'),
+      label: t('메뉴숨기기'),
       tooltip: 'Hidden메뉴 적용 시 메뉴에 API가 매칭 되나, 메뉴 자체는 화면에서 숨김처리가 됩니다.',
       name: 'isHiddenMenu',
       type: 'switch',

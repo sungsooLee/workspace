@@ -78,6 +78,7 @@ const FilteredTreeNode = ({
   node,
   draggedNodeKey,
   draggedNode,
+  shouldDisableClick,
   ...props
 }: TreeNodeComponentProps) => {
   const enhancedNode = node as EnhancedTreeNode;
@@ -93,6 +94,7 @@ const FilteredTreeNode = ({
       node={node}
       draggedNodeKey={draggedNodeKey}
       draggedNode={draggedNode}
+      shouldDisableClick={shouldDisableClick}
       {...props}
     />
   );
@@ -117,6 +119,7 @@ const TreeNodeComponent = ({
   size = 'md',
   treeContext,
   treeId,
+  shouldDisableClick,
 }: TreeNodeComponentProps) => {
   const enhanceNode = node as EnhancedTreeNode;
   const [dropPosition, setDropPosition] = useState<NodeMovePositionType | null>(null);
@@ -485,7 +488,9 @@ const TreeNodeComponent = ({
         <span
           className={cn(
             styles.node_title,
-            `${onCustomNodeClick && level >= 1 ? 'cursor-pointer underline' : 'cursor-default'}`,
+            onCustomNodeClick && level >= 1 && !shouldDisableClick?.(enhanceNode, level)
+              ? 'cursor-pointer underline'
+              : 'cursor-default',
           )}
         >
           {highlightMatch(enhanceNode.title || '')}
@@ -557,6 +562,7 @@ const TreeNodeComponent = ({
                 onCustomNodeClick={onCustomNodeClick}
                 size={size}
                 treeContext={treeContext}
+                shouldDisableClick={shouldDisableClick}
               />
             ))}
         </div>
@@ -580,6 +586,7 @@ const TreeView = ({
   onSelectedNodeChange,
   onCustomNodeClick,
   clientTree,
+  shouldDisableClick,
 }: TreeProps) => {
   // 내부 상태 관리
   const [initialData, setInitialData] = useState<EnhancedTreeNode[]>(
@@ -1017,6 +1024,7 @@ const TreeView = ({
               draggedNode={draggedNode}
               onCustomNodeClick={onCustomNodeClick}
               treeContext={treeContext}
+              shouldDisableClick={shouldDisableClick}
             />
           ))
         ) : (
