@@ -7,12 +7,11 @@ import {
   useDynamicForm,
   useDynamicFormContext,
 } from '@learnway/hooks';
-import { Button, ContentsRow, DynamicFormField, Input } from '@learnway/ui';
+import { Button, ContentsRow, Input } from '@learnway/ui';
 import { FormRow } from '../../../shared/ui/form';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
 import { FormDisplay } from '../../../features/form/ui/form-display';
-import { ValidatorConfig } from '@/libs/shared/src/lib/types/zod';
-import { buildJodObject } from '@learnway/shared';
+import { buildJodObject, ValidatorConfig } from '@learnway/shared';
 import { SubTitlesFormField } from '../../../features/form/ui';
 import React, { forwardRef, useState } from 'react';
 import { FormInfoArea } from '@shared/ui/form/components/form-info-area';

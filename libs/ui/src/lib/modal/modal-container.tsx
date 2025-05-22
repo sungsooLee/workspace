@@ -1,8 +1,8 @@
-import React, { FC, ReactNode, useRef, useState, useEffect } from 'react';
+import React, { FC, ReactNode, useEffect, useRef, useState } from 'react';
 import * as Primitive from '@radix-ui/react-dialog';
 import { cn, getSlot } from '@learnway/shared';
 import styles from './modal-container.module.css';
-import { CommonReactElementProps } from '@/libs/ui/src';
+import { CommonReactElementProps } from '../type';
 
 export interface ModalContainerProps<T = any> extends CommonReactElementProps {
   title?: string; // openModal(ModalConfig) : ModalConfig.title 값

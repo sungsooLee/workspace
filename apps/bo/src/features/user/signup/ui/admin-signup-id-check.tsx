@@ -1,11 +1,10 @@
-// import { DynamicFormConfig } from '@/libs/hooks/src/lib/form-builder/type';
-import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { useSignupStore } from '@features/user/signup';
 import { adminItems } from '@features/user/signup/ui/signup-select';
 import { IcoCaution } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import noticeBoxStyles from '@learnway/styles/bo/shared/ui/notice-box/notice-box.module.css';
-import { Button, ContentsRow, DynamicFormField, Stepper } from '@learnway/ui';
+import { Button, ContentsRow, Stepper } from '@learnway/ui';
 import { FormRow } from '@shared/ui';
 import styles from './admin-signup-id-check.module.css';
 import { useRouter } from '@tanstack/react-router';
