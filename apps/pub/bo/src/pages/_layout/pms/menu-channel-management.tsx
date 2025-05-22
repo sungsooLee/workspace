@@ -42,7 +42,7 @@ function RouteComponent() {
   ];
 
   // grid
-  const [pageIndex, setPageIndex] = useState(0);
+  const [pageNumber, setpageNumber] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const data: any[] = [
     {
@@ -302,9 +302,9 @@ function RouteComponent() {
                 guideText={'메일발송 N인 접수ID를 선택하시면 채널 등록화면으로 이동됩니다.'}
                 pagination={{
                   pageSize,
-                  pageIndex,
-                  totalRows: 100,
-                  onPageChange: setPageIndex,
+                  pageNumber,
+                  totalPages: 100,
+                  onPageChange: setpageNumber,
                   onPageSizeChange: setPageSize,
                 }}
                 customButtonNode={

@@ -10,7 +10,7 @@ export const Route = createFileRoute('/_guide/guide/grid')({
 });
 
 function RouteComponent() {
-  const [pageIndex, setPageIndex] = useState(0);
+  const [pageNumber, setPageIndex] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const data: any[] = [
     {
@@ -376,8 +376,8 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
   columns={columns}
   pagination={{
     pageSize,
-    pageIndex,
-    totalRows: 100,
+    pageNumber,
+    totalPages: 100,
     onPageChange: setPageIndex,
     onPageSizeChange: setPageSize,
   }}
@@ -397,8 +397,8 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
           showNumberingColumn={true}
           pagination={{
             pageSize,
-            pageIndex,
-            totalRows: 100,
+            pageNumber,
+            totalPages: 100,
             onPageChange: setPageIndex,
             onPageSizeChange: setPageSize,
           }}
