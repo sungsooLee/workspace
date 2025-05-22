@@ -44,3 +44,15 @@
     @apply fixed bottom-[100px] left-[263px] z-10 h-[56px] w-[24px] overflow-hidden rounded-r-[6px] border border-l-0 border-solid border-[#cfd8e8] bg-white transition-all duration-100 ease-in-out;
   }
 }
+
+@media (max-width: 1023px) {
+  .start {
+    @apply !w-0 !overflow-hidden;
+    .btn_toggle {
+      @apply left-0;
+      svg {
+        @apply rotate-180;
+      }
+    }
+  }
+}
