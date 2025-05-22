@@ -7,6 +7,7 @@ import WidgetsService from '../api/widgets';
 export const queryKeys = {
   all: ['widgets'] as const,
   detail: (widgetCode: string) => [...queryKeys.all, widgetCode] as const,
+  listForTenant: (tenantId: number) => [...queryKeys.all, tenantId] as const,
 };
 
 export const widgetsQueryOptions = {
@@ -67,4 +68,9 @@ export const widgetsQueryOptions = {
           },
         }
       : getQuerySkipToken<Widget>(),
+
+  listForTenant: (tenantId: number) => ({
+    queryKey: queryKeys.listForTenant(tenantId),
+    queryFn: () => WidgetsService.getWidgetsTenant(tenantId),
+  }),
 };
