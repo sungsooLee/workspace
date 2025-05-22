@@ -2,12 +2,12 @@ import { addOrRemoveItemByKey, cn, getMatchingItemsByKey, reorderOptions } from 
 
 import styles from './list.module.css';
 import React, { isValidElement, ReactElement } from 'react';
-import { CommonReactElementProps } from '@/libs/ui/src';
 import { Button } from '../button/button';
 import { closestCenter, DndContext, DragEndEvent } from '@dnd-kit/core';
 import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { IcoDelete03, IcoMenu01 } from '@learnway/icons';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import { CommonReactElementProps } from '../type';
 
 export interface ListProps extends CommonReactElementProps {
   /** 리스트 옵션 배열 */

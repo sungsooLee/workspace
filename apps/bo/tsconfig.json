@@ -8,7 +8,6 @@
     "types": ["vite/client"],
     "baseUrl": ".",
     "paths": {
-      "@/libs/*": ["../../libs/*"],
       "@learnway/config": ["../../libs/config/src/index.ts"],
       "@learnway/config/*": ["../../libs/config/src/lib/*"],
       "@learnway/editor": ["../../libs/editor/src/index.ts"],

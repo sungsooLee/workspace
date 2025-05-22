@@ -6,12 +6,10 @@ import {
   ModalContainer,
   ModalFooter,
   ModalTitle,
-  UppyUpload,
   useModal,
 } from '@learnway/ui';
-import { CreateFileGroupFilesInfoReq, useFileManager, useS3Uploader } from '@learnway/hooks';
+import { useFileManager, useS3Uploader } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import { cn } from '@learnway/shared';
 import { LEARNING_TYPE } from '@learnway/config';
 import { t } from 'i18next';
 import { ChannelChoiceModal } from '@features/shared';
