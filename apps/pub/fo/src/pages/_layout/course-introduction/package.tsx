@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { ChipList, SelectOption, Accordion, Button } from '@learnway/ui';
+import { ChipList, SelectOption, Accordion, Button, useToast } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import {
   IcoHeart,
@@ -48,6 +48,15 @@ function RouteComponent() {
     } else {
       setIcoHeart(true);
     }
+  };
+
+  // 공통 컴포넌트 수정 요청중 (수정예정)
+  // toast popup
+  const { open: openToast } = useToast();
+  const handleClickToast = () => {
+    openToast({
+      title: '채널을 구독하였습니다',
+    });
   };
 
   const [value2, setValue2] = useState<string>('');
@@ -747,6 +756,7 @@ function RouteComponent() {
                   className={packageInformationStyles.btn_subscribe}
                   variant="primary"
                   size="sm"
+                  onClick={() => handleClickToast()}
                 >
                   구독하기
                 </Button>
