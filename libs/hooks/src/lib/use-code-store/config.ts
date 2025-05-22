@@ -1,6 +1,6 @@
 import { CodeApiConfig, CodeOption } from './types';
 import { CODE_GROUP } from './constants';
-import { httpService } from '@/libs/shared/src';
+import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
 
 /**
