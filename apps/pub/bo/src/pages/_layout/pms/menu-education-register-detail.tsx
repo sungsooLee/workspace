@@ -54,7 +54,7 @@ function RouteComponent() {
     ];
 
     // grid
-    const [pageIndex, setPageIndex] = useState(0);
+    const [pageNumber, setpageNumber] = useState(0);
     const [pageSize, setPageSize] = useState(10);
     const data: any[] = [
       {
@@ -215,9 +215,9 @@ function RouteComponent() {
                 showNumberingColumn={true}
                 pagination={{
                   pageSize,
-                  pageIndex,
-                  totalRows: 100,
-                  onPageChange: setPageIndex,
+                  pageNumber,
+                  totalPages: 100,
+                  onPageChange: setpageNumber,
                   onPageSizeChange: setPageSize,
                 }}
                 title="타이틀"

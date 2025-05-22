@@ -54,7 +54,8 @@ function RouteComponent() {
               open={isOpen}
               onOpenChange={setIsOpen}
             >
-              팝오버 클릭요소
+              {isOpen ? '팝오버 닫기' : '팝오버 열기'}
+              {isOpen ? '팝오버 닫기' : '팝오버 열기'}
             </Popover>
           </div>
         </div>
