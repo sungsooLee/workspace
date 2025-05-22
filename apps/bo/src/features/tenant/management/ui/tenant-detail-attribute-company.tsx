@@ -3,7 +3,7 @@ import { t } from 'i18next';
 import { useRouterState } from '@tanstack/react-router';
 import { FormTranslationBox } from '@features/platform/ui/platform/system/translation/form-translation-box';
 
-import { Button, ContentsRow, Input, DynamicFormField } from '@learnway/ui';
+import { Button, ContentsRow, Input, DynamicFormField, useModal } from '@learnway/ui';
 
 import { cn } from '@learnway/shared';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
@@ -22,10 +22,11 @@ const TenantDetailAttributeCompanyComponent = (
   }: { tenantId: string; attributeData: any; companyId: string; tenantName: string },
   ref: any,
 ) => {
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const { open: openModal, confirm: openConfirm } = useModal();
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, control } =
     useDynamicForm(formConfig);
-
-  const formRef = useRef(4);
 
   useImperativeHandle(ref, () => ({
     saveData() {
@@ -40,16 +41,20 @@ const TenantDetailAttributeCompanyComponent = (
     },
   }));
 
-  const handleOnSubmit = () => {
-    console.log('dddddddddddddddddddddddddd');
+  const handleOnSubmit = async (payload: any) => {
+    console.log('payload {} => ', payload);
+    if (await openConfirm('저장 하시겠습니까?')) {
+      console.log('aaaa');
+    }
   };
+
   useEffect(() => {
     console.log(tenantName, attributeData);
     fetchData({ ...attributeData, tenantName: tenantName });
   }, []);
 
   return (
-    <form ref={formRef} onSubmit={handleOnSubmit}>
+    <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
       <div className="title_wrap">
         <strong className="title">{t('테넌트 속성 관리')}</strong>
       </div>
