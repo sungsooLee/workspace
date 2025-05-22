@@ -11,22 +11,24 @@ import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 
 /* tab contents */
 import { TenantDetailMenu } from '@features/tenant/management/ui/tenant-detail-menu';
-// import { TenantDetailBase } from '@features/tenant/management/ui/tenant-detail-base';
 import { TenantDetailCategory } from '@features/tenant/management/ui/tenant-detail-category';
 import { TenantDetailAttribute } from '@features/tenant/management/ui/tenant-detail-attribute';
 import { TenantDetailWidget } from '@features/tenant/management/ui/tenant-detail-widget';
 import { TenantDetailBanner } from '@features/tenant/management/ui/tenant-detail-banner';
 import { TenantDetailLearningRole } from '@features/tenant/management/ui/tenant-detail-learning-role';
 
+import { EnTenantDetailTabKey } from '@types';
+
 export const Route = createFileRoute('/_layout/tenant/management/detail')({
   component: RouteComponent,
 });
-
+const scrollHidden: string[] = [EnTenantDetailTabKey.base, EnTenantDetailTabKey.attribute];
+const buttonShowTabs: string[] = [EnTenantDetailTabKey.base, EnTenantDetailTabKey.attribute];
 function RouteComponent() {
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
 
-  const [selectedTabKey, setSelectedTabKey] = useState('attrbute');
+  const [selectedTabKey, setSelectedTabKey] = useState<string>(EnTenantDetailTabKey.attribute);
 
   const handleTabChange = (tabKey: string) => {
     if (tabKey !== selectedTabKey) {
@@ -51,39 +53,39 @@ function RouteComponent() {
   const menuItems = [
     {
       title: '테넌트 속성 관리',
-      key: 'attrbute',
+      key: EnTenantDetailTabKey.attribute,
       content: <TenantDetailAttribute />,
     },
     {
       title: '테넌트 메뉴관리',
-      key: 'menu',
+      key: EnTenantDetailTabKey.menu,
       content: <TenantDetailMenu />,
     },
     {
       title: '테넌트 카테고리 관리',
-      key: 'category',
+      key: EnTenantDetailTabKey.category,
       content: <TenantDetailCategory />,
     },
     {
       title: '테넌트 역할 관리',
-      key: 'learningRole',
+      key: EnTenantDetailTabKey.learningRole,
       content: <TenantDetailLearningRole />,
     },
     {
       title: '테넌트 위젯 관리',
-      key: 'widget',
+      key: EnTenantDetailTabKey.widget,
       content: <TenantDetailWidget />,
     },
     {
       title: '테넌트 배너 관리',
-      key: 'banner',
+      key: EnTenantDetailTabKey.banner,
       content: <TenantDetailBanner />,
     },
   ];
 
   return (
-    <PageContainer scrollHidden={!['attrbute', 'widget'].includes(selectedTabKey)}>
-      {selectedTabKey === 'menu01' && (
+    <PageContainer scrollHidden={!scrollHidden.includes(selectedTabKey)}>
+      {buttonShowTabs.includes(selectedTabKey) && (
         <ContentsButtons>
           <LinkBox>
             <Button onClick={handleListButtonClick} variant="point" size="sm">
@@ -99,7 +101,7 @@ function RouteComponent() {
           </Button>
         </ContentsButtons>
       )}
-      {selectedTabKey !== 'menu01' && (
+      {!buttonShowTabs.includes(selectedTabKey) && (
         <ContentsButtons>
           <Button onClick={handleListButtonClick} variant="point" size="sm">
             목록
@@ -112,7 +114,7 @@ function RouteComponent() {
           type="progress"
           size="sm"
           className={styles.progress_wrap}
-          selectedTabKey={'attrbute'}
+          selectedTabKey={EnTenantDetailTabKey.attribute}
           onTabChange={handleTabChange}
         />
       </MainContents>

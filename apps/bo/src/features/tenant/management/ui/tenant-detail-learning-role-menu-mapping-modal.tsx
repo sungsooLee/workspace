@@ -22,7 +22,7 @@ import {
   useCreateMenuTenant,
   useDeleteMenuTenent,
   useChangeMenuTenentDnd,
-} from '@entities/tenant/service/tenant-menu-manage.hook';
+} from '@entities/menu/service/tenant-menu-manage.hook';
 import {
   getAllParentAndAllChildById,
   getFirstExpandKeys,
@@ -31,7 +31,10 @@ import {
   transformRoleMenuApiDataToTreeData,
   transformMenuApiDataToTreeData,
 } from '../service/tenant-detail-tree.service';
-import { useFetchRoleMenus, useCreateRoleMenu } from '@entities/role/service/role-manage.hook';
+import {
+  useFetchRoleMenus,
+  useModifyMenusAndApiToRole,
+} from '@entities/role/service/role-manage.hook';
 
 const TenantDetailLearningRoleMenuMappingModalComponent: FC<any> = ({
   siteScope,
@@ -50,7 +53,7 @@ const TenantDetailLearningRoleMenuMappingModalComponent: FC<any> = ({
 
   const { data: tenantMenuData } = useFetchMenuTenantMappingTree(tenantId, siteScope);
   const { data: roleMenuData, refetch } = useFetchRoleMenus(tenantId, siteScope, roleCode);
-  const { create } = useCreateRoleMenu({
+  const { create } = useModifyMenusAndApiToRole({
     onSuccess: () => {
       refetch();
     },
@@ -84,13 +87,14 @@ const TenantDetailLearningRoleMenuMappingModalComponent: FC<any> = ({
               contents.push(item.menuId);
             }
           }
-
           const payload = {
             roleCode: roleCode,
-            addMenuIds: [...contents],
-            removeMenuIds: [],
-            addApis: [],
-            removeApis: [],
+            body: {
+              addMenuIds: [...contents],
+              removeMenuIds: [],
+              addApis: [],
+              removeApis: [],
+            },
           };
           console.log('save', payload);
           create(payload);

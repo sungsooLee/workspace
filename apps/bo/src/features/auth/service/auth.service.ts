@@ -4,6 +4,7 @@ import { useLoginUser, useReissue, useUpdateUser, useAsycFetchMenus } from '@lea
 import type { AuthUser } from '@learnway/auth';
 import { cookieService, MutateCallback } from '@learnway/shared';
 import { useModal } from '@learnway/ui';
+import { usePermissionStore } from '../../../shared/lib/permission-store';
 
 //import { useAsycFetchMenus } from '../../../entities/menu';
 
@@ -52,6 +53,7 @@ export function useAuthSignin() {
     reissue: async (): Promise<AuthUser | undefined> => {
       const user = await reissue();
       const menus = await asyncMenus(user?.activeTenant.tenantId);
+      await usePermissionStore.getState().fetchPermissions(); //임시 사용가능한 API 목록 Fetch
       return updateMenu(menus);
     },
   };

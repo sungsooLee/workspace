@@ -8,12 +8,12 @@ import {
   useCurrentRoute,
   useDynamicForm,
   useSearchBox,
-} from '@/libs/hooks/src';
+} from '@learnway/hooks';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { pageRouteConfig } from '@features/auth';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
-import { Button, ContentsRow, GridBox, useGridBox } from '@/libs/ui/src';
+import { Button, ContentsRow, GridBox, useGridBox } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { ContentsHistoryInfoFormField, FormRow, FormSubTitle } from '@shared/ui';
 import { cn } from '@learnway/shared';

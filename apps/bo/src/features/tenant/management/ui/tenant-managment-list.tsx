@@ -111,14 +111,15 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
     },
   };
 
-  const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
-  const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
+  const { provider: searchProvider } = useSearchBox(searchConfig);
+  const { config: gConfig, gridFetch } = useGridBox(gridConfig);
 
   // useDynamicForm(formConfig);
 
-  const handleOnSearch = useCallback((data: any) => {
+  const handleOnSearch = (data: any) => {
+    console.log('search', data);
     gridFetch(data);
-  }, []);
+  };
 
   return (
     <>

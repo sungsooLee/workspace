@@ -1,11 +1,29 @@
-import { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
-import { Button, GridBox, TreeBox, TreeNode } from '@learnway/ui';
-import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
+import { useState, useEffect, forwardRef, useCallback } from 'react';
 import { t } from 'i18next';
+import { cn } from '@learnway/shared';
+import {
+  Button,
+  GridBox,
+  TreeBox,
+  TreeNode,
+  useGridBox,
+  ChipList,
+  ChipListComponentProps,
+} from '@learnway/ui';
+
+import {
+  FormInfoArea,
+  FormRow,
+  ContentsHistoryInfoFormField,
+  ChipListFormField,
+  SwitchFormField,
+} from '@shared/ui';
+
+import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 import { useRouterState } from '@tanstack/react-router';
 
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
-import { cn } from '@learnway/shared';
+
 import { FormSubTitle } from '@shared/ui';
 import { DynamicFormConfig, useSearchBox } from '@learnway/hooks';
 import { SearchBox } from '../../../../shared/ui/search-box';
@@ -23,6 +41,9 @@ import {
   useFetchRoleTree,
   useRoleManager,
 } from '@entities/role/service/role-manage.hook';
+import { EnFormMode } from '@types';
+
+import { roleManagerQueryOptions } from '@entities/role/service/role-manage.queries';
 
 const columnHelper = createColumnHelper<any>();
 
@@ -72,23 +93,27 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
   const [roleTree, setRoleTree] = useState<any>(null);
   const [roleTreeExpandedKeys, setRoleTreeExpandedKeys] = useState<string[]>([]);
   const [selectedRole, setSelectedRole] = useState<any>(null);
+  const [formMode, setFormMode] = useState(EnFormMode.NONE);
 
   const tenantId = routerState.location.state?.tenantId;
   const tenantName = routerState.location.state?.tenantName;
 
-  const { provider: sProvider } = useSearchBox(searchConfig);
+  const { provider: sProvider, getValues } = useSearchBox(searchConfig);
   const { data: roleData } = useFetchRoleTree(tenantId, siteScope);
 
-  useImperativeHandle(ref, () => ({
-    showAlertModify: () => {
-      console.log('grant ' + siteScope);
-      return true;
-    },
-  }));
+  const { config, gridFetch } = useGridBox(gridConfig);
+
+  const handleOnSearch = useCallback((data: any) => {
+    if (formMode === EnFormMode.VIEW) {
+      gridFetch({ ...data, roleCode: selectedRole.roleCode });
+    }
+  }, []);
 
   const handleRoleSelect = (node: TreeNode) => {
-    console.log(node);
-    setSelectedRole(node);
+    if (node.key !== 'root') {
+      setSelectedRole(node);
+      gridFetch({ ...getValues(), roleCode: node.roleCode });
+    }
   };
 
   useEffect(() => {
@@ -110,14 +135,11 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
         treeId={'1'}
         showSearchKeyword
         title={'역할 목록'}
+        selectedNode={selectedRole}
         handleSelectedNodeChange={handleRoleSelect}
       />
       <div className={cn(styles.start, styles.wrap)}>
-        <FormSubTitle
-          label={'역할 정보'}
-          actionNode={<Button label={'저장'} variant={'save'} size={'sm'} />}
-          underLine={true}
-        />
+        <FormSubTitle label={'역할 정보'} underLine={true} />
         <div className={styles.contents_wrap}>
           <div className={formStyles.form_item}>
             <label htmlFor="name-id" className={formStyles.form_label}>
@@ -127,9 +149,9 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
                 <IcoFormRequired width={12} height={12} />
               </span>
             </label>
-            <SearchBox provider={sProvider} onSearch={(data: any) => console.log(data)} />
+            <SearchBox provider={sProvider} onSearch={handleOnSearch} />
             <GridBox
-              data={[]}
+              config={config}
               columns={columns}
               title={t('사용자 목록')}
               showTotalCount={true}
@@ -150,7 +172,10 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
                 </>
               }
             />
-            <div>유저 그룹 역할 부여 컴포넌트...</div>
+            <div className={styles.contents_wrap}>
+              {/* <ChipList options={[]} /> */}
+              {/* <ChipListFormField placeHolder /> */}
+            </div>
           </div>
         </div>
       </div>
@@ -160,10 +185,14 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
 export const TenantDetailLearningRoleGrant = forwardRef(TenantDetailLearningRoleGrantComponent);
 const formConfig: DynamicFormConfig = {
   builders: [
-    // {
-    //     name: ''
-    // }
+    {
+      name: 'location',
+      type: 'custom',
+      label: t('위치'),
+      value: [],
+    },
   ],
+  validator: {},
 };
 
 // 셀렉박스의 경우에 공통 코드 ?? 아니면 선택할 수 있는 셀렉 박스?
@@ -208,4 +237,22 @@ const searchConfig: any = {
       },
     ],
   ],
+};
+//const chipListOptions: ChipListComponentProps = { options: new Array() };
+
+const gridConfig = {
+  query: roleManagerQueryOptions.getRoleUserList,
+  columns: [
+    {
+      name: 'no1',
+      label: 'NO.',
+      type: 'numbering',
+    },
+  ],
+  data: [],
+  pagination: {
+    pageSize: 10,
+    pageIndex: 1,
+    totalRows: 2,
+  },
 };

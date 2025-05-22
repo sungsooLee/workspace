@@ -24,7 +24,7 @@ import {
   useCreateMenuTenant,
   useDeleteMenuTenent,
   useChangeMenuTenentDnd,
-} from '@entities/tenant/service/tenant-menu-manage.hook';
+} from '@entities/menu/service/tenant-menu-manage.hook';
 import {
   getAllParentAndAllChildById,
   getFirstExpandKeys,

@@ -18,8 +18,8 @@ export default class TenantService {
     return httpService.delete<Tenant>(`${PMSApiPrefix()}/tenants${tenantId}`);
   }
 
-  static fetchListTenant(payload: any) {
-    return httpService.get<PageableContent<any>>(`${PMSApiPrefix()}/tenants`);
+  static fetchListTenant(params: any) {
+    return httpService.get<PageableContent<any>>(`${PMSApiPrefix()}/tenants`, params);
   }
 
   static createTenant(payload: any) {

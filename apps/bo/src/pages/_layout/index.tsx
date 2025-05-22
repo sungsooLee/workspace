@@ -118,6 +118,33 @@ export const munu = [
     remarks: '작업 완료', // 비고
   },
   {
+    screenName: '나의 정보',
+    pageId: 'my-page/info',
+    screenId: 'NLP_BO_COM_1000',
+    pageType: 'Page',
+    completionDate: '-',
+    lastUpdateDate: '-',
+    remarks: '작업중 apiX', // 비고
+  },
+  {
+    screenName: '나의 권한',
+    pageId: 'my-page/role',
+    screenId: 'NLP_BO_COM_1000',
+    pageType: 'Page',
+    completionDate: '-',
+    lastUpdateDate: '-',
+    remarks: '작업중 apiX', // 비고
+  },
+  {
+    screenName: '나의 권한 상세',
+    pageId: 'my-page/role/detail',
+    screenId: 'NLP_BO_COM_1000',
+    pageType: 'Page',
+    completionDate: '-',
+    lastUpdateDate: '-',
+    remarks: '작업중 apiX', // 비고
+  },
+  {
     screenName: '공통 카테고리',
     pageId: 'platform/category',
     screenId: '-',
