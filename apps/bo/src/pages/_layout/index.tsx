@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-// import '@learnway/styles/src/lib/bo/assets/styles/guide.css';
+import style from './index.module.css';
 
 export const Route = createFileRoute('/_layout/')({
   component: HomeComponent,
@@ -15,13 +15,13 @@ function HomeComponent() {
     >
       <MainContents>
         <h3>Dash Board</h3>
-        <div className="guide_wrap">
-          <div className="preview">
-            <div className="guide_box">
+        <div className={style.guide_wrap}>
+          <div className={style.preview}>
+            <div className={style.guide_box}>
               <div style={{ marginBottom: 10 }}>
                 <h3>M0</h3>
               </div>
-              <table className="pub_table w-[1500px]">
+              <table className={style.pub_table} style={{ width: 1500 }}>
                 <thead>
                   <tr>
                     <th scope="col">스크린 명</th>
@@ -37,17 +37,19 @@ function HomeComponent() {
                   {munu.map((item, index) => (
                     <tr key={index} className="h-[20px]">
                       <td className="text-left">{item.screenName}</td>
-                      <td className="pages">
+                      <td className={style.pages}>
                         <a href={item.pageId} target="_blank" rel="noopener noreferrer">
                           {item.pageId}
                         </a>
-                        <span className="screen">{item.screenId ? `(${item.screenId})` : ''}</span>
+                        <span className={style.screen}>
+                          {item.screenId ? `(${item.screenId})` : ''}
+                        </span>
                       </td>
                       <td>{item.pageType}</td>
                       <td>{item.completionDate || '-'}</td>
                       <td>{item.lastUpdateDate || '-'}</td>
-                      <td className="remarks">{item.remarks}</td>
-                      <td className={`${item.completionDate ? 'completed' : 'status'}`}>
+                      <td className={style.remarks}>{item.remarks}</td>
+                      <td className={`${item.completionDate ? style.completed : style.status}`}>
                         {item.completionDate ? '완료' : '진행예정'}
                       </td>
                     </tr>
@@ -57,7 +59,7 @@ function HomeComponent() {
               <div style={{ marginBottom: 10, marginTop: 40 }}>
                 <h3>Guide</h3>
               </div>
-              <table className="pub_table w-[600px]">
+              <table className={style.pub_table} style={{ width: 800 }}>
                 <thead>
                   <tr>
                     <th scope="col">스크린 명</th>
@@ -70,13 +72,13 @@ function HomeComponent() {
                   {guide.map((item, index) => (
                     <tr key={index} className="h-[20px]">
                       <td className="text-left">{item.screenName}</td>
-                      <td className="pages">
+                      <td className={style.pages}>
                         <a href={item.pageId} target="_blank" rel="noopener noreferrer">
                           {item.pageId}
                         </a>
                       </td>
                       <td>{item.pageType}</td>
-                      <td className="remarks">{item.remarks}</td>
+                      <td className={style.remarks}>{item.remarks}</td>
                     </tr>
                   ))}
                 </tbody>
