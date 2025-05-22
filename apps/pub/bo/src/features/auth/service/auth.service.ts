@@ -1,7 +1,5 @@
-import { useLoginUser, useReissue, useUpdateUser } from '@learnway/auth';
+import { useAsycFetchMenus, useLoginUser, useReissue, useUpdateUser } from '@learnway/auth';
 import type { AuthUser } from '@learnway/auth';
-
-import { useAsycFetchMenus } from '../../../entities/menu';
 
 interface LoginParams {
   username: string;

@@ -3,7 +3,16 @@ import { t } from 'i18next';
 import { useRouter } from '@tanstack/react-router';
 import { cn, DATE_TIME_FORMAT, formatISODateString } from '@learnway/shared';
 import { createColumnHelper } from '@tanstack/react-table';
-import { Button, ContentsRow, GridBox, GridState, Input, useModal } from '@learnway/ui';
+import {
+  Button,
+  ContentsRow,
+  DynamicFormField,
+  GridBox,
+  GridState,
+  Input,
+  Textarea,
+  useModal,
+} from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { IcoPlus } from '@learnway/icons';
 
@@ -61,6 +70,7 @@ const CommonCodeGroupGridComponent = ({
   const [formMode, setFormMode] = useState(FORM_MODE.NONE);
   const [selectedRow, setSelectedRow] = useState<CommonCodeGroup | null>(null);
   const [dataProcessed, setDataProcessed] = useState(false);
+  const { showSaveComplete, showDeleteComplete, showUpdateComplete } = useModal();
 
   const { alert: openAlert, confirm: openConfirm } = useModal();
 
@@ -68,24 +78,20 @@ const CommonCodeGroupGridComponent = ({
     useDynamicForm(formConfig);
 
   const { mutate: createCodeGroup } = useCreateCommonCodeGroup({
-    queryParams: {
-      page,
-      size,
-      sort: state.sort,
-      cdGroupId: state.cdGroupId,
-      cdGroupName: state.cdGroupName,
-      isUsed: state.isUsed,
-    },
+    page,
+    size,
+    sort: state.sort,
+    cdGroupId: state.cdGroupId,
+    cdGroupName: state.cdGroupName,
+    isUsed: state.isUsed,
   });
   const { mutate: updateCodeGroup } = useUpdateCommonCodGroup({
-    queryParams: {
-      page,
-      size,
-      sort: state.sort,
-      cdGroupId: state.cdGroupId,
-      cdGroupName: state.cdGroupName,
-      isUsed: state.isUsed,
-    },
+    page,
+    size,
+    sort: state.sort,
+    cdGroupId: state.cdGroupId,
+    cdGroupName: state.cdGroupName,
+    isUsed: state.isUsed,
   });
 
   const afterCreateOrUpdateCommonCodeGroup = (data: any) => {
@@ -116,7 +122,9 @@ const CommonCodeGroupGridComponent = ({
     FORM_FIELDS.forEach((field) => clearFormError(field));
   };
 
-  const { data: detailData, isLoading } = useCommonCodeGroupDetail(selectedRow?.cdGroupId || '');
+  const { data: detailData, isLoading } = useCommonCodeGroupDetail(selectedRow?.cdGroupId || '', {
+    enabled: !!selectedRow?.cdGroupId,
+  });
 
   // 추가 버튼 핸들러
   const handleAddMode = () => {
@@ -150,7 +158,6 @@ const CommonCodeGroupGridComponent = ({
         (key) => currentValues[key] !== initCdGroup[key as keyof typeof initCdGroup],
       );
     }
-    console.log(row);
     if (row) {
       setFormMode(FORM_MODE.VIEW);
       setSelectedRow(row);
@@ -177,8 +184,8 @@ const CommonCodeGroupGridComponent = ({
           ...formData,
         };
         createCodeGroup(createPayload, {
-          onSuccess: async (data) => {
-            console.log(data);
+          onSuccess: async (data: any) => {
+            showSaveComplete();
             if (data) {
               afterCreateOrUpdateCommonCodeGroup(data);
             }
@@ -196,7 +203,8 @@ const CommonCodeGroupGridComponent = ({
           ...formData,
         };
         updateCodeGroup(updatePayload, {
-          onSuccess: async (data) => {
+          onSuccess: async (data: any) => {
+            showUpdateComplete();
             if (data) {
               afterCreateOrUpdateCommonCodeGroup(data);
             }
@@ -263,7 +271,7 @@ const CommonCodeGroupGridComponent = ({
               title={t('LABEL.grid.title.commonCdGroupList')}
               pagination={{
                 pageNumber: page,
-                totalRows: totalRows || 0,
+                totalPages: totalRows || 0,
                 onPageChange: onPageChange,
                 onPageSizeChange: onPageSizeChange,
               }}
@@ -328,7 +336,7 @@ const CommonCodeGroupGridComponent = ({
                 <FormRow
                   provider={provider}
                   name={'cdGroupContent'}
-                  element={<Input disabled={isFormDisabled} />}
+                  element={<Textarea disabled={isFormDisabled} />}
                 />
               </ContentsRow>
               <ContentsRow type={'horizontal'} className={'inactive'}>
@@ -375,7 +383,7 @@ const formConfig: DynamicFormConfig = {
     },
     {
       name: 'cdGroupContent',
-      type: 'text',
+      type: 'textarea',
       label: t('LABEL.cdGroupContent'),
       value: '',
     },

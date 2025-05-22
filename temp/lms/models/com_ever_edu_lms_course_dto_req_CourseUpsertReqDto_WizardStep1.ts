@@ -16,6 +16,7 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1 = {
     tenantIds: Array<number>;
     primaryCategoryId: number;
     categoryIds: Array<number>;
+    isWhiteList?: boolean;
     whiteList?: Array<com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_WizardStep1>;
     coordinatorId: number;
     coordinatorName: string;

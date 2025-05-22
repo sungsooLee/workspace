@@ -725,7 +725,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '- introduction.tsx\n- 과정소개 toastpopup 미작업',
+    remarks: '- introduction.tsx\n- toastpopup 공통 수정 요청중',
   },
   {
     screenId: 'NLP_FO_LEC_1001',
@@ -846,7 +846,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '2025-04-02',
     lastUpdateDate: '2025-05-08',
-    remarks: '- package.tsx',
+    remarks: '- package.tsx\n- toastpopup 공통 수정 요청중',
   },
   {
     screenId: 'NLP_FO_LEC_MA_1000',
@@ -856,7 +856,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '- introduction.tsx\n- 과정소개 toastpopup 미작업',
+    remarks: '- introduction.tsx\n- toastpopup 공통 수정 요청중',
   },
   {
     screenId: 'NLP_FO_LEC_MA_1001',
@@ -977,7 +977,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '2025-04-03',
     lastUpdateDate: '',
-    remarks: '- package-m.tsx',
+    remarks: '- package-m.tsx\n- toastpopup 공통 수정 요청중',
   },
   {
     screenId: 'NLP_FO_LEC_1015',

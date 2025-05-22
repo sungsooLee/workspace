@@ -193,6 +193,7 @@ export namespace com_ever_edu_pms_company_dto_req_CompanyCreateReqDto {
         KIA_SALES = 'KIA_SALES',
         KIA_SERVICE = 'KIA_SERVICE',
         KIA_PRODUCTION = 'KIA_PRODUCTION',
+        CP = 'CP',
         ETC = 'ETC',
     }
     /**

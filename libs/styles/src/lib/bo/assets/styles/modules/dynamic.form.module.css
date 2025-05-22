@@ -84,10 +84,6 @@
   }
 }
 
-.limit_box {
-  @apply flex-[];
-}
-
 .box {
   @apply flex w-full;
   .dash {

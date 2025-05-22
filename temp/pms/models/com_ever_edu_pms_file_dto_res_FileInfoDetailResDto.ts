@@ -2,9 +2,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_pms_file_dto_res_FileGroupInfoResDto } from './com_ever_edu_pms_file_dto_res_FileGroupInfoResDto';
+import type { com_ever_edu_pms_file_dto_res_GroupInfoResDto } from './com_ever_edu_pms_file_dto_res_GroupInfoResDto';
 export type com_ever_edu_pms_file_dto_res_FileInfoDetailResDto = {
-    group?: com_ever_edu_pms_file_dto_res_FileGroupInfoResDto;
+    group?: com_ever_edu_pms_file_dto_res_GroupInfoResDto;
     /**
      * 파일 아이디
      */
@@ -59,6 +59,7 @@ export namespace com_ever_edu_pms_file_dto_res_FileInfoDetailResDto {
      * 업로드 상태. 코드그룹(pms.file.FileUploadStatus) - COMPLETE|ONGOING(파일 후속 처리 상태)|FAIL(파일 후속 처리 실패)
      */
     export enum uploadStatus {
+        TEMPORARY_SAVE = 'TEMPORARY_SAVE',
         COMPLETE = 'COMPLETE',
         ONGOING = 'ONGOING',
         FAIL = 'FAIL',

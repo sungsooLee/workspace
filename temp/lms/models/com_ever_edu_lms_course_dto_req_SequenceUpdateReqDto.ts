@@ -74,10 +74,12 @@ export type com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto = {
      * (lms.course.PassMethodType)
      */
     passMethodType?: com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto.passMethodType;
+    attendanceMinPassScore?: number;
     progressMinPassScore?: number;
     examMinPassScore?: number;
     asgmtMinPassScore: number;
     totalMinPassScore?: number;
+    attendanceWeights?: number;
     progressWeights?: number;
     examWeights?: number;
     asgmtWeights?: number;

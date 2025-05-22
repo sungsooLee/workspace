@@ -153,6 +153,7 @@ const GridComponent = forwardRef(
      * 테이블 columns
      */
     const tableColumns = useMemo(() => {
+      console.log('xxxx');
       // 넘버링 컬럼 생성
       const createNumberingColumn = (): ColumnDef<T> => ({
         id: 'numbering',
@@ -163,10 +164,9 @@ const GridComponent = forwardRef(
         },
         enableSorting: true,
         accessorFn: (row, index) => index,
-
         cell: ({ row }: any) =>
           pagination ? (
-            <p>{pagination.pageIndex * pagination.pageSize + row.index + 1}</p>
+            <p>{pagination.pageNumber * pagination.pageSize + row.index + 1}</p>
           ) : (
             <p>{row.index + 1}</p>
           ),
@@ -253,7 +253,7 @@ const GridComponent = forwardRef(
         finalColumns = [createMultipleCheckColumn(), ...finalColumns];
       }
       return finalColumns;
-    }, [columns, multiple, hideRowSelectionCheckBox]);
+    }, [columns, multiple, pagination, hideRowSelectionCheckBox]);
 
     /**
      * Row Select handle - 단일 선택 모드
@@ -678,7 +678,7 @@ const GridComponent = forwardRef(
           display: 'block',
           textAlign:
             cell.column.columnDef.meta?.cellAlign || cell.column.columnDef.meta?.align || 'left',
-          verticalAlign: 'center',
+          verticalAlign: 'middle',
 
           // 고정열 스타일 추가
           position: isPinnedLeft ? 'sticky' : undefined,

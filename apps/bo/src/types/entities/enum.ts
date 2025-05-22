@@ -35,3 +35,14 @@ export enum EnUseCategory {
   isCommonCategory = 'isCommonCategory',
   isTenantCategory = 'isTenantCategory',
 }
+
+export enum EnTenantDetailTabKey {
+  base = 'base',
+  attribute = 'attribute',
+  menu = 'menu',
+  category = 'category',
+  learningRole = 'learningRole',
+  widget = 'widget',
+  banner = 'banner',
+  theme = 'theme',
+}

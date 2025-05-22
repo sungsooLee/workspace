@@ -8,7 +8,7 @@ import { Avatar } from '@learnway/ui';
 // import contentsStyles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 import styles from './my-page.module.css';
-import { useFetchAuthUser, useUserDetail } from '@/libs/auth/src';
+import { useFetchAuthUser, useUserDetail } from '@learnway/auth';
 import { useFetchUser } from '@entities/users/service/users.hook';
 
 export function MyPage() {
@@ -58,7 +58,7 @@ export function MyPage() {
           <li>
             <span className={styles.title}>{'생년월일'}</span>
             <p className={styles.text}>
-              {user?.birthday && getDateToString(String(user?.birthday))}
+              {user?.birthday && getDateToString(new Date(String(user?.birthday)))}
             </p>
           </li>
           <li>

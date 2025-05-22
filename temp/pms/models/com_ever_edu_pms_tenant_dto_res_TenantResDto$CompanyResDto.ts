@@ -7,5 +7,16 @@ export type com_ever_edu_pms_tenant_dto_res_TenantResDto$CompanyResDto = {
     companyId?: number;
     companyCode?: string;
     companyName?: string;
+    managerName?: string;
+    isCourseCommentEnabled?: boolean;
+    isCourseExternalSharingEnabled?: boolean;
+    isCourseEnrollmentEnabled?: boolean;
+    isCourseEnrollmentApprovalEnabled?: boolean;
+    isLearningRegionRestricted?: boolean;
+    isLearningTimeRestricted?: boolean;
+    isLearningDeviceRestricted?: boolean;
+    isContentSecurityEnabled?: boolean;
+    isCourseBudgetUsed?: boolean;
+    isEmploymentInsuranceRefundEnabled?: boolean;
 };
 

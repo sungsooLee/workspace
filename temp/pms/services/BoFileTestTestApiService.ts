@@ -154,6 +154,34 @@ export class BoFileTestTestApiService {
         });
     }
     /**
+     * S3 파일 리스트 목록 - 사용금지(임시 테스트용)
+     * S3 파일 리스트 목록을 요청한다.
+     * @param srcKey S3 파일 Src 경로
+     * @param destKey S3 파일 Dest 경로,
+     * @returns string OK
+     * @throws ApiError
+     */
+    public static testS3FileCopy(
+        srcKey: string,
+        destKey: string,
+    ): CancelablePromise<string> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/test/api/v1/file/s3/file/copy',
+            query: {
+                'srcKey': srcKey,
+                'destKey': destKey,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * S3 파일 삭제 요청 - 사용금지(임시 테스트용)
      * SS3 파일 삭제 요청한다.
      * @param key S3 키, S3 파일 경로로 사용<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)

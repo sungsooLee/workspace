@@ -55,13 +55,3 @@ body[data-scroll-locked][data-scroll-locked] {
   /* lnb open */
   @apply relative !max-w-[calc(100vw-263px)];
 }
-
-.scrolled {
-  header {
-    @apply h-[50px] transition-all duration-300 ease-in-out;
-    h1,
-    .util {
-      @apply hidden;
-    }
-  }
-}

@@ -1,7 +1,7 @@
 import React, { forwardRef, PropsWithChildren } from 'react';
 
 import { cn } from '@learnway/shared';
-import { IcoXclose } from '@learnway/icons';
+import { IcoClose02 } from '@learnway/icons';
 
 import styles from './chip.module.css';
 import { Button } from '../button/button';
@@ -74,7 +74,7 @@ const ChipComponent = forwardRef<HTMLElement, ChipComponentProps>(
         {/* close button */}
         {!hideCloseButton && (
           <Button onClick={handleDeleteClick}>
-            <IcoXclose stroke="#131C30" className={styles.close} />
+            <IcoClose02 stroke="#131C30" className={styles.close} />
           </Button>
         )}
       </span>

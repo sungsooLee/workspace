@@ -1,165 +1,92 @@
-import {
-  MutateOptions,
-  useMutation,
-  UseMutationOptions,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
-import {
-  mutateOptions,
-  queryKeys,
-  commonCodeQueryOptions as queryOptions,
-} from './common-code.queries';
-import { createAuthorizedQueryHook } from '../../../shared/lib/use-authorized-query';
-import { apiKeys } from './system-code.queries';
-import CommonCodeService from '../api/common-code';
+import { useMemo } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { queryKeys } from './common-code.queries';
+import { CommonCodeApi } from '../api/common-code';
+import { useApiMutation, useApiQuery } from '../../../shared/lib/use-authorized-query';
+import { CommonCode, PageableContent } from '../../../types';
 
-// 코드 목록 조회
-export const useCommonCodeList = createAuthorizedQueryHook(
-  apiKeys.list,
-  (params: {
-    page: number;
-    size: number;
-    sort: string;
-    cdGroupId?: string;
-    cdGroupName?: string;
-    isUsed?: string;
-    cdName?: string;
-  }) => queryKeys.list(params),
-  (params) => () =>
-    CommonCodeService.fetchCodes(
-      params.page,
-      params.size,
-      params.sort,
-      params.cdGroupId,
-      params.cdGroupName,
-      params.isUsed,
-      params.cdName,
-    ),
-);
-
-export function useCommonCodeDetail(cdGroupId: string, cdId: string) {
-  return useQuery({
-    ...queryOptions.detail(cdGroupId, cdId),
-    enabled: Boolean(cdGroupId) && Boolean(cdId),
-  });
+export interface CodeListParams {
+  page: number;
+  size: number;
+  sort?: string[];
+  cdGroupId?: string;
+  cdGroupName?: string;
+  isUsed?: string;
+  cdName?: string;
 }
 
-export function useCreateCommonCode({
-  onSuccess,
-  onError,
-  queryParams,
-  ...reset
-}: {
-  onSuccess?: (data: any, variables: any, context: unknown) => void;
-  onError?: (error: Error, variables: any, context: unknown) => void;
-  queryParams?: {
-    page: number;
-    size: number;
-    sort: string;
-    cdGroupId?: string;
-    cdGroupName?: string;
-    isUsed?: string;
-    cdName?: string;
-  };
-} & Omit<
-  UseMutationOptions<any, Error, any, unknown>,
-  'mutationFn' | 'onSuccess' | 'onError'
-> = {}) {
-  const queryClient = useQueryClient();
+export function useCodeList(params: CodeListParams) {
+  const cleanParams = useMemo(() => {
+    const result = { ...params };
+    Object.keys(result).forEach(
+      (key) =>
+        result[key as keyof CodeListParams] === undefined &&
+        delete result[key as keyof CodeListParams],
+    );
+    return result;
+  }, [params]);
 
-  const mutation = useMutation<any, Error, any>({
-    ...mutateOptions.create(),
-    onSuccess: async (data, variables, context) => {
-      if (queryParams) {
-        await queryClient.invalidateQueries({
-          queryKey: queryKeys.list(queryParams),
-        });
-      } else {
-        await queryClient.invalidateQueries({
-          queryKey: queryKeys.all,
-        });
-      }
-      // if (data.cdGroupId && data.cdId) {
-      //   await queryClient.invalidateQueries({
-      //     queryKey: queryKeys.detail(data.cdGroupId, data.cdId),
-      //   });
-      // }
-
-      if (onSuccess) {
-        onSuccess(data, variables, context);
-      }
-    },
-    onError,
-    ...reset,
-  });
-
+  const result = useApiQuery<PageableContent<CommonCode>, CodeListParams>(
+    CommonCodeApi.list,
+    cleanParams,
+    queryKeys.list(cleanParams),
+  );
   return {
-    create: (payload: any, callback?: MutateOptions<any, Error, any, unknown>) => {
-      mutation.mutate(payload, callback);
-    },
-    isSuccess: mutation.isSuccess,
-    isError: mutation.isError,
-    data: mutation.data,
+    ...result,
+    data: result.data as PageableContent<any> | undefined,
   };
 }
 
-export function useUpdateCommonCode({
-  onSuccess,
-  onError,
-  queryParams,
-  ...reset
-}: {
-  onSuccess?: (data: any, variables: any, context: unknown) => void;
-  onError?: (error: Error, variables: any, context: unknown) => void;
-  queryParams?: {
-    page: number;
-    size: number;
-    sort: string;
-    cdGroupId?: string;
-    cdGroupName?: string;
-    isUsed?: string;
-    cdName?: string;
+export function useCommonCodeDetail(
+  { cdGroupId, cdId }: { cdGroupId: string; cdId: string },
+  options?: any,
+) {
+  return useApiQuery<any, { cdGroupId: string; cdId: string }>(
+    CommonCodeApi.detail,
+    { cdGroupId, cdId },
+    queryKeys.detail(cdGroupId, cdId),
+    options,
+  );
+}
+
+export function useCreateCommonCode(queryParams: CodeListParams, options?: any) {
+  const mutation = useApiMutation(CommonCodeApi.create, undefined, {
+    onSuccess(data, variables, context) {
+      if (options?.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    invalidateQueries: queryParams ? [queryKeys.list(queryParams)] : [queryKeys.all],
+    ...options,
+  });
+  return {
+    ...mutation,
+    create: mutation.mutate,
   };
-} & Omit<
-  UseMutationOptions<any, Error, any, unknown>,
-  'mutationFn' | 'onSuccess' | 'onError'
-> = {}) {
+}
+
+export function useUpdateCommonCode(queryParams: CodeListParams, options?: any) {
   const queryClient = useQueryClient();
 
-  const mutation = useMutation<any, Error, any>({
-    ...mutateOptions.update(),
+  const mutation = useApiMutation(CommonCodeApi.update, undefined, {
     onSuccess: async (data, variables, context) => {
-      if (queryParams) {
-        await queryClient.invalidateQueries({
-          queryKey: queryKeys.list(queryParams),
-        });
-      } else {
-        await queryClient.invalidateQueries({
-          queryKey: queryKeys.all,
-        });
-      }
-
-      if (data.cdGroupId && data.cdId) {
+      if (data?.cdGroupId) {
         await queryClient.invalidateQueries({
           queryKey: queryKeys.detail(data.cdGroupId, data.cdId),
         });
       }
-
-      if (onSuccess) {
-        onSuccess(data, variables, context);
+      if (options?.onSuccess) {
+        options.onSuccess(data, variables, context);
       }
     },
-    onError,
-    ...reset,
+    invalidateQueries: queryParams ? [queryKeys.list(queryParams)] : [queryKeys.all],
+    ...options,
   });
 
   return {
-    update: (payload: any, callback?: MutateOptions<any, Error, any, unknown>) => {
+    ...mutation,
+    update: (payload: any, callback?: any) => {
       mutation.mutate(payload, callback);
     },
-    isSuccess: mutation.isSuccess,
-    isError: mutation.isError,
-    data: mutation.data,
   };
 }

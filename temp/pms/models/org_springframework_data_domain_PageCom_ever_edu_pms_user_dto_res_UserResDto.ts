@@ -12,10 +12,10 @@ export type org_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_Us
     content?: Array<com_ever_edu_pms_user_dto_res_UserResDto>;
     number?: number;
     sort?: Array<org_springdoc_core_converters_models_SortObject>;
-    first?: boolean;
-    last?: boolean;
     numberOfElements?: number;
     pageable?: PageableObject;
+    first?: boolean;
+    last?: boolean;
     empty?: boolean;
 };
 

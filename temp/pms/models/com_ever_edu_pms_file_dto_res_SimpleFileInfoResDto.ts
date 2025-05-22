@@ -36,7 +36,7 @@ export type com_ever_edu_pms_file_dto_res_SimpleFileInfoResDto = {
      */
     extType?: string;
     /**
-     * 업로드 상태. 코드그룹(pms.file.FileUploadStatus) - COMPLETE|ONGOING(파일 후속 처리가 필요한 상태)|FAIL(파일 후속 처리 실패)
+     * 업로드 상태. 코드그룹(pms.file.FileUploadStatus) - TEMPORARY_SAVE|COMPLETE|ONGOING(파일 후속 처리가 필요한 상태)|FAIL(파일 후속 처리 실패)
      */
     uploadStatus?: com_ever_edu_pms_file_dto_res_SimpleFileInfoResDto.uploadStatus;
 };
@@ -49,9 +49,10 @@ export namespace com_ever_edu_pms_file_dto_res_SimpleFileInfoResDto {
         HMG = 'HMG',
     }
     /**
-     * 업로드 상태. 코드그룹(pms.file.FileUploadStatus) - COMPLETE|ONGOING(파일 후속 처리가 필요한 상태)|FAIL(파일 후속 처리 실패)
+     * 업로드 상태. 코드그룹(pms.file.FileUploadStatus) - TEMPORARY_SAVE|COMPLETE|ONGOING(파일 후속 처리가 필요한 상태)|FAIL(파일 후속 처리 실패)
      */
     export enum uploadStatus {
+        TEMPORARY_SAVE = 'TEMPORARY_SAVE',
         COMPLETE = 'COMPLETE',
         ONGOING = 'ONGOING',
         FAIL = 'FAIL',

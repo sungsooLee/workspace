@@ -79,6 +79,7 @@ export type { com_ever_edu_lms_course_dto_res_SequenceResDto$onAdmin } from './m
 export type { com_ever_edu_lms_course_dto_res_SequenceResDto$onUser } from './models/com_ever_edu_lms_course_dto_res_SequenceResDto$onUser';
 export type { com_ever_edu_lms_curriculum_dto_CurriculumInfoDto } from './models/com_ever_edu_lms_curriculum_dto_CurriculumInfoDto';
 export type { com_ever_edu_lms_curriculum_dto_CurriculumInfoDto$CurriculumStructure } from './models/com_ever_edu_lms_curriculum_dto_CurriculumInfoDto$CurriculumStructure';
+export { com_ever_edu_lms_enroll_dto_event_EnrollQueueEvent } from './models/com_ever_edu_lms_enroll_dto_event_EnrollQueueEvent';
 export type { com_ever_edu_lms_enroll_dto_req_AdditionalInfoDto } from './models/com_ever_edu_lms_enroll_dto_req_AdditionalInfoDto';
 export type { com_ever_edu_lms_enroll_dto_req_AdditionalInfoDto$ApprovalInfoDto } from './models/com_ever_edu_lms_enroll_dto_req_AdditionalInfoDto$ApprovalInfoDto';
 export { com_ever_edu_lms_enroll_dto_req_AdditionalInfoDto$ApprovalInfoDto$ApproverInfoDto } from './models/com_ever_edu_lms_enroll_dto_req_AdditionalInfoDto$ApprovalInfoDto$ApproverInfoDto';

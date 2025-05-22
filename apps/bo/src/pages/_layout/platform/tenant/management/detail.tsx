@@ -9,6 +9,7 @@ import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 
+import { EnTenantDetailTabKey } from '@types';
 /* tab contents */
 import { TenantDetailMenu } from '@features/tenant/management/ui/tenant-detail-menu';
 import { TenantDetailBase } from '@features/tenant/management/ui/tenant-detail-base';
@@ -21,23 +22,21 @@ import { TenantDetailLearningRole } from '@features/tenant/management/ui/tenant-
 export const Route = createFileRoute('/_layout/platform/tenant/management/detail')({
   component: RouteComponent,
 });
-enum TabKeyList {
-  base = 'base',
-  attribute = 'attribute',
-  menu = 'menu',
-  category = 'category',
-  learningRole = 'learningRole',
-  widget = 'widget',
-  banner = 'banner',
-  theme = 'theme',
-}
-const buttonShowTabs: string[] = [TabKeyList.base, TabKeyList.attribute];
+
+const scrollHidden: string[] = [
+  EnTenantDetailTabKey.menu,
+  EnTenantDetailTabKey.category,
+  EnTenantDetailTabKey.learningRole,
+  EnTenantDetailTabKey.banner,
+];
+
+const buttonShowTabs: string[] = [EnTenantDetailTabKey.base, EnTenantDetailTabKey.attribute];
 function RouteComponent() {
   const router = useRouter();
-  const formBaseRef = useRef<HTMLFormElement>(null);
-  const formAttrRef = useRef<HTMLFormElement>(null);
+  const formBaseRef = useRef(1);
+  const formAttrRef = useRef(2);
 
-  const [selectedTabKey, setSelectedTabKey] = useState<string>(TabKeyList.base);
+  const [selectedTabKey, setSelectedTabKey] = useState<string>(EnTenantDetailTabKey.base);
 
   const handleTabChange = (tabKey: string) => {
     if (tabKey !== selectedTabKey) {
@@ -48,13 +47,48 @@ function RouteComponent() {
     router.navigate({ to: '/platform/tenant/management' });
   };
 
+  const handleModifyButtonClick = () => {
+    switch (selectedTabKey) {
+      case EnTenantDetailTabKey.base:
+        {
+          console.log('formBaseRef', formBaseRef);
+          const baseTab: any = formBaseRef.current;
+          if (baseTab) {
+            baseTab.saveData();
+          }
+        }
+        break;
+      case EnTenantDetailTabKey.attribute:
+        {
+          console.log('formAtt', formAttrRef);
+          const attrTab: any = formAttrRef.current;
+          if (attrTab) {
+            attrTab.saveData();
+          }
+        }
+        break;
+      default:
+        alert('없음');
+    }
+  };
+
   const handleResetButtonClick = () => {
     switch (selectedTabKey) {
-      case TabKeyList.base:
-        alert(TabKeyList.base);
+      case EnTenantDetailTabKey.base:
+        {
+          const baseTab: any = formBaseRef.current;
+          if (baseTab) {
+            baseTab.clearForm();
+          }
+        }
         break;
-      case TabKeyList.attribute:
-        alert(TabKeyList.attribute);
+      case EnTenantDetailTabKey.attribute:
+        {
+          const attrTab: any = formAttrRef.current;
+          if (attrTab) {
+            attrTab.clearForm();
+          }
+        }
         break;
       default:
         alert('없음');
@@ -64,48 +98,47 @@ function RouteComponent() {
   const menuItems = [
     {
       title: '테넌트 기본 정보',
-      key: TabKeyList.base,
-      content: <TenantDetailBase formRef={formBaseRef} roleInfo={'PLATFORM'} />,
+      key: EnTenantDetailTabKey.base,
+      content: <TenantDetailBase ref={formBaseRef} roleInfo={'PLATFORM'} />,
     },
     {
       title: '테넌트 속성 관리',
-      key: TabKeyList.attribute,
-      content: <TenantDetailAttribute formRef={formAttrRef} roleInfo={'PLATFORM'} />,
+      key: EnTenantDetailTabKey.attribute,
+      content: <TenantDetailAttribute ref={formAttrRef} roleInfo={'PLATFORM'} />,
     },
     {
       title: '테넌트 메뉴관리 매핑',
-      key: TabKeyList.menu,
+      key: EnTenantDetailTabKey.menu,
       content: <TenantDetailMenu roleInfo={'PLATFORM'} />,
     },
     {
       title: '테넌트 카테고리 관리',
-      key: TabKeyList.category,
+      key: EnTenantDetailTabKey.category,
       content: <TenantDetailCategory roleInfo={'PLATFORM'} />,
     },
     {
       title: '테넌트 역할 관리',
-      key: TabKeyList.learningRole,
+      key: EnTenantDetailTabKey.learningRole,
       content: <TenantDetailLearningRole roleInfo={'PLATFORM'} />,
     },
     {
       title: '테넌트 위젯 관리',
-      key: TabKeyList.widget,
+      key: EnTenantDetailTabKey.widget,
       content: <TenantDetailWidget roleInfo={'PLATFORM'} />,
     },
     {
       title: '테넌트 배너 관리',
-      key: TabKeyList.banner,
+      key: EnTenantDetailTabKey.banner,
       content: <TenantDetailBanner roleInfo={'PLATFORM'} />,
     },
     {
       title: '테넌트 디자인/테마 관리',
-      key: TabKeyList.theme,
+      key: EnTenantDetailTabKey.theme,
       content: '테넌트 디자인/테마 관리',
     },
   ];
-
   return (
-    <PageContainer scrollHidden={false}>
+    <PageContainer scrollHidden={scrollHidden.includes(selectedTabKey)}>
       {buttonShowTabs.includes(selectedTabKey) && (
         <ContentsButtons>
           <LinkBox>
@@ -117,7 +150,7 @@ function RouteComponent() {
           <Button onClick={handleResetButtonClick} variant="point" size="sm">
             초기화
           </Button>
-          <Button variant="point" size="sm">
+          <Button variant="point" size="sm" onClick={handleModifyButtonClick}>
             수정
           </Button>
         </ContentsButtons>

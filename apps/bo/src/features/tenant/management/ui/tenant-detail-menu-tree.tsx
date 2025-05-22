@@ -34,7 +34,7 @@ import {
   useFetchMenuTenantDetail,
   useFetchMenuTenantMappingTree,
   useUpdateMenuTenant,
-} from '@entities/tenant/service/tenant-menu-manage.hook';
+} from '@entities/menu/service/tenant-menu-manage.hook';
 /** method import */
 import { findMenuPathById } from '@features/platform/menu/service/menu.service';
 import {
