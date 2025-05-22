@@ -4,14 +4,11 @@ import { IcoArrowDown } from '@learnway/icons';
 import { Popover, Button } from '@learnway/ui';
 
 import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
+import { boolean } from 'zod';
 
 export const Route = createFileRoute('/_guide/guide/popover')({
   component: RouteComponent,
 });
-
-const PopoverContent = () => {
-  return <div>팝오버 내용</div>;
-};
 
 const DropdownPopoverCompoment = () => {
   return (
@@ -25,6 +22,14 @@ const DropdownPopoverCompoment = () => {
 };
 
 function RouteComponent() {
+  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const PopoverContent = () => {
+    return (
+      <div>
+        팝오버 내용 <Button label={'버튼'} onClick={() => setIsOpen(!isOpen)} />
+      </div>
+    );
+  };
   return (
     <div>
       <h2 className="guide_tit2">Popover Component Guide</h2>
@@ -46,6 +51,8 @@ function RouteComponent() {
               side="bottom"
               align="start"
               sideOffset={10}
+              open={isOpen}
+              onOpenChange={setIsOpen}
             >
               팝오버 클릭요소
             </Popover>
