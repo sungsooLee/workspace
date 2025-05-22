@@ -11,6 +11,7 @@ import {
   useModal,
   Textarea,
   Panel,
+  useToast,
 } from '@learnway/ui';
 import { IcoHeart, IcoUser01, IcoStar, IcoCaution, IcoClock01, IcoPlay } from '@learnway/icons';
 import {
@@ -61,6 +62,15 @@ function RouteComponent() {
   const handleTab = (key: string, index: number) => {
     setSelectedTabKey(key);
     setSelectedTabTitle(index);
+  };
+
+  // 공통 컴포넌트 수정 요청중 (수정예정)
+  // toast popup
+  const { open: openToast } = useToast();
+  const handleClickToast = () => {
+    openToast({
+      title: '채널을 구독하였습니다',
+    });
   };
 
   // 탭 컨텐츠
@@ -378,6 +388,7 @@ function RouteComponent() {
                   className={packageInformationStyles.btn_subscribe}
                   variant="primary"
                   size="sm"
+                  onClick={() => handleClickToast()}
                 >
                   구독하기
                 </Button>

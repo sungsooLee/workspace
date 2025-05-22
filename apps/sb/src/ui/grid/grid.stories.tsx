@@ -2,7 +2,6 @@
 import { Meta, StoryObj } from '@storybook/react/*';
 import {
   CellContext,
-  ColumnDef,
   ColumnFiltersState,
   createColumnHelper,
   RowSelectionState,
@@ -14,7 +13,6 @@ import { ReactQueryConfigProvider } from '@learnway/config';
 import React, { ReactNode, useEffect, useState } from 'react';
 import {
   Button,
-  CustomCell,
   EditCheckboxCell,
   EditDropdownCell,
   EditInputCell,
@@ -22,11 +20,10 @@ import {
   EditTextareaCell,
   Grid,
   GridBox,
+  GridBoxPagination,
   GridState,
-  Input,
   ModalWrapper,
   TableBox,
-  useModal,
 } from '@learnway/ui';
 import { IcoDownload, IcoSetting } from '@learnway/icons';
 import { DATE_TIME_FORMAT, formatDate, getRandomId, getRowSelectionByList } from '@learnway/shared';
@@ -420,17 +417,16 @@ const fetchInfiniteData = async ({ tableState }: any): Promise<Person[]> => {
   return data;
 };
 
+// 가상 스크롤
 const InfiniteScrollTable = () => {
   const [tableState, setTableState] = useState({
     sorting: [] as SortingState,
     filters: [] as ColumnFiltersState,
   });
-
   const { data, isLoading } = useQuery({
     queryKey: ['PersonEntity', tableState] as const,
     queryFn: () => fetchInfiniteData({ tableState }),
   });
-
   const handleStateChange = (newState: GridState) => {
     setTableState((prev) => ({
       ...prev,
@@ -438,7 +434,6 @@ const InfiniteScrollTable = () => {
       filters: newState.filters || prev.filters,
     }));
   };
-
   return (
     <div className="p-4">
       <GridBox
@@ -475,82 +470,7 @@ export const WithInfiniteScroll: Story = {
   },
 };
 
-// 페이지네이션용 mock API
-const fetchPaginatedData = (size: number): PaginationResponse<any> => {
-  const content = Array(size)
-    .fill({})
-    .map((_, index) => ({
-      firstName: `firstName ${index}`,
-      lastName: `lastName ${index}`,
-      age: `age ${index}`,
-      visits: `visits ${index}`,
-      status: `status ${index}`,
-      progress: `progress ${index}`,
-      preview: `preview ${index}`,
-      download: (
-        <Button className="download" onlyIcon>
-          <IcoDownload width={16} height={16} stroke={'#747D91'} />
-        </Button>
-      ),
-    }));
-
-  return {
-    totalPages: 10,
-    totalElements: size,
-    size: 10,
-    content,
-    number: 1,
-    numberOfElements: 1,
-    first: true,
-    last: false,
-    empty: false,
-    pageable: {
-      offset: 0,
-      pageSize: 10,
-      paged: true,
-      pageNumber: 0,
-      unpaged: false,
-      sort: {
-        sorted: false,
-        unsorted: true,
-        empty: true,
-      },
-    },
-  };
-};
-
 // 페이지네이션 테이블 컴포넌트
-const PaginationTable = () => {
-  const [pageNumber, setPageNumber] = useState(0);
-  const [tableState, setTableState] = useState({
-    sorting: [] as SortingState,
-    filters: [] as ColumnFiltersState,
-  });
-
-  const data: PaginationResponse<Person> = fetchPaginatedData(100);
-
-  useEffect(() => {
-    console.log('data,', data);
-  }, [data]);
-
-  return (
-    <div className="p-4">
-      <GridBox
-        data={data.content}
-        columns={columns}
-        pagination={{
-          pageNumber,
-          totalPages: 10,
-          onPageChange: (newPageNumber: number) => {
-            setPageNumber(newPageNumber);
-          },
-        }}
-        multiple={true}
-      />
-    </div>
-  );
-};
-
 export const WithPagination: Story = {
   name: '페이지네이션',
   decorators: [
@@ -572,8 +492,64 @@ export const WithPagination: Story = {
     },
   },
 };
+const PaginationTable = () => {
+  const [data, setData] = useState<PaginationResponse<Person>>();
+  const [pagination, setPagination] = useState<GridBoxPagination>({
+    pageNumber: 0,
+    pageSize: 10,
+    totalPages: 100,
+    onPageChange: (newPageNumber: number) =>
+      setPagination((state: GridBoxPagination) => ({ ...state, pageNumber: newPageNumber })),
+    onPageSizeChange: (newPageSize: number) =>
+      setPagination((state: GridBoxPagination) => ({
+        ...state,
+        pageNumber: 0,
+        pageSize: newPageSize,
+      })),
+  });
+  useEffect(() => {
+    const response = fetchPaginatedData(pagination.pageNumber, pagination.pageSize);
+    setData(response);
+  }, [pagination]);
 
-const GroupedColumnTable = () => {
+  return (
+    <div className="p-4">
+      <GridBox
+        data={data?.content}
+        columns={columns}
+        multiple={true}
+        pagination={pagination}
+        showNumberingColumn
+      />
+    </div>
+  );
+};
+
+// 데이터 그룹핑 (컬럼 기준)
+export const WithGroupColumn: Story = {
+  name: '데이터 그룹핑 (컬럼 기준)',
+  decorators: [
+    (Story) => (
+      <ReactQueryConfigProvider>
+        <Story />
+        <ModalWrapper />
+      </ReactQueryConfigProvider>
+    ),
+  ],
+  render: () => <GridContentGroupingByColumn />,
+  parameters: {
+    docs: {
+      description: {
+        story: `
+  원하는 그룹 컬럼화
+  - prop으로 그룹을 원하는 컬럼을 넘겨준다.
+        `,
+      },
+    },
+  },
+};
+
+const GridContentGroupingByColumn = () => {
   const [tableState, setTableState] = useState({
     sorting: [] as SortingState,
     filters: [] as ColumnFiltersState,
@@ -607,8 +583,9 @@ const GroupedColumnTable = () => {
   );
 };
 
-export const WithGroupColumn: Story = {
-  name: '그룹 컬럼',
+// 고정 컬럼
+export const WithPinColumn: Story = {
+  name: '고정 컬럼',
   decorators: [
     (Story) => (
       <ReactQueryConfigProvider>
@@ -617,19 +594,19 @@ export const WithGroupColumn: Story = {
       </ReactQueryConfigProvider>
     ),
   ],
-  render: () => <GroupedColumnTable />,
+  render: () => <PinnedColumnTable />,
   parameters: {
     docs: {
       description: {
         story: `
-  원하는 그룹 컬럼화
-  - prop으로 그룹을 원하는 컬럼을 넘겨준다.
+  원하는 컬럼 왼쪽 고정
+  - prop으로 고정을 원하는 컬럼을 넘겨준다.
+  - Sticky와 같은 스타일 추가 필요
         `,
       },
     },
   },
 };
-
 const PinnedColumnTable = () => {
   const [tableState, setTableState] = useState({
     sorting: [] as SortingState,
@@ -660,238 +637,6 @@ const PinnedColumnTable = () => {
         multiple={true}
         columnPinning={{ columns: ['status'] }}
       />
-    </div>
-  );
-};
-
-export const WithPinColumn: Story = {
-  name: '고정 컬럼',
-  decorators: [
-    (Story) => (
-      <ReactQueryConfigProvider>
-        <Story />
-        <ModalWrapper />
-      </ReactQueryConfigProvider>
-    ),
-  ],
-  render: () => <PinnedColumnTable />,
-  parameters: {
-    docs: {
-      description: {
-        story: `
-  원하는 컬럼 왼쪽 고정
-  - prop으로 고정을 원하는 컬럼을 넘겨준다.
-  - Sticky와 같은 스타일 추가 필요
-        `,
-      },
-    },
-  },
-};
-
-const mockData: Person[] = [
-  {
-    firstName: 'John',
-    lastName: 'Doe',
-    age: 28,
-    visits: 100,
-    status: 'Active',
-    progress: 50,
-    imageUrl: 'https://picsum.photos/seed/1/200/200',
-    preview: <Button className="link">미리보기</Button>,
-    download: (
-      <Button className="download" onlyIcon>
-        <IcoDownload width={16} height={16} stroke={'#747D91'} />
-      </Button>
-    ),
-  },
-  {
-    firstName: 'Jane',
-    lastName: 'Smith',
-    age: 32,
-    visits: 80,
-    status: 'Active',
-    progress: 75,
-    imageUrl: 'https://picsum.photos/seed/2/200/200',
-    preview: <Button className="link">미리보기</Button>,
-    download: (
-      <Button className="download" onlyIcon>
-        <IcoDownload width={16} height={16} stroke={'#747D91'} />
-      </Button>
-    ),
-  },
-  {
-    firstName: 'Bob',
-    lastName: 'Johnson',
-    age: 45,
-    visits: 60,
-    status: 'Inactive',
-    progress: 30,
-    imageUrl: 'https://picsum.photos/seed/3/200/200',
-    preview: <Button className="link">미리보기</Button>,
-    download: (
-      <Button className="download" onlyIcon>
-        <IcoDownload width={16} height={16} stroke={'#747D91'} />
-      </Button>
-    ),
-  },
-  {
-    firstName: 'Alice',
-    lastName: 'Williams',
-    age: 29,
-    visits: 90,
-    status: 'Active',
-    progress: 85,
-    imageUrl: 'https://picsum.photos/seed/4/200/200',
-    preview: <Button className="link">미리보기</Button>,
-    download: (
-      <Button className="download" onlyIcon>
-        <IcoDownload width={16} height={16} stroke={'#747D91'} />
-      </Button>
-    ),
-  },
-];
-
-const CustomCellTable = () => {
-  const { open } = useModal();
-
-  const [tableState, setTableState] = useState({
-    sorting: [] as SortingState,
-    filters: [] as ColumnFiltersState,
-  });
-
-  const columnsWithCustomCell = [
-    columnHelper.accessor('firstName', {
-      cell: (info) => (
-        <CustomCell
-          row={info.row.original}
-          value={info.getValue()}
-          imageUrl={info.row.original.imageUrl}
-          onAction={(row) => {
-            open({
-              content: (
-                <div className="p-4">
-                  <div className="space-y-2">
-                    <p>이름:{row.firstName}</p>
-                    <p>나이:{row.age}</p>
-                    <p>상태: {row.status}</p>
-                    <p>이미지 URL:{row.imageUrl}</p>
-                  </div>
-                </div>
-              ),
-              // title: '사용자 정보',
-              width: 'sm',
-            });
-          }}
-        />
-      ),
-      header: 'First Name',
-      footer: (props) => `Total: ${props.table.getRowModel().rows.length}`,
-      meta: {
-        filterType: 'text',
-      },
-      enableGrouping: false,
-    }),
-    columnHelper.accessor('lastName', {
-      cell: (info) => info.getValue(),
-      header: 'Last Name',
-      enableGrouping: false,
-    }),
-    columnHelper.accessor('age', {
-      cell: (info) => info.getValue(),
-      header: 'Age',
-      meta: {
-        filterType: 'range',
-      },
-      enableGrouping: false,
-    }),
-    columnHelper.accessor('visits', {
-      cell: (info) => info.getValue(),
-      header: 'Visits',
-      footer: (props) => {
-        const total = props.table
-          .getRowModel()
-          .rows.reduce((sum, row) => sum + row.getValue<number>('visits'), 0);
-        return `Total: ${total}`;
-      },
-      meta: {
-        filterType: 'range',
-      },
-    }),
-    columnHelper.accessor('status', {
-      cell: (info) => info.getValue(),
-      header: 'Status',
-      getGroupingValue: (row) => `${row.status}`,
-      enableGrouping: true,
-      aggregationFn: 'count',
-      meta: {
-        filterType: 'select',
-        filterOptions: [
-          { label: '활성', value: 'active' },
-          { label: '비활성', value: 'inactive' },
-        ],
-      },
-    }),
-    columnHelper.accessor('progress', {
-      cell: (info) => info.getValue(),
-      header: 'Progress',
-      meta: {
-        filterType: 'range',
-      },
-      enableGrouping: false,
-    }),
-  ] as ColumnDef<Person, unknown>[];
-
-  const handleStateChange = (newState: GridState) => {
-    setTableState((prev) => ({
-      ...prev,
-      sorting: newState.sorting || prev.sorting,
-      filters: newState.filters || prev.filters,
-    }));
-  };
-
-  return (
-    <div className="p-4">
-      <GridBox
-        data={mockData}
-        columns={columnsWithCustomCell}
-        onStateChange={handleStateChange}
-        title="커스텀 셀 테스트"
-      />
-    </div>
-  );
-};
-
-export const WithCustomCell: Story = {
-  name: '커스텀 셀',
-  decorators: [
-    (Story) => (
-      <ReactQueryConfigProvider>
-        <Story />
-        <ModalWrapper />
-      </ReactQueryConfigProvider>
-    ),
-  ],
-  render: () => <CustomCellTable />,
-};
-
-const PersonTestModal = ({
-  data,
-  onConfirm,
-}: {
-  data: Person;
-  onConfirm: (updatedData: Person) => void;
-}) => {
-  const { close: closeModal } = useModal();
-  const [tmpData, setTmpData] = useState(data.visits);
-  const handleSubmit = () => {
-    onConfirm({ ...data, visits: tmpData });
-    closeModal();
-  };
-
-  return (
-    <div>
-      <Input type="number" value={tmpData} onChange={(v: any) => setTmpData(v)} />
-      <Button onClick={handleSubmit}>확인</Button>
     </div>
   );
 };
@@ -1125,18 +870,6 @@ export const TemplateTitleArea: any = (args: any) => {
 };
 TemplateTitleArea.storyName = '타이틀 영역';
 
-const editGridData = Array(10)
-  .fill(null)
-  .map((_, i) => ({
-    id: `id_${i}`,
-    text: 'text',
-    textarea: 'textarea',
-    number: 0,
-    checkbox: true,
-    radio: '',
-    dropdown: '',
-  }));
-
 // 컬럼 유형
 export const TemplateColumnType: any = (args: any) => {
   const data = Array(5)
@@ -1176,11 +909,6 @@ export const TemplateColumnType: any = (args: any) => {
     {
       accessorKey: 'link',
       size: 150,
-      // cell: (info: CellContext<any, any>) => (
-      //   <Link className={'text-blue-600'} to={'/'}>
-      //     아이디 찾기
-      //   </Link>
-      // ),
     },
   ];
   return (
@@ -1189,6 +917,39 @@ export const TemplateColumnType: any = (args: any) => {
 };
 TemplateColumnType.storyName = '컬럼 유형';
 
+// 그룹 컬럼
+export const TemplateGroupColumn: any = (args: any) => {
+  const data = dummyData(5);
+  const columns = [
+    {
+      accessorKey: 'name',
+      header: 'Group A',
+      meta: { headerAlign: 'center' },
+      columns: [
+        { accessorKey: 'name', header: 'Group A-1' },
+        { accessorKey: 'name', header: 'Group A-2' },
+      ],
+    },
+    { accessorKey: 'name', header: 'Column A', meta: { verticalAlign: 'middle' } },
+    {
+      accessorKey: 'name',
+      header: 'Group B',
+      meta: { headerAlign: 'center' },
+      columns: [
+        { accessorKey: 'name', header: 'Group B-1' },
+        { accessorKey: 'name', header: 'Group B-2' },
+      ],
+    },
+  ];
+  return (
+    <GridBox data={data} columns={columns} title={'목록'} onRowSelect={(row) => console.log(row)} />
+  );
+};
+TemplateGroupColumn.storyName = '그룹 컬럼';
+
+// -------------------------------------------------
+//
+// -------------------------------------------------
 const dummyData = (size = 10) =>
   Array(size)
     .fill(null)
@@ -1199,3 +960,59 @@ const dummyData = (size = 10) =>
       name3: `name3_${i}`,
       name4: `name4_${i}`,
     }));
+
+const editGridData = Array(10)
+  .fill(null)
+  .map((_, i) => ({
+    id: `id_${i}`,
+    text: 'text',
+    textarea: 'textarea',
+    number: 0,
+    checkbox: true,
+    radio: '',
+    dropdown: '',
+  }));
+
+// 페이지네이션용 mock API
+const fetchPaginatedData = (pageNumber = 0, pageSize = 10): PaginationResponse<any> => {
+  const content = Array(pageSize)
+    .fill({})
+    .map((_, index) => ({
+      firstName: `firstName ${index}`,
+      lastName: `lastName ${index}`,
+      age: `age ${index}`,
+      visits: `visits ${index}`,
+      status: `status ${index}`,
+      progress: `progress ${index}`,
+      preview: `preview ${index}`,
+      download: (
+        <Button className="download" onlyIcon>
+          <IcoDownload width={16} height={16} stroke={'#747D91'} />
+        </Button>
+      ),
+    }));
+  const totalElements = 100;
+  return {
+    content,
+    totalPages: Math.ceil(totalElements / pageSize),
+    totalElements,
+    size: 10,
+    number: 1,
+    numberOfElements: 1,
+    first: true,
+    last: false,
+    empty: false,
+    pageable: {
+      offset: 0,
+      pageSize,
+      paged: true,
+      pageNumber,
+      unpaged: false,
+      sort: {
+        sorted: false,
+        unsorted: true,
+        empty: true,
+      },
+    },
+  };
+};

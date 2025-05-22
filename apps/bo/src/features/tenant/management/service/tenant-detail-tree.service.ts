@@ -220,7 +220,7 @@ export const transformRoleApiDataToTreeData = (apiData: any) => {
         key: node.roleId, // menuId를 key로 사용
         title: node.name, // title이 없으면 menuCode 사용
 
-        parentKey: node.parentId || 'root', // parentId를 parentKey로 변환
+        parentKey: node.parentRoleId || 'root', // parentRoleId를 parentKey로 변환
         children: node.children || [],
       };
 
@@ -234,4 +234,18 @@ export const transformRoleApiDataToTreeData = (apiData: any) => {
   };
 
   return transform(dataArray);
+};
+
+export const moveRoleCheck = (events: any) => {
+  const targetIndex = events.targetIndex + 1;
+  return {
+    roleCode: events.sourceNode.roleCode,
+    body: {
+      sortOrder: targetIndex,
+      parentRoleId:
+        events.targetNode.level === events.sourceNode.level
+          ? events.targetNode.parentRoleId
+          : events.targetNode.roleId,
+    },
+  };
 };

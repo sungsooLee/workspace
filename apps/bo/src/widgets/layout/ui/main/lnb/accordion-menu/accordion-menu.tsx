@@ -47,13 +47,13 @@ const AccordionMenuComponent = ({
    * 2~3 depth의 경우 route path가 있는 경우, title click시 navigate, 없는 경우 accordion open
    */
   const items = useCreation(() => {
-    return (menus ?? []).map((menu: Menu) => {
+    return (menus ?? []).map((menu: Menu, index: number) => {
       const active =
         activeMenuDepth &&
         activeMenuDepth[depth - 1] &&
         activeMenuDepth[depth - 1]?.path === menu?.path;
       return {
-        value: menu.key,
+        value: `menu_${index}`,
         title: (
           <span className={active ? styles.active : ''} onClick={() => handleNavigate(menu)}>
             {import.meta.env.VITE_LANGUAGE_DEV === 'true'

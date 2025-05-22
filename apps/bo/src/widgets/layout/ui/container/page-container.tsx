@@ -82,6 +82,7 @@ const PageContainerComponent: FC<{
     return () => {
       if (container) {
         container.removeEventListener('scroll', handleScroll);
+        document.body.classList.remove('scrolled');
       }
     };
   }, [hasScroll]);

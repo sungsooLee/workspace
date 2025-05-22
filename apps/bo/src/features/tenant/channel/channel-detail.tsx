@@ -18,7 +18,7 @@ import { FormDisplay } from '@features/form/ui/form-display';
 import { TenantChoiceModal } from '@features/shared';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 
-import { IcoFormRequired } from '@/libs/icons/src';
+import { IcoFormRequired } from '@learnway/icons';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 
 const ChannelDetailComponent: FC<any> = ({ mode, channelId }) => {

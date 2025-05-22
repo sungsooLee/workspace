@@ -103,6 +103,11 @@ const ThumbnailImageUploadComponent = forwardRef<
         }
       }
     }, [thumbnailStats]);
+    useEffect(() => {
+      if (ownerOptions) {
+        setOptions(ownerOptions);
+      }
+    }, [ownerOptions]);
 
     return (
       <div {...props} ref={ref} className={cn(styles.start, className, 'nlp--image-upload')}>

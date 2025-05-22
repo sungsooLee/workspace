@@ -9,6 +9,7 @@ import {
   ChipListModalSelectorFormField,
   Input,
   RadioGroupFormField,
+  TextareaFormField,
 } from '@learnway/ui';
 import { t } from 'i18next';
 import { useRouterState } from '@tanstack/react-router';
@@ -21,11 +22,12 @@ import {
   useFetchRole,
   useFetchRoleTree,
   useRoleManager,
+  useMovePosition,
 } from '@entities/role/service/role-manage.hook';
 import {
   getAllTreeKeys,
   getFirstExpandKeys,
-  moveNodeCheck,
+  moveRoleCheck,
   transformRoleApiDataToTreeData,
 } from '../service/tenant-detail-tree.service';
 import { FormDisplay } from '@features/form/ui/form-display';
@@ -73,6 +75,12 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
       refetch();
     },
   });
+  const { updatePosition } = useMovePosition({
+    onSuccess: () => {
+      refetch();
+    },
+  });
+
   const { provider, onSubmit, clearFormError, fetchData, onFormChange } =
     useDynamicForm(formConfig);
   const { data, refetch } = useFetchRoleTree(tenantId, siteScope);
@@ -91,6 +99,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
 
   const handleOnSubmit = async (formData: any) => {
     const parentRoleId = formData.parentRoleId === 'root' ? undefined : formData.parentRoleId;
+
     const payload = {
       ...formData,
       tenantId: tenantId,
@@ -100,6 +109,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
     if (payload.companyScope !== EnCompanyScope.MANUAL) payload.companyIds = [];
     if (payload.channelScope !== EnChannelScope.MANUAL) payload.channelIds = [];
     if (payload.deptScope !== EnDeptScope.MANUAL) payload.deptIds = [];
+
     switch (formMode) {
       case EnFormMode.ADD:
         createRole(payload);
@@ -107,6 +117,21 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
 
       case EnFormMode.VIEW:
         updateRole(payload);
+        break;
+    }
+  };
+
+  const handleTreeAction = (events: any) => {
+    switch (events.type) {
+      case 'NODE_MOVE':
+        {
+          const payload = moveRoleCheck(events);
+          console.log('event', events);
+          console.log('payload', payload);
+          if (payload) {
+            updatePosition(payload);
+          }
+        }
         break;
     }
   };
@@ -139,10 +164,11 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
     formConfig.builders.forEach((item) => {
       initData[item.name] = item.value;
     });
-
+    const sortOrder = node.children.length + 1;
     fetchData({
       ...initData,
       parentRoleId: node.key.toString(),
+      sortOrder: sortOrder,
     });
     setFormMode(EnFormMode.ADD);
   };
@@ -162,8 +188,16 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
 
   useEffect(() => {
     if (roleDetail) {
+      console.log('roleDetail', roleDetail);
       const parentRoleId = roleDetail.parentRoleId ? roleDetail.parentRoleId.toString() : 'root';
-      fetchData({ ...roleDetail, parentRoleId: parentRoleId });
+      fetchData({
+        ...roleDetail,
+        parentRoleId: parentRoleId,
+        companyIds: roleDetail.companies,
+        channelIds: roleDetail.channels,
+        deptIds: roleDetail.depts,
+      });
+
       setFormMode(EnFormMode.VIEW);
     }
   }, [roleDetail]);
@@ -194,15 +228,15 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
     <SectionLayout contentsRatio={'thirty'}>
       <TreeBox
         data={roleTreeData}
-        initLevel={2}
         treeId="1"
+        type="SAME_LEVEL_ONLY"
         showSearchKeyword
+        initLevel={2}
         title={t('역할 목록')}
+        onAction={handleTreeAction}
         selectedNode={selectedRoleNode}
         renderNodeButtons={renderNodeButtons}
         handleSelectedNodeChange={handleRoleSelect}
-        clientTree
-        type="SHUTTLE_LIST"
       />
       <div className={cn(styles.start, styles.wrap)}>
         <div className={cn(layoutStyles.inner)}>
@@ -267,28 +301,25 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                   provider={provider}
                   name={'description'}
                   element={
-                    <Input maxLength={300} disabled={formMode === EnFormMode.NONE || !roleInfo} />
+                    <TextareaFormField
+                      maxLength={300}
+                      disabled={formMode === EnFormMode.NONE || !roleInfo}
+                    />
                   }
                 />
               </ContentsRow>
-              RadioGroupFormField
               <ContentsRow>
-                radio-group
                 <FormRow
                   provider={provider}
                   name={'tenantScope'}
-                  element={
-                    <RadioGroupFormField maxLength={300} disabled={formMode === EnFormMode.NONE} />
-                  }
+                  element={<RadioGroupFormField disabled={formMode === EnFormMode.NONE} />}
                 />
               </ContentsRow>
               <ContentsRow>
                 <FormRow
                   provider={provider}
                   name={'companyScope'}
-                  element={
-                    <RadioGroupFormField maxLength={300} disabled={formMode === EnFormMode.NONE} />
-                  }
+                  element={<RadioGroupFormField disabled={formMode === EnFormMode.NONE} />}
                 />
               </ContentsRow>
               <FormDisplay
@@ -320,9 +351,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                 <FormRow
                   provider={provider}
                   name={'channelScope'}
-                  element={
-                    <RadioGroupFormField maxLength={300} disabled={formMode === EnFormMode.NONE} />
-                  }
+                  element={<RadioGroupFormField disabled={formMode === EnFormMode.NONE} />}
                 />
               </ContentsRow>
               <FormDisplay
@@ -364,7 +393,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                 <div className="chiplist_modal_wrap">
                   <FormRow
                     provider={provider}
-                    name={'dipsIds'}
+                    name="dipsIds"
                     element={
                       <ChipListModalSelectorFormField
                         chipList={{
@@ -385,7 +414,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
               <ContentsRow type={'horizontal'}>
                 <FormRow
                   provider={provider}
-                  name={'isUsed'}
+                  name="isUsed"
                   element={<SwitchFormField disabled={formMode === EnFormMode.NONE} />}
                 />
               </ContentsRow>
@@ -451,10 +480,9 @@ const formBaseConfig: DynamicFormConfig = {
     {
       name: 'companyIds',
       label: '',
-      type: 'custom',
+      type: 'array',
       format: 'array',
       value: [],
-      placeholder: '',
     },
     {
       name: 'channelScope',
@@ -480,7 +508,7 @@ const formBaseConfig: DynamicFormConfig = {
         },
       ],
     },
-    { name: 'channelIds', label: '', type: 'custom', value: [] },
+    { name: 'channelIds', label: '', type: 'array', format: 'array', value: [] },
     {
       name: 'deptScope',
       type: 'radio-group',
@@ -505,7 +533,7 @@ const formBaseConfig: DynamicFormConfig = {
         },
       ],
     },
-    { name: 'deptIds', label: '', type: 'custom', value: [] },
+    { name: 'deptIds', label: '', type: 'array', format: 'array', value: [] },
     {
       name: 'isUsed',
       type: 'switch',
@@ -515,6 +543,7 @@ const formBaseConfig: DynamicFormConfig = {
         label: (value: boolean) => (value ? t('사용함') : t('사용안함')),
       },
     },
+    { name: 'sortOrder', label: '', type: 'number', value: 0 },
   ],
   validator: {
     parentRoleId: {
