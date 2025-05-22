@@ -12,6 +12,8 @@ export interface Tenant {
   isApp: boolean;
   isCommonCategory: boolean;
   isTenantCategory: boolean;
+  tenantLanguageList: string[];
+  tenantUserList: any[];
 }
 
 export interface TenantRole {

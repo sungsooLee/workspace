@@ -8,7 +8,7 @@ import { useRouter } from '@tanstack/react-router';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 
 import { Button, GridBox, useGridBox } from '@learnway/ui';
-import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
+import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 
 import { tenantQueryOptions } from '@entities/tenant/service/tenant.queries';
 
@@ -111,14 +111,15 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
     },
   };
 
-  const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
-  const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
+  const { provider: searchProvider } = useSearchBox(searchConfig);
+  const { config: gConfig, gridFetch } = useGridBox(gridConfig);
 
   // useDynamicForm(formConfig);
 
-  const handleOnSearch = useCallback((data: any) => {
+  const handleOnSearch = (data: any) => {
+    console.log('search', data);
     gridFetch(data);
-  }, []);
+  };
 
   return (
     <>
@@ -144,26 +145,27 @@ const searchConfig: SearchBoxConfig = {
         format: 'object',
         value: '',
       },
+      // {
+      //   name: 'companyName',
+      //   type: 'dropdown',
+      //   label: t('회사명'),
+      //   value: '',
+      //   optionsConfig: {
+      //     codeGroup: CODE_GROUP['manual.company.companyCode'],
+      //   },
+      //   dropdownConfig: {
+      //     onchange: () => {
+      //       return '';
+      //     },
+      //     isSearchable: true,
+      //     placeholder: '입력 선택',
+      //   },
+      // },
       {
         name: 'companyName',
         type: 'text',
         label: t('회사명'),
         value: '',
-        // options: [
-        //   { value: 'companyA', label: t('회사A') },
-        //   { value: 'companyB', label: t('회사B') },
-        //   { value: 'companyC', label: t('회사C') },
-        //   { value: 'companyD', label: t('회사D') },
-        //   { value: 'companyE', label: t('회사E') },
-        //   { value: 'companyF', label: t('회사F') },
-        // ],
-        // dropdownConfig: {
-        //   // onChange: () => {
-        //   //   return '';
-        //   // },
-        //   isSearchable: true,
-        //   placeholder: '입력 선택',
-        // },
       },
       {
         name: 'tenantMappingRoleName',

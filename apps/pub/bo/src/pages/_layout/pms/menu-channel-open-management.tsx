@@ -81,6 +81,90 @@ function RouteComponent() {
       register: '홍길동',
       registerDate: '2025-01-01 07:12',
     },
+    {
+      channelId: 'IA000000',
+      channelName: '채널명채널명채널명채널명',
+      tenant: '테넌트명1, 테넡트명2',
+      status: '미사용',
+      type: '유니버셜',
+      sort: '비밀',
+      owner: '김현대 외 1',
+      receiptId: '0000000',
+      register: '홍길동',
+      registerDate: '2025-01-01 07:12',
+    },
+    {
+      channelId: 'IA000000',
+      channelName: '채널명채널명채널명채널명',
+      tenant: '테넌트명1, 테넡트명2',
+      status: '미사용',
+      type: '유니버셜',
+      sort: '비밀',
+      owner: '김현대 외 1',
+      receiptId: '0000000',
+      register: '홍길동',
+      registerDate: '2025-01-01 07:12',
+    },
+    {
+      channelId: 'IA000000',
+      channelName: '채널명채널명채널명채널명',
+      tenant: '테넌트명1, 테넡트명2',
+      status: '미사용',
+      type: '유니버셜',
+      sort: '비밀',
+      owner: '김현대 외 1',
+      receiptId: '0000000',
+      register: '홍길동',
+      registerDate: '2025-01-01 07:12',
+    },
+    {
+      channelId: 'IA000000',
+      channelName: '채널명채널명채널명채널명',
+      tenant: '테넌트명1, 테넡트명2',
+      status: '미사용',
+      type: '유니버셜',
+      sort: '비밀',
+      owner: '김현대 외 1',
+      receiptId: '0000000',
+      register: '홍길동',
+      registerDate: '2025-01-01 07:12',
+    },
+    {
+      channelId: 'IA000000',
+      channelName: '채널명채널명채널명채널명',
+      tenant: '테넌트명1, 테넡트명2',
+      status: '미사용',
+      type: '유니버셜',
+      sort: '비밀',
+      owner: '김현대 외 1',
+      receiptId: '0000000',
+      register: '홍길동',
+      registerDate: '2025-01-01 07:12',
+    },
+    {
+      channelId: 'IA000000',
+      channelName: '채널명채널명채널명채널명',
+      tenant: '테넌트명1, 테넡트명2',
+      status: '미사용',
+      type: '유니버셜',
+      sort: '비밀',
+      owner: '김현대 외 1',
+      receiptId: '0000000',
+      register: '홍길동',
+      registerDate: '2025-01-01 07:12',
+    },
+    {
+      channelId: 'IA000000',
+      channelName: '채널명채널명채널명채널명',
+      tenant: '테넌트명1, 테넡트명2',
+      status: '미사용',
+      type: '유니버셜',
+      sort: '비밀',
+      owner: '김현대 외 1',
+      receiptId: '0000000',
+      register: '홍길동',
+      registerDate: '2025-01-01 07:12',
+    },
   ];
 
   const columnHelper = createColumnHelper<any>();
@@ -90,7 +174,7 @@ function RouteComponent() {
       cell: (info) => info.getValue(),
       header: '채널ID',
       enableGrouping: false,
-      size:110,
+      size: 110,
     }),
     columnHelper.accessor('channelName', {
       cell: (info) => info.getValue(),
@@ -206,7 +290,7 @@ function RouteComponent() {
                   </div>
                 </div>
                 <div className={searchStyles.item_wrap}>
-                <div className={searchStyles.inner}>
+                  <div className={searchStyles.inner}>
                     <div className={searchStyles.item}>
                       <label htmlFor="name-select4" className={searchStyles.label}>
                         <span className={searchStyles.text}>채널구분</span>
@@ -232,7 +316,7 @@ function RouteComponent() {
                           <DatePicker displayType={'day'} size={'md'} />
                           <span className={searchStyles.hyphen}>-</span>
                           <DatePicker displayType={'day'} size={'md'} />
-                        </div>                        
+                        </div>
                       </div>
                     </div>
                   </div>

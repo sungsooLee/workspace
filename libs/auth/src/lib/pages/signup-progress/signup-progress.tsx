@@ -1,12 +1,12 @@
 import { useRouter } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import { ContentsRow, DynamicFormField, Button, useModal } from '@learnway/ui';
+import { ContentsRow, Button, useModal } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import { useDynamicForm, DynamicFormConfig, useCurrentRoute } from '@learnway/hooks';
 
 import { FormRow, NoticeBox, EmbededAlert } from '../../shared';
-import { useAsyncFetchEmail } from '../../entities/authorization';
+import { useExistsEmail } from '../../entities/authorization';
 
 import styles from '@learnway/styles/fo/pages/_auth/signup-progress/signup-progress.module.css';
 
@@ -18,40 +18,41 @@ export function SignupProgressPage({ route }: any) {
 
   const { provider, onSubmit, setFormError } = useDynamicForm(emailFormConfig);
 
-  const { asyncFetch: asyncFetchEmail } = useAsyncFetchEmail();
+  // const { asyncFetch: asyncFetchEmail } = useAsyncFetchEmail();
 
+  // email 확인
+  const { existsEmail } = useExistsEmail();
   const handleOnSubmit = async (data: any) => {
-    router.navigate({
-      to: '/identity-verification',
-      state: {
-        email: data.email,
-        redirectUrl: '/signup-progress/result',
-        meta: { title: 'LABEL.common.signupProgressStatus' },
-      } as any,
-    });
-    /*
-    API 확인 필요
-    update(
-      {
-        username: data.username,
-        oldPassword: data.oldPassword,
-        newPassword: data.password,
-      },
-      {
-        onSuccess: (data: any) => {
+    console.log('email :: ', data);
+    if (!data.email) return;
+
+    existsEmail(data.email, {
+      onSuccess: (data) => {
+        // TODO 관리자인지 CP사인지 API정보 필요
+        if (data.isEmailExists) {
           router.navigate({
             to: '/identity-verification',
-            state: { email: data.email },
+            state: {
+              email: data.email,
+              redirectUrl: '/signup-progress/result',
+              meta: { title: 'LABEL.common.signupProgressStatus' },
+            } as any,
           });
-        },
-        onError: (error: any) => {
+        } else {
           alert({
             title: '진행현황이 없습니다.',
-            content: '입력하신 아이디의 진행현황이 없습니다.\n정확한 정보를 다시 입력해 주세요.',
+            content: (
+              <div className="whitespace-pre-wrap">
+                {'입력하신 아이디의 진행현황이 없습니다.\n정확한 정보를 다시 입력해 주세요.'}
+              </div>
+            ),
           });
-        },
+        }
       },
-    );*/
+      onError: (error) => {
+        console.log(error);
+      },
+    });
   };
 
   const handleCancel = () => {
@@ -97,7 +98,6 @@ const emailFormConfig: DynamicFormConfig = {
       type: 'text',
       label: 'LABEL.common.email',
       value: '',
-      placeholder: '${label}을 입력하세요',
       description: '',
       required: true,
     },

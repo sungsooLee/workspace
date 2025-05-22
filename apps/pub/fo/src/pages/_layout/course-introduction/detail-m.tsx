@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { Button, Tabs, useModal, Textarea, Accordion } from '@learnway/ui';
+import { Button, Tabs, useModal, Textarea, Accordion, useToast } from '@learnway/ui';
 import { IcoHeart, IcoUser01, IcoArrowDown, IcoPlay } from '@learnway/icons';
 import { MobileView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
@@ -166,6 +166,15 @@ function RouteComponent() {
     });
   };
 
+  // 공통 컴포넌트 수정 요청중 (수정예정)
+  // toast popup
+  const { open: openToast } = useToast();
+  const handleClickToast = () => {
+    openToast({
+      title: '채널을 구독하였습니다',
+    });
+  };
+
   // 패키지 아코디언
   const [accordionValue, setAccordionValue] = useState<string>('');
   const accordionValueItems = [
@@ -317,7 +326,12 @@ function RouteComponent() {
               <img src={logoHyundai} alt="" />
             </span>
             <strong className={packageInformationStyles.channel_name}>현대오토에버 (elBls)</strong>
-            <Button className={packageInformationStyles.btn_subscribe} variant="primary" size="sm">
+            <Button
+              className={packageInformationStyles.btn_subscribe}
+              variant="primary"
+              size="sm"
+              onClick={() => handleClickToast()}
+            >
               구독하기
             </Button>
           </div>

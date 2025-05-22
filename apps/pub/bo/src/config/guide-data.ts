@@ -91,6 +91,15 @@ export const guideData = [
     remarks: '', // 비고
   },
   {
+    screenName: '공통/해상도 가이드',
+    pageId: 'common/breakpoint',
+    screenId: ' ',
+    pageType: 'Page',
+    completionDate: '2025-05-22',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
     screenName: '로그인',
     pageId: 'login',
     screenId: 'NLP_BO_LOG_1000',

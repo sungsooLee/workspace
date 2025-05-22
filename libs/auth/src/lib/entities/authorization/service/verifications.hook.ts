@@ -139,3 +139,18 @@ export function useUpdatePasswordByEmail(mutationOptions = {}) {
     isError,
   };
 }
+
+export function useExistsEmail(mutationOptions = {}) {
+  const { mutateAsync, isSuccess, isError } = useMutation({
+    ...mutateOptions.existsEmail(),
+    ...mutationOptions,
+  });
+
+  return {
+    existsEmail: (payload: string, callback?: MutateCallback<any>) => {
+      return mutateAsync(payload, callback);
+    },
+    isSuccess,
+    isError,
+  };
+}

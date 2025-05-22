@@ -40,4 +40,7 @@ export const mutateOptions = {
   updatePassword: () => ({
     mutationFn: (payload: any) => VerificationsService.updatePassword(payload),
   }),
+  existsEmail: () => ({
+    mutationFn: (payload: string) => VerificationsService.existsEmail(payload),
+  }),
 };

@@ -1,9 +1,9 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, forwardRef, useEffect, useState, useRef, useImperativeHandle } from 'react';
 import { t } from 'i18next';
 import { useRouterState } from '@tanstack/react-router';
 import { FormTranslationBox } from '@features/platform/ui/platform/system/translation/form-translation-box';
 
-import { Button, ContentsRow, Input, DynamicFormField } from '@learnway/ui';
+import { Button, ContentsRow, Input, DynamicFormField, useModal } from '@learnway/ui';
 
 import { cn } from '@learnway/shared';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
@@ -13,14 +13,40 @@ import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.cs
 /** Hook 정의 */
 import { useTenantAttributeCompany } from '@entities/tenant/service/tenant-attribute.hook';
 
-const TenantDetailAttributeCompanyComponent: FC<any> = ({
-  tenantId,
-  attributeData,
-  companyId,
-  tenantName,
-}) => {
+const TenantDetailAttributeCompanyComponent = (
+  {
+    tenantId,
+    attributeData,
+    companyId,
+    tenantName,
+  }: { tenantId: string; attributeData: any; companyId: string; tenantName: string },
+  ref: any,
+) => {
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const { open: openModal, confirm: openConfirm } = useModal();
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, control } =
     useDynamicForm(formConfig);
+
+  useImperativeHandle(ref, () => ({
+    saveData() {
+      const form: any = formRef.current;
+      if (form) {
+        console.log('formValue');
+        form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+      }
+    },
+    clearForm() {
+      onFormChange();
+    },
+  }));
+
+  const handleOnSubmit = async (payload: any) => {
+    console.log('payload {} => ', payload);
+    if (await openConfirm('저장 하시겠습니까?')) {
+      console.log('aaaa');
+    }
+  };
 
   useEffect(() => {
     console.log(tenantName, attributeData);
@@ -28,7 +54,7 @@ const TenantDetailAttributeCompanyComponent: FC<any> = ({
   }, []);
 
   return (
-    <div>
+    <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
       <div className="title_wrap">
         <strong className="title">{t('테넌트 속성 관리')}</strong>
       </div>
@@ -61,11 +87,11 @@ const TenantDetailAttributeCompanyComponent: FC<any> = ({
       <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
         <ContentsHistoryInfoFormField />
       </ContentsRow>
-    </div>
+    </form>
   );
 };
 
-export const TenantDetailAttributeCompany = TenantDetailAttributeCompanyComponent;
+export const TenantDetailAttributeCompany = forwardRef(TenantDetailAttributeCompanyComponent);
 
 // Form 구조 정의
 const formConfig: DynamicFormConfig = {

@@ -191,14 +191,16 @@
         }
       }
       .loc {
-        padding-left: 30px;
         &.react {
+          padding-left: 30px;
           background: url('../images/guide/ic_react.svg') no-repeat 5px 3px/20px 20px;
         }
         &.sass {
+          padding-left: 30px;
           background: url('../images/guide/ic_scss.svg') no-repeat 5px 3px/20px 20px;
         }
         &.css {
+          padding-left: 30px;
           background: url('../images/guide/ic_css.svg') no-repeat 5px 3px/20px 20px;
         }
         + .info {

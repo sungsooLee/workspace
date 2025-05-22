@@ -11,7 +11,7 @@ export default class I18nResourceService {
     return new Promise((resolve) =>
       setTimeout(
         () => resolve((languageCode === 'ko' ? i18nResourceKoMock : i18nResourceEnMock) as any),
-        3000,
+        1000,
       ),
     );
   }

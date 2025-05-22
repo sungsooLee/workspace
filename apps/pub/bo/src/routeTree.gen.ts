@@ -97,6 +97,7 @@ import { Route as LayoutCommonPopImagePreviewImport } from './pages/_layout/comm
 import { Route as LayoutCommonPopExcelUploadImport } from './pages/_layout/common/pop-excel-upload'
 import { Route as LayoutCommonPopCategorySelectImport } from './pages/_layout/common/pop-category-select'
 import { Route as LayoutCommonPopAdminExtensionImport } from './pages/_layout/common/pop-admin-extension'
+import { Route as LayoutCommonBreakpointImport } from './pages/_layout/common/breakpoint'
 import { Route as GuideGuideWordWrapImport } from './pages/_guide/guide/word-wrap'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
 import { Route as GuideGuideTreeViewImport } from './pages/_guide/guide/tree-view'
@@ -700,6 +701,12 @@ const LayoutCommonPopAdminExtensionRoute =
     path: '/common/pop-admin-extension',
     getParentRoute: () => LayoutRoute,
   } as any)
+
+const LayoutCommonBreakpointRoute = LayoutCommonBreakpointImport.update({
+  id: '/common/breakpoint',
+  path: '/common/breakpoint',
+  getParentRoute: () => LayoutRoute,
+} as any)
 
 const GuideGuideWordWrapRoute = GuideGuideWordWrapImport.update({
   id: '/guide/word-wrap',
@@ -1526,6 +1533,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideWordWrapImport
       parentRoute: typeof GuideImport
     }
+    '/_layout/common/breakpoint': {
+      id: '/_layout/common/breakpoint'
+      path: '/common/breakpoint'
+      fullPath: '/common/breakpoint'
+      preLoaderRoute: typeof LayoutCommonBreakpointImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/common/pop-admin-extension': {
       id: '/_layout/common/pop-admin-extension'
       path: '/common/pop-admin-extension'
@@ -2087,6 +2101,7 @@ interface LayoutRouteChildren {
   LayoutMenuIdRoute: typeof LayoutMenuIdRoute
   LayoutTestRoute: typeof LayoutTestRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutCommonBreakpointRoute: typeof LayoutCommonBreakpointRoute
   LayoutCommonPopAdminExtensionRoute: typeof LayoutCommonPopAdminExtensionRoute
   LayoutCommonPopCategorySelectRoute: typeof LayoutCommonPopCategorySelectRoute
   LayoutCommonPopExcelUploadRoute: typeof LayoutCommonPopExcelUploadRoute
@@ -2148,6 +2163,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutMenuIdRoute: LayoutMenuIdRoute,
   LayoutTestRoute: LayoutTestRoute,
   LayoutIndexRoute: LayoutIndexRoute,
+  LayoutCommonBreakpointRoute: LayoutCommonBreakpointRoute,
   LayoutCommonPopAdminExtensionRoute: LayoutCommonPopAdminExtensionRoute,
   LayoutCommonPopCategorySelectRoute: LayoutCommonPopCategorySelectRoute,
   LayoutCommonPopExcelUploadRoute: LayoutCommonPopExcelUploadRoute,
@@ -2303,6 +2319,7 @@ export interface FileRoutesByFullPath {
   '/guide/tree-view': typeof GuideGuideTreeViewRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/guide/word-wrap': typeof GuideGuideWordWrapRoute
+  '/common/breakpoint': typeof LayoutCommonBreakpointRoute
   '/common/pop-admin-extension': typeof LayoutCommonPopAdminExtensionRoute
   '/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/common/pop-excel-upload': typeof LayoutCommonPopExcelUploadRoute
@@ -2437,6 +2454,7 @@ export interface FileRoutesByTo {
   '/guide/tree-view': typeof GuideGuideTreeViewRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/guide/word-wrap': typeof GuideGuideWordWrapRoute
+  '/common/breakpoint': typeof LayoutCommonBreakpointRoute
   '/common/pop-admin-extension': typeof LayoutCommonPopAdminExtensionRoute
   '/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/common/pop-excel-upload': typeof LayoutCommonPopExcelUploadRoute
@@ -2574,6 +2592,7 @@ export interface FileRoutesById {
   '/_guide/guide/tree-view': typeof GuideGuideTreeViewRoute
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
   '/_guide/guide/word-wrap': typeof GuideGuideWordWrapRoute
+  '/_layout/common/breakpoint': typeof LayoutCommonBreakpointRoute
   '/_layout/common/pop-admin-extension': typeof LayoutCommonPopAdminExtensionRoute
   '/_layout/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/_layout/common/pop-excel-upload': typeof LayoutCommonPopExcelUploadRoute
@@ -2710,6 +2729,7 @@ export interface FileRouteTypes {
     | '/guide/tree-view'
     | '/guide/typography'
     | '/guide/word-wrap'
+    | '/common/breakpoint'
     | '/common/pop-admin-extension'
     | '/common/pop-category-select'
     | '/common/pop-excel-upload'
@@ -2843,6 +2863,7 @@ export interface FileRouteTypes {
     | '/guide/tree-view'
     | '/guide/typography'
     | '/guide/word-wrap'
+    | '/common/breakpoint'
     | '/common/pop-admin-extension'
     | '/common/pop-category-select'
     | '/common/pop-excel-upload'
@@ -2978,6 +2999,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/tree-view'
     | '/_guide/guide/typography'
     | '/_guide/guide/word-wrap'
+    | '/_layout/common/breakpoint'
     | '/_layout/common/pop-admin-extension'
     | '/_layout/common/pop-category-select'
     | '/_layout/common/pop-excel-upload'
@@ -3152,6 +3174,7 @@ export const routeTree = rootRoute
         "/_layout/$menuId",
         "/_layout/test",
         "/_layout/",
+        "/_layout/common/breakpoint",
         "/_layout/common/pop-admin-extension",
         "/_layout/common/pop-category-select",
         "/_layout/common/pop-excel-upload",
@@ -3504,6 +3527,10 @@ export const routeTree = rootRoute
     "/_guide/guide/word-wrap": {
       "filePath": "_guide/guide/word-wrap.tsx",
       "parent": "/_guide"
+    },
+    "/_layout/common/breakpoint": {
+      "filePath": "_layout/common/breakpoint.tsx",
+      "parent": "/_layout"
     },
     "/_layout/common/pop-admin-extension": {
       "filePath": "_layout/common/pop-admin-extension.tsx",
