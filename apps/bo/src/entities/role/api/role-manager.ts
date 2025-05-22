@@ -37,11 +37,8 @@ export default class RoleManagerService {
    * 역할 목록  조회
    * @returns 역할 목록
    */
-  static fetchRolesList(tenantId: number, siteScope: string): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/roles`, {
-      tenantId: tenantId,
-      siteScope: siteScope,
-    });
+  static fetchRolesList(params: any): Promise<any> {
+    return httpService.get<any>(`${PMSApiPrefix()}/roles`, params);
   }
 
   /**

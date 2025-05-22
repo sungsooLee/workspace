@@ -4,6 +4,7 @@ import TenantMenuManageService from '@entities/menu/api/menu-tenant-manage';
 import MenuMangerService from '@entities/menu/api/menu-manage';
 
 export const roleQueryKeys = {
+  list: ['role-page'] as const,
   all: ['role-manager-all'] as const,
   roles: ['roles'] as const,
   menus: ['menus'] as const,
@@ -27,6 +28,12 @@ const genRoleMenuTree = (menus: any[], roleMenu: any, contains: any[] = []) => {
 };
 
 export const roleManagerQueryOptions = {
+  list: (params: any) => ({
+    queryKey: roleQueryKeys.list,
+    queryFn: () => RoleManagerService.fetchRolesList({ ...params, siteScope: 'BO' }),
+    cacheTime: 0,
+    staleTime: 0,
+  }),
   // 특정 역할 조회
   getRole: (roleCode: string) => ({
     queryKey: [...roleQueryKeys.all, ...roleQueryKeys.roles, roleCode],
