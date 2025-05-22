@@ -49,9 +49,10 @@ const columnHelper = createColumnHelper<any>();
 
 // 속성명 변경 필요
 const columns = [
-  columnHelper.accessor('1', {
+  columnHelper.accessor('id', {
     cell: (info) => info.getValue(),
-    header: '분류',
+    header: '구분',
+    size: 50,
   }),
   columnHelper.accessor('2', {
     cell: (info) => info.getValue(),
@@ -68,10 +69,12 @@ const columns = [
   columnHelper.accessor('5', {
     cell: (info) => info.getValue(),
     header: '사용자ID',
+    size: 80,
   }),
   columnHelper.accessor('6', {
     cell: (info) => info.getValue(),
     header: '사용',
+    size: 80,
   }),
   columnHelper.accessor('7', {
     cell: (info) => info.getValue(),
@@ -81,9 +84,35 @@ const columns = [
     cell: (info) => info.getValue(),
     header: '권한종료일',
   }),
-  columnHelper.accessor('1', {
-    cell: (info) => info.getValue(),
+  columnHelper.accessor('9', {
     header: '데이터 접근 범위',
+    cell: (info) => {
+      return (
+        <>
+          <Button
+            onClick={() => {
+              const rowData = info.row.original;
+              // const currentApiList = getValues('apiMappingMenuList') || [];
+              // const updatedApiList = currentApiList.filter(
+              //   (item: any) => item.apiId !== rowData.apiId,
+              // );
+              // fetchData({ ...getValues(), apiMappingMenuList: updatedApiList });
+            }}
+            variant="gray2"
+            size={'xs'}
+            type={'button'}
+          >
+            회사
+          </Button>
+          <Button variant="gray2" size={'xs'} type={'button'}>
+            채널
+          </Button>
+          <Button variant="gray2" size={'xs'} type={'button'}>
+            팀
+          </Button>
+        </>
+      );
+    },
   }),
 ];
 
@@ -153,6 +182,7 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
             <GridBox
               config={config}
               columns={columns}
+              data={[{ id: 'sdf' }]}
               title={t('사용자 목록')}
               showTotalCount={true}
               multiple={true}
@@ -174,7 +204,7 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
             />
             <div className={styles.contents_wrap}>
               {/* <ChipList options={[]} /> */}
-              {/* <ChipListFormField placeHolder /> */}
+              <ChipListFormField placeHolder />
             </div>
           </div>
         </div>
@@ -241,7 +271,8 @@ const searchConfig: any = {
 //const chipListOptions: ChipListComponentProps = { options: new Array() };
 
 const gridConfig = {
-  query: roleManagerQueryOptions.getRoleUserList,
+  // query: roleManagerQueryOptions.getRoleUserList,
+  query: '',
   columns: [
     {
       name: 'no1',
@@ -249,7 +280,7 @@ const gridConfig = {
       type: 'numbering',
     },
   ],
-  data: [],
+  data: [{ id: 1123 }],
   pagination: {
     pageSize: 10,
     pageIndex: 1,
