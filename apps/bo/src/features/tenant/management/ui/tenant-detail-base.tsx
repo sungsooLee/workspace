@@ -131,6 +131,8 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
           name: item.companyName,
         })),
         tenantMappingLanguageTypeList: tenantData.tenantLanguageList,
+        tenantMappingUserList: tenantData.tenantUserList,
+        tenantMappingRoleList: tenantData.tenantRoleList,
         tenantDesc: tenantData.tenantDesc ?? '',
       });
     }
@@ -171,7 +173,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       <ContentsRow>
         <FormRow
           provider={provider}
-          name="managerName"
+          name="tenantMappingUserList"
           element={
             <ChipListModalSelectorFormField
               chipList={{
@@ -271,11 +273,18 @@ const formConfig: DynamicFormConfig = {
       tooltip: t('테넌트에 사용할 로고로 파일 1개만 등록할 수 있습니다.'),
     },
     {
-      name: 'managerName',
+      name: 'tenantMappingUserList',
       label: t('테넌트 담당자'),
       type: 'custom',
-      value: '',
+      format: 'array',
+      value: [],
       placeholder: t('담당자를 선택해주세요.'),
+    },
+    {
+      name: 'tenantMappingRoleList',
+      type: 'custom',
+      format: 'array',
+      value: [],
     },
     {
       name: 'tenantBillingTag',
@@ -415,7 +424,7 @@ const formConfig: DynamicFormConfig = {
     },
     // managerName: { required: true },
     tenantBillingTag: { required: true },
-    // company: { required: true },
+    companyTenantList: { required: true },
     isUsed: { required: true },
     device: {
       required: {

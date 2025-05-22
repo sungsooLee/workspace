@@ -283,63 +283,63 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
         </div>
         <div className={layoutStyles.inner_contents}>
           <ContentsRow>
-            <FormRow provider={provider} name={'location'} element={<Input disabled={true} />} />
+            <FormRow provider={provider} name="location" element={<Input disabled={true} />} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider} name={'parentName'} element={<Input disabled={true} />} />
+            <FormRow provider={provider} name="parentName" element={<Input disabled={true} />} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider} name={'menuCode'} element={<Input disabled={true} />}>
+            <FormRow provider={provider} name="menuCode" element={<Input disabled={true} />}>
               <Button variant="gray" size="sm" disabled>
                 {t('중복')}
               </Button>
             </FormRow>
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider} name={'menuName'} element={<Input disabled={true} />} />
+            <FormRow provider={provider} name="menuName" element={<Input disabled={true} />} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider} name={'path'} element={<Input disabled={true} />} />
+            <FormRow provider={provider} name="path" element={<Input disabled={true} />} />
           </ContentsRow>
           <ContentsRow>
             <FormRow
               provider={provider}
-              name={'menuDesc'}
+              name="menuDesc"
               element={<TextareaFormField disabled={true} />}
             />
           </ContentsRow>
-          <ContentsRow type={'horizontal'}>
+          <ContentsRow type="horizontal">
             <FormRow
               provider={provider}
-              name={'menuDesc'}
+              name="isHiddenMenu"
               element={<SwitchFormField disabled={true} />}
             />
           </ContentsRow>
           <ContentsRow>
             <FormRow
               provider={provider}
-              name={'deviceNames'}
+              name="deviceNames"
               element={<CheckboxGroupFormField disabled={EnFormMode.NONE === formMode} />}
             />
           </ContentsRow>
-          <ContentsRow type={'horizontal'}>
+          <ContentsRow type="horizontal">
             <FormRow
               provider={provider}
-              name={'isPersoninfoInclusion'}
+              name="isPersoninfoInclusion"
               element={<SwitchFormField disabled={true} />}
             />
           </ContentsRow>
-          <ContentsRow type={'horizontal'}>
+          <ContentsRow type="horizontal">
             <FormRow
               provider={provider}
-              name={'isUsed'}
+              name="isUsed"
               element={<SwitchFormField disabled={EnFormMode.NONE === formMode} />}
             />
           </ContentsRow>
           <ContentsRow>
             <FormRow
               provider={provider}
-              name={'apiMappingMenuList'}
+              name="apiMappingMenuList"
               element={
                 <GridBox
                   data={getValues('apiMappingMenuList') || []}
@@ -462,7 +462,7 @@ const formConfig: DynamicFormConfig = {
 const columnHelper = createColumnHelper<any>();
 
 const columns = [
-  columnHelper.accessor('Sort', {
+  columnHelper.accessor('apiName', {
     cell: (info) => info.getValue(),
     header: t('분류'),
     size: 120,
@@ -472,20 +472,10 @@ const columns = [
       cellAlign: 'left', // 셀은 오른쪽 정렬
     },
   }),
-  columnHelper.accessor('API', {
+  columnHelper.accessor('apiId', {
     cell: (info) => info.getValue(),
     header: 'API',
     size: 490,
     enableGrouping: false,
-  }),
-  columnHelper.accessor('Delete', {
-    cell: (info) => info.getValue(),
-    header: t('삭제'),
-    size: 100,
-    enableGrouping: false,
-    meta: {
-      headerAlign: 'left', // 헤더만 가운데 정렬
-      cellAlign: 'center', // 셀은 오른쪽 정렬
-    },
   }),
 ] as ColumnDef<any, unknown>[];
