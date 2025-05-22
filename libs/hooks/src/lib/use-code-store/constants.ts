@@ -88,7 +88,7 @@ export const CODE_GROUP = {
   'vps.video.FfmpegTaskType': 'vps.video.FfmpegTaskType',
   'manual.code': 'manual.code',
   'manual.code2': 'manual.code2',
-  'manual.tenant': 'manual.tenant',
   'manual.company.companyCode': 'manual.company.companyCode',
+  'manual.tenant.tenantId': 'manual.tenant.tenantId',
 };
 export type CODE_GROUP_TYPE = (typeof CODE_GROUP)[keyof typeof CODE_GROUP];
