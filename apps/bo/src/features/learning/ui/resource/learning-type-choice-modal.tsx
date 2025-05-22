@@ -16,10 +16,10 @@ import {
 } from '@learnway/icons';
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import {
-  Button,
+  // Button,
   ModalBody,
   ModalContainer,
-  ModalFooter,
+  // ModalFooter,
   ModalTitle,
   OptionCard,
   OptionCardItem,
@@ -68,9 +68,9 @@ const LearningTypeChoiceModalComponent = () => {
           />
         </div>
       </ModalBody>
-      <ModalFooter>
+      {/* <ModalFooter>
         <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => close()} />
-      </ModalFooter>
+      </ModalFooter> */}
     </ModalContainer>
   );
 };

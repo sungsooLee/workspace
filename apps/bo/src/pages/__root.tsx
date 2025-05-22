@@ -7,6 +7,9 @@ import { ModalWrapper, ToastWrapper, useModalStore } from '@learnway/ui';
 import { useGlobalRouterEvent } from '@learnway/hooks';
 import { useRenewalMenuStateFromRouting, useFetchAuthUser } from '@learnway/auth';
 import { setupErrorToastListener } from '@learnway/shared';
+import { useWindowSize } from 'react-use';
+import { MinWidthRequired } from '../widgets/layout/ui/min-width-required';
+import { useBreakpointModalClose } from '../shared/lib/breakpoint-modal.hook';
 
 const NotFound = () => {
   return (
@@ -31,6 +34,7 @@ function RootComponent() {
   const { closeAll } = useModalStore();
   const { data: authUser } = useFetchAuthUser();
   const router = useRouter();
+  const isUnderBreakpoint = useBreakpointModalClose(closeAll, 1000);
 
   useRenewalMenuStateFromRouting();
   useGlobalRouterEvent({
@@ -46,6 +50,9 @@ function RootComponent() {
     return unsubscribe;
   }, []);
 
+  if (isUnderBreakpoint) {
+    return <MinWidthRequired />;
+  }
   return (
     <>
       <Outlet />

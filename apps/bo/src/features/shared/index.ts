@@ -8,4 +8,5 @@ export * from './ui/modal/user-choice-modal';
 export * from './ui/modal/user-shuttle-modal';
 export * from './ui/modal/tenant-choice-modal';
 export * from './ui/modal/tenant-shuttle-modal';
+export * from './ui/modal/role-choice-modal';
 export { ExcelUploadModal } from './ui/modal/excel-upload-modal';

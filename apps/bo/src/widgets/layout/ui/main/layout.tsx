@@ -10,6 +10,7 @@ import { Header } from './header/header';
 
 import styles from './layout.module.css';
 import { useWindowSize } from 'react-use';
+import { MinWidthRequired } from '../min-width-required';
 
 interface LayoutComponentProps {
   children: ReactNode;
@@ -20,11 +21,11 @@ function LayoutComponent({ children }: LayoutComponentProps) {
 
   const { data } = useFetchAuthUser();
   const [activeMenuDepth] = useActiveMenuDepthState();
-  const { width } = useWindowSize();
+  // const { width } = useWindowSize();
 
-  if (width < 1000) {
-    return <>안내화면</>;
-  }
+  // if (width < 1000) {
+  //   return <MinWidthRequired />;
+  // }
 
   if (
     activeMenuDepth &&

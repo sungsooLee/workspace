@@ -9,12 +9,14 @@ import { IcoSearch } from '@learnway/icons';
 import styles from './chip-list-modal-selector-form-field.module.css';
 import { BaseFormFieldProps } from '@learnway/hooks';
 
-export interface ChipListModalSelectorFormFieldProps extends BaseFormFieldProps<any[]> {
+export interface ChipListModalSelectorFormField2Props extends BaseFormFieldProps<any[]> {
   modalConfig: ModalConfig;
   button?: ButtonComponentProps;
   chipList?: Partial<ChipListComponentProps>;
   /** action node */
   actionNode?: ReactNode;
+  /** 추가 버튼 */
+  showAddButton?: boolean;
 }
 
 /**
@@ -24,14 +26,15 @@ export interface ChipListModalSelectorFormFieldProps extends BaseFormFieldProps<
  * @param props
  * @constructor
  */
-const ChipListModalSelectorFormFieldComponent = forwardRef<
+const ChipListModalSelectorFormField2Component = forwardRef<
   HTMLDivElement,
-  ChipListModalSelectorFormFieldProps
+  ChipListModalSelectorFormField2Props
 >(
   (
     {
       modalConfig,
       value = [],
+      showAddButton,
       onChange: ownerOnChange,
       chipList: chipListProps = {
         labelField: 'label',
@@ -68,31 +71,39 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
     };
 
     return (
-      <div
-        ref={ref}
-        className={cn(
-          styles.start,
-          styles.chips_modal_wrap,
-          'nlp--chip-list-modal-selector-form-field',
+      <div className={cn(styles.start, 'nlp--chip-list-modal-selector-form-field')}>
+        {/* actionNode or 추가버튼 둘중 하나라도 설정 되어있을때 노출*/}
+        {(actionNode || showAddButton) && (
+          <div>
+            {/* action node*/}
+            {actionNode ?? actionNode}
+            {/*추가버튼*/}
+            {showAddButton && (
+              <Button variant={'text'} size={'sm'} label={'추가'} onClick={handleSearchClick} />
+            )}
+          </div>
         )}
-      >
-        <ChipList
-          {...chipListProps}
-          size={'xs'}
-          hideBorder
-          options={value}
-          onChipDeleteClick={handlerChipDelete}
-        />
-        <Button
-          type="button"
-          className={cn(styles.btn_search)}
-          onlyIcon
-          onClick={handleSearchClick}
-        >
-          <IcoSearch width={20} height={20} stroke={'#131C30'} />
-        </Button>
+        <div ref={ref} className={cn(styles.chips_modal_wrap)}>
+          <ChipList
+            {...chipListProps}
+            size={'xs'}
+            hideBorder
+            options={value}
+            onChipDeleteClick={handlerChipDelete}
+          />
+          {!showAddButton && (
+            <Button
+              type="button"
+              className={cn(styles.btn_search)}
+              onlyIcon
+              onClick={handleSearchClick}
+            >
+              <IcoSearch width={20} height={20} stroke={'#131C30'} />
+            </Button>
+          )}
+        </div>
       </div>
     );
   },
 );
-export const ChipListModalSelectorFormField = ChipListModalSelectorFormFieldComponent;
+export const ChipListModalSelectorFormField2 = ChipListModalSelectorFormField2Component;

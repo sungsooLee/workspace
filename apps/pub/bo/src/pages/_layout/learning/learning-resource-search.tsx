@@ -25,7 +25,7 @@ export const Route = createFileRoute('/_layout/learning/learning-resource-search
 
 function RouteComponent() {
   // grid
-  const [pageIndex, setPageIndex] = useState(0);
+  const [pageNumber, setpageNumber] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const data: any[] = [
     {
@@ -63,7 +63,7 @@ function RouteComponent() {
       ),
     },
     {
-      type: '동영상    ',
+      type: '동영상',
       name: (
         // <Link to={'/'} className="link">
         //   학습자원명
@@ -356,9 +356,9 @@ function RouteComponent() {
                 columnPinning={{ columns: ['numbering', 'type', 'name'] }}
                 pagination={{
                   pageSize,
-                  pageIndex,
-                  totalRows: 100,
-                  onPageChange: setPageIndex,
+                  pageNumber,
+                  totalPages: 100,
+                  onPageChange: setpageNumber,
                   onPageSizeChange: setPageSize,
                 }}
                 title="목록"
