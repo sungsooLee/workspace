@@ -20,6 +20,8 @@ export interface ThumbnailProps {
   width?: number;
   /** 세로 사이즈 */
   height?: number;
+  /** 아이디 */
+  id: string;
   /** 이미지 경로 */
   path: string;
   /** index 번호 (list type 에서 index 번호 확인시 사용) */
@@ -35,32 +37,47 @@ export interface ThumbnailProps {
   /** 카운트 체크 여부 */
   count?: boolean;
   /** 삭제 클릭 이벤트 */
-  onRemoveClick?: (checked: CheckedState) => void;
+  onRemoveClick?: () => void;
   /** 체크 변경 이벤트 */
   onCheckedChange?: (checked: CheckedState) => void;
 }
 
+/**
+ * 썸네일 컴포넌트
+ * 이미지, 체크박스, 삭제 버튼, 인덱스 번호, 파일 사이즈 텍스트 등을 표시합니다.
+ * 마우스 오버 시 삭제 버튼이 나타나는 인터랙션을 포함합니다.
+ * `forwardRef`를 사용하여 부모 컴포넌트에서 이 컴포넌트의 DOM 요소에 접근할 수 있도록 합니다.
+ */
 const ThumbnailComponent = forwardRef<HTMLDivElement, ThumbnailProps>(
   (
     {
+      id,
+      path,
       className,
       variant,
       size,
       width,
       height,
-      path,
       indexNumber,
       sizeText,
       showCheckbox,
       showDeleteBtn,
       selected,
+      onRemoveClick,
       onCheckedChange,
       ...props
     },
     ref,
   ) => {
+    // 썸네일에 마우스가 호버되었는지 여부를 관리하는 상태
     const [isHovered, setIsHovered] = useState(false);
+
+    /**
+     * 마우스 호버 상태를 업데이트하는 핸들러 함수입니다.
+     * @param state - 마우스 호버 상태 (true: 호버됨, false: 호버 해제)
+     */
     const handleHover = (state: boolean) => setIsHovered(state);
+
     return (
       <div
         {...props}
@@ -88,7 +105,7 @@ const ThumbnailComponent = forwardRef<HTMLDivElement, ThumbnailProps>(
         {sizeText && <span className={styles.sizeText}>{sizeText}</span>}
         {/* 마우스 오버시 노출 */}
         {showDeleteBtn && isHovered && (
-          <Button className={styles.btn_delete}>
+          <Button className={styles.btn_delete} onClick={() => onRemoveClick?.()}>
             <IcoTrash03 className={styles.icon_delete} width={24} height={24} stroke="#ffffff" />
           </Button>
         )}

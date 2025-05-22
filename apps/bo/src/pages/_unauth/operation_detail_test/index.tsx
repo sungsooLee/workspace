@@ -5,7 +5,6 @@ import {
   Button,
   ChipListModalSelectorFormField,
   ContentsRow,
-  DynamicFormField,
   Input,
   InputModalSelectorFormField,
   ListModalSelectorFormField,
@@ -351,7 +350,10 @@ const formConfig: DynamicFormConfig = {
       type: 'thumbnail-list',
       label: t('ThumbnailListFormField'),
       format: 'array',
-      value: [],
+      value: [
+        'https://lodash.com/assets/img/lodash.svg',
+        'https://lodash.com/assets/img/lodash.svg',
+      ],
     },
   ],
 };
