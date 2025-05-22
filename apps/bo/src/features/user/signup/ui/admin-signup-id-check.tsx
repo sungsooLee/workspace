@@ -9,6 +9,9 @@ import { Button, ContentsRow, DynamicFormField, Stepper } from '@learnway/ui';
 import { FormRow } from '@shared/ui';
 import styles from './admin-signup-id-check.module.css';
 import { useRouter } from '@tanstack/react-router';
+import { useExistsEmail } from '@learnway/auth';
+import { tokenService } from '@learnway/config';
+import { useEffect } from 'react';
 
 // 아이디 확인
 export function AdminSignupIdCheck() {
@@ -16,11 +19,40 @@ export function AdminSignupIdCheck() {
   const { setAdminPage } = useSignupStore((state) => state);
   const { provider, onSubmit, formState } = useDynamicForm(formConfig);
 
-  console.log('formState :: ', formState);
+  useEffect(() => {
+    tokenService.clear();
+  }, []);
 
+  // email 확인
+  const { existsEmail } = useExistsEmail();
   const handleOnSubmit = async (data: any) => {
-    console.log('data::', data);
-    data && setAdminPage('auth');
+    console.log('email :: ', data);
+    if (!data.email) return;
+
+    existsEmail(data.email, {
+      onSuccess: (data) => {
+        // TODO 관리자인지 CP사인지 API정보 필요
+        if (data.isEmailExists) {
+          data && setAdminPage('auth');
+        } else {
+          alert({
+            title: '진행현황이 없습니다.',
+            content: (
+              <div className="whitespace-pre-wrap">
+                {'입력하신 아이디의 진행현황이 없습니다.\n정확한 정보를 다시 입력해 주세요.'}
+              </div>
+            ),
+          });
+        }
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    });
+  };
+
+  const handleCancel = () => {
+    router.navigate({ to: '/login' });
   };
 
   return (
@@ -48,11 +80,17 @@ export function AdminSignupIdCheck() {
             </dl>
           </div>
           <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
-            <Button variant="gray" size="xl" onClick={() => router.navigate({ to: '/login' })}>
+            <Button variant="gray" size="xl" onClick={handleCancel}>
               취소
             </Button>
             <Button type="submit" variant="primary" size="xl" disabled={!formState.isValid}>
               다음
+            </Button>
+            <Button variant="gray" size="xl" onClick={handleCancel}>
+              취소
+            </Button>
+            <Button variant="primary" size="xl" onClick={() => setAdminPage('auth')}>
+              다음(테스트)
             </Button>
           </div>
         </div>
