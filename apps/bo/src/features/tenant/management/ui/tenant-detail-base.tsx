@@ -86,7 +86,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
 
   const handleOnSubmit = async (data: any) => {
     console.log('data {} => ', data);
-    const logoImageUrl = data.logoImageUrl?.length > 0 ? data.logoImageUrl[0].path : '';
+    const logoImageUrl = data.logoImageUrl?.length > 0 ? data.logoImageUrl[0] : '';
 
     const payload = {
       ...data,
@@ -114,7 +114,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
     if (tenantData) {
       const device = [];
       const useCategory = [];
-      const logoImageUrl = [{ id: `t_img_${tenantId}`, path: tenantData.logoImageUrl }];
+      const logoImageUrl = [tenantData.logoImageUrl];
       tenantData.isPc && device.push(EnDeviceType.isPc);
       tenantData.isMobile && device.push(EnDeviceType.isMobile);
       tenantData.isApp && device.push(EnDeviceType.isApp);
