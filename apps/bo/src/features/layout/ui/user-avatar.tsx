@@ -72,9 +72,9 @@ export const PopoverContent = () => {
 
         <li>
           <Popover.Close asChild>
-            {/* <Link to={'https://naver.com'} target="_blank">
+            <a href={'https://naver.com'} target="_blank" rel="noopener noreferrer">
               {t('LABEL.common.itsm')}
-            </Link> */}
+            </a>
           </Popover.Close>
         </li>
       </ul>
