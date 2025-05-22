@@ -22,6 +22,7 @@ function RouteComponent() {
         { label: '모바일', path: '/guide/mobile' },
         { label: 'Form', path: '/guide/form' },
         { label: '이미지', path: '/guide/image' },
+        { label: 'E-mail(피드백메일)', path: '/guide/email' },
       ],
     },
 
