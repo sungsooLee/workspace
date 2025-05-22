@@ -9,7 +9,7 @@ import { PageContainer } from '../../../widgets/layout/ui/container/page-contain
 import { MovieInfo } from '../../../widgets/contents/movie-info';
 import { useRef } from 'react';
 import { useDynamicForm } from '@learnway/hooks';
-import { DynamicFormConfig } from '@/libs/hooks/src/lib/form-builder/type';
+import { DynamicFormConfig } from '@learnway/hooks';
 import { FormRow } from '../../../shared/ui/form';
 import { CustomFormField } from '../../../shared/ui/form/custom-form-field';
 
