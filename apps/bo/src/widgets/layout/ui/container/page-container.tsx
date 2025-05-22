@@ -64,9 +64,11 @@ const PageContainerComponent: FC<{
     if (scrollContainerRef.current) {
       const scrollTop = scrollContainerRef.current.scrollTop;
       setScrollPosition(scrollTop);
-      scrollTop > scrollPosition
-        ? document.body.classList.add('scrolled')
-        : document.body.classList.remove('scrolled');
+      if (scrollTop === 0) {
+        document.body.classList.remove('scrolled');
+      } else if (scrollTop > scrollPosition + 50) {
+        document.body.classList.add('scrolled');
+      }
     }
   };
 
@@ -82,7 +84,7 @@ const PageContainerComponent: FC<{
         container.removeEventListener('scroll', handleScroll);
       }
     };
-  }, []);
+  }, [hasScroll]);
 
   useEffect(() => {
     const checkScroll = () => {
