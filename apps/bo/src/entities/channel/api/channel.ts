@@ -1,33 +1,33 @@
 import { httpService } from '@learnway/shared';
-import { LMSApiPrefix } from '@learnway/config';
+import { PMSApiPrefix } from '@learnway/config';
 
 export default class ChannelService {
   static async getChannelList(params: any) {
-    return httpService.get<any>(`${LMSApiPrefix()}/channel`, params);
+    return httpService.get<any>(`${PMSApiPrefix()}/channel`, params);
   }
 
   static async getChannelDetail(channelId: number) {
-    return httpService.get(`${LMSApiPrefix()}/channel/${channelId}`);
+    return httpService.get(`${PMSApiPrefix()}/channel/${channelId}`);
   }
 
   static async createChannel(payload: any) {
-    return httpService.post<any>(`${LMSApiPrefix()}/channel`, payload);
+    return httpService.post<any>(`${PMSApiPrefix()}/channel`, payload);
   }
 
   static async updateChannelDetail(channelId: number, body: any) {
-    return httpService.put<any>(`${LMSApiPrefix()}/channel/${channelId}`, body);
+    return httpService.put<any>(`${PMSApiPrefix()}/channel/${channelId}`, body);
   }
 
   static async deleteChannel(channelId: number) {
-    return httpService.delete<any>(`${LMSApiPrefix()}/channel/${channelId}`);
+    return httpService.delete<any>(`${PMSApiPrefix()}/channel/${channelId}`);
   }
 
   static async getAutoChannelAddress() {
-    return httpService.get<any>(`${LMSApiPrefix()}/channel/url/random`);
+    return httpService.get<any>(`${PMSApiPrefix()}/channel/url/random`);
   }
 
   static async existsChannelUrl(channelId: number, channelMainLinkContent: string) {
-    return httpService.get<any>(`${LMSApiPrefix()}/channel/url/exist`, {
+    return httpService.get<any>(`${PMSApiPrefix()}/channel/url/exist`, {
       channelId,
       channelMainLinkContent,
     });
