@@ -4,6 +4,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import {
   Button,
   ChipListModalSelectorFormField,
+  ChipListModalSelectorFormField2,
   ContentsRow,
   Input,
   InputModalSelectorFormField,
@@ -42,15 +43,10 @@ function RouteComponent() {
       <PageContainer>
         <ContentsButtons>
           <Button type="submit" variant="point" size="sm" label={'과정복사'} />
-
           <Button type={'button'} variant="point" size="sm" label={'임시저장'} />
-
           <Button type={'button'} variant="point" size="sm" label={'작성완료'} />
-
           <Button type={'button'} variant="point" size="sm" label={'미리보기'} />
-
           <Button type={'button'} variant="primary" size="sm" label={'게시하기'} />
-
           <Button
             type={'submit'}
             variant="point"
@@ -58,7 +54,6 @@ function RouteComponent() {
             label={'Form submit'}
             onClick={handleOnSubmit}
           />
-
           <Button
             type={'button'}
             variant="point"
@@ -114,7 +109,25 @@ function RouteComponent() {
                     valueField: 'id',
                     wordwrap: true,
                   }}
-                  actionNode={<Button variant="text" size="sm" label={t('추가')} />}
+                />
+              }
+            />
+          </ContentsRow>
+          {/* 강사2 */}
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name={'강사2'}
+              element={
+                <ChipListModalSelectorFormField2
+                  showAddButton
+                  modalConfig={{ content: <TeacherListModal channelId={getValues()?.channelId} /> }}
+                  chipList={{
+                    labelField: 'name',
+                    valueField: 'id',
+                    wordwrap: true,
+                  }}
+                  actionNode={<Button variant="text" size="sm" label={t('대상자')} />}
                 />
               }
             />
@@ -258,6 +271,15 @@ const formConfig: DynamicFormConfig = {
       name: '강사',
       type: 'custom',
       label: t('강사 - ChipListModalSelectorFormField'),
+      format: 'array',
+      value: [],
+      placeholder: '',
+      description: '',
+    },
+    {
+      name: '강사2',
+      type: 'custom',
+      label: t('강사 - ChipListModalSelectorFormField2'),
       format: 'array',
       value: [],
       placeholder: '',
