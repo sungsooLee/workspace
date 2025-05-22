@@ -1,6 +1,6 @@
 import { useFieldArray } from 'react-hook-form';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, DynamicFormField } from '@learnway/ui';
+import { Button } from '@learnway/ui';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../widgets/layout/ui/container/slot/sub-contents';
@@ -8,8 +8,7 @@ import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { MovieInfo } from '../../../widgets/contents/movie-info';
 import { useRef } from 'react';
-import { useDynamicForm } from '@learnway/hooks';
-import { DynamicFormConfig } from '@learnway/hooks';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { FormRow } from '../../../shared/ui/form';
 import { CustomFormField } from '../../../shared/ui/form/custom-form-field';
 

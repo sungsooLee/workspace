@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import '@/libs/styles/src/lib/bo/assets/styles/guide.css';
+// import '@learnway/styles/src/lib/bo/assets/styles/guide.css';
 
 export const Route = createFileRoute('/_layout/')({
   component: HomeComponent,
