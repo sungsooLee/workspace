@@ -13,11 +13,20 @@ import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { pageRouteConfig } from '@features/auth';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
-import { Button, ContentsRow, GridBox, useGridBox } from '@learnway/ui';
+import {
+  Button,
+  ChipListModalSelectorFormField,
+  ContentsRow,
+  GridBox,
+  RadioGroupFormField,
+  useGridBox,
+} from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
-import { ContentsHistoryInfoFormField, FormRow, FormSubTitle } from '@shared/ui';
+import { ChipListFormField, ContentsHistoryInfoFormField, FormRow, FormSubTitle } from '@shared/ui';
 import { cn } from '@learnway/shared';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+import { EnChannelScope, EnCompanyScope, EnDeptScope } from '@types';
+import { FormDisplay } from '@features/form/ui/form-display';
 
 export const Route = createFileRoute('/_layout/my-page/role/detail')({
   component: RouteComponent,
@@ -107,30 +116,66 @@ function RouteComponent() {
             <FormRow
               provider={provider}
               name={'tenant'}
-              // element={<DateRangePickerFormField />}
+              element={<ChipListFormField disabled={true} hideCloseButton />}
             />
           </ContentsRow>
           <ContentsRow>
             <FormRow
               provider={provider}
-              name={'channel'}
-              // element={<DateRangePickerFormField />}
+              name={'channelScope'}
+              element={<RadioGroupFormField maxLength={300} disabled={true} />}
             />
           </ContentsRow>
+          <FormDisplay
+            provider={provider}
+            dependencies={[{ name: 'channelScope', value: EnChannelScope.MANUAL }]}
+          >
+            <div className="chiplist_modal_wrap">
+              <FormRow
+                provider={provider}
+                name={'channelIds'}
+                element={<ChipListFormField disabled={true} hideCloseButton />}
+              />
+            </div>
+          </FormDisplay>
           <ContentsRow>
             <FormRow
               provider={provider}
-              name={'company'}
-              // element={<DateRangePickerFormField />}
+              name={'companyScope'}
+              element={<RadioGroupFormField maxLength={300} />}
             />
           </ContentsRow>
+          <FormDisplay
+            provider={provider}
+            dependencies={[{ name: 'companyScope', value: EnChannelScope.MANUAL }]}
+          >
+            <div className="chiplist_modal_wrap">
+              <FormRow
+                provider={provider}
+                name={'companyIds'}
+                element={<ChipListFormField disabled={true} hideCloseButton />}
+              />
+            </div>
+          </FormDisplay>
           <ContentsRow>
             <FormRow
               provider={provider}
-              name={'team'}
-              // element={<DateRangePickerFormField />}
+              name={'deptScope'}
+              element={<RadioGroupFormField maxLength={300} />}
             />
           </ContentsRow>
+          <FormDisplay
+            provider={provider}
+            dependencies={[{ name: 'deptScope', value: EnChannelScope.MANUAL }]}
+          >
+            <div className="chiplist_modal_wrap">
+              <FormRow
+                provider={provider}
+                name={'deptIds'}
+                element={<ChipListFormField disabled={true} hideCloseButton />}
+              />
+            </div>
+          </FormDisplay>
           <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
             <ContentsHistoryInfoFormField />
           </ContentsRow>
@@ -190,6 +235,7 @@ const gridConfig = {
   ],
   data: [
     {
+      id: 1,
       role: '태넌트 관리자',
       rolePeriod: '2025-10-10 ~ 2025-11-10',
       approveStatus: '승인',
@@ -198,6 +244,7 @@ const gridConfig = {
       approveUser: '김현대',
     },
     {
+      id: 2,
       role: '채널 관리자',
       rolePeriod: '2025-10-10 ~ 2025-11-10',
       approveStatus: '반려',
@@ -240,29 +287,107 @@ const formConfig: DynamicFormConfig = {
     },
     {
       name: 'tenant',
-      type: 'text',
+      type: 'chip-list',
       label: t('테넌트 적용 범위'),
-      value: '',
+      value: [{ label: '테넌트1', value: 'id0' }],
       disabled: true,
+      chipListConfig: {
+        showInput: false,
+        labelField: 'label',
+        valueField: 'value',
+        wordwrap: true,
+      },
     },
     {
-      name: 'channel',
-      type: 'text',
+      name: 'channelScope',
+      type: 'radio-group',
       label: t('채널 적용 범위'),
-      value: '',
+      value: EnChannelScope.MANUAL,
+      options: [
+        {
+          value: EnChannelScope.ALL,
+          label: t('모든 채널'),
+        },
+        {
+          value: EnChannelScope.CURRENT_COMPANY,
+          label: t('소속 채널'),
+        },
+        {
+          value: EnChannelScope.CURRENT_COMPANY_INCLUSIVE,
+          label: t('소속 채널(하위 채널 포함)'),
+        },
+        {
+          value: EnChannelScope.MANUAL,
+          label: t('직접 선택'),
+        },
+      ],
     },
     {
-      name: 'company',
-      type: 'text',
+      name: 'channelIds',
+      type: 'chip-list',
+      label: '',
+      value: [{ label: '채널1', value: 'id0' }],
+      disabled: true,
+      chipListConfig: {
+        showInput: false,
+        labelField: 'label',
+        valueField: 'value',
+        wordwrap: true,
+      },
+    },
+    {
+      name: 'companyScope',
+      type: 'radio-group',
       label: t('회사 적용 범위'),
-      value: '',
+      value: EnCompanyScope.ALL,
+      options: [
+        {
+          value: EnCompanyScope.ALL,
+          label: t('모든 회사'),
+        },
+        {
+          value: EnCompanyScope.CURRENT_COMPANY,
+          label: t('소속 회사'),
+        },
+        {
+          value: EnCompanyScope.MANUAL,
+          label: t('직접 선택'),
+        },
+      ],
     },
     {
-      name: 'team',
-      type: 'text',
-      label: t('팀 적용 범위'),
-      value: '',
+      name: 'companyIds',
+      label: '',
+      type: 'chip-list',
+      format: 'array',
+      value: [{ label: '회사1', value: 'id0' }],
+      placeholder: '',
     },
+    {
+      name: 'deptScope',
+      type: 'radio-group',
+      label: t('팀 적용 범위'),
+      value: EnDeptScope.ALL,
+      options: [
+        {
+          value: EnDeptScope.ALL,
+          label: t('모든 팀'),
+        },
+        {
+          value: EnDeptScope.CURRENT_TEAM,
+          label: t('소속 팀'),
+        },
+        {
+          value: EnDeptScope.CURRENT_TEAM_INCLUSIVE,
+          label: t('소속 팀(하위 팀 포함)'),
+        },
+        {
+          value: EnDeptScope.MANUAL,
+          label: t('직접 선택'),
+        },
+      ],
+    },
+    { name: 'deptIds', label: '', type: 'chip-list', value: [{ label: '부서1', value: 'id0' }] },
   ],
   // validator: {
   //   approveRolePeriod: {

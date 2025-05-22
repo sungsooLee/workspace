@@ -13,12 +13,12 @@ interface AuthContainerComponentProps {
 function AuthContainerComponent({ children }: AuthContainerComponentProps) {
   const { t } = useTranslation();
 
-  const { meta } = useCurrentRoute();
+  const { meta, state } = useCurrentRoute();
 
   return (
     <div className={`${styles.start} ${styles.auth_container}`}>
       <div className={styles.auth_area}>
-        <h2>{t(meta?.title)}</h2>
+        <h2>{t(meta?.title || state?.meta?.title)}</h2>
         <div className={`${styles.auth_inner}`}>{children}</div>
       </div>
     </div>

@@ -31,6 +31,12 @@ export default class VerificationsService {
     return httpService.get<any>(`${PMSApiPrefix()}/users/verifications/find-my-id`, payload);
   }
 
+  static existsEmail(payload: string) {
+    return httpService.get<any>(`/pms-module/admin/api/v1/users/is-email-exists`, {
+      email: payload,
+    });
+  }
+
   static updatePasswordByPhoneNumber(payload: any) {
     return httpService.put<any>(
       `${PMSApiPrefix()}/users/verifications/change-password-by-phone-number`,
