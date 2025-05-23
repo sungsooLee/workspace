@@ -7,6 +7,7 @@ import {
   RoleChoiceModal,
   TenantChoiceModal,
   TenantShuttleModal,
+  RoleShuttleModal,
 } from '@features/shared';
 import {
   Button,
@@ -166,6 +167,20 @@ function RouteComponent() {
             }}
           >
             {'HRD 담당자 역할 조회'}
+          </Button>
+          <Button
+            size={'xs'}
+            className="btn_table"
+            variant={'gray2'}
+            onClick={(e) => {
+              e.stopPropagation();
+              openModal({
+                width: 'xl',
+                content: <RoleShuttleModal />,
+              });
+            }}
+          >
+            {'HRD 담당자 역할 조회(셔틀)'}
           </Button>
           <Button
             size={'xs'}
