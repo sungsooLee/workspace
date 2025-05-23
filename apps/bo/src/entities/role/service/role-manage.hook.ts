@@ -24,6 +24,12 @@ export function useFetchMenuApis(roleCode: string, menuId: string) {
   });
 }
 
+export function useGetRoleUserGroups(roleCode: string) {
+  return useQuery({
+    ...queryOptions.getRoleUserGroups(roleCode),
+  });
+}
+
 export function useFetchRoleTree(tenantId: number, siteScope: string) {
   return useQuery({ ...queryOptions.getRoleTree(tenantId, siteScope) });
 }
