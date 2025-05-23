@@ -62,6 +62,7 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseIntroductionOnUse
 export namespace com_ever_edu_lms_course_dto_res_CourseResDto$CourseIntroductionOnUser {
     export enum courseType {
         ELEARNING = 'ELEARNING',
+        ELEARNING_SANGSI = 'ELEARNING_SANGSI',
         CLASS = 'CLASS',
         LIVE = 'LIVE',
         EXAM = 'EXAM',

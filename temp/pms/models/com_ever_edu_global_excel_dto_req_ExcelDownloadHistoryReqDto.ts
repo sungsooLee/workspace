@@ -4,13 +4,29 @@
 /* eslint-disable */
 export type com_ever_edu_global_excel_dto_req_ExcelDownloadHistoryReqDto = {
     /**
-     * 담당자 Id
+     * 담당자 이름
      */
-    coordinatorId: number;
+    userId: number;
     /**
-     * 메뉴 Id
+     * 담당자 이름
      */
-    menuId: number;
+    userName: string;
+    /**
+     * 담당자 사원번호
+     */
+    employeeNumber: string;
+    /**
+     * 메뉴 경로
+     */
+    menuPath: string;
+    /**
+     * 조회건수
+     */
+    dataCount?: number;
+    /**
+     * 엑셀 다운로드 요청파라메터값
+     */
+    requestParameter?: string | null;
     /**
      * 사유 유형코드(그룹코드 : pms.excel.DownloadReasonTypeCode) - AFFAIRS|LEGAL_REQUEST|OUTSIDE_SUBMIT|RND|ETC
      */
@@ -23,10 +39,6 @@ export type com_ever_edu_global_excel_dto_req_ExcelDownloadHistoryReqDto = {
      * 사유 상세 직접 입력. 사유 상세유형코드가 직접 입력인 경우에 사용
      */
     downloadDetailReason?: string | null;
-    /**
-     * 엑셀 다운로드 파라메터
-     */
-    downloadParameter?: string | null;
 };
 export namespace com_ever_edu_global_excel_dto_req_ExcelDownloadHistoryReqDto {
     /**

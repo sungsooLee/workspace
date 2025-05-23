@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { com_ever_edu_pms_company_dto_res_CompanyLoginRestrictionResDto } from './com_ever_edu_pms_company_dto_res_CompanyLoginRestrictionResDto';
 export type com_ever_edu_pms_company_dto_res_CompanyResDto = {
     /**
      * 회사 ID
@@ -183,6 +184,10 @@ export type com_ever_edu_pms_company_dto_res_CompanyResDto = {
      * 담당자 이메일
      */
     managerEmail?: string;
+    /**
+     * 로그인 제한 정보
+     */
+    companyLoginRestrictionList?: Array<com_ever_edu_pms_company_dto_res_CompanyLoginRestrictionResDto>;
     /**
      * 등록자ID
      */

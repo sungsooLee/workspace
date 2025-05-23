@@ -132,7 +132,7 @@ export const ShuttleTreeToChips = ({
         </div>
         <div className={styles.data_wrap}>
           {actualSelectedItems.length === 0 ? (
-            <div className={styles.no_data}>선택된 항목이 없습니다.</div>
+            <div className={styles.no_data}>{'선택한 데이터가 없습니다.'}</div>
           ) : (
             actualSelectedItems.map((item) => (
               <div key={item.key} className={styles.selected_item}>

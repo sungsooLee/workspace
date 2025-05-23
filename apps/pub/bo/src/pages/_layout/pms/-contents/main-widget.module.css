@@ -9,4 +9,7 @@
 
 .menu_box {
   @apply flex w-full items-center justify-between;
+  .used {
+    @apply text-[var(--gray6)];
+  }
 }
