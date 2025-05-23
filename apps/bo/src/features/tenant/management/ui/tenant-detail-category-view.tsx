@@ -7,7 +7,7 @@ import {
   Input,
   Textarea,
   useModal,
-  ChipListModalSelectorFormField2,
+  ChipListModalSelectorFormField,
 } from '@learnway/ui';
 import { FormInfoArea, FormRow, ContentsHistoryInfoFormField, SwitchFormField } from '@shared/ui';
 
@@ -356,7 +356,7 @@ const TenantCategoryViewComponent: FC<any> = ({
               provider={provider}
               name={'userGroups'}
               element={
-                <ChipListModalSelectorFormField2
+                <ChipListModalSelectorFormField
                   disabled={isInitMode || isRoot}
                   showAddButton
                   chipList={{
