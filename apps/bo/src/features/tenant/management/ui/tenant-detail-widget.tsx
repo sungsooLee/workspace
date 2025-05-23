@@ -18,7 +18,7 @@ import { NoticeBox, FormSubTitle } from '@shared/ui';
 import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 import { ContentsHistoryInfoFormField, FormRow, SwitchFormField } from '@shared/ui';
 
-import styles from './main-widget-detail.module.css';
+import styles from './main-widget.module.css';
 import dataWrapStyles from './data-wrap.module.css';
 
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
@@ -26,6 +26,7 @@ import { CompanyShuttleModal, ChannelChoiceModal, ChannelListChoiceModal } from 
 import { EnFormMode, EnDeviceType } from '@types';
 import { useAllTenantWidget, useMoveTenantWidget } from '@entities/widgets/service/widgets.hook';
 import { TenantDetailWidgetMappingModal } from './tenant-detail-widget-mapping-modal';
+import { WidgetPreviewButton } from '@features/platform';
 
 // const menuLength = 5;
 // const menuOptions = Array(menuLength)
@@ -55,7 +56,7 @@ const TenantDetailWidgetComponent: FC<any> = () => {
   const [formMode, setFormMode] = useState(EnFormMode.NONE);
   const [myOptions, setMyOptions] = useState<any[]>([]);
   const [tableData, setTableDat] = useState<any[]>([...defaultRow]);
-  const [value, setValue] = useState<any>();
+  const [selectedOption, setSelectedOption] = useState<any>();
 
   const tenantId = routerState.location.state?.tenantId;
 
@@ -85,11 +86,33 @@ const TenantDetailWidgetComponent: FC<any> = () => {
       if (myOptions[i].id !== newOptions[i].id) {
         const id = newOptions[i].original.tenantWidgetId;
         const payload = { tenantWidgetId: id, sortOrder: i + 1 };
-
         moveTenantWidget(payload);
         break;
       }
     }
+    setMyOptions(newOptions);
+  };
+  const handleSelectButtonClick = (option: any) => {
+    const widgetType = option.original.widgetType;
+    const tableData = [
+      {
+        c1: 'PC',
+        componentId: widgetType.componentPcId,
+        width: widgetType.pcWidth,
+        height: widgetType.pcHeight,
+      },
+      {
+        c1: 'Mobile',
+        componentId: widgetType.componentMobileId,
+        width: widgetType.mobileWidth,
+        height: widgetType.mobileHeight,
+      },
+    ];
+
+    console.log('click ', option);
+    setSelectedOption(option.original.widgetType);
+    setTableDat(tableData);
+    setFormMode(EnFormMode.VIEW);
   };
 
   useEffect(() => {
@@ -145,18 +168,25 @@ const TenantDetailWidgetComponent: FC<any> = () => {
           <div className={styles.menu_wrap}>
             <List
               options={myOptions}
-              value={value}
               valueField={'id'}
               draggable
               hideBorder
               disabledActive
               itemRenderer={(option: any) => (
                 <div className={styles.menu_box}>
-                  <p className={cn(styles.menu_name, option.isUsed && styles.used)}>
+                  <p className={cn(styles.menu_name, !option.isUsed && styles.used)}>
                     {option?.label}
                   </p>
                   {option?.isUsed && (
-                    <Button type={'button'} variant={'gray2'} label={'선택'} size={'ts'} />
+                    <Button
+                      type="button"
+                      variant="gray2"
+                      label={t('선택')}
+                      size="ts"
+                      onClick={() => {
+                        handleSelectButtonClick(option);
+                      }}
+                    />
                   )}
                 </div>
               )}
@@ -166,11 +196,12 @@ const TenantDetailWidgetComponent: FC<any> = () => {
         </div>
         <div className={cn(styles.start, styles.wrap)}>
           <FormSubTitle
-            label={'위젯 상세'}
+            label={t('위젯 상세')}
             actionNode={
               <>
-                <Button label={'삭제'} variant={'text'} size={'sm'} />
-                <Button label={'저장'} variant={'save'} size={'sm'} />
+                <WidgetPreviewButton widget={selectedOption} />
+                <Button label={'-' + t('삭제')} variant="text" size="sm" />
+                <Button label={t('저장')} variant="save" size="sm" />
               </>
             }
             underLine={true}
@@ -229,7 +260,12 @@ const TenantDetailWidgetComponent: FC<any> = () => {
               />
             </ContentsRow>
             <div className={styles.table_wrap}>
-              <TableBox data={tableData} columns={columns} tableMode={true} title={'컴포넌트 ID'} />
+              <TableBox
+                data={tableData}
+                columns={columns}
+                tableMode={true}
+                title={t('컴포넌트 ID')}
+              />
             </div>
           </div>
         </div>
@@ -318,20 +354,22 @@ const formConfig: DynamicFormConfig = {
 const columnHelper = createColumnHelper<any>();
 
 const columns = [
-  columnHelper.display({
+  columnHelper.accessor('c1', {
     id: 'c1',
     cell: (prop: any) => {
       return <strong>{prop.row.original.c1}</strong>;
     },
     header: '구분',
     enableGrouping: false,
-    size: 100,
+    size: 50,
+    maxSize: 50,
+    minSize: 50,
     meta: {
-      headerAlign: 'center', // 헤더 정렬
-      cellAlign: 'left', // 셀 정렬
+      headerAlign: 'center',
+      cellAlign: 'left',
     },
   }),
-  columnHelper.display({
+  columnHelper.accessor('c2', {
     id: 'c2',
     cell: (props: any) => {
       console.log('props', props);
@@ -346,6 +384,7 @@ const columns = [
     },
     header: '컴포넌트 ID',
     enableGrouping: false,
+    size: 300,
     meta: {
       headerAlign: 'center', // 헤더 정렬
       cellAlign: 'left', // 셀 정렬

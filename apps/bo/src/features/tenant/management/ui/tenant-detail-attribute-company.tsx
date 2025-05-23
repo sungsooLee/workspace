@@ -22,7 +22,14 @@ const TenantDetailAttributeCompanyComponent = (
     attributeData,
     companyId,
     tenantName,
-  }: { tenantId: number; attributeData: any; companyId: string; tenantName: string },
+    onUpdateComplete,
+  }: {
+    tenantId: number;
+    attributeData: any;
+    companyId: string;
+    tenantName: string;
+    onUpdateComplete: () => void;
+  },
   ref: any,
 ) => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -33,6 +40,7 @@ const TenantDetailAttributeCompanyComponent = (
   const { update } = useUpdateTenantAttributeCompany(tenantId, {
     onSuccess: (data: any) => {
       fetchData(data);
+      onUpdateComplete?.();
     },
   });
 
