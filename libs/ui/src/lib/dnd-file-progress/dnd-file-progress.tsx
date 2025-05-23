@@ -230,7 +230,7 @@ const DndFileProgressComponent: FC<DndFileProgressProps> = ({
         {files.length > 0 && (
           <div className={styles.upload_status}>
             {files.map((file) => (
-              <div className={styles.file_item}>
+              <div className={styles.file_item} key={file.id}>
                 <div className={styles.file_name}>
                   <IcoFileExcel width={'24'} height={'25'} className={styles.icon_type} />
                   <em className={styles.name}>{file.fileName}</em>
