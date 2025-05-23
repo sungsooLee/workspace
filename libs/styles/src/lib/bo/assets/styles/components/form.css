@@ -1,9 +1,9 @@
 /* form.css */
 .nlp--contents-row {
   &.inactive {
-    @apply mb-[16px];
+    @apply mb-[12px];
     & + .nlp--contents-row {
-      @apply border-t-[1px] border-[var(--gray2)] pt-[16px];
+      @apply pt-[12px];
     }
   }
 }

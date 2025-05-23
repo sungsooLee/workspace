@@ -55,7 +55,6 @@ function RouteComponent() {
               onOpenChange={setIsOpen}
             >
               {isOpen ? '팝오버 닫기' : '팝오버 열기'}
-              {isOpen ? '팝오버 닫기' : '팝오버 열기'}
             </Popover>
           </div>
         </div>

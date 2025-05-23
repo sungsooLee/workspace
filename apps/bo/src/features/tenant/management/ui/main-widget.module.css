@@ -6,3 +6,7 @@
     }
   }
 }
+
+.menu_box {
+  @apply flex w-full items-center justify-between;
+}
