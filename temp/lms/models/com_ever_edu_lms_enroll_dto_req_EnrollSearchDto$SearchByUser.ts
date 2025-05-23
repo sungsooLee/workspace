@@ -5,7 +5,7 @@
 export type com_ever_edu_lms_enroll_dto_req_EnrollSearchDto$SearchByUser = {
     startConditionDate?: string;
     endConditionDate?: string;
-    enrollStatusTypes?: string;
-    courseTypes?: string;
+    enrollStatusTypes?: Array<'ENROLL_DONE' | 'ENROLL_REQUEST' | 'CANCEL_DONE'>;
+    courseTypes?: Array<'ELEARNING' | 'ELEARNING_SANGSI' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY'>;
 };
 

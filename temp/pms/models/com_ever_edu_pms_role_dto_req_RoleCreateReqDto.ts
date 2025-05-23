@@ -12,6 +12,10 @@ export type com_ever_edu_pms_role_dto_req_RoleCreateReqDto = {
      */
     parentRoleId?: number;
     /**
+     * 역할 트리 순서
+     */
+    sortOrder: number;
+    /**
      * 이름
      */
     name: string;

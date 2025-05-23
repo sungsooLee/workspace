@@ -27,6 +27,7 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew = {
 export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew {
     export enum courseType {
         ELEARNING = 'ELEARNING',
+        ELEARNING_SANGSI = 'ELEARNING_SANGSI',
         CLASS = 'CLASS',
         LIVE = 'LIVE',
         EXAM = 'EXAM',

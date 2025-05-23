@@ -69,7 +69,7 @@ export class FoFileService {
     }
     /**
      * 다건의 파일 정보 생성
-     * 기존 파일그룹에 다건의 파일 정보를 생성한다.
+     * 기존 파일그룹에 다건의 파일 정보를 생성한다.<br>S3 멀티파트 업로드 대상인 경우 내부적으로 S3PartUploadService.initiateUpload 서비스를 호출한 후 파일 응답데이터에 uploadId를 넣는다.
      * @param groupUuid 파일그룹 UUID
      * @param requestBody
      * @returns com_ever_edu_pms_file_dto_res_GroupInfoResDto OK
@@ -98,7 +98,7 @@ export class FoFileService {
     }
     /**
      * 신규그룹 및 다건의 파일 정보 생성
-     * 파일그룹 및 다건의 파일 정보를 생성한다.
+     * 파일그룹 및 다건의 파일 정보를 생성한다.<br>S3 멀티파트 업로드 대상인 경우 내부적으로 S3PartUploadService.initiateUpload 서비스를 호출한 후 파일 응답데이터에 uploadId를 넣는다.
      * @param requestBody
      * @returns com_ever_edu_pms_file_dto_res_GroupInfoResDto OK
      * @throws ApiError
