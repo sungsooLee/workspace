@@ -77,7 +77,7 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
       <div
         className={cn(
           styles.start,
-          showAddButton && styles.type_show_btn,
+          chipListProps?.wordwrap && styles.type_wordwrap,
           'nlp--chip-list-modal-selector-form-field',
         )}
       >

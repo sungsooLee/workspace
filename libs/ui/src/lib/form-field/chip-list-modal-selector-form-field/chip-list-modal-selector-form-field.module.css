@@ -20,7 +20,7 @@
       }
     }
   }
-  &.type_show_btn {
+  &.type_wordwrap {
     .chips_modal_wrap {
       @apply scrollbar mt-[8px] h-[120px] items-start overflow-y-auto p-[12px];
     }
