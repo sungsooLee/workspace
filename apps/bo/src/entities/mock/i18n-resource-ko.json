@@ -517,7 +517,11 @@
   "pms.channel.ChannelApprovalStatus": {
     "PENDING": "대기",
     "ACCEPTED": "접수",
-    "APPROVED": "반려",
-    "REJECTED": "승인"
+    "APPROVED": "승인",
+    "REJECTED": "반려"
+  },
+  "pms.channel.ChannelSecretType": {
+    "SECRET": "비밀",
+    "PUBLIC": "공개"
   }
 }
