@@ -30,7 +30,7 @@ function RouteComponent() {
   ];
 
   const [page, setPage] = useState(1);
-  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  const handlePageChange = (value: number) => {
     setPage(value);
   };
 
@@ -147,8 +147,8 @@ function RouteComponent() {
 
       <Pagination
         className={cn(styles.pagenation, styles.paginationItem)}
-        count={3}
-        page={page}
+        totalPages={3}
+        pageNumber={page}
         onChange={handlePageChange}
       />
     </div>
