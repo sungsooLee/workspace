@@ -11,7 +11,10 @@ import { FormRow, ContentsHistoryInfoFormField } from '@shared/ui';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 
 /** Hook 정의 */
-import { useTenantAttributeCompany } from '@entities/tenant/service/tenant-attribute.hook';
+import {
+  useTenantAttributeCompany,
+  useUpdateTenantAttributeCompany,
+} from '@entities/tenant/service/tenant-attribute.hook';
 
 const TenantDetailAttributeCompanyComponent = (
   {
@@ -19,7 +22,7 @@ const TenantDetailAttributeCompanyComponent = (
     attributeData,
     companyId,
     tenantName,
-  }: { tenantId: string; attributeData: any; companyId: string; tenantName: string },
+  }: { tenantId: number; attributeData: any; companyId: string; tenantName: string },
   ref: any,
 ) => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -27,6 +30,11 @@ const TenantDetailAttributeCompanyComponent = (
   const { open: openModal, confirm: openConfirm } = useModal();
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, control } =
     useDynamicForm(formConfig);
+  const { update } = useUpdateTenantAttributeCompany(tenantId, {
+    onSuccess: (data: any) => {
+      fetchData(data);
+    },
+  });
 
   useImperativeHandle(ref, () => ({
     saveData() {
@@ -44,14 +52,14 @@ const TenantDetailAttributeCompanyComponent = (
   const handleOnSubmit = async (payload: any) => {
     console.log('payload {} => ', payload);
     if (await openConfirm('저장 하시겠습니까?')) {
-      console.log('aaaa');
+      update(payload);
     }
   };
 
   useEffect(() => {
     console.log(tenantName, attributeData);
     fetchData({ ...attributeData, tenantName: tenantName });
-  }, []);
+  }, [attributeData]);
 
   return (
     <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
@@ -65,24 +73,28 @@ const TenantDetailAttributeCompanyComponent = (
         <strong className="title">{t('과정 등록 연관 설정')}</strong>
       </div>
       <ContentsRow type="horizontal">
-        <FormRow provider={provider} name={'isCourseCommentEnabled'} />
-        <FormRow provider={provider} name={'isCourseExternalSharingEnabled'} />
+        <FormRow provider={provider} name={'isUseApprovalLine'} />
+        <FormRow provider={provider} name={'isLimitLearningTime'} />
       </ContentsRow>
       <ContentsRow type="horizontal">
-        <FormRow provider={provider} name={'isCourseEnrollmentEnabled'} />
-        <FormRow provider={provider} name={'isCourseEnrollmentApprovalEnabled'} />
+        <FormRow provider={provider} name={'isLimitDailyProgress'} />
+        <FormRow provider={provider} name={'isResetProgress'} />
       </ContentsRow>
       <ContentsRow type="horizontal">
-        <FormRow provider={provider} name={'isLearningRegionRestricted'} />
-        <FormRow provider={provider} name={'isLearningTimeRestricted'} />
+        <FormRow provider={provider} name={'isUseTextbook'} />
+        <FormRow provider={provider} name={'isUseTextbookShippingAddress'} />
       </ContentsRow>
       <ContentsRow type="horizontal">
-        <FormRow provider={provider} name={'isLearningDeviceRestricted'} />
-        <FormRow provider={provider} name={'isContentSecurityEnabled'} />
+        <FormRow provider={provider} name={'isUseTrainingCostPerPerson'} />
+        <FormRow provider={provider} name={'isUseEmploymentInsuranceRefund'} />
       </ContentsRow>
       <ContentsRow type="horizontal">
-        <FormRow provider={provider} name={'isCourseBudgetUsed'} />
-        <FormRow provider={provider} name={'isEmploymentInsuranceRefundEnabled'} />
+        <FormRow provider={provider} name={'isProvideCertificate'} />
+        <FormRow provider={provider} name={'isUseLearningPoint'} />
+      </ContentsRow>
+      <ContentsRow type="horizontal">
+        <FormRow provider={provider} name={'isUsePreLevelTest'} />
+        <FormRow provider={provider} name={'isUseCourseFlag'} />
       </ContentsRow>
       <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
         <ContentsHistoryInfoFormField />
@@ -103,135 +115,133 @@ const formConfig: DynamicFormConfig = {
       value: '',
     },
     {
-      name: 'isCourseCommentEnabled',
+      name: 'isUseApprovalLine',
       type: 'switch',
-      label: t('과정 댓글 작성'),
+      label: t('수강 신청 결재라인 사용'),
       value: false,
-      guideText: '과정 ',
+      guideText: '수강 신청할 때 승인하는 결제 라인을 설정합니다.',
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
-        guideText: (value: boolean) =>
-          value
-            ? t('과정 등록 시 댓글 작성 여부를 설정할 수 있습니다.')
-            : t('과정 등록 시 댓글 작성 여부를 설정할 수 없습니다.'),
       },
     },
     {
-      name: 'isCourseExternalSharingEnabled',
+      name: 'isLimitLearningTime',
       type: 'switch',
-      label: t('과정 외부 공유'),
+      label: t('학습시간 제한'),
       value: false,
+      guideText: t('정해진 시간에만 학습을 할 수 있도록 설정합니다.'),
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
-        guideText: (value: boolean) =>
-          value
-            ? t('과정 등록 시 해당 과정의 사용자간 공유 여부를 설정할 수 있습니다.')
-            : t('과정 등록 시 해당 과정의 사용자간 공유 여부를 설정할 수 없습니다.'),
       },
     },
     {
-      name: 'isCourseEnrollmentEnabled',
+      name: 'isLimitDailyProgress',
       type: 'switch',
-      label: t('수강신청 설정 여부'),
+      label: t('1일 진도 제한'),
       value: false,
+      guideText: t('하루에 학습할 수 있는 진도 제한을 설정합니다.'),
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
-        guideText: (value: boolean) =>
-          value
-            ? t('과정 등록 시 수강 신청 기능 사용 여부를 설정할 수 있습니다.')
-            : t('과정 등록 시 수강 신청 기능 사용 여부를 설정할 수 없습니다.'),
       },
     },
     {
-      name: 'isCourseEnrollmentApprovalEnabled',
+      name: 'isResetProgress',
       type: 'switch',
-      label: t('수강신청 승인자'),
+      label: t('진도 초기화'),
       value: false,
+      guideText: t('수강했던 학습 자원의 재학습 여부를 설정합니다. '),
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
-        guideText: (value: boolean) =>
-          value
-            ? t('과정 등록 시 수강신청 승인 결재 기능 사용 여부를 설정할 수 있습니다.')
-            : t('과정 등록 시 수강신청 승인 결재 기능 사용 여부를 설정할 수 없습니다.'),
       },
     },
     {
-      name: 'isLearningRegionRestricted',
+      name: 'isUseTextbook',
       type: 'switch',
-      label: t('학습 지역 제한'),
+      label: t('교재 사용'),
       value: false,
+      guideText: t('과정 등록 시 교재와 교재 정보 사용 여부를 설정합니다.'),
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
-        guideText: (value: boolean) =>
-          value
-            ? t('과정 등록 시 학습 지역 제한 기능 사용 여부를 설정할 수 있습니다.')
-            : t('과정 등록 시 학습 지역 제한 기능 사용 여부를 설정할 수 없습니다.'),
       },
     },
     {
-      name: 'isLearningTimeRestricted',
+      name: 'isUseTextbookShippingAddress',
       type: 'switch',
-      label: t('학습 시간 제한'),
+      label: t('교재 배송지 사용'),
       value: false,
+      guideText: t('교재를 사용하는 경우 교재 배송지 필요 여부를 설정합니다.'),
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
-        guideText: (value: boolean) =>
-          value
-            ? t('과정 등록 시 학습시간 제한 기능 사용 여부를 설정할 수 있습니다.')
-            : t('과정 등록 시 학습시간 제한 기능 사용 여부를 설정할 수 없습니다.'),
       },
     },
     {
-      name: 'isLearningDeviceRestricted',
+      name: 'isUseTrainingCostPerPerson',
       type: 'switch',
-      label: t('학습 기기 제한'),
+      label: t('1인당 교육비 사용'),
       value: false,
+      guideText: t('교육비 사용 여부를 설정합니다.'),
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
-        guideText: (value: boolean) =>
-          value
-            ? t('과정 등록 시 학습 기기 제한 기능 사용 여부를 설정할 수 있습니다.')
-            : t('과정 등록 시 학습 기기 제한 기능 사용 여부를 설정할 수 없습니다.'),
       },
     },
     {
-      name: 'isContentSecurityEnabled',
+      name: 'isUseEmploymentInsuranceRefund',
       type: 'switch',
-      label: t('콘텐츠 보안 적용'),
+      label: t('고용보험 환급 사용'),
       value: false,
+      guideText: t('과정 등록 시 고융보험 환급 사용 여부를 설정합니다.'),
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
-        guideText: (value: boolean) =>
-          value
-            ? t('과정 등록 시 콘텐츠 보안 적용 여부를 설정할 수 있습니다.')
-            : t('과정 등록 시 콘텐츠 보안 적용 여부를 설정할 수 없습니다.'),
       },
     },
     {
-      name: 'isCourseBudgetUsed',
+      name: 'isProvideCertificate',
       type: 'switch',
-      label: t('과정 예산 사용'),
+      label: t('수료증 제공 여부'),
       value: false,
+      guideText: t('과정 이수 시 수료증 제공 여부를 설정합니다. '),
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
-        guideText: (value: boolean) =>
-          value
-            ? t('과정 등록 시 에산 사용 여부를 설정할 수 있습니다.')
-            : t('과정 등록 시 에산 사용 여부를 설정할 수 없습니다.'),
       },
     },
     {
-      name: 'isEmploymentInsuranceRefundEnabled',
+      name: 'isUseLearningPoint',
       type: 'switch',
-      label: t('과정 고용보험 환급'),
+      label: t('학습 포인트(마일리지) 사용'),
       value: false,
+      guideText: t('학습 포인트 사용 여부를 설정합니다. '),
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
-        guideText: (value: boolean) =>
-          value
-            ? t('과정 등록 시 고융보험 환급 사용 여부를 설정할 수 있습니다.')
-            : t('과정 등록 시 고융보험 환급 사용 여부를 설정할 수 없습니다.'),
       },
+    },
+    {
+      name: 'isUsePreLevelTest',
+      type: 'switch',
+      label: t('사전 레벨 테스트 사용 '),
+      value: false,
+      guideText: t('학습자가 해당 과청 수강 신청 시 사전 레벨 테스트 필요 여부를 설정합니다.'),
+      switchConfig: {
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
+    {
+      name: 'isUseCourseFlag',
+      type: 'switch',
+      label: t('과정 플래그 사용'),
+      value: false,
+      guideText: t(
+        ' 수강신청 마스터, 과정 추출, 교육 통계에 사용하는 과정 분류 값 사용 여부를 설정합니다. ',
+      ),
+      switchConfig: {
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
+    {
+      name: 'companyId',
+      type: 'text',
+      format: 'number',
+      label: '',
+      value: 1,
     },
   ],
   validator: {
