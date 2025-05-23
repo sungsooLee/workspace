@@ -4,13 +4,27 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './date-picker.css'; // date-picker style
 import { IcoCalendar01 } from '@learnway/icons';
 
-import { cn, DATE_TIME_FORMAT, getDateTimeFormat } from '@learnway/shared';
+import { cn, DATE_TIME_FORMAT, getDateTimeFormat, getDefaultLang } from '@learnway/shared';
 import { BaseFieldProps } from '../type';
 import { useCreation } from 'ahooks';
 
 import { convertDateFormatToFns } from './date-picker.service';
 import { PopoverTimeInput } from './custom-time-picker';
 import { ReactNode } from '@tanstack/react-router';
+import { CustomDatePickerHeader } from './custom-date-picker-header';
+import { ko, enUS } from 'date-fns/locale';
+import dayjs from 'dayjs';
+import { useTranslation } from 'react-i18next';
+
+export const convertDateFormatToFnsWithSlash = (format: string): string => {
+  return format.replace(/-/g, '/');
+};
+const dayjsToDateFnsLocaleMap: Record<string, any> = {
+  // 한국어
+  ko: ko,
+  // 영어
+  en: enUS,
+};
 
 export type DatePickerType =
   | 'day'
@@ -51,6 +65,7 @@ export interface DatePickerComponentProps
   placeholderStart?: string;
   placeholderEnd?: string;
   renderDayContents?: ReactNode;
+  locale?: string;
 }
 
 // DatePicker 컴포넌트 정의
@@ -60,7 +75,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
     dateTimeFormat = DATE_TIME_FORMAT.DATE,
     value,
     onChange,
-    placeholder = 'Pick a date',
+    placeholder,
     placeholderStart = 'Start Date',
     placeholderEnd = 'End Date',
     minDate,
@@ -70,17 +85,104 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
     numberOfMonths = 1,
     showTimePicker = false,
     timeFormat = '24',
-    minuteStep = 15,
-    secondStep = 15,
+    minuteStep = 1,
+    secondStep = 1,
     className,
     readOnly,
     disabled,
     size,
     onChangeStart,
     onChangeEnd,
+    locale,
   },
   ref,
 ) => {
+  const datePickerRef = useRef<any>(null);
+
+  // const { i18n } = useTranslation();
+  const currentLocale = ko;
+  // const currentLang = locale || i18n.language;
+  // const currentLocale = useCreation(() => {
+  //   const targetLocale = locale || currentLang;
+  //   return (
+  //     dayjsToDateFnsLocaleMap[targetLocale] ||
+  //     dayjsToDateFnsLocaleMap[targetLocale.split('-')[0]] ||
+  //     enUS
+  //   );
+  // }, [locale, currentLang]);
+
+  // const dynamicPlaceholder = useCreation(() => {
+  //   const today = dayjs();
+  //   const targetLocale = locale || currentLang;
+
+  //   if (placeholder) return placeholder; // 사용자가 명시적으로 placeholder를 지정한 경우
+
+  //   try {
+  //     switch (displayType) {
+  //       case 'year':
+  //         return today.format(getDateTimeFormat(DATE_TIME_FORMAT.YEAR));
+
+  //       case 'month':
+  //         return today.format(getDateTimeFormat(DATE_TIME_FORMAT.MONTH));
+
+  //       case 'day':
+  //         return today.format(getDateTimeFormat(DATE_TIME_FORMAT.DATE));
+
+  //       case 'time':
+  //       case 'time-hm':
+  //         return today.format(getDateTimeFormat(DATE_TIME_FORMAT.HOUR_MIN));
+
+  //       case 'day-time':
+  //       case 'day-time-hm':
+  //         return today.format(getDateTimeFormat(DATE_TIME_FORMAT.DATETIME_MIN));
+
+  //       case 'day-time-hms':
+  //         return today.format(getDateTimeFormat(DATE_TIME_FORMAT.DATETIME_SEC));
+
+  //       default:
+  //         return today.format(getDateTimeFormat(DATE_TIME_FORMAT.DATE));
+  //     }
+  //   } catch (error) {
+  //     // fallback placeholder
+  //     return displayType === 'year'
+  //       ? '2024'
+  //       : displayType === 'month'
+  //         ? '2024-01'
+  //         : displayType === 'time' || displayType === 'time-hm'
+  //           ? '00:00'
+  //           : '2024-01-01';
+  //   }
+  // }, [displayType, currentLocale, locale, currentLang, placeholder]);
+
+  // from-to용 동적 placeholder들
+  // const dynamicPlaceholderStart = useCreation(() => {
+  //   if (placeholderStart) return placeholderStart;
+
+  //   const today = dayjs();
+
+  //   try {
+  //     return today.format(getDateTimeFormat(DATE_TIME_FORMAT.DATE));
+  //   } catch (error) {
+  //     const targetLocale = locale || currentLang;
+  //     const isKorean = targetLocale === 'ko' || targetLocale.startsWith('ko-');
+  //     return isKorean ? '시작 날짜' : 'Start Date';
+  //   }
+  // }, [currentLocale, locale, currentLang, placeholderStart]);
+
+  // const dynamicPlaceholderEnd = useCreation(() => {
+  //   if (placeholderEnd) return placeholderEnd;
+
+  //   const tomorrow = dayjs().add(1, 'day');
+
+  //   try {
+  //     return tomorrow.format(getDateTimeFormat(DATE_TIME_FORMAT.DATE));
+  //   } catch (error) {
+  //     const targetLocale = locale || currentLang;
+  //     const isKorean = targetLocale === 'ko' || targetLocale.startsWith('ko-');
+  //     return isKorean ? '종료 날짜' : 'End Date';
+  //   }
+  // }, [currentLocale, locale, currentLang, placeholderEnd]);
+
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
     Array.isArray(value) ? undefined : (value as Date | undefined),
   );
@@ -110,14 +212,47 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
     } else if (type === 'day-time-hms') {
       format = DATE_TIME_FORMAT.DATETIME_SEC;
     }
-    return convertDateFormatToFns(getDateTimeFormat(format));
+    const dayjsFormat = getDateTimeFormat(format);
+    const fnsFormat = convertDateFormatToFns(dayjsFormat);
+
+    // 영어 locale에서 슬래시를 사용하는 경우, react-datepicker가 제대로 파싱하도록 수정
+    return fnsFormat;
   }, [dateTimeFormat, displayType]);
 
-  const handleChange = (date: Date | null) => {
-    setSelectedDate(date || undefined);
+  const parseDateFormat = useCreation(() => {
+    if (dateFormat.includes('/')) {
+      return dateFormat.replace(/\//g, '-');
+    }
+    return dateFormat;
+  }, [dateFormat]);
+
+  // const handleChange = (date: Date | null) => {
+  //   setSelectedDate(date || undefined);
+
+  //   if (onChange) {
+  //     onChange(date || undefined);
+  //   }
+  // };
+  const handleChange = (date: Date | string | null) => {
+    let parsedDate: Date | undefined;
+
+    if (typeof date === 'string') {
+      const normalizedDate = date.replace(/-/g, '/');
+      parsedDate = new Date(normalizedDate);
+      if (isNaN(parsedDate.getTime())) {
+        parsedDate = undefined;
+      }
+    } else {
+      parsedDate = date || undefined;
+    }
+    const tmp = date?.toString();
+
+    console.log(tmp);
+
+    setSelectedDate(parsedDate);
 
     if (onChange) {
-      onChange(date || undefined);
+      onChange(parsedDate);
     }
   };
 
@@ -134,6 +269,10 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
     }
     if (onChangeEnd) {
       onChangeEnd(end || undefined);
+    }
+
+    if (start && end && datePickerRef.current) {
+      datePickerRef.current.setOpen(false);
     }
   };
 
@@ -152,7 +291,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
     return (
       <div className={cn('nlp--datepicker-wrap', 'nlp--datepicker-time-hm', size)} ref={ref}>
         <PopoverTimeInput
-          value={selectedDate || new Date()}
+          value={selectedDate}
           onChange={handleChange}
           minuteStep={minuteStep}
           secondStep={secondStep}
@@ -168,6 +307,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
     return (
       <div className={cn('nlp--datepicker-time', 'nlp--datepicker-from-to', size)} ref={ref}>
         <Primitive
+          ref={datePickerRef}
           showIcon
           selectsRange
           startDate={dateRange[0]}
@@ -178,7 +318,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
           disabled={disabled}
           minDate={minDate}
           maxDate={maxDate}
-          placeholderText={`${placeholderStart} ~ ${placeholderEnd}`}
+          // placeholderText={`${placeholderStart} ~ ${placeholderEnd}`}
           icon={<IcoCalendar01 width={16} height={16} stroke="#4C515E" fill="none" />}
           isClearable={true}
           monthsShown={numberOfMonths}
@@ -189,6 +329,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
           renderDayContents={(day) => {
             return <span className="date_text">{day}</span>;
           }}
+          locale={currentLocale}
         />
       </div>
     );
@@ -196,6 +337,10 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
 
   // 3. Year picker
   if (displayType === 'year') {
+    const currentYear = new Date().getFullYear();
+
+    const baseYear = selectedDate ? selectedDate.getFullYear() : currentYear;
+
     return (
       <div className={cn('nlp--datepicker', 'nlp--datepicker-year', size)} ref={ref}>
         <Primitive
@@ -204,20 +349,29 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
           shouldCloseOnSelect
           readOnly={readOnly}
           disabled={disabled}
-          minDate={minDate}
-          maxDate={maxDate}
-          selected={selectedDate}
-          placeholderText={placeholder}
+          // minDate={new Date(startYear, 0, 1)}
+          // maxDate={new Date(startYear + 15, 11, 31)}
+          // selected={selectedDate}
+          // placeholderText={placeholder}
           icon={<IcoCalendar01 width={16} height={16} stroke="#4C515E" fill="none" />}
           isClearable={true}
           showYearPicker
-          yearItemNumber={9}
+          scrollableYearDropdown
+          yearItemNumber={12}
           monthsShown={numberOfMonths}
           wrapperClassName={'datepicker_wrap'}
           className={cn('datepicker_input', className)}
           onChange={handleChange}
           excludeDates={disabledDates}
+          locale={currentLocale}
+          renderYearContent={(year: number) => {
+            const isCurrentYear = year === currentYear;
+            return <span className={isCurrentYear ? 'current-year' : ''}>{year}</span>;
+          }}
+          selected={selectedDate}
+          placeholderText={new Date(currentYear, 0, 1).getFullYear().toString()}
         />
+        {/* <CustomYearPicker selectedDate={selectedDate} onChange={handleChange} /> */}
       </div>
     );
   }
@@ -235,7 +389,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
           minDate={minDate}
           maxDate={maxDate}
           selected={selectedDate}
-          placeholderText={placeholder}
+          // placeholderText={placeholder}
           icon={<IcoCalendar01 width={16} height={16} stroke="#4C515E" fill="none" />}
           isClearable={true}
           showMonthYearPicker
@@ -244,6 +398,10 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
           className={cn('datepicker_input', className)}
           onChange={handleChange}
           excludeDates={disabledDates}
+          locale={currentLocale}
+          renderCustomHeader={(headerProps: any) => (
+            <CustomDatePickerHeader {...headerProps} locale={currentLocale} type={'year'} />
+          )}
         />
       </div>
     );
@@ -270,13 +428,17 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
             minDate={minDate}
             maxDate={maxDate}
             selected={selectedDate}
-            placeholderText="YYYY-MM-DD"
+            // placeholderText="YYYY-MM-DD"
             icon={<IcoCalendar01 width={16} height={16} stroke="#4C515E" fill="none" />}
             isClearable={true}
             monthsShown={numberOfMonths}
             wrapperClassName={'datepicker_wrap'}
             onChange={handleChange}
             excludeDates={disabledDates}
+            renderCustomHeader={(headerProps: any) => (
+              <CustomDatePickerHeader {...headerProps} locale={currentLocale} />
+            )}
+            locale={currentLocale}
           />
         </div>
 
@@ -288,7 +450,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
             minuteStep={minuteStep}
             secondStep={secondStep}
             showSeconds={showSeconds}
-            placeholder={showSeconds ? 'HH:MM:SS' : 'HH:MM'}
+            // placeholder={showSeconds ? 'HH:MM:SS' : 'HH:MM'}
           />
         </div>
       </div>
@@ -301,13 +463,14 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
       <Primitive
         showIcon
         dateFormat={dateFormat}
+        dateFormatCalendar={parseDateFormat}
         shouldCloseOnSelect
         readOnly={readOnly}
         disabled={disabled}
-        minDate={minDate}
-        maxDate={maxDate}
+        // minDate={minDate}
+        // maxDate={maxDate}
         selected={selectedDate}
-        placeholderText={placeholder}
+        // placeholderText={placeholder}
         icon={<IcoCalendar01 width={16} height={16} stroke="#4C515E" fill="none" />}
         isClearable={true}
         monthsShown={numberOfMonths}
@@ -315,6 +478,11 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
         className={cn('datepicker_input', className)}
         onChange={handleChange}
         excludeDates={disabledDates}
+        renderCustomHeader={(headerProps: any) => (
+          <CustomDatePickerHeader {...headerProps} locale={currentLocale} />
+        )}
+        locale={enUS}
+        // placeholderText={dynamicPlaceholder}
       />
     </div>
   );

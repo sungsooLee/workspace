@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { Button } from '../button/button';
 
 export const PopoverTimeInput = ({
   value,
@@ -11,17 +10,14 @@ export const PopoverTimeInput = ({
 }: any) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // 실제 확정된 시간 (부모 컴포넌트에 전달된 값)
   const [confirmedTime, setConfirmedTime] = useState<Date>(
     value instanceof Date && !isNaN(value.getTime()) ? new Date(value) : new Date(),
   );
 
-  // 현재 선택 중인 시간 (아직 확정되지 않은 값)
   const [tempSelectedTime, setTempSelectedTime] = useState<Date>(
     value instanceof Date && !isNaN(value.getTime()) ? new Date(value) : new Date(),
   );
 
-  // 텍스트 입력 상태를 별도로 관리
   const [inputText, setInputText] = useState<string>('');
   const [isInputValid, setIsInputValid] = useState<boolean>(true);
   const popoverRef = useRef<HTMLDivElement>(null);
@@ -29,12 +25,9 @@ export const PopoverTimeInput = ({
 
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  // 사용자가 직접 입력 중인지 여부
   const isUserInputtingRef = useRef<boolean>(false);
-  // 멈춤 현상 방지를 위한 ref
   const isProcessingRef = useRef<boolean>(false);
 
-  // 필요한 경우 0 패딩을 적용한 포맷팅 (내부 사용)
   const formatTimeWithPadding = (date: Date): string => {
     if (!date) return '';
     const hours = date.getHours().toString().padStart(2, '0');
@@ -275,45 +268,37 @@ export const PopoverTimeInput = ({
 
   // 외부 클릭 감지를 위한 이벤트 리스너 - 성능 최적화
   useEffect(() => {
-    // 디바운스 함수 구현
-    let timeoutId: NodeJS.Timeout | null = null;
-
     const handleClickOutside = (event: MouseEvent) => {
-      // 이전 타임아웃 취소
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
+      // 클릭한 요소가 컨테이너 외부인지 확인
+      if (
+        isOpen &&
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node) &&
+        popoverRef.current &&
+        !popoverRef.current.contains(event.target as Node)
+      ) {
+        // 팝오버 닫기
+        setIsOpen(false);
 
-      // 디바운스 처리로 중복 실행 방지
-      timeoutId = setTimeout(() => {
-        if (
-          isOpen &&
-          containerRef.current &&
-          !containerRef.current.contains(event.target as Node)
-        ) {
-          // 입력이 유효하다면 해당 값으로 확정
-          if (validateTimeInput(inputText)) {
-            const newDate = parseTimeInput(inputText);
-            if (newDate) {
-              handleConfirm(newDate);
-            }
-          } else {
-            // 유효하지 않다면 마지막으로 확정된 시간으로 복원
-            setInputText(formatTimeWithPadding(confirmedTime));
-            setTempSelectedTime(new Date(confirmedTime));
-            setIsOpen(false);
-          }
+        // 입력값이 유효하지 않으면 이전 값으로 복원
+        if (!validateTimeInput(inputText)) {
+          setInputText(formatTimeWithPadding(confirmedTime));
+          setTempSelectedTime(new Date(confirmedTime));
         }
-      }, 50); // 50ms 디바운스
+      }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    // 이벤트 등록
+    if (isOpen) {
+      // setTimeout을 사용하여 현재 클릭 이벤트가 완료된 후 리스너 등록
+      setTimeout(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+      }, 0);
+    }
+
+    // 클린업
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
-      // 정리 시 타임아웃 취소
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
     };
   }, [isOpen, inputText, confirmedTime]);
 
@@ -354,7 +339,7 @@ export const PopoverTimeInput = ({
   }, [value, isOpen]);
 
   return (
-    <div className="time_wrap">
+    <div className="time_wrap" ref={containerRef}>
       <input
         ref={inputRef}
         type="text"
@@ -388,92 +373,95 @@ export const PopoverTimeInput = ({
 const StandaloneTimeInput = ({
   date,
   onChange, // 선택 버튼 클릭 시 호출 (최종 확정)
-  onTempChange, // 시간 변경 시 실시간 호출 (임시 업데이트)
-  onCancel, // 취소 버튼 클릭 시 호출
   minuteStep = 1,
   secondStep = 1,
   showSeconds = true,
 }: any) => {
-  const now = new Date();
-  const currentDate = date instanceof Date && !isNaN(date.getTime()) ? date : now;
+  const currentDate = date instanceof Date && !isNaN(date.getTime()) ? date : new Date();
 
-  // 내부 상태로 시간 값 관리
-  const [hours, setHours] = useState(currentDate.getHours());
-  const [minutes, setMinutes] = useState(currentDate.getMinutes());
-  const [seconds, setSeconds] = useState(currentDate.getSeconds());
+  const [selectionStep, setSelectionStep] = useState<'hour' | 'minute' | 'second'>('hour');
+  const [selectedHour, setSelectedHour] = useState(currentDate.getHours());
+  const [selectedMinute, setSelectedMinute] = useState(currentDate.getMinutes());
+  const [selectedSecond, setSelectedSecond] = useState(currentDate.getSeconds());
 
-  // Format number to have leading zeros
+  const hourScrollRef = useRef<HTMLDivElement>(null);
+  const minuteScrollRef = useRef<HTMLDivElement>(null);
+  const secondScrollRef = useRef<HTMLDivElement>(null);
+
   const formatNumber = (num: number) => String(num).padStart(2, '0');
 
-  // Generate options for hours, minutes, seconds
   const hourOptions = Array.from({ length: 24 }, (_, i) => i);
   const minuteOptions = Array.from({ length: 60 / minuteStep }, (_, i) => i * minuteStep);
   const secondOptions = Array.from({ length: 60 / secondStep }, (_, i) => i * secondStep);
 
-  // currentDate가 바뀔 때 내부 상태 업데이트
-  useEffect(() => {
-    if (date instanceof Date && !isNaN(date.getTime())) {
-      setHours(date.getHours());
-      setMinutes(date.getMinutes());
-      setSeconds(date.getSeconds());
-    }
-  }, [date]);
-
-  // 시간이 변경될 때마다 임시 변경 함수 호출
-  useEffect(() => {
-    updateTempTime();
-  }, [hours, minutes, seconds]);
-
-  const updateTempTime = () => {
-    if (!onTempChange) return;
-
-    const newDate = new Date(currentDate);
-    newDate.setHours(hours);
-    newDate.setMinutes(minutes);
-    if (showSeconds) {
-      newDate.setSeconds(seconds);
-    } else {
-      newDate.setSeconds(0);
-    }
-
-    onTempChange(newDate);
-  };
-
+  // 시간 선택 시
   const handleHourClick = (h: number) => {
-    setHours(h);
+    setSelectedHour(h);
+    setSelectionStep('minute');
+
+    // 분 영역으로 자동 스크롤
+    setTimeout(() => {
+      if (minuteScrollRef.current) {
+        const selectedElement = minuteScrollRef.current.querySelector(
+          `[data-minute="${selectedMinute}"]`,
+        );
+        if (selectedElement) {
+          selectedElement.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        }
+      }
+    }, 100);
   };
 
+  // 분 선택 시
   const handleMinuteClick = (m: number) => {
-    setMinutes(m);
-  };
+    setSelectedMinute(m);
 
-  const handleSecondClick = (s: number) => {
-    setSeconds(s);
-  };
-
-  // 선택 버튼 클릭 시 부모에게 변경 사항 전달
-  const handleConfirm = () => {
-    const newDate = new Date(currentDate);
-    newDate.setHours(hours);
-    newDate.setMinutes(minutes);
     if (showSeconds) {
-      newDate.setSeconds(seconds);
+      setSelectionStep('second');
+
+      // 초 영역으로 자동 스크롤
+      setTimeout(() => {
+        if (secondScrollRef.current) {
+          const selectedElement = secondScrollRef.current.querySelector(
+            `[data-second="${selectedSecond}"]`,
+          );
+          if (selectedElement) {
+            selectedElement.scrollIntoView({ block: 'center', behavior: 'smooth' });
+          }
+        }
+      }, 100);
     } else {
-      newDate.setSeconds(0);
+      // 초가 없으면 바로 완료
+      completeSelection(selectedHour, m, 0);
     }
+  };
+
+  // 초 선택 시
+  const handleSecondClick = (s: number) => {
+    setSelectedSecond(s);
+    completeSelection(selectedHour, selectedMinute, s);
+  };
+
+  // 선택 완료
+  const completeSelection = (h: number, m: number, s: number) => {
+    const newDate = new Date(currentDate);
+    newDate.setHours(h);
+    newDate.setMinutes(m);
+    newDate.setSeconds(s);
 
     if (onChange) {
       onChange(newDate);
     }
   };
 
-  // 취소 버튼 클릭 시 호출
-  const handleCancel = () => {
-    if (onCancel) {
-      onCancel();
+  useEffect(() => {
+    if (hourScrollRef.current) {
+      const hourElement = hourScrollRef.current.querySelector(`[data-hour="${selectedHour}"]`);
+      if (hourElement) {
+        hourElement.scrollIntoView({ block: 'center', behavior: 'auto' });
+      }
     }
-  };
-
+  }, []);
   return (
     <div className="vertical_time_selector">
       {/* 시간 선택 영역 */}
@@ -485,11 +473,15 @@ const StandaloneTimeInput = ({
             {hourOptions.map((h) => (
               <div
                 key={`hour-${h}`}
-                className={`${h === hours ? 'selected' : ''}`}
+                data-hour={h}
+                className={`time_option ${h === selectedHour ? 'selected' : ''}`}
                 onClick={() => handleHourClick(h)}
                 style={{
-                  backgroundColor: h === hours ? '#EDFCFF' : 'transparent',
-                }}>
+                  backgroundColor: h === selectedHour ? '#EDFCFF' : 'transparent',
+                  cursor: selectionStep === 'hour' ? 'pointer' : 'default',
+                  // opacity: selectionStep === 'hour' ? 1 : 0.5,
+                }}
+              >
                 {formatNumber(h)}
               </div>
             ))}
@@ -503,11 +495,15 @@ const StandaloneTimeInput = ({
             {minuteOptions.map((m) => (
               <div
                 key={`minute-${m}`}
-                className={` ${m === minutes ? 'selected' : ''}`}
-                onClick={() => handleMinuteClick(m)}
+                data-minute={m}
+                className={`time_option ${m === selectedMinute ? 'selected' : ''}`}
+                onClick={() => selectionStep !== 'hour' && handleMinuteClick(m)}
                 style={{
-                  backgroundColor: m === minutes ? '#EDFCFF' : 'transparent',
-                }}>
+                  backgroundColor: m === selectedMinute ? '#EDFCFF' : 'transparent',
+                  cursor: selectionStep === 'minute' ? 'pointer' : 'default',
+                  opacity: selectionStep !== 'hour' ? 1 : 0.3,
+                }}
+              >
                 {formatNumber(m)}
               </div>
             ))}
@@ -521,26 +517,21 @@ const StandaloneTimeInput = ({
               {secondOptions.map((s) => (
                 <div
                   key={`second-${s}`}
-                  className={` ${s === seconds ? 'selected' : ''}`}
-                  onClick={() => handleSecondClick(s)}
+                  data-second={s}
+                  className={`time_option ${s === selectedSecond ? 'selected' : ''}`}
+                  onClick={() => selectionStep === 'second' && handleSecondClick(s)}
                   style={{
-                    backgroundColor: s === seconds ? '#EDFCFF' : 'transparent',
-                  }}>
+                    backgroundColor: s === selectedSecond ? '#EDFCFF' : 'transparent',
+                    cursor: selectionStep === 'second' ? 'pointer' : 'default',
+                    opacity: selectionStep === 'second' ? 1 : 0.3,
+                  }}
+                >
                   {formatNumber(s)}
                 </div>
               ))}
             </div>
           </div>
         )}
-      </div>
-
-      <div className="btn_wrap">
-        <Button size={'xs'} variant={'gray'} onClick={handleCancel}>
-          취소
-        </Button>
-        <Button size={'xs'} variant={'gray'} onClick={handleConfirm}>
-          선택
-        </Button>
       </div>
     </div>
   );
