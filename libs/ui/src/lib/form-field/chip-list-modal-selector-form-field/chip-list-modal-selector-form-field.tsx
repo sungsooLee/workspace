@@ -74,7 +74,13 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
     };
 
     return (
-      <div className={cn(styles.start, 'nlp--chip-list-modal-selector-form-field')}>
+      <div
+        className={cn(
+          styles.start,
+          showAddButton && styles.type_show_btn,
+          'nlp--chip-list-modal-selector-form-field',
+        )}
+      >
         {/* actionNode or 추가버튼 둘중 하나라도 설정 되어있을때 노출*/}
         {(actionNode || showAddButton) && (
           <div className={styles.custom_btn_wrap}>
