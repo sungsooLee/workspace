@@ -36,9 +36,6 @@ function RouteComponent() {
             <Progress value={50} label={'실패'} isFailed />
           </div>
           <div className="desc">
-            <Progress value={90} label={'진행중 90% 이상인 경우'} />
-          </div>
-          <div className="desc">
             <Progress value={100} label={'완료'} />
           </div>
         </div>
