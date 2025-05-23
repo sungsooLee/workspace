@@ -7,7 +7,8 @@ import WidgetsService from '../api/widgets';
 export const queryKeys = {
   all: ['widgets'] as const,
   detail: (widgetCode: string) => [...queryKeys.all, widgetCode] as const,
-  listForTenant: (tenantId: number) => [...queryKeys.all, tenantId] as const,
+  allTenantWidget: (tenantId: number) => [...queryKeys.all, tenantId] as const,
+  listWithTenant: () => [...queryKeys.all, 'fortenant'] as const,
 };
 
 export const widgetsQueryOptions = {
@@ -69,8 +70,28 @@ export const widgetsQueryOptions = {
         }
       : getQuerySkipToken<Widget>(),
 
-  listForTenant: (tenantId: number) => ({
-    queryKey: queryKeys.listForTenant(tenantId),
-    queryFn: () => WidgetsService.getWidgetsTenant(tenantId),
+  allTenantWidget: (tenantId: number) =>
+    tenantId
+      ? {
+          queryKey: queryKeys.allTenantWidget(tenantId),
+          queryFn: () => WidgetsService.getWidgetsTenant(tenantId),
+        }
+      : getQuerySkipToken<any>(),
+
+  listWithTenant: (param: any) => ({
+    queryKeys: queryKeys.listWithTenant,
+    queryFn: async () => WidgetsService.getWidgetsWithTenant(param),
+  }),
+};
+
+export const mutateOptions = {
+  createTenant: () => ({
+    mutationFn: ({ tenantId, body }: { tenantId: number; body: any }) =>
+      WidgetsService.postWidgetsTenantMappings(tenantId, body),
+  }),
+  moveTenantWidget: () => ({
+    mutationFn: (payload: any) => {
+      return WidgetsService.moveWidgetsTenantMappings(payload);
+    },
   }),
 };

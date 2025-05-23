@@ -1,7 +1,6 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 import { FC, useState } from 'react';
 import { t } from 'i18next';
-import { cn, getRandomId } from '@learnway/shared';
+import { getRandomId, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import {
   ModalBody,
   ModalContainer,
@@ -11,40 +10,48 @@ import {
   Button,
   GridBox,
   useGridBox,
+  Checkbox,
 } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
-
+import { WidgetPreviewButton } from '@features/platform';
+import { createColumnHelper, ColumnDef, Table } from '@tanstack/react-table';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 
-const menuLength = 5;
-const menuOptions = Array(menuLength)
-  .fill(null)
-  .map((d, i) => ({
-    id: getRandomId(),
-    name: `메뉴명${i}`,
-  }));
+import { widgetsQueryOptions } from '@entities/widgets/service/widgets.queries';
+import { useCreateTenantWidget } from '@entities/widgets/service/widgets.hook';
 
 const TenantDetailWidgetMappingModalComponent: FC<{ tenantId: number }> = ({ tenantId }) => {
-  const [myOptions, setMyOptions] = useState(menuOptions);
-  const [value, setValue] = useState<any>();
+  const [tableInstance, setTableInstance] = useState<Table<any>>();
+
+  const { close: closeModal } = useModal();
 
   const { provider: sProvider } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig);
-
-  const handleOnSearch = () => {
-    console.log('handleOnSearch click');
+  const { createTenantWidget } = useCreateTenantWidget({
+    onSuccess: () => {
+      closeModal();
+    },
+  });
+  const handleOnSearch = (param: any) => {
+    console.log('handleOnSearch click', param);
+    gridFetch({ ...param, tenantId: tenantId });
   };
 
-  const handleRowSelect = () => {
-    console.log('handleRowSelect click');
-  };
-
-  const handleOnClose = () => {
-    console.log('handleOnClose click');
-  };
   const handleOnConfirm = () => {
-    console.log('handleOnClose click');
+    const saveRows = tableInstance?.getSelectedRowModel().rows;
+    if (saveRows) {
+      const payload = {
+        tenantId: tenantId,
+        body: {
+          widgetTypeList: saveRows
+            .filter((item) => !item.original.isTenantApplied)
+            .map((item) => item.original.widgetCode),
+        },
+      };
+
+      createTenantWidget(payload);
+    }
   };
 
   return (
@@ -55,19 +62,23 @@ const TenantDetailWidgetMappingModalComponent: FC<{ tenantId: number }> = ({ ten
           <SearchBox provider={sProvider} onSearch={handleOnSearch} />
           <div className={popupStyles.container}>
             <GridBox
-              onRowSelect={handleRowSelect}
+              title={t('위젯목록')}
               config={gConfig}
-              //   columns={columns}
+              columns={columns}
               height={380}
+              multiple
+              showColumnSettings={false}
+              hideRowSelectionCheckBox={true}
+              guideText={t('이미 테넌트 적용(Y값)된 위젯은 선택할 수 없습니다.')}
               // showColumnSettings={false}
-              title={t('채널 목록')}
+              onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
             />
           </div>
         </div>
       </ModalBody>
       <ModalFooter>
         <ModalFooter>
-          <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={handleOnClose} />
+          <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
           <Button label={t('확인')} variant={'primary'} size={'lg'} onClick={handleOnConfirm} />
         </ModalFooter>
       </ModalFooter>
@@ -81,60 +92,32 @@ const searchConfig: SearchBoxConfig = {
   builders: [
     [
       {
-        name: 'channelName',
+        name: 'widgetName',
         type: 'text',
-        label: t('채널명'),
-        format: 'object',
+        label: t('위젯명'),
         value: '',
       },
       {
-        name: 'tenantId',
-        type: 'text',
-        label: t('테넌트명'),
-        format: 'object',
-        value: '',
-      },
-      {
-        name: 'companyId',
-        type: 'text',
-        label: t('회사'),
-        format: 'object',
-        value: '',
-      },
-    ],
-    [
-      {
-        name: 'channelOwnerId',
-        label: t('채널 소유자'),
-        type: 'custom',
-        value: '',
-        placeholder: '이름 / 소속 / 팀명',
-      },
-      {
-        name: 'isUniversalChannel',
-        type: 'radio-group',
-        label: t('채널유형'),
-        value: 'N',
+        name: 'deviceType',
+        type: 'dropdown',
+        label: t('디바이스'),
+        format: 'string',
+        value: 'ALL',
         options: [
-          {
-            value: 'Y',
-            label: t('유니버설'),
-          },
-          {
-            value: 'N',
-            label: t('일반'),
-          },
+          { label: '전체', value: 'ALL' },
+          { label: 'PC', value: 'PC' },
+          { label: 'Mobile', value: 'MOBILE' },
         ],
       },
       {
-        name: 'isUsed',
+        name: 'tenantApplied',
         type: 'dropdown',
-        label: t('사용여부'),
+        label: t('테넌트 적용 여부'),
         value: '',
         options: [
-          { value: '', label: t('전체') },
-          { value: 2, label: t('사용') },
-          { value: 3, label: t('미사용') },
+          { label: '선택', value: '' },
+          { label: 'Y', value: 'true' },
+          { label: 'N', value: 'false' },
         ],
       },
     ],
@@ -142,45 +125,8 @@ const searchConfig: SearchBoxConfig = {
 };
 
 const gridConfig = {
-  query: '',
-  columns: [
-    {
-      name: 'channelName',
-      label: t('채널명'),
-      render: (info: any) => info.row.original.channelName,
-    },
-    {
-      name: 'tenantName',
-      label: t('테넌트명'),
-      render: (info: any) => info.row.original.tenantName,
-    },
-    {
-      name: 'companyName',
-      label: t('회사명'),
-      render: (info: any) => info.row.original.companyName,
-    },
-    {
-      name: 'channelOwnerName',
-      label: t('채널 소유자'),
-      render: (info: any) => info.row.original.channelOwnerName,
-    },
-    {
-      name: 'isUniversalChannel',
-      label: t('채널 유형'),
-      render: (info: any) => {
-        return info.row.original.isUniversalChannel
-          ? t('LABEL.common.enable')
-          : t('LABEL.common.disable');
-      },
-    },
-    {
-      name: 'isUsed',
-      label: '사용여부',
-      render: (info: any) => {
-        return info.row.original.isUsed ? t('LABEL.common.enable') : t('LABEL.common.disable');
-      },
-    },
-  ],
+  query: widgetsQueryOptions.listWithTenant,
+  columns: [],
   data: [],
 
   pagination: {
@@ -189,3 +135,91 @@ const gridConfig = {
     totalRows: 0,
   },
 };
+
+const columnHelper = createColumnHelper<any>();
+
+const columns = [
+  columnHelper.accessor('select-check', {
+    id: 'select-check',
+    size: 64,
+    maxSize: 64,
+    minSize: 64,
+    meta: {
+      align: 'center',
+      headerAlign: 'center',
+      cellAlign: 'center',
+    },
+    enableSorting: false,
+    header: ({ table }) => (
+      <div style={{ width: '100%', textAlign: 'center' }}>
+        <Checkbox
+          checked={table.getIsAllRowsSelected()}
+          onCheckedChange={(checked) => {
+            table.toggleAllRowsSelected(!!checked);
+          }}
+        />
+      </div>
+    ),
+    cell: ({ row }) => {
+      const disabled = row.original.isTenantApplied;
+      return (
+        <div style={{ width: '100%', textAlign: 'center', paddingRight: 0 }}>
+          <Checkbox
+            checked={row.getIsSelected()}
+            disabled={row.getIsGrouped() || disabled}
+            onCheckedChange={() => {
+              if (!row.getIsGrouped()) {
+                row.getToggleSelectedHandler();
+              }
+            }}
+          />
+        </div>
+      );
+    },
+  }),
+
+  columnHelper.accessor('numbering', {
+    id: 'numbering',
+    cell: ({ row }) => row.index,
+    header: 'NO.',
+    size: 64,
+    enableGrouping: false,
+  }),
+  columnHelper.accessor('widgetName', {
+    id: 'widgetName',
+    cell: (info) => {
+      return info.getValue();
+    },
+    header: '위젯명',
+    enableGrouping: false,
+    size: 708,
+  }),
+  columnHelper.accessor('device', {
+    id: 'device',
+    cell: ({ row }) => {
+      const array = [];
+      row.original.isMobileExposed && array.push('PC');
+      row.original.isWebExposed && array.push('Mobile');
+      return array.toString();
+    },
+    header: '디바이스',
+    size: 200,
+    enableGrouping: false,
+  }),
+  columnHelper.accessor('isTenantApplied', {
+    id: 'isTenantApplied',
+    cell: (info) => (info.getValue() ? 'Y' : 'N'),
+    header: '테넌트적용여부',
+    size: 200,
+    enableGrouping: false,
+  }),
+
+  columnHelper.accessor('showbutton', {
+    cell: ({ row }) => {
+      return <WidgetPreviewButton widget={row.original} />;
+    },
+    header: '미리보기',
+    size: 88,
+    enableGrouping: false,
+  }),
+] as ColumnDef<any, unknown>[];

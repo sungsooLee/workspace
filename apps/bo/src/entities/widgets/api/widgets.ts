@@ -16,14 +16,17 @@ export default class WidgetsService {
     return httpService.delete<any>(`${PMSApiPrefix()}/widgets/tenant-mappings/${tenantWidgetId}`);
   }
 
-  static moveWidgetsTenantMappings(tenantWidgetId: number, body: any): Promise<any> {
-    return httpService.delete<any>(
-      `${PMSApiPrefix()}/widgets/tenant-mappings/${tenantWidgetId}/dnd`,
-      body,
+  static moveWidgetsTenantMappings(payload: any): Promise<any> {
+    return httpService.post<any>(
+      `${PMSApiPrefix()}/widgets/tenant-mappings/${payload.tenantWidgetId}/dnd`,
+      payload,
+      {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      },
     );
   }
   static postWidgetsTenantMappings(tenantId: number, body: any): Promise<any> {
-    return httpService.delete<any>(`${PMSApiPrefix()}/widgets/tenant-mappings/${tenantId}`, body);
+    return httpService.post<any>(`${PMSApiPrefix()}/widgets/tenant-mappings/${tenantId}`, body);
   }
 
   static fetchWidgets({
@@ -44,8 +47,8 @@ export default class WidgetsService {
     return httpService.get<any>(`${PMSApiPrefix()}/widgets/${widgetCode}`);
   }
 
-  static getWidgetsWithTenant(): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/widgets/with-tenant`);
+  static getWidgetsWithTenant(param: any): Promise<any> {
+    return httpService.get<any>(`${PMSApiPrefix()}/widgets/with-tenant`, param);
   }
 
   static getWidgetsTenant(tenantId: number): Promise<any> {

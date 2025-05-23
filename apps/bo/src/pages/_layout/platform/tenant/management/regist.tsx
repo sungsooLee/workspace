@@ -19,7 +19,6 @@ import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-butt
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 
 import { useCreateTenant } from '@entities/tenant/service/tenant.hook';
-import { HrdUserInquiryModal } from '@features/shared/ui/modal/hrd-user-inquiry-modal';
 import {
   DuplicateCheckInputFormField,
   DuplicateState,
