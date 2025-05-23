@@ -1,6 +1,7 @@
 .start {
-  &.chips_modal_wrap {
-    @apply flex min-h-[32px] w-full flex-wrap items-center rounded-[4px] border border-solid border-[var(--gray4)] pl-[12px];
+  @apply w-full;
+  .chips_modal_wrap {
+    @apply mt-[12px] flex min-h-[120px] w-full flex-wrap items-center rounded-[4px] border border-solid border-[var(--gray4)] pl-[12px];
     .btn_search {
       @apply flex flex-auto items-center justify-end pr-[8px];
     }
@@ -16,6 +17,22 @@
     [class*='nlp--chip-list'] {
       [class*='nlp--chips'] {
         @apply !h-[24px] !min-h-[24px];
+      }
+    }
+  }
+}
+
+.custom_btn_wrap {
+  @apply -mt-[44px] flex items-center justify-end;
+  [class*='nlp--button'] {
+    @apply !button_bo_2_r inline-flex items-center !text-[var(--gray8)];
+    svg {
+      @apply mr-[4px];
+    }
+    & + [class*='nlp--button'] {
+      @apply !ml-0;
+      &::before {
+        @apply mr-[8px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
       }
     }
   }

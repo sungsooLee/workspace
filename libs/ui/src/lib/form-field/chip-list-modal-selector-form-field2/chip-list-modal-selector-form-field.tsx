@@ -5,7 +5,7 @@ import { useModal } from '../../modal/modal.hook';
 import { ChipList, ChipListComponentProps } from '../../chips/chip-list';
 import { ModalConfig } from '../../modal/type';
 import { cn } from '@learnway/shared';
-import { IcoSearch } from '@learnway/icons';
+import { IcoSearch, IcoPlus } from '@learnway/icons';
 import styles from './chip-list-modal-selector-form-field.module.css';
 import { BaseFormFieldProps } from '@learnway/hooks';
 
@@ -74,12 +74,18 @@ const ChipListModalSelectorFormField2Component = forwardRef<
       <div className={cn(styles.start, 'nlp--chip-list-modal-selector-form-field')}>
         {/* actionNode or 추가버튼 둘중 하나라도 설정 되어있을때 노출*/}
         {(actionNode || showAddButton) && (
-          <div>
+          <div className={styles.custom_btn_wrap}>
             {/* action node*/}
             {actionNode ?? actionNode}
             {/*추가버튼*/}
             {showAddButton && (
-              <Button variant={'text'} size={'sm'} label={'추가'} onClick={handleSearchClick} />
+              <Button
+                icon={<IcoPlus width={16} height={16} stroke="#4C515E" />}
+                variant={'text'}
+                size={'sm'}
+                label={'추가'}
+                onClick={handleSearchClick}
+              />
             )}
           </div>
         )}

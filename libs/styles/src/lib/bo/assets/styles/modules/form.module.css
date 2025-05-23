@@ -219,7 +219,7 @@
   }
 }
 .form_label {
-  @apply flex items-center overflow-hidden;
+  @apply relative z-[1] inline-flex min-h-[32px] items-center overflow-hidden;
   .form_text {
     @apply body_3_r;
     &.sm {
