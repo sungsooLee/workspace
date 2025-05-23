@@ -91,8 +91,8 @@ function RouteComponent() {
       cell: (info) => (
         <Button
           className="link"
+          stopPropagation
           onClick={(e) => {
-            e.stopPropagation();
             router.navigate({
               to: '/tenant/channel/request/detail',
               state: {
@@ -196,8 +196,9 @@ function RouteComponent() {
               size={'xs'}
               variant="text"
               className="link"
+              stopPropagation
               onClick={(e) => {
-                e.stopPropagation();
+                //
               }}
             >
               채널 개설
@@ -209,8 +210,9 @@ function RouteComponent() {
               size={'xs'}
               variant="text"
               className="link"
+              stopPropagation
               onClick={(e) => {
-                e.stopPropagation();
+                //
               }}
             >
               채널 상세
@@ -233,7 +235,6 @@ function RouteComponent() {
   };
 
   const handleAcceptClick = (e: any) => {
-    e.stopPropagation();
     if (selectedRows.length > 0) {
       openConfirm({
         title: t('접수 하시겠습니까?'),
@@ -273,7 +274,6 @@ function RouteComponent() {
   };
 
   const handleRejectClick = (e: any) => {
-    e.stopPropagation();
     if (selectedRows.length > 0) {
       openModal({
         width: 'sm',
@@ -360,6 +360,7 @@ function RouteComponent() {
                     className={layoutStyles.btn_text}
                     disabled={selectedRows.length === 0}
                     label={t('접수')}
+                    stopPropagation
                     onClick={handleAcceptClick}
                   />
                   <Button
@@ -368,6 +369,7 @@ function RouteComponent() {
                     className={layoutStyles.btn_text}
                     disabled={selectedRows.length === 0}
                     label={t('반려')}
+                    stopPropagation
                     onClick={handleRejectClick}
                   />
                 </>

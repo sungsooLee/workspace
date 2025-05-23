@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { t } from 'i18next';
-import { createFileRoute, useRouterState } from '@tanstack/react-router';
+import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import {
   Button,
@@ -25,6 +25,7 @@ export const Route = createFileRoute('/_layout/tenant/channel/request/detail')({
 });
 
 function RouteComponent() {
+  const router = useRouter();
   const routerState = useRouterState();
   const channelRequestUuid = routerState.location.state?.channelRequestUuid;
 
@@ -64,15 +65,20 @@ function RouteComponent() {
       fetchData(initialData);
     }
   }, [data]);
+
+  const handleListButtonClick = () => {
+    router.navigate({ to: '/tenant/channel/request' });
+  };
+
   return (
     <PageContainer>
       <ContentsButtons>
         <LinkBox>
-          <Button variant="point" size="sm">
+          <Button variant="point" size="sm" onClick={handleListButtonClick}>
             {t('LABEL.button.list')}
           </Button>
         </LinkBox>
-        {data.approvalStatusTypecd === 'PENDING' && (
+        {data && data.approvalStatusTypecd === 'PENDING' && (
           <>
             <Button variant="point" size="sm">
               {t('접수')}
@@ -82,17 +88,17 @@ function RouteComponent() {
             </Button>
           </>
         )}
-        {data.approvalStatusTypecd === 'ACCEPTED' && (
+        {data && data.approvalStatusTypecd === 'ACCEPTED' && (
           <Button variant="point" size="sm">
             {t('채널 개설')}
           </Button>
         )}
-        {data.approvalStatusTypecd === 'APPROVED' && (
+        {data && data.approvalStatusTypecd === 'APPROVED' && (
           <Button variant="point" size="sm">
             {t('채널 상세')}
           </Button>
         )}
-        {data.approvalStatusTypecd !== 'PENDING' && (
+        {data && data.approvalStatusTypecd !== 'PENDING' && (
           <Button type="submit" variant="primary" size="sm">
             {t('저장')}
           </Button>
@@ -160,7 +166,7 @@ function RouteComponent() {
           <FormRow provider={provider} name={'approval'} element={<Input disabled={true} />} />
           <FormRow provider={provider} name={'approvalDate'} element={<Input disabled={true} />} />
         </ContentsRow>
-        {data.approvalStatusTypecd === 'REJECTED' && (
+        {data && data.approvalStatusTypecd === 'REJECTED' && (
           <ContentsRow>
             <FormRow
               provider={provider}

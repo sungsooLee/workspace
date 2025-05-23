@@ -72,15 +72,16 @@ function RouteComponent() {
     }),
     columnHelper.accessor('mapImageFileInfo', {
       cell: (info) => {
-        const disabled = info.row.original.mapImageFileInfo?.files?.length > 0 ? false : true;
+        //const disabled = info.row.original.mapImageFileInfo?.files?.length > 0 ? false : true;
+        const disabled = false;
         const imageFileUrl =
           'https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2';
         return (
           <Button
             className="link"
             disabled={disabled}
+            stopPropagation
             onClick={(e) => {
-              e.stopPropagation();
               openModal({
                 width: 'full',
                 height: 'full',
@@ -111,8 +112,8 @@ function RouteComponent() {
             className="link_icon"
             onlyIcon
             disabled={disabled}
+            stopPropagation
             onClick={(e) => {
-              e.stopPropagation();
               window.open(mapLink, '_blank', 'noreferrer');
             }}
           >
