@@ -21,7 +21,7 @@ function HomeComponent() {
               <div style={{ marginBottom: 10 }}>
                 <h3>M0</h3>
               </div>
-              <table className={style.pub_table} style={{ width: 1500 }}>
+              <table className={style.pub_table} style={{ width: '100%' }}>
                 <thead>
                   <tr>
                     <th scope="col">스크린 명</th>
@@ -59,7 +59,7 @@ function HomeComponent() {
               <div style={{ marginBottom: 10, marginTop: 40 }}>
                 <h3>Guide</h3>
               </div>
-              <table className={style.pub_table} style={{ width: 800 }}>
+              <table className={style.pub_table} style={{ width: '100%' }}>
                 <thead>
                   <tr>
                     <th scope="col">스크린 명</th>

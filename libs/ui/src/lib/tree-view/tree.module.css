@@ -137,7 +137,7 @@
     }
   }
   .no_data {
-    @apply h-[calc(100vh-398px)];
+    @apply h-[250px] pt-0;
   }
 }
 

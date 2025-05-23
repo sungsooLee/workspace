@@ -3,6 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export type com_ever_edu_global_excel_dto_res_ExcelFileHistoryResDto = {
-    result?: boolean;
+    logId?: number;
 };
 

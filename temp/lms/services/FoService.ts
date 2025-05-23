@@ -303,7 +303,7 @@ export class FoService {
      */
     public static findBySequenceNo(
         courseSequenceUuid: string,
-        courseType: 'ELEARNING' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
+        courseType: 'ELEARNING' | 'ELEARNING_SANGSI' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
     ): CancelablePromise<com_ever_edu_lms_course_dto_res_SequenceResDto$onUser> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -379,21 +379,21 @@ export class FoService {
     /**
      * 수강신청 현황?
      * 수강신청 현황
-     * @param pageable
      * @param params
+     * @param pageable
      * @returns org_springframework_data_domain_PageCom_ever_edu_lms_enroll_dto_res_EnrollResDto$onUserList OK
      * @throws ApiError
      */
     public static findPage1(
-        pageable: org_springdoc_core_converters_models_Pageable,
         params: com_ever_edu_lms_enroll_dto_req_EnrollSearchDto$SearchByUser,
+        pageable: org_springdoc_core_converters_models_Pageable,
     ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_lms_enroll_dto_res_EnrollResDto$onUserList> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/user/api/v1/enrolls',
+            url: '/user/api/v1/enrollsss',
             query: {
-                'pageable': pageable,
                 'params': params,
+                'pageable': pageable,
             },
             errors: {
                 400: `Bad Request`,
@@ -465,7 +465,7 @@ export class FoService {
     public static search(
         request: com_ever_edu_lms_search_course_dto_req_CourseSearchReqDto$OnUser,
         pageable: org_springdoc_core_converters_models_Pageable,
-        courseType?: 'ELEARNING' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
+        courseType?: 'ELEARNING' | 'ELEARNING_SANGSI' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
         enrollmentType?: 'ENROLL_DONE' | 'ENROLL_REQUEST' | 'CANCEL_DONE',
     ): CancelablePromise<Array<com_ever_edu_lms_search_course_dto_res_CourseSearchResDto$OnUser>> {
         return __request(OpenAPI, {

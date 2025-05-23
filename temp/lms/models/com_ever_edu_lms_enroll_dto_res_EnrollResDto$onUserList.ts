@@ -17,6 +17,7 @@ export type com_ever_edu_lms_enroll_dto_res_EnrollResDto$onUserList = {
 export namespace com_ever_edu_lms_enroll_dto_res_EnrollResDto$onUserList {
     export enum courseType {
         ELEARNING = 'ELEARNING',
+        ELEARNING_SANGSI = 'ELEARNING_SANGSI',
         CLASS = 'CLASS',
         LIVE = 'LIVE',
         EXAM = 'EXAM',

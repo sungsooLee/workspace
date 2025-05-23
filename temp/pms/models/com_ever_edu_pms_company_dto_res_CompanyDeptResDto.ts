@@ -2,8 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_pms_company_dto_res_CompanyDeptSubCompanyResDto } from './com_ever_edu_pms_company_dto_res_CompanyDeptSubCompanyResDto';
-import type { com_ever_edu_pms_company_dto_res_CompanyDeptSubUserResDto } from './com_ever_edu_pms_company_dto_res_CompanyDeptSubUserResDto';
+import type { com_ever_edu_pms_company_dto_res_CompanyLoginRestrictionResDto } from './com_ever_edu_pms_company_dto_res_CompanyLoginRestrictionResDto';
 export type com_ever_edu_pms_company_dto_res_CompanyDeptResDto = {
     /**
      * 부서ID
@@ -17,12 +16,14 @@ export type com_ever_edu_pms_company_dto_res_CompanyDeptResDto = {
      * 정렬순서
      */
     sortOrder?: number;
-    companyInfo?: com_ever_edu_pms_company_dto_res_CompanyDeptSubCompanyResDto;
     /**
      * 부서코드
      */
     deptCode?: string;
-    managerUserInfo?: com_ever_edu_pms_company_dto_res_CompanyDeptSubUserResDto;
+    /**
+     * 매니저 성명
+     */
+    managerName?: string;
     /**
      * 부서명
      */
@@ -48,6 +49,30 @@ export type com_ever_edu_pms_company_dto_res_CompanyDeptResDto = {
      */
     childList?: Array<com_ever_edu_pms_company_dto_res_CompanyDeptResDto>;
     /**
+     * 회사명
+     */
+    companyName?: string;
+    /**
+     * 회사유형
+     */
+    companyType?: com_ever_edu_pms_company_dto_res_CompanyDeptResDto.companyType;
+    /**
+     * 연동시스템 사용여부
+     */
+    isUseLinkageSystem?: boolean;
+    /**
+     * 연동시스템 유형
+     */
+    linkageType?: com_ever_edu_pms_company_dto_res_CompanyDeptResDto.linkageType;
+    /**
+     * 연동시스템
+     */
+    linkageSystem?: com_ever_edu_pms_company_dto_res_CompanyDeptResDto.linkageSystem;
+    /**
+     * 로그인 제한 정보
+     */
+    companyLoginRestrictionList?: Array<com_ever_edu_pms_company_dto_res_CompanyLoginRestrictionResDto>;
+    /**
      * 등록자ID
      */
     createdBy?: string;
@@ -64,4 +89,45 @@ export type com_ever_edu_pms_company_dto_res_CompanyDeptResDto = {
      */
     modifiedDate?: string;
 };
+export namespace com_ever_edu_pms_company_dto_res_CompanyDeptResDto {
+    /**
+     * 회사유형
+     */
+    export enum companyType {
+        CAR = 'CAR',
+        GROUP = 'GROUP',
+        HYUNDAI_GLOBAL = 'HYUNDAI_GLOBAL',
+        HYUNDAI_GLOBAL_DEALER = 'HYUNDAI_GLOBAL_DEALER',
+        HYUNDAI_SALES = 'HYUNDAI_SALES',
+        HYUNDAI_SERVICE = 'HYUNDAI_SERVICE',
+        HYUNDAI_PRODUCTION = 'HYUNDAI_PRODUCTION',
+        KIA_GLOBAL = 'KIA_GLOBAL',
+        KIA_GLOBAL_DEALER = 'KIA_GLOBAL_DEALER',
+        KIA_SALES = 'KIA_SALES',
+        KIA_SERVICE = 'KIA_SERVICE',
+        KIA_PRODUCTION = 'KIA_PRODUCTION',
+        CP = 'CP',
+        ETC = 'ETC',
+    }
+    /**
+     * 연동시스템 유형
+     */
+    export enum linkageType {
+        INTERFACE = 'INTERFACE',
+        FTP = 'FTP',
+    }
+    /**
+     * 연동시스템
+     */
+    export enum linkageSystem {
+        GIM = 'GIM',
+        HSW = 'HSW',
+        KSW = 'KSW',
+        DMSSH = 'DMSSH',
+        DMSSK = 'DMSSK',
+        DDMSH = 'DDMSH',
+        DDMSK = 'DDMSK',
+        VAATZ = 'VAATZ',
+    }
+}
 

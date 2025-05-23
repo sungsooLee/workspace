@@ -2,12 +2,11 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type com_ever_edu_pms_tenant_dto_res_TenantResDto$CompanyResDto = {
-    tenantId?: number;
+export type com_ever_edu_pms_tenant_dto_req_TenantCompanyUpdateReqDto = {
+    /**
+     * 회사 ID
+     */
     companyId?: number;
-    companyCode?: string;
-    companyName?: string;
-    managerName?: string;
     /**
      * 수강 신청 결재라인 사용 여부
      */
