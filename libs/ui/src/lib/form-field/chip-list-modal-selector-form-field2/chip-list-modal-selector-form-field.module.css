@@ -23,7 +23,7 @@
 }
 
 .custom_btn_wrap {
-  @apply -mt-[44px] flex items-center justify-end;
+  @apply -mt-[38px] flex items-center justify-end;
   [class*='nlp--button'] {
     @apply !button_bo_2_r inline-flex items-center !text-[var(--gray8)];
     svg {
