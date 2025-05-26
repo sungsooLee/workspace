@@ -9,3 +9,13 @@
     @apply !mx-0 !px-0;
   }
 }
+
+[class*='lnb-open'] {
+  .start {
+    &.inner {
+      [class*='grid'] {
+        @apply !max-w-[calc(100vw-424px)];
+      }
+    }
+  }
+}
