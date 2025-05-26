@@ -7,8 +7,9 @@ import {
   TreeBox,
   TreeNode,
   useGridBox,
-  ChipList,
-  ChipListComponentProps,
+  ChipListModalSelectorFormField,
+  ContentsRow,
+  useModal,
 } from '@learnway/ui';
 
 import {
@@ -25,8 +26,8 @@ import { useRouterState } from '@tanstack/react-router';
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 
 import { FormSubTitle } from '@shared/ui';
-import { DynamicFormConfig, useSearchBox } from '@learnway/hooks';
-import { SearchBox } from '../../../../shared/ui/search-box';
+import { DynamicFormConfig, useDynamicForm, useSearchBox } from '@learnway/hooks';
+import { SearchBox } from '@shared/ui/search-box';
 import { IcoFormRequired, IcoMinus, IcoPlus } from '@learnway/icons';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import { createColumnHelper } from '@tanstack/react-table';
@@ -40,58 +41,17 @@ import {
   useFetchRole,
   useFetchRoleTree,
   useRoleManager,
+  useGetRoleUserGroups,
 } from '@entities/role/service/role-manage.hook';
-import { EnFormMode } from '@types';
-
+import { UserChoiceModal } from '@features/shared';
 import { roleManagerQueryOptions } from '@entities/role/service/role-manage.queries';
-
-const columnHelper = createColumnHelper<any>();
-
-// 속성명 변경 필요
-const columns = [
-  columnHelper.accessor('1', {
-    cell: (info) => info.getValue(),
-    header: '분류',
-  }),
-  columnHelper.accessor('2', {
-    cell: (info) => info.getValue(),
-    header: '회사',
-  }),
-  columnHelper.accessor('3', {
-    cell: (info) => info.getValue(),
-    header: '조직',
-  }),
-  columnHelper.accessor('4', {
-    cell: (info) => info.getValue(),
-    header: '이름',
-  }),
-  columnHelper.accessor('5', {
-    cell: (info) => info.getValue(),
-    header: '사용자ID',
-  }),
-  columnHelper.accessor('6', {
-    cell: (info) => info.getValue(),
-    header: '사용',
-  }),
-  columnHelper.accessor('7', {
-    cell: (info) => info.getValue(),
-    header: '권한시작일',
-  }),
-  columnHelper.accessor('8', {
-    cell: (info) => info.getValue(),
-    header: '권한종료일',
-  }),
-  columnHelper.accessor('1', {
-    cell: (info) => info.getValue(),
-    header: '데이터 접근 범위',
-  }),
-];
+import { EnFormMode } from '@types';
 
 const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, ref: any) => {
   const routerState = useRouterState();
+  const { open: openModal } = useModal();
 
   const [roleTree, setRoleTree] = useState<any>(null);
-  const [roleTreeExpandedKeys, setRoleTreeExpandedKeys] = useState<string[]>([]);
   const [selectedRole, setSelectedRole] = useState<any>(null);
   const [formMode, setFormMode] = useState(EnFormMode.NONE);
 
@@ -99,15 +59,18 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
   const tenantName = routerState.location.state?.tenantName;
 
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);
-  const { data: roleData } = useFetchRoleTree(tenantId, siteScope);
-
+  const { provider, onSubmit, clearFormError, fetchData, onFormChange } =
+    useDynamicForm(formConfig);
   const { config, gridFetch } = useGridBox(gridConfig);
 
-  const handleOnSearch = useCallback((data: any) => {
+  const { data: roleData } = useFetchRoleTree(tenantId, siteScope);
+  const { data: roleGroupData } = useGetRoleUserGroups(tenantId);
+
+  const handleOnSearch = (data: any) => {
     if (formMode === EnFormMode.VIEW) {
       gridFetch({ ...data, roleCode: selectedRole.roleCode });
     }
-  }, []);
+  };
 
   const handleRoleSelect = (node: TreeNode) => {
     if (node.key !== 'root') {
@@ -115,17 +78,26 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
       gridFetch({ ...getValues(), roleCode: node.roleCode });
     }
   };
+  const handleUserAddButtonClick = async () => {
+    const data = await openModal({
+      content: <UserChoiceModal />,
+      width: 'xl',
+    });
+    console.log('hand', data);
+  };
 
   useEffect(() => {
     if (roleData) {
       const transformedData = transformRoleApiDataToTreeData(roleData);
       setRoleTree(transformedData);
-      if (transformedData && transformedData.length > 0 && roleTreeExpandedKeys.length === 0) {
-        const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
-        setRoleTreeExpandedKeys(firstLevelKeys);
-      }
     }
   }, [roleData]);
+
+  useEffect(() => {
+    if (roleGroupData) {
+      console.log('roleGroupData', roleGroupData);
+    }
+  }, [roleGroupData]);
 
   return (
     <SectionLayout contentsRatio={'thirty'}>
@@ -154,27 +126,55 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
               config={config}
               columns={columns}
               title={t('사용자 목록')}
-              showTotalCount={true}
-              multiple={true}
-              showNumberingColumn={true}
+              showTotalCount
+              multiple
+              showNumberingColumn
               customButtonNode={
                 <>
-                  <Button label={'일괄적용'} variant={'text'} size={'sm'} className="btn_text" />
+                  <Button label={t('일괄적용')} variant="text" size="sm" className="btn_text" />
 
-                  <Button variant={'text'} size={'sm'} className="btn_text">
-                    <IcoMinus width={16} height={16} stroke={'#131C30'} />
+                  <Button variant="text" size="sm" className="btn_text">
+                    <IcoMinus width="16" height="16" stroke="#131C30" />
                     삭제
                   </Button>
-                  <Button variant={'text'} size={'sm'} className="btn_text">
-                    <IcoPlus width={16} height={16} stroke={'#131C30'} />
+                  <Button
+                    variant="text"
+                    size="sm"
+                    className="btn_text"
+                    stopPropagation
+                    onClick={handleUserAddButtonClick}
+                  >
+                    <IcoPlus width="16" height="16" stroke="#131C30" />
                     추가
                   </Button>
                 </>
               }
             />
             <div className={styles.contents_wrap}>
-              {/* <ChipList options={[]} /> */}
-              {/* <ChipListFormField placeHolder /> */}
+              <div className={formStyles.form_item}>
+                <ContentsRow>
+                  <FormRow
+                    provider={provider}
+                    name="userGroup"
+                    element={
+                      <ChipListModalSelectorFormField
+                        showAddButton
+                        chipList={{
+                          labelField: 'name',
+                          valueField: 'value',
+                          wordwrap: true,
+                        }}
+                        modalConfig={{
+                          title: '',
+                          width: 'xl',
+                          content: '유저그룹 팝업 필요',
+                        }}
+                        actionNode={<Button variant="text" label={t('대상자')} />}
+                      />
+                    }
+                  />
+                </ContentsRow>
+              </div>
             </div>
           </div>
         </div>
@@ -186,9 +186,10 @@ export const TenantDetailLearningRoleGrant = forwardRef(TenantDetailLearningRole
 const formConfig: DynamicFormConfig = {
   builders: [
     {
-      name: 'location',
+      name: 'userGroup',
       type: 'custom',
-      label: t('위치'),
+      label: t('유적그룹 역할부여'),
+      format: 'array',
       value: [],
     },
   ],
@@ -200,39 +201,24 @@ const searchConfig: any = {
   builders: [
     [
       {
-        name: 'company',
-        type: 'dropdown',
-        label: t('회사'),
+        name: 'companyName',
+        type: 'text',
+        label: t('회사이름'),
+        format: 'string',
         value: '',
-        options: [{ value: '', label: t('선택') }],
-        optionsConfig: {
-          //
-        },
       },
       {
-        name: 'dept',
-        type: 'dropdown',
-        label: t('조직'),
+        name: 'deptName',
+        type: 'text',
+        label: t('조직명'),
+        format: 'string',
         value: '',
-        options: [{ value: '', label: t('선택') }],
-        optionsConfig: {
-          //
-        },
       },
       {
-        name: 'dept2',
-        type: 'dropdown',
-        label: t('호칭'),
-        value: '',
-        options: [{ value: '', label: t('선택') }],
-        optionsConfig: {
-          //
-        },
-      },
-      {
-        name: 'name',
+        name: 'userName',
         type: 'text',
         label: t('이름'),
+        format: 'string',
         value: '',
       },
     ],
@@ -256,3 +242,74 @@ const gridConfig = {
     totalRows: 2,
   },
 };
+
+const columnHelper = createColumnHelper<any>();
+
+// 속성명 변경 필요
+const columns = [
+  columnHelper.accessor('id', {
+    cell: (info) => info.getValue(),
+    header: '구분',
+    size: 50,
+  }),
+  columnHelper.accessor('2', {
+    cell: (info) => info.getValue(),
+    header: '회사',
+  }),
+  columnHelper.accessor('3', {
+    cell: (info) => info.getValue(),
+    header: '조직',
+  }),
+  columnHelper.accessor('4', {
+    cell: (info) => info.getValue(),
+    header: '이름',
+  }),
+  columnHelper.accessor('5', {
+    cell: (info) => info.getValue(),
+    header: '사용자ID',
+    size: 80,
+  }),
+  columnHelper.accessor('6', {
+    cell: (info) => info.getValue(),
+    header: '사용',
+    size: 80,
+  }),
+  columnHelper.accessor('7', {
+    cell: (info) => info.getValue(),
+    header: '권한시작일',
+  }),
+  columnHelper.accessor('8', {
+    cell: (info) => info.getValue(),
+    header: '권한종료일',
+  }),
+  columnHelper.accessor('9', {
+    header: '데이터 접근 범위',
+    cell: (info) => {
+      return (
+        <>
+          <Button
+            onClick={() => {
+              const rowData = info.row.original;
+              // const currentApiList = getValues('apiMappingMenuList') || [];
+              // const updatedApiList = currentApiList.filter(
+              //   (item: any) => item.apiId !== rowData.apiId,
+              // );
+              // fetchData({ ...getValues(), apiMappingMenuList: updatedApiList });
+            }}
+            variant="gray2"
+            size={'xs'}
+            type={'button'}
+          >
+            회사
+          </Button>
+          <Button variant="gray2" size={'xs'} type={'button'}>
+            채널
+          </Button>
+          <Button variant="gray2" size={'xs'} type={'button'}>
+            팀
+          </Button>
+        </>
+      );
+    },
+  }),
+];

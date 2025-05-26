@@ -1,9 +1,9 @@
 .start {
   @apply w-full;
   .chips_modal_wrap {
-    @apply scrollbar mt-[12px] flex h-[120px] w-full flex-wrap items-start overflow-y-auto rounded-[4px] border border-solid border-[var(--gray4)] p-[12px];
+    @apply flex h-[32px] w-full flex-wrap items-center rounded-[4px] border border-solid border-[var(--gray4)] px-[12px];
     .btn_search {
-      @apply flex flex-auto items-center justify-end pr-[8px];
+      @apply flex flex-auto items-center justify-end;
     }
     span {
       @apply !h-[24px] !min-h-[24px];
@@ -18,6 +18,11 @@
       [class*='nlp--chips'] {
         @apply !h-[24px] !min-h-[24px];
       }
+    }
+  }
+  &.type_wordwrap {
+    .chips_modal_wrap {
+      @apply scrollbar mt-[8px] h-[120px] items-start overflow-y-auto p-[12px];
     }
   }
 }

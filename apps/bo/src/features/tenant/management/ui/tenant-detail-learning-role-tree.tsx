@@ -32,7 +32,7 @@ import {
 } from '../service/tenant-detail-tree.service';
 import { FormDisplay } from '@features/form/ui/form-display';
 import { EnFormMode, EnTenantScope, EnCompanyScope, EnChannelScope, EnDeptScope } from '@types';
-import { CompanyShuttleModal, ChannelChoiceModal } from '@features/shared';
+import { CompanyShuttleModal, ChannelChoiceModal, ChannelListChoiceModal } from '@features/shared';
 import { isEqual } from 'lodash';
 
 //type fo , bo
@@ -365,14 +365,14 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                     element={
                       <ChipListModalSelectorFormField
                         chipList={{
-                          labelField: 'name',
-                          valueField: 'value',
+                          labelField: 'channelName',
+                          valueField: 'channelId',
                           hideBorder: true,
                         }}
                         modalConfig={{
                           title: '',
                           width: 'xl',
-                          content: <ChannelChoiceModal />,
+                          content: <ChannelListChoiceModal />,
                         }}
                       />
                     }
@@ -393,7 +393,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                 <div className="chiplist_modal_wrap">
                   <FormRow
                     provider={provider}
-                    name="dipsIds"
+                    name="deptIds"
                     element={
                       <ChipListModalSelectorFormField
                         chipList={{
@@ -431,7 +431,13 @@ export const TenantDetailLearningRoleTree = forwardRef(TenantDetailLearningRoleT
 
 const formBaseConfig: DynamicFormConfig = {
   builders: [
-    { name: 'parentRoleId', label: '', type: 'hidden', value: '', format: 'string' },
+    {
+      name: 'parentRoleId',
+      label: '',
+      type: 'hidden',
+      value: '',
+      format: 'string',
+    },
     {
       name: 'roleId',
       type: 'text',
@@ -508,7 +514,13 @@ const formBaseConfig: DynamicFormConfig = {
         },
       ],
     },
-    { name: 'channelIds', label: '', type: 'array', format: 'array', value: [] },
+    {
+      name: 'channelIds',
+      label: '',
+      type: 'custom',
+      format: 'array',
+      value: [],
+    },
     {
       name: 'deptScope',
       type: 'radio-group',
@@ -533,17 +545,28 @@ const formBaseConfig: DynamicFormConfig = {
         },
       ],
     },
-    { name: 'deptIds', label: '', type: 'array', format: 'array', value: [] },
+    {
+      name: 'deptIds',
+      label: '',
+      type: 'custom',
+      format: 'array',
+      value: [],
+    },
     {
       name: 'isUsed',
       type: 'switch',
-      label: t('사용여부'),
+      label: t('역할 사용 여부'),
       value: false,
       switchConfig: {
         label: (value: boolean) => (value ? t('사용함') : t('사용안함')),
       },
     },
-    { name: 'sortOrder', label: '', type: 'number', value: 0 },
+    {
+      name: 'sortOrder',
+      label: '',
+      type: 'number',
+      value: 0,
+    },
   ],
   validator: {
     parentRoleId: {

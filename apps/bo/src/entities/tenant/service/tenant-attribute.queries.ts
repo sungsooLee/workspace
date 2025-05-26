@@ -1,12 +1,21 @@
 import TenantAttributeService from '../api/tenant-attribute';
+import { getQuerySkipToken } from '@learnway/shared';
 
 export const queryKeys = {
   all: ['tenant-attribute'] as const,
 };
 
 export const tenantAttributeQueryOptions = {
-  all: (tenantId: string) => ({
+  all: (tenantId: number) => ({
     queryKey: [...queryKeys.all],
-    queryFn: () => TenantAttributeService.findTenantAttributeCompany(tenantId),
+    queryFn: () =>
+      tenantId ? TenantAttributeService.findTenantAttributeCompany(tenantId) : getQuerySkipToken(),
+  }),
+};
+
+export const mutateOptions = {
+  update: () => ({
+    mutationFn: ({ tenantId, body }: { tenantId: number; body: any }) =>
+      TenantAttributeService.modifyTenantAttributeCompany(tenantId, body),
   }),
 };

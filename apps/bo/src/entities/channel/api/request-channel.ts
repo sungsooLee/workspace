@@ -3,7 +3,7 @@ import { PMSApiPrefix } from '@learnway/config';
 
 export default class RequestChannelService {
   static async postApprovalRejected(payload: any) {
-    return httpService.post<any>(`${PMSApiPrefix()}/request/channel/approval/rejected`, payload);
+    return httpService.post(`${PMSApiPrefix()}/request/channel/approval/rejected`, payload);
   }
 
   static async postApprovalApproved(payload: any) {

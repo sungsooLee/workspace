@@ -1,14 +1,15 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
-import { Button, ContentsRow, Input, Textarea, useModal } from '@learnway/ui';
 import {
-  FormInfoArea,
-  FormRow,
-  ContentsHistoryInfoFormField,
-  ChipListFormField,
-  SwitchFormField,
-} from '@shared/ui';
+  Button,
+  ContentsRow,
+  Input,
+  Textarea,
+  useModal,
+  ChipListModalSelectorFormField,
+} from '@learnway/ui';
+import { FormInfoArea, FormRow, ContentsHistoryInfoFormField, SwitchFormField } from '@shared/ui';
 
 import { cn } from '@learnway/shared';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
@@ -349,19 +350,24 @@ const TenantCategoryViewComponent: FC<any> = ({
               element={<Textarea disabled={!isTenantManagerUpdatable} resize="none" />}
             />
           </ContentsRow>
-          {/** TODO. 공통 컴포넌트 및 유저그룹 팝업 작업 후 수정 */}
+          {/** TODO. 유저그룹 팝업 작업 후 수정 */}
           <ContentsRow>
             <FormRow
               provider={provider}
               name={'userGroups'}
-              element={<ChipListFormField disabled={isInitMode || isRoot} />}
-            >
-              <FormInfoArea>
-                <Button variant="gray" size="sm" disabled={isInitMode || isRoot}>
-                  {t('LABEL.button.add')}
-                </Button>
-              </FormInfoArea>
-            </FormRow>
+              element={
+                <ChipListModalSelectorFormField
+                  disabled={isInitMode || isRoot}
+                  showAddButton
+                  chipList={{
+                    showInput: false,
+                    labelField: 'label',
+                    valueField: 'value',
+                    wordwrap: true,
+                  }}
+                />
+              }
+            />
           </ContentsRow>
 
           <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
@@ -427,18 +433,12 @@ const formConfig: DynamicFormConfig = {
     },
     {
       name: 'userGroups',
-      type: 'chip-list',
+      type: 'custom',
       label: t('LABEL.form.label.userGroupSetting'),
       format: 'array',
       placeholder: '',
       description: '',
       value: [],
-      chipListConfig: {
-        showInput: false,
-        labelField: 'label',
-        valueField: 'value',
-        wordwrap: true,
-      },
     },
     {
       name: 'isDuplicateCode',

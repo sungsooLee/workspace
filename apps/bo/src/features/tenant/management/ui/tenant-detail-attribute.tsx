@@ -16,6 +16,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
   const tenantName = routerState.location.state?.tenantName;
 
   const formRef = useRef(null);
+  const { data, refetch } = useTenantAttributeCompany(tenantId);
 
   useImperativeHandle(ref, () => ({
     saveData() {
@@ -31,6 +32,14 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
       }
     },
   }));
+  const handleTabChange = (tabKey: string) => {
+    if (tabKey !== selectedTabKey) {
+      setSelectedTabKey(tabKey);
+    }
+  };
+  const handleOnUpdateComplate = () => {
+    refetch();
+  };
 
   const renderTabContent = (companyId: string) => {
     console.log('companyId', companyId);
@@ -45,17 +54,11 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
         attributeData={attributeData}
         companyId={companyId}
         tenantName={tenantName}
+        onUpdateComplete={handleOnUpdateComplate}
         ref={formRef}
       />
     );
   };
-  const handleTabChange = (tabKey: string) => {
-    if (tabKey !== selectedTabKey) {
-      setSelectedTabKey(tabKey);
-    }
-  };
-
-  const { data } = useTenantAttributeCompany(tenantId);
 
   useEffect(() => {
     if (data) {
@@ -75,7 +78,9 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
         };
       });
       setCompaynTabItem(tabItems);
-      setSelectedTabKey(`tab_${companyId}`);
+      if (selectedTabKey) {
+        setSelectedTabKey(`tab_${companyId}`);
+      }
     }
   }, [attributeRawData]);
 

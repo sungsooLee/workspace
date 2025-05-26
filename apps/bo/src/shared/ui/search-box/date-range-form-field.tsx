@@ -2,16 +2,16 @@ import { DatePicker } from '@learnway/ui';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
 import { FC, useEffect, useState } from 'react';
 
-const DateRangeFormFieldComponent: FC<any> = ({ onChange, onChangeGuideText }) => {
-  const [date, setDate] = useState(new Date());
-  const [date2, setDate2] = useState();
+const DateRangeFormFieldComponent: FC<any> = ({ value, onChange, onChangeGuideText }) => {
+  const [date, setDate] = useState(value.from ?? undefined);
+  const [date2, setDate2] = useState(value.to ?? undefined);
   const handleDate = (value: any) => {
-    onChange({ form: value, to: date });
+    onChange({ from: value, to: date });
     setDate(value);
   };
 
   const handleDate2 = (value: any) => {
-    onChange({ form: date, to: value });
+    onChange({ from: date, to: value });
     setDate2(value);
   };
 

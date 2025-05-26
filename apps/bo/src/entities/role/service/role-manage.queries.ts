@@ -1,7 +1,8 @@
-import { Role } from '../../../types/entities/role';
+import { Role } from '@types';
 import RoleManagerService from '../api/role-manager';
 import TenantMenuManageService from '@entities/menu/api/menu-tenant-manage';
 import MenuMangerService from '@entities/menu/api/menu-manage';
+import { getQuerySkipToken } from '@learnway/shared';
 
 export const roleQueryKeys = {
   list: ['role-page'] as const,
@@ -98,7 +99,8 @@ export const roleManagerQueryOptions = {
   //역할 사용자 그룹 조회
   getRoleUserGroups: (roleCode: string) => ({
     queryKey: [roleQueryKeys.all, roleQueryKeys.userGroups],
-    queryFn: async () => RoleManagerService.fetchRoleUserGroups(roleCode),
+    queryFn: async () =>
+      roleCode ? RoleManagerService.fetchRoleUserGroups(roleCode) : getQuerySkipToken(),
   }),
 };
 
