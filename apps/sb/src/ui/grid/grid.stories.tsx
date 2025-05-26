@@ -21,9 +21,9 @@ import {
   Grid,
   GridBox,
   GridBoxPagination,
+  GridBoxSearchInputCondition,
   GridState,
   ModalWrapper,
-  SearchInputCondition,
   TableBox,
 } from '@learnway/ui';
 import { IcoDownload, IcoSetting } from '@learnway/icons';
@@ -866,7 +866,9 @@ export const TemplateTitleArea: any = (args: any) => {
         </>
       }
       onRemoveAllClick={() => setData([])}
-      onSearchClick={(condition: SearchInputCondition) => console.log('onSearchClick', condition)}
+      onSearchClick={(condition: GridBoxSearchInputCondition) =>
+        console.log('onSearchClick', condition)
+      }
       onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
     />
   );

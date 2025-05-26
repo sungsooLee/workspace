@@ -4,7 +4,7 @@ import { Dropdown, Input } from '@learnway/ui';
 /**
  * 검색 조건을 정의하는 인터페이스
  */
-export interface SearchInputCondition {
+export interface GridBoxSearchInputCondition {
   /**
    * 검색 기준이 되는 키 (예: 'id', 'name', 'title' 등 컬럼의 accessorKey)
    */
@@ -16,9 +16,9 @@ export interface SearchInputCondition {
 }
 
 /**
- * SearchInput 컴포넌트의 props 인터페이스
+ * GridBoxSearchInput 컴포넌트의 props 인터페이스
  */
-export interface SearchInputProps {
+export interface GridBoxSearchInputProps {
   /**
    * 검색 가능한 컬럼 정보를 포함하는 배열
    * 각 컬럼 객체는 `searchable` 속성(boolean), `header` (표시될 이름), `accessorKey` (실제 검색 키)를 포함해야 합니다.
@@ -28,14 +28,14 @@ export interface SearchInputProps {
    * 사용자가 엔터 키를 누르거나 검색 아이콘을 클릭했을 때 호출되는 콜백 함수
    * @param condition - 현재 선택된 검색 조건 ({ key: string, value: string }) 객체
    */
-  onEnterKeyDown?: (condition: SearchInputCondition) => void;
+  onEnterKeyDown?: (condition: GridBoxSearchInputCondition) => void;
 }
 
 /**
  * 검색 입력 컴포넌트
  * 컬럼 드롭다운(선택 사항)과 검색 입력 필드를 포함하여 다양한 기준으로 검색할 수 있도록 합니다.
  */
-export const SearchInput: FC<SearchInputProps> = ({ columns, onEnterKeyDown }) => {
+export const GridBoxSearchInput: FC<GridBoxSearchInputProps> = ({ columns, onEnterKeyDown }) => {
   const options = useMemo(
     () =>
       columns
@@ -49,7 +49,7 @@ export const SearchInput: FC<SearchInputProps> = ({ columns, onEnterKeyDown }) =
 
   // 검색 조건(key, value)을 관리하는 상태.
   // `useState`의 초기값으로 콜백 함수를 사용하여 `options`가 준비된 후에 초기 `key`를 설정합니다.
-  const [condition, setCondition] = useState<SearchInputCondition>(() => ({
+  const [condition, setCondition] = useState<GridBoxSearchInputCondition>(() => ({
     // 검색 가능한 컬럼이 있다면 첫 번째 컬럼의 value를 기본 key로 설정
     key: options.length > 0 ? options[0].value : undefined,
     value: undefined, // 검색어는 초기에는 비어 있습니다.

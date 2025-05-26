@@ -11,16 +11,16 @@ import {
   Button,
   Grid,
   GridBoxProps,
+  GridBoxSearchInput,
+  GridBoxSearchInputCondition,
   GridImperative,
   Pagination,
-  SearchInputCondition,
 } from '@learnway/ui';
 import { IcoMinus, IcoPlus } from '@learnway/icons';
 import styles from './grid-box.module.css';
 import { cn } from '@learnway/shared';
 import { useTranslation } from 'react-i18next';
 import { ExcelButtons } from './components/excel-buttons';
-import { SearchInput } from './components/search-input';
 
 /**
  * 다양한 설정 옵션을 통해 재사용 가능한 표 컴포넌트(Grid)를 구성합니다.
@@ -163,7 +163,7 @@ const GridBoxComponent = <T extends object>(
    * 검색영역 조회 버튼 클릭 핸들러 (엔터 눌렀을때도 실행됨)
    */
   const handleSearchClick = useCallback(
-    (condition: SearchInputCondition) => {
+    (condition: GridBoxSearchInputCondition) => {
       // callback
       onSearchClick?.(condition);
     },
@@ -285,7 +285,7 @@ const GridBoxComponent = <T extends object>(
 
         <div className={styles.button_info}>
           {/* 검색 인풋 */}
-          <SearchInput columns={props.columns || []} onEnterKeyDown={handleSearchClick} />
+          <GridBoxSearchInput columns={props.columns || []} onEnterKeyDown={handleSearchClick} />
           {/* 외부에서 받은 커스텀 버튼 노드 */}
           {customButtonNode}
           {/* 엑셀 버튼 */}
