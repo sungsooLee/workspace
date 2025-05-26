@@ -26,7 +26,7 @@ function RouteComponent() {
   const { open: openModal, close: closeModal } = useModal();
   const TabContents = () => {
     // grid
-    const [pageIndex, setPageIndex] = useState(0);
+    const [pageNumber, setpageNumber] = useState(0);
     const [pageSize, setPageSize] = useState(10);
     const data: any[] = [
       {
@@ -185,9 +185,9 @@ function RouteComponent() {
                 guideText={'채널 등록전 상태의 접수ID만 조회 됩니다.'}
                 pagination={{
                   pageSize,
-                  pageIndex,
-                  totalRows: 100,
-                  onPageChange: setPageIndex,
+                  pageNumber,
+                  totalPages: 100,
+                  onPageChange: setpageNumber,
                   onPageSizeChange: setPageSize,
                 }}
                 title="접수 목록"

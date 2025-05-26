@@ -178,9 +178,9 @@ function RouteComponent() {
           </div>
         </ModalBody>
         {/* 퍼블수정 20240418 : ModalTitle 추가, title_wrap 영역 삭제 E */}
-        <ModalFooter>
+        {/* <ModalFooter>
           <Button label={'취소'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
-        </ModalFooter>
+        </ModalFooter> */}
       </ModalContainer>
     );
   };

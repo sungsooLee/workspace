@@ -7,9 +7,12 @@ import styles from './tree.module.css'; // Tree module CSS
 import { cn } from '@learnway/shared';
 import { TreeView } from './tree';
 import { IcoXclose, IcoNarrowRight } from '@learnway/icons';
+import { TreeBox } from './tree-box';
 
 type Props = Pick<TreeProps, 'onCustomNodeClick' | 'treeId' | 'searchKeyword'> & {
-  title: string;
+  sourceTitle?: string;
+  targetTitle?: string;
+  title?: string;
   selectedItems: any[]; // 추후 수정 필요 현재 key, FullPath만 받아서 필요한 정보 못 갖고옴.
   sourceData: any;
   onItemsChange: (newItems: { key: string; fullPath: string }[]) => void;
@@ -22,6 +25,8 @@ export const ShuttleTreeToChips = ({
   onItemsChange,
   searchKeyword,
   onCustomNodeClick,
+  sourceTitle,
+  targetTitle,
   ...otherProps
 }: Props) => {
   // 내부 상태 관리 (필요한 경우)
@@ -78,40 +83,16 @@ export const ShuttleTreeToChips = ({
   return (
     <div className={cn(layoutStyles.start, layoutStyles.wrap, layoutStyles.pop_layout)}>
       <div className={layoutStyles.inner}>
-        <div className={titleStyles.title_wrap}>
-          <h3 className={titleStyles.title}>{title}</h3>
-          <div className={layoutStyles.btn_wrap}>
-            <Button
-              variant="text"
-              size="sm"
-              className={layoutStyles.btn_text}
-              onClick={() => {
-                setExpandSource(true);
-              }}
-            >
-              {'전체펼침'}
-            </Button>
-            <Button
-              variant="text"
-              size="sm"
-              className={layoutStyles.btn_text}
-              onClick={() => {
-                setExpandSource(false);
-              }}
-            >
-              {'전체닫기'}
-            </Button>
-          </div>
-        </div>
-        <TreeView
+        <TreeBox
           data={sourceData}
           type="SHUTTLE_LIST"
+          title={sourceTitle || title}
           searchKeyword={searchKeyword}
           expandTrigger={expandSource}
           onCustomNodeClick={onCustomNodeClick}
-          nodeButtons={(node) => {
+          showSearchKeyword={true}
+          renderNodeButtons={(node: any) => {
             const isAlreadySelected = actualSelectedItems.some((item) => item.key === node.key);
-
             return (
               <Button
                 onClick={(e) => {
@@ -128,6 +109,7 @@ export const ShuttleTreeToChips = ({
               </Button>
             );
           }}
+          shouldDisableClick={(node: TreeNode, level: number) => node.apiNodeType === 'FOLDER'}
           {...otherProps}
         />
       </div>
@@ -136,7 +118,7 @@ export const ShuttleTreeToChips = ({
       </div>
       <div className={layoutStyles.inner}>
         <div className={titleStyles.title_wrap}>
-          <h3 className={titleStyles.title}>{title}</h3>
+          <h3 className={titleStyles.title}>{targetTitle || title}</h3>
           <div className={layoutStyles.btn_wrap}>
             <Button
               variant="text"
@@ -150,7 +132,7 @@ export const ShuttleTreeToChips = ({
         </div>
         <div className={styles.data_wrap}>
           {actualSelectedItems.length === 0 ? (
-            <div className={styles.no_data}>선택된 항목이 없습니다.</div>
+            <div className={styles.no_data}>{'선택한 데이터가 없습니다.'}</div>
           ) : (
             actualSelectedItems.map((item) => (
               <div key={item.key} className={styles.selected_item}>

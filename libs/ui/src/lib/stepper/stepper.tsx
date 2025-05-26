@@ -4,7 +4,6 @@ import { cn } from '@learnway/shared';
 
 import styles from './stepper.module.css';
 import { SelectOption } from '../type';
-// import { IcoCheckboxChecked } from '@/libs/icons/src';
 import { IcoCheckboxChecked } from '@learnway/icons';
 
 export type StepperType = 'number' | 'check';

@@ -144,6 +144,7 @@ export interface TreeProps {
   selectedNode?: TreeNode | null;
   onCustomNodeClick?: (node: TreeNode) => void;
   clientTree?: boolean;
+  shouldDisableClick?: (node: TreeNode, level: number) => boolean;
   // 추후 제약사항 추가 될 수 있음.
 }
 // 드랍 위치 감지를 위한 타입
@@ -212,6 +213,7 @@ export interface TreeNodeComponentProps {
   size?: string;
   className?: string;
   treeContext?: any;
+  shouldDisableClick?: (node: TreeNode, level: number) => boolean;
 }
 
 /**

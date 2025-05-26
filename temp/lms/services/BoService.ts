@@ -289,7 +289,7 @@ export class BoService {
      */
     public static findByUuid(
         courseId: number,
-        courseType: 'ELEARNING' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
+        courseType: 'ELEARNING' | 'ELEARNING_SANGSI' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',

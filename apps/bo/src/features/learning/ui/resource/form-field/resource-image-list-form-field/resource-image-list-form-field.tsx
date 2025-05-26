@@ -96,7 +96,13 @@ const ResourceImageListFormFieldComponent = forwardRef<
         showItemBorder
         itemRenderer={(option: any) => (
           <div className={style.thumb_wrap}>
-            <Thumbnail width={84} height={55} path={option.path} className={style.image} />
+            <Thumbnail
+              width={84}
+              height={55}
+              id={option.path}
+              path={option.path}
+              className={style.image}
+            />
             <span className={style.thumb_name}>{option.name}</span>
           </div>
         )}

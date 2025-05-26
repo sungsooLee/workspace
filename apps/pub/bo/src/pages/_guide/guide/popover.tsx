@@ -1,17 +1,16 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
-import { IcoArrowDown } from '@learnway/icons';
+import { IcoArrowDown, IcoClose02 } from '@learnway/icons';
 import { Popover, Button } from '@learnway/ui';
 
 import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
+import tooltipPopoverStyles from '@learnway/styles/bo/assets/styles/modules/tootip-popover.module.css';
+import { NoticeBox } from '../../../../../../bo/src/shared/ui/';
 
 export const Route = createFileRoute('/_guide/guide/popover')({
   component: RouteComponent,
 });
-
-const PopoverContent = () => {
-  return <div>팝오버 내용</div>;
-};
 
 const DropdownPopoverCompoment = () => {
   return (
@@ -25,6 +24,37 @@ const DropdownPopoverCompoment = () => {
 };
 
 function RouteComponent() {
+  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const PopoverContent = () => {
+    return (
+      <div className={tooltipPopoverStyles.start}>
+        <strong className={tooltipPopoverStyles.title}>{'title'}</strong>
+        <div className={tooltipPopoverStyles.contents_wrap}>
+          <NoticeBox
+            iconVisible={false}
+            type={'bullet'}
+            descriptions={[
+              '도움말 클릭시 도움말 영역이 가변적으로 노출됩니다. 영역을 클릭하거나 우측 닫기 버튼을 클릭하면 해당 영역이 사라집니다.',
+              '도움말 클릭시 도움말 영역이 가변적으로 노출됩니다. 영역을 클릭하거나 우측 닫기 버튼을 클릭하면 해당 영역이 사라집니다.',
+              '도움말 클릭시 도움말 영역이 가변적으로 노출됩니다. 영역을 클릭하거나 우측 닫기 버튼을 클릭하면 해당 영역이 사라집니다.',
+              '도움말 클릭시 도움말 영역이 가변적으로 노출됩니다. 영역을 클릭하거나 우측 닫기 버튼을 클릭하면 해당 영역이 사라집니다.',
+              '도움말 클릭시 도움말 영역이 가변적으로 노출됩니다. 영역을 클릭하거나 우측 닫기 버튼을 클릭하면 해당 영역이 사라집니다.',
+              '도움말 클릭시 도움말 영역이 가변적으로 노출됩니다. 영역을 클릭하거나 우측 닫기 버튼을 클릭하면 해당 영역이 사라집니다.',
+              '도움말 클릭시 도움말 영역이 가변적으로 노출됩니다. 영역을 클릭하거나 우측 닫기 버튼을 클릭하면 해당 영역이 사라집니다.',
+              '도움말 클릭시 도움말 영역이 가변적으로 노출됩니다. 영역을 클릭하거나 우측 닫기 버튼을 클릭하면 해당 영역이 사라집니다.',
+            ]}
+          />
+        </div>
+        <Button
+          className={tooltipPopoverStyles.btn_close}
+          icon={<IcoClose02 />}
+          onlyIcon
+          onClick={() => setIsOpen(!isOpen)}
+        />
+        {/* 팝오버 내용 <Button label={'버튼'} onClick={() => setIsOpen(!isOpen)} /> */}
+      </div>
+    );
+  };
   return (
     <div>
       <h2 className="guide_tit2">Popover Component Guide</h2>
@@ -46,8 +76,12 @@ function RouteComponent() {
               side="bottom"
               align="start"
               sideOffset={10}
+              open={isOpen}
+              onOpenChange={setIsOpen}
+              onPointerDownOutside={(e) => e.preventDefault()}
+              onInteractOutside={(e) => e.preventDefault()}
             >
-              팝오버 클릭요소
+              {isOpen ? '팝오버 닫기' : '팝오버 열기'}
             </Popover>
           </div>
         </div>

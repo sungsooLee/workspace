@@ -1,6 +1,6 @@
-import { ChangeEvent, FC, useCallback, useMemo } from 'react';
+import { FC, useCallback, useMemo } from 'react';
 import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css';
-import { Badge, Button, Progress } from '@learnway/ui';
+import { Badge, Button, ProgressBar } from '@learnway/ui';
 import {
   IcoComplete02,
   IcoFileExcel,
@@ -81,9 +81,9 @@ const DndFileProgressComponent: FC<DndFileProgressProps> = ({
 
     // 텍스트 렌더링 상태가 아닐 경우 진행률 컴포넌트를 렌더링
     return (
-      <Progress
+      <ProgressBar
         className={styles.progress}
-        value={file.progress} // 진행률 수치 (숫자 값)
+        progress={file.progress} // 진행률 수치 (숫자 값)
         label={file.status} // 진행률 레이블 (현재 상태 표시)
         isFailed={file.status === 'failed'} // 실패 상태 여부에 따라 실패 스타일 적용
       />
@@ -229,8 +229,8 @@ const DndFileProgressComponent: FC<DndFileProgressProps> = ({
         {/* 파일 업로드 후 */}
         {files.length > 0 && (
           <div className={styles.upload_status}>
-            {files.map((file: any) => (
-              <div className={styles.file_item}>
+            {files.map((file) => (
+              <div className={styles.file_item} key={file.id}>
                 <div className={styles.file_name}>
                   <IcoFileExcel width={'24'} height={'25'} className={styles.icon_type} />
                   <em className={styles.name}>{file.fileName}</em>

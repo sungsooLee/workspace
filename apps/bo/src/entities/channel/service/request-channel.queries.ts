@@ -18,7 +18,9 @@ export const queryOptions = {
 };
 
 export const mutateOptions = {
-  reject: () => (payload: any) => RequestChannelService.postApprovalRejected(payload),
+  reject: () => ({
+    mutationFn: (payload: any) => RequestChannelService.postApprovalRejected(payload),
+  }),
   approve: () => ({
     mutationFn: (payload: any) => RequestChannelService.postApprovalApproved(payload),
   }),

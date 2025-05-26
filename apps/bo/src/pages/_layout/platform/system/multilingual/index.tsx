@@ -4,32 +4,23 @@ import {
   EditInputCell,
   EditTextareaCell,
   GridBox,
-  GridBoxConfig,
   useGridBox,
   useGridBoxConfig,
   useModal,
 } from '@learnway/ui';
-import { cn } from '@learnway/shared';
+import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { translationQueryOptions } from '@entities/translation/service/translation.queries';
-import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import {
-  CODE_GROUP,
-  SearchBoxConfig,
-  SelectOption,
-  useCurrentRoute,
-  useSearchBox,
-} from '@learnway/hooks';
+import { CODE_GROUP, SearchBoxConfig, useCurrentRoute, useSearchBox } from '@learnway/hooks';
 import { SearchBox } from '@shared/ui/search-box';
 import { CellContext } from '@tanstack/react-table';
 import { useTranslation } from '@entities/translation/service/translation.hook';
 import { t } from 'i18next';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
-import styles from '@/libs/ui/src/lib/grid/grid-box.module.css';
 
 export const Route = createFileRoute('/_layout/platform/system/multilingual/')({
   component: RouteComponent,
@@ -191,9 +182,9 @@ function RouteComponent() {
             <GridBox
               config={gConfig}
               titleCustomNode={
-                <div className={styles.sub_info}>
+                <div className={'custom_info_wrap'}>
                   {t('pms.multilingual.Is_Translation.true')}{' '}
-                  <strong className={styles.num}>{successTranslationCount}</strong>
+                  <strong className={'table_tit'}>{successTranslationCount}</strong>
                   <span className={'normal_text'}>
                     {t('LABEL.platform.system.multilingual.currentTranslationLanguage')} :{' '}
                     {currentTargetLocale

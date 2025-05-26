@@ -9,10 +9,6 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate = {
      * 사용 여부
      */
     isUsed: boolean;
-    /**
-     * 공개 여부
-     */
-    isPublished: boolean;
     wizardStep: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.wizardStep;
     courseName: string;
     courseSummary: string;

@@ -1,5 +1,6 @@
+import { UploadFile } from '@learnway/hooks';
 export interface DndFileProgressProps {
-  files: any;
+  files: UploadFile[];
   onRemove: (fileId: string) => void;
   onRetry: (fileId: string) => void;
   addFiles: (files: File[]) => void;

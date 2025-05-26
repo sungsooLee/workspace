@@ -53,5 +53,8 @@
   }
   &.line {
     @apply mt-[32px] border-t-[1px] border-solid border-[var(--gray2)] pt-[32px];
+    &::before {
+      @apply top-[32px] h-[calc(100%-32px)];
+    }
   }
 }

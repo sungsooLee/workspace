@@ -73,6 +73,7 @@ export { ReactComponent as IcoRefresh } from './lib/ic_refresh.svg'; // refresh
 export { ReactComponent as IcoRefresh02 } from './lib/ic_refresh02.svg'; // refresh
 export { ReactComponent as IcoPause } from './lib/ic_pause.svg'; // pause
 export { ReactComponent as IcoComplete02 } from './lib/ic_complete02.svg'; // complete02
+export { ReactComponent as IcoProgressComplete } from './lib/ic_complete03.svg'; // complete03
 export { ReactComponent as IcoFileMp4 } from './lib/ic_file_mp4.svg'; // mp4
 export { ReactComponent as IcoFileExcel } from './lib/ic_file_excel.svg'; // excel
 export { ReactComponent as IcoBlog } from './lib/ic_blog.svg'; // blog

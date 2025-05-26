@@ -2,10 +2,10 @@
 .row {
   @apply flex w-full gap-[40px] text-left;
   .row {
-    @apply mt-[16px];
+    @apply mt-[12px];
   }
   & + .row {
-    @apply border-t-[1px] border-solid border-[var(--gray2)] pt-[16px];
+    @apply border-t-[1px] border-solid border-[var(--gray2)] pt-[12px];
     &.no_line {
       @apply border-0 pt-[0];
     }
@@ -23,21 +23,21 @@
   }
   &:has(.row .form_item) {
     + hr.divider {
-      @apply mt-[16px];
+      @apply mt-[12px];
     }
   }
 }
 
 .form_item {
-  @apply relative w-full flex-1 pb-[16px] text-left;
+  @apply relative w-full flex-1 pb-[12px] text-left;
   .form_title {
     @apply title_6_b text-[var(--gray9)];
     & + .form_label {
-      @apply mt-[16px];
+      @apply mt-[12px];
     }
   }
   .guide_text {
-    @apply mt-[8px] text-[1.2rem] font-normal leading-[1.4rem] text-[var(--gray6)];
+    @apply button_5_r mt-[8px] text-[var(--gray6)];
     &:empty {
       @apply hidden;
     }
@@ -219,7 +219,7 @@
   }
 }
 .form_label {
-  @apply flex items-center overflow-hidden;
+  @apply relative z-[1] inline-flex items-center overflow-hidden;
   .form_text {
     @apply body_3_r;
     &.sm {
@@ -344,7 +344,7 @@
 }
 
 .form_contents_wrap {
-  @apply border-t border-solid border-[#eaf1fa] pt-[16px];
+  @apply pt-[12px];
   .tit_sub {
     @apply body_3_r mb-[12px] inline-flex text-[var(--gray9)];
     .required {
@@ -373,7 +373,7 @@
     }
   }
   & + div:not(:empty) {
-    @apply !mt-[32px];
+    @apply !mt-[24px];
   }
 }
 

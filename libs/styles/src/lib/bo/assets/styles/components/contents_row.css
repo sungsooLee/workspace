@@ -3,14 +3,13 @@
   .nlp--contents-row {
     @apply flex w-full gap-[40px] text-left;
     label > span {
-      @apply text-[1.4rem] text-[var(--gray8)];
+      @apply body_bo_2_r text-[var(--gray9)];
     }
 
     .nlp--contents-row {
-      @apply mt-[16px];
+      @apply mt-[12px];
     }
     & + .nlp--contents-row {
-      @apply border-t-[1px] border-solid border-[var(--gray3)] pt-[16px];
       &.no_line {
         @apply border-t-0 pt-0;
       }
@@ -28,7 +27,7 @@
     }
     &:has(.nlp--contents-row .form_item) {
       + hr.divider {
-        @apply mt-[16px];
+        @apply mt-[12px];
       }
     }
   }

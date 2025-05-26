@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from '@tanstack/react-router';
 
 import { useModal } from '@learnway/ui';
 import { useCurrentRoute } from '@learnway/hooks';
 
-import { widgetsQueryOptions } from './widgets.queries';
+import { widgetsQueryOptions, mutateOptions } from './widgets.queries';
 
 const useWidgetsHook = () => {
   const { state } = useCurrentRoute();
@@ -36,3 +36,39 @@ const useWidgetsHook = () => {
 };
 
 export const useWidgets = useWidgetsHook;
+
+export function useAllTenantWidget(tenantId: number) {
+  return useQuery(widgetsQueryOptions.allTenantWidget(tenantId));
+}
+
+export function useCreateTenantWidget(options: any) {
+  const mutation = useMutation({
+    ...mutateOptions.createTenant(),
+    ...options,
+  });
+
+  return {
+    createTenantWidget: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
+export function useMoveTenantWidget(options: any) {
+  const mutation = useMutation({
+    ...mutateOptions.moveTenantWidget(),
+    ...options,
+  });
+
+  return {
+    moveTenantWidget: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}

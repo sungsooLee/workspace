@@ -2,22 +2,22 @@ import { useEffect, useRef } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import {
-  Button,
-  Progress,
   Badge,
-  useModal,
-  ModalContainer,
+  Button,
   ModalBody,
+  ModalContainer,
   ModalFooter,
   ModalTitle,
+  ProgressBar,
+  useModal,
 } from '@learnway/ui';
 import {
-  IcoUploadCloud,
-  IcoPpt,
-  IcoTrash03,
-  IcoRefresh,
   IcoComplete02,
   IcoPause,
+  IcoPpt,
+  IcoRefresh,
+  IcoTrash03,
+  IcoUploadCloud,
 } from '@learnway/icons';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
@@ -87,7 +87,7 @@ function RouteComponent() {
                       <em className={styles.file_size}>100MB</em>
                     </p>
                     <div className={styles.progress_area}>
-                      <Progress className={styles.progress} value={100} label={'완료'} />
+                      <ProgressBar className={styles.progress} progress={100} label={'완료'} />
                     </div>
                     <div className={styles.control_wrap}>
                       <IcoComplete02
@@ -188,7 +188,12 @@ function RouteComponent() {
                       <em className={styles.file_size}>100MB</em>
                     </p>
                     <div className={styles.progress_area}>
-                      <Progress className={styles.progress} value={40} label={'실패'} isFailed />
+                      <ProgressBar
+                        className={styles.progress}
+                        progress={40}
+                        label={'실패'}
+                        isFailed
+                      />
                     </div>
                     <div className={styles.control_wrap}>
                       <Button className={styles.btn_status} onlyIcon>
@@ -211,7 +216,7 @@ function RouteComponent() {
                       <em className={styles.file_size}>100MB</em>
                     </p>
                     <div className={styles.progress_area}>
-                      <Progress className={styles.progress} value={40} label={'진행중'} />
+                      <ProgressBar className={styles.progress} progress={40} label={'진행중'} />
                     </div>
                     <div className={styles.control_wrap}>
                       <Button className={styles.btn_status} onlyIcon>
@@ -234,7 +239,7 @@ function RouteComponent() {
                       <em className={styles.file_size}>100MB</em>
                     </p>
                     <div className={styles.progress_area}>
-                      <Progress className={styles.progress} value={0} label={'대기중'} />
+                      <ProgressBar className={styles.progress} progress={0} label={'대기중'} />
                     </div>
                     <div className={styles.control_wrap}>
                       <Button className={styles.btn_status} onlyIcon>

@@ -20,7 +20,12 @@ import {
 import { ThumbnailListFormField } from '@shared/ui';
 import { ContentsHistoryInfoFormField, FormRow } from '@shared/ui';
 import { isEqual } from 'lodash';
-import { CompanyShuttleModal, UserChoiceModal, UserShuttleModal } from '@features/shared';
+import {
+  CompanyShuttleModal,
+  UserChoiceModal,
+  UserShuttleModal,
+  RoleChoiceModal,
+} from '@features/shared';
 import {
   CODE_GROUP,
   BaseFormFieldProps,
@@ -86,7 +91,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
 
   const handleOnSubmit = async (data: any) => {
     console.log('data {} => ', data);
-    const logoImageUrl = data.logoImageUrl?.length > 0 ? data.logoImageUrl[0].path : '';
+    const logoImageUrl = data.logoImageUrl?.length > 0 ? data.logoImageUrl[0] : '';
 
     const payload = {
       ...data,
@@ -98,6 +103,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       isCommonCategory: data.useCategory.includes(EnUseCategory.isCommonCategory),
       isTenantCategory: data.useCategory.includes(EnUseCategory.isTenantCategory),
       companyTenantList: data.companyTenantList.map((i: any) => i.companyId),
+      tenantMappingRoleList: data.tenantMappingRoleList.map((i: any) => i.roleId),
       tenantId: tenantId,
     };
     console.log('payload {} => ', payload);
@@ -114,7 +120,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
     if (tenantData) {
       const device = [];
       const useCategory = [];
-      const logoImageUrl = [{ id: `t_img_${tenantId}`, path: tenantData.logoImageUrl }];
+      const logoImageUrl = [tenantData.logoImageUrl];
       tenantData.isPc && device.push(EnDeviceType.isPc);
       tenantData.isMobile && device.push(EnDeviceType.isMobile);
       tenantData.isApp && device.push(EnDeviceType.isApp);
@@ -131,6 +137,11 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
           name: item.companyName,
         })),
         tenantMappingLanguageTypeList: tenantData.tenantLanguageList,
+        tenantMappingUserList: tenantData.tenantUserList,
+        tenantMappingRoleList: tenantData.tenantRoleList.map((item) => ({
+          roleId: item.roleId,
+          name: item.roleName,
+        })),
         tenantDesc: tenantData.tenantDesc ?? '',
       });
     }
@@ -168,10 +179,10 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       <ContentsRow>
         <FormRow provider={provider} name="logoImageUrl" element={<ThumbnailListFormField />} />
       </ContentsRow>
-      <ContentsRow>
+      {/* <ContentsRow>
         <FormRow
           provider={provider}
-          name="managerName"
+          name="tenantMappingUserList"
           element={
             <ChipListModalSelectorFormField
               chipList={{
@@ -183,6 +194,26 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
                 title: '',
                 width: 'xl',
                 content: <UserChoiceModal />,
+              }}
+            />
+          }
+        />
+      </ContentsRow> */}
+      <ContentsRow>
+        <FormRow
+          provider={provider}
+          name="tenantMappingRoleList"
+          element={
+            <ChipListModalSelectorFormField
+              chipList={{
+                labelField: 'name',
+                valueField: 'roleId',
+                hideBorder: true,
+              }}
+              modalConfig={{
+                title: '',
+                width: 'xl',
+                content: <RoleChoiceModal />,
               }}
             />
           }
@@ -271,11 +302,19 @@ const formConfig: DynamicFormConfig = {
       tooltip: t('테넌트에 사용할 로고로 파일 1개만 등록할 수 있습니다.'),
     },
     {
-      name: 'managerName',
+      name: 'tenantMappingUserList',
       label: t('테넌트 담당자'),
       type: 'custom',
-      value: '',
+      format: 'array',
+      value: [],
       placeholder: t('담당자를 선택해주세요.'),
+    },
+    {
+      name: 'tenantMappingRoleList',
+      type: 'custom',
+      label: t('테넌트 역할'),
+      format: 'array',
+      value: [],
     },
     {
       name: 'tenantBillingTag',
@@ -413,9 +452,9 @@ const formConfig: DynamicFormConfig = {
         },
       ],
     },
-    // managerName: { required: true },
+    tenantMappingRoleList: { required: true },
     tenantBillingTag: { required: true },
-    // company: { required: true },
+    companyTenantList: { required: true },
     isUsed: { required: true },
     device: {
       required: {

@@ -221,7 +221,7 @@ const CompanyInfomationComponent: FC<{}> = ({}) => {
       <div className="title_wrap">
         <strong className="title">{'연동 정보 설정'}</strong>
       </div>
-      <ContentsRow type="horizontal" className="mb-[16px]">
+      <ContentsRow type="horizontal">
         {/* form_item */}
         <div className={formStyles.form_item}>
           <label htmlFor="name-hrSystem" className={formStyles.form_label}>

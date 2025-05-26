@@ -16,7 +16,7 @@ const OutsideUserMenuComponent: FC<{}> = ({}) => {
     { value: 'option2', label: '옵션 2' },
     { value: 'option3', label: '옵션 3' },
   ];
-  const [pageIndex, setPageIndex] = useState(0);
+  const [pageNumber, setpageNumber] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const data: any[] = [
     {
@@ -268,9 +268,9 @@ const OutsideUserMenuComponent: FC<{}> = ({}) => {
           height={280}
           pagination={{
             pageSize,
-            pageIndex,
-            totalRows: 100,
-            onPageChange: setPageIndex,
+            pageNumber,
+            totalPages: 100,
+            onPageChange: setpageNumber,
             onPageSizeChange: setPageSize,
           }}
           title="사외이용자 목록"

@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import '@/libs/styles/src/lib/bo/assets/styles/guide.css';
+import style from './index.module.css';
 
 export const Route = createFileRoute('/_layout/')({
   component: HomeComponent,
@@ -15,13 +15,13 @@ function HomeComponent() {
     >
       <MainContents>
         <h3>Dash Board</h3>
-        <div className="guide_wrap">
-          <div className="preview">
-            <div className="guide_box">
+        <div className={style.guide_wrap}>
+          <div className={style.preview}>
+            <div className={style.guide_box}>
               <div style={{ marginBottom: 10 }}>
                 <h3>M0</h3>
               </div>
-              <table className="pub_table">
+              <table className={style.pub_table} style={{ width: '100%' }}>
                 <thead>
                   <tr>
                     <th scope="col">스크린 명</th>
@@ -37,17 +37,19 @@ function HomeComponent() {
                   {munu.map((item, index) => (
                     <tr key={index} className="h-[20px]">
                       <td className="text-left">{item.screenName}</td>
-                      <td className="pages">
+                      <td className={style.pages}>
                         <a href={item.pageId} target="_blank" rel="noopener noreferrer">
                           {item.pageId}
                         </a>
-                        <span className="screen">{item.screenId ? `(${item.screenId})` : ''}</span>
+                        <span className={style.screen}>
+                          {item.screenId ? `(${item.screenId})` : ''}
+                        </span>
                       </td>
                       <td>{item.pageType}</td>
                       <td>{item.completionDate || '-'}</td>
                       <td>{item.lastUpdateDate || '-'}</td>
-                      <td className="remarks">{item.remarks}</td>
-                      <td className={`${item.completionDate ? 'completed' : 'status'}`}>
+                      <td className={style.remarks}>{item.remarks}</td>
+                      <td className={`${item.completionDate ? style.completed : style.status}`}>
                         {item.completionDate ? '완료' : '진행예정'}
                       </td>
                     </tr>
@@ -57,35 +59,26 @@ function HomeComponent() {
               <div style={{ marginBottom: 10, marginTop: 40 }}>
                 <h3>Guide</h3>
               </div>
-              <table className="pub_table">
+              <table className={style.pub_table} style={{ width: '100%' }}>
                 <thead>
                   <tr>
                     <th scope="col">스크린 명</th>
                     <th scope="col">페이지링크(화면아이디)</th>
                     <th scope="col">페이지타입</th>
-                    <th scope="col">완료일</th>
-                    <th scope="col">최종수정일</th>
                     <th scope="col">비고</th>
-                    <th scope="col">상태</th>
                   </tr>
                 </thead>
                 <tbody>
                   {guide.map((item, index) => (
                     <tr key={index} className="h-[20px]">
                       <td className="text-left">{item.screenName}</td>
-                      <td className="pages">
+                      <td className={style.pages}>
                         <a href={item.pageId} target="_blank" rel="noopener noreferrer">
                           {item.pageId}
                         </a>
-                        <span className="screen">{item.screenId ? `(${item.screenId})` : ''}</span>
                       </td>
                       <td>{item.pageType}</td>
-                      <td>{item.completionDate || '-'}</td>
-                      <td>{item.lastUpdateDate || '-'}</td>
-                      <td className="remarks">{item.remarks}</td>
-                      <td className={`${item.completionDate ? 'completed' : 'status'}`}>
-                        {item.completionDate ? '완료' : '진행예정'}
-                      </td>
+                      <td className={style.remarks}>{item.remarks}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -116,6 +109,24 @@ export const munu = [
     completionDate: '-',
     lastUpdateDate: '-',
     remarks: '작업 완료', // 비고
+  },
+  {
+    screenName: '회원가입 진행현황',
+    pageId: 'signup-progress',
+    screenId: 'NLP_BO_LOG_1000',
+    pageType: 'Page',
+    completionDate: '-',
+    lastUpdateDate: '-',
+    remarks: '작업 중 api X', // 비고
+  },
+  {
+    screenName: '관리자 회원가입',
+    pageId: 'signup',
+    screenId: 'NLP_BO_LOG_1000',
+    pageType: 'Page',
+    completionDate: '-',
+    lastUpdateDate: '-',
+    remarks: '작업 중 api X', // 비고
   },
   {
     screenName: '나의 정보',
@@ -249,46 +260,31 @@ export const guide = [
   {
     screenName: '폼타입3',
     pageId: 'menu/type3',
-    screenId: '-',
     pageType: 'Page',
-    completionDate: '-',
-    lastUpdateDate: '-',
-    remarks: '작업 완료', // 비고
+    remarks: '', // 비고
   },
   {
     screenName: '폼타입4',
     pageId: 'menu/type4',
-    screenId: '-',
     pageType: 'Page',
-    completionDate: '-',
-    lastUpdateDate: '-',
-    remarks: '작업 완료', // 비고
+    remarks: '', // 비고
   },
   {
     screenName: '폼타입5',
     pageId: 'menu/type5',
-    screenId: '-',
     pageType: 'Page',
-    completionDate: '-',
-    lastUpdateDate: '-',
-    remarks: '작업 완료', // 비고
+    remarks: '', // 비고
   },
   {
     screenName: '폼타입6',
     pageId: 'menu/type6',
-    screenId: '-',
     pageType: 'Page',
-    completionDate: '-',
-    lastUpdateDate: '-',
-    remarks: '작업 완료', // 비고
+    remarks: '', // 비고
   },
   {
     screenName: '공통팝업',
     pageId: 'common-popup',
-    screenId: '-',
     pageType: 'Page',
-    completionDate: '-',
-    lastUpdateDate: '-',
-    remarks: '작업 완료', // 비고
+    remarks: '공통 팝업', // 비고
   },
 ];

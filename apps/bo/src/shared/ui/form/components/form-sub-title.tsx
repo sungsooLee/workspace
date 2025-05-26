@@ -16,9 +16,11 @@ interface FormSubTitleProps {
   className?: string;
   /** action node */
   actionNode?: ReactNode;
+  titleNode?: ReactNode;
 }
 
 const FormSubTitleComponent = ({
+  titleNode,
   actionNode,
   label,
   underLine,
@@ -39,6 +41,7 @@ const FormSubTitleComponent = ({
       {/* Label */}
       <div className={styles.title_area}>
         <strong className={styles.title}>{label}</strong>
+        {titleNode && <div className={styles.custom_area}>{titleNode}</div>}
       </div>
       {/* Action Node */}
       {actionNode && <div className={styles.input_area}>{actionNode}</div>}

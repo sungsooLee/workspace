@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { isMobile } from 'react-device-detect';
-import { Button, useModal } from '@learnway/ui';
+import { Button, useModal, ProgressCheck } from '@learnway/ui';
 import styles from './curriculum-study.module.css';
 import { IcoArrowDown } from '@learnway/icons';
 import { NoticeDetailPopup } from '../../../../features/layout';
@@ -22,6 +22,9 @@ const CurriculumStudyComponent = ({ className }: CurriculumStudyProps) => {
           <div className={styles.txt_box}>
             <ul>
               <li>
+                <span className={styles.progress}>
+                  <ProgressCheck progress={30} />
+                </span>
                 <span className={styles.subject}>
                   1. (리얼법전) 김정근, 이지애와 함께하는 직장 내 성희롱 예방교육
                 </span>
@@ -47,6 +50,9 @@ const CurriculumStudyComponent = ({ className }: CurriculumStudyProps) => {
               </li>
               {/* 학습중 styles.ing */}
               <li className={styles.ing}>
+                <span className={styles.progress}>
+                  <ProgressCheck progress={100} />
+                </span>
                 <span className={styles.subject}>2. (파악하기) 직장 내 성희롱, 판단 기준은?</span>
                 <div className={styles.stats_div}>
                   <span className={styles.stats}>
@@ -68,6 +74,9 @@ const CurriculumStudyComponent = ({ className }: CurriculumStudyProps) => {
                 </div>
               </li>
               <li>
+                <span className={styles.progress}>
+                  <ProgressCheck progress={30} />
+                </span>
                 <span className={styles.subject}>3. (파악하기) 직장 내 성희롱, 판단 기준은?</span>
                 <div className={styles.stats_div}>
                   <span className={styles.stats}>
@@ -89,6 +98,9 @@ const CurriculumStudyComponent = ({ className }: CurriculumStudyProps) => {
           <div className={styles.txt_box}>
             <ul>
               <li>
+                <span className={styles.progress}>
+                  <ProgressCheck progress={80} />
+                </span>
                 <span className={styles.subject}>
                   1. (리얼법전) 김정근, 이지애와 함께하는 직장 내 성희롱 예방교육
                 </span>
@@ -114,6 +126,9 @@ const CurriculumStudyComponent = ({ className }: CurriculumStudyProps) => {
               </li>
               {/* 학습중 styles.ing */}
               <li className={styles.ing}>
+                <span className={styles.progress}>
+                  <ProgressCheck progress={50} />
+                </span>
                 <span className={styles.subject}>2. (파악하기) 직장 내 성희롱, 판단 기준은?</span>
                 <div className={styles.stats_div}>
                   <span className={styles.stats}>
@@ -135,6 +150,9 @@ const CurriculumStudyComponent = ({ className }: CurriculumStudyProps) => {
                 </div>
               </li>
               <li>
+                <span className={styles.progress}>
+                  <ProgressCheck progress={0} />
+                </span>
                 <span className={styles.subject}>3. (파악하기) 직장 내 성희롱, 판단 기준은?</span>
                 <div className={styles.stats_div}>
                   <span className={styles.stats}>

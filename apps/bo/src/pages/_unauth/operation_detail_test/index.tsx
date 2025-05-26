@@ -5,10 +5,10 @@ import {
   Button,
   ChipListModalSelectorFormField,
   ContentsRow,
-  DynamicFormField,
   Input,
   InputModalSelectorFormField,
   ListModalSelectorFormField,
+  useModal,
 } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
@@ -28,6 +28,7 @@ export const Route = createFileRoute('/_unauth/operation_detail_test/')({
 });
 
 function RouteComponent() {
+  const { open: openModal } = useModal();
   const { provider, onSubmit, control, getValues } = useDynamicForm(formConfig);
 
   const handleOnSubmit = (data: any) => {
@@ -43,15 +44,10 @@ function RouteComponent() {
       <PageContainer>
         <ContentsButtons>
           <Button type="submit" variant="point" size="sm" label={'과정복사'} />
-
           <Button type={'button'} variant="point" size="sm" label={'임시저장'} />
-
           <Button type={'button'} variant="point" size="sm" label={'작성완료'} />
-
           <Button type={'button'} variant="point" size="sm" label={'미리보기'} />
-
           <Button type={'button'} variant="primary" size="sm" label={'게시하기'} />
-
           <Button
             type={'submit'}
             variant="point"
@@ -59,7 +55,6 @@ function RouteComponent() {
             label={'Form submit'}
             onClick={handleOnSubmit}
           />
-
           <Button
             type={'button'}
             variant="point"
@@ -115,7 +110,25 @@ function RouteComponent() {
                     valueField: 'id',
                     wordwrap: true,
                   }}
-                  actionNode={<Button variant="text" size="sm" label={t('추가')} />}
+                />
+              }
+            />
+          </ContentsRow>
+          {/* 강사2 */}
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name={'강사2'}
+              element={
+                <ChipListModalSelectorFormField
+                  showAddButton
+                  modalConfig={{ content: <TeacherListModal channelId={getValues()?.channelId} /> }}
+                  chipList={{
+                    labelField: 'name',
+                    valueField: 'id',
+                    wordwrap: true,
+                  }}
+                  actionNode={<Button variant="text" size="sm" label={t('대상자')} onClick={() => openModal({content: <ManagerListModal />})} />}
                 />
               }
             />
@@ -265,6 +278,15 @@ const formConfig: DynamicFormConfig = {
       description: '',
     },
     {
+      name: '강사2',
+      type: 'custom',
+      label: t('강사 - ChipListModalSelectorFormField'),
+      format: 'array',
+      value: [],
+      placeholder: '',
+      description: '',
+    },
+    {
       name: '난이도',
       type: 'radio-group',
       label: t('난이도'),
@@ -351,7 +373,10 @@ const formConfig: DynamicFormConfig = {
       type: 'thumbnail-list',
       label: t('ThumbnailListFormField'),
       format: 'array',
-      value: [],
+      value: [
+        'https://lodash.com/assets/img/lodash.svg',
+        'https://lodash.com/assets/img/lodash.svg',
+      ],
     },
   ],
 };

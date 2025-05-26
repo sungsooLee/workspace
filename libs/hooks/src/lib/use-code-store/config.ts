@@ -1,5 +1,7 @@
-import { CodeApiConfig } from './types';
+import { CodeApiConfig, CodeOption } from './types';
 import { CODE_GROUP } from './constants';
+import { httpService } from '@learnway/shared';
+import { PMSApiPrefix } from '@learnway/config';
 
 /**
  * 기본 코드 조회 API 가 아닌 케이스만 작성 해준다.
@@ -37,5 +39,31 @@ export const codeOptions: CodeApiConfig = {
         label: 'DEFAULT 호출 3번 옵션',
       },
     ],
+  },
+  [CODE_GROUP['manual.company.companyCode']]: {
+    api: async () => {
+      const data: any = await httpService.get(`${PMSApiPrefix()}/companies`, { size: 1000 });
+      console.log('manual.', data);
+      return [
+        { label: '전체', value: '' },
+        ...data.content.map((item: any) => ({
+          label: item.name,
+          value: item.companyCode,
+        })),
+      ];
+    },
+    disableCache: true,
+  },
+  [CODE_GROUP['manual.tenant.tenantId']]: {
+    api: async () => {
+      const data: any = await httpService.get(`${PMSApiPrefix()}/tenants`, { size: 1000 });
+      return [
+        ...data.content.map((item: any) => ({
+          label: item.tenantName,
+          value: item.tenantId,
+        })),
+      ];
+    },
+    disableCache: true,
   },
 };

@@ -21,7 +21,8 @@ export default class RoleManagerService {
    * @returns 수정된 역할 정보
    */
   static updateRole(payload: Role): Promise<any> {
-    return httpService.put<Role>(`${PMSApiPrefix()}/roles/${payload.roleCode}`, payload);
+    const body = genCreateRole(payload);
+    return httpService.put<Role>(`${PMSApiPrefix()}/roles/${payload.roleCode}`, body);
   }
 
   /**
@@ -37,11 +38,8 @@ export default class RoleManagerService {
    * 역할 목록  조회
    * @returns 역할 목록
    */
-  static fetchRolesList(tenantId: number, siteScope: string): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/roles`, {
-      tenantId: tenantId,
-      siteScope: siteScope,
-    });
+  static fetchRolesList(params: any): Promise<any> {
+    return httpService.get<any>(`${PMSApiPrefix()}/roles`, params);
   }
 
   /**

@@ -14,8 +14,8 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class BoS3FileService {
     /**
-     * S3 멀티파트 업로드 시작 요청
-     * S3 멀티파트(파일분할) 업로드 시작을 요청한다.<br>응답 받은 uploadId를 이용하여 멀티파트(파일분할) 업로드를 진행해야 한다.<br><br>1. S3 멀티파트 업로드 시작 요청<br>2. S3 업로드 Presigned URL 요청<br>3. Ajax Put 파일업로드<br>4. S3 멀티파트 업로드 완료 요청
+     * S3 멀티파트 업로드 시작 요청 - 현재 사용 안함
+     * S3 멀티파트(파일분할) 업로드 시작을 요청한다.<br>현재 사용 안함 - File 정보 서비스에서 멀티파트 업로드 일 경우 내부적으로 S3 initiateUpload를 호출한다.<br>응답 받은 uploadId를 이용하여 멀티파트(파일분할) 업로드를 진행해야 한다.<br><br>1. S3 멀티파트 업로드 시작 요청<br>2. S3 업로드 Presigned URL 요청<br>3. Ajax Put 파일업로드<br>4. S3 멀티파트 업로드 완료 요청
      * @param requestBody
      * @returns com_ever_edu_global_s3_dto_res_InitiateUploadResDto OK
      * @throws ApiError
@@ -38,8 +38,8 @@ export class BoS3FileService {
         });
     }
     /**
-     * S3 멀티파트 업로드 완료 요청
-     * S3 멀티파트 업로드 완료를 요청한다.<br>단일 파일 업로드의 경우(uploadId 없음) 호출 할 필요 없다.
+     * S3 멀티파트 업로드 완료 요청 - 현재 사용 안함
+     * S3 멀티파트 업로드 완료를 요청한다.<br>단일 파일 업로드의 경우(uploadId 없음) 호출 할 필요 없다.<br>현재 사용 안함 - File 정보 서비스에서 멀티파트 업로드 일 경우 내부적으로 S3 completeUpload 호출한다.
      * @param uploadId S3 업로드Id
      * @param key S3 키, S3 파일 경로로 사용<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)
      * @param requestBody

@@ -1,6 +1,17 @@
 import { t } from 'i18next';
 import { createFileRoute } from '@tanstack/react-router';
-import { CompanyChoiceModal, CompanyShuttleModal, AddressSearchModal } from '@features/shared';
+import {
+  CompanyChoiceModal,
+  CompanyShuttleModal,
+  AddressSearchModal,
+  RoleChoiceModal,
+  TenantChoiceModal,
+  TenantShuttleModal,
+  RoleShuttleModal,
+  ChannelListChoiceModal,
+  ChannelShuttleModal,
+  MenuChoiceModal,
+} from '@features/shared';
 import {
   Button,
   ChipListModalSelectorFormField,
@@ -28,6 +39,7 @@ export const Route = createFileRoute('/_unauth/common-popup')({
 
 function RouteComponent() {
   const { open } = useModal();
+  const { open: openModal } = useModal();
   const { provider, onSubmit, control, getValues, fetchData } = useDynamicForm(formConfig);
 
   const handleOnSubmit = (data: any) => {
@@ -141,6 +153,107 @@ function RouteComponent() {
           <div>서브영역</div>
           <Button type={'button'} variant="point" size="sm">
             서브 영역
+          </Button>
+        </SubContents>
+        <SubContents>
+          <div>공통팝업</div>
+          <Button
+            size={'xs'}
+            className="btn_table"
+            variant={'gray2'}
+            onClick={(e) => {
+              e.stopPropagation();
+              openModal({
+                width: 'xl',
+                content: <RoleChoiceModal />,
+              });
+            }}
+          >
+            {'HRD 담당자 역할 조회'}
+          </Button>
+          <Button
+            size={'xs'}
+            className="btn_table"
+            variant={'gray2'}
+            onClick={(e) => {
+              e.stopPropagation();
+              openModal({
+                width: 'xl',
+                content: <RoleShuttleModal />,
+              });
+            }}
+          >
+            {'HRD 담당자 역할 조회(셔틀)'}
+          </Button>
+          <Button
+            size={'xs'}
+            className="btn_table"
+            variant={'gray2'}
+            onClick={(e) => {
+              e.stopPropagation();
+              openModal({
+                width: 'xl',
+                content: <ChannelListChoiceModal />,
+              });
+            }}
+          >
+            {'채널 조회'}
+          </Button>
+          <Button
+            size={'xs'}
+            className="btn_table"
+            variant={'gray2'}
+            onClick={(e) => {
+              e.stopPropagation();
+              openModal({
+                width: 'xl',
+                content: <ChannelShuttleModal />,
+              });
+            }}
+          >
+            {'채널 조회(셔틀)'}
+          </Button>
+          <Button
+            size={'xs'}
+            className="btn_table"
+            variant={'gray2'}
+            onClick={(e) => {
+              e.stopPropagation();
+              openModal({
+                width: 'xl',
+                content: <TenantChoiceModal />,
+              });
+            }}
+          >
+            {'테넌트 조회'}
+          </Button>
+          <Button
+            size={'xs'}
+            className="btn_table"
+            variant={'gray2'}
+            onClick={(e) => {
+              e.stopPropagation();
+              openModal({
+                width: 'xl',
+                content: <TenantShuttleModal />,
+              });
+            }}
+          >
+            {'테넌트 조회(셔틀)'}
+          </Button>
+          <Button
+            size={'xs'}
+            className="btn_table"
+            variant={'gray2'}
+            onClick={(e) => {
+              e.stopPropagation();
+              openModal({
+                width: 'xl',
+                content: <MenuChoiceModal menuScopeCode={'BO'} />,
+              });
+            }}
+          >
+            {'메뉴 조회'}
           </Button>
         </SubContents>
       </PageContainer>

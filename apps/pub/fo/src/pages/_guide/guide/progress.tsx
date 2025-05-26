@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Progress } from '@learnway/ui';
+import { ProgressBar, ProgressCheck } from '@learnway/ui';
 
 export const Route = createFileRoute('/_guide/guide/progress')({
   component: RouteComponent,
@@ -14,10 +14,14 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-  import { Progress } from '@learnway/ui';
+  import { Progress, ProgressCheck } from '@learnway/ui';
   
   // 적용방법(예시) % 기준으로 value값 추가, 실패인 경우 isFailed 속성 추가, 90%이상일때, 100%일때 컬러 변경됨
-  <Progress value={40} />`}
+  <ProgressBar progress={40} />
+  
+  // 원형 프로그레스바 + 완료 체크
+  <ProgressCheck progress={50} />
+  `}
           </code>
         </pre>
       </div>
@@ -27,19 +31,31 @@ function RouteComponent() {
         </h3>
         <div className="flex_box">
           <div className="desc">
-            <Progress value={0} label={'대기중'} />
+            <ProgressBar progress={0} label={'대기중'} />
           </div>
           <div className="desc">
-            <Progress value={40} label={'진행중'} />
+            <ProgressBar progress={40} label={'진행중'} />
           </div>
           <div className="desc">
-            <Progress value={50} label={'실패'} isFailed />
+            <ProgressBar progress={50} label={'실패'} isFailed />
           </div>
           <div className="desc">
-            <Progress value={90} label={'진행중 90% 이상인 경우'} />
+            <ProgressBar progress={100} label={'완료'} />
+          </div>
+        </div>
+      </div>
+
+      <div className="group">
+        <h3 className="guide_tit3">원형 프로그레스바 + 완료 체크(100일경우 체크로 변경됨)</h3>
+        <div className="flex_box">
+          <div className="desc">
+            <ProgressCheck progress={0} />
           </div>
           <div className="desc">
-            <Progress value={100} label={'완료'} />
+            <ProgressCheck progress={50} />
+          </div>
+          <div className="desc">
+            <ProgressCheck progress={100} />
           </div>
         </div>
       </div>
