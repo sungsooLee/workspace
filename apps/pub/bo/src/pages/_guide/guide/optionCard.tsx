@@ -3,15 +3,15 @@ import { OptionCard, OptionCardItem } from '@learnway/ui';
 import { createFileRoute } from '@tanstack/react-router';
 
 import {
-  IcoMybook,
   IcoBlog,
   IcoEntrust,
-  IcoInfoCircle,
+  IcoEtc,
+  IcoHtml,
   IcoImage01,
+  IcoInfoCircle,
+  IcoMybook,
   IcoVideo01,
   IcoVideo02,
-  IcoHtml,
-  IcoEtc,
 } from '@learnway/icons';
 
 export const Route = createFileRoute('/_guide/guide/optionCard')({
@@ -95,7 +95,7 @@ function RouteComponent() {
   단일선택인 경우 아닌 경우 props :  multiple
   multiple인 경우 onOptionsSelect 아닌경우 onOptionSelect
   한줄에 나열된 length 정의 props : cols 
-  <Progress value={40} />`}
+  <ProgressBar progress={40} />`}
           </code>
         </pre>
       </div>

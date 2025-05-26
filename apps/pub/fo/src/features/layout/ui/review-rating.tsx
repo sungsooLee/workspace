@@ -1,6 +1,6 @@
-import { memo, useState } from 'react';
-import { Progress } from '@learnway/ui';
-import { IcoStar, IcoDownArrow } from '@learnway/icons';
+import { memo } from 'react';
+import { ProgressBar } from '@learnway/ui';
+import { IcoStar } from '@learnway/icons';
 
 import styles from './review-rating.module.css';
 
@@ -26,27 +26,27 @@ const ReviewRatingComponent = ({ className }: ReviewRatingProps) => {
         <ul>
           <li>
             <span>5점</span>
-            <Progress value={100} />
+            <ProgressBar progress={100} />
             <span>999,999+</span>
           </li>
           <li>
             <span>4점</span>
-            <Progress value={40} />
+            <ProgressBar progress={40} />
             <span>10</span>
           </li>
           <li>
             <span>3점</span>
-            <Progress value={40} />
+            <ProgressBar progress={40} />
             <span>999,999+</span>
           </li>
           <li>
             <span>2점</span>
-            <Progress value={40} />
+            <ProgressBar progress={40} />
             <span>999,999+</span>
           </li>
           <li>
             <span>1점</span>
-            <Progress value={40} />
+            <ProgressBar progress={40} />
             <span>999,999+</span>
           </li>
         </ul>

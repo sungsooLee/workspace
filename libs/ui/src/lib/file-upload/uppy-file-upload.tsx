@@ -1,22 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Uppy, { type Meta, type Body, type UIPluginOptions, type State } from '@uppy/core';
+import Uppy from '@uppy/core';
 import AwsS3 from '@uppy/aws-s3';
-import { httpService, cn } from '@learnway/shared';
-import {
-  IcoDownload,
-  IcoRefresh,
-  IcoTrash03,
-  IcoFileImg,
-  IcoPause,
-  IcoFileMp4,
-} from '@learnway/icons';
+import { cn, httpService } from '@learnway/shared';
+import { IcoDownload, IcoFileMp4, IcoPause, IcoRefresh, IcoTrash03 } from '@learnway/icons';
 import { Button } from '../button/button';
-import { Progress } from '../progress/progress';
+import { ProgressBar } from '../progress/progress-bar/progress-bar';
 
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import styles from './uppy-file-upload.module.css';
-import { Input } from '../input/input';
 
 // 파일 아이템 인터페이스 확장 - 파트 정보 추가
 export interface FileItem {
@@ -659,7 +651,8 @@ export const UppyUpload: React.FC<UppyUploadProps> = ({
               <div
                 onClick={() => fileInputRef.current?.click()}
                 role="button"
-                className={styles.btn_file}>
+                className={styles.btn_file}
+              >
                 <IcoDownload
                   width={40}
                   height={40}
@@ -688,7 +681,7 @@ export const UppyUpload: React.FC<UppyUploadProps> = ({
 
                     <div className="mt-2">
                       <div className="flex items-center justify-between"></div>
-                      <Progress value={file.progress} />
+                      <ProgressBar progress={file.progress} />
                     </div>
 
                     {(file.status === 'paused' ||
@@ -717,7 +710,8 @@ export const UppyUpload: React.FC<UppyUploadProps> = ({
                         <Button
                           className={styles.btn}
                           onlyIcon
-                          onClick={() => togglePauseResume(file.id)}>
+                          onClick={() => togglePauseResume(file.id)}
+                        >
                           {file.status === 'uploading' ? (
                             <IcoPause width={20} height={20} fill="#A9AFB8" />
                           ) : (
@@ -731,7 +725,8 @@ export const UppyUpload: React.FC<UppyUploadProps> = ({
                         <Button
                           className={styles.btn}
                           onlyIcon
-                          onClick={() => uppyRef.current?.retryUpload(file.id)}>
+                          onClick={() => uppyRef.current?.retryUpload(file.id)}
+                        >
                           <IcoRefresh width={20} height={20} fill="#00AFD5" />
                         </Button>
                       )}
@@ -740,7 +735,8 @@ export const UppyUpload: React.FC<UppyUploadProps> = ({
                       <Button
                         className={styles.btn_delete}
                         onClick={() => removeFile(file.id)}
-                        onlyIcon>
+                        onlyIcon
+                      >
                         <IcoTrash03 width={20} height={20} stroke="#131C30" />
                       </Button>
                     </div>
@@ -755,7 +751,8 @@ export const UppyUpload: React.FC<UppyUploadProps> = ({
               <p className="text-sm">{error}</p>
               <button
                 onClick={() => setError(null)}
-                className="mt-2 text-sm text-red-700 hover:underline">
+                className="mt-2 text-sm text-red-700 hover:underline"
+              >
                 닫기
               </button>
             </div>
@@ -780,7 +777,8 @@ export const UppyUpload: React.FC<UppyUploadProps> = ({
                   onClick={(e) => {
                     e.stopPropagation(); // Input 클릭 이벤트가 발생하지 않도록 방지
                     removeFile(files[0].id);
-                  }}>
+                  }}
+                >
                   <IcoTrash03 width={16} height={16} stroke="#9CA3AF" />
                 </button>
               )}

@@ -105,7 +105,9 @@ export * from './lib/popover/popover';
 export * from './lib/tooltip/tooltip';
 
 // progress
-export * from './lib/progress/progress';
+export * from './lib/progress/progress-bar/progress-bar';
+export * from './lib/progress/progress-check/progress-check';
+export * from './lib/progress/progress-donut/progress-donut';
 
 // radio
 export * from './lib/radio-group/radio-group';
