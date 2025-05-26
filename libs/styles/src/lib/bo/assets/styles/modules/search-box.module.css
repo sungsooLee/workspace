@@ -51,7 +51,7 @@
         @apply !w-auto;
         .item_wrap {
           .inner {
-            @apply !w-[35vh];
+            @apply !w-[340px];
           }
         }
       }
