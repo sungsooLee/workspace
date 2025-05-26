@@ -451,6 +451,51 @@ export const guideData = [
     lastUpdateDate: '',
     remarks: '', // 비고
   },
+  {
+    screenName: 'PMS/개인정보 조회 사유 목록',
+    pageId: 'pms/private_search_list',
+    screenId: 'NLP_BO_LOG_2001',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
+    screenName: 'PMS/개인정보 조회 사유 상세',
+    pageId: 'pms/private_search_detail',
+    screenId: 'NLP_BO_LOG_2002',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
+    screenName: 'PMS/단축 URL 목록',
+    pageId: 'pms/shortening_url_list',
+    screenId: 'NLP_BO_LOG_2003',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
+    screenName: 'PMS/단축 URL 등록',
+    pageId: 'pms/shortening_url_register',
+    screenId: 'NLP_BO_LOG_2004',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
+    screenName: 'PMS/단축 URL 상세',
+    pageId: 'pms/shortening_url_detail',
+    screenId: 'NLP_BO_LOG_2005',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
   // {
   //   screenName: 'PMS/플랫폼관리_언어관리_다국어관리_메시지번역',
   //   pageId: 'pms/language_translation_management',
