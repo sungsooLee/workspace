@@ -56,7 +56,7 @@
 }
 
 .datepicker_input {
-  @apply input_3_r !h-[32px] w-full rounded-[4px] border border-solid !border-[var(--gray4)] text-[var(--gray8)];
+  @apply input_3_r !h-[32px] w-full truncate rounded-[4px] border border-solid !border-[var(--gray4)] text-[var(--gray8)];
   &:focus {
     @apply border-[#747D91];
   }

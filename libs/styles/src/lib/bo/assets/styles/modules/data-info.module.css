@@ -6,7 +6,7 @@
       @apply body_3_b text-[var(--gray9)];
     }
     .num {
-      @apply body_3_b text-[var(--secondary1)];
+      @apply body_3_b ml-[4px] text-[var(--secondary1)];
     }
     .unit {
       @apply body_3_b text-[var(--gray9)];
