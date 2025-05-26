@@ -42,14 +42,18 @@ function RouteComponent() {
         <Button
           variant="point"
           size="sm"
-          // onClick={() => router.navigate({ to: '/tenant/channel/request' })}
+          onClick={() =>
+            router.navigate({ to: '/tenant/channel/regist', state: { method: 'request' } })
+          }
         >
           {t('채널 신청 개설')}
         </Button>
         <Button
           variant="primary"
           size="sm"
-          onClick={() => router.navigate({ to: '/tenant/channel/regist' })}
+          onClick={() =>
+            router.navigate({ to: '/tenant/channel/regist', state: { method: 'direct' } })
+          }
         >
           {t('채널 직접 개설')}
         </Button>

@@ -32,14 +32,14 @@ function RouteComponent() {
       content: <ChannelDetailBase />,
     },
     {
-      title: '화면/사용 설정',
+      title: '메인 설정',
       key: 'menu02',
-      content: '화면/사용 설정',
+      content: '메인 설정',
     },
     {
-      title: '역할 관리',
+      title: '게시판 설정',
       key: 'menu03',
-      content: <ChannelDetailRole />,
+      content: '게시판 설정',
     },
     {
       title: '구독자 관리',
@@ -47,9 +47,9 @@ function RouteComponent() {
       content: '구독자 관리',
     },
     {
-      title: '유저그룹 관리',
+      title: '담당자 역할 관리',
       key: 'menu05',
-      content: '유저그룹 관리',
+      content: <ChannelDetailRole />,
     },
   ];
 
