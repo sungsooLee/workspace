@@ -4,7 +4,7 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import styles from './blog-m.module.css';
 
 import blogImg from '@learnway/styles/fo/assets/images/temp/img_blog.png';
-
+// 커밋테스트
 export const Route = createFileRoute('/_learning/blog-m')({
   component: RouteComponent,
 });
