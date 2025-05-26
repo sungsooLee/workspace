@@ -55,6 +55,14 @@
             @apply -mx-[20px] w-[calc(100%+40px)] px-[20px];
           }
         }
+        .introduction_content {
+          & > div {
+            @apply mt-[24px];
+            &:nth-child(1) {
+              @apply mt-0;
+            }
+          }
+        }
       }
     }
 

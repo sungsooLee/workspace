@@ -11,4 +11,5 @@ export * from './ui/modal/tenant-choice-modal';
 export * from './ui/modal/tenant-shuttle-modal';
 export * from './ui/modal/role-choice-modal';
 export * from './ui/modal/role-shuttle-modal';
+export * from './ui/modal/menu-choice-modal';
 export { ExcelUploadModal } from './ui/modal/excel-upload-modal';

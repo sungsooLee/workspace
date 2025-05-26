@@ -18,9 +18,9 @@
 }
 
 .contents {
-  @apply scrollbar max-h-[588px] overflow-y-auto overflow-x-hidden break-words p-[32px];
+  @apply h-auto break-words p-[32px];
   &.scrolled {
-    @apply border-b-[1px] border-solid border-[var(--gray3)];
+    @apply scrollbar max-h-[588px] overflow-y-auto overflow-x-hidden border-b-[1px] border-solid border-[var(--gray3)];
   }
   &.notitle {
     @apply pt-[48px];

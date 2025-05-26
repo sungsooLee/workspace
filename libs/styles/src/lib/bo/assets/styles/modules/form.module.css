@@ -438,3 +438,15 @@ hr.divider {
     }
   }
 }
+
+[class*='modal-content'] .input_box {
+  [class*='react-datepicker__close-icon'] {
+    @apply right-[26px];
+  }
+  [class*='react-datepicker__view-calendar-icon'] input {
+    @apply pl-[8px];
+  }
+  .dash {
+    @apply min-w-[23px];
+  }
+}

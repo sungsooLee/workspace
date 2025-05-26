@@ -47,7 +47,7 @@
       }
     }
     & + [class*='nlp--contents-row'] {
-      @apply pt-[12px];
+      @apply mt-[12px] pt-[12px];
     }
     &:has(label + div + p) {
       [class*='nlp--switch'] {

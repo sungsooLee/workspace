@@ -44,5 +44,18 @@
     & + [class*='nlp--contents-row'] {
       @apply mt-[16px];
     }
+
+    .custom_area {
+      @apply ml-[12px] flex items-center;
+      [class*='tit'] {
+        @apply title_bo_4_b relative inline-flex items-center pl-[12px] text-[var(--gray9)];
+        &::before {
+          @apply absolute left-0 top-[4px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
+        }
+      }
+      [class*='num'] {
+        @apply title_bo_4_b ml-[2px] inline-flex items-center text-[var(--secondary1)];
+      }
+    }
   }
 }

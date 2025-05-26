@@ -43,6 +43,14 @@
         & > div:nth-child(1) {
           @apply hidden;
         }
+        .introduction_content {
+          & > div {
+            @apply mt-[56px];
+            &:nth-child(1) {
+              @apply mt-0;
+            }
+          }
+        }
       }
     }
     .package_txt_box {
