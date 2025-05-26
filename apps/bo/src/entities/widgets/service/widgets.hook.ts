@@ -72,3 +72,19 @@ export function useMoveTenantWidget(options: any) {
     data: mutation.data,
   };
 }
+
+export function useUpdateTenantWidget(options: any) {
+  const mutation = useMutation({
+    ...mutateOptions.updateTenantWidget(),
+    ...options,
+  });
+
+  return {
+    updateTenantWidget: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}

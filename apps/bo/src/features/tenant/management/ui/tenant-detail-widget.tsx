@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect, forwardRef } from 'react';
 import { useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
@@ -10,21 +10,32 @@ import {
   Input,
   TableBox,
   CheckboxGroupFormField,
+  RadioGroupFormField,
   ContentsRow,
   ChipListModalSelectorFormField,
+  TextareaFormField,
   useModal,
 } from '@learnway/ui';
-import { NoticeBox, FormSubTitle } from '@shared/ui';
+import { NoticeBox, FormSubTitle, FormInfoArea } from '@shared/ui';
 import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 import { ContentsHistoryInfoFormField, FormRow, SwitchFormField } from '@shared/ui';
 
 import styles from './main-widget.module.css';
 import dataWrapStyles from './data-wrap.module.css';
 
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import {
+  DynamicFormConfig,
+  useDynamicForm,
+  BaseFormFieldProps,
+  useDynamicFormContext,
+} from '@learnway/hooks';
 import { CompanyShuttleModal, ChannelChoiceModal, ChannelListChoiceModal } from '@features/shared';
 import { EnFormMode, EnDeviceType } from '@types';
-import { useAllTenantWidget, useMoveTenantWidget } from '@entities/widgets/service/widgets.hook';
+import {
+  useAllTenantWidget,
+  useMoveTenantWidget,
+  useUpdateTenantWidget,
+} from '@entities/widgets/service/widgets.hook';
 import { TenantDetailWidgetMappingModal } from './tenant-detail-widget-mapping-modal';
 import { WidgetPreviewButton } from '@features/platform';
 
@@ -62,15 +73,22 @@ const TenantDetailWidgetComponent: FC<any> = () => {
 
   const { open: openModal, confirm: openConfirm } = useModal();
 
-  const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, control } =
-    useDynamicForm(formConfig);
+  const { provider, fetchData, getValues, onFormChange } = useDynamicForm(formConfig);
+
+  // data hook
   const { data: widgetsData, refetch } = useAllTenantWidget(tenantId);
   const { moveTenantWidget } = useMoveTenantWidget({
     onSuccess: () => {
       refetch();
     },
   });
+  const { updateTenantWidget } = useUpdateTenantWidget({
+    onSuccess: () => {
+      refetch();
+    },
+  });
 
+  // handle 함수 정의
   const handleTenantDetailWidgetMapping = async () => {
     const modalTenantId = tenantId;
     await openModal({
@@ -109,11 +127,36 @@ const TenantDetailWidgetComponent: FC<any> = () => {
       },
     ];
 
-    console.log('click ', option);
-    setSelectedOption(option.original.widgetType);
+    setSelectedOption(option.original);
     setTableDat(tableData);
+    const fetchInfo = { ...option.original.widgetType };
+    const device = [];
+    fetchInfo.isWebExposed && device.push(EnDeviceType.isPc);
+    fetchInfo.isMobileExposed && device.push(EnDeviceType.isMobile);
+    fetchInfo.device = device;
+    fetchData(fetchInfo);
     setFormMode(EnFormMode.VIEW);
   };
+
+  const handleSaveButtonClick = () => {
+    openConfirm({
+      title: t('저장 하시겠습니까?'),
+      content: <p>{t('입력한 정보로 저장됩니다.')}</p>,
+      onClose: (value: boolean) => {
+        if (value) {
+          console.log('selectedOption', selectedOption);
+          const body = { ...getValues() };
+          body.isWebExposed = body.device.includes(EnDeviceType.isPc);
+          body.isMobileExposed = body.device.includes(EnDeviceType.isMobile);
+          body.userGroupList = body.userGroupList.map((item: any) => item.userGroupId);
+          const payload = { tenantWidgetId: selectedOption.tenantWidgetId, body: body };
+          updateTenantWidget(payload);
+        }
+      },
+    });
+  };
+
+  // useEffect정의
 
   useEffect(() => {
     if (widgetsData) {
@@ -199,16 +242,42 @@ const TenantDetailWidgetComponent: FC<any> = () => {
             label={t('위젯 상세')}
             actionNode={
               <>
-                <WidgetPreviewButton widget={selectedOption} />
-                <Button label={'-' + t('삭제')} variant="text" size="sm" />
-                <Button label={t('저장')} variant="save" size="sm" />
+                <Button
+                  label={t('초기화')}
+                  variant="text"
+                  size="sm"
+                  onClick={() => onFormChange()}
+                  disabled={EnFormMode.NONE === formMode}
+                />
+                <Button
+                  label={'-' + t('삭제')}
+                  variant="text"
+                  size="sm"
+                  disabled={EnFormMode.NONE === formMode}
+                />
+                <Button
+                  label={t('저장')}
+                  variant="save"
+                  size="sm"
+                  onClick={handleSaveButtonClick}
+                  disabled={EnFormMode.NONE === formMode}
+                />
               </>
             }
             underLine={true}
           />
           <div className={styles.form_wrap}>
             <ContentsRow>
-              <FormRow provider={provider} name="widgetName" element={<Input disabled={true} />} />
+              <FormRow
+                provider={provider}
+                name="widgetName"
+                element={
+                  <WidgetNameAndButton
+                    widget={selectedOption}
+                    disabled={EnFormMode.NONE === formMode}
+                  />
+                }
+              ></FormRow>
             </ContentsRow>
             <ContentsRow type="horizontal">
               <FormRow
@@ -234,7 +303,7 @@ const TenantDetailWidgetComponent: FC<any> = () => {
             <ContentsRow>
               <FormRow
                 provider={provider}
-                name="userGroups"
+                name="userGroupList"
                 element={
                   <ChipListModalSelectorFormField
                     chipList={{
@@ -256,9 +325,24 @@ const TenantDetailWidgetComponent: FC<any> = () => {
               <FormRow
                 provider={provider}
                 name="device"
-                element={<CheckboxGroupFormField disabled={EnFormMode.NONE === formMode} />}
+                element={<CheckboxGroupFormField disabled={true} />}
               />
             </ContentsRow>
+            <ContentsRow>
+              <FormRow
+                provider={provider}
+                name="isUsed"
+                element={<RadioGroupFormField disabled={true} />}
+              />
+            </ContentsRow>
+            <ContentsRow>
+              <FormRow
+                provider={provider}
+                name="widgetDesc"
+                element={<TextareaFormField disabled={true} />}
+              />
+            </ContentsRow>
+
             <div className={styles.table_wrap}>
               <TableBox
                 data={tableData}
@@ -275,6 +359,17 @@ const TenantDetailWidgetComponent: FC<any> = () => {
 };
 
 export const TenantDetailWidget = TenantDetailWidgetComponent;
+
+const WidgetNameAndButton = forwardRef<HTMLDivElement, BaseFormFieldProps<string>>(
+  ({ disabled, value, onChange, widget }) => {
+    return (
+      <>
+        <Input disabled={true} value={value} onChange={(e: any) => onChange(e.target.value)} />
+        <WidgetPreviewButton disabled={disabled} widget={widget} />
+      </>
+    );
+  },
+);
 
 const formConfig: DynamicFormConfig = {
   builders: [
@@ -313,7 +408,7 @@ const formConfig: DynamicFormConfig = {
       },
     },
     {
-      name: 'userGroups',
+      name: 'userGroupList',
       type: 'custom',
       label: t('유저그룹 설정'),
       format: 'array',
@@ -323,7 +418,7 @@ const formConfig: DynamicFormConfig = {
       name: 'device',
       type: 'checkbox-group',
       label: t('디바이스'),
-      value: [],
+      value: [EnDeviceType.isPc, EnDeviceType.isMobile],
       options: [
         { label: t('PC'), value: EnDeviceType.isPc },
         { label: t('Mobile'), value: EnDeviceType.isMobile },
@@ -331,10 +426,13 @@ const formConfig: DynamicFormConfig = {
     },
     {
       name: 'isUsed',
-      type: 'textarea',
+      type: 'radio-group',
       label: t('사용여부'),
-      value: '',
-      size: 50,
+      value: true,
+      options: [
+        { value: true, label: t('사용') },
+        { value: false, label: t('사용부가') },
+      ],
     },
     {
       name: 'widgetDesc',
