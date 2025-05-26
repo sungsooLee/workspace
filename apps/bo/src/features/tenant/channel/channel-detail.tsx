@@ -15,7 +15,7 @@ import {
 } from '@learnway/ui';
 import { DuplicateCodeGuideText } from '@features/platform/category';
 
-import { cn } from '@learnway/shared';
+import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import {
   FormSubTitle,
@@ -34,12 +34,12 @@ import {
   SearchBoxConfig,
 } from '@learnway/hooks';
 import { SearchBox } from '@shared/ui/search-box';
+import { useGetRequestChannelDetail } from '@entities/channel/service/request-channel.hook';
 import { IcoPlus, IcoMinus } from '@learnway/icons';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
-const ChannelDetailComponent: FC<any> = ({ mode, method }) => {
-  //TODO. mode add 인 경우 분기 처리
+const ChannelDetailComponent: FC<any> = ({ mode, method, requestId }) => {
   const { t } = useTranslation();
   const [pageMode, setPageMode] = useState(mode);
 
@@ -53,6 +53,8 @@ const ChannelDetailComponent: FC<any> = ({ mode, method }) => {
     'none',
   );
 
+  const { data: request } = useGetRequestChannelDetail(requestId);
+
   const [pageIndex, setPageIndex] = useState(0);
   const [pageSize, setPageSize] = useState(10);
 
@@ -61,28 +63,27 @@ const ChannelDetailComponent: FC<any> = ({ mode, method }) => {
   }, []);
 
   useEffect(() => {
-    console.log('pageMode', pageMode);
-    console.log('method', method);
     if (pageMode === 'add') {
       const initialData = {
         channelOpenMethod: method,
         channelOpenMethod2: method,
-        channelRequestId: '',
-        channelRequestId2: '',
-        tenantName: '',
-        requestDate: '',
-        status: '',
-        channelLearningContent: '',
-        channelPurposeContent: '',
-        channelName: '',
-        channelId: '',
-        channelMainLinkContent: '',
+        channelRequestId: request?.channelRequestId,
+        channelRequestId2: request?.channelRequestId,
+        tenantName: request?.tenantName,
+        requestDate:
+          request && getDateToString(new Date(request.requestDate), DATE_TIME_FORMAT.DATETIME_SEC),
+        status: request && t('pms.channel.ChannelApprovalStatus.' + request.approvalStatusTypecd),
+        channelLearningContent: request?.channelLearningContent,
+        channelPurposeContent: request?.channelPurposeContent,
+        channelName: request?.channelName,
+        channelId: request?.channelId,
+        channelMainLinkContent: request?.channelMainLinkContent,
         channelType: 'PUBLIC',
-        tenantList: [],
+        tenantList: request ? [{ tenantId: request.tenantId, tenantName: request.tenantName }] : [],
         channelDivision: 'PUBLIC',
         subscribeType: 'MANUAL',
         channelOwnerList: [],
-        isSecureChannel: true,
+        isSecureChannel: request ? request.isSecretChannel : true,
         isActived: false,
         isUsed: false,
         profileImageUrl: [],
@@ -104,8 +105,10 @@ const ChannelDetailComponent: FC<any> = ({ mode, method }) => {
         useCourseFlag: true,
       };
       fetchData(initialData);
+    } else if (pageMode === 'view') {
+      // TODO
     }
-  }, [pageMode]);
+  }, [request, pageMode]);
   return (
     <>
       {pageMode === 'add' && method === 'request' && (

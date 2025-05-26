@@ -1,5 +1,5 @@
 import { t } from 'i18next';
-import { createFileRoute, useRouterState } from '@tanstack/react-router';
+import { createFileRoute, useRouterState, useRouter } from '@tanstack/react-router';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { Button } from '@learnway/ui';
 import { FormSubTitle } from '@shared/ui';
@@ -13,13 +13,19 @@ export const Route = createFileRoute('/_layout/tenant/channel/regist')({
 });
 
 function RouteComponent() {
+  const router = useRouter();
   const routerState = useRouterState();
   const method = routerState.location.state?.method;
+  const channelRequestUuid = routerState.location.state?.channelRequestUuid;
   return (
     <PageContainer>
       <ContentsButtons>
         <LinkBox>
-          <Button variant="point" size="sm">
+          <Button
+            variant="point"
+            size="sm"
+            onClick={() => router.navigate({ to: '/tenant/channel' })}
+          >
             {t('LABEL.button.list')}
           </Button>
         </LinkBox>
@@ -29,7 +35,7 @@ function RouteComponent() {
         </Button>
       </ContentsButtons>
       <MainContents>
-        <ChannelDetail mode="add" method={method} />
+        <ChannelDetail mode="add" method={method} requestId={channelRequestUuid} />
       </MainContents>
     </PageContainer>
   );

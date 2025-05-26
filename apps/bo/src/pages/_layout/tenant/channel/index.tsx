@@ -19,6 +19,8 @@ import {
 } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
+import { ChannelRequestChoiceModal } from '@features/shared';
+import { useModal } from '@learnway/ui';
 
 import { queryOptions } from '@entities/channel/service/channel.queries';
 
@@ -28,6 +30,7 @@ export const Route = createFileRoute('/_layout/tenant/channel/')({
 
 function RouteComponent() {
   const router = useRouter();
+  const { open: openModal } = useModal();
 
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch, data: gridData } = useGridBox(gridConfig, getValues);
@@ -43,7 +46,18 @@ function RouteComponent() {
           variant="point"
           size="sm"
           onClick={() =>
-            router.navigate({ to: '/tenant/channel/regist', state: { method: 'request' } })
+            openModal({
+              width: 'xl',
+              content: <ChannelRequestChoiceModal />,
+              onClose(data: any) {
+                if (data) {
+                  router.navigate({
+                    to: '/tenant/channel/regist',
+                    state: { method: 'request', channelRequestUuid: data.channelRequestUuid },
+                  });
+                }
+              },
+            })
           }
         >
           {t('채널 신청 개설')}
