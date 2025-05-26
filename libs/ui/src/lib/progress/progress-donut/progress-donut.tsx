@@ -16,17 +16,17 @@ export interface ProgressDonutProps {
   size?: number;
   /**
    * 도넛의 선 두께 (스트로크 너비)
-   * @default 10
+   * @default 5.6
    */
   strokeWidth?: number;
   /**
    * 트랙(진행되지 않은 부분)의 색상
-   * @default '#e0e0e0'
+   * @default 'var(--gray4)'
    */
   trackColor?: string;
   /**
    * 진행률(채워진 부분)의 색상
-   * @default '#3b82f6'
+   * @default 'var(--secondary1)'
    */
   progressColor?: string;
 }
