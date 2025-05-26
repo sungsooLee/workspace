@@ -95,6 +95,7 @@ import { Route as LayoutCommonPopUserSearchImport } from './pages/_layout/common
 import { Route as LayoutCommonPopUserGroupSearchImport } from './pages/_layout/common/pop-user-group-search'
 import { Route as LayoutCommonPopImagePreviewImport } from './pages/_layout/common/pop-image-preview'
 import { Route as LayoutCommonPopExcelUploadImport } from './pages/_layout/common/pop-excel-upload'
+import { Route as LayoutCommonPopDataRangeSettingImport } from './pages/_layout/common/pop-data-range-setting'
 import { Route as LayoutCommonPopCategorySelectImport } from './pages/_layout/common/pop-category-select'
 import { Route as LayoutCommonPopAdminExtensionImport } from './pages/_layout/common/pop-admin-extension'
 import { Route as LayoutCommonBreakpointImport } from './pages/_layout/common/breakpoint'
@@ -687,6 +688,13 @@ const LayoutCommonPopExcelUploadRoute = LayoutCommonPopExcelUploadImport.update(
     getParentRoute: () => LayoutRoute,
   } as any,
 )
+
+const LayoutCommonPopDataRangeSettingRoute =
+  LayoutCommonPopDataRangeSettingImport.update({
+    id: '/common/pop-data-range-setting',
+    path: '/common/pop-data-range-setting',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 
 const LayoutCommonPopCategorySelectRoute =
   LayoutCommonPopCategorySelectImport.update({
@@ -1554,6 +1562,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCommonPopCategorySelectImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/common/pop-data-range-setting': {
+      id: '/_layout/common/pop-data-range-setting'
+      path: '/common/pop-data-range-setting'
+      fullPath: '/common/pop-data-range-setting'
+      preLoaderRoute: typeof LayoutCommonPopDataRangeSettingImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/common/pop-excel-upload': {
       id: '/_layout/common/pop-excel-upload'
       path: '/common/pop-excel-upload'
@@ -2104,6 +2119,7 @@ interface LayoutRouteChildren {
   LayoutCommonBreakpointRoute: typeof LayoutCommonBreakpointRoute
   LayoutCommonPopAdminExtensionRoute: typeof LayoutCommonPopAdminExtensionRoute
   LayoutCommonPopCategorySelectRoute: typeof LayoutCommonPopCategorySelectRoute
+  LayoutCommonPopDataRangeSettingRoute: typeof LayoutCommonPopDataRangeSettingRoute
   LayoutCommonPopExcelUploadRoute: typeof LayoutCommonPopExcelUploadRoute
   LayoutCommonPopImagePreviewRoute: typeof LayoutCommonPopImagePreviewRoute
   LayoutCommonPopUserGroupSearchRoute: typeof LayoutCommonPopUserGroupSearchRoute
@@ -2166,6 +2182,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutCommonBreakpointRoute: LayoutCommonBreakpointRoute,
   LayoutCommonPopAdminExtensionRoute: LayoutCommonPopAdminExtensionRoute,
   LayoutCommonPopCategorySelectRoute: LayoutCommonPopCategorySelectRoute,
+  LayoutCommonPopDataRangeSettingRoute: LayoutCommonPopDataRangeSettingRoute,
   LayoutCommonPopExcelUploadRoute: LayoutCommonPopExcelUploadRoute,
   LayoutCommonPopImagePreviewRoute: LayoutCommonPopImagePreviewRoute,
   LayoutCommonPopUserGroupSearchRoute: LayoutCommonPopUserGroupSearchRoute,
@@ -2322,6 +2339,7 @@ export interface FileRoutesByFullPath {
   '/common/breakpoint': typeof LayoutCommonBreakpointRoute
   '/common/pop-admin-extension': typeof LayoutCommonPopAdminExtensionRoute
   '/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
+  '/common/pop-data-range-setting': typeof LayoutCommonPopDataRangeSettingRoute
   '/common/pop-excel-upload': typeof LayoutCommonPopExcelUploadRoute
   '/common/pop-image-preview': typeof LayoutCommonPopImagePreviewRoute
   '/common/pop-user-group-search': typeof LayoutCommonPopUserGroupSearchRoute
@@ -2457,6 +2475,7 @@ export interface FileRoutesByTo {
   '/common/breakpoint': typeof LayoutCommonBreakpointRoute
   '/common/pop-admin-extension': typeof LayoutCommonPopAdminExtensionRoute
   '/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
+  '/common/pop-data-range-setting': typeof LayoutCommonPopDataRangeSettingRoute
   '/common/pop-excel-upload': typeof LayoutCommonPopExcelUploadRoute
   '/common/pop-image-preview': typeof LayoutCommonPopImagePreviewRoute
   '/common/pop-user-group-search': typeof LayoutCommonPopUserGroupSearchRoute
@@ -2595,6 +2614,7 @@ export interface FileRoutesById {
   '/_layout/common/breakpoint': typeof LayoutCommonBreakpointRoute
   '/_layout/common/pop-admin-extension': typeof LayoutCommonPopAdminExtensionRoute
   '/_layout/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
+  '/_layout/common/pop-data-range-setting': typeof LayoutCommonPopDataRangeSettingRoute
   '/_layout/common/pop-excel-upload': typeof LayoutCommonPopExcelUploadRoute
   '/_layout/common/pop-image-preview': typeof LayoutCommonPopImagePreviewRoute
   '/_layout/common/pop-user-group-search': typeof LayoutCommonPopUserGroupSearchRoute
@@ -2732,6 +2752,7 @@ export interface FileRouteTypes {
     | '/common/breakpoint'
     | '/common/pop-admin-extension'
     | '/common/pop-category-select'
+    | '/common/pop-data-range-setting'
     | '/common/pop-excel-upload'
     | '/common/pop-image-preview'
     | '/common/pop-user-group-search'
@@ -2866,6 +2887,7 @@ export interface FileRouteTypes {
     | '/common/breakpoint'
     | '/common/pop-admin-extension'
     | '/common/pop-category-select'
+    | '/common/pop-data-range-setting'
     | '/common/pop-excel-upload'
     | '/common/pop-image-preview'
     | '/common/pop-user-group-search'
@@ -3002,6 +3024,7 @@ export interface FileRouteTypes {
     | '/_layout/common/breakpoint'
     | '/_layout/common/pop-admin-extension'
     | '/_layout/common/pop-category-select'
+    | '/_layout/common/pop-data-range-setting'
     | '/_layout/common/pop-excel-upload'
     | '/_layout/common/pop-image-preview'
     | '/_layout/common/pop-user-group-search'
@@ -3177,6 +3200,7 @@ export const routeTree = rootRoute
         "/_layout/common/breakpoint",
         "/_layout/common/pop-admin-extension",
         "/_layout/common/pop-category-select",
+        "/_layout/common/pop-data-range-setting",
         "/_layout/common/pop-excel-upload",
         "/_layout/common/pop-image-preview",
         "/_layout/common/pop-user-group-search",
@@ -3538,6 +3562,10 @@ export const routeTree = rootRoute
     },
     "/_layout/common/pop-category-select": {
       "filePath": "_layout/common/pop-category-select.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/common/pop-data-range-setting": {
+      "filePath": "_layout/common/pop-data-range-setting.tsx",
       "parent": "/_layout"
     },
     "/_layout/common/pop-excel-upload": {

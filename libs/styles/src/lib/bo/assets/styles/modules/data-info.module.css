@@ -1,0 +1,27 @@
+/* data-info.module.css */
+.start {
+  .title_box {
+    @apply mb-[4px] flex items-center;
+    .title {
+      @apply body_3_b text-[var(--gray9)];
+    }
+    .num {
+      @apply body_3_b text-[var(--secondary1)];
+    }
+    .unit {
+      @apply body_3_b text-[var(--gray9)];
+    }
+    .icon_area {
+      @apply -mt-[8px] h-[8px] w-[8px];
+      svg {
+        @apply fill-[#00afd5];
+      }
+    }
+  }
+  .text {
+    @apply body_bo_4_r text-[var(--gray6)];
+  }
+}
+div + .start {
+  @apply mt-[20px];
+}
