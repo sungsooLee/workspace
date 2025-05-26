@@ -10,6 +10,7 @@ import {
   RoleShuttleModal,
   ChannelListChoiceModal,
   ChannelShuttleModal,
+  MenuChoiceModal,
 } from '@features/shared';
 import {
   Button,
@@ -239,6 +240,20 @@ function RouteComponent() {
             }}
           >
             {'테넌트 조회(셔틀)'}
+          </Button>
+          <Button
+            size={'xs'}
+            className="btn_table"
+            variant={'gray2'}
+            onClick={(e) => {
+              e.stopPropagation();
+              openModal({
+                width: 'xl',
+                content: <MenuChoiceModal menuScopeCode={'BO'} />,
+              });
+            }}
+          >
+            {'메뉴 조회'}
           </Button>
         </SubContents>
       </PageContainer>
