@@ -16,6 +16,7 @@ import {
 import { FormRow, FormSubTitle } from '@shared/ui';
 import { t } from 'i18next';
 import { FC, useEffect } from 'react';
+import { formUtils } from '@entities/form-utils';
 
 type MyRoleModal = 'request' | 'view' | 'approve' | 'reject';
 const MyRoleExtendModalComponent: FC<any> = ({ type }: { type: MyRoleModal }) => {
@@ -112,7 +113,11 @@ const formConfig: DynamicFormConfig = {
       name: 'requestRolePeriod',
       type: 'custom',
       label: t('권한 신청 시작/종료일'),
-      value: '',
+      // value: '',
+      value: {
+        from: formUtils.now({ unit: 'day', offset: -30 }),
+        to: formUtils.now(),
+      },
     },
     {
       name: 'requestRolePeriodEnable',
