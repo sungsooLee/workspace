@@ -267,7 +267,7 @@ const GridBoxComponent = <T extends object>(
         <div className={styles.button_info}>
           {/* 검색 인풋 */}
           <SearchInput
-            columns={props.columns}
+            columns={props.columns || []}
             onEnterKeyDown={(condition) => console.log('condition', condition)}
           />
           {/* 외부에서 받은 커스텀 버튼 노드 */}
