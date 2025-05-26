@@ -4,11 +4,11 @@ import {
   Button,
   Input,
   Switch,
+  TreeBox,
+  TreeContainer,
   TreeEventPayload,
   TreeNode,
   TreeView,
-  TreeContainer,
-  TreeBox,
 } from '@learnway/ui';
 
 const meta: Meta<typeof TreeView> = {
@@ -145,7 +145,7 @@ export const Basic: Story = {
               onChange={(e) => setSearchKeyword(e.target.value)}
               placeholder="트리 검색..."
               showSearchIcon={true}
-              iconType={'tree'}
+              searchIconType={'search'}
             />
           </div>
         </div>

@@ -120,7 +120,7 @@ const TreeBoxComponent = <T extends object>(
                   onChange={(e) => setSearchKeyword(e.target.value)}
                   placeholder="검색"
                   showSearchIcon={true}
-                  iconType={'tree'}
+                  searchIconType={'search'}
                 />
               )}
               <Button
