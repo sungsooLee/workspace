@@ -1,5 +1,4 @@
 import React, {
-  FC,
   forwardRef,
   useCallback,
   useImperativeHandle,
@@ -8,22 +7,13 @@ import React, {
   useState,
 } from 'react';
 import { createColumnHelper, Table } from '@tanstack/react-table';
-import {
-  Button,
-  ExcelConfig,
-  Grid,
-  GridBoxProps,
-  GridImperative,
-  Pagination,
-  useModal,
-} from '@learnway/ui';
-import { IcoDownload, IcoMinus, IcoPlus, IcoUploadCloud } from '@learnway/icons';
+import { Button, Grid, GridBoxProps, GridImperative, Pagination } from '@learnway/ui';
+import { IcoMinus, IcoPlus } from '@learnway/icons';
 import styles from './grid-box.module.css';
-import { cn, fileDownload } from '@learnway/shared';
+import { cn } from '@learnway/shared';
 import { useTranslation } from 'react-i18next';
-import { t } from 'i18next';
-import { PMSApiPrefix } from '@learnway/config';
-import { UseFormReturn } from 'react-hook-form';
+import { ExcelButtons } from './components/excel-buttons';
+import { SearchInput } from './components/search-input';
 
 /**
  * 다양한 설정 옵션을 통해 재사용 가능한 표 컴포넌트(Grid)를 구성합니다.
@@ -275,6 +265,11 @@ const GridBoxComponent = <T extends object>(
         </div>
 
         <div className={styles.button_info}>
+          {/* 검색 인풋 */}
+          <SearchInput
+            columns={props.columns}
+            onEnterKeyDown={(condition) => console.log('condition', condition)}
+          />
           {/* 외부에서 받은 커스텀 버튼 노드 */}
           {customButtonNode}
           {/* 엑셀 버튼 */}
@@ -377,54 +372,3 @@ const GridBoxComponent = <T extends object>(
   );
 };
 export const GridBox = forwardRef(GridBoxComponent);
-/**
- * Excel 관련 버튼을 Excel Config 기준으로 렌더링 합니다.
- * @param config
- * @param getParams
- * @constructor
- */
-const ExcelButtons: FC<{ config?: ExcelConfig; getParams?: UseFormReturn['getValues'] }> = ({
-  config,
-  getParams,
-}) => {
-  if (!config) return <></>;
-  const { open: openModal } = useModal();
-  const { upload, download, form } = config;
-
-  const handleExcelDownload = async () => {
-    const params = getParams ? getParams() : {};
-    await fileDownload(`${PMSApiPrefix()}/multilingual/exportExcel`, params);
-  };
-
-  const handleExcelUpload = async () => {
-    //excelUpload || excelUpload();
-  };
-
-  return (
-    <>
-      {/* 업로드 */}
-      {upload && (
-        <Button
-          variant="text"
-          size="xs"
-          className={styles.btn_upload}
-          label={t('LABEL.grid.header.excelUpload', '엑셀업로드')}
-          icon={
-            <IcoUploadCloud width={16} height={16} stroke={'#4C515E'} onClick={handleExcelUpload} />
-          }
-        />
-      )}
-      {/* 엑셀다운로드 */}
-      {download && (
-        <Button
-          variant="text"
-          size="xs"
-          className={styles.btn_excel}
-          label={t('LABEL.grid.header.excelDownload', '엑셀다운로드')}
-          icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
-          onClick={handleExcelDownload}
-        />
-      )}
-    </>
-  );
-};

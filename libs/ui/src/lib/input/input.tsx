@@ -26,7 +26,7 @@ export interface InputProps extends Omit<NumericFormatProps, 'type'> {
   error?: boolean; // Input border 유무
   //
   showSearchIcon?: boolean; // 검색 아이콘 표시 유무
-  iconType?: 'search' | 'tree'; // 아이콘 타입 선택
+  searchIconType?: 'modal' | 'search'; // 아이콘 타입 선택
   onEnterKeyDown?: () => void; // 엔터 키 입력 callback, 검색 아이콘 클릭 했을때 해당 callback 호출
   onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
   //
@@ -55,7 +55,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       allowEmptyFormatting = true,
       onKeyDown,
       showSearchIcon,
-      iconType = 'search',
+      searchIconType = 'modal',
       onEnterKeyDown,
       maxLength,
       onFocus,
@@ -193,7 +193,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
               className={styles.count}
             >{`${(value?.toString() || '').length} / ${maxLength}`}</div>
           )}
-          {/* 돋보기 */}
+          {/* 아이콘 (돋보기, 검색) */}
           {showSearchIcon && (
             <Button
               type="button"
@@ -201,7 +201,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
               className={cn(styles.clear)}
               onlyIcon
             >
-              {iconType === 'tree' ? (
+              {searchIconType === 'search' ? (
                 <IcoSearchWrite width={20} height={20} stroke={'#4C515E'} />
               ) : (
                 <IcoSearch width={20} height={20} stroke={'#131C30'} />
