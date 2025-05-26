@@ -43,10 +43,10 @@ const ProgressDonutComponent = forwardRef<
   (
     {
       progress, // 진행률 값
-      size = 40, // 전체 크기 (기본값 100)
-      strokeWidth = 10, // 선 두께 (기본값 10)
-      trackColor = '#e0e0e0', // 트랙 색상 (기본값 #e0e0e0)
-      progressColor = '#3b82f6', // 진행률 색상 (기본값 #3b82f6)
+      size = 24, // 전체 크기 (기본값 100)
+      strokeWidth = 5.6, // 선 두께 (기본값 10)
+      trackColor = 'var(--gray4)', // 트랙 색상 (기본값 #e0e0e0)
+      progressColor = 'var(--secondary1)', // 진행률 색상 (기본값 #3b82f6)
     },
     ref, // forwardRef로 전달받은 Ref 객체
   ) => {
@@ -81,7 +81,7 @@ const ProgressDonutComponent = forwardRef<
           stroke={progressColor} // 선 색상
           strokeWidth={strokeWidth} // 선 두께
           fill="none" // 원 내부를 채우지 않음
-          strokeLinecap="round" // 선의 끝을 둥글게 처리
+          strokeLinecap="square" // 선의 끝을 둥글게 처리
           strokeDasharray={circumference} // 선의 대시 패턴 (둘레 전체를 하나의 대시로 설정)
           strokeDashoffset={offset} // 선의 대시 오프셋 (진행률에 따라 채워지는 정도 조절)
           transform={`rotate(-90 ${size / 2} ${size / 2})`} // 원을 -90도 회전시켜 상단에서 시작하도록 함

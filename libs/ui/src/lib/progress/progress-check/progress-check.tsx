@@ -1,6 +1,6 @@
 import React, { forwardRef, ReactNode } from 'react';
 import { ProgressDonut, ProgressDonutProps } from '../progress-donut/progress-donut';
-import { IcoCheck } from '@learnway/icons';
+import { IcoProgressComplete } from '@learnway/icons';
 
 /**
  * ProgressCheck 컴포넌트의 props 인터페이스
@@ -10,7 +10,7 @@ interface ProgressCheckProps extends ProgressDonutProps {
   /**
    * 진행률이 100%일 때 표시될 아이콘.
    * `progress`가 100이 아닐 때는 `ProgressDonut`이 표시됩니다.
-   * @default <IcoCheckCircle /> (예시 아이콘)
+   * @default <IcoProgressComplete /> (예시 아이콘)
    */
   completedIcon?: ReactNode; // ReactNode 타입을 사용하여 JSX 요소 또는 문자열도 받을 수 있게 함
 }
@@ -26,8 +26,8 @@ const ProgressCheckComponent = forwardRef<
 >(
   ({
     progress,
-    size = 40,
-    completedIcon = <IcoCheck width={size} height={size} stroke="#747d91" />,
+    size = 24,
+    completedIcon = <IcoProgressComplete width={24} height={24} />,
     ...props
   }) => {
     // 진행률이 100%인지 확인
