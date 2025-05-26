@@ -47,10 +47,10 @@ function RouteComponent() {
 
   // 탭 타이틀
   const tabTitle = [
-    { title: '대시보드', key: 'a', tabNumber: '1' },
-    { title: '과정소개', key: 'b', tabNumber: '2' },
-    { title: '교육일정', key: 'c', tabNumber: '2' }, // 과정소개 탭 안에서 교욱일정이 있기 때문에 tabNumber값 동일
-    { title: '후기', count: '0', key: 'd', tabNumber: '2' }, // 과정소개 탭 안에서 후기가 있기 때문에 tabNumber값 동일
+    { title: '대시보드', tabNumber: '1' },
+    { title: '과정소개', tabNumber: '2' },
+    { title: '교육일정', tabNumber: '2' }, // 과정소개 탭 안에서 교욱일정이 있기 때문에 tabNumber값 동일
+    { title: '후기', count: '0', tabNumber: '2' }, // 과정소개 탭 안에서 후기가 있기 때문에 tabNumber값 동일
   ];
   const handleTab = (key: string, index: number) => {
     setSelectedTabKey(key);
