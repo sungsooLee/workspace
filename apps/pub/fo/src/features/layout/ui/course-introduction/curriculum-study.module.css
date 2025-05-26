@@ -16,6 +16,9 @@
           ul {
             li {
               @apply relative flex items-center justify-between px-[16px] py-[8px] text-[1.4rem];
+              .progress {
+                @apply mr-[8px];
+              }
 
               .subject {
                 @apply body_3_r inline-block flex-1 flex-[6] flex-shrink-0 pr-[20px] leading-[22px] text-[var(--gray7)];
@@ -71,6 +74,8 @@
               ul {
                 li {
                   @apply flex-col items-start justify-start;
+                  .progress {
+                  }
                   .subject {
                   }
                   .stats_div {
