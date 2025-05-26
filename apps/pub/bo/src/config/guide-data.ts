@@ -456,7 +456,7 @@ export const guideData = [
     pageId: 'pms/private_search_list',
     screenId: 'NLP_BO_LOG_2001',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-05-26',
     lastUpdateDate: '',
     remarks: '', // 비고
   },

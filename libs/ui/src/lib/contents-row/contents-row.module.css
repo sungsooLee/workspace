@@ -1,7 +1,7 @@
 /* contents-row.module.css */
 .row {
   /* form */
-  @apply flex w-full gap-[40px];
+  @apply flex w-full gap-[32px];
   .row {
     @apply mt-[12px];
   }
