@@ -7,7 +7,14 @@ import React, {
   useState,
 } from 'react';
 import { createColumnHelper, Table } from '@tanstack/react-table';
-import { Button, Grid, GridBoxProps, GridImperative, Pagination } from '@learnway/ui';
+import {
+  Button,
+  Grid,
+  GridBoxProps,
+  GridImperative,
+  Pagination,
+  SearchInputCondition,
+} from '@learnway/ui';
 import { IcoMinus, IcoPlus } from '@learnway/icons';
 import styles from './grid-box.module.css';
 import { cn } from '@learnway/shared';
@@ -47,6 +54,7 @@ const GridBoxComponent = <T extends object>(
     onRemoveClick,
     onSelectAllClick,
     onRemoveAllClick,
+    onSearchClick,
     ...props
   }: GridBoxProps<T>,
   ref: React.Ref<GridImperative>,
@@ -149,6 +157,17 @@ const GridBoxComponent = <T extends object>(
       onRemoveClick?.();
     },
     [gridRef, onRemoveClick], // 의존성 배열: gridFetch와 page 객체 참조
+  );
+
+  /**
+   * 검색영역 조회 버튼 클릭 핸들러 (엔터 눌렀을때도 실행됨)
+   */
+  const handleSearchClick = useCallback(
+    (condition: SearchInputCondition) => {
+      // callback
+      onSearchClick?.(condition);
+    },
+    [onSearchClick], // 의존성 배열: gridFetch와 page 객체 참조
   );
 
   /**
@@ -266,10 +285,7 @@ const GridBoxComponent = <T extends object>(
 
         <div className={styles.button_info}>
           {/* 검색 인풋 */}
-          <SearchInput
-            columns={props.columns || []}
-            onEnterKeyDown={(condition) => console.log('condition', condition)}
-          />
+          <SearchInput columns={props.columns || []} onEnterKeyDown={handleSearchClick} />
           {/* 외부에서 받은 커스텀 버튼 노드 */}
           {customButtonNode}
           {/* 엑셀 버튼 */}
