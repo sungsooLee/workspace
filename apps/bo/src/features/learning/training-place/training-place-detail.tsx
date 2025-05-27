@@ -28,7 +28,7 @@ import {
   useFetchTrainingPlace,
   useUpdateTrainingPlace,
 } from '@entities/training-place/service/training-place.hook';
-import { AddressSearchModal, TenantChoiceModal } from '@features/shared/ui/modal';
+import { AddressSearchModal, TenantChoiceModal } from '@features/shared';
 
 const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
   const router = useRouter();

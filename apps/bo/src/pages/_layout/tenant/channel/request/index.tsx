@@ -1,13 +1,11 @@
-import { useEffect, useCallback, useState } from 'react';
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { useCallback, useEffect, useState } from 'react';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { Button, GridBox, useGridBox, useGridBoxConfig, Checkbox, useModal } from '@learnway/ui';
-import { createColumnHelper, Table } from '@tanstack/react-table';
-import { ColumnDef } from '@tanstack/react-table';
-import { useRouter } from '@tanstack/react-router';
+import { Button, Checkbox, GridBox, useGridBox, useGridBoxConfig, useModal } from '@learnway/ui';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
@@ -15,15 +13,14 @@ import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inn
 
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { SearchBox } from '@shared/ui/search-box';
-import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
+import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { queryOptions as requestChannelQueryOptions } from '@entities/channel/service/request-channel.queries';
 import { formUtils } from '@entities/form-utils';
-import { ChannelRejectModal } from '@features/shared/ui/modal/channel-reject-modal';
+import { ChannelRejectModal } from '@features/shared';
 import {
   useApproveRequestChannel,
   useRejectRequestChannel,
 } from '@entities/channel/service/request-channel.hook';
-import { r } from '@faker-js/faker/dist/airline-BXaRegOM';
 
 export const Route = createFileRoute('/_layout/tenant/channel/request/')({
   component: RouteComponent,

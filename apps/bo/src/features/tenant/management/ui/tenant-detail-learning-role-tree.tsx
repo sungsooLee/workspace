@@ -29,11 +29,7 @@ import {
 } from '../service/tenant-detail-tree.service';
 import { FormDisplay } from '@features/form/ui/form-display';
 import { EnChannelScope, EnCompanyScope, EnDeptScope, EnFormMode, EnTenantScope } from '@types';
-import {
-  ChannelChoiceModal,
-  ChannelListChoiceModal,
-  CompanyShuttleModal,
-} from '@features/shared/ui/modal';
+import { ChannelChoiceModal, ChannelListChoiceModal, CompanyShuttleModal } from '@features/shared';
 
 //type fo , bo
 const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref: any) => {
