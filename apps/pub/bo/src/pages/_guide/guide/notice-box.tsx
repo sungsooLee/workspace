@@ -21,6 +21,8 @@ function RouteComponent() {
         description // 텍스트 한줄인 경우
         <br />
         descriptions // 텍스트 멀티줄인 경우
+        <br />
+        outLine // 아웃라인 유무
       </p>
       <div className="code_example">
         <pre className="code_block">
@@ -33,7 +35,7 @@ function RouteComponent() {
       <div className="group">
         <h3 className="guide_tit3">NoticeBox 기본</h3>
         <div className="flex_box">
-          <div className="desc">
+          <div className="desc w-full">
             <NoticeBox
               title="타이틀"
               // description="자동 유저그룹은 인사 DB를 기준으로 특정 시간에 배치로 자동 매핑됩니다."
@@ -41,6 +43,7 @@ function RouteComponent() {
                 '자동 유저그룹은 인사 DB를 기준으로 특정 시간에 배치로 자동 매핑됩니다.',
                 '회사별로 자동 매핑되며, 유저그룹 설정 시 사용할 수 있습니다.',
               ]}
+              outLine={true}
               // type="count"
             />
           </div>
