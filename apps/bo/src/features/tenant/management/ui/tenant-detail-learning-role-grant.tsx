@@ -1,48 +1,30 @@
-import { useState, useEffect, forwardRef, useCallback } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { t } from 'i18next';
 import { cn } from '@learnway/shared';
 import {
   Button,
+  ChipListModalSelectorFormField,
+  ContentsRow,
   GridBox,
   TreeBox,
   TreeNode,
   useGridBox,
-  ChipListModalSelectorFormField,
-  ContentsRow,
   useModal,
 } from '@learnway/ui';
 
-import {
-  FormInfoArea,
-  FormRow,
-  ContentsHistoryInfoFormField,
-  ChipListFormField,
-  SwitchFormField,
-} from '@shared/ui';
+import { FormRow, FormSubTitle } from '@shared/ui';
 
 import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 import { useRouterState } from '@tanstack/react-router';
 
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
-
-import { FormSubTitle } from '@shared/ui';
 import { DynamicFormConfig, useDynamicForm, useSearchBox } from '@learnway/hooks';
 import { SearchBox } from '@shared/ui/search-box';
 import { IcoFormRequired, IcoMinus, IcoPlus } from '@learnway/icons';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import { createColumnHelper } from '@tanstack/react-table';
-import {
-  getAllTreeKeys,
-  getFirstExpandKeys,
-  moveNodeCheck,
-  transformRoleApiDataToTreeData,
-} from '../service/tenant-detail-tree.service';
-import {
-  useFetchRole,
-  useFetchRoleTree,
-  useRoleManager,
-  useGetRoleUserGroups,
-} from '@entities/role/service/role-manage.hook';
+import { transformRoleApiDataToTreeData } from '../service/tenant-detail-tree.service';
+import { useFetchRoleTree, useGetRoleUserGroups } from '@entities/role/service/role-manage.hook';
 import { UserChoiceModal } from '@features/shared';
 import { roleManagerQueryOptions } from '@entities/role/service/role-manage.queries';
 import { EnFormMode } from '@types';

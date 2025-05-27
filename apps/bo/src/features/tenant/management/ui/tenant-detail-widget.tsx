@@ -1,32 +1,31 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
-import { cn, getRandomId } from '@learnway/shared';
+import { cn } from '@learnway/shared';
 import {
   Button,
-  List,
-  Input,
-  TableBox,
   CheckboxGroupFormField,
-  ContentsRow,
   ChipListModalSelectorFormField,
+  ContentsRow,
+  Input,
+  List,
+  TableBox,
   useModal,
 } from '@learnway/ui';
-import { NoticeBox, FormSubTitle } from '@shared/ui';
+import { FormRow, FormSubTitle, NoticeBox, SwitchFormField } from '@shared/ui';
 import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
-import { ContentsHistoryInfoFormField, FormRow, SwitchFormField } from '@shared/ui';
 
 import styles from './main-widget.module.css';
 import dataWrapStyles from './data-wrap.module.css';
 
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { CompanyShuttleModal, ChannelChoiceModal, ChannelListChoiceModal } from '@features/shared';
-import { EnFormMode, EnDeviceType } from '@types';
+import { ChannelChoiceModal } from '@features/shared';
+import { EnDeviceType, EnFormMode } from '@types';
 import { useAllTenantWidget, useMoveTenantWidget } from '@entities/widgets/service/widgets.hook';
 import { TenantDetailWidgetMappingModal } from './tenant-detail-widget-mapping-modal';
-import { WidgetPreviewButton } from '@features/platform';
+import { WidgetPreviewButton } from '@features/platform'; // const menuLength = 5;
 
 // const menuLength = 5;
 // const menuOptions = Array(menuLength)

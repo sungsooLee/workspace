@@ -1,39 +1,39 @@
-import React, { FC, forwardRef, useEffect, useState, useImperativeHandle } from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { cn } from '@learnway/shared';
 import {
   Button,
-  ContentsRow,
-  DynamicFormField,
-  TreeBox,
-  TreeNode,
   ChipListModalSelectorFormField,
+  ContentsRow,
   Input,
   RadioGroupFormField,
   TextareaFormField,
+  TreeBox,
+  TreeNode,
 } from '@learnway/ui';
 import { t } from 'i18next';
 import { useRouterState } from '@tanstack/react-router';
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import { FormRow, ContentsHistoryInfoFormField, FormSubTitle, SwitchFormField } from '@shared/ui';
+import { ContentsHistoryInfoFormField, FormRow, FormSubTitle, SwitchFormField } from '@shared/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 import {
   useFetchRole,
   useFetchRoleTree,
-  useRoleManager,
   useMovePosition,
+  useRoleManager,
 } from '@entities/role/service/role-manage.hook';
 import {
-  getAllTreeKeys,
-  getFirstExpandKeys,
   moveRoleCheck,
   transformRoleApiDataToTreeData,
 } from '../service/tenant-detail-tree.service';
 import { FormDisplay } from '@features/form/ui/form-display';
-import { EnFormMode, EnTenantScope, EnCompanyScope, EnChannelScope, EnDeptScope } from '@types';
-import { CompanyShuttleModal, ChannelChoiceModal, ChannelListChoiceModal } from '@features/shared';
-import { isEqual } from 'lodash';
+import { EnChannelScope, EnCompanyScope, EnDeptScope, EnFormMode, EnTenantScope } from '@types';
+import {
+  ChannelChoiceModal,
+  ChannelListChoiceModal,
+  CompanyShuttleModal,
+} from '@features/shared/ui/modal';
 
 //type fo , bo
 const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref: any) => {
