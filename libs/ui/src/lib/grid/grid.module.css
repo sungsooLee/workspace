@@ -292,6 +292,14 @@
   .empty_message_container {
     @apply border-b-[1px] border-solid border-[var(--gray4)] py-[100px];
   }
+  &.has_select_all_checkbox {
+    thead th:first-child {
+      @apply !w-[64px];
+    }
+    tbody td:first-child {
+      @apply bg-[var(--gray1)];
+    }
+  }
 }
 
 .empty_wrap {
