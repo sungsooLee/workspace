@@ -6,6 +6,7 @@ import {
   ChannelShuttleModal,
   CompanyChoiceModal,
   CompanyShuttleModal,
+  ExternalUserChoiceModal,
   MenuChoiceModal,
   RoleChoiceModal,
   RoleShuttleModal,
@@ -276,6 +277,20 @@ function RouteComponent() {
               }}
             >
               {'유저그룹 조회'}
+            </Button>
+            <Button
+              size={'xs'}
+              className="btn_table"
+              variant={'gray2'}
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal({
+                  width: 'xl',
+                  content: <ExternalUserChoiceModal />,
+                });
+              }}
+            >
+              {'사외이용자 검색(공통)'}
             </Button>
           </div>
         </SubContents>
