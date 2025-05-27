@@ -59,6 +59,7 @@ export * from './lib/grid/configs/column-factory';
 export * from './lib/grid/grid-box';
 export * from './lib/grid/table-box';
 export * from './lib/grid/use-grid-box';
+export * from './lib/grid/grid';
 
 // input
 export * from './lib/input/input';

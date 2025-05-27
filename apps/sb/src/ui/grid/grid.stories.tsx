@@ -833,13 +833,7 @@ export const TemplateTitleArea: any = (args: any) => {
       multiple
       // 좌측
       title={'목록'}
-      titleCustomNode={
-        <CountText label={'커스텀개수'} count={5} />
-        // <div className={'custom_info_wrap'}>
-        //   <strong className={'table_tit'}>{'커스텀개수'}</strong>
-        //   <span className={'count_info'}>{'5'}</span>
-        // </div>
-      }
+      titleCustomNode={<CountText label={'커스텀개수'} count={5} />}
       guideText={'그리드 가이드 텍스트'}
       // 우측
       showColumnSettings

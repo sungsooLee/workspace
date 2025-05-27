@@ -29,26 +29,16 @@ import {
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table';
-import {
-  IcoChevronLeft,
-  IcoChevronLeftDouble,
-  IcoChevronRight,
-  IcoChevronRightDouble,
-  IcoGridFilter,
-  IcoGridOrder,
-} from '@learnway/icons';
+import { IcoGridFilter, IcoGridOrder } from '@learnway/icons';
 import { useVirtualizer, VirtualItem } from '@tanstack/react-virtual';
 import { cn, isFirefox } from '@learnway/shared';
 
 import { GridProps } from './types/grid';
-import { ColumnSetting } from './components/column-setting';
 import { FilterContent } from './components/filter-content';
 
 import { useModal } from '../modal/modal.hook';
 import { Button } from '../button/button';
 import { Checkbox } from '../checkbox/checkbox';
-import { Dropdown } from '../dropdown/dropdown';
-import { DropdownOption } from '../type';
 
 import styles from './grid.module.css';
 import { isEmpty } from 'lodash';
@@ -448,20 +438,6 @@ const GridComponent = forwardRef(
       // 하지만 ESLint 규칙에 따라 포함해야 할 수도 있습니다. 필요에 따라 조정하세요.
     }, [table, onTableInstanceChange]); // table과 콜백 함수를 의존성 배열에 추가
 
-    // 컬럼 팝업에서 컬럼에 대한 항목 설정
-    const handleColumnSettingsChange = (settings: ColumnSetting[]) => {
-      // 숨기기 설정
-      const visibility = settings.reduce((acc, setting) => {
-        acc[setting.id] = setting.isVisible;
-        return acc;
-      }, {} as VisibilityState);
-      // 순서 설정
-      const order = settings.map((setting) => setting.id);
-
-      setColumnVisibility(visibility);
-      setColumnOrder(order);
-    };
-
     /// 필터 팝업 오픈
     const openFilterPopup = (e: React.MouseEvent, column: Column<T, unknown>) => {
       e.stopPropagation();
@@ -760,99 +736,8 @@ const GridComponent = forwardRef(
       );
     };
 
-    // console.log('pagination', pagination);
-    //// 페이지네이션 렌더링
-    const renderPagination = () => {
-      if (!pagination) return null;
-
-      const {
-        pageSize,
-        pageIndex,
-        totalRows,
-        onPageChange,
-        onPageSizeChange,
-        pageSizeOptions = [10, 20, 50, 100],
-      } = pagination;
-
-      const options: DropdownOption[] = pageSizeOptions.map((size: number) => ({
-        value: size.toString(),
-        label: `${size}개씩 보기`,
-      }));
-
-      const handleChange = (value?: DropdownOption) => {
-        if (value) {
-          onPageSizeChange(Number(value));
-        }
-      };
-      const totalPages = Math.ceil(totalRows / pageSize);
-
-      return (
-        <div className={styles.paging_wrap} onClick={(e) => e.stopPropagation()}>
-          <Dropdown
-            value={pageSize.toString()}
-            onChange={handleChange}
-            options={options}
-            className={styles.select_item}
-          />
-          <div className={styles.btn_wrap}>
-            <Button
-              onClick={() => onPageChange(0)}
-              disabled={pageIndex === 0}
-              className={styles.btn_first}
-              onlyIcon
-            >
-              {<IcoChevronLeftDouble width={32} height={32} fill="#4C515E" />}
-            </Button>
-            <Button
-              onClick={() => onPageChange(pageIndex - 1)}
-              disabled={pageIndex === 0}
-              className={styles.btn_prev}
-            >
-              {<IcoChevronLeft width={32} height={32} fill="#4C515E" />}
-            </Button>
-
-            {/* 페이지 번호들 */}
-            <div className={styles.num_wrap}>
-              {Array.from({ length: totalPages }, (_, i) => (
-                <Button
-                  key={i}
-                  onClick={() => onPageChange(i)}
-                  className={cn(styles.btn_num, pageIndex === i ? styles.active : '')}
-                >
-                  {i + 1}
-                </Button>
-              ))}
-            </div>
-
-            <Button
-              onClick={() => onPageChange(pageIndex + 1)}
-              disabled={pageIndex >= totalPages - 1}
-              className={styles.btn_next}
-            >
-              {<IcoChevronRight width={32} height={32} fill="#4C515E" />}
-            </Button>
-            <Button
-              onClick={() => onPageChange(totalPages - 1)}
-              disabled={pageIndex >= totalPages - 1}
-              className={styles.btn_last}
-            >
-              {<IcoChevronRightDouble width={32} height={32} fill="#4C515E" />}
-            </Button>
-          </div>
-          <span className={styles.count_wrap}>
-            {pageIndex + 1} / {totalPages} Page
-          </span>
-        </div>
-      );
-    };
-
-    return (
-      <>
-        {renderTable()}
-        {/*{renderPagination()}*/}
-      </>
-    );
+    return <>{renderTable()}</>;
   },
 );
 
-export const Grid = GridComponent;
+export const Grid2 = GridComponent;

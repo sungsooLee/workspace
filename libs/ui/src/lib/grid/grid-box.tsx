@@ -10,7 +10,7 @@ import { createColumnHelper, Table } from '@tanstack/react-table';
 import {
   Button,
   CountText,
-  Grid,
+  Grid2,
   GridBoxProps,
   GridBoxSearchInput,
   GridBoxSearchInputCondition,
@@ -245,20 +245,6 @@ const GridBoxComponent = <T extends object>(
     return pagination || props.pagination;
   }, [pagination, props.pagination]);
 
-  // const paginationProps = useMemo(() => {
-  //   // props.pagination이 전달되면 우선 사용
-  //   if (pagination) {
-  //     return pagination;
-  //   }
-  //   return page
-  //     ? {
-  //         ...page, // page 객체의 현재 상태 스프레드
-  //         onPageChange: handleChangePage, // 메모이제이션된 핸들러 함수 전달
-  //         onPageSizeChange: handleChangePageSize, // 메모이제이션된 핸들러 함수 전달
-  //       }
-  //     : undefined; // page가 falsy일 경우 undefined 반환
-  // }, [page, handleChangePage, handleChangePageSize, props.pagination, pagination]);
-
   console.log('grid-box ::', { paginationProps });
 
   return (
@@ -351,21 +337,10 @@ const GridBoxComponent = <T extends object>(
               onClick={handleRemoveRowClick}
             />
           )}
-          {/* 컬럼 설정 */}
-          {/*{showColumnSettings && (*/}
-          {/*  <Button*/}
-          {/*    variant="outline"*/}
-          {/*    size="sm"*/}
-          {/*    label={t('LABEL.grid.header.columnSetting}*/}
-          {/*    icon={<IcoSetting width={16} height={16} stroke="#131C30" />}*/}
-          {/*    className="btn_setting"*/}
-          {/*  />*/}
-          {/*)}*/}
-          {/* 추가 */}
         </div>
       </div>
       {/* 데이터 테이블 렌더링 */}
-      <Grid
+      <Grid2
         {...props}
         ref={gridRef}
         onChange={onDataChange}
