@@ -159,6 +159,18 @@
           }
         }
       }
+      [class*='nlp--button'] {
+        @apply shrink-0;
+      }
+      [class*='select_wrap'] {
+        @apply w-auto;
+        [class*='nlp-select__control'] {
+          @apply !w-[108px];
+        }
+        & + [class*='nlp--input'] {
+          @apply mx-[8px] !w-[180px];
+        }
+      }
     }
     &:empty {
       @apply !hidden;
