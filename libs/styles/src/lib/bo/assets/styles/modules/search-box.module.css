@@ -60,7 +60,7 @@
     .multi {
       @apply flex w-full flex-wrap;
       .inner {
-        @apply flex flex-1 gap-[20px];
+        @apply flex flex-1 gap-[40px];
         .item {
           @apply w-full;
         }

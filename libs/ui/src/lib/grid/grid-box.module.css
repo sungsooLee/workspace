@@ -137,7 +137,7 @@
       }
     }
     button + button {
-      @apply !ml-0;
+      @apply !ml-0 !pl-0;
       &::before {
         @apply mr-[12px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
       }

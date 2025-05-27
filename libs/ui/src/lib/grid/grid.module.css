@@ -249,7 +249,7 @@
       tr {
         @apply w-full table-fixed;
         th {
-          @apply body_bo_2_b !table-cell !h-[52px] border-b-[1px] border-solid border-[var(--gray4)] px-[24px] text-center align-middle text-[#3E4550];
+          @apply body_bo_2_b !table-cell !h-[52px] border-b-[1px] border-solid border-[var(--gray4)] bg-[var(--gray1)] px-[24px] text-center align-middle text-[var(--gray9)];
           .th_cell {
             @apply !w-full;
           }
@@ -291,6 +291,14 @@
   }
   .empty_message_container {
     @apply border-b-[1px] border-solid border-[var(--gray4)] py-[100px];
+  }
+  &.has_select_all_checkbox {
+    thead th:first-child {
+      @apply !w-[64px];
+    }
+    tbody td:first-child {
+      @apply bg-[var(--gray1)];
+    }
   }
 }
 
