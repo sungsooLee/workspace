@@ -9,6 +9,7 @@ import React, {
 import { createColumnHelper, Table } from '@tanstack/react-table';
 import {
   Button,
+  CountText,
   Grid,
   GridBoxProps,
   GridBoxSearchInput,
@@ -271,10 +272,10 @@ const GridBoxComponent = <T extends object>(
 
           {/* 전체 개수  */}
           {showTotalCount && (
-            <div className={styles.sub_info}>
-              {t('LABEL.grid.header.all', '전체')}{' '}
-              <strong className={styles.num}>{totalElements || data?.length || 0}</strong>
-            </div>
+            <CountText
+              label={t('LABEL.grid.header.all', '전체')}
+              count={totalElements || data?.length || 0}
+            />
           )}
           {/* 좌측 타이틀 영역 커스텀 (전체 카운트와 가이드 텍스트 중간 영역) */}
           {titleCustomNode && <div className={styles.custom_node}>{titleCustomNode}</div>}
