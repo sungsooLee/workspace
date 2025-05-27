@@ -69,11 +69,10 @@ export function timeFormatYear() {
 }
 
 export function timeFormatMonth() {
-  // TODO: const locale = dayjs.locale();
   const locale = getDefaultLang();
   switch (locale) {
     case 'en':
-      return 'MMM/YYYY';
+      return 'MM/YYYY';
     case 'ko':
     case 'ja':
     case 'cn':
@@ -86,9 +85,10 @@ export function timeFormatMonth() {
 export function timeFormatDate() {
   // TODO: const locale = dayjs.locale();
   const locale = getDefaultLang();
+  console.log(locale);
   switch (locale) {
     case 'en':
-      return 'MMM/DD/YYYY';
+      return 'MM-DD-YYYY';
     case 'ko':
     case 'ja':
     case 'cn':
@@ -241,4 +241,52 @@ export function formatISODateString(
 
   const formatStr = getDateTimeFormat(format);
   return date.format(formatStr);
+}
+
+export function convertDateFormatToFns(dateFormat: string): string {
+  // dayjs 포맷을 date-fns 포맷으로 변환
+  let fnsFormat = dateFormat;
+
+  // 연도
+  fnsFormat = fnsFormat.replace(/YYYY/g, 'yyyy');
+  fnsFormat = fnsFormat.replace(/YY/g, 'yy');
+
+  // 월
+  fnsFormat = fnsFormat.replace(/MMMM/g, 'LLLL'); // 전체 월 이름
+  fnsFormat = fnsFormat.replace(/MMM/g, 'LLL'); // 축약 월 이름
+  fnsFormat = fnsFormat.replace(/MM/g, 'LL'); // 2자리 월 (01-12)
+  fnsFormat = fnsFormat.replace(/M/g, 'L'); // 1-2자리 월 (1-12)
+
+  // 일
+  fnsFormat = fnsFormat.replace(/DD/g, 'dd'); // 2자리 일 (01-31)
+  fnsFormat = fnsFormat.replace(/D/g, 'd'); // 1-2자리 일 (1-31)
+
+  // 시간
+  fnsFormat = fnsFormat.replace(/HH/g, 'HH'); // 24시간 형식 (00-23)
+  fnsFormat = fnsFormat.replace(/H/g, 'H'); // 24시간 형식 (0-23)
+  fnsFormat = fnsFormat.replace(/hh/g, 'hh'); // 12시간 형식 (01-12)
+  fnsFormat = fnsFormat.replace(/h/g, 'h'); // 12시간 형식 (1-12)
+
+  // 분
+  fnsFormat = fnsFormat.replace(/mm/g, 'mm'); // 2자리 분 (00-59)
+  fnsFormat = fnsFormat.replace(/m/g, 'm'); // 1-2자리 분 (0-59)
+
+  // 초
+  fnsFormat = fnsFormat.replace(/ss/g, 'ss'); // 2자리 초 (00-59)
+  fnsFormat = fnsFormat.replace(/s/g, 's'); // 1-2자리 초 (0-59)
+
+  // 밀리초
+  fnsFormat = fnsFormat.replace(/SSS/g, 'SSS'); // 3자리 밀리초
+
+  // 요일
+  fnsFormat = fnsFormat.replace(/dddd/g, 'EEEE'); // 전체 요일 이름
+  fnsFormat = fnsFormat.replace(/ddd/g, 'EEE'); // 축약 요일 이름
+
+  // AM/PM
+  fnsFormat = fnsFormat.replace(/A/g, 'a'); // AM/PM
+  fnsFormat = fnsFormat.replace(/a/g, 'a'); // am/pm
+
+  console.log('convertDateFormatToFns:', dateFormat, '->', fnsFormat);
+
+  return fnsFormat;
 }

@@ -1,0 +1,13 @@
+.start {
+  letter-spacing: -0.3px;
+  line-height: 140%;
+  font-size: 1.6rem;
+  font-weight: 700;
+
+  .label {
+    color: var(--gray9);
+  }
+  .count {
+    color: var(--secondary1);
+  }
+}

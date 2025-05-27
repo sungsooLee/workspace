@@ -3,26 +3,25 @@ import { useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
-import { cn, getRandomId } from '@learnway/shared';
+import { cn } from '@learnway/shared';
 import {
   Button,
-  List,
-  Input,
-  TableBox,
   CheckboxGroupFormField,
   RadioGroupFormField,
-  ContentsRow,
-  ChipListModalSelectorFormField,
   TextareaFormField,
+  ChipListModalSelectorFormField,
+  ContentsRow,
+  Input,
+  List,
+  TableBox,
   useModal,
 } from '@learnway/ui';
-import { NoticeBox, FormSubTitle, FormInfoArea } from '@shared/ui';
+import { FormRow, NoticeBox, FormSubTitle, SwitchFormField, FormInfoArea } from '@shared/ui';
+
 import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
-import { ContentsHistoryInfoFormField, FormRow, SwitchFormField } from '@shared/ui';
 
 import styles from './main-widget.module.css';
 import dataWrapStyles from './data-wrap.module.css';
-
 import {
   DynamicFormConfig,
   useDynamicForm,
@@ -36,8 +35,9 @@ import {
   useMoveTenantWidget,
   useUpdateTenantWidget,
 } from '@entities/widgets/service/widgets.hook';
+
 import { TenantDetailWidgetMappingModal } from './tenant-detail-widget-mapping-modal';
-import { WidgetPreviewButton } from '@features/platform';
+import { WidgetPreviewButton } from '@features/platform'; // const menuLength = 5;
 
 // const menuLength = 5;
 // const menuOptions = Array(menuLength)

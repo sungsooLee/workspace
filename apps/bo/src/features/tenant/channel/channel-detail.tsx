@@ -3,27 +3,22 @@ import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import {
   Button,
-  ContentsRow,
-  Input,
   ChipListModalSelectorFormField,
-  Tabs,
   useGridBox,
   useGridBoxConfig,
+  ContentsRow,
   GridBox,
+  Input,
+  Tabs,
   TextareaFormField,
   RadioGroupFormField,
 } from '@learnway/ui';
 import { DuplicateCodeGuideText } from '@features/platform/category';
-
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import {
-  FormSubTitle,
-  FormRow,
-  ContentsHistoryInfoFormField,
-  ThumbnailListFormField,
-  ChipListFormField,
-} from '@shared/ui';
+import { FormSubTitle, ThumbnailListFormField, ChipListFormField } from '@shared/ui';
+import { ContentsHistoryInfoFormField, FormInfoArea, FormRow } from '@shared/ui';
+
 import { FormDisplay } from '@features/form/ui/form-display';
 import { TenantChoiceModal, UserChoiceModal } from '@features/shared';
 import {

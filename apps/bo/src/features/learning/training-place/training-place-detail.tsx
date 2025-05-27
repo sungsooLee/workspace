@@ -2,29 +2,33 @@ import React, { FC, useEffect, useState } from 'react';
 import { t } from 'i18next';
 import { useRouter } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { IcoTrash03, IcoPpt } from '@learnway/icons';
+import { IcoPpt, IcoTrash03 } from '@learnway/icons';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { ContentsHistoryInfoFormField, FormSubTitle } from '@shared/ui';
+import { ContentsHistoryInfoFormField, FormRow, FormSubTitle } from '@shared/ui';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import fileUploadStyles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
-import { ChipListModalSelectorFormField, Textarea } from '@learnway/ui';
-import { AddressSearchModal, TenantChoiceModal } from '@features/shared';
-
-import { Button, ContentsRow, useModal, Input } from '@learnway/ui';
+import {
+  Button,
+  ChipListModalSelectorFormField,
+  ContentsRow,
+  Input,
+  Textarea,
+  useModal,
+} from '@learnway/ui';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { useDynamicForm, DynamicFormConfig, CODE_GROUP } from '@learnway/hooks';
-import { FormRow } from '@shared/ui';
+import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 
 import {
   useCreateTrainingPlace,
+  useDeleteTrainingPlace,
   useFetchTrainingPlace,
   useUpdateTrainingPlace,
-  useDeleteTrainingPlace,
 } from '@entities/training-place/service/training-place.hook';
+import { AddressSearchModal, TenantChoiceModal } from '@features/shared';
 
 const TrainingPlaceDetailComponent: FC<any> = ({ mode, placeUUID }) => {
   const router = useRouter();

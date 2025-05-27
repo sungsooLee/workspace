@@ -2,11 +2,9 @@ import { createFileRoute } from '@tanstack/react-router';
 import { CODE_GROUP, useCodeStore, useS3Uploader } from '@learnway/hooks';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { Button, ContentsRow, useModal } from '@learnway/ui';
-import { LearningTypeChoiceModal } from '@features/learning';
 import { ExcelUploadModal } from '@features/shared';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { httpService } from '@learnway/shared';
 import { fileDownload } from '@learnway/shared';
 
 export const Route = createFileRoute('/_layout/menu/type6')({

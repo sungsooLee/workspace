@@ -1,19 +1,18 @@
-import { useRef, useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { t } from 'i18next';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import {
   Button,
+  CheckboxGroupFormField,
   ChipListModalSelectorFormField,
   ContentsRow,
-  DynamicFormField,
   TextareaFormField,
   useModal,
-  CheckboxGroupFormField,
 } from '@learnway/ui';
 import { FormRow, ThumbnailListFormField } from '@shared/ui';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { CODE_GROUP, DynamicFormConfig, useCodeStore, useDynamicForm } from '@learnway/hooks';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
@@ -24,21 +23,8 @@ import {
   DuplicateState,
 } from '@features/tenant/management/ui/duplicate-check-input-form-field';
 import { pageRouteConfig } from '@features/auth';
-import {
-  CompanyChoiceModal,
-  CompanyShuttleModal,
-  UserChoiceModal,
-  UserShuttleModal,
-  RoleChoiceModal,
-} from '@features/shared';
+import { CompanyShuttleModal, RoleChoiceModal } from '@features/shared';
 import TenantService from '@entities/tenant/api/tenant';
-import {
-  CODE_GROUP,
-  BaseFormFieldProps,
-  OptionsConfig,
-  SelectOption,
-  useCodeStore,
-} from '@learnway/hooks';
 import { isEqual } from 'lodash';
 import { EnDeviceType, EnUseCategory } from '@types';
 
