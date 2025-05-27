@@ -1,15 +1,1 @@
-export * from './ui/modal/channel-choice-modal';
-export * from './ui/modal/channel-list-choice-modal';
-export * from './ui/modal/channel-shuttle-modal';
-export * from './ui/modal/manager-choice-modal';
-export * from './ui/modal/company-choice-modal';
-export * from './ui/modal/company-shuttle-modal';
-export * from './ui/modal/address-search-modal';
-export * from './ui/modal/user-choice-modal';
-export * from './ui/modal/user-shuttle-modal';
-export * from './ui/modal/tenant-choice-modal';
-export * from './ui/modal/tenant-shuttle-modal';
-export * from './ui/modal/role-choice-modal';
-export * from './ui/modal/role-shuttle-modal';
-export * from './ui/modal/menu-choice-modal';
-export { ExcelUploadModal } from './ui/modal/excel-upload-modal';
+export * from './ui/modal';

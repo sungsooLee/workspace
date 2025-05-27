@@ -1,4 +1,4 @@
-import { FC, useState, forwardRef, useEffect } from 'react';
+import { FC, forwardRef, useEffect, useState } from 'react';
 import { t } from 'i18next';
 import {
   Button,
@@ -6,10 +6,9 @@ import {
   ModalContainer,
   ModalFooter,
   ModalTitle,
-  useModal,
   ShuttleTreeToChips,
-  findNodesByKeys,
   TreeNode,
+  useModal,
 } from '@learnway/ui';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { useMenuManageFetchTree } from '@entities/menu';
