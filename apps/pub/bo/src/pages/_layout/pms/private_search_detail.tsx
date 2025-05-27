@@ -127,6 +127,24 @@ function RouteComponent() {
                 />
               </div>
             </div>
+            <div className={formStyles.form_item}></div>
+          </ContentsRow>
+          <FormSubTitle label={'조회 정보'} underLine />
+          <ContentsRow>
+            <div className={formStyles.form_item}>
+              <label htmlFor={'name-path'} className={formStyles.form_label}>
+                <span className={formStyles.form_text}>{'메뉴 경로'}</span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Input
+                  type={'text'}
+                  id={'name-path'}
+                  readOnly
+                  value={'플랫폼 관리 > 테넌트 관리 > 테넌트 - 유저 관리'}
+                  placeholder={'입력'}
+                />
+              </div>
+            </div>
           </ContentsRow>
         </div>
       </PageContainer>
