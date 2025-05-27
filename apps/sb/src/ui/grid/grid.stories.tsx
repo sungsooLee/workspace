@@ -13,6 +13,7 @@ import { ReactQueryConfigProvider } from '@learnway/config';
 import React, { ReactNode, useEffect, useState } from 'react';
 import {
   Button,
+  CountText,
   EditCheckboxCell,
   EditDropdownCell,
   EditInputCell,
@@ -833,10 +834,11 @@ export const TemplateTitleArea: any = (args: any) => {
       // 좌측
       title={'목록'}
       titleCustomNode={
-        <div className={'custom_info_wrap'}>
-          <strong className={'table_tit'}>{'커스텀개수'}</strong>
-          <span className={'count_info'}>{'5'}</span>
-        </div>
+        <CountText label={'커스텀개수'} count={5} />
+        // <div className={'custom_info_wrap'}>
+        //   <strong className={'table_tit'}>{'커스텀개수'}</strong>
+        //   <span className={'count_info'}>{'5'}</span>
+        // </div>
       }
       guideText={'그리드 가이드 텍스트'}
       // 우측
