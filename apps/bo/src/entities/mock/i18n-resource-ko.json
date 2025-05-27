@@ -523,5 +523,37 @@
   "pms.channel.ChannelSecretType": {
     "SECRET": "비밀",
     "PUBLIC": "공개"
+  },
+  "pms.company.CompanyType": {
+    "CAR": "완성차",
+    "GROUP": "그룹사",
+    "HYUNDAI_GLOBAL": "현대 해외법인",
+    "HYUNDAI_GLOBAL_DEALER": "현대 해외딜러",
+    "HYUNDAI_SALES": "현대 판매대리점",
+    "HYUNDAI_SERVICE": "현대 서비스협력사",
+    "HYUNDAI_PRODUCTION": "현대 생산 협력사",
+    "KIA_GLOBAL": "기아 해외법인",
+    "KIA_GLOBAL_DEALER": "기아 해외딜러",
+    "KIA_SALES": "기아 판매대리점",
+    "KIA_SERVICE": "기아 서비스협력사",
+    "KIA_PRODUCTION": "기아 생산 협력사",
+    "CP": "CP사",
+    "ETC": "기타"
+  },
+  "pms.company.LinkageSystem": {
+    "GIM": "GIM",
+    "HSW": "HSW",
+    "KSW": "KSW",
+    "DMSSH": "DMSSH",
+    "DMSSK": "DMSSK",
+    "DDMSH": "DDMSH",
+    "DDMSK": "DDMSK",
+    "VAATZ": "VAATZ"
+  },
+  "pms.company.PlatformServiceType": {
+    "CONSIGNMENT": "위탁",
+    "BASIC": "베이직",
+    "CORE": "코어",
+    "ENTERPRISE": "엔타프라이즈"
   }
 }
