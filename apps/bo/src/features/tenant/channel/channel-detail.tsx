@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useState, useCallback } from 'react';
+import { FC, useEffect, useState, useCallback } from 'react';
 import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import {
@@ -9,7 +9,6 @@ import {
   ContentsRow,
   GridBox,
   Input,
-  Tabs,
   TextareaFormField,
   RadioGroupFormField,
 } from '@learnway/ui';
