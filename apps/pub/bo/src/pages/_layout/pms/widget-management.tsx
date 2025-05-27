@@ -162,9 +162,9 @@ function RouteComponent() {
               showColumnSettings={false}
               showNumberingColumn={true}
               pagination={{
-                pageSize,
-                pageIndex,
-                totalRows: 100,
+                pageNumber: 0,
+                pageSize: 10,
+                totalPages: 100,
                 onPageChange: setPageIndex,
                 onPageSizeChange: setPageSize,
               }}

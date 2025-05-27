@@ -49,7 +49,7 @@ function RouteComponent() {
   ];
 
   // Table
-  const [pageIndex, setPageIndex] = useState(0);
+  const [pageNumber, setPageIndex] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const columns = [
     columnHelper.accessor('sort', {
@@ -232,9 +232,9 @@ function RouteComponent() {
               showExcelDownload
               showUpload
               pagination={{
+                pageNumber,
                 pageSize,
-                pageIndex,
-                totalRows: 100,
+                totalPages: 100,
                 onPageChange: setPageIndex,
                 onPageSizeChange: setPageSize,
               }}

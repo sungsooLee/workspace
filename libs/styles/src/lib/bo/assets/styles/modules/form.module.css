@@ -1,6 +1,6 @@
 /* form.module.css */
 .row {
-  @apply flex w-full gap-[40px] text-left;
+  @apply flex w-full gap-[32px] text-left;
   .row {
     @apply mt-[12px];
   }
