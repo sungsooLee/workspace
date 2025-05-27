@@ -1,23 +1,21 @@
-import { useEffect, useCallback } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
+import { useCallback, useEffect } from 'react';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { Button, GridBox, useGridBox, useModal } from '@learnway/ui';
-import { IcoInfoCircle, IcoDownload } from '@learnway/icons';
-import { createColumnHelper } from '@tanstack/react-table';
-import { ColumnDef } from '@tanstack/react-table';
-import { useRouter } from '@tanstack/react-router';
+import { IcoDownload, IcoInfoCircle } from '@learnway/icons';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { SearchBox } from '@shared/ui/search-box';
-import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
+import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { queryOptions as trainingPlaceQueryOptions } from '@entities/training-place/service/training-place.queries';
-import { ImagePreviewModal } from '@features/shared/ui/modal/image-preview-modal';
+import { ImagePreviewModal } from '@features/shared';
 
 export const Route = createFileRoute('/_layout/learning/training-place/')({
   component: RouteComponent,

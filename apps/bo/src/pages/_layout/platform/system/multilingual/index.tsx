@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Button,
+  CountText,
   EditInputCell,
   EditTextareaCell,
   GridBox,
@@ -182,16 +183,20 @@ function RouteComponent() {
             <GridBox
               config={gConfig}
               titleCustomNode={
-                <div className={'custom_info_wrap'}>
-                  {t('pms.multilingual.Is_Translation.true')}{' '}
-                  <strong className={'table_tit'}>{successTranslationCount}</strong>
+                <>
+                  {/*번역완료 개수*/}
+                  <CountText
+                    label={t('pms.multilingual.Is_Translation.true', '')}
+                    count={successTranslationCount}
+                  />
+                  {/*번역중인언어*/}
                   <span className={'normal_text'}>
                     {t('LABEL.platform.system.multilingual.currentTranslationLanguage')} :{' '}
                     {currentTargetLocale
                       ? t(`pms.multilingual.LanguageType.${currentTargetLocale}`)
                       : ''}
                   </span>
-                </div>
+                </>
               }
               showExcelDownload={true}
               showUpload={true}

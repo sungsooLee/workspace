@@ -153,7 +153,6 @@ const GridComponent = forwardRef(
      * 테이블 columns
      */
     const tableColumns = useMemo(() => {
-      console.log('xxxx');
       // 넘버링 컬럼 생성
       const createNumberingColumn = (): ColumnDef<T> => ({
         id: 'numbering',
@@ -282,7 +281,6 @@ const GridComponent = forwardRef(
     const handleRowSelectionChangeForMultiple: OnChangeFn<RowSelectionState> = (updaterOrValue) => {
       const newSelection =
         typeof updaterOrValue === 'function' ? updaterOrValue(rowSelection) : updaterOrValue;
-      console.log(newSelection);
       setRowSelection(newSelection);
     };
 

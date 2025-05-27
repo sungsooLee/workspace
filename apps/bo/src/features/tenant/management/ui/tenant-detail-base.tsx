@@ -1,38 +1,22 @@
-import { FC, useState, useEffect, useImperativeHandle, useRef, forwardRef } from 'react';
-import { t, use } from 'i18next';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useRouterState } from '@tanstack/react-router';
 
 import { cn } from '@learnway/shared';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { CODE_GROUP, DynamicFormConfig, useCodeStore, useDynamicForm } from '@learnway/hooks';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
 import {
-  Button,
   CheckboxGroupFormField,
   ChipListModalSelectorFormField,
   ContentsRow,
-  Input,
-  Textarea,
   TextareaFormField,
   useModal,
 } from '@learnway/ui';
-import { ThumbnailListFormField } from '@shared/ui';
-import { ContentsHistoryInfoFormField, FormRow } from '@shared/ui';
+import { ContentsHistoryInfoFormField, FormRow, ThumbnailListFormField } from '@shared/ui';
 import { isEqual } from 'lodash';
-import {
-  CompanyShuttleModal,
-  UserChoiceModal,
-  UserShuttleModal,
-  RoleChoiceModal,
-} from '@features/shared';
-import {
-  CODE_GROUP,
-  BaseFormFieldProps,
-  OptionsConfig,
-  SelectOption,
-  useCodeStore,
-} from '@learnway/hooks';
+import { CompanyShuttleModal, RoleChoiceModal } from '@features/shared';
 import {
   DuplicateCheckInputFormField,
   DuplicateState,

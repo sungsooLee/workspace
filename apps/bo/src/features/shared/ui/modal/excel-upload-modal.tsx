@@ -6,7 +6,7 @@ import { cn } from '@learnway/shared';
 import { IcoDownload } from '@learnway/icons';
 import { NoticeBox } from '@shared/ui';
 import { useS3Uploader } from '@learnway/hooks';
-import { DndFileProgress } from '@features/shared/ui/modal/dnd-file-progress'; // 파일 업로드
+import { DndFileProgress } from './dnd-file-progress'; // 파일 업로드
 
 const ExcelUploadModalComponent = () => {
   const acceptFiles = ['xlsx'];

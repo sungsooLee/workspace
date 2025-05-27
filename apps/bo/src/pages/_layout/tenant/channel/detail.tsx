@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { t } from 'i18next';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
@@ -17,6 +17,7 @@ export const Route = createFileRoute('/_layout/tenant/channel/detail')({
 });
 
 function RouteComponent() {
+  const router = useRouter();
   const [selectedTabKey, setSelectedTabKey] = useState('menu01');
 
   const handleTabChange = (tabKey: string) => {
@@ -32,14 +33,14 @@ function RouteComponent() {
       content: <ChannelDetailBase />,
     },
     {
-      title: '화면/사용 설정',
+      title: '메인 설정',
       key: 'menu02',
-      content: '화면/사용 설정',
+      content: '메인 설정',
     },
     {
-      title: '역할 관리',
+      title: '게시판 설정',
       key: 'menu03',
-      content: <ChannelDetailRole />,
+      content: '게시판 설정',
     },
     {
       title: '구독자 관리',
@@ -47,9 +48,9 @@ function RouteComponent() {
       content: '구독자 관리',
     },
     {
-      title: '유저그룹 관리',
+      title: '담당자 역할 관리',
       key: 'menu05',
-      content: '유저그룹 관리',
+      content: <ChannelDetailRole />,
     },
   ];
 
@@ -57,7 +58,11 @@ function RouteComponent() {
     <PageContainer>
       <ContentsButtons>
         <LinkBox>
-          <Button variant="point" size="sm">
+          <Button
+            variant="point"
+            size="sm"
+            onClick={() => router.navigate({ to: '/tenant/channel' })}
+          >
             {t('LABEL.button.list')}
           </Button>
           <Button variant="point" size="sm">

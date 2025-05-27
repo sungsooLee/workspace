@@ -45,7 +45,6 @@ export const codeOptions: CodeApiConfig = {
       const data: any = await httpService.get(`${PMSApiPrefix()}/companies`, { size: 1000 });
       console.log('manual.', data);
       return [
-        { label: '전체', value: '' },
         ...data.content.map((item: any) => ({
           label: item.name,
           value: item.companyCode,

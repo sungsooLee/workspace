@@ -94,4 +94,9 @@ export const mutateOptions = {
       return WidgetsService.moveWidgetsTenantMappings(payload);
     },
   }),
+  updateTenantWidget: () => ({
+    mutationFn: ({ tenantWidgetId, body }: { tenantWidgetId: number; body: any }) => {
+      return WidgetsService.putWidgetsTenantMappings(tenantWidgetId, body);
+    },
+  }),
 };

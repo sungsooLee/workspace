@@ -1,48 +1,30 @@
-import { useState, useEffect, forwardRef, useCallback } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { t } from 'i18next';
 import { cn } from '@learnway/shared';
 import {
   Button,
+  ChipListModalSelectorFormField,
+  ContentsRow,
   GridBox,
   TreeBox,
   TreeNode,
   useGridBox,
-  ChipListModalSelectorFormField,
-  ContentsRow,
   useModal,
 } from '@learnway/ui';
 
-import {
-  FormInfoArea,
-  FormRow,
-  ContentsHistoryInfoFormField,
-  ChipListFormField,
-  SwitchFormField,
-} from '@shared/ui';
+import { FormRow, FormSubTitle } from '@shared/ui';
 
 import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 import { useRouterState } from '@tanstack/react-router';
 
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
-
-import { FormSubTitle } from '@shared/ui';
 import { DynamicFormConfig, useDynamicForm, useSearchBox } from '@learnway/hooks';
 import { SearchBox } from '@shared/ui/search-box';
 import { IcoFormRequired, IcoMinus, IcoPlus } from '@learnway/icons';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import { createColumnHelper } from '@tanstack/react-table';
-import {
-  getAllTreeKeys,
-  getFirstExpandKeys,
-  moveNodeCheck,
-  transformRoleApiDataToTreeData,
-} from '../service/tenant-detail-tree.service';
-import {
-  useFetchRole,
-  useFetchRoleTree,
-  useRoleManager,
-  useGetRoleUserGroups,
-} from '@entities/role/service/role-manage.hook';
+import { transformRoleApiDataToTreeData } from '../service/tenant-detail-tree.service';
+import { useFetchRoleTree, useGetRoleUserGroups } from '@entities/role/service/role-manage.hook';
 import { UserChoiceModal } from '@features/shared';
 import { roleManagerQueryOptions } from '@entities/role/service/role-manage.queries';
 import { EnFormMode } from '@types';
@@ -64,7 +46,9 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
   const { config, gridFetch } = useGridBox(gridConfig);
 
   const { data: roleData } = useFetchRoleTree(tenantId, siteScope);
-  const { data: roleGroupData } = useGetRoleUserGroups(tenantId);
+  const { data: roleGroupData, refetch: roleGroupRefetch } = useGetRoleUserGroups(
+    selectedRole?.roleCode,
+  );
 
   const handleOnSearch = (data: any) => {
     if (formMode === EnFormMode.VIEW) {
@@ -74,8 +58,10 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
 
   const handleRoleSelect = (node: TreeNode) => {
     if (node.key !== 'root') {
+      setFormMode(EnFormMode.VIEW);
       setSelectedRole(node);
       gridFetch({ ...getValues(), roleCode: node.roleCode });
+      roleGroupRefetch();
     }
   };
   const handleUserAddButtonClick = async () => {
@@ -84,6 +70,7 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
       width: 'xl',
     });
     console.log('hand', data);
+    // 받은 자료로 유저그룹 역할 부여 처리
   };
 
   useEffect(() => {
@@ -174,6 +161,7 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
                     }
                   />
                 </ContentsRow>
+                <ContentsHistoryInfoFormField />
               </div>
             </div>
           </div>
@@ -250,19 +238,22 @@ const columns = [
   columnHelper.accessor('id', {
     cell: (info) => info.getValue(),
     header: '구분',
-    size: 50,
+    size: 60,
   }),
   columnHelper.accessor('2', {
     cell: (info) => info.getValue(),
     header: '회사',
+    size: 80,
   }),
   columnHelper.accessor('3', {
     cell: (info) => info.getValue(),
     header: '조직',
+    size: 90,
   }),
   columnHelper.accessor('4', {
     cell: (info) => info.getValue(),
     header: '이름',
+    size: 60,
   }),
   columnHelper.accessor('5', {
     cell: (info) => info.getValue(),
@@ -272,18 +263,21 @@ const columns = [
   columnHelper.accessor('6', {
     cell: (info) => info.getValue(),
     header: '사용',
-    size: 80,
+    size: 60,
   }),
   columnHelper.accessor('7', {
     cell: (info) => info.getValue(),
     header: '권한시작일',
+    size: 140,
   }),
   columnHelper.accessor('8', {
     cell: (info) => info.getValue(),
     header: '권한종료일',
+    size: 140,
   }),
   columnHelper.accessor('9', {
     header: '데이터 접근 범위',
+    size: 232,
     cell: (info) => {
       return (
         <>
