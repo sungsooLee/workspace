@@ -46,3 +46,11 @@ export enum EnTenantDetailTabKey {
   banner = 'banner',
   theme = 'theme',
 }
+
+export enum EnUserState {
+  WAIT = 'WAIT',
+  NORMAL = 'NORMAL',
+  HALT = 'HALT',
+  LEAVE = 'LEAVE',
+  DELETE = 'DELETE',
+}
