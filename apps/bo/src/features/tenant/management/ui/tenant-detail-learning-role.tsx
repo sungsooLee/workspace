@@ -15,6 +15,15 @@ enum TabKey {
   BO_MENU = 'BO_MENU',
   BO_GRANT = 'BO_GRANT',
 }
+/**
+ * 화면번호:
+ * NLP_BO_TMS_1003_04(학습역할), NLP_BO_TMS_1003_04_01(학습역할메뉴), NLP_BO_TMS_1003_04_02(학습역할부여),
+ * NLP_BO_TMS_1003_04_03(HRD역할), NLP_BO_TMS_1003_04_04(HRD역할메뉴), NLP_BO_TMS_1003_04_05(HRD역할부여),
+ * NLP_BO_PMS_1100 (플렛폼 학습역할), NLP_BO_PMS_1101 (플렛폼 학습역할메뉴), NLP_BO_PMS_1103 (플렛품 학습역할부여)
+ * NLP_BO_PMS_1104 (플렛폼 HRD역할), NLP_BO_PMS_1105 (플렛폼 HRD역할메뉴), NLP_BO_PMS_1106 (플렛폼 HRD역할부여),
+ * @param param0
+ * @returns
+ */
 const TenantDetailLearningRoleComponent: FC<any> = ({ roleInfo }) => {
   const [selectedTabKey, setSelectedTabKey] = useState<string>(TabKey.FO_ROLE);
   const roleRef = useRef<any>();

@@ -22,6 +22,10 @@ import popLayoutstyles from '@learnway/styles/bo/assets/styles/modules/popup-lay
 import dataInfostyles from '@learnway/styles/bo/assets/styles/modules/data-info.module.css';
 import selectMenuStyles from '@learnway/styles/bo/assets/styles/modules/select-menu.module.css';
 
+/**
+ * 화면번호: NLP_BO_PMS_1111 (데이터접근범위 일괄적용)
+ * @returns
+ */
 const TenantDetailLearningRoleGrantRangeModalComponent = () => {
   const { close: closeModal } = useModal();
   const [activeIndex, setActiveIndex] = useState<number>(0);
