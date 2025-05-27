@@ -45,6 +45,7 @@ export const DuplicateCheckInputFormField = forwardRef<
       onChange,
       onDuplicationCheck,
       maxLength,
+      disabled,
       dupConfig = {
         langCode: {
           ok: 'LABEL.form.validation.ok',
@@ -141,7 +142,12 @@ export const DuplicateCheckInputFormField = forwardRef<
 
     return (
       <div className="flex w-full gap-x-2">
-        <Input value={editionValue.fieldValue} onChange={handleChangeField} maxLength={maxLength} />
+        <Input
+          value={editionValue.fieldValue}
+          onChange={handleChangeField}
+          maxLength={maxLength}
+          disabled={disabled}
+        />
         <Button
           type="button"
           variant="gray"
@@ -149,6 +155,7 @@ export const DuplicateCheckInputFormField = forwardRef<
           label={t('LABEL.button.duplication')}
           onClick={handleDupplicationCheckButtonClick}
           disabled={
+            disabled ||
             editionValue.checkState === DuplicateState.ok ||
             editionValue.checkState === DuplicateState.okStart
           }
