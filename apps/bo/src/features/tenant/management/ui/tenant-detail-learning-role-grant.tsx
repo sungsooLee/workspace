@@ -12,7 +12,7 @@ import {
   useModal,
 } from '@learnway/ui';
 
-import { FormRow, FormSubTitle } from '@shared/ui';
+import { ContentsHistoryInfoFormField, FormRow, FormSubTitle } from '@shared/ui';
 
 import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 import { useRouterState } from '@tanstack/react-router';
