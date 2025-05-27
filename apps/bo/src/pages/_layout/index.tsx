@@ -11,7 +11,8 @@ export const Route = createFileRoute('/_layout/')({
 function HomeComponent() {
   return (
     <PageContainer
-    // scrollHidden={true}
+      // scrollHidden={true}
+      showFavoriteButton={false}
     >
       <MainContents>
         <h3>Dash Board</h3>

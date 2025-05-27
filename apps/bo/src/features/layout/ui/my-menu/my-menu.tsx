@@ -1,53 +1,96 @@
-import { memo, useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { ChipList, Popover, SelectOption, List, Button } from '@learnway/ui';
+import { ChipList, Popover, List, Button } from '@learnway/ui';
 import { IcoStar, IcoStar02, IcoClock01 } from '@learnway/icons';
-import { useFetchAuthUser } from '@learnway/auth';
-import { cn, getRandomId } from '@learnway/shared';
+import {
+  useActiveMenuDepthState,
+  useAsycFetchMenus,
+  useFetchAuthUser,
+  useLayoutStore,
+  useUpdateUser,
+} from '@learnway/auth';
+import { cn } from '@learnway/shared';
 
 import styles from './my-menu.module.css';
+import { useDeleteMenuFavorites, useFetchMenuFavorites } from '@entities/menu';
+import { useRouter } from '@tanstack/react-router';
 
-const menuLength = 5;
-const menuOptions = Array(menuLength)
-  .fill(null)
-  .map((d, i) => ({
-    id: getRandomId(),
-    name: `메뉴명${i}`,
-  }));
-
+// TODO 즐겨찾기 DND 처리
 const PopoverContent = () => {
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
+  const router = useRouter();
 
-  // chips 리스트
-  const options: SelectOption[] = [
-    { label: '학습운영', value: 'A' },
-    { label: '수강신청/현황', value: 'B' },
-    { label: '대리 결재자 지정', value: 'C' },
-    { label: '현대자동차 D', value: 'E' },
-    { label: '현대자동차 F', value: 'F' },
-    { label: '현대자동차 G', value: 'G' },
-    { label: '현대자동차 H', value: 'H' },
-    { label: '현대자동차 I', value: 'I' },
-  ];
+  const [_, setActiveMenuDepth] = useActiveMenuDepthState();
+  const { data: authUser } = useFetchAuthUser();
+  const { data: menuFavorites, refetch } = useFetchMenuFavorites({
+    tenantId: authUser?.activeTenant?.tenantId,
+    userNo: authUser?.userId,
+  });
 
-  const [isFavorites, setIsFavorites] = useState<boolean[]>([true, true, true, true, true]);
+  const { updateMenu } = useUpdateUser();
+  const { asyncMenus } = useAsycFetchMenus();
+  const { deleteMenuFavorites } = useDeleteMenuFavorites();
+
+  const { menus, deleteMenus } = useLayoutStore((state) => state);
+
+  // 최근본 메뉴
+  const recentMenu = useMemo(() => {
+    if (!menus) return [];
+    return menus.map((menu, i) => ({
+      index: i,
+      label: menu.menuName,
+      value: menu.menuId,
+      path: menu.path,
+    }));
+  }, [menus]);
+
+  // 즐겨찾기 메뉴
+  const menuFavoritesOptions = useMemo(() => {
+    if (!menuFavorites) return [];
+    return menuFavorites?.map((item: any) => ({ id: item.menuId, name: item.menuName }));
+  }, [menuFavorites]);
+
+  // 즐겨찾기 별표시 상태 ( 별표시 누르면 메뉴 삭제라서 제거 )
+  // const [isFavorites, setIsFavorites] = useState<boolean[]>([true, true, true, true, true]);
+
+  // 즐겨찾기 삭제
   const handleToggle = (index: number) => {
+    // 즐겨찾기 별표시 상태 ( 별표시 누르면 메뉴 삭제라서 제거 )
     // 버튼의 상태 배열 복사 후 해당 인덱스만 반전시킴
-    setIsFavorites((prevState) => {
-      const newToggled = [...prevState];
-      newToggled[index] = !newToggled[index];
-      return newToggled;
+    // setIsFavorites((prevState) => {
+    //   const newToggled = [...prevState];
+    //   newToggled[index] = !newToggled[index];
+    //   return newToggled;
+    // });
+
+    console.log('menuOptions[index] :: ', menuFavoritesOptions[index]);
+
+    deleteMenuFavorites(menuFavoritesOptions[index].id, {
+      onSuccess: async (data: any) => {
+        console.log('data', data);
+        refetch();
+        if (authUser?.activeTenant?.tenantId) {
+          const menus = await asyncMenus(authUser?.activeTenant?.tenantId);
+          updateMenu(menus);
+          setActiveMenuDepth((prev) => {
+            return prev?.map((menu) =>
+              menu.menuId === menuFavoritesOptions[index].id
+                ? { ...menu, isFavorite: false }
+                : menu,
+            );
+          });
+        }
+      },
     });
   };
-  const [myOptions, setMyOptions] = useState(menuOptions);
-  const [value, setValue] = useState<any>();
+
   return (
     <div className={cn(styles.start, styles.mymenu_wrap)}>
       <strong className={styles.tit}>{'최근 본 메뉴'}</strong>
       <div className={styles.word_contents}>
         {/* 최근 자주 사용한 메뉴 없는 경우 */}
-        {options.length === 0 ? (
+        {recentMenu.length === 0 ? (
           <div className={styles.empty}>
             <IcoClock01 className={styles.icon_menu} width={48} height={48} stroke="#8C97AE" />
             <p className={styles.text}>
@@ -58,55 +101,73 @@ const PopoverContent = () => {
           </div>
         ) : (
           <div className={styles.word_wrap}>
-            <ChipList options={options} size="sm" hideBorder />
+            <ChipList
+              options={recentMenu}
+              size="sm"
+              hideBorder
+              onChipClick={(e) => {
+                console.log(e);
+                router.navigate({ to: e.path });
+              }}
+              onChipDeleteClick={(e) => {
+                console.log(e);
+                deleteMenus(menus[e.index]);
+              }}
+            />
           </div>
         )}
       </div>
       <strong className={styles.tit}>{'즐겨찾기'}</strong>
-      <div className={styles.menu_list}>
-        <List
-          options={myOptions}
-          value={value}
-          valueField={'id'}
-          draggable
-          hideBorder
-          disabledActive
-          itemRenderer={(option: any, index: number) => (
-            <div className={styles.menu_box}>
-              <Button
-                className={cn(styles.btn_favorites, isFavorites[index] ? styles.active : '')}
-                onClick={() => handleToggle(index)}
-                onlyIcon
-              >
-                <IcoStar
-                  width={16}
-                  height={16}
-                  stroke="#FFB902"
-                  fill="#FFB902"
-                  className={styles.icon_star}
-                />
-              </Button>
-              <span className={styles.menu_name}>{option.name}</span>
-            </div>
-          )}
-          onOptionsOrderChange={(newOptions: any) => setMyOptions(newOptions)}
-        />
-      </div>
-      <div className={styles.empty}>
-        <IcoStar02 className={styles.icon_menu} width={48} height={48} stroke="#8C97AE" />
-        <p className={styles.text}>
-          업무 화면에서 별아이콘을 클릭하면
-          <br />
-          즐겨찾기에 메뉴가 추가됩니다.
-        </p>
-      </div>
+      {menuFavoritesOptions?.length > 0 ? (
+        <div className={styles.menu_list}>
+          <List
+            options={menuFavoritesOptions}
+            // value={value}
+            valueField={'id'}
+            draggable
+            hideBorder
+            disabledActive
+            itemRenderer={(option: any, index: number) => (
+              <div className={styles.menu_box}>
+                <Button
+                  className={cn(styles.btn_favorites, styles.active)}
+                  // 즐겨찾기 별표시 상태 ( 별표시 누르면 메뉴 삭제라서 제거 )
+                  // className={cn(styles.btn_favorites, isFavorites[index] ? styles.active : '')}
+                  onClick={() => handleToggle(index)}
+                  onlyIcon
+                >
+                  <IcoStar
+                    width={16}
+                    height={16}
+                    stroke="#FFB902"
+                    fill="#FFB902"
+                    className={styles.icon_star}
+                  />
+                </Button>
+                <span className={styles.menu_name}>{option.name}</span>
+              </div>
+            )}
+            onOptionsOrderChange={(newOptions: any) => {
+              console.log('newOptions::', newOptions);
+            }}
+          />
+        </div>
+      ) : (
+        <div className={styles.empty}>
+          <IcoStar02 className={styles.icon_menu} width={48} height={48} stroke="#8C97AE" />
+          <p className={styles.text}>
+            업무 화면에서 별아이콘을 클릭하면
+            <br />
+            즐겨찾기에 메뉴가 추가됩니다.
+          </p>
+        </div>
+      )}
     </div>
   );
 };
 
 const MyMenuCompoment = () => {
   const { t } = useTranslation();
-  const { data } = useFetchAuthUser();
 
   return (
     <Popover popoverContent={<PopoverContent />}>
