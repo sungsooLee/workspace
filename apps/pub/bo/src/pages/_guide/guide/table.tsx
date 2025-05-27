@@ -106,7 +106,7 @@ const columns = [
       </div>
       <div className="group">
         <h3 className="guide_tit3">Table basic</h3>
-        <TableBox data={data} columns={columns} tableMode={true} />
+        <TableBox data={data} columns={columns} tableMode={true} multiple />
       </div>
     </div>
   );
