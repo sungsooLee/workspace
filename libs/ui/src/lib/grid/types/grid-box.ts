@@ -1,16 +1,7 @@
 import { UseFormReturn } from 'react-hook-form';
 import { GridProps } from './grid';
 import React from 'react';
-
-export interface ExcelConfig {
-  upload?: string; // uploadUrl
-  download?: string; // downloadUrl
-  form?: {
-    // 양식 관련 정보
-    xlsx: string; // xlsx form download url
-    csv: string; // csv download url
-  };
-}
+import { GridBoxSearchInputCondition } from '../components/grid-box-search-input';
 
 /**
  * TODO. GridBox 내의 기능이 확정되지 않아 useGridBox 와 GridBox 에 대한 Config 를 분리해놨는데 확정 된다면 합치는게 좋을꺼 같습니다.
@@ -232,9 +223,18 @@ export interface GridBoxProps<T extends object = object>
   onRemoveAllClick?: () => void;
 
   /**
+   * 검색영역 조회 버튼 클릭 핸들러 (엔터 눌렀을때도 실행됨)
+   */
+  onSearchClick?: (condition: GridBoxSearchInputCondition) => void;
+
+  /**
    * Show RowIndex
    */
   showNumberingColumn?: boolean;
+
+  /**
+   * 그리드 컬럼
+   */
   columns?: any[];
 
   clientSideSorting?: boolean;
@@ -244,34 +244,6 @@ export interface GridBoxProps<T extends object = object>
    * 페이지네이션 관련 설정을 포함하는 객체입니다.
    */
   pagination?: GridBoxPagination;
-  // pagination?: {
-  //   /**
-  //    * 현재 페이지의 인덱스입니다. (0부터 시작)
-  //    */
-  //   pageNumber: number;
-  //
-  //   /**
-  //    * 전체 페이지 개수입니다.
-  //    */
-  //   totalRows: number;
-  //
-  //   /**
-  //    * 페이지 변경 시 호출되는 콜백 함수입니다.
-  //    * @param {number} pageIndex 변경된 페이지 인덱스
-  //    */
-  //   onPageChange?: (pageIndex: number) => void;
-  //
-  //   /**
-  //    * 페이지 크기 변경 시 호출되는 콜백 함수입니다.
-  //    * @param {number} pageSize 변경된 페이지 크기
-  //    */
-  //   onPageSizeChange?: (pageSize: number) => void;
-  //
-  //   /**
-  //    * 페이지 크기 선택 옵션 배열입니다.
-  //    */
-  //   pageSizeOptions?: number[];
-  // };
 }
 
 export interface GridBoxPagination {
@@ -311,4 +283,14 @@ export interface GridBoxPagination {
    * @param {number} pageSize 변경된 페이지 크기
    */
   onPageSizeChange?: (pageSize: number) => void;
+}
+
+export interface ExcelConfig {
+  upload?: string; // uploadUrl
+  download?: string; // downloadUrl
+  form?: {
+    // 양식 관련 정보
+    xlsx: string; // xlsx form download url
+    csv: string; // csv download url
+  };
 }

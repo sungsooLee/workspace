@@ -1,7 +1,7 @@
-import { memo, useState, useEffect, useRef } from 'react';
-import { MobileView, BrowserView, isMobile } from 'react-device-detect';
+import { memo, useState } from 'react';
+import { BrowserView, isMobile, MobileView } from 'react-device-detect';
 import { IcoArrowDown, IcoCaution03 } from '@learnway/icons';
-import { Button, Panel, Progress, useModal, TableBox, Popover } from '@learnway/ui';
+import { Button, Panel, Popover, ProgressBar, TableBox, useModal } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import styles from './dashboard.module.css';
 import statusStyles from './status.module.css';
@@ -124,7 +124,7 @@ const CourseDashboardCompoment = () => {
         <Panel type="rounded" hideHeaderUnderline className={statusStyles.progress_box}>
           <div className={statusStyles.progress_rate}>
             <h3>나의진도율</h3>
-            <Progress value={progress} className={statusStyles.progress_bar} />
+            <ProgressBar progress={progress} className={statusStyles.progress_bar} />
             <div className={statusStyles.info}>
               <span className={statusStyles.progress}>{progress}%</span>
             </div>

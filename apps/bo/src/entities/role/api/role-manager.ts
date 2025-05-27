@@ -21,7 +21,8 @@ export default class RoleManagerService {
    * @returns 수정된 역할 정보
    */
   static updateRole(payload: Role): Promise<any> {
-    return httpService.put<Role>(`${PMSApiPrefix()}/roles/${payload.roleCode}`, payload);
+    const body = genCreateRole(payload);
+    return httpService.put<Role>(`${PMSApiPrefix()}/roles/${payload.roleCode}`, body);
   }
 
   /**

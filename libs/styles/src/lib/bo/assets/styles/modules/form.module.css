@@ -219,7 +219,7 @@
   }
 }
 .form_label {
-  @apply flex items-center overflow-hidden;
+  @apply relative z-[1] inline-flex items-center overflow-hidden;
   .form_text {
     @apply body_3_r;
     &.sm {
@@ -344,7 +344,7 @@
 }
 
 .form_contents_wrap {
-  @apply border-t border-solid border-[#eaf1fa] pt-[16px];
+  @apply pt-[12px];
   .tit_sub {
     @apply body_3_r mb-[12px] inline-flex text-[var(--gray9)];
     .required {
@@ -373,7 +373,7 @@
     }
   }
   & + div:not(:empty) {
-    @apply !mt-[32px];
+    @apply !mt-[24px];
   }
 }
 

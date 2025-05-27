@@ -1,33 +1,22 @@
-import { FC, useState, useEffect, useImperativeHandle, useRef, forwardRef } from 'react';
-import { t, use } from 'i18next';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useRouterState } from '@tanstack/react-router';
 
 import { cn } from '@learnway/shared';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { CODE_GROUP, DynamicFormConfig, useCodeStore, useDynamicForm } from '@learnway/hooks';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
 import {
-  Button,
   CheckboxGroupFormField,
   ChipListModalSelectorFormField,
   ContentsRow,
-  Input,
-  Textarea,
   TextareaFormField,
   useModal,
 } from '@learnway/ui';
-import { ThumbnailListFormField } from '@shared/ui';
-import { ContentsHistoryInfoFormField, FormRow } from '@shared/ui';
+import { ContentsHistoryInfoFormField, FormRow, ThumbnailListFormField } from '@shared/ui';
 import { isEqual } from 'lodash';
-import { CompanyShuttleModal, UserChoiceModal, UserShuttleModal } from '@features/shared';
-import {
-  CODE_GROUP,
-  BaseFormFieldProps,
-  OptionsConfig,
-  SelectOption,
-  useCodeStore,
-} from '@learnway/hooks';
+import { CompanyShuttleModal, RoleChoiceModal } from '@features/shared';
 import {
   DuplicateCheckInputFormField,
   DuplicateState,
@@ -98,6 +87,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       isCommonCategory: data.useCategory.includes(EnUseCategory.isCommonCategory),
       isTenantCategory: data.useCategory.includes(EnUseCategory.isTenantCategory),
       companyTenantList: data.companyTenantList.map((i: any) => i.companyId),
+      tenantMappingRoleList: data.tenantMappingRoleList.map((i: any) => i.roleId),
       tenantId: tenantId,
     };
     console.log('payload {} => ', payload);
@@ -132,7 +122,10 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         })),
         tenantMappingLanguageTypeList: tenantData.tenantLanguageList,
         tenantMappingUserList: tenantData.tenantUserList,
-        tenantMappingRoleList: tenantData.tenantRoleList,
+        tenantMappingRoleList: tenantData.tenantRoleList.map((item) => ({
+          roleId: item.roleId,
+          name: item.roleName,
+        })),
         tenantDesc: tenantData.tenantDesc ?? '',
       });
     }
@@ -170,7 +163,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       <ContentsRow>
         <FormRow provider={provider} name="logoImageUrl" element={<ThumbnailListFormField />} />
       </ContentsRow>
-      <ContentsRow>
+      {/* <ContentsRow>
         <FormRow
           provider={provider}
           name="tenantMappingUserList"
@@ -185,6 +178,26 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
                 title: '',
                 width: 'xl',
                 content: <UserChoiceModal />,
+              }}
+            />
+          }
+        />
+      </ContentsRow> */}
+      <ContentsRow>
+        <FormRow
+          provider={provider}
+          name="tenantMappingRoleList"
+          element={
+            <ChipListModalSelectorFormField
+              chipList={{
+                labelField: 'name',
+                valueField: 'roleId',
+                hideBorder: true,
+              }}
+              modalConfig={{
+                title: '',
+                width: 'xl',
+                content: <RoleChoiceModal />,
               }}
             />
           }
@@ -283,6 +296,7 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'tenantMappingRoleList',
       type: 'custom',
+      label: t('테넌트 역할'),
       format: 'array',
       value: [],
     },
@@ -422,7 +436,7 @@ const formConfig: DynamicFormConfig = {
         },
       ],
     },
-    // managerName: { required: true },
+    tenantMappingRoleList: { required: true },
     tenantBillingTag: { required: true },
     companyTenantList: { required: true },
     isUsed: { required: true },

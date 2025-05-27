@@ -2,7 +2,11 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type com_ever_edu_pms_file_dto_res_SimpleFileInfoResDto = {
+export type com_ever_edu_pms_file_dto_res_FileInfoInternalResDto = {
+    /**
+     * 파일그룹 UUID
+     */
+    groupUuid?: string;
     /**
      * 파일 아이디
      */
@@ -16,11 +20,11 @@ export type com_ever_edu_pms_file_dto_res_SimpleFileInfoResDto = {
      */
     fileName?: string;
     /**
-     * 저정소유형코드. 코드그룹(pms.file.RepositoryType) - S3|HMG
+     * 저정소유형. Enum(FileUploadStatus) - S3|HMG
      */
-    reposType?: com_ever_edu_pms_file_dto_res_SimpleFileInfoResDto.reposType;
+    reposType?: com_ever_edu_pms_file_dto_res_FileInfoInternalResDto.reposType;
     /**
-     * S3버킷명
+     * S3버킷명(저정소유형이 "S3"인 경우)
      */
     s3Bucket?: string;
     /**
@@ -36,20 +40,20 @@ export type com_ever_edu_pms_file_dto_res_SimpleFileInfoResDto = {
      */
     extType?: string;
     /**
-     * 업로드 상태. 코드그룹(pms.file.FileUploadStatus) - TEMPORARY_SAVE|COMPLETE|ONGOING(파일 후속 처리가 필요한 상태)|FAIL(파일 후속 처리 실패)
+     * 업로드 상태. Enum(FileUploadStatus) - COMPLETE|ONGOING(파일 후속 처리가 필요한 상태)|FAIL(파일 후속 처리 실패)
      */
-    uploadStatus?: com_ever_edu_pms_file_dto_res_SimpleFileInfoResDto.uploadStatus;
+    uploadStatus?: com_ever_edu_pms_file_dto_res_FileInfoInternalResDto.uploadStatus;
 };
-export namespace com_ever_edu_pms_file_dto_res_SimpleFileInfoResDto {
+export namespace com_ever_edu_pms_file_dto_res_FileInfoInternalResDto {
     /**
-     * 저정소유형코드. 코드그룹(pms.file.RepositoryType) - S3|HMG
+     * 저정소유형. Enum(FileUploadStatus) - S3|HMG
      */
     export enum reposType {
         S3 = 'S3',
         HMG = 'HMG',
     }
     /**
-     * 업로드 상태. 코드그룹(pms.file.FileUploadStatus) - TEMPORARY_SAVE|COMPLETE|ONGOING(파일 후속 처리가 필요한 상태)|FAIL(파일 후속 처리 실패)
+     * 업로드 상태. Enum(FileUploadStatus) - COMPLETE|ONGOING(파일 후속 처리가 필요한 상태)|FAIL(파일 후속 처리 실패)
      */
     export enum uploadStatus {
         TEMPORARY_SAVE = 'TEMPORARY_SAVE',

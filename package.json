@@ -28,7 +28,7 @@
     "i18n-flat-bo": "node ./temp/scripts/flatJson.js --type=bo",
     "i18n-flat-fo": "node ./temp/scripts/flatJson.js --type=fo",
     "prepare": "husky",
-    "build:check": "nx affected --target=build --configuration=dev --base=HEAD~1 --head=HEAD"
+    "build:check": "node scripts/build-check.js"
   },
   "private": true,
   "dependencies": {

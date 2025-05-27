@@ -1,44 +1,30 @@
-import { useRef, useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { t } from 'i18next';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import {
   Button,
+  CheckboxGroupFormField,
   ChipListModalSelectorFormField,
   ContentsRow,
-  DynamicFormField,
   TextareaFormField,
   useModal,
-  CheckboxGroupFormField,
 } from '@learnway/ui';
 import { FormRow, ThumbnailListFormField } from '@shared/ui';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { CODE_GROUP, DynamicFormConfig, useCodeStore, useDynamicForm } from '@learnway/hooks';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 
 import { useCreateTenant } from '@entities/tenant/service/tenant.hook';
-import { HrdUserInquiryModal } from '@features/shared/ui/modal/hrd-user-inquiry-modal';
 import {
   DuplicateCheckInputFormField,
   DuplicateState,
 } from '@features/tenant/management/ui/duplicate-check-input-form-field';
 import { pageRouteConfig } from '@features/auth';
-import {
-  CompanyChoiceModal,
-  CompanyShuttleModal,
-  UserChoiceModal,
-  UserShuttleModal,
-} from '@features/shared';
+import { CompanyShuttleModal, RoleChoiceModal } from '@features/shared';
 import TenantService from '@entities/tenant/api/tenant';
-import {
-  CODE_GROUP,
-  BaseFormFieldProps,
-  OptionsConfig,
-  SelectOption,
-  useCodeStore,
-} from '@learnway/hooks';
 import { isEqual } from 'lodash';
 import { EnDeviceType, EnUseCategory } from '@types';
 
@@ -94,7 +80,7 @@ function RouteComponent() {
 
   const handleOnSubmit = async (data: any) => {
     console.log('data {} => ', data);
-    const logoImageUrl = data.logoImageUrl?.length > 0 ? data.logoImageUrl[0].path : '';
+    const logoImageUrl = data.logoImageUrl?.length > 0 ? data.logoImageUrl[0] : '';
 
     const payload = {
       ...data,
@@ -106,6 +92,7 @@ function RouteComponent() {
       isCommonCategory: data.useCategory.includes(EnUseCategory.isCommonCategory),
       isTenantCategory: data.useCategory.includes(EnUseCategory.isTenantCategory),
       companyTenantList: data.companyTenantList.map((i: any) => i.companyId),
+      tenantMappingRoleList: data.tenantMappingRoleList.map((i: any) => i.roleId),
     };
     console.log('payload {} => ', payload);
     if (await openConfirm('저장 하시겠습니까?')) {
@@ -166,7 +153,7 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider} name="logoImageUrl" element={<ThumbnailListFormField />} />
           </ContentsRow>
-          <ContentsRow>
+          {/* <ContentsRow>
             <FormRow
               provider={provider}
               name="tenantMappingUserList"
@@ -181,6 +168,26 @@ function RouteComponent() {
                     title: '',
                     width: 'xl',
                     content: <UserChoiceModal />,
+                  }}
+                />
+              }
+            />
+          </ContentsRow> */}
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name="tenantMappingRoleList"
+              element={
+                <ChipListModalSelectorFormField
+                  chipList={{
+                    labelField: 'name',
+                    valueField: 'roleId',
+                    wordwrap: true,
+                  }}
+                  modalConfig={{
+                    title: '',
+                    width: 'xl',
+                    content: <RoleChoiceModal />,
                   }}
                 />
               }
@@ -277,6 +284,7 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'tenantMappingRoleList',
       type: 'custom',
+      label: t('테넌트 역할'),
       format: 'array',
       value: [],
     },
@@ -416,7 +424,7 @@ const formConfig: DynamicFormConfig = {
         },
       ],
     },
-    // managerName: { required: true },
+    tenantMappingRoleList: { required: true },
     tenantBillingTag: { required: true },
     companyTenantList: { required: true },
     isUsed: { required: true },

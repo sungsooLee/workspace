@@ -71,9 +71,11 @@ import type { com_ever_edu_pms_role_dto_res_RoleMenuResDto } from '../models/com
 import type { com_ever_edu_pms_role_dto_res_RoleResDto } from '../models/com_ever_edu_pms_role_dto_res_RoleResDto';
 import type { com_ever_edu_pms_role_dto_res_RoleTreeResDto } from '../models/com_ever_edu_pms_role_dto_res_RoleTreeResDto';
 import type { com_ever_edu_pms_role_dto_res_RoleUserGroupResDto } from '../models/com_ever_edu_pms_role_dto_res_RoleUserGroupResDto';
+import type { com_ever_edu_pms_tenant_dto_req_TenantCompanyUpdateReqDto } from '../models/com_ever_edu_pms_tenant_dto_req_TenantCompanyUpdateReqDto';
 import type { com_ever_edu_pms_tenant_dto_req_TenantCreateReqDto } from '../models/com_ever_edu_pms_tenant_dto_req_TenantCreateReqDto';
 import type { com_ever_edu_pms_tenant_dto_req_TenantSearchReqDto$SearchByAdmin } from '../models/com_ever_edu_pms_tenant_dto_req_TenantSearchReqDto$SearchByAdmin';
 import type { com_ever_edu_pms_tenant_dto_req_TenantUpdateReqDto } from '../models/com_ever_edu_pms_tenant_dto_req_TenantUpdateReqDto';
+import type { com_ever_edu_pms_tenant_dto_res_TenantResDto$CompanyResDto } from '../models/com_ever_edu_pms_tenant_dto_res_TenantResDto$CompanyResDto';
 import type { com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin';
 import type { com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnTenant } from '../models/com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnTenant';
 import type { com_ever_edu_pms_tenant_dto_res_TenantResDto$SimpleList } from '../models/com_ever_edu_pms_tenant_dto_res_TenantResDto$SimpleList';
@@ -99,8 +101,13 @@ import type { com_ever_edu_pms_user_dto_res_FindMyIdResDto } from '../models/com
 import type { com_ever_edu_pms_user_dto_res_IsEmailExistsResDto } from '../models/com_ever_edu_pms_user_dto_res_IsEmailExistsResDto';
 import type { com_ever_edu_pms_user_dto_res_UserGroupDto } from '../models/com_ever_edu_pms_user_dto_res_UserGroupDto';
 import type { com_ever_edu_pms_user_dto_res_UserResDto } from '../models/com_ever_edu_pms_user_dto_res_UserResDto';
+import type { com_ever_edu_pms_widget_dto_req_TenantWidgetCreateReqDto } from '../models/com_ever_edu_pms_widget_dto_req_TenantWidgetCreateReqDto';
+import type { com_ever_edu_pms_widget_dto_req_TenantWidgetUpdateReqDto } from '../models/com_ever_edu_pms_widget_dto_req_TenantWidgetUpdateReqDto';
 import type { com_ever_edu_pms_widget_dto_req_WidgetSearchReqDto$SearchByAdmin } from '../models/com_ever_edu_pms_widget_dto_req_WidgetSearchReqDto$SearchByAdmin';
+import type { com_ever_edu_pms_widget_dto_req_WidgetSearchReqDto$SearchByTenant } from '../models/com_ever_edu_pms_widget_dto_req_WidgetSearchReqDto$SearchByTenant';
 import type { com_ever_edu_pms_widget_dto_res_WidgetResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_widget_dto_res_WidgetResDto$DetailOnAdmin';
+import type { com_ever_edu_pms_widget_dto_res_WidgetResDto$DetailOnTenant } from '../models/com_ever_edu_pms_widget_dto_res_WidgetResDto$DetailOnTenant';
+import type { com_ever_edu_pms_widget_dto_res_WidgetResDto$TenantWidgetListOnTenant } from '../models/com_ever_edu_pms_widget_dto_res_WidgetResDto$TenantWidgetListOnTenant';
 import type { org_springdoc_core_converters_models_Pageable } from '../models/org_springdoc_core_converters_models_Pageable';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelRequestListResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelRequestListResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelResDto';
@@ -125,10 +132,90 @@ import type { org_springframework_data_domain_PageCom_ever_edu_pms_terms_dto_res
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_terms_dto_res_TermsResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_terms_dto_res_TermsResDto$ListOnAdmin';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_UserResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_UserResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_widget_dto_res_WidgetResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_widget_dto_res_WidgetResDto$ListOnAdmin';
+import type { org_springframework_data_domain_PageCom_ever_edu_pms_widget_dto_res_WidgetResDto$PopupListOnTenant } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_widget_dto_res_WidgetResDto$PopupListOnTenant';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class BoService {
+    /**
+     * 테넌트위젯 상세 조회
+     * 테넌트위젯 상세 조회
+     * @param tenantWidgetId
+     * @returns com_ever_edu_pms_widget_dto_res_WidgetResDto$DetailOnTenant OK
+     * @throws ApiError
+     */
+    public static getTenantWidgetDetail(
+        tenantWidgetId: number,
+    ): CancelablePromise<com_ever_edu_pms_widget_dto_res_WidgetResDto$DetailOnTenant> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/widgets/tenant-mappings/{tenantWidgetId}',
+            path: {
+                'tenantWidgetId': tenantWidgetId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트위젯 수정
+     * 테넌트위젯 수정
+     * @param tenantWidgetId
+     * @param requestBody
+     * @returns com_ever_edu_pms_widget_dto_res_WidgetResDto$DetailOnTenant OK
+     * @throws ApiError
+     */
+    public static updateTenantWidget(
+        tenantWidgetId: number,
+        requestBody: com_ever_edu_pms_widget_dto_req_TenantWidgetUpdateReqDto,
+    ): CancelablePromise<com_ever_edu_pms_widget_dto_res_WidgetResDto$DetailOnTenant> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/admin/api/v1/widgets/tenant-mappings/{tenantWidgetId}',
+            path: {
+                'tenantWidgetId': tenantWidgetId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트위젯 삭제
+     * 테넌트위젯 삭제
+     * @param tenantWidgetId
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static deleteTenantWidget(
+        tenantWidgetId: number,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/admin/api/v1/widgets/tenant-mappings/{tenantWidgetId}',
+            path: {
+                'tenantWidgetId': tenantWidgetId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
     /**
      * 비밀번호 변경(비밀번호 인증)
      * 기존 비밀번호를 통해 사용자의 비밀번호를 변경한다.
@@ -422,6 +509,60 @@ export class BoService {
             path: {
                 'tenantId': tenantId,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트 상세 > 회사 속성 조회(테넌트담당자)
+     * 테넌트 상세 > 회사 속성 조회(테넌트담당자)
+     * @param tenantId
+     * @returns com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnTenant OK
+     * @throws ApiError
+     */
+    public static getCompanyTenant(
+        tenantId: number,
+    ): CancelablePromise<com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnTenant> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/tenants/company-setting/{tenantId}',
+            path: {
+                'tenantId': tenantId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트 상세 > 회사 속성 수정(테넌트담당자)
+     * 테넌트 상세 > 회사 속성 수정(테넌트담당자)
+     * @param tenantId
+     * @param requestBody
+     * @returns com_ever_edu_pms_tenant_dto_res_TenantResDto$CompanyResDto OK
+     * @throws ApiError
+     */
+    public static updateCompanyTenant(
+        tenantId: number,
+        requestBody: com_ever_edu_pms_tenant_dto_req_TenantCompanyUpdateReqDto,
+    ): CancelablePromise<com_ever_edu_pms_tenant_dto_res_TenantResDto$CompanyResDto> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/admin/api/v1/tenants/company-setting/{tenantId}',
+            path: {
+                'tenantId': tenantId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
@@ -1256,6 +1397,65 @@ export class BoService {
             path: {
                 'commonCdGroupId': commonCdGroupId,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트위젯 순서변경
+     * 테넌트위젯 순서변경
+     * @param tenantWidgetId
+     * @param sortOrder
+     * @returns number OK
+     * @throws ApiError
+     */
+    public static updateTenantWidgetDnD(
+        tenantWidgetId: number,
+        sortOrder: number,
+    ): CancelablePromise<number> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/widgets/tenant-mappings/{tenantWidgetId}/dnd',
+            path: {
+                'tenantWidgetId': tenantWidgetId,
+            },
+            query: {
+                'sortOrder': sortOrder,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트위젯 등록
+     * 테넌트위젯 등록
+     * @param tenantId
+     * @param requestBody
+     * @returns com_ever_edu_pms_widget_dto_res_WidgetResDto$DetailOnTenant OK
+     * @throws ApiError
+     */
+    public static createTenantWidget(
+        tenantId: number,
+        requestBody: com_ever_edu_pms_widget_dto_req_TenantWidgetCreateReqDto,
+    ): CancelablePromise<Array<com_ever_edu_pms_widget_dto_res_WidgetResDto$DetailOnTenant>> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/widgets/tenant-mappings/{tenantId}',
+            path: {
+                'tenantId': tenantId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
@@ -2337,8 +2537,9 @@ export class BoService {
      * @param name 회사명
      * @param isUsed 사용여부
      * @param managerName 담당자 이름
-     * @param startDate 등록 시작일
-     * @param endDate 등록 종료일
+     * @param companyType 회사유형
+     * @param regStrDate 등록검색시작일(yyyyMMdd)
+     * @param regEndDate 등록검색종료일(yyyyMMdd)
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyResDto OK
      * @throws ApiError
      */
@@ -2351,8 +2552,9 @@ export class BoService {
         name?: string,
         isUsed?: 'true' | 'false',
         managerName?: string,
-        startDate?: string,
-        endDate?: string,
+        companyType?: string,
+        regStrDate?: string,
+        regEndDate?: string,
     ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyResDto> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -2366,8 +2568,9 @@ export class BoService {
                 'name': name,
                 'isUsed': isUsed,
                 'managerName': managerName,
-                'startDate': startDate,
-                'endDate': endDate,
+                'companyType': companyType,
+                'regStrDate': regStrDate,
+                'regEndDate': regEndDate,
             },
             errors: {
                 400: `Bad Request`,
@@ -2740,8 +2943,8 @@ export class BoService {
         });
     }
     /**
-     * 위젯 전체 조회
-     * 위젯 전체를 반환한다.<br><br><b>페이징 정보</b>: <br> - totalElements: 쿼리 결과물의 전체 데이터 갯수 <br> - totalPages: 페이징하였을 때 나오는 총 페이지의 갯수 <br> - size: 페이지 당 데이터 수 설정 값(rows per page) <br> - numberOfElements: 페이지에 존재하는 요소의 갯수(최대 size와 동일) <br> - number: 요소를 가져온 페이지의 번호. 0 ~
+     * 플랫폼관리 > 위젯관리 > 위젯 목록 조회
+     * 플랫폼관리 > 위젯관리 > 위젯 목록 조회<br><br><b>페이징 정보</b>: <br> - totalElements: 쿼리 결과물의 전체 데이터 갯수 <br> - totalPages: 페이징하였을 때 나오는 총 페이지의 갯수 <br> - size: 페이지 당 데이터 수 설정 값(rows per page) <br> - numberOfElements: 페이지에 존재하는 요소의 갯수(최대 size와 동일) <br> - number: 요소를 가져온 페이지의 번호. 0 ~
      * @param pageable
      * @param params
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_widget_dto_res_WidgetResDto$ListOnAdmin OK
@@ -2768,8 +2971,8 @@ export class BoService {
         });
     }
     /**
-     * 위젯 조회
-     * 위젯을 찾아 반환한다.
+     * 플랫폼관리 > 위젯관리 > 위젯 상세 조회
+     * 플랫폼관리 > 위젯관리 > 위젯 상세 조회
      * @param code
      * @returns com_ever_edu_pms_widget_dto_res_WidgetResDto$DetailOnAdmin OK
      * @throws ApiError
@@ -2782,6 +2985,59 @@ export class BoService {
             url: '/admin/api/v1/widgets/{code}',
             path: {
                 'code': code,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트관리 > 메인위젯관리 > 위젯 조회(팝업)
+     * 테넌트관리 > 메인위젯관리 > 위젯 조회(팝업)<br><br><b>페이징 정보</b>: <br> - totalElements: 쿼리 결과물의 전체 데이터 갯수 <br> - totalPages: 페이징하였을 때 나오는 총 페이지의 갯수 <br> - size: 페이지 당 데이터 수 설정 값(rows per page) <br> - numberOfElements: 페이지에 존재하는 요소의 갯수(최대 size와 동일) <br> - number: 요소를 가져온 페이지의 번호. 0 ~
+     * @param pageable
+     * @param params
+     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_widget_dto_res_WidgetResDto$PopupListOnTenant OK
+     * @throws ApiError
+     */
+    public static getWidgetListWithTenantPopup(
+        pageable: org_springdoc_core_converters_models_Pageable,
+        params: com_ever_edu_pms_widget_dto_req_WidgetSearchReqDto$SearchByTenant,
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_widget_dto_res_WidgetResDto$PopupListOnTenant> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/widgets/with-tenant',
+            query: {
+                'pageable': pageable,
+                'params': params,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트관리 > 메인위젯관리 > 테넌트 위젯 목록 조회
+     * 테넌트관리 > 메인위젯관리 > 테넌트 위젯 목록 조회
+     * @param tenantId
+     * @returns com_ever_edu_pms_widget_dto_res_WidgetResDto$TenantWidgetListOnTenant OK
+     * @throws ApiError
+     */
+    public static getTenantWidgetList(
+        tenantId: number,
+    ): CancelablePromise<Array<com_ever_edu_pms_widget_dto_res_WidgetResDto$TenantWidgetListOnTenant>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/widgets/tenant/{tenantId}',
+            path: {
+                'tenantId': tenantId,
             },
             errors: {
                 400: `Bad Request`,
@@ -2997,31 +3253,6 @@ export class BoService {
             url: '/admin/api/v1/tenants/exists',
             query: {
                 'name': name,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 테넌트 상세 조회(테넌트담당자)
-     * 테넌트 상세 조회(테넌트담당자)
-     * @param tenantId
-     * @returns com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnTenant OK
-     * @throws ApiError
-     */
-    public static getCompanyTenant(
-        tenantId: number,
-    ): CancelablePromise<com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnTenant> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/tenants/company-setting/{tenantId}',
-            path: {
-                'tenantId': tenantId,
             },
             errors: {
                 400: `Bad Request`,
@@ -3894,8 +4125,15 @@ export class BoService {
      * @param page Zero-based page index (0..N)
      * @param size The size of the page to be returned
      * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-     * @param companyId 회사Id
+     * @param companyCode 회사코드
+     * @param companyName 회사명
+     * @param isUseLinkageSystem 연동시스템 사용여부
+     * @param companyType 회사유형
+     * @param regStrDate 등록검색시작일(yyyyMMdd)
+     * @param regEndDate 등록검색종료일(yyyyMMdd)
      * @param isUsed 사용여부
+     * @param parentDeptId 상위 부서ID
+     * @param deptId 부서ID
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyDeptResDto OK
      * @throws ApiError
      */
@@ -3903,8 +4141,15 @@ export class BoService {
         page?: number,
         size: number = 10,
         sort?: Array<string>,
-        companyId?: string,
+        companyCode?: string,
+        companyName?: string,
+        isUseLinkageSystem?: 'true' | 'false',
+        companyType?: string,
+        regStrDate?: string,
+        regEndDate?: string,
         isUsed?: 'true' | 'false',
+        parentDeptId?: string,
+        deptId?: string,
     ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyDeptResDto> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -3913,8 +4158,15 @@ export class BoService {
                 'page': page,
                 'size': size,
                 'sort': sort,
-                'companyId': companyId,
+                'companyCode': companyCode,
+                'companyName': companyName,
+                'isUseLinkageSystem': isUseLinkageSystem,
+                'companyType': companyType,
+                'regStrDate': regStrDate,
+                'regEndDate': regEndDate,
                 'isUsed': isUsed,
+                'parentDeptId': parentDeptId,
+                'deptId': deptId,
             },
             errors: {
                 400: `Bad Request`,
@@ -3927,19 +4179,19 @@ export class BoService {
     }
     /**
      * 회사 부서 tree 조회
-     * 회사 부서 목록을 트리구조로 조회한다.
-     * @param companyId 회사Id
+     * 회사 부서 목록을 트리 구조로 조회한다.
+     * @param companyCode 회사코드
      * @returns com_ever_edu_pms_company_dto_res_CompanyDeptResDto OK
      * @throws ApiError
      */
     public static getDeportmentTreeList(
-        companyId: number,
+        companyCode: string,
     ): CancelablePromise<Array<com_ever_edu_pms_company_dto_res_CompanyDeptResDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/department/tree',
             query: {
-                'companyId': companyId,
+                'companyCode': companyCode,
             },
             errors: {
                 400: `Bad Request`,

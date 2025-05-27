@@ -1,10 +1,10 @@
 import { useEffect, useCallback, useState } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { Button, GridBox, useGridBox, useGridBoxConfig, Checkbox } from '@learnway/ui';
+import { Button, GridBox, useGridBox, useGridBoxConfig, Checkbox, useModal } from '@learnway/ui';
 import { createColumnHelper, Table } from '@tanstack/react-table';
 import { ColumnDef } from '@tanstack/react-table';
 import { useRouter } from '@tanstack/react-router';
@@ -18,6 +18,12 @@ import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 import { queryOptions as requestChannelQueryOptions } from '@entities/channel/service/request-channel.queries';
 import { formUtils } from '@entities/form-utils';
+import { ChannelRejectModal } from '@features/shared/ui/modal/channel-reject-modal';
+import {
+  useApproveRequestChannel,
+  useRejectRequestChannel,
+} from '@entities/channel/service/request-channel.hook';
+import { r } from '@faker-js/faker/dist/airline-BXaRegOM';
 
 export const Route = createFileRoute('/_layout/tenant/channel/request/')({
   component: RouteComponent,
@@ -26,10 +32,14 @@ export const Route = createFileRoute('/_layout/tenant/channel/request/')({
 function RouteComponent() {
   const router = useRouter();
 
+  const { open: openModal, confirm: openConfirm, alert } = useModal();
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
 
   const [selectedRows, setSelectedRows] = useState([]);
+
+  const { approve: approveRequestChannel } = useApproveRequestChannel({});
+  const { reject: rejectRequestChannel } = useRejectRequestChannel({});
 
   const handleOnSearch = useCallback((data: any) => {
     gridFetch(data);
@@ -39,6 +49,7 @@ function RouteComponent() {
 
   const columns = [
     columnHelper.accessor('checkbox', {
+      // 상태에 따른 checkbox disabled를 위해 checkbox 따로 구현
       id: 'select-check',
       size: 50,
       maxSize: 50,
@@ -77,10 +88,25 @@ function RouteComponent() {
       },
     }),
     columnHelper.accessor('channelRequestId', {
-      cell: (info) => info.getValue(),
+      cell: (info) => (
+        <Button
+          className="link"
+          stopPropagation
+          onClick={(e) => {
+            router.navigate({
+              to: '/tenant/channel/request/detail',
+              state: {
+                channelRequestUuid: info.row.original.channelRequestUuid,
+              },
+            });
+          }}
+        >
+          {info.row.original.channelRequestId}
+        </Button>
+      ),
       header: '신청ID',
       enableGrouping: false,
-      size: 110,
+      size: 200,
     }),
     columnHelper.accessor('tenantName', {
       cell: (info) => info.getValue(),
@@ -169,15 +195,30 @@ function RouteComponent() {
             <Button
               size={'xs'}
               variant="text"
-              className={layoutStyles.btn_text}
+              className="link"
+              stopPropagation
               onClick={(e) => {
-                e.stopPropagation();
+                //
               }}
             >
               채널 개설
             </Button>
           );
-        else return '';
+        else if (info.row.original.approvalStatusTypecd === 'APPROVED')
+          return (
+            <Button
+              size={'xs'}
+              variant="text"
+              className="link"
+              stopPropagation
+              onClick={(e) => {
+                //
+              }}
+            >
+              채널 상세
+            </Button>
+          );
+        return '';
       },
       header: '채널 확인',
       size: 200,
@@ -189,17 +230,108 @@ function RouteComponent() {
     gridFetch();
   }, []);
 
-  const handleGridRowSelect = (row: any) => {
-    // router.navigate({
-    //   to: '',
-    //   state: {
-    //     placeUUID: row.educationPlaceUuid,
-    //   },
-    // });
-  };
-
   const handleGridRowsSelect = (rows: any) => {
     setSelectedRows(rows);
+  };
+
+  const handleAcceptClick = (e: any) => {
+    if (selectedRows.length > 0) {
+      openConfirm({
+        title: t('접수 하시겠습니까?'),
+        content: <p>{t('채널 개설 신청을 접수한 후에 채널을 개설해야 합니다.')}</p>,
+        onClose: (value: boolean) => {
+          if (value) {
+            approveRequests();
+          }
+        },
+      });
+    }
+  };
+
+  const approveRequests = () => {
+    if (selectedRows.length > 0) {
+      const payload = {
+        channelRequestUuid: selectedRows.map((row: any) => row.channelRequestUuid),
+        rejectedReasonContent: '',
+      };
+      console.log('payload', payload);
+      approveRequestChannel(payload, {
+        onSuccess: (data: any) => {
+          gridFetch();
+          alert({
+            title: t('접수가 완료되었습니다.'),
+            content: (
+              <p>
+                {t(
+                  '채널을 개설해야 채널 신청이 왼료됩니다.목록에서 접수 처리한 채널을 개설해 주세요.',
+                )}
+              </p>
+            ),
+          });
+        },
+      });
+    }
+  };
+
+  const handleRejectClick = (e: any) => {
+    if (selectedRows.length > 0) {
+      openModal({
+        width: 'sm',
+        content: <ChannelRejectModal />,
+        onClose(data: any) {
+          console.log('reason', data);
+          if (data) {
+            setTimeout(() => reject(data.rejectReason), 0);
+          }
+        },
+      });
+    }
+  };
+
+  const reject = (reason: any) => {
+    console.log('reason', reason);
+    openConfirm({
+      title: t('반려 하시겠습니까?'),
+      content: (
+        <p>
+          {t(
+            '채널 개설 신청을 반려하면 해당 신청 건으로 채널 개설을 할 수 없습니다. 반려 처리 시 반려 안내 메일이 발송됩니다.',
+          )}
+        </p>
+      ),
+      onClose: (value: boolean) => {
+        if (value) {
+          rejectRequests(reason);
+        }
+      },
+    });
+  };
+
+  const rejectRequests = (reason: any) => {
+    console.log('rejectRequests', selectedRows.length);
+    if (selectedRows.length > 0) {
+      const payload = {
+        channelRequestUuid: selectedRows.map((row: any) => row.channelRequestUuid),
+        rejectedReasonContent: reason,
+      };
+      console.log('payload', payload);
+      rejectRequestChannel(payload, {
+        onSuccess: (data: any) => {
+          gridFetch();
+          /*
+          alert({
+            title: t('접수가 완료되었습니다.'),
+            content: (
+              <p>
+                {t(
+                  '채널을 개설해야 채널 신청이 왼료됩니다.목록에서 접수 처리한 채널을 개설해 주세요.',
+                )}
+              </p>
+            ),
+          });*/
+        },
+      });
+    }
   };
 
   return (
@@ -218,7 +350,6 @@ function RouteComponent() {
               multiple
               showColumnSettings={false}
               hideRowSelectionCheckBox={true}
-              onRowSelect={handleGridRowSelect}
               onRowsSelect={handleGridRowsSelect}
               title={t('채널 개설 신청 목록')}
               customButtonNode={
@@ -229,6 +360,8 @@ function RouteComponent() {
                     className={layoutStyles.btn_text}
                     disabled={selectedRows.length === 0}
                     label={t('접수')}
+                    stopPropagation
+                    onClick={handleAcceptClick}
                   />
                   <Button
                     variant="text"
@@ -236,6 +369,8 @@ function RouteComponent() {
                     className={layoutStyles.btn_text}
                     disabled={selectedRows.length === 0}
                     label={t('반려')}
+                    stopPropagation
+                    onClick={handleRejectClick}
                   />
                 </>
               }

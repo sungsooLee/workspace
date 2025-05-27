@@ -1,11 +1,9 @@
 import { memo } from 'react';
 
-import { Progress, useModal } from '@learnway/ui';
-import { IcoMessageText, IcoCheck, IcoShare, IcoStar } from '@learnway/icons';
+import { ProgressBar } from '@learnway/ui';
+import { IcoCheck, IcoMessageText } from '@learnway/icons';
 
 import type { EmbedWidgetProps } from '../../widget-container/widget-container';
-//import { CompletionStatusModal } from './widget-preview-modal';
-//import type { Widget } from '../../../../types';
 import styles from './completion-status.module.css';
 import statusStyles from './completion-status-status.module.css';
 
@@ -33,7 +31,7 @@ const CompletionStatusComponent = ({ data }: EmbedWidgetProps) => {
 
         <div className={statusStyles.status_box}>
           <div className={statusStyles.progress_rate}>
-            <Progress value={data.progress} className={statusStyles.progress_bar} />
+            <ProgressBar progress={data.progress} className={statusStyles.progress_bar} />
             <div className={statusStyles.info}>
               <span className={statusStyles.txt}>진도율</span>
               <span className={statusStyles.progress}>{data.progress}%</span>

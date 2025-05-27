@@ -47,6 +47,7 @@ export const CODE_GROUP = {
   'pms.approval.ApprovalRequestStatus': 'pms.approval.ApprovalRequestStatus',
   'pms.approval.ApproverType': 'pms.approval.ApproverType',
   'pms.channel.ChannelApprovalStatus': 'pms.channel.ChannelApprovalStatus',
+  'pms.channel.ChannelSecretType': 'pms.channel.ChannelSecretType',
   'pms.company.ApplicationProcess': 'pms.company.ApplicationProcess',
   'pms.company.ApprovalMatrix': 'pms.company.ApprovalMatrix',
   'pms.company.CompanyType': 'pms.company.CompanyType',

@@ -54,6 +54,7 @@ export * from './lib/grid/components/edit-dropdown-cell';
 export * from './lib/grid/components/edit-input-cell';
 export * from './lib/grid/components/edit-radio-cell';
 export * from './lib/grid/components/edit-textarea-cell';
+export * from './lib/grid/components/grid-box-search-input';
 export * from './lib/grid/configs/column-factory';
 export * from './lib/grid/grid-box';
 export * from './lib/grid/table-box';
@@ -76,7 +77,6 @@ export * from './lib/file-upload/uppy-file-upload';
 export * from './lib/form-field/checkbox-group-form-field/checkbox-group-form-field';
 export * from './lib/form-field/input-modal-selector-form-field/input-modal-selector-form-field';
 export * from './lib/form-field/chip-list-modal-selector-form-field/chip-list-modal-selector-form-field';
-export * from './lib/form-field/chip-list-modal-selector-form-field2/chip-list-modal-selector-form-field';
 export * from './lib/form-field/list-modal-selector-form-field/list-modal-selector-form-field';
 export * from './lib/form-field/radio-group-form-field/radio-group-form-field';
 export * from './lib/form-field/textarea-form-field/textarea-form-field';
@@ -106,7 +106,9 @@ export * from './lib/popover/popover';
 export * from './lib/tooltip/tooltip';
 
 // progress
-export * from './lib/progress/progress';
+export * from './lib/progress/progress-bar/progress-bar';
+export * from './lib/progress/progress-check/progress-check';
+export * from './lib/progress/progress-donut/progress-donut';
 
 // radio
 export * from './lib/radio-group/radio-group';

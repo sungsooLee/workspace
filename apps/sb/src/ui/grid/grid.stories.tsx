@@ -21,6 +21,7 @@ import {
   Grid,
   GridBox,
   GridBoxPagination,
+  GridBoxSearchInputCondition,
   GridState,
   ModalWrapper,
   TableBox,
@@ -811,11 +812,12 @@ export const TemplateTitleArea: any = (args: any) => {
   const [tableInstance, setTableInstance] = useState<Table<any>>(); // Grid 로부터 받을 table 인스턴스를 저장할 상태
   const [data, setData] = useState<any[]>(dummyData());
   const columns = [
-    { accessorKey: 'name', size: 300 },
-    { accessorKey: 'name2', size: 300 },
-    { accessorKey: 'name3', size: 300 },
-    { accessorKey: 'name4', size: 300 },
+    { accessorKey: 'name', header: '이름', size: 300, searchable: true },
+    { accessorKey: 'age', header: '나이', size: 300, searchable: true },
+    { accessorKey: 'name3', header: 'name3', size: 300 },
+    { accessorKey: 'name4', header: 'name4', size: 300 },
   ];
+
   const handlerUserRowSelect = () => {
     if (tableInstance) {
       const targets = data.filter((_, i) => i < 2); // 2번째 항목까지
@@ -864,6 +866,9 @@ export const TemplateTitleArea: any = (args: any) => {
         </>
       }
       onRemoveAllClick={() => setData([])}
+      onSearchClick={(condition: GridBoxSearchInputCondition) =>
+        console.log('onSearchClick', condition)
+      }
       onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
     />
   );
@@ -956,7 +961,7 @@ const dummyData = (size = 10) =>
     .map((_, i) => ({
       id: getRandomId(),
       name: `name_${i}`,
-      name2: `name2_${i}`,
+      age: `${i}`,
       name3: `name3_${i}`,
       name4: `name4_${i}`,
     }));

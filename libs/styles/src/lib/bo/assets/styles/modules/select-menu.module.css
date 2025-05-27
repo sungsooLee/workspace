@@ -1,0 +1,27 @@
+/* select-menu.module.css */
+.start {
+  .title {
+    @apply body_3_b mb-[4px] text-[var(--gray9)];
+  }
+  .list {
+    @apply overflow-hidden rounded-[4px] border border-solid border-[var(--gray5)] p-[4px];
+    li {
+      @apply flex min-h-[40px] w-full items-center justify-between overflow-hidden px-[8px];
+      .menu {
+        @apply body_bo_2_r max-w-[calc(100%-40px)] text-[var(--gray8)];
+      }
+      .button {
+        @apply min-w-auto w-[33px] px-0;
+      }
+      &.active {
+        @apply rounded-[2px] bg-[#edfcff];
+      }
+      &:not(:first-child) {
+        @apply mt-[4px];
+      }
+    }
+  }
+}
+div + .start {
+  @apply mt-[20px];
+}

@@ -88,6 +88,7 @@ export namespace com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_Wiza
     }
     export enum courseType {
         ELEARNING = 'ELEARNING',
+        ELEARNING_SANGSI = 'ELEARNING_SANGSI',
         CLASS = 'CLASS',
         LIVE = 'LIVE',
         EXAM = 'EXAM',

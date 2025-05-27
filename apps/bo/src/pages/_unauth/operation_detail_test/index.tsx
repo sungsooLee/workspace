@@ -4,11 +4,11 @@ import { createFileRoute } from '@tanstack/react-router';
 import {
   Button,
   ChipListModalSelectorFormField,
-  ChipListModalSelectorFormField2,
   ContentsRow,
   Input,
   InputModalSelectorFormField,
   ListModalSelectorFormField,
+  useModal,
 } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
@@ -28,6 +28,7 @@ export const Route = createFileRoute('/_unauth/operation_detail_test/')({
 });
 
 function RouteComponent() {
+  const { open: openModal } = useModal();
   const { provider, onSubmit, control, getValues } = useDynamicForm(formConfig);
 
   const handleOnSubmit = (data: any) => {
@@ -119,7 +120,7 @@ function RouteComponent() {
               provider={provider}
               name={'강사2'}
               element={
-                <ChipListModalSelectorFormField2
+                <ChipListModalSelectorFormField
                   showAddButton
                   modalConfig={{ content: <TeacherListModal channelId={getValues()?.channelId} /> }}
                   chipList={{
@@ -127,7 +128,7 @@ function RouteComponent() {
                     valueField: 'id',
                     wordwrap: true,
                   }}
-                  actionNode={<Button variant="text" size="sm" label={t('대상자')} />}
+                  actionNode={<Button variant="text" size="sm" label={t('대상자')} onClick={() => openModal({content: <ManagerListModal />})} />}
                 />
               }
             />
@@ -279,7 +280,7 @@ const formConfig: DynamicFormConfig = {
     {
       name: '강사2',
       type: 'custom',
-      label: t('강사 - ChipListModalSelectorFormField2'),
+      label: t('강사 - ChipListModalSelectorFormField'),
       format: 'array',
       value: [],
       placeholder: '',
