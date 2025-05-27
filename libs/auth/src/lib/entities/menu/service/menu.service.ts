@@ -1,3 +1,4 @@
+import { last } from 'lodash';
 import { useEffect } from 'react';
 import { useCreation } from 'ahooks';
 import { useRouterState } from '@tanstack/react-router';
@@ -8,6 +9,7 @@ import { useFetchMenus } from './menu.hook';
 import { Menu } from '../../../types';
 
 import { useActiveMenuDepthState } from '../state/menu.state';
+import { useLayoutStore } from '../store/use-layout-sotre';
 
 /**
  * 메뉴 정보를 트리 구조로 반환
@@ -42,6 +44,7 @@ export function useRenewalMenuStateFromRouting() {
 
   const { data: authUser } = useFetchAuthUser();
   const [, setActiveMenuDepth] = useActiveMenuDepthState();
+  const { setMenus } = useLayoutStore((state) => state); // 최근본 메뉴
 
   useEffect(() => {
     if (!authUser?.menus) {
@@ -77,5 +80,8 @@ export function useRenewalMenuStateFromRouting() {
     };
 
     recursiveCall(currentPath);
+    // 최근본 메뉴
+    const recentMenu = authUser.menus.find((menu: Menu) => menu.path === currentPath);
+    recentMenu && setMenus(recentMenu);
   }, [state.location?.state?.key, authUser?.menus]);
 }
