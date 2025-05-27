@@ -18,9 +18,37 @@ const MOCK_MENU_DATA = {
       key: 'user-management',
       title: '사용자 관리',
       children: [
-        { id: 'user-list', key: 'user-list', title: '사용자 목록', path: '/users' },
+        {
+          id: 'user-list',
+          key: 'user-list',
+          title: '사용자 목록',
+          path: '/users',
+          children: [
+            { id: 'user-list-1', key: 'user-list-1', title: '사용자 목록-1', path: '/users-1' },
+            { id: 'user-list-2', key: 'user-list-2', title: '사용자 목록-2', path: '/users-2' },
+          ],
+        },
         { id: 'user-roles', key: 'user-roles', title: '권한 관리', path: '/users/roles' },
-        { id: 'user-groups', key: 'user-groups', title: '그룹 관리', path: '/users/groups' },
+        {
+          id: 'user-groups',
+          key: 'user-groups',
+          title: '그룹 관리',
+          path: '/users/groups',
+          children: [
+            {
+              id: 'user-groups-1',
+              key: 'user-groups-1',
+              title: '사용자 그룹-1',
+              path: '/groups-1',
+            },
+            {
+              id: 'user-groups-2',
+              key: 'user-groups-2',
+              title: '사용자 그룹-2',
+              path: '/groups-2',
+            },
+          ],
+        },
       ],
     },
     {
