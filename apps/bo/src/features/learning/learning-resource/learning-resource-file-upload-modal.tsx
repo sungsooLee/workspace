@@ -75,6 +75,7 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
           detailPath: file.detailPath,
           basicPath: file.basicPath,
           files: {
+            fileUploadType: file.uploadType === 'single-part' ? 'S3_SINGLEPART' : 'S3_MULTIPART',
             originalFileName: file.fileName,
             serverFileName: file.s3FileName,
             fileSize: file.size,
