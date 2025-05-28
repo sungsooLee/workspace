@@ -1,35 +1,78 @@
 /* accordion.module.css */
 .start {
-  .accordion_item {
-    .accordion_btn {
-      @apply relative box-border flex max-h-[70px] w-full items-center;
-      & > span {
-        @apply flex h-full min-h-[40px] w-full items-center pl-[16px] text-left text-[14px] leading-[22px] text-[var(--gray9)];
+  & > .accordion_item {
+    & > .accordion_btn {
+      @apply relative box-border flex w-full items-center rounded-[8px] pl-[6px];
+      svg {
+        @apply h-[16px] w-[16px];
       }
-      &[data-state='closed'] {
+      & > span {
+        @apply flex h-full min-h-[38px] w-full items-center pl-[6px] text-left text-[14px] leading-[22px] text-[var(--gray9)];
+      }
+      &:hover {
+        @apply bg-[#EDFCFF];
+      }
+      &:not(:has(svg))::before {
+        @apply inline-flex h-[16px] w-[16px] bg-[url(../../assets/images/icon/ic_arrow_forward.png)] bg-[16px_auto] bg-[center_center] bg-no-repeat content-[''];
+      }
+      &.active {
+        @apply bg-white;
+        span {
+          @apply font-bold text-[var(--gray9)];
+        }
+        &:not([class*='has_children']) {
+          @apply bg-[#EDFCFF];
+          span {
+            @apply font-bold text-[var(--secondary1)];
+          }
+          &::before {
+            @apply !bg-[url(../../assets/images/icon/ic_arrow_forward_active.png)];
+          }
+        }
+
+        /* &:not(.has_children) {
+          @apply bg-[#EDFCFF];
+          &::before {
+            @apply bg-[url(../../assets/images/icon/ic_arrow_forward_active.png)];
+          }
+          span {
+            @apply font-bold text-[var(--secondary1)];
+          }
+        } */
+      }
+      /* &[data-state='closed'] {
         svg {
           @apply stroke-[var(--gray6)];
         }
       }
       &[data-state='open'] {
         svg {
-          @apply rotate-180 stroke-[var(--gray9)];
+          @apply -rotate-90;
         }
+      }
+      &:hover {
+        @apply bg-[#EDFCFF];
+      }
+      &[aria-expanded='true'] {
+        @apply bg-[#EDFCFF];
+        & > span {
+          @apply body_bo_2_b text-[var(--secondary1)];
+        }
+        svg {
+          @apply !stroke-[var(--secondary1)];
+        }
+      }
+      &:not([class*='has_children']) {
       }
       [class*='accordion_title'] {
         &[class*='active'] {
           @apply font-bold;
         }
-      }
-      svg {
-        @apply absolute right-[12px] top-1/2 -mt-[8px] h-[16px] w-[16px];
-      }
+      } */
     }
-    .accordion_content {
-      @apply rounded-[8px] border-b-2 border-[#001b60] bg-[var(--gray1)];
+    /* .accordion_content {
       .accordion_item {
         .accordion_btn {
-          /* @apply pl-[16px]; */
           svg {
             @apply right-[16px];
           }
@@ -50,7 +93,6 @@
               }
               &[data-state='open'] {
                 span {
-                  /* @apply pl-[28px]; */
                   &::before {
                     @apply absolute left-[16px] top-1/2 -mt-[3px] block h-[6px] w-[6px] rounded-[3px] bg-white content-[''];
                   }
@@ -60,7 +102,7 @@
           }
         }
       }
-    }
+    } */
   }
 }
 
