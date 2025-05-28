@@ -6,6 +6,7 @@ import { IcoStar, IcoStar02, IcoClock01 } from '@learnway/icons';
 import {
   useActiveMenuDepthState,
   useAsycFetchMenus,
+  useAsycFetchMenusForceRefatch,
   useFetchAuthUser,
   useLayoutStore,
   useUpdateUser,
@@ -33,7 +34,7 @@ const PopoverContent = () => {
   });
 
   const { updateMenu } = useUpdateUser();
-  const { asyncMenus } = useAsycFetchMenus();
+  const { asyncMenus } = useAsycFetchMenusForceRefatch();
   const { deleteMenuFavorites } = useDeleteMenuFavorites();
   const { moveMenuFavorites } = useMoveMenuFavorites();
 
