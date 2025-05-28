@@ -49,6 +49,13 @@ const DIVICE_NAME = {
   Mobile: 'Mobile',
 };
 
+/**
+ * 화면번호:
+ * NLP_BO_TMS_1002_01 (플랫폼-학습자메뉴), NLP_BO_TMS_1002_01_01 (플랫폼-학습자메뉴-상세), NLP_BO_TMS_1002_01_03 (플랫폼-HRD메뉴),NLP_BO_TMS_1002_01_04 (플랫폼-HRD메뉴-상세),
+ * NLP_BO_TMS_1003_02 (테넌트-학습자메뉴), NLP_BO_TMS_1003_02_01 (테넌트-학습자메뉴-상세), NLP_BO_TMS_1003_02_02 (테넌트-HRD메뉴),NLP_BO_TMS_1003_02_02 (테넌트-HRD메뉴-상세)
+ * @param param0
+ * @returns
+ */
 const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
   const routerState = useRouterState();
   const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);

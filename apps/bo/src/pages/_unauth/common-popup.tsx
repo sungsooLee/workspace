@@ -6,11 +6,14 @@ import {
   ChannelShuttleModal,
   CompanyChoiceModal,
   CompanyShuttleModal,
+  ExternalUserChoiceModal,
   MenuChoiceModal,
   RoleChoiceModal,
   RoleShuttleModal,
   TenantChoiceModal,
   TenantShuttleModal,
+  UserAndExternalUserTabsChoiceModal,
+  UserChoiceForGroupModal,
 } from '@features/shared';
 import { Button, ChipListModalSelectorFormField, ContentsRow, Input, useModal } from '@learnway/ui';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
@@ -148,104 +151,148 @@ function RouteComponent() {
         </SubContents>
         <SubContents>
           <div>공통팝업</div>
-          <Button
-            size={'xs'}
-            className="btn_table"
-            variant={'gray2'}
-            onClick={(e) => {
-              e.stopPropagation();
-              openModal({
-                width: 'xl',
-                content: <RoleChoiceModal />,
-              });
-            }}
-          >
-            {'HRD 담당자 역할 조회'}
-          </Button>
-          <Button
-            size={'xs'}
-            className="btn_table"
-            variant={'gray2'}
-            onClick={(e) => {
-              e.stopPropagation();
-              openModal({
-                width: 'xl',
-                content: <RoleShuttleModal />,
-              });
-            }}
-          >
-            {'HRD 담당자 역할 조회(셔틀)'}
-          </Button>
-          <Button
-            size={'xs'}
-            className="btn_table"
-            variant={'gray2'}
-            onClick={(e) => {
-              e.stopPropagation();
-              openModal({
-                width: 'xl',
-                content: <ChannelListChoiceModal />,
-              });
-            }}
-          >
-            {'채널 조회'}
-          </Button>
-          <Button
-            size={'xs'}
-            className="btn_table"
-            variant={'gray2'}
-            onClick={(e) => {
-              e.stopPropagation();
-              openModal({
-                width: 'xl',
-                content: <ChannelShuttleModal />,
-              });
-            }}
-          >
-            {'채널 조회(셔틀)'}
-          </Button>
-          <Button
-            size={'xs'}
-            className="btn_table"
-            variant={'gray2'}
-            onClick={(e) => {
-              e.stopPropagation();
-              openModal({
-                width: 'xl',
-                content: <TenantChoiceModal />,
-              });
-            }}
-          >
-            {'테넌트 조회'}
-          </Button>
-          <Button
-            size={'xs'}
-            className="btn_table"
-            variant={'gray2'}
-            onClick={(e) => {
-              e.stopPropagation();
-              openModal({
-                width: 'xl',
-                content: <TenantShuttleModal />,
-              });
-            }}
-          >
-            {'테넌트 조회(셔틀)'}
-          </Button>
-          <Button
-            size={'xs'}
-            className="btn_table"
-            variant={'gray2'}
-            onClick={(e) => {
-              e.stopPropagation();
-              openModal({
-                width: 'xl',
-                content: <MenuChoiceModal menuScopeCode={'BO'} />,
-              });
-            }}
-          >
-            {'메뉴 조회'}
-          </Button>
+          <div className="flex flex-col gap-4">
+            <Button
+              size={'xs'}
+              className="btn_table"
+              variant={'gray2'}
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal({
+                  width: 'xl',
+                  content: <RoleChoiceModal />,
+                });
+              }}
+            >
+              {'HRD 담당자 역할 조회'}
+            </Button>
+            <Button
+              size={'xs'}
+              className="btn_table"
+              variant={'gray2'}
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal({
+                  width: 'xl',
+                  content: <RoleShuttleModal />,
+                });
+              }}
+            >
+              {'HRD 담당자 역할 조회(셔틀)'}
+            </Button>
+            <Button
+              size={'xs'}
+              className="btn_table"
+              variant={'gray2'}
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal({
+                  width: 'xl',
+                  content: <ChannelListChoiceModal />,
+                });
+              }}
+            >
+              {'채널 조회'}
+            </Button>
+            <Button
+              size={'xs'}
+              className="btn_table"
+              variant={'gray2'}
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal({
+                  width: 'xl',
+                  content: <ChannelShuttleModal />,
+                });
+              }}
+            >
+              {'채널 조회(셔틀)'}
+            </Button>
+            <Button
+              size={'xs'}
+              className="btn_table"
+              variant={'gray2'}
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal({
+                  width: 'xl',
+                  content: <TenantChoiceModal />,
+                });
+              }}
+            >
+              {'테넌트 조회'}
+            </Button>
+            <Button
+              size={'xs'}
+              className="btn_table"
+              variant={'gray2'}
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal({
+                  width: 'xl',
+                  content: <TenantShuttleModal />,
+                });
+              }}
+            >
+              {'테넌트 조회(셔틀)'}
+            </Button>
+            <Button
+              size={'xs'}
+              className="btn_table"
+              variant={'gray2'}
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal({
+                  width: 'xl',
+                  content: <MenuChoiceModal menuScopeCode={'BO'} />,
+                });
+              }}
+            >
+              {'메뉴 조회'}
+            </Button>
+            <Button
+              size={'xs'}
+              className="btn_table"
+              variant={'gray2'}
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal({
+                  width: 'xl',
+                  content: <UserAndExternalUserTabsChoiceModal />,
+                });
+              }}
+            >
+              {'유저와 사외이용자 팝업에서 선택하는 경우(탭)'}
+            </Button>
+            <Button
+              size={'xs'}
+              className="btn_table"
+              variant={'gray2'}
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal({
+                  width: 'xl',
+                  content: <UserChoiceForGroupModal />,
+                });
+              }}
+            >
+              {'유저그룹 조회'}
+            </Button>
+            <Button
+              size={'xs'}
+              className="btn_table"
+              variant={'gray2'}
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal({
+                  width: 'xl',
+                  content: <ExternalUserChoiceModal />,
+                });
+              }}
+            >
+              {'사외이용자 검색(공통)'}
+            </Button>
+          </div>
         </SubContents>
       </PageContainer>
     </form>

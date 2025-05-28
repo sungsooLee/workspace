@@ -30,6 +30,11 @@ import { getFirstExpandKeys, getAllTreeKeys } from '../service/tenant-detail-tre
 
 type ActionFunction = (payload: any) => void;
 
+/**
+ * 화면번호: NLP_BO_TMS_1002_02 (카테고리 테넌트 매핑)
+ * @param param0
+ * @returns
+ */
 const TenantDetailCategoryMappingModalComponent: FC<any> = ({ tenantId, onNodeChange }) => {
   const [commonCategoryTreeData, setCommonCategoryTreeData] = useState([]);
   const [commonCategoryTreeExpandedKeys, setCommonCategoryTreeExpandedKeys] = useState<string[]>(

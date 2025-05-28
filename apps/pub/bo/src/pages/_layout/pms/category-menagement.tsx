@@ -19,7 +19,7 @@ export const Route = createFileRoute('/_layout/pms/category-menagement')({
 function RouteComponent() {
   return (
     // 컨턴츠 안에 스크롤인 경우 : scrollHidden 추가
-    <PageContainer scrollHidden={true}>
+    <PageContainer>
       {/* main_contents */}
       <div className={styles.main_contents}>
         <div className={cn(layoutStyles.start, layoutStyles.wrap)}>

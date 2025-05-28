@@ -229,7 +229,7 @@ function RouteComponent() {
   ] as ColumnDef<any, unknown>[];
   return (
     <form className="form_row">
-      <PageContainer scrollHidden={true}>
+      <PageContainer>
         {/* main_contents */}
         <div className={styles.main_contents}>
           <div className={cn(searchStyles.start, searchStyles.wrap)}>

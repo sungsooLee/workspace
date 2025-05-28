@@ -89,7 +89,7 @@ function RouteComponent() {
   };
 
   return (
-    <PageContainer scrollHidden={true}>
+    <PageContainer>
       <MainContents>
         <SearchBox provider={sProvider} onSearch={handleOnSearch} />
         <CommonCodeGroupGrid

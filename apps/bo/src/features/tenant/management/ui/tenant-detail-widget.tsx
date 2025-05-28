@@ -62,6 +62,10 @@ const defaultRow = [
     height: '',
   },
 ];
+/**
+ * 화면번호: NLP_BO_TMS_1003_05
+ * @returns
+ */
 const TenantDetailWidgetComponent: FC<any> = () => {
   const routerState = useRouterState();
   const [formMode, setFormMode] = useState(EnFormMode.NONE);
@@ -273,7 +277,7 @@ const TenantDetailWidgetComponent: FC<any> = () => {
                 name="widgetName"
                 element={
                   <WidgetNameAndButton
-                    widget={selectedOption}
+                    widget={selectedOption.widgetType}
                     disabled={EnFormMode.NONE === formMode}
                   />
                 }

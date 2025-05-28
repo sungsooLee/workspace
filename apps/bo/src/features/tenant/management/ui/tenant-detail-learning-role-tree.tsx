@@ -31,7 +31,14 @@ import { FormDisplay } from '@features/form/ui/form-display';
 import { EnChannelScope, EnCompanyScope, EnDeptScope, EnFormMode, EnTenantScope } from '@types';
 import { ChannelChoiceModal, ChannelListChoiceModal, CompanyShuttleModal } from '@features/shared';
 
-//type fo , bo
+/**
+ * 화면번호:
+ * NLP_BO_TMS_1003_04(학습역할), NLP_BO_TMS_1003_04_03(HRD역할),
+ * NLP_BO_PMS_1100 (플렛폼 학습역할), NLP_BO_PMS_1104 (플렛폼 HRD역할)
+ * @param param0
+ * @param ref
+ * @returns
+ */
 const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref: any) => {
   const routerState = useRouterState();
   const [formMode, setFormMode] = useState(EnFormMode.NONE);

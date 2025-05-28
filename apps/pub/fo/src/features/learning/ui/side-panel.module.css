@@ -60,7 +60,7 @@
           .header {
             @apply flex items-center bg-[var(--gray1)] p-[16px];
             strong {
-              @apply body_3_b flex-1;
+              @apply body_3_b flex-1 text-[var(--gray8)];
             }
             span {
               @apply body_3_r ml-[8px] text-[var(--gray7)];

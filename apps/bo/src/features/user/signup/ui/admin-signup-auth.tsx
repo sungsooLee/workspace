@@ -1,3 +1,4 @@
+import { useRouter } from '@tanstack/react-router';
 import { AuthForm, AuthFormData } from '@learnway/auth';
 import { useSignupStore } from '@features/user/signup';
 import { cn } from '@learnway/shared';
@@ -8,27 +9,16 @@ import { adminItems } from '@features/user/signup/ui/signup-select';
 
 export function AdminSignupAuth() {
   const { setAdminPage } = useSignupStore((state) => state);
-
-  const [selectedValue, setSelectedValue] = useState<string>('type1');
-  const handleValueChange = (value: string) => {
-    setSelectedValue(value);
-  };
-
-  const [showArea, setShowArea] = useState(false);
-  const handleClick = () => {
-    if (!showArea) {
-      setShowArea(true); // 처음 클릭 시에만 true로 설정
-    }
-  };
+  const router = useRouter();
 
   const [defaultAuthValues, setDefaultAuthValues] = useState<AuthFormData>();
 
   function handleSuccess(data: any): void {
-    //
+    setAdminPage('signup');
   }
 
   function handleCancel(): void {
-    //
+    router.navigate({ to: '/login' });
   }
 
   return (
@@ -52,7 +42,7 @@ export function AdminSignupAuth() {
             취소
           </Button>
           <Button variant="primary" size="xl" onClick={() => setAdminPage('signup')}>
-            다음
+            {'다음(테스트)'}
           </Button>
         </div>
       </div>

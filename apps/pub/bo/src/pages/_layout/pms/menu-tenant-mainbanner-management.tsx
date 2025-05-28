@@ -65,7 +65,7 @@ function RouteComponent() {
     },
   ];
   return (
-    <PageContainer scrollHidden={false}>
+    <PageContainer>
       {/* main_contents */}
       <div className={cn(styles.main_contents)}>
         <Tabs

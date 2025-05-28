@@ -1,11 +1,16 @@
 import { httpService } from '@learnway/shared';
 import { Company } from '../../../types';
 import { PMSApiPrefix } from '@learnway/config';
+import { PageableContent } from '@types';
 
 export default class CompaniesService {
   // 회사 목록 조회
   static fetchAll() {
     return httpService.get<any>(`${PMSApiPrefix()}/companies`);
+  }
+
+  static fetchList(params: any) {
+    return httpService.get<PageableContent<any>>(`${PMSApiPrefix()}/companies`, params);
   }
 
   // 회사 조회

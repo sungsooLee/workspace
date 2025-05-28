@@ -509,7 +509,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
             )}
             locale={currentLocale}
           />
-
+          <span className="hyphen"></span>
           <Primitive
             ref={endPickerRef}
             showIcon

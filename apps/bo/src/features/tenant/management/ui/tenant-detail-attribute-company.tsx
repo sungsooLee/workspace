@@ -16,6 +16,12 @@ import {
   useUpdateTenantAttributeCompany,
 } from '@entities/tenant/service/tenant-attribute.hook';
 
+/**
+ * 화면번호: NLP_BO_TMS_1003_00_04 (과정등록 연관 설정 figma: NLP_BO_TMS_1003_00-04)
+ * @param param0
+ * @param ref
+ * @returns
+ */
 const TenantDetailAttributeCompanyComponent = (
   {
     tenantId,

@@ -3,7 +3,14 @@ import { FC, useState } from 'react';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import { Tabs } from '@learnway/ui';
 import { TenantDetailMenuTree } from './tenant-detail-menu-tree';
-
+/**
+ * 화면번호:
+ * NLP_BO_TMS_1002_01 (플랫폼-학습자메뉴), NLP_BO_TMS_1002_01_01 (플랫폼-학습자메뉴-상세), NLP_BO_TMS_1002_01_03 (플랫폼-HRD메뉴),NLP_BO_TMS_1002_01_04 (플랫폼-HRD메뉴-상세),
+ * NLP_BO_TMS_1003_02 (테넌트-학습자메뉴), NLP_BO_TMS_1003_02_01 (테넌트-학습자메뉴-상세), NLP_BO_TMS_1003_02_02 (테넌트-HRD메뉴),NLP_BO_TMS_1003_02_02 (테넌트-HRD메뉴-상세)
+ *
+ * @param param0
+ * @returns
+ */
 const TenantDetailMenuComponent: FC<any> = ({ roleInfo }) => {
   const [selectedTabKey, setSelectedTabKey] = useState<string>('FO');
 
