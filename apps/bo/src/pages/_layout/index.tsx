@@ -10,9 +10,7 @@ export const Route = createFileRoute('/_layout/')({
 
 function HomeComponent() {
   return (
-    <PageContainer
-    // scrollHidden={true}
-    >
+    <PageContainer>
       <MainContents>
         <h3>Dash Board</h3>
         <div className={style.guide_wrap}>

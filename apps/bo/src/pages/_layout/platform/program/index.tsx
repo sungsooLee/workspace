@@ -50,7 +50,7 @@ function RouteComponent() {
     }
   };
   return (
-    <PageContainer scrollHidden={false}>
+    <PageContainer>
       <MainContents>
         <Tabs
           selectedTabKey={selectedTabKey}
