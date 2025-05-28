@@ -42,8 +42,12 @@ export interface ListProps extends CommonReactElementProps {
   onOptionSelect?: (option: any) => void;
   /** 멀티 선택 콜백 */
   onOptionsSelect?: (options: any[]) => void;
-  /** 옵션 순서 변경 콜백 */
-  onOptionsOrderChange?: (options: any[]) => void;
+  /**
+   * @description 옵션 순서 변경 콜백
+   * @param options 옵션 목록
+   * @param over 변경된 행 정보
+   */
+  onOptionsOrderChange?: (options: any[], over?: any) => void;
 }
 
 const ListComponent = function ({
@@ -98,13 +102,17 @@ const ListComponent = function ({
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
+    console.log('event', event);
     // 만약 드래그 대상이 없거나 위치 변경이 없으면 아무 작업도 수행하지 않음
     if (!over || active.id === over.id) return;
 
     // 새로운 순서로 옵션을 정렬
     const newOptions = reorderOptions(options, valueField, active.id, over.id);
     // 정렬된 옵션을 부모 컴포넌트에 전달
-    onOptionsOrderChange?.(newOptions);
+    onOptionsOrderChange?.(newOptions, {
+      over: over?.data?.current?.sortable,
+      index: over?.data?.current?.sortable?.index,
+    });
   };
 
   return (

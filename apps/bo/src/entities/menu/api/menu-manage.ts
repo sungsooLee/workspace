@@ -107,6 +107,21 @@ export default class MenuMangerService {
   static deleteMenuFavorites(favoritesMenuId: any): Promise<any> {
     return httpService.delete<any>(`${PMSApiPrefix()}/menus/favorites/${favoritesMenuId}`);
   }
+
+  /**
+   * 메뉴 즐겨찾기 순서변경
+   */
+  static moveMenuFavorites({
+    favoritesMenuId,
+    sortOrder,
+  }: {
+    favoritesMenuId: any;
+    sortOrder: any;
+  }): Promise<any> {
+    return httpService.post<any>(`${PMSApiPrefix()}/menus/favorites/${favoritesMenuId}/dnd`, {
+      sortOrder,
+    });
+  }
 }
 
 export const MenuManageApi = {
