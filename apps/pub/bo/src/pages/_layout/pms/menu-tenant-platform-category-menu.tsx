@@ -122,7 +122,7 @@ function RouteComponent() {
   // tree
   const [sourceData, setSourceData] = useState<TreeNode[]>(sampleData);
   return (
-    <PageContainer scrollHidden={true}>
+    <PageContainer>
       {/* main_contents */}
       <div className={cn(styles.main_contents, pageStyles.start)}>
         <Tabs

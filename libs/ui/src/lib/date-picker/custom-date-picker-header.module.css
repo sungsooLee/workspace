@@ -10,6 +10,9 @@
         & + button {
           @apply ml-[25px];
         }
+        &.active svg {
+          @apply rotate-180;
+        }
         svg {
           @apply ml-[4px];
         }

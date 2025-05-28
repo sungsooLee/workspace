@@ -145,12 +145,12 @@ export const CustomDatePickerHeader: React.FC<CustomDatePickerHeaderProps> = ({
 
         <div className={styles.select_value_wrap}>
           {type !== 'year' && (
-            <Button onClick={toggleMonthPicker}>
+            <Button onClick={toggleMonthPicker} className={showMonthPicker ? styles.active : ''}>
               {getMonthNames()[currentMonth]}
               <IcoArrowDownFilled width={16} height={16} stroke="#4C515E" />
             </Button>
           )}
-          <Button onClick={toggleYearPicker}>
+          <Button onClick={toggleYearPicker} className={showYearPicker ? styles.active : ''}>
             {currentYear}
             <IcoArrowDownFilled width={16} height={16} stroke="#4C515E" />
           </Button>
