@@ -36,6 +36,7 @@ import {
   useGetRoleUserGroups,
 } from '@entities/role/service/role-manage.hook';
 import { UserChoiceModal, UserChoiceForGroupModal } from '@features/shared';
+import { TenantDetailLearningRoleGrantRangeModal } from './tenant-detail-learning-role-grant-range-modal';
 
 import { roleManagerQueryOptions } from '@entities/role/service/role-manage.queries';
 import { EnFormMode } from '@types';
@@ -91,6 +92,9 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
     console.log('hand', data);
     // 받은 자료로 유저그룹 역할 부여 처리
   };
+  const handleBatchClick = async () => {
+    const data = await openModal({ content: <TenantDetailLearningRoleGrantRangeModal /> });
+  };
 
   useEffect(() => {
     if (roleData) {
@@ -137,7 +141,14 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
               showNumberingColumn
               customButtonNode={
                 <>
-                  <Button label={t('일괄적용')} variant="text" size="sm" className="btn_text" />
+                  <Button
+                    label={t('일괄적용')}
+                    variant="text"
+                    size="sm"
+                    className="btn_text"
+                    onClick={handleBatchClick}
+                    stopPropagation
+                  />
 
                   <Button variant="text" size="sm" className="btn_text">
                     <IcoMinus width="16" height="16" stroke="#131C30" />
