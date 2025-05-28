@@ -1,78 +1,37 @@
-import { useState, forwardRef, useCallback } from 'react';
 import { t } from 'i18next';
-import {
-  Button,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  GridBox,
-  useModal,
-  useGridBox,
-} from '@learnway/ui';
+import { GridBox, useGridBox } from '@learnway/ui';
 import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
-
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { usersQueryOptions } from '@entities/users/service/users.queries';
 
-const ExternalUserModalComponent = forwardRef((props, ref) => {
-  const { close: closeModal } = useModal();
+type Props = {
+  handleRowSelect: (row: any) => void;
+};
+
+const ExternalUserComponent = ({ handleRowSelect }: Props) => {
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);
   const { config, gridFetch } = useGridBox(gridConfig, getValues);
 
-  const [selectedRow, setSelectedRow] = useState();
-
-  const handleRowSelect = (row: any) => {
-    setSelectedRow(row);
-  };
-
-  const handleOnSearch = useCallback((data: any) => {
-    gridFetch(data);
-  }, []);
-
-  const handleOnClose = () => {
-    closeModal();
-  };
-  const handleOnConfirm = () => {
-    if (!selectedRow) closeModal();
-    closeModal(selectedRow);
-  };
-
-  /**
-   * @param data
-   */
-
   return (
-    <ModalContainer>
-      <ModalTitle>{t('사외이용자 조회')}</ModalTitle>
-      <ModalBody>
-        <div className={popupStyles.wrap}>
-          <SearchBox provider={sProvider} onSearch={handleOnSearch} />
-          <div className={popupStyles.container}>
-            <GridBox
-              onRowSelect={handleRowSelect}
-              config={config}
-              columns={columns}
-              height={380}
-              showColumnSettings={false}
-              title={t('사외이용자 목록')}
-            />
-          </div>
-        </div>
-      </ModalBody>
-      <ModalFooter>
-        <ModalFooter>
-          <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={handleOnClose} />
-          <Button label={t('확인')} variant={'primary'} size={'lg'} onClick={handleOnConfirm} />
-        </ModalFooter>
-      </ModalFooter>
-    </ModalContainer>
+    <div className={popupStyles.wrap}>
+      <SearchBox provider={sProvider} onSearch={(data) => gridFetch(data)} />
+      <div className={popupStyles.container}>
+        <GridBox
+          onRowSelect={handleRowSelect}
+          config={config}
+          columns={columns}
+          height={380}
+          showColumnSettings={false}
+          title={t('사외이용자 목록')}
+        />
+      </div>
+    </div>
   );
-});
+};
 
-export const ExternalUserChoiceModal = ExternalUserModalComponent;
+export const ExternalUserChoice = ExternalUserComponent;
 
 const searchConfig: SearchBoxConfig = {
   builders: [
@@ -125,47 +84,47 @@ const columns = [
     cell: (info) => info.getValue(),
     header: '사외이용자 유형',
     enableGrouping: false,
-    size: 210,
+    size: 170,
   }),
   columnHelper.accessor('companyName', {
     cell: (info) => info.getValue(),
     header: '회사',
     enableGrouping: false,
-    size: 210,
+    size: 170,
   }),
   columnHelper.accessor('dep', {
     cell: (info) => info.getValue(),
     header: '부서',
-    size: 150,
+    size: 170,
     enableGrouping: false,
   }),
   columnHelper.accessor('position', {
     cell: (info) => info.getValue(),
     header: '직위',
-    size: 210,
+    size: 170,
   }),
   columnHelper.accessor('userNo', {
     cell: (info) => info.getValue(),
     header: '사번',
-    size: 220,
+    size: 170,
     enableGrouping: false,
   }),
   columnHelper.accessor('userName', {
     cell: (info) => info.getValue(),
     header: '이름',
-    size: 220,
+    size: 170,
     enableGrouping: false,
   }),
   columnHelper.accessor('opt2', {
     cell: (info) => info.getValue(),
     header: '재직여부',
-    size: 240,
+    size: 150,
     enableGrouping: false,
   }),
   columnHelper.accessor('opt3', {
     cell: (info) => info.getValue(),
     header: '계정상태',
-    size: 240,
+    size: 150,
     enableGrouping: false,
   }),
 ] as ColumnDef<any, unknown>[];
