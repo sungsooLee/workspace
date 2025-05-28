@@ -13,7 +13,11 @@ import {
 import { cn } from '@learnway/shared';
 
 import styles from './my-menu.module.css';
-import { useDeleteMenuFavorites, useFetchMenuFavorites } from '@entities/menu';
+import {
+  useDeleteMenuFavorites,
+  useFetchMenuFavorites,
+  useMoveMenuFavorites,
+} from '@entities/menu';
 import { useRouter } from '@tanstack/react-router';
 
 // TODO 즐겨찾기 DND 처리
@@ -31,15 +35,19 @@ const PopoverContent = () => {
   const { updateMenu } = useUpdateUser();
   const { asyncMenus } = useAsycFetchMenus();
   const { deleteMenuFavorites } = useDeleteMenuFavorites();
+  const { moveMenuFavorites } = useMoveMenuFavorites();
 
-  const { menus, deleteMenus } = useLayoutStore((state) => state);
+  const { menus, deleteMenus } = useLayoutStore((state) => state); // 최근본 메뉴
 
   // 최근본 메뉴
   const recentMenu = useMemo(() => {
     if (!menus) return [];
     return menus.map((menu, i) => ({
       index: i,
-      label: menu.menuName,
+      label:
+        import.meta.env.VITE_LANGUAGE_DEV === 'true'
+          ? t(`${menu.menuName}`)
+          : t(`MENU.${menu.menuCode}`),
       value: menu.menuId,
       path: menu.path,
     }));
@@ -48,7 +56,14 @@ const PopoverContent = () => {
   // 즐겨찾기 메뉴
   const menuFavoritesOptions = useMemo(() => {
     if (!menuFavorites) return [];
-    return menuFavorites?.map((item: any) => ({ id: item.menuId, name: item.menuName }));
+    return menuFavorites?.map((menu: any) => ({
+      ...menu,
+      id: menu.menuId,
+      name:
+        import.meta.env.VITE_LANGUAGE_DEV === 'true'
+          ? t(`${menu.menuCode}`)
+          : t(`MENU.${menu.menuCode}`),
+    }));
   }, [menuFavorites]);
 
   // 즐겨찾기 별표시 상태 ( 별표시 누르면 메뉴 삭제라서 제거 )
@@ -147,8 +162,20 @@ const PopoverContent = () => {
                 <span className={styles.menu_name}>{option.name}</span>
               </div>
             )}
-            onOptionsOrderChange={(newOptions: any) => {
-              console.log('newOptions::', newOptions);
+            onOptionsOrderChange={(newOptions: any, over: any) => {
+              if (over && newOptions && newOptions[over.index])
+                moveMenuFavorites(
+                  {
+                    favoritesMenuId: newOptions[over.index].favoritesMenuId,
+                    sortOrder: over.index + 1,
+                  },
+                  {
+                    onSuccess: (data: any) => {
+                      console.log('data', data);
+                      refetch();
+                    },
+                  },
+                );
             }}
           />
         </div>

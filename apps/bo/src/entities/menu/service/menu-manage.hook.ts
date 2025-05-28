@@ -188,3 +188,21 @@ export function useDeleteMenuFavorites(options?: any) {
     },
   };
 }
+
+export function useMoveMenuFavorites(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.moveMenuFavorites(),
+    onSuccess: (data, variables, context) => {
+      if (options?.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...options,
+  });
+  return {
+    ...mutation,
+    moveMenuFavorites: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+  };
+}
