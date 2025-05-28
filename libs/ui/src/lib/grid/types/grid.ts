@@ -251,6 +251,7 @@ export interface GridProps<T> {
   //    */
   //   pageSizeOptions?: number[];
   // };
+  subRows?: T[];
 }
 
 /**

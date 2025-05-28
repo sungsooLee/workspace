@@ -26,12 +26,19 @@ export const DuplicateCheckInputFormField = forwardRef<
       onSuccess,
       label,
       duplicationCheckFn,
+      placeholder,
     },
     ref,
   ) => {
     const { t } = useTranslation();
     const { onChangeGuideText } = useDynamicFormContext();
     const [lastDuplicateText, setLastDuplicateText] = useState(value);
+
+    useEffect(() => {
+      if (value !== lastDuplicateText) {
+        onChangeGuideText('');
+      }
+    }, [value, lastDuplicateText, onChangeGuideText]);
 
     useEffect(() => {
       return () => {
@@ -83,10 +90,9 @@ export const DuplicateCheckInputFormField = forwardRef<
         );
       }
     };
-
     return (
       <div className="flex w-full gap-x-2" ref={ref}>
-        <Input value={value} onChange={onChange} disabled={disabled} />
+        <Input value={value} onChange={onChange} disabled={disabled} placeholder={placeholder} />
         <Button
           type="button"
           variant="gray"

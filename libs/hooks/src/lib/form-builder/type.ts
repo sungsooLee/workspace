@@ -314,6 +314,7 @@ export interface FormRowProps {
   element?: ReactElement;
   formFieldConfig: FormFieldConfig;
   style?: 'bo' | 'fo';
+  infoNode?: ReactNode;
 }
 
 /*===================================

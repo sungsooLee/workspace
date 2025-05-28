@@ -3,6 +3,7 @@ import React, {
   forwardRef,
   useEffect,
   useImperativeHandle,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -82,6 +83,7 @@ const GridComponent = forwardRef(
       clientSideFiltering,
       clientSideSorting,
       onTableInstanceChange,
+      subRows,
     }: GridProps<T>,
     ref: any,
   ) => {
@@ -359,6 +361,7 @@ const GridComponent = forwardRef(
       },
       getCoreRowModel: getCoreRowModel(),
       getGroupedRowModel: getGroupedRowModel(),
+      getSubRows: (row: any) => row.subRows,
       getExpandedRowModel: getExpandedRowModel(),
       enableRowSelection: true,
       // onRowSelectionChange: setRowSelection,
@@ -382,8 +385,13 @@ const GridComponent = forwardRef(
       // manualExpanding: true,
       // pageCount: pagination ? Math.ceil(pagination.totalRows / pagination.pageSize) : undefined,
       //고유 ID 부여, 페이지네이션에서 selected row를 위해서
-      getRowId: (row: T, index: number) => {
-        return `${pagination?.pageIndex ?? 0}-${index}`;
+      getRowId: (row: T, index: number, parent?: Row<T>) => {
+        const pageIndex = pagination?.pageIndex ?? 0;
+        if (parent) {
+          // 하위 행인 경우: 부모ID + 하위인덱스
+          return `${parent.id}-${index}`;
+        }
+        return `${pageIndex}-${index}`;
       },
       meta: {
         updateData,
@@ -705,16 +713,18 @@ const GridComponent = forwardRef(
                   cursor: row.getIsGrouped() ? 'default' : 'pointer',
                 }}
               >
-                {row.getIsExpanded() ? '👇' : '👉'}{' '}
+                {row.getIsExpanded() ? '👇' : '👉'}
                 {flexRender(cell.column.columnDef.cell, cell.getContext())} ({row.subRows.length})
               </button>
+            ) : row.getCanExpand() ? (
+              <div>{flexRender(cell.column.columnDef.cell, cell.getContext())}</div>
             ) : cell.getIsAggregated() ? (
               flexRender(
                 cell.column.columnDef.aggregatedCell ?? cell.column.columnDef.cell,
                 cell.getContext(),
               )
             ) : cell.getIsPlaceholder() ? null : (
-              flexRender(cell.column.columnDef.cell, cell.getContext())
+              <div>{flexRender(cell.column.columnDef.cell, cell.getContext())}</div>
             )}
           </td>
         );

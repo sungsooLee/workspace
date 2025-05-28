@@ -49,6 +49,7 @@ interface Person {
   imageUrl?: string;
   preview?: ReactNode;
   download?: ReactNode;
+  subRows?: Person[]; // 하위 행 추가
 }
 
 interface UseTableDataProps<T> {
@@ -395,6 +396,22 @@ interface TableResponse<T> {
   };
 }
 
+const createSubRows = (parentIndex: number, count = 2): Person[] => {
+  return Array.from({ length: count }).map((_, subIndex) => ({
+    firstName: `Sub ${parentIndex}-${subIndex + 1}`,
+    lastName: `SubSurname ${parentIndex}-${subIndex + 1}`,
+    age: Math.floor(Math.random() * 30) + 15,
+    visits: Math.floor(Math.random() * 50),
+    status: Math.random() > 0.5 ? 'Active' : 'Inactive',
+    progress: Math.floor(Math.random() * 100),
+    preview: <Button className="link">하위 미리보기</Button>,
+    download: (
+      <Button className="download" onlyIcon>
+        <IcoDownload width={16} height={16} stroke={'#747D91'} />
+      </Button>
+    ),
+  }));
+};
 // 무한 스크롤용 mock API
 const fetchInfiniteData = async ({ tableState }: any): Promise<Person[]> => {
   await new Promise((resolve) => setTimeout(resolve, 500));
@@ -414,6 +431,7 @@ const fetchInfiniteData = async ({ tableState }: any): Promise<Person[]> => {
         <IcoDownload width={16} height={16} stroke={'#747D91'} />
       </Button>
     ),
+    subRows: index % 2 === 1 ? createSubRows(index, 2) : undefined,
   }));
 
   return data;
@@ -1022,4 +1040,137 @@ const fetchPaginatedData = (pageNumber = 0, pageSize = 10): PaginationResponse<a
       },
     },
   };
+};
+
+const expandedColumns = [
+  columnHelper.accessor('age', {
+    cell: ({ row, getValue }) => (
+      <div
+        style={{
+          paddingLeft: `${row.depth * 2}rem`,
+        }}
+      >
+        <div>
+          {row.getCanExpand() && (
+            <button
+              {...{
+                style: { cursor: 'pointer' },
+              }}
+              onClick={(e) => {
+                e.stopPropagation(); // 이벤트 전파 차단
+                row.getToggleExpandedHandler()();
+              }}
+            >
+              {row.getIsExpanded() ? '👇' : '👉'}
+            </button>
+          )}
+          {getValue<number>()}
+        </div>
+      </div>
+    ),
+    header: 'Age',
+    meta: {
+      filterType: 'range',
+    },
+    enableGrouping: true,
+  }),
+  columnHelper.accessor('firstName', {
+    cell: (info) => info.getValue(),
+    header: 'First Name',
+    footer: (props) => `Total: ${props.table.getRowModel().rows.length}`,
+    meta: {
+      filterType: 'text',
+      align: 'left', // 기본 정렬 - 헤더와 셀 모두 적용
+    },
+    enableGrouping: false,
+  }),
+  columnHelper.accessor('lastName', {
+    cell: (info) => info.getValue(),
+    header: 'Last Name',
+    enableGrouping: false,
+    meta: {
+      headerAlign: 'center', // 헤더만 가운데 정렬
+      cellAlign: 'right', // 셀은 오른쪽 정렬
+    },
+  }),
+  columnHelper.accessor('visits', {
+    cell: (info) => info.getValue(),
+    header: 'Visits',
+    footer: (props) => {
+      const total = props.table
+        .getRowModel()
+        .rows.reduce((sum, row) => sum + row.getValue<number>('visits'), 0);
+      return `Total: ${total}`;
+    },
+    meta: {
+      filterType: 'range',
+    },
+  }),
+  columnHelper.accessor('status', {
+    cell: (info) => info.getValue(),
+    header: 'Status',
+    getGroupingValue: (row) => `${row.status}`,
+    enableGrouping: true,
+    aggregationFn: 'count',
+    meta: {
+      filterType: 'select',
+      filterOptions: [
+        { label: '활성', value: 'active' },
+        { label: '비활성', value: 'inactive' },
+      ],
+    },
+  }),
+  columnHelper.accessor('progress', {
+    cell: (info) => info.getValue(),
+    header: 'Progress',
+    meta: {
+      filterType: 'range',
+    },
+    enableGrouping: false,
+  }),
+  columnHelper.accessor('preview', {
+    cell: (info) => info.getValue(),
+    header: '미리보기',
+    enableGrouping: false,
+  }),
+  columnHelper.accessor('download', {
+    cell: (info) => info.getValue(),
+    header: 'download',
+    enableGrouping: false,
+    meta: {
+      headerAlign: 'left', // 헤더만 가운데 정렬
+      cellAlign: 'center', // 셀은 오른쪽 정렬
+    },
+  }),
+];
+
+const ExpandedTable = () => {
+  const [tableState, setTableState] = useState({
+    sorting: [] as SortingState,
+    filters: [] as ColumnFiltersState,
+  });
+
+  const { data, isLoading } = useQuery({
+    queryKey: ['PersonEntity', tableState] as const,
+    queryFn: () => fetchInfiniteData({ tableState }),
+  });
+
+  return (
+    <div className="p-4">
+      <GridBox data={data || []} columns={expandedColumns} isLoading={isLoading} height={500} />
+    </div>
+  );
+};
+// 확장 컬럼
+export const WithExpandColumn: Story = {
+  name: '확장 컬럼',
+  decorators: [
+    (Story) => (
+      <ReactQueryConfigProvider>
+        <Story />
+        <ModalWrapper />
+      </ReactQueryConfigProvider>
+    ),
+  ],
+  render: () => <ExpandedTable />,
 };

@@ -523,5 +523,9 @@
   "pms.channel.ChannelSecretType": {
     "SECRET": "비밀",
     "PUBLIC": "공개"
+  },
+  "pms.labelmessage.LabelMessageType": {
+    "LABEL": "라벨",
+    "MESSAGE": "메세지"
   }
 }
