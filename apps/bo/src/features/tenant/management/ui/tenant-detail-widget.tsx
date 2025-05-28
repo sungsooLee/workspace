@@ -277,7 +277,7 @@ const TenantDetailWidgetComponent: FC<any> = () => {
                 name="widgetName"
                 element={
                   <WidgetNameAndButton
-                    widget={selectedOption}
+                    widget={selectedOption.widgetType}
                     disabled={EnFormMode.NONE === formMode}
                   />
                 }
