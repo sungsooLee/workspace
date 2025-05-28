@@ -1,9 +1,9 @@
 import { useState, forwardRef } from 'react';
 import { t } from 'i18next';
 import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
-import { UserChoice } from '../components/user-choice';
+import { ExternalUserChoice } from '../components/external-user-choice';
 
-const UserModalComponent = forwardRef((_, ref) => {
+const ExternalUserModalComponent = forwardRef((props, ref) => {
   const { close: closeModal } = useModal();
 
   const [selectedRow, setSelectedRow] = useState();
@@ -20,11 +20,15 @@ const UserModalComponent = forwardRef((_, ref) => {
     closeModal(selectedRow);
   };
 
+  /**
+   * @param data
+   */
+
   return (
     <ModalContainer>
-      <ModalTitle>{t('유저 조회')}</ModalTitle>
+      <ModalTitle>{t('사외이용자 조회')}</ModalTitle>
       <ModalBody>
-        <UserChoice handleRowSelect={handleRowSelect} />
+        <ExternalUserChoice handleRowSelect={handleRowSelect} />
       </ModalBody>
       <ModalFooter>
         <ModalFooter>
@@ -36,4 +40,4 @@ const UserModalComponent = forwardRef((_, ref) => {
   );
 });
 
-export const UserChoiceModal = UserModalComponent;
+export const ExternalUserChoiceModal = ExternalUserModalComponent;
