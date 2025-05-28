@@ -328,7 +328,7 @@ const GridBoxComponent = <T extends object>(
               variant="outline"
               size="sm"
               label={t('LABEL.grid.header.remove', '삭제')}
-              onClick={handleAddClick}
+              onClick={handleRemoveClick}
             />
           )}
           {/* 행추가 */}
