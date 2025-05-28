@@ -23,6 +23,7 @@ import { useTranslation } from '@entities/translation/service/translation.hook';
 import { t } from 'i18next';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
+import { usePersonalInfoCheck } from '@learnway/auth';
 
 export const Route = createFileRoute('/_layout/platform/system/multilingual/')({
   component: RouteComponent,
@@ -40,6 +41,9 @@ function RouteComponent() {
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const { update } = useTranslation();
   const router = useRouter();
+  const { checkAndExecute, hasPersonalInfo } = usePersonalInfoCheck();
+  console.log(hasPersonalInfo);
+
   const [currentTargetLocale, setCurrentTargetLocale] = useState<string>('');
   const isSaveDisable = useMemo(
     () => gConfig.totalRows === 0 || currentTargetLocale === '',
@@ -80,7 +84,7 @@ function RouteComponent() {
       return;
     }
     const uploadData: TranslationType = {
-      keyTypeCode: getValues('keyType'),
+      keyTypeCode: getValues('keyTypeCode'),
       targetLocale: getValues('targetLocale'),
       translations: [],
     };
@@ -96,7 +100,7 @@ function RouteComponent() {
   const init = async () => {
     if (state.keyType || state.multilingualKey) {
       onFormChange({
-        keyType: state?.keyType,
+        keyTypeCode: state?.keyType,
         multilingualKey: state?.multilingualKey || '',
         translation: state.translation || '',
         targetLocale: 'en',
@@ -215,7 +219,7 @@ const searchConfig: SearchBoxConfig = {
   builders: [
     [
       {
-        name: 'keyType',
+        name: 'keyTypeCode',
         type: 'dropdown',
         label: 'LABEL.platform.system.multilingual.keyType',
         value: '',
@@ -262,12 +266,12 @@ const searchConfig: SearchBoxConfig = {
         value: '',
         customConfig: {
           placeholder: {
-            target: 'keyType',
+            target: 'keyTypeCode',
             placeholder: (item: Record<string, any>) => {
-              if (!item.keyType) {
+              if (!item.keyTypeCode) {
                 return 'LABEL.platform.system.multilingual.placeholder.multilingualKey.default';
               }
-              return `LABEL.platform.system.multilingual.placeholder.multilingualKey.${item.keyType}`;
+              return `LABEL.platform.system.multilingual.placeholder.multilingualKey.${item.keyTypeCode}`;
             },
           },
         },
@@ -279,12 +283,12 @@ const searchConfig: SearchBoxConfig = {
         value: '',
         customConfig: {
           placeholder: {
-            target: 'keyType',
+            target: 'keyTypeCode',
             placeholder: (item: Record<string, any>) => {
-              if (!item.keyType) {
+              if (!item.keyTypeCode) {
                 return 'LABEL.platform.system.multilingual.placeholder.translation.default';
               }
-              return `LABEL.platform.system.multilingual.placeholder.translation.${item.keyType}`;
+              return `LABEL.platform.system.multilingual.placeholder.translation.${item.keyTypeCode}`;
             },
           },
         },
@@ -292,7 +296,7 @@ const searchConfig: SearchBoxConfig = {
     ],
   ],
   validator: {
-    keyType: true,
+    keyTypeCode: true,
     targetLocale: true,
   },
 };
