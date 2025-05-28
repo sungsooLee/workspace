@@ -1,7 +1,7 @@
 import { UseFormReturn } from 'react-hook-form';
 import { GridProps } from './grid';
 import React from 'react';
-import { SearchInputCondition } from '../components/grid-box-search-input';
+import { GridBoxSearchInputCondition } from '../components/grid-box-search-input';
 
 /**
  * TODO. GridBox 내의 기능이 확정되지 않아 useGridBox 와 GridBox 에 대한 Config 를 분리해놨는데 확정 된다면 합치는게 좋을꺼 같습니다.
@@ -225,7 +225,7 @@ export interface GridBoxProps<T extends object = object>
   /**
    * 검색영역 조회 버튼 클릭 핸들러 (엔터 눌렀을때도 실행됨)
    */
-  onSearchClick?: (condition: SearchInputCondition) => void;
+  onSearchClick?: (condition: GridBoxSearchInputCondition) => void;
 
   /**
    * Show RowIndex
