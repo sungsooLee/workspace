@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { cn, getStringF, getDateToString } from '@learnway/shared';
+import { cn, formatDate } from '@learnway/shared';
 import { FormSubTitle } from '@shared/ui/form';
 import { Avatar } from '@learnway/ui';
 
@@ -57,9 +57,7 @@ export function MyPage() {
           </li>
           <li>
             <span className={styles.title}>{'생년월일'}</span>
-            <p className={styles.text}>
-              {user?.birthday && getDateToString(new Date(String(user?.birthday)))}
-            </p>
+            <p className={styles.text}>{user?.birthday && formatDate(user?.birthday + '')}</p>
           </li>
           <li>
             <span className={styles.title}>{'성별'}</span>
@@ -89,7 +87,7 @@ export function MyPage() {
                 {/* <td>{'+82 2-1234-1234'}</td> */}
                 <td>{user?.companyTelephoneNumber}</td>
                 <th scope={'row'}>{'지역'}</th>
-                <td>{'서울'}</td>
+                <td>{user?.workPlaceCode}</td>
               </tr>
               <tr>
                 <th scope={'row'}>{'주소'}</th>

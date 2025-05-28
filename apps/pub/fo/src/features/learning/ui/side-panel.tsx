@@ -1,5 +1,6 @@
 import { memo, useState } from 'react';
-import { Button, useModal } from '@learnway/ui';
+import { Link } from '@tanstack/react-router';
+import { Button, useModal, ProgressCheck } from '@learnway/ui';
 import { isMobile } from 'react-device-detect';
 import {
   IcoLearning01,
@@ -9,6 +10,7 @@ import {
   IcoPrevPlay,
   IcoPrevNext,
   IcoXclose,
+  IcoLinkblank,
 } from '@learnway/icons';
 import { CurriculumPopup, NextLearningPopup } from '../../../features/learning';
 
@@ -28,70 +30,149 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
   const { open: openModal } = useModal();
 
   const [menuSelected, setMenuSelected] = useState(false);
+  const [menuNumber, setMenuNumber] = useState<number>(-1); // -1 : 닫기, 1 ~ n : content 순서
 
-  const sendValueToParent = () => {
-    menuSelected === true ? setMenuSelected(false) : setMenuSelected(true);
+  const sendValueToParent = (index: number) => {
+    if (menuNumber === index || index === -1) {
+      setMenuSelected(false);
+      setMenuNumber(-1);
+    } else {
+      setMenuSelected(true);
+      setMenuNumber(index);
+
+      if (menuSelected === true) {
+        return;
+      }
+    }
     const data: ChildData = {
       panelState: menuSelected,
     };
     onValueChange(data);
   };
 
+  const menu = [
+    { tit: '커리큘럼', icon: IcoLearning01 },
+    { tit: '내노트', icon: IcoLearning02 },
+    { tit: '커뮤니티', icon: IcoLearning03 },
+    { tit: 'FAQ', icon: IcoLearning04 },
+  ];
+
   return (
     <div className={`${styles.start} ${menuSelected ? styles.active : ''}`}>
       {isMobile || (
-        <>
+        <div>
           {menuSelected ? (
             <div className={styles.menu_contents}>
               <div className={styles.title_box}>
                 <strong>커리큘럼</strong>
-                <Button onClick={() => sendValueToParent()}>
+                <Button onClick={() => sendValueToParent(-1)}>
                   <IcoXclose width={24} height={24} stroke="#6f798b" />
                 </Button>
               </div>
               <div className={styles.contents_box}>
                 {/* 커리큘럼 */}
-                <div className={styles.curriculum}>커리큘럼 컨텐츠</div>
+                <div className={styles.curriculum}>
+                  <ul>
+                    <li>
+                      <div className={styles.box}>
+                        <div className={styles.header}>
+                          <strong>모듈명</strong>
+                          <span>13:40</span>
+                        </div>
+                        <div className={styles.contents}>
+                          <ul className={styles.step}>
+                            <li>
+                              <div className={styles.step_box}>
+                                <ProgressCheck progress={100} />
+                                <p>스콤아이템</p>
+                                <span>4:11</span>
+                              </div>
+                            </li>
+                            <li>
+                              <div className={styles.step_box}>
+                                <ProgressCheck progress={50} />
+                                <p>스콤아이템</p>
+                                <span>4:11</span>
+                              </div>
+                            </li>
+                            <li>
+                              <div className={styles.step_box}>
+                                <ProgressCheck progress={0} />
+                                <p>스콤아이템</p>
+                                <span>4:11</span>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div className={styles.box}>
+                        <div className={styles.header}>
+                          <strong>모듈명</strong>
+                          <span>13:40</span>
+                        </div>
+                        <div className={styles.contents}>
+                          <ul className={styles.step}>
+                            <li>
+                              <div className={styles.step_box}>
+                                <ProgressCheck progress={100} />
+                                <p>스콤아이템</p>
+                                <span>4:11</span>
+                              </div>
+                            </li>
+                            <li>
+                              <div className={styles.step_box}>
+                                <ProgressCheck progress={50} />
+                                <p>
+                                  스콤아이템
+                                  <Link to="">
+                                    <IcoLinkblank width={16} height={16} stroke="#4c515e" />
+                                  </Link>
+                                </p>
+                                <span>4:11</span>
+                              </div>
+                            </li>
+                            <li>
+                              <div className={styles.step_box}>
+                                <ProgressCheck progress={0} />
+                                <p>스콤아이템</p>
+                                <span>4:11</span>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           ) : (
             ''
           )}
-        </>
+        </div>
       )}
 
       <div className={styles.panel}>
         <div className={styles.menu}>
-          {isMobile ? (
+          {menu.map((item, index) => (
             <Button
+              key={index}
               onClick={() =>
-                openModal({
-                  width: 'm_full',
-                  content: <CurriculumPopup />,
-                })
+                isMobile
+                  ? openModal({
+                      width: 'm_full',
+                      content: <CurriculumPopup />,
+                    })
+                  : sendValueToParent(index)
               }
+              className={menuNumber === index ? styles.active : ''}
             >
-              <IcoLearning01 width={isMobile ? 24 : 32} height={isMobile ? 24 : 32} />
-              <span>커리큘럼</span>
+              <item.icon width={isMobile ? 24 : 32} height={isMobile ? 24 : 32} />
+              <span>{item.tit}</span>
             </Button>
-          ) : (
-            <Button onClick={() => sendValueToParent()}>
-              <IcoLearning01 width={isMobile ? 24 : 32} height={isMobile ? 24 : 32} />
-              <span>커리큘럼</span>
-            </Button>
-          )}
-          <Button>
-            <IcoLearning02 width={isMobile ? 24 : 32} height={isMobile ? 24 : 32} />
-            <span>내노트</span>
-          </Button>
-          <Button>
-            <IcoLearning03 width={isMobile ? 24 : 32} height={isMobile ? 24 : 32} />
-            <span>커뮤니티</span>
-          </Button>
-          <Button>
-            <IcoLearning04 width={isMobile ? 24 : 32} height={isMobile ? 24 : 32} />
-            <span>FAQ</span>
-          </Button>
+          ))}
         </div>
         <div className={styles.control}>
           <Button disabled>

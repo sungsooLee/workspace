@@ -27,6 +27,7 @@ import { cn } from '@learnway/shared';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import { EnChannelScope, EnCompanyScope, EnDeptScope } from '@types';
 import { FormDisplay } from '@features/form/ui/form-display';
+import { formUtils } from '@entities/form-utils';
 
 export const Route = createFileRoute('/_layout/my-page/role/detail')({
   component: RouteComponent,
@@ -204,8 +205,8 @@ const searchConfig: SearchBoxConfig = {
         type: 'date-range',
         label: t('신청일'),
         value: {
-          from: undefined,
-          to: undefined,
+          from: formUtils.now({ unit: 'day', offset: -30 }),
+          to: formUtils.now(),
         },
       },
     ],

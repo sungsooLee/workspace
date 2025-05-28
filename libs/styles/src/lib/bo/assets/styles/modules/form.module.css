@@ -1,6 +1,6 @@
 /* form.module.css */
 .row {
-  @apply flex w-full gap-[40px] text-left;
+  @apply flex w-full gap-[32px] text-left;
   .row {
     @apply mt-[12px];
   }
@@ -436,5 +436,17 @@ hr.divider {
         @apply !px-[10px];
       }
     }
+  }
+}
+
+[class*='modal-content'] .input_box {
+  [class*='react-datepicker__close-icon'] {
+    @apply right-[26px];
+  }
+  [class*='react-datepicker__view-calendar-icon'] input {
+    @apply pl-[8px];
+  }
+  .dash {
+    @apply min-w-[23px];
   }
 }

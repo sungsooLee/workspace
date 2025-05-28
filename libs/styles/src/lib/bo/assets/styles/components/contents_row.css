@@ -1,7 +1,7 @@
 /* contents_row.css */
 .form_row {
   .nlp--contents-row {
-    @apply flex w-full gap-[40px] text-left;
+    @apply flex w-full gap-[32px] text-left;
     label > span {
       @apply body_bo_2_r text-[var(--gray9)];
     }

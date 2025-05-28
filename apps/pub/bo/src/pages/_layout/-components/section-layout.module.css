@@ -20,7 +20,7 @@
       }
     }
     &::before {
-      @apply left-1/2 top-0 -translate-x-1/2;
+      @apply left-1/2 top-[32px] h-[calc(100%-32px)] -translate-x-1/2;
     }
   }
   &.thirty {

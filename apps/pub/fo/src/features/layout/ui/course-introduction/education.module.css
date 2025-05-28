@@ -1,0 +1,77 @@
+.start {
+  &.education_wrap {
+    h2 {
+      @apply title_5_b text-[var(--gray9)];
+    }
+    .filter_wrap {
+      @apply mt-[16px] flex items-center justify-between;
+      .date {
+        @apply title_6_b text-[var(--gray9)];
+      }
+      .filter {
+        @apply flex items-center;
+        .drop_btn {
+          @apply relative ml-[24px] min-h-min pl-[24px];
+          &::before {
+            @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray4)] content-[''];
+          }
+        }
+      }
+    }
+    .education_box {
+      @apply mt-[16px];
+      & > ul {
+        & > li {
+          & + li {
+            @apply mt-[16px];
+          }
+        }
+      }
+    }
+    .more_box {
+      @apply relative mt-[20px];
+      .btn_more {
+        @apply relative flex w-full items-center justify-center;
+        span {
+          @apply body_3_r text-[var(--gray8)];
+        }
+        &.active {
+          svg {
+            @apply rotate-180;
+          }
+        }
+      }
+      &::before {
+        @apply pointer-events-none absolute bottom-0 left-0 h-[96px] w-full bg-gradient-to-t from-white to-transparent content-[''];
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.education_wrap {
+        h2 {
+          @apply title_6_b inline-block;
+        }
+        .filter_wrap {
+          @apply float-right mt-0 inline-block;
+          .filter {
+            .array {
+              button {
+                @apply !body_4_r;
+                &[class*='active'] {
+                  @apply !body_4_b;
+                }
+              }
+            }
+          }
+        }
+        .education_box {
+          @apply mt-[8px];
+        }
+      }
+    }
+  }
+}

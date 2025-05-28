@@ -137,7 +137,7 @@
       }
     }
     button + button {
-      @apply !ml-0;
+      @apply !ml-0 !pl-0;
       &::before {
         @apply mr-[12px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
       }
@@ -157,6 +157,18 @@
           &::before {
             @apply mr-[12px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
           }
+        }
+      }
+      [class*='nlp--button'] {
+        @apply shrink-0;
+      }
+      [class*='select_wrap'] {
+        @apply w-auto;
+        [class*='nlp-select__control'] {
+          @apply !w-[108px];
+        }
+        & + [class*='nlp--input'] {
+          @apply mx-[8px] !w-[180px];
         }
       }
     }

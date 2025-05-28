@@ -34,7 +34,7 @@ function RouteComponent() {
         { label: 'Table', path: '/guide/table' },
         { label: 'Checkbox', path: '/guide/checkbox' },
         { label: 'Radio', path: '/guide/radio' },
-        { label: 'Select', path: '/guide/notice-box' },
+        { label: 'Select', path: '/guide/select' },
         { label: 'Dropdown', path: '/guide/drop-down' },
         { label: 'DatePicker', path: '/guide/date-picker' },
         { label: 'Tooltip', path: '/guide/tooltip' },
@@ -76,44 +76,55 @@ function RouteComponent() {
   useEffect(() => {
     setCurrentPath(location.pathname);
   }, [location.pathname]);
-  return (
-    <div>
-      <div>
-        <div className="guide_wrap">
-          <div className="aside">
-            <h1>
-              <Link to={'/guide'}>Publish Guide(BO)</Link>
-            </h1>
-            <div className="menu">
-              <ul>
-                {menuItems.map(({ title, subItems }) => (
-                  <li key={title}>
-                    <span className="tit" onClick={() => toggleVisibility(title)}>
-                      {title}
-                      <span className="arrow">▼</span>
-                    </span>
-                    {subItems && !visibleList[title] && (
-                      <ul>
-                        {subItems.map(({ label, path }) => (
-                          <li key={path} className={currentPath === path ? 'active' : ''}>
-                            <Link to={path}>{label}</Link>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
 
-          <div className="preview">
-            <div className="guide_box">
-              <Outlet />
-            </div>
-          </div>
+  const scrollToTop = (): void => {
+    const previewElement = document.querySelector('.preview');
+    if (previewElement) {
+      previewElement.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  return (
+    <div className="guide_wrap">
+      <div className="aside">
+        <h1>
+          <Link to={'/guide'}>Publish Guide(BO)</Link>
+        </h1>
+        <div className="menu">
+          <ul>
+            {menuItems.map(({ title, subItems }) => (
+              <li key={title}>
+                <span className="tit" onClick={() => toggleVisibility(title)}>
+                  {title}
+                  <span className="arrow">▼</span>
+                </span>
+                {subItems && !visibleList[title] && (
+                  <ul>
+                    {subItems.map(({ label, path }) => (
+                      <li key={path} className={currentPath === path ? 'active' : ''}>
+                        <Link to={path}>{label}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
+
+      <div className="preview">
+        <div className="guide_box">
+          <Outlet />
+        </div>
+      </div>
+
+      <button onClick={scrollToTop} className="btn_top">
+        ↑
+      </button>
     </div>
   );
 }

@@ -18,17 +18,17 @@ body main {
 }
 .lnb-open main {
   /* lnb open */
-  @apply !max-w-[calc(100vw-263px)];
+  @apply !max-w-[calc(100vw-280px)];
   [class*='content_wrap'] {
     & > div {
-      @apply !max-w-[calc(100vw-340px)];
+      @apply !max-w-[calc(100vw-360px)];
       & > div {
-        @apply !max-w-[calc(100vw-409px)];
+        @apply !max-w-[calc(100vw-424px)];
       }
     }
   }
-  [class*='nlp--contents-row'] [class*='grid_wrap'] {
-    @apply !max-w-[calc(100vw-420px)];
+  [class*='grid'] {
+    @apply !max-w-[calc(100vw-439px)];
   }
 }
 

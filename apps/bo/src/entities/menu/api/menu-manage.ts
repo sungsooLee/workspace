@@ -80,6 +80,33 @@ export default class MenuMangerService {
   static moveMenu(payload: any): Promise<any> {
     return httpService.post<any>(`${PMSApiPrefix()}/menus/${payload.menuId}/dnd`, payload);
   }
+  /**
+   * 메뉴 즐겨찾기 조회
+   *
+   * @param tenantId
+   * @param userNo
+   */
+  static fetchMenuFavorites(payload: any): Promise<any> {
+    return httpService.get<any>(`${PMSApiPrefix()}/menus/favorites`, payload);
+  }
+
+  /**
+   * 메뉴 즐겨찾기 등록
+   * @param menuId
+   * @param tenantId
+   * @param userId
+   */
+  static createMenuFavorites(payload: any): Promise<any> {
+    console.log('##### createMenuFavorites');
+    return httpService.post<any>(`${PMSApiPrefix()}/menus/favorites`, payload);
+  }
+
+  /**
+   * 메뉴 즐겨찾기 삭제
+   */
+  static deleteMenuFavorites(favoritesMenuId: any): Promise<any> {
+    return httpService.delete<any>(`${PMSApiPrefix()}/menus/favorites/${favoritesMenuId}`);
+  }
 }
 
 export const MenuManageApi = {

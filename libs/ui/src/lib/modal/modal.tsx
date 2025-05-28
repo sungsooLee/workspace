@@ -1,5 +1,5 @@
 import * as Primitive from '@radix-ui/react-dialog';
-import { IcoXclose } from '@learnway/icons';
+import { IcoClose02 } from '@learnway/icons';
 import React from 'react';
 
 import { ModalConfig } from './type';
@@ -53,7 +53,7 @@ const ModalComponent: React.FC<ModalConfig> = ({
           {!hideCloseButton && (
             <Primitive.Close asChild>
               <Button className={styles.btn_close} aria-label="Close" onlyIcon>
-                <IcoXclose width={24} height={24} stroke="#131C30" />
+                <IcoClose02 width={24} height={24} stroke="#131C30" />
               </Button>
             </Primitive.Close>
           )}

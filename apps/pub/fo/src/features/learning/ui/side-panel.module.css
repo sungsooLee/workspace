@@ -19,13 +19,23 @@
       button {
         @apply !mx-auto flex flex-col;
         span {
-          @apply body_3_r mt-[8px] block text-center text-[var(--gray7)];
+          @apply body_3_r mt-[8px] block whitespace-nowrap text-center text-[var(--gray7)];
         }
         & + button {
           @apply mt-[24px];
         }
         &:disabled {
           @apply opacity-50;
+        }
+        &.active {
+          svg,
+          path,
+          circle {
+            @apply stroke-[var(--secondary3)];
+          }
+          span {
+            @apply body_3_b text-[var(--secondary3)];
+          }
         }
       }
     }
@@ -35,7 +45,7 @@
   }
 
   .menu_contents {
-    @apply w-[460px] border-r-[1px] border-solid border-[var(--gray4)] shadow-[0px_2px_6px_rgba(0,0,0,0.1)];
+    @apply h-full w-[460px] border-r-[1px] border-solid border-[var(--gray4)];
     .title_box {
       @apply flex items-center justify-between px-[16px] py-[14px];
       strong {
@@ -43,7 +53,43 @@
       }
     }
     .contents_box {
-      @apply border-t-[1px] border-solid border-[var(--gray5)];
+      /* 커리쿨럼 */
+      .curriculum {
+        .box {
+          @apply border-t-[1px] border-solid border-[var(--gray5)];
+          .header {
+            @apply flex items-center bg-[var(--gray1)] p-[16px];
+            strong {
+              @apply body_3_b flex-1;
+            }
+            span {
+              @apply body_3_r ml-[8px] text-[var(--gray7)];
+            }
+          }
+          .contents {
+            .step {
+              li {
+                @apply px-[16px] py-[12px];
+                .step_box {
+                  @apply flex items-center;
+                  svg {
+                    @apply mr-[8px];
+                  }
+                  p {
+                    @apply body_3_r flex flex-1 items-center text-[var(--gray7)];
+                    svg {
+                      @apply ml-[8px];
+                    }
+                  }
+                  span {
+                    @apply body_3_r ml-[16px] text-[var(--gray7)];
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

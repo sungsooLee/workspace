@@ -8,7 +8,9 @@ import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/con
 
 import {
   CourseDashboard,
-  CourseIntroduction,
+  CourseIntroduction, // 과정소개
+  CourseEducation, // 교육일정
+  CourseReview, // 후기
   CourseInformationPopup, // 수강신청 불가 팝업창들 및 반려 팝업
   CourseFixedButton, // 수강신청 버튼
 } from '../../../features/layout';
@@ -45,9 +47,10 @@ function RouteComponent() {
 
   // 탭 타이틀
   const tabTitle = [
-    { title: '대시보드', key: 'a' },
-    { title: '과정소개', key: 'b' },
-    { title: '후기', count: '0', key: 'b' }, // 과정소개 탭 안에서 후기가 있기 때문에 key값 동일
+    { title: '대시보드', tabNumber: '1' },
+    { title: '과정소개', tabNumber: '2' },
+    { title: '교육일정', tabNumber: '2' }, // 과정소개 탭 안에서 교욱일정이 있기 때문에 tabNumber값 동일
+    { title: '후기', count: '0', tabNumber: '2' }, // 과정소개 탭 안에서 후기가 있기 때문에 tabNumber값 동일
   ];
   const handleTab = (key: string, index: number) => {
     setSelectedTabKey(key);
@@ -57,7 +60,7 @@ function RouteComponent() {
   const items = [
     {
       title: '대시보드',
-      key: 'a',
+      key: '1',
       content: (
         <div className={styles.dashboard_content}>
           <CourseDashboard />
@@ -66,10 +69,12 @@ function RouteComponent() {
     },
     {
       title: '과정소개',
-      key: 'b',
+      key: '2',
       content: (
         <div className={styles.introduction_content}>
           <CourseIntroduction />
+          <CourseEducation />
+          <CourseReview />
         </div>
       ),
     },
@@ -342,9 +347,9 @@ function RouteComponent() {
         <div className={styles.box}>
           {tabTitle.map((item, index) => (
             <Button
-              key={item.key}
+              key={item.tabNumber}
               className={selectedTabTitle === index ? styles.active : ''}
-              onClick={() => handleTab(item.key, index)}
+              onClick={() => handleTab(item.tabNumber, index)}
             >
               {item.title}
               <em>{item.count}</em>
