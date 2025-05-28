@@ -5,6 +5,7 @@ import {
   EditInputCell,
   EditTextareaCell,
   GridBox,
+  TableBox,
   useGridBox,
   useGridBoxConfig,
   useModal,
@@ -93,10 +94,10 @@ function RouteComponent() {
   }, [data]);
 
   const init = async () => {
-    if (state.keyType && state.multilingualKey) {
+    if (state.keyType || state.multilingualKey) {
       onFormChange({
-        keyType: state.keyType,
-        multilingualKey: state.multilingualKey || '',
+        keyType: state?.keyType,
+        multilingualKey: state?.multilingualKey || '',
         translation: state.translation || '',
         targetLocale: 'en',
       });
@@ -109,102 +110,104 @@ function RouteComponent() {
     init();
   }, []);
   return (
-    <PageContainer>
-      <ContentsButtons>
-        <LinkBox>
+    <div>
+      <PageContainer>
+        <ContentsButtons>
+          <LinkBox>
+            <Button
+              type="button"
+              variant="point"
+              size="sm"
+              onClick={() => {
+                router.navigate({ to: '/platform/menu' });
+              }}
+            >
+              {t('LABEL.platform.system.multilingual.platform-menu')}
+            </Button>
+            <Button
+              type="button"
+              variant="point"
+              size="sm"
+              onClick={() => {
+                router.navigate({ to: '/platform/category' });
+              }}
+            >
+              {t('LABEL.platform.system.multilingual.platform-category')}
+            </Button>
+            <Button
+              type="button"
+              variant="point"
+              size="sm"
+              onClick={() => {
+                router.navigate({
+                  to: '/platform/code/common-code-group',
+                });
+              }}
+            >
+              {t('LABEL.platform.system.multilingual.platform-code-common-code-group')}
+            </Button>
+            <Button
+              type="button"
+              variant="point"
+              size="sm"
+              onClick={() => {
+                router.navigate({
+                  to: '/platform/label-message',
+                });
+              }}
+            >
+              {t('LABEL.platform.system.multilingual.platform-message')}
+            </Button>
+          </LinkBox>
           <Button
             type="button"
-            variant="point"
+            variant="primary"
+            disabled={isSaveDisable}
             size="sm"
-            onClick={() => {
-              router.navigate({ to: '/platform/menu' });
-            }}
+            onClick={handleDeployMultilingual}
           >
-            {t('LABEL.platform.system.multilingual.platform-menu')}
+            {t('LABEL.button.deploy')}
           </Button>
           <Button
             type="button"
-            variant="point"
+            variant="primary"
+            disabled={isSaveDisable}
             size="sm"
-            onClick={() => {
-              router.navigate({ to: '/platform/category' });
-            }}
+            onClick={handleSaveMultilingual}
           >
-            {t('LABEL.platform.system.multilingual.platform-category')}
+            {t('LABEL.button.save')}
           </Button>
-          <Button
-            type="button"
-            variant="point"
-            size="sm"
-            onClick={() => {
-              router.navigate({
-                to: '/platform/code/common-code-group',
-              });
-            }}
-          >
-            {t('LABEL.platform.system.multilingual.platform-code-common-code-group')}
-          </Button>
-          <Button
-            type="button"
-            variant="point"
-            size="sm"
-            onClick={() => {
-              router.navigate({
-                to: '/platform/label-message',
-              });
-            }}
-          >
-            {t('LABEL.platform.system.multilingual.platform-message')}
-          </Button>
-        </LinkBox>
-        <Button
-          type="button"
-          variant="primary"
-          disabled={isSaveDisable}
-          size="sm"
-          onClick={handleDeployMultilingual}
-        >
-          {t('LABEL.button.deploy')}
-        </Button>
-        <Button
-          type="button"
-          variant="primary"
-          disabled={isSaveDisable}
-          size="sm"
-          onClick={handleSaveMultilingual}
-        >
-          {t('LABEL.button.save')}
-        </Button>
-      </ContentsButtons>
-      <MainContents>
-        <SearchBox provider={sProvider} onSearch={handleOnSearch} />
-        <div className={cn(boxStyles.start, boxStyles.inner)}>
-          <div className="grid_wrap">
-            <GridBox
-              config={gConfig}
-              titleCustomNode={
-                <>
-                  {/*번역완료 개수*/}
-                  <CountText
-                    label={t('pms.multilingual.Is_Translation.true', '')}
-                    count={successTranslationCount}
-                  />
-                  {/*번역중인언어*/}
-                  <span className={'normal_text'}>
-                    {t('LABEL.platform.system.multilingual.currentTranslationLanguage')} :{' '}
-                    {currentTargetLocale
-                      ? t(`pms.multilingual.LanguageType.${currentTargetLocale}`)
-                      : ''}
-                  </span>
-                </>
-              }
-              showExcelDownload={true}
-              showUpload={true}
-            />
+        </ContentsButtons>
+        <MainContents>
+          <SearchBox provider={sProvider} onSearch={handleOnSearch} />
+          <div className={cn(boxStyles.start, boxStyles.inner)}>
+            <div className="grid_wrap">
+              <TableBox
+                config={gConfig}
+                titleCustomNode={
+                  <>
+                    {/*번역완료 개수*/}
+                    <CountText
+                      label={t('pms.multilingual.Is_Translation.true', '')}
+                      count={successTranslationCount}
+                    />
+                    {/*번역중인언어*/}
+                    <span className={'normal_text'}>
+                      {t('LABEL.platform.system.multilingual.currentTranslationLanguage')} :{' '}
+                      {currentTargetLocale
+                        ? t(`pms.multilingual.LanguageType.${currentTargetLocale}`)
+                        : ''}
+                    </span>
+                  </>
+                }
+                showExcelDownload={true}
+                showUpload={true}
+              />
+            </div>
           </div>
-        </div>
-      </MainContents>
-    </PageContainer>
+        </MainContents>
+      </PageContainer>
+    </div>
   );
 }
 
@@ -212,7 +215,7 @@ const searchConfig: SearchBoxConfig = {
   builders: [
     [
       {
-        name: 'keyTypeCode',
+        name: 'keyType',
         type: 'dropdown',
         label: 'LABEL.platform.system.multilingual.keyType',
         value: '',
