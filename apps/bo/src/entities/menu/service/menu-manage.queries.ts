@@ -66,4 +66,7 @@ export const mutateOptions = {
   deleteFavorites: () => ({
     mutationFn: (payload: any) => MenuMangeService.deleteMenuFavorites(payload),
   }),
+  moveMenuFavorites: () => ({
+    mutationFn: (payload: any) => MenuMangeService.moveMenuFavorites(payload),
+  }),
 };

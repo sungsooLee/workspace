@@ -556,6 +556,10 @@
     "CORE": "코어",
     "ENTERPRISE": "엔타프라이즈"
   },
+  "pms.labelmessage.LabelMessageType": {
+    "LABEL": "라벨",
+    "MESSAGE": "메세지"
+  },
   "pms.company.SsoType": {
     "HMG_SSO": "HMG SSO",
     "AUTOWAY": "오토웨이 2.0",

@@ -34,6 +34,7 @@ const BaseFormRowComponent: FC<FormRowProps> = ({
   element,
   formFieldConfig,
   style,
+  infoNode,
 }) => {
   return (
     <DynamicFormContextProvider>
@@ -45,6 +46,7 @@ const BaseFormRowComponent: FC<FormRowProps> = ({
         element={element}
         formFieldConfig={formFieldConfig}
         style={style}
+        infoNode={infoNode}
       />
     </DynamicFormContextProvider>
   );
@@ -60,6 +62,7 @@ const DynamicFormContainer: FC<FormRowProps> = ({
   element,
   formFieldConfig,
   style = 'bo',
+  infoNode,
 }) => {
   /*
    * 구조는 동일하고 스타일만 다르다고 전달 받아서 스타일 분리 만 합니다.
@@ -115,7 +118,7 @@ const DynamicFormContainer: FC<FormRowProps> = ({
     >
       {/* 레이블 렌더링 */}
       {formConfig.label && (
-        <label htmlFor={name} className={cn(styles.form_label, 'dynamic-form-field-label')}>
+        <label htmlFor={name} className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
           <span className={styles.form_text}> {t(formConfig.label as any)}</span>
           {isRequired && (
             <span
@@ -147,6 +150,7 @@ const DynamicFormContainer: FC<FormRowProps> = ({
             </Tooltip>
           )}
           {infoArea && <span className={styles.info_area}>{infoArea}</span>}
+          {infoNode && <span className={styles.info_area}>{infoNode}</span>}
           {formConfig.subText && (
             <span className={styles.sub_text}>{t(formConfig.subText as any)}</span>
           )}

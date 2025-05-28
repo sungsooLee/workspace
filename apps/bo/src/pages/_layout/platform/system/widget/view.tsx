@@ -4,24 +4,24 @@ import { useWatch } from 'react-hook-form';
 
 import { Button, DynamicFormField, ContentsRow } from '@learnway/ui';
 
-import { pageRouteConfig } from '../../../../features/auth';
+import { pageRouteConfig } from '../../../../../features/auth';
 
-import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
-import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/contents-buttons';
-import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
+import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
+import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
+import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 
-import { FormTranslationBox } from '../../../../features/platform/ui/platform/system/translation/form-translation-box';
+import { FormTranslationBox } from '../../../../../features/platform/ui/platform/system/translation/form-translation-box';
 
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { FormRow } from '../../../../shared/ui/form';
+import { FormRow } from '../../../../../shared/ui/form';
 
-import { useWidgets } from '../../../../entities/widgets';
-import { WidgetPreviewButton } from '../../../../features/platform';
+import { useWidgets } from '../../../../../entities/widgets';
+import { WidgetPreviewButton } from '../../../../../features/platform';
 
-import { WidgetComponentTable } from './-components/widget-component-table';
-import { WidgetAssignedTenantGrid } from './-components/widget-assigned-tenant-grid';
+import { WidgetComponentTable } from '../../../../../features/platform/system/widget/widget-component-table';
+import { WidgetAssignedTenantGrid } from '../../../../../features/platform/system/widget/widget-assigned-tenant-grid';
 
-export const Route = createFileRoute('/_layout/platform/widget/view')({
+export const Route = createFileRoute('/_layout/platform/system/widget/view')({
   component: RouteComponent,
   ...pageRouteConfig({
     validateState: {
@@ -62,7 +62,7 @@ function RouteComponent() {
    * 목록으로 이동
    */
   const handleGoToListPage = () => {
-    router.navigate({ to: '/platform/widget' });
+    router.navigate({ to: '/platform/system/widget' });
   };
 
   return (

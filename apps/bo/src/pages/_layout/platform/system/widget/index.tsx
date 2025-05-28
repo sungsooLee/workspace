@@ -4,19 +4,19 @@ import { useSearchBox } from '@learnway/hooks';
 import { useCreation } from 'ahooks';
 import { cn } from '@learnway/shared';
 
-import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
-import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
+import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
+import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
 
-import { widgetsQueryOptions } from '../../../../entities/widgets';
+import { widgetsQueryOptions } from '../../../../../entities/widgets';
 
-import { SearchBox } from '../../../../shared/ui/search-box';
+import { SearchBox } from '../../../../../shared/ui/search-box';
 
-import { WidgetPreviewButton } from '../../../../features/platform';
+import { WidgetPreviewButton } from '../../../../../features/platform';
 import { GridBox, useGridBox } from '@learnway/ui';
 
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
-export const Route = createFileRoute('/_layout/platform/widget/')({
+export const Route = createFileRoute('/_layout/platform/system/widget/')({
   component: RouteComponent,
 });
 
@@ -70,7 +70,7 @@ function RouteComponent() {
               config={gridConfig}
               onRowSelect={(row: any) => {
                 router.navigate({
-                  to: '/platform/widget/view',
+                  to: '/platform/system/widget/view',
                   state: { widgetCode: row?.widgetCode },
                 });
               }}

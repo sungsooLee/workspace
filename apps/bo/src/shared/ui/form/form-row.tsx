@@ -17,7 +17,14 @@ import { formFieldConfig } from './form-field-config';
  * @param name - 명시적으로 지정한 name (없으면 내부의 첫번째 DynamicFormField의 name 사용)
  */
 type FormRowProps = Omit<BaseFormRowProps, 'formFieldConfig'>;
-const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, name, element }) => {
+const FormRowComponent: FC<FormRowProps> = ({
+  className,
+  provider,
+  children,
+  name,
+  element,
+  infoNode,
+}) => {
   return (
     <BaseFormRow
       provider={provider}
@@ -26,6 +33,7 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
       className={className}
       children={children}
       element={element}
+      infoNode={infoNode}
     />
   );
 };
