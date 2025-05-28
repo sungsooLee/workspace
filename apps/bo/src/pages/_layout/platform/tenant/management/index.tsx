@@ -1,12 +1,8 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
 
-import { useRouter } from '@tanstack/react-router';
-
+import { PageContainer, MainContents, ContentsButtons } from '@widgets/layout';
 import { Button } from '@learnway/ui';
 
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { TenantManagmentList } from '@features/tenant/management/ui/tenant-managment-list';
 
 export const Route = createFileRoute('/_layout/platform/tenant/management/')({

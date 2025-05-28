@@ -62,6 +62,10 @@ const defaultRow = [
     height: '',
   },
 ];
+/**
+ * 화면번호: NLP_BO_TMS_1003_05
+ * @returns
+ */
 const TenantDetailWidgetComponent: FC<any> = () => {
   const routerState = useRouterState();
   const [formMode, setFormMode] = useState(EnFormMode.NONE);
