@@ -7,7 +7,7 @@ import styles from './shuttle-grid-to-grid.module.css';
 import { Button } from '../button/button';
 import { ColumnDef, Table } from '@tanstack/react-table';
 import { IcoNarrowRight } from '@learnway/icons';
-import { GridBox } from '../grid/grid-box';
+import { GridBox } from '../grid/grid-box/grid-box';
 import { GridImperative } from '../grid/types';
 import { useTranslation } from 'react-i18next';
 

@@ -202,7 +202,6 @@ function RouteComponent() {
               <GridBox
                 data={data}
                 columns={columns}
-                height={380}
                 showColumnSettings={false}
                 showNumberingColumn={true}
                 pagination={{
@@ -455,7 +454,6 @@ function RouteComponent() {
               <GridBox
                 data={data}
                 columns={columns}
-                height={310}
                 showColumnSettings={false}
                 pagination={{
                   pageSize,

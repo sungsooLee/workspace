@@ -1,9 +1,11 @@
+/**
+ * 백업용 소스......
+ */
 import React, {
   CSSProperties,
   forwardRef,
   useEffect,
   useImperativeHandle,
-  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -29,7 +31,7 @@ import {
   Table,
   useReactTable,
   VisibilityState,
-} from '@tanstack/react-table'; // paging Icons
+} from '@tanstack/react-table';
 import {
   IcoChevronLeft,
   IcoChevronLeftDouble,
@@ -540,12 +542,12 @@ const GridComponent = forwardRef(
                         // width: paginationGrid ? undefined : header.getSize(),
                         // display: paginationGrid ? 'table-cell' : 'flex',
                         // 정렬 속성 추가
-                        textAlign: columnDef.meta?.headerAlign || columnDef.meta?.align || 'left',
                         // justifyContent:
                         //   columnDef.meta?.headerAlign ||
                         //   columnDef.meta?.align ||
                         //   'justify-start',
                         display: 'block',
+                        textAlign: columnDef.meta?.headerAlign || columnDef.meta?.align || 'left',
                         width: !tableMode ? header.getSize() : '',
                         // 고정 헤더 스타일 추가
                         position: isPinnedLeft ? 'sticky' : undefined,
@@ -865,4 +867,4 @@ const GridComponent = forwardRef(
   },
 );
 
-export const Grid = GridComponent;
+export const Grid2 = GridComponent;

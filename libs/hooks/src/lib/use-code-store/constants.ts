@@ -54,6 +54,8 @@ export const CODE_GROUP = {
   'pms.company.HrDataSource': 'pms.company.HrDataSource',
   'pms.company.LinkageSystem': 'pms.company.LinkageSystem',
   'pms.company.LinkageType': 'pms.company.LinkageType',
+  'pms.company.LoginRestrictionSettingType': 'pms.company.LoginRestrictionSettingType',
+  'pms.company.LoginRestrictionType': 'pms.company.LoginRestrictionType',
   'pms.company.PlatformServiceType': 'pms.company.PlatformServiceType',
   'pms.company.SsoType': 'pms.company.SsoType',
   'pms.company.TwoFactorAuthType': 'pms.company.TwoFactorAuthType',

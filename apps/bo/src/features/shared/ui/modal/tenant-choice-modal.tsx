@@ -149,7 +149,6 @@ const TenantModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
               onRowSelect={handleRowSelect}
               config={gConfig}
               //   columns={columns}
-              height={380}
               // showColumnSettings={false}
               title={t('테넌트 목록')}
             />

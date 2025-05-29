@@ -63,7 +63,7 @@ function RouteComponent() {
         <div className={styles.main_contents}>
           <FormSubTitle
             label={'채널 정보'}
-            underLine
+            lineType={'light'}
             actionNode={
               <>
                 <p className="info_text">{`접수ID : ${45785566322}`}</p>

@@ -23,7 +23,6 @@ const LearningResourceProductionGuideModalComponent: FC<any> = () => {
           <div className={popupStyles.container}>
             <GridBox
               config={config}
-              height={310}
               showColumnSettings={false}
               showTotalCount={true}
               hideRowSelectionCheckBox={false}

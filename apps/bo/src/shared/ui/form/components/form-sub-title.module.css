@@ -38,8 +38,11 @@
     [role='radiogroup'] + button {
       @apply ml-[16px];
     }
-    &.line {
-      @apply border-b-[1px] border-solid border-[var(--gray4)] pb-[12px];
+    &.light {
+      @apply border-b-[1px] border-solid border-[var(--gray4)] pb-[8px];
+    }
+    &.dark {
+      @apply border-b-[1px] border-solid border-[var(--gray9)] pb-[8px];
     }
     & + [class*='nlp--contents-row'] {
       @apply mt-[16px];

@@ -44,7 +44,7 @@ function RouteComponent() {
         <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
         <div className={cn(boxStyles.start, boxStyles.inner)}>
           <div className="grid_wrap">
-            <GridBox config={gConfig} columns={columns} height={450} title="회사 목록" />
+            <GridBox config={gConfig} columns={columns} title="회사 목록" />
           </div>
         </div>
       </MainContents>

@@ -29,7 +29,8 @@ interface SidePanelProps {
 const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
   const { open: openModal } = useModal();
 
-  const [menuSelected, setMenuSelected] = useState(false);
+  const [menuSelected, setMenuSelected] = useState(false); // content 영역 show/hide
+  const [menuContents, setMenuContents] = useState([false, false, false, false]); // 각 메뉴 컨텐츠 영역 show/hide
   const [menuNumber, setMenuNumber] = useState<number>(-1); // -1 : 닫기, 1 ~ n : content 순서
 
   const sendValueToParent = (index: number) => {
@@ -37,6 +38,7 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
       setMenuSelected(false);
       setMenuNumber(-1);
     } else {
+      handleMenuContentsClick(index);
       setMenuSelected(true);
       setMenuNumber(index);
 
@@ -48,6 +50,12 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
       panelState: menuSelected,
     };
     onValueChange(data);
+  };
+
+  // 각 메뉴 컨텐츠 number (boolean)
+  const handleMenuContentsClick = (index: number) => {
+    const newContents = menuContents.map((_, i) => i === index);
+    setMenuContents(newContents);
   };
 
   const menu = [
@@ -64,88 +72,99 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
           {menuSelected ? (
             <div className={styles.menu_contents}>
               <div className={styles.title_box}>
-                <strong>커리큘럼</strong>
+                <strong>{menu[menuNumber].tit}</strong>
                 <Button onClick={() => sendValueToParent(-1)}>
                   <IcoXclose width={24} height={24} stroke="#6f798b" />
                 </Button>
               </div>
               <div className={styles.contents_box}>
                 {/* 커리큘럼 */}
-                <div className={styles.curriculum}>
-                  <ul>
-                    <li>
-                      <div className={styles.box}>
-                        <div className={styles.header}>
-                          <strong>모듈명</strong>
-                          <span>13:40</span>
+                {menuContents[0] && (
+                  <div className={styles.curriculum}>
+                    <ul>
+                      <li>
+                        <div className={styles.box}>
+                          <div className={styles.header}>
+                            <strong>모듈명</strong>
+                            <span>13:40</span>
+                          </div>
+                          <div className={styles.contents}>
+                            <ul className={styles.step}>
+                              <li>
+                                <div className={styles.step_box}>
+                                  <ProgressCheck progress={100} />
+                                  <p>스콤아이템</p>
+                                  <span>4:11</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div className={styles.step_box}>
+                                  <ProgressCheck progress={50} />
+                                  <p>스콤아이템</p>
+                                  <span>4:11</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div className={styles.step_box}>
+                                  <ProgressCheck progress={0} />
+                                  <p>스콤아이템</p>
+                                  <span>4:11</span>
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
                         </div>
-                        <div className={styles.contents}>
-                          <ul className={styles.step}>
-                            <li>
-                              <div className={styles.step_box}>
-                                <ProgressCheck progress={100} />
-                                <p>스콤아이템</p>
-                                <span>4:11</span>
-                              </div>
-                            </li>
-                            <li>
-                              <div className={styles.step_box}>
-                                <ProgressCheck progress={50} />
-                                <p>스콤아이템</p>
-                                <span>4:11</span>
-                              </div>
-                            </li>
-                            <li>
-                              <div className={styles.step_box}>
-                                <ProgressCheck progress={0} />
-                                <p>스콤아이템</p>
-                                <span>4:11</span>
-                              </div>
-                            </li>
-                          </ul>
+                      </li>
+                      <li>
+                        <div className={styles.box}>
+                          <div className={styles.header}>
+                            <strong>모듈명</strong>
+                            <span>13:40</span>
+                          </div>
+                          <div className={styles.contents}>
+                            <ul className={styles.step}>
+                              <li>
+                                <div className={styles.step_box}>
+                                  <ProgressCheck progress={100} />
+                                  <p>스콤아이템</p>
+                                  <span>4:11</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div className={styles.step_box}>
+                                  <ProgressCheck progress={50} />
+                                  <p>
+                                    스콤아이템
+                                    <Link to="">
+                                      <IcoLinkblank width={16} height={16} stroke="#4c515e" />
+                                    </Link>
+                                  </p>
+                                  <span>4:11</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div className={styles.step_box}>
+                                  <ProgressCheck progress={0} />
+                                  <p>스콤아이템</p>
+                                  <span>4:11</span>
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
                         </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div className={styles.box}>
-                        <div className={styles.header}>
-                          <strong>모듈명</strong>
-                          <span>13:40</span>
-                        </div>
-                        <div className={styles.contents}>
-                          <ul className={styles.step}>
-                            <li>
-                              <div className={styles.step_box}>
-                                <ProgressCheck progress={100} />
-                                <p>스콤아이템</p>
-                                <span>4:11</span>
-                              </div>
-                            </li>
-                            <li>
-                              <div className={styles.step_box}>
-                                <ProgressCheck progress={50} />
-                                <p>
-                                  스콤아이템
-                                  <Link to="">
-                                    <IcoLinkblank width={16} height={16} stroke="#4c515e" />
-                                  </Link>
-                                </p>
-                                <span>4:11</span>
-                              </div>
-                            </li>
-                            <li>
-                              <div className={styles.step_box}>
-                                <ProgressCheck progress={0} />
-                                <p>스콤아이템</p>
-                                <span>4:11</span>
-                              </div>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+
+                {/* 내노트 */}
+                {menuContents[1] && <div className={styles.note}>내노트</div>}
+
+                {/* 커뮤니티 */}
+                {menuContents[2] && <div className={styles.community}>커뮤니티</div>}
+
+                {/* 내노트 */}
+                {menuContents[3] && <div className={styles.faq}>FAQ</div>}
               </div>
             </div>
           ) : (

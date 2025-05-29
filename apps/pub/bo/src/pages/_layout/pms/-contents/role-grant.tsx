@@ -23,7 +23,7 @@ const RoleGrantComponent: FC<{}> = ({}) => {
       <FormSubTitle
         label={'역할 정보'}
         actionNode={<Button label={'저장'} variant={'save'} size={'sm'} />}
-        underLine={true}
+        lineType={'light'}
       />
       <div className={styles.contents_wrap}>
         {/* search-box */}

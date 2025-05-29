@@ -3,26 +3,17 @@
   &.wrap {
     @apply relative flex w-full justify-between;
     &::before {
-      @apply absolute left-1/2 top-0 flex h-[calc(100%-32px)] w-[1px] -translate-x-1/2 bg-[var(--gray4)] content-[''];
+      @apply absolute left-1/2 top-0 flex h-full w-[1px] -translate-x-1/2 bg-[var(--gray4)] content-[''];
     }
     .inner {
-      @apply scrollbar relative z-[1] h-[calc(100vh-352px)] w-[calc(50%-32px)] items-stretch overflow-y-auto;
+      @apply relative z-[1] w-[calc(50%-32px)] items-stretch;
       .inner_contents {
-        @apply py-[16px] pb-[32px];
-      }
-      &.type2 {
-        @apply max-h-[calc(100vh-278px)] min-h-[calc(100vh-278px)];
-      }
-      &.type_progress {
-        @apply max-h-[calc(100vh-410px)] min-h-[calc(100vh-442px)];
-      }
-      &.type_progress2 {
-        @apply max-h-[calc(100vh-344px)] min-h-[calc(100vh-376px)];
+        @apply py-[16px];
       }
     }
     &.ratio_third {
       .inner {
-        @apply scrollbar max-h-[calc(100vh-403px)] min-h-[calc(100vh-435px)] overflow-y-auto;
+        @apply min-h-[calc(100vh-435px)];
         & + .inner > div:first-child,
         & + .inner form > div:first-child {
           @apply ml-[32px] w-[calc(100%-32px)];
@@ -51,7 +42,7 @@
       }
       &.common_code {
         .inner {
-          @apply max-h-[calc(100vh-447px)] min-h-[calc(100vh-447px)];
+          @apply min-h-[calc(100vh-447px)];
           .inner_contents {
             @apply pb-[48px];
           }

@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { GridBox } from './grid-box';
-import { GridBoxProps } from './types';
+import { GridBoxProps } from '../types';
 
 /**
  * 표 컴포넌트 (GridBox) 와 동일한 기능의 컴포넌트

@@ -50,7 +50,7 @@ function RouteComponent() {
   };
 
   // grid
-  const [pageIndex, setPageIndex] = useState(0);
+  const [pageNumber, setPageIndex] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const data: any[] = [
     {
@@ -308,18 +308,17 @@ function RouteComponent() {
           </div>
           <div className={cn(boxStyles.start, boxStyles.inner)}>
             <div className={cn(layoutStyles.start, layoutStyles.wrap, layoutStyles.ratio_third)}>
-              <div className={cn(layoutStyles.inner, layoutStyles.scrollHidden)}>
+              <div className={cn(layoutStyles.inner)}>
                 <div className={layoutStyles.inner_contents}>
                   <GridBox
                     data={data}
                     columns={columns}
-                    height={350}
                     showColumnSettings={false}
                     showNumberingColumn={true}
                     pagination={{
                       pageSize,
-                      pageIndex,
-                      totalRows: 100,
+                      pageNumber,
+                      totalPages: 100,
                       onPageChange: setPageIndex,
                       onPageSizeChange: setPageSize,
                     }}

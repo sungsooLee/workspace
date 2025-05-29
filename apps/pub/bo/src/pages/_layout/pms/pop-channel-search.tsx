@@ -178,7 +178,6 @@ function RouteComponent() {
               <GridBox
                 data={data}
                 columns={columns}
-                height={440}
                 showColumnSettings={false}
                 hideRowSelectionRadioBox={false}
                 showNumberingColumn

@@ -79,7 +79,6 @@ function RouteComponent() {
             <GridBox
               config={gConfig}
               columns={columns}
-              // height={440}
               // showColumnSettings={false}
               // showNumberingColumn={true}
               // multiple

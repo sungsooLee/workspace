@@ -7,6 +7,7 @@ import {
   CompanyChoiceModal,
   CompanyShuttleModal,
   ExternalUserChoiceModal,
+  ExternalUserShuttleModal,
   MenuChoiceModal,
   RoleChoiceModal,
   RoleShuttleModal,
@@ -15,6 +16,9 @@ import {
   UserAndExternalUserTabsChoiceModal,
   UserChoiceForGroupModal,
   UserChoiceModal,
+  UserShuttleModal,
+  MenuChoiceTreeModal,
+  CategoryChoiceTreeModal,
 } from '@features/shared';
 import { Button, ChipListModalSelectorFormField, ContentsRow, Input, useModal } from '@learnway/ui';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
@@ -161,6 +165,124 @@ function RouteComponent() {
                 e.stopPropagation();
                 openModal({
                   width: 'xl',
+                  content: <UserChoiceModal />,
+                });
+              }}
+            >
+              {'유저 검색(공통)'}
+            </Button>
+            <Button
+              size={'xs'}
+              className="btn_table"
+              variant={'gray2'}
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal({
+                  width: 'xl',
+                  content: <UserShuttleModal />,
+                });
+              }}
+            >
+              {'유저 검색(셔틀)'}
+            </Button>
+            <div className="h-1 w-full border-white bg-slate-700" />
+            <Button
+              size={'xs'}
+              className="btn_table"
+              variant={'gray2'}
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal({
+                  width: 'xl',
+                  content: <ExternalUserChoiceModal />,
+                });
+              }}
+            >
+              {'사외이용자 검색(공통)'}
+            </Button>
+            <Button
+              size={'xs'}
+              className="btn_table"
+              variant={'gray2'}
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal({
+                  width: 'xl',
+                  content: <ExternalUserShuttleModal />,
+                });
+              }}
+            >
+              {'사외이용자 검색(셔틀)'}
+            </Button>
+
+            <Button
+              size={'xs'}
+              className="btn_table"
+              variant={'gray2'}
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal({
+                  width: 'xl',
+                  content: <UserAndExternalUserTabsChoiceModal />,
+                });
+              }}
+            >
+              {'유저와 사외이용자 팝업에서 선택하는 경우(탭)'}
+            </Button>
+            <div className="h-1 w-full border-white bg-slate-700" />
+
+            <Button
+              size={'xs'}
+              className="btn_table"
+              variant={'gray2'}
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal({
+                  width: 'xl',
+                  content: <CompanyChoiceModal />,
+                });
+              }}
+            >
+              {'회사 조회'}
+            </Button>
+            <Button
+              size={'xs'}
+              className="btn_table"
+              variant={'gray2'}
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal({
+                  width: 'xl',
+                  content: <CompanyShuttleModal />,
+                });
+              }}
+            >
+              {'회사 조회(셔틀)'}
+            </Button>
+            <Button
+              size={'xs'}
+              className="btn_table"
+              variant={'gray2'}
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal({
+                  width: 'xl',
+                  content: <UserChoiceForGroupModal />,
+                });
+              }}
+            >
+              {'회사안에 유저 조회 팝업'}
+            </Button>
+
+            <div className="h-1 w-full border-white bg-slate-700" />
+            <Button
+              size={'xs'}
+              className="btn_table"
+              variant={'gray2'}
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal({
+                  width: 'xl',
                   content: <RoleChoiceModal />,
                 });
               }}
@@ -181,34 +303,7 @@ function RouteComponent() {
             >
               {'HRD 담당자 역할 조회(셔틀)'}
             </Button>
-            <Button
-              size={'xs'}
-              className="btn_table"
-              variant={'gray2'}
-              onClick={(e) => {
-                e.stopPropagation();
-                openModal({
-                  width: 'xl',
-                  content: <ChannelListChoiceModal />,
-                });
-              }}
-            >
-              {'채널 조회'}
-            </Button>
-            <Button
-              size={'xs'}
-              className="btn_table"
-              variant={'gray2'}
-              onClick={(e) => {
-                e.stopPropagation();
-                openModal({
-                  width: 'xl',
-                  content: <ChannelShuttleModal />,
-                });
-              }}
-            >
-              {'채널 조회(셔틀)'}
-            </Button>
+            <div className="h-1 w-full border-white bg-slate-700" />
             <Button
               size={'xs'}
               className="btn_table"
@@ -237,6 +332,7 @@ function RouteComponent() {
             >
               {'테넌트 조회(셔틀)'}
             </Button>
+            <div className="h-1 w-full border-white bg-slate-700" />
             <Button
               size={'xs'}
               className="btn_table"
@@ -245,11 +341,11 @@ function RouteComponent() {
                 e.stopPropagation();
                 openModal({
                   width: 'xl',
-                  content: <MenuChoiceModal menuScopeCode={'BO'} />,
+                  content: <ChannelListChoiceModal />,
                 });
               }}
             >
-              {'메뉴 조회'}
+              {'채널 조회'}
             </Button>
             <Button
               size={'xs'}
@@ -259,11 +355,27 @@ function RouteComponent() {
                 e.stopPropagation();
                 openModal({
                   width: 'xl',
-                  content: <UserAndExternalUserTabsChoiceModal />,
+                  content: <ChannelShuttleModal />,
                 });
               }}
             >
-              {'유저와 사외이용자 팝업에서 선택하는 경우(탭)'}
+              {'채널 조회(셔틀)'}
+            </Button>
+            <div className="h-1 w-full border-white bg-slate-700" />
+
+            <Button
+              size={'xs'}
+              className="btn_table"
+              variant={'gray2'}
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal({
+                  width: 'xl',
+                  content: <MenuChoiceTreeModal menuScopeCode="BO" />,
+                });
+              }}
+            >
+              {'메뉴 조회 팝업(공통)'}
             </Button>
             <Button
               size={'xs'}
@@ -273,39 +385,11 @@ function RouteComponent() {
                 e.stopPropagation();
                 openModal({
                   width: 'xl',
-                  content: <UserChoiceForGroupModal />,
+                  content: <CategoryChoiceTreeModal />,
                 });
               }}
             >
-              {'유저그룹 조회'}
-            </Button>
-            <Button
-              size={'xs'}
-              className="btn_table"
-              variant={'gray2'}
-              onClick={(e) => {
-                e.stopPropagation();
-                openModal({
-                  width: 'xl',
-                  content: <ExternalUserChoiceModal />,
-                });
-              }}
-            >
-              {'사외이용자 검색(공통)'}
-            </Button>
-            <Button
-              size={'xs'}
-              className="btn_table"
-              variant={'gray2'}
-              onClick={(e) => {
-                e.stopPropagation();
-                openModal({
-                  width: 'xl',
-                  content: <UserChoiceModal />,
-                });
-              }}
-            >
-              {'유저 검색(공통)'}
+              {'케테고리 조회 팝업(공통)'}
             </Button>
           </div>
         </SubContents>

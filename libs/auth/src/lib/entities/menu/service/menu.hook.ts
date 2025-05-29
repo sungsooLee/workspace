@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { convertHierarchyToList } from '@learnway/shared';
 
-import { queryOptions } from './menu.queries';
+import { queryOptions, queryKeys } from './menu.queries';
 
 export function useFetchMenus(tenantId?: number) {
   return useQuery(queryOptions.all(tenantId));
@@ -21,6 +21,37 @@ export function useAsycFetchMenus(mutationOptions = {}) {
       if (!tenantId) return [];
 
       try {
+        const menus = await queryClient.fetchQuery(queryOptions.all(tenantId));
+        return convertHierarchyToList(
+          menus,
+          /*
+            (node: any, depth: number, index: number, parentNode?: any) => {
+              node['depth'] = depth;
+              node['parentNode'] = parentNode;
+              node['key'] = getRandomId();
+              return node;
+            },*/
+        );
+      } catch (error) {
+        console.warn('## MENU ERROR ##', error);
+        return [];
+      }
+    },
+  };
+}
+
+export function useAsycFetchMenusForceRefatch(mutationOptions = {}) {
+  const queryClient = useQueryClient();
+
+  return {
+    asyncMenus: async (tenantId: number) => {
+      // tenantId 없을때 예외처리
+      if (!tenantId) return [];
+
+      console.log('useAsycFetchMenusForceRefatch');
+
+      try {
+        await queryClient.invalidateQueries({ queryKey: queryKeys.all });
         const menus = await queryClient.fetchQuery(queryOptions.all(tenantId));
         return convertHierarchyToList(
           menus,

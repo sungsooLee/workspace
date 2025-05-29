@@ -27,6 +27,7 @@ import {
 } from '@learnway/hooks';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { LoginRestrictTimeSettingModal } from '@features/shared/ui/modal/login-restrict-time-setting-modal';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
@@ -124,7 +125,7 @@ const CompanyDetailComponent: FC<any> = ({ mode }) => {
             onClick={() => {
               openModal({
                 width: 'lg', // sm(600px), md(800px), lg(1024px), xl(1400px)
-                content: '',
+                content: <LoginRestrictTimeSettingModal />,
                 onClose(data: any) {
                   console.log('data', data);
                 },
@@ -137,7 +138,6 @@ const CompanyDetailComponent: FC<any> = ({ mode }) => {
         <GridBox
           config={gConfig}
           columns={columns}
-          height={160}
           // showColumnSettings={false}
           // showNumberingColumn={true}
           multiple

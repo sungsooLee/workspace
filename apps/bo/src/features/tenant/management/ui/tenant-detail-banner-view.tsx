@@ -28,7 +28,7 @@ const TenantDetailBannerViewComponent: FC<{}> = ({}) => {
             <Button label={'저장'} variant={'save'} size={'sm'} disabled />
           </>
         }
-        underLine={true}
+        lineType={'light'}
       />
       <div className={styles.contents_wrap}>
         <ContentsRow>

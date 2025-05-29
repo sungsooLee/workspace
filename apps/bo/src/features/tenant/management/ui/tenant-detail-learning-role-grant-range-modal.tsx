@@ -53,7 +53,7 @@ const TenantDetailLearningRoleGrantRangeModalComponent = () => {
         <div className={cn(popLayoutstyles.start, popLayoutstyles.wrap)}>
           <div className={popLayoutstyles.contents}>
             <div className={popLayoutstyles.left_contents}>
-              <FormSubTitle label={t('역할 일관ㄹ 적용')} underLine={true} />
+              <FormSubTitle label={t('역할 일관ㄹ 적용')} lineType={'light'} />
               <div className={dataInfostyles.start}>
                 <div className={dataInfostyles.title_box}>
                   <strong className={dataInfostyles.title}>{t('일괄적용 대상')}</strong>
@@ -104,7 +104,7 @@ const TenantDetailLearningRoleGrantRangeModalComponent = () => {
             <div className={popLayoutstyles.main_contents}>
               <FormSubTitle
                 label={title}
-                underLine={true}
+                lineType={'light'}
                 titleNode={
                   <>
                     <strong className="tit">{'전체'}</strong>

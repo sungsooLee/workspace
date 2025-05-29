@@ -1,10 +1,10 @@
 .root {
   &.wrap {
-    @apply -mx-[32px] mt-[16px] border-t border-solid border-[#d6dae1] p-[32px];
+    @apply -mx-[32px] mt-[16px] border-t border-solid border-[#d6dae1] p-[32px] pb-0;
     .container {
       @apply relative flex w-full flex-wrap justify-between;
       .inner {
-        @apply scrollbar relative max-h-[calc(100vh-420px)] overflow-y-auto;
+        @apply relative;
         [class*='title_wrap'] {
           @apply ml-[32px];
         }
