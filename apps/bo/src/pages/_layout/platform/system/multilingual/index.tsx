@@ -24,6 +24,7 @@ import { t } from 'i18next';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 import { usePersonalInfoCheck } from '@learnway/auth';
+import { ExcelUploadModal } from '../../../../../features/shared';
 
 export const Route = createFileRoute('/_layout/platform/system/multilingual/')({
   component: RouteComponent,
@@ -35,14 +36,49 @@ type TranslationType = {
 };
 
 function RouteComponent() {
-  const { confirm, alert } = useModal();
+  const { confirm, alert, open: openModal } = useModal();
   const { state } = useCurrentRoute();
   const { provider: sProvider, getValues, onFormChange, onFormValid } = useSearchBox(searchConfig);
-  const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
+
+  const { hasPersonalInfo } = usePersonalInfoCheck();
+
+  const handlePersonalInfoCheck = useCallback(async (): Promise<void> => {
+    if (hasPersonalInfo) {
+      const isConfirmed = await confirm({
+        title: '개인정보 포함 데이터 다운로드',
+        content: '개인정보가 포함된 데이터를 다운로드하시겠습니까?',
+      });
+
+      if (!isConfirmed) {
+        throw new Error('사용자가 취소했습니다.');
+      }
+    }
+  }, [hasPersonalInfo, confirm]);
+
+  const handleExcelUpload = async () => {
+    await openModal({
+      content: (
+        <ExcelUploadModal
+          validateUrl="/multilingual/excelUploadValidation"
+          uploadUrl="/multilingual/excelUpload"
+        />
+      ),
+      width: 'lg',
+    });
+  };
+
+  const tmpGridConfig = useMemo(
+    () =>
+      createGridConfig({
+        onBeforeDownload: hasPersonalInfo ? handlePersonalInfoCheck : undefined,
+        onBeforeUpload: handleExcelUpload,
+      }),
+    [hasPersonalInfo, handlePersonalInfoCheck],
+  );
+
+  const { config: gConfig, gridFetch, data } = useGridBox(tmpGridConfig, getValues);
   const { update } = useTranslation();
   const router = useRouter();
-  const { checkAndExecute, hasPersonalInfo } = usePersonalInfoCheck();
-  console.log(hasPersonalInfo);
 
   const [currentTargetLocale, setCurrentTargetLocale] = useState<string>('');
   const isSaveDisable = useMemo(
@@ -54,12 +90,9 @@ function RouteComponent() {
   /**
    * @param data
    */
-  const handleOnSearch = useCallback((data: any) => {
+  const handleOnSearch = useCallback((form: any) => {
     setCurrentTargetLocale(getValues('targetLocale'));
-    if (data && data.length > 0) {
-      setSuccessTranslationCount(data[0].targetTranslatedCount);
-    }
-    gridFetch(data);
+    gridFetch(form);
   }, []);
 
   /**
@@ -113,6 +146,14 @@ function RouteComponent() {
   useEffect(() => {
     init();
   }, []);
+
+  useEffect(() => {
+    if (data && data.length > 0) {
+      setSuccessTranslationCount(data[0].targetTranslatedCount);
+    } else {
+      setSuccessTranslationCount(0);
+    }
+  }, [data]);
   return (
     <div>
       <PageContainer>
@@ -128,7 +169,7 @@ function RouteComponent() {
             >
               {t('LABEL.platform.system.multilingual.platform-menu')}
             </Button>
-            <Button
+            {/* <Button
               type="button"
               variant="point"
               size="sm"
@@ -137,7 +178,7 @@ function RouteComponent() {
               }}
             >
               {t('LABEL.platform.system.multilingual.platform-category')}
-            </Button>
+            </Button> */}
             <Button
               type="button"
               variant="point"
@@ -301,73 +342,96 @@ const searchConfig: SearchBoxConfig = {
   },
 };
 
-const gridConfig: useGridBoxConfig = {
-  excel: {
-    upload: '/jjjjjj/',
-    download: '/multilingual/exportExcel',
-    form: {
-      xlsx: '',
-      csv: '',
-    },
-  },
-  query: translationQueryOptions.all,
-  columns: [
-    {
-      name: 'no1',
-      label: 'NO.',
-      type: 'numbering',
-      size: 50,
-    },
-    {
-      name: 'keyType',
-      label: t('LABEL.platform.system.multilingual.keyType'),
-    },
-    {
-      name: 'multilingualKey',
-      label: t('LABEL.platform.system.multilingual.code'),
-    },
-    {
-      name: 'baseLanguage',
-      label: t('LABEL.platform.system.multilingual.baseLanguage'),
-    },
-    {
-      name: 'targetLanguage',
-      label: t('LABEL.platform.system.multilingual.targetLanguage'),
-      accessorKey: 'text',
-      render: (info: CellContext<any, string>) => {
-        return info.row.getValue('keyType') === 'MESSAGE' ? (
-          <EditTextareaCell info={info} textarea={{ maxLength: 100 }} />
-        ) : (
-          <EditInputCell info={info} input={{ type: 'text' }} />
-        );
+interface GridConfigOptions {
+  onBeforeDownload?: () => Promise<void>;
+  onBeforeUpload?: () => Promise<void>;
+  validateUrl?: string;
+  uploadUrl?: string;
+}
+
+export const createGridConfig = (options: GridConfigOptions = {}): useGridBoxConfig => {
+  const { onBeforeDownload, onBeforeUpload, validateUrl, uploadUrl } = options;
+
+  return {
+    excel: {
+      upload: '/jjjjjj/',
+      download: '/multilingual/exportExcel',
+      form: {
+        xlsx: '',
+        csv: '',
       },
+      ...(onBeforeDownload && {
+        onBeforeDownload: async (executeDownload: () => Promise<void>) => {
+          await onBeforeDownload();
+          await executeDownload();
+        },
+      }),
+      ...(onBeforeUpload && {
+        onBeforeUpload: async (executeUpload: () => Promise<void>) => {
+          await onBeforeUpload();
+          await executeUpload();
+        },
+      }),
     },
-    {
-      name: 'totalTranslatedCount',
-      label: t('LABEL.platform.system.multilingual.totalTranslatedCount'),
-      render: (info: CellContext<any, string>) => {
-        return `${info.row.original.totalTranslatedCount} / ${info.row.original.totalLocaleCount}`;
+    query: translationQueryOptions.all,
+    columns: [
+      {
+        name: 'no1',
+        label: 'NO.',
+        type: 'numbering',
+        size: 50,
       },
+      {
+        name: 'keyType',
+        label: t('LABEL.platform.system.multilingual.keyType'),
+      },
+      {
+        name: 'multilingualKey',
+        label: t('LABEL.platform.system.multilingual.code'),
+      },
+      {
+        name: 'baseLanguage',
+        label: t('LABEL.platform.system.multilingual.baseLanguage'),
+      },
+      {
+        name: 'targetLanguage',
+        label: t('LABEL.platform.system.multilingual.targetLanguage'),
+        accessorKey: 'text',
+        render: (info: CellContext<any, string>) => {
+          return info.row.getValue('keyType') === 'MESSAGE' ? (
+            <EditTextareaCell info={info} textarea={{ maxLength: 100 }} />
+          ) : (
+            <EditInputCell info={info} input={{ type: 'text' }} />
+          );
+        },
+      },
+      {
+        name: 'totalTranslatedCount',
+        label: t('LABEL.platform.system.multilingual.totalTranslatedCount'),
+        render: (info: CellContext<any, string>) => {
+          return `${info.row.original.totalTranslatedCount} / ${info.row.original.totalLocaleCount}`;
+        },
+      },
+      {
+        name: 'lastModifiedBy',
+        label: t('LABEL.grid.column.updatedBy'),
+        translation: true,
+      },
+      {
+        name: 'modifiedDate',
+        label: t('LABEL.grid.column.updatedDate'),
+        render: (info: any) => (
+          <span className={'whitespace-nowrap'}>
+            {getDateToString(new Date(info.getValue()), DATE_TIME_FORMAT.DATETIME_SEC)}
+          </span>
+        ),
+      },
+    ],
+    data: [],
+    pagination: {
+      pageSize: 10,
+      pageIndex: 0,
+      totalRows: 0,
     },
-    {
-      name: 'lastModifiedBy',
-      label: t('LABEL.grid.column.updatedBy'),
-      translation: true,
-    },
-    {
-      name: 'modifiedDate',
-      label: t('LABEL.grid.column.updatedDate'),
-      render: (info: any) => (
-        <span className={'whitespace-nowrap'}>
-          {getDateToString(new Date(info.getValue()), DATE_TIME_FORMAT.DATETIME_SEC)}
-        </span>
-      ),
-    },
-  ],
-  data: [],
-  pagination: {
-    pageSize: 10,
-    pageIndex: 0,
-    totalRows: 0,
-  },
+  };
 };

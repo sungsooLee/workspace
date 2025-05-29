@@ -10,6 +10,7 @@ import { Menu } from '../../../types';
 
 import { useActiveMenuDepthState } from '../state/menu.state';
 import { useLayoutStore } from '../store/use-layout-sotre';
+import { useModal } from '@learnway/ui';
 
 /**
  * 메뉴 정보를 트리 구조로 반환
@@ -91,6 +92,7 @@ export function useRenewalMenuStateFromRouting() {
  */
 export function usePersonalInfoCheck() {
   const state = useRouterState();
+
   const { data: authUser } = useFetchAuthUser();
 
   // 현재 메뉴 정보 계산
@@ -116,20 +118,8 @@ export function usePersonalInfoCheck() {
     return currentMenu?.isPersoninfoInclusion || false;
   }, [currentMenu]);
 
-  const checkAndExecute = useCallback(
-    (callback: () => void) => {
-      if (hasPersonalInfo) {
-        // 개인정보 팝업 로직
-      } else {
-        callback();
-      }
-    },
-    [hasPersonalInfo],
-  );
-
   return {
     hasPersonalInfo,
-    checkAndExecute,
     currentMenu,
   };
 }

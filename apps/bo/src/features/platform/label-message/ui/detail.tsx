@@ -9,7 +9,7 @@ import {
   TextareaFormField,
   useModal,
 } from '@learnway/ui';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from '@tanstack/react-router';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -50,12 +50,24 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
   const queryClient = useQueryClient();
   const [isCreateMode, setIsCreateMode] = React.useState(true);
   const { confirm: openConfirm } = useModal();
+  const [currentConfig, setCurrentConfig] = useState(() => createFormConfig('LABEL'));
+
+  // const
   const { provider, onSubmit, onFormChange, getValues, fetchData, clearFormError, control } =
-    useDynamicForm(formConfig);
+    useDynamicForm(currentConfig);
+  const typeWatch = useWatch({ control, name: 'labelMessageType' });
+
+  useEffect(() => {
+    if (typeWatch) {
+      const newConfig = createFormConfig(typeWatch);
+      setCurrentConfig(newConfig);
+    }
+  }, [typeWatch]);
+
   const { data } = useFetchLabelMessage(labelMessageId);
   const formDisabled = labelMessageId === 0;
   const clearAllFormErrors = () => {
-    formConfig.builders.forEach((item) => clearFormError(item.name));
+    currentConfig.builders.forEach((item) => clearFormError(item.name));
   };
   // 라벨 메세지 등록
   const { mutate: create } = useCreateLabelMessage({
@@ -86,7 +98,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
     // 생성 모드는 폼 내용 초기화
     if (isCreate) {
       const initData: { [key: string]: any } = {};
-      formConfig.builders.forEach((item) => {
+      currentConfig.builders.forEach((item) => {
         initData[item.name] = item.value;
       });
       onFormChange({});
@@ -172,7 +184,6 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
     return isValid;
   };
 
-  const typeWatch = useWatch({ control, name: 'labelMessageType' });
   return (
     <form onSubmit={onSubmit(handleOnSubmit)}>
       <FormSubTitle
@@ -268,7 +279,7 @@ export const MessageDetail = MessageDetailComponent;
 /**
  * 필수값 : name, type
  */
-const formConfig: DynamicFormConfig = {
+const createFormConfig = (messageType = 'LABEL'): DynamicFormConfig => ({
   builders: [
     {
       name: 'labelMessageType',
@@ -282,14 +293,20 @@ const formConfig: DynamicFormConfig = {
     },
     {
       name: 'labelMessageMultilingulKey',
-      label: t('LABEL.form.label.labelMessageCode'),
+      label:
+        messageType === 'LABEL'
+          ? t('LABEL.form.label.labelCode')
+          : t('LABEL.form.label.messageCode'),
       type: 'custom',
       value: '',
       maxLength: 150,
     },
     {
       name: 'labelMessageName',
-      label: t('LABEL.form.label.labelMessage'),
+      label:
+        messageType === 'LABEL'
+          ? t('LABEL.form.label.labelName')
+          : t('LABEL.form.label.messageName'),
       type: 'textarea',
       format: 'string',
       value: '',
@@ -357,4 +374,4 @@ const formConfig: DynamicFormConfig = {
       ],
     },
   },
-};
+});
