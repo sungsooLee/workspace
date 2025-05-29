@@ -34,6 +34,7 @@ import {
   getNodeByKey,
   genMap,
   deleteNodeByNode,
+  copyTreeNode,
 } from '@features/tenant';
 
 import { isEqual } from 'lodash';
@@ -75,28 +76,29 @@ const MenuChoiceTreeModalComponent = ({ menuScopeCode }: { menuScopeCode: 'FO' |
             alert('이미 있습니다.');
             return;
           }
-          const allParents = getAllParent(baseMenuTreeData, sourceKey);
-          const oldCopyMenu: TreeNode[] = [...JSON.parse(JSON.stringify(selectedTreeData))];
-          const oldMap = genMap(oldCopyMenu);
 
-          for (const item of allParents) {
-            const newMenu = oldMap.get(item.key);
-            if (!newMenu) {
-              const parentMenu: any = oldMap.get(item.parentKey);
-              if (parentMenu) {
-                const newItem = JSON.parse(JSON.stringify(item));
-                newItem.children = new Array<any>();
-                parentMenu?.children.push(newItem);
-                oldMap.set(newItem.key, newItem);
-              }
-            }
-          }
+          // const allParents = getAllParent(baseMenuTreeData, sourceKey);
+          // const oldCopyMenu: TreeNode[] = [...JSON.parse(JSON.stringify(selectedTreeData))];
+          // const oldMap = genMap(oldCopyMenu);
 
-          const copyMenu = oldMap.get(sourceKey);
-          if (copyMenu) {
-            copyMenu.children = JSON.parse(JSON.stringify(event.sourceNode.children));
-          }
+          // for (const item of allParents) {
+          //   const newMenu = oldMap.get(item.key);
+          //   if (!newMenu) {
+          //     const parentMenu: any = oldMap.get(item.parentKey);
+          //     if (parentMenu) {
+          //       const newItem = JSON.parse(JSON.stringify(item));
+          //       newItem.children = new Array<any>();
+          //       parentMenu?.children.push(newItem);
+          //       oldMap.set(newItem.key, newItem);
+          //     }
+          //   }
+          // }
 
+          // const copyMenu = oldMap.get(sourceKey);
+          // if (copyMenu) {
+          //   copyMenu.children = JSON.parse(JSON.stringify(event.sourceNode.children));
+          // }
+          const oldCopyMenu = copyTreeNode(event, baseMenuTreeData, selectedTreeData);
           const firstLevelKeys = oldCopyMenu.map((node: TreeNode) => node.key);
           setSelectedTreeExpandedKeys(firstLevelKeys);
 
@@ -151,6 +153,32 @@ const MenuChoiceTreeModalComponent = ({ menuScopeCode }: { menuScopeCode: 'FO' |
     });
   };
 
+  useEffect(() => {
+    if (baseMenuDB) {
+      console.log('baseMenuDB', baseMenuDB);
+      const transformedData = transformMenuApiDataToTreeData(baseMenuDB);
+      console.log('transformedData', transformedData);
+      setBaseMenuTreeData(transformedData);
+      if (transformedData && transformedData.length > 0) {
+        const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
+        setBaseMenuTreeExpandedKeys(firstLevelKeys);
+        const allKeys = getAllTreeKeys(transformedData);
+        setBaseMenuAllKeys(allKeys);
+        const root = { ...transformedData[0] };
+
+        root.children = [];
+        setSelectedTreeAllKeys(root.key);
+        setSelectedTreeData([root]);
+      }
+    }
+  }, [baseMenuDB]);
+  useEffect(() => {
+    if (selectedTreeData) {
+      const allKeys = getAllTreeKeys(selectedTreeData);
+      setSelectedTreeAllKeys(allKeys);
+    }
+  }, [selectedTreeData]);
+
   const renderMenuDeleteButtons = (node: TreeNode, level: number) => (
     <div className={'gap-10px flex'}>
       <div className={'flex items-center'}>
@@ -171,31 +199,6 @@ const MenuChoiceTreeModalComponent = ({ menuScopeCode }: { menuScopeCode: 'FO' |
       </div>
     </div>
   );
-
-  useEffect(() => {
-    if (baseMenuDB) {
-      console.log('baseMenuDB', baseMenuDB);
-      const transformedData = transformMenuApiDataToTreeData(baseMenuDB);
-      console.log('transformedData', transformedData);
-      setBaseMenuTreeData(transformedData);
-      if (transformedData && transformedData.length > 0) {
-        const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
-        setBaseMenuTreeExpandedKeys(firstLevelKeys);
-        const allKeys = getAllTreeKeys(transformedData);
-        setBaseMenuAllKeys(allKeys);
-        const root = { ...transformedData[0] };
-
-        root.children = [];
-        setSelectedTreeData([root]);
-      }
-    }
-  }, [baseMenuDB]);
-  useEffect(() => {
-    if (selectedTreeData) {
-      const allKeys = getAllTreeKeys(selectedTreeData);
-      setSelectedTreeAllKeys(allKeys);
-    }
-  }, [selectedTreeData]);
 
   return (
     <ModalContainer>

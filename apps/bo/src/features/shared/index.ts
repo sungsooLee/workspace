@@ -1,4 +1,5 @@
 export * from './ui/modal/address-search-modal';
+export * from './ui/modal/category-choice-tree-modal';
 export * from './ui/modal/channel-choice-modal';
 export * from './ui/modal/channel-list-choice-modal';
 export * from './ui/modal/channel-reject-modal';
@@ -10,6 +11,7 @@ export * from './ui/modal/dnd-file-progress';
 export * from './ui/modal/excel-upload-modal';
 export * from './ui/modal/external-user-modal';
 export * from './ui/modal/image-preview-modal';
+export * from './ui/modal/login-restrict-time-setting-modal';
 export * from './ui/modal/manager-choice-modal';
 export * from './ui/modal/menu-choice-modal';
 export * from './ui/modal/menu-choice-tree-modal';

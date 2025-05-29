@@ -31,6 +31,54 @@ export const deleteNodeByNode = (nodes: TreeNode[], node: TreeNode) => {
   recervice(nodes);
 };
 
+export const moveNodePosition = (event: any, predata: any) => {
+  const map = genMap(predata);
+  switch (event.position) {
+    case 'INSIDE':
+      {
+        deleteNodeByNode(predata, event.sourceNode);
+        const parent = map.get(event.targetNode.key);
+        parent.children.splice(event.targetIndex, 0, event.sourceNode);
+      }
+      break;
+    case 'BEFORE':
+    case 'AFTER':
+      {
+        deleteNodeByNode(predata, event.sourceNode);
+        const parent = map.get(event.targetNode.parentKey);
+        parent.children.splice(event.targetIndex, 0, event.sourceNode);
+      }
+      break;
+  }
+};
+
+export const copyTreeNode = (event: any, baseTree: any[], targetTree: any[]) => {
+  const sourceKey = event.sourceNode.key;
+  const allParents = getAllParent(baseTree, sourceKey);
+  const oldCopyMenu: TreeNode[] = [...JSON.parse(JSON.stringify(targetTree))];
+  const oldMap = genMap(oldCopyMenu);
+
+  for (const item of allParents) {
+    const newMenu = oldMap.get(item.key);
+    if (!newMenu) {
+      const parentMenu: any = oldMap.get(item.parentKey);
+      if (parentMenu) {
+        const newItem = JSON.parse(JSON.stringify(item));
+        newItem.children = new Array<any>();
+        parentMenu?.children.push(newItem);
+        oldMap.set(newItem.key, newItem);
+      }
+    }
+  }
+
+  const copyMenu = oldMap.get(sourceKey);
+  if (copyMenu) {
+    copyMenu.children = JSON.parse(JSON.stringify(event.sourceNode.children));
+  }
+
+  return oldCopyMenu;
+};
+
 export const getAllParent = (nodes: TreeNode[], key: string): TreeNode[] => {
   const retval: TreeNode[] = [];
   const map = genMap(nodes);
@@ -303,5 +351,3 @@ export const moveRoleCheck = (events: any) => {
     },
   };
 };
-
-export const copyTreeNode = (events: any) => {};
