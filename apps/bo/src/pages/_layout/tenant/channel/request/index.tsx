@@ -343,7 +343,6 @@ function RouteComponent() {
             <GridBox
               config={gConfig}
               columns={columns}
-              height={440}
               multiple
               showColumnSettings={false}
               hideRowSelectionCheckBox={true}

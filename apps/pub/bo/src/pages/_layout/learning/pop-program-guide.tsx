@@ -88,13 +88,7 @@ function RouteComponent() {
         <ModalTitle>프로그램/가이드 다운로드</ModalTitle>
         <ModalBody>
           <div className="grid_wrap">
-            <GridBox
-              data={data}
-              columns={columns}
-              height={370}
-              showColumnSettings={false}
-              title="공유현황"
-            />
+            <GridBox data={data} columns={columns} showColumnSettings={false} title="공유현황" />
           </div>
         </ModalBody>
         <ModalFooter>

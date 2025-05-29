@@ -104,7 +104,7 @@ const SystemCodeGridComponent = ({ data }: any) => {
   return (
     <div className={cn(boxStyles.start, boxStyles.inner)}>
       <div className={cn(layoutStyles.start, layoutStyles.wrap, layoutStyles.ratio_third)}>
-        <div className={cn(layoutStyles.inner, layoutStyles.scrollHidden)}>
+        <div className={cn(layoutStyles.inner)}>
           <div className={layoutStyles.grid_layout_wrap}>
             <GridBox
               ref={listGridRef}
@@ -113,7 +113,6 @@ const SystemCodeGridComponent = ({ data }: any) => {
               onRowSelect={handleRowSelect}
               showNumberingColumn={true}
               clientSideSorting={true}
-              height={350}
               title={'enum 그룹 목록'}
             />
             <GridBox
@@ -123,7 +122,6 @@ const SystemCodeGridComponent = ({ data }: any) => {
               showNumberingColumn={true}
               onRowSelect={handleDetailRowSelect}
               clientSideSorting={true}
-              height={350}
               title={'enum 목록'}
             />
           </div>
@@ -131,7 +129,7 @@ const SystemCodeGridComponent = ({ data }: any) => {
 
         <div className={layoutStyles.inner}>
           <form>
-            <FormSubTitle label={'enum 코드 정보'} underLine={true} />
+            <FormSubTitle label={'enum 코드 정보'} lineType={'light'} />
             <div className={layoutStyles.inner_contents}>
               <ContentsRow>
                 <FormRow

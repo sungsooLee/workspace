@@ -19,7 +19,7 @@ function RouteComponent() {
       <PageContainer>
         {/* main_contents */}
         <div className={styles.main_contents}>
-          <FormSubTitle label={'과정 소개'} underLine />
+          <FormSubTitle label={'과정 소개'} lineType={'light'} />
           <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor={'name-1'} className={formStyles.form_label}>
@@ -129,7 +129,7 @@ function RouteComponent() {
             </div>
             <div className={formStyles.form_item}></div>
           </ContentsRow>
-          <FormSubTitle label={'조회 정보'} underLine />
+          <FormSubTitle label={'조회 정보'} lineType={'light'} />
           <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor={'name-path'} className={formStyles.form_label}>

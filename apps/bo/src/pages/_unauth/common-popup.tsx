@@ -14,6 +14,7 @@ import {
   TenantShuttleModal,
   UserAndExternalUserTabsChoiceModal,
   UserChoiceForGroupModal,
+  UserChoiceModal,
   MenuChoiceTreeModal,
   CategoryChoiceTreeModal,
 } from '@features/shared';
@@ -301,6 +302,19 @@ function RouteComponent() {
               onClick={(e) => {
                 e.stopPropagation();
                 openModal({
+                  content: <UserChoiceModal />,
+                });
+              }}
+            >
+              {'유저 검색(공통)'}
+            </Button>
+            <Button
+              size={'xs'}
+              className="btn_table"
+              variant={'gray2'}
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal({
                   width: 'xl',
                   content: <MenuChoiceTreeModal menuScopeCode="BO" />,
                 });
@@ -321,7 +335,8 @@ function RouteComponent() {
               }}
             >
               {'케테고리 조회 팝업(공통)'}
-            </Button>
+
+
           </div>
         </SubContents>
       </PageContainer>

@@ -138,7 +138,6 @@ const CompanyDetailComponent: FC<any> = ({ mode }) => {
         <GridBox
           config={gConfig}
           columns={columns}
-          height={160}
           // showColumnSettings={false}
           // showNumberingColumn={true}
           multiple

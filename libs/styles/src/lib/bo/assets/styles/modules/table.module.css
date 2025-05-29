@@ -40,3 +40,6 @@
     }
   }
 }
+[class*='title_wrap'] + .start {
+  @apply mt-[12px];
+}

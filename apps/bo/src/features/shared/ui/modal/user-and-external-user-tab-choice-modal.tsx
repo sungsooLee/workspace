@@ -1,4 +1,4 @@
-import { useState, forwardRef, useCallback, useRef } from 'react';
+import { useState, forwardRef } from 'react';
 import { t } from 'i18next';
 import {
   Button,
@@ -6,29 +6,15 @@ import {
   ModalContainer,
   ModalFooter,
   ModalTitle,
-  GridBox,
   useModal,
-  useGridBox,
   Tabs,
-  ShuttleGridToGrid,
-  ShuttleGridToGridImperative,
 } from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
-import { SearchBox } from '@shared/ui/search-box';
-import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
-
-import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import { usersQueryOptions } from '@entities/users/service/users.queries';
-import { useQueryClient } from '@tanstack/react-query';
+import { UserChoice } from '../components/user-choice';
+import { ExternalUserChoice } from '../components/external-user-choice';
 
 const UserAndExternalUserTabsModalComponent = forwardRef((props) => {
-  const ref = useRef<ShuttleGridToGridImperative>(null);
   const { close: closeModal } = useModal();
-  const { provider: sProvider, getValues } = useSearchBox(searchConfig);
-  const { config, gridFetch } = useGridBox(gridConfig, getValues);
-
-  const [gridData, setGrideData] = useState<any[]>([]);
 
   const [selectedTabKey, setSelectedTabKey] = useState<string>('USER');
 
@@ -38,35 +24,12 @@ const UserAndExternalUserTabsModalComponent = forwardRef((props) => {
     setSelectedRow(row);
   };
 
-  const handleOnUserSearch = useCallback((data: any) => {
-    gridFetch(data);
-  }, []);
-
   const handleOnClose = () => {
     closeModal();
   };
   const handleOnConfirm = () => {
     if (!selectedRow) closeModal();
     closeModal(selectedRow);
-  };
-
-  // grid
-  const [pageIndex, setPageIndex] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
-
-  /**
-   * @param data
-   */
-
-  const queryClient = useQueryClient();
-  const [option, setOption] = useState<any>();
-
-  const handleOnSearch = (data: any) => {
-    const queryPromise = queryClient.fetchQuery(usersQueryOptions.list(data));
-    queryPromise.then((data) => {
-      setGrideData(data.content);
-    });
-    //TODO fetch
   };
 
   return (
@@ -78,42 +41,12 @@ const UserAndExternalUserTabsModalComponent = forwardRef((props) => {
             {
               title: '유저',
               key: 'USER',
-              content: (
-                <div className={popupStyles.wrap}>
-                  <SearchBox provider={sProvider} onSearch={handleOnUserSearch} />
-                  <div className={popupStyles.container}>
-                    <GridBox
-                      onRowSelect={handleRowSelect}
-                      config={config}
-                      columns={columns}
-                      height={380}
-                      showColumnSettings={false}
-                      title={t('유저조회목록')}
-                    />
-                  </div>
-                </div>
-              ),
+              content: <UserChoice handleRowSelect={handleRowSelect} />,
             },
             {
               title: '사외 이용자',
               key: 'EXTERNAL_USER',
-              content: (
-                <ModalBody>
-                  <SearchBox provider={sProvider} onSearch={handleOnSearch} />
-                  <ShuttleGridToGrid
-                    ref={ref}
-                    onSelectedChange={(data: any) => {
-                      setOption(data);
-                    }}
-                    showNumberingColumn={false}
-                    gridData={gridData}
-                    columns={columns}
-                    rowKey={'userId'}
-                    leftTitle={t('유저조회목록')}
-                    rightTitle={t('유저 선택')}
-                  />
-                </ModalBody>
-              ),
+              content: <ExternalUserChoice handleRowSelect={handleRowSelect} />,
             },
           ]}
           type="line"
@@ -121,7 +54,10 @@ const UserAndExternalUserTabsModalComponent = forwardRef((props) => {
           className={styles.tab_wrap}
           selectedTabKey={selectedTabKey}
           onTabChange={(tabKey) => {
-            if (tabKey !== selectedTabKey) setSelectedTabKey(tabKey);
+            if (tabKey !== selectedTabKey) {
+              setSelectedRow(undefined);
+              setSelectedTabKey(tabKey);
+            }
           }}
         />
       </ModalBody>
@@ -136,105 +72,3 @@ const UserAndExternalUserTabsModalComponent = forwardRef((props) => {
 });
 
 export const UserAndExternalUserTabsChoiceModal = UserAndExternalUserTabsModalComponent;
-
-const searchConfig: SearchBoxConfig = {
-  builders: [
-    [
-      {
-        name: 'compayId',
-        type: 'text',
-        label: t('회사'),
-        value: '',
-      },
-      {
-        name: 'opt1',
-        type: 'text',
-        label: t('본부/사업부'),
-        value: '',
-      },
-      {
-        name: 'num',
-        type: 'text',
-        label: t('소속'),
-        value: '',
-      },
-    ],
-    [
-      {
-        name: 'userNo',
-        type: 'text',
-        label: t('사번'),
-        value: '',
-      },
-      {
-        name: 'userName',
-        type: 'text',
-        label: t('이름'),
-        value: '',
-      },
-    ],
-  ],
-};
-
-const gridConfig = {
-  query: usersQueryOptions.list,
-  columns: [],
-  data: [],
-  pagination: {
-    pageSize: 10,
-    pageIndex: 1,
-    totalRows: 2,
-  },
-};
-
-const columnHelper = createColumnHelper<any>();
-const columns = [
-  columnHelper.accessor('companyName', {
-    cell: (info) => info.getValue(),
-    header: '회사',
-    enableGrouping: false,
-    size: 210,
-  }),
-  columnHelper.accessor('deptName', {
-    cell: (info) => info.getValue(),
-    header: '본부/사업부',
-    size: 240,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('dep', {
-    cell: (info) => info.getValue(),
-    header: '부서',
-    size: 150,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('dept2', {
-    cell: (info) => info.getValue(),
-    header: '소속',
-    size: 150,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('userNo', {
-    cell: (info) => info.getValue(),
-    header: '사번',
-    size: 220,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('userName', {
-    cell: (info) => info.getValue(),
-    header: '이름',
-    size: 220,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('opt2', {
-    cell: (info) => info.getValue(),
-    header: '재직여부',
-    size: 240,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('opt3', {
-    cell: (info) => info.getValue(),
-    header: '계정상태',
-    size: 240,
-    enableGrouping: false,
-  }),
-] as ColumnDef<any, unknown>[];

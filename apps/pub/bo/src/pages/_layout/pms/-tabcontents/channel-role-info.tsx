@@ -26,7 +26,7 @@ const ChannelRoleInfoComponent: FC<{}> = ({}) => {
     },
   ];
   // grid
-  const [pageIndex, setPageIndex] = useState(0);
+  const [pageNumber, setPageIndex] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const columnHelper = createColumnHelper<any>();
   const data: any[] = [
@@ -95,8 +95,8 @@ const ChannelRoleInfoComponent: FC<{}> = ({}) => {
         showNumberingColumn={true}
         pagination={{
           pageSize,
-          pageIndex,
-          totalRows: 100,
+          pageNumber,
+          totalPages: 100,
           onPageChange: setPageIndex,
           onPageSizeChange: setPageSize,
         }}

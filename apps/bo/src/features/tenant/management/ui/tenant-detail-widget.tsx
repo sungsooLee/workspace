@@ -210,7 +210,7 @@ const TenantDetailWidgetComponent: FC<any> = () => {
                 />
               </>
             }
-            underLine={true}
+            lineType={'light'}
           />
           <div className={styles.menu_wrap}>
             <List
@@ -268,7 +268,7 @@ const TenantDetailWidgetComponent: FC<any> = () => {
                 />
               </>
             }
-            underLine={true}
+            lineType={'light'}
           />
           <div className={styles.form_wrap}>
             <ContentsRow>

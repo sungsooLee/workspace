@@ -5,7 +5,7 @@
       @apply scrollbar box-border h-auto overflow-y-auto bg-[#f2f4f9] pb-[40px];
       /* title_wrap */
       .title_wrap {
-        @apply sticky left-0 top-0 z-auto mb-0 flex h-[64px] w-full justify-between bg-[#F2F4F9] px-[40px] py-[16px];
+        @apply sticky left-0 top-0 z-auto mb-0 flex h-[68px] w-full justify-between bg-[#F2F4F9] px-[40px] pb-[12px] pt-[24px];
         .title {
           @apply title_bo_3_b inline-flex items-center text-[var(--gray9)];
           .btn_favorites {
@@ -23,7 +23,7 @@
   .content_wrap {
     @apply relative w-full px-[40px];
     .content {
-      @apply box-border flex w-full items-stretch overflow-x-hidden rounded-[8px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] p-[32px];
+      @apply box-border flex w-full items-stretch overflow-x-hidden rounded-[8px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] px-[32px] pb-[40px] pt-[24px];
     }
     &.hide_outline {
       .content {

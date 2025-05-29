@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import * as Primitive from '@radix-ui/react-accordion';
-import { IcoArrowDown } from '@learnway/icons';
+import { IcoArrowDown, IcoArrowForward } from '@learnway/icons';
 import { isArray, map } from 'lodash';
 import { useCreation } from 'ahooks';
 
@@ -82,9 +82,10 @@ const AccordionComponent = forwardRef<
                 className={cn(styles.accordion_btn, item.children && 'has_children')}
               >
                 <span className={cn('accordion_title', item?.active === true ? 'active' : '')}>
+                  {item.children && <IcoArrowDown width={16} height={16} stroke="#4C515E" />}
+                  {!item.children && <IcoArrowForward width={16} height={16} stroke="#4C515E" />}
                   {item.title}
                 </span>
-                {item.children && <IcoArrowDown width={16} height={16} stroke="#131C30" />}
               </Primitive.Trigger>
               <Primitive.Content className={cn(styles.accordion_content)}>
                 {item.children}

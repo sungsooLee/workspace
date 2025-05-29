@@ -86,7 +86,6 @@ function RouteComponent() {
         {/* 그리드 */}
         <GridBox
           config={gConfig}
-          height={440}
           multiple
           showNumberingColumn
           onRowSelect={handleGridRowSelect}

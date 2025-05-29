@@ -72,13 +72,13 @@ const RoleListSearchComponent: FC<{}> = ({}) => {
         label={'역할 목록'}
         actionNode={
           <>
-            <Input type={'text'} showSearchIcon searchIconType={'tree'} placeholder={'검색'} />
+            <Input type={'text'} showSearchIcon searchIconType={'modal'} placeholder={'검색'} />
             <Button label={'전체펼침'} variant={'text'} size={'sm'} className="btn_text" disabled />
             <Button label={'전체닫기'} variant={'text'} size={'sm'} className="btn_text" disabled />
             {/* <Button label={'저장'} variant={'save'} size={'sm'} disabled /> */}
           </>
         }
-        underLine={true}
+        lineType={'light'}
       />
       <div className={styles.contents_wrap}>
         <TreeView treeId="source" data={sourceData} />

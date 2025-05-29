@@ -19,7 +19,7 @@ import { useCurrentRoute } from '@learnway/hooks';
 import {
   Menu,
   useActiveMenuDepthState,
-  useAsycFetchMenus,
+  useAsycFetchMenusForceRefatch,
   useFetchAuthUser,
   useFetchMenus,
   useUpdateAuthUser,
@@ -65,7 +65,7 @@ const PageContainerComponent: FC<{
   const { data: authUser } = useFetchAuthUser();
 
   const { updateMenu } = useUpdateUser();
-  const { asyncMenus } = useAsycFetchMenus();
+  const { asyncMenus } = useAsycFetchMenusForceRefatch();
 
   const { createMenuFavorites } = useCreateMenuFavorites();
   const { deleteMenuFavorites } = useDeleteMenuFavorites();

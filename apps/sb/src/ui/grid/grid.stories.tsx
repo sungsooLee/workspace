@@ -1157,7 +1157,7 @@ const ExpandedTable = () => {
 
   return (
     <div className="p-4">
-      <GridBox data={data || []} columns={expandedColumns} isLoading={isLoading} height={500} />
+      <GridBox data={data || []} columns={expandedColumns} isLoading={isLoading} />
     </div>
   );
 };

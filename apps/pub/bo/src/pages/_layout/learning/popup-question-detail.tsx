@@ -275,7 +275,7 @@ function RouteComponent() {
                 </tbody>
               </table>
             </div>
-            <FormSubTitle label={'문항정보'} underLine className={popupStyles.form_title_line} />
+            <FormSubTitle label={'문항정보'} lineType={'dark'} />
             <ContentsRow>
               {/* form_item */}
               <div className={formStyles.form_item}>

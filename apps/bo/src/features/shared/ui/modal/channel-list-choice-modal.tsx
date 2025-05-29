@@ -174,7 +174,6 @@ const ChannelListModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
               onRowSelect={handleRowSelect}
               config={gConfig}
               //   columns={columns}
-              height={380}
               // showColumnSettings={false}
               title={t('채널 목록')}
             />

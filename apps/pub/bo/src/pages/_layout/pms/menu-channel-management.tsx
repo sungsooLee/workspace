@@ -295,7 +295,6 @@ function RouteComponent() {
               <GridBox
                 data={data}
                 columns={columns}
-                height={440}
                 showColumnSettings={false}
                 showNumberingColumn={true}
                 multiple

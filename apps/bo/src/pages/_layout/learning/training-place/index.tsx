@@ -193,7 +193,6 @@ function RouteComponent() {
             <GridBox
               config={gConfig}
               columns={columns}
-              height={440}
               showColumnSettings={false}
               showExcelDownload={true}
               onRowSelect={handleGridRowSelect}
