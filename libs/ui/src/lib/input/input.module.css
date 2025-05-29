@@ -6,7 +6,7 @@
       @apply border-[var(--gray7)];
     }
     &:read-only {
-      @apply border-[1px] border-solid !border-[var(--gray1)] bg-[var(--gray1)] text-[#4c515e];
+      @apply border-[1px] border-solid !border-[var(--gray1)] bg-[var(--gray1)] text-[var(--gray8)];
       &:focus {
         @apply border-[var(--gray1)];
       }
@@ -33,10 +33,6 @@
   }
   &.focused {
     @apply border-[var(--gray4)];
-  }
-
-  &.mobile {
-    background: red;
   }
 }
 
