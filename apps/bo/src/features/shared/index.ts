@@ -11,6 +11,7 @@ export * from './ui/modal/user-choice-for-group-modal';
 export * from './ui/modal/user-choice-modal';
 export * from './ui/modal/user-shuttle-modal';
 export * from './ui/modal/external-user-choice-modal';
+export * from './ui/modal/external-user-shuttle-modal';
 export * from './ui/modal/user-and-external-user-tab-choice-modal';
 export * from './ui/modal/tenant-choice-modal';
 export * from './ui/modal/tenant-shuttle-modal';
