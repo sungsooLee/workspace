@@ -7,7 +7,7 @@ import React, {
   useState,
 } from 'react';
 import { createColumnHelper, Table } from '@tanstack/react-table';
-import { Button, CountText, Grid2, GridBoxProps, GridImperative, Pagination } from '@learnway/ui';
+import { Button, CountText, Grid, GridBoxProps, GridImperative, Pagination } from '@learnway/ui';
 import { IcoMinus, IcoPlus } from '@learnway/icons';
 import styles from './grid-box.module.css';
 import { cn } from '@learnway/shared';
@@ -332,10 +332,10 @@ const GridBoxComponent = <T extends object>(
         </div>
       </div>
       {/* 데이터 테이블 렌더링 */}
-      <Grid2
+      <Grid
         {...props}
         ref={gridRef}
-        onChange={onDataChange}
+        onChange={props.onChange || onDataChange}
         data={props.data ?? data ?? []}
         columns={props.columns ?? girdColumns ?? []}
         showNumberingColumn={showNumberingColumn}

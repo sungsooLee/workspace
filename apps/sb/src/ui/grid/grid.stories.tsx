@@ -4,7 +4,6 @@ import {
   CellContext,
   ColumnFiltersState,
   createColumnHelper,
-  RowSelectionState,
   SortingState,
   Table,
 } from '@tanstack/react-table';
@@ -263,77 +262,9 @@ export const Base: Story = {
         <Story />
         <ModalWrapper />
       </ReactQueryConfigProvider>
-      // <ReactQueryConfigProvider>
-      //   <Story />
-      //   <ModalWrapper />
-      // </ReactQueryConfigProvider>
     ),
   ],
   render: () => <BaseTable />,
-};
-
-const TableWithColumnSettings = () => {
-  const [tableState, setTableState] = useState({
-    sorting: [] as SortingState,
-    filters: [] as ColumnFiltersState,
-  });
-
-  const { data } = useTableData<Person>({
-    queryKey: 'example-table',
-    tableState,
-    fetch: fetchTableData,
-  });
-
-  const handleStateChange = (newState: GridState) => {
-    console.log(newState);
-    setTableState((prev) => ({
-      ...prev,
-      sorting: newState.sorting || prev.sorting,
-      filter: newState.filters || prev.filters,
-    }));
-  };
-
-  const handleRowSelectStateChange = (selectRowState: RowSelectionState) => {
-    console.log(selectRowState);
-  };
-
-  return (
-    <div className="p-4">
-      <GridBox
-        data={data?.data ?? []}
-        columns={columns}
-        onStateChange={handleStateChange}
-        onRowSelect={handleRowSelectStateChange}
-      />
-    </div>
-  );
-};
-
-export const WithColumnSettings: Story = {
-  name: '컬럼 설정 테스트',
-  decorators: [
-    (Story) => (
-      <ReactQueryConfigProvider>
-        <ModalWrapper />
-        <Story />
-      </ReactQueryConfigProvider>
-    ),
-  ],
-  render: () => <TableWithColumnSettings />,
-  parameters: {
-    docs: {
-      description: {
-        story: `
-  컬럼 설정 기능을 테스트할 수 있는 예제입니다.
-
-  - 항목설정 버튼을 클릭하여 컬럼 설정 모달을 엽니다.
-  - 드래그 앤 드롭으로 컬럼 순서를 변경할 수 있습니다.
-  - 체크박스로 컬럼을 표시하거나 숨길 수 있습니다.
-  - 변경사항은 '적용' 버튼을 클릭해야 반영됩니다.
-          `,
-      },
-    },
-  },
 };
 
 const MultiSelectTable = () => {
@@ -685,7 +616,7 @@ export const TemplateEditGrid: any = (args: any) => {
       header: 'number',
       accessorKey: 'number',
       size: 150,
-      cell: (info: CellContext<any, number>) => (
+      cell: (info: CellContext<any, string>) => (
         <EditInputCell info={info} input={{ type: 'number' }} />
       ),
     },

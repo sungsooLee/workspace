@@ -46,7 +46,6 @@ export { default as Editor } from './lib/editor';
 export * from './lib/empty-text/empty-text';
 
 // grid
-export * from './lib/grid';
 export * from './lib/grid/types';
 export * from './lib/grid/components/custom-cell';
 export * from './lib/grid/components/edit-check-cell';
