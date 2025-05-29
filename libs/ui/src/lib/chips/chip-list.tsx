@@ -99,7 +99,7 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
           styles.start,
           styles.chips_list,
           className,
-          wordwrap && 'wordwrap',
+          wordwrap && styles.wordwrap,
           readOnly && styles.readonly,
           {
             [styles.chips_box]: !hideBorder,

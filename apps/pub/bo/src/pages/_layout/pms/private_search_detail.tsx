@@ -163,6 +163,7 @@ function RouteComponent() {
                     { label: '현대자동차 D', value: 'E' },
                     { label: '현대자동차 F', value: 'F' },
                   ]}
+                  wordwrap={true}
                   hideCloseButton={true}
                   readOnly={true}
                 />
