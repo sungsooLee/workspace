@@ -1,4 +1,4 @@
-import { HeaderGroup, RowSelectionState, Table } from '@tanstack/react-table';
+import { RowSelectionState, Table } from '@tanstack/react-table';
 
 /**
  * 주어진 데이터 목록(list)에 해당하는 행들을 TanStack Table에서 선택하기 위한
@@ -42,17 +42,4 @@ export const getRowSelectionByList = (tableInstance: Table<any>, list: any[], ke
 
   // 생성된 선택 상태 객체를 반환합니다.
   return newSelectionState;
-};
-
-export const getMaxDepthHeaderGroup = (headerGroup: HeaderGroup<any>): number => {
-  // let depth = 0;
-  // let currentGroup: HeaderGroup<any> | undefined = headerGroup;
-  //
-  // while (currentGroup?.parent) {
-  //   depth++;
-  //   currentGroup = currentGroup.parent;
-  // }
-  //
-  // return depth;
-  return 0;
 };

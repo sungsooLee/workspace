@@ -3,7 +3,7 @@ import { Button, ExcelConfig, useModal } from '@learnway/ui';
 import { UseFormReturn } from 'react-hook-form';
 import { fileDownload } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
-import styles from '../grid-box.module.css';
+import styles from './grid-box.module.css';
 import { t } from 'i18next';
 import { IcoDownload, IcoUploadCloud } from '@learnway/icons';
 

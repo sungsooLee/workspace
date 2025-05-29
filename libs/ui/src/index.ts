@@ -54,11 +54,11 @@ export * from './lib/grid/components/edit-dropdown-cell';
 export * from './lib/grid/components/edit-input-cell';
 export * from './lib/grid/components/edit-radio-cell';
 export * from './lib/grid/components/edit-textarea-cell';
-export * from './lib/grid/components/grid-box-search-input';
 export * from './lib/grid/configs/column-factory';
-export * from './lib/grid/grid-box';
-export * from './lib/grid/table-box';
-export * from './lib/grid/use-grid-box';
+export * from './lib/grid/grid-box/table-box';
+export * from './lib/grid/grid-box/grid-box';
+export * from './lib/grid/grid-box/grid-box-search-input';
+export * from './lib/grid/grid-box/use-grid-box';
 export * from './lib/grid/grid';
 
 // input

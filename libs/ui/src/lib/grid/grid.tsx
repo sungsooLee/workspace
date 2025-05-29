@@ -474,7 +474,6 @@ const GridComponent = forwardRef(
       const lastPinnedColumnId = pinnedLeftColumns[pinnedLeftColumns.length - 1];
       // table > thead
       const renderHead = () => {
-        console.log(table.getHeaderGroups());
         if (hideHeader) {
           return <></>;
         }

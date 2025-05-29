@@ -7,21 +7,13 @@ import React, {
   useState,
 } from 'react';
 import { createColumnHelper, Table } from '@tanstack/react-table';
-import {
-  Button,
-  CountText,
-  Grid2,
-  GridBoxProps,
-  GridBoxSearchInput,
-  GridBoxSearchInputCondition,
-  GridImperative,
-  Pagination,
-} from '@learnway/ui';
+import { Button, CountText, Grid2, GridBoxProps, GridImperative, Pagination } from '@learnway/ui';
 import { IcoMinus, IcoPlus } from '@learnway/icons';
 import styles from './grid-box.module.css';
 import { cn } from '@learnway/shared';
 import { useTranslation } from 'react-i18next';
-import { ExcelButtons } from './components/excel-buttons';
+import { ExcelButtons } from './excel-buttons';
+import { GridBoxSearchInput, GridBoxSearchInputCondition } from './grid-box-search-input';
 
 /**
  * 다양한 설정 옵션을 통해 재사용 가능한 표 컴포넌트(Grid)를 구성합니다.
