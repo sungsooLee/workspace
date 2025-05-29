@@ -92,3 +92,22 @@ body.scrolled {
     @apply absolute -top-[60px] left-[40px] w-[calc(100%-80px)];
   }
 }
+
+body {
+  main [class*='content_wrap'].tab_visible {
+    & > div {
+      @apply min-h-[calc(100vh-304px)] w-full !max-w-[calc(100vw-80px)] !rounded-none !border-0 !bg-transparent !p-0;
+      & > div {
+        @apply !max-w-[calc(100vw-80px)] px-[32px] pb-[40px] pt-[24px];
+      }
+    }
+  }
+  &.lnb-open {
+    main [class*='content_wrap'].tab_visible > div {
+      @apply !max-w-[calc(100vw-360px)];
+      & > div {
+        @apply !max-w-[calc(100vw-144px)];
+      }
+    }
+  }
+}

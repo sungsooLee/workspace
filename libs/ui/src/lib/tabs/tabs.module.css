@@ -235,6 +235,9 @@
         }
       }
     }
+    &.show_border {
+      @apply rounded-[8px] border border-solid border-[var(--gray4)] bg-white;
+    }
     .count {
       @apply ml-[4px] text-[1.6rem] font-bold text-[var(--secondary4)];
     }
