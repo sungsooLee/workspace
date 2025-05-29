@@ -336,7 +336,6 @@ const ChannelDetailComponent: FC<any> = ({ mode, method, requestId }) => {
         <GridBox
           config={gConfig}
           columns={columns}
-          height={440}
           // showColumnSettings={false}
           // showNumberingColumn={true}
           multiple

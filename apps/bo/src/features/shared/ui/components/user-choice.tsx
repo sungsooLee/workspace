@@ -22,7 +22,6 @@ const UserChoiceComponent = ({ handleRowSelect }: Props) => {
           onRowSelect={handleRowSelect}
           config={config}
           columns={columns}
-          height={380}
           showColumnSettings={false}
           title={t('유저조회목록')}
         />

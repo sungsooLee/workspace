@@ -56,7 +56,7 @@ body.scrolled {
           }
         }
         .content_wrap > div {
-          @apply min-h-[calc(100vh-194px)];
+          @apply min-h-[calc(100vh-198px)];
         }
       }
     }
@@ -73,7 +73,7 @@ body.scrolled {
 }
 
 .content_wrap > div {
-  @apply min-h-[calc(100vh-244px)];
+  @apply min-h-[calc(100vh-248px)];
 }
 
 .content_wrap.scroll_hidden {

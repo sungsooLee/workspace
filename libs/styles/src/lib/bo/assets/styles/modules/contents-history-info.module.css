@@ -27,3 +27,6 @@
     }
   }
 }
+[class*='nlp--contents-row'] + .start {
+  @apply mt-[20px];
+}

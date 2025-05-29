@@ -121,7 +121,7 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
         handleSelectedNodeChange={handleRoleSelect}
       />
       <div className={cn(styles.start, styles.wrap)}>
-        <FormSubTitle label={'역할 정보'} underLine={true} />
+        <FormSubTitle label={'역할 정보'} lineType={'light'} />
         <div className={styles.contents_wrap}>
           <div className={formStyles.form_item}>
             <label htmlFor="name-id" className={formStyles.form_label}>

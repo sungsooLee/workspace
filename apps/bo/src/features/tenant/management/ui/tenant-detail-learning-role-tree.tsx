@@ -278,7 +278,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                   />
                 </>
               }
-              underLine={true}
+              lineType={'light'}
             />
             <div className={styles.contents_wrap}>
               <ContentsRow>

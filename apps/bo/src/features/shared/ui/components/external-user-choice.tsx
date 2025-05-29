@@ -22,7 +22,6 @@ const ExternalUserComponent = ({ handleRowSelect }: Props) => {
           onRowSelect={handleRowSelect}
           config={config}
           columns={columns}
-          height={380}
           showColumnSettings={false}
           title={t('사외이용자 목록')}
         />

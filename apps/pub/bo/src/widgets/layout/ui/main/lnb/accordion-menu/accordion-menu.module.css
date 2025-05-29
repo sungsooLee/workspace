@@ -1,42 +1,45 @@
 .start {
   &.depth2 {
+    [data-state='open'] > button {
+      &[class*='has_children'] {
+        & > [class*='accordion_title'] {
+          &[class*='active'] {
+            @apply body_bo_2_b text-[var(--gray9)];
+          }
+        }
+      }
+    }
   }
   &.depth3 {
-    @apply overflow-hidden rounded-[8px] bg-[var(--gray1)] px-0;
-    & > [data-state='open'] {
-      @apply rounded-[8px];
-      & > button > [class*='accordion_title'] {
-        @apply bg-[var(--gray1)];
+    div > button {
+      [class*='accordion_title'] {
+        @apply pl-[24px];
+      }
+      & > [class*='accordion_title'] {
         &[class*='active'] {
-          @apply rounded-[8px] bg-[var(--primary2)] text-white;
+          @apply body_bo_2_b bg-white text-[var(--gray9)];
         }
       }
-      button {
-        &[class*='has_children'] {
-          [class*='accordion_title'] {
-            @apply rounded-b-none rounded-t-[8px] bg-[var(--primary2)] text-white;
-          }
-          & + [data-state='open'] > div {
-            @apply rounded-t-none;
+      &:not([class*='has_children']) {
+        & > [class*='accordion_title'] {
+          &[class*='active'] {
+            @apply body_bo_2_b bg-[#EDFCFF] text-[var(--secondary1)];
           }
         }
       }
-    }
-    [aria-expanded='false'] {
-      svg {
-        @apply !stroke-[#A9AFB8];
-      }
-    }
-    svg {
-      @apply !stroke-[#fff];
     }
   }
   &.depth4 {
-    @apply overflow-hidden rounded-[8px] bg-[var(--primary2)] px-0;
-    button [class*='accordion_title'] {
-      &[class*='active'] {
-        &::before {
-          @apply mr-[6px] h-[6px] w-[6px] overflow-hidden rounded-[3px] bg-[var(--white)] content-[''];
+    div > button {
+      [class*='accordion_title'] {
+        @apply pl-[48px];
+      }
+      & > [class*='accordion_title'] {
+        &[class*='active'] {
+          @apply body_bo_2_b bg-[#EDFCFF] text-[var(--secondary1)];
+          svg {
+            @apply !stroke-[var(--secondary1)];
+          }
         }
       }
     }
@@ -44,4 +47,7 @@
   [data-status='active'] {
     @apply font-bold;
   }
+}
+
+.active {
 }
