@@ -3,6 +3,9 @@ import { t } from 'i18next';
 import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
 import { UserChoice } from '../components/user-choice';
 
+/**
+ * 화면 번호 NLP_BO_TMS_1100_02 : 유저 조회(공통)
+ */
 const UserModalComponent = forwardRef((_, ref) => {
   const { close: closeModal } = useModal();
 
