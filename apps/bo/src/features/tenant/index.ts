@@ -12,8 +12,6 @@ export * from './management/ui/tenant-detail-banner-view';
 export * from './management/ui/tenant-detail-banner';
 export * from './management/ui/tenant-detail-base';
 export * from './management/ui/tenant-detail-category-mapping-modal';
-export * from './management/ui/tenant-detail-category-tree';
-export * from './management/ui/tenant-detail-category-view';
 export * from './management/ui/tenant-detail-category';
 export * from './management/ui/tenant-detail-learning-role-grant-range-modal';
 export * from './management/ui/tenant-detail-learning-role-grant';
