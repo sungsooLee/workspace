@@ -586,6 +586,7 @@ const PinnedColumnTable = () => {
         isLoading={isLoading}
         title="Pinning Columns"
         multiple={true}
+        showNumberingColumn
         columnPinning={{ columns: ['status'] }}
       />
     </div>

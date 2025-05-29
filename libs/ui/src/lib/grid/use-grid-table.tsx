@@ -33,6 +33,7 @@ interface UseGridTableReturn<T extends object> {
   columnOrder: string[];
   rowSelection: RowSelectionState;
   isInitialSelectionEffect: React.MutableRefObject<boolean>;
+  lastPinnedColumnId: string; // 마지막 고정 열의 ID
   // updateData: (rowIndex: number, columnId: string, value: unknown) => void;
   // removeData: (rowIndex: number) => void;
 }
@@ -72,9 +73,18 @@ export function useGridTable<T extends object>(
     [columnGrouping?.columns],
   );
   const [columnPinningState, setColumnPinningState] = useState<ColumnPinningState>({
-    left: multiple ? ['select', ...columnPinning.columns] : columnPinning.columns,
+    left: [
+      ...(props.showNumberingColumn ? ['select-radio'] : []),
+      ...(multiple && !props.hideRowSelectionCheckBox ? ['select-check'] : []),
+      ...(props.showNumberingColumn ? ['numbering'] : []),
+      ...columnPinning.columns,
+    ],
     right: [],
   });
+  // const [columnPinningState, setColumnPinningState] = useState<ColumnPinningState>({
+  //   left: multiple ? ['select', ...columnPinning.columns] : columnPinning.columns,
+  //   right: [],
+  // });
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(() =>
     columns.reduce((acc, col) => {
       acc[col.id as string] = true;
@@ -282,6 +292,11 @@ export function useGridTable<T extends object>(
     },
   });
 
+  // 고정된 왼쪽 열의 ID들 가져오기
+  const pinnedLeftColumns = table.getState().columnPinning.left || [];
+  // 마지막 고정 열의 ID
+  const lastPinnedColumnId = pinnedLeftColumns[pinnedLeftColumns.length - 1];
+
   // 그리드 상태 변화(e.g. 필터, 소팅, 순서, visibility)에 따른 콜백 전달
   useEffect(() => {
     onStateChange?.({
@@ -329,6 +344,7 @@ export function useGridTable<T extends object>(
     columnOrder,
     rowSelection,
     isInitialSelectionEffect,
+    lastPinnedColumnId,
     // updateData: handleUpdateData,
     // removeData: handleRemoveData,
     // 필요하다면 setExpanded, setColumnPinningState 등도 반환
