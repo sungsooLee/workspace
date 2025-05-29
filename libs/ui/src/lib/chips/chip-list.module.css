@@ -28,6 +28,9 @@
       @apply border-0;
     }
   }
+  &.readonly {
+    @apply border-[var(--gray1)] bg-[var(--gray1)];
+  }
   .chips_wapper {
     @apply flex max-w-fit flex-wrap gap-x-[8px] gap-y-[12px];
     .btn_chips {
