@@ -29,27 +29,25 @@ import {
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table';
-import { IcoGridFilter, IcoGridOrder } from '@learnway/icons';
-import { useVirtualizer, VirtualItem } from '@tanstack/react-virtual';
-import { cn, isFirefox } from '@learnway/shared';
+import { cn } from '@learnway/shared';
 
 import { GridProps } from './types/grid';
 import { FilterContent } from './components/filter-content';
 
 import { useModal } from '../modal/modal.hook';
-import { Button } from '../button/button';
 import { Checkbox } from '../checkbox/checkbox';
 
 import styles from './grid.module.css';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
+import { IcoGridFilter, IcoGridOrder } from '@learnway/icons';
+import { Button } from '../button/button';
 
 const GridComponent = forwardRef(
   <T extends object>(
     {
       data,
       columns,
-      height = 240,
       multiple,
       disabledSelectionToggle,
       hideRowSelectionRadioBox = true,
@@ -57,6 +55,8 @@ const GridComponent = forwardRef(
       hideHeader,
       showNumberingColumn,
       pagination,
+      visibleRowCount = 20,
+      rowHeight = 40,
       isLoading,
       columnGrouping,
       columnPinning = { columns: [] },
@@ -173,7 +173,7 @@ const GridComponent = forwardRef(
           headerAlign: 'center',
           cellAlign: 'center',
         },
-        header: t('LABEL.grid.column.selected'),
+        header: t('LABEL.grid.column.selected', '선택'),
         cell: ({ row, table }) => {
           const checked = !!table
             .getSelectedRowModel()
@@ -315,6 +315,9 @@ const GridComponent = forwardRef(
     const table = useReactTable({
       data,
       columns: tableColumns,
+      defaultColumn: {
+        minSize: 50,
+      },
       state: {
         columnOrder,
         columnVisibility,
@@ -379,25 +382,11 @@ const GridComponent = forwardRef(
         updateData,
         removeData,
       },
-      // defaultColumn,
-    });
-
-    // 가상 스크롤 관련 설정
-    const { rows } = table.getRowModel();
-    const rowVirtualizer = useVirtualizer({
-      count: rows.length,
-      estimateSize: () => 33, //estimate row height for accurate scrollbar dragging
-      getScrollElement: () => tableContainerRef.current,
-      measureElement: !isFirefox()
-        ? (element) => element?.getBoundingClientRect().height
-        : undefined,
-      overscan: 5,
     });
 
     // 그리드 상태 변화(e.g. 필터, 소팅, 순서, visibility)에 따른 콜백 전달
     useEffect(() => {
-      if (!onStateChange) return;
-      onStateChange({
+      onStateChange?.({
         filters: columnFilters,
         sorting,
         columnVisibility,
@@ -435,7 +424,6 @@ const GridComponent = forwardRef(
         onTableInstanceChange(table);
       }
       // table 인스턴스는 컴포넌트 생명주기 동안 변경되지 않으므로 의존성 배열에 포함하지 않아도 됩니다.
-      // 하지만 ESLint 규칙에 따라 포함해야 할 수도 있습니다. 필요에 따라 조정하세요.
     }, [table, onTableInstanceChange]); // table과 콜백 함수를 의존성 배열에 추가
 
     /// 필터 팝업 오픈
@@ -456,14 +444,12 @@ const GridComponent = forwardRef(
             onApply={(value) => {
               column.setFilterValue(value);
               // 필터 변경 시 상위 컴포넌트에 알림
-              if (onStateChange) {
-                onStateChange({
-                  filters: columnFilters,
-                  sorting,
-                  columnVisibility,
-                  columnOrder,
-                });
-              }
+              onStateChange?.({
+                filters: columnFilters,
+                sorting,
+                columnVisibility,
+                columnOrder,
+              });
             }}
             options={filterOptions}
           />
@@ -488,6 +474,7 @@ const GridComponent = forwardRef(
       const lastPinnedColumnId = pinnedLeftColumns[pinnedLeftColumns.length - 1];
       // table > thead
       const renderHead = () => {
+        console.log(table.getHeaderGroups());
         if (hideHeader) {
           return <></>;
         }
@@ -500,82 +487,76 @@ const GridComponent = forwardRef(
                   const { columnDef } = column;
                   const isPinnedLeft = column.getIsPinned() === 'left';
                   const isLastPinnedColumn = isPinnedLeft && column.id === lastPinnedColumnId;
-
+                  const thStyle = {
+                    // width: paginationGrid ? undefined : header.getSize(),
+                    // display: paginationGrid ? 'table-cell' : 'flex',
+                    // 정렬 속성 추가
+                    // textAlign: columnDef.meta?.headerAlign || columnDef.meta?.align || 'left',
+                    // display: 'block',
+                    width: columnDef.meta?.size || header.getSize(),
+                    // width: !tableMode ? (columnDef.meta?.size ? header.getSize() : 'auto') : '',
+                    // 고정 헤더 스타일 추가
+                    // position: isPinnedLeft ? 'sticky' : 'static', // static (position default value)
+                    // left: isPinnedLeft ? `${column.getStart('left')}px` : undefined,
+                    // zIndex: isPinnedLeft ? 3 : undefined, // 헤더는 더 높은 z-index
+                  } as CSSProperties;
                   return (
                     <th
                       key={header.id}
-                      style={{
-                        // width: paginationGrid ? undefined : header.getSize(),
-                        // display: paginationGrid ? 'table-cell' : 'flex',
-                        // 정렬 속성 추가
-                        textAlign: columnDef.meta?.headerAlign || columnDef.meta?.align || 'left',
-                        // justifyContent:
-                        //   columnDef.meta?.headerAlign ||
-                        //   columnDef.meta?.align ||
-                        //   'justify-start',
-                        display: 'block',
-                        width: !tableMode ? header.getSize() : '',
-                        // 고정 헤더 스타일 추가
-                        position: isPinnedLeft ? 'sticky' : undefined,
-                        left: isPinnedLeft ? `${column.getStart('left')}px` : undefined,
-                        zIndex: isPinnedLeft ? 3 : undefined, // 헤더는 더 높은 z-index
-                      }}
+                      colSpan={header.colSpan}
+                      style={thStyle}
                       className={cn(
                         styles.thead_th,
                         isPinnedLeft && styles.th_pinned_left,
                         isLastPinnedColumn && styles.th_pinned_last,
                       )}
                     >
-                      <div className={styles.th_wrap}>
-                        <div
-                          className={cn(
-                            styles.th_cell,
-                            column.getCanSort() ? 'cursor-pointer select-none' : '',
-                          )}
-                          style={{
-                            justifyContent:
-                              columnDef.meta?.headerAlign ||
-                              columnDef.meta?.align ||
-                              'justify-start',
-                            // width: header.getSize(),
-                            width: !tableMode ? header.getSize() : '',
-                          }}
-                          onClick={column.getToggleSortingHandler()}
-                        >
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(columnDef.header, header.getContext())}
-                          {{
-                            asc: (
-                              <IcoGridOrder
-                                width={7}
-                                height={4}
-                                fill={'#00afd5'}
-                                stroke={'#00afd5'}
-                                className={styles.icon_up}
-                              />
-                            ),
-                            desc: (
-                              <IcoGridOrder
-                                width={7}
-                                height={4}
-                                fill={'#00afd5'}
-                                stroke={'#00afd5'}
-                                className={styles.icon_down}
-                              />
-                            ),
-                          }[column.getIsSorted() as string] ?? null}
-                          {/* 필터 */}
-                          {columnDef.meta?.filterType && (
-                            <Button
-                              type="button"
-                              onClick={(e) => openFilterPopup(e, column)}
-                              className={styles.btn_filter}
-                            >
-                              <IcoGridFilter width={16} height={16} />
-                            </Button>
-                          )}
-                        </div>
+                      <div
+                        className={cn(
+                          styles.th_wrap,
+                          column.getCanSort() ? 'cursor-pointer select-none' : '',
+                        )}
+                        style={{
+                          justifyContent:
+                            columnDef.meta?.headerAlign || columnDef.meta?.align || 'justify-start',
+                        }}
+                        onClick={column.getToggleSortingHandler()}
+                      >
+                        {/* flexRender */}
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(columnDef.header, header.getContext())}
+                        {/* sort icon */}
+                        {{
+                          asc: (
+                            <IcoGridOrder
+                              width={7}
+                              height={4}
+                              fill={'#00afd5'}
+                              stroke={'#00afd5'}
+                              className={styles.icon_up}
+                            />
+                          ),
+                          desc: (
+                            <IcoGridOrder
+                              width={7}
+                              height={4}
+                              fill={'#00afd5'}
+                              stroke={'#00afd5'}
+                              className={styles.icon_down}
+                            />
+                          ),
+                        }[column.getIsSorted() as string] ?? null}
+                        {/* filter */}
+                        {columnDef.meta?.filterType && (
+                          <Button
+                            type="button"
+                            onClick={(e) => openFilterPopup(e, column)}
+                            className={styles.btn_filter}
+                          >
+                            <IcoGridFilter width={16} height={16} />
+                          </Button>
+                        )}
                       </div>
                     </th>
                   );
@@ -588,45 +569,18 @@ const GridComponent = forwardRef(
 
       // table > tbody
       const renderBody = () => {
-        const bodyStyle = {
-          // display: paginationGrid ? 'table-row-group' : 'grid',
-          position: 'relative',
-          height: !tableMode ? `${rowVirtualizer.getTotalSize()}px` : '',
-        } as CSSProperties;
-
-        return (
-          <tbody style={bodyStyle}>
-            {rowVirtualizer.getVirtualItems()?.map((item: VirtualItem) => {
-              const row = rows[item.index] as Row<T>;
-              return renderRow(row, item);
-            })}
-          </tbody>
-        );
+        return <tbody>{table.getRowModel().rows.map((row) => renderRow(row))}</tbody>;
       };
 
       // table > tbody > tr
-      const renderRow = (row: Row<T>, item: VirtualItem) => {
-        const { index, size, start } = item;
-        const rowStyle = {
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: !tableMode ? `${size}px` : '',
-          transform: !tableMode ? `translateY(${start}px)` : '',
-          display: !tableMode ? 'flex' : '',
-        } as CSSProperties;
-
+      const renderRow = (row: Row<T>) => {
         return (
           <tr
             key={row.id}
-            data-index={index}
-            ref={(node) => rowVirtualizer.measureElement(node)}
             className={cn(
               row.getIsSelected() && styles.selected,
               row.getIsSelected() && 'bg-[#edfcff]',
             )}
-            style={rowStyle}
             onClick={() => !row.getIsGrouped() && !disabledSelectionToggle && row.toggleSelected()}
           >
             {row.getVisibleCells().map((cell: Cell<T, unknown>) => renderCell(row, cell))}
@@ -648,11 +602,10 @@ const GridComponent = forwardRef(
               : cell.getIsPlaceholder()
                 ? '#ff000042'
                 : '',
-          width: !tableMode ? cell.column.getSize() : '',
-          display: 'block',
+          width: cell.column.getSize(),
+          // width: cell.column.columnDef.meta?.size || cell.column.getSize(),
           textAlign:
             cell.column.columnDef.meta?.cellAlign || cell.column.columnDef.meta?.align || 'left',
-          verticalAlign: 'middle',
 
           // 고정열 스타일 추가
           position: isPinnedLeft ? 'sticky' : undefined,
@@ -702,36 +655,40 @@ const GridComponent = forwardRef(
       const renderEmptyMessage = () => {
         return (
           <div className={styles.empty_message_container}>
-            <p className={styles.empty_message}>{emptyMessage || t('LABEL.grid.emptyText')}</p>
+            <p className={styles.empty_message}>
+              {emptyMessage || t('LABEL.grid.emptyText', '조회 결과가 없습니다.')}
+            </p>
           </div>
         );
       };
 
+      const gridClass = cn(
+        className,
+        tableMode ? styles.table : styles.grid,
+        multiple && !hideRowSelectionCheckBox && styles.has_select_all_checkbox, // 멀티모드 && 체크박스사용 = 체크박스 가운데 정렬시 사용
+        tableMode ? 'table' : 'grid',
+        tableMode && styles[variant],
+        tableMode && variant,
+      );
+
+      const gridStyle = {
+        maxHeight: visibleRowCount * rowHeight + table.getHeaderGroups().length * 41 + 16, // (row 개수 * row 높이) + (header 개수 * header 높이) + (가로 스크롤 높이 + 기타 보더 패딩....)
+        overflow: !data?.length ? 'hidden' : 'auto', // 데이터 있을때만 스크롤 가능
+      };
+
+      const tableStyle = {
+        width: '100%',
+        tableLayout: 'fixed',
+      } as CSSProperties;
+
       return (
-        <div
-          ref={tableContainerRef}
-          className={cn(
-            tableMode ? styles.table : styles.grid,
-            className,
-            multiple && !hideRowSelectionCheckBox && styles.has_select_all_checkbox, // 멀티모드 && 체크박스사용 = 체크박스 가운데 정렬시 사용
-            tableMode ? 'table' : 'grid',
-            tableMode && styles[variant],
-            tableMode && variant,
-          )}
-          style={{
-            height: tableMode ? 'auto' : `${height}px`,
-            width: '100%',
-            overflow: data.length === 0 ? 'hidden' : 'auto', // 데이터 있을때만 스크롤 가능
-          }}
-        >
-          <table>
-            {/* thead */}
+        <div className={gridClass} style={gridStyle}>
+          <table style={tableStyle}>
             {renderHead()}
-            {/* tbody */}
             {isLoading ? renderLoading() : renderBody()}
           </table>
           {/* 데이터 없을 때 메세지 */}
-          {data.length === 0 && renderEmptyMessage()}
+          {!data?.length && renderEmptyMessage()}
         </div>
       );
     };

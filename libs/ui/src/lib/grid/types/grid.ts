@@ -65,6 +65,11 @@ declare module '@tanstack/react-table' {
      * 'left', 'center', 'right' 중 하나를 선택할 수 있으며, 셀에만 적용됩니다.
      */
     cellAlign?: 'left' | 'center' | 'right'; // 셀 전용 정렬
+
+    /**
+     * 컬럼 width
+     */
+    size?: 'auto' | number;
   }
 }
 
@@ -210,6 +215,16 @@ export interface GridProps<T> {
    * data 변경시 그리드의 첫번째 행을 자동으로 선택해주기 위해 사용
    */
   autoSelectFirstRow?: boolean;
+
+  /**
+   * 그리드 스크롤 없이 보여줄 row 개수
+   */
+  visibleRowCount?: number;
+
+  /**
+   * row 높이
+   */
+  rowHeight?: number;
 
   clientSideSorting?: boolean;
   clientSideFiltering?: boolean;
