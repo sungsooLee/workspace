@@ -335,8 +335,7 @@ function RouteComponent() {
               }}
             >
               {'케테고리 조회 팝업(공통)'}
-
-
+            </Button>
           </div>
         </SubContents>
       </PageContainer>
