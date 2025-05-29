@@ -12,6 +12,11 @@ import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 
 import { tenantQueryOptions } from '@entities/tenant/service/tenant.queries';
 
+/**
+ * 화면번호 : NLP_BO_TMS_1000
+ * @param param0
+ * @returns
+ */
 const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
   const router = useRouter();
 
@@ -168,7 +173,7 @@ const searchConfig: SearchBoxConfig = {
         value: '',
       },
       {
-        name: 'tenantMappingRoleName',
+        name: 'tenantManagerName',
         type: 'text',
         label: t('테넌트담당자'),
         value: '',
@@ -176,7 +181,7 @@ const searchConfig: SearchBoxConfig = {
     ],
     [
       {
-        name: 'tenantMappingCompanyName',
+        name: 'companyManagerName',
         type: 'text',
         label: t('회사 담당자'),
         value: '',
