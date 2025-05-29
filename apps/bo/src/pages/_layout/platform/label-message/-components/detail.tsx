@@ -157,7 +157,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
     <form onSubmit={onSubmit(handleOnSubmit)}>
       <FormSubTitle
         label={t('LABEL.form.label.detailInfo')}
-        underLine
+        lineType={'light'}
         actionNode={
           <div className={layoutStyles.btn_wrap}>
             <Button

@@ -27,7 +27,7 @@ const MainWidgetComponent: FC<{}> = ({}) => {
             <Button label={'저장'} variant={'save'} size={'sm'} />
           </>
         }
-        underLine={true}
+        lineType={'light'}
       />
       <div className={styles.menu_wrap}>
         <List

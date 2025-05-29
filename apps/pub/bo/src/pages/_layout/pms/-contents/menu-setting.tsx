@@ -81,7 +81,7 @@ const MenuSettingComponent: FC<{}> = ({}) => {
             <Button label={'메뉴선택'} variant={'gray2'} size={'sm'} />
           </>
         }
-        underLine={true}
+        lineType={'light'}
       />
       <div className={styles.contents_wrap}>
         <TreeView treeId="source" data={sourceData} />

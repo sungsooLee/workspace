@@ -64,7 +64,7 @@ const MainWidgetDetailComponent: FC<{}> = ({}) => {
             <Button label={'저장'} variant={'save'} size={'sm'} />
           </>
         }
-        underLine={true}
+        lineType={'light'}
       />
       <div className={styles.form_wrap}>
         <div className={styles.table_wrap}>

@@ -4,6 +4,9 @@
   [role='tablist']:first-child {
     @apply mb-[32px];
   }
+  & > [class*='title_wrap'] {
+    @apply -mt-[8px];
+  }
 }
 .sub_contents {
   @apply relative ml-[32px] box-border min-w-[448px] shrink-0 pl-[32px];
