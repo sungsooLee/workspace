@@ -103,6 +103,7 @@ export function usePersonalInfoCheck() {
     const basePath = env.BASE_PATH || '';
 
     let currentPath = state.location.pathname;
+
     if (basePath && currentPath.startsWith(basePath)) {
       currentPath = currentPath.substring(basePath.length) || '/';
     }
@@ -112,7 +113,7 @@ export function usePersonalInfoCheck() {
 
   // 개인정보 포함 여부
   const hasPersonalInfo = useMemo(() => {
-    return currentMenu?.containsPersonalInfo || false;
+    return currentMenu?.isPersoninfoInclusion || false;
   }, [currentMenu]);
 
   const checkAndExecute = useCallback(

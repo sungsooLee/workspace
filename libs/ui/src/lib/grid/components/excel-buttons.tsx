@@ -17,7 +17,7 @@ export const ExcelButtons: FC<{ config?: ExcelConfig; getParams?: UseFormReturn[
 
   const handleExcelDownload = async () => {
     const params = getParams ? getParams() : {};
-    await fileDownload(`${PMSApiPrefix()}/multilingual/exportExcel`, params);
+    // await fileDownload(`${PMSApiPrefix()}/multilingual/exportExcel`, params);
   };
 
   const handleExcelUpload = async () => {
