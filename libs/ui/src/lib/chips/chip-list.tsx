@@ -27,6 +27,8 @@ export interface ChipListComponentProps extends Omit<ChipComponentProps, 'option
   labelField?: string;
   /** value field */
   valueField?: string;
+  /** readOnly 여부 */
+  readOnly?: boolean;
   /** chip 클릭시 호출 */
   onChipClick?: (option: any) => void;
   /** chip 삭제 버튼 클릭시 호출 */
@@ -50,6 +52,7 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
       hideBorder,
       visibleCount = 10000,
       emptyMessage,
+      readOnly,
       wordwrap = false,
       labelField = 'label',
       valueField = 'value',
@@ -97,6 +100,7 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
           styles.chips_list,
           className,
           wordwrap && 'wordwrap',
+          readOnly && styles.readonly,
           {
             [styles.chips_box]: !hideBorder,
             [styles.border_none]: hideBorder,
