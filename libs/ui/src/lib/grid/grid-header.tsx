@@ -27,7 +27,6 @@ export const GridHeader = <T extends object>({ table, lastPinnedColumnId }: Grid
               styles.thead_th,
               isPinnedLeft && styles.th_pinned_left,
               isLastPinnedColumn && styles.th_pinned_last,
-              isLastPinnedColumn && 'LAST',
             );
 
             const thStyle = {
