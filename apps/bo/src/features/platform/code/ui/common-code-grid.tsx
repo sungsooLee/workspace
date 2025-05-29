@@ -309,7 +309,7 @@ const CommonCodeGridComponent = ({
           layoutStyles.common_code,
         )}
       >
-        <div className={cn(layoutStyles.inner, layoutStyles.scrollHidden)}>
+        <div className={cn(layoutStyles.inner)}>
           <div className={layoutStyles.inner_contents}>
             <GridBox
               ref={gridRef}

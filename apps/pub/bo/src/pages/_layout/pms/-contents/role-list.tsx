@@ -76,7 +76,7 @@ const RoleListComponent: FC<{}> = ({}) => {
             <Button label={'전체닫기'} variant={'text'} size={'sm'} className="btn_text" disabled />
           </>
         }
-        underLine={true}
+        lineType={'light'}
       />
       <div className={styles.contents_wrap}>
         <TreeView treeId="source" data={sourceData} />

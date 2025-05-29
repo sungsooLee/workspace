@@ -260,7 +260,7 @@ const CommonCodeGroupGridComponent = ({
   return (
     <div className={cn(boxStyles.start, boxStyles.inner)}>
       <div className={cn(layoutStyles.start, layoutStyles.wrap, layoutStyles.ratio_third)}>
-        <div className={cn(layoutStyles.inner, layoutStyles.scrollHidden)}>
+        <div className={cn(layoutStyles.inner)}>
           <div className={layoutStyles.inner_contents}>
             <GridBox
               ref={gridRef}

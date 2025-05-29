@@ -53,7 +53,7 @@ function RouteComponent() {
           <div className={cn(popLayoutstyles.start, popLayoutstyles.wrap)}>
             <div className={popLayoutstyles.contents}>
               <div className={popLayoutstyles.left_contents}>
-                <FormSubTitle label={'타이틀'} underLine={true} />
+                <FormSubTitle label={'타이틀'} lineType={'light'} />
                 <div className={dataInfostyles.start}>
                   <div className={dataInfostyles.title_box}>
                     <strong className={dataInfostyles.title}>{'일괄적용 대상'}</strong>
@@ -104,7 +104,7 @@ function RouteComponent() {
               <div className={popLayoutstyles.main_contents}>
                 <FormSubTitle
                   label={'타이틀'}
-                  underLine={true}
+                  lineType={'light'}
                   titleNode={
                     <>
                       <strong className="tit">{'전체'}</strong>
