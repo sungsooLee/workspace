@@ -1,18 +1,59 @@
 import { TreeNode } from '@learnway/ui';
 
 export const getAllTreeKeys = (treeData: TreeNode[]) => {
-  const getAllKeys = (nodes: TreeNode[]): string[] => {
+  const recursive = (nodes: TreeNode[]): string[] => {
     return nodes.reduce((keys: string[], node) => {
       keys.push(node.key);
       if (node.children?.length) {
-        keys.push(...getAllKeys(node.children));
+        keys.push(...recursive(node.children));
       }
 
       return keys;
     }, []);
   };
-  return getAllKeys(treeData);
+  return recursive(treeData);
 };
+
+export const deleteNodeByNode = (nodes: TreeNode[], node: TreeNode) => {
+  const recervice = (d: any[]) => {
+    const index = d.findIndex((item) => item.key === node.key);
+    console.log('index', index);
+    if (index !== -1) {
+      d.splice(index, 1);
+      return;
+    }
+    for (const i of d) {
+      if (i.children && i.children.length > 0) {
+        recervice(i.children);
+      }
+    }
+  };
+  recervice(nodes);
+};
+
+export const getAllParent = (nodes: TreeNode[], key: string): TreeNode[] => {
+  const retval: TreeNode[] = [];
+  const map = genMap(nodes);
+  let parentKey = key;
+  while (parentKey) {
+    if (map.has(parentKey)) {
+      const item = map.get(parentKey);
+      retval.unshift(map.get(parentKey));
+      parentKey = item.parentKey;
+    }
+  }
+  return retval;
+};
+
+export const getAllParentAndChildrenByKey = (nodes: TreeNode[], key: string) => {
+  const retval = getAllParent(nodes, key);
+  const current = retval.at(-1);
+  if (current?.children && current.children.length > 0) {
+    getAllChildrens(current.children, retval);
+  }
+  return retval;
+};
+
 const getAllChildrens = (nodes: TreeNode[], contains: TreeNode[] = []) => {
   for (const node of nodes) {
     contains.push(node);
@@ -23,7 +64,7 @@ const getAllChildrens = (nodes: TreeNode[], contains: TreeNode[] = []) => {
   return contains;
 };
 
-const getAllParentAndChildrenByKey = (
+const recusiveAllParentAndChildren = (
   nodes: TreeNode[],
   key: number | string,
   contains: TreeNode[] = [],
@@ -35,13 +76,11 @@ const getAllParentAndChildrenByKey = (
 
       if (node.children && node.children?.length > 0) {
         getAllChildrens(node.children, currentNodes);
-
-        console.log(currentNodes);
       }
       return currentNodes;
     }
     if (node.children && node.children.length > 0) {
-      const result: TreeNode[] = getAllParentAndChildrenByKey(node.children, key, currentNodes);
+      const result: TreeNode[] = recusiveAllParentAndChildren(node.children, key, currentNodes);
       if (result.length > currentNodes.length) {
         return result;
       }
@@ -50,12 +89,26 @@ const getAllParentAndChildrenByKey = (
   return contains;
 };
 
+export const genMap = (nodes: TreeNode[]) => {
+  const retMap = new Map();
+  const recursive = (nodes: TreeNode[], map: Map<any, any>) => {
+    nodes.forEach((item: TreeNode) => {
+      map.set(item.key, item);
+      if (item?.children && item?.children.length > 0) {
+        recursive(item.children, map);
+      }
+    });
+  };
+  recursive(nodes, retMap);
+  return retMap;
+};
+
 export const getNodeByKey = (nodes: TreeNode[], key: number | string): TreeNode | undefined => {
   for (const node of nodes) {
     if (node.key === key) {
       return node;
     }
-    if (node.children && node.children?.length > 0) {
+    if (node?.children && node.children?.length > 0) {
       return getNodeByKey(node.children, key);
     }
   }
@@ -63,7 +116,7 @@ export const getNodeByKey = (nodes: TreeNode[], key: number | string): TreeNode 
 };
 
 export const getAllParentAndAllChildById = (nodes: TreeNode[], key: number | string) => {
-  return getAllParentAndChildrenByKey(nodes, key);
+  return recusiveAllParentAndChildren(nodes, key);
 };
 
 export const findMenuPathById = (
@@ -125,6 +178,7 @@ export const transformMenuApiDataToTreeData = (apiData: any) => {
         title: node.menuName || node.menuCode, // title이 없으면 menuCode 사용
         parentKey: node.parentId?.toString(), // parentId를 parentKey로 변환
         children: node.children || [],
+        original: node,
       };
 
       // 자식 노드가 있는 경우 재귀적으로 변환
@@ -249,3 +303,5 @@ export const moveRoleCheck = (events: any) => {
     },
   };
 };
+
+export const copyTreeNode = (events: any) => {};
