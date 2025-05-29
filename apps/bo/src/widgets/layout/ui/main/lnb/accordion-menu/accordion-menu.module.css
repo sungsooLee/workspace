@@ -1,32 +1,44 @@
 .start {
   &.depth2 {
+    [data-state='open'] > button {
+      &[class*='has_children'] {
+        & > [class*='accordion_title'] {
+          &[class*='active'] {
+            @apply body_bo_2_b text-[var(--gray9)];
+          }
+        }
+      }
+    }
   }
   &.depth3 {
-    & > div {
-      button {
-        @apply !pl-[24px];
-        &[aria-expanded='true'] {
-          &.active {
-            @apply bg-[#EDFCFF];
-            span {
-              @apply font-bold text-[var(--secondary1)];
-            }
+    div > button {
+      [class*='accordion_title'] {
+        @apply pl-[24px];
+      }
+      & > [class*='accordion_title'] {
+        &[class*='active'] {
+          @apply body_bo_2_b bg-white text-[var(--gray9)];
+        }
+      }
+      &:not([class*='has_children']) {
+        & > [class*='accordion_title'] {
+          &[class*='active'] {
+            @apply body_bo_2_b bg-[#EDFCFF] text-[var(--secondary1)];
           }
         }
       }
     }
   }
   &.depth4 {
-    & > div {
-      button {
-        @apply !pl-[48px];
-        &[aria-expanded='true'] {
-          @apply bg-[#EDFCFF] pl-[48px];
-          span {
-            @apply font-bold text-[var(--secondary1)];
-          }
-          &::before {
-            @apply inline-flex h-[16px] w-[16px] shrink-0 bg-[url(../../assets/images/icon/ic_arrow_forward_active.png)] bg-[16px_auto] bg-[center_center] bg-no-repeat !content-[''];
+    div > button {
+      [class*='accordion_title'] {
+        @apply pl-[48px];
+      }
+      & > [class*='accordion_title'] {
+        &[class*='active'] {
+          @apply body_bo_2_b bg-[#EDFCFF] text-[var(--secondary1)];
+          svg {
+            @apply !stroke-[var(--secondary1)];
           }
         }
       }
