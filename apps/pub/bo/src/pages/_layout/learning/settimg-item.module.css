@@ -17,9 +17,6 @@
       }
     }
   }
-  .grid {
-    @apply !h-[396px];
-  }
   .grid table thead th {
     @apply border-b border-solid border-[var(--gray4)];
   }

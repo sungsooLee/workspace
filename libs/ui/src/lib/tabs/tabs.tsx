@@ -28,6 +28,8 @@ export interface TabsComponentProps extends React.ComponentProps<typeof Primitiv
   className?: string;
   /** 탭의 스타일 유형 */
   type?: 'line' | 'fill' | 'round' | 'segment' | 'progress' | 'sub-progress';
+  /** 컨텐츠 타입 */
+  showContentBorder?: boolean;
   /** 탭의 색상 테마 */
   variant?: 'primary' | 'secondary' | 'gray'; // gray는 line형
   /** 탭의 크기 */
@@ -63,6 +65,7 @@ export const TabsComponent = forwardRef<
       variant,
       size = 'md',
       type,
+      showContentBorder = false,
       ariaLabel,
       selectedTabKey,
       clickDisabled,
@@ -115,6 +118,7 @@ export const TabsComponent = forwardRef<
           size && styles[size],
           type && styles[type],
           variant && styles[variant],
+          showContentBorder && styles.show_border,
         )}
         value={value}
         ref={ref}
