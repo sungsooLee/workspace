@@ -45,7 +45,7 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
   const maxFileCount = 1;
   const maxFileSize = 1024 * 1024 * 10;
   const { stats, files, addFiles, onPause, onRetry, onResume, onRemove } = useS3Uploader({
-    s3Path: 'upload/leaning-resource/video/',
+    s3Path: 'upload/content/original',
     maxFileCount,
     acceptFiles: acceptFiles[type],
   });
@@ -68,17 +68,19 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
       .filter((file) => file.status === 'completed')
       .map((file) => {
         return {
-          uploadType: 'CONTENTS',
           affairsType: 'PMS',
           reposType: 'S3',
           languageCode: 'ko',
           detailPath: file.detailPath,
           basicPath: file.basicPath,
-          files: {
-            originalFileName: file.fileName,
-            serverFileName: file.s3FileName,
-            fileSize: file.size,
-          },
+          files: [
+            {
+              fileUploadType: file.uploadType === 'single-part' ? 'S3_SINGLEPART' : 'S3_MULTIPART',
+              originalFileName: file.fileName,
+              serverFileName: file.s3FileName,
+              fileSize: file.size,
+            },
+          ],
         };
       });
     // const response = await createFileGroupFiles(createFiles[0] as CreateFileGroupFilesInfoReq[]);

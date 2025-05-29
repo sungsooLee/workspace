@@ -100,7 +100,7 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
       await onRemove();
     }
     const newFiles = files.map((file) => {
-      const detailPath = formatDate(new Date()).replace(/-/g, '/');
+      const detailPath = formatDate(new Date(), '/YYYY/MM/DD');
       console.log('detailPath =>', detailPath);
       const id = getRandomId(); // 각 파일에 고유 ID 생성
       const fileName = file.name;
