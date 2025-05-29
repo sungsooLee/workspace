@@ -7,21 +7,13 @@ import React, {
   useState,
 } from 'react';
 import { createColumnHelper, Table } from '@tanstack/react-table';
-import {
-  Button,
-  CountText,
-  Grid,
-  GridBoxProps,
-  GridBoxSearchInput,
-  GridBoxSearchInputCondition,
-  GridImperative,
-  Pagination,
-} from '@learnway/ui';
+import { Button, CountText, Grid, GridBoxProps, GridImperative, Pagination } from '@learnway/ui';
 import { IcoMinus, IcoPlus } from '@learnway/icons';
 import styles from './grid-box.module.css';
 import { cn } from '@learnway/shared';
 import { useTranslation } from 'react-i18next';
-import { ExcelButtons } from './components/excel-buttons';
+import { ExcelButtons } from './excel-buttons';
+import { GridBoxSearchInput, GridBoxSearchInputCondition } from './grid-box-search-input';
 
 /**
  * 다양한 설정 옵션을 통해 재사용 가능한 표 컴포넌트(Grid)를 구성합니다.
@@ -245,20 +237,6 @@ const GridBoxComponent = <T extends object>(
     return pagination || props.pagination;
   }, [pagination, props.pagination]);
 
-  // const paginationProps = useMemo(() => {
-  //   // props.pagination이 전달되면 우선 사용
-  //   if (pagination) {
-  //     return pagination;
-  //   }
-  //   return page
-  //     ? {
-  //         ...page, // page 객체의 현재 상태 스프레드
-  //         onPageChange: handleChangePage, // 메모이제이션된 핸들러 함수 전달
-  //         onPageSizeChange: handleChangePageSize, // 메모이제이션된 핸들러 함수 전달
-  //       }
-  //     : undefined; // page가 falsy일 경우 undefined 반환
-  // }, [page, handleChangePage, handleChangePageSize, props.pagination, pagination]);
-
   console.log('grid-box ::', { paginationProps });
 
   return (
@@ -328,7 +306,7 @@ const GridBoxComponent = <T extends object>(
               variant="outline"
               size="sm"
               label={t('LABEL.grid.header.remove', '삭제')}
-              onClick={handleAddClick}
+              onClick={handleRemoveClick}
             />
           )}
           {/* 행추가 */}
@@ -351,24 +329,13 @@ const GridBoxComponent = <T extends object>(
               onClick={handleRemoveRowClick}
             />
           )}
-          {/* 컬럼 설정 */}
-          {/*{showColumnSettings && (*/}
-          {/*  <Button*/}
-          {/*    variant="outline"*/}
-          {/*    size="sm"*/}
-          {/*    label={t('LABEL.grid.header.columnSetting}*/}
-          {/*    icon={<IcoSetting width={16} height={16} stroke="#131C30" />}*/}
-          {/*    className="btn_setting"*/}
-          {/*  />*/}
-          {/*)}*/}
-          {/* 추가 */}
         </div>
       </div>
       {/* 데이터 테이블 렌더링 */}
       <Grid
         {...props}
         ref={gridRef}
-        onChange={onDataChange}
+        onChange={props.onChange || onDataChange}
         data={props.data ?? data ?? []}
         columns={props.columns ?? girdColumns ?? []}
         showNumberingColumn={showNumberingColumn}

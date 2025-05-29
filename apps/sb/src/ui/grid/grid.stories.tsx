@@ -4,7 +4,6 @@ import {
   CellContext,
   ColumnFiltersState,
   createColumnHelper,
-  RowSelectionState,
   SortingState,
   Table,
 } from '@tanstack/react-table';
@@ -263,77 +262,9 @@ export const Base: Story = {
         <Story />
         <ModalWrapper />
       </ReactQueryConfigProvider>
-      // <ReactQueryConfigProvider>
-      //   <Story />
-      //   <ModalWrapper />
-      // </ReactQueryConfigProvider>
     ),
   ],
   render: () => <BaseTable />,
-};
-
-const TableWithColumnSettings = () => {
-  const [tableState, setTableState] = useState({
-    sorting: [] as SortingState,
-    filters: [] as ColumnFiltersState,
-  });
-
-  const { data } = useTableData<Person>({
-    queryKey: 'example-table',
-    tableState,
-    fetch: fetchTableData,
-  });
-
-  const handleStateChange = (newState: GridState) => {
-    console.log(newState);
-    setTableState((prev) => ({
-      ...prev,
-      sorting: newState.sorting || prev.sorting,
-      filter: newState.filters || prev.filters,
-    }));
-  };
-
-  const handleRowSelectStateChange = (selectRowState: RowSelectionState) => {
-    console.log(selectRowState);
-  };
-
-  return (
-    <div className="p-4">
-      <GridBox
-        data={data?.data ?? []}
-        columns={columns}
-        onStateChange={handleStateChange}
-        onRowSelect={handleRowSelectStateChange}
-      />
-    </div>
-  );
-};
-
-export const WithColumnSettings: Story = {
-  name: '컬럼 설정 테스트',
-  decorators: [
-    (Story) => (
-      <ReactQueryConfigProvider>
-        <ModalWrapper />
-        <Story />
-      </ReactQueryConfigProvider>
-    ),
-  ],
-  render: () => <TableWithColumnSettings />,
-  parameters: {
-    docs: {
-      description: {
-        story: `
-  컬럼 설정 기능을 테스트할 수 있는 예제입니다.
-
-  - 항목설정 버튼을 클릭하여 컬럼 설정 모달을 엽니다.
-  - 드래그 앤 드롭으로 컬럼 순서를 변경할 수 있습니다.
-  - 체크박스로 컬럼을 표시하거나 숨길 수 있습니다.
-  - 변경사항은 '적용' 버튼을 클릭해야 반영됩니다.
-          `,
-      },
-    },
-  },
 };
 
 const MultiSelectTable = () => {
@@ -655,6 +586,7 @@ const PinnedColumnTable = () => {
         isLoading={isLoading}
         title="Pinning Columns"
         multiple={true}
+        showNumberingColumn
         columnPinning={{ columns: ['status'] }}
       />
     </div>
@@ -685,7 +617,7 @@ export const TemplateEditGrid: any = (args: any) => {
       header: 'number',
       accessorKey: 'number',
       size: 150,
-      cell: (info: CellContext<any, number>) => (
+      cell: (info: CellContext<any, string>) => (
         <EditInputCell info={info} input={{ type: 'number' }} />
       ),
     },
@@ -780,14 +712,20 @@ TemplateEditGrid.storyName = '셀 편집';
 // 컬럼 사이즈
 export const TemplateColumnSize: any = (args: any) => {
   const data = [
+    { name: '현대', code: 'H', code2: 'H21o3j12op3j12po312op3j12op3j1poj231po12j3poj' },
     { name: '현대', code: 'H', code2: 'H' },
-    { name: '현대', code: 'H', code2: 'H' },
-    // { name: '현대', code: 'H', code2: 'H' },
   ];
+
+  const columnHelper = createColumnHelper();
   const columns = [
-    { accessorKey: 'name', size: 100, maxSize: 100, minSize: 100, enableResizing: false },
-    { accessorKey: 'code', maxSize: 100 },
-    { accessorKey: 'code2', size: undefined },
+    // columnHelper.accessor('name', { header: 'size: 100', size: 100 }),
+    columnHelper.accessor('name', { header: 'size: 200', size: 200 }),
+    columnHelper.accessor('name', { header: 'size: 200', size: 200 }),
+    columnHelper.accessor('code2', {
+      header: 'auto (size 설정안함)',
+      size: 111,
+      meta: { size: 'auto' },
+    }),
   ];
   useEffect(() => {
     console.log('data', data);
@@ -797,7 +735,7 @@ export const TemplateColumnSize: any = (args: any) => {
       title={'Editable Grid'}
       data={data}
       columns={columns}
-      hideRowSelectionRadioBox={false}
+      // hideRowSelectionRadioBox={false}
     />
   );
 };
@@ -817,10 +755,10 @@ export const TemplateTable: any = (args: any) => {
     }));
   const columns = [
     { accessorKey: 'name', size: 200 },
-    { accessorKey: 'name2', size: 200 },
-    { accessorKey: 'name3', size: 200 },
-    { accessorKey: 'name4', size: 200 },
-    { accessorKey: 'name5', size: 200 },
+    { accessorKey: 'name2', size: 200, meta: { size: 'auto' } },
+    { accessorKey: 'name3', size: 200, meta: { size: 'auto' } },
+    { accessorKey: 'name4', size: 200, meta: { size: 'auto' } },
+    { accessorKey: 'name5', size: 200, meta: { size: 'auto' } },
   ];
   return <TableBox data={data} columns={columns} variant={'fill'} />;
 };
@@ -851,13 +789,7 @@ export const TemplateTitleArea: any = (args: any) => {
       multiple
       // 좌측
       title={'목록'}
-      titleCustomNode={
-        <CountText label={'커스텀개수'} count={5} />
-        // <div className={'custom_info_wrap'}>
-        //   <strong className={'table_tit'}>{'커스텀개수'}</strong>
-        //   <span className={'count_info'}>{'5'}</span>
-        // </div>
-      }
+      titleCustomNode={<CountText label={'커스텀개수'} count={5} />}
       guideText={'그리드 가이드 텍스트'}
       // 우측
       showColumnSettings
@@ -944,7 +876,7 @@ TemplateColumnType.storyName = '컬럼 유형';
 
 // 그룹 컬럼
 export const TemplateGroupColumn: any = (args: any) => {
-  const data = dummyData(5);
+  const data = dummyData(20);
   const columns = [
     {
       accessorKey: 'name',
@@ -955,7 +887,7 @@ export const TemplateGroupColumn: any = (args: any) => {
         { accessorKey: 'name', header: 'Group A-2' },
       ],
     },
-    { accessorKey: 'name', header: 'Column A', meta: { verticalAlign: 'middle' } },
+    // { accessorKey: 'name', header: 'Column A', meta: { verticalAlign: 'middle' } },
     {
       accessorKey: 'name',
       header: 'Group B',
@@ -963,6 +895,13 @@ export const TemplateGroupColumn: any = (args: any) => {
       columns: [
         { accessorKey: 'name', header: 'Group B-1' },
         { accessorKey: 'name', header: 'Group B-2' },
+        {
+          header: 'Group B-3',
+          columns: [
+            { accessorKey: 'name', header: 'Group B-3-1' },
+            { accessorKey: 'name', header: 'Group B-3-2' },
+          ],
+        },
       ],
     },
   ];

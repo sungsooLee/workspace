@@ -17,6 +17,8 @@ import {
   UserChoiceForGroupModal,
   UserChoiceModal,
   UserShuttleModal,
+  MenuChoiceTreeModal,
+  CategoryChoiceTreeModal,
 } from '@features/shared';
 import { Button, ChipListModalSelectorFormField, ContentsRow, Input, useModal } from '@learnway/ui';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
@@ -360,6 +362,7 @@ function RouteComponent() {
               {'채널 조회(셔틀)'}
             </Button>
             <div className="h-1 w-full border-white bg-slate-700" />
+
             <Button
               size={'xs'}
               className="btn_table"
@@ -368,11 +371,11 @@ function RouteComponent() {
                 e.stopPropagation();
                 openModal({
                   width: 'xl',
-                  content: <MenuChoiceModal menuScopeCode={'BO'} />,
+                  content: <MenuChoiceTreeModal menuScopeCode="BO" />,
                 });
               }}
             >
-              {'메뉴 조회'}
+              {'메뉴 조회 팝업(공통)'}
             </Button>
             <Button
               size={'xs'}
@@ -382,11 +385,11 @@ function RouteComponent() {
                 e.stopPropagation();
                 openModal({
                   width: 'xl',
-                  content: <UserChoiceForGroupModal />,
+                  content: <CategoryChoiceTreeModal />,
                 });
               }}
             >
-              {'유저그룹 조회'}
+              {'케테고리 조회 팝업(공통)'}
             </Button>
           </div>
         </SubContents>

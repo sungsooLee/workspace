@@ -26,7 +26,6 @@ function HomeComponent() {
                     <th scope="col">페이지링크(화면아이디)</th>
                     <th scope="col">페이지타입</th>
                     <th scope="col">완료일</th>
-                    <th scope="col">최종수정일</th>
                     <th scope="col">비고</th>
                     <th scope="col">상태</th>
                   </tr>
@@ -45,10 +44,9 @@ function HomeComponent() {
                       </td>
                       <td>{item.pageType}</td>
                       <td>{item.completionDate || '-'}</td>
-                      <td>{item.lastUpdateDate || '-'}</td>
-                      <td className={style.remarks}>{item.remarks}</td>
-                      <td className={`${item.completionDate ? style.completed : style.status}`}>
-                        {item.completionDate ? '완료' : '진행예정'}
+                      <td className={style.remarks}>{item.memo}</td>
+                      <td className={`${item.end ? style.completed : style.status}`}>
+                        {item.end ? '완료' : '진행중'}
                       </td>
                     </tr>
                   ))}
@@ -76,7 +74,7 @@ function HomeComponent() {
                         </a>
                       </td>
                       <td>{item.pageType}</td>
-                      <td className={style.remarks}>{item.remarks}</td>
+                      <td className={style.remarks}>{item.memo}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -96,161 +94,171 @@ function HomeComponent() {
 // screenId: 스크린아이디
 // pageType: 페이지 타입 Page,Pop-up
 // completionDate: 완료일
-// lastUpdateDate: 수정일
-// remarks: 비고
+// memo: 비고
+// end: true, false
 export const munu = [
   {
     screenName: '로그인',
-    pageId: 'login',
+    pageId: '/login',
     screenId: 'NLP_BO_LOG_1000',
     pageType: 'Page',
     completionDate: '-',
-    lastUpdateDate: '-',
-    remarks: '작업 완료', // 비고
+    memo: '회원,회사,역할,로그인프로세스 정의필요', // 비고
+    end: false,
   },
   {
     screenName: '회원가입 진행현황',
-    pageId: 'signup-progress',
+    pageId: '/signup-progress',
     screenId: 'NLP_BO_LOG_1000',
     pageType: 'Page',
     completionDate: '-',
-    lastUpdateDate: '-',
-    remarks: '작업 중 api X', // 비고
+    memo: '작업 중 api X', // 비고
+    end: false,
   },
   {
     screenName: '관리자 회원가입',
-    pageId: 'signup',
+    pageId: '/signup',
     screenId: 'NLP_BO_LOG_1000',
     pageType: 'Page',
     completionDate: '-',
-    lastUpdateDate: '-',
-    remarks: '작업 중 api X', // 비고
+    memo: '작업 중 api X', // 비고
+    end: false,
   },
   {
     screenName: '나의 정보',
-    pageId: 'my-page/info',
+    pageId: '/my-page/info',
     screenId: 'NLP_BO_COM_1000',
     pageType: 'Page',
     completionDate: '-',
-    lastUpdateDate: '-',
-    remarks: '작업중 apiX', // 비고
+    memo: '작업중 apiX', // 비고
+    end: false,
   },
   {
     screenName: '나의 권한',
-    pageId: 'my-page/role',
+    pageId: '/my-page/role',
     screenId: 'NLP_BO_COM_1000',
     pageType: 'Page',
     completionDate: '-',
-    lastUpdateDate: '-',
-    remarks: '작업중 apiX', // 비고
+    memo: '작업중 apiX', // 비고
+    end: false,
   },
   {
     screenName: '나의 권한 상세',
-    pageId: 'my-page/role/detail',
+    pageId: '/my-page/role/detail',
     screenId: 'NLP_BO_COM_1000',
     pageType: 'Page',
     completionDate: '-',
     lastUpdateDate: '-',
-    remarks: '작업중 apiX', // 비고
+    memo: '작업중 apiX', // 비고
+    end: false,
   },
   {
     screenName: '공통 카테고리',
-    pageId: 'platform/category',
-    screenId: '-',
+    pageId: '/platform/category',
+    screenId: 'NLP_BO_TMS_1120',
     pageType: 'Page',
     completionDate: '-',
-    lastUpdateDate: '-',
-    remarks: '작업 완료', // 비고
+    memo: '작업 완료', // 비고
+    end: false,
+  },
+  {
+    screenName: '시스템 공통코드 그룹관리',
+    pageId: '/platform/code/system-code',
+    screenId: 'NLP_BO_PMS_1401_01',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 완료', // 비고
+    end: false,
   },
   {
     screenName: '메뉴 관리',
-    pageId: 'platform/menu',
-    screenId: '-',
+    pageId: '/platform/menu',
+    screenId: 'NLP_BO_PMS_1200',
     pageType: 'Page',
     completionDate: '-',
-    lastUpdateDate: '-',
-    remarks: '작업 완료', // 비고
+    memo: '작업 완료', // 비고
+    end: false,
   },
   {
     screenName: '위젯 관리',
-    pageId: 'platform/widget',
-    screenId: '-',
+    pageId: '/platform/widget',
+    screenId: 'NLP_BO_PMS_1310',
     pageType: 'Page',
     completionDate: '-',
-    lastUpdateDate: '-',
-    remarks: '작업 완료', // 비고
+    memo: '작업 완료', // 비고
+    end: false,
   },
   {
     screenName: '라벨/메시지 관리',
-    pageId: 'platform/label-message',
-    screenId: '-',
+    pageId: '/platform/label-message',
+    screenId: 'NLP_BO_PMS_1406',
     pageType: 'Page',
     completionDate: '-',
-    lastUpdateDate: '-',
-    remarks: '작업 완료', // 비고
+    memo: '작업 완료', // 비고
+    end: false,
   },
   {
     screenName: '프로그램 관리',
-    pageId: 'platform/program',
-    screenId: '-',
+    pageId: '/platform/program',
+    screenId: 'NLP_BO_PMS_1403',
     pageType: 'Page',
     completionDate: '-',
-    lastUpdateDate: '-',
-    remarks: '작업 완료', // 비고
+    memo: '작업 완료', // 비고
+    end: false,
   },
   {
-    screenName: '시스템 변역',
-    pageId: 'platform/system/multilingual',
-    screenId: '-',
+    screenName: '시스템 번역',
+    pageId: '/platform/system/multilingual',
+    screenId: 'NLP_BO_PMS_1421',
     pageType: 'Page',
     completionDate: '-',
-    lastUpdateDate: '-',
-    remarks: '작업 완료', // 비고
+    memo: '작업 완료', // 비고
+    end: false,
   },
   {
     screenName: '테넌트 관리',
-    pageId: 'tenant/management',
-    screenId: '-',
+    pageId: '/tenant/management',
+    screenId: 'NLP_BO_TMS_1000',
     pageType: 'Page',
     completionDate: '-',
-    lastUpdateDate: '-',
-    remarks: '작업 중(조회옵션)', // 비고
+    memo: '작업 중(조회옵션)', // 비고
+    end: false,
   },
   {
     screenName: '플렛폼 테넌트 관리',
-    pageId: 'platform/tenant/management',
-    screenId: '-',
+    pageId: '/platform/tenant/management',
+    screenId: 'NLP_BO_TMS_1000',
     pageType: 'Page',
     completionDate: '-',
-    lastUpdateDate: '-',
-    remarks: '작업 중',
+    memo: '작업 중',
+    end: false,
   },
   {
     screenName: '플렛폼 테넌트 등록',
-    pageId: 'platform/tenant/management/regist',
-    screenId: '-',
+    pageId: '/platform/tenant/management/regist',
+    screenId: 'NLP_BO_TMS_1001',
     pageType: 'Page',
     completionDate: '-',
-    lastUpdateDate: '-',
-    remarks: '작업 중',
+    memo: '작업 중',
+    end: false,
   },
   {
     screenName: '교육 장소 ',
-    pageId: 'learning/training-place',
-    screenId: '-',
+    pageId: '/learning/training-place',
+    screenId: 'NLP_BO_EDO_1601',
     pageType: 'Page',
     completionDate: '-',
-    lastUpdateDate: '-',
-    remarks: '작업 중',
+    memo: '작업 중',
+    end: false,
   },
   {
     screenName: '교육 장소 등록',
-    pageId: 'learning/training-place/regist',
-    screenId: '-',
+    pageId: '/learning/training-place/regist',
+    screenId: 'NLP_BO_EDO_1603',
     pageType: 'Page',
     completionDate: '-',
-    lastUpdateDate: '-',
-    remarks: '작업 중', // 비고
+    memo: '작업 중', // 비고
+    end: false,
   },
 ];
 
@@ -259,30 +267,30 @@ export const guide = [
     screenName: '폼타입3',
     pageId: 'menu/type3',
     pageType: 'Page',
-    remarks: '', // 비고
+    memo: '', // 비고
   },
   {
     screenName: '폼타입4',
     pageId: 'menu/type4',
     pageType: 'Page',
-    remarks: '', // 비고
+    memo: '', // 비고
   },
   {
     screenName: '폼타입5',
     pageId: 'menu/type5',
     pageType: 'Page',
-    remarks: '', // 비고
+    memo: '', // 비고
   },
   {
     screenName: '폼타입6',
     pageId: 'menu/type6',
     pageType: 'Page',
-    remarks: '', // 비고
+    memo: '', // 비고
   },
   {
     screenName: '공통팝업',
     pageId: 'common-popup',
     pageType: 'Page',
-    remarks: '공통 팝업', // 비고
+    memo: '공통 팝업', // 비고
   },
 ];

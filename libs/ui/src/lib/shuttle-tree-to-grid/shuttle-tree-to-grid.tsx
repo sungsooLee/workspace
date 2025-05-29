@@ -7,8 +7,8 @@ import { Button } from '../button/button';
 import { ColumnDef } from '@tanstack/react-table';
 import { TreeView } from '../tree-view/tree';
 import { IcoChevronLeft, IcoChevronRight } from '@learnway/icons';
-import { GridBox } from '../grid/grid-box';
 import { GridImperative } from '../grid/types';
+import { GridBox } from '../grid/grid-box/grid-box';
 
 export interface ShuttleTreeToGridProps {
   columns: ColumnDef<object>[]; // 그리드 컬럼
