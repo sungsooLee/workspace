@@ -34,7 +34,7 @@ function RouteComponent() {
         { label: 'Table', path: '/guide/table' },
         { label: 'Checkbox', path: '/guide/checkbox' },
         { label: 'Radio', path: '/guide/radio' },
-        { label: 'Select', path: '/guide/notice-box' },
+        { label: 'Select', path: '/guide/select' },
         { label: 'Dropdown', path: '/guide/drop-down' },
         { label: 'DatePicker', path: '/guide/date-picker' },
         { label: 'Tooltip', path: '/guide/tooltip' },

@@ -6,6 +6,12 @@ import { TenantDetailAttributeCompany } from './tenant-detail-attribute-company'
 /** Hook 정의 */
 import { useTenantAttributeCompany } from '@entities/tenant/service/tenant-attribute.hook';
 
+/**
+ * 화면번호: NLP_BO_TMS_1003_00_04 (과정등록 연관 설정 figma: NLP_BO_TMS_1003_00-04)
+ * @param props
+ * @param ref
+ * @returns
+ */
 const TenantDetailAttributeComponent = (props: any, ref: any) => {
   const [selectedTabKey, setSelectedTabKey] = useState<string>('FO');
   const [companyTabItem, setCompaynTabItem] = useState<any>([]);

@@ -3,7 +3,9 @@ import {
   Button,
   ContentsRow,
   DynamicFormField,
+  Input,
   RadioGroupFormField,
+  Textarea,
   TextareaFormField,
   useModal,
 } from '@learnway/ui';
@@ -19,7 +21,7 @@ import {
   FormSubTitle,
   SwitchFormField,
 } from '@shared/ui/form';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import { FormInfoArea } from '@shared/ui/form/components/form-info-area';
 import {
@@ -28,6 +30,7 @@ import {
   useFetchLabelMessage,
   useUpdateLabelMessage,
 } from '@entities/label-messages';
+import { useWatch } from 'react-hook-form';
 
 interface MessageDetailProps {
   /**
@@ -47,11 +50,13 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
   const queryClient = useQueryClient();
   const [isCreateMode, setIsCreateMode] = React.useState(true);
   const { confirm: openConfirm } = useModal();
-  const { provider, onSubmit, onFormChange, getValues, fetchData, clearFormError } =
+  const { provider, onSubmit, onFormChange, getValues, fetchData, clearFormError, control } =
     useDynamicForm(formConfig);
   const { data } = useFetchLabelMessage(labelMessageId);
   const formDisabled = labelMessageId === 0;
-
+  const clearAllFormErrors = () => {
+    formConfig.builders.forEach((item) => clearFormError(item.name));
+  };
   // 라벨 메세지 등록
   const { mutate: create } = useCreateLabelMessage({
     onSuccess: async (response: any) => {
@@ -73,15 +78,19 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
    * 음수인 경우 생성 모드로 전환하며 폼을 초기화합니다.
    */
   useEffect(() => {
-    // console.log('labelMessageId', labelMessageId);
+    clearAllFormErrors();
     // 생성 모드 (labelMessageId 음수인 경우, 부모창에서 추가 버튼 눌렀을때 음수로 설정)
     const isCreate = labelMessageId <= 0;
     // set state
     setIsCreateMode(isCreate);
     // 생성 모드는 폼 내용 초기화
     if (isCreate) {
+      const initData: { [key: string]: any } = {};
+      formConfig.builders.forEach((item) => {
+        initData[item.name] = item.value;
+      });
       onFormChange({});
-      fetchData({});
+      fetchData({ ...initData });
     }
   }, [labelMessageId]);
 
@@ -107,7 +116,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
       to: '/platform/system/multilingual',
       state: {
         keyType: data?.labelMessageType || 'LABEL', // 다국어 분류, 서버에서 labelMessageType 값 안넘어와서 임시로 하드코딩
-        multilinguaKey: data?.labelMessageMultilingulKey, // 다국어 키
+        multilingualKey: data?.labelMessageMultilingulKey, // 다국어 키
         translation: data?.labelMessageName, // 한글 번역값
       },
     });
@@ -126,8 +135,18 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
       labelMessageId: isCreateMode ? '' : data?.labelMessageId,
     };
 
-    if (await openConfirm(t('LABEL.confirm.save.title'))) {
-      isCreateMode ? create(payload) : update(payload);
+    if (isCreateMode) {
+      const isAdd = await openConfirm({
+        title: t('LABEL.confirm.save.title'),
+        content: t('LABEL.confirm.save.message'),
+      });
+      isAdd && create(payload);
+    } else {
+      const isUpdate = await openConfirm({
+        title: t('LABEL.confirm.modify.title'),
+        content: t('LABEL.confirm.modify.message'),
+      });
+      isUpdate && update(payload);
     }
   };
 
@@ -153,10 +172,11 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
     return isValid;
   };
 
+  const typeWatch = useWatch({ control, name: 'labelMessageType' });
   return (
     <form onSubmit={onSubmit(handleOnSubmit)}>
       <FormSubTitle
-        label={t('LABEL.form.label.detailInfo')}
+        label={t('LABEL.form.label.labelMessage')}
         underLine
         actionNode={
           <div className={layoutStyles.btn_wrap}>
@@ -193,6 +213,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
                 onSuccess={(isValid: boolean, checkValue: string) => {
                   onFormChange({ isDuplicateCheck: isValid, lastDuplicateText: checkValue });
                 }}
+                placeholder={t('라벨 코드를 입력하세요.')}
               />
             }
           />
@@ -202,10 +223,14 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
           <FormRow
             provider={provider}
             name={'labelMessageName'}
-            element={<TextareaFormField disabled={formDisabled} />}
-          >
-            <FormInfoArea>
-              {/* 다국어 관리 : 수정 모드에서만 활성화 */}
+            element={
+              typeWatch === 'LABEL' ? (
+                <Input disabled={formDisabled} placeholder={t('라벨명을 입력하세요.')} />
+              ) : (
+                <Textarea disabled={formDisabled} placeholder={t('라벨명을 입력하세요.')} />
+              )
+            }
+            infoNode={
               <Button
                 variant="point"
                 size="xs"
@@ -213,15 +238,16 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
                 disabled={isCreateMode}
                 onClick={handleMultilingualManageClick}
               />
-            </FormInfoArea>
-          </FormRow>
+            }
+          ></FormRow>
+          {/* 다국어 관리 : 수정 모드에서만 활성화 */}
         </ContentsRow>
         {/*설명*/}
         <ContentsRow>
           <FormRow
             provider={provider}
             name={'labelMessageDesc'}
-            element={<TextareaFormField disabled={formDisabled} />}
+            element={<Textarea disabled={formDisabled} placeholder={t('설명을 입력하세요.')} />}
           />
         </ContentsRow>
         {/*사용여부*/}
@@ -249,10 +275,9 @@ const formConfig: DynamicFormConfig = {
       label: t('LABEL.form.label.category'),
       type: 'radio-group',
       format: 'string',
-      options: [
-        { value: 'LABEL', label: '라벨' },
-        { value: 'MESSAGE', label: '메세지' },
-      ],
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.labelmessage.LabelMessageType'],
+      },
       value: 'LABEL',
     },
     {

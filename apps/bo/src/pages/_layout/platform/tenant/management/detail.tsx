@@ -138,7 +138,7 @@ function RouteComponent() {
     },
   ];
   return (
-    <PageContainer scrollHidden={scrollHidden.includes(selectedTabKey)}>
+    <PageContainer>
       {buttonShowTabs.includes(selectedTabKey) && (
         <ContentsButtons>
           <LinkBox>

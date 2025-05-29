@@ -521,7 +521,77 @@
     "REJECTED": "반려"
   },
   "pms.channel.ChannelSecretType": {
-    "SECRET": "비밀",
-    "PUBLIC": "공개"
+    "PUBLIC": "공개",
+    "SECRET": "비밀"
+  },
+  "pms.company.CompanyType": {
+    "CAR": "완성차",
+    "GROUP": "그룹사",
+    "HYUNDAI_GLOBAL": "현대 해외법인",
+    "HYUNDAI_GLOBAL_DEALER": "현대 해외딜러",
+    "HYUNDAI_SALES": "현대 판매대리점",
+    "HYUNDAI_SERVICE": "현대 서비스협력사",
+    "HYUNDAI_PRODUCTION": "현대 생산 협력사",
+    "KIA_GLOBAL": "기아 해외법인",
+    "KIA_GLOBAL_DEALER": "기아 해외딜러",
+    "KIA_SALES": "기아 판매대리점",
+    "KIA_SERVICE": "기아 서비스협력사",
+    "KIA_PRODUCTION": "기아 생산 협력사",
+    "CP": "CP사",
+    "ETC": "기타"
+  },
+  "pms.company.LinkageSystem": {
+    "GIM": "GIM",
+    "HSW": "HSW",
+    "KSW": "KSW",
+    "DMSSH": "DMSSH",
+    "DMSSK": "DMSSK",
+    "DDMSH": "DDMSH",
+    "DDMSK": "DDMSK",
+    "VAATZ": "VAATZ"
+  },
+  "pms.company.PlatformServiceType": {
+    "CONSIGNMENT": "위탁",
+    "BASIC": "베이직",
+    "CORE": "코어",
+    "ENTERPRISE": "엔타프라이즈"
+  },
+  "pms.labelmessage.LabelMessageType": {
+    "LABEL": "라벨",
+    "MESSAGE": "메세지"
+  },
+  "pms.company.SsoType": {
+    "HMG_SSO": "HMG SSO",
+    "AUTOWAY": "오토웨이 2.0",
+    "AES": "AES 암호화"
+  },
+  "pms.company.TwoFactorAuthType": {
+    "MPASS": "MPASS(OTP / FIDO)",
+    "MPASS_OTP": "MPASS(OTP)",
+    "MPASS_FIDO": "MPASS(FIDO)",
+    "GOOGLE_OTP": "구글 OTP"
+  },
+  "pms.company.WatermarkPosition": {
+    "TOP_LEFT": "상단 좌측",
+    "TOP_CENTER": "상단 중앙",
+    "TOP_RIGHT": "상단 우측",
+    "MIDDLE_LEFT": "중단 좌측",
+    "MIDDLE_CENTER": "중단 중앙",
+    "MIDDLE_RIGHT": "중단 우측",
+    "BOTTOM_LEFT": "하단 좌측",
+    "BOTTOM_CENTER": "하단 중앙",
+    "BOTTOM_RIGHT": "하단 우측"
+  },
+  "pms.company.ApprovalMatrix": {
+    "COMPANY": "회사 결재라인",
+    "OPERATOR": "운영자",
+    "MANAGER": "조직장",
+    "OPERATOR_MANAGER": "운영자 > 조직장",
+    "MANAGER_OPERATOR": "조직장 > 운영자",
+    "NONE": "사용안함"
+  },
+  "pms.company.ApplicationProcess": {
+    "APPLICATION_REGISTER": "신청 후 결과 등록",
+    "REGISTER": "결과 등록"
   }
 }

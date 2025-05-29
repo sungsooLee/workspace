@@ -54,7 +54,7 @@ function RouteComponent() {
 
   return (
     <div>
-      <PageContainer scrollHidden={true}>
+      <PageContainer>
         <MainContents>
           <SearchBox provider={sProvider} onSearch={handleSearch} />
           <SystemCodeGrid data={filteredData || []} />

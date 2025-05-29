@@ -50,7 +50,14 @@ const columns = [
     size: 490,
   }),
 ];
-
+/**
+ * 화면번호:
+ * NLP_BO_TMS_1003_04_01(학습역할메뉴), NLP_BO_TMS_1003_04_04(HRD역할메뉴),
+ * NLP_BO_PMS_1101 (플렛폼 학습역할메뉴), NLP_BO_PMS_1105 (플렛폼 HRD역할메뉴),
+ * @param param0
+ * @param ref
+ * @returns
+ */
 export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: any, ref: any) => {
   const routerState = useRouterState();
 

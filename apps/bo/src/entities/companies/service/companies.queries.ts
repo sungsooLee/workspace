@@ -5,6 +5,7 @@ import { Company } from '../../../types';
 
 export const queryKeys = {
   all: ['companies'] as const,
+  list: ['companies-page'] as const,
   detail: (id: number) => [...queryKeys.all, id] as const,
 };
 
@@ -12,6 +13,12 @@ export const queryOptions = {
   all: () => ({
     queryKey: queryKeys.all,
     queryFn: async (): Promise<any> => CompaniesService.fetchAll(),
+  }),
+  list: (params: any) => ({
+    queryKey: queryKeys.list,
+    queryFn: () => CompaniesService.fetchList(params),
+    cacheTime: 0,
+    staleTime: 0,
   }),
   detail: (id?: number) =>
     id

@@ -94,6 +94,7 @@ function AuthFormComponent({
 
     onFormChange({
       verificationCode: '',
+      sendedVerifyNumber: true,
     });
 
     const result = await onFormValid([
@@ -113,7 +114,7 @@ function AuthFormComponent({
 
     if (data.authToolType === 'PHONE') {
       handleSendVerifySuccess();
-      /*sendVerifyPhone(
+      sendVerifyPhone(
         {
           ...payload,
           phoneNumber: data.phoneNumber,
@@ -122,7 +123,7 @@ function AuthFormComponent({
         {
           onSuccess: handleSendVerifySuccess,
         },
-      );*/
+      );
     } else {
       sendVerifyEmail(
         { ...payload, email: data.email },
@@ -181,6 +182,9 @@ function AuthFormComponent({
 
   const handleSendVerifySuccess = () => {
     setSendedVerifyNumber(true);
+    onFormChange({
+      sendedVerifyNumber: true,
+    });
     verifyTimerCounter.inc();
   };
 
@@ -210,6 +214,7 @@ function AuthFormComponent({
         nationCode: '',
         email: '',
         verificationCode: '',
+        sendedVerifyNumber: false,
       }),
       includeUserId,
     });
@@ -305,6 +310,11 @@ export const AuthForm = AuthFormComponent;
 
 const authFormConfig: DynamicFormConfig = {
   builders: [
+    {
+      name: 'sendedVerifyNumber',
+      type: 'hidden',
+      value: false,
+    },
     {
       name: 'includeUserId',
       type: 'hidden',
@@ -406,7 +416,9 @@ const authFormConfig: DynamicFormConfig = {
     },
     verificationCode: {
       format: 'number',
-      required: true,
+      required: {
+        fn: (data) => data.sendedVerifyNumber === true,
+      },
     },
   },
 };

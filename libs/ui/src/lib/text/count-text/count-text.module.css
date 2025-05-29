@@ -1,13 +1,17 @@
 .start {
-  letter-spacing: -0.3px;
-  line-height: 140%;
-  font-size: 1.6rem;
-  font-weight: 700;
-
+  @apply inline-flex items-center;
   .label {
-    color: var(--gray9);
+    @apply title_bo_4_b inline-flex items-center text-[var(--gray9)];
   }
   .count {
-    color: var(--secondary1);
+    @apply title_bo_4_b ml-[2px] text-[var(--secondary1)];
+  }
+  & ~ div strong::before {
+    @apply mx-[12px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
+  }
+}
+div + .start {
+  .label::before {
+    @apply mx-[12px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
   }
 }

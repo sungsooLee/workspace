@@ -15,6 +15,11 @@ export interface Menu extends Hierarchy<Menu> {
   hiddenYn: boolean;
   parentId: number;
   menuName: string;
+  isHiddenMenu: boolean;
+  isFavorite: boolean;
+  tenantId: number;
+  tenantMappingMenuId: number;
+  depth: number;
 }
 
 export interface FetchMenusParams {

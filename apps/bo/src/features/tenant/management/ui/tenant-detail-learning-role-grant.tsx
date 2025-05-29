@@ -12,7 +12,7 @@ import {
   useModal,
 } from '@learnway/ui';
 
-import { FormRow, FormSubTitle } from '@shared/ui';
+import { FormRow, FormSubTitle, ContentsHistoryInfoFormField } from '@shared/ui';
 
 import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 import { useRouterState } from '@tanstack/react-router';
@@ -23,12 +23,32 @@ import { SearchBox } from '@shared/ui/search-box';
 import { IcoFormRequired, IcoMinus, IcoPlus } from '@learnway/icons';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import { createColumnHelper } from '@tanstack/react-table';
-import { transformRoleApiDataToTreeData } from '../service/tenant-detail-tree.service';
-import { useFetchRoleTree, useGetRoleUserGroups } from '@entities/role/service/role-manage.hook';
-import { UserChoiceModal } from '@features/shared';
+import {
+  getAllTreeKeys,
+  getFirstExpandKeys,
+  moveNodeCheck,
+  transformRoleApiDataToTreeData,
+} from '../service/tenant-detail-tree.service';
+import {
+  useFetchRole,
+  useFetchRoleTree,
+  useRoleManager,
+  useGetRoleUserGroups,
+} from '@entities/role/service/role-manage.hook';
+import { UserChoiceModal, UserChoiceForGroupModal } from '@features/shared';
+import { TenantDetailLearningRoleGrantRangeModal } from './tenant-detail-learning-role-grant-range-modal';
+
 import { roleManagerQueryOptions } from '@entities/role/service/role-manage.queries';
 import { EnFormMode } from '@types';
 
+/**
+ * 화면번호:
+ * NLP_BO_TMS_1003_04_02(학습역할부여), NLP_BO_TMS_1003_04_05(HRD역할메뉴부여),
+ * NLP_BO_PMS_1103 (플렛품 학습역할부여), NLP_BO_PMS_1106 (플렛폼 HRD역할부여),
+ * @param param0
+ * @param ref
+ * @returns
+ */
 const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, ref: any) => {
   const routerState = useRouterState();
   const { open: openModal } = useModal();
@@ -66,11 +86,14 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
   };
   const handleUserAddButtonClick = async () => {
     const data = await openModal({
-      content: <UserChoiceModal />,
+      content: <UserChoiceForGroupModal />,
       width: 'xl',
     });
     console.log('hand', data);
     // 받은 자료로 유저그룹 역할 부여 처리
+  };
+  const handleBatchClick = async () => {
+    const data = await openModal({ content: <TenantDetailLearningRoleGrantRangeModal /> });
   };
 
   useEffect(() => {
@@ -118,7 +141,14 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
               showNumberingColumn
               customButtonNode={
                 <>
-                  <Button label={t('일괄적용')} variant="text" size="sm" className="btn_text" />
+                  <Button
+                    label={t('일괄적용')}
+                    variant="text"
+                    size="sm"
+                    className="btn_text"
+                    onClick={handleBatchClick}
+                    stopPropagation
+                  />
 
                   <Button variant="text" size="sm" className="btn_text">
                     <IcoMinus width="16" height="16" stroke="#131C30" />

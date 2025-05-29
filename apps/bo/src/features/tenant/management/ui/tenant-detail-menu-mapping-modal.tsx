@@ -32,6 +32,11 @@ import {
   moveNodeCheck,
 } from '../service/tenant-detail-tree.service';
 
+/**
+ * 화면번호: NLP_BO_TMS_1002_01_02 (학습자메뉴매핑), NLP_BO_TMS_1002_01_05 (HRD 메뉴 매핑)
+ * @param param0
+ * @returns
+ */
 const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantId }) => {
   const [baseMenuTreeData, setBaseMenuTreeData] = useState([]);
   const [baseMenuTreeExpandedKeys, setBaseMenuTreeExpandedKeys] = useState<string[]>([]);

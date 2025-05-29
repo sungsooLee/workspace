@@ -7,7 +7,7 @@
         @apply flex-1;
       }
       .side_panel {
-        @apply relative z-[10];
+        @apply relative z-[200];
       }
       &.panel_active {
         @apply flex;

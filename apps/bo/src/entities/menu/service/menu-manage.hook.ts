@@ -1,6 +1,6 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
-  // mutateOptions,
+  mutateOptions,
   queryKeys,
   menuManageQueryOptions as queryOptions,
 } from './menu-manage.queries';
@@ -8,6 +8,7 @@ import { useApiMutation, useApiQuery } from '../../../shared/lib/use-authorized-
 import { MenuManageApi } from '../api/menu-manage';
 import { MenuDetail } from '../../../types/entities/menu';
 import { useState } from 'react';
+import { callbackify } from 'util';
 
 export function useMenuMangeFetchMenus() {
   return useQuery(queryOptions.all());
@@ -24,6 +25,10 @@ export function useMenuTree(menuScopeCode: string, locale: string, options?: any
     queryKeys.menuTree(menuScopeCode, locale),
     options,
   );
+}
+
+export function useFetchMenuFavorites(payload: any) {
+  return useQuery(queryOptions.allFavorites(payload));
 }
 
 export function useCreateMenu(options: any) {
@@ -144,5 +149,60 @@ export function useMoveMenu(options: any) {
   return {
     ...mutation,
     move: mutation.mutate,
+  };
+}
+
+export function useCreateMenuFavorites(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.createFavorites(),
+    onSuccess: (data, variables, context) => {
+      if (options?.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...options,
+  });
+  return {
+    ...mutation,
+    createMenuFavorites: (payload: any, callback?: any) => {
+      console.log('### createMenuFavorites', payload);
+      mutation.mutate(payload, callback);
+    },
+  };
+}
+
+export function useDeleteMenuFavorites(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.deleteFavorites(),
+    onSuccess: (data, variables, context) => {
+      if (options?.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...options,
+  });
+  return {
+    ...mutation,
+    deleteMenuFavorites: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+  };
+}
+
+export function useMoveMenuFavorites(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.moveMenuFavorites(),
+    onSuccess: (data, variables, context) => {
+      if (options?.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...options,
+  });
+  return {
+    ...mutation,
+    moveMenuFavorites: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
   };
 }

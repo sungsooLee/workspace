@@ -1,5 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Children, FC, isValidElement, ReactNode, useState, useEffect, useRef } from 'react';
+import {
+  Children,
+  FC,
+  isValidElement,
+  ReactNode,
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+} from 'react';
 import { useCreation } from 'ahooks';
 import { last } from 'lodash';
 import { t } from 'i18next';
@@ -7,7 +16,15 @@ import { cn } from '@learnway/shared';
 import { Button } from '@learnway/ui';
 import { IcoStar, IcoArrowLineTop } from '@learnway/icons';
 import { useCurrentRoute } from '@learnway/hooks';
-import { useActiveMenuDepthState } from '@learnway/auth';
+import {
+  Menu,
+  useActiveMenuDepthState,
+  useAsycFetchMenusForceRefatch,
+  useFetchAuthUser,
+  useFetchMenus,
+  useUpdateAuthUser,
+  useUpdateUser,
+} from '@learnway/auth';
 
 import { Breadcrumbs } from './breadcrumbs/breadcrumbs';
 import { ContentsButtons } from './slot/contents-buttons';
@@ -15,6 +32,8 @@ import { PageContents } from './page-contents';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-container.module.css';
 import fabStyles from '@learnway/styles/bo/assets/styles/modules/fab.module.css'; /* fab */
+import { useCreateMenuFavorites, useDeleteMenuFavorites } from '@entities/menu';
+import { useRouterState } from '@tanstack/react-router';
 
 /**
  * 목록 또는 상세 화면에 대한 디자인 wrapping 컴포넌트
@@ -40,12 +59,27 @@ const PageContainerComponent: FC<{
   hideOutLine = false,
 }) => {
   const { meta } = useCurrentRoute();
-  const [activeMenuDepth] = useActiveMenuDepthState();
-  const [isFavorite, setIsFavorite] = useState(true);
+  const [activeMenuDepth, setActiveMenuDepth] = useActiveMenuDepthState();
+  const currentMenu = last(activeMenuDepth);
 
+  const { data: authUser } = useFetchAuthUser();
+
+  const { updateMenu } = useUpdateUser();
+  const { asyncMenus } = useAsycFetchMenusForceRefatch();
+
+  const { createMenuFavorites } = useCreateMenuFavorites();
+  const { deleteMenuFavorites } = useDeleteMenuFavorites();
+
+  // 페이지 타이틀
   const title = useCreation(() => {
     const currentMenuCode = last(activeMenuDepth)?.menuCode;
     return currentMenuCode ? `MENU.${currentMenuCode}` : meta?.title;
+  }, [activeMenuDepth]);
+
+  // 페이지 즐겨찾기 여부
+  const isFavorite = useMemo(() => {
+    const isFavorite = last(activeMenuDepth)?.isFavorite;
+    return isFavorite;
   }, [activeMenuDepth]);
 
   const ButtonSlot = Children.toArray(children).find(
@@ -138,6 +172,51 @@ const PageContainerComponent: FC<{
     }
   };
 
+  const handleFavorites = async () => {
+    if (!currentMenu) return;
+
+    console.log('currentMenu', currentMenu);
+    if (!isFavorite) {
+      createMenuFavorites(
+        {
+          menuId: currentMenu?.menuId,
+          // TODO tenantId 는 있어야하지 않나?
+          // tenantId: currentMenu?.tenantId,
+          // userId: authUser?.userId,
+        },
+        {
+          onSuccess: async (data: any) => {
+            console.log('data', data);
+            if (authUser?.activeTenant?.tenantId) {
+              const menus = await asyncMenus(authUser?.activeTenant?.tenantId);
+              updateMenu(menus);
+              setActiveMenuDepth((prev) => {
+                return prev?.map((menu) =>
+                  menu.menuId === currentMenu.menuId ? { ...menu, isFavorite: true } : menu,
+                );
+              });
+            }
+          },
+        },
+      );
+    } else {
+      deleteMenuFavorites(currentMenu?.menuId, {
+        onSuccess: async (data: any) => {
+          console.log('data', data);
+          if (authUser?.activeTenant?.tenantId) {
+            const menus = await asyncMenus(authUser?.activeTenant?.tenantId);
+            updateMenu(menus);
+            setActiveMenuDepth((prev) => {
+              return prev?.map((menu) =>
+                menu.menuId === currentMenu.menuId ? { ...menu, isFavorite: false } : menu,
+              );
+            });
+          }
+        },
+      });
+    }
+  };
+
   return (
     <div className={cn(styles.start, styles.contents)}>
       <Breadcrumbs />
@@ -150,7 +229,9 @@ const PageContainerComponent: FC<{
               <Button
                 className={cn(styles.btn_favorites, isFavorite ? styles.active : '')}
                 onlyIcon
-                onClick={() => setIsFavorite(!isFavorite)}
+                onClick={() => {
+                  handleFavorites();
+                }}
               >
                 <IcoStar
                   width={16}

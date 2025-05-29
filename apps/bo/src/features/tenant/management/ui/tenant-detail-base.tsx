@@ -37,6 +37,12 @@ const duplicateCheck = async (tenantName: string) => {
   else return DuplicateState.ok;
 };
 
+/**
+ * 화면번호: NLP_BO_TMS_1002 (테넌트기본 정보)
+ * @param props
+ * @param ref
+ * @returns
+ */
 const TenantDetailBaseComponent = (props: any, ref: any) => {
   const routerState = useRouterState();
   const { open: openModal, confirm: openConfirm } = useModal();

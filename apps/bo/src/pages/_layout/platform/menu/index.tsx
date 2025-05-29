@@ -48,7 +48,7 @@ function RouteComponent() {
   };
 
   return (
-    <PageContainer scrollHidden={false}>
+    <PageContainer>
       <ContentsButtons>
         <Button
           type="button"

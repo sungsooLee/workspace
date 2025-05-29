@@ -1,17 +1,20 @@
 import React, { useCallback, useState } from 'react';
-import { Button, GridBox, useGridBox } from '@learnway/ui';
+import { Button, GridBox, GridState, useGridBox } from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { useSearchBox } from '@learnway/hooks';
+import { CODE_GROUP, useSearchBox } from '@learnway/hooks';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { SearchBox } from '@shared/ui/search-box';
 import { SplitPanel } from '@shared/ui';
-import { MessageDetail } from './-components/detail';
+import { MessageDetail } from '../../../../features/platform/label-message/ui/detail';
 import { queryOptions } from '@entities/label-messages/service/label-messages.queries';
 import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { LabelMessagesQueryParams } from '@types';
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+import { IcoPlus } from '@learnway/icons';
+import { DATE_TIME_FORMAT, formatISODateString } from '@learnway/shared';
 
 export const Route = createFileRoute('/_layout/platform/label-message/')({
   component: RouteComponent,
@@ -68,13 +71,12 @@ function RouteComponent() {
     });
   };
 
-  // console.log('======>', {
-  //   gConfig,
-  //   code: codeConfig.getCodesByCodeGroup('labelMessageType'),
-  // });
+  const handleStateChange = (newState: GridState) => {
+    console.log(newState);
+  };
 
   return (
-    <PageContainer scrollHidden={true}>
+    <PageContainer>
       <ContentsButtons>
         <Button
           type="button"
@@ -92,12 +94,19 @@ function RouteComponent() {
           <GridBox
             config={gConfig}
             title={t('목록')}
-            height={400}
-            showAdd
+            // height={400}
+            // showAdd
             showNumberingColumn
             autoSelectFirstRow
             onRowSelect={handleGridRowSelect}
-            onAddClick={handleGridAddClick}
+            // onAddClick={handleGridAddClick}
+            customButtonNode={
+              <Button variant="text" onClick={handleGridAddClick} className={layoutStyles.btn_text}>
+                <IcoPlus width={16} height={16} stroke="#131C30" />
+                {t('LABEL.grid.header.add')}
+              </Button>
+            }
+            onStateChange={handleStateChange}
           />
           <MessageDetail
             labelMessageId={selectedLabelMessageId}
@@ -117,11 +126,10 @@ const searchConfig: any = {
         type: 'dropdown',
         label: t('LABEL.form.label.category'),
         value: '',
-        options: [
-          { value: '', label: '전체' },
-          { value: 'LABEL', label: '라벨' },
-          { value: 'MESSAGE', label: '메세지' },
-        ],
+        optionsConfig: {
+          options: [{ value: '', label: t('LABEL.all') }],
+          codeGroup: CODE_GROUP['pms.labelmessage.LabelMessageType'],
+        },
       },
       {
         name: 'labelMessageMultilingulKey',
@@ -141,9 +149,9 @@ const searchConfig: any = {
         label: t('LABEL.form.label.useYn'),
         value: '',
         options: [
-          { value: '', label: '전체' },
-          { value: 'true', label: '사용' },
-          { value: 'false', label: '미사용' },
+          { value: '', label: t('LABEL.all') },
+          { value: 'true', label: t('LABEL.common.isUsed') },
+          { value: 'false', label: t('LABEL.common.disable') },
         ],
       },
     ],
@@ -152,10 +160,6 @@ const searchConfig: any = {
 
 const gridConfig = {
   query: queryOptions.all<LabelMessagesQueryParams>,
-  // data: [
-  //   { labelMessageId: 1, labelMessageType: 'a', labelMessageMultilingulKey: 'a' },
-  //   { labelMessageId: 2, labelMessageType: 'a2', labelMessageMultilingulKey: 'a2' },
-  // ],
   columns: [
     { name: 'labelMessageType', label: () => t('LABEL.grid.column.type') },
     {
@@ -164,7 +168,11 @@ const gridConfig = {
     },
     { name: 'labelMessageName', label: t('LABEL.grid.column.labelMessage') },
     { name: 'createdBy', label: t('LABEL.grid.column.createdBy') },
-    { name: 'createdDate', label: t('LABEL.grid.column.createdDate') },
+    {
+      name: 'createdDate',
+      label: t('LABEL.grid.column.createdDate'),
+      render: (info: any) => formatISODateString(info.getValue(), DATE_TIME_FORMAT.DATETIME_SEC),
+    },
   ],
   pagination: {
     pageSize: 10,

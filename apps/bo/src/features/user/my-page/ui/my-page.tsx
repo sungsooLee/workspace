@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { cn, getStringF, getDateToString } from '@learnway/shared';
+import { cn, formatDate } from '@learnway/shared';
 import { FormSubTitle } from '@shared/ui/form';
 import { Avatar } from '@learnway/ui';
 
@@ -10,11 +10,26 @@ import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.
 import styles from './my-page.module.css';
 import { useFetchAuthUser, useUserDetail } from '@learnway/auth';
 import { useFetchUser } from '@entities/users/service/users.hook';
+import { useCreation } from 'ahooks';
+
+import imgLogo from '@assets/images/temp/img_temp_company_logo.png';
+
+export const AvataFallback = ({ name }: { name?: string }) => {
+  const firstUnit = useCreation(() => {
+    if (!name) {
+      return '';
+    }
+    return name.substring(0, 1);
+  }, [name]);
+  return (
+    <span className={styles.name}>
+      <em className={styles.text}>{firstUnit}</em>
+    </span>
+  );
+};
 
 export function MyPage() {
-  const [hasAvataImage] = useState<boolean>(true);
   const { data: authUser } = useFetchAuthUser();
-  // const { data: user } = useFetchUser(authUser?.userId);
   const { data: user } = useUserDetail();
 
   console.log('authUser', authUser);
@@ -23,24 +38,15 @@ export function MyPage() {
     <div className={styles.start}>
       <div className={styles.profile_wrap}>
         <div className={styles.avata_wrap}>
-          {hasAvataImage ? (
-            <>
-              <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
-              <span className={styles.logo_wrap}>
-                {/* <img src={imgLogo} alt="" className={styles.logo_img} /> */}
-              </span>
-            </>
-          ) : (
-            // 아바타 이미지 없는 경우 CASE
-            <>
-              <span className={styles.name}>
-                <em className={styles.text}>{'김'}</em>
-              </span>
-              <span className={styles.logo_wrap}>
-                {/* <img src={imgLogo} alt="" className={styles.logo_img} /> */}
-              </span>
-            </>
-          )}
+          <Avatar
+            imageUrl={authUser?.avataImage}
+            // imageUrl="https://github.com/shadcn.png"
+            className={styles.info_avata}
+            fallback={<AvataFallback name={authUser?.name} />}
+          />
+          <span className={styles.logo_wrap}>
+            <img src={imgLogo} alt="" className={styles.logo_img} />
+          </span>
         </div>
         <div className={styles.name_wrap}>
           <span className={styles.name}>{user?.name}</span>
@@ -57,9 +63,7 @@ export function MyPage() {
           </li>
           <li>
             <span className={styles.title}>{'생년월일'}</span>
-            <p className={styles.text}>
-              {user?.birthday && getDateToString(new Date(String(user?.birthday)))}
-            </p>
+            <p className={styles.text}>{user?.birthday && formatDate(user?.birthday + '')}</p>
           </li>
           <li>
             <span className={styles.title}>{'성별'}</span>
@@ -89,7 +93,7 @@ export function MyPage() {
                 {/* <td>{'+82 2-1234-1234'}</td> */}
                 <td>{user?.companyTelephoneNumber}</td>
                 <th scope={'row'}>{'지역'}</th>
-                <td>{'서울'}</td>
+                <td>{user?.workPlaceCode}</td>
               </tr>
               <tr>
                 <th scope={'row'}>{'주소'}</th>

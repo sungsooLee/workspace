@@ -101,7 +101,7 @@ function RouteComponent() {
 
   return (
     <div>
-      <PageContainer scrollHidden={true}>
+      <PageContainer>
         <ContentsButtons>
           <Button
             type="button"

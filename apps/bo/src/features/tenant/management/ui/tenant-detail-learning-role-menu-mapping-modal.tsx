@@ -36,6 +36,11 @@ import {
   useModifyMenusAndApiToRole,
 } from '@entities/role/service/role-manage.hook';
 
+/**
+ * 화면번호: NLP_BO_PMS_1109
+ * @param param0
+ * @returns
+ */
 const TenantDetailLearningRoleMenuMappingModalComponent: FC<any> = ({
   siteScope,
   tenantId,

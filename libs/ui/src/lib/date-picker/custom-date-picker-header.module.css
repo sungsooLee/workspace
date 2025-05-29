@@ -1,0 +1,39 @@
+/* custom-date-picker-header.module.css */
+.start {
+  @apply relative;
+  .header {
+    @apply flex h-[32px] w-full items-center justify-between;
+    .select_value_wrap {
+      @apply flex items-center justify-center;
+      button {
+        @apply body_3_b text-[var(--gray8)];
+        & + button {
+          @apply ml-[25px];
+        }
+        &.active svg {
+          @apply rotate-180;
+        }
+        svg {
+          @apply ml-[4px];
+        }
+      }
+    }
+  }
+  .select_year_wrap,
+  .select_month_wrap {
+    @apply scrollbar absolute top-[30px] flex max-h-[240px] w-[110px] -translate-x-1/2 flex-col overflow-y-auto rounded-[4px] border border-solid border-[#667085] bg-white px-[8px] py-[6px];
+    .btn_item {
+      @apply body_3_r !ml-0 flex !min-h-[38px] w-full items-center justify-center text-[var(--gray8)];
+      &.active,
+      &:hover {
+        @apply rounded-[4px] bg-[#EDFCFF];
+      }
+    }
+  }
+  .select_year_wrap {
+    @apply -right-[30px];
+  }
+  .select_month_wrap {
+    @apply left-1/2 -ml-[40px];
+  }
+}
