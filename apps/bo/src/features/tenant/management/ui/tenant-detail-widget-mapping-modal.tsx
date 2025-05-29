@@ -65,7 +65,6 @@ const TenantDetailWidgetMappingModalComponent: FC<{ tenantId: number }> = ({ ten
               title={t('위젯목록')}
               config={gConfig}
               columns={columns}
-              height={380}
               multiple
               showColumnSettings={false}
               hideRowSelectionCheckBox={true}

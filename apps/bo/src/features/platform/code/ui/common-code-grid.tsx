@@ -315,7 +315,6 @@ const CommonCodeGridComponent = ({
               ref={gridRef}
               data={data || []}
               columns={columns}
-              height={320}
               showTotalCount={true}
               title={t('LABEL.grid.title.commonCdList')}
               pagination={{

@@ -266,7 +266,6 @@ const CommonCodeGroupGridComponent = ({
               ref={gridRef}
               data={data || []}
               columns={columns(router)}
-              height={350}
               showTotalCount={true}
               title={t('LABEL.grid.title.commonCdGroupList')}
               pagination={{

@@ -113,7 +113,6 @@ const SystemCodeGridComponent = ({ data }: any) => {
               onRowSelect={handleRowSelect}
               showNumberingColumn={true}
               clientSideSorting={true}
-              height={350}
               title={'enum 그룹 목록'}
             />
             <GridBox
@@ -123,7 +122,6 @@ const SystemCodeGridComponent = ({ data }: any) => {
               showNumberingColumn={true}
               onRowSelect={handleDetailRowSelect}
               clientSideSorting={true}
-              height={350}
               title={'enum 목록'}
             />
           </div>

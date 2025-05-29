@@ -205,7 +205,6 @@ const RoleModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
               onRowSelect={handleRowSelect}
               config={gConfig}
               //   columns={columns}
-              height={380}
               // showColumnSettings={false}
               title={t('HRD 담당자 역할 목록')}
             />

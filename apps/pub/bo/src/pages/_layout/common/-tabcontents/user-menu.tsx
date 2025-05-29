@@ -17,7 +17,7 @@ const UserMenuComponent: FC<{}> = ({}) => {
     { value: 'option3', label: '옵션 3' },
   ];
 
-  const [pageIndex, setPageIndex] = useState(0);
+  const [pageNumber, setPageIndex] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const data: any[] = [
     {
@@ -255,11 +255,10 @@ const UserMenuComponent: FC<{}> = ({}) => {
           showSelectedCount={true}
           showColumnSettings={false}
           showNumberingColumn={true}
-          height={200}
           pagination={{
             pageSize,
-            pageIndex,
-            totalRows: 100,
+            pageNumber,
+            totalPages: 100,
             onPageChange: setPageIndex,
             onPageSizeChange: setPageSize,
           }}

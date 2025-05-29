@@ -134,7 +134,6 @@ const ChannelRequestChoiceModalComponent = () => {
               onRowSelect={handleRowSelect}
               config={config}
               columns={columns}
-              height={380}
               showColumnSettings={false}
               title="채널 개설 신청 목록"
             />

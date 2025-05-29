@@ -107,7 +107,6 @@ const CompanyModalComponent = forwardRef((props, ref) => {
               onRowSelect={handleRowSelect}
               config={config}
               columns={columns}
-              height={380}
               showColumnSettings={false}
               title="타이틀"
             />
