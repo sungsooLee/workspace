@@ -21,7 +21,7 @@
       }
     }
     &:disabled {
-      @apply border border-solid border-[var(--gray2)] bg-[var(--gray2)];
+      @apply border border-solid border-[var(--gray3)] bg-[var(--gray2)];
       .indicator::after {
         @apply hidden;
       }
