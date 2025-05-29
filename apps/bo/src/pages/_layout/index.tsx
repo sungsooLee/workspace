@@ -191,7 +191,7 @@ export const munu = [
   {
     screenName: '라벨/메시지 관리',
     pageId: '/platform/label-message',
-    screenId: '-',
+    screenId: 'NLP_BO_PMS_1406',
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 완료', // 비고
@@ -200,7 +200,7 @@ export const munu = [
   {
     screenName: '프로그램 관리',
     pageId: '/platform/program',
-    screenId: '-',
+    screenId: 'NLP_BO_PMS_1403',
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 완료', // 비고

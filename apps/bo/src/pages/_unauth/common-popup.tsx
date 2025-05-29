@@ -15,6 +15,8 @@ import {
   UserAndExternalUserTabsChoiceModal,
   UserChoiceForGroupModal,
   UserChoiceModal,
+  MenuChoiceTreeModal,
+  CategoryChoiceTreeModal,
 } from '@features/shared';
 import { Button, ChipListModalSelectorFormField, ContentsRow, Input, useModal } from '@learnway/ui';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
@@ -300,12 +302,39 @@ function RouteComponent() {
               onClick={(e) => {
                 e.stopPropagation();
                 openModal({
-                  width: 'xl',
                   content: <UserChoiceModal />,
                 });
               }}
             >
               {'유저 검색(공통)'}
+            </Button>
+            <Button
+              size={'xs'}
+              className="btn_table"
+              variant={'gray2'}
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal({
+                  width: 'xl',
+                  content: <MenuChoiceTreeModal menuScopeCode="BO" />,
+                });
+              }}
+            >
+              {'메뉴 조회 팝업(공통)'}
+            </Button>
+            <Button
+              size={'xs'}
+              className="btn_table"
+              variant={'gray2'}
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal({
+                  width: 'xl',
+                  content: <CategoryChoiceTreeModal />,
+                });
+              }}
+            >
+              {'케테고리 조회 팝업(공통)'}
             </Button>
           </div>
         </SubContents>
