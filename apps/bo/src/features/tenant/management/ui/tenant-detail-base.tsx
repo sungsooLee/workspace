@@ -16,7 +16,7 @@ import {
 } from '@learnway/ui';
 import { ContentsHistoryInfoFormField, FormRow, ThumbnailListFormField } from '@shared/ui';
 import { isEqual } from 'lodash';
-import { CompanyShuttleModal, RoleChoiceModal } from '@features/shared';
+import { CompanyShuttleModal, RoleChoiceModal, UserChoiceModal } from '@features/shared';
 import {
   DuplicateCheckInputFormField,
   DuplicateState,
@@ -94,6 +94,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       isTenantCategory: data.useCategory.includes(EnUseCategory.isTenantCategory),
       companyTenantList: data.companyTenantList.map((i: any) => i.companyId),
       tenantMappingRoleList: data.tenantMappingRoleList.map((i: any) => i.roleId),
+      tenantMappingUserList: data.tenantMappingUserList.map((i: any) => i.userId),
       tenantId: tenantId,
     };
     console.log('payload {} => ', payload);
@@ -127,7 +128,10 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
           name: item.companyName,
         })),
         tenantMappingLanguageTypeList: tenantData.tenantLanguageList,
-        tenantMappingUserList: tenantData.tenantUserList,
+        tenantMappingUserList: tenantData.tenantUserList.map((item) => ({
+          userId: item.userId,
+          name: item.companyName,
+        })),
         tenantMappingRoleList: tenantData.tenantRoleList.map((item) => ({
           roleId: item.roleId,
           name: item.roleName,
@@ -169,7 +173,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       <ContentsRow>
         <FormRow provider={provider} name="logoImageUrl" element={<ThumbnailListFormField />} />
       </ContentsRow>
-      {/* <ContentsRow>
+      <ContentsRow>
         <FormRow
           provider={provider}
           name="tenantMappingUserList"
@@ -188,8 +192,8 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
             />
           }
         />
-      </ContentsRow> */}
-      <ContentsRow>
+      </ContentsRow>
+      {/* <ContentsRow>
         <FormRow
           provider={provider}
           name="tenantMappingRoleList"
@@ -208,7 +212,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
             />
           }
         />
-      </ContentsRow>
+      </ContentsRow> */}
       <ContentsRow>
         <FormRow provider={provider} name="tenantBillingTag" />
       </ContentsRow>
@@ -442,7 +446,7 @@ const formConfig: DynamicFormConfig = {
         },
       ],
     },
-    tenantMappingRoleList: { required: true },
+    tenantMappingUserList: { required: true },
     tenantBillingTag: { required: true },
     companyTenantList: { required: true },
     isUsed: { required: true },
