@@ -9,7 +9,7 @@ import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { CompanyDetail } from '@features/platform/company/company-detail';
 import { CompanyDetailHR } from '@features/platform/company/company-detail-hr';
 
-export const Route = createFileRoute('/_layout/platform/company/detail')({
+export const Route = createFileRoute('/_layout/platform/company/management/detail')({
   component: RouteComponent,
 });
 
@@ -23,7 +23,7 @@ function RouteComponent() {
   const [selectedTabKey, setSelectedTabKey] = useState('company');
 
   useEffect(() => {
-    if (!companyCode) router.navigate({ to: '/platform/company' });
+    if (!companyCode) router.navigate({ to: '/platform/company/management' });
   }, [companyCode]);
 
   const handleTabChange = (tabKey: string) => {
@@ -51,7 +51,7 @@ function RouteComponent() {
         <Button
           variant="point"
           size="sm"
-          onClick={() => router.navigate({ to: '/platform/company' })}
+          onClick={() => router.navigate({ to: '/platform/company/management' })}
         >
           {t('LABEL.button.list')}
         </Button>

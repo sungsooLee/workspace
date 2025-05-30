@@ -275,7 +275,25 @@ export const munu = [
     screenId: 'NLP_BO_EDO_1603',
     pageType: 'Page',
     completionDate: '-',
-    memo: '작업 중', // 비고
+    memo: '작업 중',
+    end: false,
+  },
+  {
+    screenName: '회사 관리',
+    pageId: '/platform/company/management',
+    screenId: 'NLP_BO_TMS_1300',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중',
+    end: false,
+  },
+  {
+    screenName: '회사 조직 관리',
+    pageId: '/platform/company/organization',
+    screenId: 'NLP_BO_TMS_1301',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중',
     end: false,
   },
 ];
