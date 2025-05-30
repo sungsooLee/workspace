@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef } from 'react';
 
 import { cn } from '@learnway/shared';
 
@@ -55,8 +55,8 @@ const PaginationComponent = forwardRef<HTMLDivElement, PaginationComponentProps>
       size = 'medium',
       variant = 'text',
       hidePageInfo,
-      pageSize,
-      pageSizeOptions = [10, 20, 50, 100],
+      pageSize = 20,
+      pageSizeOptions = [10, 20, 50, 100, 500, 1000],
       hidePageSizeOptions,
       onPageSizeChange,
       ...props
@@ -71,7 +71,7 @@ const PaginationComponent = forwardRef<HTMLDivElement, PaginationComponentProps>
 
     const options: DropdownOption[] = pageSizeOptions?.map((size) => ({
       value: size,
-      label: `${size}개씩 보기`,
+      label: String(size),
     }));
 
     const handlePageSizeChange = (newValue?: any) => {
@@ -88,6 +88,7 @@ const PaginationComponent = forwardRef<HTMLDivElement, PaginationComponentProps>
       disabled: totalPages === 0,
       props,
     });
+
     return (
       <div
         ref={ref}
