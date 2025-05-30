@@ -62,14 +62,14 @@ const ChannelShuttleModalComponent = forwardRef((_) => {
 
   const { provider: sProvider } = useSearchBox(searchConfig);
 
-  const columnHelper = createColumnHelper();
+  const columnHelper = createColumnHelper<any>();
   const columns = [
     columnHelper.accessor('channelName', {
       header: t('채널명'),
       size: 132,
       cell: (info) => info.getValue(),
     }),
-    columnHelper.accessor('tenantId', {
+    columnHelper.accessor('companyName', {
       header: t('회사'),
       size: 132,
       cell: (info) => info.getValue(),
@@ -86,7 +86,9 @@ const ChannelShuttleModalComponent = forwardRef((_) => {
     columnHelper.accessor('isUsed', {
       header: t('사용여부'),
       size: 132,
-      cell: (info) => info.getValue(),
+      cell: (info) => {
+        return info.row.original.isUsed ? t('LABEL.common.enable') : t('LABEL.common.disable');
+      },
     }),
   ] as ColumnDef<any, unknown>[];
 

@@ -61,31 +61,43 @@ const TenantShuttleModalComponent = forwardRef((_) => {
 
   const { provider: sProvider } = useSearchBox(searchConfig);
 
-  const columnHelper = createColumnHelper();
+  const columnHelper = createColumnHelper<any>();
   const columns = [
     columnHelper.accessor('tenantName', {
       header: t('테넌트명'),
       size: 132,
       cell: (info) => info.getValue(),
     }),
-    columnHelper.accessor('companyName', {
+    columnHelper.accessor('companyTenantList', {
       header: t('회사'),
       size: 132,
-      cell: (info) => info.getValue(),
+      cell: (info) => {
+        const companyNames = info.row.original.companyTenantList.map((item: any) => {
+          return item.companyName;
+        });
+        return companyNames.toString();
+      },
       meta: {
         headerAlign: 'left', // 헤더만 가운데 정렬
         cellAlign: 'left', // 셀은 오른쪽 정렬
       },
     }),
-    columnHelper.accessor('tenantMappingRoleName', {
+    columnHelper.accessor('tenantRoleList', {
       header: t('테넌트 담당자'),
       size: 132,
-      cell: (info) => info.getValue(),
+      cell: (info) => {
+        const tenantRoleList = info.row.original.tenantRoleList.map((item: any) => {
+          return item.roleName;
+        });
+        return tenantRoleList.toString();
+      },
     }),
     columnHelper.accessor('isUsed', {
       header: t('사용여부'),
       size: 132,
-      cell: (info) => info.getValue(),
+      cell: (info) => {
+        return info.row.original.isUsed ? t('LABEL.common.enable') : t('LABEL.common.disable');
+      },
     }),
   ] as ColumnDef<any, unknown>[];
 
