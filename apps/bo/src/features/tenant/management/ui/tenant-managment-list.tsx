@@ -1,15 +1,14 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
-import { FC, useState, useCallback } from 'react';
-import { t } from 'i18next';
+import { FC, useState, useEffect, useCallback } from 'react';
+import { useRouter, useRouterState, Link } from '@tanstack/react-router';
 import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
-import { SearchBox } from '@shared/ui/search-box';
-import { useRouter } from '@tanstack/react-router';
+import { t } from 'i18next';
 
-import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
 import { Button, GridBox, useGridBox } from '@learnway/ui';
+import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
+import { SearchBox } from '@shared/ui/search-box';
 
 import { tenantQueryOptions } from '@entities/tenant/service/tenant.queries';
 
@@ -20,6 +19,17 @@ import { tenantQueryOptions } from '@entities/tenant/service/tenant.queries';
  */
 const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
   const router = useRouter();
+  const routerState = useRouterState();
+  const handleTenantNameClick = (tenantId: number, tenantName: string) => {
+    router.navigate({
+      to: `${rootPath}/tenant/management/detail`,
+      state: {
+        tenantId: tenantId,
+        tenantName: tenantName,
+        listParam: getValues(),
+      },
+    });
+  };
 
   const gridConfig = {
     query: tenantQueryOptions.list,
@@ -47,15 +57,9 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
         return (
           <Button
             className="link"
-            onClick={() => {
-              router.navigate({
-                to: `${rootPath}/tenant/management/detail`,
-                state: {
-                  tenantId: info.row.original.tenantId,
-                  tenantName: info.row.original.tenantName,
-                },
-              });
-            }}
+            onClick={() =>
+              handleTenantNameClick(info.row.original.tenantId, info.row.original.tenantName)
+            }
           >
             {info.row.original.tenantName}
           </Button>
@@ -149,7 +153,7 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
     }),
   ] as ColumnDef<any, unknown>[];
 
-  const { provider: searchProvider } = useSearchBox(searchConfig);
+  const { provider: searchProvider, getValues, fetchData } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig);
 
   // useDynamicForm(formConfig);
@@ -158,6 +162,13 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
     console.log('search', data);
     gridFetch(data);
   };
+  useEffect(() => {
+    const listParm = routerState.location.state.listParam;
+    if (listParm) {
+      fetchData(listParm);
+      gridFetch(listParm);
+    }
+  }, []);
 
   return (
     <>
