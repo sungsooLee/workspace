@@ -8,7 +8,7 @@ import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-butt
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 import { CompanyDetail } from '@features/platform/company/company-detail';
 
-export const Route = createFileRoute('/_layout/platform/company/regist')({
+export const Route = createFileRoute('/_layout/platform/company/management/regist')({
   component: RouteComponent,
 });
 
@@ -21,7 +21,7 @@ function RouteComponent() {
           <Button
             variant="point"
             size="sm"
-            onClick={() => router.navigate({ to: '/platform/company' })}
+            onClick={() => router.navigate({ to: '/platform/company/management' })}
           >
             {t('LABEL.button.list')}
           </Button>
