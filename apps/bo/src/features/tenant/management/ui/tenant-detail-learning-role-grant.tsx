@@ -35,7 +35,7 @@ import {
   useRoleManager,
   useGetRoleUserGroups,
 } from '@entities/role/service/role-manage.hook';
-import { UserChoiceModal, UserChoiceForGroupModal } from '@features/shared';
+import { UserChoiceModal, CompanyUserChoiceModal } from '@features/shared';
 import { TenantDetailLearningRoleGrantRangeModal } from './tenant-detail-learning-role-grant-range-modal';
 
 import { roleManagerQueryOptions } from '@entities/role/service/role-manage.queries';
@@ -86,7 +86,7 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
   };
   const handleUserAddButtonClick = async () => {
     const data = await openModal({
-      content: <UserChoiceForGroupModal />,
+      content: <CompanyUserChoiceModal />,
       width: 'xl',
     });
     console.log('hand', data);
