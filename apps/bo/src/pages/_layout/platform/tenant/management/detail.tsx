@@ -1,5 +1,5 @@
-import { Children, FC, isValidElement, ReactNode, useState, useEffect, useRef } from 'react';
-import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { useState, useEffect, useRef } from 'react';
+import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
@@ -9,15 +9,16 @@ import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 
-import { EnTenantDetailTabKey } from '@types';
 /* tab contents */
-import { TenantDetailMenu } from '@features/tenant/management/ui/tenant-detail-menu';
 import { TenantDetailBase } from '@features/tenant/management/ui/tenant-detail-base';
+import { TenantDetailMenu } from '@features/tenant/management/ui/tenant-detail-menu';
 import { TenantDetailCategory } from '@features/tenant/management/ui/tenant-detail-category';
 import { TenantDetailAttribute } from '@features/tenant/management/ui/tenant-detail-attribute';
 import { TenantDetailWidget } from '@features/tenant/management/ui/tenant-detail-widget';
 import { TenantDetailBanner } from '@features/tenant/management/ui/tenant-detail-banner';
 import { TenantDetailLearningRole } from '@features/tenant/management/ui/tenant-detail-learning-role';
+
+import { EnTenantDetailTabKey } from '@types';
 
 export const Route = createFileRoute('/_layout/platform/tenant/management/detail')({
   component: RouteComponent,
@@ -31,8 +32,20 @@ const scrollHidden: string[] = [
 ];
 
 const buttonShowTabs: string[] = [EnTenantDetailTabKey.base, EnTenantDetailTabKey.attribute];
+/**
+ * 화면 번호:
+ * 테넌트 기본정보 (NLP_BO_TMS_1002),
+ * 테넌트 속성 과정연관 (NLP_BO_TMS_1003_00_04),
+ * 메뉴 (NLP_BO_TMS_1002_01, NLP_BO_TMS_1002_01_01, NLP_BO_TMS_1002_01_03, NLP_BO_TMS_1002_01_04)
+ * 카테고리 (NLP_BO_TMS_1002_02_01 , NLP_BO_TMS_1002_02_02)
+ * 역할 (NLP_BO_TMS_1003_04, NLP_BO_TMS_1003_04_01, NLP_BO_TMS_1003_04_02, NLP_BO_TMS_1003_04_03, NLP_BO_TMS_1003_04_04, NLP_BO_TMS_1003_04_05)
+ * 위젯 (NLP_BO_TMS_1003_05)
+ * 배너 (NLP_BO_TMS_1105, NLP_BO_TMS_1106)
+ * @returns
+ */
 function RouteComponent() {
   const router = useRouter();
+  const routerState = useRouterState();
   const formBaseRef = useRef(1);
   const formAttrRef = useRef(2);
 
@@ -44,7 +57,9 @@ function RouteComponent() {
     }
   };
   const handleListButtonClick = () => {
-    router.navigate({ to: '/platform/tenant/management' });
+    const listParam = routerState.location.state?.listParam;
+
+    router.navigate({ to: '/platform/tenant/management', state: { listParam: listParam } });
   };
 
   const handleModifyButtonClick = () => {

@@ -1,5 +1,5 @@
-import { Children, FC, isValidElement, ReactNode, useState, useEffect, useRef } from 'react';
-import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { ReactNode, useState, useEffect, useRef } from 'react';
+import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
@@ -24,9 +24,19 @@ export const Route = createFileRoute('/_layout/tenant/management/detail')({
 });
 const scrollHidden: string[] = [EnTenantDetailTabKey.base, EnTenantDetailTabKey.attribute];
 const buttonShowTabs: string[] = [EnTenantDetailTabKey.base, EnTenantDetailTabKey.attribute];
+/**
+ * 화면 번호:
+ * 테넌트 속성 과정연관 (NLP_BO_TMS_1003_00_04),
+ * 메뉴 (NLP_BO_TMS_1002_01, NLP_BO_TMS_1002_01_01, NLP_BO_TMS_1002_01_03, NLP_BO_TMS_1002_01_04)
+ * 카테고리 (NLP_BO_TMS_1002_02_01 , NLP_BO_TMS_1002_02_02)
+ * 역할 (NLP_BO_TMS_1003_04, NLP_BO_TMS_1003_04_01, NLP_BO_TMS_1003_04_02, NLP_BO_TMS_1003_04_03, NLP_BO_TMS_1003_04_04, NLP_BO_TMS_1003_04_05)
+ * 위젯 (NLP_BO_TMS_1003_05)
+ * 배너 (NLP_BO_TMS_1105, NLP_BO_TMS_1106)
+ * @returns
+ */
 function RouteComponent() {
   const router = useRouter();
-  const formRef = useRef<HTMLFormElement>(null);
+  const routerState = useRouterState();
 
   const [selectedTabKey, setSelectedTabKey] = useState<string>(EnTenantDetailTabKey.attribute);
 
