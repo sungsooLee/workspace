@@ -51,10 +51,15 @@ const AccordionMenuComponent = ({
       .filter((menu) => menu.isHiddenMenu === false)
       .map((menu: Menu, index: number) => {
         const children = menu?.children?.filter((m) => m.isHiddenMenu === false);
-        const active =
-          activeMenuDepth &&
-          activeMenuDepth[depth - 1] &&
-          activeMenuDepth[depth - 1]?.path === menu?.path;
+
+        let active = false;
+        if (activeMenuDepth && activeMenuDepth[depth - 1]) {
+          active = activeMenuDepth[depth - 1]?.path === menu?.path;
+        } else if (depth === 4 && activeMenuDepth) {
+          const currentPath = router.state.location.pathname;
+          active = currentPath === menu?.path;
+        }
+
         return {
           value: `menu_${index}`,
           title: (
@@ -70,7 +75,7 @@ const AccordionMenuComponent = ({
           active,
         } as AccordionItem;
       });
-  }, [menus, activeMenuDepth]);
+  }, [menus, activeMenuDepth, router.state.location.pathname]);
 
   useEffect(() => {
     if (openAll === undefined) {
