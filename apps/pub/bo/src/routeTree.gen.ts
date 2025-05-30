@@ -100,6 +100,7 @@ import { Route as LayoutCommonPopExcelUploadImport } from './pages/_layout/commo
 import { Route as LayoutCommonPopDataRangeSettingImport } from './pages/_layout/common/pop-data-range-setting'
 import { Route as LayoutCommonPopCategorySelectImport } from './pages/_layout/common/pop-category-select'
 import { Route as LayoutCommonPopAdminExtensionImport } from './pages/_layout/common/pop-admin-extension'
+import { Route as LayoutCommonNotFoundImport } from './pages/_layout/common/not-found'
 import { Route as LayoutCommonBreakpointImport } from './pages/_layout/common/breakpoint'
 import { Route as GuideGuideWordWrapImport } from './pages/_guide/guide/word-wrap'
 import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
@@ -726,6 +727,12 @@ const LayoutCommonPopAdminExtensionRoute =
     path: '/common/pop-admin-extension',
     getParentRoute: () => LayoutRoute,
   } as any)
+
+const LayoutCommonNotFoundRoute = LayoutCommonNotFoundImport.update({
+  id: '/common/not-found',
+  path: '/common/not-found',
+  getParentRoute: () => LayoutRoute,
+} as any)
 
 const LayoutCommonBreakpointRoute = LayoutCommonBreakpointImport.update({
   id: '/common/breakpoint',
@@ -1565,6 +1572,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCommonBreakpointImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/common/not-found': {
+      id: '/_layout/common/not-found'
+      path: '/common/not-found'
+      fullPath: '/common/not-found'
+      preLoaderRoute: typeof LayoutCommonNotFoundImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/common/pop-admin-extension': {
       id: '/_layout/common/pop-admin-extension'
       path: '/common/pop-admin-extension'
@@ -2148,6 +2162,7 @@ interface LayoutRouteChildren {
   LayoutTestRoute: typeof LayoutTestRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutCommonBreakpointRoute: typeof LayoutCommonBreakpointRoute
+  LayoutCommonNotFoundRoute: typeof LayoutCommonNotFoundRoute
   LayoutCommonPopAdminExtensionRoute: typeof LayoutCommonPopAdminExtensionRoute
   LayoutCommonPopCategorySelectRoute: typeof LayoutCommonPopCategorySelectRoute
   LayoutCommonPopDataRangeSettingRoute: typeof LayoutCommonPopDataRangeSettingRoute
@@ -2213,6 +2228,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutTestRoute: LayoutTestRoute,
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutCommonBreakpointRoute: LayoutCommonBreakpointRoute,
+  LayoutCommonNotFoundRoute: LayoutCommonNotFoundRoute,
   LayoutCommonPopAdminExtensionRoute: LayoutCommonPopAdminExtensionRoute,
   LayoutCommonPopCategorySelectRoute: LayoutCommonPopCategorySelectRoute,
   LayoutCommonPopDataRangeSettingRoute: LayoutCommonPopDataRangeSettingRoute,
@@ -2372,6 +2388,7 @@ export interface FileRoutesByFullPath {
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/guide/word-wrap': typeof GuideGuideWordWrapRoute
   '/common/breakpoint': typeof LayoutCommonBreakpointRoute
+  '/common/not-found': typeof LayoutCommonNotFoundRoute
   '/common/pop-admin-extension': typeof LayoutCommonPopAdminExtensionRoute
   '/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/common/pop-data-range-setting': typeof LayoutCommonPopDataRangeSettingRoute
@@ -2510,6 +2527,7 @@ export interface FileRoutesByTo {
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/guide/word-wrap': typeof GuideGuideWordWrapRoute
   '/common/breakpoint': typeof LayoutCommonBreakpointRoute
+  '/common/not-found': typeof LayoutCommonNotFoundRoute
   '/common/pop-admin-extension': typeof LayoutCommonPopAdminExtensionRoute
   '/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/common/pop-data-range-setting': typeof LayoutCommonPopDataRangeSettingRoute
@@ -2651,6 +2669,7 @@ export interface FileRoutesById {
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
   '/_guide/guide/word-wrap': typeof GuideGuideWordWrapRoute
   '/_layout/common/breakpoint': typeof LayoutCommonBreakpointRoute
+  '/_layout/common/not-found': typeof LayoutCommonNotFoundRoute
   '/_layout/common/pop-admin-extension': typeof LayoutCommonPopAdminExtensionRoute
   '/_layout/common/pop-category-select': typeof LayoutCommonPopCategorySelectRoute
   '/_layout/common/pop-data-range-setting': typeof LayoutCommonPopDataRangeSettingRoute
@@ -2791,6 +2810,7 @@ export interface FileRouteTypes {
     | '/guide/typography'
     | '/guide/word-wrap'
     | '/common/breakpoint'
+    | '/common/not-found'
     | '/common/pop-admin-extension'
     | '/common/pop-category-select'
     | '/common/pop-data-range-setting'
@@ -2928,6 +2948,7 @@ export interface FileRouteTypes {
     | '/guide/typography'
     | '/guide/word-wrap'
     | '/common/breakpoint'
+    | '/common/not-found'
     | '/common/pop-admin-extension'
     | '/common/pop-category-select'
     | '/common/pop-data-range-setting'
@@ -3067,6 +3088,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/typography'
     | '/_guide/guide/word-wrap'
     | '/_layout/common/breakpoint'
+    | '/_layout/common/not-found'
     | '/_layout/common/pop-admin-extension'
     | '/_layout/common/pop-category-select'
     | '/_layout/common/pop-data-range-setting'
@@ -3245,6 +3267,7 @@ export const routeTree = rootRoute
         "/_layout/test",
         "/_layout/",
         "/_layout/common/breakpoint",
+        "/_layout/common/not-found",
         "/_layout/common/pop-admin-extension",
         "/_layout/common/pop-category-select",
         "/_layout/common/pop-data-range-setting",
@@ -3603,6 +3626,10 @@ export const routeTree = rootRoute
     },
     "/_layout/common/breakpoint": {
       "filePath": "_layout/common/breakpoint.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/common/not-found": {
+      "filePath": "_layout/common/not-found.tsx",
       "parent": "/_layout"
     },
     "/_layout/common/pop-admin-extension": {

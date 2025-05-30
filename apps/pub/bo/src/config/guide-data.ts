@@ -93,7 +93,7 @@ export const guideData = [
   {
     screenName: '공통/해상도 가이드',
     pageId: 'common/breakpoint',
-    screenId: ' ',
+    screenId: 'breakpoint',
     pageType: 'Page',
     completionDate: '2025-05-22',
     lastUpdateDate: '',
@@ -105,6 +105,15 @@ export const guideData = [
     screenId: 'NLP_BO_PMS_1111',
     pageType: 'Pop-up',
     completionDate: '2025-05-26',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
+    screenName: '공통/404 화면',
+    pageId: 'common/not-found',
+    screenId: '404',
+    pageType: 'page',
+    completionDate: '',
     lastUpdateDate: '',
     remarks: '', // 비고
   },
