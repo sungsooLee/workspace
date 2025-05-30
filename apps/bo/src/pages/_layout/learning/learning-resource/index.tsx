@@ -1,5 +1,5 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { useSearchBox } from '@learnway/hooks';
+import { CODE_GROUP, useSearchBox } from '@learnway/hooks';
 import { Button, useModal } from '@learnway/ui';
 import { LearningResourceFileUploadModal, LearningTypeChoiceModal } from '@features/learning';
 import { LEARNING_TYPE } from '@learnway/config';
@@ -144,17 +144,12 @@ const searchConfig: any = {
       {
         name: 'tenant',
         type: 'dropdown',
-        label: t('테넌트1'),
+        label: t('테넌트'),
         value: '',
-        options: [
-          { value: '', label: t('전체') },
-          { value: 'tenantA', label: t('테넌트A') },
-          { value: 'tenantB', label: t('테넌트B') },
-          { value: 'tenantC', label: t('테넌트C') },
-          { value: 'tenantD', label: t('테넌트D') },
-          { value: 'tenantE', label: t('테넌트E') },
-          { value: 'tenantF', label: t('테넌트F') },
-        ],
+        optionsConfig: {
+          options: [{ value: '', label: t('선택') }],
+          codeGroup: CODE_GROUP['manual.tenant.tenantId'],
+        },
       },
       {
         name: 'channel',
