@@ -57,10 +57,10 @@ function RouteComponent() {
   }, [thumbnailStats]);
 
   const handleExcelUploadModal = async () => {
-    await openModal({
-      content: <ExcelUploadModal />,
-      width: 'lg',
-    });
+    // await openModal({
+    //   content: <ExcelUploadModal />,
+    //   width: 'lg',
+    // });
   };
 
   const handleExcelDownLoad = async () => {

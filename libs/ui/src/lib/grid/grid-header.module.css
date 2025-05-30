@@ -48,9 +48,9 @@ table {
     &::after {
       @apply absolute right-0 top-0 z-[1] h-full w-[1px] bg-[var(--gray5)] content-[''];
     }
-  }
-  & + .thead_th:not(.th_pinned_left) {
-    @apply !border-l-0;
+    & + .thead_th:not(.th_pinned_left) {
+      @apply !border-l-0;
+    }
   }
 }
 [class*='th_pinned_left'] {

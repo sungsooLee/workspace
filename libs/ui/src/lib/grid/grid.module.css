@@ -15,8 +15,11 @@
       @apply h-[20px] w-[20px] appearance-none overflow-hidden rounded-[10px] border border-solid border-[var(--gray5)];
     }
   }
-  .empty_message_container {
-    @apply absolute left-0 top-1/2 mt-[25px] -translate-y-1/2;
+  &.no_data {
+    @apply overflow-hidden pb-[40px];
+    .empty_message_container {
+      @apply absolute bottom-0 left-0 right-0 flex h-[40px] items-center justify-center;
+    }
   }
 }
 
@@ -186,7 +189,7 @@
 }
 
 .empty_message_container {
-  @apply flex w-full items-center justify-center;
+  @apply h-[40px] text-center;
 }
 
 .empty_message {
