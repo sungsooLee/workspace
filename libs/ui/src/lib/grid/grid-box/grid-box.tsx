@@ -37,9 +37,7 @@ const GridBoxComponent = <T extends object>(
     showSelectAll,
     showRemoveAll,
     showAdd,
-    showAddRow,
     showRemove,
-    showRemoveRow,
     titleCustomNode,
     customButtonNode,
     guideText,
@@ -62,6 +60,7 @@ const GridBoxComponent = <T extends object>(
     gridFetch,
     columns,
     title,
+    onStateChange,
     onDataChange,
     excel,
     getParams,
@@ -164,20 +163,6 @@ const GridBoxComponent = <T extends object>(
     [onSearchClick], // 의존성 배열: gridFetch와 page 객체 참조
   );
 
-  /**
-   * 행추가 버튼 클릭
-   */
-  const handleAddRowClick = useCallback(() => {
-    console.log('행추가');
-  }, []);
-
-  /**
-   * 행삭제 버튼 클릭
-   */
-  const handleRemoveRowClick = useCallback(() => {
-    console.log('행삭제');
-  }, []);
-
   // GridComponent로부터 table 인스턴스를 받았을 때 호출될 핸들러
   const handleTableInstanceChange = useCallback((table: Table<any>) => {
     console.log('Table instance received:', table);
@@ -217,7 +202,6 @@ const GridBoxComponent = <T extends object>(
 
   const handlePageChange = useCallback(
     (pageNumber: number) => {
-      console.log('handlePageChange', pageNumber);
       // grid config
       gridFetch?.({
         size: pagination?.pageSize, // page 객체의 pageSize 사용
@@ -310,36 +294,18 @@ const GridBoxComponent = <T extends object>(
               onClick={handleRemoveClick}
             />
           )}
-          {/* 행추가 */}
-          {showAddRow && (
-            <Button
-              variant="outline"
-              size="sm"
-              label={t('행추가', '행추가')}
-              icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
-              onClick={handleAddRowClick}
-            />
-          )}
-          {/* 행삭제 */}
-          {showRemoveRow && (
-            <Button
-              variant="outline"
-              size="sm"
-              label={t('행삭제', '행삭제')}
-              icon={<IcoMinus width={16} height={16} stroke={'#4C515E'} />}
-              onClick={handleRemoveRowClick}
-            />
-          )}
         </div>
       </div>
       {/* 데이터 테이블 렌더링 */}
       <Grid
         {...props}
         ref={gridRef}
+        pagination={paginationProps}
         onChange={props.onChange || onDataChange}
         data={props.data ?? data ?? []}
         columns={props.columns ?? girdColumns ?? []}
         showNumberingColumn={showNumberingColumn}
+        onStateChange={props.onStateChange || onStateChange}
         onTableInstanceChange={handleTableInstanceChange}
       />
       {/* 페이지네이션 */}

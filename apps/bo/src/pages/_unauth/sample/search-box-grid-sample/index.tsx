@@ -1,12 +1,13 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { t } from 'i18next';
 import { createFileRoute } from '@tanstack/react-router';
 import { Button, GridBox, useGridBox } from '@learnway/ui';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
-import { queryOptions } from '@entities/label-messages';
+import { queryOptions } from '@entities/label-messages-mock';
 import { LabelMessagesQueryParams } from '@types';
 import { ContentsButtons, MainContents, PageContainer } from '@widgets/layout';
 import { SearchBox } from '@shared/ui/search-box';
+import { DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
 
 export const Route = createFileRoute('/_unauth/sample/search-box-grid-sample/')({
   component: RouteComponent,
@@ -15,10 +16,6 @@ export const Route = createFileRoute('/_unauth/sample/search-box-grid-sample/')(
 function RouteComponent() {
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
-
-  useEffect(() => {
-    gridFetch(getValues(), { page: 0, size: 10 });
-  }, []);
 
   const handleOnSearch = useCallback((data: any) => {
     console.log('handleOnSearch.data', data);
@@ -32,7 +29,7 @@ function RouteComponent() {
       </ContentsButtons>
       <MainContents>
         <SearchBox provider={sProvider} onSearch={handleOnSearch} />
-        <GridBox config={{ ...gConfig, data: [{}, {}] }} />
+        <GridBox config={gConfig} showNumberingColumn />
       </MainContents>
     </PageContainer>
   );
@@ -118,9 +115,36 @@ const searchConfig: SearchBoxConfig = {
 const gridConfig = {
   query: queryOptions.all<LabelMessagesQueryParams>,
   columns: [
-    { name: '채널', label: '채널', render: (info: any) => 'xxx' },
-    { name: '테넌트', label: '테넌트', render: (info: any) => '222222' },
-    { name: '과정유형', label: '과정유형' },
+    // 분류
+    { name: 'labelMessageType', label: () => t('LABEL.grid.column.type'), size: 100 },
+    // 라벨/메세지 코드
+    {
+      name: 'labelMessageMultilingulKey',
+      label: t('LABEL.grid.column.labelMessageCode'),
+      size: 200,
+    },
+    // 라벨/메세지
+    { name: 'labelMessageName', label: t('LABEL.grid.column.labelMessage'), size: 200 },
+    // 사용여부
+    {
+      name: 'isUsed',
+      label: t('LABEL.grid.column.useYn'),
+      size: 104,
+      render: (info: any) => (info.getValue() ? 'Y' : 'N'),
+    },
+    // 등록자
+    {
+      name: 'createdBy',
+      size: 139,
+      label: t('LABEL.grid.column.createdBy'),
+    },
+    // 등록일
+    {
+      name: 'createdDate',
+      label: t('LABEL.grid.column.createdDate'),
+      size: 200,
+      render: (info: any) => formatDate(info.getValue(), DATE_TIME_FORMAT.DATETIME_SEC),
+    },
   ],
   pagination: {
     pageSize: 10,

@@ -98,7 +98,7 @@ export function useGridTable<T extends object>(
     size: 64,
     header: 'NO.',
     meta: { cellAlign: 'center' },
-    enableSorting: true,
+    enableSorting: false,
     accessorFn: (row, index) => index,
     cell: ({ row }: any) =>
       pagination ? (
@@ -107,6 +107,8 @@ export function useGridTable<T extends object>(
         <p>{row.index + 1}</p>
       ),
   });
+
+  console.log('---- use-grid-table : pagination', pagination);
 
   const createSingleRadioColumn = (): ColumnDef<T> => ({
     id: 'select-radio',

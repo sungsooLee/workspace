@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { GridBoxConfig, useGridBoxConfig } from '../types';
+import { GridBoxConfig, GridState, useGridBoxConfig } from '../types';
 import { UseFormReturn } from 'react-hook-form';
+import { gridStateToSortQueryParams } from '@learnway/shared';
 
 const useGridBoxHook = (config: useGridBoxConfig, getData?: UseFormReturn['getValues']) => {
   const queryClient = useQueryClient();
 
   const [gridConfig, setGridConfig] = useState<GridBoxConfig>(config as any);
 
-  const handleExternalGridDataFetch = async (params?: any, page?: any) => {
-    const options = config.query({ ...params, ...page });
+  const handleExternalGridDataFetch = async (params?: any) => {
+    const options = config.query(params);
     const result = (await queryClient.fetchQuery(options)) as any;
     if (result) {
       setGridConfig((state: any) => ({
@@ -36,11 +37,25 @@ const useGridBoxHook = (config: useGridBoxConfig, getData?: UseFormReturn['getVa
           totalElements: result?.totalElements || 0,
           onPageChange: (newPage: number) => handleGridDataFetch({ page: newPage }),
         },
+        // sort
+        onStateChange: handleGridStateChange,
+        // onStateChange: (newState: GridState) => {
+        //   console.log('use-grid-box :: onStateChange', newState);
+        // },
       }));
     }
   };
+
   const handleGridDataFetch = (page: any) => {
-    handleExternalGridDataFetch(getData ? getData() : {}, page);
+    const params = { ...getData?.(), ...page };
+    handleExternalGridDataFetch(params);
+  };
+
+  const handleGridStateChange = (newState: GridState) => {
+    console.log(newState);
+    const sort = gridStateToSortQueryParams(newState);
+    const params = { ...getData?.(), sort };
+    handleExternalGridDataFetch(params);
   };
 
   const onDataChange = (data: any) => {
