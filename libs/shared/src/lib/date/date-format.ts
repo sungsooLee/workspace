@@ -29,7 +29,7 @@ export function changeTimeLocale(lang: string) {
   }
 }
 
-export function getDateTimeFormat(dateTimeFormat: DATE_TIME_FORMAT) {
+export function getDateTimeFormat(dateTimeFormat = DATE_TIME_FORMAT.DATE) {
   switch (dateTimeFormat) {
     case DATE_TIME_FORMAT.YEAR:
       return timeFormatYear();
@@ -50,8 +50,9 @@ export function getDateTimeFormat(dateTimeFormat: DATE_TIME_FORMAT) {
     case DATE_TIME_FORMAT.MIN_SEC:
       return timeFormatMinuteSecond();
     case DATE_TIME_FORMAT.DATE:
-    default:
       return timeFormatDate();
+    default:
+      return dateTimeFormat;
   }
 }
 

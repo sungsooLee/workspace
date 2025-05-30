@@ -17,7 +17,7 @@ import {
 } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 
-import { DuplicateCodeGuideText } from './menu-code-input';
+import { DuplicateCheckInputFormField, DuplicateState } from '@features/tenant';
 import { ApiInfoModal } from './api-info-modal';
 import { MenuApiMappingModal } from './menu-api-mapping-modal';
 
@@ -93,6 +93,14 @@ export const MenuManage = ({ menuScope }: any) => {
     },
   });
 
+  const duplicateCheck = async (code: string) => {
+    const result = await new Promise((resolve) => {
+      checkExistsMenu({ menuScopeCode: menuScope, menuCode: code }, { onSuccess: resolve });
+    });
+    if (result) return DuplicateState.duplicated;
+    return DuplicateState.ok;
+  };
+
   const {
     provider,
     fetchData,
@@ -132,7 +140,7 @@ export const MenuManage = ({ menuScope }: any) => {
     if (formMode === FORM_MODE.VIEW) {
       const updateData = {
         ...node,
-        menuCode: node.code,
+        menuCode: node.code.fieldValue,
         menuId: selectedNode?.menuId,
         isWebExposed: node.deviceNames.includes(DEVICE_NAME.PC),
         isMobileExposed: node.deviceNames.includes(DEVICE_NAME.Mobile),
@@ -145,7 +153,7 @@ export const MenuManage = ({ menuScope }: any) => {
       //
       const createData = {
         ...node,
-        menuCode: node.code,
+        menuCode: node.code.fieldValue,
         parentId: parentNode?.menuId,
         isWebExposed: node.deviceNames.includes(DEVICE_NAME.PC),
         isMobileExposed: node.deviceNames.includes(DEVICE_NAME.Mobile),
@@ -201,7 +209,7 @@ export const MenuManage = ({ menuScope }: any) => {
       const formData = {
         ...data,
         location: location,
-        code: data.menuCode,
+        code: { fieldValue: data.menuCode, checkState: DuplicateState.okStart },
         deviceNames: deviceNames,
         isDuplicateMenuCode: true, // VIEW 모드에서는 기본적으로 중복 체크 통과
       };
@@ -224,16 +232,6 @@ export const MenuManage = ({ menuScope }: any) => {
   const isFieldChanged = (fieldName: string, currentValue: any) => {
     if (!initialFromValuesRef.current) return true;
     return initialFromValuesRef.current[fieldName] !== currentValue;
-  };
-
-  const handleCodeChange = (newCode: string) => {
-    const isChanged = isFieldChanged('code', newCode);
-    if (onFormChange) {
-      onFormChange({
-        isDuplicateMenuCode: !isChanged && formMode === FORM_MODE.VIEW,
-      });
-      setCodeCheckState(!isChanged && formMode === FORM_MODE.VIEW ? 'success' : 'none');
-    }
   };
 
   const addNode = (node: any) => {
@@ -529,15 +527,16 @@ export const MenuManage = ({ menuScope }: any) => {
                 provider={provider}
                 name={'code'}
                 element={
-                  <DuplicateCodeGuideText
-                    clearFormError={clearFormError}
-                    checkExistsMenu={checkExistsMenu}
-                    isSuccess={isSuccessCodeCheck}
+                  <DuplicateCheckInputFormField
+                    onDuplicationCheck={duplicateCheck}
                     disabled={formMode === FORM_MODE.NONE}
-                    codeCheckState={codeCheckState}
-                    handleCodeChange={handleCodeChange}
-                    setFormError={setFormError}
-                    menuScope={menuScope}
+
+                    // clearFormError={clearFormError}
+                    // checkExistsMenu={checkExistsMenu}
+                    // isSuccess={isSuccessCodeCheck}
+                    // codeCheckState={codeCheckState}
+                    // setFormError={setFormError}
+                    // menuScope={menuScope}
                   />
                 }
               />
@@ -664,8 +663,9 @@ const formConfig: DynamicFormConfig = {
       label: t('메뉴 코드'),
       name: 'code',
       type: 'custom',
+      format: 'object',
       maxLength: 20,
-      value: '',
+      value: { fieldValue: '', checkState: DuplicateState.needInput },
     },
     {
       label: t('메뉴명'),
@@ -738,18 +738,29 @@ const formConfig: DynamicFormConfig = {
     },
   ],
   validator: {
-    isDuplicateMenuCode: {
-      required: {
-        fn: (values) => {
-          return values.isDuplicateMenuCode === true;
-        },
-        message: t('메뉴 코드의 중복 여부를 확인해주세요.'),
-        path: 'code',
-      },
-      conditions: [],
-    },
     code: {
+      format: 'object',
       required: true,
+      conditions: [
+        {
+          fn: (values) => {
+            const fieldValue = values.code.fieldValue;
+            if (fieldValue === '') return true;
+            return false;
+          },
+          message: t('LABEL.form.validation.needInput', { code: t('코드') }),
+        },
+        {
+          fn: (values: Record<string, any>) =>
+            values.code.checkState === DuplicateState.check ||
+            values.code.checkState === DuplicateState.needInput,
+          message: t('LABEL.form.validation.check', { code: t('코드') }),
+        },
+        {
+          fn: (values: Record<string, any>) => values.code.checkState === DuplicateState.duplicated,
+          message: t('LABEL.form.validation.duplicated', { code: t('코드') }),
+        },
+      ],
     },
     menuName: {
       required: true,
