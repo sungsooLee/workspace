@@ -42,7 +42,7 @@ function RouteComponent() {
         <Button type="button" variant="point" size="sm" label={t('LABEL.button.courseOpen')} />
       </ContentsButtons>
       <MainContents>
-        <Tabs items={items} type="fill" />
+        <Tabs items={items} type="fill" showContentBorder />
       </MainContents>
     </PageContainer>
   );
