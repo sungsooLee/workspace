@@ -202,14 +202,7 @@
       "referenceVal1": "참고 1",
       "referenceVal2": "참고 2",
       "referenceVal3": "참고 3",
-      "referenceVal4": "참고 4",
-      "cdId": "코드",
-      "enable": "사용",
-      "disable": "미사용",
-      "learnerMenu": "학습자 메뉴",
-      "hrdCenterMenu": "HRD센터 메뉴",
-      "categoryInfo": "카테고리 정보",
-      "trainingPlaceInfo": "교육장소 정보"
+      "코드": "사용"
     },
     "link": {
       "multilingual": "다국어관리"
@@ -595,5 +588,20 @@
   "pms.company.ApplicationProcess": {
     "APPLICATION_REGISTER": "신청 후 결과 등록",
     "REGISTER": "결과 등록"
+  },
+  "cms.content.ContentType": {
+    "VIDEO": "비디오",
+    "EBOOK": "이북",
+    "SCORM": "스콤",
+    "HTML5_VIDEO": "HTML",
+    "IMAGE": "이미지",
+    "EXTERNAL_LINK": "외부링크",
+    "EXTERNAL_AGENCY": "외부위탁",
+    "BLOG": "블로그",
+    "EXAM": "시험지",
+    "EXAM_POOL": "문제은행",
+    "ASSIGNMENT": "과제",
+    "SURVEY": "설문지",
+    "ETC": "기타"
   }
 }
