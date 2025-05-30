@@ -57,11 +57,13 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
     addFiles(files);
   };
 
-  const handleEncoding = async () => {
-    const channelInfo = await open({
-      content: <ChannelChoiceModal />,
-    });
+  const handleEncoding = () => {
+    // Encoding 완료 이벤트 구독 처리
   };
+
+  const onConfirm = useCallback(async () => {
+    close(files);
+  }, [files]);
 
   const initFileInfo = useCallback(async () => {
     const createFiles = files
@@ -87,6 +89,8 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
     const response = await createFileGroupFiles(createFiles[0] as any); // 타입 에러 수정 필요
     console.log('response => ', response);
     console.log('createFiles => ', createFiles);
+
+    handleEncoding();
   }, [files]);
 
   useEffect(() => {
@@ -139,9 +143,9 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
         <Button
           label={'확인'}
           variant={'primary'}
-          disabled={stats.status !== 'complete'}
+          disabled={stats.status !== 'completed'}
           size={'lg'}
-          onClick={handleEncoding}
+          onClick={onConfirm}
         />
       </ModalFooter>
     </ModalContainer>

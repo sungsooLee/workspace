@@ -27,6 +27,8 @@ function RouteComponent() {
    */
   const handleRegister = async () => {
     setDisplayContent(false);
+    let canceled = false;
+
     //router.navigate({ to: '/learning/resource/education/view' });
     const typeResult = (await openModal({
       content: <LearningTypeChoiceModal />,
@@ -46,9 +48,14 @@ function RouteComponent() {
             ),
             width: 'lg',
           });
+          if (videoUploadResult) {
+            router.navigate({ to: '/learning_test/resource/view/video' });
+            break;
+          }
         }
 
-        //router.navigate({ to: '/learning/resource/video/view', state: { permission: 'WRITE' } });
+        setTimeout(() => handleRegister(), 5);
+        canceled = true;
         break;
       }
       // HTML 동영상
@@ -107,8 +114,11 @@ function RouteComponent() {
         router.navigate({ to: '/learning/resource/assignment/view' });
         break;
       }
+      default: {
+        canceled = true;
+      }
     }
-    setDisplayContent(true);
+    if (canceled) setDisplayContent(true);
   };
 
   const handleOnSearch = (data: Record<string, any>) => {
