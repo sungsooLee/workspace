@@ -9,7 +9,6 @@ import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-butt
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
-import { formUtils } from '@entities/form-utils';
 import { queryOptions } from '@entities/companies/service/companies.queries';
 
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
@@ -150,18 +149,6 @@ const gridConfig: useGridBoxConfig = {
 const columnHelper = createColumnHelper<any>();
 
 const columns = [
-  columnHelper.accessor('isUseLinkageSystem', {
-    cell: (info) => {
-      return info.row.original.isUseLinkageSystem ? 'HR 연동' : '수동 등록';
-    },
-    header: 'HRD 연동 여부',
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('linkageType', {
-    header: t('HRD 연동 방식'),
-    cell: (info) => info.getValue(),
-    enableGrouping: false,
-  }),
   columnHelper.accessor('companyType', {
     header: t('그룹'),
     cell: (info) => t('pms.company.CompanyType.' + info.getValue()),
@@ -183,13 +170,8 @@ const columns = [
     enableGrouping: false,
   }),
   columnHelper.accessor('useYn', {
-    header: t('사용여부'),
-    cell: (info) => (info.getValue() ? t('사용') : t('미사용')),
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('managerName', {
-    header: t('담당자'),
-    cell: (info) => info.getValue(),
+    header: t('회사정보 사용'),
+    cell: (info) => (info.getValue() ? t('사용') : t('미사용')), // API 확인
     enableGrouping: false,
   }),
   columnHelper.accessor('createdBy', {

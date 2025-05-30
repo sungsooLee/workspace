@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { t } from 'i18next';
-import { useRouterState } from '@tanstack/react-router';
+import { Link, useRouterState } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@learnway/shared';
 import { GridBox } from '@learnway/ui';
@@ -77,6 +77,7 @@ const columnsNext = [
   {
     name: 'select',
     header: t('선택'),
+    accessorKey: 'select',
     size: 95,
   },
 ];
@@ -90,6 +91,7 @@ const sampleData = [
     group: '판매직',
     role: '스텝',
     memberCount: '100명',
+    select: <Link to="/">{t('선택')}</Link>,
   },
 ];
 
