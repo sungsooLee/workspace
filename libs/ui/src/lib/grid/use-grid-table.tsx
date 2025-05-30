@@ -65,6 +65,7 @@ export function useGridTable<T extends object>(
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
   const isInitialSelectionEffect = useRef(true);
+  const prevSelectedRowIdsRef = useRef<string[]>([]); // rowSelection 변경 체크를 위한 ref
 
   const groupingState = useMemo<GroupingState>(
     () => columnGrouping?.columns || [],
@@ -305,15 +306,49 @@ export function useGridTable<T extends object>(
 
   // 그리드 row 선택 변경시 onRowSelect(단건), onRowsSelect(다건) callback 실행
   useEffect(() => {
+    // 1. 초기 로드 시 콜백 실행 건너뛰기
     if (isInitialSelectionEffect.current) {
       isInitialSelectionEffect.current = false;
       return;
     }
-    const selectedRows = table.getSelectedRowModel().rows.map((row) => row.original);
-    const selectedRow = selectedRows?.[0];
-    onRowSelect?.(selectedRow);
-    onRowsSelect?.(selectedRows);
+
+    // 2. 현재 선택된 행들의 ID 목록 가져오기
+    const currentSelectedRows = table.getSelectedRowModel().rows;
+    const currentSelectedRowIds = currentSelectedRows.map((row) => row.id);
+
+    // 3. 이전 선택 상태와 현재 선택 상태 비교
+    const prevSelectedRowIds = prevSelectedRowIdsRef.current;
+
+    // 선택된 ID 배열의 길이와 모든 ID가 순서대로 같은지 확인
+    const isSameSelection =
+      currentSelectedRowIds.length === prevSelectedRowIds.length &&
+      currentSelectedRowIds.every((id, index) => id === prevSelectedRowIds[index]);
+
+    // 4. 선택 상태가 변경되지 않았다면 콜백 실행 건너뛰기
+    if (isSameSelection) {
+      return;
+    }
+
+    // 5. 선택 상태 갱신
+    prevSelectedRowIdsRef.current = currentSelectedRowIds;
+
+    // 6. 실제 데이터(original) 추출 및 콜백 실행
+    const originalSelectedRows = currentSelectedRows.map((row) => row.original);
+    const firstSelectedRow = originalSelectedRows?.[0]; // 단건 선택 시 첫 번째 행
+
+    onRowSelect?.(firstSelectedRow);
+    onRowsSelect?.(originalSelectedRows);
   }, [rowSelection, table, onRowSelect, onRowsSelect]);
+  // useEffect(() => {
+  //   if (isInitialSelectionEffect.current) {
+  //     isInitialSelectionEffect.current = false;
+  //     return;
+  //   }
+  //   const selectedRows = table.getSelectedRowModel().rows.map((row) => row.original);
+  //   const selectedRow = selectedRows?.[0];
+  //   onRowSelect?.(selectedRow);
+  //   onRowsSelect?.(selectedRows);
+  // }, [rowSelection, table, onRowSelect, onRowsSelect]);
 
   // data 변경시 첫번째 행 선택
   useEffect(() => {
