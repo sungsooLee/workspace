@@ -34,7 +34,7 @@ export const GridHeader = <T extends object>({ table, lastPinnedColumnId }: Grid
               position: isPinnedLeft && styles.th_sticky,
               left: isPinnedLeft ? `${column.getStart('left')}px` : undefined,
               // zIndex: isPinnedLeft ? 3 : undefined, // 헤더는 더 높은 z-index
-              textAlign: columnDef.meta?.headerAlign || columnDef.meta?.align || 'left',
+              textAlign: columnDef.meta?.headerAlign || 'left',
             } as CSSProperties;
 
             return (

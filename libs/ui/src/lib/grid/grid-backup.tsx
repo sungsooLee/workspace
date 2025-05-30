@@ -684,8 +684,7 @@ const GridComponent = forwardRef(
                 : '',
           width: !tableMode ? cell.column.getSize() : '',
           display: 'block',
-          textAlign:
-            cell.column.columnDef.meta?.cellAlign || cell.column.columnDef.meta?.align || 'left',
+          textAlign: cell.column.columnDef.meta?.cellAlign || 'left',
           verticalAlign: 'middle',
 
           // 고정열 스타일 추가

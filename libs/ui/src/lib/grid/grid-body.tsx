@@ -60,8 +60,8 @@ export const GridCell = <T extends object>({ row, cell, lastPinnedColumnId }: Gr
           ? '#ff000042'
           : '',
     width: cell.column.getSize(),
-    textAlign: cell.column.columnDef.meta?.cellAlign || cell.column.columnDef.meta?.align || 'left',
     // position: isPinnedLeft && styles.td_sticky,
+    textAlign: cell.column.columnDef.meta?.cellAlign || 'left',
     position: isPinnedLeft ? 'sticky' : undefined,
     left: isPinnedLeft ? `${cell.column.getStart('left')}px` : undefined,
   } as CSSProperties;
