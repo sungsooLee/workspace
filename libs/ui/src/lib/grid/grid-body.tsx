@@ -63,7 +63,7 @@ export const GridCell = <T extends object>({ row, cell, lastPinnedColumnId }: Gr
           ? '#ff000042'
           : '',
     width: cell.column.getSize(),
-    textAlign: cell.column.columnDef.meta?.cellAlign || cell.column.columnDef.meta?.align || 'left',
+    textAlign: cell.column.columnDef.meta?.cellAlign || 'left',
     position: isPinnedLeft ? 'sticky' : undefined,
     left: isPinnedLeft ? `${cell.column.getStart('left')}px` : undefined,
     zIndex: isPinnedLeft ? 3 : undefined,

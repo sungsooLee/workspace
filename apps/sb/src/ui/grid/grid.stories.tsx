@@ -831,13 +831,84 @@ TemplateTitleArea.storyName = '타이틀 영역';
 export const TemplateColumnAlign: any = (args: any) => {
   const data = dummyData(5);
   const columns = [
-    { accessorKey: 'name', header: 'Header left', size: 200, meta: { headerAlign: 'left' } },
-    { accessorKey: 'name', header: 'Header center', size: 200, meta: { headerAlign: 'center' } },
-    { accessorKey: 'name', header: 'Header right', size: 200, meta: { headerAlign: 'right' } },
-    { accessorKey: 'name', header: '', size: 200 },
-    { accessorKey: 'name', header: '', size: 200 },
-    { accessorKey: 'name', header: '', size: 200 },
-    { accessorKey: 'name', header: '', size: 200 },
+    {
+      accessorKey: 'name',
+      header: 'Header left',
+      size: 100,
+      meta: { headerAlign: 'left' },
+      columns: [
+        {
+          accessorKey: 'name',
+          header: 'Cell left',
+          size: 100,
+          meta: { headerAlign: 'left', cellAlign: 'left' },
+        },
+        {
+          accessorKey: 'name',
+          header: 'Cell center',
+          size: 100,
+          meta: { headerAlign: 'left', cellAlign: 'center' },
+        },
+        {
+          accessorKey: 'name',
+          header: 'Cell right',
+          size: 100,
+          meta: { headerAlign: 'left', cellAlign: 'right' },
+        },
+      ],
+    },
+    {
+      accessorKey: 'name',
+      header: 'Header center',
+      size: 100,
+      meta: { headerAlign: 'center' },
+      columns: [
+        {
+          accessorKey: 'name',
+          header: 'Cell left',
+          size: 100,
+          meta: { headerAlign: 'center', cellAlign: 'left' },
+        },
+        {
+          accessorKey: 'name',
+          header: 'Cell center',
+          size: 100,
+          meta: { headerAlign: 'center', cellAlign: 'center' },
+        },
+        {
+          accessorKey: 'name',
+          header: 'Cell right',
+          size: 100,
+          meta: { headerAlign: 'center', cellAlign: 'right' },
+        },
+      ],
+    },
+    {
+      accessorKey: 'name',
+      header: 'Header right',
+      size: 100,
+      meta: { headerAlign: 'right' },
+      columns: [
+        {
+          accessorKey: 'name',
+          header: 'Cell left',
+          size: 100,
+          meta: { headerAlign: 'right', cellAlign: 'left' },
+        },
+        {
+          accessorKey: 'name',
+          header: 'Cell center',
+          size: 100,
+          meta: { headerAlign: 'right', cellAlign: 'center' },
+        },
+        {
+          accessorKey: 'name',
+          header: 'Cell right',
+          size: 100,
+          meta: { headerAlign: 'right', cellAlign: 'right' },
+        },
+      ],
+    },
   ];
   return <GridBox data={data} columns={columns} />;
 };

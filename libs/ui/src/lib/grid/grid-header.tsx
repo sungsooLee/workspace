@@ -44,8 +44,7 @@ export const GridHeader = <T extends object>({ table, lastPinnedColumnId }: Grid
                     column.getCanSort() ? 'cursor-pointer select-none' : '',
                   )}
                   style={{
-                    justifyContent:
-                      columnDef.meta?.headerAlign || columnDef.meta?.align || 'justify-start',
+                    justifyContent: columnDef.meta?.headerAlign || 'justify-start',
                   }}
                   onClick={column.getToggleSortingHandler()}
                 >
