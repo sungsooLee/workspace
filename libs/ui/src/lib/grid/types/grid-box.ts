@@ -244,6 +244,11 @@ export interface GridBoxProps<T extends object = object>
    * 페이지네이션 관련 설정을 포함하는 객체입니다.
    */
   pagination?: GridBoxPagination;
+
+  /**
+   * 엑셀 버튼
+   */
+  excelButtons?: React.ReactNode;
 }
 
 export interface GridBoxPagination {

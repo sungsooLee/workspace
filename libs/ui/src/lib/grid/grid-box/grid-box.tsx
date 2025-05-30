@@ -49,6 +49,7 @@ const GridBoxComponent = <T extends object>(
     onSelectAllClick,
     onRemoveAllClick,
     onSearchClick,
+    excelButtons,
     ...props
   }: GridBoxProps<T>,
   ref: React.Ref<GridImperative>,
@@ -269,7 +270,7 @@ const GridBoxComponent = <T extends object>(
           {/* 외부에서 받은 커스텀 버튼 노드 */}
           {customButtonNode}
           {/* 엑셀 버튼 */}
-          <ExcelButtons config={excel} getParams={getParams} />
+          {excelButtons}
           {/* 전체 선택 */}
           {showSelectAll && (
             <Button
