@@ -54,3 +54,12 @@ export enum EnUserState {
   LEAVE = 'LEAVE',
   DELETE = 'DELETE',
 }
+
+// 회사 HR 연동 유형
+export enum EnCompanyHrLinkType {
+  ORGANIZATION = 'ORGANIZATION', // 조직
+  GROUP = 'GROUP', // 직군
+  ROLE = 'ROLE', // 직무
+  DESIGNATION = 'DESIGNATION', // 호칭
+  POSITION = 'POSITION', // 보직
+}

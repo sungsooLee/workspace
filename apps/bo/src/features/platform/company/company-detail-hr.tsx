@@ -2,10 +2,11 @@ import { FC, useEffect, useState, useCallback } from 'react';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import { Tabs } from '@learnway/ui';
 import { CompanyDetailHROrganization } from './company-detail-hr-organization';
-import { CompanyDetailHRPosition } from './company-detail-ht-position';
+import { CompanyDetailHRLink } from './company-detail-ht-link';
+import { EnCompanyHrLinkType } from '@types';
 
 const CompanyDetailHRComponent: FC<any> = () => {
-  const [selectedTabKey, setSelectedTabKey] = useState('position');
+  const [selectedTabKey, setSelectedTabKey] = useState<string>(EnCompanyHrLinkType.POSITION);
 
   const handleTabChange = (tabKey: string) => {
     if (tabKey !== selectedTabKey) {
@@ -16,28 +17,28 @@ const CompanyDetailHRComponent: FC<any> = () => {
   const menuItems = [
     {
       title: '조직',
-      key: 'organization',
+      key: EnCompanyHrLinkType.ORGANIZATION,
       content: <CompanyDetailHROrganization />,
     },
     {
-      title: '보직',
-      key: 'position',
-      content: <CompanyDetailHRPosition />,
-    },
-    {
       title: '직군',
-      key: 'group',
-      content: '',
-    },
-    {
-      title: '호칭',
-      key: 'designation',
-      content: '',
+      key: EnCompanyHrLinkType.GROUP,
+      content: <CompanyDetailHRLink type={EnCompanyHrLinkType.GROUP} />,
     },
     {
       title: '직무',
-      key: 'role',
-      content: '',
+      key: EnCompanyHrLinkType.ROLE,
+      content: <CompanyDetailHRLink type={EnCompanyHrLinkType.ROLE} />,
+    },
+    {
+      title: '호칭',
+      key: EnCompanyHrLinkType.DESIGNATION,
+      content: <CompanyDetailHRLink type={EnCompanyHrLinkType.DESIGNATION} />,
+    },
+    {
+      title: '보직',
+      key: EnCompanyHrLinkType.POSITION,
+      content: <CompanyDetailHRLink type={EnCompanyHrLinkType.POSITION} />,
     },
   ];
 
