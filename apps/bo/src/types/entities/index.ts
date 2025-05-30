@@ -5,6 +5,8 @@ export * from './company';
 export * from './course';
 export * from './enum';
 export * from './label-meesage';
+export * from './menu';
+export * from './notification';
 export * from './program';
 export * from './react-query';
 export * from './role';
