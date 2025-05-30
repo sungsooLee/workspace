@@ -1,0 +1,25 @@
+/* not-found.module.css */
+.start {
+  @apply flex h-screen w-screen flex-col items-center justify-center;
+  .guide_wrap {
+    @apply text-center;
+    .empty_message {
+      @apply mx-auto flex h-[240px] w-[240px] flex-col items-center justify-center overflow-hidden rounded-[120px] bg-white;
+      strong {
+        @apply flex text-[8rem] leading-none text-[var(--secondary1)];
+      }
+      p {
+        @apply mt-[12px] text-[1.8rem] font-bold leading-[1.4rem] tracking-[0.5rem] text-[var(--secondary1)];
+      }
+    }
+    .text {
+      @apply title_bo_1_b mt-[40px] text-[var(--gray9)];
+    }
+    .btn_wrap {
+      @apply mt-[32px];
+      button {
+        @apply min-w-[74px];
+      }
+    }
+  }
+}
