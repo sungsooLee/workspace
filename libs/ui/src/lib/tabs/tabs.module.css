@@ -236,8 +236,11 @@
       }
     }
     &.show_border {
+      & > [role='tablist'] {
+        @apply !mb-[16px];
+      }
       & > [role='tabpanel'] {
-        @apply mt-[16px] min-h-[calc(100vh-312px)] rounded-[8px] border border-solid border-[var(--gray4)] bg-white px-[32px] pb-[40px] pt-[24px];
+        @apply min-h-[calc(100vh-312px)] rounded-[8px] border border-solid border-[var(--gray4)] bg-white px-[32px] pb-[40px] pt-[24px];
       }
     }
     .count {
