@@ -664,7 +664,6 @@ const formConfig: DynamicFormConfig = {
       name: 'code',
       type: 'custom',
       format: 'object',
-      maxLength: 20,
       value: { fieldValue: '', checkState: DuplicateState.needInput },
     },
     {
