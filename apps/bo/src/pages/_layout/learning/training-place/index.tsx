@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react';
-import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 
@@ -51,7 +51,15 @@ function RouteComponent() {
       size: 200,
     }),
     columnHelper.accessor('educationPlaceCodeName', {
-      cell: (info) => info.getValue(),
+      cell: (info) => (
+        <Link
+          to="/learning/training-place/detail"
+          state={{ placeUUID: info.row.original.educationPlaceUuid }}
+          className="link"
+        >
+          {info.row.original.educationPlaceCodeName}
+        </Link>
+      ),
       header: t('LABEL.grid.column.placeName'),
       size: 300,
       enableGrouping: false,
@@ -195,7 +203,7 @@ function RouteComponent() {
               columns={columns}
               showColumnSettings={false}
               showExcelDownload={true}
-              onRowSelect={handleGridRowSelect}
+              //onRowSelect={handleGridRowSelect}
               title={t('LABEL.grid.title.trainingPlaceList')}
             />
           </div>

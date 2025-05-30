@@ -23,7 +23,7 @@ import {
   DuplicateState,
 } from '@features/tenant/management/ui/duplicate-check-input-form-field';
 import { pageRouteConfig } from '@features/auth';
-import { CompanyShuttleModal, RoleChoiceModal } from '@features/shared';
+import { CompanyShuttleModal, UserChoiceModal } from '@features/shared';
 import TenantService from '@entities/tenant/api/tenant';
 import { isEqual } from 'lodash';
 import { EnDeviceType, EnUseCategory } from '@types';
@@ -93,6 +93,7 @@ function RouteComponent() {
       isTenantCategory: data.useCategory.includes(EnUseCategory.isTenantCategory),
       companyTenantList: data.companyTenantList.map((i: any) => i.companyId),
       tenantMappingRoleList: data.tenantMappingRoleList.map((i: any) => i.roleId),
+      tenantMappingUserList: data.tenantMappingUserList.map((i: any) => i.userId),
     };
     console.log('payload {} => ', payload);
     if (await openConfirm('저장 하시겠습니까?')) {
@@ -176,18 +177,17 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow
               provider={provider}
-              name="tenantMappingRoleList"
+              name="tenantMappingUserList"
               element={
                 <ChipListModalSelectorFormField
                   chipList={{
                     labelField: 'name',
-                    valueField: 'roleId',
-                    wordwrap: true,
+                    valueField: 'userId',
                   }}
                   modalConfig={{
                     title: '',
                     width: 'xl',
-                    content: <RoleChoiceModal />,
+                    content: <UserChoiceModal />,
                   }}
                 />
               }
@@ -424,7 +424,7 @@ const formConfig: DynamicFormConfig = {
         },
       ],
     },
-    tenantMappingRoleList: { required: true },
+    tenantMappingUserList: { required: true },
     tenantBillingTag: { required: true },
     companyTenantList: { required: true },
     isUsed: { required: true },

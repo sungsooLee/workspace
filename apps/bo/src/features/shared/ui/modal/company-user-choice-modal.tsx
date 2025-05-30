@@ -23,9 +23,9 @@ import { useGetCompanyDepartmentTree } from '@entities/department/service/depart
 const emptyOption = [{ label: t('선택'), value: '' }];
 
 /**
- * 화면 번호 NLP_BO_TMS_1001_18 : 유저그룹대상자 조회
+ * 화면 번호 NLP_BO_TMS_1001_18 : 회사 기준으로 유저를 조회할 수 있는 팝업
  */
-const UserChoiceForGroupModalComponent = forwardRef((props, ref) => {
+const CompanyUserChoiceModalComponent = forwardRef((props, ref) => {
   const { close: closeModal } = useModal();
   //const { userGroupList } = props;
 
@@ -225,7 +225,7 @@ const UserChoiceForGroupModalComponent = forwardRef((props, ref) => {
   );
 });
 
-export const UserChoiceForGroupModal = UserChoiceForGroupModalComponent;
+export const CompanyUserChoiceModal = CompanyUserChoiceModalComponent;
 
 const gridConfig = {
   query: usersQueryOptions.list,

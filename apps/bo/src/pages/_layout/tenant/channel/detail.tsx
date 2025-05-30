@@ -55,13 +55,13 @@ function RouteComponent() {
   ];
 
   return (
-    <PageContainer>
+    <PageContainer tabs={true}>
       <MainContents>
         <Tabs
           items={menuItems}
           type="fill"
           size="sm"
-          className={styles.progress_wrap}
+          className="page_tabs"
           selectedTabKey={'home'}
           onTabChange={handleTabChange}
         />

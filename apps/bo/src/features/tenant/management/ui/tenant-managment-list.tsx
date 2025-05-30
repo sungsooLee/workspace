@@ -1,6 +1,7 @@
-import { FC, useState, useCallback } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
+import { FC, useState, useCallback } from 'react';
 import { t } from 'i18next';
+import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 import { SearchBox } from '@shared/ui/search-box';
 import { useRouter } from '@tanstack/react-router';
@@ -12,6 +13,11 @@ import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 
 import { tenantQueryOptions } from '@entities/tenant/service/tenant.queries';
 
+/**
+ * 화면번호 : NLP_BO_TMS_1000
+ * @param param0
+ * @returns
+ */
 const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
   const router = useRouter();
 
@@ -23,10 +29,22 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
         label: 'NO.',
         type: 'numbering',
       },
-      {
-        name: 'tenantName',
-        label: t('테넌트명'),
-        render: (info: any) => (
+    ],
+    data: [],
+
+    pagination: {
+      pageSize: 20,
+      pageIndex: 0,
+      totalRows: 0,
+    },
+  };
+
+  const columnHelper = createColumnHelper<any>();
+  const columns = [
+    columnHelper.accessor('tenantName', {
+      id: 'tenantName',
+      cell: (info) => {
+        return (
           <Button
             className="link"
             onClick={() => {
@@ -41,75 +59,95 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
           >
             {info.row.original.tenantName}
           </Button>
-        ),
+        );
       },
-      {
-        name: 'tenantSite',
-        label: t('테넌트 사이트'),
-        render: (info: any) => (
-          <Link to={info.row.original.tenantSite} className="link">
-            {info.row.original.tenantId}
-          </Link>
-        ),
-      },
-      {
-        name: 'companyTenantList',
-        label: t('회사'),
-        render: (info: any) => {
-          const companyNames = info.row.original.companyTenantList.map((item: any) => {
-            return item.companyName;
-          });
-          return companyNames.toString();
-        },
-      },
-      {
-        name: 'tenantRoleList',
-        label: t('테넌트 담당자'),
-        render: (info: any) => {
-          const tenantRoleList = info.row.original.tenantRoleList.map((item: any) => {
-            return item.roleName;
-          });
-          return tenantRoleList.toString();
-        },
-      },
-      {
-        name: 'isUsed',
-        label: '사용여부',
-        render: (info: any) => {
-          return info.row.original.isUsed ? t('LABEL.common.enable') : t('LABEL.common.disable');
-        },
-      },
-      { name: 'createdBy', label: '등록자' },
-      {
-        name: 'createdDate',
-        label: '등록일시',
-        render: (info: any) => {
-          return getDateToString(
-            new Date(info.row.original.createdDate),
-            DATE_TIME_FORMAT.DATETIME_SEC,
-          );
-        },
-      },
-      { name: 'lastModifiedBy', label: '수정자' },
-      {
-        name: 'modifiedDate',
-        label: '수정일시',
-        render: (info: any) => {
-          return getDateToString(
-            new Date(info.row.original.modifiedDate),
-            DATE_TIME_FORMAT.DATETIME_SEC,
-          );
-        },
-      },
-    ],
-    data: [],
+      header: t('테넌트명'),
+      size: 152,
+    }),
+    columnHelper.accessor('tenantSite', {
+      id: 'tenantSite',
+      cell: (info) => (
+        <Link to={info.row.original.tenantSite} className="link">
+          {info.row.original.tenantId}
+        </Link>
+      ),
+      header: t('테넌트 사이트'),
+      size: 240,
+    }),
 
-    pagination: {
-      pageSize: 10,
-      pageIndex: 0,
-      totalRows: 0,
-    },
-  };
+    columnHelper.accessor('companyTenantList', {
+      id: 'companyTenantList',
+      cell: (info) => {
+        const companyNames = info.row.original.companyTenantList.map((item: any) => {
+          return item.companyName;
+        });
+        return companyNames.toString();
+      },
+      header: t('회사'),
+      size: 200,
+    }),
+    columnHelper.accessor('tenantRoleList', {
+      id: 'tenantRoleList',
+      cell: (info) => {
+        const tenantRoleList = info.row.original.tenantRoleList.map((item: any) => {
+          return item.roleName;
+        });
+        return tenantRoleList.toString();
+      },
+      header: t('테넌트 담당자'),
+      size: 120,
+    }),
+    columnHelper.accessor('companyManager', {
+      id: 'companyManager',
+      cell: (info) => {
+        const companyManagerList = info.row.original.companyTenantList.map((item: any) => {
+          return item.managerName;
+        });
+        return companyManagerList.toString();
+      },
+      header: t('회사 담당자'),
+      size: 120,
+    }),
+    columnHelper.accessor('isUsed', {
+      id: 'isUsed',
+      cell: (info) => {
+        return info.row.original.isUsed ? t('LABEL.common.enable') : t('LABEL.common.disable');
+      },
+      header: t('사용여부'),
+      size: 104,
+    }),
+    columnHelper.accessor('createdBy', {
+      id: 'createdBy',
+      header: t('등록자'),
+      size: 104,
+    }),
+    columnHelper.accessor('createdDate', {
+      id: 'createdDate',
+      cell: (info) => {
+        return getDateToString(
+          new Date(info.row.original.createdDate),
+          DATE_TIME_FORMAT.DATETIME_SEC,
+        );
+      },
+      header: t('등록일'),
+      size: 152,
+    }),
+    columnHelper.accessor('lastModifiedBy', {
+      header: '수정자',
+      size: 104,
+    }),
+    columnHelper.accessor('createdDate', {
+      id: 'createdDate',
+      cell: (info) => {
+        return getDateToString(
+          new Date(info.row.original.modifiedDate),
+          DATE_TIME_FORMAT.DATETIME_SEC,
+        );
+      },
+      header: t('등록일'),
+      size: 152,
+    }),
+  ] as ColumnDef<any, unknown>[];
 
   const { provider: searchProvider } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig);
@@ -126,7 +164,7 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
       <div className={cn(boxStyles.start, boxStyles.inner)}>
         <div className="grid_wrap">
-          <GridBox config={gConfig} />
+          <GridBox config={gConfig} columns={columns} />
         </div>
       </div>
     </>
@@ -168,7 +206,7 @@ const searchConfig: SearchBoxConfig = {
         value: '',
       },
       {
-        name: 'tenantMappingRoleName',
+        name: 'tenantManagerName',
         type: 'text',
         label: t('테넌트담당자'),
         value: '',
@@ -176,7 +214,7 @@ const searchConfig: SearchBoxConfig = {
     ],
     [
       {
-        name: 'tenantMappingCompanyName',
+        name: 'companyManagerName',
         type: 'text',
         label: t('회사 담당자'),
         value: '',
