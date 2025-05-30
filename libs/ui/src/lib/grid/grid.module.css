@@ -1,134 +1,6 @@
 /* grid.module.css */
 .grid {
   @apply scrollbar relative box-border overflow-auto border border-solid border-[var(--gray5)];
-  table {
-    thead {
-      @apply sticky top-0 z-[1] !h-[39px] w-full bg-[var(--gray1)];
-      tr {
-        th.thead_th {
-          @apply !h-[39px] min-h-[39px] !border-b-0 bg-[var(--gray1)];
-          .th_wrap {
-            @apply body_bo_4_b flex items-center overflow-hidden text-ellipsis whitespace-nowrap px-[8px] text-[var(--gray8)];
-            .icon_up,
-            .icon_down,
-            .btn_filter {
-              @apply ml-auto;
-            }
-            .icon_up {
-              @apply rotate-180;
-            }
-            [class*='nlp--checkbox'] {
-              @apply mt-[5px];
-            }
-          }
-          & + .thead_th {
-            @apply border-l-[1px] border-solid border-[var(--gray3)];
-          }
-        }
-      }
-      &::after {
-        @apply sticky left-0 top-[40px] flex h-[1px] w-full bg-[var(--gray4)] content-[''];
-      }
-    }
-    tbody {
-      tr {
-        @apply !h-[40px] !min-h-[40px] border-b border-solid border-[var(--gray2)];
-        td {
-          @apply body_bo_2_r h-full px-[8px] py-[8px] align-middle text-[var(--gray7)];
-          /*@apply body_bo_2_r line-clamp-1 h-full text-ellipsis whitespace-nowrap px-[8px] py-[8px] align-middle text-[var(--gray7)];*/
-          /*@apply body_bo_2_r h-full text-ellipsis whitespace-nowrap px-[8px] py-[8px] align-middle text-[var(--gray7)];*/
-          white-space: nowrap; /* 줄바꿈 방지 */
-          overflow: hidden; /* 넘치는 텍스트 숨김 */
-          text-overflow: ellipsis;
-          [class*='nlp--button'] {
-            @apply !min-w-auto button_bo_4_r !h-[20px] !text-[1.2rem];
-          }
-          [class*='nlp--checkbox'] {
-            @apply mt-[6px];
-            button {
-              &:read-only,
-              &:disabled {
-                @apply !border-[var(--gray5)];
-              }
-            }
-          }
-          [class*='nlp--button']:disabled svg {
-            @apply stroke-[#d6dae1];
-          }
-          [class*='link'] {
-            @apply !body_bo_2_r text-[var(--gray7)] underline;
-            & + [class*='link'] {
-              @apply ml-[6px];
-            }
-            &:disabled,
-            &[aria-disabled='true'] {
-              @apply border-[var(--gray5)] text-[var(--gray5)];
-            }
-          }
-          [class*='nlp--input'] {
-            input {
-              @apply min-h-[30px] w-full rounded-[4px] border border-solid border-[var(--gray4)] px-[12px] text-[14px] font-normal text-[var(--gray9)];
-              &::placeholder {
-                @apply text-[1.2rem];
-              }
-            }
-          }
-          [class*='btn_table'] {
-            @apply !min-w-[3.2rem];
-            & + [class*='btn_table'] {
-              @apply !ml-[4px];
-            }
-          }
-          [class*='nlp--datepicker-time'] {
-            @apply mt-[4px] !h-[24px];
-            [class*='datepicker_input'] {
-              @apply !h-[24px];
-            }
-          }
-          [class*='icon_wrap'] {
-            @apply body_bo_2_r flex items-center text-[var(--gray7)];
-            svg {
-              @apply mr-[6px];
-            }
-          }
-
-          &:has(> div) {
-            @apply w-full py-[4px];
-
-            /* input {
-              &[type='text'] {
-                @apply min-h-[30px] w-full border border-[var(--gray4)];
-              }
-            } */
-          }
-          & > div {
-            &[role='radiogroup'] {
-              @apply py-[6px];
-            }
-          }
-          & + td {
-            @apply border-l-[1px] border-solid !border-[var(--gray2)];
-          }
-        }
-        &:not(.selected) {
-          .td_pinned_left {
-            @apply bg-white;
-          }
-        }
-        &.selected {
-          .td_pinned_left {
-            @apply !bg-[#edfcff];
-          }
-        }
-        /* &:hover {
-          @apply bg-[#edfcff];
-          .td_pinned_left {
-            @apply !bg-[#edfcff];
-          }
-        } */
-      }
-    }
-  }
   .select_row_radio {
     @apply relative flex h-full w-full items-center justify-center;
     &.checked {
@@ -143,8 +15,11 @@
       @apply h-[20px] w-[20px] appearance-none overflow-hidden rounded-[10px] border border-solid border-[var(--gray5)];
     }
   }
-  .empty_message_container {
-    @apply absolute left-0 top-1/2 mt-[25px] -translate-y-1/2;
+  &.no_data {
+    @apply overflow-hidden pb-[40px];
+    .empty_message_container {
+      @apply absolute bottom-0 left-0 right-0 flex h-[40px] items-center justify-center;
+    }
   }
 }
 
@@ -314,7 +189,7 @@
 }
 
 .empty_message_container {
-  @apply flex w-full items-center justify-center;
+  @apply h-[40px] text-center;
 }
 
 .empty_message {

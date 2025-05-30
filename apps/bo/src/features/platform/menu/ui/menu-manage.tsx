@@ -16,7 +16,6 @@ import {
   useModal,
 } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { cn } from '@learnway/shared';
 
 import { DuplicateCheckInputFormField, DuplicateState } from '@features/tenant';
 import { ApiInfoModal } from './api-info-modal';
@@ -36,7 +35,7 @@ import {
   useMoveMenu,
   useUpdateMenu,
 } from '../../../../entities/menu';
-import { ContentsHistoryInfoFormField, FormRow, SwitchFormField } from '../../../../shared/ui';
+import { FormRow, SwitchFormField } from '../../../../shared/ui';
 
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
@@ -638,9 +637,6 @@ export const MenuManage = ({ menuScope }: any) => {
                   />
                 }
               />
-            </ContentsRow>
-            <ContentsRow className={cn(formStyles.no_line, formStyles.space)}>
-              <ContentsHistoryInfoFormField />
             </ContentsRow>
           </div>
         </form>

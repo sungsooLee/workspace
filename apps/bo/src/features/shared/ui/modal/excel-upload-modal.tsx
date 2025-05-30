@@ -1,24 +1,149 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css';
 import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import { cn } from '@learnway/shared';
+import { cn, httpService } from '@learnway/shared';
 import { IcoDownload } from '@learnway/icons';
 import { NoticeBox } from '@shared/ui';
 import { useS3Uploader } from '@learnway/hooks';
 import { DndFileProgress } from './dnd-file-progress'; // 파일 업로드
+import { PMSApiPrefix } from '../../../../../../../libs/config/src';
 
-const ExcelUploadModalComponent = () => {
-  const acceptFiles = ['xlsx'];
+interface ExcelUploadModalProps {
+  validateUrl: string;
+  uploadUrl: string;
+  templateUrls?: {
+    xlsx?: string;
+    csv?: string;
+  };
+}
+interface ValidationResult {
+  success: boolean;
+  totalRows: number;
+  successRows: number;
+  failedRows: number;
+  errors?: Array<{
+    row: number;
+    message: string;
+  }>;
+}
+
+const ExcelUploadModalComponent = ({
+  validateUrl,
+  uploadUrl,
+  templateUrls,
+}: ExcelUploadModalProps) => {
+  const acceptFiles = ['xlsx', 'xls'];
   const maxFileCount = 1;
   const maxFileSize = 1024 * 1024 * 10;
-  const { stats, files, addFiles, onPause, onRetry, onResume, onRemove } = useS3Uploader({
-    s3Path: 'upload/leaning/resource/video',
-    maxFileCount,
-    acceptFiles,
-  });
+  // const { stats, files, addFiles, onPause, onRetry, onResume, onRemove } = useS3Uploader({
+  //   s3Path: 'upload/leaning/resource/video',
+  //   maxFileCount,
+  //   acceptFiles,
+  // });
 
   const { close: closeModal } = useModal();
+
+  const [uploadStep, setUploadStep] = useState<
+    'select' | 'validating' | 'validated' | 'uploading' | 'completed'
+  >('select');
+  const [validationResult, setValidationResult] = useState<ValidationResult | null>(null);
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // 파일 선택 시 자동 유효성 검사 실행
+  const handleFileSelect = useCallback(
+    async (files: File[]) => {
+      if (files.length === 0) return;
+
+      const file = files[0];
+      setUploadedFile(file);
+      setUploadStep('validating');
+      setIsLoading(true);
+
+      try {
+        // FormData로 파일 전송
+        const formData = new FormData();
+        formData.append('file', file);
+
+        // const response = await fetch(`${, {
+        //   method: 'POST',
+        //   body: formData,
+        // });
+        const response = await httpService.post(`${PMSApiPrefix()}` + validateUrl, formData);
+
+        // const result: ValidationResult = await response.json();
+        console.log(response);
+
+        // if (response.ok) {
+        //   setValidationResult(result);
+        //   setUploadStep('validated');
+        // } else {
+        //   throw new Error('유효성 검사 실패');
+        // }
+      } catch (error) {
+        console.error('Validation error:', error);
+        setValidationResult({
+          success: false,
+          totalRows: 0,
+          successRows: 0,
+          failedRows: 0,
+          errors: [{ row: 0, message: '유효성 검사 중 오류가 발생했습니다.' }],
+        });
+        setUploadStep('validated');
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [validateUrl],
+  );
+
+  // 실제 업로드 실행
+  const handleConfirmUpload = useCallback(async () => {
+    if (!uploadedFile || !validationResult?.success) return;
+
+    setUploadStep('uploading');
+    setIsLoading(true);
+
+    try {
+      const formData = new FormData();
+      formData.append('file', uploadedFile);
+
+      const response = await fetch(uploadUrl, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        setUploadStep('completed');
+      } else {
+        throw new Error('업로드 실패');
+      }
+    } catch (error) {
+      console.error('Upload error:', error);
+      // 에러 처리
+    } finally {
+      setIsLoading(false);
+    }
+  }, [uploadedFile, uploadUrl, validationResult]);
+
+  // 다시 선택
+  const handleReselect = useCallback(() => {
+    setUploadStep('select');
+    setValidationResult(null);
+    setUploadedFile(null);
+  }, []);
+
+  // 템플릿 다운로드
+  // const handleTemplateDownload = useCallback(
+  //   (type: 'xlsx' | 'csv') => {
+  //     const url = templateUrls?.[type];
+  //     if (url) {
+  //       window.open(url, '_blank');
+  //     }
+  //   },
+  //   [templateUrls],
+  // );
 
   /*
   useEffect(() => {
@@ -35,11 +160,11 @@ const ExcelUploadModalComponent = () => {
 
   * */
   useEffect(() => {
-    if (stats.status === 'complete') {
-      //이때 파일 객체의 첫번째 값을 가져오면 된다.
-      /*const form = new FormData();
-      form.append('file', files[0]);*/
-    }
+    // if (stats.status === 'complete') {
+    //   //이때 파일 객체의 첫번째 값을 가져오면 된다.
+    //   /*const form = new FormData();
+    //   form.append('file', files[0]);*/
+    // }
   }, []);
 
   return (
@@ -47,7 +172,7 @@ const ExcelUploadModalComponent = () => {
       <ModalTitle>엑셀 업로드</ModalTitle>
       <ModalBody>
         <div className={popupStyles.wrap}>
-          <DndFileProgress
+          {/* <DndFileProgress
             files={files}
             maxFileCount={maxFileCount}
             maxFileSize={maxFileSize}
@@ -57,6 +182,17 @@ const ExcelUploadModalComponent = () => {
             onPause={onPause}
             onResume={onResume}
             onRetry={onRetry}
+          /> */}
+          <DndFileProgress
+            files={[]}
+            maxFileCount={maxFileCount}
+            maxFileSize={maxFileSize}
+            addFiles={handleFileSelect}
+            acceptFiles={acceptFiles}
+            // onRemove={() => {}}
+            // onPause={() => {}}
+            // onResume={() => {}}
+            // onRetry={() => {}}
           />
           <div className={cn(styles.start, styles.wrap)}>
             <div className={styles.title_box}>
@@ -65,14 +201,14 @@ const ExcelUploadModalComponent = () => {
                 {/* 실패 CASE */}
                 <p className={styles.status_text}>
                   실패
-                  <span className={cn(styles.data_text, styles.error)}>
+                  {/* <span className={cn(styles.data_text, styles.error)}>
                     {stats.failed + stats['validating-error']}행
-                  </span>
+                  </span> */}
                 </p>
                 {/* 완료 CASE */}
-                <p className={styles.status_text}>
+                {/* <p className={styles.status_text}>
                   완료<span className={cn(styles.data_text)}>{stats.completed}행</span>
-                </p>
+                </p> */}
               </div>
               <div className={styles.btn_wrap}>
                 <Button
@@ -90,9 +226,9 @@ const ExcelUploadModalComponent = () => {
               </div>
             </div>
             <div className={styles.result_wrap}>
-              {stats.status === 'idle' && (
+              {/* {stats.status === 'idle' && (
                 <p className={styles.status_text}>{'상단 영역에 데이터를 업로드하세요.'}</p>
-              )}
+              )} */}
             </div>
             <NoticeBox
               iconVisible={false}

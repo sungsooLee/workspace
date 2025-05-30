@@ -34,8 +34,6 @@ interface UseGridTableReturn<T extends object> {
   rowSelection: RowSelectionState;
   isInitialSelectionEffect: React.MutableRefObject<boolean>;
   lastPinnedColumnId: string; // 마지막 고정 열의 ID
-  // updateData: (rowIndex: number, columnId: string, value: unknown) => void;
-  // removeData: (rowIndex: number) => void;
 }
 
 export function useGridTable<T extends object>(
@@ -73,18 +71,16 @@ export function useGridTable<T extends object>(
     [columnGrouping?.columns],
   );
   const [columnPinningState, setColumnPinningState] = useState<ColumnPinningState>({
-    left: [
-      ...(props.showNumberingColumn ? ['select-radio'] : []),
-      ...(multiple && !props.hideRowSelectionCheckBox ? ['select-check'] : []),
-      ...(props.showNumberingColumn ? ['numbering'] : []),
-      ...columnPinning.columns,
-    ],
+    left: columnPinning.columns?.length
+      ? [
+          ...(props.showNumberingColumn ? ['select-radio'] : []),
+          ...(multiple && !props.hideRowSelectionCheckBox ? ['select-check'] : []),
+          ...(props.showNumberingColumn ? ['numbering'] : []),
+          ...columnPinning.columns,
+        ]
+      : [],
     right: [],
   });
-  // const [columnPinningState, setColumnPinningState] = useState<ColumnPinningState>({
-  //   left: multiple ? ['select', ...columnPinning.columns] : columnPinning.columns,
-  //   right: [],
-  // });
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(() =>
     columns.reduce((acc, col) => {
       acc[col.id as string] = true;

@@ -447,7 +447,7 @@ const PaginationTable = () => {
   const [data, setData] = useState<PaginationResponse<Person>>();
   const [pagination, setPagination] = useState<GridBoxPagination>({
     pageNumber: 0,
-    pageSize: 10,
+    pageSize: 20,
     totalPages: 100,
     onPageChange: (newPageNumber: number) =>
       setPagination((state: GridBoxPagination) => ({ ...state, pageNumber: newPageNumber })),
@@ -826,6 +826,93 @@ export const TemplateTitleArea: any = (args: any) => {
   );
 };
 TemplateTitleArea.storyName = '타이틀 영역';
+
+// 컬럼 정렬
+export const TemplateColumnAlign: any = (args: any) => {
+  const data = dummyData(5);
+  const columns = [
+    {
+      accessorKey: 'name',
+      header: 'Header left',
+      size: 100,
+      meta: { headerAlign: 'left' },
+      columns: [
+        {
+          accessorKey: 'name',
+          header: 'Cell left',
+          size: 100,
+          meta: { headerAlign: 'left', cellAlign: 'left' },
+        },
+        {
+          accessorKey: 'name',
+          header: 'Cell center',
+          size: 100,
+          meta: { headerAlign: 'left', cellAlign: 'center' },
+        },
+        {
+          accessorKey: 'name',
+          header: 'Cell right',
+          size: 100,
+          meta: { headerAlign: 'left', cellAlign: 'right' },
+        },
+      ],
+    },
+    {
+      accessorKey: 'name',
+      header: 'Header center',
+      size: 100,
+      meta: { headerAlign: 'center' },
+      columns: [
+        {
+          accessorKey: 'name',
+          header: 'Cell left',
+          size: 100,
+          meta: { headerAlign: 'center', cellAlign: 'left' },
+        },
+        {
+          accessorKey: 'name',
+          header: 'Cell center',
+          size: 100,
+          meta: { headerAlign: 'center', cellAlign: 'center' },
+        },
+        {
+          accessorKey: 'name',
+          header: 'Cell right',
+          size: 100,
+          meta: { headerAlign: 'center', cellAlign: 'right' },
+        },
+      ],
+    },
+    {
+      accessorKey: 'name',
+      header: 'Header right',
+      size: 100,
+      meta: { headerAlign: 'right' },
+      columns: [
+        {
+          accessorKey: 'name',
+          header: 'Cell left',
+          size: 100,
+          meta: { headerAlign: 'right', cellAlign: 'left' },
+        },
+        {
+          accessorKey: 'name',
+          header: 'Cell center',
+          size: 100,
+          meta: { headerAlign: 'right', cellAlign: 'center' },
+        },
+        {
+          accessorKey: 'name',
+          header: 'Cell right',
+          size: 100,
+          meta: { headerAlign: 'right', cellAlign: 'right' },
+        },
+      ],
+    },
+  ];
+  return <GridBox data={data} columns={columns} />;
+};
+TemplateColumnAlign.storyName = '컬럼 정렬';
 
 // 컬럼 유형
 export const TemplateColumnType: any = (args: any) => {

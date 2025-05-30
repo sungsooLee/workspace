@@ -293,4 +293,10 @@ export interface ExcelConfig {
     xlsx: string; // xlsx form download url
     csv: string; // csv download url
   };
+  uploadCOnfig?: {
+    validateUrl?: string; //엑셀 유효성 검사 url
+    uploadUrl?: string;
+  };
+  onBeforeDownload?: (executeUpload: () => Promise<void>) => Promise<void>;
+  onBeforeUpload?: (executeUpload: () => Promise<void>) => Promise<void>;
 }
