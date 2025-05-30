@@ -1,7 +1,7 @@
 /* grid-box.module.css */
 
 .table_box {
-  @apply flex w-full flex-col;
+  @apply flex w-full select-none flex-col;
   .table_info {
     @apply mb-[12px] flex min-h-[28px] w-full items-center justify-between;
     .title_info {

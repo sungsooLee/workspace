@@ -1,40 +1,42 @@
 /* grid-header.module.css */
-table {
-  thead {
-    @apply sticky top-0 z-[4] w-full bg-[var(--gray1)] shadow-[0_1px_0_0_var(--gray5)];
-    tr {
-      th {
-        &.th_wrap {
-          @apply body_bo_4_b relative h-[40px] overflow-hidden text-ellipsis whitespace-nowrap px-[8px] align-middle;
-          .icon_up,
-          .icon_down,
-          .btn_filter {
-            @apply ml-auto inline-flex;
-          }
-          .icon_up {
-            @apply absolute right-[12px] top-1/2 -mt-[5px] -translate-y-1/2 rotate-180;
-          }
-          .icon_down {
-            @apply absolute right-[12px] top-1/2 mt-[5px] -translate-y-1/2;
-          }
-          [class*='nlp--checkbox'] {
-            @apply mt-[5px];
-          }
-          &:not(:first-child) {
-            &::before {
-              @apply absolute left-0 top-0 z-[1] h-full w-[1px] bg-[var(--gray3)] content-[''];
+[class*='grid'] {
+  table {
+    thead {
+      @apply sticky top-0 z-[4] w-full bg-[var(--gray1)] shadow-[0_1px_0_0_var(--gray5)];
+      tr {
+        th {
+          &.th_wrap {
+            @apply body_bo_4_b relative h-[40px] overflow-hidden text-ellipsis whitespace-nowrap px-[8px] align-middle;
+            .icon_up,
+            .icon_down,
+            .btn_filter {
+              @apply ml-auto inline-flex;
             }
-          }
-          &.th_pinned_left {
-            @apply !border-l-0;
+            .icon_up {
+              @apply absolute right-[12px] top-1/2 -mt-[5px] -translate-y-1/2 rotate-180;
+            }
+            .icon_down {
+              @apply absolute right-[12px] top-1/2 mt-[5px] -translate-y-1/2;
+            }
+            [class*='nlp--checkbox'] {
+              @apply mt-[5px];
+            }
             &:not(:first-child) {
               &::before {
                 @apply absolute left-0 top-0 z-[1] h-full w-[1px] bg-[var(--gray3)] content-[''];
               }
             }
-          }
-          &.th_sticky {
-            @apply !z-[4];
+            &.th_pinned_left {
+              @apply !border-l-0;
+              &:not(:first-child) {
+                &::before {
+                  @apply absolute left-0 top-0 z-[1] h-full w-[1px] bg-[var(--gray3)] content-[''];
+                }
+              }
+            }
+            &.th_sticky {
+              @apply !z-[4];
+            }
           }
         }
       }

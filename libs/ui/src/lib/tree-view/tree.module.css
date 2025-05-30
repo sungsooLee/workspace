@@ -1,5 +1,5 @@
 .tree_wrap {
-  @apply scrollbar max-h-[800px] w-full overflow-y-auto overflow-x-hidden;
+  @apply scrollbar max-h-[800px] w-full select-none overflow-y-auto overflow-x-hidden;
   .tree {
     [draggable='true'] {
       cursor: grab;
