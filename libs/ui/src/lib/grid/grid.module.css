@@ -1,6 +1,6 @@
 /* grid.module.css */
 .grid {
-  @apply scrollbar relative box-border overflow-auto border border-solid border-[var(--gray5)];
+  @apply scrollbar relative box-border select-none overflow-auto border border-solid border-[var(--gray5)];
   .select_row_radio {
     @apply relative flex h-full w-full items-center justify-center;
     &.checked {
