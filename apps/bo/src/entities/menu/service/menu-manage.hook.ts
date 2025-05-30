@@ -94,7 +94,10 @@ export function useCheckExistsMenu(options?: {
     },
   );
 
-  const checkExistsMenu = (payload: { menuScopeCode: string; menuCode: string }) => {
+  const checkExistsMenu = (
+    payload: { menuScopeCode: string; menuCode: string },
+    callback?: any,
+  ) => {
     setQueryParams(payload);
 
     setTimeout(() => {
@@ -104,11 +107,13 @@ export function useCheckExistsMenu(options?: {
           if (result.isSuccess && options?.onSuccess) {
             options.onSuccess(result.data);
           }
+          callback?.onSuccess(result.data);
         })
         .catch((error) => {
           if (options?.onError) {
             options.onError(error);
           }
+          callback?.onError(error);
         });
     }, 0);
   };

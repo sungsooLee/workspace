@@ -1,7 +1,7 @@
-import { useState, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 import { t } from 'i18next';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { Button, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
@@ -23,6 +23,10 @@ function RouteComponent() {
 
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
+
+  useEffect(() => {
+    gridFetch();
+  }, []);
 
   const handleOnSearch = useCallback((data: any) => {
     console.log('search', data);
@@ -165,7 +169,17 @@ const columns = [
   }),
   columnHelper.accessor('name', {
     header: t('회사명'),
-    cell: (info) => info.getValue(),
+    cell: (info) => (
+      <Link
+        to="/platform/company/detail"
+        state={{
+          companyCode: info.row.original.companyCode,
+        }}
+        className="link"
+      >
+        {info.row.original.name}
+      </Link>
+    ),
     enableGrouping: false,
   }),
   columnHelper.accessor('useYn', {

@@ -2,29 +2,15 @@ import { FC, useEffect, useState, useCallback } from 'react';
 import { t } from 'i18next';
 import {
   Button,
-  ChipListModalSelectorFormField,
   useGridBox,
   useGridBoxConfig,
   ContentsRow,
   GridBox,
-  Input,
   useModal,
   RadioGroupFormField,
 } from '@learnway/ui';
-import {
-  ContentsHistoryInfoFormField,
-  FormInfoArea,
-  FormRow,
-  FormSubTitle,
-  SwitchFormField,
-} from '@shared/ui';
-import {
-  DynamicFormConfig,
-  useDynamicForm,
-  CODE_GROUP,
-  useSearchBox,
-  SearchBoxConfig,
-} from '@learnway/hooks';
+import { FormRow, FormSubTitle, SwitchFormField } from '@shared/ui';
+import { DynamicFormConfig, useDynamicForm, CODE_GROUP } from '@learnway/hooks';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { LoginRestrictTimeSettingModal } from '@features/shared/ui/modal/login-restrict-time-setting-modal';

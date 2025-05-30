@@ -104,37 +104,43 @@ const gridConfig = {
 
 const columnHelper = createColumnHelper<any>();
 const columns = [
-  columnHelper.accessor('companyName', {
-    cell: (info) => info.getValue(),
+  columnHelper.accessor('company', {
+    id: 'company',
+    cell: (info) => info.row.original.company.name,
     header: '회사',
     enableGrouping: false,
     size: 210,
   }),
-  columnHelper.accessor('deptName', {
+  columnHelper.accessor('noDat1', {
+    id: 'noDat1',
     cell: (info) => info.getValue(),
     header: '본부/사업부',
     size: 240,
     enableGrouping: false,
   }),
-  columnHelper.accessor('dep', {
+  columnHelper.accessor('noDat2', {
+    id: 'noDat2',
     cell: (info) => info.getValue(),
     header: '부서',
     size: 150,
     enableGrouping: false,
   }),
-  columnHelper.accessor('dept2', {
-    cell: (info) => info.getValue(),
+  columnHelper.accessor('dept', {
+    id: 'dept',
+    cell: (info) => info.row.original.dept.deptName,
     header: '소속',
     size: 150,
     enableGrouping: false,
   }),
-  columnHelper.accessor('userNo', {
+  columnHelper.accessor('employeeNumber', {
+    id: 'employeeNumber',
     cell: (info) => info.getValue(),
     header: '사번',
     size: 220,
     enableGrouping: false,
   }),
-  columnHelper.accessor('userName', {
+  columnHelper.accessor('name', {
+    id: 'name',
     cell: (info) => info.getValue(),
     header: '이름',
     size: 220,
