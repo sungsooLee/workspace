@@ -14,11 +14,11 @@ import {
   TenantChoiceModal,
   TenantShuttleModal,
   UserAndExternalUserTabsChoiceModal,
-  UserChoiceForGroupModal,
   UserChoiceModal,
   UserShuttleModal,
   MenuChoiceTreeModal,
   CategoryChoiceTreeModal,
+  CompanyUserChoiceModal,
 } from '@features/shared';
 import { Button, ChipListModalSelectorFormField, ContentsRow, Input, useModal } from '@learnway/ui';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
@@ -267,11 +267,11 @@ function RouteComponent() {
                 e.stopPropagation();
                 openModal({
                   width: 'xl',
-                  content: <UserChoiceForGroupModal />,
+                  content: <CompanyUserChoiceModal />,
                 });
               }}
             >
-              {'회사안에 유저 조회 팝업'}
+              {'회사 기준으로 유저를 조회'}
             </Button>
 
             <div className="h-1 w-full border-white bg-slate-700" />

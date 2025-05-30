@@ -42,7 +42,7 @@ function RouteComponent() {
   return (
     <form className="form_row">
       <PageContainer tabs={true}>
-        <Tabs items={items} type="fill" className="page_tabs" />
+        <Tabs items={items} type="fill" className={'page_tabs'} showContentBorder={true} />
       </PageContainer>
     </form>
   );

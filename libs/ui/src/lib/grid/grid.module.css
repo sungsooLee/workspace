@@ -5,16 +5,10 @@
     thead {
       @apply sticky top-0 z-[1] !h-[39px] w-full bg-[var(--gray1)];
       tr {
-        th {
-
-        }
         th.thead_th {
-          @apply !h-[39px] !border-b-0 bg-[var(--gray1)];
+          @apply !h-[39px] min-h-[39px] !border-b-0 bg-[var(--gray1)];
           .th_wrap {
-            white-space: nowrap;        /* 줄바꿈 방지 */
-            overflow: hidden;           /* 넘치는 텍스트 숨김 */
-            text-overflow: ellipsis;
-            @apply flex !h-[39px] body_bo_4_b flex min-h-[39px] items-center px-[8px] text-[var(--gray8)];
+            @apply body_bo_4_b flex items-center overflow-hidden text-ellipsis whitespace-nowrap px-[8px] text-[var(--gray8)];
             .icon_up,
             .icon_down,
             .btn_filter {
@@ -43,8 +37,8 @@
           @apply body_bo_2_r h-full px-[8px] py-[8px] align-middle text-[var(--gray7)];
           /*@apply body_bo_2_r line-clamp-1 h-full text-ellipsis whitespace-nowrap px-[8px] py-[8px] align-middle text-[var(--gray7)];*/
           /*@apply body_bo_2_r h-full text-ellipsis whitespace-nowrap px-[8px] py-[8px] align-middle text-[var(--gray7)];*/
-          white-space: nowrap;        /* 줄바꿈 방지 */
-          overflow: hidden;           /* 넘치는 텍스트 숨김 */
+          white-space: nowrap; /* 줄바꿈 방지 */
+          overflow: hidden; /* 넘치는 텍스트 숨김 */
           text-overflow: ellipsis;
           [class*='nlp--button'] {
             @apply !min-w-auto button_bo_4_r !h-[20px] !text-[1.2rem];
