@@ -339,16 +339,6 @@ export function useGridTable<T extends object>(
     onRowSelect?.(firstSelectedRow);
     onRowsSelect?.(originalSelectedRows);
   }, [rowSelection, table, onRowSelect, onRowsSelect]);
-  // useEffect(() => {
-  //   if (isInitialSelectionEffect.current) {
-  //     isInitialSelectionEffect.current = false;
-  //     return;
-  //   }
-  //   const selectedRows = table.getSelectedRowModel().rows.map((row) => row.original);
-  //   const selectedRow = selectedRows?.[0];
-  //   onRowSelect?.(selectedRow);
-  //   onRowsSelect?.(selectedRows);
-  // }, [rowSelection, table, onRowSelect, onRowsSelect]);
 
   // data 변경시 첫번째 행 선택
   useEffect(() => {
