@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { Link, useMatchRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
@@ -14,11 +14,33 @@ function NavigateComponent() {
   console.log('useMenuHierarchy', data);
   const matchRoute = useMatchRoute();
 
+  // 히든메뉴는 노출하지 않음.
+  const visibleMenu = useMemo(() => {
+    function filterVisibleTreeList(menu: Menu[]): Menu[] {
+      return menu.map(filterVisibleNode).filter((node): node is Menu => node !== null);
+    }
+    function filterVisibleNode(node: Menu): Menu | null {
+      const filteredChildren = (node.children ?? [])
+        .map(filterVisibleNode)
+        .filter((n): n is Menu => n !== null);
+
+      if (node.isHiddenMenu === false) {
+        return {
+          ...node,
+          children: filteredChildren,
+        };
+      }
+      return null;
+    }
+    if (!data?.menus) return [];
+    return filterVisibleTreeList(data?.menus);
+  }, [data]);
+
   return (
     <div className={`${styles.start} nlp--navigate`}>
       <nav className={styles.nav}>
         <ul>
-          {data?.menus?.map((menu: Menu, index: number) => {
+          {visibleMenu?.map((menu: Menu, index: number) => {
             return (
               <li key={`${menu.key}_${index}`}>
                 <Link
