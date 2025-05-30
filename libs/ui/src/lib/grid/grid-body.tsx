@@ -21,10 +21,7 @@ export const GridBody = <T extends object>({
       {table.getRowModel().rows.map((row) => (
         <tr
           key={row.id}
-          className={cn(
-            row.getIsSelected() && styles.selected,
-            row.getIsSelected() && 'bg-[#edfcff]',
-          )}
+          className={cn(row.getIsSelected() && styles.selected)}
           onClick={() => !row.getIsGrouped() && !disabledSelectionToggle && row.toggleSelected()}
         >
           {row.getVisibleCells().map((cell: Cell<T, unknown>) => (
@@ -64,9 +61,9 @@ export const GridCell = <T extends object>({ row, cell, lastPinnedColumnId }: Gr
           : '',
     width: cell.column.getSize(),
     textAlign: cell.column.columnDef.meta?.cellAlign || cell.column.columnDef.meta?.align || 'left',
+    // position: isPinnedLeft && styles.td_sticky,
     position: isPinnedLeft ? 'sticky' : undefined,
     left: isPinnedLeft ? `${cell.column.getStart('left')}px` : undefined,
-    zIndex: isPinnedLeft ? 3 : undefined,
   } as CSSProperties;
 
   return (
