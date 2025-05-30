@@ -62,7 +62,7 @@ function RouteComponent() {
       </ContentsButtons>
       <MainContents>
         <SearchBox provider={sProvider} onSearch={handleOnSearch} />
-        <GridBox config={gConfig} guideText={'Guide Text'} />
+        <GridBox config={{ ...gConfig, data: [{}, {}] }} guideText={'Guide Text'} />
       </MainContents>
     </PageContainer>
   );
@@ -153,8 +153,9 @@ const gridConfig = {
       label: 'NO.',
       type: 'numbering',
     },
-    { name: '채널', label: '채널' },
-    { name: '테넌트', label: '테넌트' },
+    { name: '채널', label: '채널', render: (info: any) => 'xxx' },
+    // { name: '채널', label: '채널', render: (info: any) => info.row.original.tenantName },
+    { name: '테넌트', label: '테넌트', render: (info: any) => '222222' },
     { name: '과정유형', label: '과정유형' },
     { name: '과정코드', label: '과정코드' },
     { name: '과정', label: '과정명' },
