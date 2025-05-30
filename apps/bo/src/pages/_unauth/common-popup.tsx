@@ -189,7 +189,7 @@ function RouteComponent() {
               >
                 {'유저 검색(셔틀)'}
               </Button>
-              <span className="text-yellow-500">{'진행중'}</span>
+              <span className="text-green-400">{'완료'}</span>
             </div>
             <div className="h-1 w-full border-white bg-slate-700" />
             <div className="flex gap-4">
@@ -330,7 +330,7 @@ function RouteComponent() {
               >
                 {'HRD 담당자 역할 조회(셔틀)'}
               </Button>
-              <span className="text-yellow-500">{'진행중'}</span>
+              <span className="text-green-400">{'완료'}</span>
             </div>
             <div className="h-1 w-full border-white bg-slate-700" />
             <div className="flex gap-4">
@@ -365,7 +365,7 @@ function RouteComponent() {
               >
                 {'테넌트 조회(셔틀)'}
               </Button>
-              <span className="text-yellow-500">{'진행중'}</span>
+              <span className="text-green-400">{'완료'}</span>
             </div>
             <div className="h-1 w-full border-white bg-slate-700" />
             <div className="flex gap-4">
@@ -400,7 +400,7 @@ function RouteComponent() {
               >
                 {'채널 조회(셔틀)'}
               </Button>
-              <span className="text-yellow-500">{'진행중'}</span>
+              <span className="text-green-400">{'완료'}</span>
             </div>
             <div className="h-1 w-full border-white bg-slate-700" />
             <div className="flex gap-4">

@@ -123,28 +123,26 @@ const searchConfig: SearchBoxConfig = {
   ],
 };
 
-const columnHelper = createColumnHelper();
+const columnHelper = createColumnHelper<any>();
 const columns = [
-  columnHelper.accessor('companyName', {
+  columnHelper.accessor('company', {
     header: t('회사'),
     size: 132,
-    cell: (info) => info.getValue(),
+    cell: (info) => info.row.original.company.name,
   }),
-  columnHelper.accessor('deptName', {
+  columnHelper.accessor('dept', {
+    id: 'dept',
+    cell: (info) => info.row.original.dept.deptName,
     header: t('소속'),
     size: 132,
-    cell: (info) => info.getValue(),
-    meta: {
-      headerAlign: 'left', // 헤더만 가운데 정렬
-      cellAlign: 'left', // 셀은 오른쪽 정렬
-    },
+    enableGrouping: false,
   }),
-  columnHelper.accessor('userNo', {
+  columnHelper.accessor('employeeNumber', {
     header: t('사번'),
     size: 132,
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor('userName', {
+  columnHelper.accessor('name', {
     header: t('이름'),
     size: 132,
     cell: (info) => info.getValue(),
