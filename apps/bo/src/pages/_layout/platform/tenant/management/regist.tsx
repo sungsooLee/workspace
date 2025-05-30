@@ -3,6 +3,10 @@ import { t } from 'i18next';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
+import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
+import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
+import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
+
 import {
   Button,
   CheckboxGroupFormField,
@@ -11,11 +15,8 @@ import {
   TextareaFormField,
   useModal,
 } from '@learnway/ui';
-import { FormRow, ThumbnailListFormField } from '@shared/ui';
 import { CODE_GROUP, DynamicFormConfig, useCodeStore, useDynamicForm } from '@learnway/hooks';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
-import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
+import { FormRow, ThumbnailListFormField } from '@shared/ui';
 
 import { useCreateTenant } from '@entities/tenant/service/tenant.hook';
 import {
@@ -23,7 +24,7 @@ import {
   DuplicateState,
 } from '@features/tenant/management/ui/duplicate-check-input-form-field';
 import { pageRouteConfig } from '@features/auth';
-import { CompanyShuttleModal, UserChoiceModal } from '@features/shared';
+import { CompanyShuttleModal, CompanyChoiceModal, UserChoiceModal } from '@features/shared';
 import TenantService from '@entities/tenant/api/tenant';
 import { isEqual } from 'lodash';
 import { EnDeviceType, EnUseCategory } from '@types';
@@ -49,6 +50,10 @@ const duplicateCheck = async (tenantName: string) => {
   else return DuplicateState.ok;
 };
 
+/**
+ * 화면번호: NLP_BO_TMS_1001
+ * @returns
+ */
 function RouteComponent() {
   const router = useRouter();
   const [languageTypeList, setLanguageTypeList] = useState<any[]>(defaultLangOptions);
