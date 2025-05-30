@@ -110,7 +110,6 @@ const GridComponent = forwardRef(
       () =>
         ({
           maxHeight: visibleRowCount * rowHeight + table.getHeaderGroups().length * 41 + 16,
-          // overflow: !data?.length ? 'hidden' : 'auto',
         }) as CSSProperties,
       [visibleRowCount, rowHeight, table, data?.length],
     );
