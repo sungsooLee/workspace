@@ -14,7 +14,7 @@ import { queryOptions } from '@entities/companies/service/companies.queries';
 
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
-export const Route = createFileRoute('/_layout/platform/company/')({
+export const Route = createFileRoute('/_layout/platform/company/management/')({
   component: RouteComponent,
 });
 
@@ -39,7 +39,7 @@ function RouteComponent() {
         <Button
           variant="primary"
           size="sm"
-          onClick={() => router.navigate({ to: '/platform/company/regist' })}
+          onClick={() => router.navigate({ to: '/platform/company/management/regist' })}
         >
           {t('등록')}
         </Button>
@@ -171,7 +171,7 @@ const columns = [
     header: t('회사명'),
     cell: (info) => (
       <Link
-        to="/platform/company/detail"
+        to="/platform/company/management/detail"
         state={{
           companyCode: info.row.original.companyCode,
         }}

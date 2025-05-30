@@ -77,21 +77,7 @@ export const MenuManage = ({ menuScope }: any) => {
   const { update: updateMenu } = useUpdateMenu({});
   const { delete: deleteMenu } = useDeleteMenu({});
   const { move: moveMenu } = useMoveMenu({});
-  const { checkExistsMenu, isLoading } = useCheckExistsMenu({
-    onSuccess: (data) => {
-      const isUnique = !data; // data가 true면 중복, false면 중복 아님
-      setIsSuccessCodeCheck(isUnique);
-      setCodeCheckState(isUnique ? 'success' : 'duplicate');
-      onFormChange?.({
-        isDuplicateMenuCode: isUnique,
-      });
-    },
-    onError: () => {
-      setIsSuccessCodeCheck(false);
-      setCodeCheckState('error');
-      onFormChange?.({ isDuplicateMenuCode: false });
-    },
-  });
+  const { checkExistsMenu, isLoading } = useCheckExistsMenu({});
 
   const duplicateCheck = async (code: string) => {
     const result = await new Promise((resolve) => {
@@ -122,19 +108,6 @@ export const MenuManage = ({ menuScope }: any) => {
   const initialFromValuesRef = useRef<any>(null);
 
   const handleOnSubmit = (node: any) => {
-    const isCodeChanged = isFieldChanged('code', node.code);
-    // 코드가 변경되지 않았으면 중복 체크 없이 진행
-    if (isCodeChanged) {
-      if (codeCheckState === 'none') {
-        setFormError?.('code', '메뉴 코드의 중복 여부를 확인해 주세요.');
-        return;
-      }
-      if (!isSuccessCodeCheck || codeCheckState === 'duplicate') {
-        setFormError?.('code', '이미 사용 중인 메뉴 코드입니다.');
-        return;
-      }
-    }
-
     const apiMappingKeys = [] as number[];
     node.apiMappingMenuList.forEach((i: any) => apiMappingKeys.push(i.apiId));
     if (formMode === FORM_MODE.VIEW) {
@@ -664,7 +637,6 @@ const formConfig: DynamicFormConfig = {
       name: 'code',
       type: 'custom',
       format: 'object',
-      maxLength: 20,
       value: { fieldValue: '', checkState: DuplicateState.needInput },
     },
     {
@@ -705,12 +677,7 @@ const formConfig: DynamicFormConfig = {
       maxLength: 100,
       value: '',
     },
-    {
-      name: 'isDuplicateMenuCode',
-      type: 'hidden',
-      format: 'boolean',
-      value: false,
-    },
+
     {
       name: 'deviceNames',
       type: 'checkbox-group',
