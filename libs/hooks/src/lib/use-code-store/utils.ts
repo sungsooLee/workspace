@@ -17,10 +17,7 @@ const defaultFetchCodeGroup = async <K extends CODE_GROUP_TYPE>(
   if (response && response[0] && response[0][group]) {
     return response[0][group].map((item: CodeApiType) => ({
       value: item.cdId,
-      label:
-        import.meta.env.VITE_LANGUAGE_DEV === 'true'
-          ? item.cdName || item.multilingualKey
-          : item.multilingualKey || item.cdName,
+      label: item.multilingualKey || item.cdName,
       ...item,
     }));
   }

@@ -76,45 +76,51 @@ function RouteComponent() {
   };
 
   return (
-    <PageContainer>
-      <ContentsButtons>
-        <Button
-          type="button"
-          variant="point"
-          size="sm"
-          onClick={() => handleMultilingualManageClick()}
-          label={t('LABEL.button.multilingualManage')}
-        />
-      </ContentsButtons>
-      <MainContents>
-        {/* 검색 */}
-        <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
-        {/* 그리드 + 상세 */}
-        <SplitPanel rightSize={450}>
-          <GridBox
-            config={gConfig}
-            title={t('목록')}
-            // height={400}
-            // showAdd
-            showNumberingColumn
-            autoSelectFirstRow
-            onRowSelect={handleGridRowSelect}
-            // onAddClick={handleGridAddClick}
-            customButtonNode={
-              <Button variant="text" onClick={handleGridAddClick} className={layoutStyles.btn_text}>
-                <IcoPlus width={16} height={16} stroke="#131C30" />
-                {t('LABEL.grid.header.add')}
-              </Button>
-            }
-            onStateChange={handleStateChange}
+    <div>
+      <PageContainer>
+        <ContentsButtons>
+          <Button
+            type="button"
+            variant="point"
+            size="sm"
+            onClick={() => handleMultilingualManageClick()}
+            label={t('LABEL.button.multilingualManage')}
           />
-          <MessageDetail
-            labelMessageId={selectedLabelMessageId}
-            onSuccessSave={handleSuccessSave}
-          />
-        </SplitPanel>
-      </MainContents>
-    </PageContainer>
+        </ContentsButtons>
+        <MainContents>
+          {/* 검색 */}
+          <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
+          {/* 그리드 + 상세 */}
+          <SplitPanel rightSize={450}>
+            <GridBox
+              config={gConfig}
+              title={t('목록')}
+              // height={400}
+              // showAdd
+              showNumberingColumn
+              autoSelectFirstRow
+              onRowSelect={handleGridRowSelect}
+              // onAddClick={handleGridAddClick}
+              customButtonNode={
+                <Button
+                  variant="text"
+                  onClick={handleGridAddClick}
+                  className={layoutStyles.btn_text}
+                >
+                  <IcoPlus width={16} height={16} stroke="#131C30" />
+                  {t('LABEL.grid.header.add')}
+                </Button>
+              }
+              onStateChange={handleStateChange}
+            />
+            <MessageDetail
+              labelMessageId={selectedLabelMessageId}
+              onSuccessSave={handleSuccessSave}
+            />
+          </SplitPanel>
+        </MainContents>
+      </PageContainer>
+    </div>
   );
 }
 

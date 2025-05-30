@@ -13,15 +13,32 @@ export const ExcelButtons: FC<{ config?: ExcelConfig; getParams?: UseFormReturn[
 }) => {
   if (!config) return <></>;
   const { open: openModal } = useModal();
-  const { upload, download, form } = config;
+  const { upload, download, form, onBeforeDownload, onBeforeUpload } = config;
 
   const handleExcelDownload = async () => {
     const params = getParams ? getParams() : {};
-    await fileDownload(`${PMSApiPrefix()}/multilingual/exportExcel`, params);
+
+    const executeDownload = async () => {
+      await fileDownload(`${PMSApiPrefix()}` + download, params);
+    };
+
+    if (onBeforeDownload) await onBeforeDownload(executeDownload);
+    else await executeDownload();
   };
 
   const handleExcelUpload = async () => {
-    //excelUpload || excelUpload();
+    console.log('업로드는 시작하자');
+    const executeUpload = async () => {
+      // 업로드 로직
+      console.log('Excel upload logic');
+    };
+
+    // onBeforeUpload 콜백이 있으면 사용, 없으면 바로 실행
+    if (onBeforeUpload) {
+      await onBeforeUpload(executeUpload);
+    } else {
+      await executeUpload();
+    }
   };
 
   return (
@@ -33,9 +50,8 @@ export const ExcelButtons: FC<{ config?: ExcelConfig; getParams?: UseFormReturn[
           size="xs"
           className={styles.btn_upload}
           label={t('LABEL.grid.header.excelUpload', '엑셀업로드')}
-          icon={
-            <IcoUploadCloud width={16} height={16} stroke={'#4C515E'} onClick={handleExcelUpload} />
-          }
+          onClick={handleExcelUpload}
+          icon={<IcoUploadCloud width={16} height={16} stroke={'#4C515E'} />}
         />
       )}
       {/* 엑셀다운로드 */}

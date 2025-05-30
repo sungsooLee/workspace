@@ -225,6 +225,15 @@ export const munu = [
     end: false,
   },
   {
+    screenName: '테넌트 상세',
+    pageId: '/tenant/management/detail',
+    screenId: 'NLP_BO_TMS_1003_00_04, NLP_BO_TMS_1003_02 등등',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중 - /tenant/management 에서 조회 후 테넌트명 클릭',
+    end: false,
+  },
+  {
     screenName: '플렛폼 테넌트 관리',
     pageId: '/platform/tenant/management',
     screenId: 'NLP_BO_TMS_1000',
@@ -234,12 +243,21 @@ export const munu = [
     end: false,
   },
   {
+    screenName: '테넌트 상세(플렛폼)',
+    pageId: '/platform/tenant/management/detail',
+    screenId: 'NLP_BO_TMS_1002,NLP_BO_TMS_1002_01 등등',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중 - /platform/tenant/management 에서 조회 후 테넌트명 클릭',
+    end: false,
+  },
+  {
     screenName: '플렛폼 테넌트 등록',
     pageId: '/platform/tenant/management/regist',
     screenId: 'NLP_BO_TMS_1001',
     pageType: 'Page',
     completionDate: '-',
-    memo: '작업 중',
+    memo: '작업 중 (등록 가능)',
     end: false,
   },
   {

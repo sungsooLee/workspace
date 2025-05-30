@@ -47,27 +47,35 @@ const AccordionMenuComponent = ({
    * 2~3 depth의 경우 route path가 있는 경우, title click시 navigate, 없는 경우 accordion open
    */
   const items = useCreation(() => {
-    return (menus ?? []).map((menu: Menu, index: number) => {
-      const active =
-        activeMenuDepth &&
-        activeMenuDepth[depth - 1] &&
-        activeMenuDepth[depth - 1]?.path === menu?.path;
-      return {
-        value: `menu_${index}`,
-        title: (
-          <span className={active ? styles.active : ''} onClick={() => handleNavigate(menu)}>
-            {import.meta.env.VITE_LANGUAGE_DEV === 'true'
-              ? t(`${menu.menuName}`)
-              : t(`MENU.${menu.menuCode}`)}
-          </span>
-        ),
-        children: menu?.children && (
-          <AccordionMenu menus={(menu?.children as Menu[]) || []} depth={depth + 1} />
-        ),
-        active,
-      } as AccordionItem;
-    });
-  }, [menus, activeMenuDepth]);
+    return (menus ?? [])
+      .filter((menu) => menu.isHiddenMenu === false)
+      .map((menu: Menu, index: number) => {
+        const children = menu?.children?.filter((m) => m.isHiddenMenu === false);
+
+        let active = false;
+        if (activeMenuDepth && activeMenuDepth[depth - 1]) {
+          active = activeMenuDepth[depth - 1]?.path === menu?.path;
+        } else if (depth === 4 && activeMenuDepth) {
+          const currentPath = router.state.location.pathname;
+          active = currentPath === menu?.path;
+        }
+
+        return {
+          value: `menu_${index}`,
+          title: (
+            <span className={active ? styles.active : ''} onClick={() => handleNavigate(menu)}>
+              {import.meta.env.VITE_LANGUAGE_DEV === 'true'
+                ? t(`${menu.menuName}`)
+                : t(`MENU.${menu.menuCode}`)}
+            </span>
+          ),
+          children: children && (
+            <AccordionMenu menus={(menu?.children as Menu[]) || []} depth={depth + 1} />
+          ),
+          active,
+        } as AccordionItem;
+      });
+  }, [menus, activeMenuDepth, router.state.location.pathname]);
 
   useEffect(() => {
     if (openAll === undefined) {

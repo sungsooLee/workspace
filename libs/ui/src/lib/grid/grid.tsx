@@ -110,7 +110,6 @@ const GridComponent = forwardRef(
       () =>
         ({
           maxHeight: visibleRowCount * rowHeight + table.getHeaderGroups().length * 41 + 16,
-          overflow: !data?.length ? 'hidden' : 'auto',
         }) as CSSProperties,
       [visibleRowCount, rowHeight, table, data?.length],
     );
@@ -125,7 +124,11 @@ const GridComponent = forwardRef(
     );
 
     return (
-      <div className={gridClass} style={gridStyle} ref={tableContainerRef}>
+      <div
+        className={cn(gridClass, !data?.length && styles.no_data)}
+        style={gridStyle}
+        ref={tableContainerRef}
+      >
         <table style={tableStyle}>
           {!hideHeader && <GridHeader table={table} lastPinnedColumnId={lastPinnedColumnId} />}
           {!isLoading && (

@@ -1,6 +1,15 @@
-import { Hierarchy } from '@learnway/shared';
+// import { Hierarchy } from '@learnway/shared';
 
-export interface Menu extends Hierarchy<Menu> {
+type Hierarchy<T> = T & {
+  children?: Hierarchy<T>[];
+  key: string;
+  title: string;
+  path: string;
+  parentNode: T;
+  depth: number;
+};
+
+interface MenuItem {
   menuId: number;
   menuCode: string;
   path: string;
@@ -21,6 +30,8 @@ export interface Menu extends Hierarchy<Menu> {
   tenantMappingMenuId: number;
   depth: number;
 }
+
+export type Menu = Hierarchy<MenuItem>;
 
 export interface FetchMenusParams {
   roleIds?: string;

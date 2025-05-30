@@ -157,240 +157,286 @@ function RouteComponent() {
         <SubContents>
           <div>공통팝업</div>
           <div className="flex flex-col gap-4">
-            <Button
-              size={'xs'}
-              className="btn_table"
-              variant={'gray2'}
-              onClick={(e) => {
-                e.stopPropagation();
-                openModal({
-                  width: 'xl',
-                  content: <UserChoiceModal />,
-                });
-              }}
-            >
-              {'유저 검색(공통)'}
-            </Button>
-            <Button
-              size={'xs'}
-              className="btn_table"
-              variant={'gray2'}
-              onClick={(e) => {
-                e.stopPropagation();
-                openModal({
-                  width: 'xl',
-                  content: <UserShuttleModal />,
-                });
-              }}
-            >
-              {'유저 검색(셔틀)'}
-            </Button>
+            <div className="flex gap-4">
+              <Button
+                size={'xs'}
+                className="btn_table flex-1"
+                variant={'gray2'}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openModal({
+                    width: 'xl',
+                    content: <UserChoiceModal />,
+                  });
+                }}
+              >
+                {'유저 검색(공통)'}
+              </Button>
+              <span className="text-green-400">{'완료'}</span>
+            </div>
+            <div className="flex gap-4">
+              <Button
+                size={'xs'}
+                className="btn_table flex-1"
+                variant={'gray2'}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openModal({
+                    width: 'xl',
+                    content: <UserShuttleModal />,
+                  });
+                }}
+              >
+                {'유저 검색(셔틀)'}
+              </Button>
+              <span className="text-green-400">{'완료'}</span>
+            </div>
             <div className="h-1 w-full border-white bg-slate-700" />
-            <Button
-              size={'xs'}
-              className="btn_table"
-              variant={'gray2'}
-              onClick={(e) => {
-                e.stopPropagation();
-                openModal({
-                  width: 'xl',
-                  content: <ExternalUserChoiceModal />,
-                });
-              }}
-            >
-              {'사외이용자 검색(공통)'}
-            </Button>
-            <Button
-              size={'xs'}
-              className="btn_table"
-              variant={'gray2'}
-              onClick={(e) => {
-                e.stopPropagation();
-                openModal({
-                  width: 'xl',
-                  content: <ExternalUserShuttleModal />,
-                });
-              }}
-            >
-              {'사외이용자 검색(셔틀)'}
-            </Button>
+            <div className="flex gap-4">
+              <Button
+                size={'xs'}
+                className="btn_table flex-1"
+                variant={'gray2'}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openModal({
+                    width: 'xl',
+                    content: <ExternalUserChoiceModal />,
+                  });
+                }}
+              >
+                {'사외이용자 검색(공통)'}
+              </Button>
+              <span className="text-yellow-500">{'진행중'}</span>
+            </div>
+            <div className="flex gap-4">
+              <Button
+                size={'xs'}
+                className="btn_table flex-1"
+                variant={'gray2'}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openModal({
+                    width: 'xl',
+                    content: <ExternalUserShuttleModal />,
+                  });
+                }}
+              >
+                {'사외이용자 검색(셔틀)'}
+              </Button>
+              <span className="text-yellow-500">{'진행중'}</span>
+            </div>
+            <div className="flex gap-4">
+              <Button
+                size={'xs'}
+                className="btn_table flex-1"
+                variant={'gray2'}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openModal({
+                    width: 'xl',
+                    content: <UserAndExternalUserTabsChoiceModal />,
+                  });
+                }}
+              >
+                {'유저와 사외이용자 팝업에서 선택하는 경우(탭)'}
+              </Button>
+              <span className="text-yellow-500">{'진행중'}</span>
+            </div>
+            <div className="h-1 w-full border-white bg-slate-700" />
+            <div className="flex gap-4">
+              <Button
+                size={'xs'}
+                className="btn_table flex-1"
+                variant={'gray2'}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openModal({
+                    width: 'xl',
+                    content: <CompanyChoiceModal />,
+                  });
+                }}
+              >
+                {'회사 조회'}
+              </Button>
+              <span className="text-green-400">{'완료'}</span>
+            </div>
+            <div className="flex gap-4">
+              <Button
+                size={'xs'}
+                className="btn_table flex-1"
+                variant={'gray2'}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openModal({
+                    width: 'xl',
+                    content: <CompanyShuttleModal />,
+                  });
+                }}
+              >
+                {'회사 조회(셔틀)'}
+              </Button>
 
-            <Button
-              size={'xs'}
-              className="btn_table"
-              variant={'gray2'}
-              onClick={(e) => {
-                e.stopPropagation();
-                openModal({
-                  width: 'xl',
-                  content: <UserAndExternalUserTabsChoiceModal />,
-                });
-              }}
-            >
-              {'유저와 사외이용자 팝업에서 선택하는 경우(탭)'}
-            </Button>
-            <div className="h-1 w-full border-white bg-slate-700" />
-
-            <Button
-              size={'xs'}
-              className="btn_table"
-              variant={'gray2'}
-              onClick={(e) => {
-                e.stopPropagation();
-                openModal({
-                  width: 'xl',
-                  content: <CompanyChoiceModal />,
-                });
-              }}
-            >
-              {'회사 조회'}
-            </Button>
-            <Button
-              size={'xs'}
-              className="btn_table"
-              variant={'gray2'}
-              onClick={(e) => {
-                e.stopPropagation();
-                openModal({
-                  width: 'xl',
-                  content: <CompanyShuttleModal />,
-                });
-              }}
-            >
-              {'회사 조회(셔틀)'}
-            </Button>
-            <Button
-              size={'xs'}
-              className="btn_table"
-              variant={'gray2'}
-              onClick={(e) => {
-                e.stopPropagation();
-                openModal({
-                  width: 'xl',
-                  content: <CompanyUserChoiceModal />,
-                });
-              }}
-            >
-              {'회사 기준으로 유저를 조회'}
-            </Button>
+              <span className="text-yellow-500">{'진행중'}</span>
+            </div>
+            <div className="flex gap-4">
+              <Button
+                size={'xs'}
+                className="btn_table flex-1"
+                variant={'gray2'}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openModal({
+                    width: 'xl',
+                    content: <CompanyUserChoiceModal />,
+                  });
+                }}
+              >
+                {'회사 기준으로 유저를 조회'}
+              </Button>
+              <span className="text-yellow-500">{'진행중'}</span>
+            </div>
 
             <div className="h-1 w-full border-white bg-slate-700" />
-            <Button
-              size={'xs'}
-              className="btn_table"
-              variant={'gray2'}
-              onClick={(e) => {
-                e.stopPropagation();
-                openModal({
-                  width: 'xl',
-                  content: <RoleChoiceModal />,
-                });
-              }}
-            >
-              {'HRD 담당자 역할 조회'}
-            </Button>
-            <Button
-              size={'xs'}
-              className="btn_table"
-              variant={'gray2'}
-              onClick={(e) => {
-                e.stopPropagation();
-                openModal({
-                  width: 'xl',
-                  content: <RoleShuttleModal />,
-                });
-              }}
-            >
-              {'HRD 담당자 역할 조회(셔틀)'}
-            </Button>
+            <div className="flex gap-4">
+              <Button
+                size={'xs'}
+                className="btn_table flex-1"
+                variant={'gray2'}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openModal({
+                    width: 'xl',
+                    content: <RoleChoiceModal />,
+                  });
+                }}
+              >
+                {'HRD 담당자 역할 조회'}
+              </Button>
+              <span className="text-green-400">{'완료'}</span>
+            </div>
+            <div className="flex gap-4">
+              <Button
+                size={'xs'}
+                className="btn_table flex-1"
+                variant={'gray2'}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openModal({
+                    width: 'xl',
+                    content: <RoleShuttleModal />,
+                  });
+                }}
+              >
+                {'HRD 담당자 역할 조회(셔틀)'}
+              </Button>
+              <span className="text-green-400">{'완료'}</span>
+            </div>
             <div className="h-1 w-full border-white bg-slate-700" />
-            <Button
-              size={'xs'}
-              className="btn_table"
-              variant={'gray2'}
-              onClick={(e) => {
-                e.stopPropagation();
-                openModal({
-                  width: 'xl',
-                  content: <TenantChoiceModal />,
-                });
-              }}
-            >
-              {'테넌트 조회'}
-            </Button>
-            <Button
-              size={'xs'}
-              className="btn_table"
-              variant={'gray2'}
-              onClick={(e) => {
-                e.stopPropagation();
-                openModal({
-                  width: 'xl',
-                  content: <TenantShuttleModal />,
-                });
-              }}
-            >
-              {'테넌트 조회(셔틀)'}
-            </Button>
+            <div className="flex gap-4">
+              <Button
+                size={'xs'}
+                className="btn_table flex-1"
+                variant={'gray2'}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openModal({
+                    width: 'xl',
+                    content: <TenantChoiceModal />,
+                  });
+                }}
+              >
+                {'테넌트 조회'}
+              </Button>
+              <span className="text-green-400">{'완료'}</span>
+            </div>
+            <div className="flex gap-4">
+              <Button
+                size={'xs'}
+                className="btn_table flex-1"
+                variant={'gray2'}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openModal({
+                    width: 'xl',
+                    content: <TenantShuttleModal />,
+                  });
+                }}
+              >
+                {'테넌트 조회(셔틀)'}
+              </Button>
+              <span className="text-green-400">{'완료'}</span>
+            </div>
             <div className="h-1 w-full border-white bg-slate-700" />
-            <Button
-              size={'xs'}
-              className="btn_table"
-              variant={'gray2'}
-              onClick={(e) => {
-                e.stopPropagation();
-                openModal({
-                  width: 'xl',
-                  content: <ChannelListChoiceModal />,
-                });
-              }}
-            >
-              {'채널 조회'}
-            </Button>
-            <Button
-              size={'xs'}
-              className="btn_table"
-              variant={'gray2'}
-              onClick={(e) => {
-                e.stopPropagation();
-                openModal({
-                  width: 'xl',
-                  content: <ChannelShuttleModal />,
-                });
-              }}
-            >
-              {'채널 조회(셔틀)'}
-            </Button>
+            <div className="flex gap-4">
+              <Button
+                size={'xs'}
+                className="btn_table flex-1"
+                variant={'gray2'}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openModal({
+                    width: 'xl',
+                    content: <ChannelListChoiceModal />,
+                  });
+                }}
+              >
+                {'채널 조회'}
+              </Button>
+              <span className="text-green-400">{'완료'}</span>
+            </div>
+            <div className="flex gap-4">
+              <Button
+                size={'xs'}
+                className="btn_table flex-1"
+                variant={'gray2'}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openModal({
+                    width: 'xl',
+                    content: <ChannelShuttleModal />,
+                  });
+                }}
+              >
+                {'채널 조회(셔틀)'}
+              </Button>
+              <span className="text-green-400">{'완료'}</span>
+            </div>
             <div className="h-1 w-full border-white bg-slate-700" />
-
-            <Button
-              size={'xs'}
-              className="btn_table"
-              variant={'gray2'}
-              onClick={(e) => {
-                e.stopPropagation();
-                openModal({
-                  width: 'xl',
-                  content: <MenuChoiceTreeModal menuScopeCode="BO" />,
-                });
-              }}
-            >
-              {'메뉴 조회 팝업(공통)'}
-            </Button>
-            <Button
-              size={'xs'}
-              className="btn_table"
-              variant={'gray2'}
-              onClick={(e) => {
-                e.stopPropagation();
-                openModal({
-                  width: 'xl',
-                  content: <CategoryChoiceTreeModal />,
-                });
-              }}
-            >
-              {'케테고리 조회 팝업(공통)'}
-            </Button>
+            <div className="flex gap-4">
+              <Button
+                size={'xs'}
+                className="btn_table flex-1"
+                variant={'gray2'}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openModal({
+                    width: 'xl',
+                    content: <MenuChoiceTreeModal menuScopeCode="BO" />,
+                  });
+                }}
+              >
+                {'메뉴 조회 팝업(공통)'}
+              </Button>
+              <span className="text-green-400">{'완료'}</span>
+            </div>
+            <div className="flex gap-4">
+              <Button
+                size={'xs'}
+                className="btn_table flex-1"
+                variant={'gray2'}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openModal({
+                    width: 'xl',
+                    content: <CategoryChoiceTreeModal />,
+                  });
+                }}
+              >
+                {'케테고리 조회 팝업(공통)'}
+              </Button>
+              <span className="text-green-400">{'완료'}</span>
+            </div>
           </div>
         </SubContents>
       </PageContainer>

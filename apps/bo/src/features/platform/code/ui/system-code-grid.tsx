@@ -3,22 +3,22 @@ import { ContentsRow, DynamicFormField, GridBox, GridImperative, Input } from '@
 import { t } from 'i18next';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import { cn } from '@learnway/shared';
-import { createColumnHelper } from '@tanstack/react-table';
+import { createColumnHelper, Table } from '@tanstack/react-table';
 import { useSystemCodeDetail } from '../../../../entities/common-code/service/system-code.hook';
 import { FormRow, FormSubTitle } from '../../../../shared/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
 const columnHelper = createColumnHelper<any>();
-const listGridColumns = () => {
-  return [
-    columnHelper.accessor('enumNames', {
-      cell: ({ getValue }) => getValue(),
-      header: t('그룹코드'),
-      size: 280,
-    }),
-  ];
-};
+const listGridColumns = [
+  // return [
+  columnHelper.accessor('enumNames', {
+    cell: ({ getValue }) => getValue(),
+    header: t('그룹코드'),
+    size: 280,
+  }),
+];
+// };
 
 const detailGridColumns = () => {
   return [
@@ -48,28 +48,28 @@ const detailGridColumns = () => {
 const SystemCodeGridComponent = ({ data }: any) => {
   const listGridRef = useRef<GridImperative>(null);
   const detailGridRef = useRef<GridImperative>(null);
+  const [detailGridInstance, setDetailGridInstance] = useState<Table<any>>();
   const [selectedRow, setSelectedRow] = useState<any>(null);
   const [selectedDetailRow, setSelectedDetailRow] = useState<any>(null);
   const [formattedDetailData, setFormattedDetailData] = useState<any>([]);
   const { data: detailData } = useSystemCodeDetail(selectedRow?.enumNames);
-  // const { data: detailData } = useSystemCodeDetail(selectedRow?.enumNames || '', {
-  //   enabled: Boolean(selectedRow?.enumNames),
-  // });
-  const { provider, onSubmit, fetchData, clearFormError, onFormChange, getValues, formState } =
-    useDynamicForm(formConfig);
+
+  const { provider, fetchData } = useDynamicForm(formConfig);
 
   const handleRowSelect = (row: any) => {
-    fetchData({});
     setSelectedDetailRow(null);
-    detailGridRef.current?.resetRowSelection();
-
     setSelectedRow(row);
+    detailGridRef?.current?.resetRowSelection();
   };
 
   const handleDetailRowSelect = (row: any) => {
-    fetchData({ ...row });
     setSelectedDetailRow(row);
   };
+
+  useEffect(() => {
+    if (selectedDetailRow) fetchData({ ...selectedDetailRow });
+    else fetchData({});
+  }, [selectedDetailRow]);
 
   useEffect(() => {
     fetchData({});
@@ -108,14 +108,15 @@ const SystemCodeGridComponent = ({ data }: any) => {
           <div className={layoutStyles.grid_layout_wrap}>
             <GridBox
               ref={listGridRef}
-              data={data || []}
-              columns={listGridColumns()}
+              data={data}
+              columns={listGridColumns}
               onRowSelect={handleRowSelect}
               showNumberingColumn={true}
               clientSideSorting={true}
               title={'enum 그룹 목록'}
             />
             <GridBox
+              key={selectedRow?.enumNames}
               ref={detailGridRef}
               data={formattedDetailData}
               columns={detailGridColumns()}
@@ -123,6 +124,7 @@ const SystemCodeGridComponent = ({ data }: any) => {
               onRowSelect={handleDetailRowSelect}
               clientSideSorting={true}
               title={'enum 목록'}
+              onTableInstanceChange={(table: Table<any>) => setDetailGridInstance(table)}
             />
           </div>
         </div>

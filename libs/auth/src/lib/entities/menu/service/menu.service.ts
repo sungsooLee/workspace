@@ -1,5 +1,5 @@
 import { last } from 'lodash';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useCreation } from 'ahooks';
 import { useRouterState } from '@tanstack/react-router';
 
@@ -10,6 +10,7 @@ import { Menu } from '../../../types';
 
 import { useActiveMenuDepthState } from '../state/menu.state';
 import { useLayoutStore } from '../store/use-layout-sotre';
+import { useModal } from '@learnway/ui';
 
 /**
  * 메뉴 정보를 트리 구조로 반환
@@ -84,4 +85,41 @@ export function useRenewalMenuStateFromRouting() {
     const recentMenu = authUser.menus.find((menu: Menu) => menu.path === currentPath);
     recentMenu && setMenus(recentMenu);
   }, [state.location?.state?.key, authUser?.menus]);
+}
+
+/**
+ * 현재 경로의 개인정보 포함 여부를 체크하는 훅
+ */
+export function usePersonalInfoCheck() {
+  const state = useRouterState();
+
+  const { data: authUser } = useFetchAuthUser();
+
+  // 현재 메뉴 정보 계산
+  const currentMenu = useMemo(() => {
+    if (!authUser?.menus) {
+      return null;
+    }
+
+    const env = (window as any).__ENV__ || {};
+    const basePath = env.BASE_PATH || '';
+
+    let currentPath = state.location.pathname;
+
+    if (basePath && currentPath.startsWith(basePath)) {
+      currentPath = currentPath.substring(basePath.length) || '/';
+    }
+
+    return authUser.menus.find((menu: Menu) => menu.path === currentPath) || null;
+  }, [state.location.pathname, authUser?.menus]);
+
+  // 개인정보 포함 여부
+  const hasPersonalInfo = useMemo(() => {
+    return currentMenu?.isPersoninfoInclusion || false;
+  }, [currentMenu]);
+
+  return {
+    hasPersonalInfo,
+    currentMenu,
+  };
 }
