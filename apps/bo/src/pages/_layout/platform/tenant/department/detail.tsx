@@ -10,6 +10,7 @@ import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 
 import { Tabs, Button } from '@learnway/ui';
 
+import { TenantCompanyDepartmentTree } from '@features/tenant/department/ui/tenant-company-department-tree';
 export const Route = createFileRoute('/_layout/platform/tenant/department/detail')({
   component: RouteComponent,
 });
@@ -31,15 +32,15 @@ function RouteComponent() {
     {
       title: '회사조직 확인',
       key: EnTabKey.check,
-      content: '회사 조직 확인',
+      content: <TenantCompanyDepartmentTree />,
     },
     {
-      title: '테넌트 속성 관리',
+      title: '회사조직(원본)',
       key: EnTabKey.origin,
       content: '원본',
     },
     {
-      title: '테넌트 메뉴관리 매핑',
+      title: '회사조직(플랫폼)',
       key: EnTabKey.platform,
       content: '플랫폼',
     },
@@ -62,7 +63,7 @@ function RouteComponent() {
       <MainContents>
         <Tabs
           items={menuItems}
-          type="progress"
+          type="line"
           size="sm"
           className={styles.progress_wrap}
           selectedTabKey={selectedTabKey}
