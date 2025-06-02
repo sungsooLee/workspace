@@ -19,12 +19,12 @@
     @apply !hidden;
   }
   .title {
-    @apply !static;
+    @apply !static text-left;
   }
   & > h2 {
-    @apply flex !h-auto flex-col !justify-center border-b-0 !px-[20px] !py-0;
+    @apply flex !h-auto flex-col items-start !justify-start border-b-0 !px-[20px] !py-0 text-left;
     & + div {
-      @apply body_3_r scrollbar mt-[8px] max-h-[60px] overflow-hidden overflow-y-auto p-0 !px-[20px] text-center text-[#747D91];
+      @apply body_3_r scrollbar mt-[8px] max-h-[60px] overflow-hidden overflow-y-auto p-0 !px-[20px] text-left text-[#747D91];
     }
   }
   &:has(.scrolled) [class*='modal-content'] + div {
@@ -32,10 +32,10 @@
   }
 }
 .title {
-  @apply flex max-h-[80px] items-center justify-center pt-[8px] text-center text-[1.8rem] font-bold text-[var(--gray9)];
+  @apply flex max-h-[80px] items-start justify-start pt-[8px] text-left text-[1.8rem] font-bold text-[var(--gray9)];
 }
 .description {
-  @apply scrollbar block max-h-[160px] overflow-y-auto overflow-x-hidden pb-[20px] pt-[8px] text-center text-[1.4rem] font-normal text-[var(--gray7)];
+  @apply scrollbar block max-h-[160px] overflow-y-auto overflow-x-hidden pb-[20px] pt-[8px] text-left text-[1.4rem] font-normal text-[var(--gray7)];
 }
 .alert_footer {
   .btn_wrap {
