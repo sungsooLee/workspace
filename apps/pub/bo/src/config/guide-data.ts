@@ -461,6 +461,15 @@ export const guideData = [
     remarks: '', // 비고
   },
   {
+    screenName: 'PMS/플랫폼관리_라벨다국어관리_번역완료현황',
+    pageId: 'pms/popup-translation-complete',
+    screenId: 'NLP_BO_PMS_1424',
+    pageType: 'Pop-up',
+    completionDate: '2025-06-02',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
     screenName: 'PMS/개인정보 조회 사유 목록',
     pageId: 'pms/private_search_list',
     screenId: 'NLP_BO_LOG_2001',
