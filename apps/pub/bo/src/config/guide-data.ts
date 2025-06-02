@@ -492,7 +492,7 @@ export const guideData = [
     pageId: 'pms/shortening_url_list',
     screenId: 'NLP_BO_LOG_2003',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-06-02',
     lastUpdateDate: '',
     remarks: '', // 비고
   },
@@ -501,7 +501,7 @@ export const guideData = [
     pageId: 'pms/shortening_url_register',
     screenId: 'NLP_BO_LOG_2004',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-06-02',
     lastUpdateDate: '',
     remarks: '', // 비고
   },
