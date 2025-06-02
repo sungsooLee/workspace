@@ -26,7 +26,6 @@ import { createColumnHelper } from '@tanstack/react-table';
 import {
   getAllTreeKeys,
   getFirstExpandKeys,
-  moveNodeCheck,
   transformRoleApiDataToTreeData,
 } from '../service/tenant-detail-tree.service';
 import {
