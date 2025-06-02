@@ -9,9 +9,9 @@ import { Button, GridBox, useGridBox } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 
-import { TenantCompanyDepartmentList } from '@features/tenant/department/ui/tenant-company-department-list';
+import { TenantCompanyOrganizationList } from '@features/tenant/organization/ui/tenant-company-organization-list';
 
-export const Route = createFileRoute('/_layout/platform/tenant/department/')({
+export const Route = createFileRoute('/_layout/platform/tenant/organization/')({
   component: RouteComponent,
 });
 
@@ -33,7 +33,7 @@ function RouteComponent() {
   return (
     <PageContainer>
       <MainContents>
-        <TenantCompanyDepartmentList rootPath="/platform" />
+        <TenantCompanyOrganizationList rootPath="/platform" />
         {/* <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
         <div className={cn(boxStyles.start, boxStyles.inner)}>
           <div className="grid_wrap">
