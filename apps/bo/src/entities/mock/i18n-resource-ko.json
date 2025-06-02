@@ -458,6 +458,25 @@
         }
       }
     },
+    "contents": {
+      "learning": {
+        "resource": {
+          "no": "NO.",
+          "type": "유형",
+          "learningResourceName": "학습자원명",
+          "tenant": "테넌트",
+          "channel": "채널",
+          "managerName": "담당자",
+          "detailInfo": "세부정보",
+          "util": "기능",
+          "educationUse": "교육활용",
+          "courseCount": "과정수",
+          "usable": "사용가능",
+          "updatedBy": "수정자",
+          "updatedDate": "수정일"
+        }
+      }
+    },
     "alert": {
       "delete": {
         "title": "삭제할 수 없습니다.",
