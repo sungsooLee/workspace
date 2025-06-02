@@ -202,7 +202,14 @@
       "referenceVal1": "참고 1",
       "referenceVal2": "참고 2",
       "referenceVal3": "참고 3",
-      "코드": "사용"
+      "referenceVal4": "참고 4",
+      "cdId": "코드",
+      "enable": "사용",
+      "disable": "미사용",
+      "learnerMenu": "학습자 메뉴",
+      "hrdCenterMenu": "HRD센터 메뉴",
+      "categoryInfo": "카테고리 정보",
+      "trainingPlaceInfo": "교육장소 정보"
     },
     "link": {
       "multilingual": "다국어관리"
