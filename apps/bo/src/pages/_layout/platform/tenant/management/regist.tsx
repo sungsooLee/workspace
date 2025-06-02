@@ -224,6 +224,7 @@ function RouteComponent() {
 
           <ContentsRow type="horizontal">
             <FormRow provider={provider} name="isUsed" />
+            <FormRow provider={provider} name="isSecurityPledge" />
           </ContentsRow>
           <ContentsRow>
             <FormRow
@@ -241,8 +242,6 @@ function RouteComponent() {
               name="device"
               element={<CheckboxGroupFormField disabled={true} />}
             />
-          </ContentsRow>
-          <ContentsRow>
             <FormRow provider={provider} name="useCategory" />
           </ContentsRow>
           <ContentsRow>
@@ -324,6 +323,17 @@ const formConfig: DynamicFormConfig = {
         label: (value: boolean) => (value ? '사용' : '미사용'),
       },
       guideText: t('테넌트 사용 여부를 설정할 수 있습니다.'),
+    },
+    {
+      name: 'isSecurityPledge',
+      type: 'switch',
+      label: t('보안 서약 사용'),
+      value: true,
+      format: 'boolean',
+      switchConfig: {
+        label: (value: boolean) => (value ? '사용' : '미사용'),
+      },
+      guideText: t('보안 서약  사용 여부를 설정할 수 있습니다.'),
     },
     {
       name: 'tenantDesc',
@@ -433,6 +443,7 @@ const formConfig: DynamicFormConfig = {
     tenantBillingTag: { required: true },
     companyTenantList: { required: true },
     isUsed: { required: true },
+    isSecurityPledge: { required: true },
     device: {
       required: {
         fn: (values) => {
