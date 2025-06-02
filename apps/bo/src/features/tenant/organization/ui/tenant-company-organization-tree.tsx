@@ -27,7 +27,6 @@ import {
 
 import { ContentsHistoryInfoFormField, FormRow, FormSubTitle, SwitchFormField } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
-import { BaseComponentProps } from '@types';
 
 export enum EnOrganizationShowType {
   check = 'check',

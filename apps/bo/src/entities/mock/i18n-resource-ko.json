@@ -614,5 +614,26 @@
     "ASSIGNMENT": "과제",
     "SURVEY": "설문지",
     "ETC": "기타"
+  },
+  "pms.role.TenantScope": {
+    "ALL": "전체",
+    "CURRENT_TENANT": "소속 테넌트"
+  },
+  "pms.role.CompanyScope": {
+    "ALL": "전체",
+    "CURRENT_COMPANY": "소속 회사",
+    "MANUAL": "직접 선택"
+  },
+  "pms.role.DeptScope": {
+    "ALL": "전체",
+    "CURRENT_TEAM": "소속 조직",
+    "CURRENT_TEAM_INCLUSIVE": "소속 조직 하위",
+    "MANUAL": "직접 선택"
+  },
+  "pms.role.ChannelScope": {
+    "ALL": "전체",
+    "CURRENT_COMPANY": "소속 회사 채널 선택",
+    "CURRENT_COMPANY_INCLUSIVE": "소속 회사 채널 하위 선택",
+    "MANUAL": "직접 선택"
   }
 }
