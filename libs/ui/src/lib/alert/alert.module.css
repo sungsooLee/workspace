@@ -8,7 +8,7 @@
   }
 }
 .icon {
-  @apply mb-[8px] hidden items-center justify-center;
+  @apply mb-[8px] flex items-center justify-center;
   & + .title {
     @apply pt-[8px];
   }
