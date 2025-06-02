@@ -342,12 +342,12 @@ const gridConfig = {
       label: t('LABEL.contents.learning.resource.isUseEnabled'),
     },
     {
-      name: 'updatedBy',
-      label: t('LABEL.contents.learning.resource.updatedBy'),
+      name: 'localization',
+      label: t('LABEL.contents.learning.resource.localization'),
     },
     {
-      name: 'updatedDate',
-      label: t('LABEL.contents.learning.resource.updatedDate'),
+      name: 'updatedInfo',
+      label: t('LABEL.contents.learning.resource.updatedInfo'),
     },
   ],
   data: [],

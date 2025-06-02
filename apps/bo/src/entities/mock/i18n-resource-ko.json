@@ -471,8 +471,8 @@
           "isCourseUsed": "교육활용",
           "courseCount": "과정수",
           "isUseEnabled": "사용가능",
-          "updatedBy": "수정자",
-          "updatedDate": "수정일"
+          "localization": "현지화",
+          "updatedInfo": "수정정보"
         }
       }
     },
