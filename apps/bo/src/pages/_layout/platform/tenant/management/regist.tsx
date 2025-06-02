@@ -16,7 +16,8 @@ import {
   useModal,
 } from '@learnway/ui';
 import { CODE_GROUP, DynamicFormConfig, useCodeStore, useDynamicForm } from '@learnway/hooks';
-import { FormRow, ThumbnailListFormField } from '@shared/ui';
+
+import { FormSubTitle, FormRow, ThumbnailListFormField } from '@shared/ui';
 
 import { useCreateTenant } from '@entities/tenant/service/tenant.hook';
 import {
@@ -57,7 +58,7 @@ const duplicateCheck = async (tenantName: string) => {
 function RouteComponent() {
   const router = useRouter();
   const [languageTypeList, setLanguageTypeList] = useState<any[]>(defaultLangOptions);
-  const [clasName, setClassName] = useState('');
+
   const { open: openModal, confirm: openConfirm } = useModal();
   const { control, provider, onSubmit, onFormChange, formState } = useDynamicForm(formConfig);
 
@@ -146,9 +147,7 @@ function RouteComponent() {
       </ContentsButtons>
       <MainContents>
         <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
-          <div className="title_wrap">
-            <strong className="title">{t('기본 정보')}</strong>
-          </div>
+          <FormSubTitle label={t('기본 정보')} lineType={'dark'} />
           <ContentsRow>
             <FormRow
               provider={provider}
@@ -233,9 +232,7 @@ function RouteComponent() {
               element={<TextareaFormField resize="none" />}
             />
           </ContentsRow>
-          <div className="title_wrap no_line">
-            <strong className="title">{t('시스템 설정')}</strong>
-          </div>
+          <FormSubTitle label={t('시스템 설정')} lineType={'dark'} />
           <ContentsRow>
             <FormRow
               provider={provider}
@@ -248,7 +245,6 @@ function RouteComponent() {
             <FormRow
               provider={provider}
               name="tenantMappingLanguageTypeList"
-              className={clasName}
               element={<CheckboxGroupFormField options={languageTypeList} />}
             />
           </ContentsRow>

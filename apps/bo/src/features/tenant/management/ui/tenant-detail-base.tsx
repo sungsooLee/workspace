@@ -14,7 +14,12 @@ import {
   TextareaFormField,
   useModal,
 } from '@learnway/ui';
-import { ContentsHistoryInfoFormField, FormRow, ThumbnailListFormField } from '@shared/ui';
+import {
+  FormSubTitle,
+  ContentsHistoryInfoFormField,
+  FormRow,
+  ThumbnailListFormField,
+} from '@shared/ui';
 import { isEqual } from 'lodash';
 import { CompanyShuttleModal, RoleChoiceModal, UserChoiceModal } from '@features/shared';
 import {
@@ -160,9 +165,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
   }, []);
   return (
     <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
-      <div className="title_wrap">
-        <strong className="title">{'기본 정보'}</strong>
-      </div>
+      <FormSubTitle label={t('기본 정보')} lineType={'dark'} />
       <ContentsRow>
         <FormRow
           provider={provider}
@@ -248,9 +251,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
           element={<TextareaFormField resize={'none'} />}
         />
       </ContentsRow>
-      <div className="title_wrap no_line">
-        <strong className="title">{'시스템 설정'}</strong>
-      </div>
+      <FormSubTitle label={t('시스템 설정')} lineType={'dark'} />
       <ContentsRow>
         <FormRow
           provider={provider}
