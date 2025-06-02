@@ -241,7 +241,7 @@ const GridBoxComponent = <T extends object>(
   console.log('grid-box ::', { paginationProps });
 
   return (
-    <div className={cn(styles.table_box)}>
+    <div className={cn(styles.table_box, 'table_box')}>
       <div className={styles.table_info}>
         <div className={styles.title_info}>
           {/* 제목 */}

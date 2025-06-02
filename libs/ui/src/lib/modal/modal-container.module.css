@@ -7,6 +7,9 @@
 
 .title {
   @apply sticky left-0 top-0 z-[1] flex h-[50px] w-full items-center justify-start border-b-[1px] border-solid border-[var(--gray2)] px-[24px] py-[12px] text-[16px] font-bold text-[var(--gray9)];
+  button {
+    @apply ml-[2px];
+  }
   &:empty {
     @apply hidden;
   }
