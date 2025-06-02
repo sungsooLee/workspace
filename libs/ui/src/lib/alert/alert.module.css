@@ -8,7 +8,7 @@
   }
 }
 .icon {
-  @apply mb-[8px] flex items-center justify-center;
+  @apply mb-[8px] hidden items-center justify-center;
   & + .title {
     @apply pt-[8px];
   }
@@ -28,7 +28,7 @@
     }
   }
   &:has(.scrolled) [class*='modal-content'] + div {
-    @apply mt-[28px] border-t-[1px] border-solid border-[var(--gray4)];
+    @apply mt-[20px] border-t-[1px] border-solid border-[var(--gray4)];
   }
 }
 .title {

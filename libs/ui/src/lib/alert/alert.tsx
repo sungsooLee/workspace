@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { isString } from 'lodash';
 
 import { Button } from '../button/button';
-// import { IcoAlertComplete, IcoCaution, IcoError, IcoWarning } from '@learnway/icons'; // icon
+import { IcoAlertComplete, IcoCaution, IcoError, IcoWarning } from '@learnway/icons'; // icon
 import styles from './alert.module.css';
 import { useModal } from '../modal/modal.hook';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle } from '@learnway/ui';
@@ -19,7 +19,7 @@ export interface AlertComponentProps {
   okButtonLabel?: string;
   cancelButtonLabel?: string;
   isConfirm?: boolean;
-  // type?: 'error' | 'warning' | 'complete' | 'caution'; // icon type
+  type?: 'error' | 'warning' | 'complete' | 'caution'; // icon type
 }
 
 const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
@@ -33,7 +33,7 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
       okButtonLabel = '확인',
       cancelButtonLabel = '취소',
       isConfirm = false,
-      // type,
+      type,
       onClose,
       ...otherProps
     },
@@ -68,20 +68,20 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
     }, []);
     // description scroll check End
 
-    // const Icon = () => {
-    //   switch (type) {
-    //     case 'error':
-    //       return <IcoError width={48} height={48} stroke="#FF4646" />; // 에러 아이콘
-    //     case 'warning':
-    //       return <IcoWarning width={48} height={48} stroke="#FF4646" />; // 경고 아이콘
-    //     case 'complete':
-    //       return <IcoAlertComplete width={48} height={48} stroke="#00AFD5" />; // 완료 아이콘
-    //     case 'caution':
-    //       return <IcoCaution width={48} height={48} stroke="#8C97AE" />; // 주의 아이콘
-    //     default:
-    //       return null;
-    //   }
-    // };
+    const Icon = () => {
+      switch (type) {
+        case 'error':
+          return <IcoError width={48} height={48} stroke="#FF4646" />; // 에러 아이콘
+        case 'warning':
+          return <IcoWarning width={48} height={48} stroke="#FF4646" />; // 경고 아이콘
+        case 'complete':
+          return <IcoAlertComplete width={48} height={48} stroke="#00AFD5" />; // 완료 아이콘
+        case 'caution':
+          return <IcoCaution width={48} height={48} stroke="#8C97AE" />; // 주의 아이콘
+        default:
+          return null;
+      }
+    };
 
     const handleClose = (confirmed: boolean) => {
       closeModal(confirmed);
@@ -118,9 +118,9 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
       <ModalContainer className={cn(styles.root, styles.alert_wrap, 'nlp--alert')}>
         <ModalTitle>
           <>
-            {/* <div className={styles.icon}>
+            <div className={styles.icon}>
               <Icon />
-            </div> */}
+            </div>
             <div className={styles.title}>{isString(title) ? t(title) : title}</div>
           </>
         </ModalTitle>
