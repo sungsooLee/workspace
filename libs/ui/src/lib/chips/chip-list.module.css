@@ -29,7 +29,7 @@
     }
   }
   &.wordwrap {
-    @apply pt-[3px];
+    @apply min-h-[120px] p-[12px];
   }
   &.readonly {
     @apply border-[var(--gray1)] bg-[var(--gray1)];
