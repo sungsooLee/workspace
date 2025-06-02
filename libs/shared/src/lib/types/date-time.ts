@@ -1,6 +1,7 @@
 export const DATE_TIME_FORMAT = {
   YEAR: 'dateFormatYear',
   MONTH: 'dateFormatMonth',
+  MONTH_DAY: 'dateFormatMonthDay',
   DATE: 'dateFormatDay',
   DATETIME_HOUR: 'dateTimeFormatHour',
   DATETIME_MIN: 'dateTimeFormatHourMinute',

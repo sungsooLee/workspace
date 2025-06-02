@@ -35,6 +35,8 @@ export function getDateTimeFormat(dateTimeFormat = DATE_TIME_FORMAT.DATE) {
       return timeFormatYear();
     case DATE_TIME_FORMAT.MONTH:
       return timeFormatMonth();
+    case DATE_TIME_FORMAT.MONTH_DAY:
+      return timeFormatMonthDate();
     case DATE_TIME_FORMAT.DATETIME_HOUR:
       return timeFormatHour();
     case DATE_TIME_FORMAT.DATETIME_MIN:

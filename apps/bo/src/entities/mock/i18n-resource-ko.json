@@ -117,6 +117,10 @@
       }
     },
     "common": {
+      "date": {
+        "hoursAgo": "{{time}}시간 전",
+        "minutesAgo": "{{time}}분 전"
+      },
       "code": {
         "common": "공통",
         "menu": "메뉴",
