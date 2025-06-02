@@ -26,7 +26,6 @@ import { createColumnHelper } from '@tanstack/react-table';
 import {
   getAllTreeKeys,
   getFirstExpandKeys,
-  moveNodeCheck,
   transformRoleApiDataToTreeData,
 } from '../service/tenant-detail-tree.service';
 import {
@@ -35,9 +34,11 @@ import {
   useRoleManager,
   useGetRoleUserGroups,
 } from '@entities/role/service/role-manage.hook';
-import { UserChoiceModal, CompanyUserChoiceModal } from '@features/shared';
-import { TenantDetailLearningRoleGrantRangeModal } from './tenant-detail-learning-role-grant-range-modal';
 
+import { UserChoiceModal, UserShuttleModal } from '@features/shared';
+
+import { TenantDetailLearningRoleGrantRangeModal } from './tenant-detail-learning-role-grant-range-modal';
+import { TenantDetailLearningRoleGrantUserShuttleModal } from './tenant-detail-learning-role-grant-user-shuttle-modal';
 import { roleManagerQueryOptions } from '@entities/role/service/role-manage.queries';
 import { EnFormMode } from '@types';
 
@@ -85,12 +86,12 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
     }
   };
   const handleUserAddButtonClick = async () => {
-    const data = await openModal({
-      content: <CompanyUserChoiceModal />,
-      width: 'xl',
-    });
-    console.log('hand', data);
-    // 받은 자료로 유저그룹 역할 부여 처리
+    if (selectedRole) {
+      const data = await openModal({
+        content: <TenantDetailLearningRoleGrantUserShuttleModal roleCode={selectedRole.roleCode} />,
+        width: 'xl',
+      });
+    }
   };
   const handleBatchClick = async () => {
     const data = await openModal({ content: <TenantDetailLearningRoleGrantRangeModal /> });
@@ -127,11 +128,10 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
             <label htmlFor="name-id" className={formStyles.form_label}>
               <span className={formStyles.form_text}>{'개별사용자 역할부여'}</span>
               {/* 필수 케이스 */}
-              <span className={cn(formStyles.status, formStyles.required)}>
+              {/* <span className={cn(formStyles.status, formStyles.required)}>
                 <IcoFormRequired width={12} height={12} />
-              </span>
+              </span> */}
             </label>
-            <SearchBox provider={sProvider} onSearch={handleOnSearch} />
             <GridBox
               config={config}
               columns={columns}

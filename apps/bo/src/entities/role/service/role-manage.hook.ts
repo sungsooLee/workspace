@@ -74,6 +74,26 @@ export function useMovePosition(options: any) {
   };
 }
 
+export function useSaveUsers(options: any) {
+  const mutation = useMutation({
+    ...mutateOptions.modifyUserToRole(),
+    onSuccess: async (data, variables, context) => {
+      if (options.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...options,
+  });
+  return {
+    saveRoleUsers: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
 // 실제 API를 사용하는 훅
 interface RoleHookOptions {
   onRoleCreateSuccess?: (data: any, variables: any, context: any) => void;

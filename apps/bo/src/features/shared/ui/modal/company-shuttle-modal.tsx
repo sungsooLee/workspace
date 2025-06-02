@@ -18,6 +18,10 @@ import { IcoRefresh02 } from '@learnway/icons';
 import { useQueryClient } from '@tanstack/react-query';
 import { queryOptions as companyQueryOptions } from '@entities/companies/service/companies.queries';
 
+/**
+ * 화면번호: NLP_BO_PMS_1110
+ * @returns
+ */
 const CompanyShuttleComponent = () => {
   const ref = useRef<ShuttleGridToGridImperative>(null);
 
@@ -50,7 +54,7 @@ const CompanyShuttleComponent = () => {
 
   return (
     <ModalContainer className="h-[740]">
-      <ModalTitle>{t('회사 선택')}</ModalTitle>
+      <ModalTitle>{t('회사 조회')}</ModalTitle>
       <ModalBody>
         <SearchBox provider={sProvider} onSearch={handleOnSearch} />
         <ShuttleGridToGrid
@@ -62,7 +66,7 @@ const CompanyShuttleComponent = () => {
           gridData={gridData}
           columns={columns}
           rowKey={'companyId'}
-          leftTitle={t('회사 목록')}
+          leftTitle={t('회사 조회 목록')}
           rightTitle={t('회사 선택')}
         />
       </ModalBody>
@@ -96,15 +100,9 @@ const searchConfig: SearchBoxConfig = {
   builders: [
     [
       {
-        name: 'tenantName',
+        name: 'companyCode',
         type: 'text',
-        label: t('테넌트명'),
-        value: '',
-      },
-      {
-        name: 'channelId',
-        type: 'text',
-        label: t('채널'),
+        label: t('회사코드'),
         value: '',
       },
       {
@@ -117,30 +115,35 @@ const searchConfig: SearchBoxConfig = {
   ],
 };
 
-const columnHelper = createColumnHelper();
+const columnHelper = createColumnHelper<any>();
 const columns = [
-  columnHelper.accessor('companyId', {
-    header: t('회사구분'),
-    size: 132,
+  columnHelper.accessor('companyType', {
+    id: 'companyType',
     cell: (info) => info.getValue(),
+    header: '회사구분',
+    enableGrouping: false,
+    size: 132,
   }),
   columnHelper.accessor('name', {
-    header: t('회사'),
-    size: 132,
+    id: 'name',
     cell: (info) => info.getValue(),
-    meta: {
-      headerAlign: 'left', // 헤더만 가운데 정렬
-      cellAlign: 'left', // 셀은 오른쪽 정렬
-    },
+    header: '회사',
+    size: 132,
+    enableGrouping: false,
   }),
-  columnHelper.accessor('companyCode', {
-    header: t('회사코드'),
-    size: 132,
+  columnHelper.accessor('rpsntrName', {
+    id: 'rpsntrName',
     cell: (info) => info.getValue(),
+    header: '대표자',
+    size: 132,
+    enableGrouping: false,
   }),
-  columnHelper.accessor('ownerTel', {
-    header: t('대표전화'),
-    size: 132,
+
+  columnHelper.accessor('callNumber', {
+    id: 'callNumber',
     cell: (info) => info.getValue(),
+    header: '대표 전화',
+    size: 132,
+    enableGrouping: false,
   }),
 ] as ColumnDef<any, unknown>[];

@@ -30,18 +30,21 @@ function RouteComponent() {
       meta: {
         headerAlign: 'left', // 헤더 정렬
         cellAlign: 'left', // 셀 정렬
+        size: 'auto',
       },
     }),
     columnHelper.accessor('name2', {
       meta: {
         headerAlign: 'center', // 헤더 정렬
         cellAlign: 'center', // 셀 정렬
+        size: 'auto',
       },
     }),
     columnHelper.accessor('name3', {
       meta: {
         headerAlign: 'right', // 헤더 정렬
         cellAlign: 'right', // 셀 정렬
+        size: 'auto',
       },
     }),
     columnHelper.accessor('name4', {}),

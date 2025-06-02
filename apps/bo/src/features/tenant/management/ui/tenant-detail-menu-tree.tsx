@@ -1,7 +1,9 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useRouterState, useRouter } from '@tanstack/react-router';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
-import { useRouterState } from '@tanstack/react-router';
-import { FormTranslationBox } from '@features/platform/ui/platform/system/translation/form-translation-box';
+
+import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 
 import {
   Button,
@@ -18,15 +20,15 @@ import {
 } from '@learnway/ui';
 
 import { cn } from '@learnway/shared';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import { ContentsHistoryInfoFormField, FormRow, SwitchFormField } from '@shared/ui';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { ContentsHistoryInfoFormField, FormRow, SwitchFormField } from '@shared/ui';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 
 import { EnFormMode } from '@types';
 import { TenantDetailMenuMappingModal } from './tenant-detail-menu-mapping-modal';
+import { ApiInfoModal } from '@features/platform/menu/ui/api-info-modal';
 /** Hook 정의 */
 import {
   useChangeMenuTenentDnd,
@@ -40,15 +42,14 @@ import { findMenuPathById } from '@features/platform/menu/service/menu.service';
 import {
   getAllTreeKeys,
   getFirstExpandKeys,
-  moveNodeCheck,
+  moveTenantMenuNodeCheck,
   transformMenuApiDataToTreeData,
 } from '../service/tenant-detail-tree.service';
 
-const DIVICE_NAME = {
-  PC: 'PC',
-  Mobile: 'Mobile',
-};
+import { EnDeviceType } from '@types';
 
+//Column Helper 정의
+const columnHelper = createColumnHelper<any>();
 /**
  * 화면번호:
  * NLP_BO_TMS_1002_01 (플랫폼-학습자메뉴), NLP_BO_TMS_1002_01_01 (플랫폼-학습자메뉴-상세), NLP_BO_TMS_1002_01_03 (플랫폼-HRD메뉴),NLP_BO_TMS_1002_01_04 (플랫폼-HRD메뉴-상세),
@@ -57,7 +58,9 @@ const DIVICE_NAME = {
  * @returns
  */
 const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
+  const router = useRouter();
   const routerState = useRouterState();
+
   const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
   const [formMode, setFormMode] = useState(EnFormMode.NONE);
   const [treeData, setTreeData] = useState([]);
@@ -68,7 +71,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, control } =
     useDynamicForm(formConfig);
   const prevDataRef = React.useRef(null);
-  const { open: openModal, confirm: openConfirm } = useModal();
+  const { alert, open: openModal, confirm: openConfirm } = useModal();
 
   // fetch data
   const { data: detailData, refetch: refetchDetail } = useFetchMenuTenantDetail(
@@ -110,11 +113,9 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
     switch (events.type) {
       case 'NODE_MOVE':
         {
-          console.log('devents ', events);
-          const payload = moveNodeCheck(events);
+          const payload = moveTenantMenuNodeCheck(events);
           if (payload) {
             payload.menuScopeCode = menuScope;
-            console.log('dsend', payload);
             changeMenuPosition(payload);
           }
         }
@@ -157,8 +158,8 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
       onClose: (value: boolean) => {
         if (value) {
           const payload = { ...getValues() };
-          payload.isWebExposed = payload.deviceNames.includes(DIVICE_NAME.PC);
-          payload.isMobileExposed = payload.deviceNames.includes(DIVICE_NAME.Mobile);
+          payload.isWebExposed = payload.deviceNames.includes(EnDeviceType.isPc);
+          payload.isMobileExposed = payload.deviceNames.includes(EnDeviceType.isMobile);
           payload.tenantId = tenantId;
           payload.parentMenuId = payload.parentId;
           updateMenuTenent(payload, {
@@ -189,10 +190,10 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
       const location = findMenuPathById(treeData, detailData?.menuId);
       const deviceNames = [];
       if (detailData.isWebExposed) {
-        deviceNames.push(DIVICE_NAME.PC);
+        deviceNames.push(EnDeviceType.isPc);
       }
       if (detailData.isMobileExposed) {
-        deviceNames.push(DIVICE_NAME.Mobile);
+        deviceNames.push(EnDeviceType.isMobile);
       }
       setApiMappingMenuList(detailData.apiMappingMenuList);
       fetchData({
@@ -204,8 +205,51 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
     }
   }, [detailData]);
 
+  const columns = [
+    columnHelper.accessor('apiName', {
+      id: 'apiName',
+      cell: (info) => info.getValue(),
+      header: t('분류'),
+      size: 300,
+    }),
+    columnHelper.accessor('apiId', {
+      id: 'apiId',
+      cell: (info: any) => {
+        return (
+          <Button
+            className="link"
+            onClick={() =>
+              openModal({
+                content: <ApiInfoModal apiId={info.row.original.apiUuid} />,
+                width: 's',
+                closeOnOutsideClick: true,
+              })
+            }
+            label={info.getValue()}
+          />
+        );
+      },
+      header: 'API',
+    }),
+    columnHelper.accessor('Delete', {
+      cell: (info) => {
+        return (
+          <Button disabled={true} variant="gray2" size={'xs'} type={'button'}>
+            {t('삭제')}
+          </Button>
+        );
+      },
+      header: t('삭제'),
+      size: 100,
+      meta: {
+        headerAlign: 'left', // 헤더만 가운데 정렬
+        cellAlign: 'center', // 셀은 오른쪽 정렬
+      },
+    }),
+  ] as ColumnDef<any, unknown>[];
+
   return (
-    <div className={cn(layoutStyles.start, layoutStyles.wrap)}>
+    <SectionLayout contentsRatio={'thirty'}>
       <div className={cn(layoutStyles.inner, layoutStyles.type_progress)}>
         <div className={titleStyles.title_wrap}>
           <h3 className={titleStyles.title}>{t('테넌트 메뉴 목록')}</h3>
@@ -245,7 +289,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
           <TreeContainer>
             <TreeView
               treeId="tenant-menu-tree"
-              type={'SAME_LEVEL_ONLY'}
+              type={'DRAG_DROP'}
               data={treeData}
               selectedNode={selectedNode}
               expandedKeys={expandedKeys}
@@ -304,9 +348,36 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider} name="menuName" element={<Input disabled={true} />} />
+            <Button
+              type="button"
+              variant="gray"
+              size="sm"
+              disabled={formMode !== EnFormMode.VIEW}
+              onClick={() => {
+                const menuCode = getValues('code');
+                const menuName = getValues('menuName');
+                router.navigate({
+                  to: '/platform/system/multilingual',
+                  state: {
+                    keyType: menuScope === 'FO' ? 'LEARNER_MENU' : 'HRD_CENTER_MENU',
+                    multilingualKey: menuCode,
+                    translation: menuName,
+                  },
+                });
+              }}
+            >
+              {t('다국어 관리')}
+            </Button>
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider} name="path" element={<Input disabled={true} />} />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name="menuUrlParm"
+              element={<Input disabled={EnFormMode.NONE === formMode} />}
+            />
           </ContentsRow>
           <ContentsRow>
             <FormRow
@@ -362,7 +433,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
           </ContentsRow>
         </div>
       </div>
-    </div>
+    </SectionLayout>
   );
 };
 
@@ -408,6 +479,12 @@ const formConfig: DynamicFormConfig = {
       value: '',
     },
     {
+      name: 'menuUrlParm',
+      type: 'text',
+      label: t('메뉴URL파라미터'),
+      value: '',
+    },
+    {
       name: 'menuDesc',
       type: 'textarea',
       label: t('설명'),
@@ -417,10 +494,10 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'isHiddenMenu',
       tooltip: t(
-        'Hidden메뉴 적용 시 메뉴에 API가 매칭 되나, 메뉴 자체는 화면에서 숨김처리가 됩니다.',
+        '메뉴숨기기 적용 시 메뉴에 API가 매칭 되나, 메뉴 자체는 화면에서 숨김처리가 됩니다.',
       ),
       type: 'switch',
-      label: t('Hidden 메뉴'),
+      label: t('메뉴숨기기'),
       value: false,
       switchConfig: {
         label: (value: boolean) => (value ? t('적용') : t('미적용')),
@@ -438,17 +515,17 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'deviceNames',
       type: 'checkbox-group',
-      label: t('디바이스 노출 여부'),
+      label: t('적용 디바이스'),
       value: [],
       options: [
-        { label: t('PC'), value: DIVICE_NAME.PC },
-        { label: t('모바일'), value: DIVICE_NAME.Mobile },
+        { label: t('PC'), value: EnDeviceType.isPc },
+        { label: t('모바일'), value: EnDeviceType.isMobile },
       ],
     },
     {
       name: 'isPersoninfoInclusion',
       type: 'switch',
-      label: t('게인정보'),
+      label: t('게인정보포함'),
       tooltip: t('개인정보를 사용하는 경우 엑셀 다운로드 시 사유를 입력해야 합니다.'),
       switchConfig: { label: (value: boolean) => (value ? t('사용') : t('미사용')) },
       value: false,
@@ -464,25 +541,3 @@ const formConfig: DynamicFormConfig = {
     deviceNames: { required: true },
   },
 };
-
-//Column Helper 정의
-const columnHelper = createColumnHelper<any>();
-
-const columns = [
-  columnHelper.accessor('apiName', {
-    cell: (info) => info.getValue(),
-    header: t('분류'),
-    size: 120,
-    enableGrouping: false,
-    meta: {
-      headerAlign: 'left', // 헤더만 가운데 정렬
-      cellAlign: 'left', // 셀은 오른쪽 정렬
-    },
-  }),
-  columnHelper.accessor('apiId', {
-    cell: (info) => info.getValue(),
-    header: 'API',
-    size: 490,
-    enableGrouping: false,
-  }),
-] as ColumnDef<any, unknown>[];

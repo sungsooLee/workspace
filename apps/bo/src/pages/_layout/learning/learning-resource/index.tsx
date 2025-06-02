@@ -1,5 +1,5 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { useSearchBox } from '@learnway/hooks';
+import { CODE_GROUP, useSearchBox } from '@learnway/hooks';
 import { Button, useModal } from '@learnway/ui';
 import { LearningResourceFileUploadModal, LearningTypeChoiceModal } from '@features/learning';
 import { LEARNING_TYPE } from '@learnway/config';
@@ -144,53 +144,60 @@ const searchConfig: any = {
       {
         name: 'tenant',
         type: 'dropdown',
-        label: t('테넌트1'),
+        label: t('테넌트'),
         value: '',
-        options: [
-          { value: '', label: t('전체') },
-          { value: 'tenantA', label: t('테넌트A') },
-          { value: 'tenantB', label: t('테넌트B') },
-          { value: 'tenantC', label: t('테넌트C') },
-          { value: 'tenantD', label: t('테넌트D') },
-          { value: 'tenantE', label: t('테넌트E') },
-          { value: 'tenantF', label: t('테넌트F') },
-        ],
+        optionsConfig: {
+          options: [{ value: '', label: t('선택') }],
+          codeGroup: CODE_GROUP['manual.tenant.tenantId'],
+        },
       },
       {
         name: 'channel',
         type: 'dropdown',
         label: t('채널'),
         value: '',
-        options: [
-          { value: '', label: t('전체') },
-          { value: 'channelA', label: t('채널A') },
-          { value: 'channelB', label: t('채널B') },
-          { value: 'channelC', label: t('채널C') },
-          { value: 'channelD', label: t('채널D') },
-          { value: 'channelE', label: t('채널E') },
-          { value: 'channelF', label: t('채널F') },
-        ],
+        optionsConfig: {
+          options: [
+            { value: '', label: t('전체') },
+            { value: 'channelA', label: t('채널A') },
+            { value: 'channelB', label: t('채널B') },
+            { value: 'channelC', label: t('채널C') },
+            { value: 'channelD', label: t('채널D') },
+            { value: 'channelE', label: t('채널E') },
+            { value: 'channelF', label: t('채널F') },
+          ],
+        },
       },
       {
         name: 'type',
         type: 'dropdown',
         label: t('유형'),
         value: '',
-        options: [
-          { value: '', label: t('전체') },
-          { value: 'typeA', label: t('유형A') },
-          { value: 'typeB', label: t('유형B') },
-          { value: 'typeC', label: t('유형C') },
-          { value: 'typeD', label: t('유형D') },
-          { value: 'typeE', label: t('유형E') },
-          { value: 'typeF', label: t('유형F') },
-        ],
+        optionsConfig: {
+          options: [{ value: '', label: t('전체') }],
+          codeGroup: CODE_GROUP['cms.content.ContentType'],
+        },
       },
       {
         name: 'learningResourceName',
         type: 'text',
         label: t('학습자원명'),
         value: '',
+      },
+    ],
+    [
+      {
+        name: 'isOutsourcing',
+        type: 'dropdown',
+        label: t('외주여부'),
+        value: '',
+        optionsConfig: {
+          options: [
+            { value: '', label: t('전체') },
+            { value: 'Y', label: 'Y' },
+            { value: 'N', label: 'N' },
+          ],
+        },
       },
       {
         name: 'isUsed',
@@ -199,9 +206,29 @@ const searchConfig: any = {
         value: '',
         options: [
           { value: '', label: t('전체') },
-          { value: 'true', label: t('사용') },
-          { value: 'false', label: t('미사용') },
+          { value: 'available', label: t('사용가능') },
+          { value: 'expired', label: t('사용기한 만료') },
+          { value: 'unavailable', label: t('사용불가') },
         ],
+      },
+      {
+        name: 'isEducationUse',
+        type: 'dropdown',
+        label: t('교육활용여부'),
+        value: '',
+        optionsConfig: {
+          options: [
+            { value: '', label: t('전체') },
+            { value: 'Y', label: 'Y' },
+            { value: 'N', label: 'N' },
+          ],
+        },
+      },
+      {
+        name: 'managerName',
+        type: 'text',
+        label: t('담당자'),
+        value: '',
       },
     ],
   ],

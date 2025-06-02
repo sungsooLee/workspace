@@ -99,7 +99,7 @@ function HomeComponent() {
 export const munu = [
   {
     screenName: '로그인',
-    pageId: '/login',
+    pageId: 'login',
     screenId: 'NLP_BO_LOG_1000',
     pageType: 'Page',
     completionDate: '-',
@@ -108,7 +108,7 @@ export const munu = [
   },
   {
     screenName: '회원가입 진행현황',
-    pageId: '/signup-progress',
+    pageId: 'signup-progress',
     screenId: 'NLP_BO_LOG_1000',
     pageType: 'Page',
     completionDate: '-',
@@ -117,7 +117,7 @@ export const munu = [
   },
   {
     screenName: '관리자 회원가입',
-    pageId: '/signup',
+    pageId: 'signup',
     screenId: 'NLP_BO_LOG_1000',
     pageType: 'Page',
     completionDate: '-',
@@ -126,7 +126,7 @@ export const munu = [
   },
   {
     screenName: '나의 정보',
-    pageId: '/my-page/info',
+    pageId: 'my-page/info',
     screenId: 'NLP_BO_COM_1000',
     pageType: 'Page',
     completionDate: '-',
@@ -135,7 +135,7 @@ export const munu = [
   },
   {
     screenName: '나의 권한',
-    pageId: '/my-page/role',
+    pageId: 'my-page/role',
     screenId: 'NLP_BO_COM_1000',
     pageType: 'Page',
     completionDate: '-',
@@ -144,7 +144,7 @@ export const munu = [
   },
   {
     screenName: '나의 권한 상세',
-    pageId: '/my-page/role/detail',
+    pageId: 'my-page/role/detail',
     screenId: 'NLP_BO_COM_1000',
     pageType: 'Page',
     completionDate: '-',
@@ -154,7 +154,7 @@ export const munu = [
   },
   {
     screenName: '나의 학습자원 조회',
-    pageId: '/learning/learning-resource',
+    pageId: 'learning/learning-resource',
     screenId: 'NLP_BO_CMS_1001',
     pageType: 'Page',
     completionDate: '-',
@@ -164,7 +164,7 @@ export const munu = [
   },
   {
     screenName: '공통 카테고리',
-    pageId: '/platform/category',
+    pageId: 'platform/category',
     screenId: 'NLP_BO_TMS_1120',
     pageType: 'Page',
     completionDate: '-',
@@ -173,7 +173,7 @@ export const munu = [
   },
   {
     screenName: '시스템 공통코드 그룹관리',
-    pageId: '/platform/code/system-code',
+    pageId: 'platform/code/system-code',
     screenId: 'NLP_BO_PMS_1401_01',
     pageType: 'Page',
     completionDate: '-',
@@ -182,7 +182,7 @@ export const munu = [
   },
   {
     screenName: '메뉴 관리',
-    pageId: '/platform/menu',
+    pageId: 'platform/menu',
     screenId: 'NLP_BO_PMS_1200',
     pageType: 'Page',
     completionDate: '-',
@@ -191,7 +191,7 @@ export const munu = [
   },
   {
     screenName: '위젯 관리',
-    pageId: '/platform/widget',
+    pageId: 'platform/widget',
     screenId: 'NLP_BO_PMS_1310',
     pageType: 'Page',
     completionDate: '-',
@@ -200,7 +200,7 @@ export const munu = [
   },
   {
     screenName: '라벨/메시지 관리',
-    pageId: '/platform/label-message',
+    pageId: 'platform/label-message',
     screenId: 'NLP_BO_PMS_1406',
     pageType: 'Page',
     completionDate: '-',
@@ -209,7 +209,7 @@ export const munu = [
   },
   {
     screenName: '프로그램 관리',
-    pageId: '/platform/program',
+    pageId: 'platform/program',
     screenId: 'NLP_BO_PMS_1403',
     pageType: 'Page',
     completionDate: '-',
@@ -218,7 +218,7 @@ export const munu = [
   },
   {
     screenName: '시스템 번역',
-    pageId: '/platform/system/multilingual',
+    pageId: 'platform/system/multilingual',
     screenId: 'NLP_BO_PMS_1421',
     pageType: 'Page',
     completionDate: '-',
@@ -227,7 +227,7 @@ export const munu = [
   },
   {
     screenName: '테넌트 관리',
-    pageId: '/tenant/management',
+    pageId: 'tenant/management',
     screenId: 'NLP_BO_TMS_1000',
     pageType: 'Page',
     completionDate: '-',
@@ -236,7 +236,7 @@ export const munu = [
   },
   {
     screenName: '테넌트 상세',
-    pageId: '/tenant/management/detail',
+    pageId: 'tenant/management/detail',
     screenId: 'NLP_BO_TMS_1003_00_04, NLP_BO_TMS_1003_02 등등',
     pageType: 'Page',
     completionDate: '-',
@@ -245,7 +245,7 @@ export const munu = [
   },
   {
     screenName: '플렛폼 테넌트 관리',
-    pageId: '/platform/tenant/management',
+    pageId: 'platform/tenant/management',
     screenId: 'NLP_BO_TMS_1000',
     pageType: 'Page',
     completionDate: '-',
@@ -254,7 +254,7 @@ export const munu = [
   },
   {
     screenName: '테넌트 상세(플렛폼)',
-    pageId: '/platform/tenant/management/detail',
+    pageId: 'platform/tenant/management/detail',
     screenId: 'NLP_BO_TMS_1002,NLP_BO_TMS_1002_01 등등',
     pageType: 'Page',
     completionDate: '-',
@@ -263,7 +263,7 @@ export const munu = [
   },
   {
     screenName: '플렛폼 테넌트 등록',
-    pageId: '/platform/tenant/management/regist',
+    pageId: 'platform/tenant/management/regist',
     screenId: 'NLP_BO_TMS_1001',
     pageType: 'Page',
     completionDate: '-',
@@ -272,7 +272,7 @@ export const munu = [
   },
   {
     screenName: '교육 장소 ',
-    pageId: '/learning/training-place',
+    pageId: 'learning/training-place',
     screenId: 'NLP_BO_EDO_1601',
     pageType: 'Page',
     completionDate: '-',
@@ -281,7 +281,7 @@ export const munu = [
   },
   {
     screenName: '교육 장소 등록',
-    pageId: '/learning/training-place/regist',
+    pageId: 'learning/training-place/regist',
     screenId: 'NLP_BO_EDO_1603',
     pageType: 'Page',
     completionDate: '-',
@@ -290,7 +290,7 @@ export const munu = [
   },
   {
     screenName: '회사 관리',
-    pageId: '/platform/company/management',
+    pageId: 'platform/company/management',
     screenId: 'NLP_BO_TMS_1300',
     pageType: 'Page',
     completionDate: '-',
@@ -299,7 +299,7 @@ export const munu = [
   },
   {
     screenName: '회사 조직 관리',
-    pageId: '/platform/company/organization',
+    pageId: 'platform/company/organization',
     screenId: 'NLP_BO_TMS_1301',
     pageType: 'Page',
     completionDate: '-',

@@ -118,9 +118,9 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
       <ModalContainer className={cn(styles.root, styles.alert_wrap, 'nlp--alert')}>
         <ModalTitle>
           <>
-            <div className={styles.icon}>
+            {/* <div className={styles.icon}>
               <Icon />
-            </div>
+            </div> */}
             <div className={styles.title}>{isString(title) ? t(title) : title}</div>
           </>
         </ModalTitle>

@@ -85,7 +85,13 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
         const companyNames = info.row.original.companyTenantList.map((item: any) => {
           return item.companyName;
         });
-        return companyNames.toString();
+
+        return companyNames.length > 1
+          ? t('{{name}}외 {{count}}', {
+              name: companyNames[0],
+              count: companyNames.length - 1,
+            })
+          : companyNames.toString();
       },
       header: t('회사'),
       size: 200,
@@ -96,26 +102,17 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
         const tenantRoleList = info.row.original.tenantRoleList.map((item: any) => {
           return item.roleName;
         });
-        return tenantRoleList.toString();
+        return tenantRoleList.length > 1
+          ? t('{{name}}외 {{count}}', { name: tenantRoleList[0], count: tenantRoleList.length - 1 })
+          : tenantRoleList.toString();
       },
       header: t('테넌트 담당자'),
-      size: 120,
-    }),
-    columnHelper.accessor('companyManager', {
-      id: 'companyManager',
-      cell: (info) => {
-        const companyManagerList = info.row.original.companyTenantList.map((item: any) => {
-          return item.managerName;
-        });
-        return companyManagerList.toString();
-      },
-      header: t('회사 담당자'),
       size: 120,
     }),
     columnHelper.accessor('isUsed', {
       id: 'isUsed',
       cell: (info) => {
-        return info.row.original.isUsed ? t('LABEL.common.enable') : t('LABEL.common.disable');
+        return info.row.original.isUsed ? t('사용') : t('미사용');
       },
       header: t('사용여부'),
       size: 104,
@@ -233,7 +230,7 @@ const searchConfig: SearchBoxConfig = {
       {
         name: 'isUsed',
         type: 'dropdown',
-        label: t('LABEL.isUsed'),
+        label: t('LABEL.common.useYn.isUsed'),
         value: '',
         options: [
           { value: '', label: t('전체') },

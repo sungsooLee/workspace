@@ -117,6 +117,10 @@
       }
     },
     "common": {
+      "date": {
+        "hoursAgo": "{{time}}시간 전",
+        "minutesAgo": "{{time}}분 전"
+      },
       "code": {
         "common": "공통",
         "menu": "메뉴",
@@ -595,5 +599,20 @@
   "pms.company.ApplicationProcess": {
     "APPLICATION_REGISTER": "신청 후 결과 등록",
     "REGISTER": "결과 등록"
+  },
+  "cms.content.ContentType": {
+    "VIDEO": "비디오",
+    "EBOOK": "이북",
+    "SCORM": "스콤",
+    "HTML5_VIDEO": "HTML",
+    "IMAGE": "이미지",
+    "EXTERNAL_LINK": "외부링크",
+    "EXTERNAL_AGENCY": "외부위탁",
+    "BLOG": "블로그",
+    "EXAM": "시험지",
+    "EXAM_POOL": "문제은행",
+    "ASSIGNMENT": "과제",
+    "SURVEY": "설문지",
+    "ETC": "기타"
   }
 }
