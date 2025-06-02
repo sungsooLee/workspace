@@ -1,11 +1,14 @@
 /* tootip-popover.module.css */
 .start {
-  @apply rounded-[6px] rounded-tl-none bg-[#333] px-[12px] py-[8px];
+  @apply !max-w-[640px] rounded-[6px] bg-[#333] px-[12px] py-[8px];
   .title {
-    @apply title_bo_4_b pr-[15px] text-white;
+    @apply title_bo_4_b flex min-h-[19px] items-center pr-[30px] text-white;
   }
   .contents_wrap {
-    @apply scrollbar mt-[4px] max-h-[120px] overflow-y-auto;
+    @apply scrollbar mt-[4px] max-h-[210px] overflow-y-auto;
+    p {
+      @apply !text-white;
+    }
     [class*='notice'] ul li {
       @apply text-white;
       &::before {
@@ -14,12 +17,12 @@
     }
   }
   .btn_close {
-    @apply absolute right-[8px] top-[8px];
+    @apply absolute right-[12px] top-[10px];
     svg {
       @apply !h-[20px] !w-[20px] stroke-[#fff];
     }
   }
-  &::before {
+  /* &::before {
     @apply absolute -top-[10px] left-0 h-[10px] w-[10px] bg-[url('../../../assets/images/common/bg_popover_arrow.png')] bg-[10px_auto] bg-[center_center] bg-no-repeat content-[''];
-  }
+  } */
 }

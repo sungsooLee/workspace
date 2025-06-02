@@ -1,6 +1,14 @@
 import dayjs, { ManipulateType } from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
+import { t } from 'i18next';
 import { DATE_TIME_FORMAT } from '../types/date-time';
 import { getDateTimeFormat } from './date-format';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
 /*
 day         d	  Day
 week  	    w	  Week of Year
@@ -106,4 +114,29 @@ export const dateDiff = (
     return d.diff(t, unit ?? 'd');
   }
   return undefined;
+};
+
+export const formatTimeAgo = (
+  value: Date | string | number,
+  format = DATE_TIME_FORMAT.MONTH_DAY,
+) => {
+  // dayjs().tz(Intl.DateTimeFormat().resolvedOptions().timeZone);
+  const now = dayjs().utc();
+  const d = dayjs.utc(value);
+
+  if (d.isValid()) {
+    const diffMinutes = now.diff(d, 'minute');
+    const diffHours = now.diff(d, 'hour');
+
+    const isSameDay = now.isSame(d, 'day');
+
+    if (diffMinutes < 60 && isSameDay) {
+      return `${t('LABEL.common.date.minutesAgo', { time: diffMinutes })}`;
+    } else if (diffHours < 24 && isSameDay) {
+      return `${t('LABEL.common.date.hoursAgo', { time: diffHours })}`;
+    } else {
+      return d.format(getDateTimeFormat(format));
+    }
+  }
+  return '';
 };
