@@ -5,11 +5,11 @@ import { IcoBell03, IcoXclose } from '@learnway/icons';
 import { cn, DATE_TIME_FORMAT } from '@learnway/shared';
 
 import styles from './notification.module.css';
-import { useNotifications, useNotificationsAction } from '@entities/notification';
+import { useNotificationsAction } from '@entities/notification';
 import { formatTimeAgo } from '@learnway/shared';
+import { Notification } from '@types';
 
-const NotificationComponent = ({ userUUID }: any) => {
-  const { notifications } = useNotifications();
+const NotificationComponent = ({ notifications }: { notifications: Notification[] }) => {
   const { read, delete: deleteNotification } = useNotificationsAction();
 
   const handleDelete = (alarmId: number) => {
