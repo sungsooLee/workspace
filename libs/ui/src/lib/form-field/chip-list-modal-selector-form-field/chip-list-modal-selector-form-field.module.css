@@ -1,9 +1,12 @@
 .start {
   @apply w-full;
   .chips_modal_wrap {
-    @apply flex h-[32px] w-full flex-wrap items-center rounded-[4px] border border-solid border-[var(--gray4)] px-[12px];
+    @apply flex h-auto min-h-[120px] w-full flex-wrap items-center rounded-[4px] border border-solid border-[var(--gray4)] px-[12px];
     .btn_search {
       @apply flex flex-auto items-center justify-end;
+    }
+    .chips_wapper {
+      @apply h-auto;
     }
     span {
       @apply !h-[24px] !min-h-[24px];
@@ -19,16 +22,22 @@
         @apply !h-[24px] !min-h-[24px];
       }
     }
+    &:has(.btn_search) {
+      @apply min-h-[32px];
+    }
   }
   &.type_wordwrap {
     .chips_modal_wrap {
-      @apply scrollbar mt-[8px] h-[120px] items-start overflow-y-auto p-[12px];
+      @apply mt-[8px] items-start;
+      .btn_search {
+        @apply mt-[6px];
+      }
     }
   }
 }
 
 .custom_btn_wrap {
-  @apply -mt-[38px] flex items-center justify-end;
+  @apply relative z-[1] -mt-[38px] flex items-center justify-end;
   [class*='nlp--button'] {
     @apply !button_bo_2_r inline-flex items-center !text-[var(--gray8)];
     svg {

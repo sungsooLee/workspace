@@ -108,8 +108,8 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
           />
           {!showAddButton && (
             <Button
-              type="button"
-              className={cn(styles.btn_search)}
+              type={'button'}
+              className={cn(styles.btn_search, 'btn_search')}
               onlyIcon
               onClick={handleSearchClick}
             >

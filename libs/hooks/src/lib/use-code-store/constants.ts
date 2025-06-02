@@ -1,6 +1,6 @@
 export const CODE_GROUP = {
   'cms.content.ContentsAddInfoType': 'cms.content.ContentsAddInfoType',
-  'cms.content.ContentsType': 'cms.content.ContentsType',
+  'cms.content.ContentType': 'cms.content.ContentType',
   'cms.content.ContentsTypeCode': 'cms.content.ContentsTypeCode',
   'cms.html5.Html5ProcessingStatus': 'cms.html5.Html5ProcessingStatus',
   'cms.scorm.ScormProcessingStatus': 'cms.scorm.ScormProcessingStatus',

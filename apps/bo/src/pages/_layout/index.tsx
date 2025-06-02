@@ -153,6 +153,16 @@ export const munu = [
     end: false,
   },
   {
+    screenName: '나의 학습자원 조회',
+    pageId: '/learning/learning-resource',
+    screenId: 'NLP_BO_CMS_1001',
+    pageType: 'Page',
+    completionDate: '-',
+    lastUpdateDate: '-',
+    memo: '작업중', // 비고
+    end: false,
+  },
+  {
     screenName: '공통 카테고리',
     pageId: '/platform/category',
     screenId: 'NLP_BO_TMS_1120',

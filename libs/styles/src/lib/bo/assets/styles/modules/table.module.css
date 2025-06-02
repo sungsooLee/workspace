@@ -38,6 +38,9 @@
     & + [class*='title_wrap'] {
       @apply !mt-[32px] !border-t-0 pt-0;
     }
+    & + [class*='table_box'] {
+      @apply mt-[48px];
+    }
   }
 }
 [class*='title_wrap'] + .start {
