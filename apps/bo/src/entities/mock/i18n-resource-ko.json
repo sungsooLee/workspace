@@ -461,17 +461,16 @@
     "contents": {
       "learning": {
         "resource": {
-          "no": "NO.",
-          "type": "유형",
-          "learningResourceName": "학습자원명",
-          "tenant": "테넌트",
-          "channel": "채널",
-          "managerName": "담당자",
+          "contentType": "유형",
+          "contentName": "학습자원명",
+          "tenantName": "테넌트",
+          "channelName": "채널",
+          "coordinatorName": "담당자",
           "detailInfo": "세부정보",
           "util": "기능",
-          "educationUse": "교육활용",
+          "isCourseUsed": "교육활용",
           "courseCount": "과정수",
-          "usable": "사용가능",
+          "isUseEnabled": "사용가능",
           "updatedBy": "수정자",
           "updatedDate": "수정일"
         }

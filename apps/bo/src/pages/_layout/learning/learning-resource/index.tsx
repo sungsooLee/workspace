@@ -160,6 +160,7 @@ function RouteComponent() {
                     size="sm"
                     label={t('프로그램/가이드 다운로드')}
                     icon={<IcoDownload width={16} height={16} stroke="#131C30" />}
+                    // onClick GET /pms-module/admin/api/v1/file/s3/download - 가이드 파일 올라간 후 다운로드 (하드코딩?)
                   />
                   <Button variant="outline" size="sm" label={t('일괄설정')} />
                   <Button
@@ -190,7 +191,7 @@ const searchConfig: any = {
       {
         name: 'tenant',
         type: 'dropdown',
-        label: t('테넌트'),
+        label: t('LABEL.contents.learning.resource.tenantName'),
         value: '',
         optionsConfig: {
           options: [{ value: '', label: t('선택') }],
@@ -200,11 +201,11 @@ const searchConfig: any = {
       {
         name: 'channel',
         type: 'dropdown',
-        label: t('채널'),
+        label: t('LABEL.contents.learning.resource.channelName'),
         value: '',
         optionsConfig: {
           options: [
-            { value: '', label: t('전체') },
+            { value: '', label: t('선택') },
             { value: 'channelA', label: t('채널A') },
             { value: 'channelB', label: t('채널B') },
             { value: 'channelC', label: t('채널C') },
@@ -215,9 +216,9 @@ const searchConfig: any = {
         },
       },
       {
-        name: 'type',
+        name: 'contentType',
         type: 'dropdown',
-        label: t('유형'),
+        label: t('LABEL.contents.learning.resource.contentType'),
         value: '',
         optionsConfig: {
           options: [{ value: '', label: t('전체') }],
@@ -225,7 +226,7 @@ const searchConfig: any = {
         },
       },
       {
-        name: 'learningResourceName',
+        name: 'contentName',
         type: 'text',
         label: t('학습자원명'),
         value: '',
@@ -233,7 +234,7 @@ const searchConfig: any = {
     ],
     [
       {
-        name: 'isOutsourcing',
+        name: 'isVendored',
         type: 'dropdown',
         label: t('외주여부'),
         value: '',
@@ -246,7 +247,7 @@ const searchConfig: any = {
         },
       },
       {
-        name: 'isUsed',
+        name: 'isUseEnabled',
         type: 'dropdown',
         label: t('사용가능'),
         value: '',
@@ -258,9 +259,9 @@ const searchConfig: any = {
         ],
       },
       {
-        name: 'isEducationUse',
+        name: 'isCourseUsed',
         type: 'dropdown',
-        label: t('교육활용여부'),
+        label: t('LABEL.contents.learning.resource.isCourseUsed'),
         value: '',
         optionsConfig: {
           options: [
@@ -271,15 +272,16 @@ const searchConfig: any = {
         },
       },
       {
-        name: 'managerName',
+        name: 'coordinatorName',
         type: 'text',
-        label: t('담당자'),
+        label: t('LABEL.contents.learning.resource.coordinatorName'),
         value: '',
       },
     ],
   ],
   validator: {
     tenant: true,
+    channel: true,
     config: MainContents,
   },
 };
@@ -296,28 +298,28 @@ const gridConfig = {
   columns: [
     {
       name: 'no',
-      label: t('LABEL.contents.learning.resource.no'),
+      label: 'NO.',
       type: 'numbering',
     },
     {
-      name: 'type',
-      label: t('LABEL.contents.learning.resource.type'),
+      name: 'contentType',
+      label: t('LABEL.contents.learning.resource.contentType'),
     },
     {
-      name: 'learningResourceName',
-      label: t('LABEL.contents.learning.resource.learningResourceName'),
+      name: 'contentName',
+      label: t('LABEL.contents.learning.resource.contentName'),
     },
     {
-      name: 'tenant',
-      label: t('LABEL.contents.learning.resource.tenant'),
+      name: 'tenantName',
+      label: t('LABEL.contents.learning.resource.tenantName'),
     },
     {
-      name: 'channel',
-      label: t('LABEL.contents.learning.resource.channel'),
+      name: 'channelName',
+      label: t('LABEL.contents.learning.resource.channelName'),
     },
     {
-      name: 'managerName',
-      label: t('LABEL.contents.learning.resource.managerName'),
+      name: 'coordinatorName',
+      label: t('LABEL.contents.learning.resource.coordinatorName'),
     },
     {
       name: 'detailInfo',
@@ -328,16 +330,16 @@ const gridConfig = {
       label: t('LABEL.contents.learning.resource.util'),
     },
     {
-      name: 'educationUse',
-      label: t('LABEL.contents.learning.resource.educationUse'),
+      name: 'isCourceUsed',
+      label: t('LABEL.contents.learning.resource.isCourseUsed'),
     },
     {
-      name: 'courseCount',
+      name: 'courceCount',
       label: t('LABEL.contents.learning.resource.courseCount'),
     },
     {
-      name: 'usable',
-      label: t('LABEL.contents.learning.resource.usable'),
+      name: 'isUseEnabled',
+      label: t('LABEL.contents.learning.resource.isUseEnabled'),
     },
     {
       name: 'updatedBy',
