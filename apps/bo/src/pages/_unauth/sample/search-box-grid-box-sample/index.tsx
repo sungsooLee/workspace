@@ -9,7 +9,7 @@ import { ContentsButtons, MainContents, PageContainer } from '@widgets/layout';
 import { SearchBox } from '@shared/ui/search-box';
 import { DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
 
-export const Route = createFileRoute('/_unauth/sample/search-box-grid-sample/')({
+export const Route = createFileRoute('/_unauth/sample/search-box-grid-box-sample/')({
   component: RouteComponent,
 });
 

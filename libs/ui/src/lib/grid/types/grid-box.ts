@@ -91,10 +91,12 @@ export interface GridBoxConfig {
   onDataChange: (data: any) => void;
 
   getParams?: UseFormReturn['getValues'];
+
   /**
    * Excel 업로드 다운로드에 대한 기능 정의
    */
   excel?: ExcelConfig;
+
   /**
    * 페이지네이션 상태 객체 (선택적)입니다.
    * 현재 페이지 정보 등을 포함합니다.

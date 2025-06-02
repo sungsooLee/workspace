@@ -8,13 +8,22 @@ import React, {
   useState,
 } from 'react';
 import { createColumnHelper, Table } from '@tanstack/react-table';
-import { Button, CountText, Grid, GridBoxProps, GridImperative, Pagination } from '@learnway/ui';
+import {
+  Button,
+  CountText,
+  Grid,
+  GridBoxProps,
+  GridImperative,
+  GridState,
+  Pagination,
+} from '@learnway/ui';
 import { IcoMinus, IcoPlus } from '@learnway/icons';
 import styles from './grid-box.module.css';
-import { cn } from '@learnway/shared';
+import { cn, gridStateToSortQueryParams } from '@learnway/shared';
 import { useTranslation } from 'react-i18next';
 import { ExcelButtons } from './excel-buttons';
 import { GridBoxSearchInput, GridBoxSearchInputCondition } from './grid-box-search-input';
+import { PaginationRequest } from '../../../../../../apps/bo/src/types';
 
 /**
  * 다양한 설정 옵션을 통해 재사용 가능한 표 컴포넌트(Grid)를 구성합니다.
@@ -103,6 +112,15 @@ const GridBoxComponent = <T extends object>(
     columns?.find((d: any) => d.type === 'numbering') || props.showNumberingColumn;
 
   /**
+   * pagination 설정
+   * - props로 직접 전달되면 우선 사용
+   * - 없으면 config에서 받아 설정
+   */
+  const paginationProps = useMemo(() => {
+    return pagination || props.pagination;
+  }, [pagination, props.pagination]);
+
+  /**
    * 전체선택 버튼 클릭
    */
   const handleSelectAllClick = useCallback(
@@ -172,57 +190,50 @@ const GridBoxComponent = <T extends object>(
   }, []);
 
   /**
-   * 페이지 이동 핸들러
-   */
-  const handleChangePage = useCallback(
-    (pageIndex: number) => {
-      gridFetch?.({
-        size: page?.pageSize, // page 객체의 pageSize 사용
-        page: pageIndex,
-      });
-    },
-    [gridFetch, page], // 의존성 배열: gridFetch와 page 객체 참조
-  );
-
-  /**
    * 페이지 사이즈 변경 핸들러
    */
   const handleChangePageSize = useCallback(
     (pageSize: number) => {
-      // for use-grid-box
-      gridFetch?.({
+      const params: PaginationRequest = {
         size: pageSize,
-        page: 0, // 페이지 사이즈 변경 시 첫 페이지로 이동
-      });
-      // props.pagination
-      props?.pagination?.onPageSizeChange?.(pageSize);
+      };
+      handleFetchGridData(params);
     },
-    [gridFetch, props.pagination],
+    [props.pagination],
   );
 
   const handlePageChange = useCallback(
     (pageNumber: number) => {
-      // grid config
-      gridFetch?.({
-        size: pagination?.pageSize, // page 객체의 pageSize 사용
+      const params: PaginationRequest = {
         page: pageNumber,
-      });
-      // prop
-      props.pagination?.onPageChange?.(pageNumber);
+      };
+      handleFetchGridData(params);
     },
-    [props.pagination, pagination],
+    [props.pagination],
   );
 
-  /**
-   * pagination 설정
-   * - props로 직접 전달되면 우선 사용
-   * - 없으면 config에서 받아 설정
-   */
-  const paginationProps = useMemo(() => {
-    return pagination || props.pagination;
-  }, [pagination, props.pagination]);
+  const handleStateChange = useCallback(
+    (newState: GridState) => {
+      if (!props.data && !data) {
+        return;
+      }
+      const params: PaginationRequest = {
+        sort: gridStateToSortQueryParams(newState),
+      };
+      handleFetchGridData(params);
+    },
+    [props.onStateChange, props.data, data],
+  );
 
-  console.log('grid-box ::', { paginationProps });
+  const handleFetchGridData = useCallback(
+    (paginationRequest: PaginationRequest) => {
+      // use-grid-box 에서 받은 gridFetch
+      gridFetch?.(paginationRequest);
+    },
+    [gridFetch],
+  );
+
+  console.log('grid-box ::', { paginationProps, config, propData: props.data, data });
 
   return (
     <div className={cn(styles.table_box)}>
@@ -301,11 +312,11 @@ const GridBoxComponent = <T extends object>(
         {...props}
         ref={gridRef}
         pagination={paginationProps}
-        onChange={props.onChange || onDataChange}
         data={props.data ?? data ?? []}
         columns={props.columns ?? girdColumns ?? []}
         showNumberingColumn={showNumberingColumn}
-        onStateChange={props.onStateChange || onStateChange}
+        onChange={props.onChange || onDataChange}
+        onStateChange={props.onStateChange || handleStateChange}
         onTableInstanceChange={handleTableInstanceChange}
       />
       {/* 페이지네이션 */}

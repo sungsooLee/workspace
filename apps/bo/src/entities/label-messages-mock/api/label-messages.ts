@@ -25,6 +25,7 @@ export default class LabelMessagesService {
   static async fetchAll<T = LabelMessage>(
     params?: LabelMessagesQueryParams,
   ): Promise<PaginationResponse<T>> {
+    console.log('label-messages.ts : fetchAll', params);
     // return httpService.get<PaginationResponse<T>>(`${PMSApiPrefix()}/label-messages`, params);
     return new Promise((resolve) => {
       const response: PaginationResponse<T> = mockData(params);

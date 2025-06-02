@@ -1,5 +1,4 @@
 import { RowSelectionState, Table } from '@tanstack/react-table';
-import { GridState } from '@learnway/ui';
 
 /**
  * 주어진 데이터 목록(list)에 해당하는 행들을 TanStack Table에서 선택하기 위한
@@ -57,8 +56,9 @@ export const getRowSelectionByList = (tableInstance: Table<any>, list: any[], ke
  * @param {GridState} state - 정렬 정보가 포함된 그리드 상태 객체
  * @returns {string[]} 쿼리 파라미터로 사용할 수 있는 정렬 문자열 배열
  */
-export const gridStateToSortQueryParams = (state: GridState): string[] => {
+// export const gridStateToSortQueryParams = (state: GridState): string[] => {
+export const gridStateToSortQueryParams = (state: any): string[] => {
   if (!state.sorting || state.sorting.length === 0) return [];
 
-  return state.sorting.map(({ id, desc }) => `${id},${desc ? 'desc' : 'asc'}`);
+  return state.sorting.map(({ id, desc }: any) => `${id},${desc ? 'desc' : 'asc'}`);
 };
