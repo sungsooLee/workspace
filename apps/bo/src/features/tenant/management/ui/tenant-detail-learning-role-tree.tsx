@@ -1,5 +1,13 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import { useRouterState } from '@tanstack/react-router';
+import { t } from 'i18next';
+
+import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
+
 import { cn } from '@learnway/shared';
+import styles from '@learnway/styles/bo/features/role/role-info.module.css';
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+
 import {
   Button,
   ChipListModalSelectorFormField,
@@ -10,13 +18,10 @@ import {
   TreeBox,
   TreeNode,
 } from '@learnway/ui';
-import { t } from 'i18next';
-import { useRouterState } from '@tanstack/react-router';
-import styles from '@learnway/styles/bo/features/role/role-info.module.css';
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+import { DynamicFormConfig, useDynamicForm, CODE_GROUP } from '@learnway/hooks';
+
 import { ContentsHistoryInfoFormField, FormRow, FormSubTitle, SwitchFormField } from '@shared/ui';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
+
 import {
   useFetchRole,
   useFetchRoleTree,
@@ -145,19 +150,6 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
       setSelectedRoleNode(node);
       if (formMode !== EnFormMode.VIEW) setFormMode(EnFormMode.VIEW);
     }
-    // else {
-    //   if (isEqual(provider.originalValues, provider.getValues())) {
-    //     clearAllFormErrors();
-    //     const initData: { [key: string]: any } = {};
-    //     formConfig.builders.forEach((item) => {
-    //       initData[item.name] = item.value;
-    //     });
-    //     fetchData(initData);
-    //     setFormMode(EnFormMode.NONE);
-    //   } else {
-    //     alert('다른 자료');
-    //   }
-    // }
   };
 
   // 추가 버튼
@@ -278,22 +270,23 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                   />
                 </>
               }
-              lineType={'light'}
+              lineType="light"
             />
             <div className={styles.contents_wrap}>
               <ContentsRow>
-                <FormRow provider={provider} name={'roleId'} element={<Input disabled={true} />} />
+                <FormRow provider={provider} name="roleId" element={<Input disabled={true} />} />
 
-                <FormRow
-                  provider={provider}
-                  name={'roleCode'}
-                  element={<Input disabled={true} />}
-                />
+                <FormRow provider={provider} name="roleCode" element={<Input disabled={true} />} />
               </ContentsRow>
               <ContentsRow>
                 <FormRow
                   provider={provider}
-                  name={'name'}
+                  name="roleType"
+                  element={<Input disabled={formMode === EnFormMode.NONE || !roleInfo} />}
+                />
+                <FormRow
+                  provider={provider}
+                  name="name"
                   element={
                     <Input maxLength={40} disabled={formMode === EnFormMode.NONE || !roleInfo} />
                   }
@@ -302,7 +295,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
               <ContentsRow>
                 <FormRow
                   provider={provider}
-                  name={'description'}
+                  name="description"
                   element={
                     <TextareaFormField
                       maxLength={300}
@@ -314,14 +307,14 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
               <ContentsRow>
                 <FormRow
                   provider={provider}
-                  name={'tenantScope'}
+                  name="tenantScope"
                   element={<RadioGroupFormField disabled={formMode === EnFormMode.NONE} />}
                 />
               </ContentsRow>
               <ContentsRow>
                 <FormRow
                   provider={provider}
-                  name={'companyScope'}
+                  name="companyScope"
                   element={<RadioGroupFormField disabled={formMode === EnFormMode.NONE} />}
                 />
               </ContentsRow>
@@ -332,7 +325,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                 <div className="chiplist_modal_wrap">
                   <FormRow
                     provider={provider}
-                    name={'companyIds'}
+                    name="companyIds"
                     element={
                       <ChipListModalSelectorFormField
                         modalConfig={{
@@ -350,42 +343,11 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                   />
                 </div>
               </FormDisplay>
+
               <ContentsRow>
                 <FormRow
                   provider={provider}
-                  name={'channelScope'}
-                  element={<RadioGroupFormField disabled={formMode === EnFormMode.NONE} />}
-                />
-              </ContentsRow>
-              <FormDisplay
-                provider={provider}
-                dependencies={[{ name: 'channelScope', value: EnChannelScope.MANUAL }]}
-              >
-                <div className="chiplist_modal_wrap">
-                  <FormRow
-                    provider={provider}
-                    name={'channelIds'}
-                    element={
-                      <ChipListModalSelectorFormField
-                        chipList={{
-                          labelField: 'channelName',
-                          valueField: 'channelId',
-                          hideBorder: true,
-                        }}
-                        modalConfig={{
-                          title: '',
-                          width: 'xl',
-                          content: <ChannelListChoiceModal />,
-                        }}
-                      />
-                    }
-                  />
-                </div>
-              </FormDisplay>
-              <ContentsRow>
-                <FormRow
-                  provider={provider}
-                  name={'deptScope'}
+                  name="deptScope"
                   element={<RadioGroupFormField disabled={formMode === EnFormMode.NONE} />}
                 />
               </ContentsRow>
@@ -414,7 +376,40 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                   />
                 </div>
               </FormDisplay>
-              <ContentsRow type={'horizontal'}>
+              <ContentsRow>
+                <FormRow
+                  provider={provider}
+                  name="channelScope"
+                  element={<RadioGroupFormField disabled={formMode === EnFormMode.NONE} />}
+                />
+              </ContentsRow>
+              <FormDisplay
+                provider={provider}
+                dependencies={[{ name: 'channelScope', value: EnChannelScope.MANUAL }]}
+              >
+                <div className="chiplist_modal_wrap">
+                  <FormRow
+                    provider={provider}
+                    name="channelIds"
+                    element={
+                      <ChipListModalSelectorFormField
+                        chipList={{
+                          labelField: 'channelName',
+                          valueField: 'channelId',
+                          hideBorder: true,
+                        }}
+                        modalConfig={{
+                          title: '',
+                          width: 'xl',
+                          content: <ChannelListChoiceModal />,
+                        }}
+                      />
+                    }
+                  />
+                </div>
+              </FormDisplay>
+
+              <ContentsRow type="horizontal">
                 <FormRow
                   provider={provider}
                   name="isUsed"
@@ -435,6 +430,15 @@ export const TenantDetailLearningRoleTree = forwardRef(TenantDetailLearningRoleT
 const formBaseConfig: DynamicFormConfig = {
   builders: [
     {
+      name: 'tenantScope',
+      type: 'radio-group',
+      label: t('테넌트 적용 범위'),
+      value: EnTenantScope.ALL,
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.role.TenantScope'],
+      },
+    },
+    {
       name: 'parentRoleId',
       label: '',
       type: 'hidden',
@@ -445,13 +449,19 @@ const formBaseConfig: DynamicFormConfig = {
       name: 'roleId',
       type: 'text',
       format: 'number',
-      label: t('역할 ID'),
+      label: t('역할 번호'),
       value: '',
     },
     {
       name: 'roleCode',
       type: 'text',
       label: t('역할 코드'),
+      value: '',
+    },
+    {
+      name: 'roleType',
+      type: 'text',
+      label: t('역할 타입'),
       value: '',
     },
     {
@@ -469,22 +479,11 @@ const formBaseConfig: DynamicFormConfig = {
     {
       name: 'companyScope',
       type: 'radio-group',
-      label: t('회사 적용 범위'),
+      label: t('회사 접근 범위'),
       value: EnCompanyScope.ALL,
-      options: [
-        {
-          value: EnCompanyScope.ALL,
-          label: t('모든 회사'),
-        },
-        {
-          value: EnCompanyScope.CURRENT_COMPANY,
-          label: t('소속 회사'),
-        },
-        {
-          value: EnCompanyScope.MANUAL,
-          label: t('직접 선택'),
-        },
-      ],
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.role.CompanyScope'],
+      },
     },
     {
       name: 'companyIds',
@@ -496,26 +495,11 @@ const formBaseConfig: DynamicFormConfig = {
     {
       name: 'channelScope',
       type: 'radio-group',
-      label: t('채널 적용 범위'),
+      label: t('채널 접근 범위'),
       value: EnChannelScope.ALL,
-      options: [
-        {
-          value: EnChannelScope.ALL,
-          label: t('모든 채널'),
-        },
-        {
-          value: EnChannelScope.CURRENT_COMPANY,
-          label: t('소속 채널'),
-        },
-        {
-          value: EnChannelScope.CURRENT_COMPANY_INCLUSIVE,
-          label: t('소속 채널(하위 채널 포함)'),
-        },
-        {
-          value: EnChannelScope.MANUAL,
-          label: t('직접 선택'),
-        },
-      ],
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.role.ChannelScope'],
+      },
     },
     {
       name: 'channelIds',
@@ -527,26 +511,11 @@ const formBaseConfig: DynamicFormConfig = {
     {
       name: 'deptScope',
       type: 'radio-group',
-      label: t('팀 적용 범위'),
+      label: t('조직 접근 범위'),
       value: EnDeptScope.ALL,
-      options: [
-        {
-          value: EnDeptScope.ALL,
-          label: t('모든 팀'),
-        },
-        {
-          value: EnDeptScope.CURRENT_TEAM,
-          label: t('소속 팀'),
-        },
-        {
-          value: EnDeptScope.CURRENT_TEAM_INCLUSIVE,
-          label: t('소속 팀(하위 팀 포함)'),
-        },
-        {
-          value: EnDeptScope.MANUAL,
-          label: t('직접 선택'),
-        },
-      ],
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.role.DeptScope'],
+      },
     },
     {
       name: 'deptIds',
