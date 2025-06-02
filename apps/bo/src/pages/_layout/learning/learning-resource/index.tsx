@@ -1,6 +1,6 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { CODE_GROUP, useSearchBox } from '@learnway/hooks';
-import { Button, useModal } from '@learnway/ui';
+import { Button, Checkbox, TableBox, useGridBox, useModal } from '@learnway/ui';
 import { LearningResourceFileUploadModal, LearningTypeChoiceModal } from '@features/learning';
 import { LEARNING_TYPE } from '@learnway/config';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
@@ -10,6 +10,11 @@ import { SearchBox } from '@shared/ui/search-box';
 import { useState } from 'react';
 import { t } from 'i18next';
 import { ChannelChoiceModal } from '@features/shared';
+import { translationQueryOptions } from '@entities/translation/service/translation.queries';
+import { cn } from '@learnway/shared';
+import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
+import { IcoDownload, IcoFile01 } from '@learnway/icons';
+import { Table } from '@tanstack/react-table';
 
 export const Route = createFileRoute('/_layout/learning/learning-resource/')({
   component: RouteComponent,
@@ -17,10 +22,12 @@ export const Route = createFileRoute('/_layout/learning/learning-resource/')({
 
 function RouteComponent() {
   const router = useRouter();
-  const { provider: searchProvider } = useSearchBox(searchConfig);
+  const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
+  const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const { open: openModal } = useModal();
   // 등록 팝업 호출 여부
   const [displayContent, setDisplayContent] = useState(true);
+  const [tableInstance, setTableInstance] = useState<Table<any>>(); // Grid 로부터 받을 table 인스턴스를 저장할 상태
 
   /**
    * 학습 컨텐츠를 등록하기 위한 Dialog 호출
@@ -134,6 +141,46 @@ function RouteComponent() {
       </ContentsButtons>
       <MainContents>
         <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
+        <div className={cn(boxStyles.start, boxStyles.inner)}>
+          <div className="grid_wrap">
+            <TableBox
+              config={gConfig}
+              data={[
+                { type: '동영상', learningResourceName: '학습자원명' },
+                { type: '설문지', learningResourceName: '학습자원명' },
+                { type: '동영상', learningResourceName: '학습자원명' },
+                { type: '외부링크', learningResourceName: '학습자원명' },
+              ]}
+              multiple
+              customButtonNode={
+                <>
+                  <Checkbox size="sm" label={t('나의 학습자원')} />
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    label={t('프로그램/가이드 다운로드')}
+                    icon={<IcoDownload width={16} height={16} stroke="#131C30" />}
+                    // onClick GET /pms-module/admin/api/v1/file/s3/download - 가이드 파일 올라간 후 다운로드 (하드코딩?)
+                  />
+                  <Button variant="outline" size="sm" label={t('일괄설정')} />
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    label={t('엑셀다운로드')}
+                    icon={<IcoDownload width={16} height={16} stroke="#131C30" />}
+                  />
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    label={t('복사')}
+                    icon={<IcoFile01 width={16} height={16} stroke="#131C30" />}
+                  />
+                </>
+              }
+              onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
+            />
+          </div>
+        </div>
       </MainContents>
     </PageContainer>
   );
@@ -144,7 +191,7 @@ const searchConfig: any = {
       {
         name: 'tenant',
         type: 'dropdown',
-        label: t('테넌트'),
+        label: t('LABEL.contents.learning.resource.tenantName'),
         value: '',
         optionsConfig: {
           options: [{ value: '', label: t('선택') }],
@@ -154,11 +201,11 @@ const searchConfig: any = {
       {
         name: 'channel',
         type: 'dropdown',
-        label: t('채널'),
+        label: t('LABEL.contents.learning.resource.channelName'),
         value: '',
         optionsConfig: {
           options: [
-            { value: '', label: t('전체') },
+            { value: '', label: t('선택') },
             { value: 'channelA', label: t('채널A') },
             { value: 'channelB', label: t('채널B') },
             { value: 'channelC', label: t('채널C') },
@@ -169,9 +216,9 @@ const searchConfig: any = {
         },
       },
       {
-        name: 'type',
+        name: 'contentType',
         type: 'dropdown',
-        label: t('유형'),
+        label: t('LABEL.contents.learning.resource.contentType'),
         value: '',
         optionsConfig: {
           options: [{ value: '', label: t('전체') }],
@@ -179,7 +226,7 @@ const searchConfig: any = {
         },
       },
       {
-        name: 'learningResourceName',
+        name: 'contentName',
         type: 'text',
         label: t('학습자원명'),
         value: '',
@@ -187,7 +234,7 @@ const searchConfig: any = {
     ],
     [
       {
-        name: 'isOutsourcing',
+        name: 'isVendored',
         type: 'dropdown',
         label: t('외주여부'),
         value: '',
@@ -200,7 +247,7 @@ const searchConfig: any = {
         },
       },
       {
-        name: 'isUsed',
+        name: 'isUseEnabled',
         type: 'dropdown',
         label: t('사용가능'),
         value: '',
@@ -212,9 +259,9 @@ const searchConfig: any = {
         ],
       },
       {
-        name: 'isEducationUse',
+        name: 'isCourseUsed',
         type: 'dropdown',
-        label: t('교육활용여부'),
+        label: t('LABEL.contents.learning.resource.isCourseUsed'),
         value: '',
         optionsConfig: {
           options: [
@@ -225,15 +272,88 @@ const searchConfig: any = {
         },
       },
       {
-        name: 'managerName',
+        name: 'coordinatorName',
         type: 'text',
-        label: t('담당자'),
+        label: t('LABEL.contents.learning.resource.coordinatorName'),
         value: '',
       },
     ],
   ],
   validator: {
     tenant: true,
+    channel: true,
     config: MainContents,
+  },
+};
+
+const gridConfig = {
+  excel: {
+    download: '/learning-resource/exportExcel',
+    form: {
+      xlsx: '',
+      csv: '',
+    },
+  },
+  query: () => {},
+  columns: [
+    {
+      name: 'no',
+      label: 'NO.',
+      type: 'numbering',
+    },
+    {
+      name: 'contentType',
+      label: t('LABEL.contents.learning.resource.contentType'),
+    },
+    {
+      name: 'contentName',
+      label: t('LABEL.contents.learning.resource.contentName'),
+    },
+    {
+      name: 'tenantName',
+      label: t('LABEL.contents.learning.resource.tenantName'),
+    },
+    {
+      name: 'channelName',
+      label: t('LABEL.contents.learning.resource.channelName'),
+    },
+    {
+      name: 'coordinatorName',
+      label: t('LABEL.contents.learning.resource.coordinatorName'),
+    },
+    {
+      name: 'detailInfo',
+      label: t('LABEL.contents.learning.resource.detailInfo'),
+    },
+    {
+      nawme: 'util',
+      label: t('LABEL.contents.learning.resource.util'),
+    },
+    {
+      name: 'isCourceUsed',
+      label: t('LABEL.contents.learning.resource.isCourseUsed'),
+    },
+    {
+      name: 'courceCount',
+      label: t('LABEL.contents.learning.resource.courseCount'),
+    },
+    {
+      name: 'isUseEnabled',
+      label: t('LABEL.contents.learning.resource.isUseEnabled'),
+    },
+    {
+      name: 'localization',
+      label: t('LABEL.contents.learning.resource.localization'),
+    },
+    {
+      name: 'updatedInfo',
+      label: t('LABEL.contents.learning.resource.updatedInfo'),
+    },
+  ],
+  data: [],
+  pagination: {
+    pageSize: 20,
+    pageIndex: 0,
+    totalRows: 0,
   },
 };
