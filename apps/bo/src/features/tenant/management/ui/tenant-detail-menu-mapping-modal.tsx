@@ -29,7 +29,7 @@ import {
   getAllParentAndAllChildById,
   getFirstExpandKeys,
   getAllTreeKeys,
-  moveNodeCheck,
+  moveTenantMenuNodeCheck,
 } from '../service/tenant-detail-tree.service';
 
 /**
@@ -107,7 +107,7 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
         break;
       case 'NODE_MOVE':
         if (event.treeId === 'mapping-tenant-menu-tree') {
-          const payload = moveNodeCheck(event);
+          const payload = moveTenantMenuNodeCheck(event);
           if (payload) {
             payload.menuScopeCode = menuScopeCode;
             changeMenuPosition(payload);
@@ -316,7 +316,7 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
                 <div className={layoutStyles.inner_contents}>
                   <TreeView
                     treeId="mapping-tenant-menu-tree"
-                    type={'SAME_LEVEL_ONLY'}
+                    type={'DRAG_DROP'}
                     data={menuTreeData}
                     nodeButtons={renderMenuDeleteButtons}
                     onAction={handleTargetAction}
