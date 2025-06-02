@@ -51,12 +51,12 @@
     }
     &:has(label + div + p) {
       [class*='nlp--switch'] {
-        @apply !translate-y-1/2;
+        @apply !translate-y-0;
       }
     }
-    [class*='nlp--switch'] {
+    /* [class*='nlp--switch'] {
       @apply translate-y-1/2;
-    }
+    } */
     label ~ p {
       @apply w-full !flex-none;
     }

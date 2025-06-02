@@ -462,6 +462,21 @@
         }
       }
     },
+    "content": {
+      "learning-resource": {
+        "contentType": "유형",
+        "contentName": "학습자원명",
+        "tenantName": "테넌트",
+        "channelName": "채널",
+        "coordinatorName": "담당자",
+        "detailInfo": "세부정보",
+        "util": "기능",
+        "isCourseUsed": "교육활용",
+        "isUseEnabled": "사용가능",
+        "localization": "현지화",
+        "updatedInfo": "수정정보"
+      }
+    },
     "alert": {
       "delete": {
         "title": "삭제할 수 없습니다.",
