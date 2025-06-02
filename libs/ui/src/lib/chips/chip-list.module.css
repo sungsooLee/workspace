@@ -29,7 +29,7 @@
     }
   }
   &.wordwrap {
-    @apply h-[120px] py-[12px];
+    @apply pt-[3px];
   }
   &.readonly {
     @apply border-[var(--gray1)] bg-[var(--gray1)];
@@ -47,7 +47,7 @@
         }
       }
       &.xs {
-        @apply !h-[2.8rem] !min-h-[2.8rem];
+        @apply !h-[2.4rem] !min-h-[2.4rem];
       }
       &.sm {
         @apply min-h-[3.2rem];
@@ -88,5 +88,5 @@
 }
 
 .empty_message {
-  @apply body_bo_2_r w-full py-[43px] text-center text-[var(--gray7)];
+  @apply body_bo_2_r w-full pt-[6px] text-center text-[var(--gray7)];
 }

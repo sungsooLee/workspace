@@ -48,7 +48,7 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
       placeholder = t('태그를 입력해주세요.'),
       orientation,
       type,
-      size,
+      size = 'xs',
       hideBorder,
       visibleCount = 10000,
       emptyMessage,

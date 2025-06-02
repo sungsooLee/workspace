@@ -23,14 +23,14 @@
                 @apply order-1 !flex-1;
               }
               &::before {
-                @apply order-2 ml-[40px] h-full w-full flex-1 justify-stretch content-[''];
+                @apply order-2 ml-[32px] h-full w-full flex-1 justify-stretch content-[''];
               }
             }
             & > div {
               @apply flex-1;
             }
             .space {
-              @apply ml-[40px];
+              @apply ml-[32px];
             }
           }
         }
@@ -44,7 +44,7 @@
       .item_wrap {
         @apply w-full flex-1;
         .inner + .inner {
-          @apply ml-[40px];
+          @apply ml-[32px];
         }
       }
       &.item_auto {
@@ -60,7 +60,7 @@
     .multi {
       @apply flex w-full flex-wrap;
       .inner {
-        @apply flex flex-1 gap-[40px];
+        @apply flex flex-1 gap-[32px];
         .item {
           @apply w-full;
         }
@@ -110,7 +110,7 @@
   .box {
     @apply flex;
     .dash {
-      @apply flex w-[40px] items-center justify-center;
+      @apply flex w-[32px] items-center justify-center;
       &::after {
         @apply flex h-[1px] w-[8px] bg-[var(--gray7)] content-[''];
       }
