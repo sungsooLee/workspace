@@ -1,6 +1,6 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { CODE_GROUP, useSearchBox } from '@learnway/hooks';
-import { Button, Checkbox, TableBox, useGridBox, useModal } from '@learnway/ui';
+import { Button, Checkbox, Pagination, TableBox, useGridBox, useModal } from '@learnway/ui';
 import { LearningResourceFileUploadModal, LearningTypeChoiceModal } from '@features/learning';
 import { LEARNING_TYPE } from '@learnway/config';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
@@ -10,10 +10,9 @@ import { SearchBox } from '@shared/ui/search-box';
 import { useState } from 'react';
 import { t } from 'i18next';
 import { ChannelChoiceModal } from '@features/shared';
-import { translationQueryOptions } from '@entities/translation/service/translation.queries';
 import { cn } from '@learnway/shared';
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
-import { IcoDownload, IcoFile01 } from '@learnway/icons';
+import { IcoClock01, IcoDownload, IcoFile01 } from '@learnway/icons';
 import { Table } from '@tanstack/react-table';
 
 export const Route = createFileRoute('/_layout/learning/learning-resource/')({
@@ -146,22 +145,50 @@ function RouteComponent() {
             <TableBox
               config={gConfig}
               data={[
-                { type: '동영상', learningResourceName: '학습자원명' },
-                { type: '설문지', learningResourceName: '학습자원명' },
-                { type: '동영상', learningResourceName: '학습자원명' },
-                { type: '외부링크', learningResourceName: '학습자원명' },
+                // mock -> api로 변경 필요
+                {
+                  contentType: 'VIDEO',
+                  contentName: '학습자원명',
+                  tenantName: '테넌트',
+                  channelName: '채널',
+                  coordinatorName: '담당자',
+                  isCourseUsed: true,
+                  isUseEnabled: true,
+                  localization: 'ko',
+                },
+                {
+                  contentType: 'VIDEO',
+                  contentName: '학습자원명',
+                  tenantName: '테넌트',
+                  channelName: '채널',
+                  coordinatorName: '담당자',
+                  isCourseUsed: false,
+                  isUseEnabled: true,
+                  localization: 'ko',
+                },
+                {
+                  contentType: 'IMAGE',
+                  contentName: '학습자원명',
+                  tenantName: '테넌트',
+                  channelName: '채널',
+                  coordinatorName: '담당자',
+                  isCourseUsed: true,
+                  isUseEnabled: false,
+                  localization: 'ko',
+                },
               ]}
               multiple
               customButtonNode={
                 <>
-                  <Checkbox size="sm" label={t('나의 학습자원')} />
+                  <Checkbox size="sm" label={t('나의 학습자원')} />{' '}
+                  {/* 필터기능인듯? 글씨 크기가 혼자 작게 나옴 */}
                   <Button
                     variant="outline"
                     size="sm"
                     label={t('프로그램/가이드 다운로드')}
                     icon={<IcoDownload width={16} height={16} stroke="#131C30" />}
-                    // onClick GET /pms-module/admin/api/v1/file/s3/download - 가이드 파일 올라간 후 다운로드 (하드코딩?)
                   />
+                  {/* onClick GET /pms-module/admin/api/v1/file/s3/download - 가이드 파일 올라간 후 다운로드 (하드코딩?) */}
                   <Button variant="outline" size="sm" label={t('일괄설정')} />
                   <Button
                     variant="outline"
@@ -175,10 +202,12 @@ function RouteComponent() {
                     label={t('복사')}
                     icon={<IcoFile01 width={16} height={16} stroke="#131C30" />}
                   />
+                  {/* 디자인과 다른 아이콘 - 변경 필요 */}
                 </>
               }
               onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
             />
+            <Pagination totalPages={1} pageNumber={0} />
           </div>
         </div>
       </MainContents>
@@ -191,7 +220,7 @@ const searchConfig: any = {
       {
         name: 'tenant',
         type: 'dropdown',
-        label: t('LABEL.contents.learning.resource.tenantName'),
+        label: t('LABEL.content.learning-resource.tenantName'),
         value: '',
         optionsConfig: {
           options: [{ value: '', label: t('선택') }],
@@ -201,7 +230,7 @@ const searchConfig: any = {
       {
         name: 'channel',
         type: 'dropdown',
-        label: t('LABEL.contents.learning.resource.channelName'),
+        label: t('LABEL.content.learning-resource.channelName'),
         value: '',
         optionsConfig: {
           options: [
@@ -218,7 +247,7 @@ const searchConfig: any = {
       {
         name: 'contentType',
         type: 'dropdown',
-        label: t('LABEL.contents.learning.resource.contentType'),
+        label: t('LABEL.content.learning-resource.contentType'),
         value: '',
         optionsConfig: {
           options: [{ value: '', label: t('전체') }],
@@ -261,7 +290,7 @@ const searchConfig: any = {
       {
         name: 'isCourseUsed',
         type: 'dropdown',
-        label: t('LABEL.contents.learning.resource.isCourseUsed'),
+        label: t('LABEL.content.learning-resource.isCourseUsed'),
         value: '',
         optionsConfig: {
           options: [
@@ -274,7 +303,7 @@ const searchConfig: any = {
       {
         name: 'coordinatorName',
         type: 'text',
-        label: t('LABEL.contents.learning.resource.coordinatorName'),
+        label: t('LABEL.content.learning-resource.coordinatorName'),
         value: '',
       },
     ],
@@ -297,57 +326,72 @@ const gridConfig = {
   query: () => {},
   columns: [
     {
+      size: 64,
       name: 'no',
       label: 'NO.',
       type: 'numbering',
     },
     {
+      size: 79,
       name: 'contentType',
-      label: t('LABEL.contents.learning.resource.contentType'),
+      label: t('LABEL.content.learning-resource.contentType'),
+      render: (_: any) => t(`cms.content.ContentType.${_.getValue()}`),
     },
     {
+      size: 338,
+      meta: { size: 'auto' },
       name: 'contentName',
-      label: t('LABEL.contents.learning.resource.contentName'),
+      label: t('LABEL.content.learning-resource.contentName'),
     },
     {
+      size: 127,
       name: 'tenantName',
-      label: t('LABEL.contents.learning.resource.tenantName'),
+      label: t('LABEL.content.learning-resource.tenantName'),
     },
     {
+      size: 153,
       name: 'channelName',
-      label: t('LABEL.contents.learning.resource.channelName'),
+      label: t('LABEL.content.learning-resource.channelName'),
     },
     {
+      size: 104,
       name: 'coordinatorName',
-      label: t('LABEL.contents.learning.resource.coordinatorName'),
+      label: t('LABEL.content.learning-resource.coordinatorName'),
     },
     {
+      size: 125,
       name: 'detailInfo',
-      label: t('LABEL.contents.learning.resource.detailInfo'),
+      label: t('LABEL.content.learning-resource.detailInfo'),
+      render: (_: any) => (
+        <>
+          <IcoClock01 width={16} height={16} stroke="#131C30" /> 02:00:00
+          {/* 컨텐츠 타입 별로 다르게 나오는듯 - 비디오 러닝타임 */}
+        </>
+      ),
     },
     {
-      nawme: 'util',
-      label: t('LABEL.contents.learning.resource.util'),
+      size: 137,
+      name: 'util',
+      label: t('LABEL.content.learning-resource.util'),
+      render: () => '미리보기',
     },
     {
-      name: 'isCourceUsed',
-      label: t('LABEL.contents.learning.resource.isCourseUsed'),
-    },
-    {
-      name: 'courceCount',
-      label: t('LABEL.contents.learning.resource.courseCount'),
-    },
-    {
+      size: 95,
       name: 'isUseEnabled',
-      label: t('LABEL.contents.learning.resource.isUseEnabled'),
+      label: t('LABEL.content.learning-resource.isUseEnabled'),
+      render: (_: any) => (_.getValue() ? 'Y' : 'N'),
     },
     {
+      size: 100,
       name: 'localization',
-      label: t('LABEL.contents.learning.resource.localization'),
+      label: t('LABEL.content.learning-resource.localization'),
+      render: (_: any) => t(`CODE.LANGUAGE_CODE.${_.getValue()}`),
     },
     {
+      size: 79,
       name: 'updatedInfo',
-      label: t('LABEL.contents.learning.resource.updatedInfo'),
+      label: t('LABEL.content.learning-resource.updatedInfo'),
+      render: () => '보기',
     },
   ],
   data: [],
