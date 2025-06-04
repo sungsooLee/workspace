@@ -8,7 +8,7 @@ export type com_ever_edu_pms_channel_dto_res_ChannelRequestListResDto = {
      */
     channelRequestId?: number;
     /**
-     * 테넌트
+     * 테넌트Id
      */
     tenantId?: number;
     /**
@@ -16,13 +16,25 @@ export type com_ever_edu_pms_channel_dto_res_ChannelRequestListResDto = {
      */
     tenantName?: string;
     /**
-     * 비공개채널여부
+     * 채널 테넌트 관계 유형(일반/유니버셜)
      */
-    isSecretChannel?: boolean;
+    channelTenatMappingType?: com_ever_edu_pms_channel_dto_res_ChannelRequestListResDto.channelTenatMappingType;
+    /**
+     * 채널비밀구분
+     */
+    channelSecretType?: com_ever_edu_pms_channel_dto_res_ChannelRequestListResDto.channelSecretType;
+    /**
+     * 신청자 사원번호
+     */
+    reqeusterEmployeeNumber?: string;
     /**
      * 신청자
      */
     reqeusterName?: string;
+    /**
+     * 채널메인아이디
+     */
+    channelMainId?: string;
     /**
      * 채널명
      */
@@ -38,15 +50,11 @@ export type com_ever_edu_pms_channel_dto_res_ChannelRequestListResDto = {
     /**
      * 신청상태
      */
-    approvalStatusTypecd?: com_ever_edu_pms_channel_dto_res_ChannelRequestListResDto.approvalStatusTypecd;
+    approvalStatusType?: com_ever_edu_pms_channel_dto_res_ChannelRequestListResDto.approvalStatusType;
     /**
      * 신청일시
      */
     requestDate?: string;
-    /**
-     * 채널접수ID
-     */
-    channelAcceptId?: number;
     /**
      * 메일발송여부
      */
@@ -64,21 +72,34 @@ export type com_ever_edu_pms_channel_dto_res_ChannelRequestListResDto = {
      */
     rejectedReasonContent?: string;
     /**
+     * 채널ID
+     */
+    channelId?: number;
+    /**
      * 채널신청 uuid
      */
     channelRequestUuid?: string;
-    /**
-     * 채널접수 uuid
-     */
-    channelAcceptUuid?: string;
 };
 export namespace com_ever_edu_pms_channel_dto_res_ChannelRequestListResDto {
     /**
+     * 채널 테넌트 관계 유형(일반/유니버셜)
+     */
+    export enum channelTenatMappingType {
+        MAPPING_TENANT = 'MAPPING_TENANT',
+        ALL_TENANT = 'ALL_TENANT',
+    }
+    /**
+     * 채널비밀구분
+     */
+    export enum channelSecretType {
+        NOT_SECRET = 'NOT_SECRET',
+        SECRET = 'SECRET',
+    }
+    /**
      * 신청상태
      */
-    export enum approvalStatusTypecd {
+    export enum approvalStatusType {
         PENDING = 'PENDING',
-        ACCEPTED = 'ACCEPTED',
         APPROVED = 'APPROVED',
         REJECTED = 'REJECTED',
     }

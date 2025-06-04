@@ -4,13 +4,17 @@
 /* eslint-disable */
 import type { com_ever_edu_pms_channel_dto_req_ChannelRequestSaveReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelRequestSaveReqDto';
 import type { com_ever_edu_pms_channel_dto_req_ChannelSearchReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelSearchReqDto';
+import type { com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto } from '../models/com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto';
 import type { com_ever_edu_pms_channel_dto_res_ChannelResDto } from '../models/com_ever_edu_pms_channel_dto_res_ChannelResDto';
 import type { com_ever_edu_pms_channel_entity_ChannelRequestEntity } from '../models/com_ever_edu_pms_channel_entity_ChannelRequestEntity';
 import type { com_ever_edu_pms_company_dto_res_CompanyResDto } from '../models/com_ever_edu_pms_company_dto_res_CompanyResDto';
 import type { com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto } from '../models/com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto';
 import type { com_ever_edu_pms_menu_dto_res_GnbTenantMenuTreeDto } from '../models/com_ever_edu_pms_menu_dto_res_GnbTenantMenuTreeDto';
+import type { com_ever_edu_pms_notification_dto_req_AlarmSaveReqDto } from '../models/com_ever_edu_pms_notification_dto_req_AlarmSaveReqDto';
 import type { com_ever_edu_pms_notification_dto_req_AlarmSendReqDto } from '../models/com_ever_edu_pms_notification_dto_req_AlarmSendReqDto';
 import type { com_ever_edu_pms_notification_dto_res_AlarmResDto } from '../models/com_ever_edu_pms_notification_dto_res_AlarmResDto';
+import type { com_ever_edu_pms_role_dto_req_RoleApplicationReqDto } from '../models/com_ever_edu_pms_role_dto_req_RoleApplicationReqDto';
+import type { com_ever_edu_pms_role_dto_res_RoleApplicationResDto } from '../models/com_ever_edu_pms_role_dto_res_RoleApplicationResDto';
 import type { com_ever_edu_pms_terms_dto_req_TermsSearchReqDto$SearchByUser } from '../models/com_ever_edu_pms_terms_dto_req_TermsSearchReqDto$SearchByUser';
 import type { com_ever_edu_pms_terms_dto_res_TermsAgreementResDto$DetailOnUser } from '../models/com_ever_edu_pms_terms_dto_res_TermsAgreementResDto$DetailOnUser';
 import type { com_ever_edu_pms_terms_dto_res_TermsResDto$DetailOnUser } from '../models/com_ever_edu_pms_terms_dto_res_TermsResDto$DetailOnUser';
@@ -28,7 +32,9 @@ import type { com_ever_edu_pms_user_dto_res_ConfirmPasswordResDto } from '../mod
 import type { com_ever_edu_pms_user_dto_res_FindMyIdResDto } from '../models/com_ever_edu_pms_user_dto_res_FindMyIdResDto';
 import type { com_ever_edu_pms_user_dto_res_IsEmailExistsResDto } from '../models/com_ever_edu_pms_user_dto_res_IsEmailExistsResDto';
 import type { com_ever_edu_pms_user_dto_res_UserResDto } from '../models/com_ever_edu_pms_user_dto_res_UserResDto';
+import type { org_springdoc_core_converters_models_Pageable } from '../models/org_springdoc_core_converters_models_Pageable';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto';
+import type { org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleApplicationResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleApplicationResDto';
 import type { org_springframework_web_servlet_mvc_method_annotation_SseEmitter } from '../models/org_springframework_web_servlet_mvc_method_annotation_SseEmitter';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -107,20 +113,19 @@ export class FoService {
         });
     }
     /**
-     * @param userUuid
+     * 알람 단건 읽음 처리
+     * 알람 단건 읽음 처리
      * @param alarmId
      * @returns any OK
      * @throws ApiError
      */
     public static alarmRead(
-        userUuid: string,
         alarmId: number,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/v1/alarm/read/{userUUID}/{alarmId}',
+            url: '/api/v1/alarm/read/{alarmId}',
             path: {
-                'userUUID': userUuid,
                 'alarmId': alarmId,
             },
             errors: {
@@ -133,19 +138,15 @@ export class FoService {
         });
     }
     /**
-     * @param userUuid
+     * 알람 전체 읽음
+     * 알람 전체 읽음
      * @returns any OK
      * @throws ApiError
      */
-    public static alarmCheck(
-        userUuid: string,
-    ): CancelablePromise<any> {
+    public static alarmCheck(): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/v1/alarm/check/{userUUID}',
-            path: {
-                'userUUID': userUuid,
-            },
+            url: '/api/v1/alarm/read-all',
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
@@ -325,6 +326,64 @@ export class FoService {
         });
     }
     /**
+     * 역할 신청 목록 조회
+     * 역할 신청 목록을 조회한다.
+     * @param pageable
+     * @param roleId
+     * @param isUsed
+     * @param isExpired
+     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleApplicationResDto OK
+     * @throws ApiError
+     */
+    public static getRoleApplications(
+        pageable: org_springdoc_core_converters_models_Pageable,
+        roleId?: number,
+        isUsed?: boolean,
+        isExpired?: boolean,
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleApplicationResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/role-applications',
+            query: {
+                'pageable': pageable,
+                'roleId': roleId,
+                'isUsed': isUsed,
+                'isExpired': isExpired,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 권한 신청
+     * 권한을 신청한다.
+     * @param requestBody
+     * @returns com_ever_edu_pms_role_dto_res_RoleApplicationResDto Created
+     * @throws ApiError
+     */
+    public static createRoleApplication(
+        requestBody: com_ever_edu_pms_role_dto_req_RoleApplicationReqDto,
+    ): CancelablePromise<com_ever_edu_pms_role_dto_res_RoleApplicationResDto> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/user/api/v1/role-applications',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * 채널 신청목록 조회
      * 신청한 채널을 조회한다.
      * @param channelSearchReqDto
@@ -374,21 +433,61 @@ export class FoService {
         });
     }
     /**
-     * @param userUuid
+     * 알람 목록 조회
+     * 알람 목록 조회
+     * @returns com_ever_edu_pms_notification_dto_res_AlarmResDto OK
+     * @throws ApiError
+     */
+    public static findAlarm(): CancelablePromise<Array<com_ever_edu_pms_notification_dto_res_AlarmResDto>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/alarm',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 알람 등록(테스트용)
+     * 알람을 등록한다.
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static save(
+        requestBody: com_ever_edu_pms_notification_dto_req_AlarmSaveReqDto,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/alarm',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 알람 보내기
+     * 알람 보내기
      * @param requestBody
      * @returns any OK
      * @throws ApiError
      */
     public static sendAlarm(
-        userUuid: string,
         requestBody: com_ever_edu_pms_notification_dto_req_AlarmSendReqDto,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v1/alarm/send/{userUUID}',
-            path: {
-                'userUUID': userUuid,
-            },
+            url: '/api/v1/alarm/send',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -643,6 +742,57 @@ export class FoService {
         });
     }
     /**
+     * 역할 신청 조회(단건)
+     * 역할 신청을 조회한다.
+     * @param id
+     * @returns com_ever_edu_pms_role_dto_res_RoleApplicationResDto OK
+     * @throws ApiError
+     */
+    public static getRoleApplication(
+        id: number,
+    ): CancelablePromise<com_ever_edu_pms_role_dto_res_RoleApplicationResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/role-applications/{id}',
+            path: {
+                'id': id,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 채널신청 상세 정보 조회
+     * 채널신청 상세 정보를 조회한다.
+     * @param channelRequestUuid
+     * @returns com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto OK
+     * @throws ApiError
+     */
+    public static selectChannelReqeustInfo(
+        channelRequestUuid: string,
+    ): CancelablePromise<com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/request/channel/{channelRequestUuid}',
+            path: {
+                'channelRequestUuid': channelRequestUuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * FO GNB 테넌트메뉴목록 트리 조회
      * GNB 테넌트 메뉴 목록을 트리구조로 조회한다.
      * @param tenantId
@@ -768,42 +918,15 @@ export class FoService {
         });
     }
     /**
-     * @param userUuid
-     * @returns com_ever_edu_pms_notification_dto_res_AlarmResDto OK
-     * @throws ApiError
-     */
-    public static findAlarm(
-        userUuid: string,
-    ): CancelablePromise<Array<com_ever_edu_pms_notification_dto_res_AlarmResDto>> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/v1/alarm/{userUUID}',
-            path: {
-                'userUUID': userUuid,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * @param userUuid
+     * 미확인 알람갯수 조회
+     * 미확인 알람갯수 조회
      * @returns number OK
      * @throws ApiError
      */
-    public static findAlarmUnCheckCount(
-        userUuid: string,
-    ): CancelablePromise<number> {
+    public static findAlarmUnCheckCount(): CancelablePromise<number> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/alarm/uncheck-count/{userUUID}',
-            path: {
-                'userUUID': userUuid,
-            },
+            url: '/api/v1/alarm/uncheck-count',
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
@@ -814,19 +937,15 @@ export class FoService {
         });
     }
     /**
-     * @param userUuid
+     * 알람 신청
+     * 알람 신청
      * @returns org_springframework_web_servlet_mvc_method_annotation_SseEmitter OK
      * @throws ApiError
      */
-    public static subscribe(
-        userUuid: string,
-    ): CancelablePromise<org_springframework_web_servlet_mvc_method_annotation_SseEmitter> {
+    public static subscribe(): CancelablePromise<org_springframework_web_servlet_mvc_method_annotation_SseEmitter> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/alarm/subscribe/{userUUID}',
-            path: {
-                'userUUID': userUuid,
-            },
+            url: '/api/v1/alarm/subscribe',
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
@@ -837,19 +956,15 @@ export class FoService {
         });
     }
     /**
-     * @param id
+     * 알람 해지
+     * 알람 해지
      * @returns any OK
      * @throws ApiError
      */
-    public static close(
-        id: string,
-    ): CancelablePromise<any> {
+    public static close(): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/alarm/close/{id}',
-            path: {
-                'id': id,
-            },
+            url: '/api/v1/alarm/close',
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
@@ -869,6 +984,50 @@ export class FoService {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/user/api/v1/users/delete-account',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 알람 전체삭제
+     * 알람을 전체삭제한다.
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static deleteAll(): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/v1/alarms',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 알람 단건 삭제
+     * 알람을 삭제한다.
+     * @param alarmId
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static delete(
+        alarmId: number,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/v1/alarm/{alarmId}',
+            path: {
+                'alarmId': alarmId,
+            },
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,

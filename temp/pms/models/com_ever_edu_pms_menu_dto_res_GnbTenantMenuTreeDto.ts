@@ -23,6 +23,7 @@ export type com_ever_edu_pms_menu_dto_res_GnbTenantMenuTreeDto = {
     menuEndDate?: string;
     menuDesc?: string;
     isHiddenMenu?: boolean;
+    isFavorite?: boolean;
 };
 export namespace com_ever_edu_pms_menu_dto_res_GnbTenantMenuTreeDto {
     export enum menuScope {

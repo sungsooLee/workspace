@@ -4,15 +4,15 @@
 /* eslint-disable */
 import type { org_springframework_security_core_GrantedAuthority } from './org_springframework_security_core_GrantedAuthority';
 export type com_ever_edu_global_security_AuthUser = {
-    /**
-     * 사용자 ID
-     */
     userId?: number;
+    /**
+     * UUID
+     */
+    uuid?: string;
     /**
      * 사번(GIM: EMP_NO)
      */
     employeeNumber?: string;
-    password?: string;
     /**
      * 성명(GIM: EMP_NAME)
      */
@@ -20,7 +20,7 @@ export type com_ever_edu_global_security_AuthUser = {
     /**
      * 생년월일
      */
-    birthday?: number;
+    birthday?: string;
     /**
      * 회사 ID
      */
@@ -64,6 +64,14 @@ export type com_ever_edu_global_security_AuthUser = {
      * 비밀번호 만료 일자
      */
     passwordExpireDate?: string;
+    /**
+     * 로그인실패횟수
+     */
+    loginFailCount?: number;
+    /**
+     * 계정 잠김 여부
+     */
+    locked?: boolean;
     /**
      * 회원상태코드
      */

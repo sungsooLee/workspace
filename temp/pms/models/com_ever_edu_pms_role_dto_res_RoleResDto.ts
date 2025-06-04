@@ -9,10 +9,6 @@ export type com_ever_edu_pms_role_dto_res_RoleResDto = {
      */
     roleId?: number;
     /**
-     * 역할 코드
-     */
-    roleCode?: string;
-    /**
      * 사이트 구분
      */
     siteScope?: com_ever_edu_pms_role_dto_res_RoleResDto.siteScope;
@@ -113,8 +109,8 @@ export namespace com_ever_edu_pms_role_dto_res_RoleResDto {
      */
     export enum channelScope {
         ALL = 'ALL',
-        CURRENT_COMPANY = 'CURRENT_COMPANY',
-        CURRENT_COMPANY_INCLUSIVE = 'CURRENT_COMPANY_INCLUSIVE',
+        CURRENT_CHANNEL = 'CURRENT_CHANNEL',
+        CURRENT_CHANNEL_INCLUSIVE = 'CURRENT_CHANNEL_INCLUSIVE',
         MANUAL = 'MANUAL',
     }
     /**

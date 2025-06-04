@@ -5,7 +5,6 @@
 export type com_ever_edu_pms_tenant_dto_res_TenantResDto$RoleResDto = {
     tenantId?: number;
     roleId?: number;
-    roleCode?: string;
     roleName?: string;
 };
 

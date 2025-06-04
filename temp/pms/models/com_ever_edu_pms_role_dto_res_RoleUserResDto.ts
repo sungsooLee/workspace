@@ -4,9 +4,9 @@
 /* eslint-disable */
 export type com_ever_edu_pms_role_dto_res_RoleUserResDto = {
     /**
-     * 사용자 ID
+     * 사용자 UUID
      */
-    userId?: number;
+    userUuid?: string;
     /**
      * Email
      */
@@ -15,10 +15,6 @@ export type com_ever_edu_pms_role_dto_res_RoleUserResDto = {
      * 사용자 이름
      */
     userName?: string;
-    /**
-     * 사내 사용자 여부
-     */
-    isInHouse?: boolean;
     /**
      * 회사 ID
      */

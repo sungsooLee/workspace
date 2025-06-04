@@ -50,7 +50,7 @@ export class BoFileService {
      * @returns com_ever_edu_pms_file_dto_res_GroupInfoResDto OK
      * @throws ApiError
      */
-    public static createFileGroup(
+    public static createFileGroup1(
         requestBody: com_ever_edu_pms_file_dto_req_FileGroupInfoReqDto,
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_GroupInfoResDto> {
         return __request(OpenAPI, {
@@ -75,7 +75,7 @@ export class BoFileService {
      * @returns com_ever_edu_pms_file_dto_res_GroupInfoResDto OK
      * @throws ApiError
      */
-    public static createFileInfoList1(
+    public static attachFileInfoToGroup1(
         groupUuid: string,
         requestBody: com_ever_edu_pms_file_dto_req_FileInfoListReqDto,
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_GroupInfoResDto> {
@@ -127,7 +127,7 @@ export class BoFileService {
      * @returns com_ever_edu_pms_file_dto_res_FileInfoDetailResDto OK
      * @throws ApiError
      */
-    public static getFileInfo1(
+    public static getFileInfo3(
         fileUuid: string,
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_FileInfoDetailResDto> {
         return __request(OpenAPI, {
@@ -197,6 +197,32 @@ export class BoFileService {
         });
     }
     /**
+     * 템플릿 파일 다운로드
+     * 템플릿 파일을 다운로드한다.
+     * @param templateFileName 템플릿 파일이름
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static templateFileDownload1(
+        templateFileName: string,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/file/template/download',
+            query: {
+                'templateFileName': templateFileName,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * 파일그룹 목록 조회
      * 파일그룹 목록을 조회한다.<br><br><b>페이징 정보</b>: <br> - totalElements: 쿼리 결과물의 전체 데이터 갯수 <br> - totalPages: 페이징하였을 때 나오는 총 페이지의 갯수 <br> - size: 페이지 당 데이터 수 설정 값(rows per page) <br> - numberOfElements: 페이지에 존재하는 요소의 갯수(최대 size와 동일) <br> - number: 요소를 가져온 페이지의 번호. 0 ~
      * @param page 페이징 처리를 위한 페이지 번호. 0 ~
@@ -246,7 +272,7 @@ export class BoFileService {
      * @returns com_ever_edu_pms_file_dto_res_GroupInfoResDto OK
      * @throws ApiError
      */
-    public static getGroupFileInfoList1(
+    public static getGroupFileInfoList2(
         groupUuid: string,
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_GroupInfoResDto> {
         return __request(OpenAPI, {

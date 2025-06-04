@@ -9,10 +9,6 @@ export type com_ever_edu_pms_role_dto_res_RoleTreeResDto = {
      */
     roleId?: number;
     /**
-     * 역할 코드
-     */
-    roleCode?: string;
-    /**
      * 부모 역할 ID
      */
     parentRoleId?: number;
@@ -106,8 +102,8 @@ export namespace com_ever_edu_pms_role_dto_res_RoleTreeResDto {
      */
     export enum channelScope {
         ALL = 'ALL',
-        CURRENT_COMPANY = 'CURRENT_COMPANY',
-        CURRENT_COMPANY_INCLUSIVE = 'CURRENT_COMPANY_INCLUSIVE',
+        CURRENT_CHANNEL = 'CURRENT_CHANNEL',
+        CURRENT_CHANNEL_INCLUSIVE = 'CURRENT_CHANNEL_INCLUSIVE',
         MANUAL = 'MANUAL',
     }
     /**

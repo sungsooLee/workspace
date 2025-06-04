@@ -8,6 +8,14 @@ export type com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$TenantMenuDto = {
      */
     menuId?: number | null;
     /**
+     * 메뉴명
+     */
+    menuName?: string | null;
+    /**
+     * 메뉴URL파라메터
+     */
+    menuUrlParam?: string | null;
+    /**
      * 정렬순서
      */
     sortOrder?: number | null;
@@ -23,6 +31,18 @@ export type com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$TenantMenuDto = {
      * PC웹노출여부
      */
     isWebExposed?: boolean | null;
+    /**
+     * 개인정보포함여부
+     */
+    isPersoninfoInclusion?: boolean | null;
+    /**
+     * 히든메뉴여부
+     */
+    isHiddenMenu?: boolean | null;
+    /**
+     * 메뉴설명내용
+     */
+    menuDesc?: string | null;
     /**
      * 테넌트ID
      */
