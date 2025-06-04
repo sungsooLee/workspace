@@ -2,7 +2,14 @@ import { CODE_GROUP, useSearchBox } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
 import { SearchBox } from '@shared/ui/search-box';
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
-import { Button, Checkbox, GridBox, Pagination, useGridBox, useGridBoxConfig } from '@learnway/ui';
+import {
+  Button,
+  Checkbox,
+  GridBox,
+  GridBoxPagination,
+  useGridBox,
+  useGridBoxConfig,
+} from '@learnway/ui';
 import { IcoClock01, IcoDownload, IcoFile01 } from '@learnway/icons';
 import { t } from 'i18next';
 import { Table } from '@tanstack/react-table';
@@ -12,8 +19,14 @@ function LearningResourceTableComponent() {
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const [tableInstance, setTableInstance] = useState<Table<any>>(); // Grid 로부터 받을 table 인스턴스를 저장할 상태
-  const [totalPages, setTotalPages] = useState(1);
-  const [pageIndex, setPageIndex] = useState(0);
+  const [pagination, setPagination] = useState<GridBoxPagination>({
+    pageNumber: 0,
+    pageSize: 20,
+    totalPages: 1,
+    onPageChange: (pageNumber: number) => setPagination((prev) => ({ ...prev, pageNumber })),
+    onPageSizeChange: (pageSize: number) =>
+      setPagination((prev) => ({ ...prev, pageSize, pageNumber: 0 })),
+  });
 
   const handleOnSearch = (data: Record<string, any>) => {
     console.log('search', data);
@@ -59,6 +72,7 @@ function LearningResourceTableComponent() {
                 localization: 'ko',
               },
             ]}
+            showNumberingColumn
             multiple
             customButtonNode={
               <>
@@ -88,8 +102,8 @@ function LearningResourceTableComponent() {
               </>
             }
             onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
+            pagination={pagination}
           />
-          <Pagination totalPages={totalPages} pageNumber={pageIndex} />
         </div>
       </div>
     </>
@@ -210,12 +224,6 @@ const gridConfig: useGridBoxConfig = {
   query: () => {},
   columns: [
     {
-      size: 64,
-      name: 'no',
-      label: 'NO.',
-      type: 'numbering',
-    },
-    {
       size: 79,
       name: 'contentType',
       label: t('LABEL.content.learning-resource.contentType'),
@@ -278,10 +286,4 @@ const gridConfig: useGridBoxConfig = {
       render: () => '보기',
     },
   ],
-  data: [],
-  pagination: {
-    pageSize: 20,
-    pageIndex: 0,
-    totalRows: 0,
-  },
 };
