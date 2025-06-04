@@ -20,4 +20,11 @@ export default class TranslationService {
   static deleteTranslation(id: number) {
     return httpService.delete<Tenant>(`/pms-module/admin/api/v1/i18n`, { id });
   }
+
+  // 다국어 번역상태 팝업 조회
+  static fetchTranslationStatus(multilingualId: number) {
+    return httpService.get<any>(
+      `${PMSApiPrefix()}/multilingual/${multilingualId}/language-statuses`,
+    );
+  }
 }
