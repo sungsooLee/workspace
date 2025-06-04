@@ -124,6 +124,7 @@ function RouteComponent() {
         meta: {
           headerAlign: 'center', // 헤더 정렬
           cellAlign: 'center', // 셀 정렬
+          size: 'auto',
         },
       }),
       columnHelper.accessor('name2', {
@@ -132,11 +133,13 @@ function RouteComponent() {
         meta: {
           headerAlign: 'center', // 헤더 정렬
           cellAlign: 'center', // 셀 정렬
+          size: 'auto',
         },
       }),
       columnHelper.accessor('name3', {
         header: '정답',
         cell: (info) => info.getValue(),
+        size: 104,
         meta: {
           headerAlign: 'center', // 헤더 정렬
           cellAlign: 'center', // 셀 정렬
@@ -145,6 +148,7 @@ function RouteComponent() {
       columnHelper.accessor('name4', {
         header: '순서변경',
         cell: (info) => info.getValue(),
+        size: 104,
         meta: {
           headerAlign: 'center', // 헤더 정렬
           cellAlign: 'center', // 셀 정렬
@@ -202,6 +206,7 @@ function RouteComponent() {
         meta: {
           headerAlign: 'center', // 헤더 정렬
           cellAlign: 'center', // 셀 정렬
+          size: 'auto',
         },
       }),
       columnHelper.accessor('name2', {
@@ -210,11 +215,13 @@ function RouteComponent() {
         meta: {
           headerAlign: 'center', // 헤더 정렬
           cellAlign: 'center', // 셀 정렬
+          size: 'auto',
         },
       }),
       columnHelper.accessor('name3', {
         header: '정답',
         cell: (info) => info.getValue(),
+        size: 104,
         meta: {
           headerAlign: 'center', // 헤더 정렬
           cellAlign: 'center', // 셀 정렬
@@ -240,6 +247,7 @@ function RouteComponent() {
         meta: {
           headerAlign: 'center', // 헤더 정렬
           cellAlign: 'center', // 셀 정렬
+          size: 'auto',
         },
       }),
     ] as ColumnDef<any, unknown>[];

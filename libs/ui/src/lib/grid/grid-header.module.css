@@ -13,10 +13,10 @@
               @apply ml-auto inline-flex;
             }
             .icon_up {
-              @apply absolute right-[12px] top-1/2 -mt-[5px] -translate-y-1/2 rotate-180;
+              @apply absolute right-[12px] top-1/2 -mt-[3px] -translate-y-1/2 rotate-180;
             }
             .icon_down {
-              @apply absolute right-[12px] top-1/2 mt-[5px] -translate-y-1/2;
+              @apply absolute right-[12px] top-1/2 mt-[3px] -translate-y-1/2;
             }
             [class*='nlp--checkbox'] {
               @apply mt-[5px];

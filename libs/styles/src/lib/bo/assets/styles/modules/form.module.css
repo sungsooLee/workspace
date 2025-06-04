@@ -435,6 +435,10 @@ hr.divider {
   @apply !max-w-[calc(100vw-420px)];
 }
 
+[class*='nlp--modal-content'] .input_box {
+  @apply !max-w-none;
+}
+
 [class*='nlp--contents-row'] {
   [class*='form_item'] {
     [class*='input_box'] {
