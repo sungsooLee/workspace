@@ -3,11 +3,14 @@ import React, { memo, ReactNode, useState, useEffect, useRef } from 'react';
 import { Link } from '@tanstack/react-router';
 // import { useTranslation } from 'react-i18next';
 import { Breadcrumbs } from './breadcrumbs/breadcrumbs';
-import { Button } from '@learnway/ui';
+import { Button, Popover } from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-container.module.css';
 import fabStyles from '@learnway/styles/bo/assets/styles/modules/fab.module.css'; /* fab */
-import { IcoStar, IcoArrowLineTop } from '@learnway/icons'; // 2025-02-14 버튼 케이스 추가
+import tooltipPopoverStyles from '@learnway/styles/bo/assets/styles/modules/tootip-popover.module.css';
+import { NoticeBox } from '../../../../../../../bo/src/shared/ui';
+import { IcoStar, IcoArrowLineTop, IcoAlertCircle, IcoClose02 } from '@learnway/icons'; // 2025-02-14 버튼 케이스 추가
 import { cn } from '@learnway/shared';
+import { guide } from './../../../../../../../bo/src/pages/_layout/index';
 
 interface PageContainerComponentProps {
   children: ReactNode;
@@ -16,6 +19,7 @@ interface PageContainerComponentProps {
   tabs?: boolean; // 컨텐츠 상단에 tab 있는 경우
   scrollHidden?: boolean; // 컨텐츠 안에 스크롤인 경우
   hideOutLine?: boolean; // 공통 > 나의 정보 화면(외곽라인,bg 없는 경우)
+  showGuidePopup?: boolean; // 가이드 팝업
 }
 
 function PageContainerComponent({
@@ -25,6 +29,7 @@ function PageContainerComponent({
   tabs = false,
   scrollHidden = false,
   hideOutLine = false,
+  showGuidePopup = true,
 }: PageContainerComponentProps) {
   // const { t } = useTranslation();
   const [isFavorite, setIsFavorite] = useState(true);
@@ -44,6 +49,44 @@ function PageContainerComponent({
         document.body.classList.add('scrolled');
       }
     }
+  };
+
+  // 도움말
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const PopoverContent = () => {
+    return (
+      <div className={tooltipPopoverStyles.start}>
+        <strong className={tooltipPopoverStyles.title}>{'도움말'}</strong>
+        <div className={tooltipPopoverStyles.contents_wrap}>
+          <NoticeBox
+            iconVisible={false}
+            type={'bullet'}
+            description={
+              '가이드 팝업은 텍스트 길이에 따라 가변적으로 노출됩니다. 가로 너비는 최대 640px으로 제한됩니다. 가이드 팝업은 텍스트 길이에 따라 가변적으로 노출됩니다. 가로 너비는 최대 640px으로 제한됩니다.'
+            }
+            descriptions={[
+              '도움말 클릭시 도움말 영역이 가변적으로 노출됩니다. 영역을 클릭하거나 우측 닫기 버튼을 클릭하면 해당 영역이 사라집니다.',
+              '도움말 클릭시 도움말 영역이 가변적으로 노출됩니다. 영역을 클릭하거나 우측 닫기 버튼을 클릭하면 해당 영역이 사라집니다.',
+              '도움말 클릭시 도움말 영역이 가변적으로 노출됩니다. 영역을 클릭하거나 우측 닫기 버튼을 클릭하면 해당 영역이 사라집니다.',
+              '도움말 클릭시 도움말 영역이 가변적으로 노출됩니다. 영역을 클릭하거나 우측 닫기 버튼을 클릭하면 해당 영역이 사라집니다.',
+              '도움말 클릭시 도움말 영역이 가변적으로 노출됩니다. 영역을 클릭하거나 우측 닫기 버튼을 클릭하면 해당 영역이 사라집니다.',
+              '도움말 클릭시 도움말 영역이 가변적으로 노출됩니다. 영역을 클릭하거나 우측 닫기 버튼을 클릭하면 해당 영역이 사라집니다.',
+              '도움말 클릭시 도움말 영역이 가변적으로 노출됩니다. 영역을 클릭하거나 우측 닫기 버튼을 클릭하면 해당 영역이 사라집니다.',
+              '도움말 클릭시 도움말 영역이 가변적으로 노출됩니다. 영역을 클릭하거나 우측 닫기 버튼을 클릭하면 해당 영역이 사라집니다.',
+              '도움말 클릭시 도움말 영역이 가변적으로 노출됩니다. 영역을 클릭하거나 우측 닫기 버튼을 클릭하면 해당 영역이 사라집니다.',
+              '도움말 클릭시 도움말 영역이 가변적으로 노출됩니다. 영역을 클릭하거나 우측 닫기 버튼을 클릭하면 해당 영역이 사라집니다.',
+              '도움말 클릭시 도움말 영역이 가변적으로 노출됩니다. 영역을 클릭하거나 우측 닫기 버튼을 클릭하면 해당 영역이 사라집니다.',
+            ]}
+          />
+        </div>
+        <Button
+          className={tooltipPopoverStyles.btn_close}
+          icon={<IcoClose02 />}
+          onlyIcon
+          onClick={() => setIsOpen(!isOpen)}
+        />
+      </div>
+    );
   };
 
   useEffect(() => {
@@ -134,6 +177,22 @@ function PageContainerComponent({
                   className={styles.icon_star}
                 />
               </Button>
+            )}
+            {/* 가이드 팝업 추가 */}
+            {showGuidePopup && (
+              <Popover
+                popoverContent={<PopoverContent />}
+                className={styles.guide_popup}
+                side="bottom"
+                align="start"
+                sideOffset={10}
+                open={isOpen}
+                onOpenChange={setIsOpen}
+                // onPointerDownOutside={(e) => e.preventDefault()}
+                // onInteractOutside={(e) => e.preventDefault()}
+              >
+                <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
+              </Popover>
             )}
           </h3>
           <div className={styles.btn_wrap}>
