@@ -10,7 +10,6 @@ import tooltipPopoverStyles from '@learnway/styles/bo/assets/styles/modules/toot
 import { NoticeBox } from '../../../../../../../bo/src/shared/ui';
 import { IcoStar, IcoArrowLineTop, IcoAlertCircle, IcoClose02 } from '@learnway/icons'; // 2025-02-14 버튼 케이스 추가
 import { cn } from '@learnway/shared';
-import { guide } from './../../../../../../../bo/src/pages/_layout/index';
 
 interface PageContainerComponentProps {
   children: ReactNode;
@@ -202,22 +201,16 @@ function PageContainerComponent({
                 <Link to={'/'}>이러닝 개설</Link>
                 <Link to={'/'}>라이브개설</Link>
               </div>
-              <Button variant="point" size="sm">
-                목록
-              </Button>
-              <Button variant="point" size="sm">
-                매핑과정 보기
-              </Button>
-              <Button variant="point" size="sm">
-                공유이력 보기
-              </Button>
+              <Button variant="point" size="sm" label={'목록'} />
+              <Button variant="point" size="sm" label={'매핑과정 보기'} />
             </div>
-            <Button variant="point" size="sm" disabled>
-              배포
-            </Button>
-            <Button variant="primary" size="sm" disabled>
-              저장
-            </Button>
+            <Button variant="point" size="sm" disabled label={'배포'} />
+            <Button variant="primary" size="sm" disabled label={'저장'} />
+            <Button
+              className={styles.btn_close}
+              onlyIcon
+              icon={<IcoClose02 width={24} height={24} stroke={'#4C515E'} />}
+            />
           </div>
         </div>
         {/* content_wrap */}
