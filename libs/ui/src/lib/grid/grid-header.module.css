@@ -21,18 +21,11 @@
             [class*='nlp--checkbox'] {
               @apply mt-[5px];
             }
-            &:not(:first-child) {
-              &::before {
-                @apply absolute left-0 top-0 z-[1] h-full w-[1px] bg-[var(--gray3)] content-[''];
-              }
+            &::before {
+              @apply absolute left-0 top-0 z-[1] h-full w-[1px] bg-[var(--gray9)] content-[''];
             }
             &.th_pinned_left {
               @apply !border-l-0;
-              &:not(:first-child) {
-                &::before {
-                  @apply absolute left-0 top-0 z-[1] h-full w-[1px] bg-[var(--gray3)] content-[''];
-                }
-              }
             }
             &.th_sticky {
               @apply !z-[4];
@@ -48,11 +41,17 @@
   @apply !sticky left-0 !z-[3] bg-[var(--gray1)];
   &.th_pinned_last {
     &::after {
-      @apply absolute right-0 top-0 z-[1] h-full w-[1px] bg-[var(--gray5)] content-[''];
+      @apply absolute right-0 top-0 z-[4] h-full w-[1px] bg-[var(--gray5)] content-[''];
     }
-    & + .thead_th:not(.th_pinned_left) {
+    & + th {
       @apply !border-l-0;
     }
+  }
+  & + .th_pinned_left {
+    border-left: 1px solid red !important;
+    /* &::before {
+      @apply h-full w-[1px] bg-[var(--gray5)] content-[''];
+    } */
   }
 }
 [class*='th_pinned_left'] {
@@ -66,11 +65,6 @@
     thead {
       th {
         @apply !border-[var(--gray4)];
-        .icon_up,
-        .icon_down,
-        &::before {
-          @apply !hidden;
-        }
       }
     }
   }
