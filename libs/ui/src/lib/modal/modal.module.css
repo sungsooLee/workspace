@@ -84,6 +84,16 @@
     }
   }
   &.respon {
+    @apply h-[calc(100dvh-40px)] w-[calc(100%-40px)] min-w-[1000px] max-w-[1656px] bg-[var(--secondary10)];
+
+    .content_body {
+      @apply max-h-none p-0;
+      [class*='nlp--modal-content'] {
+        [class*='modal-content'] {
+          @apply max-h-none border-b-0 p-[0];
+        }
+      }
+    }
   }
   /* mobile full */
   &.m_full,
