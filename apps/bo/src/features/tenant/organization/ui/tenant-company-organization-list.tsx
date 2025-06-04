@@ -14,7 +14,7 @@ import { queryOptions as companyQueryOptions } from '@entities/companies/service
  * NLP_BO_TMS_1111_01 : 임시 회사 api 호출
  * @returns
  */
-const TenantCompanyDepartmentListComponent = ({ rootPath }: { rootPath: string }) => {
+const TenantCompanyOrganizationListComponent = ({ rootPath }: { rootPath: string }) => {
   const router = useRouter();
 
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
@@ -22,7 +22,7 @@ const TenantCompanyDepartmentListComponent = ({ rootPath }: { rootPath: string }
 
   const handleCompanyNameClick = (companyId: number) => {
     router.navigate({
-      to: `${rootPath}/tenant/department/detail`,
+      to: `${rootPath}/tenant/organization/detail`,
       state: {
         companyId: companyId,
         listParam: getValues(),
@@ -116,7 +116,7 @@ const TenantCompanyDepartmentListComponent = ({ rootPath }: { rootPath: string }
   );
 };
 
-export const TenantCompanyDepartmentList = TenantCompanyDepartmentListComponent;
+export const TenantCompanyOrganizationList = TenantCompanyOrganizationListComponent;
 
 const searchConfig: SearchBoxConfig = {
   builders: [

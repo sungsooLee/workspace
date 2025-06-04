@@ -315,6 +315,12 @@
       @apply ml-[16px];
     }
   }
+  [class*='nlp--button'] {
+    @apply !font-normal;
+    svg {
+      @apply mr-[4px];
+    }
+  }
 }
 
 .row_wrap {

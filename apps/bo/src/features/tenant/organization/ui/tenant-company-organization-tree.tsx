@@ -21,17 +21,27 @@ import {
   RadioGroupFormField,
   TextareaFormField,
   TreeBox,
+  TreeType,
   TreeNode,
 } from '@learnway/ui';
 
 import { ContentsHistoryInfoFormField, FormRow, FormSubTitle, SwitchFormField } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 
+export enum EnOrganizationShowType {
+  check = 'check',
+  origin = 'origin',
+  platform = 'platform',
+}
+enum EnTabKeys {
+  organization = 'organization',
+  user = 'user',
+}
 /**
  * 화면번호: NLP_BO_TMS_1111_03 테넌트-회사조직
  * @returns
  */
-const TenantCompanyDepartmentTreeComponent = () => {
+const TenantCompanyOrganizationTreeComponent = ({ showType }: { showType: string }) => {
   const [roleTreeData, setRoleTreeData] = useState([]);
   const router = useRouter();
 
@@ -45,12 +55,12 @@ const TenantCompanyDepartmentTreeComponent = () => {
   const tabItems = [
     {
       title: '조직',
-      key: 'FO',
+      key: EnTabKeys.organization,
       content: '조직',
     },
     {
       title: '유저',
-      key: 'BO',
+      key: EnTabKeys.user,
       content: '유저',
     },
   ];
@@ -59,7 +69,7 @@ const TenantCompanyDepartmentTreeComponent = () => {
       <TreeBox
         data={roleTreeData}
         treeId="1"
-        type="SAME_LEVEL_ONLY"
+        type="SHUTTLE_LIST"
         showSearchKeyword
         initLevel={2}
         title={t('조직-원본')}
@@ -81,4 +91,4 @@ const TenantCompanyDepartmentTreeComponent = () => {
   );
 };
 
-export const TenantCompanyDepartmentTree = TenantCompanyDepartmentTreeComponent;
+export const TenantCompanyOrganizationTree = TenantCompanyOrganizationTreeComponent;
