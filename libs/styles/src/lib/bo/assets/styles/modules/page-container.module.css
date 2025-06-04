@@ -63,6 +63,9 @@
         @apply ml-[16px] flex h-[28px] w-[1px] bg-[var(--gray5)] content-[''];
       }
     }
+    .btn_close {
+      @apply ml-[16px] !min-w-[24px];
+    }
     [class*='nlp--button'] {
       @apply w-auto min-w-[45px];
     }
