@@ -243,12 +243,12 @@ export interface GridBoxPagination {
   /**
    * 현재 페이지의 인덱스입니다. (0부터 시작)
    */
-  pageNumber: number;
+  pageNumber?: number;
 
   /**
    * 전체 페이지 개수입니다.
    */
-  totalPages: number;
+  totalPages?: number;
 
   /**
    * 한 페이지에 표시할 데이터 개수

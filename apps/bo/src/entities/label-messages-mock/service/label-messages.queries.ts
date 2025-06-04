@@ -8,10 +8,15 @@ export const queryKeys = {
 };
 
 export const queryOptions = {
-  all: <T = LabelMessage>(queryParam?: LabelMessagesQueryParams) => ({
-    queryKey: queryKeys.all,
-    queryFn: async (): Promise<PaginationResponse<T>> => LabelMessagesService.fetchAll(queryParam),
-  }),
+  all: <T = LabelMessage>(queryParam?: LabelMessagesQueryParams) => {
+    console.log('label-messages.queries.ts :: queryParam :: ', queryParam);
+    return {
+      queryKey: [queryKeys.all, queryParam],
+      queryFn: async (): Promise<PaginationResponse<T>> =>
+        LabelMessagesService.fetchAll(queryParam),
+      enabled: !!queryParam,
+    };
+  },
   detail: <T = LabelMessage>(id: number): UseQueryOptions<T> => {
     return {
       queryKey: queryKeys.detail(id),

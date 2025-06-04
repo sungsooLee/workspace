@@ -1,5 +1,6 @@
 import React, { FC, useMemo, useState } from 'react';
-import { Dropdown, Input } from '@learnway/ui';
+import { Dropdown } from '../../dropdown/dropdown';
+import { Input } from '../../input/input';
 
 /**
  * 검색 조건을 정의하는 인터페이스

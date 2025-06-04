@@ -299,12 +299,17 @@ export function useGridTable<T extends object>(
   // 그리드 상태 변화(e.g. 필터, 소팅, 순서, visibility)에 따른 콜백 전달
   useEffect(() => {
     onStateChange?.({
-      filters: columnFilters,
       sorting,
-      columnVisibility,
-      columnOrder,
     });
-  }, [columnFilters, sorting, columnVisibility, columnOrder]);
+  }, [sorting]);
+  // useEffect(() => {
+  //   onStateChange?.({
+  //     filters: columnFilters,
+  //     sorting,
+  //     columnVisibility,
+  //     columnOrder,
+  //   });
+  // }, [columnFilters, sorting, columnVisibility, columnOrder]);
 
   // 그리드 row 선택 변경시 onRowSelect(단건), onRowsSelect(다건) callback 실행
   useEffect(() => {

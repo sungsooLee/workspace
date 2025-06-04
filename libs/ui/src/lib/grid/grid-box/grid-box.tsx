@@ -13,17 +13,16 @@ import {
   CountText,
   Grid,
   GridBoxProps,
+  GridBoxState,
   GridImperative,
-  GridState,
   Pagination,
 } from '@learnway/ui';
 import { IcoMinus, IcoPlus } from '@learnway/icons';
-import styles from './grid-box.module.css';
 import { cn, gridStateToSortQueryParams } from '@learnway/shared';
 import { useTranslation } from 'react-i18next';
 import { ExcelButtons } from './excel-buttons';
 import { GridBoxSearchInput, GridBoxSearchInputCondition } from './grid-box-search-input';
-import { PaginationRequest } from '../../../../../../apps/bo/src/types';
+import styles from './grid-box.module.css';
 
 /**
  * 다양한 설정 옵션을 통해 재사용 가능한 표 컴포넌트(Grid)를 구성합니다.
@@ -117,7 +116,14 @@ const GridBoxComponent = <T extends object>(
    * - 없으면 config에서 받아 설정
    */
   const paginationProps = useMemo(() => {
-    return pagination || props.pagination;
+    const p = props.pagination || pagination;
+    return {
+      pageNumber: 0,
+      pageSize: 20,
+      totalPages: 0,
+      disabled: (p?.totalPages || 0) === 0,
+      ...p,
+    };
   }, [pagination, props.pagination]);
 
   /**
@@ -194,7 +200,7 @@ const GridBoxComponent = <T extends object>(
    */
   const handleChangePageSize = useCallback(
     (pageSize: number) => {
-      const params: PaginationRequest = {
+      const params: GridBoxState = {
         size: pageSize,
       };
       handleFetchGridData(params);
@@ -204,29 +210,35 @@ const GridBoxComponent = <T extends object>(
 
   const handlePageChange = useCallback(
     (pageNumber: number) => {
-      const params: PaginationRequest = {
+      const params: GridBoxState = {
         page: pageNumber,
       };
+      // for use-grid-box
       handleFetchGridData(params);
+      // for grid-box
+      props.onStateChange?.(params);
     },
     [props.pagination],
   );
 
   const handleStateChange = useCallback(
-    (newState: GridState) => {
+    (newState: GridBoxState) => {
       if (!props.data && !data) {
         return;
       }
-      const params: PaginationRequest = {
+      const params: GridBoxState = {
         sort: gridStateToSortQueryParams(newState),
       };
+      // for use-grid-box
       handleFetchGridData(params);
+      // for grid-box
+      props.onStateChange?.(params);
     },
     [props.onStateChange, props.data, data],
   );
 
   const handleFetchGridData = useCallback(
-    (paginationRequest: PaginationRequest) => {
+    (paginationRequest: GridBoxState) => {
       // use-grid-box 에서 받은 gridFetch
       gridFetch?.(paginationRequest);
     },
@@ -311,25 +323,34 @@ const GridBoxComponent = <T extends object>(
       <Grid
         {...props}
         ref={gridRef}
-        pagination={paginationProps}
         data={props.data ?? data ?? []}
         columns={props.columns ?? girdColumns ?? []}
+        pagination={paginationProps}
         showNumberingColumn={showNumberingColumn}
         onChange={props.onChange || onDataChange}
-        onStateChange={props.onStateChange || handleStateChange}
+        onStateChange={handleStateChange}
+        // onStateChange={props.onStateChange || handleStateChange}
         onTableInstanceChange={handleTableInstanceChange}
       />
       {/* 페이지네이션 */}
-      {paginationProps && (
-        <Pagination
-          totalPages={paginationProps.totalPages}
-          pageNumber={paginationProps.pageNumber}
-          pageSize={paginationProps.pageSize}
-          disabled={paginationProps.totalPages === 0}
-          onPageSizeChange={handleChangePageSize}
-          onChange={handlePageChange}
-        />
-      )}
+      <Pagination
+        totalPages={paginationProps.totalPages}
+        pageNumber={paginationProps.pageNumber}
+        pageSize={paginationProps.pageSize}
+        disabled={paginationProps.disabled}
+        onPageSizeChange={handleChangePageSize}
+        onChange={handlePageChange}
+      />
+      {/*{!paginationProps.disabled && (*/}
+      {/*  <Pagination*/}
+      {/*    totalPages={paginationProps.totalPages}*/}
+      {/*    pageNumber={paginationProps.pageNumber}*/}
+      {/*    pageSize={paginationProps.pageSize}*/}
+      {/*    disabled={paginationProps.disabled}*/}
+      {/*    onPageSizeChange={handleChangePageSize}*/}
+      {/*    onChange={handlePageChange}*/}
+      {/*  />*/}
+      {/*)}*/}
     </div>
   );
 };

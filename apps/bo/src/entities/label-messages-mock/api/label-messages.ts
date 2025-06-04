@@ -25,7 +25,7 @@ export default class LabelMessagesService {
   static async fetchAll<T = LabelMessage>(
     params?: LabelMessagesQueryParams,
   ): Promise<PaginationResponse<T>> {
-    console.log('label-messages.ts : fetchAll', params);
+    console.log('label-messages.ts.. : fetchAll', params);
     // return httpService.get<PaginationResponse<T>>(`${PMSApiPrefix()}/label-messages`, params);
     return new Promise((resolve) => {
       const response: PaginationResponse<T> = mockData(params);
@@ -64,7 +64,7 @@ export default class LabelMessagesService {
   }
 }
 
-const mockData = (params?: LabelMessagesQueryParams): PaginationResponse<any> => {
+export const mockData = (params?: LabelMessagesQueryParams): PaginationResponse<any> => {
   const content = Array(params?.size || 10)
     .fill(null)
     .map((_, i) => ({
@@ -79,6 +79,7 @@ const mockData = (params?: LabelMessagesQueryParams): PaginationResponse<any> =>
       lastModifiedBy: '9488404@ict-companion.com',
       modifiedDate: '2025-05-02T00:43:24.852Z',
     }));
+  // 로컬 테스트용
   const [sortKey, sortType] = params?.sort?.at(0)?.split(',') || [];
   const sortContent = content.sort((a: any, b: any) => {
     if (!sortType) {

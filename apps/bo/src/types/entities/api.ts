@@ -36,6 +36,6 @@ export interface PaginationResponse<T> {
     pageNumber: number;
     unpaged: boolean;
     sort: SortResponse;
-    totalPages: number; // <GridBox pagination={data?.pageable} /> 에러나서 임시로 넣음..
+    // totalPages: number; // <GridBox pagination={data?.pageable} /> 에러나서 임시로 넣음..
   };
 }
