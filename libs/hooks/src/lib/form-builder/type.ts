@@ -296,6 +296,7 @@ export interface BaseFormFieldProps<T = any> {
   onFormChange: (values: Record<string, any>) => void;
   getValues: UseFormReturn['getValues'];
   customConfig: CustomConfig;
+  currentOptionsState?: [SelectOption[], (options: SelectOption[]) => void];
   [key: string]: any;
 }
 
@@ -432,6 +433,21 @@ export type SearchBoxProvider = {
   onSubmit: (
     onValid: (data: Record<string, any>) => void,
   ) => (event: FormEvent<HTMLFormElement>) => void;
+
+  /**
+   * 현재 options를 name으로 조회함
+   *
+   * @param name - 필드 이름
+   * @return 옵션 목록
+   */
+  getOptions: (name: string) => SelectOption[];
+
+  /**
+   * options를 새로 설정함
+   * @param name - 필드 이름
+   * @param options - 설정할 options
+   */
+  setOptions: (name: string, options: SelectOption[]) => void;
 };
 
 /* ================================

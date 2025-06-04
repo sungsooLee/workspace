@@ -7,8 +7,13 @@ import { useCodeStore } from '../use-code-store/use-code-store';
  * @param options
  * @param optionsConfig
  */
-const useFormOptionsHook = (options?: SelectOption[], optionsConfig?: OptionsConfig) => {
-  const [currentOptions, setCurrentOptions] = useState<SelectOption[]>([]);
+const useFormOptionsHook = (
+  options?: SelectOption[],
+  optionsConfig?: OptionsConfig,
+  currentOptionsState?: [SelectOption[], (options: SelectOption[]) => void],
+) => {
+  const internalOptionsState = useState<SelectOption[]>([]);
+  const [currentOptions, setCurrentOptions] = currentOptionsState || internalOptionsState;
   const { getCode } = useCodeStore();
   /**
    * options 가 없고 optionsConfig 가 있을때만 작동

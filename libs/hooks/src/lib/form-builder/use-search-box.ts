@@ -1,4 +1,4 @@
-import { DynamicFormProvider, SearchBoxConfig, UseSearchBoxReturn } from './type';
+import { DynamicFormProvider, SearchBoxConfig, SelectOption, UseSearchBoxReturn } from './type';
 import { useForm } from 'react-hook-form';
 import { FormEvent, useMemo, useRef, useState } from 'react';
 import { extractSearchBoxDefaultValues } from './util';
@@ -15,6 +15,12 @@ const useSearchBoxHook = <T extends SearchBoxConfig>(config: T): UseSearchBoxRet
   const defaultValues = extractSearchBoxDefaultValues(config);
   // 원본값 상태 관리
   const [originalValues, setOriginalValues] = useState(defaultValues);
+  const [currentOptions, setCurrentOptions] = useState<Record<string, SelectOption[]>>({});
+  const getOptions = (name: string) => currentOptions[name];
+  const setOptions = (name: string, options: SelectOption[]) => {
+    setCurrentOptions((prev) => ({ ...prev, [name]: options }));
+  };
+
   const validator = useMemo<ValidatorConfig>(() => {
     const { builders, validator = {} } = config;
 
@@ -200,6 +206,8 @@ const useSearchBoxHook = <T extends SearchBoxConfig>(config: T): UseSearchBoxRet
       onFormFocus: handleFocus,
       originalValues,
       onSubmit: formSubmit,
+      getOptions,
+      setOptions,
     },
     onFormValid: trigger,
     fetchData,
