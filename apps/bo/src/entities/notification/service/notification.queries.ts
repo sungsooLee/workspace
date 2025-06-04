@@ -15,6 +15,14 @@ export const queryOptions = {
   count: () => ({
     queryKey: queryKeys.count,
     queryFn: () => NotificationService.fetchNotificationCount(),
+    select: (data: number | undefined) => {
+      if (data) {
+        if (data > 99) return 99;
+        return data;
+      } else {
+        return 0;
+      }
+    },
     staleTime: 0,
   }),
 };

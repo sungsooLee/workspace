@@ -5,16 +5,31 @@
     .profile_info {
       @apply pb-[32px] pt-[36px];
       .avata_img {
-        @apply m-auto h-[66px] w-[66px] text-center;
+        @apply relative mx-auto h-[74px] w-[128px];
+        .info_avata {
+          @apply absolute left-0 top-0 z-[1] h-[74px] w-[74px] bg-transparent p-[4px];
+          img {
+            @apply h-full w-full overflow-hidden rounded-full border border-solid border-transparent;
+          }
+        }
+        .logo_wrap {
+          @apply absolute right-0 top-0 z-0 h-[74px] w-[74px] shrink-0 p-[4px];
+          .logo_img {
+            @apply h-full w-full overflow-hidden rounded-full border border-solid border-[var(--gray2)];
+          }
+        }
+        .name {
+          @apply absolute left-0 top-0 z-[1] flex h-[74px] w-[74px] bg-transparent p-[4px];
+          .text {
+            @apply title_3_b flex h-full w-full items-center justify-center overflow-hidden rounded-full border border-solid border-transparent bg-[#00AFD5] text-white;
+          }
+        }
         .start {
           @apply h-[66px] w-[66px];
         }
-        [class*='nlp--avatar'] span {
-          @apply title_3_b;
-        }
       }
       .info_avata {
-        @apply m-auto h-[66px] w-[66px] rounded-full;
+        @apply m-auto h-[66px] w-[66px];
       }
       .profile {
         @apply m-auto max-w-[300px] px-[34px];
@@ -42,7 +57,7 @@
     .logout_wrap {
       @apply flex w-full flex-1 items-center justify-between border-t-[1px] border-solid border-[var(--gray3)] px-[24px] py-[20px];
       .btn_log {
-        @apply w-auto;
+        @apply w-auto pl-0;
       }
       .customer_info {
         @apply button_4_r text-[var(--gray6)];
