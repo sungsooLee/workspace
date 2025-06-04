@@ -1,12 +1,8 @@
 .start {
   &.depth2 {
-    [data-state='open'] > button {
-      &[class*='has_children'] {
-        & > [class*='accordion_title'] {
-          &[class*='active'] {
-            @apply body_bo_2_b text-[var(--gray9)];
-          }
-        }
+    div > button {
+      [class*='accordion_title'] {
+        @apply pl-[6px];
       }
     }
   }
@@ -14,18 +10,6 @@
     div > button {
       [class*='accordion_title'] {
         @apply pl-[24px];
-      }
-      & > [class*='accordion_title'] {
-        &[class*='active'] {
-          @apply body_bo_2_b bg-white text-[var(--gray9)];
-        }
-      }
-      &:not([class*='has_children']) {
-        & > [class*='accordion_title'] {
-          &[class*='active'] {
-            @apply body_bo_2_b bg-[#EDFCFF] text-[var(--secondary1)];
-          }
-        }
       }
     }
   }

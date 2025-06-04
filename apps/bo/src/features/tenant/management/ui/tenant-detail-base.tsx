@@ -14,7 +14,12 @@ import {
   TextareaFormField,
   useModal,
 } from '@learnway/ui';
-import { ContentsHistoryInfoFormField, FormRow, ThumbnailListFormField } from '@shared/ui';
+import {
+  FormSubTitle,
+  ContentsHistoryInfoFormField,
+  FormRow,
+  ThumbnailListFormField,
+} from '@shared/ui';
 import { isEqual } from 'lodash';
 import { CompanyShuttleModal, RoleChoiceModal, UserChoiceModal } from '@features/shared';
 import {
@@ -160,9 +165,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
   }, []);
   return (
     <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
-      <div className="title_wrap">
-        <strong className="title">{'기본 정보'}</strong>
-      </div>
+      <FormSubTitle label={t('기본 정보')} lineType={'dark'} />
       <ContentsRow>
         <FormRow
           provider={provider}
@@ -239,6 +242,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
 
       <ContentsRow type={'horizontal'}>
         <FormRow provider={provider} name="isUsed" />
+        <FormRow provider={provider} name="isSecurityPledge" />
       </ContentsRow>
       <ContentsRow>
         <FormRow
@@ -247,17 +251,13 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
           element={<TextareaFormField resize={'none'} />}
         />
       </ContentsRow>
-      <div className="title_wrap no_line">
-        <strong className="title">{'시스템 설정'}</strong>
-      </div>
+      <FormSubTitle label={t('시스템 설정')} lineType={'dark'} />
       <ContentsRow>
         <FormRow
           provider={provider}
           name="device"
           element={<CheckboxGroupFormField disabled={true} />}
         />
-      </ContentsRow>
-      <ContentsRow>
         <FormRow provider={provider} name="useCategory" />
       </ContentsRow>
       <ContentsRow>
@@ -341,6 +341,17 @@ const formConfig: DynamicFormConfig = {
         label: (value: boolean) => (value ? '사용' : '미사용'),
       },
       guideText: t('테넌트 사용 여부를 설정할 수 있습니다.'),
+    },
+    {
+      name: 'isSecurityPledge',
+      type: 'switch',
+      label: t('보안 서약 사용'),
+      value: true,
+      format: 'boolean',
+      switchConfig: {
+        label: (value: boolean) => (value ? '사용' : '미사용'),
+      },
+      guideText: t('보안 서약  사용 여부를 설정할 수 있습니다.'),
     },
     {
       name: 'tenantDesc',
@@ -450,6 +461,7 @@ const formConfig: DynamicFormConfig = {
     tenantBillingTag: { required: true },
     companyTenantList: { required: true },
     isUsed: { required: true },
+    isSecurityPledge: { required: true },
     device: {
       required: {
         fn: (values) => {

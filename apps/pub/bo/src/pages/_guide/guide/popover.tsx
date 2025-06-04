@@ -28,12 +28,18 @@ function RouteComponent() {
   const PopoverContent = () => {
     return (
       <div className={tooltipPopoverStyles.start}>
-        <strong className={tooltipPopoverStyles.title}>{'title'}</strong>
+        <strong className={tooltipPopoverStyles.title}>{'도움말'}</strong>
         <div className={tooltipPopoverStyles.contents_wrap}>
           <NoticeBox
             iconVisible={false}
             type={'bullet'}
+            description={
+              '가이드 팝업은 텍스트 길이에 따라 가변적으로 노출됩니다. 가로 너비는 최대 640px으로 제한됩니다. 가이드 팝업은 텍스트 길이에 따라 가변적으로 노출됩니다. 가로 너비는 최대 640px으로 제한됩니다.'
+            }
             descriptions={[
+              '도움말 클릭시 도움말 영역이 가변적으로 노출됩니다. 영역을 클릭하거나 우측 닫기 버튼을 클릭하면 해당 영역이 사라집니다.',
+              '도움말 클릭시 도움말 영역이 가변적으로 노출됩니다. 영역을 클릭하거나 우측 닫기 버튼을 클릭하면 해당 영역이 사라집니다.',
+              '도움말 클릭시 도움말 영역이 가변적으로 노출됩니다. 영역을 클릭하거나 우측 닫기 버튼을 클릭하면 해당 영역이 사라집니다.',
               '도움말 클릭시 도움말 영역이 가변적으로 노출됩니다. 영역을 클릭하거나 우측 닫기 버튼을 클릭하면 해당 영역이 사라집니다.',
               '도움말 클릭시 도움말 영역이 가변적으로 노출됩니다. 영역을 클릭하거나 우측 닫기 버튼을 클릭하면 해당 영역이 사라집니다.',
               '도움말 클릭시 도움말 영역이 가변적으로 노출됩니다. 영역을 클릭하거나 우측 닫기 버튼을 클릭하면 해당 영역이 사라집니다.',
@@ -78,8 +84,8 @@ function RouteComponent() {
               sideOffset={10}
               open={isOpen}
               onOpenChange={setIsOpen}
-              onPointerDownOutside={(e) => e.preventDefault()}
-              onInteractOutside={(e) => e.preventDefault()}
+              // onPointerDownOutside={(e) => e.preventDefault()}
+              // onInteractOutside={(e) => e.preventDefault()}
             >
               {isOpen ? '팝오버 닫기' : '팝오버 열기'}
             </Popover>

@@ -45,7 +45,7 @@
 }
 
 .footer {
-  @apply flex items-center justify-center pb-[24px] pt-[16px];
+  @apply flex items-center justify-end px-[24px] pb-[24px] pt-[16px];
   button {
     @apply !min-w-[80px];
     & + button {

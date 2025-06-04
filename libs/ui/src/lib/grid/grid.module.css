@@ -170,10 +170,10 @@
   }
   &.has_select_all_checkbox {
     thead th:first-child {
-      @apply !w-[64px];
+      @apply !w-[64px] px-[5px];
     }
     tbody td:first-child {
-      @apply bg-[var(--gray1)];
+      @apply bg-[var(--gray1)] px-[5px];
     }
   }
 }

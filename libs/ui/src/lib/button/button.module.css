@@ -220,4 +220,7 @@
   svg {
     @apply ml-[2px];
   }
+  &.xs {
+    @apply !min-h-[24px];
+  }
 }

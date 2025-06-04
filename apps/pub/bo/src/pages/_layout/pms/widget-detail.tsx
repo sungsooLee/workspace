@@ -78,7 +78,7 @@ function RouteComponent() {
   // Table
   const data2: any[] = [
     {
-      Sort: <strong>PC</strong>,
+      Sort: <strong className="th_tit">PC</strong>,
       ComponentId: <Input value={'dsbdbshjdbshbd'} />,
       ComponentSize: (
         <div className={dynamicFormStyles.size_wrap}>
@@ -103,7 +103,7 @@ function RouteComponent() {
       ),
     },
     {
-      Sort: <strong>Mobile</strong>,
+      Sort: <strong className="th_tit">Mobile</strong>,
       ComponentId: <Input value={'dsbdbshjdbshbd'} />,
       ComponentSize: (
         <div className={dynamicFormStyles.size_wrap}>
@@ -134,6 +134,7 @@ function RouteComponent() {
       cell: (info) => info.getValue(),
       header: '구분',
       enableGrouping: false,
+      size: 200,
       meta: {
         headerAlign: 'center', // 헤더 정렬
         cellAlign: 'left', // 셀 정렬
@@ -143,11 +144,17 @@ function RouteComponent() {
       cell: (info) => info.getValue(),
       header: '컴포넌트 ID',
       enableGrouping: false,
+      meta: {
+        size: 'auto',
+      },
     }),
     columnHelper.accessor('ComponentSize', {
       cell: (info) => info.getValue(),
       header: '사이즈(가로X세로) pixel',
       enableGrouping: false,
+      meta: {
+        size: 'auto',
+      },
     }),
   ] as ColumnDef<any, unknown>[];
   return (

@@ -3,6 +3,10 @@ import { t } from 'i18next';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
+import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
+import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
+import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
+
 import {
   Button,
   CheckboxGroupFormField,
@@ -11,11 +15,9 @@ import {
   TextareaFormField,
   useModal,
 } from '@learnway/ui';
-import { FormRow, ThumbnailListFormField } from '@shared/ui';
 import { CODE_GROUP, DynamicFormConfig, useCodeStore, useDynamicForm } from '@learnway/hooks';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
-import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
+
+import { FormSubTitle, FormRow, ThumbnailListFormField } from '@shared/ui';
 
 import { useCreateTenant } from '@entities/tenant/service/tenant.hook';
 import {
@@ -23,7 +25,7 @@ import {
   DuplicateState,
 } from '@features/tenant/management/ui/duplicate-check-input-form-field';
 import { pageRouteConfig } from '@features/auth';
-import { CompanyShuttleModal, UserChoiceModal } from '@features/shared';
+import { CompanyShuttleModal, CompanyChoiceModal, UserChoiceModal } from '@features/shared';
 import TenantService from '@entities/tenant/api/tenant';
 import { isEqual } from 'lodash';
 import { EnDeviceType, EnUseCategory } from '@types';
@@ -49,10 +51,14 @@ const duplicateCheck = async (tenantName: string) => {
   else return DuplicateState.ok;
 };
 
+/**
+ * 화면번호: NLP_BO_TMS_1001
+ * @returns
+ */
 function RouteComponent() {
   const router = useRouter();
   const [languageTypeList, setLanguageTypeList] = useState<any[]>(defaultLangOptions);
-  const [clasName, setClassName] = useState('');
+
   const { open: openModal, confirm: openConfirm } = useModal();
   const { control, provider, onSubmit, onFormChange, formState } = useDynamicForm(formConfig);
 
@@ -141,9 +147,7 @@ function RouteComponent() {
       </ContentsButtons>
       <MainContents>
         <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
-          <div className="title_wrap">
-            <strong className="title">{t('기본 정보')}</strong>
-          </div>
+          <FormSubTitle label={t('기본 정보')} lineType={'dark'} />
           <ContentsRow>
             <FormRow
               provider={provider}
@@ -219,6 +223,7 @@ function RouteComponent() {
 
           <ContentsRow type="horizontal">
             <FormRow provider={provider} name="isUsed" />
+            <FormRow provider={provider} name="isSecurityPledge" />
           </ContentsRow>
           <ContentsRow>
             <FormRow
@@ -227,24 +232,19 @@ function RouteComponent() {
               element={<TextareaFormField resize="none" />}
             />
           </ContentsRow>
-          <div className="title_wrap no_line">
-            <strong className="title">{t('시스템 설정')}</strong>
-          </div>
+          <FormSubTitle label={t('시스템 설정')} lineType={'dark'} />
           <ContentsRow>
             <FormRow
               provider={provider}
               name="device"
               element={<CheckboxGroupFormField disabled={true} />}
             />
-          </ContentsRow>
-          <ContentsRow>
             <FormRow provider={provider} name="useCategory" />
           </ContentsRow>
           <ContentsRow>
             <FormRow
               provider={provider}
               name="tenantMappingLanguageTypeList"
-              className={clasName}
               element={<CheckboxGroupFormField options={languageTypeList} />}
             />
           </ContentsRow>
@@ -319,6 +319,17 @@ const formConfig: DynamicFormConfig = {
         label: (value: boolean) => (value ? '사용' : '미사용'),
       },
       guideText: t('테넌트 사용 여부를 설정할 수 있습니다.'),
+    },
+    {
+      name: 'isSecurityPledge',
+      type: 'switch',
+      label: t('보안 서약 사용'),
+      value: true,
+      format: 'boolean',
+      switchConfig: {
+        label: (value: boolean) => (value ? '사용' : '미사용'),
+      },
+      guideText: t('보안 서약  사용 여부를 설정할 수 있습니다.'),
     },
     {
       name: 'tenantDesc',
@@ -428,6 +439,7 @@ const formConfig: DynamicFormConfig = {
     tenantBillingTag: { required: true },
     companyTenantList: { required: true },
     isUsed: { required: true },
+    isSecurityPledge: { required: true },
     device: {
       required: {
         fn: (values) => {

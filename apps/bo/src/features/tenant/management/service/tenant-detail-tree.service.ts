@@ -1,4 +1,5 @@
 import { TreeNode } from '@learnway/ui';
+import { EnTreeEventPosition } from '@types';
 
 export const getAllTreeKeys = (treeData: TreeNode[]) => {
   const recursive = (nodes: TreeNode[]): string[] => {
@@ -12,6 +13,20 @@ export const getAllTreeKeys = (treeData: TreeNode[]) => {
     }, []);
   };
   return recursive(treeData);
+};
+
+const getMaxLevel = (treeData: TreeNode[]) => {
+  let maxLevel = 1;
+  const recursive = (nodes: TreeNode[]) => {
+    return nodes.forEach((node) => {
+      if (node.children?.length && node.children?.length > 0) {
+        maxLevel++;
+        recursive(node.children);
+      }
+    });
+  };
+  recursive(treeData);
+  return maxLevel;
 };
 
 export const deleteNodeByNode = (nodes: TreeNode[], node: TreeNode) => {
@@ -270,6 +285,43 @@ export const transformRoleMenuApiDataToTreeData = (apiData: any) => {
   };
 
   return transform(dataArray);
+};
+
+export const moveTenantMenuNodeCheck = (events: any) => {
+  const targetIndex = events.targetIndex + 1;
+  const sourceNode = events.sourceNode;
+  const retValue = {
+    tenantMappingMenuId: sourceNode.tenantMappingMenuId,
+    sortOrder: targetIndex,
+    menuScopeCode: '',
+  };
+  let checkChildren = true;
+  const sourceLevel = sourceNode.level;
+  let targetLevel = events.targetNode.level;
+  switch (events.position) {
+    case EnTreeEventPosition.BEFORE:
+    case EnTreeEventPosition.AFTER:
+      checkChildren = sourceNode.level < events.targetNode.level;
+      break;
+    case EnTreeEventPosition.INSIDE:
+      checkChildren = sourceNode.level < events.targetNode.level + 1;
+      targetLevel = events.targetNode.level + 1;
+  }
+  if (checkChildren) {
+    const maxLevel =
+      sourceNode.children.length > 0 ? sourceLevel + getMaxLevel(sourceNode.children) : sourceLevel;
+    if (maxLevel - sourceLevel + targetLevel > 5) return undefined;
+  }
+
+  switch (events.position) {
+    case 'AFTER':
+    case 'BEFORE':
+      return { ...retValue, destinationParentId: events.targetNode.parentKey };
+
+    case 'INSIDE':
+      return { ...retValue, destinationParentId: events.targetNode.tenantMappingMenuId };
+  }
+  return undefined;
 };
 
 export const moveNodeCheck = (events: any) => {

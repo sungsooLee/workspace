@@ -315,6 +315,12 @@
       @apply ml-[16px];
     }
   }
+  [class*='nlp--button'] {
+    @apply !font-normal;
+    svg {
+      @apply mr-[4px];
+    }
+  }
 }
 
 .row_wrap {
@@ -408,7 +414,7 @@ hr.divider {
 
 /* 태그 */
 .tag_wrap {
-  @apply w-full rounded-[4px] border border-solid border-[var(--gray4)] p-[12px];
+  @apply min-h-[32px] w-full rounded-[4px] border border-solid border-[var(--gray4)] pl-[12px] pt-[3px];
   input {
     @apply !pl-0;
   }
@@ -427,6 +433,10 @@ hr.divider {
 
 [class*='lnb-open'] .input_box {
   @apply !max-w-[calc(100vw-420px)];
+}
+
+[class*='nlp--modal-content'] .input_box {
+  @apply !max-w-none;
 }
 
 [class*='nlp--contents-row'] {

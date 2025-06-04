@@ -10,38 +10,36 @@ import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 
 import { Tabs, Button } from '@learnway/ui';
 
-export const Route = createFileRoute('/_layout/platform/tenant/department/detail')({
+import {
+  EnOrganizationShowType,
+  TenantCompanyOrganizationTree,
+} from '@features/tenant/organization/ui/tenant-company-organization-tree';
+export const Route = createFileRoute('/_layout/platform/tenant/organization/detail')({
   component: RouteComponent,
 });
-
-enum EnTabKey {
-  check = 'check',
-  origin = 'origin',
-  platform = 'platform',
-}
 
 /**
  * 화면 번호 : NLP_BO_TMS_1111_03
  * @returns
  */
 function RouteComponent() {
-  const [selectedTabKey, setSelectedTabKey] = useState<string>(EnTabKey.origin);
+  const [selectedTabKey, setSelectedTabKey] = useState<string>(EnOrganizationShowType.origin);
 
   const menuItems = [
     {
       title: '회사조직 확인',
-      key: EnTabKey.check,
-      content: '회사 조직 확인',
+      key: EnOrganizationShowType.check,
+      content: <TenantCompanyOrganizationTree showType={EnOrganizationShowType.check} />,
     },
     {
-      title: '테넌트 속성 관리',
-      key: EnTabKey.origin,
-      content: '원본',
+      title: '회사조직(원본)',
+      key: EnOrganizationShowType.origin,
+      content: <TenantCompanyOrganizationTree showType={EnOrganizationShowType.origin} />,
     },
     {
-      title: '테넌트 메뉴관리 매핑',
-      key: EnTabKey.platform,
-      content: '플랫폼',
+      title: '회사조직(플랫폼)',
+      key: EnOrganizationShowType.platform,
+      content: <TenantCompanyOrganizationTree showType={EnOrganizationShowType.platform} />,
     },
   ];
 
@@ -62,7 +60,7 @@ function RouteComponent() {
       <MainContents>
         <Tabs
           items={menuItems}
-          type="progress"
+          type="line"
           size="sm"
           className={styles.progress_wrap}
           selectedTabKey={selectedTabKey}

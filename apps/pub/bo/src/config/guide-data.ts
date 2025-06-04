@@ -113,7 +113,7 @@ export const guideData = [
     pageId: 'common/not-found',
     screenId: '404',
     pageType: 'page',
-    completionDate: '',
+    completionDate: '2025-06-02',
     lastUpdateDate: '',
     remarks: '', // 비고
   },
@@ -492,7 +492,7 @@ export const guideData = [
     pageId: 'pms/shortening_url_list',
     screenId: 'NLP_BO_LOG_2003',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-06-02',
     lastUpdateDate: '',
     remarks: '', // 비고
   },
@@ -501,19 +501,28 @@ export const guideData = [
     pageId: 'pms/shortening_url_register',
     screenId: 'NLP_BO_LOG_2004',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-06-02',
     lastUpdateDate: '',
-    remarks: '', // 비고
+    remarks: '상세화면은 disabled 차이라 같은 화면임', // 비고
   },
   {
-    screenName: 'PMS/단축 URL 상세',
-    pageId: 'pms/shortening_url_detail',
-    screenId: 'NLP_BO_LOG_2005',
+    screenName: 'PMS/약관 관리',
+    pageId: 'pms/terms_management',
+    screenId: 'NLP_BO_TMS-1135',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-06-04',
     lastUpdateDate: '',
     remarks: '', // 비고
   },
+  // {
+  //   screenName: 'PMS/단축 URL 상세',
+  //   pageId: 'pms/shortening_url_detail',
+  //   screenId: 'NLP_BO_LOG_2005',
+  //   pageType: 'Page',
+  //   completionDate: '',
+  //   lastUpdateDate: '',
+  //   remarks: '', // 비고
+  // },
   // {
   //   screenName: 'PMS/플랫폼관리_언어관리_다국어관리_메시지번역',
   //   pageId: 'pms/language_translation_management',

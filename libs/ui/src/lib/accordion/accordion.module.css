@@ -12,14 +12,42 @@
       &:hover {
         @apply bg-[#EDFCFF];
       }
-      &:not([class*='has_children']) {
+      & > [class*='accordion_title'] {
+        &[class*='active'] {
+          @apply bg-[#EDFCFF] !text-[var(--secondary1)];
+          svg {
+            @apply stroke-[var(--secondary1)] !font-bold;
+          }
+          span {
+            @apply font-bold;
+          }
+        }
+      }
+      &:has(+ div[hidden]) {
         [class*='accordion_title'] {
           &[class*='active'] {
-            @apply body_bo_2_b bg-[#EDFCFF] text-[var(--secondary1)];
+            @apply bg-[#EDFCFF] !text-[var(--secondary1)];
             svg {
-              @apply !stroke-[var(--secondary1)];
+              @apply stroke-[var(--secondary1)] font-bold;
             }
           }
+        }
+      }
+      & > [data-state='closed'] > button {
+        & > [class*='accordion_title'] {
+          &[class*='active'] {
+            @apply bg-[#EDFCFF] !text-[var(--secondary1)];
+            svg {
+              @apply stroke-[var(--secondary1)] font-bold;
+            }
+          }
+        }
+      }
+      &:has(+ div[data-state='open'] > [class*='nlp--accordion'] [class*='active'])
+        [class*='accordion_title'] {
+        @apply bg-white !text-[var(--gray9)];
+        svg {
+          @apply stroke-[var(--gray9)];
         }
       }
     }

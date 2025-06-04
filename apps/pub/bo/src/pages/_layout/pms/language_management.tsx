@@ -58,6 +58,7 @@ function RouteComponent() {
       enableGrouping: false,
       meta: {
         headerAlign: 'center', // 헤더 정렬
+        size: 'auto',
       },
     }),
     columnHelper.accessor('code', {
@@ -66,12 +67,14 @@ function RouteComponent() {
       enableGrouping: false,
       meta: {
         headerAlign: 'center', // 헤더 정렬
+        size: 'auto',
       },
     }),
     columnHelper.accessor('standard', {
       cell: (info) => info.getValue(),
       header: '기준명(한국어)',
       enableGrouping: false,
+      size: 352,
       meta: {
         headerAlign: 'center', // 헤더 정렬
       },
@@ -79,6 +82,7 @@ function RouteComponent() {
     columnHelper.accessor('translation', {
       cell: (info) => info.getValue(),
       header: '번역명(번역언어)',
+      size: 352,
       enableGrouping: false,
       meta: {
         headerAlign: 'center', // 헤더 정렬
@@ -88,6 +92,7 @@ function RouteComponent() {
       cell: (info) => info.getValue(),
       header: '번역완료',
       enableGrouping: false,
+      size: 104,
       meta: {
         headerAlign: 'center', // 헤더 정렬
       },
@@ -96,6 +101,7 @@ function RouteComponent() {
       cell: (info) => info.getValue(),
       header: '수정자',
       enableGrouping: false,
+      size: 140,
     }),
     columnHelper.accessor('date', {
       cell: (info) => info.getValue(),
@@ -103,6 +109,7 @@ function RouteComponent() {
       enableGrouping: false,
       meta: {
         headerAlign: 'center', // 헤더 정렬
+        size: 'auto',
       },
     }),
   ] as ColumnDef<any, unknown>[];

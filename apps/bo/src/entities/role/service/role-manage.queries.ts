@@ -103,7 +103,10 @@ export const roleManagerQueryOptions = {
       roleCode ? RoleManagerService.fetchRoleUserGroups(roleCode) : getQuerySkipToken(),
   }),
 };
-
+type roleParam = {
+  roleCode: string;
+  body: any;
+};
 export const roleMutateOptions = {
   // 역할 생성
   createRole: () => ({
@@ -122,13 +125,19 @@ export const roleMutateOptions = {
 
   // 역할에 메뉴 할당
   modifyMenusAndApiToRole: () => ({
-    mutationFn: ({ roleCode, body }: { roleCode: string; body: any }) =>
+    mutationFn: ({ roleCode, body }: roleParam) =>
       RoleManagerService.modifyMenusAndApiToRole(roleCode, body),
   }),
 
   //역할 위치이동
   movePosition: () => ({
-    mutationFn: ({ roleCode, body }: { roleCode: string; body: any }) =>
+    mutationFn: ({ roleCode, body }: roleParam) =>
       RoleManagerService.modifyRolePosition(roleCode, body),
+  }),
+
+  //역할 사용자 관리
+  modifyUserToRole: () => ({
+    mutationFn: ({ roleCode, body }: roleParam) =>
+      RoleManagerService.modifyUserToRole(roleCode, body),
   }),
 };

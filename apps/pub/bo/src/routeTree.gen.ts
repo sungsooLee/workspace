@@ -46,7 +46,10 @@ import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
 import { Route as LayoutPmsWidgetRegisterImport } from './pages/_layout/pms/widget-register'
 import { Route as LayoutPmsWidgetManagementImport } from './pages/_layout/pms/widget-management'
 import { Route as LayoutPmsWidgetDetailImport } from './pages/_layout/pms/widget-detail'
+import { Route as LayoutPmsTermsmanagementImport } from './pages/_layout/pms/terms_management'
 import { Route as LayoutPmsTenantMenuManagementImport } from './pages/_layout/pms/tenant-menu-management'
+import { Route as LayoutPmsShorteningurlregisterImport } from './pages/_layout/pms/shortening_url_register'
+import { Route as LayoutPmsShorteningurllistImport } from './pages/_layout/pms/shortening_url_list'
 import { Route as LayoutPmsPrivatesearchlistImport } from './pages/_layout/pms/private_search_list'
 import { Route as LayoutPmsPrivatesearchdetailImport } from './pages/_layout/pms/private_search_detail'
 import { Route as LayoutPmsPopupWidgetManagementImport } from './pages/_layout/pms/popup-widget-management'
@@ -361,12 +364,33 @@ const LayoutPmsWidgetDetailRoute = LayoutPmsWidgetDetailImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutPmsTermsmanagementRoute = LayoutPmsTermsmanagementImport.update({
+  id: '/pms/terms_management',
+  path: '/pms/terms_management',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
 const LayoutPmsTenantMenuManagementRoute =
   LayoutPmsTenantMenuManagementImport.update({
     id: '/pms/tenant-menu-management',
     path: '/pms/tenant-menu-management',
     getParentRoute: () => LayoutRoute,
   } as any)
+
+const LayoutPmsShorteningurlregisterRoute =
+  LayoutPmsShorteningurlregisterImport.update({
+    id: '/pms/shortening_url_register',
+    path: '/pms/shortening_url_register',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutPmsShorteningurllistRoute = LayoutPmsShorteningurllistImport.update(
+  {
+    id: '/pms/shortening_url_list',
+    path: '/pms/shortening_url_list',
+    getParentRoute: () => LayoutRoute,
+  } as any,
+)
 
 const LayoutPmsPrivatesearchlistRoute = LayoutPmsPrivatesearchlistImport.update(
   {
@@ -1965,11 +1989,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutPmsPrivatesearchlistImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/pms/shortening_url_list': {
+      id: '/_layout/pms/shortening_url_list'
+      path: '/pms/shortening_url_list'
+      fullPath: '/pms/shortening_url_list'
+      preLoaderRoute: typeof LayoutPmsShorteningurllistImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/pms/shortening_url_register': {
+      id: '/_layout/pms/shortening_url_register'
+      path: '/pms/shortening_url_register'
+      fullPath: '/pms/shortening_url_register'
+      preLoaderRoute: typeof LayoutPmsShorteningurlregisterImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/pms/tenant-menu-management': {
       id: '/_layout/pms/tenant-menu-management'
       path: '/pms/tenant-menu-management'
       fullPath: '/pms/tenant-menu-management'
       preLoaderRoute: typeof LayoutPmsTenantMenuManagementImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/pms/terms_management': {
+      id: '/_layout/pms/terms_management'
+      path: '/pms/terms_management'
+      fullPath: '/pms/terms_management'
+      preLoaderRoute: typeof LayoutPmsTermsmanagementImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/pms/widget-detail': {
@@ -2232,7 +2277,10 @@ interface LayoutRouteChildren {
   LayoutPmsPopupWidgetManagementRoute: typeof LayoutPmsPopupWidgetManagementRoute
   LayoutPmsPrivatesearchdetailRoute: typeof LayoutPmsPrivatesearchdetailRoute
   LayoutPmsPrivatesearchlistRoute: typeof LayoutPmsPrivatesearchlistRoute
+  LayoutPmsShorteningurllistRoute: typeof LayoutPmsShorteningurllistRoute
+  LayoutPmsShorteningurlregisterRoute: typeof LayoutPmsShorteningurlregisterRoute
   LayoutPmsTenantMenuManagementRoute: typeof LayoutPmsTenantMenuManagementRoute
+  LayoutPmsTermsmanagementRoute: typeof LayoutPmsTermsmanagementRoute
   LayoutPmsWidgetDetailRoute: typeof LayoutPmsWidgetDetailRoute
   LayoutPmsWidgetManagementRoute: typeof LayoutPmsWidgetManagementRoute
   LayoutPmsWidgetRegisterRoute: typeof LayoutPmsWidgetRegisterRoute
@@ -2319,7 +2367,10 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutPmsPopupWidgetManagementRoute: LayoutPmsPopupWidgetManagementRoute,
   LayoutPmsPrivatesearchdetailRoute: LayoutPmsPrivatesearchdetailRoute,
   LayoutPmsPrivatesearchlistRoute: LayoutPmsPrivatesearchlistRoute,
+  LayoutPmsShorteningurllistRoute: LayoutPmsShorteningurllistRoute,
+  LayoutPmsShorteningurlregisterRoute: LayoutPmsShorteningurlregisterRoute,
   LayoutPmsTenantMenuManagementRoute: LayoutPmsTenantMenuManagementRoute,
+  LayoutPmsTermsmanagementRoute: LayoutPmsTermsmanagementRoute,
   LayoutPmsWidgetDetailRoute: LayoutPmsWidgetDetailRoute,
   LayoutPmsWidgetManagementRoute: LayoutPmsWidgetManagementRoute,
   LayoutPmsWidgetRegisterRoute: LayoutPmsWidgetRegisterRoute,
@@ -2461,7 +2512,10 @@ export interface FileRoutesByFullPath {
   '/pms/popup-widget-management': typeof LayoutPmsPopupWidgetManagementRoute
   '/pms/private_search_detail': typeof LayoutPmsPrivatesearchdetailRoute
   '/pms/private_search_list': typeof LayoutPmsPrivatesearchlistRoute
+  '/pms/shortening_url_list': typeof LayoutPmsShorteningurllistRoute
+  '/pms/shortening_url_register': typeof LayoutPmsShorteningurlregisterRoute
   '/pms/tenant-menu-management': typeof LayoutPmsTenantMenuManagementRoute
+  '/pms/terms_management': typeof LayoutPmsTermsmanagementRoute
   '/pms/widget-detail': typeof LayoutPmsWidgetDetailRoute
   '/pms/widget-management': typeof LayoutPmsWidgetManagementRoute
   '/pms/widget-register': typeof LayoutPmsWidgetRegisterRoute
@@ -2601,7 +2655,10 @@ export interface FileRoutesByTo {
   '/pms/popup-widget-management': typeof LayoutPmsPopupWidgetManagementRoute
   '/pms/private_search_detail': typeof LayoutPmsPrivatesearchdetailRoute
   '/pms/private_search_list': typeof LayoutPmsPrivatesearchlistRoute
+  '/pms/shortening_url_list': typeof LayoutPmsShorteningurllistRoute
+  '/pms/shortening_url_register': typeof LayoutPmsShorteningurlregisterRoute
   '/pms/tenant-menu-management': typeof LayoutPmsTenantMenuManagementRoute
+  '/pms/terms_management': typeof LayoutPmsTermsmanagementRoute
   '/pms/widget-detail': typeof LayoutPmsWidgetDetailRoute
   '/pms/widget-management': typeof LayoutPmsWidgetManagementRoute
   '/pms/widget-register': typeof LayoutPmsWidgetRegisterRoute
@@ -2744,7 +2801,10 @@ export interface FileRoutesById {
   '/_layout/pms/popup-widget-management': typeof LayoutPmsPopupWidgetManagementRoute
   '/_layout/pms/private_search_detail': typeof LayoutPmsPrivatesearchdetailRoute
   '/_layout/pms/private_search_list': typeof LayoutPmsPrivatesearchlistRoute
+  '/_layout/pms/shortening_url_list': typeof LayoutPmsShorteningurllistRoute
+  '/_layout/pms/shortening_url_register': typeof LayoutPmsShorteningurlregisterRoute
   '/_layout/pms/tenant-menu-management': typeof LayoutPmsTenantMenuManagementRoute
+  '/_layout/pms/terms_management': typeof LayoutPmsTermsmanagementRoute
   '/_layout/pms/widget-detail': typeof LayoutPmsWidgetDetailRoute
   '/_layout/pms/widget-management': typeof LayoutPmsWidgetManagementRoute
   '/_layout/pms/widget-register': typeof LayoutPmsWidgetRegisterRoute
@@ -2886,7 +2946,10 @@ export interface FileRouteTypes {
     | '/pms/popup-widget-management'
     | '/pms/private_search_detail'
     | '/pms/private_search_list'
+    | '/pms/shortening_url_list'
+    | '/pms/shortening_url_register'
     | '/pms/tenant-menu-management'
+    | '/pms/terms_management'
     | '/pms/widget-detail'
     | '/pms/widget-management'
     | '/pms/widget-register'
@@ -3025,7 +3088,10 @@ export interface FileRouteTypes {
     | '/pms/popup-widget-management'
     | '/pms/private_search_detail'
     | '/pms/private_search_list'
+    | '/pms/shortening_url_list'
+    | '/pms/shortening_url_register'
     | '/pms/tenant-menu-management'
+    | '/pms/terms_management'
     | '/pms/widget-detail'
     | '/pms/widget-management'
     | '/pms/widget-register'
@@ -3166,7 +3232,10 @@ export interface FileRouteTypes {
     | '/_layout/pms/popup-widget-management'
     | '/_layout/pms/private_search_detail'
     | '/_layout/pms/private_search_list'
+    | '/_layout/pms/shortening_url_list'
+    | '/_layout/pms/shortening_url_register'
     | '/_layout/pms/tenant-menu-management'
+    | '/_layout/pms/terms_management'
     | '/_layout/pms/widget-detail'
     | '/_layout/pms/widget-management'
     | '/_layout/pms/widget-register'
@@ -3346,7 +3415,10 @@ export const routeTree = rootRoute
         "/_layout/pms/popup-widget-management",
         "/_layout/pms/private_search_detail",
         "/_layout/pms/private_search_list",
+        "/_layout/pms/shortening_url_list",
+        "/_layout/pms/shortening_url_register",
         "/_layout/pms/tenant-menu-management",
+        "/_layout/pms/terms_management",
         "/_layout/pms/widget-detail",
         "/_layout/pms/widget-management",
         "/_layout/pms/widget-register",
@@ -3873,8 +3945,20 @@ export const routeTree = rootRoute
       "filePath": "_layout/pms/private_search_list.tsx",
       "parent": "/_layout"
     },
+    "/_layout/pms/shortening_url_list": {
+      "filePath": "_layout/pms/shortening_url_list.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/shortening_url_register": {
+      "filePath": "_layout/pms/shortening_url_register.tsx",
+      "parent": "/_layout"
+    },
     "/_layout/pms/tenant-menu-management": {
       "filePath": "_layout/pms/tenant-menu-management.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/terms_management": {
+      "filePath": "_layout/pms/terms_management.tsx",
       "parent": "/_layout"
     },
     "/_layout/pms/widget-detail": {

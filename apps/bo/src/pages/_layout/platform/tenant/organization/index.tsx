@@ -9,10 +9,16 @@ import { Button, GridBox, useGridBox } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 
-export const Route = createFileRoute('/_layout/platform/tenant/department/')({
+import { TenantCompanyOrganizationList } from '@features/tenant/organization/ui/tenant-company-organization-list';
+
+export const Route = createFileRoute('/_layout/platform/tenant/organization/')({
   component: RouteComponent,
 });
 
+/**
+ * 화면번호: NLP_BO_TMS_1111_01
+ * @returns
+ */
 function RouteComponent() {
   const router = useRouter();
 
@@ -27,12 +33,13 @@ function RouteComponent() {
   return (
     <PageContainer>
       <MainContents>
-        <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
+        <TenantCompanyOrganizationList rootPath="/platform" />
+        {/* <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
         <div className={cn(boxStyles.start, boxStyles.inner)}>
           <div className="grid_wrap">
             <GridBox config={gConfig} columns={columns} />
           </div>
-        </div>
+        </div> */}
       </MainContents>
     </PageContainer>
   );

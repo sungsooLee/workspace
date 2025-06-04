@@ -27,7 +27,6 @@ import {
   getAllParentAndAllChildById,
   getFirstExpandKeys,
   getAllTreeKeys,
-  moveNodeCheck,
   transformRoleMenuApiDataToTreeData,
   transformMenuApiDataToTreeData,
 } from '../service/tenant-detail-tree.service';
@@ -78,11 +77,9 @@ const TenantDetailLearningRoleMenuMappingModalComponent: FC<any> = ({
   const handleTargetAction = async (event: any) => {
     switch (event.type) {
       case 'NODE_COPY':
-        console.log('copy ', event);
         if (event.sourceTreeId === 'mapping-menu-tree') {
           const sourceMenuId = event.sourceNode.key;
           if (roleMenuTreeAllKeys.includes(sourceMenuId)) {
-            alert('이미 있음');
             return false;
           }
           const allPostMenus = getAllParentAndAllChildById(tenantMenuTree, sourceMenuId);
@@ -101,7 +98,6 @@ const TenantDetailLearningRoleMenuMappingModalComponent: FC<any> = ({
               removeApis: [],
             },
           };
-          console.log('save', payload);
           create(payload);
         }
         break;

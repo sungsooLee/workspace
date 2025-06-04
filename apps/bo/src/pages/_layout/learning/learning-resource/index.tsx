@@ -1,15 +1,13 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { CODE_GROUP, useSearchBox } from '@learnway/hooks';
 import { Button, useModal } from '@learnway/ui';
 import { LearningResourceFileUploadModal, LearningTypeChoiceModal } from '@features/learning';
 import { LEARNING_TYPE } from '@learnway/config';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { SearchBox } from '@shared/ui/search-box';
 import { useState } from 'react';
-import { t } from 'i18next';
 import { ChannelChoiceModal } from '@features/shared';
+import { LearningResourceTable } from '@features/learning/learning-resource/learning-resource-table';
 
 export const Route = createFileRoute('/_layout/learning/learning-resource/')({
   component: RouteComponent,
@@ -17,7 +15,6 @@ export const Route = createFileRoute('/_layout/learning/learning-resource/')({
 
 function RouteComponent() {
   const router = useRouter();
-  const { provider: searchProvider } = useSearchBox(searchConfig);
   const { open: openModal } = useModal();
   // 등록 팝업 호출 여부
   const [displayContent, setDisplayContent] = useState(true);
@@ -121,10 +118,6 @@ function RouteComponent() {
     if (canceled) setDisplayContent(true);
   };
 
-  const handleOnSearch = (data: Record<string, any>) => {
-    console.log('search', data);
-  };
-
   return (
     <PageContainer displayContent={displayContent}>
       <ContentsButtons>
@@ -133,107 +126,8 @@ function RouteComponent() {
         </Button>
       </ContentsButtons>
       <MainContents>
-        <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
+        <LearningResourceTable />
       </MainContents>
     </PageContainer>
   );
 }
-const searchConfig: any = {
-  builders: [
-    [
-      {
-        name: 'tenant',
-        type: 'dropdown',
-        label: t('테넌트'),
-        value: '',
-        optionsConfig: {
-          options: [{ value: '', label: t('선택') }],
-          codeGroup: CODE_GROUP['manual.tenant.tenantId'],
-        },
-      },
-      {
-        name: 'channel',
-        type: 'dropdown',
-        label: t('채널'),
-        value: '',
-        optionsConfig: {
-          options: [
-            { value: '', label: t('전체') },
-            { value: 'channelA', label: t('채널A') },
-            { value: 'channelB', label: t('채널B') },
-            { value: 'channelC', label: t('채널C') },
-            { value: 'channelD', label: t('채널D') },
-            { value: 'channelE', label: t('채널E') },
-            { value: 'channelF', label: t('채널F') },
-          ],
-        },
-      },
-      {
-        name: 'type',
-        type: 'dropdown',
-        label: t('유형'),
-        value: '',
-        optionsConfig: {
-          options: [{ value: '', label: t('전체') }],
-          codeGroup: CODE_GROUP['cms.content.ContentType'],
-        },
-      },
-      {
-        name: 'learningResourceName',
-        type: 'text',
-        label: t('학습자원명'),
-        value: '',
-      },
-    ],
-    [
-      {
-        name: 'isOutsourcing',
-        type: 'dropdown',
-        label: t('외주여부'),
-        value: '',
-        optionsConfig: {
-          options: [
-            { value: '', label: t('전체') },
-            { value: 'Y', label: 'Y' },
-            { value: 'N', label: 'N' },
-          ],
-        },
-      },
-      {
-        name: 'isUsed',
-        type: 'dropdown',
-        label: t('사용가능'),
-        value: '',
-        options: [
-          { value: '', label: t('전체') },
-          { value: 'available', label: t('사용가능') },
-          { value: 'expired', label: t('사용기한 만료') },
-          { value: 'unavailable', label: t('사용불가') },
-        ],
-      },
-      {
-        name: 'isEducationUse',
-        type: 'dropdown',
-        label: t('교육활용여부'),
-        value: '',
-        optionsConfig: {
-          options: [
-            { value: '', label: t('전체') },
-            { value: 'Y', label: 'Y' },
-            { value: 'N', label: 'N' },
-          ],
-        },
-      },
-      {
-        name: 'managerName',
-        type: 'text',
-        label: t('담당자'),
-        value: '',
-      },
-    ],
-  ],
-  validator: {
-    tenant: true,
-    config: MainContents,
-  },
-};

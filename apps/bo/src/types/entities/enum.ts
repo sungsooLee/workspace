@@ -63,3 +63,10 @@ export enum EnCompanyHrLinkType {
   DESIGNATION = 'DESIGNATION', // 호칭
   POSITION = 'POSITION', // 보직
 }
+
+//Tree Event Position
+export enum EnTreeEventPosition {
+  BEFORE = 'BEFORE',
+  INSIDE = 'INSIDE',
+  AFTER = 'AFTER',
+}
