@@ -60,3 +60,18 @@
     @apply !hidden;
   }
 }
+
+[class*='table'] {
+  table {
+    thead {
+      th {
+        @apply !border-[var(--gray4)];
+        .icon_up,
+        .icon_down,
+        &::before {
+          @apply !hidden;
+        }
+      }
+    }
+  }
+}

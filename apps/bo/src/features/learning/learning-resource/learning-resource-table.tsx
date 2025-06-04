@@ -215,10 +215,12 @@ const gridConfig = {
       type: 'numbering',
     },
     {
-      size: 79,
       name: 'contentType',
       label: t('LABEL.content.learning-resource.contentType'),
       render: (_: any) => t(`cms.content.ContentType.${_.getValue()}`),
+      meta: {
+        size: 'auto',
+      },
     },
     {
       size: 338,
@@ -227,24 +229,32 @@ const gridConfig = {
       label: t('LABEL.content.learning-resource.contentName'),
     },
     {
-      size: 127,
       name: 'tenantName',
       label: t('LABEL.content.learning-resource.tenantName'),
+      meta: {
+        size: 'auto',
+      },
     },
     {
-      size: 153,
       name: 'channelName',
       label: t('LABEL.content.learning-resource.channelName'),
+      meta: {
+        size: 'auto',
+      },
     },
     {
-      size: 104,
       name: 'coordinatorName',
       label: t('LABEL.content.learning-resource.coordinatorName'),
+      meta: {
+        size: 'auto',
+      },
     },
     {
-      size: 125,
       name: 'detailInfo',
       label: t('LABEL.content.learning-resource.detailInfo'),
+      meta: {
+        size: 'auto',
+      },
       render: (_: any) => (
         <>
           <IcoClock01 width={16} height={16} stroke="#131C30" /> 02:00:00

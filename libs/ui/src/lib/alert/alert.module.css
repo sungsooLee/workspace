@@ -23,6 +23,9 @@
   }
   & > h2 {
     @apply flex !h-auto flex-col items-start !justify-start border-b-0 !px-[20px] !py-0 text-left;
+    & > div {
+      word-break: break-all;
+    }
     & + div {
       @apply body_3_r scrollbar mt-[8px] max-h-[60px] overflow-hidden overflow-y-auto p-0 !px-[20px] text-left text-[#747D91];
     }
