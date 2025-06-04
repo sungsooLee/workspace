@@ -1,4 +1,5 @@
-import { FC, useState } from 'react';
+import { useState, forwardRef, useImperativeHandle } from 'react';
+import { useRouter } from '@tanstack/react-router';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import { Tabs } from '@learnway/ui';
@@ -11,8 +12,23 @@ import { TenantDetailMenuTree } from './tenant-detail-menu-tree';
  * @param param0
  * @returns
  */
-const TenantDetailMenuComponent: FC<any> = ({ roleInfo }) => {
+const TenantDetailMenuComponent = ({ roleInfo }: { roleInfo: any }, ref: any) => {
+  const router = useRouter();
+
   const [selectedTabKey, setSelectedTabKey] = useState<string>('FO');
+
+  useImperativeHandle(ref, () => ({
+    moveMultilang() {
+      console.log('aaaaa');
+
+      router.navigate({
+        to: '/platform/system/multilingual',
+        state: {
+          keyType: selectedTabKey === 'FO' ? 'LEARNER_MENU' : 'HRD_CENTER_MENU',
+        },
+      });
+    },
+  }));
 
   const renderTabContent = () => {
     return <TenantDetailMenuTree menuScope={selectedTabKey} roleInfo={roleInfo} />;
@@ -47,4 +63,4 @@ const TenantDetailMenuComponent: FC<any> = ({ roleInfo }) => {
   );
 };
 
-export const TenantDetailMenu = TenantDetailMenuComponent;
+export const TenantDetailMenu = forwardRef(TenantDetailMenuComponent);
