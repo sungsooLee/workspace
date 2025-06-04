@@ -273,7 +273,7 @@ const searchConfig: SearchBoxConfig = {
 
         optionsConfig: {
           options: [{ value: '', label: 'LABEL.form.label.select' }],
-          codeGroup: CODE_GROUP['pms.multilingual.LanguageType'],
+          codeGroup: CODE_GROUP['pms.multilingual.LangCountryCode'],
           /*type: 'self',
           excludeValues: ['kr'],
           filter: {
@@ -381,7 +381,7 @@ const createGridConfig = (onCellClick: (data: any) => void) => ({
               const data = info.row.original;
               onCellClick(data);
             }}
-            className="underline"
+            className="cursor-pointer underline"
           >
             {info.row.original.totalTranslatedCount} / {info.row.original.totalLocaleCount}
           </div>
