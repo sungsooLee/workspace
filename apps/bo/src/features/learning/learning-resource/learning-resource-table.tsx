@@ -7,7 +7,6 @@ import { IcoClock01, IcoDownload, IcoFile01 } from '@learnway/icons';
 import { t } from 'i18next';
 import { Table } from '@tanstack/react-table';
 import { useState } from 'react';
-import { MainContents } from '@widgets/layout';
 
 function LearningResourceTableComponent() {
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
@@ -105,6 +104,7 @@ const searchConfig: any = {
         type: 'dropdown',
         label: t('LABEL.content.learning-resource.tenantName'),
         value: '',
+        format: 'number',
         optionsConfig: {
           options: [{ value: '', label: t('선택') }],
           codeGroup: CODE_GROUP['manual.tenant.tenantId'],
@@ -194,7 +194,6 @@ const searchConfig: any = {
   validator: {
     tenant: true,
     channel: true,
-    config: MainContents,
   },
 };
 
