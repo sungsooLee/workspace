@@ -352,7 +352,7 @@ function RouteComponent() {
                 showColumnSettings={false}
                 showNumberingColumn
                 showExcelDownload
-                columnPinning={{ columns: ['numbering', 'type', 'name'] }}
+                columnPinning={{ columns: ['type', 'name'] }}
                 pagination={{
                   pageSize,
                   pageNumber,
