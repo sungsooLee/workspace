@@ -3,9 +3,9 @@
 .table_box {
   @apply flex w-full select-none flex-col;
   .table_info {
-    @apply mb-[12px] flex min-h-[28px] w-full items-center justify-between;
+    @apply flex w-full items-center justify-between;
     .title_info {
-      @apply flex items-center;
+      @apply mb-[12px] flex min-h-[28px] items-center;
       .guide_text {
         @apply ml-[16px] text-[1.4rem] font-normal leading-[1.4rem] text-[var(--gray7)];
       }
@@ -14,6 +14,9 @@
         [class*='normal_text'] {
           @apply ml-[16px] font-normal;
         }
+      }
+      &:empty {
+        @apply hidden;
       }
     }
     .title {
@@ -53,7 +56,7 @@
       @apply text-[var(--gray9)];
     }
     .button_info {
-      @apply flex items-center;
+      @apply mb-[12px] flex min-h-[28px] items-center;
       [class*='nlp--checkbox'] {
         @apply pr-[8px];
         & + [class*='nlp--button'] {
@@ -75,6 +78,9 @@
           @apply mx-[8px] !w-[180px];
         }
       }
+      &:empty {
+        @apply hidden;
+      }
     }
     &:empty {
       @apply !hidden;
@@ -85,6 +91,9 @@
         @apply body_3_r;
       }
     }
+  }
+  & + [class*='nlp--contents-row'] {
+    @apply mt-[24px];
   }
 }
 

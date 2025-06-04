@@ -246,9 +246,11 @@ const GridBoxComponent = <T extends object>(
       <div className={styles.table_info}>
         <div className={styles.title_info}>
           {/* 제목 */}
-          <div className={styles.title}>
-            {props.title || title || t('LABEL.grid.title.list', '목록')}
-          </div>
+          {title && (
+            <div className={styles.title}>
+              {props.title || title || t('LABEL.grid.title.list', '목록')}
+            </div>
+          )}
 
           {/* 전체 개수  */}
           {showTotalCount && (
@@ -261,7 +263,7 @@ const GridBoxComponent = <T extends object>(
           {titleCustomNode && <div className={styles.custom_node}>{titleCustomNode}</div>}
 
           {/* 가이드 텍스트 */}
-          <p className={styles.guide_text}>{guideText}</p>
+          {guideText && <p className={styles.guide_text}>{guideText}</p>}
         </div>
 
         <div className={styles.button_info}>

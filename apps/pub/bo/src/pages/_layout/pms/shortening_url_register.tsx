@@ -8,12 +8,13 @@ import {
   Switch,
   Textarea,
   RadioGroupFormField,
+  GridBox,
 } from '@learnway/ui';
-import { IcoFormRequired, IcoCopy } from '@learnway/icons';
+import { IcoFormRequired, IcoCopy, IcoMinus } from '@learnway/icons';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { cn } from '@learnway/shared';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { FormSubTitle } from '../../../../../../bo/src/shared/ui/form';
-import { SplitPanel } from '../../../../../../bo/src/shared/ui/';
 
 // style
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
@@ -33,6 +34,36 @@ function RouteComponent() {
   const handleCheckedChange = (id: number) => (checked: boolean) => {
     setChecked((prev) => ({ ...prev, [id]: checked }));
   };
+
+  // grid
+  const data: any[] = [
+    {
+      Key: <Input type={'text'} placeholder={'입력'} value={'key'} />,
+      Value: <Input type={'text'} placeholder={'입력'} value={'key'} />,
+    },
+    {
+      Key: <Input type={'text'} placeholder={'입력'} value={'key'} />,
+      Value: <Input type={'text'} placeholder={'입력'} value={'key'} />,
+    },
+    {
+      Key: <Input type={'text'} placeholder={'입력'} value={'key'} />,
+      Value: <Input type={'text'} placeholder={'입력'} value={'key'} />,
+    },
+  ];
+
+  const columnHelper = createColumnHelper<any>();
+  const columns = [
+    columnHelper.accessor('Key', {
+      cell: (info) => info.getValue(),
+      header: 'Key',
+      meta: { size: 'auto' },
+    }),
+    columnHelper.accessor('Value', {
+      cell: (info) => info.getValue(),
+      header: 'Value',
+      meta: { size: 'auto' },
+    }),
+  ] as ColumnDef<any, unknown>[];
   return (
     <form className="form_row">
       <PageContainer>
@@ -68,8 +99,39 @@ function RouteComponent() {
               </div>
             </div>
             {/* form_item */}
-            <div className={formStyles.form_item}></div>
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-shortUrl" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>단축 URL</span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Input type={'text'} placeholder={'lw.com/6G2H3HE'} disabled />
+              </div>
+            </div>
           </ContentsRow>
+          <ContentsRow type="horizontal">
+            {/* form_item */}
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-parameter" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>파라미터</span>
+              </label>
+              <div className={formStyles.input_box}>
+                <span className={formStyles.info_area}>
+                  <Button
+                    size={'sm'}
+                    label={'복사'}
+                    icon={<IcoCopy width={16} height={16} stroke={'#4C515E'} />}
+                  />
+                  <Button
+                    size={'sm'}
+                    label={'삭제'}
+                    icon={<IcoMinus width={16} height={16} stroke={'#4C515E'} />}
+                    disabled
+                  />
+                </span>
+              </div>
+            </div>
+          </ContentsRow>
+          <GridBox data={data} columns={columns} multiple={true} showTotalCount={false} />
           <ContentsRow>
             {/* form_item */}
             <div className={formStyles.form_item}>
