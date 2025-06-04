@@ -2,7 +2,7 @@ import { CODE_GROUP, useSearchBox } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
 import { SearchBox } from '@shared/ui/search-box';
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
-import { Button, Checkbox, Pagination, TableBox, useGridBox } from '@learnway/ui';
+import { Button, Checkbox, GridBox, Pagination, useGridBox, useGridBoxConfig } from '@learnway/ui';
 import { IcoClock01, IcoDownload, IcoFile01 } from '@learnway/icons';
 import { t } from 'i18next';
 import { Table } from '@tanstack/react-table';
@@ -12,6 +12,8 @@ function LearningResourceTableComponent() {
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const [tableInstance, setTableInstance] = useState<Table<any>>(); // Grid 로부터 받을 table 인스턴스를 저장할 상태
+  const [totalPages, setTotalPages] = useState(1);
+  const [pageIndex, setPageIndex] = useState(0);
 
   const handleOnSearch = (data: Record<string, any>) => {
     console.log('search', data);
@@ -22,7 +24,7 @@ function LearningResourceTableComponent() {
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
       <div className={cn(boxStyles.start, boxStyles.inner)}>
         <div className="grid_wrap">
-          <TableBox
+          <GridBox
             config={gConfig}
             data={[
               // mock -> api로 변경 필요
@@ -87,7 +89,7 @@ function LearningResourceTableComponent() {
             }
             onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
           />
-          <Pagination totalPages={1} pageNumber={0} />
+          <Pagination totalPages={totalPages} pageNumber={pageIndex} />
         </div>
       </div>
     </>
@@ -197,7 +199,7 @@ const searchConfig: any = {
   },
 };
 
-const gridConfig = {
+const gridConfig: useGridBoxConfig = {
   excel: {
     download: '/learning-resource/exportExcel',
     form: {
@@ -245,10 +247,10 @@ const gridConfig = {
       name: 'detailInfo',
       label: t('LABEL.content.learning-resource.detailInfo'),
       render: (_: any) => (
-        <>
+        <span className="flex">
           <IcoClock01 width={16} height={16} stroke="#131C30" /> 02:00:00
           {/* 컨텐츠 타입 별로 다르게 나오는듯 - 비디오 러닝타임 */}
-        </>
+        </span>
       ),
     },
     {
