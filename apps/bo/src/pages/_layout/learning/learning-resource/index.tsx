@@ -7,7 +7,7 @@ import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-butt
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { useState } from 'react';
 import { ChannelChoiceModal } from '@features/shared';
-import { LearningResourceTable } from '@features/learning/learning-resource/learning-resource-table';
+import { LearningResourceTable } from '@features/learning/ui/learning-resource';
 
 export const Route = createFileRoute('/_layout/learning/learning-resource/')({
   component: RouteComponent,
