@@ -2,6 +2,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+/**
+ * 파일목록
+ */
 export type com_ever_edu_pms_file_dto_res_FileInfoInternalResDto = {
     /**
      * 파일그룹 UUID

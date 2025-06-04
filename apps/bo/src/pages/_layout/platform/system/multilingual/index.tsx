@@ -4,10 +4,8 @@ import {
   CountText,
   EditInputCell,
   EditTextareaCell,
-  GridBox,
   TableBox,
   useGridBox,
-  useGridBoxConfig,
   useModal,
 } from '@learnway/ui';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
@@ -23,9 +21,8 @@ import { useTranslation } from '@entities/translation/service/translation.hook';
 import { t } from 'i18next';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
-import { usePersonalInfoCheck } from '@learnway/auth';
-import { ExcelUploadModal } from '../../../../../features/shared';
-import { ExcelButtons } from '../../../../../shared/ui/excel/grid-excel-buttons';
+import { GridExcelButtons } from '@shared/ui/excel';
+import { TranslationStatusPopup } from '../../../../../features/platform/system/multilingual/translation-status-popup';
 
 export const Route = createFileRoute('/_layout/platform/system/multilingual/')({
   component: RouteComponent,
@@ -41,11 +38,22 @@ function RouteComponent() {
   const { state } = useCurrentRoute();
   const { provider: sProvider, getValues, onFormChange, onFormValid } = useSearchBox(searchConfig);
 
-  const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const { update } = useTranslation();
   const router = useRouter();
-
   const [currentTargetLocale, setCurrentTargetLocale] = useState<string>('');
+
+  const handleCellClick = useCallback(
+    (data: any) => {
+      openModal({
+        content: <TranslationStatusPopup {...data} />,
+      });
+    },
+    [openModal],
+  );
+
+  const gridConfig = useMemo(() => createGridConfig(handleCellClick), [handleCellClick]);
+
+  const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const isSaveDisable = useMemo(
     () => gConfig.totalRows === 0 || currentTargetLocale === '',
     [gConfig.totalRows, currentTargetLocale],
@@ -96,7 +104,7 @@ function RouteComponent() {
   }, [data]);
 
   const customExcelButtons = (
-    <ExcelButtons
+    <GridExcelButtons
       showUpload={true}
       showDownload={true}
       uploadUrl="/multilingual/exportExcel"
@@ -265,7 +273,7 @@ const searchConfig: SearchBoxConfig = {
 
         optionsConfig: {
           options: [{ value: '', label: 'LABEL.form.label.select' }],
-          codeGroup: CODE_GROUP['pms.multilingual.LanguageType'],
+          codeGroup: CODE_GROUP['pms.multilingual.LangCountryCode'],
           /*type: 'self',
           excludeValues: ['kr'],
           filter: {
@@ -330,22 +338,7 @@ const searchConfig: SearchBoxConfig = {
   },
 };
 
-interface GridConfigOptions {
-  onBeforeDownload?: () => Promise<void>;
-  onBeforeUpload?: () => Promise<void>;
-  validateUrl?: string;
-  uploadUrl?: string;
-}
-
-const gridConfig = {
-  excel: {
-    upload: '/jjjjjj/',
-    download: '/multilingual/exportExcel',
-    form: {
-      xlsx: '',
-      csv: '',
-    },
-  },
+const createGridConfig = (onCellClick: (data: any) => void) => ({
   query: translationQueryOptions.all,
   columns: [
     {
@@ -382,7 +375,17 @@ const gridConfig = {
       name: 'totalTranslatedCount',
       label: t('LABEL.platform.system.multilingual.totalTranslatedCount'),
       render: (info: CellContext<any, string>) => {
-        return `${info.row.original.totalTranslatedCount} / ${info.row.original.totalLocaleCount}`;
+        return (
+          <div
+            onClick={() => {
+              const data = info.row.original;
+              onCellClick(data);
+            }}
+            className="cursor-pointer underline"
+          >
+            {info.row.original.totalTranslatedCount} / {info.row.original.totalLocaleCount}
+          </div>
+        );
       },
     },
     {
@@ -406,4 +409,4 @@ const gridConfig = {
     pageIndex: 0,
     totalRows: 0,
   },
-};
+});

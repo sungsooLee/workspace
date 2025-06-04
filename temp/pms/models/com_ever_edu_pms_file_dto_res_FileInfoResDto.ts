@@ -31,6 +31,10 @@ export type com_ever_edu_pms_file_dto_res_FileInfoResDto = {
      */
     detailPath?: string;
     /**
+     * S3|HMG 파일전체경로<br>경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)<br> Ex&gt;upload/community/board/2025/01/02/file.ppt
+     */
+    filePath?: string;
+    /**
      * 파일유형. 코드그룹(pms.file.FileType) - IMAGE|VIDEO|DOC|TXT|WEB|ZIP|ETC
      */
     fileType?: com_ever_edu_pms_file_dto_res_FileInfoResDto.fileType;

@@ -9,10 +9,10 @@ export type com_ever_edu_pms_role_dto_req_MenuApiDto = {
     /**
      * 메뉴 ID
      */
-    menuId?: number;
+    menuId: number;
     /**
      * API ID
      */
-    apiId?: number;
+    apiId: number;
 };
 

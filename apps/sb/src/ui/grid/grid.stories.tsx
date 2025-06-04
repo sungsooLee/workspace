@@ -49,6 +49,7 @@ interface Person {
   preview?: ReactNode;
   download?: ReactNode;
   subRows?: Person[]; // 하위 행 추가
+  expand?: any;
 }
 
 interface UseTableDataProps<T> {
@@ -142,7 +143,9 @@ const columnHelper = createColumnHelper<Person>();
 
 const columns = [
   columnHelper.accessor('firstName', {
-    cell: (info) => info.getValue(),
+    cell: (info) => {
+      return info.getValue();
+    },
     header: 'First Name',
     footer: (props) => `Total: ${props.table.getRowModel().rows.length}`,
     meta: {
@@ -327,7 +330,8 @@ interface TableResponse<T> {
   };
 }
 
-const createSubRows = (parentIndex: number, count = 2): Person[] => {
+// 하위 행을 생성하는 헬퍼 함수 (depth 1만 생성)
+const createSubRows = (parentIndex: number, count: 2): Person[] => {
   return Array.from({ length: count }).map((_, subIndex) => ({
     firstName: `Sub ${parentIndex}-${subIndex + 1}`,
     lastName: `SubSurname ${parentIndex}-${subIndex + 1}`,
@@ -343,12 +347,9 @@ const createSubRows = (parentIndex: number, count = 2): Person[] => {
     ),
   }));
 };
-// 무한 스크롤용 mock API
-const fetchInfiniteData = async ({ tableState }: any): Promise<Person[]> => {
-  await new Promise((resolve) => setTimeout(resolve, 500));
-  console.log(tableState);
-  const totalRows = 100;
 
+const fetchInfiniteData = async ({ tableState }: any): Promise<Person[]> => {
+  const totalRows = 100;
   const data = Array.from({ length: totalRows }).map((_, index) => ({
     firstName: `Name ${index}`,
     lastName: `Surname ${index}`,
@@ -367,7 +368,6 @@ const fetchInfiniteData = async ({ tableState }: any): Promise<Person[]> => {
 
   return data;
 };
-
 // 가상 스크롤
 const InfiniteScrollTable = () => {
   const [tableState, setTableState] = useState({
@@ -1069,31 +1069,43 @@ const fetchPaginatedData = (pageNumber = 0, pageSize = 10): PaginationResponse<a
 };
 
 const expandedColumns = [
-  columnHelper.accessor('age', {
-    cell: ({ row, getValue }) => (
-      <div
-        style={{
-          paddingLeft: `${row.depth * 2}rem`,
-        }}
-      >
-        <div>
+  columnHelper.accessor('expand', {
+    cell: ({ row, getValue }) => {
+      return (
+        <div
+          style={{
+            paddingLeft: `${row.depth * 2}rem`,
+          }}
+        >
           {row.getCanExpand() && (
             <button
               {...{
+                onClick: row.getToggleExpandedHandler(),
                 style: { cursor: 'pointer' },
-              }}
-              onClick={(e) => {
-                e.stopPropagation(); // 이벤트 전파 차단
-                row.getToggleExpandedHandler()();
               }}
             >
               {row.getIsExpanded() ? '👇' : '👉'}
             </button>
           )}
+        </div>
+      );
+    },
+    header: 'expand',
+    size: 100,
+    enableGrouping: true,
+  }),
+  columnHelper.accessor('age', {
+    cell: ({ row, getValue }) => {
+      return (
+        <div
+          style={{
+            paddingLeft: `${row.depth * 2}rem`,
+          }}
+        >
           {getValue<number>()}
         </div>
-      </div>
-    ),
+      );
+    },
     header: 'Age',
     meta: {
       filterType: 'range',
@@ -1154,20 +1166,20 @@ const expandedColumns = [
     },
     enableGrouping: false,
   }),
-  columnHelper.accessor('preview', {
-    cell: (info) => info.getValue(),
-    header: '미리보기',
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('download', {
-    cell: (info) => info.getValue(),
-    header: 'download',
-    enableGrouping: false,
-    meta: {
-      headerAlign: 'left', // 헤더만 가운데 정렬
-      cellAlign: 'center', // 셀은 오른쪽 정렬
-    },
-  }),
+  // columnHelper.accessor('preview', {
+  //   cell: (info) => info.getValue(),
+  //   header: '미리보기',
+  //   enableGrouping: false,
+  // }),
+  // columnHelper.accessor('download', {
+  //   cell: (info) => info.getValue(),
+  //   header: 'download',
+  //   enableGrouping: false,
+  //   meta: {
+  //     headerAlign: 'left', // 헤더만 가운데 정렬
+  //     cellAlign: 'center', // 셀은 오른쪽 정렬
+  //   },
+  // }),
 ];
 
 const ExpandedTable = () => {

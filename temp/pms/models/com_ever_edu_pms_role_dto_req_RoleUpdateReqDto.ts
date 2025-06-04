@@ -84,8 +84,8 @@ export namespace com_ever_edu_pms_role_dto_req_RoleUpdateReqDto {
      */
     export enum channelScope {
         ALL = 'ALL',
-        CURRENT_COMPANY = 'CURRENT_COMPANY',
-        CURRENT_COMPANY_INCLUSIVE = 'CURRENT_COMPANY_INCLUSIVE',
+        CURRENT_CHANNEL = 'CURRENT_CHANNEL',
+        CURRENT_CHANNEL_INCLUSIVE = 'CURRENT_CHANNEL_INCLUSIVE',
         MANUAL = 'MANUAL',
     }
     /**

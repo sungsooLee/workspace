@@ -1,6 +1,7 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { mutateOptions } from './translation.queries';
 import { useModal } from '@learnway/ui';
+import { translationQueryOptions as queryOptions } from './translation.queries';
 
 const useTranslationHook = () => {
   const { alert: openAlert } = useModal();
@@ -39,3 +40,7 @@ const useTranslationHook = () => {
 };
 
 export const useTranslation = useTranslationHook;
+
+export function useTranslationStatus(multilingualId: number) {
+  return useQuery(queryOptions.getStatus(multilingualId));
+}

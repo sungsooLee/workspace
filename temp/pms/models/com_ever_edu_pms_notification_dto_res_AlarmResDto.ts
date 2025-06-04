@@ -4,9 +4,11 @@
 /* eslint-disable */
 export type com_ever_edu_pms_notification_dto_res_AlarmResDto = {
     alarmId?: number;
-    userUUID?: string;
+    userId?: number;
     createdDate?: string;
     alarmSummary?: string;
     alarmDetail?: string;
+    alarmLink?: string;
+    isAlarmConfirm?: boolean;
 };
 

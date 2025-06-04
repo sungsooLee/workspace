@@ -7,12 +7,12 @@
  */
 export type com_ever_edu_pms_role_dto_req_UserCompanyDto = {
     /**
-     * 사용자 ID
+     * 사용자 UUID
      */
-    userId?: number;
+    userUuid: string;
     /**
      * 회사 ID
      */
-    companyId?: number;
+    companyId: number;
 };
 

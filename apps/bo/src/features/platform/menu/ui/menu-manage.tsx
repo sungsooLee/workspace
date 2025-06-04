@@ -586,6 +586,13 @@ export const MenuManage = ({ menuScope }: any) => {
                 element={<SwitchFormField disabled={formMode === FORM_MODE.NONE} />}
               />
             </ContentsRow>
+            <ContentsRow type={'horizontal'} className={'inactive'}>
+              <FormRow
+                provider={provider}
+                name={'isUsed'}
+                element={<SwitchFormField disabled={formMode === FORM_MODE.NONE} />}
+              />
+            </ContentsRow>
             <ContentsRow>
               <FormRow
                 provider={provider}
@@ -696,6 +703,17 @@ const formConfig: DynamicFormConfig = {
           label: '모바일',
         },
       ],
+    },
+
+    {
+      name: 'isUsed',
+      type: 'switch',
+      label: t('사용여부'),
+      tooltip: t('사용여부 툴팁'),
+      value: true,
+      switchConfig: {
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
     },
     {
       name: 'apiMappingMenuList',

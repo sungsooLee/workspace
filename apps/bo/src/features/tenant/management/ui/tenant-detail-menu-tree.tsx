@@ -66,6 +66,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
   const [treeData, setTreeData] = useState([]);
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [apiMappingMenuList, setApiMappingMenuList] = useState([]);
+
   const tenantId = routerState.location.state?.tenantId;
 
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, control } =
@@ -410,8 +411,10 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
           <ContentsRow type="horizontal">
             <FormRow
               provider={provider}
-              name="isUsed"
-              element={<SwitchFormField disabled={EnFormMode.NONE === formMode} />}
+              name="tenantIsUsed"
+              element={
+                <SwitchFormField disabled={EnFormMode.NONE === formMode || !getValues('isUsed')} />
+              }
             />
           </ContentsRow>
           <ContentsRow>
@@ -505,9 +508,16 @@ const formConfig: DynamicFormConfig = {
     },
     {
       name: 'isUsed',
+      type: 'hidden',
+      label: '',
+      value: true,
+    },
+    {
+      name: 'tenantIsUsed',
       type: 'switch',
       label: t('사용여부'),
       value: true,
+      tooltip: t('사용여부 툴팁'),
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },

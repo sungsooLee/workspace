@@ -8,13 +8,13 @@ import type { com_ever_edu_pms_role_dto_req_UserCompanyDto } from './com_ever_ed
 import type { com_ever_edu_pms_role_dto_req_UserDeptDto } from './com_ever_edu_pms_role_dto_req_UserDeptDto';
 export type com_ever_edu_pms_role_dto_req_RoleUserReqDto = {
     /**
-     * 추가할 사용자 ID 목록
+     * 추가할 사용자 UUID 목록
      */
-    addUserIds?: Array<com_ever_edu_pms_role_dto_req_RoleUserDto>;
+    addUserUuids?: Array<com_ever_edu_pms_role_dto_req_RoleUserDto>;
     /**
-     * 삭제할 사용자 ID 목록
+     * 삭제할 사용자 UUID 목록
      */
-    removeUserIds?: Array<number>;
+    removeUserUuids?: Array<string>;
     /**
      * 추가할 회사 ID 목록
      */
