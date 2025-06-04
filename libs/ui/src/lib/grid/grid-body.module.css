@@ -67,7 +67,7 @@
             }
           }
           & + td {
-            @apply border-l-[1px] border-solid !border-[var(--gray2)];
+            border-left: 1px solid var(--gray2);
           }
         }
         &:not(.selected) {
@@ -104,5 +104,14 @@
 [class*='th_pinned_left'] {
   &:last-of-type {
     @apply !hidden;
+  }
+}
+
+[class*='table'] {
+  table tbody td {
+    @apply !border-[var(--gray4)];
+    & + td {
+      @apply !border-[var(--gray4)];
+    }
   }
 }
