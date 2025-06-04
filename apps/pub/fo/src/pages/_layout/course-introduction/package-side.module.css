@@ -13,8 +13,8 @@
             & + div {
               @apply bg-inherit;
             }
-            & > svg {
-              @apply absolute right-0 top-0 mt-0 h-[20px] w-[20px] stroke-[var(--gray7)];
+            svg {
+              @apply absolute right-0 top-0 mr-0 mt-0 h-[20px] w-[20px] stroke-[var(--gray7)];
             }
           }
           & + div {
