@@ -231,7 +231,7 @@ const SearchBoxComponent: FC<SearchBoxProps> = ({ provider, onSearch }) => {
             </Button>
             <Button type="submit" variant="search" size="sm" className={searchStyles.btn_search}>
               <IcoSearch className={searchStyles.icon_sm_search} />
-              조회
+              {t('LABEL.button.search')}
             </Button>
           </div>
         </div>
