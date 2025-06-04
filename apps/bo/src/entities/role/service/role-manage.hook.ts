@@ -85,7 +85,7 @@ export function useSaveUsers(options: any) {
     ...options,
   });
   return {
-    saveRoleUsers: (payload: any, callback?: any) => {
+    saveUsersRole: (payload: any, callback?: any) => {
       mutation.mutate(payload, callback);
     },
     isSuccess: mutation.isSuccess,

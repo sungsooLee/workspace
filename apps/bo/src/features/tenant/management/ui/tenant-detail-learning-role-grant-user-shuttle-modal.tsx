@@ -45,7 +45,7 @@ const TenantDetailLearningRoleGrantUserShuttleModalComponent = ({
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
     useDynamicForm(formConfig);
 
-  const { saveRoleUsers } = useSaveUsers({});
+  const { saveUsersRole: saveRoleUsers } = useSaveUsers({});
 
   /**
    * @param data
