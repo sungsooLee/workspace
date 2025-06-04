@@ -20,7 +20,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { isEmpty } from 'lodash';
 import { GridProps } from './types/grid'; // GridProps 타입 import
 import { useTranslation } from 'react-i18next';
-import { cn } from '@learnway/shared'; // t 함수 필요 시 import
+import { cn, gridStateToSortQueryParams } from '@learnway/shared'; // t 함수 필요 시 import
 import styles from './grid.module.css';
 import { Checkbox } from '../checkbox/checkbox';
 
@@ -299,7 +299,7 @@ export function useGridTable<T extends object>(
   // 그리드 상태 변화(e.g. 필터, 소팅, 순서, visibility)에 따른 콜백 전달
   useEffect(() => {
     onStateChange?.({
-      sorting,
+      sort: gridStateToSortQueryParams({ sorting }),
     });
   }, [sorting]);
   // useEffect(() => {

@@ -65,7 +65,7 @@ export default class LabelMessagesService {
 }
 
 export const mockData = (params?: LabelMessagesQueryParams): PaginationResponse<any> => {
-  const content = Array(params?.size || 10)
+  const content = Array(params?.size || 20)
     .fill(null)
     .map((_, i) => ({
       labelMessageId: i,
@@ -94,7 +94,7 @@ export const mockData = (params?: LabelMessagesQueryParams): PaginationResponse<
     content: sortContent,
     pageable: {
       pageNumber: params?.page || 0,
-      pageSize: params?.size || 10,
+      pageSize: params?.size || 20,
       sort: {
         empty: false,
         sorted: true,

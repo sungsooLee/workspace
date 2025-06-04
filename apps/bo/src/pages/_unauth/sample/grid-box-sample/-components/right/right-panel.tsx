@@ -2,7 +2,6 @@ import { useFetchLabelMessages } from '@entities/label-messages-mock';
 import { t } from 'i18next';
 import { DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
 import { GridBox, GridBoxState } from '@learnway/ui';
-import { Table } from '@tanstack/react-table';
 import { useCallback, useEffect, useState } from 'react';
 
 const RightPanelComponent = ({ params, setTableInstance }: any) => {
@@ -42,7 +41,7 @@ const RightPanelComponent = ({ params, setTableInstance }: any) => {
     },
   ];
 
-  console.log('right-panel', { params, data });
+  console.log('right-panel -----', { params, data });
 
   const handleStateChange = useCallback(
     (newState: GridBoxState) => {
@@ -75,8 +74,8 @@ const RightPanelComponent = ({ params, setTableInstance }: any) => {
       //     }
       //   : undefined
       // }
-      onTableInstanceChange={(table: Table<any>) => setTableInstance?.(table)}
-      onStateChange={handleStateChange}
+      // onTableInstanceChange={(table: Table<any>) => setTableInstance?.(table)}
+      // onStateChange={handleStateChange}
     />
   );
 };

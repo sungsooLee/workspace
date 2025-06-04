@@ -18,7 +18,7 @@ import {
   Pagination,
 } from '@learnway/ui';
 import { IcoMinus, IcoPlus } from '@learnway/icons';
-import { cn, gridStateToSortQueryParams } from '@learnway/shared';
+import { cn } from '@learnway/shared';
 import { useTranslation } from 'react-i18next';
 import { ExcelButtons } from './excel-buttons';
 import { GridBoxSearchInput, GridBoxSearchInputCondition } from './grid-box-search-input';
@@ -77,6 +77,9 @@ const GridBoxComponent = <T extends object>(
   const columnHelper = createColumnHelper<any>();
   const gridRef = useRef<GridImperative>(null);
   const [tableInstance, setTableInstance] = useState<Table<any>>(); // GridComponent로부터 받을 table 인스턴스를 저장할 상태
+
+  // 마지막으로 페치에 사용된 params를 저장하는 useRef
+  const lastFetchedParamsRef = useRef<any>({ page: 0, size: 20, sort: [] }); // 초기값 설정
 
   useImperativeHandle(ref, () => gridRef.current as GridImperative);
 
@@ -200,23 +203,21 @@ const GridBoxComponent = <T extends object>(
    */
   const handleChangePageSize = useCallback(
     (pageSize: number) => {
-      const params: GridBoxState = {
+      const newState: GridBoxState = {
         size: pageSize,
       };
-      handleFetchGridData(params);
+      handleFetchGridData(newState);
     },
     [props.pagination],
   );
 
   const handlePageChange = useCallback(
     (pageNumber: number) => {
-      const params: GridBoxState = {
+      const newState: GridBoxState = {
         page: pageNumber,
       };
       // for use-grid-box
-      handleFetchGridData(params);
-      // for grid-box
-      props.onStateChange?.(params);
+      handleFetchGridData(newState);
     },
     [props.pagination],
   );
@@ -226,21 +227,24 @@ const GridBoxComponent = <T extends object>(
       if (!props.data && !data) {
         return;
       }
-      const params: GridBoxState = {
-        sort: gridStateToSortQueryParams(newState),
-      };
       // for use-grid-box
-      handleFetchGridData(params);
-      // for grid-box
-      props.onStateChange?.(params);
+      handleFetchGridData(newState);
     },
     [props.onStateChange, props.data, data],
   );
 
   const handleFetchGridData = useCallback(
     (paginationRequest: GridBoxState) => {
+      const newParams = {
+        ...lastFetchedParamsRef.current,
+        ...paginationRequest, // 새로 받은 정렬 정보
+      };
+      // params를 업데이트하기 전에 ref에 저장
+      lastFetchedParamsRef.current = newParams;
       // use-grid-box 에서 받은 gridFetch
-      gridFetch?.(paginationRequest);
+      gridFetch?.(newParams);
+      // for grid-box
+      props.onStateChange?.(newParams);
     },
     [gridFetch],
   );
@@ -333,14 +337,16 @@ const GridBoxComponent = <T extends object>(
         onTableInstanceChange={handleTableInstanceChange}
       />
       {/* 페이지네이션 */}
-      <Pagination
-        totalPages={paginationProps.totalPages}
-        pageNumber={paginationProps.pageNumber}
-        pageSize={paginationProps.pageSize}
-        disabled={paginationProps.disabled}
-        onPageSizeChange={handleChangePageSize}
-        onChange={handlePageChange}
-      />
+      {!!(props.data || data || [])?.length && (
+        <Pagination
+          totalPages={paginationProps.totalPages}
+          pageNumber={paginationProps.pageNumber}
+          pageSize={paginationProps.pageSize}
+          disabled={paginationProps.disabled}
+          onPageSizeChange={handleChangePageSize}
+          onChange={handlePageChange}
+        />
+      )}
       {/*{!paginationProps.disabled && (*/}
       {/*  <Pagination*/}
       {/*    totalPages={paginationProps.totalPages}*/}

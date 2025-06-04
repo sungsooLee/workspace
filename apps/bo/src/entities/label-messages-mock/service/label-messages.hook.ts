@@ -17,7 +17,7 @@ import { useModal } from '@learnway/ui';
 export const useFetchLabelMessages = (
   queryParam?: LabelMessagesQueryParams,
 ): UseQueryResult<PaginationResponse<LabelMessage>, Error> => {
-  console.log('label-message.hooks useFetchLabelMessages', queryParam);
+  console.log('label-messages.hook.ts :: useFetchLabelMessages', queryParam);
   return useQuery(queryOptions.all(queryParam));
 };
 

@@ -45,8 +45,6 @@ const GridComponent = forwardRef(
   ) => {
     const tableContainerRef = useRef<HTMLDivElement>(null);
 
-    console.log('grid.tsx', { data });
-
     // useGridTable 훅 사용
     const { table, lastPinnedColumnId } = useGridTable({
       data,
@@ -124,6 +122,8 @@ const GridComponent = forwardRef(
         }) as CSSProperties,
       [],
     );
+
+    // console.log('grid.tsx', { data });
 
     return (
       <div
