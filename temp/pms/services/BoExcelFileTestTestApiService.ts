@@ -134,6 +134,26 @@ export class BoExcelFileTestTestApiService {
         });
     }
     /**
+     * Excel 생성 후 다운로드 처리(PMS_엑셀다운로드테스트_사용자데이터_POI_EXPORT_DATA.xlsx)
+     * Excel 생성 후 다운로드 처리 테스트
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static poiExcelFileExport(): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/test/api/v1/file/excel/export/poi/user',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * Excel 생성 후 다운로드 처리(PMS_엑셀다운로드테스트_사용자데이터_EXPORT_DATA.xlsx)
      * Excel 생성 후 다운로드 처리 테스트 <br>S3 템플릿(public/template/sample/PMS_엑셀다운로드테스트_사용자데이터_EXPORT_템플릿.xlsx) 파일을 다운받아 데이터 매핑 후 다운로드 처리
      * @returns any OK

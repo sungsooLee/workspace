@@ -3,7 +3,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { GridBoxConfig, useGridBoxConfig } from '../types';
 import { UseFormReturn } from 'react-hook-form';
 
-const useGridBoxHook = (config: useGridBoxConfig, getData?: UseFormReturn['getValues']) => {
+const useGridBoxHook = (config: useGridBoxConfig, getData?: any) => {
   const queryClient = useQueryClient();
 
   const [gridConfig, setGridConfig] = useState<GridBoxConfig>(config as any);

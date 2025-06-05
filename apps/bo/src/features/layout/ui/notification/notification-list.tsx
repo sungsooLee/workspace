@@ -2,13 +2,14 @@ import { Link } from '@tanstack/react-router';
 
 import { Button, Popover } from '@learnway/ui';
 import { IcoBell03, IcoXclose } from '@learnway/icons';
-import { cn } from '@learnway/shared';
+import { cn, DATE_TIME_FORMAT } from '@learnway/shared';
 
 import styles from './notification.module.css';
-import { useNotifications, useNotificationsAction } from '@entities/notification';
+import { useNotificationsAction } from '@entities/notification';
+import { formatTimeAgo } from '@learnway/shared';
+import { Notification } from '@types';
 
-const NotificationComponent = ({ userUUID }: any) => {
-  const { notifications } = useNotifications();
+const NotificationComponent = ({ notifications }: { notifications: Notification[] }) => {
   const { read, delete: deleteNotification } = useNotificationsAction();
 
   const handleDelete = (alarmId: number) => {
@@ -45,7 +46,6 @@ const NotificationComponent = ({ userUUID }: any) => {
             ) => (
               <li
                 key={`${alarmId}_${i}`}
-                // eslint-disable-next-line no-constant-condition
                 className={cn(
                   `${styles.info_item} ${isAlarmConfirm ? '' : styles.yet}`,
                   'cursor-pointer',
@@ -74,6 +74,9 @@ const NotificationComponent = ({ userUUID }: any) => {
                   ) : (
                     <p className={styles.message}>{alarmDetail}</p>
                   )}
+                  <p className={styles.time}>
+                    {formatTimeAgo(createdDate, DATE_TIME_FORMAT.MONTH_DAY)}
+                  </p>
                   <p className={styles.time}>{createdDate}</p>
                 </div>
               </li>

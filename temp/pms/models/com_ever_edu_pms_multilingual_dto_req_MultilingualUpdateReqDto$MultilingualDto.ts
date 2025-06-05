@@ -22,11 +22,10 @@ export namespace com_ever_edu_pms_multilingual_dto_req_MultilingualUpdateReqDto$
      * 분류값
      */
     export enum keyTypeCode {
-        COMMON_CODE = 'COMMON_CODE',
+        SYSTEM_COMMON_CODE = 'SYSTEM_COMMON_CODE',
         LEARNER_MENU = 'LEARNER_MENU',
         HRD_CENTER_MENU = 'HRD_CENTER_MENU',
         LABEL = 'LABEL',
-        CATEGORY = 'CATEGORY',
         MESSAGE = 'MESSAGE',
     }
 }

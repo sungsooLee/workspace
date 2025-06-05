@@ -4,13 +4,29 @@
 /* eslint-disable */
 export type com_ever_edu_pms_channel_dto_req_ChannelRequestSaveReqDto = {
     /**
-     * 채널 명
+     * 테넌트번호
+     */
+    tenantId?: number;
+    /**
+     * 채널이름
      */
     channelName?: string;
     /**
-     * 요청자ID
+     * 채널메인아이디
      */
-    channelRequestorId?: number;
+    channelMainId?: string;
+    /**
+     * 채널메인링크내용
+     */
+    channelMainLinkContent?: string;
+    /**
+     * 채널 테넌트 관계 유형
+     */
+    channelTenatMappingType?: com_ever_edu_pms_channel_dto_req_ChannelRequestSaveReqDto.channelTenatMappingType;
+    /**
+     * 채널비밀구분
+     */
+    channelSecretType?: com_ever_edu_pms_channel_dto_req_ChannelRequestSaveReqDto.channelSecretType;
     /**
      * 채널학습내용
      */
@@ -20,12 +36,24 @@ export type com_ever_edu_pms_channel_dto_req_ChannelRequestSaveReqDto = {
      */
     channelPurposeContent?: string;
     /**
-     * 채널메인링크내용
+     * 요청자ID
      */
-    channelMainLinkContent?: string;
-    /**
-     * 테넌트번호
-     */
-    tenantId?: number;
+    channelRequestorId?: number;
 };
+export namespace com_ever_edu_pms_channel_dto_req_ChannelRequestSaveReqDto {
+    /**
+     * 채널 테넌트 관계 유형
+     */
+    export enum channelTenatMappingType {
+        MAPPING_TENANT = 'MAPPING_TENANT',
+        ALL_TENANT = 'ALL_TENANT',
+    }
+    /**
+     * 채널비밀구분
+     */
+    export enum channelSecretType {
+        NOT_SECRET = 'NOT_SECRET',
+        SECRET = 'SECRET',
+    }
+}
 

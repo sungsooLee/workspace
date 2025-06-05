@@ -1,13 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
 import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
+import { t } from 'i18next';
 
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-
-import { Tabs, Button } from '@learnway/ui';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
+
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import { Tabs, Button } from '@learnway/ui';
 
 /* tab contents */
 import { TenantDetailBase } from '@features/tenant/management/ui/tenant-detail-base';
@@ -48,6 +49,7 @@ function RouteComponent() {
   const routerState = useRouterState();
   const formBaseRef = useRef(1);
   const formAttrRef = useRef(2);
+  const menuRef = useRef(3);
 
   const [selectedTabKey, setSelectedTabKey] = useState<string>(EnTenantDetailTabKey.base);
 
@@ -56,6 +58,9 @@ function RouteComponent() {
       setSelectedTabKey(tabKey);
     }
   };
+  // if (!routerState.location.state.tenantId) {
+  //   router.navigate({ to: '/platform/tenant/management', state: { listParam: {} } });
+  // }
   const handleListButtonClick = () => {
     const listParam = routerState.location.state?.listParam;
 
@@ -79,6 +84,21 @@ function RouteComponent() {
           const attrTab: any = formAttrRef.current;
           if (attrTab) {
             attrTab.saveData();
+          }
+        }
+        break;
+      default:
+        alert('없음');
+    }
+  };
+
+  const handleMultiLangButtonClick = () => {
+    switch (selectedTabKey) {
+      case EnTenantDetailTabKey.menu:
+        {
+          const menuTab: any = menuRef.current;
+          if (menuTab) {
+            menuTab.moveMultilang();
           }
         }
         break;
@@ -124,7 +144,7 @@ function RouteComponent() {
     {
       title: '테넌트 메뉴관리 매핑',
       key: EnTenantDetailTabKey.menu,
-      content: <TenantDetailMenu roleInfo={'PLATFORM'} />,
+      content: <TenantDetailMenu ref={menuRef} roleInfo={'PLATFORM'} />,
     },
     {
       title: '테넌트 카테고리 관리',
@@ -154,29 +174,35 @@ function RouteComponent() {
   ];
   return (
     <PageContainer>
-      {buttonShowTabs.includes(selectedTabKey) && (
-        <ContentsButtons>
-          <LinkBox>
-            <Button onClick={handleListButtonClick} variant="point" size="sm">
-              목록
+      <ContentsButtons>
+        <LinkBox>
+          {EnTenantDetailTabKey.menu === selectedTabKey && (
+            <Button type="button" variant="point" size="sm" onClick={handleMultiLangButtonClick}>
+              {t('LABEL.button.multilingualManage')}
             </Button>
-          </LinkBox>
-
-          <Button onClick={handleResetButtonClick} variant="point" size="sm">
-            초기화
-          </Button>
-          <Button variant="point" size="sm" onClick={handleModifyButtonClick}>
-            수정
-          </Button>
-        </ContentsButtons>
-      )}
-      {!buttonShowTabs.includes(selectedTabKey) && (
-        <ContentsButtons>
+          )}
           <Button onClick={handleListButtonClick} variant="point" size="sm">
             목록
           </Button>
-        </ContentsButtons>
-      )}
+        </LinkBox>
+
+        <Button
+          onClick={handleResetButtonClick}
+          variant="point"
+          size="sm"
+          disabled={!buttonShowTabs.includes(selectedTabKey)}
+        >
+          초기화
+        </Button>
+        <Button
+          variant="point"
+          size="sm"
+          onClick={handleModifyButtonClick}
+          disabled={!buttonShowTabs.includes(selectedTabKey)}
+        >
+          수정
+        </Button>
+      </ContentsButtons>
       <MainContents>
         <Tabs
           items={menuItems}

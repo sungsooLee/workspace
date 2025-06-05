@@ -7,12 +7,12 @@
  */
 export type com_ever_edu_pms_role_dto_req_UserDeptDto = {
     /**
-     * 사용자 ID
+     * 사용자 UUID
      */
-    userId?: number;
+    userUuid: string;
     /**
      * 조직 ID
      */
-    deptId?: number;
+    deptId: number;
 };
 

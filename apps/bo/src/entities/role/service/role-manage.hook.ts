@@ -45,7 +45,7 @@ export function useModifyMenusAndApiToRole(options: any) {
     ...options,
   });
   return {
-    create: (payload: any, callback?: any) => {
+    createAndRemve: (payload: any, callback?: any) => {
       mutation.mutate(payload, callback);
     },
     isSuccess: mutation.isSuccess,
@@ -85,7 +85,7 @@ export function useSaveUsers(options: any) {
     ...options,
   });
   return {
-    saveRoleUsers: (payload: any, callback?: any) => {
+    saveUsersRole: (payload: any, callback?: any) => {
       mutation.mutate(payload, callback);
     },
     isSuccess: mutation.isSuccess,

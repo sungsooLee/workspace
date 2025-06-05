@@ -11,11 +11,10 @@ export type com_ever_edu_pms_multilingual_dto_excel_MultilingualExcelDto = {
 };
 export namespace com_ever_edu_pms_multilingual_dto_excel_MultilingualExcelDto {
     export enum keyTypeCode {
-        COMMON_CODE = 'COMMON_CODE',
+        SYSTEM_COMMON_CODE = 'SYSTEM_COMMON_CODE',
         LEARNER_MENU = 'LEARNER_MENU',
         HRD_CENTER_MENU = 'HRD_CENTER_MENU',
         LABEL = 'LABEL',
-        CATEGORY = 'CATEGORY',
         MESSAGE = 'MESSAGE',
     }
 }

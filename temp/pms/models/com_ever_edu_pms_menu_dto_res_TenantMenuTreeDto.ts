@@ -17,6 +17,7 @@ export type com_ever_edu_pms_menu_dto_res_TenantMenuTreeDto = {
     isUsed?: boolean;
     isMobileExposed?: boolean;
     isWebExposed?: boolean;
+    isPersoninfoInclusion?: boolean;
     menuScope?: com_ever_edu_pms_menu_dto_res_TenantMenuTreeDto.menuScope;
     menuStartDate?: string;
     menuEndDate?: string;

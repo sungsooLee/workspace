@@ -2,17 +2,31 @@ import { CODE_GROUP, useSearchBox } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
 import { SearchBox } from '@shared/ui/search-box';
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
-import { Button, Checkbox, Pagination, TableBox, useGridBox } from '@learnway/ui';
+import {
+  Button,
+  Checkbox,
+  GridBox,
+  GridBoxPagination,
+  useGridBox,
+  useGridBoxConfig,
+} from '@learnway/ui';
 import { IcoClock01, IcoDownload, IcoFile01 } from '@learnway/icons';
 import { t } from 'i18next';
 import { Table } from '@tanstack/react-table';
 import { useState } from 'react';
-import { MainContents } from '@widgets/layout';
 
 function LearningResourceTableComponent() {
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const [tableInstance, setTableInstance] = useState<Table<any>>(); // Grid 로부터 받을 table 인스턴스를 저장할 상태
+  const [pagination, setPagination] = useState<GridBoxPagination>({
+    pageNumber: 0,
+    pageSize: 20,
+    totalPages: 1,
+    onPageChange: (pageNumber: number) => setPagination((prev) => ({ ...prev, pageNumber })),
+    onPageSizeChange: (pageSize: number) =>
+      setPagination((prev) => ({ ...prev, pageSize, pageNumber: 0 })),
+  });
 
   const handleOnSearch = (data: Record<string, any>) => {
     console.log('search', data);
@@ -23,7 +37,7 @@ function LearningResourceTableComponent() {
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
       <div className={cn(boxStyles.start, boxStyles.inner)}>
         <div className="grid_wrap">
-          <TableBox
+          <GridBox
             config={gConfig}
             data={[
               // mock -> api로 변경 필요
@@ -58,6 +72,7 @@ function LearningResourceTableComponent() {
                 localization: 'ko',
               },
             ]}
+            showNumberingColumn
             multiple
             customButtonNode={
               <>
@@ -87,8 +102,8 @@ function LearningResourceTableComponent() {
               </>
             }
             onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
+            pagination={pagination}
           />
-          <Pagination totalPages={1} pageNumber={0} />
         </div>
       </div>
     </>
@@ -105,6 +120,7 @@ const searchConfig: any = {
         type: 'dropdown',
         label: t('LABEL.content.learning-resource.tenantName'),
         value: '',
+        format: 'number',
         optionsConfig: {
           options: [{ value: '', label: t('선택') }],
           codeGroup: CODE_GROUP['manual.tenant.tenantId'],
@@ -194,11 +210,10 @@ const searchConfig: any = {
   validator: {
     tenant: true,
     channel: true,
-    config: MainContents,
   },
 };
 
-const gridConfig = {
+const gridConfig: useGridBoxConfig = {
   excel: {
     download: '/learning-resource/exportExcel',
     form: {
@@ -209,16 +224,13 @@ const gridConfig = {
   query: () => {},
   columns: [
     {
-      size: 64,
-      name: 'no',
-      label: 'NO.',
-      type: 'numbering',
-    },
-    {
       size: 79,
       name: 'contentType',
       label: t('LABEL.content.learning-resource.contentType'),
       render: (_: any) => t(`cms.content.ContentType.${_.getValue()}`),
+      meta: {
+        size: 'auto',
+      },
     },
     {
       size: 338,
@@ -227,29 +239,37 @@ const gridConfig = {
       label: t('LABEL.content.learning-resource.contentName'),
     },
     {
-      size: 127,
       name: 'tenantName',
       label: t('LABEL.content.learning-resource.tenantName'),
+      meta: {
+        size: 'auto',
+      },
     },
     {
-      size: 153,
       name: 'channelName',
       label: t('LABEL.content.learning-resource.channelName'),
+      meta: {
+        size: 'auto',
+      },
     },
     {
-      size: 104,
       name: 'coordinatorName',
       label: t('LABEL.content.learning-resource.coordinatorName'),
+      meta: {
+        size: 'auto',
+      },
     },
     {
-      size: 125,
       name: 'detailInfo',
       label: t('LABEL.content.learning-resource.detailInfo'),
+      meta: {
+        size: 'auto',
+      },
       render: (_: any) => (
-        <>
+        <span className="flex">
           <IcoClock01 width={16} height={16} stroke="#131C30" /> 02:00:00
           {/* 컨텐츠 타입 별로 다르게 나오는듯 - 비디오 러닝타임 */}
-        </>
+        </span>
       ),
     },
     {
@@ -277,10 +297,4 @@ const gridConfig = {
       render: () => '보기',
     },
   ],
-  data: [],
-  pagination: {
-    pageSize: 20,
-    pageIndex: 0,
-    totalRows: 0,
-  },
 };

@@ -9,8 +9,8 @@
     p {
       @apply !text-white;
     }
-    [class*='notice'] ul li {
-      @apply text-white;
+    ul li {
+      @apply !text-white;
       &::before {
         @apply !bg-white;
       }

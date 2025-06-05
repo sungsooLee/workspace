@@ -3,6 +3,9 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { com_ever_edu_pms_channel_dto_res_ChannelMappingTenantResDto } from './com_ever_edu_pms_channel_dto_res_ChannelMappingTenantResDto';
+/**
+ * 채널 목록
+ */
 export type com_ever_edu_pms_channel_dto_res_ChannelResDto = {
     channelId?: number;
     channelName?: string;
@@ -22,9 +25,9 @@ export type com_ever_edu_pms_channel_dto_res_ChannelResDto = {
     channelOwnerId?: number;
     channelOwnerName?: string;
     /**
-     * 채널접수ID
+     * 채널신청ID
      */
-    channelAcceptId?: number;
+    channelRequestId?: number;
     createdBy?: string;
     createdDate?: string;
     modifiedDate?: string;

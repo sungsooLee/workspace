@@ -73,6 +73,10 @@ export type com_ever_edu_pms_company_dto_res_CompanyResDto = {
      */
     linkageSystem?: com_ever_edu_pms_company_dto_res_CompanyResDto.linkageSystem;
     /**
+     * 비밀번호 인증유형 리스트
+     */
+    passwordAuthTypeList?: Array<'PLATFORM' | 'HMG_SSO' | 'AUTOWAY'>;
+    /**
      * SSO 사용여부
      */
     isUseSso?: boolean;
@@ -229,10 +233,11 @@ export namespace com_ever_edu_pms_company_dto_res_CompanyResDto {
      * 서비스 타입
      */
     export enum serviceType {
-        CONSIGNMENT = 'CONSIGNMENT',
         BASIC = 'BASIC',
         CORE = 'CORE',
         ENTERPRISE = 'ENTERPRISE',
+        CONSIGNMENT = 'CONSIGNMENT',
+        FREE_CHARGE = 'FREE_CHARGE',
     }
     /**
      * 연동시스템 유형
@@ -313,16 +318,13 @@ export namespace com_ever_edu_pms_company_dto_res_CompanyResDto {
     export enum externalEnrollApplicationProcess {
         APPLICATION_REGISTER = 'APPLICATION_REGISTER',
         REGISTER = 'REGISTER',
+        NONE = 'NONE',
     }
     /**
      * 채널 신청 결재라인
      */
     export enum channelApprovalMatrix {
-        COMPANY = 'COMPANY',
-        OPERATOR = 'OPERATOR',
-        MANAGER = 'MANAGER',
-        OPERATOR_MANAGER = 'OPERATOR_MANAGER',
-        MANAGER_OPERATOR = 'MANAGER_OPERATOR',
+        TENANT_MANAGER = 'TENANT_MANAGER',
         NONE = 'NONE',
     }
     /**
@@ -353,6 +355,7 @@ export namespace com_ever_edu_pms_company_dto_res_CompanyResDto {
     export enum examFeeApplicationProcess {
         APPLICATION_REGISTER = 'APPLICATION_REGISTER',
         REGISTER = 'REGISTER',
+        NONE = 'NONE',
     }
     /**
      * 데이터 소스(데이터 원천)

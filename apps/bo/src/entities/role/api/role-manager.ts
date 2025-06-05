@@ -52,42 +52,42 @@ export default class RoleManagerService {
   }
   /**
    *역할 코드의 사용자 추가 삭제
-   * @param roleCode 역할 코드
+   * @param roleId 역할 코드
    * @param body request body : role 사용자(추가/삭제) , 회사 사용자(추가/삭제), 체널 사용자(추가/삭제), 팀(조직) 사용자 (추가/삭제)
    * @returns
    */
-  static modifyUserToRole(roleCode: string, body: any): Promise<any> {
-    return httpService.post<any>(`${PMSApiPrefix()}/roles/${roleCode}/save-users`, body);
+  static modifyUserToRole(roleId: string, body: any): Promise<any> {
+    return httpService.post<any>(`${PMSApiPrefix()}/roles/${roleId}/save-users`, body);
   }
 
   /**
    * 역할에 유저 그룹 추가 삭제 처리
-   * @param roleCode 역할 코드
+   * @param roleId 역할 코드
    * @param body userGroup 추가, 삭제 자료
    */
 
-  static modifyUserGroupToRole(roleCode: string, body: any): Promise<any> {
-    return httpService.post<any>(`${PMSApiPrefix()}/roles/${roleCode}/save-user-groups`, body);
+  static modifyUserGroupToRole(roleId: string, body: any): Promise<any> {
+    return httpService.post<any>(`${PMSApiPrefix()}/roles/${roleId}/save-user-groups`, body);
   }
 
   /**
    * 역할에 메뉴 api 할당
-   * @param roleCode 역할 코드
+   * @param roleId 역할 코드
    * @param body 메뉴, api 수정 정보
    * @returns 할당 결과
    */
-  static modifyMenusAndApiToRole(roleCode: string, body: any): Promise<any> {
-    return httpService.post<any>(`${PMSApiPrefix()}/roles/${roleCode}/save-menu-apis`, body);
+  static modifyMenusAndApiToRole(roleId: string, body: any): Promise<any> {
+    return httpService.post<any>(`${PMSApiPrefix()}/roles/${roleId}/save-menu-apis`, body);
   }
 
   /**
    * 역할 tree 위치 이동
-   * @param roleCode
+   * @param roleId
    * @param body
    * @returns
    */
-  static modifyRolePosition(roleCode: string, body: any): Promise<any> {
-    return httpService.post<any>(`${PMSApiPrefix()}/roles/${roleCode}/move`, body);
+  static modifyRolePosition(roleId: string, body: any): Promise<any> {
+    return httpService.post<any>(`${PMSApiPrefix()}/roles/${roleId}/move`, body);
   }
 
   /**
@@ -96,25 +96,26 @@ export default class RoleManagerService {
    * @returns
    */
   static fetchRoleUserList(param: any): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/roles/${param.roleCode}/users`, param);
+    console.log('param', param);
+    return httpService.get<any>(`${PMSApiPrefix()}/roles/${param.roleId}/users`, param);
   }
 
   /**
    * 역할에 할당된 사용자 그룹 목록 조회
-   * @param roleCode 역할 코드
+   * @param roleId 역할 코드
    * @returns
    */
-  static fetchRoleUserGroups(roleCode: string): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/roles/${roleCode}/user-groups`);
+  static fetchRoleUserGroups(roleId: string): Promise<any> {
+    return httpService.get<any>(`${PMSApiPrefix()}/roles/${roleId}/user-groups`);
   }
 
   /**
    * 역할에 할당된 메뉴 목록 조회
-   * @param roleCode 역할 ID
+   * @param roleId 역할 ID
    * @returns 역할에 할당된 메뉴 목록
    */
-  static fetchRoleMenus(roleCode: string): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/roles/${roleCode}/menus`);
+  static fetchRoleMenus(roleId: string): Promise<any> {
+    return httpService.get<any>(`${PMSApiPrefix()}/roles/${roleId}/menus`);
   }
 
   /**
@@ -122,8 +123,8 @@ export default class RoleManagerService {
    * @param menuId 메뉴 ID
    * @returns 메뉴에 속한 API 목록
    */
-  static fetchRoleMenuApis(roleCode: string, menuId: string): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/roles/${roleCode}/apis`, { menuId: menuId });
+  static fetchRoleMenuApis(roleId: string, menuId: string): Promise<any> {
+    return httpService.get<any>(`${PMSApiPrefix()}/roles/${roleId}/apis`, { menuId: menuId });
   }
   /**
    * 역할 tree 조회

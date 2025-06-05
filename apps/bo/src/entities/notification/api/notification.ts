@@ -33,7 +33,7 @@ export default class NotificationService {
    * 알람 전체삭제 처리
    */
   static deleteAllNotification(): Promise<any> {
-    return httpService.delete<any>(`/pms-module/api/v1/alarm`);
+    return httpService.delete<any>(`/pms-module/api/v1/alarms`);
   }
   /**
    * 알람 단건 삭제 처리

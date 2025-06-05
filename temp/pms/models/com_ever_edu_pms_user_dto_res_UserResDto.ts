@@ -2,15 +2,13 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { com_ever_edu_pms_company_dto_res_CompanyDeptResDto } from './com_ever_edu_pms_company_dto_res_CompanyDeptResDto';
+import type { com_ever_edu_pms_company_dto_res_CompanyResDto } from './com_ever_edu_pms_company_dto_res_CompanyResDto';
 export type com_ever_edu_pms_user_dto_res_UserResDto = {
     /**
-     * 사용자 ID
+     * UUID
      */
-    userId?: number;
-    /**
-     * 사용자 코드
-     */
-    userCode?: string;
+    uuid?: string;
     /**
      * 사번
      */
@@ -26,7 +24,7 @@ export type com_ever_edu_pms_user_dto_res_UserResDto = {
     /**
      * 생년월일
      */
-    birthday?: number;
+    birthday?: string;
     /**
      * Email
      */
@@ -42,7 +40,7 @@ export type com_ever_edu_pms_user_dto_res_UserResDto = {
     /**
      * 회원상태코드
      */
-    stateCode?: com_ever_edu_pms_user_dto_res_UserResDto.stateCode;
+    userState?: com_ever_edu_pms_user_dto_res_UserResDto.userState;
     /**
      * 회원기본언어셋코드
      */
@@ -70,14 +68,8 @@ export type com_ever_edu_pms_user_dto_res_UserResDto = {
      * 로그인실패횟수
      */
     loginFailCount?: number;
-    /**
-     * 회사코드 ID
-     */
-    companyId?: number;
-    /**
-     * 부서코드 ID
-     */
-    deptId?: number;
+    company?: com_ever_edu_pms_company_dto_res_CompanyResDto;
+    dept?: com_ever_edu_pms_company_dto_res_CompanyDeptResDto;
     /**
      * 사용자구분
      */
@@ -107,7 +99,7 @@ export namespace com_ever_edu_pms_user_dto_res_UserResDto {
     /**
      * 회원상태코드
      */
-    export enum stateCode {
+    export enum userState {
         WAIT = 'WAIT',
         NORMAL = 'NORMAL',
         HALT = 'HALT',

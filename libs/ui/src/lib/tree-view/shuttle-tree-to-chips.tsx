@@ -8,30 +8,39 @@ import { cn } from '@learnway/shared';
 import { TreeView } from './tree';
 import { IcoXclose, IcoNarrowRight } from '@learnway/icons';
 import { TreeBox } from './tree-box';
+import { Checkbox } from '../checkbox/checkbox';
 
 type Props = Pick<TreeProps, 'onCustomNodeClick' | 'treeId' | 'searchKeyword'> & {
   sourceTitle?: string;
   targetTitle?: string;
   title?: string;
+  showConditionSettings?: boolean;
   selectedItems: any[]; // 추후 수정 필요 현재 key, FullPath만 받아서 필요한 정보 못 갖고옴.
   sourceData: any;
   onItemsChange: (newItems: { key: string; fullPath: string }[]) => void;
 };
 
 export const ShuttleTreeToChips = ({
+  sourceTitle,
+  targetTitle,
   title,
+  showConditionSettings = false,
   sourceData,
   selectedItems,
   onItemsChange,
   searchKeyword,
   onCustomNodeClick,
-  sourceTitle,
-  targetTitle,
   ...otherProps
 }: Props) => {
   // 내부 상태 관리 (필요한 경우)
   const [internalSelectedItems, setInternalSelectedItems] = useState(selectedItems || []);
   const [expandSource, setExpandSource] = useState<boolean>(true);
+
+  const [isConditionSettingsMode, setIsConditionSettingsMode] = useState<boolean>(false);
+
+  const handleSetIsConditionSettingsMode = (value: boolean) => {
+    setIsConditionSettingsMode(value);
+  };
 
   // 실제 사용할 선택 항목들 (외부 제어 또는 내부 상태)
   const actualSelectedItems = selectedItems || internalSelectedItems;
@@ -120,6 +129,26 @@ export const ShuttleTreeToChips = ({
         <div className={titleStyles.title_wrap}>
           <h3 className={titleStyles.title}>{targetTitle || title}</h3>
           <div className={layoutStyles.btn_wrap}>
+            {showConditionSettings &&
+              (isConditionSettingsMode ? (
+                <Button
+                  variant="text"
+                  size="sm"
+                  className={layoutStyles.btn_text}
+                  onClick={() => handleSetIsConditionSettingsMode(false)}
+                >
+                  {'조건적용'}
+                </Button>
+              ) : (
+                <Button
+                  variant="text"
+                  size="sm"
+                  className={layoutStyles.btn_text}
+                  onClick={() => handleSetIsConditionSettingsMode(true)}
+                >
+                  {'조건설정'}
+                </Button>
+              ))}
             <Button
               variant="text"
               size="sm"
@@ -136,7 +165,17 @@ export const ShuttleTreeToChips = ({
           ) : (
             actualSelectedItems.map((item) => (
               <div key={item.key} className={styles.selected_item}>
-                <span className={styles.selected_text}>{item.fullPath}</span>
+                <div className="flex items-center gap-2">
+                  {isConditionSettingsMode && (
+                    <Checkbox
+                      checked={false}
+                      onCheckedChange={(checked) => {
+                        console.log();
+                      }}
+                    />
+                  )}
+                  <span className={styles.selected_text}>{item.fullPath}</span>
+                </div>
                 <Button onClick={() => handleRemoveItem(item)} className={styles.btn_close}>
                   <IcoXclose width={20} height={20} stroke="#131C30" />
                 </Button>

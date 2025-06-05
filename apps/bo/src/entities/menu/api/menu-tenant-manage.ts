@@ -79,12 +79,14 @@ function createTenantMenuCreateByAny(data: any) {
   return {
     menuId: data.menuId,
     sortOrder: data.sortOrder,
-    isUsed: data.isUsed,
+    isUsed: data.tenantIsUsed,
     isMobileExposed: data.isMobileExposed,
     isWebExposed: data.isWebExposed,
     menuScope: data.menuScope,
     tenantId: data.tenantId,
     parentMenuId: data.parentMenuId,
+    menuName: data.menuName,
+    menuDesc: data.menuDesc,
   };
 }
 

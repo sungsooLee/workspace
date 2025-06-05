@@ -371,6 +371,24 @@ export const guideData = [
   //   remarks: '진행중', // 비고
   // },
   {
+    screenName: 'PMS/플랫폼관리/회사관리',
+    pageId: 'pms/group-management',
+    screenId: 'NLP_BO_TMS_1300',
+    pageType: 'Page',
+    completionDate: '2025-06-05',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
+    screenName: 'PMS/플랫폼관리/회사관리/회사등록',
+    pageId: 'pms/group-management-register',
+    screenId: 'NLP_BO_TMS_1300_01',
+    pageType: 'Page',
+    completionDate: '2025-06-05',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
     screenName: 'PMS/플랫폼관리_회사/조직관리',
     pageId: 'pms/menu-platform-company-detail',
     screenId: 'NLP_BO_TMS_1302',
@@ -504,6 +522,15 @@ export const guideData = [
     completionDate: '2025-06-02',
     lastUpdateDate: '',
     remarks: '상세화면은 disabled 차이라 같은 화면임', // 비고
+  },
+  {
+    screenName: 'PMS/약관 관리',
+    pageId: 'pms/terms_management',
+    screenId: 'NLP_BO_TMS-1135',
+    pageType: 'Page',
+    completionDate: '2025-06-04',
+    lastUpdateDate: '',
+    remarks: '', // 비고
   },
   // {
   //   screenName: 'PMS/단축 URL 상세',

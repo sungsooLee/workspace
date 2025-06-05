@@ -3,9 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { com_ever_edu_global_excel_dto_res_ExcelValidationResDto } from '../models/com_ever_edu_global_excel_dto_res_ExcelValidationResDto';
-import type { com_ever_edu_pms_channel_dto_req_ChannelAcceptListReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelAcceptListReqDto';
-import type { com_ever_edu_pms_channel_dto_req_ChannelRequestApprovalReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelRequestApprovalReqDto';
-import type { com_ever_edu_pms_channel_dto_req_ChannelRequestListReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelRequestListReqDto';
+import type { com_ever_edu_pms_channel_dto_req_ChannelRequestApprovalApproveReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelRequestApprovalApproveReqDto';
+import type { com_ever_edu_pms_channel_dto_req_ChannelRequestApprovalRejectReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelRequestApprovalRejectReqDto';
 import type { com_ever_edu_pms_channel_dto_req_ChannelSaveReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelSaveReqDto';
 import type { com_ever_edu_pms_channel_dto_res_ChannelDetailResDto } from '../models/com_ever_edu_pms_channel_dto_res_ChannelDetailResDto';
 import type { com_ever_edu_pms_channel_dto_res_ChannelRandomUrlResDto } from '../models/com_ever_edu_pms_channel_dto_res_ChannelRandomUrlResDto';
@@ -31,6 +30,7 @@ import type { com_ever_edu_pms_form_dto_res_FormResDto$OptionalFormUsage } from 
 import type { com_ever_edu_pms_labelmessage_dto_req_LabelMessageSaveReqDto$LabelMessageDto } from '../models/com_ever_edu_pms_labelmessage_dto_req_LabelMessageSaveReqDto$LabelMessageDto';
 import type { com_ever_edu_pms_labelmessage_dto_req_LabelMessageSearchReqDto$SearchByAdmin } from '../models/com_ever_edu_pms_labelmessage_dto_req_LabelMessageSearchReqDto$SearchByAdmin';
 import type { com_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$DetailOnAdmin';
+import type { com_ever_edu_pms_menu_dto_req_FavoritesMenuDnDRequestDto } from '../models/com_ever_edu_pms_menu_dto_req_FavoritesMenuDnDRequestDto';
 import type { com_ever_edu_pms_menu_dto_req_FavoritesMenuSaveReqDto } from '../models/com_ever_edu_pms_menu_dto_req_FavoritesMenuSaveReqDto';
 import type { com_ever_edu_pms_menu_dto_req_MenuDnDRequestDto } from '../models/com_ever_edu_pms_menu_dto_req_MenuDnDRequestDto';
 import type { com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$MenuDto } from '../models/com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$MenuDto';
@@ -61,12 +61,15 @@ import type { com_ever_edu_pms_notification_dto_res_EmailTemplateResDto } from '
 import type { com_ever_edu_pms_notification_dto_res_MessageQueueEntryResDto } from '../models/com_ever_edu_pms_notification_dto_res_MessageQueueEntryResDto';
 import type { com_ever_edu_pms_notification_dto_res_PeriodicEmailResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_notification_dto_res_PeriodicEmailResDto$DetailOnAdmin';
 import type { com_ever_edu_pms_role_dto_req_MoveRoleReqDto } from '../models/com_ever_edu_pms_role_dto_req_MoveRoleReqDto';
+import type { com_ever_edu_pms_role_dto_req_RoleApplicationApproveReqDto } from '../models/com_ever_edu_pms_role_dto_req_RoleApplicationApproveReqDto';
+import type { com_ever_edu_pms_role_dto_req_RoleApplicationReqDto } from '../models/com_ever_edu_pms_role_dto_req_RoleApplicationReqDto';
 import type { com_ever_edu_pms_role_dto_req_RoleCreateReqDto } from '../models/com_ever_edu_pms_role_dto_req_RoleCreateReqDto';
 import type { com_ever_edu_pms_role_dto_req_RoleMenuApiSaveReqDto } from '../models/com_ever_edu_pms_role_dto_req_RoleMenuApiSaveReqDto';
 import type { com_ever_edu_pms_role_dto_req_RoleUpdateReqDto } from '../models/com_ever_edu_pms_role_dto_req_RoleUpdateReqDto';
 import type { com_ever_edu_pms_role_dto_req_RoleUserGroupReqDto } from '../models/com_ever_edu_pms_role_dto_req_RoleUserGroupReqDto';
 import type { com_ever_edu_pms_role_dto_req_RoleUserReqDto } from '../models/com_ever_edu_pms_role_dto_req_RoleUserReqDto';
 import type { com_ever_edu_pms_role_dto_res_RoleApiResDto } from '../models/com_ever_edu_pms_role_dto_res_RoleApiResDto';
+import type { com_ever_edu_pms_role_dto_res_RoleApplicationResDto } from '../models/com_ever_edu_pms_role_dto_res_RoleApplicationResDto';
 import type { com_ever_edu_pms_role_dto_res_RoleMenuResDto } from '../models/com_ever_edu_pms_role_dto_res_RoleMenuResDto';
 import type { com_ever_edu_pms_role_dto_res_RoleResDto } from '../models/com_ever_edu_pms_role_dto_res_RoleResDto';
 import type { com_ever_edu_pms_role_dto_res_RoleTreeResDto } from '../models/com_ever_edu_pms_role_dto_res_RoleTreeResDto';
@@ -125,6 +128,7 @@ import type { org_springframework_data_domain_PageCom_ever_edu_pms_notification_
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_notification_dto_res_MessageQueueEntryResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_notification_dto_res_MessageQueueEntryResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_notification_dto_res_MessageQueueResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_notification_dto_res_MessageQueueResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_notification_dto_res_PeriodicEmailResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_notification_dto_res_PeriodicEmailResDto$ListOnAdmin';
+import type { org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleApplicationResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleApplicationResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleUserResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleUserResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin';
@@ -575,18 +579,18 @@ export class BoService {
     /**
      * 역할 조회(단건)
      * 역할을 조회한다.
-     * @param roleCode
+     * @param roleId
      * @returns com_ever_edu_pms_role_dto_res_RoleResDto OK
      * @throws ApiError
      */
     public static getRole(
-        roleCode: string,
+        roleId: number,
     ): CancelablePromise<com_ever_edu_pms_role_dto_res_RoleResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/admin/api/v1/roles/{roleCode}',
+            url: '/admin/api/v1/roles/{roleId}',
             path: {
-                'roleCode': roleCode,
+                'roleId': roleId,
             },
             errors: {
                 400: `Bad Request`,
@@ -600,20 +604,20 @@ export class BoService {
     /**
      * 역할 수정
      * 역할을 수정한다.
-     * @param roleCode
+     * @param roleId
      * @param requestBody
      * @returns com_ever_edu_pms_role_dto_res_RoleResDto OK
      * @throws ApiError
      */
     public static updateRole(
-        roleCode: string,
+        roleId: number,
         requestBody: com_ever_edu_pms_role_dto_req_RoleUpdateReqDto,
     ): CancelablePromise<com_ever_edu_pms_role_dto_res_RoleResDto> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/admin/api/v1/roles/{roleCode}',
+            url: '/admin/api/v1/roles/{roleId}',
             path: {
-                'roleCode': roleCode,
+                'roleId': roleId,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -629,18 +633,18 @@ export class BoService {
     /**
      * 역할 삭제
      * 역할을 삭제한다.
-     * @param roleCode
+     * @param roleId
      * @returns any OK
      * @throws ApiError
      */
     public static deleteRole(
-        roleCode: string,
+        roleId: number,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/admin/api/v1/roles/{roleCode}',
+            url: '/admin/api/v1/roles/{roleId}',
             path: {
-                'roleCode': roleCode,
+                'roleId': roleId,
             },
             errors: {
                 400: `Bad Request`,
@@ -1469,26 +1473,35 @@ export class BoService {
      * 사용자 조회(목록)
      * 사용자를 목록을 조회한다.
      * @param pageable
-     * @param userState
+     * @param companyType
+     * @param companyId
+     * @param deptId
      * @param userName
-     * @param companyCode
+     * @param employeeNumber
+     * @param userState
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_UserResDto OK
      * @throws ApiError
      */
     public static findPage2(
         pageable: org_springdoc_core_converters_models_Pageable,
-        userState?: 'WAIT' | 'NORMAL' | 'HALT' | 'LEAVE' | 'DELETE',
+        companyType?: 'CAR' | 'GROUP' | 'HYUNDAI_GLOBAL' | 'HYUNDAI_GLOBAL_DEALER' | 'HYUNDAI_SALES' | 'HYUNDAI_SERVICE' | 'HYUNDAI_PRODUCTION' | 'KIA_GLOBAL' | 'KIA_GLOBAL_DEALER' | 'KIA_SALES' | 'KIA_SERVICE' | 'KIA_PRODUCTION' | 'CP' | 'ETC',
+        companyId?: number,
+        deptId?: number,
         userName?: string,
-        companyCode?: string,
+        employeeNumber?: string,
+        userState?: 'WAIT' | 'NORMAL' | 'HALT' | 'LEAVE' | 'DELETE',
     ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_UserResDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/users',
             query: {
-                'userState': userState,
-                'userName': userName,
-                'companyCode': companyCode,
                 'pageable': pageable,
+                'companyType': companyType,
+                'companyId': companyId,
+                'deptId': deptId,
+                'userName': userName,
+                'employeeNumber': employeeNumber,
+                'userState': userState,
             },
             errors: {
                 400: `Bad Request`,
@@ -1506,7 +1519,7 @@ export class BoService {
      * @returns number Created
      * @throws ApiError
      */
-    public static save(
+    public static createUser(
         requestBody: com_ever_edu_pms_user_dto_req_UserSaveReqDto$SaveByAdminDto,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
@@ -1623,7 +1636,7 @@ export class BoService {
      * 회원가입
      * 신규 사용자를 등록한다.
      * @param requestBody
-     * @returns com_ever_edu_pms_user_dto_res_UserResDto OK
+     * @returns com_ever_edu_pms_user_dto_res_UserResDto Created
      * @throws ApiError
      */
     public static register1(
@@ -1773,14 +1786,14 @@ export class BoService {
     }
     /**
      * 역할 목록 조회
-     * 역할 목록 정보를 조회한다.
+     * 역할 목록을 조회한다.
      * @param pageable
      * @param tenantId
      * @param siteScope
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleResDto OK
      * @throws ApiError
      */
-    public static getRoleList(
+    public static getRoles(
         pageable: org_springdoc_core_converters_models_Pageable,
         tenantId: number,
         siteScope: 'FO' | 'BO',
@@ -1806,7 +1819,7 @@ export class BoService {
      * 역할 생성
      * 역할을 생성한다.
      * @param requestBody
-     * @returns com_ever_edu_pms_role_dto_res_RoleResDto OK
+     * @returns com_ever_edu_pms_role_dto_res_RoleResDto Created
      * @throws ApiError
      */
     public static createRole(
@@ -1829,20 +1842,20 @@ export class BoService {
     /**
      * 역할 사용자 저장
      * 역할 사용자를 저장한다.
-     * @param roleCode
+     * @param roleId
      * @param requestBody
      * @returns any OK
      * @throws ApiError
      */
     public static saveRoleUsers(
-        roleCode: string,
+        roleId: number,
         requestBody: com_ever_edu_pms_role_dto_req_RoleUserReqDto,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/admin/api/v1/roles/{roleCode}/save-users',
+            url: '/admin/api/v1/roles/{roleId}/save-users',
             path: {
-                'roleCode': roleCode,
+                'roleId': roleId,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -1858,20 +1871,20 @@ export class BoService {
     /**
      * 역할 유저그룹 저장
      * 역할 유저그룹을 저장한다.
-     * @param roleCode
+     * @param roleId
      * @param requestBody
      * @returns any OK
      * @throws ApiError
      */
     public static saveRoleUserGroups(
-        roleCode: string,
+        roleId: number,
         requestBody: com_ever_edu_pms_role_dto_req_RoleUserGroupReqDto,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/admin/api/v1/roles/{roleCode}/save-user-groups',
+            url: '/admin/api/v1/roles/{roleId}/save-user-groups',
             path: {
-                'roleCode': roleCode,
+                'roleId': roleId,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -1887,20 +1900,20 @@ export class BoService {
     /**
      * 역할 메뉴, API 저장
      * 역할 메뉴와 API를 저장한다.
-     * @param roleCode
+     * @param roleId
      * @param requestBody
      * @returns any OK
      * @throws ApiError
      */
-    public static saveRoleMenuApi(
-        roleCode: string,
+    public static saveRoleMenuApis(
+        roleId: number,
         requestBody: com_ever_edu_pms_role_dto_req_RoleMenuApiSaveReqDto,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/admin/api/v1/roles/{roleCode}/save-menu-apis',
+            url: '/admin/api/v1/roles/{roleId}/save-menu-apis',
             path: {
-                'roleCode': roleCode,
+                'roleId': roleId,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -1916,21 +1929,112 @@ export class BoService {
     /**
      * 역할 위치 변경
      * 역할 트리에서 역할 위치를 변경한다.
-     * @param roleCode
+     * @param roleId
      * @param requestBody
      * @returns any OK
      * @throws ApiError
      */
     public static moveRole(
-        roleCode: string,
+        roleId: number,
         requestBody: com_ever_edu_pms_role_dto_req_MoveRoleReqDto,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/admin/api/v1/roles/{roleCode}/move',
+            url: '/admin/api/v1/roles/{roleId}/move',
             path: {
-                'roleCode': roleCode,
+                'roleId': roleId,
             },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 역할 신청 목록 조회
+     * 역할 신청 목록을 조회한다.
+     * @param pageable
+     * @param companyId
+     * @param userName
+     * @param employeeNumber
+     * @param roleId
+     * @param status
+     * @param createdDate
+     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleApplicationResDto OK
+     * @throws ApiError
+     */
+    public static getRoleApplications1(
+        pageable: org_springdoc_core_converters_models_Pageable,
+        companyId?: number,
+        userName?: string,
+        employeeNumber?: string,
+        roleId?: number,
+        status?: 'NEW' | 'EXTEND' | 'APPROVED' | 'REJECTED',
+        createdDate?: string,
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleApplicationResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/role-applications',
+            query: {
+                'pageable': pageable,
+                'companyId': companyId,
+                'userName': userName,
+                'employeeNumber': employeeNumber,
+                'roleId': roleId,
+                'status': status,
+                'createdDate': createdDate,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 권한 신청
+     * 권한을 신청한다.
+     * @param requestBody
+     * @returns com_ever_edu_pms_role_dto_res_RoleApplicationResDto Created
+     * @throws ApiError
+     */
+    public static createRoleApplication1(
+        requestBody: com_ever_edu_pms_role_dto_req_RoleApplicationReqDto,
+    ): CancelablePromise<com_ever_edu_pms_role_dto_res_RoleApplicationResDto> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/role-applications',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 역할 신청 승인/반려
+     * 역할 신청을 승인/반려 처리한다.
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static changeRoleApplicationStatus(
+        requestBody: com_ever_edu_pms_role_dto_req_RoleApplicationApproveReqDto,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/role-applications/approve',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -1950,7 +2054,7 @@ export class BoService {
      * @throws ApiError
      */
     public static processApprovalChannelRequestRejected(
-        requestBody: com_ever_edu_pms_channel_dto_req_ChannelRequestApprovalReqDto,
+        requestBody: com_ever_edu_pms_channel_dto_req_ChannelRequestApprovalRejectReqDto,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -1975,7 +2079,7 @@ export class BoService {
      * @throws ApiError
      */
     public static processApprovalChannelRequestApproved(
-        requestBody: com_ever_edu_pms_channel_dto_req_ChannelRequestApprovalReqDto,
+        requestBody: com_ever_edu_pms_channel_dto_req_ChannelRequestApprovalApproveReqDto,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -2186,22 +2290,13 @@ export class BoService {
     /**
      * 즐겨찾기 메뉴 조회
      * 즐겨찾기 메뉴를 조회한다.
-     * @param userNo
-     * @param tenantId
      * @returns com_ever_edu_pms_menu_dto_res_FavoritesMenuResDto$ListOnAdmin OK
      * @throws ApiError
      */
-    public static getFavoritesMenuList(
-        userNo: number,
-        tenantId?: number,
-    ): CancelablePromise<Array<com_ever_edu_pms_menu_dto_res_FavoritesMenuResDto$ListOnAdmin>> {
+    public static getFavoritesMenuList(): CancelablePromise<Array<com_ever_edu_pms_menu_dto_res_FavoritesMenuResDto$ListOnAdmin>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/menus/favorites',
-            query: {
-                'tenantId': tenantId,
-                'userNo': userNo,
-            },
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
@@ -2224,6 +2319,35 @@ export class BoService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/admin/api/v1/menus/favorites',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 즐겨찾기 메뉴 순서변경
+     * 즐겨찾기 메뉴 순서변경
+     * @param favoritesMenuId
+     * @param requestBody
+     * @returns number OK
+     * @throws ApiError
+     */
+    public static updateFavoritesMenuDnD(
+        favoritesMenuId: number,
+        requestBody: com_ever_edu_pms_menu_dto_req_FavoritesMenuDnDRequestDto,
+    ): CancelablePromise<number> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/menus/favorites/{favoritesMenuId}/dnd',
+            path: {
+                'favoritesMenuId': favoritesMenuId,
+            },
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -2839,8 +2963,8 @@ export class BoService {
         });
     }
     /**
-     * 교육장소 삭제
-     * 교육장소 정보를 삭제한다.
+     * 채널 삭제
+     * 채널 정보를 삭제한다.
      * @param channelId
      * @returns number OK
      * @throws ApiError
@@ -2853,56 +2977,6 @@ export class BoService {
             url: '/admin/api/v1/channel/{channelId}',
             path: {
                 'channelId': channelId,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 사용자 조회(단건)
-     * 사용자를 조회한다.
-     * @param userId
-     * @returns com_ever_edu_pms_user_dto_res_UserResDto OK
-     * @throws ApiError
-     */
-    public static findByUserId(
-        userId: number,
-    ): CancelablePromise<com_ever_edu_pms_user_dto_res_UserResDto> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/users/{userId}',
-            path: {
-                'userId': userId,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 사용자 삭제
-     * 사용자를 삭제한다.
-     * @param userId
-     * @returns void
-     * @throws ApiError
-     */
-    public static delete(
-        userId: number,
-    ): CancelablePromise<void> {
-        return __request(OpenAPI, {
-            method: 'DELETE',
-            url: '/admin/api/v1/users/{userId}',
-            path: {
-                'userId': userId,
             },
             errors: {
                 400: `Bad Request`,
@@ -3049,6 +3123,56 @@ export class BoService {
         });
     }
     /**
+     * 사용자 조회(단건)
+     * 사용자를 조회한다.
+     * @param uuid
+     * @returns com_ever_edu_pms_user_dto_res_UserResDto OK
+     * @throws ApiError
+     */
+    public static getUser(
+        uuid: string,
+    ): CancelablePromise<com_ever_edu_pms_user_dto_res_UserResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/users/{uuid}',
+            path: {
+                'uuid': uuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 사용자 삭제
+     * 사용자를 삭제한다.
+     * @param uuid
+     * @returns void
+     * @throws ApiError
+     */
+    public static deleteUser(
+        uuid: string,
+    ): CancelablePromise<void> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/admin/api/v1/users/{uuid}',
+            path: {
+                'uuid': uuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * 가입된 휴대전화 번호 확인
      * 가입된 휴대전화 번호인지 확인한다.
      * @param name
@@ -3172,7 +3296,7 @@ export class BoService {
      * @returns com_ever_edu_pms_user_dto_res_UserGroupDto OK
      * @throws ApiError
      */
-    public static findByUserId1(): CancelablePromise<Array<com_ever_edu_pms_user_dto_res_UserGroupDto>> {
+    public static findByUserId(): CancelablePromise<Array<com_ever_edu_pms_user_dto_res_UserGroupDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/userGroup/userGroups',
@@ -3267,19 +3391,19 @@ export class BoService {
      * 역할 사용자 조회
      * 역할 사용자를 조회한다.
      * @param pageable
-     * @param roleCode
+     * @param roleId
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleUserResDto OK
      * @throws ApiError
      */
-    public static getRoleUserList(
+    public static getRoleUsers(
         pageable: org_springdoc_core_converters_models_Pageable,
-        roleCode: string,
+        roleId: number,
     ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleUserResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/admin/api/v1/roles/{roleCode}/users',
+            url: '/admin/api/v1/roles/{roleId}/users',
             path: {
-                'roleCode': roleCode,
+                'roleId': roleId,
             },
             query: {
                 'pageable': pageable,
@@ -3296,18 +3420,18 @@ export class BoService {
     /**
      * 역할 유저그룹 조회
      * 역할 유저그룹을 조회한다.
-     * @param roleCode
+     * @param roleId
      * @returns com_ever_edu_pms_role_dto_res_RoleUserGroupResDto OK
      * @throws ApiError
      */
-    public static getRoleUserGroupList(
-        roleCode: string,
+    public static getRoleUserGroups(
+        roleId: number,
     ): CancelablePromise<Array<com_ever_edu_pms_role_dto_res_RoleUserGroupResDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/admin/api/v1/roles/{roleCode}/user-groups',
+            url: '/admin/api/v1/roles/{roleId}/user-groups',
             path: {
-                'roleCode': roleCode,
+                'roleId': roleId,
             },
             errors: {
                 400: `Bad Request`,
@@ -3321,18 +3445,18 @@ export class BoService {
     /**
      * 역할 메뉴 조회
      * 역할 메뉴를 조회한다.
-     * @param roleCode
+     * @param roleId
      * @returns com_ever_edu_pms_role_dto_res_RoleMenuResDto OK
      * @throws ApiError
      */
-    public static getRoleMenuList(
-        roleCode: string,
+    public static getRoleMenus(
+        roleId: number,
     ): CancelablePromise<Array<com_ever_edu_pms_role_dto_res_RoleMenuResDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/admin/api/v1/roles/{roleCode}/menus',
+            url: '/admin/api/v1/roles/{roleId}/menus',
             path: {
-                'roleCode': roleCode,
+                'roleId': roleId,
             },
             errors: {
                 400: `Bad Request`,
@@ -3346,20 +3470,20 @@ export class BoService {
     /**
      * 역할 API 조회
      * 역할 API를 조회한다.
-     * @param roleCode
+     * @param roleId
      * @param menuId
      * @returns com_ever_edu_pms_role_dto_res_RoleApiResDto OK
      * @throws ApiError
      */
-    public static getRoleApiList(
-        roleCode: string,
+    public static getRoleApis(
+        roleId: number,
         menuId: number,
     ): CancelablePromise<Array<com_ever_edu_pms_role_dto_res_RoleApiResDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/admin/api/v1/roles/{roleCode}/apis',
+            url: '/admin/api/v1/roles/{roleId}/apis',
             path: {
-                'roleCode': roleCode,
+                'roleId': roleId,
             },
             query: {
                 'menuId': menuId,
@@ -3402,20 +3526,73 @@ export class BoService {
         });
     }
     /**
+     * 역할 신청 조회(단건)
+     * 역할 신청을 조회한다.
+     * @param id
+     * @returns com_ever_edu_pms_role_dto_res_RoleApplicationResDto OK
+     * @throws ApiError
+     */
+    public static getRoleApplication1(
+        id: number,
+    ): CancelablePromise<com_ever_edu_pms_role_dto_res_RoleApplicationResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/role-applications/{id}',
+            path: {
+                'id': id,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * 채널신청 목록 조회
      * 채널신청 목록 정보를 조회한다.
-     * @param paramDto
      * @param page Zero-based page index (0..N)
      * @param size The size of the page to be returned
      * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param channelRequestId 채널신청ID
+     * @param channelName 채널 명
+     * @param tenantId 테넌트
+     * @param tenantName 테넌트이름
+     * @param approvalStatusType 신청상태
+     * @param isSecretChannel 비공개채널여부
+     * @param requesterId 신청자Id
+     * @param requesterEmployeeNumber 신청자 사원번호
+     * @param requesterName 신청자
+     * @param companyName 회사명
+     * @param departmentName 조직정보
+     * @param regStrDate 신청 검색시작일(yyyyMMdd)
+     * @param regEndDate 신청 검색종료일(yyyyMMdd)
+     * @param approvalStrDate 결재일 검색시작일(yyyyMMdd)
+     * @param approvalEndDate 결재일 검색종료일(yyyyMMdd)
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelRequestListResDto OK
      * @throws ApiError
      */
     public static selectChannelRequestList(
-        paramDto: com_ever_edu_pms_channel_dto_req_ChannelRequestListReqDto,
         page?: number,
         size: number = 10,
         sort?: Array<string>,
+        channelRequestId?: string,
+        channelName?: string,
+        tenantId?: string,
+        tenantName?: string,
+        approvalStatusType?: string,
+        isSecretChannel?: string,
+        requesterId?: string,
+        requesterEmployeeNumber?: string,
+        requesterName?: string,
+        companyName?: string,
+        departmentName?: string,
+        regStrDate?: string,
+        regEndDate?: string,
+        approvalStrDate?: string,
+        approvalEndDate?: string,
     ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelRequestListResDto> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -3424,7 +3601,21 @@ export class BoService {
                 'page': page,
                 'size': size,
                 'sort': sort,
-                'paramDto': paramDto,
+                'channelRequestId': channelRequestId,
+                'channelName': channelName,
+                'tenantId': tenantId,
+                'tenantName': tenantName,
+                'approvalStatusType': approvalStatusType,
+                'isSecretChannel': isSecretChannel,
+                'requesterId': requesterId,
+                'requesterEmployeeNumber': requesterEmployeeNumber,
+                'requesterName': requesterName,
+                'companyName': companyName,
+                'departmentName': departmentName,
+                'regStrDate': regStrDate,
+                'regEndDate': regEndDate,
+                'approvalStrDate': approvalStrDate,
+                'approvalEndDate': approvalEndDate,
             },
             errors: {
                 400: `Bad Request`,
@@ -3442,7 +3633,7 @@ export class BoService {
      * @returns com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto OK
      * @throws ApiError
      */
-    public static selectChannelReqeustInfo(
+    public static selectChannelReqeustInfo1(
         channelRequestUuid: string,
     ): CancelablePromise<com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto> {
         return __request(OpenAPI, {
@@ -3462,60 +3653,76 @@ export class BoService {
         });
     }
     /**
-     * 채널접수 목록 조회(팝업용)
-     * 채널접수 목록 중 접수(승이)되어 채널 생성전 목록 정보를 조회한다.
-     * @param paramDto
+     * 채널신청 목록 조회(popup)
+     * 채널신청 목록 정보를 조회한다.
      * @param page Zero-based page index (0..N)
      * @param size The size of the page to be returned
      * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param channelRequestId 채널신청ID
+     * @param channelName 채널 명
+     * @param tenantId 테넌트
+     * @param tenantName 테넌트이름
+     * @param approvalStatusType 신청상태
+     * @param isSecretChannel 비공개채널여부
+     * @param requesterId 신청자Id
+     * @param requesterEmployeeNumber 신청자 사원번호
+     * @param requesterName 신청자
+     * @param companyName 회사명
+     * @param departmentName 조직정보
+     * @param regStrDate 신청 검색시작일(yyyyMMdd)
+     * @param regEndDate 신청 검색종료일(yyyyMMdd)
+     * @param approvalStrDate 결재일 검색시작일(yyyyMMdd)
+     * @param approvalEndDate 결재일 검색종료일(yyyyMMdd)
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelRequestListResDto OK
      * @throws ApiError
      */
-    public static selectChannelAcceptList(
-        paramDto: com_ever_edu_pms_channel_dto_req_ChannelAcceptListReqDto,
+    public static selectChannelRequestPopupList(
         page?: number,
         size: number = 10,
         sort?: Array<string>,
+        channelRequestId?: string,
+        channelName?: string,
+        tenantId?: string,
+        tenantName?: string,
+        approvalStatusType?: string,
+        isSecretChannel?: string,
+        requesterId?: string,
+        requesterEmployeeNumber?: string,
+        requesterName?: string,
+        companyName?: string,
+        departmentName?: string,
+        regStrDate?: string,
+        regEndDate?: string,
+        approvalStrDate?: string,
+        approvalEndDate?: string,
     ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelRequestListResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/admin/api/v1/request/channel/accepts',
+            url: '/admin/api/v1/request/channel/popup',
             query: {
                 'page': page,
                 'size': size,
                 'sort': sort,
-                'paramDto': paramDto,
+                'channelRequestId': channelRequestId,
+                'channelName': channelName,
+                'tenantId': tenantId,
+                'tenantName': tenantName,
+                'approvalStatusType': approvalStatusType,
+                'isSecretChannel': isSecretChannel,
+                'requesterId': requesterId,
+                'requesterEmployeeNumber': requesterEmployeeNumber,
+                'requesterName': requesterName,
+                'companyName': companyName,
+                'departmentName': departmentName,
+                'regStrDate': regStrDate,
+                'regEndDate': regEndDate,
+                'approvalStrDate': approvalStrDate,
+                'approvalEndDate': approvalEndDate,
             },
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 채널접수 정보 조회
-     * 채널접수 상세 정보를 조회한다.
-     * @param channelAcceptUuid
-     * @returns com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto OK
-     * @throws ApiError
-     */
-    public static selectChannelAcceptInfo(
-        channelAcceptUuid: string,
-    ): CancelablePromise<com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/request/channel/accepts/{channelAcceptUuid}',
-            path: {
-                'channelAcceptUuid': channelAcceptUuid,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },
@@ -3606,7 +3813,7 @@ export class BoService {
      */
     public static findMultilingualJson(
         locale: string,
-        keyTypeCode?: 'COMMON_CODE' | 'LEARNER_MENU' | 'HRD_CENTER_MENU' | 'LABEL' | 'CATEGORY' | 'MESSAGE',
+        keyTypeCode?: 'SYSTEM_COMMON_CODE' | 'LEARNER_MENU' | 'HRD_CENTER_MENU' | 'LABEL' | 'MESSAGE',
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -3635,7 +3842,7 @@ export class BoService {
      * @throws ApiError
      */
     public static exportExcel(
-        keyTypeCode: 'COMMON_CODE' | 'LEARNER_MENU' | 'HRD_CENTER_MENU' | 'LABEL' | 'CATEGORY' | 'MESSAGE',
+        keyTypeCode: 'SYSTEM_COMMON_CODE' | 'LEARNER_MENU' | 'HRD_CENTER_MENU' | 'LABEL' | 'MESSAGE',
         targetLocale: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -3664,7 +3871,7 @@ export class BoService {
      * @throws ApiError
      */
     public static existsMessageCode(
-        keyTypeCode: 'COMMON_CODE' | 'LEARNER_MENU' | 'HRD_CENTER_MENU' | 'LABEL' | 'CATEGORY' | 'MESSAGE',
+        keyTypeCode: 'SYSTEM_COMMON_CODE' | 'LEARNER_MENU' | 'HRD_CENTER_MENU' | 'LABEL' | 'MESSAGE',
         messageCode: string,
     ): CancelablePromise<boolean> {
         return __request(OpenAPI, {
@@ -4346,18 +4553,18 @@ export class BoService {
     /**
      * 즐겨찾기 메뉴 삭제
      * 즐겨찾기 메뉴를 삭제한다.
-     * @param favoritesMenuId
+     * @param menuId
      * @returns any OK
      * @throws ApiError
      */
     public static deleteFavoritesMenu(
-        favoritesMenuId: number,
+        menuId: number,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/admin/api/v1/menus/favorites/{favoritesMenuId}',
+            url: '/admin/api/v1/menus/favorites/{menuId}',
             path: {
-                'favoritesMenuId': favoritesMenuId,
+                'menuId': menuId,
             },
             errors: {
                 400: `Bad Request`,

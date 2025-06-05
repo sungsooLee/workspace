@@ -9,6 +9,7 @@ export type ModalSize =
   | 'lg'
   | 'xl'
   | 'full'
+  | 'respon'
   | 'm_full'
   | 'm_bottom_sheet'; // s : 400px , sm : 600px , md : 800px, lg : 1024px, xl : 1400px, m_full : 모바일 full , m_bottom_sheet : 모바일 bottom sheet
 export type ModalHeight = 'auto' | 'sm' | 'md' | 'lg' | 'full';

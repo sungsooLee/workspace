@@ -21,7 +21,7 @@ import { useTranslation } from '@entities/translation/service/translation.hook';
 import { t } from 'i18next';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
-import { ExcelButtons } from '@shared/ui';
+import { GridExcelButtons } from '@shared/ui/excel';
 import { TranslationStatusPopup } from '../../../../../features/platform/system/multilingual/translation-status-popup';
 
 export const Route = createFileRoute('/_layout/platform/system/multilingual/')({
@@ -104,7 +104,7 @@ function RouteComponent() {
   }, [data]);
 
   const customExcelButtons = (
-    <ExcelButtons
+    <GridExcelButtons
       showUpload={true}
       showDownload={true}
       uploadUrl="/multilingual/exportExcel"
