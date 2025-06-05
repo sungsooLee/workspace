@@ -1,14 +1,25 @@
-import { useRouter } from '@tanstack/react-router';
+import { useEffect } from 'react';
+import { useRouter, useRouterState, Link } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { Button, GridBox, useGridBox } from '@learnway/ui';
-import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 
+import { SearchBox } from '@shared/ui/search-box';
+
 import { queryOptions as companyQueryOptions } from '@entities/companies/service/companies.queries';
+
+type PageFunction = {
+  linkClick: (companyCode: string) => void;
+};
+const _global: PageFunction = {
+  linkClick: (companyCode) => {
+    return;
+  },
+};
 
 /**
  * NLP_BO_TMS_1111_01 : 임시 회사 api 호출
@@ -16,94 +27,43 @@ import { queryOptions as companyQueryOptions } from '@entities/companies/service
  */
 const TenantCompanyOrganizationListComponent = ({ rootPath }: { rootPath: string }) => {
   const router = useRouter();
+  const routerState = useRouterState();
 
-  const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
-  const { config: gConfig, gridFetch } = useGridBox(gridConfig);
+  const {
+    provider: searchProvider,
+    onFormChange,
+    onFormValid,
+    getValues,
+  } = useSearchBox(searchConfig);
+  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
 
-  const handleCompanyNameClick = (companyId: number) => {
+  _global.linkClick = (companyCode: string) => {
+    console.log('getValues', getValues());
     router.navigate({
       to: `${rootPath}/tenant/organization/detail`,
       state: {
-        companyId: companyId,
+        companyCode: companyCode,
         listParam: getValues(),
       },
     });
   };
+
   const handleOnSearch = (data: any) => {
-    console.log('search', data);
     gridFetch(data);
   };
 
-  //Column Helper 정의
-  const columnHelper = createColumnHelper<any>();
-  const columns = [
-    columnHelper.accessor('numbering', {
-      id: 'numbering',
-      cell: ({ row }) => row.index,
-      header: 'NO.',
-      size: 64,
-    }),
-    columnHelper.accessor('tenant', {
-      id: 'tenant',
-      cell: (info) => {
-        return <strong>{info.row.original.c1}</strong>;
-      },
-      header: t('테넌트'),
-      size: 180,
-    }),
-    columnHelper.accessor('name', {
-      id: 'name',
-      header: t('회사명'),
-      cell: (info) => {
-        return (
-          <Button
-            className="link"
-            onClick={() => handleCompanyNameClick(info.row.original.companyId)}
-          >
-            {info.row.original.name}
-          </Button>
-        );
-      },
-      size: 180,
-    }),
-    columnHelper.accessor('c3', {
-      id: 'c3',
-      header: t('HR 연동 여부'),
-      size: 180,
-    }),
-    columnHelper.accessor('c4', {
-      id: 'c4',
-      header: t('HR 연동 방식'),
-      size: 180,
-    }),
-    columnHelper.accessor('c5', {
-      id: 'c5',
-      header: t('등록자'),
-      size: 180,
-    }),
-    columnHelper.accessor('c6', {
-      id: 'c6',
-      header: t('등록일'),
-      size: 180,
-      cell: (info) => {
-        return getDateToString(new Date(info.getValue() as string), DATE_TIME_FORMAT.DATETIME_SEC);
-      },
-    }),
-    columnHelper.accessor('c7', {
-      id: 'c7',
-      header: t('수정자'),
-      size: 180,
-    }),
-    columnHelper.accessor('c8', {
-      id: 'c8',
-      header: t('수정일'),
-      size: 180,
-      cell: (info) => {
-        return getDateToString(new Date(info.getValue() as string), DATE_TIME_FORMAT.DATETIME_SEC);
-      },
-    }),
-  ] as ColumnDef<any, unknown>[];
-
+  useEffect(() => {
+    const init = async () => {
+      const listParam = routerState.location.state.listParam;
+      if (listParam) {
+        onFormChange(listParam);
+        if (await onFormValid()) {
+          handleOnSearch(getValues());
+        }
+      }
+    };
+    init();
+  }, []);
   return (
     <>
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
@@ -128,7 +88,7 @@ const searchConfig: SearchBoxConfig = {
         value: '',
       },
       {
-        name: 'companyName',
+        name: 'name',
         type: 'text',
         label: t('회사명'),
         value: '',
@@ -157,7 +117,7 @@ const searchConfig: SearchBoxConfig = {
 };
 
 const gridConfig = {
-  query: companyQueryOptions.all,
+  query: companyQueryOptions.list,
   columns: [],
   data: [],
 
@@ -167,3 +127,62 @@ const gridConfig = {
     totalRows: 0,
   },
 };
+
+const columnHelper = createColumnHelper<any>();
+const columns = [
+  columnHelper.accessor('companyType', {
+    header: t('그룹'),
+    cell: (info) => t('pms.company.CompanyType.' + info.getValue()),
+    enableGrouping: false,
+  }),
+  columnHelper.accessor('isUseLinkageSystem', {
+    cell: (info) => {
+      return info.getValue() ? '자동 관리' : '수동 관리';
+    },
+    header: '데이터 관리 방식',
+  }),
+  columnHelper.accessor('name', {
+    header: t('회사명'),
+    cell: (info) => (
+      <Button
+        className="link"
+        onClick={() => {
+          _global.linkClick(info.row.original.companyCode as string);
+        }}
+        label={info.getValue() as string}
+      />
+    ),
+  }),
+  columnHelper.accessor('useYn', {
+    header: t('회사정보 사용'),
+    cell: (info) => (info.getValue() ? t('사용') : t('미사용')), // API 확인
+    enableGrouping: false,
+  }),
+  columnHelper.accessor('createdBy', {
+    header: t('등록자'),
+    cell: (info) => (info.row.original.isUseLinkageSystem ? '시스템' : info.row.original.createdBy),
+    enableGrouping: false,
+  }),
+  columnHelper.accessor('createdDate', {
+    header: t('등록일'),
+    cell: (info) =>
+      info.getValue() === null
+        ? ''
+        : getDateToString(new Date(info.getValue() as string), DATE_TIME_FORMAT.DATETIME_SEC),
+    enableGrouping: false,
+  }),
+  columnHelper.accessor('lastModifiedBy', {
+    header: t('수정자'),
+    cell: (info) =>
+      info.row.original.isUseLinkageSystem ? '시스템' : info.row.original.lastModifiedBy,
+    enableGrouping: false,
+  }),
+  columnHelper.accessor('modifiedDate', {
+    header: t('수정일'),
+    cell: (info) =>
+      info.getValue() === null
+        ? ''
+        : getDateToString(new Date(info.getValue() as string), DATE_TIME_FORMAT.DATETIME_SEC),
+    enableGrouping: false,
+  }),
+] as ColumnDef<any, unknown>[];

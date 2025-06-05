@@ -19,7 +19,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { queryOptions as companyQueryOptions } from '@entities/companies/service/companies.queries';
 
 /**
- * 화면번호: NLP_BO_PMS_1110
+ * 화면번호: NLP_BO_TMS_1001_19_01
  * @returns
  */
 const CompanyShuttleComponent = () => {

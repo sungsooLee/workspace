@@ -6,13 +6,9 @@ import { t } from 'i18next';
 import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 
-import { Tabs } from '@learnway/ui';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
-
 import {
   Button,
   ChipListModalSelectorFormField,
@@ -21,12 +17,20 @@ import {
   RadioGroupFormField,
   TextareaFormField,
   TreeBox,
+  Tabs,
   TreeType,
   TreeNode,
 } from '@learnway/ui';
+import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 
 import { ContentsHistoryInfoFormField, FormRow, FormSubTitle, SwitchFormField } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
+
+import { isEqual } from 'lodash';
+
+import { transformDepartmentApiDataToTreeData } from '@features/platform/company/service/company-detail-tree';
+
+import { useGetCompanyDepartmentTree } from '@entities/department/service/department.hook';
 
 export enum EnOrganizationShowType {
   check = 'check',
@@ -41,9 +45,20 @@ enum EnTabKeys {
  * 화면번호: NLP_BO_TMS_1111_03 테넌트-회사조직
  * @returns
  */
-const TenantCompanyOrganizationTreeComponent = ({ showType }: { showType: string }) => {
-  const [roleTreeData, setRoleTreeData] = useState([]);
+const TenantCompanyOrganizationTreeComponent = ({
+  companyCode,
+  showType,
+}: {
+  companyCode: string;
+  showType: string;
+}) => {
   const router = useRouter();
+
+  const [companyDeparmentTree, setCompanyDepartmentTree] = useState<any>();
+
+  const [deptTreeData, setDeptTreeData] = useState([]);
+
+  const { data: departmentTreeData, refetch } = useGetCompanyDepartmentTree(companyCode);
 
   const handleTreeAction = (events: any) => {
     switch (events.type) {
@@ -64,10 +79,18 @@ const TenantCompanyOrganizationTreeComponent = ({ showType }: { showType: string
       content: '유저',
     },
   ];
+
+  useEffect(() => {
+    if (departmentTreeData) {
+      const transformedData = transformDepartmentApiDataToTreeData(departmentTreeData);
+      setDeptTreeData(transformedData);
+    }
+  }, [departmentTreeData]);
+
   return (
     <SectionLayout contentsRatio={'thirty'}>
       <TreeBox
-        data={roleTreeData}
+        data={deptTreeData}
         treeId="1"
         type="SHUTTLE_LIST"
         showSearchKeyword
