@@ -3,16 +3,16 @@ import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.m
 import { FC, useEffect, useState } from 'react';
 
 const DateRangeFormFieldComponent: FC<any> = ({ value, onChange, onChangeGuideText }) => {
-  const [date, setDate] = useState(value.from ?? undefined);
-  const [date2, setDate2] = useState(value.to ?? undefined);
+  const [from, setFrom] = useState(value.from ?? undefined);
+  const [to, setTo] = useState(value.to ?? undefined);
   const handleDate = (value: any) => {
-    onChange({ from: value, to: date });
-    setDate(value);
+    onChange({ from: value, to: to });
+    setFrom(value);
   };
 
   const handleDate2 = (value: any) => {
-    onChange({ from: date, to: value });
-    setDate2(value);
+    onChange({ from: from, to: value });
+    setTo(value);
   };
 
   useEffect(() => {
@@ -21,9 +21,19 @@ const DateRangeFormFieldComponent: FC<any> = ({ value, onChange, onChangeGuideTe
 
   return (
     <div className={searchStyles.datepicker_wrap}>
-      <DatePicker onChange={handleDate} value={date} className={searchStyles.datepicker_item} />
+      <DatePicker
+        displayType={'day'}
+        onChange={handleDate}
+        value={from}
+        className={searchStyles.datepicker_item}
+      />
       <span className={searchStyles.hyphen}>-</span>
-      <DatePicker onChange={handleDate2} value={date2} className={searchStyles.datepicker_item} />
+      <DatePicker
+        displayType={'day'}
+        onChange={handleDate2}
+        value={to}
+        className={searchStyles.datepicker_item}
+      />
     </div>
   );
 };

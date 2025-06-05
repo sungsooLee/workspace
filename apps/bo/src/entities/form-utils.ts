@@ -14,4 +14,12 @@ export const formUtils = {
     }
     return getDateToString(now);
   },
+  nowDate: (props?: NowProps) => {
+    let now = new Date();
+    if (props) {
+      const { unit = 'day', offset = 0 } = props;
+      now = dateCalculator(now, unit, offset);
+    }
+    return now;
+  },
 };

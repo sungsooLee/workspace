@@ -18,23 +18,26 @@ export const GridBody = <T extends object>({
 }: GridBodyProps<T>) => {
   return (
     <tbody>
-      {table.getRowModel().rows.map((row) => (
-        <tr
-          key={row.id}
-          className={cn(row.getIsSelected() && styles.selected)}
-          onClick={() => !row.getIsGrouped() && !disabledSelectionToggle && row.toggleSelected()}
-        >
-          {row.getVisibleCells().map((cell: Cell<T, unknown>) => (
-            <GridCell
-              key={cell.id}
-              row={row}
-              cell={cell}
-              lastPinnedColumnId={lastPinnedColumnId}
-              disabledSelectionToggle={disabledSelectionToggle}
-            />
-          ))}
-        </tr>
-      ))}
+      {table.getRowModel().rows.map((row) => {
+        const isSubRow = row.depth > 0;
+        return (
+          <tr
+            key={row.id}
+            className={cn(row.getIsSelected() && styles.selected, isSubRow && styles.appended)}
+            onClick={() => !row.getIsGrouped() && !disabledSelectionToggle && row.toggleSelected()}
+          >
+            {row.getVisibleCells().map((cell: Cell<T, unknown>) => (
+              <GridCell
+                key={cell.id}
+                row={row}
+                cell={cell}
+                lastPinnedColumnId={lastPinnedColumnId}
+                disabledSelectionToggle={disabledSelectionToggle}
+              />
+            ))}
+          </tr>
+        );
+      })}
     </tbody>
   );
 };

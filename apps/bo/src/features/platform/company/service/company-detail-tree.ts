@@ -1,6 +1,10 @@
 export const transformDepartmentApiDataToTreeData = (apiData: any) => {
   //const dataArray = Array.isArray(apiData) ? apiData : [apiData];
-  const dataArray = [{ deptCode: 'root', deptName: 'ROOT', childList: [...apiData] }];
+  const root = { deptCode: 'root', deptName: 'ROOT', childList: [] };
+  if (apiData && apiData.length > 0) {
+    root.childList = apiData;
+  }
+  const dataArray = [root];
 
   const transform = (nodes: any) => {
     if (!nodes) return [];
