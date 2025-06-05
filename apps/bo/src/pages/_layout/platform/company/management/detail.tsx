@@ -18,8 +18,6 @@ function RouteComponent() {
   const routerState = useRouterState();
   const companyCode = routerState.location.state?.companyCode;
 
-  //if (!companyCode) router.navigate({ to: '/platform/company' });
-
   const [selectedTabKey, setSelectedTabKey] = useState('company');
 
   useEffect(() => {
