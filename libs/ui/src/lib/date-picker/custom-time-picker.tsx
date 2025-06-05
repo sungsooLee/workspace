@@ -343,15 +343,43 @@ const StandaloneTimeInput = ({
   const [selectedMinute, setSelectedMinute] = useState(currentDate.getMinutes());
   const [selectedSecond, setSelectedSecond] = useState(currentDate.getSeconds());
 
-  const hourScrollRef = useRef<HTMLDivElement>(null);
-  const minuteScrollRef = useRef<HTMLDivElement>(null);
-  const secondScrollRef = useRef<HTMLDivElement>(null);
+  // 스크롤 위치 로직 변경 주석
+  // const hourScrollRef = useRef<HTMLDivElement>(null);
+  // const minuteScrollRef = useRef<HTMLDivElement>(null);
+  // const secondScrollRef = useRef<HTMLDivElement>(null);
 
   const formatNumber = (num: number) => String(num).padStart(2, '0');
 
   const hourOptions = Array.from({ length: 24 }, (_, i) => i);
   const minuteOptions = Array.from({ length: 60 / minuteStep }, (_, i) => i * minuteStep);
   const secondOptions = Array.from({ length: 60 / secondStep }, (_, i) => i * secondStep);
+
+  const hourOptionsRefs = useRef<(HTMLDivElement | null)[]>([]); // 시 Item Ref - 스크롤 처리
+  const minuteOptionsRefs = useRef<(HTMLDivElement | null)[]>([]); // 분 Item Ref - 스크롤 처리
+  const secondOptionsRefs = useRef<(HTMLDivElement | null)[]>([]); // 초 Item Ref - 스크롤 처리
+
+  // 시 - 스크롤 처리
+  const scrollToHour = (index: number) => {
+    console.log('scrollToHour', index);
+    hourOptionsRefs.current?.[index]?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    });
+  };
+  // 분 - 스크롤 처리
+  const scrollToMinute = (index: number) => {
+    minuteOptionsRefs.current?.[index]?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    });
+  };
+  // 초 - 스크롤 처리
+  const scrollToSecond = (index: number) => {
+    secondOptionsRefs.current?.[index]?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    });
+  };
 
   // inputStage prop이 변경되면 selectionStep 업데이트
   useEffect(() => {
@@ -367,31 +395,37 @@ const StandaloneTimeInput = ({
       setSelectedMinute(date.getMinutes());
       setSelectedSecond(date.getSeconds());
 
+      // 초기 스크롤 위치
+      scrollToHour(date.getHours());
+      scrollToMinute(date.getMinutes());
+      scrollToSecond(date.getSeconds());
+
+      // 스크롤 위치 로직 변경 주석
       // 스크롤 위치도 업데이트
-      if (hourScrollRef.current) {
-        const hourElement = hourScrollRef.current.querySelector(`[data-hour="${date.getHours()}"]`);
-        if (hourElement) {
-          hourElement.scrollIntoView({ block: 'center', behavior: 'smooth' });
-        }
-      }
+      // if (hourScrollRef.current) {
+      //   const hourElement = hourScrollRef.current.querySelector(`[data-hour="${date.getHours()}"]`);
+      //   if (hourElement) {
+      //     hourElement.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      //   }
+      // }
 
-      if (minuteScrollRef.current) {
-        const minuteElement = minuteScrollRef.current.querySelector(
-          `[data-minute="${date.getMinutes()}"]`,
-        );
-        if (minuteElement) {
-          minuteElement.scrollIntoView({ block: 'center', behavior: 'smooth' });
-        }
-      }
+      // if (minuteScrollRef.current) {
+      //   const minuteElement = minuteScrollRef.current.querySelector(
+      //     `[data-minute="${date.getMinutes()}"]`,
+      //   );
+      //   if (minuteElement) {
+      //     minuteElement.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      //   }
+      // }
 
-      if (showSeconds && secondScrollRef.current) {
-        const secondElement = secondScrollRef.current.querySelector(
-          `[data-second="${date.getSeconds()}"]`,
-        );
-        if (secondElement) {
-          secondElement.scrollIntoView({ block: 'center', behavior: 'smooth' });
-        }
-      }
+      // if (showSeconds && secondScrollRef.current) {
+      //   const secondElement = secondScrollRef.current.querySelector(
+      //     `[data-second="${date.getSeconds()}"]`,
+      //   );
+      //   if (secondElement) {
+      //     secondElement.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      //   }
+      // }
     }
   }, [date, showSeconds]);
 
@@ -400,17 +434,18 @@ const StandaloneTimeInput = ({
     setSelectedHour(h);
     setSelectionStep('minute');
 
+    // 스크롤 위치 로직 변경 주석
     // 분 영역으로 자동 스크롤
-    setTimeout(() => {
-      if (minuteScrollRef.current) {
-        const selectedElement = minuteScrollRef.current.querySelector(
-          `[data-minute="${selectedMinute}"]`,
-        );
-        if (selectedElement) {
-          selectedElement.scrollIntoView({ block: 'center', behavior: 'smooth' });
-        }
-      }
-    }, 100);
+    // setTimeout(() => {
+    //   if (minuteScrollRef.current) {
+    //     const selectedElement = minuteScrollRef.current.querySelector(
+    //       `[data-minute="${selectedMinute}"]`,
+    //     );
+    //     if (selectedElement) {
+    //       selectedElement.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    //     }
+    //   }
+    // }, 100);
   };
 
   const handleMinuteClick = (m: number) => {
@@ -419,16 +454,17 @@ const StandaloneTimeInput = ({
     if (showSeconds) {
       setSelectionStep('second');
 
-      setTimeout(() => {
-        if (secondScrollRef.current) {
-          const selectedElement = secondScrollRef.current.querySelector(
-            `[data-second="${selectedSecond}"]`,
-          );
-          if (selectedElement) {
-            selectedElement.scrollIntoView({ block: 'center', behavior: 'smooth' });
-          }
-        }
-      }, 100);
+      // 스크롤 위치 로직 변경 주석
+      // setTimeout(() => {
+      //   if (secondScrollRef.current) {
+      //     const selectedElement = secondScrollRef.current.querySelector(
+      //       `[data-second="${selectedSecond}"]`,
+      //     );
+      //     if (selectedElement) {
+      //       selectedElement.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      //     }
+      //   }
+      // }, 100);
     } else {
       completeSelection(selectedHour, m, 0);
     }
@@ -452,14 +488,16 @@ const StandaloneTimeInput = ({
     }
   };
 
-  useEffect(() => {
-    if (hourScrollRef.current) {
-      const hourElement = hourScrollRef.current.querySelector(`[data-hour="${selectedHour}"]`);
-      if (hourElement) {
-        hourElement.scrollIntoView({ block: 'center', behavior: 'auto' });
-      }
-    }
-  }, []);
+  // 스크롤 위치 로직 변경 주석
+  // useEffect(() => {
+  //   if (hourScrollRef.current) {
+  //     const hourElement = hourScrollRef.current.querySelector(`[data-hour="${selectedHour}"]`);
+  //     if (hourElement) {
+  //       hourElement.scrollIntoView({ block: 'center', behavior: 'auto' });
+  //     }
+  //   }
+  // }, []);
+
   return (
     <div className="vertical_time_selector">
       {/* 시간 선택 영역 */}
@@ -467,8 +505,9 @@ const StandaloneTimeInput = ({
         <div className="hours_area">
           <div className="time_text">{t('시')}</div>
           <div className="column_options">
-            {hourOptions.map((h) => (
+            {hourOptions.map((h, i) => (
               <div
+                ref={(ref) => (hourOptionsRefs.current[i] = ref)}
                 key={`hour-${h}`}
                 data-hour={h}
                 className={`time_option ${h === selectedHour ? 'selected' : ''}`}
@@ -487,8 +526,9 @@ const StandaloneTimeInput = ({
         <div className="minutes_area">
           <div className="time_text">{t('분')}</div>
           <div className="column_options">
-            {minuteOptions.map((m) => (
+            {minuteOptions.map((m, i) => (
               <div
+                ref={(ref) => (minuteOptionsRefs.current[i] = ref)}
                 key={`minute-${m}`}
                 data-minute={m}
                 className={`time_option ${m === selectedMinute ? 'selected' : ''}`}
@@ -509,8 +549,9 @@ const StandaloneTimeInput = ({
           <div className="seconds_area">
             <div className="time_text">{t('초')}</div>
             <div className="column_options">
-              {secondOptions.map((s) => (
+              {secondOptions.map((s, i) => (
                 <div
+                  ref={(ref) => (secondOptionsRefs.current[i] = ref)}
                   key={`second-${s}`}
                   data-second={s}
                   className={`time_option ${s === selectedSecond ? 'selected' : ''}`}
