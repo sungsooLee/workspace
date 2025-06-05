@@ -266,7 +266,9 @@ export function useGridTable<T extends object>(
     getCoreRowModel: getCoreRowModel(),
     getGroupedRowModel: getGroupedRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
-    enableRowSelection: true,
+    getSubRows: (row: any) => {
+      return row.subRows;
+    },
     onRowSelectionChange: multiple
       ? handleRowSelectionChangeForMultiple
       : handleRowSelectionChangeForSingle,
@@ -280,9 +282,16 @@ export function useGridTable<T extends object>(
     manualSorting: !clientSideSorting,
     manualFiltering: !clientSideFiltering,
     manualPagination: true,
-    getRowId: (row: T, index: number) => {
-      return `${pagination?.pageIndex ?? 0}-${index}`;
+    getRowId: (row: T, index: number, parent?: Row<T>) => {
+      const pageIndex = pagination?.pageIndex ?? 0;
+      if (parent) {
+        return `${parent.id}.child.${index}`;
+      } else {
+        return `page.${pageIndex}.row.${index}`;
+      }
     },
+    enableRowSelection: true,
+    enableSubRowSelection: false,
     meta: {
       updateData: handleUpdateData,
       removeData: handleRemoveData,
