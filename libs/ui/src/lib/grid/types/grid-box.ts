@@ -1,4 +1,3 @@
-import { UseFormReturn } from 'react-hook-form';
 import { GridBoxState, GridProps } from './grid';
 import React from 'react';
 import { GridBoxSearchInputCondition } from '../grid-box/grid-box-search-input';
@@ -114,7 +113,7 @@ export interface GridBoxConfig<T extends object = object> {
 
   onDataChange: (data: any) => void;
 
-  getParams?: UseFormReturn['getValues'];
+  getParams?: () => void; //UseFormReturn['getValues'];
 
   /**
    * Excel 업로드 다운로드에 대한 기능 정의

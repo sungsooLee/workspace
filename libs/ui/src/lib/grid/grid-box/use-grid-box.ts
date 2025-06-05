@@ -7,7 +7,10 @@ import { GridBoxConfig, GridBoxState, useGridBoxConfig, UseGridBoxReturn } from 
  * - react-query를 사용하여 서버에서 데이터를 가져오고 상태에 반영
  * - Grid 컴포넌트와 결합하여 서버 기반 페이징, 정렬 등을 처리
  */
-export const useGridBox = (initialConfig: useGridBoxConfig, getData: any): UseGridBoxReturn => {
+export const useGridBox = (
+  initialConfig: useGridBoxConfig,
+  getParams?: () => void,
+): UseGridBoxReturn => {
   const queryClient = useQueryClient();
 
   // Grid에 표시할 데이터를 저장
@@ -41,10 +44,10 @@ export const useGridBox = (initialConfig: useGridBoxConfig, getData: any): UseGr
   const handleGridStateChange = useCallback(
     (newState: GridBoxState) => {
       console.log('use-grid-box :: handleGridStateChange', newState);
-      const condition = getData?.() ?? {};
+      const condition = getParams?.() ?? {};
       fetchGridData(condition, newState);
     },
-    [fetchGridData, getData],
+    [fetchGridData, getParams],
   );
 
   /**
@@ -59,10 +62,10 @@ export const useGridBox = (initialConfig: useGridBoxConfig, getData: any): UseGr
       ...initialConfig,
       gridData,
       onStateChange: handleGridStateChange,
-      getParams: getData,
+      getParams: getParams,
       onDataChange: setGridData,
     }),
-    [initialConfig, gridData, handleGridStateChange, getData],
+    [initialConfig, gridData, handleGridStateChange, getParams],
   );
 
   return {
