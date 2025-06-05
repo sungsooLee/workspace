@@ -261,7 +261,7 @@ const GridBoxComponent = <T extends object>(
    */
   const handleStateChange = useCallback(
     (state: GridBoxState) => {
-      if (!data) {
+      if (!data?.length) {
         return;
       }
       const newState: GridBoxState = {

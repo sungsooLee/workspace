@@ -54,6 +54,12 @@ export interface useGridBoxConfig {
   };
 }
 
+export interface UseGridBoxReturn {
+  config: GridBoxConfig;
+  gridFetch: (condition?: Record<string, any>, state?: GridBoxState) => Promise<void>;
+  data: any;
+}
+
 /**
  * GridBox 컴포넌트의 config prop 타입을 정의합니다.
  * Grid의 데이터와 기본적인 동작 설정을 포함합니다.
