@@ -15,8 +15,10 @@ import { t } from 'i18next';
 import { Table } from '@tanstack/react-table';
 import { useState } from 'react';
 import { leaningResourceQueryOptions } from '../../../../entities/leaning-resource';
+import { useQueryClient } from '@tanstack/react-query';
 
 function LearningResourceTableComponent() {
+  const queryClient = useQueryClient();
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const [tableInstance, setTableInstance] = useState<Table<any>>(); // Grid 로부터 받을 table 인스턴스를 저장할 상태
@@ -32,6 +34,10 @@ function LearningResourceTableComponent() {
   function handleSearch(data: Record<string, any>) {
     gridFetch(data, { page: pagination.pageNumber, size: pagination.pageSize });
   }
+
+  const handleFileDownload = (key: string, fileName: string) => {
+    queryClient.fetchQuery(leaningResourceQueryOptions.getS3FileDownload(key, fileName));
+  };
 
   return (
     <>
@@ -84,8 +90,8 @@ function LearningResourceTableComponent() {
                   size="sm"
                   label={t('프로그램/가이드 다운로드')}
                   icon={<IcoDownload width={16} height={16} stroke="#131C30" />}
+                  onClick={() => handleFileDownload('public/logo.png', 'download.png')} // 가이드 파일 하드코딩?
                 />
-                {/* onClick GET /pms-module/admin/api/v1/file/s3/download - 가이드 파일 올라간 후 다운로드 (하드코딩?) */}
                 <Button variant="outline" size="sm" label={t('일괄설정')} />
                 <Button
                   variant="outline"

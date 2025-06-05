@@ -1,10 +1,13 @@
-import { httpService } from '@learnway/shared';
+import { fileDownload, httpService } from '@learnway/shared';
 import { faker } from '@faker-js/faker';
-import { CMSApiPrefix } from '@learnway/config';
+import { CMSApiPrefix, PMSApiPrefix } from '@learnway/config';
 export default class LeaningResourceService {
   static fetchContents(params: any): Promise<any> {
-    console.log('🚀 ~ LeaningResourceService ~ fetchContents ~ params:', params);
     return httpService.get(`${CMSApiPrefix()}/content`, params);
+  }
+  static async fetchS3FileDownload(key: string, fileName: string): Promise<any> {
+    await fileDownload(`${PMSApiPrefix()}/file/s3/download`, { key, fileName });
+    return true;
   }
 
   static fetchLeaningResources(params: any) {

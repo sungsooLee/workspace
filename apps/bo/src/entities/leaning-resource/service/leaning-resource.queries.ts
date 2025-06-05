@@ -2,6 +2,7 @@ import LeaningResourceService from '../api/leaning-resource';
 
 export const queryKeys = {
   contents: ['contents'] as const,
+  s3FileDownload: ['file-s3-download'] as const,
   learningResources: ['learning-resources'] as const,
   mappingCourses: ['mapping-courses'] as const,
   sharedHistories: ['shared-histories'] as const,
@@ -13,6 +14,13 @@ export const leaningResourceQueryOptions = {
     queryKey: queryKeys.contents,
     queryFn: () => LeaningResourceService.fetchContents(params),
     cacheTime: 0,
+    staleTime: 0,
+    enabled: true,
+  }),
+  getS3FileDownload: (key: string, fileName: string) => ({
+    queryKey: queryKeys.s3FileDownload,
+    queryFn: () => LeaningResourceService.fetchS3FileDownload(key, fileName),
+    cacheTime: 1000 * 60 * 60,
     staleTime: 0,
     enabled: true,
   }),
