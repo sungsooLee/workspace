@@ -120,7 +120,7 @@
 
 /* table basic */
 .table {
-  @apply relative border-t-[1px] border-solid border-[#131C30];
+  @apply relative border-t-[1px] border-solid border-[var(--gray6)];
   table {
     @apply w-full table-fixed border-collapse;
     thead {
@@ -169,15 +169,15 @@
     }
   }
   .empty_message_container {
-    @apply border-b-[1px] border-solid border-[var(--gray4)] py-[100px];
+    @apply flex h-[50px] items-center justify-center border-b-[1px] border-solid border-[var(--gray4)];
   }
   &.has_select_all_checkbox {
     thead th:first-child {
       @apply !w-[64px] px-[5px];
     }
-    tbody td:first-child {
+    /* tbody td:first-child {
       @apply border-r-[1px] border-solid border-[var(--gray4)] bg-[var(--gray1)] px-[5px];
-    }
+    } */
   }
 }
 

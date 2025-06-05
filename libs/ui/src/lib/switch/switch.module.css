@@ -1,5 +1,5 @@
 .start {
-  @apply flex items-center;
+  @apply inline-flex items-center;
 
   .label {
     @apply -order-1 ml-0;
