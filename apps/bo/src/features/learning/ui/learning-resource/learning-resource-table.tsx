@@ -14,6 +14,7 @@ import { IcoClock01, IcoDownload, IcoFile01 } from '@learnway/icons';
 import { t } from 'i18next';
 import { Table } from '@tanstack/react-table';
 import { useState } from 'react';
+import { leaningResourceQueryOptions } from '../../../../entities/leaning-resource';
 
 function LearningResourceTableComponent() {
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
@@ -28,13 +29,13 @@ function LearningResourceTableComponent() {
       setPagination((prev) => ({ ...prev, pageSize, pageNumber: 0 })),
   });
 
-  const handleOnSearch = (data: Record<string, any>) => {
-    console.log('search', data);
-  };
+  function handleSearch(data: Record<string, any>) {
+    gridFetch(data, { page: pagination.pageNumber, size: pagination.pageSize });
+  }
 
   return (
     <>
-      <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
+      <SearchBox provider={searchProvider} onSearch={handleSearch} />
       <div className={cn(boxStyles.start, boxStyles.inner)}>
         <div className="grid_wrap">
           <GridBox
@@ -221,7 +222,10 @@ const gridConfig: useGridBoxConfig = {
       csv: '',
     },
   },
-  query: () => {},
+  query: (data: any) => {
+    console.log('🚀 gridConfig.query ~ data:', data);
+    return leaningResourceQueryOptions.getContents({ ...data, isMockUp: true });
+  },
   columns: [
     {
       size: 79,

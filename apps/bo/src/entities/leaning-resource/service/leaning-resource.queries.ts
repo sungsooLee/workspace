@@ -1,6 +1,7 @@
 import LeaningResourceService from '../api/leaning-resource';
 
 export const queryKeys = {
+  contents: ['contents'] as const,
   learningResources: ['learning-resources'] as const,
   mappingCourses: ['mapping-courses'] as const,
   sharedHistories: ['shared-histories'] as const,
@@ -8,6 +9,13 @@ export const queryKeys = {
 };
 
 export const leaningResourceQueryOptions = {
+  getContents: (params: any) => ({
+    queryKey: queryKeys.contents,
+    queryFn: () => LeaningResourceService.fetchContents(params),
+    cacheTime: 0,
+    staleTime: 0,
+    enabled: true,
+  }),
   getLearningResources: (params: any) => ({
     queryKey: queryKeys.learningResources,
     queryFn: () => LeaningResourceService.fetchLeaningResources(params),

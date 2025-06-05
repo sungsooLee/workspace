@@ -1,6 +1,12 @@
 import { httpService } from '@learnway/shared';
 import { faker } from '@faker-js/faker';
+import { CMSApiPrefix } from '@learnway/config';
 export default class LeaningResourceService {
+  static fetchContents(params: any): Promise<any> {
+    console.log('🚀 ~ LeaningResourceService ~ fetchContents ~ params:', params);
+    return httpService.get(`${CMSApiPrefix()}/content`, params);
+  }
+
   static fetchLeaningResources(params: any) {
     return new Promise((resolve) => {
       const leanings = Array.from({ length: 10 }, (_, id) => ({
