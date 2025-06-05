@@ -8,9 +8,21 @@ import { cn, getRandomId } from '@learnway/shared';
 import styles from './checkbox.module.css';
 
 export interface CheckboxComponentProps extends React.ComponentProps<typeof Primitive.Root> {
+  /**
+   * 체크박스의 표시될 레이블
+   */
   label?: string;
+  /**
+   * 레이블 숨김 여부 처리
+   */
   hideLabel?: boolean;
+  /**
+   * 체크 박스 사이즈
+   */
   size?: 'xs' | 'sm' | 'md' | 'lg'; // 12, 16, 18, 24(basic)
+  /**
+   * 체크박스 스타일
+   */
   variant?: 'round' | 'default'; // round style
 }
 

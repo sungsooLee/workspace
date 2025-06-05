@@ -5,7 +5,7 @@ import { Button, EmptyText } from '@learnway/ui';
 import { useTranslation } from 'react-i18next';
 
 export default {
-  title: 'Components/EmptyText',
+  title: 'Bo-Components/EmptyText',
   component: EmptyText,
   tags: ['autodocs'],
   argTypes: {},
@@ -13,15 +13,19 @@ export default {
 type Story = StoryObj<typeof EmptyText>;
 
 export const Template: any = (args: any) => {
-  return <EmptyText description={'Default Description'} />;
+  return <EmptyText {...args} />;
 };
 Template.storyName = 'Basic';
+Template.args = {
+  size: 'md',
+  description: 'Default Description',
+};
 
 export const TemplateButton: any = (args: any) => {
   const { t } = useTranslation();
   return (
     <EmptyText
-      description={'Default Description'}
+      {...args}
       footer={
         <>
           <Button variant={'gray'} size={'md'} label={t('action 1')} />
@@ -32,3 +36,7 @@ export const TemplateButton: any = (args: any) => {
   );
 };
 TemplateButton.storyName = 'Footer';
+TemplateButton.args = {
+  size: 'md',
+  description: 'Default Description',
+};

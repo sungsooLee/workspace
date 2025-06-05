@@ -5,6 +5,12 @@ module.exports = [
   ...baseConfig,
   ...nx.configs['flat/react'],
   {
+    files: ['**/*.ts', '**/*.tsx', '**/*.stories.ts', '**/*.stories.tsx'],
+    rules: {
+      '@nx/enforce-module-boundaries': 'off',
+    },
+  },
+  {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
     // Override or add rules here
     rules: {},
