@@ -180,3 +180,8 @@ export * from './lib/dnd-file-progress/dnd-file-progress';
 export * from './lib/base-form/base-form-row';
 export * from './lib/base-form/form-group';
 export * from './lib/base-form/form-guide-text';
+
+// player
+export * from './lib/player/player';
+export * from './lib/player/player-container';
+export * from './lib/player/hooks/player.hook';
