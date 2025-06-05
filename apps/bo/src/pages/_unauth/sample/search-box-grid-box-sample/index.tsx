@@ -4,7 +4,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Button, GridBox, useGridBox } from '@learnway/ui';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { queryOptions } from '@entities/label-messages-mock';
-import { LabelMessagesQueryParams } from '@types';
+import { LabelMessagesQueryParams, LabelMessage } from '@types';
 import { ContentsButtons, MainContents, PageContainer } from '@widgets/layout';
 import { SearchBox } from '@shared/ui/search-box';
 import { DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
@@ -15,7 +15,7 @@ export const Route = createFileRoute('/_unauth/sample/search-box-grid-box-sample
 
 function RouteComponent() {
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);
-  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
+  const { config: gConfig, gridFetch } = useGridBox<LabelMessage>(gridConfig, getValues);
 
   const handleOnSearch = useCallback((data: any) => {
     console.log('handleOnSearch.data', data);
