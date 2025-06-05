@@ -1,35 +1,35 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { GridBoxConfig, GridBoxState, useGridBoxConfig, UseGridBoxReturn } from '../types';
+import { PaginationResponse } from '../../type';
 
 /**
  * 커스텀 훅: 서버 기반 GridBox의 데이터와 상태를 관리
  * - react-query를 사용하여 서버에서 데이터를 가져오고 상태에 반영
  * - Grid 컴포넌트와 결합하여 서버 기반 페이징, 정렬 등을 처리
  */
-export const useGridBox = (
+export const useGridBox = <T = any>(
   initialConfig: useGridBoxConfig,
   getParams?: () => void,
 ): UseGridBoxReturn => {
   const queryClient = useQueryClient();
 
   // Grid에 표시할 데이터를 저장
-  const [gridData, setGridData] = useState<any>([]);
+  const [gridData, setGridData] = useState<PaginationResponse<T>>();
 
   /**
    * 서버로부터 데이터를 가져오는 함수
-   * @param condition - 검색 조건 (예: form 입력값)
+   * @param params - 검색 조건 (예: form 입력값)
    * @param state - 페이징/정렬 정보 (page, size, sort)
    */
   const fetchGridData = useCallback(
     async (
-      condition: Record<string, any> = {},
+      params: Record<string, any> = {},
       state: GridBoxState = { page: 0, size: 20, sort: [] },
     ) => {
-      const mergedParams = { ...condition, ...state };
+      const mergedParams = { ...params, ...state };
       const queryOptions = initialConfig.query(mergedParams);
-
-      const result = await queryClient.fetchQuery(queryOptions);
+      const result = (await queryClient.fetchQuery(queryOptions)) as PaginationResponse<T>;
       if (result) {
         setGridData(result);
       }
@@ -43,9 +43,8 @@ export const useGridBox = (
    */
   const handleGridStateChange = useCallback(
     (newState: GridBoxState) => {
-      console.log('use-grid-box :: handleGridStateChange', newState);
-      const condition = getParams?.() ?? {};
-      fetchGridData(condition, newState);
+      const params = getParams?.() ?? {};
+      fetchGridData(params, newState);
     },
     [fetchGridData, getParams],
   );

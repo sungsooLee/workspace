@@ -141,7 +141,7 @@ export interface PaginationResponse<T> {
   totalPages: number;
   totalElements: number;
   size: number;
-  content: Array<T>;
+  content: T[];
   number: number;
   numberOfElements: number;
   first: boolean;
