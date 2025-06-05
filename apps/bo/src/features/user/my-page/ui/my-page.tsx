@@ -67,7 +67,8 @@ export function MyPage() {
           </li>
           <li>
             <span className={styles.title}>{'성별'}</span>
-            <p className={styles.text}>{'남성'}</p>
+            {/* <p className={styles.text}>{'남성'}</p> */}
+            <p className={styles.text}>{''}</p>
           </li>
         </ul>
       </div>
@@ -87,17 +88,16 @@ export function MyPage() {
             <tbody>
               <tr>
                 <th scope={'row'}>{'휴대폰번호'}</th>
-                {/* <td>{'+82 10-1234-1234'}</td> */}
                 <td>{user?.phoneNumber}</td>
                 <th scope={'row'}>{'연락처(사무실)'}</th>
-                {/* <td>{'+82 2-1234-1234'}</td> */}
                 <td>{user?.companyTelephoneNumber}</td>
                 <th scope={'row'}>{'지역'}</th>
                 <td>{user?.workPlaceCode}</td>
               </tr>
               <tr>
                 <th scope={'row'}>{'주소'}</th>
-                <td colSpan={5}>{'(12345) 서울특별시 강남구 강남대로84길 13'}</td>
+                {/* <td colSpan={5}>{'(12345) 서울특별시 강남구 강남대로84길 13'}</td> */}
+                <td colSpan={5}>{`(${user?.company?.postNo}) ${user?.company?.basicAddress}`}</td>
               </tr>
             </tbody>
           </table>
@@ -117,27 +117,30 @@ export function MyPage() {
             <tbody>
               <tr>
                 <th scope={'row'}>{'회사'}</th>
-                {/* <td>{'현대'}</td> */}
-                <td>{user?.companyId}</td>
+                <td>{user?.company?.name}</td>
                 <th scope={'row'}>{'본부/사업부'}</th>
-                {/* <td>{'기업 전략실'}</td> */}
-                <td>{user?.deptId}</td>
+                <td>{user?.dept?.parent}</td>
                 <th scope={'row'}>{'부서'}</th>
-                <td>{'경영팀'}</td>
+                <td>{user?.dept?.deptName}</td>
               </tr>
               <tr>
                 <th scope={'row'}>{'소속'}</th>
-                <td>{'경영팀'}</td>
+                {/* <td>{'경영팀'}</td> */}
+                <td>{''}</td>
                 <th scope={'row'}>{'직책'}</th>
-                <td>{'팀장'}</td>
+                {/* <td>{'팀장'}</td> */}
+                <td>{''}</td>
                 <th scope={'row'}>{'직위'}</th>
-                <td>{'과장'}</td>
+                {/* <td>{'과장'}</td> */}
+                <td>{''}</td>
               </tr>
               <tr>
                 <th scope={'row'}>{'입사일자'}</th>
-                <td>{'2020-01-02'}</td>
+                {/* <td>{'2020-01-02'}</td> */}
+                <td>{''}</td>
                 <th scope={'row'}>{'재직상태'}</th>
-                <td colSpan={3}>{'재직'}</td>
+                {/* <td colSpan={3}>{'재직'}</td> */}
+                <td colSpan={3}>{''}</td>
               </tr>
             </tbody>
           </table>
