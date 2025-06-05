@@ -244,13 +244,12 @@ const gridConfig: useGridBoxConfig = {
         console.log(_.row.original['contentAddInfoType']);
         if (_.row.original.contentAddInfoType !== 'VIDEO_ADD_INFO')
           // enum code 사용하도록 변경해야 함
-          return `${_.getValue()}${t('초')}`;
+          return `${_.getValue()}${t('개')}`;
 
         return (
           <span className="flex">
             <IcoClock01 width={16} height={16} stroke="#131C30" />{' '}
-            {duration({ seconds: _.getValue() }, DATE_TIME_FORMAT.HOUR_MIN_SEC)}
-            {/* 컨텐츠 타입 별로 다르게 나오는듯 - 비디오 러닝타임 */}
+            {duration(_.getValue(), DATE_TIME_FORMAT.HOUR_MIN_SEC)}
           </span>
         );
       },
