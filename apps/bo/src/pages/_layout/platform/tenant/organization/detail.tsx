@@ -37,16 +37,6 @@ function RouteComponent({ companyCode }: { companyCode: string }) {
 
   const menuItems = [
     {
-      title: '회사조직 확인',
-      key: EnOrganizationShowType.check,
-      content: (
-        <TenantCompanyOrganizationTree
-          companyCode={companyCode}
-          showType={EnOrganizationShowType.check}
-        />
-      ),
-    },
-    {
       title: '회사조직(원본)',
       key: EnOrganizationShowType.origin,
       content: (
