@@ -79,6 +79,24 @@ function RouteComponent() {
         ),
         uasAble: <Switch id="switch02" />,
       },
+      {
+        day: (
+          <Dropdown
+            options={options}
+            value={selectedValues}
+            onChange={(selected) => setSelectedValues(selected)}
+            placeholder="선택"
+          />
+        ),
+        loginLimit: (
+          <div className="select_date_wrap">
+            <DatePicker displayType={'time'} size={'md'} />
+            <span className="dash"></span>
+            <DatePicker displayType={'time'} size={'md'} />
+          </div>
+        ),
+        uasAble: <Switch id="switch03" />,
+      },
     ];
 
     // Thead 정의

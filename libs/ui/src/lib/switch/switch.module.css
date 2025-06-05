@@ -36,6 +36,9 @@
       @apply text-[var(--gray5)];
     }
   }
+  &[data-label-align='right'] > button {
+    @apply order-first;
+  }
 }
 
 .active {
