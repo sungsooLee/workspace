@@ -246,7 +246,7 @@ const GridBoxComponent = <T extends object>(
       <div className={styles.table_info}>
         <div className={styles.title_info}>
           {/* 제목 */}
-          {title && (
+          {(props.title || title) && (
             <div className={styles.title}>
               {props.title || title || t('LABEL.grid.title.list', '목록')}
             </div>
