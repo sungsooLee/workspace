@@ -12,7 +12,8 @@ import { TenantDetailMenuTree } from './tenant-detail-menu-tree';
  * @param param0
  * @returns
  */
-const TenantDetailMenuComponent = ({ roleInfo }: { roleInfo: any }, ref: any) => {
+const TenantDetailMenuComponent = (prop: any, ref: any) => {
+  const { roleInfo } = prop;
   const router = useRouter();
 
   const [selectedTabKey, setSelectedTabKey] = useState<string>('FO');
