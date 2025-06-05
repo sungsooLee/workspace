@@ -86,7 +86,7 @@
 }
 
 .td_pinned_left {
-  @apply !z-[3] !h-[40px] border-b-[1px] border-l-0 bg-white;
+  @apply !z-[3] !h-[40px] !border-l-0 border-b-[1px] bg-white;
   &.td_pinned_last {
     &::after {
       @apply absolute right-0 top-0 z-[1] h-full w-[1px] bg-[var(--gray5)] content-[''];

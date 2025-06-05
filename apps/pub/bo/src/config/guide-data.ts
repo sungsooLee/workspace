@@ -372,6 +372,15 @@ export const guideData = [
   // },
   {
     screenName: 'PMS/플랫폼관리_회사/조직관리',
+    pageId: 'pms/group-management',
+    screenId: 'NLP_BO_TMS_1300',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
+    screenName: 'PMS/플랫폼관리_회사/조직관리',
     pageId: 'pms/menu-platform-company-detail',
     screenId: 'NLP_BO_TMS_1302',
     pageType: 'Page',
