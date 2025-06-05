@@ -2,6 +2,7 @@ import { UseFormReturn } from 'react-hook-form';
 import { GridProps, GridState } from './grid';
 import React from 'react';
 import { GridBoxSearchInputCondition } from '../grid-box/grid-box-search-input';
+import { PaginationResponse } from '../../type';
 
 /**
  * TODO. GridBox 내의 기능이 확정되지 않아 useGridBox 와 GridBox 에 대한 Config 를 분리해놨는데 확정 된다면 합치는게 좋을꺼 같습니다.
@@ -51,7 +52,7 @@ export interface useGridBoxConfig {
  * GridBox 컴포넌트의 config prop 타입을 정의합니다.
  * Grid의 데이터와 기본적인 동작 설정을 포함합니다.
  */
-export interface GridBoxConfig {
+export interface GridBoxConfig<T extends object = object> {
   /**
    * 타이틀
    */
@@ -66,6 +67,11 @@ export interface GridBoxConfig {
    * Grid에 표시될 데이터 배열입니다.
    */
   data?: any[]; // 실제 행 데이터 객체들의 배열 타입으로 명확히 하는 것이 좋습니다. 예: T[];
+
+  /**
+   * Grid에 표시될 데이터 배열입니다.
+   */
+  gridData?: PaginationResponse<T>; // 실제 행 데이터 객체들의 배열 타입으로 명확히 하는 것이 좋습니다. 예: T[];
 
   /**
    * Grid에 표시될 전체 행 개수 (page 객체 외부에 별도로 있을 경우)입니다.
@@ -194,6 +200,11 @@ export interface GridBoxProps<T extends object = object>
    * override GridProps
    */
   data?: T[];
+
+  /**
+   * grid data
+   */
+  gridData?: PaginationResponse<T>;
 
   /**
    * 추가 버튼 클릭 핸들러

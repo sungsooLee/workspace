@@ -16,6 +16,7 @@ import {
   GridBoxState,
   GridImperative,
   Pagination,
+  PaginationResponse,
 } from '@learnway/ui';
 import { IcoMinus, IcoPlus } from '@learnway/icons';
 import { cn } from '@learnway/shared';
@@ -61,7 +62,8 @@ const GridBoxComponent = <T extends object>(
 ) => {
   const { t } = useTranslation();
   const {
-    data = props.data,
+    // data,
+    // gridData,
     page,
     pagination,
     totalRows,
@@ -80,6 +82,10 @@ const GridBoxComponent = <T extends object>(
 
   // 마지막으로 페치에 사용된 params를 저장하는 useRef
   const lastFetchedParamsRef = useRef<any>({ page: 0, size: 20, sort: [] }); // 초기값 설정
+
+  const gridData: PaginationResponse<T> =
+    props.gridData || (config?.gridData as PaginationResponse<T>);
+  const data = gridData?.content || props.data || config?.data || [];
 
   useImperativeHandle(ref, () => gridRef.current as GridImperative);
 
@@ -211,37 +217,45 @@ const GridBoxComponent = <T extends object>(
     [props.pagination],
   );
 
+  /**
+   * 페이지 번호 변경 핸들러
+   */
   const handlePageChange = useCallback(
     (pageNumber: number) => {
       const newState: GridBoxState = {
         page: pageNumber,
       };
-      // for use-grid-box
       handleFetchGridData(newState);
     },
     [props.pagination],
   );
 
+  /**
+   * 정렬 변경 핸들러
+   */
   const handleStateChange = useCallback(
-    (newState: GridBoxState) => {
+    (state: GridBoxState) => {
       if (!props.data && !data) {
         return;
       }
-      // for use-grid-box
+      const newState: GridBoxState = {
+        ...state,
+        page: 0, // 페이지 번호 초기화
+      };
       handleFetchGridData(newState);
     },
     [props.onStateChange, props.data, data],
   );
 
   const handleFetchGridData = useCallback(
-    (paginationRequest: GridBoxState) => {
+    (state: GridBoxState) => {
       const newParams = {
         ...lastFetchedParamsRef.current,
-        ...paginationRequest, // 새로 받은 정렬 정보
+        ...state, // 새로 받은 정렬 정보
       };
       // params를 업데이트하기 전에 ref에 저장
       lastFetchedParamsRef.current = newParams;
-      // use-grid-box 에서 받은 gridFetch
+      // for use-grid-box
       gridFetch?.(newParams);
       // for grid-box
       props.onStateChange?.(newParams);
@@ -347,16 +361,6 @@ const GridBoxComponent = <T extends object>(
           onChange={handlePageChange}
         />
       )}
-      {/*{!paginationProps.disabled && (*/}
-      {/*  <Pagination*/}
-      {/*    totalPages={paginationProps.totalPages}*/}
-      {/*    pageNumber={paginationProps.pageNumber}*/}
-      {/*    pageSize={paginationProps.pageSize}*/}
-      {/*    disabled={paginationProps.disabled}*/}
-      {/*    onPageSizeChange={handleChangePageSize}*/}
-      {/*    onChange={handlePageChange}*/}
-      {/*  />*/}
-      {/*)}*/}
     </div>
   );
 };

@@ -15,9 +15,9 @@ const useGridBoxHook = (config: useGridBoxConfig, getData?: UseFormReturn['getVa
    */
   const handleExternalGridDataFetch = async (
     condition = {},
-    paginationParams = { page: 0, size: 20, sort: [] }, // 검색버튼 눌러서 검색 하는 경우 초기화 하기 위해
+    gridBoxState: GridBoxState = { page: 0, size: 20, sort: [] }, // 검색버튼 눌러서 검색 하는 경우 초기화 하기 위해
   ) => {
-    const params = { ...condition, ...paginationParams };
+    const params = { ...condition, ...gridBoxState };
     const queryOptions = config.query(params);
     const result = (await queryClient.fetchQuery(queryOptions)) as any;
 

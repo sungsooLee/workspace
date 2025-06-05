@@ -1,6 +1,6 @@
 import LabelMessagesService from '../api/label-messages';
 import { LabelMessage, LabelMessagesQueryParams, PaginationResponse } from '../../../types';
-import { UseQueryOptions } from '@tanstack/react-query';
+import { keepPreviousData, UseQueryOptions } from '@tanstack/react-query';
 
 export const queryKeys = {
   all: ['label-messages'] as const,
@@ -15,6 +15,7 @@ export const queryOptions = {
       queryFn: async (): Promise<PaginationResponse<T>> =>
         LabelMessagesService.fetchAll(queryParam),
       enabled: !!queryParam,
+      placeholderData: keepPreviousData,
     };
   },
   detail: <T = LabelMessage>(id: number): UseQueryOptions<T> => {
