@@ -15,6 +15,7 @@ import { IcoArrowDownDouble, IcoFormRequired, IcoRefresh02, IcoSearch } from '@l
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
 import styles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { t } from 'i18next';
+import { SelectOption } from '@learnway/hooks';
 
 /**
  * 검색 박스 컴포넌트 ( config 에 의거해 자동 렌더링 됨 )
@@ -23,7 +24,16 @@ import { t } from 'i18next';
  * @param onSearch - 검색 실행 시 호출될 함수
  */
 const SearchBoxComponent: FC<SearchBoxProps> = ({ provider, onSearch }) => {
-  const { builders: initBuilders, onFormChange, onSubmit, control, formState, ...props } = provider;
+  const {
+    builders: initBuilders,
+    onFormChange,
+    onSubmit,
+    control,
+    formState,
+    getOptions,
+    setOptions,
+    ...props
+  } = provider;
   // expand 버튼 상태 관리 (접기/펼치기)
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -124,6 +134,10 @@ const SearchBoxComponent: FC<SearchBoxProps> = ({ provider, onSearch }) => {
           {...item}
           {...props}
           component={renderSearchField(item)}
+          currentOptionsState={[
+            getOptions(item.name),
+            (options: SelectOption[]) => setOptions(item.name, options),
+          ]}
         />
       </div>
       {getError(item)}
@@ -231,7 +245,7 @@ const SearchBoxComponent: FC<SearchBoxProps> = ({ provider, onSearch }) => {
             </Button>
             <Button type="submit" variant="search" size="sm" className={searchStyles.btn_search}>
               <IcoSearch className={searchStyles.icon_sm_search} />
-              조회
+              {t('LABEL.button.search')}
             </Button>
           </div>
         </div>

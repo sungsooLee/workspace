@@ -8,6 +8,10 @@ export type com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto = {
      */
     channelRequestId?: number;
     /**
+     * 채널명
+     */
+    channelName?: string;
+    /**
      * 테넌트
      */
     tenantId?: number;
@@ -16,29 +20,21 @@ export type com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto = {
      */
     tenantName?: string;
     /**
-     * 비공개채널여부
+     * 채널 테넌트 관계 유형
      */
-    isSecretChannel?: boolean;
+    channelTenatMappingType?: com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto.channelTenatMappingType;
     /**
-     * 신청자Id
+     * 채널비밀구분
      */
-    reqeusterId?: number;
+    channelSecretType?: com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto.channelSecretType;
     /**
-     * 신청자명
+     * 채널메인아이디
      */
-    reqeusterName?: string;
+    channelMainId?: string;
     /**
-     * 채널명
+     * 채널메인링크내용
      */
-    channelName?: string;
-    /**
-     * 회사명
-     */
-    companyName?: string;
-    /**
-     * 조직정보
-     */
-    departmentName?: string;
+    channelMainLinkContent?: string;
     /**
      * 채널학습내용
      */
@@ -48,21 +44,29 @@ export type com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto = {
      */
     channelPurposeContent?: string;
     /**
-     * 채널메인링크내용
+     * 신청자Id
      */
-    channelMainLinkContent?: string;
+    reqeusterId?: number;
+    /**
+     * 신청자 사원번호
+     */
+    reqeusterEmployeeNumber?: string;
+    /**
+     * 신청자명
+     */
+    reqeusterName?: string;
+    /**
+     * 회사명
+     */
+    companyName?: string;
+    /**
+     * 조직정보
+     */
+    departmentName?: string;
     /**
      * 신청상태
      */
-    approvalStatusTypecd?: com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto.approvalStatusTypecd;
-    /**
-     * 신청일시
-     */
-    requestDate?: string;
-    /**
-     * 채널접수ID
-     */
-    channelAcceptId?: number;
+    approvalStatusType?: com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto.approvalStatusType;
     /**
      * 메일발송여부
      */
@@ -76,13 +80,13 @@ export type com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto = {
      */
     approverName?: string;
     /**
-     * 채널접수일시
-     */
-    channelAcceptDate?: string;
-    /**
-     * 결재일시(승인일시
+     * 결재일시(승인일시)
      */
     approvalDate?: string;
+    /**
+     * 채널 신청일시
+     */
+    createdDate?: string;
     /**
      * 채널신청 uuid
      */
@@ -91,14 +95,39 @@ export type com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto = {
      * 채널ID
      */
     channelId?: number;
+    /**
+     * 채널 활성화여부
+     */
+    isActivedChannel?: boolean;
+    /**
+     * 채널 사용여부
+     */
+    isUsedChannel?: boolean;
+    /**
+     * 채널 개설일
+     */
+    createdDateChannel?: string;
 };
 export namespace com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto {
     /**
+     * 채널 테넌트 관계 유형
+     */
+    export enum channelTenatMappingType {
+        MAPPING_TENANT = 'MAPPING_TENANT',
+        ALL_TENANT = 'ALL_TENANT',
+    }
+    /**
+     * 채널비밀구분
+     */
+    export enum channelSecretType {
+        NOT_SECRET = 'NOT_SECRET',
+        SECRET = 'SECRET',
+    }
+    /**
      * 신청상태
      */
-    export enum approvalStatusTypecd {
+    export enum approvalStatusType {
         PENDING = 'PENDING',
-        ACCEPTED = 'ACCEPTED',
         APPROVED = 'APPROVED',
         REJECTED = 'REJECTED',
     }

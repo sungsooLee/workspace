@@ -10,6 +10,6 @@ export type com_ever_edu_pms_role_dto_req_MoveRoleReqDto = {
     /**
      * 이동할 위치
      */
-    sortOrder?: number;
+    sortOrder: number;
 };
 

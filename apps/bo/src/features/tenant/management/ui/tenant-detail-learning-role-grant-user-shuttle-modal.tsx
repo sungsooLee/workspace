@@ -45,11 +45,10 @@ const TenantDetailLearningRoleGrantUserShuttleModalComponent = ({
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
     useDynamicForm(formConfig);
 
-  const { saveRoleUsers } = useSaveUsers({});
+  const { saveUsersRole: saveRoleUsers } = useSaveUsers({});
 
-  /**
-   * @param data
-   */
+  const formRef = useRef<HTMLFormElement>(null);
+
   const handleOnSearch = (data: any) => {
     const queryPromise = queryClient.fetchQuery(usersQueryOptions.list(data));
     queryPromise.then((data) => {
@@ -61,22 +60,24 @@ const TenantDetailLearningRoleGrantUserShuttleModalComponent = ({
   const handleOnClose = () => {
     close();
   };
-  const handleOnConfirm = async () => {
+  const handleOnSubmit = async (data: any) => {
     const { dateRange } = getValues();
-    if (!option || !dateRange) return;
+    if (!option || option.length === 0) {
+      alert('사용자를 선택 하세요.');
+      return;
+    }
+
     const addUsers: any[] = [];
-    console.log(dateRange.from);
-    console.log(dateRange.to);
     option.forEach((item: any) => {
       addUsers.push({
-        userId: item.userId,
+        userUuid: item.uuid,
         startDate: dateRange.from,
         endDate: dateRange.to,
         isUsed: true,
       });
     });
-    console.log('options', option);
     const payload = { roleCode: roleCode, body: { addUserIds: addUsers } };
+    console.log('getValues', payload);
     const result = await new Promise((resolve) => {
       saveRoleUsers(payload, { onSuccess: resolve });
     });
@@ -100,9 +101,11 @@ const TenantDetailLearningRoleGrantUserShuttleModalComponent = ({
           leftTitle={t('사용자목록')}
           rightTitle={t('사용자 선택')}
         />
-        <ContentsRow>
-          <FormRow provider={provider} name="dateRange" element={<DateRangeFormField />} />
-        </ContentsRow>
+        <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
+          <ContentsRow>
+            <FormRow provider={provider} name="dateRange" element={<DateRangeFormField />} />
+          </ContentsRow>
+        </form>
       </ModalBody>
       <ModalFooter>
         <Button
@@ -121,7 +124,12 @@ const TenantDetailLearningRoleGrantUserShuttleModalComponent = ({
           label={t('확인')}
           variant={'primary'}
           size={'lg'}
-          onClick={handleOnConfirm}
+          onClick={() => {
+            const form = formRef.current;
+            if (form) {
+              form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+            }
+          }}
         />
       </ModalFooter>
     </ModalContainer>
@@ -199,10 +207,33 @@ const formConfig: DynamicFormConfig = {
       name: 'dateRange',
       type: 'date-range',
       label: t('역할 부여 기간'),
-      value: '',
+      format: 'object',
+      value: { from: undefined, to: undefined },
       placeholder: '',
       maxLength: 150,
     },
   ],
-  validator: {},
+  validator: {
+    dateRange: {
+      required: true,
+      conditions: [
+        {
+          fn: (values) => !values.dateRange?.from,
+          message: t('시작 및 종료 날짜를 선택하세요'),
+        },
+        {
+          fn: (values) => !values.dateRange?.from,
+          message: t('시작 날짜를 선택하세요'),
+        },
+        {
+          fn: (values) => !values.dateRange?.to,
+          message: t('종료 날짜를 선택하세요.'),
+        },
+        {
+          fn: (values) => values.dateRange.from > values.dateRange.to,
+          message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.'),
+        },
+      ],
+    },
+  },
 };

@@ -4,7 +4,9 @@
 /* eslint-disable */
 export type com_ever_edu_pms_menu_dto_res_FavoritesMenuResDto$ListOnAdmin = {
     favoritesMenuId?: number;
-    menuName?: string;
+    menuId?: number;
+    menuCode?: string;
     path?: string;
+    sortOrder?: number;
 };
 

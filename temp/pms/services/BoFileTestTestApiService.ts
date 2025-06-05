@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { com_ever_edu_global_s3_dto_res_S3CopyPathResDto } from '../models/com_ever_edu_global_s3_dto_res_S3CopyPathResDto';
 import type { com_ever_edu_global_s3_dto_res_S3ObjectListResDto } from '../models/com_ever_edu_global_s3_dto_res_S3ObjectListResDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -154,8 +155,8 @@ export class BoFileTestTestApiService {
         });
     }
     /**
-     * S3 파일 리스트 목록 - 사용금지(임시 테스트용)
-     * S3 파일 리스트 목록을 요청한다.
+     * S3 파일 복사 - 사용금지(임시 테스트용)
+     * S3 파일을 복사한다.
      * @param srcKey S3 파일 Src 경로
      * @param destKey S3 파일 Dest 경로,
      * @returns string OK
@@ -168,6 +169,34 @@ export class BoFileTestTestApiService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/test/api/v1/file/s3/file/copy',
+            query: {
+                'srcKey': srcKey,
+                'destKey': destKey,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * S3 폴더 복사 - 사용금지(임시 테스트용)
+     * S3 폴더를 복사한다.
+     * @param srcKey S3 폴더 Src 경로
+     * @param destKey S3 폴더 Dest 경로,
+     * @returns com_ever_edu_global_s3_dto_res_S3CopyPathResDto OK
+     * @throws ApiError
+     */
+    public static testS3DirectoryCopy(
+        srcKey: string,
+        destKey: string,
+    ): CancelablePromise<com_ever_edu_global_s3_dto_res_S3CopyPathResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/test/api/v1/file/s3/directory/copy',
             query: {
                 'srcKey': srcKey,
                 'destKey': destKey,

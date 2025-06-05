@@ -131,7 +131,10 @@ export const formatTimeAgo = (
     const isSameDay = now.isSame(d, 'day');
 
     if (diffMinutes < 60 && isSameDay) {
-      return `${t('LABEL.common.date.minutesAgo', { time: diffMinutes })}`;
+      // 0분전 -> 1분전으로 보정
+      const minutesAgo = diffMinutes === 0 ? 1 : diffMinutes;
+
+      return `${t('LABEL.common.date.minutesAgo', { time: minutesAgo })}`;
     } else if (diffHours < 24 && isSameDay) {
       return `${t('LABEL.common.date.hoursAgo', { time: diffHours })}`;
     } else {

@@ -2,10 +2,15 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { com_ever_edu_pms_company_dto_res_CompanyLoginRestrictionDetailResDto } from './com_ever_edu_pms_company_dto_res_CompanyLoginRestrictionDetailResDto';
 /**
  * 로그인 제한 정보
  */
 export type com_ever_edu_pms_company_dto_res_CompanyLoginRestrictionResDto = {
+    /**
+     * 회사ID
+     */
+    companyId?: number;
     /**
      * 회사로그인제한정보 ID
      */
@@ -25,7 +30,7 @@ export type com_ever_edu_pms_company_dto_res_CompanyLoginRestrictionResDto = {
     /**
      * 제한시작일(yyyyMMdd)
      */
-    restrictionStrDate?: string;
+    restrictionStartDate?: string;
     /**
      * 제한종료일(yyyyMMdd)
      */
@@ -50,21 +55,26 @@ export type com_ever_edu_pms_company_dto_res_CompanyLoginRestrictionResDto = {
      * 최종수정일시
      */
     modifiedDate?: string;
+    /**
+     * 회사로그인제한 설정정보
+     */
+    companyLoginRestrictionDetailList?: Array<com_ever_edu_pms_company_dto_res_CompanyLoginRestrictionDetailResDto>;
 };
 export namespace com_ever_edu_pms_company_dto_res_CompanyLoginRestrictionResDto {
     /**
      * 로그인 제한 구분
      */
     export enum loginRestrictionType {
-        LOGIN_RESTRICTION_TYPE_A = 'LOGIN_RESTRICTION_TYPE_A',
-        LOGIN_RESTRICTION_TYPE_B = 'LOGIN_RESTRICTION_TYPE_B',
+        LOGIN_TIME_RESTRICTION = 'LOGIN_TIME_RESTRICTION',
+        WORK_TIME_RESTRICTION = 'WORK_TIME_RESTRICTION',
+        NONE = 'NONE',
     }
     /**
      * 로그인 제한 설정 방식
      */
     export enum loginRestrictionSettingType {
-        LOGIN_RESTRICTION_SETTING_TYPE_A = 'LOGIN_RESTRICTION_SETTING_TYPE_A',
-        LOGIN_RESTRICTION_SETTING_TYPE_B = 'LOGIN_RESTRICTION_SETTING_TYPE_B',
+        TIME_SETTING = 'TIME_SETTING',
+        HR_INFO_SETTING = 'HR_INFO_SETTING',
     }
 }
 

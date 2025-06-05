@@ -24,7 +24,7 @@ interface ExcelButtonsProps {
   className?: string;
 }
 
-export const ExcelButtons: React.FC<ExcelButtonsProps> = ({
+const GridExcelButtonsComponent: React.FC<ExcelButtonsProps> = ({
   showUpload = false,
   uploadUrl,
   validateUrl,
@@ -111,3 +111,5 @@ export const ExcelButtons: React.FC<ExcelButtonsProps> = ({
     </>
   );
 };
+
+export const GridExcelButtons = GridExcelButtonsComponent;

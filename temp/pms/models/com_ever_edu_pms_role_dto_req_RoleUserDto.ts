@@ -3,13 +3,13 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * 추가할 사용자 ID 목록
+ * 추가할 사용자 UUID 목록
  */
 export type com_ever_edu_pms_role_dto_req_RoleUserDto = {
     /**
-     * 사용자 ID
+     * 사용자 UUID
      */
-    userId?: number;
+    userUuid: string;
     /**
      * 권한 시작일
      */

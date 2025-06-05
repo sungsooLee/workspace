@@ -196,6 +196,32 @@ export class FoFileService {
         });
     }
     /**
+     * 템플릿 파일 다운로드
+     * 템플릿 파일을 다운로드한다.
+     * @param templateFileName 템플릿 파일이름
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static templateFileDownload(
+        templateFileName: string,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/file/template/download',
+            query: {
+                'templateFileName': templateFileName,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * 파일그룹 목록 조회
      * 파일그룹 목록을 조회한다.<br><br><b>페이징 정보</b>: <br> - totalElements: 쿼리 결과물의 전체 데이터 갯수 <br> - totalPages: 페이징하였을 때 나오는 총 페이지의 갯수 <br> - size: 페이지 당 데이터 수 설정 값(rows per page) <br> - numberOfElements: 페이지에 존재하는 요소의 갯수(최대 size와 동일) <br> - number: 요소를 가져온 페이지의 번호. 0 ~
      * @param page 페이징 처리를 위한 페이지 번호. 0 ~

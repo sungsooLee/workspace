@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { com_ever_edu_pms_company_dto_req_CompanyLoginRestrictionReqDto } from './com_ever_edu_pms_company_dto_req_CompanyLoginRestrictionReqDto';
 export type com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto = {
     /**
      * 회사코드
@@ -40,6 +41,10 @@ export type com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto = {
      */
     postNo?: string;
     /**
+     * 비밀번호 인증유형 리스트
+     */
+    passwordAuthTypeList?: Array<'PLATFORM' | 'HMG_SSO' | 'AUTOWAY'>;
+    /**
      * 서비스 타입
      */
     serviceType?: com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto.serviceType;
@@ -55,6 +60,10 @@ export type com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto = {
      * 연동시스템 사용여부
      */
     isUseLinkageSystem?: boolean;
+    /**
+     * 회사로그인제한정보
+     */
+    companyLoginRestrictionList?: Array<com_ever_edu_pms_company_dto_req_CompanyLoginRestrictionReqDto>;
 };
 export namespace com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto {
     /**
@@ -80,10 +89,11 @@ export namespace com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto {
      * 서비스 타입
      */
     export enum serviceType {
-        CONSIGNMENT = 'CONSIGNMENT',
         BASIC = 'BASIC',
         CORE = 'CORE',
         ENTERPRISE = 'ENTERPRISE',
+        CONSIGNMENT = 'CONSIGNMENT',
+        FREE_CHARGE = 'FREE_CHARGE',
     }
 }
 

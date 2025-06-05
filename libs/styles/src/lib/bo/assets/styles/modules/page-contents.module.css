@@ -14,3 +14,7 @@
 .vertical_line {
   @apply hidden;
 }
+
+[class*='nlp--modal'] [class*='nlp--modal-content'] .main_contents {
+  @apply max-w-full;
+}

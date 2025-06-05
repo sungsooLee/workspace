@@ -17,6 +17,7 @@ import { IcoNarrowRight } from '@learnway/icons';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import popContentsStyles from './pop-contents-layout.module.css';
+import { transformApiDataToTreeData } from '@features/platform/menu/service/menu.service';
 import { transformMenuApiDataToTreeData } from '@features/tenant/management/service/tenant-detail-tree.service';
 import { useMenuManageFetchTree } from '@entities/menu/service/menu-manage.hook';
 import {
@@ -84,10 +85,7 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
         console.log(event);
         if (event.sourceTreeId === 'mapping-menu-tree') {
           const sourceMenuId = event.sourceNode.key;
-          if (menuTreeAllKeys.includes(sourceMenuId)) {
-            alert('이미 있음');
-            return false;
-          }
+
           const allPostMenus = getAllParentAndAllChildById(baseMenuTreeData, sourceMenuId);
           const contents = [];
           for (const item of allPostMenus) {
@@ -184,7 +182,7 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
   useEffect(() => {
     if (baseMenuDB) {
       console.log(baseMenuDB);
-      const transformedData = transformMenuApiDataToTreeData(baseMenuDB);
+      const transformedData = transformApiDataToTreeData(baseMenuDB);
       setBaseMenuTreeData(transformedData);
       if (transformedData && transformedData.length > 0) {
         const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);

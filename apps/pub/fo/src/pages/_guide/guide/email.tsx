@@ -34,6 +34,15 @@ function RouteComponent() {
             </a>
           </div>
         </div>
+
+        <h3 className="guide_tit3">이용약관 개정 안내</h3>
+        <div className="flex_box">
+          <div className="desc w-full">
+            <a href="/pb-fo/html/이용약관개정안내.html" target="_blank">
+              이용약관 개정 안내
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );
