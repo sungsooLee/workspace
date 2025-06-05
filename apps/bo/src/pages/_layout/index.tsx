@@ -339,4 +339,10 @@ export const guide = [
     pageType: 'Page',
     memo: '공통 팝업', // 비고
   },
+  {
+    screenName: '영상 플레이어',
+    pageId: 'player-demo',
+    pageType: 'Page',
+    memo: '영상 플레이어', // 비고
+  },
 ];

@@ -1,4 +1,5 @@
-/* eslint-disable @nx/enforce-module-boundaries */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/jsx-no-useless-fragment */
 import { Meta, StoryObj } from '@storybook/react/*';
 import {
   CellContext,
@@ -26,7 +27,7 @@ import {
   ModalWrapper,
   TableBox,
 } from '@learnway/ui';
-import { IcoDownload, IcoSetting } from '@learnway/icons';
+import { IcoDownload, IcoSetting, IcoArrowDown, IcoArrowUp } from '@learnway/icons';
 import { DATE_TIME_FORMAT, formatDate, getRandomId, getRowSelectionByList } from '@learnway/shared';
 import { PaginationResponse } from '../../../../bo/src/types';
 
@@ -1072,38 +1073,43 @@ const expandedColumns = [
   columnHelper.accessor('expand', {
     cell: ({ row, getValue }) => {
       return (
-        <div
-          style={{
-            paddingLeft: `${row.depth * 2}rem`,
-          }}
-        >
+        <>
           {row.getCanExpand() && (
-            <button
-              {...{
-                onClick: row.getToggleExpandedHandler(),
-                style: { cursor: 'pointer' },
-              }}
-            >
-              {row.getIsExpanded() ? '👇' : '👉'}
-            </button>
+            <Button
+              onClick={row.getToggleExpandedHandler()}
+              onlyIcon={true}
+              icon={
+                row.getIsExpanded() ? (
+                  <IcoArrowUp width={16} height={16} stroke={'#6F798B'} />
+                ) : (
+                  <IcoArrowDown width={16} height={16} stroke={'#6F798B'} />
+                )
+              }
+              aria-expanded={row.getIsExpanded()}
+            />
           )}
-        </div>
+        </>
       );
     },
     header: 'expand',
-    size: 100,
     enableGrouping: true,
+    size: 55,
+    meta: {
+      headerAlign: 'center', // 헤더만 가운데 정렬
+      cellAlign: 'center', // 셀은 오른쪽 정렬
+    },
   }),
   columnHelper.accessor('age', {
     cell: ({ row, getValue }) => {
       return (
-        <div
-          style={{
-            paddingLeft: `${row.depth * 2}rem`,
-          }}
-        >
-          {getValue<number>()}
-        </div>
+        // <div
+        //   style={{
+        //     paddingLeft: `${row.depth * 2}rem`,
+        //   }}
+        // >
+
+        // </div>
+        <>{getValue<number>()}</>
       );
     },
     header: 'Age',

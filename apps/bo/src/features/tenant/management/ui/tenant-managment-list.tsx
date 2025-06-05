@@ -150,21 +150,29 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
     }),
   ] as ColumnDef<any, unknown>[];
 
-  const { provider: searchProvider, getValues, fetchData } = useSearchBox(searchConfig);
+  const {
+    provider: searchProvider,
+    getValues,
+    onFormChange,
+    onFormValid,
+  } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig);
-
-  // useDynamicForm(formConfig);
 
   const handleOnSearch = (data: any) => {
     console.log('search', data);
     gridFetch(data);
   };
   useEffect(() => {
-    const listParm = routerState.location.state.listParam;
-    if (listParm) {
-      fetchData(listParm);
-      gridFetch(listParm);
-    }
+    const init = async () => {
+      const listParam = routerState.location.state.listParam;
+      if (listParam) {
+        onFormChange(listParam);
+        if (await onFormValid()) {
+          handleOnSearch(getValues());
+        }
+      }
+    };
+    init();
   }, []);
 
   return (
