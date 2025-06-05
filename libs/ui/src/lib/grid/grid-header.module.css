@@ -21,11 +21,13 @@
             [class*='nlp--checkbox'] {
               @apply mt-[5px];
             }
-            &::before {
-              @apply absolute left-0 top-0 z-[1] h-full w-[1px] bg-[var(--gray9)] content-[''];
-            }
             &.th_pinned_left {
               @apply !border-l-0;
+              & + .th_pinned_left {
+                &::before {
+                  @apply absolute left-0 top-0 z-[1] h-full w-[1px] bg-[var(--gray4)] content-[''];
+                }
+              }
             }
             &.th_sticky {
               @apply !z-[4];
@@ -46,12 +48,6 @@
     & + th {
       @apply !border-l-0;
     }
-  }
-  & + .th_pinned_left {
-    border-left: 1px solid red !important;
-    /* &::before {
-      @apply h-full w-[1px] bg-[var(--gray5)] content-[''];
-    } */
   }
 }
 [class*='th_pinned_left'] {
