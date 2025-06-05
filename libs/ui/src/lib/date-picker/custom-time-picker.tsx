@@ -433,6 +433,7 @@ const StandaloneTimeInput = ({
   const handleHourClick = (h: number) => {
     setSelectedHour(h);
     setSelectionStep('minute');
+    scrollToHour(h);
 
     // 스크롤 위치 로직 변경 주석
     // 분 영역으로 자동 스크롤
@@ -450,6 +451,7 @@ const StandaloneTimeInput = ({
 
   const handleMinuteClick = (m: number) => {
     setSelectedMinute(m);
+    scrollToMinute(m);
 
     if (showSeconds) {
       setSelectionStep('second');
@@ -474,6 +476,7 @@ const StandaloneTimeInput = ({
   const handleSecondClick = (s: number) => {
     setSelectedSecond(s);
     completeSelection(selectedHour, selectedMinute, s);
+    scrollToSecond(s);
   };
 
   // 선택 완료
