@@ -141,6 +141,7 @@ import { Route as GuideGuideGridImport } from './pages/_guide/guide/grid'
 import { Route as GuideGuideFormImport } from './pages/_guide/guide/form'
 import { Route as GuideGuideFileUploadImport } from './pages/_guide/guide/file-upload'
 import { Route as GuideGuideEmptyImport } from './pages/_guide/guide/empty'
+import { Route as GuideGuideEmailImport } from './pages/_guide/guide/email'
 import { Route as GuideGuideDropDownImport } from './pages/_guide/guide/drop-down'
 import { Route as GuideGuideDatePickerImport } from './pages/_guide/guide/date-picker'
 import { Route as GuideGuideCssImport } from './pages/_guide/guide/css'
@@ -982,6 +983,12 @@ const GuideGuideEmptyRoute = GuideGuideEmptyImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const GuideGuideEmailRoute = GuideGuideEmailImport.update({
+  id: '/guide/email',
+  path: '/guide/email',
+  getParentRoute: () => GuideRoute,
+} as any)
+
 const GuideGuideDropDownRoute = GuideGuideDropDownImport.update({
   id: '/guide/drop-down',
   path: '/guide/drop-down',
@@ -1350,6 +1357,13 @@ declare module '@tanstack/react-router' {
       path: '/guide/drop-down'
       fullPath: '/guide/drop-down'
       preLoaderRoute: typeof GuideGuideDropDownImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/email': {
+      id: '/_guide/guide/email'
+      path: '/guide/email'
+      fullPath: '/guide/email'
+      preLoaderRoute: typeof GuideGuideEmailImport
       parentRoute: typeof GuideImport
     }
     '/_guide/guide/empty': {
@@ -2126,6 +2140,7 @@ interface GuideRouteChildren {
   GuideGuideCssRoute: typeof GuideGuideCssRoute
   GuideGuideDatePickerRoute: typeof GuideGuideDatePickerRoute
   GuideGuideDropDownRoute: typeof GuideGuideDropDownRoute
+  GuideGuideEmailRoute: typeof GuideGuideEmailRoute
   GuideGuideEmptyRoute: typeof GuideGuideEmptyRoute
   GuideGuideFileUploadRoute: typeof GuideGuideFileUploadRoute
   GuideGuideFormRoute: typeof GuideGuideFormRoute
@@ -2177,6 +2192,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideCssRoute: GuideGuideCssRoute,
   GuideGuideDatePickerRoute: GuideGuideDatePickerRoute,
   GuideGuideDropDownRoute: GuideGuideDropDownRoute,
+  GuideGuideEmailRoute: GuideGuideEmailRoute,
   GuideGuideEmptyRoute: GuideGuideEmptyRoute,
   GuideGuideFileUploadRoute: GuideGuideFileUploadRoute,
   GuideGuideFormRoute: GuideGuideFormRoute,
@@ -2421,6 +2437,7 @@ export interface FileRoutesByFullPath {
   '/guide/css': typeof GuideGuideCssRoute
   '/guide/date-picker': typeof GuideGuideDatePickerRoute
   '/guide/drop-down': typeof GuideGuideDropDownRoute
+  '/guide/email': typeof GuideGuideEmailRoute
   '/guide/empty': typeof GuideGuideEmptyRoute
   '/guide/file-upload': typeof GuideGuideFileUploadRoute
   '/guide/form': typeof GuideGuideFormRoute
@@ -2564,6 +2581,7 @@ export interface FileRoutesByTo {
   '/guide/css': typeof GuideGuideCssRoute
   '/guide/date-picker': typeof GuideGuideDatePickerRoute
   '/guide/drop-down': typeof GuideGuideDropDownRoute
+  '/guide/email': typeof GuideGuideEmailRoute
   '/guide/empty': typeof GuideGuideEmptyRoute
   '/guide/file-upload': typeof GuideGuideFileUploadRoute
   '/guide/form': typeof GuideGuideFormRoute
@@ -2710,6 +2728,7 @@ export interface FileRoutesById {
   '/_guide/guide/css': typeof GuideGuideCssRoute
   '/_guide/guide/date-picker': typeof GuideGuideDatePickerRoute
   '/_guide/guide/drop-down': typeof GuideGuideDropDownRoute
+  '/_guide/guide/email': typeof GuideGuideEmailRoute
   '/_guide/guide/empty': typeof GuideGuideEmptyRoute
   '/_guide/guide/file-upload': typeof GuideGuideFileUploadRoute
   '/_guide/guide/form': typeof GuideGuideFormRoute
@@ -2855,6 +2874,7 @@ export interface FileRouteTypes {
     | '/guide/css'
     | '/guide/date-picker'
     | '/guide/drop-down'
+    | '/guide/email'
     | '/guide/empty'
     | '/guide/file-upload'
     | '/guide/form'
@@ -2997,6 +3017,7 @@ export interface FileRouteTypes {
     | '/guide/css'
     | '/guide/date-picker'
     | '/guide/drop-down'
+    | '/guide/email'
     | '/guide/empty'
     | '/guide/file-upload'
     | '/guide/form'
@@ -3141,6 +3162,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/css'
     | '/_guide/guide/date-picker'
     | '/_guide/guide/drop-down'
+    | '/_guide/guide/email'
     | '/_guide/guide/empty'
     | '/_guide/guide/file-upload'
     | '/_guide/guide/form'
@@ -3315,6 +3337,7 @@ export const routeTree = rootRoute
         "/_guide/guide/css",
         "/_guide/guide/date-picker",
         "/_guide/guide/drop-down",
+        "/_guide/guide/email",
         "/_guide/guide/empty",
         "/_guide/guide/file-upload",
         "/_guide/guide/form",
@@ -3579,6 +3602,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/drop-down": {
       "filePath": "_guide/guide/drop-down.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/email": {
+      "filePath": "_guide/guide/email.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/empty": {
