@@ -18,8 +18,11 @@ const preview: Preview = {
     layout: 'centered',
     // Sorting stories
     options: {
-      storySort: (a, b) =>
-        a.id === b.id ? 0 : a.id.localeCompare(b.id, undefined, { numeric: true }),
+      storySort: {
+        order: ['Bo-Components', '*'],
+      },
+      // storySort: (a, b) =>
+      //   a.id === b.id ? 0 : a.id.localeCompare(b.id, undefined, { numeric: true }),
     },
   },
 };

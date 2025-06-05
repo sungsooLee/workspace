@@ -66,6 +66,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
   const [treeData, setTreeData] = useState([]);
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [apiMappingMenuList, setApiMappingMenuList] = useState([]);
+
   const tenantId = routerState.location.state?.tenantId;
 
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, control } =
@@ -347,27 +348,32 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
             </FormRow>
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider} name="menuName" element={<Input disabled={true} />} />
-            <Button
-              type="button"
-              variant="gray"
-              size="sm"
-              disabled={formMode !== EnFormMode.VIEW}
-              onClick={() => {
-                const menuCode = getValues('code');
-                const menuName = getValues('menuName');
-                router.navigate({
-                  to: '/platform/system/multilingual',
-                  state: {
-                    keyType: menuScope === 'FO' ? 'LEARNER_MENU' : 'HRD_CENTER_MENU',
-                    multilingualKey: menuCode,
-                    translation: menuName,
-                  },
-                });
-              }}
+            <FormRow
+              provider={provider}
+              name="menuName"
+              element={<Input disabled={formMode === EnFormMode.NONE} />}
             >
-              {t('다국어 관리')}
-            </Button>
+              <Button
+                type="button"
+                variant="gray"
+                size="sm"
+                disabled={formMode !== EnFormMode.VIEW}
+                onClick={() => {
+                  const menuCode = getValues('tenantMenuCode');
+                  const menuName = getValues('menuName');
+                  router.navigate({
+                    to: '/platform/system/multilingual',
+                    state: {
+                      keyType: menuScope === 'FO' ? 'LEARNER_MENU' : 'HRD_CENTER_MENU',
+                      multilingualKey: menuCode,
+                      translation: menuName,
+                    },
+                  });
+                }}
+              >
+                {t('다국어 관리')}
+              </Button>
+            </FormRow>
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider} name="path" element={<Input disabled={true} />} />
@@ -375,7 +381,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
           <ContentsRow>
             <FormRow
               provider={provider}
-              name="menuUrlParm"
+              name="menuUrlParam"
               element={<Input disabled={EnFormMode.NONE === formMode} />}
             />
           </ContentsRow>
@@ -383,7 +389,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
             <FormRow
               provider={provider}
               name="menuDesc"
-              element={<TextareaFormField disabled={true} />}
+              element={<TextareaFormField disabled={EnFormMode.NONE === formMode} />}
             />
           </ContentsRow>
           <ContentsRow type="horizontal">
@@ -410,8 +416,10 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
           <ContentsRow type="horizontal">
             <FormRow
               provider={provider}
-              name="isUsed"
-              element={<SwitchFormField disabled={EnFormMode.NONE === formMode} />}
+              name="tenantIsUsed"
+              element={
+                <SwitchFormField disabled={EnFormMode.NONE === formMode || !getValues('isUsed')} />
+              }
             />
           </ContentsRow>
           <ContentsRow>
@@ -451,8 +459,9 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'path',
       type: 'text',
-      label: t('메뉴 위치'),
+      label: t('메뉴 URL'),
       value: '',
+      size: 10,
     },
     {
       name: 'parentId',
@@ -477,19 +486,21 @@ const formConfig: DynamicFormConfig = {
       type: 'text',
       label: t('메뉴명'),
       value: '',
+      maxLength: 150,
     },
     {
-      name: 'menuUrlParm',
+      name: 'menuUrlParam',
       type: 'text',
       label: t('메뉴URL파라미터'),
       value: '',
+      maxLength: 150,
     },
     {
       name: 'menuDesc',
       type: 'textarea',
       label: t('설명'),
       value: '',
-      size: 50,
+      maxLength: 150,
     },
     {
       name: 'isHiddenMenu',
@@ -505,9 +516,16 @@ const formConfig: DynamicFormConfig = {
     },
     {
       name: 'isUsed',
+      type: 'hidden',
+      label: '',
+      value: true,
+    },
+    {
+      name: 'tenantIsUsed',
       type: 'switch',
       label: t('사용여부'),
       value: true,
+      tooltip: t('사용여부 툴팁'),
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
@@ -535,6 +553,7 @@ const formConfig: DynamicFormConfig = {
       type: 'custom',
       value: [],
     },
+    { name: 'tenantMenuCode', type: 'custom', value: '' },
   ],
   validator: {
     menuCode: { required: true },

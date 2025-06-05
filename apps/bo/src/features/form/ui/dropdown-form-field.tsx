@@ -10,8 +10,11 @@ interface DropdownFormFieldType extends BaseFormFieldProps<string> {
 }
 
 const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormFieldType>(
-  ({ value, onChange, options: initOptions, optionsConfig, dropdownConfig }, ref) => {
-    const options = useFormOptions(initOptions, optionsConfig);
+  (
+    { value, onChange, options: initOptions, optionsConfig, dropdownConfig, currentOptionsState },
+    ref,
+  ) => {
+    const options = useFormOptions(initOptions, optionsConfig, currentOptionsState);
     const { t } = useTranslation();
     return (
       options && (

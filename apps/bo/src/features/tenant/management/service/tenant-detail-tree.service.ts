@@ -117,7 +117,7 @@ export const getAllParentAndChildrenByKey = (nodes: TreeNode[], key: string) => 
   return retval;
 };
 
-const getAllChildrens = (nodes: TreeNode[], contains: TreeNode[] = []) => {
+export const getAllChildrens = (nodes: TreeNode[], contains: TreeNode[] = []) => {
   for (const node of nodes) {
     contains.push(node);
     if (node.children && node.children.length > 0) {
@@ -237,7 +237,7 @@ export const transformMenuApiDataToTreeData = (apiData: any) => {
         ...node,
 
         // 필수 트리 속성
-        key: node.menuId.toString(), // menuId를 key로 사용
+        key: node.tenantMappingMenuId?.toString(), // menuId를 key로 사용
         title: node.menuName || node.menuCode, // title이 없으면 menuCode 사용
         parentKey: node.parentId?.toString(), // parentId를 parentKey로 변환
         children: node.children || [],
@@ -269,7 +269,7 @@ export const transformRoleMenuApiDataToTreeData = (apiData: any) => {
       const transformedNode = {
         ...node,
         // 필수 트리 속성
-        key: node.menuId, // menuId를 key로 사용
+        key: node.tenantMappingMenuId, // menuId를 key로 사용
         title: node.menuName, // title이 없으면 menuCode 사용
         parentKey: node.parentId?.toString(), // parentId를 parentKey로 변환
         children: node.children || [],
@@ -393,7 +393,7 @@ export const transformRoleApiDataToTreeData = (apiData: any) => {
 export const moveRoleCheck = (events: any) => {
   const targetIndex = events.targetIndex + 1;
   return {
-    roleCode: events.sourceNode.roleCode,
+    roleId: events.sourceNode.roleId,
     body: {
       sortOrder: targetIndex,
       parentRoleId:

@@ -79,18 +79,14 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
   const { open: openModal, confirm: openConfirm } = useModal();
 
   const { data: roleData } = useFetchRoleTree(tenantId, siteScope);
-  const { data: roleMenuData } = useFetchRoleMenus(
-    tenantId,
-    siteScope,
-    selectedRole?.roleCode || '',
-  );
+  const { data: roleMenuData } = useFetchRoleMenus(tenantId, siteScope, selectedRole?.roleId || '');
 
   const { data: roleMenuApiData } = useFetchMenuApis(
-    selectedRole?.roleCode || '',
+    selectedRole?.roleId || '',
     selectedRoleMenu?.menuId || '',
   );
 
-  const { create: createApi } = useModifyMenusAndApiToRole({});
+  const { createAndRemve: createApi } = useModifyMenusAndApiToRole({});
 
   const handleMenuSelectionTypeChange = (type: string) => {
     setMenuSelectionType(type === 'option01' ? 'all' : 'custom');
@@ -119,13 +115,13 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
   const handleRoleMenuMapping = async () => {
     const modalScope = siteScope;
     const modalTenantId = tenantId;
-    const modalRoleCode = selectedRole.roleCode;
+    const modalRoleId = selectedRole.roleId;
     await openModal({
       content: (
         <TenantDetailLearningRoleMenuMappingModal
           siteScope={modalScope}
           tenantId={modalTenantId}
-          roleCode={modalRoleCode}
+          roleId={modalRoleId}
         />
       ),
       width: 'xl',
@@ -167,7 +163,7 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
       }
       if (addApis.length > 0 || removeApis.length > 0) {
         const payload = {
-          roleCode: selectedRole.roleCode,
+          roleId: selectedRole.roleId,
           body: {
             addMenuIds: [],
             removeMenuIds: [],

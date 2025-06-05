@@ -44,8 +44,11 @@ const SwitchComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Swit
           disabled && styles.disabled,
           {
             [styles.reversed]: reversed,
+            [styles.labelLeft]: labelAlign === 'left',
+            [styles.labelRight]: labelAlign === 'right',
           },
         )}
+        data-label-align={labelAlign}
       >
         {/* left label */}
         {labelAlign === 'left' && showLabel && label && (

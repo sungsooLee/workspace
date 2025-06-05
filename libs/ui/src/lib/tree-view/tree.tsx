@@ -779,11 +779,12 @@ const TreeView = ({
       return;
     }
 
+    // 중복 확인은 사용하는 쪽에서 처리 되도록 변경
     // 2. 다른 트리에서 복사하는 경우, 이미 존재하는 키인지 확인
-    if (actionType === 'NODE_COPY' && findNodePath(treeData, sourceNode.key)) {
-      alert('이미 트리에 해당 노드가 존재합니다.');
-      return;
-    }
+    // if (actionType === 'NODE_COPY' && findNodePath(treeData, sourceNode.key)) {
+    //   alert('이미 트리에 해당 노드가 존재합니다.');
+    //   return;
+    // }
 
     // 3. 루트 레벨(레벨 0)로의 이동은 INSIDE가 아니면 방지
     if (targetNode && getNodeLevel(treeData, targetNode.key) === 0 && dropPosition !== 'INSIDE') {

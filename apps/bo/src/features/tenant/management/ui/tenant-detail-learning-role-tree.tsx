@@ -92,7 +92,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
   const { provider, onSubmit, clearFormError, fetchData, onFormChange } =
     useDynamicForm(formConfig);
   const { data, refetch } = useFetchRoleTree(tenantId, siteScope);
-  const { data: roleDetail } = useFetchRole(selectedRoleNode?.roleCode || undefined);
+  const { data: roleDetail } = useFetchRole(selectedRoleNode?.roleId || undefined);
 
   const clearAllFormErrors = () => {
     formConfig.builders.forEach((item) => clearFormError(item.name));
