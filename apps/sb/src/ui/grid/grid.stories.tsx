@@ -9,7 +9,7 @@ import {
 } from '@tanstack/react-table';
 import { useQuery } from '@tanstack/react-query';
 import { ReactQueryConfigProvider } from '@learnway/config';
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useMemo, useState } from 'react';
 import {
   Button,
   CountText,
@@ -1166,36 +1166,32 @@ const expandedColumns = [
     },
     enableGrouping: false,
   }),
-  // columnHelper.accessor('preview', {
-  //   cell: (info) => info.getValue(),
-  //   header: '미리보기',
-  //   enableGrouping: false,
-  // }),
-  // columnHelper.accessor('download', {
-  //   cell: (info) => info.getValue(),
-  //   header: 'download',
-  //   enableGrouping: false,
-  //   meta: {
-  //     headerAlign: 'left', // 헤더만 가운데 정렬
-  //     cellAlign: 'center', // 셀은 오른쪽 정렬
-  //   },
-  // }),
 ];
+const transformDataForTable = (data: any[], depth = 0): any[] => {
+  return data.map((item) => {
+    console.log(depth);
+    const transformedItem = {
+      ...item,
+      className: depth > 0 ? 'expanded-row' : '',
+    };
+
+    if (item.children && Array.isArray(item.children)) {
+      transformedItem.subRows = transformDataForTable(item.children, depth + 1);
+      delete transformedItem.children;
+    }
+
+    return transformedItem;
+  });
+};
 
 const ExpandedTable = () => {
-  const [tableState, setTableState] = useState({
-    sorting: [] as SortingState,
-    filters: [] as ColumnFiltersState,
-  });
-
-  const { data, isLoading } = useQuery({
-    queryKey: ['PersonEntity', tableState] as const,
-    queryFn: () => fetchInfiniteData({ tableState }),
-  });
+  const transformedData = useMemo(() => {
+    return transformDataForTable(tmpExpandData);
+  }, []);
 
   return (
     <div className="p-4">
-      <GridBox data={data || []} columns={expandedColumns} isLoading={isLoading} />
+      <GridBox data={transformedData || []} columns={expandedColumns2} />
     </div>
   );
 };
@@ -1212,3 +1208,314 @@ export const WithExpandColumn: Story = {
   ],
   render: () => <ExpandedTable />,
 };
+const columnHelper2 = createColumnHelper<any>();
+const expandedColumns2 = [
+  columnHelper2.accessor('expand', {
+    cell: ({ row }) => {
+      const toggleExpanded = () => {
+        row.toggleExpanded();
+      };
+      return (
+        <div
+          style={{
+            cursor: row.getCanExpand() ? 'pointer' : 'default',
+          }}
+          onClick={row.getCanExpand() ? toggleExpanded : undefined}
+        >
+          {row.getCanExpand() && (
+            <button onClick={toggleExpanded}>{row.getIsExpanded() ? '👇' : '👉'}</button>
+          )}
+        </div>
+      );
+    },
+    header: '확장',
+    size: 100,
+    enableSorting: false,
+  }),
+
+  // 콘텐츠명
+  columnHelper2.accessor('contentName', {
+    cell: ({ row, getValue }) => {
+      return <div>{getValue<string>()}</div>;
+    },
+    header: '콘텐츠명',
+    enableGrouping: false,
+  }),
+
+  // 콘텐츠 타입
+  columnHelper2.accessor('contentType', {
+    cell: (info) => info.getValue(),
+    header: '콘텐츠 타입',
+    meta: {
+      filterType: 'select',
+      filterOptions: [
+        { label: '시험', value: 'EXAM' },
+        { label: '블로그', value: 'BLOG' },
+        { label: '비디오', value: 'VIDEO' },
+      ],
+    },
+    enableGrouping: true,
+  }),
+
+  // 언어 코드
+  columnHelper2.accessor('langCountryCode', {
+    cell: (info) => info.getValue(),
+    header: '언어',
+    meta: {
+      filterType: 'select',
+      filterOptions: [
+        { label: '한국어', value: 'KO' },
+        { label: '영어', value: 'EN' },
+      ],
+    },
+    enableGrouping: true,
+  }),
+
+  // 채널명
+  columnHelper2.accessor('channelName', {
+    cell: (info) => info.getValue(),
+    header: '채널명',
+    enableGrouping: true,
+  }),
+
+  // 테넌트명
+  columnHelper2.accessor('tenantName', {
+    cell: (info) => info.getValue(),
+    header: '테넌트명',
+    enableGrouping: true,
+  }),
+
+  // 담당자명
+  columnHelper2.accessor('coordinatorName', {
+    cell: (info) => info.getValue(),
+    header: '담당자',
+    enableGrouping: false,
+  }),
+
+  // 사용 여부
+  columnHelper2.accessor('isUseEnabled', {
+    cell: (info) => <span>{info.getValue() ? '사용' : '미사용'}</span>,
+    header: '사용 여부',
+    meta: {
+      filterType: 'select',
+      filterOptions: [
+        { label: '사용', value: 'true' },
+        { label: '미사용', value: 'false' },
+      ],
+    },
+    enableGrouping: true,
+  }),
+
+  // 추가 정보
+  columnHelper2.accessor('contentAddInfo', {
+    cell: (info) => info.getValue(),
+    header: '추가 정보',
+    meta: {
+      filterType: 'range',
+    },
+    enableGrouping: false,
+  }),
+
+  // 공개 여부
+  columnHelper2.accessor('isOpened', {
+    cell: (info) => <span>{info.getValue() ? '공개' : '비공개'}</span>,
+    header: '공개 여부',
+    meta: {
+      filterType: 'select',
+      filterOptions: [
+        { label: '공개', value: 'true' },
+        { label: '비공개', value: 'false' },
+      ],
+    },
+    enableGrouping: true,
+  }),
+];
+
+const tmpExpandData = [
+  {
+    contentUuid: 'deb189a5-958a-4fef-b2f5-29ab51eaa184',
+    contentName: '학습자원명4',
+    langCountryCode: 'EN',
+    contentType: 'EXAM',
+    contentStatusCode: null,
+    channelUuid: null,
+    channelName: '채널2',
+    tenantUuid: null,
+    tenantName: '테넌트1',
+    description: null,
+    coordinatorId: null,
+    coordinatorName: '담당자',
+    coordinatorTelNo: null,
+    isUnlimited: null,
+    contentUseStartDate: null,
+    contentUseEndDate: null,
+    isVendored: null,
+    vendorName: null,
+    vendorCoordinatorName: null,
+    vendorTelNo: null,
+    isCourseUsed: null,
+    isInspected: null,
+    isCopyrighted: null,
+    isUseEnabled: true,
+    contentAddInfoType: 'EXAM_ADD_INFO',
+    contentAddInfo: 10,
+    isSecured: null,
+    isDeleted: false,
+    isOpened: true,
+    isDrafted: null,
+    createdBy: null,
+    createdDate: null,
+    lastModifiedBy: '123',
+    modifiedDate: null,
+    children: null,
+  },
+  {
+    contentUuid: 'deb189a5-958a-4fef-b2f5-29ab51eaa185',
+    contentName: '학습자원명4',
+    langCountryCode: 'KO',
+    contentType: 'BLOG',
+    contentStatusCode: null,
+    channelUuid: null,
+    channelName: '채널2',
+    tenantUuid: null,
+    tenantName: '테넌트1',
+    description: null,
+    coordinatorId: null,
+    coordinatorName: '담당자',
+    coordinatorTelNo: null,
+    isUnlimited: null,
+    contentUseStartDate: null,
+    contentUseEndDate: null,
+    isVendored: null,
+    vendorName: null,
+    vendorCoordinatorName: null,
+    vendorTelNo: null,
+    isCourseUsed: null,
+    isInspected: null,
+    isCopyrighted: null,
+    isUseEnabled: true,
+    contentAddInfoType: null,
+    contentAddInfo: 50,
+    isSecured: null,
+    isDeleted: false,
+    isOpened: true,
+    isDrafted: null,
+    createdBy: null,
+    createdDate: null,
+    lastModifiedBy: '123',
+    modifiedDate: null,
+    children: null,
+  },
+  {
+    contentUuid: 'deb189a5-958a-4fef-b2f5-29ab51eaa181',
+    contentName: '테스트 비디오 콘텐츠 1',
+    langCountryCode: 'KO',
+    contentType: 'VIDEO',
+    contentStatusCode: null,
+    channelUuid: null,
+    channelName: '채널1',
+    tenantUuid: null,
+    tenantName: '테넌트1',
+    description: null,
+    coordinatorId: null,
+    coordinatorName: '담당자1',
+    coordinatorTelNo: null,
+    isUnlimited: null,
+    contentUseStartDate: null,
+    contentUseEndDate: null,
+    isVendored: null,
+    vendorName: null,
+    vendorCoordinatorName: null,
+    vendorTelNo: null,
+    isCourseUsed: null,
+    isInspected: null,
+    isCopyrighted: null,
+    isUseEnabled: true,
+    contentAddInfoType: 'VIDEO_ADD_INFO',
+    contentAddInfo: 10,
+    isSecured: null,
+    isDeleted: false,
+    isOpened: true,
+    isDrafted: null,
+    createdBy: null,
+    createdDate: null,
+    lastModifiedBy: '123',
+    modifiedDate: null,
+    children: [
+      {
+        contentUuid: 'deb189a5-958a-4fef-b2f5-29ab51eaa182',
+        contentName: '학습자원명2',
+        langCountryCode: 'KO',
+        contentType: 'VIDEO',
+        contentStatusCode: null,
+        channelUuid: null,
+        channelName: '채널2',
+        tenantUuid: null,
+        tenantName: '테넌트1',
+        description: null,
+        coordinatorId: null,
+        coordinatorName: '담당자',
+        coordinatorTelNo: null,
+        isUnlimited: null,
+        contentUseStartDate: null,
+        contentUseEndDate: null,
+        isVendored: null,
+        vendorName: null,
+        vendorCoordinatorName: null,
+        vendorTelNo: null,
+        isCourseUsed: null,
+        isInspected: null,
+        isCopyrighted: null,
+        isUseEnabled: true,
+        contentAddInfoType: 'VIDEO_ADD_INFO',
+        contentAddInfo: 20,
+        isSecured: null,
+        isDeleted: false,
+        isOpened: true,
+        isDrafted: null,
+        createdBy: null,
+        createdDate: null,
+        lastModifiedBy: '123',
+        modifiedDate: null,
+        children: null,
+      },
+      {
+        contentUuid: 'deb189a5-958a-4fef-b2f5-29ab51eaa183',
+        contentName: '학습자원명3',
+        langCountryCode: 'KO',
+        contentType: 'VIDEO',
+        contentStatusCode: null,
+        channelUuid: null,
+        channelName: '채널2',
+        tenantUuid: null,
+        tenantName: '테넌트1',
+        description: null,
+        coordinatorId: null,
+        coordinatorName: '담당자',
+        coordinatorTelNo: null,
+        isUnlimited: null,
+        contentUseStartDate: null,
+        contentUseEndDate: null,
+        isVendored: null,
+        vendorName: null,
+        vendorCoordinatorName: null,
+        vendorTelNo: null,
+        isCourseUsed: null,
+        isInspected: null,
+        isCopyrighted: null,
+        isUseEnabled: true,
+        contentAddInfoType: 'VIDEO_ADD_INFO',
+        contentAddInfo: 20,
+        isSecured: null,
+        isDeleted: false,
+        isOpened: true,
+        isDrafted: null,
+        createdBy: null,
+        createdDate: null,
+        lastModifiedBy: '123',
+        modifiedDate: null,
+        children: null,
+      },
+    ],
+  },
+];
