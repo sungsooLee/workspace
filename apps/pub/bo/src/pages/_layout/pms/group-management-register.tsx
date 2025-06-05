@@ -304,6 +304,287 @@ function RouteComponent() {
             </p>
           </div>
         </ContentsRow>
+        <ContentsRow>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-loginType" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>{'로그인 2차 인증 사용'}</span>
+              <span className={formStyles.info_area}>
+                <Switch
+                  id="switch02"
+                  className={formStyles.btn_switch}
+                  label={checked[2] ? '사용' : '미사용'}
+                  checked={checked[2]}
+                  onCheckedChange={handleCheckedChange(2)}
+                />
+              </span>
+            </label>
+            <div className={formStyles.input_box}>
+              <CheckboxGroupFormField
+                options={[
+                  { value: 'option01', label: 'FO 로그인' },
+                  { value: 'option02', label: 'BO 로그인' },
+                ]}
+                value={['option01']}
+              />
+            </div>
+            <p className={cn(formStyles.guide_text)}>
+              {'2차 로그인 인증 여부를 설정할 수 있습니다. '}
+            </p>
+          </div>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-certifyType" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>{'2차 인증 유형'}</span>
+            </label>
+            <div className={formStyles.input_box}>
+              <div className={dynamicFormStyles.radio_wrap}>
+                <RadioGroupFormField
+                  options={[
+                    { value: 'a', label: 'MPASS(OTP / FIDO) ' },
+                    { value: 'b', label: 'MPASS(FIDO)' },
+                    { value: 'c', label: 'MPASS(OTP)' },
+                    { value: 'd', label: '구글 OTP' },
+                  ]}
+                />
+              </div>
+            </div>
+            <p className={cn(formStyles.guide_text)}>
+              {'로그인 2차 인증 사용하는 경우 2차 인증 유형을 선택할 수 있습니다. '}
+            </p>
+          </div>
+        </ContentsRow>
+        <FormSubTitle label={'보안 설정 정보'} lineType={'dark'} />
+        <ContentsRow>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-mark" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>{'워터 마크 사용'}</span>
+              <span className={formStyles.info_area}>
+                <Switch
+                  id="switch03"
+                  className={formStyles.btn_switch}
+                  label={checked[3] ? '사용' : '미사용'}
+                  checked={checked[3]}
+                  onCheckedChange={handleCheckedChange(3)}
+                />
+              </span>
+            </label>
+            <div className={formStyles.input_box}>
+              <p className={formStyles.sub_text}>
+                {
+                  '워터마크는 학습창(동영상과 e-book)에서만 노출되며, 과정 등록 시 설정 옵션이 우선 적용됩니다. '
+                }
+              </p>
+            </div>
+          </div>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-markText" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>{'워터마크 문구 '}</span>
+              {/* 필수 케이스 */}
+              <span className={cn(formStyles.status, formStyles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Input type={'text'} placeholder={'입력'} value={'테스트'} maxLength={10} />
+            </div>
+            <p className={cn(formStyles.guide_text)}>
+              {'입력한 문구와 성명, 사번이 학습창에 노출됩니다. '}
+            </p>
+          </div>
+        </ContentsRow>
+        <ContentsRow>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-openPosition" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>{'워터마크 노출 위치 '}</span>
+            </label>
+            <div className={formStyles.input_box}>
+              <div className={dynamicFormStyles.radio_wrap}>
+                <RadioGroupFormField
+                  options={[
+                    { value: 'a', label: '하단 우측' },
+                    { value: 'b', label: '하단 중앙' },
+                    { value: 'c', label: '하단 좌측' },
+                    { value: 'd', label: '중단 우측' },
+                    { value: 'e', label: '중단 중앙' },
+                    { value: 'f', label: '중단 좌측' },
+                    { value: 'g', label: '상단 우측' },
+                    { value: 'h', label: '상단 중앙' },
+                    { value: 'i', label: '상단 좌측' },
+                  ]}
+                />
+              </div>
+            </div>
+            <p className={cn(formStyles.guide_text)}>
+              {'워터마크 노출 위치를 지정할 수 있습니다.'}
+            </p>
+          </div>
+        </ContentsRow>
+        <ContentsRow>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-playerControl" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>{'플레이어 재생바 제어 제한'}</span>
+            </label>
+            <div className={formStyles.input_box}>
+              <div className={dynamicFormStyles.radio_wrap}>
+                <RadioGroupFormField
+                  options={[
+                    { value: 'a', label: '회사 설정 기준' },
+                    { value: 'b', label: '과정 설정 기준' },
+                    { value: 'c', label: '미사용' },
+                  ]}
+                />
+              </div>
+            </div>
+            <p className={cn(formStyles.guide_text)}>
+              {
+                '사용 설정 시 학습창 내 플레이어의 재생바를 이동할 수 없으며, 배속 기능도 사용할 수 없습니다.'
+              }
+            </p>
+          </div>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-eLearning" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>{'이러닝 집중 모드'}</span>
+            </label>
+            <div className={formStyles.input_box}>
+              <div className={dynamicFormStyles.radio_wrap}>
+                <RadioGroupFormField
+                  options={[
+                    { value: 'a', label: '회사 설정 기준' },
+                    { value: 'b', label: '과정 설정 기준' },
+                    { value: 'c', label: '미사용' },
+                  ]}
+                />
+              </div>
+            </div>
+            <p className={cn(formStyles.guide_text)}>
+              {
+                '사용 설정 시 학습창 내 플레이어의 재생바를 이동할 수 없으며, 배속 기능도 사용할 수 없습니다.'
+              }
+            </p>
+          </div>
+        </ContentsRow>
+        <ContentsRow>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-capture" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>{'학습창 캡쳐 방지'}</span>
+            </label>
+            <div className={formStyles.input_box}>
+              <div className={dynamicFormStyles.radio_wrap}>
+                <RadioGroupFormField
+                  options={[
+                    { value: 'a', label: '회사 설정 기준' },
+                    { value: 'b', label: '과정 설정 기준' },
+                    { value: 'c', label: '미사용' },
+                  ]}
+                />
+              </div>
+            </div>
+            <p className={cn(formStyles.guide_text)}>
+              {'사용 설정 시 학습창 화면을 캡쳐할 수 없습니다.'}
+            </p>
+          </div>
+        </ContentsRow>
+        <FormSubTitle label={'회사 사용 설정'} lineType={'dark'} />
+        <ContentsRow type={'horizontal'}>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-useable" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>{'사용 여부'}</span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Switch
+                id="switch04"
+                className={formStyles.btn_switch}
+                label={checked[4] ? '사용' : '미사용'}
+                checked={checked[4]}
+                onCheckedChange={handleCheckedChange(4)}
+              />
+            </div>
+            <p className={cn(formStyles.guide_text)}>
+              {'OFF인  경우 해당 회사 사용자는 테넌트에 로그인 할 수 없습니다. '}
+            </p>
+          </div>
+          {/* form_item */}
+          <div className={formStyles.form_item}></div>
+          {/* form_item */}
+          <div className={formStyles.form_item}></div>
+        </ContentsRow>
+        <FormSubTitle label={'담당자 정보'} lineType={'dark'} />
+        <ContentsRow>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-charge" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>{'담당부서'}</span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Input id={'name-charge'} type={'text'} placeholder={'입력'} value={''} />
+            </div>
+          </div>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-charge2" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>{'직위/직책'}</span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Input id={'name-charge2'} type={'text'} placeholder={'입력'} value={''} />
+            </div>
+          </div>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-charge3" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>{'성명'}</span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Input id={'name-charge3'} type={'text'} placeholder={'입력'} value={''} />
+            </div>
+          </div>
+        </ContentsRow>
+        <ContentsRow>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-charge4" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>{'이메일'}</span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Input id={'name-charge'} type={'text'} placeholder={'입력'} value={''} />
+            </div>
+          </div>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-charge5" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>{'전화번호(사무실)'}</span>
+            </label>
+            <div className={formStyles.input_box}>
+              <PhoneNumber
+                options={[
+                  { value: 'type1', label: '+82' },
+                  { value: 'type2', label: '+83' },
+                ]}
+              />
+            </div>
+          </div>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-charge6" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>{'휴대폰 번호'}</span>
+            </label>
+            <div className={formStyles.input_box}>
+              <PhoneNumber
+                options={[
+                  { value: 'type1', label: '+82' },
+                  { value: 'type2', label: '+83' },
+                ]}
+              />
+            </div>
+          </div>
+        </ContentsRow>
       </div>
     </PageContainer>
   );

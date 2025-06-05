@@ -384,7 +384,7 @@ export const guideData = [
     pageId: 'pms/group-management-register',
     screenId: 'NLP_BO_TMS_1300_01',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-06-05',
     lastUpdateDate: '',
     remarks: '', // 비고
   },
