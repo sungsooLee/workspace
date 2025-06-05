@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { cn, formatDate, formatPhoneNumber } from '@learnway/shared';
 import { FormSubTitle } from '@shared/ui/form';
@@ -32,6 +32,11 @@ export function MyPage() {
   const { data: authUser } = useFetchAuthUser();
   const { data: user } = useUserDetail();
 
+  const address = useMemo(() => {
+    if (!user?.company?.postNo || !user?.company?.basicAddress) return '';
+    return `(${user?.company?.postNo}) ${user?.company?.basicAddress}`;
+  }, [user]);
+
   console.log('authUser', authUser);
   console.log('user', user);
   return (
@@ -50,7 +55,7 @@ export function MyPage() {
         </div>
         <div className={styles.name_wrap}>
           <span className={styles.name}>{user?.name}</span>
-          <span className={styles.eng_name}>{'Hyundae KIM'}</span>
+          <span className={styles.eng_name}>{user?.engName}</span>
         </div>
         <ul className={styles.list}>
           <li>
@@ -67,8 +72,7 @@ export function MyPage() {
           </li>
           <li>
             <span className={styles.title}>{'성별'}</span>
-            {/* <p className={styles.text}>{'남성'}</p> */}
-            <p className={styles.text}>{''}</p>
+            <p className={styles.text}>{'남성/여성'}</p>
           </li>
         </ul>
       </div>
@@ -96,8 +100,7 @@ export function MyPage() {
               </tr>
               <tr>
                 <th scope={'row'}>{'주소'}</th>
-                {/* <td colSpan={5}>{'(12345) 서울특별시 강남구 강남대로84길 13'}</td> */}
-                <td colSpan={5}>{`(${user?.company?.postNo}) ${user?.company?.basicAddress}`}</td>
+                <td colSpan={5}>{address}</td>
               </tr>
             </tbody>
           </table>

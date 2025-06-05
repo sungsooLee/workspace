@@ -7,7 +7,7 @@ import { map } from 'lodash';
 import { useCreation } from 'ahooks';
 
 import { Avatar, Popover, Button, useModal } from '@learnway/ui';
-import { useFetchAuthUser, useLogoutUser, useReissue } from '@learnway/auth';
+import { useFetchAuthUser, useLogoutUser, useReissue, useUserDetail } from '@learnway/auth';
 import { IcLogOut01 } from '@learnway/icons';
 import imgLogo from '@assets/images/temp/img_temp_company_logo.png';
 
@@ -34,6 +34,7 @@ export const PopoverContent = () => {
   const { logout } = useLogoutUser();
 
   const { data: authUser } = useFetchAuthUser();
+  const { data: user } = useUserDetail();
 
   const logoutAlert = async () => {
     const feedback = await openConfirm({
@@ -50,16 +51,16 @@ export const PopoverContent = () => {
           <Avatar
             imageUrl={authUser?.avataImage}
             className={styles.info_avata}
-            fallback={<AvataFallback name={authUser?.name} />}
+            fallback={<AvataFallback name={user?.name} />}
           />
           <span className={styles.logo_wrap}>
             <img src={imgLogo} alt="" className={styles.logo_img} />
           </span>
         </div>
         <div className={styles.profile}>
-          <span className={styles.name}>{authUser?.name}</span>
+          <span className={styles.name}>{user?.name}</span>
           <span className={styles.tenant}>{authUser?.activeTenant?.tenantName}</span>
-          <span className={styles.team}>팀명</span>
+          <span className={styles.team}>{user?.dept?.deptName}</span>
         </div>
       </div>
       <ul className={styles.info_list}>
