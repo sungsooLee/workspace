@@ -97,7 +97,7 @@ export const mockData = (params?: LabelMessagesQueryParams): PaginationResponse<
       pageSize: params?.size || 20,
       sort: {
         empty: false,
-        sorted: true,
+        sorted: !!sortKey,
         unsorted: false,
       },
       offset: 0,
@@ -111,7 +111,7 @@ export const mockData = (params?: LabelMessagesQueryParams): PaginationResponse<
     number: params?.page || 0,
     sort: {
       empty: false,
-      sorted: true,
+      sorted: !!sortKey,
       unsorted: false,
     },
     numberOfElements: params?.size || 10,

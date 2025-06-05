@@ -42,6 +42,7 @@ export function useGridTable<T extends object>(
   const {
     data,
     columns,
+    rowId = 'id',
     multiple,
     pagination,
     columnGrouping,
@@ -260,7 +261,7 @@ export function useGridTable<T extends object>(
       if (!pagination) return;
       const newPagination =
         typeof updater === 'function'
-          ? updater({ pageIndex: pagination.pageIndex, pageSize: pagination.pageSize })
+          ? updater({ pageIndex: pagination.pageNumber, pageSize: pagination.pageSize })
           : updater;
       pagination.onPageChange(newPagination.pageIndex);
       pagination.onPageSizeChange(newPagination.pageSize);
@@ -282,9 +283,7 @@ export function useGridTable<T extends object>(
     manualSorting: !clientSideSorting,
     manualFiltering: !clientSideFiltering,
     manualPagination: true,
-    getRowId: (row: T, index: number) => {
-      return `${pagination?.pageIndex ?? 0}-${index}`;
-    },
+    getRowId: (row: any, index: number) => row[rowId] ?? `${pagination?.pageNumber ?? 0}-${index}`,
     meta: {
       updateData: handleUpdateData,
       removeData: handleRemoveData,
@@ -302,14 +301,6 @@ export function useGridTable<T extends object>(
       sort: gridStateToSortQueryParams({ sorting }),
     });
   }, [sorting]);
-  // useEffect(() => {
-  //   onStateChange?.({
-  //     filters: columnFilters,
-  //     sorting,
-  //     columnVisibility,
-  //     columnOrder,
-  //   });
-  // }, [columnFilters, sorting, columnVisibility, columnOrder]);
 
   // 그리드 row 선택 변경시 onRowSelect(단건), onRowsSelect(다건) callback 실행
   useEffect(() => {
@@ -373,8 +364,5 @@ export function useGridTable<T extends object>(
     rowSelection,
     isInitialSelectionEffect,
     lastPinnedColumnId,
-    // updateData: handleUpdateData,
-    // removeData: handleRemoveData,
-    // 필요하다면 setExpanded, setColumnPinningState 등도 반환
   };
 }

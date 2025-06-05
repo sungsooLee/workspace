@@ -1,5 +1,5 @@
 import { UseFormReturn } from 'react-hook-form';
-import { GridProps, GridState } from './grid';
+import { GridBoxState, GridProps } from './grid';
 import React from 'react';
 import { GridBoxSearchInputCondition } from '../grid-box/grid-box-search-input';
 import { PaginationResponse } from '../../type';
@@ -30,6 +30,12 @@ export interface useGridBoxConfig {
    * Grid에 표시될 데이터 배열입니다.
    */
   data?: any[]; // 실제 행 데이터 객체들의 배열 타입으로 명확히 하는 것이 좋습니다. 예: T[];
+
+  /**
+   * useReactTable() 생성시 getRowId 설정에 사용되는 key 값
+   * 기본값 : 'id'
+   */
+  rowId?: string;
 
   /**
    * Excel 업로드 다운로드에 대한 기능 정의
@@ -67,6 +73,12 @@ export interface GridBoxConfig<T extends object = object> {
    * Grid에 표시될 데이터 배열입니다.
    */
   data?: any[]; // 실제 행 데이터 객체들의 배열 타입으로 명확히 하는 것이 좋습니다. 예: T[];
+
+  /**
+   * useReactTable() 생성시 getRowId 설정에 사용되는 key 값
+   * 기본값 : 'id'
+   */
+  rowId?: string;
 
   /**
    * Grid에 표시될 데이터 배열입니다.
@@ -109,8 +121,8 @@ export interface GridBoxConfig<T extends object = object> {
    */
   page?: GridBoxPagination;
 
-  // sort
-  onStateChange?: (state: GridState) => void;
+  // state change
+  onStateChange?: (state: GridBoxState) => void;
 
   pagination?: GridBoxPagination;
 }

@@ -98,24 +98,12 @@ const RightPanelComponent = ({ params, setTableInstance }: RightPanelProps) => {
     [params],
   );
 
-  /**
-   * pagination 정보 가공
-   */
-  const pagination = useMemo(
-    () => ({
-      pageSize: data?.pageable?.pageSize ?? 10,
-      pageNumber: data?.pageable?.pageNumber ?? 0,
-      totalPages: data?.totalPages ?? 0,
-    }),
-    [data],
-  );
-
   return (
     <GridBox
       columns={columns}
       showNumberingColumn
       gridData={data}
-      pagination={pagination}
+      rowId={'labelMessageName'}
       onStateChange={handleStateChange}
       onSearchClick={handleGridSearchClick}
     />

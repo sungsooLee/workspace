@@ -86,6 +86,12 @@ export interface GridProps<T> {
   columns: any[];
 
   /**
+   * useReactTable() 생성시 getRowId 설정에 사용되는 key 값
+   * 기본값 : 'id'
+   */
+  rowId?: string;
+
+  /**
    * 데이터 로딩 중 여부를 나타내는 boolean 값입니다.
    * 로딩 중일 경우, 로딩 화면을 표시할 수 있습니다.
    */

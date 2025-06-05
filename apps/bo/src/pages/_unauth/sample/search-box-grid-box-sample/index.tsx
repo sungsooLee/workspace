@@ -114,6 +114,7 @@ const searchConfig: SearchBoxConfig = {
 
 const gridConfig = {
   query: queryOptions.all<LabelMessagesQueryParams>,
+  rowId: 'labelMessageName',
   columns: [
     // 분류
     { name: 'labelMessageType', label: () => t('LABEL.grid.column.type'), size: 100 },
