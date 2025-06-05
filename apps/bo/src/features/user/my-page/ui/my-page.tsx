@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { cn, formatDate } from '@learnway/shared';
+import { cn, formatDate, formatPhoneNumber } from '@learnway/shared';
 import { FormSubTitle } from '@shared/ui/form';
 import { Avatar } from '@learnway/ui';
 
@@ -88,7 +88,7 @@ export function MyPage() {
             <tbody>
               <tr>
                 <th scope={'row'}>{'휴대폰번호'}</th>
-                <td>{user?.phoneNumber}</td>
+                <td>{formatPhoneNumber(user?.phoneNumber)}</td>
                 <th scope={'row'}>{'연락처(사무실)'}</th>
                 <td>{user?.companyTelephoneNumber}</td>
                 <th scope={'row'}>{'지역'}</th>
@@ -118,29 +118,32 @@ export function MyPage() {
               <tr>
                 <th scope={'row'}>{'회사'}</th>
                 <td>{user?.company?.name}</td>
-                <th scope={'row'}>{'본부/사업부'}</th>
+                <th scope={'row'}>{'실'}</th>
                 <td>{user?.dept?.parent}</td>
-                <th scope={'row'}>{'부서'}</th>
+                <th scope={'row'}>{'소속'}</th>
                 <td>{user?.dept?.deptName}</td>
               </tr>
               <tr>
-                <th scope={'row'}>{'소속'}</th>
+                <th scope={'row'}>{'보직'}</th>
                 {/* <td>{'경영팀'}</td> */}
                 <td>{''}</td>
-                <th scope={'row'}>{'직책'}</th>
+                <th scope={'row'}>{'호칭'}</th>
                 {/* <td>{'팀장'}</td> */}
                 <td>{''}</td>
-                <th scope={'row'}>{'직위'}</th>
+                <th scope={'row'}>{'직군'}</th>
                 {/* <td>{'과장'}</td> */}
                 <td>{''}</td>
               </tr>
               <tr>
-                <th scope={'row'}>{'입사일자'}</th>
+                <th scope={'row'}>{'입사일'}</th>
                 {/* <td>{'2020-01-02'}</td> */}
                 <td>{''}</td>
-                <th scope={'row'}>{'재직상태'}</th>
+                <th scope={'row'}>{'최근 승진일'}</th>
                 {/* <td colSpan={3}>{'재직'}</td> */}
-                <td colSpan={3}>{''}</td>
+                <td>{''}</td>
+                <th scope={'row'}>{'재직 상태'}</th>
+                {/* <td colSpan={3}>{'재직'}</td> */}
+                <td>{''}</td>
               </tr>
             </tbody>
           </table>
@@ -159,11 +162,11 @@ export function MyPage() {
             </colgroup>
             <tbody>
               <tr>
-                <th scope={'row'}>{'업무 범위1'}</th>
+                <th scope={'row'}>{'직군/직무'}</th>
                 <td>{'영업 > 관리자'}</td>
-                <th scope={'row'}>{'업무 범위1'}</th>
+                <th scope={'row'}>{'직군/직무'}</th>
                 <td>{'영업 > 관리자'}</td>
-                <th scope={'row'}>{'업무 범위1'}</th>
+                <th scope={'row'}>{'직군/직무'}</th>
                 <td>{'영업 > 관리자'}</td>
               </tr>
             </tbody>
