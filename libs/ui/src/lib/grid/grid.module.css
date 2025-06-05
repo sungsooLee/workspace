@@ -15,6 +15,9 @@
       @apply h-[20px] w-[20px] appearance-none overflow-hidden rounded-[10px] border border-solid border-[var(--gray5)];
     }
   }
+  thead th:not(:first-child) {
+    border-left: 1px solid var(--gray2);
+  }
   &.no_data {
     @apply overflow-hidden pb-[40px];
     .empty_message_container {
@@ -196,24 +199,6 @@
   @apply button_bo_2_r text-[var(--gray6)];
 }
 
-.th_pinned_left {
-  @apply !sticky left-0 !z-[3] bg-[var(--gray1)];
-  &.th_pinned_last {
-    border-right: 1px solid var(--gray5) !important;
-  }
-  & + .thead_th:not(.th_pinned_left) {
-    @apply !border-l-0;
-  }
-}
-.td_pinned_left {
-  @apply !z-[3] !h-[40px] border-b-[1px] border-solid border-[var(--gray2)] bg-white;
-  &.td_pinned_last {
-    border-right: 1px solid var(--gray5) !important;
-  }
-  & + td:not(.td_pinned_left) {
-    @apply !border-l-0;
-  }
-}
 [class*='th_pinned_left'] {
   &:last-of-type {
     @apply !hidden;

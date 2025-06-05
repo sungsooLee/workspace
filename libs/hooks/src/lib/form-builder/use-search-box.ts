@@ -203,6 +203,7 @@ const useSearchBoxHook = <T extends SearchBoxConfig>(config: T): UseSearchBoxRet
       formState,
       onFormChange,
       getValues,
+      setValue,
       onFormFocus: handleFocus,
       originalValues,
       onSubmit: formSubmit,

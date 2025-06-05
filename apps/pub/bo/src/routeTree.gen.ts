@@ -77,6 +77,7 @@ import { Route as LayoutPmsMenuChannelManagementImport } from './pages/_layout/p
 import { Route as LayoutPmsMenuChannelDetailManagementImport } from './pages/_layout/pms/menu-channel-detail-management'
 import { Route as LayoutPmsMenuChannelDetailImport } from './pages/_layout/pms/menu-channel-detail'
 import { Route as LayoutPmsLanguagemanagementImport } from './pages/_layout/pms/language_management'
+import { Route as LayoutPmsGroupManagementImport } from './pages/_layout/pms/group-management'
 import { Route as LayoutPmsCategoryMenagementImport } from './pages/_layout/pms/category-menagement'
 import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
 import { Route as LayoutMenu4Menu5Import } from './pages/_layout/menu4/menu5'
@@ -579,6 +580,12 @@ const LayoutPmsLanguagemanagementRoute =
     path: '/pms/language_management',
     getParentRoute: () => LayoutRoute,
   } as any)
+
+const LayoutPmsGroupManagementRoute = LayoutPmsGroupManagementImport.update({
+  id: '/pms/group-management',
+  path: '/pms/group-management',
+  getParentRoute: () => LayoutRoute,
+} as any)
 
 const LayoutPmsCategoryMenagementRoute =
   LayoutPmsCategoryMenagementImport.update({
@@ -1800,6 +1807,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutPmsCategoryMenagementImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/pms/group-management': {
+      id: '/_layout/pms/group-management'
+      path: '/pms/group-management'
+      fullPath: '/pms/group-management'
+      preLoaderRoute: typeof LayoutPmsGroupManagementImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/pms/language_management': {
       id: '/_layout/pms/language_management'
       path: '/pms/language_management'
@@ -2250,6 +2264,7 @@ interface LayoutRouteChildren {
   LayoutMenu4Menu5Route: typeof LayoutMenu4Menu5Route
   LayoutMenu8Menu9Route: typeof LayoutMenu8Menu9Route
   LayoutPmsCategoryMenagementRoute: typeof LayoutPmsCategoryMenagementRoute
+  LayoutPmsGroupManagementRoute: typeof LayoutPmsGroupManagementRoute
   LayoutPmsLanguagemanagementRoute: typeof LayoutPmsLanguagemanagementRoute
   LayoutPmsMenuChannelDetailRoute: typeof LayoutPmsMenuChannelDetailRoute
   LayoutPmsMenuChannelDetailManagementRoute: typeof LayoutPmsMenuChannelDetailManagementRoute
@@ -2324,6 +2339,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutMenu4Menu5Route: LayoutMenu4Menu5Route,
   LayoutMenu8Menu9Route: LayoutMenu8Menu9Route,
   LayoutPmsCategoryMenagementRoute: LayoutPmsCategoryMenagementRoute,
+  LayoutPmsGroupManagementRoute: LayoutPmsGroupManagementRoute,
   LayoutPmsLanguagemanagementRoute: LayoutPmsLanguagemanagementRoute,
   LayoutPmsMenuChannelDetailRoute: LayoutPmsMenuChannelDetailRoute,
   LayoutPmsMenuChannelDetailManagementRoute:
@@ -2485,6 +2501,7 @@ export interface FileRoutesByFullPath {
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/pms/category-menagement': typeof LayoutPmsCategoryMenagementRoute
+  '/pms/group-management': typeof LayoutPmsGroupManagementRoute
   '/pms/language_management': typeof LayoutPmsLanguagemanagementRoute
   '/pms/menu-channel-detail': typeof LayoutPmsMenuChannelDetailRoute
   '/pms/menu-channel-detail-management': typeof LayoutPmsMenuChannelDetailManagementRoute
@@ -2628,6 +2645,7 @@ export interface FileRoutesByTo {
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/pms/category-menagement': typeof LayoutPmsCategoryMenagementRoute
+  '/pms/group-management': typeof LayoutPmsGroupManagementRoute
   '/pms/language_management': typeof LayoutPmsLanguagemanagementRoute
   '/pms/menu-channel-detail': typeof LayoutPmsMenuChannelDetailRoute
   '/pms/menu-channel-detail-management': typeof LayoutPmsMenuChannelDetailManagementRoute
@@ -2774,6 +2792,7 @@ export interface FileRoutesById {
   '/_layout/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/_layout/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/_layout/pms/category-menagement': typeof LayoutPmsCategoryMenagementRoute
+  '/_layout/pms/group-management': typeof LayoutPmsGroupManagementRoute
   '/_layout/pms/language_management': typeof LayoutPmsLanguagemanagementRoute
   '/_layout/pms/menu-channel-detail': typeof LayoutPmsMenuChannelDetailRoute
   '/_layout/pms/menu-channel-detail-management': typeof LayoutPmsMenuChannelDetailManagementRoute
@@ -2919,6 +2938,7 @@ export interface FileRouteTypes {
     | '/menu4/menu5'
     | '/menu8/menu9'
     | '/pms/category-menagement'
+    | '/pms/group-management'
     | '/pms/language_management'
     | '/pms/menu-channel-detail'
     | '/pms/menu-channel-detail-management'
@@ -3061,6 +3081,7 @@ export interface FileRouteTypes {
     | '/menu4/menu5'
     | '/menu8/menu9'
     | '/pms/category-menagement'
+    | '/pms/group-management'
     | '/pms/language_management'
     | '/pms/menu-channel-detail'
     | '/pms/menu-channel-detail-management'
@@ -3205,6 +3226,7 @@ export interface FileRouteTypes {
     | '/_layout/menu4/menu5'
     | '/_layout/menu8/menu9'
     | '/_layout/pms/category-menagement'
+    | '/_layout/pms/group-management'
     | '/_layout/pms/language_management'
     | '/_layout/pms/menu-channel-detail'
     | '/_layout/pms/menu-channel-detail-management'
@@ -3388,6 +3410,7 @@ export const routeTree = rootRoute
         "/_layout/menu4/menu5",
         "/_layout/menu8/menu9",
         "/_layout/pms/category-menagement",
+        "/_layout/pms/group-management",
         "/_layout/pms/language_management",
         "/_layout/pms/menu-channel-detail",
         "/_layout/pms/menu-channel-detail-management",
@@ -3835,6 +3858,10 @@ export const routeTree = rootRoute
     },
     "/_layout/pms/category-menagement": {
       "filePath": "_layout/pms/category-menagement.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/group-management": {
+      "filePath": "_layout/pms/group-management.tsx",
       "parent": "/_layout"
     },
     "/_layout/pms/language_management": {
