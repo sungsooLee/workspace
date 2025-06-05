@@ -2,6 +2,7 @@
 import { cn } from '@learnway/shared';
 import styles from './count-text.module.css';
 import React, { FC } from 'react';
+import { NumericFormat } from 'react-number-format';
 
 interface CountTextProps {
   label: string;
@@ -20,7 +21,9 @@ const CountTextComponent: FC<CountTextProps> = ({
   return (
     <div className={cn(styles.start)}>
       <strong className={styles.label}>{label}</strong>
-      <span className={styles.count}>{count}</span>
+      <span className={styles.count}>
+        <NumericFormat value={count} thousandSeparator />
+      </span>
     </div>
   );
 };

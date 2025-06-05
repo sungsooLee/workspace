@@ -2,19 +2,28 @@
 import React, {
   forwardRef,
   useCallback,
+  useEffect,
   useImperativeHandle,
   useMemo,
   useRef,
   useState,
 } from 'react';
 import { createColumnHelper, Table } from '@tanstack/react-table';
-import { Button, CountText, Grid, GridBoxProps, GridImperative, Pagination } from '@learnway/ui';
+import {
+  Button,
+  CountText,
+  Grid,
+  GridBoxProps,
+  GridBoxState,
+  GridImperative,
+  Pagination,
+} from '@learnway/ui';
 import { IcoMinus, IcoPlus } from '@learnway/icons';
-import styles from './grid-box.module.css';
 import { cn } from '@learnway/shared';
 import { useTranslation } from 'react-i18next';
 import { ExcelButtons } from './excel-buttons';
 import { GridBoxSearchInput, GridBoxSearchInputCondition } from './grid-box-search-input';
+import styles from './grid-box.module.css';
 
 /**
  * 다양한 설정 옵션을 통해 재사용 가능한 표 컴포넌트(Grid)를 구성합니다.
@@ -37,9 +46,7 @@ const GridBoxComponent = <T extends object>(
     showSelectAll,
     showRemoveAll,
     showAdd,
-    showAddRow,
     showRemove,
-    showRemoveRow,
     titleCustomNode,
     customButtonNode,
     guideText,
@@ -56,13 +63,16 @@ const GridBoxComponent = <T extends object>(
 ) => {
   const { t } = useTranslation();
   const {
-    data = props.data,
+    // data,
+    gridData = props.gridData,
+    rowId = props.rowId,
     page,
     pagination,
     totalRows,
     gridFetch,
     columns,
-    title,
+    title = props.title,
+    onStateChange = props.onStateChange,
     onDataChange,
     excel,
     getParams,
@@ -72,7 +82,41 @@ const GridBoxComponent = <T extends object>(
   const gridRef = useRef<GridImperative>(null);
   const [tableInstance, setTableInstance] = useState<Table<any>>(); // GridComponent로부터 받을 table 인스턴스를 저장할 상태
 
+  // 마지막으로 페치에 사용된 params를 저장하는 useRef
+  const lastFetchedParamsRef = useRef<GridBoxState>({ page: 0, size: 20, sort: [] }); // 초기값 설정
+
+  // const gridData: PaginationResponse<T> =
+  //   props.gridData || (config?.gridData as PaginationResponse<T>);
+
+  // 테스트 후 삭제 예정
+  const data = gridData?.content || props.data || config?.data || [];
+
   useImperativeHandle(ref, () => gridRef.current as GridImperative);
+
+  useEffect(() => {
+    // tableInstance가 준비되었고, gridData가 유효할 때
+    if (tableInstance && gridData) {
+      // API 응답에서 'sort' 정보가 없거나 (null/undefined),
+      // 'sort' 객체가 존재하지만 'sorted'가 false인 경우를 확인
+      // 또는 'sort' 배열이 비어있는 경우 (API 응답 형식에 따라 다름)
+      const apiSaysNotSorted = !gridData.sort?.sorted; // 또는 !gridData.pageable?.sort?.length;
+
+      // 현재 TanStack Table의 정렬 상태가 실제로 적용되어 있는지 확인 (UI가 정렬되어 있는지)
+      const currentTableSorting = tableInstance.getState().sorting;
+      const isTableCurrentlySorted = !!currentTableSorting.length;
+
+      // API가 정렬되지 않았다고 하는데, 테이블 UI는 정렬되어 있다면 초기화
+      if (apiSaysNotSorted && isTableCurrentlySorted) {
+        console.log('API indicates no sort, but table is sorted. Resetting table sorting.');
+        tableInstance.setSorting([]);
+      }
+
+      // 그리드 선택 해제
+      tableInstance.resetRowSelection();
+      const list = tableInstance.getSelectedRowModel();
+      console.log(list);
+    }
+  }, [gridData, tableInstance]); // lastFetchedParamsRef.current는 useEffect 의존성에서 제거
 
   /**
    * 컬럼 정보를 기반으로 TanStack Table 형식으로 변환
@@ -103,6 +147,20 @@ const GridBoxComponent = <T extends object>(
    */
   const showNumberingColumn =
     columns?.find((d: any) => d.type === 'numbering') || props.showNumberingColumn;
+
+  /**
+   * pagination 설정
+   * - props로 직접 전달되면 우선 사용
+   * - 없으면 config에서 받아 설정
+   */
+  const paginationProps = useMemo(() => {
+    return {
+      pageNumber: gridData?.pageable?.pageNumber ?? 0,
+      pageSize: gridData?.pageable?.pageSize ?? 20,
+      totalPages: gridData?.totalPages ?? 0,
+      disabled: (gridData?.totalPages || 0) === 0,
+    };
+  }, [gridData]);
 
   /**
    * 전체선택 버튼 클릭
@@ -165,20 +223,6 @@ const GridBoxComponent = <T extends object>(
     [onSearchClick], // 의존성 배열: gridFetch와 page 객체 참조
   );
 
-  /**
-   * 행추가 버튼 클릭
-   */
-  const handleAddRowClick = useCallback(() => {
-    console.log('행추가');
-  }, []);
-
-  /**
-   * 행삭제 버튼 클릭
-   */
-  const handleRemoveRowClick = useCallback(() => {
-    console.log('행삭제');
-  }, []);
-
   // GridComponent로부터 table 인스턴스를 받았을 때 호출될 핸들러
   const handleTableInstanceChange = useCallback((table: Table<any>) => {
     console.log('Table instance received:', table);
@@ -188,69 +232,77 @@ const GridBoxComponent = <T extends object>(
   }, []);
 
   /**
-   * 페이지 이동 핸들러
-   */
-  const handleChangePage = useCallback(
-    (pageIndex: number) => {
-      gridFetch?.({
-        size: page?.pageSize, // page 객체의 pageSize 사용
-        page: pageIndex,
-      });
-    },
-    [gridFetch, page], // 의존성 배열: gridFetch와 page 객체 참조
-  );
-
-  /**
    * 페이지 사이즈 변경 핸들러
    */
   const handleChangePageSize = useCallback(
     (pageSize: number) => {
-      // for use-grid-box
-      gridFetch?.({
+      const newState: GridBoxState = {
         size: pageSize,
-        page: 0, // 페이지 사이즈 변경 시 첫 페이지로 이동
-      });
-      // props.pagination
-      props?.pagination?.onPageSizeChange?.(pageSize);
+      };
+      dispatchStateChange(newState);
     },
-    [gridFetch, props.pagination],
-  );
-
-  const handlePageChange = useCallback(
-    (pageNumber: number) => {
-      console.log('handlePageChange', pageNumber);
-      // grid config
-      gridFetch?.({
-        size: pagination?.pageSize, // page 객체의 pageSize 사용
-        page: pageNumber,
-      });
-      // prop
-      props.pagination?.onPageChange?.(pageNumber);
-    },
-    [props.pagination, pagination],
+    [props.pagination, onStateChange],
   );
 
   /**
-   * pagination 설정
-   * - props로 직접 전달되면 우선 사용
-   * - 없으면 config에서 받아 설정
+   * 페이지 번호 변경 핸들러
    */
-  const paginationProps = useMemo(() => {
-    return pagination || props.pagination;
-  }, [pagination, props.pagination]);
+  const handlePageChange = useCallback(
+    (pageNumber: number) => {
+      const newState: GridBoxState = {
+        page: pageNumber,
+      };
+      dispatchStateChange(newState);
+    },
+    [props.pagination, onStateChange],
+  );
 
-  console.log('grid-box ::', { paginationProps });
+  /**
+   * 정렬 변경 핸들러
+   */
+  const handleStateChange = useCallback(
+    (state: GridBoxState) => {
+      if (!data?.length) {
+        return;
+      }
+      const newState: GridBoxState = {
+        ...state,
+        page: 0, // 페이지 번호 초기화
+      };
+      dispatchStateChange(newState);
+    },
+    [onStateChange, data],
+  );
+
+  const dispatchStateChange = (state: GridBoxState) => {
+    const newParams = {
+      ...lastFetchedParamsRef.current,
+      ...state, // 새로 받은 정렬 정보
+    };
+    // params를 업데이트하기 전에 ref에 저장
+    lastFetchedParamsRef.current = newParams;
+    //
+    onStateChange?.(newParams);
+    // // for use-grid-box
+    // config.onStateChange?.(newParams);
+    // // for grid-box
+    // props.onStateChange?.(newParams);
+  };
+
+  console.log('grid-box ::', {
+    paginationProps,
+    config,
+    props,
+    data,
+    gridData,
+  });
 
   return (
     <div className={cn(styles.table_box, 'table_box')}>
       <div className={styles.table_info}>
         <div className={styles.title_info}>
           {/* 제목 */}
-          {(props.title || title) && (
-            <div className={styles.title}>
-              {props.title || title || t('LABEL.grid.title.list', '목록')}
-            </div>
-          )}
+          <div className={styles.title}>{title || t('LABEL.grid.title.list', '목록')}</div>
 
           {/* 전체 개수  */}
           {showTotalCount && (
@@ -313,45 +365,29 @@ const GridBoxComponent = <T extends object>(
               onClick={handleRemoveClick}
             />
           )}
-          {/* 행추가 */}
-          {showAddRow && (
-            <Button
-              variant="outline"
-              size="sm"
-              label={t('행추가', '행추가')}
-              icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
-              onClick={handleAddRowClick}
-            />
-          )}
-          {/* 행삭제 */}
-          {showRemoveRow && (
-            <Button
-              variant="outline"
-              size="sm"
-              label={t('행삭제', '행삭제')}
-              icon={<IcoMinus width={16} height={16} stroke={'#4C515E'} />}
-              onClick={handleRemoveRowClick}
-            />
-          )}
         </div>
       </div>
       {/* 데이터 테이블 렌더링 */}
       <Grid
         {...props}
         ref={gridRef}
-        onChange={props.onChange || onDataChange}
-        data={props.data ?? data ?? []}
+        data={data}
         columns={props.columns ?? girdColumns ?? []}
+        rowId={rowId}
+        pagination={paginationProps}
         showNumberingColumn={showNumberingColumn}
+        onChange={props.onChange || onDataChange}
+        onStateChange={handleStateChange}
+        // onStateChange={props.onStateChange || handleStateChange}
         onTableInstanceChange={handleTableInstanceChange}
       />
       {/* 페이지네이션 */}
-      {paginationProps && (
+      {!paginationProps.disabled && (
         <Pagination
           totalPages={paginationProps.totalPages}
           pageNumber={paginationProps.pageNumber}
           pageSize={paginationProps.pageSize}
-          disabled={paginationProps.totalPages === 0}
+          disabled={paginationProps.disabled}
           onPageSizeChange={handleChangePageSize}
           onChange={handlePageChange}
         />

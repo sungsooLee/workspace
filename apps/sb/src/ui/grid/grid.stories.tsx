@@ -22,7 +22,7 @@ import {
   GridBox,
   GridBoxPagination,
   GridBoxSearchInputCondition,
-  GridState,
+  GridBoxState,
   ModalWrapper,
   TableBox,
 } from '@learnway/ui';
@@ -54,10 +54,7 @@ interface Person {
 
 interface UseTableDataProps<T> {
   queryKey: string;
-  tableState: {
-    sorting: SortingState;
-    filters: ColumnFiltersState;
-  };
+  tableState: GridBoxState;
   fetch: (params: any) => Promise<{ data: T[] }>;
 }
 
@@ -223,10 +220,7 @@ const columns = [
 ];
 
 const BaseTable = () => {
-  const [tableState, setTableState] = useState({
-    sorting: [] as SortingState,
-    filters: [] as ColumnFiltersState,
-  });
+  const [tableState, setTableState] = useState<GridBoxState>({ sort: [] });
 
   const { data } = useTableData<Person>({
     queryKey: 'example-table',
@@ -234,13 +228,9 @@ const BaseTable = () => {
     fetch: fetchTableData,
   });
 
-  const handleStateChange = (newState: GridState) => {
+  const handleStateChange = (newState: GridBoxState) => {
     console.log(newState);
-    setTableState((prev) => ({
-      ...prev,
-      sorting: newState.sorting || prev.sorting,
-      filters: newState.filters || prev.filters,
-    }));
+    setTableState(newState);
   };
 
   return (
@@ -271,10 +261,7 @@ export const Base: Story = {
 };
 
 const MultiSelectTable = () => {
-  const [tableState, setTableState] = useState({
-    sorting: [] as SortingState,
-    filters: [] as ColumnFiltersState,
-  });
+  const [tableState, setTableState] = useState<GridBoxState>({ sort: [] });
 
   const { data } = useTableData<Person>({
     queryKey: 'example-table',
@@ -282,12 +269,8 @@ const MultiSelectTable = () => {
     fetch: fetchTableData,
   });
 
-  const handleStateChange = (newState: GridState) => {
-    setTableState((prev) => ({
-      ...prev,
-      sorting: newState.sorting || prev.sorting,
-      filters: newState.filters || prev.filters,
-    }));
+  const handleStateChange = (newState: GridBoxState) => {
+    setTableState(newState);
   };
 
   return (
@@ -370,20 +353,13 @@ const fetchInfiniteData = async ({ tableState }: any): Promise<Person[]> => {
 };
 // 가상 스크롤
 const InfiniteScrollTable = () => {
-  const [tableState, setTableState] = useState({
-    sorting: [] as SortingState,
-    filters: [] as ColumnFiltersState,
-  });
+  const [tableState, setTableState] = useState<GridBoxState>({ sort: [] });
   const { data, isLoading } = useQuery({
     queryKey: ['PersonEntity', tableState] as const,
     queryFn: () => fetchInfiniteData({ tableState }),
   });
-  const handleStateChange = (newState: GridState) => {
-    setTableState((prev) => ({
-      ...prev,
-      sorting: newState.sorting || prev.sorting,
-      filters: newState.filters || prev.filters,
-    }));
+  const handleStateChange = (newState: GridBoxState) => {
+    setTableState(newState);
   };
   return (
     <div className="p-4">
@@ -501,22 +477,15 @@ export const WithGroupColumn: Story = {
 };
 
 const GridContentGroupingByColumn = () => {
-  const [tableState, setTableState] = useState({
-    sorting: [] as SortingState,
-    filters: [] as ColumnFiltersState,
-  });
+  const [tableState, setTableState] = useState<GridBoxState>({ sort: [] });
 
   const { data, isLoading } = useQuery({
     queryKey: ['PersonEntity', tableState] as const,
     queryFn: () => fetchInfiniteData({ tableState }),
   });
 
-  const handleStateChange = (newState: GridState) => {
-    setTableState((prev) => ({
-      ...prev,
-      sorting: newState.sorting || prev.sorting,
-      filters: newState.filters || prev.filters,
-    }));
+  const handleStateChange = (newState: GridBoxState) => {
+    setTableState(newState);
   };
 
   return (
@@ -559,22 +528,15 @@ export const WithPinColumn: Story = {
   },
 };
 const PinnedColumnTable = () => {
-  const [tableState, setTableState] = useState({
-    sorting: [] as SortingState,
-    filters: [] as ColumnFiltersState,
-  });
+  const [tableState, setTableState] = useState<GridBoxState>({ sort: [] });
 
   const { data, isLoading } = useQuery({
     queryKey: ['PersonEntity', tableState] as const,
     queryFn: () => fetchInfiniteData({ tableState }),
   });
 
-  const handleStateChange = (newState: GridState) => {
-    setTableState((prev) => ({
-      ...prev,
-      sorting: newState.sorting || prev.sorting,
-      filters: newState.filters || prev.filters,
-    }));
+  const handleStateChange = (newState: GridBoxState) => {
+    setTableState(newState);
   };
 
   return (
