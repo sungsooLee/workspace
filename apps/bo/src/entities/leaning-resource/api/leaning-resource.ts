@@ -3,7 +3,7 @@ import { faker } from '@faker-js/faker';
 import { CMSApiPrefix, PMSApiPrefix } from '@learnway/config';
 export default class LeaningResourceService {
   static fetchContents(params: any): Promise<any> {
-    return httpService.get(`${CMSApiPrefix()}/content`, params);
+    return httpService.get(`${CMSApiPrefix()}/contents`, params);
   }
   static async fetchS3FileDownload(key: string, fileName: string): Promise<any> {
     await fileDownload(`${PMSApiPrefix()}/file/s3/download`, { key, fileName });

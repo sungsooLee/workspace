@@ -10,6 +10,7 @@ export const DATE_TIME_FORMAT = {
   DATETIME_MLS: 'dateTimeFormatHourMilliSecond',
   HOUR_MIN: 'timeFormatHourMinute',
   MIN_SEC: 'timeFormatMinuteSecond',
+  HOUR_MIN_SEC: 'timeFormatHourMinuteSecond',
 };
 
 export type DATE_TIME_FORMAT = (typeof DATE_TIME_FORMAT)[keyof typeof DATE_TIME_FORMAT];
