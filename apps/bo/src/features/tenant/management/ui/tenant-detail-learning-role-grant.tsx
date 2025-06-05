@@ -1,6 +1,7 @@
 import { forwardRef, useEffect, useState } from 'react';
 import { useRouterState } from '@tanstack/react-router';
 import { createColumnHelper, ColumnDef, Table } from '@tanstack/react-table';
+import { UseFormGetValues, FieldValues } from 'react-hook-form';
 import { t } from 'i18next';
 
 import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
@@ -71,24 +72,40 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
   const tenantId = routerState.location.state?.tenantId;
   const tenantName = routerState.location.state?.tenantName;
 
+  const gridConfig = {
+    query: roleManagerQueryOptions.getRoleUserList,
+    columns: [],
+    data: [],
+    pagination: {
+      pageSize: 10,
+      pageIndex: 1,
+      totalRows: 2,
+    },
+  };
+
+  const getGridParams = () => {
+    const fetchOption: any = { roleId: selectedRole.roleId };
+    if (searchKeyword) {
+      fetchOption[searchColumn] = searchKeyword;
+    }
+
+    return fetchOption as FieldValues;
+  };
+
   // const { provider: sProvider, getValues } = useSearchBox(searchConfig);
   const { provider, onSubmit, clearFormError, fetchData, onFormChange } =
     useDynamicForm(formConfig);
-  const { config, gridFetch } = useGridBox(gridConfig);
+  const { config, gridFetch } = useGridBox(gridConfig, getGridParams);
 
   const { data: roleData } = useFetchRoleTree(tenantId, siteScope);
   const { data: roleGroupData, refetch: roleGroupRefetch } = useGetRoleUserGroups(
-    selectedRole?.roleCode,
+    selectedRole?.roleId,
   );
   const { saveUsersRole: saveRoleUsers } = useSaveUsers({});
 
   const handleOnSearch = () => {
     if (formMode === EnFormMode.VIEW) {
-      const fetchOption: any = { roleCode: selectedRole.roleCode };
-      if (searchKeyword) {
-        fetchOption[searchColumn] = searchKeyword;
-      }
-      gridFetch(fetchOption);
+      gridFetch(getGridParams());
     }
   };
 
@@ -98,7 +115,7 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
       //검색 영역 초기회
       setSearchKeyword('');
       setSearchColumn('');
-      gridFetch({ roleCode: node.roleCode });
+      gridFetch({ roleId: node.roleId });
       setFormMode(EnFormMode.VIEW);
       roleGroupRefetch();
     }

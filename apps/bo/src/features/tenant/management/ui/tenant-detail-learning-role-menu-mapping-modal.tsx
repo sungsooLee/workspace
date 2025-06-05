@@ -29,6 +29,7 @@ import {
   getAllTreeKeys,
   transformRoleMenuApiDataToTreeData,
   transformMenuApiDataToTreeData,
+  getAllChildrens,
 } from '../service/tenant-detail-tree.service';
 import {
   useFetchRoleMenus,
@@ -43,7 +44,7 @@ import {
 const TenantDetailLearningRoleMenuMappingModalComponent: FC<any> = ({
   siteScope,
   tenantId,
-  roleCode,
+  roleId,
 }) => {
   const [tenantMenuTree, setTenantMenuTree] = useState([]);
   const [tenantMenuTreeExpandedKeys, setTenantMenuTreeExpandedKeys] = useState<string[]>([]);
@@ -56,8 +57,8 @@ const TenantDetailLearningRoleMenuMappingModalComponent: FC<any> = ({
   const { open: openModal, confirm: openConfirm, close: closeModal } = useModal();
 
   const { data: tenantMenuData } = useFetchMenuTenantMappingTree(tenantId, siteScope);
-  const { data: roleMenuData, refetch } = useFetchRoleMenus(tenantId, siteScope, roleCode);
-  const { create } = useModifyMenusAndApiToRole({
+  const { data: roleMenuData, refetch } = useFetchRoleMenus(tenantId, siteScope, roleId);
+  const { createAndRemve } = useModifyMenusAndApiToRole({
     onSuccess: () => {
       refetch();
     },
@@ -86,11 +87,11 @@ const TenantDetailLearningRoleMenuMappingModalComponent: FC<any> = ({
           const contents = [];
           for (const item of allPostMenus) {
             if (!roleMenuTreeAllKeys.includes(item.key)) {
-              contents.push(item.menuId);
+              contents.push(item.tenantMappingMenuId);
             }
           }
           const payload = {
-            roleCode: roleCode,
+            roleId: roleId,
             body: {
               addMenuIds: [...contents],
               removeMenuIds: [],
@@ -98,7 +99,7 @@ const TenantDetailLearningRoleMenuMappingModalComponent: FC<any> = ({
               removeApis: [],
             },
           };
-          create(payload);
+          createAndRemve(payload);
         }
         break;
 
@@ -118,13 +119,29 @@ const TenantDetailLearningRoleMenuMappingModalComponent: FC<any> = ({
       ),
       onClose: (value: boolean) => {
         if (value) {
-          const payload = { ...node };
           if (tenantMenuTreeExpandedKeys.includes(node.key)) {
             const expandedKeys = [
               ...tenantMenuTreeExpandedKeys.filter((value) => value !== node.key),
             ];
             setRoleMenuTreeExpandedKeys(expandedKeys);
           }
+          const allChildren =
+            node.children && node.children.length > 0 ? getAllChildrens(node.children) : [];
+          allChildren.push(node);
+
+          const payload = {
+            roleId: roleId,
+            body: {
+              addMenuIds: [],
+              removeMenuIds: allChildren.map((item: any) => item.tenantMappingMenuId),
+              addApis: [],
+              removeApis: [],
+            },
+          };
+          createAndRemve(payload);
+
+          // menus 정보 삭제
+          //getAllTreeKeys
           //deleteMenuTenent(payload);
         }
       },
@@ -153,10 +170,10 @@ const TenantDetailLearningRoleMenuMappingModalComponent: FC<any> = ({
   );
 
   useEffect(() => {
-    console.log('roleCode', roleCode);
+    console.log('roleId', roleId);
     if (roleMenuData) {
       console.log(roleMenuData);
-      const transformedData = transformRoleMenuApiDataToTreeData(roleMenuData);
+      const transformedData = transformMenuApiDataToTreeData(roleMenuData);
       setRoleMenuTree(transformedData);
       if (transformedData && transformedData.length > 0) {
         const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
