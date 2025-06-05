@@ -98,6 +98,15 @@ function HomeComponent() {
 // end: true, false
 export const munu = [
   {
+    screenName: 'GNB/LNB',
+    pageId: '/',
+    screenId: 'NLP_BO_COM_1000',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: 'GNB, LNB, 알람, My 메뉴', // 비고
+    end: false,
+  },
+  {
     screenName: '로그인',
     pageId: 'login',
     screenId: 'NLP_BO_LOG_1000',
