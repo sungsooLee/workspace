@@ -1,4 +1,3 @@
-/* eslint-disable no-redeclare */
 import { cn } from '@learnway/shared';
 import styles from './notice-box.module.css';
 import { IcoAnnouncement03 } from '@learnway/icons';

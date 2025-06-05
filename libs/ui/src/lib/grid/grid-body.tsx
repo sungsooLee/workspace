@@ -18,23 +18,26 @@ export const GridBody = <T extends object>({
 }: GridBodyProps<T>) => {
   return (
     <tbody>
-      {table.getRowModel().rows.map((row) => (
-        <tr
-          key={row.id}
-          className={cn(row.getIsSelected() && styles.selected)}
-          onClick={() => !row.getIsGrouped() && !disabledSelectionToggle && row.toggleSelected()}
-        >
-          {row.getVisibleCells().map((cell: Cell<T, unknown>) => (
-            <GridCell
-              key={cell.id}
-              row={row}
-              cell={cell}
-              lastPinnedColumnId={lastPinnedColumnId}
-              disabledSelectionToggle={disabledSelectionToggle}
-            />
-          ))}
-        </tr>
-      ))}
+      {table.getRowModel().rows.map((row) => {
+        const isSubRow = row.depth > 0;
+        return (
+          <tr
+            key={row.id}
+            className={cn(row.getIsSelected() && styles.selected, isSubRow && styles.appended)}
+            onClick={() => !row.getIsGrouped() && !disabledSelectionToggle && row.toggleSelected()}
+          >
+            {row.getVisibleCells().map((cell: Cell<T, unknown>) => (
+              <GridCell
+                key={cell.id}
+                row={row}
+                cell={cell}
+                lastPinnedColumnId={lastPinnedColumnId}
+                disabledSelectionToggle={disabledSelectionToggle}
+              />
+            ))}
+          </tr>
+        );
+      })}
     </tbody>
   );
 };
@@ -54,11 +57,11 @@ export const GridCell = <T extends object>({ row, cell, lastPinnedColumnId }: Gr
   const cellStyle = {
     background: cell.getIsGrouped()
       ? '#0aff0082'
-      : cell.getIsAggregated()
-        ? '#ffa50078'
-        : cell.getIsPlaceholder()
-          ? '#ff000042'
-          : '',
+      : // : cell.getIsAggregated()
+        //   ? '#ffa50078'
+        cell.getIsPlaceholder()
+        ? '#ff000042'
+        : '',
     width: cell.column.getSize(),
     // position: isPinnedLeft && styles.td_sticky,
     textAlign: cell.column.columnDef.meta?.cellAlign || 'left',
@@ -82,11 +85,14 @@ export const GridCell = <T extends object>({ row, cell, lastPinnedColumnId }: Gr
             e.stopPropagation();
             row.toggleExpanded();
           }}
-          style={{ cursor: row.getIsGrouped() ? 'default' : 'pointer' }}
+          style={{
+            cursor: row.getIsGrouped() ? 'default' : 'pointer',
+          }}
         >
-          {row.getIsExpanded() ? '👇' : '👉'}{' '}
           {flexRender(cell.column.columnDef.cell, cell.getContext())} ({row.subRows.length})
         </button>
+      ) : row.getCanExpand() ? (
+        <div>{flexRender(cell.column.columnDef.cell, cell.getContext())}</div>
       ) : cell.getIsAggregated() ? (
         flexRender(
           cell.column.columnDef.aggregatedCell ?? cell.column.columnDef.cell,

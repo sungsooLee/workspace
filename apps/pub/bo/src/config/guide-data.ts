@@ -371,23 +371,41 @@ export const guideData = [
   //   remarks: '진행중', // 비고
   // },
   {
-    screenName: 'PMS/플랫폼관리_회사/조직관리',
+    screenName: 'PMS/플랫폼관리/회사관리',
     pageId: 'pms/group-management',
     screenId: 'NLP_BO_TMS_1300',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-06-05',
     lastUpdateDate: '',
     remarks: '', // 비고
   },
   {
-    screenName: 'PMS/플랫폼관리_회사/조직관리',
-    pageId: 'pms/menu-platform-company-detail',
-    screenId: 'NLP_BO_TMS_1302',
+    screenName: 'PMS/플랫폼관리/회사관리/회사등록',
+    pageId: 'pms/group-management-register',
+    screenId: 'NLP_BO_TMS_1300_01',
     pageType: 'Page',
+    completionDate: '2025-06-05',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
+    screenName: 'PMS/플랫폼관리/회사관리/회사등록/로그인 제한시간 설정 팝업',
+    pageId: 'pms/popup-login-option',
+    screenId: 'NLP_BO_TMS_1300_02',
+    pageType: 'Pop-up',
     completionDate: '',
     lastUpdateDate: '',
-    remarks: '진행예정', // 비고
+    remarks: '', // 비고
   },
+  // {
+  //   screenName: 'PMS/플랫폼관리_회사/조직관리',
+  //   pageId: 'pms/menu-platform-company-detail',
+  //   screenId: 'NLP_BO_TMS_1302',
+  //   pageType: 'Page',
+  //   completionDate: '',
+  //   lastUpdateDate: '',
+  //   remarks: '진행예정', // 비고
+  // },
   {
     screenName: 'PMS/플랫폼관리_공통코드그룹관리',
     pageId: 'pms/menu-platform-common-group',

@@ -23,6 +23,7 @@ const EmptyTextComponent = function ({
   description,
   footer,
   hideTitle,
+  size,
 }: EmptyTextComponentProps) {
   const { t } = useTranslation();
   return (
@@ -33,7 +34,8 @@ const EmptyTextComponent = function ({
         type && styles[type],
         className,
         'nlp--empty-text',
-      )}>
+      )}
+    >
       {/* icon  */}
       {!isMobile && (
         <IcoCaution width={48} height={48} stroke={'#A9AFB8'} className={styles.icon} />

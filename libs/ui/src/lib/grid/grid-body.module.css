@@ -85,6 +85,13 @@
   }
 }
 
+.expanded {
+}
+
+.appended > td {
+  @apply bg-[#F6F8FD];
+}
+
 .td_pinned_left {
   @apply !z-[3] !h-[40px] !border-l-0 border-b-[1px] bg-white;
   &.td_pinned_last {

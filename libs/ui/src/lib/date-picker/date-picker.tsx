@@ -680,8 +680,8 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
         shouldCloseOnSelect
         readOnly={readOnly}
         disabled={disabled}
-        // minDate={minDate}
-        // maxDate={maxDate}
+        minDate={minDate}
+        maxDate={maxDate}
         selected={selectedDate}
         placeholderText={getPlaceholderByType('day', currentLocale)}
         icon={<IcoCalendar01 width={16} height={16} stroke="#4C515E" fill="none" />}

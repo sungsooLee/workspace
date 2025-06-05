@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { Input, Dropdown, Button, GridBox } from '@learnway/ui';
+import { DatePicker, Dropdown, Button, GridBox } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { IcoRefresh02, IcoSearch } from '@learnway/icons';
 import { cn } from '@learnway/shared';
@@ -18,6 +18,7 @@ export const Route = createFileRoute('/_layout/pms/group-management')({
 function RouteComponent() {
   // dropdown
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  const [selectedValues2, setSelectedValues2] = useState<string[]>([]);
   const options = [
     { value: 'option1', label: '전체' },
     { value: 'option2', label: '옵션 2' },
@@ -29,136 +30,187 @@ function RouteComponent() {
   const [pageSize, setPageSize] = useState(10);
   const data: any[] = [
     {
-      company: '현대자동차',
-      part: '경영지원본부',
-      team: '경영지원1팀',
-      companyNumber: '1234567',
-      name: '김현대',
-      employmentStatus: '재직',
-      accountStatus: '정상',
+      group: '완성차',
+      company: <Button className="link" label={'현대자동차'} />,
+      useable: '사용',
+      modifier: '시스템',
+      modificationDate: '2025-01-01 07:12:00',
     },
     {
-      company: '현대자동차',
-      part: '경영지원본부',
-      team: '경영지원2팀',
-      companyNumber: '1234567',
-      name: '김현대',
-      employmentStatus: '재직',
-      accountStatus: '정상',
+      group: '완성차',
+      company: <Button className="link" label={'현대자동차'} />,
+      useable: '사용',
+      modifier: '시스템',
+      modificationDate: '2025-01-01 07:12:00',
     },
     {
-      company: '현대자동차',
-      part: '경영지원본부',
-      team: '경영지원2팀',
-      companyNumber: '1234567',
-      name: '김현대',
-      employmentStatus: '재직',
-      accountStatus: '정상',
+      group: '완성차',
+      company: <Button className="link" label={'현대자동차'} />,
+      useable: '사용',
+      modifier: '시스템',
+      modificationDate: '2025-01-01 07:12:00',
     },
     {
-      company: '현대자동차',
-      part: '경영지원본부',
-      team: '경영지원2팀',
-      companyNumber: '1234567',
-      name: '김현대',
-      employmentStatus: '재직',
-      accountStatus: '정상',
+      group: '완성차',
+      company: <Button className="link" label={'현대자동차'} />,
+      useable: '사용',
+      modifier: '시스템',
+      modificationDate: '2025-01-01 07:12:00',
     },
     {
-      company: '현대자동차',
-      part: '경영지원본부',
-      team: '경영지원2팀',
-      companyNumber: '1234567',
-      name: '김현대',
-      employmentStatus: '재직',
-      accountStatus: '정상',
+      group: '완성차',
+      company: <Button className="link" label={'현대자동차'} />,
+      useable: '사용',
+      modifier: '시스템',
+      modificationDate: '2025-01-01 07:12:00',
     },
     {
-      company: '현대자동차',
-      part: '경영지원본부',
-      team: '경영지원2팀',
-      companyNumber: '1234567',
-      name: '김현대',
-      employmentStatus: '재직',
-      accountStatus: '정상',
+      group: '완성차',
+      company: <Button className="link" label={'현대자동차'} />,
+      useable: '사용',
+      modifier: '시스템',
+      modificationDate: '2025-01-01 07:12:00',
     },
     {
-      company: '현대자동차',
-      part: '경영지원본부',
-      team: '경영지원2팀',
-      companyNumber: '1234567',
-      name: '김현대',
-      employmentStatus: '재직',
-      accountStatus: '정상',
+      group: '완성차',
+      company: <Button className="link" label={'현대자동차'} />,
+      useable: '사용',
+      modifier: '시스템',
+      modificationDate: '2025-01-01 07:12:00',
     },
     {
-      company: '현대자동차',
-      part: '경영지원본부',
-      team: '경영지원2팀',
-      companyNumber: '1234567',
-      name: '김현대',
-      employmentStatus: '재직',
-      accountStatus: '정상',
+      group: '완성차',
+      company: <Button className="link" label={'현대자동차'} />,
+      useable: '사용',
+      modifier: '시스템',
+      modificationDate: '2025-01-01 07:12:00',
     },
     {
-      company: '현대자동차',
-      part: '경영지원본부',
-      team: '경영지원2팀',
-      companyNumber: '1234567',
-      name: '김현대',
-      employmentStatus: '재직',
-      accountStatus: '정상',
+      group: '완성차',
+      company: <Button className="link" label={'현대자동차'} />,
+      useable: '사용',
+      modifier: '시스템',
+      modificationDate: '2025-01-01 07:12:00',
     },
     {
-      company: '현대자동차',
-      part: '경영지원본부',
-      team: '경영지원2팀',
-      companyNumber: '1234567',
-      name: '김현대',
-      employmentStatus: '재직',
-      accountStatus: '정상',
+      group: '완성차',
+      company: <Button className="link" label={'현대자동차'} />,
+      useable: '사용',
+      modifier: '시스템',
+      modificationDate: '2025-01-01 07:12:00',
+    },
+    {
+      group: '완성차',
+      company: <Button className="link" label={'현대자동차'} />,
+      useable: '사용',
+      modifier: '시스템',
+      modificationDate: '2025-01-01 07:12:00',
+    },
+    {
+      group: '완성차',
+      company: <Button className="link" label={'현대자동차'} />,
+      useable: '사용',
+      modifier: '시스템',
+      modificationDate: '2025-01-01 07:12:00',
+    },
+    {
+      group: '완성차',
+      company: <Button className="link" label={'현대자동차'} />,
+      useable: '사용',
+      modifier: '시스템',
+      modificationDate: '2025-01-01 07:12:00',
+    },
+    {
+      group: '완성차',
+      company: <Button className="link" label={'현대자동차'} />,
+      useable: '사용',
+      modifier: '시스템',
+      modificationDate: '2025-01-01 07:12:00',
+    },
+    {
+      group: '완성차',
+      company: <Button className="link" label={'현대자동차'} />,
+      useable: '사용',
+      modifier: '시스템',
+      modificationDate: '2025-01-01 07:12:00',
+    },
+    {
+      group: '완성차',
+      company: <Button className="link" label={'현대자동차'} />,
+      useable: '사용',
+      modifier: '시스템',
+      modificationDate: '2025-01-01 07:12:00',
+    },
+    {
+      group: '완성차',
+      company: <Button className="link" label={'현대자동차'} />,
+      useable: '사용',
+      modifier: '시스템',
+      modificationDate: '2025-01-01 07:12:00',
+    },
+    {
+      group: '완성차',
+      company: <Button className="link" label={'현대자동차'} />,
+      useable: '사용',
+      modifier: '시스템',
+      modificationDate: '2025-01-01 07:12:00',
+    },
+    {
+      group: '완성차',
+      company: <Button className="link" label={'현대자동차'} />,
+      useable: '사용',
+      modifier: '시스템',
+      modificationDate: '2025-01-01 07:12:00',
+    },
+    {
+      group: '완성차',
+      company: <Button className="link" label={'현대자동차'} />,
+      useable: '사용',
+      modifier: '시스템',
+      modificationDate: '2025-01-01 07:12:00',
     },
   ];
 
   const columnHelper = createColumnHelper<any>();
 
   const columns = [
+    columnHelper.accessor('group', {
+      cell: (info) => info.getValue(),
+      header: '그룹',
+      enableGrouping: false,
+      meta: {
+        size: 'auto',
+      },
+    }),
     columnHelper.accessor('company', {
       cell: (info) => info.getValue(),
-      header: '회사',
+      header: '회사명',
       enableGrouping: false,
-      size: 210,
+      meta: {
+        size: 'auto',
+      },
     }),
-    columnHelper.accessor('part', {
+    columnHelper.accessor('useable', {
       cell: (info) => info.getValue(),
-      header: '본부/사업부',
-      enableGrouping: false,
-      size: 210,
+      header: '사용여부',
+      meta: {
+        size: 'auto',
+      },
     }),
-    columnHelper.accessor('team', {
+    columnHelper.accessor('modifier', {
       cell: (info) => info.getValue(),
-      header: '소속',
-      size: 210,
+      header: '수정자',
+      meta: {
+        size: 'auto',
+      },
     }),
-    columnHelper.accessor('companyNumber', {
+    columnHelper.accessor('modificationDate', {
       cell: (info) => info.getValue(),
-      header: '사번',
-      size: 210,
-    }),
-    columnHelper.accessor('name', {
-      cell: (info) => info.getValue(),
-      header: '이름',
-      size: 210,
-    }),
-    columnHelper.accessor('employmentStatus', {
-      cell: (info) => info.getValue(),
-      header: '재직여부',
-      size: 100,
-    }),
-    columnHelper.accessor('accountStatus', {
-      cell: (info) => info.getValue(),
-      header: '계정상태',
-      size: 100,
+      header: '수정일',
+      meta: {
+        size: 'auto',
+        cellAlign: 'center',
+      },
     }),
   ] as ColumnDef<any, unknown>[];
 
@@ -174,7 +226,7 @@ function RouteComponent() {
                 <div className={searchStyles.inner}>
                   <div className={searchStyles.item}>
                     <label htmlFor="name-select1" className={searchStyles.label}>
-                      <span className={searchStyles.text}>회사</span>
+                      <span className={searchStyles.text}>그룹</span>
                     </label>
                     <div className={searchStyles.box}>
                       <Dropdown
@@ -190,29 +242,13 @@ function RouteComponent() {
                 <div className={searchStyles.inner}>
                   <div className={searchStyles.item}>
                     <label htmlFor="name-select2" className={searchStyles.label}>
-                      <span className={searchStyles.text}>본부/사업부</span>
+                      <span className={searchStyles.text}>회사명</span>
                     </label>
                     <div className={searchStyles.box}>
                       <Dropdown
                         options={options}
-                        value={selectedValues}
-                        onChange={(selected) => setSelectedValues(selected)}
-                        variant="default"
-                        size={'sm'}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className={searchStyles.inner}>
-                  <div className={searchStyles.item}>
-                    <label htmlFor="name-select3" className={searchStyles.label}>
-                      <span className={searchStyles.text}>소속</span>
-                    </label>
-                    <div className={searchStyles.box}>
-                      <Dropdown
-                        options={options}
-                        value={selectedValues}
-                        onChange={(selected) => setSelectedValues(selected)}
+                        value={selectedValues2}
+                        onChange={(selected) => setSelectedValues2(selected)}
                         variant="default"
                         size={'sm'}
                       />
@@ -223,21 +259,31 @@ function RouteComponent() {
               <div className={searchStyles.item_wrap}>
                 <div className={searchStyles.inner}>
                   <div className={searchStyles.item}>
-                    <label htmlFor="name-input1" className={searchStyles.label}>
-                      <span className={searchStyles.text}>사번</span>
+                    <label htmlFor="name-select3" className={searchStyles.label}>
+                      <span className={searchStyles.text}>회사정보 사용</span>
                     </label>
                     <div className={searchStyles.box}>
-                      <Input id="name-input1" type="text" placeholder="입력" />
+                      <Dropdown
+                        options={options}
+                        value={selectedValues2}
+                        onChange={(selected) => setSelectedValues2(selected)}
+                        variant="default"
+                        size={'sm'}
+                      />
                     </div>
                   </div>
                 </div>
                 <div className={searchStyles.inner}>
                   <div className={searchStyles.item}>
-                    <label htmlFor="name-input2" className={searchStyles.label}>
-                      <span className={searchStyles.text}>이름</span>
+                    <label htmlFor="name-select4" className={searchStyles.label}>
+                      <span className={searchStyles.text}>수정 기간</span>
                     </label>
                     <div className={searchStyles.box}>
-                      <Input id="name-input2" type="text" placeholder="입력" />
+                      <div className={searchStyles.datepicker_wrap}>
+                        <DatePicker displayType={'day'} size={'md'} placeholder={'0000-00-00'} />
+                        <span className={searchStyles.hyphen}>-</span>
+                        <DatePicker displayType={'day'} size={'md'} placeholder={'0000-00-00'} />
+                      </div>
                     </div>
                   </div>
                 </div>

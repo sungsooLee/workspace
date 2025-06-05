@@ -161,6 +161,7 @@ const DynamicFormContainer: FC<FormRowProps> = ({
         <DynamicFormField
           {...formConfig}
           {...provider}
+          error={error.isError}
           name={name}
           component={element || FormConfigComponent}
         />

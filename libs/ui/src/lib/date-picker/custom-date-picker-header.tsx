@@ -28,8 +28,11 @@ export const CustomDatePickerHeader: React.FC<CustomDatePickerHeaderProps> = ({
   const monthPickerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
 
-  const currentYear = date.getFullYear();
-  const currentMonth = date.getMonth();
+  const yearItemRefs = useRef<(HTMLButtonElement | null)[]>([]); // 년도 Item Ref - 스크롤 처리
+  const monthItemRefs = useRef<(HTMLButtonElement | null)[]>([]); // 월 Item Ref - 스크롤 처리
+
+  const currentYear = date?.getFullYear?.();
+  const currentMonth = date?.getMonth?.();
 
   const generateYearRange = () => {
     const years = [];
@@ -70,6 +73,22 @@ export const CustomDatePickerHeader: React.FC<CustomDatePickerHeaderProps> = ({
     '11월',
     '12월',
   ];
+
+  // 년도 스크롤 처리
+  const scrollToYear = (index: number) => {
+    const el = yearItemRefs.current[index];
+    if (el) {
+      yearPickerRef?.current?.scrollTo({ behavior: 'smooth', top: el?.offsetTop });
+    }
+  };
+
+  // 월 스크롤 처리
+  const scrollToMonth = (index: number) => {
+    const el = monthItemRefs.current[index];
+    if (el) {
+      monthPickerRef?.current?.scrollTo({ behavior: 'smooth', top: el?.offsetTop });
+    }
+  };
 
   const getMonthNames = () => {
     if (locale?.code === 'ko') {
@@ -133,6 +152,21 @@ export const CustomDatePickerHeader: React.FC<CustomDatePickerHeaderProps> = ({
     }
   }, [showYearPicker, currentYear]);
 
+  // 년도 스크롤 처리 Effect
+  useEffect(() => {
+    if (showYearPicker) {
+      const index = generateYearRange().findIndex((year) => year === currentYear);
+      index && scrollToYear(index);
+    }
+  }, [showYearPicker]);
+
+  // 월 스크롤 처리 Effect
+  useEffect(() => {
+    if (showMonthPicker) {
+      scrollToMonth(currentMonth);
+    }
+  }, [showMonthPicker]);
+
   return (
     <div className={styles.start}>
       <div ref={headerRef} className={styles.header}>
@@ -167,6 +201,7 @@ export const CustomDatePickerHeader: React.FC<CustomDatePickerHeaderProps> = ({
         <div ref={monthPickerRef} className={styles.select_month_wrap}>
           {getMonthNames().map((month, index) => (
             <Button
+              ref={(el) => (monthItemRefs.current[index] = el)}
               key={index}
               type={'button'}
               className={cn(styles.btn_item, index === currentMonth && styles.active)}
@@ -180,16 +215,19 @@ export const CustomDatePickerHeader: React.FC<CustomDatePickerHeaderProps> = ({
 
       {showYearPicker && (
         <div ref={yearPickerRef} className={styles.select_year_wrap}>
-          {generateYearRange().map((year) => (
-            <Button
-              key={year}
-              type={'button'}
-              onClick={() => handleYearSelect(year)}
-              className={cn(styles.btn_item, year === currentYear && styles.active)}
-            >
-              {year}
-            </Button>
-          ))}
+          {generateYearRange()
+            ?.reverse()
+            ?.map((year, index) => (
+              <Button
+                ref={(el) => (yearItemRefs.current[index] = el)}
+                key={year}
+                type={'button'}
+                onClick={() => handleYearSelect(year)}
+                className={cn(styles.btn_item, year === currentYear && styles.active)}
+              >
+                {year}
+              </Button>
+            ))}
         </div>
       )}
     </div>
