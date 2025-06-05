@@ -54,6 +54,7 @@ import { Route as LayoutPmsPrivatesearchlistImport } from './pages/_layout/pms/p
 import { Route as LayoutPmsPrivatesearchdetailImport } from './pages/_layout/pms/private_search_detail'
 import { Route as LayoutPmsPopupWidgetManagementImport } from './pages/_layout/pms/popup-widget-management'
 import { Route as LayoutPmsPopupTranslationCompleteImport } from './pages/_layout/pms/popup-translation-complete'
+import { Route as LayoutPmsPopupLoginOptionImport } from './pages/_layout/pms/popup-login-option'
 import { Route as LayoutPmsPopChannelSearchImport } from './pages/_layout/pms/pop-channel-search'
 import { Route as LayoutPmsMenuTenantPlatformManagementRegistrationImport } from './pages/_layout/pms/menu-tenant-platform-management-registration'
 import { Route as LayoutPmsMenuTenantPlatformManagementBasicInfomationImport } from './pages/_layout/pms/menu-tenant-platform-management-basic-infomation'
@@ -422,6 +423,12 @@ const LayoutPmsPopupTranslationCompleteRoute =
     path: '/pms/popup-translation-complete',
     getParentRoute: () => LayoutRoute,
   } as any)
+
+const LayoutPmsPopupLoginOptionRoute = LayoutPmsPopupLoginOptionImport.update({
+  id: '/pms/popup-login-option',
+  path: '/pms/popup-login-option',
+  getParentRoute: () => LayoutRoute,
+} as any)
 
 const LayoutPmsPopChannelSearchRoute = LayoutPmsPopChannelSearchImport.update({
   id: '/pms/pop-channel-search',
@@ -1990,6 +1997,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutPmsPopChannelSearchImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/pms/popup-login-option': {
+      id: '/_layout/pms/popup-login-option'
+      path: '/pms/popup-login-option'
+      fullPath: '/pms/popup-login-option'
+      preLoaderRoute: typeof LayoutPmsPopupLoginOptionImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/pms/popup-translation-complete': {
       id: '/_layout/pms/popup-translation-complete'
       path: '/pms/popup-translation-complete'
@@ -2304,6 +2318,7 @@ interface LayoutRouteChildren {
   LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute: typeof LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute
   LayoutPmsMenuTenantPlatformManagementRegistrationRoute: typeof LayoutPmsMenuTenantPlatformManagementRegistrationRoute
   LayoutPmsPopChannelSearchRoute: typeof LayoutPmsPopChannelSearchRoute
+  LayoutPmsPopupLoginOptionRoute: typeof LayoutPmsPopupLoginOptionRoute
   LayoutPmsPopupTranslationCompleteRoute: typeof LayoutPmsPopupTranslationCompleteRoute
   LayoutPmsPopupWidgetManagementRoute: typeof LayoutPmsPopupWidgetManagementRoute
   LayoutPmsPrivatesearchdetailRoute: typeof LayoutPmsPrivatesearchdetailRoute
@@ -2395,6 +2410,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutPmsMenuTenantPlatformManagementRegistrationRoute:
     LayoutPmsMenuTenantPlatformManagementRegistrationRoute,
   LayoutPmsPopChannelSearchRoute: LayoutPmsPopChannelSearchRoute,
+  LayoutPmsPopupLoginOptionRoute: LayoutPmsPopupLoginOptionRoute,
   LayoutPmsPopupTranslationCompleteRoute:
     LayoutPmsPopupTranslationCompleteRoute,
   LayoutPmsPopupWidgetManagementRoute: LayoutPmsPopupWidgetManagementRoute,
@@ -2543,6 +2559,7 @@ export interface FileRoutesByFullPath {
   '/pms/menu-tenant-platform-management-basic-infomation': typeof LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute
   '/pms/menu-tenant-platform-management-registration': typeof LayoutPmsMenuTenantPlatformManagementRegistrationRoute
   '/pms/pop-channel-search': typeof LayoutPmsPopChannelSearchRoute
+  '/pms/popup-login-option': typeof LayoutPmsPopupLoginOptionRoute
   '/pms/popup-translation-complete': typeof LayoutPmsPopupTranslationCompleteRoute
   '/pms/popup-widget-management': typeof LayoutPmsPopupWidgetManagementRoute
   '/pms/private_search_detail': typeof LayoutPmsPrivatesearchdetailRoute
@@ -2688,6 +2705,7 @@ export interface FileRoutesByTo {
   '/pms/menu-tenant-platform-management-basic-infomation': typeof LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute
   '/pms/menu-tenant-platform-management-registration': typeof LayoutPmsMenuTenantPlatformManagementRegistrationRoute
   '/pms/pop-channel-search': typeof LayoutPmsPopChannelSearchRoute
+  '/pms/popup-login-option': typeof LayoutPmsPopupLoginOptionRoute
   '/pms/popup-translation-complete': typeof LayoutPmsPopupTranslationCompleteRoute
   '/pms/popup-widget-management': typeof LayoutPmsPopupWidgetManagementRoute
   '/pms/private_search_detail': typeof LayoutPmsPrivatesearchdetailRoute
@@ -2836,6 +2854,7 @@ export interface FileRoutesById {
   '/_layout/pms/menu-tenant-platform-management-basic-infomation': typeof LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute
   '/_layout/pms/menu-tenant-platform-management-registration': typeof LayoutPmsMenuTenantPlatformManagementRegistrationRoute
   '/_layout/pms/pop-channel-search': typeof LayoutPmsPopChannelSearchRoute
+  '/_layout/pms/popup-login-option': typeof LayoutPmsPopupLoginOptionRoute
   '/_layout/pms/popup-translation-complete': typeof LayoutPmsPopupTranslationCompleteRoute
   '/_layout/pms/popup-widget-management': typeof LayoutPmsPopupWidgetManagementRoute
   '/_layout/pms/private_search_detail': typeof LayoutPmsPrivatesearchdetailRoute
@@ -2983,6 +3002,7 @@ export interface FileRouteTypes {
     | '/pms/menu-tenant-platform-management-basic-infomation'
     | '/pms/menu-tenant-platform-management-registration'
     | '/pms/pop-channel-search'
+    | '/pms/popup-login-option'
     | '/pms/popup-translation-complete'
     | '/pms/popup-widget-management'
     | '/pms/private_search_detail'
@@ -3127,6 +3147,7 @@ export interface FileRouteTypes {
     | '/pms/menu-tenant-platform-management-basic-infomation'
     | '/pms/menu-tenant-platform-management-registration'
     | '/pms/pop-channel-search'
+    | '/pms/popup-login-option'
     | '/pms/popup-translation-complete'
     | '/pms/popup-widget-management'
     | '/pms/private_search_detail'
@@ -3273,6 +3294,7 @@ export interface FileRouteTypes {
     | '/_layout/pms/menu-tenant-platform-management-basic-infomation'
     | '/_layout/pms/menu-tenant-platform-management-registration'
     | '/_layout/pms/pop-channel-search'
+    | '/_layout/pms/popup-login-option'
     | '/_layout/pms/popup-translation-complete'
     | '/_layout/pms/popup-widget-management'
     | '/_layout/pms/private_search_detail'
@@ -3458,6 +3480,7 @@ export const routeTree = rootRoute
         "/_layout/pms/menu-tenant-platform-management-basic-infomation",
         "/_layout/pms/menu-tenant-platform-management-registration",
         "/_layout/pms/pop-channel-search",
+        "/_layout/pms/popup-login-option",
         "/_layout/pms/popup-translation-complete",
         "/_layout/pms/popup-widget-management",
         "/_layout/pms/private_search_detail",
@@ -3982,6 +4005,10 @@ export const routeTree = rootRoute
     },
     "/_layout/pms/pop-channel-search": {
       "filePath": "_layout/pms/pop-channel-search.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/popup-login-option": {
+      "filePath": "_layout/pms/popup-login-option.tsx",
       "parent": "/_layout"
     },
     "/_layout/pms/popup-translation-complete": {
