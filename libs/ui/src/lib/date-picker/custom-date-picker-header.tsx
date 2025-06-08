@@ -16,7 +16,9 @@ export const CustomDatePickerHeader: React.FC<CustomDatePickerHeaderProps> = ({
   changeYear,
   changeMonth,
   decreaseMonth,
+  decreaseYear,
   increaseMonth,
+  increaseYear,
   prevMonthButtonDisabled,
   nextMonthButtonDisabled,
   locale,
@@ -173,7 +175,7 @@ export const CustomDatePickerHeader: React.FC<CustomDatePickerHeaderProps> = ({
         <Button
           onlyIcon
           icon={<IcoArrowBackward width={20} height={20} stroke="#4C515E" />}
-          onClick={decreaseMonth}
+          onClick={type === 'year' ? decreaseYear : decreaseMonth}
           disabled={prevMonthButtonDisabled}
         />
 
@@ -192,7 +194,7 @@ export const CustomDatePickerHeader: React.FC<CustomDatePickerHeaderProps> = ({
         <Button
           onlyIcon
           icon={<IcoArrowForward width={20} height={20} stroke="#4C515E" />}
-          onClick={increaseMonth}
+          onClick={type === 'year' ? increaseYear : increaseMonth}
           disabled={nextMonthButtonDisabled}
         />
       </div>

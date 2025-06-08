@@ -9,13 +9,15 @@ const dummyOptions = Array(5)
   .map((d, i) => ({ value: `value${i}`, label: `label${i}` }));
 
 export default {
-  title: 'Components/List',
+  title: 'Bo-Components/List',
   component: List,
   tags: ['autodocs'],
   args: {
     onOptionSelect: () => null,
     onOptionsSelect: () => null,
   },
+  // includeStories: [''],
+
   // args: {
   // variant: 'primary',
   // },
@@ -25,13 +27,7 @@ export default {
 export const Template: any = (args: any) => {
   const [value, setValue] = useState<string>('value0');
   return (
-    <div>
-      <Button
-        label={'set value0'}
-        variant={'point'}
-        size={'sm'}
-        onClick={() => setValue('value0')}
-      />
+    <div className="space-y-5">
       <Button label={'선택 초기화'} variant={'point'} size={'sm'} onClick={() => setValue('')} />
       <List
         {...args}
@@ -48,7 +44,7 @@ Template.storyName = 'List (Single)';
 export const TemplateMultiple: any = (args: any) => {
   const [value, setValue] = useState<string[]>([]);
   return (
-    <div>
+    <div className="space-y-5">
       <Button label={'선택 초기화'} variant={'point'} size={'sm'} onClick={() => setValue([])} />
       <List
         {...args}
@@ -108,6 +104,10 @@ export const TemplateImage: any = (args: any) => {
           <span>{option.name}</span>
         </div>
       )}
+      onOptionDeleteClick={(data) => {
+        const filteredOptions = options.filter((option) => option.id !== data.id);
+        setOptions(filteredOptions);
+      }}
       onOptionsOrderChange={(newOptions: any) => setOptions(newOptions)}
     />
   );

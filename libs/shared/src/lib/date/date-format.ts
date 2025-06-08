@@ -29,38 +29,38 @@ export function changeTimeLocale(lang: string) {
   }
 }
 
-export function getDateTimeFormat(dateTimeFormat = DATE_TIME_FORMAT.DATE) {
+export function getDateTimeFormat(dateTimeFormat = DATE_TIME_FORMAT.DATE, locale?: string) {
   switch (dateTimeFormat) {
     case DATE_TIME_FORMAT.YEAR:
-      return timeFormatYear();
+      return timeFormatYear(locale);
     case DATE_TIME_FORMAT.MONTH:
-      return timeFormatMonth();
+      return timeFormatMonth(locale);
     case DATE_TIME_FORMAT.MONTH_DAY:
-      return timeFormatMonthDate();
+      return timeFormatMonthDate(locale);
     case DATE_TIME_FORMAT.DATETIME_HOUR:
-      return timeFormatHour();
+      return timeFormatHour(locale);
     case DATE_TIME_FORMAT.DATETIME_MIN:
-      return timeFormatMinute();
+      return timeFormatMinute(locale);
     case DATE_TIME_FORMAT.DATETIME_SEC:
-      return timeFormatSecond();
+      return timeFormatSecond(locale);
     case DATE_TIME_FORMAT.DATETIME_WEEK_SEC:
-      return timeFormatWeekSecond();
+      return timeFormatWeekSecond(locale);
     case DATE_TIME_FORMAT.DATETIME_MLS:
-      return timeFormatMilliSecond();
+      return timeFormatMilliSecond(locale);
     case DATE_TIME_FORMAT.HOUR_MIN:
-      return timeFormatHourMinute();
+      return timeFormatHourMinute(locale);
     case DATE_TIME_FORMAT.MIN_SEC:
-      return timeFormatMinuteSecond();
+      return timeFormatMinuteSecond(locale);
     case DATE_TIME_FORMAT.DATE:
-      return timeFormatDate();
+      return timeFormatDate(locale);
     default:
       return dateTimeFormat;
   }
 }
 
-export function timeFormatYear() {
-  const locale = getDefaultLang();
-  switch (locale) {
+export function timeFormatYear(locale?: string) {
+  const currentLocale = locale || getDefaultLang();
+  switch (currentLocale) {
     case 'en':
     case 'ko':
     case 'ja':
@@ -71,9 +71,9 @@ export function timeFormatYear() {
   }
 }
 
-export function timeFormatMonth() {
-  const locale = getDefaultLang();
-  switch (locale) {
+export function timeFormatMonth(locale?: string) {
+  const currentLocale = locale || getDefaultLang();
+  switch (currentLocale) {
     case 'en':
       return 'MM/YYYY';
     case 'ko':
@@ -85,11 +85,10 @@ export function timeFormatMonth() {
   }
 }
 
-export function timeFormatDate() {
+export function timeFormatDate(locale?: string) {
   // TODO: const locale = dayjs.locale();
-  const locale = getDefaultLang();
-  console.log(locale);
-  switch (locale) {
+  const currentLocale = locale || getDefaultLang();
+  switch (currentLocale) {
     case 'en':
       return 'MM-DD-YYYY';
     case 'ko':
@@ -101,9 +100,9 @@ export function timeFormatDate() {
   }
 }
 
-export function timeFormatMonthDate() {
-  const locale = getDefaultLang();
-  switch (locale) {
+export function timeFormatMonthDate(locale?: string) {
+  const currentLocale = locale || getDefaultLang();
+  switch (currentLocale) {
     case 'en':
       return 'MMM/DD';
     case 'ko':
@@ -115,9 +114,9 @@ export function timeFormatMonthDate() {
   }
 }
 
-export function timeFormatMonthHourMinDate() {
-  const locale = getDefaultLang();
-  switch (locale) {
+export function timeFormatMonthHourMinDate(locale?: string) {
+  const currentLocale = locale || getDefaultLang();
+  switch (currentLocale) {
     case 'en':
       return 'MMM/DD HH:mm';
     case 'ko':
@@ -129,9 +128,9 @@ export function timeFormatMonthHourMinDate() {
   }
 }
 
-export function timeFormatHour() {
-  const locale = getDefaultLang();
-  switch (locale) {
+export function timeFormatHour(locale?: string) {
+  const currentLocale = locale || getDefaultLang();
+  switch (currentLocale) {
     case 'en':
       return 'MMM/DD/YYYY HH';
     case 'ko':
@@ -143,9 +142,9 @@ export function timeFormatHour() {
   }
 }
 
-export function timeFormatMinute() {
-  const locale = getDefaultLang();
-  switch (locale) {
+export function timeFormatMinute(locale?: string) {
+  const currentLocale = locale || getDefaultLang();
+  switch (currentLocale) {
     case 'en':
       return 'MMM/DD/YYYY HH:mm';
     case 'ko':
@@ -157,9 +156,9 @@ export function timeFormatMinute() {
   }
 }
 
-export function timeFormatHourMinute() {
-  const locale = getDefaultLang();
-  switch (locale) {
+export function timeFormatHourMinute(locale?: string) {
+  const currentLocale = locale || getDefaultLang();
+  switch (currentLocale) {
     case 'en':
       return 'HH:mm';
     case 'ko':
@@ -171,9 +170,9 @@ export function timeFormatHourMinute() {
   }
 }
 
-export function timeFormatMinuteSecond() {
-  const locale = getDefaultLang();
-  switch (locale) {
+export function timeFormatMinuteSecond(locale?: string) {
+  const currentLocale = locale || getDefaultLang();
+  switch (currentLocale) {
     case 'en':
       return 'mm:ss';
     case 'ko':
@@ -185,9 +184,9 @@ export function timeFormatMinuteSecond() {
   }
 }
 
-export function timeFormatSecond() {
-  const locale = getDefaultLang();
-  switch (locale) {
+export function timeFormatSecond(locale?: string) {
+  const currentLocale = locale || getDefaultLang();
+  switch (currentLocale) {
     case 'en':
       return 'MMM/DD/YYYY HH:mm:ss';
     case 'ko':
@@ -199,9 +198,9 @@ export function timeFormatSecond() {
   }
 }
 
-export function timeFormatWeekSecond() {
-  const locale = getDefaultLang();
-  switch (locale) {
+export function timeFormatWeekSecond(locale?: string) {
+  const currentLocale = locale || getDefaultLang();
+  switch (currentLocale) {
     case 'en':
       return 'MMM/DD/YYYY(ddd) HH:mm:ss';
     case 'ko':
@@ -213,9 +212,9 @@ export function timeFormatWeekSecond() {
   }
 }
 
-export function timeFormatMilliSecond() {
-  const locale = getDefaultLang();
-  switch (locale) {
+export function timeFormatMilliSecond(locale?: string) {
+  const currentLocale = locale || getDefaultLang();
+  switch (currentLocale) {
     case 'en':
       return 'MMM/DD/YYYY HH:mm:ss.SSS';
     case 'ko':
@@ -292,4 +291,78 @@ export function convertDateFormatToFns(dateFormat: string): string {
   console.log('convertDateFormatToFns:', dateFormat, '->', fnsFormat);
 
   return fnsFormat;
+}
+
+/**
+ * 현재 날짜/시간을 기반으로 placeholder를 생성하는 함수
+ */
+export function getDateTimePlaceholder(dateTimeFormat: DATE_TIME_FORMAT, locale?: string): string {
+  const currentLocale = locale || getDefaultLang();
+  const now = new Date();
+  const formatString = getDateTimeFormat(dateTimeFormat, currentLocale);
+
+  return dayjs(now).format(formatString);
+}
+
+/**
+ * 특정 타입에 맞는 placeholder를 생성하는 함수
+ */
+export function getDatePickerPlaceholder(
+  type:
+    | 'year'
+    | 'month'
+    | 'day'
+    | 'time'
+    | 'time-hm'
+    | 'time-step'
+    | 'day-time'
+    | 'day-time-hm'
+    | 'day-time-hms',
+  locale?: string,
+): string {
+  const currentLocale = locale || getDefaultLang();
+  const now = new Date();
+
+  switch (type) {
+    case 'year':
+      return getDateTimePlaceholder(DATE_TIME_FORMAT.YEAR, currentLocale);
+
+    case 'month':
+      return getDateTimePlaceholder(DATE_TIME_FORMAT.MONTH, currentLocale);
+
+    case 'day':
+      return getDateTimePlaceholder(DATE_TIME_FORMAT.DATE, currentLocale);
+
+    case 'time':
+      return dayjs(now).format('HH:mm:ss');
+
+    case 'time-hm':
+      return dayjs(now).format('HH:mm');
+
+    case 'time-step': {
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const displayHours = hours % 12 || 12;
+
+      if (currentLocale === 'ko') {
+        const ampm = hours >= 12 ? '오후' : '오전';
+        return `${ampm} ${displayHours}:${String(minutes).padStart(2, '0')}`;
+      } else {
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        return `${displayHours}:${String(minutes).padStart(2, '0')} ${ampm}`;
+      }
+    }
+
+    case 'day-time':
+      return getDateTimePlaceholder(DATE_TIME_FORMAT.DATETIME_HOUR, currentLocale);
+
+    case 'day-time-hm':
+      return getDateTimePlaceholder(DATE_TIME_FORMAT.DATETIME_MIN, currentLocale);
+
+    case 'day-time-hms':
+      return getDateTimePlaceholder(DATE_TIME_FORMAT.DATETIME_SEC, currentLocale);
+
+    default:
+      return '';
+  }
 }

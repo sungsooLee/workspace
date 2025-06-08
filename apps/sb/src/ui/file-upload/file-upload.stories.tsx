@@ -12,6 +12,7 @@ export default {
     onCheckedChange: { action: 'onCheckedChange' },
     onImageSelect: { action: 'onImageSelect' },
   },
+  includeStories: [''],
 } as Meta;
 
 // Thumbnail Image Upload

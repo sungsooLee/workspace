@@ -5,14 +5,22 @@ import { cn } from '@learnway/shared';
 import React from 'react';
 import styles from './toast.module.css';
 
-interface ToastContainerProps {
+export interface ToastContainerProps {
   swipeDirection?: 'up' | 'down' | 'left' | 'right';
   duration?: number;
+  position?:
+    | 'top-right'
+    | 'top-left'
+    | 'bottom-right'
+    | 'bottom-left'
+    | 'top-center'
+    | 'bottom-center';
 }
 
 const ToastWrapperComponent = ({
   swipeDirection = 'down',
   duration = 3000,
+  position = 'bottom-center',
 }: ToastContainerProps) => {
   const toasts = useToastStore((state) => state.toasts);
 
@@ -25,6 +33,7 @@ const ToastWrapperComponent = ({
           styles.toast_wrap,
           'toast-viewport',
           swipeDirection && styles[swipeDirection],
+          position && styles[position],
         )}
       />
 

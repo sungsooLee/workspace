@@ -17,6 +17,9 @@ type Props = Pick<TreeProps, 'onCustomNodeClick' | 'treeId' | 'searchKeyword'> &
   showConditionSettings?: boolean;
   selectedItems: any[]; // 추후 수정 필요 현재 key, FullPath만 받아서 필요한 정보 못 갖고옴.
   sourceData: any;
+  initLevel?: number; // 처음 펼쳐지는 Depth
+  displayKey?: string; // 칩에서 보여줄 키명(속성)
+  renderChipContent?: (item: any) => React.ReactNode; // 커스텀 렌더링 함수
   onItemsChange: (newItems: { key: string; fullPath: string }[]) => void;
 };
 
@@ -30,6 +33,9 @@ export const ShuttleTreeToChips = ({
   onItemsChange,
   searchKeyword,
   onCustomNodeClick,
+  initLevel,
+  displayKey = 'fullPath', // 기본값 설정
+  renderChipContent,
   ...otherProps
 }: Props) => {
   // 내부 상태 관리 (필요한 경우)
@@ -89,6 +95,14 @@ export const ShuttleTreeToChips = ({
     onItemsChange?.(newItems);
   };
 
+  const renderChipText = (item: any) => {
+    if (renderChipContent) {
+      return renderChipContent(item);
+    }
+
+    return item[displayKey] || item.key;
+  };
+
   return (
     <div className={cn(layoutStyles.start, layoutStyles.wrap, layoutStyles.pop_layout)}>
       <div className={layoutStyles.inner}>
@@ -100,6 +114,7 @@ export const ShuttleTreeToChips = ({
           expandTrigger={expandSource}
           onCustomNodeClick={onCustomNodeClick}
           showSearchKeyword={true}
+          initLevel={initLevel}
           renderNodeButtons={(node: any) => {
             const isAlreadySelected = actualSelectedItems.some((item) => item.key === node.key);
             return (
@@ -174,7 +189,8 @@ export const ShuttleTreeToChips = ({
                       }}
                     />
                   )}
-                  <span className={styles.selected_text}>{item.fullPath}</span>
+                  {/* fullPath 대신 특정 속성? 값을 갖고오는 로직 추가 필요한 것 같음. */}
+                  <span className={styles.selected_text}>{renderChipText(item)}</span>
                 </div>
                 <Button onClick={() => handleRemoveItem(item)} className={styles.btn_close}>
                   <IcoXclose width={20} height={20} stroke="#131C30" />
