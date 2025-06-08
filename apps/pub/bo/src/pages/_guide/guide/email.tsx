@@ -16,32 +16,22 @@ function RouteComponent() {
         <br />
         이미지는 한폴더에 포함해서 전달
       </div>
+
+      <div className="info mt-[10px]">미리보기는 FO 가이드에서 확인</div>
       <div className="group">
         <h3 className="guide_tit3">이메일인증 (회원가입)</h3>
         <div className="flex_box">
-          <div className="desc w-full">
-            <a href="/pb-fo/html/이메일인증.html" target="_blank">
-              이메일인증 (회원가입)
-            </a>
-          </div>
+          <div className="desc w-full">이메일인증 (회원가입)</div>
         </div>
 
         <h3 className="guide_tit3">승인완료</h3>
         <div className="flex_box">
-          <div className="desc w-full">
-            <a href="/pb-fo/html/승인완료.html" target="_blank">
-              승인완료
-            </a>
-          </div>
+          <div className="desc w-full">승인완료</div>
         </div>
 
         <h3 className="guide_tit3">이용약관 개정 안내</h3>
         <div className="flex_box">
-          <div className="desc w-full">
-            <a href="/pb-fo/html/이용약관개정안내.html" target="_blank">
-              이용약관 개정 안내
-            </a>
-          </div>
+          <div className="desc w-full">이용약관 개정 안내</div>
         </div>
       </div>
     </div>

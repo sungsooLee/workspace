@@ -8,8 +8,15 @@ import { DynamicFormConfig, useDynamicForm } from '../../../../../libs/hooks/src
 export default {
   title: 'Bo-Components/Textarea',
   component: Textarea,
-  tags: ['autodocs'],
+  // tags: ['autodocs'],
   argTypes: {},
+  decorators: [
+    (Story) => (
+      <div style={{ minWidth: '800px', width: '100%', padding: '20px' }}>
+        <Story />
+      </div>
+    ),
+  ],
 } as Meta;
 type Story = StoryObj<typeof Textarea>;
 

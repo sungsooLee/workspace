@@ -4,7 +4,13 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './date-picker.css'; // date-picker style
 import { IcoCalendar01 } from '@learnway/icons';
 
-import { cn, DATE_TIME_FORMAT, getDateTimeFormat, getDefaultLang } from '@learnway/shared';
+import {
+  cn,
+  DATE_TIME_FORMAT,
+  getDatePickerPlaceholder,
+  getDateTimeFormat,
+  getDefaultLang,
+} from '@learnway/shared';
 import { BaseFieldProps } from '../type';
 import { useCreation } from 'ahooks';
 
@@ -16,6 +22,7 @@ import { ko, enUS } from 'date-fns/locale';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { Locale } from 'react-datepicker/dist/date_utils';
+import { templateSettings } from 'lodash';
 
 export const convertDateFormatToFnsWithSlash = (format: string): string => {
   return format.replace(/-/g, '/');
@@ -170,12 +177,15 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
     } else if (type === 'day-time-hms') {
       format = DATE_TIME_FORMAT.DATETIME_SEC;
     }
-    const dayjsFormat = getDateTimeFormat(format);
+    const localeString = currentLocale === ko ? 'ko' : 'en';
+
+    const dayjsFormat = getDateTimeFormat(format, localeString);
     const fnsFormat = convertDateFormatToFns(dayjsFormat);
 
     // 영어 locale에서 슬래시를 사용하는 경우, react-datepicker가 제대로 파싱하도록 수정
+    console.log(fnsFormat, currentLocale);
     return fnsFormat;
-  }, [dateTimeFormat, displayType]);
+  }, [dateTimeFormat, displayType, currentLocale]);
 
   const parseDateFormat = useCreation(() => {
     if (dateFormat.includes('/')) {
@@ -229,7 +239,6 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
 
     // 한국어 처리
     if (currentLocale === ko) {
-      // "14:30" 같은 입력을 "오후 2:30"으로 변환
       const match = input.match(/^(\d{1,2}):(\d{2})$/);
       if (match) {
         const hours = parseInt(match[1]);
@@ -291,51 +300,14 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
   };
   useEffect(() => {
     if (!Array.isArray(value)) {
+      console.log(value);
       setSelectedDate(value as Date | undefined);
     }
   }, [value]);
 
-  const getPlaceholderByType = (type: DatePickerType, locale: any) => {
-    const now = new Date();
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
-    const ampm = hours >= 12 ? '오후' : '오전';
-    const displayHours = hours % 12 || 12;
-
-    switch (type) {
-      case 'year':
-        return now.getFullYear().toString();
-
-      case 'month':
-        if (locale === ko) {
-          return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-        }
-        return `${String(now.getMonth() + 1).padStart(2, '0')}-${now.getFullYear()}`;
-
-      case 'day':
-        if (locale === ko) {
-          return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-        }
-        return `${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}-${now.getFullYear()}`;
-
-      case 'time':
-        // 현재 시간을 HH:MM:SS 형식으로
-        return `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
-
-      case 'time-hm':
-        // 현재 시간을 HH:MM 형식으로
-        return `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-
-      case 'time-step':
-        // 12시간 형식으로 표시
-        if (locale === ko) {
-          return `${ampm} ${displayHours}:${String(minutes).padStart(2, '0')}`;
-        }
-        return `${displayHours}:${String(minutes).padStart(2, '0')} ${hours >= 12 ? 'PM' : 'AM'}`;
-
-      default:
-        return placeholder || '';
-    }
+  const getPlaceholderByType = (type: any, locale: any) => {
+    const localeString = locale === ko ? 'ko' : 'en';
+    return getDatePickerPlaceholder(type, localeString);
   };
 
   // 시간만 선택하는 경우(time, time-hm)

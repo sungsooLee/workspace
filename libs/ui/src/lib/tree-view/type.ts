@@ -4,7 +4,8 @@ export type TreeType =
   | 'DRAG_DROP'
   | 'SHUTTLE_LIST'
   | 'SAME_LEVEL_ONLY' // 같은 레벨 내에서만 이동 가능
-  | 'SAME_PARENT_ONLY'; // 같은 부모 내에서만 순서 변경 가능
+  | 'SAME_PARENT_ONLY' // 같은 부모 내에서만 순서 변경 가능
+  | 'TREE_TO_TREE'; // 트리 - 트리 타입
 
 /**
  * 노드 제약 사항
@@ -145,6 +146,9 @@ export interface TreeProps {
   onCustomNodeClick?: (node: TreeNode) => void;
   clientTree?: boolean;
   shouldDisableClick?: (node: TreeNode, level: number) => boolean;
+  selectedItems?: string[]; // 선택된 아이템들의 키 배열
+  sourceTreeId?: string;
+
   // 추후 제약사항 추가 될 수 있음.
 }
 // 드랍 위치 감지를 위한 타입
@@ -214,6 +218,8 @@ export interface TreeNodeComponentProps {
   className?: string;
   treeContext?: any;
   shouldDisableClick?: (node: TreeNode, level: number) => boolean;
+  selectedItems?: string[]; // 선택된 아이템들의 키 배열
+  sourceTreeId?: string;
 }
 
 /**

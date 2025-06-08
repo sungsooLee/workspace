@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import * as Primitive from '@radix-ui/react-toast';
 
 export interface ToastConfig {
   title?: string;
@@ -7,6 +6,8 @@ export interface ToastConfig {
   type?: 'info' | 'success' | 'warning' | 'error'; // 기획 나오면 재정의
   duration?: number;
   onClose?: () => void;
+  size?: 'small' | 'medium' | 'large';
+  showCloseButton?: boolean;
 }
 
 export interface ToastData {

@@ -1,5 +1,6 @@
-import { Dropdown, DropdownOption } from '@learnway/ui';
+import { AutoCompleteDropdown, Dropdown, DropdownOption } from '@learnway/ui';
 import { Meta, StoryObj } from '@storybook/react/*';
+import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 
 export default {
@@ -116,24 +117,6 @@ export const SelectBox: Story = {
   },
 };
 
-// 검색 가능한 드롭다운 스토리
-export const Searchable: Story = {
-  args: {
-    options: [
-      { value: 'apple', label: '사과' },
-      { value: 'banana', label: '바나나' },
-      { value: 'cherry', label: '체리' },
-      { value: 'grape', label: '포도' },
-    ],
-    label: '검색 가능 드롭다운',
-    placeholder: '과일 검색',
-    isSearchable: true,
-    isClearable: true,
-    size: 'lg',
-  },
-  render: (args) => <Template {...args} />,
-};
-
 const DropdownComponent: React.FC<any> = (args) => {
   const [selectedValue, setSelectedValue] = useState<string>('option1');
   const [selectedValue2, setSelectedValue2] = useState<string>('option1');
@@ -195,6 +178,39 @@ const DropdownComponent: React.FC<any> = (args) => {
   );
 };
 
+// 검색 가능한 드롭다운 스토리
+export const Searchable: Story = {
+  name: 'Dropdown List - 단일 입력/선택형',
+  args: {
+    options: [
+      { value: 'apple', label: '사과' },
+      { value: 'banana', label: '바나나' },
+      { value: 'cherry', label: '체리' },
+      { value: 'grape', label: '포도' },
+    ],
+    label: '검색 가능 드롭다운',
+    placeholder: '과일 검색',
+    isSearchable: true,
+    isClearable: true,
+    size: 'lg',
+    noOptionsMessage: t('데이터가 없습니다.'),
+  },
+  render: (args) => <Template {...args} />,
+  parameters: {
+    docs: {
+      description: {
+        story: `
+<div>
+  <ul>
+    <li>셀렉트 박스에 두자 이상 텍스트 입력 시 드랍다운 리스트에 입력한 텍스트가 있는 항목이 우선 노출되어 데이터를 선택하는 타입</li>
+  </ul>
+</div>
+        `,
+      },
+    },
+  },
+};
+
 export const DropdownStory: Story = {
   name: 'Dropdown List - 단일 선택형',
   args: {},
@@ -243,7 +259,96 @@ const MultiDropdown: React.FC<any> = (args) => {
 };
 
 export const MultiDropdownStory: Story = {
-  name: 'MultiDropdown',
+  name: 'DropdownList - 복수 선택형',
   args: {},
   render: (args) => <MultiDropdown {...args} />,
+  parameters: {
+    docs: {
+      description: {
+        story: `
+<div>
+  <ul>
+    <li>복수 선택 기능은 여러 항목을 선택해야할 때 제공된다.</li>
+    <li>복수 선택형도 단일 선택형과 동일한 기능을 제공한다. (입력/선택/삭제 등)</li>
+    <li>2개 이상 선택시 첫번째 선택값만 필드에 노출시키며 선택값 우측에 ‘외 N’으로 전체 선택개수를 표기한다.</li>
+  </ul>
+</div>
+        `,
+      },
+    },
+  },
+};
+
+const sampleOptions: DropdownOption[] = [
+  { value: '서울', label: '서울' },
+  { value: '부산', label: '부산' },
+  { value: '대구', label: '대구' },
+  { value: '인천', label: '인천' },
+  { value: '광주', label: '광주' },
+  { value: '대전', label: '대전' },
+  { value: '울산', label: '울산' },
+  { value: '세종', label: '세종' },
+  { value: '경기', label: '경기' },
+  { value: '강원', label: '강원' },
+];
+
+const loadOptions = (inputValue: string): Promise<DropdownOption[]> => {
+  return new Promise<DropdownOption[]>((resolve) => {
+    console.log('API 호출 해야함' + inputValue);
+    setTimeout(() => {
+      const filteredOptions = sampleOptions.filter(
+        (option: DropdownOption) =>
+          option?.label && option.label.toLowerCase().includes(inputValue.toLowerCase()),
+      );
+      resolve(filteredOptions);
+    }, 500); // 0.5초 지연
+  });
+};
+
+const AutoCompleteTemplate: React.FC<any> = (args) => {
+  const [selectedOption, setSelectedOption] = useState<DropdownOption | null>(null);
+
+  const handleChange = (newValue: DropdownOption | null) => {
+    console.log(newValue);
+    setSelectedOption(newValue);
+  };
+
+  const handleLoadOptions = async (inputValue: string): Promise<DropdownOption[]> => {
+    return await loadOptions(inputValue);
+  };
+
+  return (
+    <AutoCompleteDropdown
+      {...args}
+      value={selectedOption?.value}
+      onChange={(value) => {
+        const option = sampleOptions.find((opt) => opt.value === value);
+        handleChange(option || null);
+      }}
+      loadOptions={handleLoadOptions}
+      placeholder="지역을 검색하세요... "
+      noOptionsMessage="검색 결과가 없습니다"
+      loadingMessage="검색 중..."
+    />
+  );
+};
+
+export const AutoCompleteStory: Story = {
+  name: '데이터 조회(Auto Complete - DB 호출)',
+  args: {},
+  render: (args) => <AutoCompleteTemplate {...args} loadOptions={loadOptions} />,
+  parameters: {
+    docs: {
+      description: {
+        story: `
+<div>
+  <ul>
+    <li>드랍다운 리스트 내 항목이 아닌 데이터를 조회하여 선택하는 타입으로 우측 아이콘은 미노출된다.</li>
+    <li>두자 이상 텍스트 입력 시 결과가 드랍다운 영역에 노출된다.</li>
+  </ul>
+</div>
+        `,
+      },
+    },
+  },
 };
