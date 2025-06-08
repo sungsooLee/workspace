@@ -12,7 +12,7 @@ function SessionTimeoutConfirmComponent() {
   const { t } = useTranslation();
   const [seconds, setSeconds] = useState(TIME_LIMIT_VERIFY);
 
-  const timerText = duration({ seconds }, DATE_TIME_FORMAT.MIN_SEC).toString();
+  const timerText = duration(seconds, DATE_TIME_FORMAT.MIN_SEC);
 
   useEffect(() => {
     const interval = setInterval(() => {

@@ -134,7 +134,7 @@ export function useLoginTimer() {
   // console.log('exp :: ', exp);
   // console.log('seconds :: ', seconds, showAlert);
 
-  const timerText = duration({ seconds }, DATE_TIME_FORMAT.MIN_SEC).toString();
+  const timerText = duration(seconds, DATE_TIME_FORMAT.MIN_SEC);
 
   function getRemainingTime(exp: string) {
     try {

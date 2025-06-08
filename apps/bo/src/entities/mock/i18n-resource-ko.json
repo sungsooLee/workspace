@@ -472,7 +472,7 @@
         "detailInfo": "세부정보",
         "util": "기능",
         "isCourseUsed": "교육활용",
-        "isUseEnabled": "사용가능",
+        "useEnabledType": "사용가능",
         "localization": "현지화",
         "updatedInfo": "수정정보"
       }
@@ -493,6 +493,31 @@
     "LEARNER_MENU": "학습자 메뉴",
     "CATEGORY": "카테고리",
     "MESSAGE": "메세지"
+  },
+  "pms.multilingual.LangCountryCode": {
+    "KO": "한국어",
+    "EN": "English",
+    "ZH": "中文",
+    "JA": "日本語",
+    "ES": "Español",
+    "FR": "Français",
+    "DE": "Deutsch",
+    "IT": "Italiano",
+    "PT": "Português",
+    "RU": "Русский",
+    "AR": "العربية",
+    "HI": "हिन्दी",
+    "ID": "Bahasa Indonesia",
+    "MS": "Bahasa Melayu",
+    "TH": "ไทย",
+    "VI": "Tiếng Việt",
+    "TR": "Türkçe",
+    "SK": "Slovenčina",
+    "RO": "Română",
+    "HR": "Hrvatski",
+    "HE": "עברית",
+    "ET": "Eesti",
+    "NE": "नेपाली"
   },
   "pms.multilingual.LanguageType": {
     "ko": "한국어",
@@ -629,6 +654,11 @@
     "ASSIGNMENT": "과제",
     "SURVEY": "설문지",
     "ETC": "기타"
+  },
+  "cms.content.ContentUseEnabledType": {
+    "ENABLED": "사용가능",
+    "EXPIRED": "사용기간만료",
+    "DISABLED": "사용불가"
   },
   "pms.role.TenantScope": {
     "ALL": "전체",
