@@ -77,7 +77,7 @@ export function timeFormatMonth(locale?: string) {
   const currentLocale = locale || getDefaultLang();
   switch (currentLocale) {
     case 'en':
-      return 'MM/YYYY';
+      return 'MMM YYYY';
     case 'ko':
     case 'ja':
     case 'cn':
