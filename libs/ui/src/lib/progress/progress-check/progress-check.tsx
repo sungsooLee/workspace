@@ -27,7 +27,7 @@ const ProgressCheckComponent = forwardRef<
   ({
     progress,
     size = 24,
-    completedIcon = <IcoProgressComplete width={24} height={24} />,
+    completedIcon = <IcoProgressComplete width={size} height={size} />,
     ...props
   }) => {
     // 진행률이 100%인지 확인

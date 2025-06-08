@@ -42,6 +42,20 @@
     transform: translateY(var(--radix-toast-swipe-end-y));
     transition: slideOut 100ms ease-out;
   }
+  &.small {
+    @apply px-[12px] py-[8px] text-sm;
+    min-width: 200px;
+  }
+
+  &.medium {
+    @apply px-[16px] py-[12px];
+    min-width: 280px;
+  }
+
+  &.large {
+    @apply px-[20px] py-[16px];
+    min-width: 360px;
+  }
 }
 
 @keyframes hide {
@@ -145,4 +159,15 @@
       box-shadow: 0 0 0 2px var(--green-8);
     }
   }
+}
+
+.close {
+  @apply absolute right-[8px] top-[8px] flex h-[20px] w-[20px] cursor-pointer items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white;
+  grid-area: action;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.content {
+  @apply pr-[24px];
 }

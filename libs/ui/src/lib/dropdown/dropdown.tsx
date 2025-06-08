@@ -11,6 +11,7 @@ import { DropdownOption } from '../type';
 
 import styles from './dropdown.module.css';
 import { Button } from '../button/button';
+import { t } from 'i18next';
 
 export interface ReactSelectComponentProps {
   options: DropdownOption[];
@@ -34,6 +35,7 @@ export interface ReactSelectComponentProps {
   className?: string;
   name?: string;
   onBlur?: () => void;
+  noOptionsMessage?: string;
 }
 
 // error, readonly, disabled
@@ -81,11 +83,16 @@ const CustomValueContainer = ({ children, ...props }: any) => {
 
 // 체크박스가 있는 옵션 컴포넌트
 const Option = (props: any) => {
+  const { data, isSelected, innerRef, innerProps, selectProps } = props;
+
+  // 현재 입력된 검색어 가져오기
+  const inputValue = selectProps.inputValue || '';
+
   return (
     <components.Option {...props}>
       <div className={styles.select_item}>
         {props.isMulti && <Checkbox size={'md'} checked={props.isSelected} onChange={() => null} />}
-        <span>{props.label}</span>
+        <span>{data.label}</span>
       </div>
     </components.Option>
   );
@@ -126,15 +133,28 @@ const clearIndicator = (props: any) => {
 const MenuPortal = (props: any) => {
   const variant = props.selectProps?.['data-variant'] || 'default';
   const size = props.selectProps?.['size'] || 'default';
+  const optionsCount = props.options.length;
+
   const className = cn(
     'menu-portal',
     variant && `menu-portal-variant-${variant}`, // 퍼블에서 필요 ex) menu-portal-chip, menu-portal-text
     size && `menu-portal-size-${size}`, // 퍼블에서 필요 ex) menu-portal-chip, menu-portal-text
+    optionsCount >= 10 && 'menu-portal-large', // 옵션이 10개 이상이면 사이즈가 커야됨. 스타일 추가 필요.
   );
   return (
     <components.MenuPortal {...props}>
       <div className={className}>{props.children}</div>
     </components.MenuPortal>
+  );
+};
+
+const NoOptionsMessage = (props: any) => {
+  return (
+    <components.NoOptionsMessage {...props}>
+      <div style={{ padding: '8px 12px', textAlign: 'center', color: 'black' }}>
+        {props.children}
+      </div>
+    </components.NoOptionsMessage>
   );
 };
 
@@ -158,6 +178,7 @@ const PrimitiveComponent = forwardRef<any, ReactSelectComponentProps>(
       variant = 'default',
       className = '',
       name,
+      noOptionsMessage,
       onBlur,
       ...props
     },
@@ -219,7 +240,9 @@ const PrimitiveComponent = forwardRef<any, ReactSelectComponentProps>(
             ClearIndicator: clearIndicator,
             MenuPortal,
             ValueContainer: CustomValueContainer,
+            NoOptionsMessage: NoOptionsMessage,
           }}
+          noOptionsMessage={() => noOptionsMessage || '데이터가 없습니다.'}
           menuPortalTarget={document.body}
           closeMenuOnSelect={!isMulti}
           hideSelectedOptions={false}
@@ -232,7 +255,17 @@ const PrimitiveComponent = forwardRef<any, ReactSelectComponentProps>(
 
 const DropdownComponent = forwardRef<any, DropdownComponentProps>(
   (
-    { value, onChange, onBlur, options = [], isMulti = false, disabled, readOnly, ...props },
+    {
+      value,
+      onChange,
+      onBlur,
+      options = [],
+      isMulti = false,
+      disabled,
+      readOnly,
+      noOptionsMessage,
+      ...props
+    },
     ref,
   ) => {
     // react-hook-form의 value와 react-select의 value 형식을 맞추기 위한 처리
@@ -285,6 +318,7 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
         isMulti={isMulti}
         isReadonly={readOnly}
         isDisabled={disabled}
+        noOptionsMessage={noOptionsMessage}
         {...props}
       />
     );

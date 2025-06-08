@@ -1,7 +1,7 @@
-import { forwardRef } from 'react';
+import { forwardRef, useMemo } from 'react';
 import { ActionMeta, MultiValue, SingleValue, components } from 'react-select';
 import { useCreation } from 'ahooks';
-import AsyncCreatableSelect from 'react-select/async-creatable';
+import AsyncSelect from 'react-select/async';
 import { map } from 'lodash';
 
 import { IcoDelete03 } from '@learnway/icons';
@@ -17,6 +17,8 @@ export interface PrimitiveComponentProps extends Omit<ReactSelectComponentProps,
   loadOptions: (inputValue: string) => Promise<DropdownOption[]>;
   defaultOptions?: boolean | DropdownOption[];
   cacheOptions?: boolean;
+  noOptionsMessage?: string;
+  loadingMessage?: string;
 }
 
 export interface AutoCompleteDropdownComponentProps
@@ -58,6 +60,8 @@ const PrimitiveComponent = forwardRef<any, PrimitiveComponentProps>(
       onBlur,
       defaultOptions = true,
       cacheOptions = true,
+      noOptionsMessage = '검색결과가 없습니다',
+      loadingMessage = '검색 중...',
       ...props
     },
     ref,
@@ -74,6 +78,16 @@ const PrimitiveComponent = forwardRef<any, PrimitiveComponentProps>(
       `nlp--dropdown nlp--dropdown-${size} nlp--dropdown-${variant} ${className} w-full`,
       hideArrow && 'hide_arrow',
     );
+
+    // 메시지 함수들을 메모이제이션
+    const messageCallbacks = useMemo(
+      () => ({
+        noOptionsMessage: () => noOptionsMessage,
+        loadingMessage: () => loadingMessage,
+      }),
+      [noOptionsMessage, loadingMessage],
+    );
+
     const customProps = {
       'data-variant': variant,
       ...props,
@@ -81,7 +95,7 @@ const PrimitiveComponent = forwardRef<any, PrimitiveComponentProps>(
 
     return (
       <div className={dropdownClass.trim()}>
-        <AsyncCreatableSelect
+        <AsyncSelect
           id={uuid}
           ref={ref}
           loadOptions={loadOptions}
@@ -100,12 +114,11 @@ const PrimitiveComponent = forwardRef<any, PrimitiveComponentProps>(
           hideSelectedOptions={false}
           defaultOptions={defaultOptions}
           cacheOptions={cacheOptions}
-          formatCreateLabel={(inputValue) => `"${inputValue}"`}
           components={{
             ClearIndicator: clearIndicator,
           }}
-          noOptionsMessage={() => '검색결과가 없습니다'}
-          loadingMessage={() => '검색 중...'}
+          noOptionsMessage={messageCallbacks.noOptionsMessage}
+          loadingMessage={messageCallbacks.loadingMessage}
           {...customProps}
         />
       </div>
@@ -133,29 +146,30 @@ const AutoCompleteDropdownComponent = forwardRef<any, AutoCompleteDropdownCompon
       actionMeta: ActionMeta<DropdownOption>,
     ) => {
       if (isMulti) {
-        const multiValues = map(newValue as MultiValue<DropdownOption>, 'value'); // ? newValue.map((option) => option.value) : [];
-        onChange && onChange(multiValues);
+        const multiValues = map(newValue as MultiValue<DropdownOption>, 'value');
+        onChange && onChange(multiValues, actionMeta);
       } else {
         const singleValue = newValue as SingleValue<DropdownOption>;
-        onChange && onChange(singleValue?.value ?? null);
+        onChange && onChange(singleValue?.value ?? null, actionMeta);
       }
     };
 
-    // 비동기로 옵션을 가져오므로 선택된 값이 옵션 목록에 없을 수 있음
-    const selectedOptions = useCreation(() => {
+    // 선택된 값을 DropdownOption 형태로 변환
+    const selectedOptions = useMemo(() => {
       if (!value) {
-        return null;
+        return isMulti ? [] : null;
       }
 
       if (isMulti) {
-        return (Array.isArray(value) ? value : [value]).map((val) => ({
+        const valueArray = Array.isArray(value) ? value : [value];
+        return valueArray.map((val) => ({
           value: val,
           label: val.toString(),
         }));
       }
 
       return { value, label: value.toString() };
-    }, [value]);
+    }, [value, isMulti]);
 
     return (
       <PrimitiveComponent

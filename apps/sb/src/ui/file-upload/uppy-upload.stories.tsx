@@ -10,6 +10,7 @@ export default {
   argTypes: {
     onCheckedChange: { action: 'onCheckedChange' },
   },
+  includeStories: [''],
 } as Meta;
 
 // ImageUpload

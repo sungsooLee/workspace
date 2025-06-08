@@ -415,13 +415,6 @@ export type SearchBoxProvider = {
   getValues: UseFormReturn['getValues'];
 
   /**
-   * 폼의 값을 외부에서 변경함
-   * @param name
-   * @param value
-   */
-  setValue: UseFormReturn['setValue'];
-
-  /**
    * 특정 필드에 포커스를 설정하는 함수
    *
    * @param fieldName - 포커스를 설정할 필드 이름
@@ -491,6 +484,13 @@ export type UseSearchBoxReturn = {
    * @returns 현재 필드 값 객체 반환
    */
   getValues: UseFormReturn['getValues'];
+
+  /**
+   * 폼의 값을 외부에서 변경함
+   * @param name
+   * @param value
+   */
+  setValue: UseFormReturn['setValue'];
 
   /**
    * 설정된 폼의 에러 메시지를 제거하는 함수

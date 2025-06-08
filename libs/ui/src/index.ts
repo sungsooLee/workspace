@@ -150,6 +150,7 @@ export * from './lib/tree-view/tree.context';
 export * from './lib/tree-view/type';
 export * from './lib/tree-view/shuttle-tree-to-chips';
 export * from './lib/tree-view/tree-box';
+export * from './lib/tree-view/tree-to-tree';
 
 // textarea
 export * from './lib/textarea/textarea';
