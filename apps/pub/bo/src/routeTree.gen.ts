@@ -79,6 +79,7 @@ import { Route as LayoutPmsMenuChannelDetailManagementImport } from './pages/_la
 import { Route as LayoutPmsMenuChannelDetailImport } from './pages/_layout/pms/menu-channel-detail'
 import { Route as LayoutPmsLanguagemanagementImport } from './pages/_layout/pms/language_management'
 import { Route as LayoutPmsGroupManagementRegisterImport } from './pages/_layout/pms/group-management-register'
+import { Route as LayoutPmsGroupManagementInfoImport } from './pages/_layout/pms/group-management-info'
 import { Route as LayoutPmsGroupManagementImport } from './pages/_layout/pms/group-management'
 import { Route as LayoutPmsCategoryMenagementImport } from './pages/_layout/pms/category-menagement'
 import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
@@ -594,6 +595,13 @@ const LayoutPmsGroupManagementRegisterRoute =
   LayoutPmsGroupManagementRegisterImport.update({
     id: '/pms/group-management-register',
     path: '/pms/group-management-register',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutPmsGroupManagementInfoRoute =
+  LayoutPmsGroupManagementInfoImport.update({
+    id: '/pms/group-management-info',
+    path: '/pms/group-management-info',
     getParentRoute: () => LayoutRoute,
   } as any)
 
@@ -1843,6 +1851,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutPmsGroupManagementImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/pms/group-management-info': {
+      id: '/_layout/pms/group-management-info'
+      path: '/pms/group-management-info'
+      fullPath: '/pms/group-management-info'
+      preLoaderRoute: typeof LayoutPmsGroupManagementInfoImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/pms/group-management-register': {
       id: '/_layout/pms/group-management-register'
       path: '/pms/group-management-register'
@@ -2310,6 +2325,7 @@ interface LayoutRouteChildren {
   LayoutMenu8Menu9Route: typeof LayoutMenu8Menu9Route
   LayoutPmsCategoryMenagementRoute: typeof LayoutPmsCategoryMenagementRoute
   LayoutPmsGroupManagementRoute: typeof LayoutPmsGroupManagementRoute
+  LayoutPmsGroupManagementInfoRoute: typeof LayoutPmsGroupManagementInfoRoute
   LayoutPmsGroupManagementRegisterRoute: typeof LayoutPmsGroupManagementRegisterRoute
   LayoutPmsLanguagemanagementRoute: typeof LayoutPmsLanguagemanagementRoute
   LayoutPmsMenuChannelDetailRoute: typeof LayoutPmsMenuChannelDetailRoute
@@ -2387,6 +2403,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutMenu8Menu9Route: LayoutMenu8Menu9Route,
   LayoutPmsCategoryMenagementRoute: LayoutPmsCategoryMenagementRoute,
   LayoutPmsGroupManagementRoute: LayoutPmsGroupManagementRoute,
+  LayoutPmsGroupManagementInfoRoute: LayoutPmsGroupManagementInfoRoute,
   LayoutPmsGroupManagementRegisterRoute: LayoutPmsGroupManagementRegisterRoute,
   LayoutPmsLanguagemanagementRoute: LayoutPmsLanguagemanagementRoute,
   LayoutPmsMenuChannelDetailRoute: LayoutPmsMenuChannelDetailRoute,
@@ -2552,6 +2569,7 @@ export interface FileRoutesByFullPath {
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/pms/category-menagement': typeof LayoutPmsCategoryMenagementRoute
   '/pms/group-management': typeof LayoutPmsGroupManagementRoute
+  '/pms/group-management-info': typeof LayoutPmsGroupManagementInfoRoute
   '/pms/group-management-register': typeof LayoutPmsGroupManagementRegisterRoute
   '/pms/language_management': typeof LayoutPmsLanguagemanagementRoute
   '/pms/menu-channel-detail': typeof LayoutPmsMenuChannelDetailRoute
@@ -2699,6 +2717,7 @@ export interface FileRoutesByTo {
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/pms/category-menagement': typeof LayoutPmsCategoryMenagementRoute
   '/pms/group-management': typeof LayoutPmsGroupManagementRoute
+  '/pms/group-management-info': typeof LayoutPmsGroupManagementInfoRoute
   '/pms/group-management-register': typeof LayoutPmsGroupManagementRegisterRoute
   '/pms/language_management': typeof LayoutPmsLanguagemanagementRoute
   '/pms/menu-channel-detail': typeof LayoutPmsMenuChannelDetailRoute
@@ -2849,6 +2868,7 @@ export interface FileRoutesById {
   '/_layout/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/_layout/pms/category-menagement': typeof LayoutPmsCategoryMenagementRoute
   '/_layout/pms/group-management': typeof LayoutPmsGroupManagementRoute
+  '/_layout/pms/group-management-info': typeof LayoutPmsGroupManagementInfoRoute
   '/_layout/pms/group-management-register': typeof LayoutPmsGroupManagementRegisterRoute
   '/_layout/pms/language_management': typeof LayoutPmsLanguagemanagementRoute
   '/_layout/pms/menu-channel-detail': typeof LayoutPmsMenuChannelDetailRoute
@@ -2998,6 +3018,7 @@ export interface FileRouteTypes {
     | '/menu8/menu9'
     | '/pms/category-menagement'
     | '/pms/group-management'
+    | '/pms/group-management-info'
     | '/pms/group-management-register'
     | '/pms/language_management'
     | '/pms/menu-channel-detail'
@@ -3144,6 +3165,7 @@ export interface FileRouteTypes {
     | '/menu8/menu9'
     | '/pms/category-menagement'
     | '/pms/group-management'
+    | '/pms/group-management-info'
     | '/pms/group-management-register'
     | '/pms/language_management'
     | '/pms/menu-channel-detail'
@@ -3292,6 +3314,7 @@ export interface FileRouteTypes {
     | '/_layout/menu8/menu9'
     | '/_layout/pms/category-menagement'
     | '/_layout/pms/group-management'
+    | '/_layout/pms/group-management-info'
     | '/_layout/pms/group-management-register'
     | '/_layout/pms/language_management'
     | '/_layout/pms/menu-channel-detail'
@@ -3479,6 +3502,7 @@ export const routeTree = rootRoute
         "/_layout/menu8/menu9",
         "/_layout/pms/category-menagement",
         "/_layout/pms/group-management",
+        "/_layout/pms/group-management-info",
         "/_layout/pms/group-management-register",
         "/_layout/pms/language_management",
         "/_layout/pms/menu-channel-detail",
@@ -3936,6 +3960,10 @@ export const routeTree = rootRoute
     },
     "/_layout/pms/group-management": {
       "filePath": "_layout/pms/group-management.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/group-management-info": {
+      "filePath": "_layout/pms/group-management-info.tsx",
       "parent": "/_layout"
     },
     "/_layout/pms/group-management-register": {

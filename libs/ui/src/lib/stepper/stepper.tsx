@@ -7,6 +7,7 @@ import { SelectOption } from '../type';
 import { IcoCheckboxChecked } from '@learnway/icons';
 
 export type StepperType = 'number' | 'check';
+export type OrientationType = 'horizontal' | 'vertical';
 
 export interface StepperComponentProps {
   items: Array<SelectOption>;
@@ -14,11 +15,12 @@ export interface StepperComponentProps {
   selectedStep?: string;
   enableMoveStep?: boolean; // step 이동 가능 여부 (step onClick 사용 여부)
   variant?: StepperType; // Stepper Type
+  orientation?: OrientationType;
   onChange?: (item: SelectOption) => void;
 }
 
 const StepperComponent = forwardRef<HTMLElement, StepperComponentProps>(
-  ({ className, items, selectedStep, onChange, enableMoveStep, variant, ...props }, ref) => {
+  ({ className, items, selectedStep, onChange, enableMoveStep, variant, orientation='horizontal', ...props }, ref) => {
     const [selectedItem, setSelectedItem] = useState<SelectOption>();
 
     useEffect(() => {
@@ -49,7 +51,7 @@ const StepperComponent = forwardRef<HTMLElement, StepperComponentProps>(
     };
 
     return (
-      <div className={cn(className, 'nlp-stepper', styles.stepper, variant && styles[variant])}>
+      <div className={cn(className, 'nlp-stepper', styles.stepper, variant && styles[variant] && styles[orientation])}>
         {stepperItems?.map((d: any, index: number) => (
           <div
             key={d.value}

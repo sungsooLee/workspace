@@ -70,6 +70,13 @@ export default {
       },
     },
   },
+   decorators: [
+    (Story) => (
+      <div style={{width: '100%', padding: '20px' }}>
+        <Story />
+      </div>
+    ),
+  ],
 } as Meta;
 type Story = StoryObj<typeof Dropdown>;
 
