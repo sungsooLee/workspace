@@ -57,7 +57,9 @@ function LearningResourceTableComponent() {
           name: 'contentTypes',
           type: 'dropdown',
           label: t('LABEL.content.learning-resource.contentType'),
-          value: '',
+          value: [],
+          isMulti: true,
+          variant: 'text',
           optionsConfig: {
             options: [{ value: '', label: t('전체') }],
             codeGroup: CODE_GROUP['cms.content.ContentType'],
