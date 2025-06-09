@@ -97,6 +97,9 @@ function RouteComponent() {
               {'자동관리와 수동관리 선택에 따라서 아래 회원가입 유형의 옵션이 달라집니다. '}
             </p>
           </div>
+        </ContentsRow>
+        {/* 퍼블수정 20250609 : 회원가입 유형 아래로 수정 */}
+        <ContentsRow>
           {/* form_item */}
           <div className={formStyles.form_item}>
             <label htmlFor="name-type" className={formStyles.form_label}>

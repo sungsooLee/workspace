@@ -376,7 +376,7 @@ export const guideData = [
     screenId: 'NLP_BO_TMS_1300',
     pageType: 'Page',
     completionDate: '2025-06-05',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-06-09',
     remarks: '', // 비고
   },
   {
@@ -385,7 +385,7 @@ export const guideData = [
     screenId: 'NLP_BO_TMS_1300_01',
     pageType: 'Page',
     completionDate: '2025-06-05',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-06-09',
     remarks: '', // 비고
   },
   {
