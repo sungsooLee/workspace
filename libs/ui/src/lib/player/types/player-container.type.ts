@@ -8,6 +8,7 @@ export type PlayerContainerProps = {
   duration: number;
   played: number; // 0.0 ~ 1.0
   volume: number;
+  subtitlesVisible: boolean;
   toggleMute: () => void;
   handleVolumeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   toggleSubtitles: () => void;
@@ -15,5 +16,5 @@ export type PlayerContainerProps = {
   togglePlay: () => void;
   handleRewind: () => void;
   handleForward: () => void;
-  handleSeek: () => void;
+  handleSeek: (e: React.MouseEvent<HTMLDivElement>) => void;
 } & PropsWithChildren;

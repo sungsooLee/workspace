@@ -67,7 +67,7 @@ const ChannelDetailHomeContentComponent = ({
   }, [watchSetting]);
   return (
     <>
-      <FormSubTitle label={title} />
+      <FormSubTitle label={title} lineType="dark" />
       {useSetting && (
         <ContentsRow>
           <FormRow provider={provider} name={'settings'} element={<RadioGroupFormField />} />

@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
-import { Grid, GridState } from '@learnway/ui';
+import { Grid, GridState, GridBoxState } from '@learnway/ui';
 import { pageRouteConfig } from '../../../../features/auth';
 import { useCodeGroupList } from '../../../../entities/common-code/service/common-code-group.hook';
 import { useState } from 'react';
@@ -67,25 +67,25 @@ function RouteComponent() {
     setIsSearched(true);
   };
 
-  const handleGridStateChange = (newState: GridState) => {
-    if (newState.sorting && newState.sorting.length > 0) {
-      const sortItems = newState.sorting.map((sortItem) => {
-        const direction = sortItem.desc ? 'desc' : 'asc';
-        const sortItemNameMap: Record<string, string> = {
-          isUsed: 'commonCdGroupEntity.isUsed',
-          createdDate: 'commonCdGroupEntity.createdDate',
-          createdBy: 'commonCdGroupEntity.createdBy',
-          modifiedDate: 'commonCdGroupEntity.modifiedDate',
-          lastModifiedBy: 'commonCdGroupEntity.lastModifiedBy',
-        };
-        const sortItemName = sortItemNameMap[sortItem.id] || sortItem.id;
-        return `${sortItemName},${direction}`;
-      });
-
-      setSortState({ sort: sortItems });
-    } else {
-      setSortState({ sort: [] });
-    }
+  const handleGridStateChange = (newState: GridBoxState) => {
+    // if (newState.sorting && newState.sorting.length > 0) {
+    //   const sortItems = newState.sorting.map((sortItem) => {
+    //     const direction = sortItem.desc ? 'desc' : 'asc';
+    //     const sortItemNameMap: Record<string, string> = {
+    //       isUsed: 'commonCdGroupEntity.isUsed',
+    //       createdDate: 'commonCdGroupEntity.createdDate',
+    //       createdBy: 'commonCdGroupEntity.createdBy',
+    //       modifiedDate: 'commonCdGroupEntity.modifiedDate',
+    //       lastModifiedBy: 'commonCdGroupEntity.lastModifiedBy',
+    //     };
+    //     const sortItemName = sortItemNameMap[sortItem.id] || sortItem.id;
+    //     return `${sortItemName},${direction}`;
+    //   });
+    //
+    //   setSortState({ sort: sortItems });
+    // } else {
+    //   setSortState({ sort: [] });
+    // }
   };
 
   return (

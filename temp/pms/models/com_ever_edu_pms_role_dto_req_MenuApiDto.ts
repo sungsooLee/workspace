@@ -7,9 +7,9 @@
  */
 export type com_ever_edu_pms_role_dto_req_MenuApiDto = {
     /**
-     * 메뉴 ID
+     * 테넌트메뉴관계 ID
      */
-    menuId: number;
+    tenantMappingMenuId: number;
     /**
      * API ID
      */

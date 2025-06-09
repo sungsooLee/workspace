@@ -227,7 +227,11 @@ const TenantDetailWidgetComponent: FC<any> = () => {
                   {option?.isUsed && (
                     <Button
                       type="button"
-                      variant="gray2"
+                      variant={
+                        selectedOption?.widgetType === option.original.widgetType
+                          ? 'primary'
+                          : 'gray2'
+                      }
                       label={t('선택')}
                       size="ts"
                       onClick={() => {

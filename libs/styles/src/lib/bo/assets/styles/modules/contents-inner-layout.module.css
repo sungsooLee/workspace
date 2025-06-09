@@ -3,7 +3,7 @@
   &.wrap {
     @apply relative flex w-full justify-between;
     &::before {
-      @apply absolute left-1/2 top-0 flex h-full w-[1px] -translate-x-1/2 bg-[var(--gray4)] content-[''];
+      @apply absolute left-1/2 top-0 flex h-full w-[1px] shadow-[1px_0_0_0_var(--gray4)] content-[''];
     }
     .inner {
       @apply relative z-[1] w-[calc(50%-32px)] items-stretch;
@@ -75,9 +75,9 @@
 .grid_layout_wrap {
   @apply flex w-full flex-wrap justify-between;
   & > div:first-child {
-    @apply w-[360px] shrink-0;
+    @apply w-[calc(35%-16px)] shrink-0;
     & + div {
-      @apply w-[calc(100%-392px)];
+      @apply w-[calc(65%-16px)] shrink-0;
     }
   }
 }

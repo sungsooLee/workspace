@@ -7,6 +7,10 @@ import type { com_ever_edu_pms_channel_dto_req_ChannelLearnerUserReqDto } from '
 import type { com_ever_edu_pms_channel_dto_req_ChannelTenantReqDto } from './com_ever_edu_pms_channel_dto_req_ChannelTenantReqDto';
 export type com_ever_edu_pms_channel_dto_req_ChannelSaveReqDto = {
     /**
+     * 채널Uuid
+     */
+    channelUuid?: string;
+    /**
      * 채널 개설 방식 구분
      */
     channelCreationType?: com_ever_edu_pms_channel_dto_req_ChannelSaveReqDto.channelCreationType;

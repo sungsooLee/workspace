@@ -27,7 +27,6 @@ function RootComponent() {
   const { data: authUser } = useFetchAuthUser();
   const router = useRouter();
   const isUnderBreakpoint = useBreakpointModalClose(closeAll, 1000);
-
   // 로그아웃 처리 타이머
   useLoginTimer();
   useRenewalMenuStateFromRouting();
@@ -44,16 +43,14 @@ function RootComponent() {
     return unsubscribe;
   }, []);
 
-  if (isUnderBreakpoint) {
-    return <MinWidthRequired />;
-  }
   return (
     <>
+     <div style={{ display: isUnderBreakpoint ? 'none' : 'block' }}>
       <Outlet />
+    </div>
+      {isUnderBreakpoint && <MinWidthRequired/>}
       <ModalWrapper />
       <ToastWrapper />
-      {/* <TanStackRouterDevtools position="bottom-right" /> */}
-      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </>
   );
 }

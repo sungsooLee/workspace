@@ -12,6 +12,7 @@ import {
   Input,
   Textarea,
   useModal,
+  GridBoxState,
 } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { IcoPlus } from '@learnway/icons';
@@ -251,7 +252,7 @@ const CommonCodeGroupGridComponent = ({
   // 폼 필드 활성화 여부 결정
   const isFormDisabled = formMode === FORM_MODE.NONE;
 
-  const handleStateChange = (newState: GridState) => {
+  const handleStateChange = (newState: GridBoxState) => {
     if (onStateChange) {
       onStateChange(newState);
     }

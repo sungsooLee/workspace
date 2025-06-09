@@ -117,6 +117,7 @@ export interface TreeNode {
   isUsed?: boolean;
   level?: number;
   apiNodeType?: string;
+  maxDepth?: number;
   [key: string]: any;
 }
 
@@ -148,7 +149,7 @@ export interface TreeProps {
   shouldDisableClick?: (node: TreeNode, level: number) => boolean;
   selectedItems?: string[]; // 선택된 아이템들의 키 배열
   sourceTreeId?: string;
-
+  maxDepth?: number; // 최대 Depth
   // 추후 제약사항 추가 될 수 있음.
 }
 // 드랍 위치 감지를 위한 타입
@@ -220,6 +221,7 @@ export interface TreeNodeComponentProps {
   shouldDisableClick?: (node: TreeNode, level: number) => boolean;
   selectedItems?: string[]; // 선택된 아이템들의 키 배열
   sourceTreeId?: string;
+  maxDepth?: number; // 최대 뎁스
 }
 
 /**

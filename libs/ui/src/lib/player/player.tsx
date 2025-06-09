@@ -1,6 +1,7 @@
 import ReactPlayer from 'react-player';
 import { forwardRef } from 'react';
 import type { PlayerProps } from './types';
+import './player.module.css';
 
 const PlayerComponent = forwardRef<ReactPlayer, PlayerProps>(
   ({ url, playing, onProgress, onDuration, ...props }, ref) => {

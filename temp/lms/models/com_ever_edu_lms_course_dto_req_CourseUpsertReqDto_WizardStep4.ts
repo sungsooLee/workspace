@@ -4,11 +4,30 @@
 /* eslint-disable */
 export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 = {
     wizardStep: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4.wizardStep;
+    isLearnEnvEnabled?: boolean;
     deviceRestrictType?: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4.deviceRestrictType;
+    /**
+     * 사내망 제어 여부
+     */
+    isIntranetRestricted: boolean;
     /**
      * (lms.course.LearningRestrictTimeType)
      */
     learningRestrictTimeType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4.learningRestrictTimeType;
+    /**
+     * 복습 제한 여부
+     */
+    isReviewRestricted: boolean;
+    maxReviewPeriodMonths?: number;
+    /**
+     * 캡처 방지 여부
+     */
+    isCaptureBlockEnabled: boolean;
+    /**
+     * 보안 서약 여부
+     */
+    isSecurityAgreementEnable: boolean;
+    isLearnControlEnabled?: boolean;
     /**
      * 1일 진도 제한
      */
@@ -31,37 +50,6 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 = {
      */
     maxPlayBackRate?: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4.maxPlayBackRate;
     /**
-     * 복습 제한 여부
-     */
-    isReviewRestricted: boolean;
-    maxReviewPeriodMonths?: number;
-    /**
-     * 캡처 방지 여부
-     */
-    isCaptureBlockEnabled: boolean;
-    /**
-     * 사내망 제어 여부
-     */
-    isIntranetRestricted: boolean;
-    /**
-     * 보안 서약 여부
-     */
-    isSecurityAgreementEnable: boolean;
-    /**
-     * (lms.course.LearningSpaceType)
-     */
-    learningSpaceType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4.learningSpaceType;
-    preRequisiteCourseIds?: Array<number>;
-    relatedCourseIds?: Array<number>;
-    /**
-     * 학습자가 댓글 등록이 가능한지
-     */
-    isCommentEnabled: boolean;
-    /**
-     * 과정을 학습자가 공유할 수 있는지?
-     */
-    isSharingAllowed: boolean;
-    /**
      * (lms.course.PassMethodType)
      */
     passMethodType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4.passMethodType;
@@ -74,13 +62,50 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 = {
     progressWeights?: number;
     examWeights?: number;
     asgmtWeights?: number;
+    /**
+     * (lms.course.RecognizedStudyMinType)
+     */
+    recognizedStudyMinType?: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4.recognizedStudyMinType;
+    recognizedStudyCycles?: number;
     recognizedStudyMinutes?: number;
     isRecognizedStudyPoint?: boolean;
     recognizedStudyPoint?: number;
     isCertificateProvided?: boolean;
-    isTextbookProvided?: boolean;
+    /**
+     * 커뮤니티[공지/자료실/커뮤니티/공유] 기능을 사용 할 지 말지
+     */
+    isCommunicationToolEnabled: boolean;
+    /**
+     * 공지사항 기능을 사용 할 지 말지
+     */
+    isNoticeEnabled: boolean;
+    /**
+     * Q&A 기능을 사용 할 지 말지
+     */
+    isQnaBoardEnabled: boolean;
+    /**
+     * 자료실 기능을 사용 할 지 말지
+     */
+    isMartialBoardEnabled: boolean;
+    /**
+     * 커뮤니티 기능을 사용 할 지 말지
+     */
+    isCommunityEnabled: boolean;
+    /**
+     * 과정을 학습자가 공유할 수 있는지?
+     */
+    isSharingAllowed: boolean;
+    isInstructorAssigned: boolean;
+    /**
+     * (lms.course.InstructorAssignType)
+     */
+    instructorAssignType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4.instructorAssignType;
+    isTextbookProvided: boolean;
     textbookName?: string;
     textbookFee?: number;
+    isRelatedPrerequisiteCourseExisted: boolean;
+    preRequisiteCourseIds?: Array<number>;
+    relatedCourseIds?: Array<number>;
     contentFee?: number;
     textbookPurchaseCost?: number;
     textbookPurchaseAllocationRate?: number;
@@ -119,19 +144,25 @@ export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 
         X2 = 'X2',
     }
     /**
-     * (lms.course.LearningSpaceType)
-     */
-    export enum learningSpaceType {
-        EXTERNAL_SITE = 'EXTERNAL_SITE',
-        LEARNING_WAY = 'LEARNING_WAY',
-        FACE_TO_FACE = 'FACE_TO_FACE',
-        NONE_FACE_TO_FACE = 'NONE_FACE_TO_FACE',
-    }
-    /**
      * (lms.course.PassMethodType)
      */
     export enum passMethodType {
         AUTO = 'AUTO',
+        MANUAL = 'MANUAL',
+    }
+    /**
+     * (lms.course.RecognizedStudyMinType)
+     */
+    export enum recognizedStudyMinType {
+        IMPOSSIBLE = 'IMPOSSIBLE',
+        MANDATORY = 'MANDATORY',
+        OPTIONAL = 'OPTIONAL',
+    }
+    /**
+     * (lms.course.InstructorAssignType)
+     */
+    export enum instructorAssignType {
+        REGISTERED = 'REGISTERED',
         MANUAL = 'MANUAL',
     }
 }

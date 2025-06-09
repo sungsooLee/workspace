@@ -499,3 +499,26 @@ export const flattenNodeWithChildren = (node: TreeNode) => {
 
   return nodes;
 };
+
+/**
+ * 노드의 최대 깊이를 계산하는 함수
+ * @param node 계산할 노드
+ * @returns 해당 노드 트리의 최대 깊이
+ */
+export const getNodeMaxDepth = (node: TreeNode): number => {
+  if (!node.children || node.children.length === 0) {
+    return 1;
+  }
+
+  const childDepths = node.children.map((child) => getNodeMaxDepth(child));
+  return 1 + Math.max(...childDepths);
+};
+
+/**
+ * 트리에서 루트 노드(첫 번째 레벨 0 노드)를 찾는 함수
+ * @param treeData 트리 데이터
+ * @returns 루트 노드 또는 null
+ */
+export const findRootNode = (treeData: TreeNode[]): TreeNode | null => {
+  return treeData.length > 0 ? treeData[0] : null;
+};

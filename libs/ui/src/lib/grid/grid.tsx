@@ -16,6 +16,7 @@ const GridComponent = forwardRef(
     {
       data,
       columns,
+      rowId = 'id',
       multiple,
       disabledSelectionToggle,
       hideRowSelectionRadioBox = true,
@@ -49,6 +50,7 @@ const GridComponent = forwardRef(
     const { table, lastPinnedColumnId } = useGridTable({
       data,
       columns,
+      rowId,
       multiple,
       pagination,
       columnGrouping,
@@ -122,6 +124,8 @@ const GridComponent = forwardRef(
         }) as CSSProperties,
       [],
     );
+
+    // console.log('grid.tsx', { data });
 
     return (
       <div

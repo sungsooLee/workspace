@@ -98,8 +98,6 @@ export default function usePagination(props: UsePaginationProps) {
     ...other
   } = props;
 
-  console.log('pagination.hook ', { page });
-
   // const [page, setPageState] = useControlled({
   //   controlled: pageProp,
   //   default: defaultPage,

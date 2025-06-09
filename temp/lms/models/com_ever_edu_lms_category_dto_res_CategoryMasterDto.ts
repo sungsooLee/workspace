@@ -8,5 +8,6 @@ export type com_ever_edu_lms_category_dto_res_CategoryMasterDto = {
     categoryCode?: string;
     categoryContent?: string;
     categoryPath?: string;
+    isUsed?: boolean;
 };
 

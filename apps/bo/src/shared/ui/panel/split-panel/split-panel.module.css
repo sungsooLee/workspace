@@ -17,7 +17,7 @@
             @apply py-0;
           }
           &::before {
-            @apply absolute right-0 top-0 flex h-full w-[1px] bg-[var(--gray4)] content-[''];
+            @apply absolute right-0 top-0 flex h-full w-[1px] shadow-[1px_0_0_0_var(--gray4)] content-[''];
           }
         }
         &:not(:first-child) {

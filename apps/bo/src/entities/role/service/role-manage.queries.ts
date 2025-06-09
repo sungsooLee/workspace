@@ -96,6 +96,7 @@ export const roleManagerQueryOptions = {
   getRoleTree: (tenantId: number, siteScope: string) => ({
     queryKey: [roleQueryKeys.all, roleQueryKeys.tree, tenantId, siteScope],
     queryFn: async () => RoleManagerService.fetchRoleTree(tenantId, siteScope),
+    enabled: !!tenantId,
   }),
 
   //역할 사용자 조회
