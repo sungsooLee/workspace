@@ -19,6 +19,198 @@ import { useQueryClient } from '@tanstack/react-query';
 
 function LearningResourceTableComponent() {
   const queryClient = useQueryClient();
+
+  const searchConfig: any = {
+    builders: [
+      [
+        {
+          name: 'tenantUuid',
+          type: 'dropdown',
+          label: t('LABEL.content.learning-resource.tenantName'),
+          value: '',
+          format: 'number',
+          optionsConfig: {
+            options: [{ value: '', label: t('선택') }],
+            codeGroup: CODE_GROUP['manual.tenant.tenantId'],
+          },
+        },
+        {
+          name: 'channelUuid',
+          type: 'dropdown',
+          label: t('LABEL.content.learning-resource.channelName'),
+          value: '',
+          optionsConfig: {
+            options: [
+              { value: '', label: t('선택') },
+              { value: 'channelA', label: t('채널A') },
+              { value: 'channelB', label: t('채널B') },
+              { value: 'channelC', label: t('채널C') },
+              { value: 'channelD', label: t('채널D') },
+              { value: 'channelE', label: t('채널E') },
+              { value: 'channelF', label: t('채널F') },
+            ],
+          },
+        },
+        {
+          name: 'contentTypes',
+          type: 'dropdown',
+          label: t('LABEL.content.learning-resource.contentType'),
+          value: '',
+          optionsConfig: {
+            options: [{ value: '', label: t('전체') }],
+            codeGroup: CODE_GROUP['cms.content.ContentType'],
+          },
+        },
+        {
+          name: 'contentName',
+          type: 'text',
+          label: t('학습자원명'),
+          value: '',
+        },
+      ],
+      [
+        {
+          name: 'isVendored',
+          type: 'dropdown',
+          label: t('외주여부'),
+          value: '',
+          optionsConfig: {
+            options: [
+              { value: '', label: t('전체') },
+              { value: 'true', label: 'Y' },
+              { value: 'false', label: 'N' },
+            ],
+          },
+        },
+        {
+          name: 'useEnabledType',
+          type: 'dropdown',
+          label: t('LABEL.content.learning-resource.useEnabledType'),
+          value: '',
+          optionsConfig: {
+            options: [{ value: '', label: t('전체') }],
+            codeGroup: CODE_GROUP['cms.content.ContentUseEnabledType'],
+          },
+        },
+        {
+          name: 'isCourseUsed',
+          type: 'dropdown',
+          label: t('LABEL.content.learning-resource.isCourseUsed'),
+          value: '',
+          optionsConfig: {
+            options: [
+              { value: '', label: t('전체') },
+              { value: 'true', label: 'Y' },
+              { value: 'false', label: 'N' },
+            ],
+          },
+        },
+        {
+          name: 'coordinatorName',
+          type: 'text',
+          label: t('LABEL.content.learning-resource.coordinatorName'),
+          value: '',
+        },
+      ],
+    ],
+    validator: {
+      tenantUuid: true,
+      channelUuid: true,
+    },
+  };
+
+  const gridConfig: useGridBoxConfig = {
+    query: (data: any) => {
+      return leaningResourceQueryOptions.getContents({
+        ...data,
+        sort: 'contentUuid,desc',
+        isMockUp: true,
+      });
+    },
+    columns: [
+      {
+        size: 79,
+        name: 'contentType',
+        label: t('LABEL.content.learning-resource.contentType'),
+        render: (_: any) => t(`cms.content.ContentType.${_.getValue()}`),
+        meta: {
+          size: 'auto',
+        },
+      },
+      {
+        size: 338,
+        meta: { size: 'auto' },
+        name: 'contentName',
+        label: t('LABEL.content.learning-resource.contentName'),
+      },
+      {
+        name: 'tenantName',
+        label: t('LABEL.content.learning-resource.tenantName'),
+        meta: {
+          size: 'auto',
+        },
+      },
+      {
+        name: 'channelName',
+        label: t('LABEL.content.learning-resource.channelName'),
+        meta: {
+          size: 'auto',
+        },
+      },
+      {
+        name: 'coordinatorName',
+        label: t('LABEL.content.learning-resource.coordinatorName'),
+        meta: {
+          size: 'auto',
+        },
+      },
+      {
+        name: 'contentAddInfo',
+        label: t('LABEL.content.learning-resource.detailInfo'),
+        meta: {
+          size: 'auto',
+        },
+        render: (_: any) => {
+          console.log(_.row.original['contentAddInfoType']);
+          if (_.row.original.contentAddInfoType !== 'VIDEO_ADD_INFO')
+            // enum code 사용하도록 변경해야 함
+            return `${_.getValue()}${t('개')}`;
+
+          return (
+            <span className="flex">
+              <IcoClock01 width={16} height={16} stroke="#131C30" />{' '}
+              {duration(_.getValue(), DATE_TIME_FORMAT.HOUR_MIN_SEC)}
+            </span>
+          );
+        },
+      },
+      {
+        size: 137,
+        name: 'util',
+        label: t('LABEL.content.learning-resource.util'),
+        render: () => '미리보기',
+      },
+      {
+        size: 95,
+        name: 'contentUseEnabledType',
+        label: t('LABEL.content.learning-resource.useEnabledType'),
+        render: (_: any) => t(`cms.content.ContentUseEnabledType.${_.getValue()}`),
+      },
+      {
+        size: 100,
+        name: 'langCountryCode',
+        label: t('LABEL.content.learning-resource.localization'),
+        render: (_: any) => t(`pms.multilingual.LangCountryCode.${_.getValue()}`),
+      },
+      {
+        size: 79,
+        name: 'updatedInfo',
+        label: t('LABEL.content.learning-resource.updatedInfo'),
+        render: () => '보기',
+      },
+    ],
+  };
+
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const [tableInstance, setTableInstance] = useState<Table<any>>(); // Grid 로부터 받을 table 인스턴스를 저장할 상태
@@ -89,194 +281,3 @@ function LearningResourceTableComponent() {
 }
 
 export const LearningResourceTable = LearningResourceTableComponent;
-
-const searchConfig: any = {
-  builders: [
-    [
-      {
-        name: 'tenantUuid',
-        type: 'dropdown',
-        label: t('LABEL.content.learning-resource.tenantName'),
-        value: '',
-        format: 'number',
-        optionsConfig: {
-          options: [{ value: '', label: t('선택') }],
-          codeGroup: CODE_GROUP['manual.tenant.tenantId'],
-        },
-      },
-      {
-        name: 'channelUuid',
-        type: 'dropdown',
-        label: t('LABEL.content.learning-resource.channelName'),
-        value: '',
-        optionsConfig: {
-          options: [
-            { value: '', label: t('선택') },
-            { value: 'channelA', label: t('채널A') },
-            { value: 'channelB', label: t('채널B') },
-            { value: 'channelC', label: t('채널C') },
-            { value: 'channelD', label: t('채널D') },
-            { value: 'channelE', label: t('채널E') },
-            { value: 'channelF', label: t('채널F') },
-          ],
-        },
-      },
-      {
-        name: 'contentTypes',
-        type: 'dropdown',
-        label: t('LABEL.content.learning-resource.contentType'),
-        value: '',
-        optionsConfig: {
-          options: [{ value: '', label: t('전체') }],
-          codeGroup: CODE_GROUP['cms.content.ContentType'],
-        },
-      },
-      {
-        name: 'contentName',
-        type: 'text',
-        label: t('학습자원명'),
-        value: '',
-      },
-    ],
-    [
-      {
-        name: 'isVendored',
-        type: 'dropdown',
-        label: t('외주여부'),
-        value: '',
-        optionsConfig: {
-          options: [
-            { value: '', label: t('전체') },
-            { value: 'true', label: 'Y' },
-            { value: 'false', label: 'N' },
-          ],
-        },
-      },
-      {
-        name: 'useEnabledType',
-        type: 'dropdown',
-        label: t('LABEL.content.learning-resource.useEnabledType'),
-        value: '',
-        optionsConfig: {
-          options: [{ value: '', label: t('전체') }],
-          codeGroup: CODE_GROUP['cms.content.ContentUseEnabledType'],
-        },
-      },
-      {
-        name: 'isCourseUsed',
-        type: 'dropdown',
-        label: t('LABEL.content.learning-resource.isCourseUsed'),
-        value: '',
-        optionsConfig: {
-          options: [
-            { value: '', label: t('전체') },
-            { value: 'true', label: 'Y' },
-            { value: 'false', label: 'N' },
-          ],
-        },
-      },
-      {
-        name: 'coordinatorName',
-        type: 'text',
-        label: t('LABEL.content.learning-resource.coordinatorName'),
-        value: '',
-      },
-    ],
-  ],
-  validator: {
-    tenantUuid: true,
-    channelUuid: true,
-  },
-};
-
-const gridConfig: useGridBoxConfig = {
-  query: (data: any) => {
-    return leaningResourceQueryOptions.getContents({
-      ...data,
-      sort: 'contentUuid,desc',
-      isMockUp: true,
-    });
-  },
-  columns: [
-    {
-      size: 79,
-      name: 'contentType',
-      label: t('LABEL.content.learning-resource.contentType'),
-      render: (_: any) => t(`cms.content.ContentType.${_.getValue()}`),
-      meta: {
-        size: 'auto',
-      },
-    },
-    {
-      size: 338,
-      meta: { size: 'auto' },
-      name: 'contentName',
-      label: t('LABEL.content.learning-resource.contentName'),
-    },
-    {
-      name: 'tenantName',
-      label: t('LABEL.content.learning-resource.tenantName'),
-      meta: {
-        size: 'auto',
-      },
-    },
-    {
-      name: 'channelName',
-      label: t('LABEL.content.learning-resource.channelName'),
-      meta: {
-        size: 'auto',
-      },
-    },
-    {
-      name: 'coordinatorName',
-      label: t('LABEL.content.learning-resource.coordinatorName'),
-      meta: {
-        size: 'auto',
-      },
-    },
-    {
-      name: 'contentAddInfo',
-      label: t('LABEL.content.learning-resource.detailInfo'),
-      meta: {
-        size: 'auto',
-      },
-      render: (_: any) => {
-        console.log(_.row.original['contentAddInfoType']);
-        if (_.row.original.contentAddInfoType !== 'VIDEO_ADD_INFO')
-          // enum code 사용하도록 변경해야 함
-          return `${_.getValue()}${t('개')}`;
-
-        return (
-          <span className="flex">
-            <IcoClock01 width={16} height={16} stroke="#131C30" />{' '}
-            {duration(_.getValue(), DATE_TIME_FORMAT.HOUR_MIN_SEC)}
-          </span>
-        );
-      },
-    },
-    {
-      size: 137,
-      name: 'util',
-      label: t('LABEL.content.learning-resource.util'),
-      render: () => '미리보기',
-    },
-    {
-      size: 95,
-      name: 'contentUseEnabledType',
-      label: t('LABEL.content.learning-resource.useEnabledType'),
-      render: (_: any) => t(`cms.content.ContentUseEnabledType.${_.getValue()}`),
-    },
-    {
-      size: 100,
-      name: 'langCountryCode',
-      label: t('LABEL.content.learning-resource.localization'),
-      render: (_: any) => t(`pms.multilingual.LangCountryCode.${_.getValue()}`),
-    },
-    {
-      size: 79,
-      name: 'updatedInfo',
-      label: t('LABEL.content.learning-resource.updatedInfo'),
-      render: () => '보기',
-    },
-  ],
-};
