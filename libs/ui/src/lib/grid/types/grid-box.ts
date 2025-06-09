@@ -42,6 +42,12 @@ export interface useGridBoxConfig {
   excel?: ExcelConfig;
 
   /**
+   * GridBoxState
+   * 그리드에 최초 적용할 state 값
+   */
+  gridState?: GridBoxState;
+
+  /**
    * 데이터 페칭 시 사용될 페이지네이션 상태 객체 (선택적)입니다.
    * 현재 페이지 정보 등을 포함합니다.
    */
@@ -119,6 +125,12 @@ export interface GridBoxConfig<T = any> {
    * Excel 업로드 다운로드에 대한 기능 정의
    */
   excel?: ExcelConfig;
+
+  /**
+   * GridBoxState
+   * 그리드에 최초 적용할 state 값
+   */
+  gridState?: GridBoxState;
 
   /**
    * 페이지네이션 상태 객체 (선택적)입니다.
@@ -258,8 +270,11 @@ export interface GridBoxProps<T extends object = object>
    */
   columns?: any[];
 
-  clientSideSorting?: boolean;
-  clientSideFiltering?: boolean;
+  /**
+   * GridBoxState
+   * 그리드에 최초 적용할 state 값
+   */
+  gridState?: GridBoxState;
 
   /**
    * 페이지네이션 관련 설정을 포함하는 객체입니다.
@@ -270,6 +285,9 @@ export interface GridBoxProps<T extends object = object>
    * 엑셀 버튼
    */
   excelButtons?: React.ReactNode;
+
+  clientSideSorting?: boolean;
+  clientSideFiltering?: boolean;
 }
 
 export interface GridBoxPagination {

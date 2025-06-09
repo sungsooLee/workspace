@@ -68,13 +68,14 @@ const GridBoxComponent = <T extends object>(
     page,
     columns,
     title = props.title,
+    gridState = props.gridState,
     onStateChange = props.onStateChange,
     onDataChange,
   } = config;
   const columnHelper = createColumnHelper<any>();
   const gridRef = useRef<GridImperative>(null);
   // 마지막으로 페치에 사용된 params를 저장하는 useRef
-  const lastFetchedParamsRef = useRef<GridBoxState>({ page: 0, size: 20, sort: [] }); // 초기값 설정
+  const lastFetchedParamsRef = useRef<GridBoxState>(gridState ?? DEFAULT_GRID_BOX_STATE); // 초기값 설정
   const [tableInstance, setTableInstance] = useState<Table<any>>(); // GridComponent로부터 받을 table 인스턴스를 저장할 상태
 
   // 테스트 후 삭제 예정
@@ -226,7 +227,9 @@ const GridBoxComponent = <T extends object>(
   const handleChangePageSize = useCallback(
     (pageSize: number) => {
       const newState: GridBoxState = {
+        page: 0,
         size: pageSize,
+        sort: [],
       };
       dispatchStateChange(newState);
     },
@@ -272,10 +275,6 @@ const GridBoxComponent = <T extends object>(
     lastFetchedParamsRef.current = newParams;
     //
     onStateChange?.(newParams);
-    // // for use-grid-box
-    // config.onStateChange?.(newParams);
-    // // for grid-box
-    // props.onStateChange?.(newParams);
   };
 
   console.log('grid-box ::', {
@@ -385,3 +384,5 @@ const GridBoxComponent = <T extends object>(
   );
 };
 export const GridBox = forwardRef(GridBoxComponent);
+
+export const DEFAULT_GRID_BOX_STATE: GridBoxState = { page: 0, size: 20, sort: [] };

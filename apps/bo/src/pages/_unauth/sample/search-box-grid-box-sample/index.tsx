@@ -4,7 +4,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Button, GridBox, useGridBox } from '@learnway/ui';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { queryOptions } from '@entities/label-messages-mock';
-import { LabelMessagesQueryParams, LabelMessage } from '@types';
+import { LabelMessage, LabelMessagesQueryParams } from '@types';
 import { ContentsButtons, MainContents, PageContainer } from '@widgets/layout';
 import { SearchBox } from '@shared/ui/search-box';
 import { DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
@@ -18,7 +18,6 @@ function RouteComponent() {
   const { config: gConfig, gridFetch } = useGridBox<LabelMessage>(gridConfig, getValues);
 
   const handleOnSearch = useCallback((data: any) => {
-    console.log('handleOnSearch.data', data);
     gridFetch(data);
   }, []);
 
@@ -147,9 +146,9 @@ const gridConfig = {
       render: (info: any) => formatDate(info.getValue(), DATE_TIME_FORMAT.DATETIME_SEC),
     },
   ],
-  pagination: {
-    pageSize: 10,
-    pageIndex: 0,
-    totalRows: 0,
+  gridState: {
+    page: 0,
+    size: 10,
+    sort: [],
   },
 };
