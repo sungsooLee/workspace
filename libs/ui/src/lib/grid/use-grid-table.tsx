@@ -20,7 +20,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { isEmpty } from 'lodash';
 import { GridProps } from './types/grid'; // GridProps 타입 import
 import { useTranslation } from 'react-i18next';
-import { cn } from '@learnway/shared'; // t 함수 필요 시 import
+import { cn, gridStateToSortQueryParams } from '@learnway/shared'; // t 함수 필요 시 import
 import styles from './grid.module.css';
 import { Checkbox } from '../checkbox/checkbox';
 
@@ -42,6 +42,7 @@ export function useGridTable<T extends object>(
   const {
     data,
     columns,
+    rowId = 'id',
     multiple,
     pagination,
     columnGrouping,
@@ -98,7 +99,7 @@ export function useGridTable<T extends object>(
     size: 64,
     header: 'NO.',
     meta: { cellAlign: 'center' },
-    enableSorting: true,
+    enableSorting: false,
     accessorFn: (row, index) => index,
     cell: ({ row }: any) =>
       pagination ? (
@@ -107,6 +108,8 @@ export function useGridTable<T extends object>(
         <p>{row.index + 1}</p>
       ),
   });
+
+  console.log('---- use-grid-table : pagination', pagination);
 
   const createSingleRadioColumn = (): ColumnDef<T> => ({
     id: 'select-radio',
@@ -258,7 +261,7 @@ export function useGridTable<T extends object>(
       if (!pagination) return;
       const newPagination =
         typeof updater === 'function'
-          ? updater({ pageIndex: pagination.pageIndex, pageSize: pagination.pageSize })
+          ? updater({ pageIndex: pagination.pageNumber, pageSize: pagination.pageSize })
           : updater;
       pagination.onPageChange(newPagination.pageIndex);
       pagination.onPageSizeChange(newPagination.pageSize);
@@ -266,9 +269,7 @@ export function useGridTable<T extends object>(
     getCoreRowModel: getCoreRowModel(),
     getGroupedRowModel: getGroupedRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
-    getSubRows: (row: any) => {
-      return row.subRows;
-    },
+    enableRowSelection: true,
     onRowSelectionChange: multiple
       ? handleRowSelectionChangeForMultiple
       : handleRowSelectionChangeForSingle,
@@ -282,16 +283,7 @@ export function useGridTable<T extends object>(
     manualSorting: !clientSideSorting,
     manualFiltering: !clientSideFiltering,
     manualPagination: true,
-    getRowId: (row: T, index: number, parent?: Row<T>) => {
-      const pageIndex = pagination?.pageIndex ?? 0;
-      if (parent) {
-        return `${parent.id}.child.${index}`;
-      } else {
-        return `page.${pageIndex}.row.${index}`;
-      }
-    },
-    enableRowSelection: true,
-    enableSubRowSelection: false,
+    getRowId: (row: any, index: number) => row[rowId] ?? `${pagination?.pageNumber ?? 0}-${index}`,
     meta: {
       updateData: handleUpdateData,
       removeData: handleRemoveData,
@@ -306,12 +298,9 @@ export function useGridTable<T extends object>(
   // 그리드 상태 변화(e.g. 필터, 소팅, 순서, visibility)에 따른 콜백 전달
   useEffect(() => {
     onStateChange?.({
-      filters: columnFilters,
-      sorting,
-      columnVisibility,
-      columnOrder,
+      sort: gridStateToSortQueryParams({ sorting }),
     });
-  }, [columnFilters, sorting, columnVisibility, columnOrder]);
+  }, [sorting]);
 
   // 그리드 row 선택 변경시 onRowSelect(단건), onRowsSelect(다건) callback 실행
   useEffect(() => {
@@ -375,8 +364,5 @@ export function useGridTable<T extends object>(
     rowSelection,
     isInitialSelectionEffect,
     lastPinnedColumnId,
-    // updateData: handleUpdateData,
-    // removeData: handleRemoveData,
-    // 필요하다면 setExpanded, setColumnPinningState 등도 반환
   };
 }

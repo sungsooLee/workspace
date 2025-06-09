@@ -160,7 +160,7 @@
   }
   .react-datepicker__day--selected,
   .react-datepicker__day--selected:hover {
-    @apply body_3_b overflow-hidden rounded-full bg-[var(--secondary1)] text-[var(--white)];
+    @apply body_3_b rounded-full bg-[var(--secondary1)] text-[var(--white)];
   }
   .react-datepicker__day--today,
   .react-datepicker__day--today:hover {

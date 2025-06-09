@@ -6,5 +6,6 @@ export type com_ever_edu_lms_category_dto_req_CategoryMasterUpdateRequestDto = {
     name: string;
     categoryCode: string;
     categoryContent?: string;
+    isUsed?: boolean;
 };
 

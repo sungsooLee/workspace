@@ -69,13 +69,13 @@ export type com_ever_edu_global_security_AuthUser = {
      */
     loginFailCount?: number;
     /**
-     * 계정 잠김 여부
-     */
-    locked?: boolean;
-    /**
      * 회원상태코드
      */
     userState?: com_ever_edu_global_security_AuthUser.userState;
+    /**
+     * 계정잠김일시
+     */
+    lockedDate?: string;
     /**
      * 역할
      */

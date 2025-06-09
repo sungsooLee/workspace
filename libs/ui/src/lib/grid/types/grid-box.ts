@@ -1,7 +1,7 @@
-import { UseFormReturn } from 'react-hook-form';
-import { GridProps } from './grid';
+import { GridBoxState, GridProps } from './grid';
 import React from 'react';
 import { GridBoxSearchInputCondition } from '../grid-box/grid-box-search-input';
+import { PaginationResponse } from '../../type';
 
 /**
  * TODO. GridBox 내의 기능이 확정되지 않아 useGridBox 와 GridBox 에 대한 Config 를 분리해놨는데 확정 된다면 합치는게 좋을꺼 같습니다.
@@ -31,9 +31,21 @@ export interface useGridBoxConfig {
   data?: any[]; // 실제 행 데이터 객체들의 배열 타입으로 명확히 하는 것이 좋습니다. 예: T[];
 
   /**
+   * useReactTable() 생성시 getRowId 설정에 사용되는 key 값
+   * 기본값 : 'id'
+   */
+  rowId?: string;
+
+  /**
    * Excel 업로드 다운로드에 대한 기능 정의
    */
   excel?: ExcelConfig;
+
+  /**
+   * GridBoxState
+   * 그리드에 최초 적용할 state 값
+   */
+  gridState?: GridBoxState;
 
   /**
    * 데이터 페칭 시 사용될 페이지네이션 상태 객체 (선택적)입니다.
@@ -47,11 +59,17 @@ export interface useGridBoxConfig {
   };
 }
 
+export interface UseGridBoxReturn<T = any> {
+  config: GridBoxConfig<T>;
+  gridFetch: (condition?: Record<string, any>, state?: GridBoxState) => Promise<void>;
+  data: any;
+}
+
 /**
  * GridBox 컴포넌트의 config prop 타입을 정의합니다.
  * Grid의 데이터와 기본적인 동작 설정을 포함합니다.
  */
-export interface GridBoxConfig {
+export interface GridBoxConfig<T = any> {
   /**
    * 타이틀
    */
@@ -66,6 +84,17 @@ export interface GridBoxConfig {
    * Grid에 표시될 데이터 배열입니다.
    */
   data?: any[]; // 실제 행 데이터 객체들의 배열 타입으로 명확히 하는 것이 좋습니다. 예: T[];
+
+  /**
+   * useReactTable() 생성시 getRowId 설정에 사용되는 key 값
+   * 기본값 : 'id'
+   */
+  rowId?: string;
+
+  /**
+   * Grid에 표시될 데이터 배열입니다.
+   */
+  gridData?: PaginationResponse<T>; // 실제 행 데이터 객체들의 배열 타입으로 명확히 하는 것이 좋습니다. 예: T[];
 
   /**
    * Grid에 표시될 전체 행 개수 (page 객체 외부에 별도로 있을 경우)입니다.
@@ -90,16 +119,27 @@ export interface GridBoxConfig {
 
   onDataChange: (data: any) => void;
 
-  getParams?: UseFormReturn['getValues'];
+  getParams?: () => void; //UseFormReturn['getValues'];
+
   /**
    * Excel 업로드 다운로드에 대한 기능 정의
    */
   excel?: ExcelConfig;
+
+  /**
+   * GridBoxState
+   * 그리드에 최초 적용할 state 값
+   */
+  gridState?: GridBoxState;
+
   /**
    * 페이지네이션 상태 객체 (선택적)입니다.
    * 현재 페이지 정보 등을 포함합니다.
    */
   page?: GridBoxPagination;
+
+  // state change
+  onStateChange?: (state: GridBoxState) => void;
 
   pagination?: GridBoxPagination;
 }
@@ -170,22 +210,10 @@ export interface GridBoxProps<T extends object = object>
   showAdd?: boolean;
 
   /**
-   * 행추가 버튼 표시 여부를 나타내는 boolean 값입니다.
-   * `true`로 설정하면 행추가 버튼이 표시됩니다.
-   */
-  showAddRow?: boolean;
-
-  /**
    * 삭제 버튼 표시 여부를 나타내는 boolean 값입니다.
    * `true`로 설정하면 행삭제 버튼이 표시됩니다.
    */
   showRemove?: boolean;
-
-  /**
-   * 행삭제 버튼 표시 여부를 나타내는 boolean 값입니다.
-   * `true`로 설정하면 행삭제 버튼이 표시됩니다.
-   */
-  showRemoveRow?: boolean;
 
   /**
    * 좌측 타이틀 영역 커스텀 (전체 카운트와 가이드 텍스트 중간 영역)
@@ -201,6 +229,11 @@ export interface GridBoxProps<T extends object = object>
    * override GridProps
    */
   data?: T[];
+
+  /**
+   * grid data
+   */
+  gridData?: PaginationResponse<T>;
 
   /**
    * 추가 버튼 클릭 핸들러
@@ -237,8 +270,11 @@ export interface GridBoxProps<T extends object = object>
    */
   columns?: any[];
 
-  clientSideSorting?: boolean;
-  clientSideFiltering?: boolean;
+  /**
+   * GridBoxState
+   * 그리드에 최초 적용할 state 값
+   */
+  gridState?: GridBoxState;
 
   /**
    * 페이지네이션 관련 설정을 포함하는 객체입니다.
@@ -249,18 +285,21 @@ export interface GridBoxProps<T extends object = object>
    * 엑셀 버튼
    */
   excelButtons?: React.ReactNode;
+
+  clientSideSorting?: boolean;
+  clientSideFiltering?: boolean;
 }
 
 export interface GridBoxPagination {
   /**
    * 현재 페이지의 인덱스입니다. (0부터 시작)
    */
-  pageNumber: number;
+  pageNumber?: number;
 
   /**
    * 전체 페이지 개수입니다.
    */
-  totalPages: number;
+  totalPages?: number;
 
   /**
    * 한 페이지에 표시할 데이터 개수

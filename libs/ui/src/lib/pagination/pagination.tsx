@@ -79,15 +79,15 @@ const PaginationComponent = forwardRef<HTMLDivElement, PaginationComponentProps>
       onPageSizeChange?.(newValue);
     };
 
-    console.log('pagination.tsx ', {
-      items,
-      pageNumber,
-      totalPages,
-      pageSize,
-      options,
-      disabled: totalPages === 0,
-      props,
-    });
+    // console.log('pagination.tsx ', {
+    //   items,
+    //   pageNumber,
+    //   totalPages,
+    //   pageSize,
+    //   options,
+    //   disabled: totalPages === 0,
+    //   props,
+    // });
 
     return (
       <div

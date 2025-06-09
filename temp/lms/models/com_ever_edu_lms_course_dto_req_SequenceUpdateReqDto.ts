@@ -22,7 +22,7 @@ export type com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto = {
     maxWaitlistQuota?: number;
     isEnrollCancelDeadLineActivated?: boolean;
     enrollCancelDeadLineDays?: number;
-    primaryKitId: number;
+    primaryCurriculumId: number;
     deviceRestrictType?: com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto.deviceRestrictType;
     /**
      * (lms.course.LearningRestrictTimeType)
@@ -127,10 +127,9 @@ export namespace com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto {
      * (lms.course.LearningSpaceType)
      */
     export enum learningSpaceType {
-        EXTERNAL_SITE = 'EXTERNAL_SITE',
         LEARNING_WAY = 'LEARNING_WAY',
-        FACE_TO_FACE = 'FACE_TO_FACE',
-        NONE_FACE_TO_FACE = 'NONE_FACE_TO_FACE',
+        REGISTERED = 'REGISTERED',
+        MANUAL = 'MANUAL',
     }
     /**
      * (lms.course.PassMethodType)

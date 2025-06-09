@@ -112,7 +112,6 @@ h4.auth--title {
   @apply !border-t-0 !pt-0;
 }
 .content_wrap .title_wrap {
-  @apply mb-[16px];
   .title {
     @apply title_bo_4_b text-[var(--gray9)];
   }
@@ -123,5 +122,5 @@ h4.auth--title {
 }
 
 .content_wrap div + .title_wrap {
-  @apply mt-[36px];
+  @apply mt-[24px];
 }

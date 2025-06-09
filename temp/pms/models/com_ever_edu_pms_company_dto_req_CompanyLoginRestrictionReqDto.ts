@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { com_ever_edu_pms_company_dto_req_CompanyLoginRestrictionDetailReqDto } from './com_ever_edu_pms_company_dto_req_CompanyLoginRestrictionDetailReqDto';
+import type { com_ever_edu_pms_company_dto_req_CompanyLoginRestrictionUserGroupReqDto } from './com_ever_edu_pms_company_dto_req_CompanyLoginRestrictionUserGroupReqDto';
 /**
  * 회사로그인제한정보
  */
@@ -22,23 +23,27 @@ export type com_ever_edu_pms_company_dto_req_CompanyLoginRestrictionReqDto = {
     /**
      * 로그인 제한명
      */
-    loginRestrictionName?: string;
+    loginRestrictionName: string;
     /**
      * 로그인 제한 설정 방식
      */
     loginRestrictionSettingType?: com_ever_edu_pms_company_dto_req_CompanyLoginRestrictionReqDto.loginRestrictionSettingType;
     /**
-     * 제한기간 시작일(yyyyMMdd)
+     * 제한기간 시작일(yyyy-MM-dd)
      */
     restrictionStartDate?: string;
     /**
-     * 제한기간 종료일(yyyyMMdd)
+     * 제한기간 종료일(yyyy-MM-dd)
      */
     restrictionEndDate?: string;
     /**
      * 회사로그인제한 설정정보
      */
     companyLoginRestrictionDetailList?: Array<com_ever_edu_pms_company_dto_req_CompanyLoginRestrictionDetailReqDto>;
+    /**
+     * 회사로그인제한 유저그룹
+     */
+    companyLoginRestrictionUserGroupList?: Array<com_ever_edu_pms_company_dto_req_CompanyLoginRestrictionUserGroupReqDto>;
     /**
      * 사용여부
      */

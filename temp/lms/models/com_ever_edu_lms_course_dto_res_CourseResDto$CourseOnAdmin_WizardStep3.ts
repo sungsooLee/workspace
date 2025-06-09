@@ -6,7 +6,7 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardSte
     wizardStep?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep3.wizardStep;
     courseId?: number;
     courseType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep3.courseType;
-    primaryKitId?: number;
+    primaryCurriculumId?: number;
 };
 export namespace com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep3 {
     export enum wizardStep {
@@ -18,8 +18,8 @@ export namespace com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_Wiza
         FULL_UPDATE = 'FULL_UPDATE',
     }
     export enum courseType {
-        ELEARNING = 'ELEARNING',
-        ELEARNING_SANGSI = 'ELEARNING_SANGSI',
+        ELEARNING1 = 'ELEARNING1',
+        ELEARNING2 = 'ELEARNING2',
         CLASS = 'CLASS',
         LIVE = 'LIVE',
         EXAM = 'EXAM',

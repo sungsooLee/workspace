@@ -22,7 +22,7 @@ function RouteComponent() {
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
 
   useEffect(() => {
-    gridFetch(getValues(), { page: 0, size: 10 });
+    gridFetch({ ...getValues(), ...{ page: 0, size: 10 } });
   }, []);
 
   const handleOnSubmit = (data: any) => {
