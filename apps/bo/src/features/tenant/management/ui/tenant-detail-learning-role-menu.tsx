@@ -222,6 +222,9 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
       if (root && root.children.length > 0) {
         const firstNode = root.children[0];
         setSelectedRoleMenu(firstNode);
+      } else {
+        setApiGridData([]);
+        setApiOriginalSelected([]);
       }
     }
   }, [roleMenuData]);
