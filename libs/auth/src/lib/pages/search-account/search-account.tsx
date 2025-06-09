@@ -13,16 +13,21 @@ import { EmbededAlert } from '../../shared/ui';
 
 import styles from '@learnway/styles/fo/pages/_auth/search-account/search-account.module.css';
 
-export function SearchAccountPage({ route }: any) {
+/**
+ * @description 아이디 찾기, 비밀번호 찾기 본인인증
+ * @param enableTab 상단탭 노출 여부
+ * @param hiddenIcon 안내영역 아이콘 노출여부
+ * @returns
+ */
+export function SearchAccountPage({ route, enableTab = true, hiddenIcon = true }: any) {
   const { t } = useTranslation();
-
-  const { params } = useCurrentRoute(route);
+  const { state } = useCurrentRoute(route);
   const router = useRouter();
   const { alert } = useModal();
 
   const [defaultAuthValues, setDefaultAuthValues] = useState<AuthFormData>();
   const [selectedTabKey, setSelectedTabKey] = useState<'account' | 'password'>(
-    params?.tabKey ?? 'account',
+    state?.tabKey ?? 'account',
   );
 
   const { asyncFetch: asyncFetchEmail } = useAsyncFetchEmail();
@@ -60,10 +65,11 @@ export function SearchAccountPage({ route }: any) {
 
   const handleSuccess = (data: any) => {
     if (selectedTabKey === 'password') {
-      router.navigate({ to: '/search-account/change-password', state: { ...data } });
+      router.navigate({ to: '/search-password/change-password', state: { ...data } });
       return;
     }
 
+    // TODO ID 찾기 스펙 확인 필요..
     asyncFetchEmail(
       {
         name: data.name,
@@ -97,15 +103,17 @@ export function SearchAccountPage({ route }: any) {
   return (
     <div className={`${styles.start} ${styles.auth_wrap} ${styles.search_account}`}>
       <div className={cn(styles.auth_box, 'auth--box')}>
-        <Tabs
-          selectedTabKey={selectedTabKey}
-          items={items}
-          type="fill"
-          variant="primary"
-          onTabChange={handleActiveTab}
-        />
+        {enableTab && (
+          <Tabs
+            selectedTabKey={selectedTabKey}
+            items={items}
+            type="fill"
+            variant="primary"
+            onTabChange={handleActiveTab}
+          />
+        )}
 
-        <EmbededAlert className={styles.search_info} hiddenIcon>
+        <EmbededAlert className={enableTab === false ? styles.dormant : ''} hiddenIcon={hiddenIcon}>
           {t(
             selectedTabKey === 'account'
               ? `LABEL.message.canCheckAccountAfterVerifying`

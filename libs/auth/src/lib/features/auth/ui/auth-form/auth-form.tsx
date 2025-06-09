@@ -5,7 +5,7 @@ import { isFunction, isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
 
 import { Button, ContentsRow, InputTimer } from '@learnway/ui';
-import { cn } from '@learnway/shared';
+import { cn, formatDate } from '@learnway/shared';
 import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 
 import {
@@ -109,11 +109,12 @@ function AuthFormComponent({
 
     const payload = {
       name: data.name,
-      birthday: data.birthday,
+      birthday: formatDate(data.birthday),
     };
 
+    console.log('payload :: ', payload);
+
     if (data.authToolType === 'PHONE') {
-      handleSendVerifySuccess();
       sendVerifyPhone(
         {
           ...payload,
@@ -134,17 +135,21 @@ function AuthFormComponent({
     }
   };
 
-  const handleOnSubmit = async (data: any) => {
+  const handleOnSubmit = async (d: any) => {
+    const data = d ?? getValues();
+    console.log('data :: ', data);
+
     if (!sendedVerifyNumber) {
       handleSendVerify(data);
       return;
     }
     const payload = {
       name: data.name,
-      birthday: data.birthday,
+      birthday: formatDate(String(data.birthday)),
       verificationCode: data.verificationCode,
     };
 
+    console.log('payload :: ', payload);
     if (data.authToolType === 'PHONE') {
       verifyPhone(
         {
@@ -230,7 +235,12 @@ function AuthFormComponent({
       <div className={cn(styles.auth_form, 'no_line', 'col')}>
         {includeUserId && (
           <ContentsRow>
-            <FormRow provider={provider} name={'userId'} element={<VerifyUserIdFormField />} />
+            <FormRow
+              provider={provider}
+              name={'userId'}
+              // TODO 아이디 확인 기능 제외됨 (기획) 다른곳에서 사용시 추가 필요
+              // element={<VerifyUserIdFormField />}
+            />
           </ContentsRow>
         )}
         <ContentsRow>
@@ -289,7 +299,7 @@ function AuthFormComponent({
                 variant="primary"
                 size="xl"
                 onClick={() => handleSendVerify()}
-                disabled={includeUserId}
+                // disabled={includeUserId}
               >
                 {t('LABEL.common.checkAuthRequest')}
               </Button>
@@ -415,7 +425,6 @@ const authFormConfig: DynamicFormConfig = {
       },
     },
     verificationCode: {
-      format: 'number',
       required: {
         fn: (data) => data.sendedVerifyNumber === true,
       },

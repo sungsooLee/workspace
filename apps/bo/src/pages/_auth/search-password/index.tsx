@@ -1,14 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { pageRouteConfig } from '@features/auth';
+import { isEmpty } from 'lodash';
 import { SearchAccountPage } from '@learnway/auth';
 
-export const Route = createFileRoute('/_auth/search-account/')({
+import { pageRouteConfig } from '../../../features/auth';
+export const Route = createFileRoute('/_auth/search-password/')({
   component: RouteComponent,
   ...pageRouteConfig({
     validateState: {
       tabKey: {
         format: 'string',
-        default: 'account',
+        default: 'password',
         conditions: [
           {
             fn: (values: any) => !['account', 'password'].includes(values.tabKey),
@@ -17,7 +18,7 @@ export const Route = createFileRoute('/_auth/search-account/')({
       },
     },
     meta: {
-      title: 'LABEL.common.searchAccount',
+      title: 'LABEL.common.searchPassword',
     },
   }),
 });

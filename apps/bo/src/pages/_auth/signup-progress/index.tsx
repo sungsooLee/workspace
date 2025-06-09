@@ -6,6 +6,7 @@ import { pageRouteConfig } from '../../../features/auth';
 import { AUTH_CONTAINERS } from '@widgets/layout';
 import {} from '@types';
 
+// 회원가입 진행 현황
 export const Route = createFileRoute('/_auth/signup-progress/')({
   component: RouteComponent,
   ...pageRouteConfig({

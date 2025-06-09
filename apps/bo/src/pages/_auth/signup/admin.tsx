@@ -8,6 +8,7 @@ import {
   useSignupStore,
 } from '@features/user/signup';
 
+// 관리자 회원가입 - 일반 권한 신청
 export const Route = createFileRoute('/_auth/signup/admin')({
   component: RouteComponent,
   ...pageRouteConfig({
