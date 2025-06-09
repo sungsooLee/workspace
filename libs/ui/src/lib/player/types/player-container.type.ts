@@ -15,4 +15,5 @@ export type PlayerContainerProps = {
   togglePlay: () => void;
   handleRewind: () => void;
   handleForward: () => void;
+  handleSeek: () => void;
 } & PropsWithChildren;
