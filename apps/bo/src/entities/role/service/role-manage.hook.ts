@@ -17,7 +17,7 @@ export function useFetchRoleMenus(tenantId: number, siteScope: string, roleCode:
   });
 }
 
-export function useFetchMenuApis(roleCode: string, tenantMappingMenuId: string) {
+export function useFetchMenuApis(roleCode: string, tenantMappingMenuId: number) {
   return useQuery({
     ...queryOptions.getMenuApis(roleCode, tenantMappingMenuId),
     enabled: !!roleCode && !!tenantMappingMenuId,
