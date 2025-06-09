@@ -1,5 +1,5 @@
 import type { TreeNode, TreeProps } from './type';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Button } from '../button/button';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
@@ -21,6 +21,8 @@ type Props = Pick<TreeProps, 'onCustomNodeClick' | 'treeId' | 'searchKeyword'> &
   displayKey?: string; // 칩에서 보여줄 키명(속성)
   renderChipContent?: (item: any) => React.ReactNode; // 커스텀 렌더링 함수
   onItemsChange: (newItems: { key: string; fullPath: string }[]) => void;
+  isSelectableNode?: (node: TreeNode) => boolean;
+  selectableNodeType?: string;
 };
 
 export const ShuttleTreeToChips = ({
@@ -36,6 +38,8 @@ export const ShuttleTreeToChips = ({
   initLevel,
   displayKey = 'fullPath', // 기본값 설정
   renderChipContent,
+  isSelectableNode,
+  selectableNodeType,
   ...otherProps
 }: Props) => {
   // 내부 상태 관리 (필요한 경우)
@@ -63,6 +67,14 @@ export const ShuttleTreeToChips = ({
     onItemsChange?.([]);
   };
 
+  const canSelectNode = (node: TreeNode): boolean => {
+    if (isSelectableNode) {
+      return isSelectableNode(node);
+    }
+
+    return true;
+  };
+
   const flattenNodeWithChildren = (node: TreeNode) => {
     let nodes = [node];
 
@@ -84,12 +96,13 @@ export const ShuttleTreeToChips = ({
       nodesToAdd = flattenNodeWithChildren(node);
     }
 
+    const selectableNodes = nodesToAdd.filter(canSelectNode);
+
     // 이미 선택된 항목 필터링
-    const filteredNodesToAdd = nodesToAdd.filter(
+    const filteredNodesToAdd = selectableNodes.filter(
       (n) => !actualSelectedItems.some((item) => item.key === n.key),
     );
 
-    // 새 항목 추가
     const newItems = [...actualSelectedItems, ...filteredNodesToAdd];
     setInternalSelectedItems(newItems);
     onItemsChange?.(newItems);
@@ -103,6 +116,10 @@ export const ShuttleTreeToChips = ({
     return item[displayKey] || item.key;
   };
 
+  const selectedItemKeys = useMemo(() => {
+    return actualSelectedItems.map((item) => item.key);
+  }, [actualSelectedItems]);
+
   return (
     <div className={cn(layoutStyles.start, layoutStyles.wrap, layoutStyles.pop_layout)}>
       <div className={layoutStyles.inner}>
@@ -115,6 +132,7 @@ export const ShuttleTreeToChips = ({
           onCustomNodeClick={onCustomNodeClick}
           showSearchKeyword={true}
           initLevel={initLevel}
+          selectedItems={selectedItemKeys}
           renderNodeButtons={(node: any) => {
             const isAlreadySelected = actualSelectedItems.some((item) => item.key === node.key);
             return (
@@ -123,8 +141,8 @@ export const ShuttleTreeToChips = ({
                   e.stopPropagation();
                   handleSelectItem(node);
                 }}
-                disabled={isAlreadySelected}
-                variant="gray2"
+                // disabled={isAlreadySelected}
+                variant={isAlreadySelected ? 'primary' : 'gray2'}
                 size={'ts'}
                 type={'button'}
                 className={styles.btn_select}

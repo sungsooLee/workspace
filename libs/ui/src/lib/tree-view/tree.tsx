@@ -14,7 +14,9 @@ import {
   calculateTargetIndex,
   findNodeByKey,
   findNodePath,
+  findRootNode,
   getNodeLevel,
+  getNodeMaxDepth,
   insertNodeAtPosition,
   isValidDrop,
   removeNodeByKey,
@@ -122,6 +124,7 @@ const TreeNodeComponent = ({
   shouldDisableClick,
   selectedItems,
   sourceTreeId,
+  maxDepth,
 }: TreeNodeComponentProps) => {
   const enhanceNode = node as EnhancedTreeNode;
   const [dropPosition, setDropPosition] = useState<NodeMovePositionType | null>(null);
@@ -135,12 +138,13 @@ const TreeNodeComponent = ({
     treeType === 'SAME_LEVEL_ONLY' ||
     treeType === 'SAME_PARENT_ONLY' ||
     treeType === 'TREE_TO_TREE';
-
   const isTreeToTreeMode = treeType === 'TREE_TO_TREE';
   const isNodeSelected = selectedItems?.includes(enhanceNode.key) || false;
   const isSourceTree = sourceTreeId ? treeId === sourceTreeId : false;
   const isDragDisabled = isTreeToTreeMode && isNodeSelected && isSourceTree;
   const shouldShowSelection = isTreeToTreeMode && isNodeSelected && isSourceTree;
+  // console.log(selectedItems?.some(item => item.key === enhanceNode.key))
+  // console.log(isNodeSelected, ` `, enhanceNode);
 
   // 드롭 위치가 유효한지 확인
   const isValidDropPosition = useCallback(() => {
@@ -177,6 +181,22 @@ const TreeNodeComponent = ({
         (dropPosition === 'BEFORE' || dropPosition === 'AFTER') &&
         sourceParentKey !== enhanceNode._parentKey
       ) {
+        return false;
+      }
+    }
+
+    // MaxDepth 검증 추가
+    if (maxDepth !== undefined) {
+      // 드래그하는 노드의 최대 깊이 계산
+      const draggedNodeMaxDepth = getNodeMaxDepth(draggedNode);
+      const targetNodeLevel = level;
+      let finalLevel: number;
+      if (dropPosition === 'INSIDE') {
+        finalLevel = targetNodeLevel + 1;
+      } else {
+        finalLevel = targetNodeLevel;
+      }
+      if (finalLevel + draggedNodeMaxDepth - 1 > maxDepth) {
         return false;
       }
     }
@@ -237,6 +257,9 @@ const TreeNodeComponent = ({
     if (selectedNode && selectedNode.key === enhanceNode.key) {
       styles.push('bg-[var(--gray1)]');
     }
+    if (treeType === 'SHUTTLE_LIST' && isNodeSelected) {
+      styles.push('bg-[var(--secondary5)]');
+    }
     // TREE_TO_TREE 모드에서 선택된 노드 스타일
     if (shouldShowSelection) {
       styles.push('bg-[var(--gray2)]');
@@ -280,6 +303,7 @@ const TreeNodeComponent = ({
     searchKeyword,
     enhanceNode.title,
     isTreeToTreeMode,
+    isNodeSelected,
   ]);
 
   // 드래그 시작
@@ -371,9 +395,18 @@ const TreeNodeComponent = ({
     const y = e.clientY - rect.top;
     const threshold = rect.height / 3;
 
-    // 기본 위치 계산
-    const newPosition: NodeMovePositionType =
-      y < threshold ? 'BEFORE' : y > rect.height - threshold ? 'AFTER' : 'INSIDE';
+    let newPosition: NodeMovePositionType;
+
+    // 펼쳐진 노드의 경우 AFTER 스타일 부자연스러워서 BEFORE / INSIDE 상태만 되게 수정.
+    if (hasChildren && isExpanded && enhanceNode.children && enhanceNode.children.length > 0) {
+      if (y < threshold) {
+        newPosition = 'BEFORE';
+      } else {
+        newPosition = 'INSIDE';
+      }
+    } else {
+      newPosition = y < threshold ? 'BEFORE' : y > rect.height - threshold ? 'AFTER' : 'INSIDE';
+    }
 
     // 항상 드롭 위치 표시 (유효성 여부는 스타일로 표시)
     if (dropPosition !== newPosition) {
@@ -587,6 +620,7 @@ const TreeNodeComponent = ({
                 shouldDisableClick={shouldDisableClick}
                 selectedItems={selectedItems}
                 sourceTreeId={sourceTreeId}
+                maxDepth={maxDepth}
               />
             ))}
         </div>
@@ -613,6 +647,7 @@ const TreeView = ({
   shouldDisableClick,
   selectedItems,
   sourceTreeId,
+  maxDepth,
 }: TreeProps) => {
   // 내부 상태 관리
   const [initialData, setInitialData] = useState<EnhancedTreeNode[]>(
@@ -1027,7 +1062,7 @@ const TreeView = ({
           return;
         }
 
-        handleDrop({ targetNode: null, dropPosition: 'INSIDE' });
+        // handleDrop({ targetNode: null, dropPosition: 'INSIDE' });
       }}
     >
       <div className={styles.tree}>
@@ -1054,6 +1089,7 @@ const TreeView = ({
               shouldDisableClick={shouldDisableClick}
               selectedItems={selectedItems}
               sourceTreeId={sourceTreeId}
+              maxDepth={maxDepth}
             />
           ))
         ) : (
@@ -1064,6 +1100,27 @@ const TreeView = ({
           </div>
         )}
       </div>
+      {(type === 'DEFAULT' || type === 'DRAG_DROP' || type === 'TREE_TO_TREE') && (
+        <div
+          className="min-h-5"
+          onDragOver={(e) => {
+            e.preventDefault();
+          }}
+          onDragLeave={(e) => {
+            e.preventDefault();
+          }}
+          onDrop={(e) => {
+            e.preventDefault();
+            const rootNode = findRootNode(treeData);
+            if (rootNode) {
+              handleDrop({
+                targetNode: rootNode,
+                dropPosition: 'INSIDE',
+              });
+            }
+          }}
+        ></div>
+      )}
     </div>
   );
 };
