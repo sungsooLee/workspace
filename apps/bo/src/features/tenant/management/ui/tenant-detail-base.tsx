@@ -30,11 +30,6 @@ import { useFetchTenant, useUpdateTenant } from '@entities/tenant';
 import TenantService from '@entities/tenant/api/tenant';
 import { EnDeviceType, EnUseCategory } from '@types';
 
-const defaultLangOptions = [
-  { value: 'ko', label: '한국어', disabled: true },
-  { value: 'en', label: '영어', disabled: true },
-];
-
 const duplicateCheck = async (tenantName: string) => {
   const result: boolean = await TenantService.existTenant(tenantName);
 
@@ -52,7 +47,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
   const routerState = useRouterState();
   const { open: openModal, confirm: openConfirm } = useModal();
 
-  const [languageTypeList, setLanguageTypeList] = useState<any[]>(defaultLangOptions);
+  const [languageTypeList, setLanguageTypeList] = useState<any[]>([]);
   const [checked, setChecked] = useState<{ [key: number]: boolean }>({
     1: false,
   });
@@ -135,7 +130,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         tenantMappingLanguageTypeList: tenantData.tenantLanguageList,
         tenantMappingUserList: tenantData.tenantUserList.map((item) => ({
           userId: item.userId,
-          name: item.companyName,
+          name: item.userName || '이름-없음',
         })),
         tenantMappingRoleList: tenantData.tenantRoleList.map((item) => ({
           roleId: item.roleId,
@@ -148,17 +143,22 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
 
   useEffect(() => {
     const init = async () => {
-      const data = await getCode(CODE_GROUP['pms.multilingual.LanguageType']);
+      const data = await getCode(CODE_GROUP['pms.multilingual.LangCountryCode']);
+      const defaultOption = data
+        .filter((i) => i.value === 'KO' || i.value === 'EN')
+        .map((item) => {
+          return { label: item.cdContent, value: item.value, disabled: true };
+        });
       const newOptions = data
         .filter((i) => {
-          return i.value !== 'ko' && i.value !== 'en';
+          return i.value !== 'KO' && i.value !== 'EN';
         })
         .map((item) => {
           return { label: item.cdContent, value: item.value };
         });
-      const newValues = [...defaultLangOptions, ...newOptions];
+      const newValues = [...defaultOption, ...newOptions];
       if (!isEqual(newValues, languageTypeList)) {
-        setLanguageTypeList([...defaultLangOptions, ...newOptions]);
+        setLanguageTypeList([...defaultOption, ...newOptions]);
       }
     };
     init();

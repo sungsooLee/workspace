@@ -74,7 +74,7 @@ function RouteComponent() {
       </ContentsButtons>
       <MainContents>
         <FormSubTitle label={'유저정보'} />
-        <div className={cn(tableStyles.start, tableStyles.wrap)}>
+        <div className={cn(tableStyles.start, tableStyles.wrap, 'pb-10')}>
           <table>
             <caption>{'유저정보'}</caption>
             <colgroup>

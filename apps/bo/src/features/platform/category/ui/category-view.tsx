@@ -300,7 +300,7 @@ const CategoryViewComponent: FC<any> = ({
               name={'name'}
               element={<Input disabled={isInitMode || (mode === 'view' && isRoot)} />}
             >
-              <Button
+              {/* <Button
                 type="button"
                 variant="point"
                 size="sm"
@@ -319,7 +319,7 @@ const CategoryViewComponent: FC<any> = ({
                 disabled={isInitMode || (mode === 'view' && isRoot)}
               >
                 {t('LABEL.link.multilingual')}
-              </Button>
+              </Button> */}
             </FormRow>
           </ContentsRow>
 
