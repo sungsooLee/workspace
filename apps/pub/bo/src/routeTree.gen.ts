@@ -99,6 +99,7 @@ import { Route as LayoutLearningMediaDetailImport } from './pages/_layout/learni
 import { Route as LayoutLearningLearningSearchImport } from './pages/_layout/learning/learningSearch'
 import { Route as LayoutLearningLearningResourceSearchImport } from './pages/_layout/learning/learning-resource-search'
 import { Route as LayoutLearningFileUploadImport } from './pages/_layout/learning/file-upload'
+import { Route as LayoutLanguageLanguagesubjectsmanagementImport } from './pages/_layout/language/language_subjects_management'
 import { Route as LayoutContentsLayoutImport } from './pages/_layout/contents/layout'
 import { Route as LayoutCommonProfileMyinfoImport } from './pages/_layout/common/profile-myinfo'
 import { Route as LayoutCommonPopUserSearchCheckImport } from './pages/_layout/common/pop-user-search-check'
@@ -730,6 +731,13 @@ const LayoutLearningFileUploadRoute = LayoutLearningFileUploadImport.update({
   path: '/learning/file-upload',
   getParentRoute: () => LayoutRoute,
 } as any)
+
+const LayoutLanguageLanguagesubjectsmanagementRoute =
+  LayoutLanguageLanguagesubjectsmanagementImport.update({
+    id: '/language/language_subjects_management',
+    path: '/language/language_subjects_management',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 
 const LayoutContentsLayoutRoute = LayoutContentsLayoutImport.update({
   id: '/contents/layout',
@@ -1733,6 +1741,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutContentsLayoutImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/language/language_subjects_management': {
+      id: '/_layout/language/language_subjects_management'
+      path: '/language/language_subjects_management'
+      fullPath: '/language/language_subjects_management'
+      preLoaderRoute: typeof LayoutLanguageLanguagesubjectsmanagementImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/learning/file-upload': {
       id: '/_layout/learning/file-upload'
       path: '/learning/file-upload'
@@ -2322,6 +2337,7 @@ interface LayoutRouteChildren {
   LayoutCommonPopUserSearchCheckRoute: typeof LayoutCommonPopUserSearchCheckRoute
   LayoutCommonProfileMyinfoRoute: typeof LayoutCommonProfileMyinfoRoute
   LayoutContentsLayoutRoute: typeof LayoutContentsLayoutRoute
+  LayoutLanguageLanguagesubjectsmanagementRoute: typeof LayoutLanguageLanguagesubjectsmanagementRoute
   LayoutLearningFileUploadRoute: typeof LayoutLearningFileUploadRoute
   LayoutLearningLearningResourceSearchRoute: typeof LayoutLearningLearningResourceSearchRoute
   LayoutLearningLearningSearchRoute: typeof LayoutLearningLearningSearchRoute
@@ -2397,6 +2413,8 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutCommonPopUserSearchCheckRoute: LayoutCommonPopUserSearchCheckRoute,
   LayoutCommonProfileMyinfoRoute: LayoutCommonProfileMyinfoRoute,
   LayoutContentsLayoutRoute: LayoutContentsLayoutRoute,
+  LayoutLanguageLanguagesubjectsmanagementRoute:
+    LayoutLanguageLanguagesubjectsmanagementRoute,
   LayoutLearningFileUploadRoute: LayoutLearningFileUploadRoute,
   LayoutLearningLearningResourceSearchRoute:
     LayoutLearningLearningResourceSearchRoute,
@@ -2569,6 +2587,7 @@ export interface FileRoutesByFullPath {
   '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/common/profile-myinfo': typeof LayoutCommonProfileMyinfoRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
+  '/language/language_subjects_management': typeof LayoutLanguageLanguagesubjectsmanagementRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/learning/learning-resource-search': typeof LayoutLearningLearningResourceSearchRoute
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
@@ -2718,6 +2737,7 @@ export interface FileRoutesByTo {
   '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/common/profile-myinfo': typeof LayoutCommonProfileMyinfoRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
+  '/language/language_subjects_management': typeof LayoutLanguageLanguagesubjectsmanagementRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/learning/learning-resource-search': typeof LayoutLearningLearningResourceSearchRoute
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
@@ -2870,6 +2890,7 @@ export interface FileRoutesById {
   '/_layout/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/_layout/common/profile-myinfo': typeof LayoutCommonProfileMyinfoRoute
   '/_layout/contents/layout': typeof LayoutContentsLayoutRoute
+  '/_layout/language/language_subjects_management': typeof LayoutLanguageLanguagesubjectsmanagementRoute
   '/_layout/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/_layout/learning/learning-resource-search': typeof LayoutLearningLearningResourceSearchRoute
   '/_layout/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
@@ -3021,6 +3042,7 @@ export interface FileRouteTypes {
     | '/common/pop-user-search-check'
     | '/common/profile-myinfo'
     | '/contents/layout'
+    | '/language/language_subjects_management'
     | '/learning/file-upload'
     | '/learning/learning-resource-search'
     | '/learning/learningSearch'
@@ -3169,6 +3191,7 @@ export interface FileRouteTypes {
     | '/common/pop-user-search-check'
     | '/common/profile-myinfo'
     | '/contents/layout'
+    | '/language/language_subjects_management'
     | '/learning/file-upload'
     | '/learning/learning-resource-search'
     | '/learning/learningSearch'
@@ -3319,6 +3342,7 @@ export interface FileRouteTypes {
     | '/_layout/common/pop-user-search-check'
     | '/_layout/common/profile-myinfo'
     | '/_layout/contents/layout'
+    | '/_layout/language/language_subjects_management'
     | '/_layout/learning/file-upload'
     | '/_layout/learning/learning-resource-search'
     | '/_layout/learning/learningSearch'
@@ -3508,6 +3532,7 @@ export const routeTree = rootRoute
         "/_layout/common/pop-user-search-check",
         "/_layout/common/profile-myinfo",
         "/_layout/contents/layout",
+        "/_layout/language/language_subjects_management",
         "/_layout/learning/file-upload",
         "/_layout/learning/learning-resource-search",
         "/_layout/learning/learningSearch",
@@ -3913,6 +3938,10 @@ export const routeTree = rootRoute
     },
     "/_layout/contents/layout": {
       "filePath": "_layout/contents/layout.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/language/language_subjects_management": {
+      "filePath": "_layout/language/language_subjects_management.tsx",
       "parent": "/_layout"
     },
     "/_layout/learning/file-upload": {

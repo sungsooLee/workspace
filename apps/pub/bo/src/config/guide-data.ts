@@ -749,6 +749,15 @@ export const guideData = [
     remarks: '완료', // 비고
   },
   {
+    screenName: '어학/어학시험 과목 관리_등록신청 현황',
+    pageId: 'language/language_subjects_management',
+    screenId: 'NLP_BO_EDS_1624',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
     screenName: 'CMS/학습유형선택',
     pageId: 'learning/popup-learningRegisteration',
     screenId: '',
