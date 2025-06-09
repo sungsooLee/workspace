@@ -37,6 +37,7 @@ const ModalComponent: React.FC<ModalConfig> = ({
           className={cn(styles.content, 'nlp--modal', width && styles[width])}
           onInteractOutside={handleOutsideClick}
           onEscapeKeyDown={(e) => e.preventDefault()} // ESC 키 방지
+          onOpenAutoFocus={(e) => e.preventDefault()}
           id={`nlp--modal-${id}`}
         >
           {/* 모달 콘텐츠 */}
