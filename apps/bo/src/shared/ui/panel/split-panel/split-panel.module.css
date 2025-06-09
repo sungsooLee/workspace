@@ -1,12 +1,12 @@
 .root {
   &.wrap {
-    @apply -mx-[32px] mt-[16px] pb-0;
+    @apply mt-[16px] pb-0;
     .container {
       @apply relative flex w-full flex-wrap justify-between;
       .inner {
         @apply relative;
         [class*='title_wrap'] {
-          @apply ml-[32px];
+          @apply ml-0;
         }
         .inner_contents {
           @apply py-[16px];

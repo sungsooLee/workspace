@@ -1,5 +1,5 @@
 .start {
-  @apply flex items-center;
+  @apply inline-flex items-center;
 
   .label {
     @apply -order-1 ml-0;
@@ -35,6 +35,9 @@
     .label {
       @apply text-[var(--gray5)];
     }
+  }
+  &[data-label-align='right'] > button {
+    @apply order-first;
   }
 }
 

@@ -264,6 +264,14 @@
   }
 }
 
+[class*='content_wrap'] .start {
+  &.tabs {
+    &.progress [role='tablist'] {
+      @apply mt-[8px];
+    }
+  }
+}
+
 body {
   &[class*='scrolled'] .start .show_border & > [role='tabpanel'] {
     @apply min-h-[calc(100vh-262px)];
