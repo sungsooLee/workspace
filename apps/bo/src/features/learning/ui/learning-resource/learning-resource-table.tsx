@@ -11,12 +11,11 @@ import {
   useGridBoxConfig,
   useModal,
 } from '@learnway/ui';
-import { IcoClock01, IcoDownload, IcoFile01 } from '@learnway/icons';
+import { IcoClock01, IcoCopy, IcoDownload } from '@learnway/icons';
 import { t } from 'i18next';
 import { Table } from '@tanstack/react-table';
 import { useState } from 'react';
-import { leaningResourceQueryOptions } from '../../../../entities/leaning-resource';
-import { useQueryClient } from '@tanstack/react-query';
+import { leaningResourceQueryOptions } from '@entities/leaning-resource';
 import { ModifierInfoModal } from './learning-resource-modifier-info-modal';
 import { ProgramGuideModal } from './learning-resource-program-guide-modal';
 
@@ -254,35 +253,27 @@ function LearningResourceTableComponent() {
             multiple
             customButtonNode={
               <>
-                <Checkbox size="sm" label={t('나의 학습자원')} />{' '}
+                <Checkbox size="md" label={t('나의 학습자원')} />
                 {/* 필터기능인듯? 글씨 크기가 혼자 작게 나옴 */}
                 <Button
-                  variant="outline"
-                  size="sm"
                   label={t('프로그램/가이드 다운로드')}
-                  icon={<IcoDownload width={16} height={16} stroke="#131C30" />}
+                  icon={<IcoDownload width={16} height={16} stroke="#4C515E" />}
                   onClick={() =>
                     openModal({
                       width: 'md',
                       content: <ProgramGuideModal />,
                     })
                   }
-                  // onClick={() => handleFileDownload('public/logo.png', 'download.png')} // 가이드 파일 하드코딩?
                 />
-                <Button variant="outline" size="sm" label={t('일괄설정')} />
+                <Button variant="text" label={t('일괄설정')} />
                 <Button
-                  variant="outline"
-                  size="sm"
                   label={t('엑셀다운로드')}
-                  icon={<IcoDownload width={16} height={16} stroke="#131C30" />}
+                  icon={<IcoDownload width={16} height={16} stroke="#4C515E" />}
                 />
                 <Button
-                  variant="outline"
-                  size="sm"
                   label={t('복사')}
-                  icon={<IcoFile01 width={16} height={16} stroke="#131C30" />}
+                  icon={<IcoCopy width={16} height={16} stroke="#131c30" />}
                 />
-                {/* 디자인과 다른 아이콘 - 변경 필요 */}
               </>
             }
             onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
