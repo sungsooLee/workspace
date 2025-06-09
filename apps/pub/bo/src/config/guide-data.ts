@@ -393,6 +393,15 @@ export const guideData = [
     pageId: 'pms/popup-login-option',
     screenId: 'NLP_BO_TMS_1300_02',
     pageType: 'Pop-up',
+    completionDate: '2025-06-09',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
+    screenName: 'PMS/플랫폼관리/회사관리/회사상세_회사정보',
+    pageId: 'pms/group-management-info',
+    screenId: 'NLP_BO_TMS_1302',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
     remarks: '', // 비고
