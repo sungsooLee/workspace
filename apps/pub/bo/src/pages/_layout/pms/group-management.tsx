@@ -255,7 +255,8 @@ function RouteComponent() {
                     </div>
                   </div>
                 </div>
-                {/* 퍼블수정 20250609 : 조회영역 2줄에서 1줄로 변경 */}
+              </div>
+              <div className={searchStyles.item_wrap}>
                 <div className={searchStyles.inner}>
                   <div className={searchStyles.item}>
                     <label htmlFor="name-select3" className={searchStyles.label}>
