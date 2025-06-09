@@ -19,11 +19,12 @@ export function initAxios(extendConfig?: axiosConfig) {
   axios.defaults.paramsSerializer = (params) => {
     // arrayFormat 옵션에 따라 배열 데이터를 어떤 형식으로 변환할지 지정할 수 있음
     return qs.stringify(params, {
-      arrayFormat: 'brackets', // 배열 형식을 'brackets' 스타일로 직렬화 (예: a[]=1&a[]=2)
+      arrayFormat: 'repeat',
       // 다른 옵션 예시:
       // arrayFormat: 'repeat'   -> a=1&a=2 (기본값)
       // arrayFormat: 'comma'    -> a=1,2   (서버가 comma 포맷을 지원하는 경우 사용)
       // arrayFormat: 'indices'  -> a[0]=1&a[1]=2
+      // arrayFormat: 'brackets' -> (예: a[]=1&a[]=2)
     });
   };
 
