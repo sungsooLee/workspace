@@ -21,7 +21,13 @@ import {
   TreeType,
   TreeNode,
 } from '@learnway/ui';
-import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
+import {
+  useSearchBox,
+  SearchBoxConfig,
+  CODE_GROUP,
+  useDynamicForm,
+  DynamicFormConfig,
+} from '@learnway/hooks';
 
 import { ContentsHistoryInfoFormField, FormRow, FormSubTitle, SwitchFormField } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
@@ -31,9 +37,12 @@ import { isEqual } from 'lodash';
 import { transformDepartmentApiDataToTreeData } from '@features/platform/company/service/company-detail-tree';
 
 import { useGetCompanyDepartmentTree } from '@entities/department/service/department.hook';
+import { TenantCompanyOrganizationInfoList } from './tenant-company-organization-info-list';
+import { TenantCompanyOrganizationUserList } from './tenant-company-organization-info-user';
 
+import { EnFormMode } from '@types';
 export enum EnOrganizationShowType {
-  check = 'check',
+  //check = 'check',
   origin = 'origin',
   platform = 'platform',
 }
@@ -55,8 +64,11 @@ const TenantCompanyOrganizationTreeComponent = ({
   const router = useRouter();
 
   const [companyDeparmentTree, setCompanyDepartmentTree] = useState<any>();
-
   const [deptTreeData, setDeptTreeData] = useState([]);
+  const [formMode, setFormMode] = useState(EnFormMode.NONE);
+
+  const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, control } =
+    useDynamicForm(formConfig);
 
   const { data: departmentTreeData, refetch } = useGetCompanyDepartmentTree(companyCode);
 
@@ -69,14 +81,14 @@ const TenantCompanyOrganizationTreeComponent = ({
 
   const tabItems = [
     {
-      title: '조직',
+      title: t('조직'),
       key: EnTabKeys.organization,
-      content: '조직',
+      content: <TenantCompanyOrganizationInfoList companyCode={companyCode} deptId="" />,
     },
     {
-      title: '유저',
+      title: t('유저'),
       key: EnTabKeys.user,
-      content: '유저',
+      content: <TenantCompanyOrganizationUserList companyCode={companyCode} deptId="" />,
     },
   ];
 
@@ -95,23 +107,123 @@ const TenantCompanyOrganizationTreeComponent = ({
         type="SHUTTLE_LIST"
         showSearchKeyword
         initLevel={2}
-        title={t('조직-원본')}
+        title={showType === EnOrganizationShowType.origin ? t('조직-원본') : t('조직-플랫폼')}
       />
-
-      <div className={cn(styles.start, styles.wrap)}>
-        <div className={cn(layoutStyles.inner)}>
-          <FormSubTitle
-            label={t('조직 대상자')}
-            titleNode={'현대자동차>경영지원본부'}
-            lineType={'light'}
-          ></FormSubTitle>
-          <div className={styles.contents_wrap}>
-            <Tabs items={tabItems} type="round" size={'sm'} className={styles.tab_wrap} />
+      {formMode !== EnFormMode.ADD && (
+        <div className={cn(styles.start, styles.wrap)}>
+          <div className={cn(layoutStyles.inner)}>
+            <FormSubTitle
+              label={t('조직 대상자')}
+              titleNode={'현대자동차>경영지원본부'}
+              lineType={'light'}
+            ></FormSubTitle>
+            <div className={styles.contents_wrap}>
+              <Tabs items={tabItems} type="round" size={'sm'} className={styles.tab_wrap} />
+            </div>
           </div>
         </div>
-      </div>
+      )}
+      {/**추가 상태인 경우 입력 화면 적용 */}
+      {formMode === EnFormMode.ADD && (
+        <div className={cn(styles.start, styles.wrap)}>
+          <div className={cn(layoutStyles.inner)}>
+            <FormSubTitle
+              label={t('조직 대상자')}
+              titleNode={'현대자동차>경영지원본부'}
+              lineType="light"
+            ></FormSubTitle>
+            <div className={styles.contents_wrap}>
+              <form>
+                <ContentsRow>
+                  <FormRow provider={provider} name="c1" element={<Input disabled={true} />} />
+                </ContentsRow>
+                <ContentsRow>
+                  <FormRow provider={provider} name="c2" element={<Input disabled={true} />} />
+                </ContentsRow>
+                <ContentsRow>
+                  <FormRow provider={provider} name="c3" element={<Input disabled={true} />} />
+                </ContentsRow>
+                <ContentsRow>
+                  <FormRow provider={provider} name="c4" element={<Input disabled={true} />} />
+                </ContentsRow>
+                <ContentsRow>
+                  <FormRow provider={provider} name="c5" element={<Input disabled={true} />} />
+                </ContentsRow>
+                <ContentsRow>
+                  <FormRow provider={provider} name="c6" element={<Input disabled={true} />} />
+                </ContentsRow>
+                <ContentsRow>
+                  <FormRow provider={provider} name="c7" element={<Input disabled={true} />} />
+                </ContentsRow>
+                <ContentsRow>
+                  <FormRow provider={provider} name="c8" />
+                </ContentsRow>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
     </SectionLayout>
   );
 };
 
 export const TenantCompanyOrganizationTree = TenantCompanyOrganizationTreeComponent;
+
+const formConfig: DynamicFormConfig = {
+  builders: [
+    {
+      name: 'c1',
+      type: 'text',
+      label: t('위치'),
+      value: '',
+    },
+    {
+      name: 'c2',
+      type: 'text',
+      label: t('상위 조직명'),
+      value: '',
+      size: 10,
+    },
+    {
+      name: 'c3',
+      type: 'text',
+      label: t('상위 조직코드'),
+      value: '',
+    },
+    {
+      name: 'c4',
+      type: 'text',
+      label: t('조직코드'),
+      value: '',
+    },
+    {
+      name: 'c5',
+      type: 'text',
+      label: t('조직명'),
+      value: '',
+    },
+    {
+      name: 'c6',
+      type: 'custom',
+      label: t('조직장 사번'),
+      format: 'array',
+      value: [],
+    },
+    {
+      name: 'c7',
+      type: 'text',
+      label: t('조직장 이름'),
+      value: '',
+    },
+    {
+      name: 'c8',
+      type: 'textarea',
+      label: t('설명'),
+      value: '',
+      maxLength: 50,
+    },
+  ],
+  validator: {
+    c5: { required: true },
+  },
+};

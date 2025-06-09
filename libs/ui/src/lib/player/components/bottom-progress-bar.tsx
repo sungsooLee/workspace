@@ -23,6 +23,7 @@ const BottomProgressBar = ({
   toggleSubtitles,
   toggleFullscreen,
   togglePlay,
+  handleSeek,
 }: Pick<
   PlayerContainerProps,
   | 'isFullscreen'
@@ -37,6 +38,7 @@ const BottomProgressBar = ({
   | 'toggleFullscreen'
   | 'togglePlay'
   | 'playing'
+  | 'handleSeek'
 >) => {
   // 🎬 시간 변환 함수
   const formatTime = (seconds: number) => {
@@ -51,8 +53,8 @@ const BottomProgressBar = ({
 
   return (
     <div className="absolute bottom-0 left-0 w-full px-4 pb-4 text-white">
-      <div className="h-2 w-full cursor-pointer rounded bg-white/30">
-        <div className="h-full rounded bg-[#00AFD5]" style={{ width: `${played * 100}%` }} />
+      <div className="h-2 w-full cursor-pointer rounded bg-white/30" onClick={handleSeek}>
+        <div className="h-full rounded bg-[#1a2223]" style={{ width: `${played * 100}%` }} />
       </div>
       <div className="mt-3 flex items-center justify-between">
         <div className="flex flex-row items-center gap-6">

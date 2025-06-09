@@ -120,11 +120,13 @@ export default class RoleManagerService {
 
   /**
    * 메뉴에 속한 API 목록 조회
-   * @param menuId 메뉴 ID
+   * @param temantMappingMenuId 메뉴 ID
    * @returns 메뉴에 속한 API 목록
    */
-  static fetchRoleMenuApis(roleId: string, menuId: string): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/roles/${roleId}/apis`, { menuId: menuId });
+  static fetchRoleMenuApis(roleId: string, temantMappingMenuId: number): Promise<any> {
+    return httpService.get<any>(`${PMSApiPrefix()}/roles/${roleId}/apis`, {
+      menuId: temantMappingMenuId,
+    });
   }
   /**
    * 역할 tree 조회

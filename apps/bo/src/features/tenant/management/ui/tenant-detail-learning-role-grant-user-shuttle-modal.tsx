@@ -28,17 +28,13 @@ import { useSaveUsers } from '@entities/role/service/role-manage.hook';
  *
  * @returns
  */
-const TenantDetailLearningRoleGrantUserShuttleModalComponent = ({
-  roleCode,
-}: {
-  roleCode: string;
-}) => {
+const TenantDetailLearningRoleGrantUserShuttleModalComponent = ({ roleId }: { roleId: number }) => {
   const ref = useRef<ShuttleGridToGridImperative>(null);
 
   const [option, setOption] = useState<any>();
   const [gridData, setGrideData] = useState<any[]>([]);
 
-  const { close } = useModal();
+  const { close, alert } = useModal();
 
   const queryClient = useQueryClient();
   const { provider: sProvider } = useSearchBox(searchConfig);
@@ -76,12 +72,13 @@ const TenantDetailLearningRoleGrantUserShuttleModalComponent = ({
         isUsed: true,
       });
     });
-    const payload = { roleCode: roleCode, body: { addUserIds: addUsers } };
+    const payload = { roleId: roleId, body: { addUserUuids: addUsers } };
     console.log('getValues', payload);
     const result = await new Promise((resolve) => {
       saveRoleUsers(payload, { onSuccess: resolve });
     });
     console.log('getValues', result);
+    close();
   };
 
   return (

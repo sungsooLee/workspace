@@ -306,6 +306,15 @@ export const munu = [
     memo: '작업 중',
     end: false,
   },
+  {
+    screenName: '회사 유저 관리',
+    pageId: 'platform/company/user',
+    screenId: 'NLP_BO_TMS_1303',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중',
+    end: false,
+  },
 ];
 
 export const guide = [

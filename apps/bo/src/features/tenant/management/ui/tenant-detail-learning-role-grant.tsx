@@ -123,7 +123,7 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
   const handleUserAddButtonClick = async () => {
     if (selectedRole) {
       const data = await openModal({
-        content: <TenantDetailLearningRoleGrantUserShuttleModal roleCode={selectedRole.roleCode} />,
+        content: <TenantDetailLearningRoleGrantUserShuttleModal roleId={selectedRole.roleId} />,
         width: 'xl',
       });
       handleOnSearch();
@@ -139,9 +139,9 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
     const deleteRows = tableInstance?.getSelectedRowModel().rows;
     if (deleteRows) {
       const payload = {
-        roleCode: selectedRole.roleCode,
+        roleId: selectedRole.roleId,
         body: {
-          removeUserIds: deleteRows.map((item) => item.original.userId),
+          removeUserUuids: deleteRows.map((item) => item.original.userUuid),
         },
       };
       saveRoleUsers(payload, {
