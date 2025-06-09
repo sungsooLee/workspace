@@ -36,13 +36,13 @@ Template.args = {
   variant: 'primary',
 };
 
-export const PrimaryMatrix: Story = {
+export const PrimaryButton: Story = {
   render: () => {
     const sizes = ['ts', 'xs', 'sm', 'md', 'lg', 'xl'] as const;
 
     return (
       <div className="p-6">
-        <h2 className="mb-6 text-2xl font-bold">Primary Button Matrix</h2>
+        <h2 className="mb-6 text-2xl font-bold">Primary Button</h2>
 
         <div className="mb-4 grid grid-cols-5 gap-4">
           <div className="text-center font-semibold">Size</div>
@@ -82,13 +82,13 @@ export const PrimaryMatrix: Story = {
   },
 };
 
-export const LineMatrix: Story = {
+export const LineButton: Story = {
   render: () => {
     const sizes = ['ts', 'xs', 'sm', 'md', 'lg', 'xl'] as const;
 
     return (
       <div className="p-6">
-        <h2 className="mb-6 text-2xl font-bold">Line Button Matrix</h2>
+        <h2 className="mb-6 text-2xl font-bold">Line Button</h2>
 
         <div className="mb-4 grid grid-cols-5 gap-4">
           <div className="text-center font-semibold">Size</div>

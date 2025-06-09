@@ -179,6 +179,20 @@ const columns = [
     },
     enableGrouping: false,
   }),
+
+  columnHelper.accessor('visits', {
+    cell: (info) => info.getValue(),
+    header: 'Visits',
+    footer: (props) => {
+      const total = props.table
+        .getRowModel()
+        .rows.reduce((sum, row) => sum + row.getValue<number>('visits'), 0);
+      return `Total: ${total}`;
+    },
+    meta: {
+      filterType: 'range',
+    },
+  }),
   columnHelper.accessor('visits', {
     cell: (info) => info.getValue(),
     header: 'Visits',
