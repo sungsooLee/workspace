@@ -18,9 +18,9 @@ import { useState } from 'react';
 import { leaningResourceQueryOptions } from '../../../../entities/leaning-resource';
 import { useQueryClient } from '@tanstack/react-query';
 import { ModifierInfoModal } from './learning-resource-modifier-info-modal';
+import { ProgramGuideModal } from './learning-resource-program-guide-modal';
 
 function LearningResourceTableComponent() {
-  const queryClient = useQueryClient();
   const { open: openModal } = useModal();
 
   const searchConfig: any = {
@@ -210,15 +210,14 @@ function LearningResourceTableComponent() {
         name: 'updatedInfo',
         label: t('LABEL.content.learning-resource.updatedInfo'),
         render: () => (
-          <div
-            className="h-full w-full underline"
+          <Button
+            className="link"
+            label={t('보기')}
             onClick={(e) => {
               e.stopPropagation();
               openModal({ width: 'sm', content: <ModifierInfoModal /> }); //lastModifierBy로 받아온 user uuid를 props로 넘겨야 함
             }}
-          >
-            {t('보기')}
-          </div>
+          />
         ),
       },
     ],
@@ -243,10 +242,6 @@ function LearningResourceTableComponent() {
     });
   }
 
-  const handleFileDownload = (key: string, fileName: string) => {
-    queryClient.fetchQuery(leaningResourceQueryOptions.getS3FileDownload(key, fileName));
-  };
-
   return (
     <>
       <SearchBox provider={searchProvider} onSearch={handleSearch} />
@@ -266,7 +261,13 @@ function LearningResourceTableComponent() {
                   size="sm"
                   label={t('프로그램/가이드 다운로드')}
                   icon={<IcoDownload width={16} height={16} stroke="#131C30" />}
-                  onClick={() => handleFileDownload('public/logo.png', 'download.png')} // 가이드 파일 하드코딩?
+                  onClick={() =>
+                    openModal({
+                      width: 'md',
+                      content: <ProgramGuideModal />,
+                    })
+                  }
+                  // onClick={() => handleFileDownload('public/logo.png', 'download.png')} // 가이드 파일 하드코딩?
                 />
                 <Button variant="outline" size="sm" label={t('일괄설정')} />
                 <Button
