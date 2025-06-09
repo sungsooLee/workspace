@@ -126,7 +126,10 @@ export const buildJodObject = (validator: ValidatorConfig): ZodSchema => {
         let isData = !data[key];
         if (Array.isArray(data[key])) {
           isData = data[key].length === 0;
+        } else if (typeof data[key] == 'boolean') {
+          isData = false;
         }
+
         if (
           config.required &&
           (config.fn && typeof config.fn === 'function' ? config.fn(data) : true) &&
