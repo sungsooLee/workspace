@@ -15,7 +15,7 @@ const PlayerContainerComponent = forwardRef<HTMLDivElement, PlayerContainerProps
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
-      const container = ref?.current;
+      const container = (ref as React.RefObject<HTMLDivElement>)?.current;
       if (!container) return;
 
       const handleMouseMove = () => {
