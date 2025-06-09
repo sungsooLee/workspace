@@ -45,10 +45,10 @@ import {
 } from '../service/tenant-detail-tree.service';
 import { useFetchTenantCategoryDetail } from '@entities/tenant/service/tenant-category.hook';
 import { useFetchUserGroups } from '@entities/users/service/user-groups.hook';
-import { TenantCategoryCreate, TenantCategoryUpdate } from '@types';
 import { useCheckExistsCategory } from '@entities/category';
 
-import { EnFormMode } from '@types';
+import { UserGroupTabsChoiceModal } from '@features/shared';
+import { EnFormMode, TenantCategoryCreate, TenantCategoryUpdate } from '@types';
 
 enum EnCategoryType {
   TENANT = 'TENANT',
@@ -562,6 +562,11 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
                 element={
                   <ChipListModalSelectorFormField
                     disabled={EnFormMode.NONE}
+                    modalConfig={{
+                      content: <UserGroupTabsChoiceModal />,
+                      title: '',
+                      width: 'x1',
+                    }}
                     showAddButton
                     chipList={{
                       showInput: false,
