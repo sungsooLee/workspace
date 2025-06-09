@@ -4,9 +4,9 @@
 /* eslint-disable */
 export type com_ever_edu_pms_role_dto_res_RoleMenuResDto = {
     /**
-     * 메뉴 ID
+     * 테넌트메뉴관계 ID
      */
-    menuId?: number;
+    tenantMappingMenuId?: number;
     /**
      * 메뉴 이름
      */

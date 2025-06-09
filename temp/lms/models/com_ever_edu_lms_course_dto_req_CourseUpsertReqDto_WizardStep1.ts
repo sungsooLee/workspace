@@ -2,28 +2,33 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_WizardStep1 } from './com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_WizardStep1';
 export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1 = {
     wizardStep: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1.wizardStep;
-    language: string;
     channelId: number;
+    language: string;
     courseName: string;
     courseSummary: string;
-    courseGoal: string;
     courseContent: string;
-    trainingTarget: string;
     trainingLevelType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1.trainingLevelType;
-    tenantIds: Array<number>;
-    primaryCategoryId: number;
-    categoryIds: Array<number>;
-    isWhiteList?: boolean;
-    whiteList?: Array<com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_WizardStep1>;
+    /**
+     * (lms.course.LearningSpaceType)
+     */
+    learningSpaceType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1.learningSpaceType;
+    spaceId?: number;
+    spaceName?: string;
     coordinatorId: number;
     coordinatorName: string;
     coordinatorTelNo: string;
     operatorId: number;
     operatorName: string;
     operatorTelNo: string;
+    tenantIds: Array<number>;
+    primaryCategoryId: number;
+    categoryIds: Array<number>;
+    whiteListIds?: Array<number>;
+    instructorId?: number;
+    instructorName?: string;
+    tutorId?: number;
 };
 export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1 {
     export enum wizardStep {
@@ -41,6 +46,14 @@ export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1 
         INTERMEDIATE = 'INTERMEDIATE',
         ADVANCED = 'ADVANCED',
         EXPERT = 'EXPERT',
+    }
+    /**
+     * (lms.course.LearningSpaceType)
+     */
+    export enum learningSpaceType {
+        LEARNING_WAY = 'LEARNING_WAY',
+        REGISTERED = 'REGISTERED',
+        MANUAL = 'MANUAL',
     }
 }
 

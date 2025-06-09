@@ -2,32 +2,35 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_WizardStepNew } from './com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_WizardStepNew';
 export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew = {
     courseType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew.courseType;
-    language: string;
     channelId: number;
+    language: string;
     courseName: string;
     courseSummary: string;
-    courseGoal: string;
     courseContent: string;
-    trainingTarget: string;
     trainingLevelType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew.trainingLevelType;
-    tenantIds: Array<number>;
-    primaryCategoryId: number;
-    categoryIds: Array<number>;
-    whiteList?: Array<com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_WizardStepNew>;
+    /**
+     * (lms.course.LearningSpaceType)
+     */
+    learningSpaceType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew.learningSpaceType;
+    spaceId?: number;
+    spaceName?: string;
     coordinatorId: number;
     coordinatorName: string;
     coordinatorTelNo: string;
     operatorId: number;
     operatorName: string;
     operatorTelNo: string;
+    tenantIds: Array<number>;
+    primaryCategoryId: number;
+    categoryIds: Array<number>;
+    whiteListIds?: Array<number>;
 };
 export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew {
     export enum courseType {
-        ELEARNING = 'ELEARNING',
-        ELEARNING_SANGSI = 'ELEARNING_SANGSI',
+        ELEARNING1 = 'ELEARNING1',
+        ELEARNING2 = 'ELEARNING2',
         CLASS = 'CLASS',
         LIVE = 'LIVE',
         EXAM = 'EXAM',
@@ -40,6 +43,14 @@ export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNe
         INTERMEDIATE = 'INTERMEDIATE',
         ADVANCED = 'ADVANCED',
         EXPERT = 'EXPERT',
+    }
+    /**
+     * (lms.course.LearningSpaceType)
+     */
+    export enum learningSpaceType {
+        LEARNING_WAY = 'LEARNING_WAY',
+        REGISTERED = 'REGISTERED',
+        MANUAL = 'MANUAL',
     }
 }
 

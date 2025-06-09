@@ -32,7 +32,6 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
      * 카테고리 경로 노출
      */
     categories?: Array<com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto>;
-    isWhiteList?: boolean;
     whiteList?: Array<com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto>;
     coordinatorId?: number;
     coordinatorTelNo?: string;
@@ -43,13 +42,11 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
     isMaxEnrollQuotaRestricted?: boolean;
     maxEnrollQuota?: number;
     isWaitListFuncActivated?: boolean;
-    waitListAssignType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.waitListAssignType;
-    waitListEnrollMethodType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.waitListEnrollMethodType;
+    waitListPickMethodType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.waitListPickMethodType;
     maxWaitlistQuota?: number;
     isEnrollCancelDeadLineActivated?: boolean;
     enrollCancelDeadLineDays?: number;
     isDuplicateEnrollAllowed?: boolean;
-    isScheduleConflictAllowed?: boolean;
     /**
      * 수강신청 단계에서 배송지 수집 여부
      */
@@ -58,7 +55,7 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
      * 수강신청 단계에서 레벨테스트 수행 여부
      */
     isLangLevelTestRequired?: boolean;
-    primaryKitId?: number;
+    primaryCurriculumId?: number;
     hasConfigLearnControl?: boolean;
     deviceRestrictType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.deviceRestrictType;
     learningRestrictTimeType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.learningRestrictTimeType;
@@ -147,8 +144,8 @@ export namespace com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin {
         FULL_UPDATE = 'FULL_UPDATE',
     }
     export enum courseType {
-        ELEARNING = 'ELEARNING',
-        ELEARNING_SANGSI = 'ELEARNING_SANGSI',
+        ELEARNING1 = 'ELEARNING1',
+        ELEARNING2 = 'ELEARNING2',
         CLASS = 'CLASS',
         LIVE = 'LIVE',
         EXAM = 'EXAM',
@@ -169,13 +166,10 @@ export namespace com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin {
         LEADER_OPERATOR = 'LEADER_OPERATOR',
         DEPEND_COMPANY = 'DEPEND_COMPANY',
     }
-    export enum waitListAssignType {
-        PERCENTAGE = 'PERCENTAGE',
-        FIXED_COUNT = 'FIXED_COUNT',
-    }
-    export enum waitListEnrollMethodType {
-        ADMIN_PUSH = 'ADMIN_PUSH',
-        MAIL_SEND = 'MAIL_SEND',
+    export enum waitListPickMethodType {
+        NONE = 'NONE',
+        AUTO = 'AUTO',
+        MANUAL = 'MANUAL',
     }
     export enum deviceRestrictType {
         NONE = 'NONE',
@@ -194,10 +188,9 @@ export namespace com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin {
         X2 = 'X2',
     }
     export enum learningSpaceType {
-        EXTERNAL_SITE = 'EXTERNAL_SITE',
         LEARNING_WAY = 'LEARNING_WAY',
-        FACE_TO_FACE = 'FACE_TO_FACE',
-        NONE_FACE_TO_FACE = 'NONE_FACE_TO_FACE',
+        REGISTERED = 'REGISTERED',
+        MANUAL = 'MANUAL',
     }
     export enum passMethodType {
         AUTO = 'AUTO',

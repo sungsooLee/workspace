@@ -2,11 +2,11 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_lms_channel_dto_res_ChannelInfoDto } from './com_ever_edu_lms_channel_dto_res_ChannelInfoDto';
 import type { com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto } from './com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto';
 import type { com_ever_edu_lms_course_dto_res_CourseResDto$TagNameWrapper } from './com_ever_edu_lms_course_dto_res_CourseResDto$TagNameWrapper';
 import type { com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser } from './com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser';
 import type { com_ever_edu_lms_curriculum_dto_CurriculumInfoDto } from './com_ever_edu_lms_curriculum_dto_CurriculumInfoDto';
+import type { com_ever_edu_xternal_channel_dto_res_ChannelInfoDto } from './com_ever_edu_xternal_channel_dto_res_ChannelInfoDto';
 export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseIntroductionOnUser = {
     courseUUID?: string;
     thumbnailUrl?: string;
@@ -16,7 +16,7 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseIntroductionOnUse
     shareCount?: number;
     starRating?: number;
     courseType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseIntroductionOnUser.courseType;
-    channelInfo?: com_ever_edu_lms_channel_dto_res_ChannelInfoDto;
+    channelInfo?: com_ever_edu_xternal_channel_dto_res_ChannelInfoDto;
     primaryCategoryPath?: string;
     relatedCourse?: Array<com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto>;
     learningSpaceType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseIntroductionOnUser.learningSpaceType;
@@ -61,18 +61,17 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseIntroductionOnUse
 };
 export namespace com_ever_edu_lms_course_dto_res_CourseResDto$CourseIntroductionOnUser {
     export enum courseType {
-        ELEARNING = 'ELEARNING',
-        ELEARNING_SANGSI = 'ELEARNING_SANGSI',
+        ELEARNING1 = 'ELEARNING1',
+        ELEARNING2 = 'ELEARNING2',
         CLASS = 'CLASS',
         LIVE = 'LIVE',
         EXAM = 'EXAM',
         SURVEY = 'SURVEY',
     }
     export enum learningSpaceType {
-        EXTERNAL_SITE = 'EXTERNAL_SITE',
         LEARNING_WAY = 'LEARNING_WAY',
-        FACE_TO_FACE = 'FACE_TO_FACE',
-        NONE_FACE_TO_FACE = 'NONE_FACE_TO_FACE',
+        REGISTERED = 'REGISTERED',
+        MANUAL = 'MANUAL',
     }
     export enum trainingLevelType {
         NONE = 'NONE',

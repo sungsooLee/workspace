@@ -2,12 +2,18 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto = {
+export type com_ever_edu_lms_course_dto_res_CourseInternalResDto = {
     courseId?: number;
+    courseUuid?: string;
     courseName?: string;
-    courseType?: com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto.courseType;
+    courseType?: com_ever_edu_lms_course_dto_res_CourseInternalResDto.courseType;
+    courseContent?: string;
+    channelId?: number;
+    channelName?: string;
+    openingYear?: number;
+    isUsed?: boolean;
 };
-export namespace com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto {
+export namespace com_ever_edu_lms_course_dto_res_CourseInternalResDto {
     export enum courseType {
         ELEARNING1 = 'ELEARNING1',
         ELEARNING2 = 'ELEARNING2',

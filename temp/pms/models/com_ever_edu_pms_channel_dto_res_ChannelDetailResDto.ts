@@ -7,10 +7,6 @@ import type { com_ever_edu_pms_channel_dto_res_ChannelLearnerUserResDto } from '
 import type { com_ever_edu_pms_channel_dto_res_ChannelMappingTenantResDto } from './com_ever_edu_pms_channel_dto_res_ChannelMappingTenantResDto';
 export type com_ever_edu_pms_channel_dto_res_ChannelDetailResDto = {
     /**
-     * 채널ID
-     */
-    channelId?: number;
-    /**
      * 채널 개설 방식 구분
      */
     channelCreationType?: com_ever_edu_pms_channel_dto_res_ChannelDetailResDto.channelCreationType;

@@ -46,7 +46,6 @@ import type { com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardS
 import type { com_ever_edu_lms_course_dto_res_SequenceResDto$onAdmin } from '../models/com_ever_edu_lms_course_dto_res_SequenceResDto$onAdmin';
 import type { com_ever_edu_lms_enroll_dto_event_EnrollQueueEvent } from '../models/com_ever_edu_lms_enroll_dto_event_EnrollQueueEvent';
 import type { com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByAdmin } from '../models/com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByAdmin';
-import type { com_ever_edu_lms_enroll_dto_req_EnrollReqDto$ByAdmin } from '../models/com_ever_edu_lms_enroll_dto_req_EnrollReqDto$ByAdmin';
 import type { com_ever_edu_lms_student_dto_req_StudentSearchDto$SearchByAdmin } from '../models/com_ever_edu_lms_student_dto_req_StudentSearchDto$SearchByAdmin';
 import type { org_springdoc_core_converters_models_Pageable } from '../models/org_springdoc_core_converters_models_Pageable';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_badge_dto_res_BadgeGroupListResDto$OnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_badge_dto_res_BadgeGroupListResDto$OnAdmin';
@@ -289,7 +288,7 @@ export class BoService {
      */
     public static findByUuid(
         courseId: number,
-        courseType: 'ELEARNING' | 'ELEARNING_SANGSI' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
+        courseType: 'ELEARNING1' | 'ELEARNING2' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
@@ -896,61 +895,13 @@ export class BoService {
         });
     }
     /**
-     * 관리자 입과
-     * 관리자가 특정 대상자를 입과신청한다.
-     * @param requestBody
-     * @returns number OK
-     * @throws ApiError
-     */
-    public static enroll(
-        requestBody: com_ever_edu_lms_enroll_dto_req_EnrollReqDto$ByAdmin,
-    ): CancelablePromise<number> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/admin/api/v1/enroll',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 수강신청을 취소한다.
-     * 수강신청을 취소한다.
-     * @param requestBody
-     * @returns any OK
-     * @throws ApiError
-     */
-    public static cancel1(
-        requestBody: com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByAdmin,
-    ): CancelablePromise<any> {
-        return __request(OpenAPI, {
-            method: 'DELETE',
-            url: '/admin/api/v1/enroll',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
      * 카프카 쓰지 않고 바로 입과
      * 바로 입과 테스트
      * @param requestBody
      * @returns number OK
      * @throws ApiError
      */
-    public static enrollTest(
+    public static enrollTest1(
         requestBody: com_ever_edu_lms_enroll_dto_event_EnrollQueueEvent,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
@@ -1515,6 +1466,30 @@ export class BoService {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/admin/api/v1/sequence/list-delete',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 수강신청을 강제 취소한다.
+     * 수강신청을 취소한다.
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static cancel1(
+        requestBody: com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByAdmin,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/admin/api/v1/enroll',
             body: requestBody,
             mediaType: 'application/json',
             errors: {

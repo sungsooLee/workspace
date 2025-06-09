@@ -22,7 +22,6 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardSte
      * 카테고리 경로 노출
      */
     categories?: Array<com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto_WizardStep1>;
-    isWhiteList?: boolean;
     whiteList?: Array<com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_WizardStep1>;
     coordinatorId?: number;
     coordinatorTelNo?: string;
@@ -39,8 +38,8 @@ export namespace com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_Wiza
         FULL_UPDATE = 'FULL_UPDATE',
     }
     export enum courseType {
-        ELEARNING = 'ELEARNING',
-        ELEARNING_SANGSI = 'ELEARNING_SANGSI',
+        ELEARNING1 = 'ELEARNING1',
+        ELEARNING2 = 'ELEARNING2',
         CLASS = 'CLASS',
         LIVE = 'LIVE',
         EXAM = 'EXAM',
