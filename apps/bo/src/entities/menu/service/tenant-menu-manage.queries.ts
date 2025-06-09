@@ -1,4 +1,5 @@
 import TenantMenuManageService from '../api/menu-tenant-manage';
+import { getQuerySkipToken } from '@learnway/shared';
 
 export const queryKeys = {
   tree: ['menu-tenant-manage'] as const,
@@ -9,11 +10,17 @@ export const tenantMenuManageQueryOptions = {
   //메뉴 트리 정보
   tree: (tenantId: number, menuScope: string) => ({
     queryKey: [...queryKeys.tree, tenantId, menuScope],
-    queryFn: () => TenantMenuManageService.findMenuTenantMappingTree(tenantId, menuScope),
+    queryFn: () =>
+      tenantId
+        ? TenantMenuManageService.findMenuTenantMappingTree(tenantId, menuScope)
+        : getQuerySkipToken(),
   }),
   detail: (tenantMappingMenuId: number) => ({
     queryKey: [...queryKeys.detail(tenantMappingMenuId)],
-    queryFn: () => TenantMenuManageService.findMenuTenantDetail(tenantMappingMenuId),
+    queryFn: () =>
+      tenantMappingMenuId
+        ? TenantMenuManageService.findMenuTenantDetail(tenantMappingMenuId)
+        : getQuerySkipToken(),
   }),
 };
 

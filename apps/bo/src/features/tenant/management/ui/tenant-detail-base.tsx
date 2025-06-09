@@ -130,7 +130,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         tenantMappingLanguageTypeList: tenantData.tenantLanguageList,
         tenantMappingUserList: tenantData.tenantUserList.map((item) => ({
           userId: item.userId,
-          name: item.companyName,
+          name: item.userName || '이름-없음',
         })),
         tenantMappingRoleList: tenantData.tenantRoleList.map((item) => ({
           roleId: item.roleId,
