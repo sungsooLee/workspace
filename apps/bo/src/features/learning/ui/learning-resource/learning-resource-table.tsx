@@ -21,7 +21,6 @@ import { ModifierInfoModal } from './learning-resource-modifier-info-modal';
 import { ProgramGuideModal } from './learning-resource-program-guide-modal';
 
 function LearningResourceTableComponent() {
-  const queryClient = useQueryClient();
   const { open: openModal } = useModal();
 
   const searchConfig: any = {
@@ -211,15 +210,14 @@ function LearningResourceTableComponent() {
         name: 'updatedInfo',
         label: t('LABEL.content.learning-resource.updatedInfo'),
         render: () => (
-          <div
-            className="h-full w-full underline"
+          <Button
+            className="link"
+            label={t('보기')}
             onClick={(e) => {
               e.stopPropagation();
               openModal({ width: 'sm', content: <ModifierInfoModal /> }); //lastModifierBy로 받아온 user uuid를 props로 넘겨야 함
             }}
-          >
-            {t('보기')}
-          </div>
+          />
         ),
       },
     ],
@@ -243,10 +241,6 @@ function LearningResourceTableComponent() {
       size: pagination.pageSize,
     });
   }
-
-  const handleFileDownload = (key: string, fileName: string) => {
-    queryClient.fetchQuery(leaningResourceQueryOptions.getS3FileDownload(key, fileName));
-  };
 
   return (
     <>
