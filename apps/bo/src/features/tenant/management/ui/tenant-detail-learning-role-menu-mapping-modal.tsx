@@ -93,8 +93,8 @@ const TenantDetailLearningRoleMenuMappingModalComponent: FC<any> = ({
           const payload = {
             roleId: roleId,
             body: {
-              addMenuIds: [...contents],
-              removeMenuIds: [],
+              addTenantMappingMenuIds: [...contents],
+              removeTenantMappingMenuIds: [],
               addApis: [],
               removeApis: [],
             },
@@ -132,8 +132,8 @@ const TenantDetailLearningRoleMenuMappingModalComponent: FC<any> = ({
           const payload = {
             roleId: roleId,
             body: {
-              addMenuIds: [],
-              removeMenuIds: allChildren.map((item: any) => item.tenantMappingMenuId),
+              addTenantMappingMenuIds: [],
+              removeTenantMappingMenuIds: allChildren.map((item: any) => item.tenantMappingMenuId),
               addApis: [],
               removeApis: [],
             },

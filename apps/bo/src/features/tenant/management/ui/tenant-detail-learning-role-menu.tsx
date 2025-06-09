@@ -83,7 +83,7 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
 
   const { data: roleMenuApiData } = useFetchMenuApis(
     selectedRole?.roleId || '',
-    selectedRoleMenu?.menuId || '',
+    selectedRoleMenu?.tenantMappingMenuId || '',
   );
 
   const { createAndRemve: createApi } = useModifyMenusAndApiToRole({});
@@ -103,13 +103,17 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
   };
 
   const handleRoleSelect = (node: TreeNode) => {
-    setSelectedRole(node);
-    setSelectedRoleMenu(null);
-    setIsDataModified(false);
+    if (node.key !== 'root') {
+      setSelectedRole(node);
+      setSelectedRoleMenu(null);
+      setIsDataModified(false);
+    }
   };
 
   const handleMenuSelect = (node: TreeNode) => {
-    setSelectedRoleMenu(node);
+    if (node.key !== '1') {
+      setSelectedRoleMenu(node);
+    }
   };
 
   const handleRoleMenuMapping = async () => {
@@ -148,7 +152,7 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
       for (const apiId of changeApis) {
         if (!apiOriginalSelected?.includes(apiId)) {
           addApis.push({
-            menuId: selectedRoleMenu.menuId,
+            tenantMappingMenuId: selectedRoleMenu.tenantMappingMenuId,
             apiId: apiId,
           });
         }
@@ -156,7 +160,7 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
       for (const apiId of apiOriginalSelected) {
         if (!changeApis.includes(apiId)) {
           removeApis.push({
-            menuId: selectedRoleMenu.menuId,
+            tenantMappingMenuId: selectedRoleMenu.tenantMappingMenuId,
             apiId: apiId,
           });
         }
@@ -165,8 +169,8 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
         const payload = {
           roleId: selectedRole.roleId,
           body: {
-            addMenuIds: [],
-            removeMenuIds: [],
+            addTenantMappingMenuIds: [],
+            removeTenantMappingMenuIds: [],
             addApis: addApis,
             removeApis: removeApis,
           },
@@ -269,6 +273,7 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
         data={roleTree}
         initLevel={2}
         treeId={'1'}
+        selectedNode={selectedRole}
         showSearchKeyword
         handleSelectedNodeChange={handleRoleSelect}
       />
