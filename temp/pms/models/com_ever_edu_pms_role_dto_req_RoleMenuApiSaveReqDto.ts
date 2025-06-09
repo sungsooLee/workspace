@@ -7,11 +7,11 @@ export type com_ever_edu_pms_role_dto_req_RoleMenuApiSaveReqDto = {
     /**
      * 추가할 메뉴 ID 목록
      */
-    addMenuIds?: Array<number>;
+    addTenantMappingMenuIds?: Array<number>;
     /**
      * 삭제할 메뉴 ID 목록
      */
-    removeMenuIds?: Array<number>;
+    removeTenantMappingMenuIds?: Array<number>;
     /**
      * 추가할 API ID 목록
      */

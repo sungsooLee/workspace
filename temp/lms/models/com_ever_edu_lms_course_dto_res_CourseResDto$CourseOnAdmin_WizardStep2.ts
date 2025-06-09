@@ -11,13 +11,11 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardSte
     isMaxEnrollQuotaRestricted?: boolean;
     maxEnrollQuota?: number;
     isWaitListFuncActivated?: boolean;
-    waitListAssignType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep2.waitListAssignType;
-    waitListEnrollMethodType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep2.waitListEnrollMethodType;
+    waitListPickMethodType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep2.waitListPickMethodType;
     maxWaitlistQuota?: number;
     isEnrollCancelDeadLineActivated?: boolean;
     enrollCancelDeadLineDays?: number;
     isDuplicateEnrollAllowed?: boolean;
-    isScheduleConflictAllowed?: boolean;
     /**
      * 수강신청 단계에서 배송지 수집 여부
      */
@@ -37,8 +35,8 @@ export namespace com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_Wiza
         FULL_UPDATE = 'FULL_UPDATE',
     }
     export enum courseType {
-        ELEARNING = 'ELEARNING',
-        ELEARNING_SANGSI = 'ELEARNING_SANGSI',
+        ELEARNING1 = 'ELEARNING1',
+        ELEARNING2 = 'ELEARNING2',
         CLASS = 'CLASS',
         LIVE = 'LIVE',
         EXAM = 'EXAM',
@@ -51,13 +49,10 @@ export namespace com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_Wiza
         LEADER_OPERATOR = 'LEADER_OPERATOR',
         DEPEND_COMPANY = 'DEPEND_COMPANY',
     }
-    export enum waitListAssignType {
-        PERCENTAGE = 'PERCENTAGE',
-        FIXED_COUNT = 'FIXED_COUNT',
-    }
-    export enum waitListEnrollMethodType {
-        ADMIN_PUSH = 'ADMIN_PUSH',
-        MAIL_SEND = 'MAIL_SEND',
+    export enum waitListPickMethodType {
+        NONE = 'NONE',
+        AUTO = 'AUTO',
+        MANUAL = 'MANUAL',
     }
 }
 
