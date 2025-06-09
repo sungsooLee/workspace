@@ -190,7 +190,7 @@ function PageContainerComponent({
                 // onPointerDownOutside={(e) => e.preventDefault()}
                 // onInteractOutside={(e) => e.preventDefault()}
               >
-                <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
+                <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
               </Popover>
             )}
           </h3>
