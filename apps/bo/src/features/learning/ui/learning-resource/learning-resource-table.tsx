@@ -206,7 +206,7 @@ function LearningResourceTableComponent() {
         size: 79,
         name: 'updatedInfo',
         label: t('LABEL.content.learning-resource.updatedInfo'),
-        render: () => '보기',
+        render: () => <Button className="h-full w-full underline">{t('보기')}</Button>,
       },
     ],
   };
