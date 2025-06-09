@@ -3,7 +3,7 @@
   table {
     tbody {
       tr {
-        @apply !h-[40px] !min-h-[40px] border-b border-solid border-[var(--gray2)];
+        @apply !h-[40px] !min-h-[40px] border-b border-solid !border-[var(--gray3)];
         td {
           @apply body_bo_2_r h-full overflow-hidden text-ellipsis whitespace-nowrap px-[8px] py-[8px] align-middle text-[var(--gray7)];
           [class*='nlp--button'] {
@@ -73,7 +73,7 @@
             }
           }
           & + td {
-            border-left: 1px solid var(--gray2);
+            border-left: 1px solid var(--gray2) !important;
           }
         }
         &:not(.selected) {
