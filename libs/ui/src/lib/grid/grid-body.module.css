@@ -18,9 +18,15 @@
               }
             }
           }
-          [class*='nlp--button']:disabled svg {
-            @apply stroke-[#d6dae1];
+          [class*='nlp--button'] {
+            &:disabled svg {
+              @apply stroke-[#d6dae1];
+            }
+            &:not([class*='link']) {
+              @apply px-[6px];
+            }
           }
+
           [class*='link'] {
             @apply !body_bo_2_r text-[var(--gray7)] underline;
             & + [class*='link'] {

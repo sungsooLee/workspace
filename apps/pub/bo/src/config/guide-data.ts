@@ -668,6 +668,15 @@ export const guideData = [
     remarks: '화면 케이스 작업 완료', // 비고
   },
   {
+    screenName: 'PMS/테넌트관리_유저관리',
+    pageId: 'pms/menu-tenant-user-management',
+    screenId: 'NLP_BO_TMS_1111_07',
+    pageType: 'Page',
+    completionDate: '2025-06-09',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
     screenName: 'PMS/채널관리_개설신청관리',
     pageId: 'pms/menu-channel-open-management',
     screenId: 'NLP_BO_CHN_1401',
