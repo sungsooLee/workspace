@@ -34,6 +34,14 @@ const ModalContainerComponent: React.FC<ModalContainerProps> = ({
 
     checkScroll();
     window.addEventListener('resize', checkScroll);
+    const observer = new MutationObserver(checkScroll);
+    if (contentRef.current) {
+      observer.observe(contentRef.current, {
+        childList: true,
+        subtree: true,
+        attributes: true, // 크기 변화와 같은 속성 변경을 감지
+      });
+    }
     return () => window.removeEventListener('resize', checkScroll);
   }, [children]);
 
