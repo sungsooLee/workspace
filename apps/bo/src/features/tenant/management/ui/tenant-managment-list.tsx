@@ -5,10 +5,10 @@ import { t } from 'i18next';
 
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
-import { Button, GridBox, useGridBox } from '@learnway/ui';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
+import { Button, GridBox, useGridBox } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
+import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 
 import { tenantQueryOptions } from '@entities/tenant/service/tenant.queries';
 
