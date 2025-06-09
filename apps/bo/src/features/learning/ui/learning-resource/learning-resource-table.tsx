@@ -135,17 +135,17 @@ function LearningResourceTableComponent() {
         name: 'contentType',
         label: t('LABEL.content.learning-resource.contentType'),
         render: (_: any) => t(`cms.content.ContentType.${_.getValue()}`),
+      },
+      {
+        size: 338,
+        name: 'contentName',
+        label: t('LABEL.content.learning-resource.contentName'),
         meta: {
           size: 'auto',
         },
       },
       {
-        size: 338,
-        meta: { size: 'auto' },
-        name: 'contentName',
-        label: t('LABEL.content.learning-resource.contentName'),
-      },
-      {
+        size: 127,
         name: 'tenantName',
         label: t('LABEL.content.learning-resource.tenantName'),
         meta: {
@@ -153,6 +153,7 @@ function LearningResourceTableComponent() {
         },
       },
       {
+        size: 153,
         name: 'channelName',
         label: t('LABEL.content.learning-resource.channelName'),
         meta: {
@@ -160,18 +161,14 @@ function LearningResourceTableComponent() {
         },
       },
       {
+        size: 104,
         name: 'coordinatorName',
         label: t('LABEL.content.learning-resource.coordinatorName'),
-        meta: {
-          size: 'auto',
-        },
       },
       {
+        size: 125,
         name: 'contentAddInfo',
         label: t('LABEL.content.learning-resource.detailInfo'),
-        meta: {
-          size: 'auto',
-        },
         render: (_: any) => {
           console.log(_.row.original['contentAddInfoType']);
           if (_.row.original.contentAddInfoType !== 'VIDEO_ADD_INFO')
@@ -199,7 +196,7 @@ function LearningResourceTableComponent() {
         render: (_: any) => t(`cms.content.ContentUseEnabledType.${_.getValue()}`),
       },
       {
-        size: 100,
+        size: 83,
         name: 'langCountryCode',
         label: t('LABEL.content.learning-resource.localization'),
         render: (_: any) => t(`pms.multilingual.LangCountryCode.${_.getValue()}`),
@@ -223,22 +220,11 @@ function LearningResourceTableComponent() {
   };
 
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
-  const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
+  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
   const [tableInstance, setTableInstance] = useState<Table<any>>(); // Grid 로부터 받을 table 인스턴스를 저장할 상태
-  const [pagination, setPagination] = useState<GridBoxPagination>({
-    pageNumber: 0,
-    pageSize: 20,
-    totalPages: 1,
-    onPageChange: (pageNumber: number) => setPagination((prev) => ({ ...prev, pageNumber })),
-    onPageSizeChange: (pageSize: number) =>
-      setPagination((prev) => ({ ...prev, pageSize, pageNumber: 0 })),
-  });
 
   function handleSearch(query: Record<string, any>) {
-    gridFetch(query, {
-      page: pagination.pageNumber,
-      size: pagination.pageSize,
-    });
+    gridFetch(query);
   }
 
   return (
@@ -248,7 +234,6 @@ function LearningResourceTableComponent() {
         <div className="grid_wrap">
           <GridBox
             config={gConfig}
-            data={data}
             showNumberingColumn
             multiple
             customButtonNode={
@@ -277,7 +262,6 @@ function LearningResourceTableComponent() {
               </>
             }
             onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
-            pagination={pagination}
           />
         </div>
       </div>
