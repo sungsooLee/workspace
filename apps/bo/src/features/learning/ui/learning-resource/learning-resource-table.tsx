@@ -1,5 +1,5 @@
 import { CODE_GROUP, useSearchBox } from '@learnway/hooks';
-import { cn } from '@learnway/shared';
+import { cn, DATE_TIME_FORMAT, duration } from '@learnway/shared';
 import { SearchBox } from '@shared/ui/search-box';
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 import {
@@ -14,8 +14,11 @@ import { IcoClock01, IcoDownload, IcoFile01 } from '@learnway/icons';
 import { t } from 'i18next';
 import { Table } from '@tanstack/react-table';
 import { useState } from 'react';
+import { leaningResourceQueryOptions } from '../../../../entities/leaning-resource';
+import { useQueryClient } from '@tanstack/react-query';
 
 function LearningResourceTableComponent() {
+  const queryClient = useQueryClient();
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const [tableInstance, setTableInstance] = useState<Table<any>>(); // Grid 로부터 받을 table 인스턴스를 저장할 상태
@@ -28,50 +31,25 @@ function LearningResourceTableComponent() {
       setPagination((prev) => ({ ...prev, pageSize, pageNumber: 0 })),
   });
 
-  const handleOnSearch = (data: Record<string, any>) => {
-    console.log('search', data);
+  function handleSearch(query: Record<string, any>) {
+    gridFetch(query, {
+      page: pagination.pageNumber,
+      size: pagination.pageSize,
+    });
+  }
+
+  const handleFileDownload = (key: string, fileName: string) => {
+    queryClient.fetchQuery(leaningResourceQueryOptions.getS3FileDownload(key, fileName));
   };
 
   return (
     <>
-      <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
+      <SearchBox provider={searchProvider} onSearch={handleSearch} />
       <div className={cn(boxStyles.start, boxStyles.inner)}>
         <div className="grid_wrap">
           <GridBox
             config={gConfig}
-            data={[
-              // mock -> api로 변경 필요
-              {
-                contentType: 'VIDEO',
-                contentName: '학습자원명',
-                tenantName: '테넌트',
-                channelName: '채널',
-                coordinatorName: '담당자',
-                isCourseUsed: true,
-                isUseEnabled: true,
-                localization: 'ko',
-              },
-              {
-                contentType: 'VIDEO',
-                contentName: '학습자원명',
-                tenantName: '테넌트',
-                channelName: '채널',
-                coordinatorName: '담당자',
-                isCourseUsed: false,
-                isUseEnabled: true,
-                localization: 'ko',
-              },
-              {
-                contentType: 'IMAGE',
-                contentName: '학습자원명',
-                tenantName: '테넌트',
-                channelName: '채널',
-                coordinatorName: '담당자',
-                isCourseUsed: true,
-                isUseEnabled: false,
-                localization: 'ko',
-              },
-            ]}
+            data={data}
             showNumberingColumn
             multiple
             customButtonNode={
@@ -83,8 +61,8 @@ function LearningResourceTableComponent() {
                   size="sm"
                   label={t('프로그램/가이드 다운로드')}
                   icon={<IcoDownload width={16} height={16} stroke="#131C30" />}
+                  onClick={() => handleFileDownload('public/logo.png', 'download.png')} // 가이드 파일 하드코딩?
                 />
-                {/* onClick GET /pms-module/admin/api/v1/file/s3/download - 가이드 파일 올라간 후 다운로드 (하드코딩?) */}
                 <Button variant="outline" size="sm" label={t('일괄설정')} />
                 <Button
                   variant="outline"
@@ -116,7 +94,7 @@ const searchConfig: any = {
   builders: [
     [
       {
-        name: 'tenant',
+        name: 'tenantUuid',
         type: 'dropdown',
         label: t('LABEL.content.learning-resource.tenantName'),
         value: '',
@@ -127,7 +105,7 @@ const searchConfig: any = {
         },
       },
       {
-        name: 'channel',
+        name: 'channelUuid',
         type: 'dropdown',
         label: t('LABEL.content.learning-resource.channelName'),
         value: '',
@@ -144,7 +122,7 @@ const searchConfig: any = {
         },
       },
       {
-        name: 'contentType',
+        name: 'contentTypes',
         type: 'dropdown',
         label: t('LABEL.content.learning-resource.contentType'),
         value: '',
@@ -169,22 +147,20 @@ const searchConfig: any = {
         optionsConfig: {
           options: [
             { value: '', label: t('전체') },
-            { value: 'Y', label: 'Y' },
-            { value: 'N', label: 'N' },
+            { value: 'true', label: 'Y' },
+            { value: 'false', label: 'N' },
           ],
         },
       },
       {
-        name: 'isUseEnabled',
+        name: 'useEnabledType',
         type: 'dropdown',
-        label: t('사용가능'),
+        label: t('LABEL.content.learning-resource.useEnabledType'),
         value: '',
-        options: [
-          { value: '', label: t('전체') },
-          { value: 'available', label: t('사용가능') },
-          { value: 'expired', label: t('사용기한 만료') },
-          { value: 'unavailable', label: t('사용불가') },
-        ],
+        optionsConfig: {
+          options: [{ value: '', label: t('전체') }],
+          codeGroup: CODE_GROUP['cms.content.ContentUseEnabledType'],
+        },
       },
       {
         name: 'isCourseUsed',
@@ -194,8 +170,8 @@ const searchConfig: any = {
         optionsConfig: {
           options: [
             { value: '', label: t('전체') },
-            { value: 'Y', label: 'Y' },
-            { value: 'N', label: 'N' },
+            { value: 'true', label: 'Y' },
+            { value: 'false', label: 'N' },
           ],
         },
       },
@@ -208,20 +184,19 @@ const searchConfig: any = {
     ],
   ],
   validator: {
-    tenant: true,
-    channel: true,
+    tenantUuid: true,
+    channelUuid: true,
   },
 };
 
 const gridConfig: useGridBoxConfig = {
-  excel: {
-    download: '/learning-resource/exportExcel',
-    form: {
-      xlsx: '',
-      csv: '',
-    },
+  query: (data: any) => {
+    return leaningResourceQueryOptions.getContents({
+      ...data,
+      sort: 'contentUuid,desc',
+      isMockUp: true,
+    });
   },
-  query: () => {},
   columns: [
     {
       size: 79,
@@ -260,17 +235,24 @@ const gridConfig: useGridBoxConfig = {
       },
     },
     {
-      name: 'detailInfo',
+      name: 'contentAddInfo',
       label: t('LABEL.content.learning-resource.detailInfo'),
       meta: {
         size: 'auto',
       },
-      render: (_: any) => (
-        <span className="flex">
-          <IcoClock01 width={16} height={16} stroke="#131C30" /> 02:00:00
-          {/* 컨텐츠 타입 별로 다르게 나오는듯 - 비디오 러닝타임 */}
-        </span>
-      ),
+      render: (_: any) => {
+        console.log(_.row.original['contentAddInfoType']);
+        if (_.row.original.contentAddInfoType !== 'VIDEO_ADD_INFO')
+          // enum code 사용하도록 변경해야 함
+          return `${_.getValue()}${t('개')}`;
+
+        return (
+          <span className="flex">
+            <IcoClock01 width={16} height={16} stroke="#131C30" />{' '}
+            {duration(_.getValue(), DATE_TIME_FORMAT.HOUR_MIN_SEC)}
+          </span>
+        );
+      },
     },
     {
       size: 137,
@@ -280,15 +262,15 @@ const gridConfig: useGridBoxConfig = {
     },
     {
       size: 95,
-      name: 'isUseEnabled',
-      label: t('LABEL.content.learning-resource.isUseEnabled'),
-      render: (_: any) => (_.getValue() ? 'Y' : 'N'),
+      name: 'contentUseEnabledType',
+      label: t('LABEL.content.learning-resource.useEnabledType'),
+      render: (_: any) => t(`cms.content.ContentUseEnabledType.${_.getValue()}`),
     },
     {
       size: 100,
-      name: 'localization',
+      name: 'langCountryCode',
       label: t('LABEL.content.learning-resource.localization'),
-      render: (_: any) => t(`CODE.LANGUAGE_CODE.${_.getValue()}`),
+      render: (_: any) => t(`pms.multilingual.LangCountryCode.${_.getValue()}`),
     },
     {
       size: 79,

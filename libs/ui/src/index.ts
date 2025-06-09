@@ -150,6 +150,7 @@ export * from './lib/tree-view/tree.context';
 export * from './lib/tree-view/type';
 export * from './lib/tree-view/shuttle-tree-to-chips';
 export * from './lib/tree-view/tree-box';
+export * from './lib/tree-view/tree-to-tree';
 
 // textarea
 export * from './lib/textarea/textarea';
@@ -180,3 +181,8 @@ export * from './lib/dnd-file-progress/dnd-file-progress';
 export * from './lib/base-form/base-form-row';
 export * from './lib/base-form/form-group';
 export * from './lib/base-form/form-guide-text';
+
+// player
+export * from './lib/player/player';
+export * from './lib/player/player-container';
+export * from './lib/player/hooks/player.hook';

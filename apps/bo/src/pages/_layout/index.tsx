@@ -315,6 +315,15 @@ export const munu = [
     memo: '작업 중',
     end: false,
   },
+  {
+    screenName: '회사 유저 관리',
+    pageId: 'platform/company/user',
+    screenId: 'NLP_BO_TMS_1303',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중',
+    end: false,
+  },
 ];
 
 export const guide = [
@@ -347,5 +356,11 @@ export const guide = [
     pageId: 'common-popup',
     pageType: 'Page',
     memo: '공통 팝업', // 비고
+  },
+  {
+    screenName: '영상 플레이어',
+    pageId: 'player-demo',
+    pageType: 'Page',
+    memo: '영상 플레이어', // 비고
   },
 ];

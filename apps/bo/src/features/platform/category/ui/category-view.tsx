@@ -10,7 +10,7 @@ import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.
 
 import { DuplicateCodeGuideText, findMenuPathById } from '@features/platform/category';
 import { useCheckExistsCategory, useFetchCategoryDetail } from '@entities/category';
-import { FormRow } from '@shared/ui/form';
+import { FormRow, SwitchFormField } from '@shared/ui';
 
 const CategoryViewComponent: FC<any> = ({
   treeData,
@@ -65,6 +65,7 @@ const CategoryViewComponent: FC<any> = ({
           categoryContent: data?.categoryContent,
           categoryType: 'COMMON',
           sortSeq: selectedNode?.children?.length ?? 0 + 1,
+          isUsed: data.isUsed,
         };
         fetchData(initialData);
         setCodeCheckState('none');
@@ -85,6 +86,7 @@ const CategoryViewComponent: FC<any> = ({
         categoryContent: '', // 입력 필드
         categoryType: 'COMMON',
         sortSeq: (selectedNode?.children?.length ?? 0) + 1,
+        isUsed: false,
       };
       fetchData(initialData);
     } else if (mode === 'init') {
@@ -99,6 +101,7 @@ const CategoryViewComponent: FC<any> = ({
         categoryContent: '', // 입력 필드
         categoryType: 'COMMON',
         sortSeq: 0,
+        isUsed: false,
       };
       fetchData(initialData);
       setCodeCheckState('none');
@@ -130,17 +133,18 @@ const CategoryViewComponent: FC<any> = ({
     }
   };
 
-  const handleOnSubmit = (node: any) => {
+  const handleOnSubmit = (data: any) => {
     // View 모드에서 저장 처리
     if (mode === 'view') {
-      const isCodeChanged = isFieldChanged('code', node.code);
+      const isCodeChanged = isFieldChanged('code', data.code);
       // 코드가 변경되지 않았으면 중복 체크 없이 진행
       if (!isCodeChanged) {
         const body = {
-          name: node.name,
-          categoryCode: node.code,
-          categoryContent: node.categoryContent,
-          id: node.key,
+          name: data.name,
+          categoryCode: data.code,
+          categoryContent: data.categoryContent,
+          id: data.key,
+          isUsed: data.isUsed,
         };
         console.log('## check body', body);
         // 수정 API 호출
@@ -168,12 +172,12 @@ const CategoryViewComponent: FC<any> = ({
     }
 
     const body = {
-      name: node.name,
-      categoryCode: node.code,
-      categoryContent: node.categoryContent,
+      name: data.name,
+      categoryCode: data.code,
+      categoryContent: data.categoryContent,
       categoryType: 'COMMON',
-      sortSeq: node.sortSeq,
-      parentId: node.parentKey,
+      sortSeq: data.sortSeq,
+      parentId: data.parentKey,
     };
 
     console.log('## check body', body);
@@ -327,6 +331,13 @@ const CategoryViewComponent: FC<any> = ({
               element={<TextareaFormField disabled={isInitMode || (mode === 'view' && isRoot)} />}
             />
           </ContentsRow>
+          <ContentsRow type="horizontal">
+            <FormRow
+              provider={provider}
+              name="isUsed"
+              element={<SwitchFormField disabled={isInitMode || (mode === 'view' && isRoot)} />}
+            />
+          </ContentsRow>
         </div>
       </form>
     </div>
@@ -388,6 +399,16 @@ const formConfig: DynamicFormConfig = {
       type: 'textarea',
       maxLength: 50,
       value: '',
+    },
+    {
+      name: 'isUsed',
+      type: 'switch',
+      format: 'boolean',
+      label: t('사용 여부'),
+      value: false,
+      switchConfig: {
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
     },
     {
       name: 'isDuplicateMenuCode',

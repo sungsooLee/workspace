@@ -2,6 +2,7 @@ export const CODE_GROUP = {
   'cms.content.ContentsAddInfoType': 'cms.content.ContentsAddInfoType',
   'cms.content.ContentType': 'cms.content.ContentType',
   'cms.content.ContentsTypeCode': 'cms.content.ContentsTypeCode',
+  'cms.content.ContentUseEnabledType': 'cms.content.ContentUseEnabledType',
   'cms.html5.Html5ProcessingStatus': 'cms.html5.Html5ProcessingStatus',
   'cms.scorm.ScormProcessingStatus': 'cms.scorm.ScormProcessingStatus',
   'cms.share.ShareOptionCode': 'cms.share.ShareOptionCode',

@@ -486,3 +486,16 @@ export const getKeysByLevel = (treeData: TreeNode[], level: number, currentLevel
   // 현재 레벨의 키와 자식 노드들의 키를 합침
   return [...currentLevelKeys, ...childrenKeys];
 };
+
+//  모든 하위 노드 키를 추출
+export const flattenNodeWithChildren = (node: TreeNode) => {
+  let nodes = [node];
+
+  if (node.children && node.children.length > 0) {
+    node.children.forEach((child) => {
+      nodes = [...nodes, ...flattenNodeWithChildren(child)];
+    });
+  }
+
+  return nodes;
+};

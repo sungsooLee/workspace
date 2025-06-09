@@ -8,8 +8,9 @@ import {
   useModal,
   Tabs,
   Button,
+  Tooltip,
 } from '@learnway/ui';
-import { IcoRefresh02 } from '@learnway/icons';
+import { IcoRefresh02, IcoAlertCircle } from '@learnway/icons';
 
 /* tab contents */
 import { UserGroup } from './-tabcontents/group';
@@ -55,7 +56,12 @@ function RouteComponent() {
     ];
     return (
       <ModalContainer>
-        <ModalTitle>유저 그룹 조회</ModalTitle>
+        <ModalTitle>
+          유저 그룹 조회
+          <Tooltip side={'bottom'} align={'start'} content={'tooltip content'}>
+            <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
+          </Tooltip>
+        </ModalTitle>
         <ModalBody>
           <Tabs items={tabItems} type="line" size={'sm'} selectedTabKey={'tab01'} />
         </ModalBody>

@@ -1,5 +1,6 @@
-import { Children, FC, isValidElement, ReactNode, useState, useEffect, useRef } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
+import { useState, useEffect, useRef } from 'react';
+import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
+import { t } from 'i18next';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
@@ -22,24 +23,38 @@ export const Route = createFileRoute('/_layout/platform/tenant/organization/deta
  * 화면 번호 : NLP_BO_TMS_1111_03
  * @returns
  */
-function RouteComponent() {
+function RouteComponent({ companyCode }: { companyCode: string }) {
+  const router = useRouter();
+  const routerState = useRouterState();
+
   const [selectedTabKey, setSelectedTabKey] = useState<string>(EnOrganizationShowType.origin);
+
+  const handleListButtonClick = () => {
+    const listParam = routerState.location.state?.listParam;
+    console.log('listParam-detail', listParam);
+    router.navigate({ to: '/platform/tenant/organization', state: { listParam: listParam } });
+  };
 
   const menuItems = [
     {
-      title: '회사조직 확인',
-      key: EnOrganizationShowType.check,
-      content: <TenantCompanyOrganizationTree showType={EnOrganizationShowType.check} />,
-    },
-    {
       title: '회사조직(원본)',
       key: EnOrganizationShowType.origin,
-      content: <TenantCompanyOrganizationTree showType={EnOrganizationShowType.origin} />,
+      content: (
+        <TenantCompanyOrganizationTree
+          companyCode={companyCode}
+          showType={EnOrganizationShowType.origin}
+        />
+      ),
     },
     {
       title: '회사조직(플랫폼)',
       key: EnOrganizationShowType.platform,
-      content: <TenantCompanyOrganizationTree showType={EnOrganizationShowType.platform} />,
+      content: (
+        <TenantCompanyOrganizationTree
+          companyCode={companyCode}
+          showType={EnOrganizationShowType.platform}
+        />
+      ),
     },
   ];
 
@@ -52,7 +67,13 @@ function RouteComponent() {
   return (
     <PageContainer>
       <ContentsButtons>
-        <Button variant="point" size="sm">
+        <Button
+          variant="point"
+          size="sm"
+          stopPropagation
+          onClick={handleListButtonClick}
+          label={t('목록')}
+        >
           목록
         </Button>
       </ContentsButtons>

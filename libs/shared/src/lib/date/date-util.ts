@@ -1,6 +1,7 @@
 import dayjs, { ManipulateType } from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+import duration_ from 'dayjs/plugin/duration';
 
 import { t } from 'i18next';
 import { DATE_TIME_FORMAT } from '../types/date-time';
@@ -8,6 +9,7 @@ import { getDateTimeFormat } from './date-format';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
+dayjs.extend(duration_);
 
 /*
 day         d	  Day
@@ -77,21 +79,14 @@ export const formatDate = (value: Date | string | number, format = DATE_TIME_FOR
 };
 
 /**
- * duration 연산후 문자열로 리턴
+ * 초를 입력받아서 duration 연산후 문자열로 리턴
  * format 이 없으면 Date type 리턴
- * @param value date | string
- * @param config 계산할 단위의 조합 config = {
- *   days: 1,
- *   hours: 5,
- *   minutes: 30,
- *   seconds: 15
- * }
+ * @param seconds 초
  * @param format 변환 포맷
  * @return string
  */
-export const duration = (config: any, format?: string) => {
-  const d = (dayjs as any).duration(config);
-  return formatDate(d, format);
+export const duration = (seconds: number, format?: string) => {
+  return dayjs.duration(seconds, 'seconds').format(getDateTimeFormat(format));
 };
 
 /**

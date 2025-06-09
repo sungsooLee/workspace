@@ -61,32 +61,35 @@ const ProgressDonutComponent = forwardRef<
 
     // SVG 요소를 렌더링
     return (
-      <svg width={size} height={size} ref={ref}>
-        {' '}
-        {/* ref를 SVG 요소에 연결 */}
-        {/* 트랙(진행되지 않은 부분)을 나타내는 원 */}
-        <circle
-          cx={size / 2} // 원의 중심 x 좌표 (SVG 뷰포트의 중앙)
-          cy={size / 2} // 원의 중심 y 좌표 (SVG 뷰포트의 중앙)
-          r={radius} // 원의 반지름
-          stroke={trackColor} // 선 색상
-          strokeWidth={strokeWidth} // 선 두께
-          fill="none" // 원 내부를 채우지 않음
-        />
-        {/* 진행률(채워진 부분)을 나타내는 원 */}
-        <circle
-          cx={size / 2} // 원의 중심 x 좌표
-          cy={size / 2} // 원의 중심 y 좌표
-          r={radius} // 원의 반지름
-          stroke={progressColor} // 선 색상
-          strokeWidth={strokeWidth} // 선 두께
-          fill="none" // 원 내부를 채우지 않음
-          strokeLinecap="square" // 선의 끝을 둥글게 처리
-          strokeDasharray={circumference} // 선의 대시 패턴 (둘레 전체를 하나의 대시로 설정)
-          strokeDashoffset={offset} // 선의 대시 오프셋 (진행률에 따라 채워지는 정도 조절)
-          transform={`rotate(-90 ${size / 2} ${size / 2})`} // 원을 -90도 회전시켜 상단에서 시작하도록 함
-        />
-      </svg>
+      <>
+        <svg width={size} height={size} ref={ref}>
+          {' '}
+          {/* ref를 SVG 요소에 연결 */}
+          {/* 트랙(진행되지 않은 부분)을 나타내는 원 */}
+          <circle
+            cx={size / 2} // 원의 중심 x 좌표 (SVG 뷰포트의 중앙)
+            cy={size / 2} // 원의 중심 y 좌표 (SVG 뷰포트의 중앙)
+            r={radius} // 원의 반지름
+            stroke={trackColor} // 선 색상
+            strokeWidth={strokeWidth} // 선 두께
+            fill="none" // 원 내부를 채우지 않음
+          />
+          {/* 진행률(채워진 부분)을 나타내는 원 */}
+          <circle
+            cx={size / 2} // 원의 중심 x 좌표
+            cy={size / 2} // 원의 중심 y 좌표
+            r={radius} // 원의 반지름
+            stroke={progressColor} // 선 색상
+            strokeWidth={strokeWidth} // 선 두께
+            fill="none" // 원 내부를 채우지 않음
+            strokeLinecap="square" // 선의 끝을 둥글게 처리
+            strokeDasharray={circumference} // 선의 대시 패턴 (둘레 전체를 하나의 대시로 설정)
+            strokeDashoffset={offset} // 선의 대시 오프셋 (진행률에 따라 채워지는 정도 조절)
+            transform={`rotate(-90 ${size / 2} ${size / 2})`} // 원을 -90도 회전시켜 상단에서 시작하도록 함
+          />
+        </svg>
+        {/* <p>dd</p> */}
+      </>
     );
   },
 );

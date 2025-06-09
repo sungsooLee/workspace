@@ -17,10 +17,10 @@ export function useFetchRoleMenus(tenantId: number, siteScope: string, roleCode:
   });
 }
 
-export function useFetchMenuApis(roleCode: string, menuId: string) {
+export function useFetchMenuApis(roleCode: string, tenantMappingMenuId: number) {
   return useQuery({
-    ...queryOptions.getMenuApis(roleCode, menuId),
-    enabled: !!roleCode && !!menuId,
+    ...queryOptions.getMenuApis(roleCode, tenantMappingMenuId),
+    enabled: !!roleCode && !!tenantMappingMenuId,
   });
 }
 

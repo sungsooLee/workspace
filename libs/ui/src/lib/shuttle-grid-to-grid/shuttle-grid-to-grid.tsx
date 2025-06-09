@@ -55,10 +55,9 @@ export interface ShuttleGridToGridImperative {
 }
 
 /**
- * ShuttleGridToGrid 컴포넌트 함수형 정의
- * 두 개의 그리드를 나란히 배치하고, 좌측 그리드에서 우측 그리드로 데이터를 선택/이동하며
- * 우측 그리드에서 데이터를 삭제하는 기능을 제공합니다.
- * `forwardRef`를 사용하여 외부에서 `resetSelection` 메서드를 호출할 수 있습니다.
+ * Shuttle Grid To Grid
+ * - 그리드는 페이지네이션 타입을 기본으로 하나, 셔틀 화면은 업무에 맞게 페이지네이션 또는 스크롤 타입을 제공
+ * - 그리드 스크롤 타입을 제공할 경우, 필수 조회 항목 설정하여 조회 결과가 소팅되어 목록에 노출될 수 있도록 함
  */
 const ShuttleGridToGridComponent = (
   {

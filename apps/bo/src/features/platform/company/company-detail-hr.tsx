@@ -1,9 +1,10 @@
 import { FC, useEffect, useState, useCallback } from 'react';
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import { Tabs } from '@learnway/ui';
 import { CompanyDetailHROrganization } from './company-detail-hr-organization';
 import { CompanyDetailHRLink } from './company-detail-ht-link';
 import { EnCompanyHrLinkType } from '@types';
+
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
 const CompanyDetailHRComponent: FC<any> = () => {
   const [selectedTabKey, setSelectedTabKey] = useState<string>(EnCompanyHrLinkType.POSITION);

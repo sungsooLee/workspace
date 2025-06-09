@@ -8,7 +8,7 @@ function RouteComponent() {
   return (
     <div>
       <h2 className="guide_tit2">E-mail(html)</h2>
-      <p className="loc html">파일위치 : /publish/html/</p>
+      <p className="loc html">파일위치 : /apps/pub/fo/publish/html/</p>
       <div className="info">
         피드백 메일 (FO,BO)
         <br />

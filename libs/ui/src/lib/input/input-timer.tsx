@@ -35,7 +35,7 @@ const InputTimerComponent = forwardRef<HTMLInputElement, InputTimerProps>(
     const [seconds, setSeconds] = useState(initialTime);
     const [timer, timerCounter] = useCounter(0);
 
-    const timerText = timer === 0 ? '' : duration({ seconds }, DATE_TIME_FORMAT.MIN_SEC).toString();
+    const timerText = timer === 0 ? '' : duration(seconds, DATE_TIME_FORMAT.MIN_SEC);
 
     useEffect(() => {
       // 0 이라는건 input-timer 최초 로드 했을경우 or 사용하는 곳에서 타이머 정지를 목적으로 0을 설정한 경우

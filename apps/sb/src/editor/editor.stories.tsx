@@ -7,11 +7,11 @@ export default {
   component: Editor,
   tags: ['autodocs'],
   argTypes: {},
+  includeStories: [''],
 } as Meta;
 type Story = StoryObj<typeof Editor>;
 
 const BaseEditorWrapper: React.FC<any> = (args) => {
-
   return (
     <div>
       <h1>Lexical Editor</h1>

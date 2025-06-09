@@ -53,7 +53,7 @@ export const roleManagerQueryOptions = {
       const roleMenus = await RoleManagerService.fetchRoleMenus(roleId);
       const roleMap = new Map();
       roleMenus.forEach((item: any) => {
-        roleMap.set(item.menuId, item);
+        roleMap.set(item.tenantMappingMenuId, item);
       });
 
       const menuData = await menuTreePromise;
@@ -66,11 +66,19 @@ export const roleManagerQueryOptions = {
   }),
 
   // 메뉴에 속한 API 목록 조회
-  getMenuApis: (roleCode: string, menuId: string) => ({
-    queryKey: [...roleQueryKeys.all, ...roleQueryKeys.menus, menuId, ...roleQueryKeys.apis],
+  getMenuApis: (roleCode: string, tenantMappingMenuId: number) => ({
+    queryKey: [
+      ...roleQueryKeys.all,
+      ...roleQueryKeys.menus,
+      tenantMappingMenuId,
+      ...roleQueryKeys.apis,
+    ],
     queryFn: async () => {
-      const menuDetailPromise = MenuMangerService.fetchMenuDetail(menuId);
-      const roleMenuApi: any[] = await RoleManagerService.fetchRoleMenuApis(roleCode, menuId);
+      const menuDetailPromise = TenantMenuManageService.findMenuTenantDetail(tenantMappingMenuId);
+      const roleMenuApi: any[] = await RoleManagerService.fetchRoleMenuApis(
+        roleCode,
+        tenantMappingMenuId,
+      );
       const menuDetail = await menuDetailPromise;
       const roleMenuApiMap = new Map();
       for (const item of roleMenuApi) {
@@ -81,7 +89,7 @@ export const roleManagerQueryOptions = {
         apiMappingMenuList: menuDetail.apiMappingMenuList,
       };
     },
-    enabled: !!menuId,
+    enabled: !!tenantMappingMenuId,
   }),
 
   // 역할 트리 조회

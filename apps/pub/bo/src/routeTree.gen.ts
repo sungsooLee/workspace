@@ -54,6 +54,7 @@ import { Route as LayoutPmsPrivatesearchlistImport } from './pages/_layout/pms/p
 import { Route as LayoutPmsPrivatesearchdetailImport } from './pages/_layout/pms/private_search_detail'
 import { Route as LayoutPmsPopupWidgetManagementImport } from './pages/_layout/pms/popup-widget-management'
 import { Route as LayoutPmsPopupTranslationCompleteImport } from './pages/_layout/pms/popup-translation-complete'
+import { Route as LayoutPmsPopupLoginOptionImport } from './pages/_layout/pms/popup-login-option'
 import { Route as LayoutPmsPopChannelSearchImport } from './pages/_layout/pms/pop-channel-search'
 import { Route as LayoutPmsMenuTenantPlatformManagementRegistrationImport } from './pages/_layout/pms/menu-tenant-platform-management-registration'
 import { Route as LayoutPmsMenuTenantPlatformManagementBasicInfomationImport } from './pages/_layout/pms/menu-tenant-platform-management-basic-infomation'
@@ -78,6 +79,7 @@ import { Route as LayoutPmsMenuChannelDetailManagementImport } from './pages/_la
 import { Route as LayoutPmsMenuChannelDetailImport } from './pages/_layout/pms/menu-channel-detail'
 import { Route as LayoutPmsLanguagemanagementImport } from './pages/_layout/pms/language_management'
 import { Route as LayoutPmsGroupManagementRegisterImport } from './pages/_layout/pms/group-management-register'
+import { Route as LayoutPmsGroupManagementInfoImport } from './pages/_layout/pms/group-management-info'
 import { Route as LayoutPmsGroupManagementImport } from './pages/_layout/pms/group-management'
 import { Route as LayoutPmsCategoryMenagementImport } from './pages/_layout/pms/category-menagement'
 import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
@@ -143,6 +145,7 @@ import { Route as GuideGuideGridImport } from './pages/_guide/guide/grid'
 import { Route as GuideGuideFormImport } from './pages/_guide/guide/form'
 import { Route as GuideGuideFileUploadImport } from './pages/_guide/guide/file-upload'
 import { Route as GuideGuideEmptyImport } from './pages/_guide/guide/empty'
+import { Route as GuideGuideEmailImport } from './pages/_guide/guide/email'
 import { Route as GuideGuideDropDownImport } from './pages/_guide/guide/drop-down'
 import { Route as GuideGuideDatePickerImport } from './pages/_guide/guide/date-picker'
 import { Route as GuideGuideCssImport } from './pages/_guide/guide/css'
@@ -423,6 +426,12 @@ const LayoutPmsPopupTranslationCompleteRoute =
     getParentRoute: () => LayoutRoute,
   } as any)
 
+const LayoutPmsPopupLoginOptionRoute = LayoutPmsPopupLoginOptionImport.update({
+  id: '/pms/popup-login-option',
+  path: '/pms/popup-login-option',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
 const LayoutPmsPopChannelSearchRoute = LayoutPmsPopChannelSearchImport.update({
   id: '/pms/pop-channel-search',
   path: '/pms/pop-channel-search',
@@ -586,6 +595,13 @@ const LayoutPmsGroupManagementRegisterRoute =
   LayoutPmsGroupManagementRegisterImport.update({
     id: '/pms/group-management-register',
     path: '/pms/group-management-register',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutPmsGroupManagementInfoRoute =
+  LayoutPmsGroupManagementInfoImport.update({
+    id: '/pms/group-management-info',
+    path: '/pms/group-management-info',
     getParentRoute: () => LayoutRoute,
   } as any)
 
@@ -997,6 +1013,12 @@ const GuideGuideEmptyRoute = GuideGuideEmptyImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const GuideGuideEmailRoute = GuideGuideEmailImport.update({
+  id: '/guide/email',
+  path: '/guide/email',
+  getParentRoute: () => GuideRoute,
+} as any)
+
 const GuideGuideDropDownRoute = GuideGuideDropDownImport.update({
   id: '/guide/drop-down',
   path: '/guide/drop-down',
@@ -1365,6 +1387,13 @@ declare module '@tanstack/react-router' {
       path: '/guide/drop-down'
       fullPath: '/guide/drop-down'
       preLoaderRoute: typeof GuideGuideDropDownImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/email': {
+      id: '/_guide/guide/email'
+      path: '/guide/email'
+      fullPath: '/guide/email'
+      preLoaderRoute: typeof GuideGuideEmailImport
       parentRoute: typeof GuideImport
     }
     '/_guide/guide/empty': {
@@ -1822,6 +1851,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutPmsGroupManagementImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/pms/group-management-info': {
+      id: '/_layout/pms/group-management-info'
+      path: '/pms/group-management-info'
+      fullPath: '/pms/group-management-info'
+      preLoaderRoute: typeof LayoutPmsGroupManagementInfoImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/pms/group-management-register': {
       id: '/_layout/pms/group-management-register'
       path: '/pms/group-management-register'
@@ -1990,6 +2026,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutPmsPopChannelSearchImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/pms/popup-login-option': {
+      id: '/_layout/pms/popup-login-option'
+      path: '/pms/popup-login-option'
+      fullPath: '/pms/popup-login-option'
+      preLoaderRoute: typeof LayoutPmsPopupLoginOptionImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/pms/popup-translation-complete': {
       id: '/_layout/pms/popup-translation-complete'
       path: '/pms/popup-translation-complete'
@@ -2155,6 +2198,7 @@ interface GuideRouteChildren {
   GuideGuideCssRoute: typeof GuideGuideCssRoute
   GuideGuideDatePickerRoute: typeof GuideGuideDatePickerRoute
   GuideGuideDropDownRoute: typeof GuideGuideDropDownRoute
+  GuideGuideEmailRoute: typeof GuideGuideEmailRoute
   GuideGuideEmptyRoute: typeof GuideGuideEmptyRoute
   GuideGuideFileUploadRoute: typeof GuideGuideFileUploadRoute
   GuideGuideFormRoute: typeof GuideGuideFormRoute
@@ -2206,6 +2250,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideCssRoute: GuideGuideCssRoute,
   GuideGuideDatePickerRoute: GuideGuideDatePickerRoute,
   GuideGuideDropDownRoute: GuideGuideDropDownRoute,
+  GuideGuideEmailRoute: GuideGuideEmailRoute,
   GuideGuideEmptyRoute: GuideGuideEmptyRoute,
   GuideGuideFileUploadRoute: GuideGuideFileUploadRoute,
   GuideGuideFormRoute: GuideGuideFormRoute,
@@ -2280,6 +2325,7 @@ interface LayoutRouteChildren {
   LayoutMenu8Menu9Route: typeof LayoutMenu8Menu9Route
   LayoutPmsCategoryMenagementRoute: typeof LayoutPmsCategoryMenagementRoute
   LayoutPmsGroupManagementRoute: typeof LayoutPmsGroupManagementRoute
+  LayoutPmsGroupManagementInfoRoute: typeof LayoutPmsGroupManagementInfoRoute
   LayoutPmsGroupManagementRegisterRoute: typeof LayoutPmsGroupManagementRegisterRoute
   LayoutPmsLanguagemanagementRoute: typeof LayoutPmsLanguagemanagementRoute
   LayoutPmsMenuChannelDetailRoute: typeof LayoutPmsMenuChannelDetailRoute
@@ -2304,6 +2350,7 @@ interface LayoutRouteChildren {
   LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute: typeof LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute
   LayoutPmsMenuTenantPlatformManagementRegistrationRoute: typeof LayoutPmsMenuTenantPlatformManagementRegistrationRoute
   LayoutPmsPopChannelSearchRoute: typeof LayoutPmsPopChannelSearchRoute
+  LayoutPmsPopupLoginOptionRoute: typeof LayoutPmsPopupLoginOptionRoute
   LayoutPmsPopupTranslationCompleteRoute: typeof LayoutPmsPopupTranslationCompleteRoute
   LayoutPmsPopupWidgetManagementRoute: typeof LayoutPmsPopupWidgetManagementRoute
   LayoutPmsPrivatesearchdetailRoute: typeof LayoutPmsPrivatesearchdetailRoute
@@ -2356,6 +2403,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutMenu8Menu9Route: LayoutMenu8Menu9Route,
   LayoutPmsCategoryMenagementRoute: LayoutPmsCategoryMenagementRoute,
   LayoutPmsGroupManagementRoute: LayoutPmsGroupManagementRoute,
+  LayoutPmsGroupManagementInfoRoute: LayoutPmsGroupManagementInfoRoute,
   LayoutPmsGroupManagementRegisterRoute: LayoutPmsGroupManagementRegisterRoute,
   LayoutPmsLanguagemanagementRoute: LayoutPmsLanguagemanagementRoute,
   LayoutPmsMenuChannelDetailRoute: LayoutPmsMenuChannelDetailRoute,
@@ -2395,6 +2443,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutPmsMenuTenantPlatformManagementRegistrationRoute:
     LayoutPmsMenuTenantPlatformManagementRegistrationRoute,
   LayoutPmsPopChannelSearchRoute: LayoutPmsPopChannelSearchRoute,
+  LayoutPmsPopupLoginOptionRoute: LayoutPmsPopupLoginOptionRoute,
   LayoutPmsPopupTranslationCompleteRoute:
     LayoutPmsPopupTranslationCompleteRoute,
   LayoutPmsPopupWidgetManagementRoute: LayoutPmsPopupWidgetManagementRoute,
@@ -2454,6 +2503,7 @@ export interface FileRoutesByFullPath {
   '/guide/css': typeof GuideGuideCssRoute
   '/guide/date-picker': typeof GuideGuideDatePickerRoute
   '/guide/drop-down': typeof GuideGuideDropDownRoute
+  '/guide/email': typeof GuideGuideEmailRoute
   '/guide/empty': typeof GuideGuideEmptyRoute
   '/guide/file-upload': typeof GuideGuideFileUploadRoute
   '/guide/form': typeof GuideGuideFormRoute
@@ -2519,6 +2569,7 @@ export interface FileRoutesByFullPath {
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/pms/category-menagement': typeof LayoutPmsCategoryMenagementRoute
   '/pms/group-management': typeof LayoutPmsGroupManagementRoute
+  '/pms/group-management-info': typeof LayoutPmsGroupManagementInfoRoute
   '/pms/group-management-register': typeof LayoutPmsGroupManagementRegisterRoute
   '/pms/language_management': typeof LayoutPmsLanguagemanagementRoute
   '/pms/menu-channel-detail': typeof LayoutPmsMenuChannelDetailRoute
@@ -2543,6 +2594,7 @@ export interface FileRoutesByFullPath {
   '/pms/menu-tenant-platform-management-basic-infomation': typeof LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute
   '/pms/menu-tenant-platform-management-registration': typeof LayoutPmsMenuTenantPlatformManagementRegistrationRoute
   '/pms/pop-channel-search': typeof LayoutPmsPopChannelSearchRoute
+  '/pms/popup-login-option': typeof LayoutPmsPopupLoginOptionRoute
   '/pms/popup-translation-complete': typeof LayoutPmsPopupTranslationCompleteRoute
   '/pms/popup-widget-management': typeof LayoutPmsPopupWidgetManagementRoute
   '/pms/private_search_detail': typeof LayoutPmsPrivatesearchdetailRoute
@@ -2599,6 +2651,7 @@ export interface FileRoutesByTo {
   '/guide/css': typeof GuideGuideCssRoute
   '/guide/date-picker': typeof GuideGuideDatePickerRoute
   '/guide/drop-down': typeof GuideGuideDropDownRoute
+  '/guide/email': typeof GuideGuideEmailRoute
   '/guide/empty': typeof GuideGuideEmptyRoute
   '/guide/file-upload': typeof GuideGuideFileUploadRoute
   '/guide/form': typeof GuideGuideFormRoute
@@ -2664,6 +2717,7 @@ export interface FileRoutesByTo {
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/pms/category-menagement': typeof LayoutPmsCategoryMenagementRoute
   '/pms/group-management': typeof LayoutPmsGroupManagementRoute
+  '/pms/group-management-info': typeof LayoutPmsGroupManagementInfoRoute
   '/pms/group-management-register': typeof LayoutPmsGroupManagementRegisterRoute
   '/pms/language_management': typeof LayoutPmsLanguagemanagementRoute
   '/pms/menu-channel-detail': typeof LayoutPmsMenuChannelDetailRoute
@@ -2688,6 +2742,7 @@ export interface FileRoutesByTo {
   '/pms/menu-tenant-platform-management-basic-infomation': typeof LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute
   '/pms/menu-tenant-platform-management-registration': typeof LayoutPmsMenuTenantPlatformManagementRegistrationRoute
   '/pms/pop-channel-search': typeof LayoutPmsPopChannelSearchRoute
+  '/pms/popup-login-option': typeof LayoutPmsPopupLoginOptionRoute
   '/pms/popup-translation-complete': typeof LayoutPmsPopupTranslationCompleteRoute
   '/pms/popup-widget-management': typeof LayoutPmsPopupWidgetManagementRoute
   '/pms/private_search_detail': typeof LayoutPmsPrivatesearchdetailRoute
@@ -2747,6 +2802,7 @@ export interface FileRoutesById {
   '/_guide/guide/css': typeof GuideGuideCssRoute
   '/_guide/guide/date-picker': typeof GuideGuideDatePickerRoute
   '/_guide/guide/drop-down': typeof GuideGuideDropDownRoute
+  '/_guide/guide/email': typeof GuideGuideEmailRoute
   '/_guide/guide/empty': typeof GuideGuideEmptyRoute
   '/_guide/guide/file-upload': typeof GuideGuideFileUploadRoute
   '/_guide/guide/form': typeof GuideGuideFormRoute
@@ -2812,6 +2868,7 @@ export interface FileRoutesById {
   '/_layout/menu8/menu9': typeof LayoutMenu8Menu9Route
   '/_layout/pms/category-menagement': typeof LayoutPmsCategoryMenagementRoute
   '/_layout/pms/group-management': typeof LayoutPmsGroupManagementRoute
+  '/_layout/pms/group-management-info': typeof LayoutPmsGroupManagementInfoRoute
   '/_layout/pms/group-management-register': typeof LayoutPmsGroupManagementRegisterRoute
   '/_layout/pms/language_management': typeof LayoutPmsLanguagemanagementRoute
   '/_layout/pms/menu-channel-detail': typeof LayoutPmsMenuChannelDetailRoute
@@ -2836,6 +2893,7 @@ export interface FileRoutesById {
   '/_layout/pms/menu-tenant-platform-management-basic-infomation': typeof LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute
   '/_layout/pms/menu-tenant-platform-management-registration': typeof LayoutPmsMenuTenantPlatformManagementRegistrationRoute
   '/_layout/pms/pop-channel-search': typeof LayoutPmsPopChannelSearchRoute
+  '/_layout/pms/popup-login-option': typeof LayoutPmsPopupLoginOptionRoute
   '/_layout/pms/popup-translation-complete': typeof LayoutPmsPopupTranslationCompleteRoute
   '/_layout/pms/popup-widget-management': typeof LayoutPmsPopupWidgetManagementRoute
   '/_layout/pms/private_search_detail': typeof LayoutPmsPrivatesearchdetailRoute
@@ -2894,6 +2952,7 @@ export interface FileRouteTypes {
     | '/guide/css'
     | '/guide/date-picker'
     | '/guide/drop-down'
+    | '/guide/email'
     | '/guide/empty'
     | '/guide/file-upload'
     | '/guide/form'
@@ -2959,6 +3018,7 @@ export interface FileRouteTypes {
     | '/menu8/menu9'
     | '/pms/category-menagement'
     | '/pms/group-management'
+    | '/pms/group-management-info'
     | '/pms/group-management-register'
     | '/pms/language_management'
     | '/pms/menu-channel-detail'
@@ -2983,6 +3043,7 @@ export interface FileRouteTypes {
     | '/pms/menu-tenant-platform-management-basic-infomation'
     | '/pms/menu-tenant-platform-management-registration'
     | '/pms/pop-channel-search'
+    | '/pms/popup-login-option'
     | '/pms/popup-translation-complete'
     | '/pms/popup-widget-management'
     | '/pms/private_search_detail'
@@ -3038,6 +3099,7 @@ export interface FileRouteTypes {
     | '/guide/css'
     | '/guide/date-picker'
     | '/guide/drop-down'
+    | '/guide/email'
     | '/guide/empty'
     | '/guide/file-upload'
     | '/guide/form'
@@ -3103,6 +3165,7 @@ export interface FileRouteTypes {
     | '/menu8/menu9'
     | '/pms/category-menagement'
     | '/pms/group-management'
+    | '/pms/group-management-info'
     | '/pms/group-management-register'
     | '/pms/language_management'
     | '/pms/menu-channel-detail'
@@ -3127,6 +3190,7 @@ export interface FileRouteTypes {
     | '/pms/menu-tenant-platform-management-basic-infomation'
     | '/pms/menu-tenant-platform-management-registration'
     | '/pms/pop-channel-search'
+    | '/pms/popup-login-option'
     | '/pms/popup-translation-complete'
     | '/pms/popup-widget-management'
     | '/pms/private_search_detail'
@@ -3184,6 +3248,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/css'
     | '/_guide/guide/date-picker'
     | '/_guide/guide/drop-down'
+    | '/_guide/guide/email'
     | '/_guide/guide/empty'
     | '/_guide/guide/file-upload'
     | '/_guide/guide/form'
@@ -3249,6 +3314,7 @@ export interface FileRouteTypes {
     | '/_layout/menu8/menu9'
     | '/_layout/pms/category-menagement'
     | '/_layout/pms/group-management'
+    | '/_layout/pms/group-management-info'
     | '/_layout/pms/group-management-register'
     | '/_layout/pms/language_management'
     | '/_layout/pms/menu-channel-detail'
@@ -3273,6 +3339,7 @@ export interface FileRouteTypes {
     | '/_layout/pms/menu-tenant-platform-management-basic-infomation'
     | '/_layout/pms/menu-tenant-platform-management-registration'
     | '/_layout/pms/pop-channel-search'
+    | '/_layout/pms/popup-login-option'
     | '/_layout/pms/popup-translation-complete'
     | '/_layout/pms/popup-widget-management'
     | '/_layout/pms/private_search_detail'
@@ -3360,6 +3427,7 @@ export const routeTree = rootRoute
         "/_guide/guide/css",
         "/_guide/guide/date-picker",
         "/_guide/guide/drop-down",
+        "/_guide/guide/email",
         "/_guide/guide/empty",
         "/_guide/guide/file-upload",
         "/_guide/guide/form",
@@ -3434,6 +3502,7 @@ export const routeTree = rootRoute
         "/_layout/menu8/menu9",
         "/_layout/pms/category-menagement",
         "/_layout/pms/group-management",
+        "/_layout/pms/group-management-info",
         "/_layout/pms/group-management-register",
         "/_layout/pms/language_management",
         "/_layout/pms/menu-channel-detail",
@@ -3458,6 +3527,7 @@ export const routeTree = rootRoute
         "/_layout/pms/menu-tenant-platform-management-basic-infomation",
         "/_layout/pms/menu-tenant-platform-management-registration",
         "/_layout/pms/pop-channel-search",
+        "/_layout/pms/popup-login-option",
         "/_layout/pms/popup-translation-complete",
         "/_layout/pms/popup-widget-management",
         "/_layout/pms/private_search_detail",
@@ -3626,6 +3696,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/drop-down": {
       "filePath": "_guide/guide/drop-down.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/email": {
+      "filePath": "_guide/guide/email.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/empty": {
@@ -3888,6 +3962,10 @@ export const routeTree = rootRoute
       "filePath": "_layout/pms/group-management.tsx",
       "parent": "/_layout"
     },
+    "/_layout/pms/group-management-info": {
+      "filePath": "_layout/pms/group-management-info.tsx",
+      "parent": "/_layout"
+    },
     "/_layout/pms/group-management-register": {
       "filePath": "_layout/pms/group-management-register.tsx",
       "parent": "/_layout"
@@ -3982,6 +4060,10 @@ export const routeTree = rootRoute
     },
     "/_layout/pms/pop-channel-search": {
       "filePath": "_layout/pms/pop-channel-search.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/popup-login-option": {
+      "filePath": "_layout/pms/popup-login-option.tsx",
       "parent": "/_layout"
     },
     "/_layout/pms/popup-translation-complete": {

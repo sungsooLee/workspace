@@ -120,6 +120,8 @@ const TreeNodeComponent = ({
   treeContext,
   treeId,
   shouldDisableClick,
+  selectedItems,
+  sourceTreeId,
 }: TreeNodeComponentProps) => {
   const enhanceNode = node as EnhancedTreeNode;
   const [dropPosition, setDropPosition] = useState<NodeMovePositionType | null>(null);
@@ -131,7 +133,14 @@ const TreeNodeComponent = ({
     treeType === 'DEFAULT' ||
     treeType === 'DRAG_DROP' ||
     treeType === 'SAME_LEVEL_ONLY' ||
-    treeType === 'SAME_PARENT_ONLY';
+    treeType === 'SAME_PARENT_ONLY' ||
+    treeType === 'TREE_TO_TREE';
+
+  const isTreeToTreeMode = treeType === 'TREE_TO_TREE';
+  const isNodeSelected = selectedItems?.includes(enhanceNode.key) || false;
+  const isSourceTree = sourceTreeId ? treeId === sourceTreeId : false;
+  const isDragDisabled = isTreeToTreeMode && isNodeSelected && isSourceTree;
+  const shouldShowSelection = isTreeToTreeMode && isNodeSelected && isSourceTree;
 
   // 드롭 위치가 유효한지 확인
   const isValidDropPosition = useCallback(() => {
@@ -228,6 +237,10 @@ const TreeNodeComponent = ({
     if (selectedNode && selectedNode.key === enhanceNode.key) {
       styles.push('bg-[var(--gray1)]');
     }
+    // TREE_TO_TREE 모드에서 선택된 노드 스타일
+    if (shouldShowSelection) {
+      styles.push('bg-[var(--gray2)]');
+    }
 
     // 드롭 위치 스타일
     if (dropPosition === 'INSIDE') {
@@ -266,11 +279,12 @@ const TreeNodeComponent = ({
     enhanceNode.constraints,
     searchKeyword,
     enhanceNode.title,
+    isTreeToTreeMode,
   ]);
 
   // 드래그 시작
   const handleDragStart = (e: React.DragEvent) => {
-    if (!isDraggable || enhanceNode.constraints?.drag === false) return;
+    if (!isDraggable || enhanceNode.constraints?.drag === false || isDragDisabled) return;
 
     try {
       // 드래그 이미지 생성
@@ -434,6 +448,28 @@ const TreeNodeComponent = ({
     setIsDragging(false);
   };
 
+  const renderDragIcon = () => {
+    if (level < 1) return null;
+
+    const dragIconStyle = isDragDisabled ? 'cursor-not-allowed opacity-50' : 'cursor-grab';
+
+    return (
+      <span
+        className={`flex items-center justify-center text-5xl transition-opacity ${dragIconStyle}`}
+        draggable={!isDragDisabled}
+        onDragStart={isDragDisabled ? (e) => e.preventDefault() : handleDragStart}
+      >
+        <IcoMenu01
+          width={24}
+          height={24}
+          fill={isDragDisabled ? '#D1D5DB' : '#A9AFB8'}
+          stroke={isDragDisabled ? '#D1D5DB' : '#A9AFB8'}
+          className={styles.icon_drag}
+        />
+      </span>
+    );
+  };
+
   return (
     <div className={styles.tree_item}>
       <div
@@ -506,21 +542,7 @@ const TreeNodeComponent = ({
                 {nodeButtons(enhanceNode, level)}
               </div>
             )}
-            {level >= 1 && (
-              <span
-                className={`flex items-center justify-center text-5xl transition-opacity ${isDragAndDropMode && isActuallyDraggable ? 'cursor-grab' : 'cursor-pointer'}`}
-                draggable={true}
-                onDragStart={handleDragStart}
-              >
-                <IcoMenu01
-                  width={24}
-                  height={24}
-                  fill="#A9AFB8"
-                  stroke="#A9AFB8"
-                  className={styles.icon_drag}
-                />
-              </span>
-            )}
+            {renderDragIcon()}
           </div>
         )}
 
@@ -563,6 +585,8 @@ const TreeNodeComponent = ({
                 size={size}
                 treeContext={treeContext}
                 shouldDisableClick={shouldDisableClick}
+                selectedItems={selectedItems}
+                sourceTreeId={sourceTreeId}
               />
             ))}
         </div>
@@ -587,6 +611,8 @@ const TreeView = ({
   onCustomNodeClick,
   clientTree,
   shouldDisableClick,
+  selectedItems,
+  sourceTreeId,
 }: TreeProps) => {
   // 내부 상태 관리
   const [initialData, setInitialData] = useState<EnhancedTreeNode[]>(
@@ -1026,6 +1052,8 @@ const TreeView = ({
               onCustomNodeClick={onCustomNodeClick}
               treeContext={treeContext}
               shouldDisableClick={shouldDisableClick}
+              selectedItems={selectedItems}
+              sourceTreeId={sourceTreeId}
             />
           ))
         ) : (
