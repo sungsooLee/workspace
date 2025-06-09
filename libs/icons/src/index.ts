@@ -137,6 +137,15 @@ export { ReactComponent as IcoLearning04 } from './lib/ic_learning_04.svg'; // l
 export { ReactComponent as IcoPrevPlay } from './lib/ic_prev_play.svg'; // learning prev
 export { ReactComponent as IcoPrevNext } from './lib/ic_next_play.svg'; // learning next
 export { ReactComponent as IcoArrowDownFilled } from './lib/ic_arrow_down_filled.svg'; // date picker
+export { ReactComponent as IcoSubtitles } from './lib/ic_subtitles.svg';
+export { ReactComponent as IcoPlayerSetting } from './lib/ic_player_setting.svg';
+export { ReactComponent as IcoPlayerPlay } from './lib/ic_player_play.svg';
+export { ReactComponent as IcoPlayerPause } from './lib/ic_player_pause.svg';
+export { ReactComponent as IcoExpand } from './lib/ic_expand.svg';
+export { ReactComponent as IcoReduce } from './lib/ic_reduce.svg';
+export { ReactComponent as IcoClock10Back } from './lib/ic_clock_10_back.svg';
+export { ReactComponent as IcoClock10Forward } from './lib/ic_clock_10_forward.svg';
+export { ReactComponent as IcoBackward } from './lib/ic_backward.svg';
 //export Default as Information from './lib/information.svg?react';
 
 //import Information from './lib/information.svg';
