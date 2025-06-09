@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { com_ever_edu_pms_company_dto_res_CompanyLoginRestrictionDetailResDto } from './com_ever_edu_pms_company_dto_res_CompanyLoginRestrictionDetailResDto';
+import type { com_ever_edu_pms_company_dto_res_CompanyLoginRestrictionUserGroupResDto } from './com_ever_edu_pms_company_dto_res_CompanyLoginRestrictionUserGroupResDto';
 /**
  * 로그인 제한 정보
  */
@@ -59,6 +60,10 @@ export type com_ever_edu_pms_company_dto_res_CompanyLoginRestrictionResDto = {
      * 회사로그인제한 설정정보
      */
     companyLoginRestrictionDetailList?: Array<com_ever_edu_pms_company_dto_res_CompanyLoginRestrictionDetailResDto>;
+    /**
+     * 회사로그인제한 유저그룹
+     */
+    companyLoginRestrictionUserGroupList?: Array<com_ever_edu_pms_company_dto_res_CompanyLoginRestrictionUserGroupResDto>;
 };
 export namespace com_ever_edu_pms_company_dto_res_CompanyLoginRestrictionResDto {
     /**

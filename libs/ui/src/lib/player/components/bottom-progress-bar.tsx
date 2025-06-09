@@ -1,18 +1,18 @@
-import {
-  Maximize2,
-  Minimize2,
-  Pause,
-  Play,
-  Settings,
-  Subtitles,
-  Volume2,
-  VolumeX,
-} from 'lucide-react';
+import { Volume2, VolumeX } from 'lucide-react';
 import { PlayerContainerProps } from '../types';
+import {
+  IcoExpand,
+  IcoPlayerPause,
+  IcoPlayerPlay,
+  IcoPlayerSetting,
+  IcoReduce,
+  IcoSubtitles,
+} from '@learnway/icons';
 
 const BottomProgressBar = ({
   isFullscreen,
   playing,
+  subtitlesVisible,
   currentTime,
   muted,
   duration,
@@ -28,6 +28,7 @@ const BottomProgressBar = ({
   PlayerContainerProps,
   | 'isFullscreen'
   | 'currentTime'
+  | 'subtitlesVisible'
   | 'toggleMute'
   | 'muted'
   | 'duration'
@@ -52,17 +53,27 @@ const BottomProgressBar = ({
   };
 
   return (
-    <div className="absolute bottom-0 left-0 w-full px-4 pb-4 text-white">
+    <div className="absolute bottom-0 left-0 w-full px-4 pb-6 text-white">
       <div className="h-2 w-full cursor-pointer rounded bg-white/30" onClick={handleSeek}>
-        <div className="h-full rounded bg-[#1a2223]" style={{ width: `${played * 100}%` }} />
+        <div className="h-full rounded bg-[#00AFD5]" style={{ width: `${played * 100}%` }} />
       </div>
-      <div className="mt-3 flex items-center justify-between">
+      <div className="mt-5 flex items-center justify-between">
         <div className="flex flex-row items-center gap-6">
-          <button onClick={togglePlay}>{playing ? <Pause size={24} /> : <Play size={24} />}</button>
+          <button onClick={togglePlay}>
+            {playing ? (
+              <IcoPlayerPause className="h-6 w-6 text-white" />
+            ) : (
+              <IcoPlayerPlay className="h-6 w-6 text-white" />
+            )}
+          </button>
           {/* 왼쪽: 볼륨 */}
           <div className="flex items-center gap-2">
             <button onClick={toggleMute}>
-              {muted || volume === 0 ? <VolumeX size={24} /> : <Volume2 size={24} />}
+              {muted || volume === 0 ? (
+                <VolumeX className="h-6 w-6" />
+              ) : (
+                <Volume2 className="h-6 w-6 fill-white" />
+              )}
             </button>
             <input
               style={{
@@ -85,10 +96,17 @@ const BottomProgressBar = ({
 
         {/* 오른쪽: 설정, 전체화면 */}
         <div className="flex gap-4">
-          <Subtitles size={24} className="cursor-pointer" onClick={toggleSubtitles} />
-          <Settings size={24} className="cursor-pointer" />
+          <IcoSubtitles
+            className={`h-6 w-6 cursor-pointer ${subtitlesVisible ? 'fill-[#00AFD5]' : 'fill-white'}`}
+            onClick={toggleSubtitles}
+          />
+          <IcoPlayerSetting className="h-6 w-6 cursor-pointer fill-white" />
           <button onClick={toggleFullscreen}>
-            {isFullscreen ? <Minimize2 size={24} /> : <Maximize2 size={24} />}
+            {isFullscreen ? (
+              <IcoReduce className="h-6 w-6 cursor-pointer" />
+            ) : (
+              <IcoExpand className="h-6 w-6 cursor-pointer" />
+            )}
           </button>
         </div>
       </div>

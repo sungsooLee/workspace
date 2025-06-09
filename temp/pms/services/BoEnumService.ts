@@ -3,7 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { com_ever_edu_enums_EnumValue } from '../models/com_ever_edu_enums_EnumValue';
-import type { com_ever_edu_pms_common_cd_dto_res_EnumSyncResDto } from '../models/com_ever_edu_pms_common_cd_dto_res_EnumSyncResDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
@@ -39,10 +38,10 @@ export class BoEnumService {
     /**
      * 플랫폼관리 > 시스템 공통코드 관리 > 전체 Enum Sync 생성/수정/삭제
      * enum 전체를 다국어테이블과 비교해서 저장,수정,삭제한다.
-     * @returns com_ever_edu_pms_common_cd_dto_res_EnumSyncResDto OK
+     * @returns any OK
      * @throws ApiError
      */
-    public static syncAllEnums(): CancelablePromise<com_ever_edu_pms_common_cd_dto_res_EnumSyncResDto> {
+    public static syncAllEnums(): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/admin/api/v1/enum/multilingual',

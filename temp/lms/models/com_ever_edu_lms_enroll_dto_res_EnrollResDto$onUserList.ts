@@ -4,7 +4,6 @@
 /* eslint-disable */
 export type com_ever_edu_lms_enroll_dto_res_EnrollResDto$onUserList = {
     courseType?: com_ever_edu_lms_enroll_dto_res_EnrollResDto$onUserList.courseType;
-    isScheduleConflictAllowed?: boolean;
     courseUuid?: string;
     courseSequenceUuid?: string;
     courseSequenceName?: string;
@@ -12,12 +11,11 @@ export type com_ever_edu_lms_enroll_dto_res_EnrollResDto$onUserList = {
     courseSequenceStartDate?: string;
     courseSequenceEndDate?: string;
     enrollStatusType?: com_ever_edu_lms_enroll_dto_res_EnrollResDto$onUserList.enrollStatusType;
-    enrollSourceType?: com_ever_edu_lms_enroll_dto_res_EnrollResDto$onUserList.enrollSourceType;
 };
 export namespace com_ever_edu_lms_enroll_dto_res_EnrollResDto$onUserList {
     export enum courseType {
-        ELEARNING = 'ELEARNING',
-        ELEARNING_SANGSI = 'ELEARNING_SANGSI',
+        ELEARNING1 = 'ELEARNING1',
+        ELEARNING2 = 'ELEARNING2',
         CLASS = 'CLASS',
         LIVE = 'LIVE',
         EXAM = 'EXAM',
@@ -27,11 +25,6 @@ export namespace com_ever_edu_lms_enroll_dto_res_EnrollResDto$onUserList {
         ENROLL_DONE = 'ENROLL_DONE',
         ENROLL_REQUEST = 'ENROLL_REQUEST',
         CANCEL_DONE = 'CANCEL_DONE',
-    }
-    export enum enrollSourceType {
-        USER = 'USER',
-        ADMIN = 'ADMIN',
-        SYSTEM = 'SYSTEM',
     }
 }
 

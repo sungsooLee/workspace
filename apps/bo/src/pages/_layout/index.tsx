@@ -205,7 +205,7 @@ export const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 완료', // 비고
-    end: false,
+    end: true,
   },
   {
     screenName: '프로그램 관리',

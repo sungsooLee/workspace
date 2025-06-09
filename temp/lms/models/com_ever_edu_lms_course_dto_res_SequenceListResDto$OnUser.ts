@@ -5,7 +5,6 @@
 export type com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser = {
     courseType?: com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser.courseType;
     isDuplicateEnrollAllowed?: boolean;
-    isScheduleConflictAllowed?: boolean;
     courseSequenceName?: string;
     courseSequenceUuid?: string;
     enrollQueueId?: number;
@@ -25,16 +24,16 @@ export type com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser = {
     maxWaitlistQuota?: number;
     currentWaitlistCount?: number;
     isEnrollClosed?: boolean;
-    isWaitListFuncActivated?: boolean;
     preRequisiteCourseIds?: Array<number>;
+    waitListPickMethodType?: com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser.waitListPickMethodType;
     enrollmentDenyReasons?: Array<'IS_BLACKLIST' | 'IS_NOT_WHITELIST' | 'DELETED_COURSE' | 'EXCEEDED_QUOTA' | 'DUPLICATE_ENROLL' | 'IS_NOT_ENROLL_PERIOD' | 'CONFLICT_SCHEDULE' | 'IS_ENROLL_CLOSED' | 'DEFAULT_CONSTRAINT' | 'NEED_PREREQUISITE_COURSE' | 'LIMIT_MONTH_INDIVIDUAL_PER_CATEGORY' | 'LIMIT_YEAR_INDIVIDUAL_PER_CATEGORY' | 'LIMIT_MONTH_COMPANY_PER_CATEGORY' | 'LIMIT_YEAR_COMPANY_PER_CATEGORY'>;
     enrollButtonState?: com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser.enrollButtonState;
     hide?: boolean;
 };
 export namespace com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser {
     export enum courseType {
-        ELEARNING = 'ELEARNING',
-        ELEARNING_SANGSI = 'ELEARNING_SANGSI',
+        ELEARNING1 = 'ELEARNING1',
+        ELEARNING2 = 'ELEARNING2',
         CLASS = 'CLASS',
         LIVE = 'LIVE',
         EXAM = 'EXAM',
@@ -61,6 +60,11 @@ export namespace com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser {
     export enum learningStartType {
         FIXED_DATE = 'FIXED_DATE',
         DAYS_AFTER_ENROLL = 'DAYS_AFTER_ENROLL',
+    }
+    export enum waitListPickMethodType {
+        NONE = 'NONE',
+        AUTO = 'AUTO',
+        MANUAL = 'MANUAL',
     }
     export enum enrollButtonState {
         QUEUE = 'QUEUE',

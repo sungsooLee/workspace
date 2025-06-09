@@ -201,7 +201,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
           </div>
         }
       />
-      <div className="inner_contents">
+      <div className={layoutStyles.inner_contents}>
         {/*분류*/}
         <ContentsRow>
           <FormRow

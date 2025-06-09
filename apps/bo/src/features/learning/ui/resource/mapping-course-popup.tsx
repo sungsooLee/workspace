@@ -1,5 +1,5 @@
 import { t } from 'i18next';
-import { leaningResourceQueryOptions } from '../../../../entities/leaning-resource';
+import { leaningResourceQueryOptions } from '@entities/leaning-resource';
 import { Link } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
