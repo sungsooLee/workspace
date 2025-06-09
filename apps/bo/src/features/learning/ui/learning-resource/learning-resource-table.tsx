@@ -18,6 +18,7 @@ import { useState } from 'react';
 import { leaningResourceQueryOptions } from '../../../../entities/leaning-resource';
 import { useQueryClient } from '@tanstack/react-query';
 import { ModifierInfoModal } from './learning-resource-modifier-info-modal';
+import { ProgramGuideModal } from './learning-resource-program-guide-modal';
 
 function LearningResourceTableComponent() {
   const queryClient = useQueryClient();
@@ -266,7 +267,13 @@ function LearningResourceTableComponent() {
                   size="sm"
                   label={t('프로그램/가이드 다운로드')}
                   icon={<IcoDownload width={16} height={16} stroke="#131C30" />}
-                  onClick={() => handleFileDownload('public/logo.png', 'download.png')} // 가이드 파일 하드코딩?
+                  onClick={() =>
+                    openModal({
+                      width: 'md',
+                      content: <ProgramGuideModal />,
+                    })
+                  }
+                  // onClick={() => handleFileDownload('public/logo.png', 'download.png')} // 가이드 파일 하드코딩?
                 />
                 <Button variant="outline" size="sm" label={t('일괄설정')} />
                 <Button
