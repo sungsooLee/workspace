@@ -1,5 +1,6 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
 import { cn } from '@learnway/shared';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { ContentsHistoryInfoFormField } from '../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
@@ -8,15 +9,24 @@ import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.modu
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css'; // 타이틀 css
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
-import { Button, ContentsRow, Textarea, Input } from '@learnway/ui';
-import { IcoFormRequired } from '@learnway/icons';
+import { Button, ContentsRow, Textarea, Input, Tooltip, Switch } from '@learnway/ui';
+import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
 
 export const Route = createFileRoute('/_layout/pms/category-menagement')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  // switch
+  const [checked, setChecked] = useState<{ [key: number]: boolean }>({
+    1: false,
+  });
+
+  const handleCheckedChange = (id: number) => (checked: boolean) => {
+    setChecked((prev) => ({ ...prev, [id]: checked }));
+  };
   return (
     // 컨턴츠 안에 스크롤인 경우 : scrollHidden 추가
     <PageContainer>
@@ -155,6 +165,34 @@ function RouteComponent() {
                       placeholder="메뉴 설명을 입력하세요."
                       size={'sm'}
                       maxLength={50}
+                    />
+                  </div>
+                </div>
+              </ContentsRow>
+              <ContentsRow type="horizontal">
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-toggle01" className={formStyles.form_label}>
+                    <span className={formStyles.form_text}>사용 여부</span>
+                    <Tooltip
+                      className={formStyles.tooltip}
+                      side="right"
+                      align="start"
+                      content={
+                        '테넌트 사용이 ON이면 학습자 사이트에 로그인 할 수 있으며, OFF이면 로그인 할 수 없습니다.'
+                      }
+                    >
+                      <Button onlyIcon>
+                        <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
+                      </Button>
+                    </Tooltip>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    <Switch
+                      id="name-use"
+                      className={dynamicFormStyles.btn_switch}
+                      label={checked[1] ? '사용' : '미사용'}
+                      checked={checked[1]}
+                      onCheckedChange={handleCheckedChange(1)}
                     />
                   </div>
                 </div>

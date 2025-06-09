@@ -1,5 +1,6 @@
 import React, { FC, useMemo, useState } from 'react';
-import { Dropdown, Input } from '@learnway/ui';
+import { Dropdown } from '../../dropdown/dropdown';
+import { Input } from '../../input/input';
 
 /**
  * 검색 조건을 정의하는 인터페이스
@@ -8,11 +9,11 @@ export interface GridBoxSearchInputCondition {
   /**
    * 검색 기준이 되는 키 (예: 'id', 'name', 'title' 등 컬럼의 accessorKey)
    */
-  key?: string;
+  key: string;
   /**
    * 실제 검색어 입력 값
    */
-  value?: string;
+  value: string;
 }
 
 /**
@@ -51,8 +52,8 @@ export const GridBoxSearchInput: FC<GridBoxSearchInputProps> = ({ columns, onEnt
   // `useState`의 초기값으로 콜백 함수를 사용하여 `options`가 준비된 후에 초기 `key`를 설정합니다.
   const [condition, setCondition] = useState<GridBoxSearchInputCondition>(() => ({
     // 검색 가능한 컬럼이 있다면 첫 번째 컬럼의 value를 기본 key로 설정
-    key: options.length > 0 ? options[0].value : undefined,
-    value: undefined, // 검색어는 초기에는 비어 있습니다.
+    key: options?.[0]?.value || '',
+    value: '', // 검색어는 초기에는 비어 있습니다.
   }));
 
   /**
@@ -61,10 +62,8 @@ export const GridBoxSearchInput: FC<GridBoxSearchInputProps> = ({ columns, onEnt
    */
   const handleOnEnterKeyDown = () => {
     // `condition`이 유효한 경우 (즉, undefined가 아닐 때) `onEnterKeyDown` 콜백 호출
-    // 또한, `key`와 `value`가 모두 유효한 경우에만 검색을 수행하도록 로직을 더 강화할 수 있습니다.
-    // 예: if (condition?.key && condition?.value !== undefined && onEnterKeyDown) { onEnterKeyDown(condition); }
-    if (onEnterKeyDown) {
-      onEnterKeyDown(condition || {}); // `condition`이 undefined일 경우 빈 객체를 전달
+    if (onEnterKeyDown && condition?.key && condition?.value) {
+      onEnterKeyDown(condition); // `condition`이 undefined일 경우 빈 객체를 전달
     }
   };
 

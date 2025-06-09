@@ -1,10 +1,4 @@
-import {
-  ColumnFiltersState,
-  RowData,
-  SortingState,
-  Table,
-  VisibilityState,
-} from '@tanstack/react-table';
+import { ColumnFiltersState, RowData, SortingState, Table } from '@tanstack/react-table';
 
 declare module '@tanstack/react-table' {
   /**
@@ -90,6 +84,12 @@ export interface GridProps<T> {
    * 각 컬럼의 정의는 `any` 타입으로 구성됩니다.
    */
   columns: any[];
+
+  /**
+   * useReactTable() 생성시 getRowId 설정에 사용되는 key 값
+   * 기본값 : 'id'
+   */
+  rowId?: string;
 
   /**
    * 데이터 로딩 중 여부를 나타내는 boolean 값입니다.
@@ -193,7 +193,7 @@ export interface GridProps<T> {
    * 컬럼, 그리드 설정 변경 시 호출되는 콜백 함수입니다.
    * @param {GridState} state 변경된 그리드 상태
    */
-  onStateChange?: (state: GridState) => void;
+  onStateChange?: (state: GridBoxState) => void;
 
   /**
    * 데이터 변경 시 호출되는 콜백 함수입니다.
@@ -272,6 +272,15 @@ export interface GridProps<T> {
 /**
  * Grid 컴포넌트의 상태를 나타내는 인터페이스입니다.
  */
+export interface GridBoxState {
+  page?: number;
+  size?: number;
+  sort?: string[];
+}
+
+/**
+ * Grid 컴포넌트의 상태를 나타내는 인터페이스입니다.
+ */
 export interface GridState {
   /**
    * 컬럼 필터 상태를 나타내는 배열입니다.
@@ -286,12 +295,12 @@ export interface GridState {
   /**
    * 컬럼 표시 여부를 나타내는 객체입니다.
    */
-  columnVisibility?: VisibilityState;
+  // columnVisibility?: VisibilityState;
 
   /**
    * 컬럼 순서를 나타내는 문자열 배열입니다.
    */
-  columnOrder?: string[];
+  // columnOrder?: string[];
 }
 
 /**

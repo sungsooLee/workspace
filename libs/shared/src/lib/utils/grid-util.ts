@@ -43,3 +43,22 @@ export const getRowSelectionByList = (tableInstance: Table<any>, list: any[], ke
   // 생성된 선택 상태 객체를 반환합니다.
   return newSelectionState;
 };
+
+/**
+ * GridState의 정렬 상태를 쿼리 파라미터 문자열 배열로 변환합니다.
+ *
+ * 각 정렬 조건은 "columnId,asc" 또는 "columnId,desc" 형태의 문자열로 변환됩니다.
+ *
+ * 예시:
+ * 입력: [{ id: 'name', desc: false }, { id: 'age', desc: true }]
+ * 출력: ["name,asc", "age,desc"]
+ *
+ * @param {GridState} state - 정렬 정보가 포함된 그리드 상태 객체
+ * @returns {string[]} 쿼리 파라미터로 사용할 수 있는 정렬 문자열 배열
+ */
+// export const gridStateToSortQueryParams = (state: GridState): string[] => {
+export const gridStateToSortQueryParams = (state: any): string[] => {
+  if (!state.sorting || state.sorting.length === 0) return [];
+
+  return state.sorting.map(({ id, desc }: any) => `${id},${desc ? 'desc' : 'asc'}`);
+};

@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Button, GridBox, GridState, useGridBox } from '@learnway/ui';
+import { Button, GridBox, GridState, useGridBox, GridBoxState } from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { CODE_GROUP, useSearchBox } from '@learnway/hooks';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
@@ -71,7 +71,7 @@ function RouteComponent() {
     });
   };
 
-  const handleStateChange = (newState: GridState) => {
+  const handleStateChange = (newState: GridBoxState) => {
     console.log(newState);
   };
 

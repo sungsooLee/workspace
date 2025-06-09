@@ -6,7 +6,7 @@ body main {
   @apply !max-w-[100vw];
   [class*='content_wrap'] {
     & > div {
-      @apply !max-w-[calc(100vw-80px)];
+      @apply min-w-[1360px] !max-w-[calc(100vw-80px)] overflow-x-auto;
       & > div {
         @apply !max-w-[calc(100vw-144px)];
       }
@@ -21,7 +21,7 @@ body main {
   @apply !max-w-[calc(100vw-280px)];
   [class*='content_wrap'] {
     & > div {
-      @apply !max-w-[calc(100vw-360px)];
+      @apply min-w-[1080px] !max-w-[calc(100vw-360px)] overflow-x-auto;
       & > div {
         @apply !max-w-[calc(100vw-424px)];
       }

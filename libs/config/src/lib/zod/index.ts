@@ -1,6 +1,11 @@
 import { z } from '@learnway/shared';
-import { ZodErrorMap, ZodIssueOptionalMessage, ErrorMapCtx, ZodIssueCode } from 'zod';
-import { ZodCustomIssue } from 'zod/lib/ZodError';
+import {
+  ZodErrorMap,
+  ZodIssueOptionalMessage,
+  ErrorMapCtx,
+  ZodIssueCode,
+  ZodCustomIssue,
+} from 'zod';
 
 /**
  *  Custom zod errorMap: invalid message를 i18n code로 변경 처리

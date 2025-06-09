@@ -330,7 +330,7 @@ const CommonCodeGridComponent = ({
                   ? t('LABEL.grid.searchFirst', { list: t('LABEL.common.cdGroup') })
                   : t('LABEL.grid.emptyText')
               }
-              onStateChange={handleStateChange}
+              // onStateChange={handleStateChange}
               showNumberingColumn={true}
               customButtonNode={
                 <Button
