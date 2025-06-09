@@ -21,7 +21,6 @@ import {
 import { IcoMinus, IcoPlus } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { useTranslation } from 'react-i18next';
-import { ExcelButtons } from './excel-buttons';
 import { GridBoxSearchInput, GridBoxSearchInputCondition } from './grid-box-search-input';
 import styles from './grid-box.module.css';
 
@@ -67,26 +66,16 @@ const GridBoxComponent = <T extends object>(
     gridData = props.gridData,
     rowId = props.rowId,
     page,
-    pagination,
-    totalRows,
-    gridFetch,
     columns,
     title = props.title,
     onStateChange = props.onStateChange,
     onDataChange,
-    excel,
-    getParams,
-    totalElements,
   } = config;
   const columnHelper = createColumnHelper<any>();
   const gridRef = useRef<GridImperative>(null);
-  const [tableInstance, setTableInstance] = useState<Table<any>>(); // GridComponent로부터 받을 table 인스턴스를 저장할 상태
-
   // 마지막으로 페치에 사용된 params를 저장하는 useRef
   const lastFetchedParamsRef = useRef<GridBoxState>({ page: 0, size: 20, sort: [] }); // 초기값 설정
-
-  // const gridData: PaginationResponse<T> =
-  //   props.gridData || (config?.gridData as PaginationResponse<T>);
+  const [tableInstance, setTableInstance] = useState<Table<any>>(); // GridComponent로부터 받을 table 인스턴스를 저장할 상태
 
   // 테스트 후 삭제 예정
   const data = gridData?.content || props.data || config?.data || [];
@@ -139,7 +128,7 @@ const GridBoxComponent = <T extends object>(
           // 다른 컬럼 옵션들 (sortingFn, filterFn 등) 필요시 추가
         });
       });
-  }, [columns, page, totalRows, columnHelper]);
+  }, [columns, page, columnHelper]);
 
   /**
    * numbering 컬럼 여부 확인 (props나 config로 전달 가능)
@@ -308,7 +297,7 @@ const GridBoxComponent = <T extends object>(
           {showTotalCount && (
             <CountText
               label={t('LABEL.grid.header.all', '전체')}
-              count={totalElements || data?.length || 0}
+              count={gridData?.totalElements || data?.length || 0}
             />
           )}
           {/* 좌측 타이틀 영역 커스텀 (전체 카운트와 가이드 텍스트 중간 영역) */}

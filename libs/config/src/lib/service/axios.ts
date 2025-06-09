@@ -1,8 +1,8 @@
-import axios from 'axios';
 import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import { isFunction } from 'lodash';
-
-import { httpService, HttpMethod, eventService } from '@learnway/shared';
+import qs from 'qs'; // qs 라이브러리 임포트
+import { HttpMethod, httpService } from '@learnway/shared';
 
 import { tokenService } from './token.service';
 import { OAuthApiPrefix } from '../service/config.service';
@@ -14,6 +14,18 @@ interface axiosConfig {
 export function initAxios(extendConfig?: axiosConfig) {
   axios.defaults.withCredentials = true;
   axios.defaults.baseURL = import.meta.env.VITE_AXIOS_BASE_URL;
+
+  // 요청 파라미터 객체를 쿼리 스트링으로 직렬화하기 위해 qs 라이브러리를 사용
+  axios.defaults.paramsSerializer = (params) => {
+    // arrayFormat 옵션에 따라 배열 데이터를 어떤 형식으로 변환할지 지정할 수 있음
+    return qs.stringify(params, {
+      arrayFormat: 'brackets', // 배열 형식을 'brackets' 스타일로 직렬화 (예: a[]=1&a[]=2)
+      // 다른 옵션 예시:
+      // arrayFormat: 'repeat'   -> a=1&a=2 (기본값)
+      // arrayFormat: 'comma'    -> a=1,2   (서버가 comma 포맷을 지원하는 경우 사용)
+      // arrayFormat: 'indices'  -> a[0]=1&a[1]=2
+    });
+  };
 
   // 로그인 페이지 경로 생성 함수
   const getLoginPath = () => {
