@@ -131,7 +131,7 @@ const SystemCodeGridComponent = ({ data }: any) => {
 
         <div className={layoutStyles.inner}>
           <form>
-            <FormSubTitle label={'enum 코드 정보'} lineType={'light'} />
+            <FormSubTitle label={'enum 코드 정보'} lineType={'dark'} />
             <div className={layoutStyles.inner_contents}>
               <ContentsRow>
                 <FormRow
