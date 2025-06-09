@@ -44,7 +44,7 @@ function RouteComponent() {
   ];
 
   return (
-    <PageContainer tabs={true}>
+    <PageContainer hideOutLine={true}>
       <ContentsButtons>
         <Button
           variant="point"
@@ -61,6 +61,7 @@ function RouteComponent() {
           className="page_tabs"
           selectedTabKey={'hr'}
           onTabChange={handleTabChange}
+          showContentBorder={true}
         />
       </MainContents>
     </PageContainer>

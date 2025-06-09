@@ -57,12 +57,12 @@ const ChannelDetailComponent: FC<any> = ({ mode, method, requestId }) => {
   }, []);
 
   useEffect(() => {
+    console.log('### pageMode=', pageMode);
+    console.log('### method=', method);
     if (pageMode === 'add') {
       const initialData = {
         channelOpenMethod: method,
-        channelOpenMethod2: method,
         channelRequestId: request?.channelRequestId,
-        channelRequestId2: request?.channelRequestId,
         tenantName: request?.tenantName,
         requestDate:
           request && getDateToString(new Date(request.requestDate), DATE_TIME_FORMAT.DATETIME_SEC),
@@ -103,18 +103,71 @@ const ChannelDetailComponent: FC<any> = ({ mode, method, requestId }) => {
       // TODO
     }
   }, [request, pageMode]);
+
+  // action별 다른 위치 배정
+  const channelOpenMethod = (
+    <FormRow
+      provider={provider}
+      name={'channelOpenMethod'}
+      element={<RadioGroupFormField disabled={true} />}
+    />
+  );
+  const channelName = <FormRow provider={provider} name={'channelName'} />;
+  const channelMainLinkContent = (
+    <FormRow
+      provider={provider}
+      name={'channelMainLinkContent'}
+      element={<Input disabled={true} />}
+    />
+  );
+  const channelType = (
+    <FormRow
+      provider={provider}
+      name={'channelType'}
+      element={<RadioGroupFormField disabled={true} />}
+    />
+  );
+  const channelDivision = <FormRow provider={provider} name={'channelDivision'} />;
+  const subscribeType = <FormRow provider={provider} name={'subscribeType'} />;
+  const channelId = (
+    <FormRow
+      provider={provider}
+      name={'channelId'}
+      element={
+        <DuplicateCodeGuideText
+          clearFormError={clearFormError}
+          checkExists={(data: string) => {
+            // checkExists(data, {
+            //   onSuccess: (data: any) => {
+            //     const isUnique = data;
+            //     setIsSuccessCodeCheck(isUnique);
+            //     setCodeCheckState(isUnique ? 'success' : 'duplicate');
+            //     onFormChange?.({
+            //       isDuplicateCode: isUnique,
+            //     });
+            //   },
+            //   onError: () => {
+            //     setIsSuccessCodeCheck(false);
+            //     setCodeCheckState('error');
+            //     onFormChange?.({ isDuplicateCode: false });
+            //   },
+            // });
+          }}
+          isSuccess={isSuccessCodeCheck}
+          codeCheckState={codeCheckState}
+          handleCodeChange=""
+          setFormError={setFormError}
+        />
+      }
+    />
+  );
+
   return (
     <>
       {pageMode === 'add' && method === 'request' && (
         <>
-          <FormSubTitle label={'채널 신청 정보'} />
-          <ContentsRow>
-            <FormRow
-              provider={provider}
-              name={'channelOpenMethod'}
-              element={<RadioGroupFormField disabled={true} />}
-            />
-          </ContentsRow>
+          <FormSubTitle label={'채널 신청 정보'} lineType={'light'} />
+          {channelOpenMethod}
           <ContentsRow>
             <FormRow
               provider={provider}
@@ -126,10 +179,7 @@ const ChannelDetailComponent: FC<any> = ({ mode, method, requestId }) => {
               </Button>
             </FormRow>
             <FormRow provider={provider} name={'tenantName'} element={<Input disabled={true} />} />
-          </ContentsRow>
-          <ContentsRow>
             <FormRow provider={provider} name={'requestDate'} element={<Input disabled={true} />} />
-            <FormRow provider={provider} name={'status'} element={<Input disabled={true} />} />
           </ContentsRow>
           <ContentsRow>
             <FormRow
@@ -147,72 +197,55 @@ const ChannelDetailComponent: FC<any> = ({ mode, method, requestId }) => {
           </ContentsRow>
         </>
       )}
-      <FormSubTitle label={'채널 기본 정보'} />
+      <FormSubTitle label={'채널 기본 정보'} lineType={'light'} />
 
-      {method !== 'request' && (
-        <ContentsRow>
-          <FormRow
-            provider={provider}
-            name={'channelOpenMethod2'}
-            element={<RadioGroupFormField disabled={true} />}
-          />
-          {pageMode === 'view' && (
+      {pageMode === 'add' && method === 'request' && (
+        <>
+          <ContentsRow>
+            {channelName}
+            {channelId}
+            {channelMainLinkContent}
+          </ContentsRow>
+          <ContentsRow>
+            {channelType}
+            {channelDivision}
+            {subscribeType}
+          </ContentsRow>
+        </>
+      )}
+      {pageMode === 'add' && method !== 'request' && (
+        <>
+          <ContentsRow>
+            {channelOpenMethod}
+            {channelName}
+            {channelId}
+          </ContentsRow>
+          <ContentsRow>
+            {channelMainLinkContent}
+            {channelType}
+            <div className={cn(formStyles.form_item)}></div>
+          </ContentsRow>
+        </>
+      )}
+      {pageMode === 'view' && (
+        <>
+          <ContentsRow>
+            {channelOpenMethod}
             <FormRow
               provider={provider}
-              name={'channelRequestId2'}
+              name={'channelRequestId'}
               element={<Input disabled={true} />}
             />
-          )}
-        </ContentsRow>
+            {channelName}
+          </ContentsRow>
+          <ContentsRow>
+            {channelId}
+            {channelMainLinkContent}
+            {channelType}
+          </ContentsRow>
+        </>
       )}
-      <ContentsRow>
-        <FormRow provider={provider} name={'channelName'} />
-        <FormRow
-          provider={provider}
-          name={'channelId'}
-          element={
-            <DuplicateCodeGuideText
-              clearFormError={clearFormError}
-              checkExists={(data: string) => {
-                // checkExists(data, {
-                //   onSuccess: (data: any) => {
-                //     const isUnique = data;
-                //     setIsSuccessCodeCheck(isUnique);
-                //     setCodeCheckState(isUnique ? 'success' : 'duplicate');
-                //     onFormChange?.({
-                //       isDuplicateCode: isUnique,
-                //     });
-                //   },
-                //   onError: () => {
-                //     setIsSuccessCodeCheck(false);
-                //     setCodeCheckState('error');
-                //     onFormChange?.({ isDuplicateCode: false });
-                //   },
-                // });
-              }}
-              isSuccess={isSuccessCodeCheck}
-              codeCheckState={codeCheckState}
-              handleCodeChange=""
-              setFormError={setFormError}
-            />
-          }
-        />
-      </ContentsRow>
-      <ContentsRow>
-        <FormRow
-          provider={provider}
-          name={'channelMainLinkContent'}
-          className={dynamicFormStyles.w_half}
-          element={<Input disabled={true} />}
-        />
-      </ContentsRow>
-      <ContentsRow>
-        <FormRow
-          provider={provider}
-          name={'channelType'}
-          element={<RadioGroupFormField disabled={true} />}
-        />
-      </ContentsRow>
+
       <ContentsRow>
         <FormRow
           provider={provider}
@@ -233,10 +266,13 @@ const ChannelDetailComponent: FC<any> = ({ mode, method, requestId }) => {
           }
         />
       </ContentsRow>
-      <ContentsRow>
-        <FormRow provider={provider} name={'channelDivision'} />
-        <FormRow provider={provider} name={'subscribeType'} />
-      </ContentsRow>
+      {method !== 'request' && (
+        <ContentsRow>
+          {channelDivision}
+          {subscribeType}
+          <div className={cn(formStyles.form_item)}></div>
+        </ContentsRow>
+      )}
       <ContentsRow>
         <FormRow
           provider={provider}
@@ -260,9 +296,7 @@ const ChannelDetailComponent: FC<any> = ({ mode, method, requestId }) => {
       <ContentsRow type={'horizontal'}>
         <FormRow provider={provider} name={'isSecureChannel'} />
         <FormRow provider={provider} name={'isActived'} />
-      </ContentsRow>
-      <ContentsRow type={'horizontal'}>
-        <FormRow className={dynamicFormStyles.w_half} provider={provider} name={'isUsed'} />
+        <FormRow provider={provider} name={'isUsed'} />
       </ContentsRow>
 
       <FormSubTitle label={'채널 홈 정보'} />
@@ -367,25 +401,22 @@ const ChannelDetailComponent: FC<any> = ({ mode, method, requestId }) => {
       <ContentsRow type={'horizontal'}>
         <FormRow provider={provider} name={'useApprovalProcess'} />
         <FormRow provider={provider} name={'learningTimeLimit'} />
-      </ContentsRow>
-      <ContentsRow type={'horizontal'}>
         <FormRow provider={provider} name={'dayProgressLimit'} />
-        <FormRow provider={provider} name={'resetProgress'} />
       </ContentsRow>
       <ContentsRow type={'horizontal'}>
+        <FormRow provider={provider} name={'resetProgress'} />
         <FormRow provider={provider} name={'useTextbook'} />
         <FormRow provider={provider} name={'useTrainingCost'} />
       </ContentsRow>
       <ContentsRow type={'horizontal'}>
         <FormRow provider={provider} name={'useEmploymentInsuranceRefunds'} />
         <FormRow provider={provider} name={'availabilityOfCertificates'} />
-      </ContentsRow>
-      <ContentsRow type={'horizontal'}>
         <FormRow provider={provider} name={'useLearningPoint'} />
-        <FormRow provider={provider} name={'usePreLevelTesting'} />
       </ContentsRow>
       <ContentsRow type={'horizontal'}>
-        <FormRow provider={provider} name={'useCourseFlag'} className={dynamicFormStyles.w_half} />
+        <FormRow provider={provider} name={'usePreLevelTesting'} />
+        <FormRow provider={provider} name={'useCourseFlag'} />
+        <div className={cn(formStyles.form_item)}></div>
       </ContentsRow>
       {mode === 'view' && <ContentsHistoryInfoFormField />}
     </>
@@ -407,24 +438,7 @@ const formConfig: DynamicFormConfig = {
       ],
     },
     {
-      name: 'channelOpenMethod2',
-      type: 'radio-group',
-      label: t('채널 개설 방식'),
-      value: 'request',
-      options: [
-        { value: 'request', label: '채널 신청 개설' },
-        { value: 'direct', label: '채널 직접 개설' },
-      ],
-    },
-    {
       name: 'channelRequestId',
-      type: 'text',
-      label: t('신청 ID'),
-      value: '',
-      placeholder: '',
-    },
-    {
-      name: 'channelRequestId2',
       type: 'text',
       label: t('신청 ID'),
       value: '',

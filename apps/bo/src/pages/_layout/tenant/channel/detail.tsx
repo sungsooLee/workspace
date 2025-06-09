@@ -12,6 +12,7 @@ import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.modu
 import { ChannelDetailBase } from '@features/tenant/channel/channel-detail-base';
 import { ChannelDetailRole } from '@features/tenant/channel/channel-detail-role';
 import { ChannelDetailHome } from '@features/tenant/channel/channel-detail-home';
+import { ChannelDetailBoard } from '@features/tenant/channel/channel-detail-board';
 
 export const Route = createFileRoute('/_layout/tenant/channel/detail')({
   component: RouteComponent,
@@ -38,9 +39,9 @@ function RouteComponent() {
       content: <ChannelDetailHome />,
     },
     {
-      title: '게시판 설정',
+      title: '게시판 관리',
       key: 'board',
-      content: '게시판 설정',
+      content: <ChannelDetailBoard />,
     },
     {
       title: '구독자 관리',
@@ -55,15 +56,16 @@ function RouteComponent() {
   ];
 
   return (
-    <PageContainer tabs={true}>
+    <PageContainer hideOutLine={true}>
       <MainContents>
         <Tabs
           items={menuItems}
           type="fill"
           size="sm"
           className="page_tabs"
-          selectedTabKey={'home'}
+          selectedTabKey={'board'}
           onTabChange={handleTabChange}
+          showContentBorder={true}
         />
       </MainContents>
     </PageContainer>
