@@ -1,0 +1,20 @@
+/* info-list-box.module.css */
+.start {
+  &.wrap {
+    @apply w-full rounded-[8px] bg-[#f6f8fd] px-[32px] py-[24px];
+    .info_list {
+      & > li {
+        @apply flex w-full items-center;
+        .title {
+          @apply body_bo_2_r w-[100px] shrink-0 text-[var(--gray7)];
+        }
+        .data {
+          @apply body_bo_2_r flex-grow text-[var(--gray9)];
+        }
+        &:not(:first-child) {
+          @apply mt-[24px];
+        }
+      }
+    }
+  }
+}

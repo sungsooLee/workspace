@@ -9,6 +9,7 @@ import {
   GridBoxPagination,
   useGridBox,
   useGridBoxConfig,
+  useModal,
 } from '@learnway/ui';
 import { IcoClock01, IcoDownload, IcoFile01 } from '@learnway/icons';
 import { t } from 'i18next';
@@ -16,9 +17,11 @@ import { Table } from '@tanstack/react-table';
 import { useState } from 'react';
 import { leaningResourceQueryOptions } from '../../../../entities/leaning-resource';
 import { useQueryClient } from '@tanstack/react-query';
+import { ModifierInfoModal } from './learning-resource-modifier-info-modal';
 
 function LearningResourceTableComponent() {
   const queryClient = useQueryClient();
+  const { open: openModal } = useModal();
 
   const searchConfig: any = {
     builders: [
@@ -206,7 +209,17 @@ function LearningResourceTableComponent() {
         size: 79,
         name: 'updatedInfo',
         label: t('LABEL.content.learning-resource.updatedInfo'),
-        render: () => <Button className="h-full w-full underline">{t('보기')}</Button>,
+        render: () => (
+          <div
+            className="h-full w-full underline"
+            onClick={(e) => {
+              e.stopPropagation();
+              openModal({ width: 'sm', content: <ModifierInfoModal /> }); //lastModifierBy로 받아온 user uuid를 props로 넘겨야 함
+            }}
+          >
+            {t('보기')}
+          </div>
+        ),
       },
     ],
   };
