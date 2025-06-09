@@ -39,11 +39,6 @@ export const Route = createFileRoute('/_layout/platform/tenant/management/regist
   }),
 });
 
-const defaultLangOptions = [
-  { value: 'ko', label: '한국어', disabled: true },
-  { value: 'en', label: '영어', disabled: true },
-];
-
 const duplicateCheck = async (tenantName: string) => {
   const result: boolean = await TenantService.existTenant(tenantName);
 
@@ -57,7 +52,7 @@ const duplicateCheck = async (tenantName: string) => {
  */
 function RouteComponent() {
   const router = useRouter();
-  const [languageTypeList, setLanguageTypeList] = useState<any[]>(defaultLangOptions);
+  const [languageTypeList, setLanguageTypeList] = useState<any[]>([]);
 
   const { open: openModal, confirm: openConfirm } = useModal();
   const { control, provider, onSubmit, onFormChange, formState } = useDynamicForm(formConfig);
@@ -113,17 +108,24 @@ function RouteComponent() {
 
   useEffect(() => {
     const init = async () => {
-      const data = await getCode(CODE_GROUP['pms.multilingual.LanguageType']);
+      const data = await getCode(CODE_GROUP['pms.multilingual.LangCountryCode']);
+      const defaultOptions = data
+        .filter((i) => {
+          return i.value === 'KO' || i.value === 'EN';
+        })
+        .map((item) => {
+          return { label: item.cdContent, value: item.value, disabled: true };
+        });
       const newOptions = data
         .filter((i) => {
-          return i.value !== 'ko' && i.value !== 'en';
+          return i.value !== 'KO' && i.value !== 'EN';
         })
         .map((item) => {
           return { label: item.cdContent, value: item.value };
         });
-      const newValues = [...defaultLangOptions, ...newOptions];
+      const newValues = [...defaultOptions, ...newOptions];
       if (!isEqual(newValues, languageTypeList)) {
-        setLanguageTypeList([...defaultLangOptions, ...newOptions]);
+        setLanguageTypeList([...defaultOptions, ...newOptions]);
       }
     };
     init();
@@ -372,7 +374,7 @@ const formConfig: DynamicFormConfig = {
       tooltip: t(
         '테넌트에서 사용할 언어를 선택하고, 선택한 언어에서 다국어 설정을 할 수 있습니다.',
       ),
-      value: ['ko', 'en'],
+      value: ['KO', 'EN'],
       showSelectAll: true,
       cols: 6,
     },
