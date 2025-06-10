@@ -8,6 +8,8 @@ import {
   IcoReduce,
   IcoSubtitles,
 } from '@learnway/icons';
+import { useState } from 'react';
+import SettingsPopover from './settings-popover';
 
 const BottomProgressBar = ({
   isFullscreen,
@@ -23,6 +25,7 @@ const BottomProgressBar = ({
   toggleSubtitles,
   toggleFullscreen,
   togglePlay,
+  changePlaybackRate,
   handleSeek,
 }: Pick<
   PlayerContainerProps,
@@ -40,7 +43,14 @@ const BottomProgressBar = ({
   | 'togglePlay'
   | 'playing'
   | 'handleSeek'
+  | 'changePlaybackRate'
 >) => {
+  const [showSettings, setShowSettings] = useState(false);
+
+  const toggleSettings = () => {
+    setShowSettings((prev) => !prev);
+  };
+
   // 🎬 시간 변환 함수
   const formatTime = (seconds: number) => {
     const m = Math.floor(seconds / 60)
@@ -100,7 +110,14 @@ const BottomProgressBar = ({
             className={`h-6 w-6 cursor-pointer ${subtitlesVisible ? 'fill-[#00AFD5]' : 'fill-white'}`}
             onClick={toggleSubtitles}
           />
-          <IcoPlayerSetting className="h-6 w-6 cursor-pointer fill-white" />
+          <div className="relative">
+            <IcoPlayerSetting
+              className={`h-6 w-6 cursor-pointer ${showSettings ? 'fill-[#00AFD5]' : 'fill-white'}`}
+              onClick={toggleSettings}
+            />
+
+            {showSettings && <SettingsPopover changePlaybackRate={changePlaybackRate} />}
+          </div>
           <button onClick={toggleFullscreen}>
             {isFullscreen ? (
               <IcoReduce className="h-6 w-6 cursor-pointer" />
