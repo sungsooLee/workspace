@@ -293,10 +293,15 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
     );
 
     useEffect(() => {
-      if (isMulti && presetOptionLabel) {
+      if (
+        isMulti &&
+        presetOptionLabel &&
+        value.includes(ALL_OPTION) &&
+        value.length !== optionsWithPreset.length
+      ) {
         onChange?.(map(optionsWithPreset, 'value'));
       }
-    }, []);
+    }, [value]);
 
     // value를 react-select 형식으로 변환
     const selectedOptions = useCreation(() => {

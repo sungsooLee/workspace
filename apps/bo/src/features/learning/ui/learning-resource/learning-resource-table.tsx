@@ -1,4 +1,4 @@
-import { CODE_GROUP, useSearchBox } from '@learnway/hooks';
+import { ALL_OPTION, CODE_GROUP, useSearchBox } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
 import { SearchBox } from '@shared/ui/search-box';
 import {
@@ -56,7 +56,7 @@ function LearningResourceTableComponent() {
           name: 'contentTypes',
           type: 'dropdown',
           label: t('LABEL.content.learning-resource.contentType'),
-          value: [],
+          value: [ALL_OPTION],
           isMulti: true,
           variant: 'text',
           presetOptionLabel: t('전체'),

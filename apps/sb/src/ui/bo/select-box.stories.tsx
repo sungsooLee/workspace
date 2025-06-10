@@ -1,3 +1,4 @@
+import { ALL_OPTION } from '@learnway/hooks';
 import { AutoCompleteDropdown, Dropdown, DropdownOption } from '@learnway/ui';
 import { Meta, StoryObj } from '@storybook/react/*';
 import { t } from 'i18next';
@@ -245,7 +246,7 @@ export const DropdownStory: Story = {
 
 const MultiDropdown: React.FC<any> = (args) => {
   const [selectedOptions, setSelectedOptions] = useState<any[]>([]);
-  const [selectedOptions2, setSelectedOptions2] = useState<any[]>([]);
+  const [selectedOptions2, setSelectedOptions2] = useState<any[]>([ALL_OPTION]);
   const options = [
     { value: 'option1', label: '옵션 1' },
     { value: 'option2', label: '옵션 2' },
