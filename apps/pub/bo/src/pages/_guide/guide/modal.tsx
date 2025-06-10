@@ -11,6 +11,7 @@ import {
   Input,
   Checkbox,
   GridBox,
+  Divider,
 } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { useState } from 'react';
@@ -30,7 +31,6 @@ import {
 /* style */
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
 const ContentModal = () => {
   const { close: closeModal } = useModal();
@@ -371,40 +371,37 @@ const ResponModal = () => {
                   </div>
                 </div>
               </div>
-              <div className={cn(boxStyles.start, boxStyles.inner)}>
-                <div className="grid_wrap">
-                  <GridBox
-                    data={data}
-                    columns={columns}
-                    showColumnSettings={false}
-                    showNumberingColumn
-                    showExcelDownload
-                    columnPinning={{ columns: ['type', 'name'] }}
-                    pagination={{
-                      pageSize,
-                      pageNumber,
-                      totalPages: 100,
-                      onPageChange: setpageNumber,
-                      onPageSizeChange: setPageSize,
-                    }}
-                    title="목록"
-                    customButtonNode={
-                      <>
-                        <Checkbox label={'나의 학습자원'} size={'md'} />
-                        <Button
-                          label={'프로그램/가이드 다운로드'}
-                          icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
-                        />
-                        <Button label={'일괄설정'} variant={'text'} />
-                        <Button
-                          label={'복사'}
-                          icon={<IcoCopy width={16} height={16} stroke={'#131c30'} />}
-                        />
-                      </>
-                    }
-                  />
-                </div>
-              </div>
+              <Divider />
+              <GridBox
+                data={data}
+                columns={columns}
+                showColumnSettings={false}
+                showNumberingColumn
+                showExcelDownload
+                columnPinning={{ columns: ['type', 'name'] }}
+                pagination={{
+                  pageSize,
+                  pageNumber,
+                  totalPages: 100,
+                  onPageChange: setpageNumber,
+                  onPageSizeChange: setPageSize,
+                }}
+                title="목록"
+                customButtonNode={
+                  <>
+                    <Checkbox label={'나의 학습자원'} size={'md'} />
+                    <Button
+                      label={'프로그램/가이드 다운로드'}
+                      icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
+                    />
+                    <Button label={'일괄설정'} variant={'text'} />
+                    <Button
+                      label={'복사'}
+                      icon={<IcoCopy width={16} height={16} stroke={'#131c30'} />}
+                    />
+                  </>
+                }
+              />
             </div>
           </PageContainer>
         </form>

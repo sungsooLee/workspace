@@ -4,9 +4,8 @@ import { PageContainer } from '../../../widgets/layout/ui/container/page-contain
 import { cn } from '@learnway/shared';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
-import { Button, GridBox, Input, Dropdown, DropdownOption } from '@learnway/ui';
+import { Button, GridBox, Input, Dropdown, Divider } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { IcoRefresh02, IcoSearch } from '@learnway/icons';
 
@@ -154,23 +153,22 @@ function RouteComponent() {
               {/* 퍼블수정 20240318 : item_row 추가, btn_box 위치 수정 E */}
             </div>
           </div>
-          <div className={cn(boxStyles.start, boxStyles.inner)}>
-            <GridBox
-              data={data}
-              columns={columns}
-              showSelectedCount={true}
-              showColumnSettings={false}
-              showNumberingColumn={true}
-              pagination={{
-                pageNumber: 0,
-                pageSize: 10,
-                totalPages: 100,
-                onPageChange: setPageIndex,
-                onPageSizeChange: setPageSize,
-              }}
-              title="모듈타이틀"
-            />
-          </div>
+          <Divider />
+          <GridBox
+            data={data}
+            columns={columns}
+            showSelectedCount={true}
+            showColumnSettings={false}
+            showNumberingColumn={true}
+            pagination={{
+              pageNumber: 0,
+              pageSize: 10,
+              totalPages: 100,
+              onPageChange: setPageIndex,
+              onPageSizeChange: setPageSize,
+            }}
+            title="모듈타이틀"
+          />
         </div>
       </PageContainer>
     </form>

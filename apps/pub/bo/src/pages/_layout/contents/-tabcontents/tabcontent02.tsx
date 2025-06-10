@@ -2,8 +2,7 @@ import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
 import styles from './tabcontents02.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
-import { Button, Dropdown, Input } from '@learnway/ui';
+import { Button, Dropdown, Input, Divider } from '@learnway/ui';
 import { IcoRefresh02, IcoSearch } from '@learnway/icons';
 // eslint-disable-next-line no-empty-pattern
 const TabContents02Component: FC<{}> = ({}) => {
@@ -97,9 +96,8 @@ const TabContents02Component: FC<{}> = ({}) => {
           </div>
         </div>
       </div>
-      <div className={cn(boxStyles.start, boxStyles.inner)}>
-        {/* <TransferGrid columns={[]} gridData={undefined} rowKey={''} /> */}
-      </div>
+      <Divider />
+      {/* <TransferGrid columns={[]} gridData={undefined} rowKey={''} /> */}
     </div>
   );
 };
