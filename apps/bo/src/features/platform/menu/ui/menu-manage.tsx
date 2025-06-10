@@ -15,9 +15,10 @@ import {
   TreeNode,
   useModal,
 } from '@learnway/ui';
+import { IcoMinus, IcoPlus } from '@learnway/icons';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-
 import { DuplicateCheckInputFormField, DuplicateState } from '@features/tenant';
+
 import { ApiInfoModal } from './api-info-modal';
 import { MenuApiMappingModal } from './menu-api-mapping-modal';
 
@@ -39,8 +40,8 @@ import { FormRow, SwitchFormField } from '../../../../shared/ui';
 
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { MenuDetail } from '../../../../types/entities/menu';
+import { useWatch } from 'react-hook-form';
 
 const FORM_MODE = {
   NONE: 'NONE',
@@ -63,7 +64,7 @@ export const MenuManage = ({ menuScope }: any) => {
   const [treeData, setTreeData] = useState([]);
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [lastCreatedMenuId, setLastCreatedMenuId] = useState<string | null>(null);
-  const { open: openModal, confirm: openConfirm } = useModal();
+  const { open: openModal, confirm: openConfirm, alert: openAlert } = useModal();
   const prevDataRef = useRef<any>(null);
   const router = useRouter();
   const { showSaveComplete, showDeleteComplete, showUpdateComplete } = useModal();
@@ -87,24 +88,14 @@ export const MenuManage = ({ menuScope }: any) => {
     return DuplicateState.ok;
   };
 
-  const {
-    provider,
-    fetchData,
-    onSubmit,
-    onFormChange,
-    clearFormError,
-    control,
-    getValues,
-    setFormError,
-  } = useDynamicForm(formConfig);
+  const { provider, fetchData, onSubmit, onFormChange, clearFormError, control, getValues } =
+    useDynamicForm(formConfig);
+  const typeWatch = useWatch({ control, name: 'deviceNames' });
 
   const clearAllFormErrors = () => {
     formConfig.builders.forEach((item) => clearFormError(item.name));
   };
-  const [isSuccessCodeCheck, setIsSuccessCodeCheck] = useState(false);
-  const [codeCheckState, setCodeCheckState] = useState<'none' | 'success' | 'duplicate' | 'error'>(
-    'none',
-  );
+
   const initialFromValuesRef = useRef<any>(null);
 
   const handleOnSubmit = (node: any) => {
@@ -140,6 +131,18 @@ export const MenuManage = ({ menuScope }: any) => {
       create(createData);
     }
   };
+
+  useEffect(() => {
+    if (typeWatch && detailData && formMode !== FORM_MODE.NONE) {
+      const data = detailData as MenuDetail;
+      const { parentId } = data;
+      if (parentId !== null && typeWatch.length === 0) {
+        openAlert({
+          content: '1개 이상 적용 디바이스를 선택하세요.',
+        });
+      }
+    }
+  }, [typeWatch]);
 
   useEffect(() => {
     if (data) {
@@ -184,11 +187,9 @@ export const MenuManage = ({ menuScope }: any) => {
         location: location,
         code: { fieldValue: data.menuCode, checkState: DuplicateState.okStart },
         deviceNames: deviceNames,
-        isDuplicateMenuCode: true, // VIEW 모드에서는 기본적으로 중복 체크 통과
       };
       fetchData({ ...formData });
       initialFromValuesRef.current = { ...formData };
-      setCodeCheckState('none');
       setFormMode(FORM_MODE.VIEW);
     }
   }, [detailData]);
@@ -200,11 +201,6 @@ export const MenuManage = ({ menuScope }: any) => {
     } else {
       setFormMode(FORM_MODE.NONE);
     }
-  };
-
-  const isFieldChanged = (fieldName: string, currentValue: any) => {
-    if (!initialFromValuesRef.current) return true;
-    return initialFromValuesRef.current[fieldName] !== currentValue;
   };
 
   const addNode = (node: any) => {
@@ -246,7 +242,9 @@ export const MenuManage = ({ menuScope }: any) => {
         );
       },
       header: 'API',
-      size: 490,
+      // size: 490,
+      size: 400,
+      meta: { size: 'auto' },
     }),
     columnHelper.accessor('Delete', {
       cell: (info) => {
@@ -271,6 +269,7 @@ export const MenuManage = ({ menuScope }: any) => {
       header: '삭제',
       size: 100,
       meta: {
+        // size: 'auto',
         headerAlign: 'left', // 헤더만 가운데 정렬
         cellAlign: 'center', // 셀은 오른쪽 정렬
       },
@@ -427,6 +426,9 @@ export const MenuManage = ({ menuScope }: any) => {
         initLevel={1}
         handleSelectedNodeChange={handleSelectedNodeChange}
         maxDepth={5}
+        isSelectableNode={(node: TreeNode) => {
+          return node && node.level !== 0;
+        }}
       />
       <div className={layoutStyles.inner}>
         <form onSubmit={onSubmit(handleOnSubmit)}>
@@ -449,6 +451,7 @@ export const MenuManage = ({ menuScope }: any) => {
                 disabled={formMode === FORM_MODE.NONE || formMode === FORM_MODE.ADD}
                 onClick={handleDelete}
                 className={layoutStyles.btn_text}
+                icon={<IcoMinus width={16} height={16} stroke={'#4C515E'} />}
               >
                 삭제
               </Button>
@@ -481,6 +484,7 @@ export const MenuManage = ({ menuScope }: any) => {
                   <DuplicateCheckInputFormField
                     onDuplicationCheck={duplicateCheck}
                     disabled={formMode === FORM_MODE.NONE}
+                    inputType={'alphanumeric'}
                   />
                 }
               />
@@ -581,6 +585,7 @@ export const MenuManage = ({ menuScope }: any) => {
                         onClick={() => handleApiMapping()}
                         disabled={formMode === FORM_MODE.NONE}
                         className={layoutStyles.btn_text}
+                        icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
                       >
                         추가
                       </Button>

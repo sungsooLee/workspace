@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isEqual } from 'lodash';
 import { BaseFormFieldProps, useDynamicFormContext } from '@learnway/hooks';
@@ -54,13 +54,18 @@ export const DuplicateCheckInputFormField = forwardRef<
           needInput: 'LABEL.form.validation.needInput',
         },
       },
+      inputType,
       ...props
     },
     ref,
   ) => {
+    console.log(inputType);
     const { t } = useTranslation();
     const { guideText, onChangeGuideText } = useDynamicFormContext();
     const [editionValue, setEditionValue] = useState<DuplicateField>(value);
+
+    const prevValueRef = useRef<DuplicateField>(value);
+    const isInternalChangeRef = useRef(false);
 
     //console.log('control', control);
     const handleChangeField = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -121,24 +126,27 @@ export const DuplicateCheckInputFormField = forwardRef<
     };
 
     useEffect(() => {
-      if (isEqual(value, editionValue)) {
+      if (isInternalChangeRef.current || isEqual(prevValueRef.current, editionValue)) {
+        isInternalChangeRef.current = false;
         return;
       }
 
+      prevValueRef.current = editionValue;
       onChange?.(editionValue);
-    }, [editionValue]);
+    }, [editionValue, onChange]);
 
     useEffect(() => {
       const fieldState = control.getFieldState(name);
       if (!fieldState.isDirty && guideText) {
         onChangeGuideText('');
       }
-      if (!value || isEqual(value, editionValue)) {
-        console.log('b1', guideText);
-        return;
+
+      if (value && !isEqual(value, editionValue)) {
+        isInternalChangeRef.current = true;
+        setEditionValue(value);
+        prevValueRef.current = value;
       }
-      setEditionValue(value);
-    }, [value]);
+    }, [value, control, name, guideText, onChangeGuideText]);
 
     return (
       <div className="flex w-full gap-x-2">
@@ -147,6 +155,7 @@ export const DuplicateCheckInputFormField = forwardRef<
           onChange={handleChangeField}
           maxLength={maxLength}
           disabled={disabled}
+          type={inputType}
         />
         <Button
           type="button"

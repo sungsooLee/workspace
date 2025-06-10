@@ -133,8 +133,8 @@ const DynamicFormContainer: FC<FormRowProps> = ({
           {formConfig.tooltip && (
             <Tooltip
               className={styles.tooltip}
-              side="right"
-              align="start"
+              // side="right" //툴팁 위치가 제각각 다르게 노출 되는 현상있음.
+              // align="start"
               content={t(formConfig.tooltip as any)}
             >
               <Button

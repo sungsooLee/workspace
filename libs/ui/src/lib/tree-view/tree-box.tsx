@@ -35,6 +35,7 @@ const TreeBoxComponent = <T extends object>(
     selectedItems,
     sourceTreeId,
     maxDepth,
+    isSelectableNode,
     ...props
   }: any,
   // ref: React.Ref
@@ -171,6 +172,7 @@ const TreeBoxComponent = <T extends object>(
             selectedItems={selectedItems}
             sourceTreeId={sourceTreeId}
             maxDepth={maxDepth}
+            isSelectableNode={isSelectableNode}
             // {...props}
           />
         </TreeContainer>

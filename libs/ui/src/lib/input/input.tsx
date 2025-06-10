@@ -9,7 +9,7 @@ import { IcoDelete03, IcoSearch, IcoSearchWrite } from '@learnway/icons';
 import styles from './input.module.css';
 
 export interface InputProps extends Omit<NumericFormatProps, 'type'> {
-  type?: 'text' | 'number' | 'mask' | 'password' | 'tel' | 'file';
+  type?: 'text' | 'number' | 'mask' | 'password' | 'tel' | 'file' | 'alphanumeric';
   id?: string;
   placeholder?: string;
   unitText?: string;
@@ -65,6 +65,57 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
   ) => {
     const [isFocused, setIsFocused] = useState(false);
 
+    // 영문/숫자만 허용하는 정규식
+    const alphanumericRegex = /^[a-zA-Z0-9]*$/;
+    ///
+    const handleAlphanumericChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      console.log(event);
+      const inputValue = event.target.value;
+
+      if (alphanumericRegex.test(inputValue)) {
+        handleInputChange(inputValue);
+      }
+    };
+
+    const handleAlphanumericKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      const allowedKeys = [
+        'Backspace',
+        'Delete',
+        'ArrowLeft',
+        'ArrowRight',
+        'ArrowUp',
+        'ArrowDown',
+        'Home',
+        'End',
+        'Tab',
+        'Enter',
+        'Escape',
+      ];
+
+      if (event.ctrlKey || event.metaKey) {
+        return;
+      }
+
+      if (!allowedKeys.includes(event.key) && !alphanumericRegex.test(event.key)) {
+        event.preventDefault();
+      }
+
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        onEnterKeyDown?.();
+      }
+
+      onKeyDown?.(event);
+    };
+
+    const handleAlphanumericPaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
+      const pastedText = event.clipboardData.getData('text');
+
+      if (!alphanumericRegex.test(pastedText)) {
+        event.preventDefault();
+      }
+    };
+    ///
     const handleInputChange = (value: any) => {
       const changeEvent = {
         target: {
@@ -137,6 +188,28 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             }}
             maxLength={maxLength}
           />
+        ) : type === 'alphanumeric' ? (
+          <input
+            ref={ref}
+            id={id}
+            value={value || ''}
+            readOnly={readOnly}
+            disabled={disabled}
+            type="text"
+            placeholder={placeholder}
+            className={cn(
+              styles.input,
+              className,
+              borderNone ? styles.bd_none : '',
+              error ? styles.error : '',
+            )}
+            onKeyDown={handleAlphanumericKeyDown}
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
+            onChange={handleAlphanumericChange}
+            onPaste={handleAlphanumericPaste}
+            maxLength={maxLength}
+          />
         ) : (
           <input
             ref={ref}
@@ -188,7 +261,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
           {/* 단위 */}
           {unitText && <div className={styles.unit}>{unitText}</div>}
           {/* 입력글자수/최대입력가능글자수 */}
-          {!hideInputLength && maxLength && type === 'text' && (
+          {!hideInputLength && maxLength && (type === 'text' || type === 'alphanumeric') && (
             <div
               className={styles.count}
             >{`${(value?.toString() || '').length} / ${maxLength}`}</div>
