@@ -7,7 +7,7 @@ import type { com_ever_edu_pms_channel_dto_res_ChannelMappingTenantResDto } from
  * 채널 목록
  */
 export type com_ever_edu_pms_channel_dto_res_ChannelResDto = {
-    channelId?: number;
+    channelUuid?: string;
     channelName?: string;
     tenantId?: number;
     tenantName?: string;

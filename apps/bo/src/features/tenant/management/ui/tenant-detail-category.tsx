@@ -45,10 +45,10 @@ import {
 } from '../service/tenant-detail-tree.service';
 import { useFetchTenantCategoryDetail } from '@entities/tenant/service/tenant-category.hook';
 import { useFetchUserGroups } from '@entities/users/service/user-groups.hook';
-import { TenantCategoryCreate, TenantCategoryUpdate } from '@types';
 import { useCheckExistsCategory } from '@entities/category';
 
-import { EnFormMode } from '@types';
+import { UserGroupTabsChoiceModal } from '@features/shared';
+import { EnFormMode, TenantCategoryCreate, TenantCategoryUpdate } from '@types';
 
 enum EnCategoryType {
   TENANT = 'TENANT',
@@ -104,7 +104,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
   // 카테고리 코드 체크는 마스터/테넌트 카테고리 공통 사용
   const { checkExistsCategory: checkExists } = useCheckExistsCategory({});
 
-  const { provider, fetchData, onSubmit, onFormChange, setFormError, clearFormError } =
+  const { provider, fetchData, onSubmit, onFormChange, setFormError, clearFormError, getValues } =
     useDynamicForm(formConfig);
 
   const clearAllFormErrors = () => {
@@ -144,7 +144,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
     formConfig.builders.forEach((item) => {
       initData[item.name] = item.value;
     });
-
+    initData.isUsed = true;
     setMode(EnFormMode.ADD);
     setExpandedKeys([...expandedKeys, node.key]);
     const location = findMenuPathById(treeData, node?.menuId);
@@ -293,7 +293,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
         name: formData.categoryName,
         categoryCode: formData.code.fieldValue,
         categoryContent: formData.categoryContent,
-        isUsed: formData.isUsed,
+        isUsed: formData.tenantIsUsed,
         whiteList: userGroups,
       };
       handleUpdate({
@@ -311,7 +311,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
         sortSeq: formData.sortSeq,
         parentId: formData.parentKey,
         whiteList: userGroups,
-        isUsed: formData.isUsed,
+        isUsed: formData.tenantIsUsed,
       };
       handleSave({
         tenantId: tenantId,
@@ -497,6 +497,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
                     onDuplicationCheck={duplicateCheck}
                     disabled={
                       mode === EnFormMode.NONE ||
+                      !isTenantManager ||
                       (isTenantManager &&
                         selectedNode &&
                         selectedNode.categoryType !== EnCategoryType.TENANT)
@@ -514,6 +515,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
                   <Input
                     disabled={
                       mode === EnFormMode.NONE ||
+                      !isTenantManager ||
                       (isTenantManager &&
                         selectedNode &&
                         selectedNode.categoryType !== EnCategoryType.TENANT)
@@ -525,14 +527,12 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
             <ContentsRow type="horizontal">
               <FormRow
                 provider={provider}
-                name="isUsed"
+                name="tenantIsUsed"
                 element={
                   <SwitchFormField
                     disabled={
                       mode === EnFormMode.NONE ||
-                      (isTenantManager &&
-                        selectedNode &&
-                        selectedNode.categoryType !== EnCategoryType.TENANT)
+                      (selectedNode.categoryType !== EnCategoryType.TENANT && !getValues('isUsed'))
                     }
                   />
                 }
@@ -562,6 +562,11 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
                 element={
                   <ChipListModalSelectorFormField
                     disabled={EnFormMode.NONE}
+                    modalConfig={{
+                      content: <UserGroupTabsChoiceModal />,
+                      title: '',
+                      width: 'x1',
+                    }}
                     showAddButton
                     chipList={{
                       showInput: false,
@@ -621,6 +626,12 @@ const formConfig: DynamicFormConfig = {
     },
     {
       name: 'isUsed',
+      type: 'hidden',
+      value: false,
+      format: 'boolean',
+    },
+    {
+      name: 'tenantIsUsed',
       type: 'switch',
       label: t('LABEL.form.label.useYn'),
       value: false,

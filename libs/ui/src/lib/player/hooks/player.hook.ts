@@ -142,6 +142,7 @@ export const usePlayer = () => {
     volume,
     muted,
     isFullscreen,
+    subtitlesVisible,
     toggleFullscreen,
     toggleSubtitles,
     formatTime,

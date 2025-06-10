@@ -157,7 +157,7 @@ export class BoFileInternalApiService {
     ): CancelablePromise<com_ever_edu_global_excel_dto_res_ExcelFileHistoryResDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/internal/api/v1/excel/download/history',
+            url: '/internal/api/v1/file/excel/download/history',
             body: requestBody,
             mediaType: 'application/json',
             errors: {

@@ -6,6 +6,7 @@ import { ChannelDetailHomeContent } from './channel-detail-home-content';
 
 import { cn } from '@learnway/shared';
 import styles from './channel-detail-base.module.css';
+import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
 const ChannelDetailHomeComponent = () => {
   const router = useRouter();
@@ -14,22 +15,7 @@ const ChannelDetailHomeComponent = () => {
 
   return (
     <div className={cn(styles.start, styles.wrap)}>
-      <FormSubTitle
-        label={'홈 설정'}
-        actionNode={
-          <>
-            <Button
-              variant={'gray2'}
-              size={'sm'}
-              label={'목록'}
-              onClick={() => router.navigate({ to: '/tenant/channel' })}
-            />
-            <Button variant={'gray2'} size={'sm'} label={'초기화'} />
-            <Button variant={'line'} size={'sm'} label={'저장'} />
-          </>
-        }
-      />
-      <Panel type="rounded" hideHeaderUnderline>
+      <Panel type="fill" hideHeaderUnderline={true}>
         <div className="p-10">
           <NoticeBox
             iconVisible={true}
@@ -40,20 +26,24 @@ const ChannelDetailHomeComponent = () => {
           />
         </div>
       </Panel>
-      <ChannelDetailHomeContent
-        title={t('추천 콘텐츠 설정')}
-        tableTitle={t('추천 콘텐츠 목록')}
-        useSetting={false}
-        max={3}
-      />
-      <ChannelDetailHomeContent title={t('과정 설정')} tableTitle={t('과정 목록')} max={12} />
-      <ChannelDetailHomeContent
-        title={t('학습 패키지 설정')}
-        tableTitle={t('학습 패키지 목록')}
-        max={12}
-      />
-      <ChannelDetailHomeContent title={t('숏츠')} tableTitle={t('숏츠 목록')} max={12} />
-      <ContentsHistoryInfoFormField />
+      <div className={cn(boxStyles.start, boxStyles.inner)}>
+        <ChannelDetailHomeContent
+          title={t('추천 콘텐츠 설정')}
+          tableTitle={t('추천 콘텐츠 목록')}
+          useSetting={false}
+          max={3}
+        />
+        <ChannelDetailHomeContent title={t('과정 설정')} tableTitle={t('과정 목록')} max={12} />
+        <ChannelDetailHomeContent
+          title={t('학습 패키지 설정')}
+          tableTitle={t('학습 패키지 목록')}
+          max={12}
+        />
+        <ChannelDetailHomeContent title={t('숏츠')} tableTitle={t('숏츠 목록')} max={12} />
+        <div className="pt-10">
+          <ContentsHistoryInfoFormField />
+        </div>
+      </div>
     </div>
   );
 };

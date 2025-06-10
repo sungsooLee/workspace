@@ -24,7 +24,7 @@ export class InternalService {
      */
     public static findPage(
         pageable: org_springdoc_core_converters_models_Pageable,
-        companyType?: 'CAR' | 'GROUP' | 'HYUNDAI_GLOBAL' | 'HYUNDAI_GLOBAL_DEALER' | 'HYUNDAI_SALES' | 'HYUNDAI_SERVICE' | 'HYUNDAI_PRODUCTION' | 'KIA_GLOBAL' | 'KIA_GLOBAL_DEALER' | 'KIA_SALES' | 'KIA_SERVICE' | 'KIA_PRODUCTION' | 'CP' | 'ETC',
+        companyType?: 'CAR' | 'GLOBAL' | 'GROUP' | 'SERVICE' | 'SALES' | 'GLOBAL_DEALER' | 'ETC_SERVICE' | 'HELLO_HMG' | 'EDU_SERVICE' | 'ETC',
         companyId?: number,
         deptId?: number,
         userName?: string,

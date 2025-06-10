@@ -16,6 +16,11 @@
             svg {
               @apply absolute right-0 top-0 mr-0 mt-0 h-[20px] w-[20px] stroke-[var(--gray7)];
             }
+            [data-state='oepn'] {
+              svg {
+                @apply rotate-180;
+              }
+            }
           }
           & + div {
             @apply mt-[16px] border-t-[1px] border-solid border-[var(--gray3)] pt-[16px];

@@ -87,8 +87,8 @@ export namespace com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_Wiza
         FULL_UPDATE = 'FULL_UPDATE',
     }
     export enum courseType {
-        ELEARNING = 'ELEARNING',
-        ELEARNING_SANGSI = 'ELEARNING_SANGSI',
+        ELEARNING1 = 'ELEARNING1',
+        ELEARNING2 = 'ELEARNING2',
         CLASS = 'CLASS',
         LIVE = 'LIVE',
         EXAM = 'EXAM',
@@ -111,10 +111,9 @@ export namespace com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_Wiza
         X2 = 'X2',
     }
     export enum learningSpaceType {
-        EXTERNAL_SITE = 'EXTERNAL_SITE',
         LEARNING_WAY = 'LEARNING_WAY',
-        FACE_TO_FACE = 'FACE_TO_FACE',
-        NONE_FACE_TO_FACE = 'NONE_FACE_TO_FACE',
+        REGISTERED = 'REGISTERED',
+        MANUAL = 'MANUAL',
     }
     export enum passMethodType {
         AUTO = 'AUTO',
