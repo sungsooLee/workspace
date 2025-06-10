@@ -70,17 +70,7 @@ const MenuSettingComponent: FC<{}> = ({}) => {
     <div className={cn(styles.start, styles.wrap)}>
       <FormSubTitle
         label={'메뉴 설정'}
-        actionNode={
-          <>
-            <RadioGroupFormField
-              options={[
-                { value: 'option01', label: '모든 메뉴/API' },
-                { value: 'option02', label: '직접 선택' },
-              ]}
-            />
-            <Button label={'메뉴선택'} variant={'gray2'} size={'sm'} />
-          </>
-        }
+        actionNode={<Button label={'메뉴선택'} variant={'text'} size={'sm'} />}
         lineType={'light'}
       />
       <div className={styles.contents_wrap}>

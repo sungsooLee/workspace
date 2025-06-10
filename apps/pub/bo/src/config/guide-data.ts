@@ -664,7 +664,7 @@ export const guideData = [
     screenId: 'NLP_BO_TMS_1003_04',
     pageType: 'Page',
     completionDate: '2025-04-24',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-06-10',
     remarks: '화면 케이스 작업 완료', // 비고
   },
   {
