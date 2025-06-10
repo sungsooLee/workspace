@@ -1,10 +1,10 @@
 import { CODE_GROUP, useSearchBox } from '@learnway/hooks';
-import { cn, DATE_TIME_FORMAT, duration } from '@learnway/shared';
+import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
 import { SearchBox } from '@shared/ui/search-box';
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 import {
   Button,
   Checkbox,
+  Divider,
   GridBox,
   Tooltip,
   useGridBox,
@@ -232,55 +232,49 @@ function LearningResourceTableComponent() {
   return (
     <>
       <SearchBox provider={searchProvider} onSearch={handleSearch} />
-      <div className={cn(boxStyles.start, boxStyles.inner)}>
-        <div className="grid_wrap">
-          <GridBox
-            config={gConfig}
-            showNumberingColumn
-            multiple
-            customButtonNode={
-              <>
-                <Checkbox
-                  size="md"
-                  label={t('나의 학습자원')}
-                  checked={checkedMy}
-                  onCheckedChange={(checked: boolean) => setCheckedMy(checked)}
-                />
-                {/* 필터기능인듯? 글씨 크기가 혼자 작게 나옴 */}
-                <Button
-                  label={t('프로그램/가이드 다운로드')}
-                  icon={<IcoDownload width={16} height={16} stroke="#4C515E" />}
-                  onClick={() =>
-                    openModal({
-                      width: 'md',
-                      content: <ProgramGuideModal />,
-                    })
-                  }
-                />
-                <span className="type_tooltip">
-                  <Tooltip
-                    side="bottom"
-                    align="start"
-                    content={<pre>{t('LABEL.message.learningResource.batchModifyTooltip')}</pre>}
-                  >
-                    <IcoSucess02 width={16} height={16} stroke="#4C515E" />
-                  </Tooltip>
-                  <Button variant="text" label={t('일괄설정')} />
-                </span>
-                <Button
-                  label={t('엑셀다운로드')}
-                  icon={<IcoDownload width={16} height={16} stroke="#4C515E" />}
-                />
-                <Button
-                  label={t('복사')}
-                  icon={<IcoCopy width={16} height={16} stroke="#4C515E" />}
-                />
-              </>
-            }
-            onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
-          />
-        </div>
-      </div>
+      <Divider />
+      <GridBox
+        config={gConfig}
+        showNumberingColumn
+        multiple
+        customButtonNode={
+          <>
+            <Checkbox
+              size="md"
+              label={t('나의 학습자원')}
+              checked={checkedMy}
+              onCheckedChange={(checked: boolean) => setCheckedMy(checked)}
+            />
+            {/* 필터기능인듯? 글씨 크기가 혼자 작게 나옴 */}
+            <Button
+              label={t('프로그램/가이드 다운로드')}
+              icon={<IcoDownload width={16} height={16} stroke="#4C515E" />}
+              onClick={() =>
+                openModal({
+                  width: 'md',
+                  content: <ProgramGuideModal />,
+                })
+              }
+            />
+            <span className="type_tooltip">
+              <Tooltip
+                side="bottom"
+                align="start"
+                content={<pre>{t('LABEL.message.learningResource.batchModifyTooltip')}</pre>}
+              >
+                <IcoSucess02 width={16} height={16} stroke="#4C515E" />
+              </Tooltip>
+              <Button variant="text" label={t('일괄설정')} />
+            </span>
+            <Button
+              label={t('엑셀다운로드')}
+              icon={<IcoDownload width={16} height={16} stroke="#4C515E" />}
+            />
+            <Button label={t('복사')} icon={<IcoCopy width={16} height={16} stroke="#4C515E" />} />
+          </>
+        }
+        onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
+      />
     </>
   );
 }
