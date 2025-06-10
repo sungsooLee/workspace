@@ -106,7 +106,7 @@
   }
 }
 .form_display {
-  @apply flex w-full flex-wrap;
+  @apply mt-[4px] flex w-full flex-wrap border-t-[1px] border-solid border-[#E5ECF5] pt-[20px];
   .box {
     @apply flex;
     .dash {

@@ -17,7 +17,7 @@ import {
   ModalBody,
   ModalFooter,
 } from '@learnway/ui';
-import { IcoRefresh02, IcoSearch, IcoArrowDownDouble } from '@learnway/icons';
+import { IcoRefresh02, IcoSearch, IcoArrowDownDouble, IcoDownload } from '@learnway/icons';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 /* style */
@@ -32,18 +32,453 @@ export const Route = createFileRoute('/_layout/language/language_history_list')(
 function RouteComponent() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
-  const [selectedValues2, setSelectedValues2] = useState<string[]>([]);
   const options = [
     { value: 'option1', label: '전체' },
     { value: 'option2', label: '옵션 2' },
     { value: 'option3', label: '옵션 3' },
   ];
 
+  const columnHelper = createColumnHelper<any>();
+
+  const data: any[] = [
+    {
+      title1: '기아',
+      title2: '인재개발팀',
+      title3: '5648952',
+      title4: '김현대',
+      title5: '매니저(G2)',
+      title6: '매니저(G2)',
+      title7: '중국어',
+      title8: <Button className="link" label={'HK-SPA'} />,
+      title9: '999',
+      title10: '1',
+      title11: (
+        <Button
+          className="download"
+          onlyIcon
+          icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
+        />
+      ),
+      title12: (
+        <Button
+          className="download"
+          onlyIcon
+          icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
+        />
+      ),
+      title13: '2025-01-01',
+      title14: '조직장 승인완료',
+      title15: '진행중',
+      title16: '2025-07',
+    },
+    {
+      title1: '기아',
+      title2: '인재개발팀',
+      title3: '5648952',
+      title4: '김현대',
+      title5: '매니저(G2)',
+      title6: '매니저(G2)',
+      title7: '중국어',
+      title8: <Button className="link" label={'HK-SPA'} />,
+      title9: '999',
+      title10: '1',
+      title11: (
+        <Button
+          className="download"
+          onlyIcon
+          icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
+          disabled
+        />
+      ),
+      title12: (
+        <Button
+          className="download"
+          onlyIcon
+          icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
+        />
+      ),
+      title13: '2025-01-01',
+      title14: '조직장 승인완료',
+      title15: '진행중',
+      title16: '2025-07',
+    },
+    {
+      title1: '기아',
+      title2: '인재개발팀',
+      title3: '5648952',
+      title4: '김현대',
+      title5: '매니저(G2)',
+      title6: '매니저(G2)',
+      title7: '중국어',
+      title8: <Button className="link" label={'HK-SPA'} />,
+      title9: '999',
+      title10: '1',
+      title11: (
+        <Button
+          className="download"
+          onlyIcon
+          icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
+        />
+      ),
+      title12: (
+        <Button
+          className="download"
+          onlyIcon
+          icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
+        />
+      ),
+      title13: '2025-01-01',
+      title14: '조직장 승인완료',
+      title15: '진행중',
+      title16: '2025-07',
+    },
+    {
+      title1: '기아',
+      title2: '인재개발팀',
+      title3: '5648952',
+      title4: '김현대',
+      title5: '매니저(G2)',
+      title6: '매니저(G2)',
+      title7: '중국어',
+      title8: <Button className="link" label={'HK-SPA'} />,
+      title9: '999',
+      title10: '1',
+      title11: (
+        <Button
+          className="download"
+          onlyIcon
+          icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
+        />
+      ),
+      title12: (
+        <Button
+          className="download"
+          onlyIcon
+          icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
+        />
+      ),
+      title13: '2025-01-01',
+      title14: '조직장 승인완료',
+      title15: '진행중',
+      title16: '2025-07',
+    },
+    {
+      title1: '기아',
+      title2: '인재개발팀',
+      title3: '5648952',
+      title4: '김현대',
+      title5: '매니저(G2)',
+      title6: '매니저(G2)',
+      title7: '중국어',
+      title8: <Button className="link" label={'HK-SPA'} />,
+      title9: '999',
+      title10: '1',
+      title11: (
+        <Button
+          className="download"
+          onlyIcon
+          icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
+        />
+      ),
+      title12: (
+        <Button
+          className="download"
+          onlyIcon
+          icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
+        />
+      ),
+      title13: '2025-01-01',
+      title14: '조직장 승인완료',
+      title15: '진행중',
+      title16: '2025-07',
+    },
+    {
+      title1: '기아',
+      title2: '인재개발팀',
+      title3: '5648952',
+      title4: '김현대',
+      title5: '매니저(G2)',
+      title6: '매니저(G2)',
+      title7: '중국어',
+      title8: <Button className="link" label={'HK-SPA'} />,
+      title9: '999',
+      title10: '1',
+      title11: (
+        <Button
+          className="download"
+          onlyIcon
+          icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
+        />
+      ),
+      title12: (
+        <Button
+          className="download"
+          onlyIcon
+          icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
+        />
+      ),
+      title13: '2025-01-01',
+      title14: '조직장 승인완료',
+      title15: '진행중',
+      title16: '2025-07',
+    },
+    {
+      title1: '기아',
+      title2: '인재개발팀',
+      title3: '5648952',
+      title4: '김현대',
+      title5: '매니저(G2)',
+      title6: '매니저(G2)',
+      title7: '중국어',
+      title8: <Button className="link" label={'HK-SPA'} />,
+      title9: '999',
+      title10: '1',
+      title11: (
+        <Button
+          className="download"
+          onlyIcon
+          icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
+        />
+      ),
+      title12: (
+        <Button
+          className="download"
+          onlyIcon
+          icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
+        />
+      ),
+      title13: '2025-01-01',
+      title14: '조직장 승인완료',
+      title15: '진행중',
+      title16: '2025-07',
+    },
+    {
+      title1: '기아',
+      title2: '인재개발팀',
+      title3: '5648952',
+      title4: '김현대',
+      title5: '매니저(G2)',
+      title6: '매니저(G2)',
+      title7: '중국어',
+      title8: <Button className="link" label={'HK-SPA'} />,
+      title9: '999',
+      title10: '1',
+      title11: (
+        <Button
+          className="download"
+          onlyIcon
+          icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
+        />
+      ),
+      title12: (
+        <Button
+          className="download"
+          onlyIcon
+          icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
+        />
+      ),
+      title13: '2025-01-01',
+      title14: '조직장 승인완료',
+      title15: '진행중',
+      title16: '2025-07',
+    },
+    {
+      title1: '기아',
+      title2: '인재개발팀',
+      title3: '5648952',
+      title4: '김현대',
+      title5: '매니저(G2)',
+      title6: '매니저(G2)',
+      title7: '중국어',
+      title8: <Button className="link" label={'HK-SPA'} />,
+      title9: '999',
+      title10: '1',
+      title11: (
+        <Button
+          className="download"
+          onlyIcon
+          icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
+        />
+      ),
+      title12: (
+        <Button
+          className="download"
+          onlyIcon
+          icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
+        />
+      ),
+      title13: '2025-01-01',
+      title14: '조직장 승인완료',
+      title15: '진행중',
+      title16: '2025-07',
+    },
+    {
+      title1: '기아',
+      title2: '인재개발팀',
+      title3: '5648952',
+      title4: '김현대',
+      title5: '매니저(G2)',
+      title6: '매니저(G2)',
+      title7: '중국어',
+      title8: <Button className="link" label={'HK-SPA'} />,
+      title9: '999',
+      title10: '1',
+      title11: (
+        <Button
+          className="download"
+          onlyIcon
+          icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
+        />
+      ),
+      title12: (
+        <Button
+          className="download"
+          onlyIcon
+          icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
+        />
+      ),
+      title13: '2025-01-01',
+      title14: '조직장 승인완료',
+      title15: '진행중',
+      title16: '2025-07',
+    },
+  ];
+
+  const columns = [
+    columnHelper.accessor('title1', {
+      cell: (info) => info.getValue(),
+      header: '회사',
+      enableGrouping: false,
+      size: 120,
+    }),
+    columnHelper.accessor('title2', {
+      cell: (info) => info.getValue(),
+      header: '조직',
+      enableGrouping: false,
+      size: 140,
+    }),
+    columnHelper.accessor('title3', {
+      cell: (info) => info.getValue(),
+      header: '사번',
+      enableGrouping: false,
+      size: 120,
+    }),
+    columnHelper.accessor('title4', {
+      cell: (info) => info.getValue(),
+      header: '성명',
+      enableGrouping: false,
+      size: 120,
+    }),
+    columnHelper.accessor('title5', {
+      cell: (info) => info.getValue(),
+      header: '직급',
+      enableGrouping: false,
+      size: 120,
+    }),
+    columnHelper.accessor('title6', {
+      cell: (info) => info.getValue(),
+      header: '취득 시 직급',
+      enableGrouping: false,
+      size: 120,
+    }),
+    columnHelper.accessor('title7', {
+      cell: (info) => info.getValue(),
+      header: '언어',
+      enableGrouping: false,
+      size: 120,
+    }),
+    columnHelper.accessor('title8', {
+      cell: (info) => info.getValue(),
+      header: '어학시험 과목',
+      enableGrouping: false,
+      size: 140,
+    }),
+    columnHelper.accessor('title9', {
+      cell: (info) => info.getValue(),
+      header: '총점',
+      enableGrouping: false,
+      size: 64,
+      meta: {
+        headerAlign: 'center',
+        cellAlign: 'center',
+      },
+    }),
+    columnHelper.accessor('title10', {
+      cell: (info) => info.getValue(),
+      header: '등급',
+      enableGrouping: false,
+      size: 64,
+      meta: {
+        headerAlign: 'center',
+        cellAlign: 'center',
+      },
+    }),
+    columnHelper.accessor('title11', {
+      cell: (info) => info.getValue(),
+      header: '성적표 사본',
+      enableGrouping: false,
+      size: 100,
+      meta: {
+        headerAlign: 'center',
+        cellAlign: 'center',
+      },
+    }),
+    columnHelper.accessor('title12', {
+      cell: (info) => info.getValue(),
+      header: '영수증 사본',
+      enableGrouping: false,
+      size: 100,
+      meta: {
+        headerAlign: 'center',
+        cellAlign: 'center',
+      },
+    }),
+    columnHelper.accessor('title13', {
+      cell: (info) => info.getValue(),
+      header: '시험일자',
+      enableGrouping: false,
+      size: 120,
+      meta: {
+        headerAlign: 'center',
+        cellAlign: 'center',
+      },
+    }),
+    columnHelper.accessor('title14', {
+      cell: (info) => info.getValue(),
+      header: '승인상태',
+      enableGrouping: false,
+      size: 140,
+      meta: {
+        headerAlign: 'center',
+        cellAlign: 'center',
+      },
+    }),
+    columnHelper.accessor('title15', {
+      cell: (info) => info.getValue(),
+      header: '지급상태',
+      enableGrouping: false,
+      size: 100,
+      meta: {
+        headerAlign: 'center',
+        cellAlign: 'center',
+      },
+    }),
+    columnHelper.accessor('title16', {
+      cell: (info) => info.getValue(),
+      header: '지급예정월',
+      enableGrouping: false,
+      size: 100,
+      meta: {
+        headerAlign: 'center',
+        cellAlign: 'center',
+      },
+    }),
+  ] as ColumnDef<any, unknown>[];
+
   const ModalOwnerSearchContent = () => {
     const [selectedValues, setSelectedValues] = useState<string[]>([]);
 
     const { close: closeModal } = useModal();
-
     const data2: any[] = [
       {
         title1: '영어',
@@ -58,8 +493,6 @@ function RouteComponent() {
         title2: 'G-TELP',
       },
     ];
-
-    const columnHelper = createColumnHelper<any>();
     const columns2 = [
       columnHelper.accessor('title1', {
         cell: (info) => info.getValue(),
@@ -232,8 +665,8 @@ function RouteComponent() {
                 <div className={searchStyles.item_wrap}>
                   <div className={searchStyles.inner}>
                     <div className={searchStyles.item}>
-                      <label htmlFor="name-select2" className={searchStyles.label}>
-                        <span className={searchStyles.text}>테넌트</span>
+                      <label htmlFor="name-option1" className={searchStyles.label}>
+                        <span className={searchStyles.text}>언어</span>
                       </label>
                       <div className={searchStyles.box}>
                         <Dropdown
@@ -248,24 +681,25 @@ function RouteComponent() {
                   </div>
                   <div className={searchStyles.inner}>
                     <div className={searchStyles.item}>
-                      <label htmlFor="name-channel2" className={searchStyles.label}>
-                        <span className={searchStyles.text}>채널</span>
+                      <label htmlFor="name-option2" className={searchStyles.label}>
+                        <span className={searchStyles.text}>어학시험 과목</span>
                       </label>
                       <div className={searchStyles.box}>
-                        <Dropdown
-                          className={searchStyles.select_option}
-                          options={[
-                            { value: 'type1', label: '전체' },
-                            { value: 'type2', label: '항목' },
-                          ]}
+                        <ChipListModalSelectorFormField
+                          modalConfig={{ width: 'xl', content: <ModalOwnerSearchContent /> }}
+                          chipList={{
+                            labelField: 'name',
+                            valueField: 'value',
+                            hideBorder: true,
+                          }}
                         />
                       </div>
                     </div>
                   </div>
                   <div className={searchStyles.inner}>
                     <div className={searchStyles.item}>
-                      <label htmlFor="name-type2" className={searchStyles.label}>
-                        <span className={searchStyles.text}>유형</span>
+                      <label htmlFor="name-option3" className={searchStyles.label}>
+                        <span className={searchStyles.text}>승인상태</span>
                       </label>
                       <div className={searchStyles.box}>
                         <Dropdown
@@ -280,14 +714,16 @@ function RouteComponent() {
                   </div>
                   <div className={searchStyles.inner}>
                     <div className={searchStyles.item}>
-                      <label htmlFor="name-owner2" className={searchStyles.label}>
-                        <span className={searchStyles.text}>담당자</span>
+                      <label htmlFor="name-option4" className={searchStyles.label}>
+                        <span className={searchStyles.text}>지급상태</span>
                       </label>
                       <div className={searchStyles.box}>
-                        <Input
-                          id="name-owner2"
-                          type="text"
-                          placeholder="담당자명으로 조회하세요."
+                        <Dropdown
+                          options={options}
+                          value={selectedValues}
+                          onChange={(selected) => setSelectedValues(selected)}
+                          variant="default"
+                          size={'sm'}
                         />
                       </div>
                     </div>
@@ -298,8 +734,8 @@ function RouteComponent() {
                   <div className={cn(searchStyles.form_display, searchStyles.item_wrap)}>
                     <div className={searchStyles.inner}>
                       <div className={searchStyles.item}>
-                        <label htmlFor="name-term" className={searchStyles.label}>
-                          <span className={searchStyles.text}>공유기간</span>
+                        <label htmlFor="name-item1" className={searchStyles.label}>
+                          <span className={searchStyles.text}>시험일자</span>
                         </label>
                         <div className={searchStyles.box}>
                           <DatePicker className={searchStyles.datepicker_item} />
@@ -310,17 +746,13 @@ function RouteComponent() {
                     </div>
                     <div className={searchStyles.inner}>
                       <div className={searchStyles.item}>
-                        <label htmlFor="name-owner2" className={searchStyles.label}>
-                          <span className={searchStyles.text}>담당자</span>
+                        <label htmlFor="name-item2" className={searchStyles.label}>
+                          <span className={searchStyles.text}>유효기간</span>
                         </label>
                         <div className={searchStyles.box}>
-                          <div className={searchStyles.half}>
-                            <Input
-                              id="name-owner2"
-                              type="text"
-                              placeholder="담당자명을 입력하세요."
-                            />
-                          </div>
+                          <DatePicker className={searchStyles.datepicker_item} />
+                          <span className={searchStyles.dash}></span>
+                          <DatePicker className={searchStyles.datepicker_item} />
                         </div>
                       </div>
                     </div>
@@ -360,6 +792,16 @@ function RouteComponent() {
             </div>
           </div>
           <Divider />
+          <GridBox
+            data={data}
+            columns={columns}
+            showSelectedCount={true}
+            multiple={true}
+            title={'어학성적/지원이력'}
+            columnPinning={{
+              columns: ['title1', 'title2', 'title3', 'title4', 'title5', 'title6'],
+            }}
+          />
         </div>
       </PageContainer>
     </form>
