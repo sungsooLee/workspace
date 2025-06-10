@@ -1,4 +1,4 @@
-import { RowSelectionState, Table } from '@tanstack/react-table';
+import { RowSelectionState, SortingState, Table } from '@tanstack/react-table';
 
 /**
  * 주어진 데이터 목록(list)에 해당하는 행들을 TanStack Table에서 선택하기 위한
@@ -62,3 +62,31 @@ export const gridStateToSortQueryParams = (state: any): string[] => {
 
   return state.sorting.map(({ id, desc }: any) => `${id},${desc ? 'desc' : 'asc'}`);
 };
+
+/**
+ * GridBoxState의 sort 정보를 TanStack Table의 GridState 형식으로 변환합니다.
+ * TODO: GridBoxState, GridState import 문제로 any 설정...
+ *
+ * @param state - GridBoxState (e.g., { sort: ["name,asc", "age,desc"] })
+ * @returns GridState - TanStack Table이 이해할 수 있는 정렬 상태 객체
+ */
+export const gridBoxStateToGridState = (state: any) => {
+  const sorting: SortingState = (state.sort ?? []).map((sortStr: string) => {
+    const [id, direction] = sortStr.split(',');
+    return {
+      id,
+      desc: direction === 'desc',
+    };
+  });
+  return { sorting };
+};
+// export const gridBoxStateToGridState = (state: GridBoxState): GridState => {
+//   const sorting: SortingState = (state.sort ?? []).map((sortStr): ColumnSort => {
+//     const [id, direction] = sortStr.split(',');
+//     return {
+//       id,
+//       desc: direction === 'desc',
+//     };
+//   });
+//   return { sorting };
+// };
