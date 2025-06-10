@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { t } from 'i18next';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, GridBox, useGridBox } from '@learnway/ui';
+import { Button, Divider, GridBox, useGridBox } from '@learnway/ui';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { queryOptions } from '@entities/label-messages-mock';
 import { LabelMessage, LabelMessagesQueryParams } from '@types';
@@ -28,6 +28,7 @@ function RouteComponent() {
       </ContentsButtons>
       <MainContents>
         <SearchBox provider={sProvider} onSearch={handleOnSearch} />
+        <Divider />
         <GridBox config={gConfig} showNumberingColumn />
       </MainContents>
     </PageContainer>

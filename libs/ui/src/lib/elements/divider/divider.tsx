@@ -8,7 +8,7 @@ interface DividerProps {
   className?: string; // 추가 CSS 클래스 (선택 사항)
 }
 
-const Divider: React.FC<DividerProps> = ({
+export const Divider: React.FC<DividerProps> = ({
   orientation = 'horizontal', // 기본값은 수평선
   spacing,
   className,
@@ -24,5 +24,3 @@ const Divider: React.FC<DividerProps> = ({
     />
   );
 };
-
-export default Divider;
