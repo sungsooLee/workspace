@@ -236,7 +236,7 @@ const TestListsComponent: FC<{}> = ({}) => {
           </div>
         </div>
       </div>
-      <Divider spacing={'full'} />
+      <Divider />
       <GridBox
         data={data}
         columns={columns}

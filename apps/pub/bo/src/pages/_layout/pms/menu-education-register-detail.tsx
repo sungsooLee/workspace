@@ -28,6 +28,7 @@ import {
   GridBox,
   Textarea,
   RadioGroupFormField,
+  Divider,
 } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
@@ -206,22 +207,21 @@ function RouteComponent() {
                 </div>
               </div>
             </div>
-            <div className="grid_wrap line">
-              <GridBox
-                data={data}
-                columns={columns}
-                showColumnSettings={false}
-                showNumberingColumn={true}
-                pagination={{
-                  pageSize,
-                  pageNumber,
-                  totalPages: 100,
-                  onPageChange: setpageNumber,
-                  onPageSizeChange: setPageSize,
-                }}
-                title="타이틀"
-              />
-            </div>
+            <Divider />
+            <GridBox
+              data={data}
+              columns={columns}
+              showColumnSettings={false}
+              showNumberingColumn={true}
+              pagination={{
+                pageSize,
+                pageNumber,
+                totalPages: 100,
+                onPageChange: setpageNumber,
+                onPageSizeChange: setPageSize,
+              }}
+              title="타이틀"
+            />
           </div>
         </ModalBody>
         <ModalFooter>
