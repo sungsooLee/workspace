@@ -64,6 +64,12 @@ declare module '@tanstack/react-table' {
      * 컬럼 width
      */
     size?: 'auto' | number;
+
+    /**
+     * 컬럼에 커스텀 className 추가시 사용
+     * cell class
+     */
+    cellClass?: '';
   }
 }
 
