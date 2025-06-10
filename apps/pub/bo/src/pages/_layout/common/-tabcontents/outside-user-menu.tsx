@@ -1,7 +1,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
-import { Input, Dropdown, Button, GridBox } from '@learnway/ui';
+import { Input, Dropdown, Button, GridBox, Divider } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { IcoRefresh02, IcoSearch } from '@learnway/icons';
 
@@ -259,22 +259,21 @@ const OutsideUserMenuComponent: FC<{}> = ({}) => {
           </div>
         </div>
       </div>
-      <div className="grid_wrap line">
-        <GridBox
-          data={data}
-          columns={columns}
-          showSelectedCount={true}
-          showColumnSettings={false}
-          pagination={{
-            pageSize,
-            pageNumber,
-            totalPages: 100,
-            onPageChange: setpageNumber,
-            onPageSizeChange: setPageSize,
-          }}
-          title="사외이용자 목록"
-        />
-      </div>
+      <Divider />
+      <GridBox
+        data={data}
+        columns={columns}
+        showSelectedCount={true}
+        showColumnSettings={false}
+        pagination={{
+          pageSize,
+          pageNumber,
+          totalPages: 100,
+          onPageChange: setpageNumber,
+          onPageSizeChange: setPageSize,
+        }}
+        title="사외이용자 목록"
+      />
     </div>
   );
 };

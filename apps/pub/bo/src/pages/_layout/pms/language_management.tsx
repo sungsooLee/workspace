@@ -3,12 +3,11 @@ import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { Button, Input, Dropdown, TableBox } from '@learnway/ui';
+import { Button, Input, Dropdown, TableBox, Divider } from '@learnway/ui';
 import { IcoRefresh02, IcoSearch, IcoFormRequired } from '@learnway/icons';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
 export const Route = createFileRoute('/_layout/pms/language_management')({
   component: RouteComponent,
@@ -229,24 +228,23 @@ function RouteComponent() {
               </div>
             </div>
           </div>
-          <div className={cn(boxStyles.start, boxStyles.inner)}>
-            <TableBox
-              data={data}
-              columns={columns}
-              tableMode={true}
-              title={'목록'}
-              showNumberingColumn
-              showExcelDownload
-              showUpload
-              pagination={{
-                pageNumber,
-                pageSize,
-                totalPages: 100,
-                onPageChange: setPageIndex,
-                onPageSizeChange: setPageSize,
-              }}
-            />
-          </div>
+          <Divider />
+          <TableBox
+            data={data}
+            columns={columns}
+            tableMode={true}
+            title={'목록'}
+            showNumberingColumn
+            showExcelDownload
+            showUpload
+            pagination={{
+              pageNumber,
+              pageSize,
+              totalPages: 100,
+              onPageChange: setPageIndex,
+              onPageSizeChange: setPageSize,
+            }}
+          />
         </div>
       </PageContainer>
     </form>

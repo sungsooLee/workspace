@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { DatePicker, Dropdown, Button, GridBox } from '@learnway/ui';
+import { DatePicker, Dropdown, Button, GridBox, Divider } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { IcoRefresh02, IcoSearch } from '@learnway/icons';
 import { cn } from '@learnway/shared';
@@ -9,7 +9,6 @@ import { cn } from '@learnway/shared';
 /** style */
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
 export const Route = createFileRoute('/_layout/pms/group-management')({
   component: RouteComponent,
@@ -306,22 +305,21 @@ function RouteComponent() {
             </div>
           </div>
         </div>
-        <div className={cn(boxStyles.start, boxStyles.inner)}>
-          <GridBox
-            data={data}
-            columns={columns}
-            showNumberingColumn={true}
-            showSelectedCount={true}
-            pagination={{
-              pageSize,
-              pageNumber,
-              totalPages: 100,
-              onPageChange: setPageIndex,
-              onPageSizeChange: setPageSize,
-            }}
-            title={'회사 목록'}
-          />
-        </div>
+        <Divider />
+        <GridBox
+          data={data}
+          columns={columns}
+          showNumberingColumn={true}
+          showSelectedCount={true}
+          pagination={{
+            pageSize,
+            pageNumber,
+            totalPages: 100,
+            onPageChange: setPageIndex,
+            onPageSizeChange: setPageSize,
+          }}
+          title={'회사 목록'}
+        />
       </div>
     </PageContainer>
   );

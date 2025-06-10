@@ -5,7 +5,6 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
 import { cn } from '@learnway/shared';
 
@@ -16,7 +15,7 @@ import {
   // ThumbnailImageUpload,
   // ChipList,
   // SelectOption,
-  Input,
+  Divider,
   Dropdown,
 } from '@learnway/ui';
 
@@ -271,24 +270,21 @@ function RouteComponent() {
               </div>
             </div>
           </div>
-          <div className={cn(boxStyles.start, boxStyles.inner)}>
-            <div className="grid_wrap">
-              <GridBox
-                data={data}
-                columns={columns}
-                showColumnSettings={false}
-                showNumberingColumn={true}
-                pagination={{
-                  pageSize,
-                  pageNumber,
-                  totalPages: 100,
-                  onPageChange: setpageNumber,
-                  onPageSizeChange: setPageSize,
-                }}
-                title="타이틀"
-              />
-            </div>
-          </div>
+          <Divider />
+          <GridBox
+            data={data}
+            columns={columns}
+            showColumnSettings={false}
+            showNumberingColumn={true}
+            pagination={{
+              pageSize,
+              pageNumber,
+              totalPages: 100,
+              onPageChange: setpageNumber,
+              onPageSizeChange: setPageSize,
+            }}
+            title="타이틀"
+          />
         </div>
       </PageContainer>
     </form>

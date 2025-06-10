@@ -5,11 +5,10 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
 import { cn } from '@learnway/shared';
 
-import { Button, GridBox, Dropdown, DatePicker, Input } from '@learnway/ui';
+import { Button, GridBox, Dropdown, DatePicker, Input, Divider } from '@learnway/ui';
 
 export const Route = createFileRoute('/_layout/pms/menu-channel-management')({
   component: RouteComponent,
@@ -290,32 +289,29 @@ function RouteComponent() {
               </div>
             </div>
           </div>
-          <div className={cn(boxStyles.start, boxStyles.inner)}>
-            <div className="grid_wrap">
-              <GridBox
-                data={data}
-                columns={columns}
-                showColumnSettings={false}
-                showNumberingColumn={true}
-                multiple
-                guideText={'메일발송 N인 접수ID를 선택하시면 채널 등록화면으로 이동됩니다.'}
-                pagination={{
-                  pageSize,
-                  pageNumber,
-                  totalPages: 100,
-                  onPageChange: setpageNumber,
-                  onPageSizeChange: setPageSize,
-                }}
-                customButtonNode={
-                  <>
-                    <Button variant="text" size="sm" label={'접수'} />
-                    <Button variant="text" size="sm" label={'반려'} />
-                  </>
-                }
-                title="신청 목록"
-              />
-            </div>
-          </div>
+          <Divider />
+          <GridBox
+            data={data}
+            columns={columns}
+            showColumnSettings={false}
+            showNumberingColumn={true}
+            multiple
+            guideText={'메일발송 N인 접수ID를 선택하시면 채널 등록화면으로 이동됩니다.'}
+            pagination={{
+              pageSize,
+              pageNumber,
+              totalPages: 100,
+              onPageChange: setpageNumber,
+              onPageSizeChange: setPageSize,
+            }}
+            customButtonNode={
+              <>
+                <Button variant="text" size="sm" label={'접수'} />
+                <Button variant="text" size="sm" label={'반려'} />
+              </>
+            }
+            title="신청 목록"
+          />
         </div>
       </PageContainer>
     </form>

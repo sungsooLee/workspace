@@ -4,12 +4,11 @@ import { cn } from '@learnway/shared';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { IcoRefresh02, IcoSearch } from '@learnway/icons';
-import { Input, Button, Dropdown, DatePicker, GridBox } from '@learnway/ui';
+import { Input, Button, Dropdown, DatePicker, GridBox, Divider } from '@learnway/ui';
 
 /* style */
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css';
 
 export const Route = createFileRoute('/_layout/pms/private_search_list')({
   component: RouteComponent,
@@ -206,25 +205,22 @@ function RouteComponent() {
               </div>
             </div>
           </div>
-          <div className={cn(boxStyles.start, boxStyles.inner)}>
-            <div className={'grid_wrap'}>
-              <GridBox
-                data={data}
-                columns={columns}
-                showSelectedCount={true}
-                showNumberingColumn={true}
-                showExcelDownload={true}
-                pagination={{
-                  pageSize,
-                  pageNumber,
-                  totalPages: 100,
-                  onPageChange: setPageIndex,
-                  onPageSizeChange: setPageSize,
-                }}
-                title={'개인정보 조회 사유 목록'}
-              />
-            </div>
-          </div>
+          <Divider />
+          <GridBox
+            data={data}
+            columns={columns}
+            showSelectedCount={true}
+            showNumberingColumn={true}
+            showExcelDownload={true}
+            pagination={{
+              pageSize,
+              pageNumber,
+              totalPages: 100,
+              onPageChange: setPageIndex,
+              onPageSizeChange: setPageSize,
+            }}
+            title={'개인정보 조회 사유 목록'}
+          />
         </div>
       </PageContainer>
     </form>

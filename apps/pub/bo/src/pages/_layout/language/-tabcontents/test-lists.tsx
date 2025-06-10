@@ -1,12 +1,11 @@
 import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
-import { Input, Dropdown, Button, GridBox, DatePicker } from '@learnway/ui';
+import { Input, Dropdown, Button, GridBox, Divider } from '@learnway/ui';
 import { IcoRefresh02, IcoSearch } from '@learnway/icons';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 /* style */
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css';
 
 const TestListsComponent: FC<{}> = ({}) => {
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
@@ -237,24 +236,21 @@ const TestListsComponent: FC<{}> = ({}) => {
           </div>
         </div>
       </div>
-      <div className={cn(boxStyles.start, boxStyles.inner)}>
-        <div className="grid_wrap">
-          <GridBox
-            data={data}
-            columns={columns}
-            showNumberingColumn={true}
-            showSelectedCount={true}
-            pagination={{
-              pageSize,
-              pageNumber,
-              totalPages: 100,
-              onPageChange: setpageNumber,
-              onPageSizeChange: setPageSize,
-            }}
-            title={'어학시험 과목'}
-          />
-        </div>
-      </div>
+      <Divider />
+      <GridBox
+        data={data}
+        columns={columns}
+        showNumberingColumn={true}
+        showSelectedCount={true}
+        pagination={{
+          pageSize,
+          pageNumber,
+          totalPages: 100,
+          onPageChange: setpageNumber,
+          onPageSizeChange: setPageSize,
+        }}
+        title={'어학시험 과목'}
+      />
     </div>
   );
 };

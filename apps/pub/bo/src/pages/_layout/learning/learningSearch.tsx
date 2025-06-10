@@ -14,11 +14,11 @@ import {
   // SelectOption,
   Input,
   Dropdown,
+  Divider,
 } from '@learnway/ui';
 import { IcoRefresh02, IcoSearch, IcoFormRequired } from '@learnway/icons';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 import { cn } from '@learnway/shared';
 
 export const Route = createFileRoute('/_layout/learning/learningSearch')({
@@ -194,7 +194,7 @@ function RouteComponent() {
               {/* 퍼블수정 20240318 : item_row 추가, btn_box 위치 수정 E */}
             </div>
           </div>
-          <div className={cn(boxStyles.start, boxStyles.inner)}></div>
+          <Divider />
         </div>
       </PageContainer>
     </form>
