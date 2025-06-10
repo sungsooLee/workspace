@@ -3,7 +3,6 @@ import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
 import { SearchBox } from '@shared/ui/search-box';
 import {
   Button,
-  Checkbox,
   Divider,
   GridBox,
   Tooltip,
@@ -21,7 +20,6 @@ import { ProgramGuideModal } from './learning-resource-program-guide-modal';
 
 function LearningResourceTableComponent() {
   const { open: openModal } = useModal();
-  const [checkedMy, setCheckedMy] = useState(false);
 
   const searchConfig: any = {
     builders: [
@@ -239,13 +237,6 @@ function LearningResourceTableComponent() {
         multiple
         customButtonNode={
           <>
-            <Checkbox
-              size="md"
-              label={t('나의 학습자원')}
-              checked={checkedMy}
-              onCheckedChange={(checked: boolean) => setCheckedMy(checked)}
-            />
-            {/* 필터기능인듯? 글씨 크기가 혼자 작게 나옴 */}
             <Button
               label={t('프로그램/가이드 다운로드')}
               icon={<IcoDownload width={16} height={16} stroke="#4C515E" />}
