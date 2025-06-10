@@ -13,6 +13,8 @@ import { SwitchFormField } from './switch-form-field';
 import { CheckBoxFormField } from './checkbox-form-field';
 
 export const formFieldConfig: FormFieldConfig = {
+  password: Input,
+  number: Input,
   text: Input,
   'radio-group': RadioGroupFormField,
   checkbox: CheckBoxFormField,

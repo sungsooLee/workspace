@@ -289,6 +289,7 @@
     },
     "form": {
       "input": {
+        "placeholder": "값을 입력 하세요.",
         "id": "아이디",
         "email": "이메일",
         "idEmail": "아이디/이메일",
