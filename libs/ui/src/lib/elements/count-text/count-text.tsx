@@ -12,17 +12,12 @@ interface CountTextProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
 }
 
-const CountTextComponent: FC<CountTextProps> = ({
-  label,
-  count,
-  countColor,
-  size,
-}: CountTextProps) => {
+const CountTextComponent: FC<CountTextProps> = ({ label, count }: CountTextProps) => {
   return (
     <div className={cn(styles.start)}>
       <strong className={styles.label}>{label}</strong>
       <span className={styles.count}>
-        <NumericFormat value={count} thousandSeparator />
+        <NumericFormat value={count} thousandSeparator readOnly />
       </span>
     </div>
   );

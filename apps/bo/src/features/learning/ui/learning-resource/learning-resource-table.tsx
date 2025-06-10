@@ -11,16 +11,15 @@ import {
   useGridBoxConfig,
   useModal,
 } from '@learnway/ui';
-import { IcoClock01, IcoDownload, IcoFile01 } from '@learnway/icons';
+import { IcoClock01, IcoCopy, IcoDownload } from '@learnway/icons';
 import { t } from 'i18next';
 import { Table } from '@tanstack/react-table';
 import { useState } from 'react';
-import { leaningResourceQueryOptions } from '../../../../entities/leaning-resource';
-import { useQueryClient } from '@tanstack/react-query';
+import { leaningResourceQueryOptions } from '@entities/leaning-resource';
 import { ModifierInfoModal } from './learning-resource-modifier-info-modal';
+import { ProgramGuideModal } from './learning-resource-program-guide-modal';
 
 function LearningResourceTableComponent() {
-  const queryClient = useQueryClient();
   const { open: openModal } = useModal();
 
   const searchConfig: any = {
@@ -58,7 +57,9 @@ function LearningResourceTableComponent() {
           name: 'contentTypes',
           type: 'dropdown',
           label: t('LABEL.content.learning-resource.contentType'),
-          value: '',
+          value: [''],
+          isMulti: true,
+          variant: 'text',
           optionsConfig: {
             options: [{ value: '', label: t('전체') }],
             codeGroup: CODE_GROUP['cms.content.ContentType'],
@@ -136,17 +137,17 @@ function LearningResourceTableComponent() {
         name: 'contentType',
         label: t('LABEL.content.learning-resource.contentType'),
         render: (_: any) => t(`cms.content.ContentType.${_.getValue()}`),
+      },
+      {
+        size: 338,
+        name: 'contentName',
+        label: t('LABEL.content.learning-resource.contentName'),
         meta: {
           size: 'auto',
         },
       },
       {
-        size: 338,
-        meta: { size: 'auto' },
-        name: 'contentName',
-        label: t('LABEL.content.learning-resource.contentName'),
-      },
-      {
+        size: 127,
         name: 'tenantName',
         label: t('LABEL.content.learning-resource.tenantName'),
         meta: {
@@ -154,6 +155,7 @@ function LearningResourceTableComponent() {
         },
       },
       {
+        size: 153,
         name: 'channelName',
         label: t('LABEL.content.learning-resource.channelName'),
         meta: {
@@ -161,18 +163,14 @@ function LearningResourceTableComponent() {
         },
       },
       {
+        size: 104,
         name: 'coordinatorName',
         label: t('LABEL.content.learning-resource.coordinatorName'),
-        meta: {
-          size: 'auto',
-        },
       },
       {
+        size: 125,
         name: 'contentAddInfo',
         label: t('LABEL.content.learning-resource.detailInfo'),
-        meta: {
-          size: 'auto',
-        },
         render: (_: any) => {
           console.log(_.row.original['contentAddInfoType']);
           if (_.row.original.contentAddInfoType !== 'VIDEO_ADD_INFO')
@@ -200,7 +198,7 @@ function LearningResourceTableComponent() {
         render: (_: any) => t(`cms.content.ContentUseEnabledType.${_.getValue()}`),
       },
       {
-        size: 100,
+        size: 83,
         name: 'langCountryCode',
         label: t('LABEL.content.learning-resource.localization'),
         render: (_: any) => t(`pms.multilingual.LangCountryCode.${_.getValue()}`),
@@ -210,42 +208,26 @@ function LearningResourceTableComponent() {
         name: 'updatedInfo',
         label: t('LABEL.content.learning-resource.updatedInfo'),
         render: () => (
-          <div
-            className="h-full w-full underline"
+          <Button
+            className="link"
+            label={t('보기')}
             onClick={(e) => {
               e.stopPropagation();
               openModal({ width: 'sm', content: <ModifierInfoModal /> }); //lastModifierBy로 받아온 user uuid를 props로 넘겨야 함
             }}
-          >
-            {t('보기')}
-          </div>
+          />
         ),
       },
     ],
   };
 
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
-  const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
+  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
   const [tableInstance, setTableInstance] = useState<Table<any>>(); // Grid 로부터 받을 table 인스턴스를 저장할 상태
-  const [pagination, setPagination] = useState<GridBoxPagination>({
-    pageNumber: 0,
-    pageSize: 20,
-    totalPages: 1,
-    onPageChange: (pageNumber: number) => setPagination((prev) => ({ ...prev, pageNumber })),
-    onPageSizeChange: (pageSize: number) =>
-      setPagination((prev) => ({ ...prev, pageSize, pageNumber: 0 })),
-  });
 
   function handleSearch(query: Record<string, any>) {
-    gridFetch(query, {
-      page: pagination.pageNumber,
-      size: pagination.pageSize,
-    });
+    gridFetch(query);
   }
-
-  const handleFileDownload = (key: string, fileName: string) => {
-    queryClient.fetchQuery(leaningResourceQueryOptions.getS3FileDownload(key, fileName));
-  };
 
   return (
     <>
@@ -254,38 +236,34 @@ function LearningResourceTableComponent() {
         <div className="grid_wrap">
           <GridBox
             config={gConfig}
-            data={data}
             showNumberingColumn
             multiple
             customButtonNode={
               <>
-                <Checkbox size="sm" label={t('나의 학습자원')} />{' '}
+                <Checkbox size="md" label={t('나의 학습자원')} />
                 {/* 필터기능인듯? 글씨 크기가 혼자 작게 나옴 */}
                 <Button
-                  variant="outline"
-                  size="sm"
                   label={t('프로그램/가이드 다운로드')}
-                  icon={<IcoDownload width={16} height={16} stroke="#131C30" />}
-                  onClick={() => handleFileDownload('public/logo.png', 'download.png')} // 가이드 파일 하드코딩?
+                  icon={<IcoDownload width={16} height={16} stroke="#4C515E" />}
+                  onClick={() =>
+                    openModal({
+                      width: 'md',
+                      content: <ProgramGuideModal />,
+                    })
+                  }
                 />
-                <Button variant="outline" size="sm" label={t('일괄설정')} />
+                <Button variant="text" label={t('일괄설정')} />
                 <Button
-                  variant="outline"
-                  size="sm"
                   label={t('엑셀다운로드')}
-                  icon={<IcoDownload width={16} height={16} stroke="#131C30" />}
+                  icon={<IcoDownload width={16} height={16} stroke="#4C515E" />}
                 />
                 <Button
-                  variant="outline"
-                  size="sm"
                   label={t('복사')}
-                  icon={<IcoFile01 width={16} height={16} stroke="#131C30" />}
+                  icon={<IcoCopy width={16} height={16} stroke="#131c30" />}
                 />
-                {/* 디자인과 다른 아이콘 - 변경 필요 */}
               </>
             }
             onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
-            pagination={pagination}
           />
         </div>
       </div>

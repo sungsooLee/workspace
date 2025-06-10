@@ -34,6 +34,7 @@ const TreeBoxComponent = <T extends object>(
     showTotalCount,
     selectedItems,
     sourceTreeId,
+    maxDepth,
     ...props
   }: any,
   // ref: React.Ref
@@ -169,6 +170,7 @@ const TreeBoxComponent = <T extends object>(
             shouldDisableClick={shouldDisableClick}
             selectedItems={selectedItems}
             sourceTreeId={sourceTreeId}
+            maxDepth={maxDepth}
             // {...props}
           />
         </TreeContainer>

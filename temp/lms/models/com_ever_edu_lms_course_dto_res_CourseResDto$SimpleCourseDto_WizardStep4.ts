@@ -9,8 +9,8 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto_WizardS
 };
 export namespace com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto_WizardStep4 {
     export enum courseType {
-        ELEARNING = 'ELEARNING',
-        ELEARNING_SANGSI = 'ELEARNING_SANGSI',
+        ELEARNING1 = 'ELEARNING1',
+        ELEARNING2 = 'ELEARNING2',
         CLASS = 'CLASS',
         LIVE = 'LIVE',
         EXAM = 'EXAM',

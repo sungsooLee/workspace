@@ -1,0 +1,51 @@
+/* divider.module.css */
+
+.divider {
+  /* 모든 구분선의 기본 스타일 */
+  background-color: black; /* 기본 경계선 색상  */
+  flex-shrink: 0; /* flex 컨테이너 내에서 축소되지 않도록 함 */
+}
+
+/* 수평 구분선 */
+.horizontal {
+  width: 100%; /* 너비를 100%로 설정 */
+  height: 1px; /* 높이를 얇게 설정 */
+  margin: 16px 0; /* 기본 상하 여백 */
+}
+
+/* 수직 구분선 */
+.vertical {
+  height: 100%; /* 높이를 100%로 설정 */
+  width: 1px; /* 너비를 얇게 설정 */
+  margin: 0 16px; /* 기본 좌우 여백 */
+}
+
+/* 여백 조절을 위한 클래스 (spacing prop) */
+.spacing-xs {
+  /* 수평: 상하 여백, 수직: 좌우 여백 */
+  margin: 8px; /* 또는 수평: 8px 0; 수직: 0 8px; */
+}
+
+.spacing-sm {
+  margin: 12px;
+}
+
+.spacing-md { /* .horizontal 기본값과 유사 */
+  margin: 16px;
+}
+
+.spacing-lg {
+  margin: 24px;
+}
+
+.spacing-xl {
+  margin: 32px;
+}
+
+
+/* 추가적인 스타일 (예: 점선, 텍스트 포함 등) */
+/* .dashed {
+  border-top: 1px dashed var(--color-border-default, #e0e0e0);
+  background-color: transparent;
+  height: auto;
+} */

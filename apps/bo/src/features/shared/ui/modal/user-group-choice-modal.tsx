@@ -14,7 +14,7 @@ import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { usersQueryOptions } from '@entities/users/service/users.queries';
+import { queryOptions } from '@entities/department/service/department.queries';
 
 const UserGroupModalComponent: FC<any> = () => {
   const { close: closeModal } = useModal();
@@ -69,7 +69,7 @@ const UserGroupModalComponent: FC<any> = () => {
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);
 
   const gridConfig = {
-    query: usersQueryOptions.list,
+    query: queryOptions.list,
     columns: [],
     data: [],
     pagination: {
@@ -129,58 +129,54 @@ export const UserGroupChoiceModal = UserGroupModalComponent;
 
 const columnHelper = createColumnHelper<any>();
 const columns = [
-  columnHelper.accessor('company', {
-    id: 'company',
-    cell: (info) => info.row.original.company.name,
+  columnHelper.accessor('companyName', {
+    id: 'companyName',
+    cell: (info) => info.getValue(),
     header: '회사',
     enableGrouping: false,
     size: 210,
   }),
-  columnHelper.accessor('noDat1', {
-    id: 'noDat1',
+  columnHelper.accessor('managerName', {
+    id: 'managerName',
     cell: (info) => info.getValue(),
     header: '본부/사업부',
-    size: 240,
+    size: 210,
     enableGrouping: false,
   }),
-  columnHelper.accessor('noDat2', {
-    id: 'noDat2',
+  columnHelper.accessor('deptName', {
+    id: 'deptName',
     cell: (info) => info.getValue(),
     header: '부서',
     size: 150,
     enableGrouping: false,
   }),
-  columnHelper.accessor('dept', {
-    id: 'dept',
-    cell: (info) => info.row.original.dept.deptName,
+  columnHelper.accessor('deptEngName', {
+    id: 'deptEngName',
+    cell: (info) => info.getValue(),
     header: '소속',
     size: 150,
     enableGrouping: false,
   }),
-  columnHelper.accessor('employeeNumber', {
-    id: 'employeeNumber',
+  columnHelper.accessor('managerEmployeeNumber', {
+    id: 'managerEmployeeNumber',
     cell: (info) => info.getValue(),
     header: '사번',
-    size: 220,
     enableGrouping: false,
   }),
   columnHelper.accessor('name', {
     id: 'name',
     cell: (info) => info.getValue(),
     header: '이름',
-    size: 220,
     enableGrouping: false,
   }),
   columnHelper.accessor('opt2', {
     cell: (info) => info.getValue(),
     header: '재직여부',
-    size: 240,
     enableGrouping: false,
   }),
   columnHelper.accessor('opt3', {
     cell: (info) => info.getValue(),
     header: '계정상태',
-    size: 240,
     enableGrouping: false,
   }),
 ] as ColumnDef<any, unknown>[];

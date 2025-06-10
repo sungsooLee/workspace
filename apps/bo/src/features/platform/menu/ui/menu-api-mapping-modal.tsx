@@ -70,6 +70,9 @@ const MenuApiMappingModalComponent = ({ menuScopeCode, selectedApiKeys }: any) =
               selectedItems={selectedItems}
               onItemsChange={handleSelectedItemsChange}
               onCustomNodeClick={handleCustomNodeClick}
+              isSelectableNode={(node) => {
+                return node.apiNodeType === 'API';
+              }}
             />
           </div>
         </div>

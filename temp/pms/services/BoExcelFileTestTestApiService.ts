@@ -254,6 +254,26 @@ export class BoExcelFileTestTestApiService {
         });
     }
     /**
+     * Excel 생성 후 다운로드 처리(CMS_전체학습자원_EXPORT_DATA.xlsx
+     * Excel 생성 후 다운로드 처리 테스트 <br>S3 템플릿(public/template/excel/CMS_전체학습자원_EXPORT_템플릿.xlsx) 파일을 다운받아 데이터 매핑 후 다운로드 처리
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static jxlsExcelFileExportContents(): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/test/api/v1/file/excel/export/jxls/contents',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * S3 템플릿 파일 다운로드 요청
      * S3 템플릿 파일 다운로드 요청한다. <br><br><b>템플릿 파일명</b>: <br>- csv_read_sample_lang_code.csv <br>- excel_read_sample_lang_code.xlsx <br>- excel_read_sample_user.xlsx <br>- jxls_template_sample_01.xlsx<br>- jxls_template_lang_code.xlsx<br>- jxls_template_user.xlsx
      * @param fileName 템플릿 파일명 <br>- csv_read_sample_lang_code.csv <br>- excel_read_sample_lang_code.xlsx <br>- excel_read_sample_user.xlsx <br>- jxls_template_sample_01.xlsx <br>- jxls_template_lang_code.xlsx<br>- jxls_template_user.xlsx

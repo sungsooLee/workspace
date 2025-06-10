@@ -9,6 +9,7 @@ export type com_ever_edu_lms_category_dto_res_TenantCategoryDto = {
     categoryCode?: string;
     categoryContent?: string;
     isUsed?: boolean;
+    tenantIsUsed?: boolean;
     whiteList?: com_ever_edu_lms_blackwhite_dto_res_BlackAndWhiteDto$GroupDto;
     categoryPath?: string;
 };

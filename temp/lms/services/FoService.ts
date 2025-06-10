@@ -297,22 +297,17 @@ export class FoService {
      * 차수 단건 조회
      * 차수를 조회한다.
      * @param courseSequenceUuid
-     * @param courseType
      * @returns com_ever_edu_lms_course_dto_res_SequenceResDto$onUser OK
      * @throws ApiError
      */
     public static findBySequenceNo(
         courseSequenceUuid: string,
-        courseType: 'ELEARNING' | 'ELEARNING_SANGSI' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
     ): CancelablePromise<com_ever_edu_lms_course_dto_res_SequenceResDto$onUser> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/user/api/v1/sequence/{courseSequenceUuid}',
             path: {
                 'courseSequenceUuid': courseSequenceUuid,
-            },
-            query: {
-                'courseType': courseType,
             },
             errors: {
                 400: `Bad Request`,
@@ -465,7 +460,7 @@ export class FoService {
     public static search(
         request: com_ever_edu_lms_search_course_dto_req_CourseSearchReqDto$OnUser,
         pageable: org_springdoc_core_converters_models_Pageable,
-        courseType?: 'ELEARNING' | 'ELEARNING_SANGSI' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
+        courseType?: 'ELEARNING1' | 'ELEARNING2' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
         enrollmentType?: 'ENROLL_DONE' | 'ENROLL_REQUEST' | 'CANCEL_DONE',
     ): CancelablePromise<Array<com_ever_edu_lms_search_course_dto_res_CourseSearchResDto$OnUser>> {
         return __request(OpenAPI, {

@@ -228,15 +228,6 @@ export const MenuManage = ({ menuScope }: any) => {
 
   const columns = [
     columnHelper.accessor('apiName', {
-      cell: (info) => info.getValue(),
-      header: '분류',
-      size: 120,
-      meta: {
-        headerAlign: 'left', // 헤더만 가운데 정렬
-        cellAlign: 'left', // 셀은 오른쪽 정렬
-      },
-    }),
-    columnHelper.accessor('apiId', {
       cell: (info: CellContext<any, string>) => {
         const rowData = info.row.original;
         return (
@@ -367,32 +358,18 @@ export const MenuManage = ({ menuScope }: any) => {
   const renderNodeButtons = (node: TreeNode, level: number) => (
     <div className={'gap-10px flex'}>
       <div className={'flex items-center'}>
-        {menuScope === 'FO' && level <= 2 && (
-          <Button
-            onClick={(e) => {
-              e.stopPropagation();
-              addNode(node);
-            }}
-            variant="gray2"
-            size={'xs'}
-            type={'button'}
-          >
-            {level == 0 ? '메뉴추가' : '하위메뉴추가'}
-          </Button>
-        )}
-        {menuScope === 'BO' && level <= 3 && (
-          <Button
-            onClick={(e) => {
-              e.stopPropagation();
-              addNode(node);
-            }}
-            variant="gray2"
-            size={'xs'}
-            type={'button'}
-          >
-            {level == 0 ? '메뉴추가' : '하위메뉴추가'}
-          </Button>
-        )}
+        <Button
+          onClick={(e) => {
+            e.stopPropagation();
+            addNode(node);
+          }}
+          variant="gray2"
+          size={'xs'}
+          type={'button'}
+          disabled={level >= 5}
+        >
+          {level === 0 ? t('메뉴추가') : t('하위메뉴추가')}
+        </Button>
       </div>
     </div>
   );
@@ -445,10 +422,11 @@ export const MenuManage = ({ menuScope }: any) => {
         onExpandedKeysChange={handleExpandChange}
         renderNodeButtons={renderNodeButtons}
         onAction={handleTreeAction}
-        type={'SAME_LEVEL_ONLY'}
+        type={'DRAG_DROP'}
         selectedNode={selectedNode}
         initLevel={1}
         handleSelectedNodeChange={handleSelectedNodeChange}
+        maxDepth={5}
       />
       <div className={layoutStyles.inner}>
         <form onSubmit={onSubmit(handleOnSubmit)}>
@@ -503,13 +481,6 @@ export const MenuManage = ({ menuScope }: any) => {
                   <DuplicateCheckInputFormField
                     onDuplicationCheck={duplicateCheck}
                     disabled={formMode === FORM_MODE.NONE}
-
-                    // clearFormError={clearFormError}
-                    // checkExistsMenu={checkExistsMenu}
-                    // isSuccess={isSuccessCodeCheck}
-                    // codeCheckState={codeCheckState}
-                    // setFormError={setFormError}
-                    // menuScope={menuScope}
                   />
                 }
               />
@@ -528,7 +499,7 @@ export const MenuManage = ({ menuScope }: any) => {
                   size="sm"
                   disabled={formMode !== FORM_MODE.VIEW}
                   onClick={() => {
-                    const menuCode = getValues('code');
+                    const menuCode = getValues('menuCode');
                     const menuName = getValues('menuName');
                     router.navigate({
                       to: '/platform/system/multilingual',
@@ -644,6 +615,7 @@ const formConfig: DynamicFormConfig = {
       name: 'code',
       type: 'custom',
       format: 'object',
+      maxLength: 150,
       value: { fieldValue: '', checkState: DuplicateState.needInput },
     },
     {
@@ -661,7 +633,7 @@ const formConfig: DynamicFormConfig = {
       value: '',
     },
     {
-      label: t('개인정보'),
+      label: t('개인정보포함'),
       tooltip: '개인정보를 사용하는 경우 엑셀 다운로드 시 사유를 입력해야 합니다.',
       name: 'isPersoninfoInclusion',
       type: 'switch',
@@ -675,6 +647,9 @@ const formConfig: DynamicFormConfig = {
       tooltip: 'Hidden메뉴 적용 시 메뉴에 API가 매칭 되나, 메뉴 자체는 화면에서 숨김처리가 됩니다.',
       name: 'isHiddenMenu',
       type: 'switch',
+      switchConfig: {
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
       value: false,
     },
     {
@@ -688,17 +663,15 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'deviceNames',
       type: 'checkbox-group',
-      label: t('디바이스 노출 여부'),
+      label: t('적용 디바이스'),
       format: 'array',
       value: [],
       options: [
         {
-          //   value: 'isWebExposed',
           value: DEVICE_NAME.PC,
           label: 'PC',
         },
         {
-          //   value: 'isMobileExposed',
           value: DEVICE_NAME.Mobile,
           label: '모바일',
         },
@@ -708,7 +681,7 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'isUsed',
       type: 'switch',
-      label: t('사용여부'),
+      label: t('사용 여부'),
       tooltip: t('사용여부 툴팁'),
       value: true,
       switchConfig: {
