@@ -1,7 +1,9 @@
 import { useRef, useState } from 'react';
-import { t } from 'i18next';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { useQueryClient } from '@tanstack/react-query';
+import { t } from 'i18next';
+
+import { IcoRefresh02 } from '@learnway/icons';
 import {
   Button,
   ModalBody,
@@ -12,10 +14,9 @@ import {
   ShuttleGridToGridImperative,
   useModal,
 } from '@learnway/ui';
+import { SearchBoxConfig, useSearchBox, CODE_GROUP } from '@learnway/hooks';
 
 import { SearchBox } from '@shared/ui/search-box';
-import { IcoRefresh02 } from '@learnway/icons';
-import { useQueryClient } from '@tanstack/react-query';
 import { queryOptions as companyQueryOptions } from '@entities/companies/service/companies.queries';
 
 /**
@@ -100,10 +101,14 @@ const searchConfig: SearchBoxConfig = {
   builders: [
     [
       {
-        name: 'companyCode',
-        type: 'text',
-        label: t('회사코드'),
+        name: 'companyType',
+        type: 'dropdown',
+        label: t('그룹'),
         value: '',
+        optionsConfig: {
+          options: [{ label: t('전체'), value: '' }],
+          codeGroup: CODE_GROUP['pms.company.CompanyType'],
+        },
       },
       {
         name: 'name',
@@ -119,30 +124,27 @@ const columnHelper = createColumnHelper<any>();
 const columns = [
   columnHelper.accessor('companyType', {
     id: 'companyType',
-    cell: (info) => info.getValue(),
-    header: '회사구분',
-    enableGrouping: false,
+    cell: (info) => t(`pms.company.CompanyType.${info.getValue()}`),
+    header: t('그룹'),
     size: 132,
   }),
   columnHelper.accessor('name', {
     id: 'name',
     cell: (info) => info.getValue(),
-    header: '회사',
+    header: t('회사'),
     size: 132,
-    enableGrouping: false,
   }),
   columnHelper.accessor('rpsntrName', {
     id: 'rpsntrName',
     cell: (info) => info.getValue(),
-    header: '대표자',
+    header: t('대표자'),
     size: 132,
-    enableGrouping: false,
   }),
 
   columnHelper.accessor('callNumber', {
     id: 'callNumber',
     cell: (info) => info.getValue(),
-    header: '대표 전화',
+    header: t('대표전화'),
     size: 132,
     enableGrouping: false,
   }),
