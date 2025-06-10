@@ -46,4 +46,7 @@ export const mutateOptions = {
   delete: () => ({
     mutationFn: (id?: number) => (id ? CompaniesService.delete(id) : skipToken),
   }),
+  checkExists: () => ({
+    mutationFn: (payload: any) => CompaniesService.existsCode(payload),
+  }),
 };

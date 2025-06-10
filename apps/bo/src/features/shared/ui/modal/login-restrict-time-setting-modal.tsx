@@ -1,5 +1,6 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { t } from 'i18next';
+import { useWatch } from 'react-hook-form';
 import {
   ModalBody,
   ModalContainer,
@@ -28,14 +29,31 @@ import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic
 
 const LoginRestrictTimeSettingModalComponent: FC<any> = () => {
   const { close } = useModal();
-  const { provider, onSubmit } = useDynamicForm(formConfig);
 
+  const { provider, control, onSubmit } = useDynamicForm(formConfig);
   const { config: gConfig, gridFetch, data: gridData } = useGridBox(gridConfig);
+
+  const watchedRestrictionType = useWatch({
+    control: control,
+    name: ['loginRestrictionType'],
+  });
+
   const [timeRestriction, setTimeRestriction] = useState<any[]>([]);
+  const [restrictionType, setRestrictionType] = useState('');
+  const [settingTypeDisabled, setSettingTypeDisabled] = useState(false);
 
   const handleOnSubmit = (node: any) => {
     close(node);
   };
+
+  useEffect(() => {
+    const selectRestrictionType: string = watchedRestrictionType[0];
+    if (selectRestrictionType !== restrictionType) {
+      setRestrictionType(selectRestrictionType);
+      setSettingTypeDisabled(selectRestrictionType === 'NONE');
+    }
+  }, [watchedRestrictionType]);
+
   const handleAddRowClick = () => {
     const row: any = {
       dayOfTheWeek: (
@@ -46,56 +64,54 @@ const LoginRestrictTimeSettingModalComponent: FC<any> = () => {
         />
       ),
       loginRestrictionTime: (
-        <>
-          <DatePicker displayType={'time-step'} minuteStep={30} /> {' - '}
-          <DatePicker displayType={'time-step'} minuteStep={30} />
-        </>
+        <div className="select_date_wrap">
+          <DatePicker displayType={'time'} size={'md'} />
+          <span className="dash"></span>
+          <DatePicker displayType={'time'} size={'md'} />
+        </div>
       ),
       isUsed: <Switch checked={true} />,
     };
     setTimeRestriction([...timeRestriction, row]);
   };
+
   return (
     <form className="form_row" onSubmit={onSubmit(handleOnSubmit)}>
       <ModalContainer>
         <ModalTitle>{t('로그인 제한 시간 설정')}</ModalTitle>
         <ModalBody>
-          <div className={popupStyles.wrap}>
-            <div className={popupStyles.pop_contents}>
-              <ContentsRow>
-                <FormRow provider={provider} name={'loginRestrictionType'} />
-              </ContentsRow>
-              <ContentsRow>
-                <FormRow provider={provider} name={'loginRestrictionName'} />
-              </ContentsRow>
-              <ContentsRow>
-                <FormRow
-                  provider={provider}
-                  name={'restrictionDate'}
-                  element={<DateRangePickerFormField />}
-                />
-              </ContentsRow>
-              <ContentsRow>
-                <FormRow
-                  provider={provider}
-                  name={'loginRestrictionSettingType'}
-                  element={<RadioGroupFormField disabled={true} />}
-                />
-              </ContentsRow>
-              <div className="grid_wrap">
-                <TableBox
-                  config={gConfig}
-                  columns={columns}
-                  data={timeRestriction}
-                  multiple
-                  title={'요일 및 시간 제한 설정'}
-                  showAdd
-                  height={200}
-                  onAddClick={handleAddRowClick}
-                />
-              </div>
-            </div>
-          </div>
+          <ContentsRow>
+            <FormRow provider={provider} name={'loginRestrictionType'} />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider} name={'loginRestrictionName'} />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name={'restrictionDate'}
+              element={<DateRangePickerFormField />}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name={'loginRestrictionSettingType'}
+              element={<RadioGroupFormField disabled={settingTypeDisabled} />}
+            />
+          </ContentsRow>
+          <TableBox
+            config={gConfig}
+            columns={columns}
+            data={timeRestriction}
+            tableMode={true}
+            multiple
+            title={t('요일 및 시간 제한 설정')}
+            showAdd
+            showRemove
+            onAddClick={handleAddRowClick}
+            showTotalCount={false}
+          />
         </ModalBody>
         <ModalFooter>
           <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={() => close()} />
@@ -117,10 +133,10 @@ const formConfig: DynamicFormConfig = {
       value: '',
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.LoginRestrictionType'],
-        options: [{ value: '', label: '제한없음' }],
       },
-      guideText:
+      guideText: t(
         '사용자가 학습자 사이트에 로그인 가능한 시간을 설정할 수 있으며, 로그인 가능 시간 경과 시 자동 로그아웃됩니다.',
+      ),
     },
     {
       name: 'loginRestrictionName',
@@ -134,8 +150,8 @@ const formConfig: DynamicFormConfig = {
       label: t('기간 선택'),
       type: 'custom',
       value: {
-        from: formUtils.now(),
-        to: formUtils.now(),
+        from: undefined,
+        to: undefined,
       },
     },
     {
@@ -146,8 +162,9 @@ const formConfig: DynamicFormConfig = {
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.LoginRestrictionSettingType'],
       },
-      guideText:
+      guideText: t(
         '근태 정보 연동 선택 시 각 사용자별 근태 정보를 기준으로 로그인 제한이 설정됩니다.',
+      ),
     },
   ],
   validator: {
@@ -186,29 +203,29 @@ const columnHelper = createColumnHelper<any>();
 const columns = [
   columnHelper.accessor('dayOfTheWeek', {
     cell: (info) => info.getValue(),
-    header: '요일',
-    size: 200,
-    enableGrouping: false,
+    header: t('요일'),
     meta: {
-      align: 'center',
+      size: 'auto',
+      headerAlign: 'center',
+      cellAlign: 'center',
     },
   }),
   columnHelper.accessor('loginRestrictionTime', {
     cell: (info) => info.getValue(),
-    header: '로그인 제한 시간',
-    size: 560,
-    enableGrouping: false,
+    header: t('로그인 제한 시간'),
+    size: 557,
     meta: {
-      align: 'center',
+      headerAlign: 'center',
+      cellAlign: 'center',
     },
   }),
   columnHelper.accessor('isUsed', {
     cell: (info) => info.getValue(),
-    header: '사용 여부',
-    size: 160,
-    enableGrouping: false,
+    header: t('사용 여부'),
     meta: {
-      align: 'center',
+      size: 'auto',
+      headerAlign: 'center',
+      cellAlign: 'center',
     },
   }),
 ] as ColumnDef<any, unknown>[];
