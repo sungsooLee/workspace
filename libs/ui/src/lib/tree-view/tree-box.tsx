@@ -11,6 +11,7 @@ import { Input } from '../input/input';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 import subTitleStyles from '@learnway/styles/bo/assets/styles/modules/form-sub-title.module.css';
+import { CountText } from '../elements/count-text/count-text';
 
 const TreeBoxComponent = <T extends object>(
   {
@@ -44,6 +45,7 @@ const TreeBoxComponent = <T extends object>(
   const [internalExpandedKeys, setInternalExpandedKeys] = useState<string[]>([]);
 
   const hasExternalKeys = externalExpandedKeys !== undefined && externalExpandedKeys !== null;
+  const treeDataLength = getAllKeysByTree(data);
 
   // 실제 사용할 expandedKeys 결정
   const expandedKeys = hasExternalKeys ? externalExpandedKeys : internalExpandedKeys;
@@ -111,6 +113,12 @@ const TreeBoxComponent = <T extends object>(
       >
         <div className={subTitleStyles.title_area}>
           <strong className={subTitleStyles.title}>{title}</strong>
+          {/* {showTotalCount && (
+            <CountText
+              label={t('LABEL.grid.header.all', '전체')}
+              count={treeDataLength.length - 1 || 0}
+            />
+          )} */}
         </div>
         <div className={subTitleStyles.input_area}>
           {customButtonNode ? (

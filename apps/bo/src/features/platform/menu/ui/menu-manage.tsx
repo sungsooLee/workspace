@@ -138,7 +138,7 @@ export const MenuManage = ({ menuScope }: any) => {
       const { parentId } = data;
       if (parentId !== null && typeWatch.length === 0) {
         openAlert({
-          content: '1개 이상 적용 디바이스를 선택하세요.',
+          content: t('LABEL.form.validation.selectAtLeastCount', { count: 1 }),
         });
       }
     }
@@ -262,11 +262,11 @@ export const MenuManage = ({ menuScope }: any) => {
             size={'xs'}
             type={'button'}
           >
-            삭제
+            {t('LABEL.button.delete')}
           </Button>
         );
       },
-      header: '삭제',
+      header: t('LABEL.grid.header.remove'),
       size: 100,
       meta: {
         // size: 'auto',
@@ -282,7 +282,7 @@ export const MenuManage = ({ menuScope }: any) => {
 
     const selectApis = await openModal({
       content: <MenuApiMappingModal menuScopeCode={menuScope} selectedApiKeys={keyArray} />,
-      width: 'lg',
+      width: 'xl',
     });
     fetchData({ ...getValues(), apiMappingMenuList: [...selectApis] });
   };
@@ -367,7 +367,7 @@ export const MenuManage = ({ menuScope }: any) => {
           type={'button'}
           disabled={level >= 5}
         >
-          {level === 0 ? t('메뉴추가') : t('하위메뉴추가')}
+          {level === 0 ? t('LABEL.menu.add') : t('LABEL.menu.addSub')}
         </Button>
       </div>
     </div>
@@ -381,7 +381,14 @@ export const MenuManage = ({ menuScope }: any) => {
     const isReset = await openConfirm({
       title: t('LABEL.confirm.reset.title'),
     });
-    if (isReset) onFormChange();
+    if (isReset) {
+      onFormChange();
+      if (FORM_MODE.ADD === formMode) {
+        fetchData({ apiMappingMenuList: [] });
+      } else if (FORM_MODE.VIEW === formMode) {
+        if (initialFromValuesRef.current) fetchData({ ...initialFromValuesRef.current });
+      }
+    }
   };
 
   const handleDelete = () => {
@@ -414,7 +421,7 @@ export const MenuManage = ({ menuScope }: any) => {
   return (
     <>
       <TreeBox
-        title={t('목록')}
+        title={t('LABEL.menu.list')}
         data={treeData}
         treeId={'menu-tree'}
         expandedKeys={expandedKeys}
@@ -433,7 +440,7 @@ export const MenuManage = ({ menuScope }: any) => {
       <div className={layoutStyles.inner}>
         <form onSubmit={onSubmit(handleOnSubmit)}>
           <div className={titleStyles.title_wrap}>
-            <h3 className={titleStyles.title}>{t('메뉴 정보')}</h3>
+            <h3 className={titleStyles.title}>{t('LABEL.menu.info')}</h3>
             <div className={layoutStyles.btn_wrap}>
               <Button
                 type="button"
@@ -443,7 +450,7 @@ export const MenuManage = ({ menuScope }: any) => {
                 disabled={formMode === FORM_MODE.NONE}
                 className={layoutStyles.btn_text}
               >
-                초기화
+                {t('LABEL.button.reset')}
               </Button>
               <Button
                 variant="text"
@@ -453,10 +460,10 @@ export const MenuManage = ({ menuScope }: any) => {
                 className={layoutStyles.btn_text}
                 icon={<IcoMinus width={16} height={16} stroke={'#4C515E'} />}
               >
-                삭제
+                {t('LABEL.button.delete')}
               </Button>
               <Button type="submit" variant="save" size="sm" disabled={formMode === FORM_MODE.NONE}>
-                저장
+                {t('LABEL.button.save')}
               </Button>
             </div>
           </div>
@@ -515,7 +522,7 @@ export const MenuManage = ({ menuScope }: any) => {
                     });
                   }}
                 >
-                  다국어 관리
+                  {t('LABEL.button.multilingualManage')}{' '}
                 </Button>
               </FormRow>
             </ContentsRow>
@@ -587,7 +594,7 @@ export const MenuManage = ({ menuScope }: any) => {
                         className={layoutStyles.btn_text}
                         icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
                       >
-                        추가
+                        {t('LABEL.grid.header.add')}
                       </Button>
                     }
                   />
@@ -606,17 +613,17 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'location',
       type: 'text',
-      label: t('메뉴 위치'),
+      label: t('LABEL.menu.location'),
       value: '',
     },
     {
-      label: t('상위 메뉴명'),
+      label: t('LABEL.menu.parentName'),
       name: 'parentCode',
       type: 'text',
       value: '',
     },
     {
-      label: t('메뉴 코드'),
+      label: t('LABEL.menu.code'),
       name: 'code',
       type: 'custom',
       format: 'object',
@@ -624,41 +631,42 @@ const formConfig: DynamicFormConfig = {
       value: { fieldValue: '', checkState: DuplicateState.needInput },
     },
     {
-      label: t('메뉴명'),
+      label: t('LABEL.menu.name'),
       name: 'menuName',
       type: 'text',
       maxLength: 10,
       value: '',
     },
     {
-      label: t('메뉴 URL'),
+      label: t('LABEL.menu.url'),
       name: 'path',
       type: 'text',
       maxLength: 50,
       value: '',
     },
     {
-      label: t('개인정보포함'),
-      tooltip: '개인정보를 사용하는 경우 엑셀 다운로드 시 사유를 입력해야 합니다.',
+      label: t('LABEL.menu.personalInfo'),
+      tooltip: t('LABEL.menu.personalInfoTooltip'),
       name: 'isPersoninfoInclusion',
       type: 'switch',
       switchConfig: {
-        label: (value: boolean) => (value ? t('개인정보포함') : t('미포함')),
+        label: (value: boolean) =>
+          value ? t('LABEL.menu.personalInfo') : t('LABEL.menu.personalInfoNotIncluded'),
       },
       value: false,
     },
     {
-      label: t('메뉴숨기기'),
-      tooltip: 'Hidden메뉴 적용 시 메뉴에 API가 매칭 되나, 메뉴 자체는 화면에서 숨김처리가 됩니다.',
+      label: t('LABEL.menu.hide'),
+      tooltip: t('LABEL.menu.hideTooltip'),
       name: 'isHiddenMenu',
       type: 'switch',
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+        label: (value: boolean) => (value ? t('LABEL.common.enable') : t('LABEL.common.disable')),
       },
       value: false,
     },
     {
-      label: t('메뉴 설명'),
+      label: t('LABEL.menu.description'),
       name: 'menuDesc',
       type: 'textarea',
       maxLength: 100,
@@ -668,17 +676,17 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'deviceNames',
       type: 'checkbox-group',
-      label: t('적용 디바이스'),
+      label: t('LABEL.menu.device'),
       format: 'array',
       value: [],
       options: [
         {
           value: DEVICE_NAME.PC,
-          label: 'PC',
+          label: t('LABEL.menu.pc'),
         },
         {
           value: DEVICE_NAME.Mobile,
-          label: '모바일',
+          label: t('LABEL.menu.mobile'),
         },
       ],
     },
@@ -687,10 +695,9 @@ const formConfig: DynamicFormConfig = {
       name: 'isUsed',
       type: 'switch',
       label: t('사용 여부'),
-      tooltip: t('사용여부 툴팁'),
       value: true,
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+        label: (value: boolean) => (value ? t('LABEL.common.enable') : t('LABEL.common.disable')),
       },
     },
     {
@@ -711,17 +718,17 @@ const formConfig: DynamicFormConfig = {
             if (fieldValue === '') return true;
             return false;
           },
-          message: t('LABEL.form.validation.needInput', { code: t('코드') }),
+          message: t('LABEL.form.validation.needInput', { code: t('LABEL.cdId') }),
         },
         {
           fn: (values: Record<string, any>) =>
             values.code.checkState === DuplicateState.check ||
             values.code.checkState === DuplicateState.needInput,
-          message: t('LABEL.form.validation.check', { code: t('코드') }),
+          message: t('LABEL.form.validation.check', { code: t('LABEL.cdId') }),
         },
         {
           fn: (values: Record<string, any>) => values.code.checkState === DuplicateState.duplicated,
-          message: t('LABEL.form.validation.duplicated', { code: t('코드') }),
+          message: t('LABEL.form.validation.duplicated', { code: t('LABEL.cdId') }),
         },
       ],
     },
@@ -736,7 +743,7 @@ const formConfig: DynamicFormConfig = {
         fn: (values) => {
           return !values.isMobileExposed && !values.isWebExposed;
         },
-        message: t('1개 이상 선택하세요.'),
+        message: t('LABEL.form.validation.selectAtLeastCount', { count: 1 }),
       },
     },
   },
