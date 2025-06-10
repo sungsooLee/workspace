@@ -2,8 +2,16 @@ import { CODE_GROUP, useSearchBox } from '@learnway/hooks';
 import { cn, DATE_TIME_FORMAT, duration } from '@learnway/shared';
 import { SearchBox } from '@shared/ui/search-box';
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
-import { Button, Checkbox, GridBox, useGridBox, useGridBoxConfig, useModal } from '@learnway/ui';
-import { IcoClock01, IcoCopy, IcoDownload } from '@learnway/icons';
+import {
+  Button,
+  Checkbox,
+  GridBox,
+  Tooltip,
+  useGridBox,
+  useGridBoxConfig,
+  useModal,
+} from '@learnway/ui';
+import { IcoClock01, IcoCopy, IcoDownload, IcoSucess02 } from '@learnway/icons';
 import { t } from 'i18next';
 import { Table } from '@tanstack/react-table';
 import { useState } from 'react';
@@ -249,7 +257,16 @@ function LearningResourceTableComponent() {
                     })
                   }
                 />
-                <Button variant="text" label={t('일괄설정')} />
+                <span className="type_tooltip">
+                  <Tooltip
+                    side="bottom"
+                    align="start"
+                    content={<pre>{t('LABEL.message.learningResource.batchModifyTooltip')}</pre>}
+                  >
+                    <IcoSucess02 width={16} height={16} stroke="#4C515E" />
+                  </Tooltip>
+                  <Button variant="text" label={t('일괄설정')} />
+                </span>
                 <Button
                   label={t('엑셀다운로드')}
                   icon={<IcoDownload width={16} height={16} stroke="#4C515E" />}
