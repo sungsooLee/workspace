@@ -16,7 +16,7 @@
     }
   }
   thead th:not(:first-child) {
-    border-left: 1px solid var(--gray2);
+    border-left: 1px solid var(--gray3);
   }
   &.no_data {
     @apply overflow-hidden pb-[40px];

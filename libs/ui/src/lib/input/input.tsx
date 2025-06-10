@@ -96,18 +96,23 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       onChange?.(clearEvent);
     };
     return (
-      <div className={cn(styles.start, 'nlp--input')}>
+      <div
+        className={cn(
+          styles.start,
+          borderNone && styles.bd_none,
+          isFocused && styles.focused,
+          disabled && styles.disabled,
+          readOnly && styles.read_only,
+          error ? styles.error : '',
+          'nlp--input',
+        )}
+      >
         {type === 'number' ? (
           <NumericFormat
             {...props}
             getInputRef={ref}
             id={id}
-            className={cn(
-              styles.input,
-              className,
-              borderNone ? styles.bd_none : '',
-              error ? styles.error : '',
-            )}
+            className={cn(styles.input, className, error ? styles.error : '')}
             value={value}
             thousandSeparator={thousandSeparator}
             placeholder={placeholder}
@@ -146,12 +151,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             disabled={disabled}
             type={type}
             placeholder={placeholder}
-            className={cn(
-              styles.input,
-              className,
-              borderNone ? styles.bd_none : '',
-              error ? styles.error : '',
-            )}
+            className={cn(styles.input, className)}
             onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => {
               if (event.key === 'Enter') {
                 event.preventDefault(); // Enter 키 기본 동작 방지

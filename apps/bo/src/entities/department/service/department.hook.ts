@@ -1,7 +1,7 @@
 import type { UseMutationResult, UseQueryResult } from '@tanstack/react-query';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-import { queryKeys, queryOptions } from './depoartment.queries';
+import { queryKeys, queryOptions } from './department.queries';
 
 export function useGetCompanyDepartmentTree(companyCode: string) {
   return useQuery(queryOptions.tree(companyCode));

@@ -19,7 +19,7 @@ import {
   Pagination,
 } from '@learnway/ui';
 import { IcoMinus, IcoPlus } from '@learnway/icons';
-import { cn } from '@learnway/shared';
+import { cn, gridBoxStateToGridState } from '@learnway/shared';
 import { useTranslation } from 'react-i18next';
 import { GridBoxSearchInput, GridBoxSearchInputCondition } from './grid-box-search-input';
 import styles from './grid-box.module.css';
@@ -73,9 +73,13 @@ const GridBoxComponent = <T extends object>(
     onDataChange,
   } = config;
   const columnHelper = createColumnHelper<any>();
+  // GridImperative Ref
   const gridRef = useRef<GridImperative>(null);
-  // 마지막으로 페치에 사용된 params를 저장하는 useRef
-  const lastFetchedParamsRef = useRef<GridBoxState>(gridState ?? DEFAULT_GRID_BOX_STATE); // 초기값 설정
+  // 마지막으로 onStateChange 사용된 params를 저장하는 Ref
+  const lastDispatchGridBoxStateRef = useRef<GridBoxState>(gridState ?? DEFAULT_GRID_BOX_STATE);
+  // 마지막으로 onStateChange 사용된 params를 저장하는 Ref
+  const initialSortRef = useRef<boolean>(false);
+  // table instance
   const [tableInstance, setTableInstance] = useState<Table<any>>(); // GridComponent로부터 받을 table 인스턴스를 저장할 상태
 
   // 테스트 후 삭제 예정
@@ -90,7 +94,6 @@ const GridBoxComponent = <T extends object>(
       // 'sort' 객체가 존재하지만 'sorted'가 false인 경우를 확인
       // 또는 'sort' 배열이 비어있는 경우 (API 응답 형식에 따라 다름)
       const apiSaysNotSorted = !gridData.sort?.sorted; // 또는 !gridData.pageable?.sort?.length;
-
       // 현재 TanStack Table의 정렬 상태가 실제로 적용되어 있는지 확인 (UI가 정렬되어 있는지)
       const currentTableSorting = tableInstance.getState().sorting;
       const isTableCurrentlySorted = !!currentTableSorting.length;
@@ -100,13 +103,18 @@ const GridBoxComponent = <T extends object>(
         console.log('API indicates no sort, but table is sorted. Resetting table sorting.');
         tableInstance.setSorting([]);
       }
+      // API 응답에 sort 정보가 있고 && sort 설정이 처음 && 그리드 설정에 sort 설정이 있는 경우
+      else if (!apiSaysNotSorted && !initialSortRef.current && gridState?.sort?.length) {
+        const { sorting } = gridBoxStateToGridState(gridState);
+        console.log('initialSorting', sorting);
+        initialSortRef.current = true;
+        tableInstance.setSorting(sorting ?? []);
+      }
 
       // 그리드 선택 해제
       tableInstance.resetRowSelection();
-      const list = tableInstance.getSelectedRowModel();
-      console.log(list);
     }
-  }, [gridData, tableInstance]); // lastFetchedParamsRef.current는 useEffect 의존성에서 제거
+  }, [gridData, tableInstance, gridState?.sort]); // lastDispatchGridBoxStateRef.current는 useEffect 의존성에서 제거
 
   /**
    * 컬럼 정보를 기반으로 TanStack Table 형식으로 변환
@@ -129,7 +137,7 @@ const GridBoxComponent = <T extends object>(
           // 다른 컬럼 옵션들 (sortingFn, filterFn 등) 필요시 추가
         });
       });
-  }, [columns, page, columnHelper]);
+  }, [columns, columnHelper]);
 
   /**
    * numbering 컬럼 여부 확인 (props나 config로 전달 가능)
@@ -268,11 +276,11 @@ const GridBoxComponent = <T extends object>(
 
   const dispatchStateChange = (state: GridBoxState) => {
     const newParams = {
-      ...lastFetchedParamsRef.current,
+      ...lastDispatchGridBoxStateRef.current,
       ...state, // 새로 받은 정렬 정보
     };
     // params를 업데이트하기 전에 ref에 저장
-    lastFetchedParamsRef.current = newParams;
+    lastDispatchGridBoxStateRef.current = newParams;
     //
     onStateChange?.(newParams);
   };
@@ -366,7 +374,6 @@ const GridBoxComponent = <T extends object>(
         showNumberingColumn={showNumberingColumn}
         onChange={props.onChange || onDataChange}
         onStateChange={handleStateChange}
-        // onStateChange={props.onStateChange || handleStateChange}
         onTableInstanceChange={handleTableInstanceChange}
       />
       {/* 페이지네이션 */}
