@@ -17,4 +17,5 @@ export type PlayerContainerProps = {
   handleRewind: () => void;
   handleForward: () => void;
   handleSeek: (e: React.MouseEvent<HTMLDivElement>) => void;
+  changePlaybackRate: (rate: number) => void;
 } & PropsWithChildren;
