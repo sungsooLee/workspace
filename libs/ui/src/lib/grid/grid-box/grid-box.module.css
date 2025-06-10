@@ -39,8 +39,10 @@
     }
     button {
       @apply button_bo_2_r !font-normal;
-      svg {
-        @apply mr-[4px];
+      &:not([role='checkbox']) {
+        svg {
+          @apply mr-[4px];
+        }
       }
     }
     button + button {
@@ -107,7 +109,7 @@
 }
 
 [class*='custom_info_wrap'] {
-  @apply ml-[16px];
+  @apply flex items-center;
   [class*='table_tit'] {
     @apply body_2_b inline-flex items-center text-[var(--gray9)];
     &:not(:first-child)::before {
@@ -118,6 +120,22 @@
     @apply body_2_b ml-[6px] inline-flex items-center text-[var(--secondary1)];
     &[class*='point'] {
       @apply text-[var(--status1)];
+    }
+  }
+}
+
+[class*='type_tooltip'] {
+  @apply relative flex items-center;
+  button::before {
+    @apply !hidden;
+  }
+}
+
+[class*='nlp--button'] {
+  & + [class*='type_tooltip'] {
+    @apply ml-[8px];
+    &::before {
+      @apply mr-[12px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
     }
   }
 }
