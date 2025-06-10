@@ -193,9 +193,12 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
       fetchData({
         ...roleDetail,
         parentRoleId: parentRoleId,
-        companyIds: roleDetail.companies,
+        companyIds: roleDetail.companies.map((item: any) => ({
+          companyId: item.id,
+          name: item.name,
+        })),
         channelIds: roleDetail.channels,
-        deptIds: roleDetail.depts,
+        deptIds: roleDetail.depts.map((item: any) => ({ deptId: item.id, deptName: item.name })),
       });
 
       setFormMode(EnFormMode.VIEW);
@@ -400,7 +403,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                       <ChipListModalSelectorFormField
                         chipList={{
                           labelField: 'channelName',
-                          valueField: 'channelId',
+                          valueField: 'channelUuid',
                           hideBorder: true,
                         }}
                         modalConfig={{

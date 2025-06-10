@@ -94,7 +94,7 @@ export const copyTreeNode = (event: any, baseTree: any[], targetTree: any[]) => 
   return oldCopyMenu;
 };
 
-export const getAllParent = (nodes: TreeNode[], key: string): TreeNode[] => {
+export const getAllParent = (nodes: TreeNode[], key: string | number): TreeNode[] => {
   const retval: TreeNode[] = [];
   const map = genMap(nodes);
   let parentKey = key;
@@ -176,6 +176,30 @@ export const getNodeByKey = (nodes: TreeNode[], key: number | string): TreeNode 
     }
   }
   return undefined;
+};
+
+export const getAllParentAndChildTreeById = (nodes: TreeNode[], key: number | string) => {
+  const retval = getAllParent(nodes, key);
+  const copyParent = JSON.parse(JSON.stringify(retval));
+  const first = copyParent.at(0);
+  const last = copyParent.at(-1);
+  let parent = null;
+  for (const item of copyParent) {
+    if (parent == null) {
+      parent = item;
+      if (last !== item) {
+        parent.children = [];
+      }
+    } else {
+      parent.children.push(item);
+      if (last != item) {
+        console.log('---- last');
+        item.children = [];
+      }
+      parent = item;
+    }
+  }
+  return first;
 };
 
 export const getAllParentAndAllChildById = (nodes: TreeNode[], key: number | string) => {

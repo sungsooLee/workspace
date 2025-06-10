@@ -27,7 +27,7 @@ import {
   useChangeMenuTenentDnd,
 } from '@entities/menu/service/tenant-menu-manage.hook';
 import {
-  getAllParentAndAllChildById,
+  getAllParentAndChildTreeById,
   getFirstExpandKeys,
   getAllTreeKeys,
   moveTenantMenuNodeCheck,
@@ -86,19 +86,9 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
         if (event.sourceTreeId === 'mapping-menu-tree') {
           const sourceMenuId = event.sourceNode.key;
 
-          const allPostMenus = getAllParentAndAllChildById(baseMenuTreeData, sourceMenuId);
-          const contents = [];
-          for (const item of allPostMenus) {
-            if (!menuTreeAllKeys.includes(item.key)) {
-              const reqMenu: any = JSON.parse(JSON.stringify(item));
-              reqMenu.tenantId = tenantId;
-              reqMenu.menuScope = menuScopeCode;
-              reqMenu.parentMenuId = item.parentId;
-              contents.push(reqMenu);
-            }
-          }
+          const rootMenu = getAllParentAndChildTreeById(baseMenuTreeData, sourceMenuId);
 
-          const payload = { tenantId: tenantId, contents: [...contents] };
+          const payload = { tenantId: tenantId, menus: rootMenu.children };
           console.log(payload);
           tentantMenuCreate(payload);
         }

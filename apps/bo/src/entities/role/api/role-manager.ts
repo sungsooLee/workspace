@@ -150,7 +150,7 @@ function genCreateRole(payload: any) {
     retval.companyIds = retval.companyIds.map((item: any) => item.companyId);
   }
   if (retval.channelIds?.length > 0) {
-    retval.channelIds = retval.channelIds.map((item: any) => item.channelId);
+    retval.channelIds = retval.channelIds.map((item: any) => item.channelUuid);
   }
   if (retval.deptIds?.length > 0) {
     retval.deptIds = retval.deptIds.map((item: any) => item.deptId);
