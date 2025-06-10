@@ -125,5 +125,17 @@
 }
 
 [class*='type_tooltip'] {
-  @apply ml-[6px] flex items-center;
+  @apply relative flex items-center;
+  button::before {
+    @apply !hidden;
+  }
+}
+
+[class*='nlp--button'] {
+  & + [class*='type_tooltip'] {
+    @apply ml-[8px];
+    &::before {
+      @apply mr-[12px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
+    }
+  }
 }

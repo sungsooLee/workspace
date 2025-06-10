@@ -426,12 +426,14 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
                 label={'프로그램/가이드 다운로드'}
                 icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
               />
+              {/* 퍼블수정 2025-06-10 버튼 케이스 추가 S */}
               <span className={'type_tooltip'}>
                 <Tooltip side={'bottom'} align={'start'} content={'tooltip content'}>
                   <IcoSucess02 width={16} height={16} stroke={'#4C515E'} />
                 </Tooltip>
                 <Button label={'일괄설정'} variant={'text'} />
               </span>
+              {/* 퍼블수정 2025-06-10 버튼 케이스 추가 E */}
               <Button label={'복사'} icon={<IcoCopy width={16} height={16} stroke={'#131c30'} />} />
             </>
           }
