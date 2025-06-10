@@ -97,7 +97,12 @@
 }
 
 [class*='select__menu'] {
-  @apply !scrollbar !max-h-[150px];
+  @apply !scrollbar !max-h-[167px];
+}
+[class*='menu-portal-large'] {
+  [class*='select__menu'] {
+    @apply !max-h-[334px];
+  }
 }
 [class*='nlp-select__control'] {
   @apply h-[32px] min-h-[32px] !cursor-pointer items-center border-[#C8D2E5] pr-[8px];
@@ -116,9 +121,6 @@
   }
   &:hover {
     @apply !rounded-[4px] !bg-[var(--gray1)];
-  }
-  & + [class*='nlp-select__option'] {
-    @apply mt-[4px];
   }
 }
 [class*='select__option--is-focused'] {
