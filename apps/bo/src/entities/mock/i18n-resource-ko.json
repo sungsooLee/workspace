@@ -55,6 +55,9 @@
       "upload": {
         "uploadDescription": "영역을 클릭하거나 파일을 마우스로 끌어 놓으세요"
       },
+      "learningResource": {
+        "batchModifyTooltip": "학습자원의 담당자, 사용기한, 공유채널설정, \n교육자원활용, 보안콘텐츠 적용, 검수진행을 \n한번에 할 수 있어요."
+      },
       "learningResourceFileUploadModal": {
         "uploaderLabel": "파일은 1개당 최대 4GB 이하로 가능 합니다.",
         "uploaderGuideText": "업로드된 동영상은 학습자원목록에서 조회가능합니다.",
