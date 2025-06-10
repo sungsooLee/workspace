@@ -30,8 +30,8 @@ function LearningResourceTableComponent() {
           label: t('LABEL.content.learning-resource.tenantName'),
           value: '',
           format: 'number',
+          presetOptionLabel: t('선택'),
           optionsConfig: {
-            options: [{ value: '', label: t('선택') }],
             codeGroup: CODE_GROUP['manual.tenant.tenantId'],
           },
         },
@@ -40,9 +40,9 @@ function LearningResourceTableComponent() {
           type: 'dropdown',
           label: t('LABEL.content.learning-resource.channelName'),
           value: '',
+          presetOptionLabel: t('선택'),
           optionsConfig: {
             options: [
-              { value: '', label: t('선택') },
               { value: 'channelA', label: t('채널A') },
               { value: 'channelB', label: t('채널B') },
               { value: 'channelC', label: t('채널C') },
@@ -56,11 +56,11 @@ function LearningResourceTableComponent() {
           name: 'contentTypes',
           type: 'dropdown',
           label: t('LABEL.content.learning-resource.contentType'),
-          value: [''],
+          value: [],
           isMulti: true,
           variant: 'text',
+          presetOptionLabel: t('전체'),
           optionsConfig: {
-            options: [{ value: '', label: t('전체') }],
             codeGroup: CODE_GROUP['cms.content.ContentType'],
           },
         },
@@ -77,9 +77,9 @@ function LearningResourceTableComponent() {
           type: 'dropdown',
           label: t('외주여부'),
           value: '',
+          presetOptionLabel: t('전체'),
           optionsConfig: {
             options: [
-              { value: '', label: t('전체') },
               { value: 'true', label: 'Y' },
               { value: 'false', label: 'N' },
             ],
@@ -90,8 +90,8 @@ function LearningResourceTableComponent() {
           type: 'dropdown',
           label: t('LABEL.content.learning-resource.useEnabledType'),
           value: '',
+          presetOptionLabel: t('전체'),
           optionsConfig: {
-            options: [{ value: '', label: t('전체') }],
             codeGroup: CODE_GROUP['cms.content.ContentUseEnabledType'],
           },
         },
@@ -100,9 +100,9 @@ function LearningResourceTableComponent() {
           type: 'dropdown',
           label: t('LABEL.content.learning-resource.isCourseUsed'),
           value: '',
+          presetOptionLabel: t('전체'),
           optionsConfig: {
             options: [
-              { value: '', label: t('전체') },
               { value: 'true', label: 'Y' },
               { value: 'false', label: 'N' },
             ],
