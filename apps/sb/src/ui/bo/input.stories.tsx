@@ -54,7 +54,7 @@ Input 컴포넌트는 다양한 타입의 사용자 입력을 받는 폼 요소�
       control: { type: 'number' },
       description: '최대 입력 가능 글자수',
     },
-    unitText: {
+    suffixText: {
       control: { type: 'text' },
       description: '단위 텍스트',
     },
@@ -407,11 +407,12 @@ export const FieldTextMatrix: Story = {
               label="Unit Text"
               placeholder="0"
               initialValue="1000"
-              unitText="원"
+              prefixText="1인당"
+              suffixText="원"
             />
           </div>
           <div>
-            <InputWrapper type="text" label="Unit Text" placeholder="0" unitText="코드" />
+            <InputWrapper type="text" label="Unit Text" placeholder="0" suffixText="코드" />
           </div>
         </div>
       </div>

@@ -13,7 +13,8 @@ export interface InputProps extends Omit<NumericFormatProps, 'type'> {
   type?: 'text' | 'number' | 'mask' | 'password' | 'tel' | 'file' | 'alphanumeric';
   id?: string;
   placeholder?: string;
-  unitText?: string;
+  prefixText?: string;
+  suffixText?: string;
   timerText?: string; // timer input 에서만 사용
   // onChange?: (value: any) => void;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -46,7 +47,8 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       value = '',
       onBlur,
       placeholder,
-      unitText,
+      prefixText,
+      suffixText,
       timerText,
       onChange,
       hideInputLength,
@@ -255,6 +257,8 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
 
         {/* 삭제 버튼 | 단위 | 입력글자수/최대입력가능글자수 */}
         <div className={cn(styles.button_wrap)}>
+          {/* prefixText */}
+          {prefixText && <div className={styles.unit}>{prefixText}</div>}
           {/* 삭제 버튼 */}
           {!readOnly && isFocused && !!String(value)?.length && (
             <Button
@@ -268,8 +272,8 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
           )}
           {/* 타이머 */}
           {timerText && <div className={styles.time}>{timerText}</div>}
-          {/* 단위 */}
-          {unitText && <div className={styles.unit}>{unitText}</div>}
+          {/* suffixText */}
+          {suffixText && <div className={styles.unit}>{suffixText}</div>}
           {/* 입력글자수/최대입력가능글자수 */}
           {!hideInputLength && maxLength && (type === 'text' || type === 'alphanumeric') && (
             <div

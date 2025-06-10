@@ -5,24 +5,24 @@ import { FormSubTitle } from '../../../../../../../bo/src/shared/ui/form';
 import { NoticeBox } from '../../../../../../../bo/src/shared/ui';
 import {
   Button,
+  CheckboxGroupFormField,
   ContentsRow,
-  Tabs,
+  Dropdown,
+  Input,
   InputModalSelectorFormField,
   List,
   ModalBody,
   ModalContainer,
   ModalFooter,
-  useModal,
-  Dropdown,
-  Input,
-  Textarea,
   PhoneNumber,
-  Switch,
   RadioGroupFormField,
-  CheckboxGroupFormField,
+  Switch,
+  Tabs,
+  Textarea,
   Tooltip,
+  useModal,
 } from '@learnway/ui';
-import { IcoFormRequired, IcoRefresh02, IcoSearch, IcoAlertCircle } from '@learnway/icons';
+import { IcoAlertCircle, IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';
 
 /* style */
 import styles from './test-detail.module.css';
@@ -540,7 +540,7 @@ const TestInfoComponent: FC<{}> = ({}) => {
                 <Input
                   id="name-exam01"
                   type="text"
-                  unitText={'개'}
+                  suffixText={'개'}
                   value={'5'}
                   className={formStyles.input_time}
                 />
@@ -559,7 +559,7 @@ const TestInfoComponent: FC<{}> = ({}) => {
                 <Input
                   id="name-exam02"
                   type="text"
-                  unitText={'개'}
+                  suffixText={'개'}
                   value={'5'}
                   className={formStyles.input_time}
                 />
@@ -577,7 +577,7 @@ const TestInfoComponent: FC<{}> = ({}) => {
                 <Input
                   id="name-exam03"
                   type="text"
-                  unitText={'개'}
+                  suffixText={'개'}
                   value={'5'}
                   className={formStyles.input_time}
                 />
@@ -595,7 +595,7 @@ const TestInfoComponent: FC<{}> = ({}) => {
                 <Input
                   id="name-exam04"
                   type="text"
-                  unitText={'회'}
+                  suffixText={'회'}
                   value={'5'}
                   className={formStyles.input_time}
                 />
@@ -829,7 +829,7 @@ const TestInfoComponent: FC<{}> = ({}) => {
                       <Input
                         id="name-exam04"
                         type="text"
-                        unitText={'분전'}
+                        suffixText={'분전'}
                         placeholder={'입력'}
                         className={formStyles.input_time}
                       />

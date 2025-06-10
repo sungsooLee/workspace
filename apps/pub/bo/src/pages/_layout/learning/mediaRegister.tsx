@@ -19,6 +19,7 @@ import defaultImg from '../../../assets/images/thumb/img_thumb_default.jpg';
 import {
   Button,
   Checkbox,
+  CheckboxGroupFormField,
   ChipList,
   ContentsRow,
   DatePicker,
@@ -32,17 +33,16 @@ import {
   ModalFooter,
   PhoneNumber,
   RadioGroup,
+  RadioGroupFormField,
   SelectOption,
   Spinner,
   Switch,
+  Tabs,
   Textarea,
   Thumbnail,
   ThumbnailImageUpload,
   Tooltip,
   useModal,
-  Tabs,
-  RadioGroupFormField,
-  CheckboxGroupFormField,
 } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import {
@@ -923,19 +923,19 @@ function RouteComponent() {
                   <div className={dynamicFormStyles.form_auto}>
                     <Input
                       type="text"
-                      unitText={'시간'}
+                      suffixText={'시간'}
                       value={'5'}
                       className={formStyles.input_time}
                     />
                     <Input
                       type="text"
-                      unitText={'분'}
+                      suffixText={'분'}
                       value={'15'}
                       className={formStyles.input_time}
                     />
                     <Input
                       type="text"
-                      unitText={'초'}
+                      suffixText={'초'}
                       value={'30'}
                       className={formStyles.input_time}
                     />
@@ -1260,7 +1260,7 @@ function RouteComponent() {
                 <Input
                   id="name-exam01"
                   type="text"
-                  unitText={'개'}
+                  suffixText={'개'}
                   value={'5'}
                   className={formStyles.input_time}
                 />
@@ -1279,7 +1279,7 @@ function RouteComponent() {
                 <Input
                   id="name-exam02"
                   type="text"
-                  unitText={'개'}
+                  suffixText={'개'}
                   value={'5'}
                   className={formStyles.input_time}
                 />
@@ -1297,7 +1297,7 @@ function RouteComponent() {
                 <Input
                   id="name-exam03"
                   type="text"
-                  unitText={'개'}
+                  suffixText={'개'}
                   value={'5'}
                   className={formStyles.input_time}
                 />
@@ -1315,7 +1315,7 @@ function RouteComponent() {
                 <Input
                   id="name-exam04"
                   type="text"
-                  unitText={'회'}
+                  suffixText={'회'}
                   value={'5'}
                   className={formStyles.input_time}
                 />
@@ -1402,7 +1402,7 @@ function RouteComponent() {
                       <Input
                         id="name-exam04"
                         type="text"
-                        unitText={'분전'}
+                        suffixText={'분전'}
                         placeholder={'입력'}
                         className={formStyles.input_time}
                       />
