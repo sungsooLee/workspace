@@ -123,3 +123,7 @@
     }
   }
 }
+
+[class*='type_tooltip'] {
+  @apply ml-[6px] flex items-center;
+}

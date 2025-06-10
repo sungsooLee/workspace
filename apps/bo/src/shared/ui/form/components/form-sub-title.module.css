@@ -1,6 +1,6 @@
 .root {
   &.title_wrap {
-    @apply flex flex-wrap justify-between;
+    @apply mb-[16px] flex flex-wrap justify-between;
     .title_area {
       @apply flex h-[32px] items-center;
       .title {

@@ -44,5 +44,5 @@
   }
 }
 [class*='title_wrap'] + .start {
-  @apply mt-[8px];
+  @apply -mt-[8px];
 }
