@@ -39,8 +39,9 @@ export * from './lib/date-picker/form-date-range-picker';
 export * from './lib/date-picker/time-picker';
 
 // editor
-export * from './lib/editor/hooks/editor.hook';
-export { default as Editor } from './lib/editor';
+// export * from './lib/editor/hooks/editor.hook';
+// export { default as Editor } from './lib/editor';
+export * from './lib/editor/editor';
 
 // elements
 export * from './lib/elements/count-text/count-text';

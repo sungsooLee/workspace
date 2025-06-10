@@ -30,8 +30,7 @@ const Button: FC<ButtonProps> = ({
     e.preventDefault();
     e.stopPropagation();
     if (disabled) return;
-
-    onClick && onClick();
+    onClick?.();
   };
   return (
     <button
@@ -39,7 +38,8 @@ const Button: FC<ButtonProps> = ({
       disabled={disabled}
       className={`hover:bg-gray-3 flex items-center justify-center rounded-lg disabled:cursor-not-allowed disabled:opacity-25 disabled:hover:bg-transparent ${
         active ? 'bg-gray-2 text-gray-10' : ''
-      } ${className}`}>
+      } ${className}`}
+    >
       {children}
     </button>
   );
