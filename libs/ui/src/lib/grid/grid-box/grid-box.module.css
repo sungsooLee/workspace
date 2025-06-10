@@ -39,8 +39,10 @@
     }
     button {
       @apply button_bo_2_r !font-normal;
-      svg {
-        @apply mr-[4px];
+      &:not([role='checkbox']) {
+        svg {
+          @apply mr-[4px];
+        }
       }
     }
     button + button {
