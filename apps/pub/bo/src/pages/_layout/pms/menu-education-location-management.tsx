@@ -6,9 +6,8 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
-import { Button, GridBox, Input, Dropdown } from '@learnway/ui';
+import { Button, GridBox, Input, Dropdown, Divider } from '@learnway/ui';
 
 export const Route = createFileRoute('/_layout/pms/menu-education-location-management')({
   component: RouteComponent,
@@ -241,25 +240,22 @@ function RouteComponent() {
               </div>
             </div>
           </div>
-          <div className={cn(boxStyles.start, boxStyles.inner)}>
-            <div className="grid_wrap">
-              <GridBox
-                data={data}
-                columns={columns}
-                showColumnSettings={false}
-                showExcelDownload={true}
-                showNumberingColumn={true}
-                pagination={{
-                  pageSize,
-                  pageNumber,
-                  totalPages: 100,
-                  onPageChange: setpageNumber,
-                  onPageSizeChange: setPageSize,
-                }}
-                title="교육장소 목록"
-              />
-            </div>
-          </div>
+          <Divider />
+          <GridBox
+            data={data}
+            columns={columns}
+            showColumnSettings={false}
+            showExcelDownload={true}
+            showNumberingColumn={true}
+            pagination={{
+              pageSize,
+              pageNumber,
+              totalPages: 100,
+              onPageChange: setpageNumber,
+              onPageSizeChange: setPageSize,
+            }}
+            title="교육장소 목록"
+          />
         </div>
       </PageContainer>
     </form>

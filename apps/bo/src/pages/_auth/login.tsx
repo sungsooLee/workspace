@@ -79,8 +79,12 @@ function RouteComponent() {
           <ContentsRow className={cn(formStyles.no_line, styles.login_info)}>
             <FormRow provider={provider} name={'saveId'} />
             <div className={styles.info}>
-              <Link to="/search-account">아이디 찾기</Link>
-              <Link to="/search-account">비밀번호 찾기</Link>
+              <Link to="/search-account" state={{ tabKey: 'account' }}>
+                아이디 찾기
+              </Link>
+              <Link to="/search-password" state={{ tabKey: 'password' }}>
+                비밀번호 찾기
+              </Link>
             </div>
           </ContentsRow>
 

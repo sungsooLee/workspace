@@ -11,10 +11,20 @@ export const usePlayer = () => {
   const [currentTime, setCurrentTime] = useState(0);
   const [volume, setVolume] = useState(0.8); // 기본 볼륨 80%
   const [muted, setMuted] = useState(false);
+  const [playbackRate, setPlaybackRate] = useState(1.0); // 재생 속도 상태
 
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   const [subtitlesVisible, setSubtitlesVisible] = useState(true);
+
+  // 재생 속도 설정 함수
+  const changePlaybackRate = (rate: number) => {
+    setPlaybackRate(rate);
+    const internalPlayer = playerRef.current?.getInternalPlayer() as HTMLVideoElement | null;
+    if (internalPlayer) {
+      internalPlayer.playbackRate = rate;
+    }
+  };
 
   // 전체화면 토글 함수
   const toggleFullscreen = () => {
@@ -155,5 +165,6 @@ export const usePlayer = () => {
     updateSubtitles,
     togglePlay,
     onProgress,
+    changePlaybackRate,
   };
 };

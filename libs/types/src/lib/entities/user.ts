@@ -1,4 +1,7 @@
-export interface UserStateCode {
+import { Company } from './company';
+import { CompanyDept } from './companyDept';
+
+export interface UserState {
   /**
    * 회원상태코드
    */
@@ -9,15 +12,11 @@ export interface UserStateCode {
   DELETE: 'DELETE';
 }
 
-export interface UserRes {
+export type User = {
   /**
-   * 사용자 ID
+   * UUID
    */
-  userId?: number;
-  /**
-   * 사용자 코드
-   */
-  userCode?: string;
+  uuid?: string;
   /**
    * 사번
    */
@@ -33,7 +32,7 @@ export interface UserRes {
   /**
    * 생년월일
    */
-  birthday?: number;
+  birthday?: string;
   /**
    * Email
    */
@@ -49,7 +48,7 @@ export interface UserRes {
   /**
    * 회원상태코드
    */
-  stateCode?: UserStateCode;
+  userState?: UserState;
   /**
    * 회원기본언어셋코드
    */
@@ -77,14 +76,8 @@ export interface UserRes {
    * 로그인실패횟수
    */
   loginFailCount?: number;
-  /**
-   * 회사코드 ID
-   */
-  companyId?: number;
-  /**
-   * 부서코드 ID
-   */
-  deptId?: number;
+  company?: Company;
+  dept?: CompanyDept;
   /**
    * 사용자구분
    */
@@ -109,4 +102,4 @@ export interface UserRes {
    * 최종수정일시
    */
   modifiedDate?: string;
-}
+};

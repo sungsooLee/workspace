@@ -12,11 +12,11 @@ import {
   ModalTitle,
   Input,
   GridBox,
+  Divider,
 } from '@learnway/ui';
 
 /* style */
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
 export const Route = createFileRoute('/_layout/pms/pop-channel-search')({
   component: RouteComponent,
@@ -173,26 +173,23 @@ function RouteComponent() {
               </div>
             </div>
           </div>
-          <div className={cn(boxStyles.start, boxStyles.inner)}>
-            <div className="grid_wrap">
-              <GridBox
-                data={data}
-                columns={columns}
-                showColumnSettings={false}
-                hideRowSelectionRadioBox={false}
-                showNumberingColumn
-                guideText={'채널 등록전 상태의 접수ID만 조회 됩니다.'}
-                pagination={{
-                  pageSize,
-                  pageNumber,
-                  totalPages: 100,
-                  onPageChange: setpageNumber,
-                  onPageSizeChange: setPageSize,
-                }}
-                title="접수 목록"
-              />
-            </div>
-          </div>
+          <Divider />
+          <GridBox
+            data={data}
+            columns={columns}
+            showColumnSettings={false}
+            hideRowSelectionRadioBox={false}
+            showNumberingColumn
+            guideText={'채널 등록전 상태의 접수ID만 조회 됩니다.'}
+            pagination={{
+              pageSize,
+              pageNumber,
+              totalPages: 100,
+              onPageChange: setpageNumber,
+              onPageSizeChange: setPageSize,
+            }}
+            title="접수 목록"
+          />
         </ModalBody>
         <ModalFooter>
           <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />

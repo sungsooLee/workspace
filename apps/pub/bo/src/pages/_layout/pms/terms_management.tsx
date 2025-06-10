@@ -2,14 +2,13 @@ import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { Button, Input, GridBox, Dropdown, DatePicker } from '@learnway/ui';
+import { Button, Input, GridBox, Dropdown, DatePicker, Divider } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { IcoRefresh02, IcoSearch } from '@learnway/icons';
 
 /** style */
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css';
 
 export const Route = createFileRoute('/_layout/pms/terms_management')({
   component: RouteComponent,
@@ -605,24 +604,21 @@ function RouteComponent() {
             </div>
           </div>
         </div>
-        <div className={cn(boxStyles.start, boxStyles.inner)}>
-          <div className="grid_wrap">
-            <GridBox
-              data={data}
-              columns={columns}
-              showNumberingColumn={true}
-              showSelectedCount={true}
-              pagination={{
-                pageSize,
-                pageNumber,
-                totalPages: 100,
-                onPageChange: setpageNumber,
-                onPageSizeChange: setPageSize,
-              }}
-              title={'약관 목록'}
-            />
-          </div>
-        </div>
+        <Divider />
+        <GridBox
+          data={data}
+          columns={columns}
+          showNumberingColumn={true}
+          showSelectedCount={true}
+          pagination={{
+            pageSize,
+            pageNumber,
+            totalPages: 100,
+            onPageChange: setpageNumber,
+            onPageSizeChange: setPageSize,
+          }}
+          title={'약관 목록'}
+        />
       </div>
     </PageContainer>
   );

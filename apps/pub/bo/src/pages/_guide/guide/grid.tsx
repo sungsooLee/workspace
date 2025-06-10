@@ -2,7 +2,14 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { Button, GridBox, Tooltip, Checkbox } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { useState } from 'react';
-import { IcoDownload, IcoInfoCircle, IcoClock01, IcoClipboard, IcoCopy } from '@learnway/icons';
+import {
+  IcoDownload,
+  IcoInfoCircle,
+  IcoClock01,
+  IcoClipboard,
+  IcoCopy,
+  IcoSucess02,
+} from '@learnway/icons';
 import { WordWrap } from './-component/word-wrap';
 
 export const Route = createFileRoute('/_guide/guide/grid')({
@@ -419,7 +426,14 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
                 label={'프로그램/가이드 다운로드'}
                 icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
               />
-              <Button label={'일괄설정'} variant={'text'} />
+              {/* 퍼블수정 2025-06-10 버튼 케이스 추가 S */}
+              <span className={'type_tooltip'}>
+                <Tooltip side={'bottom'} align={'start'} content={'tooltip content'}>
+                  <IcoSucess02 width={16} height={16} stroke={'#4C515E'} />
+                </Tooltip>
+                <Button label={'일괄설정'} variant={'text'} />
+              </span>
+              {/* 퍼블수정 2025-06-10 버튼 케이스 추가 E */}
               <Button label={'복사'} icon={<IcoCopy width={16} height={16} stroke={'#131c30'} />} />
             </>
           }

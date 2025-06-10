@@ -4,6 +4,7 @@ import { pageRouteConfig } from '@features/auth/index';
 import { CPSignupCheck, CPSignupForm } from '@features/user/signup';
 import { useSignupStore } from '@features/user/signup/store/use-signup-store';
 
+// 관리자 회원가입 - CP
 export const Route = createFileRoute('/_auth/signup/cp')({
   component: RouteComponent,
   ...pageRouteConfig({

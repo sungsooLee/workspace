@@ -20,14 +20,14 @@
   [aria-selected='true'] {
     @apply !bg-[var(--secondary5)];
   }
-  .readonly {
+  /* .readonly {
     .nlp-select__control {
       @apply pointer-events-none !border-[var(--gray4)] bg-[#f6f8fd];
       .nlp-select__single-value {
         @apply pl-[8px] text-[#4c515e];
       }
     }
-  }
+  } */
   [class*='nlp-select__control--is-disabled'] {
     @apply !bg-[var(--gray1)] !text-[var(--gray4)];
   }
@@ -80,6 +80,19 @@
     [class*='nlp-select__control'] {
       @apply !border-[var(--status1)];
     }
+  }
+  &.readonly,
+  &.disabled {
+    @apply pointer-events-none cursor-auto;
+    [class*='nlp-select__control'] {
+      @apply !border-[var(--gray1)] !bg-[var(--gray1)];
+      [class*='nlp-select__single-value'] {
+        @apply text-[var(--gray8)];
+      }
+    }
+  }
+  &.disabled [class*='nlp-select__control'] [class*='nlp-select__single-value'] {
+    @apply text-[var(--gray5)];
   }
 }
 

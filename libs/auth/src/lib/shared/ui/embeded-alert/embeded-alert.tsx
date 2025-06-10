@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { cn } from '@learnway/shared';
 import { IcoCaution } from '@learnway/icons';
 
-import styles from '@learnway/styles/fo/shared/ui/embeded-alert/embeded-alert.module.css';
+import styles from '@learnway/styles/fo/pages/_auth/search-account/search-account.module.css';
+import embededAlert from '@learnway/styles/fo/shared/ui/embeded-alert/embeded-alert.module.css';
 
 interface EmbededAlertComponentProps {
   className?: string;
@@ -20,9 +21,9 @@ function EmbededAlertComponent({
   const { t } = useTranslation();
 
   return (
-    <div className={cn(styles.start, className)}>
+    <div className={cn(embededAlert.start, styles.search_info, styles.dormant, className)}>
       {!hiddenIcon && <IcoCaution width={48} height={48} stroke={'#A9AFB8'} />}
-      <p className="txt">{children}</p>
+      <p className={embededAlert.txt}>{children}</p>
     </div>
   );
 }
