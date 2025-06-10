@@ -172,7 +172,6 @@ function LearningResourceTableComponent() {
         name: 'contentAddInfo',
         label: t('LABEL.content.learning-resource.detailInfo'),
         render: (_: any) => {
-          console.log(_.row.original['contentAddInfoType']);
           if (_.row.original.contentAddInfoType !== 'VIDEO_ADD_INFO')
             // enum code 사용하도록 변경해야 함
             return `${_.getValue()}${t('개')}`;
