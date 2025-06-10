@@ -6,7 +6,7 @@
 
 /* 수평 구분선 */
 .horizontal {
-  @apply mb-[32px] mt-[24px] h-[1px] w-full;
+  @apply mb-[24px] mt-[8px] h-[1px] w-full;
 }
 
 /* 수직 구분선 */
