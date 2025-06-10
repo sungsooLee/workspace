@@ -14,6 +14,7 @@ import {
 } from '../../entities/authorization';
 
 import styles from '@learnway/styles/fo/pages/_auth/search-account/change-password.module.css';
+import { t } from 'i18next';
 
 export function ChangePasswordBySearchAccountPage({ route }: any) {
   const router = useRouter();
@@ -104,19 +105,19 @@ const passwordFormConfig: DynamicFormConfig = {
   builders: [
     {
       name: 'password',
-      type: 'text',
+      type: 'password',
       label: 'LABEL.common.newPassword',
       value: '',
-      placeholder: '아이디/이메일을 입력하세요',
+      placeholder: 'LABEL.common.newPasswordInfo',
       description: '',
       required: true,
     },
     {
       name: 'confirm_password',
-      type: 'text',
+      type: 'password',
       label: 'LABEL.common.newPasswordCheck',
       value: '',
-      placeholder: '이름을 입력하세요',
+      placeholder: 'LABEL.common.newPasswordCheckInfo',
       description: '',
     },
   ],
@@ -130,7 +131,9 @@ const passwordFormConfig: DynamicFormConfig = {
       required: true,
       conditions: [
         {
-          fn: (values: Record<string, any>) => values.password === values.confirm_password,
+          fn: (values: Record<string, any>) => {
+            return values.password === values.confirm_password ? false : true;
+          },
           message: 'LABEL.message.validationConfirmPassword',
           path: 'confirm_password',
         },

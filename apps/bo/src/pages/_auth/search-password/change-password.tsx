@@ -9,7 +9,6 @@ export const Route = createFileRoute('/_auth/search-password/change-password')({
     validateState: {
       authToolType: {
         format: 'string',
-        default: 'PHONE',
         conditions: [
           {
             fn: (values: any) => !['PHONE', 'EMAIL'].includes(values.authToolType),
@@ -25,7 +24,7 @@ export const Route = createFileRoute('/_auth/search-password/change-password')({
         },
       },
       email: {
-        format: 'email',
+        format: 'object',
         required: {
           fn: (data) => data.authToolType === 'EMAIL',
         },
