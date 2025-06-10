@@ -22,7 +22,7 @@ export default class RoleManagerService {
    */
   static updateRole(payload: Role): Promise<any> {
     const body = genCreateRole(payload);
-    return httpService.put<Role>(`${PMSApiPrefix()}/roles/${payload.roleCode}`, body);
+    return httpService.put<Role>(`${PMSApiPrefix()}/roles/${payload.roleId}`, body);
   }
 
   /**
@@ -153,7 +153,7 @@ function genCreateRole(payload: any) {
     retval.channelIds = retval.channelIds.map((item: any) => item.channelId);
   }
   if (retval.deptIds?.length > 0) {
-    retval.deptIds = retval.deptIds.map((item: any) => item.deptIds);
+    retval.deptIds = retval.deptIds.map((item: any) => item.deptId);
   }
   return retval;
 }

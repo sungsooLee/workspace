@@ -34,7 +34,12 @@ import {
 } from '../service/tenant-detail-tree.service';
 import { FormDisplay } from '@features/form/ui/form-display';
 import { EnChannelScope, EnCompanyScope, EnDeptScope, EnFormMode, EnTenantScope } from '@types';
-import { ChannelChoiceModal, ChannelListChoiceModal, CompanyShuttleModal } from '@features/shared';
+import {
+  ChannelChoiceModal,
+  ChannelListChoiceModal,
+  CompanyShuttleModal,
+  UserGroupChoiceModal,
+} from '@features/shared';
 
 /**
  * 화면번호:
@@ -362,14 +367,14 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                     element={
                       <ChipListModalSelectorFormField
                         chipList={{
-                          labelField: 'name',
-                          valueField: 'value',
+                          labelField: 'deptName',
+                          valueField: 'deptId',
                           hideBorder: true,
                         }}
                         modalConfig={{
                           title: '',
                           width: 'xl',
-                          content: <ChannelChoiceModal />,
+                          content: <UserGroupChoiceModal />,
                         }}
                       />
                     }
@@ -456,12 +461,14 @@ const formBaseConfig: DynamicFormConfig = {
       name: 'roleCode',
       type: 'text',
       label: t('역할 코드'),
+      format: 'object',
       value: '',
     },
     {
       name: 'roleType',
       type: 'text',
       label: t('역할 타입'),
+      format: 'object',
       value: '',
     },
     {
