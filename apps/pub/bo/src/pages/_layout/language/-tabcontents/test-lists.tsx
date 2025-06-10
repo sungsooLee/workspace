@@ -22,137 +22,151 @@ const TestListsComponent: FC<{}> = ({}) => {
   const [pageSize, setPageSize] = useState(10);
   const data: any[] = [
     {
-      tenant: '테넌트1 외 2',
-      group: '완성차',
-      company: '회사1',
-      team: '소속',
-      position: '직위',
-      companyNum: '1234567',
-      user: <Button className="link" label={'김현대'} />,
-      role: '조직원',
-      tenure: '정상',
-      status: '정상',
-      unlock: <Button label={'잠김해제'} variant={'gray'} disabled />,
-      login: <Button label={'로그인'} variant={'gray'} />,
-      joinDate: '2025-01-01 14:25:11',
+      title1: '영어',
+      title2: <Button className="link" label={'TOEIC'} />,
+      title3: '점수/등급형',
+      title4: '754',
+      title5: 'ETS',
+      title6: '2025-01-01',
+      title7: '2025-01-01',
     },
     {
-      tenant: '테넌트1 외 2',
-      group: '완성차',
-      company: '회사1',
-      team: '소속',
-      position: '직위',
-      companyNum: '1234567',
-      user: <Button className="link" label={'김현대'} />,
-      role: '조직원',
-      tenure: '정상',
-      status: '정상',
-      unlock: <Button label={'잠김해제'} variant={'gray'} />,
-      login: <Button label={'로그인'} variant={'gray'} disabled />,
-      joinDate: '2025-01-01 14:25:11',
+      title1: '영어',
+      title2: <Button className="link" label={'TOEIC'} />,
+      title3: '점수/등급형',
+      title4: '754',
+      title5: 'ETS',
+      title6: '2025-01-01',
+      title7: '2025-01-01',
+    },
+    {
+      title1: '영어',
+      title2: <Button className="link" label={'TOEIC'} />,
+      title3: '점수/등급형',
+      title4: '754',
+      title5: 'ETS',
+      title6: '2025-01-01',
+      title7: '2025-01-01',
+    },
+    {
+      title1: '영어',
+      title2: <Button className="link" label={'TOEIC'} />,
+      title3: '점수/등급형',
+      title4: '754',
+      title5: 'ETS',
+      title6: '2025-01-01',
+      title7: '2025-01-01',
+    },
+    {
+      title1: '영어',
+      title2: <Button className="link" label={'TOEIC'} />,
+      title3: '점수/등급형',
+      title4: '754',
+      title5: 'ETS',
+      title6: '2025-01-01',
+      title7: '2025-01-01',
+    },
+    {
+      title1: '영어',
+      title2: <Button className="link" label={'TOEIC'} />,
+      title3: '점수/등급형',
+      title4: '754',
+      title5: 'ETS',
+      title6: '2025-01-01',
+      title7: '2025-01-01',
+    },
+    {
+      title1: '영어',
+      title2: <Button className="link" label={'TOEIC'} />,
+      title3: '점수/등급형',
+      title4: '754',
+      title5: 'ETS',
+      title6: '2025-01-01',
+      title7: '2025-01-01',
+    },
+    {
+      title1: '영어',
+      title2: <Button className="link" label={'TOEIC'} />,
+      title3: '점수/등급형',
+      title4: '754',
+      title5: 'ETS',
+      title6: '2025-01-01',
+      title7: '2025-01-01',
+    },
+    {
+      title1: '영어',
+      title2: <Button className="link" label={'TOEIC'} />,
+      title3: '점수/등급형',
+      title4: '754',
+      title5: 'ETS',
+      title6: '2025-01-01',
+      title7: '2025-01-01',
+    },
+    {
+      title1: '영어',
+      title2: <Button className="link" label={'TOEIC'} />,
+      title3: '점수/등급형',
+      title4: '754',
+      title5: 'ETS',
+      title6: '2025-01-01',
+      title7: '2025-01-01',
     },
   ];
 
   const columnHelper = createColumnHelper<any>();
   const columns = [
-    columnHelper.accessor('tenant', {
+    columnHelper.accessor('title1', {
       cell: (info) => info.getValue(),
-      header: '테넌트',
+      header: '언어 분류',
       enableGrouping: false,
-      size: 120,
+      size: 150,
     }),
-    columnHelper.accessor('group', {
+    columnHelper.accessor('title2', {
       cell: (info) => info.getValue(),
-      header: '그룹',
-      size: 120,
+      header: '어학시험 과목',
       enableGrouping: false,
+      meta: {
+        size: 'auto',
+      },
     }),
-    columnHelper.accessor('company', {
+    columnHelper.accessor('title3', {
       cell: (info) => info.getValue(),
-      header: '회사',
-      size: 120,
+      header: '어학시험 결과유형',
+      size: 170,
       enableGrouping: false,
     }),
 
-    columnHelper.accessor('team', {
+    columnHelper.accessor('title4', {
       cell: (info) => info.getValue(),
-      header: '소속',
-      size: 120,
+      header: '사용 이력 수',
+      size: 180,
       enableGrouping: false,
     }),
-    columnHelper.accessor('position', {
+    columnHelper.accessor('title5', {
       cell: (info) => info.getValue(),
-      header: '직위',
+      header: '시행기관',
       enableGrouping: false,
-      size: 120,
+      size: 140,
     }),
-    columnHelper.accessor('companyNum', {
+    columnHelper.accessor('title6', {
       cell: (info) => info.getValue(),
-      header: '사번',
+      header: '최초등록일',
       enableGrouping: false,
-      size: 120,
+      size: 190,
       meta: {
         headerAlign: 'center',
         cellAlign: 'center',
       },
     }),
-    columnHelper.accessor('user', {
+    columnHelper.accessor('title7', {
       cell: (info) => info.getValue(),
-      header: '이름',
+      header: '최종수정일',
       enableGrouping: false,
-      size: 120,
-    }),
-    columnHelper.accessor('role', {
-      cell: (info) => info.getValue(),
-      header: '학습자 역할',
-      enableGrouping: false,
-      size: 120,
-    }),
-    columnHelper.accessor('tenure', {
-      cell: (info) => info.getValue(),
-      header: '재직여부',
-      enableGrouping: false,
-      size: 88,
+      size: 190,
       meta: {
         headerAlign: 'center',
         cellAlign: 'center',
       },
-    }),
-    columnHelper.accessor('status', {
-      cell: (info) => info.getValue(),
-      header: '계정상태',
-      enableGrouping: false,
-      size: 88,
-      meta: {
-        headerAlign: 'center',
-        cellAlign: 'center',
-      },
-    }),
-    columnHelper.accessor('unlock', {
-      cell: (info) => info.getValue(),
-      header: '잠김해제',
-      enableGrouping: false,
-      size: 88,
-      meta: {
-        headerAlign: 'center',
-        cellAlign: 'center',
-      },
-    }),
-    columnHelper.accessor('login', {
-      cell: (info) => info.getValue(),
-      header: '로그인',
-      enableGrouping: false,
-      size: 88,
-      meta: {
-        headerAlign: 'center',
-        cellAlign: 'center',
-      },
-    }),
-    columnHelper.accessor('joinDate', {
-      cell: (info) => info.getValue(),
-      header: '회원가입일',
-      enableGrouping: false,
-      size: 120,
     }),
   ] as ColumnDef<any, unknown>[];
   return (
@@ -237,7 +251,7 @@ const TestListsComponent: FC<{}> = ({}) => {
               onPageChange: setpageNumber,
               onPageSizeChange: setPageSize,
             }}
-            title={'약관 목록'}
+            title={'어학시험 과목'}
           />
         </div>
       </div>

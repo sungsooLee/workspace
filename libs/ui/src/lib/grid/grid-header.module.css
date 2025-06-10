@@ -21,12 +21,18 @@
             [class*='nlp--checkbox'] {
               @apply mt-[5px];
             }
+            &:not(:first-child) {
+              border-left: 1px solid var(--gray3) !important;
+            }
             &.th_pinned_left {
               @apply !border-l-0;
               & + .th_pinned_left {
                 &::before {
-                  @apply absolute left-0 top-0 z-[1] h-full w-[1px] shadow-[0_1px_0_0_var(--gray5)] content-[''];
+                  @apply absolute left-0 top-0 z-[1] h-full w-[1px] bg-[var(--gray3)] content-[''];
                 }
+              }
+              & + :not(.th_pinned_left) {
+                @apply !border-l-0;
               }
             }
             &.th_sticky {

@@ -107,7 +107,7 @@
 }
 
 [class*='custom_info_wrap'] {
-  @apply ml-[16px];
+  @apply flex items-center;
   [class*='table_tit'] {
     @apply body_2_b inline-flex items-center text-[var(--gray9)];
     &:not(:first-child)::before {

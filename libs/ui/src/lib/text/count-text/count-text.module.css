@@ -4,7 +4,10 @@
     @apply title_bo_4_b inline-flex items-center text-[var(--gray9)];
   }
   .count {
-    @apply title_bo_4_b ml-[2px] text-[var(--secondary1)];
+    @apply title_bo_4_b ml-[2px] w-auto max-w-[30px] text-left text-[var(--secondary1)];
+    input {
+      @apply w-full;
+    }
   }
   & ~ div strong::before {
     @apply mx-[12px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
