@@ -35,3 +35,4 @@ export * from './ui/modal/role-choice-modal';
 export * from './ui/modal/role-shuttle-modal';
 export * from './ui/modal/user-group-choice-modal';
 export * from './ui/modal/user-group-tab-choice-modal';
+export * from './ui/modal/user-group-organization-shuttle-modal';
