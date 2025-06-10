@@ -27,8 +27,8 @@ import {
   ModalWrapper,
   TableBox,
 } from '@learnway/ui';
-import { IcoDownload, IcoSetting, IcoArrowDown, IcoArrowUp } from '@learnway/icons';
-import { DATE_TIME_FORMAT, formatDate, getRandomId, getRowSelectionByList } from '@learnway/shared';
+import { IcoArrowDown, IcoArrowUp, IcoDownload, IcoSetting } from '@learnway/icons';
+import { getRandomId, getRowSelectionByList } from '@learnway/shared';
 import { PaginationResponse } from '../../../../bo/src/types';
 
 export default {
@@ -755,6 +755,29 @@ TemplateEditGrid.storyName = '셀 편집';
 //   );
 // };
 // TemplateColumnSize.storyName = '컬럼 사이즈';
+
+// 컬럼 스타일 적용
+export const TemplateColumnStyle: any = (args: any) => {
+  const data = Array(2)
+    .fill(null)
+    .map((_, i) => ({
+      id: getRandomId(),
+      name: `name_${i}`,
+      name2: `name2_${i}`,
+      name3: `name3_${i}`,
+      name4: `name4_${i}`,
+      name5: `name5_${i}`,
+    }));
+  const columns = [
+    { accessorKey: 'name', size: 200, meta: { cellClass: 'title' } },
+    { accessorKey: 'name2' },
+    { accessorKey: 'name3' },
+    { accessorKey: 'name4' },
+    { accessorKey: 'name5' },
+  ];
+  return <GridBox data={data} columns={columns} hideHeader />;
+};
+TemplateColumnStyle.storyName = '컬럼 스타일 적용';
 
 // 테이블 모드
 export const TemplateTable: any = (args: any) => {
