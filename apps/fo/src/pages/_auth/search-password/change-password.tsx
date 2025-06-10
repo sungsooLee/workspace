@@ -6,7 +6,7 @@ import { ChangePasswordBySearchAccountPage } from '@learnway/auth';
 
 import { pageRouteConfig } from '../../../features/auth';
 
-export const Route = createFileRoute('/_auth/search-account/change-password')({
+export const Route = createFileRoute('/_auth/search-password/change-password')({
   component: RouteComponent,
   ...pageRouteConfig({
     validateState: {
