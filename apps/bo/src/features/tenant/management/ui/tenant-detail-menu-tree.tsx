@@ -209,12 +209,6 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
   const columns = [
     columnHelper.accessor('apiName', {
       id: 'apiName',
-      cell: (info) => info.getValue(),
-      header: t('분류'),
-      size: 300,
-    }),
-    columnHelper.accessor('apiId', {
-      id: 'apiId',
       cell: (info: any) => {
         return (
           <Button
@@ -231,6 +225,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
         );
       },
       header: 'API',
+      size: 612,
     }),
     columnHelper.accessor('Delete', {
       cell: (info) => {
