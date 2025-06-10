@@ -753,6 +753,15 @@ export const guideData = [
     pageId: 'language/language_subjects_management',
     screenId: 'NLP_BO_EDS_1624',
     pageType: 'Page',
+    completionDate: '2025-06-10',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
+    screenName: '어학/어학성적/지원이력_목록',
+    pageId: 'language/language_history_list',
+    screenId: 'NLP_BO_EDS_1626',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
     remarks: '', // 비고

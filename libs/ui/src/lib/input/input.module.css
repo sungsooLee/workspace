@@ -1,7 +1,7 @@
 .start {
   @apply relative w-full overflow-hidden rounded-[4px] border-[1px] border-solid border-[var(--gray4)];
   .input {
-    @apply min-h-[30px] w-[calc(100%-70px)] truncate px-[12px] align-middle text-[14px] font-normal text-[var(--gray9)];
+    @apply min-h-[30px] w-[calc(100%-70px)] truncate bg-transparent px-[12px] align-middle text-[14px] font-normal text-[var(--gray9)];
     &::placeholder {
       @apply text-[var(--gray5)];
     }
