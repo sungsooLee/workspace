@@ -137,6 +137,9 @@ export * from './lib/thumbnail/thumbnail';
 export * from './lib/thumbnail/thumbnail-list';
 export * from './lib/thumbnail/type';
 
+// shuttle grid to chips
+export * from './lib/shuttle-grid-to-chips/shuttle-grid-to-chips';
+
 // shuttle grid to grid
 export * from './lib/shuttle-grid-to-grid/shuttle-grid-to-grid';
 

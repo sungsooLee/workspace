@@ -21,6 +21,7 @@ import {
   CompanyUserChoiceModal,
   UserGroupChoiceModal,
   UserGroupTabsChoiceModal,
+  UserGroupOrganizationShuttleModal,
 } from '@features/shared';
 import { Button, ChipListModalSelectorFormField, ContentsRow, Input, useModal } from '@learnway/ui';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
@@ -454,6 +455,23 @@ function RouteComponent() {
                 }}
               >
                 {'유저그룹 대상자 조회 팝업(공통)'}
+              </Button>
+              <span className="text-yellow-500">{'진행중'}</span>
+            </div>
+            <div className="flex gap-4">
+              <Button
+                size={'xs'}
+                className="btn_table flex-1"
+                variant={'gray2'}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openModal({
+                    width: 'xl',
+                    content: <UserGroupOrganizationShuttleModal />,
+                  });
+                }}
+              >
+                {'유저그룹 조회 팝업(조직만)'}
               </Button>
               <span className="text-yellow-500">{'진행중'}</span>
             </div>
