@@ -16,6 +16,7 @@ import { CheckBoxFormField } from './checkbox-form-field';
 import { ThumbnailListFormField } from './thumbnail-list-form-field';
 
 export const formFieldConfig: FormFieldConfig = {
+  password: Input,
   text: Input,
   number: Input,
   'radio-group': RadioGroupFormField,

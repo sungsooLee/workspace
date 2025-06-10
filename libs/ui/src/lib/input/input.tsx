@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import { forwardRef, useMemo, useState } from 'react';
 import { NumericFormat, PatternFormat } from 'react-number-format';
 import { NumericFormatProps } from 'react-number-format/types/types';
 import { Button } from '../button/button';
@@ -7,6 +7,7 @@ import { cn } from '@learnway/shared';
 import { IcoDelete03, IcoSearch, IcoSearchWrite } from '@learnway/icons';
 
 import styles from './input.module.css';
+import { useTranslation } from 'react-i18next';
 
 export interface InputProps extends Omit<NumericFormatProps, 'type'> {
   type?: 'text' | 'number' | 'mask' | 'password' | 'tel' | 'file';
@@ -29,7 +30,7 @@ export interface InputProps extends Omit<NumericFormatProps, 'type'> {
   searchIconType?: 'modal' | 'search'; // 아이콘 타입 선택
   onEnterKeyDown?: () => void; // 엔터 키 입력 callback, 검색 아이콘 클릭 했을때 해당 callback 호출
   onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
-  //
+  label?: string;
 }
 
 const InputComponent = forwardRef<HTMLInputElement, InputProps>(
@@ -44,7 +45,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       className,
       value = '',
       onBlur,
-      placeholder = '값을 입력하세요.',
+      placeholder,
       unitText,
       timerText,
       onChange,
@@ -63,6 +64,15 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
     },
     ref,
   ) => {
+    const { t } = useTranslation();
+
+    const placeholderText = useMemo(() => {
+      if (placeholder) return t(placeholder);
+      if (props && props.label)
+        return `${t(props.label as any)} ${t('LABEL.form.input.placeholder')}`;
+      return t('LABEL.form.input.placeholder');
+    }, [placeholder, props?.label]);
+
     const [isFocused, setIsFocused] = useState(false);
 
     const handleInputChange = (value: any) => {
@@ -115,7 +125,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             className={cn(styles.input, className, error ? styles.error : '')}
             value={value}
             thousandSeparator={thousandSeparator}
-            placeholder={placeholder}
+            placeholder={placeholderText}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
             onValueChange={(values) => {
@@ -133,7 +143,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             value={value}
             format={format}
             mask={mask}
-            placeholder={placeholder}
+            placeholder={placeholderText}
             allowEmptyFormatting={allowEmptyFormatting}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
@@ -150,7 +160,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             readOnly={readOnly}
             disabled={disabled}
             type={type}
-            placeholder={placeholder}
+            placeholder={placeholderText}
             className={cn(styles.input, className)}
             onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => {
               if (event.key === 'Enter') {
