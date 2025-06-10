@@ -259,7 +259,7 @@ function LearningResourceTableComponent() {
                 />
                 <Button
                   label={t('복사')}
-                  icon={<IcoCopy width={16} height={16} stroke="#131c30" />}
+                  icon={<IcoCopy width={16} height={16} stroke="#4C515E" />}
                 />
               </>
             }
