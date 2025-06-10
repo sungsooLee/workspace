@@ -16,7 +16,6 @@ export interface InputProps extends Omit<NumericFormatProps, 'type'> {
   prefixText?: string;
   suffixText?: string;
   timerText?: string; // timer input 에서만 사용
-  // onChange?: (value: any) => void;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   // for text type
   hideInputLength?: boolean; // 입력글자수/최대입력가능글자수 표시 여부, maxLength 설정은 했지만 글자수 표시 안보이게 할 경우 사용
