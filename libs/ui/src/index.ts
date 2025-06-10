@@ -42,6 +42,10 @@ export * from './lib/date-picker/time-picker';
 export * from './lib/editor/hooks/editor.hook';
 export { default as Editor } from './lib/editor';
 
+// elements
+export * from './lib/elements/count-text/count-text';
+export * from './lib/elements/divider/divider';
+
 // empty-text
 export * from './lib/empty-text/empty-text';
 
@@ -159,9 +163,6 @@ export * from './lib/textarea/textarea';
 export * from './lib/toast/toast';
 export * from './lib/toast/toast.hook';
 export * from './lib/toast/toast-wrapper';
-
-// text
-export * from './lib/text/count-text/count-text';
 
 // type
 export * from './lib/type';

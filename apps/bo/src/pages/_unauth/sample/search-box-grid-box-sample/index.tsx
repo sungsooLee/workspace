@@ -149,6 +149,6 @@ const gridConfig = {
   gridState: {
     page: 0,
     size: 10,
-    sort: [],
+    sort: ['labelMessageMultilingulKey,desc'],
   },
 };
