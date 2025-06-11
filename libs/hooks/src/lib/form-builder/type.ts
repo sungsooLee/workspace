@@ -493,6 +493,13 @@ export type UseSearchBoxReturn = {
   setValue: UseFormReturn['setValue'];
 
   /**
+   * options를 새로 설정함
+   * @param name - 필드 이름
+   * @param options - 설정할 options
+   */
+  setOptions: (name: string, options: SelectOption[]) => void;
+
+  /**
    * 설정된 폼의 에러 메시지를 제거하는 함수
    */
   clearFormError: UseFormReturn['clearErrors'];
