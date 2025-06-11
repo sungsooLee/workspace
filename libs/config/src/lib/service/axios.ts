@@ -71,13 +71,14 @@ export function initAxios(extendConfig?: axiosConfig) {
       },
       // response rejected 상태가 401인 경우 reissue
       onRejected: async (error: any) => {
+        console.log('onRejected', error);
         const { config, response: errorResponse } = error;
         // error
         if (errorResponse?.status === 401) {
           return await reissueProccess(error);
         }
 
-        if (errorResponse?.status === 412) {
+        if (errorResponse?.status === 412 && config.url === '/token-reissue') {
           tokenService.clear();
 
           if (typeof window !== 'undefined') {

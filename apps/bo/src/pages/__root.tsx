@@ -5,7 +5,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import { ModalWrapper, ToastWrapper, useModalStore } from '@learnway/ui';
 import { useGlobalRouterEvent } from '@learnway/hooks';
-import { useRenewalMenuStateFromRouting, useFetchAuthUser, useLoginTimer } from '@learnway/auth';
+import { useRenewalMenuStateFromRouting, useFetchAuthUser } from '@learnway/auth';
 import { setupErrorToastListener } from '@learnway/shared';
 // import { useWindowSize } from 'react-use';
 import { MinWidthRequired } from '../widgets/layout/ui/min-width-required';
@@ -27,8 +27,7 @@ function RootComponent() {
   const { data: authUser } = useFetchAuthUser();
   const router = useRouter();
   const isUnderBreakpoint = useBreakpointModalClose(closeAll, 1000);
-  // 로그아웃 처리 타이머
-  useLoginTimer();
+
   useRenewalMenuStateFromRouting();
   useGlobalRouterEvent({
     onBeforeLoad: () => {
@@ -45,12 +44,13 @@ function RootComponent() {
 
   return (
     <>
-     <div style={{ display: isUnderBreakpoint ? 'none' : 'block' }}>
-      <Outlet />
-    </div>
-      {isUnderBreakpoint && <MinWidthRequired/>}
+      <div style={{ display: isUnderBreakpoint ? 'none' : 'block' }}>
+        <Outlet />
+      </div>
+      {isUnderBreakpoint && <MinWidthRequired />}
       <ModalWrapper />
       <ToastWrapper />
+      <ReactQueryDevtools />
     </>
   );
 }
