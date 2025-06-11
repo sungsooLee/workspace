@@ -8,7 +8,7 @@ import {
   IcoClock01,
   IcoClipboard,
   IcoCopy,
-  IcoSucess02,
+  IcoAlertCircle,
 } from '@learnway/icons';
 import { WordWrap } from './-component/word-wrap';
 
@@ -429,7 +429,7 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
               {/* 퍼블수정 2025-06-10 버튼 케이스 추가 S */}
               <span className={'type_tooltip'}>
                 <Tooltip side={'bottom'} align={'start'} content={'tooltip content'}>
-                  <IcoSucess02 width={16} height={16} stroke={'#4C515E'} />
+                  <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
                 </Tooltip>
                 <Button label={'일괄설정'} variant={'text'} />
               </span>
