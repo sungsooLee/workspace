@@ -107,22 +107,33 @@ export function useGridTable<T extends object>(
     header: ' ',
     cell: ({ row }) => {
       return (
-        <>
+        <div>
           {row.getCanExpand() && (
-            <Button
-              onClick={row.getToggleExpandedHandler()}
-              onlyIcon={true}
-              icon={
-                row.getIsExpanded() ? (
-                  <IcoArrowUp width={16} height={16} stroke={'#6F798B'} />
-                ) : (
-                  <IcoArrowDown width={16} height={16} stroke={'#6F798B'} />
-                )
-              }
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                row.getToggleExpandedHandler()();
+              }}
+              style={{
+                cursor: 'pointer',
+                padding: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '100%',
+                height: '100%',
+              }}
               aria-expanded={row.getIsExpanded()}
-            />
+              role="button"
+            >
+              {row.getIsExpanded() ? (
+                <IcoArrowUp width={16} height={16} stroke={'#6F798B'} />
+              ) : (
+                <IcoArrowDown width={16} height={16} stroke={'#6F798B'} />
+              )}
+            </div>
           )}
-        </>
+        </div>
       );
     },
   });
@@ -207,9 +218,7 @@ export function useGridTable<T extends object>(
 
   const tableColumns = useMemo(() => {
     let finalColumns = [...columns];
-    if (props.showExpandColumn) {
-      finalColumns = [createExpandColumn(), ...finalColumns];
-    }
+
     if (props.showNumberingColumn) {
       finalColumns = [createNumberingColumn(), ...finalColumns];
     }
@@ -218,6 +227,9 @@ export function useGridTable<T extends object>(
     }
     if (multiple && !props.hideRowSelectionCheckBox) {
       finalColumns = [createMultipleCheckColumn(), ...finalColumns];
+    }
+    if (props.showExpandColumn) {
+      finalColumns = [createExpandColumn(), ...finalColumns];
     }
     return finalColumns;
   }, [
