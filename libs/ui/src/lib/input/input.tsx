@@ -198,7 +198,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
           {/* 단위 */}
           {unitText && <div className={styles.unit}>{unitText}</div>}
           {/* 입력글자수/최대입력가능글자수 */}
-          {!hideInputLength && maxLength && type === 'text' && (
+          {!hideInputLength && maxLength && (type === 'text' || type === 'password') && (
             <div
               className={styles.count}
             >{`${(value?.toString() || '').length} / ${maxLength}`}</div>
