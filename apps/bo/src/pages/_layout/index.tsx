@@ -1,16 +1,42 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
+import { GuidePopupProps, PageContainer } from '@widgets/layout/ui/container/page-container';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import style from './index.module.css';
+import { pageRouteConfig } from '@features/auth/index';
 
 export const Route = createFileRoute('/_layout/')({
   component: HomeComponent,
+  ...pageRouteConfig({
+    meta: {
+      title: '개발 현황',
+    },
+  }),
 });
+
+const guideProps: GuidePopupProps = {
+  title: '도움말',
+  description:
+    '도움말 메시지 입니다.도움말 메시지 입니다.도움말 메시지 입니다.도움말 메시지 입니다.도움말 메시지 입니다.도움말 메시지 입니다.도움말 메시지 입니다.도움말 메시지 입니다.도움말 메시지 입니다.도움말 메시지 입니다.도움말 메시지 입니다.도움말 메시지 입니다.',
+  descriptions: [
+    '도움말 목록 입니다.',
+    '도움말 목록 입니다.',
+    '도움말 목록 입니다.',
+    '도움말 목록 입니다.',
+    '도움말 목록 입니다.',
+    '도움말 목록 입니다.',
+    '도움말 목록 입니다.',
+    '도움말 목록 입니다.',
+    '도움말 목록 입니다.',
+    '도움말 목록 입니다.',
+    '도움말 목록 입니다.',
+    '도움말 목록 입니다.',
+  ],
+};
 
 function HomeComponent() {
   return (
-    <PageContainer showFavoriteButton={false}>
+    <PageContainer showFavoriteButton={false} guidePopupProps={guideProps}>
       <MainContents>
         <h3>Dash Board</h3>
         <div className={style.guide_wrap}>

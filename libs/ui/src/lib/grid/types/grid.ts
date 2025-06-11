@@ -273,6 +273,11 @@ export interface GridProps<T> {
   //   pageSizeOptions?: number[];
   // };
   subRows?: T[];
+
+  /**
+   * 확장 컬럼 표시 여부
+   */
+  showExpandColumn?: boolean;
 }
 
 /**

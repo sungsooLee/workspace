@@ -43,7 +43,6 @@ export function useLoginUser(mutationOptions = {}) {
       reset();
       setExp(data.exp);
       queryClient.setQueryData(queryKeys.authUser, data);
-      console.log();
     },
     ...mutationOptions,
   });
@@ -95,6 +94,7 @@ export function useLogoutUser(mutationOptions = {}) {
     onSuccess: async (data) => {
       reset();
       queryClient.invalidateQueries({ queryKey: queryKeys.authUser });
+      queryClient.removeQueries({ queryKey: queryKeys.authUser });
     },
     ...mutationOptions,
   });
@@ -107,6 +107,8 @@ export function useLogoutUser(mutationOptions = {}) {
           ...callback,
           onSuccess: (data) => {
             reset();
+            queryClient.invalidateQueries({ queryKey: queryKeys.authUser });
+            queryClient.removeQueries({ queryKey: queryKeys.authUser });
             router.navigate({ to: '/login' });
           },
         });
@@ -129,25 +131,26 @@ export function useLoginTimer() {
   const { exp, showAlert, setShowAlert, reset } = useExpStore((state) => state);
   const { alert: openAlert, confirm: openConfirm, closeAll } = useModal();
 
-  const [seconds, setSeconds] = useState<number>(1 * 60 * 60);
+  const [seconds, setSeconds] = useState<number | undefined>();
+  const [stop, setStop] = useState<boolean>(true);
 
-  // console.log('exp :: ', exp);
-  // console.log('seconds :: ', seconds, showAlert);
-
-  const timerText = duration(seconds, DATE_TIME_FORMAT.MIN_SEC);
+  const timerText = duration(seconds ?? 0, DATE_TIME_FORMAT.MIN_SEC);
 
   function getRemainingTime(exp: string) {
     try {
       const now = dayjs().utc().unix() * 1000; // 현재 시간 (초 단위)
       const time = Math.floor((parseInt(exp) - now) / 1000);
       return time;
+
+      // TEST
+      // return 10;
     } catch (error) {
       return 0;
     }
   }
 
   function handleLogout() {
-    reset();
+    closeAll();
     logout(undefined, {
       onSuccess: () => {
         openAlert({
@@ -160,6 +163,9 @@ export function useLoginTimer() {
         });
       },
     });
+
+    setStop(true);
+    reset();
   }
 
   async function handleReissue() {
@@ -182,40 +188,39 @@ export function useLoginTimer() {
   }
 
   useEffect(() => {
-    if (!exp) return;
+    if (!exp) {
+      setSeconds(undefined);
+      setStop(true);
+      return;
+    }
     setSeconds(getRemainingTime(exp));
+    setStop(false);
   }, [exp]);
 
   useEffect(() => {
-    if (seconds <= 0) {
+    if (seconds === undefined) return;
+
+    if (seconds === 0) {
       handleLogout();
       return;
     }
+    if (stop) return;
     const interval = setInterval(() => {
       setSeconds(seconds - 1);
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [seconds]);
+  }, [seconds, stop]);
 
   useEffect(() => {
+    if (!seconds) return;
+
     // 5분(300초) 이하일 때 알림 한 번만
     if (seconds <= 300 && !showAlert) {
       setShowAlert(true);
       handleReissue();
     }
   }, [seconds, showAlert]);
-
-  // const formatTime = (seconds: number) => {
-  //   const h = Math.floor(seconds / 3600)
-  //     .toString()
-  //     .padStart(2, '0');
-  //   const m = Math.floor((seconds % 3600) / 60)
-  //     .toString()
-  //     .padStart(2, '0');
-  //   const s = (seconds % 60).toString().padStart(2, '0');
-  //   return `${h}:${m}:${s}`;
-  // };
 
   return {
     time: timerText,

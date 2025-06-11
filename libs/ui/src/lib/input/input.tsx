@@ -170,6 +170,11 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
           'nlp--input',
         )}
       >
+        <div className={styles.before_area}>
+          {/* prefixText */}
+          {prefixText && <div className={styles.unit}>{prefixText}</div>}
+        </div>
+
         {type === 'number' ? (
           <NumericFormat
             {...props}
@@ -256,9 +261,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
         )}
 
         {/* 삭제 버튼 | 단위 | 입력글자수/최대입력가능글자수 */}
-        <div className={cn(styles.button_wrap)}>
-          {/* prefixText */}
-          {prefixText && <div className={styles.unit}>{prefixText}</div>}
+        <div className={cn(styles.after_area)}>
           {/* 삭제 버튼 */}
           {!readOnly && isFocused && !!String(value)?.length && (
             <Button
@@ -275,11 +278,13 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
           {/* suffixText */}
           {suffixText && <div className={styles.unit}>{suffixText}</div>}
           {/* 입력글자수/최대입력가능글자수 */}
-          {!hideInputLength && maxLength && (type === 'text' || type === 'alphanumeric') && (
-            <div
-              className={styles.count}
-            >{`${(value?.toString() || '').length} / ${maxLength}`}</div>
-          )}
+          {!hideInputLength &&
+            maxLength &&
+            (type === 'text' || type === 'password' || type === 'alphanumeric') && (
+              <div
+                className={styles.count}
+              >{`${(value?.toString() || '').length} / ${maxLength}`}</div>
+            )}
           {/* 아이콘 (돋보기, 검색) */}
           {showSearchIcon && (
             <Button

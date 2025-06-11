@@ -23,6 +23,8 @@ import { useTranslation } from 'react-i18next';
 import { cn, gridStateToSortQueryParams } from '@learnway/shared'; // t 함수 필요 시 import
 import styles from './grid.module.css';
 import { Checkbox } from '../checkbox/checkbox';
+import { Button } from '../button/button';
+import { IcoArrowDown, IcoArrowUp } from '@learnway/icons';
 
 // useGridTable의 반환 타입 정의 (필요한 부분만 예시)
 interface UseGridTableReturn<T extends object> {
@@ -75,6 +77,7 @@ export function useGridTable<T extends object>(
   const [columnPinningState, setColumnPinningState] = useState<ColumnPinningState>({
     left: columnPinning.columns?.length
       ? [
+          ...(props.showExpandColumn ? ['expand'] : []),
           ...(props.showNumberingColumn ? ['select-radio'] : []),
           ...(multiple && !props.hideRowSelectionCheckBox ? ['select-check'] : []),
           ...(props.showNumberingColumn ? ['numbering'] : []),
@@ -92,6 +95,37 @@ export function useGridTable<T extends object>(
   const [columnOrder, setColumnOrder] = useState<string[]>(() =>
     columns.map((col) => col.id as string),
   );
+
+  const createExpandColumn = (): ColumnDef<T> => ({
+    id: 'expand',
+    size: 64,
+    // maxSize: 100,
+    // minSize: 100,
+    enablePinning: true,
+    enableSorting: false,
+    meta: { align: 'center', headerAlign: 'center', cellAlign: 'center' },
+    header: ' ',
+    cell: ({ row }) => {
+      return (
+        <>
+          {row.getCanExpand() && (
+            <Button
+              onClick={row.getToggleExpandedHandler()}
+              onlyIcon={true}
+              icon={
+                row.getIsExpanded() ? (
+                  <IcoArrowUp width={16} height={16} stroke={'#6F798B'} />
+                ) : (
+                  <IcoArrowDown width={16} height={16} stroke={'#6F798B'} />
+                )
+              }
+              aria-expanded={row.getIsExpanded()}
+            />
+          )}
+        </>
+      );
+    },
+  });
 
   // 넘버링/선택 컬럼 정의를 이 훅 안으로 이동
   const createNumberingColumn = (): ColumnDef<T> => ({
@@ -173,6 +207,9 @@ export function useGridTable<T extends object>(
 
   const tableColumns = useMemo(() => {
     let finalColumns = [...columns];
+    if (props.showExpandColumn) {
+      finalColumns = [createExpandColumn(), ...finalColumns];
+    }
     if (props.showNumberingColumn) {
       finalColumns = [createNumberingColumn(), ...finalColumns];
     }
@@ -190,6 +227,7 @@ export function useGridTable<T extends object>(
     props.showNumberingColumn,
     props.hideRowSelectionRadioBox,
     props.hideRowSelectionCheckBox,
+    props.showExpandColumn,
     t, // t 함수 의존성 추가
   ]);
 
@@ -270,6 +308,7 @@ export function useGridTable<T extends object>(
     getGroupedRowModel: getGroupedRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
     enableRowSelection: true,
+    enableSubRowSelection: false,
     onRowSelectionChange: multiple
       ? handleRowSelectionChangeForMultiple
       : handleRowSelectionChangeForSingle,
@@ -283,7 +322,17 @@ export function useGridTable<T extends object>(
     manualSorting: !clientSideSorting,
     manualFiltering: !clientSideFiltering,
     manualPagination: true,
-    getRowId: (row: any, index: number) => row[rowId] ?? `${pagination?.pageNumber ?? 0}-${index}`,
+    getSubRows: (row: any) => {
+      return row.subRows || row.children || row.details || [];
+    },
+    getRowId: (row: any, index: number, parent) => {
+      if (parent) {
+        return `${parent.id}_child_${index}`;
+      }
+
+      const pageIndex = pagination?.pageIndex ?? 0;
+      return `page_${pageIndex}_row_${index}`;
+    },
     meta: {
       updateData: handleUpdateData,
       removeData: handleRemoveData,

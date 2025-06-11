@@ -34,7 +34,7 @@ export function useAuthSignin() {
           callback?.onSuccess && callback.onSuccess(updateMenu(menus), {}, {});
         },
         onError: async (error, variables, context) => {
-          alert({ title: 'LABEL.message.nvalidInputInformation', content: error?.message });
+          alert({ title: 'LABEL.message.invalidInputInformation', content: error?.message });
           callback?.onError && callback.onError(error, variables, context);
         },
       });

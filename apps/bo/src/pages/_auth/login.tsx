@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { isEmpty } from 'lodash';
 
 import { Button, ContentsRow } from '@learnway/ui';
-import { useFetchAuthUser } from '@learnway/auth';
+import { useExpStore, useFetchAuthUser } from '@learnway/auth';
 import { cn } from '@learnway/shared';
 import { DynamicFormField } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
@@ -37,6 +37,7 @@ function RouteComponent() {
   const params = Route.useParams();
   const search = Route.useSearch();
 
+  const { reset } = useExpStore();
   const { provider, onSubmit, onFormChange, control } = useDynamicForm(detailConfig);
 
   const { data: authData } = useFetchAuthUser();
@@ -45,6 +46,7 @@ function RouteComponent() {
   const { set: setLanguage, inProgress } = useSetLanguage();
 
   useEffect(() => {
+    reset();
     onFormChange({
       username: getSavedUserid() ?? '@ict-companion.com',
       password: 'hae1234',
