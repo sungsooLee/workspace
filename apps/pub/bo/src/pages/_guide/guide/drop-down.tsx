@@ -19,6 +19,7 @@ function RouteComponent() {
     { value: 'option8', label: '옵션 8' },
     { value: 'option9', label: '옵션 9' },
     { value: 'option10', label: '옵션 10' },
+    { value: 'option11', label: '옵션 11' },
   ];
 
   const [selectedValues2, setSelectedValues2] = useState<string[]>([]);
