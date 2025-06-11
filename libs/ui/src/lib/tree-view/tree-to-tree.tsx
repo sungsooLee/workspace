@@ -1,10 +1,10 @@
 import { cn } from '@learnway/shared';
 import { TreeBox } from './tree-box';
 import { TreeNode } from './type';
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import { IcoXclose, IcoNarrowRight } from '@learnway/icons';
 import { flattenNodeWithChildren } from './tree.service';
 import { useEffect, useState } from 'react';
+import styles from './tree-to-tree.module.css';
 
 export interface TreeToTreeProps {
   sourceTreeId: string;
@@ -61,36 +61,37 @@ export const TreeToTree = ({
   };
 
   return (
-    <div className={cn(layoutStyles.start, layoutStyles.wrap, layoutStyles.pop_layout)}>
-      <div className={layoutStyles.inner}>
-        <TreeBox
-          key={`source-${renderKey}`}
-          treeId={sourceTreeId}
-          data={sourceData}
-          type="TREE_TO_TREE"
-          title={sourceTitle}
-          onAction={handleSourceAction}
-          selectedItems={selectedItems}
-          sourceTreeId={sourceTreeId}
-          initLevel={initLevel}
-        />
+    <div className={cn(styles.start, styles.wrap)}>
+      <TreeBox
+        key={`source-${renderKey}`}
+        treeId={sourceTreeId}
+        data={sourceData}
+        type="TREE_TO_TREE"
+        title={sourceTitle}
+        onAction={handleSourceAction}
+        selectedItems={selectedItems}
+        sourceTreeId={sourceTreeId}
+        initLevel={initLevel}
+      />
+      <div className={styles.transfer_arrow}>
+        <span className={styles.guide_text}>
+          <IcoNarrowRight width={24} height={24} stroke={'#C8d2e5'} />
+          Drag
+          <br />
+          &amp; Drop
+        </span>
       </div>
-      <div className={layoutStyles.transfer_arrow}>
-        <IcoNarrowRight width={24} height={24} stroke={'#C8d2e5'} />
-      </div>
-      <div className={layoutStyles.inner}>
-        <TreeBox
-          treeId={targetTreeId}
-          data={targetData}
-          type="TREE_TO_TREE"
-          title={targetTitle}
-          onAction={handleTargetAction}
-          selectedItems={selectedItems}
-          clientTree
-          sourceTreeId={sourceTreeId}
-          initLevel={initLevel}
-        />
-      </div>
+      <TreeBox
+        treeId={targetTreeId}
+        data={targetData}
+        type="TREE_TO_TREE"
+        title={targetTitle}
+        onAction={handleTargetAction}
+        selectedItems={selectedItems}
+        clientTree
+        sourceTreeId={sourceTreeId}
+        initLevel={initLevel}
+      />
     </div>
   );
 };

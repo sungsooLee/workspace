@@ -30,7 +30,6 @@ function LayoutComponent() {
     // document.title = tenant.windowTitle;
   }, [tenant]);
 
-  console.log('time', time);
   return (
     <div className="layout_wrap">
       {import.meta.env.VITE_APP_ENV === 'local' && (
