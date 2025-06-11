@@ -31,6 +31,7 @@ import { Route as AuthProgressStatusCertImport } from './pages/_auth/progress-st
 import { Route as AuthProgressStatusAdminFailImport } from './pages/_auth/progress-status-admin-fail'
 import { Route as AuthProgressStatusAdminImport } from './pages/_auth/progress-status-admin'
 import { Route as AuthProgressStatusImport } from './pages/_auth/progress-status'
+import { Route as AuthPopupRoleSelectImport } from './pages/_auth/popup-role-select'
 import { Route as AuthPasswordModifyImport } from './pages/_auth/password-modify'
 import { Route as AuthPasswordInputImport } from './pages/_auth/password-input'
 import { Route as AuthMpassCertOtpImport } from './pages/_auth/mpass-cert-otp'
@@ -279,6 +280,12 @@ const AuthProgressStatusAdminRoute = AuthProgressStatusAdminImport.update({
 const AuthProgressStatusRoute = AuthProgressStatusImport.update({
   id: '/progress-status',
   path: '/progress-status',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthPopupRoleSelectRoute = AuthPopupRoleSelectImport.update({
+  id: '/popup-role-select',
+  path: '/popup-role-select',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -1208,6 +1215,13 @@ declare module '@tanstack/react-router' {
       path: '/password-modify'
       fullPath: '/password-modify'
       preLoaderRoute: typeof AuthPasswordModifyImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/popup-role-select': {
+      id: '/_auth/popup-role-select'
+      path: '/popup-role-select'
+      fullPath: '/popup-role-select'
+      preLoaderRoute: typeof AuthPopupRoleSelectImport
       parentRoute: typeof AuthImport
     }
     '/_auth/progress-status': {
@@ -2185,6 +2199,7 @@ interface AuthRouteChildren {
   AuthMpassCertOtpRoute: typeof AuthMpassCertOtpRoute
   AuthPasswordInputRoute: typeof AuthPasswordInputRoute
   AuthPasswordModifyRoute: typeof AuthPasswordModifyRoute
+  AuthPopupRoleSelectRoute: typeof AuthPopupRoleSelectRoute
   AuthProgressStatusRoute: typeof AuthProgressStatusRoute
   AuthProgressStatusAdminRoute: typeof AuthProgressStatusAdminRoute
   AuthProgressStatusAdminFailRoute: typeof AuthProgressStatusAdminFailRoute
@@ -2212,6 +2227,7 @@ const AuthRouteChildren: AuthRouteChildren = {
   AuthMpassCertOtpRoute: AuthMpassCertOtpRoute,
   AuthPasswordInputRoute: AuthPasswordInputRoute,
   AuthPasswordModifyRoute: AuthPasswordModifyRoute,
+  AuthPopupRoleSelectRoute: AuthPopupRoleSelectRoute,
   AuthProgressStatusRoute: AuthProgressStatusRoute,
   AuthProgressStatusAdminRoute: AuthProgressStatusAdminRoute,
   AuthProgressStatusAdminFailRoute: AuthProgressStatusAdminFailRoute,
@@ -2528,6 +2544,7 @@ export interface FileRoutesByFullPath {
   '/mpass-cert-otp': typeof AuthMpassCertOtpRoute
   '/password-input': typeof AuthPasswordInputRoute
   '/password-modify': typeof AuthPasswordModifyRoute
+  '/popup-role-select': typeof AuthPopupRoleSelectRoute
   '/progress-status': typeof AuthProgressStatusRoute
   '/progress-status-admin': typeof AuthProgressStatusAdminRoute
   '/progress-status-admin-fail': typeof AuthProgressStatusAdminFailRoute
@@ -2679,6 +2696,7 @@ export interface FileRoutesByTo {
   '/mpass-cert-otp': typeof AuthMpassCertOtpRoute
   '/password-input': typeof AuthPasswordInputRoute
   '/password-modify': typeof AuthPasswordModifyRoute
+  '/popup-role-select': typeof AuthPopupRoleSelectRoute
   '/progress-status': typeof AuthProgressStatusRoute
   '/progress-status-admin': typeof AuthProgressStatusAdminRoute
   '/progress-status-admin-fail': typeof AuthProgressStatusAdminFailRoute
@@ -2833,6 +2851,7 @@ export interface FileRoutesById {
   '/_auth/mpass-cert-otp': typeof AuthMpassCertOtpRoute
   '/_auth/password-input': typeof AuthPasswordInputRoute
   '/_auth/password-modify': typeof AuthPasswordModifyRoute
+  '/_auth/popup-role-select': typeof AuthPopupRoleSelectRoute
   '/_auth/progress-status': typeof AuthProgressStatusRoute
   '/_auth/progress-status-admin': typeof AuthProgressStatusAdminRoute
   '/_auth/progress-status-admin-fail': typeof AuthProgressStatusAdminFailRoute
@@ -2986,6 +3005,7 @@ export interface FileRouteTypes {
     | '/mpass-cert-otp'
     | '/password-input'
     | '/password-modify'
+    | '/popup-role-select'
     | '/progress-status'
     | '/progress-status-admin'
     | '/progress-status-admin-fail'
@@ -3136,6 +3156,7 @@ export interface FileRouteTypes {
     | '/mpass-cert-otp'
     | '/password-input'
     | '/password-modify'
+    | '/popup-role-select'
     | '/progress-status'
     | '/progress-status-admin'
     | '/progress-status-admin-fail'
@@ -3288,6 +3309,7 @@ export interface FileRouteTypes {
     | '/_auth/mpass-cert-otp'
     | '/_auth/password-input'
     | '/_auth/password-modify'
+    | '/_auth/popup-role-select'
     | '/_auth/progress-status'
     | '/_auth/progress-status-admin'
     | '/_auth/progress-status-admin-fail'
@@ -3468,6 +3490,7 @@ export const routeTree = rootRoute
         "/_auth/mpass-cert-otp",
         "/_auth/password-input",
         "/_auth/password-modify",
+        "/_auth/popup-role-select",
         "/_auth/progress-status",
         "/_auth/progress-status-admin",
         "/_auth/progress-status-admin-fail",
@@ -3655,6 +3678,10 @@ export const routeTree = rootRoute
     },
     "/_auth/password-modify": {
       "filePath": "_auth/password-modify.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/popup-role-select": {
+      "filePath": "_auth/popup-role-select.tsx",
       "parent": "/_auth"
     },
     "/_auth/progress-status": {

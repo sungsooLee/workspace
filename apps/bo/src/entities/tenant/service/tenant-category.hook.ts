@@ -7,7 +7,7 @@ export function useFetchTenantCategory(tenantId: number) {
 }
 
 export function useFetchTenantCategoryDetail(tenantId: number, id: number) {
-  return useQuery({ ...queryOptions.detail(tenantId, id), enabled: !!id });
+  return useQuery({ ...queryOptions.detail(tenantId, id) });
 }
 
 export function useCreateTenantCategory(tenantId: number, options: any) {

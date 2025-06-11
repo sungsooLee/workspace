@@ -50,6 +50,8 @@ import { useCheckExistsCategory } from '@entities/category';
 import { UserGroupTabsChoiceModal } from '@features/shared';
 import { EnFormMode, TenantCategoryCreate, TenantCategoryUpdate } from '@types';
 
+import { TenantCategoryDetail } from '@types';
+
 enum EnCategoryType {
   TENANT = 'TENANT',
   ROOT = 'ROOT',
@@ -140,6 +142,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
 
   const handleNodeAdd = (node: any) => {
     clearAllFormErrors();
+    setSelectedNode(null);
     const initData: { [key: string]: any } = {};
     formConfig.builders.forEach((item) => {
       initData[item.name] = item.value;
@@ -151,7 +154,6 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
     const fdat = {
       ...initData,
       location: location,
-      code: { fieldValue: '', checkState: DuplicateState.needInput },
       parentKey: node.key,
       parentCategoryName: node.title,
       sortSeq: (selectedNode?.children?.length ?? 0) + 1,
@@ -222,6 +224,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
   };
 
   const handleTreeAction = (event: any) => {
+    console.log('event', event);
     switch (event.type) {
       case 'NODE_SELECT':
         if (event.node.depth > 0) {
@@ -532,7 +535,9 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
                   <SwitchFormField
                     disabled={
                       mode === EnFormMode.NONE ||
-                      (selectedNode.categoryType !== EnCategoryType.TENANT && !getValues('isUsed'))
+                      (selectedNode &&
+                        selectedNode.categoryType !== EnCategoryType.TENANT &&
+                        !getValues('isUsed'))
                     }
                   />
                 }

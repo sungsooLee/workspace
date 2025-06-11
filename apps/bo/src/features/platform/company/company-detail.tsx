@@ -11,19 +11,21 @@ import {
   Input,
 } from '@learnway/ui';
 import { FormRow, FormSubTitle, SwitchFormField } from '@shared/ui';
+import { FormDisplay } from '@features/form/ui/form-display';
 import { DynamicFormConfig, useDynamicForm, CODE_GROUP } from '@learnway/hooks';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { DuplicateCodeGuideText } from '@features/platform/category';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { LoginRestrictTimeSettingModal } from '@features/shared/ui/modal/login-restrict-time-setting-modal';
-import { FormDisplay } from '@features/form/ui/form-display';
+import { UserGroupTabsChoiceModal } from '@features/shared';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+
 import { useCheckExistsCompanyCode } from '@entities/companies';
 
 const CompanyDetailComponent: FC<any> = ({ mode }) => {
-  const { open: openModal, close: closeModal } = useModal();
+  const { open: openModal, close: closeModal, confirm: openConfirm } = useModal();
   const { provider, fetchData, onSubmit, onFormChange, setFormError, clearFormError, getValues } =
     useDynamicForm(formConfig);
   const { config: gConfig, gridFetch, data: gridData } = useGridBox(gridConfig);
@@ -111,7 +113,42 @@ const CompanyDetailComponent: FC<any> = ({ mode }) => {
       width: 'lg',
       content: <LoginRestrictTimeSettingModal />,
       onClose(data: any) {
-        console.log('data', data);
+        if (data) {
+          // TODO. 제한 설정 임시 저장
+          setTimeout(() => openConfirmChooseUserGroup(), 0);
+        }
+      },
+    });
+  };
+
+  const openConfirmChooseUserGroup = () => {
+    openConfirm({
+      title: t('유저그룹을 설정하시겠습니까?'),
+      content: (
+        <>
+          {t('유저 그룹을 추가로 설정해야 합니다.')}
+          <br />
+          {t('유저그룹을 설정하지 않는 경우 로그인 제한 시간 설정이 목록에 추가되지 않습니다.')}
+        </>
+      ),
+      onClose: (value: boolean) => {
+        console.log('success');
+        if (value) {
+          setTimeout(() => chooseUserGroup(), 0);
+        } else {
+          // TODO. 제한 설정 임시 저장 삭제
+        }
+      },
+    });
+  };
+
+  const chooseUserGroup = () => {
+    openModal({
+      width: 'xl',
+      content: <UserGroupTabsChoiceModal />,
+      onClose(data: any) {
+        console.log('## userGroups', data);
+        // TODO. 유저 그룹 검색 팝업 완료 이후 테스트
       },
     });
   };
@@ -216,31 +253,6 @@ const CompanyDetailComponent: FC<any> = ({ mode }) => {
         </ContentsRow>
       </FormDisplay>
 
-      {/* <FormSubTitle
-        label={t('로그인 제한 시간 설정')}
-        titleNode={
-          <p className={formStyles.guide_text}>
-            사용자가 학습자 사이트에 로그인 가능한 시간을 설정할 수 있으며, 회사의 유저그룹을
-            기준으로 로그인 제한 시간을 설정할 수 있습니다.
-          </p>
-        }
-        actionNode={
-          <Button
-            variant={'gray2'}
-            size={'sm'}
-            label={'선택'}
-            onClick={() => {
-              openModal({
-                width: 'lg', // sm(600px), md(800px), lg(1024px), xl(1400px)
-                content: <LoginRestrictTimeSettingModal />,
-                onClose(data: any) {
-                  console.log('data', data);
-                },
-              });
-            }}
-          />
-        }
-      /> */}
       <div className="grid_wrap py-10">
         <GridBox
           config={gConfig}

@@ -10,7 +10,7 @@ import {
   useGridBoxConfig,
   useModal,
 } from '@learnway/ui';
-import { IcoClock01, IcoCopy, IcoDownload, IcoSucess02 } from '@learnway/icons';
+import { IcoClock01, IcoCopy, IcoDownload, IcoAlertCircle } from '@learnway/icons';
 import { t } from 'i18next';
 import { Table } from '@tanstack/react-table';
 import { useState } from 'react';
@@ -235,6 +235,7 @@ function LearningResourceTableComponent() {
         config={gConfig}
         showNumberingColumn
         multiple
+        showExpandColumn
         customButtonNode={
           <>
             <Button
@@ -248,14 +249,14 @@ function LearningResourceTableComponent() {
               }
             />
             <span className="type_tooltip">
+              <Button variant="text" label={t('일괄설정')} />
               <Tooltip
                 side="bottom"
                 align="start"
                 content={<pre>{t('LABEL.message.learningResource.batchModifyTooltip')}</pre>}
               >
-                <IcoSucess02 width={16} height={16} stroke="#4C515E" />
+                <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
               </Tooltip>
-              <Button variant="text" label={t('일괄설정')} />
             </span>
             <Button
               label={t('엑셀다운로드')}

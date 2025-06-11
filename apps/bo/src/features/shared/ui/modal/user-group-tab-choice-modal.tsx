@@ -14,7 +14,7 @@ import { UserGroupOrganization } from '../components/user-group-organization';
 import { UserGroupPosition } from '../components/user-group-position';
 import { UserGroupOccupation } from '../components/user-group-occupation';
 import { UserGroupJobTitle } from '../components/user-group-job-title';
-import { UserGroupTenant } from '../components/user-group-tenant';
+import { UserGroupJob } from '../components/user-group-job';
 import { UserGroupCustom } from '../components/user-group-custom';
 import { IcoRefresh02 } from '@learnway/icons';
 
@@ -49,14 +49,14 @@ const UserGroupTabModalComponent = forwardRef((props) => {
               content: <UserGroupOrganization handleSetOption={handleSetOption} />,
             },
             {
-              title: t('보직'),
-              key: 'POSITION',
-              content: <UserGroupPosition />,
-            },
-            {
               title: t('직군'),
               key: 'OCCUPATION',
               content: <UserGroupOccupation />,
+            },
+            {
+              title: t('직무'),
+              key: 'TENANT',
+              content: <UserGroupJob />,
             },
             {
               title: t('호칭'),
@@ -64,9 +64,9 @@ const UserGroupTabModalComponent = forwardRef((props) => {
               content: <UserGroupJobTitle />,
             },
             {
-              title: t('테넌트'),
-              key: 'TENANT',
-              content: <UserGroupTenant />,
+              title: t('보직'),
+              key: 'POSITION',
+              content: <UserGroupPosition />,
             },
             {
               title: '사용자 정의',

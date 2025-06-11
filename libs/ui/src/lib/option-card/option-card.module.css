@@ -1,6 +1,6 @@
 .start {
   &.option_card_wrap {
-    @apply grid w-full gap-[16px];
+    @apply grid w-full gap-[8px];
     &.type_flex {
       @apply flex flex-wrap;
     }

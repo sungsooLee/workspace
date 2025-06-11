@@ -12,11 +12,8 @@ import { SearchBox } from '@shared/ui/search-box';
 
 import { queryOptions as companyQueryOptions } from '@entities/companies/service/companies.queries';
 
-type PageFunction = {
-  linkClick: (companyCode: string) => void;
-};
-const _global: PageFunction = {
-  linkClick: (companyCode) => {
+const _global = {
+  linkClick: (companyCode: string) => {
     return;
   },
 };

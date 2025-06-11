@@ -752,5 +752,23 @@
     "CURRENT_COMPANY": "소속 회사 채널 선택",
     "CURRENT_COMPANY_INCLUSIVE": "소속 회사 채널 하위 선택",
     "MANUAL": "직접 선택"
+  },
+  "pms.company.LoginRestrictionType": {
+    "LOGIN_TIME_RESTRICTION": "근무 시간 외 로그인 제한",
+    "WORK_TIME_RESTRICTION": "근무 시간 내 로그인 제한",
+    "NONE": "제한 없음"
+  },
+  "pms.company.LoginRestrictionSettingType": {
+    "TIME_SETTING": "시간 설정",
+    "HR_INFO_SETTING": "근태 정보 연동"
+  },
+  "cmmon.DayOfWeekType": {
+    "MONDAY": "월요일",
+    "TUESDAY": "화요일",
+    "WEDNESDAY": "수요일",
+    "THURSDAY": "목요일",
+    "FRIDAY": "금요일",
+    "SATURDAY": "토요일",
+    "SUNDAY": "일요일"
   }
 }

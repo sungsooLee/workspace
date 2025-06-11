@@ -163,6 +163,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
           payload.isMobileExposed = payload.deviceNames.includes(EnDeviceType.isMobile);
           payload.tenantId = tenantId;
           payload.parentMenuId = payload.parentId;
+          payload.menuScope = menuScope;
           updateMenuTenent(payload, {
             onSuccess: () => {
               refetchDetail();
