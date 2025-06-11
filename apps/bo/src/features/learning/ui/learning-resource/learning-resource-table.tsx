@@ -235,6 +235,7 @@ function LearningResourceTableComponent() {
         config={gConfig}
         showNumberingColumn
         multiple
+        showExpandColumn
         customButtonNode={
           <>
             <Button
