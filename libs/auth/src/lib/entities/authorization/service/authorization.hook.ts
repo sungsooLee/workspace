@@ -94,6 +94,7 @@ export function useLogoutUser(mutationOptions = {}) {
     onSuccess: async (data) => {
       reset();
       queryClient.invalidateQueries({ queryKey: queryKeys.authUser });
+      queryClient.removeQueries({ queryKey: queryKeys.authUser });
     },
     ...mutationOptions,
   });
@@ -106,6 +107,8 @@ export function useLogoutUser(mutationOptions = {}) {
           ...callback,
           onSuccess: (data) => {
             reset();
+            queryClient.invalidateQueries({ queryKey: queryKeys.authUser });
+            queryClient.removeQueries({ queryKey: queryKeys.authUser });
             router.navigate({ to: '/login' });
           },
         });
