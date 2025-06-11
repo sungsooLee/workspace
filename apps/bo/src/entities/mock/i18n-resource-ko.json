@@ -63,7 +63,11 @@
         "uploaderGuideText": "업로드된 동영상은 학습자원목록에서 조회가능합니다.",
         "sizeError": "4GB 이하의 파일을 업로드 하세요.",
         "extensionError": "지원하는 형식의 파일을 업로드 하세요."
-      }
+      },
+      "favoritesMenuInfo": "업무 화면에서 별아이콘을 클릭하면\n즐겨찾기에 메뉴가 추가됩니다.",
+      "recentMenuInfo": "최근 자주 사용한 메뉴를\n최대 10개 까지 볼 수 있습니다.",
+      "notificationEmpty": "새로운 알림이 없습니다.",
+      "notificationSaveDay": "알림은 30일 동안 보관됩니다."
     },
     "menu": {
       "list": "목록",
@@ -158,11 +162,13 @@
         "channel": "채널",
         "tenantCategory": "테넌트 카테고리"
       },
+      "hrdCenter": "HRD 센터",
       "login": "로그인",
       "logout": "로그아웃",
       "myInfo": "나의 정보",
       "myRole": "나의 권한",
       "itsm": "문의하기 ITSM",
+      "customerCenter": "고객센터",
       "loginExtension": "로그인연장",
       "caution": "유의사항",
       "resend": "재전송",
@@ -244,7 +250,12 @@
       "learnerMenu": "학습자 메뉴",
       "hrdCenterMenu": "HRD센터 메뉴",
       "categoryInfo": "카테고리 정보",
-      "trainingPlaceInfo": "교육장소 정보"
+      "trainingPlaceInfo": "교육장소 정보",
+      "favorites": "즐겨찾기",
+      "recentMenu": "최근 본 메뉴",
+      "notification": "알림",
+      "readAll": "전체읽음",
+      "deleteAll": "전체삭제"
     },
     "link": {
       "multilingual": "다국어관리"
@@ -453,6 +464,10 @@
       "logout": {
         "title": "로그아웃 하시겠습니까?",
         "message": "로그아웃을 하면 다시 로그인해야 서비스를 이용할 수 있습니다.\n확인 버튼을 클릭하면 로그아웃 됩니다."
+      },
+      "notificationDelete": {
+        "title": "알림을 모두 삭제하시겠습니까?",
+        "message": "알림을 삭제한 후에는 알림을 조회할 수 없습니다."
       }
     },
     "platform": {
