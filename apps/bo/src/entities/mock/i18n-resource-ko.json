@@ -86,6 +86,19 @@
       "mobile": "모바일",
       "modal": {}
     },
+    "program": {
+      "checkUsed": "시용 여부를 확인해주세요.",
+      "learnerApi": "학습자 API",
+      "hrdCenterApi": "HRD센터 API",
+      "location": "API 위치",
+      "parentApiName": "상위 API 명",
+      "type": "API 유형",
+      "folder": "폴더",
+      "api": "API",
+      "name": "API 이름",
+      "apiMethodType": "API Method 구분",
+      "isUsed": "사용 여부"
+    },
     "cdGroupId": "그룹코드",
     "cdGroupName": "그룹 명",
     "isUsed": "사용",
@@ -100,7 +113,9 @@
     "referenceVal4": "참고 4",
     "cdId": "코드",
     "add": "{{type}} 추가",
+    "addSub": "하위 {{type}} 추가",
     "list": "{{type}} 목록",
+    "info": "{{type}} 정보",
     "select": "{{type}} 선택",
     "selected": "선택된",
     "noData": "{{type}} 데이터가 없습니다.",
@@ -244,7 +259,8 @@
       "learnerMenu": "학습자 메뉴",
       "hrdCenterMenu": "HRD센터 메뉴",
       "categoryInfo": "카테고리 정보",
-      "trainingPlaceInfo": "교육장소 정보"
+      "trainingPlaceInfo": "교육장소 정보",
+      "tree": "트리"
     },
     "link": {
       "multilingual": "다국어관리"

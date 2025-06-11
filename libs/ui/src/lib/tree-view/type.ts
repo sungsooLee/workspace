@@ -36,14 +36,6 @@ interface BaseEventPayload {
   sourceTreeId?: string | null;
 }
 
-/**
- * 이벤트별 페이로드 타입 정의
- */
-// export interface SelectEventPayload extends BaseEventPayload {
-//   type: 'NODE_SELECT';
-//   node: TreeNode | null;
-// }
-
 export interface MoveEventPayload extends BaseEventPayload {
   type: 'NODE_MOVE';
   sourceNode: TreeNode;
@@ -113,7 +105,6 @@ export interface TreeNode {
   constraints?: NodeConstraints;
   dropPosition?: string;
   treeId?: string;
-  //추후 Seq 속성 추가 될 것 같음. 해당 속성으로 무브에 대한 이벤트 targetIndex 로직 추가하면 될 것 같음.
   isUsed?: boolean;
   level?: number;
   apiNodeType?: string;
@@ -151,7 +142,7 @@ export interface TreeProps {
   sourceTreeId?: string;
   maxDepth?: number; // 최대 Depth
   isSelectableNode?: (node: TreeNode) => boolean;
-  // 추후 제약사항 추가 될 수 있음.
+  customDropValidator?: CustomDropValidator; // 커스텀 드랍 유효성 체크 - 사용하는 쪽에서 제약 추가를 위해 추가함.
 }
 // 드랍 위치 감지를 위한 타입
 export interface IndicatorPosition {
@@ -172,15 +163,6 @@ export interface SelectEventPayload extends BaseEventPayload {
   node: TreeNode;
 }
 
-// export interface ApiCallbackPayload extends BaseEventPayload {
-//   type: string;
-//   sourceNode: TreeNode;
-//   targetNode: TreeNode | null;
-//   position: NodeMovePositionType;
-//   treeId: string;
-//   success?: boolean;
-//   error?: string;
-// }
 export interface ApiCallbackPayload extends BaseEventPayload {
   type: string;
   sourceNode: TreeNode;
@@ -223,6 +205,7 @@ export interface TreeNodeComponentProps {
   selectedItems?: string[]; // 선택된 아이템들의 키 배열
   sourceTreeId?: string;
   maxDepth?: number; // 최대 뎁스
+  customDropValidator?: CustomDropValidator;
 }
 
 /**
@@ -237,3 +220,11 @@ export interface DropInfo {
 export interface TreeBoxProps extends TreeProps {
   initLevel: number;
 }
+
+export type CustomDropValidator = (params: {
+  sourceNode: TreeNode;
+  targetNode: TreeNode;
+  dropPosition: NodeMovePositionType;
+  level: number;
+  treeData?: TreeNode[];
+}) => boolean;

@@ -1,16 +1,16 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { t } from 'i18next';
 import { useWatch } from 'react-hook-form';
 
 import {
   Button,
   ContentsRow,
-  DynamicFormField,
+  CustomDropValidator,
   findNodePath,
   findParentNode,
   Input,
   RadioGroupFormField,
-  TextareaFormField,
+  Textarea,
   TreeBox,
   TreeEventPayload,
   TreeNode,
@@ -22,13 +22,14 @@ import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inn
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 
 import { findNodeByApiId } from '../service/program.service';
-import { FormRow } from '../../../../shared/ui';
+import { FormRow, SwitchFormField } from '../../../../shared/ui';
 import {
   useFetchProgram,
   useFetchPrograms,
   useProgramHook,
 } from '../../../../entities/program/service/program-manage.hook';
 import { transformApiDataToApiTreeData } from '../../menu/service/menu.service';
+import { IcoMinus } from '@learnway/icons';
 import { SectionLayout } from '../../../../widgets/layout/ui/container/section-layout/section-layout';
 
 const FORM_MODE = {
@@ -43,7 +44,7 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
   const [treeData, setTreeData] = useState([]);
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [lastCreateApiId, setLastCreateApiId] = useState<string | null>(null);
-  const { confirm: openConfirm } = useModal();
+  const { confirm: openConfirm, alert: openAlert } = useModal();
 
   const prevDataRef = useRef(null);
 
@@ -53,6 +54,7 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
   const clearAllFormErrors = () => {
     formConfig.builders.forEach((item) => clearFormError(item.name));
   };
+  const { showDeleteComplete } = useModal();
 
   const apiNodeType = useWatch({ control, name: 'apiNodeType' });
 
@@ -78,7 +80,6 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
         const newNode = findNodeByApiId(transformedData, lastCreateApiId);
         if (newNode) {
           const nodePath = findNodePath(transformedData, lastCreateApiId);
-          console.log(newNode);
           if (nodePath) {
             setExpandedKeys((prev) => {
               const combined = [...new Set([...prev, ...nodePath])];
@@ -130,20 +131,18 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
   const renderNodeButtons = (node: TreeNode, level: number) => (
     <div className={'gap-10px flex'}>
       <div className={'flex items-center'}>
-        {level <= 4 && (
-          <Button
-            onClick={(e) => {
-              e.stopPropagation();
-              addNode(node);
-            }}
-            variant="gray2"
-            size={'xs'}
-            type={'button'}
-            disabled={node.apiNodeType === 'API'}
-          >
-            {level === 0 ? 'API 추가' : '하위 API 추가'}
-          </Button>
-        )}
+        <Button
+          onClick={(e) => {
+            e.stopPropagation();
+            addNode(node);
+          }}
+          variant="gray2"
+          size={'xs'}
+          type={'button'}
+          disabled={node.apiNodeType === 'API' || level >= 5}
+        >
+          {level === 0 ? t('LABEL.add', { type: 'API' }) : t('LABEL.addSub', { type: 'API' })}
+        </Button>
       </div>
     </div>
   );
@@ -156,7 +155,6 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
           const payload = {
             apiUuid: nodeInfo.sourceNode.apiUuid,
             destinationParentId: nodeInfo.targetNode?.apiId,
-            // sortSeq: nodeInfo.targetIndex ? nodeInfo.targetIndex + 1 : 1,
             sortOrder: 1,
             apiScopeCode: menuScope,
           };
@@ -177,7 +175,6 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
   };
 
   const handleSelectedNodeChange = (node: TreeNode | null) => {
-    console.log(node);
     setSelectedNode(node);
     if (node) {
       setFormMode(FORM_MODE.VIEW);
@@ -187,7 +184,6 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
   };
 
   const handleReset = async () => {
-    //
     const isReset = await openConfirm({
       title: t('LABEL.confirm.reset.title'),
     });
@@ -236,10 +232,58 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
     }
   };
 
+  const customDropValidator = useCallback<CustomDropValidator>(
+    ({ sourceNode, targetNode, dropPosition }) => {
+      if (dropPosition === 'INSIDE' && targetNode.apiNodeType !== 'FOLDER') {
+        return false;
+      }
+      return true;
+    },
+    [],
+  );
+
+  const handleDelete = async () => {
+    if (selectedNode && selectedNode.isUsed) {
+      await openAlert({
+        content: t('LABEL.program.checkUsed'),
+      });
+      return;
+    }
+
+    openConfirm({
+      title: t('LABEL.confirm.delete.title'),
+      content: t('LABEL.confirm.delete.message', { type: t('LABEL.common.tree') }),
+      onClose: (value: boolean) => {
+        const payload = {
+          menuId: selectedNode?.menuId,
+        };
+        if (value && payload) {
+          deleteProgram(selectedNode?.apiUuid, {
+            onSuccess: async (data: any) => {
+              showDeleteComplete();
+              setSelectedNode(null);
+              clearAllFormErrors();
+              const initData: { [key: string]: any } = {};
+              formConfig.builders.forEach((item) => {
+                initData[item.name] = item.value;
+              });
+              fetchData({ ...initData });
+              setFormMode(FORM_MODE.NONE);
+            },
+          });
+        }
+      },
+    });
+  };
+
   return (
     <>
       <TreeBox
-        title={menuScope === 'FO' ? t('학습자 API 목록') : t('HRD센터 API 목록')}
+        title={
+          menuScope === 'FO'
+            ? t('LABEL.list', { type: t('LABEL.program.learnerApi') })
+            : t('LABEL.list', { type: t('LABEL.program.hrdCenterApi') })
+        }
         data={treeData}
         treeId={'program-tree'}
         expandedKeys={expandedKeys}
@@ -250,12 +294,16 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
         selectedNode={selectedNode}
         initLevel={2}
         handleSelectedNodeChange={handleSelectedNodeChange}
+        customDropValidator={customDropValidator}
+        maxDepth={5}
       />
       <div className={layoutStyles.inner}>
         <form onSubmit={onSubmit(handleOnSubmit)}>
           <div className={titleStyles.title_wrap}>
             <h3 className={titleStyles.title}>
-              {menuScope === 'FO' ? t('학습자 API 정보') : t('HRD센터 API 정보')}
+              {menuScope === 'FO'
+                ? t('LABEL.info', { type: t('LABEL.program.learnerApi') })
+                : t('LABEL.info', { type: t('LABEL.program.hrdCenterApi') })}
             </h3>
             <div className={layoutStyles.btn_wrap}>
               <Button
@@ -273,9 +321,8 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
                 size="sm"
                 className={layoutStyles.btn_text}
                 disabled={FORM_MODE.VIEW !== formMode}
-                onClick={() => {
-                  deleteProgram(selectedNode?.apiUuid);
-                }}
+                onClick={handleDelete}
+                icon={<IcoMinus width={16} height={16} stroke={'#4C515E'} />}
               >
                 {t('LABEL.button.delete')}
               </Button>
@@ -297,14 +344,22 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
             </ContentsRow>
 
             <ContentsRow>
-              <FormRow provider={provider} name={'apiId'} element={<Input disabled={true} />} />
+              <FormRow
+                provider={provider}
+                name={'apiId'}
+                element={<Input disabled={true} className="text-left" />}
+              />
             </ContentsRow>
 
             <ContentsRow>
               <FormRow
                 provider={provider}
                 name={'apiNodeType'}
-                element={<RadioGroupFormField disabled={FORM_MODE.NONE === formMode} />}
+                element={
+                  <RadioGroupFormField
+                    disabled={FORM_MODE.NONE === formMode || FORM_MODE.VIEW === formMode}
+                  />
+                }
               />
             </ContentsRow>
 
@@ -335,11 +390,18 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
               </>
             )}
             {/* {apiNodeType === 'FOLDER' && ( */}
+            <ContentsRow type={'horizontal'} className={'inactive'}>
+              <FormRow
+                provider={provider}
+                name={'isUsed'}
+                element={<SwitchFormField disabled={formMode === FORM_MODE.NONE} />}
+              />
+            </ContentsRow>
             <ContentsRow>
               <FormRow
                 provider={provider}
                 name={'apiDesc'}
-                element={<TextareaFormField disabled={FORM_MODE.NONE === formMode} />}
+                element={<Textarea disabled={FORM_MODE.NONE === formMode} />}
               />
             </ContentsRow>
             {/* )} */}
@@ -369,13 +431,13 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'fullPath',
       type: 'text',
-      label: t('API 위치'),
+      label: t('LABEL.program.location'),
       value: '',
     },
     {
       name: 'parentName',
       type: 'text',
-      label: t('상위 API 명'),
+      label: t('LABEL.program.parentApiName'),
       value: '',
     },
     {
@@ -388,35 +450,37 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'apiNodeType',
       type: 'radio-group',
-      label: t('API 유형'),
+      label: t('LABEL.program.type'),
       value: 'FOLDER',
       options: [
         {
           value: 'FOLDER',
-          label: t('폴더'),
+          label: t('LABEL.program.folder'),
         },
         {
           value: 'API',
-          label: t('API'),
+          label: t('LABEL.program.api'),
         },
       ],
     },
     {
       name: 'apiName',
       type: 'text',
-      label: t('API 이름'),
+      label: t('LABEL.program.name'),
       value: '',
+      maxLength: 10,
     },
     {
       name: 'apiDesc',
       type: 'textarea',
-      label: t('설명'),
+      label: t('LABEL.form.input.description'),
       value: '',
+      maxLength: 2000,
     },
     {
       name: 'apiMethodCode',
       type: 'radio-group',
-      label: t('API Method 구분'),
+      label: t('LABEL.program.apiMethodType'),
       value: 'GET',
       options: [
         {
@@ -443,6 +507,17 @@ const formConfig: DynamicFormConfig = {
       type: 'text',
       label: t('API URL'),
       value: '',
+    },
+    {
+      name: 'isUsed',
+      type: 'switch',
+      label: t('LABEL.program.isUsed'),
+      value: true,
+      switchConfig: {
+        label: (value: boolean) => (value ? t('LABEL.common.enable') : t('LABEL.common.disable')),
+      },
+      tooltip:
+        '사용여부 변경 시 메뉴관리에서 매핑한 메뉴의 해당 API 사용여부도 같이 변경되니 유의해 주세요.',
     },
   ],
   validator: {
