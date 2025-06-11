@@ -1,15 +1,17 @@
 import type { PlayerContainerProps } from './types';
 import { forwardRef, useEffect, useRef, useState } from 'react';
+import clsx from 'clsx';
 import LessonTitle from './components/lesson-title';
 import CentralControlButton from './components/central-control-button';
 import BottomProgressBar from './components/bottom-progress-bar';
 import RightSideButtons from './components/right-side-buttons';
-import clsx from 'clsx';
+import CurriculumSidebar from './components/curriculum-side-bar';
+import RightSideBar from './components/right-side-bar';
 
 const AUTO_HIDE_DELAY = 3000; // 3
 
 const PlayerContainerComponent = forwardRef<HTMLDivElement, PlayerContainerProps>(
-  ({ children, ...props }, ref) => {
+  ({ children, showCurriculumSection, ...props }, ref) => {
     const [isHovered, setIsHovered] = useState(false);
 
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -39,53 +41,59 @@ const PlayerContainerComponent = forwardRef<HTMLDivElement, PlayerContainerProps
     }, []);
 
     return (
-      <div
-        ref={ref}
-        className="relative h-screen w-full bg-black"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        {children}
-
-        {/* 상단 왼쪽 */}
+      <div className={`flex flex-row`}>
         <div
-          className={clsx({
-            'opacity-100': isHovered,
-            'opacity-0': !isHovered,
-          })}
+          ref={ref}
+          className={`relative flex h-screen w-full bg-black`}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
-          <LessonTitle lessonTitle="Title" />
-        </div>
+          {children}
 
-        {/* 중앙 제어 버튼 */}
-        <div
-          className={clsx({
-            'opacity-100': isHovered,
-            'opacity-0': !isHovered,
-          })}
-        >
-          <CentralControlButton {...props} />
-        </div>
+          {/* 상단 왼쪽 */}
+          <div
+            className={clsx({
+              'opacity-100': isHovered,
+              'opacity-0': !isHovered,
+            })}
+          >
+            <LessonTitle lessonTitle="Title" />
+          </div>
 
-        {/* 오른쪽 사이드 버튼 */}
-        <div
-          className={clsx({
-            'opacity-100': isHovered,
-            'opacity-0': !isHovered,
-          })}
-        >
-          <RightSideButtons />
-        </div>
+          {/* 중앙 제어 버튼 */}
+          <div
+            className={clsx({
+              'opacity-100': isHovered,
+              'opacity-0': !isHovered,
+            })}
+          >
+            <CentralControlButton {...props} />
+          </div>
 
-        {/* 하단 진행바 */}
-        <div
-          className={clsx({
-            'opacity-100': isHovered,
-            'opacity-0': !isHovered,
-          })}
-        >
-          <BottomProgressBar {...props} />
+          {/* 오른쪽 사이드 버튼 */}
+          {!showCurriculumSection && (
+            <div
+              className={clsx({
+                'opacity-100': isHovered,
+                'opacity-0': !isHovered,
+              })}
+            >
+              <RightSideButtons {...props} />
+            </div>
+          )}
+
+          {/* 하단 진행바 */}
+          <div
+            className={clsx({
+              'opacity-100': isHovered,
+              'opacity-0': !isHovered,
+            })}
+          >
+            <BottomProgressBar {...props} />
+          </div>
         </div>
+        {showCurriculumSection && <CurriculumSidebar {...props} />}
+        {showCurriculumSection && <RightSideBar {...props} />}
       </div>
     );
   },
