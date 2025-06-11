@@ -10,11 +10,11 @@ import {
   useMemo,
 } from 'react';
 import { useCreation } from 'ahooks';
-import { last } from 'lodash';
+import { isArray, last } from 'lodash';
 import { t } from 'i18next';
 import { cn } from '@learnway/shared';
-import { Button } from '@learnway/ui';
-import { IcoStar, IcoArrowLineTop } from '@learnway/icons';
+import { Button, Popover } from '@learnway/ui';
+import { IcoStar, IcoArrowLineTop, IcoAlertCircle, IcoClose02 } from '@learnway/icons';
 import { useCurrentRoute } from '@learnway/hooks';
 import {
   Menu,
@@ -32,8 +32,17 @@ import { PageContents } from './page-contents';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-container.module.css';
 import fabStyles from '@learnway/styles/bo/assets/styles/modules/fab.module.css'; /* fab */
+import tooltipPopoverStyles from '@learnway/styles/bo/assets/styles/modules/tootip-popover.module.css';
 import { useCreateMenuFavorites, useDeleteMenuFavorites } from '@entities/menu';
 import { useRouterState } from '@tanstack/react-router';
+import { NoticeBox } from '@shared/ui';
+
+export type GuidePopupProps = {
+  title?: string;
+  description?: string;
+  descriptions?: string[];
+  type?: 'bullet' | 'count';
+};
 
 /**
  * 목록 또는 상세 화면에 대한 디자인 wrapping 컴포넌트
@@ -49,6 +58,7 @@ const PageContainerComponent: FC<{
   tabs?: boolean; // 컨텐츠 상단에 tab 있는 경우
   scrollHidden?: boolean; // 컨텐츠 안에 스크롤인 경우
   hideOutLine?: boolean; // 공통 > 나의 정보 화면(외곽라인,bg 없는 경우)
+  guidePopupProps?: GuidePopupProps; // 가이드 팝업 props, props가 존재하면 노출
 }> = ({
   children,
   displayContent = true,
@@ -57,6 +67,7 @@ const PageContainerComponent: FC<{
   tabs = false,
   scrollHidden = false,
   hideOutLine = false,
+  guidePopupProps,
 }) => {
   const { meta } = useCurrentRoute();
   const [activeMenuDepth, setActiveMenuDepth] = useActiveMenuDepthState();
@@ -217,14 +228,35 @@ const PageContainerComponent: FC<{
     }
   };
 
+  // GuidePopup
+  const PopoverContent = () => {
+    return (
+      <div className={tooltipPopoverStyles.start}>
+        <strong className={tooltipPopoverStyles.title}>{guidePopupProps?.title}</strong>
+        <div className={tooltipPopoverStyles.contents_wrap}>
+          <NoticeBox
+            iconVisible={false}
+            type={'bullet'}
+            description={guidePopupProps?.description}
+            descriptions={guidePopupProps?.descriptions}
+          />
+        </div>
+        <Popover.Close asChild>
+          <Button className={tooltipPopoverStyles.btn_close} icon={<IcoClose02 />} onlyIcon />
+        </Popover.Close>
+      </div>
+    );
+  };
+
   return (
     <div className={cn(styles.start, styles.contents)}>
       <Breadcrumbs />
       <div ref={scrollContainerRef} className={cn(styles.inner, 'scroll_inner')}>
         {/* title_wrap */}
         <div className={cn(styles.title_wrap, 'title_wrap')}>
-          <h3 className={styles.title}>
+          <h3 className={cn(styles.title, 'title_bo_1_b')}>
             {t(title)}
+            {/* 즐겨찾기 기능 */}
             {showFavoriteButton && (
               <Button
                 className={cn(styles.btn_favorites, isFavorite ? styles.active : '')}
@@ -241,6 +273,20 @@ const PageContainerComponent: FC<{
                   className={styles.icon_star}
                 />
               </Button>
+            )}
+            {/* GuidePopup */}
+            {guidePopupProps && (
+              <Popover
+                popoverContent={<PopoverContent />}
+                className={styles.guide_popup}
+                side="bottom"
+                align="start"
+                sideOffset={10}
+                // onPointerDownOutside={(e) => e.preventDefault()}
+                // onInteractOutside={(e) => e.preventDefault()}
+              >
+                <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
+              </Popover>
             )}
           </h3>
           {ButtonSlot && displayContent && <div className={styles.btn_wrap}>{ButtonSlot}</div>}
