@@ -55,9 +55,6 @@
       "upload": {
         "uploadDescription": "영역을 클릭하거나 파일을 마우스로 끌어 놓으세요"
       },
-      "learningResource": {
-        "batchModifyTooltip": "학습자원의 담당자, 사용기한, 공유채널설정, \n교육자원활용, 보안콘텐츠 적용, 검수진행을 \n한번에 할 수 있어요."
-      },
       "learningResourceFileUploadModal": {
         "uploaderLabel": "파일은 1개당 최대 4GB 이하로 가능 합니다.",
         "uploaderGuideText": "업로드된 동영상은 학습자원목록에서 조회가능합니다.",
@@ -301,7 +298,13 @@
         "csvUpload": "CSV 업로드",
         "selectAll": "전체 선택",
         "removeAll": "전체 삭제",
-        "courseList": "과정 목록"
+        "courseList": "과정 목록",
+        "guideDownload": "프로그램/가이드 다운로드",
+        "batchModify": "일괄설정",
+        "copy": "복사"
+      },
+      "tooltip": {
+        "batchModify": "학습자원의 담당자, 사용기한, 공유채널설정, \n교육자원활용, 보안콘텐츠 적용, 검수진행을 \n한번에 할 수 있어요."
       },
       "column": {
         "no": "NO.",
@@ -335,7 +338,15 @@
         "lastModifiedDateTime": "최종수정일시",
         "lastModifiedBy": "최종수정자",
         "map": "약도",
-        "link": "링크"
+        "link": "링크",
+        "contentType": "유형",
+        "contentName": "학습자원명",
+        "coordinator": "담당자",
+        "detailInfo": "세부정보",
+        "util": "기능",
+        "useEnabledType": "사용가능",
+        "localization": "현지화",
+        "updatedInfo": "수정정보"
       },
       "emptyText": "조회 결과가 없습니다.",
       "searchFirst": "{{list}}을 먼저 검색해주세요."
@@ -389,6 +400,7 @@
         "useYn": "사용여부",
         "userGroupSetting": "유저그룹 설정",
         "select": "선택",
+        "all": "전체",
         "mapImageAttachment": "약도 이미지 첨부",
         "division": "구분",
         "placeCode": "장소 코드",
@@ -398,7 +410,17 @@
         "note": "비고",
         "isReservationUsed": "예약 가능",
         "isUsed": "사용 가능",
-        "address": "주소"
+        "address": "주소",
+        "contentType": "유형",
+        "contentName": "학습자원명",
+        "isVendored": "외주여부",
+        "useEnabledType": "사용가능",
+        "isCourseUsed": "교육활용",
+        "coordinator": "담당자",
+        "langCountryCode": "언어",
+        "createdBy": "등록자",
+        "preview": "미리보기",
+        "look": "보기"
       },
       "validation": {
         "needInput": "{{code}}를 입력해 주세요.",
@@ -528,21 +550,6 @@
             }
           }
         }
-      }
-    },
-    "content": {
-      "learning-resource": {
-        "contentType": "유형",
-        "contentName": "학습자원명",
-        "tenantName": "테넌트",
-        "channelName": "채널",
-        "coordinatorName": "담당자",
-        "detailInfo": "세부정보",
-        "util": "기능",
-        "isCourseUsed": "교육활용",
-        "useEnabledType": "사용가능",
-        "localization": "현지화",
-        "updatedInfo": "수정정보"
       }
     },
     "alert": {
