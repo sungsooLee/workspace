@@ -61,10 +61,10 @@ export function useRenewalMenuStateFromRouting() {
     if (basePath && currentPath.startsWith(basePath)) {
       currentPath = currentPath.substring(basePath.length) || '/';
     }
-    if (currentPath === '/') {
-      setActiveMenuDepth([]);
-      return;
-    }
+    // if (currentPath === '/') {
+    //   setActiveMenuDepth([]);
+    //   return;
+    // }
     const depths: Menu[] = [];
     const recursiveCall = (path: string) => {
       authUser.menus.some((menu: Menu) => {
