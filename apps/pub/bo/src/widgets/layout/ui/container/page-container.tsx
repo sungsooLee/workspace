@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @nx/enforce-module-boundaries */
 import React, { memo, ReactNode, useState, useEffect, useRef } from 'react';
 import { Link } from '@tanstack/react-router';
 // import { useTranslation } from 'react-i18next';
