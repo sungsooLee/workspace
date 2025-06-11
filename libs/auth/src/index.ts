@@ -1,3 +1,4 @@
+export * from './lib/pages/find-email';
 export * from './lib/pages/change-password';
 export * from './lib/pages/identity-verification';
 export * from './lib/pages/search-account/search-account';
