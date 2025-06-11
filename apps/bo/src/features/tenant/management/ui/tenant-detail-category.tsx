@@ -50,6 +50,8 @@ import { useCheckExistsCategory } from '@entities/category';
 import { UserGroupTabsChoiceModal } from '@features/shared';
 import { EnFormMode, TenantCategoryCreate, TenantCategoryUpdate } from '@types';
 
+import { TenantCategoryDetail } from '@types';
+
 enum EnCategoryType {
   TENANT = 'TENANT',
   ROOT = 'ROOT',
