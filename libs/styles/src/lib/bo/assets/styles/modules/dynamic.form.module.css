@@ -25,6 +25,16 @@
   }
 }
 .form_item_horizontal {
+  @apply flex flex-row flex-wrap justify-between;
+  label {
+    @apply flex-1;
+    & + div {
+      @apply !mt-[8px] flex flex-1 justify-end;
+    }
+  }
+  p {
+    @apply !mt-[4px] w-full flex-none;
+  }
 }
 
 .col_wrap {
