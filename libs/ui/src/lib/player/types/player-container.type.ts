@@ -1,6 +1,7 @@
 import { PropsWithChildren } from 'react';
 
 export type PlayerContainerProps = {
+  showCurriculumSection: boolean;
   playing: boolean;
   isFullscreen: boolean;
   currentTime: number;
@@ -18,4 +19,5 @@ export type PlayerContainerProps = {
   handleForward: () => void;
   handleSeek: (e: React.MouseEvent<HTMLDivElement>) => void;
   changePlaybackRate: (rate: number) => void;
+  toggleCurriculumSection: () => void;
 } & PropsWithChildren;

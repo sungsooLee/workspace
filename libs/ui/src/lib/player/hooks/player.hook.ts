@@ -12,10 +12,15 @@ export const usePlayer = () => {
   const [volume, setVolume] = useState(0.8); // 기본 볼륨 80%
   const [muted, setMuted] = useState(false);
   const [playbackRate, setPlaybackRate] = useState(1.0); // 재생 속도 상태
+  const [showCurriculumSection, setShowCurriculumSection] = useState(false);
 
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   const [subtitlesVisible, setSubtitlesVisible] = useState(true);
+
+  const toggleCurriculumSection = () => {
+    setShowCurriculumSection((prev) => !prev);
+  };
 
   // 재생 속도 설정 함수
   const changePlaybackRate = (rate: number) => {
@@ -142,6 +147,7 @@ export const usePlayer = () => {
   };
 
   return {
+    showCurriculumSection,
     playerContainerRef,
     playerRef,
     playing,
@@ -166,5 +172,6 @@ export const usePlayer = () => {
     togglePlay,
     onProgress,
     changePlaybackRate,
+    toggleCurriculumSection,
   };
 };
