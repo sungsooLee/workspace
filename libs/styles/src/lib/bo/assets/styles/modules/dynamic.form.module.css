@@ -24,6 +24,8 @@
     @apply !min-w-[43px];
   }
 }
+.form_item_horizontal {
+}
 
 .col_wrap {
   @apply flex w-full flex-col;

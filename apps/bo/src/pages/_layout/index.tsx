@@ -204,7 +204,7 @@ export const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 완료', // 비고
-    end: false,
+    end: true,
   },
   {
     screenName: '시스템 공통코드 그룹관리',
@@ -213,7 +213,7 @@ export const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 완료', // 비고
-    end: false,
+    end: true,
   },
   {
     screenName: '메뉴 관리',
@@ -222,7 +222,7 @@ export const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 완료', // 비고
-    end: false,
+    end: true,
   },
   {
     screenName: '위젯 관리',
@@ -330,6 +330,24 @@ export const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 중 (api x)- /platform/tenant/organization 검색 후 회사명 클릭',
+    end: false,
+  },
+  {
+    screenName: '플렛폼 테넌트 유저그룹 수동 관리',
+    pageId: 'platform/tenant/management/usr-group/handmade',
+    screenId: 'NLP_BO_PMS_2001',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중 (api x) - 화면만',
+    end: false,
+  },
+  {
+    screenName: '플렛폼 테넌트 유저그룹 등록 상세',
+    pageId: 'platform/tenant/management/usr-group/handmade-detail',
+    screenId: 'NLP_BO_PMS_2002',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중 (api x) - 화면만',
     end: false,
   },
   {
