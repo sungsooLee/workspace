@@ -1,80 +1,53 @@
-import {
-  Button,
-  findNodesByKeys,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  ShuttleTreeToChips,
-  TreeNode,
-  useModal,
-} from '@learnway/ui';
-import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import { useEffect, useState } from 'react';
-import { useFetchPrograms } from '../../../../entities/program/service/program-manage.hook';
-import { cn } from '@learnway/shared';
-import { transformApiDataToApiTreeData } from '@features/platform/menu/service/menu.service';
+import { ShuttleGridToChips, ShuttleGridToChipsImperative } from '@learnway/ui';
+import { useEffect, useRef, useState } from 'react';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { t } from 'i18next';
 
 const UserGroupOccupationComponent = ({ menuScopeCode, selectedApiKeys }: any) => {
-  const { open: openModal, close } = useModal();
-  const [treeData, setTreeData] = useState([]);
-  const { data, isLoading } = useFetchPrograms(menuScopeCode);
+  const ref = useRef<ShuttleGridToChipsImperative>(null);
+  const [option, setOption] = useState<any>();
+  const [gridData, setGrideData] = useState<any[]>([]);
 
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [selectedItems, setSelectedItems] = useState<any[]>([]);
-  useEffect(() => {
-    if (data) {
-      const transformedData = transformApiDataToApiTreeData(data);
-      setTreeData(transformedData);
-
-      if (transformedData && transformedData.length > 0 && expandedKeys.length === 0) {
-        const firstLevelKeys = transformedData.map((node: any) => node.key);
-        setExpandedKeys(firstLevelKeys);
-      }
-      if (selectedApiKeys && selectedApiKeys.length > 0) {
-        console.log(selectedApiKeys);
-        const selectedNodes = findNodesByKeys(transformedData, selectedApiKeys);
-        setSelectedItems(selectedNodes);
-      }
-    }
-  }, [data, selectedApiKeys]);
 
   const handleSelectedItemsChange = (items: { key: string; fullPath: string }[]) => {
     setSelectedItems(items);
   };
 
+  const columnHelper = createColumnHelper();
+  const columns = [
+    columnHelper.accessor('tenantName', {
+      header: t('테넌트'),
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor('companyName', {
+      header: t('회사'),
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor('position', {
+      header: t('보직'),
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor('memberCount', {
+      header: t('대상자'),
+      cell: (info) => info.getValue(),
+    }),
+  ] as ColumnDef<any, unknown>[];
+
   return (
-    <ModalContainer>
-      <ModalTitle>유저 그룹 조회</ModalTitle>
-      <ModalBody>
-        <div className={styles.wrap}>
-          <div className={cn(styles.pop_contents, 'h-full')}>
-            <ShuttleTreeToChips
-              treeId="user-group-list-tree"
-              sourceTitle="유저그룹 - 조직"
-              targetTitle="선택 유저그룹 목록"
-              sourceData={treeData as TreeNode[]}
-              selectedItems={selectedItems}
-              onItemsChange={handleSelectedItemsChange}
-            />
-          </div>
-        </div>
-      </ModalBody>
-      <ModalFooter>
-        <Button variant={'gray'} size={'lg'} onClick={close}>
-          취소
-        </Button>
-        <Button
-          variant={'primary'}
-          size={'lg'}
-          onClick={() => {
-            close(selectedItems);
-          }}
-        >
-          적용
-        </Button>
-      </ModalFooter>
-    </ModalContainer>
+    <ShuttleGridToChips
+      ref={ref}
+      onSelectedChange={(data: any) => {
+        setOption(data);
+      }}
+      showNumberingColumn={false}
+      gridData={gridData}
+      columns={columns}
+      rowKey={'userId'}
+      leftTitle={t('유저그룹 - 직군')}
+      rightTitle={t('선택 유저그룹 목록')}
+    />
   );
 };
 
