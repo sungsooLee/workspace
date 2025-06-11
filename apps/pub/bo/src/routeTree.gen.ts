@@ -56,6 +56,7 @@ import { Route as LayoutPmsPopupWidgetManagementImport } from './pages/_layout/p
 import { Route as LayoutPmsPopupTranslationCompleteImport } from './pages/_layout/pms/popup-translation-complete'
 import { Route as LayoutPmsPopupLoginOptionImport } from './pages/_layout/pms/popup-login-option'
 import { Route as LayoutPmsPopChannelSearchImport } from './pages/_layout/pms/pop-channel-search'
+import { Route as LayoutPmsMenuTenantUserManagementImport } from './pages/_layout/pms/menu-tenant-user-management'
 import { Route as LayoutPmsMenuTenantPlatformManagementRegistrationImport } from './pages/_layout/pms/menu-tenant-platform-management-registration'
 import { Route as LayoutPmsMenuTenantPlatformManagementBasicInfomationImport } from './pages/_layout/pms/menu-tenant-platform-management-basic-infomation'
 import { Route as LayoutPmsMenuTenantPlatformManagementImport } from './pages/_layout/pms/menu-tenant-platform-management'
@@ -98,6 +99,8 @@ import { Route as LayoutLearningMediaDetailImport } from './pages/_layout/learni
 import { Route as LayoutLearningLearningSearchImport } from './pages/_layout/learning/learningSearch'
 import { Route as LayoutLearningLearningResourceSearchImport } from './pages/_layout/learning/learning-resource-search'
 import { Route as LayoutLearningFileUploadImport } from './pages/_layout/learning/file-upload'
+import { Route as LayoutLanguageLanguagesubjectsmanagementImport } from './pages/_layout/language/language_subjects_management'
+import { Route as LayoutLanguageLanguagehistorylistImport } from './pages/_layout/language/language_history_list'
 import { Route as LayoutContentsLayoutImport } from './pages/_layout/contents/layout'
 import { Route as LayoutCommonProfileMyinfoImport } from './pages/_layout/common/profile-myinfo'
 import { Route as LayoutCommonPopUserSearchCheckImport } from './pages/_layout/common/pop-user-search-check'
@@ -438,6 +441,13 @@ const LayoutPmsPopChannelSearchRoute = LayoutPmsPopChannelSearchImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutPmsMenuTenantUserManagementRoute =
+  LayoutPmsMenuTenantUserManagementImport.update({
+    id: '/pms/menu-tenant-user-management',
+    path: '/pms/menu-tenant-user-management',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
 const LayoutPmsMenuTenantPlatformManagementRegistrationRoute =
   LayoutPmsMenuTenantPlatformManagementRegistrationImport.update({
     id: '/pms/menu-tenant-platform-management-registration',
@@ -722,6 +732,20 @@ const LayoutLearningFileUploadRoute = LayoutLearningFileUploadImport.update({
   path: '/learning/file-upload',
   getParentRoute: () => LayoutRoute,
 } as any)
+
+const LayoutLanguageLanguagesubjectsmanagementRoute =
+  LayoutLanguageLanguagesubjectsmanagementImport.update({
+    id: '/language/language_subjects_management',
+    path: '/language/language_subjects_management',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutLanguageLanguagehistorylistRoute =
+  LayoutLanguageLanguagehistorylistImport.update({
+    id: '/language/language_history_list',
+    path: '/language/language_history_list',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 
 const LayoutContentsLayoutRoute = LayoutContentsLayoutImport.update({
   id: '/contents/layout',
@@ -1725,6 +1749,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutContentsLayoutImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/language/language_history_list': {
+      id: '/_layout/language/language_history_list'
+      path: '/language/language_history_list'
+      fullPath: '/language/language_history_list'
+      preLoaderRoute: typeof LayoutLanguageLanguagehistorylistImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/language/language_subjects_management': {
+      id: '/_layout/language/language_subjects_management'
+      path: '/language/language_subjects_management'
+      fullPath: '/language/language_subjects_management'
+      preLoaderRoute: typeof LayoutLanguageLanguagesubjectsmanagementImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/learning/file-upload': {
       id: '/_layout/learning/file-upload'
       path: '/learning/file-upload'
@@ -2019,6 +2057,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutPmsMenuTenantPlatformManagementRegistrationImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/pms/menu-tenant-user-management': {
+      id: '/_layout/pms/menu-tenant-user-management'
+      path: '/pms/menu-tenant-user-management'
+      fullPath: '/pms/menu-tenant-user-management'
+      preLoaderRoute: typeof LayoutPmsMenuTenantUserManagementImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/pms/pop-channel-search': {
       id: '/_layout/pms/pop-channel-search'
       path: '/pms/pop-channel-search'
@@ -2307,6 +2352,8 @@ interface LayoutRouteChildren {
   LayoutCommonPopUserSearchCheckRoute: typeof LayoutCommonPopUserSearchCheckRoute
   LayoutCommonProfileMyinfoRoute: typeof LayoutCommonProfileMyinfoRoute
   LayoutContentsLayoutRoute: typeof LayoutContentsLayoutRoute
+  LayoutLanguageLanguagehistorylistRoute: typeof LayoutLanguageLanguagehistorylistRoute
+  LayoutLanguageLanguagesubjectsmanagementRoute: typeof LayoutLanguageLanguagesubjectsmanagementRoute
   LayoutLearningFileUploadRoute: typeof LayoutLearningFileUploadRoute
   LayoutLearningLearningResourceSearchRoute: typeof LayoutLearningLearningResourceSearchRoute
   LayoutLearningLearningSearchRoute: typeof LayoutLearningLearningSearchRoute
@@ -2349,6 +2396,7 @@ interface LayoutRouteChildren {
   LayoutPmsMenuTenantPlatformManagementRoute: typeof LayoutPmsMenuTenantPlatformManagementRoute
   LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute: typeof LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute
   LayoutPmsMenuTenantPlatformManagementRegistrationRoute: typeof LayoutPmsMenuTenantPlatformManagementRegistrationRoute
+  LayoutPmsMenuTenantUserManagementRoute: typeof LayoutPmsMenuTenantUserManagementRoute
   LayoutPmsPopChannelSearchRoute: typeof LayoutPmsPopChannelSearchRoute
   LayoutPmsPopupLoginOptionRoute: typeof LayoutPmsPopupLoginOptionRoute
   LayoutPmsPopupTranslationCompleteRoute: typeof LayoutPmsPopupTranslationCompleteRoute
@@ -2381,6 +2429,10 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutCommonPopUserSearchCheckRoute: LayoutCommonPopUserSearchCheckRoute,
   LayoutCommonProfileMyinfoRoute: LayoutCommonProfileMyinfoRoute,
   LayoutContentsLayoutRoute: LayoutContentsLayoutRoute,
+  LayoutLanguageLanguagehistorylistRoute:
+    LayoutLanguageLanguagehistorylistRoute,
+  LayoutLanguageLanguagesubjectsmanagementRoute:
+    LayoutLanguageLanguagesubjectsmanagementRoute,
   LayoutLearningFileUploadRoute: LayoutLearningFileUploadRoute,
   LayoutLearningLearningResourceSearchRoute:
     LayoutLearningLearningResourceSearchRoute,
@@ -2442,6 +2494,8 @@ const LayoutRouteChildren: LayoutRouteChildren = {
     LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute,
   LayoutPmsMenuTenantPlatformManagementRegistrationRoute:
     LayoutPmsMenuTenantPlatformManagementRegistrationRoute,
+  LayoutPmsMenuTenantUserManagementRoute:
+    LayoutPmsMenuTenantUserManagementRoute,
   LayoutPmsPopChannelSearchRoute: LayoutPmsPopChannelSearchRoute,
   LayoutPmsPopupLoginOptionRoute: LayoutPmsPopupLoginOptionRoute,
   LayoutPmsPopupTranslationCompleteRoute:
@@ -2551,6 +2605,8 @@ export interface FileRoutesByFullPath {
   '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/common/profile-myinfo': typeof LayoutCommonProfileMyinfoRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
+  '/language/language_history_list': typeof LayoutLanguageLanguagehistorylistRoute
+  '/language/language_subjects_management': typeof LayoutLanguageLanguagesubjectsmanagementRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/learning/learning-resource-search': typeof LayoutLearningLearningResourceSearchRoute
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
@@ -2593,6 +2649,7 @@ export interface FileRoutesByFullPath {
   '/pms/menu-tenant-platform-management': typeof LayoutPmsMenuTenantPlatformManagementRoute
   '/pms/menu-tenant-platform-management-basic-infomation': typeof LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute
   '/pms/menu-tenant-platform-management-registration': typeof LayoutPmsMenuTenantPlatformManagementRegistrationRoute
+  '/pms/menu-tenant-user-management': typeof LayoutPmsMenuTenantUserManagementRoute
   '/pms/pop-channel-search': typeof LayoutPmsPopChannelSearchRoute
   '/pms/popup-login-option': typeof LayoutPmsPopupLoginOptionRoute
   '/pms/popup-translation-complete': typeof LayoutPmsPopupTranslationCompleteRoute
@@ -2699,6 +2756,8 @@ export interface FileRoutesByTo {
   '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/common/profile-myinfo': typeof LayoutCommonProfileMyinfoRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
+  '/language/language_history_list': typeof LayoutLanguageLanguagehistorylistRoute
+  '/language/language_subjects_management': typeof LayoutLanguageLanguagesubjectsmanagementRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/learning/learning-resource-search': typeof LayoutLearningLearningResourceSearchRoute
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
@@ -2741,6 +2800,7 @@ export interface FileRoutesByTo {
   '/pms/menu-tenant-platform-management': typeof LayoutPmsMenuTenantPlatformManagementRoute
   '/pms/menu-tenant-platform-management-basic-infomation': typeof LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute
   '/pms/menu-tenant-platform-management-registration': typeof LayoutPmsMenuTenantPlatformManagementRegistrationRoute
+  '/pms/menu-tenant-user-management': typeof LayoutPmsMenuTenantUserManagementRoute
   '/pms/pop-channel-search': typeof LayoutPmsPopChannelSearchRoute
   '/pms/popup-login-option': typeof LayoutPmsPopupLoginOptionRoute
   '/pms/popup-translation-complete': typeof LayoutPmsPopupTranslationCompleteRoute
@@ -2850,6 +2910,8 @@ export interface FileRoutesById {
   '/_layout/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/_layout/common/profile-myinfo': typeof LayoutCommonProfileMyinfoRoute
   '/_layout/contents/layout': typeof LayoutContentsLayoutRoute
+  '/_layout/language/language_history_list': typeof LayoutLanguageLanguagehistorylistRoute
+  '/_layout/language/language_subjects_management': typeof LayoutLanguageLanguagesubjectsmanagementRoute
   '/_layout/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/_layout/learning/learning-resource-search': typeof LayoutLearningLearningResourceSearchRoute
   '/_layout/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
@@ -2892,6 +2954,7 @@ export interface FileRoutesById {
   '/_layout/pms/menu-tenant-platform-management': typeof LayoutPmsMenuTenantPlatformManagementRoute
   '/_layout/pms/menu-tenant-platform-management-basic-infomation': typeof LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute
   '/_layout/pms/menu-tenant-platform-management-registration': typeof LayoutPmsMenuTenantPlatformManagementRegistrationRoute
+  '/_layout/pms/menu-tenant-user-management': typeof LayoutPmsMenuTenantUserManagementRoute
   '/_layout/pms/pop-channel-search': typeof LayoutPmsPopChannelSearchRoute
   '/_layout/pms/popup-login-option': typeof LayoutPmsPopupLoginOptionRoute
   '/_layout/pms/popup-translation-complete': typeof LayoutPmsPopupTranslationCompleteRoute
@@ -3000,6 +3063,8 @@ export interface FileRouteTypes {
     | '/common/pop-user-search-check'
     | '/common/profile-myinfo'
     | '/contents/layout'
+    | '/language/language_history_list'
+    | '/language/language_subjects_management'
     | '/learning/file-upload'
     | '/learning/learning-resource-search'
     | '/learning/learningSearch'
@@ -3042,6 +3107,7 @@ export interface FileRouteTypes {
     | '/pms/menu-tenant-platform-management'
     | '/pms/menu-tenant-platform-management-basic-infomation'
     | '/pms/menu-tenant-platform-management-registration'
+    | '/pms/menu-tenant-user-management'
     | '/pms/pop-channel-search'
     | '/pms/popup-login-option'
     | '/pms/popup-translation-complete'
@@ -3147,6 +3213,8 @@ export interface FileRouteTypes {
     | '/common/pop-user-search-check'
     | '/common/profile-myinfo'
     | '/contents/layout'
+    | '/language/language_history_list'
+    | '/language/language_subjects_management'
     | '/learning/file-upload'
     | '/learning/learning-resource-search'
     | '/learning/learningSearch'
@@ -3189,6 +3257,7 @@ export interface FileRouteTypes {
     | '/pms/menu-tenant-platform-management'
     | '/pms/menu-tenant-platform-management-basic-infomation'
     | '/pms/menu-tenant-platform-management-registration'
+    | '/pms/menu-tenant-user-management'
     | '/pms/pop-channel-search'
     | '/pms/popup-login-option'
     | '/pms/popup-translation-complete'
@@ -3296,6 +3365,8 @@ export interface FileRouteTypes {
     | '/_layout/common/pop-user-search-check'
     | '/_layout/common/profile-myinfo'
     | '/_layout/contents/layout'
+    | '/_layout/language/language_history_list'
+    | '/_layout/language/language_subjects_management'
     | '/_layout/learning/file-upload'
     | '/_layout/learning/learning-resource-search'
     | '/_layout/learning/learningSearch'
@@ -3338,6 +3409,7 @@ export interface FileRouteTypes {
     | '/_layout/pms/menu-tenant-platform-management'
     | '/_layout/pms/menu-tenant-platform-management-basic-infomation'
     | '/_layout/pms/menu-tenant-platform-management-registration'
+    | '/_layout/pms/menu-tenant-user-management'
     | '/_layout/pms/pop-channel-search'
     | '/_layout/pms/popup-login-option'
     | '/_layout/pms/popup-translation-complete'
@@ -3484,6 +3556,8 @@ export const routeTree = rootRoute
         "/_layout/common/pop-user-search-check",
         "/_layout/common/profile-myinfo",
         "/_layout/contents/layout",
+        "/_layout/language/language_history_list",
+        "/_layout/language/language_subjects_management",
         "/_layout/learning/file-upload",
         "/_layout/learning/learning-resource-search",
         "/_layout/learning/learningSearch",
@@ -3526,6 +3600,7 @@ export const routeTree = rootRoute
         "/_layout/pms/menu-tenant-platform-management",
         "/_layout/pms/menu-tenant-platform-management-basic-infomation",
         "/_layout/pms/menu-tenant-platform-management-registration",
+        "/_layout/pms/menu-tenant-user-management",
         "/_layout/pms/pop-channel-search",
         "/_layout/pms/popup-login-option",
         "/_layout/pms/popup-translation-complete",
@@ -3890,6 +3965,14 @@ export const routeTree = rootRoute
       "filePath": "_layout/contents/layout.tsx",
       "parent": "/_layout"
     },
+    "/_layout/language/language_history_list": {
+      "filePath": "_layout/language/language_history_list.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/language/language_subjects_management": {
+      "filePath": "_layout/language/language_subjects_management.tsx",
+      "parent": "/_layout"
+    },
     "/_layout/learning/file-upload": {
       "filePath": "_layout/learning/file-upload.tsx",
       "parent": "/_layout"
@@ -4056,6 +4139,10 @@ export const routeTree = rootRoute
     },
     "/_layout/pms/menu-tenant-platform-management-registration": {
       "filePath": "_layout/pms/menu-tenant-platform-management-registration.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/menu-tenant-user-management": {
+      "filePath": "_layout/pms/menu-tenant-user-management.tsx",
       "parent": "/_layout"
     },
     "/_layout/pms/pop-channel-search": {

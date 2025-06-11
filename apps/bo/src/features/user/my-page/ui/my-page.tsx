@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
-import { cn, formatDate } from '@learnway/shared';
+import { cn, formatDate, formatPhoneNumber } from '@learnway/shared';
 import { FormSubTitle } from '@shared/ui/form';
 import { Avatar } from '@learnway/ui';
 
@@ -32,6 +32,11 @@ export function MyPage() {
   const { data: authUser } = useFetchAuthUser();
   const { data: user } = useUserDetail();
 
+  const address = useMemo(() => {
+    if (!user?.company?.postNo || !user?.company?.basicAddress) return '';
+    return `(${user?.company?.postNo}) ${user?.company?.basicAddress}`;
+  }, [user]);
+
   console.log('authUser', authUser);
   console.log('user', user);
   return (
@@ -50,7 +55,7 @@ export function MyPage() {
         </div>
         <div className={styles.name_wrap}>
           <span className={styles.name}>{user?.name}</span>
-          <span className={styles.eng_name}>{'Hyundae KIM'}</span>
+          <span className={styles.eng_name}>{user?.engName}</span>
         </div>
         <ul className={styles.list}>
           <li>
@@ -67,7 +72,7 @@ export function MyPage() {
           </li>
           <li>
             <span className={styles.title}>{'성별'}</span>
-            <p className={styles.text}>{'남성'}</p>
+            <p className={styles.text}>{'남성/여성'}</p>
           </li>
         </ul>
       </div>
@@ -87,17 +92,15 @@ export function MyPage() {
             <tbody>
               <tr>
                 <th scope={'row'}>{'휴대폰번호'}</th>
-                {/* <td>{'+82 10-1234-1234'}</td> */}
-                <td>{user?.phoneNumber}</td>
+                <td>{formatPhoneNumber(user?.phoneNumber)}</td>
                 <th scope={'row'}>{'연락처(사무실)'}</th>
-                {/* <td>{'+82 2-1234-1234'}</td> */}
                 <td>{user?.companyTelephoneNumber}</td>
                 <th scope={'row'}>{'지역'}</th>
                 <td>{user?.workPlaceCode}</td>
               </tr>
               <tr>
                 <th scope={'row'}>{'주소'}</th>
-                <td colSpan={5}>{'(12345) 서울특별시 강남구 강남대로84길 13'}</td>
+                <td colSpan={5}>{address}</td>
               </tr>
             </tbody>
           </table>
@@ -117,27 +120,33 @@ export function MyPage() {
             <tbody>
               <tr>
                 <th scope={'row'}>{'회사'}</th>
-                {/* <td>{'현대'}</td> */}
-                <td>{user?.companyId}</td>
-                <th scope={'row'}>{'본부/사업부'}</th>
-                {/* <td>{'기업 전략실'}</td> */}
-                <td>{user?.deptId}</td>
-                <th scope={'row'}>{'부서'}</th>
-                <td>{'경영팀'}</td>
-              </tr>
-              <tr>
+                <td>{user?.company?.name}</td>
+                <th scope={'row'}>{'실'}</th>
+                <td>{user?.dept?.parent}</td>
                 <th scope={'row'}>{'소속'}</th>
-                <td>{'경영팀'}</td>
-                <th scope={'row'}>{'직책'}</th>
-                <td>{'팀장'}</td>
-                <th scope={'row'}>{'직위'}</th>
-                <td>{'과장'}</td>
+                <td>{user?.dept?.deptName}</td>
               </tr>
               <tr>
-                <th scope={'row'}>{'입사일자'}</th>
-                <td>{'2020-01-02'}</td>
-                <th scope={'row'}>{'재직상태'}</th>
-                <td colSpan={3}>{'재직'}</td>
+                <th scope={'row'}>{'보직'}</th>
+                {/* <td>{'경영팀'}</td> */}
+                <td>{''}</td>
+                <th scope={'row'}>{'호칭'}</th>
+                {/* <td>{'팀장'}</td> */}
+                <td>{''}</td>
+                <th scope={'row'}>{'직군'}</th>
+                {/* <td>{'과장'}</td> */}
+                <td>{''}</td>
+              </tr>
+              <tr>
+                <th scope={'row'}>{'입사일'}</th>
+                {/* <td>{'2020-01-02'}</td> */}
+                <td>{''}</td>
+                <th scope={'row'}>{'최근 승진일'}</th>
+                {/* <td colSpan={3}>{'재직'}</td> */}
+                <td>{''}</td>
+                <th scope={'row'}>{'재직 상태'}</th>
+                {/* <td colSpan={3}>{'재직'}</td> */}
+                <td>{''}</td>
               </tr>
             </tbody>
           </table>
@@ -156,11 +165,11 @@ export function MyPage() {
             </colgroup>
             <tbody>
               <tr>
-                <th scope={'row'}>{'업무 범위1'}</th>
+                <th scope={'row'}>{'직군/직무'}</th>
                 <td>{'영업 > 관리자'}</td>
-                <th scope={'row'}>{'업무 범위1'}</th>
+                <th scope={'row'}>{'직군/직무'}</th>
                 <td>{'영업 > 관리자'}</td>
-                <th scope={'row'}>{'업무 범위1'}</th>
+                <th scope={'row'}>{'직군/직무'}</th>
                 <td>{'영업 > 관리자'}</td>
               </tr>
             </tbody>

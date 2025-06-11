@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import { forwardRef, useMemo, useState } from 'react';
 import { NumericFormat, PatternFormat } from 'react-number-format';
 import { NumericFormatProps } from 'react-number-format/types/types';
 import { Button } from '../button/button';
@@ -7,12 +7,14 @@ import { cn } from '@learnway/shared';
 import { IcoDelete03, IcoSearch, IcoSearchWrite } from '@learnway/icons';
 
 import styles from './input.module.css';
+import { useTranslation } from 'react-i18next';
 
 export interface InputProps extends Omit<NumericFormatProps, 'type'> {
-  type?: 'text' | 'number' | 'mask' | 'password' | 'tel' | 'file';
+  type?: 'text' | 'number' | 'mask' | 'password' | 'tel' | 'file' | 'alphanumeric';
   id?: string;
   placeholder?: string;
-  unitText?: string;
+  prefixText?: string;
+  suffixText?: string;
   timerText?: string; // timer input 에서만 사용
   // onChange?: (value: any) => void;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -29,7 +31,7 @@ export interface InputProps extends Omit<NumericFormatProps, 'type'> {
   searchIconType?: 'modal' | 'search'; // 아이콘 타입 선택
   onEnterKeyDown?: () => void; // 엔터 키 입력 callback, 검색 아이콘 클릭 했을때 해당 callback 호출
   onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
-  //
+  label?: string;
 }
 
 const InputComponent = forwardRef<HTMLInputElement, InputProps>(
@@ -44,8 +46,9 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       className,
       value = '',
       onBlur,
-      placeholder = '값을 입력하세요.',
-      unitText,
+      placeholder,
+      prefixText,
+      suffixText,
       timerText,
       onChange,
       hideInputLength,
@@ -63,8 +66,68 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
     },
     ref,
   ) => {
+    const { t } = useTranslation();
+
+    const placeholderText = useMemo(() => {
+      if (placeholder) return t(placeholder);
+      if (props && props.label)
+        return `${t(props.label as any)} ${t('LABEL.form.input.placeholder')}`;
+      return t('LABEL.form.input.placeholder');
+    }, [placeholder, props?.label]);
+
     const [isFocused, setIsFocused] = useState(false);
 
+    // 영문/숫자만 허용하는 정규식
+    const alphanumericRegex = /^[a-zA-Z0-9]*$/;
+    ///
+    const handleAlphanumericChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      console.log(event);
+      const inputValue = event.target.value;
+
+      if (alphanumericRegex.test(inputValue)) {
+        handleInputChange(inputValue);
+      }
+    };
+
+    const handleAlphanumericKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      const allowedKeys = [
+        'Backspace',
+        'Delete',
+        'ArrowLeft',
+        'ArrowRight',
+        'ArrowUp',
+        'ArrowDown',
+        'Home',
+        'End',
+        'Tab',
+        'Enter',
+        'Escape',
+      ];
+
+      if (event.ctrlKey || event.metaKey) {
+        return;
+      }
+
+      if (!allowedKeys.includes(event.key) && !alphanumericRegex.test(event.key)) {
+        event.preventDefault();
+      }
+
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        onEnterKeyDown?.();
+      }
+
+      onKeyDown?.(event);
+    };
+
+    const handleAlphanumericPaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
+      const pastedText = event.clipboardData.getData('text');
+
+      if (!alphanumericRegex.test(pastedText)) {
+        event.preventDefault();
+      }
+    };
+    ///
     const handleInputChange = (value: any) => {
       const changeEvent = {
         target: {
@@ -96,21 +159,26 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       onChange?.(clearEvent);
     };
     return (
-      <div className={cn(styles.start, 'nlp--input')}>
+      <div
+        className={cn(
+          styles.start,
+          borderNone && styles.bd_none,
+          isFocused && styles.focused,
+          disabled && styles.disabled,
+          readOnly && styles.read_only,
+          error ? styles.error : '',
+          'nlp--input',
+        )}
+      >
         {type === 'number' ? (
           <NumericFormat
             {...props}
             getInputRef={ref}
             id={id}
-            className={cn(
-              styles.input,
-              className,
-              borderNone ? styles.bd_none : '',
-              error ? styles.error : '',
-            )}
+            className={cn(styles.input, className, error ? styles.error : '')}
             value={value}
             thousandSeparator={thousandSeparator}
-            placeholder={placeholder}
+            placeholder={placeholderText}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
             onValueChange={(values) => {
@@ -128,13 +196,35 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             value={value}
             format={format}
             mask={mask}
-            placeholder={placeholder}
+            placeholder={placeholderText}
             allowEmptyFormatting={allowEmptyFormatting}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
             onValueChange={(values) => {
               handleInputChange(values.value);
             }}
+            maxLength={maxLength}
+          />
+        ) : type === 'alphanumeric' ? (
+          <input
+            ref={ref}
+            id={id}
+            value={value || ''}
+            readOnly={readOnly}
+            disabled={disabled}
+            type="text"
+            placeholder={placeholder}
+            className={cn(
+              styles.input,
+              className,
+              borderNone ? styles.bd_none : '',
+              error ? styles.error : '',
+            )}
+            onKeyDown={handleAlphanumericKeyDown}
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
+            onChange={handleAlphanumericChange}
+            onPaste={handleAlphanumericPaste}
             maxLength={maxLength}
           />
         ) : (
@@ -145,13 +235,8 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             readOnly={readOnly}
             disabled={disabled}
             type={type}
-            placeholder={placeholder}
-            className={cn(
-              styles.input,
-              className,
-              borderNone ? styles.bd_none : '',
-              error ? styles.error : '',
-            )}
+            placeholder={placeholderText}
+            className={cn(styles.input, className)}
             onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => {
               if (event.key === 'Enter') {
                 event.preventDefault(); // Enter 키 기본 동작 방지
@@ -172,6 +257,8 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
 
         {/* 삭제 버튼 | 단위 | 입력글자수/최대입력가능글자수 */}
         <div className={cn(styles.button_wrap)}>
+          {/* prefixText */}
+          {prefixText && <div className={styles.unit}>{prefixText}</div>}
           {/* 삭제 버튼 */}
           {!readOnly && isFocused && !!String(value)?.length && (
             <Button
@@ -185,10 +272,10 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
           )}
           {/* 타이머 */}
           {timerText && <div className={styles.time}>{timerText}</div>}
-          {/* 단위 */}
-          {unitText && <div className={styles.unit}>{unitText}</div>}
+          {/* suffixText */}
+          {suffixText && <div className={styles.unit}>{suffixText}</div>}
           {/* 입력글자수/최대입력가능글자수 */}
-          {!hideInputLength && maxLength && type === 'text' && (
+          {!hideInputLength && maxLength && (type === 'text' || type === 'alphanumeric') && (
             <div
               className={styles.count}
             >{`${(value?.toString() || '').length} / ${maxLength}`}</div>

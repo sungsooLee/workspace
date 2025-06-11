@@ -40,9 +40,11 @@ export function ResultBySearchAccountPage({ route }: any) {
 
         <div className={styles.btn_txt}>
           {isEmpty(state?.email) ? (
-            <Link to="/search-account">{t('LABEL.common.searchAccount')}</Link>
+            <Link to="/search-account" state={{ tabKey: 'password' } as any}>
+              {t('LABEL.common.searchAccount')}
+            </Link>
           ) : (
-            <Link to="/search-account" search={{ tabKey: 'password' }}>
+            <Link to="/search-password" state={{ tabKey: 'password' } as any}>
               {t('LABEL.common.searchPassword')}
             </Link>
           )}

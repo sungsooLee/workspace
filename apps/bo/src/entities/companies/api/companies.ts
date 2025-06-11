@@ -1,5 +1,5 @@
 import { httpService } from '@learnway/shared';
-import { Company } from '../../../types';
+import { Company } from 'types';
 import { PMSApiPrefix } from '@learnway/config';
 import { PageableContent } from '@types';
 

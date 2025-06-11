@@ -11,6 +11,7 @@ import {
   Dropdown,
   Input,
   ShuttleGridToGrid,
+  Divider,
 } from '@learnway/ui';
 import { IcoRefresh02, IcoSearch } from '@learnway/icons';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
@@ -148,15 +149,14 @@ function RouteComponent() {
                 </div>
               </div>
             </div>
-            <div className="grid_wrap line">
-              <ShuttleGridToGrid
-                gridData={gridData}
-                columns={columns}
-                leftTitle={'유저 목록'}
-                rightTitle={'유저 선택'}
-                rowKey={'test'}
-              />
-            </div>
+            <Divider />
+            <ShuttleGridToGrid
+              gridData={gridData}
+              columns={columns}
+              leftTitle={'유저 목록'}
+              rightTitle={'유저 선택'}
+              rowKey={'test'}
+            />
           </div>
         </ModalBody>
         <ModalFooter>

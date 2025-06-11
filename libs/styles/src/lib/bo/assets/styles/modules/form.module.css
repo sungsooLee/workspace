@@ -123,7 +123,7 @@
 .input_box {
   @apply flex w-full items-center space-x-[8px];
   input {
-    @apply flex-auto !border-[var(--gray4)];
+    @apply flex-auto bg-transparent;
   }
   [class*='table'] {
     @apply mb-[4px];

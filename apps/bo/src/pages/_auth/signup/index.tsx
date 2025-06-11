@@ -9,6 +9,7 @@ import { Button, RadioCard, Stepper } from '@learnway/ui';
 import { adminItems, cpItems } from '@features/user/signup/ui/signup-select';
 import styles from '@features/user/signup/ui/signup-select.module.css';
 
+// 관리자 회원가입
 export const Route = createFileRoute('/_auth/signup/')({
   component: RouteComponent,
   ...pageRouteConfig({

@@ -1,7 +1,6 @@
 export * from './api';
 export * from './category';
 export * from './common-code';
-export * from './company';
 export * from './course';
 export * from './enum';
 export * from './label-meesage';
@@ -14,5 +13,4 @@ export * from './sequence';
 export * from './signup';
 export * from './tenant-category';
 export * from './tenant';
-export * from './user';
 export * from './widgets';

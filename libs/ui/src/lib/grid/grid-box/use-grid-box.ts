@@ -91,17 +91,16 @@ const getQueryState = (
   lastState?: GridBoxState,
   initState?: GridBoxState,
 ) => {
-  // 사용자가 직접 페이지를 변경하거나 정렬을 클릭했을 때
+  // 사용자가 페이지를 변경하거나 정렬을 클릭했을 때
   if (state) {
     return state;
   }
   // 재조회 (최초 조회 이후 조회 버튼 눌러서 실행...)
-  // size (한 페이지 조회 개수)는 직전 size 사용 (사용자 개수 변경 했을때 유지 하기위헤)
   if (lastState && initState) {
     return {
       page: initState.page ?? 0,
-      size: lastState.size ?? 0,
-      sort: initState.sort ?? [],
+      size: lastState.size ?? 0, // size (한 페이지 조회 개수)는 직전 size 사용 (사용자 개수 변경 했을때 유지 하기위헤)
+      sort: [], //initState.sort ?? [], // sort는 재조회시 초기화, 최초에만 initState 사용
     };
   }
   // 최초 조회시 사용

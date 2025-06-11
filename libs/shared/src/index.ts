@@ -23,6 +23,7 @@ export * from './lib/utils/grid-util';
 export * from './lib/utils/query';
 export * from './lib/utils/random-generator';
 export * from './lib/utils/tree';
+export * from './lib/utils/string-util';
 export * from './lib/zod/utils';
 export * from './lib/zod/validator';
 export * from './lib/zod/zod';

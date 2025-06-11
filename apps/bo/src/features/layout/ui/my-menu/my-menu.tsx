@@ -21,7 +21,6 @@ import {
 } from '@entities/menu';
 import { useRouter } from '@tanstack/react-router';
 
-// TODO 즐겨찾기 DND 처리
 const PopoverContent = () => {
   const { t } = useTranslation();
   const router = useRouter();
@@ -62,7 +61,7 @@ const PopoverContent = () => {
       id: menu.menuId,
       name:
         import.meta.env.VITE_LANGUAGE_DEV === 'true'
-          ? t(`${menu.menuCode}`)
+          ? t(`${menu.menuName}`)
           : t(`MENU.${menu.menuCode}`),
     }));
   }, [menuFavorites]);

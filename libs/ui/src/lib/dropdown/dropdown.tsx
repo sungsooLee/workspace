@@ -1,7 +1,7 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useEffect, useMemo, useState } from 'react';
 import Select, { ActionMeta, components, MultiValue, SingleValue } from 'react-select';
 import { useCreation } from 'ahooks';
-import { map } from 'lodash';
+import { difference, filter, find, map } from 'lodash';
 
 import { cn, getRandomId } from '@learnway/shared';
 import { IcoArrowDown, IcoDelete03 } from '@learnway/icons';
@@ -12,6 +12,7 @@ import { DropdownOption } from '../type';
 import styles from './dropdown.module.css';
 import { Button } from '../button/button';
 import { t } from 'i18next';
+import { ALL_OPTION } from '@learnway/hooks';
 
 export interface ReactSelectComponentProps {
   options: DropdownOption[];
@@ -27,6 +28,7 @@ export interface ReactSelectComponentProps {
   isMulti?: boolean;
   isSearchable?: boolean;
   isClearable?: boolean;
+  presetOptionLabel?: string;
   label?: string;
   hideLabel?: boolean;
   hideArrow?: boolean;
@@ -64,14 +66,16 @@ const CustomValueContainer = ({ children, ...props }: any) => {
     return <components.ValueContainer {...props}>{children}</components.ValueContainer>;
   }
 
+  const selectedAllOption = find(values, (_) => _.value === ALL_OPTION);
+
+  const valueText = selectedAllOption
+    ? selectedAllOption.label
+    : `${values[0].label} ${values.length > 1 ? `외 ${values.length - 1}` : ''}`;
+
   return (
     <components.ValueContainer {...props}>
       <div className={styles.container}>
-        {values.length > 0 && (
-          <span className={styles.result_text}>
-            {values[0].label} {values.length > 1 ? `외 ${values.length - 1}` : ''}
-          </span>
-        )}
+        {values.length > 0 && <span className={styles.result_text}>{valueText}</span>}
       </div>
       {/* 중요: 숨겨진 입력 필드 등을 유지하기 위한 원래 children 렌더링 */}
       {React.Children.map(children, (child) =>
@@ -213,7 +217,16 @@ const PrimitiveComponent = forwardRef<any, ReactSelectComponentProps>(
     };
 
     return (
-      <div className={cn(dropdownClass.trim(), styles.select_wrap, 'dropdown', className)}>
+      <div
+        className={cn(
+          dropdownClass.trim(),
+          styles.select_wrap,
+          isDisabled && styles.disabled,
+          isReadonly && styles.readonly,
+          'dropdown',
+          className,
+        )}
+      >
         <Select
           id={uuid}
           ref={ref}
@@ -261,6 +274,7 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
       onBlur,
       options = [],
       isMulti = false,
+      presetOptionLabel,
       disabled,
       readOnly,
       noOptionsMessage,
@@ -268,19 +282,26 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
     },
     ref,
   ) => {
-    // react-hook-form의 value와 react-select의 value 형식을 맞추기 위한 처리
-    const handleChange = (
-      newValue: SingleValue<DropdownOption> | MultiValue<DropdownOption>,
-      actionMeta: ActionMeta<DropdownOption>,
-    ) => {
-      if (isMulti) {
-        const multiValues = map(newValue as MultiValue<DropdownOption>, 'value'); // ? newValue.map((option) => option.value) : [];
-        onChange && onChange(multiValues);
-      } else {
-        const singleValue = newValue as SingleValue<DropdownOption>;
-        onChange && onChange(singleValue?.value ?? null);
+    const optionsWithPreset = useMemo(
+      () => [
+        ...(presetOptionLabel
+          ? [{ value: isMulti ? ALL_OPTION : '', label: presetOptionLabel }]
+          : []),
+        ...options,
+      ],
+      [options, isMulti, presetOptionLabel],
+    );
+
+    useEffect(() => {
+      if (
+        isMulti &&
+        presetOptionLabel &&
+        value.includes(ALL_OPTION) &&
+        value.length !== optionsWithPreset.length
+      ) {
+        onChange?.(map(optionsWithPreset, 'value'));
       }
-    };
+    }, [value]);
 
     // value를 react-select 형식으로 변환
     const selectedOptions = useCreation(() => {
@@ -289,7 +310,9 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
         return null;
       }
 
-      const safeOptions = Array.isArray(options) ? options : [options];
+      const safeOptions = Array.isArray(optionsWithPreset)
+        ? optionsWithPreset
+        : [optionsWithPreset];
 
       if (isMulti) {
         return (Array.isArray(value) ? value : [value])
@@ -306,7 +329,52 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
       }
 
       return selectedOption || null;
-    }, [value, options]);
+    }, [value, optionsWithPreset]);
+
+    // react-hook-form의 value와 react-select의 value 형식을 맞추기 위한 처리
+    const handleChange = (
+      newValue: SingleValue<DropdownOption> | MultiValue<DropdownOption>,
+      actionMeta: ActionMeta<DropdownOption>,
+    ) => {
+      if (!onChange) return;
+
+      if (isMulti) {
+        const multiValues = map(newValue as MultiValue<DropdownOption>, 'value'); // ? newValue.map((option) => option.value) : [];
+
+        if (!presetOptionLabel) return onChange(multiValues);
+
+        const addedOptions = difference(multiValues, value);
+        if (addedOptions.length) {
+          if (addedOptions.includes(ALL_OPTION)) {
+            // 전체가 추가된 경우
+            return onChange(map(optionsWithPreset, 'value'));
+          } else {
+            if (multiValues.length === options.length) {
+              // 다른 옵션을 추가했는데 모든 옵션이 선택된 된 경우
+              return onChange([ALL_OPTION, ...multiValues]);
+            } else {
+              return onChange(multiValues);
+            }
+          }
+        }
+
+        const removedOptions = difference(value, multiValues);
+        if (removedOptions.length) {
+          if (removedOptions.includes(ALL_OPTION)) {
+            // 전체가 해제된 경우
+            return onChange([]);
+          } else {
+            // 다른 옵션을 해제한 경우 전체옵션을 제거
+            return onChange(filter(multiValues, (_) => _ !== ALL_OPTION));
+          }
+        }
+
+        onChange(multiValues);
+      } else {
+        const singleValue = newValue as SingleValue<DropdownOption>;
+        onChange(singleValue?.value ?? null);
+      }
+    };
 
     return (
       <PrimitiveComponent
@@ -314,7 +382,7 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
         value={selectedOptions as DropdownOption | DropdownOption[]}
         onChange={handleChange}
         onBlur={onBlur}
-        options={Array.isArray(options) ? options : []}
+        options={Array.isArray(optionsWithPreset) ? optionsWithPreset : []}
         isMulti={isMulti}
         isReadonly={readOnly}
         isDisabled={disabled}

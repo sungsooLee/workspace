@@ -15,6 +15,7 @@ import { transformApiDataToApiTreeData, treeExpandAll } from '../service/menu.se
 import { ApiInfoModal } from './api-info-modal';
 import { useFetchPrograms } from '../../../../entities/program/service/program-manage.hook';
 import { cn } from '@learnway/shared';
+import { t } from 'i18next';
 
 const MenuApiMappingModalComponent = ({ menuScopeCode, selectedApiKeys }: any) => {
   const { open: openModal, close } = useModal();
@@ -58,14 +59,14 @@ const MenuApiMappingModalComponent = ({ menuScopeCode, selectedApiKeys }: any) =
 
   return (
     <ModalContainer>
-      <ModalTitle>API 추가</ModalTitle>
+      <ModalTitle>{t('LABEL.add', { type: 'API' })}</ModalTitle>
       <ModalBody>
         <div className={styles.wrap}>
           <div className={cn(styles.pop_contents, 'h-full')}>
             <ShuttleTreeToChips
               treeId="api-list-tree"
-              sourceTitle="API 목록"
-              targetTitle="API 선택"
+              sourceTitle={t('LABEL.list', { type: 'API' })}
+              targetTitle={t('LABEL.select', { type: 'API' })}
               sourceData={treeData as TreeNode[]}
               selectedItems={selectedItems}
               onItemsChange={handleSelectedItemsChange}
@@ -79,7 +80,7 @@ const MenuApiMappingModalComponent = ({ menuScopeCode, selectedApiKeys }: any) =
       </ModalBody>
       <ModalFooter>
         <Button variant={'gray'} size={'lg'} onClick={close}>
-          취소
+          {t('LABEL.common.cancel')}
         </Button>
         <Button
           variant={'primary'}
@@ -88,7 +89,7 @@ const MenuApiMappingModalComponent = ({ menuScopeCode, selectedApiKeys }: any) =
             close(selectedItems);
           }}
         >
-          적용
+          {t('LABEL.common.apply')}
         </Button>
       </ModalFooter>
     </ModalContainer>

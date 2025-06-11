@@ -668,6 +668,15 @@ export const guideData = [
     remarks: '화면 케이스 작업 완료', // 비고
   },
   {
+    screenName: 'PMS/테넌트관리_유저관리',
+    pageId: 'pms/menu-tenant-user-management',
+    screenId: 'NLP_BO_TMS_1111_07',
+    pageType: 'Page',
+    completionDate: '2025-06-09',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
     screenName: 'PMS/채널관리_개설신청관리',
     pageId: 'pms/menu-channel-open-management',
     screenId: 'NLP_BO_CHN_1401',
@@ -738,6 +747,24 @@ export const guideData = [
     completionDate: '2025-04-18',
     lastUpdateDate: '',
     remarks: '완료', // 비고
+  },
+  {
+    screenName: '어학/어학시험 과목 관리_등록신청 현황',
+    pageId: 'language/language_subjects_management',
+    screenId: 'NLP_BO_EDS_1624',
+    pageType: 'Page',
+    completionDate: '2025-06-10',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
+    screenName: '어학/어학성적/지원이력_목록',
+    pageId: 'language/language_history_list',
+    screenId: 'NLP_BO_EDS_1626',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
   },
   {
     screenName: 'CMS/학습유형선택',

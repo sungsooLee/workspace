@@ -22,9 +22,9 @@ function BreadcrumbsComponent() {
           </Link>
         </li>
         {activeMenuDepthMenu &&
-          activeMenuDepthMenu.map((menu: Menu) => {
+          activeMenuDepthMenu.map((menu: Menu, i: number) => {
             return (
-              <li key={menu.key} className={styles.link_item}>
+              <li key={`bread_${menu.key}_${i}`} className={styles.link_item}>
                 <Link
                   to={menu.path}
                   className={matchRoute({ to: menu?.path }) ? styles.active : ''}

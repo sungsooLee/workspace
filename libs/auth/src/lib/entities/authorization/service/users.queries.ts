@@ -1,6 +1,7 @@
 import { StringOrTemplateHeader } from '@tanstack/react-table';
 import { getQuerySkipToken } from '@learnway/shared';
-import UsersService, { UserRes } from '../api/users';
+import UsersService from '../api/users';
+import { User } from 'types';
 
 export const queryKeys = {
   all: ['user'] as const,
@@ -19,7 +20,7 @@ export const queryOptions = {
   // }),
   detail: () => ({
     queryKey: queryKeys.detail(),
-    queryFn: async (): Promise<UserRes | null> => {
+    queryFn: async (): Promise<User | null> => {
       const data = await UsersService.getUser();
       console.log('## get user detail :: ', data);
       if (!data) return null;

@@ -39,8 +39,13 @@ export * from './lib/date-picker/form-date-range-picker';
 export * from './lib/date-picker/time-picker';
 
 // editor
-export * from './lib/editor/hooks/editor.hook';
-export { default as Editor } from './lib/editor';
+// export * from './lib/editor/hooks/editor.hook';
+// export { default as Editor } from './lib/editor';
+export * from './lib/editor/editor';
+
+// elements
+export * from './lib/elements/count-text/count-text';
+export * from './lib/elements/divider/divider';
 
 // empty-text
 export * from './lib/empty-text/empty-text';
@@ -132,6 +137,9 @@ export * from './lib/thumbnail/thumbnail';
 export * from './lib/thumbnail/thumbnail-list';
 export * from './lib/thumbnail/type';
 
+// shuttle grid to chips
+export * from './lib/shuttle-grid-to-chips/shuttle-grid-to-chips';
+
 // shuttle grid to grid
 export * from './lib/shuttle-grid-to-grid/shuttle-grid-to-grid';
 
@@ -159,9 +167,6 @@ export * from './lib/textarea/textarea';
 export * from './lib/toast/toast';
 export * from './lib/toast/toast.hook';
 export * from './lib/toast/toast-wrapper';
-
-// text
-export * from './lib/text/count-text/count-text';
 
 // type
 export * from './lib/type';

@@ -9,6 +9,8 @@ import { TreeView } from './tree';
 import { IcoXclose, IcoNarrowRight } from '@learnway/icons';
 import { TreeBox } from './tree-box';
 import { Checkbox } from '../checkbox/checkbox';
+import { CountText } from '../elements/count-text/count-text';
+import { t } from 'i18next';
 
 type Props = Pick<TreeProps, 'onCustomNodeClick' | 'treeId' | 'searchKeyword'> & {
   sourceTitle?: string;
@@ -147,11 +149,12 @@ export const ShuttleTreeToChips = ({
                 type={'button'}
                 className={styles.btn_select}
               >
-                선택
+                {t('LABEL.button.select')}
               </Button>
             );
           }}
           shouldDisableClick={(node: TreeNode, level: number) => node.apiNodeType === 'FOLDER'}
+          showTotalCount={true}
           {...otherProps}
         />
       </div>
@@ -188,13 +191,13 @@ export const ShuttleTreeToChips = ({
               className={layoutStyles.btn_text}
               onClick={handleRemoveAllItem}
             >
-              {'전체삭제'}
+              {t('LABEL.button.deleteAll')}
             </Button>
           </div>
         </div>
         <div className={styles.data_wrap}>
           {actualSelectedItems.length === 0 ? (
-            <div className={styles.no_data}>{'선택한 데이터가 없습니다.'}</div>
+            <div className={styles.no_data}>{t('LABEL.noData', { type: t('LABEL.selected') })}</div>
           ) : (
             actualSelectedItems.map((item) => (
               <div key={item.key} className={styles.selected_item}>

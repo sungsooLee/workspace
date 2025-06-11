@@ -34,8 +34,14 @@ import { Input } from '@learnway/ui';
       <div className="group">
         <h3 className="guide_tit3">Size(40px)</h3>
         <div className="flex_box">
-          <div className="desc w-full">
-            <Input id="name" type="text" placeholder="입력하세요." value="" size="lg" />
+          <div className="desc w-[200px]">
+            <Input
+              id="name"
+              type="text"
+              placeholder="입력하세요."
+              value={'dsadshdbhdbhbhbh'}
+              maxLength={20}
+            />
           </div>
         </div>
       </div>

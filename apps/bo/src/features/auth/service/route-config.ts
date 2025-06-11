@@ -1,6 +1,7 @@
 /* eslint-disable no-useless-catch */
 import { createElement } from 'react';
-import { ErrorComponent, redirect } from '@tanstack/react-router';
+// import { ErrorComponent, redirect } from '@tanstack/react-router';
+import { redirect } from '@tanstack/react-router';
 import type { ParsedLocation } from '@tanstack/react-router';
 import { isEmpty } from 'lodash';
 import { ZodSchema } from 'zod';
@@ -12,6 +13,7 @@ import type { PageRouteConfig } from '@learnway/shared';
 import { buildJodObject, dateDiff } from '@learnway/shared';
 
 import type { PageMeta } from '../../../types';
+import { ErrorComponent } from '@features/layout';
 
 // Default Routing config
 const defaultPageRouteConfig: PageRouteConfig<PageMeta> = {
