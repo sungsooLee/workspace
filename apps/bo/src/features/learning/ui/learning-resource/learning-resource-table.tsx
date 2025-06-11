@@ -248,6 +248,7 @@ function LearningResourceTableComponent() {
               }
             />
             <span className="type_tooltip">
+              <Button variant="text" label={t('일괄설정')} />
               <Tooltip
                 side="bottom"
                 align="start"
@@ -255,7 +256,6 @@ function LearningResourceTableComponent() {
               >
                 <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
               </Tooltip>
-              <Button variant="text" label={t('일괄설정')} />
             </span>
             <Button
               label={t('엑셀다운로드')}

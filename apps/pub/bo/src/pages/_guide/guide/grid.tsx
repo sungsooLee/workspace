@@ -428,10 +428,10 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
               />
               {/* 퍼블수정 2025-06-10 버튼 케이스 추가 S */}
               <span className={'type_tooltip'}>
+                <Button label={'일괄설정'} variant={'text'} />
                 <Tooltip side={'bottom'} align={'start'} content={'tooltip content'}>
                   <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
                 </Tooltip>
-                <Button label={'일괄설정'} variant={'text'} />
               </span>
               {/* 퍼블수정 2025-06-10 버튼 케이스 추가 E */}
               <Button label={'복사'} icon={<IcoCopy width={16} height={16} stroke={'#131c30'} />} />
