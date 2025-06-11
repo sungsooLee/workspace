@@ -5,6 +5,10 @@ import {
   Button,
   ChipListModalSelectorFormField,
   ContentsRow,
+  EditDropdownCell,
+  EditInputCell,
+  EditSwitchCell,
+  GridFormField,
   Input,
   InputModalSelectorFormField,
   ListModalSelectorFormField,
@@ -22,6 +26,7 @@ import {
   ManagerListModal,
   TeacherListModal,
 } from '@features/learning/course';
+import { CellContext } from '@tanstack/react-table';
 
 export const Route = createFileRoute('/_unauth/operation_detail_test/')({
   component: RouteComponent,
@@ -81,6 +86,55 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider} name={'강의유형'} element={<LectureTypeSiteUrl />} />
           </ContentsRow>
+          {/* 그리드 */}
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name={'그리드'}
+              element={
+                <GridFormField
+                  gridProps={{
+                    multiple: true,
+                    showAdd: true,
+                    showRemove: true,
+                    showTotalCount: false,
+                    columns: [
+                      {
+                        header: 'text',
+                        accessorKey: 'text',
+                        size: 150,
+                        cell: (info: CellContext<any, string>) => (
+                          <EditInputCell info={info} input={{ type: 'text' }} />
+                        ),
+                      },
+                      {
+                        header: 'switch',
+                        accessorKey: 'switch',
+                        size: 150,
+                        cell: (info: CellContext<any, boolean>) => <EditSwitchCell info={info} />,
+                      },
+                      {
+                        header: 'dropdown',
+                        accessorKey: 'dropdown',
+                        size: 100,
+                        cell: (info: CellContext<any, string>) => (
+                          <EditDropdownCell
+                            info={info}
+                            dropdown={{
+                              options: [
+                                { value: `value1`, label: `label1` },
+                                { value: `value2`, label: `label2` },
+                              ],
+                            }}
+                          />
+                        ),
+                      },
+                    ],
+                  }}
+                />
+              }
+            />
+          </ContentsRow>
           {/* 과정명 */}
           <ContentsRow>
             <FormRow provider={provider} name={'과정명'} />
@@ -128,7 +182,14 @@ function RouteComponent() {
                     valueField: 'id',
                     wordwrap: true,
                   }}
-                  actionNode={<Button variant="text" size="sm" label={t('대상자')} onClick={() => openModal({content: <ManagerListModal />})} />}
+                  actionNode={
+                    <Button
+                      variant="text"
+                      size="sm"
+                      label={t('대상자')}
+                      onClick={() => openModal({ content: <ManagerListModal /> })}
+                    />
+                  }
                 />
               }
             />
@@ -224,6 +285,15 @@ const formConfig: DynamicFormConfig = {
       value: {},
       placeholder: '',
       description: '',
+    },
+    {
+      name: '그리드',
+      type: 'custom',
+      label: t('그리드'),
+      value: [
+        { text: 'text', dropdown: 'value1', id: '1' },
+        { text: 'text2', dropdown: 'value1', id: '2' },
+      ],
     },
     {
       name: '과정명',
