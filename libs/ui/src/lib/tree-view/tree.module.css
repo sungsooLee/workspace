@@ -121,11 +121,6 @@
     }
   }
 }
-div {
-  .tree_wrap {
-    @apply mt-[16px];
-  }
-}
 
 .no_data {
   @apply body_bo_2_r flex w-full items-center justify-center pt-[100px] text-[var(--gray6)];

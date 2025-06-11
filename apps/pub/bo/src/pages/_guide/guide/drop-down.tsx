@@ -65,6 +65,7 @@ function RouteComponent() {
         variant="default"
         isMulti={false}
         size={'sm'}
+        presetOptionLabel={'전체'}
       />`}
             </code>
           </pre>
@@ -81,6 +82,7 @@ function RouteComponent() {
                 variant="default"
                 isMulti={false}
                 size={'sm'}
+                presetOptionLabel={'전체'}
               />
             </div>
           </div>
