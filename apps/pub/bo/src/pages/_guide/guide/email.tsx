@@ -16,22 +16,59 @@ function RouteComponent() {
         <br />
         이미지는 한폴더에 포함해서 전달
       </div>
-
-      <div className="info mt-[10px]">미리보기는 FO 가이드에서 확인</div>
       <div className="group">
         <h3 className="guide_tit3">이메일인증 (회원가입)</h3>
         <div className="flex_box">
-          <div className="desc w-full">이메일인증 (회원가입)</div>
+          <div className="desc w-full">
+            <a href="/pb-bo/html/email/이메일인증.html" target="_blank">
+              이메일인증 (회원가입)
+            </a>
+          </div>
+        </div>
+
+        <h3 className="guide_tit3">회원가입 신청 승인</h3>
+        <div className="flex_box">
+          <div className="desc w-full">
+            <a href="/pb-bo/html/email/회원가입신청승인.html" target="_blank">
+              회원가입 신청 승인
+            </a>
+          </div>
+        </div>
+
+        <h3 className="guide_tit3">회원가입 신청 반려</h3>
+        <div className="flex_box">
+          <div className="desc w-full">
+            <a href="/pb-bo/html/email/회원가입신청반려.html" target="_blank">
+              회원가입 신청 반려
+            </a>
+          </div>
         </div>
 
         <h3 className="guide_tit3">승인완료</h3>
         <div className="flex_box">
-          <div className="desc w-full">승인완료</div>
+          <div className="desc w-full">
+            <a href="/pb-bo/html/email/승인완료.html" target="_blank">
+              승인완료
+            </a>
+          </div>
         </div>
 
         <h3 className="guide_tit3">이용약관 개정 안내</h3>
         <div className="flex_box">
-          <div className="desc w-full">이용약관 개정 안내</div>
+          <div className="desc w-full">
+            <a href="/pb-bo/html/email/이용약관개정안내.html" target="_blank">
+              이용약관 개정 안내
+            </a>
+          </div>
+        </div>
+
+        <h3 className="guide_tit3">교재 배송 주소 확인 안내</h3>
+        <div className="flex_box">
+          <div className="desc w-full">
+            <a href="/pb-bo/html/email/교재배송주소확인.html" target="_blank">
+              교재 배송 주소 확인 안내
+            </a>
+          </div>
         </div>
       </div>
     </div>
