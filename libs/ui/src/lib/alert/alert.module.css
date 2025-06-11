@@ -35,7 +35,7 @@
   }
 }
 .title {
-  @apply flex max-h-[80px] items-start justify-start pt-[8px] text-left text-[1.8rem] font-bold text-[var(--gray9)];
+  @apply flex max-h-[80px] items-start justify-start text-left text-[1.8rem] font-bold text-[var(--gray9)];
 }
 .description {
   @apply scrollbar block max-h-[160px] overflow-y-auto overflow-x-hidden pb-[20px] pt-[8px] text-left text-[1.4rem] font-normal text-[var(--gray7)];
