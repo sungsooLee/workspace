@@ -27,10 +27,10 @@ function LearningResourceTableComponent() {
         {
           name: 'tenantUuid',
           type: 'dropdown',
-          label: t('LABEL.content.learning-resource.tenantName'),
+          label: t('LABEL.form.label.tenant'),
           value: '',
           format: 'number',
-          presetOptionLabel: t('선택'),
+          presetOptionLabel: t('LABEL.form.label.select'),
           optionsConfig: {
             codeGroup: CODE_GROUP['manual.tenant.tenantId'],
           },
@@ -38,9 +38,9 @@ function LearningResourceTableComponent() {
         {
           name: 'channelUuid',
           type: 'dropdown',
-          label: t('LABEL.content.learning-resource.channelName'),
+          label: t('LABEL.form.label.channel'),
           value: '',
-          presetOptionLabel: t('선택'),
+          presetOptionLabel: t('LABEL.form.label.select'),
           optionsConfig: {
             options: [
               { value: 'channelA', label: t('채널A') },
@@ -55,11 +55,11 @@ function LearningResourceTableComponent() {
         {
           name: 'contentTypes',
           type: 'dropdown',
-          label: t('LABEL.content.learning-resource.contentType'),
+          label: t('LABEL.form.label.contentType'),
           value: [ALL_OPTION],
           isMulti: true,
           variant: 'text',
-          presetOptionLabel: t('전체'),
+          presetOptionLabel: t('LABEL.form.label.all'),
           optionsConfig: {
             codeGroup: CODE_GROUP['cms.content.ContentType'],
           },
@@ -67,7 +67,7 @@ function LearningResourceTableComponent() {
         {
           name: 'contentName',
           type: 'text',
-          label: t('학습자원명'),
+          label: t('LABEL.form.label.contentName'),
           value: '',
         },
       ],
@@ -75,9 +75,9 @@ function LearningResourceTableComponent() {
         {
           name: 'isVendored',
           type: 'dropdown',
-          label: t('외주여부'),
+          label: t('LABEL.form.label.isVendored'),
           value: '',
-          presetOptionLabel: t('전체'),
+          presetOptionLabel: t('LABEL.form.label.all'),
           optionsConfig: {
             options: [
               { value: 'true', label: 'Y' },
@@ -88,9 +88,9 @@ function LearningResourceTableComponent() {
         {
           name: 'useEnabledType',
           type: 'dropdown',
-          label: t('LABEL.content.learning-resource.useEnabledType'),
+          label: t('LABEL.form.label.useEnabledType'),
           value: '',
-          presetOptionLabel: t('전체'),
+          presetOptionLabel: t('LABEL.form.label.all'),
           optionsConfig: {
             codeGroup: CODE_GROUP['cms.content.ContentUseEnabledType'],
           },
@@ -98,9 +98,9 @@ function LearningResourceTableComponent() {
         {
           name: 'isCourseUsed',
           type: 'dropdown',
-          label: t('LABEL.content.learning-resource.isCourseUsed'),
+          label: t('LABEL.form.label.isCourseUsed'),
           value: '',
-          presetOptionLabel: t('전체'),
+          presetOptionLabel: t('LABEL.form.label.all'),
           optionsConfig: {
             options: [
               { value: 'true', label: 'Y' },
@@ -111,7 +111,7 @@ function LearningResourceTableComponent() {
         {
           name: 'coordinatorName',
           type: 'text',
-          label: t('LABEL.content.learning-resource.coordinatorName'),
+          label: t('LABEL.form.label.coordinator'),
           value: '',
         },
       ],
@@ -119,9 +119,9 @@ function LearningResourceTableComponent() {
         {
           name: 'langCountryCode',
           type: 'dropdown',
-          label: t('LABEL.content.learning-resource.langCountryCode'),
+          label: t('LABEL.form.label.langCountryCode'),
           value: '',
-          presetOptionLabel: t('선택'),
+          presetOptionLabel: t('LABEL.form.label.select'),
           optionsConfig: {
             codeGroup: CODE_GROUP['pms.multilingual.LangCountryCode'],
           },
@@ -129,7 +129,7 @@ function LearningResourceTableComponent() {
         {
           name: 'createdBy',
           type: 'text',
-          label: t('LABEL.content.learning-resource.createdBy'),
+          label: t('LABEL.form.label.createdBy'),
           value: '',
         },
       ],
@@ -152,13 +152,13 @@ function LearningResourceTableComponent() {
       {
         size: 79,
         name: 'contentType',
-        label: t('LABEL.content.learning-resource.contentType'),
+        label: t('LABEL.grid.column.contentType'),
         render: (_: any) => t(`cms.content.ContentType.${_.getValue()}`),
       },
       {
         size: 338,
         name: 'contentName',
-        label: t('LABEL.content.learning-resource.contentName'),
+        label: t('LABEL.grid.column.contentName'),
         meta: {
           size: 'auto',
         },
@@ -166,7 +166,7 @@ function LearningResourceTableComponent() {
       {
         size: 127,
         name: 'tenantName',
-        label: t('LABEL.content.learning-resource.tenantName'),
+        label: t('LABEL.grid.column.tenant'),
         meta: {
           size: 'auto',
         },
@@ -174,7 +174,7 @@ function LearningResourceTableComponent() {
       {
         size: 153,
         name: 'channelName',
-        label: t('LABEL.content.learning-resource.channelName'),
+        label: t('LABEL.grid.column.channel'),
         meta: {
           size: 'auto',
         },
@@ -182,12 +182,12 @@ function LearningResourceTableComponent() {
       {
         size: 104,
         name: 'coordinatorName',
-        label: t('LABEL.content.learning-resource.coordinatorName'),
+        label: t('LABEL.grid.column.coordinator'),
       },
       {
         size: 125,
         name: 'contentAddInfo',
-        label: t('LABEL.content.learning-resource.detailInfo'),
+        label: t('LABEL.grid.column.detailInfo'),
         render: (_: any) => {
           if (_.row.original.contentAddInfoType !== 'VIDEO_ADD_INFO')
             // enum code 사용하도록 변경해야 함
@@ -204,29 +204,29 @@ function LearningResourceTableComponent() {
       {
         size: 137,
         name: 'util',
-        label: t('LABEL.content.learning-resource.util'),
-        render: () => '미리보기',
+        label: t('LABEL.grid.column.util'),
+        render: () => t('LABEL.form.label.preview'),
       },
       {
         size: 95,
         name: 'contentUseEnabledType',
-        label: t('LABEL.content.learning-resource.useEnabledType'),
+        label: t('LABEL.grid.column.useEnabledType'),
         render: (_: any) => t(`cms.content.ContentUseEnabledType.${_.getValue()}`),
       },
       {
         size: 83,
         name: 'langCountryCode',
-        label: t('LABEL.content.learning-resource.localization'),
+        label: t('LABEL.grid.column.localization'),
         render: (_: any) => t(`pms.multilingual.LangCountryCode.${_.getValue()}`),
       },
       {
         size: 79,
         name: 'updatedInfo',
-        label: t('LABEL.content.learning-resource.updatedInfo'),
+        label: t('LABEL.grid.column.updatedInfo'),
         render: () => (
           <Button
             className="link"
-            label={t('보기')}
+            label={t('LABEL.form.label.look')}
             onClick={(e) => {
               e.stopPropagation();
               openModal({ width: 'sm', content: <ModifierInfoModal /> }); //lastModifierBy로 받아온 user uuid를 props로 넘겨야 함
@@ -257,7 +257,7 @@ function LearningResourceTableComponent() {
         customButtonNode={
           <>
             <Button
-              label={t('프로그램/가이드 다운로드')}
+              label={t('LABEL.grid.header.guideDownload')}
               icon={<IcoDownload width={16} height={16} stroke="#4C515E" />}
               onClick={() =>
                 openModal({
@@ -267,20 +267,23 @@ function LearningResourceTableComponent() {
               }
             />
             <span className="type_tooltip">
-              <Button variant="text" label={t('일괄설정')} />
+              <Button variant="text" label={t('LABEL.grid.header.batchModify')} />
               <Tooltip
                 side="bottom"
                 align="start"
-                content={<pre>{t('LABEL.message.learningResource.batchModifyTooltip')}</pre>}
+                content={<pre>{t('LABEL.grid.tooltip.batchModify')}</pre>}
               >
                 <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
               </Tooltip>
             </span>
             <Button
-              label={t('엑셀다운로드')}
+              label={t('LABEL.grid.header.excelDownload')}
               icon={<IcoDownload width={16} height={16} stroke="#4C515E" />}
             />
-            <Button label={t('복사')} icon={<IcoCopy width={16} height={16} stroke="#4C515E" />} />
+            <Button
+              label={t('LABEL.grid.header.copy')}
+              icon={<IcoCopy width={16} height={16} stroke="#4C515E" />}
+            />
           </>
         }
         onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
