@@ -434,4 +434,10 @@ export const guide = [
     pageType: 'Page',
     memo: '영상 플레이어', // 비고
   },
+  {
+    screenName: 'SearchBox 데모',
+    pageId: 'search-box-demo',
+    pageType: 'Page',
+    memo: 'SearchBox 데모', // 비고
+  },
 ];

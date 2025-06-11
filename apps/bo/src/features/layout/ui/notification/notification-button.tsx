@@ -8,6 +8,7 @@ import { NotificationList } from './notification-list';
 
 import styles from './notification-button.module.css';
 import { useNotifications, useNotificationsActionForAll } from '@entities/notification';
+import { t } from 'i18next';
 
 const PopoverContent = () => {
   const { notifications } = useNotifications();
@@ -24,8 +25,8 @@ const PopoverContent = () => {
   const handleDeleteAll = async () => {
     await openAlert({
       isConfirm: true,
-      title: '알림을 모두 삭제하시겠습니까?',
-      content: '알림을 삭제한 후에는 알림을 조회할 수 없습니다.',
+      title: t('LABEL.confirm.notificationDelete.title'),
+      content: t('LABEL.confirm.notificationDelete.message'),
       onClose: (isConfirm) => {
         isConfirm && deleteAll();
       },
@@ -37,13 +38,13 @@ const PopoverContent = () => {
       <div className={styles.alarm_content}>
         {/* alarm_header */}
         <div className={styles.alarm_header}>
-          <strong className={styles.tit}>{'알림'}</strong>
+          <strong className={styles.tit}>{t('LABEL.common.notification')}</strong>
           <div className={styles.btn_wrap}>
             <Button className={styles.btn} onClick={handleReadAll} disabled={readAllDisabled}>
-              전체읽음
+              {t('LABEL.common.readAll')}
             </Button>
             <Button className={styles.btn} onClick={handleDeleteAll} disabled={!notifications}>
-              전체삭제
+              {t('LABEL.common.deleteAll')}
             </Button>
           </div>
         </div>

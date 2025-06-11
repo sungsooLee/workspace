@@ -57,6 +57,7 @@ export * from './lib/grid/components/edit-check-cell';
 export * from './lib/grid/components/edit-dropdown-cell';
 export * from './lib/grid/components/edit-input-cell';
 export * from './lib/grid/components/edit-radio-cell';
+export * from './lib/grid/components/edit-switch-cell';
 export * from './lib/grid/components/edit-textarea-cell';
 export * from './lib/grid/configs/column-factory';
 export * from './lib/grid/grid-box/table-box';
@@ -86,6 +87,7 @@ export * from './lib/form-field/list-modal-selector-form-field/list-modal-select
 export * from './lib/form-field/textarea-form-field/textarea-form-field';
 export * from './lib/form-field/radio-group-form-field/radio-group-form-field';
 export * from './lib/form-field/radio-group-form-field/radio-group-form-field.module.css';
+export * from './lib/form-field/grid-form-field/grid-form-field';
 
 // modal
 export * from './lib/modal/modal';

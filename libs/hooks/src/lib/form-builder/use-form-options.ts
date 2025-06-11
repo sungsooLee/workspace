@@ -38,7 +38,7 @@ const useFormOptionsHook = (
     if (options) {
       setCurrentOptions(options);
     }
-  }, [options]);
+  }, [options?.length]);
   return currentOptions;
 };
 

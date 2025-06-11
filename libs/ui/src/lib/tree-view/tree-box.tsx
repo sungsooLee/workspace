@@ -37,6 +37,7 @@ const TreeBoxComponent = <T extends object>(
     sourceTreeId,
     maxDepth,
     isSelectableNode,
+    customDropValidator,
     ...props
   }: any,
   // ref: React.Ref
@@ -181,6 +182,7 @@ const TreeBoxComponent = <T extends object>(
             sourceTreeId={sourceTreeId}
             maxDepth={maxDepth}
             isSelectableNode={isSelectableNode}
+            customDropValidator={customDropValidator}
             // {...props}
           />
         </TreeContainer>

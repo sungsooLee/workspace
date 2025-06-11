@@ -126,6 +126,7 @@ const TreeNodeComponent = ({
   selectedItems,
   sourceTreeId,
   maxDepth,
+  customDropValidator,
 }: TreeNodeComponentProps) => {
   const enhanceNode = node as EnhancedTreeNode;
   const [dropPosition, setDropPosition] = useState<NodeMovePositionType | null>(null);
@@ -144,7 +145,6 @@ const TreeNodeComponent = ({
   const isSourceTree = sourceTreeId ? treeId === sourceTreeId : false;
   const isDragDisabled = isTreeToTreeMode && isNodeSelected && isSourceTree;
   const shouldShowSelection = isTreeToTreeMode && isNodeSelected && isSourceTree;
-
   // 드롭 위치가 유효한지 확인
   const isValidDropPosition = useCallback(() => {
     if (!draggedNode || !dropPosition) return true;
@@ -199,9 +199,21 @@ const TreeNodeComponent = ({
         return false;
       }
     }
+    if (customDropValidator) {
+      const isCustomValid = customDropValidator({
+        sourceNode: draggedNode,
+        targetNode: enhanceNode,
+        dropPosition,
+        level,
+      });
+
+      if (!isCustomValid) {
+        return false;
+      }
+    }
 
     return true;
-  }, [dropPosition, draggedNode, level, treeType, enhanceNode]);
+  }, [dropPosition, draggedNode, level, treeType, enhanceNode, customDropValidator]);
 
   // 드롭 위치 표시기 렌더링
   const renderDropIndicator = () => {
@@ -629,6 +641,7 @@ const TreeNodeComponent = ({
                 selectedItems={selectedItems}
                 sourceTreeId={sourceTreeId}
                 maxDepth={maxDepth}
+                customDropValidator={customDropValidator}
               />
             ))}
         </div>
@@ -657,11 +670,13 @@ const TreeView = ({
   sourceTreeId,
   maxDepth,
   isSelectableNode,
+  customDropValidator,
 }: TreeProps) => {
   // 내부 상태 관리
   const [initialData, setInitialData] = useState<EnhancedTreeNode[]>(
     JSON.parse(JSON.stringify(data)),
   );
+
   const [treeData, setTreeData] = useState<EnhancedTreeNode[]>(JSON.parse(JSON.stringify(data)));
   const [draggedNode, setDraggedNode] = useState<TreeNode | null>(null);
   const [internalSelectedNode, setInternalSelectedNode] = useState<TreeNode | null>(null);
@@ -1095,6 +1110,7 @@ const TreeView = ({
               selectedItems={selectedItems}
               sourceTreeId={sourceTreeId}
               maxDepth={maxDepth}
+              customDropValidator={customDropValidator}
             />
           ))
         ) : (
