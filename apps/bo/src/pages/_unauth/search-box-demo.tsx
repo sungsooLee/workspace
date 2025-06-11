@@ -118,7 +118,7 @@ function RouteComponent() {
           type: 'dropdown',
           label: '드롭다운 싱글',
           value: '',
-          presetOptionalLabel: '전체',
+          presetOptionLabel: '전체',
           optionsConfig: {
             options: [
               { value: 'true', label: '사용' },
