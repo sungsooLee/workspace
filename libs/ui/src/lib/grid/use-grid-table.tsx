@@ -206,9 +206,10 @@ export function useGridTable<T extends object>(
         <Checkbox
           checked={row.getIsSelected()}
           disabled={row.getIsGrouped()}
-          onCheckedChange={() => {
+          onCheckedChange={(checked) => {
             if (!row.getIsGrouped()) {
-              row.getToggleSelectedHandler();
+              row.toggleSelected(!!checked);
+              // row.getToggleSelectedHandler();
             }
           }}
         />

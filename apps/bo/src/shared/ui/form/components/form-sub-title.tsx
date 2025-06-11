@@ -35,6 +35,7 @@ const FormSubTitleComponent = ({
         styles.title_wrap,
         'title_wrap',
         lineType && styles[lineType],
+        size && styles[size],
         className,
       )}
     >

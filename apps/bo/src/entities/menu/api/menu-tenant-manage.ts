@@ -82,6 +82,7 @@ function createTenantMenuCreateByAny(data: any) {
     parentMenuId: data.parentMenuId,
     menuName: data.menuName,
     menuDesc: data.menuDesc,
+    menuUrlParam: data.menuUrlParam,
   };
 }
 

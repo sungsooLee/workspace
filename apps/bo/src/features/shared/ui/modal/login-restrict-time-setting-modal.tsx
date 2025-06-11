@@ -18,48 +18,80 @@ import {
   TimePicker,
   DatePicker,
 } from '@learnway/ui';
-import { DateRangePickerFormField } from '@features/learning/ui/resource/date-range-picker-form-field';
-import { useDynamicForm, DynamicFormConfig, CODE_GROUP } from '@learnway/hooks';
+import { DateRangeFormField } from '@shared/ui/search-box';
+import { FormDisplay } from '@features/form/ui/form-display';
+import { useDynamicForm, DynamicFormConfig, useCodeStore, CODE_GROUP } from '@learnway/hooks';
 import { FormRow } from '@shared/ui';
 import { formUtils } from '@entities/form-utils';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import dayjs from 'dayjs';
 
 const LoginRestrictTimeSettingModalComponent: FC<any> = () => {
   const { close } = useModal();
+  const { getCode } = useCodeStore();
 
   const { provider, control, onSubmit } = useDynamicForm(formConfig);
-  const { config: gConfig, gridFetch, data: gridData } = useGridBox(gridConfig);
 
   const watchedRestrictionType = useWatch({
     control: control,
     name: ['loginRestrictionType'],
   });
 
+  const watchedRestrictionSettingType = useWatch({
+    control: control,
+    name: ['loginRestrictionSettingType'],
+  });
+
+  const [dayOfWeeksOptions, setDayOfWeeksOptions] = useState<any[]>([]);
+
   const [timeRestriction, setTimeRestriction] = useState<any[]>([]);
   const [restrictionType, setRestrictionType] = useState('');
+  const [restrictionSettingType, setRestrictionSettingType] = useState('');
   const [settingTypeDisabled, setSettingTypeDisabled] = useState(false);
+  const [timeLimitTableAreaDisabled, setTimeLimitTableAreaDisabled] = useState(false);
 
   const handleOnSubmit = (node: any) => {
     close(node);
   };
 
+  const initOptionConfig = async () => {
+    const options: any[] = await getCode(CODE_GROUP['cmmon.DayOfWeekType']);
+    setDayOfWeeksOptions(options);
+  };
+
+  useEffect(() => {
+    initOptionConfig();
+  }, []);
+
   useEffect(() => {
     const selectRestrictionType: string = watchedRestrictionType[0];
+    const selectRestrictionSettingType: string = watchedRestrictionSettingType[0];
+    let isChanged = false;
     if (selectRestrictionType !== restrictionType) {
       setRestrictionType(selectRestrictionType);
       setSettingTypeDisabled(selectRestrictionType === 'NONE');
+      isChanged = true;
     }
-  }, [watchedRestrictionType]);
+    if (selectRestrictionSettingType !== restrictionSettingType) {
+      setRestrictionSettingType(selectRestrictionSettingType);
+      isChanged = true;
+    }
+    if (isChanged)
+      setTimeLimitTableAreaDisabled(
+        selectRestrictionType === 'NONE' || selectRestrictionSettingType === 'HR_INFO_SETTING',
+      );
+  }, [watchedRestrictionType, watchedRestrictionSettingType]);
 
   const handleAddRowClick = () => {
+    // TODO. 공통 컴포넌트 필요
     const row: any = {
       dayOfTheWeek: (
         <Dropdown
           className={dynamicFormStyles.short}
-          options={optionsDayOfTheWeek}
+          options={dayOfWeeksOptions.map((option) => ({ ...option, label: t(option.label || '') }))}
           //onChange={handleBaseLocalChange}
         />
       ),
@@ -90,7 +122,7 @@ const LoginRestrictTimeSettingModalComponent: FC<any> = () => {
             <FormRow
               provider={provider}
               name={'restrictionDate'}
-              element={<DateRangePickerFormField />}
+              element={<DateRangeFormField />}
             />
           </ContentsRow>
           <ContentsRow>
@@ -100,18 +132,20 @@ const LoginRestrictTimeSettingModalComponent: FC<any> = () => {
               element={<RadioGroupFormField disabled={settingTypeDisabled} />}
             />
           </ContentsRow>
-          <TableBox
-            config={gConfig}
-            columns={columns}
-            data={timeRestriction}
-            tableMode={true}
-            multiple
-            title={t('요일 및 시간 제한 설정')}
-            showAdd
-            showRemove
-            onAddClick={handleAddRowClick}
-            showTotalCount={false}
-          />
+          <div style={{ display: timeLimitTableAreaDisabled ? 'none' : 'block' }}>
+            <TableBox
+              columns={columns}
+              data={timeRestriction}
+              tableMode={true}
+              multiple
+              title={t('요일 및 시간 제한 설정')}
+              showAdd
+              showRemove={timeRestriction.length > 0}
+              onAddClick={handleAddRowClick}
+              showTotalCount={false}
+              visibleRowCount={3}
+            />
+          </div>
         </ModalBody>
         <ModalFooter>
           <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={() => close()} />
@@ -130,7 +164,7 @@ const formConfig: DynamicFormConfig = {
       name: 'loginRestrictionType',
       type: 'radio-group',
       label: t('로그인 제한 구분'),
-      value: '',
+      value: 'NONE',
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.LoginRestrictionType'],
       },
@@ -148,17 +182,18 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'restrictionDate',
       label: t('기간 선택'),
-      type: 'custom',
+      type: 'date-range',
+      format: 'object',
       value: {
-        from: undefined,
-        to: undefined,
+        from: formUtils.nowDate(),
+        to: formUtils.nowDate({ unit: 'year', offset: 1 }),
       },
     },
     {
       name: 'loginRestrictionSettingType',
       type: 'radio-group',
       label: t('로그인 제한 설정 방식'),
-      value: 'LOGIN_RESTRICTION_SETTING_TYPE_A',
+      value: 'TIME_SETTING',
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.LoginRestrictionSettingType'],
       },
@@ -169,33 +204,33 @@ const formConfig: DynamicFormConfig = {
   ],
   validator: {
     loginRestrictionName: true,
-    restrictionDate: true,
+    restrictionDate: {
+      required: true,
+      conditions: [
+        {
+          fn: (values) => !values.restrictionDate?.from,
+          message: t('시작 및 종료 날짜를 선택하세요'),
+        },
+        {
+          fn: (values) => !values.restrictionDate?.from,
+          message: t('시작 날짜를 선택하세요'),
+        },
+        {
+          fn: (values) => dayjs(values.restrictionDate?.from).isBefore(formUtils.nowDate(), 'day'),
+          message: t('시작 날짜는 오늘 이후로 선택하세요.'),
+        },
+        {
+          fn: (values) => !values.restrictionDate?.to,
+          message: t('종료 날짜를 선택하세요.'),
+        },
+        {
+          fn: (values) =>
+            dayjs(values.restrictionDate?.to).isBefore(dayjs(values.restrictionDate?.from), 'day'),
+          message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.'),
+        },
+      ],
+    },
   },
-};
-
-const optionsDayOfTheWeek = [
-  { label: t('월요일'), value: 'MON' },
-  { label: t('화요일'), value: 'TUE' },
-  { label: t('수요일'), value: 'WEB' },
-  { label: t('목요일'), value: 'THU' },
-  { label: t('금요일'), value: 'FRI' },
-  { label: t('토요일'), value: 'SAT' },
-  { label: t('일요일'), value: 'SUN' },
-];
-
-const gridConfig: useGridBoxConfig = {
-  query: '',
-  columns: [],
-  data: [],
-
-  //   pagination: {
-  //     pageSize: 10,
-  //     pageIndex: 0,
-  //     totalRows: 0,
-  //   },
-  //   excel: {
-  //     upload: '/upload',
-  //   },
 };
 
 const columnHelper = createColumnHelper<any>();

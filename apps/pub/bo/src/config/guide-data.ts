@@ -352,6 +352,16 @@ export const guideData = [
     lastUpdateDate: '2025-03-25',
     remarks: '작업 완료', // 비고
   },
+  {
+    screenName: '로그인/테넌트,역할 선택',
+    pageId: 'popup-role-select',
+    screenId: 'NLP_BO_LOG_1000_04',
+    pageType: 'Pop-up',
+    completionDate: '2025-06-11',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+
   // {
   //   screenName: '공통/공통기능_유저그룹검색팝업',
   //   pageId: 'common/pop-user-search',

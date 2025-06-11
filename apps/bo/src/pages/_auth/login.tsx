@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { createFileRoute, useRouter, Link, useSearch } from '@tanstack/react-router';
-import { useTranslation } from 'react-i18next';
+import { t } from 'i18next';
 import { isEmpty } from 'lodash';
 
-import { Button, ContentsRow } from '@learnway/ui';
+import { Button, ContentsRow, Input } from '@learnway/ui';
 import { useExpStore, useFetchAuthUser } from '@learnway/auth';
 import { cn } from '@learnway/shared';
 import { DynamicFormField } from '@learnway/ui';
@@ -32,7 +32,6 @@ export const Route = createFileRoute('/_auth/login')({
 });
 
 function RouteComponent() {
-  const { t } = useTranslation();
   const router = useRouter();
   const params = Route.useParams();
   const search = Route.useSearch();
@@ -75,32 +74,32 @@ function RouteComponent() {
             <FormRow provider={provider} name={'username'} />
           </ContentsRow>
           <ContentsRow className={formStyles.no_line}>
-            <FormRow provider={provider} name={'password'} />
+            <FormRow provider={provider} name={'password'} element={<Input type="password" />} />
           </ContentsRow>
 
           <ContentsRow className={cn(formStyles.no_line, styles.login_info)}>
             <FormRow provider={provider} name={'saveId'} />
             <div className={styles.info}>
               <Link to="/search-account" state={{ tabKey: 'account' }}>
-                아이디 찾기
+                {t('LABEL.common.searchAccount')}
               </Link>
-              <Link to="/search-password" state={{ tabKey: 'password' }}>
-                비밀번호 찾기
+              <Link to="/search-password" state={{ tabKey: 'password', step: 'email' }}>
+                {t('LABEL.common.searchPassword')}
               </Link>
             </div>
           </ContentsRow>
 
           <div className={styles.btn_box}>
             <Button type="submit" size="xl" variant="primary" className={styles.btn}>
-              로그인
+              {t('LABEL.common.login')}
             </Button>
           </div>
         </div>
 
         <div className={styles.login_guide}>
           <span>
-            <Link to="/signup-progress">회원 가입 현황</Link>
-            <Link to="/signup">관리자 회원가입</Link>
+            <Link to="/signup-progress">{t('LABEL.common.membershipStatus')}</Link>
+            <Link to="/signup">{t('LABEL.common.joinTheAdminMembership')}</Link>
           </span>
         </div>
       </div>
@@ -116,19 +115,16 @@ const detailConfig: DynamicFormConfig = {
     {
       name: 'username',
       type: 'text',
-      label: '아이디/이메일',
+      label: 'LABEL.form.input.idEmail',
       value: '',
-      placeholder: '아아디/이메일을 입력하세요',
-      description: '기본 메세지',
       format: 'email',
     },
     {
       name: 'password',
       type: 'text',
-      label: '비밀번호',
+      label: 'LABEL.form.input.password',
       maxLength: 10,
       value: '',
-      placeholder: '비밀번호를 입력하세요',
     },
     {
       name: 'saveId',

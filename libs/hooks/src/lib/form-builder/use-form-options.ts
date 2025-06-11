@@ -1,7 +1,6 @@
 import { OptionsConfig, SelectOption, UseFormOptionsProps } from './type';
 import { useEffect, useState } from 'react';
 import { useCodeStore } from '../use-code-store/use-code-store';
-import { isEqual } from 'lodash';
 
 /**
  * Form 에서 CodeGroup에 대한 로딩을 위한 커스텀 훅
@@ -36,10 +35,10 @@ const useFormOptionsHook = (
     }
   }, []);
   useEffect(() => {
-    if (options && !isEqual(options, currentOptions)) {
+    if (options) {
       setCurrentOptions(options);
     }
-  }, [options]);
+  }, [options?.length]);
   return currentOptions;
 };
 
