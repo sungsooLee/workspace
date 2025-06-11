@@ -45,10 +45,16 @@
         }
       }
     }
-    button + button {
-      @apply !ml-0 !pl-0;
-      &::before {
-        @apply mr-[12px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
+    button {
+      & + button {
+        &::before {
+          @apply mr-[12px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
+        }
+      }
+      & + [class*='type_tooltip'] {
+        &::before {
+          @apply mx-[8px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
+        }
       }
     }
     .btn_excel {
@@ -60,7 +66,7 @@
     .button_info {
       @apply mb-[12px] flex min-h-[28px] items-center;
       [class*='nlp--checkbox'] {
-        @apply mr-[8px];
+        @apply mr-[12px];
         & + [class*='nlp--button'] {
           &::before {
             @apply mr-[12px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
@@ -125,22 +131,18 @@
 }
 
 [class*='type_tooltip'] {
-  @apply relative flex items-center;
-  button::before {
-    @apply !hidden;
+  @apply relative !ml-[8px] flex items-center;
+  button {
+    &[data-state] {
+      @apply !mr-0;
+      &::before {
+        @apply hidden;
+      }
+    }
   }
   & + [class*='nlp--button'] {
     &::before {
-      @apply mr-[12px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
-    }
-  }
-}
-
-[class*='nlp--button'] {
-  & + [class*='type_tooltip'] {
-    @apply ml-[8px];
-    &::before {
-      @apply mr-[12px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
+      @apply ml-[8px] mr-[12px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
     }
   }
 }

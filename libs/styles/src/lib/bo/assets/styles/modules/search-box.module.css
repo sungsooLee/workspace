@@ -145,6 +145,14 @@
   }
 }
 
+[class*='content_wrap'] {
+  .start {
+    &.wrap + [class*='divider'] {
+      @apply mt-[16px];
+    }
+  }
+}
+
 [class*='nlp--modal-content'] {
   .start {
     &.wrap + [class*='divider'] {
