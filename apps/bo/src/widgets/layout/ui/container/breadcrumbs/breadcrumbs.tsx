@@ -19,10 +19,12 @@ function BreadcrumbsComponent() {
         <li key={'Home'} className={styles.link_item}>
           <Link to={'/'} className={styles.active}>
             <IcoHome02 width={12} height={12} stroke="#131C30" />
+            {' Home'}
           </Link>
         </li>
         {activeMenuDepthMenu &&
           activeMenuDepthMenu.map((menu: Menu, i: number) => {
+            if (i === 0) return <></>;
             return (
               <li key={`bread_${menu.key}_${i}`} className={styles.link_item}>
                 <Link

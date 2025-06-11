@@ -236,7 +236,7 @@ const PageContainerComponent: FC<{
         <div className={tooltipPopoverStyles.contents_wrap}>
           <NoticeBox
             iconVisible={false}
-            type={'bullet'}
+            type={guidePopupProps?.type || 'bullet'}
             description={guidePopupProps?.description}
             descriptions={guidePopupProps?.descriptions}
           />
