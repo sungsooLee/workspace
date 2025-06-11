@@ -1,14 +1,20 @@
 .start {
-  @apply relative w-full overflow-hidden rounded-[4px] border-[1px] border-solid border-[var(--gray4)];
+  @apply relative flex w-full items-center justify-between overflow-hidden rounded-[4px] border-[1px] border-solid border-[var(--gray4)];
   .input {
-    @apply min-h-[30px] w-[calc(100%-70px)] truncate px-[12px] align-middle text-[14px] font-normal text-[var(--gray9)];
+    @apply min-h-[30px] w-full truncate bg-transparent px-[12px] align-middle text-[14px] font-normal text-[var(--gray9)];
     &::placeholder {
       @apply text-[var(--gray5)];
     }
+    &[inputmode='numeric'] {
+      @apply text-right;
+    }
+    &:focus {
+      @apply !border-transparent !outline-none;
+    }
   }
 
-  .button {
-    @apply absolute right-[10px] top-1/2 -mt-[10px] inline-flex h-[20px] w-[20px] items-center justify-center;
+  .clear {
+    @apply inline-flex h-[20px] w-[20px] items-center justify-center;
   }
   &.focused {
     @apply border-[var(--gray7)];
@@ -33,16 +39,28 @@
   }
 }
 
-.button_wrap {
-  @apply absolute right-[10px] top-1/2 flex min-w-[75px] -translate-y-1/2 flex-row justify-end gap-2;
+.before_area {
+  @apply mr-[12px];
+  .unit {
+    @apply input_bo_1_r flex shrink-0 items-center text-[var(--gray8)];
+  }
+  &:empty {
+    @apply !hidden;
+  }
+}
+.after_area {
+  @apply flex w-auto flex-row items-center justify-end gap-2 pr-[12px];
   .count {
-    @apply button_5_r flex items-center text-[#8c97ae];
+    @apply button_5_r flex shrink-0 items-center text-[#8c97ae];
   }
   .unit {
-    @apply input_bo_1_r flex items-center text-[#747d91];
+    @apply input_bo_1_r flex shrink-0 items-center text-[#747d91];
   }
   .time {
-    @apply button_4_b flex items-center text-[#07287E];
+    @apply button_4_b flex shrink-0 items-center text-[#07287E];
+  }
+  &:empty {
+    @apply !hidden;
   }
 }
 

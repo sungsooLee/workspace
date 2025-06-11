@@ -1,3 +1,4 @@
+import { ALL_OPTION } from '@learnway/hooks';
 import { AutoCompleteDropdown, Dropdown, DropdownOption } from '@learnway/ui';
 import { Meta, StoryObj } from '@storybook/react/*';
 import { t } from 'i18next';
@@ -24,6 +25,11 @@ export default {
       control: 'boolean',
       description: '다중 선택 여부',
       defaultValue: false,
+    },
+    presetOptionLabel: {
+      control: 'text',
+      description: '가장 상단에 전체 또는 선택 옵션을 추가',
+      defaultValue: '',
     },
     isSearchable: {
       control: 'boolean',
@@ -70,9 +76,9 @@ export default {
       },
     },
   },
-   decorators: [
+  decorators: [
     (Story) => (
-      <div style={{width: '100%', padding: '20px' }}>
+      <div style={{ width: '100%', padding: '20px' }}>
         <Story />
       </div>
     ),
@@ -144,7 +150,6 @@ const DropdownComponent: React.FC<any> = (args) => {
     { value: 'option7', label: '옵션 7' },
   ];
   const options3 = [
-    { value: '', label: '전체' },
     { value: 'option1', label: '옵션 1' },
     { value: 'option2', label: '옵션 2' },
     { value: 'option3', label: '옵션 3' },
@@ -179,6 +184,7 @@ const DropdownComponent: React.FC<any> = (args) => {
           value={selectedValue3}
           onChange={(value: string) => setSelectedValue3(value)}
           label="Dropdown 컴포넌트"
+          presetOptionLabel="전체"
         />
       </div>
     </div>
@@ -240,6 +246,7 @@ export const DropdownStory: Story = {
 
 const MultiDropdown: React.FC<any> = (args) => {
   const [selectedOptions, setSelectedOptions] = useState<any[]>([]);
+  const [selectedOptions2, setSelectedOptions2] = useState<any[]>([ALL_OPTION]);
   const options = [
     { value: 'option1', label: '옵션 1' },
     { value: 'option2', label: '옵션 2' },
@@ -253,15 +260,27 @@ const MultiDropdown: React.FC<any> = (args) => {
     { value: 'option10', label: '옵션 10' },
   ];
   return (
-    <Dropdown
-      options={options}
-      value={selectedOptions}
-      onChange={(selected) => setSelectedOptions(selected as any[])}
-      placeholder="여러 항목 선택"
-      label="다중 선택 (체크박스)"
-      variant="text"
-      isMulti={true}
-    />
+    <div className="flex flex-row space-x-2">
+      <Dropdown
+        options={options}
+        value={selectedOptions}
+        onChange={(selected) => setSelectedOptions(selected as any[])}
+        placeholder="여러 항목 선택"
+        label="다중 선택 (체크박스)"
+        variant="text"
+        isMulti={true}
+      />
+      <Dropdown
+        options={options}
+        value={selectedOptions2}
+        onChange={(selected) => setSelectedOptions2(selected as any[])}
+        placeholder="여러 항목 선택"
+        label="다중 선택 (체크박스)"
+        variant="text"
+        isMulti={true}
+        presetOptionLabel="전체"
+      />
+    </div>
   );
 };
 

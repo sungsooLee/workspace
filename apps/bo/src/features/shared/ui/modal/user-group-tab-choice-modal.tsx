@@ -16,24 +16,25 @@ import { UserGroupOccupation } from '../components/user-group-occupation';
 import { UserGroupJobTitle } from '../components/user-group-job-title';
 import { UserGroupTenant } from '../components/user-group-tenant';
 import { UserGroupCustom } from '../components/user-group-custom';
+import { IcoRefresh02 } from '@learnway/icons';
 
 const UserGroupTabModalComponent = forwardRef((props) => {
   const { close: closeModal } = useModal();
 
   const [selectedTabKey, setSelectedTabKey] = useState<string>('ORGANIZATION');
 
-  const [selectedRow, setSelectedRow] = useState();
+  const [option, setOption] = useState<any>();
 
-  const handleRowSelect = (row: any) => {
-    setSelectedRow(row);
+  const handleSetOption = (data: any) => {
+    setOption(data);
   };
 
   const handleOnClose = () => {
     closeModal();
   };
+
   const handleOnConfirm = () => {
-    if (!selectedRow) closeModal();
-    closeModal(selectedRow);
+    closeModal(option);
   };
 
   return (
@@ -45,32 +46,32 @@ const UserGroupTabModalComponent = forwardRef((props) => {
             {
               title: '조직',
               key: 'ORGANIZATION',
-              content: <UserGroupOrganization handleRowSelect={handleRowSelect} />,
+              content: <UserGroupOrganization handleSetOption={handleSetOption} />,
             },
             {
               title: t('보직'),
               key: 'POSITION',
-              content: <UserGroupPosition handleRowSelect={handleRowSelect} />,
+              content: <UserGroupPosition />,
             },
             {
               title: t('직군'),
               key: 'OCCUPATION',
-              content: <UserGroupOccupation handleRowSelect={handleRowSelect} />,
+              content: <UserGroupOccupation />,
             },
             {
               title: t('호칭'),
               key: 'JOB_TITLE',
-              content: <UserGroupJobTitle handleRowSelect={handleRowSelect} />,
+              content: <UserGroupJobTitle />,
             },
             {
               title: t('테넌트'),
               key: 'TENANT',
-              content: <UserGroupTenant handleRowSelect={handleRowSelect} />,
+              content: <UserGroupTenant />,
             },
             {
               title: '사용자 정의',
               key: 'CUSTOM',
-              content: <UserGroupCustom handleRowSelect={handleRowSelect} />,
+              content: <UserGroupCustom />,
             },
           ]}
           type="line"
@@ -79,7 +80,7 @@ const UserGroupTabModalComponent = forwardRef((props) => {
           selectedTabKey={selectedTabKey}
           onTabChange={(tabKey) => {
             if (tabKey !== selectedTabKey) {
-              setSelectedRow(undefined);
+              setOption(undefined);
               setSelectedTabKey(tabKey);
             }
           }}
@@ -87,8 +88,15 @@ const UserGroupTabModalComponent = forwardRef((props) => {
       </ModalBody>
       <ModalFooter>
         <ModalFooter>
+          <Button
+            icon={<IcoRefresh02 width={16} height={16} className="icon_refresh" />}
+            variant={'gray'}
+            size={'lg'}
+          >
+            {t('초기화')}
+          </Button>
           <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={handleOnClose} />
-          <Button label={t('확인')} variant={'primary'} size={'lg'} onClick={handleOnConfirm} />
+          <Button label={t('적용')} variant={'primary'} size={'lg'} onClick={handleOnConfirm} />
         </ModalFooter>
       </ModalFooter>
     </ModalContainer>

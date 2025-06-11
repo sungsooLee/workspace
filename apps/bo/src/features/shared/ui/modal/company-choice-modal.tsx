@@ -18,7 +18,7 @@ import {
   useGridBox,
 } from '@learnway/ui';
 
-import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
+import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 
 import { SearchBox } from '@shared/ui/search-box';
 
@@ -73,8 +73,8 @@ const CompanyModalComponent = forwardRef((props, ref) => {
       </ModalBody>
       <ModalFooter>
         <ModalFooter>
-          <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={handleOnClose} />
-          <Button label={t('확인')} variant={'primary'} size={'lg'} onClick={handleOnConfirm} />
+          <Button label={t('취소')} variant="gray" size="lg" onClick={handleOnClose} />
+          <Button label={t('확인')} variant="primary" size="lg" onClick={handleOnConfirm} />
         </ModalFooter>
       </ModalFooter>
     </ModalContainer>
@@ -87,10 +87,14 @@ const searchConfig: SearchBoxConfig = {
   builders: [
     [
       {
-        name: 'companyCode',
-        type: 'text',
-        label: t('회사코드'),
+        name: 'companyType',
+        type: 'dropdown',
+        label: t('그룹'),
         value: '',
+        optionsConfig: {
+          options: [{ label: t('전체'), value: '' }],
+          codeGroup: CODE_GROUP['pms.company.CompanyType'],
+        },
       },
       {
         name: 'name',
@@ -103,64 +107,58 @@ const searchConfig: SearchBoxConfig = {
 };
 
 const gridConfig = {
-  query: companyQueryOptions.all,
-  columns: [
-    {
-      name: 'no1',
-      label: 'NO.',
-      type: 'numbering',
-    },
-  ],
+  query: companyQueryOptions.list,
+  columns: [],
   data: [],
   pagination: {
     pageSize: 10,
-    pageIndex: 1,
-    totalRows: 2,
+    pageIndex: 0,
+    totalRows: 0,
   },
 };
 
 const columnHelper = createColumnHelper<any>();
 const columns = [
+  columnHelper.accessor('no', {
+    id: 'no',
+    cell: (info) => info.row.index + 1,
+    header: 'NO.',
+    size: 64,
+  }),
   columnHelper.accessor('companyType', {
     id: 'companyType',
-    cell: (info) => info.getValue(),
-    header: '회사구분',
-    enableGrouping: false,
+    cell: (info) => t(`pms.company.CompanyType.${info.getValue()}`),
+    header: t('그룹'),
     size: 210,
   }),
   columnHelper.accessor('name', {
     id: 'name',
     cell: (info) => info.getValue(),
-    header: '회사',
-    size: 240,
-    enableGrouping: false,
+    header: t('회사'),
+    size: 210,
   }),
   columnHelper.accessor('rpsntrName', {
     id: 'rpsntrName',
     cell: (info) => info.getValue(),
-    header: '대표자',
-    size: 150,
-    enableGrouping: false,
+    header: t('대표자'),
+    size: 210,
   }),
   columnHelper.accessor('brn', {
     id: 'brn',
     cell: (info) => info.getValue(),
-    header: '사업자 등록번호',
+    header: t('사업자 등록번호'),
     size: 220,
-    enableGrouping: false,
   }),
   columnHelper.accessor('callNumber', {
     id: 'callNumber',
     cell: (info) => info.getValue(),
-    header: '대표 전화',
-    size: 220,
-    enableGrouping: false,
+    header: t('대표 전화'),
+    size: 210,
   }),
   columnHelper.accessor('email', {
     id: 'email',
     cell: (info) => info.getValue(),
-    header: '대표 이메일',
-    size: 240,
-    enableGrouping: false,
+    header: t('대표 이메일'),
+    size: 210,
   }),
 ] as ColumnDef<any, unknown>[];

@@ -37,6 +37,10 @@ export default class CompaniesService {
   static fetchBrn(id: number) {
     return httpService.get<Company>(`${PMSApiPrefix()}/companies/brn/${id}`);
   }
+
+  static existsCode(params: any) {
+    return httpService.get<any>(`${PMSApiPrefix()}/companies/companyCode/exist`, params);
+  }
 }
 
 //-------------------
