@@ -204,3 +204,11 @@
     @apply !hidden;
   }
 }
+
+[class*='content_wrap'] {
+  [class*='divider'] {
+    & + [class*='table_box'] {
+      @apply mt-[24px];
+    }
+  }
+}

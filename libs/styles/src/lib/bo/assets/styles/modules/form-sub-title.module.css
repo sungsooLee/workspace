@@ -18,7 +18,7 @@
     }
 
     [class*='btn_text'] {
-      @apply text-[var(--gray8)];
+      @apply !font-normal text-[var(--gray8)];
       & + [class*='btn_text'] {
         @apply relative pl-[16px];
         &::before {
@@ -30,7 +30,7 @@
       }
     }
     &.line {
-      @apply border-b-[1px] border-solid border-[var(--gray4)] pb-[12px];
+      @apply mb-[16px] border-b-[1px] border-solid border-[var(--gray8)] pb-[8px];
     }
   }
 }

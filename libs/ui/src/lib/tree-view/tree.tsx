@@ -30,6 +30,7 @@ import {
   IcoFolderOpen,
   IcoHome03,
   IcoMenu01,
+  IcoMove01,
 } from '@learnway/icons';
 import styles from './tree.module.css'; // Tree module CSS
 import { cn } from '@learnway/shared';
@@ -253,14 +254,14 @@ const TreeNodeComponent = ({
 
     // 선택 스타일
     if (selectedNode && selectedNode.key === enhanceNode.key) {
-      styles.push('bg-[var(--secondary5)]');
+      styles.push('bg-[var(--secondary6)]');
     }
     if (treeType === 'SHUTTLE_LIST' && isNodeSelected) {
-      styles.push('bg-[var(--secondary5)]');
+      styles.push('bg-[var(--secondary6)]');
     }
     // TREE_TO_TREE 모드에서 선택된 노드 스타일
     if (shouldShowSelection) {
-      styles.push('bg-[var(--gray2)]');
+      styles.push('bg-[var(--secondary6)]');
     }
 
     // 드롭 위치 스타일
@@ -489,13 +490,23 @@ const TreeNodeComponent = ({
         draggable={!isDragDisabled}
         onDragStart={isDragDisabled ? (e) => e.preventDefault() : handleDragStart}
       >
-        <IcoMenu01
-          width={24}
-          height={24}
-          fill={isDragDisabled ? '#D1D5DB' : '#A9AFB8'}
-          stroke={isDragDisabled ? '#D1D5DB' : '#A9AFB8'}
-          className={styles.icon_drag}
-        />
+        {isTreeToTreeMode ? (
+          <IcoMove01
+            width={24}
+            height={24}
+            fill={isDragDisabled ? '#E3E9EF' : '#A9AFB8'}
+            stroke={isDragDisabled ? '#E3E9EF' : '#A9AFB8'}
+            className={styles.icon_drag}
+          />
+        ) : (
+          <IcoMenu01
+            width={24}
+            height={24}
+            fill={isDragDisabled ? '#E3E9EF' : '#A9AFB8'}
+            stroke={isDragDisabled ? '#E3E9EF' : '#A9AFB8'}
+            className={styles.icon_drag}
+          />
+        )}
       </span>
     );
   };
