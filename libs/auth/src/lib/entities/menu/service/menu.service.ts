@@ -73,7 +73,21 @@ export function useRenewalMenuStateFromRouting() {
           if (menu.depth === 1) {
             setActiveMenuDepth(depths);
           } else {
-            recursiveCall(menu.parentNode.path);
+            recursiveCallById(menu.parentNode.tenantMappingMenuId);
+          }
+          return true;
+        }
+      });
+    };
+
+    const recursiveCallById = (id: number) => {
+      authUser.menus.some((menu: Menu) => {
+        if (menu.tenantMappingMenuId === id) {
+          depths.unshift(menu);
+          if (menu.depth === 1) {
+            setActiveMenuDepth(depths);
+          } else {
+            recursiveCallById(menu.parentNode.tenantMappingMenuId);
           }
           return true;
         }
@@ -81,6 +95,7 @@ export function useRenewalMenuStateFromRouting() {
     };
 
     recursiveCall(currentPath);
+
     // 최근본 메뉴
     const recentMenu = authUser.menus.find((menu: Menu) => menu.path === currentPath);
     recentMenu && setMenus(recentMenu);
