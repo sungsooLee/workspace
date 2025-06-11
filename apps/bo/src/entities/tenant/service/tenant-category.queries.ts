@@ -23,10 +23,13 @@ export const queryOptions = {
   detail: (tenantId: number, id: number) => ({
     queryKey: queryKeys.detail(tenantId, id),
     queryFn: async () => {
-      const data = await TenantCategoryService.getTenantCategoryDetail(tenantId, id);
-      console.log('## get tenant category detail :: ', data);
-      if (!data) return null;
-      return data;
+      if (tenantId && id) {
+        const data = await TenantCategoryService.getTenantCategoryDetail(tenantId, id);
+        console.log('## get tenant category detail :: ', data);
+        if (!data) return null;
+        return data;
+      }
+      return getQuerySkipToken();
     },
   }),
 };
