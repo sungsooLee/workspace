@@ -76,6 +76,7 @@ export const GridCell = <T extends object>({ row, cell, lastPinnedColumnId }: Gr
         styles.tbody_td,
         isPinnedLeft && styles.td_pinned_left,
         isLastPinnedColumn && styles.td_pinned_last,
+        cell.column.columnDef.meta?.cellClass,
       )}
       style={cellStyle}
     >

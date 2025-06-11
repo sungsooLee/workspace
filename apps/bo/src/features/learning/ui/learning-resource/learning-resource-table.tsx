@@ -1,17 +1,16 @@
-import { CODE_GROUP, useSearchBox } from '@learnway/hooks';
-import { cn, DATE_TIME_FORMAT, duration } from '@learnway/shared';
+import { ALL_OPTION, CODE_GROUP, useSearchBox } from '@learnway/hooks';
+import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
 import { SearchBox } from '@shared/ui/search-box';
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 import {
   Button,
-  Checkbox,
+  Divider,
   GridBox,
-  GridBoxPagination,
+  Tooltip,
   useGridBox,
   useGridBoxConfig,
   useModal,
 } from '@learnway/ui';
-import { IcoClock01, IcoCopy, IcoDownload } from '@learnway/icons';
+import { IcoClock01, IcoCopy, IcoDownload, IcoSucess02 } from '@learnway/icons';
 import { t } from 'i18next';
 import { Table } from '@tanstack/react-table';
 import { useState } from 'react';
@@ -31,8 +30,8 @@ function LearningResourceTableComponent() {
           label: t('LABEL.content.learning-resource.tenantName'),
           value: '',
           format: 'number',
+          presetOptionLabel: t('선택'),
           optionsConfig: {
-            options: [{ value: '', label: t('선택') }],
             codeGroup: CODE_GROUP['manual.tenant.tenantId'],
           },
         },
@@ -41,9 +40,9 @@ function LearningResourceTableComponent() {
           type: 'dropdown',
           label: t('LABEL.content.learning-resource.channelName'),
           value: '',
+          presetOptionLabel: t('선택'),
           optionsConfig: {
             options: [
-              { value: '', label: t('선택') },
               { value: 'channelA', label: t('채널A') },
               { value: 'channelB', label: t('채널B') },
               { value: 'channelC', label: t('채널C') },
@@ -57,11 +56,11 @@ function LearningResourceTableComponent() {
           name: 'contentTypes',
           type: 'dropdown',
           label: t('LABEL.content.learning-resource.contentType'),
-          value: [''],
+          value: [ALL_OPTION],
           isMulti: true,
           variant: 'text',
+          presetOptionLabel: t('전체'),
           optionsConfig: {
-            options: [{ value: '', label: t('전체') }],
             codeGroup: CODE_GROUP['cms.content.ContentType'],
           },
         },
@@ -78,9 +77,9 @@ function LearningResourceTableComponent() {
           type: 'dropdown',
           label: t('외주여부'),
           value: '',
+          presetOptionLabel: t('전체'),
           optionsConfig: {
             options: [
-              { value: '', label: t('전체') },
               { value: 'true', label: 'Y' },
               { value: 'false', label: 'N' },
             ],
@@ -91,8 +90,8 @@ function LearningResourceTableComponent() {
           type: 'dropdown',
           label: t('LABEL.content.learning-resource.useEnabledType'),
           value: '',
+          presetOptionLabel: t('전체'),
           optionsConfig: {
-            options: [{ value: '', label: t('전체') }],
             codeGroup: CODE_GROUP['cms.content.ContentUseEnabledType'],
           },
         },
@@ -101,9 +100,9 @@ function LearningResourceTableComponent() {
           type: 'dropdown',
           label: t('LABEL.content.learning-resource.isCourseUsed'),
           value: '',
+          presetOptionLabel: t('전체'),
           optionsConfig: {
             options: [
-              { value: '', label: t('전체') },
               { value: 'true', label: 'Y' },
               { value: 'false', label: 'N' },
             ],
@@ -172,7 +171,6 @@ function LearningResourceTableComponent() {
         name: 'contentAddInfo',
         label: t('LABEL.content.learning-resource.detailInfo'),
         render: (_: any) => {
-          console.log(_.row.original['contentAddInfoType']);
           if (_.row.original.contentAddInfoType !== 'VIDEO_ADD_INFO')
             // enum code 사용하도록 변경해야 함
             return `${_.getValue()}${t('개')}`;
@@ -232,41 +230,42 @@ function LearningResourceTableComponent() {
   return (
     <>
       <SearchBox provider={searchProvider} onSearch={handleSearch} />
-      <div className={cn(boxStyles.start, boxStyles.inner)}>
-        <div className="grid_wrap">
-          <GridBox
-            config={gConfig}
-            showNumberingColumn
-            multiple
-            customButtonNode={
-              <>
-                <Checkbox size="md" label={t('나의 학습자원')} />
-                {/* 필터기능인듯? 글씨 크기가 혼자 작게 나옴 */}
-                <Button
-                  label={t('프로그램/가이드 다운로드')}
-                  icon={<IcoDownload width={16} height={16} stroke="#4C515E" />}
-                  onClick={() =>
-                    openModal({
-                      width: 'md',
-                      content: <ProgramGuideModal />,
-                    })
-                  }
-                />
-                <Button variant="text" label={t('일괄설정')} />
-                <Button
-                  label={t('엑셀다운로드')}
-                  icon={<IcoDownload width={16} height={16} stroke="#4C515E" />}
-                />
-                <Button
-                  label={t('복사')}
-                  icon={<IcoCopy width={16} height={16} stroke="#131c30" />}
-                />
-              </>
-            }
-            onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
-          />
-        </div>
-      </div>
+      <Divider />
+      <GridBox
+        config={gConfig}
+        showNumberingColumn
+        multiple
+        customButtonNode={
+          <>
+            <Button
+              label={t('프로그램/가이드 다운로드')}
+              icon={<IcoDownload width={16} height={16} stroke="#4C515E" />}
+              onClick={() =>
+                openModal({
+                  width: 'md',
+                  content: <ProgramGuideModal />,
+                })
+              }
+            />
+            <span className="type_tooltip">
+              <Tooltip
+                side="bottom"
+                align="start"
+                content={<pre>{t('LABEL.message.learningResource.batchModifyTooltip')}</pre>}
+              >
+                <IcoSucess02 width={16} height={16} stroke="#4C515E" />
+              </Tooltip>
+              <Button variant="text" label={t('일괄설정')} />
+            </span>
+            <Button
+              label={t('엑셀다운로드')}
+              icon={<IcoDownload width={16} height={16} stroke="#4C515E" />}
+            />
+            <Button label={t('복사')} icon={<IcoCopy width={16} height={16} stroke="#4C515E" />} />
+          </>
+        }
+        onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
+      />
     </>
   );
 }

@@ -41,6 +41,7 @@ const GridComponent = forwardRef(
       clientSideFiltering,
       clientSideSorting,
       onTableInstanceChange,
+      showExpandColumn,
     }: GridProps<T>,
     ref: any,
   ) => {
@@ -67,6 +68,7 @@ const GridComponent = forwardRef(
       hideRowSelectionCheckBox, // props로 전달
       showNumberingColumn, // props로 전달
       onTableInstanceChange, // table 인스턴스 전달 콜백
+      showExpandColumn,
     });
 
     // 부모 컴포넌트에서 grid 특정 기능 수행시 필요

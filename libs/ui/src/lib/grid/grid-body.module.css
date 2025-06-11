@@ -63,6 +63,9 @@
               @apply mr-[6px];
             }
           }
+          &[class*='title'] {
+            @apply body_bo_2_b bg-[var(--gray1)] text-[var(--gray9)];
+          }
 
           &:has(> div) {
             @apply w-full py-[4px];

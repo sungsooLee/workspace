@@ -34,7 +34,12 @@ import {
 } from '../service/tenant-detail-tree.service';
 import { FormDisplay } from '@features/form/ui/form-display';
 import { EnChannelScope, EnCompanyScope, EnDeptScope, EnFormMode, EnTenantScope } from '@types';
-import { ChannelChoiceModal, ChannelListChoiceModal, CompanyShuttleModal } from '@features/shared';
+import {
+  ChannelChoiceModal,
+  ChannelListChoiceModal,
+  CompanyShuttleModal,
+  UserGroupChoiceModal,
+} from '@features/shared';
 
 /**
  * 화면번호:
@@ -188,9 +193,12 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
       fetchData({
         ...roleDetail,
         parentRoleId: parentRoleId,
-        companyIds: roleDetail.companies,
+        companyIds: roleDetail.companies.map((item: any) => ({
+          companyId: item.id,
+          name: item.name,
+        })),
         channelIds: roleDetail.channels,
-        deptIds: roleDetail.depts,
+        deptIds: roleDetail.depts.map((item: any) => ({ deptId: item.id, deptName: item.name })),
       });
 
       setFormMode(EnFormMode.VIEW);
@@ -362,14 +370,14 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                     element={
                       <ChipListModalSelectorFormField
                         chipList={{
-                          labelField: 'name',
-                          valueField: 'value',
+                          labelField: 'deptName',
+                          valueField: 'deptId',
                           hideBorder: true,
                         }}
                         modalConfig={{
                           title: '',
                           width: 'xl',
-                          content: <ChannelChoiceModal />,
+                          content: <UserGroupChoiceModal />,
                         }}
                       />
                     }
@@ -395,7 +403,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                       <ChipListModalSelectorFormField
                         chipList={{
                           labelField: 'channelName',
-                          valueField: 'channelId',
+                          valueField: 'channelUuid',
                           hideBorder: true,
                         }}
                         modalConfig={{
@@ -456,12 +464,14 @@ const formBaseConfig: DynamicFormConfig = {
       name: 'roleCode',
       type: 'text',
       label: t('역할 코드'),
+      format: 'object',
       value: '',
     },
     {
       name: 'roleType',
       type: 'text',
       label: t('역할 타입'),
+      format: 'object',
       value: '',
     },
     {

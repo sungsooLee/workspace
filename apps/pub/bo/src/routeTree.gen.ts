@@ -100,6 +100,7 @@ import { Route as LayoutLearningLearningSearchImport } from './pages/_layout/lea
 import { Route as LayoutLearningLearningResourceSearchImport } from './pages/_layout/learning/learning-resource-search'
 import { Route as LayoutLearningFileUploadImport } from './pages/_layout/learning/file-upload'
 import { Route as LayoutLanguageLanguagesubjectsmanagementImport } from './pages/_layout/language/language_subjects_management'
+import { Route as LayoutLanguageLanguagehistorylistImport } from './pages/_layout/language/language_history_list'
 import { Route as LayoutContentsLayoutImport } from './pages/_layout/contents/layout'
 import { Route as LayoutCommonProfileMyinfoImport } from './pages/_layout/common/profile-myinfo'
 import { Route as LayoutCommonPopUserSearchCheckImport } from './pages/_layout/common/pop-user-search-check'
@@ -736,6 +737,13 @@ const LayoutLanguageLanguagesubjectsmanagementRoute =
   LayoutLanguageLanguagesubjectsmanagementImport.update({
     id: '/language/language_subjects_management',
     path: '/language/language_subjects_management',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutLanguageLanguagehistorylistRoute =
+  LayoutLanguageLanguagehistorylistImport.update({
+    id: '/language/language_history_list',
+    path: '/language/language_history_list',
     getParentRoute: () => LayoutRoute,
   } as any)
 
@@ -1741,6 +1749,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutContentsLayoutImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/language/language_history_list': {
+      id: '/_layout/language/language_history_list'
+      path: '/language/language_history_list'
+      fullPath: '/language/language_history_list'
+      preLoaderRoute: typeof LayoutLanguageLanguagehistorylistImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/language/language_subjects_management': {
       id: '/_layout/language/language_subjects_management'
       path: '/language/language_subjects_management'
@@ -2337,6 +2352,7 @@ interface LayoutRouteChildren {
   LayoutCommonPopUserSearchCheckRoute: typeof LayoutCommonPopUserSearchCheckRoute
   LayoutCommonProfileMyinfoRoute: typeof LayoutCommonProfileMyinfoRoute
   LayoutContentsLayoutRoute: typeof LayoutContentsLayoutRoute
+  LayoutLanguageLanguagehistorylistRoute: typeof LayoutLanguageLanguagehistorylistRoute
   LayoutLanguageLanguagesubjectsmanagementRoute: typeof LayoutLanguageLanguagesubjectsmanagementRoute
   LayoutLearningFileUploadRoute: typeof LayoutLearningFileUploadRoute
   LayoutLearningLearningResourceSearchRoute: typeof LayoutLearningLearningResourceSearchRoute
@@ -2413,6 +2429,8 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutCommonPopUserSearchCheckRoute: LayoutCommonPopUserSearchCheckRoute,
   LayoutCommonProfileMyinfoRoute: LayoutCommonProfileMyinfoRoute,
   LayoutContentsLayoutRoute: LayoutContentsLayoutRoute,
+  LayoutLanguageLanguagehistorylistRoute:
+    LayoutLanguageLanguagehistorylistRoute,
   LayoutLanguageLanguagesubjectsmanagementRoute:
     LayoutLanguageLanguagesubjectsmanagementRoute,
   LayoutLearningFileUploadRoute: LayoutLearningFileUploadRoute,
@@ -2587,6 +2605,7 @@ export interface FileRoutesByFullPath {
   '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/common/profile-myinfo': typeof LayoutCommonProfileMyinfoRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
+  '/language/language_history_list': typeof LayoutLanguageLanguagehistorylistRoute
   '/language/language_subjects_management': typeof LayoutLanguageLanguagesubjectsmanagementRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/learning/learning-resource-search': typeof LayoutLearningLearningResourceSearchRoute
@@ -2737,6 +2756,7 @@ export interface FileRoutesByTo {
   '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/common/profile-myinfo': typeof LayoutCommonProfileMyinfoRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
+  '/language/language_history_list': typeof LayoutLanguageLanguagehistorylistRoute
   '/language/language_subjects_management': typeof LayoutLanguageLanguagesubjectsmanagementRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/learning/learning-resource-search': typeof LayoutLearningLearningResourceSearchRoute
@@ -2890,6 +2910,7 @@ export interface FileRoutesById {
   '/_layout/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/_layout/common/profile-myinfo': typeof LayoutCommonProfileMyinfoRoute
   '/_layout/contents/layout': typeof LayoutContentsLayoutRoute
+  '/_layout/language/language_history_list': typeof LayoutLanguageLanguagehistorylistRoute
   '/_layout/language/language_subjects_management': typeof LayoutLanguageLanguagesubjectsmanagementRoute
   '/_layout/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/_layout/learning/learning-resource-search': typeof LayoutLearningLearningResourceSearchRoute
@@ -3042,6 +3063,7 @@ export interface FileRouteTypes {
     | '/common/pop-user-search-check'
     | '/common/profile-myinfo'
     | '/contents/layout'
+    | '/language/language_history_list'
     | '/language/language_subjects_management'
     | '/learning/file-upload'
     | '/learning/learning-resource-search'
@@ -3191,6 +3213,7 @@ export interface FileRouteTypes {
     | '/common/pop-user-search-check'
     | '/common/profile-myinfo'
     | '/contents/layout'
+    | '/language/language_history_list'
     | '/language/language_subjects_management'
     | '/learning/file-upload'
     | '/learning/learning-resource-search'
@@ -3342,6 +3365,7 @@ export interface FileRouteTypes {
     | '/_layout/common/pop-user-search-check'
     | '/_layout/common/profile-myinfo'
     | '/_layout/contents/layout'
+    | '/_layout/language/language_history_list'
     | '/_layout/language/language_subjects_management'
     | '/_layout/learning/file-upload'
     | '/_layout/learning/learning-resource-search'
@@ -3532,6 +3556,7 @@ export const routeTree = rootRoute
         "/_layout/common/pop-user-search-check",
         "/_layout/common/profile-myinfo",
         "/_layout/contents/layout",
+        "/_layout/language/language_history_list",
         "/_layout/language/language_subjects_management",
         "/_layout/learning/file-upload",
         "/_layout/learning/learning-resource-search",
@@ -3938,6 +3963,10 @@ export const routeTree = rootRoute
     },
     "/_layout/contents/layout": {
       "filePath": "_layout/contents/layout.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/language/language_history_list": {
+      "filePath": "_layout/language/language_history_list.tsx",
       "parent": "/_layout"
     },
     "/_layout/language/language_subjects_management": {

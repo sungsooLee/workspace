@@ -19,19 +19,19 @@ const VideoDurationFormFieldComponent = forwardRef<HTMLDivElement, BaseFormField
           type={'number'}
           className={'w-[200px]'}
           value={String(value.hour)}
-          unitText={'시간'}
+          suffixText={'시간'}
         />
         <Input
           type={'number'}
           className={'w-[200px]'}
           value={String(value.minute)}
-          unitText={'분'}
+          suffixText={'분'}
         />
         <Input
           type={'number'}
           className={'w-[200px]'}
           value={String(value.second)}
-          unitText={'초'}
+          suffixText={'초'}
         />
       </div>
     );

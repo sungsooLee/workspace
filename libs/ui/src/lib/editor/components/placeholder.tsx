@@ -2,7 +2,7 @@
 import { FC } from 'react';
 
 const Placeholder: FC<{ placeholder?: string }> = ({ placeholder = 'Start typing...' }) => {
-  return <div style={{ color: '#aaa' }}>{placeholder}</div>;
+  return <div className={`nlp--content-editable-placeholder`} style={{ color: '#aaa' }}>{placeholder}</div>;
 };
 
 export default Placeholder;

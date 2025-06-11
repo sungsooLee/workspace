@@ -55,12 +55,36 @@
       "upload": {
         "uploadDescription": "영역을 클릭하거나 파일을 마우스로 끌어 놓으세요"
       },
+      "learningResource": {
+        "batchModifyTooltip": "학습자원의 담당자, 사용기한, 공유채널설정, \n교육자원활용, 보안콘텐츠 적용, 검수진행을 \n한번에 할 수 있어요."
+      },
       "learningResourceFileUploadModal": {
         "uploaderLabel": "파일은 1개당 최대 4GB 이하로 가능 합니다.",
         "uploaderGuideText": "업로드된 동영상은 학습자원목록에서 조회가능합니다.",
         "sizeError": "4GB 이하의 파일을 업로드 하세요.",
         "extensionError": "지원하는 형식의 파일을 업로드 하세요."
       }
+    },
+    "menu": {
+      "list": "목록",
+      "info": "메뉴 정보",
+      "add": "메뉴추가",
+      "addSub": "하위메뉴추가",
+      "location": "메뉴 위치",
+      "parentName": "상위 메뉴명",
+      "code": "메뉴 코드",
+      "name": "메뉴명",
+      "url": "메뉴 URL",
+      "description": "메뉴 설명",
+      "hide": "메뉴숨기기",
+      "device": "적용 디바이스",
+      "personalInfo": "개인정보포함",
+      "personalInfoNotIncluded": "미포함",
+      "personalInfoTooltip": "개인정보를 사용하는 경우 엑셀 다운로드 시 사유를 입력해야 합니다.",
+      "hideTooltip": "Hidden메뉴 적용 시 메뉴에 API가 매칭 되나, 메뉴 자체는 화면에서 숨김처리가 됩니다.",
+      "pc": "PC",
+      "mobile": "모바일",
+      "modal": {}
     },
     "cdGroupId": "그룹코드",
     "cdGroupName": "그룹 명",
@@ -75,6 +99,11 @@
     "referenceVal3": "참고 3",
     "referenceVal4": "참고 4",
     "cdId": "코드",
+    "add": "{{type}} 추가",
+    "list": "{{type}} 목록",
+    "select": "{{type}} 선택",
+    "selected": "선택된",
+    "noData": "{{type}} 데이터가 없습니다.",
     "page": {
       "title": {
         "menuManage": "메뉴 관리",
@@ -305,7 +334,8 @@
         "categoryParentName": "상위 카테고리명",
         "categoryLocation": "카테고리 위치",
         "select": "선택",
-        "description": "설명"
+        "description": "설명",
+        "companyCode": "회사 코드"
       },
       "label": {
         "category": "분류",
@@ -346,7 +376,8 @@
         "duplicated": "이미 사용 중인 {{code}} 입니다.",
         "ok": "사용할 수 있는 {{code}} 입니다.",
         "check": "{{code}}의 중복 여부를 확인해 주세요.",
-        "invalidUrl": "URL 형식에 맞게 입력해 주세요."
+        "invalidUrl": "URL 형식에 맞게 입력해 주세요.",
+        "selectAtLeastCount": "{{count}}개 이상 선택하세요."
       },
       "checkbox": {
         "idSave": "아이디 저장"

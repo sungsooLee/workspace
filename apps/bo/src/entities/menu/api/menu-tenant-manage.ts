@@ -21,12 +21,7 @@ export default class TenantMenuManageService {
    * @returns
    */
   static createMenuTenant(payload: any): Promise<any> {
-    const reqbody = [];
-    for (const item of payload.contents) {
-      const menu = createTenantMenuCreateByAny(item);
-      reqbody.push(menu);
-    }
-    return httpService.post<any>(`${PMSApiPrefix()}/menus/tenant/${payload.tenantId}`, reqbody);
+    return httpService.post<any>(`${PMSApiPrefix()}/menus/tenant/${payload.tenantId}`, payload);
   }
 
   /**

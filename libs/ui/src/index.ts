@@ -39,8 +39,9 @@ export * from './lib/date-picker/form-date-range-picker';
 export * from './lib/date-picker/time-picker';
 
 // editor
-export * from './lib/editor/hooks/editor.hook';
-export { default as Editor } from './lib/editor';
+// export * from './lib/editor/hooks/editor.hook';
+// export { default as Editor } from './lib/editor';
+export * from './lib/editor/editor';
 
 // elements
 export * from './lib/elements/count-text/count-text';
@@ -135,6 +136,9 @@ export * from './lib/stepper/stepper';
 export * from './lib/thumbnail/thumbnail';
 export * from './lib/thumbnail/thumbnail-list';
 export * from './lib/thumbnail/type';
+
+// shuttle grid to chips
+export * from './lib/shuttle-grid-to-chips/shuttle-grid-to-chips';
 
 // shuttle grid to grid
 export * from './lib/shuttle-grid-to-grid/shuttle-grid-to-grid';

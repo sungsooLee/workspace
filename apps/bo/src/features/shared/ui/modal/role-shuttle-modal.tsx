@@ -16,7 +16,9 @@ import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-content
 import { roleManagerQueryOptions } from '@entities/role/service/role-manage.queries';
 import { useQueryClient } from '@tanstack/react-query';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-
+/**
+ * 화면번호: NLP_BO_TMS_1001_17_01
+ */
 const RoleShuttleModalComponent = forwardRef((_) => {
   const ref = useRef<ShuttleGridToGridImperative>(null);
   const { close: closeModal } = useModal();

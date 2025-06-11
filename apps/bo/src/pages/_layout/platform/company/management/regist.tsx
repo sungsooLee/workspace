@@ -26,9 +26,6 @@ function RouteComponent() {
             {t('LABEL.button.list')}
           </Button>
         </LinkBox>
-        <Button variant="point" size="sm">
-          {t('LABEL.button.reset')}
-        </Button>
         <Button type="submit" variant="primary" size="sm">
           {t('LABEL.button.save')}
         </Button>

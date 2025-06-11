@@ -27,8 +27,8 @@ import {
   ModalWrapper,
   TableBox,
 } from '@learnway/ui';
-import { IcoDownload, IcoSetting, IcoArrowDown, IcoArrowUp } from '@learnway/icons';
-import { DATE_TIME_FORMAT, formatDate, getRandomId, getRowSelectionByList } from '@learnway/shared';
+import { IcoArrowDown, IcoArrowUp, IcoDownload, IcoSetting } from '@learnway/icons';
+import { getRandomId, getRowSelectionByList } from '@learnway/shared';
 import { PaginationResponse } from '../../../../bo/src/types';
 
 export default {
@@ -378,7 +378,7 @@ const fetchInfiniteData = async ({ tableState }: any): Promise<Person[]> => {
         <IcoDownload width={16} height={16} stroke={'#747D91'} />
       </Button>
     ),
-    subRows: index % 2 === 1 ? createSubRows(index, 2) : undefined,
+    children: index % 2 === 1 ? createSubRows(index, 2) : undefined,
   }));
 
   return data;
@@ -756,6 +756,29 @@ TemplateEditGrid.storyName = '셀 편집';
 // };
 // TemplateColumnSize.storyName = '컬럼 사이즈';
 
+// 컬럼 스타일 적용
+export const TemplateColumnStyle: any = (args: any) => {
+  const data = Array(2)
+    .fill(null)
+    .map((_, i) => ({
+      id: getRandomId(),
+      name: `name_${i}`,
+      name2: `name2_${i}`,
+      name3: `name3_${i}`,
+      name4: `name4_${i}`,
+      name5: `name5_${i}`,
+    }));
+  const columns = [
+    { accessorKey: 'name', size: 200, meta: { cellClass: 'title' } },
+    { accessorKey: 'name2' },
+    { accessorKey: 'name3' },
+    { accessorKey: 'name4' },
+    { accessorKey: 'name5' },
+  ];
+  return <GridBox data={data} columns={columns} hideHeader />;
+};
+TemplateColumnStyle.storyName = '컬럼 스타일 적용';
+
 // 테이블 모드
 export const TemplateTable: any = (args: any) => {
   const data = Array(10)
@@ -1083,35 +1106,35 @@ const fetchPaginatedData = (pageNumber = 0, pageSize = 10): PaginationResponse<a
 };
 
 const expandedColumns = [
-  columnHelper.accessor('expand', {
-    cell: ({ row, getValue }) => {
-      return (
-        <>
-          {row.getCanExpand() && (
-            <Button
-              onClick={row.getToggleExpandedHandler()}
-              onlyIcon={true}
-              icon={
-                row.getIsExpanded() ? (
-                  <IcoArrowUp width={16} height={16} stroke={'#6F798B'} />
-                ) : (
-                  <IcoArrowDown width={16} height={16} stroke={'#6F798B'} />
-                )
-              }
-              aria-expanded={row.getIsExpanded()}
-            />
-          )}
-        </>
-      );
-    },
-    header: 'expand',
-    enableGrouping: true,
-    size: 55,
-    meta: {
-      headerAlign: 'center', // 헤더만 가운데 정렬
-      cellAlign: 'center', // 셀은 오른쪽 정렬
-    },
-  }),
+  // columnHelper.accessor('expand', {
+  //   cell: ({ row, getValue }) => {
+  //     return (
+  //       <>
+  //         {row.getCanExpand() && (
+  //           <Button
+  //             onClick={row.getToggleExpandedHandler()}
+  //             onlyIcon={true}
+  //             icon={
+  //               row.getIsExpanded() ? (
+  //                 <IcoArrowUp width={16} height={16} stroke={'#6F798B'} />
+  //               ) : (
+  //                 <IcoArrowDown width={16} height={16} stroke={'#6F798B'} />
+  //               )
+  //             }
+  //             aria-expanded={row.getIsExpanded()}
+  //           />
+  //         )}
+  //       </>
+  //     );
+  //   },
+  //   header: 'expand',
+  //   enableGrouping: true,
+  //   size: 55,
+  //   meta: {
+  //     headerAlign: 'center', // 헤더만 가운데 정렬
+  //     cellAlign: 'center', // 셀은 오른쪽 정렬
+  //   },
+  // }),
   columnHelper.accessor('age', {
     cell: ({ row, getValue }) => {
       return (
@@ -1195,7 +1218,7 @@ const transformDataForTable = (data: any[], depth = 0): any[] => {
     };
 
     if (item.children && Array.isArray(item.children)) {
-      transformedItem.subRows = transformDataForTable(item.children, depth + 1);
+      transformedItem.children = transformDataForTable(item.children, depth + 1);
       delete transformedItem.children;
     }
 
@@ -1208,9 +1231,24 @@ const ExpandedTable = () => {
     return transformDataForTable(tmpExpandData);
   }, []);
 
+  const [tableState, setTableState] = useState({
+    sorting: [] as SortingState,
+    filters: [] as ColumnFiltersState,
+  });
+  const { data, isLoading } = useQuery({
+    queryKey: ['PersonEntity', tableState] as const,
+    queryFn: () => fetchInfiniteData({ tableState }),
+  });
+  console.log(transformedData);
   return (
     <div className="p-4">
-      <GridBox data={transformedData || []} columns={expandedColumns2} />
+      <GridBox
+        data={tmpExpandData}
+        // data={data}
+        columns={expandedColumns2}
+        showExpandColumn={true}
+        // showNumberingColumn={true}
+      />
     </div>
   );
 };
@@ -1229,26 +1267,26 @@ export const WithExpandColumn: Story = {
 };
 const columnHelper2 = createColumnHelper<any>();
 const expandedColumns2 = [
-  columnHelper2.accessor('expand', {
-    cell: ({ row }) => {
-      const toggleExpanded = () => {
-        row.toggleExpanded();
-      };
-      return (
-        <div
-          style={{
-            cursor: row.getCanExpand() ? 'pointer' : 'default',
-          }}
-          onClick={row.getCanExpand() ? toggleExpanded : undefined}
-        >
-          {row.getCanExpand() && <button>{row.getIsExpanded() ? '👇' : '👉'}</button>}
-        </div>
-      );
-    },
-    header: '확장',
-    size: 100,
-    enableSorting: false,
-  }),
+  // columnHelper2.accessor('expand', {
+  //   cell: ({ row }) => {
+  //     const toggleExpanded = () => {
+  //       row.toggleExpanded();
+  //     };
+  //     return (
+  //       <div
+  //         style={{
+  //           cursor: row.getCanExpand() ? 'pointer' : 'default',
+  //         }}
+  //         onClick={row.getCanExpand() ? toggleExpanded : undefined}
+  //       >
+  //         {row.getCanExpand() && <button>{row.getIsExpanded() ? '👇' : '👉'}</button>}
+  //       </div>
+  //     );
+  //   },
+  //   header: '확장',
+  //   size: 100,
+  //   enableSorting: false,
+  // }),
 
   // 콘텐츠명
   columnHelper2.accessor('contentName', {

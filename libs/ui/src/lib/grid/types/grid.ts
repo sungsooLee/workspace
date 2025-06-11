@@ -64,6 +64,12 @@ declare module '@tanstack/react-table' {
      * 컬럼 width
      */
     size?: 'auto' | number;
+
+    /**
+     * 컬럼에 커스텀 className 추가시 사용
+     * cell class
+     */
+    cellClass?: '';
   }
 }
 
@@ -267,6 +273,11 @@ export interface GridProps<T> {
   //   pageSizeOptions?: number[];
   // };
   subRows?: T[];
+
+  /**
+   * 확장 컬럼 표시 여부
+   */
+  showExpandColumn?: boolean;
 }
 
 /**

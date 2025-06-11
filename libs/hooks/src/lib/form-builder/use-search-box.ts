@@ -4,6 +4,8 @@ import { FormEvent, useMemo, useRef, useState } from 'react';
 import { extractSearchBoxDefaultValues } from './util';
 import { buildJodObject, ValidatorConfig, ValidatorFormat } from '@learnway/shared';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { filter, flatten } from 'lodash';
+import { ALL_OPTION } from './constants';
 /**
  * 동적 으로 검색 영역에 대한 지원을 하는 훅 (useSearchBox)
  *
@@ -119,8 +121,18 @@ const useSearchBoxHook = <T extends SearchBoxConfig>(config: T): UseSearchBoxRet
           config.builders.forEach((prop) => {
             const value = data[prop.name];
             objectParams[prop.name] = value ?? '';
-          });*/
-          onValid(data);
+            });*/
+          const multiDropdowns = filter(flatten(config.builders), {
+            type: 'dropdown',
+            isMulti: true,
+          });
+          const clonedData = { ...data };
+          multiDropdowns.map((builder) => {
+            if (builder.presetOptionLabel && Array.isArray(clonedData[builder.name])) {
+              clonedData[builder.name] = filter(clonedData[builder.name], (_) => _ !== ALL_OPTION);
+            }
+          });
+          onValid(clonedData);
         },
         (errors) => {
           console.log('Validation Errors:', errors);

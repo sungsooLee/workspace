@@ -143,8 +143,6 @@ const TreeNodeComponent = ({
   const isSourceTree = sourceTreeId ? treeId === sourceTreeId : false;
   const isDragDisabled = isTreeToTreeMode && isNodeSelected && isSourceTree;
   const shouldShowSelection = isTreeToTreeMode && isNodeSelected && isSourceTree;
-  // console.log(selectedItems?.some(item => item.key === enhanceNode.key))
-  // console.log(isNodeSelected, ` `, enhanceNode);
 
   // 드롭 위치가 유효한지 확인
   const isValidDropPosition = useCallback(() => {
@@ -255,7 +253,7 @@ const TreeNodeComponent = ({
 
     // 선택 스타일
     if (selectedNode && selectedNode.key === enhanceNode.key) {
-      styles.push('bg-[var(--gray1)]');
+      styles.push('bg-[var(--secondary5)]');
     }
     if (treeType === 'SHUTTLE_LIST' && isNodeSelected) {
       styles.push('bg-[var(--secondary5)]');
@@ -434,7 +432,6 @@ const TreeNodeComponent = ({
       const jsonData = e.dataTransfer.getData('application/json');
       if (jsonData) {
         droppedNode = JSON.parse(jsonData);
-        console.log(droppedNode);
       }
     } catch (error) {
       console.error('Failed to parse drag data:', error);
@@ -648,6 +645,7 @@ const TreeView = ({
   selectedItems,
   sourceTreeId,
   maxDepth,
+  isSelectableNode,
 }: TreeProps) => {
   // 내부 상태 관리
   const [initialData, setInitialData] = useState<EnhancedTreeNode[]>(
@@ -657,7 +655,7 @@ const TreeView = ({
   const [draggedNode, setDraggedNode] = useState<TreeNode | null>(null);
   const [internalSelectedNode, setInternalSelectedNode] = useState<TreeNode | null>(null);
   const [internalExpandedKeys, setInternalExpandedKeys] = useState<string[]>(initExpandedKeys);
-  const [originalExpandedKeys, setOriginalExpandedKeys] = useState<string[]>([]);
+  // const [originalExpandedKeys, setOriginalExpandedKeys] = useState<string[]>([]);
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const [draggedNodeKey, setDraggedNodeKey] = useState<string | null>(null);
 
@@ -749,7 +747,6 @@ const TreeView = ({
       collectVisibleNodePaths(newTreeData);
 
       const expandedKeysArray = [...newExpandedKeys];
-      console.log('Expanded keys for search:', expandedKeysArray);
 
       // 직접 내부 상태 변경 (의존성 사이클 끊기)
       setInternalExpandedKeys(expandedKeysArray);
@@ -793,7 +790,7 @@ const TreeView = ({
       const newExpandedKeys = expandTrigger ? getAllNodeKeys(treeData) : [];
       // 직접 상태 업데이트 사용
       updateExpandedKeys(newExpandedKeys);
-      setOriginalExpandedKeys(newExpandedKeys);
+      // setOriginalExpandedKeys(newExpandedKeys);
     }
   }, [expandTrigger, getAllNodeKeys, treeData, isSearching, updateExpandedKeys]);
 
@@ -812,22 +809,11 @@ const TreeView = ({
     const sourceTreeId = treeContext?.dragState?.sourceTreeId || null;
 
     if (!sourceNode) {
-      console.error('No source node available, aborting drop');
       return;
     }
 
     // 같은 트리인지 다른 트리인지 확인
     const actionType = sourceTreeId === treeId ? 'NODE_MOVE' : 'NODE_COPY';
-
-    // 디버깅을 위한 로그
-    console.log('Drop operation details:', {
-      actionType,
-      sourceNode,
-      targetNode,
-      position: dropPosition,
-      sourceTreeId,
-      targetTreeId: treeId,
-    });
 
     // 유효성 검증
     // 1. 같은 트리 내에서의 드롭이면 유효성 검사 수행
@@ -836,7 +822,6 @@ const TreeView = ({
       targetNode &&
       !isValidDrop(sourceNode.key, targetNode.key, treeData, dropPosition, type)
     ) {
-      console.warn('Invalid drop position within the same tree');
       return;
     }
 
@@ -1001,7 +986,14 @@ const TreeView = ({
   };
 
   // 노드 클릭 처리
-  const handleNodeClick = (node: TreeNode | null) => {
+  const handleNodeClick = (node: TreeNode) => {
+    //선택 가능한 노드 제약 조건 추가
+    if (node && node.key && isSelectableNode) {
+      const nodeLevel = getNodeLevel(treeData, node.key);
+      if (isSelectableNode && !isSelectableNode({ ...node, level: nodeLevel })) {
+        return;
+      }
+    }
     setInternalSelectedNode(node);
     if (onSelectedNodeChange && node) {
       onSelectedNodeChange(node);
@@ -1078,7 +1070,9 @@ const TreeView = ({
               onDragStart={handleDragStart}
               onDrop={handleDrop}
               isDraggable={canDragNode(node)}
-              onNodeClick={handleNodeClick}
+              onNodeClick={(node) => {
+                node && handleNodeClick(node);
+              }}
               nodeButtons={nodeButtons}
               treeType={type}
               searchKeyword={searchKeyword}

@@ -29,7 +29,19 @@ function RouteComponent() {
 
   const handleOnSearch = useCallback((data: any) => {
     console.log('search', data);
-    gridFetch(data);
+    const searchData = {
+      companyType: data.companyType,
+      name: data.name,
+      isUsed: data.isUsed,
+      modifyStartDate: data.modifyDate.from
+        ? getDateToString(new Date(data.modifyDate.from), 'YYYYMMDD')
+        : '',
+      modifyEndDate: data.modifyDate.to
+        ? getDateToString(new Date(data.modifyDate.to), 'YYYYMMDD')
+        : '',
+    };
+    console.log('searchData', searchData);
+    gridFetch(searchData);
   }, []);
 
   return (
@@ -59,20 +71,9 @@ const searchConfig: SearchBoxConfig = {
   builders: [
     [
       {
-        name: 'isUseLinkageSystem',
-        type: 'dropdown',
-        label: t('HR 연동 여부'),
-        value: '',
-        options: [
-          { value: '', label: t('전체') },
-          { value: 'true', label: t('HR 연동') },
-          { value: 'false', label: t('수동 등록') },
-        ],
-      },
-      {
         name: 'companyType',
         type: 'dropdown',
-        label: t('회사 구분'),
+        label: t('그룹'),
         value: '',
         optionsConfig: {
           options: [{ value: '', label: t('전체') }],
@@ -81,26 +82,15 @@ const searchConfig: SearchBoxConfig = {
       },
       {
         name: 'name',
-        type: 'dropdown',
+        type: 'text',
         label: t('회사명'),
         value: '',
-        optionsConfig: {
-          codeGroup: CODE_GROUP['manual.company.companyCode'],
-        },
-        dropdownConfig: {
-          onchange: () => {
-            return '';
-          },
-          isSearchable: true,
-          placeholder: '입력 선택',
-        },
+        placeholder: '',
       },
-    ],
-    [
       {
         name: 'isUsed',
         type: 'dropdown',
-        label: t('사용여부'),
+        label: t('회사정보 사용'),
         value: '',
         options: [
           { value: '', label: t('전체') },
@@ -109,23 +99,34 @@ const searchConfig: SearchBoxConfig = {
         ],
       },
       {
-        name: 'managerName',
-        type: 'text',
-        label: t('담당자'),
-        value: '',
-      },
-      /*
-      {
-        name: 'regStrDate', // regStrDate, regEndDate
+        name: 'modifyDate',
         type: 'date-range',
-        label: t('등록기간'),
+        label: t('수정 기간'),
         value: {
-          from: formUtils.now({ unit: 'day', offset: -30 }),
-          to: formUtils.now(),
+          from: undefined,
+          to: undefined,
         },
-      },*/
+      },
     ],
   ],
+  validator: {
+    modifyDate: {
+      conditions: [
+        {
+          fn: (values: any) => !values.modifyDate?.from && values.modifyDate?.to,
+          message: t('시작 날짜를 선택하세요'),
+        },
+        {
+          fn: (values: any) => values.modifyDate?.from && !values.modifyDate?.to,
+          message: t('종료 날짜를 선택하세요.'),
+        },
+        {
+          fn: (values: any) => values.modifyDate.from > values.modifyDate.to,
+          message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.'),
+        },
+      ],
+    },
+  },
 };
 
 const gridConfig: useGridBoxConfig = {
@@ -138,11 +139,10 @@ const gridConfig: useGridBoxConfig = {
     },
   ],
   data: [],
-
-  pagination: {
-    pageSize: 10,
-    pageIndex: 0,
-    totalRows: 0,
+  gridState: {
+    page: 0,
+    size: 10,
+    sort: [],
   },
 };
 
@@ -169,22 +169,9 @@ const columns = [
     ),
     enableGrouping: false,
   }),
-  columnHelper.accessor('useYn', {
+  columnHelper.accessor('isUsed', {
     header: t('회사정보 사용'),
     cell: (info) => (info.getValue() ? t('사용') : t('미사용')), // API 확인
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('createdBy', {
-    header: t('등록자'),
-    cell: (info) => (info.row.original.isUseLinkageSystem ? '시스템' : info.row.original.createdBy),
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('createdDate', {
-    header: t('등록일'),
-    cell: (info) =>
-      info.getValue() === null
-        ? ''
-        : getDateToString(new Date(info.row.original.createdDate), DATE_TIME_FORMAT.DATETIME_SEC),
     enableGrouping: false,
   }),
   columnHelper.accessor('lastModifiedBy', {
