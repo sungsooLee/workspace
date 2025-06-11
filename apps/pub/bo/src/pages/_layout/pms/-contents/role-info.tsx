@@ -196,6 +196,19 @@ const RoleInfoComponent: FC<{}> = ({}) => {
           {/* form_item */}
           <div className={formStyles.form_item}>
             <label htmlFor="name-roleName" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>{'역할타입'}</span>
+              {/* 필수 케이스 */}
+              <span className={cn(formStyles.status, formStyles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Input id="name-id" type="text" placeholder="입력" value="역할명" maxLength={40} />
+            </div>
+          </div>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-roleName" className={formStyles.form_label}>
               <span className={formStyles.form_text}>{'역할명'}</span>
               {/* 필수 케이스 */}
               <span className={cn(formStyles.status, formStyles.required)}>

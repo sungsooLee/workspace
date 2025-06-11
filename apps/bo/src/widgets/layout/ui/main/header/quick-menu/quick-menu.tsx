@@ -15,6 +15,7 @@ function QuickMenuComponent() {
   return (
     <div className={cn(styles.start, 'nlp--quick-menu')}>
       <div className={styles.menu_wrap}>
+        {/* TODO 퀵메뉴 정책 확인 필요 */}
         {/**
         <ul className={styles.menu_list}>
           {data?.map((menu: Menu, index: number) => {
@@ -28,6 +29,7 @@ function QuickMenuComponent() {
           })}
         </ul>
          */}
+        {/* 최근본메뉴, 즐겨찾기메뉴 */}
         <MyMenu />
       </div>
     </div>

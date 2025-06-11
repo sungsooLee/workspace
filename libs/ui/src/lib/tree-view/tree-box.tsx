@@ -139,7 +139,7 @@ const TreeBoxComponent = <T extends object>(
               <Button
                 variant="text"
                 size="sm"
-                className={layoutStyles.btn_text}
+                className={'btn_text'}
                 onClick={() => {
                   if (data) {
                     handleExpandAll();
@@ -151,7 +151,7 @@ const TreeBoxComponent = <T extends object>(
               <Button
                 variant="text"
                 size="sm"
-                className={layoutStyles.btn_text}
+                className={'btn_text'}
                 onClick={() => {
                   handleCollapseToLevel();
                 }}

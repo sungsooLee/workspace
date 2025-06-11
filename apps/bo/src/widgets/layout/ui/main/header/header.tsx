@@ -18,7 +18,7 @@ function HeaderComponent() {
       <header className={styles.header}>
         <h1>
           <Logo />
-          <strong className={styles.title}>{'HRD 센터'}</strong>
+          <strong className={styles.title}>{t('LABEL.common.hrdCenter')}</strong>
         </h1>
         <div className={cn(styles.nav_area, 'nav_area')}>
           <Navigate />

@@ -8,6 +8,7 @@ import styles from './notification.module.css';
 import { useNotificationsAction } from '@entities/notification';
 import { formatTimeAgo } from '@learnway/shared';
 import { Notification } from '@types';
+import { t } from 'i18next';
 
 const NotificationComponent = ({ notifications }: { notifications: Notification[] }) => {
   const { read, delete: deleteNotification } = useNotificationsAction();
@@ -26,8 +27,8 @@ const NotificationComponent = ({ notifications }: { notifications: Notification[
       {notifications.length === 0 ? (
         <p className={styles.empty}>
           <IcoBell03 width={48} height={48} stroke="#a9afbb" className={styles.ico_bell} />
-          새로운 알림이 없습니다.
-          <span className={styles.sub_text}>알림은 30일 동안 보관됩니다.</span>
+          {t('LABEL.message.notificationEmpty')}
+          <span className={styles.sub_text}>{t('LABEL.message.notificationSaveDay')}</span>
         </p>
       ) : (
         <ul className={styles.info_list}>

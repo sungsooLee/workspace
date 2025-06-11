@@ -76,11 +76,12 @@ export const PopoverContent = () => {
         </li>
 
         <li>
-          <Popover.Close asChild>
+          {/* TODO ITSM 추후 진행 */}
+          {/* <Popover.Close asChild>
             <a href={'https://naver.com'} target="_blank" rel="noopener noreferrer">
               {t('LABEL.common.itsm')}
             </a>
-          </Popover.Close>
+          </Popover.Close> */}
         </li>
       </ul>
 
@@ -89,7 +90,7 @@ export const PopoverContent = () => {
           <IcLogOut01 width={20} height={20} stroke="#3E4550" />
           <span>{t('LABEL.common.logout')}</span>
         </Button>
-        <p className={styles.customer_info}>{'고객센터 02-6296-6789'}</p>
+        <p className={styles.customer_info}>{`${t('LABEL.common.customerCenter')} 02-6296-6789`}</p>
       </div>
     </div>
   );

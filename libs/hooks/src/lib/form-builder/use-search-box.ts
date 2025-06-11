@@ -226,6 +226,7 @@ const useSearchBoxHook = <T extends SearchBoxConfig>(config: T): UseSearchBoxRet
     setFormError,
     getValues,
     setValue,
+    setOptions,
     clearFormError: clearErrors,
     formState,
     onFormChange,

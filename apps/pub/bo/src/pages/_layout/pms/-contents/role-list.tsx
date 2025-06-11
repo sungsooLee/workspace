@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { FormSubTitle } from '../../../../../../../bo/src/shared/ui/form';
-import { Button, TreeView, TreeNode } from '@learnway/ui';
+import { Button, TreeView, TreeNode, Input } from '@learnway/ui';
 /* style */
 import styles from './role-list.module.css';
 
@@ -72,6 +72,7 @@ const RoleListComponent: FC<{}> = ({}) => {
         label={'역할 목록'}
         actionNode={
           <>
+            <Input type="text" placeholder="검색" showSearchIcon={true} searchIconType={'search'} />
             <Button label={'전체펼침'} variant={'text'} size={'sm'} className="btn_text" disabled />
             <Button label={'전체닫기'} variant={'text'} size={'sm'} className="btn_text" disabled />
           </>
@@ -79,7 +80,7 @@ const RoleListComponent: FC<{}> = ({}) => {
         lineType={'light'}
       />
       <div className={styles.contents_wrap}>
-        <TreeView treeId="source" data={sourceData} />
+        <TreeView treeId="source" data={sourceData} searchKeyword="" />
       </div>
     </div>
   );

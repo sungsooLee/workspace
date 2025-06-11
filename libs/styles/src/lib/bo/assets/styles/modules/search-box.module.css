@@ -144,3 +144,11 @@
     @apply flex w-[24px] shrink-0 items-center justify-center;
   }
 }
+
+[class*='nlp--modal-content'] {
+  .start {
+    &.wrap + [class*='divider'] {
+      @apply mb-[24px] mt-[8px];
+    }
+  }
+}

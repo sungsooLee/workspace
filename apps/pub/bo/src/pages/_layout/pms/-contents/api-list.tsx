@@ -37,7 +37,14 @@ const ApiListComponent: FC<{}> = ({}) => {
   ] as ColumnDef<any, unknown>[];
   return (
     <div className={cn(styles.start, styles.wrap)}>
-      <GridBox data={data} columns={columns} showColumnSettings={false} multiple title="API 목록" />
+      <GridBox
+        data={data}
+        columns={columns}
+        showColumnSettings={false}
+        multiple
+        title="API 목록"
+        customButtonNode={<Button variant="save" size="sm" label={'저장'} />}
+      />
     </div>
   );
 };

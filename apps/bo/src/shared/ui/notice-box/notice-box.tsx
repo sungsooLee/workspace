@@ -2,6 +2,7 @@ import { cn } from '@learnway/shared';
 import styles from './notice-box.module.css';
 import { IcoAnnouncement03 } from '@learnway/icons';
 import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface NoticeComponentProps {
   title?: string;
@@ -22,6 +23,7 @@ const NoticeBoxComponent: FC<NoticeComponentProps> = ({
   type = 'bullet',
   className,
 }: NoticeComponentProps) => {
+  const { t } = useTranslation();
   return (
     <div
       className={cn(styles.start, styles.notice, outLine && styles.outline, 'notice', className)}
@@ -36,17 +38,17 @@ const NoticeBoxComponent: FC<NoticeComponentProps> = ({
       {/* 📝 텍스트 영역 */}
       <div className={styles.text_wrap}>
         {/* 제목 */}
-        {title && <strong className={styles.title}>{title}</strong>}
+        {title && <strong className={styles.title}>{t(title)}</strong>}
 
         {/* 단일 설명 */}
-        {description && <p className={styles.text}>{description}</p>}
+        {description && <p className={styles.text}>{t(description)}</p>}
 
         {/* 여러 줄 설명 */}
         {!!descriptions?.length && (
           <ul className={cn(styles.text_list, type && styles[type])}>
             {descriptions.map((d, i) => (
               <li key={`${d}-${i}`} className={styles.list}>
-                {d}
+                {t(d)}
               </li>
             ))}
           </ul>

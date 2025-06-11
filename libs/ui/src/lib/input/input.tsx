@@ -278,11 +278,13 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
           {/* suffixText */}
           {suffixText && <div className={styles.unit}>{suffixText}</div>}
           {/* 입력글자수/최대입력가능글자수 */}
-          {!hideInputLength && maxLength && (type === 'text' || type === 'alphanumeric') && (
-            <div
-              className={styles.count}
-            >{`${(value?.toString() || '').length} / ${maxLength}`}</div>
-          )}
+          {!hideInputLength &&
+            maxLength &&
+            (type === 'text' || type === 'password' || type === 'alphanumeric') && (
+              <div
+                className={styles.count}
+              >{`${(value?.toString() || '').length} / ${maxLength}`}</div>
+            )}
           {/* 아이콘 (돋보기, 검색) */}
           {showSearchIcon && (
             <Button

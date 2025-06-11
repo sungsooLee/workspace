@@ -102,16 +102,14 @@ const PopoverContent = () => {
 
   return (
     <div className={cn(styles.start, styles.mymenu_wrap)}>
-      <strong className={styles.tit}>{'최근 본 메뉴'}</strong>
+      <strong className={styles.tit}>{t('LABEL.common.recentMenu')}</strong>
       <div className={styles.word_contents}>
         {/* 최근 자주 사용한 메뉴 없는 경우 */}
         {recentMenu.length === 0 ? (
           <div className={styles.empty}>
             <IcoClock01 className={styles.icon_menu} width={48} height={48} stroke="#8C97AE" />
-            <p className={styles.text}>
-              최근 자주 사용한 메뉴를
-              <br />
-              최대 10개 까지 볼 수 있습니다.
+            <p className={cn(styles.text, 'whitespace-pre-wrap')}>
+              {t('LABEL.message.recentMenuInfo')}
             </p>
           </div>
         ) : (
@@ -132,7 +130,7 @@ const PopoverContent = () => {
           </div>
         )}
       </div>
-      <strong className={styles.tit}>{'즐겨찾기'}</strong>
+      <strong className={styles.tit}>{t('LABEL.common.favorites')}</strong>
       {menuFavoritesOptions?.length > 0 ? (
         <div className={styles.menu_list}>
           <List
@@ -182,10 +180,8 @@ const PopoverContent = () => {
       ) : (
         <div className={styles.empty}>
           <IcoStar02 className={styles.icon_menu} width={48} height={48} stroke="#8C97AE" />
-          <p className={styles.text}>
-            업무 화면에서 별아이콘을 클릭하면
-            <br />
-            즐겨찾기에 메뉴가 추가됩니다.
+          <p className={cn(styles.text, 'whitespace-pre-wrap')}>
+            {t('LABEL.message.favoritesMenuInfo')}
           </p>
         </div>
       )}
