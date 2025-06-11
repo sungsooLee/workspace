@@ -542,7 +542,9 @@
         "isCourseUsed": "교육활용",
         "useEnabledType": "사용가능",
         "localization": "현지화",
-        "updatedInfo": "수정정보"
+        "updatedInfo": "수정정보",
+        "langCountryCode": "언어",
+        "createdBy": "등록자"
       }
     },
     "alert": {

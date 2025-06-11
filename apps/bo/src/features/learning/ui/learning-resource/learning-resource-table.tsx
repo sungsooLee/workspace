@@ -115,6 +115,24 @@ function LearningResourceTableComponent() {
           value: '',
         },
       ],
+      [
+        {
+          name: 'langCountryCode',
+          type: 'dropdown',
+          label: t('LABEL.content.learning-resource.langCountryCode'),
+          value: '',
+          presetOptionLabel: t('선택'),
+          optionsConfig: {
+            codeGroup: CODE_GROUP['pms.multilingual.LangCountryCode'],
+          },
+        },
+        {
+          name: 'createdBy',
+          type: 'text',
+          label: t('LABEL.content.learning-resource.createdBy'),
+          value: '',
+        },
+      ],
     ],
     validator: {
       tenantUuid: true,
