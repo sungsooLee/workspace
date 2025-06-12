@@ -1,6 +1,6 @@
 import { Button, useModal } from '@learnway/ui';
 import { usePersonalInfoCheck } from '@learnway/auth';
-import { ExcelUploadModal } from '../../../features/shared';
+import { ExcelUploadModal } from '@features/shared';
 import { fileDownload } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
 import { IcoDownload, IcoUploadCloud } from '@learnway/icons';
