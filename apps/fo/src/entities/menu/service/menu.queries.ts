@@ -7,7 +7,7 @@ import { Menu } from '@learnway/auth';
 export const queryKeys = {
   all: ['menus'] as const,
   allByParentMenuId: (parentMenuId: number) => [...queryKeys.all, parentMenuId] as const,
-  detail: (menuId: string) => [...queryKeys.all, menuId] as const,
+  detail: (menuId: number) => [...queryKeys.all, menuId] as const,
 };
 
 export const queryOptions = {
@@ -35,7 +35,7 @@ export const queryOptions = {
         }
       : getQuerySkipToken<Menu[]>(),
 
-  detail: (menuId: string) => ({
+  detail: (menuId: number) => ({
     queryKey: queryKeys.detail(menuId),
     queryFn: () => MenuService.getMenu(menuId),
   }),

@@ -8,7 +8,7 @@ export function useFetchMenus(tenantId?: number) {
   return useQuery(queryOptions.all(tenantId));
 }
 
-export function useFetchMenu({ menuId }: { menuId: string }) {
+export function useFetchMenu({ menuId }: { menuId: number }) {
   return useQuery(queryOptions.detail(menuId));
 }
 
