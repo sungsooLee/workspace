@@ -57,7 +57,7 @@ function RouteComponent() {
       }
       // HTML 동영상
       case LEARNING_TYPE.HTML_VIDEO: {
-        router.navigate({ to: '/learning/resource/html-video/view' });
+        router.navigate({ to: '/learning/resource/html-video/regist' });
         break;
       }
       // 이미지

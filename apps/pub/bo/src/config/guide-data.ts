@@ -687,11 +687,29 @@ export const guideData = [
     remarks: '', // 비고
   },
   {
+    screenName: 'PMS/메인페이지관리_팝업관리_팝업등록',
+    pageId: 'pms/menu-main-registration',
+    screenId: 'NLP_BO_TMS_1109',
+    pageType: 'Page',
+    completionDate: '2025-06-12',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
+    screenName: 'PMS/메인페이지관리_공지사항관리',
+    pageId: 'pms/menu-main-notification-management',
+    screenId: 'NLP_BO_TMS_1129',
+    pageType: 'Page',
+    completionDate: '2025-06-12',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
     screenName: 'PMS/테넌트_조직관리',
     pageId: 'pms/menu-tenant-group-management',
     screenId: 'NLP_BO_TMS_1111_01',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-06-12',
     lastUpdateDate: '',
     remarks: '', // 비고
   },
@@ -700,7 +718,7 @@ export const guideData = [
     pageId: 'pms/menu-tenant-company-group',
     screenId: 'NLP_BO_TMS_1111_03',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-06-12',
     lastUpdateDate: '',
     remarks: '', // 비고
   },

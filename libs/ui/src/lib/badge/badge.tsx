@@ -8,7 +8,7 @@ import { Button } from '../button/button';
 
 export interface BadgeComponentProps extends PropsWithChildren {
   option: SelectOption;
-  variant?: 'dot' | 'number' | 'flag';
+  variant?: 'dot' | 'number' | 'flag' | 'text';
   status?: 'primary' | 'disabled' | 'success' | 'warning' | 'caution' | 'new' | 'error' | 'ing';
   size?: 'xs' | 'sm' | 'md' | 'lg'; // xs(28) , sm(32) , md(36), lg(40)
   className?: string;

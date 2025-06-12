@@ -48,5 +48,17 @@
         }
       }
     }
+    &.text {
+      @apply label_3_r rounded-[2px] px-[6px] py-[4px];
+      &.new {
+        @apply bg-[#ffeded];
+        button {
+          @apply p-0 text-[var(--status1)];
+        }
+      }
+      button {
+        @apply !h-auto leading-[11px];
+      }
+    }
   }
 }

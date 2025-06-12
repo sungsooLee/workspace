@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
 import { Popover, SelectOption } from '@learnway/ui';
-import { IcoCheck, IcoArrowDown } from '@learnway/icons';
+import { IcoCheck02, IcoArrowDown } from '@learnway/icons';
 import { Button } from '@learnway/ui';
 import { getDefaultLang } from '@learnway/config';
 import { useFetchAuthUser } from '@learnway/auth';
@@ -35,9 +35,16 @@ const PopoverContent = ({ data }: { data?: SelectOption[] }) => {
                 key={`LANGUAGE${index}`}
                 className={`${styles.btn} ${code.value === i18n.language ? styles.active : ''}`}
                 onClick={() => handleLanguage(code.value)}
-              >
-                {code.label}
-              </Button>
+                label={code.label}
+                icon={
+                  <IcoCheck02
+                    width={16}
+                    height={16}
+                    stroke="#131c30"
+                    className={styles.icon_check}
+                  />
+                }
+              />
             </li>
           ))}
         </ul>

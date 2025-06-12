@@ -20,13 +20,12 @@ function HeaderComponent() {
           <Logo />
           <strong className={styles.title}>{t('LABEL.common.hrdCenter')}</strong>
         </h1>
-        <div className={cn(styles.nav_area, 'nav_area')}>
-          <Navigate />
-        </div>
-
-        <div className={cn(styles.util, 'absolute left-[300px] top-[6px] flex items-center')}>
+        <div className={cn(styles.option_menu, 'option_menu')}>
           <GnbTenantSelect />
           <GnbRoleSelect />
+        </div>
+        <div className={cn(styles.nav_area, 'nav_area')}>
+          <Navigate />
         </div>
         <div className={cn(styles.util, 'util')}>
           <Language />

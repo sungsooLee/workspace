@@ -89,6 +89,9 @@
             @apply !bg-[#edfcff];
           }
         }
+        &:nth-last-child(1) td {
+          @apply !border-b-0;
+        }
       }
     }
   }

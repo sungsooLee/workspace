@@ -29,7 +29,7 @@
   label {
     @apply flex-1;
     & + div {
-      @apply !mt-[8px] flex flex-1 justify-end;
+      @apply !mt-0 flex flex-1 justify-end;
     }
   }
   p {

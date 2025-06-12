@@ -34,7 +34,7 @@ function BreadcrumbsComponent() {
                   <IcoArrowForward width={12} height={12} stroke="#131C30" />
                   {import.meta.env.VITE_LANGUAGE_DEV === 'true'
                     ? t(`${menu.menuCode}`) // t(`${menu.menuName}`)
-                    : t(`MENU.${menu.menuCode}`)}
+                    : t(`HRD_CENTER_MENU.${menu.menuCode}`)}
                 </Link>
               </li>
             );

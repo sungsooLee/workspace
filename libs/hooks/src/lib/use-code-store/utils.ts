@@ -16,9 +16,10 @@ const defaultFetchCodeGroup = async <K extends CODE_GROUP_TYPE>(
   const response = await httpService.get<any>(`${PMSApiPrefix()}/enum/${group}`, filter);
   if (response && response[0] && response[0][group]) {
     return response[0][group].map((item: CodeApiType) => ({
-      value: item.cdId,
-      label: item.multilingualKey || item.cdName,
       ...item,
+      value: item.cdId,
+      label: `SYSTEM_COMMON_CODE.${item.multilingualKey || item.cdName}`,
+      multilingualKey: `SYSTEM_COMMON_CODE.${item.multilingualKey || item.cdName}`,
     }));
   }
   return [];

@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
 import { cn } from '@learnway/shared';
-import styles from './contents-row.module.css';
+import styles from './contents-row-item.module.css';
 
 const ContentsRowItemComponent: FC<{ children: ReactNode; className?: string; type?: string }> = ({
   children,
@@ -8,7 +8,7 @@ const ContentsRowItemComponent: FC<{ children: ReactNode; className?: string; ty
   type,
 }) => {
   return (
-    <div className={cn(styles.row, className, 'nlp--contents-row', type && styles[type])}>
+    <div className={cn(styles.start, className, 'nlp--contents-row-item', type && styles[type])}>
       {children}
     </div>
   );

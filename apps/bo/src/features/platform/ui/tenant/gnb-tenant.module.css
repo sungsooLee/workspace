@@ -36,6 +36,9 @@
             }
           }
         }
+        &:not(:first-child) {
+          @apply border-t-[1px] border-solid border-[var(--gray3)];
+        }
       }
     }
   }

@@ -344,36 +344,36 @@ const CompanyDetailComponent: FC<any> = ({ mode }) => {
 
       <FormSubTitle label={t('로그인 및 인증 설정 정보')} lineType="dark" />
       <ContentsRow>
-        <FormRow provider={provider} name={'isUseSso'} />
-        <FormRow provider={provider} name={'passwordAuthType'} />
+        <ContentsRowItem>
+          <FormRow
+            provider={provider}
+            name={'isUseSso'}
+            className={dynamicFormStyles.form_item_horizontal}
+          />
+          <FormDisplay provider={provider} dependencies={[{ name: 'isUseSso', value: true }]}>
+            <ContentsRow>
+              <FormRow provider={provider} name={'ssoTypeList'} />
+            </ContentsRow>
+          </FormDisplay>
+        </ContentsRowItem>
+        <ContentsRowItem>
+          <FormRow provider={provider} name={'passwordAuthType'} />
+        </ContentsRowItem>
       </ContentsRow>
-      <FormDisplay provider={provider} dependencies={[{ name: 'isUseSso', value: true }]}>
-        <ContentsRow>
-          <FormRow className={dynamicFormStyles.w_half} provider={provider} name={'ssoTypeList'} />
-        </ContentsRow>
-      </FormDisplay>
 
       <ContentsRow>
         <ContentsRowItem>
-          <ContentsRow>
-            <FormRow
-              provider={provider}
-              name={'isUseTwoFactorAuth'}
-              className={dynamicFormStyles.form_item_horizontal}
-            ></FormRow>
-          </ContentsRow>
-          <ContentsRow>
-            <FormDisplay
-              provider={provider}
-              dependencies={[{ name: 'isUseTwoFactorAuth', value: true }]}
-            >
-              <FormRow
-                className={dynamicFormStyles.w_half}
-                provider={provider}
-                name={'twoFactorAuthPlatformTypeList'}
-              />
-            </FormDisplay>
-          </ContentsRow>
+          <FormRow
+            provider={provider}
+            name={'isUseTwoFactorAuth'}
+            className={dynamicFormStyles.form_item_horizontal}
+          ></FormRow>
+          <FormDisplay
+            provider={provider}
+            dependencies={[{ name: 'isUseTwoFactorAuth', value: true }]}
+          >
+            <FormRow provider={provider} name={'twoFactorAuthPlatformTypeList'} />
+          </FormDisplay>
         </ContentsRowItem>
         <ContentsRowItem>
           <FormRow

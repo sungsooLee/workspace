@@ -62,7 +62,7 @@ const PopoverContent = () => {
       name:
         import.meta.env.VITE_LANGUAGE_DEV === 'true'
           ? t(`${menu.menuName}`)
-          : t(`MENU.${menu.menuCode}`),
+          : t(`HRD_CENTER_MENU.${menu.menuCode}`),
     }));
   }, [menuFavorites]);
 

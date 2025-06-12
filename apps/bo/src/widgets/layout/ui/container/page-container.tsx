@@ -84,7 +84,7 @@ const PageContainerComponent: FC<{
   // 페이지 타이틀
   const title = useCreation(() => {
     const currentMenuCode = last(activeMenuDepth)?.menuCode;
-    return currentMenuCode ? `MENU.${currentMenuCode}` : meta?.title;
+    return currentMenuCode ? `HRD_CENTER_MENU.${currentMenuCode}` : meta?.title;
   }, [activeMenuDepth]);
 
   // 페이지 즐겨찾기 여부

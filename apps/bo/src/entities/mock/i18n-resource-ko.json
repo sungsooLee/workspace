@@ -300,11 +300,11 @@
         "removeAll": "전체 삭제",
         "courseList": "과정 목록",
         "guideDownload": "프로그램/가이드 다운로드",
-        "batchModify": "일괄설정",
+        "batchSetting": "일괄설정",
         "copy": "복사"
       },
       "tooltip": {
-        "batchModify": "학습자원의 담당자, 사용기한, 공유채널설정, \n교육자원활용, 보안콘텐츠 적용, 검수진행을 \n한번에 할 수 있어요."
+        "batchSetting": "학습자원의 담당자, 사용기한, 공유채널설정, \n교육자원활용, 보안콘텐츠 적용, 검수진행을 \n한번에 할 수 있어요."
       },
       "column": {
         "no": "NO.",
@@ -566,7 +566,15 @@
         "message": "하위 {{type}} 존재 시 삭제할 수 없습니다."
       },
       "movableSameLevel": "동일한 레벨 내에서만 매핑 및 이동이 가능합니다.",
-      "movableSameParent": "동일한 부모 {{type}}에만 매핑 및 이동이 가능합니다."
+      "movableSameParent": "동일한 부모 {{type}}에만 매핑 및 이동이 가능합니다.",
+      "contentTypeNotMatched": {
+        "title": "같은 유형의 학습자원들을 선택하세요.",
+        "content": "일괄설정은 같은 유형의 학습자원들에서만 적용됩니다."
+      },
+      "isCourseUsed": {
+        "title": "교육과정에서 사용 중입니다.",
+        "content": "사용 중인 학습자원은 일괄설정 불가합니다."
+      }
     }
   },
   "pms.multilingual.KeyTypeCode": {
