@@ -687,6 +687,15 @@ export const guideData = [
     remarks: '', // 비고
   },
   {
+    screenName: 'PMS/메인페이지관리_팝업관리_팝업등록',
+    pageId: 'pms/menu-main-registration',
+    screenId: 'NLP_BO_TMS_1109',
+    pageType: 'Page',
+    completionDate: '2025-06-12',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
     screenName: 'PMS/테넌트_조직관리',
     pageId: 'pms/menu-tenant-group-management',
     screenId: 'NLP_BO_TMS_1111_01',
