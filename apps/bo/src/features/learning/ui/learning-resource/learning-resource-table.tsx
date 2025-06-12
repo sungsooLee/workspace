@@ -18,7 +18,7 @@ import { leaningResourceQueryOptions } from '@entities/leaning-resource';
 import { ModifierInfoModal } from './learning-resource-modifier-info-modal';
 import { ProgramGuideModal } from './learning-resource-program-guide-modal';
 import { BatchSettingModal } from './learning-resource-batch-setting-modal';
-import { map, uniq } from 'lodash';
+import { map, some, uniq } from 'lodash';
 
 function LearningResourceTableComponent() {
   const { open: openModal, alert } = useModal();
@@ -261,6 +261,14 @@ function LearningResourceTableComponent() {
       return alert({
         title: t('LABEL.alert.contentTypeNotMatched.title'),
         content: t('LABEL.alert.contentTypeNotMatched.content'),
+      });
+    }
+
+    const selectedIsCourseUsed = map(selectedRows, 'isCouseUsed');
+    if (some(selectedIsCourseUsed)) {
+      return alert({
+        title: t('LABEL.alert.isCourseUsed.title'),
+        content: t('LABEL.alert.isCourseUsed.content'),
       });
     }
 
