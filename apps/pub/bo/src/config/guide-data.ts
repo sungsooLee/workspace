@@ -407,15 +407,15 @@ export const guideData = [
     lastUpdateDate: '',
     remarks: '', // 비고
   },
-  {
-    screenName: 'PMS/플랫폼관리/회사관리/회사상세_회사정보',
-    pageId: 'pms/group-management-info',
-    screenId: 'NLP_BO_TMS_1302',
-    pageType: 'Page',
-    completionDate: '',
-    lastUpdateDate: '',
-    remarks: '', // 비고
-  },
+  // {
+  //   screenName: 'PMS/플랫폼관리/회사관리/회사상세_회사정보',
+  //   pageId: 'pms/group-management-info',
+  //   screenId: 'NLP_BO_TMS_1302',
+  //   pageType: 'Page',
+  //   completionDate: '',
+  //   lastUpdateDate: '',
+  //   remarks: '', // 비고
+  // },
   // {
   //   screenName: 'PMS/플랫폼관리_회사/조직관리',
   //   pageId: 'pms/menu-platform-company-detail',
@@ -687,6 +687,42 @@ export const guideData = [
     remarks: '', // 비고
   },
   {
+    screenName: 'PMS/테넌트_조직관리',
+    pageId: 'pms/menu-tenant-group-management',
+    screenId: 'NLP_BO_TMS_1111_01',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
+    screenName: 'PMS/테넌트_회사조직',
+    pageId: 'pms/menu-tenant-company-group',
+    screenId: 'NLP_BO_TMS_1111_03',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
+    screenName: 'PMS/테넌트_유저관리',
+    pageId: 'pms/menu-tenant-user-management',
+    screenId: 'NLP_BO_TMS_1111_07',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
+    screenName: 'PMS/테넌트_유저관리_교육이력',
+    pageId: 'pms/menu-tenant-user-education',
+    screenId: 'NLP_BO_TMS_1111_12',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
     screenName: 'PMS/채널관리_개설신청관리',
     pageId: 'pms/menu-channel-open-management',
     screenId: 'NLP_BO_CHN_1401',
@@ -772,7 +808,7 @@ export const guideData = [
     pageId: 'language/language_history_list',
     screenId: 'NLP_BO_EDS_1626',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-06-12',
     lastUpdateDate: '',
     remarks: '', // 비고
   },
