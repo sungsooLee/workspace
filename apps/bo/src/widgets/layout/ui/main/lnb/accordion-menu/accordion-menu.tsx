@@ -106,6 +106,9 @@ const AccordionMenuComponent = ({
 
   const handleNavigate = (menu: Menu) => {
     if (!menu?.path) {
+      if (menu?.children?.[0]?.path) {
+        router.navigate({ to: menu.children[0].path });
+      }
       return;
     }
     router.navigate({ to: menu.path });

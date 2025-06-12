@@ -13,7 +13,7 @@ export default class MenuService {
     return httpService.get<Menu>(url);
   }
 
-  static getMenu(menuId: string) {
+  static getMenu(menuId: number) {
     return httpService.get<any>(`${PMSApiPrefix()}/menu/${menuId}`);
   }
 }

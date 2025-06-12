@@ -68,6 +68,9 @@
       [class*='num'] {
         @apply title_bo_4_b ml-[2px] inline-flex items-center text-[var(--secondary1)];
       }
+      p {
+        @apply body_3_r text-[var(--gray9)];
+      }
     }
   }
 }

@@ -34,6 +34,17 @@
       @apply left-[453px];
     }
   }
+  &.forty {
+    & > div {
+      @apply w-[calc(100%-592px)];
+      &:first-child {
+        @apply w-[592px];
+      }
+    }
+    &::before {
+      @apply left-[593px];
+    }
+  }
   &.third_children {
     & > div {
       @apply min-h-[calc(100vh-446px)] w-[calc((100%-452px)/2)] pr-[32px];

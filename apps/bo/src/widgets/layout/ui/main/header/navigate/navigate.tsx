@@ -6,13 +6,13 @@ import type { Menu } from '@learnway/auth';
 import { useActiveMenuDepthState, useMenuHierarchy } from '@learnway/auth';
 
 import styles from './navigate.module.css';
+import { cn } from '@learnway/shared';
 
 function NavigateComponent() {
   const { t } = useTranslation();
   const [activeMenuDepthMenu, setActiveMenuDepthMenu] = useActiveMenuDepthState();
   const { data } = useMenuHierarchy();
-  console.log('useMenuHierarchy', data);
-  const matchRoute = useMatchRoute();
+  // const matchRoute = useMatchRoute();
 
   // 히든메뉴는 노출하지 않음.
   const visibleMenu = useMemo(() => {
@@ -41,44 +41,17 @@ function NavigateComponent() {
       <nav className={styles.nav}>
         <ul>
           {visibleMenu?.map((menu: Menu, index: number) => {
+            const isActive = menu.menuId === activeMenuDepthMenu?.[0]?.menuId;
+            const path = menu.path ? menu.path : menu.children?.[0]?.path;
+            const menuName =
+              import.meta.env.VITE_LANGUAGE_DEV === 'true'
+                ? t(`${menu.menuName}`)
+                : t(`MENU.${menu.menuCode}`);
             return (
-              <li key={`${menu.key}_${index}`}>
-                {menu.path ? (
-                  <Link
-                    to={menu.path}
-                    key={menu.key}
-                    className={
-                      menu.path &&
-                      (matchRoute({ to: menu?.path }) ||
-                        activeMenuDepthMenu?.[0]?.path === menu?.path)
-                        ? styles.active
-                        : ''
-                    }
-                  >
-                    {import.meta.env.VITE_LANGUAGE_DEV === 'true'
-                      ? t(`${menu.menuName}`)
-                      : t(`MENU.${menu.menuCode}`)}
-                  </Link>
-                ) : (
-                  <Link
-                    to={menu.children?.[0]?.path}
-                    // onClick={() => {
-                    //   setActiveMenuDepthMenu([menu]);
-                    // }}
-                    key={menu.key}
-                    className={
-                      menu.path &&
-                      (matchRoute({ to: menu?.path }) ||
-                        activeMenuDepthMenu?.[0]?.path === menu?.path)
-                        ? styles.active
-                        : ''
-                    }
-                  >
-                    {import.meta.env.VITE_LANGUAGE_DEV === 'true'
-                      ? t(`${menu.menuName}`)
-                      : t(`MENU.${menu.menuCode}`)}
-                  </Link>
-                )}
+              <li key={`${menu.menuId}_${index}`}>
+                <Link to={path} className={cn(isActive && 'active')}>
+                  {menuName}
+                </Link>
               </li>
             );
           })}

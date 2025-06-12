@@ -5,10 +5,10 @@ import { cn } from '@learnway/shared';
 
 import { Navigate } from './navigate/navigate';
 import { QuickMenu } from './quick-menu/quick-menu';
-import { Logo, UserAvatar, NotificationButton } from '../../../../../features/layout';
-import { Language } from '../../../../../features/platform';
 
 import styles from './header.module.css';
+import { Logo, UserAvatar, NotificationButton } from '@features/layout';
+import { Language, GnbTenantSelect, GnbRoleSelect } from '@features/platform/ui';
 
 function HeaderComponent() {
   const { t } = useTranslation();
@@ -24,6 +24,10 @@ function HeaderComponent() {
           <Navigate />
         </div>
 
+        <div className={cn(styles.util, 'absolute left-[300px] top-[6px] flex items-center')}>
+          <GnbTenantSelect />
+          <GnbRoleSelect />
+        </div>
         <div className={cn(styles.util, 'util')}>
           <Language />
           <NotificationButton />

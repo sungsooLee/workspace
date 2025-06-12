@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
@@ -257,29 +258,37 @@ function RouteComponent() {
         <ContentsRow>
           {/* form_item */}
           <div className={formStyles.form_item}>
-            <label htmlFor="name-serviceType" className={formStyles.form_label}>
-              <span className={formStyles.form_text}>{'SSO 로그인 사용 및 SSO 로그인 유형'}</span>
-              <span className={formStyles.info_area}>
-                <Switch
-                  id="switch01"
-                  className={formStyles.btn_switch}
-                  label={checked[1] ? '사용' : '미사용'}
-                  checked={checked[1]}
-                  onCheckedChange={handleCheckedChange(1)}
-                />
-              </span>
-            </label>
-            <div className={formStyles.input_box}>
-              <CheckboxGroupFormField
-                options={[
-                  { value: 'option01', label: 'HMG SSO' },
-                  { value: 'option02', label: 'Autoway' },
-                  { value: 'option03', label: 'AES Link' },
-                ]}
-                value={['option01']}
-              />
+            <div className={formStyles.form_wrap}>
+              <div className={cn(formStyles.form_item, dynamicFormStyles.form_item_horizontal)}>
+                <label htmlFor="name-serviceType" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>
+                    {'SSO 로그인 사용 및 SSO 로그인 유형'}
+                  </span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Switch
+                    id="switch01"
+                    className={formStyles.btn_switch}
+                    label={checked[1] ? '사용' : '미사용'}
+                    checked={checked[1]}
+                    onCheckedChange={handleCheckedChange(1)}
+                  />
+                </div>
+              </div>
+              <div className={formStyles.form_item}>
+                <div className={formStyles.input_box}>
+                  <CheckboxGroupFormField
+                    options={[
+                      { value: 'option01', label: 'HMG SSO' },
+                      { value: 'option02', label: 'Autoway' },
+                      { value: 'option03', label: 'AES Link' },
+                    ]}
+                    value={['option01']}
+                  />
+                </div>
+                <p className={cn(formStyles.guide_text)}>{'SSO 로그인 사용 여부를 설정합니다. '}</p>
+              </div>
             </div>
-            <p className={cn(formStyles.guide_text)}>{'SSO 로그인 사용 여부를 설정합니다. '}</p>
           </div>
           {/* form_item */}
           <div className={formStyles.form_item}>

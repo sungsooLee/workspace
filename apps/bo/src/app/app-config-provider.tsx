@@ -1,13 +1,15 @@
 import { useEffect, useState, ReactNode } from 'react';
 import { useMount } from 'ahooks';
 
-import { initI18N, initZod, initAxios, tokenService } from '@learnway/config';
+import { initI18N, initZod, initAxios, tokenService, getDefaultLang } from '@learnway/config';
 import { Spinner, useModal } from '@learnway/ui';
 
 import { useFetchI18nResource, useFetchCodeGroups } from '../entities/platform';
 import { useAuthSignin } from '../features/auth';
 
 import '../styles.css';
+import { QueryClient } from '@tanstack/react-query';
+import { queryOptions } from '../entities/platform/service/i18n-resource.queries';
 
 declare global {
   interface Window {
@@ -28,6 +30,7 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
   const { data: i18nData } = useFetchI18nResource();
   const { reissue } = useAuthSignin();
   const { alert } = useModal();
+  const queryClient = new QueryClient();
 
   useMount(async () => {
     tokenService.refreshToken && (await reissue());
@@ -67,6 +70,18 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
 
     setIsLoading(false);
   }, [codeGroupData, i18nData]);
+
+  // useEffect(() => {
+  //   const supportedLanguages = ['ko', 'en'];
+  //   const currentLang = getDefaultLang();
+
+  //   // 현재 언어가 아닌 다른 언어들을 백그라운드에서 미리 로딩
+  //   supportedLanguages
+  //     .filter((lang) => lang !== currentLang)
+  //     .forEach((lang) => {
+  //       queryClient.prefetchQuery(queryOptions.detail(lang));
+  //     });
+  // }, []);
 
   if (isLoading) {
     return (

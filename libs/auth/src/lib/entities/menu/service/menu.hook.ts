@@ -8,7 +8,7 @@ export function useFetchMenus(tenantId?: number) {
   return useQuery(queryOptions.all(tenantId));
 }
 
-export function useFetchMenu({ menuId }: { menuId: string }) {
+export function useFetchMenu({ menuId }: { menuId: number }) {
   return useQuery(queryOptions.detail(menuId));
 }
 
@@ -53,6 +53,9 @@ export function useAsycFetchMenusForceRefatch(mutationOptions = {}) {
       try {
         await queryClient.invalidateQueries({ queryKey: queryKeys.all });
         const menus = await queryClient.fetchQuery(queryOptions.all(tenantId));
+
+        console.log('### menus', menus);
+
         return convertHierarchyToList(
           menus,
           /*
