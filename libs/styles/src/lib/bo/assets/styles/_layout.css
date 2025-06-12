@@ -38,7 +38,8 @@ body.scrolled {
     header {
       @apply !h-[50px] !overflow-hidden;
       h1,
-      .util {
+      .util,
+      .option_menu {
         @apply !hidden;
       }
     }
