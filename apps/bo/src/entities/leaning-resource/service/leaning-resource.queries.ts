@@ -1,6 +1,7 @@
 import LeaningResourceService from '../api/leaning-resource';
 
 export const queryKeys = {
+  userByUuid: ['user-by-uuid'] as const,
   contents: ['contents'] as const,
   s3FileDownload: ['file-s3-download'] as const,
   learningResources: ['learning-resources'] as const,
@@ -10,6 +11,13 @@ export const queryKeys = {
 };
 
 export const leaningResourceQueryOptions = {
+  getUser: (uuid: string) => ({
+    queryKey: queryKeys.userByUuid,
+    queryFn: () => LeaningResourceService.fetchUser(uuid),
+    cacheTime: 0,
+    staleTime: 0,
+    enabled: true,
+  }),
   getContents: (params: any) => ({
     queryKey: queryKeys.contents,
     queryFn: () => LeaningResourceService.fetchContents(params),
