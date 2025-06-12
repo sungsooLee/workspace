@@ -24,14 +24,15 @@ export default class I18nResourceService {
     const localResult = results[1];
     let merged = {};
 
-    if (localResult.status === 'fulfilled' && this.isValidObject(localResult.value)) {
-      merged = { ...localResult.value };
-    }
-
     if (s3Result.status === 'fulfilled' && this.isValidObject(s3Result.value)) {
-      merged = { ...merged, ...s3Result.value };
+      merged = { ...s3Result.value };
     }
 
+    if (localResult.status === 'fulfilled' && this.isValidObject(localResult.value)) {
+      merged = { ...merged, ...localResult.value };
+    }
+
+    console.log(merged);
     return merged;
   }
 
