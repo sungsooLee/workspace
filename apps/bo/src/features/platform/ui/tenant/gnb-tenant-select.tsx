@@ -6,6 +6,7 @@ import { IcoArrowDown } from '@learnway/icons';
 import { Button } from '@learnway/ui';
 import {
   Tenant,
+  useActiveMenuDepthState,
   useAsycFetchMenusForceRefatch,
   useFetchAuthUser,
   useUpdateUser,
@@ -17,6 +18,7 @@ import { useRouter } from '@tanstack/react-router';
 const PopoverContent = () => {
   const { data } = useFetchAuthUser();
   const { updateActiveTenant, updateMenu } = useUpdateUser();
+  const [_, setActiveMenuDepth] = useActiveMenuDepthState();
   const { asyncMenus } = useAsycFetchMenusForceRefatch();
   const router = useRouter();
 
@@ -28,8 +30,9 @@ const PopoverContent = () => {
     updateMenu(menus);
     router.navigate({ to: '/' });
 
-    // if (!menus?.length) {
-    // }
+    if (!menus?.length) {
+      setActiveMenuDepth([]);
+    }
   };
 
   if (!data || !data?.tenants) {
