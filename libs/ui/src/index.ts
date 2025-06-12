@@ -60,6 +60,7 @@ export * from './lib/grid/components/edit-input-cell';
 export * from './lib/grid/components/edit-radio-cell';
 export * from './lib/grid/components/edit-switch-cell';
 export * from './lib/grid/components/edit-textarea-cell';
+export * from './lib/grid/components/edit-time-range-cell';
 export * from './lib/grid/configs/column-factory';
 export * from './lib/grid/grid-box/table-box';
 export * from './lib/grid/grid-box/grid-box';

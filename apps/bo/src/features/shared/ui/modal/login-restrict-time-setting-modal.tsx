@@ -17,17 +17,22 @@ import {
   Switch,
   TimePicker,
   DatePicker,
+  EditDropdownCell,
+  EditSwitchCell,
+  EditTimeRangeCell,
+  GridFormField,
+  DateRange,
 } from '@learnway/ui';
 import { DateRangeFormField } from '@shared/ui/search-box';
-import { FormDisplay } from '@features/form/ui/form-display';
+import { CellContext } from '@tanstack/react-table';
 import { useDynamicForm, DynamicFormConfig, useCodeStore, CODE_GROUP } from '@learnway/hooks';
 import { FormRow } from '@shared/ui';
 import { formUtils } from '@entities/form-utils';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
-import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import dayjs from 'dayjs';
+import { timeFormatYear } from '@learnway/shared';
 
 const LoginRestrictTimeSettingModalComponent: FC<any> = () => {
   const { close } = useModal();
@@ -85,27 +90,63 @@ const LoginRestrictTimeSettingModalComponent: FC<any> = () => {
       );
   }, [watchedRestrictionType, watchedRestrictionSettingType]);
 
-  const handleAddRowClick = () => {
-    // TODO. 공통 컴포넌트 필요
-    const row: any = {
-      dayOfTheWeek: (
-        <Dropdown
-          className={dynamicFormStyles.short}
-          options={dayOfWeeksOptions.map((option) => ({ ...option, label: t(option.label || '') }))}
-          //onChange={handleBaseLocalChange}
+  // const handleAddRowClick = () => {
+  //   // TODO. 공통 컴포넌트 필요
+  //   const row: any = {
+  //     dayOfTheWeek: (
+  //       <Dropdown
+  //         className={dynamicFormStyles.short}
+  //         options={dayOfWeeksOptions.map((option) => ({ ...option, label: t(option.label || '') }))}
+  //         //onChange={handleBaseLocalChange}
+  //       />
+  //     ),
+  //     loginRestrictionTime: (
+  //       <div className="select_date_wrap">
+  //         <DatePicker displayType={'time'} size={'md'} />
+  //         <span className="dash"></span>
+  //         <DatePicker displayType={'time'} size={'md'} />
+  //       </div>
+  //     ),
+  //     isUsed: <Switch checked={true} />,
+  //   };
+  //   const row2: any = {
+  //     dayOfTheWeek: '',
+  //     loginRestrictionTime: '',
+  //     isUsed: true,
+  //   };
+  //   setTimeRestriction([...timeRestriction, row2]);
+  // };
+
+  const timeLimitColumns = [
+    {
+      header: '요일',
+      accessorKey: 'dayOfTheWeek',
+      size: 'auto',
+      cell: (info: CellContext<any, string>) => (
+        <EditDropdownCell
+          info={info}
+          dropdown={{
+            options: dayOfWeeksOptions.map((option) => ({
+              ...option,
+              label: t(option.label || ''),
+            })),
+          }}
         />
       ),
-      loginRestrictionTime: (
-        <div className="select_date_wrap">
-          <DatePicker displayType={'time'} size={'md'} />
-          <span className="dash"></span>
-          <DatePicker displayType={'time'} size={'md'} />
-        </div>
-      ),
-      isUsed: <Switch checked={true} />,
-    };
-    setTimeRestriction([...timeRestriction, row]);
-  };
+    },
+    {
+      header: '로그인 시간 제한',
+      accessorKey: 'loginRestrictionTime',
+      size: 'auto',
+      cell: (info: CellContext<any, DateRange>) => <EditTimeRangeCell info={info} />,
+    },
+    {
+      header: '사용 여부',
+      accessorKey: 'isUsed',
+      size: 150,
+      cell: (info: CellContext<any, boolean>) => <EditSwitchCell info={info} />,
+    },
+  ];
 
   return (
     <form className="form_row" onSubmit={onSubmit(handleOnSubmit)}>
@@ -133,7 +174,7 @@ const LoginRestrictTimeSettingModalComponent: FC<any> = () => {
             />
           </ContentsRow>
           <div style={{ display: timeLimitTableAreaDisabled ? 'none' : 'block' }}>
-            <TableBox
+            {/* <TableBox
               columns={columns}
               data={timeRestriction}
               tableMode={true}
@@ -144,7 +185,27 @@ const LoginRestrictTimeSettingModalComponent: FC<any> = () => {
               onAddClick={handleAddRowClick}
               showTotalCount={false}
               visibleRowCount={3}
-            />
+            /> */}
+            <ContentsRow>
+              <FormRow
+                provider={provider}
+                name={'timeLimits'}
+                element={
+                  <GridFormField
+                    gridProps={{
+                      multiple: true,
+                      showAdd: true,
+                      showRemove: true,
+                      showTotalCount: false,
+                      columns: timeLimitColumns,
+                      title: t('요일 및 시간 제한 설정'),
+                      visibleRowCount: 3,
+                      //onAddClick: handleAddRowClick,
+                    }}
+                  />
+                }
+              />
+            </ContentsRow>
           </div>
         </ModalBody>
         <ModalFooter>
@@ -201,6 +262,12 @@ const formConfig: DynamicFormConfig = {
         '근태 정보 연동 선택 시 각 사용자별 근태 정보를 기준으로 로그인 제한이 설정됩니다.',
       ),
     },
+    {
+      name: 'timeLimits',
+      type: 'custom',
+      label: '',
+      value: [],
+    },
   ],
   validator: {
     loginRestrictionName: true,
@@ -233,34 +300,34 @@ const formConfig: DynamicFormConfig = {
   },
 };
 
-const columnHelper = createColumnHelper<any>();
+// const columnHelper = createColumnHelper<any>();
 
-const columns = [
-  columnHelper.accessor('dayOfTheWeek', {
-    cell: (info) => info.getValue(),
-    header: t('요일'),
-    meta: {
-      size: 'auto',
-      headerAlign: 'center',
-      cellAlign: 'center',
-    },
-  }),
-  columnHelper.accessor('loginRestrictionTime', {
-    cell: (info) => info.getValue(),
-    header: t('로그인 제한 시간'),
-    size: 557,
-    meta: {
-      headerAlign: 'center',
-      cellAlign: 'center',
-    },
-  }),
-  columnHelper.accessor('isUsed', {
-    cell: (info) => info.getValue(),
-    header: t('사용 여부'),
-    meta: {
-      size: 'auto',
-      headerAlign: 'center',
-      cellAlign: 'center',
-    },
-  }),
-] as ColumnDef<any, unknown>[];
+// const columns = [
+//   columnHelper.accessor('dayOfTheWeek', {
+//     cell: (info) => info.getValue(),
+//     header: t('요일'),
+//     meta: {
+//       size: 'auto',
+//       headerAlign: 'center',
+//       cellAlign: 'center',
+//     },
+//   }),
+//   columnHelper.accessor('loginRestrictionTime', {
+//     cell: (info) => info.getValue(),
+//     header: t('로그인 제한 시간'),
+//     size: 557,
+//     meta: {
+//       headerAlign: 'center',
+//       cellAlign: 'center',
+//     },
+//   }),
+//   columnHelper.accessor('isUsed', {
+//     cell: (info) => info.getValue(),
+//     header: t('사용 여부'),
+//     meta: {
+//       size: 'auto',
+//       headerAlign: 'center',
+//       cellAlign: 'center',
+//     },
+//   }),
+// ] as ColumnDef<any, unknown>[];
