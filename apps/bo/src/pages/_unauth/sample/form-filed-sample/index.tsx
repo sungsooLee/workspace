@@ -5,20 +5,12 @@ import {
   Button,
   ChipListModalSelectorFormField,
   ContentsRow,
-  EditDropdownCell,
-  EditInputCell,
-  EditSwitchCell,
-  GridFormField,
+  EditorFormField,
   Input,
   InputModalSelectorFormField,
   ListModalSelectorFormField,
   useModal,
 } from '@learnway/ui';
-import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
-import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
-import { SubContents } from '../../../widgets/layout/ui/container/slot/sub-contents';
-import { FormRow } from '../../../shared/ui/form';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import {
   ChannelListModal,
@@ -26,9 +18,11 @@ import {
   ManagerListModal,
   TeacherListModal,
 } from '@features/learning/course';
-import { CellContext } from '@tanstack/react-table';
+import { ContentsButtons, MainContents, PageContainer } from '@widgets/layout';
+import { FormRow } from '@shared/ui';
+import { SubContents } from '@widgets/layout/ui/container/slot/sub-contents';
 
-export const Route = createFileRoute('/_unauth/operation_detail_test/')({
+export const Route = createFileRoute('/_unauth/sample/form-filed-sample/')({
   component: RouteComponent,
 });
 
@@ -82,58 +76,13 @@ function RouteComponent() {
               }
             />
           </ContentsRow>
+          {/* Editor */}
+          <ContentsRow>
+            <FormRow provider={provider} name={'에디터'} element={<EditorFormField />} />
+          </ContentsRow>
           {/* 강의유형 */}
           <ContentsRow>
             <FormRow provider={provider} name={'강의유형'} element={<LectureTypeSiteUrl />} />
-          </ContentsRow>
-          {/* 그리드 */}
-          <ContentsRow>
-            <FormRow
-              provider={provider}
-              name={'그리드'}
-              element={
-                <GridFormField
-                  gridProps={{
-                    multiple: true,
-                    showAdd: true,
-                    showRemove: true,
-                    showTotalCount: false,
-                    columns: [
-                      {
-                        header: 'text',
-                        accessorKey: 'text',
-                        size: 150,
-                        cell: (info: CellContext<any, string>) => (
-                          <EditInputCell info={info} input={{ type: 'text' }} />
-                        ),
-                      },
-                      {
-                        header: 'switch',
-                        accessorKey: 'switch',
-                        size: 150,
-                        cell: (info: CellContext<any, boolean>) => <EditSwitchCell info={info} />,
-                      },
-                      {
-                        header: 'dropdown',
-                        accessorKey: 'dropdown',
-                        size: 100,
-                        cell: (info: CellContext<any, string>) => (
-                          <EditDropdownCell
-                            info={info}
-                            dropdown={{
-                              options: [
-                                { value: `value1`, label: `label1` },
-                                { value: `value2`, label: `label2` },
-                              ],
-                            }}
-                          />
-                        ),
-                      },
-                    ],
-                  }}
-                />
-              }
-            />
           </ContentsRow>
           {/* 과정명 */}
           <ContentsRow>
@@ -279,21 +228,19 @@ const formConfig: DynamicFormConfig = {
       value: '',
     },
     {
+      name: '에디터',
+      type: 'custom',
+      label: 'Editor - EditorFormField',
+      value:
+        '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"editor sample text.....","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}',
+    },
+    {
       name: '강의유형',
       type: 'custom',
       label: t('강의유형 - 라디오버튼 + 체크박스2 + 인풋 + 라벨'),
       value: {},
       placeholder: '',
       description: '',
-    },
-    {
-      name: '그리드',
-      type: 'custom',
-      label: t('그리드'),
-      value: [
-        { text: 'text', dropdown: 'value1', id: '1' },
-        { text: 'text2', dropdown: 'value1', id: '2' },
-      ],
     },
     {
       name: '과정명',

@@ -71,17 +71,17 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
     setIsLoading(false);
   }, [codeGroupData, i18nData]);
 
-  useEffect(() => {
-    const supportedLanguages = ['ko', 'en'];
-    const currentLang = getDefaultLang();
+  // useEffect(() => {
+  //   const supportedLanguages = ['ko', 'en'];
+  //   const currentLang = getDefaultLang();
 
-    // 현재 언어가 아닌 다른 언어들을 백그라운드에서 미리 로딩
-    supportedLanguages
-      .filter((lang) => lang !== currentLang)
-      .forEach((lang) => {
-        queryClient.prefetchQuery(queryOptions.detail(lang));
-      });
-  }, []);
+  //   // 현재 언어가 아닌 다른 언어들을 백그라운드에서 미리 로딩
+  //   supportedLanguages
+  //     .filter((lang) => lang !== currentLang)
+  //     .forEach((lang) => {
+  //       queryClient.prefetchQuery(queryOptions.detail(lang));
+  //     });
+  // }, []);
 
   if (isLoading) {
     return (
