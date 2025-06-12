@@ -44,9 +44,7 @@ const RichTextEditor = () => {
               ErrorBoundary={ErrorBoundary}
             />
           </div>
-
           <DragDropPastePlugin />
-
           <AutoFocusPlugin />
           {scrollTarget && (
             <>

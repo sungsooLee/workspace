@@ -5,16 +5,12 @@ import {
   Button,
   ChipListModalSelectorFormField,
   ContentsRow,
+  EditorFormField,
   Input,
   InputModalSelectorFormField,
   ListModalSelectorFormField,
   useModal,
 } from '@learnway/ui';
-import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
-import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
-import { SubContents } from '../../../widgets/layout/ui/container/slot/sub-contents';
-import { FormRow } from '../../../shared/ui/form';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import {
   ChannelListModal,
@@ -22,8 +18,11 @@ import {
   ManagerListModal,
   TeacherListModal,
 } from '@features/learning/course';
+import { ContentsButtons, MainContents, PageContainer } from '@widgets/layout';
+import { FormRow } from '@shared/ui';
+import { SubContents } from '@widgets/layout/ui/container/slot/sub-contents';
 
-export const Route = createFileRoute('/_unauth/operation_detail_test/')({
+export const Route = createFileRoute('/_unauth/sample/form-filed-sample/')({
   component: RouteComponent,
 });
 
@@ -77,6 +76,10 @@ function RouteComponent() {
               }
             />
           </ContentsRow>
+          {/* Editor */}
+          <ContentsRow>
+            <FormRow provider={provider} name={'에디터'} element={<EditorFormField />} />
+          </ContentsRow>
           {/* 강의유형 */}
           <ContentsRow>
             <FormRow provider={provider} name={'강의유형'} element={<LectureTypeSiteUrl />} />
@@ -128,7 +131,14 @@ function RouteComponent() {
                     valueField: 'id',
                     wordwrap: true,
                   }}
-                  actionNode={<Button variant="text" size="sm" label={t('대상자')} onClick={() => openModal({content: <ManagerListModal />})} />}
+                  actionNode={
+                    <Button
+                      variant="text"
+                      size="sm"
+                      label={t('대상자')}
+                      onClick={() => openModal({ content: <ManagerListModal /> })}
+                    />
+                  }
                 />
               }
             />
@@ -216,6 +226,13 @@ const formConfig: DynamicFormConfig = {
       type: 'custom',
       label: '채널 - InputModalSelectorFormField',
       value: '',
+    },
+    {
+      name: '에디터',
+      type: 'custom',
+      label: 'Editor - EditorFormField',
+      value:
+        '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"editor sample text.....","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}',
     },
     {
       name: '강의유형',
