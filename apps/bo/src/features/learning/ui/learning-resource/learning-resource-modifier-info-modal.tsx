@@ -1,5 +1,5 @@
 // IA102 / NLP_BO_CMS_1055
-import { cn } from '@learnway/shared';
+import { cn, DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
 import { ModalContainer, ModalBody, ModalTitle } from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/info-list-box.module.css';
 import { t } from 'i18next';
@@ -17,6 +17,8 @@ function ModifierInfoModalComponent({
 }: ModifierInfoModalComponentProps) {
   const { data } = useQuery(leaningResourceQueryOptions.getUser(lastModifiedBy));
 
+  if (!data) return null;
+
   return (
     <ModalContainer>
       <ModalTitle>{t('수정자')}</ModalTitle>
@@ -25,15 +27,27 @@ function ModifierInfoModalComponent({
           <ul className={styles.info_list}>
             <li>
               <span className={styles.title}>{t('이름(사번)')}</span>
-              <span className={styles.data}>{'조일환(9500896)'}</span>
+              <span className={styles.data}>
+                {data.name}({data.employeeNumber})
+              </span>
             </li>
             <li>
               <span className={styles.title}>{t('이메일 주소')}</span>
-              <span className={styles.data}>{'95008965@ict-companion.com'}</span>
+              <span className={styles.data}>{data.email}</span>
             </li>
+            {(data.phoneNumber || data.companyTelephoneNumber) && (
+              <li>
+                <span className={styles.title}>{t('연락처')}</span>
+                <span className={styles.data}>
+                  {data.phoneNumber || data.companyTelephoneNumber}
+                </span>
+              </li>
+            )}
             <li>
-              <span className={styles.title}>{t('연락처')}</span>
-              <span className={styles.data}>{'+82 01012345678'}</span>
+              <span className={styles.title}>{t('수정일')}</span>
+              <span className={styles.data}>
+                {formatDate(modifiedDate, DATE_TIME_FORMAT.DATETIME_MIN)}
+              </span>
             </li>
           </ul>
         </div>
