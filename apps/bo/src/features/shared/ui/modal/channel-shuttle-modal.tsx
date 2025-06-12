@@ -25,16 +25,16 @@ const ChannelShuttleModalComponent = forwardRef((_) => {
     builders: [
       [
         {
-          name: 'channelName',
+          name: 'tenantId',
           type: 'text',
-          label: t('채널명'),
+          label: t('테넌트'),
           format: 'object',
           value: '',
         },
         {
-          name: 'tenantId',
+          name: 'channelName',
           type: 'text',
-          label: t('테넌트명'),
+          label: t('채널'),
           format: 'object',
           value: '',
         },
@@ -64,19 +64,19 @@ const ChannelShuttleModalComponent = forwardRef((_) => {
 
   const columnHelper = createColumnHelper<any>();
   const columns = [
-    columnHelper.accessor('channelName', {
-      header: t('채널명'),
-      size: 132,
-      cell: (info) => info.getValue(),
-    }),
-    columnHelper.accessor('companyName', {
-      header: t('회사'),
+    columnHelper.accessor('tenantName', {
+      header: t('테넌트'),
       size: 132,
       cell: (info) => info.getValue(),
       meta: {
         headerAlign: 'left', // 헤더만 가운데 정렬
         cellAlign: 'left', // 셀은 오른쪽 정렬
       },
+    }),
+    columnHelper.accessor('channelName', {
+      header: t('채널'),
+      size: 132,
+      cell: (info) => info.getValue(),
     }),
     columnHelper.accessor('channelOwnerId', {
       header: t('채널 소유자'),
