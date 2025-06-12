@@ -24,7 +24,7 @@ export default function DraggableBlockPlugin({
   const menuRef = useRef<HTMLDivElement>(null);
   const targetLineRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    console.log('draggable block plugin');
+    // console.log('draggable block plugin');
   }, []);
   return (
     <DraggableBlockPlugin_EXPERIMENTAL
