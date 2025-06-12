@@ -9,7 +9,7 @@ import { Input } from '../input/input';
 
 import styles from './thumbnail-image-upload.module.css';
 import { IcoLoading, IcoUploadCloud } from '@learnway/icons';
-import { useS3Uploader } from '@learnway/hooks';
+import { S3UploaderConfig, useS3Uploader } from '@learnway/hooks';
 
 export interface ThumbnailImageUploadProps {
   /**
@@ -28,6 +28,10 @@ export interface ThumbnailImageUploadProps {
    * 업로드 및 썸네일 목록 조작 기능 비활성화 여부
    */
   disabled?: boolean;
+  /**
+   * useS3Uploader 호출시 전달할 S3UploaderConfig
+   */
+  uploadConfig?: S3UploaderConfig;
   /**
    * 썸네일 항목 클릭 시 호출되는 콜백 함수
    * @param option - 클릭된 ImageOption 객체
@@ -64,6 +68,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
       options: ownerOptions,
       description,
       disabled,
+      uploadConfig,
       onItemClick,
       onChange,
       onCheckedChange,
@@ -85,6 +90,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
       stats: thumbnailStats,
     } = useS3Uploader({
       s3Path: 'public/thumbnail',
+      ...uploadConfig,
     });
 
     /**
