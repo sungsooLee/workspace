@@ -296,6 +296,9 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
         handleSelectedNodeChange={handleSelectedNodeChange}
         customDropValidator={customDropValidator}
         maxDepth={5}
+        isSelectableNode={(node: TreeNode) => {
+          return node && node.level !== 0;
+        }}
       />
       <div className={layoutStyles.inner}>
         <form onSubmit={onSubmit(handleOnSubmit)}>

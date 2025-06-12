@@ -445,6 +445,7 @@ export const calculateTargetIndex = (
  * @returns
  */
 export const getAllKeysByTree = (treeData: TreeNode[]) => {
+  if (!treeData) return;
   const getAllKeys = (nodes: TreeNode[]): string[] => {
     return nodes.reduce((keys: string[], node) => {
       keys.push(node.key);

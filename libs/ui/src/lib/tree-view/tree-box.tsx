@@ -93,7 +93,7 @@ const TreeBoxComponent = <T extends object>(
   const handleExpandAll = () => {
     if (data) {
       const allKeys = getAllKeysByTree(data);
-      handleExpandedKeysChange(allKeys);
+      allKeys && handleExpandedKeysChange(allKeys);
     }
   };
 
