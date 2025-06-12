@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useEffect, useRef, useState, useMemo } from 'react';
 
 import { cn } from '@learnway/shared';
 
@@ -89,9 +89,17 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
       files: thumbnailFiles,
       stats: thumbnailStats,
     } = useS3Uploader({
-      s3Path: 'public/thumbnail',
       ...uploadConfig,
+      s3Path: 'public/thumbnail',
     });
+
+    const acceptFileString = useMemo(() => {
+      if (!uploadConfig || !uploadConfig.acceptFiles) return '';
+      return uploadConfig.acceptFiles
+        .map((acceptFile: any) => (acceptFile.startsWith('.') ? acceptFile : `.${acceptFile}`))
+        .join(', ')
+        .toUpperCase();
+    }, [uploadConfig]);
 
     /**
      * '업로드' 버튼 클릭 시 숨겨진 파일 선택창을 엽니다.
@@ -179,6 +187,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
               disabled={disabled}
               className={styles.input_file}
               onChange={handleFilesChange}
+              accept={acceptFileString}
             />
           </div>
           {/*동영상 추출중 (처음에만 노출)*/}

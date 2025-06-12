@@ -231,6 +231,33 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             onPaste={handleAlphanumericPaste}
             maxLength={maxLength}
           />
+        ) : type === 'file' ? (
+          <input
+            ref={ref}
+            id={id}
+            value={value || ''}
+            readOnly={readOnly}
+            disabled={disabled}
+            type={type}
+            placeholder={placeholderText}
+            className={cn(styles.input, className)}
+            onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => {
+              if (event.key === 'Enter') {
+                event.preventDefault(); // Enter 키 기본 동작 방지
+                onEnterKeyDown?.(); // onEnterKeyDown callback
+              }
+              onKeyDown && onKeyDown(event);
+            }}
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              event.preventDefault();
+              event.stopPropagation();
+              handleInputChange(event?.target?.value);
+            }}
+            maxLength={maxLength}
+            accept={props.accept}
+          />
         ) : (
           <input
             ref={ref}
