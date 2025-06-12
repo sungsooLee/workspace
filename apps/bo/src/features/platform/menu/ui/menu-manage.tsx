@@ -735,9 +735,9 @@ const formConfig: DynamicFormConfig = {
     menuName: {
       required: true,
     },
-    path: {
-      required: true,
-    },
+    // path: {
+    //   required: true,
+    // },
     deviceNames: {
       required: {
         fn: (values) => {

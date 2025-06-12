@@ -11,7 +11,7 @@ import {
   useGridBox,
 } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
-import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
+import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { queryOptions } from '@entities/channel/service/channel.queries';
@@ -25,16 +25,26 @@ const ChannelListModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
     builders: [
       [
         {
-          name: 'channelName',
-          type: 'text',
-          label: t('채널명'),
-          format: 'object',
-          value: '',
+          name: 'tenantId',
+          type: 'dropdown',
+          format: 'number',
+          label: t('테넌트'),
+          value: undefined,
+          optionsConfig: {
+            codeGroup: CODE_GROUP['manual.tenant.tenantId'],
+          },
+          dropdownConfig: {
+            onchange: () => {
+              return '';
+            },
+            isSearchable: true,
+            placeholder: '입력 또는 선택',
+          },
         },
         {
-          name: 'tenantId',
+          name: 'channelName',
           type: 'text',
-          label: t('테넌트명'),
+          label: t('채널'),
           format: 'object',
           value: '',
         },
@@ -91,18 +101,18 @@ const ChannelListModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
     query: queryOptions.list,
     columns: [
       {
-        name: 'channelName',
-        label: t('채널명'),
-        render: (info: any) => info.row.original.channelName,
-      },
-      {
         name: 'tenantName',
-        label: t('테넌트명'),
+        label: t('테넌트'),
         render: (info: any) => info.row.original.tenantName,
       },
       {
+        name: 'channelName',
+        label: t('채널'),
+        render: (info: any) => info.row.original.channelName,
+      },
+      {
         name: 'companyName',
-        label: t('회사명'),
+        label: t('회사'),
         render: (info: any) => info.row.original.companyName,
       },
       {
@@ -112,7 +122,7 @@ const ChannelListModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
       },
       {
         name: 'isUniversalChannel',
-        label: t('채널 유형'),
+        label: t('채널구분'),
         render: (info: any) => {
           return info.row.original.isUniversalChannel
             ? t('LABEL.common.enable')

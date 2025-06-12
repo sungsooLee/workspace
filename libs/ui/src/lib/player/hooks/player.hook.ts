@@ -4,7 +4,7 @@ import ReactPlayer from 'react-player';
 export const usePlayer = () => {
   const playerContainerRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<ReactPlayer>(null);
-  const [playing, setPlaying] = useState(true);
+  const [playing, setPlaying] = useState(false);
   const [played, setPlayed] = useState(0); // 0.0 ~ 1.0
   const [duration, setDuration] = useState(0);
   const [subtitles, setSubtitles] = useState('');

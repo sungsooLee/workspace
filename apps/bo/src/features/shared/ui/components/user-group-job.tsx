@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 
-const UserGroupJobTitleComponent = ({ menuScopeCode, selectedApiKeys }: any) => {
+const UserGroupJobComponent = ({ menuScopeCode, selectedApiKeys }: any) => {
   const ref = useRef<ShuttleGridToChipsImperative>(null);
   const [option, setOption] = useState<any>();
   const [gridData, setGrideData] = useState<any[]>([]);
@@ -45,10 +45,10 @@ const UserGroupJobTitleComponent = ({ menuScopeCode, selectedApiKeys }: any) => 
       gridData={gridData}
       columns={columns}
       rowKey={'userId'}
-      leftTitle={t('유저그룹 - 호칭')}
+      leftTitle={t('유저그룹 - 직무')}
       rightTitle={t('선택 유저그룹 목록')}
     />
   );
 };
 
-export const UserGroupJobTitle = UserGroupJobTitleComponent;
+export const UserGroupJob = UserGroupJobComponent;

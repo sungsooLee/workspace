@@ -36,7 +36,7 @@ const guideProps: GuidePopupProps = {
 
 function HomeComponent() {
   return (
-    <PageContainer showFavoriteButton={false} guidePopupProps={guideProps}>
+    <PageContainer showFavoriteButton guidePopupProps={guideProps}>
       <MainContents>
         <h3>Dash Board</h3>
         <div className={style.guide_wrap}>

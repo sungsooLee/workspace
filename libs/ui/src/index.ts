@@ -31,6 +31,7 @@ export * from './lib/chips/chip-list';
 
 // contents-row
 export * from './lib/contents-row/contents-row';
+export * from './lib/contents-row/contents-row-item';
 
 // date-picker
 export * from './lib/date-picker/date-picker';
