@@ -18,6 +18,7 @@ import { leaningResourceQueryOptions } from '@entities/leaning-resource';
 import { ModifierInfoModal } from './learning-resource-modifier-info-modal';
 import { ProgramGuideModal } from './learning-resource-program-guide-modal';
 import { BatchSettingModal } from './learning-resource-batch-setting-modal';
+import { map } from 'lodash';
 
 function LearningResourceTableComponent() {
   const { open: openModal } = useModal();
@@ -247,6 +248,20 @@ function LearningResourceTableComponent() {
     gridFetch(query);
   }
 
+  function openProgramGuide() {
+    openModal({
+      width: 'md',
+      content: <ProgramGuideModal />,
+    });
+  }
+
+  function openBatchSetting() {
+    openModal({
+      width: 'xl',
+      content: <BatchSettingModal />,
+    });
+  }
+
   return (
     <>
       <SearchBox provider={searchProvider} onSearch={handleSearch} />
@@ -262,23 +277,13 @@ function LearningResourceTableComponent() {
             <Button
               label={t('LABEL.grid.header.guideDownload')}
               icon={<IcoDownload width={16} height={16} stroke="#4C515E" />}
-              onClick={() =>
-                openModal({
-                  width: 'md',
-                  content: <ProgramGuideModal />,
-                })
-              }
+              onClick={openProgramGuide}
             />
             <span className="type_tooltip">
               <Button
                 variant="text"
                 label={t('LABEL.grid.header.batchSetting')}
-                onClick={() =>
-                  openModal({
-                    width: 'xl',
-                    content: <BatchSettingModal />,
-                  })
-                }
+                onClick={openBatchSetting}
               />
               <Tooltip
                 side="bottom"
