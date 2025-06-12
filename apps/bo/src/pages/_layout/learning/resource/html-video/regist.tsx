@@ -1,16 +1,19 @@
 import { t } from 'i18next';
-import { Button, ContentsRow } from '@learnway/ui';
+import { Button, ContentsRow, useModal } from '@learnway/ui';
 import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '@shared/ui';
 import { createFileRoute } from '@tanstack/react-router';
 import { ContentsButtons, MainContents, PageContainer } from '@widgets/layout';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { SubContents } from '@widgets/layout/ui/container/slot/sub-contents';
-import { ImageInfo, SharedChannelGridFormField } from '@features/learning';
+import { LearningResourceFileUploadModal, SharedChannelGridFormField } from '@features/learning';
 import styles from './test-detail.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { cn } from '@learnway/shared';
+import style from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
+import { leaningResourceQueryOptions } from '@entities/leaning-resource';
+import { LEARNING_TYPE } from '@learnway/config';
 
-export const Route = createFileRoute('/_layout/learning/resource/html-video/view')({
+export const Route = createFileRoute('/_layout/learning/resource/html-video/regist')({
   component: RouteComponent,
 });
 
@@ -45,15 +48,6 @@ function RouteComponent() {
         description: '',
       },
       {
-        name: 'learningResourceDescription',
-        type: 'textarea',
-        label: t('학습자원 설명'),
-        readOnly: true,
-        placeholder: '',
-        maxLength: 2000,
-        value: '',
-      },
-      {
         name: 'manager',
         type: 'text',
         label: t('담당자'),
@@ -86,6 +80,34 @@ function RouteComponent() {
         type: 'switch',
         format: 'boolean',
         value: false,
+      },
+      {
+        name: 'DevelopmentCompany',
+        type: 'text',
+        label: t('개발업체'),
+        format: 'array',
+        value: [],
+        placeholder: '',
+        description: '',
+      },
+      {
+        name: 'DevelopmentCompanyManager',
+        type: 'text',
+        label: t('외주개발업체 담당자'),
+        format: 'array',
+        value: [],
+        placeholder: '',
+        description: '',
+      },
+      {
+        name: 'DevelopmentCompanyContact',
+        type: 'phone-number',
+        label: t('외주개발업체 연락처'),
+        value: '',
+        fields: {
+          nationCode: 'nationCode',
+          number: 'contact',
+        },
       },
       {
         label: t('썸네일'),
@@ -198,22 +220,78 @@ function RouteComponent() {
     },
   };
 
+  const infoList = [
+    { title: '파일명', text: '화면 기록 2024-11-28 오후 3.00.55.zip' },
+    { title: '파일용량', text: '1.97GB' },
+    { title: '파일형식', text: 'ZIP' },
+  ];
+
   const { provider, onSubmit, control, getValues, fetchData } = useDynamicForm(formConfig);
+  const { open: openModal } = useModal();
   const handleOnSubmit = () => {
     //
+  };
+  const { confirm: openConfirm } = useModal();
+
+  const onSave = async () => {
+    const feedback = await openConfirm({
+      title: t('LABEL.confirm.save.title'),
+      content: t('LABEL.confirm.save.message'),
+    });
+    feedback && save();
+  };
+  const goList = async () => {
+    const feedback = await openConfirm({
+      title: t('LABEL.confirm.list.title'),
+      content: t('LABEL.confirm.list.message'),
+    });
+    feedback && save();
+  };
+  const onDelete = async () => {
+    const feedback = await openConfirm({
+      title: t('LABEL.confirm.delete.title'),
+      content: (
+        <p>{`모든 정보가 삭제되며 복구 불가합니다.\n삭제 후 학습자원 조회화면으로 이동합니다.`}</p>
+      ),
+    });
+    feedback && save();
+  };
+
+  const save = () => {
+    console.log('save');
+  };
+
+  const onFileChange = async (params: { contentUuid: string; fileUuid: string }) => {
+    await leaningResourceQueryOptions.updateHTML5FileChange(params);
+  };
+
+  const openFileUpload = async () => {
+    const videoUploadResult = await openModal({
+      content: (
+        <LearningResourceFileUploadModal
+          channel={{ channelId: '', channelName: '' }}
+          type={LEARNING_TYPE.VIDEO}
+        />
+      ),
+      width: 'lg',
+    });
+  };
+
+  const downloadOriginal = () => {
+    console.log('download');
   };
 
   return (
     <form onSubmit={onSubmit(handleOnSubmit)}>
       <PageContainer>
         <ContentsButtons>
-          <Button type={'button'} variant="point" size="sm">
+          <Button type={'button'} variant="point" size="sm" onClick={goList}>
             목록
           </Button>
-          <Button type={'button'} variant="point" size="sm">
+          <Button type={'button'} variant="point" size="sm" onClick={onDelete}>
             삭제
           </Button>
-          <Button type={'button'} variant="point" size="sm">
+          <Button type={'button'} variant="point" size="sm" onClick={onSave}>
             저장
           </Button>
         </ContentsButtons>
@@ -226,6 +304,9 @@ function RouteComponent() {
             <FormRow provider={provider} name={'learningResourceName'} />
           </ContentsRow>
           <ContentsRow>
+            <FormRow provider={provider} name={'learningResourceDescription'} />
+          </ContentsRow>
+          <ContentsRow>
             <FormRow provider={provider} name={'manager'} />
             <FormRow provider={provider} name={'contact'} />
           </ContentsRow>
@@ -234,6 +315,13 @@ function RouteComponent() {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider} name={'isExternalDevelopmentCompany'} />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider} name={'DevelopmentCompany'} />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider} name={'DevelopmentCompanyManager'} />
+            <FormRow provider={provider} name={'DevelopmentCompanyContact'} />
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider} name="thumbnails" />
@@ -274,7 +362,36 @@ function RouteComponent() {
         </MainContents>
         <SubContents>
           <div className={styles.sub_container}>
-            <ImageInfo />
+            <strong className={style.title}>{t('업로드 파일')}</strong>
+            <ul className={style.btn_list}>
+              <li>
+                <Button
+                  className={style.btn_text}
+                  label={t('원본 다운로드')}
+                  onClick={downloadOriginal}
+                />
+              </li>
+              <li>
+                <Button
+                  className={style.btn_text}
+                  label={t('파일 변경')}
+                  onClick={openFileUpload}
+                />
+              </li>
+            </ul>
+            {/* media(비디오 영역) */}
+            <div className={style.media}>
+              <img src={'https://picsum.photos/200'} width="100%" alt="" />
+            </div>
+            {/* info_list */}
+            <ul className={style.info_list}>
+              {infoList.map((item, index) => (
+                <li key={index}>
+                  <span className={style.title}>{item.title}</span>
+                  <span className={style.text}>{item.text}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </SubContents>
       </PageContainer>
