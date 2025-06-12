@@ -300,11 +300,11 @@
         "removeAll": "전체 삭제",
         "courseList": "과정 목록",
         "guideDownload": "프로그램/가이드 다운로드",
-        "batchModify": "일괄설정",
+        "batchSetting": "일괄설정",
         "copy": "복사"
       },
       "tooltip": {
-        "batchModify": "학습자원의 담당자, 사용기한, 공유채널설정, \n교육자원활용, 보안콘텐츠 적용, 검수진행을 \n한번에 할 수 있어요."
+        "batchSetting": "학습자원의 담당자, 사용기한, 공유채널설정, \n교육자원활용, 보안콘텐츠 적용, 검수진행을 \n한번에 할 수 있어요."
       },
       "column": {
         "no": "NO.",

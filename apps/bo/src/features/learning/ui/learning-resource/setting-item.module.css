@@ -1,0 +1,23 @@
+/* setting-item.module.css */
+.start {
+  .guide {
+    @apply body_3_r mb-[20px] text-[#3e4550];
+    .num {
+      @apply inline-flex text-[var(--secondary1)];
+    }
+    .icon {
+      @apply inline-flex fill-[#00afd5] align-top;
+    }
+  }
+  .guide + div {
+    & > div {
+      @apply !mb-0;
+      & > div + div {
+        @apply !hidden;
+      }
+    }
+  }
+  .grid table thead th {
+    @apply border-b border-solid border-[var(--gray4)];
+  }
+}

@@ -1,0 +1,20 @@
+/* contents-layout.module */
+.start {
+  &.wrap {
+    .contents {
+      @apply flex;
+    }
+    .left_contents {
+      @apply w-[276px] shrink-0;
+    }
+    .main_contents {
+      @apply relative ml-[32px] flex-grow pl-[32px];
+      &::before {
+        @apply absolute left-0 top-0 h-full w-[1px] bg-[var(--gray4)] content-[''];
+      }
+    }
+  }
+  .title {
+    @apply mb-[20px] flex min-h-[40px] items-center border-b-[2px] border-solid border-[var(--gray9)];
+  }
+}

@@ -17,6 +17,7 @@ import { useState } from 'react';
 import { leaningResourceQueryOptions } from '@entities/leaning-resource';
 import { ModifierInfoModal } from './learning-resource-modifier-info-modal';
 import { ProgramGuideModal } from './learning-resource-program-guide-modal';
+import { BatchSettingModal } from './learning-resource-batch-setting-modal';
 
 function LearningResourceTableComponent() {
   const { open: openModal } = useModal();
@@ -269,11 +270,20 @@ function LearningResourceTableComponent() {
               }
             />
             <span className="type_tooltip">
-              <Button variant="text" label={t('LABEL.grid.header.batchModify')} />
+              <Button
+                variant="text"
+                label={t('LABEL.grid.header.batchSetting')}
+                onClick={() =>
+                  openModal({
+                    width: 'xl',
+                    content: <BatchSettingModal />,
+                  })
+                }
+              />
               <Tooltip
                 side="bottom"
                 align="start"
-                content={<pre>{t('LABEL.grid.tooltip.batchModify')}</pre>}
+                content={<pre>{t('LABEL.grid.tooltip.batchSetting')}</pre>}
               >
                 <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
               </Tooltip>
