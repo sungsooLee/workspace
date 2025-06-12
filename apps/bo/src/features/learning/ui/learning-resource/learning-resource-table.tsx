@@ -257,7 +257,7 @@ function LearningResourceTableComponent() {
 
   function openBatchSetting() {
     const selectedContentTypes = map(selectedRows, 'contentType');
-    if (uniq(selectedContentTypes).length > 1) {
+    if (uniq(selectedContentTypes).length !== 1) {
       return alert({
         title: t('LABEL.alert.contentTypeNotMatched.title'),
         content: t('LABEL.alert.contentTypeNotMatched.content'),
@@ -297,7 +297,6 @@ function LearningResourceTableComponent() {
             />
             <span className="type_tooltip">
               <Button
-                disabled={!selectedRows?.length}
                 variant="text"
                 label={t('LABEL.grid.header.batchSetting')}
                 onClick={openBatchSetting}
