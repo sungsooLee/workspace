@@ -28,11 +28,10 @@ const PopoverContent = () => {
     updateActiveTenant(tenant);
     const menus = await asyncMenus(tenant.tenantId);
     updateMenu(menus);
+    setActiveMenuDepth([]);
     router.navigate({ to: '/' });
-
-    if (!menus?.length) {
-      setActiveMenuDepth([]);
-    }
+    // if (!menus?.length) {
+    // }
   };
 
   if (!data || !data?.tenants) {
