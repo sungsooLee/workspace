@@ -66,3 +66,9 @@
     @apply mt-[32px] border-t-[1px] border-solid border-[var(--gray2)] pt-[32px];
   }
 }
+
+[class*='content_wrap'] .start {
+  [class*='divider'] {
+    @apply mx-0 w-full;
+  }
+}

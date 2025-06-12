@@ -73,6 +73,8 @@ import { Route as LayoutPmsMenuPlatformCompanyDetailImport } from './pages/_layo
 import { Route as LayoutPmsMenuPlatformCommonGroupImport } from './pages/_layout/pms/menu-platform-common-group'
 import { Route as LayoutPmsMenuPlatformImport } from './pages/_layout/pms/menu-platform'
 import { Route as LayoutPmsMenuManagementImport } from './pages/_layout/pms/menu-management'
+import { Route as LayoutPmsMenuMainRegistrationImport } from './pages/_layout/pms/menu-main-registration'
+import { Route as LayoutPmsMenuMainNotificationManagementImport } from './pages/_layout/pms/menu-main-notification-management'
 import { Route as LayoutPmsMenuEducationRegisterDetailImport } from './pages/_layout/pms/menu-education-register-detail'
 import { Route as LayoutPmsMenuEducationLocationManagementImport } from './pages/_layout/pms/menu-education-location-management'
 import { Route as LayoutPmsMenuChannelRegisterImport } from './pages/_layout/pms/menu-channel-register'
@@ -559,6 +561,20 @@ const LayoutPmsMenuManagementRoute = LayoutPmsMenuManagementImport.update({
   path: '/pms/menu-management',
   getParentRoute: () => LayoutRoute,
 } as any)
+
+const LayoutPmsMenuMainRegistrationRoute =
+  LayoutPmsMenuMainRegistrationImport.update({
+    id: '/pms/menu-main-registration',
+    path: '/pms/menu-main-registration',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutPmsMenuMainNotificationManagementRoute =
+  LayoutPmsMenuMainNotificationManagementImport.update({
+    id: '/pms/menu-main-notification-management',
+    path: '/pms/menu-main-notification-management',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 
 const LayoutPmsMenuEducationRegisterDetailRoute =
   LayoutPmsMenuEducationRegisterDetailImport.update({
@@ -1996,6 +2012,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutPmsMenuEducationRegisterDetailImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/pms/menu-main-notification-management': {
+      id: '/_layout/pms/menu-main-notification-management'
+      path: '/pms/menu-main-notification-management'
+      fullPath: '/pms/menu-main-notification-management'
+      preLoaderRoute: typeof LayoutPmsMenuMainNotificationManagementImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/pms/menu-main-registration': {
+      id: '/_layout/pms/menu-main-registration'
+      path: '/pms/menu-main-registration'
+      fullPath: '/pms/menu-main-registration'
+      preLoaderRoute: typeof LayoutPmsMenuMainRegistrationImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/pms/menu-management': {
       id: '/_layout/pms/menu-management'
       path: '/pms/menu-management'
@@ -2429,6 +2459,8 @@ interface LayoutRouteChildren {
   LayoutPmsMenuChannelRegisterRoute: typeof LayoutPmsMenuChannelRegisterRoute
   LayoutPmsMenuEducationLocationManagementRoute: typeof LayoutPmsMenuEducationLocationManagementRoute
   LayoutPmsMenuEducationRegisterDetailRoute: typeof LayoutPmsMenuEducationRegisterDetailRoute
+  LayoutPmsMenuMainNotificationManagementRoute: typeof LayoutPmsMenuMainNotificationManagementRoute
+  LayoutPmsMenuMainRegistrationRoute: typeof LayoutPmsMenuMainRegistrationRoute
   LayoutPmsMenuManagementRoute: typeof LayoutPmsMenuManagementRoute
   LayoutPmsMenuPlatformRoute: typeof LayoutPmsMenuPlatformRoute
   LayoutPmsMenuPlatformCommonGroupRoute: typeof LayoutPmsMenuPlatformCommonGroupRoute
@@ -2519,6 +2551,9 @@ const LayoutRouteChildren: LayoutRouteChildren = {
     LayoutPmsMenuEducationLocationManagementRoute,
   LayoutPmsMenuEducationRegisterDetailRoute:
     LayoutPmsMenuEducationRegisterDetailRoute,
+  LayoutPmsMenuMainNotificationManagementRoute:
+    LayoutPmsMenuMainNotificationManagementRoute,
+  LayoutPmsMenuMainRegistrationRoute: LayoutPmsMenuMainRegistrationRoute,
   LayoutPmsMenuManagementRoute: LayoutPmsMenuManagementRoute,
   LayoutPmsMenuPlatformRoute: LayoutPmsMenuPlatformRoute,
   LayoutPmsMenuPlatformCommonGroupRoute: LayoutPmsMenuPlatformCommonGroupRoute,
@@ -2688,6 +2723,8 @@ export interface FileRoutesByFullPath {
   '/pms/menu-channel-register': typeof LayoutPmsMenuChannelRegisterRoute
   '/pms/menu-education-location-management': typeof LayoutPmsMenuEducationLocationManagementRoute
   '/pms/menu-education-register-detail': typeof LayoutPmsMenuEducationRegisterDetailRoute
+  '/pms/menu-main-notification-management': typeof LayoutPmsMenuMainNotificationManagementRoute
+  '/pms/menu-main-registration': typeof LayoutPmsMenuMainRegistrationRoute
   '/pms/menu-management': typeof LayoutPmsMenuManagementRoute
   '/pms/menu-platform': typeof LayoutPmsMenuPlatformRoute
   '/pms/menu-platform-common-group': typeof LayoutPmsMenuPlatformCommonGroupRoute
@@ -2842,6 +2879,8 @@ export interface FileRoutesByTo {
   '/pms/menu-channel-register': typeof LayoutPmsMenuChannelRegisterRoute
   '/pms/menu-education-location-management': typeof LayoutPmsMenuEducationLocationManagementRoute
   '/pms/menu-education-register-detail': typeof LayoutPmsMenuEducationRegisterDetailRoute
+  '/pms/menu-main-notification-management': typeof LayoutPmsMenuMainNotificationManagementRoute
+  '/pms/menu-main-registration': typeof LayoutPmsMenuMainRegistrationRoute
   '/pms/menu-management': typeof LayoutPmsMenuManagementRoute
   '/pms/menu-platform': typeof LayoutPmsMenuPlatformRoute
   '/pms/menu-platform-common-group': typeof LayoutPmsMenuPlatformCommonGroupRoute
@@ -2999,6 +3038,8 @@ export interface FileRoutesById {
   '/_layout/pms/menu-channel-register': typeof LayoutPmsMenuChannelRegisterRoute
   '/_layout/pms/menu-education-location-management': typeof LayoutPmsMenuEducationLocationManagementRoute
   '/_layout/pms/menu-education-register-detail': typeof LayoutPmsMenuEducationRegisterDetailRoute
+  '/_layout/pms/menu-main-notification-management': typeof LayoutPmsMenuMainNotificationManagementRoute
+  '/_layout/pms/menu-main-registration': typeof LayoutPmsMenuMainRegistrationRoute
   '/_layout/pms/menu-management': typeof LayoutPmsMenuManagementRoute
   '/_layout/pms/menu-platform': typeof LayoutPmsMenuPlatformRoute
   '/_layout/pms/menu-platform-common-group': typeof LayoutPmsMenuPlatformCommonGroupRoute
@@ -3155,6 +3196,8 @@ export interface FileRouteTypes {
     | '/pms/menu-channel-register'
     | '/pms/menu-education-location-management'
     | '/pms/menu-education-register-detail'
+    | '/pms/menu-main-notification-management'
+    | '/pms/menu-main-registration'
     | '/pms/menu-management'
     | '/pms/menu-platform'
     | '/pms/menu-platform-common-group'
@@ -3308,6 +3351,8 @@ export interface FileRouteTypes {
     | '/pms/menu-channel-register'
     | '/pms/menu-education-location-management'
     | '/pms/menu-education-register-detail'
+    | '/pms/menu-main-notification-management'
+    | '/pms/menu-main-registration'
     | '/pms/menu-management'
     | '/pms/menu-platform'
     | '/pms/menu-platform-common-group'
@@ -3463,6 +3508,8 @@ export interface FileRouteTypes {
     | '/_layout/pms/menu-channel-register'
     | '/_layout/pms/menu-education-location-management'
     | '/_layout/pms/menu-education-register-detail'
+    | '/_layout/pms/menu-main-notification-management'
+    | '/_layout/pms/menu-main-registration'
     | '/_layout/pms/menu-management'
     | '/_layout/pms/menu-platform'
     | '/_layout/pms/menu-platform-common-group'
@@ -3657,6 +3704,8 @@ export const routeTree = rootRoute
         "/_layout/pms/menu-channel-register",
         "/_layout/pms/menu-education-location-management",
         "/_layout/pms/menu-education-register-detail",
+        "/_layout/pms/menu-main-notification-management",
+        "/_layout/pms/menu-main-registration",
         "/_layout/pms/menu-management",
         "/_layout/pms/menu-platform",
         "/_layout/pms/menu-platform-common-group",
@@ -4163,6 +4212,14 @@ export const routeTree = rootRoute
     },
     "/_layout/pms/menu-education-register-detail": {
       "filePath": "_layout/pms/menu-education-register-detail.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/menu-main-notification-management": {
+      "filePath": "_layout/pms/menu-main-notification-management.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/menu-main-registration": {
+      "filePath": "_layout/pms/menu-main-registration.tsx",
       "parent": "/_layout"
     },
     "/_layout/pms/menu-management": {

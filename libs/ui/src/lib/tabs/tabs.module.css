@@ -59,7 +59,7 @@
         }
       }
       &.sm {
-        & .list .trigger {
+        & > .list > .trigger {
           @apply !min-h-[42px];
         }
       }
