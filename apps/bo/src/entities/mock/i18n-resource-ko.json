@@ -566,7 +566,11 @@
         "message": "하위 {{type}} 존재 시 삭제할 수 없습니다."
       },
       "movableSameLevel": "동일한 레벨 내에서만 매핑 및 이동이 가능합니다.",
-      "movableSameParent": "동일한 부모 {{type}}에만 매핑 및 이동이 가능합니다."
+      "movableSameParent": "동일한 부모 {{type}}에만 매핑 및 이동이 가능합니다.",
+      "contentTypeNotMatched": {
+        "title": "같은 유형의 학습자원들을 선택하세요.",
+        "content": "일괄설정은 같은 유형의 학습자원들에서만 적용됩니다."
+      }
     }
   },
   "pms.multilingual.KeyTypeCode": {

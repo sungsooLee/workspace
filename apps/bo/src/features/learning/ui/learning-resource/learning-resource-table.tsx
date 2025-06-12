@@ -18,10 +18,10 @@ import { leaningResourceQueryOptions } from '@entities/leaning-resource';
 import { ModifierInfoModal } from './learning-resource-modifier-info-modal';
 import { ProgramGuideModal } from './learning-resource-program-guide-modal';
 import { BatchSettingModal } from './learning-resource-batch-setting-modal';
-import { map } from 'lodash';
+import { map, uniq } from 'lodash';
 
 function LearningResourceTableComponent() {
-  const { open: openModal } = useModal();
+  const { open: openModal, alert } = useModal();
 
   const searchConfig: any = {
     builders: [
@@ -256,6 +256,14 @@ function LearningResourceTableComponent() {
   }
 
   function openBatchSetting() {
+    const selectedContentTypes = map(selectedRows, 'contentType');
+    if (uniq(selectedContentTypes).length > 1) {
+      return alert({
+        title: t('LABEL.alert.contentTypeNotMatched.title'),
+        content: t('LABEL.alert.contentTypeNotMatched.content'),
+      });
+    }
+
     openModal({
       width: 'xl',
       content: <BatchSettingModal />,
@@ -281,6 +289,7 @@ function LearningResourceTableComponent() {
             />
             <span className="type_tooltip">
               <Button
+                disabled={!selectedRows?.length}
                 variant="text"
                 label={t('LABEL.grid.header.batchSetting')}
                 onClick={openBatchSetting}
