@@ -3,10 +3,9 @@ import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useRouterState } from '@tanstack/react-router';
 
-import { cn } from '@learnway/shared';
-import { CODE_GROUP, DynamicFormConfig, useCodeStore, useDynamicForm } from '@learnway/hooks';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
+import { cn } from '@learnway/shared';
 import {
   CheckboxGroupFormField,
   ChipListModalSelectorFormField,
@@ -14,12 +13,15 @@ import {
   TextareaFormField,
   useModal,
 } from '@learnway/ui';
+import { CODE_GROUP, DynamicFormConfig, useCodeStore, useDynamicForm } from '@learnway/hooks';
+
 import {
   FormSubTitle,
   ContentsHistoryInfoFormField,
   FormRow,
   ThumbnailListFormField,
 } from '@shared/ui';
+
 import { isEqual } from 'lodash';
 import { CompanyShuttleModal, RoleChoiceModal, UserChoiceModal } from '@features/shared';
 import {
@@ -82,7 +84,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
   const handleOnSubmit = async (data: any) => {
     console.log('data {} => ', data);
     const logoImageUrl = data.logoImageUrl?.length > 0 ? data.logoImageUrl[0] : '';
-
+    const tagStringList = data.tenantTagList.split(',');
     const payload = {
       ...data,
       tenantName: data.tenantName.fieldValue,
@@ -92,10 +94,8 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       isApp: data.device.includes(EnDeviceType.isApp),
       isCommonCategory: data.useCategory.includes(EnUseCategory.isCommonCategory),
       isTenantCategory: data.useCategory.includes(EnUseCategory.isTenantCategory),
-      companyTenantList: data.companyTenantList.map((i: any) => i.companyId),
-      tenantMappingRoleList: data.tenantMappingRoleList.map((i: any) => i.roleId),
-      tenantMappingUserList: data.tenantMappingUserList.map((i: any) => i.userId),
       tenantId: tenantId,
+      tenantTagList: tagStringList.map((item: string) => ({ tagName: item })),
     };
     console.log('payload {} => ', payload);
     if (await openConfirm('저장 하시겠습니까?')) {
@@ -117,26 +117,18 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       tenantData.isApp && device.push(EnDeviceType.isApp);
       tenantData.isCommonCategory && useCategory.push(EnUseCategory.isCommonCategory);
       tenantData.isTenantCategory && useCategory.push(EnUseCategory.isTenantCategory);
+      let tag = '';
+      if (tenantData.tenantTagList && tenantData.tenantTagList.length > 0) {
+        tag = tenantData.tenantTagList.map((item) => item.tagName).join(',');
+      }
       fetchData({
         ...tenantData,
         tenantName: { fieldValue: tenantData.tenantName, checkState: DuplicateState.okStart },
         logoImageUrl: logoImageUrl,
         device: device,
         useCategory: useCategory,
-        companyTenantList: tenantData.companyTenantList.map((item) => ({
-          companyId: item.companyId,
-          name: item.companyName,
-        })),
-        tenantMappingLanguageTypeList: tenantData.tenantLanguageList,
-        tenantMappingUserList: tenantData.tenantUserList.map((item) => ({
-          userId: item.userId,
-          name: item.userName || '이름-없음',
-        })),
-        tenantMappingRoleList: tenantData.tenantRoleList.map((item) => ({
-          roleId: item.roleId,
-          name: item.roleName,
-        })),
         tenantDesc: tenantData.tenantDesc ?? '',
+        tenantTagList: tag,
       });
     }
   }, [tenantData]);
@@ -179,7 +171,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       <ContentsRow>
         <FormRow
           provider={provider}
-          name="tenantMappingUserList"
+          name="tenantUserList"
           element={
             <ChipListModalSelectorFormField
               chipList={{

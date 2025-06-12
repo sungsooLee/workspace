@@ -39,13 +39,6 @@ export const Route = createFileRoute('/_layout/platform/tenant/management/regist
   }),
 });
 
-const duplicateCheck = async (tenantName: string) => {
-  const result: boolean = await TenantService.existTenant(tenantName);
-
-  if (result) return DuplicateState.duplicated;
-  else return DuplicateState.ok;
-};
-
 /**
  * 화면번호: NLP_BO_TMS_1001
  * @returns
@@ -92,9 +85,6 @@ function RouteComponent() {
       isApp: data.device.includes(EnDeviceType.isApp),
       isCommonCategory: data.useCategory.includes(EnUseCategory.isCommonCategory),
       isTenantCategory: data.useCategory.includes(EnUseCategory.isTenantCategory),
-      companyTenantList: data.companyTenantList.map((i: any) => i.companyId),
-      tenantMappingRoleList: data.tenantMappingRoleList.map((i: any) => i.roleId),
-      tenantMappingUserList: data.tenantMappingUserList.map((i: any) => i.userId),
     };
     console.log('payload {} => ', payload);
     if (await openConfirm('저장 하시겠습니까?')) {
@@ -158,37 +148,21 @@ function RouteComponent() {
             />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider} name="logoImageUrl" element={<ThumbnailListFormField />} />
-          </ContentsRow>
-          {/* <ContentsRow>
             <FormRow
               provider={provider}
-              name="tenantMappingUserList"
-              element={
-                <ChipListModalSelectorFormField
-                  chipList={{
-                    labelField: 'name',
-                    valueField: 'userId',
-                    wordwrap: true,
-                  }}
-                  modalConfig={{
-                    title: '',
-                    width: 'xl',
-                    content: <UserChoiceModal />,
-                  }}
-                />
-              }
+              name="logoImageUrl"
+              element={<ThumbnailListFormField uploadConfig={s3UploadConfig} />}
             />
-          </ContentsRow> */}
+          </ContentsRow>
           <ContentsRow>
             <FormRow
               provider={provider}
-              name="tenantMappingUserList"
+              name="tenantUserList"
               element={
                 <ChipListModalSelectorFormField
                   chipList={{
                     labelField: 'name',
-                    valueField: 'userId',
+                    valueField: 'userUuid',
                   }}
                   modalConfig={{
                     title: '',
@@ -200,7 +174,7 @@ function RouteComponent() {
             />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider} name="tenantBillingTag" />
+            <FormRow provider={provider} name="tenantTagList" />
           </ContentsRow>
           <ContentsRow>
             <FormRow
@@ -246,7 +220,7 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow
               provider={provider}
-              name="tenantMappingLanguageTypeList"
+              name="langCountryCodeTypeList"
               element={<CheckboxGroupFormField options={languageTypeList} />}
             />
           </ContentsRow>
@@ -255,6 +229,19 @@ function RouteComponent() {
     </PageContainer>
   );
 }
+
+const duplicateCheck = async (tenantName: string) => {
+  const result: boolean = await TenantService.existTenant(tenantName);
+
+  if (result) return DuplicateState.duplicated;
+  else return DuplicateState.ok;
+};
+
+const s3UploadConfig = {
+  acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
+  maxFileCount: 1,
+  maxFileSize: 1024 * 1024 * 50,
+};
 
 const formConfig: DynamicFormConfig = {
   builders: [
@@ -268,15 +255,18 @@ const formConfig: DynamicFormConfig = {
       maxLength: 150,
     },
     {
-      label: t('테넌트 로고 (Size : 000x000)'),
+      label: t('테넌트 로고'),
       name: 'logoImageUrl',
       type: 'custom',
       format: 'array',
       value: [],
       tooltip: t('테넌트에 사용할 로고로 파일 1개만 등록할 수 있습니다.'),
+      guideText: t(
+        '파일 사이즈 000x000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 1개 / 파일용량 최대 50MB',
+      ),
     },
     {
-      name: 'tenantMappingUserList',
+      name: 'tenantUserList',
       label: t('테넌트 담당자'),
       type: 'custom',
       format: 'array',
@@ -284,14 +274,7 @@ const formConfig: DynamicFormConfig = {
       placeholder: t('담당자를 선택해주세요.'),
     },
     {
-      name: 'tenantMappingRoleList',
-      type: 'custom',
-      label: t('테넌트 역할'),
-      format: 'array',
-      value: [],
-    },
-    {
-      name: 'tenantBillingTag',
+      name: 'tenantTagList',
       type: 'text',
       label: t('테넌트 정산 태그'),
       value: '',
@@ -367,7 +350,7 @@ const formConfig: DynamicFormConfig = {
       showSelectAll: true,
     },
     {
-      name: 'tenantMappingLanguageTypeList',
+      name: 'langCountryCodeTypeList',
       type: 'checkbox-group',
       label: t('언어'),
       format: 'array',
@@ -437,8 +420,8 @@ const formConfig: DynamicFormConfig = {
         },
       ],
     },
-    tenantMappingUserList: { required: true },
-    tenantBillingTag: { required: true },
+    tenantUserList: { required: true },
+    tenantTagList: { required: true },
     companyTenantList: { required: true },
     isUsed: { required: true },
     isSecurityPledge: { required: true },
@@ -462,10 +445,10 @@ const formConfig: DynamicFormConfig = {
         message: t('1개 이상 선택하세요.'),
       },
     },
-    tenantMappingLanguageTypeList: {
+    langCountryCodeTypeList: {
       required: {
         fn: (values) => {
-          return values.tenantMappingLanguageTypeList.length === 0;
+          return values.langCountryCodeTypeList.length === 0;
         },
         message: t('1개 이상 선택하세요.'),
       },
