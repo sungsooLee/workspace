@@ -239,6 +239,7 @@ function LearningResourceTableComponent() {
 
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
+  const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const [tableInstance, setTableInstance] = useState<Table<any>>(); // Grid 로부터 받을 table 인스턴스를 저장할 상태
 
   function handleSearch(query: Record<string, any>) {
@@ -254,6 +255,7 @@ function LearningResourceTableComponent() {
         showNumberingColumn
         multiple
         showExpandColumn
+        onRowsSelect={setSelectedRows}
         customButtonNode={
           <>
             <Button
