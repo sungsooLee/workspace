@@ -13,7 +13,7 @@ import { useCreation } from 'ahooks';
 import { isArray, last } from 'lodash';
 import { t } from 'i18next';
 import { cn } from '@learnway/shared';
-import { Button, Popover } from '@learnway/ui';
+import { Button, Popover, useModal } from '@learnway/ui';
 import { IcoStar, IcoArrowLineTop, IcoAlertCircle, IcoClose02 } from '@learnway/icons';
 import { useCurrentRoute } from '@learnway/hooks';
 import {
@@ -80,7 +80,7 @@ const PageContainerComponent: FC<{
 
   const { createMenuFavorites } = useCreateMenuFavorites();
   const { deleteMenuFavorites } = useDeleteMenuFavorites();
-
+  const { alert: openAlert } = useModal();
   // 페이지 타이틀
   const title = useCreation(() => {
     const currentMenuCode = last(activeMenuDepth)?.menuCode;
@@ -205,6 +205,14 @@ const PageContainerComponent: FC<{
                 return prev?.map((menu) =>
                   menu.menuId === currentMenu.menuId ? { ...menu, isFavorite: true } : menu,
                 );
+              });
+            }
+          },
+          onError: (data: any) => {
+            if (data && data?.code && data?.code === 'B001') {
+              openAlert({
+                title: t('LABEL.alert.notFavoritesAdd.title'),
+                content: t('LABEL.alert.notFavoritesAdd.message'),
               });
             }
           },
