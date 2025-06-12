@@ -69,6 +69,11 @@ export default class LeaningResourceService {
     });
   }
 
+  // HTML5 동영상 콘텐츠 관리
+  static updateHTML5FileChange(params: { contentUuid: string; fileUuid: string }): Promise<any> {
+    return httpService.put(`${CMSApiPrefix()}/html5/file/change`, params);
+  }
+
   static fetchProgramGuideDownload() {
     return new Promise((resolve) => {
       const sharedHistories = Array.from({ length: 10 }, (_, id) => ({

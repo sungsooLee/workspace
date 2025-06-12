@@ -17,6 +17,7 @@ export const leaningResourceQueryOptions = {
     staleTime: 0,
     enabled: true,
   }),
+
   getS3FileDownload: (key: string, fileName: string) => ({
     queryKey: queryKeys.s3FileDownload,
     queryFn: () => LeaningResourceService.fetchS3FileDownload(key, fileName),
@@ -51,5 +52,13 @@ export const leaningResourceQueryOptions = {
     cacheTime: 0,
     staleTime: 0,
     enabled: false,
+  }),
+
+  updateHTML5FileChange: (params: { contentUuid: string; fileUuid: string }) => ({
+    queryKey: queryKeys.contents,
+    queryFn: () => LeaningResourceService.updateHTML5FileChange(params),
+    cacheTime: 0,
+    staleTime: 0,
+    enabled: true,
   }),
 };
