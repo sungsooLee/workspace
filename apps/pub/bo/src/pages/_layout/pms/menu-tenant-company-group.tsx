@@ -7,6 +7,7 @@ import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.modu
 
 /* tab contents */
 import { CompanyGroupConfirm } from './-tabcontents/company-group-confirm'; // 회사조직(원본)
+import { CompanyGroupPlatform } from './-tabcontents/company-group-platform'; // 회사조직(플랫폼)
 
 export const Route = createFileRoute('/_layout/pms/menu-tenant-company-group')({
   component: RouteComponent,
@@ -27,7 +28,7 @@ function RouteComponent() {
     {
       title: '회사조직(플랫폼)',
       key: 'tab03',
-      content: <CompanyGroupConfirm />,
+      content: <CompanyGroupPlatform />,
     },
   ];
   return (

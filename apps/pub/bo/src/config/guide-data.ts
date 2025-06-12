@@ -709,7 +709,7 @@ export const guideData = [
     pageId: 'pms/menu-tenant-group-management',
     screenId: 'NLP_BO_TMS_1111_01',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-06-12',
     lastUpdateDate: '',
     remarks: '', // 비고
   },
@@ -718,7 +718,7 @@ export const guideData = [
     pageId: 'pms/menu-tenant-company-group',
     screenId: 'NLP_BO_TMS_1111_03',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-06-12',
     lastUpdateDate: '',
     remarks: '', // 비고
   },
