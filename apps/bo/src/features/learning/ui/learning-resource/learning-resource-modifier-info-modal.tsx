@@ -3,10 +3,19 @@ import { cn } from '@learnway/shared';
 import { ModalContainer, ModalBody, ModalTitle } from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/info-list-box.module.css';
 import { t } from 'i18next';
+import { leaningResourceQueryOptions } from '@entities/leaning-resource';
+import { useQuery } from '@tanstack/react-query';
 
-function ModifierInfoModalComponent() {
-  // 수정자 UUID를 Props로 받아서 사용자 정보를 API로 가져와야 함
-  // /{pms}/admin/api/v1/users/{uuid}/
+interface ModifierInfoModalComponentProps {
+  lastModifiedBy: string;
+  modifiedDate: string;
+}
+
+function ModifierInfoModalComponent({
+  lastModifiedBy,
+  modifiedDate,
+}: ModifierInfoModalComponentProps) {
+  const { data } = useQuery(leaningResourceQueryOptions.getUser(lastModifiedBy));
 
   return (
     <ModalContainer>
