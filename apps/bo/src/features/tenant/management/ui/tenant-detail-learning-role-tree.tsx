@@ -120,7 +120,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
       parentRoleId: parentRoleId,
     };
     if (payload.companyScope !== EnCompanyScope.MANUAL) payload.companyIds = [];
-    if (payload.channelScope !== EnChannelScope.MANUAL) payload.channelIds = [];
+    if (payload.channelScope !== EnChannelScope.MANUAL) payload.channelUuids = [];
     if (payload.deptScope !== EnDeptScope.MANUAL) payload.deptIds = [];
 
     switch (formMode) {
@@ -197,7 +197,10 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
           companyId: item.id,
           name: item.name,
         })),
-        channelIds: roleDetail.channels,
+        channelUuids: roleDetail.channels.map((item: any) => ({
+          channelUuid: item.uuid,
+          channelName: item.name,
+        })),
         deptIds: roleDetail.depts.map((item: any) => ({ deptId: item.id, deptName: item.name })),
       });
 
@@ -398,7 +401,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                 <div className="chiplist_modal_wrap">
                   <FormRow
                     provider={provider}
-                    name="channelIds"
+                    name="channelUuids"
                     element={
                       <ChipListModalSelectorFormField
                         chipList={{
@@ -512,7 +515,7 @@ const formBaseConfig: DynamicFormConfig = {
       },
     },
     {
-      name: 'channelIds',
+      name: 'channelUuids',
       label: '',
       type: 'custom',
       format: 'array',

@@ -149,8 +149,8 @@ function genCreateRole(payload: any) {
   if (retval.companyIds?.length > 0) {
     retval.companyIds = retval.companyIds.map((item: any) => item.companyId);
   }
-  if (retval.channelIds?.length > 0) {
-    retval.channelIds = retval.channelIds.map((item: any) => item.channelUuid);
+  if (retval.channelUuids?.length > 0) {
+    retval.channelUuids = retval.channelUuids.map((item: any) => item.channelUuid);
   }
   if (retval.deptIds?.length > 0) {
     retval.deptIds = retval.deptIds.map((item: any) => item.deptId);
