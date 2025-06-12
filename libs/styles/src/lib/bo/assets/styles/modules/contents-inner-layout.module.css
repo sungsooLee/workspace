@@ -7,8 +7,8 @@
     }
     .inner {
       @apply relative z-[1] w-[calc(50%-32px)] items-stretch;
-      .inner_contents {
-        @apply py-[16px];
+      div + .inner_contents {
+        @apply relative mt-[16px];
       }
     }
     &.ratio_third {
@@ -98,4 +98,10 @@
 
 [class*='nlp--modal-content'] .start::before {
   @apply h-full;
+}
+
+[class*='divider'] {
+  & + .start {
+    @apply mt-[32px];
+  }
 }
