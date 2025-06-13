@@ -288,6 +288,17 @@ function LearningResourceTableComponent() {
     });
   }
 
+  const [isCopying, setIsCopying] = useState(false);
+
+  function handleCopy() {
+    if (selectedRows.length !== 1) {
+      return alert({
+        title: t('LABEL.alert.canNotCopy.title'),
+        content: t('LABEL.alert.canNotCopy.content'),
+      });
+    }
+  }
+
   return (
     <>
       <SearchBox provider={searchProvider} onSearch={handleSearch} />
@@ -326,6 +337,7 @@ function LearningResourceTableComponent() {
             <Button
               label={t('LABEL.grid.header.copy')}
               icon={<IcoCopy width={16} height={16} stroke="#4C515E" />}
+              onClick={handleCopy}
             />
           </>
         }
