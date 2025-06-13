@@ -89,13 +89,16 @@ function LearningResourceTableComponent() {
           },
         },
         {
-          name: 'useEnabledType',
+          name: 'isContentEnabled',
           type: 'dropdown',
-          label: t('LABEL.form.label.useEnabledType'),
+          label: t('LABEL.form.label.isContentEnabled'),
           value: '',
           presetOptionLabel: t('LABEL.form.label.all'),
           optionsConfig: {
-            codeGroup: CODE_GROUP['cms.content.ContentUseEnabledType'],
+            options: [
+              { value: 'true', label: 'Y' },
+              { value: 'false', label: 'N' },
+            ],
           },
         },
         {
@@ -147,7 +150,6 @@ function LearningResourceTableComponent() {
     query: (data: any) => {
       return leaningResourceQueryOptions.getContents({
         ...data,
-        sort: 'contentUuid,desc',
         isMockUp: true,
       });
     },
@@ -212,9 +214,9 @@ function LearningResourceTableComponent() {
       },
       {
         size: 95,
-        name: 'contentUseEnabledType',
-        label: t('LABEL.grid.column.useEnabledType'),
-        render: (_: any) => t(`cms.content.ContentUseEnabledType.${_.getValue()}`),
+        name: 'isContentEnabled',
+        label: t('LABEL.grid.column.isContentEnabled'),
+        render: (_: any) => (_.getValue() ? 'Y' : 'N'),
       },
       {
         size: 83,
@@ -246,6 +248,9 @@ function LearningResourceTableComponent() {
         ),
       },
     ],
+    gridState: {
+      sort: ['modifiedDate,desc'],
+    },
   };
 
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);

@@ -351,7 +351,7 @@
         "coordinator": "담당자",
         "detailInfo": "세부정보",
         "util": "기능",
-        "useEnabledType": "사용가능",
+        "isContentEnabled": "사용가능",
         "localization": "현지화",
         "updatedInfo": "수정정보"
       },
@@ -421,7 +421,7 @@
         "contentType": "유형",
         "contentName": "학습자원명",
         "isVendored": "외주여부",
-        "useEnabledType": "사용가능",
+        "isContentEnabled": "사용가능",
         "isCourseUsed": "교육활용",
         "coordinator": "담당자",
         "langCountryCode": "언어",
@@ -756,11 +756,6 @@
     "ASSIGNMENT": "과제",
     "SURVEY": "설문지",
     "ETC": "기타"
-  },
-  "cms.content.ContentUseEnabledType": {
-    "ENABLED": "사용가능",
-    "EXPIRED": "사용기간만료",
-    "DISABLED": "사용불가"
   },
   "pms.role.TenantScope": {
     "ALL": "전체",
