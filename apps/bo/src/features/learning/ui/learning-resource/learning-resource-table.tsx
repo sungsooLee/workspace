@@ -287,8 +287,6 @@ function LearningResourceTableComponent() {
     });
   }
 
-  const [isCopying, setIsCopying] = useState(false);
-
   function handleCopy() {
     if (selectedRows.length !== 1) {
       return alert({
@@ -299,6 +297,7 @@ function LearningResourceTableComponent() {
 
     openModal({
       width: 's',
+      hideCloseButton: true,
       content: <CopyModal />,
     });
   }
