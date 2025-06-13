@@ -126,12 +126,18 @@ export const usePlayer = () => {
     setMuted(false);
   };
 
-  // 📍 진행바 클릭
   const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
+    if (!playerRef.current) return;
+
+    const bar = e.currentTarget;
+    const rect = bar.getBoundingClientRect();
+
+    // 클릭 좌표에서 bar 기준 상대 위치 계산
     const clickX = e.clientX - rect.left;
-    const percentage = clickX / rect.width;
-    playerRef.current?.seekTo(percentage, 'fraction');
+    const percentage = Math.min(Math.max(clickX / rect.width, 0), 1); // 0~1로 클램프
+
+    // react-player의 seekTo (fraction 단위로 이동)
+    playerRef.current.seekTo(percentage, 'fraction');
   };
 
   // 🎞️ 자막 불러오기 (간단한 .vtt 파싱 시뮬레이션)
