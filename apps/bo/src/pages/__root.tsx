@@ -5,12 +5,12 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import { ModalWrapper, ToastWrapper, useModalStore } from '@learnway/ui';
 import { useGlobalRouterEvent } from '@learnway/hooks';
-import { useRenewalMenuStateFromRouting, useFetchAuthUser } from '@learnway/auth';
 import { setupErrorToastListener } from '@learnway/shared';
 // import { useWindowSize } from 'react-use';
 import { MinWidthRequired } from '../widgets/layout/ui/min-width-required';
 import { useBreakpointModalClose } from '../shared/lib/breakpoint-modal.hook';
 import { NotFound } from '@features/layout';
+import { useFetchAuthUser, useRenewalMenuStateFromRouting } from '@learnway/auth/entities';
 
 interface RouterContext {
   setPageRouteState?: any;

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
 
-import { useActiveMenuDepthState, useFetchAuthUser } from '@learnway/auth';
+import { useActiveMenuDepthState, useFetchAuthUser } from '@learnway/auth/entities';
 import { LNB } from './lnb/lnb';
 
 import { Header } from './header/header';

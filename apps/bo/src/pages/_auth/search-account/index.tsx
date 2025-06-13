@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { pageRouteConfig } from '@features/auth';
-import { SearchAccountPage } from '@learnway/auth';
+import { SearchAccountPage } from '@learnway/auth/pages';
 
 export const Route = createFileRoute('/_auth/search-account/')({
   component: RouteComponent,

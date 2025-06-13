@@ -4,7 +4,7 @@ import { t } from 'i18next';
 import { isEmpty } from 'lodash';
 
 import { Button, ContentsRow, Input, useModal } from '@learnway/ui';
-import { useExpStore, useFetchAuthUser } from '@learnway/auth';
+import { useExpStore, useFetchAuthUser } from '@learnway/auth/entities';
 import { cn } from '@learnway/shared';
 // import { DynamicFormField } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';

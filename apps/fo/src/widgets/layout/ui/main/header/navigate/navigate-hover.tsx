@@ -3,7 +3,7 @@ import { Link, useRouter } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import { IcoArrowForward } from '@learnway/icons';
-import type { Menu } from '@learnway/auth';
+import type { Menu } from '@learnway/auth/types';
 import styles from './navigate-hover.module.css';
 
 import { useMenuHierarchy } from '../../../../../../entities/menu/service/menu.service';

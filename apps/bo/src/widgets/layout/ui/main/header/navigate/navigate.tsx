@@ -2,8 +2,8 @@ import { memo, useMemo } from 'react';
 import { Link, useMatchRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import type { Menu } from '@learnway/auth';
-import { useActiveMenuDepthState, useMenuHierarchy } from '@learnway/auth';
+import type { Menu } from '@learnway/auth/types';
+import { useActiveMenuDepthState, useMenuHierarchy } from '@learnway/auth/entities';
 
 import styles from './navigate.module.css';
 import { cn } from '@learnway/shared';

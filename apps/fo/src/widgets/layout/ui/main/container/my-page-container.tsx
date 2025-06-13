@@ -1,5 +1,5 @@
 import { memo, ReactNode } from 'react';
-import { useActiveMenuDepthState } from '@learnway/auth';
+import { useActiveMenuDepthState } from '@learnway/auth/entities';
 import { useTranslation } from 'react-i18next';
 
 import { useCurrentRoute } from '@learnway/hooks';

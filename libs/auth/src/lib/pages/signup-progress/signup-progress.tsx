@@ -6,7 +6,7 @@ import { cn } from '@learnway/shared';
 import { useDynamicForm, DynamicFormConfig, useCurrentRoute } from '@learnway/hooks';
 
 import { FormRow, NoticeBox, EmbededAlert } from '../../shared';
-import { useExistsEmail } from '../../entities/authorization';
+import { useExistsEmail } from '../../entities';
 
 import styles from '@learnway/styles/fo/pages/_auth/signup-progress/signup-progress.module.css';
 

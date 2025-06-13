@@ -12,7 +12,7 @@ import {
   useLogoutUser,
   useSessionTimeoutAlertState,
   useUpdateUser,
-} from '../../../entities/authorization';
+} from '../../../entities';
 import { SessionTimeoutConfirm } from '../ui/sessionTimeoutConfirm';
 import type { AuthUser, AuthSSOHealthcheck } from '../../../types';
 import { useAsycFetchMenus } from '../../../entities/menu';

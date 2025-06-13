@@ -8,7 +8,7 @@ import { Avatar } from '@learnway/ui';
 // import contentsStyles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 import styles from './my-page.module.css';
-import { useFetchAuthUser, useUserDetail } from '@learnway/auth';
+import { useFetchAuthUser, useUserDetail } from '@learnway/auth/entities';
 import { useFetchUser } from '@entities/users/service/users.hook';
 import { useCreation } from 'ahooks';
 

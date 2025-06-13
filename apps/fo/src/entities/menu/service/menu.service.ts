@@ -1,7 +1,7 @@
 import { useCreation } from 'ahooks';
 
-import { useFetchAuthUser } from '@learnway/auth';
-import type { Menu } from '@learnway/auth';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+import type { Menu } from '@learnway/auth/types';
 
 import { useFetchMenus } from '..';
 import { HookData } from '../../../types';

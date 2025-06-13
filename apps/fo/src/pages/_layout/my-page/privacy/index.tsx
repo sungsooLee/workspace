@@ -6,13 +6,19 @@ import { Avatar, ContentsRow, DynamicFormField } from '@learnway/ui';
 import { IcoImage01 } from '@learnway/icons';
 import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 import {
+  // ChangeUserIdFormField,
+  // ChangePhoneNumberFormField,
+  // ChangePasswordFormField,
+  // WithdrawMembershipButton,
+  useFetchAuthUser,
+  useUserDetail,
+} from '@learnway/auth/entities';
+import {
   ChangeUserIdFormField,
   ChangePhoneNumberFormField,
   ChangePasswordFormField,
   WithdrawMembershipButton,
-  useFetchAuthUser,
-  useUserDetail,
-} from '@learnway/auth';
+} from '@learnway/auth/features';
 
 import { MAIN_CONTAINERS } from '../../../../widgets/layout';
 import { pageRouteConfig } from '../../../../features/auth';

@@ -5,6 +5,7 @@ import AuthorizationService from '../api/authorization';
 import { assignToken, removeToken, convertToAuthUser } from './authorization.service';
 
 import type { AuthSSOLogin } from '../../../types';
+import VerificationsService from '../api/verifications';
 
 export const queryKeys = {
   authUser: ['auth-user'] as const,
@@ -63,5 +64,34 @@ export const mutateOptions = {
         throw e;
       }
     },
+  }),
+  sendVerifyPhoneNumber: () => ({
+    mutationFn: (payload: any) => {
+      return VerificationsService.sendVerifyPhoneNumer(payload);
+    },
+  }),
+  sendVerifyEmail: () => ({
+    mutationFn: (payload: any) => VerificationsService.sendVerifyEmail(payload),
+  }),
+  verifyPhoneNumber: () => ({
+    mutationFn: (payload: any) => VerificationsService.verifyPhoneNumer(payload),
+  }),
+  verifyEmail: () => ({
+    mutationFn: (payload: any) => VerificationsService.verifyEmail(payload),
+  }),
+  fetchEmail: () => ({
+    mutationFn: (payload: any) => VerificationsService.fetchEmail(payload),
+  }),
+  updatePasswordByPhoneNumber: () => ({
+    mutationFn: (payload: any) => VerificationsService.updatePasswordByPhoneNumber(payload),
+  }),
+  updatePasswordByEmail: () => ({
+    mutationFn: (payload: any) => VerificationsService.updatePasswordByEmail(payload),
+  }),
+  updatePassword: () => ({
+    mutationFn: (payload: any) => VerificationsService.updatePassword(payload),
+  }),
+  existsEmail: () => ({
+    mutationFn: (payload: string) => VerificationsService.existsEmail(payload),
   }),
 };

@@ -7,8 +7,8 @@ import { useDynamicForm, DynamicFormConfig, useCurrentRoute } from '@learnway/ho
 
 import { FormRow, NoticeBox, HighlightMessageBox } from '../shared/ui';
 import { GoogleOtpGuideButton } from '../features/auth';
-import { useUpdatePassword } from '../entities/authorization';
-import { useLogoutUser, useFetchAuthUser } from '../entities/authorization';
+import { useUpdatePassword } from '../entities';
+import { useLogoutUser, useFetchAuthUser } from '../entities';
 
 import styles from '@learnway/styles/fo/pages/_auth/change-password.module.css';
 

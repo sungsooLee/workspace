@@ -5,7 +5,7 @@ import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { IcoCaution03 } from '@learnway/icons';
 import { Button, Checkbox, useModal } from '@learnway/ui';
 import { cn } from '@learnway/shared';
-import { useDeleteUser, useLogoutUser } from '@learnway/auth';
+import { useDeleteUser, useLogoutUser } from '@learnway/auth/entities';
 
 import { MAIN_CONTAINERS } from '../../../../widgets/layout';
 import { pageRouteConfig } from '../../../../features/auth';

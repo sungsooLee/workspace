@@ -7,7 +7,7 @@ import { DynamicFormField, ContentsRow } from '@learnway/ui';
 import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 
 import { FormRow, EmbededAlert } from '../../../../shared/ui';
-import { useLogoutUser, useVerifyPassword } from '../../../../entities/authorization';
+import { useLogoutUser, useVerifyPassword } from '../../../../entities';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/widget-management.module.css'; // 화면 css
 import { useModal } from '@learnway/ui';

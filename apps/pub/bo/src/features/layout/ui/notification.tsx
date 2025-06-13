@@ -7,7 +7,7 @@ import { cn } from '@learnway/shared';
 
 import styles from './notification.module.css';
 
-// import { useFetchAuthUser } from '../../../entities/authorization';
+// import { useFetchAuthUser } from '../../../entities';
 
 interface NotificationInfo {
   id: number;

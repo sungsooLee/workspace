@@ -17,14 +17,13 @@ import { Button, Popover, useModal } from '@learnway/ui';
 import { IcoStar, IcoArrowLineTop, IcoAlertCircle, IcoClose02 } from '@learnway/icons';
 import { useCurrentRoute } from '@learnway/hooks';
 import {
-  Menu,
   useActiveMenuDepthState,
   useAsycFetchMenusForceRefatch,
   useFetchAuthUser,
   useFetchMenus,
   useUpdateAuthUser,
   useUpdateUser,
-} from '@learnway/auth';
+} from '@learnway/auth/entities';
 
 import { Breadcrumbs } from './breadcrumbs/breadcrumbs';
 import { ContentsButtons } from './slot/contents-buttons';

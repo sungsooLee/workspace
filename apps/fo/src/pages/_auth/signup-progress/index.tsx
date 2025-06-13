@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { SignupProgressPage } from '@learnway/auth';
+import { SignupProgressPage } from '@learnway/auth/pages';
 
 import { pageRouteConfig } from '../../../features/auth';
 

@@ -2,7 +2,8 @@ import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useMatchRoute } from '@tanstack/react-router';
 
-import { Menu, useActiveMenuDepthState } from '@learnway/auth';
+import { useActiveMenuDepthState } from '@learnway/auth/entities';
+import { Menu } from '@learnway/auth/types';
 import { IcoArrowForward, IcoHome02 } from '@learnway/icons';
 
 import styles from './breadcrumbs.module.css';

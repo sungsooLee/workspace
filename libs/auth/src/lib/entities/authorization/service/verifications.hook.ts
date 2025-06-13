@@ -1,9 +1,9 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import type { MutateOptions } from '@tanstack/react-query';
 
 import type { MutateCallback } from '@learnway/shared';
 
-import { queryKeys, queryOptions, mutateOptions } from './verifications.queries';
+import { mutateOptions } from './authorization.queries';
 
 interface VerifyPhoneNumber {
   name: string;

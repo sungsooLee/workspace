@@ -1,5 +1,5 @@
 import { useRouter } from '@tanstack/react-router';
-import { AuthForm, AuthFormData } from '@learnway/auth';
+import { AuthForm, AuthFormData } from '@learnway/auth/features/auth';
 import { useSignupStore } from '@features/user/signup';
 import { cn } from '@learnway/shared';
 import { Button, Stepper } from '@learnway/ui';
