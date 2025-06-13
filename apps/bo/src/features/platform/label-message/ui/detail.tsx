@@ -41,7 +41,7 @@ interface MessageDetailProps {
   /**
    * 저장 완료 callback function
    */
-  onSuccessSave?: () => void;
+  onSuccessSave?: (response?: any) => void;
 }
 
 const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetailProps) => {
@@ -73,7 +73,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
   const { mutate: create } = useCreateLabelMessage({
     onSuccess: async (response: any) => {
       console.log('useCreateLabelMessage :: onSuccess', response);
-      onSuccessSave?.();
+      onSuccessSave?.(response);
     },
   });
 
@@ -110,14 +110,15 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
    * 조회된 데이터를 폼에 반영합니다.
    */
   useEffect(() => {
-    const d = {
-      ...data,
-      // 중복체크를 위해 설정
-      labelMessageId, // TODO: formConfig 에 hidden 설정했지만 featchData 에 값 넣지 않으면 validation 에러나서 임시로 넣음, form 문의 필요
-      lastDuplicateText: data?.labelMessageMultilingulKey || '',
-      isDuplicateCheck: !isCreateMode,
-    };
-    fetchData(d);
+    if (!isCreateMode && data) {
+      const d = {
+        ...data,
+        labelMessageId,
+        lastDuplicateText: data?.labelMessageMultilingulKey || '',
+        isDuplicateCheck: !isCreateMode,
+      };
+      fetchData(d);
+    }
   }, [data, labelMessageId, isCreateMode]);
 
   /**

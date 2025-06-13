@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Button, GridBox, GridState, useGridBox, GridBoxState, Divider } from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { CODE_GROUP, useSearchBox } from '@learnway/hooks';
@@ -15,6 +15,7 @@ import { LabelMessagesQueryParams } from '@types';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import { IcoPlus } from '@learnway/icons';
 import { DATE_TIME_FORMAT, formatISODateString } from '@learnway/shared';
+import { fstat } from 'fs';
 
 export const Route = createFileRoute('/_layout/platform/label-message/')({
   component: RouteComponent,
@@ -24,7 +25,7 @@ function RouteComponent() {
   const { t } = useTranslation();
   const router = useRouter();
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
-  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
+  const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const [selectedLabelMessageId, setSelectedLabelMessageId] = useState<number>(0);
 
   /**
@@ -55,8 +56,8 @@ function RouteComponent() {
    * 상세 저장 완료 시 호출
    * 마지막 검색 조건을 기준으로 그리드를 재조회함
    */
-  const handleSuccessSave = () => {
-    gridFetch(searchProvider.originalValues);
+  const handleSuccessSave = (response?: any) => {
+    gridFetch(searchProvider.getValues());
   };
 
   /**
@@ -74,6 +75,13 @@ function RouteComponent() {
   const handleStateChange = (newState: GridBoxState) => {
     console.log(newState);
   };
+
+  useEffect(() => {
+    if (data && data.content) {
+      const firstRow = data.content[0];
+      setSelectedLabelMessageId(firstRow?.labelMessageId);
+    }
+  }, [data]);
 
   return (
     <div>
