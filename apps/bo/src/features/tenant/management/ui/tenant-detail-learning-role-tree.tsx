@@ -14,6 +14,7 @@ import {
   ContentsRow,
   Input,
   RadioGroupFormField,
+  Switch,
   TextareaFormField,
   TreeBox,
   TreeNode,
@@ -40,6 +41,7 @@ import {
   CompanyShuttleModal,
   UserGroupChoiceModal,
 } from '@features/shared';
+import { DropdownFormField } from '@features/form';
 
 /**
  * 화면번호:
@@ -293,7 +295,9 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                 <FormRow
                   provider={provider}
                   name="roleType"
-                  element={<Input disabled={formMode === EnFormMode.NONE || !roleInfo} />}
+                  element={
+                    <DropdownFormField disabled={formMode !== EnFormMode.ADD || !roleInfo} />
+                  }
                 />
                 <FormRow
                   provider={provider}
@@ -472,10 +476,13 @@ const formBaseConfig: DynamicFormConfig = {
     },
     {
       name: 'roleType',
-      type: 'text',
+      type: 'dropdown',
       label: t('역할 타입'),
-      format: 'object',
       value: '',
+      presetOptionLabel: t('LABEL.form.label.select'),
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.role.RoleType'],
+      },
     },
     {
       name: 'name',
@@ -568,6 +575,7 @@ const formBaseConfig: DynamicFormConfig = {
     companyScope: { required: true },
     channelScope: { required: true },
     deptScope: { required: true },
+    roleType: true,
     companyIds: {
       required: {
         fn: (value) => {

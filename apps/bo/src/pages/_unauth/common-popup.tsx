@@ -35,6 +35,9 @@ import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { SubContents } from '@widgets/layout/ui/container/slot/sub-contents';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 
+import langCodes from '@entities/mock/i18n-resource-ko.json';
+import TranslationService from '@entities/translation/api/translation';
+import LabelMessagesService from '@entities/label-messages/api/label-messages';
 export const Route = createFileRoute('/_unauth/common-popup')({
   component: RouteComponent,
 });
@@ -44,6 +47,33 @@ function RouteComponent() {
   const { open: openModal } = useModal();
   const { provider, onSubmit, control, getValues, fetchData } = useDynamicForm(formConfig);
 
+  const handleLabelUpdate = async () => {
+    const langPath = jsonToPaths(langCodes.LABEL);
+    const data: any[] = [];
+    let rowNum = 1;
+    for (const item of langPath) {
+      const result = await TranslationService.fetchTranslationExists({
+        keyTypeCode: 'LABEL',
+        messageCode: item.path,
+      });
+      if (!result) {
+        const row = [rowNum.toString(), 'LABEL', item.path, item.value, item.value];
+        data.push(row);
+        rowNum++;
+      }
+    }
+    const csvContent = data
+      .map((row) => row.map((item: string) => `"${item.replace(/\n/gi, '\\n')}"`).join(','))
+      .join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'data.csv';
+    link.click();
+    URL.revokeObjectURL(url);
+    link.remove();
+  };
   const handleOnSubmit = (data: any) => {
     console.log('data {} => ', data);
   };
@@ -149,6 +179,15 @@ function RouteComponent() {
                 <FormRow provider={provider} name={'addressDetail'} element={<Input />} />
               </div>
             </div>
+          </ContentsRow>
+          <ContentsRow>
+            <Button
+              label="Label 처리"
+              type="button"
+              variant="primary"
+              size="sm"
+              onClick={handleLabelUpdate}
+            />
           </ContentsRow>
         </MainContents>
         <SubContents>
@@ -543,3 +582,22 @@ const formConfig: DynamicFormConfig = {
     },
   ],
 };
+
+function jsonToPaths(obj: any, parentPath = ''): any[] {
+  const result = [];
+
+  for (const key in obj) {
+    // eslint-disable-next-line no-prototype-builtins
+    if (obj.hasOwnProperty(key)) {
+      const currentPath = parentPath ? `${parentPath}.${key}` : key;
+
+      if (typeof obj[key] === 'object' && obj[key] !== null) {
+        result.push(...jsonToPaths(obj[key], currentPath));
+      } else {
+        result.push({ path: currentPath, value: obj[key] });
+      }
+    }
+  }
+
+  return result;
+}

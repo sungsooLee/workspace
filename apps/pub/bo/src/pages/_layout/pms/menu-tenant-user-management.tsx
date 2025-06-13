@@ -9,6 +9,7 @@ export const Route = createFileRoute('/_layout/pms/menu-tenant-user-management')
 
 /* tab contents */
 import { TenantUser } from './-tabcontents/tenant-user'; // 유저
+import { TenantMemberApply } from './-tabcontents/tenant-member-apply'; // 회원가입 신청
 
 function RouteComponent() {
   const items = [
@@ -20,7 +21,7 @@ function RouteComponent() {
     {
       title: '회원가입 신청',
       key: 'b',
-      content: <h2>Tab B content</h2>,
+      content: <TenantMemberApply />,
     },
   ];
   return (

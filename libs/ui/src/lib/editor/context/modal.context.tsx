@@ -38,22 +38,26 @@ export const ModalContext: React.FC<{ children: ReactNode }> = ({ children }) =>
       value={{
         openModal: handleOpenModal,
         closeModal: handleCloseModal,
-      }}>
+      }}
+    >
       {children}
       {modal.open && (
         <div
           className="nlp--editor-modal-overlay absolute inset-0 z-[100] flex items-center justify-center bg-[rgba(40,40,40,0.6)]"
-          onClick={handleOverlayClick}>
+          onClick={handleOverlayClick}
+        >
           <div
             className="nlp--editor-modal relative z-[101] flex min-w-[300px] flex-col rounded bg-white p-4 shadow-lg"
-            onClick={handleModalClick}>
+            onClick={handleModalClick}
+          >
             <div className="nlp--editor-modal-header flex items-center justify-between">
               {modal.title && (
                 <h2 className="nlp--editor-modal-title text-lg font-bold">{modal.title}</h2>
               )}
               <button
                 className="nlp--editor-modal-close-btn text-gray-500 hover:text-black"
-                onClick={handleCloseModal}>
+                onClick={handleCloseModal}
+              >
                 X
               </button>
             </div>
@@ -68,7 +72,7 @@ export const ModalContext: React.FC<{ children: ReactNode }> = ({ children }) =>
 };
 
 // 훅을 통해 컨텍스트를 쉽게 사용할 수 있도록 설정
-export const useModal = () => {
+export const useModalContext = () => {
   const context = useContext(Context);
   if (!context) {
     throw new Error('useModal must be used within a ModalProvider');

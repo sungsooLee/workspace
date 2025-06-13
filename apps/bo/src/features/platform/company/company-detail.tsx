@@ -10,6 +10,7 @@ import {
   RadioGroupFormField,
   Input,
   ContentsRowItem,
+  Switch,
 } from '@learnway/ui';
 import { FormRow, FormSubTitle, SwitchFormField } from '@shared/ui';
 import { FormDisplay } from '@features/form/ui/form-display';
@@ -120,7 +121,7 @@ const CompanyDetailComponent: FC<any> = ({ mode }) => {
         if (data) {
           console.log('## data', data);
           // 제한 설정 임시 저장
-          tempLoginRestrictTimeSetting.current = data;
+          tempLoginRestrictTimeSetting.current = { ...data, isUsed: true };
           setTimeout(() => openConfirmChooseUserGroup(), 0);
         }
       },
@@ -161,6 +162,115 @@ const CompanyDetailComponent: FC<any> = ({ mode }) => {
       },
     });
   };
+
+  const handleLoginRestrictTimeUsed = (index: number, value: boolean) => {
+    setLoginRestrictTimeSettings((prev) => {
+      const newSettings = [...prev];
+      newSettings[index] = { ...newSettings[index], isUsed: value };
+      return newSettings;
+    });
+  };
+
+  const columnHelper = createColumnHelper<any>();
+
+  const columns = [
+    columnHelper.accessor('loginRestrictionType', {
+      cell: (info) => t('pms.company.LoginRestrictionType.' + info.getValue()),
+      header: t('로그인 제한 구분'),
+      size: 160,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('loginRestrictionName', {
+      cell: (info) => <Button className="link">{info.row.original.loginRestrictionName}</Button>,
+      header: t('로그인 제한명'),
+      enableGrouping: false,
+      meta: {
+        size: 'auto',
+      },
+    }),
+    columnHelper.accessor('restrictionStrDate', {
+      cell: (info) =>
+        getDateToString(new Date(info.row.original.restrictionDate.from), DATE_TIME_FORMAT.DATE) +
+        ' ~ ' +
+        getDateToString(new Date(info.row.original.restrictionDate.to), DATE_TIME_FORMAT.DATE),
+      header: t('제한 기간'),
+      size: 200,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('loginRestrictionSettingType', {
+      cell: (info) => t('pms.company.LoginRestrictionSettingType.' + info.getValue()),
+      header: t('제한 설정 방식'),
+      size: 120,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('userGroup', {
+      cell: (info) => <Button label={t('유저그룹 설정')} variant={'gray'} size={'md'} />,
+      header: t('유저그룹 설정'),
+      size: 120,
+      enableGrouping: false,
+      meta: {
+        cellAlign: 'center',
+      },
+    }),
+    columnHelper.accessor('userGroupTarget', {
+      cell: (info) => {
+        console.log('## row', info.row);
+        return <Button label={t('대상자')} variant={'gray'} size={'md'} />;
+      },
+      header: t('유저그룹 대상자'),
+      size: 120,
+      enableGrouping: false,
+      meta: {
+        cellAlign: 'center',
+      },
+    }),
+    columnHelper.accessor('isUsed', {
+      cell: (info) => (
+        <Switch
+          checked={info.row.original.isUsed}
+          onCheckedChange={(checked: boolean) =>
+            handleLoginRestrictTimeUsed(info.row.index, checked)
+          }
+        />
+      ),
+      header: t('사용'),
+      size: 100,
+      enableGrouping: false,
+      meta: {
+        cellAlign: 'center',
+      },
+    }),
+    columnHelper.accessor('createdBy', {
+      cell: (info) => info.getValue(),
+      header: t('등록자'),
+      size: 100,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('createdDate', {
+      cell: (info) =>
+        info.row.original.createdDate
+          ? getDateToString(new Date(info.row.original.createdDate), DATE_TIME_FORMAT.DATETIME_SEC)
+          : '',
+      header: t('등록일시'),
+      size: 200,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('lastModifiedBy', {
+      cell: (info) => info.getValue(),
+      header: t('수정자'),
+      size: 100,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('modifiedDate', {
+      cell: (info) =>
+        info.row.original.modifiedDate
+          ? getDateToString(new Date(info.row.original.modifiedDate), DATE_TIME_FORMAT.DATETIME_SEC)
+          : '',
+      header: t('수정일시'),
+      size: 200,
+      enableGrouping: false,
+    }),
+  ] as ColumnDef<any, unknown>[];
 
   return (
     <form onSubmit={onSubmit(handleOnSubmit)}>
@@ -902,94 +1012,3 @@ const formConfig: DynamicFormConfig = {
     languageApprovalMatrix: true,
   },
 };
-
-const columnHelper = createColumnHelper<any>();
-
-const columns = [
-  columnHelper.accessor('loginRestrictionType', {
-    cell: (info) => t('pms.company.LoginRestrictionType.' + info.getValue()),
-    header: t('로그인 제한 구분'),
-    size: 160,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('loginRestrictionName', {
-    cell: (info) => <Button className="link">{info.row.original.loginRestrictionName}</Button>,
-    header: t('로그인 제한명'),
-    enableGrouping: false,
-    meta: {
-      size: 'auto',
-    },
-  }),
-  columnHelper.accessor('restrictionStrDate', {
-    cell: (info) =>
-      getDateToString(new Date(info.row.original.restrictionDate.from), DATE_TIME_FORMAT.DATE) +
-      ' ~ ' +
-      getDateToString(new Date(info.row.original.restrictionDate.to), DATE_TIME_FORMAT.DATE),
-    header: t('제한 기간'),
-    size: 200,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('loginRestrictionSettingType', {
-    cell: (info) => t('pms.company.LoginRestrictionSettingType.' + info.getValue()),
-    header: t('제한 설정 방식'),
-    size: 120,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('userGroup', {
-    cell: (info) => <Button label={t('유저그룹 설정')} variant={'gray'} size={'md'} />,
-    header: t('유저그룹 설정'),
-    size: 120,
-    enableGrouping: false,
-    meta: {
-      cellAlign: 'center',
-    },
-  }),
-  columnHelper.accessor('userGroupTarget', {
-    cell: (info) => <Button label={t('대상자')} variant={'gray'} size={'md'} />,
-    header: t('유저그룹 대상자'),
-    size: 120,
-    enableGrouping: false,
-    meta: {
-      cellAlign: 'center',
-    },
-  }),
-  columnHelper.accessor('isUsed', {
-    cell: (info) => info.getValue(),
-    header: t('사용'),
-    size: 100,
-    enableGrouping: false,
-    meta: {
-      cellAlign: 'center',
-    },
-  }),
-  columnHelper.accessor('createdBy', {
-    cell: (info) => info.getValue(),
-    header: t('등록자'),
-    size: 100,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('createdDate', {
-    cell: (info) =>
-      info.row.original.createdDate
-        ? getDateToString(new Date(info.row.original.createdDate), DATE_TIME_FORMAT.DATETIME_SEC)
-        : '',
-    header: t('등록일시'),
-    size: 200,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('lastModifiedBy', {
-    cell: (info) => info.getValue(),
-    header: t('수정자'),
-    size: 100,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('modifiedDate', {
-    cell: (info) =>
-      info.row.original.modifiedDate
-        ? getDateToString(new Date(info.row.original.modifiedDate), DATE_TIME_FORMAT.DATETIME_SEC)
-        : '',
-    header: t('수정일시'),
-    size: 200,
-    enableGrouping: false,
-  }),
-] as ColumnDef<any, unknown>[];

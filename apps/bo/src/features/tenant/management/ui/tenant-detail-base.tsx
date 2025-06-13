@@ -3,10 +3,9 @@ import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useRouterState } from '@tanstack/react-router';
 
-import { cn } from '@learnway/shared';
-import { CODE_GROUP, DynamicFormConfig, useCodeStore, useDynamicForm } from '@learnway/hooks';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
+import { cn } from '@learnway/shared';
 import {
   CheckboxGroupFormField,
   ChipListModalSelectorFormField,
@@ -14,12 +13,15 @@ import {
   TextareaFormField,
   useModal,
 } from '@learnway/ui';
+import { CODE_GROUP, DynamicFormConfig, useCodeStore, useDynamicForm } from '@learnway/hooks';
+
 import {
   FormSubTitle,
   ContentsHistoryInfoFormField,
   FormRow,
   ThumbnailListFormField,
 } from '@shared/ui';
+
 import { isEqual } from 'lodash';
 import { CompanyShuttleModal, RoleChoiceModal, UserChoiceModal } from '@features/shared';
 import {
@@ -82,7 +84,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
   const handleOnSubmit = async (data: any) => {
     console.log('data {} => ', data);
     const logoImageUrl = data.logoImageUrl?.length > 0 ? data.logoImageUrl[0] : '';
-
+    const tagStringList = data.tenantTagList.split(',');
     const payload = {
       ...data,
       tenantName: data.tenantName.fieldValue,
@@ -92,10 +94,9 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       isApp: data.device.includes(EnDeviceType.isApp),
       isCommonCategory: data.useCategory.includes(EnUseCategory.isCommonCategory),
       isTenantCategory: data.useCategory.includes(EnUseCategory.isTenantCategory),
-      companyTenantList: data.companyTenantList.map((i: any) => i.companyId),
-      tenantMappingRoleList: data.tenantMappingRoleList.map((i: any) => i.roleId),
-      tenantMappingUserList: data.tenantMappingUserList.map((i: any) => i.userId),
       tenantId: tenantId,
+      tenantTagList: tagStringList.map((item: string) => ({ tagName: item })),
+      tenantUserList: data.tenantUserList.map((item: any) => ({ userUuid: item.uuid })),
     };
     console.log('payload {} => ', payload);
     if (await openConfirm('저장 하시겠습니까?')) {
@@ -117,26 +118,26 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       tenantData.isApp && device.push(EnDeviceType.isApp);
       tenantData.isCommonCategory && useCategory.push(EnUseCategory.isCommonCategory);
       tenantData.isTenantCategory && useCategory.push(EnUseCategory.isTenantCategory);
+      let tag = '';
+      if (tenantData.tenantTagList && tenantData.tenantTagList.length > 0) {
+        tag = tenantData.tenantTagList.map((item) => item.tagName).join(',');
+      }
       fetchData({
         ...tenantData,
         tenantName: { fieldValue: tenantData.tenantName, checkState: DuplicateState.okStart },
         logoImageUrl: logoImageUrl,
         device: device,
         useCategory: useCategory,
+        tenantDesc: tenantData.tenantDesc ?? '',
+        tenantTagList: tag,
         companyTenantList: tenantData.companyTenantList.map((item) => ({
           companyId: item.companyId,
           name: item.companyName,
         })),
-        tenantMappingLanguageTypeList: tenantData.tenantLanguageList,
-        tenantMappingUserList: tenantData.tenantUserList.map((item) => ({
-          userId: item.userId,
-          name: item.userName || '이름-없음',
+        tenantUserList: tenantData.tenantUserList.map((item) => ({
+          uuid: item.userUuid,
+          name: item.userName ?? '이름 없음',
         })),
-        tenantMappingRoleList: tenantData.tenantRoleList.map((item) => ({
-          roleId: item.roleId,
-          name: item.roleName,
-        })),
-        tenantDesc: tenantData.tenantDesc ?? '',
       });
     }
   }, [tenantData]);
@@ -179,12 +180,12 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       <ContentsRow>
         <FormRow
           provider={provider}
-          name="tenantMappingUserList"
+          name="tenantUserList"
           element={
             <ChipListModalSelectorFormField
               chipList={{
                 labelField: 'name',
-                valueField: 'userId',
+                valueField: 'uuid',
                 hideBorder: true,
               }}
               modalConfig={{
@@ -196,28 +197,8 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
           }
         />
       </ContentsRow>
-      {/* <ContentsRow>
-        <FormRow
-          provider={provider}
-          name="tenantMappingRoleList"
-          element={
-            <ChipListModalSelectorFormField
-              chipList={{
-                labelField: 'name',
-                valueField: 'roleId',
-                hideBorder: true,
-              }}
-              modalConfig={{
-                title: '',
-                width: 'xl',
-                content: <RoleChoiceModal />,
-              }}
-            />
-          }
-        />
-      </ContentsRow> */}
       <ContentsRow>
-        <FormRow provider={provider} name="tenantBillingTag" />
+        <FormRow provider={provider} name="tenantTagList" />
       </ContentsRow>
       <ContentsRow>
         <FormRow
@@ -263,7 +244,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       <ContentsRow>
         <FormRow
           provider={provider}
-          name="tenantMappingLanguageTypeList"
+          name="langCountryCodeTypeList"
           element={<CheckboxGroupFormField options={languageTypeList} />}
         />
       </ContentsRow>
@@ -296,7 +277,7 @@ const formConfig: DynamicFormConfig = {
       tooltip: t('테넌트에 사용할 로고로 파일 1개만 등록할 수 있습니다.'),
     },
     {
-      name: 'tenantMappingUserList',
+      name: 'tenantUserList',
       label: t('테넌트 담당자'),
       type: 'custom',
       format: 'array',
@@ -304,14 +285,7 @@ const formConfig: DynamicFormConfig = {
       placeholder: t('담당자를 선택해주세요.'),
     },
     {
-      name: 'tenantMappingRoleList',
-      type: 'custom',
-      label: t('테넌트 역할'),
-      format: 'array',
-      value: [],
-    },
-    {
-      name: 'tenantBillingTag',
+      name: 'tenantTagList',
       type: 'text',
       label: t('테넌트 정산 태그'),
       value: '',
@@ -387,7 +361,7 @@ const formConfig: DynamicFormConfig = {
       showSelectAll: true,
     },
     {
-      name: 'tenantMappingLanguageTypeList',
+      name: 'langCountryCodeTypeList',
       type: 'checkbox-group',
       label: t('언어'),
       format: 'array',
@@ -457,8 +431,8 @@ const formConfig: DynamicFormConfig = {
         },
       ],
     },
-    tenantMappingUserList: { required: true },
-    tenantBillingTag: { required: true },
+    tenantUserList: { required: true },
+    tenantTagList: { required: true },
     companyTenantList: { required: true },
     isUsed: { required: true },
     isSecurityPledge: { required: true },
@@ -482,10 +456,10 @@ const formConfig: DynamicFormConfig = {
         message: t('1개 이상 선택하세요.'),
       },
     },
-    tenantMappingLanguageTypeList: {
+    langCountryCodeTypeList: {
       required: {
         fn: (values) => {
-          return values.tenantMappingLanguageTypeList.length === 0;
+          return values.langCountryCodeTypeList.length === 0;
         },
         message: t('1개 이상 선택하세요.'),
       },

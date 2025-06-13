@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Button, ExcelConfig, useModal } from '@learnway/ui';
+import { Button, ExcelConfig, useModal } from '../../../index';
 import { UseFormReturn } from 'react-hook-form';
 import { fileDownload } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
@@ -11,8 +11,9 @@ export const ExcelButtons: FC<{ config?: ExcelConfig; getParams?: UseFormReturn[
   config,
   getParams,
 }) => {
-  if (!config) return <></>;
   const { open: openModal } = useModal();
+
+  if (!config) return <></>;
   const { upload, download, form, onBeforeDownload, onBeforeUpload } = config;
 
   const handleExcelDownload = async () => {

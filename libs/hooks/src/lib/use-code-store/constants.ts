@@ -100,5 +100,6 @@ export const CODE_GROUP = {
   'manual.company.companyCode': 'manual.company.companyCode',
   'manual.tenant.tenantId': 'manual.tenant.tenantId',
   'pms.multilingual.LangCountryCode': 'pms.multilingual.LangCountryCode',
+  'pms.role.RoleType': 'pms.role.RoleType',
 };
 export type CODE_GROUP_TYPE = (typeof CODE_GROUP)[keyof typeof CODE_GROUP];
