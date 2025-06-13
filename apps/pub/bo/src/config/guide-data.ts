@@ -917,7 +917,7 @@ export const guideData = [
     screenId: 'NLP_BO_CMS_1203',
     pageType: 'Page',
     completionDate: '2025-05-14',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-06-13',
     remarks: '', // 비고
   },
   {
