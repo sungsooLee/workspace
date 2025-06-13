@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useCreation } from 'ahooks';
 import { useRouterState } from '@tanstack/react-router';
 
-import { useFetchAuthUser, useFetchMenus } from '@learnway/auth';
+import { useFetchAuthUser, useFetchMenus } from '@learnway/auth/entities';
 
 // import { useFetchMenus } from '../../../entities/menu';
 import { Menu, HookData } from '../../../types';

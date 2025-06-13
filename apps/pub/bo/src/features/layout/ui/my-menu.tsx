@@ -6,7 +6,7 @@ import { ChipList, Popover, SelectOption, List, Button } from '@learnway/ui';
 import { IcoStar, IcoStar02, IcoClock01 } from '@learnway/icons';
 import { cn, getRandomId } from '@learnway/shared';
 
-// import { useFetchAuthUser } from '../../../entities/authorization';
+// import { useFetchAuthUser } from '../../../entities';
 
 // 메뉴 갯수
 const menuLength = 5;

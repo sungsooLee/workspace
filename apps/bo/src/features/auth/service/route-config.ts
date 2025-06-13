@@ -6,8 +6,8 @@ import type { ParsedLocation } from '@tanstack/react-router';
 import { isEmpty } from 'lodash';
 import { ZodSchema } from 'zod';
 
-import { authUserQueryKeys } from '@learnway/auth';
-import type { AuthUser } from '@learnway/auth';
+import { authUserQueryKeys } from '@learnway/auth/entities';
+import type { AuthUser } from '@learnway/auth/types';
 import { ERROR } from '@learnway/config';
 import type { PageRouteConfig } from '@learnway/shared';
 import { buildJodObject, dateDiff } from '@learnway/shared';

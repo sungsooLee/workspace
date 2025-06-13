@@ -2,17 +2,17 @@ import { memo } from 'react';
 
 import { cn } from '@learnway/shared';
 import { Popover } from '@learnway/ui';
-import { IcoArrowDown } from '@learnway/icons';
+import { IcoArrowDown, IcoCheck02 } from '@learnway/icons';
 import { Button } from '@learnway/ui';
 import {
-  Tenant,
   useAsycFetchMenusForceRefatch,
   useFetchAuthUser,
   useUpdateUser,
-} from '@learnway/auth';
+} from '@learnway/auth/entities';
 
 import styles from './gnb-role.module.css';
 import { useRouter } from '@tanstack/react-router';
+import { Tenant } from '@learnway/auth/types';
 
 // TODO 역할 조회, 역할 선택기능
 const PopoverContent = () => {
@@ -47,9 +47,16 @@ const PopoverContent = () => {
                   key={`tenant_${i}`}
                   className={`${styles.btn} ${tenant.tenantId === data?.activeTenant?.tenantId ? styles.active : ''}`}
                   onClick={() => handleLanguage(tenant)}
-                >
-                  {tenant?.tenantName}
-                </Button>
+                  label={tenant?.tenantName}
+                  icon={
+                    <IcoCheck02
+                      width={16}
+                      height={16}
+                      stroke="#131c30"
+                      className={styles.icon_check}
+                    />
+                  }
+                />
               </li>
             </Popover.Close>
           ))}

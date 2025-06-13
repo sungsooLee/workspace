@@ -1,0 +1,9 @@
+/* editor.module.css */
+.start {
+  &.editor {
+    @apply w-full overflow-hidden rounded-[4px] border border-solid border-[var(--gray4)];
+    [class*='nlp--editor-tool-bar'] {
+      border-bottom: 1px solid var(--gray4);
+    }
+  }
+}

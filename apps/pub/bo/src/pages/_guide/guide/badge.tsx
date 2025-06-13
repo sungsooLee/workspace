@@ -110,6 +110,12 @@ import { Badge } from '@learnway/ui';
             <Badge option={{ label: '999+', value: 'D' }} variant="number" status="new" size="sm" />
           </div>
         </div>
+        <h3 className="guide_tit3">Badge text 타입</h3>
+        <div className="flex_box">
+          <div className="desc">
+            <Badge option={{ label: 'text', value: 'A' }} variant="text" status="new" />
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ import { Link, useRouter, useCanGoBack } from '@tanstack/react-router';
 import { IcoArrowBackward } from '@learnway/icons';
 import { useCurrentRoute } from '@learnway/hooks';
 import { Button } from '@learnway/ui';
-import { useActiveMenuDepthState } from '@learnway/auth';
+import { useActiveMenuDepthState } from '@learnway/auth/entities';
 
 import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/container/container-header.module.css';
 

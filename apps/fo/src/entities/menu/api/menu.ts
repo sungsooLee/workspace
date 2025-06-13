@@ -1,6 +1,6 @@
 import { httpService, objectToQueryString } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
-import type { Menu } from '@learnway/auth';
+import type { Menu } from '@learnway/auth/types';
 
 export default class MenuService {
   static getMenus(tenantId: number, isMobile: boolean): Promise<any> {

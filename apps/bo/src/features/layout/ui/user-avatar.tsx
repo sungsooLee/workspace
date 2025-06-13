@@ -7,11 +7,11 @@ import { map } from 'lodash';
 import { useCreation } from 'ahooks';
 
 import { Avatar, Popover, Button, useModal } from '@learnway/ui';
-import { useFetchAuthUser, useLogoutUser, useReissue, useUserDetail } from '@learnway/auth';
 import { IcLogOut01 } from '@learnway/icons';
 import imgLogo from '@assets/images/temp/img_temp_company_logo.png';
 
 import styles from './user-avatar.module.css';
+import { useFetchAuthUser, useLogoutUser, useUserDetail } from '@learnway/auth/entities';
 
 export const AvataFallback = ({ name }: { name?: string }) => {
   const firstUnit = useCreation(() => {

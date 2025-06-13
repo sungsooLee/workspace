@@ -6,7 +6,8 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ModalWrapper, useModalStore } from '@learnway/ui';
 import { useGlobalRouterEvent } from '@learnway/hooks';
 import { PageRouteContext } from '@learnway/shared';
-import { useRenewalMenuStateFromRouting, useSessionTimout } from '@learnway/auth';
+import { useRenewalMenuStateFromRouting } from '@learnway/auth/entities';
+import { useSessionTimout } from '@learnway/auth/features';
 
 const NotFound = () => {
   return (

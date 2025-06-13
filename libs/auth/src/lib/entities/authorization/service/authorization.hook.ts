@@ -1,5 +1,5 @@
 // import { useTokenStore } from './../../../../../../config/src/lib/store/token-store';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient, MutateOptions } from '@tanstack/react-query';
 import { useRouter } from '@tanstack/react-router';
 
 import { DATE_TIME_FORMAT, duration, type MutateCallback } from '@learnway/shared';

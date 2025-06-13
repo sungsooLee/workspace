@@ -17,9 +17,11 @@ import { useState } from 'react';
 import { leaningResourceQueryOptions } from '@entities/leaning-resource';
 import { ModifierInfoModal } from './learning-resource-modifier-info-modal';
 import { ProgramGuideModal } from './learning-resource-program-guide-modal';
+import { BatchSettingModal } from './learning-resource-batch-setting-modal';
+import { map, some, uniq } from 'lodash';
 
 function LearningResourceTableComponent() {
-  const { open: openModal } = useModal();
+  const { open: openModal, alert } = useModal();
 
   const searchConfig: any = {
     builders: [
@@ -221,15 +223,25 @@ function LearningResourceTableComponent() {
       },
       {
         size: 79,
-        name: 'updatedInfo',
+        name: 'modifiedDate',
         label: t('LABEL.grid.column.updatedInfo'),
-        render: () => (
+        render: (_: any) => (
           <Button
             className="link"
             label={t('LABEL.form.label.look')}
             onClick={(e) => {
               e.stopPropagation();
-              openModal({ width: 'sm', content: <ModifierInfoModal /> }); //lastModifierBy로 받아온 user uuid를 props로 넘겨야 함
+              openModal({
+                width: 'sm',
+                content: (
+                  <ModifierInfoModal
+                    lastModifiedBy="c392867d-3f6d-11f0-9435-0218a74d52f7" // 조일환 uuid
+                    modifiedDate={'2025-06-12T19:36:43+09:00'} // API 적용일
+                    // lastModifiedBy={_.row.original.lastModifiedBy}
+                    // modifiedDate={_.getValue()}
+                  />
+                ),
+              });
             }}
           />
         ),
@@ -239,10 +251,41 @@ function LearningResourceTableComponent() {
 
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
+  const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const [tableInstance, setTableInstance] = useState<Table<any>>(); // Grid 로부터 받을 table 인스턴스를 저장할 상태
 
   function handleSearch(query: Record<string, any>) {
     gridFetch(query);
+  }
+
+  function openProgramGuide() {
+    openModal({
+      width: 'md',
+      content: <ProgramGuideModal />,
+    });
+  }
+
+  function openBatchSetting() {
+    const selectedContentTypes = map(selectedRows, 'contentType');
+    if (uniq(selectedContentTypes).length !== 1) {
+      return alert({
+        title: t('LABEL.alert.contentTypeNotMatched.title'),
+        content: t('LABEL.alert.contentTypeNotMatched.content'),
+      });
+    }
+
+    const selectedIsCourseUsed = map(selectedRows, 'isCouseUsed');
+    if (some(selectedIsCourseUsed)) {
+      return alert({
+        title: t('LABEL.alert.isCourseUsed.title'),
+        content: t('LABEL.alert.isCourseUsed.content'),
+      });
+    }
+
+    openModal({
+      width: 'xl',
+      content: <BatchSettingModal />,
+    });
   }
 
   return (
@@ -254,24 +297,24 @@ function LearningResourceTableComponent() {
         showNumberingColumn
         multiple
         showExpandColumn
+        onRowsSelect={setSelectedRows}
         customButtonNode={
           <>
             <Button
               label={t('LABEL.grid.header.guideDownload')}
               icon={<IcoDownload width={16} height={16} stroke="#4C515E" />}
-              onClick={() =>
-                openModal({
-                  width: 'md',
-                  content: <ProgramGuideModal />,
-                })
-              }
+              onClick={openProgramGuide}
             />
             <span className="type_tooltip">
-              <Button variant="text" label={t('LABEL.grid.header.batchModify')} />
+              <Button
+                variant="text"
+                label={t('LABEL.grid.header.batchSetting')}
+                onClick={openBatchSetting}
+              />
               <Tooltip
                 side="bottom"
                 align="start"
-                content={<pre>{t('LABEL.grid.tooltip.batchModify')}</pre>}
+                content={<pre>{t('LABEL.grid.tooltip.batchSetting')}</pre>}
               >
                 <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
               </Tooltip>

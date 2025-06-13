@@ -45,6 +45,15 @@ function RouteComponent() {
         description: '',
       },
       {
+        name: 'learningResourceDescription',
+        type: 'textarea',
+        label: t('학습자원 설명'),
+        readOnly: true,
+        placeholder: '',
+        maxLength: 2000,
+        value: '',
+      },
+      {
         name: 'manager',
         type: 'text',
         label: t('담당자'),

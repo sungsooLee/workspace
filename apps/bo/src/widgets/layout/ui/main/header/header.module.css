@@ -1,7 +1,7 @@
 /* header.module.css */
 .start {
   .header {
-    @apply relative box-border h-[100px] min-w-[1200px] bg-[#012277] px-[32px] transition-all duration-150 ease-in-out;
+    @apply relative box-border flex h-[100px] min-w-[1200px] flex-wrap bg-[#012277] px-[32px] transition-all duration-150 ease-in-out;
     h1 {
       @apply inline-flex align-top;
       img {
@@ -18,7 +18,7 @@
       }
     }
     .nav_area {
-      @apply flex h-[50px] items-center pr-[360px];
+      @apply flex h-[50px] w-full flex-none items-center pr-[360px];
     }
     .util {
       @apply absolute right-[36px] top-[6px] flex items-center;
@@ -28,6 +28,15 @@
     }
     .quick_menu {
       @apply absolute bottom-0 right-0 h-[50px] w-auto pr-[32px] pt-[5px];
+    }
+    .option_menu {
+      @apply ml-[32px] mt-[4px] flex items-center;
+      button {
+        @apply ml-0 pl-[4px];
+        & + button {
+          @apply ml-[16px];
+        }
+      }
     }
   }
 }

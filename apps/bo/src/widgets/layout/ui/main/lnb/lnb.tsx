@@ -5,7 +5,7 @@ import { cn } from '@learnway/shared';
 import { Button } from '@learnway/ui';
 import { IcoArrowDown, IcoArrowBackward } from '@learnway/icons';
 
-import { useActiveMenuDepthState } from '@learnway/auth';
+import { useActiveMenuDepthState } from '@learnway/auth/entities';
 import { AccordionMenu } from './accordion-menu/accordion-menu';
 
 import styles from './lnb.module.css';
@@ -86,7 +86,7 @@ function LNBComponent() {
             <span className={styles.lnb_title_text}>
               {import.meta.env.VITE_LANGUAGE_DEV === 'true'
                 ? t(`${activeMenuDepth[0].menuName}`)
-                : t(`MENU.${activeMenuDepth[0].menuCode}`)}
+                : t(`HRD_CENTER_MENU.${activeMenuDepth[0].menuCode}`)}
             </span>
             <IcoArrowDown width={16} height={16} stroke="#131C30" />
           </Button>

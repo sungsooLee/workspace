@@ -21,7 +21,7 @@ import {
   useSendVerifySMS,
   useUpdatePhoneNumber,
   useUserDetail,
-} from '../../../../entities/authorization';
+} from '../../../../entities';
 import { t } from 'i18next';
 
 const TIME_LIMIT_VERIFY = 180;

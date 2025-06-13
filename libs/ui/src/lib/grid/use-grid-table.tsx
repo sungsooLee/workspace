@@ -373,7 +373,7 @@ export function useGridTable<T extends object>(
     }
 
     // 2. 현재 선택된 행들의 ID 목록 가져오기
-    const currentSelectedRows = table.getSelectedRowModel().rows;
+    const currentSelectedRows = table.getSelectedRowModel().flatRows;
     const currentSelectedRowIds = currentSelectedRows.map((row) => row.id);
 
     // 3. 이전 선택 상태와 현재 선택 상태 비교

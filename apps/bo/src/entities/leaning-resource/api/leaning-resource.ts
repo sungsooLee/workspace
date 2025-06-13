@@ -1,10 +1,16 @@
 import { fileDownload, httpService } from '@learnway/shared';
 import { faker } from '@faker-js/faker';
 import { CMSApiPrefix, PMSApiPrefix } from '@learnway/config';
+
 export default class LeaningResourceService {
+  static fetchUser(uuid: string): Promise<any> {
+    return httpService.get(`${PMSApiPrefix()}/users/` + uuid);
+  }
+
   static fetchContents(params: any): Promise<any> {
     return httpService.get(`${CMSApiPrefix()}/contents`, params);
   }
+
   static async fetchS3FileDownload(key: string, fileName: string): Promise<any> {
     await fileDownload(`${PMSApiPrefix()}/file/s3/download`, { key, fileName });
     return true;
@@ -67,6 +73,11 @@ export default class LeaningResourceService {
         pageable: { pageSize: 10, pageIndex: 0, totalElements: 55 },
       });
     });
+  }
+
+  // HTML5 동영상 콘텐츠 관리
+  static updateHTML5FileChange(params: { contentUuid: string; fileUuid: string }): Promise<any> {
+    return httpService.put(`${CMSApiPrefix()}/html5/file/change`, params);
   }
 
   static fetchProgramGuideDownload() {

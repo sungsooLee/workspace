@@ -2,7 +2,8 @@ import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useMatchRoute } from '@tanstack/react-router';
 
-import { Menu, useActiveMenuDepthState } from '@learnway/auth';
+import { useActiveMenuDepthState } from '@learnway/auth/entities';
+import { Menu } from '@learnway/auth/types';
 import { IcoArrowForward, IcoHome02 } from '@learnway/icons';
 
 import styles from './breadcrumbs.module.css';
@@ -34,7 +35,7 @@ function BreadcrumbsComponent() {
                   <IcoArrowForward width={12} height={12} stroke="#131C30" />
                   {import.meta.env.VITE_LANGUAGE_DEV === 'true'
                     ? t(`${menu.menuCode}`) // t(`${menu.menuName}`)
-                    : t(`MENU.${menu.menuCode}`)}
+                    : t(`HRD_CENTER_MENU.${menu.menuCode}`)}
                 </Link>
               </li>
             );

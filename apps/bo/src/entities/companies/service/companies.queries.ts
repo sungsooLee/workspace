@@ -1,7 +1,7 @@
 import { skipToken } from '@tanstack/react-query';
 import { getQuerySkipToken } from '@learnway/shared';
 import CompaniesService from '../api/companies';
-import { Company } from 'types';
+import { Company } from '@learnway/types';
 
 export const queryKeys = {
   all: ['companies'] as const,

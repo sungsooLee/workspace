@@ -29,7 +29,6 @@ import {
 } from '@learnway/hooks';
 
 import { FormRow, FormSubTitle, SwitchFormField } from '@shared/ui';
-import { GridExcelButtons } from '@shared/ui/excel';
 import { SearchBox } from '@shared/ui/search-box';
 
 import { FormDisplay } from '@features/form/ui/form-display';
@@ -38,6 +37,7 @@ import {
   ChannelListChoiceModal,
   CompanyShuttleModal,
   UserGroupChoiceModal,
+  GridExcelButtons,
 } from '@features/shared';
 
 import { EnTenantDetailTabKey } from '@types';

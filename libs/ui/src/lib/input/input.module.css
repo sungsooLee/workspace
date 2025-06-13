@@ -40,9 +40,9 @@
 }
 
 .before_area {
-  @apply mr-[12px];
+  @apply mr-[12px] flex shrink-0 items-center pl-[12px];
   .unit {
-    @apply input_bo_1_r flex shrink-0 items-center text-[var(--gray8)];
+    @apply input_bo_1_r text-[var(--gray7)];
   }
   &:empty {
     @apply !hidden;

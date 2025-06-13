@@ -1,7 +1,7 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 
 import { cookieService } from '@learnway/shared';
-import { useFetchAuthUser } from '@learnway/auth';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 
 import { Search, Logo, UserAvatar } from '../../../../../features/layout';
 import {

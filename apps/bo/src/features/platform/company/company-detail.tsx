@@ -9,6 +9,7 @@ import {
   useModal,
   RadioGroupFormField,
   Input,
+  ContentsRowItem,
 } from '@learnway/ui';
 import { FormRow, FormSubTitle, SwitchFormField } from '@shared/ui';
 import { FormDisplay } from '@features/form/ui/form-display';
@@ -26,15 +27,18 @@ import { useCheckExistsCompanyCode } from '@entities/companies';
 
 const CompanyDetailComponent: FC<any> = ({ mode }) => {
   const { open: openModal, close: closeModal, confirm: openConfirm } = useModal();
+
   const { provider, fetchData, onSubmit, onFormChange, setFormError, clearFormError, getValues } =
     useDynamicForm(formConfig);
-  const { config: gConfig, gridFetch, data: gridData } = useGridBox(gridConfig);
 
   const [isSuccessCodeCheck, setIsSuccessCodeCheck] = useState(false);
   const [codeCheckState, setCodeCheckState] = useState<'none' | 'success' | 'duplicate' | 'error'>(
     'none',
   );
   const initialFromValuesRef = React.useRef<any>(null);
+
+  const tempLoginRestrictTimeSetting = React.useRef<any>(null);
+  const [loginRestrictTimeSettings, setLoginRestrictTimeSettings] = useState<any[]>([]);
 
   const { checkExistsCompanyCode: checkExists } = useCheckExistsCompanyCode({});
 
@@ -114,7 +118,9 @@ const CompanyDetailComponent: FC<any> = ({ mode }) => {
       content: <LoginRestrictTimeSettingModal />,
       onClose(data: any) {
         if (data) {
-          // TODO. 제한 설정 임시 저장
+          console.log('## data', data);
+          // 제한 설정 임시 저장
+          tempLoginRestrictTimeSetting.current = data;
           setTimeout(() => openConfirmChooseUserGroup(), 0);
         }
       },
@@ -136,7 +142,8 @@ const CompanyDetailComponent: FC<any> = ({ mode }) => {
         if (value) {
           setTimeout(() => chooseUserGroup(), 0);
         } else {
-          // TODO. 제한 설정 임시 저장 삭제
+          // 제한 설정 임시 저장 삭제
+          tempLoginRestrictTimeSetting.current = null;
         }
       },
     });
@@ -147,8 +154,10 @@ const CompanyDetailComponent: FC<any> = ({ mode }) => {
       width: 'xl',
       content: <UserGroupTabsChoiceModal />,
       onClose(data: any) {
-        console.log('## userGroups', data);
-        // TODO. 유저 그룹 검색 팝업 완료 이후 테스트
+        console.log('## tempLoginRestrictTimeSetting', tempLoginRestrictTimeSetting.current);
+        const newSetting = JSON.parse(JSON.stringify(tempLoginRestrictTimeSetting.current));
+        tempLoginRestrictTimeSetting.current = null;
+        setLoginRestrictTimeSettings([...loginRestrictTimeSettings, newSetting]);
       },
     });
   };
@@ -225,63 +234,55 @@ const CompanyDetailComponent: FC<any> = ({ mode }) => {
 
       <FormSubTitle label={t('로그인 및 인증 설정 정보')} lineType="dark" />
       <ContentsRow>
-        <FormRow provider={provider} name={'isUseSso'} />
-        <FormRow provider={provider} name={'passwordAuthType'} />
+        <ContentsRowItem>
+          <FormRow
+            provider={provider}
+            name={'isUseSso'}
+            className={dynamicFormStyles.form_item_horizontal}
+          />
+          <FormDisplay provider={provider} dependencies={[{ name: 'isUseSso', value: true }]}>
+            <ContentsRow>
+              <FormRow provider={provider} name={'ssoTypeList'} />
+            </ContentsRow>
+          </FormDisplay>
+        </ContentsRowItem>
+        <ContentsRowItem>
+          <FormRow provider={provider} name={'passwordAuthType'} />
+        </ContentsRowItem>
       </ContentsRow>
-      <FormDisplay provider={provider} dependencies={[{ name: 'isUseSso', value: true }]}>
-        <ContentsRow>
-          <FormRow className={dynamicFormStyles.w_half} provider={provider} name={'ssoTypeList'} />
-        </ContentsRow>
-      </FormDisplay>
 
       <ContentsRow>
-        <FormRow provider={provider} name={'isUseTwoFactorAuth'} />
-        <FormRow
-          className={dynamicFormStyles.w_half}
-          provider={provider}
-          name={'twoFactorAuthType'}
-        />
-      </ContentsRow>
-
-      <FormDisplay provider={provider} dependencies={[{ name: 'isUseTwoFactorAuth', value: true }]}>
-        <ContentsRow>
+        <ContentsRowItem>
+          <FormRow
+            provider={provider}
+            name={'isUseTwoFactorAuth'}
+            className={dynamicFormStyles.form_item_horizontal}
+          ></FormRow>
+          <FormDisplay
+            provider={provider}
+            dependencies={[{ name: 'isUseTwoFactorAuth', value: true }]}
+          >
+            <FormRow provider={provider} name={'twoFactorAuthPlatformTypeList'} />
+          </FormDisplay>
+        </ContentsRowItem>
+        <ContentsRowItem>
           <FormRow
             className={dynamicFormStyles.w_half}
             provider={provider}
-            name={'twoFactorAuthPlatformTypeList'}
+            name={'twoFactorAuthType'}
           />
-        </ContentsRow>
-      </FormDisplay>
+        </ContentsRowItem>
+      </ContentsRow>
 
       <div className="grid_wrap py-10">
         <GridBox
-          config={gConfig}
           columns={columns}
+          data={loginRestrictTimeSettings}
           multiple
           showAdd
           showRemove
           showTotalCount={false}
           onAddClick={handleAddClick}
-          //   customButtonNode={
-          //     <>
-          //       <Button
-          //         variant="text"
-          //         size="sm"
-          //         //onClick={handleAddMode}
-          //       >
-          //         <IcoPlus width={16} height={16} stroke="#131C30" />
-          //         {t('LABEL.button.add')}
-          //       </Button>
-          //       <Button
-          //         variant="text"
-          //         size="sm"
-          //         //onClick={handleAddMode}
-          //       >
-          //         <IcoMinus width={16} height={16} stroke="#131C30" />
-          //         {t('LABEL.button.delete')}
-          //       </Button>
-          //     </>
-          //   }
           title={t('로그인 제한 시간 설정')}
           guideText={t(
             '사용자가 학습자 사이트에 로그인 가능한 시간을 설정할 수 있으며, 회사의 유저그룹을 기준으로 로그인 제한 시간을 설정할 수 있습니다.',
@@ -291,7 +292,11 @@ const CompanyDetailComponent: FC<any> = ({ mode }) => {
 
       <FormSubTitle label={t('보안 설정 정보')} lineType="dark" />
       <ContentsRow>
-        <FormRow provider={provider} name={'isUseWatermark'} />
+        <FormRow
+          provider={provider}
+          name={'isUseWatermark'}
+          className={dynamicFormStyles.form_item_horizontal}
+        />
         <FormDisplay provider={provider} dependencies={[{ name: 'isUseWatermark', value: true }]}>
           <FormRow provider={provider} name={'watermarkText'} />
         </FormDisplay>
@@ -898,76 +903,76 @@ const formConfig: DynamicFormConfig = {
   },
 };
 
-const gridConfig: useGridBoxConfig = {
-  query: '',
-  columns: [],
-  data: [],
-
-  //   pagination: {
-  //     pageSize: 10,
-  //     pageIndex: 0,
-  //     totalRows: 0,
-  //   },
-  //   excel: {
-  //     upload: '/upload',
-  //   },
-};
-
 const columnHelper = createColumnHelper<any>();
 
 const columns = [
   columnHelper.accessor('loginRestrictionType', {
-    cell: (info) => info.getValue(),
+    cell: (info) => t('pms.company.LoginRestrictionType.' + info.getValue()),
     header: t('로그인 제한 구분'),
-    size: 200,
+    size: 160,
     enableGrouping: false,
   }),
   columnHelper.accessor('loginRestrictionName', {
-    cell: (info) => info.getValue(),
+    cell: (info) => <Button className="link">{info.row.original.loginRestrictionName}</Button>,
     header: t('로그인 제한명'),
-    size: 200,
     enableGrouping: false,
+    meta: {
+      size: 'auto',
+    },
   }),
   columnHelper.accessor('restrictionStrDate', {
     cell: (info) =>
-      info.row.original.restrictionStrDate + ' ~ ' + info.row.original.restrictionEndDate,
+      getDateToString(new Date(info.row.original.restrictionDate.from), DATE_TIME_FORMAT.DATE) +
+      ' ~ ' +
+      getDateToString(new Date(info.row.original.restrictionDate.to), DATE_TIME_FORMAT.DATE),
     header: t('제한 기간'),
     size: 200,
     enableGrouping: false,
   }),
   columnHelper.accessor('loginRestrictionSettingType', {
-    cell: (info) => info.getValue(),
+    cell: (info) => t('pms.company.LoginRestrictionSettingType.' + info.getValue()),
     header: t('제한 설정 방식'),
     size: 120,
     enableGrouping: false,
   }),
   columnHelper.accessor('userGroup', {
-    cell: (info) => info.getValue(),
+    cell: (info) => <Button label={t('유저그룹 설정')} variant={'gray'} size={'md'} />,
     header: t('유저그룹 설정'),
     size: 120,
     enableGrouping: false,
+    meta: {
+      cellAlign: 'center',
+    },
   }),
   columnHelper.accessor('userGroupTarget', {
-    cell: (info) => info.getValue(),
+    cell: (info) => <Button label={t('대상자')} variant={'gray'} size={'md'} />,
     header: t('유저그룹 대상자'),
     size: 120,
     enableGrouping: false,
+    meta: {
+      cellAlign: 'center',
+    },
   }),
   columnHelper.accessor('isUsed', {
     cell: (info) => info.getValue(),
     header: t('사용'),
-    size: 120,
+    size: 100,
     enableGrouping: false,
+    meta: {
+      cellAlign: 'center',
+    },
   }),
   columnHelper.accessor('createdBy', {
     cell: (info) => info.getValue(),
     header: t('등록자'),
-    size: 120,
+    size: 100,
     enableGrouping: false,
   }),
   columnHelper.accessor('createdDate', {
     cell: (info) =>
-      getDateToString(new Date(info.row.original.createdDate), DATE_TIME_FORMAT.DATETIME_SEC),
+      info.row.original.createdDate
+        ? getDateToString(new Date(info.row.original.createdDate), DATE_TIME_FORMAT.DATETIME_SEC)
+        : '',
     header: t('등록일시'),
     size: 200,
     enableGrouping: false,
@@ -975,12 +980,14 @@ const columns = [
   columnHelper.accessor('lastModifiedBy', {
     cell: (info) => info.getValue(),
     header: t('수정자'),
-    size: 120,
+    size: 100,
     enableGrouping: false,
   }),
   columnHelper.accessor('modifiedDate', {
     cell: (info) =>
-      getDateToString(new Date(info.row.original.modifiedDate), DATE_TIME_FORMAT.DATETIME_SEC),
+      info.row.original.modifiedDate
+        ? getDateToString(new Date(info.row.original.modifiedDate), DATE_TIME_FORMAT.DATETIME_SEC)
+        : '',
     header: t('수정일시'),
     size: 200,
     enableGrouping: false,

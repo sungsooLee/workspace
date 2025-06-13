@@ -22,10 +22,17 @@ const PopoverContent = () => {
               <Button
                 key={idx}
                 className={`${styles.btn} ${activeIdx === idx ? styles.active : ''}`}
-                onClick={() => handleClick(idx)}>
-                {langs}
-                <IcoCheck02 width={16} height={16} stroke="#131c30" className={styles.icon_check} />
-              </Button>
+                onClick={() => handleClick(idx)}
+                label={langs}
+                icon={
+                  <IcoCheck02
+                    width={16}
+                    height={16}
+                    stroke="#131c30"
+                    className={styles.icon_check}
+                  />
+                }
+              />
             </li>
           ))}
         </ul>
@@ -45,7 +52,8 @@ const LanguageComponent = ({ className }: LanguageComponentProp) => {
       className={cn(styles.btn_language, className)}
       side="bottom"
       align="end"
-      sideOffset={5}>
+      sideOffset={5}
+    >
       <span className={styles.select}>{'KR'}</span>
       <IcoArrowDown width={16} height={16} stroke="#ffffff" />
     </Popover>

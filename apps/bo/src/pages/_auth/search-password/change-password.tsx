@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { isEmpty } from 'lodash';
-import { ChangePasswordBySearchAccountPage } from '@learnway/auth';
+import { ChangePasswordBySearchAccountPage } from '@learnway/auth/pages';
 import { pageRouteConfig } from '../../../features/auth';
 
 export const Route = createFileRoute('/_auth/search-password/change-password')({

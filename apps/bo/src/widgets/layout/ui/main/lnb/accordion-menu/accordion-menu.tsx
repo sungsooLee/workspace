@@ -6,8 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { cn } from '@learnway/shared';
 import { Accordion, AccordionItem } from '@learnway/ui';
 
-import type { Menu } from '@learnway/auth';
-import { useActiveMenuDepthState } from '@learnway/auth';
+import type { Menu } from '@learnway/auth/types';
+import { useActiveMenuDepthState } from '@learnway/auth/entities';
 
 import styles from './accordion-menu.module.css';
 import { useCreation } from 'ahooks';
@@ -50,7 +50,7 @@ const AccordionMenuComponent = ({
     return (menus ?? [])
       .filter((menu) => menu.isHiddenMenu === false)
       .map((menu: Menu, index: number) => {
-        const children = menu?.children?.filter((m) => m.isHiddenMenu === false);
+        const children = menu?.children?.filter((m: Menu) => m.isHiddenMenu === false);
 
         let active = false;
         if (activeMenuDepth && activeMenuDepth[depth - 1]) {
@@ -66,7 +66,7 @@ const AccordionMenuComponent = ({
             <span className={active ? styles.active : ''} onClick={() => handleNavigate(menu)}>
               {import.meta.env.VITE_LANGUAGE_DEV === 'true'
                 ? t(`${menu.menuName}`)
-                : t(`MENU.${menu.menuCode}`)}
+                : t(`HRD_CENTER_MENU.${menu.menuCode}`)}
             </span>
           ),
           children: children && (

@@ -3,13 +3,13 @@ import { createFileRoute, useRouter, Link, useSearch } from '@tanstack/react-rou
 import { t } from 'i18next';
 import { isEmpty } from 'lodash';
 
-import { Button, ContentsRow, Input } from '@learnway/ui';
-import { useExpStore, useFetchAuthUser } from '@learnway/auth';
+import { Button, ContentsRow, Input, useModal } from '@learnway/ui';
+import { useExpStore, useFetchAuthUser } from '@learnway/auth/entities';
 import { cn } from '@learnway/shared';
-import { DynamicFormField } from '@learnway/ui';
+// import { DynamicFormField } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 
-import { useAuthSignin, getSavedUserid, pageRouteConfig } from '../../features/auth';
+import { useAuthSignin, getSavedUserid, pageRouteConfig, TenantRoleModal } from '@features/auth';
 import { useSetLanguage } from '../../features/platform';
 
 import { FormRow } from '../../shared/ui/form';
@@ -35,7 +35,7 @@ function RouteComponent() {
   const router = useRouter();
   const params = Route.useParams();
   const search = Route.useSearch();
-
+  const { open: openModal } = useModal();
   const { reset } = useExpStore();
   const { provider, onSubmit, onFormChange, control } = useDynamicForm(detailConfig);
 
@@ -98,6 +98,27 @@ function RouteComponent() {
 
         <div className={styles.login_guide}>
           <span>
+            <Button
+              type="button"
+              size="sm"
+              variant="link"
+              className={cn('text-red-800 underline')}
+              onClick={() => {
+                openModal({
+                  content: <TenantRoleModal />,
+                  height: 'lg',
+                  width: 'sm',
+                  hideCloseButton: true,
+                  closeOnOutsideClick: false,
+                  onClose: (data: any) => {
+                    const text = `선택 \n테넌트: ${data.tenant.label}\n역할: ${data.role.label}`;
+                    alert(text);
+                  },
+                });
+              }}
+            >
+              테넌트/역할TEST
+            </Button>
             <Link to="/signup-progress">{t('LABEL.common.membershipStatus')}</Link>
             <Link to="/signup">{t('LABEL.common.joinTheAdminMembership')}</Link>
           </span>
