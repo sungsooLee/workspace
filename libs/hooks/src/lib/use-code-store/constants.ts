@@ -1,5 +1,6 @@
 export const CODE_GROUP = {
   'cmmon.DayOfWeekType': 'cmmon.DayOfWeekType',
+  'cmmon.TelCountryCode': 'cmmon.TelCountryCode',
   'cms.content.ContentsAddInfoType': 'cms.content.ContentsAddInfoType',
   'cms.content.ContentType': 'cms.content.ContentType',
   'cms.content.ContentsTypeCode': 'cms.content.ContentsTypeCode',

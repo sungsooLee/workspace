@@ -23,7 +23,7 @@ import {
 } from '@shared/ui';
 
 import { isEqual } from 'lodash';
-import { CompanyShuttleModal, RoleChoiceModal, UserChoiceModal } from '@features/shared';
+import { CompanyShuttleModal, CompanyChoiceModal, UserChoiceModal } from '@features/shared';
 import {
   DuplicateCheckInputFormField,
   DuplicateState,
@@ -214,7 +214,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
               modalConfig={{
                 title: '',
                 width: 'xl',
-                content: <CompanyShuttleModal />,
+                content: <CompanyChoiceModal />,
               }}
             />
           }
