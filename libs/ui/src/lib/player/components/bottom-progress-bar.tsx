@@ -64,7 +64,7 @@ const BottomProgressBar = ({
 
   return (
     <div className="absolute bottom-0 left-0 w-full px-4 pb-6 text-white">
-      <div className="h-2 w-full cursor-pointer rounded bg-white/30" onClick={handleSeek}>
+      <div className="relative h-2 w-full cursor-pointer rounded bg-white/30" onClick={handleSeek}>
         <div className="h-full rounded bg-[#00AFD5]" style={{ width: `${played * 100}%` }} />
       </div>
       <div className="mt-5 flex items-center justify-between">
