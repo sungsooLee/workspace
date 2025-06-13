@@ -165,6 +165,13 @@
           "e0015": "검색결과가 9천건이 초과하는 검색은 불가합니다.",
           "-999": "시스템 에러가 발생했습니다. 관리자에게 문의해 주세요."
         }
+      },
+      "modifierInfo": {
+        "title": "수정자",
+        "nameAndEmployeeNumber": "이름(사번)",
+        "email": "이메일 주소",
+        "phoneNumber": "연락처",
+        "modifiedDate": "수정일"
       }
     },
     "common": {
@@ -349,7 +356,7 @@
         "coordinator": "담당자",
         "detailInfo": "세부정보",
         "util": "기능",
-        "useEnabledType": "사용가능",
+        "isContentEnabled": "사용가능",
         "localization": "현지화",
         "updatedInfo": "수정정보"
       },
@@ -419,7 +426,7 @@
         "contentType": "유형",
         "contentName": "학습자원명",
         "isVendored": "외주여부",
-        "useEnabledType": "사용가능",
+        "isContentEnabled": "사용가능",
         "isCourseUsed": "교육활용",
         "coordinator": "담당자",
         "langCountryCode": "언어",
@@ -579,6 +586,10 @@
       "isCourseUsed": {
         "title": "교육과정에서 사용 중입니다.",
         "content": "사용 중인 학습자원은 일괄설정 불가합니다."
+      },
+      "canNotCopy": {
+        "title": "1개의 학습자원을 선택하세요",
+        "content": "복사기능은 1개의 학습자원들서만 적용됩니다."
       },
       "NOTFOUND_ID": {
         "title": "입력 정보를 확인해 주세요.",
@@ -801,11 +812,6 @@
     "ASSIGNMENT": "과제",
     "SURVEY": "설문지",
     "ETC": "기타"
-  },
-  "cms.content.ContentUseEnabledType": {
-    "ENABLED": "사용가능",
-    "EXPIRED": "사용기간만료",
-    "DISABLED": "사용불가"
   },
   "pms.role.TenantScope": {
     "ALL": "전체",
