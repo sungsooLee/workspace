@@ -183,6 +183,7 @@ const columns = [
   columnHelper.accessor('companyTenantList', {
     id: 'companyTenantList',
     cell: (info) =>
+      info.getValue() &&
       info
         .getValue()
         .map((item) => item.companyName)
@@ -193,6 +194,7 @@ const columns = [
   columnHelper.accessor('tenantUserList', {
     id: 'tenantUserList',
     cell: (info) =>
+      info.getValue() &&
       info
         .getValue()
         .map((item) => item.userName)

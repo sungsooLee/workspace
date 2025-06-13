@@ -583,7 +583,7 @@ const formConfig: DynamicFormConfig = {
   ],
 };
 
-function jsonToPaths(obj: any, parentPath = '') {
+function jsonToPaths(obj: any, parentPath = ''): any[] {
   const result = [];
 
   for (const key in obj) {

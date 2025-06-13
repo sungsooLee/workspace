@@ -129,6 +129,15 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         useCategory: useCategory,
         tenantDesc: tenantData.tenantDesc ?? '',
         tenantTagList: tag,
+        companyTenantList: tenantData.companyTenantList.map((item) => ({
+          companyId: item.companyId,
+          name: item.companyName,
+        })),
+        tenantUserList: tenantData.tenantUserList.map((item) => ({
+          userId: item.userId,
+          name: item.userName ?? '이름 없음',
+        })),
+        langCountryCodeTypeList: tenantData.langCountryCodeTypeList.filter((item) => !item),
       });
     }
   }, [tenantData]);
@@ -188,28 +197,8 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
           }
         />
       </ContentsRow>
-      {/* <ContentsRow>
-        <FormRow
-          provider={provider}
-          name="tenantMappingRoleList"
-          element={
-            <ChipListModalSelectorFormField
-              chipList={{
-                labelField: 'name',
-                valueField: 'roleId',
-                hideBorder: true,
-              }}
-              modalConfig={{
-                title: '',
-                width: 'xl',
-                content: <RoleChoiceModal />,
-              }}
-            />
-          }
-        />
-      </ContentsRow> */}
       <ContentsRow>
-        <FormRow provider={provider} name="tenantBillingTag" />
+        <FormRow provider={provider} name="tenantTagList" />
       </ContentsRow>
       <ContentsRow>
         <FormRow
@@ -255,7 +244,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       <ContentsRow>
         <FormRow
           provider={provider}
-          name="tenantMappingLanguageTypeList"
+          name="langCountryCodeTypeList"
           element={<CheckboxGroupFormField options={languageTypeList} />}
         />
       </ContentsRow>
@@ -288,7 +277,7 @@ const formConfig: DynamicFormConfig = {
       tooltip: t('테넌트에 사용할 로고로 파일 1개만 등록할 수 있습니다.'),
     },
     {
-      name: 'tenantMappingUserList',
+      name: 'tenantUserList',
       label: t('테넌트 담당자'),
       type: 'custom',
       format: 'array',
@@ -296,14 +285,7 @@ const formConfig: DynamicFormConfig = {
       placeholder: t('담당자를 선택해주세요.'),
     },
     {
-      name: 'tenantMappingRoleList',
-      type: 'custom',
-      label: t('테넌트 역할'),
-      format: 'array',
-      value: [],
-    },
-    {
-      name: 'tenantBillingTag',
+      name: 'tenantTagList',
       type: 'text',
       label: t('테넌트 정산 태그'),
       value: '',
@@ -379,7 +361,7 @@ const formConfig: DynamicFormConfig = {
       showSelectAll: true,
     },
     {
-      name: 'tenantMappingLanguageTypeList',
+      name: 'langCountryCodeTypeList',
       type: 'checkbox-group',
       label: t('언어'),
       format: 'array',
@@ -449,8 +431,8 @@ const formConfig: DynamicFormConfig = {
         },
       ],
     },
-    tenantMappingUserList: { required: true },
-    tenantBillingTag: { required: true },
+    tenantUserList: { required: true },
+    tenantTagList: { required: true },
     companyTenantList: { required: true },
     isUsed: { required: true },
     isSecurityPledge: { required: true },

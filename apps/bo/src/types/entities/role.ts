@@ -6,6 +6,7 @@ export interface Role {
   roleCode?: string;
   roleName: string;
   roleDesc?: string;
+  roleType: string;
   parentRoleUuid?: string;
   isUsed: boolean;
   sortSeq?: number;
