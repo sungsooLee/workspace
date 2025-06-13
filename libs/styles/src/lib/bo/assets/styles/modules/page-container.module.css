@@ -40,6 +40,9 @@
     [class*='divider'] {
       @apply -mx-[32px] w-[calc(100%+64px)];
     }
+    form + [class*='divider'] {
+      @apply mt-[16px];
+    }
     [role='tabpanel'] {
       [class*='divider'] {
         @apply mx-0 w-full;

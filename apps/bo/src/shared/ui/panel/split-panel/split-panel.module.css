@@ -30,6 +30,15 @@
     }
   }
 }
-div + .root {
-  @apply border-t border-solid border-[#d6dae1] p-[32px];
+div {
+  &:not([class*='divider']) {
+    & + .root {
+      @apply border-t border-solid border-[#d6dae1] p-[32px];
+    }
+  }
+  &[class*='divider'] {
+    & + .root {
+      @apply mt-[32px];
+    }
+  }
 }

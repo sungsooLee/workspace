@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Button, GridBox, GridState, useGridBox, GridBoxState } from '@learnway/ui';
+import { Button, GridBox, GridState, useGridBox, GridBoxState, Divider } from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { CODE_GROUP, useSearchBox } from '@learnway/hooks';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
@@ -91,6 +91,7 @@ function RouteComponent() {
           {/* 검색 */}
           <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
           {/* 그리드 + 상세 */}
+          <Divider />
           <SplitPanel rightSize={450}>
             <GridBox
               config={gConfig}
