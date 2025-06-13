@@ -929,6 +929,15 @@ export const guideData = [
     lastUpdateDate: '',
     remarks: '', // 비고
   },
+  {
+    screenName: 'LMS/과정관리',
+    pageId: 'lms/procedure-management',
+    screenId: 'NLP_BO_LMS_0001',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
   // {
   //   screenName: 'CMS/시험관리',
   //   pageId: 'learning/test-management',

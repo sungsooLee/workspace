@@ -23,7 +23,7 @@ function WordWrapComponent({ text, className }: WordWrapComponentProps) {
     <div className={cn(styles.start, styles.word_wrap, className)}>
       <div ref={textRef} className={styles.word_area}>
         {isEllipsed ? (
-          <Tooltip side="right" align="start" content={text}>
+          <Tooltip side="bottom" align="start" content={text}>
             {text}
           </Tooltip>
         ) : (
