@@ -206,11 +206,11 @@ function PageContainerComponent({
             </div>
             <Button variant="point" size="sm" disabled label={'배포'} />
             <Button variant="primary" size="sm" disabled label={'저장'} />
-            <Button
+            {/* <Button
               className={styles.btn_close}
               onlyIcon
               icon={<IcoClose02 width={24} height={24} stroke={'#4C515E'} />}
-            />
+            /> */}
           </div>
         </div>
         {/* content_wrap */}

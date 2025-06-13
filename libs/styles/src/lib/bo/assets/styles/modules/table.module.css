@@ -42,6 +42,9 @@
       @apply mt-[48px];
     }
   }
+  & + [class*='nlp--tabs'] {
+    @apply mt-[48px];
+  }
 }
 [class*='title_wrap'] + .start {
   @apply -mt-[8px];

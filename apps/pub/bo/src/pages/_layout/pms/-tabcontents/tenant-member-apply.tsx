@@ -2,12 +2,12 @@ import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
 import { Input, Dropdown, Button, GridBox, DatePicker, Divider } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { IcoRefresh02, IcoSearch } from '@learnway/icons';
+import { IcoRefresh02, IcoSearch, IcoFormRequired } from '@learnway/icons';
 
 /* style */
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
 
-const TenantUserComponent: FC<{}> = ({}) => {
+const TenantMemberApplyComponent: FC<{}> = ({}) => {
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
   const [selectedValues2, setSelectedValues2] = useState<string[]>([]);
   const [selectedValues3, setSelectedValues3] = useState<string[]>([]);
@@ -26,30 +26,30 @@ const TenantUserComponent: FC<{}> = ({}) => {
       tenant: '테넌트1 외 2',
       group: '완성차',
       company: '회사1',
+      part: '경영지원실',
       team: '소속',
       position: '직위',
+      email: 'mail@mail.com',
       companyNum: '1234567',
       user: <Button className="link" label={'김현대'} />,
-      role: '조직원',
+      applyDate: '2025-01-01 14:25:11',
       tenure: '정상',
       status: '정상',
-      unlock: <Button label={'잠김해제'} variant={'gray'} disabled />,
-      login: <Button label={'로그인'} variant={'gray'} />,
       joinDate: '2025-01-01 14:25:11',
     },
     {
       tenant: '테넌트1 외 2',
       group: '완성차',
       company: '회사1',
+      part: '경영지원실',
       team: '소속',
       position: '직위',
+      email: 'mail@mail.com',
       companyNum: '1234567',
       user: <Button className="link" label={'김현대'} />,
-      role: '조직원',
+      applyDate: '2025-01-01 14:25:11',
       tenure: '정상',
       status: '정상',
-      unlock: <Button label={'잠김해제'} variant={'gray'} />,
-      login: <Button label={'로그인'} variant={'gray'} disabled />,
       joinDate: '2025-01-01 14:25:11',
     },
   ];
@@ -80,6 +80,14 @@ const TenantUserComponent: FC<{}> = ({}) => {
         size: 'auto',
       },
     }),
+    columnHelper.accessor('part', {
+      cell: (info) => info.getValue(),
+      header: '실',
+      enableGrouping: false,
+      meta: {
+        size: 'auto',
+      },
+    }),
 
     columnHelper.accessor('team', {
       cell: (info) => info.getValue(),
@@ -91,7 +99,15 @@ const TenantUserComponent: FC<{}> = ({}) => {
     }),
     columnHelper.accessor('position', {
       cell: (info) => info.getValue(),
-      header: '직위',
+      header: '호칭(직위)',
+      enableGrouping: false,
+      meta: {
+        size: 'auto',
+      },
+    }),
+    columnHelper.accessor('email', {
+      cell: (info) => info.getValue(),
+      header: '이메일',
       enableGrouping: false,
       meta: {
         size: 'auto',
@@ -115,9 +131,9 @@ const TenantUserComponent: FC<{}> = ({}) => {
         size: 'auto',
       },
     }),
-    columnHelper.accessor('role', {
+    columnHelper.accessor('applyDate', {
       cell: (info) => info.getValue(),
-      header: '학습자 역할',
+      header: '신청일',
       enableGrouping: false,
       meta: {
         size: 'auto',
@@ -143,29 +159,9 @@ const TenantUserComponent: FC<{}> = ({}) => {
         cellAlign: 'center',
       },
     }),
-    columnHelper.accessor('unlock', {
-      cell: (info) => info.getValue(),
-      header: '잠김해제',
-      enableGrouping: false,
-      size: 88,
-      meta: {
-        headerAlign: 'center',
-        cellAlign: 'center',
-      },
-    }),
-    columnHelper.accessor('login', {
-      cell: (info) => info.getValue(),
-      header: '로그인',
-      enableGrouping: false,
-      size: 88,
-      meta: {
-        headerAlign: 'center',
-        cellAlign: 'center',
-      },
-    }),
     columnHelper.accessor('joinDate', {
       cell: (info) => info.getValue(),
-      header: '회원가입일',
+      header: '승인일',
       enableGrouping: false,
       meta: {
         size: 'auto',
@@ -182,6 +178,10 @@ const TenantUserComponent: FC<{}> = ({}) => {
                 <div className={searchStyles.item}>
                   <label htmlFor="name-select1" className={searchStyles.label}>
                     <span className={searchStyles.text}>테넌트</span>
+                    {/* 필수 케이스 */}
+                    <span className={cn(searchStyles.status, searchStyles.required)}>
+                      <IcoFormRequired width={8} height={8} />
+                    </span>
                   </label>
                   <div className={searchStyles.box}>
                     <Dropdown
@@ -213,10 +213,20 @@ const TenantUserComponent: FC<{}> = ({}) => {
               <div className={searchStyles.inner}>
                 <div className={searchStyles.item}>
                   <label htmlFor="name-select3" className={searchStyles.label}>
-                    <span className={searchStyles.text}>사번</span>
+                    <span className={searchStyles.text}>이메일</span>
                   </label>
                   <div className={searchStyles.box}>
                     <Input id={'name-select3'} type={'text'} placeholder={'입력'} value={''} />
+                  </div>
+                </div>
+              </div>
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-select4" className={searchStyles.label}>
+                    <span className={searchStyles.text}>사번</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <Input id={'name-select4'} type={'text'} placeholder={'입력'} value={''} />
                   </div>
                 </div>
               </div>
@@ -224,8 +234,8 @@ const TenantUserComponent: FC<{}> = ({}) => {
             <div className={searchStyles.item_wrap}>
               <div className={searchStyles.inner}>
                 <div className={searchStyles.item}>
-                  <label htmlFor="name-select4" className={searchStyles.label}>
-                    <span className={searchStyles.text}>학습자 역할</span>
+                  <label htmlFor="name-select5" className={searchStyles.label}>
+                    <span className={searchStyles.text}>재직여부</span>
                   </label>
                   <div className={searchStyles.box}>
                     <Dropdown
@@ -240,8 +250,8 @@ const TenantUserComponent: FC<{}> = ({}) => {
               </div>
               <div className={searchStyles.inner}>
                 <div className={searchStyles.item}>
-                  <label htmlFor="name-select4" className={searchStyles.label}>
-                    <span className={searchStyles.text}>계정상태</span>
+                  <label htmlFor="name-select6" className={searchStyles.label}>
+                    <span className={searchStyles.text}>승인 상태</span>
                   </label>
                   <div className={searchStyles.box}>
                     <Dropdown
@@ -257,7 +267,7 @@ const TenantUserComponent: FC<{}> = ({}) => {
               <div className={searchStyles.inner}>
                 <div className={searchStyles.item}>
                   <label htmlFor="name-7" className={searchStyles.label}>
-                    <span className={searchStyles.text}>등록 기간</span>
+                    <span className={searchStyles.text}>신청 기간</span>
                   </label>
                   <div className={searchStyles.box}>
                     <div className={searchStyles.datepicker_wrap}>
@@ -291,7 +301,7 @@ const TenantUserComponent: FC<{}> = ({}) => {
       <GridBox
         data={data}
         columns={columns}
-        showNumberingColumn={true}
+        multiple={true}
         showSelectedCount={true}
         pagination={{
           pageSize,
@@ -306,5 +316,5 @@ const TenantUserComponent: FC<{}> = ({}) => {
   );
 };
 
-TenantUserComponent.displayName = 'TenantUser';
-export const TenantUser = TenantUserComponent;
+TenantMemberApplyComponent.displayName = 'TenantMemberApply';
+export const TenantMemberApply = TenantMemberApplyComponent;

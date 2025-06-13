@@ -2,12 +2,12 @@ import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
 import { Input, Dropdown, Button, GridBox, DatePicker, Divider } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { IcoRefresh02, IcoSearch } from '@learnway/icons';
+import { IcoRefresh02, IcoSearch, IcoFormRequired } from '@learnway/icons';
 
 /* style */
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
 
-const TenantUserComponent: FC<{}> = ({}) => {
+const TenantUserInfoComponent: FC<{}> = ({}) => {
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
   const [selectedValues2, setSelectedValues2] = useState<string[]>([]);
   const [selectedValues3, setSelectedValues3] = useState<string[]>([]);
@@ -23,149 +23,118 @@ const TenantUserComponent: FC<{}> = ({}) => {
   const [pageSize, setPageSize] = useState(10);
   const data: any[] = [
     {
-      tenant: '테넌트1 외 2',
-      group: '완성차',
-      company: '회사1',
-      team: '소속',
-      position: '직위',
-      companyNum: '1234567',
-      user: <Button className="link" label={'김현대'} />,
-      role: '조직원',
-      tenure: '정상',
-      status: '정상',
-      unlock: <Button label={'잠김해제'} variant={'gray'} disabled />,
-      login: <Button label={'로그인'} variant={'gray'} />,
-      joinDate: '2025-01-01 14:25:11',
+      title1: '서비스 기술교육',
+      title2: '서비스 기술교육',
+      title3: '서비스 기술교육',
+      title4: '서비스 기술교육',
+      title5: '서비스 기술교육',
+      title6: '서비스 기술교육',
+      title7: '서비스 기술교육',
+      title8: '서비스 기술교육',
     },
     {
-      tenant: '테넌트1 외 2',
-      group: '완성차',
-      company: '회사1',
-      team: '소속',
-      position: '직위',
-      companyNum: '1234567',
-      user: <Button className="link" label={'김현대'} />,
-      role: '조직원',
-      tenure: '정상',
-      status: '정상',
-      unlock: <Button label={'잠김해제'} variant={'gray'} />,
-      login: <Button label={'로그인'} variant={'gray'} disabled />,
-      joinDate: '2025-01-01 14:25:11',
+      title1: '서비스 기술교육',
+      title2: '서비스 기술교육',
+      title3: '서비스 기술교육',
+      title4: '서비스 기술교육',
+      title5: '서비스 기술교육',
+      title6: '서비스 기술교육',
+      title7: '서비스 기술교육',
+      title8: '서비스 기술교육',
+    },
+    {
+      title1: '서비스 기술교육',
+      title2: '서비스 기술교육',
+      title3: '서비스 기술교육',
+      title4: '서비스 기술교육',
+      title5: '서비스 기술교육',
+      title6: '서비스 기술교육',
+      title7: '서비스 기술교육',
+      title8: '서비스 기술교육',
+    },
+    {
+      title1: '서비스 기술교육',
+      title2: '서비스 기술교육',
+      title3: '서비스 기술교육',
+      title4: '서비스 기술교육',
+      title5: '서비스 기술교육',
+      title6: '서비스 기술교육',
+      title7: '서비스 기술교육',
+      title8: '서비스 기술교육',
+    },
+    {
+      title1: '서비스 기술교육',
+      title2: '서비스 기술교육',
+      title3: '서비스 기술교육',
+      title4: '서비스 기술교육',
+      title5: '서비스 기술교육',
+      title6: '서비스 기술교육',
+      title7: '서비스 기술교육',
+      title8: '서비스 기술교육',
     },
   ];
 
   const columnHelper = createColumnHelper<any>();
   const columns = [
-    columnHelper.accessor('tenant', {
+    columnHelper.accessor('title1', {
       cell: (info) => info.getValue(),
-      header: '테넌트',
+      header: '구분',
       enableGrouping: false,
       meta: {
         size: 'auto',
       },
     }),
-    columnHelper.accessor('group', {
+    columnHelper.accessor('title2', {
       cell: (info) => info.getValue(),
-      header: '그룹',
+      header: '구분',
       enableGrouping: false,
       meta: {
         size: 'auto',
       },
     }),
-    columnHelper.accessor('company', {
+    columnHelper.accessor('title3', {
       cell: (info) => info.getValue(),
-      header: '회사',
+      header: '구분',
       enableGrouping: false,
       meta: {
         size: 'auto',
       },
     }),
-
-    columnHelper.accessor('team', {
+    columnHelper.accessor('title4', {
       cell: (info) => info.getValue(),
-      header: '소속',
+      header: '구분',
       enableGrouping: false,
       meta: {
         size: 'auto',
       },
     }),
-    columnHelper.accessor('position', {
+    columnHelper.accessor('title5', {
       cell: (info) => info.getValue(),
-      header: '직위',
+      header: '구분',
       enableGrouping: false,
       meta: {
         size: 'auto',
       },
     }),
-    columnHelper.accessor('companyNum', {
+    columnHelper.accessor('title6', {
       cell: (info) => info.getValue(),
-      header: '사번',
-      enableGrouping: false,
-      meta: {
-        headerAlign: 'center',
-        cellAlign: 'center',
-        size: 'auto',
-      },
-    }),
-    columnHelper.accessor('user', {
-      cell: (info) => info.getValue(),
-      header: '이름',
+      header: '구분',
       enableGrouping: false,
       meta: {
         size: 'auto',
       },
     }),
-    columnHelper.accessor('role', {
+    columnHelper.accessor('title7', {
       cell: (info) => info.getValue(),
-      header: '학습자 역할',
+      header: '구분',
       enableGrouping: false,
       meta: {
         size: 'auto',
       },
     }),
-    columnHelper.accessor('tenure', {
+    columnHelper.accessor('title8', {
       cell: (info) => info.getValue(),
-      header: '재직여부',
-      enableGrouping: false,
-      size: 88,
-      meta: {
-        headerAlign: 'center',
-        cellAlign: 'center',
-      },
-    }),
-    columnHelper.accessor('status', {
-      cell: (info) => info.getValue(),
-      header: '계정상태',
-      enableGrouping: false,
-      size: 88,
-      meta: {
-        headerAlign: 'center',
-        cellAlign: 'center',
-      },
-    }),
-    columnHelper.accessor('unlock', {
-      cell: (info) => info.getValue(),
-      header: '잠김해제',
-      enableGrouping: false,
-      size: 88,
-      meta: {
-        headerAlign: 'center',
-        cellAlign: 'center',
-      },
-    }),
-    columnHelper.accessor('login', {
-      cell: (info) => info.getValue(),
-      header: '로그인',
-      enableGrouping: false,
-      size: 88,
-      meta: {
-        headerAlign: 'center',
-        cellAlign: 'center',
-      },
-    }),
-    columnHelper.accessor('joinDate', {
-      cell: (info) => info.getValue(),
-      header: '회원가입일',
+      header: '구분',
       enableGrouping: false,
       meta: {
         size: 'auto',
@@ -182,6 +151,10 @@ const TenantUserComponent: FC<{}> = ({}) => {
                 <div className={searchStyles.item}>
                   <label htmlFor="name-select1" className={searchStyles.label}>
                     <span className={searchStyles.text}>테넌트</span>
+                    {/* 필수 케이스 */}
+                    <span className={cn(searchStyles.status, searchStyles.required)}>
+                      <IcoFormRequired width={8} height={8} />
+                    </span>
                   </label>
                   <div className={searchStyles.box}>
                     <Dropdown
@@ -213,10 +186,26 @@ const TenantUserComponent: FC<{}> = ({}) => {
               <div className={searchStyles.inner}>
                 <div className={searchStyles.item}>
                   <label htmlFor="name-select3" className={searchStyles.label}>
-                    <span className={searchStyles.text}>사번</span>
+                    <span className={searchStyles.text}>이메일</span>
                   </label>
                   <div className={searchStyles.box}>
                     <Input id={'name-select3'} type={'text'} placeholder={'입력'} value={''} />
+                  </div>
+                </div>
+              </div>
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-select4" className={searchStyles.label}>
+                    <span className={searchStyles.text}>회원가입 방식</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <Dropdown
+                      options={options}
+                      value={selectedValues2}
+                      onChange={(selected) => setSelectedValues2(selected)}
+                      variant="default"
+                      size={'sm'}
+                    />
                   </div>
                 </div>
               </div>
@@ -224,24 +213,18 @@ const TenantUserComponent: FC<{}> = ({}) => {
             <div className={searchStyles.item_wrap}>
               <div className={searchStyles.inner}>
                 <div className={searchStyles.item}>
-                  <label htmlFor="name-select4" className={searchStyles.label}>
-                    <span className={searchStyles.text}>학습자 역할</span>
+                  <label htmlFor="name-select5" className={searchStyles.label}>
+                    <span className={searchStyles.text}>사번</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <Dropdown
-                      options={options}
-                      value={selectedValues3}
-                      onChange={(selected) => setSelectedValues3(selected)}
-                      variant="default"
-                      size={'sm'}
-                    />
+                    <Input id={'name-select5'} type={'text'} placeholder={'입력'} value={''} />
                   </div>
                 </div>
               </div>
               <div className={searchStyles.inner}>
                 <div className={searchStyles.item}>
-                  <label htmlFor="name-select4" className={searchStyles.label}>
-                    <span className={searchStyles.text}>계정상태</span>
+                  <label htmlFor="name-select6" className={searchStyles.label}>
+                    <span className={searchStyles.text}>학습자 역할</span>
                   </label>
                   <div className={searchStyles.box}>
                     <Dropdown
@@ -257,14 +240,32 @@ const TenantUserComponent: FC<{}> = ({}) => {
               <div className={searchStyles.inner}>
                 <div className={searchStyles.item}>
                   <label htmlFor="name-7" className={searchStyles.label}>
-                    <span className={searchStyles.text}>등록 기간</span>
+                    <span className={searchStyles.text}>계정상태</span>
                   </label>
                   <div className={searchStyles.box}>
-                    <div className={searchStyles.datepicker_wrap}>
-                      <DatePicker displayType={'day'} size={'md'} placeholder={'0000-00-00'} />
-                      <span className={searchStyles.hyphen}>-</span>
-                      <DatePicker displayType={'day'} size={'md'} placeholder={'0000-00-00'} />
-                    </div>
+                    <Dropdown
+                      options={options}
+                      value={selectedValues4}
+                      onChange={(selected) => setSelectedValues4(selected)}
+                      variant="default"
+                      size={'sm'}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className={searchStyles.inner}>
+                <div className={searchStyles.item}>
+                  <label htmlFor="name-8" className={searchStyles.label}>
+                    <span className={searchStyles.text}>승인상태</span>
+                  </label>
+                  <div className={searchStyles.box}>
+                    <Dropdown
+                      options={options}
+                      value={selectedValues4}
+                      onChange={(selected) => setSelectedValues4(selected)}
+                      variant="default"
+                      size={'sm'}
+                    />
                   </div>
                 </div>
               </div>
@@ -291,8 +292,8 @@ const TenantUserComponent: FC<{}> = ({}) => {
       <GridBox
         data={data}
         columns={columns}
-        showNumberingColumn={true}
         showSelectedCount={true}
+        showNumberingColumn={true}
         pagination={{
           pageSize,
           pageNumber,
@@ -300,11 +301,11 @@ const TenantUserComponent: FC<{}> = ({}) => {
           onPageChange: setpageNumber,
           onPageSizeChange: setPageSize,
         }}
-        title={'유저 목록'}
+        title={'교육 이력 목록'}
       />
     </>
   );
 };
 
-TenantUserComponent.displayName = 'TenantUser';
-export const TenantUser = TenantUserComponent;
+TenantUserInfoComponent.displayName = 'TenantUserInfo';
+export const TenantUserInfo = TenantUserInfoComponent;
