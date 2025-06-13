@@ -31,7 +31,9 @@ export const useGridBox = <T = any>(
       const queryState = getQueryState(state, lastStateRef.current, initialConfig.gridState);
       const mergedParams = { ...params, ...queryState };
       const queryOptions = initialConfig.query(mergedParams);
-      const result = (await queryClient.fetchQuery(queryOptions)) as PaginationResponse<T>;
+      const result = convertPaginationResponse(
+        await queryClient.fetchQuery(queryOptions),
+      ) as PaginationResponse<T>;
       if (result) {
         setGridData(result);
         lastStateRef.current = queryState;
@@ -75,6 +77,25 @@ export const useGridBox = <T = any>(
     gridFetch: fetchGridData,
     data: gridData,
   };
+};
+
+/**
+ * PaginationResponse 타입이 아닌 response 데이터를 PaginationResponse 타입으로 변환
+ * @param response
+ */
+const convertPaginationResponse = <T>(response: any): PaginationResponse<T> => {
+  if (response?.pageable) {
+    return response as PaginationResponse<T>;
+  }
+  const content = response?.content ?? response?.data ?? response ?? [];
+  return {
+    content,
+    totalElements: 1000,
+    totalPages: 0,
+    size: 20,
+    number: 1,
+    numberOfElements: 20,
+  } as PaginationResponse<T>;
 };
 
 /**
