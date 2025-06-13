@@ -17,8 +17,6 @@ function ModifierInfoModalComponent({
 }: ModifierInfoModalComponentProps) {
   const { data } = useQuery(leaningResourceQueryOptions.getUser(lastModifiedBy));
 
-  if (!data) return null;
-
   return (
     <ModalContainer>
       <ModalTitle>{t('수정자')}</ModalTitle>
@@ -28,18 +26,19 @@ function ModifierInfoModalComponent({
             <li>
               <span className={styles.title}>{t('이름(사번)')}</span>
               <span className={styles.data}>
-                {data.name}({data.employeeNumber})
+                {data?.name}({data?.employeeNumber})
               </span>
             </li>
             <li>
               <span className={styles.title}>{t('이메일 주소')}</span>
-              <span className={styles.data}>{data.email}</span>
+              <span className={styles.data}>{data?.email}</span>
             </li>
-            {(data.phoneNumber || data.companyTelephoneNumber) && (
+            {(!data || data?.phoneNumber || data?.companyTelephoneNumber) && (
+              // 조회 전 빈칸을 보여주고 조회 후 전화번호가 없으면 줄 삭제
               <li>
                 <span className={styles.title}>{t('연락처')}</span>
                 <span className={styles.data}>
-                  {data.phoneNumber || data.companyTelephoneNumber}
+                  {data?.phoneNumber || data?.companyTelephoneNumber}
                 </span>
               </li>
             )}
