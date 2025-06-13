@@ -21,7 +21,7 @@ function RouteComponent() {
   const [pageSize, setPageSize] = useState(10);
   const data: any[] = [
     {
-      firstName: 'tanner',
+      firstName: <WordWrap text={'과정명과정명과정명과정명과정명과정명과정명'} />,
       lastName: 'linsley',
       age: 24,
       visits: 100,

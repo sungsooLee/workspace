@@ -934,7 +934,7 @@ export const guideData = [
     pageId: 'lms/procedure-management',
     screenId: 'NLP_BO_LMS_0001',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-06-13',
     lastUpdateDate: '',
     remarks: '', // 비고
   },
