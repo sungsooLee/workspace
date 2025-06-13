@@ -5,7 +5,6 @@ import { cn } from '@learnway/shared';
 import { ImageOption } from '../thumbnail/type';
 import { ThumbnailList } from '../thumbnail/thumbnail-list';
 import { Button } from '../button/button';
-import { Input } from '../input/input';
 
 import styles from './thumbnail-image-upload.module.css';
 import { IcoLoading, IcoUploadCloud } from '@learnway/icons';
@@ -87,11 +86,13 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
     const {
       addFiles: thumbnailAddFiles,
       files: thumbnailFiles,
-      stats: thumbnailStats,
+      stats: { status, acceptFiles },
     } = useS3Uploader({
       s3Path: 'public/thumbnail',
       ...uploadConfig,
     });
+
+    console.log('acceptFiles', acceptFiles);
 
     /**
      * '업로드' 버튼 클릭 시 숨겨진 파일 선택창을 엽니다.
@@ -133,7 +134,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
      * 특히 파일 업로드가 'completed' 상태가 되면, 업로드된 파일 정보를 썸네일 목록에 추가합니다.
      */
     useEffect(() => {
-      if (thumbnailStats.status === 'completed') {
+      if (status === 'completed') {
         const file = thumbnailFiles[0];
         if (file) {
           const newOption = {
@@ -146,7 +147,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
           onChange?.(newOptions);
         }
       }
-    }, [thumbnailStats]);
+    }, [status]);
 
     /**
      * `ownerOptions` prop (부모 컴포넌트로부터 받은 썸네일 목록)이 변경될 때마다
@@ -173,8 +174,9 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
             >
               <span className={styles.text}>썸네일 업로드</span>
             </Button>
-            <Input
+            <input
               type="file"
+              accept={'image/*'}
               ref={fileInputRef}
               disabled={disabled}
               className={styles.input_file}
