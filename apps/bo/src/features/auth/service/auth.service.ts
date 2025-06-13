@@ -1,3 +1,4 @@
+import { LoginErrorAlert } from './../ui/login-error-alert';
 import {
   useLoginUser,
   useReissue,
@@ -10,6 +11,7 @@ import { useModal } from '@learnway/ui';
 
 import { cookieService, MutateCallback } from '@learnway/shared';
 import { usePermissionStore } from '../../../shared/lib/permission-store';
+import { t } from 'i18next';
 
 interface LoginParams {
   username: string;
@@ -23,7 +25,7 @@ export function useAuthSignin() {
   const { reissue } = useReissue();
   const { updateMenu } = useUpdateUser();
   const { asyncMenus } = useAsycFetchMenus();
-  const { alert: openAlert } = useModal();
+  // const { alert: openAlert } = useModal();
 
   return {
     login: async (
@@ -43,8 +45,7 @@ export function useAuthSignin() {
           callback?.onSuccess && callback.onSuccess(updateMenu(menus), {}, {});
         },
         onError: async (error, variables, context) => {
-          if (AUTH_ERROR_CODE.APPROVAL_ADMIN_PENDING)
-            openAlert({ title: 'LABEL.message.invalidInputInformation', content: error?.message });
+          // loginErrorAlert(error);
           callback?.onError && callback.onError(error, variables, context);
         },
       });
