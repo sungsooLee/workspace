@@ -27,4 +27,12 @@ export default class TranslationService {
       `${PMSApiPrefix()}/multilingual/${multilingualId}/language-statuses`,
     );
   }
+
+  static createTranslationByExcel(payload: any) {
+    return httpService.post<any>(`${PMSApiPrefix()}/multilingual/excelUpload`, payload);
+  }
+
+  static fetchTranslationExists(param: any) {
+    return httpService.get<any>(`${PMSApiPrefix()}/multilingual/exists`, param);
+  }
 }

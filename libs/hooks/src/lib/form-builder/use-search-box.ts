@@ -122,17 +122,7 @@ const useSearchBoxHook = <T extends SearchBoxConfig>(config: T): UseSearchBoxRet
             const value = data[prop.name];
             objectParams[prop.name] = value ?? '';
             });*/
-          const multiDropdowns = filter(flatten(config.builders), {
-            type: 'dropdown',
-            isMulti: true,
-          });
-          const clonedData = { ...data };
-          multiDropdowns.map((builder) => {
-            if (builder.presetOptionLabel && Array.isArray(clonedData[builder.name])) {
-              clonedData[builder.name] = filter(clonedData[builder.name], (_) => _ !== ALL_OPTION);
-            }
-          });
-          onValid(clonedData);
+          onValid(data);
         },
         (errors) => {
           console.log('Validation Errors:', errors);

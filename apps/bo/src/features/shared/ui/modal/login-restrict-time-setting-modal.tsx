@@ -35,7 +35,7 @@ import dayjs from 'dayjs';
 import { timeFormatYear } from '@learnway/shared';
 
 const LoginRestrictTimeSettingModalComponent: FC<any> = () => {
-  const { close } = useModal();
+  const { close, alert } = useModal();
   const { getCode } = useCodeStore();
 
   const { provider, control, onSubmit } = useDynamicForm(formConfig);
@@ -59,6 +59,37 @@ const LoginRestrictTimeSettingModalComponent: FC<any> = () => {
   const [timeLimitTableAreaDisabled, setTimeLimitTableAreaDisabled] = useState(false);
 
   const handleOnSubmit = (node: any) => {
+    if (node.timeLimits.length > 0) {
+      node.timeLimits.forEach((limit: any) => {
+        if (
+          !limit.dayOfTheWeek ||
+          !limit.loginRestrictionTime.from ||
+          !limit.loginRestrictionTime.to
+        ) {
+          alert({
+            title: t('설정 방식을 입력해 주세요.'),
+            content: t(
+              '행추가한 요일 및 시간 제한 설정 정보를 모두 입력하거나 입력하지 않은 행을 삭제하고 다시 시도해 주세요.',
+            ),
+          });
+          return;
+        }
+        if (
+          dayjs(limit.loginRestrictionTime.to).isBefore(
+            dayjs(limit.loginRestrictionTime.from),
+            'minute',
+          )
+        ) {
+          alert({
+            title: t('설정 시간을 변경해 주세요.'),
+            content: t(
+              '추가한 시간 제한 설정 정보 중 시작 시간이 종료 시간 보다 늦은 행이 있습니다. 변경하거나 해당 행을 삭제하고 다시 시도해 주세요.',
+            ),
+          });
+          return;
+        }
+      });
+    }
     close(node);
   };
 
@@ -90,38 +121,11 @@ const LoginRestrictTimeSettingModalComponent: FC<any> = () => {
       );
   }, [watchedRestrictionType, watchedRestrictionSettingType]);
 
-  // const handleAddRowClick = () => {
-  //   // TODO. 공통 컴포넌트 필요
-  //   const row: any = {
-  //     dayOfTheWeek: (
-  //       <Dropdown
-  //         className={dynamicFormStyles.short}
-  //         options={dayOfWeeksOptions.map((option) => ({ ...option, label: t(option.label || '') }))}
-  //         //onChange={handleBaseLocalChange}
-  //       />
-  //     ),
-  //     loginRestrictionTime: (
-  //       <div className="select_date_wrap">
-  //         <DatePicker displayType={'time'} size={'md'} />
-  //         <span className="dash"></span>
-  //         <DatePicker displayType={'time'} size={'md'} />
-  //       </div>
-  //     ),
-  //     isUsed: <Switch checked={true} />,
-  //   };
-  //   const row2: any = {
-  //     dayOfTheWeek: '',
-  //     loginRestrictionTime: '',
-  //     isUsed: true,
-  //   };
-  //   setTimeRestriction([...timeRestriction, row2]);
-  // };
-
   const timeLimitColumns = [
     {
       header: '요일',
       accessorKey: 'dayOfTheWeek',
-      size: 'auto',
+      size: 200,
       cell: (info: CellContext<any, string>) => (
         <EditDropdownCell
           info={info}
@@ -133,18 +137,30 @@ const LoginRestrictTimeSettingModalComponent: FC<any> = () => {
           }}
         />
       ),
+      meta: {
+        headerAlign: 'center',
+        cellAlign: 'center',
+      },
     },
     {
       header: '로그인 시간 제한',
       accessorKey: 'loginRestrictionTime',
       size: 'auto',
       cell: (info: CellContext<any, DateRange>) => <EditTimeRangeCell info={info} />,
+      meta: {
+        headerAlign: 'center',
+        cellAlign: 'center',
+      },
     },
     {
       header: '사용 여부',
       accessorKey: 'isUsed',
-      size: 150,
+      size: 170,
       cell: (info: CellContext<any, boolean>) => <EditSwitchCell info={info} />,
+      meta: {
+        headerAlign: 'center',
+        cellAlign: 'center',
+      },
     },
   ];
 
@@ -174,18 +190,6 @@ const LoginRestrictTimeSettingModalComponent: FC<any> = () => {
             />
           </ContentsRow>
           <div style={{ display: timeLimitTableAreaDisabled ? 'none' : 'block' }}>
-            {/* <TableBox
-              columns={columns}
-              data={timeRestriction}
-              tableMode={true}
-              multiple
-              title={t('요일 및 시간 제한 설정')}
-              showAdd
-              showRemove={timeRestriction.length > 0}
-              onAddClick={handleAddRowClick}
-              showTotalCount={false}
-              visibleRowCount={3}
-            /> */}
             <ContentsRow>
               <FormRow
                 provider={provider}
@@ -200,7 +204,6 @@ const LoginRestrictTimeSettingModalComponent: FC<any> = () => {
                       columns: timeLimitColumns,
                       title: t('요일 및 시간 제한 설정'),
                       visibleRowCount: 3,
-                      //onAddClick: handleAddRowClick,
                     }}
                   />
                 }
@@ -299,35 +302,3 @@ const formConfig: DynamicFormConfig = {
     },
   },
 };
-
-// const columnHelper = createColumnHelper<any>();
-
-// const columns = [
-//   columnHelper.accessor('dayOfTheWeek', {
-//     cell: (info) => info.getValue(),
-//     header: t('요일'),
-//     meta: {
-//       size: 'auto',
-//       headerAlign: 'center',
-//       cellAlign: 'center',
-//     },
-//   }),
-//   columnHelper.accessor('loginRestrictionTime', {
-//     cell: (info) => info.getValue(),
-//     header: t('로그인 제한 시간'),
-//     size: 557,
-//     meta: {
-//       headerAlign: 'center',
-//       cellAlign: 'center',
-//     },
-//   }),
-//   columnHelper.accessor('isUsed', {
-//     cell: (info) => info.getValue(),
-//     header: t('사용 여부'),
-//     meta: {
-//       size: 'auto',
-//       headerAlign: 'center',
-//       cellAlign: 'center',
-//     },
-//   }),
-// ] as ColumnDef<any, unknown>[];

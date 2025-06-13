@@ -1,1 +1,1 @@
-export const ALL_OPTION = '_____ALL_____';
+export const ALL_OPTION = '';
