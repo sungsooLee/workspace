@@ -8,7 +8,7 @@ import { Button, ContentsRow, Stepper } from '@learnway/ui';
 import { FormRow } from '@shared/ui';
 import styles from './admin-signup-id-check.module.css';
 import { useRouter } from '@tanstack/react-router';
-import { useExistsEmail } from '@learnway/auth';
+import { useExistsEmail } from '@learnway/auth/entities';
 import { tokenService } from '@learnway/config';
 import { useEffect } from 'react';
 

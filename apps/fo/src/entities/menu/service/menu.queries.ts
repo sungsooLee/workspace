@@ -2,7 +2,7 @@ import { getQuerySkipToken, convertHierarchyNode, getRandomId } from '@learnway/
 import { isMobile } from 'react-device-detect';
 
 import MenuService from '../api/menu';
-import { Menu } from '@learnway/auth';
+import { Menu } from '@learnway/auth/types';
 
 export const queryKeys = {
   all: ['menus'] as const,

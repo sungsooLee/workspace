@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from '@tanstack/react-router';
 
 import { Button, useModal } from '@learnway/ui';
-import { useFetchAuthUser } from '@learnway/auth';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 
 import type { TermsType } from '../../../../../types';
 

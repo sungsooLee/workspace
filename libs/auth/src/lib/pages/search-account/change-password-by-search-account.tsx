@@ -8,10 +8,7 @@ import { useDynamicForm, DynamicFormConfig, useCurrentRoute } from '@learnway/ho
 import { FormRow, NoticeBox } from '../../shared/ui';
 
 import { GoogleOtpGuideButton } from '../../features/auth';
-import {
-  useUpdatePasswordByPhoneNumber,
-  useUpdatePasswordByEmail,
-} from '../../entities/authorization';
+import { useUpdatePasswordByPhoneNumber, useUpdatePasswordByEmail } from '../../entities';
 
 import styles from '@learnway/styles/fo/pages/_auth/search-account/change-password.module.css';
 import { t } from 'i18next';

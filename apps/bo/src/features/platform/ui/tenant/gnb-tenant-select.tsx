@@ -5,15 +5,15 @@ import { Popover } from '@learnway/ui';
 import { IcoArrowDown, IcoCheck02 } from '@learnway/icons';
 import { Button } from '@learnway/ui';
 import {
-  Tenant,
   useActiveMenuDepthState,
   useAsycFetchMenusForceRefatch,
   useFetchAuthUser,
   useUpdateUser,
-} from '@learnway/auth';
+} from '@learnway/auth/entities';
 
 import styles from './gnb-tenant.module.css';
 import { useRouter } from '@tanstack/react-router';
+import { Tenant } from '@learnway/auth/types';
 
 const PopoverContent = () => {
   const { data } = useFetchAuthUser();

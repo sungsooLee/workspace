@@ -1,6 +1,6 @@
 import { createFileRoute, useRouter, useMatches } from '@tanstack/react-router';
 
-import { IdentityVerificationPage } from '@learnway/auth';
+import { IdentityVerificationPage } from '@learnway/auth/pages';
 
 import { pageRouteConfig } from '../../features/auth';
 

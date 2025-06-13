@@ -223,15 +223,25 @@ function LearningResourceTableComponent() {
       },
       {
         size: 79,
-        name: 'updatedInfo',
+        name: 'modifiedDate',
         label: t('LABEL.grid.column.updatedInfo'),
-        render: () => (
+        render: (_: any) => (
           <Button
             className="link"
             label={t('LABEL.form.label.look')}
             onClick={(e) => {
               e.stopPropagation();
-              openModal({ width: 'sm', content: <ModifierInfoModal /> }); //lastModifierBy로 받아온 user uuid를 props로 넘겨야 함
+              openModal({
+                width: 'sm',
+                content: (
+                  <ModifierInfoModal
+                    lastModifiedBy="c392867d-3f6d-11f0-9435-0218a74d52f7" // 조일환 uuid
+                    modifiedDate={'2025-06-12T19:36:43+09:00'} // API 적용일
+                    // lastModifiedBy={_.row.original.lastModifiedBy}
+                    // modifiedDate={_.getValue()}
+                  />
+                ),
+              });
             }}
           />
         ),

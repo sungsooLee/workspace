@@ -4,8 +4,8 @@ import { Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 
 import { MyMenu } from '../../../../../../features/layout';
-import { useMenuHierarchy } from '@learnway/auth';
-import type { Menu } from '@learnway/auth';
+import { useMenuHierarchy } from '@learnway/auth/entities';
+import type { Menu } from '@learnway/auth/types';
 
 import styles from './quick-menu.module.css';
 

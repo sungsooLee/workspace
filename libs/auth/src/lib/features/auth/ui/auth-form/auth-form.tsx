@@ -13,7 +13,7 @@ import {
   useSendVerifyEmail,
   useVerifyPhoneNumber,
   useSendVerifyPhoneNumber,
-} from '../../../../entities/authorization';
+} from '../../../../entities';
 import { FormRow, NoticeBox } from '../../../../shared/ui';
 import { AuthToolFormField, VerifyUserIdFormField } from '../../../../features/auth';
 import { MobileResponsiveContainerFooter, BrowserFooter, MobileFooter } from '../../../../shared';

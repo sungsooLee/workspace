@@ -3,14 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { ChipList, Popover, List, Button } from '@learnway/ui';
 import { IcoStar, IcoStar02, IcoClock01 } from '@learnway/icons';
-import {
-  useActiveMenuDepthState,
-  useAsycFetchMenus,
-  useAsycFetchMenusForceRefatch,
-  useFetchAuthUser,
-  useLayoutStore,
-  useUpdateUser,
-} from '@learnway/auth';
+
 import { cn } from '@learnway/shared';
 
 import styles from './my-menu.module.css';
@@ -20,6 +13,13 @@ import {
   useMoveMenuFavorites,
 } from '@entities/menu';
 import { useRouter } from '@tanstack/react-router';
+import {
+  useActiveMenuDepthState,
+  useAsycFetchMenusForceRefatch,
+  useFetchAuthUser,
+  useLayoutStore,
+  useUpdateUser,
+} from '@learnway/auth/entities';
 
 const PopoverContent = () => {
   const { t } = useTranslation();

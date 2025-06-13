@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { ChangePasswordPage } from '@learnway/auth';
+import { ChangePasswordPage } from '@learnway/auth/pages';
 
 import { pageRouteConfig } from '../../features/auth';
 

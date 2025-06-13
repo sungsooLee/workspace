@@ -6,9 +6,9 @@ import type { MutateCallback } from '@learnway/shared';
 import type { PhoneNumberValue } from '@learnway/ui';
 
 import { mutateOptions, queryOptions } from './users.queries';
-import { useUpdateAuthUser } from './authorization.hook';
 
 import type { AuthUser, Tenant } from '../../../types';
+import { useUpdateAuthUser } from '../../authorization/service/authorization.hook';
 
 interface phoneNumberPayload {
   name: string;

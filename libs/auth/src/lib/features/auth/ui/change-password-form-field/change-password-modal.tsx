@@ -7,7 +7,7 @@ import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 
 import { FormRow, NoticeBox } from '../../../../shared/ui';
 
-import { useFetchAuthUser, useUpdatePassword } from '../../../../entities/authorization';
+import { useFetchAuthUser, useUpdatePassword } from '../../../../entities';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/widget-management.module.css'; // 화면 css
 

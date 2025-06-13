@@ -4,7 +4,8 @@ import { map } from 'lodash';
 import { useCreation } from 'ahooks';
 
 import { Avatar, Button, Popover, useModal } from '@learnway/ui';
-import { useFetchAuthUser, useLogoutUser, PasswordVerifyModal } from '@learnway/auth';
+import { useFetchAuthUser, useLogoutUser } from '@learnway/auth/entities';
+import { PasswordVerifyModal } from '@learnway/auth/features';
 import { cn } from '@learnway/shared';
 import { IcLogOut01 } from '@learnway/icons';
 

@@ -1,5 +1,5 @@
 import { Button, useModal } from '@learnway/ui';
-import { usePersonalInfoCheck } from '@learnway/auth';
+import { usePersonalInfoCheck } from '@learnway/auth/entities';
 import { ExcelUploadModal } from '@features/shared';
 import { fileDownload } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';

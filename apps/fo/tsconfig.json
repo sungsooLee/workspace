@@ -5,7 +5,28 @@
     "esModuleInterop": true, // for json mock
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "types": ["vite/client"]
+    "types": ["vite/client"],
+    "baseUrl": ".",
+    "paths": {
+      "@learnway/config": ["../../libs/config/src/index.ts"],
+      "@learnway/config/*": ["../../libs/config/src/lib/*"],
+      "@learnway/editor": ["../../libs/editor/src/index.ts"],
+      "@learnway/hooks": ["../../libs/hooks/src/index.ts"],
+      "@learnway/icons": ["../../libs/icons/src/index.ts"],
+      "@learnway/shared": ["../../libs/shared/src/index.ts"],
+      "@learnway/ui": ["../../libs/ui/src/index.ts"],
+      "@learnway/auth/*": ["../../libs/auth/src/lib/*"],
+      "@learnway/styles/*": ["../../libs/styles/src/lib/*"],
+      "@learnway/types": ["../../libs/types/src/index.ts"],
+      "@app/*": ["src/app/*"],
+      "@assets/*": ["src/assets/*"],
+      "@entities/*": ["src/entities/*"],
+      "@features/*": ["src/features/*"],
+      "@pages/*": ["src/pages/*"],
+      "@shared/*": ["src/shared/*"],
+      "@types": ["src/types/index.ts"],
+      "@widgets/*": ["src/widgets/*"]
+    }
   },
   "files": [],
   "include": [],

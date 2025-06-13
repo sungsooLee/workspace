@@ -5,14 +5,14 @@ import { Popover } from '@learnway/ui';
 import { IcoArrowDown, IcoCheck02 } from '@learnway/icons';
 import { Button } from '@learnway/ui';
 import {
-  Tenant,
   useAsycFetchMenusForceRefatch,
   useFetchAuthUser,
   useUpdateUser,
-} from '@learnway/auth';
+} from '@learnway/auth/entities';
 
 import styles from './gnb-role.module.css';
 import { useRouter } from '@tanstack/react-router';
+import { Tenant } from '@learnway/auth/types';
 
 // TODO 역할 조회, 역할 선택기능
 const PopoverContent = () => {

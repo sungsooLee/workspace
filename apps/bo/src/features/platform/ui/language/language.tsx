@@ -6,7 +6,7 @@ import { Popover, SelectOption } from '@learnway/ui';
 import { IcoCheck02, IcoArrowDown } from '@learnway/icons';
 import { Button } from '@learnway/ui';
 import { getDefaultLang } from '@learnway/config';
-import { useFetchAuthUser } from '@learnway/auth';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 
 import { useSetLanguage, useLanguageSelectOptions } from '../../../platform';
 

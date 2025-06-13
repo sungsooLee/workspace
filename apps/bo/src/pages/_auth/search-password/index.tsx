@@ -1,6 +1,6 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { isEmpty } from 'lodash';
-import { SearchAccountPage, FindEmailPage } from '@learnway/auth';
+import { SearchAccountPage, FindEmailPage } from '@learnway/auth/pages';
 
 import { pageRouteConfig } from '../../../features/auth';
 import { useEffect, useState } from 'react';

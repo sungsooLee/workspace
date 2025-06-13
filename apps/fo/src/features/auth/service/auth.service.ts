@@ -1,5 +1,10 @@
-import { useLoginUser, useReissue, useUpdateUser, useAsycFetchMenus } from '@learnway/auth';
-import type { AuthUser } from '@learnway/auth';
+import {
+  useLoginUser,
+  useReissue,
+  useUpdateUser,
+  useAsycFetchMenus,
+} from '@learnway/auth/entities';
+import type { AuthUser } from '@learnway/auth/types';
 import { cookieService, MutateCallback } from '@learnway/shared';
 import { useModal } from '@learnway/ui';
 

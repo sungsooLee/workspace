@@ -1,12 +1,15 @@
-import { useTranslation } from 'react-i18next';
-
-import { useLoginUser, useReissue, useUpdateUser, useAsycFetchMenus } from '@learnway/auth';
-import type { AuthUser } from '@learnway/auth';
-import { cookieService, MutateCallback } from '@learnway/shared';
+import {
+  useLoginUser,
+  useReissue,
+  useUpdateUser,
+  useAsycFetchMenus,
+} from '@learnway/auth/entities';
+import { AUTH_ERROR_CODE } from '@learnway/auth/features/auth';
+import type { AuthUser } from '@learnway/auth/types';
 import { useModal } from '@learnway/ui';
-import { usePermissionStore } from '../../../shared/lib/permission-store';
 
-//import { useAsycFetchMenus } from '../../../entities/menu';
+import { cookieService, MutateCallback } from '@learnway/shared';
+import { usePermissionStore } from '../../../shared/lib/permission-store';
 
 interface LoginParams {
   username: string;
@@ -20,7 +23,7 @@ export function useAuthSignin() {
   const { reissue } = useReissue();
   const { updateMenu } = useUpdateUser();
   const { asyncMenus } = useAsycFetchMenus();
-  const { alert } = useModal();
+  const { alert: openAlert } = useModal();
 
   return {
     login: async (
@@ -40,7 +43,8 @@ export function useAuthSignin() {
           callback?.onSuccess && callback.onSuccess(updateMenu(menus), {}, {});
         },
         onError: async (error, variables, context) => {
-          alert({ title: 'LABEL.message.invalidInputInformation', content: error?.message });
+          if (AUTH_ERROR_CODE.APPROVAL_ADMIN_PENDING)
+            openAlert({ title: 'LABEL.message.invalidInputInformation', content: error?.message });
           callback?.onError && callback.onError(error, variables, context);
         },
       });
