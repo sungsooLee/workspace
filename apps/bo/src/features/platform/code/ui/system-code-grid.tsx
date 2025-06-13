@@ -1,8 +1,15 @@
-import { useEffect, useRef, useState } from 'react';
-import { ContentsRow, DynamicFormField, GridBox, GridImperative, Input } from '@learnway/ui';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  ContentsRow,
+  DynamicFormField,
+  GridBox,
+  GridImperative,
+  Input,
+  Textarea,
+} from '@learnway/ui';
 import { t } from 'i18next';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import { cn } from '@learnway/shared';
+import { cn, getRowSelectionByList } from '@learnway/shared';
 import { createColumnHelper, Table } from '@tanstack/react-table';
 import { useSystemCodeDetail } from '../../../../entities/common-code/service/system-code.hook';
 import { FormRow, FormSubTitle } from '../../../../shared/ui';
@@ -14,7 +21,7 @@ const listGridColumns = [
   // return [
   columnHelper.accessor('enumNames', {
     cell: ({ getValue }) => getValue(),
-    header: t('그룹코드'),
+    header: t('LABEL.cdGroupId'),
     size: 280,
   }),
 ];
@@ -24,24 +31,24 @@ const detailGridColumns = () => {
   return [
     columnHelper.accessor('cdId', {
       cell: ({ getValue }) => getValue(),
-      header: t('코드'),
+      header: t('LABEL.cdId'),
       size: 150,
     }),
     columnHelper.accessor('cdName', {
       cell: ({ getValue }) => getValue(),
-      header: t('코드명'),
+      header: t('LABEL.cdName'),
       size: 150,
     }),
     columnHelper.accessor('cdContent', {
       cell: ({ getValue }) => getValue(),
-      header: t('코드설명'),
+      header: t('LABEL.content', { type: t('LABEL.cdId') }),
       size: 250,
     }),
-    columnHelper.accessor('multilingualKey', {
-      cell: ({ getValue }) => getValue(),
-      header: t('다국어키'),
-      size: 280,
-    }),
+    // columnHelper.accessor('multilingualKey', {
+    //   cell: ({ getValue }) => getValue(),
+    //   header: t('LABEL.multilingualKey'),
+    //   size: 280,
+    // }),
   ];
 };
 
@@ -52,6 +59,7 @@ const SystemCodeGridComponent = ({ data }: any) => {
   const [selectedRow, setSelectedRow] = useState<any>(null);
   const [selectedDetailRow, setSelectedDetailRow] = useState<any>(null);
   const [formattedDetailData, setFormattedDetailData] = useState<any>([]);
+  const [tableInstance, setTableInstance] = useState<Table<any>>();
   const { data: detailData } = useSystemCodeDetail(selectedRow?.enumNames);
 
   const { provider, fetchData } = useDynamicForm(formConfig);
@@ -67,19 +75,36 @@ const SystemCodeGridComponent = ({ data }: any) => {
   };
 
   useEffect(() => {
-    if (selectedDetailRow) fetchData({ ...selectedDetailRow });
-    else fetchData({});
+    if (selectedDetailRow) {
+      const referenceVal = selectedDetailRow?.referenceVal1
+        ? JSON.stringify(selectedDetailRow.referenceVal1, null, 2)
+        : '';
+      fetchData({ ...selectedDetailRow, referenceVal1: referenceVal });
+    } else fetchData({});
   }, [selectedDetailRow]);
+
+  const selectFirstRow = useCallback(() => {
+    if (data && data.length > 0) {
+      const firstRow = data[0];
+
+      listGridRef.current?.selectRowById('enumNames', firstRow.enumNames);
+
+      setSelectedDetailRow(null);
+      setSelectedRow(firstRow);
+      detailGridRef?.current?.resetRowSelection();
+    }
+  }, [data]);
 
   useEffect(() => {
     fetchData({});
-    if (data[0]) {
-      const selected = listGridRef.current?.selectRowById('enumNames', data[0].enumNames);
-      selected && setSelectedRow(selected);
+    if (data && data.length > 0) {
+      const timeoutId = setTimeout(selectFirstRow, 100);
+      return () => clearTimeout(timeoutId);
     } else {
       setFormattedDetailData([]);
+      setSelectedRow(null);
     }
-  }, [data]);
+  }, [data, selectFirstRow]);
 
   useEffect(() => {
     const data = detailData as any;
@@ -113,7 +138,8 @@ const SystemCodeGridComponent = ({ data }: any) => {
               onRowSelect={handleRowSelect}
               showNumberingColumn={true}
               clientSideSorting={true}
-              title={'enum 그룹 목록'}
+              title={t('LABEL.list', { type: t('LABEL.systemCommonCdGroup') })}
+              onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
             />
             <GridBox
               key={selectedRow?.enumNames}
@@ -123,7 +149,7 @@ const SystemCodeGridComponent = ({ data }: any) => {
               showNumberingColumn={true}
               onRowSelect={handleDetailRowSelect}
               clientSideSorting={true}
-              title={'enum 목록'}
+              title={t('LABEL.list', { type: t('LABEL.systemCommonCd') })}
               onTableInstanceChange={(table: Table<any>) => setDetailGridInstance(table)}
             />
           </div>
@@ -131,7 +157,10 @@ const SystemCodeGridComponent = ({ data }: any) => {
 
         <div className={layoutStyles.inner}>
           <form>
-            <FormSubTitle label={'enum 코드 정보'} lineType={'dark'} />
+            <FormSubTitle
+              label={t('LABEL.info', { type: t('LABEL.systemCommonCd') })}
+              lineType={'dark'}
+            />
             <div className={layoutStyles.inner_contents}>
               <ContentsRow>
                 <FormRow
@@ -164,7 +193,7 @@ const SystemCodeGridComponent = ({ data }: any) => {
                 <FormRow
                   provider={provider}
                   name={'referenceVal1'}
-                  element={<Input disabled={true} />}
+                  element={<Textarea disabled={true} rows={5} />}
                 />
               </ContentsRow>
             </div>
@@ -203,7 +232,7 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'cdContent',
       type: 'text',
-      label: t('LABEL.cdContent'),
+      label: t('LABEL.content', { type: t('LABEL.cdId') }),
       value: '',
       placeholder: '',
     },
@@ -216,18 +245,10 @@ const formConfig: DynamicFormConfig = {
     },
     {
       name: 'referenceVal1',
-      type: 'text',
+      type: 'textarea',
       label: t('LABEL.referenceVal1'),
       value: '',
       placeholder: '',
     },
   ],
 };
-
-// "cdGroupId": "cms.html5.Html5ProcessingStatus",
-//           "cdId": "PARSING",
-//           "cdName": "퍼싱중",
-//           "cdContent": "HTML5 파일 압축 해제 후 파싱 처리 시작",
-//           "multilingualKey": "cms.html5.Html5ProcessingStatus.PARSING",
-//           "referenceVal1": "",
-//           "isUsed": true
