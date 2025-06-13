@@ -40,6 +40,11 @@
     [class*='divider'] {
       @apply -mx-[32px] w-[calc(100%+64px)];
     }
+    [role='tabpanel'] {
+      [class*='divider'] {
+        @apply mx-0 w-full;
+      }
+    }
   }
 
   /* btn_wrap */
