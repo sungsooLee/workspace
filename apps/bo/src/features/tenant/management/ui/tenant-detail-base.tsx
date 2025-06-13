@@ -96,6 +96,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       isTenantCategory: data.useCategory.includes(EnUseCategory.isTenantCategory),
       tenantId: tenantId,
       tenantTagList: tagStringList.map((item: string) => ({ tagName: item })),
+      tenantUserList: data.tenantUserList.map((item: any) => ({ userUuid: item.uuid })),
     };
     console.log('payload {} => ', payload);
     if (await openConfirm('저장 하시겠습니까?')) {
@@ -134,7 +135,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
           name: item.companyName,
         })),
         tenantUserList: tenantData.tenantUserList.map((item) => ({
-          userId: item.userId,
+          uuid: item.userUuid,
           name: item.userName ?? '이름 없음',
         })),
         langCountryCodeTypeList: tenantData.langCountryCodeTypeList.filter((item) => !item),
@@ -185,7 +186,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
             <ChipListModalSelectorFormField
               chipList={{
                 labelField: 'name',
-                valueField: 'userId',
+                valueField: 'uuid',
                 hideBorder: true,
               }}
               modalConfig={{
