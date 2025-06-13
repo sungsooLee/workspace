@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef, useState, useMemo } from 'react';
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
 
 import { cn } from '@learnway/shared';
 
@@ -87,19 +87,11 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
     const {
       addFiles: thumbnailAddFiles,
       files: thumbnailFiles,
-      stats: thumbnailStats,
+      stats: { status, inputAccept = 'image/*' },
     } = useS3Uploader({
       ...uploadConfig,
       s3Path: 'public/thumbnail',
     });
-
-    const acceptFileString = useMemo(() => {
-      if (!uploadConfig || !uploadConfig.acceptFiles) return '';
-      return uploadConfig.acceptFiles
-        .map((acceptFile: any) => (acceptFile.startsWith('.') ? acceptFile : `.${acceptFile}`))
-        .join(', ')
-        .toUpperCase();
-    }, [uploadConfig]);
 
     /**
      * '업로드' 버튼 클릭 시 숨겨진 파일 선택창을 엽니다.
@@ -141,7 +133,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
      * 특히 파일 업로드가 'completed' 상태가 되면, 업로드된 파일 정보를 썸네일 목록에 추가합니다.
      */
     useEffect(() => {
-      if (thumbnailStats.status === 'completed') {
+      if (status === 'completed') {
         const file = thumbnailFiles[0];
         if (file) {
           const newOption = {
@@ -154,7 +146,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
           onChange?.(newOptions);
         }
       }
-    }, [thumbnailStats]);
+    }, [status]);
 
     /**
      * `ownerOptions` prop (부모 컴포넌트로부터 받은 썸네일 목록)이 변경될 때마다
@@ -187,7 +179,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
               disabled={disabled}
               className={styles.input_file}
               onChange={handleFilesChange}
-              accept={acceptFileString}
+              accept={inputAccept}
             />
           </div>
           {/*동영상 추출중 (처음에만 노출)*/}

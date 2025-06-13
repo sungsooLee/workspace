@@ -2,9 +2,10 @@ import { S3UploaderConfig, UploadFile, UploadStatus } from './types';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useUploadTask } from './use-upload-task';
 import { resumeUpload, startUpload } from './upload-manger';
-import { formatDate, getRandomId } from '@learnway/shared';
+import { acceptFilesToAccept, formatDate, getRandomId } from '@learnway/shared';
 import { formatFileSize, normalizePath, updateFile } from './utils';
 import { abortMultiPartUpload } from './api';
+
 const DEFAULT_MULTIPART_THRESHOLD = 10 * 1204 * 1024;
 
 /**
@@ -71,7 +72,8 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
 
     return {
       status,
-      acceptFiles,
+      accept: acceptFiles,
+      inputAccept: acceptFilesToAccept(acceptFiles),
       maxFileCount,
       total: files.length,
       uploading: statusCount.uploading,
@@ -208,6 +210,8 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
       );
     });
   }, [files]);
+
+  // const accept={acceptFileString}
 
   /**
    * 설정 값 변경시 자동 업로드 활성화
