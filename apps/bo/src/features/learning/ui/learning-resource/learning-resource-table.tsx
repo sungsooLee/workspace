@@ -19,6 +19,7 @@ import { ModifierInfoModal } from './learning-resource-modifier-info-modal';
 import { ProgramGuideModal } from './learning-resource-program-guide-modal';
 import { BatchSettingModal } from './learning-resource-batch-setting-modal';
 import { map, some, uniq } from 'lodash';
+import { CopyModal } from './learning-resource-copy-modal';
 
 function LearningResourceTableComponent() {
   const { open: openModal, alert } = useModal();
@@ -295,6 +296,11 @@ function LearningResourceTableComponent() {
         content: t('LABEL.alert.canNotCopy.content'),
       });
     }
+
+    openModal({
+      width: 's',
+      content: <CopyModal />,
+    });
   }
 
   return (
