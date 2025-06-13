@@ -2,7 +2,7 @@ import { S3UploaderConfig, UploadFile, UploadStatus } from './types';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useUploadTask } from './use-upload-task';
 import { resumeUpload, startUpload } from './upload-manger';
-import { formatDate, getRandomId } from '@learnway/shared';
+import { acceptFilesToAccept, formatDate, getRandomId } from '@learnway/shared';
 import { formatFileSize, normalizePath, updateFile } from './utils';
 import { abortMultiPartUpload } from './api';
 
@@ -72,7 +72,8 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
 
     return {
       status,
-      acceptFiles,
+      accept: acceptFiles,
+      inputAccept: acceptFilesToAccept(acceptFiles),
       maxFileCount,
       total: files.length,
       uploading: statusCount.uploading,
