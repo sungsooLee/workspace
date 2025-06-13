@@ -75,7 +75,7 @@ function RouteComponent() {
   const handleOnSubmit = async (data: any) => {
     console.log('data {} => ', data);
     const logoImageUrl = data.logoImageUrl?.length > 0 ? data.logoImageUrl[0] : '';
-
+    const tagStringList = data.tenantTagList.split(',');
     const payload = {
       ...data,
       tenantName: data.tenantName.fieldValue,
@@ -85,6 +85,8 @@ function RouteComponent() {
       isApp: data.device.includes(EnDeviceType.isApp),
       isCommonCategory: data.useCategory.includes(EnUseCategory.isCommonCategory),
       isTenantCategory: data.useCategory.includes(EnUseCategory.isTenantCategory),
+      tenantTagList: tagStringList.map((item: string) => ({ tagName: item })),
+      tenantUserList: data.tenantUserList.map((item: any) => ({ userUuid: item.uuid })),
     };
     console.log('payload {} => ', payload);
     if (await openConfirm('저장 하시겠습니까?')) {

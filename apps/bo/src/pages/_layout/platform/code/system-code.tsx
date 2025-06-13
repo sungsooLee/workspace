@@ -21,7 +21,7 @@ export const Route = createFileRoute('/_layout/platform/code/system-code')({
 function RouteComponent() {
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);
 
-  const { data, hasPermission } = useSystemCodeList();
+  const { data } = useSystemCodeList();
 
   const [listData, setListData] = useState([]);
 
@@ -70,7 +70,7 @@ const searchConfig: SearchBoxConfig = {
       {
         name: 'enumName',
         type: 'text',
-        label: t('그룹코드'),
+        label: t('LABEL.cdGroupId'),
         value: '',
       },
     ],

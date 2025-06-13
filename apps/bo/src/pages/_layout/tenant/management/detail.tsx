@@ -1,28 +1,29 @@
 import { ReactNode, useState, useEffect, useRef } from 'react';
 import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
+import { t } from 'i18next';
 
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
+import { ContentsButtons, MainContents, PageContainer, LinkBox } from '@widgets/layout';
+
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
 import { Tabs, Button } from '@learnway/ui';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
-import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 
 /* tab contents */
-import { TenantDetailMenu } from '@features/tenant/management/ui/tenant-detail-menu';
-import { TenantDetailCategory } from '@features/tenant/management/ui/tenant-detail-category';
-import { TenantDetailAttribute } from '@features/tenant/management/ui/tenant-detail-attribute';
-import { TenantDetailWidget } from '@features/tenant/management/ui/tenant-detail-widget';
-import { TenantDetailBanner } from '@features/tenant/management/ui/tenant-detail-banner';
-import { TenantDetailLearningRole } from '@features/tenant/management/ui/tenant-detail-learning-role';
+import {
+  TenantDetailLearningRole,
+  TenantDetailBanner,
+  TenantDetailWidget,
+  TenantDetailMenu,
+  TenantDetailCategory,
+  TenantDetailAttribute,
+} from '@features/tenant';
 
 import { EnTenantDetailTabKey } from '@types';
 
 export const Route = createFileRoute('/_layout/tenant/management/detail')({
   component: RouteComponent,
 });
-const scrollHidden: string[] = [EnTenantDetailTabKey.base, EnTenantDetailTabKey.attribute];
+
 const buttonShowTabs: string[] = [EnTenantDetailTabKey.base, EnTenantDetailTabKey.attribute];
 /**
  * 화면 번호:
@@ -37,6 +38,8 @@ const buttonShowTabs: string[] = [EnTenantDetailTabKey.base, EnTenantDetailTabKe
 function RouteComponent() {
   const router = useRouter();
   const routerState = useRouterState();
+  const formAttrRef = useRef(2);
+  const menuRef = useRef(3);
 
   const [selectedTabKey, setSelectedTabKey] = useState<string>(EnTenantDetailTabKey.attribute);
 
@@ -49,14 +52,43 @@ function RouteComponent() {
     router.navigate({ to: '/tenant/management' });
   };
 
+  const handleModifyButtonClick = () => {
+    switch (selectedTabKey) {
+      case EnTenantDetailTabKey.attribute:
+        {
+          console.log('formAtt', formAttrRef);
+          const attrTab: any = formAttrRef.current;
+          if (attrTab) {
+            attrTab.saveData();
+          }
+        }
+        break;
+    }
+  };
+
   const handleResetButtonClick = () => {
     switch (selectedTabKey) {
-      case 'attrbute':
-        alert('attrbute');
+      case EnTenantDetailTabKey.attribute:
+        {
+          const attrTab: any = formAttrRef.current;
+          if (attrTab) {
+            attrTab.clearForm();
+          }
+        }
         break;
+    }
+  };
 
-      default:
-        alert('없음');
+  const handleMultiLangButtonClick = () => {
+    switch (selectedTabKey) {
+      case EnTenantDetailTabKey.menu:
+        {
+          const menuTab: any = menuRef.current;
+          if (menuTab) {
+            menuTab.moveMultilang();
+          }
+        }
+        break;
     }
   };
 
@@ -64,12 +96,12 @@ function RouteComponent() {
     {
       title: '테넌트 속성 관리',
       key: EnTenantDetailTabKey.attribute,
-      content: <TenantDetailAttribute />,
+      content: <TenantDetailAttribute ref={formAttrRef} />,
     },
     {
       title: '테넌트 메뉴관리',
       key: EnTenantDetailTabKey.menu,
-      content: <TenantDetailMenu />,
+      content: <TenantDetailMenu ref={menuRef} />,
     },
     {
       title: '테넌트 카테고리 관리',
@@ -95,29 +127,35 @@ function RouteComponent() {
 
   return (
     <PageContainer>
-      {buttonShowTabs.includes(selectedTabKey) && (
-        <ContentsButtons>
-          <LinkBox>
-            <Button onClick={handleListButtonClick} variant="point" size="sm">
-              목록
-            </Button>
-          </LinkBox>
+      <ContentsButtons>
+        <LinkBox>
+          {EnTenantDetailTabKey.menu === selectedTabKey && (
+            <Button
+              type="button"
+              variant="point"
+              size="sm"
+              onClick={handleMultiLangButtonClick}
+              label={t('LABEL.button.multilingualManage')}
+            />
+          )}
+          <Button onClick={handleListButtonClick} variant="point" size="sm" label={t('목록')} />
+        </LinkBox>
 
-          <Button onClick={handleResetButtonClick} variant="point" size="sm">
-            초기화
-          </Button>
-          <Button variant="point" size="sm">
-            수정
-          </Button>
-        </ContentsButtons>
-      )}
-      {!buttonShowTabs.includes(selectedTabKey) && (
-        <ContentsButtons>
-          <Button onClick={handleListButtonClick} variant="point" size="sm">
-            목록
-          </Button>
-        </ContentsButtons>
-      )}
+        <Button
+          onClick={handleResetButtonClick}
+          variant="point"
+          size="sm"
+          disabled={!buttonShowTabs.includes(selectedTabKey)}
+          label={t('초기화')}
+        />
+        <Button
+          variant="point"
+          size="sm"
+          onClick={handleModifyButtonClick}
+          disabled={!buttonShowTabs.includes(selectedTabKey)}
+          label={t('수정')}
+        ></Button>
+      </ContentsButtons>
       <MainContents>
         <Tabs
           items={menuItems}

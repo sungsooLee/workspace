@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { useQueryClient } from '@tanstack/react-query';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 
 import { IcoRefresh02 } from '@learnway/icons';
@@ -19,6 +19,7 @@ import { SearchBoxConfig, useSearchBox, CODE_GROUP } from '@learnway/hooks';
 import { SearchBox } from '@shared/ui/search-box';
 import { queryOptions as companyQueryOptions } from '@entities/companies/service/companies.queries';
 
+import { EnGlobalConst } from '@types';
 /**
  * 화면번호: NLP_BO_TMS_1001_19_01
  * @returns
@@ -124,7 +125,8 @@ const columnHelper = createColumnHelper<any>();
 const columns = [
   columnHelper.accessor('companyType', {
     id: 'companyType',
-    cell: (info) => t(`pms.company.CompanyType.${info.getValue()}`),
+    cell: (info) =>
+      t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.CompanyType.${info.getValue()}`),
     header: t('그룹'),
     size: 132,
   }),

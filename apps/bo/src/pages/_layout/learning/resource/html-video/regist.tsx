@@ -1,5 +1,11 @@
 import { t } from 'i18next';
-import { Button, ContentsRow, useModal } from '@learnway/ui';
+import {
+  Button,
+  ChipListModalSelectorFormField,
+  ContentsRow,
+  InputModalSelectorFormField,
+  useModal,
+} from '@learnway/ui';
 import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '@shared/ui';
 import { createFileRoute } from '@tanstack/react-router';
 import { ContentsButtons, MainContents, PageContainer } from '@widgets/layout';
@@ -12,6 +18,9 @@ import { cn } from '@learnway/shared';
 import style from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import { leaningResourceQueryOptions } from '@entities/leaning-resource';
 import { LEARNING_TYPE } from '@learnway/config';
+import { ChannelListChoiceModal, ManagerChoiceModal } from '@features/shared';
+import { FormDisplay } from '@features/form/ui/form-display';
+import { DateRangePickerFormField } from '@features/learning/ui/resource/date-range-picker-form-field';
 
 export const Route = createFileRoute('/_layout/learning/resource/html-video/regist')({
   component: RouteComponent,
@@ -21,18 +30,9 @@ function RouteComponent() {
   const formConfig: DynamicFormConfig = {
     builders: [
       {
-        name: 'companyModal',
+        name: 'channelUuids',
         type: 'text',
-        label: t('채널명'),
-        format: 'array',
-        value: [],
-        placeholder: '',
-        description: '',
-      },
-      {
-        name: 'language',
-        type: 'dropdown',
-        label: t('언어'),
+        label: t('채널'),
         format: 'array',
         value: [],
         placeholder: '',
@@ -44,8 +44,18 @@ function RouteComponent() {
         label: t('학습자원명'),
         format: 'array',
         value: [],
-        placeholder: '',
+        placeholder: '입력',
         description: '',
+        maxLength: 150,
+      },
+      {
+        name: 'learningResourceDescription',
+        label: '학습자원설명',
+        type: 'textarea',
+        format: 'string',
+        value: '',
+        placeholder: '콘텐츠에 대한 설명을 입력해주세요.',
+        maxLength: 2000,
       },
       {
         name: 'manager',
@@ -67,22 +77,42 @@ function RouteComponent() {
         },
       },
       {
-        label: t('사용기한'),
+        label: '사용기한',
         name: 'expirationDate',
         type: 'switch',
-        value: false,
         format: 'boolean',
+        value: false,
+        switchConfig: {
+          label: (value: boolean) => (value ? '기간설정' : '무기한'),
+        },
         tooltip: '사용기한 내 콘텐츠 공유/교육자원활용이  가능합니다.',
       },
       {
-        label: t('외주개발업체정보'),
+        name: 'expirationDateFrom',
+        type: 'custom',
+        value: '',
+        fields: {
+          from: 'expirationDateFrom',
+          to: 'expirationDateTo',
+        },
+      },
+      {
+        name: 'expirationDateTo',
+        type: 'hidden',
+        value: '',
+      },
+      {
+        label: '외주개발업체정보',
         name: 'isExternalDevelopmentCompany',
         type: 'switch',
         format: 'boolean',
         value: false,
+        switchConfig: {
+          label: (value: boolean) => (value ? '있음' : '없음'),
+        },
       },
       {
-        name: 'DevelopmentCompany',
+        name: 'externalDevelopmentCompany',
         type: 'text',
         label: t('개발업체'),
         format: 'array',
@@ -91,7 +121,7 @@ function RouteComponent() {
         description: '',
       },
       {
-        name: 'DevelopmentCompanyManager',
+        name: 'externalDevelopmentCompanyManager',
         type: 'text',
         label: t('외주개발업체 담당자'),
         format: 'array',
@@ -100,7 +130,7 @@ function RouteComponent() {
         description: '',
       },
       {
-        name: 'DevelopmentCompanyContact',
+        name: 'externalDevelopmentCompanyContact',
         type: 'phone-number',
         label: t('외주개발업체 연락처'),
         value: '',
@@ -285,6 +315,15 @@ function RouteComponent() {
     <form onSubmit={onSubmit(handleOnSubmit)}>
       <PageContainer>
         <ContentsButtons>
+          <Button variant="point" size="sm">
+            과정개설
+          </Button>
+          <Button variant="point" size="sm">
+            매핑과정
+          </Button>
+          <Button variant="point" size="sm">
+            공유이력
+          </Button>
           <Button type={'button'} variant="point" size="sm" onClick={goList}>
             목록
           </Button>
@@ -297,8 +336,24 @@ function RouteComponent() {
         </ContentsButtons>
         <MainContents>
           <ContentsRow>
-            <FormRow provider={provider} name={'companyModal'} />
-            <FormRow provider={provider} name={'language'} />
+            <FormRow
+              provider={provider}
+              name="channelUuids"
+              element={
+                <ChipListModalSelectorFormField
+                  chipList={{
+                    labelField: 'channelName',
+                    valueField: 'channelUuid',
+                    hideBorder: true,
+                  }}
+                  modalConfig={{
+                    title: '',
+                    width: 'xl',
+                    content: <ChannelListChoiceModal />,
+                  }}
+                />
+              }
+            />
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider} name={'learningResourceName'} />
@@ -310,19 +365,53 @@ function RouteComponent() {
             <FormRow provider={provider} name={'manager'} />
             <FormRow provider={provider} name={'contact'} />
           </ContentsRow>
-          <ContentsRow>
+
+          <ContentsRow type={'horizontal'} className={'inactive'}>
             <FormRow provider={provider} name={'expirationDate'} />
           </ContentsRow>
-          <ContentsRow>
+          {/* 사용기한 상세 */}
+          <FormDisplay provider={provider} dependencies={[{ name: 'expirationDate', value: true }]}>
+            <ContentsRow>
+              <FormRow
+                provider={provider}
+                name={'expirationDateFrom'}
+                element={<DateRangePickerFormField />}
+              />
+            </ContentsRow>
+          </FormDisplay>
+
+          {/*외주개발업체 정보*/}
+          <ContentsRow type={'horizontal'} className={'inactive'}>
             <FormRow provider={provider} name={'isExternalDevelopmentCompany'} />
           </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider} name={'DevelopmentCompany'} />
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider} name={'DevelopmentCompanyManager'} />
-            <FormRow provider={provider} name={'DevelopmentCompanyContact'} />
-          </ContentsRow>
+          {/*외주개발업체 상세*/}
+          <FormDisplay
+            provider={provider}
+            dependencies={[{ name: 'isExternalDevelopmentCompany', value: true }]}
+          >
+            <ContentsRow>
+              {/*외부개발업체*/}
+              <FormRow
+                provider={provider}
+                name={'externalDevelopmentCompany'}
+                element={
+                  <InputModalSelectorFormField
+                    modalConfig={{
+                      title: '',
+                      width: 'md',
+                      content: <ManagerChoiceModal />,
+                    }}
+                  />
+                }
+              />
+            </ContentsRow>
+            <ContentsRow>
+              {/*외주개발업체 담당자*/}
+              <FormRow provider={provider} name={'externalDevelopmentCompanyManager'} />
+              {/*외주개발업체 연락처*/}
+              <FormRow provider={provider} name={'externalDevelopmentCompanyContact'} />
+            </ContentsRow>
+          </FormDisplay>
           <ContentsRow>
             <FormRow provider={provider} name="thumbnails" />
           </ContentsRow>

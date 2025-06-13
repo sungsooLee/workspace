@@ -727,7 +727,7 @@ export const guideData = [
     pageId: 'pms/menu-tenant-user-management',
     screenId: 'NLP_BO_TMS_1111_07',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-06-13',
     lastUpdateDate: '',
     remarks: '', // 비고
   },
@@ -736,7 +736,7 @@ export const guideData = [
     pageId: 'pms/menu-tenant-user-education',
     screenId: 'NLP_BO_TMS_1111_12',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-06-13',
     lastUpdateDate: '',
     remarks: '', // 비고
   },
@@ -917,7 +917,7 @@ export const guideData = [
     screenId: 'NLP_BO_CMS_1203',
     pageType: 'Page',
     completionDate: '2025-05-14',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-06-13',
     remarks: '', // 비고
   },
   {

@@ -60,54 +60,68 @@ const TenantUserComponent: FC<{}> = ({}) => {
       cell: (info) => info.getValue(),
       header: '테넌트',
       enableGrouping: false,
-      size: 120,
+      meta: {
+        size: 'auto',
+      },
     }),
     columnHelper.accessor('group', {
       cell: (info) => info.getValue(),
       header: '그룹',
-      size: 120,
       enableGrouping: false,
+      meta: {
+        size: 'auto',
+      },
     }),
     columnHelper.accessor('company', {
       cell: (info) => info.getValue(),
       header: '회사',
-      size: 120,
       enableGrouping: false,
+      meta: {
+        size: 'auto',
+      },
     }),
 
     columnHelper.accessor('team', {
       cell: (info) => info.getValue(),
       header: '소속',
-      size: 120,
       enableGrouping: false,
+      meta: {
+        size: 'auto',
+      },
     }),
     columnHelper.accessor('position', {
       cell: (info) => info.getValue(),
       header: '직위',
       enableGrouping: false,
-      size: 120,
+      meta: {
+        size: 'auto',
+      },
     }),
     columnHelper.accessor('companyNum', {
       cell: (info) => info.getValue(),
       header: '사번',
       enableGrouping: false,
-      size: 120,
       meta: {
         headerAlign: 'center',
         cellAlign: 'center',
+        size: 'auto',
       },
     }),
     columnHelper.accessor('user', {
       cell: (info) => info.getValue(),
       header: '이름',
       enableGrouping: false,
-      size: 120,
+      meta: {
+        size: 'auto',
+      },
     }),
     columnHelper.accessor('role', {
       cell: (info) => info.getValue(),
       header: '학습자 역할',
       enableGrouping: false,
-      size: 120,
+      meta: {
+        size: 'auto',
+      },
     }),
     columnHelper.accessor('tenure', {
       cell: (info) => info.getValue(),
@@ -153,11 +167,13 @@ const TenantUserComponent: FC<{}> = ({}) => {
       cell: (info) => info.getValue(),
       header: '회원가입일',
       enableGrouping: false,
-      size: 120,
+      meta: {
+        size: 'auto',
+      },
     }),
   ] as ColumnDef<any, unknown>[];
   return (
-    <div>
+    <>
       <div className={cn(searchStyles.start, searchStyles.wrap)}>
         <div className={searchStyles.contents}>
           <div className={searchStyles.item_row}>
@@ -284,9 +300,9 @@ const TenantUserComponent: FC<{}> = ({}) => {
           onPageChange: setpageNumber,
           onPageSizeChange: setPageSize,
         }}
-        title={'약관 목록'}
+        title={'유저 목록'}
       />
-    </div>
+    </>
   );
 };
 

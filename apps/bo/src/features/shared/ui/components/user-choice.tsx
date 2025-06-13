@@ -44,7 +44,7 @@ const searchConfig: SearchBoxConfig = {
       {
         name: 'opt1',
         type: 'text',
-        label: t('본부/사업부'),
+        label: t('실'),
         value: '',
       },
       {
@@ -66,26 +66,6 @@ const searchConfig: SearchBoxConfig = {
         type: 'text',
         label: t('이름'),
         value: '',
-      },
-      {
-        name: 'ust',
-        type: 'text',
-        label: t('계정상태'),
-        value: '',
-        options: [
-          {
-            label: '전체',
-            value: '',
-          },
-          {
-            label: '정상',
-            value: 'open',
-          },
-          {
-            label: '잠김',
-            value: 'close',
-          },
-        ],
       },
     ],
   ],
@@ -114,15 +94,8 @@ const columns = [
   columnHelper.accessor('noDat1', {
     id: 'noDat1',
     cell: (info) => info.getValue(),
-    header: '본부/사업부',
+    header: '실',
     size: 240,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('noDat2', {
-    id: 'noDat2',
-    cell: (info) => info.getValue(),
-    header: '부서',
-    size: 150,
     enableGrouping: false,
   }),
   columnHelper.accessor('dept', {
@@ -146,16 +119,14 @@ const columns = [
     size: 220,
     enableGrouping: false,
   }),
-  columnHelper.accessor('opt2', {
+  columnHelper.accessor('employmentStatus', {
     cell: (info) => info.getValue(),
     header: '재직여부',
-    size: 240,
     enableGrouping: false,
   }),
-  columnHelper.accessor('opt3', {
+  columnHelper.accessor('accountType', {
     cell: (info) => info.getValue(),
     header: '계정상태',
-    size: 240,
     enableGrouping: false,
   }),
 ] as ColumnDef<any, unknown>[];

@@ -203,7 +203,7 @@ function RouteComponent() {
         router.navigate({ to: search.redirect || '/' });
 
         // 임시 : 사용 가능한 API 목록 fetch
-        await usePermissionStore.getState().fetchPermissions();
+        // await usePermissionStore.getState().fetchPermissions();
       },
       onError: async (data: any) => {
         loginErrorAlert(data);

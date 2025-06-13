@@ -58,7 +58,7 @@ export function useAuthSignin() {
     reissue: async (): Promise<AuthUser | undefined> => {
       const user = await reissue();
       const menus = await asyncMenus(user?.activeTenant.tenantId);
-      await usePermissionStore.getState().fetchPermissions(); //임시 사용가능한 API 목록 Fetch
+      // await usePermissionStore.getState().fetchPermissions(); //임시 사용가능한 API 목록 Fetch
       return updateMenu(menus);
     },
   };

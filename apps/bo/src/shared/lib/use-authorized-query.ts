@@ -56,7 +56,9 @@ export function useApiQuery<TResponse = any, TParams = any, TError = Error>(
   options?: any,
 ) {
   const hasApiAccess = usePermissionStore((state) => state.hasApiAccess);
-  const hasPermission = hasApiAccess(api.key);
+  // const hasPermission = hasApiAccess(api.key);
+  const hasPermission = true;
+
   const queryFn = async (): Promise<TResponse> => {
     if (!hasPermission) {
       eventService.emit(HTTP_EVENTS.REACT_QUERY_ERROR, {
@@ -95,7 +97,7 @@ export function useApiMutation<TResponse = any, TPayload = any, TParams = any, T
 
   const queryClient = useQueryClient();
   const hasApiAccess = usePermissionStore((state) => state.hasApiAccess);
-  const hasPermission = hasApiAccess(api.key);
+  const hasPermission = true;
 
   const customMutate = (payload: TPayload, mutationOptions?: any) => {
     if (!hasPermission) {

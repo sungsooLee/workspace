@@ -16,6 +16,7 @@ import {
   GridBox,
   useModal,
   useGridBox,
+  useGridBoxConfig,
 } from '@learnway/ui';
 
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
@@ -23,6 +24,8 @@ import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 import { SearchBox } from '@shared/ui/search-box';
 
 import { queryOptions as companyQueryOptions } from '@entities/companies/service/companies.queries';
+
+import { EnGlobalConst } from '@types';
 
 /**
  * 화면 번호: NLP_BO_TMS_1001_19 or 화면번호 NLP_BO_PMS_1107
@@ -65,7 +68,8 @@ const CompanyModalComponent = forwardRef((props, ref) => {
               onRowSelect={handleRowSelect}
               config={config}
               columns={columns}
-              showColumnSettings={false}
+              showNumberingColumn
+              visibleRowCount={7}
               title={t('회사')}
             />
           </div>
@@ -91,8 +95,8 @@ const searchConfig: SearchBoxConfig = {
         type: 'dropdown',
         label: t('그룹'),
         value: '',
+        presetOptionLabel: t('LABEL.form.label.select'),
         optionsConfig: {
-          options: [{ label: t('전체'), value: '' }],
           codeGroup: CODE_GROUP['pms.company.CompanyType'],
         },
       },
@@ -106,57 +110,41 @@ const searchConfig: SearchBoxConfig = {
   ],
 };
 
-const gridConfig = {
+const gridConfig: useGridBoxConfig = {
   query: companyQueryOptions.list,
   columns: [],
   data: [],
-  pagination: {
-    pageSize: 10,
-    pageIndex: 0,
-    totalRows: 0,
-  },
 };
 
 const columnHelper = createColumnHelper<any>();
 const columns = [
-  columnHelper.accessor('no', {
-    id: 'no',
-    cell: (info) => info.row.index + 1,
-    header: 'NO.',
-    size: 64,
-  }),
   columnHelper.accessor('companyType', {
-    id: 'companyType',
-    cell: (info) => t(`pms.company.CompanyType.${info.getValue()}`),
+    cell: (info) =>
+      t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.CompanyType.${info.getValue()}`),
     header: t('그룹'),
     size: 210,
   }),
   columnHelper.accessor('name', {
-    id: 'name',
     cell: (info) => info.getValue(),
     header: t('회사'),
     size: 210,
   }),
   columnHelper.accessor('rpsntrName', {
-    id: 'rpsntrName',
     cell: (info) => info.getValue(),
     header: t('대표자'),
     size: 210,
   }),
   columnHelper.accessor('brn', {
-    id: 'brn',
     cell: (info) => info.getValue(),
     header: t('사업자 등록번호'),
     size: 220,
   }),
   columnHelper.accessor('callNumber', {
-    id: 'callNumber',
     cell: (info) => info.getValue(),
     header: t('대표 전화'),
     size: 210,
   }),
   columnHelper.accessor('email', {
-    id: 'email',
     cell: (info) => info.getValue(),
     header: t('대표 이메일'),
     size: 210,

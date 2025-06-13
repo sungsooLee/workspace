@@ -6,7 +6,7 @@ import { isEqual } from 'lodash';
 
 import { getBrowserNation } from '@learnway/shared';
 
-import NationNumbers from './nation-number.json';
+import { useCodeStore, CODE_GROUP } from '@learnway/hooks';
 import { Input, InputProps } from '../input/input';
 import { Dropdown } from '../dropdown/dropdown';
 import type { DropdownOption } from '../type';
@@ -41,9 +41,21 @@ const PhoneNumberComponent = function ({
     nationCode: value?.nationCode ?? getBrowserNation(),
   } as PhoneNumberValue);
 
-  const nationOptions = useCreation(() => {
-    return NationNumbers;
-  }, []);
+  const { getCode } = useCodeStore();
+
+  const [nationOptions, setNationOptions] = useState<any[]>([]);
+
+  useEffect(() => {
+    const init = async () => {
+      const nationCodes: any = await getCode(CODE_GROUP['cmmon.TelCountryCode']);
+      const options = nationCodes.map((code: any) => ({
+        value: code.value,
+        label: code.cdContent,
+      }));
+      setNationOptions(options);
+    };
+    init();
+  }, [getCode]);
 
   useEffect(() => {
     if (isEqual(value, editionValue)) {
