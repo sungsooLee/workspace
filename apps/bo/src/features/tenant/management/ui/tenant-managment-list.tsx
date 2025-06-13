@@ -44,10 +44,9 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
     onFormChange,
     onFormValid,
   } = useSearchBox(searchConfig);
-  const { config: gConfig, gridFetch } = useGridBox(gridConfig);
+  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
 
   const handleOnSearch = (data: any) => {
-    console.log('search', data);
     gridFetch(data);
   };
   useEffect(() => {
@@ -68,7 +67,7 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
       <div className={cn(boxStyles.start, boxStyles.inner)}>
         <div className="grid_wrap">
-          <GridBox config={gConfig} columns={columns} />
+          <GridBox config={gConfig} columns={columns} showNumberingColumn />
         </div>
       </div>
     </>
@@ -126,7 +125,7 @@ const searchConfig: SearchBoxConfig = {
       {
         name: 'isUsed',
         type: 'dropdown',
-        label: t('LABEL.common.useYn.isUsed'),
+        label: t('사용여부'),
         value: '',
         options: [
           { value: '', label: t('전체') },
@@ -145,15 +144,12 @@ const gridConfig = {
 
   pagination: {
     pageSize: 20,
-    pageIndex: 0,
-    totalRows: 0,
   },
 };
 
 const columnHelper = createColumnHelper<Tenant>();
 const columns = [
   columnHelper.accessor('tenantName', {
-    id: 'tenantName',
     cell: (info) => {
       return (
         <Button
@@ -169,19 +165,7 @@ const columns = [
     header: t('테넌트명'),
     size: 192,
   }),
-  columnHelper.accessor('tenantSite', {
-    id: 'tenantSite',
-    cell: (info) => (
-      <Link to={info.getValue()} className="link">
-        {info.row.original.tenantId}
-      </Link>
-    ),
-    header: t('테넌트 사이트'),
-    size: 192,
-  }),
-
   columnHelper.accessor('companyTenantList', {
-    id: 'companyTenantList',
     cell: (info) =>
       info.getValue() &&
       info
@@ -192,7 +176,6 @@ const columns = [
     size: 200,
   }),
   columnHelper.accessor('tenantUserList', {
-    id: 'tenantUserList',
     cell: (info) =>
       info.getValue() &&
       info
@@ -203,7 +186,6 @@ const columns = [
     size: 120,
   }),
   columnHelper.accessor('isUsed', {
-    id: 'isUsed',
     cell: (info) => {
       return info.row.original.isUsed ? t('사용') : t('미사용');
     },
@@ -211,12 +193,10 @@ const columns = [
     size: 104,
   }),
   columnHelper.accessor('createdBy', {
-    id: 'createdBy',
     header: t('등록자'),
     size: 104,
   }),
   columnHelper.accessor('createdDate', {
-    id: 'createdDate',
     cell: (info) => {
       return getDateToString(new Date(info.getValue()), DATE_TIME_FORMAT.DATETIME_SEC);
     },
@@ -224,12 +204,10 @@ const columns = [
     size: 192,
   }),
   columnHelper.accessor('lastModifiedBy', {
-    id: 'lastModifiedBy',
     header: '수정자',
     size: 104,
   }),
   columnHelper.accessor('modifiedDate', {
-    id: 'modifiedDate',
     cell: (info) => {
       return getDateToString(new Date(info.getValue()), DATE_TIME_FORMAT.DATETIME_SEC);
     },
