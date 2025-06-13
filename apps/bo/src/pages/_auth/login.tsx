@@ -9,7 +9,13 @@ import { cn } from '@learnway/shared';
 // import { DynamicFormField } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 
-import { useAuthSignin, getSavedUserid, pageRouteConfig, TenantRoleModal } from '@features/auth';
+import {
+  useAuthSignin,
+  getSavedUserid,
+  pageRouteConfig,
+  TenantRoleModal,
+  LoginErrorAlert,
+} from '@features/auth';
 import { useSetLanguage } from '../../features/platform';
 
 import { FormRow } from '../../shared/ui/form';
@@ -19,6 +25,7 @@ import authStyles from './auth.module.css';
 import styles from '@learnway/styles/bo/pages/_auth/login.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { usePermissionStore } from '../../shared/lib/permission-store';
+import { AUTH_ERROR_CODE } from '@learnway/auth/features/auth';
 
 export const Route = createFileRoute('/_auth/login')({
   component: RouteComponent,
@@ -35,7 +42,6 @@ function RouteComponent() {
   const router = useRouter();
   const params = Route.useParams();
   const search = Route.useSearch();
-  const { open: openModal } = useModal();
   const { reset } = useExpStore();
   const { provider, onSubmit, onFormChange, control } = useDynamicForm(detailConfig);
 
@@ -43,6 +49,142 @@ function RouteComponent() {
 
   const { login } = useAuthSignin();
   const { set: setLanguage, inProgress } = useSetLanguage();
+  const { open: openModal, alert: openAlert } = useModal();
+
+  const loginErrorAlert = (error: any) => {
+    console.log('loginErrorAlert :: ', error);
+    openAlert({
+      title: t('LABEL.alert.PASSWORD_FAIL.title'),
+      content: (
+        <LoginErrorAlert
+          message={t('LABEL.alert.PASSWORD_FAIL.message')}
+          subMessage={t('LABEL.alert.PASSWORD_FAIL.etc', { data: error.loginFailCount })}
+        />
+      ),
+    });
+
+    // TODO 에러코드 정의시 처리 필요
+    return;
+    switch (error.code) {
+      case AUTH_ERROR_CODE.NOTFOUND_ID: // 아이디 없음
+        openAlert({
+          title: 'LABEL.alert.NOTFOUND_ID.title',
+          content: 'LABEL.alert.NOTFOUND_ID.message',
+        });
+        break;
+      case AUTH_ERROR_CODE.PASSWORD_FAIL:
+        // 패스워드 실패
+        openAlert({
+          title: t('LABEL.alert.PASSWORD_FAIL.title'),
+          content: (
+            <LoginErrorAlert
+              message={t('LABEL.alert.PASSWORD_FAIL.message')}
+              subMessage={t('LABEL.alert.PASSWORD_FAIL.etc', { data: error.loginFailCount })}
+            />
+          ),
+        });
+        break;
+      case AUTH_ERROR_CODE.LOGIN_LOCK_PASSWORD_USE: // 잠김 - 패스워드 사용자
+        openAlert({
+          title: t('LABEL.alert.LOGIN_LOCK_PASSWORD_USE.title'),
+          content: (
+            <LoginErrorAlert
+              message={t('LABEL.alert.LOGIN_LOCK_PASSWORD_USE.message')}
+              subMessage={t('LABEL.alert.LOGIN_LOCK_PASSWORD_USE.etc', {
+                data: error.loginFailCount,
+              })}
+            />
+          ),
+        });
+        break;
+      case AUTH_ERROR_CODE.LOGIN_LOCK_PASSWORD_NOT_USE: // 잠김 - 패스워드 미사용자
+        openAlert({
+          title: t('LABEL.alert.LOGIN_LOCK_PASSWORD_NOT_USE.title'),
+          content: (
+            <LoginErrorAlert
+              message={t('LABEL.alert.LOGIN_LOCK_PASSWORD_USE.message')}
+              subMessage={t('LABEL.alert.LOGIN_LOCK_PASSWORD_USE.etc', {
+                data: error.loginFailCount,
+              })}
+            />
+          ),
+        });
+        break;
+      case AUTH_ERROR_CODE.APPROVAL_ADMIN_PENDING: // 어드민 승인 대기
+        openAlert({
+          title: t('LABEL.alert.APPROVAL_ADMIN_PENDING.title'),
+          content: (
+            <LoginErrorAlert
+              message={t('LABEL.alert.APPROVAL_ADMIN_PENDING.message')}
+              subMessage={t('LABEL.alert.APPROVAL_ADMIN_PENDING.etc', {
+                data: error.loginFailCount,
+              })}
+            />
+          ),
+        });
+        break;
+      case AUTH_ERROR_CODE.APPROVAL_ADMIN_REJECT: // 어드민 승인 반려
+        openAlert({
+          title: t('LABEL.alert.APPROVAL_ADMIN_REJECT.title'),
+          content: (
+            <LoginErrorAlert
+              message={t('LABEL.alert.APPROVAL_ADMIN_REJECT.message')}
+              subMessage={t('LABEL.alert.APPROVAL_ADMIN_REJECT.etc', {
+                data: error.loginFailCount,
+              })}
+            />
+          ),
+        });
+        break;
+      case AUTH_ERROR_CODE.APPROVAL_CP_PENDING: // CP 승인 대기
+        openAlert({
+          title: t('LABEL.alert.APPROVAL_CP_PENDING.title'),
+          content: (
+            <LoginErrorAlert
+              message={t('LABEL.alert.APPROVAL_CP_PENDING.message')}
+              subMessage={t('LABEL.alert.APPROVAL_CP_PENDING.etc', {
+                data: error.loginFailCount,
+              })}
+            />
+          ),
+        });
+        break;
+      case AUTH_ERROR_CODE.APPROVAL_CP_REJECT: // CP 승인 반려
+        openAlert({
+          title: t('LABEL.alert.APPROVAL_CP_REJECT.title'),
+          content: (
+            <LoginErrorAlert
+              message={t('LABEL.alert.APPROVAL_CP_REJECT.message')}
+              subMessage={t('LABEL.alert.APPROVAL_CP_REJECT.etc', {
+                data: error.loginFailCount,
+              })}
+            />
+          ),
+        });
+        break;
+      case AUTH_ERROR_CODE.PASSWORD_CHANGE_PASSWORD_USE: // 패스워드 변경 안내 - 패스워드 사용자
+        openAlert({
+          title: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_USE.title'),
+          content: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_USE.message'),
+        });
+        break;
+      case AUTH_ERROR_CODE.PASSWORD_CHANGE_PASSWORD_NOT_USE: // 패스워드 변경 안내 - 패스워드 미사용자
+        openAlert({
+          title: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_NOT_USE.title'),
+          content: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_NOT_USE.message'),
+        });
+        break;
+      case AUTH_ERROR_CODE.TENANT_PENDING: //테넌트 개설 대기중
+        openAlert({
+          title: t('LABEL.alert.TENANT_PENDING.title'),
+          content: t('LABEL.alert.TENANT_PENDING.message'),
+        });
+        break;
+      default:
+        openAlert({ title: t('LABEL.message.invalidInputInformation'), content: error?.message });
+        break;
+    }
+  };
 
   useEffect(() => {
     reset();
@@ -62,6 +204,9 @@ function RouteComponent() {
 
         // 임시 : 사용 가능한 API 목록 fetch
         // await usePermissionStore.getState().fetchPermissions();
+      },
+      onError: async (data: any) => {
+        loginErrorAlert(data);
       },
     });
   };

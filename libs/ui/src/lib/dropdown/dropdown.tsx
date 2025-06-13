@@ -95,7 +95,7 @@ const Option = (props: any) => {
   return (
     <components.Option {...props}>
       <div className={styles.select_item}>
-        {props.isMulti && <Checkbox size={'md'} checked={props.isSelected} onChange={() => null} />}
+        {props.isMulti && <Checkbox size="md" checked={props.isSelected} />}
         <span>{data.label}</span>
       </div>
     </components.Option>
@@ -204,6 +204,7 @@ const PrimitiveComponent = forwardRef<any, ReactSelectComponentProps>(
     };
     const handleBlur = () => {
       setIsFocused(false);
+      setIsMenuOpen(false);
     };
     // 드롭다운이 닫힐 때 상태 처리
     const handleMenuClose = () => {

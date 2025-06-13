@@ -73,8 +73,13 @@ export const PopoverContent = () => {
           <Popover.Close asChild>
             <Link to="/my-page/role">{t('LABEL.common.myRole')}</Link>
           </Popover.Close>
+          {/* TODO  링크, 화면추가작업 */}
         </li>
-
+        <li>
+          <Popover.Close asChild>
+            <Link to="/my-page/role">{t('LABEL.common.personalUserGroup')}</Link>
+          </Popover.Close>
+        </li>
         <li>
           {/* TODO ITSM 추후 진행 */}
           {/* <Popover.Close asChild>

@@ -19,6 +19,7 @@ import { ModifierInfoModal } from './learning-resource-modifier-info-modal';
 import { ProgramGuideModal } from './learning-resource-program-guide-modal';
 import { BatchSettingModal } from './learning-resource-batch-setting-modal';
 import { map, some, uniq } from 'lodash';
+import { CopyModal } from './learning-resource-copy-modal';
 
 function LearningResourceTableComponent() {
   const { open: openModal, alert } = useModal();
@@ -88,13 +89,16 @@ function LearningResourceTableComponent() {
           },
         },
         {
-          name: 'useEnabledType',
+          name: 'isContentEnabled',
           type: 'dropdown',
-          label: t('LABEL.form.label.useEnabledType'),
+          label: t('LABEL.form.label.isContentEnabled'),
           value: '',
           presetOptionLabel: t('LABEL.form.label.all'),
           optionsConfig: {
-            codeGroup: CODE_GROUP['cms.content.ContentUseEnabledType'],
+            options: [
+              { value: 'true', label: 'Y' },
+              { value: 'false', label: 'N' },
+            ],
           },
         },
         {
@@ -146,7 +150,6 @@ function LearningResourceTableComponent() {
     query: (data: any) => {
       return leaningResourceQueryOptions.getContents({
         ...data,
-        sort: 'contentUuid,desc',
         isMockUp: true,
       });
     },
@@ -211,9 +214,9 @@ function LearningResourceTableComponent() {
       },
       {
         size: 95,
-        name: 'contentUseEnabledType',
-        label: t('LABEL.grid.column.useEnabledType'),
-        render: (_: any) => t(`cms.content.ContentUseEnabledType.${_.getValue()}`),
+        name: 'isContentEnabled',
+        label: t('LABEL.grid.column.isContentEnabled'),
+        render: (_: any) => (_.getValue() ? 'Y' : 'N'),
       },
       {
         size: 83,
@@ -235,10 +238,8 @@ function LearningResourceTableComponent() {
                 width: 'sm',
                 content: (
                   <ModifierInfoModal
-                    lastModifiedBy="c392867d-3f6d-11f0-9435-0218a74d52f7" // 조일환 uuid
-                    modifiedDate={'2025-06-12T19:36:43+09:00'} // API 적용일
-                    // lastModifiedBy={_.row.original.lastModifiedBy}
-                    // modifiedDate={_.getValue()}
+                    lastModifiedBy={_.row.original.lastModifiedBy}
+                    modifiedDate={_.getValue()}
                   />
                 ),
               });
@@ -247,6 +248,9 @@ function LearningResourceTableComponent() {
         ),
       },
     ],
+    gridState: {
+      sort: ['modifiedDate,desc'],
+    },
   };
 
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
@@ -288,6 +292,21 @@ function LearningResourceTableComponent() {
     });
   }
 
+  function handleCopy() {
+    if (selectedRows.length !== 1) {
+      return alert({
+        title: t('LABEL.alert.canNotCopy.title'),
+        content: t('LABEL.alert.canNotCopy.content'),
+      });
+    }
+
+    openModal({
+      width: 's',
+      hideCloseButton: true,
+      content: <CopyModal />,
+    });
+  }
+
   return (
     <>
       <SearchBox provider={searchProvider} onSearch={handleSearch} />
@@ -326,6 +345,7 @@ function LearningResourceTableComponent() {
             <Button
               label={t('LABEL.grid.header.copy')}
               icon={<IcoCopy width={16} height={16} stroke="#4C515E" />}
+              onClick={handleCopy}
             />
           </>
         }
