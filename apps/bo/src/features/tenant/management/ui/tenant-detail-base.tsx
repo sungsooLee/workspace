@@ -138,7 +138,6 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
           uuid: item.userUuid,
           name: item.userName ?? '이름 없음',
         })),
-        langCountryCodeTypeList: tenantData.langCountryCodeTypeList.filter((item) => !item),
       });
     }
   }, [tenantData]);
@@ -457,10 +456,10 @@ const formConfig: DynamicFormConfig = {
         message: t('1개 이상 선택하세요.'),
       },
     },
-    tenantMappingLanguageTypeList: {
+    langCountryCodeTypeList: {
       required: {
         fn: (values) => {
-          return values.tenantMappingLanguageTypeList.length === 0;
+          return values.langCountryCodeTypeList.length === 0;
         },
         message: t('1개 이상 선택하세요.'),
       },
