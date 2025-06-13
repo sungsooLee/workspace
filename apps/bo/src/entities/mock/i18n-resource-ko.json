@@ -161,6 +161,13 @@
           "e0015": "검색결과가 9천건이 초과하는 검색은 불가합니다.",
           "-999": "시스템 에러가 발생했습니다. 관리자에게 문의해 주세요."
         }
+      },
+      "modifierInfo": {
+        "title": "수정자",
+        "nameAndEmployeeNumber": "이름(사번)",
+        "email": "이메일 주소",
+        "phoneNumber": "연락처",
+        "modifiedDate": "수정일"
       }
     },
     "common": {
