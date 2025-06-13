@@ -6,7 +6,7 @@ import { t } from 'i18next';
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { Button, GridBox, useGridBox } from '@learnway/ui';
+import { Button, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 
@@ -137,13 +137,15 @@ const searchConfig: SearchBoxConfig = {
   ],
 };
 
-const gridConfig = {
+const gridConfig: useGridBoxConfig = {
   query: tenantQueryOptions.list,
   columns: [],
   data: [],
 
   pagination: {
     pageSize: 20,
+    pageIndex: 0,
+    totalRows: 0,
   },
 };
 
