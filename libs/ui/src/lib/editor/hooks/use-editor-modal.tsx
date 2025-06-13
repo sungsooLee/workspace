@@ -1,6 +1,6 @@
 import Modal from '../components/modal';
 import { ReactNode, useCallback, useMemo, useState } from 'react';
-const useModal = () => {
+const useEditorModal = () => {
   const [modalContent, setModalContent] = useState<null | {
     closeOnClickOutside: boolean;
     content: ReactNode;
@@ -55,4 +55,4 @@ const useModal = () => {
   return [modal, showModal];
 };
 
-export default useModal;
+export default useEditorModal;
