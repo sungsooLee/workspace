@@ -106,6 +106,26 @@ export function useUpdatePassword(mutationOptions = {}) {
   };
 }
 
+/**
+ * @description 패스워드 기간 연장
+ * @param mutationOptions
+ * @returns
+ */
+export function useUpdatePasswordExpireDate(mutationOptions = {}) {
+  const { mutateAsync, isSuccess, isError } = useMutation({
+    ...mutateOptions.updatePasswordExpireDate(),
+    ...mutationOptions,
+  });
+
+  return {
+    update: (payload: any, callback?: MutateCallback<any[]>) => {
+      return mutateAsync(payload, callback);
+    },
+    isSuccess,
+    isError,
+  };
+}
+
 export function useUpdateUser() {
   const { update } = useUpdateAuthUser();
 

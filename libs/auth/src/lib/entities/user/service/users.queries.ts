@@ -44,6 +44,9 @@ export const mutateOptions = {
   updatePassword: () => ({
     mutationFn: (payload: any) => UsersService.updatePassword(payload),
   }),
+  updatePasswordExpireDate: () => ({
+    mutationFn: (payload: any) => UsersService.updatePasswordExpireDate(payload),
+  }),
   verifyPassword: () => ({
     mutationFn: (payload: string) => UsersService.verifyPassword(payload),
   }),
