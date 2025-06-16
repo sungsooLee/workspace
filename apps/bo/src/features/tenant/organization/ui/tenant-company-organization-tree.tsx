@@ -42,7 +42,7 @@ import { TenantCompanyOrganizationUserList } from './tenant-company-organization
 
 import { EnFormMode } from '@types';
 export enum EnOrganizationShowType {
-  //check = 'check',
+  check = 'check',
   origin = 'origin',
   platform = 'platform',
 }
@@ -70,7 +70,7 @@ const TenantCompanyOrganizationTreeComponent = ({
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, control } =
     useDynamicForm(formConfig);
 
-  const { data: departmentTreeData, refetch } = useGetCompanyDepartmentTree(companyCode);
+  const { data: departmentTreeData, refetch } = useGetCompanyDepartmentTree([companyCode]);
 
   const handleTreeAction = (events: any) => {
     switch (events.type) {

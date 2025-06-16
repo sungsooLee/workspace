@@ -14,7 +14,8 @@ import { Tabs, Button } from '@learnway/ui';
 import {
   EnOrganizationShowType,
   TenantCompanyOrganizationTree,
-} from '@features/tenant/organization/ui/tenant-company-organization-tree';
+  TenantCompanyOrganizationCheck,
+} from '@features/tenant';
 export const Route = createFileRoute('/_layout/platform/tenant/organization/detail')({
   component: RouteComponent,
 });
@@ -23,12 +24,12 @@ export const Route = createFileRoute('/_layout/platform/tenant/organization/deta
  * 화면 번호 : NLP_BO_TMS_1111_03
  * @returns
  */
-function RouteComponent({ companyCode }: { companyCode: string }) {
+function RouteComponent() {
   const router = useRouter();
   const routerState = useRouterState();
 
-  const [selectedTabKey, setSelectedTabKey] = useState<string>(EnOrganizationShowType.origin);
-
+  const [selectedTabKey, setSelectedTabKey] = useState<string>(EnOrganizationShowType.check);
+  const companyCode = routerState.location.state?.companyCode;
   const handleListButtonClick = () => {
     const listParam = routerState.location.state?.listParam;
     console.log('listParam-detail', listParam);
@@ -37,7 +38,12 @@ function RouteComponent({ companyCode }: { companyCode: string }) {
 
   const menuItems = [
     {
-      title: '회사조직(원본)',
+      title: t('회사조직 확인'),
+      key: EnOrganizationShowType.check,
+      content: <TenantCompanyOrganizationCheck companyCode={companyCode} />,
+    },
+    {
+      title: t('회사조직(원본)'),
       key: EnOrganizationShowType.origin,
       content: (
         <TenantCompanyOrganizationTree
@@ -47,7 +53,7 @@ function RouteComponent({ companyCode }: { companyCode: string }) {
       ),
     },
     {
-      title: '회사조직(플랫폼)',
+      title: t('회사조직(플랫폼)'),
       key: EnOrganizationShowType.platform,
       content: (
         <TenantCompanyOrganizationTree
@@ -73,9 +79,7 @@ function RouteComponent({ companyCode }: { companyCode: string }) {
           stopPropagation
           onClick={handleListButtonClick}
           label={t('목록')}
-        >
-          목록
-        </Button>
+        />
       </ContentsButtons>
 
       <MainContents>

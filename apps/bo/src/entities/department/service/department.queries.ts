@@ -18,7 +18,10 @@ export const queryOptions = {
 
   tree: (companyCode: string[]) => ({
     queryKey: queryKeys.tree(companyCode),
-    queryFn: () =>
-      companyCode ? DepartmentService.getDepartmentTree(companyCode) : getQuerySkipToken(),
+    queryFn: () => {
+      const companys = companyCode.filter((item) => item !== undefined);
+      return companys.length > 0 ? DepartmentService.getDepartmentTree(companyCode) : undefined;
+    },
+    disabled: !companyCode,
   }),
 };

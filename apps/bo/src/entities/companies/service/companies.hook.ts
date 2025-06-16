@@ -2,8 +2,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { queryKeys, queryOptions, mutateOptions } from './companies.queries';
 
-export function useFetchCompanies() {
-  return useQuery(queryOptions.all());
+export function useFetchCompanies(param: any) {
+  return useQuery(queryOptions.all(param));
 }
 
 export function useCreateCompany(options: any) {

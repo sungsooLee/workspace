@@ -3,7 +3,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { queryKeys, queryOptions } from './department.queries';
 
-export function useGetCompanyDepartmentTree(companyCode: string) {
+export function useGetCompanyDepartmentTree(companyCode: string[]) {
   return useQuery(queryOptions.tree(companyCode));
 }
 

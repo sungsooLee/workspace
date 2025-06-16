@@ -44,7 +44,7 @@ const OrganizationChoiceTreeModalComponent = ({ companyCodes }: { companyCodes: 
 
   const { open: openModal, close: closeModal, confirm: openConfirm, alert: openAlert } = useModal();
 
-  const { data: organizationData } = useGetCompanyDepartmentTree(companyCodes[0]);
+  const { data: organizationData } = useGetCompanyDepartmentTree(companyCodes);
 
   useEffect(() => {
     if (organizationData) {
