@@ -156,7 +156,7 @@ const MenuChoiceTreeModalComponent = ({ menuScopeCode }: { menuScopeCode: 'FO' |
   useEffect(() => {
     if (baseMenuDB) {
       console.log('baseMenuDB', baseMenuDB);
-      const transformedData = transformMenuApiDataToTreeData(baseMenuDB);
+      const transformedData = transformMenuApiDataToTreeData(baseMenuDB, menuScopeCode);
       console.log('transformedData', transformedData);
       setBaseMenuTreeData(transformedData);
       if (transformedData && transformedData.length > 0) {

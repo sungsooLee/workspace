@@ -16,18 +16,26 @@ import { transformDepartmentApiDataToTreeData } from '@features/platform/company
 
 import { useGetCompanyDepartmentTree } from '@entities/department/service/department.hook';
 
+import { EnOrganizationShowType } from './tenant-company-organization-tree';
+import { queryOptions as departmentQuery } from '@entities/department/service/department.queries';
+import { queryOptions as hmgDepartmentQuery } from '@entities/department/service/hmg-department.queries';
+
 /**
  * 화면번호: NLP_BO_TMS_1111_03 테넌트-회사조직 대상자 (조직)
  * @returns
  */
 const TenantCompanyOrganizationInfoListComponent = ({
   companyCode,
+  showType,
   deptId,
 }: {
   companyCode: string;
-  deptId: string;
+  showType: string;
+  deptId: number;
 }) => {
   const router = useRouter();
+
+  const [gridConfig, setGridConfig] = useState<any>(gridConfigOrg);
 
   const {
     provider: searchProvider,
@@ -35,11 +43,28 @@ const TenantCompanyOrganizationInfoListComponent = ({
     onFormChange,
     onFormValid,
   } = useSearchBox(searchConfig);
-  const { config: gConfig, gridFetch } = useGridBox(gridConfig);
+  const getSearchParam = () => {
+    const retval = { ...getValues(), companyCode: companyCode, parentDeptId: deptId };
+
+    return retval;
+  };
+  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getSearchParam);
 
   const handleOnSearch = (data: any) => {
-    gridFetch(data);
+    if (deptId) {
+      gridFetch(getSearchParam());
+    }
   };
+
+  useEffect(() => {
+    switch (showType) {
+      case EnOrganizationShowType.origin:
+        setGridConfig(gridConfigOrg);
+        break;
+      case EnOrganizationShowType.platform:
+        setGridConfig(gridConfigPlat);
+    }
+  }, [showType]);
 
   return (
     <>
@@ -59,20 +84,19 @@ const searchConfig: SearchBoxConfig = {
   builders: [
     [
       {
-        name: 'tenantName',
+        name: 'hrInfoManageType',
         type: 'text',
         label: t('조직등록유형'),
-        format: 'object',
         value: '',
       },
       {
-        name: 'companyName',
+        name: 'deptName',
         type: 'text',
         label: t('조직명'),
         value: '',
       },
       {
-        name: 'tenantManagerName',
+        name: 'deptManagerName',
         type: 'text',
         label: t('조직장이름'),
         value: '',
@@ -81,8 +105,20 @@ const searchConfig: SearchBoxConfig = {
   ],
 };
 
-const gridConfig = {
-  query: '',
+const gridConfigOrg = {
+  query: hmgDepartmentQuery.child,
+  columns: [],
+  data: [],
+
+  pagination: {
+    pageSize: 20,
+    pageIndex: 0,
+    totalRows: 0,
+  },
+};
+
+const gridConfigPlat = {
+  query: departmentQuery.child,
   columns: [],
   data: [],
 

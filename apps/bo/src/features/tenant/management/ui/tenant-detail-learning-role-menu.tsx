@@ -212,7 +212,7 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
 
   useEffect(() => {
     if (roleMenuData) {
-      const transformedData = transformMenuApiDataToTreeData(roleMenuData);
+      const transformedData = transformMenuApiDataToTreeData(roleMenuData, siteScope);
       setRoleMenuTree(transformedData);
       if (transformedData && transformedData.length > 0 && roleMenuTreeExpandedKeys.length === 0) {
         const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);

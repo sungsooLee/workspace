@@ -6,7 +6,7 @@ import { Company } from '@learnway/types';
 export const queryKeys = {
   all: ['companies'] as const,
   list: ['companies-page'] as const,
-  detail: (id: number) => [...queryKeys.all, id] as const,
+  detail: (code: string) => [...queryKeys.all, code] as const,
 };
 
 export const queryOptions = {
@@ -20,18 +20,18 @@ export const queryOptions = {
     cacheTime: 0,
     staleTime: 0,
   }),
-  detail: (id?: number) =>
-    id
+  detail: (code?: string) =>
+    code
       ? {
-          queryKey: queryKeys.detail(id),
-          queryFn: (): Promise<any> => CompaniesService.fetch(id),
+          queryKey: queryKeys.detail(code),
+          queryFn: (): Promise<any> => CompaniesService.fetch(code),
         }
-      : getQuerySkipToken<Company>(),
-  detailBrn: (id?: number) =>
-    id
+      : getQuerySkipToken<any>(),
+  detailBrn: (brn?: string) =>
+    brn
       ? {
-          queryKey: queryKeys.detail(id),
-          queryFn: (): Promise<any> => CompaniesService.fetchBrn(id),
+          queryKey: queryKeys.detail(brn),
+          queryFn: (): Promise<any> => CompaniesService.fetchBrn(brn),
         }
       : getQuerySkipToken<Company>(),
 };

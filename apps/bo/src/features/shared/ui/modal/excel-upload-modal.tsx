@@ -37,7 +37,7 @@ const ExcelUploadModalComponent = ({
   const maxFileCount = 1;
   const maxFileSize = 1024 * 1024 * 10;
   // const { stats, files, addFiles, onPause, onRetry, onResume, onRemove } = useS3Uploader({
-  //   s3Path: 'upload/leaning/resource/video',
+  //   s3Path: 'upload/learning/resource/video',
   //   maxFileCount,
   //   acceptFiles,
   // });

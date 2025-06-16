@@ -178,7 +178,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
     if (menuData) {
       prevDataRef.current = menuData;
       console.log(menuData);
-      const transformedData = transformMenuApiDataToTreeData(menuData);
+      const transformedData = transformMenuApiDataToTreeData(menuData, menuScope);
       setTreeData(transformedData);
       if (transformedData && transformedData.length > 0 && expandedKeys.length === 0) {
         const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);

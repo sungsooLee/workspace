@@ -3,7 +3,7 @@ import { cn, DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
 import { ModalContainer, ModalBody, ModalTitle } from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/info-list-box.module.css';
 import { t } from 'i18next';
-import { leaningResourceQueryOptions } from '@entities/leaning-resource';
+import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { useQuery } from '@tanstack/react-query';
 
 interface ModifierInfoModalComponentProps {
@@ -15,7 +15,7 @@ function ModifierInfoModalComponent({
   lastModifiedBy,
   modifiedDate,
 }: ModifierInfoModalComponentProps) {
-  const { data } = useQuery(leaningResourceQueryOptions.getUser(lastModifiedBy));
+  const { data } = useQuery(learningResourceQueryOptions.getUser(lastModifiedBy));
 
   return (
     <ModalContainer>

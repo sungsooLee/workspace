@@ -16,7 +16,7 @@ import styles from './test-detail.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { cn } from '@learnway/shared';
 import style from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
-import { leaningResourceQueryOptions } from '@entities/leaning-resource';
+import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { LEARNING_TYPE } from '@learnway/config';
 import { ChannelListChoiceModal, ManagerChoiceModal } from '@features/shared';
 import { FormDisplay } from '@features/form/ui/form-display';
@@ -292,7 +292,7 @@ function RouteComponent() {
   };
 
   const onFileChange = async (params: { contentUuid: string; fileUuid: string }) => {
-    await leaningResourceQueryOptions.updateHTML5FileChange(params);
+    await learningResourceQueryOptions.updateHTML5FileChange(params);
   };
 
   const openFileUpload = async () => {
