@@ -28,7 +28,6 @@ const ModalContainerComponent: React.FC<ModalContainerProps> = ({
     const checkScroll = () => {
       if (contentRef.current) {
         setIsScrollable(contentRef.current.scrollHeight > 588);
-        console.log(contentRef.current.scrollHeight);
       }
     };
 

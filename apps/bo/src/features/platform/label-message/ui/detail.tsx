@@ -1,20 +1,9 @@
 import { useTranslation } from 'react-i18next';
-import {
-  Button,
-  ContentsRow,
-  DynamicFormField,
-  Input,
-  RadioGroupFormField,
-  Textarea,
-  TextareaFormField,
-  useModal,
-} from '@learnway/ui';
+import { Button, ContentsRow, Input, RadioGroupFormField, Textarea, useModal } from '@learnway/ui';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from '@tanstack/react-router';
 import { useQueryClient } from '@tanstack/react-query';
-
 import { t } from 'i18next';
-
 import {
   DuplicateCheckInputFormField,
   FormRow,
@@ -23,7 +12,6 @@ import {
 } from '@shared/ui/form';
 import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
-import { FormInfoArea } from '@shared/ui/form/components/form-info-area';
 import {
   queryOptions,
   useCreateLabelMessage,
@@ -51,6 +39,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
   const [isCreateMode, setIsCreateMode] = React.useState(true);
   const { confirm: openConfirm } = useModal();
   const [currentConfig, setCurrentConfig] = useState(() => createFormConfig('LABEL'));
+  const [resetKey, setResetKey] = useState(0);
 
   // const
   const { provider, onSubmit, onFormChange, getValues, fetchData, clearFormError, control } =
@@ -73,6 +62,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
   const { mutate: create } = useCreateLabelMessage({
     onSuccess: async (response: any) => {
       console.log('useCreateLabelMessage :: onSuccess', response);
+      setResetKey((prev) => prev + 1);
       onSuccessSave?.(response);
     },
   });
@@ -81,7 +71,8 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
   const { mutate: update } = useUpdateLabelMessage({
     onSuccess: async (response: any) => {
       console.log('useUpdateLabelMessage :: onSuccess', response);
-      onSuccessSave?.();
+      setResetKey((prev) => prev + 1);
+      onSuccessSave?.(response);
     },
   });
 
@@ -93,9 +84,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
     clearAllFormErrors();
     // 생성 모드 (labelMessageId 음수인 경우, 부모창에서 추가 버튼 눌렀을때 음수로 설정)
     const isCreate = labelMessageId <= 0;
-    // set state
     setIsCreateMode(isCreate);
-    // 생성 모드는 폼 내용 초기화
     if (isCreate) {
       const initData: { [key: string]: any } = {};
       currentConfig.builders.forEach((item) => {
@@ -177,11 +166,9 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
       labelMessageMultilingulKey: getValues()?.labelMessageMultilingulKey,
     };
     const result = (await queryClient.fetchQuery(queryOptions.all(params))) as any;
-    // const result = getValues()?.labelMessageMultilingulKey?.length === 1 ? { content: [] } : { content: [1] };
     const content = result?.content;
     const isValid =
       content?.filter((d: any) => d?.labelMessageId !== getValues()?.labelMessageId)?.length === 0;
-    console.log({ params, result, isValid });
     return isValid;
   };
 
@@ -218,6 +205,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
             name={'labelMessageMultilingulKey'}
             element={
               <DuplicateCheckInputFormField
+                idKey={resetKey}
                 query={queryOptions.all}
                 clearFormError={clearFormError}
                 duplicationCheckFn={checkDuplicate}
@@ -225,7 +213,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
                 onSuccess={(isValid: boolean, checkValue: string) => {
                   onFormChange({ isDuplicateCheck: isValid, lastDuplicateText: checkValue });
                 }}
-                placeholder={t('라벨 코드를 입력하세요.')}
+                placeholder={t('LABEL.common.placeholder2', { type: t('LABEL.cdId') })}
               />
             }
           />
@@ -237,9 +225,19 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
             name={'labelMessageName'}
             element={
               typeWatch === 'LABEL' ? (
-                <Input disabled={formDisabled} placeholder={t('라벨명을 입력하세요.')} />
+                <Input
+                  disabled={formDisabled}
+                  placeholder={t('LABEL.common.placeholder1', {
+                    type: t('LABEL.form.label.labelName'),
+                  })}
+                />
               ) : (
-                <Textarea disabled={formDisabled} placeholder={t('라벨명을 입력하세요.')} />
+                <Textarea
+                  disabled={formDisabled}
+                  placeholder={t('LABEL.common.placeholder1', {
+                    type: t('LABEL.form.label.messageName'),
+                  })}
+                />
               )
             }
             infoNode={
@@ -259,7 +257,14 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
           <FormRow
             provider={provider}
             name={'labelMessageDesc'}
-            element={<Textarea disabled={formDisabled} placeholder={t('설명을 입력하세요.')} />}
+            element={
+              <Textarea
+                disabled={formDisabled}
+                placeholder={t('LABEL.common.placeholder1', {
+                  type: t('LABEL.form.label.description'),
+                })}
+              />
+            }
           />
         </ContentsRow>
         {/*사용여부*/}
@@ -324,7 +329,7 @@ const createFormConfig = (messageType = 'LABEL'): DynamicFormConfig => ({
       name: 'isUsed',
       label: t('LABEL.form.label.useYn'),
       type: 'switch',
-      value: false,
+      value: true,
       format: 'boolean',
     },
     {

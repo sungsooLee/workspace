@@ -281,17 +281,17 @@ const GridBoxComponent = <T extends object>(
     };
     // params를 업데이트하기 전에 ref에 저장
     lastDispatchGridBoxStateRef.current = newParams;
-    //
+    props.onStateChange?.(newParams);
     onStateChange?.(newParams);
   };
 
-  console.log('grid-box ::', {
-    paginationProps,
-    config,
-    props,
-    data,
-    gridData,
-  });
+  // console.log('grid-box ::', {
+  //   paginationProps,
+  //   config,
+  //   props,
+  //   data,
+  //   gridData,
+  // });
 
   return (
     <div className={cn(styles.table_box, 'table_box')}>
@@ -348,6 +348,7 @@ const GridBoxComponent = <T extends object>(
             <Button
               variant="outline"
               size="sm"
+              icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
               label={t('LABEL.grid.header.add', '추가')}
               onClick={handleAddClick}
             />
@@ -358,6 +359,7 @@ const GridBoxComponent = <T extends object>(
               variant="outline"
               size="sm"
               label={t('LABEL.grid.header.remove', '삭제')}
+              icon={<IcoMinus width={16} height={16} stroke={'#131C30'} />}
               onClick={handleRemoveClick}
             />
           )}

@@ -154,7 +154,7 @@ export function useGridTable<T extends object>(
       ),
   });
 
-  console.log('---- use-grid-table : pagination', pagination);
+  // console.log('---- use-grid-table : pagination', pagination);
 
   const createSingleRadioColumn = (): ColumnDef<T> => ({
     id: 'select-radio',

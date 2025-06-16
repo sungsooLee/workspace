@@ -62,6 +62,7 @@ export function ChangePasswordPage({ route }: any) {
   };
 
   const handleLater = () => {
+    // TODO 1개월 후 변경 API 적용 필요
     router.navigate({ to: '/' });
   };
 
@@ -71,7 +72,7 @@ export function ChangePasswordPage({ route }: any) {
         <div className={cn(styles.auth_box, 'auth--box')}>
           <div className={styles.success_info}>
             <HighlightMessageBox className={styles.noti_box}>
-              {t('LABEL.common.lastChangeDate')} :
+              {`${t('LABEL.common.lastChangeDate')} : `}
               <strong>
                 {formatDate(
                   authUser?.passwordChangeDate ?? new Date(),
@@ -104,10 +105,10 @@ export function ChangePasswordPage({ route }: any) {
             <dd>{t('LABEL.message.cautionPasswordInput02')}</dd>
             <dd>{t('LABEL.message.cautionPasswordInput03')}</dd>
             <dd>{t('LABEL.message.cautionPasswordInput04')}</dd>
-            <dd>{t('LABEL.message.cautionPasswordInput05')}</dd>
-            <dd>
+            {/* <dd>{t('LABEL.message.cautionPasswordInput05')}</dd> */}
+            {/* <dd>
               {t('LABEL.message.cautionPasswordInput06')} <GoogleOtpGuideButton />
-            </dd>
+            </dd> */}
           </NoticeBox>
 
           <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>

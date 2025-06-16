@@ -1,5 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Button, GridBox, GridState, useGridBox, GridBoxState, Divider } from '@learnway/ui';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
+import { Button, GridBox, useGridBox, GridBoxState, Divider } from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { CODE_GROUP, useSearchBox } from '@learnway/hooks';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
@@ -7,15 +9,13 @@ import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-butt
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { SearchBox } from '@shared/ui/search-box';
 import { SplitPanel } from '@shared/ui';
-import { MessageDetail } from '../../../../features/platform/label-message/ui/detail';
 import { queryOptions } from '@entities/label-messages/service/label-messages.queries';
-import { t } from 'i18next';
-import { useTranslation } from 'react-i18next';
 import { LabelMessagesQueryParams } from '@types';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import { IcoPlus } from '@learnway/icons';
-import { DATE_TIME_FORMAT, formatISODateString } from '@learnway/shared';
-import { fstat } from 'fs';
+import { DATE_TIME_FORMAT, formatISODateString, getRowSelectionByList } from '@learnway/shared';
+import { Table } from '@tanstack/react-table';
+import { MessageDetail } from '../../../../features/platform/label-message/ui/detail';
 
 export const Route = createFileRoute('/_layout/platform/label-message/')({
   component: RouteComponent,
@@ -27,13 +27,20 @@ function RouteComponent() {
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const [selectedLabelMessageId, setSelectedLabelMessageId] = useState<number>(0);
+  const [lastSavedLabelMessageId, setLastSavedLabelMessageId] = useState<number | null>(null);
+  const [tableInstance, setTableInstance] = useState<Table<any>>();
+
+  const currentGridStateRef = useRef<GridBoxState>({ page: 0, size: 20, sort: [] });
 
   /**
    * 검색 실행 시 호출되는 핸들러
    * @param {any} data - 검색 조건 데이터
    */
   const handleOnSearch = useCallback((data: any) => {
-    gridFetch(data);
+    setLastSavedLabelMessageId(null);
+    setSelectedLabelMessageId(0);
+
+    gridFetch(data, { ...currentGridStateRef.current, page: 0 });
   }, []);
 
   /**
@@ -41,6 +48,9 @@ function RouteComponent() {
    * 음수 임시 ID를 설정하여 새 항목 추가 모드로 전환
    */
   const handleGridAddClick = () => {
+    if (tableInstance) {
+      tableInstance.setRowSelection({});
+    }
     setSelectedLabelMessageId(Date.now() * -1); // 음수 랜덤 값 설정
   };
 
@@ -57,7 +67,11 @@ function RouteComponent() {
    * 마지막 검색 조건을 기준으로 그리드를 재조회함
    */
   const handleSuccessSave = (response?: any) => {
-    gridFetch(searchProvider.getValues());
+    if (response?.labelMessageId) {
+      setLastSavedLabelMessageId(response.labelMessageId);
+    }
+
+    gridFetch(searchProvider.getValues(), { ...currentGridStateRef.current, page: 0 });
   };
 
   /**
@@ -67,19 +81,61 @@ function RouteComponent() {
     router.navigate({
       to: '/platform/system/multilingual',
       state: {
-        keyType: 'LABEL', // 다국어 분류 (다국어 관리 화면에서 검색조건의 '분류' 기본값 설정시 사용)
+        keyType: 'LABEL',
       },
     });
   };
 
+  // 페이지 변경이나 검색 시 플래그 리셋
   const handleStateChange = (newState: GridBoxState) => {
-    console.log(newState);
+    if (newState.page !== undefined && newState.page !== currentGridStateRef.current?.page) {
+      setSelectedLabelMessageId(0);
+      setLastSavedLabelMessageId(null);
+    }
+
+    currentGridStateRef.current = newState;
+    if (tableInstance) selectFirstRow(data, tableInstance);
   };
 
+  const selectFirstRow = useCallback((dataContent: any[], tableInstance: Table<any>) => {
+    if (dataContent.length > 0) {
+      const firstRow = dataContent[0];
+      setTimeout(() => {
+        const newSelection = getRowSelectionByList(tableInstance, [firstRow], 'labelMessageId');
+        tableInstance.setRowSelection(newSelection);
+        setSelectedLabelMessageId(firstRow.labelMessageId);
+      }, 100);
+    }
+  }, []);
+
   useEffect(() => {
-    if (data && data.content) {
-      const firstRow = data.content[0];
-      setSelectedLabelMessageId(firstRow?.labelMessageId);
+    if (data?.content && tableInstance) {
+      if (lastSavedLabelMessageId) {
+        const savedLabelMessage = data.content.find(
+          (item: any) => item.labelMessageId === lastSavedLabelMessageId,
+        );
+
+        if (savedLabelMessage) {
+          setTimeout(() => {
+            const newSelection = getRowSelectionByList(
+              tableInstance,
+              [savedLabelMessage],
+              'labelMessageId',
+            );
+            tableInstance.setRowSelection(newSelection);
+            setSelectedLabelMessageId(savedLabelMessage.labelMessageId);
+          }, 100);
+          setLastSavedLabelMessageId(null);
+          return;
+        } else {
+          setLastSavedLabelMessageId(null);
+          selectFirstRow(data.content, tableInstance);
+        }
+      }
+
+      if (data.content.length > 0) {
+        selectFirstRow(data.content, tableInstance);
+      }
     }
   }, [data]);
 
@@ -104,12 +160,8 @@ function RouteComponent() {
             <GridBox
               config={gConfig}
               title={t('목록')}
-              // height={400}
-              // showAdd
               showNumberingColumn
-              autoSelectFirstRow
               onRowSelect={handleGridRowSelect}
-              // onAddClick={handleGridAddClick}
               customButtonNode={
                 <Button
                   variant="text"
@@ -121,6 +173,7 @@ function RouteComponent() {
                 </Button>
               }
               onStateChange={handleStateChange}
+              onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
             />
             <MessageDetail
               labelMessageId={selectedLabelMessageId}
