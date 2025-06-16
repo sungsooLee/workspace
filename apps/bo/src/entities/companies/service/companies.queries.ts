@@ -10,9 +10,9 @@ export const queryKeys = {
 };
 
 export const queryOptions = {
-  all: () => ({
+  all: (params: any) => ({
     queryKey: queryKeys.all,
-    queryFn: async (): Promise<any> => CompaniesService.fetchAll(),
+    queryFn: async (): Promise<any> => CompaniesService.fetchAll(params),
   }),
   list: (params: any) => ({
     queryKey: queryKeys.list,

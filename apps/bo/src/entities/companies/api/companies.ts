@@ -5,8 +5,9 @@ import { PageableContent } from '@types';
 
 export default class CompaniesService {
   // 회사 목록 조회
-  static fetchAll() {
-    return httpService.get<any>(`${PMSApiPrefix()}/companies`);
+  static fetchAll(params: any) {
+    const reqParam = { ...params, size: 5000 };
+    return httpService.get<any>(`${PMSApiPrefix()}/companies`, reqParam);
   }
 
   static fetchList(params: any) {
