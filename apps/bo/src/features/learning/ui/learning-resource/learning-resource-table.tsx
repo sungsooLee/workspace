@@ -326,6 +326,8 @@ function LearningResourceTableComponent() {
     gridFetch(query);
   }
 
+  function handleShare() {}
+
   function openProgramGuide() {
     openModal({
       width: 'md',
@@ -383,6 +385,7 @@ function LearningResourceTableComponent() {
         onRowsSelect={setSelectedRows}
         customButtonNode={
           <>
+            <Button label={t('LABEL.grid.header.share')} onClick={handleShare} />
             <Button
               label={t('LABEL.grid.header.guideDownload')}
               icon={<IcoDownload width={16} height={16} stroke="#4C515E" />}
