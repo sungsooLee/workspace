@@ -27,8 +27,8 @@ export default class TenantService {
     return httpService.post<Tenant>(`${PMSApiPrefix()}/tenants`, reqbody);
   }
 
-  static existTenant(name: string) {
-    return httpService.get<boolean>(`${PMSApiPrefix()}/tenants/exists`, { name: name });
+  static existTenant(tenantName: string) {
+    return httpService.get<boolean>(`${PMSApiPrefix()}/tenants/exists`, { tenantName: tenantName });
   }
 
   //전체 목록 가지고 오기 임시 (size 값으로)
@@ -45,9 +45,10 @@ function genTenantCreate(payload: any) {
   return {
     tenantName: payload.tenantName,
     logoImageUrl: payload.logoImageUrl,
-    tenantMappingRoleList: payload.tenantMappingRoleList,
-    tenantBillingTag: payload.tenantBillingTag,
+    tenantUserList: payload.tenantUserList,
+    tenantTagList: payload.tenantTagList,
     companyTenantList: payload.companyTenantList,
+    isSecurityPledge: payload.isSecurityPledge,
     isUsed: payload.isUsed,
     tenantDesc: payload.tenantDesc,
     isPc: payload.isPc,
@@ -55,7 +56,6 @@ function genTenantCreate(payload: any) {
     isApp: payload.isApp,
     isCommonCategory: payload.isCommonCategory,
     isTenantCategory: payload.isTenantCategory,
-    tenantMappingLanguageTypeList: payload.tenantMappingLanguageTypeList,
-    tenantMappingUserList: payload.tenantMappingUserList,
+    langCountryCodeTypeList: payload.langCountryCodeTypeList,
   };
 }

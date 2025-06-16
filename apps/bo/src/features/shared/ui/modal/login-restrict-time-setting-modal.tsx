@@ -34,11 +34,13 @@ import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic
 import dayjs from 'dayjs';
 import { timeFormatYear } from '@learnway/shared';
 
-const LoginRestrictTimeSettingModalComponent: FC<any> = () => {
+const LoginRestrictTimeSettingModalComponent: FC<any> = ({ mode = 'add', data }) => {
   const { close, alert } = useModal();
   const { getCode } = useCodeStore();
 
-  const { provider, control, onSubmit } = useDynamicForm(formConfig);
+  console.log('### mode', mode);
+
+  const { provider, control, onSubmit, fetchData } = useDynamicForm(formConfig);
 
   const watchedRestrictionType = useWatch({
     control: control,
@@ -90,7 +92,8 @@ const LoginRestrictTimeSettingModalComponent: FC<any> = () => {
         }
       });
     }
-    close(node);
+    if (mode === 'view') close({ index: data.index, node: node });
+    else close(node);
   };
 
   const initOptionConfig = async () => {
@@ -100,6 +103,19 @@ const LoginRestrictTimeSettingModalComponent: FC<any> = () => {
 
   useEffect(() => {
     initOptionConfig();
+    if (mode === 'view' && data) {
+      const convertedData = {
+        ...data.original,
+        timeLimits: data.original.timeLimits.map((item: any) => ({
+          ...item,
+          loginRestrictionTime: {
+            from: new Date(item.loginRestrictionTime.from),
+            to: new Date(item.loginRestrictionTime.to),
+          },
+        })),
+      };
+      fetchData(convertedData);
+    }
   }, []);
 
   useEffect(() => {

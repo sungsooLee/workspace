@@ -2,22 +2,22 @@ import { useState, useEffect, useRef } from 'react';
 import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
 
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
-import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
+import { ContentsButtons, MainContents, PageContainer, LinkBox } from '@widgets/layout';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+
 import { Tabs, Button } from '@learnway/ui';
 
 /* tab contents */
-import { TenantDetailBase } from '@features/tenant/management/ui/tenant-detail-base';
-import { TenantDetailMenu } from '@features/tenant/management/ui/tenant-detail-menu';
-import { TenantDetailCategory } from '@features/tenant/management/ui/tenant-detail-category';
-import { TenantDetailAttribute } from '@features/tenant/management/ui/tenant-detail-attribute';
-import { TenantDetailWidget } from '@features/tenant/management/ui/tenant-detail-widget';
-import { TenantDetailBanner } from '@features/tenant/management/ui/tenant-detail-banner';
-import { TenantDetailLearningRole } from '@features/tenant/management/ui/tenant-detail-learning-role';
+import {
+  TenantDetailLearningRole,
+  TenantDetailBanner,
+  TenantDetailWidget,
+  TenantDetailAttribute,
+  TenantDetailCategory,
+  TenantDetailMenu,
+  TenantDetailBase,
+} from '@features/tenant';
 
 import { EnTenantDetailTabKey } from '@types';
 
@@ -25,14 +25,8 @@ export const Route = createFileRoute('/_layout/platform/tenant/management/detail
   component: RouteComponent,
 });
 
-const scrollHidden: string[] = [
-  EnTenantDetailTabKey.menu,
-  EnTenantDetailTabKey.category,
-  EnTenantDetailTabKey.learningRole,
-  EnTenantDetailTabKey.banner,
-];
-
 const buttonShowTabs: string[] = [EnTenantDetailTabKey.base, EnTenantDetailTabKey.attribute];
+const buttonShowMultiLang: string[] = [EnTenantDetailTabKey.menu, EnTenantDetailTabKey.category];
 /**
  * 화면 번호:
  * 테넌트 기본정보 (NLP_BO_TMS_1002),
@@ -87,8 +81,6 @@ function RouteComponent() {
           }
         }
         break;
-      default:
-        alert('없음');
     }
   };
 
@@ -102,8 +94,6 @@ function RouteComponent() {
           }
         }
         break;
-      default:
-        alert('없음');
     }
   };
 
@@ -125,8 +115,6 @@ function RouteComponent() {
           }
         }
         break;
-      default:
-        alert('없음');
     }
   };
 
@@ -176,14 +164,16 @@ function RouteComponent() {
     <PageContainer>
       <ContentsButtons>
         <LinkBox>
-          {EnTenantDetailTabKey.menu === selectedTabKey && (
-            <Button type="button" variant="point" size="sm" onClick={handleMultiLangButtonClick}>
-              {t('LABEL.button.multilingualManage')}
-            </Button>
+          {buttonShowMultiLang.includes(selectedTabKey) && (
+            <Button
+              type="button"
+              variant="point"
+              size="sm"
+              onClick={handleMultiLangButtonClick}
+              label={t('LABEL.button.multilingualManage')}
+            />
           )}
-          <Button onClick={handleListButtonClick} variant="point" size="sm">
-            목록
-          </Button>
+          <Button onClick={handleListButtonClick} variant="point" size="sm" label={t('목록')} />
         </LinkBox>
 
         <Button
@@ -191,17 +181,16 @@ function RouteComponent() {
           variant="point"
           size="sm"
           disabled={!buttonShowTabs.includes(selectedTabKey)}
-        >
-          초기화
-        </Button>
+          label={t('초기화')}
+        />
+
         <Button
           variant="point"
           size="sm"
           onClick={handleModifyButtonClick}
           disabled={!buttonShowTabs.includes(selectedTabKey)}
-        >
-          수정
-        </Button>
+          label={t('수정')}
+        />
       </ContentsButtons>
       <MainContents>
         <Tabs

@@ -101,7 +101,7 @@ const CompanyUserChoiceModalComponent = forwardRef((props, ref) => {
   const { getCode } = useCodeStore();
   const { control, provider: sProvider, getValues } = useSearchBox(searchConfig);
   const { config, gridFetch } = useGridBox(gridConfig, getValues);
-  const { data: departmentTreeData } = useGetCompanyDepartmentTree(companyCode);
+  const { data: departmentTreeData } = useGetCompanyDepartmentTree([companyCode]);
   const watchedCompany = useWatch({
     control: control,
     name: ['compayId'],

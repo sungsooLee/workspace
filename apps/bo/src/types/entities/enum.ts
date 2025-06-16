@@ -70,3 +70,7 @@ export enum EnTreeEventPosition {
   INSIDE = 'INSIDE',
   AFTER = 'AFTER',
 }
+
+export enum EnGlobalConst {
+  SYSTEM_COMMON_CODE = 'SYSTEM_COMMON_CODE',
+}

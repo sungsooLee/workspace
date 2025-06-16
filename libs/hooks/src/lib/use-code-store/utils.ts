@@ -18,8 +18,13 @@ const defaultFetchCodeGroup = async <K extends CODE_GROUP_TYPE>(
     return response[0][group].map((item: CodeApiType) => ({
       ...item,
       value: item.cdId,
-      label: `SYSTEM_COMMON_CODE.${item.multilingualKey || item.cdName}`,
-      multilingualKey: `SYSTEM_COMMON_CODE.${item.multilingualKey || item.cdName}`,
+      label:
+        item.cdGroupId === 'pms.multilingual.LangCountryCode'
+          ? item.multilingualKey
+          : `SYSTEM_COMMON_CODE.${item.multilingualKey || item.cdName}`,
+      multilingualKey: item.multilingualKey
+        ? `SYSTEM_COMMON_CODE.${item.multilingualKey}`
+        : item.cdName,
     }));
   }
   return [];

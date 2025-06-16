@@ -296,7 +296,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                   provider={provider}
                   name="roleType"
                   element={
-                    <DropdownFormField disabled={formMode === EnFormMode.NONE || !roleInfo} />
+                    <DropdownFormField disabled={formMode !== EnFormMode.ADD || !roleInfo} />
                   }
                 />
                 <FormRow

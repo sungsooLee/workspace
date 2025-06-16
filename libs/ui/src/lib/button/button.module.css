@@ -6,7 +6,7 @@
       @apply button_bo_3_r h-[24px] min-w-[50px] justify-center rounded-[4px] px-[6px];
     }
     &.xs {
-      @apply button_bo_3_b h-[28px] min-w-[50px] justify-center px-[6px];
+      @apply button_bo_3_r h-[28px] min-w-[50px] justify-center px-[6px];
     }
     &.sm {
       @apply button_bo_2_b h-[32px] min-w-[32px] justify-center px-[10px];
@@ -45,6 +45,9 @@
   }
   &:disabled {
     @apply bg-[var(--gray5)] text-[var(--gray2)];
+  }
+  &::before {
+    @apply hidden;
   }
 }
 .line {
@@ -171,6 +174,9 @@
   }
   &:disabled {
     @apply bg-[var(--gray3)] text-[var(--gray6)];
+  }
+  &::before {
+    @apply hidden;
   }
 }
 .point {

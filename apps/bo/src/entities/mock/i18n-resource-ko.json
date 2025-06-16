@@ -23,10 +23,10 @@
       "canCheckAccountAfterVerifying": "본인인증 후 아이디를 확인 할 수 있습니다.",
       "canUpdatePasswordAfterVerifying": "본인인증 후 비밀번호를 재설정 할 수 있습니다.",
       "canUpdateEmailAfterVerifying": "이메일 본인인증 후\n 메일 아이디를 변경 할 수 있습니다.",
-      "cautionPasswordInput01": "영문 대/소문자, 숫자, 특수문자 중 3가지 이상을 조합하여 8-20자리로 입력해 주세요.",
+      "cautionPasswordInput01": "영문자, 숫자, 특수문자 3가지 조합 8자리 이상 또는 2가지 조합 10자리 이상을 입력해 주세요. ",
       "cautionPasswordInput02": "직전에 사용한 비밀번호는 사용하실 수 없습니다.",
-      "cautionPasswordInput03": "아이디와 동일한 비밀번호는 사용하실 수 없습니다.",
-      "cautionPasswordInput04": "생년월일, 전화번호와 동일하거나 일부를 포함한 비밀번호는 사용하실 수 없습니다.",
+      "cautionPasswordInput03": "동일한 숫자/문자 또는 연속된 숫자/문자, 키보드 상 연속된 배열의 문자는 입력하실 수 없습니다.",
+      "cautionPasswordInput04": "비밀번호 생성 규칙에 맞는 비밀번호를 사용해 주세요.",
       "cautionPasswordInput05": "3글자 이상의 동일한 숫자/문자 또는 연속된 숫자/문자, 키보드 상 연속된 배열의 문자는 입력하실 수 없습니다.",
       "cautionPasswordInput06": "법인명의 휴대전화(법인폰)는 통신사에서 본인인증 서비스 신청 후 휴대폰 인증을 하실 수 있습니다.",
       "cautionSignupProgress": "아이디로 사용하는 이메일을 입력해야 진행현황을 확인할 수 있습니다.",
@@ -114,6 +114,7 @@
     "referenceVal2": "참고 2",
     "referenceVal3": "참고 3",
     "referenceVal4": "참고 4",
+    "multilingualKey": "다국어Key",
     "cdId": "코드",
     "add": "{{type}} 추가",
     "addSub": "하위 {{type}} 추가",
@@ -121,7 +122,10 @@
     "info": "{{type}} 정보",
     "select": "{{type}} 선택",
     "selected": "선택된",
+    "content": "{{type}} 내용",
     "noData": "{{type}} 데이터가 없습니다.",
+    "systemCommonCdGroup": "시스템 공통코드 그룹",
+    "systemCommonCd": "시스템 공통코드",
     "page": {
       "title": {
         "menuManage": "메뉴 관리",
@@ -161,6 +165,13 @@
           "e0015": "검색결과가 9천건이 초과하는 검색은 불가합니다.",
           "-999": "시스템 에러가 발생했습니다. 관리자에게 문의해 주세요."
         }
+      },
+      "modifierInfo": {
+        "title": "수정자",
+        "nameAndEmployeeNumber": "이름(사번)",
+        "email": "이메일 주소",
+        "phoneNumber": "연락처",
+        "modifiedDate": "수정일"
       }
     },
     "common": {
@@ -177,10 +188,12 @@
         "tenantCategory": "테넌트 카테고리"
       },
       "hrdCenter": "HRD 센터",
+      "monthLater": "1개월 후 변경",
       "login": "로그인",
       "logout": "로그아웃",
       "myInfo": "나의 정보",
-      "myRole": "나의 권한",
+      "myRole": "나의 역할",
+      "personalUserGroup": "개인 유저그룹",
       "itsm": "문의하기 ITSM",
       "customerCenter": "고객센터",
       "loginExtension": "로그인연장",
@@ -344,7 +357,7 @@
         "coordinator": "담당자",
         "detailInfo": "세부정보",
         "util": "기능",
-        "useEnabledType": "사용가능",
+        "isContentEnabled": "사용가능",
         "localization": "현지화",
         "updatedInfo": "수정정보"
       },
@@ -414,7 +427,7 @@
         "contentType": "유형",
         "contentName": "학습자원명",
         "isVendored": "외주여부",
-        "useEnabledType": "사용가능",
+        "isContentEnabled": "사용가능",
         "isCourseUsed": "교육활용",
         "coordinator": "담당자",
         "langCountryCode": "언어",
@@ -429,7 +442,13 @@
         "ok": "사용할 수 있는 {{code}} 입니다.",
         "check": "{{code}}의 중복 여부를 확인해 주세요.",
         "invalidUrl": "URL 형식에 맞게 입력해 주세요.",
-        "selectAtLeastCount": "{{count}}개 이상 선택하세요."
+        "selectAtLeastCount": "{{count}}개 이상 선택하세요.",
+        "password": {
+          "00": "비밀번호를 다시 확인해 주세요.",
+          "01": "영문자, 숫자, 특수문자 3가지 조합 8자리 이상 또는 2가지 조합 10자리 이상으로 입력해 주세요.",
+          "02": "동일 문자 또는 숫자를 5개 연속 사용할 수 없습니다.",
+          "03": "숫자는 연속 5개 이상 사용할 수 없습니다."
+        }
       },
       "checkbox": {
         "idSave": "아이디 저장"
@@ -574,6 +593,61 @@
       "isCourseUsed": {
         "title": "교육과정에서 사용 중입니다.",
         "content": "사용 중인 학습자원은 일괄설정 불가합니다."
+      },
+      "canNotCopy": {
+        "title": "1개의 학습자원을 선택하세요",
+        "content": "복사기능은 1개의 학습자원들서만 적용됩니다."
+      },
+      "NOTFOUND_ID": {
+        "title": "입력 정보를 확인해 주세요.",
+        "message": "아이디 또는 비밀번호를 다시 확인해 주세요."
+      },
+      "PASSWORD_FAIL": {
+        "title": "입력 정보를 확인해 주세요.",
+        "message": "아이디 또는 비밀번호를 다시 확인해 주세요\n5회 이상 비밀번호 오류 시 계정이 잠기며 비밀번호\n변경 후에 로그인 할 수 있습니다.",
+        "etc": "{{data}}/5"
+      },
+      "LOGIN_LOCK_PASSWORD_USE": {
+        "title": "로그인 계정이 잠겼습니다.  ",
+        "message": "5회 이상 비밀번호 오류로 인해 계정이 잠겼습니다.\n계정이 잠기어 비밀번호 찾기에서 비밀번호를 변경한 후에 다시 로그인을 해주세요.",
+        "etc": "{{data}}/5"
+      },
+      "LOGIN_LOCK_PASSWORD_NOT_USE": {
+        "title": "로그인 계정이 잠겼습니다.  ",
+        "message": "5회 이상 비밀번호 오류로 인해 60분 동안 계정이 잠기어 남은 시간 동안 로그인이 불가합니다.비밀번호 분실 시 그룹웨어에서 비밀번호를 변경해 주세요.",
+        "etc": "남은시간 {{data}}"
+      },
+      "APPROVAL_ADMIN_PENDING": {
+        "title": "관리자 승인 대기 중 입니다.  ",
+        "message": "관리자 권한 신청 승인 대기 중으로 담당자 승인 완료 후에 승인 결과를 메일로 발송해 드립니다.",
+        "etc": "관리자 권한 신청일\n{{data}}"
+      },
+      "APPROVAL_ADMIN_REJECT": {
+        "title": "관리자 승인이 반려되었습니다.",
+        "message": "관리자 권한 신청 승인이 반려되었습니다. 진행 현황\n확인에서 본인 확인 후 다시 신청해 주세요.",
+        "etc": "관리자 권한 신청일\n{{data}}"
+      },
+      "APPROVAL_CP_PENDING": {
+        "title": "관리자 승인 대기 중 입니다.  ",
+        "message": "CP사 회원가입 신청 승인 대기 중으로 담당자 승인 완료 후에 승인 결과를 메일로 발송해 드립니다.",
+        "etc": "CP사 회원 가입 신청일\n{{data}}"
+      },
+      "APPROVAL_CP_REJECT": {
+        "title": "관리자 승인이 반려되었습니다.",
+        "message": "CP사 회원가입 신청 승인이 반려되었습니다.\n진행 현황 확인에서  본인 확인 후 다시 신청해 주세요.",
+        "etc": "CP사 회원 가입 신청일\n{{date}}"
+      },
+      "PASSWORD_CHANGE_PASSWORD_USE": {
+        "title": "비밀번호를 변경해 주세요.  ",
+        "message": "비밀번호 변경 일자가 180일이 경과되었습니다.\n비밀번호 변경 후 다시 로그인해 주세요."
+      },
+      "PASSWORD_CHANGE_PASSWORD_NOT_USE": {
+        "title": "비밀번호를 변경해 주세요.  ",
+        "message": "비밀번호 변경 일자가 180일이 경과되었습니다.\n그룹웨어에서 비밀번호 변경 후  다시 로그인해 주세요."
+      },
+      "TENANT_PENDING": {
+        "title": "테넌트 개설 준비 중입니다.",
+        "message": "테넌트가 오픈 준비 중으로 로그인할 수 없습니다.\n테넌트 관리자에게 문의해 주세요."
       }
     }
   },
@@ -745,11 +819,6 @@
     "ASSIGNMENT": "과제",
     "SURVEY": "설문지",
     "ETC": "기타"
-  },
-  "cms.content.ContentUseEnabledType": {
-    "ENABLED": "사용가능",
-    "EXPIRED": "사용기간만료",
-    "DISABLED": "사용불가"
   },
   "pms.role.TenantScope": {
     "ALL": "전체",

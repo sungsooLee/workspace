@@ -54,5 +54,8 @@
         @apply flex min-h-[72px] items-center;
       }
     }
+    & + [class*='table_box'] {
+      @apply mt-[32px];
+    }
   }
 }

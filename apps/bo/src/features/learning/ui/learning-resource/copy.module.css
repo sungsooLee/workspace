@@ -1,0 +1,5 @@
+.copy {
+  & > h2 {
+    @apply border-b-0;
+  }
+}

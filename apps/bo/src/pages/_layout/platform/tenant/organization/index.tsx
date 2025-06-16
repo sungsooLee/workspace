@@ -24,12 +24,6 @@ function RouteComponent() {
     <PageContainer>
       <MainContents>
         <TenantCompanyOrganizationList rootPath="/platform" />
-        {/* <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
-        <div className={cn(boxStyles.start, boxStyles.inner)}>
-          <div className="grid_wrap">
-            <GridBox config={gConfig} columns={columns} />
-          </div>
-        </div> */}
       </MainContents>
     </PageContainer>
   );

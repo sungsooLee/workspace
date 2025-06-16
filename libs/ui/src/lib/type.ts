@@ -144,9 +144,9 @@ export interface PaginationResponse<T> {
   content: T[];
   number: number;
   numberOfElements: number;
-  first: boolean;
-  last: boolean;
-  empty: boolean;
+  first?: boolean;
+  last?: boolean;
+  empty?: boolean;
   sort?: SortResponse;
   pageable?: {
     offset: number;

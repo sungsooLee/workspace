@@ -938,6 +938,33 @@ export const guideData = [
     lastUpdateDate: '',
     remarks: '', // 비고
   },
+  {
+    screenName: 'LMS/과정개설 5단계 게시 설정',
+    pageId: 'lms/procedure-open-setting',
+    screenId: 'NLP_BO_LMS_0017',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
+    screenName: '완성차_교육예산/교육운영조직',
+    pageId: 'completion/education_operate_group',
+    screenId: 'NLP_BO_EDS_1848',
+    pageType: 'Page',
+    completionDate: '2025-06-16',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
+    screenName: '완성차_교육예산/세부산출근거',
+    pageId: 'completion/detail-calculation-reason',
+    screenId: 'NLP_BO_EDS_1848',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
   // {
   //   screenName: 'CMS/시험관리',
   //   pageId: 'learning/test-management',
