@@ -200,10 +200,10 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
 
   const handleDelete = () => {
     if (!selectedNode) return;
-    if (selectedNode.children) {
+    if (selectedNode.children && selectedNode.children.length > 0) {
       openAlert({
         title: t('LABEL.alert.delete.title'),
-        content: t('LABEL.alert.delete.message', { code: t('LABEL.common.code.category') }),
+        content: t('LABEL.alert.delete.message', { type: t('LABEL.common.code.category') }),
       });
       return false;
     }
@@ -213,7 +213,9 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
 
     openConfirm({
       title: t('LABEL.confirm.delete.title'),
-      content: <p>{t('LABEL.confirm.delete.messageNoChildren')}</p>,
+      content: (
+        <p>{t('LABEL.confirm.delete.message', { type: t('LABEL.common.code.category') })}</p>
+      ),
       onClose: (value: boolean) => {
         if (value) {
           deleteTenantCategory(payload);
