@@ -2,7 +2,6 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { queryKeys, queryOptions, mutateOptions } from './companies.queries';
 
-
 export function useFetchCompanies(param: any) {
   return useQuery(queryOptions.all(param));
 }
@@ -30,6 +29,7 @@ export function useCreateCompany(options: any) {
     isError: mutation.isError,
     data: mutation.data,
   };
+}
 
 export function useCheckExistsCompanyCode(options: any) {
   const { mutate, isSuccess, isError } = useMutation({
