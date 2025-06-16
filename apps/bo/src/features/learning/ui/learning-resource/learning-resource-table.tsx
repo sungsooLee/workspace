@@ -173,7 +173,6 @@ function LearningResourceTableComponent() {
           <Button
             className="link"
             onClick={(e) => {
-              e.preventDefault();
               e.stopPropagation();
               // 유형별 상세 화면으로 이동해야 함
               router.navigate({ to: '/learning_test/resource/view/video' });
@@ -225,7 +224,31 @@ function LearningResourceTableComponent() {
         size: 137,
         name: 'util',
         label: t('LABEL.grid.column.util'),
-        render: () => t('LABEL.form.label.preview'),
+        render: (_: any) => (
+          <span>
+            <Button
+              className="link"
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              {t('LABEL.grid.column.preview')}
+            </Button>
+            {
+              /* 시험지, 문제은행, 설문지 */
+              ['EXAM', 'EXAM_POOL', 'SURVEY'].includes(_.row.original.contentType) && (
+                <Button
+                  className="link"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
+                  {t('LABEL.grid.column.questionManage')}
+                </Button>
+              )
+            }
+          </span>
+        ),
       },
       {
         size: 95,
