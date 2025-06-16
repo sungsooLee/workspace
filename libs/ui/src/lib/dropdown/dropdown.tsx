@@ -34,6 +34,7 @@ export interface ReactSelectComponentProps {
   hideArrow?: boolean;
   size?: 'sm' | 'md' | 'lg';
   variant?: 'default' | 'chip' | 'text';
+  backgroundType?: 'blue' | 'white';
   className?: string;
   name?: string;
   onBlur?: () => void;

@@ -122,22 +122,21 @@ const GnbRoleSelectComponent = ({ className }: Props) => {
   };
 
   return (
-    <div className={cn(className)}>
-      <AutoCompleteDropdown
-        className={''}
-        variant="text"
-        size="md"
-        value={selectedOption?.label}
-        onChange={(value) => {
-          const option = tenantList?.find((opt) => opt.tenantId + '' === value);
-          handleChange(option);
-        }}
-        loadOptions={handleLoadOptions}
-        placeholder="테넌트명 "
-        noOptionsMessage="검색 결과가 없습니다"
-        loadingMessage="검색 중..."
-      />
-    </div>
+    <AutoCompleteDropdown
+      className={'min-w-[180px]'}
+      variant="text"
+      size="md"
+      backgroundType={'blue'}
+      value={selectedOption?.label}
+      onChange={(value) => {
+        const option = tenantList?.find((opt) => opt.tenantId + '' === value);
+        handleChange(option);
+      }}
+      loadOptions={handleLoadOptions}
+      placeholder="테넌트명 "
+      noOptionsMessage="검색 결과가 없습니다"
+      loadingMessage="검색 중..."
+    />
     //   <Popover
     //   popoverContent={<PopoverContent />}
     //   className={cn(styles.btn_language, className)}
