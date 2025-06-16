@@ -4,7 +4,7 @@ import { t } from 'i18next';
 import { isEmpty } from 'lodash';
 
 import { Button, ContentsRow, Input, useModal } from '@learnway/ui';
-import { useExpStore, useFetchAuthUser } from '@learnway/auth/entities';
+import { useExpStore, useFetchAuthUser, useLogoutUser } from '@learnway/auth/entities';
 import { cn, dateDiff } from '@learnway/shared';
 // import { DynamicFormField } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
@@ -49,53 +49,45 @@ function RouteComponent() {
   const { data: authData } = useFetchAuthUser();
 
   const { login } = useAuthSignin();
+  const { logout } = useLogoutUser();
   const { set: setLanguage, inProgress } = useSetLanguage();
   const { open: openModal, alert: openAlert } = useModal();
 
+  useEffect(() => {
+    reset();
+    onFormChange({
+      username: getSavedUserid() ?? '@ict-companion.com',
+      password: 'hae1234',
+      saveId: !isEmpty(getSavedUserid()),
+    });
+  }, []);
+
   const loginErrorAlert = (error: any) => {
     console.log('loginErrorAlert :: ', error);
-    openAlert({
-      title: t('LABEL.alert.PASSWORD_FAIL.title'),
-      content: (
-        <LoginErrorAlert
-          message={t('LABEL.alert.PASSWORD_FAIL.message')}
-          subMessage={t('LABEL.alert.PASSWORD_FAIL.etc', { data: error.loginFailCount })}
-        />
-      ),
-    });
 
     // TODO 에러코드 정의시 처리 필요
-    return;
     switch (error.code) {
       case AUTH_ERROR_CODE.NOTFOUND_ID: // 아이디 없음
+      case AUTH_ERROR_CODE.PASSWORD_FAIL: // 패스워드 실패
         openAlert({
           title: 'LABEL.alert.NOTFOUND_ID.title',
           content: 'LABEL.alert.NOTFOUND_ID.message',
         });
         break;
-      case AUTH_ERROR_CODE.PASSWORD_FAIL:
-        // 패스워드 실패
-        openAlert({
-          title: t('LABEL.alert.PASSWORD_FAIL.title'),
-          content: (
-            <LoginErrorAlert
-              message={t('LABEL.alert.PASSWORD_FAIL.message')}
-              subMessage={t('LABEL.alert.PASSWORD_FAIL.etc', { data: error.loginFailCount })}
-            />
-          ),
-        });
-        break;
+      // openAlert({
+      //   title: t('LABEL.alert.PASSWORD_FAIL.title'),
+      //   content: (
+      //     <LoginErrorAlert
+      //       message={t('LABEL.alert.PASSWORD_FAIL.message')}
+      //       subMessage={t('LABEL.alert.PASSWORD_FAIL.etc', { data: error.loginFailCount })}
+      //     />
+      //   ),
+      // });
+      // break;
       case AUTH_ERROR_CODE.LOGIN_LOCK_PASSWORD_USE: // 잠김 - 패스워드 사용자
         openAlert({
           title: t('LABEL.alert.LOGIN_LOCK_PASSWORD_USE.title'),
-          content: (
-            <LoginErrorAlert
-              message={t('LABEL.alert.LOGIN_LOCK_PASSWORD_USE.message')}
-              subMessage={t('LABEL.alert.LOGIN_LOCK_PASSWORD_USE.etc', {
-                data: error.loginFailCount,
-              })}
-            />
-          ),
+          content: t('LABEL.alert.LOGIN_LOCK_PASSWORD_USE.message'),
         });
         break;
       case AUTH_ERROR_CODE.LOGIN_LOCK_PASSWORD_NOT_USE: // 잠김 - 패스워드 미사용자
@@ -105,7 +97,7 @@ function RouteComponent() {
             <LoginErrorAlert
               message={t('LABEL.alert.LOGIN_LOCK_PASSWORD_USE.message')}
               subMessage={t('LABEL.alert.LOGIN_LOCK_PASSWORD_USE.etc', {
-                data: error.loginFailCount,
+                data: error?.lockDate,
               })}
             />
           ),
@@ -182,6 +174,9 @@ function RouteComponent() {
         openAlert({
           title: t('LABEL.alert.TENANT_PENDING.title'),
           content: t('LABEL.alert.TENANT_PENDING.message'),
+          onClose: () => {
+            logout();
+          },
         });
         break;
       default:
@@ -190,47 +185,79 @@ function RouteComponent() {
     }
   };
 
-  useEffect(() => {
-    reset();
-    onFormChange({
-      username: getSavedUserid() ?? '@ict-companion.com',
-      password: 'hae1234',
-      saveId: !isEmpty(getSavedUserid()),
-    });
-  }, []);
+  const handleExpireCheck = (data: any) => {
+    // if (dayjs(authData?.passwordExpireDate).diff(dayjs()) < 0) {
+    const diff = dateDiff(data!.passwordExpireDate, new Date(), 'd');
+    console.log('### login date check', diff);
+    if (diff !== undefined && 0 >= diff) {
+      if (data?.authType === 'PLATFORM') {
+        // 패스워드 사용자
+        openAlert({
+          title: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_USE.title'),
+          content: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_USE.message'),
+          onClose: () => {
+            router.navigate({ to: '/change-password' });
+          },
+        });
+        return false;
+      } else {
+        // 패스워드 미사용자
+        openAlert({
+          title: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_NOT_USE.title'),
+          content: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_NOT_USE.message'),
+          onClose: () => {
+            logout();
+          },
+        });
+
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const handleTenantCheck = async (data: any) => {
+    console.log(' ### handleTenantSelectCheck', data);
+
+    // 테넌트/역할 없을때 처리
+    if (!data?.tenents?.length || !data?.roles?.length) {
+      loginErrorAlert({ code: AUTH_ERROR_CODE.TENANT_PENDING });
+      return false;
+    }
+
+    // 테넌트/역할 선택 - 최초 로그인 사용자
+    if (data?.tenents?.length && data?.roles?.length) {
+      await openModal({
+        content: <TenantRoleModal />,
+        height: 'lg',
+        width: 'sm',
+        // hideCloseButton: true,
+        closeOnOutsideClick: false,
+        onClose: (data: any) => {
+          const text = `선택 \n테넌트: ${data?.tenant?.label}\n역할: ${data?.role?.label}`;
+          alert(text);
+          return true;
+        },
+      });
+    }
+    return false;
+  };
 
   const handleOnSubmit = async (values: any) => {
     await login(values, {
       onSuccess: async (data) => {
+        console.log('Login Page onSuccess');
         const locale = data?.locale;
         locale && (await setLanguage(locale));
 
         // 로그인 - 비밀번호 변경 3개월 체크
-        // if (dayjs(authData?.passwordExpireDate).diff(dayjs()) < 0) {
-        const diff = dateDiff(data!.passwordExpireDate, new Date(), 'd');
-        console.log('### login date check', diff);
-        if (diff !== undefined && 0 >= diff) {
-          if (data?.authType === 'PLATFORM') {
-            // 패스워드 사용자
-            openAlert({
-              title: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_USE.title'),
-              content: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_USE.message'),
-              onClose: () => {
-                router.navigate({ to: '/change-password' });
-              },
-            });
-            return;
-          } else {
-            // 패스워드 미사용자
-            openAlert({
-              title: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_NOT_USE.title'),
-              content: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_NOT_USE.message'),
-            });
-            return;
-          }
-        }
+        const checkExpire = handleExpireCheck(data);
+        // 테넌트 선택 체크
+        const checkTenant = await handleTenantCheck(data);
 
-        router.navigate({ to: search.redirect || '/' });
+        if (checkExpire && checkTenant) {
+          router.navigate({ to: search.redirect || '/' });
+        }
 
         // 임시 : 사용 가능한 API 목록 fetch
         // await usePermissionStore.getState().fetchPermissions();
@@ -273,27 +300,6 @@ function RouteComponent() {
 
         <div className={styles.login_guide}>
           <span>
-            <Button
-              type="button"
-              size="sm"
-              variant="link"
-              className={cn('text-red-800 underline')}
-              onClick={() => {
-                openModal({
-                  content: <TenantRoleModal />,
-                  height: 'lg',
-                  width: 'sm',
-                  hideCloseButton: true,
-                  closeOnOutsideClick: false,
-                  onClose: (data: any) => {
-                    const text = `선택 \n테넌트: ${data.tenant.label}\n역할: ${data.role.label}`;
-                    alert(text);
-                  },
-                });
-              }}
-            >
-              테넌트/역할TEST
-            </Button>
             <Link to="/signup-progress">{t('LABEL.common.membershipStatus')}</Link>
             <Link to="/signup">{t('LABEL.common.joinTheAdminMembership')}</Link>
           </span>
