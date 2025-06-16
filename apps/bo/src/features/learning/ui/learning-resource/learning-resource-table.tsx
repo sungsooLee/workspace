@@ -248,9 +248,9 @@ function LearningResourceTableComponent() {
         ),
       },
     ],
-    gridState: {
-      sort: ['modifiedDate,desc'],
-    },
+    // gridState: {
+    //   sort: ['modifiedDate,desc'], // 버그 발생함 state가 꼬여있음. sort를 지정하면 row 선택이 되지 않음.
+    // },
   };
 
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
