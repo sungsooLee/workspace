@@ -17,8 +17,7 @@ export const SESSION_TIMEOUT_EXTENSION_ALERT_DURATION = 1000 * 60 * 5; // 경과
 // |------------------------------+------------------+------------+---------|
 // NLP_BO_LOG_1000 / 로그인 / 로그인 > 로그인 > 관리자 로그인 얼럿
 export const AUTH_ERROR_CODE = {
-  NOTFOUND_ID: 'A002', // 아이디 없음  1
-  PASSWORD_FAIL: 'A002', // 패스워드 실패  2
+  FAIL_ID_PASSWORD: 'A002', // 아이디 없음, 패스워드 실패  1, 2
   LOGIN_LOCK_PASSWORD_USE: 'A005', // 잠김 - 패스워드 사용자  3
   LOGIN_LOCK_PASSWORD_NOT_USE: 'A006', // 잠김 - 패스워드 미사용자  4
   APPROVAL_ADMIN_PENDING: 'A007', // 어드민 승인 대기  7
@@ -27,5 +26,7 @@ export const AUTH_ERROR_CODE = {
   APPROVAL_CP_REJECT: '10', // CP 승인 반려  10
   PASSWORD_CHANGE_PASSWORD_USE: 'A008', // 패스워드 변경 안내 - 패스워드 사용자  11
   PASSWORD_CHANGE_PASSWORD_NOT_USE: 'A008', // 패스워드 변경 안내 - 패스워드 미사용자  12
-  TENANT_PENDING: '13', //테넌트 개설 대기중  13
+  TENANT_PENDING: '13', // 테넌트 개설 대기중  13
+  IN_WORKING_TIME: '14', // 근무시간에만 로그인 14
+  OUT_WORKING_TIME: '15', // 근무시간 외 로그인  15
 };

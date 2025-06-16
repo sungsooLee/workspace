@@ -67,23 +67,12 @@ function RouteComponent() {
 
     // TODO 에러코드 정의시 처리 필요
     switch (error.code) {
-      case AUTH_ERROR_CODE.NOTFOUND_ID: // 아이디 없음
-      case AUTH_ERROR_CODE.PASSWORD_FAIL: // 패스워드 실패
+      case AUTH_ERROR_CODE.FAIL_ID_PASSWORD: // 아이디 없음 // 패스워드 실패
         openAlert({
-          title: 'LABEL.alert.NOTFOUND_ID.title',
-          content: 'LABEL.alert.NOTFOUND_ID.message',
+          title: 'LABEL.alert.FAIL_ID_PASSWORD.title',
+          content: 'LABEL.alert.FAIL_ID_PASSWORD.message',
         });
         break;
-      // openAlert({
-      //   title: t('LABEL.alert.PASSWORD_FAIL.title'),
-      //   content: (
-      //     <LoginErrorAlert
-      //       message={t('LABEL.alert.PASSWORD_FAIL.message')}
-      //       subMessage={t('LABEL.alert.PASSWORD_FAIL.etc', { data: error.loginFailCount })}
-      //     />
-      //   ),
-      // });
-      // break;
       case AUTH_ERROR_CODE.LOGIN_LOCK_PASSWORD_USE: // 잠김 - 패스워드 사용자
         openAlert({
           title: t('LABEL.alert.LOGIN_LOCK_PASSWORD_USE.title'),
@@ -179,6 +168,24 @@ function RouteComponent() {
           },
         });
         break;
+      case AUTH_ERROR_CODE.IN_WORKING_TIME: //테넌트 개설 대기중
+        openAlert({
+          title: t('LABEL.alert.IN_WORKING_TIME.title'),
+          content: t('LABEL.alert.IN_WORKING_TIME.message'),
+          onClose: () => {
+            logout();
+          },
+        });
+        break;
+      case AUTH_ERROR_CODE.OUT_WORKING_TIME: //테넌트 개설 대기중
+        openAlert({
+          title: t('LABEL.alert.OUT_WORKING_TIME.title'),
+          content: t('LABEL.alert.OUT_WORKING_TIME.message'),
+          onClose: () => {
+            logout();
+          },
+        });
+        break;
       default:
         openAlert({ title: t('LABEL.message.invalidInputInformation'), content: error?.message });
         break;
@@ -209,7 +216,6 @@ function RouteComponent() {
             logout();
           },
         });
-
         return false;
       }
     }
