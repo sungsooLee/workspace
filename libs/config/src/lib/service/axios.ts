@@ -78,7 +78,7 @@ export function initAxios(extendConfig?: axiosConfig) {
           return await reissueProccess(error);
         }
 
-        if (errorResponse?.status === 412 && config.url === '/token-reissue') {
+        if (errorResponse?.status === 412 && config.url.includes('/token-reissue')) {
           tokenService.clear();
 
           if (typeof window !== 'undefined') {
