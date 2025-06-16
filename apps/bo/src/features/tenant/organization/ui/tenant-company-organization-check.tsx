@@ -37,9 +37,7 @@ import { isEqual } from 'lodash';
 import { transformDepartmentApiDataToTreeData } from '@features/platform/company/service/company-detail-tree';
 
 import { useGetCompanyDepartmentTree } from '@entities/department/service/department.hook';
-import { TenantCompanyOrganizationInfoList } from './tenant-company-organization-info-list';
-import { TenantCompanyOrganizationUserList } from './tenant-company-organization-info-user';
-
+import { useGetCompanyHmgDepartmentTree } from '@entities/department/service/hmg-department.hook';
 /**
  * 화면번호: NLP_BO_TMS_1111_02 테넌트-회사조직 확인
  * @returns
@@ -47,10 +45,11 @@ import { TenantCompanyOrganizationUserList } from './tenant-company-organization
 const TenantCompanyOrganizationCheckComponent = ({ companyCode }: { companyCode: string }) => {
   const router = useRouter();
 
-  const [companyDeparmentTree, setCompanyDepartmentTree] = useState<any>();
   const [deptTreeData, setDeptTreeData] = useState([]);
+  const [hmgDeptTreeData, setHmgDeptTreeData] = useState([]);
 
   const { data: departmentTreeData, refetch } = useGetCompanyDepartmentTree([companyCode]);
+  const { data: hmgDepartmentTreeData } = useGetCompanyHmgDepartmentTree([companyCode]);
 
   const handleTreeAction = (events: any) => {
     switch (events.type) {
@@ -66,10 +65,17 @@ const TenantCompanyOrganizationCheckComponent = ({ companyCode }: { companyCode:
     }
   }, [departmentTreeData]);
 
+  useEffect(() => {
+    if (hmgDepartmentTreeData) {
+      const transformedData = transformDepartmentApiDataToTreeData(hmgDepartmentTreeData);
+      setHmgDeptTreeData(transformedData);
+    }
+  }, [hmgDepartmentTreeData]);
+
   return (
     <SectionLayout contentsRatio={'half'}>
       <TreeBox
-        data={deptTreeData}
+        data={hmgDeptTreeData}
         treeId="1"
         type="SHUTTLE_LIST"
         showSearchKeyword

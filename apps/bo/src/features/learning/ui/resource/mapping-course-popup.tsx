@@ -1,5 +1,5 @@
 import { t } from 'i18next';
-import { leaningResourceQueryOptions } from '@entities/leaning-resource';
+import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { Link } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
@@ -88,7 +88,7 @@ const searchConfig: SearchBoxConfig = {
   ],
 };
 const gridConfig = {
-  query: leaningResourceQueryOptions.getLearningResources,
+  query: learningResourceQueryOptions.getLearningResources,
   columns: [
     {
       name: 'no1',
@@ -102,7 +102,7 @@ const gridConfig = {
     { name: 'channel', label: t('채널') },
     { name: 'type', label: t('유형') },
     {
-      name: 'leaningResourceName',
+      name: 'learningResourceName',
       label: t('과정명'),
       render: (info: any) => (
         <Link className={'text-blue-600'} to={'.'}>

@@ -314,6 +314,7 @@
         "selectAll": "전체 선택",
         "removeAll": "전체 삭제",
         "courseList": "과정 목록",
+        "share": "공유",
         "guideDownload": "프로그램/가이드 다운로드",
         "batchSetting": "일괄설정",
         "copy": "복사"
@@ -343,6 +344,7 @@
         "operator": "운영자",
         "openingDate": "개설년도",
         "preview": "미리보기",
+        "questionManage": "문항관리",
         "urlGeneration": "URL 생성",
         "division": "구분",
         "placeName": "장소 명",

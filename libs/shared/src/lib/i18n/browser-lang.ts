@@ -35,3 +35,11 @@ export const getBrowserNation = () => {
   });
   return nationCode ?? 'US';
 };
+
+export const getNationCodeFromBrowser = (telephoneCountryCodes: any[]) => {
+  const nationCode2 = getBrowserNation();
+  const countryCode = telephoneCountryCodes.find(
+    (code) => code.referenceVal1.nationCode2 === nationCode2,
+  );
+  return countryCode.value;
+};

@@ -1,5 +1,6 @@
 import { TreeNode } from '@learnway/ui';
 import { EnTreeEventPosition } from '@types';
+import { getMenuTile } from '@features/platform/menu/service/menu.service';
 
 export const getAllTreeKeys = (treeData: TreeNode[]) => {
   const recursive = (nodes: TreeNode[]): string[] => {
@@ -246,7 +247,7 @@ export const getFirstExpandKeys = (treeData: TreeNode[]) => {
  * @param apiData
  * @returns 변환된 TreeNode
  */
-export const transformMenuApiDataToTreeData = (apiData: any) => {
+export const transformMenuApiDataToTreeData = (apiData: any, siteScope: string) => {
   // 단일 노드인 경우 배열로 감싸기
   const dataArray = Array.isArray(apiData) ? apiData : [apiData];
 
@@ -262,7 +263,7 @@ export const transformMenuApiDataToTreeData = (apiData: any) => {
 
         // 필수 트리 속성
         key: node.tenantMappingMenuId?.toString(), // menuId를 key로 사용
-        title: node.menuName || node.menuCode, // title이 없으면 menuCode 사용
+        title: getMenuTile(node, siteScope), // title이 없으면 menuCode 사용
         parentKey: node.parentId?.toString(), // parentId를 parentKey로 변환
         children: node.children || [],
         original: node,

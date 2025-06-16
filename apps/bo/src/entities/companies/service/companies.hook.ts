@@ -6,6 +6,10 @@ export function useFetchCompanies(param: any) {
   return useQuery(queryOptions.all(param));
 }
 
+export function useFetchCompany(code: string) {
+  return useQuery({ ...queryOptions.detail(code) });
+}
+
 export function useCreateCompany(options: any) {
   const queryClient = useQueryClient();
 
@@ -23,6 +27,31 @@ export function useCreateCompany(options: any) {
 
   return {
     create: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
+export function useUpdateCompany(options: any) {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    ...mutateOptions.update(),
+    onSuccess: async (data: any, variables, context) => {
+      // 공통 메세지 처리 등...
+      queryClient.invalidateQueries({ queryKey: queryKeys.list });
+      if (options.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...options,
+  });
+
+  return {
+    update: (payload: any, callback?: any) => {
       mutation.mutate(payload, callback);
     },
     isSuccess: mutation.isSuccess,

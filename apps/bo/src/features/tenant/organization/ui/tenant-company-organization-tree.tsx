@@ -35,8 +35,9 @@ import { SearchBox } from '@shared/ui/search-box';
 import { isEqual } from 'lodash';
 
 import { transformDepartmentApiDataToTreeData } from '@features/platform/company/service/company-detail-tree';
-
+import { findOrganizationPathById } from '@features/tenant/organization/service/tenant-company-organization.service';
 import { useGetCompanyDepartmentTree } from '@entities/department/service/department.hook';
+import { useGetCompanyHmgDepartmentTree } from '@entities/department/service/hmg-department.hook';
 import { TenantCompanyOrganizationInfoList } from './tenant-company-organization-info-list';
 import { TenantCompanyOrganizationUserList } from './tenant-company-organization-info-user';
 
@@ -65,40 +66,70 @@ const TenantCompanyOrganizationTreeComponent = ({
 
   const [companyDeparmentTree, setCompanyDepartmentTree] = useState<any>();
   const [deptTreeData, setDeptTreeData] = useState([]);
+  const [selectedNode, setSelectedNode] = useState<any>();
   const [formMode, setFormMode] = useState(EnFormMode.NONE);
+  const [pathString, setPathString] = useState<string>();
 
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, control } =
     useDynamicForm(formConfig);
 
   const { data: departmentTreeData, refetch } = useGetCompanyDepartmentTree([companyCode]);
+  const { data: hmgDepartmentTreeData } = useGetCompanyHmgDepartmentTree([companyCode]);
 
-  const handleTreeAction = (events: any) => {
-    switch (events.type) {
-      case 'NODE_MOVE':
-        break;
+  const handleSelectedNodeChange = (node: any) => {
+    if (node.key !== 'root' && node.parentKey !== 'root') {
+      const location = findOrganizationPathById(deptTreeData, node.key);
+      console.log('location', location, node);
+      setPathString(location);
+      setSelectedNode(node);
     }
   };
+  const renderTabOrganizationContent = () => {
+    return (
+      <TenantCompanyOrganizationInfoList
+        companyCode={companyCode}
+        showType={showType}
+        deptId={selectedNode?.deptId}
+      />
+    );
+  };
 
-  const tabItems = [
-    {
-      title: t('조직'),
-      key: EnTabKeys.organization,
-      content: <TenantCompanyOrganizationInfoList companyCode={companyCode} deptId="" />,
-    },
-    {
-      title: t('유저'),
-      key: EnTabKeys.user,
-      content: <TenantCompanyOrganizationUserList companyCode={companyCode} deptId="" />,
-    },
-  ];
+  const renderTabUserContent = () => {
+    return (
+      <TenantCompanyOrganizationUserList
+        companyCode={companyCode}
+        deptId={selectedNode?.deptId}
+        showType={showType}
+      />
+    );
+  };
 
   useEffect(() => {
-    if (departmentTreeData) {
+    if (showType === EnOrganizationShowType.platform && departmentTreeData) {
       const transformedData = transformDepartmentApiDataToTreeData(departmentTreeData);
       setDeptTreeData(transformedData);
     }
   }, [departmentTreeData]);
 
+  useEffect(() => {
+    if (showType === EnOrganizationShowType.origin && departmentTreeData) {
+      const transformedData = transformDepartmentApiDataToTreeData(departmentTreeData);
+      setDeptTreeData(transformedData);
+    }
+  }, [hmgDepartmentTreeData]);
+
+  const tabItems = [
+    {
+      title: t('조직'),
+      key: EnTabKeys.organization,
+      content: renderTabOrganizationContent(),
+    },
+    {
+      title: t('유저'),
+      key: EnTabKeys.user,
+      content: renderTabUserContent(),
+    },
+  ];
   return (
     <SectionLayout contentsRatio={'thirty'}>
       <TreeBox
@@ -108,13 +139,15 @@ const TenantCompanyOrganizationTreeComponent = ({
         showSearchKeyword
         initLevel={2}
         title={showType === EnOrganizationShowType.origin ? t('조직-원본') : t('조직-플랫폼')}
+        selectedNode={selectedNode}
+        handleSelectedNodeChange={handleSelectedNodeChange}
       />
       {formMode !== EnFormMode.ADD && (
         <div className={cn(styles.start, styles.wrap)}>
           <div className={cn(layoutStyles.inner)}>
             <FormSubTitle
               label={t('조직 대상자')}
-              titleNode={'현대자동차>경영지원본부'}
+              titleNode={pathString}
               lineType={'light'}
             ></FormSubTitle>
             <div className={styles.contents_wrap}>

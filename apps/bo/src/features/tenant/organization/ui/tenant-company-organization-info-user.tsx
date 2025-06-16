@@ -12,9 +12,12 @@ import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 
 import { isEqual } from 'lodash';
 
+import { EnOrganizationShowType } from './tenant-company-organization-tree';
+
 import { transformDepartmentApiDataToTreeData } from '@features/platform/company/service/company-detail-tree';
 
-import { useGetCompanyDepartmentTree } from '@entities/department/service/department.hook';
+import { queryOptions as departmentQuery } from '@entities/department/service/department.queries';
+import { queryOptions as hmgDepartmentQuery } from '@entities/department/service/hmg-department.queries';
 
 /**
  * 화면번호: NLP_BO_TMS_1111_03 테넌트-회사조직 대상자 (조직)
@@ -23,11 +26,15 @@ import { useGetCompanyDepartmentTree } from '@entities/department/service/depart
 const TenantCompanyOrganizationInfoUserComponent = ({
   companyCode,
   deptId,
+  showType,
 }: {
   companyCode: string;
-  deptId: string;
+  deptId: number;
+  showType: string;
 }) => {
   const router = useRouter();
+
+  const [gridConfig, setGridConfig] = useState<any>(gridConfigOrg);
 
   const {
     provider: searchProvider,
@@ -35,18 +42,36 @@ const TenantCompanyOrganizationInfoUserComponent = ({
     onFormChange,
     onFormValid,
   } = useSearchBox(searchConfig);
-  const { config: gConfig, gridFetch } = useGridBox(gridConfig);
+
+  const getSearchParam = () => {
+    const retval = { ...getValues(), companyCode: companyCode, parentDeptId: deptId };
+
+    return retval;
+  };
+  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getSearchParam);
 
   const handleOnSearch = (data: any) => {
-    gridFetch(data);
+    if (deptId) {
+      gridFetch(getSearchParam());
+    }
   };
+
+  useEffect(() => {
+    switch (showType) {
+      case EnOrganizationShowType.origin:
+        setGridConfig(gridConfigOrg);
+        break;
+      case EnOrganizationShowType.platform:
+        setGridConfig(gridConfigPlat);
+    }
+  }, [showType]);
 
   return (
     <>
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
       <div className={cn(boxStyles.start, boxStyles.inner)}>
         <div className="grid_wrap">
-          <GridBox config={gConfig} columns={columns} />
+          <GridBox config={gConfig} columns={columns} showNumberingColumn />
         </div>
       </div>
     </>
@@ -59,20 +84,19 @@ const searchConfig: SearchBoxConfig = {
   builders: [
     [
       {
-        name: 'tenantName',
+        name: 'hrInfoManageType',
         type: 'text',
         label: t('유저등록유형'),
-        format: 'object',
         value: '',
       },
       {
-        name: 'companyName',
+        name: 'deptName',
         type: 'text',
         label: t('소속'),
         value: '',
       },
       {
-        name: 'tenantManagerName',
+        name: 'employeeNumber',
         type: 'text',
         label: t('사번'),
         value: '',
@@ -81,8 +105,20 @@ const searchConfig: SearchBoxConfig = {
   ],
 };
 
-const gridConfig = {
-  query: '',
+const gridConfigOrg = {
+  query: hmgDepartmentQuery.user,
+  columns: [],
+  data: [],
+
+  pagination: {
+    pageSize: 20,
+    pageIndex: 0,
+    totalRows: 0,
+  },
+};
+
+const gridConfigPlat = {
+  query: departmentQuery.user,
   columns: [],
   data: [],
 
@@ -95,55 +131,42 @@ const gridConfig = {
 
 const columnHelper = createColumnHelper<any>();
 const columns = [
-  columnHelper.accessor('tenantName', {
-    id: 'tenantName',
-    cell: (info) => info.row.index + 1,
-    header: t('NO.'),
-    size: 64,
-  }),
-  columnHelper.accessor('userType', {
-    id: 'userType',
+  columnHelper.accessor('hrInfoManageType', {
     cell: (info) => info.getValue(),
     header: t('유저등록유형'),
     size: 100,
   }),
-  columnHelper.accessor('tenantSite', {
-    id: 'tenantSite',
+  columnHelper.accessor('companyName', {
     cell: (info) => info.getValue(),
     header: t('회사'),
     size: 100,
   }),
 
-  columnHelper.accessor('companyTenantList', {
-    id: 'companyTenantList',
+  columnHelper.accessor('deptName', {
     cell: (info) => info.getValue(),
     header: t('소속'),
     size: 100,
   }),
-  columnHelper.accessor('tenantRoleList', {
-    id: 'tenantRoleList',
+  columnHelper.accessor('c1', {
     cell: (info) => info.getValue(),
     header: t('학습자 역할'),
     size: 120,
   }),
-  columnHelper.accessor('isUsed', {
-    id: 'isUsed',
+  columnHelper.accessor('employeeNumber', {
     cell: (info) => info.getValue(),
     header: t('사번'),
     size: 104,
   }),
-  columnHelper.accessor('createdBy', {
-    id: 'createdBy',
+  columnHelper.accessor('name', {
     header: t('이름'),
     size: 104,
   }),
-  columnHelper.accessor('createdDate', {
-    id: 'createdDate',
+  columnHelper.accessor('c2', {
     cell: (info) => info.getValue(),
     header: t('재직여부'),
     size: 60,
   }),
-  columnHelper.accessor('lastModifiedBy', {
+  columnHelper.accessor('userState', {
     header: '계정상태',
     size: 60,
   }),

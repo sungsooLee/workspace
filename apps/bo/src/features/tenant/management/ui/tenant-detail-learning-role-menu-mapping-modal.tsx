@@ -173,7 +173,7 @@ const TenantDetailLearningRoleMenuMappingModalComponent: FC<any> = ({
     console.log('roleId', roleId);
     if (roleMenuData) {
       console.log(roleMenuData);
-      const transformedData = transformMenuApiDataToTreeData(roleMenuData);
+      const transformedData = transformMenuApiDataToTreeData(roleMenuData, siteScope);
       setRoleMenuTree(transformedData);
       if (transformedData && transformedData.length > 0) {
         const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
@@ -186,7 +186,7 @@ const TenantDetailLearningRoleMenuMappingModalComponent: FC<any> = ({
 
   useEffect(() => {
     if (tenantMenuData) {
-      const transformedData = transformMenuApiDataToTreeData(tenantMenuData);
+      const transformedData = transformMenuApiDataToTreeData(tenantMenuData, siteScope);
       console.log(transformedData);
       setTenantMenuTree(transformedData);
       if (transformedData && transformedData.length > 0 && tenantMenuTreeExpandedKeys.length == 0) {

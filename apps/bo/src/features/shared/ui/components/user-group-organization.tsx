@@ -5,7 +5,11 @@ import { useFetchPrograms } from '../../../../entities/program/service/program-m
 import { cn } from '@learnway/shared';
 import { transformApiDataToApiTreeData } from '@features/platform/menu/service/menu.service';
 
-const UserGroupOrganizationComponent = ({ menuScopeCode, selectedApiKeys }: any) => {
+const UserGroupOrganizationComponent = ({
+  menuScopeCode,
+  selectedApiKeys,
+  handleSetOption,
+}: any) => {
   const [treeData, setTreeData] = useState([]);
   const { data } = useFetchPrograms(menuScopeCode);
 
@@ -30,6 +34,8 @@ const UserGroupOrganizationComponent = ({ menuScopeCode, selectedApiKeys }: any)
 
   const handleSelectedItemsChange = (items: { key: string; fullPath: string }[]) => {
     setSelectedItems(items);
+    // 테스트를 위해 임의로 삽입
+    handleSetOption(items);
   };
 
   return (

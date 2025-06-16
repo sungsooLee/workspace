@@ -73,4 +73,6 @@ export enum EnTreeEventPosition {
 
 export enum EnGlobalConst {
   SYSTEM_COMMON_CODE = 'SYSTEM_COMMON_CODE',
+  LEARNER_MENU = 'LEARNER_MENU',
+  HRD_CENTER_MENU = 'HRD_CENTER_MENU',
 }

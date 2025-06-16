@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { t } from 'i18next';
 import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { Tabs, Button } from '@learnway/ui';
@@ -18,6 +18,8 @@ function RouteComponent() {
   const routerState = useRouterState();
   const companyCode = routerState.location.state?.companyCode;
 
+  const formRef = useRef(1);
+
   const [selectedTabKey, setSelectedTabKey] = useState('company');
 
   useEffect(() => {
@@ -30,11 +32,21 @@ function RouteComponent() {
     }
   };
 
+  const handleSaveClick = () => {
+    console.log('formRef', formRef);
+    const detail: any = formRef.current;
+    detail.saveData();
+  };
+
+  const handleListClick = () => {
+    router.navigate({ to: '/platform/company/management' });
+  };
+
   const menuItems = [
     {
       title: '회사 정보',
       key: 'company',
-      content: <CompanyDetail mode="view" />,
+      content: <CompanyDetail ref={formRef} mode="view" />,
     },
     {
       title: 'HR 연동 정보',
@@ -46,20 +58,29 @@ function RouteComponent() {
   return (
     <PageContainer hideOutLine={true}>
       <ContentsButtons>
-        <Button
-          variant="point"
-          size="sm"
-          onClick={() => router.navigate({ to: '/platform/company/management' })}
-        >
-          {t('LABEL.button.list')}
-        </Button>
+        {selectedTabKey === 'company' ? (
+          <>
+            <LinkBox>
+              <Button variant="point" size="sm" onClick={handleListClick}>
+                {t('LABEL.button.list')}
+              </Button>
+            </LinkBox>
+            <Button variant="primary" size="sm" onClick={handleSaveClick}>
+              {t('LABEL.button.save')}
+            </Button>
+          </>
+        ) : (
+          <Button variant="point" size="sm" onClick={handleListClick}>
+            {t('LABEL.button.list')}
+          </Button>
+        )}
       </ContentsButtons>
       <MainContents>
         <Tabs
           items={menuItems}
           type="fill"
           className="page_tabs"
-          selectedTabKey={'hr'}
+          selectedTabKey={'company'}
           onTabChange={handleTabChange}
           showContentBorder={true}
         />

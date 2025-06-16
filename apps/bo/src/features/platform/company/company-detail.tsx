@@ -1,11 +1,9 @@
-import React, { FC, useRef, useState, useImperativeHandle, forwardRef } from 'react';
+import React, { FC, useRef, useState, useImperativeHandle, forwardRef, useEffect } from 'react';
 import { t } from 'i18next';
-import { useRouter } from '@tanstack/react-router';
+import { useRouter, useRouterState } from '@tanstack/react-router';
 import { useWatch } from 'react-hook-form';
 import {
   Button,
-  useGridBox,
-  useGridBoxConfig,
   ContentsRow,
   GridBox,
   useModal,
@@ -15,10 +13,11 @@ import {
   Switch,
   CheckboxGroupFormField,
 } from '@learnway/ui';
-import { FormRow, FormSubTitle, SwitchFormField } from '@shared/ui';
+import dayjs from 'dayjs';
+import { FormRow, FormSubTitle, ContentsHistoryInfoFormField } from '@shared/ui';
 import { FormDisplay } from '@features/form/ui/form-display';
 import { DynamicFormConfig, useDynamicForm, CODE_GROUP } from '@learnway/hooks';
-import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import { cn, DATE_TIME_FORMAT, getDateToString, getStringToDate } from '@learnway/shared';
 import {
   DuplicateCheckInputFormField,
   DuplicateState,
@@ -31,7 +30,7 @@ import { EnGlobalConst } from '@types';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
-import { useCheckExistsCompanyCode, useCreateCompany } from '@entities/companies';
+import { useCreateCompany, useUpdateCompany, useFetchCompany } from '@entities/companies';
 import CompaniesService from '@entities/companies/api/companies';
 
 const EMAIL_REGEX =
@@ -39,18 +38,71 @@ const EMAIL_REGEX =
 
 const CompanyDetailComponent = (props: any, ref: any) => {
   const router = useRouter();
-  const { open: openModal, close: closeModal, confirm: openConfirm } = useModal();
+  const routerState = useRouterState();
+  const companyCode = routerState.location.state?.companyCode;
 
-  const {
-    provider,
-    fetchData,
-    onSubmit,
-    onFormChange,
-    setFormError,
-    clearFormError,
-    getValues,
-    control,
-  } = useDynamicForm(formConfig);
+  const { data: detailData, refetch } = useFetchCompany(companyCode);
+
+  const { open: openModal, close: closeModal, confirm: openConfirm } = useModal();
+  const { provider, fetchData, onSubmit, onFormChange, getValues, control } =
+    useDynamicForm(formConfig);
+
+  const tempLoginRestrictTimeSetting = React.useRef<any>(null);
+  const [loginRestrictTimeSettings, setLoginRestrictTimeSettings] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (props.mode === 'view' && detailData) {
+      console.log('detailData', detailData);
+      const initialData = {
+        ...detailData,
+        companyCode: {
+          fieldValue: detailData.companyCode,
+          checkState: DuplicateState.okStart,
+        },
+      };
+      const convertedData = replaceNullValues(initialData, [
+        'companyMemberJoinTypeList',
+        'serviceTypeList',
+        'ssoTypeList',
+        'twoFactorAuthPlatformTypeList',
+      ]);
+      console.log('##### initialData', convertedData);
+      fetchData(convertedData);
+
+      const loginRestrictions = detailData.companyLoginRestrictionList.map((limit: any) => ({
+        ...limit,
+        restrictionDate: {
+          from: getStringToDate(limit.restrictionStartDate),
+          to: getStringToDate(limit.restrictionEndDate),
+        },
+        timeLimits: limit.companyLoginRestrictionDetailList.map((detail: any) => ({
+          ...detail,
+          id: detail.companyLoginRestrictionDetailId,
+          dayOfTheWeek: detail.dayOfWeekType,
+          loginRestrictionTime: {
+            from: timeStringToDate(detail.startTime),
+            to: timeStringToDate(detail.endTime),
+          },
+        })),
+      }));
+      console.log('#### loginRestrictions', loginRestrictions);
+      setLoginRestrictTimeSettings(loginRestrictions);
+    }
+  }, [detailData]);
+
+  const timeStringToDate = (timeString: string): Date => {
+    const [hours, minutes] = timeString.split(':').map(Number);
+    return dayjs().hour(hours).minute(minutes).second(0).millisecond(0).toDate();
+  };
+
+  const replaceNullValues = (obj: any, arrayKeys: string[], replacement = '') => {
+    return Object.fromEntries(
+      Object.entries(obj).map(([key, value]) => [
+        key,
+        value === null ? (arrayKeys.includes(key) ? [] : replacement) : value,
+      ]),
+    );
+  };
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -68,12 +120,14 @@ const CompanyDetailComponent = (props: any, ref: any) => {
     },
   }));
 
-  const tempLoginRestrictTimeSetting = React.useRef<any>(null);
-  const [loginRestrictTimeSettings, setLoginRestrictTimeSettings] = useState<any[]>([]);
-
   const { create } = useCreateCompany({
     onSuccess: () => {
       router.navigate({ to: '/platform/company/management' });
+    },
+  });
+  const { update } = useUpdateCompany({
+    onSuccess: () => {
+      refetch();
     },
   });
 
@@ -83,13 +137,11 @@ const CompanyDetailComponent = (props: any, ref: any) => {
   });
 
   const handleOnSubmit = async (data: any) => {
-    console.log('handleOnSubmit', data);
+    console.log('#### handleOnSubmit', data);
     console.log('loginRestrictTimeSettings', loginRestrictTimeSettings);
 
     const loginRestrictions = loginRestrictTimeSettings.map((item) => ({
-      loginRestrictionType: item.loginRestrictionType,
-      loginRestrictionName: item.loginRestrictionName,
-      loginRestrictionSettingType: item.loginRestrictionSettingType,
+      ...item,
       restrictionStartDate: getDateToString(
         new Date(item.restrictionDate.from),
         DATE_TIME_FORMAT.DATE,
@@ -107,61 +159,22 @@ const CompanyDetailComponent = (props: any, ref: any) => {
         ),
         isUsed: limit.isUsed,
       })),
-      companyLoginRestrictionUserGroupList: item.companyLoginRestrictionUserGroupList,
     }));
 
     const payload = {
+      ...data,
       companyCode: data.companyCode.fieldValue,
-      companyType: data.companyType,
-      name: data.name,
-      engName: data.engName,
-      brn: data.brn,
-      abbreviationName: data.abbreviationName,
-      rpsntrName: data.rpsntrName,
-      companyTelNoCountryCode: data.companyTelNoCountryCode,
-      companyTelNo: data.companyTelNo,
-      companyFaxNoCountryCode: data.companyFaxNoCountryCode,
-      companyFaxNo: data.companyFaxNo,
-      companyEmail: data.companyEmail,
-      //basicAddress: '서울특별시 강남구 테헤란로 123',
-      //detailAddress: '123층 456호',
-      //postNo: '08123',
-      //isUsed: true,
-      hrInfoManageType: data.hrInfoManageType,
-      companyMemberJoinTypeList: data.companyMemberJoinTypeList,
-      //isUseLinkageSystem: true,
-      //linkageType: 'INTERFACE',
-      linkageSystem: data.linkageSystem,
-      serviceTypeList: data.serviceTypeList,
-      //paymentCompanyCode: 'string',
-      isUseSso: data.isUseSso,
-      ssoTypeList: data.ssoTypeList,
-      passwordAuthType: data.passwordAuthType,
-      isUseTwoFactorAuth: data.isUseTwoFactorAuth,
-      twoFactorAuthPlatformTypeList: data.twoFactorAuthPlatformTypeList,
-      twoFactorAuthType: data.twoFactorAuthType,
-      isUseWatermark: data.isUseWatermark,
-      watermarkText: data.watermarkText,
-      watermarkPosition: data.watermarkPosition,
-      playerControlLimitType: data.playerControlLimitType,
-      focusModeType: data.focusModeType,
-      captureBlockType: data.captureBlockType,
-      managerDept: data.managerDept,
-      managerPosition: data.managerPosition,
-      managerName: data.managerName,
-      managerEmail: data.managerEmail,
-      managerOfficeTelCountryCode: data.managerOfficeTelCountryCode,
-      managerOfficeTel: data.managerOfficeTel,
-      managerPhoneCountryCode: data.managerPhoneCountryCode,
-      managerPhone: data.managerPhone,
       companyLoginRestrictionList: loginRestrictions,
     };
-
     console.log('mode', props.mode);
     console.log('payload', payload);
     if (props.mode === 'add') {
       if (await openConfirm('저장 하시겠습니까?')) {
         create(payload);
+      }
+    } else if (props.mode === 'view') {
+      if (await openConfirm('수정 하시겠습니까?')) {
+        update(payload);
       }
     }
   };
@@ -555,6 +568,14 @@ const CompanyDetailComponent = (props: any, ref: any) => {
       </ContentsRow>
       <ContentsRow>
         <FormRow provider={provider} name={'captureBlockType'} />
+        <FormRow provider={provider} name={'ipAccessControlTypeFo'} />
+      </ContentsRow>
+      <ContentsRow>
+        <FormRow
+          provider={provider}
+          name={'ipAccessControlTypeBo'}
+          className={dynamicFormStyles.w_half}
+        />
       </ContentsRow>
 
       {/* <FormSubTitle label={'결재라인 설정 정보'} lineType="dark" />
@@ -591,6 +612,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
         <FormRow provider={provider} name={'managerOfficeTel'} />
         <FormRow provider={provider} name={'managerPhone'} />
       </ContentsRow>
+      {props.mode === 'view' && <ContentsHistoryInfoFormField />}
     </form>
   );
 };
@@ -646,12 +668,6 @@ const formConfig: DynamicFormConfig = {
       value: { fieldValue: '', checkState: DuplicateState.needInput },
       format: 'object',
       placeholder: '',
-    },
-    {
-      name: 'isDuplicateCode',
-      type: 'hidden',
-      format: 'boolean',
-      value: false,
     },
     {
       name: 'name',
@@ -853,9 +869,7 @@ const formConfig: DynamicFormConfig = {
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.SettingBasisType'],
       },
-      guideText: t(
-        '사용 설정 시 학습창 내 플레이어의 재생바를 이동할 수 없으며, 배속 기능도 사용할 수 없습니다.',
-      ),
+      guideText: t('사용 설정 시 학습창이 전체화면으로 노출되고 마우스 외부 이동이 불가합니다.'),
     },
     {
       name: 'captureBlockType',
@@ -867,6 +881,27 @@ const formConfig: DynamicFormConfig = {
       },
       guideText: t('사용 설정 시 학습창 화면을 캡쳐할 수 없습니다.'),
     },
+    {
+      name: 'ipAccessControlTypeFo',
+      type: 'radio-group',
+      label: t('IP 접근 제한 설정(FO)'),
+      value: 'ACCESS_IN_SIDE',
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.company.IpAccessControlType'],
+      },
+      guideText: t('학습자 사이트의 IP 접근 제한을 설정합니다.'),
+    },
+    {
+      name: 'ipAccessControlTypeBo',
+      type: 'radio-group',
+      label: t('IP 접근 제한 설정(BO)'),
+      value: 'ACCESS_IN_SIDE',
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.company.IpAccessControlType'],
+      },
+      guideText: t('HRD 센터의 IP 접근 제한을 설정합니다.'),
+    },
+
     // {
     //   name: 'enrollApprovalMatrix',
     //   type: 'radio-group',
@@ -1033,19 +1068,20 @@ const formConfig: DynamicFormConfig = {
         },
       ],
     },
-    isDuplicateCode: {
-      required: {
-        fn: (values) => {
-          return values.isDuplicateCode === true;
-        },
-        message: t('LABEL.form.validation.check', { code: t('LABEL.form.input.companyCode') }),
-        path: 'companyCode',
-      },
-      conditions: [],
-    },
     name: true,
     engName: true,
-    brn: true,
+    brn: {
+      required: true,
+      conditions: [
+        {
+          fn: (values) => {
+            const regex = /\D/;
+            return regex.test(values.brn);
+          },
+          message: t('사업자 등록번호는 숫자만 입력해 주세요.'),
+        },
+      ],
+    },
     serviceTypeList: true,
     watermarkText: {
       required: {

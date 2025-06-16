@@ -56,6 +56,7 @@ export const CODE_GROUP = {
   'pms.company.CompanyType': 'pms.company.CompanyType',
   'pms.company.HrDataSource': 'pms.company.HrDataSource',
   'pms.company.HrInfoManageType': 'pms.company.HrInfoManageType',
+  'pms.company.IpAccessControlType': 'pms.company.IpAccessControlType',
   'pms.company.CompanyMemberJoinType': 'pms.company.CompanyMemberJoinType',
   'pms.company.LinkageSystem': 'pms.company.LinkageSystem',
   'pms.company.LinkageType': 'pms.company.LinkageType',

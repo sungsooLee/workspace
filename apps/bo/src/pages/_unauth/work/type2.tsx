@@ -258,7 +258,7 @@ const detailConfig: DynamicFormConfig = {
       },
     },
     {
-      name: 'eLeaning',
+      name: 'eLearning',
       type: 'text',
       label: '이러닝 카테고리',
       value: '',

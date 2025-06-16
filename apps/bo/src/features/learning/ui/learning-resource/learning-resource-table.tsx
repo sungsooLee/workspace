@@ -13,16 +13,24 @@ import {
 import { IcoClock01, IcoCopy, IcoDownload, IcoAlertCircle } from '@learnway/icons';
 import { t } from 'i18next';
 import { Table } from '@tanstack/react-table';
-import { useState } from 'react';
-import { leaningResourceQueryOptions } from '@entities/leaning-resource';
+import { useEffect, useState } from 'react';
+import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { ModifierInfoModal } from './learning-resource-modifier-info-modal';
 import { ProgramGuideModal } from './learning-resource-program-guide-modal';
 import { BatchSettingModal } from './learning-resource-batch-setting-modal';
-import { map, some, uniq } from 'lodash';
+import { first, get, map, some, uniq } from 'lodash';
 import { CopyModal } from './learning-resource-copy-modal';
+import { useRouter } from '@tanstack/react-router';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+import { useWatch } from 'react-hook-form';
+import { useQueryClient } from '@tanstack/react-query';
 
 function LearningResourceTableComponent() {
+  const router = useRouter();
   const { open: openModal, alert } = useModal();
+
+  const queryClient = useQueryClient();
+  const { data: user } = useFetchAuthUser();
 
   const searchConfig: any = {
     builders: [
@@ -34,9 +42,7 @@ function LearningResourceTableComponent() {
           value: '',
           format: 'number',
           presetOptionLabel: t('LABEL.form.label.select'),
-          optionsConfig: {
-            codeGroup: CODE_GROUP['manual.tenant.tenantId'],
-          },
+          options: [],
         },
         {
           name: 'channelUuid',
@@ -44,16 +50,7 @@ function LearningResourceTableComponent() {
           label: t('LABEL.form.label.channel'),
           value: '',
           presetOptionLabel: t('LABEL.form.label.select'),
-          optionsConfig: {
-            options: [
-              { value: 'channelA', label: t('채널A') },
-              { value: 'channelB', label: t('채널B') },
-              { value: 'channelC', label: t('채널C') },
-              { value: 'channelD', label: t('채널D') },
-              { value: 'channelE', label: t('채널E') },
-              { value: 'channelF', label: t('채널F') },
-            ],
-          },
+          options: [],
         },
         {
           name: 'contentTypes',
@@ -148,7 +145,7 @@ function LearningResourceTableComponent() {
 
   const gridConfig: useGridBoxConfig = {
     query: (data: any) => {
-      return leaningResourceQueryOptions.getContents({
+      return learningResourceQueryOptions.getContents({
         ...data,
         isMockUp: true,
       });
@@ -167,6 +164,18 @@ function LearningResourceTableComponent() {
         meta: {
           size: 'auto',
         },
+        render: (_: any) => (
+          <Button
+            className="link"
+            onClick={(e) => {
+              e.stopPropagation();
+              // 유형별 상세 화면으로 이동해야 함
+              router.navigate({ to: '/learning_test/resource/view/video' });
+            }}
+          >
+            {_.getValue()}
+          </Button>
+        ),
       },
       {
         size: 127,
@@ -210,7 +219,31 @@ function LearningResourceTableComponent() {
         size: 137,
         name: 'util',
         label: t('LABEL.grid.column.util'),
-        render: () => t('LABEL.form.label.preview'),
+        render: (_: any) => (
+          <span>
+            <Button
+              className="link"
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              {t('LABEL.grid.column.preview')}
+            </Button>
+            {
+              /* 시험지, 문제은행, 설문지 */
+              ['EXAM', 'EXAM_POOL', 'SURVEY'].includes(_.row.original.contentType) && (
+                <Button
+                  className="link"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
+                  {t('LABEL.grid.column.questionManage')}
+                </Button>
+              )
+            }
+          </span>
+        ),
       },
       {
         size: 95,
@@ -231,7 +264,6 @@ function LearningResourceTableComponent() {
         render: (_: any) => (
           <Button
             className="link"
-            label={t('LABEL.form.label.look')}
             onClick={(e) => {
               e.stopPropagation();
               openModal({
@@ -244,22 +276,59 @@ function LearningResourceTableComponent() {
                 ),
               });
             }}
-          />
+          >
+            {t('LABEL.form.label.look')}
+          </Button>
         ),
       },
     ],
-    gridState: {
-      sort: ['modifiedDate,desc'],
-    },
+    // gridState: {
+    //   sort: ['modifiedDate,desc'], // 버그 발생함 state가 꼬여있음. sort를 지정하면 row 선택이 되지 않음.
+    // },
   };
 
-  const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
-  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
+  const { provider: searchProvider, getValues, setOptions, setValue } = useSearchBox(searchConfig);
+  const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const [tableInstance, setTableInstance] = useState<Table<any>>(); // Grid 로부터 받을 table 인스턴스를 저장할 상태
 
+  //user정보로 tenant 설정
+  useEffect(() => {
+    if (!user) return;
+
+    if (user.activeTenant) setValue('tenantUuid', user.activeTenant.tenantId ?? '');
+    setOptions(
+      'tenantUuid',
+      user.tenants.map((tenant) => ({ value: tenant.tenantId, label: tenant.tenantName })),
+    );
+  }, [user]);
+
+  // tenant 정보로 channel 설정
+  const tenantUuid = useWatch({ control: searchProvider.control, name: 'tenantUuid' });
+  useEffect(() => {
+    console.log('🚀 ~ LearningResourceTableComponent ~ tenantUuid:', tenantUuid);
+    if (!tenantUuid && tenantUuid !== 0) return;
+
+    (async () => {
+      const { content } = await queryClient.fetchQuery(
+        learningResourceQueryOptions.getChannelsByTenantId(tenantUuid),
+      );
+      setValue('channelUuid', '');
+      if (content)
+        setOptions(
+          'channelUuid',
+          content.map((_: any) => ({ value: _.channelUuid, label: _.channelName })),
+        );
+    })();
+  }, [tenantUuid]);
+
   function handleSearch(query: Record<string, any>) {
     gridFetch(query);
+  }
+
+  function handleShare() {
+    console.log('🚀 ~ handleShare ~ getValues():', getValues());
+    console.log('🚀 ~ handleShare ~ data:', data);
   }
 
   function openProgramGuide() {
@@ -278,7 +347,7 @@ function LearningResourceTableComponent() {
       });
     }
 
-    const selectedIsCourseUsed = map(selectedRows, 'isCouseUsed');
+    const selectedIsCourseUsed = map(selectedRows, 'isCourseUsed');
     if (some(selectedIsCourseUsed)) {
       return alert({
         title: t('LABEL.alert.isCourseUsed.title'),
@@ -320,6 +389,18 @@ function LearningResourceTableComponent() {
         customButtonNode={
           <>
             <Button
+              variant="text"
+              label={t('LABEL.grid.header.share')}
+              disabled={
+                selectedRows.length !== 1 ||
+                !data?.content?.find(
+                  (_: any) => _.contentUuid === get(first(selectedRows), 'contentUuid'),
+                ) // child
+              }
+              onClick={handleShare}
+            />
+            <Button
+              variant="text"
               label={t('LABEL.grid.header.guideDownload')}
               icon={<IcoDownload width={16} height={16} stroke="#4C515E" />}
               onClick={openProgramGuide}
@@ -328,6 +409,7 @@ function LearningResourceTableComponent() {
               <Button
                 variant="text"
                 label={t('LABEL.grid.header.batchSetting')}
+                disabled={selectedRows.length === 0}
                 onClick={openBatchSetting}
               />
               <Tooltip
@@ -339,12 +421,20 @@ function LearningResourceTableComponent() {
               </Tooltip>
             </span>
             <Button
+              variant="text"
               label={t('LABEL.grid.header.excelDownload')}
               icon={<IcoDownload width={16} height={16} stroke="#4C515E" />}
             />
             <Button
+              variant="text"
               label={t('LABEL.grid.header.copy')}
               icon={<IcoCopy width={16} height={16} stroke="#4C515E" />}
+              disabled={
+                selectedRows.length !== 1 ||
+                !data?.content?.find(
+                  (_: any) => _.contentUuid === get(first(selectedRows), 'contentUuid'),
+                ) // child
+              }
               onClick={handleCopy}
             />
           </>

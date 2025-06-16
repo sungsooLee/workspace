@@ -172,7 +172,7 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
   useEffect(() => {
     if (baseMenuDB) {
       console.log(baseMenuDB);
-      const transformedData = transformApiDataToTreeData(baseMenuDB);
+      const transformedData = transformApiDataToTreeData(baseMenuDB, menuScopeCode);
       setBaseMenuTreeData(transformedData);
       if (transformedData && transformedData.length > 0) {
         const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
@@ -185,7 +185,7 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
 
   useEffect(() => {
     if (menuDB) {
-      const transformedData = transformMenuApiDataToTreeData(menuDB);
+      const transformedData = transformMenuApiDataToTreeData(menuDB, menuScopeCode);
       console.log(transformedData);
       setMenuTreeData(transformedData);
       if (transformedData && transformedData.length > 0 && menuTreeExpandedKeys.length == 0) {

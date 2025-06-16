@@ -11,7 +11,7 @@ import { DropdownOption } from '../type';
 import { ReactSelectComponentProps } from '../dropdown/dropdown';
 
 import { Button } from '../button/button';
-import './auto-complete.module.css';
+import styles from './auto-complete.module.css';
 
 export interface PrimitiveComponentProps extends Omit<ReactSelectComponentProps, 'options'> {
   loadOptions: (inputValue: string) => Promise<DropdownOption[]>;
@@ -54,7 +54,8 @@ const PrimitiveComponent = forwardRef<any, PrimitiveComponentProps>(
       hideLabel = false,
       size = 'sm',
       variant = 'default',
-      hideArrow = true,
+      backgroundType = 'white',
+      hideArrow = false,
       className = '',
       name,
       onBlur,
@@ -75,8 +76,12 @@ const PrimitiveComponent = forwardRef<any, PrimitiveComponentProps>(
     );
 
     const dropdownClass = cn(
-      `nlp--dropdown nlp--dropdown-${size} nlp--dropdown-${variant} ${className} w-full`,
-      hideArrow && 'hide_arrow',
+      `nlp--dropdown w-full`,
+      hideArrow && styles.hide_arrow,
+      size && styles[size],
+      variant && styles[variant],
+      backgroundType && styles[backgroundType],
+      className,
     );
 
     // 메시지 함수들을 메모이제이션
@@ -94,7 +99,7 @@ const PrimitiveComponent = forwardRef<any, PrimitiveComponentProps>(
     };
 
     return (
-      <div className={dropdownClass.trim()}>
+      <div className={cn(styles.start, styles.auto_complete, dropdownClass.trim())}>
         <AsyncSelect
           id={uuid}
           ref={ref}
