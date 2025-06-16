@@ -65,6 +65,7 @@ export const CODE_GROUP = {
   'pms.company.PlatformServiceType': 'pms.company.PlatformServiceType',
   'pms.company.SsoType': 'pms.company.SsoType',
   'pms.company.SettingBasisType': 'pms.company.SettingBasisType',
+  'pms.company.TwoFactorAuthPlatformType': 'pms.company.TwoFactorAuthPlatformType',
   'pms.company.TwoFactorAuthType': 'pms.company.TwoFactorAuthType',
   'pms.company.WatermarkPosition': 'pms.company.WatermarkPosition',
   'pms.education.EducationHistoryType': 'pms.education.EducationHistoryType',

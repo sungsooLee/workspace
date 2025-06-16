@@ -1,5 +1,7 @@
-import React, { FC, useEffect, useState, useCallback } from 'react';
+import React, { FC, useRef, useState, useImperativeHandle, forwardRef } from 'react';
 import { t } from 'i18next';
+import { useRouter } from '@tanstack/react-router';
+import { useWatch } from 'react-hook-form';
 import {
   Button,
   useGridBox,
@@ -11,106 +13,157 @@ import {
   Input,
   ContentsRowItem,
   Switch,
+  CheckboxGroupFormField,
 } from '@learnway/ui';
 import { FormRow, FormSubTitle, SwitchFormField } from '@shared/ui';
 import { FormDisplay } from '@features/form/ui/form-display';
 import { DynamicFormConfig, useDynamicForm, CODE_GROUP } from '@learnway/hooks';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { DuplicateCodeGuideText } from '@features/platform/category';
+import {
+  DuplicateCheckInputFormField,
+  DuplicateState,
+} from '@features/tenant/management/ui/duplicate-check-input-form-field';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { LoginRestrictTimeSettingModal } from '@features/shared/ui/modal/login-restrict-time-setting-modal';
-import { UserGroupTabsChoiceModal } from '@features/shared';
+import { UserGroupTabsChoiceModal, UserGroupChoiceModal } from '@features/shared';
+import { EnGlobalConst } from '@types';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
-import { useCheckExistsCompanyCode } from '@entities/companies';
+import { useCheckExistsCompanyCode, useCreateCompany } from '@entities/companies';
+import CompaniesService from '@entities/companies/api/companies';
 
-const CompanyDetailComponent: FC<any> = ({ mode }) => {
+const EMAIL_REGEX =
+  /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
+
+const CompanyDetailComponent = (props: any, ref: any) => {
+  const router = useRouter();
   const { open: openModal, close: closeModal, confirm: openConfirm } = useModal();
 
-  const { provider, fetchData, onSubmit, onFormChange, setFormError, clearFormError, getValues } =
-    useDynamicForm(formConfig);
+  const {
+    provider,
+    fetchData,
+    onSubmit,
+    onFormChange,
+    setFormError,
+    clearFormError,
+    getValues,
+    control,
+  } = useDynamicForm(formConfig);
 
-  const [isSuccessCodeCheck, setIsSuccessCodeCheck] = useState(false);
-  const [codeCheckState, setCodeCheckState] = useState<'none' | 'success' | 'duplicate' | 'error'>(
-    'none',
-  );
-  const initialFromValuesRef = React.useRef<any>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  useImperativeHandle(ref, () => ({
+    saveData() {
+      console.log('saveData');
+      const form = formRef.current;
+      if (form) {
+        console.log('formValue');
+        form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+      }
+    },
+    clearForm() {
+      onFormChange();
+    },
+  }));
 
   const tempLoginRestrictTimeSetting = React.useRef<any>(null);
   const [loginRestrictTimeSettings, setLoginRestrictTimeSettings] = useState<any[]>([]);
 
-  const { checkExistsCompanyCode: checkExists } = useCheckExistsCompanyCode({});
+  const { create } = useCreateCompany({
+    onSuccess: () => {
+      router.navigate({ to: '/platform/company/management' });
+    },
+  });
 
-  const isFieldChanged = (fieldName: string, currentValue: any) => {
-    if (!initialFromValuesRef.current) return true;
-    return initialFromValuesRef.current[fieldName] !== currentValue;
-  };
+  const watchedValues = useWatch({
+    control,
+    name: ['isUseSso', 'isUseTwoFactorAuth', 'isUseWatermark', 'twoFactorAuthPlatformTypeList'],
+  });
 
-  const handleCodeChange = (newCode: string) => {
-    const isChanged = isFieldChanged('companyCode', newCode);
-    console.log('handleCodeChange isChanged', isChanged);
-    console.log('handleCodeChange newCode', newCode);
+  const handleOnSubmit = async (data: any) => {
+    console.log('handleOnSubmit', data);
+    console.log('loginRestrictTimeSettings', loginRestrictTimeSettings);
 
-    if (onFormChange) {
-      // 코드가 변경됐을 경우에만 중복 체크 필요
-      onFormChange({
-        isDuplicateCode: !isChanged && mode === 'view',
-      });
-      setCodeCheckState(!isChanged && mode === 'view' ? 'success' : 'none');
-    }
-  };
+    const loginRestrictions = loginRestrictTimeSettings.map((item) => ({
+      loginRestrictionType: item.loginRestrictionType,
+      loginRestrictionName: item.loginRestrictionName,
+      loginRestrictionSettingType: item.loginRestrictionSettingType,
+      restrictionStartDate: getDateToString(
+        new Date(item.restrictionDate.from),
+        DATE_TIME_FORMAT.DATE,
+      ),
+      restrictionEndDate: getDateToString(new Date(item.restrictionDate.to), DATE_TIME_FORMAT.DATE),
+      companyLoginRestrictionDetailList: item.timeLimits.map((limit: any) => ({
+        dayOfWeekType: limit.dayOfTheWeek,
+        startTime: getDateToString(
+          new Date(limit.loginRestrictionTime.from),
+          DATE_TIME_FORMAT.HOUR_MIN,
+        ),
+        endTime: getDateToString(
+          new Date(limit.loginRestrictionTime.to),
+          DATE_TIME_FORMAT.HOUR_MIN,
+        ),
+        isUsed: limit.isUsed,
+      })),
+      companyLoginRestrictionUserGroupList: item.companyLoginRestrictionUserGroupList,
+    }));
 
-  const handleOnSubmit = (data: any) => {
-    // View 모드에서 저장 처리
-    if (mode === 'view') {
-      const isCodeChanged = isFieldChanged('companyCode', data.companyCode);
-      // 코드가 변경되지 않았으면 중복 체크 없이 진행
-      if (!isCodeChanged) {
-        // const body = {
-        //   name: data.name,
-        //   categoryCode: data.code,
-        //   categoryContent: data.categoryContent,
-        //   id: data.key,
-        //   isUsed: data.isUsed,
-        // };
-        // console.log('## check body', body);
-        // // 수정 API 호출
-        // onUpdate(body);
-        return;
+    const payload = {
+      companyCode: data.companyCode.fieldValue,
+      companyType: data.companyType,
+      name: data.name,
+      engName: data.engName,
+      brn: data.brn,
+      abbreviationName: data.abbreviationName,
+      rpsntrName: data.rpsntrName,
+      companyTelNoCountryCode: data.companyTelNoCountryCode,
+      companyTelNo: data.companyTelNo,
+      companyFaxNoCountryCode: data.companyFaxNoCountryCode,
+      companyFaxNo: data.companyFaxNo,
+      companyEmail: data.companyEmail,
+      //basicAddress: '서울특별시 강남구 테헤란로 123',
+      //detailAddress: '123층 456호',
+      //postNo: '08123',
+      //isUsed: true,
+      hrInfoManageType: data.hrInfoManageType,
+      companyMemberJoinTypeList: data.companyMemberJoinTypeList,
+      //isUseLinkageSystem: true,
+      //linkageType: 'INTERFACE',
+      linkageSystem: data.linkageSystem,
+      serviceTypeList: data.serviceTypeList,
+      //paymentCompanyCode: 'string',
+      isUseSso: data.isUseSso,
+      ssoTypeList: data.ssoTypeList,
+      passwordAuthType: data.passwordAuthType,
+      isUseTwoFactorAuth: data.isUseTwoFactorAuth,
+      twoFactorAuthPlatformTypeList: data.twoFactorAuthPlatformTypeList,
+      twoFactorAuthType: data.twoFactorAuthType,
+      isUseWatermark: data.isUseWatermark,
+      watermarkText: data.watermarkText,
+      watermarkPosition: data.watermarkPosition,
+      playerControlLimitType: data.playerControlLimitType,
+      focusModeType: data.focusModeType,
+      captureBlockType: data.captureBlockType,
+      managerDept: data.managerDept,
+      managerPosition: data.managerPosition,
+      managerName: data.managerName,
+      managerEmail: data.managerEmail,
+      managerOfficeTelCountryCode: data.managerOfficeTelCountryCode,
+      managerOfficeTel: data.managerOfficeTel,
+      managerPhoneCountryCode: data.managerPhoneCountryCode,
+      managerPhone: data.managerPhone,
+      companyLoginRestrictionList: loginRestrictions,
+    };
+
+    console.log('mode', props.mode);
+    console.log('payload', payload);
+    if (props.mode === 'add') {
+      if (await openConfirm('저장 하시겠습니까?')) {
+        create(payload);
       }
     }
-
-    // "{{code}}의 중복 여부를 확인해 주세요."
-    if (codeCheckState === 'none') {
-      setFormError?.(
-        'code',
-        t('LABEL.form.validation.check', { code: t('LABEL.form.input.companyCode') }),
-      );
-      return;
-    }
-
-    //  '이미 사용 중인 {{code}} 코드입니다.'
-    if (!isSuccessCodeCheck || codeCheckState === 'duplicate') {
-      setFormError?.(
-        'code',
-        t('LABEL.form.validation.duplicated', { code: t('LABEL.form.input.companyCode') }),
-      );
-      return;
-    }
-
-    // const body = {
-    //   name: data.name,
-    //   categoryCode: data.code,
-    //   categoryContent: data.categoryContent,
-    //   categoryType: 'COMMON',
-    //   sortSeq: data.sortSeq,
-    //   parentId: data.parentKey,
-    // };
-
-    // console.log('## check body', body);
-    // onSave?.(body);
   };
 
   const handleAddClick = () => {
@@ -155,11 +208,49 @@ const CompanyDetailComponent: FC<any> = ({ mode }) => {
       width: 'xl',
       content: <UserGroupTabsChoiceModal />,
       onClose(data: any) {
+        console.log('### selectedUserGroups', data);
+        const userGroups = data.map((group: any) => ({
+          userGroupId: group.key,
+          isUsed: true,
+        }));
         console.log('## tempLoginRestrictTimeSetting', tempLoginRestrictTimeSetting.current);
         const newSetting = JSON.parse(JSON.stringify(tempLoginRestrictTimeSetting.current));
         tempLoginRestrictTimeSetting.current = null;
-        setLoginRestrictTimeSettings([...loginRestrictTimeSettings, newSetting]);
+        setLoginRestrictTimeSettings([
+          ...loginRestrictTimeSettings,
+          { ...newSetting, companyLoginRestrictionUserGroupList: userGroups },
+        ]);
       },
+    });
+  };
+
+  const changeUserGroup = (info: any) => {
+    openModal({
+      width: 'xl',
+      content: <UserGroupTabsChoiceModal />,
+      onClose(data: any) {
+        console.log('### selectedUserGroups', data);
+        console.log('### info', info);
+        const userGroups = data.map((group: any) => ({
+          userGroupId: group.key,
+          isUsed: true,
+        }));
+        setLoginRestrictTimeSettings((prev) => {
+          const newSettings = [...prev];
+          newSettings[data.index] = {
+            ...newSettings[data.index],
+            companyLoginRestrictionUserGroupList: userGroups,
+          };
+          return newSettings;
+        });
+      },
+    });
+  };
+
+  const handleUserGroupMemberView = () => {
+    openModal({
+      width: 'xl',
+      content: <UserGroupChoiceModal />,
     });
   };
 
@@ -171,22 +262,56 @@ const CompanyDetailComponent: FC<any> = ({ mode }) => {
     });
   };
 
+  const handleLoginRestrictTimeDetailClick = (info: any) => {
+    openModal({
+      width: 'lg',
+      content: <LoginRestrictTimeSettingModal mode={'view'} data={info} />,
+      onClose(data: any) {
+        if (data) {
+          console.log('## data', data);
+          setLoginRestrictTimeSettings((prev) => {
+            const newSettings = [...prev];
+            newSettings[data.index] = { ...newSettings[data.index], ...data.node };
+            return newSettings;
+          });
+        }
+      },
+    });
+  };
+
+  const duplicateCheck = async (companyCode: string) => {
+    const payload = { companyCode: companyCode };
+    const result: boolean = await CompaniesService.existsCode(payload);
+
+    if (result) return DuplicateState.duplicated;
+    else return DuplicateState.ok;
+  };
+
   const columnHelper = createColumnHelper<any>();
 
   const columns = [
     columnHelper.accessor('loginRestrictionType', {
-      cell: (info) => t('pms.company.LoginRestrictionType.' + info.getValue()),
+      cell: (info) =>
+        t(
+          `${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.LoginRestrictionType.${info.getValue()}`,
+        ),
       header: t('로그인 제한 구분'),
       size: 160,
       enableGrouping: false,
     }),
     columnHelper.accessor('loginRestrictionName', {
-      cell: (info) => <Button className="link">{info.row.original.loginRestrictionName}</Button>,
+      cell: (info) => (
+        <Button
+          className="link"
+          stopPropagation
+          onClick={() => handleLoginRestrictTimeDetailClick(info.row)}
+        >
+          {info.row.original.loginRestrictionName}
+        </Button>
+      ),
       header: t('로그인 제한명'),
+      size: 160,
       enableGrouping: false,
-      meta: {
-        size: 'auto',
-      },
     }),
     columnHelper.accessor('restrictionStrDate', {
       cell: (info) =>
@@ -198,13 +323,24 @@ const CompanyDetailComponent: FC<any> = ({ mode }) => {
       enableGrouping: false,
     }),
     columnHelper.accessor('loginRestrictionSettingType', {
-      cell: (info) => t('pms.company.LoginRestrictionSettingType.' + info.getValue()),
+      cell: (info) =>
+        t(
+          `${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.LoginRestrictionSettingType.${info.getValue()}`,
+        ),
       header: t('제한 설정 방식'),
       size: 120,
       enableGrouping: false,
     }),
     columnHelper.accessor('userGroup', {
-      cell: (info) => <Button label={t('유저그룹 설정')} variant={'gray'} size={'md'} />,
+      cell: (info) => (
+        <Button
+          label={t('유저그룹 설정')}
+          variant={'gray'}
+          size={'md'}
+          stopPropagation
+          onClick={() => changeUserGroup(info.row)}
+        />
+      ),
       header: t('유저그룹 설정'),
       size: 120,
       enableGrouping: false,
@@ -215,7 +351,15 @@ const CompanyDetailComponent: FC<any> = ({ mode }) => {
     columnHelper.accessor('userGroupTarget', {
       cell: (info) => {
         console.log('## row', info.row);
-        return <Button label={t('대상자')} variant={'gray'} size={'md'} />;
+        return (
+          <Button
+            label={t('대상자')}
+            variant={'gray'}
+            size={'md'}
+            stopPropagation
+            onClick={() => handleUserGroupMemberView()}
+          />
+        );
       },
       header: t('유저그룹 대상자'),
       size: 120,
@@ -273,7 +417,7 @@ const CompanyDetailComponent: FC<any> = ({ mode }) => {
   ] as ColumnDef<any, unknown>[];
 
   return (
-    <form onSubmit={onSubmit(handleOnSubmit)}>
+    <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
       <FormSubTitle label={t('회사 인사 데이터 관리 정보')} lineType="dark" />
       <ContentsRow>
         <FormRow provider={provider} name={'companyType'} />
@@ -281,41 +425,29 @@ const CompanyDetailComponent: FC<any> = ({ mode }) => {
       <ContentsRow>
         <FormRow provider={provider} name={'hrInfoManageType'} />
       </ContentsRow>
-      <ContentsRow>
-        <FormRow provider={provider} name={'companyMemberJoinTypeList'} />
-      </ContentsRow>
+      <FormDisplay
+        provider={provider}
+        dependencies={[{ name: 'hrInfoManageType', value: 'MANUAL_MANAGE' }]}
+      >
+        <ContentsRow>
+          <FormRow provider={provider} name={'companyMemberJoinTypeList'} />
+        </ContentsRow>
+      </FormDisplay>
+      <FormDisplay
+        provider={provider}
+        dependencies={[{ name: 'hrInfoManageType', value: 'AUTO_MANAGE' }]}
+      >
+        <ContentsRow>
+          <FormRow provider={provider} name={'linkageSystem'} />
+        </ContentsRow>
+      </FormDisplay>
 
       <FormSubTitle label={t('회사 기본 정보')} lineType="dark" />
       <ContentsRow>
         <FormRow
           provider={provider}
           name={'companyCode'}
-          element={
-            <DuplicateCodeGuideText
-              clearFormError={clearFormError}
-              checkExists={(data: string) => {
-                checkExists(data, {
-                  onSuccess: (data: any) => {
-                    const isUnique = data;
-                    setIsSuccessCodeCheck(isUnique);
-                    setCodeCheckState(isUnique ? 'success' : 'duplicate');
-                    onFormChange?.({
-                      isDuplicateCode: isUnique,
-                    });
-                  },
-                  onError: () => {
-                    setIsSuccessCodeCheck(false);
-                    setCodeCheckState('error');
-                    onFormChange?.({ isDuplicateCode: false });
-                  },
-                });
-              }}
-              isSuccess={isSuccessCodeCheck}
-              codeCheckState={codeCheckState}
-              handleCodeChange={handleCodeChange}
-              setFormError={setFormError}
-            />
-          }
+          element={<DuplicateCheckInputFormField onDuplicationCheck={duplicateCheck} />}
         />
 
         <FormRow provider={provider} name={'name'} />
@@ -335,11 +467,6 @@ const CompanyDetailComponent: FC<any> = ({ mode }) => {
       <FormSubTitle label={t('플랫폼 계약 설정 정보')} lineType="dark" />
       <ContentsRow>
         <FormRow provider={provider} name={'serviceTypeList'} />
-        <FormRow
-          provider={provider}
-          name={'paymentCompanyCode'}
-          element={<Input disabled={true} />}
-        />
       </ContentsRow>
 
       <FormSubTitle label={t('로그인 및 인증 설정 정보')} lineType="dark" />
@@ -350,11 +477,11 @@ const CompanyDetailComponent: FC<any> = ({ mode }) => {
             name={'isUseSso'}
             className={dynamicFormStyles.form_item_horizontal}
           />
-          <FormDisplay provider={provider} dependencies={[{ name: 'isUseSso', value: true }]}>
-            <ContentsRow>
-              <FormRow provider={provider} name={'ssoTypeList'} />
-            </ContentsRow>
-          </FormDisplay>
+          <FormRow
+            provider={provider}
+            name={'ssoTypeList'}
+            element={<CheckboxGroupFormField disabled={!watchedValues[0]} />}
+          />
         </ContentsRowItem>
         <ContentsRowItem>
           <FormRow provider={provider} name={'passwordAuthType'} />
@@ -368,18 +495,18 @@ const CompanyDetailComponent: FC<any> = ({ mode }) => {
             name={'isUseTwoFactorAuth'}
             className={dynamicFormStyles.form_item_horizontal}
           ></FormRow>
-          <FormDisplay
+          <FormRow
             provider={provider}
-            dependencies={[{ name: 'isUseTwoFactorAuth', value: true }]}
-          >
-            <FormRow provider={provider} name={'twoFactorAuthPlatformTypeList'} />
-          </FormDisplay>
+            name={'twoFactorAuthPlatformTypeList'}
+            element={<CheckboxGroupFormField disabled={!watchedValues[1]} />}
+          />
         </ContentsRowItem>
         <ContentsRowItem>
           <FormRow
             className={dynamicFormStyles.w_half}
             provider={provider}
             name={'twoFactorAuthType'}
+            element={<RadioGroupFormField disabled={!watchedValues[1]} />}
           />
         </ContentsRowItem>
       </ContentsRow>
@@ -393,6 +520,7 @@ const CompanyDetailComponent: FC<any> = ({ mode }) => {
           showRemove
           showTotalCount={false}
           onAddClick={handleAddClick}
+          disabledSelectionToggle={true}
           title={t('로그인 제한 시간 설정')}
           guideText={t(
             '사용자가 학습자 사이트에 로그인 가능한 시간을 설정할 수 있으며, 회사의 유저그룹을 기준으로 로그인 제한 시간을 설정할 수 있습니다.',
@@ -407,16 +535,20 @@ const CompanyDetailComponent: FC<any> = ({ mode }) => {
           name={'isUseWatermark'}
           className={dynamicFormStyles.form_item_horizontal}
         />
-        <FormDisplay provider={provider} dependencies={[{ name: 'isUseWatermark', value: true }]}>
-          <FormRow provider={provider} name={'watermarkText'} />
-        </FormDisplay>
-      </ContentsRow>
 
-      <FormDisplay provider={provider} dependencies={[{ name: 'isUseWatermark', value: true }]}>
-        <ContentsRow>
-          <FormRow provider={provider} name={'watermarkPosition'} />
-        </ContentsRow>
-      </FormDisplay>
+        <FormRow
+          provider={provider}
+          name={'watermarkText'}
+          element={<Input disabled={!watchedValues[2]} />}
+        />
+      </ContentsRow>
+      <ContentsRow>
+        <FormRow
+          provider={provider}
+          name={'watermarkPosition'}
+          element={<RadioGroupFormField disabled={!watchedValues[2]} />}
+        />
+      </ContentsRow>
       <ContentsRow>
         <FormRow provider={provider} name={'playerControlLimitType'} />
         <FormRow provider={provider} name={'focusModeType'} />
@@ -442,32 +574,7 @@ const CompanyDetailComponent: FC<any> = ({ mode }) => {
       <ContentsRow>
         <FormRow provider={provider} name={'languageApprovalMatrix'} />
       </ContentsRow>
-
-      <FormSubTitle label={'교육 및 과정 연관 설정 정보'} />
-      <ContentsRow type={'horizontal'}>
-        <FormRow provider={provider} name={'수강 신청 결재라인 사용'} />
-        <FormRow provider={provider} name={'학습시간 제한'} />
-      </ContentsRow>
-      <ContentsRow type={'horizontal'}>
-        <FormRow provider={provider} name={'1일 진도 제한'} />
-        <FormRow provider={provider} name={'진도 초기화'} />
-      </ContentsRow>
-      <ContentsRow type={'horizontal'}>
-        <FormRow provider={provider} name={'교재 사용'} />
-        <FormRow provider={provider} name={'교재 배송지 사용'} />
-      </ContentsRow>
-      <ContentsRow type={'horizontal'}>
-        <FormRow provider={provider} name={'1인당 교육비 사용'} />
-        <FormRow provider={provider} name={'고용보험 환급 사용'} />
-      </ContentsRow>
-      <ContentsRow type={'horizontal'}>
-        <FormRow provider={provider} name={'수료증 제공 여부'} />
-        <FormRow provider={provider} name={'학습 포인트(마일리지) 사용'} />
-      </ContentsRow>
-      <ContentsRow type={'horizontal'}>
-        <FormRow provider={provider} name={'사전 레벨 테스트 사용'} />
-        <FormRow provider={provider} name={'과정 플래그 사용'} />
-      </ContentsRow> */}
+*/}
       <FormSubTitle label={t('회사 사용 설정')} lineType="dark" />
       <ContentsRow type={'horizontal'}>
         <FormRow className={dynamicFormStyles.w_half} provider={provider} name={'isUsed'} />
@@ -488,7 +595,7 @@ const CompanyDetailComponent: FC<any> = ({ mode }) => {
   );
 };
 
-export const CompanyDetail = CompanyDetailComponent;
+export const CompanyDetail = forwardRef(CompanyDetailComponent);
 
 const formConfig: DynamicFormConfig = {
   builders: [
@@ -496,7 +603,7 @@ const formConfig: DynamicFormConfig = {
       name: 'companyType',
       type: 'radio-group',
       label: t('그룹 선택'),
-      value: '',
+      value: 'GLOBAL',
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.CompanyType'],
       },
@@ -506,7 +613,7 @@ const formConfig: DynamicFormConfig = {
       name: 'hrInfoManageType',
       type: 'radio-group',
       label: t('인사 데이터 관리 방식'),
-      value: '',
+      value: 'MANUAL_MANAGE',
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.HrInfoManageType'],
       },
@@ -516,9 +623,19 @@ const formConfig: DynamicFormConfig = {
       name: 'companyMemberJoinTypeList',
       type: 'checkbox-group',
       label: t('회원 가입 유형'),
-      value: [],
+      value: ['FO_JOIN_DEALER'],
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.CompanyMemberJoinType'],
+      },
+      guideText: t('수동 관리는 다수 선택할 수 있으며, 자동 관리는 하나만 선택할 수 있습니다.'),
+    },
+    {
+      name: 'linkageSystem',
+      type: 'radio-group',
+      label: t('회원 가입 유형'),
+      value: 'GIM',
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.company.LinkageSystem'],
       },
       guideText: t('수동 관리는 다수 선택할 수 있으며, 자동 관리는 하나만 선택할 수 있습니다.'),
     },
@@ -526,7 +643,8 @@ const formConfig: DynamicFormConfig = {
       name: 'companyCode',
       type: 'custom',
       label: t('회사 코드'),
-      value: '',
+      value: { fieldValue: '', checkState: DuplicateState.needInput },
+      format: 'object',
       placeholder: '',
     },
     {
@@ -590,6 +708,13 @@ const formConfig: DynamicFormConfig = {
       placeholder: t('대표 전화번호 입력 (02-234-5678)'),
     },
     {
+      label: '',
+      name: 'companyTelNoCountryCode',
+      type: 'hidden',
+      format: 'string',
+      value: 'KOR_82',
+    },
+    {
       label: t('대표 팩스번호'),
       name: 'companyFaxNo',
       type: 'phone-number',
@@ -601,28 +726,27 @@ const formConfig: DynamicFormConfig = {
       },
       placeholder: t('대표 팩스번호 입력 (070-2345-6789)'),
     },
-
+    {
+      label: '',
+      name: 'companyFaxNoCountryCode',
+      type: 'hidden',
+      format: 'string',
+      value: 'KOR_82',
+    },
     {
       name: 'serviceTypeList',
       type: 'checkbox-group',
       label: t('서비스 유형 선택'),
-      value: [],
+      value: ['BASIC'],
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.PlatformServiceType'],
       },
     },
     {
-      name: 'paymentCompanyCode',
-      type: 'text',
-      label: t('비용 결재 용 법인 코드'),
-      value: '',
-      placeholder: '',
-    },
-    {
       name: 'isUseSso',
       type: 'switch',
       label: t('SSO 로그인 사용 및 SSO 로그인 유형'),
-      value: false,
+      value: true,
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
@@ -631,7 +755,7 @@ const formConfig: DynamicFormConfig = {
       name: 'ssoTypeList',
       type: 'checkbox-group',
       label: '',
-      value: [],
+      value: ['AES_Link'],
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.SsoType'],
       },
@@ -641,7 +765,7 @@ const formConfig: DynamicFormConfig = {
       name: 'passwordAuthType',
       type: 'radio-group',
       label: t('비밀번호 인증 유형'),
-      value: '',
+      value: 'PLATFORM',
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.PasswordAuthType'],
       },
@@ -662,7 +786,7 @@ const formConfig: DynamicFormConfig = {
       name: 'twoFactorAuthType',
       type: 'radio-group',
       label: t('2차 인증 유형'),
-      value: '',
+      value: 'GOOGLE_OTP',
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.TwoFactorAuthType'],
       },
@@ -672,9 +796,9 @@ const formConfig: DynamicFormConfig = {
       name: 'twoFactorAuthPlatformTypeList',
       type: 'checkbox-group',
       label: '',
-      value: [],
+      value: ['FO_PLATFORM', 'BO_PLATFORM'],
       optionsConfig: {
-        codeGroup: CODE_GROUP['pms.company.PlatformServiceType'],
+        codeGroup: CODE_GROUP['pms.company.TwoFactorAuthPlatformType'],
       },
       guideText: t('2차 로그인 인증 여부를 설정할 수 있습니다.'),
     },
@@ -703,7 +827,7 @@ const formConfig: DynamicFormConfig = {
       name: 'watermarkPosition',
       type: 'radio-group',
       label: t('워터마크 노출 위치'),
-      value: '',
+      value: 'TOP_LEFT',
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.WatermarkPosition'],
       },
@@ -713,7 +837,7 @@ const formConfig: DynamicFormConfig = {
       name: 'playerControlLimitType',
       type: 'radio-group',
       label: t('플레이어 재생바 제어 제한'),
-      value: '',
+      value: 'BASIS_COMPANY',
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.SettingBasisType'],
       },
@@ -725,7 +849,7 @@ const formConfig: DynamicFormConfig = {
       name: 'focusModeType',
       type: 'radio-group',
       label: t('이러닝 집중 모드'),
-      value: '',
+      value: 'BASIS_COMPANY',
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.SettingBasisType'],
       },
@@ -737,7 +861,7 @@ const formConfig: DynamicFormConfig = {
       name: 'captureBlockType',
       type: 'radio-group',
       label: t('학습창 캡쳐 방지'),
-      value: '',
+      value: 'BASIS_COMPANY',
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.SettingBasisType'],
       },
@@ -794,128 +918,6 @@ const formConfig: DynamicFormConfig = {
     //   guideText: '어학 이력 결재라인을 설정할 수 있습니다.',
     //   tooltip: 'EMPTY',
     // },
-
-    // {
-    //   name: '수강 신청 결재라인 사용',
-    //   type: 'switch',
-    //   label: t('수강 신청 결재라인 사용'),
-    //   value: true,
-    //   guideText: '수강 신청할 때 승인하는 결제 라인을 설정합니다.',
-    //   switchConfig: {
-    //     label: (value: boolean) => (value ? '사용' : '미사용'),
-    //   },
-    // },
-    // {
-    //   name: '학습시간 제한',
-    //   type: 'switch',
-    //   label: t('학습시간 제한'),
-    //   value: true,
-    //   guideText: '정해진 시간에만 학습을 할 수 있도록 설정합니다.',
-    //   switchConfig: {
-    //     label: (value: boolean) => (value ? '사용' : '미사용'),
-    //   },
-    // },
-    // {
-    //   name: '1일 진도 제한',
-    //   type: 'switch',
-    //   label: t('1일 진도 제한'),
-    //   value: true,
-    //   guideText: '하루에 학습할 수 있는 진도 제한을 설정합니다.',
-    //   switchConfig: {
-    //     label: (value: boolean) => (value ? '사용' : '미사용'),
-    //   },
-    // },
-    // {
-    //   name: '진도 초기화',
-    //   type: 'switch',
-    //   label: t('진도 초기화'),
-    //   value: true,
-    //   guideText: '수강했던 학습 자원의 재학습 여부를 설정합니다.',
-    //   switchConfig: {
-    //     label: (value: boolean) => (value ? '사용' : '미사용'),
-    //   },
-    // },
-    // {
-    //   name: '교재 사용',
-    //   type: 'switch',
-    //   label: t('교재 사용'),
-    //   value: true,
-    //   guideText: '과정 등록 시 교재와 교재 정보 사용 여부를 설정합니다.',
-    //   switchConfig: {
-    //     label: (value: boolean) => (value ? '사용' : '미사용'),
-    //   },
-    // },
-    // {
-    //   name: '교재 배송지 사용',
-    //   type: 'switch',
-    //   label: t('교재 배송지 사용'),
-    //   value: true,
-    //   guideText: '교재를 사용하는 경우 교재 배송지 필요 여부를 설정합니다.',
-    //   switchConfig: {
-    //     label: (value: boolean) => (value ? '사용' : '미사용'),
-    //   },
-    // },
-    // {
-    //   name: '1인당 교육비 사용',
-    //   type: 'switch',
-    //   label: t('1인당 교육비 사용'),
-    //   value: true,
-    //   guideText: '교육비 사용 여부를 설정합니다.',
-    //   switchConfig: {
-    //     label: (value: boolean) => (value ? '사용' : '미사용'),
-    //   },
-    // },
-    // {
-    //   name: '고용보험 환급 사용',
-    //   type: 'switch',
-    //   label: t('고용보험 환급 사용'),
-    //   value: false,
-    //   guideText: '과정 등록 시 고융보험 환급 사용 여부를 설정합니다.',
-    //   switchConfig: {
-    //     label: (value: boolean) => (value ? '사용' : '미사용'),
-    //   },
-    // },
-    // {
-    //   name: '수료증 제공 여부',
-    //   type: 'switch',
-    //   label: t('수료증 제공 여부'),
-    //   value: true,
-    //   guideText: '과정 이수 시 수료증 제공 여부를 설정합니다.',
-    //   switchConfig: {
-    //     label: (value: boolean) => (value ? '사용' : '미사용'),
-    //   },
-    // },
-    // {
-    //   name: '학습 포인트(마일리지) 사용',
-    //   type: 'switch',
-    //   label: t('학습 포인트(마일리지) 사용'),
-    //   value: false,
-    //   guideText: '학습 포인트 사용 여부를 설정합니다.',
-    //   switchConfig: {
-    //     label: (value: boolean) => (value ? '사용' : '미사용'),
-    //   },
-    // },
-    // {
-    //   name: '사전 레벨 테스트 사용',
-    //   type: 'switch',
-    //   label: t('사전 레벨 테스트 사용'),
-    //   value: true,
-    //   guideText: '학습자가 해당 과청 수강 신청 시 사전 레벨 테스트 필요 여부를 설정합니다.',
-    //   switchConfig: {
-    //     label: (value: boolean) => (value ? '사용' : '미사용'),
-    //   },
-    // },
-    // {
-    //   name: '과정 플래그 사용',
-    //   type: 'switch',
-    //   label: t('과정 플래그 사용'),
-    //   value: true,
-    //   guideText:
-    //     '수강신청 마스터, 과정 추출, 교육 통계에 사용하는 과정 분류 값 사용 여부를 설정합니다.',
-    //   switchConfig: {
-    //     label: (value: boolean) => (value ? '사용' : '미사용'),
-    //   },
-    // },
     {
       name: 'isUsed',
       type: 'switch',
@@ -968,6 +970,13 @@ const formConfig: DynamicFormConfig = {
       placeholder: t('전화번호 입력 (02-234-5678)'),
     },
     {
+      label: '',
+      name: 'managerOfficeTelCountryCode',
+      type: 'hidden',
+      format: 'string',
+      value: 'KOR_82',
+    },
+    {
       label: t('휴대폰 번호'),
       name: 'managerPhone',
       type: 'phone-number',
@@ -978,6 +987,13 @@ const formConfig: DynamicFormConfig = {
         number: 'managerPhone',
       },
       placeholder: t('휴대폰번호 입력 (010-2345-6789)'),
+    },
+    {
+      label: '',
+      name: 'managerPhoneCountryCode',
+      type: 'hidden',
+      format: 'string',
+      value: 'KOR_82',
     },
   ],
   validator: {
@@ -992,7 +1008,31 @@ const formConfig: DynamicFormConfig = {
         },
       ],
     },
-    companyCode: true,
+    companyCode: {
+      format: 'object',
+      required: true,
+      conditions: [
+        {
+          fn: (values) => {
+            const fieldValue = values.companyCode.fieldValue;
+            if (fieldValue === '') return true;
+            return false;
+          },
+          message: t('LABEL.form.validation.needInput', { code: t('회사 코드') }),
+        },
+        {
+          fn: (values: Record<string, any>) =>
+            values.companyCode.checkState === DuplicateState.check ||
+            values.companyCode.checkState === DuplicateState.needInput,
+          message: t('LABEL.form.validation.check', { code: t('회사 코드') }),
+        },
+        {
+          fn: (values: Record<string, any>) =>
+            values.companyCode.checkState === DuplicateState.duplicated,
+          message: t('LABEL.form.validation.duplicated', { code: t('회사 코드') }),
+        },
+      ],
+    },
     isDuplicateCode: {
       required: {
         fn: (values) => {
@@ -1007,8 +1047,38 @@ const formConfig: DynamicFormConfig = {
     engName: true,
     brn: true,
     serviceTypeList: true,
-    watermarkText: true,
-
-    languageApprovalMatrix: true,
+    watermarkText: {
+      required: {
+        fn: (values) => {
+          return values.isUseWatermark === true;
+        },
+      },
+    },
+    companyEmail: {
+      required: false,
+      conditions: [
+        {
+          fn: (values) => {
+            if (values.companyEmail.trim().length === 0) return false;
+            const pattern = new RegExp(EMAIL_REGEX, 'i');
+            return !pattern.test(values.companyEmail.trim());
+          },
+          message: t('이메일 형식에 맞게 입력해 주세요.'),
+        },
+      ],
+    },
+    managerEmail: {
+      required: false,
+      conditions: [
+        {
+          fn: (values) => {
+            if (values.managerEmail.trim().length === 0) return false;
+            const pattern = new RegExp(EMAIL_REGEX, 'i');
+            return !pattern.test(values.managerEmail.trim());
+          },
+          message: t('이메일 형식에 맞게 입력해 주세요.'),
+        },
+      ],
+    },
   },
 };

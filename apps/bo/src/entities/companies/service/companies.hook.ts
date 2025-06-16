@@ -1,9 +1,34 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { queryOptions, mutateOptions } from './companies.queries';
+import { queryKeys, queryOptions, mutateOptions } from './companies.queries';
 
 export function useFetchCompanies() {
   return useQuery(queryOptions.all());
+}
+
+export function useCreateCompany(options: any) {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    ...mutateOptions.create(),
+    onSuccess: async (data: any, variables, context) => {
+      // 공통 메세지 처리 등...
+      queryClient.invalidateQueries({ queryKey: queryKeys.list });
+      if (options.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...options,
+  });
+
+  return {
+    create: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
 }
 
 export function useCheckExistsCompanyCode(options: any) {

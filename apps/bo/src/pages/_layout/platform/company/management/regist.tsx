@@ -1,8 +1,8 @@
+import { useState, useEffect, useRef } from 'react';
 import { t } from 'i18next';
 import { createFileRoute, useRouterState, useRouter } from '@tanstack/react-router';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { Button } from '@learnway/ui';
-import { FormSubTitle } from '@shared/ui';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
@@ -14,6 +14,13 @@ export const Route = createFileRoute('/_layout/platform/company/management/regis
 
 function RouteComponent() {
   const router = useRouter();
+  const formRef = useRef(1);
+
+  const handleSaveClick = () => {
+    console.log('formRef', formRef);
+    const detail: any = formRef.current;
+    detail.saveData();
+  };
   return (
     <PageContainer>
       <ContentsButtons>
@@ -26,12 +33,12 @@ function RouteComponent() {
             {t('LABEL.button.list')}
           </Button>
         </LinkBox>
-        <Button type="submit" variant="primary" size="sm">
+        <Button variant="primary" size="sm" onClick={handleSaveClick}>
           {t('LABEL.button.save')}
         </Button>
       </ContentsButtons>
       <MainContents>
-        <CompanyDetail mode="add" />
+        <CompanyDetail ref={formRef} mode="add" />
       </MainContents>
     </PageContainer>
   );
