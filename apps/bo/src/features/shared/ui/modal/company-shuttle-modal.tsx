@@ -39,7 +39,7 @@ const CompanyShuttleComponent = () => {
    * @param data
    */
   const handleOnSearch = (data: any) => {
-    const queryPromise = queryClient.fetchQuery(companyQueryOptions.all());
+    const queryPromise = queryClient.fetchQuery(companyQueryOptions.all(data));
     queryPromise.then((data) => {
       setGrideData(data.content);
     });

@@ -208,7 +208,8 @@ const QuestionInfoComponent: FC<{}> = ({}) => {
           </tbody>
         </table>
       </div>
-      <FormSubTitle label={'문항정보'} />
+      {/* 퍼블수정 20250613 : lineType 추가 */}
+      <FormSubTitle label={'문항정보'} lineType={'dark'} />
       <ContentsRow>
         {/* form_item */}
         <div className={formStyles.form_item}>

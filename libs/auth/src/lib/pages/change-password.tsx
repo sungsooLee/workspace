@@ -32,6 +32,7 @@ export function ChangePasswordPage({ route }: any) {
       },
       {
         onSuccess: handleSuccess,
+        onError: handleError,
       },
     );
   };
@@ -42,6 +43,12 @@ export function ChangePasswordPage({ route }: any) {
       content: t('LABEL.message.changePasswordSuccessGuide'),
     });
     logout();
+  };
+
+  const handleError = async (error: any) => {
+    if (error && error.code === 'B004') {
+      setFormError('oldPassword', t('LABEL.form.validation.password.00'));
+    }
   };
 
   const handleCancel = async () => {
@@ -55,6 +62,7 @@ export function ChangePasswordPage({ route }: any) {
   };
 
   const handleLater = () => {
+    // TODO 1개월 후 변경 API 적용 필요
     router.navigate({ to: '/' });
   };
 
@@ -64,7 +72,7 @@ export function ChangePasswordPage({ route }: any) {
         <div className={cn(styles.auth_box, 'auth--box')}>
           <div className={styles.success_info}>
             <HighlightMessageBox className={styles.noti_box}>
-              {t('LABEL.common.lastChangeDate')} :
+              {`${t('LABEL.common.lastChangeDate')} : `}
               <strong>
                 {formatDate(
                   authUser?.passwordChangeDate ?? new Date(),
@@ -86,22 +94,22 @@ export function ChangePasswordPage({ route }: any) {
             </ContentsRow>
           </div>
 
+          {/* 1개월후 변경 */}
+          <div className={styles.noti_info_txt}>
+            <Button className={styles.btn_txt} onClick={() => handleLater()}>
+              {t('LABEL.common.monthLater')}
+            </Button>
+          </div>
           <NoticeBox title={t('LABEL.common.caution')} className={styles.signup_noti}>
             <dd>{t('LABEL.message.cautionPasswordInput01')}</dd>
             <dd>{t('LABEL.message.cautionPasswordInput02')}</dd>
             <dd>{t('LABEL.message.cautionPasswordInput03')}</dd>
             <dd>{t('LABEL.message.cautionPasswordInput04')}</dd>
-            <dd>{t('LABEL.message.cautionPasswordInput05')}</dd>
-            <dd>
+            {/* <dd>{t('LABEL.message.cautionPasswordInput05')}</dd> */}
+            {/* <dd>
               {t('LABEL.message.cautionPasswordInput06')} <GoogleOtpGuideButton />
-            </dd>
+            </dd> */}
           </NoticeBox>
-
-          <div className={styles.noti_info_txt}>
-            <Button className={styles.btn_txt} onClick={() => handleLater()}>
-              1개월 후 변경
-            </Button>
-          </div>
 
           <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="gray" size="xl" onClick={() => handleCancel()}>
@@ -124,7 +132,6 @@ const passwordFormConfig: DynamicFormConfig = {
       type: 'text',
       label: 'LABEL.common.oldPassword',
       value: '',
-      placeholder: '${label}을 입력하세요',
       description: '',
       required: true,
     },
@@ -133,7 +140,6 @@ const passwordFormConfig: DynamicFormConfig = {
       type: 'text',
       label: 'LABEL.common.newPassword',
       value: '',
-      placeholder: '${label}을 입력하세요',
       description: '',
       required: true,
     },
@@ -142,7 +148,6 @@ const passwordFormConfig: DynamicFormConfig = {
       type: 'text',
       label: 'LABEL.common.newPasswordCheck',
       value: '',
-      placeholder: '${label}을 입력하세요',
       description: '',
     },
   ],

@@ -5,7 +5,7 @@ import { isEmpty } from 'lodash';
 
 import { Button, ContentsRow, Input, useModal } from '@learnway/ui';
 import { useExpStore, useFetchAuthUser } from '@learnway/auth/entities';
-import { cn } from '@learnway/shared';
+import { cn, dateDiff } from '@learnway/shared';
 // import { DynamicFormField } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 
@@ -26,6 +26,7 @@ import styles from '@learnway/styles/bo/pages/_auth/login.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { usePermissionStore } from '../../shared/lib/permission-store';
 import { AUTH_ERROR_CODE } from '@learnway/auth/features/auth';
+import dayjs from 'dayjs';
 
 export const Route = createFileRoute('/_auth/login')({
   component: RouteComponent,
@@ -166,6 +167,9 @@ function RouteComponent() {
         openAlert({
           title: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_USE.title'),
           content: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_USE.message'),
+          onClose: () => {
+            router.navigate({ to: '/change-password' });
+          },
         });
         break;
       case AUTH_ERROR_CODE.PASSWORD_CHANGE_PASSWORD_NOT_USE: // 패스워드 변경 안내 - 패스워드 미사용자
@@ -200,6 +204,32 @@ function RouteComponent() {
       onSuccess: async (data) => {
         const locale = data?.locale;
         locale && (await setLanguage(locale));
+
+        // 로그인 - 비밀번호 변경 3개월 체크
+        // if (dayjs(authData?.passwordExpireDate).diff(dayjs()) < 0) {
+        const diff = dateDiff(data!.passwordExpireDate, new Date(), 'd');
+        console.log('### login date check', diff);
+        if (diff !== undefined && 0 >= diff) {
+          if (data?.authType === 'PLATFORM') {
+            // 패스워드 사용자
+            openAlert({
+              title: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_USE.title'),
+              content: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_USE.message'),
+              onClose: () => {
+                router.navigate({ to: '/change-password' });
+              },
+            });
+            return;
+          } else {
+            // 패스워드 미사용자
+            openAlert({
+              title: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_NOT_USE.title'),
+              content: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_NOT_USE.message'),
+            });
+            return;
+          }
+        }
+
         router.navigate({ to: search.redirect || '/' });
 
         // 임시 : 사용 가능한 API 목록 fetch
