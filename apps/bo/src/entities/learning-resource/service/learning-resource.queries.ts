@@ -1,6 +1,7 @@
 import LearningResourceService from '../api/learning-resource';
 
 export const queryKeys = {
+  channelsByTenantId: ['channels-by-tenant-id'] as const,
   userByUuid: ['user-by-uuid'] as const,
   contents: ['contents'] as const,
   s3FileDownload: ['file-s3-download'] as const,
@@ -11,6 +12,13 @@ export const queryKeys = {
 };
 
 export const learningResourceQueryOptions = {
+  getChannelsByTenantId: (tenantId: string | number) => ({
+    queryKey: queryKeys.channelsByTenantId,
+    queryFn: () => LearningResourceService.fetchChannelsByTenantId(tenantId),
+    cacheTime: 0,
+    staleTime: 0,
+    enabled: true,
+  }),
   getUser: (uuid: string) => ({
     queryKey: queryKeys.userByUuid,
     queryFn: () => LearningResourceService.fetchUser(uuid),
@@ -25,7 +33,6 @@ export const learningResourceQueryOptions = {
     staleTime: 0,
     enabled: true,
   }),
-
   getS3FileDownload: (key: string, fileName: string) => ({
     queryKey: queryKeys.s3FileDownload,
     queryFn: () => LearningResourceService.fetchS3FileDownload(key, fileName),

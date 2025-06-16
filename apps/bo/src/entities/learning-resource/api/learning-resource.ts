@@ -3,6 +3,12 @@ import { faker } from '@faker-js/faker';
 import { CMSApiPrefix, PMSApiPrefix } from '@learnway/config';
 
 export default class LearningResourceService {
+  static fetchChannelsByTenantId(tenantId: string | number): Promise<any> {
+    console.log('🚀 ~ LearningResourceService ~ fetchChannelsByTenantId ~ tenantId:', tenantId);
+    const params = { page: 0, size: 2000, tenantId };
+    return httpService.get(`${PMSApiPrefix()}/channel`, params);
+  }
+
   static fetchUser(uuid: string): Promise<any> {
     return httpService.get(`${PMSApiPrefix()}/users/` + uuid);
   }

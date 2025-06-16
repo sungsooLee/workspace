@@ -23,11 +23,13 @@ import { CopyModal } from './learning-resource-copy-modal';
 import { useRouter } from '@tanstack/react-router';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { useWatch } from 'react-hook-form';
+import { useQueryClient } from '@tanstack/react-query';
 
 function LearningResourceTableComponent() {
   const router = useRouter();
   const { open: openModal, alert } = useModal();
 
+  const queryClient = useQueryClient();
   const { data: user } = useFetchAuthUser();
 
   const searchConfig: any = {
@@ -290,6 +292,7 @@ function LearningResourceTableComponent() {
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const [tableInstance, setTableInstance] = useState<Table<any>>(); // Grid 로부터 받을 table 인스턴스를 저장할 상태
 
+  //user정보로 tenant 설정
   useEffect(() => {
     if (!user) return;
 
@@ -300,10 +303,23 @@ function LearningResourceTableComponent() {
     );
   }, [user]);
 
+  // tenant 정보로 channel 설정
   const tenantUuid = useWatch({ control: searchProvider.control, name: 'tenantUuid' });
   useEffect(() => {
     console.log('🚀 ~ LearningResourceTableComponent ~ tenantUuid:', tenantUuid);
-    // channel목록 tennantUuid로 조회
+    if (!tenantUuid && tenantUuid !== 0) return;
+
+    (async () => {
+      const { content } = await queryClient.fetchQuery(
+        learningResourceQueryOptions.getChannelsByTenantId(tenantUuid),
+      );
+      setValue('channelUuid', '');
+      if (content)
+        setOptions(
+          'channelUuid',
+          content.map((_: any) => ({ value: _.channelUuid, label: _.channelName })),
+        );
+    })();
   }, [tenantUuid]);
 
   function handleSearch(query: Record<string, any>) {
