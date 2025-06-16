@@ -13,7 +13,7 @@ import {
 import { IcoClock01, IcoCopy, IcoDownload, IcoAlertCircle } from '@learnway/icons';
 import { t } from 'i18next';
 import { Table } from '@tanstack/react-table';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { leaningResourceQueryOptions } from '@entities/leaning-resource';
 import { ModifierInfoModal } from './learning-resource-modifier-info-modal';
 import { ProgramGuideModal } from './learning-resource-program-guide-modal';
@@ -21,10 +21,14 @@ import { BatchSettingModal } from './learning-resource-batch-setting-modal';
 import { map, some, uniq } from 'lodash';
 import { CopyModal } from './learning-resource-copy-modal';
 import { useRouter } from '@tanstack/react-router';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+import { useWatch } from 'react-hook-form';
 
 function LearningResourceTableComponent() {
   const router = useRouter();
   const { open: openModal, alert } = useModal();
+
+  const { data: user } = useFetchAuthUser();
 
   const searchConfig: any = {
     builders: [
@@ -36,9 +40,7 @@ function LearningResourceTableComponent() {
           value: '',
           format: 'number',
           presetOptionLabel: t('LABEL.form.label.select'),
-          optionsConfig: {
-            codeGroup: CODE_GROUP['manual.tenant.tenantId'],
-          },
+          options: [],
         },
         {
           name: 'channelUuid',
@@ -46,16 +48,7 @@ function LearningResourceTableComponent() {
           label: t('LABEL.form.label.channel'),
           value: '',
           presetOptionLabel: t('LABEL.form.label.select'),
-          optionsConfig: {
-            options: [
-              { value: 'channelA', label: t('채널A') },
-              { value: 'channelB', label: t('채널B') },
-              { value: 'channelC', label: t('채널C') },
-              { value: 'channelD', label: t('채널D') },
-              { value: 'channelE', label: t('채널E') },
-              { value: 'channelF', label: t('채널F') },
-            ],
-          },
+          options: [],
         },
         {
           name: 'contentTypes',
@@ -292,10 +285,26 @@ function LearningResourceTableComponent() {
     // },
   };
 
-  const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
+  const { provider: searchProvider, getValues, setOptions, setValue } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const [tableInstance, setTableInstance] = useState<Table<any>>(); // Grid 로부터 받을 table 인스턴스를 저장할 상태
+
+  useEffect(() => {
+    if (!user) return;
+
+    if (user.activeTenant) setValue('tenantUuid', user.activeTenant.tenantId ?? '');
+    setOptions(
+      'tenantUuid',
+      user.tenants.map((tenant) => ({ value: tenant.tenantId, label: tenant.tenantName })),
+    );
+  }, [user]);
+
+  const tenantUuid = useWatch({ control: searchProvider.control, name: 'tenantUuid' });
+  useEffect(() => {
+    console.log('🚀 ~ LearningResourceTableComponent ~ tenantUuid:', tenantUuid);
+    // channel목록 tennantUuid로 조회
+  }, [tenantUuid]);
 
   function handleSearch(query: Record<string, any>) {
     gridFetch(query);
