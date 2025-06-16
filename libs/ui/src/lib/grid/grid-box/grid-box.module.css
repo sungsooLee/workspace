@@ -105,6 +105,9 @@
   & + [class*='nlp--contents-row'] {
     @apply mt-[24px];
   }
+  & + .table_box {
+    @apply mt-[32px];
+  }
 }
 
 [class*='grid_info'] {

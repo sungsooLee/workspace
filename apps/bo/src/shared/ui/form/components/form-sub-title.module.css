@@ -13,6 +13,12 @@
         }
         [class*='nlp--button'] {
           @apply w-auto flex-none;
+          svg {
+            @apply mr-[4px];
+          }
+          & + [class*='nlp--button']::before {
+            @apply mr-[8px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
+          }
         }
       }
     }

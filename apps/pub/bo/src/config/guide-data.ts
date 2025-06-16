@@ -952,6 +952,15 @@ export const guideData = [
     pageId: 'completion/education_operate_group',
     screenId: 'NLP_BO_EDS_1848',
     pageType: 'Page',
+    completionDate: '2025-06-16',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
+    screenName: '완성차_교육예산/세부산출근거',
+    pageId: 'completion/detail-calculation-reason',
+    screenId: 'NLP_BO_EDS_1848',
+    pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
     remarks: '', // 비고

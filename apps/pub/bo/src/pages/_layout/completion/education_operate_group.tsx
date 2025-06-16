@@ -7,6 +7,8 @@ import { MainContents } from '../../../../../../bo/src/widgets/layout/ui/contain
 /** tab contents */
 import { HeadquartersInfo } from './-contents/headquarters-info';
 import { AffiliationGroup } from './-contents/affiliation-group';
+import { TalentDevelopmentTeam } from './-contents/talent-development-team';
+import { CurrentTeamCharge } from './-contents/current-team-charge';
 
 export const Route = createFileRoute('/_layout/completion/education_operate_group')({
   component: RouteComponent,
@@ -54,12 +56,12 @@ function RouteComponent() {
     {
       title: '인재개발주무팀',
       key: 'menu03',
-      content: '',
+      content: <TalentDevelopmentTeam />,
     },
     {
       title: '현업팀담당',
       key: 'menu04',
-      content: '',
+      content: <CurrentTeamCharge />,
     },
   ];
   return (
