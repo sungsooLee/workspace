@@ -178,6 +178,7 @@ const CategoryViewComponent: FC<any> = ({
       categoryType: 'COMMON',
       sortSeq: data.sortSeq,
       parentId: data.parentKey,
+      isUsed: data.isUsed,
     };
 
     console.log('## check body', body);
