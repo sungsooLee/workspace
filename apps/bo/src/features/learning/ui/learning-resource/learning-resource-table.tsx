@@ -344,7 +344,7 @@ function LearningResourceTableComponent() {
       });
     }
 
-    const selectedIsCourseUsed = map(selectedRows, 'isCouseUsed');
+    const selectedIsCourseUsed = map(selectedRows, 'isCourseUsed');
     if (some(selectedIsCourseUsed)) {
       return alert({
         title: t('LABEL.alert.isCourseUsed.title'),
@@ -385,8 +385,14 @@ function LearningResourceTableComponent() {
         onRowsSelect={setSelectedRows}
         customButtonNode={
           <>
-            <Button label={t('LABEL.grid.header.share')} onClick={handleShare} />
             <Button
+              variant="text"
+              label={t('LABEL.grid.header.share')}
+              disabled={selectedRows.length !== 1}
+              onClick={handleShare}
+            />
+            <Button
+              variant="text"
               label={t('LABEL.grid.header.guideDownload')}
               icon={<IcoDownload width={16} height={16} stroke="#4C515E" />}
               onClick={openProgramGuide}
@@ -395,6 +401,7 @@ function LearningResourceTableComponent() {
               <Button
                 variant="text"
                 label={t('LABEL.grid.header.batchSetting')}
+                disabled={selectedRows.length === 0}
                 onClick={openBatchSetting}
               />
               <Tooltip
@@ -406,12 +413,15 @@ function LearningResourceTableComponent() {
               </Tooltip>
             </span>
             <Button
+              variant="text"
               label={t('LABEL.grid.header.excelDownload')}
               icon={<IcoDownload width={16} height={16} stroke="#4C515E" />}
             />
             <Button
+              variant="text"
               label={t('LABEL.grid.header.copy')}
               icon={<IcoCopy width={16} height={16} stroke="#4C515E" />}
+              disabled={selectedRows.length !== 1}
               onClick={handleCopy}
             />
           </>
