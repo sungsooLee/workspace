@@ -10,6 +10,7 @@ export const queryKeys = {
     companyCode,
     parentDeptId,
   ],
+  user: (param: any) => ['department-user', param],
 };
 
 export const queryOptions = {
@@ -25,6 +26,12 @@ export const queryOptions = {
     queryKey: queryKeys.child(param.companyCode, param.parentDeptId),
     queryFn: () => {
       return HmgDepartmentService.getDepartmentChildDepartmentList(param);
+    },
+  }),
+  user: (param: any) => ({
+    queryKey: queryKeys.user(param),
+    queryFn: () => {
+      return HmgDepartmentService.getDepartmentUserList(param);
     },
   }),
 };

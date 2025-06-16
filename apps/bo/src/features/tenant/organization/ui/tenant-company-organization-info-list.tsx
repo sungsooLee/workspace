@@ -31,7 +31,7 @@ const TenantCompanyOrganizationInfoListComponent = ({
 }: {
   companyCode: string;
   showType: string;
-  deptId: string;
+  deptId: number;
 }) => {
   const router = useRouter();
 
@@ -43,10 +43,17 @@ const TenantCompanyOrganizationInfoListComponent = ({
     onFormChange,
     onFormValid,
   } = useSearchBox(searchConfig);
-  const { config: gConfig, gridFetch } = useGridBox(gridConfig);
+  const getSearchParam = () => {
+    const retval = { ...getValues(), companyCode: companyCode, parentDeptId: deptId };
+
+    return retval;
+  };
+  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getSearchParam);
 
   const handleOnSearch = (data: any) => {
-    gridFetch(data);
+    if (deptId) {
+      gridFetch(getSearchParam());
+    }
   };
 
   useEffect(() => {
@@ -77,20 +84,19 @@ const searchConfig: SearchBoxConfig = {
   builders: [
     [
       {
-        name: 'tenantName',
+        name: 'hrInfoManageType',
         type: 'text',
         label: t('조직등록유형'),
-        format: 'object',
         value: '',
       },
       {
-        name: 'companyName',
+        name: 'deptName',
         type: 'text',
         label: t('조직명'),
         value: '',
       },
       {
-        name: 'tenantManagerName',
+        name: 'deptManagerName',
         type: 'text',
         label: t('조직장이름'),
         value: '',
@@ -100,7 +106,7 @@ const searchConfig: SearchBoxConfig = {
 };
 
 const gridConfigOrg = {
-  query: '',
+  query: hmgDepartmentQuery.child,
   columns: [],
   data: [],
 
