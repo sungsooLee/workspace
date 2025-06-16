@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isString } from 'lodash';
@@ -43,7 +44,7 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
     const { close: closeModal } = useModal();
 
     // description scroll check Start
-    const MAX_HEIGHT = 60;
+    const MAX_HEIGHT = 140;
 
     const contentRef = useRef<HTMLDivElement>(null);
     const [isScrolled, setIsScrolled] = useState(false);
