@@ -37,6 +37,7 @@ export interface CategoryUpdate {
   categoryCode: string;
   categoryContent: string;
   id: string;
+  isUsed: boolean;
 }
 
 export interface CategoryMove {
