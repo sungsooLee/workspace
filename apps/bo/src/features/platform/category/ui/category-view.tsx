@@ -79,7 +79,7 @@ const CategoryViewComponent: FC<any> = ({
         location: location ?? '',
         key: '',
         parentKey: selectedNode.key,
-        parentMenuName: selectedNode.parentMenuName,
+        parentMenuName: selectedNode.parentMenuName ?? '',
         isDuplicateMenuCode: false,
         name: '', // 입력 필드
         code: '', // 입력 필드
@@ -370,6 +370,7 @@ const formConfig: DynamicFormConfig = {
       label: t('LABEL.form.input.categoryParentName'),
       name: 'parentMenuName',
       type: 'text',
+      format: 'string',
       value: '',
     },
     {
