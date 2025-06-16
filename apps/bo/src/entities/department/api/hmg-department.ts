@@ -7,4 +7,8 @@ export class HmgDepartmentService {
       companyCodeList: companyCode,
     });
   }
+
+  static getDepartmentChildDepartmentList(param: any): Promise<any> {
+    return httpService.get<any>(`${PMSApiPrefix()}/hmg/department/child`, param);
+  }
 }

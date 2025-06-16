@@ -37,6 +37,7 @@ import { isEqual } from 'lodash';
 import { transformDepartmentApiDataToTreeData } from '@features/platform/company/service/company-detail-tree';
 
 import { useGetCompanyDepartmentTree } from '@entities/department/service/department.hook';
+import { useGetCompanyHmgDepartmentTree } from '@entities/department/service/hmg-department.hook';
 import { TenantCompanyOrganizationInfoList } from './tenant-company-organization-info-list';
 import { TenantCompanyOrganizationUserList } from './tenant-company-organization-info-user';
 
@@ -71,6 +72,7 @@ const TenantCompanyOrganizationTreeComponent = ({
     useDynamicForm(formConfig);
 
   const { data: departmentTreeData, refetch } = useGetCompanyDepartmentTree([companyCode]);
+  const { data: hmgDepartmentTreeData } = useGetCompanyHmgDepartmentTree([companyCode]);
 
   const handleTreeAction = (events: any) => {
     switch (events.type) {
@@ -78,12 +80,19 @@ const TenantCompanyOrganizationTreeComponent = ({
         break;
     }
   };
+  const renderTabContent = () => {};
 
   const tabItems = [
     {
       title: t('조직'),
       key: EnTabKeys.organization,
-      content: <TenantCompanyOrganizationInfoList companyCode={companyCode} deptId="" />,
+      content: (
+        <TenantCompanyOrganizationInfoList
+          companyCode={companyCode}
+          showType={showType}
+          deptId=""
+        />
+      ),
     },
     {
       title: t('유저'),
@@ -93,11 +102,18 @@ const TenantCompanyOrganizationTreeComponent = ({
   ];
 
   useEffect(() => {
-    if (departmentTreeData) {
+    if (showType === EnOrganizationShowType.platform && departmentTreeData) {
       const transformedData = transformDepartmentApiDataToTreeData(departmentTreeData);
       setDeptTreeData(transformedData);
     }
   }, [departmentTreeData]);
+
+  useEffect(() => {
+    if (showType === EnOrganizationShowType.origin && departmentTreeData) {
+      const transformedData = transformDepartmentApiDataToTreeData(departmentTreeData);
+      setDeptTreeData(transformedData);
+    }
+  }, [hmgDepartmentTreeData]);
 
   return (
     <SectionLayout contentsRatio={'thirty'}>

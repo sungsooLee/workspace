@@ -16,18 +16,26 @@ import { transformDepartmentApiDataToTreeData } from '@features/platform/company
 
 import { useGetCompanyDepartmentTree } from '@entities/department/service/department.hook';
 
+import { EnOrganizationShowType } from './tenant-company-organization-tree';
+import { queryOptions as departmentQuery } from '@entities/department/service/department.queries';
+import { queryOptions as hmgDepartmentQuery } from '@entities/department/service/hmg-department.queries';
+
 /**
  * 화면번호: NLP_BO_TMS_1111_03 테넌트-회사조직 대상자 (조직)
  * @returns
  */
 const TenantCompanyOrganizationInfoListComponent = ({
   companyCode,
+  showType,
   deptId,
 }: {
   companyCode: string;
+  showType: string;
   deptId: string;
 }) => {
   const router = useRouter();
+
+  const [gridConfig, setGridConfig] = useState<any>(gridConfigOrg);
 
   const {
     provider: searchProvider,
@@ -40,6 +48,16 @@ const TenantCompanyOrganizationInfoListComponent = ({
   const handleOnSearch = (data: any) => {
     gridFetch(data);
   };
+
+  useEffect(() => {
+    switch (showType) {
+      case EnOrganizationShowType.origin:
+        setGridConfig(gridConfigOrg);
+        break;
+      case EnOrganizationShowType.platform:
+        setGridConfig(gridConfigPlat);
+    }
+  }, [showType]);
 
   return (
     <>
@@ -81,8 +99,20 @@ const searchConfig: SearchBoxConfig = {
   ],
 };
 
-const gridConfig = {
+const gridConfigOrg = {
   query: '',
+  columns: [],
+  data: [],
+
+  pagination: {
+    pageSize: 20,
+    pageIndex: 0,
+    totalRows: 0,
+  },
+};
+
+const gridConfigPlat = {
+  query: departmentQuery.child,
   columns: [],
   data: [],
 

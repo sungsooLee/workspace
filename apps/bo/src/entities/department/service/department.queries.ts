@@ -6,6 +6,12 @@ export const queryKeys = {
   list: ['department-page'] as const,
   all: ['department-all'] as const,
   tree: (companyCode: string[]) => ['department-tree', ...companyCode],
+  child: (companyCode: string, parentDeptId: string) => [
+    'department-child',
+    companyCode,
+    parentDeptId,
+  ],
+  user: (param: any) => ['department-user', param],
 };
 
 export const queryOptions = {
@@ -23,5 +29,17 @@ export const queryOptions = {
       return companys.length > 0 ? DepartmentService.getDepartmentTree(companyCode) : undefined;
     },
     disabled: !companyCode,
+  }),
+  child: (param: any) => ({
+    queryKey: queryKeys.child(param.companyCode, param.parentDeptId),
+    queryFn: () => {
+      return DepartmentService.getDepartmentChildDepartmentList(param);
+    },
+  }),
+  user: (param: any) => ({
+    queryKey: queryKeys.user(param),
+    queryFn: () => {
+      return DepartmentService.getDepartmentUserList(param);
+    },
   }),
 };
