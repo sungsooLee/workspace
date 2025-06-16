@@ -214,7 +214,7 @@ function RouteComponent() {
 
   return (
     <PageContainer>
-      <ContentsButtons>
+      {/* <ContentsButtons>
         <Button
           type="button"
           variant="point"
@@ -230,7 +230,7 @@ function RouteComponent() {
         >
           {t('LABEL.link.multilingual')}
         </Button>
-      </ContentsButtons>
+      </ContentsButtons> */}
       <MainContents>
         <div className={cn(layoutStyles.start, layoutStyles.wrap)}>
           {treeData && (
