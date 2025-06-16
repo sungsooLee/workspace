@@ -148,7 +148,7 @@ export const MenuManage = ({ menuScope }: any) => {
     if (data) {
       prevDataRef.current = data;
 
-      const transformedData = transformApiDataToTreeData(data);
+      const transformedData = transformApiDataToTreeData(data, menuScope);
       setTreeData(transformedData);
 
       if (lastCreatedMenuId) {

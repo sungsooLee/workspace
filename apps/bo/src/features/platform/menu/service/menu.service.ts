@@ -1,11 +1,18 @@
 import { findNodeByKey, findNodePath, TreeNode } from '@learnway/ui';
+import { t } from 'i18next';
+import { EnGlobalConst } from '@types';
+
+export const getMenuTile = (node: any, siteScope: string) => {
+  const mType = siteScope === 'BO' ? EnGlobalConst.HRD_CENTER_MENU : EnGlobalConst.LEARNER_MENU;
+  return t(`${mType}.${node.menuCode}`);
+};
 
 /**
  * API 응답 데이터에서 menuId를 key로 변환하고 isUsed 속성을 추가하는 함수
  * @param {any} apiData - API에서 받은 원본 데이터
  * @returns {TreeNode[]} - 트리 컴포넌트에 적합한 형태로 변환된 데이터
  */
-export const transformApiDataToTreeData = (apiData: any) => {
+export const transformApiDataToTreeData = (apiData: any, siteScope: string) => {
   // 단일 노드인 경우 배열로 감싸기
   const dataArray = Array.isArray(apiData) ? apiData : [apiData];
 
@@ -18,7 +25,7 @@ export const transformApiDataToTreeData = (apiData: any) => {
       const transformedNode = {
         // 필수 트리 속성
         key: node.menuId.toString(), // menuId를 key로 사용
-        title: node.title || node.menuCode, // title이 없으면 menuCode 사용
+        title: getMenuTile(node, siteScope), // title이 없으면 menuCode 사용
         isUsed: node.isUsed === true, // isUsed을 isUsed로 변환
 
         // 원본 데이터 속성 유지

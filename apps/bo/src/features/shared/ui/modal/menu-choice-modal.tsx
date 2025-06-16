@@ -25,7 +25,7 @@ const MenuModalComponent: FC<any> = forwardRef(({ menuScopeCode }, ref) => {
 
   useEffect(() => {
     if (data) {
-      const transformedData = transformMenuApiDataToTreeData(data);
+      const transformedData = transformMenuApiDataToTreeData(data, menuScopeCode);
       setTreeData(transformedData);
 
       if (transformedData && transformedData.length > 0 && expandedKeys.length === 0) {

@@ -96,7 +96,11 @@ const TenantCompanyOrganizationTreeComponent = ({
 
   const renderTabUserContent = () => {
     return (
-      <TenantCompanyOrganizationUserList companyCode={companyCode} deptId={selectedNode?.deptId} />
+      <TenantCompanyOrganizationUserList
+        companyCode={companyCode}
+        deptId={selectedNode?.deptId}
+        showType={showType}
+      />
     );
   };
 
