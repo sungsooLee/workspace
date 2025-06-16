@@ -92,7 +92,7 @@ const TenantDetailCategoryMappingModalComponent: FC<any> = ({ tenantId, onNodeCh
   };
 
   const handleDeleteTenantCategory = (node: TreeNode) => {
-    if (node.children) {
+    if (node.children && node.children.length > 0) {
       openAlert({
         title: '삭제할 수 없습니다.',
         content: '하위 카테고리가 존재 시 삭제할 수 없습니다.',

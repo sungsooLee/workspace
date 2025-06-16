@@ -435,12 +435,13 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
         <div className={layoutStyles.inner_contents}>
           <TreeContainer>
             <TreeView
-              data={treeData}
               treeId="1"
+              type="SAME_LEVEL_ONLY"
+              data={treeData}
+              selectedNode={selectedNode}
               expandedKeys={expandedKeys}
               onAction={handleTreeAction}
-              type="SAME_LEVEL_ONLY"
-              selectedNode={selectedNode}
+              onExpandedKeysChange={setExpandedKeys}
               nodeButtons={renderNodeButtons}
             />
           </TreeContainer>
