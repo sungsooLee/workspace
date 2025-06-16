@@ -246,15 +246,3 @@ body.tree-dragging .tree div:not(.tree-node-dragging):hover {
     background-color: transparent;
   }
 }
-
-/* 드래그 중인 커서 스타일 */
-.tree-dragging {
-  cursor: grabbing !important;
-}
-
-/* 드롭 인디케이터 스타일 강화 */
-.drop-indicator-invalid-before,
-.drop-indicator-invalid-after,
-.drop-indicator-invalid-inside {
-  z-index: 100 !important; /* 유효하지 않은 드롭 인디케이터의 우선순위 높임 */
-}

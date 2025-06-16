@@ -20,6 +20,7 @@ import {
   insertNodeAtPosition,
   isValidDrop,
   removeNodeByKey,
+  throttle,
 } from './tree.service';
 import { useTreeContext } from './tree.context';
 import {
@@ -322,7 +323,6 @@ const TreeNodeComponent = ({
     if (!isDraggable || enhanceNode.constraints?.drag === false || isDragDisabled) return;
 
     try {
-      // 드래그 이미지 생성
       const dragImage = document.createElement('div');
       dragImage.classList.add('drag-node-image');
       dragImage.innerHTML = `
@@ -356,47 +356,37 @@ const TreeNodeComponent = ({
       e.dataTransfer.setData('application/json', JSON.stringify(nodeData));
       e.dataTransfer.setData('treeId', treeId);
 
-      if (!isDragging) {
-        setIsDragging(true);
+      // TreeContext 상태 업데이트 - 드래그 시작
+      if (treeContext && treeContext.setDragState) {
+        treeContext.setDragState({
+          node: JSON.parse(JSON.stringify(nodeData)),
+          sourceTreeId: treeId,
+          isDragging: true,
+          dragPosition: { x: e.clientX, y: e.clientY },
+        });
       }
 
       if (onDragStart) {
         onDragStart(nodeData);
       }
-
-      // TreeContext의 dragState 업데이트
-      if (treeContext && treeContext.setDragState) {
-        const newDragState = {
-          node: JSON.parse(JSON.stringify(nodeData)), // 깊은 복사
-          sourceTreeId: treeId,
-        };
-        treeContext.setDragState(newDragState);
-      } else {
-        console.warn('TreeContext or setDragState is not available!');
-      }
-
-      setTimeout(() => {
-        if (document.body.contains(dragImage)) {
-          document.body.removeChild(dragImage);
-        }
-      }, 0);
     } catch (error) {
       console.error('Drag start error:', error);
     }
   };
 
-  // 드래그 오버
   const handleDragOver = (e: React.DragEvent) => {
     if (enhanceNode.constraints?.drop === false) return;
 
     e.preventDefault();
     e.stopPropagation();
 
-    // 데이터 형식 확인
+    if (treeContext && treeContext.updateDragPosition) {
+      treeContext.updateDragPosition(e.clientX, e.clientY);
+    }
+
     const hasJsonData = e.dataTransfer.types.includes('application/json');
     if (!hasJsonData) return;
 
-    // 레벨 0으로의 드롭은 INSIDE만 허용
     if (level === 0) {
       setDropPosition('INSIDE');
       return;
@@ -408,7 +398,6 @@ const TreeNodeComponent = ({
 
     let newPosition: NodeMovePositionType;
 
-    // 펼쳐진 노드의 경우 AFTER 스타일 부자연스러워서 BEFORE / INSIDE 상태만 되게 수정.
     if (hasChildren && isExpanded && enhanceNode.children && enhanceNode.children.length > 0) {
       if (y < threshold) {
         newPosition = 'BEFORE';
@@ -419,27 +408,23 @@ const TreeNodeComponent = ({
       newPosition = y < threshold ? 'BEFORE' : y > rect.height - threshold ? 'AFTER' : 'INSIDE';
     }
 
-    // 항상 드롭 위치 표시 (유효성 여부는 스타일로 표시)
     if (dropPosition !== newPosition) {
       setDropPosition(newPosition);
     }
   };
 
-  // 드래그 리브
   const handleDragLeave = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
     setDropPosition(null);
   };
 
-  // 드롭
   const handleDrop = (e: React.DragEvent) => {
     if (enhanceNode.constraints?.drop === false) return;
 
     e.preventDefault();
     e.stopPropagation();
 
-    // 드래그된 노드 데이터 추출
     let droppedNode;
     try {
       const jsonData = e.dataTransfer.getData('application/json');
@@ -467,6 +452,10 @@ const TreeNodeComponent = ({
 
     // 상태 초기화
     setDropPosition(null);
+
+    if (treeContext && treeContext.resetDragState) {
+      treeContext.resetDragState();
+    }
   };
 
   // 접기, 펴기 토글
@@ -489,6 +478,10 @@ const TreeNodeComponent = ({
   const handleDragEnd = (e: React.DragEvent) => {
     e.stopPropagation();
     setIsDragging(false);
+
+    if (treeContext && treeContext.resetDragState) {
+      treeContext.resetDragState();
+    }
   };
 
   const renderDragIcon = () => {
@@ -940,6 +933,9 @@ const TreeView = ({
 
       // 초기 데이터 업데이트 (검색 취소 후 사용할 데이터)
       setInitialData(fullData);
+      if (treeContext?.resetDragState) {
+        treeContext.resetDragState();
+      }
     }
 
     // 액션 콜백 호출 - 타입에 따라 다른 페이로드 구조 사용
@@ -996,6 +992,7 @@ const TreeView = ({
     // 로컬 상태 업데이트
     setDraggedNode(enhancedNode);
     setDraggedNodeKey(node.key);
+
     // TreeContext 상태 업데이트
     if (treeContext && treeContext.setDragState) {
       // 깊은 복사를 통해 새 객체 생성
@@ -1021,9 +1018,7 @@ const TreeView = ({
       }
     }
     setInternalSelectedNode(node);
-    if (onSelectedNodeChange && node) {
-      onSelectedNodeChange(node);
-    }
+    onSelectedNodeChange?.(node);
     if (onAction && node) {
       onAction({ type: 'NODE_SELECT', node: node } as SelectEventPayload);
     }

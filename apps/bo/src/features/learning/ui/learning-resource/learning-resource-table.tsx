@@ -18,7 +18,7 @@ import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { ModifierInfoModal } from './learning-resource-modifier-info-modal';
 import { ProgramGuideModal } from './learning-resource-program-guide-modal';
 import { BatchSettingModal } from './learning-resource-batch-setting-modal';
-import { map, some, uniq } from 'lodash';
+import { first, get, map, some, uniq } from 'lodash';
 import { CopyModal } from './learning-resource-copy-modal';
 import { useRouter } from '@tanstack/react-router';
 import { useFetchAuthUser } from '@learnway/auth/entities';
@@ -288,7 +288,7 @@ function LearningResourceTableComponent() {
   };
 
   const { provider: searchProvider, getValues, setOptions, setValue } = useSearchBox(searchConfig);
-  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
+  const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const [tableInstance, setTableInstance] = useState<Table<any>>(); // Grid 로부터 받을 table 인스턴스를 저장할 상태
 
@@ -326,7 +326,10 @@ function LearningResourceTableComponent() {
     gridFetch(query);
   }
 
-  function handleShare() {}
+  function handleShare() {
+    console.log('🚀 ~ handleShare ~ getValues():', getValues());
+    console.log('🚀 ~ handleShare ~ data:', data);
+  }
 
   function openProgramGuide() {
     openModal({
@@ -344,7 +347,7 @@ function LearningResourceTableComponent() {
       });
     }
 
-    const selectedIsCourseUsed = map(selectedRows, 'isCouseUsed');
+    const selectedIsCourseUsed = map(selectedRows, 'isCourseUsed');
     if (some(selectedIsCourseUsed)) {
       return alert({
         title: t('LABEL.alert.isCourseUsed.title'),
@@ -385,8 +388,19 @@ function LearningResourceTableComponent() {
         onRowsSelect={setSelectedRows}
         customButtonNode={
           <>
-            <Button label={t('LABEL.grid.header.share')} onClick={handleShare} />
             <Button
+              variant="text"
+              label={t('LABEL.grid.header.share')}
+              disabled={
+                selectedRows.length !== 1 ||
+                !data?.content?.find(
+                  (_: any) => _.contentUuid === get(first(selectedRows), 'contentUuid'),
+                ) // child
+              }
+              onClick={handleShare}
+            />
+            <Button
+              variant="text"
               label={t('LABEL.grid.header.guideDownload')}
               icon={<IcoDownload width={16} height={16} stroke="#4C515E" />}
               onClick={openProgramGuide}
@@ -395,6 +409,7 @@ function LearningResourceTableComponent() {
               <Button
                 variant="text"
                 label={t('LABEL.grid.header.batchSetting')}
+                disabled={selectedRows.length === 0}
                 onClick={openBatchSetting}
               />
               <Tooltip
@@ -406,12 +421,20 @@ function LearningResourceTableComponent() {
               </Tooltip>
             </span>
             <Button
+              variant="text"
               label={t('LABEL.grid.header.excelDownload')}
               icon={<IcoDownload width={16} height={16} stroke="#4C515E" />}
             />
             <Button
+              variant="text"
               label={t('LABEL.grid.header.copy')}
               icon={<IcoCopy width={16} height={16} stroke="#4C515E" />}
+              disabled={
+                selectedRows.length !== 1 ||
+                !data?.content?.find(
+                  (_: any) => _.contentUuid === get(first(selectedRows), 'contentUuid'),
+                ) // child
+              }
               onClick={handleCopy}
             />
           </>
