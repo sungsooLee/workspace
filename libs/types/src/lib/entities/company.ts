@@ -36,6 +36,30 @@ export type Company = {
    */
   rpsntrName?: string;
   /**
+   * 법인 약어
+   */
+  abbreviationName?: string;
+  /**
+   * 대표 전화번호 국가코드
+   */
+  companyTelNoCountryCode: string;
+  /**
+   * 대표 전화번호
+   */
+  companyTelNo: string;
+  /**
+   * 대표 팩스번호 국가코드
+   */
+  companyFaxNoCountryCode: string;
+  /**
+   * 대표 팩스번호
+   */
+  companyFaxNo: string;
+  /**
+   * 대표 이메일
+   */
+  companyEmail: string;
+  /**
    * 기본주소
    */
   basicAddress?: string;

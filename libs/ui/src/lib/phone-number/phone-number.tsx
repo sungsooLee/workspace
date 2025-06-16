@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useCreation } from 'ahooks';
 import { isEqual } from 'lodash';
 
-import { getBrowserNation } from '@learnway/shared';
+import { getNationCodeFromBrowser } from '@learnway/shared';
 
 import { useCodeStore, CODE_GROUP } from '@learnway/hooks';
 import { Input, InputProps } from '../input/input';
@@ -38,12 +38,13 @@ const PhoneNumberComponent = function ({
   const { t } = useTranslation();
   const [editionValue, setEditionValue] = useState<PhoneNumberValue>({
     number: value?.number,
-    nationCode: value?.nationCode ?? getBrowserNation(),
+    nationCode: value?.nationCode,
   } as PhoneNumberValue);
 
   const { getCode } = useCodeStore();
 
   const [nationOptions, setNationOptions] = useState<any[]>([]);
+  const [telephoneCountryCodes, setTelephoneCountryCodes] = useState<any[]>([]);
 
   useEffect(() => {
     const init = async () => {
@@ -53,6 +54,7 @@ const PhoneNumberComponent = function ({
         label: code.cdContent,
       }));
       setNationOptions(options);
+      setTelephoneCountryCodes(nationCodes);
     };
     init();
   }, [getCode]);
@@ -68,7 +70,11 @@ const PhoneNumberComponent = function ({
     if (!value || isEqual(value, editionValue)) {
       return;
     }
-    setEditionValue(!value?.nationCode ? { ...value, nationCode: getBrowserNation() } : value);
+    setEditionValue(
+      !value?.nationCode
+        ? { ...value, nationCode: getNationCodeFromBrowser(telephoneCountryCodes) }
+        : value,
+    );
   }, [value]);
 
   const handleSelect = (option: any) => {
@@ -96,7 +102,7 @@ const PhoneNumberComponent = function ({
         size={size}
         readOnly={readOnly}
         disabled={disabled}
-        value={editionValue?.nationCode ?? getBrowserNation()}
+        value={editionValue?.nationCode ?? getNationCodeFromBrowser(telephoneCountryCodes)}
       />
       <Input
         value={editionValue?.number}

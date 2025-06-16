@@ -15,8 +15,8 @@ export default class CompaniesService {
   }
 
   // 회사 조회
-  static fetch(id: number) {
-    return httpService.get<Company>(`${PMSApiPrefix()}/companies/${id}`);
+  static fetch(code: string) {
+    return httpService.get<any>(`${PMSApiPrefix()}/companies/${code}`);
   }
 
   // 회사 생성
@@ -26,7 +26,7 @@ export default class CompaniesService {
 
   // 회사 수정
   static update(payload: Company) {
-    return httpService.post<Company>(`${PMSApiPrefix()}/companies`, payload);
+    return httpService.put<Company>(`${PMSApiPrefix()}/companies/${payload.companyCode}`, payload);
   }
 
   // 회사 삭제
@@ -35,8 +35,8 @@ export default class CompaniesService {
   }
 
   // 사업자등록번호로 회사 조회
-  static fetchBrn(id: number) {
-    return httpService.get<Company>(`${PMSApiPrefix()}/companies/brn/${id}`);
+  static fetchBrn(brn: string) {
+    return httpService.get<Company>(`${PMSApiPrefix()}/companies/brn/${brn}`);
   }
 
   static existsCode(params: any) {
