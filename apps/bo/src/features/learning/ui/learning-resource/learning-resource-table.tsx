@@ -20,8 +20,10 @@ import { ProgramGuideModal } from './learning-resource-program-guide-modal';
 import { BatchSettingModal } from './learning-resource-batch-setting-modal';
 import { map, some, uniq } from 'lodash';
 import { CopyModal } from './learning-resource-copy-modal';
+import { useRouter } from '@tanstack/react-router';
 
 function LearningResourceTableComponent() {
+  const router = useRouter();
   const { open: openModal, alert } = useModal();
 
   const searchConfig: any = {
@@ -167,6 +169,19 @@ function LearningResourceTableComponent() {
         meta: {
           size: 'auto',
         },
+        render: (_: any) => (
+          <Button
+            className="link"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              // 유형별 상세 화면으로 이동해야 함
+              router.navigate({ to: '/learning_test/resource/view/video' });
+            }}
+          >
+            {_.getValue()}
+          </Button>
+        ),
       },
       {
         size: 127,
@@ -231,7 +246,6 @@ function LearningResourceTableComponent() {
         render: (_: any) => (
           <Button
             className="link"
-            label={t('LABEL.form.label.look')}
             onClick={(e) => {
               e.stopPropagation();
               openModal({
@@ -244,7 +258,9 @@ function LearningResourceTableComponent() {
                 ),
               });
             }}
-          />
+          >
+            {t('LABEL.form.label.look')}
+          </Button>
         ),
       },
     ],
