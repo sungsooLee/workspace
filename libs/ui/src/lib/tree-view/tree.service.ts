@@ -523,3 +523,24 @@ export const getNodeMaxDepth = (node: TreeNode): number => {
 export const findRootNode = (treeData: TreeNode[]): TreeNode | null => {
   return treeData.length > 0 ? treeData[0] : null;
 };
+
+/**
+ * 함수 호출을 제한하는 throttle 유틸리티
+ * @param func 실행할 함수
+ * @param limit 제한 시간 (밀리초)
+ * @returns throttled 함수
+ */
+export const throttle = <T extends (...args: any[]) => any>(
+  func: T,
+  limit: number,
+): ((...args: Parameters<T>) => void) => {
+  let inThrottle: boolean;
+
+  return function (this: any, ...args: Parameters<T>) {
+    if (!inThrottle) {
+      func.apply(this, args);
+      inThrottle = true;
+      setTimeout(() => (inThrottle = false), limit);
+    }
+  };
+};

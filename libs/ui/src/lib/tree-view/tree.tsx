@@ -20,6 +20,7 @@ import {
   insertNodeAtPosition,
   isValidDrop,
   removeNodeByKey,
+  throttle,
 } from './tree.service';
 import { useTreeContext } from './tree.context';
 import {
@@ -685,6 +686,12 @@ const TreeView = ({
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const [draggedNodeKey, setDraggedNodeKey] = useState<string | null>(null);
 
+  // 자동 스크롤을 위한 상태와 ref
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const autoScrollIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [isDraggingActive, setIsDraggingActive] = useState(false);
+  const [scrollDirection, setScrollDirection] = useState<'up' | 'down' | null>(null);
+
   const selectedNode =
     externalSelectedNode !== undefined ? externalSelectedNode : internalSelectedNode;
   const expandedKeys = externalExpandedKeys || internalExpandedKeys;
@@ -695,6 +702,38 @@ const TreeView = ({
   useEffect(() => {
     setInitialData(JSON.parse(JSON.stringify(data)));
   }, [data]);
+
+  // 자동 스크롤 함수
+  const startAutoScroll = useCallback((direction: 'up' | 'down', intensity = 1) => {
+    if (autoScrollIntervalRef.current) {
+      clearInterval(autoScrollIntervalRef.current);
+    }
+
+    const baseScrollAmount = 8; // 기본 스크롤 속도
+    const scrollAmount = baseScrollAmount * intensity; // 거리에 따른 속도 조절
+
+    autoScrollIntervalRef.current = setInterval(() => {
+      if (scrollContainerRef.current) {
+        const container = scrollContainerRef.current;
+        const currentScrollTop = container.scrollTop;
+        const maxScroll = container.scrollHeight - container.clientHeight;
+
+        if (direction === 'up' && currentScrollTop > 0) {
+          container.scrollTop = Math.max(0, currentScrollTop - scrollAmount);
+        } else if (direction === 'down' && currentScrollTop < maxScroll) {
+          container.scrollTop = Math.min(maxScroll, currentScrollTop + scrollAmount);
+        }
+      }
+    }, 16); // 60fps
+  }, []);
+
+  const stopAutoScroll = useCallback(() => {
+    if (autoScrollIntervalRef.current) {
+      clearInterval(autoScrollIntervalRef.current);
+      autoScrollIntervalRef.current = null;
+    }
+    setScrollDirection(null);
+  }, []);
 
   // 확장된 키를 안전하게 업데이트하는 함수
   const updateExpandedKeys = useCallback(
@@ -798,6 +837,43 @@ const TreeView = ({
 
     setTreeData(refreshedData);
   }, [initialData, isSearching, searchKeyword]);
+
+  const handleAutoScrollOnDrag = useMemo(
+    () =>
+      throttle((e: DragEvent) => {
+        if (!scrollContainerRef.current || !isDraggingActive) return;
+
+        const container = scrollContainerRef.current;
+        const rect = container.getBoundingClientRect();
+        const scrollZoneHeight = 60;
+        const mouseY = e.clientY;
+
+        if (mouseY < rect.top || mouseY > rect.bottom) {
+          if (scrollDirection) stopAutoScroll();
+          return;
+        }
+
+        const distanceFromTop = mouseY - rect.top;
+        const distanceFromBottom = rect.bottom - mouseY;
+
+        if (distanceFromTop <= scrollZoneHeight) {
+          const intensity = 1 + (scrollZoneHeight - distanceFromTop) / scrollZoneHeight;
+          if (scrollDirection !== 'up') {
+            setScrollDirection('up');
+            startAutoScroll('up', intensity);
+          }
+        } else if (distanceFromBottom <= scrollZoneHeight) {
+          const intensity = 1 + (scrollZoneHeight - distanceFromBottom) / scrollZoneHeight;
+          if (scrollDirection !== 'down') {
+            setScrollDirection('down');
+            startAutoScroll('down', intensity);
+          }
+        } else if (scrollDirection) {
+          stopAutoScroll();
+        }
+      }, 50),
+    [isDraggingActive, scrollDirection, startAutoScroll, stopAutoScroll],
+  );
 
   // 모든 노드 키 가져오기
   const getAllNodeKeys = useCallback((nodes: TreeNode[]): string[] => {
@@ -996,6 +1072,8 @@ const TreeView = ({
     // 로컬 상태 업데이트
     setDraggedNode(enhancedNode);
     setDraggedNodeKey(node.key);
+    setIsDraggingActive(true); // 추가
+
     // TreeContext 상태 업데이트
     if (treeContext && treeContext.setDragState) {
       // 깊은 복사를 통해 새 객체 생성
@@ -1060,6 +1138,27 @@ const TreeView = ({
       };
     }
   }, [draggedNodeKey]);
+
+  // 전역 드래그 이벤트 리스너 등록
+  useEffect(() => {
+    if (isDraggingActive) {
+      const handleDragEnd = () => {
+        setIsDraggingActive(false);
+        stopAutoScroll();
+      };
+
+      document.addEventListener('dragover', handleAutoScrollOnDrag);
+      document.addEventListener('dragend', handleDragEnd);
+      document.addEventListener('drop', handleDragEnd);
+
+      return () => {
+        document.removeEventListener('dragover', handleAutoScrollOnDrag);
+        document.removeEventListener('dragend', handleDragEnd);
+        document.removeEventListener('drop', handleDragEnd);
+        stopAutoScroll();
+      };
+    }
+  }, [isDraggingActive, handleAutoScrollOnDrag, stopAutoScroll]);
 
   return (
     <div
