@@ -2,8 +2,8 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { queryOptions, mutateOptions } from './companies.queries';
 
-export function useFetchCompanies() {
-  return useQuery(queryOptions.all());
+export function useFetchCompanies(params: any) {
+  return useQuery(queryOptions.all(params));
 }
 
 export function useCheckExistsCompanyCode(options: any) {
