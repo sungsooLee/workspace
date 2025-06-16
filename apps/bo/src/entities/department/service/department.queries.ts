@@ -5,7 +5,7 @@ import { DepartmentService } from '../api/department';
 export const queryKeys = {
   list: ['department-page'] as const,
   all: ['department-all'] as const,
-  tree: (companyCode: string) => ['department-tree', companyCode],
+  tree: (companyCode: string[]) => ['department-tree', ...companyCode],
 };
 
 export const queryOptions = {
@@ -16,7 +16,7 @@ export const queryOptions = {
     staleTime: 0,
   }),
 
-  tree: (companyCode: string) => ({
+  tree: (companyCode: string[]) => ({
     queryKey: queryKeys.tree(companyCode),
     queryFn: () =>
       companyCode ? DepartmentService.getDepartmentTree(companyCode) : getQuerySkipToken(),
