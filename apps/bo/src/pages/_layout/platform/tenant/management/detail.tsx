@@ -26,6 +26,7 @@ export const Route = createFileRoute('/_layout/platform/tenant/management/detail
 });
 
 const buttonShowTabs: string[] = [EnTenantDetailTabKey.base, EnTenantDetailTabKey.attribute];
+const buttonShowMultiLang: string[] = [EnTenantDetailTabKey.menu, EnTenantDetailTabKey.category];
 /**
  * 화면 번호:
  * 테넌트 기본정보 (NLP_BO_TMS_1002),
@@ -163,7 +164,7 @@ function RouteComponent() {
     <PageContainer>
       <ContentsButtons>
         <LinkBox>
-          {EnTenantDetailTabKey.menu === selectedTabKey && (
+          {buttonShowMultiLang.includes(selectedTabKey) && (
             <Button
               type="button"
               variant="point"
