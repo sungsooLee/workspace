@@ -2,6 +2,7 @@ import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 import { getBrowserLang, cookieService } from '@learnway/shared';
+import dayjs from 'dayjs';
 
 export function initI18N(resources: any) {
   i18next.use(initReactI18next).init({
@@ -16,6 +17,8 @@ export function initI18N(resources: any) {
     },
     resources,
   });
+  console.log('getBrowserLang()', getDefaultLang());
+  dayjs.locale(getDefaultLang());
 }
 
 export function getDefaultLang() {

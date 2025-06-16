@@ -10,8 +10,6 @@ import { useAuthSignin } from '../features/auth';
 import '../styles.css';
 import { QueryClient } from '@tanstack/react-query';
 import { queryOptions } from '../entities/platform/service/i18n-resource.queries';
-import dayjs from 'dayjs';
-import { getBrowserLang } from '@learnway/shared';
 
 declare global {
   interface Window {
@@ -61,8 +59,7 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
     if (!i18nData) {
       return;
     }
-    console.log('getBrowserLang()', getBrowserLang());
-    dayjs.locale(getBrowserLang());
+
     initI18N(i18nData);
   }, [i18nData]);
 
