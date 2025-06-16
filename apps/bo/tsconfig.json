@@ -10,7 +10,6 @@
     "paths": {
       "@learnway/config": ["../../libs/config/src/index.ts"],
       "@learnway/config/*": ["../../libs/config/src/lib/*"],
-      "@learnway/editor": ["../../libs/editor/src/index.ts"],
       "@learnway/hooks": ["../../libs/hooks/src/index.ts"],
       "@learnway/icons": ["../../libs/icons/src/index.ts"],
       "@learnway/shared": ["../../libs/shared/src/index.ts"],

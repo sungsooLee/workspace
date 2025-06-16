@@ -8,13 +8,14 @@ import { Button } from '../button/button';
 
 export interface ChipComponentProps extends PropsWithChildren {
   option: any;
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'invalid';
   size?: 'ts' | 'xs' | 'sm' | 'md' | 'lg'; //  ts(20), xs(28) , sm(32) , md(36), lg(40)
   className?: string;
   prefixCharacter?: string;
   hideCloseButton?: boolean;
   labelField?: string;
   valueField?: string;
+  disabled?: boolean; // disabled 상태 유무
   onClick?: (option: any) => void;
   onDelete?: (option: any) => void;
 }
@@ -29,6 +30,7 @@ const ChipComponent = forwardRef<HTMLElement, ChipComponentProps>(
       labelField = 'label',
       valueField = 'value',
       option,
+      disabled = false,
       onClick,
       onDelete,
       hideCloseButton,
@@ -58,6 +60,7 @@ const ChipComponent = forwardRef<HTMLElement, ChipComponentProps>(
           styles.chips,
           variant && styles[variant],
           size && styles[size],
+          disabled && styles.disabled,
           className,
           'nlp--chips',
         )}

@@ -284,9 +284,7 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
   ) => {
     const optionsWithPreset = useMemo(
       () => [
-        ...(presetOptionLabel
-          ? [{ value: isMulti ? ALL_OPTION : '', label: presetOptionLabel }]
-          : []),
+        ...(presetOptionLabel ? [{ value: ALL_OPTION, label: presetOptionLabel }] : []),
         ...options,
       ],
       [options, isMulti, presetOptionLabel],
@@ -294,12 +292,13 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
 
     useEffect(() => {
       if (
+        onChange &&
         isMulti &&
         presetOptionLabel &&
         value.includes(ALL_OPTION) &&
         value.length !== optionsWithPreset.length
       ) {
-        onChange?.(map(optionsWithPreset, 'value'));
+        onChange(map(optionsWithPreset, 'value'));
       }
     }, [value]);
 

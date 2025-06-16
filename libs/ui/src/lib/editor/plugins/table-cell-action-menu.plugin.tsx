@@ -53,7 +53,7 @@ import { createPortal } from 'react-dom';
 import { IcoChevronDown as ChevronDown } from '@learnway/icons';
 import invariant from './invariant';
 
-import useModal from '../hooks/use-modal';
+import useEditorModal from '../hooks/use-editor-modal';
 import ColorPicker from '../components/ColorPicker';
 import Popover, { PopoverItem } from '../context/popover.context';
 
@@ -462,7 +462,8 @@ function TableActionMenu({
           type="button"
           className="item"
           onClick={() => mergeTableCellsAtSelection()}
-          data-test-id="table-merge-cells">
+          data-test-id="table-merge-cells"
+        >
           <span className="text">Merge cells</span>
         </button>
       );
@@ -472,7 +473,8 @@ function TableActionMenu({
           type="button"
           className="item"
           onClick={() => unmergeTableCellsAtSelection()}
-          data-test-id="table-unmerge-cells">
+          data-test-id="table-unmerge-cells"
+        >
           <span className="text">Unmerge cells</span>
         </button>
       );
@@ -485,7 +487,8 @@ function TableActionMenu({
       ref={dropDownRef}
       onClick={(e) => {
         e.stopPropagation();
-      }}>
+      }}
+    >
       {mergeCellButton}
       <button
         type="button"
@@ -495,14 +498,16 @@ function TableActionMenu({
             <ColorPicker color={backgroundColor} onChange={handleCellBackgroundColor} />
           ))
         }
-        data-test-id="table-background-color">
+        data-test-id="table-background-color"
+      >
         <span className="text">Background color</span>
       </button>
       <button
         type="button"
         className="item"
         onClick={() => toggleRowStriping()}
-        data-test-id="table-row-striping">
+        data-test-id="table-row-striping"
+      >
         <span className="text">Toggle Row Striping</span>
       </button>
       <hr />
@@ -510,7 +515,8 @@ function TableActionMenu({
         type="button"
         className="item"
         onClick={() => insertTableRowAtSelection(false)}
-        data-test-id="table-insert-row-above">
+        data-test-id="table-insert-row-above"
+      >
         <span className="text">
           Insert {selectionCounts.rows === 1 ? 'row' : `${selectionCounts.rows} rows`} above
         </span>
@@ -519,7 +525,8 @@ function TableActionMenu({
         type="button"
         className="item"
         onClick={() => insertTableRowAtSelection(true)}
-        data-test-id="table-insert-row-below">
+        data-test-id="table-insert-row-below"
+      >
         <span className="text">
           Insert {selectionCounts.rows === 1 ? 'row' : `${selectionCounts.rows} rows`} below
         </span>
@@ -529,7 +536,8 @@ function TableActionMenu({
         type="button"
         className="item"
         onClick={() => insertTableColumnAtSelection(false)}
-        data-test-id="table-insert-column-before">
+        data-test-id="table-insert-column-before"
+      >
         <span className="text">
           Insert {selectionCounts.columns === 1 ? 'column' : `${selectionCounts.columns} columns`}{' '}
           left
@@ -539,7 +547,8 @@ function TableActionMenu({
         type="button"
         className="item"
         onClick={() => insertTableColumnAtSelection(true)}
-        data-test-id="table-insert-column-after">
+        data-test-id="table-insert-column-after"
+      >
         <span className="text">
           Insert {selectionCounts.columns === 1 ? 'column' : `${selectionCounts.columns} columns`}{' '}
           right
@@ -550,21 +559,24 @@ function TableActionMenu({
         type="button"
         className="item"
         onClick={() => deleteTableColumnAtSelection()}
-        data-test-id="table-delete-columns">
+        data-test-id="table-delete-columns"
+      >
         <span className="text">Delete column</span>
       </button>
       <button
         type="button"
         className="item"
         onClick={() => deleteTableRowAtSelection()}
-        data-test-id="table-delete-rows">
+        data-test-id="table-delete-rows"
+      >
         <span className="text">Delete row</span>
       </button>
       <button
         type="button"
         className="item"
         onClick={() => deleteTableAtSelection()}
-        data-test-id="table-delete">
+        data-test-id="table-delete"
+      >
         <span className="text">Delete table</span>
       </button>
       <hr />
@@ -580,7 +592,8 @@ function TableActionMenu({
         type="button"
         className="item"
         onClick={() => toggleTableColumnIsHeader()}
-        data-test-id="table-column-header">
+        data-test-id="table-column-header"
+      >
         <span className="text">
           {(tableCellNode.__headerState & TableCellHeaderStates.COLUMN) ===
           TableCellHeaderStates.COLUMN
@@ -609,7 +622,7 @@ function TableCellActionMenuContainer({
 
   const [tableCellNode, setTableMenuCellNode] = useState<TableCellNode | null>(null);
 
-  const [colorPickerModal, showColorPickerModal] = useModal();
+  const [colorPickerModal, showColorPickerModal] = useEditorModal();
 
   const $moveMenu = useCallback(() => {
     const menu = menuButtonRef.current;
@@ -746,7 +759,8 @@ function TableCellActionMenuContainer({
               e.stopPropagation();
               setIsMenuOpen(!isMenuOpen);
             }}
-            ref={menuRootRef}>
+            ref={menuRootRef}
+          >
             <ChevronDown />
           </button>
           {colorPickerModal}

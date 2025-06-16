@@ -21,6 +21,9 @@ import {
   Textarea,
   Tooltip,
   useModal,
+  ThumbnailImageUpload,
+  ImageOption,
+  ChipList,
 } from '@learnway/ui';
 import { IcoAlertCircle, IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';
 
@@ -35,6 +38,7 @@ import popSearchStyles from '@learnway/styles/bo/assets/styles/modules/popup-sea
 
 /* images */
 import previewImg from '../../../../assets/images/temp/img_exam_basic.jpg';
+import selectedImg from '../../../../assets/images/thumb/img_thumb_hyundai.jpg';
 
 const TestInfoComponent: FC<{}> = ({}) => {
   const { close: closeModal } = useModal();
@@ -297,6 +301,12 @@ const TestInfoComponent: FC<{}> = ({}) => {
   const handleCheckedChange = (id: number) => (checked: boolean) => {
     setChecked((prev) => ({ ...prev, [id]: checked }));
   };
+  const [selectedValues2, setSelectedValues2] = useState<string[]>([]);
+  const options2 = [
+    { value: 'option1', label: '전체' },
+    { value: 'option2', label: '옵션 2' },
+    { value: 'option3', label: '옵션 3' },
+  ];
   return (
     <div className={styles.wrap}>
       <NoticeBox
@@ -307,7 +317,8 @@ const TestInfoComponent: FC<{}> = ({}) => {
       />
       <div className={styles.row_wrap}>
         <div className={styles.main_container}>
-          <FormSubTitle label={'기본 정보'} />
+          {/* 퍼블수정 20250613 : lineType 추가 */}
+          <FormSubTitle label={'기본 정보'} lineType={'dark'} />
           <ContentsRow>
             {/* form_item */}
             <div className={formStyles.form_item}>
@@ -329,13 +340,12 @@ const TestInfoComponent: FC<{}> = ({}) => {
             {/* form_item */}
             <div className={formStyles.form_item}>
               <label htmlFor="name-channel" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>채널</span>
+                <span className={formStyles.form_text}>채널명</span>
                 {/* 필수 케이스 */}
                 <span className={cn(formStyles.status, formStyles.required)}>
                   <IcoFormRequired width={12} height={12} />
                 </span>
               </label>
-              {/* 퍼블수정 20240317 : Modal 수정 S  */}
               <div className={formStyles.input_box}>
                 <InputModalSelectorFormField
                   modalConfig={{
@@ -344,7 +354,26 @@ const TestInfoComponent: FC<{}> = ({}) => {
                   }}
                 />
               </div>
-              {/* 퍼블수정 20240317 : Modal 수정 E  */}
+            </div>
+            {/* form_item */}
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-channel" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>언어</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Dropdown
+                  options={options2}
+                  value={selectedValues2}
+                  onChange={(selected) => setSelectedValues2(selected)}
+                  variant="default"
+                  placeholder="선택"
+                  size={'sm'}
+                />
+              </div>
             </div>
           </ContentsRow>
           <ContentsRow>
@@ -499,6 +528,57 @@ const TestInfoComponent: FC<{}> = ({}) => {
               </ContentsRow>
             </div>
           )}
+          {/* 퍼블수정 20250613 썸네일 추가 */}
+          <ContentsRow>
+            {/* form_item */}
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-tenantLog" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>{'썸네일'}</span>
+                {/* 필수 케이스 */}
+                <span className={cn(dynamicFormStyles.status, dynamicFormStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <ThumbnailImageUpload
+                  options={[{ id: '1', path: selectedImg }]}
+                  onChange={(options: ImageOption[]) => console.log('onChange', options)}
+                  onCheckedChange={(options: ImageOption[]) =>
+                    console.log('onCheckedChange', options)
+                  }
+                />
+              </div>
+              <p className={cn(formStyles.guide_text)}>
+                학습자원을 표현하는 썸네일을 선택하거나 업로드 하세요. (미선택 시 자동 선택)
+              </p>
+            </div>
+          </ContentsRow>
+          {/* 퍼블수정 20250613 태그 추가 */}
+          <ContentsRow>
+            {/* form_item */}
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-tenantLog" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>{'태그'}</span>
+                {/* 필수 케이스 */}
+                <span className={cn(dynamicFormStyles.status, dynamicFormStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+                <Tooltip
+                  className={formStyles.tooltip}
+                  side="bottom"
+                  align="start"
+                  content={'태그.'}
+                >
+                  <Button onlyIcon>
+                    <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
+                  </Button>
+                </Tooltip>
+              </label>
+              <div className={formStyles.input_box}>
+                <ChipList options={['김현대(1234567)']} wordwrap={true} />
+              </div>
+            </div>
+          </ContentsRow>
           <ContentsRow type="horizontal">
             <div className={formStyles.form_item}>
               <label htmlFor="name-share" className={formStyles.form_label}>
@@ -526,7 +606,8 @@ const TestInfoComponent: FC<{}> = ({}) => {
               </div>
             </div>
           </ContentsRow>
-          <FormSubTitle label={'시험지 상세 설정'} />
+          {/* 퍼블수정 20250613 : lineType 추가 */}
+          <FormSubTitle label={'시험지 상세 설정'} lineType={'dark'} />
           <ContentsRow>
             <div className={formStyles.form_item}>
               <label htmlFor="name-exam01" className={formStyles.form_label}>

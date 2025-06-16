@@ -10,7 +10,7 @@ import { $getSelection } from 'lexical';
 import { insertItems } from '../../../config/toolbar.config';
 import Popover, { PopoverItem } from '../../../context/popover.context';
 import { ReactComponent as PlusIcon } from '../../../assets/images/icons/plus.svg';
-import { useModal } from '../../../context/modal.context';
+import { useModalContext } from '../../../context/modal.context';
 import Image from './image';
 import Video from './video';
 import Table from './table';
@@ -26,7 +26,7 @@ import { $createReactPlayerNode } from '../../../nodes/react-player.node';
  */
 const Insert = () => {
   const [editor] = useLexicalComposerContext();
-  const { openModal, closeModal } = useModal();
+  const { openModal, closeModal } = useModalContext();
 
   const handleAddImage = (payload: InsertImagePayload) => {
     editor.dispatchCommand(INSERT_IMAGE_COMMAND, payload);
@@ -74,12 +74,14 @@ const Insert = () => {
       <Popover
         className={`'h-[36px] p-2' gap-2`}
         icon={<PlusIcon className={'h-[20px] w-[20px]'} />}
-        label={'Insert'}>
+        label={'Insert'}
+      >
         {insertItems.map((item) => (
           <PopoverItem
             key={item.value}
             className={`hover:bg-gray-3 flex h-full w-full items-center gap-2 rounded-lg px-2 py-1`}
-            onClick={() => handleChangeType(item.value)}>
+            onClick={() => handleChangeType(item.value)}
+          >
             <>
               <item.icon />
               <span>{item.label}</span>

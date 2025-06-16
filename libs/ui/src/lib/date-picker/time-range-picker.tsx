@@ -16,24 +16,10 @@ export interface TimeRangeFieldProps extends Omit<DatePickerComponentProps, 'val
 }
 
 const TimeRangePickerComponent = forwardRef<HTMLDivElement, TimeRangeFieldProps>(
-  (
-    {
-      //dateTimeFormat = DATE_TIME_FORMAT.HOUR_MIN,
-      value = { from: new Date(), to: undefined },
-      onChange,
-      minuteStep,
-      size,
-      ...props
-    },
-    ref,
-  ) => {
+  ({ value = { from: new Date(), to: undefined }, onChange, minuteStep, size, ...props }, ref) => {
     const [startDate, setStartDate] = useState<Date | undefined>(value.from);
     const [endDate, setEndDate] = useState<Date | undefined>(value.to);
     const prevValueRef = useRef<DateRange>(value);
-
-    // const dateFormat = useCreation(() => {
-    //   return getDateTimeFormat(dateTimeFormat);
-    // }, [dateTimeFormat]);
 
     const handleStartChange = (date: any) => {
       setStartDate(date);

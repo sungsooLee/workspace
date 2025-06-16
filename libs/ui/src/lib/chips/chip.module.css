@@ -13,6 +13,14 @@
         }
       }
     }
+    &.invalid {
+      @apply bg-[#FFEDED] text-[var(--status1)];
+      .label {
+        @apply text-[var(--status1)];
+      }
+    }
+    &.disabled {
+    }
   }
   &.chips_box {
     @apply min-w-full rounded-[4px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] p-[12px] pt-[6px];

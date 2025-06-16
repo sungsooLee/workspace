@@ -1,9 +1,10 @@
 export interface Tenant {
   tenantId: number;
+  tenantSite: string;
   tenantName: string;
   logoImageUrl: string;
-  tenantRoleList: TenantRole[];
-  tenantBillingTag: string;
+  tenantUserList: any[];
+  tenantTagList: TenantTag[];
   companyTenantList: TenantCompany[];
   isUsed: boolean;
   tenantDesc: string;
@@ -12,10 +13,16 @@ export interface Tenant {
   isApp: boolean;
   isCommonCategory: boolean;
   isTenantCategory: boolean;
-  tenantLanguageList: string[];
-  tenantUserList: any[];
+  langCountryCodeTypeList: string[];
+  createdBy: string;
+  createdDate: Date;
+  lastModifiedBy: string;
+  modifiedDate: Date;
 }
 
+export interface TenantTag {
+  tagName: string;
+}
 export interface TenantRole {
   tenantId: number;
   roleId: number;

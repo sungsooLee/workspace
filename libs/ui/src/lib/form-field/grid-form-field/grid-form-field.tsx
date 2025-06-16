@@ -2,7 +2,7 @@ import React, { forwardRef, useState } from 'react';
 import styles from './grid-form-field.module.css';
 import { cn, getRandomId } from '@learnway/shared';
 import { BaseFormFieldProps } from '@learnway/hooks';
-import { GridBox, GridBoxProps } from '@learnway/ui';
+import { GridBox, GridBoxProps, TableBox } from '@learnway/ui';
 
 interface GridFormFieldComponentProps extends BaseFormFieldProps<any[]> {
   /** grid box Props */
@@ -29,7 +29,7 @@ const GridFormFieldComponent = forwardRef<HTMLInputElement, GridFormFieldCompone
 
     return (
       <div className={cn(styles.start)} role="button">
-        <GridBox
+        <TableBox
           {...gridProps}
           onAddClick={handleAddClick}
           onRemoveClick={handleRemoveClick}

@@ -1,12 +1,13 @@
 import React, { forwardRef, useEffect } from 'react';
-import { ImageOption, ThumbnailImageUpload } from '@learnway/ui'; // @learnway/ui에서 ThumbnailImageUpload 컴포넌트 import
-import { BaseFormFieldProps } from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
+import { ImageOption, ThumbnailImageUpload, ThumbnailImageUploadProps } from '@learnway/ui'; // @learnway/ui에서 ThumbnailImageUpload 컴포넌트 import
+import { S3UploaderConfig, BaseFormFieldProps } from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
 
 /**
  * ThumbnailImageUploadFormField 컴포넌트의 props 인터페이스
  * 폼 필드로서 ThumbnailImageUpload 컴포넌트를 래핑하여 폼 시스템과 통합합니다.
  */
 interface ThumbnailImageUploadFormFieldProps extends BaseFormFieldProps<string[]> {
+  uploadConfig?: S3UploaderConfig;
   /**
    * 더미 속성 (현재 코드에서 사용되지 않음)
    * @deprecated 이 prop은 현재 코드에서 사용되지 않습니다.
@@ -29,6 +30,7 @@ const ThumbnailImageUploadFormFieldComponent = forwardRef<
     {
       value, // 폼 필드의 현재 값 (string[] 타입, 이미지 경로 배열)
       onChange, // 폼 필드 값이 변경될 때 호출되는 콜백 함수
+      uploadConfig,
       ...props // 나머지 HTMLDivElement 속성들
     },
     ref, // forwardRef로 전달받은 Ref 객체
@@ -62,6 +64,7 @@ const ThumbnailImageUploadFormFieldComponent = forwardRef<
         ref={ref} // forwardRef로 받은 Ref를 ThumbnailImageUpload 컴포넌트에 연결
         options={options} // 내부 상태의 ImageOption[] 배열을 options prop으로 전달
         onChange={handleChange} // ThumbnailImageUpload의 onChange 이벤트를 커스텀 핸들러와 연결
+        uploadConfig={uploadConfig}
         {...props} // ThumbnailImageUpload에 전달될 수 있는 나머지 props (예: className)
       />
     );

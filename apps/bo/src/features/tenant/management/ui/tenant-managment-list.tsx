@@ -11,6 +11,13 @@ import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 
 import { tenantQueryOptions } from '@entities/tenant/service/tenant.queries';
+import { Tenant } from '@types';
+
+const _global = {
+  linkClick: (tenantId: number, tenantName: string) => {
+    return;
+  },
+};
 
 /**
  * 화면번호 : NLP_BO_TMS_1000
@@ -20,7 +27,7 @@ import { tenantQueryOptions } from '@entities/tenant/service/tenant.queries';
 const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
   const router = useRouter();
   const routerState = useRouterState();
-  const handleTenantNameClick = (tenantId: number, tenantName: string) => {
+  _global.linkClick = (tenantId: number, tenantName: string) => {
     router.navigate({
       to: `${rootPath}/tenant/management/detail`,
       state: {
@@ -30,125 +37,6 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
       },
     });
   };
-
-  const gridConfig = {
-    query: tenantQueryOptions.list,
-    columns: [
-      {
-        name: 'no1',
-        label: 'NO.',
-        type: 'numbering',
-      },
-    ],
-    data: [],
-
-    pagination: {
-      pageSize: 20,
-      pageIndex: 0,
-      totalRows: 0,
-    },
-  };
-
-  const columnHelper = createColumnHelper<any>();
-  const columns = [
-    columnHelper.accessor('tenantName', {
-      id: 'tenantName',
-      cell: (info) => {
-        return (
-          <Button
-            className="link"
-            onClick={() =>
-              handleTenantNameClick(info.row.original.tenantId, info.row.original.tenantName)
-            }
-          >
-            {info.row.original.tenantName}
-          </Button>
-        );
-      },
-      header: t('테넌트명'),
-      size: 152,
-    }),
-    columnHelper.accessor('tenantSite', {
-      id: 'tenantSite',
-      cell: (info) => (
-        <Link to={info.row.original.tenantSite} className="link">
-          {info.row.original.tenantId}
-        </Link>
-      ),
-      header: t('테넌트 사이트'),
-      size: 240,
-    }),
-
-    columnHelper.accessor('companyTenantList', {
-      id: 'companyTenantList',
-      cell: (info) => {
-        const companyNames = info.row.original.companyTenantList.map((item: any) => {
-          return item.companyName;
-        });
-
-        return companyNames.length > 1
-          ? t('{{name}}외 {{count}}', {
-              name: companyNames[0],
-              count: companyNames.length - 1,
-            })
-          : companyNames.toString();
-      },
-      header: t('회사'),
-      size: 200,
-    }),
-    columnHelper.accessor('tenantRoleList', {
-      id: 'tenantRoleList',
-      cell: (info) => {
-        const tenantRoleList = info.row.original.tenantRoleList.map((item: any) => {
-          return item.roleName;
-        });
-        return tenantRoleList.length > 1
-          ? t('{{name}}외 {{count}}', { name: tenantRoleList[0], count: tenantRoleList.length - 1 })
-          : tenantRoleList.toString();
-      },
-      header: t('테넌트 담당자'),
-      size: 120,
-    }),
-    columnHelper.accessor('isUsed', {
-      id: 'isUsed',
-      cell: (info) => {
-        return info.row.original.isUsed ? t('사용') : t('미사용');
-      },
-      header: t('사용여부'),
-      size: 104,
-    }),
-    columnHelper.accessor('createdBy', {
-      id: 'createdBy',
-      header: t('등록자'),
-      size: 104,
-    }),
-    columnHelper.accessor('createdDate', {
-      id: 'createdDate',
-      cell: (info) => {
-        return getDateToString(
-          new Date(info.row.original.createdDate),
-          DATE_TIME_FORMAT.DATETIME_SEC,
-        );
-      },
-      header: t('등록일'),
-      size: 152,
-    }),
-    columnHelper.accessor('lastModifiedBy', {
-      header: '수정자',
-      size: 104,
-    }),
-    columnHelper.accessor('createdDate', {
-      id: 'createdDate',
-      cell: (info) => {
-        return getDateToString(
-          new Date(info.row.original.modifiedDate),
-          DATE_TIME_FORMAT.DATETIME_SEC,
-        );
-      },
-      header: t('등록일'),
-      size: 152,
-    }),
-  ] as ColumnDef<any, unknown>[];
 
   const {
     provider: searchProvider,
@@ -249,3 +137,103 @@ const searchConfig: SearchBoxConfig = {
     ],
   ],
 };
+
+const gridConfig = {
+  query: tenantQueryOptions.list,
+  columns: [],
+  data: [],
+
+  pagination: {
+    pageSize: 20,
+    pageIndex: 0,
+    totalRows: 0,
+  },
+};
+
+const columnHelper = createColumnHelper<Tenant>();
+const columns = [
+  columnHelper.accessor('tenantName', {
+    id: 'tenantName',
+    cell: (info) => {
+      return (
+        <Button
+          className="link"
+          onClick={() =>
+            _global.linkClick(info.row.original.tenantId, info.row.original.tenantName)
+          }
+        >
+          {info.getValue()}
+        </Button>
+      );
+    },
+    header: t('테넌트명'),
+    size: 192,
+  }),
+  columnHelper.accessor('tenantSite', {
+    id: 'tenantSite',
+    cell: (info) => (
+      <Link to={info.getValue()} className="link">
+        {info.row.original.tenantId}
+      </Link>
+    ),
+    header: t('테넌트 사이트'),
+    size: 192,
+  }),
+
+  columnHelper.accessor('companyTenantList', {
+    id: 'companyTenantList',
+    cell: (info) =>
+      info.getValue() &&
+      info
+        .getValue()
+        .map((item) => item.companyName)
+        .join(','),
+    header: t('회사'),
+    size: 200,
+  }),
+  columnHelper.accessor('tenantUserList', {
+    id: 'tenantUserList',
+    cell: (info) =>
+      info.getValue() &&
+      info
+        .getValue()
+        .map((item) => item.userName)
+        .join(','),
+    header: t('테넌트담당자'),
+    size: 120,
+  }),
+  columnHelper.accessor('isUsed', {
+    id: 'isUsed',
+    cell: (info) => {
+      return info.row.original.isUsed ? t('사용') : t('미사용');
+    },
+    header: t('사용여부'),
+    size: 104,
+  }),
+  columnHelper.accessor('createdBy', {
+    id: 'createdBy',
+    header: t('등록자'),
+    size: 104,
+  }),
+  columnHelper.accessor('createdDate', {
+    id: 'createdDate',
+    cell: (info) => {
+      return getDateToString(new Date(info.getValue()), DATE_TIME_FORMAT.DATETIME_SEC);
+    },
+    header: t('등록일시'),
+    size: 192,
+  }),
+  columnHelper.accessor('lastModifiedBy', {
+    id: 'lastModifiedBy',
+    header: '수정자',
+    size: 104,
+  }),
+  columnHelper.accessor('modifiedDate', {
+    id: 'modifiedDate',
+    cell: (info) => {
+      return getDateToString(new Date(info.getValue()), DATE_TIME_FORMAT.DATETIME_SEC);
+    },
+    header: t('수정일시'),
+    size: 192,
+  }),
+] as ColumnDef<any, unknown>[];

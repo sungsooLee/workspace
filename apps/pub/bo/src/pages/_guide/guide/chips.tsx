@@ -70,6 +70,7 @@ import { Chip, ChipList, SelectOption } from '@learnway/ui';
               }}
               prefixCharacter="#"
               onClick={handleClick}
+              disabled
             />
             <Chip
               option={{
@@ -77,6 +78,7 @@ import { Chip, ChipList, SelectOption } from '@learnway/ui';
                 value: 'F',
               }}
               prefixCharacter="#"
+              variant={'invalid'}
             />
             <Chip
               option={{

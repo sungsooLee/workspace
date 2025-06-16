@@ -58,6 +58,7 @@ import { Route as LayoutPmsPopupTranslationCompleteImport } from './pages/_layou
 import { Route as LayoutPmsPopupLoginOptionImport } from './pages/_layout/pms/popup-login-option'
 import { Route as LayoutPmsPopChannelSearchImport } from './pages/_layout/pms/pop-channel-search'
 import { Route as LayoutPmsMenuTenantUserManagementImport } from './pages/_layout/pms/menu-tenant-user-management'
+import { Route as LayoutPmsMenuTenantUserEducationImport } from './pages/_layout/pms/menu-tenant-user-education'
 import { Route as LayoutPmsMenuTenantPlatformManagementRegistrationImport } from './pages/_layout/pms/menu-tenant-platform-management-registration'
 import { Route as LayoutPmsMenuTenantPlatformManagementBasicInfomationImport } from './pages/_layout/pms/menu-tenant-platform-management-basic-infomation'
 import { Route as LayoutPmsMenuTenantPlatformManagementImport } from './pages/_layout/pms/menu-tenant-platform-management'
@@ -91,6 +92,7 @@ import { Route as LayoutPmsCategoryMenagementImport } from './pages/_layout/pms/
 import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
 import { Route as LayoutMenu4Menu5Import } from './pages/_layout/menu4/menu5'
 import { Route as LayoutMenuMenuIdImport } from './pages/_layout/menu/$menuId'
+import { Route as LayoutLmsProcedureManagementImport } from './pages/_layout/lms/procedure-management'
 import { Route as LayoutLearningTestDetailImport } from './pages/_layout/learning/testDetail'
 import { Route as LayoutLearningPopupUploadImport } from './pages/_layout/learning/popup-upload'
 import { Route as LayoutLearningPopupQuestionDetailImport } from './pages/_layout/learning/popup-question-detail'
@@ -459,6 +461,13 @@ const LayoutPmsMenuTenantUserManagementRoute =
     getParentRoute: () => LayoutRoute,
   } as any)
 
+const LayoutPmsMenuTenantUserEducationRoute =
+  LayoutPmsMenuTenantUserEducationImport.update({
+    id: '/pms/menu-tenant-user-education',
+    path: '/pms/menu-tenant-user-education',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
 const LayoutPmsMenuTenantPlatformManagementRegistrationRoute =
   LayoutPmsMenuTenantPlatformManagementRegistrationImport.update({
     id: '/pms/menu-tenant-platform-management-registration',
@@ -684,6 +693,13 @@ const LayoutMenuMenuIdRoute = LayoutMenuMenuIdImport.update({
   path: '/menu/$menuId',
   getParentRoute: () => LayoutRoute,
 } as any)
+
+const LayoutLmsProcedureManagementRoute =
+  LayoutLmsProcedureManagementImport.update({
+    id: '/lms/procedure-management',
+    path: '/lms/procedure-management',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 
 const LayoutLearningTestDetailRoute = LayoutLearningTestDetailImport.update({
   id: '/learning/testDetail',
@@ -1900,6 +1916,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutLearningTestDetailImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/lms/procedure-management': {
+      id: '/_layout/lms/procedure-management'
+      path: '/lms/procedure-management'
+      fullPath: '/lms/procedure-management'
+      preLoaderRoute: typeof LayoutLmsProcedureManagementImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/menu/$menuId': {
       id: '/_layout/menu/$menuId'
       path: '/menu/$menuId'
@@ -2129,6 +2152,13 @@ declare module '@tanstack/react-router' {
       path: '/pms/menu-tenant-platform-management-registration'
       fullPath: '/pms/menu-tenant-platform-management-registration'
       preLoaderRoute: typeof LayoutPmsMenuTenantPlatformManagementRegistrationImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/pms/menu-tenant-user-education': {
+      id: '/_layout/pms/menu-tenant-user-education'
+      path: '/pms/menu-tenant-user-education'
+      fullPath: '/pms/menu-tenant-user-education'
+      preLoaderRoute: typeof LayoutPmsMenuTenantUserEducationImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/pms/menu-tenant-user-management': {
@@ -2443,6 +2473,7 @@ interface LayoutRouteChildren {
   LayoutLearningPopupQuestionDetailRoute: typeof LayoutLearningPopupQuestionDetailRoute
   LayoutLearningPopupUploadRoute: typeof LayoutLearningPopupUploadRoute
   LayoutLearningTestDetailRoute: typeof LayoutLearningTestDetailRoute
+  LayoutLmsProcedureManagementRoute: typeof LayoutLmsProcedureManagementRoute
   LayoutMenuMenuIdRoute: typeof LayoutMenuMenuIdRoute
   LayoutMenu4Menu5Route: typeof LayoutMenu4Menu5Route
   LayoutMenu8Menu9Route: typeof LayoutMenu8Menu9Route
@@ -2476,6 +2507,7 @@ interface LayoutRouteChildren {
   LayoutPmsMenuTenantPlatformManagementRoute: typeof LayoutPmsMenuTenantPlatformManagementRoute
   LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute: typeof LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute
   LayoutPmsMenuTenantPlatformManagementRegistrationRoute: typeof LayoutPmsMenuTenantPlatformManagementRegistrationRoute
+  LayoutPmsMenuTenantUserEducationRoute: typeof LayoutPmsMenuTenantUserEducationRoute
   LayoutPmsMenuTenantUserManagementRoute: typeof LayoutPmsMenuTenantUserManagementRoute
   LayoutPmsPopChannelSearchRoute: typeof LayoutPmsPopChannelSearchRoute
   LayoutPmsPopupLoginOptionRoute: typeof LayoutPmsPopupLoginOptionRoute
@@ -2530,6 +2562,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
     LayoutLearningPopupQuestionDetailRoute,
   LayoutLearningPopupUploadRoute: LayoutLearningPopupUploadRoute,
   LayoutLearningTestDetailRoute: LayoutLearningTestDetailRoute,
+  LayoutLmsProcedureManagementRoute: LayoutLmsProcedureManagementRoute,
   LayoutMenuMenuIdRoute: LayoutMenuMenuIdRoute,
   LayoutMenu4Menu5Route: LayoutMenu4Menu5Route,
   LayoutMenu8Menu9Route: LayoutMenu8Menu9Route,
@@ -2580,6 +2613,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
     LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute,
   LayoutPmsMenuTenantPlatformManagementRegistrationRoute:
     LayoutPmsMenuTenantPlatformManagementRegistrationRoute,
+  LayoutPmsMenuTenantUserEducationRoute: LayoutPmsMenuTenantUserEducationRoute,
   LayoutPmsMenuTenantUserManagementRoute:
     LayoutPmsMenuTenantUserManagementRoute,
   LayoutPmsPopChannelSearchRoute: LayoutPmsPopChannelSearchRoute,
@@ -2707,6 +2741,7 @@ export interface FileRoutesByFullPath {
   '/learning/popup-question-detail': typeof LayoutLearningPopupQuestionDetailRoute
   '/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
   '/learning/testDetail': typeof LayoutLearningTestDetailRoute
+  '/lms/procedure-management': typeof LayoutLmsProcedureManagementRoute
   '/menu/$menuId': typeof LayoutMenuMenuIdRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
@@ -2740,6 +2775,7 @@ export interface FileRoutesByFullPath {
   '/pms/menu-tenant-platform-management': typeof LayoutPmsMenuTenantPlatformManagementRoute
   '/pms/menu-tenant-platform-management-basic-infomation': typeof LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute
   '/pms/menu-tenant-platform-management-registration': typeof LayoutPmsMenuTenantPlatformManagementRegistrationRoute
+  '/pms/menu-tenant-user-education': typeof LayoutPmsMenuTenantUserEducationRoute
   '/pms/menu-tenant-user-management': typeof LayoutPmsMenuTenantUserManagementRoute
   '/pms/pop-channel-search': typeof LayoutPmsPopChannelSearchRoute
   '/pms/popup-login-option': typeof LayoutPmsPopupLoginOptionRoute
@@ -2863,6 +2899,7 @@ export interface FileRoutesByTo {
   '/learning/popup-question-detail': typeof LayoutLearningPopupQuestionDetailRoute
   '/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
   '/learning/testDetail': typeof LayoutLearningTestDetailRoute
+  '/lms/procedure-management': typeof LayoutLmsProcedureManagementRoute
   '/menu/$menuId': typeof LayoutMenuMenuIdRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
@@ -2896,6 +2933,7 @@ export interface FileRoutesByTo {
   '/pms/menu-tenant-platform-management': typeof LayoutPmsMenuTenantPlatformManagementRoute
   '/pms/menu-tenant-platform-management-basic-infomation': typeof LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute
   '/pms/menu-tenant-platform-management-registration': typeof LayoutPmsMenuTenantPlatformManagementRegistrationRoute
+  '/pms/menu-tenant-user-education': typeof LayoutPmsMenuTenantUserEducationRoute
   '/pms/menu-tenant-user-management': typeof LayoutPmsMenuTenantUserManagementRoute
   '/pms/pop-channel-search': typeof LayoutPmsPopChannelSearchRoute
   '/pms/popup-login-option': typeof LayoutPmsPopupLoginOptionRoute
@@ -3022,6 +3060,7 @@ export interface FileRoutesById {
   '/_layout/learning/popup-question-detail': typeof LayoutLearningPopupQuestionDetailRoute
   '/_layout/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
   '/_layout/learning/testDetail': typeof LayoutLearningTestDetailRoute
+  '/_layout/lms/procedure-management': typeof LayoutLmsProcedureManagementRoute
   '/_layout/menu/$menuId': typeof LayoutMenuMenuIdRoute
   '/_layout/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/_layout/menu8/menu9': typeof LayoutMenu8Menu9Route
@@ -3055,6 +3094,7 @@ export interface FileRoutesById {
   '/_layout/pms/menu-tenant-platform-management': typeof LayoutPmsMenuTenantPlatformManagementRoute
   '/_layout/pms/menu-tenant-platform-management-basic-infomation': typeof LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute
   '/_layout/pms/menu-tenant-platform-management-registration': typeof LayoutPmsMenuTenantPlatformManagementRegistrationRoute
+  '/_layout/pms/menu-tenant-user-education': typeof LayoutPmsMenuTenantUserEducationRoute
   '/_layout/pms/menu-tenant-user-management': typeof LayoutPmsMenuTenantUserManagementRoute
   '/_layout/pms/pop-channel-search': typeof LayoutPmsPopChannelSearchRoute
   '/_layout/pms/popup-login-option': typeof LayoutPmsPopupLoginOptionRoute
@@ -3180,6 +3220,7 @@ export interface FileRouteTypes {
     | '/learning/popup-question-detail'
     | '/learning/popup-upload'
     | '/learning/testDetail'
+    | '/lms/procedure-management'
     | '/menu/$menuId'
     | '/menu4/menu5'
     | '/menu8/menu9'
@@ -3213,6 +3254,7 @@ export interface FileRouteTypes {
     | '/pms/menu-tenant-platform-management'
     | '/pms/menu-tenant-platform-management-basic-infomation'
     | '/pms/menu-tenant-platform-management-registration'
+    | '/pms/menu-tenant-user-education'
     | '/pms/menu-tenant-user-management'
     | '/pms/pop-channel-search'
     | '/pms/popup-login-option'
@@ -3335,6 +3377,7 @@ export interface FileRouteTypes {
     | '/learning/popup-question-detail'
     | '/learning/popup-upload'
     | '/learning/testDetail'
+    | '/lms/procedure-management'
     | '/menu/$menuId'
     | '/menu4/menu5'
     | '/menu8/menu9'
@@ -3368,6 +3411,7 @@ export interface FileRouteTypes {
     | '/pms/menu-tenant-platform-management'
     | '/pms/menu-tenant-platform-management-basic-infomation'
     | '/pms/menu-tenant-platform-management-registration'
+    | '/pms/menu-tenant-user-education'
     | '/pms/menu-tenant-user-management'
     | '/pms/pop-channel-search'
     | '/pms/popup-login-option'
@@ -3492,6 +3536,7 @@ export interface FileRouteTypes {
     | '/_layout/learning/popup-question-detail'
     | '/_layout/learning/popup-upload'
     | '/_layout/learning/testDetail'
+    | '/_layout/lms/procedure-management'
     | '/_layout/menu/$menuId'
     | '/_layout/menu4/menu5'
     | '/_layout/menu8/menu9'
@@ -3525,6 +3570,7 @@ export interface FileRouteTypes {
     | '/_layout/pms/menu-tenant-platform-management'
     | '/_layout/pms/menu-tenant-platform-management-basic-infomation'
     | '/_layout/pms/menu-tenant-platform-management-registration'
+    | '/_layout/pms/menu-tenant-user-education'
     | '/_layout/pms/menu-tenant-user-management'
     | '/_layout/pms/pop-channel-search'
     | '/_layout/pms/popup-login-option'
@@ -3688,6 +3734,7 @@ export const routeTree = rootRoute
         "/_layout/learning/popup-question-detail",
         "/_layout/learning/popup-upload",
         "/_layout/learning/testDetail",
+        "/_layout/lms/procedure-management",
         "/_layout/menu/$menuId",
         "/_layout/menu4/menu5",
         "/_layout/menu8/menu9",
@@ -3721,6 +3768,7 @@ export const routeTree = rootRoute
         "/_layout/pms/menu-tenant-platform-management",
         "/_layout/pms/menu-tenant-platform-management-basic-infomation",
         "/_layout/pms/menu-tenant-platform-management-registration",
+        "/_layout/pms/menu-tenant-user-education",
         "/_layout/pms/menu-tenant-user-management",
         "/_layout/pms/pop-channel-search",
         "/_layout/pms/popup-login-option",
@@ -4150,6 +4198,10 @@ export const routeTree = rootRoute
       "filePath": "_layout/learning/testDetail.tsx",
       "parent": "/_layout"
     },
+    "/_layout/lms/procedure-management": {
+      "filePath": "_layout/lms/procedure-management.tsx",
+      "parent": "/_layout"
+    },
     "/_layout/menu/$menuId": {
       "filePath": "_layout/menu/$menuId.tsx",
       "parent": "/_layout"
@@ -4280,6 +4332,10 @@ export const routeTree = rootRoute
     },
     "/_layout/pms/menu-tenant-platform-management-registration": {
       "filePath": "_layout/pms/menu-tenant-platform-management-registration.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/pms/menu-tenant-user-education": {
+      "filePath": "_layout/pms/menu-tenant-user-education.tsx",
       "parent": "/_layout"
     },
     "/_layout/pms/menu-tenant-user-management": {
