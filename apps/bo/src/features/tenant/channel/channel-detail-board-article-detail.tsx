@@ -30,7 +30,7 @@ const ChannelDetailBoardArticleDetailComponent = () => {
     useDynamicForm(formConfig);
 
   const { stats, files, addFiles, onPause, onRetry, onResume, onRemove } = useS3Uploader({
-    s3Path: 'upload/leaning/resource/video',
+    s3Path: 'upload/learning/resource/video',
     maxFileCount,
   });
 

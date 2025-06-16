@@ -16,7 +16,7 @@ function RouteComponent() {
   const thumbnailRef = useRef<HTMLInputElement>(null);
   const [imageUrl, setImageUrl] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
-  const { addFiles, files, stats } = useS3Uploader({ s3Path: 'upload/leaning/resource/video' });
+  const { addFiles, files, stats } = useS3Uploader({ s3Path: 'upload/learning/resource/video' });
   const {
     addFiles: thumbnailAddFiles,
     files: thumbnailFiles,

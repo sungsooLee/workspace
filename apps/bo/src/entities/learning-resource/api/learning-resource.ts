@@ -2,7 +2,7 @@ import { fileDownload, httpService } from '@learnway/shared';
 import { faker } from '@faker-js/faker';
 import { CMSApiPrefix, PMSApiPrefix } from '@learnway/config';
 
-export default class LeaningResourceService {
+export default class LearningResourceService {
   static fetchUser(uuid: string): Promise<any> {
     return httpService.get(`${PMSApiPrefix()}/users/` + uuid);
   }
@@ -16,14 +16,14 @@ export default class LeaningResourceService {
     return true;
   }
 
-  static fetchLeaningResources(params: any) {
+  static fetchLearningResources(params: any) {
     return new Promise((resolve) => {
-      const leanings = Array.from({ length: 10 }, (_, id) => ({
+      const learnings = Array.from({ length: 10 }, (_, id) => ({
         id: id + 1,
         tenant: faker.food.fruit(),
         channel: faker.food.fruit(),
         type: faker.food.fruit(),
-        leaningResourceName: faker.food.fruit(),
+        learningResourceName: faker.food.fruit(),
         fileType: faker.food.fruit(),
         fileSize: faker.food.fruit(),
         managerName: faker.person.fullName(),
@@ -40,7 +40,7 @@ export default class LeaningResourceService {
         modifyUser: faker.food.fruit(),
         modifyDateTime: faker.food.fruit(),
       }));
-      resolve({ content: leanings, pageable: { pageSize: 10, pageIndex: 0, totalElements: 55 } });
+      resolve({ content: learnings, pageable: { pageSize: 10, pageIndex: 0, totalElements: 55 } });
     });
   }
   static fetchMappingCourses(params: any) {
@@ -50,7 +50,7 @@ export default class LeaningResourceService {
         tenant: faker.food.fruit(),
         channel: faker.food.fruit(),
         type: faker.food.fruit(),
-        leaningResourceName: faker.food.fruit(),
+        learningResourceName: faker.food.fruit(),
         learningPeriod: faker.food.fruit(),
         courseDetail: faker.food.fruit(),
       }));

@@ -14,7 +14,7 @@ import { IcoClock01, IcoCopy, IcoDownload, IcoAlertCircle } from '@learnway/icon
 import { t } from 'i18next';
 import { Table } from '@tanstack/react-table';
 import { useEffect, useState } from 'react';
-import { leaningResourceQueryOptions } from '@entities/leaning-resource';
+import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { ModifierInfoModal } from './learning-resource-modifier-info-modal';
 import { ProgramGuideModal } from './learning-resource-program-guide-modal';
 import { BatchSettingModal } from './learning-resource-batch-setting-modal';
@@ -143,7 +143,7 @@ function LearningResourceTableComponent() {
 
   const gridConfig: useGridBoxConfig = {
     query: (data: any) => {
-      return leaningResourceQueryOptions.getContents({
+      return learningResourceQueryOptions.getContents({
         ...data,
         isMockUp: true,
       });

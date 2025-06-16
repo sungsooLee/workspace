@@ -1,7 +1,7 @@
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { Button, ModalContainer, ModalBody, ModalTitle, GridBox } from '@learnway/ui';
 import { useQueryClient } from '@tanstack/react-query';
-import { leaningResourceQueryOptions } from '@entities/leaning-resource';
+import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { UIEvent } from 'react';
 import { t } from 'i18next';
 
@@ -10,7 +10,7 @@ function ProgramGuideModalComponent() {
 
   const handleFileDownload = (e: UIEvent, key: string, fileName: string) => {
     e.stopPropagation();
-    queryClient.fetchQuery(leaningResourceQueryOptions.getS3FileDownload(key, fileName));
+    queryClient.fetchQuery(learningResourceQueryOptions.getS3FileDownload(key, fileName));
   };
 
   const data = [
