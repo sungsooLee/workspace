@@ -5,7 +5,7 @@
   .table_info {
     @apply flex w-full items-center justify-between;
     .title_info {
-      @apply mb-[12px] flex min-h-[28px] items-center;
+      @apply mb-[8px] flex min-h-[32px] items-center;
       .guide_text {
         @apply ml-[16px] text-[1.4rem] font-normal leading-[1.4rem] text-[var(--gray7)];
       }
@@ -64,7 +64,7 @@
       @apply text-[var(--gray9)];
     }
     .button_info {
-      @apply mb-[12px] flex min-h-[28px] items-center;
+      @apply mb-[8px] flex min-h-[32px] items-center;
       [class*='nlp--checkbox'] {
         @apply mr-[12px];
         & + [class*='nlp--button'] {

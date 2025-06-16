@@ -348,6 +348,7 @@ const GridBoxComponent = <T extends object>(
             <Button
               variant="outline"
               size="sm"
+              icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
               label={t('LABEL.grid.header.add', '추가')}
               onClick={handleAddClick}
             />
