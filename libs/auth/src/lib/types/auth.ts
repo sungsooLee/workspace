@@ -41,6 +41,7 @@ export interface AuthSSOLogin {
 export interface Tenant {
   tenantId: number;
   tenantName: string;
+  logoImageUrl?: string;
 }
 
 export type AUTH_TOOL_TYPE = 'PHONE' | 'EMAIL';
