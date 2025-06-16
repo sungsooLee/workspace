@@ -6,6 +6,7 @@ import duration_ from 'dayjs/plugin/duration';
 import { t } from 'i18next';
 import { DATE_TIME_FORMAT } from '../types/date-time';
 import { getDateTimeFormat } from './date-format';
+import 'dayjs/locale/ko';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
