@@ -7,6 +7,8 @@ export class DepartmentService {
   }
 
   static getDepartmentTree(companyCode: string[]): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/department/tree`, { companyCode: companyCode });
+    return httpService.get<any>(`${PMSApiPrefix()}/department/tree`, {
+      companyCodeList: companyCode,
+    });
   }
 }
