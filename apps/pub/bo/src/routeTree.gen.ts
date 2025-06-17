@@ -92,6 +92,7 @@ import { Route as LayoutPmsCategoryMenagementImport } from './pages/_layout/pms/
 import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
 import { Route as LayoutMenu4Menu5Import } from './pages/_layout/menu4/menu5'
 import { Route as LayoutMenuMenuIdImport } from './pages/_layout/menu/$menuId'
+import { Route as LayoutLmsProcedureOpenSettingImport } from './pages/_layout/lms/procedure-open-setting'
 import { Route as LayoutLmsProcedureManagementImport } from './pages/_layout/lms/procedure-management'
 import { Route as LayoutLearningTestDetailImport } from './pages/_layout/learning/testDetail'
 import { Route as LayoutLearningPopupUploadImport } from './pages/_layout/learning/popup-upload'
@@ -105,6 +106,7 @@ import { Route as LayoutLearningMediaRegisterImport } from './pages/_layout/lear
 import { Route as LayoutLearningMediaDetailImport } from './pages/_layout/learning/mediaDetail'
 import { Route as LayoutLearningLearningSearchImport } from './pages/_layout/learning/learningSearch'
 import { Route as LayoutLearningLearningResourceSearchImport } from './pages/_layout/learning/learning-resource-search'
+import { Route as LayoutLearningLearningExternalRegistrationImport } from './pages/_layout/learning/learning-external-registration'
 import { Route as LayoutLearningFileUploadImport } from './pages/_layout/learning/file-upload'
 import { Route as LayoutLanguageLanguagesubjectsmanagementImport } from './pages/_layout/language/language_subjects_management'
 import { Route as LayoutLanguageLanguagehistorylistImport } from './pages/_layout/language/language_history_list'
@@ -695,6 +697,13 @@ const LayoutMenuMenuIdRoute = LayoutMenuMenuIdImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutLmsProcedureOpenSettingRoute =
+  LayoutLmsProcedureOpenSettingImport.update({
+    id: '/lms/procedure-open-setting',
+    path: '/lms/procedure-open-setting',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
 const LayoutLmsProcedureManagementRoute =
   LayoutLmsProcedureManagementImport.update({
     id: '/lms/procedure-management',
@@ -780,6 +789,13 @@ const LayoutLearningLearningResourceSearchRoute =
   LayoutLearningLearningResourceSearchImport.update({
     id: '/learning/learning-resource-search',
     path: '/learning/learning-resource-search',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutLearningLearningExternalRegistrationRoute =
+  LayoutLearningLearningExternalRegistrationImport.update({
+    id: '/learning/learning-external-registration',
+    path: '/learning/learning-external-registration',
     getParentRoute: () => LayoutRoute,
   } as any)
 
@@ -1847,6 +1863,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutLearningFileUploadImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/learning/learning-external-registration': {
+      id: '/_layout/learning/learning-external-registration'
+      path: '/learning/learning-external-registration'
+      fullPath: '/learning/learning-external-registration'
+      preLoaderRoute: typeof LayoutLearningLearningExternalRegistrationImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/learning/learning-resource-search': {
       id: '/_layout/learning/learning-resource-search'
       path: '/learning/learning-resource-search'
@@ -1936,6 +1959,13 @@ declare module '@tanstack/react-router' {
       path: '/lms/procedure-management'
       fullPath: '/lms/procedure-management'
       preLoaderRoute: typeof LayoutLmsProcedureManagementImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/lms/procedure-open-setting': {
+      id: '/_layout/lms/procedure-open-setting'
+      path: '/lms/procedure-open-setting'
+      fullPath: '/lms/procedure-open-setting'
+      preLoaderRoute: typeof LayoutLmsProcedureOpenSettingImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/menu/$menuId': {
@@ -2477,6 +2507,7 @@ interface LayoutRouteChildren {
   LayoutLanguageLanguagehistorylistRoute: typeof LayoutLanguageLanguagehistorylistRoute
   LayoutLanguageLanguagesubjectsmanagementRoute: typeof LayoutLanguageLanguagesubjectsmanagementRoute
   LayoutLearningFileUploadRoute: typeof LayoutLearningFileUploadRoute
+  LayoutLearningLearningExternalRegistrationRoute: typeof LayoutLearningLearningExternalRegistrationRoute
   LayoutLearningLearningResourceSearchRoute: typeof LayoutLearningLearningResourceSearchRoute
   LayoutLearningLearningSearchRoute: typeof LayoutLearningLearningSearchRoute
   LayoutLearningMediaDetailRoute: typeof LayoutLearningMediaDetailRoute
@@ -2490,6 +2521,7 @@ interface LayoutRouteChildren {
   LayoutLearningPopupUploadRoute: typeof LayoutLearningPopupUploadRoute
   LayoutLearningTestDetailRoute: typeof LayoutLearningTestDetailRoute
   LayoutLmsProcedureManagementRoute: typeof LayoutLmsProcedureManagementRoute
+  LayoutLmsProcedureOpenSettingRoute: typeof LayoutLmsProcedureOpenSettingRoute
   LayoutMenuMenuIdRoute: typeof LayoutMenuMenuIdRoute
   LayoutMenu4Menu5Route: typeof LayoutMenu4Menu5Route
   LayoutMenu8Menu9Route: typeof LayoutMenu8Menu9Route
@@ -2564,6 +2596,8 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutLanguageLanguagesubjectsmanagementRoute:
     LayoutLanguageLanguagesubjectsmanagementRoute,
   LayoutLearningFileUploadRoute: LayoutLearningFileUploadRoute,
+  LayoutLearningLearningExternalRegistrationRoute:
+    LayoutLearningLearningExternalRegistrationRoute,
   LayoutLearningLearningResourceSearchRoute:
     LayoutLearningLearningResourceSearchRoute,
   LayoutLearningLearningSearchRoute: LayoutLearningLearningSearchRoute,
@@ -2581,6 +2615,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutLearningPopupUploadRoute: LayoutLearningPopupUploadRoute,
   LayoutLearningTestDetailRoute: LayoutLearningTestDetailRoute,
   LayoutLmsProcedureManagementRoute: LayoutLmsProcedureManagementRoute,
+  LayoutLmsProcedureOpenSettingRoute: LayoutLmsProcedureOpenSettingRoute,
   LayoutMenuMenuIdRoute: LayoutMenuMenuIdRoute,
   LayoutMenu4Menu5Route: LayoutMenu4Menu5Route,
   LayoutMenu8Menu9Route: LayoutMenu8Menu9Route,
@@ -2748,6 +2783,7 @@ export interface FileRoutesByFullPath {
   '/language/language_history_list': typeof LayoutLanguageLanguagehistorylistRoute
   '/language/language_subjects_management': typeof LayoutLanguageLanguagesubjectsmanagementRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
+  '/learning/learning-external-registration': typeof LayoutLearningLearningExternalRegistrationRoute
   '/learning/learning-resource-search': typeof LayoutLearningLearningResourceSearchRoute
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
@@ -2761,6 +2797,7 @@ export interface FileRoutesByFullPath {
   '/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
   '/learning/testDetail': typeof LayoutLearningTestDetailRoute
   '/lms/procedure-management': typeof LayoutLmsProcedureManagementRoute
+  '/lms/procedure-open-setting': typeof LayoutLmsProcedureOpenSettingRoute
   '/menu/$menuId': typeof LayoutMenuMenuIdRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
@@ -2907,6 +2944,7 @@ export interface FileRoutesByTo {
   '/language/language_history_list': typeof LayoutLanguageLanguagehistorylistRoute
   '/language/language_subjects_management': typeof LayoutLanguageLanguagesubjectsmanagementRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
+  '/learning/learning-external-registration': typeof LayoutLearningLearningExternalRegistrationRoute
   '/learning/learning-resource-search': typeof LayoutLearningLearningResourceSearchRoute
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
@@ -2920,6 +2958,7 @@ export interface FileRoutesByTo {
   '/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
   '/learning/testDetail': typeof LayoutLearningTestDetailRoute
   '/lms/procedure-management': typeof LayoutLmsProcedureManagementRoute
+  '/lms/procedure-open-setting': typeof LayoutLmsProcedureOpenSettingRoute
   '/menu/$menuId': typeof LayoutMenuMenuIdRoute
   '/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/menu8/menu9': typeof LayoutMenu8Menu9Route
@@ -3069,6 +3108,7 @@ export interface FileRoutesById {
   '/_layout/language/language_history_list': typeof LayoutLanguageLanguagehistorylistRoute
   '/_layout/language/language_subjects_management': typeof LayoutLanguageLanguagesubjectsmanagementRoute
   '/_layout/learning/file-upload': typeof LayoutLearningFileUploadRoute
+  '/_layout/learning/learning-external-registration': typeof LayoutLearningLearningExternalRegistrationRoute
   '/_layout/learning/learning-resource-search': typeof LayoutLearningLearningResourceSearchRoute
   '/_layout/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/_layout/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
@@ -3082,6 +3122,7 @@ export interface FileRoutesById {
   '/_layout/learning/popup-upload': typeof LayoutLearningPopupUploadRoute
   '/_layout/learning/testDetail': typeof LayoutLearningTestDetailRoute
   '/_layout/lms/procedure-management': typeof LayoutLmsProcedureManagementRoute
+  '/_layout/lms/procedure-open-setting': typeof LayoutLmsProcedureOpenSettingRoute
   '/_layout/menu/$menuId': typeof LayoutMenuMenuIdRoute
   '/_layout/menu4/menu5': typeof LayoutMenu4Menu5Route
   '/_layout/menu8/menu9': typeof LayoutMenu8Menu9Route
@@ -3230,6 +3271,7 @@ export interface FileRouteTypes {
     | '/language/language_history_list'
     | '/language/language_subjects_management'
     | '/learning/file-upload'
+    | '/learning/learning-external-registration'
     | '/learning/learning-resource-search'
     | '/learning/learningSearch'
     | '/learning/mediaDetail'
@@ -3243,6 +3285,7 @@ export interface FileRouteTypes {
     | '/learning/popup-upload'
     | '/learning/testDetail'
     | '/lms/procedure-management'
+    | '/lms/procedure-open-setting'
     | '/menu/$menuId'
     | '/menu4/menu5'
     | '/menu8/menu9'
@@ -3388,6 +3431,7 @@ export interface FileRouteTypes {
     | '/language/language_history_list'
     | '/language/language_subjects_management'
     | '/learning/file-upload'
+    | '/learning/learning-external-registration'
     | '/learning/learning-resource-search'
     | '/learning/learningSearch'
     | '/learning/mediaDetail'
@@ -3401,6 +3445,7 @@ export interface FileRouteTypes {
     | '/learning/popup-upload'
     | '/learning/testDetail'
     | '/lms/procedure-management'
+    | '/lms/procedure-open-setting'
     | '/menu/$menuId'
     | '/menu4/menu5'
     | '/menu8/menu9'
@@ -3548,6 +3593,7 @@ export interface FileRouteTypes {
     | '/_layout/language/language_history_list'
     | '/_layout/language/language_subjects_management'
     | '/_layout/learning/file-upload'
+    | '/_layout/learning/learning-external-registration'
     | '/_layout/learning/learning-resource-search'
     | '/_layout/learning/learningSearch'
     | '/_layout/learning/mediaDetail'
@@ -3561,6 +3607,7 @@ export interface FileRouteTypes {
     | '/_layout/learning/popup-upload'
     | '/_layout/learning/testDetail'
     | '/_layout/lms/procedure-management'
+    | '/_layout/lms/procedure-open-setting'
     | '/_layout/menu/$menuId'
     | '/_layout/menu4/menu5'
     | '/_layout/menu8/menu9'
@@ -3747,6 +3794,7 @@ export const routeTree = rootRoute
         "/_layout/language/language_history_list",
         "/_layout/language/language_subjects_management",
         "/_layout/learning/file-upload",
+        "/_layout/learning/learning-external-registration",
         "/_layout/learning/learning-resource-search",
         "/_layout/learning/learningSearch",
         "/_layout/learning/mediaDetail",
@@ -3760,6 +3808,7 @@ export const routeTree = rootRoute
         "/_layout/learning/popup-upload",
         "/_layout/learning/testDetail",
         "/_layout/lms/procedure-management",
+        "/_layout/lms/procedure-open-setting",
         "/_layout/menu/$menuId",
         "/_layout/menu4/menu5",
         "/_layout/menu8/menu9",
@@ -4179,6 +4228,10 @@ export const routeTree = rootRoute
       "filePath": "_layout/learning/file-upload.tsx",
       "parent": "/_layout"
     },
+    "/_layout/learning/learning-external-registration": {
+      "filePath": "_layout/learning/learning-external-registration.tsx",
+      "parent": "/_layout"
+    },
     "/_layout/learning/learning-resource-search": {
       "filePath": "_layout/learning/learning-resource-search.tsx",
       "parent": "/_layout"
@@ -4229,6 +4282,10 @@ export const routeTree = rootRoute
     },
     "/_layout/lms/procedure-management": {
       "filePath": "_layout/lms/procedure-management.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/lms/procedure-open-setting": {
+      "filePath": "_layout/lms/procedure-open-setting.tsx",
       "parent": "/_layout"
     },
     "/_layout/menu/$menuId": {

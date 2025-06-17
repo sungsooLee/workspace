@@ -76,7 +76,7 @@
 }
 
 .react-datepicker__input-container {
-  @apply overflow-hidden;
+  @apply overflow-hidden align-top;
 }
 
 .react-datepicker__close-icon {
