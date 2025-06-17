@@ -312,7 +312,6 @@ function LearningResourceTableComponent() {
   // tenant 정보로 channel 설정
   const tenantUuid = useWatch({ control: searchProvider.control, name: 'tenantUuid' });
   useEffect(() => {
-    console.log('🚀 ~ LearningResourceTableComponent ~ tenantUuid:', tenantUuid);
     if (!tenantUuid && tenantUuid !== 0) return;
 
     (async () => {
