@@ -288,10 +288,6 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
             <div className={styles.contents_wrap}>
               <ContentsRow>
                 <FormRow provider={provider} name="roleId" element={<Input disabled={true} />} />
-
-                <FormRow provider={provider} name="roleCode" element={<Input disabled={true} />} />
-              </ContentsRow>
-              <ContentsRow>
                 <FormRow
                   provider={provider}
                   name="roleType"
@@ -299,6 +295,8 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                     <DropdownFormField disabled={formMode !== EnFormMode.ADD || !roleInfo} />
                   }
                 />
+              </ContentsRow>
+              <ContentsRow>
                 <FormRow
                   provider={provider}
                   name="name"
@@ -465,13 +463,6 @@ const formBaseConfig: DynamicFormConfig = {
       type: 'text',
       format: 'number',
       label: t('역할 번호'),
-      value: '',
-    },
-    {
-      name: 'roleCode',
-      type: 'text',
-      label: t('역할 코드'),
-      format: 'object',
       value: '',
     },
     {
