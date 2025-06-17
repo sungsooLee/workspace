@@ -106,6 +106,7 @@ import { Route as LayoutLearningMediaRegisterImport } from './pages/_layout/lear
 import { Route as LayoutLearningMediaDetailImport } from './pages/_layout/learning/mediaDetail'
 import { Route as LayoutLearningLearningSearchImport } from './pages/_layout/learning/learningSearch'
 import { Route as LayoutLearningLearningResourceSearchImport } from './pages/_layout/learning/learning-resource-search'
+import { Route as LayoutLearningLearningExternalRegistrationImport } from './pages/_layout/learning/learning-external-registration'
 import { Route as LayoutLearningFileUploadImport } from './pages/_layout/learning/file-upload'
 import { Route as LayoutLanguageLanguagesubjectsmanagementImport } from './pages/_layout/language/language_subjects_management'
 import { Route as LayoutLanguageLanguagehistorylistImport } from './pages/_layout/language/language_history_list'
@@ -788,6 +789,13 @@ const LayoutLearningLearningResourceSearchRoute =
   LayoutLearningLearningResourceSearchImport.update({
     id: '/learning/learning-resource-search',
     path: '/learning/learning-resource-search',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutLearningLearningExternalRegistrationRoute =
+  LayoutLearningLearningExternalRegistrationImport.update({
+    id: '/learning/learning-external-registration',
+    path: '/learning/learning-external-registration',
     getParentRoute: () => LayoutRoute,
   } as any)
 
@@ -1855,6 +1863,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutLearningFileUploadImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/learning/learning-external-registration': {
+      id: '/_layout/learning/learning-external-registration'
+      path: '/learning/learning-external-registration'
+      fullPath: '/learning/learning-external-registration'
+      preLoaderRoute: typeof LayoutLearningLearningExternalRegistrationImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/learning/learning-resource-search': {
       id: '/_layout/learning/learning-resource-search'
       path: '/learning/learning-resource-search'
@@ -2492,6 +2507,7 @@ interface LayoutRouteChildren {
   LayoutLanguageLanguagehistorylistRoute: typeof LayoutLanguageLanguagehistorylistRoute
   LayoutLanguageLanguagesubjectsmanagementRoute: typeof LayoutLanguageLanguagesubjectsmanagementRoute
   LayoutLearningFileUploadRoute: typeof LayoutLearningFileUploadRoute
+  LayoutLearningLearningExternalRegistrationRoute: typeof LayoutLearningLearningExternalRegistrationRoute
   LayoutLearningLearningResourceSearchRoute: typeof LayoutLearningLearningResourceSearchRoute
   LayoutLearningLearningSearchRoute: typeof LayoutLearningLearningSearchRoute
   LayoutLearningMediaDetailRoute: typeof LayoutLearningMediaDetailRoute
@@ -2580,6 +2596,8 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutLanguageLanguagesubjectsmanagementRoute:
     LayoutLanguageLanguagesubjectsmanagementRoute,
   LayoutLearningFileUploadRoute: LayoutLearningFileUploadRoute,
+  LayoutLearningLearningExternalRegistrationRoute:
+    LayoutLearningLearningExternalRegistrationRoute,
   LayoutLearningLearningResourceSearchRoute:
     LayoutLearningLearningResourceSearchRoute,
   LayoutLearningLearningSearchRoute: LayoutLearningLearningSearchRoute,
@@ -2765,6 +2783,7 @@ export interface FileRoutesByFullPath {
   '/language/language_history_list': typeof LayoutLanguageLanguagehistorylistRoute
   '/language/language_subjects_management': typeof LayoutLanguageLanguagesubjectsmanagementRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
+  '/learning/learning-external-registration': typeof LayoutLearningLearningExternalRegistrationRoute
   '/learning/learning-resource-search': typeof LayoutLearningLearningResourceSearchRoute
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
@@ -2925,6 +2944,7 @@ export interface FileRoutesByTo {
   '/language/language_history_list': typeof LayoutLanguageLanguagehistorylistRoute
   '/language/language_subjects_management': typeof LayoutLanguageLanguagesubjectsmanagementRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
+  '/learning/learning-external-registration': typeof LayoutLearningLearningExternalRegistrationRoute
   '/learning/learning-resource-search': typeof LayoutLearningLearningResourceSearchRoute
   '/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
@@ -3088,6 +3108,7 @@ export interface FileRoutesById {
   '/_layout/language/language_history_list': typeof LayoutLanguageLanguagehistorylistRoute
   '/_layout/language/language_subjects_management': typeof LayoutLanguageLanguagesubjectsmanagementRoute
   '/_layout/learning/file-upload': typeof LayoutLearningFileUploadRoute
+  '/_layout/learning/learning-external-registration': typeof LayoutLearningLearningExternalRegistrationRoute
   '/_layout/learning/learning-resource-search': typeof LayoutLearningLearningResourceSearchRoute
   '/_layout/learning/learningSearch': typeof LayoutLearningLearningSearchRoute
   '/_layout/learning/mediaDetail': typeof LayoutLearningMediaDetailRoute
@@ -3250,6 +3271,7 @@ export interface FileRouteTypes {
     | '/language/language_history_list'
     | '/language/language_subjects_management'
     | '/learning/file-upload'
+    | '/learning/learning-external-registration'
     | '/learning/learning-resource-search'
     | '/learning/learningSearch'
     | '/learning/mediaDetail'
@@ -3409,6 +3431,7 @@ export interface FileRouteTypes {
     | '/language/language_history_list'
     | '/language/language_subjects_management'
     | '/learning/file-upload'
+    | '/learning/learning-external-registration'
     | '/learning/learning-resource-search'
     | '/learning/learningSearch'
     | '/learning/mediaDetail'
@@ -3570,6 +3593,7 @@ export interface FileRouteTypes {
     | '/_layout/language/language_history_list'
     | '/_layout/language/language_subjects_management'
     | '/_layout/learning/file-upload'
+    | '/_layout/learning/learning-external-registration'
     | '/_layout/learning/learning-resource-search'
     | '/_layout/learning/learningSearch'
     | '/_layout/learning/mediaDetail'
@@ -3770,6 +3794,7 @@ export const routeTree = rootRoute
         "/_layout/language/language_history_list",
         "/_layout/language/language_subjects_management",
         "/_layout/learning/file-upload",
+        "/_layout/learning/learning-external-registration",
         "/_layout/learning/learning-resource-search",
         "/_layout/learning/learningSearch",
         "/_layout/learning/mediaDetail",
@@ -4201,6 +4226,10 @@ export const routeTree = rootRoute
     },
     "/_layout/learning/file-upload": {
       "filePath": "_layout/learning/file-upload.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/learning/learning-external-registration": {
+      "filePath": "_layout/learning/learning-external-registration.tsx",
       "parent": "/_layout"
     },
     "/_layout/learning/learning-resource-search": {

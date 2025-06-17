@@ -930,6 +930,15 @@ export const guideData = [
     remarks: '', // 비고
   },
   {
+    screenName: 'CMS/학습자원_등록_외부링크',
+    pageId: 'learning/learning-external-registration',
+    screenId: 'NLP_BO_CMS_1026',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
     screenName: 'LMS/과정관리',
     pageId: 'lms/procedure-management',
     screenId: 'NLP_BO_LMS_0001',
