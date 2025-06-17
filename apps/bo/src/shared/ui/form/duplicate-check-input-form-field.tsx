@@ -17,6 +17,7 @@ export const DuplicateCheckInputFormField = forwardRef<
 >(
   (
     {
+      idKey,
       name,
       value,
       onChange,
@@ -44,7 +45,7 @@ export const DuplicateCheckInputFormField = forwardRef<
       return () => {
         onChangeGuideText('');
       };
-    }, [onChangeGuideText]);
+    }, [onChangeGuideText, idKey]);
 
     /**
      * 중복 확인 버튼 클릭 시 호출되는 비동기 함수입니다.

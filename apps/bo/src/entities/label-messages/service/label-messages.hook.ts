@@ -1,5 +1,11 @@
-import { useMutation, UseMutationResult, useQuery, UseQueryResult } from '@tanstack/react-query';
-import { mutateOptions, queryOptions } from './label-messages.queries';
+import {
+  useMutation,
+  UseMutationResult,
+  useQuery,
+  useQueryClient,
+  UseQueryResult,
+} from '@tanstack/react-query';
+import { mutateOptions, queryKeys, queryOptions } from './label-messages.queries';
 import {
   LabelMessage,
   LabelMessagesQueryParams,
@@ -40,11 +46,20 @@ export const useCreateLabelMessage = (
   options?: MutationHookOptions<LabelMessage, Error, LabelMessage, unknown>,
 ): UseMutationResult<LabelMessage, Error, LabelMessage, unknown> => {
   const { showSaveComplete } = useModal();
+  const queryClient = useQueryClient();
+
   return useMutation({
     ...mutateOptions.create(),
     ...options,
     onSuccess: async (data, variables, context) => {
       await showSaveComplete();
+      await queryClient.invalidateQueries({
+        queryKey: [queryKeys.detail(data.labelMessageId ?? Number(data.labelMessageId))],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: [queryKeys.all],
+      });
+
       // 추가적인 성공 처리 로직이 있다면 실행
       if (options?.onSuccess) {
         options.onSuccess(data, variables, context);

@@ -281,17 +281,17 @@ const GridBoxComponent = <T extends object>(
     };
     // params를 업데이트하기 전에 ref에 저장
     lastDispatchGridBoxStateRef.current = newParams;
-    //
+    props.onStateChange?.(newParams);
     onStateChange?.(newParams);
   };
 
-  console.log('grid-box ::', {
-    paginationProps,
-    config,
-    props,
-    data,
-    gridData,
-  });
+  // console.log('grid-box ::', {
+  //   paginationProps,
+  //   config,
+  //   props,
+  //   data,
+  //   gridData,
+  // });
 
   return (
     <div className={cn(styles.table_box, 'table_box')}>

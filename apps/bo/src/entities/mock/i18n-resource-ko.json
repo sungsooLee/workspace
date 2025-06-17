@@ -284,7 +284,9 @@
       "recentMenu": "최근 본 메뉴",
       "notification": "알림",
       "readAll": "전체읽음",
-      "deleteAll": "전체삭제"
+      "deleteAll": "전체삭제",
+      "placeholder1": "{{type}}을 입력하세요.",
+      "placeholder2": "{{type}}를 입력하세요."
     },
     "link": {
       "multilingual": "다국어관리"
