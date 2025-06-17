@@ -74,7 +74,7 @@ export function initAxios(extendConfig?: axiosConfig) {
         console.log('onRejected', error);
         const { config, response: errorResponse } = error;
         // error
-        if (errorResponse?.status === 401 || !config.url.includes('/token-reissue')) {
+        if (errorResponse?.status === 401 && !config.url.includes('/token-reissue')) {
           return await reissueProccess(error);
         }
 
