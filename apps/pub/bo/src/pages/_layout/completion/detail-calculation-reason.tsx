@@ -46,10 +46,18 @@ function RouteComponent() {
     {
       title1: '식비',
       title2: (
-        <div className="">
-          <Input type={'text'} placeholder={'입력'} value={''} />
-          <Button onlyIcon icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />} />
-          <Button onlyIcon icon={<IcoMinus width={16} height={16} stroke={'#4C515E'} />} />
+        <div className="flex w-full">
+          <Input type={'text'} placeholder={'입력'} value={''} className="flex-1" />
+          <Button
+            onlyIcon
+            icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
+            className="ml-[8px] flex h-[32px] w-[32px] shrink-0 items-center justify-center rounded-[4px] border border-solid border-[var(--gray4)]"
+          />
+          <Button
+            onlyIcon
+            icon={<IcoMinus width={16} height={16} stroke={'#4C515E'} />}
+            className="ml-[8px] flex h-[32px] w-[32px] shrink-0 items-center justify-center rounded-[4px] border border-solid border-[var(--gray4)]"
+          />
         </div>
       ),
       title3: <Checkbox />,
