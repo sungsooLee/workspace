@@ -1,8 +1,32 @@
+/* pop-image-preview.module.css */
 .start {
   &.img_wrap {
     @apply flex h-full w-full items-center justify-center overflow-auto;
-    img {
+    & > img {
       @apply h-auto w-auto;
+    }
+    button {
+      @apply fixed top-1/2 ml-0 flex h-[56px] w-[56px] items-center justify-center rounded-[28px] !bg-white shadow-[0px_2px_10px_rgba(0,0,0,0.1)];
+      svg {
+        @apply fill-none stroke-[#131C30];
+      }
+      &.btn_prev {
+        @apply left-[32px];
+        svg {
+          @apply -ml-[4px];
+        }
+      }
+      &.btn_next {
+        @apply right-[32px];
+        svg {
+          @apply -mr-[4px];
+        }
+      }
+      &:disabled {
+        svg {
+          @apply stroke-[#D6DAE1];
+        }
+      }
     }
   }
 }
