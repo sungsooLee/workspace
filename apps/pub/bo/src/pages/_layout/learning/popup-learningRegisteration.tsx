@@ -31,6 +31,7 @@ import {
   IcoHomework,
   IcoFolder,
   IcoExam,
+  // IcoClass,
 } from '@learnway/icons';
 
 export const Route = createFileRoute('/_layout/learning/popup-learningRegisteration')({
@@ -105,6 +106,12 @@ function RouteComponent() {
     { label: '과제', value: getRandomId(), icon: <IcoHomework />, description: '설명문구2줄설명' },
     { label: '설문지', value: getRandomId(), icon: <IcoSurvey />, description: '설명문구2줄설명' },
     { label: '기타', value: getRandomId(), icon: <IcoEtc />, description: '설명문구2줄설명' },
+    // {
+    //   label: '클래스',
+    //   value: getRandomId(),
+    //   icon: <IcoClass />,
+    //   description: '집합/워크샵/포럼·컨퍼런스로 교수자/운영자가 존재하는 유형',
+    // },
     // {
     //   label: '라이브',
     //   value: getRandomId(),
