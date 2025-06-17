@@ -135,6 +135,12 @@ function LearningResourceTableComponent() {
           label: t('LABEL.form.label.createdBy', '등록자'),
           value: '',
         },
+        {
+          type: 'empty',
+        },
+        {
+          type: 'empty',
+        },
       ],
     ],
     validator: {
