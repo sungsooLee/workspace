@@ -23,14 +23,24 @@ interface fileDownloadParams {
   params?: any;
   options?: object;
   payload?: any;
+  method?: string;
 }
-export const fileDownload = async ({ url, params, options, payload }: fileDownloadParams) => {
-  const response = await httpService.get<FileResponse>(
-    url,
-    params,
-    { ...options, responseType: 'blob' },
-    payload,
-  );
+export const fileDownload = async ({
+  url,
+  params,
+  options,
+  payload,
+  method,
+}: fileDownloadParams) => {
+  const response =
+    method === 'post'
+      ? await httpService.post<FileResponse>(url, params, { ...options, responseType: 'blob' })
+      : await httpService.get<FileResponse>(
+          url,
+          params,
+          { ...options, responseType: 'blob' },
+          payload,
+        );
   // Blob URL 생성
   const blobUrl = URL.createObjectURL(response.blob);
 

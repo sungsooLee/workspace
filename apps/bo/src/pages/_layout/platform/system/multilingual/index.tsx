@@ -23,6 +23,7 @@ import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 import { GridExcelButtons } from '@features/shared';
 import { TranslationStatusPopup } from '@features/platform/system/multilingual/translation-status-popup';
+import { PMSApiPrefix } from '@learnway/config';
 
 export const Route = createFileRoute('/_layout/platform/system/multilingual/')({
   component: RouteComponent,
@@ -109,7 +110,7 @@ function RouteComponent() {
       showDownload={true}
       uploadUrl="/multilingual/exportExcel"
       validateUrl="/multilingual/excelUploadValidation"
-      downloadUrl="/multilingual/exportExcel"
+      downloadUrl={`${PMSApiPrefix()}/multilingual/exportExcel`}
       downloadParams={getValues()}
       onBeforeDownload={async () => {
         const keyTypeCode = getValues('keyTypeCode');

@@ -442,7 +442,7 @@ function LearningResourceTableComponent() {
             </span>
             <GridExcelButtons
               showDownload
-              // downloadMethod="post"
+              downloadMethod="post"
               downloadUrl={`${CMSApiPrefix()}/contents/excel`}
               downloadParams={params}
               disabled={!data?.totalElements}
