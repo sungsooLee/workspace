@@ -9,7 +9,7 @@
       @apply button_bo_3_r h-[28px] min-w-[50px] justify-center px-[6px];
     }
     &.sm {
-      @apply button_bo_2_b h-[32px] min-w-[32px] justify-center px-[10px];
+      @apply button_bo_2_r h-[32px] min-w-[32px] justify-center px-[10px];
     }
     &.md {
       @apply button_bo_2_b h-[36px] min-w-[50px] justify-center px-[12px];
@@ -165,7 +165,7 @@
   }
 }
 .save {
-  @apply justify-center rounded-[4px] bg-[var(--gray7)] text-[var(--white)];
+  @apply justify-center rounded-[4px] bg-[var(--gray7)] !font-bold text-[var(--white)];
   &:hover {
     @apply bg-[var(--gray6)];
   }
