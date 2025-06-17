@@ -9,6 +9,7 @@ export type com_ever_edu_lms_course_dto_res_CourseInternalResDto = {
     courseType?: com_ever_edu_lms_course_dto_res_CourseInternalResDto.courseType;
     courseContent?: string;
     channelId?: number;
+    channelUuid?: string;
     channelName?: string;
     openingYear?: number;
     isUsed?: boolean;

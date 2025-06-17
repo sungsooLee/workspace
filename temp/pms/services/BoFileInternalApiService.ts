@@ -18,14 +18,14 @@ export class BoFileInternalApiService {
     /**
      * 다건 파일 복사 - Internal API
      * 다건 파일을 복사한다.<BR>예를 들어 Module-CMS에서 콘텐츠 파일을 복사하기 위해서 호출한다
-     * @param userId 사용자 이메일
+     * @param userUuid 사용자 UUID
      * @param companyId 회사번호
      * @param requestBody
      * @returns com_ever_edu_pms_file_dto_res_FileGroupCopyInternalResDto OK
      * @throws ApiError
      */
     public static copyFiles(
-        userId: string,
+        userUuid: string,
         companyId: number,
         requestBody: com_ever_edu_pms_file_dto_req_FileCopyInternalReqDto,
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_FileGroupCopyInternalResDto> {
@@ -33,7 +33,7 @@ export class BoFileInternalApiService {
             method: 'POST',
             url: '/internal/api/v1/files/copy',
             query: {
-                'userId': userId,
+                'userUuid': userUuid,
                 'companyId': companyId,
             },
             body: requestBody,
@@ -50,20 +50,20 @@ export class BoFileInternalApiService {
     /**
      * 파일그룹 정보 생성
      * 파일그룹 정보를 생성한다.
-     * @param userId 사용자 이메일
+     * @param userUuid 사용자 UUID
      * @param requestBody
      * @returns com_ever_edu_pms_file_dto_res_GroupFileInfoInternalResDto OK
      * @throws ApiError
      */
     public static createFileGroup(
-        userId: string,
+        userUuid: string,
         requestBody: com_ever_edu_pms_file_dto_req_FileGroupInfoReqDto,
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_GroupFileInfoInternalResDto> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/internal/api/v1/file/group',
             query: {
-                'userId': userId,
+                'userUuid': userUuid,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -79,7 +79,7 @@ export class BoFileInternalApiService {
     /**
      * 다건의 파일 정보 생성
      * 기존 파일그룹에 다건의 파일 정보를 생성한다.
-     * @param userId 사용자 이메일
+     * @param userUuid 사용자 UUID
      * @param companyId 회사번호
      * @param groupUuid 파일그룹 UUID
      * @param requestBody
@@ -87,7 +87,7 @@ export class BoFileInternalApiService {
      * @throws ApiError
      */
     public static attachFileInfoToGroup(
-        userId: string,
+        userUuid: string,
         companyId: number,
         groupUuid: string,
         requestBody: com_ever_edu_pms_file_dto_req_FileInfoListReqDto,
@@ -99,7 +99,7 @@ export class BoFileInternalApiService {
                 'groupUuid': groupUuid,
             },
             query: {
-                'userId': userId,
+                'userUuid': userUuid,
                 'companyId': companyId,
             },
             body: requestBody,
@@ -116,14 +116,14 @@ export class BoFileInternalApiService {
     /**
      * 파일 그룹 복사 - Internal API
      * 파일 그룹을 복사한다.<br>예를 들어 Module-CMS에서 콘텐츠 파일 그룹 복사하기 위해서 호출한다.<br>대상 파일그룹 UUID를 지정하지 않으면 신규 그룹을 생성한 후 파일을 복사한다.<BR>
-     * @param userId 사용자 이메일
+     * @param userUuid 사용자 UUID
      * @param companyId 회사번호
      * @param requestBody
      * @returns com_ever_edu_pms_file_dto_res_FileGroupCopyInternalResDto OK
      * @throws ApiError
      */
     public static copyFileGroup(
-        userId: string,
+        userUuid: string,
         companyId: number,
         requestBody: com_ever_edu_pms_file_dto_req_FileGroupCopyInternalReqDto,
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_FileGroupCopyInternalResDto> {
@@ -131,7 +131,7 @@ export class BoFileInternalApiService {
             method: 'POST',
             url: '/internal/api/v1/file/group/copy',
             query: {
-                'userId': userId,
+                'userUuid': userUuid,
                 'companyId': companyId,
             },
             body: requestBody,
@@ -220,7 +220,7 @@ export class BoFileInternalApiService {
         });
     }
     /**
-     * Simple 파일 정보 목록 조회 - Internal API
+     * 파일 정보 목록 조회 - Internal API
      * 간략한 파일 정보 목록을 조회한다.<BR>예를 들어 Module-CMS에서 섬네일 파일 처리 시 파일 정보를 조회한다
      * @param groupUuid 파일그룹 UUID
      * @returns com_ever_edu_pms_file_dto_res_GroupFileInfoInternalResDto OK

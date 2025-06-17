@@ -3,16 +3,16 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { com_ever_edu_pms_tenant_dto_res_TenantResDto$CompanyResDto } from './com_ever_edu_pms_tenant_dto_res_TenantResDto$CompanyResDto';
-import type { com_ever_edu_pms_tenant_dto_res_TenantResDto$RoleResDto } from './com_ever_edu_pms_tenant_dto_res_TenantResDto$RoleResDto';
+import type { com_ever_edu_pms_tenant_dto_res_TenantResDto$TagResDto } from './com_ever_edu_pms_tenant_dto_res_TenantResDto$TagResDto';
 import type { com_ever_edu_pms_tenant_dto_res_TenantResDto$UserResDto } from './com_ever_edu_pms_tenant_dto_res_TenantResDto$UserResDto';
 export type com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin = {
     tenantId?: number;
     tenantName?: string;
     logoImageUrl?: string;
-    tenantRoleList?: Array<com_ever_edu_pms_tenant_dto_res_TenantResDto$RoleResDto>;
     tenantUserList?: Array<com_ever_edu_pms_tenant_dto_res_TenantResDto$UserResDto>;
-    tenantBillingTag?: string;
+    tenantTagList?: Array<com_ever_edu_pms_tenant_dto_res_TenantResDto$TagResDto>;
     companyTenantList?: Array<com_ever_edu_pms_tenant_dto_res_TenantResDto$CompanyResDto>;
+    isSecurityPledge?: boolean;
     isUsed?: boolean;
     tenantDesc?: string;
     isPc?: boolean;
@@ -20,6 +20,6 @@ export type com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin = {
     isApp?: boolean;
     isCommonCategory?: boolean;
     isTenantCategory?: boolean;
-    tenantLanguageList?: Array<'KO' | 'EN' | 'ZH' | 'JA' | 'ES' | 'FR' | 'DE' | 'IT' | 'PT' | 'RU' | 'AR' | 'HI' | 'ID' | 'MS' | 'TH' | 'VI' | 'TR' | 'SK' | 'RO' | 'HR' | 'HE' | 'ET' | 'NE'>;
+    langCountryCodeTypeList?: Array<'KO' | 'EN' | 'ES' | 'AR' | 'RU' | 'FR' | 'PT' | 'ID' | 'ZH' | 'VI' | 'TR' | 'TH' | 'DE' | 'HE' | 'NE' | 'FA' | 'HI' | 'JA' | 'MS' | 'IT' | 'SK' | 'RO' | 'HR' | 'ET'>;
 };
 

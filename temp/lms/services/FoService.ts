@@ -3,8 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { com_ever_edu_lms_category_dto_res_TenantCategoryTreeDto } from '../models/com_ever_edu_lms_category_dto_res_TenantCategoryTreeDto';
-import type { com_ever_edu_lms_course_dto_res_CourseLikesResDto } from '../models/com_ever_edu_lms_course_dto_res_CourseLikesResDto';
-import type { com_ever_edu_lms_course_dto_res_CourseResDto$CourseIntroductionOnUser } from '../models/com_ever_edu_lms_course_dto_res_CourseResDto$CourseIntroductionOnUser';
 import type { com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser } from '../models/com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser';
 import type { com_ever_edu_lms_course_dto_res_SequenceResDto$onUser } from '../models/com_ever_edu_lms_course_dto_res_SequenceResDto$onUser';
 import type { com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByUser } from '../models/com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByUser';
@@ -132,81 +130,6 @@ export class FoService {
             url: '/user/api/v1/enroll',
             body: requestBody,
             mediaType: 'application/json',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 과정 좋아요 해제
-     * 과정 좋아요를 해제한다.
-     * @param courseUuid 과정 uuid
-     * @returns number OK
-     * @throws ApiError
-     */
-    public static unlike(
-        courseUuid: string,
-    ): CancelablePromise<number> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/user/api/v1/course/{courseUuid}/unlike',
-            path: {
-                'courseUuid': courseUuid,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 과정 좋아요 조회
-     * 과정의 좋아요 정보를 조회한다.
-     * @param courseUuid 과정 uuid
-     * @returns com_ever_edu_lms_course_dto_res_CourseLikesResDto OK
-     * @throws ApiError
-     */
-    public static findCourseLikesByCourseTsId(
-        courseUuid: string,
-    ): CancelablePromise<com_ever_edu_lms_course_dto_res_CourseLikesResDto> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/user/api/v1/course/{courseUuid}/like',
-            path: {
-                'courseUuid': courseUuid,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 과정 좋아요
-     * 과정에 좋아요를 누른다.
-     * @param courseUuid 과정 uuid
-     * @returns number OK
-     * @throws ApiError
-     */
-    public static like(
-        courseUuid: string,
-    ): CancelablePromise<number> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/user/api/v1/course/{courseUuid}/like',
-            path: {
-                'courseUuid': courseUuid,
-            },
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
@@ -389,31 +312,6 @@ export class FoService {
             query: {
                 'params': params,
                 'pageable': pageable,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 과정 조회
-     * 과정 id를 통해 조회한다.
-     * @param courseUuid
-     * @returns com_ever_edu_lms_course_dto_res_CourseResDto$CourseIntroductionOnUser OK
-     * @throws ApiError
-     */
-    public static findByCourseId(
-        courseUuid: string,
-    ): CancelablePromise<com_ever_edu_lms_course_dto_res_CourseResDto$CourseIntroductionOnUser> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/user/api/v1/course/{courseUuid}',
-            path: {
-                'courseUuid': courseUuid,
             },
             errors: {
                 400: `Bad Request`,
