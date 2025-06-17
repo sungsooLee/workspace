@@ -17,7 +17,6 @@ import {
 } from '@learnway/ui';
 import { IcoMinus, IcoPlus } from '@learnway/icons';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { DuplicateCheckInputFormField, DuplicateState } from '@features/tenant';
 
 import { ApiInfoModal } from './api-info-modal';
 import { MenuApiMappingModal } from './menu-api-mapping-modal';
@@ -42,6 +41,10 @@ import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inn
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import { MenuDetail } from '../../../../types/entities/menu';
 import { useWatch } from 'react-hook-form';
+import {
+  DuplicateCheckInputFormField,
+  DuplicateState,
+} from '@features/tenant/management/ui/duplicate-check-input-form-field';
 
 const FORM_MODE = {
   NONE: 'NONE',
@@ -176,23 +179,25 @@ export const MenuManage = ({ menuScope }: any) => {
   }, [data, lastCreatedMenuId]);
 
   useEffect(() => {
-    if (detailData) {
-      const data = detailData as MenuDetail;
-      const location = selectedNode && findMenuPathById(treeData, selectedNode.menuId);
-      const deviceNames = [];
-      if (data.isWebExposed) deviceNames.push(DEVICE_NAME.PC);
-      if (data.isMobileExposed) deviceNames.push(DEVICE_NAME.Mobile);
-      const formData = {
-        ...data,
-        location: location,
-        code: { fieldValue: data.menuCode, checkState: DuplicateState.okStart },
-        deviceNames: deviceNames,
-      };
-      fetchData({ ...formData });
-      initialFromValuesRef.current = { ...formData };
-      setFormMode(FORM_MODE.VIEW);
+    if (detailData && treeData) {
+      if (formMode === FORM_MODE.VIEW) {
+        const data = detailData as MenuDetail;
+        const location = selectedNode && findMenuPathById(treeData, selectedNode.menuId);
+        const deviceNames = [];
+        if (data.isWebExposed) deviceNames.push(DEVICE_NAME.PC);
+        if (data.isMobileExposed) deviceNames.push(DEVICE_NAME.Mobile);
+        const formData = {
+          ...data,
+          location: location,
+          code: { fieldValue: data.menuCode, checkState: DuplicateState.okStart },
+          deviceNames: deviceNames,
+        };
+        fetchData({ ...formData });
+        initialFromValuesRef.current = { ...formData };
+        setFormMode(FORM_MODE.VIEW);
+      }
     }
-  }, [detailData]);
+  }, [detailData, formMode]);
 
   const handleSelectedNodeChange = (node: TreeNode | null) => {
     setSelectedNode(node);

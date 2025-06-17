@@ -80,7 +80,6 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
     const alphanumericRegex = /^[a-zA-Z0-9]*$/;
     ///
     const handleAlphanumericChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      console.log(event);
       const inputValue = event.target.value;
 
       if (alphanumericRegex.test(inputValue)) {

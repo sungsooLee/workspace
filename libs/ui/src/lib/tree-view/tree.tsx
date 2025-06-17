@@ -170,7 +170,7 @@ const TreeNodeComponent = ({
     }
 
     if (treeType === 'SAME_PARENT_ONLY') {
-      const sourceParentKey = draggedNode._parentKey;
+      const sourceParentKey = draggedNode.parentKey;
 
       // INSIDE는 현재 노드가 원본 부모여야 함
       if (dropPosition === 'INSIDE' && enhanceNode.key !== sourceParentKey) {
@@ -179,7 +179,7 @@ const TreeNodeComponent = ({
       // BEFORE/AFTER는 타겟과 같은 부모를 가져야 함
       if (
         (dropPosition === 'BEFORE' || dropPosition === 'AFTER') &&
-        sourceParentKey !== enhanceNode._parentKey
+        sourceParentKey !== enhanceNode.parentKey
       ) {
         return false;
       }
