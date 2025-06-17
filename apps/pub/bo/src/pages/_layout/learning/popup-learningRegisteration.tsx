@@ -39,9 +39,49 @@ export const Route = createFileRoute('/_layout/learning/popup-learningRegisterat
 });
 
 function RouteComponent() {
-  const { open: openModal, close: closeModal } = useModal();
+  const { open: openModal } = useModal();
+  useEffect(() => {
+    openModal({
+      width: 'lg', // sm(600px), md(800px), lg(1024px), xl(1400px)
+      content: <TypeSelectContent />,
+    });
+  }, [openModal]);
+  return <div>학습자원 조회 유형 선택 팝업</div>;
+}
 
-  // 퍼블수정 20240428 : 메뉴 수정 S
+const EbookContent = () => {
+  const { close: closeModal } = useModal();
+  return (
+    <ModalContainer>
+      <ModalBody>
+        <h2 className={eBookstyles.title}>
+          이북 등록은
+          <br />
+          TOAST 프로그램에서 진행합니다.
+        </h2>
+        <div className={eBookstyles.contents}>
+          <p className={eBookstyles.text}>
+            TOAST 프로그램을 미설치 시<br /> 설치파일을 다운로드 후 설치하세요.
+          </p>
+        </div>
+        <div className={eBookstyles.btn_box}>
+          <Button variant="gray" size="sm">
+            {'TOAST 프로그램 설치 파일'}
+          </Button>
+          <Button variant="gray" size="sm">
+            {'TOAST 이북 제작 가이드'}
+          </Button>
+        </div>
+      </ModalBody>
+      <ModalFooter>
+        <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
+      </ModalFooter>
+    </ModalContainer>
+  );
+};
+
+const TypeSelectContent = () => {
+  const { open: openModal } = useModal();
   const data = [
     {
       label: '동영상',
@@ -125,82 +165,38 @@ function RouteComponent() {
     //   description: '설명문구2줄설명',
     // },
   ];
-  // 퍼블수정 20240428 : 메뉴 수정 E
-  const EbookContent = () => {
-    return (
-      <ModalContainer>
-        <ModalBody>
-          <h2 className={eBookstyles.title}>
-            이북 등록은
-            <br />
-            TOAST 프로그램에서 진행합니다.
-          </h2>
-          <div className={eBookstyles.contents}>
-            <p className={eBookstyles.text}>
-              TOAST 프로그램을 미설치 시<br /> 설치파일을 다운로드 후 설치하세요.
-            </p>
-          </div>
-          <div className={eBookstyles.btn_box}>
-            <Button variant="gray" size="sm">
-              {'TOAST 프로그램 설치 파일'}
-            </Button>
-            <Button variant="gray" size="sm">
-              {'TOAST 이북 제작 가이드'}
-            </Button>
-          </div>
-        </ModalBody>
-        <ModalFooter>
-          <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
-        </ModalFooter>
-      </ModalContainer>
-    );
-  };
 
-  const TypeSelectContent = () => {
-    return (
-      <ModalContainer>
-        {/* 퍼블수정 20240418 : ModalTitle 추가, title_wrap 영역 삭제 S */}
-        <ModalTitle>{'학습자원 유형 선택'}</ModalTitle>
-        <ModalBody>
-          <div className={styles.wrap}>
-            {/* <div className={styles.title_wrap}>
-              <h2 className={styles.title}>{'등록할 학습자원의 유형을 선택하세요.'}</h2>
-            </div> */}
-            <OptionCard
-              cols={5}
-              size="lg"
-              className={styles.select_wrap}
-              options={data}
-              onOptionSelect={(option) => {
-                console.log('selected', option);
-                option?.label === '이북' &&
-                  openModal({
-                    // title: '',
-                    hideCloseButton: true,
-                    width: 'auto',
-                    content: <EbookContent />,
-                  });
-              }}
-            />
-          </div>
-        </ModalBody>
-        {/* 퍼블수정 20240418 : ModalTitle 추가, title_wrap 영역 삭제 E */}
-        {/* <ModalFooter>
-          <Button label={'취소'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
-        </ModalFooter> */}
-      </ModalContainer>
-    );
-  };
-  // 한번만 실행
-  const hasRun = useRef(false);
-  useEffect(() => {
-    if (!hasRun.current) {
-      openModal({
-        width: 'lg', // sm(600px), md(800px), lg(1024px), xl(1400px)
-        content: <TypeSelectContent />,
-      });
-      hasRun.current = true;
-    }
-  }, [openModal]);
-  return <div>학습자원 조회 유형 선택 팝업</div>;
-}
+  return (
+    <ModalContainer>
+      {/* 퍼블수정 20240418 : ModalTitle 추가, title_wrap 영역 삭제 S */}
+      <ModalTitle>{'학습자원 유형 선택'}</ModalTitle>
+      <ModalBody>
+        <div className={styles.wrap}>
+          {/* <div className={styles.title_wrap}>
+            <h2 className={styles.title}>{'등록할 학습자원의 유형을 선택하세요.'}</h2>
+          </div> */}
+          <OptionCard
+            cols={5}
+            size="lg"
+            className={styles.select_wrap}
+            options={data}
+            onOptionSelect={(option) => {
+              console.log('selected', option);
+              option?.label === '이북' &&
+                openModal({
+                  // title: '',
+                  hideCloseButton: true,
+                  width: 'auto',
+                  content: <EbookContent />,
+                });
+            }}
+          />
+        </div>
+      </ModalBody>
+      {/* 퍼블수정 20240418 : ModalTitle 추가, title_wrap 영역 삭제 E */}
+      {/* <ModalFooter>
+        <Button label={'취소'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
+      </ModalFooter> */}
+    </ModalContainer>
+  );
+};

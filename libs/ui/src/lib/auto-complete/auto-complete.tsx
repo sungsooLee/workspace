@@ -101,6 +101,7 @@ const PrimitiveComponent = forwardRef<any, PrimitiveComponentProps>(
     return (
       <div className={cn(styles.start, styles.auto_complete, dropdownClass.trim())}>
         <AsyncSelect
+          menuIsOpen
           id={uuid}
           ref={ref}
           loadOptions={loadOptions}
