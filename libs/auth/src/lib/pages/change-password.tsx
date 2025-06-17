@@ -7,7 +7,7 @@ import { useDynamicForm, DynamicFormConfig, useCurrentRoute } from '@learnway/ho
 
 import { FormRow, NoticeBox, HighlightMessageBox } from '../shared/ui';
 import { GoogleOtpGuideButton } from '../features/auth';
-import { useUpdatePassword } from '../entities';
+import { useReissue, useUpdatePassword, useUpdatePasswordExpireDate } from '../entities';
 import { useLogoutUser, useFetchAuthUser } from '../entities';
 
 import styles from '@learnway/styles/fo/pages/_auth/change-password.module.css';
@@ -22,6 +22,8 @@ export function ChangePasswordPage({ route }: any) {
 
   const { alert, confirm } = useModal();
   const { update } = useUpdatePassword();
+  const { reissue } = useReissue();
+  const { update: updateExpireDate } = useUpdatePasswordExpireDate();
 
   const handleOnSubmit = async (data: any) => {
     update(
@@ -62,8 +64,19 @@ export function ChangePasswordPage({ route }: any) {
   };
 
   const handleLater = () => {
-    // TODO 1개월 후 변경 API 적용 필요
-    router.navigate({ to: '/' });
+    updateExpireDate(
+      { days: 30 },
+      {
+        onSuccess: async () => {
+          await reissue();
+          router.navigate({ to: '/' });
+        },
+        onError: (error) => {
+          // error
+          console.log('### error', error);
+        },
+      },
+    );
   };
 
   return (

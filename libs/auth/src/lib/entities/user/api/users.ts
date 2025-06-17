@@ -22,6 +22,10 @@ export default class UsersService {
     return httpService.put<any>(`${PMSApiPrefix()}/users/verifications/change-password`, payload);
   }
 
+  static updatePasswordExpireDate(payload: { days: number }) {
+    return httpService.post<any>(`${PMSApiPrefix()}/users/extend-password-change-date`, payload);
+  }
+
   static verifyPassword(payload: any) {
     return httpService.post<any>(`${PMSApiPrefix()}/users/confirm-password`, payload);
   }

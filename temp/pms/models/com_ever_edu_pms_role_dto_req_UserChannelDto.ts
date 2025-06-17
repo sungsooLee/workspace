@@ -11,8 +11,8 @@ export type com_ever_edu_pms_role_dto_req_UserChannelDto = {
      */
     userUuid: string;
     /**
-     * 채널 ID
+     * 채널 UUID
      */
-    channelId: number;
+    channelUuid: string;
 };
 

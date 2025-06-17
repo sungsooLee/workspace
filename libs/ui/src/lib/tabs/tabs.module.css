@@ -266,9 +266,15 @@
 
 [class*='content_wrap'] .start {
   &.tabs {
-    &.progress [role='tablist'] {
-      @apply mt-[8px];
+    &.progress {
+      [role='tablist'] {
+        @apply mt-[8px];
+      }
+      [role='tabpanel'] > [class*='title_wrap'] {
+        @apply mt-[32px];
+      }
     }
+
     &.line [role='tablist'] {
       @apply mb-[32px];
     }

@@ -68,7 +68,7 @@ const CompanyShuttleComponent = () => {
           gridData={gridData}
           columns={columns}
           rowKey={'companyId'}
-          leftTitle={t('회사 조회 목록')}
+          leftTitle={t('회사 목록')}
           rightTitle={t('회사 선택')}
         />
       </ModalBody>
@@ -112,10 +112,20 @@ const searchConfig: SearchBoxConfig = {
         },
       },
       {
-        name: 'name',
-        type: 'text',
-        label: t('회사명'),
+        name: 'companyCode',
+        type: 'dropdown',
+        label: t('회사'),
         value: '',
+        optionsConfig: {
+          codeGroup: CODE_GROUP['manual.company.companyCode'],
+        },
+        dropdownConfig: {
+          onchange: () => {
+            return '';
+          },
+          isSearchable: true,
+          placeholder: '입력 또는 선택',
+        },
       },
     ],
   ],

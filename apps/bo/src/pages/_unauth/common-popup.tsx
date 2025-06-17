@@ -6,19 +6,13 @@ import {
   ChannelShuttleModal,
   CompanyChoiceModal,
   CompanyShuttleModal,
-  ExternalUserChoiceModal,
-  ExternalUserShuttleModal,
   MenuChoiceModal,
-  RoleChoiceModal,
-  RoleShuttleModal,
   TenantChoiceModal,
   TenantShuttleModal,
-  UserAndExternalUserTabsChoiceModal,
   UserChoiceModal,
   UserShuttleModal,
   MenuChoiceTreeModal,
   CategoryChoiceTreeModal,
-  CompanyUserChoiceModal,
   UserGroupChoiceModal,
   UserGroupTabsChoiceModal,
   UserGroupOrganizationShuttleModal,
@@ -235,58 +229,7 @@ function RouteComponent() {
               <span className="text-green-400">{'완료'}</span>
             </div>
             <div className="h-1 w-full border-white bg-slate-700" />
-            <div className="flex gap-4">
-              <Button
-                size={'xs'}
-                className="btn_table flex-1"
-                variant={'gray2'}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openModal({
-                    width: 'xl',
-                    content: <ExternalUserChoiceModal />,
-                  });
-                }}
-              >
-                {'사외이용자 검색(공통)'}
-              </Button>
-              <span className="text-yellow-500">{'진행중'}</span>
-            </div>
-            <div className="flex gap-4">
-              <Button
-                size={'xs'}
-                className="btn_table flex-1"
-                variant={'gray2'}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openModal({
-                    width: 'xl',
-                    content: <ExternalUserShuttleModal />,
-                  });
-                }}
-              >
-                {'사외이용자 검색(셔틀)'}
-              </Button>
-              <span className="text-yellow-500">{'진행중'}</span>
-            </div>
-            <div className="flex gap-4">
-              <Button
-                size={'xs'}
-                className="btn_table flex-1"
-                variant={'gray2'}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openModal({
-                    width: 'xl',
-                    content: <UserAndExternalUserTabsChoiceModal />,
-                  });
-                }}
-              >
-                {'유저와 사외이용자 팝업에서 선택하는 경우(탭)'}
-              </Button>
-              <span className="text-yellow-500">{'진행중'}</span>
-            </div>
-            <div className="h-1 w-full border-white bg-slate-700" />
+
             <div className="flex gap-4">
               <Button
                 size={'xs'}
@@ -320,62 +263,11 @@ function RouteComponent() {
                 {'회사 조회(셔틀)'}
               </Button>
 
-              <span className="text-yellow-500">{'진행중'}</span>
-            </div>
-            <div className="flex gap-4">
-              <Button
-                size={'xs'}
-                className="btn_table flex-1"
-                variant={'gray2'}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openModal({
-                    width: 'xl',
-                    content: <CompanyUserChoiceModal />,
-                  });
-                }}
-              >
-                {'회사 기준으로 유저를 조회'}
-              </Button>
-              <span className="text-yellow-500">{'진행중'}</span>
+              <span className="text-green-400">{'완료'}</span>
             </div>
 
             <div className="h-1 w-full border-white bg-slate-700" />
-            <div className="flex gap-4">
-              <Button
-                size={'xs'}
-                className="btn_table flex-1"
-                variant={'gray2'}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openModal({
-                    width: 'xl',
-                    content: <RoleChoiceModal />,
-                  });
-                }}
-              >
-                {'HRD 담당자 역할 조회'}
-              </Button>
-              <span className="text-yellow-500">{'작업중'}</span>
-            </div>
-            <div className="flex gap-4">
-              <Button
-                size={'xs'}
-                className="btn_table flex-1"
-                variant={'gray2'}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openModal({
-                    width: 'xl',
-                    content: <RoleShuttleModal />,
-                  });
-                }}
-              >
-                {'HRD 담당자 역할 조회(셔틀)'}
-              </Button>
-              <span className="text-yellow-500">{'작업중'}</span>
-            </div>
-            <div className="h-1 w-full border-white bg-slate-700" />
+
             <div className="flex gap-4">
               <Button
                 size={'xs'}

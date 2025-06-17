@@ -9,7 +9,6 @@ import type { com_ever_edu_pms_file_dto_req_FileUploadCompleteReqDto } from '../
 import type { com_ever_edu_pms_file_dto_res_FileInfoDetailResDto } from '../models/com_ever_edu_pms_file_dto_res_FileInfoDetailResDto';
 import type { com_ever_edu_pms_file_dto_res_FileUploadCompleteResDto } from '../models/com_ever_edu_pms_file_dto_res_FileUploadCompleteResDto';
 import type { com_ever_edu_pms_file_dto_res_GroupInfoResDto } from '../models/com_ever_edu_pms_file_dto_res_GroupInfoResDto';
-import type { org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_GroupInfoResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_GroupInfoResDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
@@ -171,6 +170,31 @@ export class FoFileService {
         });
     }
     /**
+     * 이미지 파일 URL 정보 조회
+     * 이미지 파일 URL 정보를 조회한다.
+     * @param fileUuid 파일 UUID
+     * @returns string OK
+     * @throws ApiError
+     */
+    public static getImageFileUrl(
+        fileUuid: string,
+    ): CancelablePromise<string> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/file/{fileUuid}/image/url',
+            path: {
+                'fileUuid': fileUuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * 파일 다운로드
      * 파일을 다운로드한다.
      * @param fileUuid 파일 UUID
@@ -216,49 +240,6 @@ export class FoFileService {
                 401: `Unauthorized`,
                 404: `Not Found`,
                 405: `Method Not Allowed`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 파일그룹 목록 조회
-     * 파일그룹 목록을 조회한다.<br><br><b>페이징 정보</b>: <br> - totalElements: 쿼리 결과물의 전체 데이터 갯수 <br> - totalPages: 페이징하였을 때 나오는 총 페이지의 갯수 <br> - size: 페이지 당 데이터 수 설정 값(rows per page) <br> - numberOfElements: 페이지에 존재하는 요소의 갯수(최대 size와 동일) <br> - number: 요소를 가져온 페이지의 번호. 0 ~
-     * @param page 페이징 처리를 위한 페이지 번호. 0 ~
-     * @param size 페이징 처리를 위한 페이지 size. 10(최소값) ~
-     * @param sort 페이징 처리를 위한 sort
-     * @param affairsType 파일업무유형, 코드그룹(pms.file.FileAffairsType) - LMS|PMS|CMS
-     * @param reposType 저정소유형, 코드그룹(pms.file.RepositoryType) - S3(기본)|HMG
-     * @param isDeleted 삭제여부
-     * @param isUsed 사용여부
-     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_GroupInfoResDto OK
-     * @throws ApiError
-     */
-    public static getFileGroupList(
-        page: any,
-        size: any,
-        sort: any,
-        affairsType?: any,
-        reposType?: any,
-        isDeleted?: any,
-        isUsed?: any,
-    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_file_dto_res_GroupInfoResDto> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/user/api/v1/file/groups',
-            query: {
-                'affairsType': affairsType,
-                'reposType': reposType,
-                'isDeleted': isDeleted,
-                'isUsed': isUsed,
-                'page': page,
-                'size': size,
-                'sort': sort,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },

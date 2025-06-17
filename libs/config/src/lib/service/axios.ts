@@ -74,7 +74,7 @@ export function initAxios(extendConfig?: axiosConfig) {
         console.log('onRejected', error);
         const { config, response: errorResponse } = error;
         // error
-        if (errorResponse?.status === 401) {
+        if (errorResponse?.status === 401 && !config.url.includes('/token-reissue')) {
           return await reissueProccess(error);
         }
 
@@ -99,27 +99,33 @@ export function initAxios(extendConfig?: axiosConfig) {
   };
 
   // accessToken 만료인 경우 refreshToken을 이용해 accessToken 갱신
-  const reissueProccess = (error: any): Promise<any> => {
+  const reissueProccess = async (error: any): Promise<any> => {
     const { config, response: errorResponse } = error;
     const refresh_token = tokenService.refreshToken;
     if (!refresh_token) {
       return Promise.reject(error);
     }
-    return httpService
-      .execute<AxiosResponse>(
+
+    try {
+      const data = await httpService.execute<AxiosResponse>(
         {
           method: HttpMethod.POST,
           url: `${OAuthApiPrefix()}/token-reissue`,
         },
         { headers: { 'refresh-token': `${refresh_token}` } },
-      )
-      .then((data) => {
-        tokenService.accessToken = data.headers['access-token'];
-        tokenService.refreshToken = data.headers['refresh-token'];
-
-        config.headers.authorization = `Bearer ${tokenService.accessToken}`;
-        return axios(config);
-      });
+      );
+      tokenService.accessToken = data.headers['access-token'];
+      tokenService.refreshToken = data.headers['refresh-token'];
+      config.headers.authorization = `Bearer ${tokenService.accessToken}`;
+      return await axios(config);
+    } catch (error) {
+      tokenService.clear();
+      if (typeof window !== 'undefined') {
+        const loginPath = getLoginPath();
+        window.location.href = loginPath;
+      }
+      return Promise.reject(error);
+    }
   };
 
   httpService.init({ interceptors });

@@ -4,7 +4,8 @@
 /* eslint-disable */
 export type com_ever_edu_pms_tenant_dto_res_TenantResDto$UserResDto = {
     tenantId?: number;
-    userId?: number;
+    userUuid?: string;
+    userName?: string;
     deptName?: string;
     companyName?: string;
 };

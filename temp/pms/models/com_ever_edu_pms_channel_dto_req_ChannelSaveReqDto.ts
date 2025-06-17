@@ -47,9 +47,9 @@ export type com_ever_edu_pms_channel_dto_req_ChannelSaveReqDto = {
      */
     channelSubscriptionType?: com_ever_edu_pms_channel_dto_req_ChannelSaveReqDto.channelSubscriptionType;
     /**
-     * 채널소유자Id
+     * 채널소유자UUID
      */
-    channelOwnerId: number;
+    channelOwnerUuid: string;
     /**
      * 보안채널여부
      */

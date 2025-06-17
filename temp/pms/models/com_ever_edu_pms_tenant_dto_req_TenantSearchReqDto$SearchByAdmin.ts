@@ -12,6 +12,10 @@ export type com_ever_edu_pms_tenant_dto_req_TenantSearchReqDto$SearchByAdmin = {
      */
     companyName?: string;
     /**
+     * 회사코드
+     */
+    companyCode?: string;
+    /**
      * 테넌트담당자
      */
     tenantManagerName?: string;

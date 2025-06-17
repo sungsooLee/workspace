@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { cn } from '@learnway/shared';
 import { FormSubTitle } from '../../../../../bo/src/shared/ui/form';
 import {
@@ -11,22 +11,39 @@ import {
   OptionCard,
   OptionCardItem,
 } from '@learnway/ui';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 
 const TenantRoleModalComponent = () => {
   const { close: closeModal } = useModal();
+  const { data: authUser } = useFetchAuthUser();
+
   const [tenantvalues, setTenantValues] = useState<{ label: string; value: string }>();
   const [rolevalues, setRolevalues] = useState<{ label: string; value: string }>();
-  const tenantOptions = [
-    { label: '플랫폼 테넌트', value: 'a' },
-    { label: '완성차 테넌트', value: 'b' },
-  ];
-  const roleOptions = [
-    { label: '플랫폼 담당자', value: 'a' },
-    { label: '테넌트 담당자', value: 'b' },
-    { label: `${'채널명'} 채널 소유자`, value: 'c' },
-    { label: `${'채널명'} 채널 구성원`, value: 'd' },
-    { label: `${'채널명'} 채널 게스트`, value: 'e' },
-  ];
+
+  // 테넌트 목록
+  const tenantOptions = useMemo(() => {
+    if (!authUser?.tenants) return [];
+
+    return authUser?.tenants?.map?.((tenant) => ({
+      label: tenant.tenantName,
+      value: String(tenant.tenantId),
+    }));
+  }, [authUser?.tenants]);
+
+  // 역할 목록 ( 테넌트의 역할이기 때문에 필터링 처리 )
+  const roleOptions = useMemo(() => {
+    if (!authUser?.tenants) return [];
+    if (!authUser?.roles) return [];
+
+    return authUser?.roles
+      ?.map?.((role) => ({
+        ...role,
+        label: role.roleName,
+        value: String(role.roleId),
+      }))
+      .filter((role) => role.value === tenantvalues?.value);
+  }, [authUser?.roles, tenantvalues]);
+
   return (
     <ModalContainer>
       <ModalTitle>{'테넌트&역할 선택'}</ModalTitle>
@@ -57,7 +74,8 @@ const TenantRoleModalComponent = () => {
           label={'확인'}
           variant={'primary'}
           size={'lg'}
-          disabled={!tenantvalues || !rolevalues}
+          disabled={!tenantvalues}
+          // disabled={!tenantvalues || !rolevalues}
           onClick={() => closeModal({ tenant: tenantvalues, role: rolevalues })}
         />
       </ModalFooter>

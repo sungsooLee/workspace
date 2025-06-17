@@ -95,16 +95,26 @@ const searchConfig: SearchBoxConfig = {
         type: 'dropdown',
         label: t('그룹'),
         value: '',
-        presetOptionLabel: t('LABEL.form.label.select'),
         optionsConfig: {
+          options: [{ label: t('전체'), value: '' }],
           codeGroup: CODE_GROUP['pms.company.CompanyType'],
         },
       },
       {
-        name: 'name',
-        type: 'text',
-        label: t('회사명'),
+        name: 'companyCode',
+        type: 'dropdown',
+        label: t('회사'),
         value: '',
+        optionsConfig: {
+          codeGroup: CODE_GROUP['manual.company.companyCode'],
+        },
+        dropdownConfig: {
+          onchange: () => {
+            return '';
+          },
+          isSearchable: true,
+          placeholder: '입력 또는 선택',
+        },
       },
     ],
   ],

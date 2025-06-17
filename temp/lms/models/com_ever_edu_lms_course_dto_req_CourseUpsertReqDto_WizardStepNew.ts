@@ -5,6 +5,10 @@
 export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew = {
     courseType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew.courseType;
     channelId: number;
+    tenantIds: Array<number>;
+    primaryCategoryId: number;
+    categoryIds: Array<number>;
+    whiteListIds?: Array<number>;
     language: string;
     courseName: string;
     courseSummary: string;
@@ -19,13 +23,11 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew = {
     coordinatorId: number;
     coordinatorName: string;
     coordinatorTelNo: string;
+    coordinatorEmail: string;
     operatorId: number;
     operatorName: string;
     operatorTelNo: string;
-    tenantIds: Array<number>;
-    primaryCategoryId: number;
-    categoryIds: Array<number>;
-    whiteListIds?: Array<number>;
+    operatorEmail: string;
 };
 export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew {
     export enum courseType {

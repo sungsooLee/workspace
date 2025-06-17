@@ -25,33 +25,25 @@ import type { com_ever_edu_lms_category_dto_res_CategoryMasterTreeDto } from '..
 import type { com_ever_edu_lms_category_dto_res_TenantCategoryDto } from '../models/com_ever_edu_lms_category_dto_res_TenantCategoryDto';
 import type { com_ever_edu_lms_category_dto_res_TenantCategoryTreeDto } from '../models/com_ever_edu_lms_category_dto_res_TenantCategoryTreeDto';
 import type { com_ever_edu_lms_course_dto_req_CourseSearchReqDto$SearchByAdminDto } from '../models/com_ever_edu_lms_course_dto_req_CourseSearchReqDto$SearchByAdminDto';
-import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate';
-import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1 } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1';
-import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2 } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2';
-import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep3 } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep3';
-import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4';
-import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep5 } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep5';
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew';
 import type { com_ever_edu_lms_course_dto_req_SequenceDeleteReqDto } from '../models/com_ever_edu_lms_course_dto_req_SequenceDeleteReqDto';
 import type { com_ever_edu_lms_course_dto_req_SequenceSaveReqDto } from '../models/com_ever_edu_lms_course_dto_req_SequenceSaveReqDto';
 import type { com_ever_edu_lms_course_dto_req_SequenceSearchReqDto$ByAdmin } from '../models/com_ever_edu_lms_course_dto_req_SequenceSearchReqDto$ByAdmin';
 import type { com_ever_edu_lms_course_dto_req_SequenceUpdateEnrollConfDto } from '../models/com_ever_edu_lms_course_dto_req_SequenceUpdateEnrollConfDto';
 import type { com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto } from '../models/com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto';
-import type { com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin } from '../models/com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin';
-import type { com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep1 } from '../models/com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep1';
-import type { com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep2 } from '../models/com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep2';
-import type { com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep3 } from '../models/com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep3';
-import type { com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep4 } from '../models/com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep4';
-import type { com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep5 } from '../models/com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep5';
 import type { com_ever_edu_lms_course_dto_res_SequenceResDto$onAdmin } from '../models/com_ever_edu_lms_course_dto_res_SequenceResDto$onAdmin';
 import type { com_ever_edu_lms_enroll_dto_event_EnrollQueueEvent } from '../models/com_ever_edu_lms_enroll_dto_event_EnrollQueueEvent';
 import type { com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByAdmin } from '../models/com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByAdmin';
+import type { com_ever_edu_lms_space_dto_req_LearningSpaceListReqDto } from '../models/com_ever_edu_lms_space_dto_req_LearningSpaceListReqDto';
+import type { com_ever_edu_lms_space_dto_req_LearningSpaceSaveReqDto } from '../models/com_ever_edu_lms_space_dto_req_LearningSpaceSaveReqDto';
+import type { com_ever_edu_lms_space_dto_res_LearningSpaceAdminResDto } from '../models/com_ever_edu_lms_space_dto_res_LearningSpaceAdminResDto';
 import type { com_ever_edu_lms_student_dto_req_StudentSearchDto$SearchByAdmin } from '../models/com_ever_edu_lms_student_dto_req_StudentSearchDto$SearchByAdmin';
 import type { org_springdoc_core_converters_models_Pageable } from '../models/org_springdoc_core_converters_models_Pageable';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_badge_dto_res_BadgeGroupListResDto$OnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_badge_dto_res_BadgeGroupListResDto$OnAdmin';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_badge_dto_res_BadgeListResDto$OnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_badge_dto_res_BadgeListResDto$OnAdmin';
-import type { org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CourseListResDto$OnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CourseListResDto$OnAdmin';
+import type { org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CourseListAdminResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CourseListAdminResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_SequenceListResDto$OnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_SequenceListResDto$OnAdmin';
+import type { org_springframework_data_domain_PageCom_ever_edu_lms_space_dto_res_LearningSpaceListAdminResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_space_dto_res_LearningSpaceListAdminResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_student_dto_res_StudentHistoryDto$OnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_student_dto_res_StudentHistoryDto$OnAdmin';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -225,360 +217,6 @@ export class BoService {
         });
     }
     /**
-     * 과정 조회
-     * 과정 id를 통해 조회한다.
-     * @param courseId
-     * @returns com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin OK
-     * @throws ApiError
-     */
-    public static findByCourseId1(
-        courseId: number,
-    ): CancelablePromise<com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/course/{courseId}',
-            path: {
-                'courseId': courseId,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     *  과정 수정
-     * 과정을 수정한다.
-     * @param courseId
-     * @param requestBody
-     * @returns number OK
-     * @throws ApiError
-     */
-    public static update(
-        courseId: number,
-        requestBody: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate,
-    ): CancelablePromise<number> {
-        return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/admin/api/v1/course/{courseId}',
-            path: {
-                'courseId': courseId,
-            },
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 과정 삭제
-     * 과정을 논리적으로 삭제한다.
-     * @param courseId
-     * @param courseType
-     * @returns any OK
-     * @throws ApiError
-     */
-    public static findByUuid(
-        courseId: number,
-        courseType: 'ELEARNING1' | 'ELEARNING2' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
-    ): CancelablePromise<any> {
-        return __request(OpenAPI, {
-            method: 'DELETE',
-            url: '/admin/api/v1/course/{courseId}',
-            path: {
-                'courseId': courseId,
-            },
-            query: {
-                'courseType': courseType,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 과정 조회
-     * 과정 id를 통해 조회한다.
-     * @param courseId
-     * @returns com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep5 OK
-     * @throws ApiError
-     */
-    public static findByCourseIdWizard5(
-        courseId: number,
-    ): CancelablePromise<com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep5> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/course/wizard5/{courseId}',
-            path: {
-                'courseId': courseId,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 과정 생성 마법사5
-     * 과정 생성 마법사5 입니다.
-     * @param courseId
-     * @param requestBody
-     * @returns number OK
-     * @throws ApiError
-     */
-    public static wizard5(
-        courseId: number,
-        requestBody: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep5,
-    ): CancelablePromise<number> {
-        return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/admin/api/v1/course/wizard5/{courseId}',
-            path: {
-                'courseId': courseId,
-            },
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 과정 조회
-     * 과정 id를 통해 조회한다.
-     * @param courseId
-     * @returns com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep4 OK
-     * @throws ApiError
-     */
-    public static findByCourseIdWizard4(
-        courseId: number,
-    ): CancelablePromise<com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep4> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/course/wizard4/{courseId}',
-            path: {
-                'courseId': courseId,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 과정 생성 마법사4
-     * 과정 생성 마법사4 입니다.
-     * @param courseId
-     * @param requestBody
-     * @returns number OK
-     * @throws ApiError
-     */
-    public static wizard4(
-        courseId: number,
-        requestBody: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4,
-    ): CancelablePromise<number> {
-        return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/admin/api/v1/course/wizard4/{courseId}',
-            path: {
-                'courseId': courseId,
-            },
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 과정 조회
-     * 과정 id를 통해 조회한다.
-     * @param courseId
-     * @returns com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep3 OK
-     * @throws ApiError
-     */
-    public static findByCourseIdWizard3(
-        courseId: number,
-    ): CancelablePromise<com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep3> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/course/wizard3/{courseId}',
-            path: {
-                'courseId': courseId,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 과정 생성 마법사3
-     * 과정 생성 마법사3 입니다.
-     * @param courseId
-     * @param requestBody
-     * @returns number OK
-     * @throws ApiError
-     */
-    public static wizard3(
-        courseId: number,
-        requestBody: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep3,
-    ): CancelablePromise<number> {
-        return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/admin/api/v1/course/wizard3/{courseId}',
-            path: {
-                'courseId': courseId,
-            },
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 과정 조회
-     * 과정 id를 통해 조회한다.
-     * @param courseId
-     * @returns com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep2 OK
-     * @throws ApiError
-     */
-    public static findByCourseIdWizard2(
-        courseId: number,
-    ): CancelablePromise<com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep2> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/course/wizard2/{courseId}',
-            path: {
-                'courseId': courseId,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     *  과정 생성 마법사2
-     * 과정 생성 마법사2 입니다.
-     * @param courseId
-     * @param requestBody
-     * @returns number OK
-     * @throws ApiError
-     */
-    public static wizard2(
-        courseId: number,
-        requestBody: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2,
-    ): CancelablePromise<number> {
-        return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/admin/api/v1/course/wizard2/{courseId}',
-            path: {
-                'courseId': courseId,
-            },
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 과정 조회
-     * 과정 id를 통해 조회한다.
-     * @param courseId
-     * @returns com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep1 OK
-     * @throws ApiError
-     */
-    public static findByCourseIdWizard1(
-        courseId: number,
-    ): CancelablePromise<com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin_WizardStep1> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/course/wizard1/{courseId}',
-            path: {
-                'courseId': courseId,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     *  과정 생성 마법사1
-     * 과정 생성 마법사1 입니다.
-     * @param courseId
-     * @param requestBody
-     * @returns number OK
-     * @throws ApiError
-     */
-    public static wizard1(
-        courseId: number,
-        requestBody: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1,
-    ): CancelablePromise<number> {
-        return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/admin/api/v1/course/wizard1/{courseId}',
-            path: {
-                'courseId': courseId,
-            },
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
      * 마스터 카테고리 메타 정보 업데이트
      * 마스터 카테고리 정보를 업데이트한다.
      * @param categoryId
@@ -586,7 +224,7 @@ export class BoService {
      * @returns number OK
      * @throws ApiError
      */
-    public static update1(
+    public static update(
         categoryId: number,
         requestBody: com_ever_edu_lms_category_dto_req_CategoryMasterUpdateRequestDto,
     ): CancelablePromise<number> {
@@ -643,7 +281,7 @@ export class BoService {
      * @returns number OK
      * @throws ApiError
      */
-    public static update2(
+    public static update1(
         requestBody: com_ever_edu_lms_badge_dto_req_BadgeUpdateReqDto,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
@@ -667,7 +305,7 @@ export class BoService {
      * @returns number OK
      * @throws ApiError
      */
-    public static save1(
+    public static save2(
         requestBody: com_ever_edu_lms_badge_dto_req_BadgeSaveReqDto,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
@@ -743,7 +381,7 @@ export class BoService {
      * @returns number OK
      * @throws ApiError
      */
-    public static update3(
+    public static update2(
         requestBody: com_ever_edu_lms_badge_dto_req_BadgeGroupUpdateReqDto,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
@@ -767,7 +405,7 @@ export class BoService {
      * @returns number OK
      * @throws ApiError
      */
-    public static save2(
+    public static save3(
         requestBody: com_ever_edu_lms_badge_dto_req_BadgeGroupSaveReqDto,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
@@ -840,6 +478,59 @@ export class BoService {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 교육 장소 목록 조회
+     * 교육장소 목록을 조회한다.
+     * @param pageable
+     * @param param
+     * @returns org_springframework_data_domain_PageCom_ever_edu_lms_space_dto_res_LearningSpaceListAdminResDto OK
+     * @throws ApiError
+     */
+    public static findAll(
+        pageable: org_springdoc_core_converters_models_Pageable,
+        param: com_ever_edu_lms_space_dto_req_LearningSpaceListReqDto,
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_lms_space_dto_res_LearningSpaceListAdminResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/space',
+            query: {
+                'pageable': pageable,
+                'param': param,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 교육 장소 등록
+     * 교육장소 정보를 신규 등록한다.
+     * @param requestBody
+     * @returns number OK
+     * @throws ApiError
+     */
+    public static save(
+        requestBody: com_ever_edu_lms_space_dto_req_LearningSpaceSaveReqDto,
+    ): CancelablePromise<number> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/space',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },
@@ -919,33 +610,8 @@ export class BoService {
         });
     }
     /**
-     * 과정 복사
-     * 과정을 복사한다. 현지화 대비용 json 으로 채널정보나 담당자를 별도로 받을 지도 모르겠다.
-     * @param courseId
-     * @returns number OK
-     * @throws ApiError
-     */
-    public static copy1(
-        courseId: number,
-    ): CancelablePromise<number> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/admin/api/v1/course/{courseId}/copy',
-            path: {
-                'courseId': courseId,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
      * 과정 생성 마법사 시작
-     * 과정 생성 마법사 최초 저장 api 입니다.
+     * 과정 개설 > 1. 기본정보 설정 저장(신규등록)
      * @param requestBody
      * @returns number OK
      * @throws ApiError
@@ -974,7 +640,7 @@ export class BoService {
      * @returns number OK
      * @throws ApiError
      */
-    public static save(
+    public static save1(
         requestBody: com_ever_edu_lms_category_dto_req_CategoryMasterSaveRequestDto,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
@@ -1099,7 +765,7 @@ export class BoService {
      * @returns any OK
      * @throws ApiError
      */
-    public static save3(
+    public static save4(
         requestBody: com_ever_edu_lms_badge_dto_req_BadgeMappingGroupSaveReqDto,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -1251,6 +917,31 @@ export class BoService {
         });
     }
     /**
+     * 교육 장소 상세 조회
+     * 교육장소 UUID로 상세정보를 조회한다.
+     * @param learningSpaceUuid
+     * @returns com_ever_edu_lms_space_dto_res_LearningSpaceAdminResDto OK
+     * @throws ApiError
+     */
+    public static findByUuid(
+        learningSpaceUuid: string,
+    ): CancelablePromise<com_ever_edu_lms_space_dto_res_LearningSpaceAdminResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/space/{learningSpaceUuid}',
+            path: {
+                'learningSpaceUuid': learningSpaceUuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * 차수 목록 조회
      * 과정 id를 통해 차수 목록을 조회한다.
      * @param pageable
@@ -1283,13 +974,13 @@ export class BoService {
      * 과정 목록을 조회한다.
      * @param pageable
      * @param params
-     * @returns org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CourseListResDto$OnAdmin OK
+     * @returns org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CourseListAdminResDto OK
      * @throws ApiError
      */
     public static findPage6(
         pageable: org_springdoc_core_converters_models_Pageable,
         params: com_ever_edu_lms_course_dto_req_CourseSearchReqDto$SearchByAdminDto,
-    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CourseListResDto$OnAdmin> {
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CourseListAdminResDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/courses',
@@ -1492,6 +1183,36 @@ export class BoService {
             url: '/admin/api/v1/enroll',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 과정 삭제
+     * 과정을 논리적으로 삭제한다.
+     * @param courseId
+     * @param courseType
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static findByUuid1(
+        courseId: number,
+        courseType: 'ELEARNING1' | 'ELEARNING2' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/admin/api/v1/course/{courseId}',
+            path: {
+                'courseId': courseId,
+            },
+            query: {
+                'courseType': courseType,
+            },
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,

@@ -7,6 +7,10 @@ import type { com_ever_edu_pms_channel_dto_res_ChannelLearnerUserResDto } from '
 import type { com_ever_edu_pms_channel_dto_res_ChannelMappingTenantResDto } from './com_ever_edu_pms_channel_dto_res_ChannelMappingTenantResDto';
 export type com_ever_edu_pms_channel_dto_res_ChannelDetailResDto = {
     /**
+     * 채널 UUID
+     */
+    channelUuid?: string;
+    /**
      * 채널 개설 방식 구분
      */
     channelCreationType?: com_ever_edu_pms_channel_dto_res_ChannelDetailResDto.channelCreationType;
@@ -39,9 +43,9 @@ export type com_ever_edu_pms_channel_dto_res_ChannelDetailResDto = {
      */
     channelSubscriptionType?: com_ever_edu_pms_channel_dto_res_ChannelDetailResDto.channelSubscriptionType;
     /**
-     * 채널소유자Id
+     * 채널소유자UUId
      */
-    channelOwnerId?: number;
+    channelOwnerUuid?: string;
     channelOwnerName?: string;
     /**
      * 보안채널여부
@@ -59,7 +63,9 @@ export type com_ever_edu_pms_channel_dto_res_ChannelDetailResDto = {
      * 삭제여부
      */
     isDeleted?: boolean;
-    channelUuid?: string;
+    /**
+     * 채널대상자 설정 구분
+     */
     channelTargetUserSettingType?: com_ever_edu_pms_channel_dto_res_ChannelDetailResDto.channelTargetUserSettingType;
     learnerUserGroupList?: Array<com_ever_edu_pms_channel_dto_res_ChannelLearnerUserGroupResDto>;
     learnerUserList?: Array<com_ever_edu_pms_channel_dto_res_ChannelLearnerUserResDto>;
@@ -110,6 +116,9 @@ export namespace com_ever_edu_pms_channel_dto_res_ChannelDetailResDto {
         MANUAL = 'MANUAL',
         AUTO = 'AUTO',
     }
+    /**
+     * 채널대상자 설정 구분
+     */
     export enum channelTargetUserSettingType {
         USER_GROUP_SETTING = 'USER_GROUP_SETTING',
         MANUAL_SETTING = 'MANUAL_SETTING',

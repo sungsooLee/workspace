@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-no-useless-fragment */
+/* eslint-disable @nx/enforce-module-boundaries */
 import { FC } from 'react';
 import { Button, GridBox } from '@learnway/ui';
 import { NoticeBox } from '../../../../../../../bo/src/shared/ui';

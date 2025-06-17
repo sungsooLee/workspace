@@ -12,6 +12,7 @@ export interface AuthUser {
   passwordExpireDate: string;
   stateCode: string;
   tenants: Tenant[];
+  roles: Role[];
   enabled: boolean;
   username: string;
   accountNonExpired: boolean;
@@ -24,6 +25,11 @@ export interface AuthUser {
   avataImage?: string;
   latestLoginDatetime?: Date;
   phoneNumberNationCode?: string;
+
+  lastBoTenentId?: number;
+  lastBoRoleId?: number;
+  lastFoTenentId?: number;
+  lastFoRoleId?: number;
 }
 
 export interface AuthSSOHealthcheck {
@@ -41,6 +47,12 @@ export interface AuthSSOLogin {
 export interface Tenant {
   tenantId: number;
   tenantName: string;
+  logoImageUrl?: string;
+}
+export interface Role {
+  roleId: number;
+  roleName: string;
+  tenantId: number;
 }
 
 export type AUTH_TOOL_TYPE = 'PHONE' | 'EMAIL';

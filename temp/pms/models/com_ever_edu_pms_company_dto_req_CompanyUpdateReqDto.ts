@@ -65,41 +65,25 @@ export type com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto = {
      */
     postNo?: string;
     /**
-     * 비밀번호 인증유형 리스트
-     */
-    passwordAuthTypeList?: Array<'PLATFORM' | 'HMG_SSO' | 'AUTOWAY'>;
-    /**
-     * 서비스 타입
-     */
-    serviceType?: com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto.serviceType;
-    /**
-     * 조직정보 수정 사용여부
-     */
-    isUseEditableDept?: boolean;
-    /**
-     * 연동시스템 사용여부
-     */
-    isUseLinkageSystem?: boolean;
-    /**
      * 사용여부
      */
     isUsed?: boolean;
-    /**
-     * 회사로그인제한정보
-     */
-    companyLoginRestrictionList?: Array<com_ever_edu_pms_company_dto_req_CompanyLoginRestrictionReqDto>;
     /**
      * 인사 데이터 수동 관리 유형
      */
     hrInfoManageType?: com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto.hrInfoManageType;
     /**
-     * 회사부가정보 회원가입유형 기본
+     * 회원 가입 유형
      */
     companyMemberJoinTypeList?: Array<'FO_JOIN_DEALER' | 'FO_JOIN_NORMAL' | 'FO_JOIN_PARTNER' | 'BO_JOIN_MANAGER'>;
     /**
-     * 회사부가정보 서비스유형타입 기본
+     * 연동시스템
      */
-    serviceTypeList?: Array<'BASIC' | 'CORE' | 'ENTERPRISE' | 'CONSIGNMENT' | 'FREE_CHARGE'>;
+    linkageSystem?: com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto.linkageSystem;
+    /**
+     * 서비스 타입
+     */
+    serviceTypeList: Array<'BASIC' | 'CORE' | 'ENTERPRISE' | 'CONSIGNMENT' | 'FREE_CHARGE'>;
     /**
      * 비용결제용 법인코드
      */
@@ -109,7 +93,7 @@ export type com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto = {
      */
     isUseSso?: boolean;
     /**
-     * 회사부가정보 서비스유형타입 기본
+     * 서비스유형타입(SSO 로그인 유형)
      */
     ssoTypeList?: Array<'HMG_SSO' | 'AUTOWAY' | 'AES_Link'>;
     /**
@@ -121,7 +105,7 @@ export type com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto = {
      */
     isUseTwoFactorAuth?: boolean;
     /**
-     * 회사부가정보 2차인증플랫폼유형 기본
+     * 2차인증플랫폼유형
      */
     twoFactorAuthPlatformTypeList?: Array<'FO_PLATFORM' | 'BO_PLATFORM'>;
     /**
@@ -152,6 +136,14 @@ export type com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto = {
      * 학습창 캡처 방지 유형
      */
     captureBlockType?: com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto.captureBlockType;
+    /**
+     * IP 접근 제한 설정(FO)
+     */
+    ipAccessControlTypeFo?: com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto.ipAccessControlTypeFo;
+    /**
+     * IP 접근 제한 설정(BO)
+     */
+    ipAccessControlTypeBo?: com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto.ipAccessControlTypeBo;
     /**
      * 담당부서
      */
@@ -184,6 +176,10 @@ export type com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto = {
      * 회사담당자 전화번호
      */
     managerPhone?: string;
+    /**
+     * 회사로그인제한정보
+     */
+    companyLoginRestrictionList?: Array<com_ever_edu_pms_company_dto_req_CompanyLoginRestrictionReqDto>;
 };
 export namespace com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto {
     /**
@@ -704,21 +700,24 @@ export namespace com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto {
         ZWE_263 = 'ZWE_263',
     }
     /**
-     * 서비스 타입
-     */
-    export enum serviceType {
-        BASIC = 'BASIC',
-        CORE = 'CORE',
-        ENTERPRISE = 'ENTERPRISE',
-        CONSIGNMENT = 'CONSIGNMENT',
-        FREE_CHARGE = 'FREE_CHARGE',
-    }
-    /**
      * 인사 데이터 수동 관리 유형
      */
     export enum hrInfoManageType {
         MANUAL_MANAGE = 'MANUAL_MANAGE',
         AUTO_MANAGE = 'AUTO_MANAGE',
+    }
+    /**
+     * 연동시스템
+     */
+    export enum linkageSystem {
+        GIM = 'GIM',
+        HSW = 'HSW',
+        KSW = 'KSW',
+        DMSSH = 'DMSSH',
+        DMSSK = 'DMSSK',
+        DDMSH = 'DDMSH',
+        DDMSK = 'DDMSK',
+        VAATZ = 'VAATZ',
     }
     /**
      * 비밀번호 인증 유형
@@ -774,6 +773,22 @@ export namespace com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto {
         BASIS_COMPANY = 'BASIS_COMPANY',
         BASIS_COURSE = 'BASIS_COURSE',
         NONE = 'NONE',
+    }
+    /**
+     * IP 접근 제한 설정(FO)
+     */
+    export enum ipAccessControlTypeFo {
+        ACCESS_IN_SIDE = 'ACCESS_IN_SIDE',
+        ACCESS_OUT_SIDE = 'ACCESS_OUT_SIDE',
+        ACCESS_ALL = 'ACCESS_ALL',
+    }
+    /**
+     * IP 접근 제한 설정(BO)
+     */
+    export enum ipAccessControlTypeBo {
+        ACCESS_IN_SIDE = 'ACCESS_IN_SIDE',
+        ACCESS_OUT_SIDE = 'ACCESS_OUT_SIDE',
+        ACCESS_ALL = 'ACCESS_ALL',
     }
     /**
      * 회사담당자사무실전화번호 국가번호
