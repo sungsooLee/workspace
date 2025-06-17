@@ -3,18 +3,18 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { com_ever_edu_pms_tenant_dto_res_TenantResDto$CompanyResDto } from './com_ever_edu_pms_tenant_dto_res_TenantResDto$CompanyResDto';
-import type { com_ever_edu_pms_tenant_dto_res_TenantResDto$RoleResDto } from './com_ever_edu_pms_tenant_dto_res_TenantResDto$RoleResDto';
+import type { com_ever_edu_pms_tenant_dto_res_TenantResDto$UserResDto } from './com_ever_edu_pms_tenant_dto_res_TenantResDto$UserResDto';
 export type com_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin = {
     tenantId?: number;
     tenantName?: string;
     tenantSite?: string;
+    isSecurityPledge?: boolean;
     isUsed?: boolean;
+    tenantUserList?: Array<com_ever_edu_pms_tenant_dto_res_TenantResDto$UserResDto>;
     companyTenantList?: Array<com_ever_edu_pms_tenant_dto_res_TenantResDto$CompanyResDto>;
-    tenantRoleList?: Array<com_ever_edu_pms_tenant_dto_res_TenantResDto$RoleResDto>;
     createdBy?: string;
     createdDate?: string;
     lastModifiedBy?: string;
     modifiedDate?: string;
-    tenantMappingRoleNameList?: Array<com_ever_edu_pms_tenant_dto_res_TenantResDto$RoleResDto>;
 };
 

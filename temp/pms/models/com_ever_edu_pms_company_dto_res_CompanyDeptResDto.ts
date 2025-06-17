@@ -24,6 +24,10 @@ export type com_ever_edu_pms_company_dto_res_CompanyDeptResDto = {
      */
     deptCode?: string;
     /**
+     * 매니저 사원번호
+     */
+    managerEmployeeNumber?: string;
+    /**
      * 매니저 성명
      */
     managerName?: string;
@@ -48,9 +52,17 @@ export type com_ever_edu_pms_company_dto_res_CompanyDeptResDto = {
      */
     parent?: number;
     /**
-     * 하위메뉴
+     * 부서 구성원 수
      */
-    childList?: Array<com_ever_edu_pms_company_dto_res_CompanyDeptResDto>;
+    deptMemberCount?: number;
+    /**
+     * 조직등록유형
+     */
+    hrInfoManageType?: com_ever_edu_pms_company_dto_res_CompanyDeptResDto.hrInfoManageType;
+    /**
+     * 회사코드
+     */
+    companyCode?: string;
     /**
      * 회사명
      */
@@ -59,18 +71,6 @@ export type com_ever_edu_pms_company_dto_res_CompanyDeptResDto = {
      * 회사유형
      */
     companyType?: com_ever_edu_pms_company_dto_res_CompanyDeptResDto.companyType;
-    /**
-     * 연동시스템 사용여부
-     */
-    isUseLinkageSystem?: boolean;
-    /**
-     * 연동시스템 유형
-     */
-    linkageType?: com_ever_edu_pms_company_dto_res_CompanyDeptResDto.linkageType;
-    /**
-     * 연동시스템
-     */
-    linkageSystem?: com_ever_edu_pms_company_dto_res_CompanyDeptResDto.linkageSystem;
     /**
      * 로그인 제한 정보
      */
@@ -91,8 +91,19 @@ export type com_ever_edu_pms_company_dto_res_CompanyDeptResDto = {
      * 최종수정일시
      */
     modifiedDate?: string;
+    /**
+     * 하위메뉴
+     */
+    childList?: Array<com_ever_edu_pms_company_dto_res_CompanyDeptResDto>;
 };
 export namespace com_ever_edu_pms_company_dto_res_CompanyDeptResDto {
+    /**
+     * 조직등록유형
+     */
+    export enum hrInfoManageType {
+        MANUAL_MANAGE = 'MANUAL_MANAGE',
+        AUTO_MANAGE = 'AUTO_MANAGE',
+    }
     /**
      * 회사유형
      */
@@ -107,26 +118,6 @@ export namespace com_ever_edu_pms_company_dto_res_CompanyDeptResDto {
         HELLO_HMG = 'HELLO_HMG',
         EDU_SERVICE = 'EDU_SERVICE',
         ETC = 'ETC',
-    }
-    /**
-     * 연동시스템 유형
-     */
-    export enum linkageType {
-        INTERFACE = 'INTERFACE',
-        FTP = 'FTP',
-    }
-    /**
-     * 연동시스템
-     */
-    export enum linkageSystem {
-        GIM = 'GIM',
-        HSW = 'HSW',
-        KSW = 'KSW',
-        DMSSH = 'DMSSH',
-        DMSSK = 'DMSSK',
-        DDMSH = 'DDMSH',
-        DDMSK = 'DDMSK',
-        VAATZ = 'VAATZ',
     }
 }
 

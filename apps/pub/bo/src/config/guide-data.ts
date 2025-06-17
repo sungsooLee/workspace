@@ -930,6 +930,15 @@ export const guideData = [
     remarks: '', // 비고
   },
   {
+    screenName: 'CMS/학습자원_등록_외부링크',
+    pageId: 'learning/learning-external-registration',
+    screenId: 'NLP_BO_CMS_1026',
+    pageType: 'Page',
+    completionDate: '2025-06-17',
+    lastUpdateDate: '',
+    remarks: '', // 비고
+  },
+  {
     screenName: 'LMS/과정관리',
     pageId: 'lms/procedure-management',
     screenId: 'NLP_BO_LMS_0001',
@@ -943,7 +952,7 @@ export const guideData = [
     pageId: 'lms/procedure-open-setting',
     screenId: 'NLP_BO_LMS_0017',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-06-17',
     lastUpdateDate: '',
     remarks: '', // 비고
   },

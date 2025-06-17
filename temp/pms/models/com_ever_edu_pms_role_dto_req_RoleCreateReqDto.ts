@@ -8,6 +8,10 @@ export type com_ever_edu_pms_role_dto_req_RoleCreateReqDto = {
      */
     siteScope?: com_ever_edu_pms_role_dto_req_RoleCreateReqDto.siteScope;
     /**
+     * 역할 타입
+     */
+    roleType?: com_ever_edu_pms_role_dto_req_RoleCreateReqDto.roleType;
+    /**
      * 부모 역할 ID
      */
     parentRoleId?: number;
@@ -44,9 +48,9 @@ export type com_ever_edu_pms_role_dto_req_RoleCreateReqDto = {
      */
     channelScope?: com_ever_edu_pms_role_dto_req_RoleCreateReqDto.channelScope;
     /**
-     * 채널 ID
+     * 채널 UUID
      */
-    channelIds?: Array<number>;
+    channelUuids?: Array<string>;
     /**
      * 팀 적용 범위
      */
@@ -67,6 +71,18 @@ export namespace com_ever_edu_pms_role_dto_req_RoleCreateReqDto {
     export enum siteScope {
         FO = 'FO',
         BO = 'BO',
+    }
+    /**
+     * 역할 타입
+     */
+    export enum roleType {
+        PLATFORM_MANAGER = 'PLATFORM_MANAGER',
+        TENANT_MANAGER = 'TENANT_MANAGER',
+        CHANNEL_OWNER = 'CHANNEL_OWNER',
+        CHANNEL_MEMBER = 'CHANNEL_MEMBER',
+        CHANNEL_GUEST = 'CHANNEL_GUEST',
+        POLICY_MANAGER = 'POLICY_MANAGER',
+        TUTOR = 'TUTOR',
     }
     /**
      * 테넌트 적용 범위

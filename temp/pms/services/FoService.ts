@@ -15,6 +15,13 @@ import type { com_ever_edu_pms_notification_dto_req_AlarmSendReqDto } from '../m
 import type { com_ever_edu_pms_notification_dto_res_AlarmResDto } from '../models/com_ever_edu_pms_notification_dto_res_AlarmResDto';
 import type { com_ever_edu_pms_role_dto_req_RoleApplicationReqDto } from '../models/com_ever_edu_pms_role_dto_req_RoleApplicationReqDto';
 import type { com_ever_edu_pms_role_dto_res_RoleApplicationResDto } from '../models/com_ever_edu_pms_role_dto_res_RoleApplicationResDto';
+import type { com_ever_edu_pms_tenant_dto_req_TenantCreateReqDto } from '../models/com_ever_edu_pms_tenant_dto_req_TenantCreateReqDto';
+import type { com_ever_edu_pms_tenant_dto_req_TenantPropertiesUpdateReqDto } from '../models/com_ever_edu_pms_tenant_dto_req_TenantPropertiesUpdateReqDto';
+import type { com_ever_edu_pms_tenant_dto_req_TenantSearchReqDto$SearchByAdmin } from '../models/com_ever_edu_pms_tenant_dto_req_TenantSearchReqDto$SearchByAdmin';
+import type { com_ever_edu_pms_tenant_dto_req_TenantUpdateReqDto } from '../models/com_ever_edu_pms_tenant_dto_req_TenantUpdateReqDto';
+import type { com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin';
+import type { com_ever_edu_pms_tenant_dto_res_TenantResDto$PropertiesResDto } from '../models/com_ever_edu_pms_tenant_dto_res_TenantResDto$PropertiesResDto';
+import type { com_ever_edu_pms_tenant_dto_res_TenantResDto$SimpleList } from '../models/com_ever_edu_pms_tenant_dto_res_TenantResDto$SimpleList';
 import type { com_ever_edu_pms_terms_dto_req_TermsSearchReqDto$SearchByUser } from '../models/com_ever_edu_pms_terms_dto_req_TermsSearchReqDto$SearchByUser';
 import type { com_ever_edu_pms_terms_dto_res_TermsAgreementResDto$DetailOnUser } from '../models/com_ever_edu_pms_terms_dto_res_TermsAgreementResDto$DetailOnUser';
 import type { com_ever_edu_pms_terms_dto_res_TermsResDto$DetailOnUser } from '../models/com_ever_edu_pms_terms_dto_res_TermsResDto$DetailOnUser';
@@ -23,11 +30,13 @@ import type { com_ever_edu_pms_user_dto_req_ChangeEmailReqDto } from '../models/
 import type { com_ever_edu_pms_user_dto_req_ChangePasswordReqDto } from '../models/com_ever_edu_pms_user_dto_req_ChangePasswordReqDto';
 import type { com_ever_edu_pms_user_dto_req_ChangePhoneNumberReqDto } from '../models/com_ever_edu_pms_user_dto_req_ChangePhoneNumberReqDto';
 import type { com_ever_edu_pms_user_dto_req_ConfirmPasswordReqDto } from '../models/com_ever_edu_pms_user_dto_req_ConfirmPasswordReqDto';
+import type { com_ever_edu_pms_user_dto_req_ExtendPasswordChangeDateReqDto } from '../models/com_ever_edu_pms_user_dto_req_ExtendPasswordChangeDateReqDto';
 import type { com_ever_edu_pms_user_dto_req_SendVerifyEmailReqDto } from '../models/com_ever_edu_pms_user_dto_req_SendVerifyEmailReqDto';
 import type { com_ever_edu_pms_user_dto_req_SendVerifyPhoneNumberReqDto } from '../models/com_ever_edu_pms_user_dto_req_SendVerifyPhoneNumberReqDto';
 import type { com_ever_edu_pms_user_dto_req_UserRegisterReqDto } from '../models/com_ever_edu_pms_user_dto_req_UserRegisterReqDto';
 import type { com_ever_edu_pms_user_dto_req_VerifyEmailReqDto } from '../models/com_ever_edu_pms_user_dto_req_VerifyEmailReqDto';
 import type { com_ever_edu_pms_user_dto_req_VerifyPhoneNumberReqDto } from '../models/com_ever_edu_pms_user_dto_req_VerifyPhoneNumberReqDto';
+import type { com_ever_edu_pms_user_dto_req_VisitTenantAndRoleReqDto } from '../models/com_ever_edu_pms_user_dto_req_VisitTenantAndRoleReqDto';
 import type { com_ever_edu_pms_user_dto_res_ConfirmPasswordResDto } from '../models/com_ever_edu_pms_user_dto_res_ConfirmPasswordResDto';
 import type { com_ever_edu_pms_user_dto_res_FindMyIdResDto } from '../models/com_ever_edu_pms_user_dto_res_FindMyIdResDto';
 import type { com_ever_edu_pms_user_dto_res_IsEmailExistsResDto } from '../models/com_ever_edu_pms_user_dto_res_IsEmailExistsResDto';
@@ -35,11 +44,36 @@ import type { com_ever_edu_pms_user_dto_res_UserResDto } from '../models/com_eve
 import type { org_springdoc_core_converters_models_Pageable } from '../models/org_springdoc_core_converters_models_Pageable';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleApplicationResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleApplicationResDto';
+import type { org_springframework_data_domain_PageCom_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin';
 import type { org_springframework_web_servlet_mvc_method_annotation_SseEmitter } from '../models/org_springframework_web_servlet_mvc_method_annotation_SseEmitter';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class FoService {
+    /**
+     * 최근 접속 테넌트/역할 저장
+     * 최근 접속 테넌트/역할을 저장한다.
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static visitTenantAndRole(
+        requestBody: com_ever_edu_pms_user_dto_req_VisitTenantAndRoleReqDto,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/user/api/v1/users/visit-tenant-role',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
     /**
      * 비밀번호 변경(비밀번호 인증)
      * 기존 비밀번호를 통해 사용자의 비밀번호를 변경한다.
@@ -101,6 +135,139 @@ export class FoService {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/user/api/v1/users/change-email',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트 상세 조회(플랫폼담당자)
+     * 테넌트 상세 조회(플랫폼담당자)
+     * @param tenantId
+     * @returns com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin OK
+     * @throws ApiError
+     */
+    public static getTenant(
+        tenantId: number,
+    ): CancelablePromise<com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/tenants/{tenantId}',
+            path: {
+                'tenantId': tenantId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트 수정(플랫폼담당자)
+     * 테넌트 수정(플랫폼담당자)
+     * @param tenantId
+     * @param requestBody
+     * @returns com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin OK
+     * @throws ApiError
+     */
+    public static updateTenant(
+        tenantId: number,
+        requestBody: com_ever_edu_pms_tenant_dto_req_TenantUpdateReqDto,
+    ): CancelablePromise<com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/user/api/v1/tenants/{tenantId}',
+            path: {
+                'tenantId': tenantId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트 삭제
+     * 테넌트 삭제
+     * @param tenantId
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static deleteTenant(
+        tenantId: number,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/user/api/v1/tenants/{tenantId}',
+            path: {
+                'tenantId': tenantId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트 상세 > 속성 조회(테넌트담당자)
+     * 테넌트 상세 > 속성 조회(테넌트담당자)
+     * @param tenantId
+     * @returns com_ever_edu_pms_tenant_dto_res_TenantResDto$PropertiesResDto OK
+     * @throws ApiError
+     */
+    public static getTenantProperties(
+        tenantId: number,
+    ): CancelablePromise<com_ever_edu_pms_tenant_dto_res_TenantResDto$PropertiesResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/tenants/{tenantId}/properties',
+            path: {
+                'tenantId': tenantId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트 상세 > 속성 수정(테넌트담당자)
+     * 테넌트 상세 > 속성 수정(테넌트담당자)
+     * @param tenantId
+     * @param requestBody
+     * @returns com_ever_edu_pms_tenant_dto_res_TenantResDto$PropertiesResDto OK
+     * @throws ApiError
+     */
+    public static updateTenantProperties(
+        tenantId: number,
+        requestBody: com_ever_edu_pms_tenant_dto_req_TenantPropertiesUpdateReqDto,
+    ): CancelablePromise<com_ever_edu_pms_tenant_dto_res_TenantResDto$PropertiesResDto> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/user/api/v1/tenants/{tenantId}/properties',
+            path: {
+                'tenantId': tenantId,
+            },
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -277,6 +444,30 @@ export class FoService {
         });
     }
     /**
+     * 비밀번호 변경 기간 연장
+     * 비밀번호 변경 기간을 연장한다.
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static changePasswordByPhoneNumber1(
+        requestBody: com_ever_edu_pms_user_dto_req_ExtendPasswordChangeDateReqDto,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/user/api/v1/users/extend-password-change-date',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * 비밀번호 확인
      * 비밀번호가 일치하는지 확인한다.
      * @param requestBody
@@ -316,6 +507,64 @@ export class FoService {
             query: {
                 'termsId': termsId,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트 목록 조회
+     * 테넌트 목록 조회
+     * @param searchReqDto
+     * @param page Zero-based page index (0..N)
+     * @param size The size of the page to be returned
+     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin OK
+     * @throws ApiError
+     */
+    public static getTenantList(
+        searchReqDto: com_ever_edu_pms_tenant_dto_req_TenantSearchReqDto$SearchByAdmin,
+        page?: number,
+        size: number = 10,
+        sort?: Array<string>,
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/tenants',
+            query: {
+                'page': page,
+                'size': size,
+                'sort': sort,
+                'searchReqDto': searchReqDto,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트 등록(플랫폼담당자)
+     * 테넌트 등록(플랫폼담당자)
+     * @param requestBody
+     * @returns com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin OK
+     * @throws ApiError
+     */
+    public static createTenant(
+        requestBody: com_ever_edu_pms_tenant_dto_req_TenantCreateReqDto,
+    ): CancelablePromise<com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/user/api/v1/tenants',
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
@@ -731,6 +980,108 @@ export class FoService {
             url: '/user/api/v1/terms/agreement-status',
             query: {
                 'params': params,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트 목록 조회(공통팝업용)
+     * 테넌트 목록 조회(공통팝업용)
+     * @param searchReqDto
+     * @returns com_ever_edu_pms_tenant_dto_res_TenantResDto$SimpleList OK
+     * @throws ApiError
+     */
+    public static getTenantSimpleList(
+        searchReqDto: com_ever_edu_pms_tenant_dto_req_TenantSearchReqDto$SearchByAdmin,
+    ): CancelablePromise<Array<com_ever_edu_pms_tenant_dto_res_TenantResDto$SimpleList>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/tenants/simple-list',
+            query: {
+                'searchReqDto': searchReqDto,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트 목록 조회 (공통팝업용)
+     * 테넌트 목록 조회 (공통팝업용)
+     * @param page Zero-based page index (0..N)
+     * @param size The size of the page to be returned
+     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param tenantName 테넌트명
+     * @param companyName 회사명
+     * @param companyCode 회사코드
+     * @param tenantManagerName 테넌트담당자
+     * @param companyManagerName 회사담당자
+     * @param isUsed 사용여부
+     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin OK
+     * @throws ApiError
+     */
+    public static getTenantListPopup(
+        page?: number,
+        size: number = 2147483647,
+        sort?: Array<string>,
+        tenantName?: string,
+        companyName?: string,
+        companyCode?: string,
+        tenantManagerName?: string,
+        companyManagerName?: string,
+        isUsed?: 'true' | 'false',
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/tenants/popup',
+            query: {
+                'page': page,
+                'size': size,
+                'sort': sort,
+                'tenantName': tenantName,
+                'companyName': companyName,
+                'companyCode': companyCode,
+                'tenantManagerName': tenantManagerName,
+                'companyManagerName': companyManagerName,
+                'isUsed': isUsed,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트명 중복 확인 API
+     * 테넌트명 중복 확인 API
+     * @param tenantName
+     * @param tenantId
+     * @returns boolean OK
+     * @throws ApiError
+     */
+    public static checkDuplicateTenantName(
+        tenantName: string,
+        tenantId?: number,
+    ): CancelablePromise<boolean> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/tenants/exists',
+            query: {
+                'tenantName': tenantName,
+                'tenantId': tenantId,
             },
             errors: {
                 400: `Bad Request`,

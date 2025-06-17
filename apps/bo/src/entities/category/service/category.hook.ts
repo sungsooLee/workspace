@@ -7,7 +7,7 @@ export function useFetchCategory() {
   return useQuery(queryOptions.all());
 }
 
-export function useFetchCategoryDetail(id: number, mode: string) {
+export function useFetchCategoryDetail(id: number, mode?: string) {
   return useQuery(queryOptions.detail(id, mode));
 }
 

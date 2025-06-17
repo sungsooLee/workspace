@@ -41,5 +41,5 @@ export const getNationCodeFromBrowser = (telephoneCountryCodes: any[]) => {
   const countryCode = telephoneCountryCodes.find(
     (code) => code.referenceVal1.nationCode2 === nationCode2,
   );
-  return countryCode.value;
+  return countryCode?.value ?? '';
 };

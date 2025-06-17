@@ -145,6 +145,14 @@ export type com_ever_edu_pms_company_dto_res_CompanyResDto = {
      */
     captureBlockType?: com_ever_edu_pms_company_dto_res_CompanyResDto.captureBlockType;
     /**
+     * IP 접근 제한 설정(FO)
+     */
+    ipAccessControlTypeFo?: com_ever_edu_pms_company_dto_res_CompanyResDto.ipAccessControlTypeFo;
+    /**
+     * IP 접근 제한 설정(BO)
+     */
+    ipAccessControlTypeBo?: com_ever_edu_pms_company_dto_res_CompanyResDto.ipAccessControlTypeBo;
+    /**
      * 담당부서
      */
     managerDept?: string;
@@ -804,6 +812,22 @@ export namespace com_ever_edu_pms_company_dto_res_CompanyResDto {
         BASIS_COMPANY = 'BASIS_COMPANY',
         BASIS_COURSE = 'BASIS_COURSE',
         NONE = 'NONE',
+    }
+    /**
+     * IP 접근 제한 설정(FO)
+     */
+    export enum ipAccessControlTypeFo {
+        ACCESS_IN_SIDE = 'ACCESS_IN_SIDE',
+        ACCESS_OUT_SIDE = 'ACCESS_OUT_SIDE',
+        ACCESS_ALL = 'ACCESS_ALL',
+    }
+    /**
+     * IP 접근 제한 설정(BO)
+     */
+    export enum ipAccessControlTypeBo {
+        ACCESS_IN_SIDE = 'ACCESS_IN_SIDE',
+        ACCESS_OUT_SIDE = 'ACCESS_OUT_SIDE',
+        ACCESS_ALL = 'ACCESS_ALL',
     }
     /**
      * 회사담당자사무실전화번호 국가번호

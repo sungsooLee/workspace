@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Button, StepperTabs } from '@learnway/ui';
+import { Button, Tabs } from '@learnway/ui';
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
@@ -8,7 +8,6 @@ import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { BasicInfo } from '../-components/basic-info/basic-info';
 import { formConfig as formConfigBasic } from '../-components/basic-info/form-config';
 import { CourseRegistration } from '../-components/course-registration/course-registration';
-import { formConfig as formConfigCourse } from '../-components/course-registration/form-config';
 
 export const Route = createFileRoute('/_unauth/learning_test/course/create/view')({
   component: RouteComponent,
@@ -19,22 +18,11 @@ function RouteComponent() {
   const dynamicForm = useDynamicForm(formConfig);
   const { provider, onSubmit, control, getValues, fetchData } = dynamicForm; //useDynamicForm(formConfig);
 
-  const [test, setTest] = React.useState<any>('');
-
-  const handleImport = () => {
-    console.log('handleImportCourse');
-    setTest((state: any) => state + '.');
-  };
-
-  const handleCopy = () => {
-    console.log('handleCopyCourse');
-  };
-
-  const handleExport = () => {
+  const handleListClick = () => {
     console.log('handleExportCourse');
   };
 
-  const handlePreview = () => {
+  const handleDeleteClick = () => {
     console.log('handleImportCourse');
     console.log('getValues', getValues());
   };
@@ -58,7 +46,7 @@ function RouteComponent() {
   const tabItems = useMemo(
     () => [
       {
-        title: '기본정보',
+        title: '기본정보 설정',
         key: 'a',
         content: <BasicInfo dynamicForm={dynamicForm} />,
       },
@@ -73,12 +61,12 @@ function RouteComponent() {
         content: <h2>Tab C content</h2>,
       },
       {
-        title: '상세정보 설정',
+        title: '상세 설정',
         key: 'd',
         content: <h2>Tab C content</h2>,
       },
       {
-        title: '강의 게시 설정',
+        title: '강의 설정',
         key: 'e',
         content: <h2>Tab C content</h2>,
       },
@@ -94,39 +82,26 @@ function RouteComponent() {
             type="button"
             variant="point"
             size="sm"
-            label={'과정 가져오기'}
-            onClick={handleImport}
+            label={'목록'}
+            onClick={handleListClick}
           />
           <Button
             type="button"
             variant="point"
             size="sm"
-            label={'과정 복사'}
-            onClick={handleCopy}
+            label={'삭제'}
+            onClick={handleDeleteClick}
           />
           <Button
-            type="button"
-            variant="point"
+            type="submit"
+            variant="primary"
             size="sm"
-            label={'과정 내보내기'}
-            onClick={handleExport}
+            label={'저장'}
+            onClick={handleOnSubmit}
           />
-          <Button
-            type="button"
-            variant="point"
-            size="sm"
-            label={'미리보기'}
-            onClick={handlePreview}
-          />
-          <Button type="submit" variant="primary" size="sm" label={'저장'} />
         </ContentsButtons>
         <MainContents>
-          <StepperTabs
-            type={'sub-progress'}
-            size={'md'}
-            items={tabItems}
-            onTabChange={handleTabChange}
-          />
+          <Tabs type={'progress'} size={'sm'} items={tabItems} onTabChange={handleTabChange} />
         </MainContents>
       </PageContainer>
     </form>
@@ -136,6 +111,6 @@ function RouteComponent() {
 const formConfig: DynamicFormConfig = {
   builders: [
     ...formConfigBasic.builders, // 기본정보
-    ...formConfigCourse.builders, // 수강신청 설정
+    // ...formConfigCourse.builders, // 수강신청 설정
   ],
 };

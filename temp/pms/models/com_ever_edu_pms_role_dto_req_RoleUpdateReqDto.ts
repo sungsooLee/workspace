@@ -40,9 +40,9 @@ export type com_ever_edu_pms_role_dto_req_RoleUpdateReqDto = {
      */
     channelScope?: com_ever_edu_pms_role_dto_req_RoleUpdateReqDto.channelScope;
     /**
-     * 채널 ID
+     * 채널 UUID
      */
-    channelIds?: Array<number>;
+    channelUuids?: Array<string>;
     /**
      * 팀 적용 범위
      */

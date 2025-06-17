@@ -135,12 +135,7 @@ function BatchSettingModalComponent() {
                     </span>
                   </label>
                   <div className={formStyles.input_box}>
-                    <PhoneNumber
-                      options={[
-                        { value: 'type1', label: '+82' },
-                        { value: 'type2', label: '+83' },
-                      ]}
-                    />
+                    <PhoneNumber options={[{ value: 'KOR_82', label: '+82' }]} />
                   </div>
                 </div>
               </ContentsRow>

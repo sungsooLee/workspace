@@ -13,7 +13,6 @@ import {
   UserShuttleModal,
   MenuChoiceTreeModal,
   CategoryChoiceTreeModal,
-  CompanyUserChoiceModal,
   UserGroupChoiceModal,
   UserGroupTabsChoiceModal,
   UserGroupOrganizationShuttleModal,
@@ -265,25 +264,7 @@ function RouteComponent() {
               >
                 {'회사 조회(셔틀)'}
               </Button>
-
               <span className="text-green-500">{'완료'}</span>
-            </div>
-            <div className="flex gap-4">
-              <Button
-                size={'xs'}
-                className="btn_table flex-1"
-                variant={'gray2'}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openModal({
-                    width: 'xl',
-                    content: <CompanyUserChoiceModal />,
-                  });
-                }}
-              >
-                {'회사 기준으로 유저를 조회'}
-              </Button>
-              <span className="text-yellow-500">{'진행중'}</span>
             </div>
 
             <div className="h-1 w-full border-white bg-slate-700" />

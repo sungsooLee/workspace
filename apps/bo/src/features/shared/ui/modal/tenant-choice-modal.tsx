@@ -11,31 +11,48 @@ import {
   useGridBox,
 } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
-import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
+import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { tenantQueryOptions } from '@entities/tenant/service/tenant.queries';
-import { useRouter } from '@tanstack/react-router';
 
 const TenantModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
-  const router = useRouter();
   const { close: closeModal } = useModal();
 
   const searchConfig: SearchBoxConfig = {
     builders: [
       [
         {
-          name: 'tenantName',
-          type: 'text',
-          label: t('테넌트명'),
-          format: 'object',
-          value: '',
+          required: true,
+          name: 'tenantId',
+          type: 'dropdown',
+          format: 'number',
+          label: t('테넌트'),
+          value: undefined,
+          optionsConfig: {
+            codeGroup: CODE_GROUP['manual.tenant.tenantId'],
+          },
+          dropdownConfig: {
+            onchange: () => {
+              return '';
+            },
+            placeholder: '입력 또는 선택',
+          },
         },
         {
-          name: 'companyName',
-          type: 'text',
-          label: t('회사명'),
+          name: 'companyCode',
+          type: 'dropdown',
+          label: t('회사'),
           value: '',
+          optionsConfig: {
+            codeGroup: CODE_GROUP['manual.company.companyCode'],
+          },
+          dropdownConfig: {
+            onchange: () => {
+              return '';
+            },
+            placeholder: '입력 또는 선택',
+          },
         },
         {
           name: 'tenantMappingRoleName',
@@ -57,6 +74,9 @@ const TenantModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
       ],
       [],
     ],
+    validator: {
+      tenantId: { required: true },
+    },
   };
 
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);
@@ -71,27 +91,27 @@ const TenantModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
       },
       {
         name: 'tenantName',
-        label: t('테넌트명'),
+        label: t('테넌트'),
         render: (info: any) => info.row.original.tenantName,
       },
       {
         name: 'companyTenantList',
         label: t('회사'),
         render: (info: any) => {
-          const companyNames = info.row.original.companyTenantList.map((item: any) => {
-            return item.companyName;
+          const companyNames = info.row.original.companyTenantList.map(({ companyName }: any) => {
+            return companyName;
           });
           return companyNames.toString();
         },
       },
       {
-        name: 'tenantRoleList',
+        name: 'tenantUserList',
         label: t('테넌트 담당자'),
         render: (info: any) => {
-          const tenantRoleList = info.row.original.tenantRoleList.map((item: any) => {
-            return item.roleName;
+          const tenantUserList = info.row.original.tenantUserList.map(({ userName }: any) => {
+            return userName;
           });
-          return tenantRoleList.toString();
+          return tenantUserList.toString();
         },
       },
       {
@@ -129,14 +149,6 @@ const TenantModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
     if (!selectedRow) closeModal();
     closeModal(selectedRow);
   };
-
-  // grid
-  const [pageIndex, setPageIndex] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
-
-  /**
-   * @param data
-   */
 
   return (
     <ModalContainer>

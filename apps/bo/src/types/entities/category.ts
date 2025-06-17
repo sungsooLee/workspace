@@ -21,6 +21,7 @@ export interface CategoryDetail {
   categoryCode: string;
   categoryContent: string;
   categoryPath: string;
+  isUsed?: boolean;
 }
 
 export interface CategoryCreate {

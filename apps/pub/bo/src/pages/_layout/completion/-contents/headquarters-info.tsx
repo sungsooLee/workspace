@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import { FC } from 'react';
 import { forwardRef, useState } from 'react';
 import { cn } from '@learnway/shared';

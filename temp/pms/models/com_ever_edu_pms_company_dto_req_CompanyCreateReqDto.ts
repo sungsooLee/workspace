@@ -23,15 +23,15 @@ export type com_ever_edu_pms_company_dto_req_CompanyCreateReqDto = {
     /**
      * 사업자등록번호
      */
-    brn?: string;
+    brn: string;
     /**
      * 회사명 약어
      */
-    abbreviationName: string;
+    abbreviationName?: string;
     /**
      * 대표자명
      */
-    rpsntrName: string;
+    rpsntrName?: string;
     /**
      * 대표전화번호 국가번호
      */
@@ -76,14 +76,6 @@ export type com_ever_edu_pms_company_dto_req_CompanyCreateReqDto = {
      * 회원 가입 유형
      */
     companyMemberJoinTypeList?: Array<'FO_JOIN_DEALER' | 'FO_JOIN_NORMAL' | 'FO_JOIN_PARTNER' | 'BO_JOIN_MANAGER'>;
-    /**
-     * 연동시스템 사용여부
-     */
-    isUseLinkageSystem?: boolean;
-    /**
-     * 연동시스템 유형
-     */
-    linkageType?: com_ever_edu_pms_company_dto_req_CompanyCreateReqDto.linkageType;
     /**
      * 연동시스템
      */
@@ -144,6 +136,14 @@ export type com_ever_edu_pms_company_dto_req_CompanyCreateReqDto = {
      * 학습창 캡처 방지 유형
      */
     captureBlockType?: com_ever_edu_pms_company_dto_req_CompanyCreateReqDto.captureBlockType;
+    /**
+     * IP 접근 제한 설정(FO)
+     */
+    ipAccessControlTypeFo?: com_ever_edu_pms_company_dto_req_CompanyCreateReqDto.ipAccessControlTypeFo;
+    /**
+     * IP 접근 제한 설정(BO)
+     */
+    ipAccessControlTypeBo?: com_ever_edu_pms_company_dto_req_CompanyCreateReqDto.ipAccessControlTypeBo;
     /**
      * 담당부서
      */
@@ -707,13 +707,6 @@ export namespace com_ever_edu_pms_company_dto_req_CompanyCreateReqDto {
         AUTO_MANAGE = 'AUTO_MANAGE',
     }
     /**
-     * 연동시스템 유형
-     */
-    export enum linkageType {
-        INTERFACE = 'INTERFACE',
-        FTP = 'FTP',
-    }
-    /**
      * 연동시스템
      */
     export enum linkageSystem {
@@ -780,6 +773,22 @@ export namespace com_ever_edu_pms_company_dto_req_CompanyCreateReqDto {
         BASIS_COMPANY = 'BASIS_COMPANY',
         BASIS_COURSE = 'BASIS_COURSE',
         NONE = 'NONE',
+    }
+    /**
+     * IP 접근 제한 설정(FO)
+     */
+    export enum ipAccessControlTypeFo {
+        ACCESS_IN_SIDE = 'ACCESS_IN_SIDE',
+        ACCESS_OUT_SIDE = 'ACCESS_OUT_SIDE',
+        ACCESS_ALL = 'ACCESS_ALL',
+    }
+    /**
+     * IP 접근 제한 설정(BO)
+     */
+    export enum ipAccessControlTypeBo {
+        ACCESS_IN_SIDE = 'ACCESS_IN_SIDE',
+        ACCESS_OUT_SIDE = 'ACCESS_OUT_SIDE',
+        ACCESS_ALL = 'ACCESS_ALL',
     }
     /**
      * 회사담당자사무실전화번호 국가번호

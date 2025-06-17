@@ -21,6 +21,8 @@ export { ReactComponent as IcoBell03 } from './lib/ic_bell_03.svg'; // bell03 li
 export { ReactComponent as IcoLinkblank } from './lib/ic_btn_pop.svg'; // link blank line
 export { ReactComponent as IcoChevronDown } from './lib/ic_chevron_down.svg';
 export { ReactComponent as IcoChevronLeft } from './lib/ic_chevron_left.svg'; // grid paging IcoArrowDown
+export { ReactComponent as IcoArrowPrev } from './lib/ic_arrow_prev.svg';
+export { ReactComponent as IcoArrowNext } from './lib/ic_arrow_next.svg';
 export { ReactComponent as IcoChevronLeftDouble } from './lib/ic_chevron_left_double.svg'; // grid paging btn
 export { ReactComponent as IcoChevronRight } from './lib/ic_chevron_right.svg'; // grid paging btn
 export { ReactComponent as IcoChevronRightDouble } from './lib/ic_chevron_right_double.svg'; // grid paging btn
@@ -82,6 +84,7 @@ export { ReactComponent as IcoInfoCircle } from './lib/ic_info_circle.svg'; // l
 export { ReactComponent as IcoImage01 } from './lib/ic_image_01.svg'; // image
 export { ReactComponent as IcoVideo01 } from './lib/ic_video_recorder_01.svg'; // video
 export { ReactComponent as IcoVideo02 } from './lib/ic_video_recorder_02.svg'; // video2
+export { ReactComponent as IcoClass } from './lib/ic_users_plus.svg'; // class
 export { ReactComponent as IcoQuestionBank } from './lib/ic_questionbank.svg';
 export { ReactComponent as IcoLive } from './lib/ic_live.svg';
 export { ReactComponent as IcoLiveHive } from './lib/ic_livehive.svg';

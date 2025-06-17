@@ -11,6 +11,33 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class BoExcelFileTestTestApiService {
     /**
+     * excel_read_sample_user.xlsx 파일 유효성검사
+     * 엑셀 유효성검사 <br>엑셀 파일(을 멀티파트 업로드하여 유효성검사 처리<br>S3 upload/template/sample/excel_read_sample_user.xlsx 파일을 다운로드 받은 후 후 멀티파트 업로드 테스트하세요.
+     * @param formData
+     * @returns com_ever_edu_global_excel_dto_res_ExcelValidationResDto OK
+     * @throws ApiError
+     */
+    public static multipartExcelUserFileValidation(
+        formData?: {
+            multipartFile?: Blob;
+        },
+    ): CancelablePromise<com_ever_edu_global_excel_dto_res_ExcelValidationResDto> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/test/api/v1/file/excel/validation/excel/user',
+            formData: formData,
+            mediaType: 'multipart/form-data',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * MultipartFile Excel 업로드 처리(excel_read_sample_user.xlsx)
      * MultipartFile Excel(excel_read_sample_user.xlsx) 업로드 처리 테스트
      * @param companyCode companyCode
@@ -289,26 +316,6 @@ export class BoExcelFileTestTestApiService {
             query: {
                 'fileName': fileName,
             },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                405: `Method Not Allowed`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * S3 excel_read_sample_user.xlsx 파일 유효성검사
-     * 엑셀 유효성검사 <br>S3 파일(public/template/sample/excel_read_sample_user.xlsx)을 다운받아 엑셀 유효성검사 처리
-     * @returns com_ever_edu_global_excel_dto_res_ExcelValidationResDto OK
-     * @throws ApiError
-     */
-    public static s3ExcelUserFileValidation(): CancelablePromise<com_ever_edu_global_excel_dto_res_ExcelValidationResDto> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/test/api/v1/file/excel/validation/user',
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,

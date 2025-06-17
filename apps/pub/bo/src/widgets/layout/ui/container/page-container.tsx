@@ -3,7 +3,7 @@ import React, { memo, ReactNode, useState, useEffect, useRef } from 'react';
 import { Link } from '@tanstack/react-router';
 // import { useTranslation } from 'react-i18next';
 import { Breadcrumbs } from './breadcrumbs/breadcrumbs';
-import { Button, Popover } from '@learnway/ui';
+import { Button, Popover, Divider } from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-container.module.css';
 import fabStyles from '@learnway/styles/bo/assets/styles/modules/fab.module.css'; /* fab */
 import tooltipPopoverStyles from '@learnway/styles/bo/assets/styles/modules/tootip-popover.module.css';
@@ -204,6 +204,7 @@ function PageContainerComponent({
               <Button variant="point" size="sm" label={'목록'} />
               <Button variant="point" size="sm" label={'매핑과정 보기'} />
             </div>
+            <Divider orientation={'vertical'} />
             <Button variant="point" size="sm" disabled label={'배포'} />
             <Button variant="primary" size="sm" disabled label={'저장'} />
             {/* <Button
