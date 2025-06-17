@@ -1,5 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
-import { cn } from '@learnway/shared';
+import { useMemo, useState } from 'react';
 import { FormSubTitle } from '../../../../../bo/src/shared/ui/form';
 import {
   Button,
@@ -11,14 +10,17 @@ import {
   OptionCard,
   OptionCardItem,
 } from '@learnway/ui';
-import { useFetchAuthUser } from '@learnway/auth/entities';
+import { useFetchAuthUser, useUpdateTenantRoleLastSelect } from '@learnway/auth/entities';
+import { useTranslation } from 'react-i18next';
 
 const TenantRoleModalComponent = () => {
+  const { t } = useTranslation();
   const { close: closeModal } = useModal();
   const { data: authUser } = useFetchAuthUser();
+  const { update: updateTenantRole } = useUpdateTenantRoleLastSelect();
 
-  const [tenantvalues, setTenantValues] = useState<{ label: string; value: string }>();
-  const [rolevalues, setRolevalues] = useState<{ label: string; value: string }>();
+  const [tenantvalues, setTenantValues] = useState<OptionCardItem>();
+  const [rolevalues, setRolevalues] = useState<OptionCardItem | undefined>();
 
   // 테넌트 목록
   const tenantOptions = useMemo(() => {
@@ -27,6 +29,7 @@ const TenantRoleModalComponent = () => {
     return authUser?.tenants?.map?.((tenant) => ({
       label: tenant.tenantName,
       value: String(tenant.tenantId),
+      original: { ...tenant },
     }));
   }, [authUser?.tenants]);
 
@@ -37,18 +40,39 @@ const TenantRoleModalComponent = () => {
 
     return authUser?.roles
       ?.map?.((role) => ({
-        ...role,
         label: role.roleName,
         value: String(role.roleId),
+        original: { ...role },
       }))
-      .filter((role) => role.value === tenantvalues?.value);
+      .filter((role) => role.original.tenantId === tenantvalues?.original?.tenantId);
   }, [authUser?.roles, tenantvalues]);
+
+  const handleOk = () => {
+    if (!tenantvalues) return;
+    updateTenantRole(
+      {
+        lastVisitedBoTenantId: tenantvalues?.original?.tenantId,
+        lastVisitedBoRoleId: rolevalues?.original?.roleId,
+      },
+      {
+        onSuccess: (data: any) => {
+          closeModal(true);
+        },
+        onError: (error: any) => {
+          closeModal(false);
+        },
+      },
+    );
+  };
+
+  console.log('### tenantvalues', tenantvalues);
+  console.log('### roleOptions', roleOptions);
 
   return (
     <ModalContainer>
-      <ModalTitle>{'테넌트&역할 선택'}</ModalTitle>
+      <ModalTitle>{t('LABEL.modal.tenantRole.title')}</ModalTitle>
       <ModalBody>
-        <FormSubTitle label={'테넌트 선택'} size={'sm'} />
+        <FormSubTitle label={t('LABEL.modal.tenantRole.tenantTitle')} size={'sm'} />
         <OptionCard
           value={tenantvalues}
           cols={2}
@@ -56,9 +80,10 @@ const TenantRoleModalComponent = () => {
           options={tenantOptions}
           onOptionSelect={(option: OptionCardItem) => {
             setTenantValues(option);
+            setRolevalues(undefined);
           }}
         />
-        <FormSubTitle label={'역할 선택'} size={'sm'} />
+        <FormSubTitle label={t('LABEL.modal.tenantRole.roleTitle')} size={'sm'} />
         <OptionCard
           value={rolevalues}
           cols={2}
@@ -71,12 +96,12 @@ const TenantRoleModalComponent = () => {
       </ModalBody>
       <ModalFooter>
         <Button
-          label={'확인'}
+          label={t('LABEL.common.ok')}
           variant={'primary'}
           size={'lg'}
           disabled={!tenantvalues}
           // disabled={!tenantvalues || !rolevalues}
-          onClick={() => closeModal({ tenant: tenantvalues, role: rolevalues })}
+          onClick={handleOk}
         />
       </ModalFooter>
     </ModalContainer>

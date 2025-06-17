@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
-import { createFileRoute, useRouter, Link, useSearch } from '@tanstack/react-router';
+import { createFileRoute, useRouter, Link } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { isEmpty } from 'lodash';
 
 import { Button, ContentsRow, Input, useModal } from '@learnway/ui';
 import { useExpStore, useFetchAuthUser, useLogoutUser } from '@learnway/auth/entities';
 import { cn, dateDiff } from '@learnway/shared';
-// import { DynamicFormField } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { AUTH_ERROR_CODE } from '@learnway/auth/features/auth';
 
 import {
   useAuthSignin,
@@ -16,17 +16,15 @@ import {
   TenantRoleModal,
   LoginErrorAlert,
 } from '@features/auth';
-import { useSetLanguage } from '../../features/platform';
+import { useSetLanguage } from '@features/platform';
 
-import { FormRow } from '../../shared/ui/form';
-import { AUTH_CONTAINERS } from '../../widgets/layout';
+import { FormRow } from '@shared/ui/form';
+import { AUTH_CONTAINERS } from '@widgets/layout';
 
 import authStyles from './auth.module.css';
 import styles from '@learnway/styles/bo/pages/_auth/login.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import { usePermissionStore } from '../../shared/lib/permission-store';
-import { AUTH_ERROR_CODE } from '@learnway/auth/features/auth';
-import dayjs from 'dayjs';
+// import { usePermissionStore } from '../../shared/lib/permission-store';
 
 export const Route = createFileRoute('/_auth/login')({
   component: RouteComponent,
@@ -41,12 +39,11 @@ export const Route = createFileRoute('/_auth/login')({
 
 function RouteComponent() {
   const router = useRouter();
-  const params = Route.useParams();
   const search = Route.useSearch();
   const { reset } = useExpStore();
   const { provider, onSubmit, onFormChange, control } = useDynamicForm(detailConfig);
 
-  const { data: authData } = useFetchAuthUser();
+  // const { data: authData } = useFetchAuthUser();
 
   const { login } = useAuthSignin();
   const { logout } = useLogoutUser();
@@ -226,16 +223,17 @@ function RouteComponent() {
     console.log(' ### handleTenantSelectCheck', data);
 
     // TODO 테넌트/역할 구성 후 제외 필요
-    return true;
+    // return true;
 
-    // 테넌트/역할 없을때 처리
-    if (!data?.tenents?.length || !data?.roles?.length) {
-      loginErrorAlert({ code: AUTH_ERROR_CODE.TENANT_PENDING });
-      return false;
-    }
+    // TODO 테넌트/역할 없을때 처리
+    // if (!data?.tenents?.length || !data?.roles?.length) {
+    //   loginErrorAlert({ code: AUTH_ERROR_CODE.TENANT_PENDING });
+    //   return false;
+    // }
 
     // 테넌트/역할 선택 - 최초 로그인 사용자
-    if (data?.tenents?.length && data?.roles?.length) {
+    // if (!data?.lastVisitedBoRoleId || !data?.lastVisitedBoTenantId) {
+    if (!data?.lastVisitedBoTenantId) {
       await openModal({
         content: <TenantRoleModal />,
         height: 'lg',
@@ -243,19 +241,16 @@ function RouteComponent() {
         // hideCloseButton: true,
         closeOnOutsideClick: false,
         onClose: (data: any) => {
-          const text = `선택 \n테넌트: ${data?.tenant?.label}\n역할: ${data?.role?.label}`;
-          alert(text);
-          return true;
+          return data;
         },
       });
     }
-    return false;
+    return true;
   };
 
   const handleOnSubmit = async (values: any) => {
     await login(values, {
       onSuccess: async (data) => {
-        console.log('Login Page onSuccess');
         const locale = data?.locale;
         locale && (await setLanguage(locale));
 
@@ -266,6 +261,7 @@ function RouteComponent() {
 
         if (checkExpire && checkTenant) {
           router.navigate({ to: search.redirect || '/' });
+          return;
         }
 
         // 임시 : 사용 가능한 API 목록 fetch
