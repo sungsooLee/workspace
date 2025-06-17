@@ -9,8 +9,8 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { formUtils } from '@entities/form-utils';
 import { FormSubTitle } from '@shared/ui';
 
-import { CompanyUserDetailBase } from '@features/platform/company/company-user-detail-base';
-import { CompanyUserDetailLearningHistory } from '@features/platform/company/company-user-detail-learning-history';
+import { CompanyUserDetailBase } from '@features/platform/company/ui/company-user-detail-base';
+import { CompanyUserDetailLearningHistory } from '@features/platform/company/ui/company-user-detail-learning-history';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';

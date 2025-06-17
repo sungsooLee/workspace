@@ -79,7 +79,7 @@ const searchConfig: SearchBoxConfig = {
       {
         name: 'isUsed',
         type: 'dropdown',
-        label: t('회사정보 사용'),
+        label: t('사용여부'),
         value: '',
         options: [
           { value: '', label: t('전체') },
@@ -163,6 +163,9 @@ const columns = [
     header: t('사용여부'),
     cell: (info) => (info.getValue() ? t('사용') : t('미사용')), // API 확인
     enableGrouping: false,
+    meta: {
+      cellAlign: 'center',
+    },
   }),
   columnHelper.accessor('lastModifiedBy', {
     header: t('수정자'),
