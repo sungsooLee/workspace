@@ -18,6 +18,7 @@ import {
   UserGroupTabsChoiceModal,
   UserGroupOrganizationShuttleModal,
   OrganizationChoiceTreeModal,
+  OrganizationShuttleTreeModal,
   TrainingPlaceChoiceModal,
 } from '@features/shared';
 import { Button, ChipListModalSelectorFormField, ContentsRow, Input, useModal } from '@learnway/ui';
@@ -454,7 +455,7 @@ function RouteComponent() {
                   e.stopPropagation();
                   openModal({
                     width: 'md',
-                    content: <OrganizationChoiceTreeModal companyCodes={['H101']} />,
+                    content: <OrganizationChoiceTreeModal companyCodes={['H199', 'H103']} />,
                   });
                 }}
               >
@@ -462,7 +463,23 @@ function RouteComponent() {
               </Button>
               <span className="text-yellow-500">{'진행중'}</span>
             </div>
-
+            <div className="flex gap-4">
+              <Button
+                size={'xs'}
+                className="btn_table flex-1"
+                variant={'gray2'}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openModal({
+                    width: 'xl',
+                    content: <OrganizationShuttleTreeModal companyCodes={['H199', 'H103']} />,
+                  });
+                }}
+              >
+                {'회사조직조회 셔틀팝업'}
+              </Button>
+              <span className="text-yellow-500">{'진행중'}</span>
+            </div>
             <div className="h-1 w-full border-white bg-slate-700" />
             <div className="flex gap-4">
               <Button

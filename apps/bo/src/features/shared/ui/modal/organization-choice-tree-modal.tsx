@@ -71,11 +71,26 @@ const OrganizationChoiceTreeModalComponent = ({ companyCodes }: { companyCodes: 
               <div className={layoutStyles.inner_contents}>
                 <TreeBox
                   treeId="common-tree"
-                  type="SAME_LEVEL_ONLY"
+                  type="SHUTTLE_LIST"
                   data={organizationTree}
                   title={t('조직-플랫폼')}
                   initLevel={2}
                   showSearchKeyword
+                  renderNodeButtons={(node: any, index: number) => {
+                    if (node.key !== 'root' && node.parentKey !== 'root')
+                      return (
+                        <Button
+                          onClick={(e) => {
+                            closeModal(node);
+                          }}
+                          stopPropagation
+                          variant="gray2"
+                          size="ts"
+                          type="button"
+                          label={t('LABEL.button.select')}
+                        />
+                      );
+                  }}
                 />
               </div>
               {/* 종료 */}
