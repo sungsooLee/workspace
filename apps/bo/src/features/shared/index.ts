@@ -16,7 +16,6 @@ export * from './ui/modal/channel-request-choice-modal';
 export * from './ui/modal/channel-shuttle-modal';
 export * from './ui/modal/company-choice-modal';
 export * from './ui/modal/company-shuttle-modal';
-export * from './ui/modal/company-user-choice-modal';
 export * from './ui/modal/dnd-file-progress';
 export * from './ui/modal/excel-upload-modal';
 export * from './ui/modal/image-preview-modal';
