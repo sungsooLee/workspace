@@ -199,9 +199,16 @@ const formConfig: DynamicFormConfig = {
       value: '',
       fields: {
         nationCode: '휴대폰nationCode',
-        number: '휴대폰번호',
+        number: 'cellular',
       },
       placeholder: '010-1234-1234',
+    },
+    {
+      label: '',
+      name: '휴대폰nationCode',
+      type: 'hidden',
+      format: 'string',
+      value: 'KOR_82',
     },
     {
       label: t('연락처 (사무실)'),
@@ -211,9 +218,16 @@ const formConfig: DynamicFormConfig = {
       value: '',
       fields: {
         nationCode: '연락처nationCode',
-        number: '연락처',
+        number: 'officePhone',
       },
       placeholder: '2-1234-1234',
+    },
+    {
+      label: '',
+      name: '연락처nationCode',
+      type: 'hidden',
+      format: 'string',
+      value: 'KOR_82',
     },
     {
       name: 'company',

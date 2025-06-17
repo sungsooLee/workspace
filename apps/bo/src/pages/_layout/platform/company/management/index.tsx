@@ -10,6 +10,7 @@ import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 import { queryOptions } from '@entities/companies/service/companies.queries';
+import { EnGlobalConst } from '@types';
 
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
@@ -28,7 +29,6 @@ function RouteComponent() {
   }, []);
 
   const handleOnSearch = useCallback((data: any) => {
-    console.log('search', data);
     const searchData = {
       companyType: data.companyType,
       name: data.name,
@@ -40,7 +40,6 @@ function RouteComponent() {
         ? getDateToString(new Date(data.modifyDate.to), 'YYYYMMDD')
         : '',
     };
-    console.log('searchData', searchData);
     gridFetch(searchData);
   }, []);
 
@@ -151,7 +150,8 @@ const columnHelper = createColumnHelper<any>();
 const columns = [
   columnHelper.accessor('companyType', {
     header: t('그룹'),
-    cell: (info) => t('pms.company.CompanyType.' + info.getValue()),
+    cell: (info) =>
+      t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.CompayType.${info.getValue()}`),
     enableGrouping: false,
   }),
   columnHelper.accessor('name', {
@@ -170,8 +170,8 @@ const columns = [
     enableGrouping: false,
   }),
   columnHelper.accessor('isUsed', {
-    header: t('회사정보 사용'),
-    cell: (info) => (info.getValue() ? t('사용') : t('미사용')), // API 확인
+    header: t('사용여부'),
+    cell: (info) => (info.getValue() ? t('사용') : t('미사용')),
     enableGrouping: false,
   }),
   columnHelper.accessor('lastModifiedBy', {

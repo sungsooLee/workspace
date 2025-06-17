@@ -1,9 +1,9 @@
 import { FC, useEffect, useState } from 'react';
 import { t } from 'i18next';
-import { Link, useRouterState } from '@tanstack/react-router';
+import { useRouterState } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@learnway/shared';
-import { GridBox } from '@learnway/ui';
+import { GridBox, Button } from '@learnway/ui';
 import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 import { CompanyDetailHRUsergroup } from './company-detail-hr-usergroup';
 
@@ -79,11 +79,16 @@ const columnsNext = [
     header: t('선택'),
     accessorKey: 'select',
     size: 95,
+    cell: (info: any) => <Button variant="gray" label={t('선택')} />,
+    meta: {
+      cellAlign: 'center',
+    },
   },
 ];
 
 const sampleData = [
   {
+    id: 1,
     company: '현대자동차',
     affiliation: '소속1팀',
     position: '조직장',
@@ -91,7 +96,6 @@ const sampleData = [
     group: '판매직',
     role: '스텝',
     memberCount: '100명',
-    select: <Link to="/">{t('선택')}</Link>,
   },
 ];
 

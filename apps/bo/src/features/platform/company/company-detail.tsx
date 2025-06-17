@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState, useImperativeHandle, forwardRef, useEffect } from 'react';
+import React, { useRef, useState, useImperativeHandle, forwardRef, useEffect } from 'react';
 import { t } from 'i18next';
 import { useRouter, useRouterState } from '@tanstack/react-router';
 import { useWatch } from 'react-hook-form';
@@ -22,12 +22,11 @@ import {
   DuplicateCheckInputFormField,
   DuplicateState,
 } from '@features/tenant/management/ui/duplicate-check-input-form-field';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
 import { LoginRestrictTimeSettingModal } from '@features/shared/ui/modal/login-restrict-time-setting-modal';
 import { UserGroupTabsChoiceModal, UserGroupChoiceModal } from '@features/shared';
 import { EnGlobalConst } from '@types';
 
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
 import { useCreateCompany, useUpdateCompany, useFetchCompany } from '@entities/companies';
@@ -43,7 +42,8 @@ const CompanyDetailComponent = (props: any, ref: any) => {
 
   const { data: detailData, refetch } = useFetchCompany(companyCode);
 
-  const { open: openModal, close: closeModal, confirm: openConfirm } = useModal();
+  const { open: openModal, confirm: openConfirm } = useModal();
+  const [tableInstance, setTableInstance] = useState<Table<any>>();
   const { provider, fetchData, onSubmit, onFormChange, getValues, control } =
     useDynamicForm(formConfig);
 
@@ -60,6 +60,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
           checkState: DuplicateState.okStart,
         },
       };
+      // 기등록된 회사의 NULL 치환
       const convertedData = replaceNullValues(initialData, [
         'companyMemberJoinTypeList',
         'serviceTypeList',
@@ -192,6 +193,20 @@ const CompanyDetailComponent = (props: any, ref: any) => {
         }
       },
     });
+  };
+
+  const handleRemoveClick = () => {
+    const deleteRows = tableInstance?.getSelectedRowModel().rows;
+    if (deleteRows && deleteRows.length > 0) {
+      console.log('deleteRows', deleteRows);
+      const indexesToRemove = deleteRows.map((r) => r.index);
+      console.log('indexesToRemove', indexesToRemove);
+
+      setLoginRestrictTimeSettings((prev) => {
+        const newSettings = prev.filter((_, index) => !indexesToRemove.includes(index));
+        return newSettings;
+      });
+    }
   };
 
   const openConfirmChooseUserGroup = () => {
@@ -532,7 +547,9 @@ const CompanyDetailComponent = (props: any, ref: any) => {
           showAdd
           showRemove
           showTotalCount={false}
+          onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
           onAddClick={handleAddClick}
+          onRemoveClick={handleRemoveClick}
           disabledSelectionToggle={true}
           title={t('로그인 제한 시간 설정')}
           guideText={t(

@@ -1,25 +1,22 @@
 import { useEffect, useCallback } from 'react';
 import { t } from 'i18next';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
-import { queryOptions } from '@entities/companies/service/companies.queries';
 import { EnGlobalConst } from '@types';
 
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
-export const Route = createFileRoute('/_layout/platform/company/organization/')({
+export const Route = createFileRoute('/_layout/platform/company/hr-history/')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const router = useRouter();
-
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
 
@@ -48,7 +45,7 @@ function RouteComponent() {
         <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
         <div className={cn(boxStyles.start, boxStyles.inner)}>
           <div className="grid_wrap">
-            <GridBox config={gConfig} columns={columns} title="회사 목록" />
+            <GridBox config={gConfig} columns={columns} title="회사 연결 목록" />
           </div>
         </div>
       </MainContents>
@@ -119,7 +116,7 @@ const searchConfig: SearchBoxConfig = {
 };
 
 const gridConfig: useGridBoxConfig = {
-  query: queryOptions.list,
+  query: '',
   columns: [
     {
       name: 'no1',
@@ -146,22 +143,17 @@ const columns = [
   }),
   columnHelper.accessor('name', {
     header: t('회사명'),
-    cell: (info) => (
-      <Link
-        to="/platform/company/organization/detail"
-        state={{
-          companyCode: info.row.original.companyCode,
-        }}
-        className="link"
-      >
-        {info.row.original.name}
-      </Link>
-    ),
+    cell: (info) => info.getValue(),
     enableGrouping: false,
   }),
-  columnHelper.accessor('isUsed', {
-    header: t('사용여부'),
-    cell: (info) => (info.getValue() ? t('사용') : t('미사용')), // API 확인
+  columnHelper.accessor('api', {
+    header: t('API'),
+    cell: (info) => 'API',
+    enableGrouping: false,
+  }),
+  columnHelper.accessor('method', {
+    header: t('Method 구분'),
+    cell: (info) => 'POST',
     enableGrouping: false,
   }),
   columnHelper.accessor('lastModifiedBy', {

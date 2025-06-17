@@ -395,6 +395,15 @@ export const munu = [
     memo: '작업 중',
     end: false,
   },
+  {
+    screenName: 'HR 연동 이력',
+    pageId: 'platform/company/hr-history',
+    screenId: 'NLP_BO_TMS_1306',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중',
+    end: false,
+  },
 ];
 
 export const guide = [
