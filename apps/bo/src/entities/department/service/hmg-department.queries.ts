@@ -5,11 +5,7 @@ import { HmgDepartmentService } from '../api/hmg-department';
 export const queryKeys = {
   all: ['hmg-department-all'] as const,
   tree: (companyCode: string[]) => ['hmg-department-tree', ...companyCode],
-  child: (companyCode: string, parentDeptId: string) => [
-    'hmg-department-child',
-    companyCode,
-    parentDeptId,
-  ],
+  child: (param: any) => ['hmg-department-child', param],
   user: (param: any) => ['department-user', param],
 };
 
@@ -23,7 +19,7 @@ export const queryOptions = {
     disabled: !companyCode,
   }),
   child: (param: any) => ({
-    queryKey: queryKeys.child(param.companyCode, param.parentDeptId),
+    queryKey: queryKeys.child(param),
     queryFn: () => {
       return HmgDepartmentService.getDepartmentChildDepartmentList(param);
     },

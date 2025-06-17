@@ -51,7 +51,7 @@ const TenantCompanyOrganizationInfoUserComponent = ({
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getSearchParam);
 
   const handleOnSearch = (data: any) => {
-    if (deptId) {
+    if (companyCode) {
       gridFetch(getSearchParam());
     }
   };

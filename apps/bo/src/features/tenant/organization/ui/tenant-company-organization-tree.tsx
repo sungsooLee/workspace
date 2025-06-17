@@ -67,6 +67,8 @@ const TenantCompanyOrganizationTreeComponent = ({
   const [companyDeparmentTree, setCompanyDepartmentTree] = useState<any>();
   const [deptTreeData, setDeptTreeData] = useState([]);
   const [selectedNode, setSelectedNode] = useState<any>();
+  const [viewNode, setViewNode] = useState<any>();
+
   const [formMode, setFormMode] = useState(EnFormMode.NONE);
   const [pathString, setPathString] = useState<string>();
 
@@ -79,11 +81,19 @@ const TenantCompanyOrganizationTreeComponent = ({
   const handleSelectedNodeChange = (node: any) => {
     if (node.key !== 'root' && node.parentKey !== 'root') {
       const location = findOrganizationPathById(deptTreeData, node.key);
-      console.log('location', location, node);
       setPathString(location);
-      setSelectedNode(node);
+      setSelectedNode(undefined);
+      setViewNode(node);
+      setFormMode(EnFormMode.VIEW);
     }
   };
+
+  const handleNodeCustomButton = (node: TreeNode, level: number) => {
+    setSelectedNode(node);
+    setViewNode(null);
+    setFormMode(EnFormMode.NONE);
+  };
+
   const renderTabOrganizationContent = () => {
     return (
       <TenantCompanyOrganizationInfoList
@@ -105,9 +115,25 @@ const TenantCompanyOrganizationTreeComponent = ({
   };
 
   useEffect(() => {
+    if (viewNode) {
+      const location = findOrganizationPathById(deptTreeData, viewNode.key);
+      setPathString(location);
+    }
+    if (selectedNode) {
+      const location = findOrganizationPathById(deptTreeData, selectedNode.key);
+      setPathString(location);
+    }
+  }, [viewNode, selectedNode]);
+
+  useEffect(() => {
     if (showType === EnOrganizationShowType.platform && departmentTreeData) {
       const transformedData = transformDepartmentApiDataToTreeData(departmentTreeData);
       setDeptTreeData(transformedData);
+      if (transformedData?.length > 0) {
+        const root = transformedData[0];
+        const company = root?.children[0];
+        setSelectedNode(company);
+      }
     }
   }, [departmentTreeData]);
 
@@ -115,6 +141,11 @@ const TenantCompanyOrganizationTreeComponent = ({
     if (showType === EnOrganizationShowType.origin && departmentTreeData) {
       const transformedData = transformDepartmentApiDataToTreeData(departmentTreeData);
       setDeptTreeData(transformedData);
+      if (transformedData?.length > 0) {
+        const root = transformedData[0];
+        const company = root?.children[0];
+        setSelectedNode(company);
+      }
     }
   }, [hmgDepartmentTreeData]);
 
@@ -130,6 +161,45 @@ const TenantCompanyOrganizationTreeComponent = ({
       content: renderTabUserContent(),
     },
   ];
+
+  const renderTreeCustomButtonNode = (node: TreeNode, level: number) => {
+    console.log('showType', showType);
+    if (level === 0) return;
+
+    if (showType === EnOrganizationShowType.origin) {
+      return (
+        <div className={'gap-10px flex'}>
+          <div className={'flex items-center'}>
+            <Button
+              onClick={(e) => {
+                handleNodeCustomButton(node, level);
+              }}
+              variant={node?.key === selectedNode?.key ? 'primary' : 'gray2'}
+              size="xs"
+              type="button"
+              label={t('선택')}
+            />
+          </div>
+        </div>
+      );
+    } else if (showType === EnOrganizationShowType.platform) {
+      return (
+        <div className={'gap-10px flex'}>
+          <div className={'flex items-center'}>
+            <Button
+              onClick={(e) => {
+                handleNodeCustomButton(node, level);
+              }}
+              variant={node?.key === selectedNode?.key ? 'primary' : 'gray2'}
+              size="xs"
+              type="button"
+              label={t('선택')}
+            />
+          </div>
+        </div>
+      );
+    }
+  };
   return (
     <SectionLayout contentsRatio={'thirty'}>
       <TreeBox
@@ -139,30 +209,31 @@ const TenantCompanyOrganizationTreeComponent = ({
         showSearchKeyword
         initLevel={2}
         title={showType === EnOrganizationShowType.origin ? t('조직-원본') : t('조직-플랫폼')}
-        selectedNode={selectedNode}
+        selectedNode={viewNode}
         handleSelectedNodeChange={handleSelectedNodeChange}
+        renderNodeButtons={renderTreeCustomButtonNode}
       />
-      {formMode !== EnFormMode.ADD && (
+      {formMode === EnFormMode.NONE && (
         <div className={cn(styles.start, styles.wrap)}>
           <div className={cn(layoutStyles.inner)}>
             <FormSubTitle
               label={t('조직 대상자')}
               titleNode={pathString}
-              lineType={'light'}
+              lineType="light"
             ></FormSubTitle>
             <div className={styles.contents_wrap}>
-              <Tabs items={tabItems} type="round" size={'sm'} className={styles.tab_wrap} />
+              <Tabs items={tabItems} type="round" size="sm" className={styles.tab_wrap} />
             </div>
           </div>
         </div>
       )}
       {/**추가 상태인 경우 입력 화면 적용 */}
-      {formMode === EnFormMode.ADD && (
+      {formMode !== EnFormMode.NONE && (
         <div className={cn(styles.start, styles.wrap)}>
           <div className={cn(layoutStyles.inner)}>
             <FormSubTitle
               label={t('조직 대상자')}
-              titleNode={'현대자동차>경영지원본부'}
+              titleNode={pathString}
               lineType="light"
             ></FormSubTitle>
             <div className={styles.contents_wrap}>

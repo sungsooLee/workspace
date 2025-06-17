@@ -26,6 +26,6 @@ export class DepartmentService {
    * @returns
    */
   static getDepartmentChildDepartmentList(param: any): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/department/child`, param);
+    return httpService.get<any>(`${PMSApiPrefix()}/department`, param);
   }
 }

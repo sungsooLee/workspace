@@ -6,11 +6,7 @@ export const queryKeys = {
   list: ['department-page'] as const,
   all: ['department-all'] as const,
   tree: (companyCode: string[]) => ['department-tree', ...companyCode],
-  child: (companyCode: string, parentDeptId: string) => [
-    'department-child',
-    companyCode,
-    parentDeptId,
-  ],
+  child: (param: any) => ['department-child', param],
   user: (param: any) => ['department-user', param],
 };
 
@@ -31,7 +27,7 @@ export const queryOptions = {
     disabled: !companyCode,
   }),
   child: (param: any) => ({
-    queryKey: queryKeys.child(param.companyCode, param.parentDeptId),
+    queryKey: queryKeys.child(param),
     queryFn: () => {
       return DepartmentService.getDepartmentChildDepartmentList(param);
     },
