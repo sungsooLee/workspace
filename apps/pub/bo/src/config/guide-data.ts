@@ -934,7 +934,7 @@ export const guideData = [
     pageId: 'learning/learning-external-registration',
     screenId: 'NLP_BO_CMS_1026',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-06-17',
     lastUpdateDate: '',
     remarks: '', // 비고
   },

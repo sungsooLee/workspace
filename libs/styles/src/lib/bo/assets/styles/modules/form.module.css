@@ -60,7 +60,7 @@
     }
   }
   .input_time {
-    @apply !min-w-[154px];
+    /* @apply !min-w-[154px]; */
   }
   .form_item {
     @apply pb-0;
@@ -417,7 +417,7 @@ hr.divider {
 
 /* 태그 */
 .tag_wrap {
-  @apply min-h-[32px] w-full rounded-[4px] border border-solid border-[var(--gray4)] pl-[12px] pt-[3px];
+  @apply min-h-[32px] w-full rounded-[4px] border border-solid border-[var(--gray4)] px-[12px] pb-[12px] pt-[3px];
   input {
     @apply !pl-0;
   }
