@@ -5,8 +5,9 @@
       [class*='nlp-select__control'] {
         @apply !border-transparent bg-[rgba(19,28,48,0.4)];
         [class*='nlp-select__single-value'],
-        [class*='nlp-select__placeholder'] {
-          @apply text-white;
+        [class*='nlp-select__placeholder'],
+        [class*='nlp-select__input-container'] input {
+          @apply !body_bo_2_r !text-white;
         }
         [class*='nlp-select__clear-indicator'] button svg {
           @apply !fill-none;
@@ -31,6 +32,9 @@
           @apply !bg-[#EDFCFF];
         }
       }
+    }
+    [class*='nlp-select__menu-notice'] {
+      @apply !body_bo_2_r;
     }
   }
 
