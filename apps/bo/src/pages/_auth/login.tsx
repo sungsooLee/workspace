@@ -225,6 +225,9 @@ function RouteComponent() {
   const handleTenantCheck = async (data: any) => {
     console.log(' ### handleTenantSelectCheck', data);
 
+    // TODO 테넌트/역할 구성 후 제외 필요
+    return true;
+
     // 테넌트/역할 없을때 처리
     if (!data?.tenents?.length || !data?.roles?.length) {
       loginErrorAlert({ code: AUTH_ERROR_CODE.TENANT_PENDING });
