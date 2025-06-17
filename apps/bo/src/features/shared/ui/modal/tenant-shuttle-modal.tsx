@@ -11,7 +11,7 @@ import {
   ShuttleGridToGridImperative,
 } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
-import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
+import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { tenantQueryOptions } from '@entities/tenant/service/tenant.queries';
 import { useQueryClient } from '@tanstack/react-query';
@@ -25,17 +25,37 @@ const TenantShuttleModalComponent = forwardRef((_) => {
     builders: [
       [
         {
-          name: 'tenantName',
-          type: 'text',
-          label: t('테넌트명'),
-          format: 'object',
-          value: '',
+          required: true,
+          name: 'tenantId',
+          type: 'dropdown',
+          format: 'number',
+          label: t('테넌트'),
+          value: undefined,
+          optionsConfig: {
+            codeGroup: CODE_GROUP['manual.tenant.tenantId'],
+          },
+          dropdownConfig: {
+            onchange: () => {
+              return '';
+            },
+            isSearchable: true,
+            placeholder: '입력 또는 선택',
+          },
         },
         {
-          name: 'companyName',
-          type: 'text',
-          label: t('회사명'),
+          name: 'companyCode',
+          type: 'dropdown',
+          label: t('회사'),
           value: '',
+          optionsConfig: {
+            codeGroup: CODE_GROUP['manual.company.companyCode'],
+          },
+          dropdownConfig: {
+            onchange: () => {
+              return '';
+            },
+            placeholder: '입력 또는 선택',
+          },
         },
         {
           name: 'tenantMappingRoleName',
@@ -57,6 +77,9 @@ const TenantShuttleModalComponent = forwardRef((_) => {
       ],
       [],
     ],
+    validator: {
+      tenantId: { required: true },
+    },
   };
 
   const { provider: sProvider } = useSearchBox(searchConfig);
@@ -64,7 +87,7 @@ const TenantShuttleModalComponent = forwardRef((_) => {
   const columnHelper = createColumnHelper<any>();
   const columns = [
     columnHelper.accessor('tenantName', {
-      header: t('테넌트명'),
+      header: t('테넌트'),
       size: 132,
       cell: (info) => info.getValue(),
     }),
@@ -72,8 +95,8 @@ const TenantShuttleModalComponent = forwardRef((_) => {
       header: t('회사'),
       size: 132,
       cell: (info) => {
-        const companyNames = info.row.original.companyTenantList.map((item: any) => {
-          return item.companyName;
+        const companyNames = info.row.original.companyTenantList.map(({ companyName }: any) => {
+          return companyName;
         });
         return companyNames.toString();
       },
@@ -86,10 +109,10 @@ const TenantShuttleModalComponent = forwardRef((_) => {
       header: t('테넌트 담당자'),
       size: 132,
       cell: (info) => {
-        const tenantRoleList = info.row.original.tenantRoleList.map((item: any) => {
-          return item.roleName;
+        const tenantUserList = info.row.original.tenantUserList.map(({ userName }: any) => {
+          return userName;
         });
-        return tenantRoleList.toString();
+        return tenantUserList.toString();
       },
     }),
     columnHelper.accessor('isUsed', {
