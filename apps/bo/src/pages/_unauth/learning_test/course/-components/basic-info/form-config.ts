@@ -3,24 +3,17 @@ import { t } from 'i18next';
 
 export const formConfig: DynamicFormConfig = {
   builders: [
-    // 강의 유형
+    // 유형
     {
-      name: '강의 유형',
+      name: '유형',
       type: 'custom',
-      label: '강의 유형',
+      label: '유형',
       value: '',
     },
-    // 강의 유형 ID
+    // 유형 ID
     {
-      name: '강의 유형 아이디',
+      name: '유형아이디',
       type: 'hidden',
-      value: '',
-    },
-    // 강의 세부 요청
-    {
-      name: '강의 세부 요청',
-      type: 'custom',
-      label: '강의 세부 요청',
       value: '',
     },
     // 채널
@@ -29,6 +22,46 @@ export const formConfig: DynamicFormConfig = {
       type: 'custom',
       label: '채널',
       value: '',
+    },
+    // 채널 ID
+    {
+      name: '채널아이디',
+      type: 'hidden',
+      value: '',
+    },
+    // 테넌트
+    {
+      name: '테넌트',
+      type: 'custom',
+      label: '테넌트',
+      format: 'array',
+      options: [
+        { value: 'tenant1', label: '테넌트1' },
+        { value: 'tenant2', label: '테넌트2' },
+      ],
+      value: ['tenant1', 'tenant2'],
+      placeholder: '',
+      description: '',
+    },
+    // 카테고리
+    {
+      name: '카테고리',
+      type: 'custom',
+      label: '카테고리',
+      format: 'array',
+      value: ['현대자동차 A', '현대자동차 B', '현대자동차 C'],
+      placeholder: '',
+      description: '',
+    },
+    // 학습대상
+    {
+      name: '학습대상',
+      type: 'custom',
+      label: '학습대상',
+      format: 'array',
+      value: ['현대자동차 A', '현대자동차 B', '현대자동차 C'],
+      placeholder: '',
+      description: '',
     },
     // 언어 설정
     {
@@ -40,59 +73,40 @@ export const formConfig: DynamicFormConfig = {
     // 과정명
     {
       name: '과정명',
-      type: 'text',
+      type: 'custom',
       label: '과정명',
       value: '',
       placeholder: '',
       description: '',
       maxLength: 40,
     },
-    // 교육 목표
+    //과정 요약
     {
-      name: '교육 목표',
-      type: 'textarea',
-      label: t('교육 목표'),
+      name: '과정 요약',
+      type: 'custom',
+      label: '과정 요약',
       value: '',
       placeholder: '',
       description: '',
+      maxLength: 40,
     },
     // 교육 내용
     {
       name: '교육 내용',
-      type: 'textarea',
+      type: 'custom',
       label: t('교육 내용'),
       value: '',
-      placeholder: '',
-      description: '',
-    },
-    // 학습 대상
-    {
-      name: '학습 대상',
-      type: 'textarea',
-      label: t('학습 대상'),
-      value: '',
-      placeholder: '',
-      description: '',
-    },
-    // 과정 요약
-    {
-      name: '과정 요약',
-      type: 'textarea',
-      label: t('과정 요약'),
-      value: '',
-      placeholder: '',
-      description: '',
     },
     // 난이도
     {
       name: '난이도',
-      type: 'radio-group',
+      type: 'custom',
       label: t('난이도'),
       format: 'string',
       options: [
         {
           label: '없음',
-          value: '',
+          value: '0',
         },
         {
           label: '입문',
@@ -112,44 +126,20 @@ export const formConfig: DynamicFormConfig = {
         },
       ],
       value: '',
-      placeholder: '',
-      description: '',
     },
-    // 테넌트
+    // 교육 내용
     {
-      name: '테넌트',
-      type: 'checkbox-group',
-      label: '테넌트',
-      format: 'array',
-      options: [
-        { value: 'tenant1', label: '테넌트1' },
-        { value: 'tenant2', label: '테넌트2' },
-      ],
-      value: ['tenant1', 'tenant2'],
-      placeholder: '',
-      description: '',
+      name: '교육 내용',
+      type: 'custom',
+      label: t('교육 내용'),
+      value: '',
     },
-    // 카테고리
+    // 교육공간
     {
-      name: '카테고리',
-      type: 'chip-list',
-      label: '카테고리',
-      format: 'array',
-      value: ['현대자동차 A', '현대자동차 B', '현대자동차 C'],
-      // placeholder: '',
-      description: '',
-      chipListConfig: {},
-    },
-    // 학습대상(유저그룹)
-    {
-      name: '학습대상',
-      type: 'chip-list',
-      label: '학습대상',
-      format: 'array',
-      value: ['현대자동차 A', '현대자동차 B', '현대자동차 C'],
-      // placeholder: '',
-      description: '',
-      chipListConfig: {},
+      name: '교육공간',
+      type: 'custom',
+      label: '교육공간',
+      value: '',
     },
     // 담당자
     {
@@ -158,16 +148,19 @@ export const formConfig: DynamicFormConfig = {
       label: '담당자',
       value: '',
     },
-    // 담당자 연락처
+    // 담당자연락처
     {
-      label: '담당자 연락처',
-      name: '담당자 연락처',
-      type: 'phone-number',
+      name: '담당자연락처',
+      type: 'custom',
+      label: '담당자연락처',
       value: '',
-      fields: {
-        nationCode: 'nationCode',
-        number: 'contact',
-      },
+    },
+    // 담당자이메일
+    {
+      name: '담당자이메일',
+      type: 'custom',
+      label: '담당자이메일',
+      value: '',
     },
     // 운영자
     {
@@ -176,16 +169,19 @@ export const formConfig: DynamicFormConfig = {
       label: '운영자',
       value: '',
     },
-    // 운영자 연락처
+    // 운영자연락처
     {
-      label: '운영자 연락처',
-      name: '운영자 연락처',
-      type: 'phone-number',
+      name: '운영자연락처',
+      type: 'custom',
+      label: '운영자연락처',
       value: '',
-      fields: {
-        nationCode: 'nationCode',
-        number: 'contact',
-      },
+    },
+    // 운영자이메일
+    {
+      name: '운영자이메일',
+      type: 'custom',
+      label: '운영자이메일',
+      value: '',
     },
   ],
 };
