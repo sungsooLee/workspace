@@ -24,6 +24,8 @@ import { useRouter } from '@tanstack/react-router';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { useWatch } from 'react-hook-form';
 import { useQueryClient } from '@tanstack/react-query';
+import { GridExcelButtons } from '@features/shared';
+import { CMSApiPrefix } from '@learnway/config';
 
 function LearningResourceTableComponent() {
   const router = useRouter();
@@ -295,6 +297,7 @@ function LearningResourceTableComponent() {
 
   const { provider: searchProvider, getValues, setOptions, setValue } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
+  const [params, setParams] = useState<Record<string, any>>({});
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const [tableInstance, setTableInstance] = useState<Table<any>>(); // Grid 로부터 받을 table 인스턴스를 저장할 상태
 
@@ -328,11 +331,12 @@ function LearningResourceTableComponent() {
   }, [tenantUuid]);
 
   function handleSearch(query: Record<string, any>) {
+    setParams(query);
     gridFetch(query);
   }
 
   function handleShare() {
-    console.log('🚀 ~ handleShare ~ getValues():', getValues());
+    console.log('🚀 ~ handleShare ~ params:', params);
     console.log('🚀 ~ handleShare ~ data:', data);
   }
 
@@ -436,10 +440,12 @@ function LearningResourceTableComponent() {
                 <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
               </Tooltip>
             </span>
-            <Button
-              variant="text"
-              label={t('LABEL.grid.header.excelDownload', '엑셀 다운로드')}
-              icon={<IcoDownload width={16} height={16} stroke="#4C515E" />}
+            <GridExcelButtons
+              showDownload
+              // downloadMethod="post"
+              downloadUrl={`${CMSApiPrefix()}/contents/excel`}
+              downloadParams={params}
+              disabled={!data?.totalElements}
             />
             <Button
               variant="text"
