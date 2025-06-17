@@ -7,6 +7,7 @@ import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { Button, GridBox, useGridBox, useModal } from '@learnway/ui';
 import { IcoDownload, IcoInfoCircle } from '@learnway/icons';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { EnGlobalConst } from '@types';
 
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
@@ -45,7 +46,10 @@ function RouteComponent() {
 
   const columns = [
     columnHelper.accessor('educationPlaceTypecd', {
-      cell: (info) => t('pms.education.EducationPlaceType.' + info.getValue()),
+      cell: (info) =>
+        t(
+          `${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.education.EducationPlaceType.${info.getValue()}`,
+        ),
       header: t('LABEL.grid.column.division'),
       enableGrouping: false,
       size: 200,

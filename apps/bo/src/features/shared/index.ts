@@ -32,3 +32,4 @@ export * from './ui/modal/user-group-choice-modal';
 export * from './ui/modal/user-group-organization-shuttle-modal';
 export * from './ui/modal/user-group-tab-choice-modal';
 export * from './ui/modal/user-shuttle-modal';
+export * from './ui/modal/traning-place-choice-modal';

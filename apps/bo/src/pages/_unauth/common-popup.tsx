@@ -18,6 +18,7 @@ import {
   UserGroupTabsChoiceModal,
   UserGroupOrganizationShuttleModal,
   OrganizationChoiceTreeModal,
+  TrainingPlaceChoiceModal,
 } from '@features/shared';
 import { Button, ChipListModalSelectorFormField, ContentsRow, Input, useModal } from '@learnway/ui';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
@@ -458,6 +459,28 @@ function RouteComponent() {
                 }}
               >
                 {'회사조직조회팝업'}
+              </Button>
+              <span className="text-yellow-500">{'진행중'}</span>
+            </div>
+
+            <div className="h-1 w-full border-white bg-slate-700" />
+            <div className="flex gap-4">
+              <Button
+                size={'xs'}
+                className="btn_table flex-1"
+                variant={'gray2'}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openModal({
+                    width: 'xl',
+                    content: <TrainingPlaceChoiceModal />,
+                    onClose(data: any) {
+                      console.log('교육공간 선택 결과', data);
+                    },
+                  });
+                }}
+              >
+                {'교육공간 선택 팝업'}
               </Button>
               <span className="text-yellow-500">{'진행중'}</span>
             </div>
