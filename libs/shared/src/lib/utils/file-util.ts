@@ -18,7 +18,13 @@ export const getFileResponse = (response: any) => {
 
 type FileResponse = ReturnType<typeof getFileResponse>;
 
-export const fileDownload = async (url: string, params = {}, options = {}, payload = {}) => {
+interface fileDownloadParams {
+  url: string;
+  params?: any;
+  options?: object;
+  payload?: any;
+}
+export const fileDownload = async ({ url, params, options, payload }: fileDownloadParams) => {
   const response = await httpService.get<FileResponse>(
     url,
     params,

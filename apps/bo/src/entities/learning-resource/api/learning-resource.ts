@@ -17,7 +17,7 @@ export default class LearningResourceService {
   }
 
   static async fetchS3FileDownload(key: string, fileName: string): Promise<any> {
-    await fileDownload(`${PMSApiPrefix()}/file/s3/download`, { key, fileName });
+    await fileDownload({ url: `${PMSApiPrefix()}/file/s3/download`, params: { key, fileName } });
     return true;
   }
 

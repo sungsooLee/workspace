@@ -28,7 +28,7 @@ export default class FileManagerService {
   }
   // 파일 다운로드
   static fileDownload(fileUuid: string) {
-    return fileDownload(`${PMSApiPrefix()}/file/${fileUuid}/download`);
+    return fileDownload({ url: `${PMSApiPrefix()}/file/${fileUuid}/download` });
   }
 
   // TODO. 아래 3가지는 요건이 없어서 추가하지 않았음

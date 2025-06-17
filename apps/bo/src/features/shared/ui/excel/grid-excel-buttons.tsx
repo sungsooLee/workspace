@@ -56,7 +56,7 @@ const GridExcelButtonsComponent: React.FC<ExcelButtonsProps> = ({
     if (!downloadUrl) return;
 
     const executeDownload = async () => {
-      await fileDownload(`${PMSApiPrefix()}${downloadUrl}`, downloadParams);
+      await fileDownload({ url: `${PMSApiPrefix()}${downloadUrl}`, params: downloadParams });
     };
 
     try {
