@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { com_ever_edu_global_dto_IdNameDto } from './com_ever_edu_global_dto_IdNameDto';
+import type { com_ever_edu_global_dto_UuidNameDto } from './com_ever_edu_global_dto_UuidNameDto';
 export type com_ever_edu_pms_role_dto_res_RoleResDto = {
     /**
      * 역할 ID
@@ -12,6 +13,10 @@ export type com_ever_edu_pms_role_dto_res_RoleResDto = {
      * 사이트 구분
      */
     siteScope?: com_ever_edu_pms_role_dto_res_RoleResDto.siteScope;
+    /**
+     * 역할 타입
+     */
+    roleType?: com_ever_edu_pms_role_dto_res_RoleResDto.roleType;
     /**
      * 부모 역할 ID
      */
@@ -51,7 +56,7 @@ export type com_ever_edu_pms_role_dto_res_RoleResDto = {
     /**
      * 채널 목록
      */
-    channels?: Array<com_ever_edu_global_dto_IdNameDto>;
+    channels?: Array<com_ever_edu_global_dto_UuidNameDto>;
     /**
      * 팀 적용 범위
      */
@@ -88,6 +93,18 @@ export namespace com_ever_edu_pms_role_dto_res_RoleResDto {
     export enum siteScope {
         FO = 'FO',
         BO = 'BO',
+    }
+    /**
+     * 역할 타입
+     */
+    export enum roleType {
+        PLATFORM_MANAGER = 'PLATFORM_MANAGER',
+        TENANT_MANAGER = 'TENANT_MANAGER',
+        CHANNEL_OWNER = 'CHANNEL_OWNER',
+        CHANNEL_MEMBER = 'CHANNEL_MEMBER',
+        CHANNEL_GUEST = 'CHANNEL_GUEST',
+        POLICY_MANAGER = 'POLICY_MANAGER',
+        TUTOR = 'TUTOR',
     }
     /**
      * 테넌트 적용 범위

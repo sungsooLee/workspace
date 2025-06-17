@@ -4,17 +4,9 @@
 /* eslint-disable */
 export type com_ever_edu_global_excel_dto_req_ExcelDownloadHistoryReqDto = {
     /**
-     * 담당자 이름
+     * 담당자 UUID
      */
-    userId: number;
-    /**
-     * 담당자 이름
-     */
-    userName: string;
-    /**
-     * 담당자 사원번호
-     */
-    employeeNumber: string;
+    userUuid: string;
     /**
      * 메뉴 경로
      */

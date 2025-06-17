@@ -27,7 +27,7 @@ export type com_ever_edu_pms_file_dto_res_FileInfoInternalResDto = {
      */
     reposType?: com_ever_edu_pms_file_dto_res_FileInfoInternalResDto.reposType;
     /**
-     * S3버킷명(저정소유형이 "S3"인 경우)
+     * 버킷명(S3 Bucket 개념의 최상위 저장소 구분)
      */
     s3Bucket?: string;
     /**

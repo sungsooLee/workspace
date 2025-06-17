@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { com_ever_edu_global_dto_IdNameDto } from './com_ever_edu_global_dto_IdNameDto';
+import type { com_ever_edu_global_dto_UuidNameDto } from './com_ever_edu_global_dto_UuidNameDto';
 export type com_ever_edu_pms_role_dto_res_RoleTreeResDto = {
     /**
      * 역할 ID
@@ -47,7 +48,7 @@ export type com_ever_edu_pms_role_dto_res_RoleTreeResDto = {
     /**
      * 채널 목록
      */
-    channels?: Array<com_ever_edu_global_dto_IdNameDto>;
+    channels?: Array<com_ever_edu_global_dto_UuidNameDto>;
     /**
      * 팀 적용 범위
      */
