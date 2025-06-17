@@ -264,7 +264,7 @@ function RouteComponent() {
                 {'회사 조회(셔틀)'}
               </Button>
 
-              <span className="text-yellow-500">{'진행중'}</span>
+              <span className="text-green-500">{'완료'}</span>
             </div>
             <div className="flex gap-4">
               <Button
