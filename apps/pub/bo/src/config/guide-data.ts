@@ -943,7 +943,7 @@ export const guideData = [
     pageId: 'lms/procedure-open-setting',
     screenId: 'NLP_BO_LMS_0017',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-06-17',
     lastUpdateDate: '',
     remarks: '', // 비고
   },
