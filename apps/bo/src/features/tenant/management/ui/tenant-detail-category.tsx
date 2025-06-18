@@ -12,6 +12,7 @@ import {
   Input,
   Textarea,
   ChipListModalSelectorFormField,
+  DndTreeView,
 } from '@learnway/ui';
 import { FormInfoArea, FormRow, ContentsHistoryInfoFormField, SwitchFormField } from '@shared/ui';
 
@@ -436,7 +437,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
         </div>
         <div className={layoutStyles.inner_contents}>
           <TreeContainer>
-            <TreeView
+            <DndTreeView
               treeId="1"
               type="SAME_LEVEL_ONLY"
               data={treeData}
