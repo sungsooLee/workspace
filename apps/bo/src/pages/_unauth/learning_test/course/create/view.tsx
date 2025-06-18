@@ -1,15 +1,13 @@
-import React, { useMemo, useRef } from 'react';
 import { Button, Divider, Tabs } from '@learnway/ui';
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { DynamicFormConfig } from '@learnway/hooks';
+import React, { useMemo, useRef } from 'react';
 import { BasicInfo } from '../-components/basic-info/basic-info';
-import { formConfig as formConfigBasic } from '../-components/basic-info/form-config';
-import { formConfig as formConfigCourse } from '../-components/course-registration/form-config';
-import { CourseRegistration } from '../-components/course-registration/course-registration';
 import { TabFormRef } from '../-components/common/tab-form-ref';
+import { CourseRegistration } from '../-components/course-registration/course-registration';
+import { Curriculum } from '../-components/curriculum/curriculum';
 
 export const Route = createFileRoute('/_unauth/learning_test/course/create/view')({
   component: RouteComponent,
@@ -80,7 +78,7 @@ function RouteComponent() {
       {
         title: '커리큘럼 설정',
         key: 'c',
-        content: <h2>Tab C content</h2>,
+        content: <Curriculum ref={(ref) => (tabRefs.current.c = ref)} initialData={formData} />,
       },
       {
         title: '상세 설정',
@@ -136,10 +134,3 @@ function RouteComponent() {
     </form>
   );
 }
-
-const formConfig: DynamicFormConfig = {
-  builders: [
-    ...formConfigBasic.builders, // 기본정보
-    ...formConfigCourse.builders, // 수강신청 설정
-  ],
-};
