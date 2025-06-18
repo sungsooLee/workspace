@@ -8,6 +8,7 @@ import { addOrRemoveItemByKey, cn } from '@learnway/shared';
 import styles from './list-modal-selector-form-field.module.css';
 import { BaseFormFieldProps } from '@learnway/hooks';
 import { useTranslation } from 'react-i18next';
+import { IcoPlus } from '@learnway/icons';
 
 export interface ListModalSelectorFormFieldProps extends BaseFormFieldProps<any[]> {
   /** Modal component props */
@@ -41,6 +42,7 @@ const ListModalSelectorFormFieldComponent = forwardRef<
       list: listProps = {
         labelField: 'label',
         valueField: 'value',
+        invalid: false,
       },
       control,
     },
@@ -77,14 +79,18 @@ const ListModalSelectorFormFieldComponent = forwardRef<
           'nlp--list-modal-selector-form-field',
         )}
       >
-        <Button
-          className={styles.btn}
-          {...buttonProps}
-          variant={'gray'}
-          size={'md'}
-          label={'추가'}
-          onClick={handleButtonClick}
-        />
+        <div className={styles.btn_wrap}>
+          <Button
+            className={styles.btn}
+            {...buttonProps}
+            variant={'text'}
+            size={'sm'}
+            label={'추가'}
+            icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
+            onClick={handleButtonClick}
+          />
+        </div>
+
         <List
           checkable
           deletable

@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { FormRow, FormSubTitle } from '@shared/ui';
 import { ChannelListModal, TeacherListModal } from '@features/learning/course';
 import { DropdownFormField } from '@features/form';
+import { IcoPlus } from '@learnway/icons';
 
 interface BasicInfoProps {
   dynamicForm: UseDynamicFormResult;
@@ -144,7 +145,14 @@ const BasicInfoComponent = forwardRef<HTMLDivElement, BasicInfoProps>(({ dynamic
                 valueField: 'id',
                 wordwrap: true,
               }}
-              actionNode={<Button variant="text" size="sm" label={t('추가')} />}
+              actionNode={
+                <Button
+                  variant="text"
+                  size="sm"
+                  icon={<IcoPlus width={16} height={16} stroke="#4C515E" />}
+                  label={t('추가')}
+                />
+              }
             />
           }
         />
