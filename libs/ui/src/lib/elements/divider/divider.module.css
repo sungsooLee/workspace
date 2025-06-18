@@ -1,7 +1,7 @@
 /* divider.module.css */
 
 .divider {
-  @apply bg-[#d6dae1];
+  @apply bg-[var(--gray4)];
 }
 
 /* 수평 구분선 */
@@ -11,5 +11,5 @@
 
 /* 수직 구분선 */
 .vertical {
-  @apply mx-[32px] h-full w-[1px];
+  @apply h-full w-[1px];
 }

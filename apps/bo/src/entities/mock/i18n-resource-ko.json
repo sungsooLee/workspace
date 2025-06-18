@@ -116,6 +116,7 @@
     "referenceVal4": "참고 4",
     "multilingualKey": "다국어Key",
     "cdId": "코드",
+    "commonCategory": "공통 카테고리",
     "add": "{{type}} 추가",
     "addSub": "하위 {{type}} 추가",
     "list": "{{type}} 목록",

@@ -52,7 +52,7 @@
 
   /* btn_wrap */
   .btn_wrap {
-    @apply flex items-center;
+    @apply flex items-center justify-stretch;
     .link_box {
       @apply mr-[16px] flex items-center;
       .link {
@@ -70,15 +70,21 @@
           @apply ml-[8px];
         }
       }
-      &::after {
+      /* &::after {
         @apply ml-[16px] flex h-[28px] w-[1px] bg-[var(--gray5)] content-[''];
-      }
+      } */
     }
     .btn_close {
       @apply ml-[16px] !min-w-[24px];
     }
     [class*='nlp--button'] {
       @apply w-auto min-w-[45px];
+    }
+    [class*='divider'] {
+      @apply h-[28px];
+      & + [class*='nlp--button'] {
+        @apply ml-[16px];
+      }
     }
   }
 

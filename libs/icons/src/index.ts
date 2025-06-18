@@ -21,6 +21,8 @@ export { ReactComponent as IcoBell03 } from './lib/ic_bell_03.svg'; // bell03 li
 export { ReactComponent as IcoLinkblank } from './lib/ic_btn_pop.svg'; // link blank line
 export { ReactComponent as IcoChevronDown } from './lib/ic_chevron_down.svg';
 export { ReactComponent as IcoChevronLeft } from './lib/ic_chevron_left.svg'; // grid paging IcoArrowDown
+export { ReactComponent as IcoArrowPrev } from './lib/ic_arrow_prev.svg';
+export { ReactComponent as IcoArrowNext } from './lib/ic_arrow_next.svg';
 export { ReactComponent as IcoChevronLeftDouble } from './lib/ic_chevron_left_double.svg'; // grid paging btn
 export { ReactComponent as IcoChevronRight } from './lib/ic_chevron_right.svg'; // grid paging btn
 export { ReactComponent as IcoChevronRightDouble } from './lib/ic_chevron_right_double.svg'; // grid paging btn

@@ -17,9 +17,9 @@ export const queryOptions = {
       return data;
     },
   }),
-  detail: (id: number, mode: string) => ({
+  detail: (id: number, mode?: string) => ({
     queryKey: queryKeys.detail(id),
-    enabled: mode === 'view',
+    enabled: !!id,
     queryFn: async () => {
       const data = await CategoryService.getCategoryDetail(id);
       console.log('## get category detail :: ', data);

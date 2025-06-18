@@ -112,6 +112,7 @@ import { Route as LayoutLanguageLanguagesubjectsmanagementImport } from './pages
 import { Route as LayoutLanguageLanguagehistorylistImport } from './pages/_layout/language/language_history_list'
 import { Route as LayoutContentsLayoutImport } from './pages/_layout/contents/layout'
 import { Route as LayoutCompletionEducationoperategroupImport } from './pages/_layout/completion/education_operate_group'
+import { Route as LayoutCompletionDetailCalculationReasonImport } from './pages/_layout/completion/detail-calculation-reason'
 import { Route as LayoutCommonProfileMyinfoImport } from './pages/_layout/common/profile-myinfo'
 import { Route as LayoutCommonPopUserSearchCheckImport } from './pages/_layout/common/pop-user-search-check'
 import { Route as LayoutCommonPopUserSearchImport } from './pages/_layout/common/pop-user-search'
@@ -829,6 +830,13 @@ const LayoutCompletionEducationoperategroupRoute =
   LayoutCompletionEducationoperategroupImport.update({
     id: '/completion/education_operate_group',
     path: '/completion/education_operate_group',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutCompletionDetailCalculationReasonRoute =
+  LayoutCompletionDetailCalculationReasonImport.update({
+    id: '/completion/detail-calculation-reason',
+    path: '/completion/detail-calculation-reason',
     getParentRoute: () => LayoutRoute,
   } as any)
 
@@ -1828,6 +1836,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCommonProfileMyinfoImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/completion/detail-calculation-reason': {
+      id: '/_layout/completion/detail-calculation-reason'
+      path: '/completion/detail-calculation-reason'
+      fullPath: '/completion/detail-calculation-reason'
+      preLoaderRoute: typeof LayoutCompletionDetailCalculationReasonImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/completion/education_operate_group': {
       id: '/_layout/completion/education_operate_group'
       path: '/completion/education_operate_group'
@@ -2502,6 +2517,7 @@ interface LayoutRouteChildren {
   LayoutCommonPopUserSearchRoute: typeof LayoutCommonPopUserSearchRoute
   LayoutCommonPopUserSearchCheckRoute: typeof LayoutCommonPopUserSearchCheckRoute
   LayoutCommonProfileMyinfoRoute: typeof LayoutCommonProfileMyinfoRoute
+  LayoutCompletionDetailCalculationReasonRoute: typeof LayoutCompletionDetailCalculationReasonRoute
   LayoutCompletionEducationoperategroupRoute: typeof LayoutCompletionEducationoperategroupRoute
   LayoutContentsLayoutRoute: typeof LayoutContentsLayoutRoute
   LayoutLanguageLanguagehistorylistRoute: typeof LayoutLanguageLanguagehistorylistRoute
@@ -2588,6 +2604,8 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutCommonPopUserSearchRoute: LayoutCommonPopUserSearchRoute,
   LayoutCommonPopUserSearchCheckRoute: LayoutCommonPopUserSearchCheckRoute,
   LayoutCommonProfileMyinfoRoute: LayoutCommonProfileMyinfoRoute,
+  LayoutCompletionDetailCalculationReasonRoute:
+    LayoutCompletionDetailCalculationReasonRoute,
   LayoutCompletionEducationoperategroupRoute:
     LayoutCompletionEducationoperategroupRoute,
   LayoutContentsLayoutRoute: LayoutContentsLayoutRoute,
@@ -2778,6 +2796,7 @@ export interface FileRoutesByFullPath {
   '/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
   '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/common/profile-myinfo': typeof LayoutCommonProfileMyinfoRoute
+  '/completion/detail-calculation-reason': typeof LayoutCompletionDetailCalculationReasonRoute
   '/completion/education_operate_group': typeof LayoutCompletionEducationoperategroupRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
   '/language/language_history_list': typeof LayoutLanguageLanguagehistorylistRoute
@@ -2939,6 +2958,7 @@ export interface FileRoutesByTo {
   '/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
   '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/common/profile-myinfo': typeof LayoutCommonProfileMyinfoRoute
+  '/completion/detail-calculation-reason': typeof LayoutCompletionDetailCalculationReasonRoute
   '/completion/education_operate_group': typeof LayoutCompletionEducationoperategroupRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
   '/language/language_history_list': typeof LayoutLanguageLanguagehistorylistRoute
@@ -3103,6 +3123,7 @@ export interface FileRoutesById {
   '/_layout/common/pop-user-search': typeof LayoutCommonPopUserSearchRoute
   '/_layout/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/_layout/common/profile-myinfo': typeof LayoutCommonProfileMyinfoRoute
+  '/_layout/completion/detail-calculation-reason': typeof LayoutCompletionDetailCalculationReasonRoute
   '/_layout/completion/education_operate_group': typeof LayoutCompletionEducationoperategroupRoute
   '/_layout/contents/layout': typeof LayoutContentsLayoutRoute
   '/_layout/language/language_history_list': typeof LayoutLanguageLanguagehistorylistRoute
@@ -3266,6 +3287,7 @@ export interface FileRouteTypes {
     | '/common/pop-user-search'
     | '/common/pop-user-search-check'
     | '/common/profile-myinfo'
+    | '/completion/detail-calculation-reason'
     | '/completion/education_operate_group'
     | '/contents/layout'
     | '/language/language_history_list'
@@ -3426,6 +3448,7 @@ export interface FileRouteTypes {
     | '/common/pop-user-search'
     | '/common/pop-user-search-check'
     | '/common/profile-myinfo'
+    | '/completion/detail-calculation-reason'
     | '/completion/education_operate_group'
     | '/contents/layout'
     | '/language/language_history_list'
@@ -3588,6 +3611,7 @@ export interface FileRouteTypes {
     | '/_layout/common/pop-user-search'
     | '/_layout/common/pop-user-search-check'
     | '/_layout/common/profile-myinfo'
+    | '/_layout/completion/detail-calculation-reason'
     | '/_layout/completion/education_operate_group'
     | '/_layout/contents/layout'
     | '/_layout/language/language_history_list'
@@ -3789,6 +3813,7 @@ export const routeTree = rootRoute
         "/_layout/common/pop-user-search",
         "/_layout/common/pop-user-search-check",
         "/_layout/common/profile-myinfo",
+        "/_layout/completion/detail-calculation-reason",
         "/_layout/completion/education_operate_group",
         "/_layout/contents/layout",
         "/_layout/language/language_history_list",
@@ -4206,6 +4231,10 @@ export const routeTree = rootRoute
     },
     "/_layout/common/profile-myinfo": {
       "filePath": "_layout/common/profile-myinfo.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/completion/detail-calculation-reason": {
+      "filePath": "_layout/completion/detail-calculation-reason.tsx",
       "parent": "/_layout"
     },
     "/_layout/completion/education_operate_group": {

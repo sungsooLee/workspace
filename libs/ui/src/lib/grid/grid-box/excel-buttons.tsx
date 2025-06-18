@@ -20,7 +20,7 @@ export const ExcelButtons: FC<{ config?: ExcelConfig; getParams?: UseFormReturn[
     const params = getParams ? getParams() : {};
 
     const executeDownload = async () => {
-      await fileDownload(`${PMSApiPrefix()}` + download, params);
+      await fileDownload({ url: `${PMSApiPrefix()}` + download, params });
     };
 
     if (onBeforeDownload) await onBeforeDownload(executeDownload);

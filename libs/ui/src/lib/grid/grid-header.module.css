@@ -70,6 +70,9 @@
     thead {
       th {
         @apply !border-[var(--gray4)];
+        &.text_center {
+          @apply px-[8px];
+        }
       }
     }
   }

@@ -1,16 +1,20 @@
 import {
   Button,
+  CheckboxGroupFormField,
   ChipListModalSelectorFormField,
   ContentsRow,
-  DynamicFormField,
+  EditorFormField,
   Input,
   InputModalSelectorFormField,
+  ListModalSelectorFormField,
+  TextareaFormField,
 } from '@learnway/ui';
 import React, { forwardRef, useEffect } from 'react';
 import { UseDynamicFormResult } from '@learnway/hooks';
 import { useTranslation } from 'react-i18next';
 import { FormRow, FormSubTitle } from '@shared/ui';
 import { ChannelListModal, TeacherListModal } from '@features/learning/course';
+import { DropdownFormField } from '@features/form';
 
 interface BasicInfoProps {
   dynamicForm: UseDynamicFormResult;
@@ -32,32 +36,42 @@ const BasicInfoComponent = forwardRef<HTMLDivElement, BasicInfoProps>(({ dynamic
 
   return (
     <div ref={ref}>
+      {/*기본 정보 설정*/}
+      <FormSubTitle label={t('기본 정보 설정')} lineType={'dark'} />
+      {/*유형, 채널*/}
       <ContentsRow>
-        {/*강의 유형*/}
+        {/*유형*/}
         <FormRow
           provider={provider}
-          name={'강의 유형'}
+          name={'유형'}
           element={
-            <InputModalSelectorFormField
-              modalConfig={{
-                content: <ChannelListModal />,
-              }}
-              transformModalData={(modalData: any) => ({
-                '강의 유형': modalData?.channelName,
-                '강의 유형 아이디': modalData?.channelId,
-              })}
-            />
-          }
-        />
-        {/*강의 세부 요청*/}
-        <FormRow
-          provider={provider}
-          name={'강의 세부 요청'}
-          element={
-            <InputModalSelectorFormField
-              modalConfig={{
-                content: <ChannelListModal />,
-              }}
+            <DropdownFormField
+              options={[
+                {
+                  label: '이러닝',
+                  value: '이러닝',
+                },
+                {
+                  label: '클래스',
+                  value: '클래스',
+                },
+                {
+                  label: '라이브',
+                  value: '라이브',
+                },
+                {
+                  label: '시험',
+                  value: '시험',
+                },
+                {
+                  label: '설문',
+                  value: '설문',
+                },
+                {
+                  label: '페키지',
+                  value: '페키지',
+                },
+              ]}
             />
           }
         />
@@ -66,64 +80,38 @@ const BasicInfoComponent = forwardRef<HTMLDivElement, BasicInfoProps>(({ dynamic
           provider={provider}
           name={'채널'}
           element={
-            <InputModalSelectorFormField
-              modalConfig={{
-                content: <ChannelListModal />,
-              }}
+            <DropdownFormField
+              options={[
+                {
+                  label: '채널1',
+                  value: '채널1',
+                },
+                {
+                  label: '채널2',
+                  value: '채널2',
+                },
+              ]}
             />
           }
         />
       </ContentsRow>
-      {/*과정소개 타이틀*/}
-      <FormSubTitle label={t('과정소개')} />
-      {/*언어 설정*/}
-      <ContentsRow>
-        <FormRow
-          provider={provider}
-          name={'채널'}
-          element={
-            <InputModalSelectorFormField
-              modalConfig={{
-                content: <ChannelListModal />,
-              }}
-            />
-          }
-        />
-      </ContentsRow>
-      {/*과정명*/}
-      <ContentsRow>
-        {/* TODO. 과정명이 어떤 컴포넌트인지 추적 불가해서 일단 Input 으로 작성 합니다.*/}
-        <FormRow
-          provider={provider}
-          name={'과정명'}
-          element={<Input disabled={getValues()?.['교육 목표'] === 'a'} />}
-        />
-      </ContentsRow>
-      {/*교육 목표*/}
-      <ContentsRow>
-        <FormRow provider={provider} name={'교육 목표'} />
-      </ContentsRow>
-      {/*교육 내용*/}
-      <ContentsRow>
-        <FormRow provider={provider} name={'교육 내용'} />
-      </ContentsRow>
-      {/*학습 대상*/}
-      <ContentsRow>
-        <FormRow provider={provider} name={'학습 대상'} />
-      </ContentsRow>
-      {/*과정 요약*/}
-      <ContentsRow>
-        <FormRow provider={provider} name={'과정 요약'} />
-      </ContentsRow>
-      {/*공개범위 타이틀*/}
-      <FormSubTitle label={t('공개범위')} />
-      {/*난이도*/}
-      <ContentsRow>
-        <FormRow provider={provider} name={'난이도'} />
-      </ContentsRow>
+
+      {/*공개대상*/}
+      <FormSubTitle label={t('공개대상')} lineType={'dark'} />
       {/*테넌트*/}
       <ContentsRow>
-        <FormRow provider={provider} name={'테넌트'} />
+        <FormRow
+          provider={provider}
+          name={'테넌트'}
+          element={
+            <CheckboxGroupFormField
+              options={[
+                { value: 'tenant1', label: '테넌트1' },
+                { value: 'tenant2', label: '테넌트2' },
+              ]}
+            />
+          }
+        />
       </ContentsRow>
       {/*카테고리*/}
       <ContentsRow>
@@ -131,13 +119,13 @@ const BasicInfoComponent = forwardRef<HTMLDivElement, BasicInfoProps>(({ dynamic
           provider={provider}
           name={'카테고리'}
           element={
-            <ChipListModalSelectorFormField
+            <ListModalSelectorFormField
+              deletable
               modalConfig={{ content: <TeacherListModal channelId={getValues()?.channelId} /> }}
-              chipList={{
-                labelField: 'name',
-                valueField: 'id',
-                wordwrap: true,
-              }}
+              options={[
+                { value: 'tenant1', label: '테넌트1' },
+                { value: 'tenant2', label: '테넌트2' },
+              ]}
               actionNode={<Button variant="text" size="sm" label={t('추가')} />}
             />
           }
@@ -161,13 +149,14 @@ const BasicInfoComponent = forwardRef<HTMLDivElement, BasicInfoProps>(({ dynamic
           }
         />
       </ContentsRow>
-      {/*과정 관리자 타이틀*/}
-      <FormSubTitle label={t('과정 관리자')} />
-      {/*담당자*/}
+
+      {/*과정소개*/}
+      <FormSubTitle label={t('과정소개')} lineType={'dark'} />
+      {/*언어 설정*/}
       <ContentsRow>
         <FormRow
           provider={provider}
-          name={'채널'}
+          name={'언어 설정'}
           element={
             <InputModalSelectorFormField
               modalConfig={{
@@ -177,17 +166,117 @@ const BasicInfoComponent = forwardRef<HTMLDivElement, BasicInfoProps>(({ dynamic
           }
         />
       </ContentsRow>
-      {/*담당자 연락처*/}
+      {/*과정명*/}
       <ContentsRow>
-        <FormRow provider={provider} name={'담당자 연락처'} />
+        <FormRow
+          provider={provider}
+          name={'과정명'}
+          element={<Input disabled={getValues()?.['교육 목표'] === 'a'} />}
+        />
+      </ContentsRow>
+      {/*과정 요약*/}
+      <ContentsRow>
+        <FormRow provider={provider} name={'과정 요약'} element={<TextareaFormField />} />
+      </ContentsRow>
+      {/*교육 내용*/}
+      <ContentsRow>
+        <FormRow provider={provider} name={'교육 내용'} element={<EditorFormField />} />
+      </ContentsRow>
+      {/*난이도, 교육공간*/}
+      <ContentsRow>
+        <FormRow
+          provider={provider}
+          name={'난이도'}
+          element={
+            <CheckboxGroupFormField
+              options={[
+                {
+                  label: '없음',
+                  value: '',
+                },
+                {
+                  label: '입문',
+                  value: '1',
+                },
+                {
+                  label: '초급',
+                  value: '2',
+                },
+                {
+                  label: '중급',
+                  value: '3',
+                },
+                {
+                  label: '고급',
+                  value: '4',
+                },
+              ]}
+            />
+          }
+        />
+        <FormRow
+          provider={provider}
+          name={'교육공간'}
+          element={
+            <CheckboxGroupFormField
+              options={[
+                {
+                  label: '차세대 학습플렛폼',
+                  value: '1',
+                },
+                {
+                  label: '공간선택',
+                  value: '2',
+                },
+                {
+                  label: '직접입력',
+                  value: '3',
+                },
+              ]}
+            />
+          }
+        />
+      </ContentsRow>
+
+      {/*관리자*/}
+      <FormSubTitle label={t('관리자')} lineType={'dark'} />
+      {/*담당자*/}
+      <ContentsRow>
+        {/*담당자*/}
+        <FormRow
+          provider={provider}
+          name={'담당자'}
+          element={
+            <InputModalSelectorFormField
+              modalConfig={{
+                content: <ChannelListModal />,
+              }}
+            />
+          }
+        />
+        {/*담당자-연락처*/}
+        <FormRow provider={provider} name={'담당자연락처'} element={<Input />} />
+        {/*담당자-이메일*/}
+        <FormRow provider={provider} name={'담당자이메일'} element={<Input />} />
       </ContentsRow>
       {/*운영자*/}
       <ContentsRow>
-        <FormRow provider={provider} name={'운영자'} />
-      </ContentsRow>
-      {/*담당자 연락처*/}
-      <ContentsRow>
-        <FormRow provider={provider} name={'담당자 연락처'} />
+        {/*운영자*/}
+        <FormRow
+          provider={provider}
+          name={'운영자'}
+          element={
+            <InputModalSelectorFormField
+              modalConfig={{
+                content: <ChannelListModal />,
+              }}
+            />
+          }
+        />
+        {/*운영자-연락처*/}
+        <FormRow provider={provider} name={'운영자연락처'} element={<Input />} />
+        {/*운영자-이메일*/}
+        <FormRow provider={provider} name={'운영자이메일'} element={<Input />} />
       </ContentsRow>
     </div>
   );

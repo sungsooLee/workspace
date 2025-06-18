@@ -45,6 +45,7 @@ export const GridHeader = <T extends object>({ table, lastPinnedColumnId }: Grid
                   thClass,
                   styles.th_wrap,
                   column.getCanSort() ? 'cursor-pointer select-none' : '',
+                  columnDef.meta?.headerAlign === 'center' && styles.text_center,
                 )}
                 style={thStyle}
                 onClick={column.getToggleSortingHandler()}

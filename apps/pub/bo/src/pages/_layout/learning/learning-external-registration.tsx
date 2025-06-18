@@ -6,7 +6,6 @@ import { FormSubTitle } from '../../../../../../bo/src/shared/ui/form';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import {
   Button,
-  CheckboxGroupFormField,
   ContentsRow,
   Dropdown,
   Input,
@@ -17,9 +16,9 @@ import {
   ModalFooter,
   PhoneNumber,
   DatePicker,
-  RadioGroupFormField,
+  Checkbox,
+  SelectOption,
   Switch,
-  Tabs,
   Textarea,
   Tooltip,
   useModal,
@@ -41,6 +40,7 @@ import popSearchStyles from '@learnway/styles/bo/assets/styles/modules/popup-sea
 
 /* images */
 import previewImg from '../../../assets/images/temp/img_exam_basic.jpg';
+import selectedImg from '../../../assets/images/thumb/img_thumb_hyundai.jpg';
 
 export const Route = createFileRoute('/_layout/learning/learning-external-registration')({
   component: RouteComponent,
@@ -315,6 +315,12 @@ function RouteComponent() {
     setDate2(value);
   };
 
+  // chip List
+  const options: SelectOption[] = [
+    { label: '현대자동차 A', value: 'A' },
+    { label: '현대자동차 B', value: 'B' },
+  ];
+
   return (
     <form className="form_row">
       <PageContainer>
@@ -463,7 +469,6 @@ function RouteComponent() {
             </div>
           </ContentsRow>
           {checked[1] && (
-            // 퍼블수정 20250317 : form_display 구조 수정 S
             <div className={dynamicFormStyles.form_display}>
               <ContentsRow>
                 <div className={formStyles.form_item}>
@@ -483,8 +488,411 @@ function RouteComponent() {
                 </div>
               </ContentsRow>
             </div>
-            // 퍼블수정 20250317 : form_display 구조 수정 E
           )}
+          {/* 외주개발업체 정보 */}
+          <ContentsRow type="horizontal" className={!checked[2] ? 'inactive' : ''}>
+            {/* form_item */}
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-term" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>외주개발업체 정보</span>
+              </label>
+              <div className={formStyles.input_box}>
+                {/* Switch 텍스트 : '있음' : '없음' */}
+                <Switch
+                  id="switch02"
+                  className={formStyles.btn_switch}
+                  label={checked[2] ? '있음' : '없음'}
+                  checked={checked[2]}
+                  onCheckedChange={handleCheckedChange(2)}
+                />
+              </div>
+            </div>
+          </ContentsRow>
+          {checked[2] && (
+            <div className={dynamicFormStyles.form_display}>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-company" className={formStyles.form_label}>
+                    <span className={cn(formStyles.form_text, formStyles.sm)}>개발업체</span>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    <InputModalSelectorFormField
+                      modalConfig={{
+                        title: '',
+                        width: 'md',
+                        content: <ModalChannelContent />,
+                      }}
+                    />
+                  </div>
+                </div>
+              </ContentsRow>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-1-7-1" className={formStyles.form_label}>
+                    <span className={cn(formStyles.form_text, formStyles.sm)}>
+                      외주개발업체 담당자
+                    </span>
+                    {/* 필수 케이스 */}
+                    <span className={cn(formStyles.status, formStyles.required)}>
+                      <IcoFormRequired width={12} height={12} />
+                    </span>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    <Input id="name-1-7-1" type="text" value="김현대" placeholder="" />
+                  </div>
+                </div>
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-1-7-2" className={formStyles.form_label}>
+                    <span className={cn(formStyles.form_text, formStyles.sm)}>
+                      외주개발업체 연락처
+                    </span>
+                    {/* 필수 케이스 */}
+                    <span className={cn(formStyles.status, formStyles.required)}>
+                      <IcoFormRequired width={12} height={12} />
+                    </span>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    <PhoneNumber
+                      options={[
+                        { value: 'type1', label: '+82' },
+                        { value: 'type2', label: '+83' },
+                      ]}
+                    />
+                  </div>
+                </div>
+              </ContentsRow>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-owner2" className={formStyles.form_label}>
+                    <span className={cn(formStyles.form_text, formStyles.sm)}>
+                      외주업체 과정코드
+                    </span>
+                    {/* 필수 케이스 */}
+                    <span className={cn(formStyles.status, formStyles.required)}>
+                      <IcoFormRequired width={12} height={12} />
+                    </span>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    <Input id="name-owner2" type="text" placeholder="개발코스를 입력하세요." />
+                  </div>
+                  <p className={formStyles.guide_text}>
+                    개발업체 선택시 불러오는 외주업체 과정코드를 입력하세요.
+                  </p>
+                </div>
+              </ContentsRow>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-url" className={formStyles.form_label}>
+                    <span className={cn(formStyles.form_text, formStyles.sm)}>
+                      외부학습시작 URL(비표준)
+                    </span>
+                    {/* 필수 케이스 */}
+                    <span className={cn(formStyles.status, formStyles.required)}>
+                      <IcoFormRequired width={12} height={12} />
+                    </span>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    <Input id="name-url" type="text" placeholder="URL을 입력하세요." />
+                  </div>
+                  <p className={formStyles.guide_text}>
+                    개발업체 선택 시 불러오는 외주업체 URL을 입력하세요. (안내문으로 노출하거나
+                    아이콘을 통해 노출)
+                  </p>
+                </div>
+              </ContentsRow>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-parameter" className={formStyles.form_label}>
+                    <span className={cn(formStyles.form_text, formStyles.sm)}>
+                      외부학습시작 파라미터
+                    </span>
+                    {/* 필수 케이스 */}
+                    <span className={cn(formStyles.status, formStyles.required)}>
+                      <IcoFormRequired width={12} height={12} />
+                    </span>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    <Input
+                      id="name-parameter"
+                      type="text"
+                      placeholder="Param Value 값을 입력하세요."
+                    />
+                    <Input type="text" placeholder="Param Value 값을 입력하세요." />
+                  </div>
+                  <p className={formStyles.guide_text}>
+                    개발업체 선택시 불러오는 Value 값을 각각 입력하세요.
+                  </p>
+                </div>
+              </ContentsRow>
+            </div>
+          )}
+          <ContentsRow>
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-time" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>학습 시간</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <div className={formStyles.form_item}>
+                  <div className={dynamicFormStyles.form_auto}>
+                    <Input
+                      type="text"
+                      suffixText={'시간'}
+                      value={'5'}
+                      className={formStyles.input_time}
+                    />
+                    <Input
+                      type="text"
+                      suffixText={'분'}
+                      value={'15'}
+                      className={formStyles.input_time}
+                    />
+                    <Input
+                      type="text"
+                      suffixText={'초'}
+                      value={'30'}
+                      className={formStyles.input_time}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ContentsRow>
+          <ContentsRow>
+            {/* form_item */}
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-markText" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>출처</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Input type={'text'} placeholder={'출처를 입력하세요.'} maxLength={150} />
+              </div>
+            </div>
+          </ContentsRow>
+          <ContentsRow>
+            {/* form_item */}
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-markText" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>URL</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Input type={'text'} placeholder={'출처를 입력하세요.'} maxLength={150} />
+              </div>
+            </div>
+          </ContentsRow>
+          <ContentsRow>
+            {/* form_item */}
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-tenantLog" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>{'썸네일'}</span>
+                {/* 필수 케이스 */}
+                <span className={cn(dynamicFormStyles.status, dynamicFormStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <ThumbnailImageUpload
+                  options={[{ id: '1', path: selectedImg }]}
+                  onChange={(options: ImageOption[]) => console.log('onChange', options)}
+                  onCheckedChange={(options: ImageOption[]) =>
+                    console.log('onCheckedChange', options)
+                  }
+                />
+              </div>
+              <p className={cn(formStyles.guide_text)}>
+                학습자원을 표현하는 썸네일을 선택하거나 업로드 하세요. (미선택 시 자동 선택)
+              </p>
+            </div>
+          </ContentsRow>
+          <ContentsRow>
+            {/* form_item */}
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-1-8" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>태그</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+                <Tooltip
+                  className={formStyles.tooltip}
+                  side="bottom"
+                  align="start"
+                  content={'태그는 학습자원 검색 시 활용되고, 학습자에게는 10개까지만 보여집니다.'}
+                >
+                  <Button onlyIcon>
+                    <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
+                  </Button>
+                </Tooltip>
+              </label>
+              <div className={formStyles.input_box}>
+                <div className={formStyles.tag_wrap}>
+                  <ChipList
+                    className={formStyles.chips_wrap}
+                    options={options}
+                    placeholder="한글, 영문, 숫자 포함 9자 이하 태그를 입력하세요. (9자 초과할 경우 얼럿)"
+                    showInput
+                    prefixCharacter="#"
+                    hideBorder
+                  />
+                  <p className={formStyles.text_limit}>
+                    여러 개의 태그는 쉼표로 구분,<em className={formStyles.num}>1개</em>
+                    /200개
+                  </p>
+                </div>
+              </div>
+            </div>
+          </ContentsRow>
+          <ContentsRow>
+            {/* Textarea type */}
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-auto" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>학습자원 개요 (AI 자동 추출)</span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Textarea
+                  id="name-auto"
+                  rows={5}
+                  cols={33}
+                  placeholder="키워드는 AI 자동 추출되어 표기됩니다.   "
+                  resize="none"
+                  size="md"
+                  readOnly
+                />
+              </div>
+            </div>
+          </ContentsRow>
+          <ContentsRow>
+            {/* Textarea type */}
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-auto2" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>키워드 (AI 자동 추출)</span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Textarea
+                  id="name-auto2"
+                  rows={5}
+                  cols={33}
+                  placeholder="키워드는 AI 자동 추출되어 표기됩니다."
+                  resize="none"
+                  size="md"
+                  readOnly
+                />
+              </div>
+            </div>
+          </ContentsRow>
+          <ContentsRow type="horizontal">
+            {/* Textarea type */}
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-conjugation" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>교육자원 활용여부</span>
+                {/* 필수 케이스 */}
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={12} height={12} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <Switch
+                  id="name-use"
+                  className={dynamicFormStyles.btn_switch}
+                  label={checked[3] ? '활용 가능' : '활용 불가'}
+                  checked={checked[3]}
+                  onCheckedChange={handleCheckedChange(3)}
+                />
+              </div>
+              <p className={formStyles.guide_text}>
+                해당 학습자원으로 교육 과정을 개설할 수 {checked[3] ? '있습니다.' : '없습니다.'}
+              </p>
+            </div>
+          </ContentsRow>
+          <ContentsRow type="horizontal">
+            <div className={formStyles.form_item}>
+              <label htmlFor="name-share" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>공유채널 설정</span>
+                <Tooltip
+                  className={formStyles.tooltip}
+                  side="bottom"
+                  align="start"
+                  content={'설정된 채널에 해당 학습자원이 공유됩니다.'}
+                >
+                  <Button onlyIcon>
+                    <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
+                  </Button>
+                </Tooltip>
+              </label>
+              <div className={formStyles.input_box}>
+                <span className={formStyles.info_area}>
+                  <span className={formStyles.info_text}>
+                    채널<em>10</em>개
+                  </span>
+                  <Button variant="search" size="sm">
+                    채널선택
+                  </Button>
+                </span>
+              </div>
+            </div>
+          </ContentsRow>
+          <div className={formStyles.form_contents_wrap}>
+            <strong className={formStyles.tit_sub}>
+              최종 확인{/* 필수 케이스 */}
+              <span className={cn(formStyles.status, formStyles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+            </strong>
+            <div className={formStyles.form_contents}>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-confirm" className={formStyles.form_label}>
+                    <span className={formStyles.form_text}>검수 확인</span>
+                    {/* 필수 케이스 */}
+                    <span className={cn(formStyles.status, formStyles.required)}>
+                      <IcoFormRequired width={12} height={12} />
+                    </span>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    <Checkbox className={formStyles.checkbox} />
+                    <p className={formStyles.sub_text}>
+                      등록하고자 한 동영상이며, 처음부터 끝까지 정상적으로 재생됨이 확인되었습니다.
+                    </p>
+                  </div>
+                  <p className={cn(formStyles.guide_text, formStyles.error)}>
+                    ‘검수 확인’ 체크하세요.
+                  </p>
+                </div>
+              </ContentsRow>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-confirm2" className={formStyles.form_label}>
+                    <span className={formStyles.form_text}>보안 확인</span>
+                    {/* 필수 케이스 */}
+                    <span className={cn(formStyles.status, formStyles.required)}>
+                      <IcoFormRequired width={12} height={12} />
+                    </span>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    <Checkbox className={formStyles.checkbox} />
+                    <p className={formStyles.sub_text}>
+                      보안콘텐츠 미 설정 시, 불법복제, 무단사용,저작권 침해 위험에 노출되고, 이에
+                      따른 피해를 입을 수 있음에 인지합니다.
+                    </p>
+                  </div>
+                  <p className={cn(formStyles.guide_text, formStyles.error)}>
+                    ‘보안 확인’ 체크하세요.
+                  </p>
+                </div>
+              </ContentsRow>
+            </div>
+          </div>
         </div>
         <hr className={styles.vertical_line} />
         {/* sub_contents */}
@@ -502,7 +910,7 @@ function RouteComponent() {
           </ul>
           {/* 이미지 영역 */}
           <div className={movieInfoStyles.media}>
-            <img src={previewImg} width="100%" alt="" />
+            <img src={previewImg} width="416" alt="" />
           </div>
         </div>
       </PageContainer>

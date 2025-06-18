@@ -59,7 +59,6 @@ export const DuplicateCheckInputFormField = forwardRef<
     },
     ref,
   ) => {
-    console.log(inputType);
     const { t } = useTranslation();
     const { guideText, onChangeGuideText } = useDynamicFormContext();
     const [editionValue, setEditionValue] = useState<DuplicateField>(value);

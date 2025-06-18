@@ -15,6 +15,7 @@ interface ExcelButtonsProps {
 
   // 다운로드 관련
   showDownload?: boolean;
+  downloadMethod?: string;
   downloadUrl?: string;
   downloadParams?: Record<string, any>;
   onBeforeDownload?: () => Promise<void>;
@@ -30,6 +31,7 @@ const GridExcelButtonsComponent: React.FC<ExcelButtonsProps> = ({
   validateUrl,
   onUpload,
   showDownload = false,
+  downloadMethod = 'get',
   downloadUrl,
   downloadParams = {},
   onBeforeDownload,
@@ -56,7 +58,11 @@ const GridExcelButtonsComponent: React.FC<ExcelButtonsProps> = ({
     if (!downloadUrl) return;
 
     const executeDownload = async () => {
-      await fileDownload(`${PMSApiPrefix()}${downloadUrl}`, downloadParams);
+      await fileDownload({
+        url: downloadUrl,
+        params: downloadParams,
+        method: downloadMethod,
+      });
     };
 
     try {

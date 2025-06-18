@@ -64,10 +64,10 @@ function RouteComponent() {
   };
 
   const handleExcelDownLoad = async () => {
-    await fileDownload(
-      'http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/pms-module/admin/api/v1/multilingual/exportExcel',
-      { keyTypeCode: 'LABEL', locale: 'en' },
-    );
+    await fileDownload({
+      url: 'http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/pms-module/admin/api/v1/multilingual/exportExcel',
+      params: { keyTypeCode: 'LABEL', locale: 'en' },
+    });
   };
 
   const codeStore = async () => {
