@@ -2,8 +2,8 @@ import { FC, useEffect, useState, useCallback } from 'react';
 
 import { useTranslation } from 'react-i18next';
 import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
-import { CompanyOrganizationDetailTree } from './company-organization-detail-tree';
-import { CompanyOrganizationDetailTarget } from './company-organization-detail-target';
+import { CompanyOrganizationDetailTree } from '@features/platform/company/organization/ui/company-organization-detail-tree';
+import { CompanyOrganizationDetailTarget } from '@features/platform/company/organization/ui/company-organization-detail-target';
 
 const CompanyOrganizationDetailPlatformComponent: FC<any> = () => {
   const { t } = useTranslation();

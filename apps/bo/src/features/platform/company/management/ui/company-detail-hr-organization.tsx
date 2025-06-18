@@ -5,7 +5,7 @@ import { NoticeBox } from '@shared/ui';
 import { cn } from '@learnway/shared';
 import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 import { CompanyDetailHRUsergroup } from './company-detail-hr-usergroup';
-import { CompanyOrganizationDetailTree } from './company-organization-detail-tree';
+import { CompanyOrganizationDetailTree } from '@features/platform/company/organization/ui/company-organization-detail-tree';
 
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
