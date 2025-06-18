@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { FormSubTitle } from '../../../../../../../bo/src/shared/ui/form';
-import { Button, TreeView, TreeNode, Input } from '@learnway/ui';
+import { Button, TreeView, TreeNode, Input, TreeContainer, DndTreeView } from '@learnway/ui';
 /* style */
 import styles from './role-list.module.css';
 
@@ -80,7 +80,9 @@ const RoleListComponent: FC<{}> = ({}) => {
         lineType={'light'}
       />
       <div className={styles.contents_wrap}>
-        <TreeView treeId="source" data={sourceData} searchKeyword="" />
+        <TreeContainer>
+          <DndTreeView treeId="source" data={sourceData} searchKeyword="" />
+        </TreeContainer>
       </div>
     </div>
   );

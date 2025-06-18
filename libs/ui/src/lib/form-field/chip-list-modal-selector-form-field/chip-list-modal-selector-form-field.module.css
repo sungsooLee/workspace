@@ -18,6 +18,7 @@
       }
     }
     [class*='nlp--chip-list'] {
+      @apply pl-0;
       [class*='nlp--chips'] {
         @apply !h-[24px] !min-h-[24px];
       }

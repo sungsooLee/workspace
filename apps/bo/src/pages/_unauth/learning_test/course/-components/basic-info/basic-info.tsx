@@ -17,6 +17,7 @@ import { ChannelListModal, TeacherListModal } from '@features/learning/course';
 import { DropdownFormField } from '@features/form';
 import { t } from 'i18next';
 import { TabFormRef } from '../common/tab-form-ref';
+import { IcoPlus } from '@learnway/icons';
 
 interface BasicInfoProps {
   dummy?: any;

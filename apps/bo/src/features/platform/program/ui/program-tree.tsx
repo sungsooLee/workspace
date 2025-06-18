@@ -12,6 +12,7 @@ import {
   RadioGroupFormField,
   Textarea,
   TreeBox,
+  TreeContainer,
   TreeEventPayload,
   TreeNode,
   useModal,
@@ -278,28 +279,30 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
 
   return (
     <>
-      <TreeBox
-        title={
-          menuScope === 'FO'
-            ? t('LABEL.list', { type: t('LABEL.program.learnerApi') })
-            : t('LABEL.list', { type: t('LABEL.program.hrdCenterApi') })
-        }
-        data={treeData}
-        treeId={'program-tree'}
-        expandedKeys={expandedKeys}
-        onExpandedKeysChange={handleExpandChange}
-        renderNodeButtons={renderNodeButtons}
-        onAction={handleTreeAction}
-        type={'DRAG_DROP'}
-        selectedNode={selectedNode}
-        initLevel={2}
-        handleSelectedNodeChange={handleSelectedNodeChange}
-        customDropValidator={customDropValidator}
-        maxDepth={5}
-        isSelectableNode={(node: TreeNode) => {
-          return node && node.level !== 0;
-        }}
-      />
+      <TreeContainer>
+        <TreeBox
+          title={
+            menuScope === 'FO'
+              ? t('LABEL.list', { type: t('LABEL.program.learnerApi') })
+              : t('LABEL.list', { type: t('LABEL.program.hrdCenterApi') })
+          }
+          data={treeData}
+          treeId={'program-tree'}
+          expandedKeys={expandedKeys}
+          onExpandedKeysChange={handleExpandChange}
+          renderNodeButtons={renderNodeButtons}
+          onAction={handleTreeAction}
+          type={'DRAG_DROP'}
+          selectedNode={selectedNode}
+          initLevel={2}
+          handleSelectedNodeChange={handleSelectedNodeChange}
+          customDropValidator={customDropValidator}
+          maxDepth={5}
+          isSelectableNode={(node: TreeNode) => {
+            return node && node.level !== 0;
+          }}
+        />
+      </TreeContainer>
       <div className={layoutStyles.inner}>
         <form onSubmit={onSubmit(handleOnSubmit)}>
           <div className={titleStyles.title_wrap}>

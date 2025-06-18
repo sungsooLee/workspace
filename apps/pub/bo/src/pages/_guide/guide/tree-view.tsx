@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { TreeView, TreeNode } from '@learnway/ui';
+import { TreeView, TreeNode, DndTreeView, TreeContainer } from '@learnway/ui';
 
 const sampleData: TreeNode[] = [
   {
@@ -62,7 +62,9 @@ function RouteComponent() {
         <h3 className="guide_tit3">Basic</h3>
         <div className="flex_box">
           <div className="desc w-full">
-            <TreeView treeId="source" data={sourceData} />
+            <TreeContainer>
+              <DndTreeView treeId="source" data={sourceData} />
+            </TreeContainer>
           </div>
         </div>
       </div>

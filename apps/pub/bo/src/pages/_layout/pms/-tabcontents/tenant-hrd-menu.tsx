@@ -15,6 +15,8 @@ import {
   GridBox,
   TreeView,
   TreeNode,
+  DndTreeView,
+  TreeContainer,
 } from '@learnway/ui';
 
 // eslint-disable-next-line @nx/enforce-module-boundaries
@@ -151,7 +153,9 @@ const TenantHrdMenuComponent: FC<{}> = ({}) => {
           </div>
         </div>
         <div className={layoutStyles.inner_contents}>
-          <TreeView treeId="source" data={sourceData} />
+          <TreeContainer>
+            <DndTreeView treeId="source" data={sourceData} />
+          </TreeContainer>
         </div>
       </div>
       <div className={cn(layoutStyles.inner, layoutStyles.type_progress)}>

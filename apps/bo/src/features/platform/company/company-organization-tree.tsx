@@ -1,6 +1,6 @@
 import { FC, useEffect, useState, useCallback } from 'react';
 import { useRouterState } from '@tanstack/react-router';
-import { TreeBox, TreeNode, Button } from '@learnway/ui';
+import { TreeBox, TreeNode, Button, TreeContainer } from '@learnway/ui';
 import { transformDepartmentApiDataToTreeData } from './service/company-detail-tree';
 import { useGetCompanyDepartmentTree } from '@entities/department/service/department.hook';
 
@@ -28,15 +28,17 @@ const CompanyOrganizationTreeComponent = ({ title }: any) => {
   }, [data]);
 
   return (
-    <TreeBox
-      data={deptTreeData}
-      type="DEFAULT"
-      treeId="1"
-      showSearchKeyword
-      title={title}
-      selectedNode={selectedDeptNode}
-      renderNodeButtons={renderNodeButtons}
-    />
+    <TreeContainer>
+      <TreeBox
+        data={deptTreeData}
+        type="DEFAULT"
+        treeId="1"
+        showSearchKeyword
+        title={title}
+        selectedNode={selectedDeptNode}
+        renderNodeButtons={renderNodeButtons}
+      />
+    </TreeContainer>
   );
 };
 

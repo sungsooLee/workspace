@@ -11,6 +11,7 @@ import {
   TreeView,
   TreeNode,
   TreeEventPayload,
+  DndTreeView,
 } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import { IcoNarrowRight } from '@learnway/icons';
@@ -201,7 +202,7 @@ const CategoryChoiceTreeModalModalComponent = () => {
                   </div>
                 </div>
                 <div className={layoutStyles.inner_contents}>
-                  <TreeView
+                  <DndTreeView
                     treeId="common-tree"
                     type={'DRAG_DROP'}
                     data={commonCategoryTreeData}
@@ -263,7 +264,7 @@ const CategoryChoiceTreeModalModalComponent = () => {
                   </div>
                 </div>
                 <div className={layoutStyles.inner_contents}>
-                  <TreeView
+                  <DndTreeView
                     treeId="selected-tree"
                     type={'SAME_LEVEL_ONLY'}
                     data={selectedCategoryTreeData}

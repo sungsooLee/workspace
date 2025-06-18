@@ -18,6 +18,12 @@
   }
 }
 
+[class*='divider'] {
+  & + .start {
+    @apply mt-[24px];
+  }
+}
+
 .btn_select {
   @apply mt-[6px];
   button {

@@ -463,6 +463,7 @@ openModal({
               onClick={() =>
                 openModal({
                   width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
+                  height: 'fix',
                   content: <ContentModal />,
                 })
               }

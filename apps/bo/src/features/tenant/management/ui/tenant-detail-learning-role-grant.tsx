@@ -21,6 +21,7 @@ import {
   useModal,
   Input,
   Dropdown,
+  TreeContainer,
 } from '@learnway/ui';
 import { IcoFormRequired, IcoMinus, IcoPlus } from '@learnway/icons';
 import { DynamicFormConfig, useDynamicForm, useSearchBox } from '@learnway/hooks';
@@ -167,15 +168,17 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
 
   return (
     <SectionLayout contentsRatio={'thirty'}>
-      <TreeBox
-        data={roleTree}
-        initLevel={2}
-        treeId={'1'}
-        showSearchKeyword
-        title={'역할 목록'}
-        selectedNode={selectedRole}
-        handleSelectedNodeChange={handleRoleSelect}
-      />
+      <TreeContainer>
+        <TreeBox
+          data={roleTree}
+          initLevel={2}
+          treeId={'1'}
+          showSearchKeyword
+          title={'역할 목록'}
+          selectedNode={selectedRole}
+          handleSelectedNodeChange={handleRoleSelect}
+        />
+      </TreeContainer>
       <div className={cn(styles.start, styles.wrap)}>
         <FormSubTitle label={t('역할 정보')} lineType="light" />
         <div className={styles.contents_wrap}>

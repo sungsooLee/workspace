@@ -8,6 +8,7 @@ import {
   ContentsRow,
   Input,
   Textarea,
+  TreeContainer,
 } from '@learnway/ui';
 import { useEffect, useRef, useState } from 'react';
 import {
@@ -363,23 +364,25 @@ export const CategoryManage = () => {
 
   return (
     <>
-      <TreeBox
-        title={t('LABEL.list', { type: t('LABEL.commonCategory') })}
-        data={treeData}
-        treeId={'common-category'}
-        expandedKeys={expandedKeys}
-        onExpandedKeysChange={handleExpandChange}
-        renderNodeButtons={renderNodeButtons}
-        onAction={handleTreeAction}
-        type={'SAME_PARENT_ONLY'}
-        initLevel={1}
-        maxDepth={5}
-        handleSelectedNodeChange={handleSelectedNodeChange}
-        isSelectableNode={(node: TreeNode) => {
-          return node && node.level !== 0;
-        }}
-        selectedNode={selectedNode}
-      />
+      <TreeContainer>
+        <TreeBox
+          title={t('LABEL.list', { type: t('LABEL.commonCategory') })}
+          data={treeData}
+          treeId={'common-category'}
+          expandedKeys={expandedKeys}
+          onExpandedKeysChange={handleExpandChange}
+          renderNodeButtons={renderNodeButtons}
+          onAction={handleTreeAction}
+          type={'SAME_PARENT_ONLY'}
+          initLevel={1}
+          maxDepth={5}
+          handleSelectedNodeChange={handleSelectedNodeChange}
+          isSelectableNode={(node: TreeNode) => {
+            return node && node.level !== 0;
+          }}
+          selectedNode={selectedNode}
+        />
+      </TreeContainer>
       <div className={layoutStyles.inner}>
         <form onSubmit={onSubmit(handleOnSubmit)}>
           <div className={titleStyles.title_wrap}>

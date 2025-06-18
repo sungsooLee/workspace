@@ -8,6 +8,7 @@ import '@learnway/config/style/font.css';
 
 import { AppConfigProvider } from './app/app-config-provider';
 import { routeTree } from './routeTree.gen';
+import { GlobalLoadingIndicator } from './components/global-loading-indicator';
 
 import type { PageMeta } from './types';
 import { registerToastHandler } from '@learnway/shared';
@@ -51,14 +52,15 @@ registerToastHandler((config: any) => {
 
 function App() {
   const [, setPageRouteState] = usePageRouteState();
-  // Inject the returned value from the hook into the router context
   return (
     <QueryClientProvider client={queryConfig.getQueryClient()}>
       <AppConfigProvider>
-        <RouterProvider
-          router={router}
-          context={{ queryClient: queryConfig.getQueryClient(), setPageRouteState }}
-        />
+        <GlobalLoadingIndicator>
+          <RouterProvider
+            router={router}
+            context={{ queryClient: queryConfig.getQueryClient(), setPageRouteState }}
+          />
+        </GlobalLoadingIndicator>
       </AppConfigProvider>
     </QueryClientProvider>
   );

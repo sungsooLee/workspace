@@ -8,7 +8,7 @@ import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import { Tabs } from '@learnway/ui';
+import { DndTreeView, Tabs, TreeContainer } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import {
   Button,
@@ -149,7 +149,9 @@ function RouteComponent() {
               </div>
             </div>
             <div className={layoutStyles.inner_contents}>
-              <TreeView treeId="source" data={sourceData} />
+              <TreeContainer>
+                <DndTreeView treeId="source" data={sourceData} />
+              </TreeContainer>
             </div>
           </div>
           <div className={cn(layoutStyles.inner, layoutStyles.type_progress2)}>
