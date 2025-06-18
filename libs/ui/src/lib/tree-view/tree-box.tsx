@@ -12,6 +12,7 @@ import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inn
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 import subTitleStyles from '@learnway/styles/bo/assets/styles/modules/form-sub-title.module.css';
 import { CountText } from '../elements/count-text/count-text';
+import { DndTreeView } from './dnd-tree';
 
 const TreeBoxComponent = <T extends object>(
   {
@@ -164,7 +165,7 @@ const TreeBoxComponent = <T extends object>(
       </div>
       <div className={layoutStyles.inner_contents}>
         <TreeContainer>
-          <TreeView
+          <DndTreeView
             data={data ?? []}
             treeId={treeId}
             searchKeyword={searchKeyword}

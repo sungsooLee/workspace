@@ -183,6 +183,7 @@ export * from './lib/toast/toast.hook';
 export * from './lib/toast/toast';
 export * from './lib/toast/type';
 export * from './lib/tooltip/tooltip';
+export * from './lib/tree-view/dnd-tree';
 export * from './lib/tree-view/shuttle-tree-to-chips';
 export * from './lib/tree-view/tree-box';
 export * from './lib/tree-view/tree-to-tree';
