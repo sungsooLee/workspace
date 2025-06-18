@@ -970,7 +970,7 @@ export const guideData = [
     pageId: 'completion/detail-calculation-reason',
     screenId: 'NLP_BO_EDS_1848',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-06-18',
     lastUpdateDate: '',
     remarks: '', // 비고
   },
