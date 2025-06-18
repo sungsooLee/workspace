@@ -631,7 +631,7 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
       <div
         ref={setDropAfterRef}
         style={{
-          height: '10px',
+          height: isOverAfter ? '10px' : '0px',
           backgroundColor: isOverAfter ? 'rgba(33, 150, 243, 0.2)' : 'transparent',
           marginTop: '0px',
           marginLeft: `${level * 20}px`,
