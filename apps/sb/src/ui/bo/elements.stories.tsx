@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button, Divider } from '@learnway/ui';
+import { Button, Divider, SplitPanel } from '@learnway/ui';
 
 export default {
   title: 'Bo-Components/Elements',
@@ -31,3 +31,17 @@ export const TemplateDivider: any = (args: any) => {
   );
 };
 TemplateDivider.storyName = 'Divider';
+
+// SplitPanel
+export const TemplateSplitPanel: any = (args: any) => {
+  return (
+    <div className={'border border-gray-400 p-10'}>
+      <section>Search Box</section>
+      <SplitPanel size={[100, 200]}>
+        <div>LEFT</div>
+        <div>RIGHT</div>
+      </SplitPanel>
+    </div>
+  );
+};
+TemplateSplitPanel.storyName = 'SplitPanel';

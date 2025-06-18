@@ -52,7 +52,7 @@ const CurriculumComponent = forwardRef<TabFormRef, curriculumProps>(
         {/*대표커리큘럼설정*/}
         <FormSubTitle label={t('대표 커리큘럼 설정')} lineType={'dark'} />
         {/* 트리 */}
-        <SplitPanel leftSize={'50%'}>
+        <SplitPanel leftSize={'400'}>
           <div>LEFT</div>
           <div>RIGHT</div>
         </SplitPanel>
