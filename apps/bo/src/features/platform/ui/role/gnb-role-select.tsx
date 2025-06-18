@@ -109,6 +109,11 @@ const GnbRoleSelectComponent = ({ className }: Props) => {
     await updateTenantRole({
       lastVisitedBoTenantId: newValue.tenantId,
     });
+
+    const menus = await asyncMenus(newValue.tenantId);
+    updateMenu(menus);
+    setActiveMenuDepth([]);
+    router.navigate({ to: '/' });
   };
 
   const handleTenantLoadOptions = async (searchText: string): Promise<any[]> => {
