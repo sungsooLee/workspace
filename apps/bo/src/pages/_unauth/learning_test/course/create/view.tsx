@@ -1,25 +1,30 @@
-import React, { useMemo, useState } from 'react';
-import { Button, Tabs } from '@learnway/ui';
+import { Button, Divider, Tabs } from '@learnway/ui';
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import React, { useMemo, useRef } from 'react';
 import { BasicInfo } from '../-components/basic-info/basic-info';
-import { formConfig as formConfigBasic } from '../-components/basic-info/form-config';
-import { formConfig as formConfigCourse } from '../-components/course-registration/form-config';
+import { TabFormRef } from '../-components/common/tab-form-ref';
 import { CourseRegistration } from '../-components/course-registration/course-registration';
+import { Curriculum } from '../-components/curriculum/curriculum';
 
 export const Route = createFileRoute('/_unauth/learning_test/course/create/view')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const [formConfig, setFormConfig] = useState<DynamicFormConfig>(formConfigBasic);
-  const dynamicForm = useDynamicForm(formConfig);
-  const { provider, onSubmit, control, getValues, fetchData } = dynamicForm; //useDynamicForm(formConfig);
+  // 통합된 ref 객체로 관리
+  const tabRefs = useRef<Record<string, TabFormRef | null>>({
+    a: null, // BasicInfo
+    b: null, // CourseRegistration
+  });
 
-  console.log({ dynamicForm });
+  const [activeTab, setActiveTab] = React.useState('a');
+
+  // 모든 탭의 폼 데이터를 하나의 객체로 관리
+  const [formData, setFormData] = React.useState<Record<string, any>>({});
+
   const handleListClick = () => {
     console.log('handleExportCourse');
   };
@@ -28,20 +33,32 @@ function RouteComponent() {
     console.log('handleImportCourse');
   };
 
-  const handleOnSubmit = (data: any) => {
-    console.log('data {} => ', data);
+  const handleSaveClick = async () => {
+    console.log('data {} => ');
+
+    // 활성화된 탭의 유효성 검사 수행
+    const currentRef = tabRefs.current[activeTab];
+    if (currentRef) {
+      const result = await currentRef.validate();
+
+      if (result.isValid) {
+        console.log(`${activeTab} 탭 유효성 검사 통과:`, result.data);
+        setFormData((prev) => ({ ...prev, ...result.data }));
+        // 여기서 저장 로직을 실행
+        console.log('저장할 데이터:', result.data);
+        // API 호출 등 저장 로직
+      } else {
+        console.log(`${activeTab} 탭 유효성 검사 실패:`, result.errors);
+        // 에러 처리 로직
+      }
+    } else {
+      console.log('해당 탭은 아직 구현되지 않았습니다.');
+    }
   };
 
   const handleTabChange = (activeKey: string) => {
     console.log('activeKey', activeKey);
-    // 기본정보
-    if (activeKey === 'a') {
-      setFormConfig(formConfigBasic);
-    }
-    // 수강신청 설정
-    else if (activeKey === 'b') {
-      // setFormConfig(formConfigCourse);
-    }
+    setActiveTab(activeKey);
   };
 
   const tabItems = useMemo(
@@ -49,17 +66,19 @@ function RouteComponent() {
       {
         title: '기본정보 설정',
         key: 'a',
-        content: <BasicInfo dynamicForm={dynamicForm} />,
+        content: <BasicInfo ref={(ref) => (tabRefs.current.a = ref)} initialData={formData} />,
       },
       {
         title: '수강신청 설정',
         key: 'b',
-        content: <CourseRegistration dynamicForm={dynamicForm} />,
+        content: (
+          <CourseRegistration ref={(ref) => (tabRefs.current.b = ref)} initialData={formData} />
+        ),
       },
       {
         title: '커리큘럼 설정',
         key: 'c',
-        content: <h2>Tab C content</h2>,
+        content: <Curriculum ref={(ref) => (tabRefs.current.c = ref)} initialData={formData} />,
       },
       {
         title: '상세 설정',
@@ -72,11 +91,11 @@ function RouteComponent() {
         content: <h2>Tab C content</h2>,
       },
     ],
-    [],
+    [formData],
   );
 
   return (
-    <form onSubmit={onSubmit(handleOnSubmit)}>
+    <form>
       <PageContainer>
         <ContentsButtons>
           <Button
@@ -86,6 +105,7 @@ function RouteComponent() {
             label={'목록'}
             onClick={handleListClick}
           />
+          <Divider orientation={'vertical'} />
           <Button
             type="button"
             variant="point"
@@ -94,24 +114,23 @@ function RouteComponent() {
             onClick={handleDeleteClick}
           />
           <Button
-            type="submit"
+            type="button"
             variant="primary"
             size="sm"
             label={'저장'}
-            onClick={handleOnSubmit}
+            onClick={handleSaveClick}
           />
         </ContentsButtons>
         <MainContents>
-          <Tabs type={'progress'} size={'sm'} items={tabItems} onTabChange={handleTabChange} />
+          <Tabs
+            type={'progress'}
+            size={'sm'}
+            items={tabItems}
+            onTabChange={handleTabChange}
+            selectedTabKey={activeTab}
+          />
         </MainContents>
       </PageContainer>
     </form>
   );
 }
-
-const formConfig: DynamicFormConfig = {
-  builders: [
-    ...formConfigBasic.builders, // 기본정보
-    ...formConfigCourse.builders, // 수강신청 설정
-  ],
-};

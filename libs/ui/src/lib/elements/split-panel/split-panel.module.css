@@ -1,0 +1,56 @@
+.root {
+  &.wrap {
+    @apply mt-[16px] pb-0;
+    .container {
+      @apply relative flex w-full flex-wrap justify-between;
+      .inner {
+        @apply relative;
+        [class*='title_wrap'] {
+          @apply ml-0;
+        }
+        .inner_contents {
+          @apply py-[16px];
+        }
+        &:first-child {
+          @apply shrink-0 pr-[32px];
+          [class*='inner_contents'] {
+            @apply py-0;
+          }
+          &::before {
+            @apply absolute right-0 top-0 flex h-full w-[1px] shadow-[1px_0_0_0_var(--gray4)] content-[''];
+          }
+        }
+        &:not(:first-child) {
+          @apply relative shrink-0 pl-[32px];
+          [class*='inner_contents'] {
+            @apply relative;
+          }
+        }
+      }
+    }
+  }
+}
+div {
+  &:not([class*='divider']) {
+    & + .root {
+      @apply border-t border-solid border-[#d6dae1] p-[32px];
+    }
+  }
+  &[class*='divider'] {
+    & + .root {
+      @apply mt-[32px];
+    }
+  }
+}
+
+.container {
+  @apply flex;
+}
+
+.panel {
+  @apply flex items-center;
+}
+
+.panel[data-width] {
+  width: var(--panel-width);
+}

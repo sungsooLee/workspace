@@ -69,7 +69,6 @@ const ListModalSelectorFormFieldComponent = forwardRef<
       ownerOnChange(newValue);
     };
 
-    console.log('list', { value });
     return (
       <div
         ref={ref}
