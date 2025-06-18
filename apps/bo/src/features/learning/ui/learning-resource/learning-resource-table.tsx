@@ -1,4 +1,4 @@
-import { ALL_OPTION, CODE_GROUP, useSearchBox } from '@learnway/hooks';
+import { ALL_OPTION, CODE_GROUP, useSearchBox, compactValues } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
 import { SearchBox } from '@shared/ui/search-box';
 import {
@@ -326,7 +326,7 @@ function LearningResourceTableComponent() {
   }, [tenantId]);
 
   function handleSearch(rawQuery: Record<string, any>) {
-    const processedQuery = { ...rawQuery, isMockUp: true };
+    const processedQuery = compactValues({ ...rawQuery, isMockUp: true });
 
     setParams(processedQuery);
     gridFetch(processedQuery);

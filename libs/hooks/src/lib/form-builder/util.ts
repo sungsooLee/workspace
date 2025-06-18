@@ -1,3 +1,4 @@
+import { filter, isArray, isNil, mapValues, omitBy } from 'lodash';
 import { DynamicFormConfig, FormConfig, GroupConfig, SearchBoxConfig } from './type';
 
 /**
@@ -43,4 +44,27 @@ export const extractDynamicFormDefaultValues = (builders: FormConfig[]) => {
     }
   });
   return defaultValues;
+};
+
+/**
+ * * value가 null(undefined, null, '') 인 경우 null을 리턴
+ * * value가 array인 경우 null(undefined, null, '')인 값을 제거하고 리턴
+ * * value가 object인 경우 각 value가 null(undefined, null, '')인 값을 제거하고 리턴
+ * * 그외의 value는 그대로 리턴
+ *
+ * > compactValue({ a: '', b: undefined, c: null, d: 0, e: 'a', f: [0, null, '', 'a'] })
+ * > => { d: 0, e: 'a', f: [0, 'a'] }
+ *
+ */
+export const compactValues = (value: any): any => {
+  const isNull = (value: any) => isNil(value) || value === '';
+
+  if (isNull(value)) return null;
+
+  if (typeof value === 'object') {
+    if (isArray(value)) return filter(value, (v) => !isNull(v));
+    return omitBy(mapValues(value, compactValues), isNull);
+  }
+
+  return value;
 };
