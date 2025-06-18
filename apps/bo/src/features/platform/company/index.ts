@@ -1,4 +1,5 @@
 export * from './organization/service/company-organization.service';
+export * from './organization/ui/company-organization';
 export * from './organization/ui/company-organization-check';
 export * from './organization/ui/company-organization-info-list';
 export * from './organization/ui/company-organization-info-user';
@@ -10,10 +11,6 @@ export * from './management/ui/company-detail-hr';
 export * from './management/ui/company-detail-ht-link';
 export * from './management/ui/company-detail';
 export * from './management/ui/company-list';
-export * from './organization/ui/company-organization-detail-compare';
-export * from './organization/ui/company-organization-detail-master';
-export * from './organization/ui/company-organization-detail-platform';
-export * from './organization/ui/company-organization-detail-target';
 export * from './organization/ui/company-organization-detail-tree';
 export * from './user/ui/company-user-detail-base';
 export * from './user/ui/company-user-detail-learning-history';

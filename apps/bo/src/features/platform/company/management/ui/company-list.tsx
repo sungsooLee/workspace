@@ -65,6 +65,9 @@ const CompanyListComponent = () => {
       header: t('사용여부'),
       cell: (info) => (info.getValue() ? t('사용') : t('미사용')),
       enableGrouping: false,
+      meta: {
+        cellAlign: 'center',
+      },
     }),
     columnHelper.accessor('lastModifiedBy', {
       header: t('수정자'),

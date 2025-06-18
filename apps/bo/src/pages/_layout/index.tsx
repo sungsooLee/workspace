@@ -334,7 +334,7 @@ export const munu = [
   },
   {
     screenName: '플렛폼 테넌트 조직 관리',
-    pageId: 'platform/tenant/organization',
+    pageId: 'platform/tenant/management/organization',
     screenId: 'NLP_BO_TMS_1111_01',
     pageType: 'Page',
     completionDate: '-',
@@ -343,11 +343,11 @@ export const munu = [
   },
   {
     screenName: '플렛폼 테넌트 조직 관리 - 상세',
-    pageId: 'platform/tenant/organization/detail',
+    pageId: 'platform/tenant/management/organization/detail',
     screenId: 'NLP_BO_TMS_1111_03',
     pageType: 'Page',
     completionDate: '-',
-    memo: '작업 중 (api x)- /platform/tenant/organization 검색 후 회사명 클릭',
+    memo: '작업 중 (api x)- /platform/tenant/management/organization 검색 후 회사명 클릭',
     end: false,
   },
   {

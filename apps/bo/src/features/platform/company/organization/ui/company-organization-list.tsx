@@ -38,7 +38,7 @@ const CompanyOrganizationListComponent = ({ rootPath }: { rootPath: string }) =>
   _global.linkClick = (companyCode: string) => {
     console.log('getValues', getValues());
     router.navigate({
-      to: `${rootPath}/tenant/organization/detail`,
+      to: `${rootPath}/tenant/management/organization/detail`,
       state: {
         companyCode: companyCode,
         listParam: getValues(),
