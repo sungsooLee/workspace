@@ -105,6 +105,10 @@ const GnbRoleSelectComponent = ({ className }: Props) => {
     if (newValue.tenantId === authUser?.activeTenant?.tenantId) return;
 
     updateActiveTenant(newValue);
+    // TODO 역할 완료후 제거 필요
+    await updateTenantRole({
+      lastVisitedBoTenantId: newValue.tenantId,
+    });
   };
 
   const handleTenantLoadOptions = async (searchText: string): Promise<any[]> => {
