@@ -46,6 +46,7 @@ export { ReactComponent as IcoError } from './lib/ic_error.svg'; // alert error 
 export { ReactComponent as IcoComplete } from './lib/ic_complete.svg'; // complete icon 48*48
 export { ReactComponent as IcoAlertComplete } from './lib/ic_alert_complete.svg'; // alert complete icon 48*48
 export { ReactComponent as IcoDelete03 } from './lib/ic_delete_03.svg'; // alert complete icon 48*48
+export { ReactComponent as IcoDelete04 } from './lib/ic_close_circle02.svg';
 export { ReactComponent as IcoFormRequired } from './lib/ic_form_required.svg'; // form required icon 9*8
 export { ReactComponent as IcoCheckboxChecked } from './lib/ic_checkbox_checked.svg'; // checkbox checked icon 12*13
 export { ReactComponent as IcoAlertCircle } from './lib/ic_alert_circle02.svg'; // Tooltip icon

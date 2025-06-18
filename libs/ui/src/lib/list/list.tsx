@@ -6,7 +6,7 @@ import { Button } from '../button/button';
 import { Checkbox } from '../checkbox/checkbox';
 import { closestCenter, DndContext, DragEndEvent } from '@dnd-kit/core';
 import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
-import { IcoDelete03, IcoMenu01 } from '@learnway/icons';
+import { IcoDelete03, IcoDelete04, IcoMenu01 } from '@learnway/icons';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import { CommonReactElementProps } from '../type';
 
@@ -215,7 +215,7 @@ const SortableItem = ({
       className={cn(
         styles.item,
         isSelected && styles.active, // selected row style
-        invalid && styles.invalid, // invalid style
+        item.invalid && styles.invalid, // invalid style
       )}
       onClick={(event: React.MouseEvent) => onClick?.(event, item)}
     >
@@ -227,9 +227,14 @@ const SortableItem = ({
             className={cn(styles.clear)}
             onlyIcon
             onClick={(event: React.MouseEvent) => onDelete?.(event, item)}
-          >
-            <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
-          </Button>
+            icon={
+              checkable ? (
+                <IcoDelete04 width={20} height={20} fill={'none'} stroke={'#4C515E'} />
+              ) : (
+                <IcoDelete03 width={20} height={20} fill={'#A9AFB8'} stroke={'#ffffff'} />
+              )
+            }
+          />
         )}
       </div>
       {draggable && (

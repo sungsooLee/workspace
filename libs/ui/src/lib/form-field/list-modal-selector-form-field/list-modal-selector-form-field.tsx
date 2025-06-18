@@ -42,6 +42,7 @@ const ListModalSelectorFormFieldComponent = forwardRef<
       list: listProps = {
         labelField: 'label',
         valueField: 'value',
+        invalid: false,
       },
       control,
     },

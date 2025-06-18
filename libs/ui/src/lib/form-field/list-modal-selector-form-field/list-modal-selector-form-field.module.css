@@ -2,9 +2,9 @@
   &.modal_select_wrap {
     @apply flex w-full flex-col;
     .btn_wrap {
-      @apply mb-[8px] flex w-full justify-end;
+      @apply -mt-[38px] mb-[8px] flex w-full justify-end;
       .btn {
-        @apply font-normal;
+        @apply relative z-[1] font-normal;
         svg {
           @apply mr-[4px];
         }
