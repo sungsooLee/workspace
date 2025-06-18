@@ -95,17 +95,17 @@
       }
     }
   }
-  &.fix {
+  /* &.fix {
     .content_body [class*='nlp--modal-content'] {
-      @apply h-[720px];
+      @apply h-[718px];
       [class*='modal-content'] {
-        @apply h-[670px];
+        @apply h-[668px];
         &:has(+ div) {
-          @apply h-[590px];
+          @apply h-[588px];
         }
       }
     }
-  }
+  } */
   /* mobile full */
   &.m_full,
   &.m_bottom_sheet {
