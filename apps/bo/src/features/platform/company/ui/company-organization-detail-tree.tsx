@@ -4,7 +4,7 @@ import { TreeBox, TreeNode, Button } from '@learnway/ui';
 import { transformDepartmentApiDataToTreeData } from '@features/platform/company/organization/service/company-organization.service';
 import { useGetCompanyDepartmentTree } from '@entities/department/service/department.hook';
 
-const CompanyOrganizationTreeComponent = ({ title }: any) => {
+const CompanyOrganizationDetailTreeComponent = ({ title }: any) => {
   const routerState = useRouterState();
   const companyCode = routerState.location.state?.companyCode;
 
@@ -40,4 +40,4 @@ const CompanyOrganizationTreeComponent = ({ title }: any) => {
   );
 };
 
-export const CompanyOrganizationTree = CompanyOrganizationTreeComponent;
+export const CompanyOrganizationDetailTree = CompanyOrganizationDetailTreeComponent;

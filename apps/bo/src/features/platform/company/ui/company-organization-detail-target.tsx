@@ -13,7 +13,7 @@ import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.cs
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 
-const CompanyOrganizationTargetComponent = () => {
+const CompanyOrganizationDetailTargetComponent = () => {
   const { t } = useTranslation();
 
   const [selectedTabKey, setSelectedTabKey] = useState<string>('organization');
@@ -58,7 +58,7 @@ const CompanyOrganizationTargetComponent = () => {
   );
 };
 
-export const CompanyOrganizationTarget = CompanyOrganizationTargetComponent;
+export const CompanyOrganizationDetailTarget = CompanyOrganizationDetailTargetComponent;
 
 const OrganizationTabComponent = () => {
   const { provider: searchProvider, getValues } = useSearchBox(searchOrganizationConfig);
