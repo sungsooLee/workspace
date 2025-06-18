@@ -9,6 +9,7 @@ import {
   Button,
   CheckboxGroupFormField,
   ContentsRow,
+  DndTreeView,
   DynamicFormField,
   GridBox,
   Input,
@@ -284,7 +285,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
         </div>
         <div className={layoutStyles.inner_contents}>
           <TreeContainer>
-            <TreeView
+            <DndTreeView
               treeId="tenant-menu-tree"
               type={'DRAG_DROP'}
               data={treeData}

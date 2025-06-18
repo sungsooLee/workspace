@@ -2,7 +2,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { SectionLayout } from '../-components/section-layout';
-import { Tabs, TreeBox, TreeNode } from '@learnway/ui';
+import { Tabs, TreeBox, TreeContainer, TreeNode } from '@learnway/ui';
 import { MainContents } from '../../../../../../bo/src/widgets/layout/ui/container/slot/main-contents';
 
 /** tab contents */
@@ -69,7 +69,9 @@ function RouteComponent() {
     <PageContainer>
       <MainContents>
         <SectionLayout contentsRatio={'thirty'}>
-          <TreeBox data={sampleData} treeId={'menu-tree'} title={'교육본부'} />
+          <TreeContainer>
+            <TreeBox data={sampleData} treeId={'menu-tree'} title={'교육본부'} />
+          </TreeContainer>
           <Tabs items={menuItems} type="line" size="sm" selectedTabKey={'menu01'} />
         </SectionLayout>
       </MainContents>

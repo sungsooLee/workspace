@@ -2,7 +2,16 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { SectionLayout } from '../-components/section-layout';
-import { TreeBox, TreeNode, Button, TableBox, Input, Switch, Checkbox } from '@learnway/ui';
+import {
+  TreeBox,
+  TreeNode,
+  Button,
+  TableBox,
+  Input,
+  Switch,
+  Checkbox,
+  TreeContainer,
+} from '@learnway/ui';
 import { MainContents } from '../../../../../../bo/src/widgets/layout/ui/container/slot/main-contents';
 import { FormSubTitle } from '../../../../../../bo/src/shared/ui/form';
 import { IcoMinus, IcoPlus } from '@learnway/icons';
@@ -117,7 +126,9 @@ function RouteComponent() {
     <PageContainer>
       <MainContents>
         <SectionLayout contentsRatio={'thirty'}>
-          <TreeBox data={sampleData} treeId={'menu-tree'} title={'교육본부'} />
+          <TreeContainer>
+            <TreeBox data={sampleData} treeId={'menu-tree'} title={'교육본부'} />
+          </TreeContainer>
           <div>
             <FormSubTitle
               label={'세부산출근거 단가'}
