@@ -1,8 +1,9 @@
-import { ContentsRow, DynamicFormField } from '@learnway/ui';
+import { ContentsRow, RadioGroupFormField } from '@learnway/ui';
 import React, { forwardRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormRow, FormSubTitle } from '@shared/ui';
 import { UseDynamicFormResult } from '@learnway/hooks';
+import { DropdownFormField } from '@features/form';
 
 interface CourseRegistrationProps {
   dynamicForm: UseDynamicFormResult;
@@ -25,45 +26,130 @@ const CourseRegistrationComponent = forwardRef<HTMLDivElement, CourseRegistratio
 
     return (
       <div ref={ref}>
-        {/*수강신청여부*/}
-        <ContentsRow type={'horizontal'} className={'inactive'}>
-          <FormRow provider={provider} name={'수강신청여부'} />
-        </ContentsRow>
-        {/*수강신청 기본정보*/}
-        <FormSubTitle label={'수강신청 기본정보'} />
-        {/*수강신청 기본정보 > 수강신청 승인자*/}
+        {/*수강신청*/}
+        <FormSubTitle label={t('수강신청')} lineType={'dark'} />
+        {/*승인 결재 라인, 정원*/}
         <ContentsRow>
-          <FormRow provider={provider} name={'수강신청 승인자'} />
+          {/*승인 결재 라인*/}
+          <FormRow
+            provider={provider}
+            name={'승인 결재 라인'}
+            element={
+              <DropdownFormField
+                options={[
+                  {
+                    label: '결재라인1',
+                    value: '결재라인1',
+                  },
+                  {
+                    label: '결재라인2',
+                    value: '결재라인2',
+                  },
+                ]}
+              />
+            }
+          />
+          {/*정원*/}
+          <FormRow
+            provider={provider}
+            name={'정원'}
+            element={
+              <RadioGroupFormField
+                options={[
+                  {
+                    label: 'option1',
+                    value: 'option1',
+                  },
+                  {
+                    label: 'option2',
+                    value: 'option2',
+                  },
+                ]}
+              />
+            }
+          />
         </ContentsRow>
-        {/*수강신청 기본정보 > 수강신청 정원*/}
+        {/*수강신청 대기, 차수 중복수강*/}
         <ContentsRow>
-          <FormRow provider={provider} name={'수강신청 정원'} />
+          {/*수강신청 대기*/}
+          <FormRow
+            provider={provider}
+            name={'수강신청 대기'}
+            element={
+              <RadioGroupFormField
+                options={[
+                  {
+                    label: 'option1',
+                    value: 'option1',
+                  },
+                  {
+                    label: 'option2',
+                    value: 'option2',
+                  },
+                ]}
+              />
+            }
+          />
+          {/*차수 중복수강*/}
+          <FormRow
+            provider={provider}
+            name={'차수 중복수강'}
+            element={
+              <RadioGroupFormField
+                options={[
+                  {
+                    label: 'option1',
+                    value: 'option1',
+                  },
+                  {
+                    label: 'option2',
+                    value: 'option2',
+                  },
+                ]}
+              />
+            }
+          />
         </ContentsRow>
-        {/*수강신청 기본정보 > 수강신청 대기자*/}
-        <ContentsRow type={'horizontal'} className={'inactive'}>
-          <FormRow provider={provider} name={'수강신청 대기자'} />
-        </ContentsRow>
-        {/*수강신청 기본정보 > 수강신청 취소 기간*/}
+        {/*사전 레벨테스트, 교재 배송지 수집*/}
         <ContentsRow>
-          <FormRow provider={provider} name={'수강신청 취소 기간'} />
-        </ContentsRow>
-        {/*수강신청 기본정보 > 중복 수강 신청*/}
-        <ContentsRow>
-          <FormRow provider={provider} name={'중복 수강 신청'} />
-        </ContentsRow>
-        {/*수강신청 기본정보 > 학습기간 중복예외 처리*/}
-        <ContentsRow>
-          <FormRow provider={provider} name={'학습기간 중복예외 처리'} />
-        </ContentsRow>
-        {/*수강신청 시 수집 정보*/}
-        <FormSubTitle label={'수강신청 시 수집 정보'} />
-        {/*수강신청 시 수집 정보 > 사전 레벨테스트*/}
-        <ContentsRow>
-          <FormRow provider={provider} name={'사전 레벨테스트'} />
-        </ContentsRow>
-        {/*수강신청 시 수집 정보 > 교재 배송지 입력 여부*/}
-        <ContentsRow>
-          <FormRow provider={provider} name={'교재 배송지 입력 여부'} />
+          {/*사전 레벨테스트*/}
+          <FormRow
+            provider={provider}
+            name={'사전 레벨테스트'}
+            element={
+              <RadioGroupFormField
+                options={[
+                  {
+                    label: 'option1',
+                    value: 'option1',
+                  },
+                  {
+                    label: 'option2',
+                    value: 'option2',
+                  },
+                ]}
+              />
+            }
+          />
+          {/*교재 배송지 수집*/}
+          <FormRow
+            provider={provider}
+            name={'교재 배송지 수집'}
+            element={
+              <RadioGroupFormField
+                options={[
+                  {
+                    label: 'option1',
+                    value: 'option1',
+                  },
+                  {
+                    label: 'option2',
+                    value: 'option2',
+                  },
+                ]}
+              />
+            }
+          />
         </ContentsRow>
       </div>
     );
