@@ -15,16 +15,16 @@ function RouteComponent() {
         playing={player.playing}
         onProgress={player.onProgress}
         onDuration={player.onDuration}
-        url={'/SampleVideo_1280x720_30mb.mp4'}
+        // url={''}
         config={{
           file: {
-            attributes: {
-              crossOrigin: 'anonymous', // 자막 로드할 때 필요할 수 있음
-            },
+            // attributes: {
+            //   crossOrigin: 'anonymous', // 자막 로드할 때 필요할 수 있음
+            // },
             tracks: [
               {
                 kind: 'subtitles',
-                src: '/subtitles-en.vtt',
+                src: 'https://gist.githubusercontent.com/samdutton/ca37f3adaf4e23679957b8083e061177/raw/sample.vtt',
                 srcLang: 'en',
                 default: true,
                 label: 'en',
