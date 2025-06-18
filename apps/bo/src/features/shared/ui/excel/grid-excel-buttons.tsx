@@ -5,6 +5,7 @@ import { fileDownload } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
 import { IcoDownload, IcoUploadCloud } from '@learnway/icons';
 import { t } from 'i18next';
+import { ExcelDownloadReasonModal } from '../modal/excel-download-reason-modal';
 
 interface ExcelButtonsProps {
   // 업로드 관련
@@ -67,14 +68,20 @@ const GridExcelButtonsComponent: React.FC<ExcelButtonsProps> = ({
 
     try {
       if (hasPersonalInfo) {
-        const isConfirmed = await confirm({
-          title: '개인정보 포함 데이터 다운로드',
-          content: '개인정보가 포함된 데이터를 다운로드하시겠습니까?',
-        });
+        // const isConfirmed = await confirm({
+        //   title: '개인정보 포함 데이터 다운로드',
+        //   content: '개인정보가 포함된 데이터를 다운로드하시겠습니까?',
+        // });
 
-        if (!isConfirmed) {
-          return;
-        }
+        // if (!isConfirmed) {
+        //   return;
+        // }
+        const modalResult = await openModal({
+          width: 'md',
+          content: <ExcelDownloadReasonModal />,
+        });
+        console.log('🚀 ~ handleDownload ~ modalResult:', modalResult);
+        return;
       }
 
       if (onBeforeDownload) {
