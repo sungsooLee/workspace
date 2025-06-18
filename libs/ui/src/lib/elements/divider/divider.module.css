@@ -13,3 +13,11 @@
 .vertical {
   @apply h-full w-[1px];
 }
+
+form {
+  & + .divider {
+    &.horizontal {
+      @apply mt-[8px];
+    }
+  }
+}
