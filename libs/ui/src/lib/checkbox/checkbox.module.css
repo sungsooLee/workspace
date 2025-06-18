@@ -6,7 +6,7 @@
     border: 1px solid var(--gray5);
     &[data-state='checked'] {
       .checkbox_indicator {
-        @apply absolute left-0 top-0 flex h-[2rem] w-[2rem] items-center justify-center rounded-[4px] bg-[var(--secondary1)];
+        @apply flex h-[2rem] w-[2rem] items-center justify-center rounded-[4px] bg-[var(--secondary1)];
         border-color: var(--secondary1);
       }
       & ~ .label {
