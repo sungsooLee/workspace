@@ -13,6 +13,9 @@ import {
 import { useFetchAuthUser, useUpdateTenantRoleLastSelect } from '@learnway/auth/entities';
 import { useTranslation } from 'react-i18next';
 
+/**
+ * @description 로그인시 테넌트/역할 선택 완료 후 메인화면으로 진입
+ */
 const TenantRoleModalComponent = () => {
   const { t } = useTranslation();
   const { close: closeModal } = useModal();

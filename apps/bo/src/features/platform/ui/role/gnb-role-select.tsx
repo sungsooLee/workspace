@@ -1,9 +1,6 @@
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 
-import { cn } from '@learnway/shared';
-import { AutoCompleteDropdown, Popover } from '@learnway/ui';
-import { IcoArrowDown, IcoCheck02 } from '@learnway/icons';
-import { Button } from '@learnway/ui';
+import { AutoCompleteDropdown } from '@learnway/ui';
 import {
   useActiveMenuDepthState,
   useAsycFetchMenusForceRefatch,
@@ -13,14 +10,13 @@ import {
 } from '@learnway/auth/entities';
 
 import { useRouter } from '@tanstack/react-router';
-import { Tenant } from '@learnway/auth/types';
 
 interface Props {
   className?: string;
 }
 
 /**
- * @description GNB 역할 변경 드롭다운
+ * @description GNB 테넌트 역할 변경 드롭다운
  * @param className
  * @returns
  */
@@ -31,21 +27,33 @@ const GnbRoleSelectComponent = ({ className }: Props) => {
 
   const { data: authUser } = useFetchAuthUser();
   const { asyncMenus } = useAsycFetchMenusForceRefatch();
-  const { updateMenu } = useUpdateUser();
+  const { updateMenu, updateActiveTenant } = useUpdateUser();
   const { update: updateTenantRole } = useUpdateTenantRoleLastSelect();
 
-  const [selectedOption, setSelectedOption] = useState<any | null>(null);
+  const [selectedTenant, setSelectedTenant] = useState<any | null>(null);
+  const [selectedRole, setSelectedRole] = useState<any | null>(null);
 
   useEffect(() => {
-    setSelectedOption(authUser?.activeRole);
+    setSelectedTenant(authUser?.activeTenant);
+    setSelectedRole(authUser?.activeRole);
   }, []);
 
   useEffect(() => {
     if (authUser?.activeTenant?.tenantId !== authUser?.activeRole?.tenantId) {
-      setSelectedOption(null);
+      setSelectedRole(null);
     }
   }, [authUser?.activeTenant, authUser?.activeRole]);
 
+  // 테넌트 목록
+  const tenantList = useMemo(() => {
+    return authUser?.tenants?.map?.((tenant) => ({
+      value: String(tenant.tenantId),
+      label: tenant.tenantName,
+      ...tenant,
+    }));
+  }, [authUser?.tenants]);
+
+  // 역할 목록
   const roleList = useMemo(() => {
     // 테넌트하위 역할 필터링
     return authUser?.roles
@@ -57,9 +65,11 @@ const GnbRoleSelectComponent = ({ className }: Props) => {
       ?.filter((role) => role.tenantId === authUser?.activeTenant?.tenantId);
   }, [authUser?.activeTenant?.tenantId, authUser?.roles]);
 
-  const handleChange = async (newValue: any | null) => {
-    setSelectedOption(newValue);
+  // 롤 변경
+  const handleRoleChange = async (newValue: any | null) => {
+    setSelectedRole(newValue);
 
+    if (!newValue) return;
     // 기존 선택값 체크
     if (newValue.roleId === authUser?.activeRole?.roleId) return;
 
@@ -73,7 +83,7 @@ const GnbRoleSelectComponent = ({ className }: Props) => {
     router.navigate({ to: '/' });
   };
 
-  const handleLoadOptions = async (searchText: string): Promise<any[]> => {
+  const handleRoleLoadOptions = async (searchText: string): Promise<any[]> => {
     const reg = new RegExp(searchText, 'i'); // 대소문자 구분 없이 검색하려면 'i' 옵션 추가
     const filteredList = roleList?.filter((role) => reg.test(role.roleName));
 
@@ -85,27 +95,66 @@ const GnbRoleSelectComponent = ({ className }: Props) => {
     return [];
   };
 
-  const AutoCompleteDropdownCallback = useCallback(() => {
-    return (
+  // 테넌트 변경
+  const handleTenantChange = async (newValue: any | null) => {
+    setSelectedTenant(newValue);
+
+    if (!newValue) return;
+
+    // 기존 선택값 체크
+    if (newValue.tenantId === authUser?.activeTenant?.tenantId) return;
+
+    updateActiveTenant(newValue);
+  };
+
+  const handleTenantLoadOptions = async (searchText: string): Promise<any[]> => {
+    const reg = new RegExp(searchText, 'i'); // 대소문자 구분 없이 검색하려면 'i' 옵션 추가
+    const filteredList = tenantList?.filter((tenant) => reg.test(tenant.tenantName));
+
+    if (filteredList) {
+      return filteredList;
+    } else if (tenantList) {
+      return tenantList;
+    }
+    return [];
+  };
+
+  return (
+    <>
       <AutoCompleteDropdown
+        cacheOptions={false}
         className={'min-w-[180px]'}
         variant="text"
         size="md"
         backgroundType={'blue'}
-        value={selectedOption?.roleName}
+        value={selectedTenant?.tenantName}
+        onChange={(value) => {
+          const option = tenantList?.find((tenant) => tenant.value === value);
+          handleTenantChange(option);
+        }}
+        loadOptions={handleTenantLoadOptions}
+        placeholder="테넌트를 선택해 주세요."
+        noOptionsMessage="검색 결과가 없습니다"
+        loadingMessage="검색 중..."
+      />
+      <AutoCompleteDropdown
+        defaultOptions={roleList}
+        className={'min-w-[180px]'}
+        variant="text"
+        size="md"
+        backgroundType={'blue'}
+        value={selectedRole?.roleName}
         onChange={(value) => {
           const option = roleList?.find((role) => role.value === value);
-          handleChange(option);
+          handleRoleChange(option);
         }}
-        loadOptions={handleLoadOptions}
+        loadOptions={handleRoleLoadOptions}
         placeholder="역할을 선택해 주세요. "
         noOptionsMessage="검색 결과가 없습니다"
         loadingMessage="검색 중..."
       />
-    );
-  }, [selectedOption, roleList]);
-
-  return <AutoCompleteDropdownCallback />;
+    </>
+  );
 };
 
 export const GnbRoleSelect = memo(GnbRoleSelectComponent);

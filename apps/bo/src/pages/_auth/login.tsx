@@ -189,14 +189,14 @@ function RouteComponent() {
     }
   };
 
-  const handleExpireCheck = (data: any) => {
+  const handleExpireCheck = async (data: any) => {
     // if (dayjs(authData?.passwordExpireDate).diff(dayjs()) < 0) {
     const diff = dateDiff(data!.passwordExpireDate, new Date(), 'd');
     console.log('### login date check', diff);
     if (diff !== undefined && 0 >= diff) {
       if (data?.authType === 'PLATFORM') {
         // 패스워드 사용자
-        openAlert({
+        await openAlert({
           title: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_USE.title'),
           content: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_USE.message'),
           onClose: () => {
@@ -206,7 +206,7 @@ function RouteComponent() {
         return false;
       } else {
         // 패스워드 미사용자
-        openAlert({
+        await openAlert({
           title: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_NOT_USE.title'),
           content: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_NOT_USE.message'),
           onClose: () => {
@@ -231,14 +231,15 @@ function RouteComponent() {
     //   return false;
     // }
 
-    // 테넌트/역할 선택 - 최초 로그인 사용자
+    // TODO 역할체크도 필요
+    //  테넌트/역할 선택 - 최초 로그인 사용자
     // if (!data?.lastVisitedBoRoleId || !data?.lastVisitedBoTenantId) {
     if (!data?.lastVisitedBoTenantId) {
       await openModal({
         content: <TenantRoleModal />,
         height: 'lg',
         width: 'sm',
-        // hideCloseButton: true,
+        hideCloseButton: true,
         closeOnOutsideClick: false,
         onClose: (data: any) => {
           return data;
@@ -255,7 +256,7 @@ function RouteComponent() {
         locale && (await setLanguage(locale));
 
         // 로그인 - 비밀번호 변경 3개월 체크
-        const checkExpire = handleExpireCheck(data);
+        const checkExpire = await handleExpireCheck(data);
         // 테넌트 선택 체크
         const checkTenant = await handleTenantCheck(data);
 
@@ -263,6 +264,8 @@ function RouteComponent() {
           router.navigate({ to: search.redirect || '/' });
           return;
         }
+
+        logout();
 
         // 임시 : 사용 가능한 API 목록 fetch
         // await usePermissionStore.getState().fetchPermissions();
