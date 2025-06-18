@@ -188,6 +188,7 @@ const formConfig: DynamicFormConfig = {
       name: '승인 결재 라인',
       type: 'custom',
       label: '승인 결재 라인',
+      format: 'string',
       value: '',
     },
     // 정원
@@ -195,6 +196,7 @@ const formConfig: DynamicFormConfig = {
       name: '정원',
       type: 'custom',
       label: '정원',
+      format: 'string',
       value: '',
     },
     // 수강신청 대기
@@ -202,6 +204,7 @@ const formConfig: DynamicFormConfig = {
       name: '수강신청 대기',
       type: 'custom',
       label: '수강신청 대기',
+      format: 'string',
       value: '',
     },
     // 차수 중복수강
@@ -209,6 +212,7 @@ const formConfig: DynamicFormConfig = {
       name: '차수 중복수강',
       type: 'custom',
       label: '차수 중복수강',
+      format: 'string',
       value: '',
     },
     // 사전 레벨테스트
@@ -216,6 +220,7 @@ const formConfig: DynamicFormConfig = {
       name: '사전 레벨테스트',
       type: 'custom',
       label: '사전 레벨테스트',
+      format: 'string',
       value: '',
     },
     // 교재 배송지 수집
@@ -223,33 +228,34 @@ const formConfig: DynamicFormConfig = {
       name: '교재 배송지 수집',
       type: 'custom',
       label: '교재 배송지 수집',
+      format: 'string',
       value: '',
     },
   ],
-  validator: {
-    '승인 결재 라인': {
-      format: 'string',
-      required: true,
-    },
-    정원: {
-      format: 'string',
-      required: true,
-    },
-    '수강신청 대기': {
-      format: 'string',
-      required: true,
-    },
-    '차수 중복수강': {
-      format: 'string',
-      required: true,
-    },
-    '사전 레벨테스트': {
-      format: 'string',
-      required: true,
-    },
-    '교재 배송지 수집': {
-      format: 'string',
-      required: true,
-    },
-  },
+  // validator: {
+  //   '승인 결재 라인': {
+  //     format: 'string',
+  //     required: true,
+  //   },
+  //   정원: {
+  //     format: 'string',
+  //     required: true,
+  //   },
+  //   '수강신청 대기': {
+  //     format: 'string',
+  //     required: true,
+  //   },
+  //   '차수 중복수강': {
+  //     format: 'string',
+  //     required: true,
+  //   },
+  //   '사전 레벨테스트': {
+  //     format: 'string',
+  //     required: true,
+  //   },
+  //   '교재 배송지 수집': {
+  //     format: 'string',
+  //     required: true,
+  //   },
+  // },
 };
