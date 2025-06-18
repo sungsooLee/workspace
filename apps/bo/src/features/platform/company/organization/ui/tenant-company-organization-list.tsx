@@ -11,6 +11,7 @@ import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 import { SearchBox } from '@shared/ui/search-box';
 
 import { queryOptions as companyQueryOptions } from '@entities/companies/service/companies.queries';
+import { EnGlobalConst } from '@types';
 
 const _global = {
   linkClick: (companyCode: string) => {
@@ -129,7 +130,8 @@ const columnHelper = createColumnHelper<any>();
 const columns = [
   columnHelper.accessor('companyType', {
     header: t('그룹'),
-    cell: (info) => t('pms.company.CompanyType.' + info.getValue()),
+    cell: (info) =>
+      t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.CompanyType.${info.getValue()}`),
     enableGrouping: false,
   }),
   columnHelper.accessor('isUseLinkageSystem', {

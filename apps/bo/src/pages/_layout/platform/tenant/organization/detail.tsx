@@ -15,7 +15,8 @@ import {
   EnOrganizationShowType,
   TenantCompanyOrganizationTree,
   TenantCompanyOrganizationCheck,
-} from '@features/tenant';
+} from '@features/platform/company';
+
 export const Route = createFileRoute('/_layout/platform/tenant/organization/detail')({
   component: RouteComponent,
 });

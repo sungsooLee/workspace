@@ -32,8 +32,8 @@ import {
   deleteNodeByNode,
   copyTreeNode,
   moveNodePosition,
-  findOrganizationPathById,
 } from '@features/tenant';
+import { findOrganizationPathById } from '@features/platform/company';
 
 /**
  * 화면번호: NLP_BO_TMS_1111_09 (회사조직조회 팝업(공통))
