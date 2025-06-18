@@ -4,14 +4,10 @@ import styles from './split-panel.module.css';
 import { Divider } from '../divider/divider';
 
 interface SplitPanelProps {
-  children: React.ReactNode[];
+  children: React.ReactNode | React.ReactNode[];
   /** 외부에서 추가할 CSS 클래스 이름 */
   className?: string;
-  /** 좌측 사이즈 */
-  leftSize?: number | string;
-  /** 우측 사이즈 */
-  rightSize?: number | string;
-  /** 사이즈 */
+  /** 각 영역의 사이즈 (ex: ['30%', '70%'] 또는 [300, 'auto']) */
   size?: Array<number | string>;
 }
 
@@ -21,59 +17,27 @@ interface SplitPanelProps {
  * @param className
  * @constructor
  */
-const SplitPanelComponent = ({
-  children,
-  size,
-  className,
-  leftSize,
-  rightSize,
-}: SplitPanelProps) => {
+const SplitPanelComponent = ({ children, size, className }: SplitPanelProps) => {
   const childrenArray = React.Children.toArray(children);
 
-  return childrenArray.map((child, index) => (
-    <div key={index} className={cn(styles.inner)} style={size ? { width: size[index] } : undefined}>
-      {child}
-      {index < childrenArray.length - 1 && <Divider orientation="vertical" />}
+  return (
+    <div className={cn(styles.container, className)}>
+      {childrenArray.map((child, index) => {
+        const width = size?.[index];
+        const style = width
+          ? { width: typeof width === 'number' ? `${width}px` : width }
+          : undefined;
+        const isLast = index === childrenArray.length - 1;
+
+        return (
+          <div key={index} className={cn(styles.panel)} style={style}>
+            {child}
+            {!isLast && <Divider orientation="vertical" />}
+          </div>
+        );
+      })}
     </div>
-  ));
-
-  // return (
-  //   <div className={cn(styles.root, styles.wrap)}>
-  //     <div className={cn(styles.container)}>
-  //       {/*left*/}
-  //       <div className={cn(styles.inner)}>
-  //         <div className={styles.inner_contents}>{left}</div>
-  //       </div>
-  //       {/*right*/}
-  //       <div className={cn(styles.inner)}>
-  //         {right}
-  //         {rest}
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
-};
-
-const getPanelStyle = (leftSize?: number | string, rightSize?: number | string) => {
-  const isRightSizeNumber = typeof rightSize === 'number';
-  // CSS Flexbox 스타일을 위한 객체 초기화
-  const leftPanelStyle: React.CSSProperties = {
-    width: isRightSizeNumber
-      ? `calc(100% - ${rightSize}px)`
-      : leftSize
-        ? `${leftSize}px`
-        : undefined,
-  };
-
-  const rightPanelStyle: React.CSSProperties = {
-    width: isRightSizeNumber
-      ? `${rightSize}px`
-      : rightSize
-        ? `calc(100% - ${leftSize}px)`
-        : undefined,
-  };
-
-  return { leftPanelStyle, rightPanelStyle };
+  );
 };
 
 export const SplitPanel = SplitPanelComponent;

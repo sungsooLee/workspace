@@ -42,3 +42,15 @@ div {
     }
   }
 }
+
+.container {
+  @apply flex;
+}
+
+.panel {
+  @apply flex items-center;
+}
+
+.panel[data-width] {
+  width: var(--panel-width);
+}
