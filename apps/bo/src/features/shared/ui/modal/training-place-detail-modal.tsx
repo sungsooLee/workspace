@@ -1,39 +1,38 @@
-import { useCallback, useEffect } from 'react';
 import { t } from 'i18next';
 import {
   Button,
   ModalBody,
   ModalContainer,
   ModalTitle,
-  GridBox,
   useModal,
-  useGridBox,
-  useGridBoxConfig,
-  Divider,
   ContentsRow,
   TextareaFormField,
   ModalFooter,
+  Input,
+  RadioGroupFormField,
 } from '@learnway/ui';
-import { FormRow, FormSubTitle } from '@shared/ui';
+import { FormRow, FormSubTitle, SwitchFormField } from '@shared/ui';
 import { FormDisplay } from '@features/form/ui/form-display';
 import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import {
   DuplicateCheckInputFormField,
   DuplicateState,
 } from '@features/tenant/management/ui/duplicate-check-input-form-field';
+import { AddressSearchModal } from './address-search-modal';
 
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import { DropdownFormField, InputFormField } from '@features/form';
 
 const URL_REGEX =
   /((https?:\/\/(www\.)?)|(www\.))[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)(?<![-.+():%])/;
 
-const TrainingPlaceAddModalComponent = () => {
-  const { close: closeModal, alert } = useModal();
+const TrainingPlaceDetailModalComponent = ({ mode }: { mode: string }) => {
+  const { open: openModal, close: closeModal, alert: openAlert } = useModal();
   const { provider, fetchData, onSubmit, getValues, onFormChange } = useDynamicForm(formConfig);
 
   const handleOnSubmit = (node: any) => {
-    alert({
-      title: 'API가 변경예정입니다.',
+    openAlert({
+      title: 'API가 준비중입니다.',
     });
   };
 
@@ -51,33 +50,72 @@ const TrainingPlaceAddModalComponent = () => {
     else return DuplicateState.ok;
   };
 
-  const isUsedFormField = <FormRow provider={provider} name={'isUsed'} />;
+  const isUsedFormField = (
+    <FormRow
+      provider={provider}
+      name={'isUsed'}
+      element={<SwitchFormField disabled={mode === 'view'} />}
+    />
+  );
+
+  const handleAddressSearchResult = (address: any) => {
+    console.log('address', address);
+    fetchData({ ...getValues(), addr: address.roadAddr });
+  };
+
+  const handleSearchAddress = async () => {
+    openModal({
+      width: 'sm',
+      content: <AddressSearchModal onSelect={handleAddressSearchResult} />,
+    });
+  };
 
   return (
     <form className="form_row" onSubmit={onSubmit(handleOnSubmit)}>
       <ModalContainer>
-        <ModalTitle>{t('교육공간 등록')}</ModalTitle>
+        <ModalTitle>{mode === 'view' ? t('교육공간 상세') : t('교육공간 등록')}</ModalTitle>
         <ModalBody>
           <div className={popupStyles.wrap}>
             <FormSubTitle label={'기본정보'} lineType="dark" />
             <ContentsRow>
-              <FormRow provider={provider} name={'tenantId'} />
-              <FormRow provider={provider} name={'educationPlaceType'} />
+              <FormRow
+                provider={provider}
+                name={'tenantId'}
+                element={<DropdownFormField disabled={mode === 'view'} />}
+              />
+              <FormRow
+                provider={provider}
+                name={'educationPlaceType'}
+                element={<RadioGroupFormField disabled={mode === 'view'} />}
+              />
             </ContentsRow>
             <ContentsRow>
               <FormRow
                 provider={provider}
                 name={'educationPlaceCode'}
-                element={<DuplicateCheckInputFormField onDuplicationCheck={duplicateCheck} />}
+                element={
+                  <DuplicateCheckInputFormField
+                    onDuplicationCheck={duplicateCheck}
+                    disabled={mode === 'view'}
+                  />
+                }
               />
-              <FormRow provider={provider} name={'educationPlaceName'} />
+              <FormRow
+                provider={provider}
+                name={'educationPlaceName'}
+                element={<InputFormField disabled={mode === 'view'} />}
+              />
             </ContentsRow>
             <FormDisplay
               provider={provider}
               dependencies={[{ name: 'educationPlaceType', value: 'ONLINE' }]}
             >
               <ContentsRow>
-                <FormRow provider={provider} name={'mapImageLinkContent'} />
+                <FormRow
+                  provider={provider}
+                  name={'mapImageLinkContent'}
+                  element={<InputFormField disabled={mode === 'view'} />}
+                />
                 {isUsedFormField}
               </ContentsRow>
             </FormDisplay>
@@ -86,7 +124,11 @@ const TrainingPlaceAddModalComponent = () => {
               dependencies={[{ name: 'educationPlaceType', value: 'OFFLINE' }]}
             >
               <ContentsRow>
-                <FormRow provider={provider} name={'addr'} />
+                <FormRow
+                  provider={provider}
+                  name={'addr'}
+                  element={<Input showSearchIcon onEnterKeyDown={handleSearchAddress} />}
+                />
                 <FormRow provider={provider} name={'addrDetail'} />
               </ContentsRow>
               <ContentsRow>
@@ -114,7 +156,7 @@ const TrainingPlaceAddModalComponent = () => {
   );
 };
 
-export const TrainingPlaceAddModal = TrainingPlaceAddModalComponent;
+export const TrainingPlaceDetailModal = TrainingPlaceDetailModalComponent;
 
 const formConfig: DynamicFormConfig = {
   builders: [
@@ -133,7 +175,7 @@ const formConfig: DynamicFormConfig = {
       name: 'educationPlaceType',
       type: 'radio-group',
       label: t('교육공간 타입'),
-      value: 'ONLINE',
+      value: 'OFFLINE',
       options: [
         { value: 'ONLINE', label: t('온라인') },
         { value: 'OFFLINE', label: t('오프라인') },
