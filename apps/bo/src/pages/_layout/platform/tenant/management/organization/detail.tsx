@@ -14,10 +14,10 @@ import { Tabs, Button } from '@learnway/ui';
 import {
   EnOrganizationShowType,
   TenantCompanyOrganizationTree,
-  TenantCompanyOrganizationCheck,
+  CompanyOrganizationCheck,
 } from '@features/platform/company';
 
-export const Route = createFileRoute('/_layout/platform/tenant/organization/detail')({
+export const Route = createFileRoute('/_layout/platform/tenant/management/organization/detail')({
   component: RouteComponent,
 });
 
@@ -41,7 +41,7 @@ function RouteComponent() {
     {
       title: t('회사조직 확인'),
       key: EnOrganizationShowType.check,
-      content: <TenantCompanyOrganizationCheck companyCode={companyCode} />,
+      content: <CompanyOrganizationCheck companyCode={companyCode} />,
     },
     {
       title: t('회사조직(원본)'),

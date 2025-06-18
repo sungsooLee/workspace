@@ -7,7 +7,7 @@ import { Tabs, Button } from '@learnway/ui';
 
 import { TenantManagmentList } from '@features/tenant/management/ui/tenant-managment-list';
 
-export const Route = createFileRoute('/_layout/platform/tenant/management/user-management/')({
+export const Route = createFileRoute('/_layout/platform/tenant/management/user/')({
   component: RouteComponent,
 });
 

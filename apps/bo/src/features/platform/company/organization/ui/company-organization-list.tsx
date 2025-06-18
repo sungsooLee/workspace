@@ -23,7 +23,7 @@ const _global = {
  * NLP_BO_TMS_1111_01 : 임시 회사 api 호출
  * @returns
  */
-const TenantCompanyOrganizationListComponent = ({ rootPath }: { rootPath: string }) => {
+const CompanyOrganizationListComponent = ({ rootPath }: { rootPath: string }) => {
   const router = useRouter();
   const routerState = useRouterState();
 
@@ -74,7 +74,7 @@ const TenantCompanyOrganizationListComponent = ({ rootPath }: { rootPath: string
   );
 };
 
-export const TenantCompanyOrganizationList = TenantCompanyOrganizationListComponent;
+export const TenantCompanyOrganizationList = CompanyOrganizationListComponent;
 
 const searchConfig: SearchBoxConfig = {
   builders: [

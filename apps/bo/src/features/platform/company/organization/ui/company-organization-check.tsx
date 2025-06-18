@@ -42,7 +42,7 @@ import { useGetCompanyHmgDepartmentTree } from '@entities/department/service/hmg
  * 화면번호: NLP_BO_TMS_1111_02 테넌트-회사조직 확인
  * @returns
  */
-const TenantCompanyOrganizationCheckComponent = ({ companyCode }: { companyCode: string }) => {
+const CompanyOrganizationCheckComponent = ({ companyCode }: { companyCode: string }) => {
   const router = useRouter();
 
   const [deptTreeData, setDeptTreeData] = useState([]);
@@ -94,4 +94,4 @@ const TenantCompanyOrganizationCheckComponent = ({ companyCode }: { companyCode:
   );
 };
 
-export const TenantCompanyOrganizationCheck = TenantCompanyOrganizationCheckComponent;
+export const CompanyOrganizationCheck = CompanyOrganizationCheckComponent;

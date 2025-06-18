@@ -12,11 +12,10 @@ import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 
 import { isEqual } from 'lodash';
 
+import { EnOrganizationShowType } from './company-organization-tree';
+
 import { transformDepartmentApiDataToTreeData } from '@features/platform/company/service/company-detail-tree';
 
-import { useGetCompanyDepartmentTree } from '@entities/department/service/department.hook';
-
-import { EnOrganizationShowType } from './tenant-company-organization-tree';
 import { queryOptions as departmentQuery } from '@entities/department/service/department.queries';
 import { queryOptions as hmgDepartmentQuery } from '@entities/department/service/hmg-department.queries';
 
@@ -24,14 +23,14 @@ import { queryOptions as hmgDepartmentQuery } from '@entities/department/service
  * 화면번호: NLP_BO_TMS_1111_03 테넌트-회사조직 대상자 (조직)
  * @returns
  */
-const TenantCompanyOrganizationInfoListComponent = ({
+const CompanyOrganizationInfoUserComponent = ({
   companyCode,
-  showType,
   deptId,
+  showType,
 }: {
   companyCode: string;
-  showType: string;
   deptId: number;
+  showType: string;
 }) => {
   const router = useRouter();
 
@@ -43,6 +42,7 @@ const TenantCompanyOrganizationInfoListComponent = ({
     onFormChange,
     onFormValid,
   } = useSearchBox(searchConfig);
+
   const getSearchParam = () => {
     const retval = { ...getValues(), companyCode: companyCode, parentDeptId: deptId };
 
@@ -71,14 +71,14 @@ const TenantCompanyOrganizationInfoListComponent = ({
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
       <div className={cn(boxStyles.start, boxStyles.inner)}>
         <div className="grid_wrap">
-          <GridBox config={gConfig} columns={columns} />
+          <GridBox config={gConfig} columns={columns} showNumberingColumn />
         </div>
       </div>
     </>
   );
 };
 
-export const TenantCompanyOrganizationInfoList = TenantCompanyOrganizationInfoListComponent;
+export const CompanyOrganizationUserList = CompanyOrganizationInfoUserComponent;
 
 const searchConfig: SearchBoxConfig = {
   builders: [
@@ -86,19 +86,19 @@ const searchConfig: SearchBoxConfig = {
       {
         name: 'hrInfoManageType',
         type: 'text',
-        label: t('조직등록유형'),
+        label: t('유저등록유형'),
         value: '',
       },
       {
         name: 'deptName',
         type: 'text',
-        label: t('조직명'),
+        label: t('소속'),
         value: '',
       },
       {
-        name: 'deptManagerName',
+        name: 'employeeNumber',
         type: 'text',
-        label: t('조직장이름'),
+        label: t('사번'),
         value: '',
       },
     ],
@@ -106,7 +106,7 @@ const searchConfig: SearchBoxConfig = {
 };
 
 const gridConfigOrg = {
-  query: hmgDepartmentQuery.child,
+  query: hmgDepartmentQuery.user,
   columns: [],
   data: [],
 
@@ -118,7 +118,7 @@ const gridConfigOrg = {
 };
 
 const gridConfigPlat = {
-  query: departmentQuery.child,
+  query: departmentQuery.user,
   columns: [],
   data: [],
 
@@ -131,35 +131,43 @@ const gridConfigPlat = {
 
 const columnHelper = createColumnHelper<any>();
 const columns = [
-  columnHelper.accessor('tenantName', {
-    id: 'tenantName',
+  columnHelper.accessor('hrInfoManageType', {
     cell: (info) => info.getValue(),
-    header: t('조직등록유형'),
-    size: 152,
+    header: t('유저등록유형'),
+    size: 100,
   }),
-  columnHelper.accessor('tenantSite', {
-    id: 'tenantSite',
+  columnHelper.accessor('companyName', {
     cell: (info) => info.getValue(),
-    header: t('조직코드'),
-    size: 240,
+    header: t('회사'),
+    size: 100,
   }),
 
-  columnHelper.accessor('companyTenantList', {
-    id: 'companyTenantList',
+  columnHelper.accessor('deptName', {
     cell: (info) => info.getValue(),
-    header: t('조직명'),
-    size: 200,
+    header: t('소속'),
+    size: 100,
   }),
-  columnHelper.accessor('tenantRoleList', {
-    id: 'tenantRoleList',
+  columnHelper.accessor('c1', {
     cell: (info) => info.getValue(),
-    header: t('조직사번'),
+    header: t('학습자 역할'),
     size: 120,
   }),
-  columnHelper.accessor('isUsed', {
-    id: 'isUsed',
+  columnHelper.accessor('employeeNumber', {
     cell: (info) => info.getValue(),
-    header: t('조직장 이름'),
+    header: t('사번'),
     size: 104,
+  }),
+  columnHelper.accessor('name', {
+    header: t('이름'),
+    size: 104,
+  }),
+  columnHelper.accessor('c2', {
+    cell: (info) => info.getValue(),
+    header: t('재직여부'),
+    size: 60,
+  }),
+  columnHelper.accessor('userState', {
+    header: '계정상태',
+    size: 60,
   }),
 ] as ColumnDef<any, unknown>[];

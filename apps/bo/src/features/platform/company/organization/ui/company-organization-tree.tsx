@@ -38,8 +38,8 @@ import { transformDepartmentApiDataToTreeData } from '@features/platform/company
 import { findOrganizationPathById } from '@features/platform/company';
 import { useGetCompanyDepartmentTree } from '@entities/department/service/department.hook';
 import { useGetCompanyHmgDepartmentTree } from '@entities/department/service/hmg-department.hook';
-import { TenantCompanyOrganizationInfoList } from './tenant-company-organization-info-list';
-import { TenantCompanyOrganizationUserList } from './tenant-company-organization-info-user';
+import { CompanyOrganizationInfoList } from './company-organization-info-list';
+import { CompanyOrganizationUserList } from './company-organization-info-user';
 
 import { EnFormMode } from '@types';
 export enum EnOrganizationShowType {
@@ -96,7 +96,7 @@ const TenantCompanyOrganizationTreeComponent = ({
 
   const renderTabOrganizationContent = () => {
     return (
-      <TenantCompanyOrganizationInfoList
+      <CompanyOrganizationInfoList
         companyCode={companyCode}
         showType={showType}
         deptId={selectedNode?.deptId}
@@ -106,7 +106,7 @@ const TenantCompanyOrganizationTreeComponent = ({
 
   const renderTabUserContent = () => {
     return (
-      <TenantCompanyOrganizationUserList
+      <CompanyOrganizationUserList
         companyCode={companyCode}
         deptId={selectedNode?.deptId}
         showType={showType}
