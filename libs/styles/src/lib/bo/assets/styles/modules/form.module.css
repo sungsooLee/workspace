@@ -188,6 +188,9 @@
   .info_text {
     @apply body_bo_4_r ml-[10px] flex-auto shrink-0 text-[var(--gray7)];
   }
+  [class*='nlp--list-modal-selector-form-field'] [class*='nlp--list'] {
+    @apply scrollbar h-[114px] overflow-y-auto overflow-x-hidden border-[var(--gray4)] px-[4px] py-[12px];
+  }
   &.type2 {
     @apply mt-0;
   }

@@ -3,12 +3,12 @@ import { addOrRemoveItemByKey, cn, getMatchingItemsByKey, reorderOptions } from 
 import styles from './list.module.css';
 import React, { isValidElement, ReactElement } from 'react';
 import { Button } from '../button/button';
+import { Checkbox } from '../checkbox/checkbox';
 import { closestCenter, DndContext, DragEndEvent } from '@dnd-kit/core';
 import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { IcoDelete03, IcoMenu01 } from '@learnway/icons';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import { CommonReactElementProps } from '../type';
-import { Checkbox } from '@radix-ui/react-checkbox';
 
 export interface ListProps extends CommonReactElementProps {
   /** 리스트 옵션 배열 */
@@ -173,6 +173,7 @@ interface SortableItemProps extends Partial<ListProps> {
   index: number;
   className?: string;
   isSelected?: boolean;
+  invalid?: boolean;
   onDelete?: (event: React.MouseEvent, item: any) => void;
   onClick?: (event: React.MouseEvent, item: any) => void;
 }
@@ -188,6 +189,7 @@ const SortableItem = ({
   valueField = '',
   labelField = '',
   isSelected,
+  invalid,
   onDelete,
   onClick,
 }: SortableItemProps) => {
@@ -202,6 +204,10 @@ const SortableItem = ({
     boxShadow: isDragging ? '0px 5px 10px rgba(0, 0, 0, 0.2)' : 'none', // 드래그 중 그림자 추가
   };
 
+  const textContent = isValidElement(itemRenderer?.(item, index))
+    ? itemRenderer(item, index)
+    : item[labelField];
+
   return (
     <li
       ref={setNodeRef}
@@ -209,12 +215,12 @@ const SortableItem = ({
       className={cn(
         styles.item,
         isSelected && styles.active, // selected row style
+        invalid && styles.invalid, // invalid style
       )}
       onClick={(event: React.MouseEvent) => onClick?.(event, item)}
     >
       <div className={cn(styles.inner, showItemBorder && styles.line)}>
-        {checkable && <Checkbox />}
-        {isValidElement(itemRenderer?.(item, index)) ? itemRenderer(item, index) : item[labelField]}
+        {checkable ? <Checkbox label={textContent} /> : textContent}
         {deletable && (
           <Button
             type="button"
