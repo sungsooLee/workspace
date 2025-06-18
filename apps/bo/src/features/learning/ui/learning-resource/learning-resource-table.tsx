@@ -38,7 +38,7 @@ function LearningResourceTableComponent() {
     builders: [
       [
         {
-          name: 'tenantUuid',
+          name: 'tenantId',
           type: 'dropdown',
           label: t('LABEL.form.label.tenant', '테넌트'),
           value: '',
@@ -146,7 +146,7 @@ function LearningResourceTableComponent() {
       ],
     ],
     validator: {
-      tenantUuid: true,
+      tenantId: true,
       channelUuid: true,
     },
   };
@@ -305,21 +305,21 @@ function LearningResourceTableComponent() {
   useEffect(() => {
     if (!user) return;
 
-    if (user.activeTenant) setValue('tenantUuid', user.activeTenant.tenantId ?? '');
+    if (user.activeTenant) setValue('tenantId', user.activeTenant.tenantId ?? '');
     setOptions(
-      'tenantUuid',
+      'tenantId',
       user.tenants.map((tenant) => ({ value: tenant.tenantId, label: tenant.tenantName })),
     );
   }, [user]);
 
   // tenant 정보로 channel 설정
-  const tenantUuid = useWatch({ control: searchProvider.control, name: 'tenantUuid' });
+  const tenantId = useWatch({ control: searchProvider.control, name: 'tenantId' });
   useEffect(() => {
-    if (!tenantUuid && tenantUuid !== 0) return;
+    if (!tenantId && tenantId !== 0) return;
 
     (async () => {
       const { content } = await queryClient.fetchQuery(
-        learningResourceQueryOptions.getChannelsByTenantId(tenantUuid),
+        learningResourceQueryOptions.getChannelsByTenantId(tenantId),
       );
       setValue('channelUuid', '');
       if (content)
@@ -328,7 +328,7 @@ function LearningResourceTableComponent() {
           content.map((_: any) => ({ value: _.channelUuid, label: _.channelName })),
         );
     })();
-  }, [tenantUuid]);
+  }, [tenantId]);
 
   function handleSearch(query: Record<string, any>) {
     setParams(query);
