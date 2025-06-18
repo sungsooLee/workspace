@@ -146,11 +146,11 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             element={
               <ListModalSelectorFormField
                 deletable
-                modalConfig={{ content: <TeacherListModal channelId={getValues()?.channelId} /> }}
-                options={[
-                  { value: 'tenant1', label: '테넌트1' },
-                  { value: 'tenant2', label: '테넌트2' },
-                ]}
+                modalConfig={{ content: <TeacherListModal /> }}
+                transformModalData={(data: any) => ({
+                  value: data.id,
+                  label: data.name,
+                })}
                 actionNode={<Button variant="text" size="sm" label={t('추가')} />}
               />
             }

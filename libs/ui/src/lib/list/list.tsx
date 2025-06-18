@@ -106,7 +106,6 @@ const ListComponent = function ({
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
-    console.log('event', event);
     // 만약 드래그 대상이 없거나 위치 변경이 없으면 아무 작업도 수행하지 않음
     if (!over || active.id === over.id) return;
 
@@ -196,6 +195,8 @@ const SortableItem = ({
   const { setNodeRef, transform, transition, listeners, attributes, isDragging } = useSortable({
     id: item[valueField],
   });
+
+  console.log('isDragging', { item, isDragging });
 
   const style = {
     transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,

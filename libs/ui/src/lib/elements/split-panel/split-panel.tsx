@@ -18,16 +18,16 @@ interface SplitPanelProps {
  * @constructor
  */
 const SplitPanelComponent = ({ children, size, className }: SplitPanelProps) => {
-  const childrenArray = React.Children.toArray(children);
+  const nodes = React.Children.toArray(children);
 
   return (
     <div className={cn(styles.container, className)}>
-      {childrenArray.map((child, index) => {
+      {nodes.map((child, index) => {
         const width = size?.[index];
         const style = width
           ? { width: typeof width === 'number' ? `${width}px` : width }
           : undefined;
-        const isLast = index === childrenArray.length - 1;
+        const isLast = index === nodes.length - 1;
 
         return (
           <div key={index} className={cn(styles.panel)} style={style}>
