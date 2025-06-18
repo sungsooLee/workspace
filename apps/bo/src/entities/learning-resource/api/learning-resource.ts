@@ -4,7 +4,6 @@ import { CMSApiPrefix, PMSApiPrefix } from '@learnway/config';
 
 export default class LearningResourceService {
   static fetchChannelsByTenantId(tenantId: string | number): Promise<any> {
-    console.log('🚀 ~ LearningResourceService ~ fetchChannelsByTenantId ~ tenantId:', tenantId);
     const params = { page: 0, size: 2000, tenantId };
     return httpService.get(`${PMSApiPrefix()}/channel`, params);
   }
@@ -17,9 +16,8 @@ export default class LearningResourceService {
     return httpService.get(`${CMSApiPrefix()}/contents`, params);
   }
 
-  static async fetchS3FileDownload(key: string, fileName: string): Promise<any> {
-    await fileDownload(`${PMSApiPrefix()}/file/s3/download`, { key, fileName });
-    return true;
+  static async fetchS3FileDownload(key: string, fileName: string): Promise<void> {
+    return fileDownload({ url: `${PMSApiPrefix()}/file/s3/download`, params: { key, fileName } });
   }
 
   static fetchLearningResources(params: any) {
@@ -84,6 +82,11 @@ export default class LearningResourceService {
   // HTML5 동영상 콘텐츠 관리
   static updateHTML5FileChange(params: { contentUuid: string; fileUuid: string }): Promise<any> {
     return httpService.put(`${CMSApiPrefix()}/html5/file/change`, params);
+  }
+
+  // HTML5 동영상 콘텐츠 리소스 조회
+  static fetchHTML5Resource(params: { contentUuid: string }) {
+    return httpService.put(`${CMSApiPrefix()}/html5/${params.contentUuid}/resource`, params);
   }
 
   static fetchProgramGuideDownload() {

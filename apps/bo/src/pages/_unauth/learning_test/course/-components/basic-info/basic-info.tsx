@@ -36,8 +36,11 @@ const BasicInfoComponent = forwardRef<HTMLDivElement, BasicInfoProps>(({ dynamic
 
   return (
     <div ref={ref}>
+      {/*기본 정보 설정*/}
+      <FormSubTitle label={t('기본 정보 설정')} lineType={'dark'} />
+      {/*유형, 채널*/}
       <ContentsRow>
-        {/*강의 유형*/}
+        {/*유형*/}
         <FormRow
           provider={provider}
           name={'유형'}
@@ -117,6 +120,7 @@ const BasicInfoComponent = forwardRef<HTMLDivElement, BasicInfoProps>(({ dynamic
           name={'카테고리'}
           element={
             <ListModalSelectorFormField
+              deletable
               modalConfig={{ content: <TeacherListModal channelId={getValues()?.channelId} /> }}
               options={[
                 { value: 'tenant1', label: '테넌트1' },

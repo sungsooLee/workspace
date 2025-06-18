@@ -118,29 +118,33 @@ const SearchBoxComponent: FC<SearchBoxProps> = ({ provider, onSearch }) => {
 
   const renderFormItem = (item: any) => (
     <div className={searchStyles.item} key={item.name}>
-      <label htmlFor={item.name} className={searchStyles.label}>
-        <span className={searchStyles.text}>{t(item.label)}</span>
-        {control.isFieldRequired(item.name) && (
-          <span className={cn(searchStyles.status, searchStyles.required)}>
-            <IcoFormRequired width={8} height={8} />
-          </span>
-        )}
-      </label>
-      <div className={searchStyles.box}>
-        <DynamicFormField
-          control={control}
-          name={item.name}
-          formState={formState}
-          {...item}
-          {...props}
-          component={renderSearchField(item)}
-          currentOptionsState={[
-            getOptions(item.name),
-            (options: SelectOption[]) => setOptions(item.name, options),
-          ]}
-        />
-      </div>
-      {getError(item)}
+      {item.type !== 'empty' && (
+        <>
+          <label htmlFor={item.name} className={searchStyles.label}>
+            <span className={searchStyles.text}>{t(item.label)}</span>
+            {control.isFieldRequired(item.name) && (
+              <span className={cn(searchStyles.status, searchStyles.required)}>
+                <IcoFormRequired width={8} height={8} />
+              </span>
+            )}
+          </label>
+          <div className={searchStyles.box}>
+            <DynamicFormField
+              control={control}
+              name={item.name}
+              formState={formState}
+              {...item}
+              {...props}
+              component={renderSearchField(item)}
+              currentOptionsState={[
+                getOptions(item.name),
+                (options: SelectOption[]) => setOptions(item.name, options),
+              ]}
+            />
+          </div>
+          {getError(item)}
+        </>
+      )}
     </div>
   );
 

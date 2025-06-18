@@ -173,6 +173,11 @@
         "email": "이메일 주소",
         "phoneNumber": "연락처",
         "modifiedDate": "수정일"
+      },
+      "tenantRole": {
+        "title": "테넌트&역할 선택",
+        "tenantTitle": "테넌트 선택",
+        "roleTitle": "역할 선택"
       }
     },
     "common": {

@@ -15,17 +15,18 @@ export const ErrorComponent = ({ error }: { error: any }) => {
         <div className={cn('flex h-screen flex-col items-center justify-center overflow-hidden')}>
           <div>
             <EmptyText
-              description={'Default Description'}
+              text={'페이지 오류가 발생 했습니다.'}
+              description={`${error}`}
               footer={
                 <>
-                  <Button
+                  {/* <Button
                     variant={'gray'}
                     size={'md'}
                     label={t('action 1')}
                     onClick={() => {
                       router.navigate({ to: '/' });
                     }}
-                  />
+                  /> */}
                   <Button
                     variant={'primary'}
                     size={'md'}
@@ -33,11 +34,12 @@ export const ErrorComponent = ({ error }: { error: any }) => {
                     onClick={() => {
                       router.navigate({ to: '/' });
                     }}
-                  />
+                  >
+                    홈
+                  </Button>
                 </>
               }
             />
-            <div>{`${error}`}</div>
           </div>
         </div>
       </div>

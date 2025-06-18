@@ -124,6 +124,24 @@ function HomeComponent() {
 // end: true, false
 export const munu = [
   {
+    screenName: '404',
+    pageId: '/404',
+    screenId: '-',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '404', // 비고
+    end: true,
+  },
+  {
+    screenName: '500',
+    pageId: '/500',
+    screenId: '-',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '500', // 비고
+    end: true,
+  },
+  {
     screenName: 'GNB/LNB',
     pageId: '/',
     screenId: 'NLP_BO_COM_1000',

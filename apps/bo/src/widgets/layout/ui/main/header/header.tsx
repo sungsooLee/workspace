@@ -21,7 +21,7 @@ function HeaderComponent() {
           <strong className={styles.title}>{t('LABEL.common.hrdCenter')}</strong>
         </h1>
         <div className={cn(styles.option_menu, 'option_menu')}>
-          <GnbTenantSelect />
+          {/* <GnbTenantSelect /> */}
           <GnbRoleSelect />
         </div>
         <div className={cn(styles.nav_area, 'nav_area')}>

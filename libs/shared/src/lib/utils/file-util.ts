@@ -18,13 +18,29 @@ export const getFileResponse = (response: any) => {
 
 type FileResponse = ReturnType<typeof getFileResponse>;
 
-export const fileDownload = async (url: string, params = {}, options = {}, payload = {}) => {
-  const response = await httpService.get<FileResponse>(
-    url,
-    params,
-    { ...options, responseType: 'blob' },
-    payload,
-  );
+interface fileDownloadParams {
+  url: string;
+  params?: any;
+  options?: object;
+  payload?: any;
+  method?: string;
+}
+export const fileDownload = async ({
+  url,
+  params,
+  options,
+  payload,
+  method,
+}: fileDownloadParams) => {
+  const response =
+    method === 'post'
+      ? await httpService.post<FileResponse>(url, params, { ...options, responseType: 'blob' })
+      : await httpService.get<FileResponse>(
+          url,
+          params,
+          { ...options, responseType: 'blob' },
+          payload,
+        );
   // Blob URL 생성
   const blobUrl = URL.createObjectURL(response.blob);
 

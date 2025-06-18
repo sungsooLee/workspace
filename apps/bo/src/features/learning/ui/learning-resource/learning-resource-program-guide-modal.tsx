@@ -20,7 +20,13 @@ function ProgramGuideModalComponent() {
         <Button
           className="link"
           label={t('다운로드')}
-          onClick={(e) => handleFileDownload(e, 'public/logo.png', 'download.png')} // 가이드 파일 하드코딩? 코드화?
+          onClick={(e) =>
+            handleFileDownload(
+              e,
+              'upload/template/sample/excel_read_sample_lang_code.xlsx',
+              'download.xlsx',
+            )
+          } // 가이드 파일 하드코딩? 코드화?
         />
       ),
     },
@@ -30,7 +36,13 @@ function ProgramGuideModalComponent() {
         <Button
           className="link"
           label={t('다운로드')}
-          onClick={(e) => handleFileDownload(e, 'public/logo.png', 'download.png')} // 가이드 파일 하드코딩? 코드화?
+          onClick={(e) =>
+            handleFileDownload(
+              e,
+              'upload/template/sample/excel_read_sample_lang_code.xlsx',
+              'download.xlsx',
+            )
+          } // 가이드 파일 하드코딩? 코드화?
         />
       ),
     },
@@ -40,7 +52,13 @@ function ProgramGuideModalComponent() {
         <Button
           className="link"
           label={t('다운로드')}
-          onClick={(e) => handleFileDownload(e, 'public/logo.png', 'download.png')} // 가이드 파일 하드코딩? 코드화?
+          onClick={(e) =>
+            handleFileDownload(
+              e,
+              'upload/template/sample/excel_read_sample_lang_code.xlsx',
+              'download.xlsx',
+            )
+          } // 가이드 파일 하드코딩? 코드화?
         />
       ),
     },
@@ -50,7 +68,13 @@ function ProgramGuideModalComponent() {
         <Button
           className="link"
           label={t('다운로드')}
-          onClick={(e) => handleFileDownload(e, 'public/logo.png', 'download.png')} // 가이드 파일 하드코딩? 코드화?
+          onClick={(e) =>
+            handleFileDownload(
+              e,
+              'upload/template/sample/excel_read_sample_lang_code.xlsx',
+              'download.xlsx',
+            )
+          } // 가이드 파일 하드코딩? 코드화?
         />
       ),
     },
@@ -60,7 +84,13 @@ function ProgramGuideModalComponent() {
         <Button
           className="link"
           label={t('다운로드')}
-          onClick={(e) => handleFileDownload(e, 'public/logo.png', 'download.png')} // 가이드 파일 하드코딩? 코드화?
+          onClick={(e) =>
+            handleFileDownload(
+              e,
+              'upload/template/sample/excel_read_sample_lang_code.xlsx',
+              'download.xlsx',
+            )
+          } // 가이드 파일 하드코딩? 코드화?
         />
       ),
     },
