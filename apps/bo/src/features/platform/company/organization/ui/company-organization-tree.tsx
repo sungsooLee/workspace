@@ -34,7 +34,7 @@ import { SearchBox } from '@shared/ui/search-box';
 
 import { isEqual } from 'lodash';
 
-import { transformDepartmentApiDataToTreeData } from '@features/platform/company/service/company-detail-tree';
+import { transformDepartmentApiDataToTreeData } from '@features/platform/company/organization/service/company-organization.service';
 import { findOrganizationPathById } from '@features/platform/company';
 import { useGetCompanyDepartmentTree } from '@entities/department/service/department.hook';
 import { useGetCompanyHmgDepartmentTree } from '@entities/department/service/hmg-department.hook';

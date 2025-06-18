@@ -26,7 +26,7 @@ import { IcoXclose, IcoRefresh02, IcoNarrowRight } from '@learnway/icons';
 
 import { ContentsHistoryInfoFormField, FormRow, FormSubTitle, SwitchFormField } from '@shared/ui';
 
-import { transformDepartmentApiDataToTreeData } from '@features/platform/company/service/company-detail-tree';
+import { transformDepartmentApiDataToTreeData } from '@features/platform/company/organization/service/company-organization.service';
 
 import { useGetCompanyDepartmentTree } from '@entities/department';
 import {

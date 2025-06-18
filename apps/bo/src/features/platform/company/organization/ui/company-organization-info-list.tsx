@@ -12,7 +12,7 @@ import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 
 import { isEqual } from 'lodash';
 
-import { transformDepartmentApiDataToTreeData } from '@features/platform/company/service/company-detail-tree';
+import { transformDepartmentApiDataToTreeData } from '@features/platform/company/organization/service/company-organization.service';
 
 import { useGetCompanyDepartmentTree } from '@entities/department/service/department.hook';
 

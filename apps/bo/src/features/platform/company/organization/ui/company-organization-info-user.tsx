@@ -14,7 +14,7 @@ import { isEqual } from 'lodash';
 
 import { EnOrganizationShowType } from './company-organization-tree';
 
-import { transformDepartmentApiDataToTreeData } from '@features/platform/company/service/company-detail-tree';
+import { transformDepartmentApiDataToTreeData } from '@features/platform/company/organization/service/company-organization.service';
 
 import { queryOptions as departmentQuery } from '@entities/department/service/department.queries';
 import { queryOptions as hmgDepartmentQuery } from '@entities/department/service/hmg-department.queries';

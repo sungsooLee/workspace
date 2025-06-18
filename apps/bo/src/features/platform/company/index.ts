@@ -4,7 +4,6 @@ export * from './organization/ui/company-organization-info-list';
 export * from './organization/ui/company-organization-info-user';
 export * from './organization/ui/company-organization-list';
 export * from './organization/ui/company-organization-tree';
-export * from './service/company-detail-tree';
 export * from './ui/company-detail-hr-organization';
 export * from './ui/company-detail-hr-usergroup';
 export * from './ui/company-detail-hr';

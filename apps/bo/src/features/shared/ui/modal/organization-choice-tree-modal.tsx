@@ -18,7 +18,7 @@ import {
   TreeBox,
 } from '@learnway/ui';
 
-import { transformDepartmentApiDataToTreeData } from '@features/platform/company/service/company-detail-tree';
+import { transformDepartmentApiDataToTreeData } from '@features/platform/company/organization/service/company-organization.service';
 
 import { useGetCompanyDepartmentTree } from '@entities/department';
 import {
