@@ -96,6 +96,7 @@ export const CODE_GROUP = {
   'pms.terms.TermsStatusCode': 'pms.terms.TermsStatusCode',
   'pms.terms.TermsTargetCode': 'pms.terms.TermsTargetCode',
   'pms.terms.TermsTypeCode': 'pms.terms.TermsTypeCode',
+  'pms.user.UserGroupType': 'pms.user.UserGroupType',
   'pms.user.UserState': 'pms.user.UserState',
   'vps.video.FfmpegTaskType': 'vps.video.FfmpegTaskType',
   'manual.code': 'manual.code',

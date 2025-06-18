@@ -17,11 +17,11 @@ const _global = {
 };
 
 /**
- * 화면번호 : NLP_BO_TMS_1111_07 테넌트-유저관리
+ * 화면번호 : NLP_BO_TMS_1111_15 테넌트-유저관리 (회원 가입 신청)
  * @param param0
  * @returns
  */
-const TenantUserListComponent: FC<any> = ({ rootPath }) => {
+const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
   const router = useRouter();
   const routerState = useRouterState();
   _global.linkClick = (tenantId: number, tenantName: string) => {
@@ -72,7 +72,7 @@ const TenantUserListComponent: FC<any> = ({ rootPath }) => {
   );
 };
 
-export const TenantUserList = TenantUserListComponent;
+export const TenantUserRegistApplicationList = TenantUserRegistApplicationListComponent;
 
 const searchConfig: SearchBoxConfig = {
   builders: [

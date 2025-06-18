@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { t } from 'i18next';
 
 import { PageContainer, MainContents, ContentsButtons } from '@widgets/layout';
 
 import { Tabs, Button } from '@learnway/ui';
 
-import { TenantUserList } from '@features/tenant';
+import { TenantUserList, TenantUserRegistApplicationList } from '@features/tenant';
 
 export const Route = createFileRoute('/_layout/platform/tenant/management/user/')({
   component: RouteComponent,
@@ -35,7 +36,7 @@ function RouteComponent() {
     {
       title: '회원가입 신청',
       key: 't2',
-      content: '',
+      content: <TenantUserRegistApplicationList />,
     },
   ];
 
@@ -43,12 +44,11 @@ function RouteComponent() {
     <PageContainer>
       <ContentsButtons>
         <Button
-          variant="point"
+          label={t('LABEL.button.regist')}
+          variant="primary"
           size="sm"
-          //onClick={() => router.navigate({ to: '/platform/tenant/management/regist' })}
-        >
-          등록
-        </Button>
+          onClick={() => router.navigate({ to: '/platform/tenant/management/user/user-regist' })}
+        />
       </ContentsButtons>
       <MainContents>
         <Tabs
