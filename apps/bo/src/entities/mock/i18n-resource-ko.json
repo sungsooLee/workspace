@@ -510,7 +510,8 @@
       "attachFile": "파일첨부",
       "searchZipNo": "우편번호찾기",
       "regist": "등록",
-      "viewMap": "약도보기"
+      "viewMap": "약도보기",
+      "previous": "이전"
     },
     "all": "전체",
     "confirm": {
