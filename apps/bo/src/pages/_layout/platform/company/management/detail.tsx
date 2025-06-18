@@ -6,8 +6,7 @@ import { ContentsButtons } from '@widgets/layout';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { CompanyDetail } from '@features/platform/company/ui/company-detail';
-import { CompanyDetailHR } from '@features/platform/company/ui/company-detail-hr';
+import { CompanyDetail, CompanyDetailHR } from '@features/platform/company';
 
 export const Route = createFileRoute('/_layout/platform/company/management/detail')({
   component: RouteComponent,

@@ -6,7 +6,7 @@ import { Button } from '@learnway/ui';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
-import { CompanyDetail } from '@features/platform/company/ui/company-detail';
+import { CompanyDetail } from '@features/platform/company';
 
 export const Route = createFileRoute('/_layout/platform/company/management/regist')({
   component: RouteComponent,

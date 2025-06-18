@@ -5,9 +5,11 @@ import { Tabs, Button } from '@learnway/ui';
 import { ContentsButtons } from '@widgets/layout';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { CompanyOrganizationDetailCompare } from '@features/platform/company/organization/ui/company-organization-detail-compare';
-import { CompanyOrganizationDetailMaster } from '@features/platform/company/organization/ui/company-organization-detail-master';
-import { CompanyOrganizationDetailPlatform } from '@features/platform/company/organization/ui/company-organization-detail-platform';
+import {
+  CompanyOrganizationDetailCompare,
+  CompanyOrganizationDetailMaster,
+  CompanyOrganizationDetailPlatform,
+} from '@features/platform/company';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
