@@ -50,7 +50,14 @@ export function MyPage() {
             fallback={<AvataFallback name={authUser?.name} />}
           />
           <span className={styles.logo_wrap}>
-            <img src={imgLogo} alt="" className={styles.logo_img} />
+            <Avatar
+              imageUrl={authUser?.activeTenant?.logoImageUrl}
+              // imageUrl="https://github.com/shadcn.png"
+              className={styles.info_avata}
+              fallback={
+                <img src={'https://github.com/shadcn.png'} alt="" className={styles.logo_img} />
+              }
+            />
           </span>
         </div>
         <div className={styles.name_wrap}>

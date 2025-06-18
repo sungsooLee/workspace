@@ -1,5 +1,5 @@
 import { t } from 'i18next';
-import { Button, ContentsRow } from '@learnway/ui';
+import { Button, ContentsRow, useModal } from '@learnway/ui';
 import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '@shared/ui';
 import { createFileRoute } from '@tanstack/react-router';
 import { ContentsButtons, MainContents, PageContainer } from '@widgets/layout';
@@ -203,17 +203,56 @@ function RouteComponent() {
     //
   };
 
+  const { confirm: openConfirm } = useModal();
+
+  const save = () => {
+    console.log('save');
+  };
+
+  const onSave = async () => {
+    const feedback = await openConfirm({
+      title: t('LABEL.confirm.save.title'),
+      content: t('LABEL.confirm.save.message'),
+    });
+    feedback && save();
+  };
+  const goList = async () => {
+    const feedback = await openConfirm({
+      title: t('LABEL.confirm.list.title'),
+      content: t('LABEL.confirm.list.message'),
+    });
+    feedback && save();
+  };
+  const onDelete = async () => {
+    const feedback = await openConfirm({
+      title: t('LABEL.confirm.delete.title'),
+      content: (
+        <p>{`모든 정보가 삭제되며 복구 불가합니다.\n삭제 후 학습자원 조회화면으로 이동합니다.`}</p>
+      ),
+    });
+    feedback && save();
+  };
+
   return (
     <form onSubmit={onSubmit(handleOnSubmit)}>
       <PageContainer>
         <ContentsButtons>
-          <Button type={'button'} variant="point" size="sm">
+          <Button variant="point" size="sm">
+            과정개설
+          </Button>
+          <Button variant="point" size="sm">
+            매핑과정
+          </Button>
+          <Button variant="point" size="sm">
+            공유이력
+          </Button>
+          <Button type={'button'} variant="point" size="sm" onClick={goList}>
             목록
           </Button>
-          <Button type={'button'} variant="point" size="sm">
+          <Button type={'button'} variant="point" size="sm" onClick={onDelete}>
             삭제
           </Button>
-          <Button type={'button'} variant="point" size="sm">
+          <Button type={'button'} variant="point" size="sm" onClick={onSave}>
             저장
           </Button>
         </ContentsButtons>

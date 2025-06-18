@@ -104,7 +104,28 @@ export function useGridTable<T extends object>(
     enablePinning: true,
     enableSorting: false,
     meta: { align: 'center', headerAlign: 'center', cellAlign: 'center' },
-    header: ' ',
+    header: ({ table }) => (
+      <div
+        onClick={(e) => {
+          e.stopPropagation();
+          table.toggleAllRowsExpanded();
+        }}
+        style={{
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          height: '100%',
+        }}
+      >
+        {table.getIsAllRowsExpanded() ? (
+          <IcoArrowUp width={16} height={16} stroke={'#6F798B'} />
+        ) : (
+          <IcoArrowDown width={16} height={16} stroke={'#6F798B'} />
+        )}
+      </div>
+    ),
     cell: ({ row }) => {
       return (
         <div>
@@ -146,12 +167,17 @@ export function useGridTable<T extends object>(
     meta: { cellAlign: 'center' },
     enableSorting: false,
     accessorFn: (row, index) => index,
-    cell: ({ row }: any) =>
-      pagination ? (
-        <p>{pagination.pageNumber * pagination.pageSize + row.index + 1}</p>
-      ) : (
-        <p>{row.index + 1}</p>
-      ),
+    cell: ({ row }: any) => {
+      if (row.depth === 0) {
+        return pagination ? (
+          <p>{pagination.pageNumber * pagination.pageSize + row.index + 1}</p>
+        ) : (
+          <p>{row.index + 1}</p>
+        );
+      }
+
+      return <span></span>;
+    },
   });
 
   // console.log('---- use-grid-table : pagination', pagination);

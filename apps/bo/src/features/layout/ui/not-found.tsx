@@ -7,8 +7,8 @@ import pageStyles from '@learnway/styles/bo/assets/styles/modules/page-container
 
 const NotFoundComponent = () => {
   return (
-    <div className={cn(pageStyles.start, pageStyles.contents)}>
-      <div className={pageStyles.inner}>
+    <div className={cn(pageStyles.start, pageStyles.contents, '!pb-0')}>
+      <div className={cn(pageStyles.inner, '!pb-0')}>
         <div className={cn(styles.start, 'not_found')}>
           <div className={styles.guide_wrap}>
             <div className={styles.empty_message}>

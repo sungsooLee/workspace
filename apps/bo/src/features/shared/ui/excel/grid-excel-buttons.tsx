@@ -39,7 +39,7 @@ const GridExcelButtonsComponent: React.FC<ExcelButtonsProps> = ({
   className,
 }) => {
   const { open: openModal, confirm } = useModal();
-  const { hasPersonalInfo } = usePersonalInfoCheck();
+  const { hasPersonalInfo, currentMenu } = usePersonalInfoCheck();
 
   // 업로드
   const handleUpload = async () => {
@@ -60,7 +60,7 @@ const GridExcelButtonsComponent: React.FC<ExcelButtonsProps> = ({
     const executeDownload = async () => {
       await fileDownload({
         url: downloadUrl,
-        params: downloadParams,
+        params: { ...downloadParams, menuId: currentMenu?.menuId },
         method: downloadMethod,
       });
     };

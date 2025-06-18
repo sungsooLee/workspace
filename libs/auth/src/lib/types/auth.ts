@@ -20,16 +20,17 @@ export interface AuthUser {
   credentialsNonExpired: boolean;
   // fe custom spec
   activeTenant?: Tenant;
+  activeRole?: Role;
   mainTenantId?: number;
   menus?: any;
   avataImage?: string;
   latestLoginDatetime?: Date;
   phoneNumberNationCode?: string;
 
-  lastBoTenentId?: number;
-  lastBoRoleId?: number;
-  lastFoTenentId?: number;
-  lastFoRoleId?: number;
+  lastVisitedBoRoleId: number | null;
+  lastVisitedBoTenantId: number | null;
+  lastVisitedFoRoleId: number | null;
+  lastVisitedFoTenantId: number | null;
 }
 
 export interface AuthSSOHealthcheck {

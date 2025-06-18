@@ -7,8 +7,11 @@ import type { PhoneNumberValue } from '@learnway/ui';
 
 import { mutateOptions, queryOptions } from './users.queries';
 
-import type { AuthUser, Tenant } from '../../../types';
-import { useUpdateAuthUser } from '../../authorization/service/authorization.hook';
+import type { AuthUser, Role, Tenant } from '../../../types';
+import {
+  useFetchAuthUser,
+  useUpdateAuthUser,
+} from '../../authorization/service/authorization.hook';
 
 interface phoneNumberPayload {
   name: string;
@@ -118,7 +121,47 @@ export function useUpdatePasswordExpireDate(mutationOptions = {}) {
   });
 
   return {
-    update: (payload: any, callback?: MutateCallback<any[]>) => {
+    update: (payload: any, callback?: MutateCallback<any>) => {
+      return mutateAsync(payload, callback);
+    },
+    isSuccess,
+    isError,
+  };
+}
+/**
+ * @description 테너트/역할 GNB 선택
+ * @param mutationOptions
+ * @returns
+ */
+export function useUpdateTenantRoleLastSelect(mutationOptions = {}) {
+  const { data: authUser } = useFetchAuthUser();
+  const { updateActiveTenant, updateActiveRole } = useUpdateUser();
+
+  const { mutateAsync, isSuccess, isError } = useMutation({
+    ...mutateOptions.updateTenantRoleLastSelect(),
+    onSuccess: async (data: any, variables, context) => {
+      if (variables.lastVisitedBoTenantId) {
+        const tenant = authUser?.tenants?.find(
+          (tenant) => tenant.tenantId === variables.lastVisitedBoTenantId,
+        );
+        const role = authUser?.roles?.find((role) => role.roleId === variables.lastVisitedBoRoleId);
+        tenant && updateActiveTenant(tenant);
+        role && updateActiveRole(role);
+      }
+    },
+    ...mutationOptions,
+  });
+
+  return {
+    update: (
+      payload: {
+        lastVisitedFoTenantId?: number;
+        lastVisitedFoRoleId?: number;
+        lastVisitedBoTenantId?: number;
+        lastVisitedBoRoleId?: number;
+      },
+      callback?: MutateCallback<any>,
+    ) => {
       return mutateAsync(payload, callback);
     },
     isSuccess,
@@ -138,6 +181,9 @@ export function useUpdateUser() {
     },
     updateActiveTenant: (tenant: Tenant): AuthUser | undefined => {
       return update({ activeTenant: tenant });
+    },
+    updateActiveRole: (role: Role): AuthUser | undefined => {
+      return update({ activeRole: role });
     },
     updateMainTenant: (tenantId: number): AuthUser | undefined => {
       return update({ mainTenantId: tenantId });
@@ -175,6 +221,10 @@ export function useDeleteUser(mutationOptions = {}) {
 
 export function useUserDetail() {
   return useQuery(queryOptions.detail());
+}
+
+export function useUserGnbRole() {
+  return useQuery(queryOptions.role());
 }
 
 export function useVerifyPassword(mutationOptions = {}) {
