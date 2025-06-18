@@ -11,6 +11,7 @@ import {
   TreeView,
   TreeNode,
   TreeEventPayload,
+  DndTreeView,
 } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import { IcoNarrowRight } from '@learnway/icons';
@@ -241,7 +242,7 @@ const TenantDetailLearningRoleMenuMappingModalComponent: FC<any> = ({
                   </div>
                 </div>
                 <div className={layoutStyles.inner_contents}>
-                  <TreeView
+                  <DndTreeView
                     treeId="mapping-menu-tree"
                     type={'DRAG_DROP'}
                     data={tenantMenuTree}
@@ -301,7 +302,7 @@ const TenantDetailLearningRoleMenuMappingModalComponent: FC<any> = ({
                   </div>
                 </div>
                 <div className={layoutStyles.inner_contents}>
-                  <TreeView
+                  <DndTreeView
                     treeId="mapping-tenant-menu-tree"
                     type={'SAME_LEVEL_ONLY'}
                     data={roleMenuTree}

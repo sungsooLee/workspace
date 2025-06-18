@@ -11,6 +11,7 @@ import {
   TreeView,
   TreeNode,
   TreeEventPayload,
+  DndTreeView,
 } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import { IcoNarrowRight } from '@learnway/icons';
@@ -299,7 +300,7 @@ const TenantDetailCategoryMappingModalComponent: FC<any> = ({ tenantId, onNodeCh
                   </div>
                 </div>
                 <div className={layoutStyles.inner_contents}>
-                  <TreeView
+                  <DndTreeView
                     treeId="mapping-common-tree"
                     type={'DRAG_DROP'}
                     data={commonCategoryTreeData}
@@ -359,7 +360,7 @@ const TenantDetailCategoryMappingModalComponent: FC<any> = ({ tenantId, onNodeCh
                   </div>
                 </div>
                 <div className={layoutStyles.inner_contents}>
-                  <TreeView
+                  <DndTreeView
                     treeId="mapping-tenant-tree"
                     type={'SAME_LEVEL_ONLY'}
                     data={tenantCategoryTreeData}

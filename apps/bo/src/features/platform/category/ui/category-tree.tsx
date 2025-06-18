@@ -5,6 +5,7 @@ import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inn
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import {
   Button,
+  DndTreeView,
   findNodeByKey,
   TreeContainer,
   TreeEventPayload,
@@ -125,7 +126,7 @@ const CategoryTreeComponent: FC<any> = ({
       </div>
       <div className={layoutStyles.inner_contents}>
         <TreeContainer>
-          <TreeView
+          <DndTreeView
             data={treeData}
             treeId={'1'}
             expandedKeys={expandedKeys} // 외부에서 제어되는 확장된 키

@@ -11,6 +11,7 @@ import {
   TreeView,
   TreeNode,
   TreeEventPayload,
+  DndTreeView,
 } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import { IcoNarrowRight } from '@learnway/icons';
@@ -243,7 +244,7 @@ const MenuChoiceTreeModalComponent = ({ menuScopeCode }: { menuScopeCode: 'FO' |
                   </div>
                 </div>
                 <div className={layoutStyles.inner_contents}>
-                  <TreeView
+                  <DndTreeView
                     treeId="menu-tree"
                     type={'SAME_LEVEL_ONLY'}
                     data={baseMenuTreeData}
@@ -300,7 +301,7 @@ const MenuChoiceTreeModalComponent = ({ menuScopeCode }: { menuScopeCode: 'FO' |
                   </div>
                 </div>
                 <div className={layoutStyles.inner_contents}>
-                  <TreeView
+                  <DndTreeView
                     treeId="selected-tree"
                     type={'SAME_LEVEL_ONLY'}
                     data={selectedTreeData}

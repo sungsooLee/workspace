@@ -1,7 +1,7 @@
 import { FC, useEffect, useState, useCallback } from 'react';
 import { useRouterState } from '@tanstack/react-router';
 import { TreeBox, TreeNode, Button } from '@learnway/ui';
-import { transformDepartmentApiDataToTreeData } from '@features/platform/company/organization/service/company-organization.service';
+import { transformDepartmentApiDataToTreeData } from './service/company-detail-tree';
 import { useGetCompanyDepartmentTree } from '@entities/department/service/department.hook';
 
 const CompanyOrganizationDetailTreeComponent = ({ title }: any) => {
@@ -28,15 +28,17 @@ const CompanyOrganizationDetailTreeComponent = ({ title }: any) => {
   }, [data]);
 
   return (
-    <TreeBox
-      data={deptTreeData}
-      type="DEFAULT"
-      treeId="1"
-      showSearchKeyword
-      title={title}
-      selectedNode={selectedDeptNode}
-      renderNodeButtons={renderNodeButtons}
-    />
+    <TreeContainer>
+      <TreeBox
+        data={deptTreeData}
+        type="DEFAULT"
+        treeId="1"
+        showSearchKeyword
+        title={title}
+        selectedNode={selectedDeptNode}
+        renderNodeButtons={renderNodeButtons}
+      />
+    </TreeContainer>
   );
 };
 

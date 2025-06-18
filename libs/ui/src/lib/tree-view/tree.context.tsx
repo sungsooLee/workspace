@@ -1,11 +1,31 @@
-import React, { createContext, useContext, useState, ReactNode, useEffect, useRef } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+  useRef,
+  useCallback,
+} from 'react';
 import { NodeMovePositionType, TreeNode } from './type';
+import {
+  DndContext,
+  DragOverlay,
+  DragStartEvent,
+  DragEndEvent,
+  DragOverEvent,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+  UniqueIdentifier,
+} from '@dnd-kit/core';
+import { snapCenterToCursor } from '@dnd-kit/modifiers';
 
 interface DragState {
   node: TreeNode | null;
   sourceTreeId: string | null;
   isDragging: boolean;
-  dragPosition: { x: number; y: number } | null;
   currentDropTarget?: {
     node: TreeNode;
     position?: NodeMovePositionType;
@@ -16,7 +36,6 @@ const defaultDragState: DragState = {
   node: null,
   sourceTreeId: null,
   isDragging: false,
-  dragPosition: null,
   currentDropTarget: null,
 };
 
@@ -24,7 +43,18 @@ interface TreeContextType {
   dragState: DragState;
   setDragState: (state: Partial<DragState>) => void;
   resetDragState: () => void;
-  updateDragPosition: (x: number, y: number) => void;
+  // DnD 관련 콜백들
+  onDragStart?: (event: DragStartEvent) => void;
+  onDragOver?: (event: DragOverEvent) => void;
+  onDragEnd?: (event: DragEndEvent) => void;
+  registerTreeCallbacks: (
+    treeId: string,
+    callbacks: {
+      onDragStart?: (event: DragStartEvent) => void;
+      onDragOver?: (event: DragOverEvent) => void;
+      onDragEnd?: (event: DragEndEvent) => void;
+    },
+  ) => void;
 }
 
 const TreeContext = createContext<TreeContextType>({
@@ -35,167 +65,109 @@ const TreeContext = createContext<TreeContextType>({
   resetDragState: () => {
     //
   },
-  updateDragPosition: () => {
+  registerTreeCallbacks: () => {
     //
   },
 });
 
-const useEnhancedMultiScroll = () => {
-  const scrollIntervalRef = useRef<NodeJS.Timeout | null>(null);
-  const activeScrollersRef = useRef<
-    Map<HTMLElement, { direction: 'up' | 'down'; intensity: number }>
-  >(new Map());
-
-  const findAllScrollableElements = (): HTMLElement[] => {
-    const scrollables: HTMLElement[] = [];
-
-    const treeElements = document.querySelectorAll('.tree_wrap');
-    treeElements.forEach((tree) => {
-      if (tree.scrollHeight > tree.clientHeight) {
-        scrollables.push(tree as HTMLElement);
-      }
-    });
-
-    if (document.documentElement.scrollHeight > window.innerHeight) {
-      scrollables.push(document.documentElement);
-    }
-
-    const allElements = document.querySelectorAll('*');
-    allElements.forEach((element) => {
-      const style = window.getComputedStyle(element);
-      const hasScroll =
-        (style.overflowY === 'auto' || style.overflowY === 'scroll') &&
-        element.scrollHeight > element.clientHeight;
-
-      if (hasScroll && !scrollables.includes(element as HTMLElement)) {
-        scrollables.push(element as HTMLElement);
-      }
-    });
-
-    return scrollables;
-  };
-
-  const startMultiAutoScroll = (mouseX: number, mouseY: number) => {
-    if (scrollIntervalRef.current) {
-      clearInterval(scrollIntervalRef.current);
-    }
-
-    const scrollables = findAllScrollableElements();
-    activeScrollersRef.current.clear();
-
-    scrollIntervalRef.current = setInterval(() => {
-      const scrollZone = 80;
-      const baseSpeed = 8;
-
-      scrollables.forEach((scroller) => {
-        let rect: DOMRect;
-        let scrollTop: number;
-        let maxScroll: number;
-
-        if (scroller === document.documentElement) {
-          rect = new DOMRect(0, 0, window.innerWidth, window.innerHeight);
-          scrollTop = window.pageYOffset;
-          maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-        } else {
-          rect = scroller.getBoundingClientRect();
-          scrollTop = scroller.scrollTop;
-          maxScroll = scroller.scrollHeight - scroller.clientHeight;
-        }
-
-        // 마우스가 스크롤러 영역 내에 있는지 확인
-        const isMouseInBounds =
-          mouseX >= rect.left &&
-          mouseX <= rect.right &&
-          mouseY >= rect.top &&
-          mouseY <= rect.bottom;
-
-        if (!isMouseInBounds) return;
-
-        const distanceFromTop = mouseY - rect.top;
-        const distanceFromBottom = rect.bottom - mouseY;
-
-        let scrollDirection: 'up' | 'down' | null = null;
-        let intensity = 1;
-
-        // 상단 스크롤 영역
-        if (distanceFromTop <= scrollZone && scrollTop > 0) {
-          scrollDirection = 'up';
-          intensity = Math.max(1, 3 - (distanceFromTop / scrollZone) * 2);
-        }
-        // 하단 스크롤 영역
-        else if (distanceFromBottom <= scrollZone && scrollTop < maxScroll) {
-          scrollDirection = 'down';
-          intensity = Math.max(1, 3 - (distanceFromBottom / scrollZone) * 2);
-        }
-
-        if (scrollDirection) {
-          const scrollAmount = baseSpeed * intensity;
-
-          if (scroller === document.documentElement) {
-            if (scrollDirection === 'up') {
-              window.scrollBy(0, -scrollAmount);
-            } else {
-              window.scrollBy(0, scrollAmount);
-            }
-          } else {
-            if (scrollDirection === 'up') {
-              scroller.scrollTop = Math.max(0, scroller.scrollTop - scrollAmount);
-            } else {
-              scroller.scrollTop = Math.min(maxScroll, scroller.scrollTop + scrollAmount);
-            }
-          }
-
-          activeScrollersRef.current.set(scroller, { direction: scrollDirection, intensity });
-        } else {
-          activeScrollersRef.current.delete(scroller);
-        }
-      });
-    }, 16);
-  };
-
-  const stopAutoScroll = () => {
-    if (scrollIntervalRef.current) {
-      clearInterval(scrollIntervalRef.current);
-      scrollIntervalRef.current = null;
-    }
-    activeScrollersRef.current.clear();
-  };
-
-  return { startMultiAutoScroll, stopAutoScroll, activeScrollersRef };
-};
-
 export const TreeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [dragState, setDragStateInternal] = useState<DragState>(defaultDragState);
-  const { startMultiAutoScroll, stopAutoScroll, activeScrollersRef } = useEnhancedMultiScroll();
+  const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
+  const treeCallbacksRef = useRef<Map<string, any>>(new Map());
 
-  const setDragState = (newState: Partial<DragState>) => {
+  const setDragState = useCallback((newState: Partial<DragState>) => {
     setDragStateInternal((prev) => ({ ...prev, ...newState }));
-  };
+  }, []);
 
-  const resetDragState = () => {
-    stopAutoScroll();
+  const resetDragState = useCallback(() => {
     setDragStateInternal({ ...defaultDragState });
+    setActiveId(null);
     document.body.classList.remove('dragging-active');
-  };
+  }, []);
 
-  const updateDragPosition = (x: number, y: number) => {
-    setDragStateInternal((prev) => ({
-      ...prev,
-      dragPosition: { x, y },
-    }));
+  const registerTreeCallbacks = useCallback((treeId: string, callbacks: any) => {
+    treeCallbacksRef.current.set(treeId, callbacks);
+  }, []);
 
-    if (dragState.isDragging) {
-      startMultiAutoScroll(x, y);
-    }
-  };
+  // DnD 센서 설정
+  const mouseSensor = useSensor(MouseSensor, {
+    activationConstraint: {
+      distance: 3,
+    },
+  });
+  const touchSensor = useSensor(TouchSensor, {
+    activationConstraint: {
+      delay: 150,
+      tolerance: 3,
+    },
+  });
+  const sensors = useSensors(mouseSensor, touchSensor);
+
+  // 통합된 드래그 이벤트 핸들러들
+  const handleDragStart = useCallback(
+    (event: DragStartEvent) => {
+      console.log('Global DragStart:', event);
+      setActiveId(event.active.id);
+
+      // 모든 트리의 onDragStart 콜백 호출
+      treeCallbacksRef.current.forEach((callbacks) => {
+        if (callbacks.onDragStart) {
+          callbacks.onDragStart(event);
+        }
+      });
+    },
+    [],
+  );
+
+  const handleDragOver = useCallback(
+    (event: DragOverEvent) => {
+      console.log('Global DragOver:', event);
+
+      // 전역에서 드롭 상태 업데이트
+      const { over } = event;
+      if (over) {
+        const dropData = over.data.current as any;
+        if (dropData && dropData.node && dropData.position) {
+          setDragState({
+            currentDropTarget: {
+              node: dropData.node,
+              position: dropData.position,
+            },
+          });
+        }
+      } else {
+        setDragState({
+          currentDropTarget: null,
+        });
+      }
+
+      // 모든 트리의 onDragOver 콜백 호출
+      treeCallbacksRef.current.forEach((callbacks) => {
+        if (callbacks.onDragOver) {
+          callbacks.onDragOver(event);
+        }
+      });
+    },
+    [setDragState],
+  );
+
+  const handleDragEnd = useCallback(
+    (event: DragEndEvent) => {
+      console.log('Global DragEnd:', event);
+
+      // 모든 트리의 onDragEnd 콜백 호출
+      treeCallbacksRef.current.forEach((callbacks) => {
+        if (callbacks.onDragEnd) {
+          callbacks.onDragEnd(event);
+        }
+      });
+
+      resetDragState();
+    },
+    [resetDragState],
+  );
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (dragState.isDragging) {
-        updateDragPosition(e.clientX, e.clientY);
-      }
-    };
-
     const handleMouseUp = (e: MouseEvent) => {
       if (dragState.isDragging) {
         resetDragState();
@@ -215,7 +187,6 @@ export const TreeProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     };
 
     if (dragState.isDragging) {
-      document.addEventListener('mousemove', handleMouseMove);
       document.addEventListener('mouseup', handleMouseUp);
       document.addEventListener('dragend', handleDragEnd);
       document.addEventListener('keydown', handleKeyDown);
@@ -223,7 +194,6 @@ export const TreeProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       document.body.classList.add('dragging-active');
 
       return () => {
-        document.removeEventListener('mousemove', handleMouseMove);
         document.removeEventListener('mouseup', handleMouseUp);
         document.removeEventListener('dragend', handleDragEnd);
         document.removeEventListener('keydown', handleKeyDown);
@@ -231,16 +201,52 @@ export const TreeProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         document.body.classList.remove('dragging-active');
       };
     }
-  }, [dragState.isDragging]);
+  }, [dragState.isDragging, resetDragState]);
 
   const contextValue: TreeContextType = {
     dragState,
     setDragState,
     resetDragState,
-    updateDragPosition,
+    registerTreeCallbacks,
   };
 
-  return <TreeContext.Provider value={contextValue}>{children}</TreeContext.Provider>;
+  return (
+    <TreeContext.Provider value={contextValue}>
+      <DndContext
+        sensors={sensors}
+        onDragStart={handleDragStart}
+        onDragOver={handleDragOver}
+        onDragEnd={handleDragEnd}
+        modifiers={[snapCenterToCursor]}
+      >
+        {children}
+        {/* 드래그 오버레이 */}
+        <DragOverlay>
+          {activeId && dragState.node ? (
+            <div
+              style={{
+                padding: '8px 12px',
+                backgroundColor: 'white',
+                border: '2px solid #2196f3',
+                borderRadius: '6px',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                fontSize: '14px',
+                fontWeight: '500',
+                color: '#333',
+                maxWidth: '200px',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                cursor: 'grabbing',
+              }}
+            >
+              {dragState.node.title}
+            </div>
+          ) : null}
+        </DragOverlay>
+      </DndContext>
+    </TreeContext.Provider>
+  );
 };
 
 export const useTreeContext = () => {

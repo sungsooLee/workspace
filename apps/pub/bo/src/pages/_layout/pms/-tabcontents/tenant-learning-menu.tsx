@@ -18,6 +18,8 @@ import {
   GridBox,
   TreeView,
   TreeNode,
+  DndTreeView,
+  TreeContainer,
 } from '@learnway/ui';
 import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
@@ -152,7 +154,9 @@ const TenantLearningMenuComponent: FC<{}> = ({}) => {
           </div>
         </div>
         <div className={layoutStyles.inner_contents}>
-          <TreeView treeId="source" data={sourceData} />
+          <TreeContainer>
+            <DndTreeView treeId="source" data={sourceData} />
+          </TreeContainer>
         </div>
       </div>
       <div className={cn(layoutStyles.inner, layoutStyles.type_progress)}>

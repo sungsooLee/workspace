@@ -12,6 +12,7 @@ import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inn
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 import subTitleStyles from '@learnway/styles/bo/assets/styles/modules/form-sub-title.module.css';
 import { CountText } from '../elements/count-text/count-text';
+import { DndTreeView } from './dnd-tree';
 
 const TreeBoxComponent = <T extends object>(
   {
@@ -163,29 +164,27 @@ const TreeBoxComponent = <T extends object>(
         </div>
       </div>
       <div className={layoutStyles.inner_contents}>
-        <TreeContainer>
-          <TreeView
-            data={data ?? []}
-            treeId={treeId}
-            searchKeyword={searchKeyword}
-            expandedKeys={expandedKeys}
-            onExpandedKeysChange={handleExpandedKeysChange}
-            nodeButtons={renderNodeButtons}
-            onAction={onAction}
-            type={type}
-            clientTree={clientTree}
-            onSelectedNodeChange={handleSelectedNodeChange}
-            selectedNode={selectedNode}
-            onCustomNodeClick={onCustomNodeClick}
-            shouldDisableClick={shouldDisableClick}
-            selectedItems={selectedItems}
-            sourceTreeId={sourceTreeId}
-            maxDepth={maxDepth}
-            isSelectableNode={isSelectableNode}
-            customDropValidator={customDropValidator}
-            // {...props}
-          />
-        </TreeContainer>
+        <DndTreeView
+          data={data ?? []}
+          treeId={treeId}
+          searchKeyword={searchKeyword}
+          expandedKeys={expandedKeys}
+          onExpandedKeysChange={handleExpandedKeysChange}
+          nodeButtons={renderNodeButtons}
+          onAction={onAction}
+          type={type}
+          clientTree={clientTree}
+          onSelectedNodeChange={handleSelectedNodeChange}
+          selectedNode={selectedNode}
+          onCustomNodeClick={onCustomNodeClick}
+          shouldDisableClick={shouldDisableClick}
+          selectedItems={selectedItems}
+          sourceTreeId={sourceTreeId}
+          maxDepth={maxDepth}
+          isSelectableNode={isSelectableNode}
+          customDropValidator={customDropValidator}
+          // {...props}
+        />
       </div>
     </div>
   );
