@@ -24,10 +24,17 @@ export function removeToken() {
 export function convertToAuthUser(data: AxiosResponse): AuthUser {
   console.log('convertToAuthUser', data);
   const user = data.data;
-  const { tenants } = user;
+  const { tenants, roles } = user;
+
+  const tenant = tenants?.find(
+    (tenant: { tenantId: any }) => tenant.tenantId === user.lastVisitedBoTenantId,
+  );
+  const role = roles?.find((role: { roleId: any }) => role.roleId === user.lastVisitedBoRoleId);
+
   return {
     ...user,
-    activeTenant: user.tenants?.length > 0 ? tenants?.[0] : null,
+    activeTenant: tenant ? tenant : user.tenants?.length > 0 ? tenants?.[0] : null,
+    activeRole: role ? role : roles?.roles?.length > 0 ? roles?.roles?.[0] : null,
     phoneNumberNationCode: user?.phoneNumberNationCode ?? 'KR',
     accessToken: data.headers['access-token'],
     refreshToken: data.headers['refresh-token'],
