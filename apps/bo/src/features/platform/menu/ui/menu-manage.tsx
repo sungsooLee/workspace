@@ -11,6 +11,7 @@ import {
   Input,
   Textarea,
   TreeBox,
+  TreeContainer,
   TreeEventPayload,
   TreeNode,
   useModal,
@@ -425,23 +426,25 @@ export const MenuManage = ({ menuScope }: any) => {
 
   return (
     <>
-      <TreeBox
-        title={t('LABEL.menu.list')}
-        data={treeData}
-        treeId={'menu-tree'}
-        expandedKeys={expandedKeys}
-        onExpandedKeysChange={handleExpandChange}
-        renderNodeButtons={renderNodeButtons}
-        onAction={handleTreeAction}
-        type={'DRAG_DROP'}
-        selectedNode={selectedNode}
-        initLevel={1}
-        handleSelectedNodeChange={handleSelectedNodeChange}
-        maxDepth={5}
-        isSelectableNode={(node: TreeNode) => {
-          return node && node.level !== 0;
-        }}
-      />
+      <TreeContainer>
+        <TreeBox
+          title={t('LABEL.menu.list')}
+          data={treeData}
+          treeId={'menu-tree'}
+          expandedKeys={expandedKeys}
+          onExpandedKeysChange={handleExpandChange}
+          renderNodeButtons={renderNodeButtons}
+          onAction={handleTreeAction}
+          type={'DRAG_DROP'}
+          selectedNode={selectedNode}
+          initLevel={1}
+          handleSelectedNodeChange={handleSelectedNodeChange}
+          maxDepth={5}
+          isSelectableNode={(node: TreeNode) => {
+            return node && node.level !== 0;
+          }}
+        />
+      </TreeContainer>
       <div className={layoutStyles.inner}>
         <form onSubmit={onSubmit(handleOnSubmit)}>
           <div className={titleStyles.title_wrap}>
