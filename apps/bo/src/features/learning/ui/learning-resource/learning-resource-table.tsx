@@ -152,12 +152,7 @@ function LearningResourceTableComponent() {
   };
 
   const gridConfig: useGridBoxConfig = {
-    query: (data: any) => {
-      return learningResourceQueryOptions.getContents({
-        ...data,
-        isMockUp: true,
-      });
-    },
+    query: learningResourceQueryOptions.getContents,
     columns: [
       {
         size: 79,
@@ -330,9 +325,11 @@ function LearningResourceTableComponent() {
     })();
   }, [tenantId]);
 
-  function handleSearch(query: Record<string, any>) {
-    setParams(query);
-    gridFetch(query);
+  function handleSearch(rawQuery: Record<string, any>) {
+    const processedQuery = { ...rawQuery, isMockUp: true };
+
+    setParams(processedQuery);
+    gridFetch(processedQuery);
   }
 
   function handleShare() {
