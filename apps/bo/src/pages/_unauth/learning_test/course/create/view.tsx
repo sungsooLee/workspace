@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Button, Tabs } from '@learnway/ui';
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
@@ -7,6 +7,7 @@ import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { BasicInfo } from '../-components/basic-info/basic-info';
 import { formConfig as formConfigBasic } from '../-components/basic-info/form-config';
+import { formConfig as formConfigCourse } from '../-components/course-registration/form-config';
 import { CourseRegistration } from '../-components/course-registration/course-registration';
 
 export const Route = createFileRoute('/_unauth/learning_test/course/create/view')({
@@ -14,17 +15,17 @@ export const Route = createFileRoute('/_unauth/learning_test/course/create/view'
 });
 
 function RouteComponent() {
-  // const [formConfig, setFormConfig] = useState<DynamicFormConfig>(formConfigBasic);
+  const [formConfig, setFormConfig] = useState<DynamicFormConfig>(formConfigBasic);
   const dynamicForm = useDynamicForm(formConfig);
   const { provider, onSubmit, control, getValues, fetchData } = dynamicForm; //useDynamicForm(formConfig);
 
+  console.log({ dynamicForm });
   const handleListClick = () => {
     console.log('handleExportCourse');
   };
 
   const handleDeleteClick = () => {
     console.log('handleImportCourse');
-    console.log('getValues', getValues());
   };
 
   const handleOnSubmit = (data: any) => {
@@ -35,7 +36,7 @@ function RouteComponent() {
     console.log('activeKey', activeKey);
     // 기본정보
     if (activeKey === 'a') {
-      // setFormConfig(formConfigBasic);
+      setFormConfig(formConfigBasic);
     }
     // 수강신청 설정
     else if (activeKey === 'b') {
@@ -111,6 +112,6 @@ function RouteComponent() {
 const formConfig: DynamicFormConfig = {
   builders: [
     ...formConfigBasic.builders, // 기본정보
-    // ...formConfigCourse.builders, // 수강신청 설정
+    ...formConfigCourse.builders, // 수강신청 설정
   ],
 };
