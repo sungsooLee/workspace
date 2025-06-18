@@ -32,6 +32,7 @@ import {
   deleteNodeByNode,
   copyTreeNode,
   moveNodePosition,
+  findOrganizationPathById,
 } from '@features/tenant';
 
 /**
@@ -81,7 +82,10 @@ const OrganizationChoiceTreeModalComponent = ({ companyCodes }: { companyCodes: 
                       return (
                         <Button
                           onClick={(e) => {
-                            closeModal(node);
+                            closeModal({
+                              ...node,
+                              label: findOrganizationPathById(organizationTree, node.key),
+                            });
                           }}
                           stopPropagation
                           variant="gray2"

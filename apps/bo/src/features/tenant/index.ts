@@ -31,6 +31,7 @@ export * from './management/ui/tenant-detail-widget-mapping-modal';
 export * from './management/ui/tenant-detail-widget';
 export * from './management/ui/tenant-managment-list';
 export * from './management/user-group/ui/tenant-user-group-handmade-list';
+export * from './organization/service/tenant-company-organization.service';
 export * from './organization/ui/tenant-company-organization-check';
 export * from './organization/ui/tenant-company-organization-info-list';
 export * from './organization/ui/tenant-company-organization-info-user';

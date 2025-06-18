@@ -6,6 +6,7 @@ import { t } from 'i18next';
 import { IcoRefresh02 } from '@learnway/icons';
 import {
   Button,
+  Divider,
   ModalBody,
   ModalContainer,
   ModalFooter,
@@ -59,6 +60,7 @@ const CompanyShuttleComponent = () => {
       <ModalTitle>{t('회사 조회')}</ModalTitle>
       <ModalBody>
         <SearchBox provider={sProvider} onSearch={handleOnSearch} />
+        <Divider />
         <ShuttleGridToGrid
           ref={ref}
           onSelectedChange={(data: any) => {
@@ -112,20 +114,10 @@ const searchConfig: SearchBoxConfig = {
         },
       },
       {
-        name: 'companyCode',
-        type: 'dropdown',
+        name: 'name',
+        type: 'text',
         label: t('회사'),
         value: '',
-        optionsConfig: {
-          codeGroup: CODE_GROUP['manual.company.companyCode'],
-        },
-        dropdownConfig: {
-          onchange: () => {
-            return '';
-          },
-          isSearchable: true,
-          placeholder: '입력 또는 선택',
-        },
       },
     ],
   ],

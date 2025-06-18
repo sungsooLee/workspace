@@ -17,6 +17,7 @@ import {
   useModal,
   useGridBox,
   useGridBoxConfig,
+  Divider,
 } from '@learnway/ui';
 
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
@@ -63,6 +64,7 @@ const CompanyModalComponent = forwardRef((props, ref) => {
       <ModalBody>
         <div className={popupStyles.wrap}>
           <SearchBox provider={sProvider} onSearch={handleOnSearch} />
+          <Divider />
           <div className={popupStyles.container}>
             <GridBox
               onRowSelect={handleRowSelect}
@@ -101,20 +103,10 @@ const searchConfig: SearchBoxConfig = {
         },
       },
       {
-        name: 'companyCode',
-        type: 'dropdown',
+        name: 'name',
+        type: 'text',
         label: t('회사'),
         value: '',
-        optionsConfig: {
-          codeGroup: CODE_GROUP['manual.company.companyCode'],
-        },
-        dropdownConfig: {
-          onchange: () => {
-            return '';
-          },
-          isSearchable: true,
-          placeholder: '입력 또는 선택',
-        },
       },
     ],
   ],

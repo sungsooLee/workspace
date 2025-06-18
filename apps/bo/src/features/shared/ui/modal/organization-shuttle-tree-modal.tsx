@@ -39,7 +39,7 @@ import {
   genMap,
   deleteNodeByNode,
   copyTreeNode,
-  moveNodePosition,
+  findOrganizationPathById,
 } from '@features/tenant';
 
 /**
@@ -47,31 +47,69 @@ import {
  * @param param0
  * @returns
  */
-const OrganizationShuttleTreeModalComponent = ({ companyCodes }: { companyCodes: string[] }) => {
-  const [organizationTree, setCommonCategoryTree] = useState<any>([]);
-
-  const [internalSelectedItems, setInternalSelectedItems] = useState([]);
+const OrganizationShuttleTreeModalComponent = ({
+  companyCodes,
+  originList,
+}: {
+  companyCodes: string[];
+  originList: any[];
+}) => {
+  const [organizationTree, setOrganizationTree] = useState<any>([]);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [selectedChips, setSelectedChips] = useState<any[]>([]);
 
   const { open: openModal, close: closeModal, confirm: openConfirm, alert: openAlert } = useModal();
 
   const { data: organizationData } = useGetCompanyDepartmentTree(companyCodes);
 
-  const actualSelectedItems = internalSelectedItems;
+  const handlerApppendNodeClick = (node: any) => {
+    if (!selectedItems?.includes(node.key)) {
+      setSelectedItems([...selectedItems, node.key]);
+    }
+  };
+  const handleRemveAll = () => {
+    setSelectedChips([]);
+    setSelectedItems([]);
+  };
 
+  const handleRemoveItem = (node: any) => {
+    setSelectedItems(selectedItems.filter((item) => item !== node.key));
+  };
   useEffect(() => {
     if (organizationData) {
       const transformedData = transformDepartmentApiDataToTreeData(organizationData);
-      setCommonCategoryTree(transformedData);
+      setOrganizationTree(transformedData);
       if (transformedData && transformedData.length > 0) {
-        const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
-
-        const allKeys = getAllTreeKeys(transformedData);
-
         const root = { ...transformedData[0] };
         root.children = [];
       }
     }
   }, [organizationData]);
+
+  useEffect(() => {
+    console.log(organizationTree, originList);
+    if (organizationTree && organizationTree.length > 0 && originList && originList.length > 0) {
+      const selectedKeys = originList.map((item) => {
+        return item.deptId.toString();
+      });
+      console.log(selectedKeys);
+      setSelectedItems(selectedKeys);
+    }
+  }, [originList, organizationTree]);
+
+  useEffect(() => {
+    if (organizationTree && selectedItems) {
+      const treeMap = genMap(organizationTree);
+      const chips = [];
+      for (const i of selectedItems) {
+        const node = treeMap.get(i);
+        if (node) {
+          chips.push({ ...node, label: findOrganizationPathById(organizationTree, i) });
+        }
+      }
+      setSelectedChips(chips);
+    }
+  }, [selectedItems]);
 
   return (
     <ModalContainer>
@@ -86,6 +124,8 @@ const OrganizationShuttleTreeModalComponent = ({ companyCodes }: { companyCodes:
                 data={organizationTree}
                 title={t('조직-플랫폼')}
                 initLevel={2}
+                selectedNode={null}
+                selectedItems={selectedItems}
                 renderNodeButtons={(node: any, index: number) => {
                   if (node.key !== 'root' && node.parentKey !== 'root')
                     return (
@@ -95,6 +135,10 @@ const OrganizationShuttleTreeModalComponent = ({ companyCodes }: { companyCodes:
                         size="ts"
                         type="button"
                         label={t('LABEL.button.select')}
+                        onClick={() => {
+                          handlerApppendNodeClick(node);
+                        }}
+                        disabled={selectedItems.includes(node.key)}
                       />
                     );
                 }}
@@ -117,7 +161,14 @@ const OrganizationShuttleTreeModalComponent = ({ companyCodes }: { companyCodes:
                 </>
               }
               actionNode={
-                <Button label={t('전체삭제')} variant="text" size="sm" className="btn_text" />
+                <Button
+                  label={t('전체삭제')}
+                  variant="text"
+                  size="sm"
+                  className="btn_text"
+                  preventDefault
+                  onClick={handleRemveAll}
+                />
               }
               lineType="dark"
             />
@@ -125,14 +176,8 @@ const OrganizationShuttleTreeModalComponent = ({ companyCodes }: { companyCodes:
               <div className={layoutStyles.inner_contents}>
                 <ChipsForTreeShuttle
                   title={t('선택목록')}
-                  selectedItems={[
-                    { label: 'A > B > c' },
-                    { label: 'A > B > c' },
-                    { label: 'A > B > c' },
-                  ]}
-                  handleRemoveItem={(node: any) => {
-                    console.log(node);
-                  }}
+                  selectedItems={selectedChips}
+                  handleRemoveItem={handleRemoveItem}
                 />
               </div>
             </div>
@@ -147,7 +192,12 @@ const OrganizationShuttleTreeModalComponent = ({ companyCodes }: { companyCodes:
           icon={<IcoRefresh02 width={16} height={16} className="icon_refresh" />}
         />
         <Button label={t('취소')} variant="gray" size="lg" onClick={() => closeModal()} />
-        <Button label={t('적용')} variant="primary" size="lg" onClick={() => closeModal()} />
+        <Button
+          label={t('적용')}
+          variant="primary"
+          size="lg"
+          onClick={() => closeModal(selectedChips)}
+        />
       </ModalFooter>
     </ModalContainer>
   );

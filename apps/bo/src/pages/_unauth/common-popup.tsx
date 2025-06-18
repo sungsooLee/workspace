@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { t } from 'i18next';
 import { createFileRoute } from '@tanstack/react-router';
 import {
@@ -43,6 +44,7 @@ export const Route = createFileRoute('/_unauth/common-popup')({
 function RouteComponent() {
   const { open } = useModal();
   const { open: openModal } = useModal();
+  const [organizations, setOrganizations] = useState<any>([]);
   const { provider, onSubmit, control, getValues, fetchData } = useDynamicForm(formConfig);
 
   const handleLabelUpdate = async () => {
@@ -450,12 +452,19 @@ function RouteComponent() {
                 size={'xs'}
                 className="btn_table flex-1"
                 variant={'gray2'}
-                onClick={(e) => {
+                onClick={async (e) => {
                   e.stopPropagation();
-                  openModal({
+                  const retval = await openModal({
                     width: 'xl',
-                    content: <OrganizationShuttleTreeModal companyCodes={['H199', 'H103']} />,
+                    content: (
+                      <OrganizationShuttleTreeModal
+                        companyCodes={['H199', 'H103']}
+                        originList={organizations}
+                      />
+                    ),
                   });
+                  console.log(retval);
+                  setOrganizations(retval);
                 }}
               >
                 {'회사조직조회 셔틀팝업'}
