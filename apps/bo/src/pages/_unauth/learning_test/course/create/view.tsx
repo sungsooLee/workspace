@@ -19,7 +19,7 @@ function RouteComponent() {
   const dynamicForm = useDynamicForm(formConfig);
   const { provider, onSubmit, control, getValues, fetchData } = dynamicForm; //useDynamicForm(formConfig);
 
-  console.log({ dynamicForm });
+  console.log('view.tsx', { dynamicForm });
   const handleListClick = () => {
     console.log('handleExportCourse');
   };
@@ -40,7 +40,7 @@ function RouteComponent() {
     }
     // 수강신청 설정
     else if (activeKey === 'b') {
-      // setFormConfig(formConfigCourse);
+      setFormConfig(formConfigCourse);
     }
   };
 

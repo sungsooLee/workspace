@@ -10,18 +10,20 @@ import {
   TextareaFormField,
 } from '@learnway/ui';
 import React, { forwardRef, useEffect } from 'react';
-import { UseDynamicFormResult } from '@learnway/hooks';
+import { useDynamicForm } from '@learnway/hooks';
 import { useTranslation } from 'react-i18next';
 import { FormRow, FormSubTitle } from '@shared/ui';
 import { ChannelListModal, TeacherListModal } from '@features/learning/course';
 import { DropdownFormField } from '@features/form';
 
 interface BasicInfoProps {
-  dynamicForm: UseDynamicFormResult;
+  dummy?: any;
 }
 
-const BasicInfoComponent = forwardRef<HTMLDivElement, BasicInfoProps>(({ dynamicForm }, ref) => {
+const BasicInfoComponent = forwardRef<HTMLDivElement, BasicInfoProps>(({ dummy }, ref) => {
   const { t } = useTranslation();
+
+  const dynamicForm = useDynamicForm(formConfig);
   const { provider, getValues, fetchData } = dynamicForm;
   // const { provider, getValues, onSubmit } = useDynamicForm(formConfig);
 
