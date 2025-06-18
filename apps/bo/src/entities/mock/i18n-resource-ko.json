@@ -279,7 +279,6 @@
       "learnerMenu": "학습자 메뉴",
       "hrdCenterMenu": "HRD센터 메뉴",
       "categoryInfo": "카테고리 정보",
-      "trainingPlaceInfo": "교육장소 정보",
       "tree": "트리",
       "favorites": "즐겨찾기",
       "recentMenu": "최근 본 메뉴",
@@ -297,8 +296,7 @@
         "list": "목록",
         "courseList": "과정 목록",
         "commonCdGroupList": "공통코드그룹목록",
-        "commonCdList": "공통코드 목록",
-        "trainingPlaceList": "교육장소 목록"
+        "commonCdList": "공통코드 목록"
       },
       "header": {
         "all": "전체",

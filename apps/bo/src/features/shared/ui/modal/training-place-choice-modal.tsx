@@ -15,7 +15,6 @@ import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { EnGlobalConst } from '@types';
-import { queryOptions as trainingPlaceQueryOptions } from '@entities/training-place/service/training-place.queries';
 
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 
@@ -152,7 +151,7 @@ const searchConfig: SearchBoxConfig = {
 };
 
 const gridConfig: useGridBoxConfig = {
-  query: trainingPlaceQueryOptions.all,
+  query: '',
   columns: [
     {
       name: 'no1',

@@ -42,7 +42,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
 
   const { data: detailData, refetch } = useFetchCompany(companyCode);
 
-  const { open: openModal, confirm: openConfirm } = useModal();
+  const { open: openModal, confirm: openConfirm, alert: openAlert } = useModal();
   const [tableInstance, setTableInstance] = useState<Table<any>>();
   const { provider, fetchData, onSubmit, onFormChange, getValues, control } =
     useDynamicForm(formConfig);
@@ -123,12 +123,22 @@ const CompanyDetailComponent = (props: any, ref: any) => {
 
   const { create } = useCreateCompany({
     onSuccess: () => {
-      router.navigate({ to: '/platform/company/management' });
+      openAlert({
+        title: t('저장되었습니다.'),
+        onClose: () => {
+          router.navigate({ to: '/platform/company/management' });
+        },
+      });
     },
   });
   const { update } = useUpdateCompany({
     onSuccess: () => {
-      refetch();
+      openAlert({
+        title: t('저장되었습니다.'),
+        onClose: () => {
+          refetch();
+        },
+      });
     },
   });
 
