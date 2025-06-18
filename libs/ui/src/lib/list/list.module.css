@@ -35,9 +35,6 @@
         @apply rounded-[8px] border border-solid border-[var(--gray4)];
       }
     }
-    &.active {
-      @apply bg-[#d8f8ff];
-    }
     [class*='nlp--checkbox'] {
       label {
         @apply input_bo_1_r text-[var(--gray8)];
@@ -50,6 +47,15 @@
       & + .clear {
         @apply ml-[4px];
       }
+    }
+    &:has([class*='nlp--checkbox']) {
+      @apply min-h-[24px];
+      &:not(:first-child) {
+        @apply mt-[4px];
+      }
+    }
+    &.active {
+      @apply bg-[#d8f8ff];
     }
     &.invalid [class*='nlp--checkbox'] label {
       @apply text-[var(--status1)];
