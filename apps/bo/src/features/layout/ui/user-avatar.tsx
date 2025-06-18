@@ -54,7 +54,13 @@ export const PopoverContent = () => {
             fallback={<AvataFallback name={user?.name} />}
           />
           <span className={styles.logo_wrap}>
-            <img src={authUser?.activeTenant?.logoImageUrl} alt="" className={styles.logo_img} />
+            <Avatar
+              imageUrl={authUser?.activeTenant?.logoImageUrl}
+              className={styles.info_avata}
+              fallback={
+                <img src={'https://github.com/shadcn.png'} alt="" className={styles.logo_img} />
+              }
+            />
           </span>
         </div>
         <div className={styles.profile}>
