@@ -42,6 +42,7 @@ export const CODE_GROUP = {
   'lms.enroll.EnrollSourceType': 'lms.enroll.EnrollSourceType',
   'lms.enroll.EnrollStatusType': 'lms.enroll.EnrollStatusType',
   'lms.enroll.LangLevelTestPreferGenderType': 'lms.enroll.LangLevelTestPreferGenderType',
+  'lms.space.OnOffLineType': 'lms.space.OnOffLineType',
   'pms.api.ApiMethodCode': 'pms.api.ApiMethodCode',
   'pms.api.ApiNodeType': 'pms.api.ApiNodeType',
   'pms.api.ApiScopeCode': 'pms.api.ApiScopeCode',

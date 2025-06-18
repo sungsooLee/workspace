@@ -110,8 +110,8 @@ const searchConfig: SearchBoxConfig = {
         type: 'dropdown',
         label: t('그룹'),
         value: '',
+        presetOptionLabel: t('전체'),
         optionsConfig: {
-          options: [{ value: '', label: t('전체') }],
           codeGroup: CODE_GROUP['pms.company.CompanyType'],
         },
       },
