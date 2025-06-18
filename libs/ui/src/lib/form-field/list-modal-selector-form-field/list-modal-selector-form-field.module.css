@@ -1,11 +1,23 @@
 .start {
   &.modal_select_wrap {
     @apply flex w-full flex-col;
+    .btn_wrap {
+      @apply -mt-[38px] mb-[8px] flex w-full justify-end;
+      .btn {
+        @apply relative z-[1] font-normal;
+        svg {
+          @apply mr-[4px];
+        }
+      }
+    }
     button {
       @apply max-w-[100px];
       & + ul {
         @apply mt-[8px] w-full;
       }
+    }
+    [class*='nlp--checkbox'] [role='checkbox'] {
+      @apply overflow-hidden rounded-full;
     }
   }
 }

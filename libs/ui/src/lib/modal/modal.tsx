@@ -12,6 +12,7 @@ const ModalComponent: React.FC<ModalConfig> = ({
   headerActionNode,
   onClose,
   width = 'auto',
+  height,
   hideCloseButton = false,
   closeOnOutsideClick = false,
   id,
@@ -34,7 +35,12 @@ const ModalComponent: React.FC<ModalConfig> = ({
       <Primitive.Portal>
         <Primitive.Overlay className={styles.overlay} />
         <Primitive.Content
-          className={cn(styles.content, 'nlp--modal', width && styles[width])}
+          className={cn(
+            styles.content,
+            'nlp--modal',
+            width && styles[width],
+            height && styles[height],
+          )}
           onInteractOutside={handleOutsideClick}
           onEscapeKeyDown={(e) => e.preventDefault()} // ESC 키 방지
           onOpenAutoFocus={(e) => e.preventDefault()}

@@ -51,7 +51,7 @@ export const formConfig: DynamicFormConfig = {
       format: 'array',
       value: [
         { value: 'tenant1', label: '테넌트1' },
-        { value: 'tenant2', label: '테넌트2' },
+        { value: 'tenant2', label: '테넌트2', invalid: true },
       ],
       placeholder: '',
       description: '',
