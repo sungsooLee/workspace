@@ -233,7 +233,7 @@ function RouteComponent() {
 }
 
 const duplicateCheck = async (tenantName: string) => {
-  const result: boolean = await TenantService.existTenant(tenantName);
+  const result: boolean = await TenantService.existTenant(tenantName, undefined);
 
   if (result) return DuplicateState.duplicated;
   else return DuplicateState.ok;

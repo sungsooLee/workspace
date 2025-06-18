@@ -32,13 +32,6 @@ import { useFetchTenant, useUpdateTenant } from '@entities/tenant';
 import TenantService from '@entities/tenant/api/tenant';
 import { EnDeviceType, EnUseCategory } from '@types';
 
-const duplicateCheck = async (tenantName: string) => {
-  const result: boolean = await TenantService.existTenant(tenantName);
-
-  if (result) return DuplicateState.duplicated;
-  else return DuplicateState.ok;
-};
-
 /**
  * 화면번호: NLP_BO_TMS_1002 (테넌트기본 정보)
  * @param props
@@ -80,6 +73,13 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       onFormChange();
     },
   }));
+
+  const duplicateCheck = async (tenantName: string) => {
+    const result: boolean = await TenantService.existTenant(tenantName, tenantId);
+
+    if (result) return DuplicateState.duplicated;
+    else return DuplicateState.ok;
+  };
 
   const handleOnSubmit = async (data: any) => {
     console.log('data {} => ', data);

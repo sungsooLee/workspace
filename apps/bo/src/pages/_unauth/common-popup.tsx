@@ -271,6 +271,7 @@ function RouteComponent() {
                   e.stopPropagation();
                   openModal({
                     width: 'xl',
+                    height: 'fix',
                     content: <CompanyShuttleModal />,
                   });
                 }}

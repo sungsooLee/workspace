@@ -27,8 +27,11 @@ export default class TenantService {
     return httpService.post<Tenant>(`${PMSApiPrefix()}/tenants`, reqbody);
   }
 
-  static existTenant(tenantName: string) {
-    return httpService.get<boolean>(`${PMSApiPrefix()}/tenants/exists`, { tenantName: tenantName });
+  static existTenant(tenantName: string, tenantId: number | undefined) {
+    return httpService.get<boolean>(`${PMSApiPrefix()}/tenants/exists`, {
+      tenantName: tenantName,
+      tenantId: tenantId,
+    });
   }
 
   //전체 목록 가지고 오기 임시 (size 값으로)
