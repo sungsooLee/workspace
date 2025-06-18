@@ -501,14 +501,16 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
       <div
         ref={setDropBeforeRef}
         style={{
-          height: isOverBefore ? '10px' : '0px',
+          height: '10px',
           backgroundColor: isOverBefore ? 'rgba(33, 150, 243, 0.2)' : 'transparent',
           marginBottom: '0px',
           marginLeft: `${level * 20}px`,
           borderRadius: '2px',
           transition: 'all 0.2s ease',
-          minWidth: '300px',
-          position: 'relative',
+          width: '100%',
+          position: 'absolute',
+          left: '0',
+          top: '0',
           zIndex: 10,
           display: 'flex',
           alignItems: 'center',
@@ -631,14 +633,16 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
       <div
         ref={setDropAfterRef}
         style={{
-          height: isOverAfter ? '10px' : '0px',
+          height: '10px',
           backgroundColor: isOverAfter ? 'rgba(33, 150, 243, 0.2)' : 'transparent',
           marginTop: '0px',
           marginLeft: `${level * 20}px`,
           borderRadius: '2px',
           transition: 'all 0.2s ease',
-          minWidth: '300px',
-          position: 'relative',
+          width: '100%',
+          position: 'absolute',
+          left: '0',
+          bottom: '0',
           zIndex: 10,
           display: 'flex',
           alignItems: 'center',
