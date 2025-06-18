@@ -56,7 +56,7 @@ const CompanyShuttleComponent = () => {
   };
 
   return (
-    <ModalContainer className="h-[740]">
+    <ModalContainer>
       <ModalTitle>{t('회사 조회')}</ModalTitle>
       <ModalBody>
         <SearchBox provider={sProvider} onSearch={handleOnSearch} />
@@ -72,6 +72,7 @@ const CompanyShuttleComponent = () => {
           rowKey={'companyId'}
           leftTitle={t('회사 목록')}
           rightTitle={t('회사 선택')}
+          visibleRowCount={8}
         />
       </ModalBody>
       <ModalFooter>

@@ -17,7 +17,7 @@ import {
   GridBoxState,
   GridImperative,
   Pagination,
-} from '@learnway/ui';
+} from '../../../';
 import { IcoMinus, IcoPlus } from '@learnway/icons';
 import { cn, gridBoxStateToGridState } from '@learnway/shared';
 import { useTranslation } from 'react-i18next';

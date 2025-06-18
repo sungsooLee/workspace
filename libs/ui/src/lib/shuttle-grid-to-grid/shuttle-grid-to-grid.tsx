@@ -1,15 +1,14 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { ColumnDef, Table } from '@tanstack/react-table';
+import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
-import { GridBoxProps } from '@learnway/ui';
 
 import styles from './shuttle-grid-to-grid.module.css';
-import { Button } from '../button/button';
-import { ColumnDef, Table } from '@tanstack/react-table';
+
 import { IcoNarrowRight } from '@learnway/icons';
-import { GridBox } from '../grid/grid-box/grid-box';
-import { GridImperative } from '../grid/types';
-import { useTranslation } from 'react-i18next';
+
+import { Button, GridBoxProps, GridBox, GridImperative } from '../../';
 
 export interface ShuttleGridToGridProps
   extends Pick<GridBoxProps, 'hideRowSelectionCheckBox' | 'showNumberingColumn'> {
@@ -42,6 +41,11 @@ export interface ShuttleGridToGridProps
    * @param newGridData - 변경된 우측 그리드 데이터
    */
   onSelectedChange?: (newGridData: any) => void;
+
+  /**
+   * 그리드 스크롤 없이 보여줄 row 개수
+   */
+  visibleRowCount?: number;
 }
 
 /**
@@ -69,6 +73,7 @@ const ShuttleGridToGridComponent = (
     className,
     leftTitle,
     rightTitle,
+    visibleRowCount = 5,
     onSelectedChange,
   }: ShuttleGridToGridProps,
   ref: React.Ref<ShuttleGridToGridImperative>,
@@ -211,6 +216,7 @@ const ShuttleGridToGridComponent = (
           showNumberingColumn={showNumberingColumn} // 번호 매김 컬럼 표시 여부
           onRowsSelect={handleLeftGridRowsSelect} // 행 선택 시 호출되는 핸들러
           onTableInstanceChange={(table: Table<any>) => setLeftTableInstance(table)}
+          visibleRowCount={visibleRowCount}
         />
       </div>
       {/* 그리드 사이의 구분 및 이동 아이콘 */}
@@ -231,6 +237,7 @@ const ShuttleGridToGridComponent = (
           onRowSelect={handleRightGridRowSelect} // 행 선택 시 호출되는 핸들러
           onRemoveAllClick={handleRightGridRemoveAll} // '전체 삭제' 클릭 핸들러
           onTableInstanceChange={(table: Table<any>) => setRightTableInstance(table)}
+          visibleRowCount={visibleRowCount}
         />
       </div>
     </div>

@@ -32,3 +32,4 @@ export * from './management/ui/tenant-detail-widget-mapping-modal';
 export * from './management/ui/tenant-detail-widget';
 export * from './management/ui/tenant-managment-list';
 export * from './management/user-group/ui/tenant-user-group-handmade-list';
+export * from './management/user/tenant-user-list';

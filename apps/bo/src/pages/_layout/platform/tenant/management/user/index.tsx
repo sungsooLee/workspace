@@ -5,7 +5,7 @@ import { PageContainer, MainContents, ContentsButtons } from '@widgets/layout';
 
 import { Tabs, Button } from '@learnway/ui';
 
-import { TenantManagmentList } from '@features/tenant/management/ui/tenant-managment-list';
+import { TenantUserList } from '@features/tenant';
 
 export const Route = createFileRoute('/_layout/platform/tenant/management/user/')({
   component: RouteComponent,
@@ -30,7 +30,7 @@ function RouteComponent() {
     {
       title: '유저',
       key: 't1',
-      content: '유저',
+      content: <TenantUserList />,
     },
     {
       title: '회원가입 신청',
@@ -43,7 +43,7 @@ function RouteComponent() {
     <PageContainer>
       <ContentsButtons>
         <Button
-          variant="primary"
+          variant="point"
           size="sm"
           //onClick={() => router.navigate({ to: '/platform/tenant/management/regist' })}
         >
@@ -53,7 +53,7 @@ function RouteComponent() {
       <MainContents>
         <Tabs
           items={tabItems}
-          type="line"
+          type="fill"
           size="sm"
           selectedTabKey={selectedTabKey}
           onTabChange={handleTabChange}

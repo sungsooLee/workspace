@@ -34,7 +34,10 @@ function RouteComponent() {
   const handleListButtonClick = () => {
     const listParam = routerState.location.state?.listParam;
     console.log('listParam-detail', listParam);
-    router.navigate({ to: '/platform/tenant/organization', state: { listParam: listParam } });
+    router.navigate({
+      to: '/platform/tenant/management/organization',
+      state: { listParam: listParam },
+    });
   };
 
   const menuItems = [
