@@ -187,4 +187,84 @@ export const formConfig: DynamicFormConfig = {
       value: '',
     },
   ],
+  validator: {
+    유형: {
+      format: 'string',
+      required: true,
+    },
+    채널: {
+      format: 'string',
+      required: true,
+    },
+    테넌트: {
+      format: 'array',
+      required: true,
+    },
+    카테고리: {
+      format: 'array',
+      required: true,
+    },
+    학습대상: {
+      format: 'array',
+      required: true,
+    },
+    과정명: {
+      format: 'string',
+      required: true,
+      conditions: [
+        {
+          fn: (values) => {
+            return values.과정명.trim().length === 0;
+          },
+          message: '과정명을 입력해주세요.',
+        },
+        {
+          fn: (values) => {
+            return values.과정명.trim().length > 40;
+          },
+          message: '과정명은 40자 이내로 입력해주세요.',
+        },
+      ],
+    },
+    과정요약: {
+      format: 'string',
+      required: false,
+      conditions: [
+        {
+          fn: (values) => {
+            return values.과정요약 && values.과정요약.trim().length > 40;
+          },
+          message: '과정 요약은 40자 이내로 입력해주세요.',
+        },
+      ],
+    },
+    담당자이메일: {
+      format: 'email',
+      required: false,
+      conditions: [
+        {
+          fn: (values) => {
+            if (!values.담당자이메일 || values.담당자이메일.trim().length === 0) return false;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return !emailRegex.test(values.담당자이메일.trim());
+          },
+          message: '올바른 이메일 형식을 입력해주세요.',
+        },
+      ],
+    },
+    운영자이메일: {
+      format: 'email',
+      required: false,
+      conditions: [
+        {
+          fn: (values) => {
+            if (!values.운영자이메일 || values.운영자이메일.trim().length === 0) return false;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return !emailRegex.test(values.운영자이메일.trim());
+          },
+          message: '올바른 이메일 형식을 입력해주세요.',
+        },
+      ],
+    },
+  },
 };

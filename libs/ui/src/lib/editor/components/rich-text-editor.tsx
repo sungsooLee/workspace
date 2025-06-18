@@ -45,7 +45,7 @@ const RichTextEditor = () => {
             />
           </div>
           <DragDropPastePlugin />
-          <AutoFocusPlugin />
+          {/* <AutoFocusPlugin /> */}
           {scrollTarget && (
             <>
               <DraggableBlockPlugin anchorElem={scrollTarget} />
