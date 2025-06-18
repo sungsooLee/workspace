@@ -8,6 +8,7 @@ import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-
 import { IcoDelete03, IcoMenu01 } from '@learnway/icons';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import { CommonReactElementProps } from '../type';
+import { Checkbox } from '@radix-ui/react-checkbox';
 
 export interface ListProps extends CommonReactElementProps {
   /** 리스트 옵션 배열 */
@@ -22,6 +23,8 @@ export interface ListProps extends CommonReactElementProps {
   disabledActive?: boolean;
   /** 다중 선택 가능 여부 */
   multiple?: boolean;
+  /** 옵션 삭제 가능 여부 */
+  checkable?: boolean;
   /** 옵션 삭제 가능 여부 */
   deletable?: boolean;
   /** 리스트 테두리 숨김 여부 */
@@ -58,6 +61,7 @@ const ListComponent = function ({
   valueField = 'value',
   disabledActive = false,
   multiple,
+  checkable,
   deletable,
   hideBorder,
   showItemBorder,
@@ -147,6 +151,7 @@ const ListComponent = function ({
                 !disabledActive &&
                 selectedOptions?.find((x: any) => x[valueField] === d[valueField])
               }
+              checkable={checkable}
               deletable={deletable}
               draggable={draggable}
               onClick={handleOptionSelect}
@@ -176,6 +181,7 @@ const SortableItem = ({
   item,
   index,
   showItemBorder,
+  checkable,
   deletable,
   draggable,
   itemRenderer,
@@ -207,6 +213,7 @@ const SortableItem = ({
       onClick={(event: React.MouseEvent) => onClick?.(event, item)}
     >
       <div className={cn(styles.inner, showItemBorder && styles.line)}>
+        {checkable && <Checkbox />}
         {isValidElement(itemRenderer?.(item, index)) ? itemRenderer(item, index) : item[labelField]}
         {deletable && (
           <Button

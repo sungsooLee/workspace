@@ -1,152 +1,163 @@
-import { memo, useMemo, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 
-import { cn } from '@learnway/shared';
-import { AutoCompleteDropdown, Popover } from '@learnway/ui';
-import { IcoArrowDown, IcoCheck02 } from '@learnway/icons';
-import { Button } from '@learnway/ui';
+import { AutoCompleteDropdown } from '@learnway/ui';
 import {
   useActiveMenuDepthState,
   useAsycFetchMenusForceRefatch,
   useFetchAuthUser,
+  useUpdateTenantRoleLastSelect,
   useUpdateUser,
 } from '@learnway/auth/entities';
 
-import styles from './gnb-role.module.css';
 import { useRouter } from '@tanstack/react-router';
-import { Tenant } from '@learnway/auth/types';
-
-// TODO 역할 조회, 역할 선택기능
-const PopoverContent = () => {
-  const { data } = useFetchAuthUser();
-  const { updateActiveTenant, updateMenu } = useUpdateUser();
-  const { asyncMenus } = useAsycFetchMenusForceRefatch();
-  const router = useRouter();
-
-  // 테넌트 변경
-  const handleLanguage = async (tenant: Tenant) => {
-    updateActiveTenant(tenant);
-    const menus = await asyncMenus(tenant.tenantId);
-    updateMenu(menus);
-    router.navigate({ to: '/' });
-
-    // if (!menus?.length) {
-    // }
-  };
-
-  if (!data || !data?.tenants) {
-    return <></>;
-  }
-
-  return (
-    <div className={`${styles.language_content}`}>
-      <div className={styles.lang_wrap}>
-        <ul className={styles.lang_list}>
-          {data.tenants.map((tenant: Tenant, i: number) => (
-            <Popover.Close asChild>
-              <li>
-                <Button
-                  key={`tenant_${i}`}
-                  className={`${styles.btn} ${tenant.tenantId === data?.activeTenant?.tenantId ? styles.active : ''}`}
-                  onClick={() => handleLanguage(tenant)}
-                  label={tenant?.tenantName}
-                  icon={
-                    <IcoCheck02
-                      width={16}
-                      height={16}
-                      stroke="#131c30"
-                      className={styles.icon_check}
-                    />
-                  }
-                />
-              </li>
-            </Popover.Close>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-};
 
 interface Props {
   className?: string;
 }
 
 /**
- * @description GNB 역할 변경 드롭다운
+ * @description GNB 테넌트 역할 변경 드롭다운
  * @param className
  * @returns
  */
 const GnbRoleSelectComponent = ({ className }: Props) => {
-  const { data } = useFetchAuthUser();
-  const { updateActiveTenant, updateMenu } = useUpdateUser();
-  const [_, setActiveMenuDepth] = useActiveMenuDepthState();
-  const { asyncMenus } = useAsycFetchMenusForceRefatch();
   const router = useRouter();
 
+  const [_, setActiveMenuDepth] = useActiveMenuDepthState();
+
+  const { data: authUser } = useFetchAuthUser();
+  const { asyncMenus } = useAsycFetchMenusForceRefatch();
+  const { updateMenu, updateActiveTenant } = useUpdateUser();
+  const { update: updateTenantRole } = useUpdateTenantRoleLastSelect();
+
+  const [selectedTenant, setSelectedTenant] = useState<any | null>(null);
+  const [selectedRole, setSelectedRole] = useState<any | null>(null);
+
+  useEffect(() => {
+    setSelectedTenant(authUser?.activeTenant);
+    setSelectedRole(authUser?.activeRole);
+  }, []);
+
+  useEffect(() => {
+    if (authUser?.activeTenant?.tenantId !== authUser?.activeRole?.tenantId) {
+      setSelectedRole(null);
+    }
+  }, [authUser?.activeTenant, authUser?.activeRole]);
+
+  // 테넌트 목록
   const tenantList = useMemo(() => {
-    return data?.tenants?.map((tenant) => ({
+    return authUser?.tenants?.map?.((tenant) => ({
       value: String(tenant.tenantId),
       label: tenant.tenantName,
       ...tenant,
     }));
-  }, [data?.tenants]);
+  }, [authUser?.tenants]);
 
-  const [selectedOption, setSelectedOption] = useState<any | null>(null);
+  // 역할 목록
+  const roleList = useMemo(() => {
+    // 테넌트하위 역할 필터링
+    return authUser?.roles
+      ?.map?.((role) => ({
+        value: String(role.roleId),
+        label: role.roleName,
+        ...role,
+      }))
+      ?.filter((role) => role.tenantId === authUser?.activeTenant?.tenantId);
+  }, [authUser?.activeTenant?.tenantId, authUser?.roles]);
 
-  const loadOptions = (searchText: string): any => {
-    const reg = new RegExp(searchText, 'i'); // 대소문자 구분 없이 검색하려면 'i' 옵션 추가
-    const filteredOptions = tenantList?.filter((option) => reg.test(option.tenantName));
+  // 롤 변경
+  const handleRoleChange = async (newValue: any | null) => {
+    setSelectedRole(newValue);
 
-    if (filteredOptions) {
-      return filteredOptions;
-    } else {
-      return tenantList;
-    }
-  };
+    if (!newValue) return;
+    // 기존 선택값 체크
+    if (newValue.roleId === authUser?.activeRole?.roleId) return;
 
-  // TODO 테넌트 변경시 서버 등록 API 처리
-  // 테넌트 변경
-  const handleChange = async (newValue: any | null) => {
-    setSelectedOption(newValue);
-    updateActiveTenant({ tenantId: newValue.tenantId, tenantName: newValue.tenantName });
+    await updateTenantRole({
+      lastVisitedBoRoleId: newValue?.roleId,
+      lastVisitedBoTenantId: authUser?.activeTenant?.tenantId,
+    });
     const menus = await asyncMenus(newValue.tenantId);
     updateMenu(menus);
     setActiveMenuDepth([]);
     router.navigate({ to: '/' });
-    // if (!menus?.length) {
-    // }
   };
 
-  const handleLoadOptions = async (searchText: string): Promise<any[]> => {
-    return loadOptions(searchText);
+  const handleRoleLoadOptions = async (searchText: string): Promise<any[]> => {
+    const reg = new RegExp(searchText, 'i'); // 대소문자 구분 없이 검색하려면 'i' 옵션 추가
+    const filteredList = roleList?.filter((role) => reg.test(role.roleName));
+
+    if (filteredList) {
+      return filteredList;
+    } else if (roleList) {
+      return roleList;
+    }
+    return [];
+  };
+
+  // 테넌트 변경
+  const handleTenantChange = async (newValue: any | null) => {
+    setSelectedTenant(newValue);
+
+    if (!newValue) return;
+
+    // 기존 선택값 체크
+    if (newValue.tenantId === authUser?.activeTenant?.tenantId) return;
+
+    updateActiveTenant(newValue);
+    // TODO 역할 완료후 제거 필요
+    await updateTenantRole({
+      lastVisitedBoTenantId: newValue.tenantId,
+    });
+  };
+
+  const handleTenantLoadOptions = async (searchText: string): Promise<any[]> => {
+    const reg = new RegExp(searchText, 'i'); // 대소문자 구분 없이 검색하려면 'i' 옵션 추가
+    const filteredList = tenantList?.filter((tenant) => reg.test(tenant.tenantName));
+
+    if (filteredList) {
+      return filteredList;
+    } else if (tenantList) {
+      return tenantList;
+    }
+    return [];
   };
 
   return (
-    <AutoCompleteDropdown
-      className={'min-w-[180px]'}
-      variant="text"
-      size="md"
-      backgroundType={'blue'}
-      value={selectedOption?.label}
-      onChange={(value) => {
-        const option = tenantList?.find((opt) => opt.tenantId + '' === value);
-        handleChange(option);
-      }}
-      loadOptions={handleLoadOptions}
-      placeholder="테넌트명 "
-      noOptionsMessage="검색 결과가 없습니다"
-      loadingMessage="검색 중..."
-    />
-    //   <Popover
-    //   popoverContent={<PopoverContent />}
-    //   className={cn(styles.btn_language, className)}
-    //   side="bottom"
-    //   align="end"
-    //   sideOffset={5}
-    // >
-    //   <span className={styles.select}>역할 선택</span>
-    //   <IcoArrowDown width={16} height={16} stroke="#ffffff" />
-    // </Popover>
+    <>
+      <AutoCompleteDropdown
+        cacheOptions={false}
+        className={'min-w-[180px]'}
+        variant="text"
+        size="md"
+        backgroundType={'blue'}
+        value={selectedTenant?.tenantName}
+        onChange={(value) => {
+          const option = tenantList?.find((tenant) => tenant.value === value);
+          handleTenantChange(option);
+        }}
+        loadOptions={handleTenantLoadOptions}
+        placeholder="테넌트를 선택해 주세요."
+        noOptionsMessage="검색 결과가 없습니다"
+        loadingMessage="검색 중..."
+      />
+      <AutoCompleteDropdown
+        defaultOptions={roleList}
+        className={'min-w-[180px]'}
+        variant="text"
+        size="md"
+        backgroundType={'blue'}
+        value={selectedRole?.roleName}
+        onChange={(value) => {
+          const option = roleList?.find((role) => role.value === value);
+          handleRoleChange(option);
+        }}
+        loadOptions={handleRoleLoadOptions}
+        placeholder="역할을 선택해 주세요. "
+        noOptionsMessage="검색 결과가 없습니다"
+        loadingMessage="검색 중..."
+      />
+    </>
   );
 };
 

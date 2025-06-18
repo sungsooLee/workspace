@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
-import { createFileRoute, useRouter, Link, useSearch } from '@tanstack/react-router';
+import { createFileRoute, useRouter, Link } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { isEmpty } from 'lodash';
 
 import { Button, ContentsRow, Input, useModal } from '@learnway/ui';
 import { useExpStore, useFetchAuthUser, useLogoutUser } from '@learnway/auth/entities';
 import { cn, dateDiff } from '@learnway/shared';
-// import { DynamicFormField } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { AUTH_ERROR_CODE } from '@learnway/auth/features/auth';
 
 import {
   useAuthSignin,
@@ -16,17 +16,15 @@ import {
   TenantRoleModal,
   LoginErrorAlert,
 } from '@features/auth';
-import { useSetLanguage } from '../../features/platform';
+import { useSetLanguage } from '@features/platform';
 
-import { FormRow } from '../../shared/ui/form';
-import { AUTH_CONTAINERS } from '../../widgets/layout';
+import { FormRow } from '@shared/ui/form';
+import { AUTH_CONTAINERS } from '@widgets/layout';
 
 import authStyles from './auth.module.css';
 import styles from '@learnway/styles/bo/pages/_auth/login.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import { usePermissionStore } from '../../shared/lib/permission-store';
-import { AUTH_ERROR_CODE } from '@learnway/auth/features/auth';
-import dayjs from 'dayjs';
+// import { usePermissionStore } from '../../shared/lib/permission-store';
 
 export const Route = createFileRoute('/_auth/login')({
   component: RouteComponent,
@@ -41,12 +39,11 @@ export const Route = createFileRoute('/_auth/login')({
 
 function RouteComponent() {
   const router = useRouter();
-  const params = Route.useParams();
   const search = Route.useSearch();
   const { reset } = useExpStore();
   const { provider, onSubmit, onFormChange, control } = useDynamicForm(detailConfig);
 
-  const { data: authData } = useFetchAuthUser();
+  // const { data: authData } = useFetchAuthUser();
 
   const { login } = useAuthSignin();
   const { logout } = useLogoutUser();
@@ -192,14 +189,14 @@ function RouteComponent() {
     }
   };
 
-  const handleExpireCheck = (data: any) => {
+  const handleExpireCheck = async (data: any) => {
     // if (dayjs(authData?.passwordExpireDate).diff(dayjs()) < 0) {
     const diff = dateDiff(data!.passwordExpireDate, new Date(), 'd');
     console.log('### login date check', diff);
     if (diff !== undefined && 0 >= diff) {
       if (data?.authType === 'PLATFORM') {
         // 패스워드 사용자
-        openAlert({
+        await openAlert({
           title: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_USE.title'),
           content: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_USE.message'),
           onClose: () => {
@@ -209,7 +206,7 @@ function RouteComponent() {
         return false;
       } else {
         // 패스워드 미사용자
-        openAlert({
+        await openAlert({
           title: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_NOT_USE.title'),
           content: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_NOT_USE.message'),
           onClose: () => {
@@ -226,47 +223,49 @@ function RouteComponent() {
     console.log(' ### handleTenantSelectCheck', data);
 
     // TODO 테넌트/역할 구성 후 제외 필요
-    return true;
+    // return true;
 
-    // 테넌트/역할 없을때 처리
-    if (!data?.tenents?.length || !data?.roles?.length) {
-      loginErrorAlert({ code: AUTH_ERROR_CODE.TENANT_PENDING });
-      return false;
-    }
+    // TODO 테넌트/역할 없을때 처리
+    // if (!data?.tenents?.length || !data?.roles?.length) {
+    //   loginErrorAlert({ code: AUTH_ERROR_CODE.TENANT_PENDING });
+    //   return false;
+    // }
 
-    // 테넌트/역할 선택 - 최초 로그인 사용자
-    if (data?.tenents?.length && data?.roles?.length) {
+    // TODO 역할체크도 필요
+    //  테넌트/역할 선택 - 최초 로그인 사용자
+    // if (!data?.lastVisitedBoRoleId || !data?.lastVisitedBoTenantId) {
+    if (!data?.lastVisitedBoTenantId) {
       await openModal({
         content: <TenantRoleModal />,
         height: 'lg',
         width: 'sm',
-        // hideCloseButton: true,
+        hideCloseButton: true,
         closeOnOutsideClick: false,
         onClose: (data: any) => {
-          const text = `선택 \n테넌트: ${data?.tenant?.label}\n역할: ${data?.role?.label}`;
-          alert(text);
-          return true;
+          return data;
         },
       });
     }
-    return false;
+    return true;
   };
 
   const handleOnSubmit = async (values: any) => {
     await login(values, {
       onSuccess: async (data) => {
-        console.log('Login Page onSuccess');
         const locale = data?.locale;
         locale && (await setLanguage(locale));
 
         // 로그인 - 비밀번호 변경 3개월 체크
-        const checkExpire = handleExpireCheck(data);
+        const checkExpire = await handleExpireCheck(data);
         // 테넌트 선택 체크
         const checkTenant = await handleTenantCheck(data);
 
         if (checkExpire && checkTenant) {
           router.navigate({ to: search.redirect || '/' });
+          return;
         }
+
+        logout();
 
         // 임시 : 사용 가능한 API 목록 fetch
         // await usePermissionStore.getState().fetchPermissions();

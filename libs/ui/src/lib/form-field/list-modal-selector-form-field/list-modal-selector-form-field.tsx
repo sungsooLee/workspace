@@ -67,6 +67,7 @@ const ListModalSelectorFormFieldComponent = forwardRef<
       ownerOnChange(newValue);
     };
 
+    console.log('list', { value });
     return (
       <div
         ref={ref}
@@ -81,9 +82,12 @@ const ListModalSelectorFormFieldComponent = forwardRef<
           {...buttonProps}
           variant={'gray'}
           size={'md'}
+          label={'추가'}
           onClick={handleButtonClick}
         />
         <List
+          checkable
+          deletable
           className={styles.list}
           {...listProps}
           options={value}

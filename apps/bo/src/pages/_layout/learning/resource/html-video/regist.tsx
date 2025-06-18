@@ -238,6 +238,7 @@ function RouteComponent() {
       },
     ],
     validator: {
+      channelUuids: true,
       companyModal: true,
       language: true,
       learningResourceName: true,
@@ -260,6 +261,10 @@ function RouteComponent() {
   const { open: openModal } = useModal();
   const handleOnSubmit = () => {
     //
+  };
+
+  const save = () => {
+    console.log('save');
   };
   const { confirm: openConfirm } = useModal();
 
@@ -287,10 +292,6 @@ function RouteComponent() {
     feedback && save();
   };
 
-  const save = () => {
-    console.log('save');
-  };
-
   const onFileChange = async (params: { contentUuid: string; fileUuid: string }) => {
     await learningResourceQueryOptions.updateHTML5FileChange(params);
   };
@@ -311,19 +312,15 @@ function RouteComponent() {
     console.log('download');
   };
 
+  const onPreview = async () => {
+    const contentUuid = '';
+    const result = await learningResourceQueryOptions.getHTML5Resource({ contentUuid });
+  };
+
   return (
     <form onSubmit={onSubmit(handleOnSubmit)}>
       <PageContainer>
         <ContentsButtons>
-          <Button variant="point" size="sm">
-            과정개설
-          </Button>
-          <Button variant="point" size="sm">
-            매핑과정
-          </Button>
-          <Button variant="point" size="sm">
-            공유이력
-          </Button>
           <Button type={'button'} variant="point" size="sm" onClick={goList}>
             목록
           </Button>
@@ -363,7 +360,7 @@ function RouteComponent() {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider} name={'manager'} />
-            <FormRow provider={provider} name={'contact'} />
+            {/* <FormRow provider={provider} name={'contact'} /> */}
           </ContentsRow>
 
           <ContentsRow type={'horizontal'} className={'inactive'}>
@@ -409,7 +406,7 @@ function RouteComponent() {
               {/*외주개발업체 담당자*/}
               <FormRow provider={provider} name={'externalDevelopmentCompanyManager'} />
               {/*외주개발업체 연락처*/}
-              <FormRow provider={provider} name={'externalDevelopmentCompanyContact'} />
+              {/* <FormRow provider={provider} name={'externalDevelopmentCompanyContact'} /> */}
             </ContentsRow>
           </FormDisplay>
           <ContentsRow>
@@ -466,6 +463,9 @@ function RouteComponent() {
                   label={t('파일 변경')}
                   onClick={openFileUpload}
                 />
+              </li>
+              <li>
+                <Button className={style.btn_text} label={t('미리보기')} onClick={onPreview} />
               </li>
             </ul>
             {/* media(비디오 영역) */}

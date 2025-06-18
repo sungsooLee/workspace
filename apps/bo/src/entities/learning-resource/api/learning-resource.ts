@@ -84,6 +84,11 @@ export default class LearningResourceService {
     return httpService.put(`${CMSApiPrefix()}/html5/file/change`, params);
   }
 
+  // HTML5 동영상 콘텐츠 리소스 조회
+  static fetchHTML5Resource(params: { contentUuid: string }) {
+    return httpService.put(`${CMSApiPrefix()}/html5/${params.contentUuid}/resource`, params);
+  }
+
   static fetchProgramGuideDownload() {
     return new Promise((resolve) => {
       const sharedHistories = Array.from({ length: 10 }, (_, id) => ({

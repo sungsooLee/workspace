@@ -9,6 +9,8 @@ export const queryKeys = {
   mappingCourses: ['mapping-courses'] as const,
   sharedHistories: ['shared-histories'] as const,
   programGuideDownload: ['program-guide-download'] as const,
+  html5FileChange: ['html5-file-change'] as const,
+  html5Resource: ['html5-resource'] as const,
 };
 
 export const learningResourceQueryOptions = {
@@ -70,8 +72,15 @@ export const learningResourceQueryOptions = {
   }),
 
   updateHTML5FileChange: (params: { contentUuid: string; fileUuid: string }) => ({
-    queryKey: queryKeys.contents,
+    queryKey: queryKeys.html5FileChange,
     queryFn: () => LearningResourceService.updateHTML5FileChange(params),
+    cacheTime: 0,
+    staleTime: 0,
+    enabled: true,
+  }),
+  getHTML5Resource: (params: { contentUuid: string }) => ({
+    queryKey: queryKeys.html5Resource,
+    queryFn: () => LearningResourceService.fetchHTML5Resource(params),
     cacheTime: 0,
     staleTime: 0,
     enabled: true,
