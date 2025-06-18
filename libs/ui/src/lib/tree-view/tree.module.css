@@ -30,6 +30,12 @@
         .folder_wrap {
           @apply mr-[6px];
         }
+        & > div {
+          @apply relative pl-[28px];
+          .has_children {
+            @apply absolute left-0 top-1/2 -mt-[10px];
+          }
+        }
         /* &:not(.root_menu) {
           @apply bg-[url(../../assets/images/bg/bg_tree_line.png)] bg-[10px_auto] bg-[left_6px_top_12px] bg-no-repeat !pl-[18px];
         } */
@@ -38,9 +44,7 @@
             @apply mr-0;
           }
         }
-        & > .has_children {
-          @apply absolute left-0 top-[10px];
-        }
+
         &:hover {
           @apply bg-[var(--gray1)];
         }
