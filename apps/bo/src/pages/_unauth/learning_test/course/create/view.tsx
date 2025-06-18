@@ -1,10 +1,10 @@
-import React, { useMemo, useState } from 'react';
-import { Button, Tabs } from '@learnway/ui';
+import React, { useMemo } from 'react';
+import { Button, Divider, Tabs } from '@learnway/ui';
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { DynamicFormConfig } from '@learnway/hooks';
 import { BasicInfo } from '../-components/basic-info/basic-info';
 import { formConfig as formConfigBasic } from '../-components/basic-info/form-config';
 import { formConfig as formConfigCourse } from '../-components/course-registration/form-config';
@@ -15,11 +15,10 @@ export const Route = createFileRoute('/_unauth/learning_test/course/create/view'
 });
 
 function RouteComponent() {
-  const [formConfig, setFormConfig] = useState<DynamicFormConfig>(formConfigBasic);
-  const dynamicForm = useDynamicForm(formConfig);
-  const { provider, onSubmit, control, getValues, fetchData } = dynamicForm; //useDynamicForm(formConfig);
+  // const [formConfig, setFormConfig] = useState<DynamicFormConfig>(formConfigBasic);
+  // const dynamicForm = useDynamicForm(formConfig);
+  // const { provider, onSubmit, control, getValues, fetchData } = dynamicForm; //useDynamicForm(formConfig);
 
-  console.log('view.tsx', { dynamicForm });
   const handleListClick = () => {
     console.log('handleExportCourse');
   };
@@ -28,19 +27,19 @@ function RouteComponent() {
     console.log('handleImportCourse');
   };
 
-  const handleOnSubmit = (data: any) => {
-    console.log('data {} => ', data);
+  const handleSaveClick = () => {
+    console.log('data {} => ');
   };
 
   const handleTabChange = (activeKey: string) => {
     console.log('activeKey', activeKey);
     // 기본정보
     if (activeKey === 'a') {
-      setFormConfig(formConfigBasic);
+      // setFormConfig(formConfigBasic);
     }
     // 수강신청 설정
     else if (activeKey === 'b') {
-      setFormConfig(formConfigCourse);
+      // setFormConfig(formConfigCourse);
     }
   };
 
@@ -49,12 +48,12 @@ function RouteComponent() {
       {
         title: '기본정보 설정',
         key: 'a',
-        content: <BasicInfo dynamicForm={dynamicForm} />,
+        content: <BasicInfo />,
       },
       {
         title: '수강신청 설정',
         key: 'b',
-        content: <CourseRegistration dynamicForm={dynamicForm} />,
+        content: <CourseRegistration />,
       },
       {
         title: '커리큘럼 설정',
@@ -76,7 +75,7 @@ function RouteComponent() {
   );
 
   return (
-    <form onSubmit={onSubmit(handleOnSubmit)}>
+    <form>
       <PageContainer>
         <ContentsButtons>
           <Button
@@ -86,6 +85,7 @@ function RouteComponent() {
             label={'목록'}
             onClick={handleListClick}
           />
+          <Divider orientation={'vertical'} />
           <Button
             type="button"
             variant="point"
@@ -98,7 +98,7 @@ function RouteComponent() {
             variant="primary"
             size="sm"
             label={'저장'}
-            onClick={handleOnSubmit}
+            onClick={handleSaveClick}
           />
         </ContentsButtons>
         <MainContents>
