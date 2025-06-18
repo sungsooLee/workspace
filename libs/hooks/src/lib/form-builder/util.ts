@@ -55,15 +55,21 @@ export const extractDynamicFormDefaultValues = (builders: FormConfig[]) => {
  * > compactValue({ a: '', b: undefined, c: null, d: 0, e: 'a', f: [0, null, '', 'a'] })
  * > => { d: 0, e: 'a', f: [0, 'a'] }
  *
+ * @param {any} value 변환할 데이터 값
+ * @param {boolean} keepEmptyString empty string('')은 삭제하지 않고 유지할지 여부
+ * @returns {any}
  */
-export const compactValues = (value: any): any => {
-  const isNull = (value: any) => isNil(value) || value === '';
+export const compactValues = (value: any, keepEmptyString = false): any => {
+  const isNull = (value: any) => isNil(value) || (!keepEmptyString && value === '');
 
   if (isNull(value)) return null;
 
   if (typeof value === 'object') {
     if (isArray(value)) return filter(value, (v) => !isNull(v));
-    return omitBy(mapValues(value, compactValues), isNull);
+    return omitBy(
+      mapValues(value, (v) => compactValues(v, keepEmptyString)),
+      isNull,
+    );
   }
 
   return value;
