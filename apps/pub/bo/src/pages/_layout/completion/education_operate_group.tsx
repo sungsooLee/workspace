@@ -74,7 +74,7 @@ function RouteComponent() {
           </TreeContainer>
           <Tabs items={menuItems} type="line" size="sm" selectedTabKey={'menu01'} />
         </SectionLayout> */}
-        <SplitPanel size={['30%']}>
+        <SplitPanel size={['30%']} divider>
           <div>
             <TreeBox data={sampleData} treeId={'menu-tree'} title={'교육본부'} />
           </div>

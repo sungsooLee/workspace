@@ -212,7 +212,7 @@ function RouteComponent() {
       <ModalContainer>
         <ModalTitle>{'학습자원 일괄설정'}</ModalTitle>
         <ModalBody>
-          <SplitPanel size={['276px', 'auto']}>
+          <SplitPanel size={['276px', 'auto']} divider>
             <div>
               <GridBox
                 data={data}
