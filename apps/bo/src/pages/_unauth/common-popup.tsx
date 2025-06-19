@@ -7,7 +7,6 @@ import {
   ChannelShuttleModal,
   CompanyChoiceModal,
   CompanyShuttleModal,
-  MenuChoiceModal,
   TenantChoiceModal,
   TenantShuttleModal,
   UserChoiceModal,
@@ -36,7 +35,8 @@ import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-butt
 
 import langCodes from '@entities/mock/i18n-resource-ko.json';
 import TranslationService from '@entities/translation/api/translation';
-import LabelMessagesService from '@entities/label-messages/api/label-messages';
+import { EnFormMode } from '@types';
+
 export const Route = createFileRoute('/_unauth/common-popup')({
   component: RouteComponent,
 });
@@ -90,7 +90,7 @@ function RouteComponent() {
     });
   };
 
-  const handleTrainingPlaceDetail = (mode: string) => {
+  const handleTrainingPlaceDetail = (mode: EnFormMode) => {
     openModal({
       width: 'xl',
       content: <TrainingPlaceDetailModal mode={mode} />,
@@ -489,7 +489,7 @@ function RouteComponent() {
                 className="btn_table flex-1"
                 variant={'gray2'}
                 stopPropagation
-                onClick={(e) => handleTrainingPlaceDetail('view')}
+                onClick={(e) => handleTrainingPlaceDetail(EnFormMode.VIEW)}
               >
                 {'교육공간 조회 팝업'}
               </Button>
@@ -507,7 +507,7 @@ function RouteComponent() {
                     width: 'xl',
                     content: (
                       <TrainingPlaceChoiceModal
-                        onAddClick={() => handleTrainingPlaceDetail('add')}
+                        onAddClick={() => handleTrainingPlaceDetail(EnFormMode.ADD)}
                       />
                     ),
                     onClose(data: any) {
@@ -526,7 +526,7 @@ function RouteComponent() {
                 className="btn_table flex-1"
                 variant={'gray2'}
                 stopPropagation
-                onClick={(e) => handleTrainingPlaceDetail('add')}
+                onClick={(e) => handleTrainingPlaceDetail(EnFormMode.ADD)}
               >
                 {'교육공간 등록 팝업'}
               </Button>
