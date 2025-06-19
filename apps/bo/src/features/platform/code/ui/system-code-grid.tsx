@@ -16,7 +16,6 @@ import { createColumnHelper, Table } from '@tanstack/react-table';
 import { useSystemCodeDetail } from '../../../../entities/common-code/service/system-code.hook';
 import { FormRow, FormSubTitle } from '../../../../shared/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
 const columnHelper = createColumnHelper<any>();
 const listGridColumns = [
