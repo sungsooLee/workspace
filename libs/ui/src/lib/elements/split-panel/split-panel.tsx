@@ -30,7 +30,7 @@ const SplitPanelComponent = ({
   gap,
 }: SplitPanelProps) => {
   const nodes = React.Children.toArray(children);
-  const containerStyle = gap ? { columnGap: `${gap}px` } : undefined;
+  const containerStyle = !divider && gap ? { columnGap: `${gap}px` } : undefined;
 
   return (
     <div className={cn(styles.start, 'split_panel', className)} style={containerStyle}>
