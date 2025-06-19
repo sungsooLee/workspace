@@ -246,17 +246,19 @@ const CompanyDetailComponent = (props: any, ref: any) => {
       content: <UserGroupTabsChoiceModal />,
       onClose(data: any) {
         console.log('### selectedUserGroups', data);
-        const userGroups = data.map((group: any) => ({
-          userGroupId: group.key,
-          isUsed: true,
-        }));
-        console.log('## tempLoginRestrictTimeSetting', tempLoginRestrictTimeSetting.current);
-        const newSetting = JSON.parse(JSON.stringify(tempLoginRestrictTimeSetting.current));
-        tempLoginRestrictTimeSetting.current = null;
-        setLoginRestrictTimeSettings([
-          ...loginRestrictTimeSettings,
-          { ...newSetting, companyLoginRestrictionUserGroupList: userGroups },
-        ]);
+        if (data) {
+          const userGroups = data.map((group: any) => ({
+            userGroupId: group.key,
+            isUsed: true,
+          }));
+          console.log('## tempLoginRestrictTimeSetting', tempLoginRestrictTimeSetting.current);
+          const newSetting = JSON.parse(JSON.stringify(tempLoginRestrictTimeSetting.current));
+          tempLoginRestrictTimeSetting.current = null;
+          setLoginRestrictTimeSettings([
+            ...loginRestrictTimeSettings,
+            { ...newSetting, companyLoginRestrictionUserGroupList: userGroups },
+          ]);
+        } else tempLoginRestrictTimeSetting.current = null;
       },
     });
   };
@@ -268,18 +270,20 @@ const CompanyDetailComponent = (props: any, ref: any) => {
       onClose(data: any) {
         console.log('### selectedUserGroups', data);
         console.log('### info', info);
-        const userGroups = data.map((group: any) => ({
-          userGroupId: group.key,
-          isUsed: true,
-        }));
-        setLoginRestrictTimeSettings((prev) => {
-          const newSettings = [...prev];
-          newSettings[data.index] = {
-            ...newSettings[data.index],
-            companyLoginRestrictionUserGroupList: userGroups,
-          };
-          return newSettings;
-        });
+        if (data) {
+          const userGroups = data.map((group: any) => ({
+            userGroupId: group.key,
+            isUsed: true,
+          }));
+          setLoginRestrictTimeSettings((prev) => {
+            const newSettings = [...prev];
+            newSettings[data.index] = {
+              ...newSettings[data.index],
+              companyLoginRestrictionUserGroupList: userGroups,
+            };
+            return newSettings;
+          });
+        }
       },
     });
   };

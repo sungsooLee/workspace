@@ -47,4 +47,31 @@ export class DepartmentService {
   static getDepartmentChildDepartmentList(param: any): Promise<any> {
     return httpService.get<any>(`${PMSApiPrefix()}/department`, param);
   }
+
+  /**
+   * 부서명 중복 체크
+   * @param params
+   * @returns
+   */
+  static existDepartmentName(params: any) {
+    return httpService.get<any>(`${PMSApiPrefix()}/department/companyName/exist`, params);
+  }
+
+  /**
+   * 회사 부서 등록
+   * @param payload
+   * @returns
+   */
+  static createDepartment(payload: any) {
+    return httpService.post<any>(`${PMSApiPrefix()}/department`, payload);
+  }
+
+  /**
+   * 회사 부서 수정
+   * @param payload
+   * @returns
+   */
+  static updateDepartment(payload: any) {
+    return httpService.put<any>(`${PMSApiPrefix()}/department/${payload.deptId}`, payload);
+  }
 }
