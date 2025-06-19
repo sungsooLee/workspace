@@ -1,10 +1,9 @@
-import { ContentsRow, RadioGroupFormField } from '@learnway/ui';
-import React, { forwardRef, useEffect, useImperativeHandle } from 'react';
-import { useTranslation } from 'react-i18next';
-import { FormRow, FormSubTitle, SplitPanel } from '@shared/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { DropdownFormField } from '@features/form';
+import { FormSubTitle } from '@shared/ui';
+import { forwardRef, useEffect, useImperativeHandle } from 'react';
+import { useTranslation } from 'react-i18next';
 import { TabFormRef } from '../common/tab-form-ref';
+import { SplitPanel } from '@learnway/ui';
 
 interface curriculumProps {
   dummy?: any;
@@ -52,7 +51,7 @@ const CurriculumComponent = forwardRef<TabFormRef, curriculumProps>(
         {/*대표커리큘럼설정*/}
         <FormSubTitle label={t('대표 커리큘럼 설정')} lineType={'dark'} />
         {/* 트리 */}
-        <SplitPanel leftSize={'400'}>
+        <SplitPanel>
           <div>LEFT</div>
           <div>RIGHT</div>
         </SplitPanel>

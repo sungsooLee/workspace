@@ -22,7 +22,7 @@ function RouteComponent() {
     b: null, // CourseRegistration
   });
 
-  const [activeTab, setActiveTab] = React.useState('e');
+  const [activeTab, setActiveTab] = React.useState('c');
 
   // 모든 탭의 폼 데이터를 하나의 객체로 관리
   const [formData, setFormData] = React.useState<Record<string, any>>({});
