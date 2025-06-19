@@ -442,6 +442,7 @@ function LearningResourceTableComponent() {
               downloadMethod="post"
               downloadUrl={`${CMSApiPrefix()}/contents/excel`}
               downloadParams={params}
+              dataCount={data?.totalElements}
               disabled={!data?.totalElements}
             />
             <Button

@@ -19,6 +19,7 @@ interface ExcelButtonsProps {
   downloadMethod?: string;
   downloadUrl?: string;
   downloadParams?: Record<string, any>;
+  dataCount?: number;
   onBeforeDownload?: () => Promise<void>;
 
   // 공통
@@ -35,6 +36,7 @@ const GridExcelButtonsComponent: React.FC<ExcelButtonsProps> = ({
   downloadMethod = 'get',
   downloadUrl,
   downloadParams = {},
+  dataCount = 0,
   onBeforeDownload,
   disabled = false,
   className,
@@ -78,7 +80,7 @@ const GridExcelButtonsComponent: React.FC<ExcelButtonsProps> = ({
         // }
         const modalResult = await openModal({
           width: 'md',
-          content: <ExcelDownloadReasonModal />,
+          content: <ExcelDownloadReasonModal dataCount={dataCount} />,
         });
         console.log('🚀 ~ handleDownload ~ modalResult:', modalResult);
         return;

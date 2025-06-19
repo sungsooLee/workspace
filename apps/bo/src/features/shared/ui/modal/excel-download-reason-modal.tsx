@@ -15,16 +15,20 @@ import { IcoAlertCircle } from '@learnway/icons';
 import { FormRow } from '@shared/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { useActiveMenuDepthState, useFetchAuthUser } from '@learnway/auth/entities';
+import { useEffect } from 'react';
 
-interface ExcelDownloadReasonModalComponentProps {}
+interface ExcelDownloadReasonModalComponentProps {
+  dataCount: number;
+}
 
-function ExcelDownloadReasonModalCompoment({}: ExcelDownloadReasonModalComponentProps) {
+function ExcelDownloadReasonModalCompoment({ dataCount }: ExcelDownloadReasonModalComponentProps) {
   const { close: closeModal } = useModal();
   const { data: user } = useFetchAuthUser();
   const [activeMenuDepth] = useActiveMenuDepthState();
 
   const formConfig: DynamicFormConfig = {
     builders: [
+      { name: 'userUuid', type: 'hidden', value: user?.uuid },
       {
         name: 'employeeNumber',
         type: 'text',
@@ -62,11 +66,11 @@ function ExcelDownloadReasonModalCompoment({}: ExcelDownloadReasonModalComponent
         },
       },
       {
-        name: 'totalCounts',
+        name: 'dataCount',
         type: 'number',
         label: t('조회 건'),
         readOnly: true,
-        value: 15000,
+        value: dataCount,
         suffixText: t('건'),
       },
       {
@@ -108,60 +112,70 @@ function ExcelDownloadReasonModalCompoment({}: ExcelDownloadReasonModalComponent
       downloadDetailReason: true,
     },
   };
-  const { provider } = useDynamicForm(formConfig);
+  const { provider, setValue, onSubmit } = useDynamicForm(formConfig);
+
+  useEffect(() => {
+    setValue('dataCount', dataCount);
+  }, [dataCount]);
+
+  function handleSubmit(query: Record<string, any>) {
+    closeModal(query);
+  }
 
   return (
-    <ModalContainer>
-      <ModalTitle>
-        <div className={cn('flex', 'items-center')}>
-          {t('엑셀 다운로드 사유')}
-          <Tooltip
-            side="bottom"
-            align="start"
-            content={
-              <>
-                <h2>{t('도움말')}</h2>
-                <pre>
-                  {t(
-                    'ISMS 정보보호 관리체계 인증을 위해 개인정보 엑셀 다운로드 사유를 입력해 주세요.',
-                  )}
-                </pre>
-              </>
-            }
-          >
-            <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
-          </Tooltip>
-        </div>
-      </ModalTitle>
-      <ModalBody>
-        <ContentsRow>
-          <FormRow provider={provider} name="employeeNumber" />
-          <FormRow provider={provider} name="name" />
-        </ContentsRow>
-        <ContentsRow>
-          <FormRow provider={provider} name="menuPath" />
-        </ContentsRow>
-        <ContentsRow>
-          <FormRow provider={provider} name="searchQuery" />
-        </ContentsRow>
-        <ContentsRow>
-          <FormRow provider={provider} name="totalCounts" />
-        </ContentsRow>
-        <ContentsRow>
-          <FormRow provider={provider} name="downloadReasonType" />
-        </ContentsRow>
-        <ContentsRow>
-          <FormRow provider={provider} name="downloadDetailReasonType" />
-        </ContentsRow>
-        <ContentsRow>
-          <FormRow provider={provider} name="downloadDetailReason" />
-        </ContentsRow>
-      </ModalBody>
-      <ModalFooter>
-        <Button label={t('취소')} variant="gray" size="lg" onClick={() => closeModal()} />
-        <Button label={t('확인')} variant="primary" size="lg" onClick={() => closeModal('ok')} />
-      </ModalFooter>
-    </ModalContainer>
+    <form onSubmit={onSubmit(handleSubmit)}>
+      <ModalContainer>
+        <ModalTitle>
+          <div className={cn('flex', 'items-center')}>
+            {t('엑셀 다운로드 사유')}
+            <Tooltip
+              side="bottom"
+              align="start"
+              content={
+                <>
+                  <h2>{t('도움말')}</h2>
+                  <pre>
+                    {t(
+                      'ISMS 정보보호 관리체계 인증을 위해 개인정보 엑셀 다운로드 사유를 입력해 주세요.',
+                    )}
+                  </pre>
+                </>
+              }
+            >
+              <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
+            </Tooltip>
+          </div>
+        </ModalTitle>
+        <ModalBody>
+          <ContentsRow>
+            <FormRow provider={provider} name="employeeNumber" />
+            <FormRow provider={provider} name="name" />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider} name="menuPath" />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider} name="searchQuery" />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider} name="dataCount" />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider} name="downloadReasonType" />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider} name="downloadDetailReasonType" />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider} name="downloadDetailReason" />
+          </ContentsRow>
+        </ModalBody>
+        <ModalFooter>
+          <Button label={t('취소')} variant="gray" size="lg" onClick={() => closeModal()} />
+          <Button type="submit" label={t('확인')} variant="primary" size="lg" />
+        </ModalFooter>
+      </ModalContainer>
+    </form>
   );
 }
 

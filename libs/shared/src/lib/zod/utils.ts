@@ -104,6 +104,7 @@ export const buildJodObject = (validator: ValidatorConfig): ZodSchema => {
         schema = z.any();
         break;
       default:
+        console.log('🚀 ~ buildJodObject ~ config:', config);
         throw new Error(`Unsupported type: ${config.format}`);
     }
     if ('default' in config) {
