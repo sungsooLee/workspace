@@ -47,3 +47,12 @@ export const queryOptions = {
     },
   }),
 };
+
+export const mutateOptions = {
+  create: () => ({
+    mutationFn: (payload: any) => DepartmentService.createDepartment(payload),
+  }),
+  update: () => ({
+    mutationFn: (payload: any) => DepartmentService.updateDepartment(payload),
+  }),
+};
