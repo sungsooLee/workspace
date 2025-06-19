@@ -6,12 +6,21 @@ import {
   FileGroupInfo,
   FileInfo,
   GroupFileInfo,
+  ImageInfo,
 } from './type';
 
 /**
  * BE 에 S3 업로드 된 파일에대 한 파일 그룹 및 파일 정보 등록 요청 hook
  */
 const useFileManagerHook = () => {
+  // 썸네일 이미지 업로드 요청
+  const uploadImageFile = (formData?: FormData): Promise<ImageInfo> => {
+    return FileManagerService.uploadImageFile(formData);
+  };
+  // 썸네일 이미지 업로드 요청
+  const deleteImageFile = (imageUrl: string): Promise<ImageInfo> => {
+    return FileManagerService.deleteImageFile(imageUrl);
+  };
   // 파일 정보 생성
   const createFileInfo = (fileInfo: CreateFileInfoReq): Promise<FileInfo> => {
     return FileManagerService.createFileInfo(fileInfo);
@@ -36,6 +45,8 @@ const useFileManagerHook = () => {
   };
 
   return {
+    uploadImageFile,
+    deleteImageFile,
     createFileInfo,
     createFileGroupInfo,
     createFileGroupFiles,
