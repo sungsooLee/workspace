@@ -1,10 +1,11 @@
 import { ContentsRow, RadioGroupFormField } from '@learnway/ui';
 import React, { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FormRow, FormSubTitle } from '@shared/ui';
+import { FormRow, FormSubTitle, SwitchFormField } from '@shared/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { DropdownFormField } from '@features/form';
 import { TabFormRef } from '../common/tab-form-ref';
+import { FormDisplay } from '@features/form/ui/form-display';
 
 interface CourseRegistrationProps {
   dummy?: any;
@@ -50,130 +51,135 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationPro
     return (
       <div>
         {/*수강신청*/}
-        <FormSubTitle label={t('수강신청')} lineType={'dark'} />
+        {/* <FormSubTitle label={t('수강신청')} /> */}
+        <ContentsRow type={'horizontal'}>
+          <FormRow provider={provider} name={'수강신청'} />
+        </ContentsRow>
         {/*승인 결재 라인, 정원*/}
-        <ContentsRow>
-          {/*승인 결재 라인*/}
-          <FormRow
-            provider={provider}
-            name={'승인 결재 라인'}
-            element={
-              <DropdownFormField
-                options={[
-                  {
-                    label: '결재라인1',
-                    value: '결재라인1',
-                  },
-                  {
-                    label: '결재라인2',
-                    value: '결재라인2',
-                  },
-                ]}
-              />
-            }
-          />
-          {/*정원*/}
-          <FormRow
-            provider={provider}
-            name={'정원'}
-            element={
-              <RadioGroupFormField
-                options={[
-                  {
-                    label: 'option1',
-                    value: 'option1',
-                  },
-                  {
-                    label: 'option2',
-                    value: 'option2',
-                  },
-                ]}
-              />
-            }
-          />
-        </ContentsRow>
-        {/*수강신청 대기, 차수 중복수강*/}
-        <ContentsRow>
-          {/*수강신청 대기*/}
-          <FormRow
-            provider={provider}
-            name={'수강신청 대기'}
-            element={
-              <RadioGroupFormField
-                options={[
-                  {
-                    label: 'option1',
-                    value: 'option1',
-                  },
-                  {
-                    label: 'option2',
-                    value: 'option2',
-                  },
-                ]}
-              />
-            }
-          />
-          {/*차수 중복수강*/}
-          <FormRow
-            provider={provider}
-            name={'차수 중복수강'}
-            element={
-              <RadioGroupFormField
-                options={[
-                  {
-                    label: 'option1',
-                    value: 'option1',
-                  },
-                  {
-                    label: 'option2',
-                    value: 'option2',
-                  },
-                ]}
-              />
-            }
-          />
-        </ContentsRow>
-        {/*사전 레벨테스트, 교재 배송지 수집*/}
-        <ContentsRow>
-          {/*사전 레벨테스트*/}
-          <FormRow
-            provider={provider}
-            name={'사전 레벨테스트'}
-            element={
-              <RadioGroupFormField
-                options={[
-                  {
-                    label: 'option1',
-                    value: 'option1',
-                  },
-                  {
-                    label: 'option2',
-                    value: 'option2',
-                  },
-                ]}
-              />
-            }
-          />
-          {/*교재 배송지 수집*/}
-          <FormRow
-            provider={provider}
-            name={'교재 배송지 수집'}
-            element={
-              <RadioGroupFormField
-                options={[
-                  {
-                    label: 'option1',
-                    value: 'option1',
-                  },
-                  {
-                    label: 'option2',
-                    value: 'option2',
-                  },
-                ]}
-              />
-            }
-          />
-        </ContentsRow>
+        <FormDisplay provider={provider} dependencies={[{ name: '수강신청', value: true }]}>
+          <ContentsRow>
+            {/*승인 결재 라인*/}
+            <FormRow
+              provider={provider}
+              name={'승인 결재 라인'}
+              element={
+                <DropdownFormField
+                  options={[
+                    {
+                      label: '결재라인1',
+                      value: '결재라인1',
+                    },
+                    {
+                      label: '결재라인2',
+                      value: '결재라인2',
+                    },
+                  ]}
+                />
+              }
+            />
+            {/*정원*/}
+            <FormRow
+              provider={provider}
+              name={'정원'}
+              element={
+                <RadioGroupFormField
+                  options={[
+                    {
+                      label: 'option1',
+                      value: 'option1',
+                    },
+                    {
+                      label: 'option2',
+                      value: 'option2',
+                    },
+                  ]}
+                />
+              }
+            />
+          </ContentsRow>
+          {/*수강신청 대기, 차수 중복수강*/}
+          <ContentsRow>
+            {/*수강신청 대기*/}
+            <FormRow
+              provider={provider}
+              name={'수강신청 대기'}
+              element={
+                <RadioGroupFormField
+                  options={[
+                    {
+                      label: 'option1',
+                      value: 'option1',
+                    },
+                    {
+                      label: 'option2',
+                      value: 'option2',
+                    },
+                  ]}
+                />
+              }
+            />
+            {/*차수 중복수강*/}
+            <FormRow
+              provider={provider}
+              name={'차수 중복수강'}
+              element={
+                <RadioGroupFormField
+                  options={[
+                    {
+                      label: 'option1',
+                      value: 'option1',
+                    },
+                    {
+                      label: 'option2',
+                      value: 'option2',
+                    },
+                  ]}
+                />
+              }
+            />
+          </ContentsRow>
+          {/*사전 레벨테스트, 교재 배송지 수집*/}
+          <ContentsRow>
+            {/*사전 레벨테스트*/}
+            <FormRow
+              provider={provider}
+              name={'사전 레벨테스트'}
+              element={
+                <RadioGroupFormField
+                  options={[
+                    {
+                      label: 'option1',
+                      value: 'option1',
+                    },
+                    {
+                      label: 'option2',
+                      value: 'option2',
+                    },
+                  ]}
+                />
+              }
+            />
+            {/*교재 배송지 수집*/}
+            <FormRow
+              provider={provider}
+              name={'교재 배송지 수집'}
+              element={
+                <RadioGroupFormField
+                  options={[
+                    {
+                      label: 'option1',
+                      value: 'option1',
+                    },
+                    {
+                      label: 'option2',
+                      value: 'option2',
+                    },
+                  ]}
+                />
+              }
+            />
+          </ContentsRow>
+        </FormDisplay>
       </div>
     );
   },
@@ -183,6 +189,15 @@ export const CourseRegistration = CourseRegistrationComponent;
 
 const formConfig: DynamicFormConfig = {
   builders: [
+    {
+      name: '수강신청',
+      type: 'switch',
+      label: '수강신청',
+      value: true,
+      switchConfig: {
+        label: (value: boolean) => (value ? '사용' : '미사용'),
+      },
+    },
     // 승인 결재 라인
     {
       name: '승인 결재 라인',

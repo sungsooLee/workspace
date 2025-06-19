@@ -62,7 +62,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
     return (
       <div>
         {/*기본 정보 설정*/}
-        <FormSubTitle label={t('기본 정보 설정')} lineType={'dark'} />
+        <FormSubTitle label={t('기본 정보 설정')} />
         {/*유형, 채널*/}
         <ContentsRow>
           {/*유형*/}
@@ -122,7 +122,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         </ContentsRow>
 
         {/*공개대상*/}
-        <FormSubTitle label={t('공개대상')} lineType={'dark'} />
+        <FormSubTitle label={t('공개대상')} />
         {/*테넌트*/}
         <ContentsRow>
           <FormRow
@@ -176,7 +176,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         </ContentsRow>
 
         {/*과정소개*/}
-        <FormSubTitle label={t('과정소개')} lineType={'dark'} />
+        <FormSubTitle label={t('과정소개')} />
         {/*언어 설정*/}
         <ContentsRow>
           <FormRow
@@ -263,7 +263,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         </ContentsRow>
 
         {/*관리자*/}
-        <FormSubTitle label={t('관리자')} lineType={'dark'} />
+        <FormSubTitle label={t('관리자')} />
         {/*담당자*/}
         <ContentsRow>
           {/*담당자*/}

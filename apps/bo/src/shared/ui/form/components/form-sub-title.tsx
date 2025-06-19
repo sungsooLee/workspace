@@ -23,7 +23,7 @@ const FormSubTitleComponent = ({
   titleNode,
   actionNode,
   label,
-  lineType,
+  lineType = 'dark',
   variant = 'text', // 기본값 설정
   size = 'md', // 기본값 설정
   className,
