@@ -192,7 +192,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
   const handleAddClick = () => {
     openModal({
       width: 'lg',
-      content: <LoginRestrictTimeSettingModal />,
+      content: <LoginRestrictTimeSettingModal mode={EnFormMode.ADD} />,
       onClose(data: any) {
         if (data) {
           console.log('## data', data);
@@ -302,7 +302,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
   const handleLoginRestrictTimeDetailClick = (info: any) => {
     openModal({
       width: 'lg',
-      content: <LoginRestrictTimeSettingModal mode={'view'} data={info} />,
+      content: <LoginRestrictTimeSettingModal mode={EnFormMode.VIEW} data={info} />,
       onClose(data: any) {
         if (data) {
           console.log('## data', data);

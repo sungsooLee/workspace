@@ -10,13 +10,6 @@ import {
   Button,
   ContentsRow,
   RadioGroupFormField,
-  useGridBox,
-  useGridBoxConfig,
-  TableBox,
-  Dropdown,
-  Switch,
-  TimePicker,
-  DatePicker,
   EditDropdownCell,
   EditSwitchCell,
   EditTimeRangeCell,
@@ -28,13 +21,17 @@ import { CellContext } from '@tanstack/react-table';
 import { useDynamicForm, DynamicFormConfig, useCodeStore, CODE_GROUP } from '@learnway/hooks';
 import { FormRow } from '@shared/ui';
 import { formUtils } from '@entities/form-utils';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { EnFormMode } from '@types';
 
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import dayjs from 'dayjs';
-import { timeFormatYear } from '@learnway/shared';
 
-const LoginRestrictTimeSettingModalComponent: FC<any> = ({ mode = 'add', data }) => {
+const LoginRestrictTimeSettingModalComponent: FC<any> = ({
+  mode = EnFormMode.ADD,
+  data,
+}: {
+  mode: EnFormMode;
+  data: any;
+}) => {
   const { close, alert } = useModal();
   const { getCode } = useCodeStore();
 
@@ -54,7 +51,6 @@ const LoginRestrictTimeSettingModalComponent: FC<any> = ({ mode = 'add', data })
 
   const [dayOfWeeksOptions, setDayOfWeeksOptions] = useState<any[]>([]);
 
-  const [timeRestriction, setTimeRestriction] = useState<any[]>([]);
   const [restrictionType, setRestrictionType] = useState('');
   const [restrictionSettingType, setRestrictionSettingType] = useState('');
   const [settingTypeDisabled, setSettingTypeDisabled] = useState(false);
@@ -92,7 +88,7 @@ const LoginRestrictTimeSettingModalComponent: FC<any> = ({ mode = 'add', data })
         }
       });
     }
-    if (mode === 'view') close({ index: data.index, node: node });
+    if (mode === EnFormMode.VIEW) close({ index: data.index, node: node });
     else close(node);
   };
 
@@ -103,7 +99,7 @@ const LoginRestrictTimeSettingModalComponent: FC<any> = ({ mode = 'add', data })
 
   useEffect(() => {
     initOptionConfig();
-    if (mode === 'view' && data) {
+    if (mode === EnFormMode.VIEW && data) {
       const convertedData = {
         ...data.original,
         timeLimits: data.original.timeLimits.map((item: any) => ({

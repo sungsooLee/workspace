@@ -29,7 +29,7 @@ import {
 } from '@features/tenant/management/ui/duplicate-check-input-form-field';
 import { LoginRestrictTimeSettingModal } from '@features/shared/ui/modal/login-restrict-time-setting-modal';
 import { UserGroupTabsChoiceModal, UserGroupChoiceModal } from '@features/shared';
-import { EnGlobalConst } from '@types';
+import { EnFormMode, EnGlobalConst } from '@types';
 
 import { useCreateCompany, useUpdateCompany, useFetchCompany } from '@entities/companies';
 import CompaniesService from '@entities/companies/api/companies';
@@ -195,7 +195,7 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
   const handleAddClick = () => {
     openModal({
       width: 'lg',
-      content: <LoginRestrictTimeSettingModal />,
+      content: <LoginRestrictTimeSettingModal mode={EnFormMode.ADD} />,
       onClose(data: any) {
         if (data) {
           console.log('## data', data);
@@ -305,7 +305,7 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
   const handleLoginRestrictTimeDetailClick = (info: any) => {
     openModal({
       width: 'lg',
-      content: <LoginRestrictTimeSettingModal mode={'view'} data={info} />,
+      content: <LoginRestrictTimeSettingModal mode={EnFormMode.VIEW} data={info} />,
       onClose(data: any) {
         if (data) {
           console.log('## data', data);
