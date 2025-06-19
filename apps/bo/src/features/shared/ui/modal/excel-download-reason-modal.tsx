@@ -103,9 +103,7 @@ function ExcelDownloadReasonModalCompoment({
     ],
     validator: {
       downloadReasonType: true,
-      downloadDetailReasonType: {
-        required: (values) => values.downloadReasonType !== 'ETC',
-      },
+      downloadDetailReasonType: true,
       downloadDetailReason: {
         required: (values) => values.downloadReasonType === 'ETC',
       },
@@ -135,17 +133,12 @@ function ExcelDownloadReasonModalCompoment({
   useEffect(() => {
     if (!downloadReasonType) return;
 
-    setValue('downloadDetailReason', '');
-    if (downloadReasonType === 'ETC') {
-      setValue('downloadDetailReasonType', '');
-      return;
-    }
-
     const DOWNLOAD_DETAIL_REASON_TYPE_CODE_GROUP: Record<string, string> = {
       AFFAIRS: CODE_GROUP['pms.excel.DownloadAffairsReasonTypeCode'],
       LEGAL_REQUEST: CODE_GROUP['pms.excel.DownloadLegalRequestReasonTypeCode'],
       OUTSIDE_SUBMIT: CODE_GROUP['pms.excel.DownloadOutsideSubmitReasonTypeCode'],
       RND: CODE_GROUP['pms.excel.DownloadRndReasonTypeCode'],
+      ETC: CODE_GROUP['pms.excel.DownloadEtcReasonTypeCode'],
     };
 
     (async () => {
@@ -154,6 +147,7 @@ function ExcelDownloadReasonModalCompoment({
       );
       setDownloadDetailReasonTypeOptions(downloadDetailReasonTypeOption);
       setValue('downloadDetailReasonType', get(first(downloadDetailReasonTypeOption), 'value'));
+      setValue('downloadDetailReason', '');
     })();
   }, [downloadReasonType]);
 
@@ -164,11 +158,9 @@ function ExcelDownloadReasonModalCompoment({
         'menuPath',
         'dataCount',
         'downloadReasonType',
+        'downloadDetailReasonType',
         'downloadDetailReason',
       ]),
-      ...(query.downloadDetailReasonType && {
-        downloadDetailReasonType: query.downloadDetailReasonType,
-      }),
       requestParameter: JSON.stringify(mapValues(paramLabels, (option) => get(option, 'value'))),
     });
   }
