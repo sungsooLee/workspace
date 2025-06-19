@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Button, GridBox, useGridBox } from '@learnway/ui';
+import { Button, GridBox, SplitPanel, useGridBox } from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useSearchBox } from '@learnway/hooks';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';

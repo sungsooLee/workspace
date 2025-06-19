@@ -1,23 +1,10 @@
-import {
-  CheckboxGroupFormField,
-  ChipListModalSelectorFormField,
-  ContentsRow,
-  RadioGroupFormField,
-} from '@learnway/ui';
-import React, { forwardRef, useEffect, useImperativeHandle } from 'react';
-import { useTranslation } from 'react-i18next';
-import {
-  ChipListFormField,
-  FormRow,
-  FormSubTitle,
-  SplitPanel,
-  ThumbnailListFormField,
-} from '@shared/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { DropdownFormField } from '@features/form';
-import { TabFormRef } from '../common/tab-form-ref';
-import { TeacherListModal } from '@features/learning/course';
+import { ContentsRow, RadioGroupFormField } from '@learnway/ui';
+import { ChipListFormField, FormRow, FormSubTitle, ThumbnailListFormField } from '@shared/ui';
 import { DateRangeFormField } from '@shared/ui/search-box';
+import { forwardRef, useEffect, useImperativeHandle } from 'react';
+import { useTranslation } from 'react-i18next';
+import { TabFormRef } from '../common/tab-form-ref';
 
 interface PublishCourseProps {
   dummy?: any;
