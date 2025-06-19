@@ -34,14 +34,48 @@ TemplateDivider.storyName = 'Divider';
 
 // SplitPanel
 export const TemplateSplitPanel: any = (args: any) => {
+  const Left = () => <div className={'bg-lime-300'}>LEFT</div>;
+  const Center = () => <div className={'bg-violet-300'}>Center</div>;
+  const Right = () => <div className={'bg-orange-300'}>RIGHT</div>;
   return (
-    <div className={'border border-gray-400 p-10'}>
-      <section>Search Box</section>
-      <SplitPanel size={[100, 200]}>
-        <div>LEFT</div>
-        <div>RIGHT</div>
+    <>
+      <section className="mt-8 text-4xl italic">설정 값 없음 - 모든 영역 1/N</section>
+      <SplitPanel>
+        <Left />
+        <Right />
       </SplitPanel>
-    </div>
+
+      <section className="mt-8 text-4xl italic">50% 50%</section>
+      <SplitPanel size={['50%', '50%']}>
+        <Left />
+        <Right />
+      </SplitPanel>
+
+      <section className="mt-8 text-4xl italic">Left: 300px, Right: auto</section>
+      <SplitPanel size={[300, 'auto']}>
+        <Left />
+        <Right />
+      </SplitPanel>
+
+      <section className="mt-8 text-4xl italic">Left: auto, Right: 300px</section>
+      <SplitPanel size={['auto', 300]}>
+        <Left />
+        <Right />
+      </SplitPanel>
+
+      <section className="mt-8 text-4xl italic">Left: 100px, Center: 200px, Right: auto</section>
+      <SplitPanel size={['100px', '200px', 'auto']}>
+        <Left />
+        <Center />
+        <Right />
+      </SplitPanel>
+
+      <section className="mt-8 text-4xl italic">divider=true 설정</section>
+      <SplitPanel divider={true}>
+        <Left />
+        <Right />
+      </SplitPanel>
+    </>
   );
 };
 TemplateSplitPanel.storyName = 'SplitPanel';

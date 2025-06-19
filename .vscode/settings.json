@@ -5,4 +5,5 @@
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "prettier.requireConfig": true,
+  "nxConsole.generateAiAgentRules": true
 }

@@ -1,17 +1,18 @@
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { FormSubTitle } from '@shared/ui';
+import { ContentsRow, RadioGroupFormField } from '@learnway/ui';
+import { ChipListFormField, FormRow, FormSubTitle, ThumbnailListFormField } from '@shared/ui';
+import { DateRangeFormField } from '@shared/ui/search-box';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TabFormRef } from '../common/tab-form-ref';
-import { SplitPanel } from '@learnway/ui';
 
-interface curriculumProps {
+interface PublishCourseProps {
   dummy?: any;
   // dynamicForm: UseDynamicFormResult;
   initialData?: any;
 }
 
-const CurriculumComponent = forwardRef<TabFormRef, curriculumProps>(
+const PublishCourseComponent = forwardRef<TabFormRef, PublishCourseProps>(
   ({ dummy, initialData }, ref) => {
     const { t } = useTranslation();
     // const { provider, getValues, fetchData } = dynamicForm;
@@ -39,7 +40,7 @@ const CurriculumComponent = forwardRef<TabFormRef, curriculumProps>(
     }));
 
     useEffect(() => {
-      console.log('curriculumComponent init');
+      console.log('PuComponent init');
       // 초기 데이터가 있으면 설정
       if (initialData) {
         fetchData(initialData);
@@ -48,69 +49,92 @@ const CurriculumComponent = forwardRef<TabFormRef, curriculumProps>(
 
     return (
       <div>
-        {/*대표커리큘럼설정*/}
-        <FormSubTitle label={t('대표 커리큘럼 설정')} lineType={'dark'} />
-        {/* 트리 */}
-        <SplitPanel divider>
-          <div>LEFT</div>
-          <div className="h-[300px]">RIGHT</div>
-        </SplitPanel>
+        {/*게시*/}
+        <FormSubTitle label={t('게시')} lineType={'dark'} />
+        {/*과정 사용유무*/}
+        <ContentsRow>
+          <FormRow
+            provider={provider}
+            name={'과정 사용유무'}
+            element={
+              <RadioGroupFormField
+                options={[
+                  {
+                    label: '옵션1',
+                    value: '옵션1',
+                  },
+                  {
+                    label: '옵션2',
+                    value: '옵션2',
+                  },
+                ]}
+              />
+            }
+          />
+        </ContentsRow>
+        {/*노출 기간*/}
+        <ContentsRow>
+          <FormRow provider={provider} name={'노출 기간'} element={<DateRangeFormField />} />
+        </ContentsRow>
+        {/*대표 이미지*/}
+        <ContentsRow>
+          <FormRow provider={provider} name={'대표 이미지'} element={<ThumbnailListFormField />} />
+        </ContentsRow>
+        {/*태그*/}
+        <ContentsRow>
+          <FormRow
+            provider={provider}
+            name={'태그'}
+            element={
+              <ChipListFormField
+                chipListConfig={{
+                  showInput: true,
+                  wordwrap: true,
+                }}
+              />
+            }
+          />
+        </ContentsRow>
       </div>
     );
   },
 );
 
-export const Curriculum = CurriculumComponent;
+export const PublishCourse = PublishCourseComponent;
 
 const formConfig: DynamicFormConfig = {
   builders: [
-    // 승인 결재 라인
+    // 과정 사용유무
     {
-      name: '승인 결재 라인',
+      name: '과정 사용유무',
       type: 'custom',
-      label: '승인 결재 라인',
+      label: '과정 사용유무',
       format: 'string',
       value: '',
     },
-    // 정원
+    // 노출 기간
     {
-      name: '정원',
+      name: '노출 기간',
       type: 'custom',
-      label: '정원',
+      label: '노출 기간',
       format: 'string',
       value: '',
     },
-    // 수강신청 대기
+    // 대표 이미지
     {
-      name: '수강신청 대기',
+      name: '대표 이미지',
       type: 'custom',
-      label: '수강신청 대기',
+      label: '대표 이미지',
       format: 'string',
       value: '',
     },
-    // 차수 중복수강
+    // 태그
     {
-      name: '차수 중복수강',
+      name: '태그',
       type: 'custom',
-      label: '차수 중복수강',
-      format: 'string',
-      value: '',
-    },
-    // 사전 레벨테스트
-    {
-      name: '사전 레벨테스트',
-      type: 'custom',
-      label: '사전 레벨테스트',
-      format: 'string',
-      value: '',
-    },
-    // 교재 배송지 수집
-    {
-      name: '교재 배송지 수집',
-      type: 'custom',
-      label: '교재 배송지 수집',
-      format: 'string',
-      value: '',
+      label: '태그',
+      format: 'array',
+      value: [],
     },
   ],
   // validator: {

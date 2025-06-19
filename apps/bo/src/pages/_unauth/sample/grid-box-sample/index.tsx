@@ -1,9 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { t } from 'i18next';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button } from '@learnway/ui';
+import { Button, SplitPanel } from '@learnway/ui';
 import { ContentsButtons, MainContents, PageContainer } from '@widgets/layout';
-import { SplitPanel } from '@shared/ui';
 import { RightPanel } from './-components/right/right-panel';
 import { LeftPanel } from '@pages/_unauth/sample/grid-box-sample/-components/left/left-panel';
 
@@ -31,7 +30,7 @@ function RouteComponent() {
         <Button type="button" variant="point" size="sm" label={t('초기화')} onClick={handleReset} />
       </ContentsButtons>
       <MainContents>
-        <SplitPanel rightSize={700}>
+        <SplitPanel size={['auto', 700]} divider>
           <LeftPanel value={listValue} onChange={handleLeftPanelChange} />
           <RightPanel params={params} />
         </SplitPanel>

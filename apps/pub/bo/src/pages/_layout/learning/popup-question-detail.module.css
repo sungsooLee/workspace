@@ -46,4 +46,16 @@
       }
     }
   }
+
+  [class*='table_box'] {
+    [class*='table_info'] {
+      [class*='select_wrap'] {
+        &.detail_drop {
+          [class*='select__control'] {
+            @apply !w-[268px];
+          }
+        }
+      }
+    }
+  }
 }
