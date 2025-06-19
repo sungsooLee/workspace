@@ -17,6 +17,7 @@ import { DynamicFormConfig, SelectOption, useDynamicForm } from '@learnway/hooks
 import { useActiveMenuDepthState, useFetchAuthUser } from '@learnway/auth/entities';
 import { useEffect } from 'react';
 import { get, mapValues, pick, values } from 'lodash';
+import { FormDisplay } from '@features/form/ui/form-display';
 
 interface ExcelDownloadReasonModalComponentProps {
   dataCount: number;
@@ -171,12 +172,26 @@ function ExcelDownloadReasonModalCompoment({
           <ContentsRow>
             <FormRow provider={provider} name="downloadReasonType" />
           </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider} name="downloadDetailReasonType" />
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider} name="downloadDetailReason" />
-          </ContentsRow>
+          <FormDisplay
+            provider={provider}
+            condition="or"
+            dependencies={[
+              { name: 'downloadReasonType', value: 'a' },
+              { name: 'downloadReasonType', value: 'b' },
+            ]}
+          >
+            <ContentsRow>
+              <FormRow provider={provider} name="downloadDetailReasonType" />
+            </ContentsRow>
+          </FormDisplay>
+          <FormDisplay
+            provider={provider}
+            dependencies={[{ name: 'downloadReasonType', value: 'c' }]}
+          >
+            <ContentsRow>
+              <FormRow provider={provider} name="downloadDetailReason" />
+            </ContentsRow>
+          </FormDisplay>
         </ModalBody>
         <ModalFooter>
           <Button label={t('취소')} variant="gray" size="lg" onClick={() => closeModal()} />
