@@ -6,6 +6,7 @@ import { PMSApiPrefix } from '@learnway/config';
 import { IcoDownload, IcoUploadCloud } from '@learnway/icons';
 import { t } from 'i18next';
 import { ExcelDownloadReasonModal } from '../modal/excel-download-reason-modal';
+import { SelectOption } from '@learnway/hooks';
 
 interface ExcelButtonsProps {
   // 업로드 관련
@@ -19,6 +20,8 @@ interface ExcelButtonsProps {
   downloadMethod?: string;
   downloadUrl?: string;
   downloadParams?: Record<string, any>;
+  downloadParamLabels?: Record<string, SelectOption>;
+  dataCount?: number;
   onBeforeDownload?: () => Promise<void>;
 
   // 공통
@@ -35,6 +38,8 @@ const GridExcelButtonsComponent: React.FC<ExcelButtonsProps> = ({
   downloadMethod = 'get',
   downloadUrl,
   downloadParams = {},
+  downloadParamLabels = {},
+  dataCount = 0,
   onBeforeDownload,
   disabled = false,
   className,
@@ -58,37 +63,35 @@ const GridExcelButtonsComponent: React.FC<ExcelButtonsProps> = ({
   const handleDownload = async () => {
     if (!downloadUrl) return;
 
-    const executeDownload = async () => {
+    const executeDownload = async (params: Record<string, any>) => {
       await fileDownload({
         url: downloadUrl,
-        params: { ...downloadParams, menuId: currentMenu?.menuId },
+        params,
         method: downloadMethod,
       });
     };
 
     try {
+      let downloadReason: undefined | Record<string, any>;
       if (hasPersonalInfo) {
-        // const isConfirmed = await confirm({
-        //   title: '개인정보 포함 데이터 다운로드',
-        //   content: '개인정보가 포함된 데이터를 다운로드하시겠습니까?',
-        // });
-
-        // if (!isConfirmed) {
-        //   return;
-        // }
-        const modalResult = await openModal({
+        downloadReason = await openModal({
           width: 'md',
-          content: <ExcelDownloadReasonModal />,
+          content: (
+            <ExcelDownloadReasonModal dataCount={dataCount} paramLabels={downloadParamLabels} />
+          ),
         });
-        console.log('🚀 ~ handleDownload ~ modalResult:', modalResult);
-        return;
+        if (!downloadReason) return;
       }
 
       if (onBeforeDownload) {
         await onBeforeDownload();
       }
 
-      await executeDownload();
+      await executeDownload({
+        ...downloadParams,
+        menuId: currentMenu?.menuId,
+        ...(downloadReason && { downloadReason }),
+      });
     } catch (error) {
       console.error('다운로드 중 오류 발생:', error);
     }

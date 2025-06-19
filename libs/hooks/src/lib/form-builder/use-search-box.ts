@@ -1,11 +1,11 @@
 import { DynamicFormProvider, SearchBoxConfig, SelectOption, UseSearchBoxReturn } from './type';
 import { useForm } from 'react-hook-form';
-import { FormEvent, useMemo, useRef, useState } from 'react';
+import { FormEvent, useMemo, useState } from 'react';
 import { extractSearchBoxDefaultValues } from './util';
 import { buildJodObject, ValidatorConfig, ValidatorFormat } from '@learnway/shared';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { filter, flatten } from 'lodash';
-import { ALL_OPTION } from './constants';
+import { find, first, fromPairs, isArray, isNil, omitBy } from 'lodash';
+import { t } from 'i18next';
 /**
  * 동적 으로 검색 영역에 대한 지원을 하는 훅 (useSearchBox)
  *
@@ -23,24 +23,24 @@ const useSearchBoxHook = <T extends SearchBoxConfig>(config: T): UseSearchBoxRet
     setCurrentOptions((prev) => ({ ...prev, [name]: options }));
   };
 
+  const flattenBuilders = (list: any[]): any[] => {
+    const result: any[] = [];
+    list.forEach((item) => {
+      if (Array.isArray(item)) {
+        result.push(...flattenBuilders(item));
+      } else if (item.type === 'group' && Array.isArray(item.builders)) {
+        result.push(...flattenBuilders(item.builders));
+      } else {
+        result.push(item);
+      }
+    });
+    return result;
+  };
+
+  const flatBuilders = flattenBuilders(config.builders);
+
   const validator = useMemo<ValidatorConfig>(() => {
-    const { builders, validator = {} } = config;
-
-    const flattenBuilders = (list: any[]): any[] => {
-      const result: any[] = [];
-      list.forEach((item) => {
-        if (Array.isArray(item)) {
-          result.push(...flattenBuilders(item));
-        } else if (item.type === 'group' && Array.isArray(item.builders)) {
-          result.push(...flattenBuilders(item.builders));
-        } else {
-          result.push(item);
-        }
-      });
-      return result;
-    };
-
-    const flatBuilders = flattenBuilders(builders);
+    const { validator = {} } = config;
 
     return flatBuilders.reduce((acc, builder) => {
       const key = builder.name;
@@ -197,6 +197,42 @@ const useSearchBoxHook = <T extends SearchBoxConfig>(config: T): UseSearchBoxRet
     setOriginalValues(data);
   };
 
+  /**
+   * 폼의 현재 값을 SelectOption 형식으로 가져오기 함수
+   *
+   * text 데이터는 { value: value, label: value }로 리턴
+   *
+   * @returns {Record<string, SelectOption>}
+   */
+  const getValuesWithLabel = (): Record<string, SelectOption> => {
+    const values = getValues();
+
+    const selectedOptions = flatBuilders.map((builder) => {
+      if (builder.options || builder.optionsConfig) {
+        const options = getOptions(builder.name)?.map((option) => ({
+          ...option,
+          label: t(option.label || ''),
+        }));
+        if (!options) return [builder.name, null];
+
+        const selectedOption = isArray(values[builder.name])
+          ? values[builder.name].map((value: any) => find(options, { value }))
+          : find(options, { value: values[builder.name] });
+
+        if (selectedOption && (!isArray(selectedOption) || first(selectedOption)?.value))
+          return [builder.name, selectedOption];
+
+        return [builder.name, null];
+      }
+
+      if (values[builder.name])
+        return [builder.name, { value: values[builder.name], label: values[builder.name] }];
+
+      return [builder.name, null];
+    });
+    return omitBy(fromPairs(selectedOptions), (value) => isNil(value) || value === '');
+  };
+
   // provider 객체 반환
   return {
     provider: {
@@ -215,6 +251,7 @@ const useSearchBoxHook = <T extends SearchBoxConfig>(config: T): UseSearchBoxRet
     fetchData,
     setFormError,
     getValues,
+    getValuesWithLabel,
     setValue,
     setOptions,
     clearFormError: clearErrors,
