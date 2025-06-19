@@ -263,7 +263,7 @@ export const transformMenuApiDataToTreeData = (apiData: any, siteScope: string) 
 
         // 필수 트리 속성
         key: node.tenantMappingMenuId?.toString(), // menuId를 key로 사용
-        title: getMenuTile(node, siteScope), // title이 없으면 menuCode 사용
+        title: node.menuName || node.menuCode, // title이 없으면 menuCode 사용
         parentKey: node.parentId?.toString(), // parentId를 parentKey로 변환
         children: node.children || [],
         original: node,

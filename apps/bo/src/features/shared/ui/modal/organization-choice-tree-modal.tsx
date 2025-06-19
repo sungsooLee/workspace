@@ -85,6 +85,7 @@ const OrganizationChoiceTreeModalComponent = ({ companyCodes }: { companyCodes: 
                             closeModal({
                               ...node,
                               label: findOrganizationPathById(organizationTree, node.key),
+                              allTreePath: getAllParent(organizationTree, node.key),
                             });
                           }}
                           stopPropagation
