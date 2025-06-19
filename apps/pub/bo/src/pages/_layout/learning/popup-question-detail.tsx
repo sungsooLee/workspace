@@ -15,6 +15,7 @@ import {
   Input,
   TableBox,
   Checkbox,
+  Dropdown,
 } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { cn } from '@learnway/shared';
@@ -252,6 +253,20 @@ function RouteComponent() {
       }),
     ] as ColumnDef<any, unknown>[];
 
+    // dropdown
+    const [selectedValues, setSelectedValues] = useState<string[]>([]);
+    const [selectedValues2, setSelectedValues2] = useState<string[]>([]);
+    const options = [
+      { value: 'option1', label: '과정이해도' },
+      { value: 'option2', label: '과정이해도2' },
+      { value: 'option3', label: '과정이해도3' },
+    ];
+    const options2 = [
+      { value: 'option1', label: '척도형 데이터 1 (아주 만족~만족)' },
+      { value: 'option2', label: '척도형 데이터 2 (아주 만족~만족)' },
+      { value: 'option3', label: '척도형 데이터 3 (아주 만족~만족)' },
+    ];
+
     return (
       <ModalContainer>
         <ModalTitle>{'문항추가'}</ModalTitle>
@@ -363,6 +378,31 @@ function RouteComponent() {
                   />
                 </div>
               </div>
+            </ContentsRow>
+            {/* 퍼블수정 20250619 문항속성 추가 */}
+            <ContentsRow>
+              {/* form_item */}
+              <div className={formStyles.form_item}>
+                <label htmlFor="name-type2-1" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>문항속성</span>
+                  {/* 필수 케이스 */}
+                  <span className={cn(formStyles.status, formStyles.required)}>
+                    <IcoFormRequired width={12} height={12} />
+                  </span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Dropdown
+                    options={options}
+                    value={selectedValues}
+                    onChange={(selected) => setSelectedValues(selected)}
+                    variant="default"
+                    placeholder="선택"
+                    size={'sm'}
+                  />
+                </div>
+              </div>
+              <div className={formStyles.form_item}></div>
+              <div className={formStyles.form_item}></div>
             </ContentsRow>
             <ContentsRow>
               {/* form_item */}
@@ -476,9 +516,21 @@ function RouteComponent() {
               columns={columns3}
               tableMode={true}
               showNumberingColumn={true}
-              showSelectAll={true}
+              // showSelectAll={true}
               title={'보기목록'}
               className={styles.detail_table03}
+              // 퍼블수정 20250619 dropdown case 추가
+              customButtonNode={
+                <Dropdown
+                  className={styles.detail_drop}
+                  options={options2}
+                  value={selectedValues2}
+                  onChange={(selected) => setSelectedValues2(selected)}
+                  variant="default"
+                  placeholder="척도형 데이터 1 (아주 만족~만족)"
+                  size={'sm'}
+                />
+              }
             />
           </div>
         </ModalBody>
