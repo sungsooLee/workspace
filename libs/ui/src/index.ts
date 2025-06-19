@@ -87,6 +87,7 @@ export * from './lib/elements/divider/divider';
 export * from './lib/elements/split-panel/split-panel';
 export * from './lib/empty-text/empty-text';
 export * from './lib/file-upload/thumbnail-image-upload';
+export * from './lib/file-upload/thumbnail-image-upload-v2';
 export * from './lib/file-upload/uppy-file-upload';
 export * from './lib/form-field/checkbox-group-form-field/checkbox-group-form-field';
 export * from './lib/form-field/chip-list-modal-selector-form-field/chip-list-modal-selector-form-field';

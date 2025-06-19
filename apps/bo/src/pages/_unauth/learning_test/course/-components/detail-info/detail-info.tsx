@@ -60,7 +60,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
     return (
       <div>
         {/*학습환경*/}
-        <FormSubTitle label={t('학습환경')} lineType={'dark'} />
+        <FormSubTitle label={t('학습환경')} />
         {/* 기기 제한, 네트워크 제한, 학습시간 제한 */}
         <ContentsRow>
           {/*기기 제한*/}
@@ -183,7 +183,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
         </ContentsRow>
 
         {/*학습제어*/}
-        <FormSubTitle label={t('학습제어')} lineType={'dark'} />
+        <FormSubTitle label={t('학습제어')} />
         {/* 1일 진도제한, 진도 초기화, 순차 학습  */}
         <ContentsRow>
           {/* 1일 진도제한 */}
@@ -289,7 +289,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
         </ContentsRow>
 
         {/*이수기준*/}
-        <FormSubTitle label={t('이수기준')} lineType={'dark'} />
+        <FormSubTitle label={t('이수기준')} />
         {/* 이수처리 설정, 수료증 제공 */}
         <ContentsRow>
           {/* 이수처리 설정  */}
@@ -382,7 +382,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
         </ContentsRow>
 
         {/*커뮤니티*/}
-        <FormSubTitle label={t('커뮤니티')} lineType={'dark'} />
+        <FormSubTitle label={t('커뮤니티')} />
         {/* 커뮤니티 및 공유 설정 */}
         <ContentsRow>
           <FormRow
@@ -418,7 +418,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
         </ContentsRow>
 
         {/*강사*/}
-        <FormSubTitle label={t('강사')} lineType={'dark'} />
+        <FormSubTitle label={t('강사')} />
         {/* 강사 */}
         <ContentsRow>
           {/* 강사  */}
@@ -443,7 +443,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
         </ContentsRow>
 
         {/*교재*/}
-        <FormSubTitle label={t('교재')} lineType={'dark'} />
+        <FormSubTitle label={t('교재')} />
         {/*교재명, 교재비*/}
         <ContentsRow>
           {/*교재명*/}
@@ -453,7 +453,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
         </ContentsRow>
 
         {/*사전/연관학습*/}
-        <FormSubTitle label={t('사전/연관학습')} lineType={'dark'} />
+        <FormSubTitle label={t('사전/연관학습')} />
         {/*사전 필수과정*/}
         <ContentsRow>
           <FormRow
@@ -492,7 +492,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
         </ContentsRow>
 
         {/*행정항목*/}
-        <FormSubTitle label={t('행정항목')} lineType={'dark'} />
+        <FormSubTitle label={t('행정항목')} />
         {/*HMG 과정 데이터 표준 대분류, 중분류*/}
         <ContentsRow>
           {/* 대분류  */}
@@ -618,7 +618,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
         </ContentsRow>
 
         {/*오토에버 위탁 전용*/}
-        <FormSubTitle label={t('오토에버 위탁 전용')} lineType={'dark'} />
+        <FormSubTitle label={t('오토에버 위탁 전용')} />
         {/* 사전 레벨테스트, 교재 배송지 수집 */}
         <ContentsRow>
           {/* 사전 레벨테스트  */}

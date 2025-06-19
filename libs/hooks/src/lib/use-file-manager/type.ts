@@ -44,6 +44,14 @@ export interface FileGroupInfo {
   isUsed: boolean;
 }
 
+export interface ImageInfo {
+  reposType: string;
+  originalFileName: string;
+  filePath: string;
+  fileSize: number;
+  imageUrl: string;
+}
+
 export interface GroupFileInfo extends FileGroupInfo {
   files: FileInfo[];
 }

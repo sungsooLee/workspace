@@ -50,7 +50,7 @@ const PublishCourseComponent = forwardRef<TabFormRef, PublishCourseProps>(
     return (
       <div>
         {/*게시*/}
-        <FormSubTitle label={t('게시')} lineType={'dark'} />
+        <FormSubTitle label={t('게시')} />
         {/*과정 사용유무*/}
         <ContentsRow>
           <FormRow
