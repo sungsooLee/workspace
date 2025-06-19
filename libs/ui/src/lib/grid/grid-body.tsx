@@ -3,6 +3,7 @@ import { Cell, flexRender, Row, Table } from '@tanstack/react-table';
 import { cn } from '@learnway/shared';
 
 import styles from './grid-body.module.css';
+import { WordWrap } from '../word-wrap/word-wrap';
 
 // GridBody.tsx (새 파일)
 interface GridBodyProps<T extends object> {
@@ -100,7 +101,7 @@ export const GridCell = <T extends object>({ row, cell, lastPinnedColumnId }: Gr
           cell.getContext(),
         )
       ) : cell.getIsPlaceholder() ? null : (
-        flexRender(cell.column.columnDef.cell, cell.getContext())
+        <WordWrap text={flexRender(cell.column.columnDef.cell, cell.getContext())} />
       )}
     </td>
   );
