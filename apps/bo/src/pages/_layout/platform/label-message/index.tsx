@@ -235,6 +235,17 @@ const gridConfig = {
       label: t('LABEL.grid.column.labelMessageCode'),
     },
     { name: 'labelMessageName', label: t('LABEL.grid.column.labelMessage') },
+    {
+      name: 'isUsed',
+      label: t('LABEL.grid.column.useYn'),
+      size: 80,
+      render: (info: any) => {
+        return <span>{info.getValue() === true ? 'Y' : 'N'}</span>;
+      },
+      meta: {
+        cellAlign: 'center',
+      },
+    },
     { name: 'createdBy', label: t('LABEL.grid.column.createdBy') },
     {
       name: 'createdDate',

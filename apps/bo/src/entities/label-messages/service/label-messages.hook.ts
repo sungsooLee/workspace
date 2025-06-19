@@ -45,14 +45,12 @@ export const useFetchLabelMessage = (id: number): UseQueryResult<LabelMessage, E
 export const useCreateLabelMessage = (
   options?: MutationHookOptions<LabelMessage, Error, LabelMessage, unknown>,
 ): UseMutationResult<LabelMessage, Error, LabelMessage, unknown> => {
-  const { showSaveComplete } = useModal();
   const queryClient = useQueryClient();
 
   return useMutation({
     ...mutateOptions.create(),
     ...options,
     onSuccess: async (data, variables, context) => {
-      await showSaveComplete();
       await queryClient.invalidateQueries({
         queryKey: [queryKeys.detail(data.labelMessageId ?? Number(data.labelMessageId))],
       });
@@ -77,12 +75,10 @@ export const useCreateLabelMessage = (
 export const useUpdateLabelMessage = (
   options?: MutationHookOptions<LabelMessage, Error, LabelMessage, unknown>,
 ): UseMutationResult<LabelMessage, Error, LabelMessage, unknown> => {
-  const { showUpdateComplete } = useModal();
   return useMutation({
     ...mutateOptions.update(),
     ...options,
     onSuccess: async (data, variables, context) => {
-      await showUpdateComplete();
       // 추가적인 성공 처리 로직이 있다면 실행
       if (options?.onSuccess) {
         options.onSuccess(data, variables, context);

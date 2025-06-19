@@ -95,6 +95,7 @@ export const MenuManage = ({ menuScope }: any) => {
   const { provider, fetchData, onSubmit, onFormChange, clearFormError, control, getValues } =
     useDynamicForm(formConfig);
   const typeWatch = useWatch({ control, name: 'deviceNames' });
+  const prevTypeWatchRef = useRef<string[]>([]);
 
   const clearAllFormErrors = () => {
     formConfig.builders.forEach((item) => clearFormError(item.name));
@@ -140,10 +141,16 @@ export const MenuManage = ({ menuScope }: any) => {
     if (typeWatch && detailData && formMode !== FORM_MODE.NONE) {
       const data = detailData as MenuDetail;
       const { parentId } = data;
-      if (parentId !== null && typeWatch.length === 0) {
-        openAlert({
-          content: t('LABEL.form.validation.selectAtLeastCount', { count: 1 }),
-        });
+      
+      if (parentId !== null) {
+        if (typeWatch.length === 0) {
+          openAlert({
+            content: t('LABEL.form.validation.selectAtLeastCount', { count: 1 }),
+          });
+          fetchData({ ...getValues(), deviceNames: prevTypeWatchRef.current });
+        } else {
+          prevTypeWatchRef.current = typeWatch;
+        }
       }
     }
   }, [typeWatch]);
@@ -195,6 +202,7 @@ export const MenuManage = ({ menuScope }: any) => {
         };
         fetchData({ ...formData });
         initialFromValuesRef.current = { ...formData };
+        prevTypeWatchRef.current = deviceNames;
         setFormMode(FORM_MODE.VIEW);
       }
     }
@@ -479,14 +487,18 @@ export const MenuManage = ({ menuScope }: any) => {
 
           <div className={layoutStyles.inner_contents}>
             <ContentsRow>
-              <FormRow provider={provider} name={'location'} element={<Input disabled={true} />} />
+              <FormRow
+                provider={provider}
+                name={'location'}
+                element={<Input disabled={true} hiddenPlaceholder={formMode === FORM_MODE.NONE} />}
+              />
             </ContentsRow>
 
             <ContentsRow>
               <FormRow
                 provider={provider}
                 name={'parentCode'}
-                element={<Input disabled={true} />}
+                element={<Input disabled={true} hiddenPlaceholder={formMode === FORM_MODE.NONE} />}
               />
             </ContentsRow>
 
@@ -500,6 +512,7 @@ export const MenuManage = ({ menuScope }: any) => {
                     onDuplicationCheck={duplicateCheck}
                     disabled={formMode === FORM_MODE.NONE}
                     inputType={'alphanumeric'}
+                    hiddenPlaceholder={formMode === FORM_MODE.NONE}
                   />
                 }
               />
@@ -510,7 +523,12 @@ export const MenuManage = ({ menuScope }: any) => {
               <FormRow
                 provider={provider}
                 name={'menuName'}
-                element={<Input disabled={formMode === FORM_MODE.NONE} />}
+                element={
+                  <Input
+                    disabled={formMode === FORM_MODE.NONE}
+                    hiddenPlaceholder={formMode === FORM_MODE.NONE}
+                  />
+                }
               >
                 <Button
                   type="button"
@@ -540,7 +558,12 @@ export const MenuManage = ({ menuScope }: any) => {
               <FormRow
                 provider={provider}
                 name={'path'}
-                element={<Input disabled={formMode === FORM_MODE.NONE} />}
+                element={
+                  <Input
+                    disabled={formMode === FORM_MODE.NONE}
+                    hiddenPlaceholder={formMode === FORM_MODE.NONE}
+                  />
+                }
               />
             </ContentsRow>
 
@@ -549,7 +572,12 @@ export const MenuManage = ({ menuScope }: any) => {
               <FormRow
                 provider={provider}
                 name={'menuDesc'}
-                element={<Textarea disabled={formMode === FORM_MODE.NONE} />}
+                element={
+                  <Textarea
+                    disabled={formMode === FORM_MODE.NONE}
+                    hiddenPlaceholder={formMode === FORM_MODE.NONE}
+                  />
+                }
               />
             </ContentsRow>
 

@@ -28,6 +28,7 @@ export const DuplicateCheckInputFormField = forwardRef<
       label,
       duplicationCheckFn,
       placeholder,
+      inputType,
     },
     ref,
   ) => {
@@ -93,7 +94,13 @@ export const DuplicateCheckInputFormField = forwardRef<
     };
     return (
       <div className="flex w-full gap-x-2" ref={ref}>
-        <Input value={value} onChange={onChange} disabled={disabled} placeholder={placeholder} />
+        <Input
+          value={value}
+          onChange={onChange}
+          disabled={disabled}
+          placeholder={placeholder}
+          type={inputType}
+        />
         <Button
           type="button"
           variant="gray"

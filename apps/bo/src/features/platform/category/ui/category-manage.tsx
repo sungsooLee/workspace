@@ -373,7 +373,7 @@ export const CategoryManage = () => {
           onExpandedKeysChange={handleExpandChange}
           renderNodeButtons={renderNodeButtons}
           onAction={handleTreeAction}
-          type={'SAME_PARENT_ONLY'}
+          type={'SAME_LEVEL_ONLY'}
           initLevel={1}
           maxDepth={5}
           handleSelectedNodeChange={handleSelectedNodeChange}
@@ -416,14 +416,18 @@ export const CategoryManage = () => {
           {/* 폼 필드 - location (비활성화 상태) */}
           <div className={layoutStyles.inner_contents}>
             <ContentsRow>
-              <FormRow provider={provider} name={'location'} element={<Input disabled={true} />} />
+              <FormRow
+                provider={provider}
+                name={'location'}
+                element={<Input disabled={true} hiddenPlaceholder={formMode === FORM_MODE.NONE} />}
+              />
             </ContentsRow>
 
             <ContentsRow>
               <FormRow
                 provider={provider}
                 name={'parentMenuName'}
-                element={<Input disabled={true} />}
+                element={<Input disabled={true} hiddenPlaceholder={formMode === FORM_MODE.NONE} />}
               />
             </ContentsRow>
 
@@ -436,6 +440,7 @@ export const CategoryManage = () => {
                   <DuplicateCheckInputFormField
                     onDuplicationCheck={duplicateCheck}
                     disabled={formMode === FORM_MODE.NONE}
+                    hiddenPlaceholder={formMode === FORM_MODE.NONE}
                   />
                 }
               />
@@ -446,7 +451,12 @@ export const CategoryManage = () => {
               <FormRow
                 provider={provider}
                 name={'name'}
-                element={<Input disabled={formMode === FORM_MODE.NONE} />}
+                element={
+                  <Input
+                    disabled={formMode === FORM_MODE.NONE}
+                    hiddenPlaceholder={formMode === FORM_MODE.NONE}
+                  />
+                }
               ></FormRow>
             </ContentsRow>
 
@@ -455,7 +465,12 @@ export const CategoryManage = () => {
               <FormRow
                 provider={provider}
                 name={'categoryContent'}
-                element={<Textarea disabled={formMode === FORM_MODE.NONE} />}
+                element={
+                  <Textarea
+                    disabled={formMode === FORM_MODE.NONE}
+                    hiddenPlaceholder={formMode === FORM_MODE.NONE}
+                  />
+                }
               />
             </ContentsRow>
             <ContentsRow type="horizontal">

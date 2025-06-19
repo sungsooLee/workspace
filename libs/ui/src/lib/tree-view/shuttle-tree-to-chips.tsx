@@ -47,7 +47,7 @@ export const ShuttleTreeToChips = ({
   // 내부 상태 관리 (필요한 경우)
   const [internalSelectedItems, setInternalSelectedItems] = useState(selectedItems || []);
   const [expandSource, setExpandSource] = useState<boolean>(true);
-
+  const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
   const [isConditionSettingsMode, setIsConditionSettingsMode] = useState<boolean>(false);
 
   const handleSetIsConditionSettingsMode = (value: boolean) => {
@@ -122,16 +122,26 @@ export const ShuttleTreeToChips = ({
     return actualSelectedItems.map((item) => item.key);
   }, [actualSelectedItems]);
 
+  const handleSelectedNodeChange = (node: TreeNode) => {
+    if (node.key === selectedNode?.key) {
+      setSelectedNode(null);
+    } else {
+      setSelectedNode(node);
+    }
+  };
+
   return (
     <div className={cn(layoutStyles.start, layoutStyles.wrap, layoutStyles.pop_layout)}>
       <div className={layoutStyles.inner}>
         <TreeBox
           data={sourceData}
+          selectedNode={selectedNode}
           type="SHUTTLE_LIST"
           title={sourceTitle || title}
           searchKeyword={searchKeyword}
           expandTrigger={expandSource}
           onCustomNodeClick={onCustomNodeClick}
+          handleSelectedNodeChange={handleSelectedNodeChange}
           showSearchKeyword={true}
           initLevel={initLevel}
           selectedItems={selectedItemKeys}

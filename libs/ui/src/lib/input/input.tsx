@@ -31,6 +31,7 @@ export interface InputProps extends Omit<NumericFormatProps, 'type'> {
   onEnterKeyDown?: () => void; // 엔터 키 입력 callback, 검색 아이콘 클릭 했을때 해당 callback 호출
   onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
   label?: string;
+  hiddenPlaceholder?: boolean;
 }
 
 const InputComponent = forwardRef<HTMLInputElement, InputProps>(
@@ -61,6 +62,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       onEnterKeyDown,
       maxLength,
       onFocus,
+      hiddenPlaceholder,
       ...props
     },
     ref,
@@ -68,16 +70,17 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
     const { t } = useTranslation();
 
     const placeholderText = useMemo(() => {
+      if (hiddenPlaceholder) return '';
       if (placeholder) return t(placeholder);
       if (props && props.label)
         return `${t(props.label as any)} ${t('LABEL.form.input.placeholder')}`;
       return t('LABEL.form.input.placeholder');
-    }, [placeholder, props?.label]);
+    }, [placeholder, props?.label, hiddenPlaceholder]);
 
     const [isFocused, setIsFocused] = useState(false);
 
     // 영문/숫자만 허용하는 정규식
-    const alphanumericRegex = /^[a-zA-Z0-9]*$/;
+    const alphanumericRegex = /^[a-zA-Z0-9.]*$/;
     ///
     const handleAlphanumericChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const inputValue = event.target.value;

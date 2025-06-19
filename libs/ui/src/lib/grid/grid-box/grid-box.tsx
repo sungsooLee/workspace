@@ -134,6 +134,7 @@ const GridBoxComponent = <T extends object>(
           },
           header: column.label,
           size: column.size,
+          meta: column.meta,
           // 다른 컬럼 옵션들 (sortingFn, filterFn 등) 필요시 추가
         });
       });

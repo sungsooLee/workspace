@@ -3,6 +3,7 @@ import { t } from 'i18next';
 import { EnGlobalConst } from '@types';
 
 export const getMenuTile = (node: any, siteScope: string) => {
+  console.log(node);
   const mType = siteScope === 'BO' ? EnGlobalConst.HRD_CENTER_MENU : EnGlobalConst.LEARNER_MENU;
   return t(`${mType}.${node.menuCode}`);
 };
@@ -25,7 +26,8 @@ export const transformApiDataToTreeData = (apiData: any, siteScope: string) => {
       const transformedNode = {
         // 필수 트리 속성
         key: node.menuId.toString(), // menuId를 key로 사용
-        title: getMenuTile(node, siteScope), // title이 없으면 menuCode 사용
+        // title: getMenuTile(node, siteScope), // title이 없으면 menuCode 사용
+        title: node.menuName,
         isUsed: node.isUsed === true, // isUsed을 isUsed로 변환
 
         // 원본 데이터 속성 유지
