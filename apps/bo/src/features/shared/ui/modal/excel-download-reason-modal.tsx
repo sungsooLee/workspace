@@ -103,8 +103,12 @@ function ExcelDownloadReasonModalCompoment({
     ],
     validator: {
       downloadReasonType: true,
-      downloadDetailReasonType: true,
-      downloadDetailReason: true,
+      downloadDetailReasonType: {
+        required: (values) => values.downloadReasonType !== 'c',
+      },
+      downloadDetailReason: {
+        required: (values) => values.downloadReqsonType === 'c',
+      },
     },
   };
   const { provider, setValue, onSubmit } = useDynamicForm(formConfig);
