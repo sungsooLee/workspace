@@ -255,10 +255,16 @@ function RouteComponent() {
 
     // dropdown
     const [selectedValues, setSelectedValues] = useState<string[]>([]);
+    const [selectedValues2, setSelectedValues2] = useState<string[]>([]);
     const options = [
       { value: 'option1', label: '과정이해도' },
       { value: 'option2', label: '과정이해도2' },
       { value: 'option3', label: '과정이해도3' },
+    ];
+    const options2 = [
+      { value: 'option1', label: '척도형 데이터 1 (아주 만족~만족)' },
+      { value: 'option2', label: '척도형 데이터 2 (아주 만족~만족)' },
+      { value: 'option3', label: '척도형 데이터 3 (아주 만족~만족)' },
     ];
 
     return (
@@ -510,9 +516,21 @@ function RouteComponent() {
               columns={columns3}
               tableMode={true}
               showNumberingColumn={true}
-              showSelectAll={true}
+              // showSelectAll={true}
               title={'보기목록'}
               className={styles.detail_table03}
+              // 퍼블수정 20250619 dropdown case 추가
+              customButtonNode={
+                <Dropdown
+                  className={styles.detail_drop}
+                  options={options2}
+                  value={selectedValues2}
+                  onChange={(selected) => setSelectedValues2(selected)}
+                  variant="default"
+                  placeholder="척도형 데이터 1 (아주 만족~만족)"
+                  size={'sm'}
+                />
+              }
             />
           </div>
         </ModalBody>
