@@ -258,6 +258,9 @@ export type UseDynamicFormResult = {
     /** 필드가 필수인지 확인하는 함수 */
     isFieldRequired: (fieldName: string) => boolean;
   };
+
+  /**   builders에  설정된 필드에 clearFormError 호출 과 value 값에 해당 하는 object를 리턴함 */
+  getInitByBuilders: () => any;
 };
 
 // dynamic form config value 추적을 위한 타입 정의

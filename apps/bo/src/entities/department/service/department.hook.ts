@@ -10,3 +10,7 @@ export function useGetCompanyDepartmentTree(companyCode: string[]) {
 export function useGetCompanyDepartmentList(param: any) {
   return useQuery(queryOptions.list(param));
 }
+
+export function useGetCompanyDepartmentDetail(deptId: number) {
+  return useQuery(queryOptions.detail(deptId));
+}

@@ -3,8 +3,9 @@ import { getQuerySkipToken } from '@learnway/shared';
 import { DepartmentService } from '../api/department';
 
 export const queryKeys = {
-  list: ['department-page'] as const,
   all: ['department-all'] as const,
+  list: ['department-page'] as const,
+  detail: (deptId: number) => ['department-detail', deptId],
   tree: (companyCode: string[]) => ['department-tree', ...companyCode],
   child: (param: any) => ['department-child', param],
   user: (param: any) => ['department-user', param],
@@ -16,6 +17,13 @@ export const queryOptions = {
     queryFn: () => DepartmentService.getDepartmentList(param),
     cacheTime: 0,
     staleTime: 0,
+  }),
+  detail: (deptId: number) => ({
+    queryKey: queryKeys.detail(deptId),
+    queryFn: () => {
+      return deptId ? DepartmentService.getDepartmentDetail(deptId) : undefined;
+    },
+    disabled: !deptId,
   }),
 
   tree: (companyCode: string[]) => ({
