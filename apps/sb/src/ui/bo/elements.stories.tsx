@@ -37,9 +37,10 @@ export const TemplateSplitPanel: any = (args: any) => {
   return (
     <div className={'border border-gray-400 p-10'}>
       <section>Search Box</section>
-      <SplitPanel size={[100, 200]}>
+      <SplitPanel size={[100, 200, 'auto']}>
         <div>LEFT</div>
         <div>RIGHT</div>
+        <div>flexible</div>
       </SplitPanel>
     </div>
   );
