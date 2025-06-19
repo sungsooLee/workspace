@@ -16,7 +16,7 @@ import { FormRow } from '@shared/ui';
 import { DynamicFormConfig, SelectOption, useDynamicForm } from '@learnway/hooks';
 import { useActiveMenuDepthState, useFetchAuthUser } from '@learnway/auth/entities';
 import { useEffect } from 'react';
-import { get, map, values } from 'lodash';
+import { get, mapValues, pick, values } from 'lodash';
 
 interface ExcelDownloadReasonModalComponentProps {
   dataCount: number;
@@ -50,7 +50,7 @@ function ExcelDownloadReasonModalCompoment({
         value: activeMenuDepth?.map((menu) => menu.menuName).join(' > '),
       },
       {
-        name: 'searchQuery',
+        name: 'requestParameter',
         type: 'chip-list',
         label: t('검색 조건'),
         disabled: true,
@@ -113,14 +113,21 @@ function ExcelDownloadReasonModalCompoment({
   }, [dataCount]);
 
   useEffect(() => {
-    setValue(
-      'searchQuery',
-      values(paramLabels).map((v) => get(v, 'label')),
-    );
+    setValue('requestParameter', values(paramLabels));
   }, [paramLabels]);
 
   function handleSubmit(query: Record<string, any>) {
-    closeModal(query);
+    closeModal({
+      ...pick(query, [
+        'userUuid',
+        'menuPath',
+        'dataCount',
+        'downloadReasonType',
+        'downloadDetailReasonType',
+        'downloadDetailReason',
+      ]),
+      requestParameter: JSON.stringify(mapValues(paramLabels, (option) => get(option, 'value'))),
+    });
   }
 
   return (
@@ -156,7 +163,7 @@ function ExcelDownloadReasonModalCompoment({
             <FormRow provider={provider} name="menuPath" />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider} name="searchQuery" />
+            <FormRow provider={provider} name="requestParameter" />
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider} name="dataCount" />
