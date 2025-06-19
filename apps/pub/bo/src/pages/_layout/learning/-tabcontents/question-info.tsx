@@ -5,7 +5,7 @@ import { cn } from '@learnway/shared';
 import { FormSubTitle } from '../../../../../../../bo/src/shared/ui/form';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { ContentsRow, Tabs, TableBox, Input, RadioGroupFormField } from '@learnway/ui';
-import { IcoMenu01 } from '@learnway/icons';
+import { IcoMenu01, IcoFormRequired } from '@learnway/icons';
 
 /* styles */
 import styles from './test-detail.module.css';
@@ -228,6 +228,24 @@ const QuestionInfoComponent: FC<{}> = ({}) => {
             </div>
           </div>
         </div>
+      </ContentsRow>
+      {/* 퍼블수정 20250619 페이지별 문항수 추가 */}
+      <ContentsRow>
+        {/* form_item */}
+        <div className={formStyles.form_item}>
+          <label htmlFor="name-type" className={formStyles.form_label}>
+            <span className={formStyles.form_text}>페이지별 문항수</span>
+            {/* 필수 케이스 */}
+            <span className={cn(formStyles.status, formStyles.required)}>
+              <IcoFormRequired width={12} height={12} />
+            </span>
+          </label>
+          <div className={formStyles.input_box}>
+            <Input type="text" suffixText={'개'} value={'5'} className={formStyles.input_time} />
+          </div>
+        </div>
+        <div className={formStyles.form_item}></div>
+        <div className={formStyles.form_item}></div>
       </ContentsRow>
       <div className={styles.table_wrap}>
         <TableBox

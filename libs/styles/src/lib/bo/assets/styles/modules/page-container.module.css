@@ -73,6 +73,9 @@
       /* &::after {
         @apply ml-[16px] flex h-[28px] w-[1px] bg-[var(--gray5)] content-[''];
       } */
+      & + [class*='divider'] {
+        @apply ml-0;
+      }
     }
     .btn_close {
       @apply ml-[16px] !min-w-[24px];
@@ -81,10 +84,7 @@
       @apply w-auto min-w-[45px];
     }
     [class*='divider'] {
-      @apply h-[28px];
-      & + [class*='nlp--button'] {
-        @apply ml-[16px];
-      }
+      @apply mx-[16px] h-[28px];
     }
   }
 
