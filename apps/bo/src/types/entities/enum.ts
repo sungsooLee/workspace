@@ -76,3 +76,9 @@ export enum EnGlobalConst {
   LEARNER_MENU = 'LEARNER_MENU',
   HRD_CENTER_MENU = 'HRD_CENTER_MENU',
 }
+
+// 공통 컴포넌트의 페이지/모달에서의 사용 여부
+export enum EnPageMode {
+  PAGE = 'PAGE',
+  MODAL = 'MODAL',
+}

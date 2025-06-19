@@ -1,17 +1,18 @@
-import React, { useRef, useState, useImperativeHandle, forwardRef, useEffect } from 'react';
+import React, { useRef, useImperativeHandle, forwardRef } from 'react';
 import { t } from 'i18next';
-import { createFileRoute, useRouterState, useRouter } from '@tanstack/react-router';
+import { useRouter } from '@tanstack/react-router';
 import { useModal, ContentsRow, TextareaFormField, Input, RadioGroupFormField } from '@learnway/ui';
 import { FormDisplay } from '@features/form/ui/form-display';
 import {
   DuplicateCheckInputFormField,
   DuplicateState,
 } from '@features/tenant/management/ui/duplicate-check-input-form-field';
-import { FormRow, FormSubTitle, SwitchFormField } from '@shared/ui';
+import { FormRow, FormSubTitle } from '@shared/ui';
 import { DynamicFormConfig, useDynamicForm, CODE_GROUP } from '@learnway/hooks';
 import { AddressSearchModal } from '@features/shared/ui/modal/address-search-modal';
 import { DropdownFormField, InputFormField } from '@features/form';
 import { useCreateSpace } from '@entities/training-place/service/space.hook';
+import { EnFormMode } from '@types';
 
 const URL_REGEX =
   /((https?:\/\/(www\.)?)|(www\.))[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)(?<![-.+():%])/;
@@ -75,7 +76,7 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
     <FormRow
       provider={provider}
       name={'isUsed'}
-      element={<SwitchFormField disabled={props.mode === 'view'} />}
+      element={<RadioGroupFormField disabled={props.mode === EnFormMode.VIEW} />}
     />
   );
 
@@ -86,11 +87,11 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
       tenantIds: [data.tenantId],
       learningSpaceCode: data.learningSpaceCode.fieldValue,
     };
-    if (props.mode === 'add') {
+    if (props.mode === EnFormMode.ADD) {
       if (await openConfirm('저장 하시겠습니까?')) {
         create(payload);
       }
-    } else if (props.mode === 'view') {
+    } else if (props.mode === EnFormMode.VIEW) {
       // if (await openConfirm('수정 하시겠습니까?')) {
       //   update(payload);
       // }
@@ -104,19 +105,19 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
         <FormRow
           provider={provider}
           name={'tenantId'}
-          element={<DropdownFormField disabled={props.mode === 'view'} />}
+          element={<DropdownFormField disabled={props.mode === EnFormMode.VIEW} />}
         />
         <FormRow
           provider={provider}
           name={'onOffLineType'}
-          element={<RadioGroupFormField disabled={props.mode === 'view'} />}
+          element={<RadioGroupFormField disabled={props.mode === EnFormMode.VIEW} />}
         />
       </ContentsRow>
       <ContentsRow>
         <FormRow
           provider={provider}
           name={'learningSpaceName'}
-          element={<InputFormField disabled={props.mode === 'view'} />}
+          element={<InputFormField disabled={props.mode === EnFormMode.VIEW} />}
         />
         <FormRow
           provider={provider}
@@ -124,7 +125,7 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
           element={
             <DuplicateCheckInputFormField
               onDuplicationCheck={duplicateCheck}
-              disabled={props.mode === 'view'}
+              disabled={props.mode === EnFormMode.VIEW}
             />
           }
         />
@@ -135,7 +136,7 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
           <FormRow
             provider={provider}
             name={'linkUrl'}
-            element={<InputFormField disabled={props.mode === 'view'} />}
+            element={<InputFormField disabled={props.mode === EnFormMode.VIEW} />}
           />
           {isUsedFormField}
         </ContentsRow>
@@ -215,12 +216,13 @@ const formConfig: DynamicFormConfig = {
     },
     {
       name: 'isUsed',
-      type: 'switch',
+      type: 'radio-group',
       label: t('사용 여부'),
       value: true,
-      switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')),
-      },
+      options: [
+        { value: true, label: t('사용') },
+        { value: false, label: t('미사용') },
+      ],
     },
     {
       name: 'linkUrl',
