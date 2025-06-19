@@ -95,17 +95,15 @@
       }
     }
   }
-  /* &.fix {
+  &.fix {
     .content_body [class*='nlp--modal-content'] {
-      @apply h-[718px];
-      [class*='modal-content'] {
-        @apply h-[668px];
-        &:has(+ div) {
-          @apply h-[588px];
-        }
+      @apply flex min-h-[718px] w-full flex-wrap;
+      flex-direction: column;
+      h2 + div {
+        @apply flex-auto;
       }
     }
-  } */
+  }
   /* mobile full */
   &.m_full,
   &.m_bottom_sheet {
