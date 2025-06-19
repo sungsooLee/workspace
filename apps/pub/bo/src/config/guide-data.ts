@@ -917,7 +917,7 @@ export const guideData = [
     screenId: 'NLP_BO_CMS_1203',
     pageType: 'Page',
     completionDate: '2025-05-14',
-    lastUpdateDate: '2025-06-13',
+    lastUpdateDate: '2025-06-19',
     remarks: '', // 비고
   },
   {
@@ -926,7 +926,7 @@ export const guideData = [
     screenId: 'NLP_BO_CMS_1215',
     pageType: 'Pop-up',
     completionDate: '2025-05-21',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-06-19',
     remarks: '', // 비고
   },
   {

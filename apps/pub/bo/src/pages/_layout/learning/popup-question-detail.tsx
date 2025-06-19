@@ -15,6 +15,7 @@ import {
   Input,
   TableBox,
   Checkbox,
+  Dropdown,
 } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { cn } from '@learnway/shared';
@@ -252,6 +253,14 @@ function RouteComponent() {
       }),
     ] as ColumnDef<any, unknown>[];
 
+    // dropdown
+    const [selectedValues, setSelectedValues] = useState<string[]>([]);
+    const options = [
+      { value: 'option1', label: '과정이해도' },
+      { value: 'option2', label: '과정이해도2' },
+      { value: 'option3', label: '과정이해도3' },
+    ];
+
     return (
       <ModalContainer>
         <ModalTitle>{'문항추가'}</ModalTitle>
@@ -363,6 +372,31 @@ function RouteComponent() {
                   />
                 </div>
               </div>
+            </ContentsRow>
+            {/* 퍼블수정 20250619 문항속성 추가 */}
+            <ContentsRow>
+              {/* form_item */}
+              <div className={formStyles.form_item}>
+                <label htmlFor="name-type2-1" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>문항속성</span>
+                  {/* 필수 케이스 */}
+                  <span className={cn(formStyles.status, formStyles.required)}>
+                    <IcoFormRequired width={12} height={12} />
+                  </span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Dropdown
+                    options={options}
+                    value={selectedValues}
+                    onChange={(selected) => setSelectedValues(selected)}
+                    variant="default"
+                    placeholder="선택"
+                    size={'sm'}
+                  />
+                </div>
+              </div>
+              <div className={formStyles.form_item}></div>
+              <div className={formStyles.form_item}></div>
             </ContentsRow>
             <ContentsRow>
               {/* form_item */}
