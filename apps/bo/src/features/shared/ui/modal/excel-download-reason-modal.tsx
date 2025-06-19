@@ -46,22 +46,28 @@ function ExcelDownloadReasonModalCompoment({
       {
         name: 'employeeNumber',
         type: 'text',
-        label: t('사번'),
+        label: t('LABEL.form.label.employeeNumber', '사번'),
         readOnly: true,
         value: user?.employeeNumber,
       },
-      { name: 'name', type: 'text', label: t('이름'), readOnly: true, value: user?.name },
+      {
+        name: 'name',
+        type: 'text',
+        label: t('LABEL.form.label.name', '이름'),
+        readOnly: true,
+        value: user?.name,
+      },
       {
         name: 'menuPath',
         type: 'text',
-        label: t('메뉴 경로'),
+        label: t('LABEL.form.label.menuPath', '메뉴 경로'),
         readOnly: true,
         value: activeMenuDepth?.map((menu) => menu.menuName).join(' > '),
       },
       {
         name: 'requestParameter',
         type: 'chip-list',
-        label: t('검색 조건'),
+        label: t('LABEL.form.label.requestParameter', '검색 조건'),
         disabled: true,
         value: [],
         chipListConfig: {
@@ -71,10 +77,10 @@ function ExcelDownloadReasonModalCompoment({
       {
         name: 'dataCount',
         type: 'number',
-        label: t('조회 건'),
+        label: t('LABEL.form.label.dataCount', '조회 건'),
         readOnly: true,
         value: dataCount,
-        suffixText: t('건'),
+        suffixText: t('LABEL.form.label.countUnit', '건'),
       },
       {
         name: 'downloadReasonType',
@@ -170,15 +176,16 @@ function ExcelDownloadReasonModalCompoment({
       <ModalContainer>
         <ModalTitle>
           <div className={cn('flex', 'items-center')}>
-            {t('엑셀 다운로드 사유')}
+            {t('LABEL.modal.excelDownloadReason.title', '엑셀 다운로드 사유')}
             <Tooltip
               side="bottom"
               align="start"
               content={
                 <>
-                  <h3>{t('도움말')}</h3>
+                  <h3>{t('LABEL.modal.excelDownloadReason.tooltip.title', '도움말')}</h3>
                   <pre>
                     {t(
+                      'LABEL.modal.excelDownloadReason.tooltip.title',
                       'ISMS 정보보호 관리체계 인증을 위해 개인정보 엑셀 다운로드 사유를 입력해 주세요.',
                     )}
                   </pre>
@@ -222,8 +229,13 @@ function ExcelDownloadReasonModalCompoment({
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button label={t('취소')} variant="gray" size="lg" onClick={() => closeModal()} />
-          <Button type="submit" label={t('확인')} variant="primary" size="lg" />
+          <Button
+            label={t('LABEL.button.cancel', '취소')}
+            variant="gray"
+            size="lg"
+            onClick={() => closeModal()}
+          />
+          <Button type="submit" label={t('LABEL.button.ok', '확인')} variant="primary" size="lg" />
         </ModalFooter>
       </ModalContainer>
     </form>

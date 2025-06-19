@@ -178,6 +178,13 @@
         "title": "테넌트&역할 선택",
         "tenantTitle": "테넌트 선택",
         "roleTitle": "역할 선택"
+      },
+      "excelDownloadReason": {
+        "title": "엑셀 다운로드 사유",
+        "tooltip": {
+          "title": "도움말",
+          "content": "ISMS 정보보호 관리체계 인증을 위해 개인정보 엑셀 다운로드 사유를 입력해 주세요."
+        }
       }
     },
     "common": {
@@ -441,7 +448,16 @@
         "langCountryCode": "언어",
         "createdBy": "등록자",
         "preview": "미리보기",
-        "look": "보기"
+        "look": "보기",
+        "employeeNumber": "사번",
+        "name": "이름",
+        "menuPath": "메뉴 경로",
+        "requestParameter": "검색조건",
+        "dataCount": "조회 건",
+        "countUnit": "건",
+        "downloadReasonType": "다운로드 사유",
+        "downloadDetailReasonType": "상세 사유",
+        "downloadDetailReason": "상세 사유"
       },
       "validation": {
         "needInput": "{{code}}를 입력해 주세요.",
