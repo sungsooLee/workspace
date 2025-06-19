@@ -7,6 +7,7 @@ import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 import { CompanyDetail } from '@features/platform/company';
+import { EnFormMode } from '@types';
 
 export const Route = createFileRoute('/_layout/platform/company/management/regist')({
   component: RouteComponent,
@@ -38,7 +39,7 @@ function RouteComponent() {
         </Button>
       </ContentsButtons>
       <MainContents>
-        <CompanyDetail ref={formRef} mode="add" />
+        <CompanyDetail ref={formRef} mode={EnFormMode.ADD} />
       </MainContents>
     </PageContainer>
   );
