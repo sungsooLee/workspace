@@ -34,6 +34,11 @@ export interface ThumbnailListComponentProps
    * @param options - 제거된 후의 전체 ImageOption 배열
    */
   onRemoveOptions?: (options: ImageOption[]) => void; // 변경된 prop 이름
+  /**
+   * 썸네일 목록에서 옵션이 제거될 때 호출되는 콜백 함수
+   * @param option - 삭제될 ImageOption 객체
+   */
+  onRemove?: (option: ImageOption) => void;
 }
 
 /**
@@ -49,6 +54,7 @@ const ThumbnailListComponent = forwardRef<HTMLDivElement, ThumbnailListComponent
       showCheckbox = true,
       showDeleteButton = true,
       onRemoveOptions,
+      onRemove,
       onCheckedChange,
       ...props
     },
@@ -59,6 +65,7 @@ const ThumbnailListComponent = forwardRef<HTMLDivElement, ThumbnailListComponent
      * @param currentOption - 삭제될 ImageOption 객체
      */
     const handleRemoveClick = (currentOption: ImageOption) => {
+      onRemove?.(currentOption);
       // 현재 옵션 배열에서 삭제될 썸네일을 제외한 새로운 배열 생성
       const newOptions = options.filter((d: ImageOption) => d.id !== currentOption.id);
       // 변경된 썸네일 목록을 부모 컴포넌트에 알림 (onRemoveOptions 콜백 사용)

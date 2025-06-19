@@ -14,6 +14,7 @@ import { PhoneNumberFormField } from './phone-number-form-filed';
 import { DropdownFormField } from '../../../features/form/ui';
 import { CheckBoxFormField } from './checkbox-form-field';
 import { ThumbnailListFormField } from './thumbnail-list-form-field';
+import { ThumbnailListFormFieldV2 } from './thumbnail-list-form-field-v2';
 
 export const formFieldConfig: FormFieldConfig = {
   alphanumeric: Input,
@@ -32,4 +33,5 @@ export const formFieldConfig: FormFieldConfig = {
   'phone-number': PhoneNumberFormField,
   'chip-list': ChipListFormField,
   'thumbnail-list': ThumbnailListFormField,
+  'thumbnail-list-v2': ThumbnailListFormFieldV2,
 };

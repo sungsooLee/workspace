@@ -1,5 +1,5 @@
 import { fileDownload, httpService } from '@learnway/shared';
-import { LMSApiPrefix, PMSApiPrefix } from '@learnway/config';
+import { PMSApiPrefix } from '@learnway/config';
 import {
   BaseGroupInfo,
   CreateFileGroupFilesInfoReq,
@@ -7,9 +7,18 @@ import {
   FileGroupInfo,
   FileInfo,
   GroupFileInfo,
+  ImageInfo,
 } from './type';
 
 export default class FileManagerService {
+  // 썸네일 이미지 업로드 요청
+  static uploadImageFile(formData?: FormData): Promise<ImageInfo> {
+    return httpService.post<ImageInfo>(`${PMSApiPrefix()}/file/image`, formData);
+  }
+  // 썸네일 이미지 삭제 요청
+  static deleteImageFile(imageUrl: string): Promise<ImageInfo> {
+    return httpService.delete<ImageInfo>(`${PMSApiPrefix()}/file/image?imageUrl=${imageUrl}`);
+  }
   // 파일 정보 생성
   static createFileInfo(fileInfo: CreateFileInfoReq): Promise<FileInfo> {
     return httpService.post<FileInfo>(`${PMSApiPrefix()}/file`, fileInfo);
