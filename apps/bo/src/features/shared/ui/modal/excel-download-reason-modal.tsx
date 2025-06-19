@@ -13,11 +13,18 @@ import {
 import { t } from 'i18next';
 import { IcoAlertCircle } from '@learnway/icons';
 import { FormRow } from '@shared/ui';
-import { DynamicFormConfig, SelectOption, useDynamicForm } from '@learnway/hooks';
+import {
+  CODE_GROUP,
+  DynamicFormConfig,
+  SelectOption,
+  useCodeStore,
+  useDynamicForm,
+} from '@learnway/hooks';
 import { useActiveMenuDepthState, useFetchAuthUser } from '@learnway/auth/entities';
-import { useEffect } from 'react';
-import { get, mapValues, pick, values } from 'lodash';
-import { FormDisplay } from '@features/form/ui/form-display';
+import { useEffect, useState } from 'react';
+import { first, get, mapValues, pick, values } from 'lodash';
+import { useWatch } from 'react-hook-form';
+import { DropdownFormField } from '@features/form';
 
 interface ExcelDownloadReasonModalComponentProps {
   dataCount: number;
@@ -31,6 +38,7 @@ function ExcelDownloadReasonModalCompoment({
   const { close: closeModal } = useModal();
   const { data: user } = useFetchAuthUser();
   const [activeMenuDepth] = useActiveMenuDepthState();
+  const { getCode } = useCodeStore();
 
   const formConfig: DynamicFormConfig = {
     builders: [
@@ -73,11 +81,7 @@ function ExcelDownloadReasonModalCompoment({
         type: 'radio-group',
         label: t('다운로드 사유'),
         optionsConfig: {
-          options: [
-            { label: 'a', value: 'a' },
-            { label: 'b', value: 'b' },
-            { label: 'c', value: 'c' },
-          ],
+          codeGroup: CODE_GROUP['pms.excel.DownloadReasonTypeCode'],
         },
         value: '',
       },
@@ -86,11 +90,7 @@ function ExcelDownloadReasonModalCompoment({
         type: 'dropdown',
         label: t('상세 사유'),
         optionsConfig: {
-          options: [
-            { label: 'a', value: 'a' },
-            { label: 'b', value: 'b' },
-            { label: 'c', value: 'c' },
-          ],
+          codeGroup: CODE_GROUP['pms.excel.DownloadAffairsReasonTypeCode'],
         },
         value: '',
       },
@@ -104,14 +104,17 @@ function ExcelDownloadReasonModalCompoment({
     validator: {
       downloadReasonType: true,
       downloadDetailReasonType: {
-        required: (values) => values.downloadReasonType !== 'c',
+        required: (values) => values.downloadReasonType !== 'ETC',
       },
       downloadDetailReason: {
-        required: (values) => values.downloadReqsonType === 'c',
+        required: (values) => values.downloadReasonType === 'ETC',
       },
     },
   };
   const { provider, setValue, onSubmit } = useDynamicForm(formConfig);
+  const [downloadDetailReasonTypeOptions, setDownloadDetailReasonTypeOptions] = useState<
+    SelectOption[]
+  >([]);
 
   useEffect(() => {
     setValue('dataCount', dataCount);
@@ -121,6 +124,39 @@ function ExcelDownloadReasonModalCompoment({
     setValue('requestParameter', values(paramLabels));
   }, [paramLabels]);
 
+  useEffect(() => {
+    (async () => {
+      const options = await getCode(CODE_GROUP['pms.excel.DownloadReasonTypeCode']);
+      setValue('downloadReasonType', get(first(options), 'value'));
+    })();
+  }, []);
+
+  const downloadReasonType = useWatch({ control: provider.control, name: 'downloadReasonType' });
+  useEffect(() => {
+    if (!downloadReasonType) return;
+
+    setValue('downloadDetailReason', '');
+    if (downloadReasonType === 'ETC') {
+      setValue('downloadDetailReasonType', '');
+      return;
+    }
+
+    const DOWNLOAD_DETAIL_REASON_TYPE_CODE_GROUP: Record<string, string> = {
+      AFFAIRS: CODE_GROUP['pms.excel.DownloadAffairsReasonTypeCode'],
+      LEGAL_REQUEST: CODE_GROUP['pms.excel.DownloadLegalRequestReasonTypeCode'],
+      OUTSIDE_SUBMIT: CODE_GROUP['pms.excel.DownloadOutsideSubmitReasonTypeCode'],
+      RND: CODE_GROUP['pms.excel.DownloadRndReasonTypeCode'],
+    };
+
+    (async () => {
+      const downloadDetailReasonTypeOption = await getCode(
+        DOWNLOAD_DETAIL_REASON_TYPE_CODE_GROUP[downloadReasonType],
+      );
+      setDownloadDetailReasonTypeOptions(downloadDetailReasonTypeOption);
+      setValue('downloadDetailReasonType', get(first(downloadDetailReasonTypeOption), 'value'));
+    })();
+  }, [downloadReasonType]);
+
   function handleSubmit(query: Record<string, any>) {
     closeModal({
       ...pick(query, [
@@ -128,9 +164,11 @@ function ExcelDownloadReasonModalCompoment({
         'menuPath',
         'dataCount',
         'downloadReasonType',
-        'downloadDetailReasonType',
         'downloadDetailReason',
       ]),
+      ...(query.downloadDetailReasonType && {
+        downloadDetailReasonType: query.downloadDetailReasonType,
+      }),
       requestParameter: JSON.stringify(mapValues(paramLabels, (option) => get(option, 'value'))),
     });
   }
@@ -176,26 +214,20 @@ function ExcelDownloadReasonModalCompoment({
           <ContentsRow>
             <FormRow provider={provider} name="downloadReasonType" />
           </ContentsRow>
-          <FormDisplay
-            provider={provider}
-            condition="or"
-            dependencies={[
-              { name: 'downloadReasonType', value: 'a' },
-              { name: 'downloadReasonType', value: 'b' },
-            ]}
-          >
+          <div className={cn(downloadReasonType === 'ETC' && 'hidden')}>
             <ContentsRow>
-              <FormRow provider={provider} name="downloadDetailReasonType" />
+              <FormRow
+                provider={provider}
+                name="downloadDetailReasonType"
+                element={<DropdownFormField options={downloadDetailReasonTypeOptions} />}
+              />
             </ContentsRow>
-          </FormDisplay>
-          <FormDisplay
-            provider={provider}
-            dependencies={[{ name: 'downloadReasonType', value: 'c' }]}
-          >
+          </div>
+          <div className={cn(downloadReasonType !== 'ETC' && 'hidden')}>
             <ContentsRow>
               <FormRow provider={provider} name="downloadDetailReason" />
             </ContentsRow>
-          </FormDisplay>
+          </div>
         </ModalBody>
         <ModalFooter>
           <Button label={t('취소')} variant="gray" size="lg" onClick={() => closeModal()} />
