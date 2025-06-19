@@ -13,15 +13,20 @@ import {
 import { t } from 'i18next';
 import { IcoAlertCircle } from '@learnway/icons';
 import { FormRow } from '@shared/ui';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { DynamicFormConfig, SelectOption, useDynamicForm } from '@learnway/hooks';
 import { useActiveMenuDepthState, useFetchAuthUser } from '@learnway/auth/entities';
 import { useEffect } from 'react';
+import { get, map, values } from 'lodash';
 
 interface ExcelDownloadReasonModalComponentProps {
   dataCount: number;
+  paramLabels: Record<string, SelectOption>;
 }
 
-function ExcelDownloadReasonModalCompoment({ dataCount }: ExcelDownloadReasonModalComponentProps) {
+function ExcelDownloadReasonModalCompoment({
+  dataCount,
+  paramLabels,
+}: ExcelDownloadReasonModalComponentProps) {
   const { close: closeModal } = useModal();
   const { data: user } = useFetchAuthUser();
   const [activeMenuDepth] = useActiveMenuDepthState();
@@ -49,18 +54,7 @@ function ExcelDownloadReasonModalCompoment({ dataCount }: ExcelDownloadReasonMod
         type: 'chip-list',
         label: t('검색 조건'),
         disabled: true,
-        value: [
-          { label: '현대자동차 A', value: 'A' },
-          { label: '현대자동차 B', value: 'B' },
-          { label: '현대자동차 C', value: 'C' },
-          { label: '현대자동차 D', value: 'E' },
-          { label: '현대자동차 F', value: 'F' },
-          { label: '현대자동차 G', value: 'G' },
-          { label: '현대자동차 H', value: 'H' },
-          { label: '현대자동차 I', value: 'I' },
-          { label: '현대자동차 J', value: 'J' },
-          { label: '현대자동차 K', value: 'K' },
-        ],
+        value: [],
         chipListConfig: {
           hideCloseButton: true,
         },
@@ -117,6 +111,13 @@ function ExcelDownloadReasonModalCompoment({ dataCount }: ExcelDownloadReasonMod
   useEffect(() => {
     setValue('dataCount', dataCount);
   }, [dataCount]);
+
+  useEffect(() => {
+    setValue(
+      'searchQuery',
+      values(paramLabels).map((v) => get(v, 'label')),
+    );
+  }, [paramLabels]);
 
   function handleSubmit(query: Record<string, any>) {
     closeModal(query);

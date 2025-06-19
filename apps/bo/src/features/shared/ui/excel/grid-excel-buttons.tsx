@@ -6,6 +6,7 @@ import { PMSApiPrefix } from '@learnway/config';
 import { IcoDownload, IcoUploadCloud } from '@learnway/icons';
 import { t } from 'i18next';
 import { ExcelDownloadReasonModal } from '../modal/excel-download-reason-modal';
+import { SelectOption } from '@learnway/hooks';
 
 interface ExcelButtonsProps {
   // 업로드 관련
@@ -19,6 +20,7 @@ interface ExcelButtonsProps {
   downloadMethod?: string;
   downloadUrl?: string;
   downloadParams?: Record<string, any>;
+  downloadParamLabels?: Record<string, SelectOption>;
   dataCount?: number;
   onBeforeDownload?: () => Promise<void>;
 
@@ -36,6 +38,7 @@ const GridExcelButtonsComponent: React.FC<ExcelButtonsProps> = ({
   downloadMethod = 'get',
   downloadUrl,
   downloadParams = {},
+  downloadParamLabels = {},
   dataCount = 0,
   onBeforeDownload,
   disabled = false,
@@ -80,7 +83,9 @@ const GridExcelButtonsComponent: React.FC<ExcelButtonsProps> = ({
         // }
         const modalResult = await openModal({
           width: 'md',
-          content: <ExcelDownloadReasonModal dataCount={dataCount} />,
+          content: (
+            <ExcelDownloadReasonModal dataCount={dataCount} paramLabels={downloadParamLabels} />
+          ),
         });
         console.log('🚀 ~ handleDownload ~ modalResult:', modalResult);
         return;
