@@ -79,6 +79,61 @@ const sampleData: TreeNode[] = [
     ],
   },
 ];
+const sampleData2: TreeNode[] = [
+  {
+    key: '1',
+    title: 'Root Node 1',
+    isUsed: false,
+    children: [
+      {
+        key: '1-1',
+        title: 'Child 1',
+        isUsed: true,
+        children: [
+          { key: '1-1-1', title: 'Grandchild 1', isUsed: true },
+          { key: '1-1-2', title: 'Grandchild 2', isUsed: false },
+        ],
+      },
+      {
+        key: '1-2',
+        title: 'Child 2',
+        isUsed: true,
+        children: [
+          { key: '2-1', title: 'Child 3', isUsed: false },
+          { key: '2-2', title: 'Child 4', isUsed: false },
+        ],
+      },
+    ],
+  },
+];
+
+const sampleData3: TreeNode[] = [
+  {
+    key: '11',
+    title: 'Root Node 1',
+    isUsed: false,
+    children: [
+      {
+        key: '12',
+        title: 'Child 1',
+        isUsed: true,
+        children: [
+          { key: '1-1-13', title: 'Grandchild 1', isUsed: true },
+          { key: '1-1-24', title: 'Grandchild 2', isUsed: false },
+        ],
+      },
+      {
+        key: '1-25',
+        title: 'Child 2',
+        isUsed: true,
+        children: [
+          { key: '2-16', title: 'Child 3', isUsed: false },
+          { key: '2-2', title: 'Child 4', isUsed: false },
+        ],
+      },
+    ],
+  },
+];
 
 const TreeComponent: React.FC<any> = (args) => {
   const renderNodeButtons = (node: TreeNode, level: number) => (
@@ -98,13 +153,21 @@ const TreeComponent: React.FC<any> = (args) => {
     </div>
   );
   return (
-    <div className="w-full">
+    <div className="flex w-full">
       <TreeContainer>
         <TreeBox
           data={sampleData}
           treeId={'menu-tree'}
           renderNodeButtons={renderNodeButtons}
           {...args}
+          clientTree
+        />
+        <TreeBox
+          data={sampleData3}
+          treeId={'test2'}
+          renderNodeButtons={renderNodeButtons}
+          {...args}
+          clientTree
         />
       </TreeContainer>
     </div>

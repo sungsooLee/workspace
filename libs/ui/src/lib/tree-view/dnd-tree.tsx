@@ -61,6 +61,7 @@ interface DropZoneData {
   node: TreeNode;
   level: number;
   position: NodeMovePositionType;
+  treeId: string;
 }
 
 interface DndTreeNodeProps {
@@ -142,7 +143,7 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
     setNodeRef: setDragNodeRef,
     isDragging,
   } = useDraggable({
-    id: `drag-${node.key}`,
+    id: `${treeId}-drag-${node.key}`,
     data: {
       id: node.key,
       node,
@@ -224,21 +225,23 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
   const isValidDropTarget = useCallback(() => {
     if (!effectiveDraggedNode) return true; // 드래그 중이 아니면 항상 유효
 
-    // 자기 자신으로는 드롭할 수 없음
+    // 같은 트리에서 자기 자신으로는 드롭할 수 없음
     if (effectiveDraggedNode.key === node.key) {
       return false;
     }
 
-    // 자식 노드로는 드롭할 수 없음 (순환 참조 방지)
-    const isDescendant = (parentNode: TreeNode, childKey: string): boolean => {
-      if (!parentNode.children) return false;
-      return parentNode.children.some(
-        (child) => child.key === childKey || isDescendant(child, childKey),
-      );
-    };
+    // 같은 트리에서 자식 노드로는 드롭할 수 없음 (순환 참조 방지)
+    if (globalSourceTreeId === treeId) {
+      const isDescendant = (parentNode: TreeNode, childKey: string): boolean => {
+        if (!parentNode.children) return false;
+        return parentNode.children.some(
+          (child) => child.key === childKey || isDescendant(child, childKey),
+        );
+      };
 
-    if (isDescendant(effectiveDraggedNode, node.key)) {
-      return false;
+      if (isDescendant(effectiveDraggedNode, node.key)) {
+        return false;
+      }
     }
 
     // 제약 조건 확인
@@ -322,7 +325,9 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
     // }
 
     // 드래그 중 스타일 (현재 드래그되는 노드)
-    if (isDragging) {
+    const isThisNodeBeingDragged =
+      isDragging && globalSourceTreeId === treeId && effectiveDraggedNodeKey === node.key;
+    if (isThisNodeBeingDragged) {
       styles.push('opacity-50 bg-[var(--gray1)]');
     }
 
@@ -357,8 +362,8 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
       styles.push('opacity-75');
     }
 
-    // 드래그 중일 때 유효하지 않은 드롭 대상 스타일
-    if (effectiveDraggedNode && !isValidDropTarget()) {
+    // 드래그 중일 때 유효하지 않은 드롭 대상 스타일 (같은 트리에서만 적용)
+    if (effectiveDraggedNode && globalSourceTreeId === treeId && !isValidDropTarget()) {
       styles.push('opacity-50 cursor-not-allowed');
       // 드래그 중이고 유효하지 않은 대상이면 배경을 빨간색으로
       if (!isValidDropTarget()) {
@@ -399,7 +404,8 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
 
   // 전역 드롭 상태 확인
   const currentDropTarget = treeContext?.dragState?.currentDropTarget;
-  const isThisNodeDropTarget = currentDropTarget?.node?.key === node.key;
+  const isThisNodeDropTarget =
+    currentDropTarget?.node?.key === node.key && currentDropTarget?.treeId === treeId;
   const currentDropPosition = isThisNodeDropTarget ? currentDropTarget?.position : null;
 
   // 드롭 위치 상태 업데이트 (로컬과 전역 상태 동기화)
@@ -415,36 +421,39 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
 
   // 드롭 영역 설정 (BEFORE) - 모든 depth에서 허용
   const { setNodeRef: setDropBeforeRef, isOver: isOverBefore } = useDroppable({
-    id: `drop-before-${node.key}`,
+    id: `${treeId}-drop-before-${node.key}`,
     data: {
       id: node.key,
       node,
       level,
       position: 'BEFORE',
+      treeId,
     } as DropZoneData,
     disabled: node.constraints?.drop === false,
   });
 
   // 드롭 영역 설정 (AFTER) - 모든 depth에서 허용
   const { setNodeRef: setDropAfterRef, isOver: isOverAfter } = useDroppable({
-    id: `drop-after-${node.key}`,
+    id: `${treeId}-drop-after-${node.key}`,
     data: {
       id: node.key,
       node,
       level,
       position: 'AFTER',
+      treeId,
     } as DropZoneData,
     disabled: node.constraints?.drop === false,
   });
 
   // 드롭 영역 설정 (INSIDE) - 하위 노드로 이동
   const { setNodeRef: setDropInsideRef, isOver: isOverInside } = useDroppable({
-    id: `drop-inside-${node.key}`,
+    id: `${treeId}-drop-inside-${node.key}`,
     data: {
       id: node.key,
       node,
       level,
       position: 'INSIDE',
+      treeId,
     } as DropZoneData,
     disabled: node.constraints?.drop === false,
   });
@@ -922,11 +931,11 @@ export const DndTreeView: React.FC<TreeProps> = ({
       const { active } = event;
       const dragData = active.data.current as DragData;
 
-      // 이 트리에서 시작된 드래그인지 확인
-      if (dragData && dragData.id && treeData.some((node) => findNodeByKey([node], dragData.id))) {
+      // 이 트리에서 시작된 드래그인지 확인 - 드래그 ID가 이 트리의 것인지 확인
+      const isDragFromThisTree = active.id && active.id.toString().startsWith(`${treeId}-drag-`);
+      if (dragData && isDragFromThisTree) {
         setDraggedNode(dragData.node);
         setDraggedNodeKey(dragData.node.key);
-
         if (treeContext && treeContext.setDragState) {
           treeContext.setDragState({
             node: JSON.parse(JSON.stringify(dragData.node)),
@@ -966,8 +975,11 @@ export const DndTreeView: React.FC<TreeProps> = ({
       if (clientTree) {
         let newTreeData = [...treeData];
 
+        // 같은 트리 내에서만 이동할 때 소스에서 제거, 크로스 트리에서는 타겟 트리에만 추가
         if (actionType === 'NODE_MOVE') {
           newTreeData = removeNodeByKey(newTreeData, sourceNode.key);
+        } else if (actionType === 'NODE_COPY') {
+          // 타겟 트리에만 노드 추가 (소스 트리에서는 제거하지 않음)
         }
 
         newTreeData = insertNodeAtPosition(newTreeData, targetNode.key, sourceNode, dropPosition);
@@ -1023,8 +1035,7 @@ export const DndTreeView: React.FC<TreeProps> = ({
 
       // 이 트리에서 시작된 드래그인지 확인하여 처리
       const dragData = active.data.current as DragData;
-      const isThisTreeDrag =
-        dragData && dragData.id && treeData.some((node) => findNodeByKey([node], dragData.id));
+      const isThisTreeDrag = active.id && active.id.toString().startsWith(`${treeId}-drag-`);
 
       if (isThisTreeDrag) {
         setDraggedNode(null);
@@ -1042,8 +1053,7 @@ export const DndTreeView: React.FC<TreeProps> = ({
       }
 
       // 이 트리의 드롭 영역인지 확인 - 드롭 처리는 해당 트리에서만
-      const isThisTreeDrop =
-        dropData.id && treeData.some((node) => findNodeByKey([node], dropData.id));
+      const isThisTreeDrop = over.id && over.id.toString().startsWith(`${treeId}-drop-`);
 
       if (!isThisTreeDrop) {
         return;
@@ -1060,14 +1070,35 @@ export const DndTreeView: React.FC<TreeProps> = ({
     [treeData, handleDrop],
   );
 
+  const handleRemoveNode = useCallback(
+    (nodeKey: string) => {
+      if (clientTree) {
+        const newTreeData = removeNodeByKey([...treeData], nodeKey);
+
+        if (isSearching && searchKeyword) {
+          updateNodeVisibility(newTreeData, searchKeyword);
+        }
+
+        setTreeData(newTreeData);
+
+        const updatedInitialData = JSON.parse(JSON.stringify(newTreeData));
+        const fullData = JSON.parse(JSON.stringify(updatedInitialData));
+        updateNodeVisibility(fullData, '');
+        setInitialData(fullData);
+      }
+    },
+    [clientTree, treeData, isSearching, searchKeyword],
+  );
+
   useEffect(() => {
     if (treeContext && treeContext.registerTreeCallbacks) {
       treeContext.registerTreeCallbacks(treeId, {
         onDragStart: handleDragStart,
         onDragEnd: handleDragEnd,
+        removeNode: handleRemoveNode,
       });
     }
-  }, [treeId, treeContext, handleDragStart, handleDragEnd]);
+  }, [treeId, treeContext, handleDragStart, handleDragEnd, handleRemoveNode]);
 
   // 드롭 처리
 

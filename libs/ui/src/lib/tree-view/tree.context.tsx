@@ -29,6 +29,7 @@ interface DragState {
   currentDropTarget?: {
     node: TreeNode;
     position?: NodeMovePositionType;
+    treeId?: string;
   } | null;
 }
 
@@ -53,6 +54,7 @@ interface TreeContextType {
       onDragStart?: (event: DragStartEvent) => void;
       onDragOver?: (event: DragOverEvent) => void;
       onDragEnd?: (event: DragEndEvent) => void;
+      removeNode?: (nodeKey: string) => void;
     },
   ) => void;
 }
@@ -83,6 +85,8 @@ export const TreeProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setDragStateInternal({ ...defaultDragState });
     setActiveId(null);
     document.body.classList.remove('dragging-active');
+    document.body.style.userSelect = '';
+    // document.body.style.overflow = '';
   }, []);
 
   const registerTreeCallbacks = useCallback((treeId: string, callbacks: any) => {
@@ -104,20 +108,17 @@ export const TreeProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const sensors = useSensors(mouseSensor, touchSensor);
 
   // 통합된 드래그 이벤트 핸들러들
-  const handleDragStart = useCallback(
-    (event: DragStartEvent) => {
-      console.log('Global DragStart:', event);
-      setActiveId(event.active.id);
+  const handleDragStart = useCallback((event: DragStartEvent) => {
+    console.log('Global DragStart:', event);
+    setActiveId(event.active.id);
 
-      // 모든 트리의 onDragStart 콜백 호출
-      treeCallbacksRef.current.forEach((callbacks) => {
-        if (callbacks.onDragStart) {
-          callbacks.onDragStart(event);
-        }
-      });
-    },
-    [],
-  );
+    // 모든 트리의 onDragStart 콜백 호출
+    treeCallbacksRef.current.forEach((callbacks) => {
+      if (callbacks.onDragStart) {
+        callbacks.onDragStart(event);
+      }
+    });
+  }, []);
 
   const handleDragOver = useCallback(
     (event: DragOverEvent) => {
@@ -132,6 +133,7 @@ export const TreeProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             currentDropTarget: {
               node: dropData.node,
               position: dropData.position,
+              treeId: dropData.treeId,
             },
           });
         }
@@ -155,6 +157,24 @@ export const TreeProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     (event: DragEndEvent) => {
       console.log('Global DragEnd:', event);
 
+      const { active, over } = event;
+      const dragData = active.data.current as any;
+      const dropData = over?.data.current as any;
+
+      // 크로스 트리 이동 시 소스 트리에서 노드 제거
+      if (dragData && dropData && dragData.node && dropData.treeId) {
+        const sourceTreeId = dragState.sourceTreeId;
+        const targetTreeId = dropData.treeId;
+
+        // 다른 트리로 이동하는 경우 소스 트리에서 노드 제거
+        if (sourceTreeId && targetTreeId && sourceTreeId !== targetTreeId) {
+          const sourceTreeCallbacks = treeCallbacksRef.current.get(sourceTreeId);
+          if (sourceTreeCallbacks && sourceTreeCallbacks.removeNode) {
+            sourceTreeCallbacks.removeNode(dragData.node.key);
+          }
+        }
+      }
+
       // 모든 트리의 onDragEnd 콜백 호출
       treeCallbacksRef.current.forEach((callbacks) => {
         if (callbacks.onDragEnd) {
@@ -164,7 +184,7 @@ export const TreeProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
       resetDragState();
     },
-    [resetDragState],
+    [resetDragState, dragState.sourceTreeId],
   );
 
   useEffect(() => {
@@ -191,6 +211,7 @@ export const TreeProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       document.addEventListener('dragend', handleDragEnd);
       document.addEventListener('keydown', handleKeyDown);
       document.body.style.userSelect = 'none';
+      // document.body.style.overflow = 'hidden';
       document.body.classList.add('dragging-active');
 
       return () => {
@@ -198,6 +219,7 @@ export const TreeProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         document.removeEventListener('dragend', handleDragEnd);
         document.removeEventListener('keydown', handleKeyDown);
         document.body.style.userSelect = '';
+        // document.body.style.overflow = '';
         document.body.classList.remove('dragging-active');
       };
     }
