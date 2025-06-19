@@ -1,7 +1,11 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import type { MutateOptions } from '@tanstack/react-query';
 
-import { queryKeys, tenantQueryOptions as queryOptions, mutateOptions } from './tenant.queries';
+import {
+  tenantQueryKeys,
+  tenantQueryOptions as queryOptions,
+  tenantMutateOptions,
+} from './tenant.queries';
 import { Tenant } from '../../../types/entities/tenant';
 
 export function useFetchTenant(tenantId?: number) {
@@ -12,10 +16,10 @@ export function useCreateTenant(options: any) {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    ...mutateOptions.create(),
+    ...tenantMutateOptions.create(),
     onSuccess: async (data: any, variables, context) => {
       // 공통 메세지 처리 등...
-      queryClient.invalidateQueries({ queryKey: queryKeys.list });
+      queryClient.invalidateQueries({ queryKey: tenantQueryKeys.list });
       console.log('aaaaaaaa');
       if (options.onSuccess) {
         options.onSuccess(data, variables, context);
@@ -38,10 +42,10 @@ export function useUpdateTenant(options: any) {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    ...mutateOptions.update(),
+    ...tenantMutateOptions.update(),
     onSuccess: async (data: any, variables, context) => {
       // 공통 메세지 처리 등...
-      queryClient.invalidateQueries({ queryKey: queryKeys.list });
+      queryClient.invalidateQueries({ queryKey: tenantQueryKeys.list });
       if (options.onSuccess) {
         options.onSuccess(data, variables, context);
       }
