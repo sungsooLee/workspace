@@ -22,7 +22,7 @@ import {
 } from '@learnway/hooks';
 import { useActiveMenuDepthState, useFetchAuthUser } from '@learnway/auth/entities';
 import { useEffect, useState } from 'react';
-import { first, get, mapValues, pick, values } from 'lodash';
+import { first, flatten, get, isArray, map, mapValues, pick, values } from 'lodash';
 import { useWatch } from 'react-hook-form';
 import { DropdownFormField } from '@features/form';
 
@@ -125,7 +125,7 @@ function ExcelDownloadReasonModalCompoment({
   }, [dataCount]);
 
   useEffect(() => {
-    setValue('requestParameter', values(paramLabels));
+    setValue('requestParameter', flatten(values(paramLabels)));
   }, [paramLabels]);
 
   useEffect(() => {
@@ -167,7 +167,11 @@ function ExcelDownloadReasonModalCompoment({
         'downloadDetailReasonType',
         'downloadDetailReason',
       ]),
-      requestParameter: JSON.stringify(mapValues(paramLabels, (option) => get(option, 'value'))),
+      requestParameter: JSON.stringify(
+        mapValues(paramLabels, (option) =>
+          isArray(option) ? map(option, (_) => get(_, 'value')) : get(option, 'value'),
+        ),
+      ),
     });
   }
 
