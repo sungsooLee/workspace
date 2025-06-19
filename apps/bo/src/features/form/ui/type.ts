@@ -19,6 +19,7 @@ export type FormDisplayProps = {
   provider: DynamicFormProvider;
   children: ReactNode;
   dependencies?: Dependency[]; // 의존성 필드 값 설정
+  condition?: 'and' | 'or';
   onDisplay?: (values: Record<string, any>) => boolean; // 필드 값이 조건에 맞는지 확인하는 함수
 };
 
