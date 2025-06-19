@@ -490,6 +490,15 @@ export type UseSearchBoxReturn = {
   getValues: UseFormReturn['getValues'];
 
   /**
+   * 폼의 현재 값을 SelectOption 형식으로 가져오기 함수
+   *
+   * text 데이터는 { value: value, label: value }로 리턴
+   *
+   * @returns {Record<string, SelectOption>}
+   */
+  getValuesWithLabel: () => Record<string, SelectOption>;
+
+  /**
    * 폼의 값을 외부에서 변경함
    * @param name
    * @param value

@@ -290,7 +290,13 @@ function LearningResourceTableComponent() {
     // },
   };
 
-  const { provider: searchProvider, getValues, setOptions, setValue } = useSearchBox(searchConfig);
+  const {
+    provider: searchProvider,
+    getValues,
+    getValuesWithLabel,
+    setOptions,
+    setValue,
+  } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const [params, setParams] = useState<Record<string, any>>({});
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
