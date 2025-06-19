@@ -126,7 +126,7 @@ function RouteComponent() {
   return (
     <PageContainer>
       <MainContents>
-        <SplitPanel size={['30%', 'auto']}>
+        <SplitPanel size={['30%', 'auto']} divider>
           <div>
             <TreeBox data={sampleData} treeId={'menu-tree'} title={'교육본부'} />
           </div>

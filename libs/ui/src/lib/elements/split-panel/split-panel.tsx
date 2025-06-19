@@ -11,6 +11,8 @@ interface SplitPanelProps {
   size?: Array<number | string>;
   /** divider 표시 여부 */
   divider?: boolean;
+  /** gap 간격 사이즈 */
+  gap?: number;
 }
 
 /**
@@ -20,11 +22,18 @@ interface SplitPanelProps {
  * @param divider
  * @constructor
  */
-const SplitPanelComponent = ({ children, size, className, divider = false }: SplitPanelProps) => {
+const SplitPanelComponent = ({
+  children,
+  size,
+  className,
+  divider = false,
+  gap,
+}: SplitPanelProps) => {
   const nodes = React.Children.toArray(children);
+  const containerStyle = gap ? { columnGap: `${gap}px` } : undefined;
 
   return (
-    <div className={cn(styles.start, 'split_panel', className)}>
+    <div className={cn(styles.start, 'split_panel', className)} style={containerStyle}>
       {nodes.map((child, index) => {
         const width = size?.[index];
         const style =
