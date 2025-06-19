@@ -13,6 +13,9 @@ export const roleQueryKeys = {
   tree: ['tree'] as const,
   users: ['users'] as const,
   userGroups: ['userGroups'] as const,
+  userRoleMe: ['users-role-me'] as const,
+  applicationList: ['application-list'] as const,
+  application: ['application-detail'] as const,
 };
 
 const genRoleMenuTree = (menus: any[], roleMenu: any, contains: any[] = []) => {
@@ -110,6 +113,27 @@ export const roleManagerQueryOptions = {
     queryKey: [roleQueryKeys.all, roleQueryKeys.userGroups],
     queryFn: async () =>
       roleId ? RoleManagerService.fetchRoleUserGroups(roleId) : getQuerySkipToken(),
+  }),
+
+  //역할 조회
+  getRoleMe: (siteScope: string) => ({
+    queryKey: [roleQueryKeys.all, roleQueryKeys.userRoleMe],
+    queryFn: async () =>
+      siteScope ? RoleManagerService.fetchRoleMe(siteScope) : getQuerySkipToken(),
+  }),
+  // 나의 역할 신청 목록 조회
+  getRoleApplicationList: (siteScope: string) => ({
+    queryKey: [roleQueryKeys.applicationList],
+    queryFn: async () =>
+      siteScope ? RoleManagerService.fetchRoleApplicationList(siteScope) : getQuerySkipToken(),
+  }),
+  // 나의 역할 신청 조회 단건
+  getRoleApplication: (roleApplicationId: number) => ({
+    queryKey: [roleQueryKeys.application],
+    queryFn: async () =>
+      roleApplicationId
+        ? RoleManagerService.fetchRoleApplication(roleApplicationId)
+        : getQuerySkipToken(),
   }),
 };
 type roleParam = {

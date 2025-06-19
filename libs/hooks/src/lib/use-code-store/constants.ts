@@ -88,6 +88,7 @@ export const CODE_GROUP = {
   'pms.menu.MenuScopeCode': 'pms.menu.MenuScopeCode',
   'pms.multilingual.KeyTypeCode': 'pms.multilingual.KeyTypeCode',
   'pms.multilingual.LanguageType': 'pms.multilingual.LanguageType',
+  'pms.role.RoleApplicationStatus': 'pms.role.RoleApplicationStatus',
   'pms.role.ChannelScope': 'pms.role.ChannelScope',
   'pms.role.CompanyScope': 'pms.role.CompanyScope',
   'pms.role.DeptScope': 'pms.role.DeptScope',
@@ -107,5 +108,6 @@ export const CODE_GROUP = {
   'manual.tenant.tenantId': 'manual.tenant.tenantId',
   'pms.multilingual.LangCountryCode': 'pms.multilingual.LangCountryCode',
   'pms.role.RoleType': 'pms.role.RoleType',
+  'manual.bo.role.roidId': 'manual.bo.role.roidId',
 };
 export type CODE_GROUP_TYPE = (typeof CODE_GROUP)[keyof typeof CODE_GROUP];

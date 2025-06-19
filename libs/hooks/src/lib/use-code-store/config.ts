@@ -65,4 +65,19 @@ export const codeOptions: CodeApiConfig = {
     },
     disableCache: true,
   },
+  [CODE_GROUP['manual.bo.role.roidId']]: {
+    api: async () => {
+      const data: any = await httpService.get<any>(`${PMSApiPrefix()}/roles/me`, {
+        siteScope: 'BO',
+      });
+
+      return [
+        ...data.map((item: any) => ({
+          label: item.name,
+          value: item.roleId,
+        })),
+      ];
+    },
+    // disableCache: true,
+  },
 };

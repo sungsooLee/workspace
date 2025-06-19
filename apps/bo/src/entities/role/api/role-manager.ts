@@ -140,6 +140,36 @@ export default class RoleManagerService {
       siteScope: siteScope,
     });
   }
+
+  /**
+   * 나의 역할 목록 조회 (me)
+   * @param siteScope (FO/BO)
+   * @returns
+   */
+  static fetchRoleMe(siteScope: string) {
+    return httpService.get<any>(`${PMSApiPrefix()}/roles/me`, {
+      siteScope,
+    });
+  }
+
+  /**
+   * 나의 역할 신청 목록 조회
+   * @returns
+   */
+  static fetchRoleApplicationList(siteScope: string) {
+    return httpService.get<any>(`${PMSApiPrefix()}/role-applications`, {
+      siteScope,
+    });
+  }
+
+  /**
+   * 나의 역할 신청 조회 (단건)
+   * @roleApplicationId 신청 아이디
+   * @returns
+   */
+  static fetchRoleApplication(roleApplicationId: number) {
+    return httpService.get<any>(`${PMSApiPrefix()}/role-applications/${roleApplicationId}`);
+  }
 }
 
 function genCreateRole(payload: any) {

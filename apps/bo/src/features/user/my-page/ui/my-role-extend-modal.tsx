@@ -17,13 +17,22 @@ import { FormRow, FormSubTitle } from '@shared/ui';
 import { t } from 'i18next';
 import { FC, useEffect } from 'react';
 import { formUtils } from '@entities/form-utils';
+import { useGetRoleApplication } from '@entities/role/service/role-manage.hook';
 
-type MyRoleModal = 'request' | 'view' | 'approve' | 'reject';
-const MyRoleExtendModalComponent: FC<any> = ({ type }: { type: MyRoleModal }) => {
-  const { open: openModal, confirm: openConfirm, close: closeModal } = useModal();
-  const { provider, fetchData, onSubmit, onFormChange, clearFormError, control } =
-    useDynamicForm(formConfig);
+type MyRoleModal = 'request' | 'view';
+const MyRoleExtendModalComponent: FC<any> = ({ type, data }: { type: MyRoleModal; data: any }) => {
+  console.log('data :: ', data);
 
+  const { close: closeModal } = useModal();
+  const { provider, fetchData, onSubmit, onFormChange } = useDynamicForm(formConfig);
+
+  const { data: viewData } = useGetRoleApplication(
+    type === 'view' ? data?.roleApplicationId : undefined,
+  );
+
+  console.log('### viewData', viewData);
+
+  const isApprovedInfo = false;
   const handleOnSubmit = (node: any) => {
     console.log('onsubmit', node);
     closeModal(node);
@@ -46,7 +55,7 @@ const MyRoleExtendModalComponent: FC<any> = ({ type }: { type: MyRoleModal }) =>
             <FormRow provider={provider} name={'role'} />
             <FormRow provider={provider} name={'currentRolePeriod'} />
           </ContentsRow>
-          <FormSubTitle label={t('관리자 권한 신청 정보')} />
+          <FormSubTitle className="mt-3" label={t('관리자 권한 신청 정보')} />
           <FormDisplay
             provider={provider}
             dependencies={[{ name: 'requestRolePeriodEnable', value: true }]}
@@ -59,21 +68,29 @@ const MyRoleExtendModalComponent: FC<any> = ({ type }: { type: MyRoleModal }) =>
               />
             </ContentsRow>
           </FormDisplay>
-          <ContentsRow>
+          <ContentsRow className="mb-4">
             <FormRow provider={provider} name={'reason'} />
           </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider} name={'approveStatus'} />
-            <FormRow provider={provider} name={'requestDate'} />
-          </ContentsRow>
-          <FormSubTitle label={t('관리자 권한 승인 정보')} />
-          <ContentsRow>
-            <FormRow provider={provider} name={'approveDate'} />
-            <FormRow provider={provider} name={'approveUser'} />
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider} name={'rejectReason'} />
-          </ContentsRow>
+          {type === 'view' && (
+            <ContentsRow>
+              <FormRow provider={provider} name={'approveStatus'} />
+              <FormRow provider={provider} name={'requestDate'} />
+            </ContentsRow>
+          )}
+
+          {/* 승인 반려 정보 있을때 */}
+          {isApprovedInfo && (
+            <>
+              <FormSubTitle label={t('관리자 권한 승인 정보')} />
+              <ContentsRow>
+                <FormRow provider={provider} name={'approveDate'} />
+                <FormRow provider={provider} name={'approveUser'} />
+              </ContentsRow>
+              <ContentsRow>
+                <FormRow provider={provider} name={'rejectReason'} />
+              </ContentsRow>
+            </>
+          )}
         </ModalBody>
         <ModalFooter>
           <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
@@ -115,8 +132,8 @@ const formConfig: DynamicFormConfig = {
       label: t('권한 신청 시작/종료일'),
       // value: '',
       value: {
-        from: formUtils.now({ unit: 'day', offset: -30 }),
-        to: formUtils.now(),
+        from: formUtils.nowDate({ unit: 'day', offset: -30 }),
+        to: formUtils.nowDate(),
       },
     },
     {
