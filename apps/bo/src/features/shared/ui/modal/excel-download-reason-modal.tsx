@@ -133,7 +133,7 @@ function ExcelDownloadReasonModalCompoment({ dataCount }: ExcelDownloadReasonMod
               align="start"
               content={
                 <>
-                  <h2>{t('도움말')}</h2>
+                  <h3>{t('도움말')}</h3>
                   <pre>
                     {t(
                       'ISMS 정보보호 관리체계 인증을 위해 개인정보 엑셀 다운로드 사유를 입력해 주세요.',
