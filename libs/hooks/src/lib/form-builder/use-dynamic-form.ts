@@ -199,6 +199,15 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
     isFieldRequired,
   };
 
+  const getInitByBuilders = () => {
+    const initData: { [key: string]: any } = {};
+    config.builders.forEach((item) => {
+      clearErrors(item.name);
+      initData[item.name] = item.value;
+    });
+    return initData;
+  };
+
   // provider 객체 반환
   return {
     provider: {
@@ -222,5 +231,6 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
     onFormChange,
     onFormFocus: handleFocus,
     control: extendedControl,
+    getInitByBuilders: getInitByBuilders,
   };
 };

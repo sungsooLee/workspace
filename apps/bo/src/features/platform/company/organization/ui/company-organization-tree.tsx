@@ -36,8 +36,13 @@ import { isEqual } from 'lodash';
 
 import { transformDepartmentApiDataToTreeData } from '@features/platform/company/organization/service/company-organization.service';
 import { findOrganizationPathById } from '@features/platform/company';
-import { useGetCompanyDepartmentTree } from '@entities/department/service/department.hook';
-import { useGetCompanyHmgDepartmentTree } from '@entities/department/service/hmg-department.hook';
+
+import {
+  useGetCompanyDepartmentDetail,
+  useGetCompanyHmgDepartmentTree,
+  useGetCompanyDepartmentTree,
+} from '@entities/department';
+
 import { CompanyOrganizationInfoList } from './company-organization-info-list';
 import { CompanyOrganizationUserList } from './company-organization-info-user';
 
@@ -64,7 +69,6 @@ const TenantCompanyOrganizationTreeComponent = ({
 }) => {
   const router = useRouter();
 
-  const [companyDeparmentTree, setCompanyDepartmentTree] = useState<any>();
   const [deptTreeData, setDeptTreeData] = useState([]);
   const [selectedNode, setSelectedNode] = useState<any>();
   const [viewNode, setViewNode] = useState<any>();
@@ -72,11 +76,12 @@ const TenantCompanyOrganizationTreeComponent = ({
   const [formMode, setFormMode] = useState(EnFormMode.NONE);
   const [pathString, setPathString] = useState<string>();
 
-  const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, control } =
+  const { provider, fetchData, onSubmit, onFormChange, getValues, getInitByBuilders, control } =
     useDynamicForm(formConfig);
 
   const { data: departmentTreeData, refetch } = useGetCompanyDepartmentTree([companyCode]);
   const { data: hmgDepartmentTreeData } = useGetCompanyHmgDepartmentTree([companyCode]);
+  const { data: departmentData } = useGetCompanyDepartmentDetail(viewNode?.key);
 
   const handleSelectedNodeChange = (node: any) => {
     if (node.key !== 'root' && node.parentKey !== 'root') {
@@ -92,6 +97,16 @@ const TenantCompanyOrganizationTreeComponent = ({
     setSelectedNode(node);
     setViewNode(null);
     setFormMode(EnFormMode.NONE);
+  };
+  const handleAppendSubOrganization = (node: TreeNode, level: number) => {
+    const initdata = getInitByBuilders();
+    initdata.deptLoc = findOrganizationPathById(deptTreeData, node.key);
+    initdata.c2 = node.title;
+    initdata.c3 = node.key;
+    fetchData(initdata);
+    setSelectedNode(node);
+    setViewNode(null);
+    setFormMode(EnFormMode.ADD);
   };
 
   const renderTabOrganizationContent = () => {
@@ -149,6 +164,12 @@ const TenantCompanyOrganizationTreeComponent = ({
     }
   }, [hmgDepartmentTreeData]);
 
+  useEffect(() => {
+    if (departmentData) {
+      fetchData(departmentData);
+    }
+  }, [departmentData]);
+
   const tabItems = [
     {
       title: t('조직'),
@@ -187,13 +208,30 @@ const TenantCompanyOrganizationTreeComponent = ({
         <div className={'gap-10px flex'}>
           <div className={'flex items-center'}>
             <Button
+              label={t('하위 조직 추가')}
+              variant={
+                node?.key === selectedNode?.key && formMode === EnFormMode.ADD ? 'primary' : 'gray2'
+              }
+              size="xs"
+              type="button"
+              stopPropagation
+              onClick={(e) => {
+                handleAppendSubOrganization(node, level);
+              }}
+            />
+            <Button
+              label={t('선택')}
+              variant={
+                node?.key === selectedNode?.key && formMode === EnFormMode.NONE
+                  ? 'primary'
+                  : 'gray2'
+              }
+              size="xs"
+              type="button"
+              stopPropagation
               onClick={(e) => {
                 handleNodeCustomButton(node, level);
               }}
-              variant={node?.key === selectedNode?.key ? 'primary' : 'gray2'}
-              size="xs"
-              type="button"
-              label={t('선택')}
             />
           </div>
         </div>
@@ -276,45 +314,45 @@ export const TenantCompanyOrganizationTree = TenantCompanyOrganizationTreeCompon
 const formConfig: DynamicFormConfig = {
   builders: [
     {
-      name: 'c1',
+      name: 'deptLoc',
       type: 'text',
       label: t('위치'),
       value: '',
     },
     {
-      name: 'c2',
+      name: 'parentName',
       type: 'text',
       label: t('상위 조직명'),
       value: '',
       size: 10,
     },
     {
-      name: 'c3',
+      name: 'parentDeptCode',
       type: 'text',
       label: t('상위 조직코드'),
       value: '',
     },
     {
-      name: 'c4',
+      name: 'deptCode',
       type: 'text',
       label: t('조직코드'),
       value: '',
     },
     {
-      name: 'c5',
+      name: 'deptName',
       type: 'text',
       label: t('조직명'),
       value: '',
     },
     {
-      name: 'c6',
+      name: 'managerEmployeeNumber',
       type: 'custom',
       label: t('조직장 사번'),
       format: 'array',
       value: [],
     },
     {
-      name: 'c7',
+      name: 'managerName',
       type: 'text',
       label: t('조직장 이름'),
       value: '',
@@ -326,6 +364,7 @@ const formConfig: DynamicFormConfig = {
       value: '',
       maxLength: 50,
     },
+    { name: 'deptId', type: 'hidden', label: '', value: '' },
   ],
   validator: {
     c5: { required: true },

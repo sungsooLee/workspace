@@ -17,7 +17,7 @@ import { EnOrganizationShowType } from './company-organization-tree';
 import { transformDepartmentApiDataToTreeData } from '@features/platform/company/organization/service/company-organization.service';
 
 import { queryOptions as departmentQuery } from '@entities/department/service/department.queries';
-import { queryOptions as hmgDepartmentQuery } from '@entities/department/service/hmg-department.queries';
+import { hmgQueryOptions as hmgDepartmentQuery } from '@entities/department/service/hmg-department.queries';
 
 /**
  * 화면번호: NLP_BO_TMS_1111_03 테넌트-회사조직 대상자 (조직)
