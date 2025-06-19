@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   ContentsRow,
+  Divider,
   DynamicFormField,
   GridBox,
   GridImperative,
   Input,
+  SplitPanel,
   Textarea,
 } from '@learnway/ui';
 import { t } from 'i18next';
@@ -14,7 +16,6 @@ import { createColumnHelper, Table } from '@tanstack/react-table';
 import { useSystemCodeDetail } from '../../../../entities/common-code/service/system-code.hook';
 import { FormRow, FormSubTitle } from '../../../../shared/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
 const columnHelper = createColumnHelper<any>();
 const listGridColumns = [
@@ -127,80 +128,68 @@ const SystemCodeGridComponent = ({ data }: any) => {
   }, [detailData]);
 
   return (
-    <div className={cn(boxStyles.start, boxStyles.inner)}>
-      <div className={cn(layoutStyles.start, layoutStyles.wrap, layoutStyles.ratio_third)}>
-        <div className={cn(layoutStyles.inner)}>
-          <div className={layoutStyles.grid_layout_wrap}>
-            <GridBox
-              ref={listGridRef}
-              data={data}
-              columns={listGridColumns}
-              onRowSelect={handleRowSelect}
-              showNumberingColumn={true}
-              clientSideSorting={true}
-              title={t('LABEL.list', { type: t('LABEL.systemCommonCdGroup') })}
-              onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
-            />
-            <GridBox
-              key={selectedRow?.enumNames}
-              ref={detailGridRef}
-              data={formattedDetailData}
-              columns={detailGridColumns()}
-              showNumberingColumn={true}
-              onRowSelect={handleDetailRowSelect}
-              clientSideSorting={true}
-              title={t('LABEL.list', { type: t('LABEL.systemCommonCd') })}
-              onTableInstanceChange={(table: Table<any>) => setDetailGridInstance(table)}
-            />
+    <>
+      <Divider />
+      <SplitPanel size={['auto', '28%']} divider>
+        <SplitPanel size={['36%', 'auto']} gap={32}>
+          <GridBox
+            ref={listGridRef}
+            data={data}
+            columns={listGridColumns}
+            onRowSelect={handleRowSelect}
+            showNumberingColumn={true}
+            clientSideSorting={true}
+            title={t('LABEL.list', { type: t('LABEL.systemCommonCdGroup') })}
+            onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
+          />
+          <GridBox
+            key={selectedRow?.enumNames}
+            ref={detailGridRef}
+            data={formattedDetailData}
+            columns={detailGridColumns()}
+            showNumberingColumn={true}
+            onRowSelect={handleDetailRowSelect}
+            clientSideSorting={true}
+            title={t('LABEL.list', { type: t('LABEL.systemCommonCd') })}
+            onTableInstanceChange={(table: Table<any>) => setDetailGridInstance(table)}
+          />
+        </SplitPanel>
+        <form>
+          <FormSubTitle
+            label={t('LABEL.info', { type: t('LABEL.systemCommonCd') })}
+            lineType={'dark'}
+          />
+          <div className={layoutStyles.inner_contents}>
+            <ContentsRow>
+              <FormRow provider={provider} name={'cdGroupId'} element={<Input disabled={true} />} />
+            </ContentsRow>
+            <ContentsRow>
+              <FormRow provider={provider} name={'cdId'} element={<Input disabled={true} />} />
+            </ContentsRow>
+            <ContentsRow>
+              <FormRow provider={provider} name={'cdName'} element={<Input disabled={true} />} />
+            </ContentsRow>
+            <ContentsRow>
+              <FormRow provider={provider} name={'cdContent'} element={<Input disabled={true} />} />
+            </ContentsRow>
+            <ContentsRow>
+              <FormRow
+                provider={provider}
+                name={'multilingualKey'}
+                element={<Input disabled={true} />}
+              />
+            </ContentsRow>
+            <ContentsRow>
+              <FormRow
+                provider={provider}
+                name={'referenceVal1'}
+                element={<Textarea disabled={true} rows={5} />}
+              />
+            </ContentsRow>
           </div>
-        </div>
-
-        <div className={layoutStyles.inner}>
-          <form>
-            <FormSubTitle
-              label={t('LABEL.info', { type: t('LABEL.systemCommonCd') })}
-              lineType={'dark'}
-            />
-            <div className={layoutStyles.inner_contents}>
-              <ContentsRow>
-                <FormRow
-                  provider={provider}
-                  name={'cdGroupId'}
-                  element={<Input disabled={true} />}
-                />
-              </ContentsRow>
-              <ContentsRow>
-                <FormRow provider={provider} name={'cdId'} element={<Input disabled={true} />} />
-              </ContentsRow>
-              <ContentsRow>
-                <FormRow provider={provider} name={'cdName'} element={<Input disabled={true} />} />
-              </ContentsRow>
-              <ContentsRow>
-                <FormRow
-                  provider={provider}
-                  name={'cdContent'}
-                  element={<Input disabled={true} />}
-                />
-              </ContentsRow>
-              <ContentsRow>
-                <FormRow
-                  provider={provider}
-                  name={'multilingualKey'}
-                  element={<Input disabled={true} />}
-                />
-              </ContentsRow>
-              <ContentsRow>
-                <FormRow
-                  provider={provider}
-                  name={'referenceVal1'}
-                  element={<Textarea disabled={true} rows={5} />}
-                />
-              </ContentsRow>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+        </form>
+      </SplitPanel>
+    </>
   );
 };
 

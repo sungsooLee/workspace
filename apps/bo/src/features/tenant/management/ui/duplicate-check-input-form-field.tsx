@@ -155,6 +155,7 @@ export const DuplicateCheckInputFormField = forwardRef<
           maxLength={maxLength}
           disabled={disabled}
           type={inputType}
+          {...props}
         />
         <Button
           type="button"

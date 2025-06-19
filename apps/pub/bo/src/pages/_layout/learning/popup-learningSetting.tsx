@@ -18,6 +18,7 @@ import {
   ModalFooter,
   ModalTitle,
   PhoneNumber,
+  SplitPanel,
   Switch,
   Tooltip,
   useModal,
@@ -32,7 +33,6 @@ import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
 import popSearchStyles from '@learnway/styles/bo/assets/styles/modules/popup-search.module.css';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import popLayoutstyles from './contents-layout.module.css'; // 팝업 컨텐츠 레이아웃
 import styles from './settimg-item.module.css'; // 화면 css
 
 export const Route = createFileRoute('/_layout/learning/popup-learningSetting')({
@@ -212,252 +212,247 @@ function RouteComponent() {
       <ModalContainer>
         <ModalTitle>{'학습자원 일괄설정'}</ModalTitle>
         <ModalBody>
-          <div className={cn(popLayoutstyles.start, popLayoutstyles.wrap)}>
-            <div className={popLayoutstyles.contents}>
-              <div className={popLayoutstyles.left_contents}>
-                {/* settimg-item.module.css */}
-                <div className={styles.start}>
-                  <GridBox
-                    data={data}
-                    columns={columns}
-                    title="일괄설정 항목"
-                    showColumnSettings={false}
-                    multiple={true}
-                    showTotalCount={false}
-                    className={styles.grid}
-                    customButtonNode={
-                      <p className="grid_info">
-                        대상동영상 <span className="num">10</span>건
-                      </p>
-                    }
-                  />
-                </div>
-              </div>
-              <div className={popLayoutstyles.main_contents}>
-                <FormSubTitle label={'타이틀'} />
-                <ContentsRow>
-                  <div className={formStyles.form_item}>
-                    <label htmlFor="name-manager" className={formStyles.form_label}>
-                      <span className={cn(formStyles.form_text)}>담당자</span>
-                      {/* 필수 케이스 */}
-                      <span className={cn(formStyles.status, formStyles.required)}>
-                        <IcoFormRequired width={12} height={12} />
-                      </span>
-                    </label>
-                    {/* 퍼블수정 20240317 : Modal 수정 S  */}
-                    <div className={formStyles.input_box}>
-                      <InputModalSelectorFormField
-                        modalConfig={{
-                          width: 'md',
-                          content: <ModalManagerContent />,
-                        }}
-                        placeholder={'담당자를 선택하세요.'}
-                      />
-                    </div>
-                    {/* 퍼블수정 20240317 : Modal 수정 E  */}
-                  </div>
-                  <div className={formStyles.form_item}>
-                    <label htmlFor="name-managerNum" className={formStyles.form_label}>
-                      <span className={cn(formStyles.form_text)}>연락처</span>
-                      {/* 필수 케이스 */}
-                      <span className={cn(formStyles.status, formStyles.required)}>
-                        <IcoFormRequired width={12} height={12} />
-                      </span>
-                    </label>
-                    <div className={formStyles.input_box}>
-                      {/* 퍼블수정 20240313 : PhoneNumber 컴포넌트로 수정 S */}
-                      <PhoneNumber
-                        options={[
-                          { value: 'type1', label: '+82' },
-                          { value: 'type2', label: '+83' },
-                        ]}
-                      />
-                      {/* 퍼블수정 20240313 : PhoneNumber 컴포넌트로 수정 E */}
-                    </div>
-                  </div>
-                </ContentsRow>
-                <ContentsRow type="horizontal">
-                  {/* form_item */}
-                  <div className={formStyles.form_item}>
-                    <label htmlFor="name-term" className={formStyles.form_label}>
-                      <span className={formStyles.form_text}>사용기한</span>
-                      {/* 필수 케이스 */}
-                      <span className={cn(formStyles.status, formStyles.required)}>
-                        <IcoFormRequired width={12} height={12} />
-                      </span>
-                      <Tooltip
-                        className={formStyles.tooltip}
-                        side="bottom"
-                        align="start"
-                        content={'사용기한 내 콘텐츠 공유/교육자원활용이 가능합니다.'}
-                      >
-                        <Button onlyIcon>
-                          <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
-                        </Button>
-                      </Tooltip>
-                    </label>
-                    <div className={formStyles.input_box}>
-                      {/* Switch 텍스트 : '무기한' : '기간 설정' */}
-                      <Switch
-                        id="switch01"
-                        className={formStyles.btn_switch}
-                        label={checked[1] ? '기간 설정' : '무기한'}
-                        checked={checked[1]}
-                        onCheckedChange={handleCheckedChange(1)}
-                      />
-                    </div>
-                  </div>
-                </ContentsRow>
-                {checked[1] && (
-                  <div className={dynamicFormStyles.form_display}>
-                    <ContentsRow>
-                      <div className={formStyles.form_item}>
-                        <div className={formStyles.input_box}>
-                          <DatePicker
-                            onChange={handleDate}
-                            value={date}
-                            className={formStyles.datepicker_item}
-                          />
-                          <span className={formStyles.dash}></span>
-                          <DatePicker
-                            onChange={handleDate2}
-                            value={date2}
-                            className={formStyles.datepicker_item}
-                          />
-                        </div>
-                      </div>
-                    </ContentsRow>
-                  </div>
-                )}
-                <ContentsRow type="horizontal">
-                  {/* Textarea type */}
-                  <div className={formStyles.form_item}>
-                    <label htmlFor="name-conjugation" className={formStyles.form_label}>
-                      <span className={formStyles.form_text}>교육자원 활용여부</span>
-                      {/* 필수 케이스 */}
-                      <span className={cn(formStyles.status, formStyles.required)}>
-                        <IcoFormRequired width={12} height={12} />
-                      </span>
-                    </label>
-                    <div className={formStyles.input_box}>
-                      <Switch
-                        id="name-use"
-                        className={dynamicFormStyles.btn_switch}
-                        label={checked[2] ? '활용 가능' : '활용 불가'}
-                        checked={checked[2]}
-                        onCheckedChange={handleCheckedChange(2)}
-                      />
-                    </div>
-                    <p className={formStyles.guide_text}>
-                      해당 학습자원으로 교육 과정을 개설할 수
-                      {checked[2] ? ' 있습니다.' : ' 없습니다.'}
-                    </p>
-                  </div>
-                </ContentsRow>
-                <ContentsRow type="horizontal">
-                  <div className={formStyles.form_item}>
-                    <label htmlFor="name-share" className={formStyles.form_label}>
-                      <span className={formStyles.form_text}>공유채널 설정</span>
-                      <Tooltip
-                        className={formStyles.tooltip}
-                        side="bottom"
-                        align="start"
-                        content={'설정된 채널에 해당 학습자원이 공유됩니다.'}
-                      >
-                        <Button onlyIcon>
-                          <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
-                        </Button>
-                      </Tooltip>
-                    </label>
-                    <div className={formStyles.input_box}>
-                      <span className={formStyles.info_area}>
-                        <span className={formStyles.info_text}>
-                          {/* 채널<em>10</em>개 */}
-                          채널 없음
-                        </span>
-                        <Button variant="search" size="sm">
-                          채널선택
-                        </Button>
-                      </span>
-                    </div>
-                  </div>
-                </ContentsRow>
-                <div className={formStyles.form_contents_wrap}>
-                  <strong className={formStyles.tit_sub}>
-                    최종 확인{/* 필수 케이스 */}
+          <SplitPanel size={['276px', 'auto']} divider>
+            <>
+              <GridBox
+                data={data}
+                columns={columns}
+                title="일괄설정 항목"
+                showColumnSettings={false}
+                multiple={true}
+                showTotalCount={false}
+                className={styles.grid}
+                customButtonNode={
+                  <p className="grid_info">
+                    대상동영상 <span className="num">10</span>건
+                  </p>
+                }
+              />
+            </>
+            <>
+              <FormSubTitle label={'타이틀'} />
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-manager" className={formStyles.form_label}>
+                    <span className={cn(formStyles.form_text)}>담당자</span>
+                    {/* 필수 케이스 */}
                     <span className={cn(formStyles.status, formStyles.required)}>
                       <IcoFormRequired width={12} height={12} />
                     </span>
-                  </strong>
-                  <div className={formStyles.form_contents}>
-                    <ContentsRow>
-                      <div className={formStyles.form_item}>
-                        <label htmlFor="name-confirm" className={formStyles.form_label}>
-                          <span className={formStyles.form_text}>검수 확인</span>
-                          {/* 필수 케이스 */}
-                          <span className={cn(formStyles.status, formStyles.required)}>
-                            <IcoFormRequired width={12} height={12} />
-                          </span>
-                        </label>
-                        <div className={formStyles.input_box}>
-                          <Checkbox className={formStyles.checkbox} />
-                          <p className={formStyles.sub_text}>
-                            등록하고자 한 학습자원이며, 정상적으로 보여짐이 확인되었습니다.
-                          </p>
-                        </div>
-                        <p className={cn(formStyles.guide_text, formStyles.error)}>
-                          ‘검수 확인’ 체크하세요.
-                        </p>
-                      </div>
-                    </ContentsRow>
-                    <ContentsRow>
-                      <div className={formStyles.form_item}>
-                        <label htmlFor="name-confirm2" className={formStyles.form_label}>
-                          <span className={formStyles.form_text}>저작권 확인</span>
-                          {/* 필수 케이스 */}
-                          <span className={cn(formStyles.status, formStyles.required)}>
-                            <IcoFormRequired width={12} height={12} />
-                          </span>
-                        </label>
-                        <div className={formStyles.input_box}>
-                          <Checkbox className={formStyles.checkbox} />
-                          <p className={formStyles.sub_text}>
-                            저작권법(제25조2항)에 따라 학습자원(동영상,이미지등)은 해당
-                            학습플랫폼에서만 이용가능하며, 이 외의 공간에서 저작물을 공유 또는
-                            게시하는 행위는 저작권법 위반에 해당될 수 있음에 동의합니다.
-                          </p>
-                        </div>
-                        <p className={cn(formStyles.guide_text, formStyles.error)}>
-                          ‘저작권 확인’ 체크하세요.
-                        </p>
-                      </div>
-                    </ContentsRow>
-                    <ContentsRow>
-                      <div className={formStyles.form_item}>
-                        <label htmlFor="name-confirm3" className={formStyles.form_label}>
-                          <span className={formStyles.form_text}>보안 확인</span>
-                          {/* 필수 케이스 */}
-                          <span className={cn(formStyles.status, formStyles.required)}>
-                            <IcoFormRequired width={12} height={12} />
-                          </span>
-                        </label>
-                        <div className={formStyles.input_box}>
-                          <Checkbox className={formStyles.checkbox} />
-                          <p className={formStyles.sub_text}>
-                            보안콘텐츠 미 설정 시, 불법복제, 무단사용,저작권 침해 위험에 노출되고,
-                            이에 따른 피해를 입을 수 있음에 인지합니다.
-                          </p>
-                        </div>
-                        <p className={cn(formStyles.guide_text, formStyles.error)}>
-                          ‘보안 확인’ 체크하세요.
-                        </p>
-                      </div>
-                    </ContentsRow>
+                  </label>
+                  {/* 퍼블수정 20240317 : Modal 수정 S  */}
+                  <div className={formStyles.input_box}>
+                    <InputModalSelectorFormField
+                      modalConfig={{
+                        width: 'md',
+                        content: <ModalManagerContent />,
+                      }}
+                      placeholder={'담당자를 선택하세요.'}
+                    />
+                  </div>
+                  {/* 퍼블수정 20240317 : Modal 수정 E  */}
+                </div>
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-managerNum" className={formStyles.form_label}>
+                    <span className={cn(formStyles.form_text)}>연락처</span>
+                    {/* 필수 케이스 */}
+                    <span className={cn(formStyles.status, formStyles.required)}>
+                      <IcoFormRequired width={12} height={12} />
+                    </span>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    {/* 퍼블수정 20240313 : PhoneNumber 컴포넌트로 수정 S */}
+                    <PhoneNumber
+                      options={[
+                        { value: 'type1', label: '+82' },
+                        { value: 'type2', label: '+83' },
+                      ]}
+                    />
+                    {/* 퍼블수정 20240313 : PhoneNumber 컴포넌트로 수정 E */}
                   </div>
                 </div>
+              </ContentsRow>
+              <ContentsRow type="horizontal">
+                {/* form_item */}
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-term" className={formStyles.form_label}>
+                    <span className={formStyles.form_text}>사용기한</span>
+                    {/* 필수 케이스 */}
+                    <span className={cn(formStyles.status, formStyles.required)}>
+                      <IcoFormRequired width={12} height={12} />
+                    </span>
+                    <Tooltip
+                      className={formStyles.tooltip}
+                      side="bottom"
+                      align="start"
+                      content={'사용기한 내 콘텐츠 공유/교육자원활용이 가능합니다.'}
+                    >
+                      <Button onlyIcon>
+                        <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
+                      </Button>
+                    </Tooltip>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    {/* Switch 텍스트 : '무기한' : '기간 설정' */}
+                    <Switch
+                      id="switch01"
+                      className={formStyles.btn_switch}
+                      label={checked[1] ? '기간 설정' : '무기한'}
+                      checked={checked[1]}
+                      onCheckedChange={handleCheckedChange(1)}
+                    />
+                  </div>
+                </div>
+              </ContentsRow>
+              {checked[1] && (
+                <div className={dynamicFormStyles.form_display}>
+                  <ContentsRow>
+                    <div className={formStyles.form_item}>
+                      <div className={formStyles.input_box}>
+                        <DatePicker
+                          onChange={handleDate}
+                          value={date}
+                          className={formStyles.datepicker_item}
+                        />
+                        <span className={formStyles.dash}></span>
+                        <DatePicker
+                          onChange={handleDate2}
+                          value={date2}
+                          className={formStyles.datepicker_item}
+                        />
+                      </div>
+                    </div>
+                  </ContentsRow>
+                </div>
+              )}
+              <ContentsRow type="horizontal">
+                {/* Textarea type */}
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-conjugation" className={formStyles.form_label}>
+                    <span className={formStyles.form_text}>교육자원 활용여부</span>
+                    {/* 필수 케이스 */}
+                    <span className={cn(formStyles.status, formStyles.required)}>
+                      <IcoFormRequired width={12} height={12} />
+                    </span>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    <Switch
+                      id="name-use"
+                      className={dynamicFormStyles.btn_switch}
+                      label={checked[2] ? '활용 가능' : '활용 불가'}
+                      checked={checked[2]}
+                      onCheckedChange={handleCheckedChange(2)}
+                    />
+                  </div>
+                  <p className={formStyles.guide_text}>
+                    해당 학습자원으로 교육 과정을 개설할 수
+                    {checked[2] ? ' 있습니다.' : ' 없습니다.'}
+                  </p>
+                </div>
+              </ContentsRow>
+              <ContentsRow type="horizontal">
+                <div className={formStyles.form_item}>
+                  <label htmlFor="name-share" className={formStyles.form_label}>
+                    <span className={formStyles.form_text}>공유채널 설정</span>
+                    <Tooltip
+                      className={formStyles.tooltip}
+                      side="bottom"
+                      align="start"
+                      content={'설정된 채널에 해당 학습자원이 공유됩니다.'}
+                    >
+                      <Button onlyIcon>
+                        <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
+                      </Button>
+                    </Tooltip>
+                  </label>
+                  <div className={formStyles.input_box}>
+                    <span className={formStyles.info_area}>
+                      <span className={formStyles.info_text}>
+                        {/* 채널<em>10</em>개 */}
+                        채널 없음
+                      </span>
+                      <Button variant="search" size="sm">
+                        채널선택
+                      </Button>
+                    </span>
+                  </div>
+                </div>
+              </ContentsRow>
+              <div className={formStyles.form_contents_wrap}>
+                <strong className={formStyles.tit_sub}>
+                  최종 확인{/* 필수 케이스 */}
+                  <span className={cn(formStyles.status, formStyles.required)}>
+                    <IcoFormRequired width={12} height={12} />
+                  </span>
+                </strong>
+                <div className={formStyles.form_contents}>
+                  <ContentsRow>
+                    <div className={formStyles.form_item}>
+                      <label htmlFor="name-confirm" className={formStyles.form_label}>
+                        <span className={formStyles.form_text}>검수 확인</span>
+                        {/* 필수 케이스 */}
+                        <span className={cn(formStyles.status, formStyles.required)}>
+                          <IcoFormRequired width={12} height={12} />
+                        </span>
+                      </label>
+                      <div className={formStyles.input_box}>
+                        <Checkbox className={formStyles.checkbox} />
+                        <p className={formStyles.sub_text}>
+                          등록하고자 한 학습자원이며, 정상적으로 보여짐이 확인되었습니다.
+                        </p>
+                      </div>
+                      <p className={cn(formStyles.guide_text, formStyles.error)}>
+                        ‘검수 확인’ 체크하세요.
+                      </p>
+                    </div>
+                  </ContentsRow>
+                  <ContentsRow>
+                    <div className={formStyles.form_item}>
+                      <label htmlFor="name-confirm2" className={formStyles.form_label}>
+                        <span className={formStyles.form_text}>저작권 확인</span>
+                        {/* 필수 케이스 */}
+                        <span className={cn(formStyles.status, formStyles.required)}>
+                          <IcoFormRequired width={12} height={12} />
+                        </span>
+                      </label>
+                      <div className={formStyles.input_box}>
+                        <Checkbox className={formStyles.checkbox} />
+                        <p className={formStyles.sub_text}>
+                          저작권법(제25조2항)에 따라 학습자원(동영상,이미지등)은 해당
+                          학습플랫폼에서만 이용가능하며, 이 외의 공간에서 저작물을 공유 또는
+                          게시하는 행위는 저작권법 위반에 해당될 수 있음에 동의합니다.
+                        </p>
+                      </div>
+                      <p className={cn(formStyles.guide_text, formStyles.error)}>
+                        ‘저작권 확인’ 체크하세요.
+                      </p>
+                    </div>
+                  </ContentsRow>
+                  <ContentsRow>
+                    <div className={formStyles.form_item}>
+                      <label htmlFor="name-confirm3" className={formStyles.form_label}>
+                        <span className={formStyles.form_text}>보안 확인</span>
+                        {/* 필수 케이스 */}
+                        <span className={cn(formStyles.status, formStyles.required)}>
+                          <IcoFormRequired width={12} height={12} />
+                        </span>
+                      </label>
+                      <div className={formStyles.input_box}>
+                        <Checkbox className={formStyles.checkbox} />
+                        <p className={formStyles.sub_text}>
+                          보안콘텐츠 미 설정 시, 불법복제, 무단사용,저작권 침해 위험에 노출되고,
+                          이에 따른 피해를 입을 수 있음에 인지합니다.
+                        </p>
+                      </div>
+                      <p className={cn(formStyles.guide_text, formStyles.error)}>
+                        ‘보안 확인’ 체크하세요.
+                      </p>
+                    </div>
+                  </ContentsRow>
+                </div>
               </div>
-            </div>
-          </div>
+            </>
+          </SplitPanel>
         </ModalBody>
         <ModalFooter>
           <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />

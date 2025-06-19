@@ -1,10 +1,10 @@
-import { ContentsRow, RadioGroupFormField } from '@learnway/ui';
-import React, { forwardRef, useEffect, useImperativeHandle } from 'react';
-import { useTranslation } from 'react-i18next';
-import { FormRow, FormSubTitle, SplitPanel } from '@shared/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { DropdownFormField } from '@features/form';
+import { FormSubTitle } from '@shared/ui';
+import { forwardRef, useEffect, useImperativeHandle } from 'react';
+import { useTranslation } from 'react-i18next';
 import { TabFormRef } from '../common/tab-form-ref';
+import { Button, SplitPanel, TreeBox, TreeContainer } from '@learnway/ui';
+import { IcoMinus, IcoPlus } from '@learnway/icons';
 
 interface curriculumProps {
   dummy?: any;
@@ -50,11 +50,50 @@ const CurriculumComponent = forwardRef<TabFormRef, curriculumProps>(
     return (
       <div>
         {/*대표커리큘럼설정*/}
-        <FormSubTitle label={t('대표 커리큘럼 설정')} lineType={'dark'} />
+        <FormSubTitle
+          label={t('대표 커리큘럼 설정')}
+          lineType={'dark'}
+          actionNode={<Button variant="text" size="sm" label={t('미리보기')} />}
+        />
         {/* 트리 */}
-        <SplitPanel leftSize={'400'}>
-          <div>LEFT</div>
-          <div>RIGHT</div>
+        <SplitPanel divider>
+          <div>
+            <TreeContainer>
+              <TreeBox
+                data={[]}
+                treeId={'menu-tree'}
+                title={'목차'}
+                customButtonNode={
+                  <>
+                    <Button variant="text" size="sm" label={t('불러오기')} />
+                    <Button
+                      variant="text"
+                      size="sm"
+                      label={t('신규등록')}
+                      icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
+                    />
+                  </>
+                }
+              />
+            </TreeContainer>
+          </div>
+          <div>
+            <FormSubTitle
+              label={t('상세정보')}
+              lineType={'dark'}
+              actionNode={
+                <>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    label={t('LABEL.grid.header.remove', '삭제')}
+                    icon={<IcoMinus width={16} height={16} stroke={'#131C30'} />}
+                  />
+                  <Button variant="save" size="sm" label={t('저장')} />
+                </>
+              }
+            />
+          </div>
         </SplitPanel>
       </div>
     );

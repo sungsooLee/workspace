@@ -1,8 +1,9 @@
-import { forwardRef } from 'react';
+import { forwardRef, useMemo } from 'react';
 
 import { cn } from '@learnway/shared';
 
 import styles from './textarea.module.css';
+import { t } from 'i18next';
 
 export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   dummy?: any;
@@ -12,11 +13,26 @@ export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextArea
   readOnly?: boolean;
   disabled?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  label?: string;
+  placeholder?: string;
+  hiddenPlaceholder?: boolean;
 }
 
 const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaProps>(
   (
-    { size = 'md', resize, className, disabled, readOnly, maxLength, value, onChange, ...props },
+    {
+      size = 'md',
+      resize,
+      className,
+      disabled,
+      readOnly,
+      maxLength,
+      value,
+      onChange,
+      placeholder,
+      hiddenPlaceholder,
+      ...props
+    },
     ref,
   ) => {
     // const [inputValue, setInputValue] = useState(value);
@@ -39,6 +55,14 @@ const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaProps>(
     // const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     //   setInputValue(e.target.value);
     // };
+
+    const placeholderText = useMemo(() => {
+      if (hiddenPlaceholder) return '';
+      if (placeholder) return t(placeholder);
+      if (props && props.label)
+        return `${t(props.label as any)} ${t('LABEL.form.input.placeholder')}`;
+      return t('LABEL.form.input.placeholder');
+    }, [placeholder, props?.label, hiddenPlaceholder]);
 
     const currentLength = (value as string)?.length || 0;
 
@@ -63,6 +87,7 @@ const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaProps>(
             resize && styles[resize],
             size && styles[size],
           )}
+          placeholder={placeholderText}
           maxLength={maxLength}
           disabled={disabled}
           readOnly={readOnly}

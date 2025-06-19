@@ -8,6 +8,8 @@ import { BasicInfo } from '../-components/basic-info/basic-info';
 import { TabFormRef } from '../-components/common/tab-form-ref';
 import { CourseRegistration } from '../-components/course-registration/course-registration';
 import { Curriculum } from '../-components/curriculum/curriculum';
+import { DetailInfo } from '../-components/detail-info/detail-info';
+import { PublishCourse } from '../-components/publish-course/publish-course';
 
 export const Route = createFileRoute('/_unauth/learning_test/course/create/view')({
   component: RouteComponent,
@@ -20,7 +22,7 @@ function RouteComponent() {
     b: null, // CourseRegistration
   });
 
-  const [activeTab, setActiveTab] = React.useState('a');
+  const [activeTab, setActiveTab] = React.useState('b');
 
   // 모든 탭의 폼 데이터를 하나의 객체로 관리
   const [formData, setFormData] = React.useState<Record<string, any>>({});
@@ -83,12 +85,12 @@ function RouteComponent() {
       {
         title: '상세 설정',
         key: 'd',
-        content: <h2>Tab C content</h2>,
+        content: <DetailInfo ref={(ref) => (tabRefs.current.d = ref)} initialData={formData} />,
       },
       {
         title: '강의 설정',
         key: 'e',
-        content: <h2>Tab C content</h2>,
+        content: <PublishCourse ref={(ref) => (tabRefs.current.e = ref)} initialData={formData} />,
       },
     ],
     [formData],

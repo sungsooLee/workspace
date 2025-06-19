@@ -1,14 +1,13 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
-import { Button, GridBox, useGridBox, GridBoxState, Divider } from '@learnway/ui';
+import { Button, GridBox, useGridBox, GridBoxState, Divider, SplitPanel } from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { CODE_GROUP, useSearchBox } from '@learnway/hooks';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { SearchBox } from '@shared/ui/search-box';
-import { SplitPanel } from '@shared/ui';
 import { queryOptions } from '@entities/label-messages/service/label-messages.queries';
 import { LabelMessagesQueryParams } from '@types';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
@@ -156,7 +155,7 @@ function RouteComponent() {
           <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
           {/* 그리드 + 상세 */}
           <Divider />
-          <SplitPanel rightSize={450}>
+          <SplitPanel size={['auto', 450]} divider>
             <GridBox
               config={gConfig}
               title={t('목록')}
@@ -235,6 +234,17 @@ const gridConfig = {
       label: t('LABEL.grid.column.labelMessageCode'),
     },
     { name: 'labelMessageName', label: t('LABEL.grid.column.labelMessage') },
+    {
+      name: 'isUsed',
+      label: t('LABEL.grid.column.useYn'),
+      size: 80,
+      render: (info: any) => {
+        return <span>{info.getValue() === true ? 'Y' : 'N'}</span>;
+      },
+      meta: {
+        cellAlign: 'center',
+      },
+    },
     { name: 'createdBy', label: t('LABEL.grid.column.createdBy') },
     {
       name: 'createdDate',

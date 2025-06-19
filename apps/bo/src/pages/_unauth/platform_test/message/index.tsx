@@ -1,12 +1,11 @@
 import React, { useCallback, useState } from 'react';
-import { Button, GridBox, useGridBox } from '@learnway/ui';
+import { Button, GridBox, SplitPanel, useGridBox } from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useSearchBox } from '@learnway/hooks';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { SearchBox } from '@shared/ui/search-box';
-import { SplitPanel } from '@shared/ui';
 import { MessageDetail } from './-components/detail';
 import { queryOptions } from '@entities/label-messages/service/label-messages.queries';
 import { t } from 'i18next';
@@ -89,7 +88,7 @@ function RouteComponent() {
         {/* 검색 */}
         <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
         {/* 그리드 + 상세 */}
-        <SplitPanel rightSize={450}>
+        <SplitPanel size={['auto', 450]} divider>
           <GridBox
             config={gConfig}
             title={t('목록')}

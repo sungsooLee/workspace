@@ -125,19 +125,19 @@ function HomeComponent() {
 export const munu = [
   {
     screenName: '404',
-    pageId: '/404',
+    pageId: '404',
     screenId: '-',
     pageType: 'Page',
-    completionDate: '-',
+    completionDate: '2025-06-19',
     memo: '404', // 비고
     end: true,
   },
   {
     screenName: '500',
-    pageId: '/500',
+    pageId: '500',
     screenId: '-',
     pageType: 'Page',
-    completionDate: '-',
+    completionDate: '2025-06-19',
     memo: '500', // 비고
     end: true,
   },
@@ -220,7 +220,7 @@ export const munu = [
     pageId: 'platform/category',
     screenId: 'NLP_BO_TMS_1120',
     pageType: 'Page',
-    completionDate: '-',
+    completionDate: '2025-06-17',
     memo: '작업 완료', // 비고
     end: true,
   },
@@ -229,7 +229,7 @@ export const munu = [
     pageId: 'platform/code/system-code',
     screenId: 'NLP_BO_PMS_1401_01',
     pageType: 'Page',
-    completionDate: '-',
+    completionDate: '2025-06-13',
     memo: '작업 완료', // 비고
     end: true,
   },
@@ -238,7 +238,7 @@ export const munu = [
     pageId: 'platform/menu',
     screenId: 'NLP_BO_PMS_1200',
     pageType: 'Page',
-    completionDate: '-',
+    completionDate: '2025-06-11',
     memo: '작업 완료', // 비고
     end: true,
   },
@@ -248,7 +248,7 @@ export const munu = [
     screenId: 'NLP_BO_PMS_1310',
     pageType: 'Page',
     completionDate: '-',
-    memo: '작업 완료', // 비고
+    memo: '작업 중', // 비고
     end: false,
   },
   {
@@ -256,7 +256,7 @@ export const munu = [
     pageId: 'platform/label-message',
     screenId: 'NLP_BO_PMS_1406',
     pageType: 'Page',
-    completionDate: '-',
+    completionDate: '2025-05-30',
     memo: '작업 완료', // 비고
     end: true,
   },
@@ -265,9 +265,9 @@ export const munu = [
     pageId: 'platform/program',
     screenId: 'NLP_BO_PMS_1403',
     pageType: 'Page',
-    completionDate: '-',
+    completionDate: '2025-06-12',
     memo: '작업 완료', // 비고
-    end: false,
+    end: true,
   },
   {
     screenName: '시스템 번역',

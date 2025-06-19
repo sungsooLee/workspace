@@ -9,19 +9,31 @@ interface SplitPanelProps {
   className?: string;
   /** 각 영역의 사이즈 (ex: ['30%', '70%'] 또는 [300, 'auto']) */
   size?: Array<number | string>;
+  /** divider 표시 여부 */
+  divider?: boolean;
+  /** gap 간격 사이즈 */
+  gap?: number;
 }
 
 /**
  * 리펙토링중
  * @param children
  * @param className
+ * @param divider
  * @constructor
  */
-const SplitPanelComponent = ({ children, size, className }: SplitPanelProps) => {
+const SplitPanelComponent = ({
+  children,
+  size,
+  className,
+  divider = false,
+  gap,
+}: SplitPanelProps) => {
   const nodes = React.Children.toArray(children);
+  const containerStyle = !divider && gap ? { columnGap: `${gap}px` } : undefined;
 
   return (
-    <div className={cn(styles.start, 'split_panel', className)}>
+    <div className={cn(styles.start, 'split_panel', className)} style={containerStyle}>
       {nodes.map((child, index) => {
         const width = size?.[index];
         const style =
@@ -35,7 +47,7 @@ const SplitPanelComponent = ({ children, size, className }: SplitPanelProps) => 
             <div key={index} className={cn(styles.panel)} style={style}>
               {child}
             </div>
-            {!isLast && <Divider orientation="vertical" className={styles.divider} />}
+            {!isLast && divider && <Divider orientation="vertical" className={styles.divider} />}
           </>
         );
       })}

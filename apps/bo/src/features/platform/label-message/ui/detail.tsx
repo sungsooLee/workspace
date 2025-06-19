@@ -37,10 +37,9 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   const [isCreateMode, setIsCreateMode] = React.useState(true);
-  const { confirm: openConfirm } = useModal();
+  const { confirm: openConfirm, showSaveComplete, showUpdateComplete } = useModal();
   const [currentConfig, setCurrentConfig] = useState(() => createFormConfig('LABEL'));
   const [resetKey, setResetKey] = useState(0);
-
   // const
   const { provider, onSubmit, onFormChange, getValues, fetchData, clearFormError, control } =
     useDynamicForm(currentConfig);
@@ -61,6 +60,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
   // 라벨 메세지 등록
   const { mutate: create } = useCreateLabelMessage({
     onSuccess: async (response: any) => {
+      await showSaveComplete();
       console.log('useCreateLabelMessage :: onSuccess', response);
       setResetKey((prev) => prev + 1);
       onSuccessSave?.(response);
@@ -70,6 +70,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
   // 라벨 메세지 수정
   const { mutate: update } = useUpdateLabelMessage({
     onSuccess: async (response: any) => {
+      await showUpdateComplete();
       console.log('useUpdateLabelMessage :: onSuccess', response);
       setResetKey((prev) => prev + 1);
       onSuccessSave?.(response);
@@ -206,6 +207,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
             element={
               <DuplicateCheckInputFormField
                 idKey={resetKey}
+                inputType={'alphanumeric'}
                 query={queryOptions.all}
                 clearFormError={clearFormError}
                 duplicationCheckFn={checkDuplicate}
@@ -225,7 +227,13 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
             name={'labelMessageName'}
             element={
               typeWatch === 'LABEL' ? (
-                <Input
+                // <Input
+                //   disabled={formDisabled}
+                //   placeholder={t('LABEL.common.placeholder1', {
+                //     type: t('LABEL.form.label.labelName'),
+                //   })}
+                // />
+                <Textarea
                   disabled={formDisabled}
                   placeholder={t('LABEL.common.placeholder1', {
                     type: t('LABEL.form.label.labelName'),

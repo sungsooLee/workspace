@@ -20,6 +20,7 @@ import {
   OrganizationShuttleTreeModal,
   TrainingPlaceChoiceModal,
   TrainingPlaceDetailModal,
+  ImagePreviewModal,
 } from '@features/shared';
 import { Button, ChipListModalSelectorFormField, ContentsRow, Input, useModal } from '@learnway/ui';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
@@ -35,11 +36,18 @@ import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-butt
 
 import langCodes from '@entities/mock/i18n-resource-ko.json';
 import TranslationService from '@entities/translation/api/translation';
+
 import { EnFormMode } from '@types';
+
+import LabelMessagesService from '@entities/label-messages/api/label-messages';
+import { IcoDownload } from '@learnway/icons';
 
 export const Route = createFileRoute('/_unauth/common-popup')({
   component: RouteComponent,
 });
+
+const imageFileUrl =
+  'https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2';
 
 function RouteComponent() {
   const { open } = useModal();
@@ -81,6 +89,14 @@ function RouteComponent() {
   const handleAddressSearchResult = (address: any) => {
     console.log('address', address);
     fetchData({ zipNo: address.zipNo, address: address.roadAddr });
+  };
+
+  const downloadByUrl = (url: string) => {
+    const link = document.createElement('a');
+    link.href = url;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const handleAddressSearch = () => {
@@ -198,6 +214,9 @@ function RouteComponent() {
               size="sm"
               onClick={handleLabelUpdate}
             />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider} name="thumbnails" />
           </ContentsRow>
         </MainContents>
         <SubContents>
@@ -449,6 +468,30 @@ function RouteComponent() {
                 onClick={(e) => {
                   e.stopPropagation();
                   openModal({
+                    width: 'full',
+                    height: 'full',
+                    content: <ImagePreviewModal imageUrl={imageFileUrl} />,
+                    headerActionNode: (
+                      <Button onlyIcon onClick={() => downloadByUrl(imageFileUrl)}>
+                        <IcoDownload width={40} height={40} stroke="#131C30" />
+                      </Button>
+                    ),
+                  });
+                }}
+              >
+                {'이미지 미리보기'}
+              </Button>
+              <span className="text-green-400">{'완료'}</span>
+            </div>
+            <div className="h-1 w-full border-white bg-slate-700" />
+            <div className="flex gap-4">
+              <Button
+                size={'xs'}
+                className="btn_table flex-1"
+                variant={'gray2'}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openModal({
                     width: 'md',
                     content: <OrganizationChoiceTreeModal companyCodes={['H199', 'H103']} />,
                   });
@@ -579,6 +622,16 @@ const formConfig: DynamicFormConfig = {
       label: '',
       value: '',
       placeholder: t('LABEL.form.placeholder.addressDetail'),
+    },
+    {
+      name: 'thumbnails',
+      label: t('썸네일'),
+      type: 'thumbnail-list-v2',
+      max: 3,
+      format: 'array',
+      value: [],
+      description:
+        '파일 사이즈 000 x 000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 00개 / 파일용량 최대 00 MB',
     },
   ],
 };

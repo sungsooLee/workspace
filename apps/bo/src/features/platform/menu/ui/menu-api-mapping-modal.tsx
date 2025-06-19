@@ -89,7 +89,7 @@ const MenuApiMappingModalComponent = ({ menuScopeCode, selectedApiKeys }: any) =
             close(selectedItems);
           }}
         >
-          {t('LABEL.common.apply')}
+          {t('LABEL.button.apply')}
         </Button>
       </ModalFooter>
     </ModalContainer>
