@@ -167,9 +167,6 @@ function RouteComponent() {
           config={gConfig}
         />
         <form style={{ marginTop: 20 }} onSubmit={onSubmit(handleSubmit)}>
-          <Button type="submit" variant="point" size="sm">
-            테스트
-          </Button>
           <FormSubTitle label={t('역할 정보')} />
           <ContentsRow>
             <FormRow provider={provider} name={'roleId'} />
@@ -269,13 +266,6 @@ function RouteComponent() {
           </FormDisplay>
           <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
             <ContentsHistoryInfoFormField />
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow
-              provider={provider}
-              name={'date'}
-              element={<DatePicker displayType="from-to" />}
-            />
           </ContentsRow>
         </form>
       </MainContents>

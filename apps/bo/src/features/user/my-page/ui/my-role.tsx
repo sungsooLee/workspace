@@ -22,7 +22,7 @@ const MyRoleComponent = () => {
   const [selectedRow, setSelectedRow] = useState<any | null>(null);
 
   function handleOnSearch(query: Record<string, any>) {
-    gridFetch(compactValues(query));
+    // gridFetch(compactValues(query));
   }
 
   useEffect(() => {
@@ -140,7 +140,8 @@ const searchConfig = {
 };
 
 const gridConfig = {
-  query: roleManagerQueryOptions.getRoleApplicationList,
+  query: '',
+  // query: roleManagerQueryOptions.getRoleApplicationList,
   pagination: {
     pageIndex: 0,
     pageSize: 20,
@@ -170,29 +171,29 @@ const gridConfig = {
     { name: 'expired', label: t('만료 여부') },
     { name: 'statusName', label: t('신청 상태') },
   ],
-  data: [],
-  // data: [
-  //   {
-  //     roleApplicationId: 1,
-  //     roleId: 1,
-  //     roleName: '테넌트 관리자',
-  //     tenant: '1번테넌트',
-  //     channel: '1번채널',
-  //     isUsed: 'Y',
-  //     rolePeriod: '2020-05-01 ~ 2020-06-01',
-  //     expired: 'N',
-  //     statusName: '신청',
-  //   },
-  //   {
-  //     roleApplicationId: 2,
-  //     roleId: 2,
-  //     roleName: '테넌트 관리자',
-  //     tenant: '2번테넌트',
-  //     channel: '2번채널',
-  //     isUsed: 'N',
-  //     rolePeriod: '2020-05-01 ~ 2020-06-01',
-  //     expired: 'Y',
-  //     statusName: '만료',
-  //   },
-  // ],
+  // data: [],
+  data: [
+    {
+      roleApplicationId: 1,
+      roleId: 1,
+      roleName: '테넌트 관리자',
+      tenant: '1번테넌트',
+      channel: '1번채널',
+      isUsed: 'Y',
+      rolePeriod: '2020-05-01 ~ 2020-06-01',
+      expired: 'N',
+      statusName: '신청',
+    },
+    {
+      roleApplicationId: 2,
+      roleId: 2,
+      roleName: '테넌트 관리자',
+      tenant: '2번테넌트',
+      channel: '2번채널',
+      isUsed: 'N',
+      rolePeriod: '2020-05-01 ~ 2020-06-01',
+      expired: 'Y',
+      statusName: '만료',
+    },
+  ],
 };
