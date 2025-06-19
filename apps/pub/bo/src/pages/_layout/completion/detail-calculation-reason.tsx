@@ -11,6 +11,7 @@ import {
   Switch,
   Checkbox,
   TreeContainer,
+  SplitPanel,
 } from '@learnway/ui';
 import { MainContents } from '../../../../../../bo/src/widgets/layout/ui/container/slot/main-contents';
 import { FormSubTitle } from '../../../../../../bo/src/shared/ui/form';
@@ -125,10 +126,10 @@ function RouteComponent() {
   return (
     <PageContainer>
       <MainContents>
-        <SectionLayout contentsRatio={'thirty'}>
-          <TreeContainer>
+        <SplitPanel size={['30%', 'auto']}>
+          <div>
             <TreeBox data={sampleData} treeId={'menu-tree'} title={'교육본부'} />
-          </TreeContainer>
+          </div>
           <div>
             <FormSubTitle
               label={'세부산출근거 단가'}
@@ -153,7 +154,7 @@ function RouteComponent() {
             />
             <TableBox data={data} columns={columns} tableMode={true} multiple />
           </div>
-        </SectionLayout>
+        </SplitPanel>
       </MainContents>
     </PageContainer>
   );

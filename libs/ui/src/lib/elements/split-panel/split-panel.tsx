@@ -27,9 +27,10 @@ const SplitPanelComponent = ({ children, size, className, divider = false }: Spl
     <div className={cn(styles.start, 'split_panel', className)}>
       {nodes.map((child, index) => {
         const width = size?.[index];
-        const style = width
-          ? { width: typeof width === 'number' ? `${width}px` : width }
-          : undefined;
+        const style =
+          width && width !== 'auto'
+            ? { width: typeof width === 'number' ? `${width}px` : width }
+            : undefined;
         const isLast = index === nodes.length - 1;
 
         return (
