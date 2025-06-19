@@ -9,7 +9,7 @@ import {
 } from '@learnway/ui';
 import React, { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FormRow, FormSubTitle, SplitPanel } from '@shared/ui';
+import { FormRow, FormSubTitle } from '@shared/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { TabFormRef } from '../common/tab-form-ref';
 import { DropdownFormField } from '@features/form';
