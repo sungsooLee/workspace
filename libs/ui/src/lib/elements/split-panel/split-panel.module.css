@@ -10,3 +10,7 @@
     @apply !mx-[32px] !flex h-auto !w-[1px] shrink-0 bg-[var(--gray4)];
   }
 }
+
+[class*='divider'] + .start {
+  @apply mt-[32px];
+}
