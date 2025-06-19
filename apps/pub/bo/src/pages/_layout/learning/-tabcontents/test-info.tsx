@@ -24,6 +24,7 @@ import {
   ThumbnailImageUpload,
   ImageOption,
   ChipList,
+  SplitPanel,
 } from '@learnway/ui';
 import { IcoAlertCircle, IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';
 
@@ -315,9 +316,8 @@ const TestInfoComponent: FC<{}> = ({}) => {
           '해당 시험지는 과정에서 사용 중입니다. 일부 정보만 변경할 수 있고, 삭제는 할 수 없습니다.',
         ]}
       />
-      <div className={styles.row_wrap}>
-        <div className={styles.main_container}>
-          {/* 퍼블수정 20250613 : lineType 추가 */}
+      <SplitPanel size={['auto', 305]}>
+        <div>
           <FormSubTitle label={'기본 정보'} lineType={'dark'} />
           <ContentsRow>
             {/* form_item */}
@@ -939,7 +939,7 @@ const TestInfoComponent: FC<{}> = ({}) => {
             </div>
           )}
         </div>
-        <div className={styles.sub_container}>
+        <div>
           <FormSubTitle label={'시험지'} />
           {/* btn_list */}
           <ul className={movieInfoStyles.btn_list}>
@@ -956,7 +956,7 @@ const TestInfoComponent: FC<{}> = ({}) => {
             <img src={previewImg} width="100%" alt="" />
           </div>
         </div>
-      </div>
+      </SplitPanel>
     </div>
   );
 };
