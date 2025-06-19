@@ -213,7 +213,7 @@ function RouteComponent() {
         <ModalTitle>{'학습자원 일괄설정'}</ModalTitle>
         <ModalBody>
           <SplitPanel size={['276px', 'auto']} divider>
-            <div>
+            <>
               <GridBox
                 data={data}
                 columns={columns}
@@ -228,8 +228,8 @@ function RouteComponent() {
                   </p>
                 }
               />
-            </div>
-            <div>
+            </>
+            <>
               <FormSubTitle label={'타이틀'} />
               <ContentsRow>
                 <div className={formStyles.form_item}>
@@ -451,7 +451,7 @@ function RouteComponent() {
                   </ContentsRow>
                 </div>
               </div>
-            </div>
+            </>
           </SplitPanel>
         </ModalBody>
         <ModalFooter>
