@@ -37,10 +37,10 @@ import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-butt
 import langCodes from '@entities/mock/i18n-resource-ko.json';
 import TranslationService from '@entities/translation/api/translation';
 
-import { EnFormMode } from '@types';
-
 import LabelMessagesService from '@entities/label-messages/api/label-messages';
 import { IcoDownload } from '@learnway/icons';
+
+import { EnFormMode } from '@types';
 
 export const Route = createFileRoute('/_unauth/common-popup')({
   component: RouteComponent,
