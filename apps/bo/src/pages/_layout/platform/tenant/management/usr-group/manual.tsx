@@ -21,7 +21,7 @@ function RouteComponent() {
           variant="primary"
           size="sm"
           onClick={() =>
-            router.navigate({ to: '/platform/tenant/management/usr-group/handmade-detail' })
+            router.navigate({ to: '/platform/tenant/management/usr-group/manual-detail' })
           }
           label={t('등록')}
         />
