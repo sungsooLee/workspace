@@ -64,7 +64,7 @@ const CompanyUserDetailComponent: FC<any> = () => {
 
   return (
     <>
-      <FormSubTitle label={'유저정보'} />
+      <FormSubTitle label={'유저정보'} noLine />
       <div className={cn(tableStyles.start, tableStyles.wrap, 'pb-10')}>
         <table>
           <caption>{'유저정보'}</caption>

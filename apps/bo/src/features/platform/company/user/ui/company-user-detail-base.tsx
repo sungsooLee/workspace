@@ -17,23 +17,30 @@ const CompanyUserDetailBaseComponent: FC<any> = ({ userInfo }) => {
     useDynamicForm(formConfig);
   const [roleData, setRoleData] = useState<any[]>([]);
   useEffect(() => {
-    if (userInfo) fetchData(userInfo);
+    if (userInfo) {
+      const value = {
+        ...userInfo,
+        companyName: userInfo.company.name,
+        deptName: userInfo.dept.deptName,
+      };
+      fetchData(value);
+    }
   }, [userInfo]);
   return (
     <>
       <FormSubTitle label={'개인 정보'} lineType={'dark'} />
       <ContentsRow>
         <FormRow provider={provider} name={'name'} element={<Input disabled={true} />} />
-        <FormRow provider={provider} name={'sabun'} element={<Input disabled={true} />} />
-        <FormRow provider={provider} name={'userId'} element={<Input disabled={true} />} />
+        <FormRow provider={provider} name={'employeeNumber'} element={<Input disabled={true} />} />
+        <FormRow provider={provider} name={'email'} element={<Input disabled={true} />} />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name={'birth'} element={<Input disabled={true} />} />
+        <FormRow provider={provider} name={'birthday'} element={<Input disabled={true} />} />
         <FormRow provider={provider} name={'gender'} element={<Input disabled={true} />} />
         <FormRow provider={provider} name={'area'} element={<Input disabled={true} />} />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name={'cellular'} />
+        <FormRow provider={provider} name={'phoneNumber'} />
         <FormRow provider={provider} name={'officePhone'} />
       </ContentsRow>
 
@@ -42,9 +49,9 @@ const CompanyUserDetailBaseComponent: FC<any> = ({ userInfo }) => {
 
       <FormSubTitle label={'회사/조직 정보'} lineType={'dark'} />
       <ContentsRow>
-        <FormRow provider={provider} name={'company'} element={<Input disabled={true} />} />
+        <FormRow provider={provider} name={'companyName'} element={<Input disabled={true} />} />
         <FormRow provider={provider} name={'room'} element={<Input disabled={true} />} />
-        <FormRow provider={provider} name={'affiliation'} element={<Input disabled={true} />} />
+        <FormRow provider={provider} name={'deptName'} element={<Input disabled={true} />} />
       </ContentsRow>
       <ContentsRow>
         <FormRow provider={provider} name={'position'} element={<Input disabled={true} />} />
@@ -160,21 +167,21 @@ const formConfig: DynamicFormConfig = {
       placeholder: '',
     },
     {
-      name: 'sabun',
+      name: 'employeeNumber',
       type: 'text',
       label: t('사번'),
       value: '',
       placeholder: '',
     },
     {
-      name: 'userId',
+      name: 'email',
       type: 'text',
       label: t('아이디 (이메일)'),
       value: '',
       placeholder: '',
     },
     {
-      name: 'birth',
+      name: 'birthday',
       type: 'text',
       label: t('생년월일'),
       value: '',
@@ -196,7 +203,7 @@ const formConfig: DynamicFormConfig = {
     },
     {
       label: t('휴대폰 번호'),
-      name: 'cellular',
+      name: 'phoneNumber',
       type: 'phone-number',
       format: 'string',
       value: '',
@@ -233,7 +240,7 @@ const formConfig: DynamicFormConfig = {
       value: 'KOR_82',
     },
     {
-      name: 'company',
+      name: 'companyName',
       type: 'text',
       label: t('회사'),
       value: '',
@@ -247,7 +254,7 @@ const formConfig: DynamicFormConfig = {
       placeholder: '',
     },
     {
-      name: 'affiliation',
+      name: 'deptName',
       type: 'text',
       label: t('소속'),
       value: '',
