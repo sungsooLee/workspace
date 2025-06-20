@@ -126,13 +126,13 @@ const searchConfig: SearchBoxConfig = {
       {
         name: 'tenantId',
         type: 'dropdown',
-        label: t('테넌트'),
+        label: t('LABEL.form.label.tenant'),
         format: 'object',
         value: '',
         options: [],
         isClearable: true,
         isSearchable: true,
-        placeholder: t('입력 선택'),
+        placeholder: t('LABEL.grid.header.inputSelect'),
       },
       // {
       //   name: 'companyName',
@@ -146,7 +146,7 @@ const searchConfig: SearchBoxConfig = {
       {
         name: 'companyCode',
         type: 'dropdown',
-        label: t('회사'),
+        label: t('LABEL.grid.column.company'),
         presetOptionLabel: t('LABEL.form.label.select'),
         value: '',
         options: [],
@@ -154,7 +154,7 @@ const searchConfig: SearchBoxConfig = {
       {
         name: 'tenantManagerName',
         type: 'text',
-        label: t('테넌트담당자'),
+        label: t('LABEL.grid.column.tenantManager'),
         value: '',
       },
     ],
@@ -162,18 +162,18 @@ const searchConfig: SearchBoxConfig = {
       {
         name: 'companyManagerName',
         type: 'text',
-        label: t('회사 담당자'),
+        label: t('LABEL.grid.column.companyManager'),
         value: '',
       },
       {
         name: 'isUsed',
         type: 'dropdown',
-        label: t('사용여부'),
+        label: t('LABEL.form.label.useYn'),
         value: '',
         options: [
-          { value: '', label: t('전체') },
-          { value: 'true', label: t('사용') },
-          { value: 'false', label: t('미사용') },
+          { value: '', label: t('LABEL.all') },
+          { value: 'true', label: t('LABEL.common.enable') },
+          { value: 'false', label: t('LABEL.common.disable') },
         ],
       },
     ],
@@ -207,7 +207,7 @@ const columns = [
         </Button>
       );
     },
-    header: t('테넌트명'),
+    header: t('LABEL.grid.column.tenantName'),
     size: 192,
   }),
   columnHelper.accessor('companyTenantList', {
@@ -217,7 +217,7 @@ const columns = [
         .getValue()
         .map((item) => item.companyName)
         .join(','),
-    header: t('회사'),
+    header: t('LABEL.grid.column.company'),
     size: 200,
   }),
   columnHelper.accessor('tenantUserList', {
@@ -227,12 +227,12 @@ const columns = [
         .getValue()
         .map((item) => item.userName)
         .join(','),
-    header: t('테넌트담당자'),
+    header: t('LABEL.grid.column.tenantManager'),
     size: 120,
   }),
   columnHelper.accessor('isUsed', {
     cell: (info) => {
-      return info.row.original.isUsed ? t('사용') : t('미사용');
+      return info.row.original.isUsed ? t('LABEL.common.enable') : t('미사용');
     },
     header: t('사용여부'),
     size: 104,

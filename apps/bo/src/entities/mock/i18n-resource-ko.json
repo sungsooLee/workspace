@@ -313,6 +313,7 @@
       "header": {
         "all": "전체",
         "selected": "선택",
+        "inputSelect": "입력 선택",
         "add": "추가",
         "remove": "삭제",
         "columnSetting": "컬럼셋팅",
@@ -341,9 +342,11 @@
         "labelMessageCode": "라벨/메세지 코드",
         "createdBy": "등록자",
         "createdDate": "등록일",
+        "createdDateAndTime": "등록일시",
         "useYn": "사용여부",
         "updatedBy": "수정자",
         "updatedDate": "수정일",
+        "modifiedDateAndTime": "수정일시",
         "modifiedDate": "최종수정 일자",
         "channel": "채널",
         "tenant": "테넌트",
@@ -374,7 +377,11 @@
         "util": "기능",
         "isContentEnabled": "사용가능",
         "localization": "현지화",
-        "updatedInfo": "수정정보"
+        "updatedInfo": "수정정보",
+        "tenantName": "테넌트명",
+        "company": "회사",
+        "tenantManager": "테넌트 담당자",
+        "companyManager": "회사 담당자"
       },
       "emptyText": "조회 결과가 없습니다.",
       "searchFirst": "{{list}}을 먼저 검색해주세요."
@@ -676,6 +683,11 @@
       "OUT_WORKING_TIME": {
         "title": "로그인 할 수 없습니다. ",
         "message": "근무 시간에는 로그인할 수 없습니다.\n업무 시간을 확인해 주세요."
+      }
+    },
+    "tenant": {
+      "page": {
+        "tenant": "테넌트담당자"
       }
     }
   },
