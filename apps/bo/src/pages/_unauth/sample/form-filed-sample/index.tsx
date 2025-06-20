@@ -11,6 +11,7 @@ import {
   ListModalSelectorFormField,
   PhoneNumberFormField,
   RadioGroup,
+  RadioGroupFormField,
   useModal,
 } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
@@ -39,11 +40,16 @@ function RouteComponent() {
     <form onSubmit={onSubmit(handleOnSubmit)}>
       <PageContainer>
         <ContentsButtons>
-          <Button type="submit" variant="point" size="sm" label={'과정복사'} />
-          <Button type={'button'} variant="point" size="sm" label={'임시저장'} />
-          <Button type={'button'} variant="point" size="sm" label={'작성완료'} />
-          <Button type={'button'} variant="point" size="sm" label={'미리보기'} />
-          <Button type={'button'} variant="primary" size="sm" label={'게시하기'} />
+          <Button
+            type={'button'}
+            variant="primary"
+            size="sm"
+            label={'set value'}
+            onClick={() => {
+              const { setValue } = provider;
+              setValue('라디오커스텀_인풋', '1');
+            }}
+          />
           <Button
             type={'submit'}
             variant="point"
@@ -70,15 +76,35 @@ function RouteComponent() {
               provider={provider}
               name={'라디오커스텀'}
               element={
-                <RadioGroup
+                <RadioGroupFormField
                   options={[
                     {
-                      label: '초급',
+                      label: '일반',
                       value: '1',
+                      node: (
+                        <FormRow
+                          provider={provider}
+                          name={'라디오커스텀_인풋'}
+                          element={<Input />}
+                        />
+                      ),
                     },
                     {
-                      label: '중급',
+                      label: '고급',
                       value: '2',
+                      node: (
+                        <FormRow
+                          provider={provider}
+                          name={'라디오커스텀_모달인풋'}
+                          element={
+                            <InputModalSelectorFormField
+                              modalConfig={{
+                                content: <ChannelListModal />,
+                              }}
+                            />
+                          }
+                        />
+                      ),
                     },
                   ]}
                 />
@@ -334,7 +360,6 @@ const formConfig: DynamicFormConfig = {
       name: '라디오',
       type: 'radio-group',
       label: t('라디오'),
-      format: 'string',
       options: [
         {
           label: '없음',
@@ -355,11 +380,21 @@ const formConfig: DynamicFormConfig = {
     },
     {
       name: '라디오커스텀',
-      type: 'radio-group',
+      type: 'custom',
       label: t('라디오커스텀'),
       value: [],
       placeholder: '',
       description: '',
+    },
+    {
+      name: '라디오커스텀_인풋',
+      type: 'custom',
+      value: '',
+    },
+    {
+      name: '라디오커스텀_모달인풋',
+      type: 'custom',
+      value: '',
     },
     {
       name: '강의실설정',

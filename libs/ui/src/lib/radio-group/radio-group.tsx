@@ -7,6 +7,7 @@ import { RadioGroupOption } from './type';
 import styles from './radio-group.module.css';
 
 export interface RadioGroupComponentProps extends React.ComponentProps<typeof Primitive.Root> {
+  value?: string;
   options: RadioGroupOption[];
   orientation?: 'vertical' | 'horizontal';
   defaultValue?: string;
@@ -22,6 +23,7 @@ const RadioGroupComponent = forwardRef<
 >(
   (
     {
+      value,
       className,
       options,
       disabled,
@@ -33,6 +35,7 @@ const RadioGroupComponent = forwardRef<
     },
     ref,
   ) => {
+    console.log('options => ', options);
     return (
       <Primitive.Root
         className={cn(
@@ -63,6 +66,8 @@ const RadioGroupComponent = forwardRef<
               <label className={styles.label} htmlFor={uniqueId}>
                 {option.label}
               </label>
+              {/* 커스텀 노드 */}
+              {option.value === value && option.node}
             </div>
           );
         })}
