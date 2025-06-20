@@ -75,7 +75,7 @@ ex) test.module.css
 
           <h3 className="guide_tit3">Tailwind CSS</h3>
           <p className="loc react">
-            설장파일 위치(공통) : /libs/config/src/lib/style/<strong>tailwind.preset.js</strong>
+            설정파일 위치(공통) : /libs/config/src/lib/style/<strong>tailwind.preset.js</strong>
           </p>
           <div className="info">지정 class명이 없을경우 설정파일에서 추가</div>
 

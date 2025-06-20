@@ -406,7 +406,7 @@ function RouteComponent() {
     <div>
       <h2 className="guide_tit2">Typography Guide</h2>
       <p className="loc react">
-        설장파일 위치(공통) : /libs/config/src/lib/style/<strong>tailwind.preset.js</strong>
+        설정파일 위치(공통) : /libs/config/src/lib/style/<strong>tailwind.preset.js</strong>
       </p>
       <p className="info">
         타이틀은 h1~h6까지 의미있는(시멘틱) 태그를 부여한다.
