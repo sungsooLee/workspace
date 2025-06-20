@@ -109,7 +109,6 @@ export const TreeProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   // 통합된 드래그 이벤트 핸들러들
   const handleDragStart = useCallback((event: DragStartEvent) => {
-    console.log('Global DragStart:', event);
     setActiveId(event.active.id);
 
     // 모든 트리의 onDragStart 콜백 호출
@@ -122,8 +121,6 @@ export const TreeProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const handleDragOver = useCallback(
     (event: DragOverEvent) => {
-      console.log('Global DragOver:', event);
-
       // 전역에서 드롭 상태 업데이트
       const { over } = event;
       if (over) {
@@ -155,8 +152,6 @@ export const TreeProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const handleDragEnd = useCallback(
     (event: DragEndEvent) => {
-      console.log('Global DragEnd:', event);
-
       const { active, over } = event;
       const dragData = active.data.current as any;
       const dropData = over?.data.current as any;

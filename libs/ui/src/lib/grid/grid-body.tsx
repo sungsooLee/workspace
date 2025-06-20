@@ -101,7 +101,9 @@ export const GridCell = <T extends object>({ row, cell, lastPinnedColumnId }: Gr
           cell.getContext(),
         )
       ) : cell.getIsPlaceholder() ? null : (
-        <WordWrap text={flexRender(cell.column.columnDef.cell, cell.getContext())} />
+        flexRender(cell.column.columnDef.cell, cell.getContext())
+        // 다양한 케이스 추가 작업 후 추가 필요.
+        // <WordWrap text={flexRender(cell.column.columnDef.cell, cell.getContext())} />
       )}
     </td>
   );

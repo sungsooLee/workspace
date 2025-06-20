@@ -22,6 +22,7 @@ export interface CategoryDetail {
   categoryContent: string;
   categoryPath: string;
   isUsed?: boolean;
+  parentMenuName?: string;
 }
 
 export interface CategoryCreate {
