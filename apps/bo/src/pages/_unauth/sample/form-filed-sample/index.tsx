@@ -46,8 +46,13 @@ function RouteComponent() {
             size="sm"
             label={'set value'}
             onClick={() => {
-              const { setValue } = provider;
-              setValue('라디오커스텀_인풋', '1');
+              const { onFormChange } = provider;
+              const newValues = {
+                라디오커스텀: '2',
+                라디오커스텀_모달_아이디: 'channel_id1',
+                라디오커스텀_모달_이름: 'channel_name1',
+              };
+              onFormChange(newValues);
             }}
           />
           <Button
@@ -95,12 +100,16 @@ function RouteComponent() {
                       node: (
                         <FormRow
                           provider={provider}
-                          name={'라디오커스텀_모달인풋'}
+                          name={'라디오커스텀_모달_이름'}
                           element={
                             <InputModalSelectorFormField
                               modalConfig={{
                                 content: <ChannelListModal />,
                               }}
+                              transformModalData={(data: any) => ({
+                                라디오커스텀_모달_아이디: data.channelId,
+                                라디오커스텀_모달_이름: data.channelName,
+                              })}
                             />
                           }
                         />
@@ -392,7 +401,12 @@ const formConfig: DynamicFormConfig = {
       value: '',
     },
     {
-      name: '라디오커스텀_모달인풋',
+      name: '라디오커스텀_모달_아이디',
+      type: 'hidden',
+      value: '',
+    },
+    {
+      name: '라디오커스텀_모달_이름',
       type: 'custom',
       value: '',
     },

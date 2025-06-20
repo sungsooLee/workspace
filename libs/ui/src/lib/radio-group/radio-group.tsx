@@ -35,7 +35,6 @@ const RadioGroupComponent = forwardRef<
     },
     ref,
   ) => {
-    console.log('options => ', options);
     return (
       <Primitive.Root
         className={cn(
@@ -67,7 +66,9 @@ const RadioGroupComponent = forwardRef<
                 {option.label}
               </label>
               {/* 커스텀 노드 */}
-              {option.value === value && option.node}
+              {option.value === value && option.node && (
+                <span className={styles.node}>{option.node}</span>
+              )}
             </div>
           );
         })}

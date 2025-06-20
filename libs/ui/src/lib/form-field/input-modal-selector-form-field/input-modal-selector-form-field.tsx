@@ -25,6 +25,8 @@ interface InputModalSelectorFormFieldComponentProps extends BaseFormFieldProps<s
   transformModalData?: (modalData?: any) => string | ComplexFieldValue;
   /** 복합 서치 필드 모드 활성화 */
   complexField?: boolean;
+  complexName?: string;
+  complexFieldConfig?: ComplexFieldConfig;
   leftFieldProps?: {
     placeholder?: string;
     inputProps?: InputProps;
@@ -33,8 +35,6 @@ interface InputModalSelectorFormFieldComponentProps extends BaseFormFieldProps<s
     placeholder?: string;
     inputProps?: InputProps;
   };
-  complexName?: string;
-  complexFieldConfig?: ComplexFieldConfig;
 }
 
 const InputModalSelectorFormFieldComponent = forwardRef<
@@ -79,10 +79,8 @@ const InputModalSelectorFormFieldComponent = forwardRef<
         const clearData = { [leftKey]: '', [rightKey]: '' };
         onFormChange({ [complexName]: clearData } as any);
       } else {
-        if (onChange) {
-          const clearEvent = { target: { value: '' } } as any;
-          onChange(clearEvent);
-        }
+        const clearEvent = { target: { value: '' } } as any;
+        onChange?.(clearEvent);
       }
     };
 
@@ -102,7 +100,6 @@ const InputModalSelectorFormFieldComponent = forwardRef<
 
     if (complexField) {
       const dualValues = getDualValues();
-
       return (
         <div
           className={cn(styles.start, styles.search_wrap, 'nlp--input-modal-selector-form-field')}
@@ -114,25 +111,23 @@ const InputModalSelectorFormFieldComponent = forwardRef<
               readOnly={true}
               placeholder={leftFieldProps?.placeholder || t('LABEL.form.input.code')}
             />
-
             <Input
               {...rightFieldProps?.inputProps}
               ref={ref}
               value={dualValues.rightValue}
               placeholder={rightFieldProps?.placeholder || t('LABEL.form.input.text')}
+              showSearchIcon
               onEnterKeyDown={handleModalOpen}
               onChange={(event) => {
                 if (event.target.value === '') {
                   handleClear();
                 }
               }}
-              showSearchIcon
             />
           </div>
         </div>
       );
     }
-    //////
 
     return (
       <div
@@ -145,13 +140,13 @@ const InputModalSelectorFormFieldComponent = forwardRef<
           value={value}
           readOnly={readOnly}
           placeholder={placeholder}
+          showSearchIcon
           onEnterKeyDown={handleModalOpen}
           onChange={(event) => {
             if (event.target.value === '') {
               handleClear();
             }
           }}
-          showSearchIcon
         />
       </div>
     );

@@ -448,16 +448,6 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             </Button>
           )}
         </div>
-
-        {/* 토스트 메시지 */}
-        {/* {showToast && (
-          <div
-          >
-            {type === 'alphanumeric' || inputType === 'alphanumeric'
-              ? t('영어, 숫자만 입력 가능합니다.')
-              : t('URL에 사용할 수 없는 문자입니다.')}
-          </div>
-        )} */}
       </div>
     );
   },
