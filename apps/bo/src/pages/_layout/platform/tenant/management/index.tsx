@@ -24,7 +24,7 @@ function RouteComponent() {
         </Button>
       </ContentsButtons>
       <MainContents>
-        <TenantManagmentList rootPath="/platform" />
+        <TenantManagmentList rootPath="/platform" roleInfo={'PLATFORM'} />
       </MainContents>
     </PageContainer>
   );

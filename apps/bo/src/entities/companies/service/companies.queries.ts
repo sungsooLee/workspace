@@ -34,6 +34,16 @@ export const queryOptions = {
           queryFn: (): Promise<any> => CompaniesService.fetchBrn(brn),
         }
       : getQuerySkipToken<Company>(),
+  tenantCompany: (tenantId: number) =>
+    tenantId
+      ? {
+          queryKey: [...queryKeys.all, 'tenantCompany', tenantId],
+          queryFn: async () => {
+            const pagedata = await CompaniesService.fetchAll({ tenantId: tenantId });
+            return pagedata.content;
+          },
+        }
+      : getQuerySkipToken<any[]>(),
 };
 
 export const mutateOptions = {

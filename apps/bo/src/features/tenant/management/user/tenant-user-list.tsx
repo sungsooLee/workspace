@@ -9,7 +9,7 @@ import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module
 
 import { Button, GridBox, useGridBox } from '@learnway/ui';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
+import { useSearchBox, SearchBoxConfig, CODE_GROUP, SelectOption } from '@learnway/hooks';
 
 import { useFetchAuthUser } from '@learnway/auth/entities';
 
@@ -18,6 +18,7 @@ import { SearchBox } from '@shared/ui/search-box';
 import { EnGlobalConst } from '@types';
 import { tenantQueryOptions } from '@entities/tenant';
 import { usersQueryOptions } from '@entities/users/service/users.queries';
+import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
 
 const _global = {
   linkClick: (tenantId: number, tenantName: string) => {
@@ -36,8 +37,6 @@ const TenantUserListComponent: FC<any> = ({ rootPath }) => {
 
   const { data: loginUser } = useFetchAuthUser();
   const queryClient = useQueryClient();
-
-  const [companyCodes, setCompanyCodes] = useState<string[]>([]);
 
   _global.linkClick = (tenantId: number, tenantName: string) => {
     router.navigate({
@@ -87,33 +86,25 @@ const TenantUserListComponent: FC<any> = ({ rootPath }) => {
       value: tenant.tenantId,
       label: tenant.tenantName,
     }));
-    const tenantIds = tenantIdOptions.map((item) => item.value);
+
     setOptions('tenantId', tenantIdOptions);
     if (loginUser.activeTenant) setValue('tenantId', loginUser.activeTenant.tenantId ?? '');
-
-    (async () => {
-      const companys = await queryClient.fetchQuery(tenantQueryOptions.tenantCompanys(tenantIds));
-      const companyCodes = companys.map((item) => item.companyCode);
-      setCompanyCodes(companyCodes);
-    })();
   }, [loginUser]);
 
   useEffect(() => {
+    setValue('companyId', '');
     if (tenantIdWatch) {
       (async () => {
         const companys = await queryClient.fetchQuery(
-          tenantQueryOptions.tenantCompanys([tenantIdWatch]),
+          companysQueryOptions.tenantCompany(tenantIdWatch),
         );
-        console.log(companys);
         const companyIdOptions = companys.map((item) => ({
           label: item.name,
           value: item.companyId,
         }));
-        console.log(companyIdOptions);
         setOptions('companyId', companyIdOptions);
       })();
     } else {
-      setValue('companyId', '');
       setOptions('companyId', []);
     }
   }, [tenantIdWatch]);
