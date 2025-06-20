@@ -9,7 +9,7 @@
         @apply flex h-[2rem] w-[2rem] items-center justify-center;
       }
       & ~ .label {
-        @apply !font-bold tracking-tighter;
+        @apply !font-bold tracking-[-0.035em];
       }
     }
     &.round {

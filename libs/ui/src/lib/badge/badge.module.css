@@ -52,8 +52,20 @@
       @apply label_3_r rounded-[2px] px-[6px] py-[4px];
       &.new {
         @apply bg-[#ffeded];
-        button {
+        .label {
           @apply p-0 text-[var(--status1)];
+        }
+      }
+      &.primary {
+        @apply bg-[var(--secondary1)];
+        .label {
+          @apply text-white;
+        }
+      }
+      &.warning {
+        @apply bg-[var(--status2)];
+        .label {
+          @apply text-white;
         }
       }
       button {

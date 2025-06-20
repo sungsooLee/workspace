@@ -37,7 +37,7 @@
     }
     [class*='nlp--checkbox'] {
       label {
-        @apply input_bo_1_r text-[var(--gray8)];
+        @apply input_bo_1_r !tracking-[-0.035em] text-[var(--gray8)];
       }
       button[role='checkbox'] {
         &[aria-checked='true'] ~ label {

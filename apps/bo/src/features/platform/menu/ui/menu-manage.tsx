@@ -28,6 +28,7 @@ import {
   transformApiDataToTreeData,
 } from '../service/menu.service';
 import {
+  queryKeys,
   useCheckExistsMenu,
   useCreateMenu,
   useDeleteMenu,
@@ -47,6 +48,7 @@ import {
   DuplicateState,
 } from '@features/tenant/management/ui/duplicate-check-input-form-field';
 import { isEqual } from 'lodash';
+import { useQueryClient } from '@tanstack/react-query';
 
 const FORM_MODE = {
   NONE: 'NONE',
@@ -90,6 +92,8 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
   const { delete: deleteMenu } = useDeleteMenu({});
   const { move: moveMenu } = useMoveMenu({});
   const { checkExistsMenu, isLoading } = useCheckExistsMenu({});
+
+  const queryClient = useQueryClient();
 
   const duplicateCheck = async (code: string) => {
     const result = await new Promise((resolve) => {
@@ -224,6 +228,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
         const formData = {
           ...data,
           location: location,
+          parentCode: data.parentName,
           code: { fieldValue: data.menuCode, checkState: DuplicateState.okStart },
           deviceNames: deviceNames,
         };
@@ -274,13 +279,13 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
     formConfig.builders.forEach((item) => {
       initData[item.name] = item.value;
     });
-
     setParentNode(node);
     const location = findMenuPathById(treeData, node.menuId);
     const addFormData = {
       ...initData,
       location: location,
-      parentCode: node.menuCode,
+      // parentCode: node.menuCode,
+      parentCode: node.title,
       deviceNames: ['PC'],
     };
 
@@ -407,7 +412,15 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
             sortOrder: 1,
             menuScopeCode: menuScope,
           };
-          moveMenu(payload);
+          moveMenu(payload, {
+            onSuccess: async (data: any) => {
+              if (selectedNode?.menuId) {
+                await queryClient.invalidateQueries({
+                  queryKey: [...queryKeys.detail(selectedNode.menuId)],
+                });
+              }
+            },
+          });
         } else {
           const targetIndex = nodeInfo.targetIndex!;
           const payload = {
@@ -416,7 +429,15 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
             sortOrder: targetIndex + 1,
             menuScopeCode: menuScope,
           };
-          moveMenu(payload);
+          moveMenu(payload, {
+            onSuccess: async (data: any) => {
+              if (selectedNode?.menuId) {
+                await queryClient.invalidateQueries({
+                  queryKey: [...queryKeys.detail(selectedNode.menuId)],
+                });
+              }
+            },
+          });
         }
 
         break;

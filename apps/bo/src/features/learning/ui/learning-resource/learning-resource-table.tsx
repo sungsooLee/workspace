@@ -24,7 +24,7 @@ import { useRouter } from '@tanstack/react-router';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { useWatch } from 'react-hook-form';
 import { useQueryClient } from '@tanstack/react-query';
-import { GridExcelButtons } from '@features/shared';
+import { GridExcelDownloadButton } from '@features/shared/ui/excel/grid-excel-download-button';
 import { CMSApiPrefix } from '@learnway/config';
 
 function LearningResourceTableComponent() {
@@ -445,12 +445,11 @@ function LearningResourceTableComponent() {
                 <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
               </Tooltip>
             </span>
-            <GridExcelButtons
-              showDownload
-              downloadMethod="post"
-              downloadUrl={`${CMSApiPrefix()}/contents/excel`}
-              downloadParams={params}
-              downloadParamLabels={valuesWithLabel}
+            <GridExcelDownloadButton
+              method="post"
+              url={`${CMSApiPrefix()}/contents/excel`}
+              params={params}
+              paramLabels={valuesWithLabel}
               dataCount={data?.totalElements}
               disabled={!data?.totalElements}
             />

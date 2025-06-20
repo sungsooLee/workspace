@@ -1,3 +1,4 @@
+import type { UseMutationResult } from '@tanstack/react-query';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   mutateOptions,
@@ -5,6 +6,13 @@ import {
   programManageQueryOptions as queryOptions,
 } from './program-manage.queries';
 import { useModal } from '@learnway/ui';
+
+type MutationHookOptions<TData = any, TError = Error, TVariables = any, TContext = unknown> = {
+  onSuccess?: (data: TData, variables: TVariables, context: TContext) => void | Promise<void>;
+  onError?: (error: TError, variables: TVariables, context: TContext | undefined) => void | Promise<void>;
+  onSettled?: (data: TData | undefined, error: TError | null, variables: TVariables, context: TContext | undefined) => void | Promise<void>;
+  onMutate?: (variables: TVariables) => Promise<TContext> | TContext | void;
+};
 
 export function useFetchPrograms(apiScopeCode: string) {
   return useQuery(queryOptions.all(apiScopeCode));
@@ -14,20 +22,16 @@ export function useFetchProgram(apiUuid: string) {
   return useQuery({ ...queryOptions.getProgram(apiUuid), enabled: !!apiUuid });
 }
 
-interface ProgramHookOptions {
-  apiScope?: string;
-  apiId?: string;
-  onCreateSuccess?: (data: any, variables: any, context: any) => void;
-  // onDeleteSuccess?: ()
-}
-
-export const useProgramHook = (options: ProgramHookOptions = {}) => {
+export const useCreateProgram = (
+  apiScope?: string,
+  options?: MutationHookOptions,
+): UseMutationResult<any, Error, any, unknown> => {
   const queryClient = useQueryClient();
-  const { showSaveComplete, showDeleteComplete, showUpdateComplete } = useModal();
-  const { apiScope, apiId } = options;
-
-  const { mutate: createMutate } = useMutation({
+  const { showSaveComplete } = useModal();
+  
+  return useMutation({
     ...mutateOptions.create(),
+    ...options,
     onSuccess: async (data, variables, context) => {
       showSaveComplete();
       if (apiScope) {
@@ -39,30 +43,23 @@ export const useProgramHook = (options: ProgramHookOptions = {}) => {
           queryKey: queryKeys.all,
         });
       }
-      if (options.onCreateSuccess) {
-        options.onCreateSuccess(data, variables, context);
+      if (options?.onSuccess) {
+        await options.onSuccess(data, variables, context);
       }
     },
   });
+};
 
-  const { mutate: deleteMutate } = useMutation({
-    ...mutateOptions.delete(),
-    onSuccess: async (data, variables, context) => {
-      showDeleteComplete();
-      if (apiScope) {
-        await queryClient.invalidateQueries({
-          queryKey: [...queryKeys.all, apiScope],
-        });
-      } else {
-        await queryClient.invalidateQueries({
-          queryKey: queryKeys.all,
-        });
-      }
-    },
-  });
-
-  const { mutate: updateMutate } = useMutation({
+export const useUpdateProgram = (
+  apiScope?: string,
+  options?: MutationHookOptions,
+): UseMutationResult<any, Error, any, unknown> => {
+  const queryClient = useQueryClient();
+  const { showUpdateComplete } = useModal();
+  
+  return useMutation({
     ...mutateOptions.update(),
+    ...options,
     onSuccess: async (data, variables, context) => {
       showUpdateComplete();
       if (apiScope) {
@@ -74,11 +71,50 @@ export const useProgramHook = (options: ProgramHookOptions = {}) => {
           queryKey: queryKeys.all,
         });
       }
+      if (options?.onSuccess) {
+        await options.onSuccess(data, variables, context);
+      }
     },
   });
+};
 
-  const { mutate: dndMutate } = useMutation({
+export const useDeleteProgram = (
+  apiScope?: string,
+  options?: MutationHookOptions,
+): UseMutationResult<any, Error, any, unknown> => {
+  const queryClient = useQueryClient();
+  const { showDeleteComplete } = useModal();
+  
+  return useMutation({
+    ...mutateOptions.delete(),
+    ...options,
+    onSuccess: async (data, variables, context) => {
+      showDeleteComplete();
+      if (apiScope) {
+        await queryClient.invalidateQueries({
+          queryKey: [...queryKeys.all, apiScope],
+        });
+      } else {
+        await queryClient.invalidateQueries({
+          queryKey: queryKeys.all,
+        });
+      }
+      if (options?.onSuccess) {
+        await options.onSuccess(data, variables, context);
+      }
+    },
+  });
+};
+
+export const useDndProgram = (
+  apiScope?: string,
+  options?: MutationHookOptions,
+): UseMutationResult<any, Error, any, unknown> => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
     ...mutateOptions.dnd(),
+    ...options,
     onSuccess: async (data, variables, context) => {
       if (apiScope) {
         await queryClient.invalidateQueries({
@@ -89,29 +125,9 @@ export const useProgramHook = (options: ProgramHookOptions = {}) => {
           queryKey: queryKeys.all,
         });
       }
+      if (options?.onSuccess) {
+        await options.onSuccess(data, variables, context);
+      }
     },
   });
-
-  const handleSave = (saveData: any, callbacks?: any) => {
-    createMutate(saveData, callbacks);
-  };
-
-  const handleDelete = (deleteData: any, callbacks?: any) => {
-    deleteMutate(deleteData, callbacks);
-  };
-
-  const handleUpdate = (updateData: any, callbacks?: any) => {
-    updateMutate(updateData, callbacks);
-  };
-
-  const handleDnd = (updateData: any, callbacks?: any) => {
-    dndMutate(updateData, callbacks);
-  };
-
-  return {
-    create: handleSave,
-    delete: handleDelete,
-    update: handleUpdate,
-    dnd: handleDnd,
-  };
 };

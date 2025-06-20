@@ -21,6 +21,14 @@ export default class TranslationService {
     return httpService.delete<Tenant>(`/pms-module/admin/api/v1/i18n`, { id });
   }
 
+  static deployTranslation(payload: any) {
+    const { locale } = payload;
+    return httpService.post<any>(
+      `${PMSApiPrefix()}/multilingual/${locale}/multilingualJson`,
+      payload,
+    );
+  }
+
   // 다국어 번역상태 팝업 조회
   static fetchTranslationStatus(multilingualId: number) {
     return httpService.get<any>(
