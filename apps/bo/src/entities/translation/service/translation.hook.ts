@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { mutateOptions } from './translation.queries';
 import { useModal } from '@learnway/ui';
 import { translationQueryOptions as queryOptions } from './translation.queries';
@@ -43,4 +43,26 @@ export const useTranslation = useTranslationHook;
 
 export function useTranslationStatus(multilingualId: number) {
   return useQuery(queryOptions.getStatus(multilingualId));
+}
+
+export function useDeployTranslation(options: any) {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    ...mutateOptions.deploy(),
+    onSuccess: async (dataTagErrorSymbol, variables, context) => {
+      if (options.onSuccess) {
+        options.onSuccess(dataTagErrorSymbol, variables, context);
+      }
+    },
+    ...options,
+  });
+  return {
+    deploy: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
 }

@@ -228,6 +228,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
         const formData = {
           ...data,
           location: location,
+          parentCode: data.parentName,
           code: { fieldValue: data.menuCode, checkState: DuplicateState.okStart },
           deviceNames: deviceNames,
         };
@@ -278,13 +279,13 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
     formConfig.builders.forEach((item) => {
       initData[item.name] = item.value;
     });
-
     setParentNode(node);
     const location = findMenuPathById(treeData, node.menuId);
     const addFormData = {
       ...initData,
       location: location,
-      parentCode: node.menuCode,
+      // parentCode: node.menuCode,
+      parentCode: node.title,
       deviceNames: ['PC'],
     };
 

@@ -139,7 +139,7 @@ export const CategoryManage = () => {
           location: detailData.categoryPath || location,
           key: selectedNode.key,
           parentKey: selectedNode.parentKey,
-          parentMenuName: detailData.parentMenuName || selectedNode.parentMenuName,
+          parentMenuName: detailData.parentCategoryName || selectedNode.parentMenuName,
           name: detailData.name,
           code: { fieldValue: detailData.categoryCode, checkState: DuplicateState.okStart },
           categoryContent: detailData.categoryContent,
