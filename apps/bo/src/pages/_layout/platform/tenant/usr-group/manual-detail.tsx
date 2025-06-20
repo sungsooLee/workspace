@@ -42,11 +42,9 @@ import {
 
 import { EnTenantDetailTabKey } from '@types';
 
-export const Route = createFileRoute('/_layout/platform/tenant/usr-group/manual-detail')(
-  {
-    component: RouteComponent,
-  },
-);
+export const Route = createFileRoute('/_layout/platform/tenant/usr-group/manual-detail')({
+  component: RouteComponent,
+});
 
 /**
  * 화면 번호: NLP_BO_PMS_2001 (유저그룹수동등록 등록/상세)
@@ -87,7 +85,7 @@ function RouteComponent() {
     const listParam = routerState.location.state?.listParam;
 
     router.navigate({
-      to: '/platform/tenant/management/usr-group/manual',
+      to: '/platform/tenant/usr-group/manual',
       state: { listParam: listParam },
     });
   };

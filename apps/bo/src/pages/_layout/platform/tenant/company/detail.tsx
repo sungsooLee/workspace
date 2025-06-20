@@ -28,7 +28,7 @@ function RouteComponent() {
   };
 
   const handleListClick = () => {
-    router.navigate({ to: '/platform/tenant/management/company' });
+    router.navigate({ to: '/platform/tenant/company' });
   };
 
   return (

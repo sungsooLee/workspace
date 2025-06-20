@@ -180,7 +180,7 @@ const columns = [
     header: t('회사명'),
     cell: (info) => (
       <Link
-        to="/platform/tenant/management/company/detail"
+        to="/platform/tenant/company/detail"
         state={{
           companyCode: info.row.original.companyCode,
         }}

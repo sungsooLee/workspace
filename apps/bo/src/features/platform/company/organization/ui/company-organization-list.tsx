@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter, useRouterState, Link } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
@@ -7,6 +7,8 @@ import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { Button, GridBox, useGridBox } from '@learnway/ui';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
+
+import { useFetchAuthUser } from '@learnway/auth/entities';
 
 import { SearchBox } from '@shared/ui/search-box';
 
@@ -27,6 +29,27 @@ const CompanyOrganizationListComponent = ({ rootPath }: { rootPath: string }) =>
   const router = useRouter();
   const routerState = useRouterState();
 
+  const { data: loginUser } = useFetchAuthUser();
+
+  const [tenantId, setTenantId] = useState<number>();
+
+  const searchParam = () => {
+    const data = getValues();
+    const searchData = {
+      tenantId: tenantId,
+      companyType: data.companyType,
+      name: data.name,
+      isUsed: data.isUsed,
+      modifyStartDate: data.modifyDate.from
+        ? getDateToString(new Date(data.modifyDate.from), 'YYYYMMDD')
+        : '',
+      modifyEndDate: data.modifyDate.to
+        ? getDateToString(new Date(data.modifyDate.to), 'YYYYMMDD')
+        : '',
+    };
+    return searchData;
+  };
+
   const {
     provider: searchProvider,
     onFormChange,
@@ -38,7 +61,7 @@ const CompanyOrganizationListComponent = ({ rootPath }: { rootPath: string }) =>
   _global.linkClick = (companyCode: string) => {
     console.log('getValues', getValues());
     router.navigate({
-      to: `${rootPath}/tenant/management/organization/detail`,
+      to: `${rootPath}/tenant/organization/detail`,
       state: {
         companyCode: companyCode,
         listParam: getValues(),
@@ -47,21 +70,27 @@ const CompanyOrganizationListComponent = ({ rootPath }: { rootPath: string }) =>
   };
 
   const handleOnSearch = (data: any) => {
+    if (!tenantId) return;
     gridFetch(data);
   };
 
   useEffect(() => {
-    const init = async () => {
-      const listParam = routerState.location.state.listParam;
-      if (listParam) {
-        onFormChange(listParam);
-        if (await onFormValid()) {
-          handleOnSearch(getValues());
-        }
+    if (!loginUser) return;
+
+    if (loginUser.activeTenant) {
+      setTenantId(loginUser.activeTenant.tenantId);
+    } else {
+      if (loginUser.tenants && loginUser.tenants.length > 0) {
+        setTenantId(loginUser.tenants[0].tenantId);
       }
-    };
-    init();
-  }, []);
+    }
+  }, [loginUser]);
+
+  useEffect(() => {
+    if (!tenantId) return;
+    gridFetch(searchParam());
+  }, [tenantId]);
+
   return (
     <>
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
@@ -80,38 +109,62 @@ const searchConfig: SearchBoxConfig = {
   builders: [
     [
       {
-        name: 'tenantName',
-        type: 'text',
-        label: t('테넌트명'),
+        name: 'companyType',
+        type: 'dropdown',
+        label: t('그룹'),
         value: '',
+        optionsConfig: {
+          options: [{ value: '', label: t('전체') }],
+          codeGroup: CODE_GROUP['pms.company.CompanyType'],
+        },
       },
       {
         name: 'name',
         type: 'text',
         label: t('회사명'),
         value: '',
-      },
-    ],
-    [
-      {
-        name: 'tenantMappingCompanyName',
-        type: 'text',
-        label: t('HR연동 여부'),
-        value: '',
-        options: [
-          { label: '전체', value: '' },
-          { label: 'HR연동', value: 'HR' },
-          { label: '수동등록', value: 'MANUAL' },
-        ],
+        placeholder: '',
       },
       {
         name: 'isUsed',
-        type: 'date-range',
-        label: t('등록기간'),
+        type: 'dropdown',
+        label: t('회사정보 사용'),
         value: '',
+        options: [
+          { value: '', label: t('전체') },
+          { value: true, label: t('사용') },
+          { value: false, label: t('미사용') },
+        ],
+      },
+      {
+        name: 'modifyDate',
+        type: 'date-range',
+        label: t('수정 기간'),
+        value: {
+          from: undefined,
+          to: undefined,
+        },
       },
     ],
   ],
+  validator: {
+    modifyDate: {
+      conditions: [
+        {
+          fn: (values: any) => !values.modifyDate?.from && values.modifyDate?.to,
+          message: t('시작 날짜를 선택하세요'),
+        },
+        {
+          fn: (values: any) => values.modifyDate?.from && !values.modifyDate?.to,
+          message: t('종료 날짜를 선택하세요.'),
+        },
+        {
+          fn: (values: any) => values.modifyDate.from > values.modifyDate.to,
+          message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.'),
+        },
+      ],
+    },
+  },
 };
 
 const gridConfig = {

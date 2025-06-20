@@ -75,7 +75,7 @@ function RouteComponent() {
           onClick={() => {
             if (companyCodes && companyCodes.length > 0) {
               router.navigate({
-                to: '/platform/tenant/management/user/user-regist',
+                to: '/platform/tenant/user/user-regist',
                 state: { companyCodes: companyCodes },
               });
             }

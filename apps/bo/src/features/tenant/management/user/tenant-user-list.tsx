@@ -40,7 +40,7 @@ const TenantUserListComponent: FC<any> = ({ rootPath }) => {
 
   _global.linkClick = (userUuid: string) => {
     router.navigate({
-      to: `${rootPath}/tenant/management/user/detail`,
+      to: `${rootPath}/tenant/user/detail`,
       state: {
         userUuid: userUuid,
         listParam: getValues(),

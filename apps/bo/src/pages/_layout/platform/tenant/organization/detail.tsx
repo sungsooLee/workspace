@@ -24,14 +24,14 @@ function RouteComponent() {
   const companyCode = routerState.location.state?.companyCode;
 
   useEffect(() => {
-    if (!companyCode) router.navigate({ to: '/platform/tenant/management/organization' });
+    if (!companyCode) router.navigate({ to: '/platform/tenant/organization' });
   }, [companyCode]);
 
   const handleListButtonClick = () => {
     const listParam = routerState.location.state?.listParam;
     console.log('listParam-detail', listParam);
     router.navigate({
-      to: '/platform/tenant/management/organization',
+      to: '/platform/tenant/organization',
       state: { listParam: listParam },
     });
   };

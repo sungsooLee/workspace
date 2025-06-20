@@ -20,9 +20,7 @@ function RouteComponent() {
         <Button
           variant="primary"
           size="sm"
-          onClick={() =>
-            router.navigate({ to: '/platform/tenant/management/usr-group/manual-detail' })
-          }
+          onClick={() => router.navigate({ to: '/platform/tenant/usr-group/manual-detail' })}
           label={t('등록')}
         />
       </ContentsButtons>

@@ -27,7 +27,7 @@ function RouteComponent() {
             label={t('LABEL.button.list')}
             variant="gray2"
             size="sm"
-            onClick={() => router.navigate({ to: '/platform/tenant/management/user' })}
+            onClick={() => router.navigate({ to: '/platform/tenant/user' })}
           />
         </LinkBox>
         <Button
