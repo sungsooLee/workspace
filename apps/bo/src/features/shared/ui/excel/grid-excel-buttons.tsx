@@ -1,9 +1,6 @@
-import { Button, useModal } from '@learnway/ui';
-import { ExcelUploadModal } from '@features/shared';
-import { IcoUploadCloud } from '@learnway/icons';
-import { t } from 'i18next';
-import { SelectOption } from '@learnway/hooks';
+import { GridExcelUploadButton } from './grid-excel-upload-button';
 import { GridExcelDownloadButton } from './grid-excel-download-button';
+import { SelectOption } from '@learnway/hooks';
 
 interface ExcelButtonsProps {
   // 업로드 관련
@@ -41,32 +38,16 @@ const GridExcelButtonsComponent: React.FC<ExcelButtonsProps> = ({
   disabled = false,
   className,
 }) => {
-  const { open: openModal } = useModal();
-
-  // 업로드
-  const handleUpload = async () => {
-    if (onUpload) await onUpload();
-    if (uploadUrl && validateUrl) {
-      console.log('?');
-      await openModal({
-        content: <ExcelUploadModal validateUrl={validateUrl} uploadUrl={uploadUrl} />,
-        width: 'lg',
-      });
-    }
-  };
-
   return (
     <>
       {/* 업로드 버튼 */}
       {showUpload && (
-        <Button
-          variant="text"
-          size="xs"
-          className={className}
-          label={t('LABEL.grid.header.excelUpload', '엑셀업로드')}
-          icon={<IcoUploadCloud width={16} height={16} stroke={'#4C515E'} />}
-          onClick={handleUpload}
+        <GridExcelUploadButton
+          url={uploadUrl}
+          validateUrl={validateUrl}
+          onUpload={onUpload}
           disabled={disabled}
+          className={className}
         />
       )}
 
