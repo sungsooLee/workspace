@@ -5,10 +5,13 @@ import { t } from 'i18next';
 
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
-import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { Button, GridBox, useGridBox } from '@learnway/ui';
-import { SearchBox } from '@shared/ui/search-box';
+import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
+
+import { useFetchAuthUser } from '@learnway/auth/entities';
+
+import { SearchBox } from '@shared/ui/search-box';
 
 const _global = {
   linkClick: (tenantId: number, tenantName: string) => {
@@ -24,6 +27,9 @@ const _global = {
 const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => {
   const router = useRouter();
   const routerState = useRouterState();
+
+  const { data: loginUser } = useFetchAuthUser();
+
   _global.linkClick = (tenantId: number, tenantName: string) => {
     router.navigate({
       to: `${rootPath}/tenant/management/user-group/handmade-detail`,
@@ -38,6 +44,8 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
   const {
     provider: searchProvider,
     getValues,
+    setOptions,
+    setValue,
     onFormChange,
     onFormValid,
   } = useSearchBox(searchConfig);
@@ -47,6 +55,7 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
     console.log('search', data);
     gridFetch(data);
   };
+
   useEffect(() => {
     const init = async () => {
       const listParam = routerState.location.state.listParam;
@@ -59,6 +68,18 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
     };
     init();
   }, []);
+
+  useEffect(() => {
+    if (!loginUser) return;
+
+    const tenantIdOptions = loginUser.tenants.map((tenant) => ({
+      value: tenant.tenantId,
+      label: tenant.tenantName,
+    }));
+
+    setOptions('tenantId', tenantIdOptions);
+    if (loginUser.activeTenant) setValue('tenantId', loginUser.activeTenant.tenantId ?? '');
+  }, [loginUser]);
 
   return (
     <>
@@ -79,13 +100,12 @@ const searchConfig: SearchBoxConfig = {
     [
       {
         name: 'tenantId',
-        type: 'text',
-        label: t('테넌트명'),
+        type: 'dropdown',
+        label: t('테넌트'),
         format: 'object',
         value: '',
-        optionsConfig: {
-          codeGroup: CODE_GROUP['manual.tenant.tenantId'],
-        },
+        presetOptionLabel: t('LABEL.form.label.select'),
+        options: [],
       },
       {
         name: 'companyName',
@@ -133,6 +153,9 @@ const searchConfig: SearchBoxConfig = {
       },
     ],
   ],
+  validator: {
+    tenantId: true,
+  },
 };
 
 const gridConfig = {
