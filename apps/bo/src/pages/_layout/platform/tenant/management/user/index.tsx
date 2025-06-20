@@ -72,12 +72,14 @@ function RouteComponent() {
           label={t('LABEL.button.regist')}
           variant="primary"
           size="sm"
-          onClick={() =>
-            router.navigate({
-              to: '/platform/tenant/management/user/user-regist',
-              state: { companyCodes: companyCodes },
-            })
-          }
+          onClick={() => {
+            if (companyCodes && companyCodes.length > 0) {
+              router.navigate({
+                to: '/platform/tenant/management/user/user-regist',
+                state: { companyCodes: companyCodes },
+              });
+            }
+          }}
         />
       </ContentsButtons>
       <MainContents>

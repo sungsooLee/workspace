@@ -52,12 +52,12 @@ export const transformDepartmentApiDataToTreeData = (apiData: any) => {
         key: node.deptId?.toString(),
         title: node.deptName,
 
-        parentKey: node.parent || node.companyCode,
+        parentKey: node.parentDeptId?.toString() || node.companyCode,
         children: node.childList || [],
         _nodeType: 'D',
       };
 
-      if (!node.deptId && !node.parent) {
+      if (!node.deptId && !node.parentDeptId) {
         //회사 노드
         transformedNode.parentKey = 'root';
         transformedNode.key = node.companyCode;

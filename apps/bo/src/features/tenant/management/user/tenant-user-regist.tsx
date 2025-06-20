@@ -66,10 +66,16 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       width: 'md',
       content: <OrganizationChoiceTreeModal companyCodes={companyCodes} />,
     });
-    console.log('dtaa====', organization);
-    const changeData = { companyName: organization.companyName };
+
+    const changeData = {
+      companyName: organization.companyName,
+      lastDept: organization.deptName,
+      deptId: organization.deptId,
+      firstDept: '',
+    };
 
     if (organization.allTreePath.length > 3) {
+      changeData.firstDept = organization.allTreePath[2].deptName;
     }
     onFormChange(changeData);
   };
@@ -314,8 +320,8 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
             onClick={handleCompanySearchButtonClick}
           />
         </FormRow>
-        <FormRow provider={provider} name={'firstDepth'} element={<Input disabled={true} />} />
-        <FormRow provider={provider} name={'lastDepth'} element={<Input disabled={true} />} />
+        <FormRow provider={provider} name={'firstDept'} element={<Input disabled={true} />} />
+        <FormRow provider={provider} name={'lastDept'} element={<Input disabled={true} />} />
       </ContentsRow>
       <ContentsRow>
         <FormRow provider={provider} name={'userPosition'} />
@@ -392,9 +398,23 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       <ContentsRow>
         <FormRow provider={provider} name={'hrInfoManageType'} />
       </ContentsRow>
-      <ContentsRow>
-        <FormRow provider={provider} name={'companyMemberJoinType'} />
-      </ContentsRow>
+      <FormDisplay
+        provider={provider}
+        dependencies={[{ name: 'hrInfoManageType', value: 'MANUAL_MANAGE' }]}
+      >
+        <ContentsRow>
+          <FormRow provider={provider} name={'companyMemberJoinTypeList'} />
+        </ContentsRow>
+      </FormDisplay>
+      <FormDisplay
+        provider={provider}
+        dependencies={[{ name: 'hrInfoManageType', value: 'AUTO_MANAGE' }]}
+      >
+        <ContentsRow>
+          <FormRow provider={provider} name={'linkageSystem'} />
+        </ContentsRow>
+      </FormDisplay>
+
       <ContentsRow>
         <FormRow provider={provider} name={'accountState'} />
         <FormRow
@@ -523,13 +543,14 @@ const formConfig: DynamicFormConfig = {
       value: '',
     },
     {
-      name: 'firstDepth',
+      name: 'firstDept',
       type: 'text',
       label: t('본부'),
       value: '',
     },
+    { name: 'deptId', type: 'hidden', label: '', value: '' },
     {
-      name: 'lastDepth',
+      name: 'lastDept',
       type: 'text',
       label: t('소속'),
       value: '',
@@ -598,7 +619,7 @@ const formConfig: DynamicFormConfig = {
       type: 'text',
       label: t('재직 상태 변경일'),
       value: '',
-      placeholder: '',
+      placeholder: ' ',
     },
 
     {
@@ -641,7 +662,7 @@ const formConfig: DynamicFormConfig = {
       type: 'text',
       label: t('지역'),
       value: '',
-      placeholder: '',
+      placeholder: ' ',
     },
 
     {
@@ -690,7 +711,16 @@ const formConfig: DynamicFormConfig = {
         codeGroup: CODE_GROUP['pms.company.HrInfoManageType'],
       },
     },
-
+    {
+      name: 'companyMemberJoinTypeList',
+      type: 'checkbox-group',
+      label: t('회원 가입 유형'),
+      value: ['FO_JOIN_DEALER'],
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.company.CompanyMemberJoinType'],
+      },
+      guideText: t('수동 관리는 다수 선택할 수 있으며, 자동 관리는 하나만 선택할 수 있습니다.'),
+    },
     {
       name: 'companyMemberJoinType',
       type: 'checkbox-group',
@@ -720,24 +750,28 @@ const formConfig: DynamicFormConfig = {
       type: 'text',
       label: t('계정 상태 최종 변경일'),
       value: '',
+      placeholder: ' ',
     },
     {
       name: 'accountDormancyUpdateDate',
       type: 'text',
       label: t('휴면 상태 변경일'),
       value: '',
+      placeholder: ' ',
     },
     {
       name: 'approvalStat',
       type: 'text',
       label: t('승인상태'),
       value: '',
+      placeholder: ' ',
     },
     {
       name: 'approvalStateDate',
       type: 'text',
       label: t('승인상태 최종 변경일'),
       value: '',
+      placeholder: ' ',
     },
     {
       name: 'tenant',
@@ -824,7 +858,7 @@ const formConfig: DynamicFormConfig = {
   ],
   validator: {
     companyName: true,
-    lastDepth: true,
+    lastDept: true,
 
     name: true,
     employeeNumber: true,
