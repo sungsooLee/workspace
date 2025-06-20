@@ -97,19 +97,23 @@ const TenantUserListComponent: FC<any> = ({ rootPath }) => {
   }, [loginUser]);
 
   useEffect(() => {
-    if (!tenantIdWatch) return;
-    (async () => {
-      const companys = await queryClient.fetchQuery(
-        tenantQueryOptions.tenantCompanys([tenantIdWatch]),
-      );
-      console.log(companys);
-      const companyIdOptions = companys.map((item) => ({
-        label: item.name,
-        value: item.companyId,
-      }));
-      console.log(companyIdOptions);
-      setOptions('companyId', companyIdOptions);
-    })();
+    if (tenantIdWatch) {
+      (async () => {
+        const companys = await queryClient.fetchQuery(
+          tenantQueryOptions.tenantCompanys([tenantIdWatch]),
+        );
+        console.log(companys);
+        const companyIdOptions = companys.map((item) => ({
+          label: item.name,
+          value: item.companyId,
+        }));
+        console.log(companyIdOptions);
+        setOptions('companyId', companyIdOptions);
+      })();
+    } else {
+      setValue('companyId', '');
+      setOptions('companyId', []);
+    }
   }, [tenantIdWatch]);
   return (
     <>
