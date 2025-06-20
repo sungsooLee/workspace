@@ -505,7 +505,8 @@
         "zipNo": "우편번호",
         "address": "기본주소",
         "addressDetail": "상세주소",
-        "input": "입력"
+        "input": "입력",
+        "downloadDetailReason": "세부 사유 명확하게 입력"
       }
     },
     "button": {

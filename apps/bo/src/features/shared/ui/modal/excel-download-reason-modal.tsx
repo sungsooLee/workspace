@@ -68,7 +68,7 @@ function ExcelDownloadReasonModalCompoment({
         name: 'requestParameter',
         type: 'chip-list',
         label: t('LABEL.form.label.requestParameter', '검색 조건'),
-        disabled: true,
+        readOnly: true,
         value: [],
         chipListConfig: {
           hideCloseButton: true,
@@ -85,7 +85,7 @@ function ExcelDownloadReasonModalCompoment({
       {
         name: 'downloadReasonType',
         type: 'radio-group',
-        label: t('다운로드 사유'),
+        label: t('LABEL.form.label.downloadReasonType', '다운로드 사유'),
         optionsConfig: {
           codeGroup: CODE_GROUP['pms.excel.DownloadReasonTypeCode'],
         },
@@ -94,7 +94,7 @@ function ExcelDownloadReasonModalCompoment({
       {
         name: 'downloadDetailReasonType',
         type: 'dropdown',
-        label: t('상세 사유'),
+        label: t('LABEL.form.label.downloadDetailReasonType', '상세 사유'),
         optionsConfig: {
           codeGroup: CODE_GROUP['pms.excel.DownloadAffairsReasonTypeCode'],
         },
@@ -102,9 +102,11 @@ function ExcelDownloadReasonModalCompoment({
       },
       {
         name: 'downloadDetailReason',
-        type: 'text',
-        label: t('상세 사유'),
+        type: 'textarea',
+        label: t('LABEL.form.label.downloadDetailReason', '상세 사유'),
         value: '',
+        maxLength: 2000,
+        placeholder: t('LABEL.form.placeholder.downloadDetailReason', '세부 사유 명확하게 입력'),
       },
     ],
     validator: {
