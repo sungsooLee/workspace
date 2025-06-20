@@ -9,15 +9,11 @@ import {
   Input,
   InputModalSelectorFormField,
   ListModalSelectorFormField,
+  PhoneNumberFormField,
   useModal,
 } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import {
-  ChannelListModal,
-  LectureTypeSiteUrl,
-  ManagerListModal,
-  TeacherListModal,
-} from '@features/learning/course';
+import { ChannelListModal, ManagerListModal, TeacherListModal } from '@features/learning/course';
 import { ContentsButtons, MainContents, PageContainer } from '@widgets/layout';
 import { FormRow } from '@shared/ui';
 import { SubContents } from '@widgets/layout/ui/container/slot/sub-contents';
@@ -63,6 +59,15 @@ function RouteComponent() {
           />
         </ContentsButtons>
         <MainContents>
+          {/* 라디오 */}
+          <ContentsRow>
+            <FormRow provider={provider} name={'라디오'} />
+          </ContentsRow>
+          {/* 라디오 + custom node */}
+          <ContentsRow>
+            <FormRow provider={provider} name={'라디오커스텀'} />
+          </ContentsRow>
+          {/* 채널 */}
           <ContentsRow>
             <FormRow
               provider={provider}
@@ -79,10 +84,6 @@ function RouteComponent() {
           {/* Editor */}
           <ContentsRow>
             <FormRow provider={provider} name={'에디터'} element={<EditorFormField />} />
-          </ContentsRow>
-          {/* 강의유형 */}
-          <ContentsRow>
-            <FormRow provider={provider} name={'강의유형'} element={<LectureTypeSiteUrl />} />
           </ContentsRow>
           {/* 과정명 */}
           <ContentsRow>
@@ -143,10 +144,6 @@ function RouteComponent() {
               }
             />
           </ContentsRow>
-          {/* 난이도 */}
-          <ContentsRow>
-            <FormRow provider={provider} name={'난이도'} />
-          </ContentsRow>
           {/* 강의실설정 */}
           <ContentsRow>
             <FormRow provider={provider} name={'강의실설정'} />
@@ -202,6 +199,20 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider} name={'썸네일'} />
           </ContentsRow>
+          {/* 폰넘버 */}
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name={'폰넘버'}
+              element={
+                <PhoneNumberFormField
+                  phoneNumberConfig={{
+                    options: [{ value: 'KOR_82', label: '+82' }],
+                  }}
+                />
+              }
+            />
+          </ContentsRow>
         </MainContents>
         <SubContents>
           <Input />
@@ -216,6 +227,12 @@ function RouteComponent() {
  */
 const formConfig: DynamicFormConfig = {
   builders: [
+    {
+      name: '폰넘버',
+      type: 'custom',
+      label: '폰넘버 - PhoneNumberFormField',
+      value: '',
+    },
     {
       name: 'channelId',
       type: 'hidden',
@@ -233,14 +250,6 @@ const formConfig: DynamicFormConfig = {
       label: 'Editor - EditorFormField',
       value:
         '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"editor sample text.....","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}',
-    },
-    {
-      name: '강의유형',
-      type: 'custom',
-      label: t('강의유형 - 라디오버튼 + 체크박스2 + 인풋 + 라벨'),
-      value: {},
-      placeholder: '',
-      description: '',
     },
     {
       name: '과정명',
@@ -304,9 +313,9 @@ const formConfig: DynamicFormConfig = {
       description: '',
     },
     {
-      name: '난이도',
+      name: '라디오',
       type: 'radio-group',
-      label: t('난이도'),
+      label: t('라디오'),
       format: 'string',
       options: [
         {
@@ -321,9 +330,28 @@ const formConfig: DynamicFormConfig = {
           label: '중급',
           value: '2',
         },
+      ],
+      value: [],
+      placeholder: '',
+      description: '',
+    },
+    {
+      name: '라디오커스텀',
+      type: 'radio-group',
+      label: t('라디오커스텀'),
+      format: 'string',
+      options: [
         {
-          label: '고급',
-          value: '3',
+          label: '없음',
+          value: '',
+        },
+        {
+          label: '초급',
+          value: '1',
+        },
+        {
+          label: '중급',
+          value: '2',
         },
       ],
       value: [],

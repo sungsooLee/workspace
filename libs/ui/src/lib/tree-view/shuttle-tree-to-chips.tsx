@@ -17,7 +17,7 @@ type Props = Pick<TreeProps, 'onCustomNodeClick' | 'treeId' | 'searchKeyword'> &
   targetTitle?: string;
   title?: string;
   showConditionSettings?: boolean;
-  selectedItems: any[]; // 추후 수정 필요 현재 key, FullPath만 받아서 필요한 정보 못 갖고옴.
+  selectedItems?: any[]; // 추후 수정 필요 현재 key, FullPath만 받아서 필요한 정보 못 갖고옴.
   sourceData: any;
   initLevel?: number; // 처음 펼쳐지는 Depth
   displayKey?: string; // 칩에서 보여줄 키명(속성)
