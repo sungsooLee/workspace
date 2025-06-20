@@ -69,4 +69,7 @@ const FormDateRangePickerComponent: FC<FormDialogProps> = ({
   );
 };
 
+/**
+ * @deprecated
+ */
 export const FormDateRangePicker = FormDateRangePickerComponent;
