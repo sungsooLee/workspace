@@ -114,6 +114,8 @@ import { Badge } from '@learnway/ui';
         <div className="flex_box">
           <div className="desc">
             <Badge option={{ label: 'text', value: 'A' }} variant="text" status="new" />
+            <Badge option={{ label: '승인', value: 'B' }} variant="text" status="primary" />
+            <Badge option={{ label: '승인대기', value: 'C' }} variant="text" status="warning" />
           </div>
         </div>
       </div>
