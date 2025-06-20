@@ -53,7 +53,7 @@ import { CompanyOrganizationInfoList } from './company-organization-info-list';
 import { CompanyOrganizationUserList } from './company-organization-info-user';
 
 import { EnFormMode } from '@types';
-import { DuplicateState, DuplicateCheckInputFormField } from '@features/tenant';
+import { DuplicateState, DuplicateCheckInputFormField } from '@features/form';
 import { UserChoiceModal } from '@features/shared';
 export enum EnOrganizationShowType {
   check = 'check',

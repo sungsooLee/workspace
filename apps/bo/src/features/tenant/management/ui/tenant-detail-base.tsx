@@ -24,10 +24,7 @@ import {
 
 import { isEqual } from 'lodash';
 import { CompanyShuttleModal, CompanyChoiceModal, UserChoiceModal } from '@features/shared';
-import {
-  DuplicateCheckInputFormField,
-  DuplicateState,
-} from '@features/tenant/management/ui/duplicate-check-input-form-field';
+import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
 import { useFetchTenant, useUpdateTenant } from '@entities/tenant';
 import TenantService from '@entities/tenant/api/tenant';
 import { EnDeviceType, EnUseCategory } from '@types';

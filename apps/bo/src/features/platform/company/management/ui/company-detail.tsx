@@ -18,10 +18,7 @@ import { FormRow, FormSubTitle, ContentsHistoryInfoFormField } from '@shared/ui'
 import { FormDisplay } from '@features/form/ui/form-display';
 import { DynamicFormConfig, useDynamicForm, CODE_GROUP } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString, getStringToDate } from '@learnway/shared';
-import {
-  DuplicateCheckInputFormField,
-  DuplicateState,
-} from '@features/tenant/management/ui/duplicate-check-input-form-field';
+import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
 import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
 import { LoginRestrictTimeSettingModal } from '@features/shared/ui/modal/login-restrict-time-setting-modal';
 import { UserGroupTabsChoiceModal, UserGroupChoiceModal } from '@features/shared';

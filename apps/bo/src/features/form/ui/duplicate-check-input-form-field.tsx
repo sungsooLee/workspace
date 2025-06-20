@@ -31,12 +31,7 @@ interface DuplicateCheckInputFormFieldPros<T = any> extends BaseFormFieldProps {
     };
   };
 }
-/**
- * 위치를 '@features/form' 경로로 변경 합니다.
- * 수정 사항이 있는 경우 @feature/form/ui 하위 파일을 수정 하세요.
- *
- * @deprecated
- */
+
 export const DuplicateCheckInputFormField = forwardRef<
   HTMLDivElement,
   DuplicateCheckInputFormFieldPros<DuplicateField>

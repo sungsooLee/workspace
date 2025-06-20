@@ -33,10 +33,7 @@ import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.
 import { FormRow, SwitchFormField } from '@shared/ui';
 import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 import { IcoMinus } from '@learnway/icons';
-import {
-  DuplicateCheckInputFormField,
-  DuplicateState,
-} from '@features/tenant/management/ui/duplicate-check-input-form-field';
+import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
 import { useQueryClient } from '@tanstack/react-query';
 
 const FORM_MODE = {
@@ -192,7 +189,7 @@ export const CategoryManage = () => {
   // 메뉴 저장 핸들러
   const handleSave = (payload: any) => {
     if (isSubmitting) return;
-    
+
     setIsSubmitting(true);
     openConfirm({
       title: t('LABEL.confirm.save.title'),
@@ -220,7 +217,7 @@ export const CategoryManage = () => {
 
   const handleUpdate = (payload: any) => {
     if (isSubmitting) return;
-    
+
     setIsSubmitting(true);
     openConfirm({
       title: t('LABEL.confirm.modify.title'),
@@ -445,7 +442,12 @@ export const CategoryManage = () => {
               >
                 {t('LABEL.button.delete')}
               </Button>
-              <Button type="submit" variant="save" size="sm" disabled={formMode === FORM_MODE.NONE || isSubmitting}>
+              <Button
+                type="submit"
+                variant="save"
+                size="sm"
+                disabled={formMode === FORM_MODE.NONE || isSubmitting}
+              >
                 {t('LABEL.button.save')}
               </Button>
             </div>

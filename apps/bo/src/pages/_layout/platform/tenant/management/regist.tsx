@@ -20,10 +20,7 @@ import { CODE_GROUP, DynamicFormConfig, useCodeStore, useDynamicForm } from '@le
 import { FormSubTitle, FormRow, ThumbnailListFormField } from '@shared/ui';
 
 import { useCreateTenant } from '@entities/tenant/service/tenant.hook';
-import {
-  DuplicateCheckInputFormField,
-  DuplicateState,
-} from '@features/tenant/management/ui/duplicate-check-input-form-field';
+import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
 import { pageRouteConfig } from '@features/auth';
 import { CompanyShuttleModal, CompanyChoiceModal, UserChoiceModal } from '@features/shared';
 import TenantService from '@entities/tenant/api/tenant';

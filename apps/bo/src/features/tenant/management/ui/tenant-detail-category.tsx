@@ -23,10 +23,7 @@ import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.cs
 import { DuplicateCodeGuideText, findMenuPathById } from '@features/platform/category';
 
 import { TenantDetailCategoryMappingModal } from './tenant-detail-category-mapping-modal';
-import {
-  DuplicateCheckInputFormField,
-  DuplicateState,
-} from '@features/tenant/management/ui/duplicate-check-input-form-field';
+import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
 
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 
