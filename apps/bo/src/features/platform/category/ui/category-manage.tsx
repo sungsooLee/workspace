@@ -50,6 +50,7 @@ export const CategoryManage = () => {
 
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [formMode, setFormMode] = useState(FORM_MODE.NONE);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
     useDynamicForm(formConfig);
@@ -190,6 +191,9 @@ export const CategoryManage = () => {
 
   // 메뉴 저장 핸들러
   const handleSave = (payload: any) => {
+    if (isSubmitting) return;
+    
+    setIsSubmitting(true);
     openConfirm({
       title: t('LABEL.confirm.save.title'),
       content: <p>{t('LABEL.confirm.save.message')}</p>,
@@ -201,14 +205,23 @@ export const CategoryManage = () => {
               if (data) {
                 setLastCreatedMenuId(data.toString());
               }
+              setIsSubmitting(false);
+            },
+            onError: () => {
+              setIsSubmitting(false);
             },
           });
+        } else {
+          setIsSubmitting(false);
         }
       },
     });
   };
 
   const handleUpdate = (payload: any) => {
+    if (isSubmitting) return;
+    
+    setIsSubmitting(true);
     openConfirm({
       title: t('LABEL.confirm.modify.title'),
       content: <p>{t('LABEL.confirm.modify.message')}</p>,
@@ -220,8 +233,14 @@ export const CategoryManage = () => {
               if (data) {
                 setLastCreatedMenuId(data.toString());
               }
+              setIsSubmitting(false);
+            },
+            onError: () => {
+              setIsSubmitting(false);
             },
           });
+        } else {
+          setIsSubmitting(false);
         }
       },
     });
@@ -426,7 +445,7 @@ export const CategoryManage = () => {
               >
                 {t('LABEL.button.delete')}
               </Button>
-              <Button type="submit" variant="save" size="sm" disabled={formMode === FORM_MODE.NONE}>
+              <Button type="submit" variant="save" size="sm" disabled={formMode === FORM_MODE.NONE || isSubmitting}>
                 {t('LABEL.button.save')}
               </Button>
             </div>

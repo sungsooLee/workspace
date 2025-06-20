@@ -17,7 +17,10 @@ import { translationQueryOptions } from '@entities/translation/service/translati
 import { CODE_GROUP, SearchBoxConfig, useCurrentRoute, useSearchBox } from '@learnway/hooks';
 import { SearchBox } from '@shared/ui/search-box';
 import { CellContext } from '@tanstack/react-table';
-import { useTranslation } from '@entities/translation/service/translation.hook';
+import {
+  useDeployTranslation,
+  useTranslation,
+} from '@entities/translation/service/translation.hook';
 import { t } from 'i18next';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
@@ -40,6 +43,7 @@ function RouteComponent() {
   const { provider: sProvider, getValues, onFormChange, onFormValid } = useSearchBox(searchConfig);
 
   const { update } = useTranslation();
+  const { deploy } = useDeployTranslation({});
   const router = useRouter();
   const [currentTargetLocale, setCurrentTargetLocale] = useState<string>('');
 
@@ -73,7 +77,9 @@ function RouteComponent() {
    *  번역본 S3 배포
    */
   const handleDeployMultilingual = () => {
-    alert('준비중입니다.');
+    const locale = getValues('targetLocale').toLowerCase();
+    deploy({ locale: locale });
+    // alert('준비중입니다.');
   };
 
   /**
@@ -203,7 +209,7 @@ function RouteComponent() {
           <Button
             type="button"
             variant="primary"
-            disabled={isSaveDisable}
+            // disabled={isSaveDisable}
             size="sm"
             onClick={handleDeployMultilingual}
           >

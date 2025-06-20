@@ -40,6 +40,8 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
   const { confirm: openConfirm, showSaveComplete, showUpdateComplete } = useModal();
   const [currentConfig, setCurrentConfig] = useState(() => createFormConfig('LABEL'));
   const [resetKey, setResetKey] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   // const
   const { provider, onSubmit, onFormChange, getValues, fetchData, clearFormError, control } =
     useDynamicForm(currentConfig);
@@ -64,6 +66,10 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
       console.log('useCreateLabelMessage :: onSuccess', response);
       setResetKey((prev) => prev + 1);
       onSuccessSave?.(response);
+      setIsSubmitting(false);
+    },
+    onError: () => {
+      setIsSubmitting(false);
     },
   });
 
@@ -74,6 +80,10 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
       console.log('useUpdateLabelMessage :: onSuccess', response);
       setResetKey((prev) => prev + 1);
       onSuccessSave?.(response);
+      setIsSubmitting(false);
+    },
+    onError: () => {
+      setIsSubmitting(false);
     },
   });
 
@@ -132,6 +142,9 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
    * @param {any} data - 폼 데이터
    */
   const handleOnSubmit = async (data: any) => {
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
     console.log('data {} => ', data);
     const payload = {
       ...data,
@@ -185,7 +198,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
               size="sm"
               type={'submit'}
               label={t('LABEL.button.save')}
-              disabled={formDisabled}
+              disabled={formDisabled || isSubmitting}
             />
           </div>
         }

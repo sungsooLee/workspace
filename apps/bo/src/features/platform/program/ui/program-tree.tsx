@@ -50,6 +50,8 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
   const [treeData, setTreeData] = useState([]);
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [lastCreateApiId, setLastCreateApiId] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const { confirm: openConfirm, alert: openAlert } = useModal();
   const queryClient = useQueryClient();
 
@@ -217,19 +219,32 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
   };
 
   const handleOnSubmit = (node: any) => {
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+
     if (formMode === FORM_MODE.VIEW) {
       openConfirm({
         title: t('LABEL.confirm.modify.title'),
         content: t('LABEL.confirm.modify.message'),
         onClose: (value: boolean) => {
           if (value) {
-            updateProgram({ ...node }, {
-              onSuccess: (data: any) => {
-                if (data && data.apiId) {
-                  setLastCreateApiId(data.apiId.toString());
-                }
+            updateProgram(
+              { ...node },
+              {
+                onSuccess: (data: any) => {
+                  if (data && data.apiId) {
+                    setLastCreateApiId(data.apiId.toString());
+                  }
+                  setIsSubmitting(false);
+                },
+                onError: () => {
+                  setIsSubmitting(false);
+                },
               },
-            });
+            );
+          } else {
+            setIsSubmitting(false);
           }
         },
       });
@@ -239,13 +254,19 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
         content: t('LABEL.confirm.save.message'),
         onClose: (value: boolean) => {
           if (value) {
-            createProgram({ ...node, apiScope: menuScope, sortOrder: 1 }, {
-              onSuccess: (data: any) => {
-                if (data && data.apiId) {
-                  setLastCreateApiId(data.apiId.toString());
-                }
+            createProgram(
+              { ...node, apiScope: menuScope, sortOrder: 1 },
+              {
+                onSuccess: (data: any) => {
+                  if (data && data.apiId) {
+                    setLastCreateApiId(data.apiId.toString());
+                  }
+                  setIsSubmitting(false);
+                },
               },
-            });
+            );
+          } else {
+            setIsSubmitting(false);
           }
         },
       });
@@ -352,7 +373,12 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
               >
                 {t('LABEL.button.delete')}
               </Button>
-              <Button type="submit" variant="save" size="sm" disabled={FORM_MODE.NONE === formMode}>
+              <Button
+                type="submit"
+                variant="save"
+                size="sm"
+                disabled={FORM_MODE.NONE === formMode || isSubmitting}
+              >
                 {t('LABEL.button.save')}
               </Button>
             </div>
