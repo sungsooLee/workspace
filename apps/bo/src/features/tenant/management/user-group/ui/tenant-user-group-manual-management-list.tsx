@@ -21,7 +21,7 @@ const _global = {
  * @param param0
  * @returns
  */
-const TenantUserGroupHandmadeListComponent: FC<any> = ({ rootPath }) => {
+const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => {
   const router = useRouter();
   const routerState = useRouterState();
   _global.linkClick = (tenantId: number, tenantName: string) => {
@@ -72,7 +72,7 @@ const TenantUserGroupHandmadeListComponent: FC<any> = ({ rootPath }) => {
   );
 };
 
-export const TenantUserGroupHandmadeList = TenantUserGroupHandmadeListComponent;
+export const TenantUserGroupManualManagementList = TenantUserGroupManualManagementListComponent;
 
 const searchConfig: SearchBoxConfig = {
   builders: [

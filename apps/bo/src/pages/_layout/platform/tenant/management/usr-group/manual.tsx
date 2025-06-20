@@ -1,12 +1,13 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { t } from 'i18next';
 
 import { PageContainer, MainContents, ContentsButtons } from '@widgets/layout';
 
 import { Button } from '@learnway/ui';
 
-import { TenantUserGroupHandmadeList } from '@features/tenant/management/user-group/ui/tenant-user-group-handmade-list';
+import { TenantUserGroupManualManagementList } from '@features/tenant';
 
-export const Route = createFileRoute('/_layout/platform/tenant/management/usr-group/handmade')({
+export const Route = createFileRoute('/_layout/platform/tenant/management/usr-group/manual')({
   component: RouteComponent,
 });
 
@@ -22,12 +23,11 @@ function RouteComponent() {
           onClick={() =>
             router.navigate({ to: '/platform/tenant/management/usr-group/handmade-detail' })
           }
-        >
-          등록
-        </Button>
+          label={t('등록')}
+        />
       </ContentsButtons>
       <MainContents>
-        <TenantUserGroupHandmadeList rootPath="/platform" />
+        <TenantUserGroupManualManagementList rootPath="/platform" />
       </MainContents>
     </PageContainer>
   );
