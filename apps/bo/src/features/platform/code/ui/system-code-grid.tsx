@@ -161,29 +161,45 @@ const SystemCodeGridComponent = ({ data }: any) => {
           />
           <div className={layoutStyles.inner_contents}>
             <ContentsRow>
-              <FormRow provider={provider} name={'cdGroupId'} element={<Input disabled={true} />} />
+              <FormRow
+                provider={provider}
+                name={'cdGroupId'}
+                element={<Input disabled={true} hiddenPlaceholder />}
+              />
             </ContentsRow>
             <ContentsRow>
-              <FormRow provider={provider} name={'cdId'} element={<Input disabled={true} />} />
+              <FormRow
+                provider={provider}
+                name={'cdId'}
+                element={<Input disabled={true} hiddenPlaceholder />}
+              />
             </ContentsRow>
             <ContentsRow>
-              <FormRow provider={provider} name={'cdName'} element={<Input disabled={true} />} />
+              <FormRow
+                provider={provider}
+                name={'cdName'}
+                element={<Input disabled={true} hiddenPlaceholder />}
+              />
             </ContentsRow>
             <ContentsRow>
-              <FormRow provider={provider} name={'cdContent'} element={<Input disabled={true} />} />
+              <FormRow
+                provider={provider}
+                name={'cdContent'}
+                element={<Input disabled={true} hiddenPlaceholder />}
+              />
             </ContentsRow>
             <ContentsRow>
               <FormRow
                 provider={provider}
                 name={'multilingualKey'}
-                element={<Input disabled={true} />}
+                element={<Input disabled={true} hiddenPlaceholder />}
               />
             </ContentsRow>
             <ContentsRow>
               <FormRow
                 provider={provider}
                 name={'referenceVal1'}
-                element={<Textarea disabled={true} rows={5} />}
+                element={<Textarea disabled={true} rows={5} hiddenPlaceholder />}
               />
             </ContentsRow>
           </div>

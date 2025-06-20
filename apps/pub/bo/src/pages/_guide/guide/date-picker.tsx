@@ -36,8 +36,8 @@ import { DatePicker } from '@learnway/ui'; // 사용할 icon 함수명 호출
         <DatePicker displayType={'year'} size={'lg'} />
         <h3 className="guide_tit3">month</h3>
         <DatePicker displayType={'month'} size={'lg'} />
-        <h3 className="guide_tit3">from-to</h3>
-        <DatePicker displayType={'from-to'} numberOfMonths={2} size={'lg'} />
+        {/* <h3 className="guide_tit3">from-to</h3>
+        <DatePicker displayType={'from-to'} numberOfMonths={2} size={'lg'} /> */}
         <h3 className="guide_tit3">time</h3>
         <DatePicker displayType={'time'} size={'lg'} />
         <h3 className="guide_tit3">time-hm</h3>

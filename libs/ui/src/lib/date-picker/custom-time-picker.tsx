@@ -320,6 +320,7 @@ export const PopoverTimeInput = ({
             secondStep={secondStep}
             showSeconds={showSeconds}
             inputStage={currentInputStage}
+            locale={locale}
           />
         </div>
       )}
@@ -336,17 +337,13 @@ const StandaloneTimeInput = ({
   inputStage,
   locale,
 }: any) => {
+  console.log(locale);
   const currentDate = date instanceof Date && !isNaN(date.getTime()) ? date : new Date();
 
   const [selectionStep, setSelectionStep] = useState<'hour' | 'minute' | 'second'>('hour');
   const [selectedHour, setSelectedHour] = useState(currentDate.getHours());
   const [selectedMinute, setSelectedMinute] = useState(currentDate.getMinutes());
   const [selectedSecond, setSelectedSecond] = useState(currentDate.getSeconds());
-
-  // 스크롤 위치 로직 변경 주석
-  // const hourScrollRef = useRef<HTMLDivElement>(null);
-  // const minuteScrollRef = useRef<HTMLDivElement>(null);
-  // const secondScrollRef = useRef<HTMLDivElement>(null);
 
   const formatNumber = (num: number) => String(num).padStart(2, '0');
 
@@ -399,33 +396,6 @@ const StandaloneTimeInput = ({
       scrollToHour(date.getHours());
       scrollToMinute(date.getMinutes());
       scrollToSecond(date.getSeconds());
-
-      // 스크롤 위치 로직 변경 주석
-      // 스크롤 위치도 업데이트
-      // if (hourScrollRef.current) {
-      //   const hourElement = hourScrollRef.current.querySelector(`[data-hour="${date.getHours()}"]`);
-      //   if (hourElement) {
-      //     hourElement.scrollIntoView({ block: 'center', behavior: 'smooth' });
-      //   }
-      // }
-
-      // if (minuteScrollRef.current) {
-      //   const minuteElement = minuteScrollRef.current.querySelector(
-      //     `[data-minute="${date.getMinutes()}"]`,
-      //   );
-      //   if (minuteElement) {
-      //     minuteElement.scrollIntoView({ block: 'center', behavior: 'smooth' });
-      //   }
-      // }
-
-      // if (showSeconds && secondScrollRef.current) {
-      //   const secondElement = secondScrollRef.current.querySelector(
-      //     `[data-second="${date.getSeconds()}"]`,
-      //   );
-      //   if (secondElement) {
-      //     secondElement.scrollIntoView({ block: 'center', behavior: 'smooth' });
-      //   }
-      // }
     }
   }, [date, showSeconds]);
 
@@ -434,19 +404,6 @@ const StandaloneTimeInput = ({
     setSelectedHour(h);
     setSelectionStep('minute');
     scrollToHour(h);
-
-    // 스크롤 위치 로직 변경 주석
-    // 분 영역으로 자동 스크롤
-    // setTimeout(() => {
-    //   if (minuteScrollRef.current) {
-    //     const selectedElement = minuteScrollRef.current.querySelector(
-    //       `[data-minute="${selectedMinute}"]`,
-    //     );
-    //     if (selectedElement) {
-    //       selectedElement.scrollIntoView({ block: 'center', behavior: 'smooth' });
-    //     }
-    //   }
-    // }, 100);
   };
 
   const handleMinuteClick = (m: number) => {
@@ -455,18 +412,6 @@ const StandaloneTimeInput = ({
 
     if (showSeconds) {
       setSelectionStep('second');
-
-      // 스크롤 위치 로직 변경 주석
-      // setTimeout(() => {
-      //   if (secondScrollRef.current) {
-      //     const selectedElement = secondScrollRef.current.querySelector(
-      //       `[data-second="${selectedSecond}"]`,
-      //     );
-      //     if (selectedElement) {
-      //       selectedElement.scrollIntoView({ block: 'center', behavior: 'smooth' });
-      //     }
-      //   }
-      // }, 100);
     } else {
       completeSelection(selectedHour, m, 0);
     }
@@ -490,23 +435,12 @@ const StandaloneTimeInput = ({
       onChange(newDate);
     }
   };
-
-  // 스크롤 위치 로직 변경 주석
-  // useEffect(() => {
-  //   if (hourScrollRef.current) {
-  //     const hourElement = hourScrollRef.current.querySelector(`[data-hour="${selectedHour}"]`);
-  //     if (hourElement) {
-  //       hourElement.scrollIntoView({ block: 'center', behavior: 'auto' });
-  //     }
-  //   }
-  // }, []);
-
   return (
     <div className="vertical_time_selector">
       {/* 시간 선택 영역 */}
       <div className="time_select">
         <div className="hours_area">
-          <div className="time_text">{t('시')}</div>
+          <div className="time_text">{locale === ko ? t('시') : t('Hour')}</div>
           <div className="column_options">
             {hourOptions.map((h, i) => (
               <div
@@ -527,7 +461,7 @@ const StandaloneTimeInput = ({
         </div>
 
         <div className="minutes_area">
-          <div className="time_text">{t('분')}</div>
+          <div className="time_text">{locale === ko ? t('분') : t('Minute')}</div>
           <div className="column_options">
             {minuteOptions.map((m, i) => (
               <div
@@ -550,7 +484,7 @@ const StandaloneTimeInput = ({
 
         {showSeconds && (
           <div className="seconds_area">
-            <div className="time_text">{t('초')}</div>
+            <div className="time_text">{locale === ko ? t('초') : t('Second')}</div>
             <div className="column_options">
               {secondOptions.map((s, i) => (
                 <div

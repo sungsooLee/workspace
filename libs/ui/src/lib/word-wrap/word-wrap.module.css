@@ -8,7 +8,7 @@
         @apply inline-block max-w-full truncate;
       }
       .text {
-        @apply inline-block;
+        @apply inline-block w-full truncate;
       }
     }
   }

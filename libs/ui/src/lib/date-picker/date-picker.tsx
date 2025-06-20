@@ -1,9 +1,8 @@
-import { forwardRef, useEffect, useState, ForwardRefRenderFunction, useRef } from 'react';
+import { forwardRef, useEffect, useState, ForwardRefRenderFunction } from 'react';
 import Primitive from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import './date-picker.css'; // date-picker style
+import './date-picker.css';
 import { IcoCalendar01 } from '@learnway/icons';
-
 import {
   cn,
   DATE_TIME_FORMAT,
@@ -13,16 +12,13 @@ import {
 } from '@learnway/shared';
 import { BaseFieldProps } from '../type';
 import { useCreation } from 'ahooks';
-
 import { convertDateFormatToFns } from './date-picker.service';
 import { PopoverTimeInput } from './custom-time-picker';
 import { ReactNode } from '@tanstack/react-router';
 import { CustomDatePickerHeader } from './custom-date-picker-header';
 import { ko, enUS } from 'date-fns/locale';
-import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { Locale } from 'react-datepicker/dist/date_utils';
-import { templateSettings } from 'lodash';
 
 export const convertDateFormatToFnsWithSlash = (format: string): string => {
   return format.replace(/-/g, '/');
@@ -38,7 +34,6 @@ export type DatePickerType =
   | 'day'
   | 'year'
   | 'month'
-  | 'from-to'
   | 'time-step'
   | 'time'
   | 'time-hm'
@@ -46,33 +41,24 @@ export type DatePickerType =
   | 'day-time-hm'
   | 'day-time-hms'; // 팝오버 스타일의 시간 선택기 컴포넌트
 
-export interface DatePickerComponentProps
-  extends BaseFieldProps<Date | [Date | null, Date | null]> {
+export interface DatePickerComponentProps extends BaseFieldProps<Date> {
   displayType?: DatePickerType;
   dateTimeFormat?: DATE_TIME_FORMAT;
   minDate?: Date;
   maxDate?: Date;
   selected?: Date;
   disabledDates?: Date[];
-  startDate?: Date;
-  endDate?: Date;
   timeFormat?: '12' | '24';
   numberOfMonths?: number;
   minuteStep?: number;
   secondStep?: number;
-  selectsStart?: boolean;
-  selectsEnd?: boolean;
   showTimePicker?: boolean;
   showTimeSelectOnly?: boolean;
   className?: string;
   readOnly?: boolean;
   disabled?: boolean;
   size?: 'md' | 'lg';
-  onChange?: (date: Date | [Date | null, Date | null] | undefined) => void;
-  onChangeStart?: (date: Date | undefined) => void;
-  onChangeEnd?: (date: Date | undefined) => void;
-  placeholderStart?: string;
-  placeholderEnd?: string;
+  onChange?: (date: Date | undefined) => void;
   renderDayContents?: ReactNode;
   locale?: string;
 }
@@ -98,8 +84,6 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
     readOnly,
     disabled,
     size,
-    onChangeStart,
-    onChangeEnd,
     locale,
   },
   ref,
@@ -138,23 +122,12 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
   }, [i18n, locale]);
 
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(() => {
-    if (Array.isArray(value)) {
-      return undefined;
-    }
     // time 타입일 때는 value가 없으면 undefined 유지
     if ((displayType === 'time' || displayType === 'time-hm') && !value) {
       return undefined;
     }
     return value as Date | undefined;
   });
-  const [startDate, setStartDate] = useState<Date | null>();
-  const [endDate, setEndDate] = useState<Date | null>();
-
-  //키보드 입력 추적 - rangePicker
-  const [isKeyboardInput, setIsKeyboardInput] = useState(false);
-
-  const startPickerRef = useRef<any>(null);
-  const endPickerRef = useRef<any>(null);
 
   // DateFormat을 가지고옴.
   const dateFormat = useCreation(() => {
@@ -299,10 +272,8 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
     }
   };
   useEffect(() => {
-    if (!Array.isArray(value)) {
-      console.log(value);
-      setSelectedDate(value as Date | undefined);
-    }
+    console.log(value);
+    setSelectedDate(value as Date | undefined);
   }, [value]);
 
   const getPlaceholderByType = (type: any, locale: any) => {
@@ -322,6 +293,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
           minuteStep={minuteStep}
           secondStep={secondStep}
           showSeconds={showSeconds}
+          locale={currentLocale}
           placeholder={
             showSeconds
               ? getPlaceholderByType('time', currentLocale)
@@ -348,6 +320,9 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
           icon={<IcoCalendar01 width={16} height={16} stroke="#4  C515E" fill="none" />}
           isClearable={true}
           dateFormat={currentLocale === ko ? 'aa h:mm' : 'h:mm aa'}
+          timeFormat={currentLocale === ko ? 'aa h:mm' : 'h:mm aa'}
+          // dateFormat={currentLocale === ko ? 'aa h시' : 'h:mm aa'}
+          // timeFormat={currentLocale === ko ? 'aa h시' : 'h:mm aa'}
           wrapperClassName={'datepicker_wrap'}
           className={cn('datepicker_input', className)}
           onChange={handleTimeStepChange}
@@ -357,161 +332,6 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
           timeIntervals={minuteStep}
           timeCaption=""
         />
-      </div>
-    );
-  }
-
-  // 2. Date range picker
-  if (displayType === 'from-to') {
-    // 시작일 변경 핸들러
-    const handleStartDateChange = (date: Date | null) => {
-      if (!date) {
-        setStartDate(null);
-        setEndDate(null); // 시작일 삭제시 종료일도 초기화
-        onChange?.([null, null]);
-        return;
-      }
-
-      // 종료일이 없거나, 시작일이 종료일보다 이후인 경우
-      if (!endDate || date > endDate) {
-        setStartDate(date);
-        setEndDate(null); // 종료일 초기화
-        onChange?.([date, null]);
-
-        // 키보드 입력이 아닌 경우에만 자동으로 종료일 선택 모드로 전환
-        if (!isKeyboardInput) {
-          setTimeout(() => {
-            endPickerRef.current?.setOpen(true);
-          }, 100);
-        }
-      } else {
-        // 시작일이 종료일 이전인 경우 종료일 유지
-        setStartDate(date);
-        onChange?.([date, endDate]);
-      }
-
-      onChangeStart?.(date || undefined);
-      setIsKeyboardInput(false); // 리셋
-    };
-
-    // 종료일 변경 핸들러
-    const handleEndDateChange = (date: Date | null) => {
-      if (!date) {
-        setEndDate(null);
-        onChange?.([startDate ?? null, null]);
-        return;
-      }
-
-      // 시작일이 없거나, 종료일이 시작일보다 이전인 경우
-      if (!startDate || date < startDate) {
-        // 종료일을 시작일로 지정
-        setStartDate(date);
-        setEndDate(null);
-        onChange?.([date, null]);
-
-        // 키보드 입력이 아닌 경우에만 자동으로 종료일 선택 모드로 유지
-        if (!isKeyboardInput) {
-          setTimeout(() => {
-            endPickerRef.current?.setOpen(true);
-          }, 100);
-        }
-      } else {
-        // 정상적인 종료일 선택
-        setEndDate(date);
-        onChange?.([startDate, date]);
-      }
-
-      onChangeEnd?.(date || undefined);
-      setIsKeyboardInput(false); // 리셋
-    };
-
-    // 키보드 입력 감지 핸들러
-    const handleKeyDown = (e: React.KeyboardEvent) => {
-      // 숫자, 백스페이스, 삭제, 탭, 엔터 등 입력 관련 키
-      const inputKeys = [
-        '0',
-        '1',
-        '2',
-        '3',
-        '4',
-        '5',
-        '6',
-        '7',
-        '8',
-        '9',
-        '-',
-        '/',
-        'Backspace',
-        'Delete',
-      ];
-      if (inputKeys.includes(e.key) || e.key.length === 1) {
-        setIsKeyboardInput(true);
-      }
-    };
-
-    return (
-      <div className={cn('nlp--datepicker-time', 'nlp--datepicker-from-to', size)} ref={ref}>
-        <div className="flex flex-row">
-          <Primitive
-            ref={startPickerRef}
-            showIcon
-            selectsStart
-            selected={startDate}
-            startDate={startDate}
-            endDate={endDate}
-            dateFormat={dateFormat}
-            shouldCloseOnSelect={true}
-            readOnly={readOnly}
-            disabled={disabled}
-            minDate={minDate}
-            maxDate={maxDate}
-            placeholderText={getPlaceholderByType('day', currentLocale)}
-            icon={<IcoCalendar01 width={16} height={16} stroke="#4C515E" fill="none" />}
-            isClearable={true}
-            wrapperClassName={'datepicker_wrap'}
-            className={cn('datepicker_input', className)}
-            onChange={handleStartDateChange}
-            onKeyDown={handleKeyDown}
-            excludeDates={disabledDates}
-            renderDayContents={(day) => {
-              return <span className="date_text">{day}</span>;
-            }}
-            renderCustomHeader={(headerProps: any) => (
-              <CustomDatePickerHeader {...headerProps} locale={currentLocale} />
-            )}
-            locale={currentLocale}
-          />
-          <span className="hyphen"></span>
-          <Primitive
-            ref={endPickerRef}
-            showIcon
-            selectsEnd
-            selected={endDate}
-            startDate={startDate}
-            endDate={endDate}
-            dateFormat={dateFormat}
-            shouldCloseOnSelect={true}
-            readOnly={readOnly}
-            disabled={disabled}
-            minDate={startDate || minDate} // 시작일이 있으면 시작일부터 선택 가능
-            maxDate={maxDate}
-            placeholderText={getPlaceholderByType('day', currentLocale)}
-            icon={<IcoCalendar01 width={16} height={16} stroke="#4C515E" fill="none" />}
-            isClearable={true}
-            wrapperClassName={'datepicker_wrap'}
-            className={cn('datepicker_input', className)}
-            onChange={handleEndDateChange}
-            onKeyDown={handleKeyDown}
-            excludeDates={disabledDates}
-            renderDayContents={(day) => {
-              return <span className="date_text">{day}</span>;
-            }}
-            renderCustomHeader={(headerProps: any) => (
-              <CustomDatePickerHeader {...headerProps} locale={currentLocale} />
-            )}
-            locale={currentLocale}
-          />
-        </div>
       </div>
     );
   }
