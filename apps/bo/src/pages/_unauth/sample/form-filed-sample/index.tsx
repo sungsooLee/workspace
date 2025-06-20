@@ -10,6 +10,8 @@ import {
   InputModalSelectorFormField,
   ListModalSelectorFormField,
   PhoneNumberFormField,
+  RadioGroup,
+  RadioGroupFormField,
   useModal,
 } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
@@ -38,11 +40,21 @@ function RouteComponent() {
     <form onSubmit={onSubmit(handleOnSubmit)}>
       <PageContainer>
         <ContentsButtons>
-          <Button type="submit" variant="point" size="sm" label={'과정복사'} />
-          <Button type={'button'} variant="point" size="sm" label={'임시저장'} />
-          <Button type={'button'} variant="point" size="sm" label={'작성완료'} />
-          <Button type={'button'} variant="point" size="sm" label={'미리보기'} />
-          <Button type={'button'} variant="primary" size="sm" label={'게시하기'} />
+          <Button
+            type={'button'}
+            variant="primary"
+            size="sm"
+            label={'set value'}
+            onClick={() => {
+              const { onFormChange } = provider;
+              const newValues = {
+                라디오커스텀: '2',
+                라디오커스텀_모달_아이디: 'channel_id1',
+                라디오커스텀_모달_이름: 'channel_name1',
+              };
+              onFormChange(newValues);
+            }}
+          />
           <Button
             type={'submit'}
             variant="point"
@@ -65,7 +77,48 @@ function RouteComponent() {
           </ContentsRow>
           {/* 라디오 + custom node */}
           <ContentsRow>
-            <FormRow provider={provider} name={'라디오커스텀'} />
+            <FormRow
+              provider={provider}
+              name={'라디오커스텀'}
+              element={
+                <RadioGroupFormField
+                  options={[
+                    {
+                      label: '일반',
+                      value: '1',
+                      node: (
+                        <FormRow
+                          provider={provider}
+                          name={'라디오커스텀_인풋'}
+                          element={<Input />}
+                        />
+                      ),
+                    },
+                    {
+                      label: '고급',
+                      value: '2',
+                      node: (
+                        <FormRow
+                          provider={provider}
+                          name={'라디오커스텀_모달_이름'}
+                          element={
+                            <InputModalSelectorFormField
+                              modalConfig={{
+                                content: <ChannelListModal />,
+                              }}
+                              transformModalData={(data: any) => ({
+                                라디오커스텀_모달_아이디: data.channelId,
+                                라디오커스텀_모달_이름: data.channelName,
+                              })}
+                            />
+                          }
+                        />
+                      ),
+                    },
+                  ]}
+                />
+              }
+            />
           </ContentsRow>
           {/* 채널 */}
           <ContentsRow>
@@ -316,7 +369,6 @@ const formConfig: DynamicFormConfig = {
       name: '라디오',
       type: 'radio-group',
       label: t('라디오'),
-      format: 'string',
       options: [
         {
           label: '없음',
@@ -337,26 +389,26 @@ const formConfig: DynamicFormConfig = {
     },
     {
       name: '라디오커스텀',
-      type: 'radio-group',
+      type: 'custom',
       label: t('라디오커스텀'),
-      format: 'string',
-      options: [
-        {
-          label: '없음',
-          value: '',
-        },
-        {
-          label: '초급',
-          value: '1',
-        },
-        {
-          label: '중급',
-          value: '2',
-        },
-      ],
       value: [],
       placeholder: '',
       description: '',
+    },
+    {
+      name: '라디오커스텀_인풋',
+      type: 'custom',
+      value: '',
+    },
+    {
+      name: '라디오커스텀_모달_아이디',
+      type: 'hidden',
+      value: '',
+    },
+    {
+      name: '라디오커스텀_모달_이름',
+      type: 'custom',
+      value: '',
     },
     {
       name: '강의실설정',

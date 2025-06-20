@@ -2,7 +2,7 @@ import { t } from 'i18next';
 import { GridBox, useGridBox } from '@learnway/ui';
 import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
 import { SearchBox } from '@shared/ui/search-box';
-import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
+import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { usersQueryOptions } from '@entities/users/service/users.queries';
 
@@ -36,19 +36,25 @@ const searchConfig: SearchBoxConfig = {
   builders: [
     [
       {
-        name: 'compayId',
-        type: 'text',
+        required: true,
+        name: 'companyId',
+        type: 'dropdown',
         label: t('회사'),
-        value: '',
+        value: undefined,
+        optionsConfig: {
+          codeGroup: CODE_GROUP['manual.company.companyId'],
+        },
+        format: 'number',
+        dropdownConfig: {
+          onchange: () => {
+            return '';
+          },
+          isSearchable: true,
+          placeholder: '입력 또는 선택',
+        },
       },
       {
-        name: 'opt1',
-        type: 'text',
-        label: t('실'),
-        value: '',
-      },
-      {
-        name: 'num',
+        name: 'deptId',
         type: 'text',
         label: t('소속'),
         value: '',
@@ -56,7 +62,7 @@ const searchConfig: SearchBoxConfig = {
     ],
     [
       {
-        name: 'userNo',
+        name: 'employeeNumber',
         type: 'text',
         label: t('사번'),
         value: '',
@@ -69,6 +75,7 @@ const searchConfig: SearchBoxConfig = {
       },
     ],
   ],
+  validator: { companyId: { required: true } },
 };
 
 const gridConfig = {
@@ -90,13 +97,6 @@ const columns = [
     header: '회사',
     enableGrouping: false,
     size: 210,
-  }),
-  columnHelper.accessor('noDat1', {
-    id: 'noDat1',
-    cell: (info) => info.getValue(),
-    header: '실',
-    size: 240,
-    enableGrouping: false,
   }),
   columnHelper.accessor('dept', {
     id: 'dept',

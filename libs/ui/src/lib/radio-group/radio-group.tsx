@@ -7,13 +7,14 @@ import { RadioGroupOption } from './type';
 import styles from './radio-group.module.css';
 
 export interface RadioGroupComponentProps extends React.ComponentProps<typeof Primitive.Root> {
+  value?: string;
   options: RadioGroupOption[];
   orientation?: 'vertical' | 'horizontal';
   defaultValue?: string;
   size?: 'xs' | 'sm' | 'md' | 'lg'; // 12, 16, 18, 24(basic)
-  onValueChange?: (value: string) => void;
   name?: string;
   cols?: number;
+  onValueChange?: (value: string) => void;
 }
 
 const RadioGroupComponent = forwardRef<
@@ -22,6 +23,7 @@ const RadioGroupComponent = forwardRef<
 >(
   (
     {
+      value,
       className,
       options,
       disabled,
@@ -36,10 +38,10 @@ const RadioGroupComponent = forwardRef<
     return (
       <Primitive.Root
         className={cn(
-          styles.start,
           'nlp--radio',
+          styles.start,
           size && styles[size],
-          orientation !== 'horizontal' ? styles.vertical : '',
+          orientation === 'vertical' && styles.vertical,
           className,
         )}
         defaultValue={defaultValue}
@@ -53,9 +55,9 @@ const RadioGroupComponent = forwardRef<
             <div className={styles.radio} key={option.value}>
               <Primitive.Item
                 key={uniqueId}
-                className={styles.item}
-                value={option.value}
                 id={uniqueId}
+                value={option.value}
+                className={styles.item}
                 disabled={disabled}
               >
                 <Primitive.Indicator className={styles.indicator} />
@@ -63,6 +65,10 @@ const RadioGroupComponent = forwardRef<
               <label className={styles.label} htmlFor={uniqueId}>
                 {option.label}
               </label>
+              {/* 커스텀 노드 */}
+              {option.value === value && option.node && (
+                <span className={styles.node}>{option.node}</span>
+              )}
             </div>
           );
         })}

@@ -63,11 +63,13 @@ const AccordionMenuComponent = ({
         return {
           value: `menu_${index}`,
           title: (
-            <span className={active ? styles.active : ''} onClick={() => handleNavigate(menu)}>
-              {import.meta.env.VITE_LANGUAGE_DEV === 'true'
-                ? t(`${menu.menuName}`)
-                : t(`HRD_CENTER_MENU.${menu.menuCode}`)}
-            </span>
+            <div className="w-full" onClick={() => handleNavigate(menu)}>
+              <span className={active ? styles.active : ''}>
+                {import.meta.env.VITE_LANGUAGE_DEV === 'true'
+                  ? t(`${menu.menuName}`)
+                  : t(`HRD_CENTER_MENU.${menu.menuCode}`)}
+              </span>
+            </div>
           ),
           children: children && (
             <AccordionMenu menus={(menu?.children as Menu[]) || []} depth={depth + 1} />

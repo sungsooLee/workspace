@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { t } from 'i18next';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import {
   Button,
   ModalBody,
@@ -96,10 +96,22 @@ const searchConfig: SearchBoxConfig = {
   builders: [
     [
       {
+        required: true,
         name: 'companyId',
-        type: 'text',
+        type: 'dropdown',
         label: t('회사'),
-        value: '',
+        value: undefined,
+        optionsConfig: {
+          codeGroup: CODE_GROUP['manual.company.companyId'],
+        },
+        format: 'number',
+        dropdownConfig: {
+          onchange: () => {
+            return '';
+          },
+          isSearchable: true,
+          placeholder: '입력 또는 선택',
+        },
       },
       {
         name: 'deptId',
@@ -121,6 +133,7 @@ const searchConfig: SearchBoxConfig = {
       },
     ],
   ],
+  validator: { companyId: { required: true } },
 };
 
 const columnHelper = createColumnHelper<any>();
@@ -131,11 +144,9 @@ const columns = [
     cell: (info) => info.row.original.company.name,
   }),
   columnHelper.accessor('dept', {
-    id: 'dept',
-    cell: (info) => info.row.original.dept.deptName,
     header: t('소속'),
     size: 132,
-    enableGrouping: false,
+    cell: (info) => info.row.original.dept.deptName,
   }),
   columnHelper.accessor('employeeNumber', {
     header: t('사번'),

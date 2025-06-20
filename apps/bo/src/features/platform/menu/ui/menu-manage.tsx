@@ -678,6 +678,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
                   <Textarea
                     disabled={formMode === FORM_MODE.NONE}
                     hiddenPlaceholder={formMode === FORM_MODE.NONE}
+                    inputType={'koreanPlus'}
                   />
                 }
               />
