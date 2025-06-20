@@ -16,6 +16,9 @@ export interface DateRangeFieldProps extends Omit<DatePickerComponentProps, 'val
   disabled?: boolean;
 }
 
+/**
+ * @deprecated
+ */
 const DateRangePickerComponent = forwardRef<HTMLDivElement, DateRangeFieldProps>(
   (
     {
@@ -65,9 +68,6 @@ const DateRangePickerComponent = forwardRef<HTMLDivElement, DateRangeFieldProps>
         value={endDate}
         readOnly={readOnly}
         disabled={disabled}
-        selectsEnd
-        startDate={startDate}
-        endDate={endDate}
         minDate={startDate}
         numberOfMonths={2}
         onChange={(date: any) => handleEndChange(date)}
@@ -76,4 +76,7 @@ const DateRangePickerComponent = forwardRef<HTMLDivElement, DateRangeFieldProps>
   },
 );
 
+/**
+ * @deprecated
+ */
 export const DateRangePicker = DateRangePickerComponent;
