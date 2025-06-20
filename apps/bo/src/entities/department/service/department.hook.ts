@@ -63,3 +63,28 @@ export function useUpdateDepartment(options: any) {
     data: mutation.data,
   };
 }
+
+export function useDeleteDepartment(options: any) {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    ...mutateOptions.delete(),
+    onSuccess: async (data: any, variables, context) => {
+      // 공통 메세지 처리 등...
+      queryClient.invalidateQueries({ queryKey: queryKeys.list });
+      if (options.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...options,
+  });
+
+  return {
+    delete: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}

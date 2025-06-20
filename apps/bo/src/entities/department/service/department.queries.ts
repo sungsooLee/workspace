@@ -55,4 +55,7 @@ export const mutateOptions = {
   update: () => ({
     mutationFn: (payload: any) => DepartmentService.updateDepartment(payload),
   }),
+  delete: () => ({
+    mutationFn: (payload: any) => DepartmentService.deleteDepartment(payload),
+  }),
 };

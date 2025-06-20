@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle, useState, useRef } from 'react';
 import { useRouter } from '@tanstack/react-router';
 import { useWatch } from 'react-hook-form';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
@@ -46,6 +46,7 @@ import {
   useCreateDepartment,
   useUpdateDepartment,
   DepartmentService,
+  useDeleteDepartment,
 } from '@entities/department';
 
 import { CompanyOrganizationInfoList } from './company-organization-info-list';
@@ -90,22 +91,33 @@ const TenantCompanyOrganizationTreeComponent = ({
   const { data: departmentTreeData, refetch } = useGetCompanyDepartmentTree([companyCode]);
   const { data: hmgDepartmentTreeData } = useGetCompanyHmgDepartmentTree([companyCode]);
   const { data: departmentData } = useGetCompanyDepartmentDetail(viewNode?.key);
-  const { create } = useCreateDepartment({
+
+  const { create: createDepartment } = useCreateDepartment({
     onSuccess: () => {
       openAlert({
         title: t('저장되었습니다.'),
         onClose: () => {
-          //
+          refetch();
         },
       });
     },
   });
-  const { update } = useUpdateDepartment({
+  const { update: updateDepartment } = useUpdateDepartment({
     onSuccess: () => {
       openAlert({
         title: t('저장되었습니다.'),
         onClose: () => {
-          //
+          refetch();
+        },
+      });
+    },
+  });
+  const { delete: deleteDepartment } = useDeleteDepartment({
+    onSuccess: () => {
+      openAlert({
+        title: t('삭제되었습니다.'),
+        onClose: () => {
+          // TODO
         },
       });
     },
@@ -137,11 +149,13 @@ const TenantCompanyOrganizationTreeComponent = ({
     const initdata = getInitByBuilders();
     initdata.deptLoc = findOrganizationPathById(deptTreeData, node.key);
     initdata.parentName = node.title;
-    initdata.parentDeptCode = node.key;
+    initdata.parentDeptCode = node.deptCode;
     initdata.deptName = {
       fieldValue: '',
       checkState: DuplicateState.needInput,
     };
+    initdata.parentDeptId = node.deptId ? node.deptId.toString() : '';
+    console.log('### initdata', initdata);
     fetchData(initdata);
     setSelectedNode(node);
     setViewNode(null);
@@ -149,7 +163,8 @@ const TenantCompanyOrganizationTreeComponent = ({
   };
 
   const duplicateDeptNameCheck = async (deptName: string) => {
-    const payload = { deptName: deptName };
+    const payload: any = { deptName: deptName };
+    if (formMode === EnFormMode.VIEW) payload.deptId = getValues().deptId;
     const result: boolean = await DepartmentService.existDepartmentName(payload);
 
     if (result) return DuplicateState.duplicated;
@@ -213,7 +228,31 @@ const TenantCompanyOrganizationTreeComponent = ({
 
   useEffect(() => {
     if (departmentData) {
-      fetchData(departmentData);
+      console.log('### departmentData', departmentData);
+      const parentDept = departmentData.parentDeptList.find(
+        (item: any) => item.deptId === departmentData.parentDeptId,
+      );
+      console.log('### parentDept', parentDept);
+      const data = {
+        ...departmentData,
+        deptLoc: findOrganizationPathById(deptTreeData, departmentData.deptId.toString()),
+        managerEmployeeNumber: [
+          {
+            employeeNumber: departmentData.managerEmployeeNumber,
+            uuid: departmentData.managerEmployeeNumberUuid,
+            name: departmentData.managerName,
+          },
+        ],
+        deptName: {
+          fieldValue: departmentData.deptName,
+          checkState: DuplicateState.okStart,
+        },
+        parentName: parentDept?.deptName,
+        parentDeptCode: parentDept?.deptCode,
+      };
+      console.log('### fetchData', data);
+      //TODO. 부서 상세에 부서 설명 누락
+      fetchData(data);
     }
   }, [departmentData]);
 
@@ -244,8 +283,9 @@ const TenantCompanyOrganizationTreeComponent = ({
 
   const handleOnSubmit = async (data: any) => {
     console.log('### handleOnSubmit', data);
-    const payload = {
+    const payload: any = {
       companyCode: companyCode,
+      parentDeptId: data.parentDeptId,
       sortOrder: 1,
       managerEmployeeNumberUuid: data.managerEmployeeNumber[0]?.uuid,
       deptName: data.deptName.fieldValue,
@@ -253,8 +293,24 @@ const TenantCompanyOrganizationTreeComponent = ({
     };
     if (formMode === EnFormMode.ADD) {
       if (await openConfirm('저장 하시겠습니까?')) {
-        create(payload);
+        createDepartment(payload);
       }
+    } else if (formMode === EnFormMode.VIEW) {
+      if (await openConfirm('저장 하시겠습니까?')) {
+        payload.deptId = data.deptId;
+        updateDepartment(payload);
+      }
+    }
+  };
+
+  const handleDeleteDeparment = async () => {
+    const deptId = getValues().deptId;
+    if (deptId && formMode === EnFormMode.VIEW) {
+      const payload = {
+        companyCode: companyCode,
+        deptIdList: [deptId],
+      };
+      deleteDepartment(payload);
     }
   };
 
@@ -361,6 +417,7 @@ const TenantCompanyOrganizationTreeComponent = ({
                       variant={'text'}
                       size={'sm'}
                       disabled={formMode === EnFormMode.ADD}
+                      onClick={() => handleDeleteDeparment()}
                     />
                     <Button type="submit" label={t('저장')} variant={'save'} size={'sm'} />
                   </>
