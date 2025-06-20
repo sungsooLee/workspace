@@ -9,25 +9,26 @@ interface WordWrapComponentProps {
 }
 
 function WordWrapComponent({ text, className }: WordWrapComponentProps) {
-  const textRef = useRef<HTMLDivElement>(null);
-  const [isEllipsed, setIsEllipsed] = useState<boolean | null>(null);
+  const textRef = useRef<HTMLParagraphElement>(null);
+  const [isEllipsed, setIsEllipsed] = useState<boolean>(false);
 
   useLayoutEffect(() => {
     const el = textRef.current;
     if (el) {
-      setIsEllipsed(el.scrollWidth > el.clientWidth);
+      const checkEllipsis = el.scrollWidth > el.clientWidth;
+      setIsEllipsed(checkEllipsis);
     }
-  }, [text]);
+  });
 
   return (
     <div className={cn(styles.start, styles.word_wrap, className)}>
-      <div ref={textRef} className={styles.word_area}>
+      <div className={styles.word_area}>
         {isEllipsed ? (
           <Tooltip side="bottom" align="start" content={text}>
-            {text}
+            <p ref={textRef} className={styles.text}>{text}</p>
           </Tooltip>
         ) : (
-          <p className={styles.text}>{text}</p>
+          <p ref={textRef} className={styles.text}>{text}</p>
         )}
       </div>
     </div>

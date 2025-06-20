@@ -26,6 +26,7 @@ export * from './lib/date-picker/date-picker.service';
 export * from './lib/date-picker/date-picker';
 export * from './lib/date-picker/date-range-picker';
 export * from './lib/date-picker/form-date-range-picker';
+export * from './lib/date-picker/range-date-picker';
 export * from './lib/date-picker/time-picker';
 export * from './lib/date-picker/time-range-picker';
 export * from './lib/dnd-file-progress/dnd-file-progress';

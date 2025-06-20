@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button, DatePicker, DatePickerType, Switch, Tooltip } from '@learnway/ui';
+import { Button, DatePicker, DatePickerType, RangeDatePicker, Switch, Tooltip } from '@learnway/ui';
 import { DATE_TIME_FORMAT, getDefaultLang, setDefaultLang } from '@learnway/shared';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/locale';
@@ -69,7 +69,7 @@ export default {
         'day',
         'year',
         'month',
-        'from-to',
+        'time-step',
         'time',
         'time-hm',
         'day-time',
@@ -134,6 +134,7 @@ const ComparisonTemplate: React.FC<ComparisonTemplateProps> = ({ datePickerTypes
     values: Record<string, any>,
     onChange: (type: DatePickerType, value: any) => void,
     minuteStep?: number,
+    isRangePicker?: boolean,
   ) => (
     <div
       key={`${type}-${locale}`}
@@ -148,14 +149,23 @@ const ComparisonTemplate: React.FC<ComparisonTemplateProps> = ({ datePickerTypes
       <div>{label}</div>
 
       <div style={{ marginBottom: '12px' }}>
-        <DatePicker
-          displayType={type}
-          value={values[type]}
-          onChange={(value) => onChange(type, value)}
-          minuteStep={minuteStep ?? 1}
-          locale={locale}
-          disabledDates={[addDays(new Date(), 5)]}
-        />
+        {isRangePicker ? (
+          <RangeDatePicker
+            value={values[type]}
+            onChange={(value) => onChange(type, value)}
+            locale={locale}
+            disabledDates={[addDays(new Date(), 5)]}
+          />
+        ) : (
+          <DatePicker
+            displayType={type}
+            value={values[type]}
+            onChange={(value) => onChange(type, value)}
+            minuteStep={minuteStep ?? 1}
+            locale={locale}
+            disabledDates={[addDays(new Date(), 5)]}
+          />
+        )}
       </div>
 
       <div
@@ -289,14 +299,124 @@ export const Compare_TimePicker: Story = {
     ),
   ],
   render: () => (
-    <TimePickerTemplate
+    <ComparisonTemplate
       datePickerTypes={[
-        { type: 'time-step', label: 'Time-Step', minuteStep: 30 },
+        { type: 'time-step', label: 'Time-Step', minuteStep: 60 },
         { type: 'time', label: 'Time' },
         { type: 'time-hm', label: 'Time-HH:MM:SS' },
       ]}
     />
   ),
+};
+
+const RangePickerDemo: React.FC = () => {
+  // 한글
+  const [koValue, setKoValue] = useState<[Date | null, Date | null] | undefined>();
+  // 영어
+  const [enValue, setEnValue] = useState<[Date | null, Date | null] | undefined>();
+
+  return (
+    <div style={{ padding: '20px', maxWidth: '1400px' }}>
+      <div style={{ marginBottom: '40px' }}>
+        <h4
+          style={{
+            textAlign: 'center',
+            margin: '0 0 20px 0',
+            color: '#374151',
+            fontSize: '18px',
+            fontWeight: '600',
+          }}
+        >
+          Range Picker
+        </h4>
+
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: '24px',
+            alignItems: 'start',
+          }}
+        >
+          <div
+            style={{
+              padding: '20px',
+              border: '2px solid #3b82f6',
+              borderRadius: '12px',
+              backgroundColor: '#ffffff',
+            }}
+          >
+            <div>Range Picker (한국어)</div>
+            <div style={{ marginBottom: '12px' }}>
+              <RangeDatePicker
+                value={koValue}
+                onChange={(value) => {
+                  console.log('KO Range:', value);
+                  setKoValue(value);
+                }}
+                locale="ko"
+                disabledDates={[addDays(new Date(), 5)]}
+              />
+            </div>
+            <div
+              style={{
+                fontSize: '12px',
+                color: '#6b7280',
+                backgroundColor: '#f9fafb',
+                padding: '8px',
+                borderRadius: '6px',
+                fontFamily: 'monospace',
+                wordBreak: 'break-all',
+              }}
+            >
+              <strong>Value:</strong>{' '}
+              {koValue
+                ? `[${koValue.map((d) => (d ? d.toISOString().split('T')[0] : 'null')).join(', ')}]`
+                : 'null'}
+            </div>
+          </div>
+
+          <div
+            style={{
+              padding: '20px',
+              border: '2px solid #8b5cf6',
+              borderRadius: '12px',
+              backgroundColor: '#ffffff',
+            }}
+          >
+            <div>Range Picker (English)</div>
+            <div style={{ marginBottom: '12px' }}>
+              <RangeDatePicker
+                value={enValue}
+                onChange={(value) => {
+                  console.log('EN Range:', value);
+                  setEnValue(value);
+                }}
+                locale="en"
+                disabledDates={[addDays(new Date(), 5)]}
+              />
+            </div>
+            <div
+              style={{
+                fontSize: '12px',
+                color: '#6b7280',
+                backgroundColor: '#f9fafb',
+                padding: '8px',
+                borderRadius: '6px',
+                fontFamily: 'monospace',
+                wordBreak: 'break-all',
+              }}
+            >
+              <strong>Value:</strong>{' '}
+              {enValue
+                ? `[${enValue.map((d) => (d ? d.toISOString().split('T')[0] : 'null')).join(', ')}]`
+                : 'null'}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export const Compare_RangePicker: Story = {
@@ -308,9 +428,7 @@ export const Compare_RangePicker: Story = {
       </StorybookI18nProvider>
     ),
   ],
-  render: () => (
-    <ComparisonTemplate datePickerTypes={[{ type: 'from-to', label: 'Range Picker' }]} />
-  ),
+  render: () => <RangePickerDemo />,
 };
 
 export const Compare_DateTimePicker: Story = {

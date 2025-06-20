@@ -216,6 +216,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
                   onFormChange({ isDuplicateCheck: isValid, lastDuplicateText: checkValue });
                 }}
                 placeholder={t('LABEL.common.placeholder2', { type: t('LABEL.cdId') })}
+                hiddenPlaceholder={formDisabled}
               />
             }
           />
@@ -238,6 +239,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
                   placeholder={t('LABEL.common.placeholder1', {
                     type: t('LABEL.form.label.labelName'),
                   })}
+                  hiddenPlaceholder={formDisabled}
                 />
               ) : (
                 <Textarea
@@ -245,6 +247,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
                   placeholder={t('LABEL.common.placeholder1', {
                     type: t('LABEL.form.label.messageName'),
                   })}
+                  hiddenPlaceholder={formDisabled}
                 />
               )
             }
@@ -271,6 +274,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
                 placeholder={t('LABEL.common.placeholder1', {
                   type: t('LABEL.form.label.description'),
                 })}
+                hiddenPlaceholder={formDisabled}
               />
             }
           />
