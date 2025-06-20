@@ -14,10 +14,13 @@ import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 
 import { useFetchAuthUser } from '@learnway/auth/entities';
 
-import { tenantQueryOptions } from '@entities/tenant';
 import { Tenant } from '@types';
 
+import { tenantQueryOptions } from '@entities/tenant';
+import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
+
 const _global = {
+  tenantIdValidator: false,
   linkClick: (tenantId: number, tenantName: string) => {
     return;
   },
@@ -28,12 +31,14 @@ const _global = {
  * @param param0
  * @returns
  */
-const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
+const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
   const router = useRouter();
   const routerState = useRouterState();
 
   const { data: loginUser } = useFetchAuthUser();
   const queryClient = useQueryClient();
+
+  _global.tenantIdValidator = !roleInfo;
 
   _global.linkClick = (tenantId: number, tenantName: string) => {
     router.navigate({
@@ -87,12 +92,13 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
   }, [loginUser]);
 
   useEffect(() => {
+    setValue('companyCode', '');
     if (tenantIdWatch) {
       (async () => {
         const companys = await queryClient.fetchQuery(
-          tenantQueryOptions.tenantCompanys([tenantIdWatch]),
+          companysQueryOptions.tenantCompany(tenantIdWatch),
         );
-        console.log(companys);
+
         const companyIdOptions = companys.map((item) => ({
           label: item.name,
           value: item.companyCode,
@@ -101,7 +107,6 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
         setOptions('companyCode', companyIdOptions);
       })();
     } else {
-      setValue('companyCode', '');
       setOptions('companyCode', []);
     }
   }, [tenantIdWatch]);
@@ -178,6 +183,21 @@ const searchConfig: SearchBoxConfig = {
       },
     ],
   ],
+  validator: {
+    tenantId: {
+      required: false,
+      conditions: [
+        {
+          fn: (values: any) => {
+            if (!_global.tenantIdValidator) return false;
+            console.log(values);
+            return !values.tenantId;
+          },
+          message: t('{{type}}를 선택해주세요.', { type: t('테넌트') }),
+        },
+      ],
+    },
+  },
 };
 
 const gridConfig: useGridBoxConfig = {

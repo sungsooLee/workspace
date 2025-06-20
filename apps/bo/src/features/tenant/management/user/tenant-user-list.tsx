@@ -9,16 +9,19 @@ import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module
 
 import { Button, GridBox, useGridBox } from '@learnway/ui';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
+import { useSearchBox, SearchBoxConfig, CODE_GROUP, SelectOption } from '@learnway/hooks';
 
 import { useFetchAuthUser } from '@learnway/auth/entities';
 
 import { SearchBox } from '@shared/ui/search-box';
 
+import { EnGlobalConst } from '@types';
 import { tenantQueryOptions } from '@entities/tenant';
+import { usersQueryOptions } from '@entities/users/service/users.queries';
+import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
 
 const _global = {
-  linkClick: (tenantId: number, tenantName: string) => {
+  linkClick: (userUuid: string) => {
     return;
   },
 };
@@ -35,14 +38,11 @@ const TenantUserListComponent: FC<any> = ({ rootPath }) => {
   const { data: loginUser } = useFetchAuthUser();
   const queryClient = useQueryClient();
 
-  const [companyCodes, setCompanyCodes] = useState<string[]>([]);
-
-  _global.linkClick = (tenantId: number, tenantName: string) => {
+  _global.linkClick = (userUuid: string) => {
     router.navigate({
       to: `${rootPath}/tenant/management/user/detail`,
       state: {
-        tenantId: tenantId,
-        tenantName: tenantName,
+        userUuid: userUuid,
         listParam: getValues(),
       },
     });
@@ -85,33 +85,25 @@ const TenantUserListComponent: FC<any> = ({ rootPath }) => {
       value: tenant.tenantId,
       label: tenant.tenantName,
     }));
-    const tenantIds = tenantIdOptions.map((item) => item.value);
+
     setOptions('tenantId', tenantIdOptions);
     if (loginUser.activeTenant) setValue('tenantId', loginUser.activeTenant.tenantId ?? '');
-
-    (async () => {
-      const companys = await queryClient.fetchQuery(tenantQueryOptions.tenantCompanys(tenantIds));
-      const companyCodes = companys.map((item) => item.companyCode);
-      setCompanyCodes(companyCodes);
-    })();
   }, [loginUser]);
 
   useEffect(() => {
+    setValue('companyId', '');
     if (tenantIdWatch) {
       (async () => {
         const companys = await queryClient.fetchQuery(
-          tenantQueryOptions.tenantCompanys([tenantIdWatch]),
+          companysQueryOptions.tenantCompany(tenantIdWatch),
         );
-        console.log(companys);
         const companyIdOptions = companys.map((item) => ({
           label: item.name,
           value: item.companyId,
         }));
-        console.log(companyIdOptions);
         setOptions('companyId', companyIdOptions);
       })();
     } else {
-      setValue('companyId', '');
       setOptions('companyId', []);
     }
   }, [tenantIdWatch]);
@@ -136,7 +128,7 @@ const searchConfig: SearchBoxConfig = {
         name: 'tenantId',
         type: 'dropdown',
         label: t('테넌트'),
-        format: 'number',
+        format: 'object',
         value: '',
         presetOptionLabel: t('LABEL.form.label.select'),
         options: [],
@@ -145,13 +137,13 @@ const searchConfig: SearchBoxConfig = {
         name: 'companyId',
         type: 'dropdown',
         label: t('회사'),
-        format: 'number',
+        format: 'object',
         value: '',
         presetOptionLabel: t('LABEL.form.label.select'),
         options: [],
       },
       {
-        name: 'tenantManagerName',
+        name: 'employeeNumber',
         type: 'text',
         label: t('사번'),
         value: '',
@@ -185,7 +177,7 @@ const searchConfig: SearchBoxConfig = {
 };
 
 const gridConfig = {
-  query: '',
+  query: usersQueryOptions.list,
   columns: [],
   data: [],
 
@@ -203,18 +195,21 @@ const columns = [
     header: t('테넌트'),
     size: 120,
   }),
-  columnHelper.accessor('opt1', {
-    cell: (info) => info.getValue(),
+  columnHelper.accessor('company', {
+    cell: (info) =>
+      t(
+        `${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.CompanyType.${info.row.original.company.companyType}`,
+      ),
     header: t('그룹'),
     size: 120,
   }),
-  columnHelper.accessor('opt2', {
-    cell: (info) => info.getValue(),
+  columnHelper.accessor('company', {
+    cell: (info) => info.row.original.company.name,
     header: t('회사'),
     size: 120,
   }),
   columnHelper.accessor('opt3', {
-    cell: (info) => info.getValue(),
+    cell: (info) => info.row.original.dept?.deptName,
     header: t('소속'),
     size: 120,
   }),
@@ -227,13 +222,21 @@ const columns = [
     header: t('지위'),
     size: 120,
   }),
-  columnHelper.accessor('opt5', {
+  columnHelper.accessor('employeeNumber', {
     cell: (info) => info.getValue(),
     header: t('사번'),
     size: 120,
   }),
-  columnHelper.accessor('opt6', {
-    cell: (info) => info.getValue(),
+  columnHelper.accessor('name', {
+    cell: (info) => {
+      return (
+        <Button
+          label={`${info.getValue()}`}
+          className="link"
+          onClick={() => _global.linkClick(info.row.original.uuid)}
+        />
+      );
+    },
     header: t('이름'),
     size: 120,
   }),
@@ -247,10 +250,13 @@ const columns = [
     header: t('재직여부'),
     size: 88,
   }),
-  columnHelper.accessor('opt9', {
-    cell: (info) => info.getValue(),
+  columnHelper.accessor('userState', {
+    cell: (info) => t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.UserState.${info.getValue()}`),
     header: t('계정상태'),
     size: 88,
+    meta: {
+      cellAlign: 'center',
+    },
   }),
   columnHelper.accessor('opt10', {
     cell: (info) => info.getValue(),
@@ -258,16 +264,13 @@ const columns = [
     size: 88,
   }),
   columnHelper.accessor('opt11', {
-    cell: (info) => info.getValue(),
+    cell: (info) => <Button variant="gray" label={t('로그인')} />,
     header: t('로그인'),
     size: 88,
   }),
   columnHelper.accessor('createdDate', {
     cell: (info) => {
-      return getDateToString(
-        new Date(info.row.original.createdDate),
-        DATE_TIME_FORMAT.DATETIME_SEC,
-      );
+      return getDateToString(new Date(info.getValue() as string), DATE_TIME_FORMAT.DATETIME_SEC);
     },
     header: t('회원가입일'),
     size: 120,

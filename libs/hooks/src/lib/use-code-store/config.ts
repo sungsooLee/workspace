@@ -43,11 +43,22 @@ export const codeOptions: CodeApiConfig = {
   [CODE_GROUP['manual.company.companyCode']]: {
     api: async () => {
       const data: any = await httpService.get(`${PMSApiPrefix()}/companies`, { size: 1000 });
-      console.log('manual.', data);
       return [
         ...data.content.map((item: any) => ({
           label: item.name,
           value: item.companyCode,
+        })),
+      ];
+    },
+    disableCache: true,
+  },
+  [CODE_GROUP['manual.company.companyId']]: {
+    api: async () => {
+      const data: any = await httpService.get(`${PMSApiPrefix()}/companies`, { size: 1000 });
+      return [
+        ...data.content.map((item: any) => ({
+          label: item.name,
+          value: item.companyId,
         })),
       ];
     },

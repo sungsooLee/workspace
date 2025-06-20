@@ -50,6 +50,9 @@
     &.dark {
       @apply border-b-[1px] border-solid border-[var(--gray9)] pb-[8px];
     }
+    &.no_line {
+      @apply border-0;
+    }
     &.sm {
       @apply mb-[8px];
       .title_area {

@@ -9,11 +9,10 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { formUtils } from '@entities/form-utils';
 import { FormSubTitle } from '@shared/ui';
 
-import { CompanyUserDetailBase } from '@features/platform/company/user/ui/company-user-detail-base';
-import { CompanyUserDetailLearningHistory } from '@features/platform/company/user/ui/company-user-detail-learning-history';
-
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
+
+import { CompanyUserDetail } from '@features/platform/company';
 
 export const Route = createFileRoute('/_layout/platform/company/user/detail')({
   component: RouteComponent,
@@ -21,37 +20,6 @@ export const Route = createFileRoute('/_layout/platform/company/user/detail')({
 
 function RouteComponent() {
   const router = useRouter();
-
-  const [selectedTabKey, setSelectedTabKey] = useState<string>('userInfo');
-
-  const handleTabChange = (tabKey: string) => {
-    if (tabKey !== selectedTabKey) {
-      setSelectedTabKey(tabKey);
-    }
-  };
-
-  const tabItems = [
-    {
-      title: '유저 정보',
-      key: 'userInfo',
-      content: <CompanyUserDetailBase />,
-    },
-    {
-      title: '교육 이력',
-      key: 'learningHistory',
-      content: <CompanyUserDetailLearningHistory />,
-    },
-    {
-      title: '플랫폼 이용 이력',
-      key: 'platformHistory',
-      content: '플랫폼 이용 이력',
-    },
-    {
-      title: '로그인 이력',
-      key: 'loginHistory',
-      content: '로그인 이력',
-    },
-  ];
 
   return (
     <PageContainer>
@@ -73,45 +41,7 @@ function RouteComponent() {
         </Button>
       </ContentsButtons>
       <MainContents>
-        <FormSubTitle label={'유저정보'} />
-        <div className={cn(tableStyles.start, tableStyles.wrap, 'pb-10')}>
-          <table>
-            <caption>{'유저정보'}</caption>
-            <colgroup>
-              <col style={{ width: '240px' }} />
-              <col />
-              <col style={{ width: '240px' }} />
-              <col />
-              <col style={{ width: '240px' }} />
-              <col />
-            </colgroup>
-            <tbody>
-              <tr>
-                <th scope={'row'}>{'회원 유형'}</th>
-                <td>{'GIM'}</td>
-                <th scope={'row'}>{'이름'}</th>
-                <td>{'김현대'}</td>
-                <th scope={'row'}>{'사번'}</th>
-                <td>{'1234567'}</td>
-              </tr>
-              <tr>
-                <th scope={'row'}>{'회원가입일'}</th>
-                <td>{'2025-01-01 14:25:11'}</td>
-                <th scope={'row'}>{'최근 접속일'}</th>
-                <td>{'2025-01-01 14:25:11'}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <Tabs
-          items={tabItems}
-          type="line"
-          size={'sm'}
-          className={styles.tab_wrap}
-          selectedTabKey={selectedTabKey}
-          onTabChange={handleTabChange}
-        />
+        <CompanyUserDetail />
       </MainContents>
     </PageContainer>
   );

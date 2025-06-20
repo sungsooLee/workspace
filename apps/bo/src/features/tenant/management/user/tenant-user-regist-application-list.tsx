@@ -120,7 +120,7 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
       <div className={cn(boxStyles.start, boxStyles.inner)}>
         <div className="grid_wrap">
-          <GridBox config={gConfig} columns={columns} showNumberingColumn />
+          <GridBox config={gConfig} columns={columns} multiple />
         </div>
       </div>
     </>
@@ -151,6 +151,12 @@ const searchConfig: SearchBoxConfig = {
         options: [],
       },
       {
+        name: 'email',
+        type: 'text',
+        label: t('이메일'),
+        value: '',
+      },
+      {
         name: 'tenantManagerName',
         type: 'text',
         label: t('사번'),
@@ -161,19 +167,19 @@ const searchConfig: SearchBoxConfig = {
       {
         name: 'companyManagerName',
         type: 'text',
-        label: t('학습자 역할'),
+        label: t('재직여부'),
         value: '',
       },
       {
         name: 'opt2',
         type: 'text',
-        label: t('계정상태'),
+        label: t('승인상태'),
         value: '',
       },
       {
         name: 'dateRange',
         type: 'date-range',
-        label: t('회원가입 기간'),
+        label: t('신청기간'),
         format: 'object',
         value: { from: undefined, to: undefined },
       },
@@ -201,22 +207,27 @@ const columns = [
   columnHelper.accessor('tenantName', {
     cell: (info) => info.getValue(),
     header: t('테넌트'),
-    size: 120,
+    size: 114,
   }),
   columnHelper.accessor('opt1', {
     cell: (info) => info.getValue(),
     header: t('그룹'),
-    size: 120,
+    size: 114,
   }),
   columnHelper.accessor('opt2', {
     cell: (info) => info.getValue(),
     header: t('회사'),
-    size: 120,
+    size: 114,
+  }),
+  columnHelper.accessor('opt3-1', {
+    cell: (info) => info.getValue(),
+    header: t('실'),
+    size: 114,
   }),
   columnHelper.accessor('opt3', {
     cell: (info) => info.getValue(),
     header: t('소속'),
-    size: 120,
+    size: 114,
   }),
   columnHelper.accessor('opt4', {
     cell: (info) => (
@@ -224,52 +235,43 @@ const columns = [
         {info.row.original.tenantId}
       </Link>
     ),
-    header: t('지위'),
-    size: 120,
+    header: t('호칭(지위)'),
+    size: 114,
+  }),
+  columnHelper.accessor('opt8', {
+    cell: (info) => info.getValue(),
+    header: t('이메일'),
+    size: 114,
   }),
   columnHelper.accessor('opt5', {
     cell: (info) => info.getValue(),
     header: t('사번'),
-    size: 120,
+    size: 114,
   }),
   columnHelper.accessor('opt6', {
     cell: (info) => info.getValue(),
     header: t('이름'),
-    size: 120,
+    size: 114,
   }),
   columnHelper.accessor('opt7', {
     cell: (info) => info.getValue(),
-    header: t('학습자 역할'),
-    size: 120,
+    header: t('신청일'),
+    size: 114,
   }),
-  columnHelper.accessor('opt8', {
+
+  columnHelper.accessor('opt9', {
     cell: (info) => info.getValue(),
     header: t('재직여부'),
     size: 88,
   }),
-  columnHelper.accessor('opt9', {
-    cell: (info) => info.getValue(),
-    header: t('계정상태'),
-    size: 88,
-  }),
   columnHelper.accessor('opt10', {
     cell: (info) => info.getValue(),
-    header: t('잠김해제'),
+    header: t('승인상태'),
     size: 88,
   }),
   columnHelper.accessor('opt11', {
     cell: (info) => info.getValue(),
-    header: t('로그인'),
-    size: 88,
-  }),
-  columnHelper.accessor('createdDate', {
-    cell: (info) => {
-      return getDateToString(
-        new Date(info.row.original.createdDate),
-        DATE_TIME_FORMAT.DATETIME_SEC,
-      );
-    },
-    header: t('회원가입일'),
-    size: 120,
+    header: t('승인일'),
+    size: 114,
   }),
 ] as ColumnDef<any, unknown>[];

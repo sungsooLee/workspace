@@ -7,7 +7,7 @@ import UsersService from '../api/users';
 export const queryKeys = {
   all: ['users'] as const,
   list: ['list'] as const,
-  detail: (userId: number) => [...queryKeys.all, userId] as const,
+  detail: (userUuid: string) => [...queryKeys.all, userUuid] as const,
 };
 
 export const usersQueryOptions = {
@@ -22,11 +22,11 @@ export const usersQueryOptions = {
     queryKey: queryKeys.list,
     queryFn: () => UsersService.fetchListUsers(params),
   }),
-  detail: (userId?: number) =>
-    userId
+  detail: (userUuid?: string) =>
+    userUuid
       ? {
-          queryKey: queryKeys.detail(userId),
-          queryFn: () => UsersService.fetchUser(userId),
+          queryKey: queryKeys.detail(userUuid),
+          queryFn: () => UsersService.fetchUser(userUuid),
         }
       : getQuerySkipToken<any>(),
 };

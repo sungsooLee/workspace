@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
@@ -9,6 +10,8 @@ import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module
 import { Button, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+
+import { useFetchAuthUser } from '@learnway/auth/entities';
 
 import { SearchBox } from '@shared/ui/search-box';
 
@@ -28,9 +31,14 @@ export const Route = createFileRoute('/_layout/platform/tenant/management/compan
 function RouteComponent() {
   const router = useRouter();
 
+  const { data: loginUser } = useFetchAuthUser();
+
+  const [tenantId, setTenantId] = useState<number>();
+
   const searchParam = () => {
     const data = getValues();
     const searchData = {
+      tenantId: tenantId,
       companyType: data.companyType,
       name: data.name,
       isUsed: data.isUsed,
@@ -47,8 +55,26 @@ function RouteComponent() {
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, searchParam);
 
   const handleOnSearch = () => {
+    if (!tenantId) return;
     gridFetch(searchParam());
   };
+
+  useEffect(() => {
+    if (!loginUser) return;
+
+    if (loginUser.activeTenant) {
+      setTenantId(loginUser.activeTenant.tenantId);
+    } else {
+      if (loginUser.tenants && loginUser.tenants.length > 0) {
+        setTenantId(loginUser.tenants[0].tenantId);
+      }
+    }
+  }, [loginUser]);
+
+  useEffect(() => {
+    if (!tenantId) return;
+    gridFetch(searchParam());
+  }, [tenantId]);
 
   return (
     <PageContainer>
@@ -56,7 +82,12 @@ function RouteComponent() {
         <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
         <div className={cn(boxStyles.start, boxStyles.inner)}>
           <div className="grid_wrap">
-            <GridBox config={gConfig} columns={columns} showNumberingColumn title="회사 목록" />
+            <GridBox
+              config={gConfig}
+              columns={columns}
+              showNumberingColumn
+              title={t('회사 목록')}
+            />
           </div>
         </div>
       </MainContents>

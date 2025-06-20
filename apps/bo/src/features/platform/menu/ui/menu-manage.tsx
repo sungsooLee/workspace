@@ -81,6 +81,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
   const prevDataRef = useRef<any>(null);
   const router = useRouter();
   const { showSaveComplete, showDeleteComplete, showUpdateComplete } = useModal();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { data } = useMenuTree(menuScope, 'ko');
   const { data: detailData } = useMenuManageDetail(selectedNode?.menuId || '', {
@@ -363,6 +364,9 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
   };
 
   const update = (payload: any) => {
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
     openConfirm({
       title: t('LABEL.confirm.modify.title'),
       content: t('LABEL.confirm.modify.message'),
@@ -375,14 +379,23 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
                 setSelectedNode(null);
                 setLastCreatedMenuId(data.menuId.toString());
               }
+              setIsSubmitting(false);
+            },
+            onError: () => {
+              setIsSubmitting(false);
             },
           });
+        } else {
+          setIsSubmitting(false);
         }
       },
     });
   };
 
   const create = (payload: any) => {
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
     openConfirm({
       title: t('LABEL.confirm.save.title'),
       content: t('LABEL.confirm.save.message'),
@@ -394,8 +407,14 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
               if (data && data.menuId) {
                 setLastCreatedMenuId(data.menuId.toString());
               }
+              setIsSubmitting(false);
+            },
+            onError: () => {
+              setIsSubmitting(false);
             },
           });
+        } else {
+          setIsSubmitting(false);
         }
       },
     });
@@ -555,7 +574,12 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
               >
                 {t('LABEL.button.delete')}
               </Button>
-              <Button type="submit" variant="save" size="sm" disabled={formMode === FORM_MODE.NONE}>
+              <Button
+                type="submit"
+                variant="save"
+                size="sm"
+                disabled={formMode === FORM_MODE.NONE || isSubmitting}
+              >
                 {t('LABEL.button.save')}
               </Button>
             </div>
