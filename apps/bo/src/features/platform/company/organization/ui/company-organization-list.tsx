@@ -71,7 +71,7 @@ const CompanyOrganizationListComponent = ({ rootPath }: { rootPath: string }) =>
 
   const handleOnSearch = (data: any) => {
     if (!tenantId) return;
-    gridFetch(data);
+    gridFetch(searchParam());
   };
 
   useEffect(() => {

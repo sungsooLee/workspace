@@ -88,8 +88,12 @@ const TenantCompanyOrganizationTreeComponent = ({
   const { provider, fetchData, onSubmit, onFormChange, getValues, getInitByBuilders, control } =
     useDynamicForm(formConfig);
 
-  const { data: departmentTreeData, refetch } = useGetCompanyDepartmentTree([companyCode]);
-  const { data: hmgDepartmentTreeData } = useGetCompanyHmgDepartmentTree([companyCode]);
+  const { data: departmentTreeData, refetch } = useGetCompanyDepartmentTree(
+    showType === EnOrganizationShowType.platform ? [companyCode] : [],
+  );
+  const { data: hmgDepartmentTreeData } = useGetCompanyHmgDepartmentTree(
+    showType === EnOrganizationShowType.origin ? [companyCode] : [],
+  );
   const { data: departmentData } = useGetCompanyDepartmentDetail(viewNode?.key);
 
   const { create: createDepartment } = useCreateDepartment({
@@ -233,16 +237,19 @@ const TenantCompanyOrganizationTreeComponent = ({
         (item: any) => item.deptId === departmentData.parentDeptId,
       );
       console.log('### parentDept', parentDept);
+      const managerEmployeeNumber = [];
+      if (departmentData.managerEmployeeNumber && departmentData.managerEmployeeNumberUuid) {
+        managerEmployeeNumber.push({
+          employeeNumber: departmentData.managerEmployeeNumber,
+          uuid: departmentData.managerEmployeeNumberUuid,
+          name: departmentData.managerName,
+        });
+      }
+
       const data = {
         ...departmentData,
         deptLoc: findOrganizationPathById(deptTreeData, departmentData.deptId.toString()),
-        managerEmployeeNumber: [
-          {
-            employeeNumber: departmentData.managerEmployeeNumber,
-            uuid: departmentData.managerEmployeeNumberUuid,
-            name: departmentData.managerName,
-          },
-        ],
+        managerEmployeeNumber: managerEmployeeNumber,
         deptName: {
           fieldValue: departmentData.deptName,
           checkState: DuplicateState.okStart,
