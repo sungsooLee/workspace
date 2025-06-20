@@ -2,9 +2,10 @@ import { forwardRef } from 'react';
 import { BaseFormFieldProps } from '@learnway/hooks';
 import { useWatch } from 'react-hook-form';
 
-import { PhoneNumber, PhoneNumberValue } from './phone-number';
+import { PhoneNumber, PhoneNumberComponentProps, PhoneNumberValue } from './phone-number';
 
 interface PhoneNumberFormFieldProps extends BaseFormFieldProps<string> {
+  phoneNumberConfig?: PhoneNumberComponentProps;
   fields?: {
     nationCode: string;
     number: string;
@@ -22,6 +23,7 @@ const PhoneNumberFormFieldComponent = forwardRef<HTMLDivElement, PhoneNumberForm
       onFormChange,
       fields = { nationCode: 'nationCode', number: 'number' },
       disabled,
+      phoneNumberConfig,
     },
     _,
   ) => {
@@ -39,6 +41,7 @@ const PhoneNumberFormFieldComponent = forwardRef<HTMLDivElement, PhoneNumberForm
 
     return (
       <PhoneNumber
+        {...phoneNumberConfig}
         value={{
           nationCode,
           number: value,

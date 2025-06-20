@@ -11,7 +11,10 @@ import { IcoNarrowRight } from '@learnway/icons';
 import { Button, GridBoxProps, GridBox, GridImperative } from '../../';
 
 export interface ShuttleGridToGridProps
-  extends Pick<GridBoxProps, 'hideRowSelectionCheckBox' | 'showNumberingColumn'> {
+  extends Pick<
+    GridBoxProps,
+    'hideRowSelectionCheckBox' | 'showNumberingColumn' | 'visibleRowCount'
+  > {
   /**
    * 그리드 컬럼 정의 배열
    */
@@ -41,11 +44,6 @@ export interface ShuttleGridToGridProps
    * @param newGridData - 변경된 우측 그리드 데이터
    */
   onSelectedChange?: (newGridData: any) => void;
-
-  /**
-   * 그리드 스크롤 없이 보여줄 row 개수
-   */
-  visibleRowCount?: number;
 }
 
 /**

@@ -1,3 +1,6 @@
+import { DropdownFormField } from '@features/form';
+import { CategoryChoiceModal, ChannelListModal, TeacherListModal } from '@features/learning/course';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import {
   Button,
   CheckboxGroupFormField,
@@ -7,17 +10,14 @@ import {
   Input,
   InputModalSelectorFormField,
   ListModalSelectorFormField,
+  PhoneNumberFormField,
   TextareaFormField,
 } from '@learnway/ui';
-import React, { forwardRef, useEffect, useImperativeHandle } from 'react';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { useTranslation } from 'react-i18next';
 import { FormRow, FormSubTitle } from '@shared/ui';
-import { ChannelListModal, TeacherListModal } from '@features/learning/course';
-import { DropdownFormField } from '@features/form';
 import { t } from 'i18next';
+import { forwardRef, useEffect, useImperativeHandle } from 'react';
+import { useTranslation } from 'react-i18next';
 import { TabFormRef } from '../common/tab-form-ref';
-import { IcoPlus } from '@learnway/icons';
 
 interface BasicInfoProps {
   dummy?: any;
@@ -146,7 +146,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             element={
               <ListModalSelectorFormField
                 deletable
-                modalConfig={{ content: <TeacherListModal /> }}
+                modalConfig={{ content: <CategoryChoiceModal />, width: 'lg' }}
                 transformModalData={(data: any) => ({
                   value: data.id,
                   label: data.name,
@@ -169,7 +169,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
                   valueField: 'id',
                   wordwrap: true,
                 }}
-                actionNode={<Button variant="text" size="sm" label={t('추가')} />}
+                showAddButton
               />
             }
           />
@@ -193,15 +193,15 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         </ContentsRow>
         {/*과정명*/}
         <ContentsRow>
-          <FormRow
-            provider={provider}
-            name={'과정명'}
-            element={<Input disabled={getValues()?.['교육 목표'] === 'a'} />}
-          />
+          <FormRow provider={provider} name={'과정명'} element={<Input maxLength={40} />} />
         </ContentsRow>
         {/*과정 요약*/}
         <ContentsRow>
-          <FormRow provider={provider} name={'과정 요약'} element={<TextareaFormField />} />
+          <FormRow
+            provider={provider}
+            name={'과정 요약'}
+            element={<TextareaFormField maxLength={500} />}
+          />
         </ContentsRow>
         {/*교육 내용*/}
         <ContentsRow>
@@ -279,7 +279,18 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             }
           />
           {/*담당자-연락처*/}
-          <FormRow provider={provider} name={'담당자연락처'} element={<Input />} />
+          <FormRow
+            provider={provider}
+            name={'담당자연락처'}
+            element={
+              <PhoneNumberFormField
+                fields={{ nationCode: '담당자연락처코드', number: '담당자연락처' }}
+                phoneNumberConfig={{
+                  options: [{ value: 'KOR_82', label: '+82' }],
+                }}
+              />
+            }
+          />
           {/*담당자-이메일*/}
           <FormRow provider={provider} name={'담당자이메일'} element={<Input />} />
         </ContentsRow>
@@ -298,7 +309,18 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             }
           />
           {/*운영자-연락처*/}
-          <FormRow provider={provider} name={'운영자연락처'} element={<Input />} />
+          <FormRow
+            provider={provider}
+            name={'운영자연락처'}
+            element={
+              <PhoneNumberFormField
+                fields={{ nationCode: '운영자연락처코드', number: '운영자연락처' }}
+                phoneNumberConfig={{
+                  options: [{ value: 'KOR_82', label: '+82' }],
+                }}
+              />
+            }
+          />
           {/*운영자-이메일*/}
           <FormRow provider={provider} name={'운영자이메일'} element={<Input />} />
         </ContentsRow>
@@ -384,12 +406,11 @@ const formConfig: DynamicFormConfig = {
     // 과정명
     {
       name: '과정명',
-      type: 'custom',
+      type: 'text',
       label: '과정명',
       value: '',
       placeholder: '',
       description: '',
-      maxLength: 40,
     },
     //과정 요약
     {
@@ -399,7 +420,6 @@ const formConfig: DynamicFormConfig = {
       value: '',
       placeholder: '',
       description: '',
-      maxLength: 40,
     },
     // 교육 내용
     {
@@ -413,44 +433,14 @@ const formConfig: DynamicFormConfig = {
       name: '난이도',
       type: 'custom',
       label: t('난이도'),
-      format: 'string',
-      options: [
-        {
-          label: '없음',
-          value: '0',
-        },
-        {
-          label: '입문',
-          value: '1',
-        },
-        {
-          label: '초급',
-          value: '2',
-        },
-        {
-          label: '중급',
-          value: '3',
-        },
-        {
-          label: '고급',
-          value: '4',
-        },
-      ],
-      value: '',
-    },
-    // 교육 내용
-    {
-      name: '교육 내용',
-      type: 'custom',
-      label: t('교육 내용'),
-      value: '',
+      value: [],
     },
     // 교육공간
     {
       name: '교육공간',
       type: 'custom',
       label: '교육공간',
-      value: '',
+      value: [],
     },
     // 담당자
     {

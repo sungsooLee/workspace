@@ -196,8 +196,6 @@ const SortableItem = ({
     id: item[valueField],
   });
 
-  console.log('isDragging', { item, isDragging });
-
   const style = {
     transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
     transition,
