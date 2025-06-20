@@ -441,6 +441,7 @@ export const CategoryManage = () => {
                     onDuplicationCheck={duplicateCheck}
                     disabled={formMode === FORM_MODE.NONE}
                     hiddenPlaceholder={formMode === FORM_MODE.NONE}
+                    inputType={'alphanumeric'}
                   />
                 }
               />
@@ -525,7 +526,7 @@ const formConfig: DynamicFormConfig = {
       label: t('LABEL.form.input.categoryCodeName'),
       name: 'name',
       type: 'text',
-      maxLength: 10,
+      maxLength: 20,
       value: '',
     },
     {

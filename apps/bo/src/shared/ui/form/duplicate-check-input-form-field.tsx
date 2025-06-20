@@ -101,6 +101,7 @@ export const DuplicateCheckInputFormField = forwardRef<
           disabled={disabled}
           placeholder={placeholder}
           type={inputType}
+          inputType={inputType}
           {...props}
         />
         <Button
