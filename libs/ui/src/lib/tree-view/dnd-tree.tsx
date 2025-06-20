@@ -304,7 +304,7 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
       });
 
       // 하나라도 유효하면 유효한 드롭 대상으로 간주
-      if (!isValidInside && !isValidBefore && !isValidAfter) {
+      if (!isValidInside || !isValidBefore || !isValidAfter) {
         return false;
       }
     }

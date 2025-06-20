@@ -27,8 +27,13 @@ import { FormRow, SwitchFormField } from '../../../../shared/ui';
 import {
   useFetchProgram,
   useFetchPrograms,
-  useProgramHook,
+  useCreateProgram,
+  useUpdateProgram,
+  useDeleteProgram,
+  useDndProgram,
 } from '../../../../entities/program/service/program-manage.hook';
+import { useQueryClient } from '@tanstack/react-query';
+import { queryKeys } from '../../../../entities/program/service/program-manage.queries';
 import { transformApiDataToApiTreeData } from '../../menu/service/menu.service';
 import { IcoMinus } from '@learnway/icons';
 import { SectionLayout } from '../../../../widgets/layout/ui/container/section-layout/section-layout';
@@ -46,6 +51,7 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [lastCreateApiId, setLastCreateApiId] = useState<string | null>(null);
   const { confirm: openConfirm, alert: openAlert } = useModal();
+  const queryClient = useQueryClient();
 
   const prevDataRef = useRef(null);
 
@@ -63,8 +69,11 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
   const { data } = useFetchPrograms(menuScope);
   // 프로그램 단건 조회
   const { data: detailData } = useFetchProgram(selectedNode?.apiUuid || '');
-  // 프로그램 생성
-  const { create, delete: deleteProgram, update, dnd } = useProgramHook({ apiScope: menuScope });
+  // 프로그램 뮤테이션 훅들
+  const { mutate: createProgram } = useCreateProgram(menuScope);
+  const { mutate: updateProgram } = useUpdateProgram(menuScope);
+  const { mutate: deleteProgram } = useDeleteProgram(menuScope);
+  const { mutate: dndProgram } = useDndProgram(menuScope);
 
   useEffect(() => {
     if (data) {
@@ -159,7 +168,15 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
             sortOrder: 1,
             apiScopeCode: menuScope,
           };
-          dnd(payload);
+          dndProgram(payload, {
+            onSuccess: async (data: any) => {
+              if (selectedNode?.apiUuid) {
+                await queryClient.invalidateQueries({
+                  queryKey: [...queryKeys.all, selectedNode.apiUuid],
+                });
+              }
+            },
+          });
         } else {
           const targetIndex = nodeInfo.targetIndex!;
           const payload = {
@@ -168,7 +185,15 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
             sortOrder: targetIndex + 1,
             apiScopeCode: menuScope,
           };
-          dnd(payload);
+          dndProgram(payload, {
+            onSuccess: async (data: any) => {
+              if (selectedNode?.apiUuid) {
+                await queryClient.invalidateQueries({
+                  queryKey: [...queryKeys.all, selectedNode.apiUuid],
+                });
+              }
+            },
+          });
         }
         break;
       }
@@ -198,16 +223,13 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
         content: t('LABEL.confirm.modify.message'),
         onClose: (value: boolean) => {
           if (value) {
-            update(
-              { ...node },
-              {
-                onSuccess: (data: any) => {
-                  if (data && data.apiId) {
-                    setLastCreateApiId(data.apiId.toString());
-                  }
-                },
+            updateProgram({ ...node }, {
+              onSuccess: (data: any) => {
+                if (data && data.apiId) {
+                  setLastCreateApiId(data.apiId.toString());
+                }
               },
-            );
+            });
           }
         },
       });
@@ -217,16 +239,13 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
         content: t('LABEL.confirm.save.message'),
         onClose: (value: boolean) => {
           if (value) {
-            create(
-              { ...node, apiScope: menuScope, sortOrder: 1 },
-              {
-                onSuccess: (data: any) => {
-                  if (data && data.apiId) {
-                    setLastCreateApiId(data.apiId.toString());
-                  }
-                },
+            createProgram({ ...node, apiScope: menuScope, sortOrder: 1 }, {
+              onSuccess: (data: any) => {
+                if (data && data.apiId) {
+                  setLastCreateApiId(data.apiId.toString());
+                }
               },
-            );
+            });
           }
         },
       });
@@ -235,6 +254,8 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
 
   const customDropValidator = useCallback<CustomDropValidator>(
     ({ sourceNode, targetNode, dropPosition }) => {
+      // console.log(`targetNode:`, targetNode);
+      // console.log(`dropPosition:`, dropPosition);
       if (dropPosition === 'INSIDE' && targetNode.apiNodeType !== 'FOLDER') {
         return false;
       }
@@ -261,7 +282,6 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
         if (value && payload) {
           deleteProgram(selectedNode?.apiUuid, {
             onSuccess: async (data: any) => {
-              showDeleteComplete();
               setSelectedNode(null);
               clearAllFormErrors();
               const initData: { [key: string]: any } = {};
@@ -339,13 +359,17 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
           </div>
           <div className={layoutStyles.inner_contents}>
             <ContentsRow>
-              <FormRow provider={provider} name={'fullPath'} element={<Input disabled={true} />} />
+              <FormRow
+                provider={provider}
+                name={'fullPath'}
+                element={<Input disabled={true} hiddenPlaceholder={formMode === FORM_MODE.NONE} />}
+              />
             </ContentsRow>
             <ContentsRow>
               <FormRow
                 provider={provider}
                 name={'parentName'}
-                element={<Input disabled={true} />}
+                element={<Input disabled={true} hiddenPlaceholder={formMode === FORM_MODE.NONE} />}
               />
             </ContentsRow>
 
@@ -353,7 +377,13 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
               <FormRow
                 provider={provider}
                 name={'apiId'}
-                element={<Input disabled={true} className="text-left" />}
+                element={
+                  <Input
+                    disabled={true}
+                    className="text-left"
+                    hiddenPlaceholder={formMode === FORM_MODE.NONE}
+                  />
+                }
               />
             </ContentsRow>
 
@@ -373,7 +403,12 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
               <FormRow
                 provider={provider}
                 name={'apiName'}
-                element={<Input disabled={FORM_MODE.NONE === formMode} />}
+                element={
+                  <Input
+                    disabled={FORM_MODE.NONE === formMode}
+                    hiddenPlaceholder={formMode === FORM_MODE.NONE}
+                  />
+                }
               />
             </ContentsRow>
 
@@ -390,7 +425,13 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
                   <FormRow
                     provider={provider}
                     name={'apiUrl'}
-                    element={<Input disabled={FORM_MODE.NONE === formMode} />}
+                    element={
+                      <Input
+                        disabled={FORM_MODE.NONE === formMode}
+                        hiddenPlaceholder={formMode === FORM_MODE.NONE}
+                        inputType="url"
+                      />
+                    }
                   />
                 </ContentsRow>
               </>
@@ -407,7 +448,12 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
               <FormRow
                 provider={provider}
                 name={'apiDesc'}
-                element={<Textarea disabled={FORM_MODE.NONE === formMode} />}
+                element={
+                  <Textarea
+                    disabled={FORM_MODE.NONE === formMode}
+                    hiddenPlaceholder={formMode === FORM_MODE.NONE}
+                  />
+                }
               />
             </ContentsRow>
             {/* )} */}

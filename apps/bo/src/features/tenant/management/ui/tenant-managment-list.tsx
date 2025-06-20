@@ -1,6 +1,8 @@
 import { FC, useState, useEffect, useCallback } from 'react';
+import { useWatch } from 'react-hook-form';
 import { useRouter, useRouterState, Link } from '@tanstack/react-router';
 import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
+import { useQueryClient } from '@tanstack/react-query';
 import { t } from 'i18next';
 
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
@@ -10,7 +12,9 @@ import { Button, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 
-import { tenantQueryOptions } from '@entities/tenant/service/tenant.queries';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+
+import { tenantQueryOptions } from '@entities/tenant';
 import { Tenant } from '@types';
 
 const _global = {
@@ -27,6 +31,10 @@ const _global = {
 const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
   const router = useRouter();
   const routerState = useRouterState();
+
+  const { data: loginUser } = useFetchAuthUser();
+  const queryClient = useQueryClient();
+
   _global.linkClick = (tenantId: number, tenantName: string) => {
     router.navigate({
       to: `${rootPath}/tenant/management/detail`,
@@ -43,8 +51,12 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
     getValues,
     onFormChange,
     onFormValid,
+    setOptions,
+    setValue,
   } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
+
+  const tenantIdWatch = useWatch({ control: searchProvider.control, name: 'tenantId' });
 
   const handleOnSearch = (data: any) => {
     gridFetch(data);
@@ -61,6 +73,38 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath }) => {
     };
     init();
   }, []);
+
+  useEffect(() => {
+    if (!loginUser) return;
+
+    const tenantIdOptions = loginUser.tenants.map((tenant) => ({
+      value: tenant.tenantId,
+      label: tenant.tenantName,
+    }));
+    const tenantIds = tenantIdOptions.map((item) => item.value);
+    setOptions('tenantId', tenantIdOptions);
+    if (loginUser.activeTenant) setValue('tenantId', loginUser.activeTenant.tenantId ?? '');
+  }, [loginUser]);
+
+  useEffect(() => {
+    if (tenantIdWatch) {
+      (async () => {
+        const companys = await queryClient.fetchQuery(
+          tenantQueryOptions.tenantCompanys([tenantIdWatch]),
+        );
+        console.log(companys);
+        const companyIdOptions = companys.map((item) => ({
+          label: item.name,
+          value: item.companyCode,
+        }));
+        console.log(companyIdOptions);
+        setOptions('companyCode', companyIdOptions);
+      })();
+    } else {
+      setValue('companyCode', '');
+      setOptions('companyCode', []);
+    }
+  }, [tenantIdWatch]);
 
   return (
     <>
@@ -80,11 +124,15 @@ const searchConfig: SearchBoxConfig = {
   builders: [
     [
       {
-        name: 'tenantName',
-        type: 'text',
-        label: t('테넌트명'),
+        name: 'tenantId',
+        type: 'dropdown',
+        label: t('LABEL.form.label.tenant'),
         format: 'object',
         value: '',
+        options: [],
+        isClearable: true,
+        isSearchable: true,
+        placeholder: t('LABEL.grid.header.inputSelect'),
       },
       // {
       //   name: 'companyName',
@@ -94,24 +142,19 @@ const searchConfig: SearchBoxConfig = {
       //   optionsConfig: {
       //     codeGroup: CODE_GROUP['manual.company.companyCode'],
       //   },
-      //   dropdownConfig: {
-      //     onchange: () => {
-      //       return '';
-      //     },
-      //     isSearchable: true,
-      //     placeholder: '입력 선택',
-      //   },
-      // },
+
       {
-        name: 'companyName',
-        type: 'text',
-        label: t('회사명'),
+        name: 'companyCode',
+        type: 'dropdown',
+        label: t('LABEL.grid.column.company'),
+        presetOptionLabel: t('LABEL.form.label.select'),
         value: '',
+        options: [],
       },
       {
         name: 'tenantManagerName',
         type: 'text',
-        label: t('테넌트담당자'),
+        label: t('LABEL.grid.column.tenantManager'),
         value: '',
       },
     ],
@@ -119,18 +162,18 @@ const searchConfig: SearchBoxConfig = {
       {
         name: 'companyManagerName',
         type: 'text',
-        label: t('회사 담당자'),
+        label: t('LABEL.grid.column.companyManager'),
         value: '',
       },
       {
         name: 'isUsed',
         type: 'dropdown',
-        label: t('사용여부'),
+        label: t('LABEL.form.label.useYn'),
         value: '',
         options: [
-          { value: '', label: t('전체') },
-          { value: 'true', label: t('사용') },
-          { value: 'false', label: t('미사용') },
+          { value: '', label: t('LABEL.all') },
+          { value: 'true', label: t('LABEL.common.enable') },
+          { value: 'false', label: t('LABEL.common.disable') },
         ],
       },
     ],
@@ -164,7 +207,7 @@ const columns = [
         </Button>
       );
     },
-    header: t('테넌트명'),
+    header: t('LABEL.grid.column.tenantName'),
     size: 192,
   }),
   columnHelper.accessor('companyTenantList', {
@@ -174,7 +217,7 @@ const columns = [
         .getValue()
         .map((item) => item.companyName)
         .join(','),
-    header: t('회사'),
+    header: t('LABEL.grid.column.company'),
     size: 200,
   }),
   columnHelper.accessor('tenantUserList', {
@@ -184,12 +227,12 @@ const columns = [
         .getValue()
         .map((item) => item.userName)
         .join(','),
-    header: t('테넌트담당자'),
+    header: t('LABEL.grid.column.tenantManager'),
     size: 120,
   }),
   columnHelper.accessor('isUsed', {
     cell: (info) => {
-      return info.row.original.isUsed ? t('사용') : t('미사용');
+      return info.row.original.isUsed ? t('LABEL.common.enable') : t('미사용');
     },
     header: t('사용여부'),
     size: 104,

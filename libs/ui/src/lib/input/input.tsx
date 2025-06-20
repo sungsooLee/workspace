@@ -1,4 +1,4 @@
-import { forwardRef, useMemo, useState } from 'react';
+import { forwardRef, useMemo, useState, useRef } from 'react';
 import { NumericFormat, PatternFormat } from 'react-number-format';
 import { NumericFormatProps } from 'react-number-format/types/types';
 import { Button } from '../button/button';
@@ -10,7 +10,7 @@ import styles from './input.module.css';
 import { useTranslation } from 'react-i18next';
 
 export interface InputProps extends Omit<NumericFormatProps, 'type'> {
-  type?: 'text' | 'number' | 'mask' | 'password' | 'tel' | 'file' | 'alphanumeric';
+  type?: 'text' | 'number' | 'mask' | 'password' | 'tel' | 'file' | 'alphanumeric' | 'url';
   id?: string;
   placeholder?: string;
   prefixText?: string;
@@ -32,6 +32,9 @@ export interface InputProps extends Omit<NumericFormatProps, 'type'> {
   onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
   label?: string;
   hiddenPlaceholder?: boolean;
+  inputType?: string;
+  showAlphanumericToast?: boolean; // alphanumeric 타입에서 잘못된 문자 입력 시 토스트 메시지 표시 여부
+  showUrlToast?: boolean; // url 타입에서 잘못된 문자 입력 시 토스트 메시지 표시 여부
 }
 
 const InputComponent = forwardRef<HTMLInputElement, InputProps>(
@@ -63,6 +66,9 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       maxLength,
       onFocus,
       hiddenPlaceholder,
+      inputType,
+      showAlphanumericToast = true,
+      showUrlToast = true,
       ...props
     },
     ref,
@@ -78,9 +84,13 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
     }, [placeholder, props?.label, hiddenPlaceholder]);
 
     const [isFocused, setIsFocused] = useState(false);
+    const [showToast, setShowToast] = useState(false);
+    const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     // 영문/숫자만 허용하는 정규식
     const alphanumericRegex = /^[a-zA-Z0-9.]*$/;
+    // URL에 허용되는 문자 정규식 (영문, 숫자, URL 특수문자)
+    const urlRegex = /^[a-zA-Z0-9\-._~:/?#[\]@!$&'()*+,;=%]*$/;
     ///
     const handleAlphanumericChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const inputValue = event.target.value;
@@ -111,6 +121,15 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
 
       if (!allowedKeys.includes(event.key) && !alphanumericRegex.test(event.key)) {
         event.preventDefault();
+
+        // 토스트 메시지 표시
+        if (showAlphanumericToast) {
+          if (toastTimeoutRef.current) {
+            clearTimeout(toastTimeoutRef.current);
+          }
+          setShowToast(true);
+          toastTimeoutRef.current = setTimeout(() => setShowToast(false), 3000);
+        }
       }
 
       if (event.key === 'Enter') {
@@ -126,6 +145,81 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
 
       if (!alphanumericRegex.test(pastedText)) {
         event.preventDefault();
+
+        // 토스트 메시지 표시
+        if (showAlphanumericToast) {
+          if (toastTimeoutRef.current) {
+            clearTimeout(toastTimeoutRef.current);
+          }
+          setShowToast(true);
+          toastTimeoutRef.current = setTimeout(() => setShowToast(false), 3000);
+        }
+      }
+    };
+
+    // URL 타입 핸들러들
+    const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const inputValue = event.target.value;
+
+      if (urlRegex.test(inputValue)) {
+        handleInputChange(inputValue);
+      }
+    };
+
+    const handleUrlKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      const allowedKeys = [
+        'Backspace',
+        'Delete',
+        'ArrowLeft',
+        'ArrowRight',
+        'ArrowUp',
+        'ArrowDown',
+        'Home',
+        'End',
+        'Tab',
+        'Enter',
+        'Escape',
+      ];
+
+      if (event.ctrlKey || event.metaKey) {
+        return;
+      }
+
+      if (!allowedKeys.includes(event.key) && !urlRegex.test(event.key)) {
+        event.preventDefault();
+
+        // 토스트 메시지 표시
+        if (showUrlToast) {
+          if (toastTimeoutRef.current) {
+            clearTimeout(toastTimeoutRef.current);
+          }
+          setShowToast(true);
+          toastTimeoutRef.current = setTimeout(() => setShowToast(false), 3000);
+        }
+      }
+
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        onEnterKeyDown?.();
+      }
+
+      onKeyDown?.(event);
+    };
+
+    const handleUrlPaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
+      const pastedText = event.clipboardData.getData('text');
+
+      if (!urlRegex.test(pastedText)) {
+        event.preventDefault();
+
+        // 토스트 메시지 표시
+        if (showUrlToast) {
+          if (toastTimeoutRef.current) {
+            clearTimeout(toastTimeoutRef.current);
+          }
+          setShowToast(true);
+          toastTimeoutRef.current = setTimeout(() => setShowToast(false), 3000);
+        }
       }
     };
     ///
@@ -175,7 +269,6 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
           {/* prefixText */}
           {prefixText && <div className={styles.unit}>{prefixText}</div>}
         </div>
-
         {type === 'number' ? (
           <NumericFormat
             {...props}
@@ -211,7 +304,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             }}
             maxLength={maxLength}
           />
-        ) : type === 'alphanumeric' ? (
+        ) : type === 'alphanumeric' || inputType === 'alphanumeric' ? (
           <input
             ref={ref}
             id={id}
@@ -219,7 +312,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             readOnly={readOnly}
             disabled={disabled}
             type="text"
-            placeholder={placeholder}
+            placeholder={placeholderText}
             className={cn(
               styles.input,
               className,
@@ -231,6 +324,28 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             onBlur={handleInputBlur}
             onChange={handleAlphanumericChange}
             onPaste={handleAlphanumericPaste}
+            maxLength={maxLength}
+          />
+        ) : type === 'url' || inputType === 'url' ? (
+          <input
+            ref={ref}
+            id={id}
+            value={value || ''}
+            readOnly={readOnly}
+            disabled={disabled}
+            type="text"
+            placeholder={placeholderText}
+            className={cn(
+              styles.input,
+              className,
+              borderNone ? styles.bd_none : '',
+              error ? styles.error : '',
+            )}
+            onKeyDown={handleUrlKeyDown}
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
+            onChange={handleUrlChange}
+            onPaste={handleUrlPaste}
             maxLength={maxLength}
           />
         ) : type === 'file' ? (
@@ -287,7 +402,6 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             maxLength={maxLength}
           />
         )}
-
         {/* 삭제 버튼 | 단위 | 입력글자수/최대입력가능글자수 */}
         <div className={cn(styles.after_area)}>
           {/* 삭제 버튼 */}
@@ -308,7 +422,12 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
           {/* 입력글자수/최대입력가능글자수 */}
           {!hideInputLength &&
             maxLength &&
-            (type === 'text' || type === 'password' || type === 'alphanumeric') && (
+            (type === 'text' ||
+              type === 'password' ||
+              type === 'alphanumeric' ||
+              type === 'url' ||
+              inputType === 'alphanumeric' ||
+              inputType === 'url') && (
               <div
                 className={styles.count}
               >{`${(value?.toString() || '').length} / ${maxLength}`}</div>
@@ -329,6 +448,16 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             </Button>
           )}
         </div>
+
+        {/* 토스트 메시지 */}
+        {/* {showToast && (
+          <div
+          >
+            {type === 'alphanumeric' || inputType === 'alphanumeric'
+              ? t('영어, 숫자만 입력 가능합니다.')
+              : t('URL에 사용할 수 없는 문자입니다.')}
+          </div>
+        )} */}
       </div>
     );
   },

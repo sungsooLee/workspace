@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
+// IA011 / NLP_BO_PMS_1100_4
+import { useCallback, useEffect, useState } from 'react';
 import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css';
 import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';

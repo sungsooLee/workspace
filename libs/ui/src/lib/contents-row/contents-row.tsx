@@ -11,7 +11,15 @@ interface ContentsRowProps {
 
 const ContentsRowComponent: FC<ContentsRowProps> = ({ children, className, type, titleMode }) => {
   return (
-    <div className={cn(styles.row, className, 'nlp--contents-row', type && styles[type])}>
+    <div
+      className={cn(
+        styles.row,
+        className,
+        'nlp--contents-row',
+        type && styles[type],
+        titleMode && styles.title_mode,
+      )}
+    >
       {children}
     </div>
   );

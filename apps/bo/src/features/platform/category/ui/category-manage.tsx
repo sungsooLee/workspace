@@ -9,6 +9,7 @@ import {
   Input,
   Textarea,
   TreeContainer,
+  findParentNode,
 } from '@learnway/ui';
 import { useEffect, useRef, useState } from 'react';
 import {
@@ -19,6 +20,7 @@ import {
   useFetchCategoryDetail,
   useMoveCategory,
   useUpdateCategory,
+  queryKeys,
 } from '@entities/category';
 import {
   findMenuPathById,
@@ -35,6 +37,7 @@ import {
   DuplicateCheckInputFormField,
   DuplicateState,
 } from '@features/tenant/management/ui/duplicate-check-input-form-field';
+import { useQueryClient } from '@tanstack/react-query';
 
 const FORM_MODE = {
   NONE: 'NONE',
@@ -50,7 +53,7 @@ export const CategoryManage = () => {
 
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
     useDynamicForm(formConfig);
-
+  const queryClient = useQueryClient();
   const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
   const [lastCreatedMenuId, setLastCreatedMenuId] = useState<string | null>(null);
   const clearAllFormErrors = () => {
@@ -132,12 +135,11 @@ export const CategoryManage = () => {
     if (detailData && treeData) {
       if (formMode === FORM_MODE.VIEW) {
         const location = selectedNode?.menuId && findMenuPathById(treeData, selectedNode?.menuId);
-
         const initialData = selectedNode && {
-          location: location ?? '',
+          location: detailData.categoryPath || location,
           key: selectedNode.key,
           parentKey: selectedNode.parentKey,
-          parentMenuName: selectedNode.parentMenuName,
+          parentMenuName: detailData.parentMenuName || selectedNode.parentMenuName,
           name: detailData.name,
           code: { fieldValue: detailData.categoryCode, checkState: DuplicateState.okStart },
           categoryContent: detailData.categoryContent,
@@ -318,7 +320,15 @@ export const CategoryManage = () => {
               destinationParentId: nodeInfo.targetNode?.menuId,
               sortSeq: 1,
             };
-            moveCategory(payload);
+            moveCategory(payload, {
+              onSuccess: async (data: any) => {
+                if (selectedNode?.categoryId) {
+                  await queryClient.invalidateQueries({
+                    queryKey: [...queryKeys.detail(Number(selectedNode.categoryId))],
+                  });
+                }
+              },
+            });
           } else {
             const targetIndex = nodeInfo.targetIndex!;
             const payload = {
@@ -326,7 +336,15 @@ export const CategoryManage = () => {
               destinationParentId: nodeInfo.targetNode?.parentKey,
               sortSeq: targetIndex + 1,
             };
-            moveCategory(payload);
+            moveCategory(payload, {
+              onSuccess: async (data: any) => {
+                if (selectedNode?.categoryId) {
+                  await queryClient.invalidateQueries({
+                    queryKey: [...queryKeys.detail(Number(selectedNode.categoryId))],
+                  });
+                }
+              },
+            });
           }
           break;
         }
@@ -441,6 +459,7 @@ export const CategoryManage = () => {
                     onDuplicationCheck={duplicateCheck}
                     disabled={formMode === FORM_MODE.NONE}
                     hiddenPlaceholder={formMode === FORM_MODE.NONE}
+                    inputType={'alphanumeric'}
                   />
                 }
               />
@@ -525,7 +544,7 @@ const formConfig: DynamicFormConfig = {
       label: t('LABEL.form.input.categoryCodeName'),
       name: 'name',
       type: 'text',
-      maxLength: 10,
+      maxLength: 20,
       value: '',
     },
     {

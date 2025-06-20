@@ -1,0 +1,32 @@
+@font-face {
+  font-family: 'NanumBarunGothic';
+  font-weight: 400;
+  src:
+    local('나눔바른고딕'),
+    url(./woff-subset/NanumBarunGothicSubset.woff2) format('woff2'),
+    url(./woff-subset/NanumBarunGothicSubset.woff) format('woff');
+}
+@font-face {
+  font-family: 'NanumBarunGothic';
+  font-weight: 700;
+  src:
+    local('나눔바른고딕 Bold'),
+    url(./woff-subset/NanumBarunGothicBoldSubset.woff2) format('woff2'),
+    url(./woff-subset/NanumBarunGothicBoldSubset.woff) format('woff');
+}
+@font-face {
+  font-family: 'NanumBarunGothic';
+  font-weight: 300;
+  src:
+    local('나눔바른고딕 Light'),
+    url(./woff-subset/NanumBarunGothicLightSubset.woff2) format('woff2'),
+    url(./woff-subset/NanumBarunGothicLightSubset.woff) format('woff');
+}
+@font-face {
+  font-family: 'NanumBarunGothic';
+  font-weight: 200;
+  src:
+    local('나눔바른고딕 UltraLight'),
+    url(./woff-subset/NanumBarunGothicUltraLightSubset.woff2) format('woff2'),
+    url(./woff-subset/NanumBarunGothicUltraLightSubset.woff) format('woff');
+}

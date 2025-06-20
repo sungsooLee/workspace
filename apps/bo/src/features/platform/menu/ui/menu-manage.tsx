@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, forwardRef, useImperativeHandle } from 'react';
 import { t } from 'i18next';
 import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { useRouter } from '@tanstack/react-router';
@@ -28,6 +28,7 @@ import {
   transformApiDataToTreeData,
 } from '../service/menu.service';
 import {
+  queryKeys,
   useCheckExistsMenu,
   useCreateMenu,
   useDeleteMenu,
@@ -46,6 +47,8 @@ import {
   DuplicateCheckInputFormField,
   DuplicateState,
 } from '@features/tenant/management/ui/duplicate-check-input-form-field';
+import { isEqual } from 'lodash';
+import { useQueryClient } from '@tanstack/react-query';
 
 const FORM_MODE = {
   NONE: 'NONE',
@@ -60,7 +63,12 @@ const DEVICE_NAME = {
 
 const columnHelper = createColumnHelper<any>();
 
-export const MenuManage = ({ menuScope }: any) => {
+export interface MenuManageRef {
+  hasFormChanges: () => boolean;
+  setSkipConfirmation: (skip: boolean) => void;
+}
+
+export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ menuScope }, ref) => {
   const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
   const [parentNode, setParentNode] = useState<TreeNode | null>(null);
 
@@ -68,6 +76,7 @@ export const MenuManage = ({ menuScope }: any) => {
   const [treeData, setTreeData] = useState([]);
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [lastCreatedMenuId, setLastCreatedMenuId] = useState<string | null>(null);
+  const [skipConfirmation, setSkipConfirmation] = useState(false);
   const { open: openModal, confirm: openConfirm, alert: openAlert } = useModal();
   const prevDataRef = useRef<any>(null);
   const router = useRouter();
@@ -83,6 +92,8 @@ export const MenuManage = ({ menuScope }: any) => {
   const { delete: deleteMenu } = useDeleteMenu({});
   const { move: moveMenu } = useMoveMenu({});
   const { checkExistsMenu, isLoading } = useCheckExistsMenu({});
+
+  const queryClient = useQueryClient();
 
   const duplicateCheck = async (code: string) => {
     const result = await new Promise((resolve) => {
@@ -100,6 +111,26 @@ export const MenuManage = ({ menuScope }: any) => {
   const clearAllFormErrors = () => {
     formConfig.builders.forEach((item) => clearFormError(item.name));
   };
+
+  const hasFormChanges = () => {
+    const currentValues = getValues();
+
+    if (
+      (formMode === FORM_MODE.ADD || formMode === FORM_MODE.VIEW) &&
+      initialFromValuesRef.current
+    ) {
+      // 등록/수정 모드: 초기값과 현재값 비교
+      return !isEqual(initialFromValuesRef.current, currentValues);
+    }
+
+    return false;
+  };
+
+  // 외부에서 접근할 수 있도록 함수 노출
+  useImperativeHandle(ref, () => ({
+    hasFormChanges,
+    setSkipConfirmation,
+  }));
 
   const initialFromValuesRef = useRef<any>(null);
 
@@ -141,7 +172,7 @@ export const MenuManage = ({ menuScope }: any) => {
     if (typeWatch && detailData && formMode !== FORM_MODE.NONE) {
       const data = detailData as MenuDetail;
       const { parentId } = data;
-      
+
       if (parentId !== null) {
         if (typeWatch.length === 0) {
           openAlert({
@@ -208,16 +239,40 @@ export const MenuManage = ({ menuScope }: any) => {
     }
   }, [detailData, formMode]);
 
-  const handleSelectedNodeChange = (node: TreeNode | null) => {
+  const handleSelectedNodeChange = async (node: TreeNode | null) => {
+    // if (!skipConfirmation && node !== selectedNode && hasFormChanges()) {
+    //   const shouldProceed = await openConfirm({
+    //     title: '저장하지 않고 이동',
+    //     content: '변경된 내용이 있습니다. 저장하지 않고 이동하시겠습니까?',
+    //   });
+
+    //   if (!shouldProceed) {
+    //     return; // 취소 시 현재 상태 유지
+    //   }
+    // }
+
     setSelectedNode(node);
     if (node) {
       setFormMode(FORM_MODE.VIEW);
     } else {
       setFormMode(FORM_MODE.NONE);
+      initialFromValuesRef.current = null; // 폼 모드가 NONE이 될 때 초기값 클리어
     }
   };
 
-  const addNode = (node: any) => {
+  const addNode = async (node: any) => {
+    // skipConfirmation이 true이거나 변경사항이 없는 경우 바로 진행
+    // if (!skipConfirmation && hasFormChanges()) {
+    //   const shouldProceed = await openConfirm({
+    //     title: '저장하지 않고 이동',
+    //     content: '변경된 내용이 있습니다. 저장하지 않고 이동하시겠습니까?',
+    //   });
+
+    //   if (!shouldProceed) {
+    //     return; // 취소 시 현재 상태 유지
+    //   }
+    // }
+
     clearAllFormErrors();
     const initData: { [key: string]: any } = {};
     formConfig.builders.forEach((item) => {
@@ -226,12 +281,17 @@ export const MenuManage = ({ menuScope }: any) => {
 
     setParentNode(node);
     const location = findMenuPathById(treeData, node.menuId);
-    fetchData({
+    const addFormData = {
       ...initData,
       location: location,
       parentCode: node.menuCode,
       deviceNames: ['PC'],
-    });
+    };
+
+    fetchData(addFormData);
+
+    // 등록 모드에서 초기값 설정 (변경사항 감지를 위해)
+    initialFromValuesRef.current = { ...addFormData };
 
     setFormMode(FORM_MODE.ADD);
   };
@@ -351,7 +411,15 @@ export const MenuManage = ({ menuScope }: any) => {
             sortOrder: 1,
             menuScopeCode: menuScope,
           };
-          moveMenu(payload);
+          moveMenu(payload, {
+            onSuccess: async (data: any) => {
+              if (selectedNode?.menuId) {
+                await queryClient.invalidateQueries({
+                  queryKey: [...queryKeys.detail(selectedNode.menuId)],
+                });
+              }
+            },
+          });
         } else {
           const targetIndex = nodeInfo.targetIndex!;
           const payload = {
@@ -360,7 +428,15 @@ export const MenuManage = ({ menuScope }: any) => {
             sortOrder: targetIndex + 1,
             menuScopeCode: menuScope,
           };
-          moveMenu(payload);
+          moveMenu(payload, {
+            onSuccess: async (data: any) => {
+              if (selectedNode?.menuId) {
+                await queryClient.invalidateQueries({
+                  queryKey: [...queryKeys.detail(selectedNode.menuId)],
+                });
+              }
+            },
+          });
         }
 
         break;
@@ -372,9 +448,9 @@ export const MenuManage = ({ menuScope }: any) => {
     <div className={'gap-10px flex'}>
       <div className={'flex items-center'}>
         <Button
-          onClick={(e) => {
+          onClick={async (e) => {
             e.stopPropagation();
-            addNode(node);
+            await addNode(node);
           }}
           variant="gray2"
           size={'xs'}
@@ -562,6 +638,7 @@ export const MenuManage = ({ menuScope }: any) => {
                   <Input
                     disabled={formMode === FORM_MODE.NONE}
                     hiddenPlaceholder={formMode === FORM_MODE.NONE}
+                    inputType={'url'}
                   />
                 }
               />
@@ -642,7 +719,7 @@ export const MenuManage = ({ menuScope }: any) => {
       </div>
     </>
   );
-};
+});
 
 const formConfig: DynamicFormConfig = {
   builders: [

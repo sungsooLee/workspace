@@ -45,8 +45,8 @@ export const TemplateSplitPanel: any = (args: any) => {
         <Right />
       </SplitPanel>
 
-      <section className="mt-8 text-4xl italic">50% 50%</section>
-      <SplitPanel size={['50%', '50%']}>
+      <section className="mt-8 text-4xl italic">50% 50%, gap:32px</section>
+      <SplitPanel size={['50%', '50%']} gap={32}>
         <Left />
         <Right />
       </SplitPanel>
