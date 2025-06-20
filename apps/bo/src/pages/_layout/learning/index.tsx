@@ -15,7 +15,7 @@ import { SubContents } from '@widgets/layout/ui/container/slot/sub-contents';
 import { ContentsRow } from '@widgets/layout/ui/container/parts/contents-row';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { FormRow } from '@shared/ui';
-import { LectureTypeSiteUrl, ManagerListModal, TeacherListModal } from '@features/learning/course';
+import { ManagerListModal, TeacherListModal } from '@features/learning/course';
 
 export const Route = createFileRoute('/_layout/learning/')({
   component: RouteComponent,
