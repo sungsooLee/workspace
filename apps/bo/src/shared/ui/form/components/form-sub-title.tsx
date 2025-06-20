@@ -10,8 +10,10 @@ interface FormSubTitleProps {
   variant?: 'text' | 'primary';
   /** 크기 변형 (예: 폰트 크기, 패딩 등) */
   size?: 'sm' | 'md' | 'lg' | 'xl';
-  /** 하단 밑줄 표시 여부 */
+  /** 하단 스타일 선택 */
   lineType?: 'light' | 'dark';
+  /** 하단 라인 삭제 */
+  noLine?: boolean;
   /** 외부에서 추가할 CSS 클래스 이름 */
   className?: string;
   /** action node */
@@ -24,6 +26,7 @@ const FormSubTitleComponent = ({
   actionNode,
   label,
   lineType = 'dark',
+  noLine = false,
   variant = 'text', // 기본값 설정
   size = 'md', // 기본값 설정
   className,
@@ -35,6 +38,7 @@ const FormSubTitleComponent = ({
         styles.title_wrap,
         'title_wrap',
         lineType && styles[lineType],
+        noLine && styles.no_line,
         size && styles[size],
         className,
       )}
