@@ -72,3 +72,6 @@
     }
   }
 }
+.title_mode {
+  @apply mb-[16px] border-b-[1px] border-solid border-[var(--gray8)];
+}
