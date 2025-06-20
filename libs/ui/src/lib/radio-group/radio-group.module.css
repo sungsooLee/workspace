@@ -79,4 +79,8 @@
       @apply !hidden;
     }
   }
+
+  .node {
+    @apply ml-[16px];
+  }
 }
