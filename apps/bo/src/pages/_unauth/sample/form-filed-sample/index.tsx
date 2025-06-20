@@ -10,6 +10,7 @@ import {
   InputModalSelectorFormField,
   ListModalSelectorFormField,
   PhoneNumberFormField,
+  RadioGroup,
   useModal,
 } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
@@ -65,7 +66,24 @@ function RouteComponent() {
           </ContentsRow>
           {/* 라디오 + custom node */}
           <ContentsRow>
-            <FormRow provider={provider} name={'라디오커스텀'} />
+            <FormRow
+              provider={provider}
+              name={'라디오커스텀'}
+              element={
+                <RadioGroup
+                  options={[
+                    {
+                      label: '초급',
+                      value: '1',
+                    },
+                    {
+                      label: '중급',
+                      value: '2',
+                    },
+                  ]}
+                />
+              }
+            />
           </ContentsRow>
           {/* 채널 */}
           <ContentsRow>
@@ -339,21 +357,6 @@ const formConfig: DynamicFormConfig = {
       name: '라디오커스텀',
       type: 'radio-group',
       label: t('라디오커스텀'),
-      format: 'string',
-      options: [
-        {
-          label: '없음',
-          value: '',
-        },
-        {
-          label: '초급',
-          value: '1',
-        },
-        {
-          label: '중급',
-          value: '2',
-        },
-      ],
       value: [],
       placeholder: '',
       description: '',
