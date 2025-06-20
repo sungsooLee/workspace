@@ -15,7 +15,9 @@ import { useFetchAuthUser } from '@learnway/auth/entities';
 
 import { SearchBox } from '@shared/ui/search-box';
 
+import { EnGlobalConst } from '@types';
 import { tenantQueryOptions } from '@entities/tenant';
+import { usersQueryOptions } from '@entities/users/service/users.queries';
 
 const _global = {
   linkClick: (tenantId: number, tenantName: string) => {
@@ -136,7 +138,7 @@ const searchConfig: SearchBoxConfig = {
         name: 'tenantId',
         type: 'dropdown',
         label: t('테넌트'),
-        format: 'number',
+        format: 'object',
         value: '',
         presetOptionLabel: t('LABEL.form.label.select'),
         options: [],
@@ -145,13 +147,13 @@ const searchConfig: SearchBoxConfig = {
         name: 'companyId',
         type: 'dropdown',
         label: t('회사'),
-        format: 'number',
+        format: 'object',
         value: '',
         presetOptionLabel: t('LABEL.form.label.select'),
         options: [],
       },
       {
-        name: 'tenantManagerName',
+        name: 'employeeNumber',
         type: 'text',
         label: t('사번'),
         value: '',
@@ -185,7 +187,7 @@ const searchConfig: SearchBoxConfig = {
 };
 
 const gridConfig = {
-  query: '',
+  query: usersQueryOptions.list,
   columns: [],
   data: [],
 
@@ -203,18 +205,21 @@ const columns = [
     header: t('테넌트'),
     size: 120,
   }),
-  columnHelper.accessor('opt1', {
-    cell: (info) => info.getValue(),
+  columnHelper.accessor('company', {
+    cell: (info) =>
+      t(
+        `${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.CompanyType.${info.row.original.company.companyType}`,
+      ),
     header: t('그룹'),
     size: 120,
   }),
-  columnHelper.accessor('opt2', {
-    cell: (info) => info.getValue(),
+  columnHelper.accessor('company', {
+    cell: (info) => info.row.original.company.name,
     header: t('회사'),
     size: 120,
   }),
   columnHelper.accessor('opt3', {
-    cell: (info) => info.getValue(),
+    cell: (info) => info.row.original.dept?.deptName,
     header: t('소속'),
     size: 120,
   }),
@@ -227,12 +232,12 @@ const columns = [
     header: t('지위'),
     size: 120,
   }),
-  columnHelper.accessor('opt5', {
+  columnHelper.accessor('employeeNumber', {
     cell: (info) => info.getValue(),
     header: t('사번'),
     size: 120,
   }),
-  columnHelper.accessor('opt6', {
+  columnHelper.accessor('name', {
     cell: (info) => info.getValue(),
     header: t('이름'),
     size: 120,
@@ -247,10 +252,13 @@ const columns = [
     header: t('재직여부'),
     size: 88,
   }),
-  columnHelper.accessor('opt9', {
-    cell: (info) => info.getValue(),
+  columnHelper.accessor('userState', {
+    cell: (info) => t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.UserState.${info.getValue()}`),
     header: t('계정상태'),
     size: 88,
+    meta: {
+      cellAlign: 'center',
+    },
   }),
   columnHelper.accessor('opt10', {
     cell: (info) => info.getValue(),
@@ -258,16 +266,13 @@ const columns = [
     size: 88,
   }),
   columnHelper.accessor('opt11', {
-    cell: (info) => info.getValue(),
+    cell: (info) => <Button variant="gray" label={t('로그인')} />,
     header: t('로그인'),
     size: 88,
   }),
   columnHelper.accessor('createdDate', {
     cell: (info) => {
-      return getDateToString(
-        new Date(info.row.original.createdDate),
-        DATE_TIME_FORMAT.DATETIME_SEC,
-      );
+      return getDateToString(new Date(info.getValue() as string), DATE_TIME_FORMAT.DATETIME_SEC);
     },
     header: t('회원가입일'),
     size: 120,
