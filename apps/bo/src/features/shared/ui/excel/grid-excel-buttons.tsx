@@ -1,11 +1,5 @@
-import { Button, useModal } from '@learnway/ui';
-import { usePersonalInfoCheck } from '@learnway/auth/entities';
-import { ExcelUploadModal } from '@features/shared';
-import { fileDownload } from '@learnway/shared';
-import { PMSApiPrefix } from '@learnway/config';
-import { IcoDownload, IcoUploadCloud } from '@learnway/icons';
-import { t } from 'i18next';
-import { ExcelDownloadReasonModal } from '../modal/excel-download-reason-modal';
+import { GridExcelUploadButton } from './grid-excel-upload-button';
+import { GridExcelDownloadButton } from './grid-excel-download-button';
 import { SelectOption } from '@learnway/hooks';
 
 interface ExcelButtonsProps {
@@ -44,84 +38,30 @@ const GridExcelButtonsComponent: React.FC<ExcelButtonsProps> = ({
   disabled = false,
   className,
 }) => {
-  const { open: openModal, confirm } = useModal();
-  const { hasPersonalInfo, currentMenu } = usePersonalInfoCheck();
-
-  // 업로드
-  const handleUpload = async () => {
-    if (onUpload) await onUpload();
-    if (uploadUrl && validateUrl) {
-      console.log('?');
-      await openModal({
-        content: <ExcelUploadModal validateUrl={validateUrl} uploadUrl={uploadUrl} />,
-        width: 'lg',
-      });
-    }
-  };
-
-  // 다운로드  (개인정보 체크 포함)
-  const handleDownload = async () => {
-    if (!downloadUrl) return;
-
-    const executeDownload = async (params: Record<string, any>) => {
-      await fileDownload({
-        url: downloadUrl,
-        params,
-        method: downloadMethod,
-      });
-    };
-
-    try {
-      let downloadReason: undefined | Record<string, any>;
-      if (hasPersonalInfo) {
-        downloadReason = await openModal({
-          width: 'md',
-          content: (
-            <ExcelDownloadReasonModal dataCount={dataCount} paramLabels={downloadParamLabels} />
-          ),
-        });
-        if (!downloadReason) return;
-      }
-
-      if (onBeforeDownload) {
-        await onBeforeDownload();
-      }
-
-      await executeDownload({
-        ...downloadParams,
-        menuId: currentMenu?.menuId,
-        ...(downloadReason && { downloadReason }),
-      });
-    } catch (error) {
-      console.error('다운로드 중 오류 발생:', error);
-    }
-  };
-
   return (
     <>
       {/* 업로드 버튼 */}
       {showUpload && (
-        <Button
-          variant="text"
-          size="xs"
-          className={className}
-          label={t('LABEL.grid.header.excelUpload', '엑셀업로드')}
-          icon={<IcoUploadCloud width={16} height={16} stroke={'#4C515E'} />}
-          onClick={handleUpload}
+        <GridExcelUploadButton
+          url={uploadUrl}
+          validateUrl={validateUrl}
+          onUpload={onUpload}
           disabled={disabled}
+          className={className}
         />
       )}
 
       {/* 다운로드 버튼 */}
       {showDownload && downloadUrl && (
-        <Button
-          variant="text"
-          size="xs"
-          className={className}
-          label={t('LABEL.grid.header.excelDownload', '엑셀다운로드')}
-          icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
-          onClick={handleDownload}
+        <GridExcelDownloadButton
+          method={downloadMethod}
+          url={downloadUrl}
+          params={downloadParams}
+          paramLabels={downloadParamLabels}
+          dataCount={dataCount}
+          onBeforeDownload={onBeforeDownload}
           disabled={disabled}
+          className={className}
         />
       )}
     </>
