@@ -7,6 +7,7 @@ export const queryKeys = {
   all: ['translation-all'] as const,
   get: ['translation'] as const,
   getStatus: (multilingualId: number) => ['translation-status', multilingualId],
+  deploy: (locale: string) => ['translation-locale', locale],
 };
 
 export const translationQueryOptions = {
@@ -32,5 +33,8 @@ export const mutateOptions = {
   delete: () => ({
     mutationFn: (tenantId?: number) =>
       tenantId ? TenantService.deleteTenant(tenantId) : skipToken,
+  }),
+  deploy: () => ({
+    mutationFn: (payload: { locale: string }) => TranslationService.deployTranslation(payload),
   }),
 };
