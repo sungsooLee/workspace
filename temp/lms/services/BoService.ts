@@ -24,7 +24,11 @@ import type { com_ever_edu_lms_category_dto_res_CategoryMasterDto } from '../mod
 import type { com_ever_edu_lms_category_dto_res_CategoryMasterTreeDto } from '../models/com_ever_edu_lms_category_dto_res_CategoryMasterTreeDto';
 import type { com_ever_edu_lms_category_dto_res_TenantCategoryDto } from '../models/com_ever_edu_lms_category_dto_res_TenantCategoryDto';
 import type { com_ever_edu_lms_category_dto_res_TenantCategoryTreeDto } from '../models/com_ever_edu_lms_category_dto_res_TenantCategoryTreeDto';
+import type { com_ever_edu_lms_course_dto_req_CoursePrimaryCurriculumReqDto } from '../models/com_ever_edu_lms_course_dto_req_CoursePrimaryCurriculumReqDto';
 import type { com_ever_edu_lms_course_dto_req_CourseSearchReqDto$SearchByAdminDto } from '../models/com_ever_edu_lms_course_dto_req_CourseSearchReqDto$SearchByAdminDto';
+import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1 } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1';
+import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2 } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2';
+import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep3 } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep3';
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew';
 import type { com_ever_edu_lms_course_dto_req_SequenceDeleteReqDto } from '../models/com_ever_edu_lms_course_dto_req_SequenceDeleteReqDto';
 import type { com_ever_edu_lms_course_dto_req_SequenceSaveReqDto } from '../models/com_ever_edu_lms_course_dto_req_SequenceSaveReqDto';
@@ -205,6 +209,93 @@ export class BoService {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/admin/api/v1/sequence/list-update',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 과정 생성 마법사3
+     * 과정 개설 > 3. 커리큘럼 설정 저장
+     * @param courseId
+     * @param requestBody
+     * @returns number OK
+     * @throws ApiError
+     */
+    public static wizard3(
+        courseId: number,
+        requestBody: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep3,
+    ): CancelablePromise<number> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/admin/api/v1/course/wizard3/{courseId}',
+            path: {
+                'courseId': courseId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     *  과정 생성 마법사2
+     * 과정 개설 > 2. 수강신청 설정 저장
+     * @param courseId
+     * @param requestBody
+     * @returns number OK
+     * @throws ApiError
+     */
+    public static wizard2(
+        courseId: number,
+        requestBody: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2,
+    ): CancelablePromise<number> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/admin/api/v1/course/wizard2/{courseId}',
+            path: {
+                'courseId': courseId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     *  과정 생성 마법사1
+     * 과정 개설 > 1. 기본정보 설정 저장(수정)
+     * @param courseId
+     * @param requestBody
+     * @returns number OK
+     * @throws ApiError
+     */
+    public static wizard1(
+        courseId: number,
+        requestBody: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1,
+    ): CancelablePromise<number> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/admin/api/v1/course/wizard1/{courseId}',
+            path: {
+                'courseId': courseId,
+            },
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -598,6 +689,35 @@ export class BoService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/admin/api/v1/enroll-test',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 과정 생성 마법사3-대표커리큘럼 신규/복사 등록
+     * 과정 개설 > 3. 커리큘럼 설정 > 대표 커리큘럼 신규등록
+     * @param courseId
+     * @param requestBody
+     * @returns number OK
+     * @throws ApiError
+     */
+    public static newPrimaryCurriculum(
+        courseId: number,
+        requestBody: com_ever_edu_lms_course_dto_req_CoursePrimaryCurriculumReqDto,
+    ): CancelablePromise<number> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/course/wizard3/{courseId}/curriculum',
+            path: {
+                'courseId': courseId,
+            },
             body: requestBody,
             mediaType: 'application/json',
             errors: {

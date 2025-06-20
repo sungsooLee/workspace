@@ -2,8 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew = {
-    courseType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew.courseType;
+export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1 = {
+    wizardStep: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1.wizardStep;
     channelId: number;
     tenantIds: Array<number>;
     primaryCategoryId: number;
@@ -13,11 +13,11 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew = {
     courseName: string;
     courseSummary: string;
     courseContent: string;
-    trainingLevelType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew.trainingLevelType;
+    trainingLevelType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1.trainingLevelType;
     /**
      * (lms.course.LearningSpaceType)
      */
-    learningSpaceType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew.learningSpaceType;
+    learningSpaceType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1.learningSpaceType;
     learningSpaceId?: number;
     learningSpaceName?: string;
     coordinatorId: number;
@@ -28,15 +28,17 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew = {
     operatorName: string;
     operatorTelNo: string;
     operatorEmail: string;
+    instructorId?: number;
+    tutorId?: number;
 };
-export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew {
-    export enum courseType {
-        ELEARNING1 = 'ELEARNING1',
-        ELEARNING2 = 'ELEARNING2',
-        CLASS = 'CLASS',
-        LIVE = 'LIVE',
-        EXAM = 'EXAM',
-        SURVEY = 'SURVEY',
+export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1 {
+    export enum wizardStep {
+        STEP1 = 'STEP1',
+        STEP2 = 'STEP2',
+        STEP3 = 'STEP3',
+        STEP4 = 'STEP4',
+        STEP5 = 'STEP5',
+        FULL_UPDATE = 'FULL_UPDATE',
     }
     export enum trainingLevelType {
         NONE = 'NONE',
