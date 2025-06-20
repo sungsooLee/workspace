@@ -36,7 +36,7 @@ const SplitPanelComponent = ({
     <div className={cn(styles.start, 'split_panel', className)} style={containerStyle}>
       {nodes.map((child, index) => {
         const width = size?.[index];
-        const gapPx = gap ? `${gap / 2}px` : '0px';
+        const gapPx = gap ? `${(gap * (nodes.length - 1)) / nodes.length}px` : '0px';
 
         const style =
           width && width !== 'auto'
