@@ -21,7 +21,7 @@ const RadioGroupFormFieldComponent = forwardRef<HTMLDivElement, RadioGroupFormFi
         name={name}
         defaultValue={value}
         onValueChange={onChange}
-        options={options.map((item: any) => ({ value: item.value, label: t(item.label) }))}
+        options={options.map((item: any) => ({ ...item, label: t(item.label) }))}
         className={cn(styles.start, styles.radio_list, !cols && styles.type_flex)}
         cols={cols}
         style={cols ? { gridTemplateColumns: `repeat(${cols}, 1fr)` } : undefined}

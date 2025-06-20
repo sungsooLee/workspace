@@ -104,6 +104,7 @@ export const CODE_GROUP = {
   'vps.video.FfmpegTaskType': 'vps.video.FfmpegTaskType',
   'manual.code': 'manual.code',
   'manual.code2': 'manual.code2',
+  'manual.company.companyId': 'manual.company.companyId',
   'manual.company.companyCode': 'manual.company.companyCode',
   'manual.tenant.tenantId': 'manual.tenant.tenantId',
   'pms.multilingual.LangCountryCode': 'pms.multilingual.LangCountryCode',
