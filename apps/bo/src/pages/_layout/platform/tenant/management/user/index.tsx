@@ -56,7 +56,7 @@ function RouteComponent() {
     {
       title: '유저',
       key: 't1',
-      content: <TenantUserList />,
+      content: <TenantUserList rootPath="/platform" />,
     },
     {
       title: '회원가입 신청',

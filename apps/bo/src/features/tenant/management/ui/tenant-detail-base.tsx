@@ -248,9 +248,9 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
           element={<CheckboxGroupFormField options={languageTypeList} />}
         />
       </ContentsRow>
-      <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
+      {/* <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
         <ContentsHistoryInfoFormField />
-      </ContentsRow>
+      </ContentsRow> */}
     </form>
   );
 };

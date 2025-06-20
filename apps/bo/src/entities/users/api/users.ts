@@ -7,8 +7,8 @@ export default class UsersService {
     return httpService.get<PageableContent<any>>(`${PMSApiPrefix()}/users`, params);
   }
 
-  static fetchUser(userId: number) {
-    return httpService.get<any>(`${PMSApiPrefix()}/users/${userId}`);
+  static fetchUser(userUuid: string) {
+    return httpService.get<any>(`${PMSApiPrefix()}/users/${userUuid}`);
   }
 
   static createUser(payload: any) {

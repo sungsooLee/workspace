@@ -12,10 +12,13 @@ import {
 import { DynamicFormConfig, useDynamicForm, CODE_GROUP } from '@learnway/hooks';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
-const CompanyUserDetailBaseComponent: FC<any> = () => {
+const CompanyUserDetailBaseComponent: FC<any> = ({ userInfo }) => {
   const { provider, fetchData, onSubmit, setFormError, clearFormError, getValues } =
     useDynamicForm(formConfig);
   const [roleData, setRoleData] = useState<any[]>([]);
+  useEffect(() => {
+    if (userInfo) fetchData(userInfo);
+  }, [userInfo]);
   return (
     <>
       <FormSubTitle label={'개인 정보'} lineType={'dark'} />

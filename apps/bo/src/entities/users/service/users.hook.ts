@@ -3,8 +3,8 @@ import type { MutateOptions } from '@tanstack/react-query';
 
 import { queryKeys, usersQueryOptions as queryOptions, mutateOptions } from './users.queries';
 
-export function useFetchUser(userId: number) {
-  return useQuery(queryOptions.detail(userId));
+export function useFetchUser(userUuid: string) {
+  return useQuery(queryOptions.detail(userUuid));
 }
 
 /** 사용자 생성 뮤테이션  */

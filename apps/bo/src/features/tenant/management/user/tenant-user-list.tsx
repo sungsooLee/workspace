@@ -21,7 +21,7 @@ import { usersQueryOptions } from '@entities/users/service/users.queries';
 import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
 
 const _global = {
-  linkClick: (tenantId: number, tenantName: string) => {
+  linkClick: (userUuid: string) => {
     return;
   },
 };
@@ -38,12 +38,11 @@ const TenantUserListComponent: FC<any> = ({ rootPath }) => {
   const { data: loginUser } = useFetchAuthUser();
   const queryClient = useQueryClient();
 
-  _global.linkClick = (tenantId: number, tenantName: string) => {
+  _global.linkClick = (userUuid: string) => {
     router.navigate({
       to: `${rootPath}/tenant/management/user/detail`,
       state: {
-        tenantId: tenantId,
-        tenantName: tenantName,
+        userUuid: userUuid,
         listParam: getValues(),
       },
     });
@@ -229,7 +228,15 @@ const columns = [
     size: 120,
   }),
   columnHelper.accessor('name', {
-    cell: (info) => info.getValue(),
+    cell: (info) => {
+      return (
+        <Button
+          label={`${info.getValue()}`}
+          className="link"
+          onClick={() => _global.linkClick(info.row.original.uuid)}
+        />
+      );
+    },
     header: t('이름'),
     size: 120,
   }),
