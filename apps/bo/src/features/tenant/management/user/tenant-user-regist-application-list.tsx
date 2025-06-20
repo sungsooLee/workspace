@@ -1,14 +1,21 @@
 import { FC, useState, useEffect, useCallback } from 'react';
+import { useWatch } from 'react-hook-form';
 import { useRouter, useRouterState, Link } from '@tanstack/react-router';
 import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
+import { useQueryClient } from '@tanstack/react-query';
 import { t } from 'i18next';
 
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
-import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { Button, GridBox, useGridBox } from '@learnway/ui';
-import { SearchBox } from '@shared/ui/search-box';
+import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
+
+import { useFetchAuthUser } from '@learnway/auth/entities';
+
+import { SearchBox } from '@shared/ui/search-box';
+
+import { tenantQueryOptions } from '@entities/tenant';
 
 const _global = {
   linkClick: (tenantId: number, tenantName: string) => {
@@ -24,6 +31,12 @@ const _global = {
 const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
   const router = useRouter();
   const routerState = useRouterState();
+
+  const { data: loginUser } = useFetchAuthUser();
+  const queryClient = useQueryClient();
+
+  const [companyCodes, setCompanyCodes] = useState<string[]>([]);
+
   _global.linkClick = (tenantId: number, tenantName: string) => {
     router.navigate({
       to: `${rootPath}/tenant/management/user-group/handmade-detail`,
@@ -37,11 +50,15 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
 
   const {
     provider: searchProvider,
+    setValue,
+    setOptions,
     getValues,
     onFormChange,
     onFormValid,
   } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig);
+
+  const tenantIdWatch = useWatch({ control: searchProvider.control, name: 'tenantId' });
 
   const handleOnSearch = (data: any) => {
     console.log('search', data);
@@ -59,6 +76,44 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
     };
     init();
   }, []);
+
+  useEffect(() => {
+    if (!loginUser) return;
+
+    const tenantIdOptions = loginUser.tenants.map((tenant) => ({
+      value: tenant.tenantId,
+      label: tenant.tenantName,
+    }));
+    const tenantIds = tenantIdOptions.map((item) => item.value);
+    setOptions('tenantId', tenantIdOptions);
+    if (loginUser.activeTenant) setValue('tenantId', loginUser.activeTenant.tenantId ?? '');
+
+    (async () => {
+      const companys = await queryClient.fetchQuery(tenantQueryOptions.tenantCompanys(tenantIds));
+      const companyCodes = companys.map((item) => item.companyCode);
+      setCompanyCodes(companyCodes);
+    })();
+  }, [loginUser]);
+
+  useEffect(() => {
+    if (tenantIdWatch) {
+      (async () => {
+        const companys = await queryClient.fetchQuery(
+          tenantQueryOptions.tenantCompanys([tenantIdWatch]),
+        );
+        console.log(companys);
+        const companyIdOptions = companys.map((item) => ({
+          label: item.name,
+          value: item.companyId,
+        }));
+        console.log(companyIdOptions);
+        setOptions('companyId', companyIdOptions);
+      })();
+    } else {
+      setValue('companyId', '');
+      setOptions('companyId', []);
+    }
+  }, [tenantIdWatch]);
 
   return (
     <>
@@ -79,26 +134,21 @@ const searchConfig: SearchBoxConfig = {
     [
       {
         name: 'tenantId',
-        type: 'text',
-        label: t('테넌트명'),
-        format: 'object',
+        type: 'dropdown',
+        label: t('테넌트'),
+        format: 'number',
         value: '',
-        optionsConfig: {
-          codeGroup: CODE_GROUP['manual.tenant.tenantId'],
-        },
-        dropdownConfig: {
-          onchange: () => {
-            return '';
-          },
-          isSearchable: true,
-          placeholder: '입력 또는 선택',
-        },
+        presetOptionLabel: t('LABEL.form.label.select'),
+        options: [],
       },
       {
         name: 'companyId',
-        type: 'text',
+        type: 'dropdown',
         label: t('회사'),
+        format: 'number',
         value: '',
+        presetOptionLabel: t('LABEL.form.label.select'),
+        options: [],
       },
       {
         name: 'tenantManagerName',

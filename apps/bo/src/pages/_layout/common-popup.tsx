@@ -42,7 +42,7 @@ import { IcoDownload } from '@learnway/icons';
 
 import { EnFormMode } from '@types';
 
-export const Route = createFileRoute('/_unauth/common-popup')({
+export const Route = createFileRoute('/_layout/common-popup')({
   component: RouteComponent,
 });
 

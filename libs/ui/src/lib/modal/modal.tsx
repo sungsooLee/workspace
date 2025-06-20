@@ -42,7 +42,12 @@ const ModalComponent: React.FC<ModalConfig> = ({
             height && styles[height],
           )}
           onInteractOutside={handleOutsideClick}
-          onEscapeKeyDown={(e) => e.preventDefault()} // ESC 키 방지
+          onEscapeKeyDown={(e) => {
+            if (React.isValidElement(content) && (content.type as any)?.displayName === 'Alert') {
+              return;
+            }
+            e.preventDefault();
+          }}
           onOpenAutoFocus={(e) => e.preventDefault()}
           id={`nlp--modal-${id}`}
         >

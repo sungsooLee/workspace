@@ -1,5 +1,5 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useEffect, useRef, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isString } from 'lodash';
 
@@ -42,6 +42,7 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
   ) => {
     const { t } = useTranslation();
     const { close: closeModal } = useModal();
+    const [isProcessing, setIsProcessing] = useState(false);
 
     // description scroll check Start
     const MAX_HEIGHT = 140;
@@ -69,6 +70,33 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
     }, []);
     // description scroll check End
 
+    const handleClose = useCallback(
+      (confirmed: boolean) => {
+        if (isProcessing) return;
+        setIsProcessing(true);
+        closeModal(confirmed);
+      },
+      [isProcessing, closeModal],
+    );
+
+    // 키보드 이벤트 핸들러
+    useEffect(() => {
+      if (isProcessing) return;
+
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          handleClose(true);
+        } else if (event.key === 'Escape') {
+          event.preventDefault();
+          handleClose(false);
+        }
+      };
+
+      document.addEventListener('keydown', handleKeyDown);
+      return () => document.removeEventListener('keydown', handleKeyDown);
+    }, [handleClose, isProcessing]);
+
     const Icon = () => {
       switch (type) {
         case 'error':
@@ -84,10 +112,6 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
       }
     };
 
-    const handleClose = (confirmed: boolean) => {
-      closeModal(confirmed);
-    };
-
     const defaultFooter = isConfirm ? (
       <div className={styles.btn_wrap}>
         <Button
@@ -95,6 +119,7 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
           size="lg"
           className={styles.btn_cancel}
           onClick={() => handleClose(false)}
+          disabled={isProcessing}
         >
           {cancelButtonLabel}
         </Button>
@@ -103,13 +128,19 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
           size="lg"
           className={styles.btn_confirm}
           onClick={() => handleClose(true)}
+          disabled={isProcessing}
         >
           {okButtonLabel}
         </Button>
       </div>
     ) : (
       <div className={styles.btn_wrap}>
-        <Button variant="primary" size="lg" onClick={() => handleClose(true)}>
+        <Button
+          variant="primary"
+          size="lg"
+          onClick={() => handleClose(true)}
+          disabled={isProcessing}
+        >
           {okButtonLabel}
         </Button>
       </div>
@@ -140,4 +171,5 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
   },
 );
 
+AlertComponent.displayName = 'Alert';
 export const Alert = AlertComponent;

@@ -228,20 +228,20 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
             name={'labelMessageName'}
             element={
               typeWatch === 'LABEL' ? (
-                // <Input
-                //   disabled={formDisabled}
-                //   placeholder={t('LABEL.common.placeholder1', {
-                //     type: t('LABEL.form.label.labelName'),
-                //   })}
-                // />
-                <Textarea
+                <Input
                   disabled={formDisabled}
                   placeholder={t('LABEL.common.placeholder1', {
                     type: t('LABEL.form.label.labelName'),
                   })}
-                  hiddenPlaceholder={formDisabled}
                 />
               ) : (
+                // <Textarea
+                //   disabled={formDisabled}
+                //   placeholder={t('LABEL.common.placeholder1', {
+                //     type: t('LABEL.form.label.labelName'),
+                //   })}
+                //   hiddenPlaceholder={formDisabled}
+                // />
                 <Textarea
                   disabled={formDisabled}
                   placeholder={t('LABEL.common.placeholder1', {
