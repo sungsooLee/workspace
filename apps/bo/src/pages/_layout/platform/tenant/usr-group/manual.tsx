@@ -7,7 +7,7 @@ import { Button } from '@learnway/ui';
 
 import { TenantUserGroupManualManagementList } from '@features/tenant';
 
-export const Route = createFileRoute('/_layout/platform/tenant/management/usr-group/manual')({
+export const Route = createFileRoute('/_layout/platform/tenant/usr-group/manual')({
   component: RouteComponent,
 });
 

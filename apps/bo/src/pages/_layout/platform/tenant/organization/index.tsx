@@ -11,7 +11,7 @@ import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 
 import { TenantCompanyOrganizationList } from '@features/platform/company';
 
-export const Route = createFileRoute('/_layout/platform/tenant/management/organization/')({
+export const Route = createFileRoute('/_layout/platform/tenant/organization/')({
   component: RouteComponent,
 });
 

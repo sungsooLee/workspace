@@ -13,7 +13,7 @@ import { TenantUserList, TenantUserRegistApplicationList } from '@features/tenan
 
 import { tenantQueryOptions } from '@entities/tenant';
 
-export const Route = createFileRoute('/_layout/platform/tenant/management/user/')({
+export const Route = createFileRoute('/_layout/platform/tenant/user/')({
   component: RouteComponent,
 });
 

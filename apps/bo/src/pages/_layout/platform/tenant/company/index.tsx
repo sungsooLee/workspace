@@ -19,7 +19,7 @@ import { queryOptions } from '@entities/companies/service/companies.queries';
 
 import { EnGlobalConst } from '@types';
 
-export const Route = createFileRoute('/_layout/platform/tenant/management/company/')({
+export const Route = createFileRoute('/_layout/platform/tenant/company/')({
   component: RouteComponent,
 });
 

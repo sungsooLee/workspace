@@ -9,7 +9,7 @@ import { Button } from '@learnway/ui';
 import { CompanyDetail } from '@features/platform/company';
 import { EnFormMode } from '@types';
 
-export const Route = createFileRoute('/_layout/platform/tenant/management/company/detail')({
+export const Route = createFileRoute('/_layout/platform/tenant/company/detail')({
   component: RouteComponent,
 });
 

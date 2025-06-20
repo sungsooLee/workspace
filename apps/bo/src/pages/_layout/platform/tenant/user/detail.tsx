@@ -11,8 +11,13 @@ import {
   TenantUserList,
   TenantUserRegistApplicationList,
 } from '@features/tenant';
+import {
+  CompanyUserDetail,
+  CompanyUserDetailBase,
+  CompanyUserDetailLearningHistory,
+} from '@features/platform/company';
 
-export const Route = createFileRoute('/_layout/platform/tenant/management/user/user-regist')({
+export const Route = createFileRoute('/_layout/platform/tenant/user/detail')({
   component: RouteComponent,
 });
 
@@ -44,7 +49,7 @@ function RouteComponent() {
         />
       </ContentsButtons>
       <MainContents>
-        <TenantUserRegist />
+        <CompanyUserDetail />
       </MainContents>
     </PageContainer>
   );

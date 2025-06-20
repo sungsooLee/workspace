@@ -10,7 +10,7 @@ import { Button } from '@learnway/ui';
 
 import { CompanyOrganization } from '@features/platform/company';
 
-export const Route = createFileRoute('/_layout/platform/tenant/management/organization/detail')({
+export const Route = createFileRoute('/_layout/platform/tenant/organization/detail')({
   component: RouteComponent,
 });
 

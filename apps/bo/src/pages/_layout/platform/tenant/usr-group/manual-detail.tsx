@@ -42,7 +42,7 @@ import {
 
 import { EnTenantDetailTabKey } from '@types';
 
-export const Route = createFileRoute('/_layout/platform/tenant/management/usr-group/manual-detail')(
+export const Route = createFileRoute('/_layout/platform/tenant/usr-group/manual-detail')(
   {
     component: RouteComponent,
   },
