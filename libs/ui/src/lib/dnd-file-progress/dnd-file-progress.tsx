@@ -39,6 +39,7 @@ const DndFileProgressComponent: FC<DndFileProgressProps> = ({
 }) => {
   const acceptFileString = useMemo(() => {
     if (!acceptFiles) return '';
+    if (typeof acceptFiles === 'string') return acceptFiles;
     return acceptFiles
       .map((acceptFile: any) => (acceptFile.startsWith('.') ? acceptFile : `.${acceptFile}`))
       .join(', ')
