@@ -26,6 +26,7 @@ import { DynamicFormField } from '@learnway/ui';
  * @param provider
  * @param children
  * @param dependencies
+ * @param condition
  * @param onDisplay
  * @constructor
  */
@@ -33,6 +34,7 @@ const FormDisplayComponent: FC<FormDisplayProps> = ({
   provider,
   children,
   dependencies,
+  condition = 'and',
   onDisplay,
 }) => {
   // provider에서 control, onFormChange, originalValues 추출
@@ -52,8 +54,9 @@ const FormDisplayComponent: FC<FormDisplayProps> = ({
   useEffect(() => {
     if (dependencies) {
       const isDependenciesMet =
-        watchedValue.length === dependencies.length &&
-        watchedValue.every((value: any, index: number) => value === dependencies[index].value);
+        watchedValue.length === dependencies.length && condition === 'and'
+          ? watchedValue.every((value: any, index: number) => value === dependencies[index].value)
+          : watchedValue.some((value: any, index: number) => value === dependencies[index].value);
 
       const isDisplayMet = onDisplay ? onDisplay(getValues()) : true;
 

@@ -2,22 +2,25 @@ import { skipToken } from '@tanstack/react-query';
 
 import { getQuerySkipToken } from '@learnway/shared';
 
-import TenantService from '../api/tenant';
-import { Tenant } from '../../../types/entities/tenant';
+import CompaniesService from '@entities/companies/api/companies';
 
-export const queryKeys = {
+import TenantService from '../api/tenant';
+import { Tenant } from '@types';
+
+export const tenantQueryKeys = {
   all: ['tenants'] as const,
   list: ['tenants-page'] as const,
-  detail: (tenantId: number) => [...queryKeys.list, tenantId] as const,
+  detail: (tenantId: number) => [...tenantQueryKeys.list, tenantId] as const,
+  tenantCompanys: (tenantIds: number[]) => ['tenants-companys', ...tenantIds],
 };
 
 export const tenantQueryOptions = {
   all: () => ({
-    queryKey: queryKeys.all,
+    queryKey: tenantQueryKeys.all,
     queryFn: async (): Promise<any> => TenantService.fetchAllTenant(),
   }),
   list: (params: any) => ({
-    queryKey: queryKeys.list,
+    queryKey: tenantQueryKeys.list,
     queryFn: () => TenantService.fetchListTenant(params),
     cacheTime: 0,
     staleTime: 0,
@@ -25,13 +28,31 @@ export const tenantQueryOptions = {
   detail: (tenantId?: number) =>
     tenantId
       ? {
-          queryKey: queryKeys.detail(tenantId),
+          queryKey: tenantQueryKeys.detail(tenantId),
           queryFn: (): Promise<any> => TenantService.fetchTenant(tenantId),
         }
       : getQuerySkipToken<Tenant>(),
+  tenantCompanys: (tenantIds?: number[]) =>
+    tenantIds && tenantIds.length > 0
+      ? {
+          queryKey: tenantQueryKeys.tenantCompanys(tenantIds),
+          queryFn: async () => {
+            const tenantPromise = TenantService.fetchAllTenant();
+            const companys = (await CompaniesService.fetchAll({})).content;
+            const tenantList = (await tenantPromise).filter((item) =>
+              tenantIds.includes(item.tenantId),
+            );
+            const allCompanyIds: any[] = [];
+            for (const i of tenantList) {
+              allCompanyIds.push(...i.companyTenantList.map((item: any) => item.companyId));
+            }
+            return companys.filter((item: any) => allCompanyIds.includes(item.companyId));
+          },
+        }
+      : getQuerySkipToken<any[]>(),
 };
 
-export const mutateOptions = {
+export const tenantMutateOptions = {
   create: () => ({
     mutationFn: (payload: Tenant) => TenantService.createTenant(payload),
   }),

@@ -7,6 +7,7 @@ import { PageContainer, MainContents, ContentsButtons, LinkBox } from '@widgets/
 import { Button } from '@learnway/ui';
 
 import { CompanyDetail } from '@features/platform/company';
+import { EnFormMode } from '@types';
 
 export const Route = createFileRoute('/_layout/platform/tenant/management/company/detail')({
   component: RouteComponent,
@@ -43,7 +44,7 @@ function RouteComponent() {
         </Button>
       </ContentsButtons>
       <MainContents>
-        <CompanyDetail ref={formRef} mode="view" />
+        <CompanyDetail ref={formRef} mode={EnFormMode.VIEW} />
       </MainContents>
     </PageContainer>
   );

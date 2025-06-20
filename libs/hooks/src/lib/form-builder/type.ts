@@ -222,6 +222,8 @@ export type DynamicFormProvider = {
   onFormFocus: (fieldName: string) => void;
   /** 필드 값 가져오기 */
   getValues: UseFormReturn['getValues'];
+  /** 필드 값 변경 */
+  setValue: UseFormReturn['setValue'];
   /** 초기 필드 값 */
   originalValues: Record<string, any>;
   /** 필드 에러 제거 */
@@ -248,6 +250,8 @@ export type UseDynamicFormResult = {
   formState: UseFormReturn['formState'];
   /** 현재 폼 데이터 가져오기 */
   getValues: UseFormReturn['getValues'];
+  /** 필드 값 변경 */
+  setValue: UseFormReturn['setValue'];
   /** 현재 폼 유효성 강제 체크 하기 */
   onFormValid: UseFormReturn['trigger'];
   /** 필드 값 변경 핸들러 */
@@ -258,6 +262,9 @@ export type UseDynamicFormResult = {
     /** 필드가 필수인지 확인하는 함수 */
     isFieldRequired: (fieldName: string) => boolean;
   };
+
+  /**   builders에  설정된 필드에 clearFormError 호출 과 value 값에 해당 하는 object를 리턴함 */
+  getInitByBuilders: () => any;
 };
 
 // dynamic form config value 추적을 위한 타입 정의
@@ -484,6 +491,15 @@ export type UseSearchBoxReturn = {
    * @returns 현재 필드 값 객체 반환
    */
   getValues: UseFormReturn['getValues'];
+
+  /**
+   * 폼의 현재 값을 SelectOption 형식으로 가져오기 함수
+   *
+   * text 데이터는 { value: value, label: value }로 리턴
+   *
+   * @returns {Record<string, SelectOption>}
+   */
+  getValuesWithLabel: () => Record<string, SelectOption>;
 
   /**
    * 폼의 값을 외부에서 변경함

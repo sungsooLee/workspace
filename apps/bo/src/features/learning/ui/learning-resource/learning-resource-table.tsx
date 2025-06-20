@@ -1,4 +1,4 @@
-import { ALL_OPTION, CODE_GROUP, useSearchBox, compactValues } from '@learnway/hooks';
+import { ALL_OPTION, CODE_GROUP, useSearchBox, compactValues, SelectOption } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
 import { SearchBox } from '@shared/ui/search-box';
 import {
@@ -290,9 +290,16 @@ function LearningResourceTableComponent() {
     // },
   };
 
-  const { provider: searchProvider, getValues, setOptions, setValue } = useSearchBox(searchConfig);
+  const {
+    provider: searchProvider,
+    getValues,
+    getValuesWithLabel,
+    setOptions,
+    setValue,
+  } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const [params, setParams] = useState<Record<string, any>>({});
+  const [valuesWithLabel, setValuesWithLabel] = useState<Record<string, SelectOption>>({});
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const [tableInstance, setTableInstance] = useState<Table<any>>(); // Grid 로부터 받을 table 인스턴스를 저장할 상태
 
@@ -329,6 +336,7 @@ function LearningResourceTableComponent() {
     const processedQuery = compactValues({ ...rawQuery, isMockUp: true });
 
     setParams(processedQuery);
+    setValuesWithLabel(getValuesWithLabel());
     gridFetch(processedQuery);
   }
 
@@ -442,6 +450,8 @@ function LearningResourceTableComponent() {
               downloadMethod="post"
               downloadUrl={`${CMSApiPrefix()}/contents/excel`}
               downloadParams={params}
+              downloadParamLabels={valuesWithLabel}
+              dataCount={data?.totalElements}
               disabled={!data?.totalElements}
             />
             <Button

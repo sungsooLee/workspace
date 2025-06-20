@@ -45,8 +45,10 @@ const RadioGroupComponent = forwardRef<
         defaultValue={defaultValue}
         {...props}
       >
-        {options.map((option: RadioGroupOption) => {
-          const uniqueId = name ? `${name}-${option.value}` : `radio-${option.value}`;
+        {options.map((option: RadioGroupOption, index: number) => {
+          const uniqueId = name
+            ? `${name}-${option.value}_${index}`
+            : `radio-${option.value}_${index}`;
           return (
             <div className={styles.radio} key={option.value}>
               <Primitive.Item

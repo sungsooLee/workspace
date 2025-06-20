@@ -88,6 +88,7 @@ export const CODE_GROUP = {
   'pms.menu.MenuScopeCode': 'pms.menu.MenuScopeCode',
   'pms.multilingual.KeyTypeCode': 'pms.multilingual.KeyTypeCode',
   'pms.multilingual.LanguageType': 'pms.multilingual.LanguageType',
+  'pms.role.RoleApplicationStatus': 'pms.role.RoleApplicationStatus',
   'pms.role.ChannelScope': 'pms.role.ChannelScope',
   'pms.role.CompanyScope': 'pms.role.CompanyScope',
   'pms.role.DeptScope': 'pms.role.DeptScope',
@@ -97,6 +98,7 @@ export const CODE_GROUP = {
   'pms.terms.TermsStatusCode': 'pms.terms.TermsStatusCode',
   'pms.terms.TermsTargetCode': 'pms.terms.TermsTargetCode',
   'pms.terms.TermsTypeCode': 'pms.terms.TermsTypeCode',
+  'pms.user.Gender': 'pms.user.Gender',
   'pms.user.UserGroupType': 'pms.user.UserGroupType',
   'pms.user.UserState': 'pms.user.UserState',
   'vps.video.FfmpegTaskType': 'vps.video.FfmpegTaskType',
@@ -106,5 +108,6 @@ export const CODE_GROUP = {
   'manual.tenant.tenantId': 'manual.tenant.tenantId',
   'pms.multilingual.LangCountryCode': 'pms.multilingual.LangCountryCode',
   'pms.role.RoleType': 'pms.role.RoleType',
+  'manual.bo.role.roidId': 'manual.bo.role.roidId',
 };
 export type CODE_GROUP_TYPE = (typeof CODE_GROUP)[keyof typeof CODE_GROUP];

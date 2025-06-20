@@ -30,6 +30,33 @@ export function useGetRoleUserGroups(roleCode: string) {
   });
 }
 
+export function useGetRoleUserMe(siteScope: string) {
+  return useQuery({
+    ...queryOptions.getRoleMe(siteScope),
+  });
+}
+
+/**
+ * @description 나의 역할 신청 목록
+ * @param roleApplicationId
+ */
+export function useGetRoleApplicationList(siteScope: string) {
+  return useQuery({
+    ...queryOptions.getRoleApplicationList(siteScope),
+  });
+}
+
+/**
+ * @description 나의 역할 신청조회 단건
+ * @param roleApplicationId
+ */
+export function useGetRoleApplication(roleApplicationId: number) {
+  return useQuery({
+    ...queryOptions.getRoleApplication(roleApplicationId),
+    enabled: !!roleApplicationId,
+  });
+}
+
 export function useFetchRoleTree(tenantId: number, siteScope: string) {
   return useQuery({ ...queryOptions.getRoleTree(tenantId, siteScope) });
 }

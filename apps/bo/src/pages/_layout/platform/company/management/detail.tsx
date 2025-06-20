@@ -7,6 +7,7 @@ import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { CompanyDetail, CompanyDetailHR } from '@features/platform/company';
+import { EnFormMode } from '@types';
 
 export const Route = createFileRoute('/_layout/platform/company/management/detail')({
   component: RouteComponent,
@@ -45,7 +46,7 @@ function RouteComponent() {
     {
       title: '회사 정보',
       key: 'company',
-      content: <CompanyDetail ref={formRef} mode="view" />,
+      content: <CompanyDetail ref={formRef} mode={EnFormMode.VIEW} />,
     },
     {
       title: 'HR 연동 정보',

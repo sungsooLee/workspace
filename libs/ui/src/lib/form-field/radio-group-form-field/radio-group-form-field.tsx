@@ -18,6 +18,7 @@ const RadioGroupFormFieldComponent = forwardRef<HTMLDivElement, RadioGroupFormFi
       <RadioGroup
         ref={ref}
         value={value}
+        name={name}
         defaultValue={value}
         onValueChange={onChange}
         options={options.map((item: any) => ({ value: item.value, label: t(item.label) }))}

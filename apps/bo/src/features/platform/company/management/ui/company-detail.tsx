@@ -17,7 +17,7 @@ import dayjs from 'dayjs';
 import { FormRow, FormSubTitle, ContentsHistoryInfoFormField } from '@shared/ui';
 import { FormDisplay } from '@features/form/ui/form-display';
 import { DynamicFormConfig, useDynamicForm, CODE_GROUP } from '@learnway/hooks';
-import { cn, DATE_TIME_FORMAT, getDateToString, getStringToDate } from '@learnway/shared';
+import { DATE_TIME_FORMAT, getDateToString, getStringToDate } from '@learnway/shared';
 import {
   DuplicateCheckInputFormField,
   DuplicateState,
@@ -25,12 +25,11 @@ import {
 import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
 import { LoginRestrictTimeSettingModal } from '@features/shared/ui/modal/login-restrict-time-setting-modal';
 import { UserGroupTabsChoiceModal, UserGroupChoiceModal } from '@features/shared';
-import { EnGlobalConst } from '@types';
-
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-
+import { EnGlobalConst, EnFormMode } from '@types';
 import { useCreateCompany, useUpdateCompany, useFetchCompany } from '@entities/companies';
 import CompaniesService from '@entities/companies/api/companies';
+
+import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
 const EMAIL_REGEX =
   /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
@@ -51,7 +50,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
   const [loginRestrictTimeSettings, setLoginRestrictTimeSettings] = useState<any[]>([]);
 
   useEffect(() => {
-    if (props.mode === 'view' && detailData) {
+    if (props.mode === EnFormMode.VIEW && detailData) {
       console.log('detailData', detailData);
       const initialData = {
         ...detailData,
@@ -179,11 +178,11 @@ const CompanyDetailComponent = (props: any, ref: any) => {
     };
     console.log('mode', props.mode);
     console.log('payload', payload);
-    if (props.mode === 'add') {
+    if (props.mode === EnFormMode.ADD) {
       if (await openConfirm('저장 하시겠습니까?')) {
         create(payload);
       }
-    } else if (props.mode === 'view') {
+    } else if (props.mode === EnFormMode.VIEW) {
       if (await openConfirm('수정 하시겠습니까?')) {
         update(payload);
       }
@@ -193,7 +192,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
   const handleAddClick = () => {
     openModal({
       width: 'lg',
-      content: <LoginRestrictTimeSettingModal />,
+      content: <LoginRestrictTimeSettingModal mode={EnFormMode.ADD} />,
       onClose(data: any) {
         if (data) {
           console.log('## data', data);
@@ -247,17 +246,19 @@ const CompanyDetailComponent = (props: any, ref: any) => {
       content: <UserGroupTabsChoiceModal />,
       onClose(data: any) {
         console.log('### selectedUserGroups', data);
-        const userGroups = data.map((group: any) => ({
-          userGroupId: group.key,
-          isUsed: true,
-        }));
-        console.log('## tempLoginRestrictTimeSetting', tempLoginRestrictTimeSetting.current);
-        const newSetting = JSON.parse(JSON.stringify(tempLoginRestrictTimeSetting.current));
-        tempLoginRestrictTimeSetting.current = null;
-        setLoginRestrictTimeSettings([
-          ...loginRestrictTimeSettings,
-          { ...newSetting, companyLoginRestrictionUserGroupList: userGroups },
-        ]);
+        if (data) {
+          const userGroups = data.map((group: any) => ({
+            userGroupId: group.key,
+            isUsed: true,
+          }));
+          console.log('## tempLoginRestrictTimeSetting', tempLoginRestrictTimeSetting.current);
+          const newSetting = JSON.parse(JSON.stringify(tempLoginRestrictTimeSetting.current));
+          tempLoginRestrictTimeSetting.current = null;
+          setLoginRestrictTimeSettings([
+            ...loginRestrictTimeSettings,
+            { ...newSetting, companyLoginRestrictionUserGroupList: userGroups },
+          ]);
+        } else tempLoginRestrictTimeSetting.current = null;
       },
     });
   };
@@ -269,18 +270,20 @@ const CompanyDetailComponent = (props: any, ref: any) => {
       onClose(data: any) {
         console.log('### selectedUserGroups', data);
         console.log('### info', info);
-        const userGroups = data.map((group: any) => ({
-          userGroupId: group.key,
-          isUsed: true,
-        }));
-        setLoginRestrictTimeSettings((prev) => {
-          const newSettings = [...prev];
-          newSettings[data.index] = {
-            ...newSettings[data.index],
-            companyLoginRestrictionUserGroupList: userGroups,
-          };
-          return newSettings;
-        });
+        if (data) {
+          const userGroups = data.map((group: any) => ({
+            userGroupId: group.key,
+            isUsed: true,
+          }));
+          setLoginRestrictTimeSettings((prev) => {
+            const newSettings = [...prev];
+            newSettings[data.index] = {
+              ...newSettings[data.index],
+              companyLoginRestrictionUserGroupList: userGroups,
+            };
+            return newSettings;
+          });
+        }
       },
     });
   };
@@ -303,7 +306,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
   const handleLoginRestrictTimeDetailClick = (info: any) => {
     openModal({
       width: 'lg',
-      content: <LoginRestrictTimeSettingModal mode={'view'} data={info} />,
+      content: <LoginRestrictTimeSettingModal mode={EnFormMode.VIEW} data={info} />,
       onClose(data: any) {
         if (data) {
           console.log('## data', data);
@@ -639,7 +642,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
         <FormRow provider={provider} name={'managerOfficeTel'} />
         <FormRow provider={provider} name={'managerPhone'} />
       </ContentsRow>
-      {props.mode === 'view' && <ContentsHistoryInfoFormField />}
+      {props.mode === EnFormMode.VIEW && <ContentsHistoryInfoFormField />}
     </form>
   );
 };

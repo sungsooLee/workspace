@@ -2,16 +2,16 @@ import { UseQueryOptions } from '@tanstack/react-query';
 import { getQuerySkipToken } from '@learnway/shared';
 import { HmgDepartmentService } from '../api/hmg-department';
 
-export const queryKeys = {
+export const hmgQueryKeys = {
   all: ['hmg-department-all'] as const,
   tree: (companyCode: string[]) => ['hmg-department-tree', ...companyCode],
   child: (param: any) => ['hmg-department-child', param],
   user: (param: any) => ['department-user', param],
 };
 
-export const queryOptions = {
+export const hmgQueryOptions = {
   tree: (companyCode: string[]) => ({
-    queryKey: queryKeys.tree(companyCode),
+    queryKey: hmgQueryKeys.tree(companyCode),
     queryFn: () => {
       const companys = companyCode.filter((item) => item !== undefined);
       return companys.length > 0 ? HmgDepartmentService.getDepartmentTree(companyCode) : undefined;
@@ -19,13 +19,13 @@ export const queryOptions = {
     disabled: !companyCode,
   }),
   child: (param: any) => ({
-    queryKey: queryKeys.child(param),
+    queryKey: hmgQueryKeys.child(param),
     queryFn: () => {
       return HmgDepartmentService.getDepartmentChildDepartmentList(param);
     },
   }),
   user: (param: any) => ({
-    queryKey: queryKeys.user(param),
+    queryKey: hmgQueryKeys.user(param),
     queryFn: () => {
       return HmgDepartmentService.getDepartmentUserList(param);
     },

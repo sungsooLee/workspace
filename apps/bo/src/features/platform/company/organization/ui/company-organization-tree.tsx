@@ -1,5 +1,6 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { useRouter } from '@tanstack/react-router';
+import { useWatch } from 'react-hook-form';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 
@@ -20,6 +21,7 @@ import {
   Tabs,
   TreeType,
   TreeNode,
+  useModal,
 } from '@learnway/ui';
 import {
   useSearchBox,
@@ -36,12 +38,22 @@ import { isEqual } from 'lodash';
 
 import { transformDepartmentApiDataToTreeData } from '@features/platform/company/organization/service/company-organization.service';
 import { findOrganizationPathById } from '@features/platform/company';
-import { useGetCompanyDepartmentTree } from '@entities/department/service/department.hook';
-import { useGetCompanyHmgDepartmentTree } from '@entities/department/service/hmg-department.hook';
+
+import {
+  useGetCompanyDepartmentDetail,
+  useGetCompanyHmgDepartmentTree,
+  useGetCompanyDepartmentTree,
+  useCreateDepartment,
+  useUpdateDepartment,
+  DepartmentService,
+} from '@entities/department';
+
 import { CompanyOrganizationInfoList } from './company-organization-info-list';
 import { CompanyOrganizationUserList } from './company-organization-info-user';
 
 import { EnFormMode } from '@types';
+import { DuplicateState, DuplicateCheckInputFormField } from '@features/tenant';
+import { UserChoiceModal } from '@features/shared';
 export enum EnOrganizationShowType {
   check = 'check',
   origin = 'origin',
@@ -63,8 +75,8 @@ const TenantCompanyOrganizationTreeComponent = ({
   showType: string;
 }) => {
   const router = useRouter();
+  const { confirm: openConfirm, alert: openAlert } = useModal();
 
-  const [companyDeparmentTree, setCompanyDepartmentTree] = useState<any>();
   const [deptTreeData, setDeptTreeData] = useState([]);
   const [selectedNode, setSelectedNode] = useState<any>();
   const [viewNode, setViewNode] = useState<any>();
@@ -72,13 +84,40 @@ const TenantCompanyOrganizationTreeComponent = ({
   const [formMode, setFormMode] = useState(EnFormMode.NONE);
   const [pathString, setPathString] = useState<string>();
 
-  const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, control } =
+  const { provider, fetchData, onSubmit, onFormChange, getValues, getInitByBuilders, control } =
     useDynamicForm(formConfig);
 
   const { data: departmentTreeData, refetch } = useGetCompanyDepartmentTree([companyCode]);
   const { data: hmgDepartmentTreeData } = useGetCompanyHmgDepartmentTree([companyCode]);
+  const { data: departmentData } = useGetCompanyDepartmentDetail(viewNode?.key);
+  const { create } = useCreateDepartment({
+    onSuccess: () => {
+      openAlert({
+        title: t('저장되었습니다.'),
+        onClose: () => {
+          //
+        },
+      });
+    },
+  });
+  const { update } = useUpdateDepartment({
+    onSuccess: () => {
+      openAlert({
+        title: t('저장되었습니다.'),
+        onClose: () => {
+          //
+        },
+      });
+    },
+  });
+
+  const watchedDepartment = useWatch({
+    control: control,
+    name: 'managerEmployeeNumber',
+  });
 
   const handleSelectedNodeChange = (node: any) => {
+    console.log('##### handleSelectedNodeChange', node);
     if (node.key !== 'root' && node.parentKey !== 'root') {
       const location = findOrganizationPathById(deptTreeData, node.key);
       setPathString(location);
@@ -92,6 +131,29 @@ const TenantCompanyOrganizationTreeComponent = ({
     setSelectedNode(node);
     setViewNode(null);
     setFormMode(EnFormMode.NONE);
+  };
+  const handleAppendSubOrganization = (node: TreeNode, level: number) => {
+    console.log('### node', node);
+    const initdata = getInitByBuilders();
+    initdata.deptLoc = findOrganizationPathById(deptTreeData, node.key);
+    initdata.parentName = node.title;
+    initdata.parentDeptCode = node.key;
+    initdata.deptName = {
+      fieldValue: '',
+      checkState: DuplicateState.needInput,
+    };
+    fetchData(initdata);
+    setSelectedNode(node);
+    setViewNode(null);
+    setFormMode(EnFormMode.ADD);
+  };
+
+  const duplicateDeptNameCheck = async (deptName: string) => {
+    const payload = { deptName: deptName };
+    const result: boolean = await DepartmentService.existDepartmentName(payload);
+
+    if (result) return DuplicateState.duplicated;
+    else return DuplicateState.ok;
   };
 
   const renderTabOrganizationContent = () => {
@@ -138,8 +200,8 @@ const TenantCompanyOrganizationTreeComponent = ({
   }, [departmentTreeData]);
 
   useEffect(() => {
-    if (showType === EnOrganizationShowType.origin && departmentTreeData) {
-      const transformedData = transformDepartmentApiDataToTreeData(departmentTreeData);
+    if (showType === EnOrganizationShowType.origin && hmgDepartmentTreeData) {
+      const transformedData = transformDepartmentApiDataToTreeData(hmgDepartmentTreeData);
       setDeptTreeData(transformedData);
       if (transformedData?.length > 0) {
         const root = transformedData[0];
@@ -148,6 +210,24 @@ const TenantCompanyOrganizationTreeComponent = ({
       }
     }
   }, [hmgDepartmentTreeData]);
+
+  useEffect(() => {
+    if (departmentData) {
+      fetchData(departmentData);
+    }
+  }, [departmentData]);
+
+  useEffect(() => {
+    const selectManagerEmployeeNumber = watchedDepartment;
+    if (selectManagerEmployeeNumber.length > 0) {
+      console.log('#### selectManagerEmployeeNumber', selectManagerEmployeeNumber);
+      onFormChange({
+        managerName: selectManagerEmployeeNumber[0].name,
+      });
+    } else {
+      onFormChange({ managerName: '' });
+    }
+  }, [watchedDepartment]);
 
   const tabItems = [
     {
@@ -162,8 +242,23 @@ const TenantCompanyOrganizationTreeComponent = ({
     },
   ];
 
+  const handleOnSubmit = async (data: any) => {
+    console.log('### handleOnSubmit', data);
+    const payload = {
+      companyCode: companyCode,
+      sortOrder: 1,
+      managerEmployeeNumberUuid: data.managerEmployeeNumber[0]?.uuid,
+      deptName: data.deptName.fieldValue,
+      deptDesc: data.deptDesc,
+    };
+    if (formMode === EnFormMode.ADD) {
+      if (await openConfirm('저장 하시겠습니까?')) {
+        create(payload);
+      }
+    }
+  };
+
   const renderTreeCustomButtonNode = (node: TreeNode, level: number) => {
-    console.log('showType', showType);
     if (level === 0) return;
 
     if (showType === EnOrganizationShowType.origin) {
@@ -187,13 +282,30 @@ const TenantCompanyOrganizationTreeComponent = ({
         <div className={'gap-10px flex'}>
           <div className={'flex items-center'}>
             <Button
+              label={t('하위 조직 추가')}
+              variant={
+                node?.key === selectedNode?.key && formMode === EnFormMode.ADD ? 'primary' : 'gray2'
+              }
+              size="xs"
+              type="button"
+              stopPropagation
+              onClick={(e) => {
+                handleAppendSubOrganization(node, level);
+              }}
+            />
+            <Button
+              label={t('선택')}
+              variant={
+                node?.key === selectedNode?.key && formMode === EnFormMode.NONE
+                  ? 'primary'
+                  : 'gray2'
+              }
+              size="xs"
+              type="button"
+              stopPropagation
               onClick={(e) => {
                 handleNodeCustomButton(node, level);
               }}
-              variant={node?.key === selectedNode?.key ? 'primary' : 'gray2'}
-              size="xs"
-              type="button"
-              label={t('선택')}
             />
           </div>
         </div>
@@ -231,39 +343,102 @@ const TenantCompanyOrganizationTreeComponent = ({
       {formMode !== EnFormMode.NONE && (
         <div className={cn(styles.start, styles.wrap)}>
           <div className={cn(layoutStyles.inner)}>
-            <FormSubTitle
-              label={t('조직 대상자')}
-              titleNode={pathString}
-              lineType="light"
-            ></FormSubTitle>
-            <div className={styles.contents_wrap}>
-              <form>
+            <form onSubmit={onSubmit(handleOnSubmit)}>
+              <FormSubTitle
+                label={t('조직 대상자')}
+                titleNode={pathString}
+                lineType="light"
+                actionNode={
+                  <>
+                    <Button
+                      label={t('초기화')}
+                      variant={'text'}
+                      size={'sm'}
+                      onClick={() => onFormChange()}
+                    />
+                    <Button
+                      label={t('삭제')}
+                      variant={'text'}
+                      size={'sm'}
+                      disabled={formMode === EnFormMode.ADD}
+                    />
+                    <Button type="submit" label={t('저장')} variant={'save'} size={'sm'} />
+                  </>
+                }
+              ></FormSubTitle>
+              <div className={styles.contents_wrap}>
                 <ContentsRow>
-                  <FormRow provider={provider} name="c1" element={<Input disabled={true} />} />
+                  <FormRow provider={provider} name="deptLoc" element={<Input disabled={true} />} />
                 </ContentsRow>
                 <ContentsRow>
-                  <FormRow provider={provider} name="c2" element={<Input disabled={true} />} />
+                  <FormRow
+                    provider={provider}
+                    name="parentName"
+                    element={<Input disabled={true} />}
+                  />
                 </ContentsRow>
                 <ContentsRow>
-                  <FormRow provider={provider} name="c3" element={<Input disabled={true} />} />
+                  <FormRow
+                    provider={provider}
+                    name="parentDeptCode"
+                    element={<Input disabled={true} />}
+                  />
                 </ContentsRow>
                 <ContentsRow>
-                  <FormRow provider={provider} name="c4" element={<Input disabled={true} />} />
+                  <FormRow
+                    provider={provider}
+                    name="deptCode"
+                    element={<Input disabled={true} />}
+                  />
                 </ContentsRow>
                 <ContentsRow>
-                  <FormRow provider={provider} name="c5" element={<Input disabled={true} />} />
+                  <FormRow
+                    provider={provider}
+                    name="deptName"
+                    element={
+                      <DuplicateCheckInputFormField onDuplicationCheck={duplicateDeptNameCheck} />
+                    }
+                  />
                 </ContentsRow>
                 <ContentsRow>
-                  <FormRow provider={provider} name="c6" element={<Input disabled={true} />} />
+                  <FormRow
+                    provider={provider}
+                    name="managerEmployeeNumber"
+                    element={
+                      <ChipListModalSelectorFormField
+                        chipList={{
+                          labelField: 'employeeNumber',
+                          valueField: 'uuid',
+                          hideBorder: true,
+                          visibleCount: 1,
+                        }}
+                        modalConfig={{
+                          title: '',
+                          width: 'xl',
+                          content: <UserChoiceModal />,
+                        }}
+                        selectOnlyOne
+                      />
+                    }
+                  />
                 </ContentsRow>
                 <ContentsRow>
-                  <FormRow provider={provider} name="c7" element={<Input disabled={true} />} />
+                  <FormRow
+                    provider={provider}
+                    name="managerName"
+                    element={<Input disabled={true} />}
+                  />
                 </ContentsRow>
                 <ContentsRow>
-                  <FormRow provider={provider} name="c8" />
+                  <FormRow
+                    provider={provider}
+                    name="deptDesc"
+                    element={<TextareaFormField resize={'none'} />}
+                  />
                 </ContentsRow>
-              </form>
-            </div>
+                {formMode === EnFormMode.VIEW && <ContentsHistoryInfoFormField />}
+              </div>
+            </form>
           </div>
         </div>
       )}
@@ -276,58 +451,92 @@ export const TenantCompanyOrganizationTree = TenantCompanyOrganizationTreeCompon
 const formConfig: DynamicFormConfig = {
   builders: [
     {
-      name: 'c1',
+      name: 'deptLoc',
       type: 'text',
       label: t('위치'),
       value: '',
+      placeholder: '',
     },
     {
-      name: 'c2',
+      name: 'parentName',
       type: 'text',
       label: t('상위 조직명'),
       value: '',
-      size: 10,
+      placeholder: '',
     },
     {
-      name: 'c3',
+      name: 'parentDeptCode',
       type: 'text',
       label: t('상위 조직코드'),
       value: '',
+      placeholder: '',
     },
     {
-      name: 'c4',
+      name: 'deptCode',
       type: 'text',
       label: t('조직코드'),
       value: '',
+      placeholder: '',
     },
     {
-      name: 'c5',
-      type: 'text',
+      name: 'deptName',
+      type: 'custom',
       label: t('조직명'),
-      value: '',
+      value: { fieldValue: '', checkState: DuplicateState.needInput },
+      format: 'object',
+      maxLength: 20,
+      placeholder: '',
     },
     {
-      name: 'c6',
+      name: 'managerEmployeeNumber',
       type: 'custom',
       label: t('조직장 사번'),
       format: 'array',
       value: [],
     },
     {
-      name: 'c7',
+      name: 'managerName',
       type: 'text',
       label: t('조직장 이름'),
       value: '',
+      placeholder: '',
     },
     {
-      name: 'c8',
+      name: 'deptDesc',
       type: 'textarea',
       label: t('설명'),
       value: '',
       maxLength: 50,
+      placeholder: '',
     },
+    { name: 'deptId', type: 'hidden', label: '', value: '' },
+    { name: 'parentDeptId', type: 'hidden', label: '', value: '' },
   ],
   validator: {
-    c5: { required: true },
+    deptName: {
+      format: 'object',
+      required: true,
+      conditions: [
+        {
+          fn: (values) => {
+            const fieldValue = values.deptName.fieldValue;
+            if (fieldValue === '') return true;
+            return false;
+          },
+          message: t('LABEL.form.validation.needInput', { code: t('조직명') }),
+        },
+        {
+          fn: (values: Record<string, any>) =>
+            values.deptName.checkState === DuplicateState.check ||
+            values.deptName.checkState === DuplicateState.needInput,
+          message: t('LABEL.form.validation.check', { code: t('조직명') }),
+        },
+        {
+          fn: (values: Record<string, any>) =>
+            values.deptName.checkState === DuplicateState.duplicated,
+          message: t('LABEL.form.validation.duplicated', { code: t('조직명') }),
+        },
+      ],
+    },
   },
 };

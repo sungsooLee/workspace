@@ -17,6 +17,8 @@ export interface ChipListModalSelectorFormFieldProps extends BaseFormFieldProps<
   actionNode?: ReactNode;
   /** 추가 버튼 */
   showAddButton?: boolean;
+  /** 1개만 선택 가능 */
+  selectOnlyOne?: boolean;
 }
 
 /**
@@ -35,6 +37,7 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
       modalConfig,
       value = [],
       showAddButton,
+      selectOnlyOne,
       onChange: ownerOnChange,
       chipList: chipListProps = {
         labelField: 'label',
@@ -51,6 +54,9 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
     const mergeValue = (modalData: any) => {
       if (!modalData) {
         return value;
+      }
+      if (selectOnlyOne) {
+        return Array.isArray(modalData) ? modalData[0] : [modalData];
       }
       const key = chipListProps?.valueField || 'value';
       const list = Array.isArray(modalData) ? modalData : [modalData];
