@@ -78,7 +78,6 @@ function RouteComponent() {
         />
         <Button
           type="button"
-          s
           variant="primary"
           size="sm"
           label={t('LABEL.button.courseOpen')}
