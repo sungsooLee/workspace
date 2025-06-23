@@ -1,6 +1,6 @@
 import { queryOptions } from '@entities/label-messages/service/label-messages.queries';
 import { CourseTypeOptionCardModal } from '@features/learning/course';
-import { GridExcelButtons } from '@features/shared';
+import { GridExcelDownloadButton, GridExcelUploadButton } from '@features/shared';
 import { LMSApiPrefix } from '@learnway/config';
 import { useSearchBox } from '@learnway/hooks';
 import { Button, Divider, GridBox, useGridBox, useModal } from '@learnway/ui';
@@ -78,7 +78,6 @@ function RouteComponent() {
         />
         <Button
           type="button"
-          s
           variant="primary"
           size="sm"
           label={t('LABEL.button.courseOpen')}
@@ -101,25 +100,27 @@ function RouteComponent() {
             <Button variant="text" size="sm" label={t('LABEL.grid.header.toShare')} />
           }
           excelButtons={
-            <GridExcelButtons
-              showUpload={true}
-              showDownload={true}
-              uploadUrl="/multilingual/exportExcel"
-              validateUrl="/multilingual/excelUploadValidation"
-              downloadUrl={`${LMSApiPrefix()}/multilingual/exportExcel`}
-              downloadParams={getValues()}
-              onBeforeDownload={async () => {
-                const keyTypeCode = getValues('keyTypeCode');
-                const targetLocale = getValues('targetLocale');
-                if (keyTypeCode === '' || targetLocale === '') {
-                  alert({
-                    type: 'warning',
-                    content: t('분류와 번역언어는 필수 항목입니다.'),
-                  });
-                  throw new Error(t('분류와 번역언어는 필수 항목입니다.'));
-                }
-              }}
-            />
+            <>
+              <GridExcelUploadButton
+                url="/multilingual/exportExcel"
+                validateUrl="/multilingual/excelUploadValidation"
+              />
+              <GridExcelDownloadButton
+                url={`${LMSApiPrefix()}/multilingual/exportExcel`}
+                params={getValues()}
+                onBeforeDownload={async () => {
+                  const keyTypeCode = getValues('keyTypeCode');
+                  const targetLocale = getValues('targetLocale');
+                  if (keyTypeCode === '' || targetLocale === '') {
+                    alert({
+                      type: 'warning',
+                      content: t('분류와 번역언어는 필수 항목입니다.'),
+                    });
+                    throw new Error(t('분류와 번역언어는 필수 항목입니다.'));
+                  }
+                }}
+              />
+            </>
           }
         />
       </MainContents>
