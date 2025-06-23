@@ -71,7 +71,7 @@ const CompanyOrganizationInfoListComponent = ({
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
       <div className={cn(boxStyles.start, boxStyles.inner)}>
         <div className="grid_wrap">
-          <GridBox config={gConfig} columns={columns} />
+          <GridBox config={gConfig} columns={columns} showNumberingColumn />
         </div>
       </div>
     </>
@@ -85,21 +85,27 @@ const searchConfig: SearchBoxConfig = {
     [
       {
         name: 'hrInfoManageType',
-        type: 'text',
-        label: t('조직등록유형'),
+        type: 'dropdown',
+        label: t('조직 등록 유형'),
         value: '',
+        presetOptionLabel: t('전체'),
+        optionsConfig: {
+          codeGroup: CODE_GROUP['pms.company.HrInfoManageType'],
+        },
       },
       {
         name: 'deptName',
         type: 'text',
         label: t('조직명'),
         value: '',
+        placeholder: t('입력'),
       },
       {
         name: 'deptManagerName',
         type: 'text',
-        label: t('조직장이름'),
+        label: t('조직장 이름'),
         value: '',
+        placeholder: t('입력'),
       },
     ],
   ],
@@ -110,10 +116,10 @@ const gridConfigOrg = {
   columns: [],
   data: [],
 
-  pagination: {
-    pageSize: 20,
-    pageIndex: 0,
-    totalRows: 0,
+  gridState: {
+    page: 0,
+    size: 10,
+    sort: [],
   },
 };
 
@@ -122,10 +128,10 @@ const gridConfigPlat = {
   columns: [],
   data: [],
 
-  pagination: {
-    pageSize: 20,
-    pageIndex: 0,
-    totalRows: 0,
+  gridState: {
+    page: 0,
+    size: 10,
+    sort: [],
   },
 };
 
@@ -134,7 +140,7 @@ const columns = [
   columnHelper.accessor('tenantName', {
     id: 'tenantName',
     cell: (info) => info.getValue(),
-    header: t('조직등록유형'),
+    header: t('조직 등록 유형'),
     size: 152,
   }),
   columnHelper.accessor('tenantSite', {
@@ -153,7 +159,7 @@ const columns = [
   columnHelper.accessor('tenantRoleList', {
     id: 'tenantRoleList',
     cell: (info) => info.getValue(),
-    header: t('조직사번'),
+    header: t('조직장 사번'),
     size: 120,
   }),
   columnHelper.accessor('isUsed', {

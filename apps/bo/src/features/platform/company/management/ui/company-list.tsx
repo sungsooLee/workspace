@@ -136,7 +136,7 @@ const searchConfig: SearchBoxConfig = {
       {
         name: 'modifyDate',
         type: 'date-range',
-        label: t('수정 기간'),
+        label: t('수정일'),
         value: {
           from: undefined,
           to: undefined,

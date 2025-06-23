@@ -639,7 +639,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
         <FormRow provider={provider} name={'managerOfficeTel'} />
         <FormRow provider={provider} name={'managerPhone'} />
       </ContentsRow>
-      {props.mode === EnFormMode.VIEW && <ContentsHistoryInfoFormField />}
+      {/* {props.mode === EnFormMode.VIEW && <ContentsHistoryInfoFormField />} */}
     </form>
   );
 };

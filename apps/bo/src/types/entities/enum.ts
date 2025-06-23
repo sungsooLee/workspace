@@ -2,6 +2,7 @@ export enum EnFormMode {
   NONE = 'NONE',
   VIEW = 'VIEW',
   ADD = 'ADD',
+  EMPTY = 'EMPTY',
 }
 export enum EnTenantScope {
   ALL = 'ALL',

@@ -85,21 +85,27 @@ const searchConfig: SearchBoxConfig = {
     [
       {
         name: 'hrInfoManageType',
-        type: 'text',
-        label: t('유저등록유형'),
+        type: 'dropdown',
+        label: t('유저 등록 유형'),
         value: '',
+        presetOptionLabel: t('전체'),
+        optionsConfig: {
+          codeGroup: CODE_GROUP['pms.company.HrInfoManageType'],
+        },
       },
       {
         name: 'deptName',
         type: 'text',
         label: t('소속'),
         value: '',
+        placeholder: t('입력'),
       },
       {
         name: 'employeeNumber',
         type: 'text',
         label: t('사번'),
         value: '',
+        placeholder: t('입력'),
       },
     ],
   ],
@@ -110,10 +116,10 @@ const gridConfigOrg = {
   columns: [],
   data: [],
 
-  pagination: {
-    pageSize: 20,
-    pageIndex: 0,
-    totalRows: 0,
+  gridState: {
+    page: 0,
+    size: 10,
+    sort: [],
   },
 };
 
@@ -122,10 +128,10 @@ const gridConfigPlat = {
   columns: [],
   data: [],
 
-  pagination: {
-    pageSize: 20,
-    pageIndex: 0,
-    totalRows: 0,
+  gridState: {
+    page: 0,
+    size: 10,
+    sort: [],
   },
 };
 
@@ -133,7 +139,7 @@ const columnHelper = createColumnHelper<any>();
 const columns = [
   columnHelper.accessor('hrInfoManageType', {
     cell: (info) => info.getValue(),
-    header: t('유저등록유형'),
+    header: t('유저 등록 유형'),
     size: 100,
   }),
   columnHelper.accessor('companyName', {
