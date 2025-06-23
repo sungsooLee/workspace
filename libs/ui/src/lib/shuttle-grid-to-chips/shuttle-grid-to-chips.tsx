@@ -1,6 +1,7 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { cn } from '@learnway/shared';
-import { GridBoxProps, TreeNode } from '@learnway/ui';
+import { GridBoxProps } from '../grid/types';
+import { TreeNode } from '../tree-view/type';
 import styles from './shuttle-grid-to-chips.module.css';
 import { Button } from '../button/button';
 import { ColumnDef, Table } from '@tanstack/react-table';

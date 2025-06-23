@@ -35,6 +35,7 @@ import type { com_ever_edu_lms_course_dto_req_SequenceSaveReqDto } from '../mode
 import type { com_ever_edu_lms_course_dto_req_SequenceSearchReqDto$ByAdmin } from '../models/com_ever_edu_lms_course_dto_req_SequenceSearchReqDto$ByAdmin';
 import type { com_ever_edu_lms_course_dto_req_SequenceUpdateEnrollConfDto } from '../models/com_ever_edu_lms_course_dto_req_SequenceUpdateEnrollConfDto';
 import type { com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto } from '../models/com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto';
+import type { com_ever_edu_lms_course_dto_res_CourseConfigResDto } from '../models/com_ever_edu_lms_course_dto_res_CourseConfigResDto';
 import type { com_ever_edu_lms_course_dto_res_SequenceResDto$onAdmin } from '../models/com_ever_edu_lms_course_dto_res_SequenceResDto$onAdmin';
 import type { com_ever_edu_lms_enroll_dto_event_EnrollQueueEvent } from '../models/com_ever_edu_lms_enroll_dto_event_EnrollQueueEvent';
 import type { com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByAdmin } from '../models/com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByAdmin';
@@ -724,6 +725,7 @@ export class BoService {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
+                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },
@@ -1107,6 +1109,34 @@ export class BoService {
             query: {
                 'pageable': pageable,
                 'params': params,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 과정 항목 설정 정보
+     * 채널, 과정유형에 설정된 항목 설정정보 조회(채널 선택시 호출)
+     * @param channelId
+     * @param courseType
+     * @returns com_ever_edu_lms_course_dto_res_CourseConfigResDto OK
+     * @throws ApiError
+     */
+    public static getCourseConfig(
+        channelId: number,
+        courseType: 'ELEARNING1' | 'ELEARNING2' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
+    ): CancelablePromise<com_ever_edu_lms_course_dto_res_CourseConfigResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/course/config',
+            query: {
+                'channelId': channelId,
+                'courseType': courseType,
             },
             errors: {
                 400: `Bad Request`,

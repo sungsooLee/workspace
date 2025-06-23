@@ -20,6 +20,12 @@
       }
       &.lg {
         @apply min-h-[158px] justify-start px-[24px] pt-[24px];
+        .label {
+          @apply leading-[1.6rem];
+        }
+        .description {
+          @apply mt-[2px] leading-[1.6rem];
+        }
         &:hover,
         &.active {
           @apply border-transparent;

@@ -1,16 +1,18 @@
-import React, { useCallback, useState } from 'react';
-import { Button, GridBox, useGridBox, useModal } from '@learnway/ui';
-import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { queryOptions } from '@entities/label-messages/service/label-messages.queries';
+import { CourseTypeOptionCardModal } from '@features/learning/course';
+import { GridExcelDownloadButton, GridExcelUploadButton } from '@features/shared';
+import { LMSApiPrefix } from '@learnway/config';
 import { useSearchBox } from '@learnway/hooks';
+import { Button, Divider, GridBox, useGridBox, useModal } from '@learnway/ui';
+import { SearchBox } from '@shared/ui/search-box';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { LabelMessagesQueryParams } from '@types';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { SearchBox } from '@shared/ui/search-box';
-import { queryOptions } from '@entities/label-messages/service/label-messages.queries';
 import { t } from 'i18next';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { LabelMessagesQueryParams } from '@types';
-import { CourseTypeOptionCardModal } from '@features/learning/course';
 
 export const Route = createFileRoute('/_unauth/learning_test/course/')({
   component: RouteComponent,
@@ -18,11 +20,11 @@ export const Route = createFileRoute('/_unauth/learning_test/course/')({
 
 function RouteComponent() {
   const router = useRouter();
-  const { open: openModal } = useModal();
   const { t } = useTranslation();
+  const { open: openModal } = useModal();
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
-  const [selectedLabelMessageId, setSelectedLabelMessageId] = useState<number>(0);
+  const [selectedCourses, setSelectedCourses] = useState<any[]>([]);
 
   /**
    * 검색 실행 시 호출되는 핸들러
@@ -33,19 +35,18 @@ function RouteComponent() {
   }, []);
 
   /**
-   * 그리드에서 '추가' 버튼 클릭 시 호출되는 핸들러
-   * 음수 임시 ID를 설정하여 새 항목 추가 모드로 전환
-   */
-  const handleGridAddClick = () => {
-    setSelectedLabelMessageId(Date.now() * -1); // 음수 랜덤 값 설정
-  };
-
-  /**
    * 그리드의 행 선택 시 호출되는 핸들러
    * @param {any} row - 선택된 행 데이터
    */
-  const handleGridRowSelect = (row: any) => {
-    row && setSelectedLabelMessageId(row?.labelMessageId);
+  const handleGridRowSelect = (rows: any) => {
+    rows && setSelectedCourses(rows);
+  };
+
+  /**
+   * 과정 일괄업로드 버튼 클릭 시 호출되는 핸들러
+   */
+  const handleBatchUploadClick = () => {
+    console.log('handleBatchUploadClick');
   };
 
   /**
@@ -54,18 +55,14 @@ function RouteComponent() {
   const handleCourseOpenClick = async () => {
     const { value } = await openModal({
       content: <CourseTypeOptionCardModal />,
-      width: 'lg', // sm(600px), md(800px), lg(1024px), xl(1400px)
+      width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
     });
-
-    console.log(value);
-
     router.navigate({
       to: '/platform/system/multilingual',
       state: {
         courseType: 'CATEGORY', // 다국어 분류 - 공통코드
       },
     });
-
     // 선택한 유형의 등록 페이지로 이동
   };
 
@@ -76,6 +73,13 @@ function RouteComponent() {
           type="button"
           variant="point"
           size="sm"
+          label={t('LABEL.button.courseBatchUpload')}
+          onClick={handleBatchUploadClick}
+        />
+        <Button
+          type="button"
+          variant="primary"
+          size="sm"
           label={t('LABEL.button.courseOpen')}
           onClick={handleCourseOpenClick}
         />
@@ -83,13 +87,41 @@ function RouteComponent() {
       <MainContents>
         {/* 검색 */}
         <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
+        {/* Divider */}
+        <Divider />
         {/* 그리드 */}
         <GridBox
           config={gConfig}
           multiple
           showNumberingColumn
+          showCopy
           onRowSelect={handleGridRowSelect}
-          onAddClick={handleGridAddClick}
+          customButtonNode={
+            <Button variant="text" size="sm" label={t('LABEL.grid.header.toShare')} />
+          }
+          excelButtons={
+            <>
+              <GridExcelUploadButton
+                url="/multilingual/exportExcel"
+                validateUrl="/multilingual/excelUploadValidation"
+              />
+              <GridExcelDownloadButton
+                url={`${LMSApiPrefix()}/multilingual/exportExcel`}
+                params={getValues()}
+                onBeforeDownload={async () => {
+                  const keyTypeCode = getValues('keyTypeCode');
+                  const targetLocale = getValues('targetLocale');
+                  if (keyTypeCode === '' || targetLocale === '') {
+                    alert({
+                      type: 'warning',
+                      content: t('분류와 번역언어는 필수 항목입니다.'),
+                    });
+                    throw new Error(t('분류와 번역언어는 필수 항목입니다.'));
+                  }
+                }}
+              />
+            </>
+          }
         />
       </MainContents>
     </PageContainer>
@@ -123,27 +155,6 @@ const searchConfig: any = {
           { value: 'false', label: '미사용' },
         ],
       },
-      // 과정유형
-      {
-        name: 'courseType',
-        type: 'dropdown',
-        label: t('LABEL.form.label.courseType'),
-        value: '',
-        options: [
-          { value: '', label: '전체' },
-          { value: 'true', label: '사용' },
-          { value: 'false', label: '미사용' },
-        ],
-      },
-      // 운영자
-      {
-        name: 'operator',
-        type: 'text',
-        label: t('LABEL.form.label.operator'),
-        value: '',
-      },
-    ],
-    [
       // 개설년도
       {
         name: 'openingDate',
@@ -156,6 +167,20 @@ const searchConfig: any = {
           { value: 'false', label: '미사용' },
         ],
       },
+      // 과정유형
+      {
+        name: 'courseType',
+        type: 'dropdown',
+        label: t('LABEL.form.label.courseType'),
+        value: '',
+        options: [
+          { value: '', label: '전체' },
+          { value: 'true', label: '사용' },
+          { value: 'false', label: '미사용' },
+        ],
+      },
+    ],
+    [
       // 사용여부
       {
         name: 'useYn',
@@ -167,6 +192,13 @@ const searchConfig: any = {
           { value: 'true', label: '사용' },
           { value: 'false', label: '미사용' },
         ],
+      },
+      // 담당자/운영자
+      {
+        name: 'adminName',
+        type: 'text',
+        label: t('LABEL.form.label.coordinator/Operator'),
+        value: '',
       },
       // 과정코드
       {
@@ -194,38 +226,41 @@ const gridConfig = {
   //   { labelMessageId: 2, labelMessageType: 'a2', labelMessageMultilingulKey: 'a2' },
   // ],
   columns: [
-    // 채널
-    { name: 'channel', label: () => t('LABEL.grid.column.channel'), size: 90 },
     // 테넌트
     { name: 'tenant', label: () => t('LABEL.grid.column.tenant'), size: 140 },
-    // 과정유형
-    { name: 'courseType', label: () => t('LABEL.grid.column.courseType'), size: 90 },
+    // 채널
+    { name: 'channel', label: () => t('LABEL.grid.column.channel'), size: 90 },
     // 과정코드
     { name: 'courseCode', label: () => t('LABEL.grid.column.courseCode'), size: 90 },
+    // 개설연도
+    { name: 'openingDate', label: () => t('LABEL.grid.column.openingDate'), size: 90 },
+    // 과정유형
+    { name: 'courseType', label: () => t('LABEL.grid.column.courseType'), size: 90 },
+    // 찜
+    { name: 'favorite', label: () => t('LABEL.grid.column.favorite'), size: 40 },
     // 과정명
     { name: 'courseName', label: () => t('LABEL.grid.column.courseName'), size: 200 },
+    // 사용
+    { name: 'useYn', label: () => t('LABEL.grid.column.use'), size: 90 },
     // 차수
     { name: 'session', label: () => t('LABEL.grid.column.session'), size: 90 },
+    // 조회
+    { name: 'search', label: () => t('LABEL.grid.column.search'), size: 90 },
+    // 좋아요
+    { name: 'like', label: () => t('LABEL.grid.column.like'), size: 90 },
+    // 공유
+    { name: 'share', label: () => t('LABEL.grid.column.share'), size: 90 },
+    // 후기
+    { name: 'review', label: () => t('LABEL.grid.column.review'), size: 90 },
+    // 수강생
+    { name: 'student', label: () => t('LABEL.grid.column.student'), size: 90 },
     // 담당자
     { name: 'manager', label: () => t('LABEL.grid.column.manager'), size: 90 },
     // 운영자
     { name: 'operator', label: () => t('LABEL.grid.column.operator'), size: 90 },
-    // 사용여부
-    { name: 'useYn', label: () => t('LABEL.grid.column.useYn'), size: 90 },
-    // 개설년도
-    { name: 'openingDate', label: () => t('LABEL.grid.column.openingDate'), size: 90 },
     // 미리보기
     { name: 'preview', label: () => t('LABEL.grid.column.preview'), size: 90 },
-    // 등록일
-    { name: 'createdDate', label: () => t('LABEL.grid.column.createdDate'), size: 120 },
-    // 등록자
-    { name: 'createdBy', label: () => t('LABEL.grid.column.createdBy'), size: 90 },
-    // URL 생성
-    { name: 'urlGeneration', label: () => t('LABEL.grid.column.urlGeneration'), size: 90 },
+    // URL
+    { name: 'url', label: () => t('LABEL.grid.column.url'), size: 90 },
   ],
-  pagination: {
-    pageSize: 10,
-    pageIndex: 0,
-    totalRows: 0,
-  },
 };

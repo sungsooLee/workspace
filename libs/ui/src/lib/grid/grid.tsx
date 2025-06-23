@@ -34,6 +34,7 @@ const GridComponent = forwardRef(
       onStateChange,
       onRowSelect,
       onRowsSelect,
+      onRowDoubleClick,
       onChange,
       emptyMessage,
       variant = 'line',
@@ -142,6 +143,7 @@ const GridComponent = forwardRef(
               table={table}
               lastPinnedColumnId={lastPinnedColumnId}
               disabledSelectionToggle={disabledSelectionToggle}
+              onRowDoubleClick={onRowDoubleClick}
             />
           )}
           {isLoading && <GridLoading table={table} />}

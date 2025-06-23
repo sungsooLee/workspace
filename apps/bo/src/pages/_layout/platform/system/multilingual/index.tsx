@@ -24,7 +24,7 @@ import {
 import { t } from 'i18next';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
-import { GridExcelButtons } from '@features/shared';
+import { GridExcelDownloadButton, GridExcelUploadButton } from '@features/shared';
 import { TranslationStatusPopup } from '@features/platform/system/multilingual/translation-status-popup';
 import { PMSApiPrefix } from '@learnway/config';
 
@@ -111,25 +111,27 @@ function RouteComponent() {
   }, [data]);
 
   const customExcelButtons = (
-    <GridExcelButtons
-      showUpload={true}
-      showDownload={true}
-      uploadUrl="/multilingual/exportExcel"
-      validateUrl="/multilingual/excelUploadValidation"
-      downloadUrl={`${PMSApiPrefix()}/multilingual/exportExcel`}
-      downloadParams={getValues()}
-      onBeforeDownload={async () => {
-        const keyTypeCode = getValues('keyTypeCode');
-        const targetLocale = getValues('targetLocale');
-        if (keyTypeCode === '' || targetLocale === '') {
-          alert({
-            type: 'warning',
-            content: t('분류와 번역언어는 필수 항목입니다.'),
-          });
-          throw new Error(t('분류와 번역언어는 필수 항목입니다.'));
-        }
-      }}
-    />
+    <>
+      <GridExcelUploadButton
+        url="/multilingual/exportExcel"
+        validateUrl="/multilingual/excelUploadValidation"
+      />
+      <GridExcelDownloadButton
+        url={`${PMSApiPrefix()}/multilingual/exportExcel`}
+        params={getValues()}
+        onBeforeDownload={async () => {
+          const keyTypeCode = getValues('keyTypeCode');
+          const targetLocale = getValues('targetLocale');
+          if (keyTypeCode === '' || targetLocale === '') {
+            alert({
+              type: 'warning',
+              content: t('분류와 번역언어는 필수 항목입니다.'),
+            });
+            throw new Error(t('분류와 번역언어는 필수 항목입니다.'));
+          }
+        }}
+      />
+    </>
   );
 
   const init = async () => {
