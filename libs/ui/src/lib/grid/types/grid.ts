@@ -189,6 +189,12 @@ export interface GridProps<T> {
   onRowsSelect?: (selectedRows: any[]) => void;
 
   /**
+   * 행 더블 클릭 시 호출되는 콜백 함수입니다.
+   * @param {any} selectedRow 선택된 행 데이터
+   */
+  onRowDoubleClick?: (selectedRow: any) => void;
+
+  /**
    * useReactTable 훅으로 생성된 table 인스턴스가 준비되었을 때 호출되는 콜백 함수입니다.
    * 상위 컴포넌트에서 table 인스턴스를 받아 테이블 상태 및 기능을 제어할 수 있습니다.
    * @param table - useReactTable 훅이 반환한 table 인스턴스
