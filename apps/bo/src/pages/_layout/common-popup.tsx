@@ -218,6 +218,9 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider} name="thumbnails" />
           </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider} name="attachment" />
+          </ContentsRow>
         </MainContents>
         <SubContents>
           <div>서브영역</div>
@@ -632,6 +635,12 @@ const formConfig: DynamicFormConfig = {
       value: [],
       description:
         '파일 사이즈 000 x 000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 00개 / 파일용량 최대 00 MB',
+    },
+    {
+      name: 'attachment',
+      type: 'attachment',
+      label: '',
+      value: '',
     },
   ],
 };
