@@ -108,6 +108,8 @@
     "cdName": "코드 명",
     "cdGroupAbbreviationEnglishName": "그룹코드 약어영문",
     "cdGroupContent": "내용",
+    "label": "라벨",
+    "message": "메세지",
     "cdSeq": "순서",
     "cdContent": "내용",
     "referenceVal1": "참고 1",

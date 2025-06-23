@@ -174,14 +174,16 @@ function RouteComponent() {
           className="graph_bar completed"
           style={{
             width: `${stats.result > 0 ? ((stats.completed + stats.native) / stats.result) * 100 : 0}%`,
-          }}>
+          }}
+        >
           완료 : {stats.completed}본
         </div>
         <div
           className="graph_bar remaining"
           style={{
             width: `${stats.result > 0 ? ((stats.remaining + stats.cancel) / stats.result) * 100 : 0}%`,
-          }}>
+          }}
+        >
           남은본수 : {stats.remaining - stats.cancel}본(취소:{stats.cancel}본)
         </div>
       </div>
@@ -204,7 +206,8 @@ function RouteComponent() {
           {sortedData.map((item, index) => (
             <tr
               key={index + 1}
-              className={`${item.native ? 'native' : ''} ${item.cancel ? 'cancel' : ''}`}>
+              className={`${item.native ? 'native' : ''} ${item.cancel ? 'cancel' : ''}`}
+            >
               <td>{index + 1}</td>
               <td>{getLayoutType(item.screenId)}</td>
               <td className="text-left">{item.screenName}</td>
@@ -216,12 +219,13 @@ function RouteComponent() {
               </td>
               <td>{item.native ? 'Native' : item.pageType}</td>
               <td>{item.completionDate || '-'}</td>
-              <td>{item.lastUpdateDate || '-'}</td>
+              <td className="last-date">{item.lastUpdateDate || '-'}</td>
               <td className="remarks">
                 {item.cancel ? '삭제됨' : item.native ? '퍼블영역 아님' : item.remarks}
               </td>
               <td
-                className={`${item.native ? 'native' : ''} ${item.cancel ? 'cancel' : ''} ${item.completionDate ? 'completed' : 'status'}`}>
+                className={`${item.native ? 'native' : ''} ${item.cancel ? 'cancel' : ''} ${item.completionDate ? 'completed' : 'status'}`}
+              >
                 {item.cancel
                   ? '취소'
                   : item.native

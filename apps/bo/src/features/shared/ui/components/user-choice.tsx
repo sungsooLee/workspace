@@ -45,13 +45,9 @@ const searchConfig: SearchBoxConfig = {
           codeGroup: CODE_GROUP['manual.company.companyId'],
         },
         format: 'number',
-        dropdownConfig: {
-          onchange: () => {
-            return '';
-          },
-          isSearchable: true,
-          placeholder: '입력 또는 선택',
-        },
+        isSearchable: true,
+        isClearable: true,
+        placeholder: '입력 선택',
       },
       {
         name: 'deptId',

@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button, DatePicker, DatePickerType, RangeDatePicker, Switch, Tooltip } from '@learnway/ui';
-import { DATE_TIME_FORMAT, getDefaultLang, setDefaultLang } from '@learnway/shared';
+import { DatePicker, DatePickerType, RangeDatePicker } from '@learnway/ui';
+import { getDefaultLang, setDefaultLang } from '@learnway/shared';
 import 'react-datepicker/dist/react-datepicker.css';
-import { ko } from 'date-fns/locale';
 import i18next from 'i18next';
-import { initReactI18next, useTranslation } from 'react-i18next';
-// import { addDays } from 'react-datepicker/dist/date_utils';/
+import { initReactI18next } from 'react-i18next';
 import { addDays } from 'date-fns';
 
 interface StorybookI18nProviderProps {
@@ -312,23 +310,86 @@ export const Compare_TimePicker: Story = {
 const RangePickerDemo: React.FC = () => {
   // 한글
   const [koValue, setKoValue] = useState<[Date | null, Date | null] | undefined>();
+  const [koTimeValue, setKoTimeValue] = useState<[Date | null, Date | null] | undefined>();
+  const [koTimeStepValue, setKoTimeStepValue] = useState<[Date | null, Date | null] | undefined>();
+
   // 영어
   const [enValue, setEnValue] = useState<[Date | null, Date | null] | undefined>();
+  const [enTimeValue, setEnTimeValue] = useState<[Date | null, Date | null] | undefined>();
+  const [enTimeStepValue, setEnTimeStepValue] = useState<[Date | null, Date | null] | undefined>();
 
   return (
     <div style={{ padding: '20px', maxWidth: '1400px' }}>
       <div style={{ marginBottom: '40px' }}>
-        <h4
+        <h4>Range Picker</h4>
+        <div
           style={{
-            textAlign: 'center',
-            margin: '0 0 20px 0',
-            color: '#374151',
-            fontSize: '18px',
-            fontWeight: '600',
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: '24px',
+            alignItems: 'start',
           }}
         >
-          Range Picker
-        </h4>
+          <div
+            style={{
+              padding: '20px',
+              border: '2px solid',
+              borderRadius: '12px',
+              backgroundColor: '#ffffff',
+              borderColor: '#3b82f6',
+            }}
+          >
+            <div>Range Picker (한국어)</div>
+            <div style={{ marginBottom: '12px' }}>
+              <RangeDatePicker
+                value={koValue}
+                onChange={(value) => {
+                  console.log('KO Range:', value);
+                  setKoValue(value);
+                }}
+                locale="ko"
+              />
+            </div>
+            <div>
+              <strong>Value:</strong>{' '}
+              {koValue
+                ? `[${koValue.map((d) => (d ? d.toISOString().split('T')[0] : 'null')).join(', ')}]`
+                : 'null'}
+            </div>
+          </div>
+
+          <div
+            style={{
+              padding: '20px',
+              border: '2px solid',
+              borderRadius: '12px',
+              backgroundColor: '#ffffff',
+              borderColor: '#8b5cf6',
+            }}
+          >
+            <div>Range Picker (English)</div>
+            <div style={{ marginBottom: '12px' }}>
+              <RangeDatePicker
+                value={enValue}
+                onChange={(value) => {
+                  console.log('EN Range:', value);
+                  setEnValue(value);
+                }}
+                locale="en"
+              />
+            </div>
+            <div>
+              <strong>Value:</strong>{' '}
+              {enValue
+                ? `[${enValue.map((d) => (d ? d.toISOString().split('T')[0] : 'null')).join(', ')}]`
+                : 'null'}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style={{ marginBottom: '40px' }}>
+        <h4>Range Picker with Time</h4>
 
         <div
           style={{
@@ -341,77 +402,98 @@ const RangePickerDemo: React.FC = () => {
           <div
             style={{
               padding: '20px',
-              border: '2px solid #3b82f6',
+              border: '2px solid',
               borderRadius: '12px',
               backgroundColor: '#ffffff',
+              borderColor: '#3b82f6',
             }}
           >
-            <div>Range Picker (한국어)</div>
-            <div style={{ marginBottom: '12px' }}>
-              <RangeDatePicker
-                value={koValue}
-                onChange={(value) => {
-                  console.log('KO Range:', value);
-                  setKoValue(value);
-                }}
-                locale="ko"
-                disabledDates={[addDays(new Date(), 5)]}
-              />
-            </div>
-            <div
-              style={{
-                fontSize: '12px',
-                color: '#6b7280',
-                backgroundColor: '#f9fafb',
-                padding: '8px',
-                borderRadius: '6px',
-                fontFamily: 'monospace',
-                wordBreak: 'break-all',
+            <div>Range Picker with Time (한국어)</div>
+            <RangeDatePicker
+              value={koTimeValue}
+              onChange={(value) => {
+                setKoTimeValue(value);
               }}
-            >
-              <strong>Value:</strong>{' '}
-              {koValue
-                ? `[${koValue.map((d) => (d ? d.toISOString().split('T')[0] : 'null')).join(', ')}]`
-                : 'null'}
-            </div>
+              locale="ko"
+              displayType="day-time-hm"
+              minuteStep={15}
+            />
           </div>
 
           <div
             style={{
               padding: '20px',
-              border: '2px solid #8b5cf6',
+              border: '2px solid',
               borderRadius: '12px',
               backgroundColor: '#ffffff',
+              borderColor: '#8b5cf6',
             }}
           >
-            <div>Range Picker (English)</div>
-            <div style={{ marginBottom: '12px' }}>
-              <RangeDatePicker
-                value={enValue}
-                onChange={(value) => {
-                  console.log('EN Range:', value);
-                  setEnValue(value);
-                }}
-                locale="en"
-                disabledDates={[addDays(new Date(), 5)]}
-              />
-            </div>
-            <div
-              style={{
-                fontSize: '12px',
-                color: '#6b7280',
-                backgroundColor: '#f9fafb',
-                padding: '8px',
-                borderRadius: '6px',
-                fontFamily: 'monospace',
-                wordBreak: 'break-all',
+            <div>Range Picker with Time (English)</div>
+            <RangeDatePicker
+              value={enTimeValue}
+              onChange={(value) => {
+                setEnTimeValue(value);
               }}
-            >
-              <strong>Value:</strong>{' '}
-              {enValue
-                ? `[${enValue.map((d) => (d ? d.toISOString().split('T')[0] : 'null')).join(', ')}]`
-                : 'null'}
-            </div>
+              locale="en"
+              displayType="day-time-hm"
+              minuteStep={15}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div style={{ marginBottom: '40px' }}>
+        <h4>Range Picker with Time-Step</h4>
+
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: '24px',
+            alignItems: 'start',
+          }}
+        >
+          <div
+            style={{
+              padding: '20px',
+              border: '2px solid',
+              borderRadius: '12px',
+              backgroundColor: '#ffffff',
+              borderColor: '#3b82f6',
+            }}
+          >
+            <div>Range Picker with Time (한국어)</div>
+            <RangeDatePicker
+              value={koTimeStepValue}
+              onChange={(value) => {
+                setKoTimeStepValue(value);
+              }}
+              locale="ko"
+              displayType="time-step"
+              minuteStep={60}
+            />
+          </div>
+
+          <div
+            style={{
+              padding: '20px',
+              border: '2px solid',
+              borderRadius: '12px',
+              backgroundColor: '#ffffff',
+              borderColor: '#8b5cf6',
+            }}
+          >
+            <div>Range Picker with Time (English)</div>
+            <RangeDatePicker
+              value={enTimeStepValue}
+              onChange={(value) => {
+                setEnTimeStepValue(value);
+              }}
+              locale="en"
+              displayType="time-step"
+              minuteStep={60}
+            />
           </div>
         </div>
       </div>
@@ -449,99 +531,4 @@ export const Compare_DateTimePicker: Story = {
       ]}
     />
   ),
-};
-
-const TimePickerTemplate: React.FC<ComparisonTemplateProps> = ({ datePickerTypes }) => {
-  const [koValues, setKoValues] = useState<Record<string, any>>({});
-
-  const handleKoChange = (type: DatePickerType, value: any) => {
-    console.log('KO:', type, value);
-    setKoValues((prev) => ({
-      ...prev,
-      [type]: value,
-    }));
-  };
-
-  const renderDatePickerCard = (
-    type: DatePickerType,
-    label: string,
-    locale: 'ko' | 'en',
-    values: Record<string, any>,
-    onChange: (type: DatePickerType, value: any) => void,
-    minuteStep?: number,
-  ) => (
-    <div
-      key={`${type}-${locale}`}
-      style={{
-        padding: '20px',
-        border: '2px solid',
-        borderColor: locale === 'ko' ? '#3b82f6' : '#8b5cf6',
-        borderRadius: '12px',
-        backgroundColor: '#ffffff',
-      }}
-    >
-      <div>{label}</div>
-
-      <div style={{ marginBottom: '12px' }}>
-        <DatePicker
-          displayType={type}
-          value={values[type]}
-          onChange={(value) => onChange(type, value)}
-          minuteStep={minuteStep ?? 1}
-          locale={locale}
-          disabledDates={[addDays(new Date(), 5)]}
-        />
-      </div>
-
-      <div
-        style={{
-          fontSize: '12px',
-          color: '#6b7280',
-          backgroundColor: '#f9fafb',
-          padding: '8px',
-          borderRadius: '6px',
-          fontFamily: 'monospace',
-          wordBreak: 'break-all',
-        }}
-      >
-        <strong>Value:</strong>{' '}
-        {values[type]
-          ? Array.isArray(values[type])
-            ? `[${values[type].map((d: Date | null) => (d ? d.toISOString().split('T')[0] : 'null')).join(', ')}]`
-            : values[type].toISOString
-              ? values[type].toISOString().split('T')[0]
-              : String(values[type])
-          : 'null'}
-      </div>
-    </div>
-  );
-
-  return (
-    <div style={{ padding: '20px', maxWidth: '1400px' }}>
-      {datePickerTypes.map(({ type, label, minuteStep }) => (
-        <div key={type} style={{ marginBottom: '40px' }}>
-          <h4
-            style={{
-              textAlign: 'center',
-              margin: '0 0 20px 0',
-              color: '#374151',
-              fontSize: '18px',
-              fontWeight: '600',
-            }}
-          >
-            {label}
-          </h4>
-
-          {renderDatePickerCard(
-            type,
-            `${label} (한국어)`,
-            'ko',
-            koValues,
-            handleKoChange,
-            minuteStep,
-          )}
-        </div>
-      ))}
-    </div>
-  );
 };

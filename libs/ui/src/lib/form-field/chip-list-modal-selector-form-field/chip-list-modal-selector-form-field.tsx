@@ -46,6 +46,7 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
       },
       actionNode,
       control,
+      disabled,
     },
     ref,
   ) => {
@@ -99,6 +100,7 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
                 variant={'text'}
                 size={'sm'}
                 label={'추가'}
+                disabled={disabled}
                 onClick={handleSearchClick}
               />
             )}
@@ -111,11 +113,13 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
             hideBorder
             options={value}
             onChipDeleteClick={handlerChipDelete}
+            disabled={disabled}
           />
           {!showAddButton && (
             <Button
               type={'button'}
               className={cn(styles.btn_search, 'btn_search')}
+              disabled={disabled}
               onlyIcon
               onClick={handleSearchClick}
             >

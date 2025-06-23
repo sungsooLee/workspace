@@ -51,6 +51,7 @@ export type { com_ever_edu_lms_course_dto_req_SequenceSaveReqDto } from './model
 export type { com_ever_edu_lms_course_dto_req_SequenceSearchReqDto$ByAdmin } from './models/com_ever_edu_lms_course_dto_req_SequenceSearchReqDto$ByAdmin';
 export { com_ever_edu_lms_course_dto_req_SequenceUpdateEnrollConfDto } from './models/com_ever_edu_lms_course_dto_req_SequenceUpdateEnrollConfDto';
 export { com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto } from './models/com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto';
+export { com_ever_edu_lms_course_dto_res_CourseConfigResDto } from './models/com_ever_edu_lms_course_dto_res_CourseConfigResDto';
 export { com_ever_edu_lms_course_dto_res_CourseInternalResDto } from './models/com_ever_edu_lms_course_dto_res_CourseInternalResDto';
 export { com_ever_edu_lms_course_dto_res_CourseListAdminResDto } from './models/com_ever_edu_lms_course_dto_res_CourseListAdminResDto';
 export { com_ever_edu_lms_course_dto_res_CourseResDto$CourseIntroductionOnUser } from './models/com_ever_edu_lms_course_dto_res_CourseResDto$CourseIntroductionOnUser';
