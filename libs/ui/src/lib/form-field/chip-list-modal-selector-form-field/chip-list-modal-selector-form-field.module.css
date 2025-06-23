@@ -3,7 +3,7 @@
   .chips_modal_wrap {
     @apply flex h-auto min-h-[120px] w-full flex-wrap items-center overflow-hidden rounded-[4px] border border-solid border-[var(--gray4)];
     .btn_search {
-      @apply flex flex-auto items-center justify-end;
+      @apply mr-[12px] flex flex-auto items-center justify-end;
     }
     .chips_wapper {
       @apply h-auto;
@@ -17,14 +17,19 @@
         }
       }
     }
-    [class*='nlp--chip-list'] {
-      @apply w-full px-[12px];
+    .chip_list {
+      @apply pl-[12px];
       [class*='nlp--chips'] {
         @apply !h-[24px] !min-h-[24px];
       }
+      &.disabled {
+        @apply w-full;
+      }
     }
     &:has(.btn_search) {
-      @apply min-h-[32px];
+      .chip_list {
+        @apply w-auto;
+      }
     }
   }
   &.type_wordwrap {

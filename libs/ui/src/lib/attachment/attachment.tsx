@@ -1,6 +1,5 @@
-import { FC, useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css';
-import { Badge, Button, ProgressBar } from '@learnway/ui';
 import {
   IcoComplete02,
   IcoFileExcel,
@@ -9,19 +8,26 @@ import {
   IcoTrash03,
   IcoUploadCloud,
 } from '@learnway/icons';
-import { cn } from '@learnway/shared';
+import { cn, SelectOption } from '@learnway/shared';
 import { UploadFile } from '@learnway/hooks';
 import { useDropzone } from 'react-dropzone';
+import { Button } from '../button/button';
+import { Badge } from '../badge/badge';
+import { ProgressBar } from '../progress/progress-bar/progress-bar';
+import { DndFileProgressProps } from '../dnd-file-progress/types';
+import { Info, Paperclip } from 'lucide-react';
+import { Checkbox } from '../checkbox/checkbox';
+import { t } from 'i18next';
 
 // 바이트를 자동 포맷된 문자열로 변환
-export const dpSize = (bytes: number, digits = 2): string => {
+const dpSize = (bytes: number, digits = 2): string => {
   if (!bytes || bytes === 0) return '';
   if (bytes < 1024 * 1024) return `${bytes.toLocaleString()} B`;
   if (bytes < 1024 * 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(digits)} MB`;
   return `${(bytes / (1024 * 1024 * 1024)).toFixed(digits)} GB`;
 };
 
-const DndFileProgressComponent: FC<any> = ({
+const AttachmentComponent = ({
   files,
   addFiles,
   onRemove,
@@ -31,22 +37,46 @@ const DndFileProgressComponent: FC<any> = ({
   acceptFiles,
   maxFileCount,
   maxFileSize,
-}) => {
+}: DndFileProgressProps) => {
   const acceptFileString = useMemo(() => {
-    if (!acceptFiles) return '';
+    if (!acceptFiles || typeof acceptFiles === 'string') return '';
     return acceptFiles
-      .map((acceptFile: any) => (acceptFile.startsWith('.') ? acceptFile : `.${acceptFile}`))
+      .map((acceptFile) => (acceptFile.startsWith('.') ? acceptFile : `.${acceptFile}`))
       .join(', ')
       .toUpperCase();
   }, [acceptFiles]);
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    addFiles(acceptedFiles);
-  }, []);
-  const { getRootProps, getInputProps } = useDropzone({
+  const isOverMaxFileCount = files.length >= maxFileCount;
+
+  const [value, setValue] = useState<string[]>([]);
+
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      if (isOverMaxFileCount) return;
+      addFiles(acceptedFiles);
+    },
+    [files],
+  );
+
+  const { getRootProps, getInputProps, inputRef, open } = useDropzone({
     onDrop,
-    maxFiles: maxFileSize || 999,
+    multiple: true,
+    maxFiles: maxFileCount || 999,
+    maxSize: maxFileSize,
   });
+
+  const removeFile = () => {
+    // setFiles(prev => prev.filter(f => f !== file));
+    value.forEach((id) => {
+      onRemove(id);
+    });
+  };
+
+  const handleCheckChange = (checked: boolean, checkedValue: string) => {
+    const checkOptions = [...value, checkedValue];
+    const unCheckOptions = value?.filter((d: string) => d !== checkedValue);
+    setValue(checked ? checkOptions : unCheckOptions);
+  };
 
   /**
    * 파일 업로드 상태에 따라 진행률 또는 상태 텍스트를 렌더링하는 함수
@@ -208,27 +238,54 @@ const DndFileProgressComponent: FC<any> = ({
 
   return (
     <div className={cn(styles.start, styles.wrap)}>
-      <div className={cn(styles.file_wrap, styles.type_excel)}>
-        {files.length === 0 && (
-          <div className={styles.attach_area} {...getRootProps()}>
+      <div className="flex items-center justify-between rounded bg-white px-4 py-3">
+        <div className="flex items-center gap-2 text-sm text-gray-700">
+          <span>파일올리기</span>
+          <Paperclip className="h-4 w-4 text-gray-500" />
+          <span className="text-[#00bcd4]">{`${files.length}/${maxFileCount}`}개</span>
+          <span className="text-[#00bcd4]">
+            {dpSize(files.reduce((acc, cur) => acc + cur.size, 0))}
+          </span>
+        </div>
+        <div className="flex items-center gap-3 text-sm text-gray-400">
+          <div className="flex items-center gap-1">
+            <Info className="h-4 w-4" />
+            <span>{`최대 ${maxFileCount}개, 최대 파일 사이즈 ${dpSize(maxFileSize)}`}</span>
+          </div>
+          <Button
+            label="추가"
+            type="button"
+            variant="primary"
+            size="ts"
+            onClick={open}
+            // disabled={isOverMaxFileCount}
+          />
+          <Button label="삭제" type="button" variant="primary" size="ts" onClick={removeFile} />
+        </div>
+      </div>
+      <div className={cn(styles.file_wrap, styles.type_excel)} {...getRootProps()}>
+        {files.length === 0 ? (
+          <div className={styles.attach_area}>
             <Button className={styles.btn_file}>
               <IcoUploadCloud width={'40'} height={'40'} stroke={'#131C30'} />
               <strong className={styles.file_title}>
                 {'영역을 클릭하거나 파일을 마우스로 끌어놓으세요'}
               </strong>
-              <span
-                className={styles.file_guide}
-              >{`${acceptFileString} ${maxFileCount === 1 ? ` / 최대 1개 파일` : ''} ${maxFileSize ? `/ Max file size : ${dpSize(maxFileSize)}` : ''} `}</span>
-              <input {...getInputProps()} accept={acceptFileString} />
+              <span className={styles.file_guide}>{`모든 파일 확장자`}</span>
+              <input ref={inputRef} {...getInputProps()} accept={acceptFileString} />
             </Button>
           </div>
-        )}
-
-        {/* 파일 업로드 후 */}
-        {files.length > 0 && (
+        ) : (
           <div className={styles.upload_status}>
-            {files.map((file: any) => (
+            {files.map((file: UploadFile) => (
               <div className={styles.file_item}>
+                <div className="mr-3">
+                  <Checkbox
+                    onCheckedChange={(checked: boolean) => handleCheckChange(checked, file.id)}
+                    checked={value.indexOf(file.id) >= 0}
+                    // disabled={disabled || item.disabled}
+                  />
+                </div>
                 <div className={styles.file_name}>
                   <IcoFileExcel width={'24'} height={'25'} className={styles.icon_type} />
                   <em className={styles.name}>{file.fileName}</em>
@@ -247,4 +304,4 @@ const DndFileProgressComponent: FC<any> = ({
   );
 };
 
-export const DndFileProgress = DndFileProgressComponent;
+export const Attachment = AttachmentComponent;

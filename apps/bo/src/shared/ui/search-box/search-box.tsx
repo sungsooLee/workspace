@@ -196,8 +196,15 @@ const SearchBoxComponent: FC<SearchBoxProps> = ({ provider, onSearch }) => {
     [formState],
   );
 
+  const handleWheel = (event: React.WheelEvent<HTMLFormElement>) => {
+    const target = event.target as HTMLElement;
+    if (target.closest('.nlp-select__menu')) {
+      event.stopPropagation();
+    }
+  };
+
   return (
-    <form onSubmit={handleFormSubmit} onKeyDown={handleKeyDown}>
+    <form onSubmit={handleFormSubmit} onKeyDown={handleKeyDown} onWheel={handleWheel}>
       <div className={cn(searchStyles.start, searchStyles.wrap)}>
         <div className={searchStyles.contents}>
           <div className={rowClassName}>

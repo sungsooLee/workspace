@@ -216,6 +216,12 @@ export interface GridBoxProps<T extends object = object>
   showRemove?: boolean;
 
   /**
+   * 복사 버튼 표시 여부를 나타내는 boolean 값입니다.
+   * `true`로 설정하면 복사 버튼이 표시됩니다.
+   */
+  showCopy?: boolean;
+
+  /**
    * 좌측 타이틀 영역 커스텀 (전체 카운트와 가이드 텍스트 중간 영역)
    */
   titleCustomNode?: React.ReactNode;
