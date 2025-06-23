@@ -21,6 +21,10 @@ function RouteComponent() {
     gridFetch(data);
   }, []);
 
+  const handleOnRowDoubleClick = useCallback((row: any) => {
+    console.log('handleOnRowDoubleClick.row {} => ', row);
+  }, []);
+
   return (
     <PageContainer>
       <ContentsButtons>
@@ -29,7 +33,7 @@ function RouteComponent() {
       <MainContents>
         <SearchBox provider={sProvider} onSearch={handleOnSearch} />
         <Divider />
-        <GridBox config={gConfig} showNumberingColumn />
+        <GridBox config={gConfig} showNumberingColumn onRowDoubleClick={handleOnRowDoubleClick} />
       </MainContents>
     </PageContainer>
   );
