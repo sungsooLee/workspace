@@ -18,7 +18,8 @@ const isLocal = process.env.NODE_ENV === 'local';
 
 const router = createRouter({
   routeTree,
-  defaultPreload: 'intent',
+  defaultPreload: false,
+  defaultPreloadStaleTime: 0,
   basepath: import.meta.env.VITE_BO_BASE_PATH,
   context: {
     setPageRouteState: undefined,
