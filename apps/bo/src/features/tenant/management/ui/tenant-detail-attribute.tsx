@@ -101,9 +101,6 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
         <FormRow provider={provider} name={'isUseCourseFlag'} />
         <div className={cn(formStyles.form_item)}></div>
       </ContentsRow>
-      <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
-        <ContentsHistoryInfoFormField />
-      </ContentsRow>
     </form>
   );
 };

@@ -584,10 +584,6 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
                 }
               />
             </ContentsRow>
-
-            <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
-              <ContentsHistoryInfoFormField />
-            </ContentsRow>
           </div>
         </form>
       </div>
