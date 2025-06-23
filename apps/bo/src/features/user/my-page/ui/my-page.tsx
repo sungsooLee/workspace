@@ -4,15 +4,16 @@ import { cn, formatDate, formatPhoneNumber } from '@learnway/shared';
 import { FormSubTitle } from '@shared/ui/form';
 import { Avatar } from '@learnway/ui';
 
-/* style */
-// import contentsStyles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
-import styles from './my-page.module.css';
 import { useFetchAuthUser, useUserDetail } from '@learnway/auth/entities';
 import { useFetchUser } from '@entities/users/service/users.hook';
 import { useCreation } from 'ahooks';
 
 import imgLogo from '@assets/images/temp/img_temp_company_logo.png';
+
+/* style */
+import contentsStyles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
+import styles from './my-page.module.css';
 
 export const AvataFallback = ({ name }: { name?: string }) => {
   const firstUnit = useCreation(() => {
@@ -40,147 +41,149 @@ export function MyPage() {
   console.log('authUser', authUser);
   console.log('user', user);
   return (
-    <div className={styles.start}>
-      <div className={styles.profile_wrap}>
-        <div className={styles.avata_wrap}>
-          <Avatar
-            imageUrl={authUser?.avataImage}
-            // imageUrl="https://github.com/shadcn.png"
-            className={styles.info_avata}
-            fallback={<AvataFallback name={authUser?.name} />}
-          />
-          <span className={styles.logo_wrap}>
+    <div className={contentsStyles.main_contents}>
+      <div className={styles.start}>
+        <div className={styles.profile_wrap}>
+          <div className={styles.avata_wrap}>
             <Avatar
-              imageUrl={authUser?.activeTenant?.logoImageUrl}
+              imageUrl={authUser?.avataImage}
               // imageUrl="https://github.com/shadcn.png"
               className={styles.info_avata}
-              fallback={
-                <img src={'https://github.com/shadcn.png'} alt="" className={styles.logo_img} />
-              }
+              fallback={<AvataFallback name={authUser?.name} />}
             />
-          </span>
+            <span className={styles.logo_wrap}>
+              <Avatar
+                imageUrl={authUser?.activeTenant?.logoImageUrl}
+                // imageUrl="https://github.com/shadcn.png"
+                className={styles.info_avata}
+                fallback={
+                  <img src={'https://github.com/shadcn.png'} alt="" className={styles.logo_img} />
+                }
+              />
+            </span>
+          </div>
+          <div className={styles.name_wrap}>
+            <span className={styles.name}>{user?.name}</span>
+            <span className={styles.eng_name}>{user?.engName}</span>
+          </div>
+          <ul className={styles.list}>
+            <li>
+              <span className={styles.title}>{'사번'}</span>
+              <p className={styles.text}>{user?.employeeNumber}</p>
+            </li>
+            <li>
+              <span className={styles.title}>{'아이디(이메일)'}</span>
+              <p className={styles.text}>{user?.email}</p>
+            </li>
+            <li>
+              <span className={styles.title}>{'생년월일'}</span>
+              <p className={styles.text}>{user?.birthday && formatDate(user?.birthday + '')}</p>
+            </li>
+            <li>
+              <span className={styles.title}>{'성별'}</span>
+              <p className={styles.text}>{'남성/여성'}</p>
+            </li>
+          </ul>
         </div>
-        <div className={styles.name_wrap}>
-          <span className={styles.name}>{user?.name}</span>
-          <span className={styles.eng_name}>{user?.engName}</span>
-        </div>
-        <ul className={styles.list}>
-          <li>
-            <span className={styles.title}>{'사번'}</span>
-            <p className={styles.text}>{user?.employeeNumber}</p>
-          </li>
-          <li>
-            <span className={styles.title}>{'아이디(이메일)'}</span>
-            <p className={styles.text}>{user?.email}</p>
-          </li>
-          <li>
-            <span className={styles.title}>{'생년월일'}</span>
-            <p className={styles.text}>{user?.birthday && formatDate(user?.birthday + '')}</p>
-          </li>
-          <li>
-            <span className={styles.title}>{'성별'}</span>
-            <p className={styles.text}>{'남성/여성'}</p>
-          </li>
-        </ul>
-      </div>
-      <div className={styles.info_wrap}>
-        <FormSubTitle label={'기본정보'} />
-        <div className={cn(tableStyles.start, tableStyles.wrap)}>
-          <table>
-            <caption>{'기본정보'}</caption>
-            <colgroup>
-              <col style={{ width: '160px' }} />
-              <col />
-              <col style={{ width: '160px' }} />
-              <col />
-              <col style={{ width: '160px' }} />
-              <col />
-            </colgroup>
-            <tbody>
-              <tr>
-                <th scope={'row'}>{'휴대폰번호'}</th>
-                <td>{formatPhoneNumber(user?.phoneNumber)}</td>
-                <th scope={'row'}>{'연락처(사무실)'}</th>
-                <td>{user?.companyTelephoneNumber}</td>
-                <th scope={'row'}>{'지역'}</th>
-                <td>{user?.workPlaceCode}</td>
-              </tr>
-              <tr>
-                <th scope={'row'}>{'주소'}</th>
-                <td colSpan={5}>{address}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <FormSubTitle label={'회사 정보'} />
-        <div className={cn(tableStyles.start, tableStyles.wrap)}>
-          <table>
-            <caption>{'회사 정보'}</caption>
-            <colgroup>
-              <col style={{ width: '160px' }} />
-              <col />
-              <col style={{ width: '160px' }} />
-              <col />
-              <col style={{ width: '160px' }} />
-              <col />
-            </colgroup>
-            <tbody>
-              <tr>
-                <th scope={'row'}>{'회사'}</th>
-                <td>{user?.company?.name}</td>
-                <th scope={'row'}>{'실'}</th>
-                <td>{user?.dept?.parent}</td>
-                <th scope={'row'}>{'소속'}</th>
-                <td>{user?.dept?.deptName}</td>
-              </tr>
-              <tr>
-                <th scope={'row'}>{'보직'}</th>
-                {/* <td>{'경영팀'}</td> */}
-                <td>{''}</td>
-                <th scope={'row'}>{'호칭'}</th>
-                {/* <td>{'팀장'}</td> */}
-                <td>{''}</td>
-                <th scope={'row'}>{'직군'}</th>
-                {/* <td>{'과장'}</td> */}
-                <td>{''}</td>
-              </tr>
-              <tr>
-                <th scope={'row'}>{'입사일'}</th>
-                {/* <td>{'2020-01-02'}</td> */}
-                <td>{''}</td>
-                <th scope={'row'}>{'최근 승진일'}</th>
-                {/* <td colSpan={3}>{'재직'}</td> */}
-                <td>{''}</td>
-                <th scope={'row'}>{'재직 상태'}</th>
-                {/* <td colSpan={3}>{'재직'}</td> */}
-                <td>{''}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <FormSubTitle label={'기타 정보'} />
-        <div className={cn(tableStyles.start, tableStyles.wrap)}>
-          <table>
-            <caption>{'기타 정보'}</caption>
-            <colgroup>
-              <col style={{ width: '160px' }} />
-              <col />
-              <col style={{ width: '160px' }} />
-              <col />
-              <col style={{ width: '160px' }} />
-              <col />
-            </colgroup>
-            <tbody>
-              <tr>
-                <th scope={'row'}>{'직군/직무'}</th>
-                <td>{'영업 > 관리자'}</td>
-                <th scope={'row'}>{'직군/직무'}</th>
-                <td>{'영업 > 관리자'}</td>
-                <th scope={'row'}>{'직군/직무'}</th>
-                <td>{'영업 > 관리자'}</td>
-              </tr>
-            </tbody>
-          </table>
+        <div className={styles.info_wrap}>
+          <FormSubTitle label={'기본정보'} />
+          <div className={cn(tableStyles.start, tableStyles.wrap, 'border-t-[0px]')}>
+            <table>
+              <caption>{'기본정보'}</caption>
+              <colgroup>
+                <col style={{ width: '160px' }} />
+                <col />
+                <col style={{ width: '160px' }} />
+                <col />
+                <col style={{ width: '160px' }} />
+                <col />
+              </colgroup>
+              <tbody>
+                <tr>
+                  <th scope={'row'}>{'휴대폰번호'}</th>
+                  <td>{formatPhoneNumber(user?.phoneNumber)}</td>
+                  <th scope={'row'}>{'연락처(사무실)'}</th>
+                  <td>{user?.companyTelephoneNumber}</td>
+                  <th scope={'row'}>{'지역'}</th>
+                  <td>{user?.workPlaceCode}</td>
+                </tr>
+                <tr>
+                  <th scope={'row'}>{'주소'}</th>
+                  <td colSpan={5}>{address}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <FormSubTitle label={'회사 정보'} />
+          <div className={cn(tableStyles.start, tableStyles.wrap, 'border-t-[0px]')}>
+            <table>
+              <caption>{'회사 정보'}</caption>
+              <colgroup>
+                <col style={{ width: '160px' }} />
+                <col />
+                <col style={{ width: '160px' }} />
+                <col />
+                <col style={{ width: '160px' }} />
+                <col />
+              </colgroup>
+              <tbody>
+                <tr>
+                  <th scope={'row'}>{'회사'}</th>
+                  <td>{user?.company?.name}</td>
+                  <th scope={'row'}>{'실'}</th>
+                  <td>{user?.dept?.parent}</td>
+                  <th scope={'row'}>{'소속'}</th>
+                  <td>{user?.dept?.deptName}</td>
+                </tr>
+                <tr>
+                  <th scope={'row'}>{'보직'}</th>
+                  {/* <td>{'경영팀'}</td> */}
+                  <td>{''}</td>
+                  <th scope={'row'}>{'호칭'}</th>
+                  {/* <td>{'팀장'}</td> */}
+                  <td>{''}</td>
+                  <th scope={'row'}>{'직군'}</th>
+                  {/* <td>{'과장'}</td> */}
+                  <td>{''}</td>
+                </tr>
+                <tr>
+                  <th scope={'row'}>{'입사일'}</th>
+                  {/* <td>{'2020-01-02'}</td> */}
+                  <td>{''}</td>
+                  <th scope={'row'}>{'최근 승진일'}</th>
+                  {/* <td colSpan={3}>{'재직'}</td> */}
+                  <td>{''}</td>
+                  <th scope={'row'}>{'재직 상태'}</th>
+                  {/* <td colSpan={3}>{'재직'}</td> */}
+                  <td>{''}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <FormSubTitle label={'기타 정보'} />
+          <div className={cn(tableStyles.start, tableStyles.wrap, 'border-t-[0px]')}>
+            <table>
+              <caption>{'기타 정보'}</caption>
+              <colgroup>
+                <col style={{ width: '160px' }} />
+                <col />
+                <col style={{ width: '160px' }} />
+                <col />
+                <col style={{ width: '160px' }} />
+                <col />
+              </colgroup>
+              <tbody>
+                <tr>
+                  <th scope={'row'}>{'직군/직무'}</th>
+                  <td>{'영업 > 관리자'}</td>
+                  <th scope={'row'}>{'직군/직무'}</th>
+                  <td>{'영업 > 관리자'}</td>
+                  <th scope={'row'}>{'직군/직무'}</th>
+                  <td>{'영업 > 관리자'}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

@@ -122,12 +122,12 @@ export const useCreateCourse = (
  * 성공 시 'showSaveComplete' 모달을 표시합니다.
  * @param [options] - 추가 뮤테이션 설정 옵션.
  */
-export const useCreateCourseWizard1 = (
+export const useUpdateCourseWizard1 = (
   options?: MutationHookOptions<Course, Error, Course, unknown>,
 ): UseMutationResult<Course, Error, Course, unknown> => {
   const { showSaveComplete } = useModal();
   return useMutation({
-    ...mutateOptions.createWizard1(),
+    ...mutateOptions.updateWizard1(),
     ...options,
     onSuccess: async (data, variables, context) => {
       await showSaveComplete();

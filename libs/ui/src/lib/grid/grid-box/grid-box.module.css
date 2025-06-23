@@ -75,9 +75,6 @@
       }
       [class*='nlp--button'] {
         @apply shrink-0;
-        & + [class*='nlp--button'] {
-          @apply !ml-[8px];
-        }
       }
       [class*='select_wrap'] {
         @apply w-auto;
