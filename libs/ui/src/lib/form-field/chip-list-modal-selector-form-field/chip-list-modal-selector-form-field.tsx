@@ -116,7 +116,7 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
             disabled={disabled}
             className={cn(styles.chip_list, disabled && styles.disabled)}
           />
-          {(!disabled || !showAddButton) && (
+          {!showAddButton && !disabled && (
             <Button
               type={'button'}
               className={cn(styles.btn_search, 'btn_search')}
