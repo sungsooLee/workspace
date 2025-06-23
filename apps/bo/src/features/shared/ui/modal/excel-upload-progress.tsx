@@ -247,4 +247,4 @@ const DndFileProgressComponent: FC<any> = ({
   );
 };
 
-export const DndFileProgress = DndFileProgressComponent;
+export const ExcelUploadProgress = DndFileProgressComponent;
