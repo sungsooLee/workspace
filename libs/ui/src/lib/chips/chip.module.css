@@ -20,6 +20,9 @@
       }
     }
     &.disabled {
+      [class*='nlp--button'] {
+        @apply !pointer-events-none;
+      }
     }
   }
   &.chips_box {
