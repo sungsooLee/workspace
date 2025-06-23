@@ -70,7 +70,7 @@ export const codeOptions: CodeApiConfig = {
       return [
         ...data.content.map((item: any) => ({
           label: item.tenantName,
-          value: item.tenantId,
+          value: String(item.tenantId),
         })),
       ];
     },
@@ -85,10 +85,23 @@ export const codeOptions: CodeApiConfig = {
       return [
         ...data.map((item: any) => ({
           label: item.name,
-          value: item.roleId,
+          value: String(item.roleId),
         })),
       ];
     },
     // disableCache: true,
+  },
+  [CODE_GROUP['manual.code.expired']]: {
+    api: 'default',
+    options: [
+      {
+        value: 'true',
+        label: 'LABEL.common.expired', // 만료
+      },
+      {
+        value: 'false',
+        label: 'LABEL.common.valid', // 정상
+      },
+    ],
   },
 };
