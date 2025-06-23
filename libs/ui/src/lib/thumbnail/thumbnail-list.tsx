@@ -25,6 +25,10 @@ export interface ThumbnailListComponentProps
    */
   showDeleteButton?: boolean;
   /**
+   * 미리보기 버튼 표시 여부
+   */
+  showPreviewButton?: boolean;
+  /**
    * 썸네일의 체크 상태가 변경될 때 호출되는 콜백 함수
    * @param options - 체크 상태가 업데이트된 전체 ImageOption 배열
    */
@@ -53,6 +57,7 @@ const ThumbnailListComponent = forwardRef<HTMLDivElement, ThumbnailListComponent
       options = [],
       showCheckbox = true,
       showDeleteButton = true,
+      showPreviewButton = true,
       onRemoveOptions,
       onRemove,
       onCheckedChange,
@@ -100,6 +105,7 @@ const ThumbnailListComponent = forwardRef<HTMLDivElement, ThumbnailListComponent
         key={d.id}
         showCheckbox={showCheckbox}
         showDeleteBtn={showDeleteButton}
+        showPreviewBtn={showPreviewButton}
         selected={d.checked}
         onCheckedChange={(checked: CheckedState) => handleCheckChange(checked, d)}
         onRemoveClick={() => handleRemoveClick(d)}

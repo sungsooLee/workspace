@@ -7,6 +7,8 @@ export * from './ui/components/user-group-occupation';
 export * from './ui/components/user-group-organization';
 export * from './ui/components/user-group-position';
 export * from './ui/excel/grid-excel-buttons';
+export * from './ui/excel/grid-excel-download-button';
+export * from './ui/excel/grid-excel-upload-button';
 export * from './ui/modal/address-search-modal';
 export * from './ui/modal/category-choice-tree-modal';
 export * from './ui/modal/channel-choice-modal';

@@ -29,6 +29,8 @@ export interface ChipListComponentProps extends Omit<ChipComponentProps, 'option
   valueField?: string;
   /** readOnly 여부 */
   readOnly?: boolean;
+  /** disabled 여부 */
+  disabled?: boolean;
   /** chip 클릭시 호출 */
   onChipClick?: (option: any) => void;
   /** chip 삭제 버튼 클릭시 호출 */
@@ -53,6 +55,7 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
       visibleCount = 10000,
       emptyMessage,
       readOnly,
+      disabled,
       wordwrap = false,
       labelField = 'label',
       valueField = 'value',
@@ -101,6 +104,7 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
           className,
           wordwrap && styles.wordwrap,
           readOnly && styles.readonly,
+          disabled && styles.disabled,
           {
             [styles.chips_box]: !hideBorder,
             [styles.border_none]: hideBorder,
@@ -134,6 +138,7 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
                 option={option}
                 labelField={labelField}
                 valueField={valueField}
+                disabled={disabled}
                 className={cn(styles.btn_chips, size && styles[size], type && styles[type])}
                 onClick={onChipClick && handleChipClick}
                 onDelete={handleChipDelete}

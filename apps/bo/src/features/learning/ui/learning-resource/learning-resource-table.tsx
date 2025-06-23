@@ -24,7 +24,7 @@ import { useRouter } from '@tanstack/react-router';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { useWatch } from 'react-hook-form';
 import { useQueryClient } from '@tanstack/react-query';
-import { GridExcelDownloadButton } from '@features/shared/ui/excel/grid-excel-download-button';
+import { GridExcelDownloadButton } from '@features/shared';
 import { CMSApiPrefix } from '@learnway/config';
 
 function LearningResourceTableComponent() {
