@@ -65,6 +65,9 @@ const CompanyDetailComponent = (props: any, ref: any) => {
       ]);
       console.log('##### initialData', convertedData);
       fetchData(convertedData);
+      setTimeout(() => {
+        fetchData(convertedData);
+      }, 10000);
 
       const loginRestrictions = detailData.companyLoginRestrictionList.map((limit: any) => ({
         ...limit,
@@ -458,10 +461,10 @@ const CompanyDetailComponent = (props: any, ref: any) => {
     <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
       <FormSubTitle label={t('회사 인사 데이터 관리 정보')} lineType="dark" />
       <ContentsRow>
-        <FormRow provider={provider} name={'companyType'} />
+        <FormRow provider={provider} name={'companyType'} element={<RadioGroupFormField />} />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name={'hrInfoManageType'} />
+        <FormRow provider={provider} name={'hrInfoManageType'} element={<RadioGroupFormField />} />
       </ContentsRow>
       <FormDisplay
         provider={provider}
@@ -662,7 +665,7 @@ const formConfig: DynamicFormConfig = {
       name: 'hrInfoManageType',
       type: 'radio-group',
       label: t('인사 데이터 관리 방식'),
-      value: 'MANUAL_MANAGE',
+      value: '',
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.HrInfoManageType'],
       },

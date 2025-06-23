@@ -86,12 +86,11 @@ const TenantCompanyOrganizationTreeComponent = ({
   const [formMode, setFormMode] = useState(EnFormMode.NONE);
   const [pathString, setPathString] = useState<string>();
   const [disableEditing, setDisableEditing] = useState(false);
+  const [company, setCompany] = useState<any>();
 
   const { provider, fetchData, onSubmit, onFormChange, getValues, getInitByBuilders, control } =
     useDynamicForm(formConfig);
 
-  // 부서 수정/삭제 시 회사의 인사 데이터 수동 관리 유형을 확인하기 위해 조회
-  const company: any = CompaniesService.fetch(companyCode);
   const { data: departmentTreeData, refetch } = useGetCompanyDepartmentTree(
     showType === EnOrganizationShowType.platform ? [companyCode] : [],
   );
@@ -154,6 +153,7 @@ const TenantCompanyOrganizationTreeComponent = ({
     setViewNode(null);
     setFormMode(EnFormMode.NONE);
   };
+
   const handleAppendSubOrganization = (node: TreeNode, level: number) => {
     console.log('### node', node);
     const initdata = getInitByBuilders();
@@ -187,6 +187,7 @@ const TenantCompanyOrganizationTreeComponent = ({
         companyCode={companyCode}
         showType={showType}
         deptId={selectedNode?.deptId}
+        companyHrInfoManageType={company?.hrInfoManageType}
       />
     );
   };
@@ -202,6 +203,15 @@ const TenantCompanyOrganizationTreeComponent = ({
   };
 
   useEffect(() => {
+    // 부서 수정/삭제 시 회사의 인사 데이터 수동 관리 유형을 확인하기 위해 조회
+    const init = async () => {
+      const data: any[] = await CompaniesService.fetch(companyCode);
+      setCompany({ ...data });
+    };
+    init();
+  }, []);
+
+  useEffect(() => {
     if (viewNode) {
       const location = findOrganizationPathById(deptTreeData, viewNode.key);
       setPathString(location);
@@ -214,7 +224,10 @@ const TenantCompanyOrganizationTreeComponent = ({
 
   useEffect(() => {
     if (showType === EnOrganizationShowType.platform && departmentTreeData) {
-      const transformedData = transformDepartmentApiDataToTreeData(departmentTreeData);
+      const transformedData = transformDepartmentApiDataToTreeData(
+        departmentTreeData,
+        t('러닝웨이 - 조직'),
+      );
       setDeptTreeData(transformedData);
       if (transformedData?.length > 0) {
         const root = transformedData[0];
@@ -226,7 +239,10 @@ const TenantCompanyOrganizationTreeComponent = ({
 
   useEffect(() => {
     if (showType === EnOrganizationShowType.origin && hmgDepartmentTreeData) {
-      const transformedData = transformDepartmentApiDataToTreeData(hmgDepartmentTreeData);
+      const transformedData = transformDepartmentApiDataToTreeData(
+        hmgDepartmentTreeData,
+        t('조직'),
+      );
       setDeptTreeData(transformedData);
       if (transformedData?.length > 0) {
         const root = transformedData[0];
@@ -267,12 +283,14 @@ const TenantCompanyOrganizationTreeComponent = ({
         deptDesc: departmentData.deptDesc ?? '',
       };
       console.log('### fetchData', data);
-      //TODO. 부서 상세에 부서 설명 누락
       fetchData(data);
       setDisableEditing(
         company.hrInfoManageType === 'AUTO_MANAGE' ||
           departmentData.hrInfoManageType === 'AUTO_MANAGE',
       );
+      console.log('### company', company);
+      console.log('#### company.hrInfoManageType', company.hrInfoManageType);
+      console.log('#### departmentData.hrInfoManageType', departmentData.hrInfoManageType);
     }
   }, [departmentData]);
 
@@ -326,11 +344,13 @@ const TenantCompanyOrganizationTreeComponent = ({
   const handleDeleteDeparment = async () => {
     const deptId = getValues().deptId;
     if (deptId && formMode === EnFormMode.VIEW) {
-      const payload = {
-        companyCode: companyCode,
-        deptIdList: [deptId],
-      };
-      deleteDepartment(payload);
+      if (await openConfirm('삭제 하시겠습니까?')) {
+        const payload = {
+          companyCode: companyCode,
+          deptIdList: [deptId],
+        };
+        deleteDepartment(payload);
+      }
     }
   };
 
@@ -509,8 +529,7 @@ const TenantCompanyOrganizationTreeComponent = ({
                           content: <UserChoiceModal />,
                         }}
                         selectOnlyOne
-                        //disabled={formMode === EnFormMode.EMPTY}
-                        disabled={true}
+                        disabled={formMode === EnFormMode.EMPTY}
                       />
                     }
                   />
