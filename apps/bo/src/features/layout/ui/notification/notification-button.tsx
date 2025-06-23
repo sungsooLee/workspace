@@ -18,6 +18,11 @@ const PopoverContent = () => {
   const readAllDisabled = useMemo(() => {
     return notifications?.every((item) => item.isAlarmConfirm === true);
   }, [notifications]);
+
+  const deleteAllDisabled = useMemo(() => {
+    return notifications?.length <= 0;
+  }, [notifications]);
+
   const handleReadAll = () => {
     readAll();
   };
@@ -43,7 +48,7 @@ const PopoverContent = () => {
             <Button className={styles.btn} onClick={handleReadAll} disabled={readAllDisabled}>
               {t('LABEL.common.readAll')}
             </Button>
-            <Button className={styles.btn} onClick={handleDeleteAll} disabled={!notifications}>
+            <Button className={styles.btn} onClick={handleDeleteAll} disabled={deleteAllDisabled}>
               {t('LABEL.common.deleteAll')}
             </Button>
           </div>
