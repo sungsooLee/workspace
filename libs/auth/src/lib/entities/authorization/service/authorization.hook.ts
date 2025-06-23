@@ -131,10 +131,37 @@ export function useLoginTimer() {
   const { exp, showAlert, setShowAlert, reset } = useExpStore((state) => state);
   const { alert: openAlert, confirm: openConfirm, closeAll } = useModal();
 
-  const [seconds, setSeconds] = useState<number | undefined>();
-  const [stop, setStop] = useState<boolean>(true);
+  const [remainingTime, setRemainingTime] = useState<string>('');
 
-  const timerText = duration(seconds ?? 0, DATE_TIME_FORMAT.MIN_SEC);
+  useEffect(() => {
+    if (!exp) return;
+
+    const update = () => {
+      const remainingSeconds = getRemainingTime(exp);
+      const hours = Math.floor(remainingSeconds / 3600)
+        .toString()
+        .padStart(2, '0');
+      const minutes = Math.floor((remainingSeconds % 3600) / 60)
+        .toString()
+        .padStart(2, '0');
+      const seconds = (remainingSeconds % 60).toString().padStart(2, '0');
+
+      console.log('### ', `${hours}:${minutes}:${seconds}`);
+
+      setRemainingTime(`${hours}:${minutes}:${seconds}`);
+      if (remainingSeconds <= 300 && remainingSeconds > 0 && !showAlert) {
+        setShowAlert(true);
+        handleReissue();
+      } else if (remainingSeconds <= 0) {
+        handleLogout();
+      }
+    };
+
+    update();
+
+    const interval = setInterval(update, 1000);
+    return () => clearInterval(interval);
+  }, [exp, showAlert]);
 
   function getRemainingTime(exp: string) {
     try {
@@ -164,7 +191,6 @@ export function useLoginTimer() {
       },
     });
 
-    setStop(true);
     reset();
   }
 
@@ -178,6 +204,7 @@ export function useLoginTimer() {
       onClose: async (feedback: boolean) => {
         if (feedback) {
           await reissue();
+          setShowAlert(true);
           closeAll();
         } else {
           // 로그인 연장 취소한 경우 다시 묻지 않음
@@ -187,42 +214,7 @@ export function useLoginTimer() {
     });
   }
 
-  useEffect(() => {
-    if (!exp) {
-      setSeconds(undefined);
-      setStop(true);
-      return;
-    }
-    setSeconds(getRemainingTime(exp));
-    setStop(false);
-  }, [exp]);
-
-  useEffect(() => {
-    if (seconds === undefined) return;
-
-    if (seconds === 0) {
-      handleLogout();
-      return;
-    }
-    if (stop) return;
-    const interval = setInterval(() => {
-      setSeconds(seconds - 1);
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [seconds, stop]);
-
-  useEffect(() => {
-    if (!seconds) return;
-
-    // 5분(300초) 이하일 때 알림 한 번만
-    if (seconds <= 300 && !showAlert) {
-      setShowAlert(true);
-      handleReissue();
-    }
-  }, [seconds, showAlert]);
-
   return {
-    time: timerText,
+    time: remainingTime,
   };
 }
