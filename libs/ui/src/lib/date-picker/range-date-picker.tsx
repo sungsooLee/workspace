@@ -3,14 +3,14 @@ import Primitive from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './date-picker.css';
 import { IcoCalendar01 } from '@learnway/icons';
-
 import { cn, getDatePickerPlaceholder, getDefaultLang } from '@learnway/shared';
 import { BaseFieldProps } from '../type';
-
 import { CustomDatePickerHeader } from './custom-date-picker-header';
+import { PopoverTimeInput } from './custom-time-picker';
 import { ko, enUS } from 'date-fns/locale';
 import { useTranslation } from 'react-i18next';
 import { Locale } from 'react-datepicker/dist/date_utils';
+import { DatePickerType } from './date-picker';
 
 const dayjsToDateFnsLocaleMap: Record<string, any> = {
   ko: ko,
@@ -31,6 +31,9 @@ export interface RangeDatePickerProps extends BaseFieldProps<[Date | null, Date 
   placeholderStart?: string;
   placeholderEnd?: string;
   locale?: string;
+  displayType?: DatePickerType;
+  minuteStep?: number;
+  secondStep?: number;
 }
 
 const RangeDatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, RangeDatePickerProps> = (
@@ -47,6 +50,9 @@ const RangeDatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, RangeDa
     onChangeStart,
     onChangeEnd,
     locale,
+    displayType = 'day',
+    minuteStep = 1,
+    secondStep = 1,
   },
   ref,
 ) => {
@@ -117,7 +123,7 @@ const RangeDatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, RangeDa
       setEndDate(null);
       onChange?.([date, null]);
 
-      if (!isKeyboardInput) {
+      if (!isKeyboardInput && !isTimeOnlyMode) {
         setTimeout(() => {
           endPickerRef.current?.setOpen(true);
         }, 100);
@@ -144,7 +150,7 @@ const RangeDatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, RangeDa
       setEndDate(null);
       onChange?.([date, null]);
 
-      if (!isKeyboardInput) {
+      if (!isKeyboardInput && !isTimeOnlyMode) {
         setTimeout(() => {
           endPickerRef.current?.setOpen(true);
         }, 100);
@@ -182,69 +188,166 @@ const RangeDatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, RangeDa
   };
 
   const dateFormat = currentLocale === ko ? 'yyyy-MM-dd' : 'MM-dd-yyyy';
+  const showTimePicker =
+    displayType === 'time' ||
+    displayType === 'time-hm' ||
+    displayType === 'day-time' ||
+    displayType === 'day-time-hm' ||
+    displayType === 'day-time-hms';
+  const showTimeStep = displayType === 'time-step';
+  const isTimeOnlyMode = showTimePicker || showTimeStep;
+  const showSeconds = displayType === 'day-time-hms' || displayType === 'time';
 
   return (
     <div className={cn('nlp--datepicker-time', 'nlp--datepicker-from-to', size)} ref={ref}>
       <div className="flex flex-row">
-        <Primitive
-          ref={startPickerRef}
-          showIcon
-          selectsStart
-          selected={startDate}
-          startDate={startDate}
-          endDate={endDate}
-          dateFormat={dateFormat}
-          shouldCloseOnSelect={true}
-          readOnly={readOnly}
-          disabled={disabled}
-          minDate={minDate}
-          maxDate={maxDate}
-          placeholderText={getPlaceholderByType('day', currentLocale)}
-          icon={<IcoCalendar01 width={16} height={16} stroke="#4C515E" fill="none" />}
-          isClearable={true}
-          wrapperClassName={'datepicker_wrap'}
-          className={cn('datepicker_input', className)}
-          onChange={handleStartDateChange}
-          onKeyDown={handleKeyDown}
-          excludeDates={disabledDates}
-          renderDayContents={(day) => {
-            return <span className="date_text">{day}</span>;
-          }}
-          renderCustomHeader={(headerProps: any) => (
-            <CustomDatePickerHeader {...headerProps} locale={currentLocale} />
+        <div className="nlp--datepicker-calendar flex flex-row space-x-2">
+          <Primitive
+            ref={startPickerRef}
+            showIcon
+            selectsStart
+            selected={startDate}
+            startDate={startDate}
+            endDate={endDate}
+            dateFormat={dateFormat}
+            shouldCloseOnSelect={true}
+            readOnly={readOnly}
+            disabled={disabled}
+            minDate={minDate}
+            maxDate={maxDate}
+            placeholderText={getPlaceholderByType('day', currentLocale)}
+            icon={<IcoCalendar01 width={16} height={16} stroke="#4C515E" fill="none" />}
+            isClearable={true}
+            wrapperClassName={'datepicker_wrap'}
+            className={cn('datepicker_input', className)}
+            onChange={handleStartDateChange}
+            onKeyDown={handleKeyDown}
+            excludeDates={disabledDates}
+            renderDayContents={(day) => {
+              return <span className="date_text">{day}</span>;
+            }}
+            renderCustomHeader={(headerProps: any) => (
+              <CustomDatePickerHeader {...headerProps} locale={currentLocale} />
+            )}
+            locale={currentLocale}
+          />
+          {showTimePicker && (
+            <div className="nlp--datepicker-time">
+              <PopoverTimeInput
+                value={startDate}
+                onChange={(date: Date | undefined) => {
+                  if (date) {
+                    handleStartDateChange(date);
+                  }
+                }}
+                minuteStep={minuteStep}
+                secondStep={secondStep}
+                showSeconds={showSeconds}
+                placeholder={getPlaceholderByType('time-hm', currentLocale)}
+                locale={currentLocale}
+              />
+            </div>
           )}
-          locale={currentLocale}
-        />
+          {showTimeStep && (
+            <div className="nlp--datepicker-time">
+              <Primitive
+                showIcon
+                shouldCloseOnSelect
+                readOnly={readOnly}
+                disabled={disabled}
+                showTimeSelect
+                showTimeSelectOnly
+                selected={startDate}
+                placeholderText={getPlaceholderByType('time-step', currentLocale)}
+                icon={<IcoCalendar01 width={16} height={16} stroke="#4C515E" fill="none" />}
+                isClearable={true}
+                dateFormat={currentLocale === ko ? 'aa h:mm' : 'h:mm aa'}
+                timeFormat={currentLocale === ko ? 'aa h:mm' : 'h:mm aa'}
+                wrapperClassName={'datepicker_wrap'}
+                className={cn('datepicker_input', className)}
+                onChange={handleStartDateChange}
+                excludeDates={disabledDates}
+                locale={currentLocale}
+                timeIntervals={minuteStep}
+                timeCaption=""
+              />
+            </div>
+          )}
+        </div>
         <span className="hyphen"></span>
-        <Primitive
-          ref={endPickerRef}
-          showIcon
-          selectsEnd
-          selected={endDate}
-          startDate={startDate}
-          endDate={endDate}
-          dateFormat={dateFormat}
-          shouldCloseOnSelect={true}
-          readOnly={readOnly}
-          disabled={disabled}
-          minDate={startDate || minDate}
-          maxDate={maxDate}
-          placeholderText={getPlaceholderByType('day', currentLocale)}
-          icon={<IcoCalendar01 width={16} height={16} stroke="#4C515E" fill="none" />}
-          isClearable={true}
-          wrapperClassName={'datepicker_wrap'}
-          className={cn('datepicker_input', className)}
-          onChange={handleEndDateChange}
-          onKeyDown={handleKeyDown}
-          excludeDates={disabledDates}
-          renderDayContents={(day) => {
-            return <span className="date_text">{day}</span>;
-          }}
-          renderCustomHeader={(headerProps: any) => (
-            <CustomDatePickerHeader {...headerProps} locale={currentLocale} />
+        <div className="nlp--datepicker-calendar flex flex-row space-x-2">
+          <Primitive
+            ref={endPickerRef}
+            showIcon
+            selectsEnd
+            selected={endDate}
+            startDate={startDate}
+            endDate={endDate}
+            dateFormat={dateFormat}
+            shouldCloseOnSelect={true}
+            readOnly={readOnly}
+            disabled={disabled}
+            minDate={startDate || minDate}
+            maxDate={maxDate}
+            placeholderText={getPlaceholderByType('day', currentLocale)}
+            icon={<IcoCalendar01 width={16} height={16} stroke="#4C515E" fill="none" />}
+            isClearable={true}
+            wrapperClassName={'datepicker_wrap'}
+            className={cn('datepicker_input', className)}
+            onChange={handleEndDateChange}
+            onKeyDown={handleKeyDown}
+            excludeDates={disabledDates}
+            renderDayContents={(day) => {
+              return <span className="date_text">{day}</span>;
+            }}
+            renderCustomHeader={(headerProps: any) => (
+              <CustomDatePickerHeader {...headerProps} locale={currentLocale} />
+            )}
+            locale={currentLocale}
+          />
+          {showTimePicker && (
+            <div className="nlp--datepicker-time">
+              <PopoverTimeInput
+                value={endDate}
+                onChange={(date: Date | undefined) => {
+                  if (date) {
+                    handleEndDateChange(date);
+                  }
+                }}
+                minuteStep={minuteStep}
+                secondStep={secondStep}
+                showSeconds={showSeconds}
+                placeholder={getPlaceholderByType('time-hm', currentLocale)}
+                locale={currentLocale}
+              />
+            </div>
           )}
-          locale={currentLocale}
-        />
+          {showTimeStep && (
+            <div className="nlp--datepicker-time">
+              <Primitive
+                showIcon
+                shouldCloseOnSelect
+                readOnly={readOnly}
+                disabled={disabled}
+                showTimeSelect
+                showTimeSelectOnly
+                selected={endDate}
+                placeholderText={getPlaceholderByType('time-step', currentLocale)}
+                icon={<IcoCalendar01 width={16} height={16} stroke="#4C515E" fill="none" />}
+                isClearable={true}
+                dateFormat={currentLocale === ko ? 'aa h:mm' : 'h:mm aa'}
+                timeFormat={currentLocale === ko ? 'aa h:mm' : 'h:mm aa'}
+                wrapperClassName={'datepicker_wrap'}
+                className={cn('datepicker_input', className)}
+                onChange={handleEndDateChange}
+                excludeDates={disabledDates}
+                locale={currentLocale}
+                timeIntervals={minuteStep}
+                timeCaption=""
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
