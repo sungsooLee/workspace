@@ -22,10 +22,12 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1 = {
     learningSpaceName?: string;
     coordinatorId: number;
     coordinatorName: string;
+    coordinatorDeptName: string;
     coordinatorTelNo: string;
     coordinatorEmail: string;
     operatorId: number;
     operatorName: string;
+    operatorDeptName: string;
     operatorTelNo: string;
     operatorEmail: string;
     instructorId?: number;
