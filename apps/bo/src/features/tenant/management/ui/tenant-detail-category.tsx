@@ -567,7 +567,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
                 name="userGroups"
                 element={
                   <ChipListModalSelectorFormField
-                    disabled={EnFormMode.NONE}
+                    disabled={mode === EnFormMode.NONE}
                     modalConfig={{
                       content: <UserGroupTabsChoiceModal />,
                       title: '',
