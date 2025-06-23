@@ -36,8 +36,8 @@ import {
   ChannelChoiceModal,
   ChannelListChoiceModal,
   CompanyShuttleModal,
+  GridExcelUploadButton,
   UserGroupChoiceModal,
-  GridExcelButtons,
 } from '@features/shared';
 
 import { EnTenantDetailTabKey } from '@types';
@@ -165,7 +165,7 @@ function RouteComponent() {
             <GridBox
               showAdd
               showRemove
-              excelButtons={<GridExcelButtons showUpload />}
+              excelButtons={<GridExcelUploadButton />}
               config={gMenualConfig}
               columns={menualColumns}
             />
@@ -178,7 +178,7 @@ function RouteComponent() {
           <GridBox
             showAdd
             showRemove
-            excelButtons={<GridExcelButtons showUpload />}
+            excelButtons={<GridExcelUploadButton />}
             config={gExceptionConfig}
             columns={exceptionColumns}
           />
