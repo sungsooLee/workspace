@@ -550,7 +550,7 @@ const TenantCompanyOrganizationTreeComponent = ({
                     }
                   />
                 </ContentsRow>
-                {formMode === EnFormMode.VIEW && <ContentsHistoryInfoFormField />}
+                {/* {formMode === EnFormMode.VIEW && <ContentsHistoryInfoFormField />} */}
               </div>
             </form>
           </div>
