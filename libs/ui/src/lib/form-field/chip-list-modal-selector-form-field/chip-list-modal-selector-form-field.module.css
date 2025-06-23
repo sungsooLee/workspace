@@ -1,7 +1,7 @@
 .start {
   @apply w-full;
   .chips_modal_wrap {
-    @apply flex h-auto min-h-[120px] w-full flex-wrap items-center rounded-[4px] border border-solid border-[var(--gray4)] px-[12px];
+    @apply flex h-auto min-h-[120px] w-full flex-wrap items-center overflow-hidden rounded-[4px] border border-solid border-[var(--gray4)];
     .btn_search {
       @apply flex flex-auto items-center justify-end;
     }
@@ -18,7 +18,7 @@
       }
     }
     [class*='nlp--chip-list'] {
-      @apply pl-0;
+      @apply w-full px-[12px];
       [class*='nlp--chips'] {
         @apply !h-[24px] !min-h-[24px];
       }

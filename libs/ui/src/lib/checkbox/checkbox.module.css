@@ -2,7 +2,7 @@
   @apply relative inline-flex items-center;
 
   .checkbox_root {
-    @apply flex h-[2rem] w-[2rem] items-center justify-center rounded-[4px] bg-[var(--white)];
+    @apply flex h-[2rem] w-[2rem] items-center justify-center overflow-hidden rounded-[4px] bg-[var(--white)];
     border: 1px solid var(--gray5);
     &[data-state='checked'] {
       .checkbox_indicator {
@@ -22,8 +22,8 @@
     }
     &:disabled {
       @apply border border-solid border-[var(--gray3)] bg-[var(--gray2)];
-      [data-state='checked'] {
-        @apply !bg-[var(--gray5)];
+      &[data-state='checked'] {
+        @apply !border-[var(--gray5)] !bg-[var(--gray5)];
       }
       & ~ .label {
         @apply text-[var(--gray5)];
@@ -56,7 +56,7 @@
         }
       }
     }
-    &[aria-checked='true'] {
+    &[data-state='checked'] {
       @apply bg-[var(--secondary1)];
       border-color: var(--secondary1);
     }

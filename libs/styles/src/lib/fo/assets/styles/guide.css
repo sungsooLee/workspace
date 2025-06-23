@@ -499,6 +499,9 @@
           @apply text-[12px] text-[#999];
         }
       }
+      &.last-date {
+        @apply text-[var(--status1)];
+      }
       &.remarks {
         @apply text-left text-[12px] leading-[1.4];
       }

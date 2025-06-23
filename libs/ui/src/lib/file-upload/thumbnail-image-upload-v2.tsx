@@ -168,7 +168,11 @@ const ThumbnailImageUploadV2Component = forwardRef<HTMLDivElement, ThumbnailImag
     // }, [status]);
 
     return (
-      <div {...props} ref={ref} className={cn(styles.start, className, 'nlp--image-upload')}>
+      <div
+        {...props}
+        ref={ref}
+        className={cn(styles.start, className, 'nlp--image-upload flex flex-col gap-2')}
+      >
         {/* ThumbnailList */}
         <div className={styles.thumbnail_wrap}>
           {/*썸네일 업로드*/}

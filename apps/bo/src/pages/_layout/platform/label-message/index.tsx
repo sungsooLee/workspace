@@ -228,7 +228,23 @@ const searchConfig: any = {
 const gridConfig = {
   query: queryOptions.all<LabelMessagesQueryParams>,
   columns: [
-    { name: 'labelMessageType', label: () => t('LABEL.grid.column.type') },
+    {
+      name: 'labelMessageType',
+      label: () => t('LABEL.grid.column.type'),
+      render: (info: any) => {
+        return info.getValue() === 'LABEL' ? (
+          <span>{t('LABEL.label')}</span>
+        ) : info.getValue() === 'MESSAGE' ? (
+          <span>{t('LABEL.message')}</span>
+        ) : (
+          <span>{info.getValue()}</span>
+        );
+      },
+      meta: {
+        cellAlign: 'center',
+      },
+      size: 80,
+    },
     {
       name: 'labelMessageMultilingulKey',
       label: t('LABEL.grid.column.labelMessageCode'),
