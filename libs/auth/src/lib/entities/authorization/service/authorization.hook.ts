@@ -146,13 +146,11 @@ export function useLoginTimer() {
         .padStart(2, '0');
       const seconds = (remainingSeconds % 60).toString().padStart(2, '0');
 
-      console.log('### ', `${hours}:${minutes}:${seconds}`);
-
       setRemainingTime(`${hours}:${minutes}:${seconds}`);
       if (remainingSeconds <= 300 && remainingSeconds > 0 && !showAlert) {
         setShowAlert(true);
         handleReissue();
-      } else if (remainingSeconds <= 0) {
+      } else if (remainingSeconds === 0) {
         handleLogout();
       }
     };

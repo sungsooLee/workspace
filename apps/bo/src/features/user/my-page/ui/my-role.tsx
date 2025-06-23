@@ -8,10 +8,11 @@ import {
 import { Button, GridBox, useGridBox, useModal } from '@learnway/ui';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
-import { SearchBox } from '../../../../shared/ui/search-box';
+import { SearchBox } from '@shared/ui/search-box';
 import { MyRoleExtendModal } from './my-role-extend-modal';
 import { Link } from '@tanstack/react-router';
 import { roleManagerQueryOptions } from '@entities/role/service/role-manage.queries';
+import { dateDiff } from '@learnway/shared';
 
 const MyRoleComponent = () => {
   const { state } = useCurrentRoute();
@@ -22,13 +23,14 @@ const MyRoleComponent = () => {
   const [selectedRow, setSelectedRow] = useState<any | null>(null);
 
   function handleOnSearch(query: Record<string, any>) {
-    // gridFetch(compactValues(query));
+    console.log('### query', query);
+    gridFetch(compactValues(query));
   }
 
   useEffect(() => {
     const init = async (state: any) => {
-      if (state) {
-        onFormChange(state);
+      if (state.listParam) {
+        onFormChange(state.listParam);
         if (await onFormValid()) {
           handleOnSearch(getValues());
         }
@@ -103,27 +105,26 @@ const searchConfig = {
       },
     ],
     [
+      // {
+      // name: 'useYn',
+      // type: 'dropdown',
+      // label: t('사용여부'),
+      // value: '',
+      // options: [
+      //   { value: '', label: t('전체') },
+      //   { value: 'channelA', label: t('Y') },
+      //   { value: 'channelB', label: t('N') },
+      // ],
+      // },
       {
-        name: 'useYn',
-        type: 'dropdown',
-        label: t('사용여부'),
-        value: '',
-        options: [
-          { value: '', label: t('전체') },
-          { value: 'channelA', label: t('Y') },
-          { value: 'channelB', label: t('N') },
-        ],
-      },
-      {
-        name: 'expYn',
+        name: 'isExpired',
         type: 'dropdown',
         label: t('만료여부'),
         value: '',
-        options: [
-          { value: '', label: t('전체') },
-          { value: 'video', label: t('Y') },
-          { value: 'ebook', label: t('N') },
-        ],
+        presetOptionLabel: t('LABEL.form.label.all'),
+        optionsConfig: {
+          codeGroup: CODE_GROUP['manual.code.expired'],
+        },
       },
       {
         name: 'status',
@@ -140,8 +141,8 @@ const searchConfig = {
 };
 
 const gridConfig = {
-  query: '',
-  // query: roleManagerQueryOptions.getRoleApplicationList,
+  // query: '',
+  query: roleManagerQueryOptions.getRoleApplicationList,
   pagination: {
     pageIndex: 0,
     pageSize: 20,
@@ -162,38 +163,78 @@ const gridConfig = {
       ),
     },
     {
-      name: 'tenant',
+      name: 'tenantName',
       label: '테넌트',
     },
-    { name: 'channel', label: t('채널') },
+    {
+      name: 'channels',
+      label: t('채널'),
+      render: (info: any) => {
+        const channelList = [
+          {
+            channelId: 1,
+            channelName: '채널1',
+          },
+          {
+            channelId: 2,
+            channelName: '채널2',
+          },
+        ];
+        // TODO 채널 목록 적용
+        // const channelText = info.row.original.channels
+        //   ?.map?.((channel: { channelName: any }) => channel.channelName)
+        //   ?.join(', ');
+        const channelText = channelList
+          ?.map?.((channel: { channelName: any }) => channel.channelName)
+          ?.join(', ');
+        return `${channelText}`;
+      },
+    },
     // { name: 'isUsed', label: t('사용여부') },
-    { name: 'rolePeriod', label: t('권한기간') },
-    { name: 'expired', label: t('만료 여부') },
-    { name: 'statusName', label: t('신청 상태') },
-  ],
-  // data: [],
-  data: [
     {
-      roleApplicationId: 1,
-      roleId: 1,
-      roleName: '테넌트 관리자',
-      tenant: '1번테넌트',
-      channel: '1번채널',
-      isUsed: 'Y',
-      rolePeriod: '2020-05-01 ~ 2020-06-01',
-      expired: 'N',
-      statusName: '신청',
+      name: 'rolePeriod',
+      label: t('권한기간'),
+      render: (info: any) => {
+        return `${info.row.original.startDate} ~ ${info.row.original.endDate}`;
+      },
     },
     {
-      roleApplicationId: 2,
-      roleId: 2,
-      roleName: '테넌트 관리자',
-      tenant: '2번테넌트',
-      channel: '2번채널',
-      isUsed: 'N',
-      rolePeriod: '2020-05-01 ~ 2020-06-01',
-      expired: 'Y',
-      statusName: '만료',
+      name: 'expired',
+      label: t('만료 여부'),
+      render: (info: any) => {
+        const diff = dateDiff(info.row.original.endDate, new Date());
+        if (diff !== undefined && 0 >= diff) {
+          return `${t('LABEL.common.expired')}`;
+        } else {
+          return `${t('LABEL.common.valid')}`;
+        }
+      },
     },
+    { name: 'status', label: t('신청 상태') },
   ],
+  data: [],
+  // data: [
+  //   {
+  //     roleApplicationId: 1,
+  //     roleId: 1,
+  //     roleName: '테넌트 관리자',
+  //     tenant: '1번테넌트',
+  //     channel: '1번채널',
+  //     isUsed: 'Y',
+  //     rolePeriod: '2020-05-01 ~ 2020-06-01',
+  //     expired: 'N',
+  //     statusName: '신청',
+  //   },
+  //   {
+  //     roleApplicationId: 2,
+  //     roleId: 2,
+  //     roleName: '테넌트 관리자',
+  //     tenant: '2번테넌트',
+  //     channel: '2번채널',
+  //     isUsed: 'N',
+  //     rolePeriod: '2020-05-01 ~ 2020-06-01',
+  //     expired: 'Y',
+  //     statusName: '만료',
+  //   },
+  // ],
 };

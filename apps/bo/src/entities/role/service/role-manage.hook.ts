@@ -40,9 +40,9 @@ export function useGetRoleUserMe(siteScope: string) {
  * @description 나의 역할 신청 목록
  * @param roleApplicationId
  */
-export function useGetRoleApplicationList(siteScope: string) {
+export function useGetRoleApplicationList(payload: any) {
   return useQuery({
-    ...queryOptions.getRoleApplicationList(siteScope),
+    ...queryOptions.getRoleApplicationList(payload),
   });
 }
 

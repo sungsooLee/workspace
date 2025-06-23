@@ -26,11 +26,19 @@ const MyRoleExtendModalComponent: FC<any> = ({ type, data }: { type: MyRoleModal
   const { close: closeModal } = useModal();
   const { provider, fetchData, onSubmit, onFormChange } = useDynamicForm(formConfig);
 
-  const { data: viewData } = useGetRoleApplication(
-    type === 'view' ? data?.roleApplicationId : undefined,
-  );
+  const { data: viewData } = useGetRoleApplication(data?.roleApplicationId ?? undefined);
 
   console.log('### viewData', viewData);
+
+  useEffect(() => {
+    if (!viewData) return;
+
+    onFormChange({
+      userName: viewData.userName,
+      roleName: viewData.roleName,
+      currentRolePeriod: `${viewData.startDate} ~ ${viewData.endDate}`,
+    });
+  }, [viewData]);
 
   const isApprovedInfo = false;
   const handleOnSubmit = (node: any) => {
@@ -49,10 +57,10 @@ const MyRoleExtendModalComponent: FC<any> = ({ type, data }: { type: MyRoleModal
         <ModalBody>
           <FormSubTitle label={t('HRD 담당자 역할 정보')} />
           <ContentsRow>
-            <FormRow provider={provider} name={'user'} />
+            <FormRow provider={provider} name={'userName'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider} name={'role'} />
+            <FormRow provider={provider} name={'roleName'} />
             <FormRow provider={provider} name={'currentRolePeriod'} />
           </ContentsRow>
           <FormSubTitle className="mt-3" label={t('관리자 권한 신청 정보')} />
@@ -106,14 +114,14 @@ export const MyRoleExtendModal = MyRoleExtendModalComponent;
 const formConfig: DynamicFormConfig = {
   builders: [
     {
-      name: 'user',
+      name: 'userName',
       type: 'text',
       label: t('신청자'),
       value: '',
       disabled: true,
     },
     {
-      name: 'role',
+      name: 'roleName',
       type: 'text',
       label: t('HRD 담당자 역할'),
       value: '',
@@ -132,8 +140,8 @@ const formConfig: DynamicFormConfig = {
       label: t('권한 신청 시작/종료일'),
       // value: '',
       value: {
-        from: formUtils.nowDate({ unit: 'day', offset: -30 }),
-        to: formUtils.nowDate(),
+        from: formUtils.nowDate(),
+        to: formUtils.nowDate({ unit: 'day', offset: 30 }),
       },
     },
     {

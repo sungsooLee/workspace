@@ -200,8 +200,12 @@
         "category": "카테고리",
         "tenant": "테넌트",
         "channel": "채널",
-        "tenantCategory": "테넌트 카테고리"
+        "tenantCategory": "테넌트 카테고리",
+        "hrdRole": "HRD 담당자 역할",
+        "userRole": "학습자 역할"
       },
+      "expired": "만료",
+      "valid": "정상",
       "hrdCenter": "HRD 센터",
       "monthLater": "1개월 후 변경",
       "login": "로그인",
@@ -300,7 +304,7 @@
       "readAll": "전체읽음",
       "deleteAll": "전체삭제",
       "placeholder1": "{{type}}을 입력하세요.",
-      "placeholder2": "{{type}}를 입력하세요."
+      "placeholder2": "{{type}}를 입력하세요.",
     },
     "link": {
       "multilingual": "다국어관리"

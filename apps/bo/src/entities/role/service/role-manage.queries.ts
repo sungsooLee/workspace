@@ -122,10 +122,10 @@ export const roleManagerQueryOptions = {
       siteScope ? RoleManagerService.fetchRoleMe(siteScope) : getQuerySkipToken(),
   }),
   // 나의 역할 신청 목록 조회
-  getRoleApplicationList: (siteScope: string) => ({
-    queryKey: [roleQueryKeys.applicationList],
+  getRoleApplicationList: (payload: any) => ({
+    queryKey: [...roleQueryKeys.applicationList],
     queryFn: async () =>
-      siteScope ? RoleManagerService.fetchRoleApplicationList(siteScope) : getQuerySkipToken(),
+      payload ? RoleManagerService.fetchRoleApplicationList(payload) : getQuerySkipToken(),
   }),
   // 나의 역할 신청 조회 단건
   getRoleApplication: (roleApplicationId: number) => ({

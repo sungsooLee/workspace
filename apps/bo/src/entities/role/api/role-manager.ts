@@ -156,10 +156,8 @@ export default class RoleManagerService {
    * 나의 역할 신청 목록 조회
    * @returns
    */
-  static fetchRoleApplicationList(siteScope: string) {
-    return httpService.get<any>(`${PMSApiPrefix()}/role-applications`, {
-      siteScope,
-    });
+  static fetchRoleApplicationList(payload: any) {
+    return httpService.get<any>(`${PMSApiPrefix()}/role-applications/me`, payload);
   }
 
   /**
