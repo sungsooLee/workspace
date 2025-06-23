@@ -214,6 +214,29 @@ export function useLoginTimer() {
     });
   }
 
+  useEffect(() => {
+    const handler = (e: StorageEvent) => {
+      if (e.key !== 'exp-storage') return;
+      if (!e.newValue) return;
+
+      try {
+        const newState = JSON.parse(e.newValue);
+        const newExp = newState?.state?.exp;
+
+        if (typeof newExp === 'string') {
+          useExpStore.getState().setExp(newExp);
+        } else {
+          useExpStore.getState().reset();
+        }
+      } catch (err) {
+        console.error('Failed to sync auth state from localStorage:', err);
+      }
+    };
+
+    window.addEventListener('storage', handler);
+    return () => window.removeEventListener('storage', handler);
+  }, []);
+
   return {
     time: remainingTime,
   };
