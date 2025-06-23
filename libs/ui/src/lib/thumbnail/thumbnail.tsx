@@ -107,55 +107,57 @@ const ThumbnailComponent = forwardRef<HTMLDivElement, ThumbnailProps>(
       >
         {/* index 번호 */}
         {indexNumber !== null && <span className={styles.indexNumber}>{indexNumber}</span>}
-        {/* 체크박스 */}
-        {showCheckbox && (
-          <Checkbox
-            className={cn(styles.checkbox)}
-            variant="round"
-            hideLabel
-            onCheckedChange={onCheckedChange}
-          />
-        )}
         {/* 파일 사이즈 텍스트 */}
         {sizeText && <span className={styles.sizeText}>{sizeText}</span>}
         {/* 마우스 호버시 노출 */}
-        {isHovered && (
-          <div
-            style={{ width }}
-            className="absolute z-20 flex h-full w-full items-center justify-center gap-3"
-          >
-            {showPreviewBtn && (
-              <Button
-                className={styles.btn_delete}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openModal({
-                    width: 'full',
-                    height: 'full',
-                    content: <PreviewImage imageUrl={path} />,
-                    headerActionNode: (
-                      <Button onlyIcon onClick={() => downloadByUrl(path)}>
-                        <IcoDownload width={40} height={40} stroke="#131C30" />
-                      </Button>
-                    ),
-                  });
-                }}
-              >
-                <IcoEye className={styles.icon_delete} width={24} height={24} stroke="#ffffff" />
-              </Button>
-            )}
-            {showDeleteBtn && (
-              <Button className={styles.btn_delete} onClick={() => onRemoveClick?.()}>
-                <IcoTrash03
-                  className={styles.icon_delete}
-                  width={24}
-                  height={24}
-                  stroke="#ffffff"
-                />
-              </Button>
-            )}
-          </div>
-        )}
+        <div
+          style={{ width }}
+          className="absolute z-10 flex h-full w-full items-center justify-center gap-3"
+        >
+          {/* 체크박스 */}
+          {showCheckbox && (
+            <Checkbox
+              className={cn(styles.checkbox)}
+              variant="round"
+              hideLabel
+              onCheckedChange={onCheckedChange}
+            />
+          )}
+          {isHovered && (
+            <>
+              {showPreviewBtn && (
+                <Button
+                  className={styles.btn_delete}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    openModal({
+                      width: 'full',
+                      height: 'full',
+                      content: <PreviewImage imageUrl={path} />,
+                      headerActionNode: (
+                        <Button onlyIcon onClick={() => downloadByUrl(path)}>
+                          <IcoDownload width={40} height={40} stroke="#131C30" />
+                        </Button>
+                      ),
+                    });
+                  }}
+                >
+                  <IcoEye className={styles.icon_delete} width={24} height={24} stroke="#ffffff" />
+                </Button>
+              )}
+              {showDeleteBtn && (
+                <Button className={styles.btn_delete} onClick={() => onRemoveClick?.()}>
+                  <IcoTrash03
+                    className={styles.icon_delete}
+                    width={24}
+                    height={24}
+                    stroke="#ffffff"
+                  />
+                </Button>
+              )}
+            </>
+          )}
+        </div>
         <img src={path} className={styles.thumbnail_image} alt="Thumbnail" />
         {/* 시스템에서 제공하는 기본이미지인 경우 styles.default_image 클래스 추가 필요 */}
       </div>
