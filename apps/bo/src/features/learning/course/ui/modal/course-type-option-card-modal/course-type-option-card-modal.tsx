@@ -30,7 +30,7 @@ const CourseTypeOptionCardModalComponent = forwardRef<
 >(({ ...props }, ref) => {
   const { t } = useTranslation();
   const { close: closeModal } = useModal();
-  const { data: optionsData }: any = getMockData();
+  const { data: optionsData }: any = getLocalOptions();
 
   const handleCardSelect = (option: any) => {
     closeModal?.(option);
@@ -55,7 +55,7 @@ const CourseTypeOptionCardModalComponent = forwardRef<
 });
 export const CourseTypeOptionCardModal = CourseTypeOptionCardModalComponent;
 
-const getMockData = () => {
+const getLocalOptions = () => {
   return {
     data: [
       {
