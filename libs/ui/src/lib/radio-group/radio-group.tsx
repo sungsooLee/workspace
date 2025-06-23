@@ -45,6 +45,7 @@ const RadioGroupComponent = forwardRef<
           className,
         )}
         defaultValue={defaultValue}
+        value={value}
         {...props}
       >
         {options.map((option: RadioGroupOption, index: number) => {
