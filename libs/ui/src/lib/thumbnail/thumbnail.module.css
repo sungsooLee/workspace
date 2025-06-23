@@ -47,6 +47,6 @@
   }
 
   .btn_delete {
-    @apply absolute left-1/2 top-1/2 z-[2] -ml-[12px] -mt-[12px] h-[24px] w-[24px] bg-transparent;
+    @apply cursor-pointer bg-transparent;
   }
 }

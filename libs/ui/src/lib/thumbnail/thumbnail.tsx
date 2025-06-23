@@ -6,8 +6,10 @@ import { CheckedState } from '@radix-ui/react-checkbox';
 import { cn } from '@learnway/shared';
 import { Checkbox } from '../checkbox/checkbox';
 import { Button } from '../button/button';
-import { IcoTrash03 } from '@learnway/icons';
+import { IcoDownload, IcoEye, IcoTrash03 } from '@learnway/icons';
 import styles from './thumbnail.module.css';
+import { useModal } from '../modal/modal.hook';
+import { PreviewImage } from '../preview-image/preview-image';
 
 export interface ThumbnailProps {
   /** variant */
@@ -32,6 +34,8 @@ export interface ThumbnailProps {
   showCheckbox?: boolean;
   /** 삭제버튼 표시 여부 */
   showDeleteBtn?: boolean; // delete button
+  /** 미리보기버튼 표시 여부 */
+  showPreviewBtn?: boolean; // delete button
   /** 선택 여부 (check style 에 사용) */
   selected?: boolean;
   /** 카운트 체크 여부 */
@@ -62,6 +66,7 @@ const ThumbnailComponent = forwardRef<HTMLDivElement, ThumbnailProps>(
       sizeText,
       showCheckbox,
       showDeleteBtn,
+      showPreviewBtn,
       selected,
       onRemoveClick,
       onCheckedChange,
@@ -71,6 +76,16 @@ const ThumbnailComponent = forwardRef<HTMLDivElement, ThumbnailProps>(
   ) => {
     // 썸네일에 마우스가 호버되었는지 여부를 관리하는 상태
     const [isHovered, setIsHovered] = useState(false);
+
+    const { open: openModal } = useModal();
+
+    const downloadByUrl = (url: string) => {
+      const link = document.createElement('a');
+      link.href = url;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    };
 
     /**
      * 마우스 호버 상태를 업데이트하는 핸들러 함수입니다.
@@ -103,11 +118,43 @@ const ThumbnailComponent = forwardRef<HTMLDivElement, ThumbnailProps>(
         )}
         {/* 파일 사이즈 텍스트 */}
         {sizeText && <span className={styles.sizeText}>{sizeText}</span>}
-        {/* 마우스 오버시 노출 */}
-        {showDeleteBtn && isHovered && (
-          <Button className={styles.btn_delete} onClick={() => onRemoveClick?.()}>
-            <IcoTrash03 className={styles.icon_delete} width={24} height={24} stroke="#ffffff" />
-          </Button>
+        {/* 마우스 호버시 노출 */}
+        {isHovered && (
+          <div
+            style={{ width }}
+            className="absolute z-20 flex h-full w-full items-center justify-center gap-3"
+          >
+            {showPreviewBtn && (
+              <Button
+                className={styles.btn_delete}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openModal({
+                    width: 'full',
+                    height: 'full',
+                    content: <PreviewImage imageUrl={path} />,
+                    headerActionNode: (
+                      <Button onlyIcon onClick={() => downloadByUrl(path)}>
+                        <IcoDownload width={40} height={40} stroke="#131C30" />
+                      </Button>
+                    ),
+                  });
+                }}
+              >
+                <IcoEye className={styles.icon_delete} width={24} height={24} stroke="#ffffff" />
+              </Button>
+            )}
+            {showDeleteBtn && (
+              <Button className={styles.btn_delete} onClick={() => onRemoveClick?.()}>
+                <IcoTrash03
+                  className={styles.icon_delete}
+                  width={24}
+                  height={24}
+                  stroke="#ffffff"
+                />
+              </Button>
+            )}
+          </div>
         )}
         <img src={path} className={styles.thumbnail_image} alt="Thumbnail" />
         {/* 시스템에서 제공하는 기본이미지인 경우 styles.default_image 클래스 추가 필요 */}

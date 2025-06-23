@@ -198,3 +198,4 @@ export * from './lib/tree-view/tree';
 export * from './lib/tree-view/type';
 export * from './lib/type';
 export * from './lib/word-wrap/word-wrap';
+export * from './lib/preview-image/preview-image';
