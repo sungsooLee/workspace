@@ -18,7 +18,7 @@ import {
   GridImperative,
   Pagination,
 } from '../../../';
-import { IcoMinus, IcoPlus } from '@learnway/icons';
+import { IcoCopy, IcoMinus, IcoPlus } from '@learnway/icons';
 import { cn, gridBoxStateToGridState } from '@learnway/shared';
 import { useTranslation } from 'react-i18next';
 import { GridBoxSearchInput, GridBoxSearchInputCondition } from './grid-box-search-input';
@@ -46,6 +46,7 @@ const GridBoxComponent = <T extends object>(
     showRemoveAll,
     showAdd,
     showRemove,
+    showCopy,
     titleCustomNode,
     customButtonNode,
     guideText,
@@ -361,6 +362,16 @@ const GridBoxComponent = <T extends object>(
               size="sm"
               label={t('LABEL.grid.header.remove', '삭제')}
               icon={<IcoMinus width={16} height={16} stroke={'#131C30'} />}
+              onClick={handleRemoveClick}
+            />
+          )}
+          {/* 복사 */}
+          {showCopy && (
+            <Button
+              variant="outline"
+              size="sm"
+              label={t('LABEL.grid.header.copy', '복사')}
+              icon={<IcoCopy width={16} height={16} stroke={'#131C30'} />}
               onClick={handleRemoveClick}
             />
           )}

@@ -1,5 +1,5 @@
 import CourseService from '../api/course';
-import { Course, CourseQueryParams, LabelMessage, PaginationResponse } from '../../../types';
+import { Course, CoursesQueryParams, PaginationResponse } from '../../../types';
 
 export const queryKeys = {
   all: ['courses'] as const,
@@ -7,7 +7,7 @@ export const queryKeys = {
 };
 
 export const queryOptions = {
-  all: <T = Course>(params: CourseQueryParams) => ({
+  all: <T = Course>(params: CoursesQueryParams) => ({
     queryKey: queryKeys.all,
     queryFn: async (): Promise<PaginationResponse<T>> => CourseService.fetchAll(params),
   }),
@@ -26,5 +26,14 @@ export const mutateOptions = {
   }),
   delete: () => ({
     mutationFn: (id: number) => CourseService.delete(id),
+  }),
+  updateWizard1: () => ({
+    mutationFn: (payload: Course) => CourseService.updateWizard1(payload),
+  }),
+  updateWizard2: () => ({
+    mutationFn: (payload: Course) => CourseService.updateWizard2(payload),
+  }),
+  updateWizard3: () => ({
+    mutationFn: (payload: Course) => CourseService.updateWizard3(payload),
   }),
 };

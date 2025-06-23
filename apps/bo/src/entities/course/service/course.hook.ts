@@ -2,7 +2,12 @@ import type { UseMutationResult, UseQueryResult } from '@tanstack/react-query';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { mutateOptions, queryOptions } from './course.queries';
-import { Course, CourseQueryParams, MutationHookOptions, PaginationResponse } from '../../../types';
+import {
+  Course,
+  CoursesQueryParams,
+  MutationHookOptions,
+  PaginationResponse,
+} from '../../../types';
 import { useModal } from '@learnway/ui';
 
 /**
@@ -10,7 +15,7 @@ import { useModal } from '@learnway/ui';
  * @param params - 코스 목록 조회 쿼리 파라미터.
  */
 export function useFetchCourses(
-  params: CourseQueryParams,
+  params: CoursesQueryParams,
 ): UseQueryResult<PaginationResponse<Course>, Error> {
   return useQuery(queryOptions.all(params));
 }
@@ -28,22 +33,22 @@ export function useFetchCourse(id: number): UseQueryResult<Course, Error> {
  * 성공 시 'showSaveComplete' 모달을 표시합니다.
  * @param [options] - 추가 뮤테이션 설정 옵션.
  */
-export const useCreateCourse = (
-  options?: MutationHookOptions<Course, Error, Course, unknown>,
-): UseMutationResult<Course, Error, Course, unknown> => {
-  const { showSaveComplete } = useModal();
-  return useMutation({
-    ...mutateOptions.create(),
-    ...options,
-    onSuccess: async (data, variables, context) => {
-      await showSaveComplete();
-      // 추가적인 성공 처리 로직이 있다면 실행
-      if (options?.onSuccess) {
-        options.onSuccess(data, variables, context);
-      }
-    },
-  });
-};
+// export const useCreateCourse = (
+//   options?: MutationHookOptions<Course, Error, Course, unknown>,
+// ): UseMutationResult<Course, Error, Course, unknown> => {
+//   const { showSaveComplete } = useModal();
+//   return useMutation({
+//     ...mutateOptions.create(),
+//     ...options,
+//     onSuccess: async (data, variables, context) => {
+//       await showSaveComplete();
+//       // 추가적인 성공 처리 로직이 있다면 실행
+//       if (options?.onSuccess) {
+//         options.onSuccess(data, variables, context);
+//       }
+//     },
+//   });
+// };
 
 /**
  * 기존 코스 정보를 업데이트하는 뮤테이션 훅.
@@ -82,6 +87,50 @@ export const useDeleteCourse = (
     ...options,
     onSuccess: async (data, variables, context) => {
       await showDeleteComplete();
+      // 추가적인 성공 처리 로직이 있다면 실행
+      if (options?.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+  });
+};
+
+/**
+ * 새로운 코스를 생성하는 뮤테이션 훅.
+ * 성공 시 'showSaveComplete' 모달을 표시합니다.
+ * @param [options] - 추가 뮤테이션 설정 옵션.
+ */
+export const useCreateCourse = (
+  options?: MutationHookOptions<Course, Error, Course, unknown>,
+): UseMutationResult<Course, Error, Course, unknown> => {
+  const { showSaveComplete } = useModal();
+  return useMutation({
+    ...mutateOptions.create(),
+    ...options,
+    onSuccess: async (data, variables, context) => {
+      await showSaveComplete();
+      // 추가적인 성공 처리 로직이 있다면 실행
+      if (options?.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+  });
+};
+
+/**
+ * 새로운 코스를 생성하는 뮤테이션 훅.
+ * 성공 시 'showSaveComplete' 모달을 표시합니다.
+ * @param [options] - 추가 뮤테이션 설정 옵션.
+ */
+export const useCreateCourseWizard1 = (
+  options?: MutationHookOptions<Course, Error, Course, unknown>,
+): UseMutationResult<Course, Error, Course, unknown> => {
+  const { showSaveComplete } = useModal();
+  return useMutation({
+    ...mutateOptions.createWizard1(),
+    ...options,
+    onSuccess: async (data, variables, context) => {
+      await showSaveComplete();
       // 추가적인 성공 처리 로직이 있다면 실행
       if (options?.onSuccess) {
         options.onSuccess(data, variables, context);

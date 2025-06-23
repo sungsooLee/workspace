@@ -1,6 +1,6 @@
 import { httpService } from '@learnway/shared';
 import { LMSApiPrefix } from '@learnway/config';
-import { Course, CourseQueryParams, PaginationResponse } from '../../../types';
+import { Course, CoursesQueryParams, PaginationResponse } from '../../../types';
 
 /**
  * 과정 관련 API 요청을 처리하는 서비스 클래스.
@@ -11,7 +11,7 @@ export default class CourseService {
    * @param [params] - 조회 파라미터 (선택 사항).
    * @returns 과정 목록 페이지네이션 응답 Promise.
    */
-  static async fetchAll<T = Course>(params?: CourseQueryParams): Promise<PaginationResponse<T>> {
+  static async fetchAll<T = Course>(params?: CoursesQueryParams): Promise<PaginationResponse<T>> {
     return httpService.get<PaginationResponse<T>>(`${LMSApiPrefix()}/courses`, params);
   }
 
@@ -29,9 +29,9 @@ export default class CourseService {
    * @param payload - 생성할 과정 정보.
    * @returns 생성된 과정 정보 Promise.
    */
-  static async create(payload: Course): Promise<Course> {
-    return httpService.post<Course>(`${LMSApiPrefix()}/course`, payload);
-  }
+  // static async create(payload: Course): Promise<Course> {
+  //   return httpService.post<Course>(`${LMSApiPrefix()}/course`, payload);
+  // }
 
   /**
    * 기존 과정을 수정합니다.
@@ -49,5 +49,41 @@ export default class CourseService {
    */
   static delete(id: number): Promise<any> {
     return httpService.delete<any>(`${LMSApiPrefix()}/course/${id}`);
+  }
+
+  /**
+   * 새로운 과정을 생성합니다.
+   * @param payload - 생성할 과정 정보.
+   * @returns 생성된 과정 정보 Promise.
+   */
+  static async create(payload: Course): Promise<Course> {
+    return httpService.post<Course>(`${LMSApiPrefix()}/wizard/new`, payload);
+  }
+
+  /**
+   * 기존 과정을 수정합니다. step1
+   * @param payload - 수정할 과정 정보 (ID 포함 필수).
+   * @returns 수정된 과정 정보 Promise.
+   */
+  static updateWizard1(payload: Course): Promise<Course> {
+    return httpService.put<Course>(`${LMSApiPrefix()}/course/wizard1/${payload.courseId}`, payload);
+  }
+
+  /**
+   * 기존 과정을 수정합니다. step2
+   * @param payload - 수정할 과정 정보 (ID 포함 필수).
+   * @returns 수정된 과정 정보 Promise.
+   */
+  static updateWizard2(payload: Course): Promise<Course> {
+    return httpService.put<Course>(`${LMSApiPrefix()}/course/wizard2/${payload.courseId}`, payload);
+  }
+
+  /**
+   * 기존 과정을 수정합니다. step3
+   * @param payload - 수정할 과정 정보 (ID 포함 필수).
+   * @returns 수정된 과정 정보 Promise.
+   */
+  static updateWizard3(payload: Course): Promise<Course> {
+    return httpService.put<Course>(`${LMSApiPrefix()}/course/wizard3/${payload.courseId}`, payload);
   }
 }

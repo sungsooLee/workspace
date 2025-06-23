@@ -41,7 +41,6 @@ const CourseTypeOptionCardModalComponent = forwardRef<
       <ModalTitle>{t('과정 유형 선택')}</ModalTitle>
       <ModalBody>
         <div className={styles.wrap}>
-          <h2 className={styles.title}>{t('등록할 과정 유형을 선택하세요.')}</h2>
           <OptionCard
             cols={3}
             size="lg"
@@ -51,9 +50,6 @@ const CourseTypeOptionCardModalComponent = forwardRef<
           />
         </div>
       </ModalBody>
-      <ModalFooter>
-        <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
-      </ModalFooter>
     </ModalContainer>
   );
 });
@@ -63,40 +59,40 @@ const getMockData = () => {
   return {
     data: [
       {
-        label: '이러닝',
-        value: '이러닝',
+        label: '이러닝 I',
+        value: '이러닝 I',
         icon: <IcoVideo01 />,
-        description: '집합/워크샵/포럼.컨퍼런스/라이브/교수자/운영자가 존재하는 유형',
+        description: '동영상(mp4)/이러닝(scorm) 온라인 학습 유형 (상시)',
+      },
+      {
+        label: '이러닝 II',
+        value: '이러닝 II',
+        icon: <IcoVideo01 />,
+        description: '동영상(mp4)/이러닝(scorm) 수강신청 후 온라인 학습 유형 (정규)',
       },
       {
         label: '클래스',
         value: '클래스',
         icon: <IcoVideo01 />,
-        description: '집합/워크샵/포럼.컨퍼런스/라이브/교수자/운영자가 존재하는 유형',
+        description: '집합/워크샵/포럼·컨퍼런스로 교수자/운영자가 존재하는 유형',
       },
       {
         label: '라이브',
         value: '라이브',
         icon: <IcoVideo01 />,
-        description: '집합/워크샵/포럼.컨퍼런스/라이브/교수자/운영자가 존재하는 유형',
+        description: 'Hive/WebEX 등 실시간 스트리밍을 수강신청 없이 개설 가능한 유형',
       },
       {
-        label: '시험',
-        value: '시험',
+        label: '평가',
+        value: '평가',
         icon: <IcoVideo01 />,
-        description: '집합/워크샵/포럼.컨퍼런스/라이브/교수자/운영자가 존재하는 유형',
+        description: '시험지/퀴즈 등을 단독으로 진행할 때수강신청 여부는 선택이 가능한 유형',
       },
       {
         label: '설문',
         value: '설문',
         icon: <IcoVideo01 />,
-        description: '집합/워크샵/포럼.컨퍼런스/라이브/교수자/운영자가 존재하는 유형',
-      },
-      {
-        label: '페키지',
-        value: '페키지',
-        icon: <IcoVideo01 />,
-        description: '집합/워크샵/포럼.컨퍼런스/라이브/교수자/운영자가 존재하는 유형',
+        description: '설문을 단독 수행하려고 할 때수강신청 없이 개설이 가능한 유형',
       },
     ],
   };
