@@ -48,6 +48,12 @@ interface ValidationResult {
   }>;
 }
 
+enum Status {
+  UPLOADING = 'Uploading',
+  COMPLETED = 'Completed',
+  FAILED = 'Failed',
+}
+
 export interface UploadFile {
   file: File; // 파일
   extension: string; // 확장자
@@ -55,7 +61,7 @@ export interface UploadFile {
   size: number; // 파일 사이즈
   displaySize: string; // 포맷팅된 사이즈
   progress: number; // 업로드 Progress
-  status: UploadStatus; // 파일 상태
+  status: Status; // 파일 상태
   message?: string;
 }
 
@@ -67,7 +73,7 @@ function toUploadFile(file: File): UploadFile {
     size: file.size,
     displaySize: formatFileSize(file.size),
     progress: 0,
-    status: 'validating',
+    status: Status.UPLOADING,
   };
 }
 
@@ -154,86 +160,18 @@ const ExcelUploadModalComponent = ({
     maxSize: maxFileSize,
   });
 
-  // 실제 업로드 실행
-  const handleConfirmUpload = useCallback(async () => {
-    if (!uploadedFile || !validationResult?.success) return;
-
-    setUploadStep('uploading');
-    setIsLoading(true);
-
-    try {
-      const formData = new FormData();
-      formData.append('file', uploadedFile);
-
-      const response = await fetch(uploadUrl, {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (response.ok) {
-        setUploadStep('completed');
-      } else {
-        throw new Error('업로드 실패');
-      }
-    } catch (error) {
-      console.error('Upload error:', error);
-      // 에러 처리
-    } finally {
-      setIsLoading(false);
-    }
-  }, [uploadedFile, uploadUrl, validationResult]);
-
-  // 다시 선택
-  const handleReselect = useCallback(() => {
-    setUploadStep('select');
-    setValidationResult(null);
-    setUploadedFile(null);
-  }, []);
-
-  // 템플릿 다운로드
-  // const handleTemplateDownload = useCallback(
-  //   (type: 'xlsx' | 'csv') => {
-  //     const url = templateUrls?.[type];
-  //     if (url) {
-  //       window.open(url, '_blank');
-  //     }
-  //   },
-  //   [templateUrls],
-  // );
-
   /**
-   * 파일 업로드 상태에 따라 진행률 또는 상태 텍스트를 렌더링하는 함수
+   * 파일 업로드 상태에 따라 진행률을 렌더링하는 함수
    * @param {UploadFile} file - 업로드 대상 파일 객체
    * @returns {JSX.Element} 상태에 맞는 JSX 엘리먼트 반환
    */
   const renderFileProgress = (file: UploadFile) => {
-    /**
-     * 주어진 상태 코드에 따라 렌더링할 텍스트를 반환하는 함수
-     * @param {string} status - 파일의 상태 코드
-     * @returns {string | null} 상태에 해당하는 텍스트 (없으면 null)
-     */
-    const renderStatusText = (status: string) => {
-      const statusTexts: Record<string, string> = {
-        validating: '유효성 검토중',
-        'validating-error': '업로드 불가',
-      };
-      return statusTexts[status] || null;
-    };
-    // 현재 파일 상태에 따라 렌더링할 텍스트를 가져옴
-    const statusText = renderStatusText(file.status);
-
-    // 상태가 텍스트 렌더링과 관련된 경우
-    if (statusText) {
-      return <p className={styles.file_status_text}>{statusText}</p>;
-    }
-
-    // 텍스트 렌더링 상태가 아닐 경우 진행률 컴포넌트를 렌더링
     return (
       <ProgressBar
         className={styles.progress}
         progress={file.progress} // 진행률 수치 (숫자 값)
         label={file.status} // 진행률 레이블 (현재 상태 표시)
-        isFailed={file.status === 'failed'} // 실패 상태 여부에 따라 실패 스타일 적용
+        isFailed={file.status === Status.FAILED} // 실패 상태 여부에 따라 실패 스타일 적용
       />
     );
   };
@@ -270,7 +208,7 @@ const ExcelUploadModalComponent = ({
        * - 일시 중지(Pause) 버튼을 렌더링
        * - 삭제 버튼 영역 비어 있음
        */
-      uploading: (
+      [Status.UPLOADING]: (
         <>
           {renderControl(
             <Button
@@ -285,26 +223,9 @@ const ExcelUploadModalComponent = ({
         </>
       ),
       /**
-       * 대기 중 (idle) 상태:
-       */
-      idle: (
-        <>
-          {renderControl(
-            <Button
-              className={styles.btn_status}
-              onlyIcon
-              onClick={() => {} /*onPause?.(file.name)*/}
-            >
-              <IcoPause width={20} height={20} fill="#A9AFB8" />
-            </Button>,
-          )}
-          <div className={styles.delele_btn_wrap}></div>
-        </>
-      ),
-      /**
        * 완료 (completed) 상태:
        */
-      completed: (
+      [Status.COMPLETED]: (
         <>
           {renderControl(
             <IcoComplete02 width={20} height={20} fill="#3EB838" className={styles.complete} />,
@@ -312,26 +233,7 @@ const ExcelUploadModalComponent = ({
           {renderDeleteButton()}
         </>
       ),
-      /**
-       * 유효성 검사 중 (validating) 상태:
-       */
-      validating: (
-        <>
-          {renderControl(
-            <Badge
-              className={styles.file_status}
-              option={{ label: '', value: '' }}
-              variant="dot"
-              status="ing"
-            />,
-          )}
-          {renderDeleteButton()}
-        </>
-      ),
-      /**
-       * 첨부파일 유효성 에러 (validating-error) 상태:
-       */
-      'validating-error': (
+      [Status.FAILED]: (
         <>
           {renderControl(
             <Badge
@@ -418,28 +320,22 @@ const ExcelUploadModalComponent = ({
           <div className={cn(styles.start, styles.wrap)}>
             <div className={styles.title_box}>
               <div className={styles.title_info}>
-                <h3 className={styles.sub_title}>{'업로드 결과'}</h3>
+                <h3 className={styles.sub_title}>{t('업로드 결과')}</h3>
                 {/* 실패 CASE */}
-                <p className={styles.status_text}>
-                  실패
-                  {/* <span className={cn(styles.data_text, styles.error)}>
-                    {stats.failed + stats['validating-error']}행
-                  </span> */}
+                <p className={cn(styles.status_text, '')}>{t(Status.FAILED)}</p>
+                <p className={cn(styles.status_text)}>
+                  완료<span className={cn(styles.data_text)}>{t(Status.COMPLETED)}행</span>
                 </p>
-                {/* 완료 CASE */}
-                {/* <p className={styles.status_text}>
-                  완료<span className={cn(styles.data_text)}>{stats.completed}행</span>
-                </p> */}
               </div>
               <div className={styles.btn_wrap}>
                 <Button
-                  label={'엑셀 양식 다운로드'}
+                  label={t('엑셀 양식 다운로드')}
                   variant={'text'}
                   size={'sm'}
                   icon={<IcoDownload width={'16'} height={16} stroke={'#4C515E'} />}
                 />
                 <Button
-                  label={'CSV 양식 다운로드'}
+                  label={t('CSV 양식 다운로드')}
                   variant={'text'}
                   size={'sm'}
                   icon={<IcoDownload width={'16'} height={16} stroke={'#4C515E'} />}
@@ -447,15 +343,13 @@ const ExcelUploadModalComponent = ({
               </div>
             </div>
             <div className={styles.result_wrap}>
-              {/* {stats.status === 'idle' && (
-                <p className={styles.status_text}>{'상단 영역에 데이터를 업로드하세요.'}</p>
-              )} */}
+              <p className={styles.status_text}>{t('상단 영역에 데이터를 업로드하세요.')}</p>
             </div>
             <NoticeBox
               iconVisible={false}
               descriptions={[
-                '양식과 다르게 작성된 파일은 업로드를 할 수 없습니다.',
-                '업로드가 되지 않을 경우, 결과를 확인 후 다시 작성하여 업로드해 주세요.',
+                t('양식과 다르게 작성된 파일은 업로드를 할 수 없습니다.'),
+                t('업로드가 되지 않을 경우, 결과를 확인 후 다시 작성하여 업로드해 주세요.'),
               ]}
             />
           </div>
