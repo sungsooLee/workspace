@@ -169,7 +169,7 @@
 }
 [class*='nlp-select__input-container'],
 [class*='nlp-select__value-container'] {
-  @apply !m-0 !py-0;
+  @apply !body_bo_2_r !m-0 !py-0;
 }
 [class*='nlp-select__indicator'] {
   @apply !p-0;

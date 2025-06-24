@@ -34,28 +34,31 @@ function RouteComponent() {
 
   const colorGroups = [
     {
-      title: 'Gray Scale',
+      title: 'Gray',
       description: [
         'Text, Icon, line 등 서비스를 구성하는 기본 UI에 사용되는 Color입니다.',
         'UI Color는 명도 변화로 정의하며, 정보의 강약을 나타내고 우선순위의 계층을 구분하는데 사용됩니다.',
         'Text Color는 WCAG 2.0의 접근성지침을 반영하여 최소 3:1의 명도대비를 준수하는 권장 컬러를 사용합니다.',
+        'Default Color : --gray10',
       ],
       colors: [
+        { name: '--gray10', textColor: '--white', code: '' },
+        { name: '--gray25', textColor: '--white', code: '' },
+        { name: '--gray35', textColor: '--white', code: '' },
+        { name: '--gray50', textColor: '--white', code: '' },
+        { name: '--gray65', textColor: '--white', code: '' },
+        { name: '--gray75', textColor: '', code: '' },
+        { name: '--gray85', textColor: '', code: '' },
+        { name: '--gray90', textColor: '', code: '' },
+        { name: '--gray92', textColor: '', code: '' },
+        { name: '--gray95', textColor: '', code: '' },
+        { name: '--gray98', textColor: '', code: '' },
         {
           name: '--white',
-          textColor: '--gray9',
+          textColor: '--gray10',
           code: '',
           border: '1px solid var(--gray3)',
         },
-        { name: '--gray1', textColor: '', code: '' },
-        { name: '--gray2', textColor: '', code: '' },
-        { name: '--gray3', textColor: '', code: '' },
-        { name: '--gray4', textColor: '', code: '' },
-        { name: '--gray5', textColor: '', code: '' },
-        { name: '--gray6', textColor: '', code: '' },
-        { name: '--gray7', textColor: '--white', code: '' },
-        { name: '--gray8', textColor: '--white', code: '' },
-        { name: '--gray9', textColor: '--white', code: '' },
       ],
     },
     {
@@ -64,47 +67,38 @@ function RouteComponent() {
         '서비스의 Identity 및 행동유도를 이끄는 Color입니다.',
         'Primary Color는 브랜드 이미지를 전달하는 중요한 기능을 합니다.',
         'Primary Color는 화면에서 강조하고자 하는 정보를 하이라이트 하거나 사용자가 해야하는 최종 행동을 유도할 때 사용합니다.',
+        'Default Color : --blue50',
       ],
       colors: [
-        { name: '--primary1', textColor: '--white', code: '' },
-        { name: '--primary2', textColor: '--white', code: '' },
-        { name: '--primary3', textColor: '--white', code: '' },
-        { name: '--primary4', textColor: '--white', code: '' },
-        { name: '--primary5', textColor: '', code: '' },
+        { name: '--blue10', textColor: '--white', code: '' },
+        { name: '--blue25', textColor: '--white', code: '' },
+        { name: '--blue35', textColor: '--white', code: '' },
+        { name: '--blue50', textColor: '--white', code: '' },
+        { name: '--blue65', textColor: '', code: '' },
+        { name: '--blue75', textColor: '', code: '' },
+        { name: '--blue85', textColor: '', code: '' },
+
+        { name: '--blue95', textColor: '', code: '' },
       ],
     },
     {
-      title: 'Secondary',
-      description: [
-        'Secondary Color는 기본 컬러와 함께 사용되는 보조 색상으로 주로 버튼, 링크, 알림 등을 강조할 때 사용합니다.',
-        'Secondary Color를 선택할 때는 Primary Color와 조화를 이루는 색상을 선택해야 합니다.',
-        '너무 많은 세컨더리 컬러를 사용하면 색의 조화가 깨질 수 있으므로 적절한 수의 컬러를 선택해야 합니다.',
-      ],
+      title: 'Red',
+      description: ['Default Color : --red50'],
       colors: [
-        { name: '--secondary1', textColor: '--white', code: '' },
-        { name: '--secondary2', textColor: '--white', code: '' },
-        { name: '--secondary3', textColor: '--white', code: '' },
-        { name: '--secondary4', textColor: '', code: '' },
-        { name: '--secondary5', textColor: '', code: '' },
-        { name: '--secondary6', textColor: '', code: '' },
-        { name: '--secondary7', textColor: '', code: '' },
-        { name: '--secondary8', textColor: '', code: '' },
-        { name: '--secondary9', textColor: '', code: '' },
-        { name: '--secondary10', textColor: '--white', code: '' },
+        { name: '--red10', textColor: '--white', code: '' },
+        { name: '--red25', textColor: '--white', code: '' },
+        { name: '--red35', textColor: '--white', code: '' },
+        { name: '--red50', textColor: '--white', code: '' },
+        { name: '--red65', textColor: '--white', code: '' },
+        { name: '--red75', textColor: '', code: '' },
+        { name: '--red85', textColor: '', code: '' },
+        { name: '--red95', textColor: '', code: '' },
       ],
     },
     {
-      title: 'Support',
-      description: [
-        '보조 Color입니다.',
-        'Error, Warning, Process/Positive, Success의 상태를 나타낼 때 사용합니다. ',
-      ],
-      colors: [
-        { name: '--status1', textColor: '--white', code: '' },
-        { name: '--status2', textColor: '', code: '' },
-        { name: '--status3', textColor: '', code: '' },
-        { name: '--status4', textColor: '', code: '' },
-      ],
+      title: 'Etc',
+      description: ['그라데이션 컬러', 'background:var(--gradient01)', 'bg-[var(--gradient01)]'],
+      colors: [{ name: '--gradient01', textColor: '--white', code: '' }],
     },
   ];
 
@@ -154,7 +148,7 @@ function RouteComponent() {
               <div className="color_info" key={index}>
                 <i
                   style={{
-                    backgroundColor: `var(${color.name})`,
+                    background: `var(${color.name})`,
                     border: color.border || 'none',
                   }}
                 ></i>

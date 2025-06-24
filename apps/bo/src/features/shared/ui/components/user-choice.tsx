@@ -1,5 +1,5 @@
 import { t } from 'i18next';
-import { GridBox, useGridBox } from '@learnway/ui';
+import { Divider, GridBox, useGridBox } from '@learnway/ui';
 import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
@@ -17,15 +17,14 @@ const UserChoiceComponent = ({ handleRowSelect }: Props) => {
   return (
     <div className={popupStyles.wrap}>
       <SearchBox provider={sProvider} onSearch={(data) => gridFetch(data)} />
-      <div className={popupStyles.container}>
-        <GridBox
-          onRowSelect={handleRowSelect}
-          config={config}
-          columns={columns}
-          showColumnSettings={false}
-          title={t('유저조회목록')}
-        />
-      </div>
+      <Divider />
+      <GridBox
+        onRowSelect={handleRowSelect}
+        config={config}
+        columns={columns}
+        showColumnSettings={false}
+        title={t('유저조회목록')}
+      />
     </div>
   );
 };

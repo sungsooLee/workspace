@@ -265,7 +265,10 @@ const gridConfig = {
     {
       name: 'createdDate',
       label: t('LABEL.grid.column.createdDate'),
-      render: (info: any) => formatISODateString(info.getValue(), DATE_TIME_FORMAT.DATETIME_SEC),
+      render: (info: any) => formatISODateString(info.getValue(), DATE_TIME_FORMAT.DATETIME_MIN),
+      meta: {
+        cellAlign: 'center',
+      },
     },
   ],
   pagination: {

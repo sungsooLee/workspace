@@ -31,6 +31,10 @@
   .form_title_line {
     @apply !border-[var(--gray9)];
   }
+
+  [class*='divider'] + [class*='table_box'] {
+    @apply mt-[16px];
+  }
 }
 .selected_area {
   @apply body_bo_2_r mb-[12px] flex h-[4rem] items-center rounded-[8px] bg-[var(--gray1)] px-[16px] text-[var(--gray8)];
