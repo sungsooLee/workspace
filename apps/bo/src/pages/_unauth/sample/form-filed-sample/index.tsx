@@ -1,6 +1,6 @@
-import React from 'react';
-import { t } from 'i18next';
-import { createFileRoute } from '@tanstack/react-router';
+import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
+import { ChannelListModal, ManagerListModal, TeacherListModal } from '@features/learning/course';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import {
   Button,
   ChipListModalSelectorFormField,
@@ -10,16 +10,15 @@ import {
   InputModalSelectorFormField,
   ListModalSelectorFormField,
   PhoneNumberFormField,
-  RadioGroup,
   RadioGroupFormField,
   useModal,
 } from '@learnway/ui';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { ChannelListModal, ManagerListModal, TeacherListModal } from '@features/learning/course';
-import { ContentsButtons, MainContents, PageContainer } from '@widgets/layout';
 import { FormRow } from '@shared/ui';
+import { createFileRoute } from '@tanstack/react-router';
+import { ContentsButtons, MainContents, PageContainer } from '@widgets/layout';
 import { SubContents } from '@widgets/layout/ui/container/slot/sub-contents';
-import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
+import { t } from 'i18next';
+import LabelMessagesService from '../../../../entities/label-messages-mock/api/label-messages';
 
 export const Route = createFileRoute('/_unauth/sample/form-filed-sample/')({
   component: RouteComponent,
@@ -74,7 +73,19 @@ function RouteComponent() {
         <MainContents>
           {/* dropdown */}
           <ContentsRow>
-            <FormRow provider={provider} name={'Dropdown'} element={<DropdownFormField />} />
+            <FormRow
+              provider={provider}
+              name={'Dropdown'}
+              element={
+                <DropdownFormField
+                  optionsConfig={{
+                    api: {
+                      fn: LabelMessagesService.fetchChannelMock,
+                    },
+                  }}
+                />
+              }
+            />
           </ContentsRow>
           {/* 라디오 */}
           <ContentsRow>

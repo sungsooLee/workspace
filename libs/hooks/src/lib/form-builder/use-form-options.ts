@@ -1,6 +1,6 @@
-import { OptionsConfig, SelectOption, UseFormOptionsProps } from './type';
 import { useEffect, useState } from 'react';
 import { useCodeStore } from '../use-code-store/use-code-store';
+import { OptionsConfig, SelectOption } from './type';
 
 /**
  * Form 에서 CodeGroup에 대한 로딩을 위한 커스텀 훅
@@ -15,16 +15,23 @@ const useFormOptionsHook = (
   const internalOptionsState = useState<SelectOption[]>([]);
   const [currentOptions, setCurrentOptions] = currentOptionsState || internalOptionsState;
   const { getCode } = useCodeStore();
+
   /**
    * options 가 없고 optionsConfig 가 있을때만 작동
    */
   const initOptionConfig = async () => {
-    if (!optionsConfig) return;
+    if (!optionsConfig) {
+      return;
+    }
     // optionsConfig > options 에 등록된 값은 조회와 상관없이 앞에 선언 됩니다.
     let optionConfigOptions: SelectOption[] = optionsConfig.options || [];
     if (optionsConfig.codeGroup) {
       const codeStoreOptions = await getCode(optionsConfig.codeGroup);
       optionConfigOptions = [...optionConfigOptions, ...codeStoreOptions];
+    } else if (optionsConfig.api) {
+      const { fn, params } = optionsConfig.api;
+      const apiOptions = await fn(params);
+      optionConfigOptions = [...optionConfigOptions, ...apiOptions];
     }
     setCurrentOptions(optionConfigOptions);
   };
@@ -34,11 +41,13 @@ const useFormOptionsHook = (
       initOptionConfig();
     }
   }, []);
+
   useEffect(() => {
     if (options) {
       setCurrentOptions(options);
     }
   }, [options?.length]);
+
   return currentOptions;
 };
 

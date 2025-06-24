@@ -1,4 +1,4 @@
-import { getRandomId, httpService } from '@learnway/shared';
+import { getMockCourseType, getRandomId, httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
 import { LabelMessage, LabelMessagesQueryParams, PaginationResponse } from '@types';
 
@@ -61,6 +61,18 @@ export default class LabelMessagesService {
       `${PMSApiPrefix()}/label-messages/${payload.labelMessageId}`,
       payload,
     );
+  }
+
+  /**
+   * 테스트용 API
+   * @param id - 조회할 라벨 메시지 ID.
+   * @returns 라벨 메시지 상세 정보 Promise.
+   */
+  static async fetchChannelMock<T = any>(key?: string): Promise<T> {
+    return new Promise((resolve) => {
+      const response = getMockCourseType();
+      resolve(response as T);
+    }); // Mock 코드는 주석 처리 또는 삭제 필요
   }
 }
 

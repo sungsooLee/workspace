@@ -48,10 +48,16 @@ export type BaseFormFieldConfigProps<T = string> = {
 };
 
 export type ApiType = (param?: any) => {
-  queryKey: any;
   queryFn: () => Promise<any>;
+  queryKey?: any;
   [key: string]: any;
 };
+
+export type ApiProps = {
+  fn: (params?: any) => Promise<any>;
+  params?: any;
+};
+
 /**
  * 동적 폼에서 사용되는 개별 필드의 속성을 정의합니다.
  * 필드 타입에 따라 추가 속성이 달라집니다.
@@ -342,6 +348,7 @@ export type ApiCallback<T> = (response: any) => SelectOption[];
 export interface OptionsConfig<T = any> {
   codeGroup?: CODE_GROUP_TYPE; // 옵션을 가져오기 위한 코드 그룹.
   options?: SelectOption[]; // 미리 정의된 정적 옵션
+  api?: ApiProps; // 옵션을 가져오기 위한 API.
   [key: string]: any; // TODO. 기존 소스 에러 방지를 위해 추가해 둠
 }
 // TODO. Form 은 외부에서 주입이 가능하지만 SearchBox 는 외부 주입이 불가능 하므로 아래와 같은

@@ -18,10 +18,6 @@ export interface ReactSelectComponentProps {
   options: DropdownOption[];
   value?: DropdownOption | readonly DropdownOption[] | null;
   defaultValue?: SingleValue<DropdownOption> | MultiValue<DropdownOption>;
-  onChange?: (
-    newValue: SingleValue<DropdownOption> | MultiValue<DropdownOption>,
-    actionMeta: ActionMeta<DropdownOption>,
-  ) => void;
   placeholder?: string;
   isDisabled?: boolean;
   isReadonly?: boolean;
@@ -37,8 +33,12 @@ export interface ReactSelectComponentProps {
   backgroundType?: 'blue' | 'white';
   className?: string;
   name?: string;
-  onBlur?: () => void;
   noOptionsMessage?: string;
+  onBlur?: () => void;
+  onChange?: (
+    newValue: SingleValue<DropdownOption> | MultiValue<DropdownOption>,
+    actionMeta: ActionMeta<DropdownOption>,
+  ) => void;
 }
 
 // error, readonly, disabled
