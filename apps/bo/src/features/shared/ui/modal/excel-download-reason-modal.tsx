@@ -42,6 +42,32 @@ function ExcelDownloadReasonModalCompoment({
 
   const formConfig: DynamicFormConfig = {
     builders: [
+      {
+        name: 'downloadReasonType',
+        type: 'radio-group',
+        label: t('LABEL.form.label.downloadReasonType', '다운로드 사유'),
+        optionsConfig: {
+          codeGroup: CODE_GROUP['pms.excel.DownloadReasonTypeCode'],
+        },
+        value: '',
+      },
+      {
+        name: 'downloadDetailReasonType',
+        type: 'dropdown',
+        label: t('LABEL.form.label.downloadDetailReasonType', '상세 사유'),
+        optionsConfig: {
+          codeGroup: CODE_GROUP['pms.excel.DownloadAffairsReasonTypeCode'],
+        },
+        value: '',
+      },
+      {
+        name: 'downloadDetailReason',
+        type: 'textarea',
+        label: t('LABEL.form.label.downloadDetailReason', '상세 사유'),
+        value: '',
+        maxLength: 2000,
+        placeholder: t('LABEL.form.placeholder.downloadDetailReason', '세부 사유 명확하게 입력'),
+      },
       { name: 'userUuid', type: 'hidden', value: user?.uuid },
       {
         name: 'employeeNumber',
@@ -82,32 +108,6 @@ function ExcelDownloadReasonModalCompoment({
         value: dataCount,
         suffixText: t('LABEL.form.label.countUnit', '건'),
       },
-      {
-        name: 'downloadReasonType',
-        type: 'radio-group',
-        label: t('LABEL.form.label.downloadReasonType', '다운로드 사유'),
-        optionsConfig: {
-          codeGroup: CODE_GROUP['pms.excel.DownloadReasonTypeCode'],
-        },
-        value: '',
-      },
-      {
-        name: 'downloadDetailReasonType',
-        type: 'dropdown',
-        label: t('LABEL.form.label.downloadDetailReasonType', '상세 사유'),
-        optionsConfig: {
-          codeGroup: CODE_GROUP['pms.excel.DownloadAffairsReasonTypeCode'],
-        },
-        value: '',
-      },
-      {
-        name: 'downloadDetailReason',
-        type: 'textarea',
-        label: t('LABEL.form.label.downloadDetailReason', '상세 사유'),
-        value: '',
-        maxLength: 2000,
-        placeholder: t('LABEL.form.placeholder.downloadDetailReason', '세부 사유 명확하게 입력'),
-      },
     ],
     validator: {
       downloadReasonType: true,
@@ -121,14 +121,6 @@ function ExcelDownloadReasonModalCompoment({
   const [downloadDetailReasonTypeOptions, setDownloadDetailReasonTypeOptions] = useState<
     SelectOption[]
   >([]);
-
-  useEffect(() => {
-    setValue('dataCount', dataCount);
-  }, [dataCount]);
-
-  useEffect(() => {
-    setValue('requestParameter', flatten(values(paramLabels)));
-  }, [paramLabels]);
 
   useEffect(() => {
     (async () => {
@@ -158,6 +150,14 @@ function ExcelDownloadReasonModalCompoment({
       setValue('downloadDetailReason', '');
     })();
   }, [downloadReasonType]);
+
+  useEffect(() => {
+    setValue('requestParameter', flatten(values(paramLabels)));
+  }, [paramLabels]);
+
+  useEffect(() => {
+    setValue('dataCount', dataCount);
+  }, [dataCount]);
 
   function handleSubmit(query: Record<string, any>) {
     closeModal({
@@ -204,19 +204,6 @@ function ExcelDownloadReasonModalCompoment({
         </ModalTitle>
         <ModalBody>
           <ContentsRow>
-            <FormRow provider={provider} name="employeeNumber" />
-            <FormRow provider={provider} name="name" />
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider} name="menuPath" />
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider} name="requestParameter" />
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider} name="dataCount" />
-          </ContentsRow>
-          <ContentsRow>
             <FormRow provider={provider} name="downloadReasonType" />
           </ContentsRow>
           <div className={cn(downloadReasonType === 'ETC' && 'hidden')}>
@@ -233,6 +220,19 @@ function ExcelDownloadReasonModalCompoment({
               <FormRow provider={provider} name="downloadDetailReason" />
             </ContentsRow>
           </div>
+          <ContentsRow>
+            <FormRow provider={provider} name="employeeNumber" />
+            <FormRow provider={provider} name="name" />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider} name="menuPath" />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider} name="requestParameter" />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider} name="dataCount" />
+          </ContentsRow>
         </ModalBody>
         <ModalFooter>
           <Button
