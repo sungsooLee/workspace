@@ -60,7 +60,7 @@ import { EnFormMode } from '@types';
  */
 const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, ref: any) => {
   const routerState = useRouterState();
-  const { open: openModal } = useModal();
+  const { open: openModal, alert } = useModal();
 
   const [roleTree, setRoleTree] = useState<any>(null);
   const [selectedRole, setSelectedRole] = useState<any>(null);
@@ -126,8 +126,11 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
       const data = await openModal({
         content: <TenantDetailLearningRoleGrantUserShuttleModal roleId={selectedRole.roleId} />,
         width: 'xl',
+        height: 'fix',
       });
       handleOnSearch();
+    } else {
+      alert(t('역할을 선택하세요.'));
     }
   };
 
@@ -261,7 +264,6 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
                     }
                   />
                 </ContentsRow>
-                <ContentsHistoryInfoFormField />
               </div>
             </div>
           </div>

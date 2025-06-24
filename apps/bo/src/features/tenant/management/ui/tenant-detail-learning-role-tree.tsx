@@ -429,7 +429,6 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                   element={<SwitchFormField disabled={formMode === EnFormMode.NONE} />}
                 />
               </ContentsRow>
-              <ContentsHistoryInfoFormField />
             </div>
           </form>
         </div>

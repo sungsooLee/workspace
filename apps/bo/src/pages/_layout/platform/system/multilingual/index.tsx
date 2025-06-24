@@ -42,7 +42,11 @@ function RouteComponent() {
   const { state } = useCurrentRoute();
   const { provider: sProvider, getValues, onFormChange, onFormValid } = useSearchBox(searchConfig);
 
-  const { update } = useTranslation();
+  const { update } = useTranslation({
+    onSuccess: () => {
+      gridFetch(getValues());
+    },
+  });
   const { deploy } = useDeployTranslation({});
   const router = useRouter();
   const [currentTargetLocale, setCurrentTargetLocale] = useState<string>('');
@@ -59,11 +63,7 @@ function RouteComponent() {
   const gridConfig = useMemo(() => createGridConfig(handleCellClick), [handleCellClick]);
 
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
-  const isSaveDisable = useMemo(
-    () => gConfig.totalRows === 0 || currentTargetLocale === '',
-    [gConfig.totalRows, currentTargetLocale],
-  );
-  // 번역완료
+
   const [successTranslationCount, setSuccessTranslationCount] = useState<number>(0);
   /**
    * @param data
@@ -98,10 +98,11 @@ function RouteComponent() {
     }
     const uploadData: TranslationType = {
       keyTypeCode: getValues('keyTypeCode'),
-      targetLocale: getValues('targetLocale'),
+      targetLocale: getValues('targetLocale').toLowerCase(),
       translations: [],
     };
-    data.forEach((item: any) => {
+    const dataArr = data.content;
+    dataArr.forEach((item: any) => {
       uploadData.translations.push({
         multilingualKey: item.multilingualKey,
         translation: item.targetLanguage || '',
@@ -115,10 +116,12 @@ function RouteComponent() {
       <GridExcelUploadButton
         url="/multilingual/exportExcel"
         validateUrl="/multilingual/excelUploadValidation"
+        disabled={data && data.content && data.content.length === 0}
       />
       <GridExcelDownloadButton
         url={`${PMSApiPrefix()}/multilingual/exportExcel`}
         params={getValues()}
+        disabled={data && data.content && data.content.length === 0}
         onBeforeDownload={async () => {
           const keyTypeCode = getValues('keyTypeCode');
           const targetLocale = getValues('targetLocale');
@@ -140,24 +143,26 @@ function RouteComponent() {
         keyTypeCode: state?.keyType,
         multilingualKey: state?.multilingualKey || '',
         translation: state.translation || '',
-        targetLocale: 'en',
+        targetLocale: 'EN',
       });
       if (await onFormValid()) {
         handleOnSearch(getValues());
       }
     }
   };
+
   useEffect(() => {
     init();
   }, []);
 
   useEffect(() => {
-    if (data && data.length > 0) {
-      setSuccessTranslationCount(data[0].targetTranslatedCount);
+    if (data && data.content && data.content.length > 0) {
+      setSuccessTranslationCount(data.content[0].targetTranslatedCount);
     } else {
       setSuccessTranslationCount(0);
     }
   }, [data]);
+
   return (
     <div>
       <PageContainer>
@@ -173,28 +178,7 @@ function RouteComponent() {
             >
               {t('LABEL.platform.system.multilingual.platform-menu')}
             </Button>
-            {/* <Button
-              type="button"
-              variant="point"
-              size="sm"
-              onClick={() => {
-                router.navigate({ to: '/platform/category' });
-              }}
-            >
-              {t('LABEL.platform.system.multilingual.platform-category')}
-            </Button> */}
-            <Button
-              type="button"
-              variant="point"
-              size="sm"
-              onClick={() => {
-                router.navigate({
-                  to: '/platform/code/common-code-group',
-                });
-              }}
-            >
-              {t('LABEL.platform.system.multilingual.platform-code-common-code-group')}
-            </Button>
+
             <Button
               type="button"
               variant="point"
@@ -210,7 +194,7 @@ function RouteComponent() {
           </LinkBox>
           <Button
             type="button"
-            variant="primary"
+            variant="point"
             // disabled={isSaveDisable}
             size="sm"
             onClick={handleDeployMultilingual}
@@ -220,7 +204,10 @@ function RouteComponent() {
           <Button
             type="button"
             variant="primary"
-            disabled={isSaveDisable}
+            disabled={
+              getValues('targetLocale') === '' ||
+              (data && data.content && data.content.length === 0)
+            }
             size="sm"
             onClick={handleSaveMultilingual}
           >
@@ -244,7 +231,9 @@ function RouteComponent() {
                     <span className={'normal_text'}>
                       {t('LABEL.platform.system.multilingual.currentTranslationLanguage')} :{' '}
                       {currentTargetLocale
-                        ? t(`pms.multilingual.LanguageType.${currentTargetLocale}`)
+                        ? t(
+                            `SYSTEM_COMMON_CODE.pms.multilingual.LanguageType.${currentTargetLocale}`,
+                          )
                         : ''}
                     </span>
                   </>
@@ -359,6 +348,20 @@ const createGridConfig = (onCellClick: (data: any) => void) => ({
     {
       name: 'keyType',
       label: t('LABEL.platform.system.multilingual.keyType'),
+      render: (info: CellContext<any, string>) => {
+        return info.row.getValue('keyTypeName');
+      },
+      // enableHiding: true,
+      // meta: {
+      //   hidden: true,
+      // },
+    },
+    {
+      name: 'keyTypeName',
+      label: t('LABEL.platform.system.multilingual.keyType'),
+      meta: {
+        hidden: true,
+      },
     },
     {
       name: 'multilingualKey',
@@ -373,10 +376,11 @@ const createGridConfig = (onCellClick: (data: any) => void) => ({
       label: t('LABEL.platform.system.multilingual.targetLanguage'),
       accessorKey: 'text',
       render: (info: CellContext<any, string>) => {
-        return info.row.getValue('keyType') === 'MESSAGE' ? (
-          <EditTextareaCell info={info} textarea={{ maxLength: 100 }} />
+        return info.row.getValue('keyType') === 'MESSAGE' ||
+          info.row.getValue('keyType') === 'LABEL' ? (
+          <EditTextareaCell info={info} textarea={{ maxLength: 150 }} />
         ) : (
-          <EditInputCell info={info} input={{ type: 'text' }} />
+          <EditInputCell info={info} input={{ type: 'text', maxLength: 150 }} />
         );
       },
     },
@@ -396,26 +400,21 @@ const createGridConfig = (onCellClick: (data: any) => void) => ({
           </div>
         );
       },
-    },
-    {
-      name: 'lastModifiedBy',
-      label: t('LABEL.grid.column.updatedBy'),
-      translation: true,
+      size: 80,
+      enableSorting: false,
     },
     {
       name: 'modifiedDate',
       label: t('LABEL.grid.column.updatedDate'),
       render: (info: any) => (
         <span className={'whitespace-nowrap'}>
-          {getDateToString(new Date(info.getValue()), DATE_TIME_FORMAT.DATETIME_SEC)}
+          {getDateToString(new Date(info.getValue()), DATE_TIME_FORMAT.DATETIME_MIN)}
         </span>
       ),
+      meta: {
+        cellAlign: 'center',
+      },
     },
   ],
   data: [],
-  pagination: {
-    pageSize: 10,
-    pageIndex: 0,
-    totalRows: 0,
-  },
 });

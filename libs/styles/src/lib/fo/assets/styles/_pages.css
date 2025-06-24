@@ -11,7 +11,7 @@
 }
 
 h4.auth--title {
-  @apply title_6_b mt-[32px] pb-[16px] text-left text-[var(--gray9)];
+  @apply title_6_b mt-[32px] pb-[16px] text-left;
 }
 
 .auth--signup-select {

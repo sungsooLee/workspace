@@ -14,7 +14,9 @@ interface AttachmentFormFieldProps extends BaseFormFieldProps<string[]> {
    * @deprecated 이 prop은 현재 코드에서 사용되지 않습니다.
    */
   dummy?: any;
-
+  maxFileCount?: number;
+  maxFileSize?: number;
+  isDownloadCase?: boolean;
   type: LEARNING_TYPE;
 }
 
@@ -50,15 +52,16 @@ const AttachmentFormFieldComponent = forwardRef<
 >(
   (
     {
-      value, // 폼 필드의 현재 값 (string[] 타입, 이미지 경로 배열)
-      onChange, // 폼 필드 값이 변경될 때 호출되는 콜백 함수
+      maxFileCount = 10,
+      maxFileSize = 1024 * 1024 * 50,
+      value,
+      onChange,
       type,
+      isDownloadCase = false,
       ...props // 나머지 HTMLDivElement 속성들
     },
     ref, // forwardRef로 전달받은 Ref 객체
   ) => {
-    const maxFileCount = 3;
-    const maxFileSize = 1024 * 1024 * 10;
     const { stats, files, addFiles, onPause, onRetry, onResume, onRemove } = useS3Uploader({
       s3Path: 'upload/content/original',
       maxFileCount,
@@ -96,6 +99,7 @@ const AttachmentFormFieldComponent = forwardRef<
         guideText={t('LABEL.message.learningResourceFileUploadModal.uploaderGuideText')}
         errorMessage={errorMessage}
         wrapSize={'lg'}
+        isDownloadCase={isDownloadCase}
         {...props} // Attachment에 전달될 수 있는 나머지 props (예: className)
       />
     );

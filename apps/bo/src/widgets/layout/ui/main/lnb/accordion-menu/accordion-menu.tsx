@@ -1,4 +1,4 @@
-import { memo, useState, useEffect } from 'react';
+import { memo, useState, useEffect, SetStateAction } from 'react';
 import { useRouter } from '@tanstack/react-router';
 import { map, intersection } from 'lodash';
 import { useTranslation } from 'react-i18next';
@@ -75,6 +75,7 @@ const AccordionMenuComponent = ({
             <AccordionMenu menus={(menu?.children as Menu[]) || []} depth={depth + 1} />
           ),
           active,
+          tenantMappingMenuId: menu.tenantMappingMenuId,
         } as AccordionItem;
       });
   }, [menus, activeMenuDepth, router.state.location.pathname]);
@@ -83,14 +84,24 @@ const AccordionMenuComponent = ({
     if (openAll === undefined) {
       return;
     }
-    setValue(
-      openAll
-        ? map(
-            items.filter((item) => item?.children),
-            'value',
-          )
-        : [],
-    );
+    if (openAll) {
+      setValue(
+        map(
+          items.filter((item) => item?.children),
+          'value',
+        ),
+      );
+    } else {
+      let menuValue: SetStateAction<string[] | undefined> = [];
+      if (activeMenuDepth) {
+        const currentMenul = activeMenuDepth[depth - 1];
+        menuValue = map(
+          items.filter((item) => item.tenantMappingMenuId === currentMenul?.tenantMappingMenuId),
+          'value',
+        );
+      }
+      setValue(menuValue);
+    }
   }, [openAll]);
 
   useEffect(() => {

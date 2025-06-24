@@ -3,6 +3,6 @@ import { PMSApiPrefix } from '@learnway/config';
 
 export default class UserGroupsService {
   static fetchAllUserGroups() {
-    return httpService.get<any>(`${PMSApiPrefix()}/userGroup/userGroups`);
+    return httpService.get<any>(`${PMSApiPrefix()}/userGroup/user-groups`);
   }
 }

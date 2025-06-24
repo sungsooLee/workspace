@@ -55,6 +55,7 @@ import { CompanyOrganizationUserList } from './company-organization-info-user';
 import { EnFormMode } from '@types';
 import { DuplicateState, DuplicateCheckInputFormField } from '@features/form';
 import { UserChoiceModal } from '@features/shared';
+import CompaniesService from '@entities/companies/api/companies';
 export enum EnOrganizationShowType {
   check = 'check',
   origin = 'origin',
@@ -84,6 +85,8 @@ const TenantCompanyOrganizationTreeComponent = ({
 
   const [formMode, setFormMode] = useState(EnFormMode.NONE);
   const [pathString, setPathString] = useState<string>();
+  const [disableEditing, setDisableEditing] = useState(false);
+  const [company, setCompany] = useState<any>();
 
   const { provider, fetchData, onSubmit, onFormChange, getValues, getInitByBuilders, control } =
     useDynamicForm(formConfig);
@@ -121,7 +124,9 @@ const TenantCompanyOrganizationTreeComponent = ({
       openAlert({
         title: t('삭제되었습니다.'),
         onClose: () => {
-          // TODO
+          setFormMode(EnFormMode.EMPTY);
+          refetch();
+          fetchData(getInitByBuilders());
         },
       });
     },
@@ -148,12 +153,13 @@ const TenantCompanyOrganizationTreeComponent = ({
     setViewNode(null);
     setFormMode(EnFormMode.NONE);
   };
+
   const handleAppendSubOrganization = (node: TreeNode, level: number) => {
     console.log('### node', node);
     const initdata = getInitByBuilders();
     initdata.deptLoc = findOrganizationPathById(deptTreeData, node.key);
     initdata.parentName = node.title;
-    initdata.parentDeptCode = node.deptCode;
+    initdata.parentDeptCode = node.deptCode ?? '';
     initdata.deptName = {
       fieldValue: '',
       checkState: DuplicateState.needInput,
@@ -181,6 +187,7 @@ const TenantCompanyOrganizationTreeComponent = ({
         companyCode={companyCode}
         showType={showType}
         deptId={selectedNode?.deptId}
+        companyHrInfoManageType={company?.hrInfoManageType}
       />
     );
   };
@@ -196,6 +203,15 @@ const TenantCompanyOrganizationTreeComponent = ({
   };
 
   useEffect(() => {
+    // 부서 수정/삭제 시 회사의 인사 데이터 수동 관리 유형을 확인하기 위해 조회
+    const init = async () => {
+      const data: any[] = await CompaniesService.fetch(companyCode);
+      setCompany({ ...data });
+    };
+    init();
+  }, []);
+
+  useEffect(() => {
     if (viewNode) {
       const location = findOrganizationPathById(deptTreeData, viewNode.key);
       setPathString(location);
@@ -208,7 +224,10 @@ const TenantCompanyOrganizationTreeComponent = ({
 
   useEffect(() => {
     if (showType === EnOrganizationShowType.platform && departmentTreeData) {
-      const transformedData = transformDepartmentApiDataToTreeData(departmentTreeData);
+      const transformedData = transformDepartmentApiDataToTreeData(
+        departmentTreeData,
+        t('러닝웨이 - 조직'),
+      );
       setDeptTreeData(transformedData);
       if (transformedData?.length > 0) {
         const root = transformedData[0];
@@ -220,7 +239,10 @@ const TenantCompanyOrganizationTreeComponent = ({
 
   useEffect(() => {
     if (showType === EnOrganizationShowType.origin && hmgDepartmentTreeData) {
-      const transformedData = transformDepartmentApiDataToTreeData(hmgDepartmentTreeData);
+      const transformedData = transformDepartmentApiDataToTreeData(
+        hmgDepartmentTreeData,
+        t('조직'),
+      );
       setDeptTreeData(transformedData);
       if (transformedData?.length > 0) {
         const root = transformedData[0];
@@ -254,12 +276,21 @@ const TenantCompanyOrganizationTreeComponent = ({
           fieldValue: departmentData.deptName,
           checkState: DuplicateState.okStart,
         },
-        parentName: parentDept?.deptName,
-        parentDeptCode: parentDept?.deptCode,
+        parentName: parentDept?.deptName ?? '',
+        parentDeptCode: parentDept?.deptCode ?? '',
+        deptId: departmentData.deptId.toString(),
+        parentDeptId: departmentData.parentDeptId ? departmentData.parentDeptId.toString() : '',
+        deptDesc: departmentData.deptDesc ?? '',
       };
       console.log('### fetchData', data);
-      //TODO. 부서 상세에 부서 설명 누락
       fetchData(data);
+      setDisableEditing(
+        company.hrInfoManageType === 'AUTO_MANAGE' ||
+          departmentData.hrInfoManageType === 'AUTO_MANAGE',
+      );
+      console.log('### company', company);
+      console.log('#### company.hrInfoManageType', company.hrInfoManageType);
+      console.log('#### departmentData.hrInfoManageType', departmentData.hrInfoManageType);
     }
   }, [departmentData]);
 
@@ -313,11 +344,13 @@ const TenantCompanyOrganizationTreeComponent = ({
   const handleDeleteDeparment = async () => {
     const deptId = getValues().deptId;
     if (deptId && formMode === EnFormMode.VIEW) {
-      const payload = {
-        companyCode: companyCode,
-        deptIdList: [deptId],
-      };
-      deleteDepartment(payload);
+      if (await openConfirm('삭제 하시겠습니까?')) {
+        const payload = {
+          companyCode: companyCode,
+          deptIdList: [deptId],
+        };
+        deleteDepartment(payload);
+      }
     }
   };
 
@@ -417,16 +450,27 @@ const TenantCompanyOrganizationTreeComponent = ({
                       label={t('초기화')}
                       variant={'text'}
                       size={'sm'}
+                      disabled={formMode === EnFormMode.EMPTY || disableEditing}
                       onClick={() => onFormChange()}
                     />
                     <Button
                       label={t('삭제')}
                       variant={'text'}
                       size={'sm'}
-                      disabled={formMode === EnFormMode.ADD}
+                      disabled={
+                        formMode === EnFormMode.ADD ||
+                        formMode === EnFormMode.EMPTY ||
+                        disableEditing
+                      }
                       onClick={() => handleDeleteDeparment()}
                     />
-                    <Button type="submit" label={t('저장')} variant={'save'} size={'sm'} />
+                    <Button
+                      type="submit"
+                      label={t('저장')}
+                      variant={'save'}
+                      size={'sm'}
+                      disabled={formMode === EnFormMode.EMPTY || disableEditing}
+                    />
                   </>
                 }
               ></FormSubTitle>
@@ -460,7 +504,10 @@ const TenantCompanyOrganizationTreeComponent = ({
                     provider={provider}
                     name="deptName"
                     element={
-                      <DuplicateCheckInputFormField onDuplicationCheck={duplicateDeptNameCheck} />
+                      <DuplicateCheckInputFormField
+                        onDuplicationCheck={duplicateDeptNameCheck}
+                        disabled={formMode === EnFormMode.EMPTY}
+                      />
                     }
                   />
                 </ContentsRow>
@@ -482,6 +529,7 @@ const TenantCompanyOrganizationTreeComponent = ({
                           content: <UserChoiceModal />,
                         }}
                         selectOnlyOne
+                        disabled={formMode === EnFormMode.EMPTY}
                       />
                     }
                   />
@@ -497,10 +545,12 @@ const TenantCompanyOrganizationTreeComponent = ({
                   <FormRow
                     provider={provider}
                     name="deptDesc"
-                    element={<TextareaFormField resize={'none'} />}
+                    element={
+                      <TextareaFormField resize={'none'} disabled={formMode === EnFormMode.EMPTY} />
+                    }
                   />
                 </ContentsRow>
-                {formMode === EnFormMode.VIEW && <ContentsHistoryInfoFormField />}
+                {/* {formMode === EnFormMode.VIEW && <ContentsHistoryInfoFormField />} */}
               </div>
             </form>
           </div>
@@ -519,28 +569,28 @@ const formConfig: DynamicFormConfig = {
       type: 'text',
       label: t('위치'),
       value: '',
-      placeholder: '',
+      placeholder: ' ',
     },
     {
       name: 'parentName',
       type: 'text',
       label: t('상위 조직명'),
       value: '',
-      placeholder: '',
+      placeholder: ' ',
     },
     {
       name: 'parentDeptCode',
       type: 'text',
       label: t('상위 조직코드'),
       value: '',
-      placeholder: '',
+      placeholder: ' ',
     },
     {
       name: 'deptCode',
       type: 'text',
       label: t('조직코드'),
       value: '',
-      placeholder: '',
+      placeholder: ' ',
     },
     {
       name: 'deptName',
@@ -549,7 +599,7 @@ const formConfig: DynamicFormConfig = {
       value: { fieldValue: '', checkState: DuplicateState.needInput },
       format: 'object',
       maxLength: 20,
-      placeholder: '',
+      placeholder: ' ',
     },
     {
       name: 'managerEmployeeNumber',
@@ -563,7 +613,7 @@ const formConfig: DynamicFormConfig = {
       type: 'text',
       label: t('조직장 이름'),
       value: '',
-      placeholder: '',
+      placeholder: ' ',
     },
     {
       name: 'deptDesc',
@@ -571,7 +621,7 @@ const formConfig: DynamicFormConfig = {
       label: t('설명'),
       value: '',
       maxLength: 50,
-      placeholder: '',
+      placeholder: ' ',
     },
     { name: 'deptId', type: 'hidden', label: '', value: '' },
     { name: 'parentDeptId', type: 'hidden', label: '', value: '' },

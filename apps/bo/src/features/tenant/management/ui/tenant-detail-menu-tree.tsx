@@ -433,9 +433,6 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
               }
             />
           </ContentsRow>
-          <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
-            <ContentsHistoryInfoFormField />
-          </ContentsRow>
         </div>
       </div>
     </SectionLayout>

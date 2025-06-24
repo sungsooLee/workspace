@@ -1,9 +1,9 @@
 .start {
   @apply w-full;
   .chips_modal_wrap {
-    @apply flex h-auto min-h-[120px] w-full flex-wrap items-center overflow-hidden rounded-[4px] border border-solid border-[var(--gray4)];
+    @apply flex h-auto min-h-[30px] w-full flex-wrap items-start overflow-hidden rounded-[4px] border border-solid border-[var(--gray4)];
     .btn_search {
-      @apply mr-[12px] flex flex-auto items-center justify-end;
+      @apply mr-[10px] mt-[4px] flex flex-auto items-start justify-end;
     }
     .chips_wapper {
       @apply h-auto;

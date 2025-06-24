@@ -17,7 +17,7 @@ import dayjs from 'dayjs';
 import { FormRow, FormSubTitle, ContentsHistoryInfoFormField } from '@shared/ui';
 import { FormDisplay } from '@features/form/ui/form-display';
 import { DynamicFormConfig, useDynamicForm, CODE_GROUP } from '@learnway/hooks';
-import { DATE_TIME_FORMAT, getDateToString, getStringToDate } from '@learnway/shared';
+import { DATE_TIME_FORMAT, getDateToString, getStringToDate, cn } from '@learnway/shared';
 import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
 import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
 import { LoginRestrictTimeSettingModal } from '@features/shared/ui/modal/login-restrict-time-setting-modal';
@@ -26,6 +26,7 @@ import { EnGlobalConst, EnFormMode } from '@types';
 import { useCreateCompany, useUpdateCompany, useFetchCompany } from '@entities/companies';
 import CompaniesService from '@entities/companies/api/companies';
 
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
 const EMAIL_REGEX =
@@ -65,6 +66,9 @@ const CompanyDetailComponent = (props: any, ref: any) => {
       ]);
       console.log('##### initialData', convertedData);
       fetchData(convertedData);
+      setTimeout(() => {
+        fetchData(convertedData);
+      }, 10000);
 
       const loginRestrictions = detailData.companyLoginRestrictionList.map((limit: any) => ({
         ...limit,
@@ -136,11 +140,6 @@ const CompanyDetailComponent = (props: any, ref: any) => {
         },
       });
     },
-  });
-
-  const watchedValues = useWatch({
-    control,
-    name: ['isUseSso', 'isUseTwoFactorAuth', 'isUseWatermark', 'twoFactorAuthPlatformTypeList'],
   });
 
   const handleOnSubmit = async (data: any) => {
@@ -458,10 +457,10 @@ const CompanyDetailComponent = (props: any, ref: any) => {
     <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
       <FormSubTitle label={t('회사 인사 데이터 관리 정보')} lineType="dark" />
       <ContentsRow>
-        <FormRow provider={provider} name={'companyType'} />
+        <FormRow provider={provider} name={'companyType'} element={<RadioGroupFormField />} />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name={'hrInfoManageType'} />
+        <FormRow provider={provider} name={'hrInfoManageType'} element={<RadioGroupFormField />} />
       </ContentsRow>
       <FormDisplay
         provider={provider}
@@ -515,11 +514,13 @@ const CompanyDetailComponent = (props: any, ref: any) => {
             name={'isUseSso'}
             className={dynamicFormStyles.form_item_horizontal}
           />
-          <FormRow
-            provider={provider}
-            name={'ssoTypeList'}
-            element={<CheckboxGroupFormField disabled={!watchedValues[0]} />}
-          />
+          <FormDisplay provider={provider} dependencies={[{ name: 'isUseSso', value: true }]}>
+            <FormRow
+              provider={provider}
+              name={'ssoTypeList'}
+              element={<CheckboxGroupFormField />}
+            />
+          </FormDisplay>
         </ContentsRowItem>
         <ContentsRowItem>
           <FormRow provider={provider} name={'passwordAuthType'} />
@@ -533,21 +534,28 @@ const CompanyDetailComponent = (props: any, ref: any) => {
             name={'isUseTwoFactorAuth'}
             className={dynamicFormStyles.form_item_horizontal}
           ></FormRow>
-          <FormRow
+          <FormDisplay
             provider={provider}
-            name={'twoFactorAuthPlatformTypeList'}
-            element={<CheckboxGroupFormField disabled={!watchedValues[1]} />}
-          />
+            dependencies={[{ name: 'isUseTwoFactorAuth', value: true }]}
+          >
+            <FormRow
+              provider={provider}
+              name={'twoFactorAuthPlatformTypeList'}
+              element={<CheckboxGroupFormField />}
+            />
+          </FormDisplay>
         </ContentsRowItem>
-        <ContentsRowItem>
+      </ContentsRow>
+      <FormDisplay provider={provider} dependencies={[{ name: 'isUseTwoFactorAuth', value: true }]}>
+        <ContentsRow>
           <FormRow
             className={dynamicFormStyles.w_half}
             provider={provider}
             name={'twoFactorAuthType'}
-            element={<RadioGroupFormField disabled={!watchedValues[1]} />}
+            element={<RadioGroupFormField />}
           />
-        </ContentsRowItem>
-      </ContentsRow>
+        </ContentsRow>
+      </FormDisplay>
 
       <div className="grid_wrap py-10">
         <GridBox
@@ -575,20 +583,15 @@ const CompanyDetailComponent = (props: any, ref: any) => {
           name={'isUseWatermark'}
           className={dynamicFormStyles.form_item_horizontal}
         />
-
-        <FormRow
-          provider={provider}
-          name={'watermarkText'}
-          element={<Input disabled={!watchedValues[2]} />}
-        />
       </ContentsRow>
-      <ContentsRow>
-        <FormRow
-          provider={provider}
-          name={'watermarkPosition'}
-          element={<RadioGroupFormField disabled={!watchedValues[2]} />}
-        />
-      </ContentsRow>
+      <FormDisplay provider={provider} dependencies={[{ name: 'isUseWatermark', value: true }]}>
+        <ContentsRow>
+          <FormRow provider={provider} name={'watermarkText'} />
+        </ContentsRow>
+        <ContentsRow>
+          <FormRow provider={provider} name={'watermarkPosition'} />
+        </ContentsRow>
+      </FormDisplay>
       <ContentsRow>
         <FormRow provider={provider} name={'playerControlLimitType'} />
         <FormRow provider={provider} name={'focusModeType'} />
@@ -625,7 +628,9 @@ const CompanyDetailComponent = (props: any, ref: any) => {
 */}
       <FormSubTitle label={t('회사 사용 설정')} lineType="dark" />
       <ContentsRow type={'horizontal'}>
-        <FormRow className={dynamicFormStyles.w_half} provider={provider} name={'isUsed'} />
+        <FormRow provider={provider} name={'isUsed'} />
+        <div className={cn(formStyles.form_item)}></div>
+        <div className={cn(formStyles.form_item)}></div>
       </ContentsRow>
 
       <FormSubTitle label={t('담당자 정보')} />
@@ -639,7 +644,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
         <FormRow provider={provider} name={'managerOfficeTel'} />
         <FormRow provider={provider} name={'managerPhone'} />
       </ContentsRow>
-      {props.mode === EnFormMode.VIEW && <ContentsHistoryInfoFormField />}
+      {/* {props.mode === EnFormMode.VIEW && <ContentsHistoryInfoFormField />} */}
     </form>
   );
 };
@@ -793,6 +798,7 @@ const formConfig: DynamicFormConfig = {
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
+      guideText: t('SSO 로그인 사용 여부를 설정합니다.'),
     },
     {
       name: 'ssoTypeList',
@@ -802,7 +808,6 @@ const formConfig: DynamicFormConfig = {
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.SsoType'],
       },
-      guideText: t('SSO 로그인 사용 여부를 설정합니다.'),
     },
     {
       name: 'passwordAuthType',
@@ -824,6 +829,7 @@ const formConfig: DynamicFormConfig = {
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
+      guideText: t('로그인 2차 인증 사용하는 경우 2차 인증 유형을 선택할 수 있습니다.'),
     },
     {
       name: 'twoFactorAuthType',
@@ -833,7 +839,6 @@ const formConfig: DynamicFormConfig = {
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.TwoFactorAuthType'],
       },
-      guideText: t('로그인 2차 인증 사용하는 경우 2차 인증 유형을 선택할 수 있습니다.'),
     },
     {
       name: 'twoFactorAuthPlatformTypeList',

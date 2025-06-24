@@ -3,10 +3,7 @@ import { t } from 'i18next';
 import { useRouter } from '@tanstack/react-router';
 import { useModal, ContentsRow, TextareaFormField, Input, RadioGroupFormField } from '@learnway/ui';
 import { FormDisplay } from '@features/form/ui/form-display';
-import {
-  DuplicateCheckInputFormField,
-  DuplicateState,
-} from '@features/tenant/management/ui/duplicate-check-input-form-field';
+import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
 import { FormRow, FormSubTitle } from '@shared/ui';
 import { DynamicFormConfig, useDynamicForm, CODE_GROUP } from '@learnway/hooks';
 import { AddressSearchModal } from '@features/shared/ui/modal/address-search-modal';

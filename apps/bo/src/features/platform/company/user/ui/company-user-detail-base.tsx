@@ -1,21 +1,34 @@
 import { FC, useEffect, useState, useCallback } from 'react';
+import { useWatch } from 'react-hook-form';
 import { useRouterState } from '@tanstack/react-router';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
-import { FormSubTitle, FormRow, ContentsHistoryInfoFormField } from '@shared/ui';
+
+import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+
 import {
   Input,
   ContentsRow,
   TableBox,
   ChipListModalSelectorFormField,
   RadioGroupFormField,
+  ContentsRowItem,
+  CheckboxGroupFormField,
 } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm, CODE_GROUP } from '@learnway/hooks';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+
+import { FormSubTitle, FormRow, ContentsHistoryInfoFormField } from '@shared/ui';
 
 const CompanyUserDetailBaseComponent: FC<any> = ({ userInfo }) => {
-  const { provider, fetchData, onSubmit, setFormError, clearFormError, getValues } =
+  const { provider, control, fetchData, onSubmit, setFormError, clearFormError, getValues } =
     useDynamicForm(formConfig);
   const [roleData, setRoleData] = useState<any[]>([]);
+
+  const watchedValues = useWatch({
+    control,
+    name: ['useSsoLogin', 'isUseTwoFactorAuth', 'twoFactorAuthPlatformTypeList'],
+  });
+
   useEffect(() => {
     if (userInfo) {
       const value = {
@@ -135,9 +148,22 @@ const CompanyUserDetailBaseComponent: FC<any> = ({ userInfo }) => {
 
       <FormSubTitle label={'로그인 및 인증 설정 정보'} lineType={'dark'} />
       <ContentsRow>
-        <FormRow provider={provider} name={'useSsoLogin'} />
-        <FormRow provider={provider} name={'ssoLoginType'} />
-        <FormRow provider={provider} name={'passwordAuthType'} />
+        <ContentsRowItem>
+          <FormRow
+            provider={provider}
+            name={'useSsoLogin'}
+            className={dynamicFormStyles.form_item_horizontal}
+          />
+
+          <FormRow
+            provider={provider}
+            name={'ssoLoginType'}
+            element={<RadioGroupFormField disabled={!watchedValues[0]} />}
+          />
+        </ContentsRowItem>
+        <ContentsRowItem>
+          <FormRow provider={provider} name={'passwordAuthType'} />
+        </ContentsRowItem>
       </ContentsRow>
       <ContentsRow>
         <FormRow provider={provider} name={'use2FA'} />
@@ -410,18 +436,18 @@ const formConfig: DynamicFormConfig = {
       switchConfig: {
         label: (value: boolean) => (value ? '사용' : '미사용'),
       },
-      guideText: t('SSO 로그인 사용 여부를 설정합니다.'),
     },
     {
       name: 'ssoLoginType',
       type: 'radio-group',
-      label: t('SSO 로그인 유형'),
+      label: '',
       value: 'opt1',
       options: [
         { label: 'HMG SSO', value: 'opt1' },
         { label: 'Autoway', value: 'opt2' },
         { label: 'AES Link', value: 'opt3' },
       ],
+      guideText: t('SSO 로그인 사용 여부를 설정합니다.'),
     },
     {
       name: 'passwordAuthType',

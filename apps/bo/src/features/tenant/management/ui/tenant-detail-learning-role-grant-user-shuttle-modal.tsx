@@ -1,4 +1,5 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useWatch } from 'react-hook-form';
 import { t } from 'i18next';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { useQueryClient } from '@tanstack/react-query';
@@ -15,7 +16,13 @@ import {
   useModal,
 } from '@learnway/ui';
 import { IcoRefresh02 } from '@learnway/icons';
-import { DynamicFormConfig, SearchBoxConfig, useSearchBox, useDynamicForm } from '@learnway/hooks';
+import {
+  DynamicFormConfig,
+  SearchBoxConfig,
+  useSearchBox,
+  useDynamicForm,
+  CODE_GROUP,
+} from '@learnway/hooks';
 
 import { FormRow, ThumbnailListFormField } from '@shared/ui/';
 import { DateRangeFormField } from '@shared/ui/search-box/date-range-form-field';
@@ -23,6 +30,7 @@ import { DateRangeFormField } from '@shared/ui/search-box/date-range-form-field'
 import { SearchBox } from '@shared/ui/search-box';
 import { usersQueryOptions } from '@entities/users/service/users.queries';
 import { useSaveUsers } from '@entities/role/service/role-manage.hook';
+import { queryOptions as departmentQuery } from '@entities/department';
 /**
  * 화면번호: NLP_BO_PMS_1110
  *
@@ -34,23 +42,35 @@ const TenantDetailLearningRoleGrantUserShuttleModalComponent = ({ roleId }: { ro
   const [option, setOption] = useState<any>();
   const [gridData, setGrideData] = useState<any[]>([]);
 
+  const formRef = useRef<HTMLFormElement>(null);
+
   const { close, alert } = useModal();
 
   const queryClient = useQueryClient();
-  const { provider: sProvider } = useSearchBox(searchConfig);
+  const {
+    provider: sProvider,
+    getValues: getSearchValues,
+    setOptions,
+    setValue,
+  } = useSearchBox(searchConfig);
   const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
     useDynamicForm(formConfig);
 
   const { saveUsersRole: saveRoleUsers } = useSaveUsers({});
 
-  const formRef = useRef<HTMLFormElement>(null);
+  const companyIdWatch = useWatch({ control: sProvider.control, name: 'companyId' });
+
+  const searchParam = () => {
+    const data = getSearchValues();
+    data.size = 2000;
+    return data;
+  };
 
   const handleOnSearch = (data: any) => {
-    const queryPromise = queryClient.fetchQuery(usersQueryOptions.list(data));
+    const queryPromise = queryClient.fetchQuery(usersQueryOptions.list(searchParam()));
     queryPromise.then((data) => {
       setGrideData(data.content);
     });
-    //TODO fetch
   };
 
   const handleOnClose = () => {
@@ -81,6 +101,23 @@ const TenantDetailLearningRoleGrantUserShuttleModalComponent = ({ roleId }: { ro
     close();
   };
 
+  useEffect(() => {
+    if (companyIdWatch) {
+      (async () => {
+        const paramDept = { companyId: companyIdWatch, size: 2000 };
+        const data = await queryClient.fetchQuery(departmentQuery.list(paramDept));
+        const deptIdOptions = data.content.map((item: any) => ({
+          label: item.deptName,
+          value: item.deptId,
+        }));
+        setOptions('deptId', deptIdOptions);
+      })();
+    } else {
+      setValue('deptId', '');
+      setOptions('deptId', []);
+    }
+  }, [companyIdWatch]);
+
   return (
     <ModalContainer className="h-[740]">
       <ModalTitle>{t('유저조회')}</ModalTitle>
@@ -94,13 +131,15 @@ const TenantDetailLearningRoleGrantUserShuttleModalComponent = ({ roleId }: { ro
           showNumberingColumn={false}
           gridData={gridData}
           columns={columns}
-          rowKey={'userId'}
+          rowKey={'uuid'}
           leftTitle={t('사용자목록')}
           rightTitle={t('사용자 선택')}
+          visibleRowCount={6}
         />
-        <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
+        <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)} style={{ marginTop: '20px' }}>
           <ContentsRow>
             <FormRow provider={provider} name="dateRange" element={<DateRangeFormField />} />
+            <FormRow provider={provider} name="---" />
           </ContentsRow>
         </form>
       </ModalBody>
@@ -141,15 +180,25 @@ const searchConfig: SearchBoxConfig = {
     [
       {
         name: 'companyId',
-        type: 'text',
+        type: 'dropdown',
         label: t('회사'),
-        value: '',
+        format: 'object',
+        value: undefined,
+        isSearchable: true,
+        isClearable: true,
+        placeholder: t('LABEL.grid.header.inputSelect'),
+        optionsConfig: {
+          codeGroup: CODE_GROUP['manual.company.companyId'],
+        },
       },
       {
         name: 'deptId',
-        type: 'text',
+        type: 'dropdown',
         label: t('소속'),
+        format: 'object',
+        presetOptionLabel: t('LABEL.form.label.select'),
         value: '',
+        options: [],
       },
       {
         name: 'userName',
@@ -165,6 +214,9 @@ const searchConfig: SearchBoxConfig = {
       },
     ],
   ],
+  validator: {
+    companyId: true,
+  },
 };
 
 const columnHelper = createColumnHelper<any>();
