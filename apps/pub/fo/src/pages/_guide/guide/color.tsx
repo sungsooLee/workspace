@@ -97,7 +97,7 @@ function RouteComponent() {
     },
     {
       title: 'Etc',
-      description: ['그라데이션 컬러', 'background:var(--gradient01)', 'bg-[var(--gradient01)]'],
+      description: ['그라데이션 컬러', 'background:var(--gradient1)', 'bg-[var(--gradient1)]'],
       colors: [{ name: '--gradient1', textColor: '--white', code: '' }],
     },
   ];

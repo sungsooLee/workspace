@@ -31,17 +31,23 @@ strong {
   font-weight: 600;
 }
 
-/* 아랍어 */
-[dir='rtl'] {
-  direction: rtl;
-  text-align: right;
-  @apply flex-row-reverse;
-}
-
 /* 일반 */
 [dir='ltr'] {
   direction: ltr;
-  text-align: left;
+  @apply text-left;
+}
+
+/* 아랍어 html에  dir="rtl" 추가 */
+[dir='rtl'] {
+  direction: rtl;
+  @apply flex-row-reverse text-right;
+}
+[dir='rtl'] p,
+[dir='rtl'] div,
+[dir='rtl'] li,
+[dir='rtl'] button {
+  direction: rtl;
+  @apply !text-right;
 }
 
 /* mobile */
