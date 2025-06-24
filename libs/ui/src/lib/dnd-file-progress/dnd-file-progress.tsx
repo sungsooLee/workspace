@@ -211,7 +211,10 @@ const DndFileProgressComponent: FC<DndFileProgressProps> = ({
             <Button className={styles.btn_file}>
               <IcoUploadCloud width={'40'} height={'40'} stroke={'#131C30'} />
               <strong className={styles.file_title}>
-                {t('LABEL.message.upload.uploadDescription')}
+                {t(
+                  'LABEL.message.upload.uploadDescription',
+                  '영역을 클릭하거나 파일을 마우스로 끌어놓으세요',
+                )}
               </strong>
               <span className={styles.file_guide}>{`${acceptFileString}`}</span>
               <input {...getInputProps()} accept={acceptFileString} />

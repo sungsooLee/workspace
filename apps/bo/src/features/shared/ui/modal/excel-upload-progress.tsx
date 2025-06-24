@@ -11,7 +11,8 @@ import {
 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { formatFileSize, UploadStatus } from '@learnway/hooks';
-import { useDropzone } from 'react-dropzone';
+import { Accept, useDropzone } from 'react-dropzone';
+import { t } from 'i18next';
 
 export interface UploadFile {
   file: File; // 파일
@@ -64,7 +65,9 @@ const DndFileProgressComponent: FC<FileProgressProps> = ({
   }, []);
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
-    maxFiles: maxFileSize || 999,
+    multiple: false,
+    maxFiles: maxFileCount,
+    maxSize: maxFileSize,
   });
 
   /**
@@ -235,7 +238,10 @@ const DndFileProgressComponent: FC<FileProgressProps> = ({
             <Button className={styles.btn_file}>
               <IcoUploadCloud width={'40'} height={'40'} stroke={'#131C30'} />
               <strong className={styles.file_title}>
-                {'영역을 클릭하거나 파일을 마우스로 끌어놓으세요'}
+                {t(
+                  'LABEL.message.upload.uploadDescription',
+                  '영역을 클릭하거나 파일을 마우스로 끌어놓으세요',
+                )}
               </strong>
               <span
                 className={styles.file_guide}
