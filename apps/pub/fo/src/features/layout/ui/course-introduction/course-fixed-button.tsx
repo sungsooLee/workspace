@@ -23,11 +23,12 @@ const CourseFixedButtonComponent = ({ course }: CourseFixedButton) => {
   return (
     <div className={`${styles.start} ${styles.course_button}`}>
       <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
+        {/* 퍼블수정 20250624 색상 수정 */}
         <IcoHeart
           width={20}
           height={20}
-          stroke={heart === true ? '#ff4646' : '#4c515e'}
-          fill={heart === true ? '#ff4646' : 'none'}
+          stroke={heart === true ? '#f58b75' : '#b7bbc3'}
+          fill={heart === true ? '#f58b75' : '#b7bbc3'}
         />
       </Button>
       <Button>

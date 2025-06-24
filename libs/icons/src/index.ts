@@ -151,6 +151,7 @@ export { ReactComponent as IcoClock10Back } from './lib/ic_clock_10_back.svg';
 export { ReactComponent as IcoClock10Forward } from './lib/ic_clock_10_forward.svg';
 export { ReactComponent as IcoBackward } from './lib/ic_backward.svg';
 export { ReactComponent as IcoList } from './lib/ic_list.svg';
+export { ReactComponent as IcoAvatar } from './lib/ic_avatar.svg';
 //export Default as Information from './lib/information.svg?react';
 
 //import Information from './lib/information.svg';

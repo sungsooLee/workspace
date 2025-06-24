@@ -30,11 +30,16 @@
         @apply body_3_r flex-1 text-[var(--gray7)];
       }
       button {
-        @apply ml-[8px];
+        @apply ml-[8px] !h-auto min-h-[inherit] py-[12px] leading-[20px];
       }
     }
     .list_box {
       @apply border-t-[1px] border-solid border-[var(--gray3)] pt-[16px];
+      dl {
+        dt {
+          @apply min-w-[64px] pr-[8px];
+        }
+      }
     }
     .lecture_wrap {
       @apply mt-[16px];
