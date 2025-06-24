@@ -104,6 +104,7 @@
             height: 80px;
             margin: 0 auto;
             border: 0;
+            color: var(--gray10);
           }
           .code {
             display: block;

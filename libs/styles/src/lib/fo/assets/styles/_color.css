@@ -1,9 +1,8 @@
 /* _color.css */
 
-/* font, BG */
+/* 구가이드(최신가이드 적용시 삭제해야함) */
 :root {
-  /* gray Scale */
-  --white: #ffffff;
+  /* gray Scale *
 
   --gray1: #f6f8fd; /* BG */
   --gray2: #f2f5fb; /* Table_bg */
@@ -38,4 +37,44 @@
   --status2: #ffb902; /* Warning */
   --status3: #3eb838; /* Complete */
   --status4: #926bea; /* icon */
+}
+
+/* 최신 가이드 */
+:root {
+  /* gray */
+  --gray10: #131416; /* default */
+  --gray25: #33363d;
+  --gray35: #4d525c;
+  --gray50: #6b7280;
+  --gray65: #959ba7;
+  --gray75: #b7bbc3;
+  --gray85: #d3d5da;
+  --gray90: #dedfe3;
+  --gray92: #e6e7ea;
+  --gray95: #eff0f1;
+  --gray98: #f9fafa;
+  --white: #fff;
+
+  /* primary(blue) */
+  --blue10: #000e29;
+  --blue25: #00287a;
+  --blue35: #003cb2;
+  --blue50: #0056ff; /* default */
+  --blue65: #4d88ff;
+  --blue75: #80aaff;
+  --blue85: #e5eeff;
+  --blue95: #f5f8ff;
+
+  /* red */
+  --red10: #2e0700;
+  --red25: #751400;
+  --red35: #ad1d00;
+  --red50: #d62500; /* default */
+  --red65: #f05638;
+  --red75: #f58b75;
+  --red85: #fbbeb2;
+  --red95: #fcd2ca;
+
+  /* etc */
+  --gradient01: linear-gradient(to right, #4d88ff, #7673fc);
 }
