@@ -2,8 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_global_excel_dto_req_ExcelDownloadHistoryReqDto } from '../models/com_ever_edu_global_excel_dto_req_ExcelDownloadHistoryReqDto';
-import type { com_ever_edu_global_excel_dto_res_ExcelFileHistoryResDto } from '../models/com_ever_edu_global_excel_dto_res_ExcelFileHistoryResDto';
+import type { com_ever_edu_global_excel_dto_req_ExcelDownloadReasonReqDto } from '../models/com_ever_edu_global_excel_dto_req_ExcelDownloadReasonReqDto';
+import type { com_ever_edu_global_excel_dto_res_ExcelDownloadReasonResDto } from '../models/com_ever_edu_global_excel_dto_res_ExcelDownloadReasonResDto';
 import type { com_ever_edu_pms_file_dto_req_FileCopyInternalReqDto } from '../models/com_ever_edu_pms_file_dto_req_FileCopyInternalReqDto';
 import type { com_ever_edu_pms_file_dto_req_FileGroupCopyInternalReqDto } from '../models/com_ever_edu_pms_file_dto_req_FileGroupCopyInternalReqDto';
 import type { com_ever_edu_pms_file_dto_req_FileGroupInfoReqDto } from '../models/com_ever_edu_pms_file_dto_req_FileGroupInfoReqDto';
@@ -148,16 +148,21 @@ export class BoFileInternalApiService {
     /**
      * Excel File 다운로드 이력정보 저장 - Internal API
      * Excel File 다운로드 이력정보를 생성한다.<BR>엑셀 파일 생성 성공 후 다운로드 응답 직전에 API를 호출하여 이력 정보를 저장하도록 한다.
+     * @param menuId
      * @param requestBody
-     * @returns com_ever_edu_global_excel_dto_res_ExcelFileHistoryResDto OK
+     * @returns com_ever_edu_global_excel_dto_res_ExcelDownloadReasonResDto OK
      * @throws ApiError
      */
     public static createExcelDownloadReason(
-        requestBody: com_ever_edu_global_excel_dto_req_ExcelDownloadHistoryReqDto,
-    ): CancelablePromise<com_ever_edu_global_excel_dto_res_ExcelFileHistoryResDto> {
+        menuId: number,
+        requestBody: com_ever_edu_global_excel_dto_req_ExcelDownloadReasonReqDto,
+    ): CancelablePromise<com_ever_edu_global_excel_dto_res_ExcelDownloadReasonResDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/internal/api/v1/file/excel/download/history',
+            url: '/internal/api/v1/file/excel/download/reason/{menuId}',
+            path: {
+                'menuId': menuId,
+            },
             body: requestBody,
             mediaType: 'application/json',
             errors: {

@@ -211,6 +211,32 @@ export class BoFileTestTestApiService {
         });
     }
     /**
+     * HttpRequest 다운로드 - 사용금지(임시 테스트용)
+     * HttpRequest 다운로드 테스트
+     * @param type
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static testHttpRequestDownload(
+        type: number,
+    ): CancelablePromise<Record<string, Record<string, any>>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/test/api/v1/file/httprequest',
+            query: {
+                'type': type,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * S3 파일 삭제 요청 - 사용금지(임시 테스트용)
      * SS3 파일 삭제 요청한다.
      * @param key S3 키, S3 파일 경로로 사용<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)

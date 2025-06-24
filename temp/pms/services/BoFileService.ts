@@ -9,7 +9,7 @@ import type { com_ever_edu_pms_file_dto_req_FileUploadCompleteReqDto } from '../
 import type { com_ever_edu_pms_file_dto_res_FileInfoDetailResDto } from '../models/com_ever_edu_pms_file_dto_res_FileInfoDetailResDto';
 import type { com_ever_edu_pms_file_dto_res_FileUploadCompleteResDto } from '../models/com_ever_edu_pms_file_dto_res_FileUploadCompleteResDto';
 import type { com_ever_edu_pms_file_dto_res_GroupInfoResDto } from '../models/com_ever_edu_pms_file_dto_res_GroupInfoResDto';
-import type { com_ever_edu_pms_file_dto_res_ThumbnailImageResDto } from '../models/com_ever_edu_pms_file_dto_res_ThumbnailImageResDto';
+import type { com_ever_edu_pms_file_dto_res_ImageResDto } from '../models/com_ever_edu_pms_file_dto_res_ImageResDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
@@ -44,22 +44,22 @@ export class BoFileService {
         });
     }
     /**
-     * 썸네일 이미지 업로드 요청
-     * 썸네일 이미지 업로드한다.<br>- reposType: 저정소유형. Enum(FileUploadStatus) - S3|HMG<br>- filePath: 파일경로: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명) ex> public/board/thumbnail/2025/06/02/thumbnail.jpg
+     * 이미지 업로드 요청
+     * 이미지 업로드한다.<br>- reposType: 저정소유형. Enum(FileUploadStatus) - S3|HMG<br>- filePath: 파일경로: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명) ex> public/image/board/2025/06/02/thumbnail.jpg
      * @param formData
-     * @returns com_ever_edu_pms_file_dto_res_ThumbnailImageResDto OK
+     * @returns com_ever_edu_pms_file_dto_res_ImageResDto OK
      * @throws ApiError
      */
-    public static uploadThumbnailImageFile(
+    public static uploadImageFile(
         formData?: {
             multipartFile?: Blob;
             reposType: string;
             filePath: string;
         },
-    ): CancelablePromise<com_ever_edu_pms_file_dto_res_ThumbnailImageResDto> {
+    ): CancelablePromise<com_ever_edu_pms_file_dto_res_ImageResDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/admin/api/v1/file/thumbnail',
+            url: '/admin/api/v1/file/image',
             formData: formData,
             mediaType: 'multipart/form-data',
             errors: {
@@ -72,18 +72,18 @@ export class BoFileService {
         });
     }
     /**
-     * 썸네일 이미지 파일 삭제
-     * 썸네일 이미지 파일 삭제한다.
-     * @param imageUrl
+     * 이미지 파일 삭제
+     * 파일 저장소에 업로드한 이미지 파일을 삭제한다.
+     * @param imageUrl 이미지 URL
      * @returns boolean OK
      * @throws ApiError
      */
-    public static deleteThumbnailImageFile(
+    public static deleteImageFile(
         imageUrl: string,
     ): CancelablePromise<boolean> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/admin/api/v1/file/thumbnail',
+            url: '/admin/api/v1/file/image',
             query: {
                 'imageUrl': imageUrl,
             },
@@ -320,6 +320,58 @@ export class BoFileService {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 파일그룹 다운로드
+     * 파일그룹의 모든 파일을 압축로 다운로드한다.
+     * @param groupUuid 파일그룹 UUID
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static fileGroupDownload1(
+        groupUuid: string,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/file/group/{groupUuid}/download',
+            path: {
+                'groupUuid': groupUuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 복수 파일 다운로드
+     * 복수 파일을 다운로드한다.
+     * @param fileUuids 파일 UUID, ","로 여러개의 파일 UUID를 전달받는다
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static multiFileDownload1(
+        fileUuids: string,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/file/files/{fileUuids}/download',
+            path: {
+                'fileUuids': fileUuids,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },

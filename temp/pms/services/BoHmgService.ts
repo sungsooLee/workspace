@@ -37,10 +37,10 @@ export class BoHmgService {
      * (HMG)회사 부서 하위 목록 조회
      * (원본)회사 부서의 하위 목록 정보를 조회한다.
      * @param companyCode 회사코드
-     * @param parentDeptId 부서Id
      * @param page Zero-based page index (0..N)
      * @param size The size of the page to be returned
      * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param parentDeptId 부서Id
      * @param deptName 부서명
      * @param deptManagerName 부서장 이름
      * @param hrInfoManageType 조직등록유형(인사 데이터 수동 관리 유형)
@@ -49,10 +49,10 @@ export class BoHmgService {
      */
     public static getDeportmentChildList(
         companyCode: string,
-        parentDeptId: string,
         page?: number,
         size: number = 10,
         sort?: Array<string>,
+        parentDeptId?: string,
         deptName?: string,
         deptManagerName?: string,
         hrInfoManageType?: string,

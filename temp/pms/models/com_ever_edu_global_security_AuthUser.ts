@@ -20,7 +20,7 @@ export type com_ever_edu_global_security_AuthUser = {
      */
     guccId?: string;
     /**
-     * 성명(GIM: EMP_NAME)
+     * 성명
      */
     name?: string;
     /**
@@ -36,6 +36,10 @@ export type com_ever_edu_global_security_AuthUser = {
      */
     companyCode?: string;
     /**
+     * 회사유형
+     */
+    companyType?: com_ever_edu_global_security_AuthUser.companyType;
+    /**
      * 회사명
      */
     companyName?: string;
@@ -44,11 +48,11 @@ export type com_ever_edu_global_security_AuthUser = {
      */
     companyIsUsed?: boolean;
     /**
-     * 이메일(GIM: EMAIL)
+     * 이메일
      */
     email?: string;
     /**
-     * 휴대전화번호(GIM: MOBILE)
+     * 휴대전화번호
      */
     phoneNumber?: string;
     /**
@@ -129,6 +133,21 @@ export type com_ever_edu_global_security_AuthUser = {
     credentialsNonExpired?: boolean;
 };
 export namespace com_ever_edu_global_security_AuthUser {
+    /**
+     * 회사유형
+     */
+    export enum companyType {
+        CAR = 'CAR',
+        GLOBAL = 'GLOBAL',
+        GROUP = 'GROUP',
+        SERVICE = 'SERVICE',
+        SALES = 'SALES',
+        GLOBAL_DEALER = 'GLOBAL_DEALER',
+        ETC_SERVICE = 'ETC_SERVICE',
+        HELLO_HMG = 'HELLO_HMG',
+        EDU_SERVICE = 'EDU_SERVICE',
+        ETC = 'ETC',
+    }
     /**
      * 회원상태코드
      */

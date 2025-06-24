@@ -757,6 +757,7 @@ export namespace com_ever_edu_pms_company_dto_res_CompanyResDto {
         DDMSH = 'DDMSH',
         DDMSK = 'DDMSK',
         VAATZ = 'VAATZ',
+        GETIS = 'GETIS',
     }
     /**
      * 비밀번호 인증 유형

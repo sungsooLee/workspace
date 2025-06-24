@@ -3,10 +3,27 @@
 /* tslint:disable */
 /* eslint-disable */
 export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep3 = {
+    /**
+     * 과정 생성/수정 마법사 타입 (lms.course.WizardStep)
+     */
     wizardStep: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep3.wizardStep;
+    /**
+     * 대표 커리큘럼id
+     */
     primaryCurriculumId: number;
+    /**
+     * 위탁 소유 회사 ID
+     */
+    outsourcingCompanyId?: number;
+    /**
+     * 위탁 소유 회사 이름
+     */
+    outsourcingCompanyName?: string;
 };
 export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep3 {
+    /**
+     * 과정 생성/수정 마법사 타입 (lms.course.WizardStep)
+     */
     export enum wizardStep {
         STEP1 = 'STEP1',
         STEP2 = 'STEP2',

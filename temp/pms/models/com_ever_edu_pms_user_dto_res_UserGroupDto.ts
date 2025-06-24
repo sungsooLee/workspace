@@ -5,5 +5,11 @@
 export type com_ever_edu_pms_user_dto_res_UserGroupDto = {
     userGroupId?: number;
     userGroupName?: string;
+    userGroupSubName?: string;
+    tenantName?: string;
+    companyName?: string;
+    fullName?: string;
+    userCount?: number;
+    userUuids?: Array<string>;
 };
 
