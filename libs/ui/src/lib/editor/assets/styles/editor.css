@@ -8,10 +8,10 @@
   min-height: 150px;
 }
 .nlp--tool-bar {
-  font-size: 14px;
+  @apply body_bo_2_r;
 }
 .nlp--content-editable-placeholder {
-  color: #999;
+  @apply body_bo_2_r !text-[var(--gray5)];
   overflow: hidden;
   position: absolute;
   text-overflow: ellipsis;
@@ -27,6 +27,7 @@
 .nlp--editor-paragraph {
   margin: 0;
   position: relative;
+  @apply body_bo_2_r text-[var(--gray8)];
 }
 
 .nlp--editor-text-bold {
