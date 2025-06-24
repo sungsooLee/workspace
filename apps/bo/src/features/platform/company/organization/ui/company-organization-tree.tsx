@@ -18,9 +18,9 @@ import {
   Tabs,
   TreeNode,
   useModal,
+  TreeEventPayload,
 } from '@learnway/ui';
 import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
-
 import { ContentsHistoryInfoFormField, FormRow, FormSubTitle } from '@shared/ui';
 
 import { transformDepartmentApiDataToTreeData } from '@features/platform/company/organization/service/company-organization.service';
@@ -394,18 +394,65 @@ const TenantCompanyOrganizationTreeComponent = ({
       );
     }
   };
+
+  const handleTreeAction = (event: TreeEventPayload) => {
+    switch (event.type) {
+      case 'NODE_MOVE': {
+        const nodeInfo = event;
+        console.log('NODE_MOVE', event);
+        if (nodeInfo.sourceNode.menuId) {
+          if (nodeInfo.position === 'INSIDE') {
+            // const payload = {
+            //   id: nodeInfo.sourceNode.menuId,
+            //   destinationParentId: nodeInfo.targetNode?.menuId,
+            //   sortSeq: 1,
+            // };
+            // moveCategory(payload, {
+            //   onSuccess: async (data: any) => {
+            //     if (selectedNode?.categoryId) {
+            //       await queryClient.invalidateQueries({
+            //         queryKey: [...queryKeys.detail(Number(selectedNode.categoryId))],
+            //       });
+            //     }
+            //   },
+            // });
+          } else {
+            const targetIndex = nodeInfo.targetIndex!;
+            const payload = {
+              id: nodeInfo.sourceNode.menuId,
+              destinationParentId: nodeInfo.targetNode?.parentKey,
+              sortSeq: targetIndex + 1,
+            };
+            // moveCategory(payload, {
+            //   onSuccess: async (data: any) => {
+            //     if (selectedNode?.categoryId) {
+            //       await queryClient.invalidateQueries({
+            //         queryKey: [...queryKeys.detail(Number(selectedNode.categoryId))],
+            //       });
+            //     }
+            //   },
+            // });
+          }
+          break;
+        }
+      }
+    }
+  };
+
   return (
     <SectionLayout contentsRatio={'thirty'}>
       <TreeBox
         data={deptTreeData}
         treeId="1"
-        type="SHUTTLE_LIST"
+        type={showType === EnOrganizationShowType.origin ? 'SHUTTLE_LIST' : 'SAME_LEVEL_ONLY'}
         showSearchKeyword
         initLevel={2}
         title={showType === EnOrganizationShowType.origin ? t('조직-원본') : t('조직-플랫폼')}
         selectedNode={viewNode}
         handleSelectedNodeChange={handleSelectedNodeChange}
         renderNodeButtons={renderTreeCustomButtonNode}
+        onAction={handleTreeAction}
+        minDraggableLevel={2}
       />
       {formMode === EnFormMode.NONE && (
         <div className={cn(styles.start, styles.wrap)}>

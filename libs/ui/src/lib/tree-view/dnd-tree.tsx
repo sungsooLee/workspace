@@ -66,6 +66,7 @@ interface DndTreeNodeProps {
   customDropValidator?: (params: any) => boolean;
   draggedNode?: TreeNode | null; // 현재 드래그 중인 노드 추가
   draggedNodeKey?: string | null; // 현재 드래그 중인 노드 키 추가
+  minDraggableLevel?: number;
 }
 
 const DndTreeNode: React.FC<DndTreeNodeProps> = ({
@@ -88,6 +89,7 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
   customDropValidator,
   draggedNode,
   draggedNodeKey,
+  minDraggableLevel,
 }) => {
   const [dropPosition, setDropPosition] = useState<NodeMovePositionType | null>(null);
   const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -536,6 +538,7 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
 
   const renderDragIcon = () => {
     if (level < 1) return null;
+    if (minDraggableLevel && level < minDraggableLevel) return null;
 
     const dragIconStyle = isDragDisabled ? 'cursor-not-allowed opacity-50' : 'cursor-grab';
 
@@ -766,6 +769,7 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
               customDropValidator={customDropValidator}
               draggedNode={effectiveDraggedNode}
               draggedNodeKey={effectiveDraggedNodeKey}
+              minDraggableLevel={minDraggableLevel}
             />
           ))}
         </div>
@@ -821,6 +825,7 @@ export const DndTreeView: React.FC<TreeProps> = ({
   maxDepth,
   isSelectableNode,
   customDropValidator,
+  minDraggableLevel,
 }) => {
   const [initialData, setInitialData] = useState<EnhancedTreeNode[]>(
     JSON.parse(JSON.stringify(data)),
@@ -1181,6 +1186,7 @@ export const DndTreeView: React.FC<TreeProps> = ({
               customDropValidator={customDropValidator}
               draggedNode={currentDraggedNode}
               draggedNodeKey={currentDraggedNodeKey}
+              minDraggableLevel={minDraggableLevel}
             />
           ))
         ) : (
