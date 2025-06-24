@@ -79,12 +79,26 @@ const ThumbnailComponent = forwardRef<HTMLDivElement, ThumbnailProps>(
 
     const { open: openModal } = useModal();
 
-    const downloadByUrl = (url: string) => {
-      const link = document.createElement('a');
-      link.href = url;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+    const downloadByUrl = async (url: string) => {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Failed to load image');
+
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
+
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = 'file';
+
+        document.body.appendChild(link);
+        link.click();
+
+        document.body.removeChild(link);
+        URL.revokeObjectURL(blobUrl); // 메모리 해제
+      } catch (error) {
+        console.error('Error:', error);
+      }
     };
 
     /**
