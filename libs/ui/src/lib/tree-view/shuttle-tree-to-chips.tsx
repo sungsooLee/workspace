@@ -11,7 +11,7 @@ import { TreeBox } from './tree-box';
 import { Checkbox } from '../checkbox/checkbox';
 import { CountText } from '../elements/count-text/count-text';
 import { t } from 'i18next';
-import { FormSubTitle } from '../../../../../apps/bo/src/shared/ui/form';
+import { FormSubTitle } from '../base-form/form-sub-title';
 
 type Props = Pick<TreeProps, 'onCustomNodeClick' | 'treeId' | 'searchKeyword'> & {
   sourceTitle?: string;
@@ -207,7 +207,7 @@ export const ShuttleTreeToChips = ({
               </Button>
             </>
           }
-          lineType={'dark'}
+          underLine={true}
         />
         <div className={styles.data_wrap}>
           {actualSelectedItems.length === 0 ? (
