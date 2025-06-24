@@ -5,14 +5,34 @@ import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { usersQueryOptions } from '@entities/users/service/users.queries';
+import { useWatch } from 'react-hook-form';
+import { useEffect } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { queryOptions } from '@entities/department';
 
 type Props = {
   handleRowSelect: (row: any) => void;
 };
 
 const UserChoiceComponent = ({ handleRowSelect }: Props) => {
-  const { provider: sProvider, getValues } = useSearchBox(searchConfig);
+  const { provider: sProvider, getValues, setOptions, setValue } = useSearchBox(searchConfig);
   const { config, gridFetch } = useGridBox(gridConfig, getValues);
+  const queryClient = useQueryClient();
+  const companyId = useWatch({ control: sProvider.control, name: 'companyId' });
+
+  useEffect(() => {
+    if (!companyId && companyId !== 0) return;
+
+    (async () => {
+      const { content } = await queryClient.fetchQuery(queryOptions.list({ companyId }));
+      setValue('deptId', '');
+      if (content)
+        setOptions(
+          'deptId',
+          content.map((_: any) => ({ value: _.deptId, label: _.deptName })),
+        );
+    })();
+  }, [companyId]);
 
   return (
     <div className={popupStyles.wrap}>
@@ -50,9 +70,14 @@ const searchConfig: SearchBoxConfig = {
       },
       {
         name: 'deptId',
-        type: 'text',
+        type: 'dropdown',
         label: t('소속'),
         value: '',
+        presetOptionLabel: t('LABEL.form.label.select', '선택'),
+        options: [],
+        format: 'number',
+        isSearchable: true,
+        isClearable: true,
       },
     ],
     [

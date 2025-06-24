@@ -78,7 +78,8 @@ const NotificationComponent = ({ notifications }: { notifications: Notification[
                   <p className={styles.time}>
                     {formatTimeAgo(createdDate, DATE_TIME_FORMAT.MONTH_DAY)}
                   </p>
-                  <p className={styles.time}>{createdDate}</p>
+                  {/* TEST */}
+                  {/* <p className={styles.time}>{createdDate}</p> */}
                 </div>
               </li>
             ),

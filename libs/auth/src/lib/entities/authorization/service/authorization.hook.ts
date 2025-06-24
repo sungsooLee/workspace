@@ -6,7 +6,7 @@ import { DATE_TIME_FORMAT, duration, type MutateCallback } from '@learnway/share
 
 import type { AuthUser } from '../../../types';
 import { queryKeys, queryOptions, mutateOptions } from './authorization.queries';
-import { createElement, useEffect, useState } from 'react';
+import { createElement, useEffect, useRef, useState } from 'react';
 import dayjs from 'dayjs';
 import { useModal } from '@learnway/ui';
 import { useTranslation } from 'react-i18next';
@@ -124,6 +124,9 @@ export function useLogoutUser(mutationOptions = {}) {
 }
 
 export function useLoginTimer() {
+  // 로그인 연장 팝업 5분 남았을때 생성
+  const REISSUE_TIME = 60 * 5; // 5분
+
   const { t } = useTranslation();
   const router = useRouter();
   const { logout } = useLogoutUser();
@@ -131,19 +134,54 @@ export function useLoginTimer() {
   const { exp, showAlert, setShowAlert, reset } = useExpStore((state) => state);
   const { alert: openAlert, confirm: openConfirm, closeAll } = useModal();
 
-  const [seconds, setSeconds] = useState<number | undefined>();
-  const [stop, setStop] = useState<boolean>(true);
+  const [remainingTime, setRemainingTime] = useState<string>('');
 
-  const timerText = duration(seconds ?? 0, DATE_TIME_FORMAT.MIN_SEC);
+  const intervalRef = useRef<NodeJS.Timer | null>(null);
+
+  useEffect(() => {
+    if (!exp) return;
+
+    const update = () => {
+      const remainingSeconds = getRemainingTime(exp);
+      const hours = Math.floor(remainingSeconds / 3600)
+        .toString()
+        .padStart(2, '0');
+      const minutes = Math.floor((remainingSeconds % 3600) / 60)
+        .toString()
+        .padStart(2, '0');
+      const seconds = (remainingSeconds % 60).toString().padStart(2, '0');
+
+      // setRemainingTime(`${hours}:${minutes}:${seconds}`);
+
+      // remainingSeconds 음수 방지
+      if (remainingSeconds >= 0) {
+        setRemainingTime(`${minutes}:${seconds}`);
+      }
+
+      if (remainingSeconds <= REISSUE_TIME && remainingSeconds > 0 && !showAlert) {
+        setShowAlert(true);
+        handleReissue();
+      } else if (remainingSeconds <= 0) {
+        if (intervalRef.current) {
+          handleLogout();
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
+        }
+      }
+    };
+
+    update();
+
+    const interval = setInterval(update, 1000);
+    intervalRef.current = interval;
+    return () => clearInterval(interval);
+  }, [exp, showAlert]);
 
   function getRemainingTime(exp: string) {
     try {
       const now = dayjs().utc().unix() * 1000; // 현재 시간 (초 단위)
       const time = Math.floor((parseInt(exp) - now) / 1000);
       return time;
-
-      // TEST
-      // return 10;
     } catch (error) {
       return 0;
     }
@@ -162,9 +200,18 @@ export function useLoginTimer() {
           },
         });
       },
+      onError: () => {
+        openAlert({
+          title: '자동 로그아웃 되었습니다.',
+          content:
+            '로그인 후 2시간이 경과되어 로그아웃 되었습니다.\n다시 로그인 후 이용해 주십시오',
+          onClose: () => {
+            router.navigate({ to: '/' });
+          },
+        });
+      },
     });
 
-    setStop(true);
     reset();
   }
 
@@ -178,6 +225,7 @@ export function useLoginTimer() {
       onClose: async (feedback: boolean) => {
         if (feedback) {
           await reissue();
+          setShowAlert(true);
           closeAll();
         } else {
           // 로그인 연장 취소한 경우 다시 묻지 않음
@@ -188,41 +236,29 @@ export function useLoginTimer() {
   }
 
   useEffect(() => {
-    if (!exp) {
-      setSeconds(undefined);
-      setStop(true);
-      return;
-    }
-    setSeconds(getRemainingTime(exp));
-    setStop(false);
-  }, [exp]);
+    const handler = (e: StorageEvent) => {
+      if (e.key !== 'exp-storage') return;
+      if (!e.newValue) return;
 
-  useEffect(() => {
-    if (seconds === undefined) return;
+      try {
+        const newState = JSON.parse(e.newValue);
+        const newExp = newState?.state?.exp;
 
-    if (seconds === 0) {
-      handleLogout();
-      return;
-    }
-    if (stop) return;
-    const interval = setInterval(() => {
-      setSeconds(seconds - 1);
-    }, 1000);
+        if (typeof newExp === 'string') {
+          useExpStore.getState().setExp(newExp);
+        } else {
+          useExpStore.getState().reset();
+        }
+      } catch (err) {
+        console.error('Failed to sync auth state from localStorage:', err);
+      }
+    };
 
-    return () => clearInterval(interval);
-  }, [seconds, stop]);
-
-  useEffect(() => {
-    if (!seconds) return;
-
-    // 5분(300초) 이하일 때 알림 한 번만
-    if (seconds <= 300 && !showAlert) {
-      setShowAlert(true);
-      handleReissue();
-    }
-  }, [seconds, showAlert]);
+    window.addEventListener('storage', handler);
+    return () => window.removeEventListener('storage', handler);
+  }, []);
 
   return {
-    time: timerText,
+    time: remainingTime,
   };
 }

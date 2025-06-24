@@ -122,14 +122,14 @@ export const roleManagerQueryOptions = {
       siteScope ? RoleManagerService.fetchRoleMe(siteScope) : getQuerySkipToken(),
   }),
   // 나의 역할 신청 목록 조회
-  getRoleApplicationList: (siteScope: string) => ({
-    queryKey: [roleQueryKeys.applicationList],
+  getRoleApplicationList: (payload: any) => ({
+    queryKey: [...roleQueryKeys.applicationList],
     queryFn: async () =>
-      siteScope ? RoleManagerService.fetchRoleApplicationList(siteScope) : getQuerySkipToken(),
+      payload ? RoleManagerService.fetchRoleApplicationList(payload) : getQuerySkipToken(),
   }),
   // 나의 역할 신청 조회 단건
   getRoleApplication: (roleApplicationId: number) => ({
-    queryKey: [roleQueryKeys.application],
+    queryKey: [...roleQueryKeys.application],
     queryFn: async () =>
       roleApplicationId
         ? RoleManagerService.fetchRoleApplication(roleApplicationId)
@@ -140,6 +140,16 @@ type roleParam = {
   roleId: string;
   body: any;
 };
+
+type RoleApplicationParam = {
+  userUuid: string;
+  roleId: number;
+  startDate: string;
+  endDate: string;
+  reason: string;
+  status: string;
+};
+
 export const roleMutateOptions = {
   // 역할 생성
   createRole: () => ({
@@ -171,5 +181,11 @@ export const roleMutateOptions = {
   //역할 사용자 관리
   modifyUserToRole: () => ({
     mutationFn: ({ roleId, body }: roleParam) => RoleManagerService.modifyUserToRole(roleId, body),
+  }),
+
+  // 나의 역할 신청
+  createRoleApplication: () => ({
+    mutationFn: (payload: RoleApplicationParam) =>
+      RoleManagerService.createRoleApplication(payload),
   }),
 };
