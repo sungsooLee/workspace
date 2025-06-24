@@ -27,7 +27,7 @@
         &.active {
           @apply !button_2_b text-[var(--gray9)];
           em {
-            @apply text-[var(--secondary1)];
+            @apply text-[var(--blue50)];
           }
           &::after {
             @apply absolute -bottom-[1px] left-0 h-[2px] w-full bg-[var(--gray9)] content-[''];
@@ -93,20 +93,20 @@
       .result_box {
         @apply p-0;
         & > div {
-          @apply !p-[24px];
+          @apply !px-[24px] !py-[32px];
           svg {
             @apply mx-auto;
           }
           strong {
-            @apply body_3_b mt-[4px] block text-center leading-[22px] text-[var(--gray8)];
+            @apply body_1_r mt-[4px] block text-center leading-[22px] text-[var(--gray8)];
           }
           p {
-            @apply body_3_r mt-[4px] text-center leading-[22px] text-[var(--gray7)];
+            @apply body_2_r mt-[4px] text-center leading-[22px] text-[var(--gray7)];
           }
         }
       }
       .course_btn_wrap {
-        @apply sticky -bottom-[24px] left-0 -mb-[24px] -ml-[24px] w-[calc(100%+48px)] bg-white p-[24px];
+        @apply sticky -bottom-[32px] left-0 -mb-[32px] -ml-[32px] w-[calc(100%+64px)] bg-white p-[32px] pt-[16px];
       }
     }
   }

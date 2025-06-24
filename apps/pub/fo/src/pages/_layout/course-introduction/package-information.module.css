@@ -1,7 +1,7 @@
 .start {
   &.information {
     .tit {
-      @apply title_5_b block text-[var(--gray9)];
+      @apply headline1-b block text-[var(--gray9)];
     }
     .count_box {
       @apply mt-[8px] flex flex-wrap;
@@ -14,7 +14,7 @@
           }
         }
         span {
-          @apply body_3_r ml-[4px] leading-[16px] text-[var(--gray7)];
+          @apply label-lg ml-[4px] leading-[16px] text-[var(--gray7)];
         }
       }
     }
@@ -27,10 +27,10 @@
         }
       }
       .channel_name {
-        @apply body_3_r flex-1 text-[var(--gray7)];
+        @apply title3 flex-1 text-[var(--gray7)];
       }
       button {
-        @apply ml-[8px] !h-auto min-h-[inherit] py-[12px] leading-[20px];
+        @apply label-lg ml-[8px] !h-auto min-h-[inherit] py-[12px] leading-[20px];
       }
     }
     .list_box {
@@ -49,7 +49,7 @@
         }
         & > div,
         & > button {
-          @apply !p-[16px];
+          @apply !p-[24px];
         }
         .box {
           & + .box {

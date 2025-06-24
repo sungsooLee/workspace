@@ -428,7 +428,8 @@ function RouteComponent() {
                 <Panel hideHeaderUnderline type="rounded" className={styles.result_box}>
                   <div>
                     <IcoCaution width={40} height={40} stroke={'#A9AFB8'} />
-                    <p>현재 수강 신청 가능한 차수가 없습니다.</p>
+                    {/* 퍼블수정 20250624 태그 수정 */}
+                    <strong>현재 수강 신청 가능한 차수가 없습니다.</strong>
                   </div>
                 </Panel>
 
