@@ -220,8 +220,8 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
 
       <ContentsRow>
         <FormRow provider={provider} name="isUsed" />
-        <FormRow provider={provider} name="channelFile" />
-        <FormRow provider={provider} name="channelFileOut" element={<CheckboxGroupFormField />} />
+        <FormRow provider={provider} name="fileStorageTypeChannel" />
+        <FormRow provider={provider} name="fileStorageTypeBase" />
       </ContentsRow>
       <ContentsRow>
         <FormRow
@@ -315,29 +315,39 @@ const formConfig: DynamicFormConfig = {
       guideText: t('테넌트 사용 여부를 설정할 수 있습니다.'),
     },
     {
-      name: 'channelFile',
-      type: 'checkbox-group',
+      name: 'isSecurityPledge',
+      type: 'switch',
+      label: t('보안 서약 사용'),
+      value: true,
+      format: 'boolean',
+      switchConfig: {
+        label: (value: boolean) => (value ? '사용' : '미사용'),
+      },
+      guideText: t('보안 서약  사용 여부를 설정할 수 있습니다.'),
+    },
+    {
+      name: 'fileStorageTypeChannel',
+      type: 'radio-group',
       label: t('파일 저장 설정(채널)'),
-      value: [],
-      format: 'array',
+      value: '',
       options: [
-        { label: 'AWS(국내)', value: '1' },
-        { label: 'AWS(해외)', value: '2' },
-        { label: 'HMG Cloud', value: '3' },
+        { label: 'AWS(국내)', value: 'AWS_INTERNAL' },
+        { label: 'AWS(해외)', value: 'AWS_EXTERNAL' },
+        { label: 'HMG Cloud', value: 'HMG_CLOUD' },
       ],
       // optionsConfig: {
       //   codeGroup: CODE_GROUP['pms.company.CompanyType'],
       // },
     },
     {
-      name: 'channelFileOut',
+      name: 'fileStorageTypeBase',
       type: 'radio-group',
       label: t('파일 저장 설정(채널 외)'),
       value: '',
       options: [
-        { label: 'AWS(국내)', value: '1' },
-        { label: 'AWS(해외)', value: '2' },
-        { label: 'HMG Cloud', value: '3' },
+        { label: 'AWS(국내)', value: 'AWS_INTERNAL' },
+        { label: 'AWS(해외)', value: 'AWS_EXTERNAL' },
+        { label: 'HMG Cloud', value: 'HMG_CLOUD' },
       ],
       // optionsConfig: {
       //   codeGroup: CODE_GROUP['pms.company.CompanyType'],
