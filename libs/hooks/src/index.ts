@@ -11,6 +11,7 @@ export * from './lib/form-builder/util';
 export * from './lib/form-builder/dynamic-form-context';
 export * from './lib/use-file-uploader/use-file-uploader';
 export * from './lib/use-s3-uploader/use-s3-uploader';
+export * from './lib/use-s3-uploader/utils';
 export * from './lib/use-file-manager/use-file-manager';
 export * from './lib/use-file-manager/type';
 export * from './lib/use-s3-uploader/types';
