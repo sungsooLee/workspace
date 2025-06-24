@@ -6,7 +6,7 @@ import { DATE_TIME_FORMAT, duration, type MutateCallback } from '@learnway/share
 
 import type { AuthUser } from '../../../types';
 import { queryKeys, queryOptions, mutateOptions } from './authorization.queries';
-import { createElement, useEffect, useState } from 'react';
+import { createElement, useEffect, useRef, useState } from 'react';
 import dayjs from 'dayjs';
 import { useModal } from '@learnway/ui';
 import { useTranslation } from 'react-i18next';
@@ -124,6 +124,9 @@ export function useLogoutUser(mutationOptions = {}) {
 }
 
 export function useLoginTimer() {
+  // 로그인 연장 팝업 5분 남았을때 생성
+  const REISSUE_TIME = 60 * 5; // 5분
+
   const { t } = useTranslation();
   const router = useRouter();
   const { logout } = useLogoutUser();
@@ -132,6 +135,8 @@ export function useLoginTimer() {
   const { alert: openAlert, confirm: openConfirm, closeAll } = useModal();
 
   const [remainingTime, setRemainingTime] = useState<string>('');
+
+  const intervalRef = useRef<NodeJS.Timer>();
 
   useEffect(() => {
     if (!exp) return;
@@ -146,18 +151,21 @@ export function useLoginTimer() {
         .padStart(2, '0');
       const seconds = (remainingSeconds % 60).toString().padStart(2, '0');
 
-      setRemainingTime(`${hours}:${minutes}:${seconds}`);
-      if (remainingSeconds <= 300 && remainingSeconds > 0 && !showAlert) {
+      // setRemainingTime(`${hours}:${minutes}:${seconds}`);
+      setRemainingTime(`${minutes}:${seconds}`);
+      if (remainingSeconds <= REISSUE_TIME && remainingSeconds > 0 && !showAlert) {
         setShowAlert(true);
         handleReissue();
       } else if (remainingSeconds === 0) {
         handleLogout();
+        intervalRef.current && clearInterval(intervalRef.current);
       }
     };
 
     update();
 
     const interval = setInterval(update, 1000);
+    intervalRef.current = interval;
     return () => clearInterval(interval);
   }, [exp, showAlert]);
 
@@ -166,9 +174,6 @@ export function useLoginTimer() {
       const now = dayjs().utc().unix() * 1000; // 현재 시간 (초 단위)
       const time = Math.floor((parseInt(exp) - now) / 1000);
       return time;
-
-      // TEST
-      // return 10;
     } catch (error) {
       return 0;
     }
@@ -178,6 +183,16 @@ export function useLoginTimer() {
     closeAll();
     logout(undefined, {
       onSuccess: () => {
+        openAlert({
+          title: '자동 로그아웃 되었습니다.',
+          content:
+            '로그인 후 2시간이 경과되어 로그아웃 되었습니다.\n다시 로그인 후 이용해 주십시오',
+          onClose: () => {
+            router.navigate({ to: '/' });
+          },
+        });
+      },
+      onError: () => {
         openAlert({
           title: '자동 로그아웃 되었습니다.',
           content:
