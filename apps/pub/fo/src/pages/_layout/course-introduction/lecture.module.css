@@ -3,6 +3,11 @@
     @apply rounded-[16px] border-[1px] border-solid border-[var(--secondary3)] p-[24px];
     &.course_option {
       @apply border-none p-0;
+      .box {
+        .tit {
+          @apply title_3_b;
+        }
+      }
     }
     .box {
       .date {

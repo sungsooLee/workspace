@@ -2,7 +2,7 @@
   &.course_button {
     @apply flex w-full gap-[8px] bg-gradient-to-t from-white from-90% to-white/0;
     button {
-      @apply flex h-[48px] w-full !min-w-[48px] flex-[1%] justify-center border-[1px] border-solid border-[var(--gray5)] text-center;
+      @apply flex h-[48px] w-full !min-w-[48px] flex-[1%] justify-center rounded-[6px] border-[1px] border-solid border-[var(--gray5)] text-center;
       & + button {
         @apply !ml-0;
       }
@@ -13,7 +13,7 @@
     .course {
       @apply relative flex !flex-[100%];
       button {
-        @apply !w-full flex-1;
+        @apply !w-full flex-1 border-0;
       }
       .tip {
         @apply body_3_r absolute -top-[15px] left-[18px] -translate-y-[100%] whitespace-nowrap rounded-[6px] bg-[var(--primary1)] px-[16px] py-[8px] leading-[22px] text-white shadow-[0px_3px_6px_rgba(0,0,0,0.08)];
