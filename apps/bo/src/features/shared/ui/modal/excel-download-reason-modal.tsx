@@ -191,7 +191,7 @@ function ExcelDownloadReasonModalCompoment({
                   <h3>{t('LABEL.modal.excelDownloadReason.tooltip.title', '도움말')}</h3>
                   <pre>
                     {t(
-                      'LABEL.modal.excelDownloadReason.tooltip.title',
+                      'LABEL.modal.excelDownloadReason.tooltip.content',
                       'ISMS 정보보호 관리체계 인증을 위해 개인정보 엑셀 다운로드 사유를 입력해 주세요.',
                     )}
                   </pre>
