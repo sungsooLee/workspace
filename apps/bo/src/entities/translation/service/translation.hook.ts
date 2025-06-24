@@ -3,7 +3,7 @@ import { mutateOptions } from './translation.queries';
 import { useModal } from '@learnway/ui';
 import { translationQueryOptions as queryOptions } from './translation.queries';
 
-const useTranslationHook = () => {
+const useTranslationHook = (options?: any) => {
   const { alert: openAlert } = useModal();
   const { mutate: saveMutate } = useMutation({
     ...mutateOptions.create(),
@@ -12,6 +12,9 @@ const useTranslationHook = () => {
         content: '정상적으로 저장되었습니다.',
         type: 'complete',
       });
+      if (options?.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
     },
   });
 
@@ -23,6 +26,9 @@ const useTranslationHook = () => {
         content: '정상적으로 수정되었습니다.',
         type: 'complete',
       });
+      if (options?.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
     },
   });
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { CellContext } from '@tanstack/react-table';
-import { Textarea, TextareaProps } from '@learnway/ui';
+import { Textarea, TextareaProps } from '../../textarea/textarea';
 
 interface EditTextareaCellProps<T> {
   info: CellContext<T, string>;
