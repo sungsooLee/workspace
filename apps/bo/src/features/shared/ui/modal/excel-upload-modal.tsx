@@ -46,6 +46,7 @@ interface ValidationResult {
     row: number;
     message: string;
   }>;
+  errorMessage?: string;
 }
 
 enum Status {
@@ -97,14 +98,10 @@ const ExcelUploadModalComponent = ({
 
   const { close: closeModal } = useModal();
 
-  const [uploadStep, setUploadStep] = useState<
-    'select' | 'validating' | 'validated' | 'uploading' | 'completed'
-  >('select');
-  const [validationResult, setValidationResult] = useState<ValidationResult | null>(null);
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [files, setFiles] = useState<UploadFile[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  const files = useMemo(() => compact([uploadedFile]).map(toUploadFile), [uploadedFile]);
+  const [status, setStatus] = useState<Status | null>(null);
+  const [validationResult, setValidationResult] = useState<ValidationResult | null>(null);
 
   // 파일 선택 시 자동 유효성 검사 실행
   const handleFileSelect = useCallback(
@@ -112,8 +109,8 @@ const ExcelUploadModalComponent = ({
       if (files.length === 0) return;
 
       const file = files[0];
-      setUploadedFile(file);
-      setUploadStep('validating');
+      setStatus(Status.UPLOADING);
+      setFiles(compact([file]).map(toUploadFile));
       setIsLoading(true);
 
       try {
@@ -136,8 +133,30 @@ const ExcelUploadModalComponent = ({
         // } else {
         //   throw new Error('유효성 검사 실패');
         // }
-      } catch (error) {
+        setStatus(Status.COMPLETED);
+      } catch (error: any) {
         console.error('Validation error:', error);
+        setStatus(Status.FAILED);
+        if (!error.status) {
+          setFiles((prev) => prev.map((_) => ({ ..._, status: Status.FAILED })));
+          return setValidationResult({
+            success: false,
+            totalRows: 0,
+            successRows: 0,
+            failedRows: 0,
+            errorMessage: error.message,
+          });
+        }
+        setFiles((prev) => prev.map((_) => ({ ..._, status: Status.FAILED, progress: 100 })));
+        if (error.code === 'B116') {
+          return setValidationResult({
+            success: false,
+            totalRows: 0,
+            successRows: 0,
+            failedRows: 0,
+            errorMessage: error.message,
+          });
+        }
         setValidationResult({
           success: false,
           totalRows: 0,
@@ -145,7 +164,6 @@ const ExcelUploadModalComponent = ({
           failedRows: 0,
           errors: [{ row: 0, message: '유효성 검사 중 오류가 발생했습니다.' }],
         });
-        setUploadStep('validated');
       } finally {
         setIsLoading(false);
       }
@@ -321,11 +339,26 @@ const ExcelUploadModalComponent = ({
             <div className={styles.title_box}>
               <div className={styles.title_info}>
                 <h3 className={styles.sub_title}>{t('업로드 결과')}</h3>
-                {/* 실패 CASE */}
-                <p className={cn(styles.status_text, '')}>{t(Status.FAILED)}</p>
-                <p className={cn(styles.status_text)}>
-                  완료<span className={cn(styles.data_text)}>{t(Status.COMPLETED)}행</span>
-                </p>
+                {status === Status.FAILED && (
+                  <p className={cn(styles.status_text)}>
+                    {t('실패')}
+                    {Boolean(validationResult?.failedRows) && (
+                      <span className={cn(styles.data_text, styles.error)}>
+                        {validationResult?.failedRows} {t('행')}
+                      </span>
+                    )}
+                  </p>
+                )}
+                {status === Status.COMPLETED && (
+                  <p className={cn(styles.status_text)}>
+                    {t(Status.COMPLETED, '완료')}
+                    {Boolean(validationResult?.successRows) && (
+                      <span className={cn(styles.data_text)}>
+                        {validationResult?.successRows} {t('행')}
+                      </span>
+                    )}
+                  </p>
+                )}
               </div>
               <div className={styles.btn_wrap}>
                 <Button
@@ -343,7 +376,12 @@ const ExcelUploadModalComponent = ({
               </div>
             </div>
             <div className={styles.result_wrap}>
-              <p className={styles.status_text}>{t('상단 영역에 데이터를 업로드하세요.')}</p>
+              {validationResult && (
+                <p className={styles.status_text}>
+                  {validationResult?.errorMessage ||
+                    validationResult?.errors?.map((e) => `{${e.row}${t('행')}} ${e.message}`)}
+                </p>
+              )}
             </div>
             <NoticeBox
               iconVisible={false}
