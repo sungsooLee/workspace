@@ -21,7 +21,7 @@
     .info_box {
       @apply flex items-center justify-between;
       & + .info_box {
-        @apply mt-[12px] border-t-[1px] border-solid border-[var(--gray3)] pt-[12px];
+        @apply mt-[20px] border-t-[1px] border-solid border-[var(--gray3)] pt-[20px];
       }
       .txt_box {
         @apply flex-1;
@@ -29,7 +29,7 @@
           @apply flex items-center;
           .state,
           .date {
-            @apply body_3_r text-[var(--secondary3)];
+            @apply title3 text-[var(--blue50)];
           }
           .state {
             @apply relative ml-[8px] pl-[8px];
@@ -41,7 +41,7 @@
             @apply label_3_r ml-[8px] inline-block rounded-[4px] border-[1px] border-solid border-[var(--gray6)] bg-[var(--gray1)] px-[6px] py-[4px] leading-[11px] text-[var(--gray8)];
           }
           p {
-            @apply body_2_b mt-[4px] text-[var(--gray8)];
+            @apply title5-b mt-[4px] text-[var(--gray8)];
           }
         }
       }
@@ -55,7 +55,10 @@
           dd {
             @apply table-cell leading-[22px] text-[var(--gray8)];
             button {
-              @apply body_3_r ml-[8px] text-[var(--gray8)] underline underline-offset-[4px];
+              @apply body-md ml-[12px] !px-0 leading-[28px] text-[var(--gray50)] underline underline-offset-[4px];
+            }
+            em {
+              @apply body-md text-[var(--blue50)];
             }
           }
           &:nth-child(n + 3) {
@@ -64,23 +67,26 @@
         }
       }
       .more_list {
-        @apply mt-[4px] flex flex-wrap;
+        @apply mt-[24px] flex flex-wrap;
         .full {
           @apply flex w-full;
           dd {
             @apply flex-1;
+            &::before {
+              @apply hidden;
+            }
           }
         }
         .evaluation_box {
           & > ul {
-            @apply mb-[8px] flex w-full items-start;
+            @apply flex w-full items-start;
             li {
-              @apply flex-1 rounded-[8px] bg-[var(--secondary5)] py-[8px];
+              @apply flex-1 rounded-[40px] bg-[var(--gray95)] py-[12px];
               span {
-                @apply body_4_r block text-center text-[var(--gray8)];
+                @apply title1-b block text-center text-[var(--gray8)];
               }
               strong {
-                @apply body_3_b block text-center text-[var(--secondary10)];
+                @apply title4-b mt-[4px] block text-center leading-[24px] text-[var(--blue50)];
               }
               & + li {
                 @apply ml-[8px];
@@ -88,6 +94,7 @@
             }
           }
           & > div {
+            @apply mt-[24px];
             ul {
               li {
                 & + li {
