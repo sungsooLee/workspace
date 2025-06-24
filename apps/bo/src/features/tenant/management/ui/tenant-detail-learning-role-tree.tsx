@@ -17,6 +17,7 @@ import {
   Switch,
   TextareaFormField,
   TreeBox,
+  TreeContainer,
   TreeNode,
 } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm, CODE_GROUP } from '@learnway/hooks';
@@ -234,18 +235,21 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
 
   return (
     <SectionLayout contentsRatio={'thirty'}>
-      <TreeBox
-        data={roleTreeData}
-        treeId="1"
-        type="SAME_LEVEL_ONLY"
-        showSearchKeyword
-        initLevel={2}
-        title={t('역할 목록')}
-        onAction={handleTreeAction}
-        selectedNode={selectedRoleNode}
-        renderNodeButtons={renderNodeButtons}
-        handleSelectedNodeChange={handleRoleSelect}
-      />
+      <TreeContainer>
+        <TreeBox
+          maxDepth={5}
+          data={roleTreeData}
+          treeId="1"
+          type="SAME_LEVEL_ONLY"
+          showSearchKeyword
+          initLevel={2}
+          title={t('역할 목록')}
+          onAction={handleTreeAction}
+          selectedNode={selectedRoleNode}
+          renderNodeButtons={renderNodeButtons}
+          handleSelectedNodeChange={handleRoleSelect}
+        />
+      </TreeContainer>
       <div className={cn(styles.start, styles.wrap)}>
         <div className={cn(layoutStyles.inner)}>
           <form onSubmit={onSubmit(handleOnSubmit)}>
@@ -345,11 +349,11 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                           content: <CompanyShuttleModal />,
                           title: '',
                           width: 'xl',
+                          height: 'fix',
                         }}
                         chipList={{
                           labelField: 'name',
                           valueField: 'companyId',
-                          wordwrap: true,
                         }}
                       />
                     }
@@ -414,6 +418,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                         modalConfig={{
                           title: '',
                           width: 'xl',
+                          height: 'fix',
                           content: <ChannelListChoiceModal />,
                         }}
                       />

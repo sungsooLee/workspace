@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { t } from 'i18next';
-import { cn } from '@learnway/shared';
+
+/* style */
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form module css
+import popLayoutstyles from '@learnway/styles/bo/assets/styles/modules/popup-layout.module.css';
+import dataInfostyles from '@learnway/styles/bo/assets/styles/modules/data-info.module.css';
+import selectMenuStyles from '@learnway/styles/bo/assets/styles/modules/select-menu.module.css';
+
 import {
   Button,
   ContentsRow,
@@ -14,20 +20,28 @@ import {
   useModal,
 } from '@learnway/ui';
 import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
-import { FormSubTitle } from '../../../../shared/ui';
+import { cn } from '@learnway/shared';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 
-/* style */
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form module css
-import popLayoutstyles from '@learnway/styles/bo/assets/styles/modules/popup-layout.module.css';
-import dataInfostyles from '@learnway/styles/bo/assets/styles/modules/data-info.module.css';
-import selectMenuStyles from '@learnway/styles/bo/assets/styles/modules/select-menu.module.css';
+import { FormRow, FormSubTitle } from '@shared/ui';
+import { DateRangeFormField } from '@shared/ui/search-box';
+import { useSaveUsers } from '@entities/role/service/role-manage.hook';
 
 /**
  * 화면번호: NLP_BO_PMS_1111 (데이터접근범위 일괄적용)
  * @returns
  */
-const TenantDetailLearningRoleGrantRangeModalComponent = () => {
+const TenantDetailLearningRoleGrantRangeModalComponent = ({
+  roleId,
+  userList,
+}: {
+  roleId: number;
+  userList: any[];
+}) => {
   const { close: closeModal } = useModal();
+
+  const formRef = useRef<HTMLFormElement>(null);
+
   const [title, setTitle] = useState(t('역할 사용 여부'));
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
@@ -36,7 +50,33 @@ const TenantDetailLearningRoleGrantRangeModalComponent = () => {
     1: false,
   });
 
+  const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
+    useDynamicForm(formConfig);
+
+  const { saveUsersRole: saveRoleUsers } = useSaveUsers({});
+
+  const handleOnSubmit = async (data: any) => {
+    const { isUsed, dateRange } = getValues();
+
+    const addUsers = userList.map((item) => ({
+      userUuid: item.userUuid,
+      startDate: activeIndex === 1 ? dateRange.from : item.startDate,
+      endDate: activeIndex === 1 ? dateRange.to : item.endDate,
+      isUsed: activeIndex === 0 ? isUsed : item.isUsed,
+    }));
+
+    const payload = { roleId: roleId, body: { addUserUuids: addUsers } };
+    console.log('getValues----', payload, userList);
+    const result = await new Promise((resolve) => {
+      saveRoleUsers(payload, { onSuccess: resolve });
+    });
+
+    console.log('getValues', result);
+    closeModal();
+  };
+
   const handleSelectClick = (index: number) => {
+    onFormChange({ activeIndex: index });
     setActiveIndex(index);
     setTitle(items[index]);
   };
@@ -53,11 +93,11 @@ const TenantDetailLearningRoleGrantRangeModalComponent = () => {
         <div className={cn(popLayoutstyles.start, popLayoutstyles.wrap)}>
           <div className={popLayoutstyles.contents}>
             <div className={popLayoutstyles.left_contents}>
-              <FormSubTitle label={t('역할 일관ㄹ 적용')} lineType={'light'} />
+              <FormSubTitle label={t('역할 일괄 적용')} lineType={'light'} />
               <div className={dataInfostyles.start}>
                 <div className={dataInfostyles.title_box}>
                   <strong className={dataInfostyles.title}>{t('일괄적용 대상')}</strong>
-                  <span className={dataInfostyles.num}>{10}</span>
+                  <span className={dataInfostyles.num}>{userList.length}</span>
                   <span className={dataInfostyles.unit}>{t('건')}</span>
                   <span className={dataInfostyles.icon_area}>
                     <IcoFormRequired className={dataInfostyles.icon_required} />
@@ -107,72 +147,44 @@ const TenantDetailLearningRoleGrantRangeModalComponent = () => {
                 lineType={'light'}
                 titleNode={
                   <>
-                    <strong className="tit">{'전체'}</strong>
-                    <span className="num">{'15'}</span>
+                    <strong className="tit">{t('전체')}</strong>
+                    <span className="num">{userList.length}</span>
                   </>
                 }
               />
-              {activeIndex === 0 && (
-                <ContentsRow type={'horizontal'}>
-                  <div className={formStyles.form_item}>
-                    <label htmlFor="name-1" className={formStyles.form_label}>
-                      <span className={cn(formStyles.form_text)}>역할 사용 여부</span>
-                      {/* 필수 케이스 */}
-                      <span className={cn(formStyles.status, formStyles.required)}>
-                        <IcoFormRequired width={12} height={12} />
-                      </span>
-                    </label>
-                    <div className={formStyles.input_box}>
-                      <Switch
-                        id={'switch01'}
-                        className={formStyles.btn_switch}
-                        label={checked[1] ? '사용' : '사용안함'}
-                        checked={checked[1]}
-                        onCheckedChange={handleCheckedChange(1)}
-                      />
-                    </div>
-                  </div>
-                </ContentsRow>
-              )}
-              {activeIndex === 1 && (
-                <ContentsRow>
-                  <div className={formStyles.form_item}>
-                    <label htmlFor="name-start" className={formStyles.form_label}>
-                      <span className={cn(formStyles.form_text)}>역할 시작일</span>
-                      {/* 필수 케이스 */}
-                      <span className={cn(formStyles.status, formStyles.required)}>
-                        <IcoFormRequired width={12} height={12} />
-                      </span>
-                    </label>
-                    <div className={formStyles.input_box}>
-                      <DatePicker displayType={'day'} />
-                      <span className={formStyles.dash}></span>
-                      <DatePicker displayType={'day'} />
-                    </div>
-                  </div>
-                  <div className={formStyles.form_item}>
-                    <label htmlFor="name-end" className={formStyles.form_label}>
-                      <span className={cn(formStyles.form_text)}>역할 종료일</span>
-                      {/* 필수 케이스 */}
-                      <span className={cn(formStyles.status, formStyles.required)}>
-                        <IcoFormRequired width={12} height={12} />
-                      </span>
-                    </label>
-                    <div className={formStyles.input_box}>
-                      <DatePicker displayType={'day'} />
-                      <span className={formStyles.dash}></span>
-                      <DatePicker displayType={'day'} />
-                    </div>
-                  </div>
-                </ContentsRow>
-              )}
+              <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)} style={{ marginTop: '20px' }}>
+                {activeIndex === 0 && (
+                  <ContentsRow type={'horizontal'}>
+                    <FormRow provider={provider} name="isUsed" />
+                  </ContentsRow>
+                )}
+                {activeIndex === 1 && (
+                  <ContentsRow>
+                    <FormRow
+                      provider={provider}
+                      name="dateRange"
+                      element={<DateRangeFormField />}
+                    />
+                  </ContentsRow>
+                )}
+              </form>
             </div>
           </div>
         </div>
       </ModalBody>
       <ModalFooter>
         <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
-        <Button label={'적용'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
+        <Button
+          label={'적용'}
+          variant={'primary'}
+          size={'lg'}
+          onClick={() => {
+            const form = formRef.current;
+            if (form) {
+              form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+            }
+          }}
+        />
       </ModalFooter>
     </ModalContainer>
   );
@@ -182,3 +194,61 @@ export const TenantDetailLearningRoleGrantRangeModal =
   TenantDetailLearningRoleGrantRangeModalComponent;
 
 const items = [t('역할 사용 여부'), t('역할 시작일/종료일')];
+
+const formConfig: DynamicFormConfig = {
+  builders: [
+    {
+      name: 'activeIndex',
+      type: 'hidden',
+      label: '',
+      value: 0,
+    },
+    {
+      name: 'isUsed',
+      type: 'switch',
+      label: t('역할 사용 여부'),
+      value: true,
+      switchConfig: {
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
+    {
+      name: 'dateRange',
+      type: 'date-range',
+      label: t('역할 부여 기간'),
+      format: 'object',
+      value: { from: undefined, to: undefined },
+      placeholder: '',
+      maxLength: 150,
+    },
+  ],
+  validator: {
+    isUsed: true,
+    dateRange: {
+      required: {
+        fn: (values) => {
+          console.log('required', values);
+          return values.activeIndex === 1;
+        },
+      },
+      conditions: [
+        {
+          fn: (values) => values.activeIndex === 1 && !values.dateRange?.from,
+          message: t('시작 및 종료 날짜를 선택하세요'),
+        },
+        {
+          fn: (values) => values.activeIndex === 1 && !values.dateRange?.from,
+          message: t('시작 날짜를 선택하세요'),
+        },
+        {
+          fn: (values) => values.activeIndex === 1 && !values.dateRange?.to,
+          message: t('종료 날짜를 선택하세요.'),
+        },
+        {
+          fn: (values) => values.activeIndex === 1 && values.dateRange.from > values.dateRange.to,
+          message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.'),
+        },
+      ],
+    },
+  },
+};
