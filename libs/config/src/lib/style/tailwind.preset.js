@@ -648,6 +648,18 @@ module.exports = {
           fontWeight: '600',
         },
 
+        '.label-lg': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '400',
+        },
+
+        '.label-lg-b': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '600',
+        },
+
         '.label-md': {
           ...baseTitle,
           fontSize: '1.3rem',

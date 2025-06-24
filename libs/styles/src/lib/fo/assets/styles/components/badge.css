@@ -1,14 +1,26 @@
 .nlp--badge {
   &.xs {
     @apply h-[2.2rem];
+    .nlp--button {
+      @apply label-sm !px-[8px];
+    }
   }
   &.sm {
     @apply h-[2.4rem];
+    .nlp--button {
+      @apply label-lg !px-[10px];
+    }
   }
   &.md {
     @apply h-[3.2rem] rounded-[6px];
+    .nlp--button {
+      @apply label-lg !px-[12px];
+    }
   }
   &.lg {
     @apply h-[4.4rem] rounded-[8px];
+    .nlp--button {
+      @apply label-xl !px-[20px];
+    }
   }
 }

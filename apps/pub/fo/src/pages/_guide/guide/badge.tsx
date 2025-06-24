@@ -48,18 +48,18 @@ import { Badge } from '@learnway/ui';
         <h3 className="guide_tit3">Badge gray 타입</h3>
         <div className="flex_box">
           <div className="desc">
-            <Badge option={{ label: '태그 라벨', value: 'a' }} status="gray" size="md" />
+            <Badge option={{ label: '태그 라벨', value: 'a' }} status="gray" size="xs" />
             <Badge
               option={{ label: '태그 라벨', value: 'a' }}
               status="gray"
-              size="md"
+              size="sm"
               labelType={'bold'}
             />
             <Badge option={{ label: '태그 라벨', value: 'a' }} status="gray" size="md" rounded />
             <Badge
               option={{ label: '태그 라벨', value: 'a' }}
               status="gray"
-              size="md"
+              size="lg"
               rounded
               labelType={'bold'}
             />
@@ -72,13 +72,13 @@ import { Badge } from '@learnway/ui';
               option={{ label: '태그 라벨', value: 'a' }}
               variant="outline"
               status="gray"
-              size="md"
+              size="xs"
             />
             <Badge
               option={{ label: '태그 라벨', value: 'a' }}
               variant="outline"
               status="gray"
-              size="md"
+              size="sm"
               labelType={'bold'}
             />
             <Badge
@@ -92,7 +92,7 @@ import { Badge } from '@learnway/ui';
               option={{ label: '태그 라벨', value: 'a' }}
               variant="outline"
               status="gray"
-              size="md"
+              size="lg"
               rounded
               labelType={'bold'}
             />
@@ -101,18 +101,18 @@ import { Badge } from '@learnway/ui';
         <h3 className="guide_tit3">Badge primary 타입</h3>
         <div className="flex_box">
           <div className="desc">
-            <Badge option={{ label: '태그 라벨', value: 'a' }} status="primary" size="md" />
+            <Badge option={{ label: '태그 라벨', value: 'a' }} status="primary" size="xs" />
             <Badge
               option={{ label: '태그 라벨', value: 'a' }}
               status="primary"
-              size="md"
+              size="sm"
               labelType={'bold'}
             />
             <Badge option={{ label: '태그 라벨', value: 'a' }} status="primary" size="md" rounded />
             <Badge
               option={{ label: '태그 라벨', value: 'a' }}
               status="primary"
-              size="md"
+              size="lg"
               rounded
               labelType={'bold'}
             />
