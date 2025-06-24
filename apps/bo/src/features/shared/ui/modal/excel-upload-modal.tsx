@@ -330,7 +330,7 @@ const ExcelUploadModalComponent = ({
                 )}
                 {status === Status.COMPLETED && (
                   <p className={cn(styles.status_text)}>
-                    {t(Status.COMPLETED, '완료')}
+                    {t('완료')}
                     {Boolean(validationResult?.successRows) && (
                       <span className={cn(styles.data_text)}>
                         {validationResult?.successRows} {t('행')}
