@@ -7,6 +7,22 @@ export default class I18nResourceService {
   static isValidObject(value: any): value is Record<string, any> {
     return value !== null && typeof value === 'object' && !Array.isArray(value);
   }
+
+  static deepMerge(target: Record<string, any>, source: Record<string, any>): Record<string, any> {
+    const result = { ...target };
+    
+    for (const key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        if (this.isValidObject(source[key]) && this.isValidObject(result[key])) {
+          result[key] = this.deepMerge(result[key], source[key]);
+        } else {
+          result[key] = source[key];
+        }
+      }
+    }
+    
+    return result;
+  }
   static async fetchResource(languageCode: string) {
     if (isLocal() || isDev()) {
       return await this.fetchBothSources(languageCode);
@@ -29,7 +45,7 @@ export default class I18nResourceService {
     }
 
     if (localResult.status === 'fulfilled' && this.isValidObject(localResult.value)) {
-      merged = { ...merged, ...localResult.value };
+      merged = this.deepMerge(merged, localResult.value);
     }
 
     console.log(merged);

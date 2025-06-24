@@ -15,12 +15,13 @@ import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.
 import { IcoAlertCircle } from '@learnway/icons';
 import { FormSubTitle } from '../../../../shared/ui';
 import { cn } from '@learnway/shared';
-import { CODE_GROUP, useCodeStore } from '@learnway/hooks';
-import { useEffect, useMemo, useState } from 'react';
+import { useLanguageMap } from '@learnway/hooks';
+import { useMemo } from 'react';
 
 interface TranslationStatusPopupProps {
   baseLanguage: string;
   keyType: string;
+  keyTypeName: string;
   lastModifiedBy: string;
   modifiedDate: string;
   multilingualId: number;
@@ -34,70 +35,38 @@ interface TranslationStatusPopupProps {
 
 const columnHelper = createColumnHelper<any>();
 export const TranslationStatusPopup = (props: TranslationStatusPopupProps) => {
-  const { getCode } = useCodeStore();
-  const [languageCodes, setLanguageCodes] = useState<any[]>([]);
-  const languageMultilingualKeyMap = useMemo(() => {
-    const map = new Map<string, string>();
-    languageCodes.forEach((code) => {
-      map.set(code.value, code.multilingualKey); // locale(ko) -> multilingualKey
-    });
-    return map;
-  }, [languageCodes]);
-  const { keyType, multilingualId, multilingualKey, baseLanguage } = props;
+  const { getLanguageName } = useLanguageMap();
+  const { keyType, multilingualId, multilingualKey, keyTypeName, baseLanguage } = props;
   const { close: closeModal } = useModal();
 
   const { data } = useTranslationStatus(multilingualId);
   const translations = data?.translations || [];
-
-  const languageMap = useMemo(() => {
-    const map = new Map<string, string>();
-    languageCodes.forEach((code) => {
-      map.set(code.value, code.cdContent);
-    });
-    return map;
-  }, [languageCodes]);
 
   const columns = useMemo(
     () => [
       columnHelper.accessor('locale', {
         cell: (info) => {
           const locale = info.getValue();
-          console.log(locale);
-          return languageMap.get(locale) || locale;
+          return getLanguageName(locale);
         },
         header: t('번역언어'),
       }),
       columnHelper.accessor('translation', {
         cell: (info) => {
           const value = info.getValue();
-          return value || '-'; // null인 경우 '-' 표시
+          return value ? '번역 완료' : '번역 미완료';
         },
         header: t('번역상태'),
       }),
     ],
-    [languageMap],
+    [getLanguageName],
   );
-
-  useEffect(() => {
-    const init = async () => {
-      const codes: any = await getCode(CODE_GROUP['pms.multilingual.LangCountryCode']);
-      setLanguageCodes(codes);
-    };
-    init();
-  }, [getCode]);
 
   return (
     <ModalContainer>
-      <ModalTitle>
-        {t('번역언어 현황팝업')}
-        {/* <Tooltip side="bottom" align="start" content={'툴팁내용입니다.'}>
-          <Button onlyIcon>
-            <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
-          </Button>
-        </Tooltip> */}
-      </ModalTitle>
+      <ModalTitle>{t('번역언어 현황팝업')}</ModalTitle>
       <ModalBody>
-        <FormSubTitle label={t('타이틀')} />
+        <FormSubTitle label={t('타이틀')} noLine />
         <div className={cn(tableStyles.start, tableStyles.wrap)}>
           <table>
             <caption>{t('번역언어정보')}</caption>
@@ -110,7 +79,7 @@ export const TranslationStatusPopup = (props: TranslationStatusPopupProps) => {
             <tbody>
               <tr>
                 <th scope={'row'}>{t('분류')}</th>
-                <td>{keyType}</td>
+                <td>{keyTypeName}</td>
                 <th scope={'row'}>{t('코드')}</th>
                 <td>{multilingualKey}</td>
               </tr>
