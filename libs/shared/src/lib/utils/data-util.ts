@@ -1,3 +1,4 @@
+import { t } from 'i18next';
 import { isArray } from 'lodash';
 
 /**
@@ -124,4 +125,36 @@ export const reorderOptions = (options: any[], valueField: string, activeId: any
   newOptions.splice(newIndex, 0, movedItem); // newIndex에 요소 삽입
 
   return newOptions;
+};
+
+/**
+ * 서버 Enum 데이터와 로컬 데이터를 병합하여 옵션을 생성합니다.
+ * @param data - 서버에서 받은 데이터
+ * @param localData - 하드코딩된 로컬 데이터 (아이콘, 설명 등 포함)
+ * @param mergeFields - 병합할 필드들의 배열 (예: ['icon', 'description'])
+ * @returns 병합된 옵션 배열
+ */
+export const mergeEnumDataWithKeys = (
+  data: any[],
+  localData: any[],
+  mergeFields: string[] = ['icon', 'description'],
+) => {
+  return data.map((item: any) => {
+    // localData에서 value가 일치하는 항목 찾기
+    const matchingLocalItem = localData.find((localItem: any) => localItem.value === item.cdId);
+
+    const result: any = {
+      label: t(item.multilingualKey, { defaultValue: item.cdName }),
+      value: item.cdId,
+    };
+
+    // mergeFields에 지정된 필드들을 병합
+    mergeFields.forEach((field) => {
+      if (matchingLocalItem && matchingLocalItem[field] !== undefined) {
+        result[field] = matchingLocalItem[field];
+      }
+    });
+
+    return result;
+  });
 };

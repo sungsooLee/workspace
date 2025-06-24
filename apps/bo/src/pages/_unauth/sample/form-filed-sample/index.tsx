@@ -1,6 +1,6 @@
-import React from 'react';
-import { t } from 'i18next';
-import { createFileRoute } from '@tanstack/react-router';
+import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
+import { ChannelListModal, ManagerListModal, TeacherListModal } from '@features/learning/course';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import {
   Button,
   ChipListModalSelectorFormField,
@@ -10,15 +10,16 @@ import {
   InputModalSelectorFormField,
   ListModalSelectorFormField,
   PhoneNumberFormField,
-  RadioGroup,
   RadioGroupFormField,
+  SelectOption,
   useModal,
 } from '@learnway/ui';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { ChannelListModal, ManagerListModal, TeacherListModal } from '@features/learning/course';
-import { ContentsButtons, MainContents, PageContainer } from '@widgets/layout';
 import { FormRow } from '@shared/ui';
+import { createFileRoute } from '@tanstack/react-router';
+import { ContentsButtons, MainContents, PageContainer } from '@widgets/layout';
 import { SubContents } from '@widgets/layout/ui/container/slot/sub-contents';
+import { t } from 'i18next';
+import LabelMessagesService from '../../../../entities/label-messages-mock/api/label-messages';
 
 export const Route = createFileRoute('/_unauth/sample/form-filed-sample/')({
   component: RouteComponent,
@@ -26,7 +27,10 @@ export const Route = createFileRoute('/_unauth/sample/form-filed-sample/')({
 
 function RouteComponent() {
   const { open: openModal } = useModal();
-  const { provider, onSubmit, control, getValues } = useDynamicForm(formConfig);
+  const { provider, onSubmit, control, getValues, watch } = useDynamicForm(formConfig);
+
+  // DropdownCodeGroup 필드 값 감시
+  const dropdownCodeGroupValue = watch('DropdownCodeGroup');
 
   const handleOnSubmit = (data: any) => {
     console.log('data {} => ', data);
@@ -82,40 +86,77 @@ function RouteComponent() {
               name={'라디오커스텀'}
               element={
                 <RadioGroupFormField
-                  options={[
-                    {
-                      label: '일반',
-                      value: '1',
-                      node: (
-                        <FormRow
-                          provider={provider}
-                          name={'라디오커스텀_인풋'}
-                          element={<Input />}
-                        />
-                      ),
+                  optionsConfig={{
+                    codeGroup: 'test',
+                    transformOptions: (options: SelectOption[]) => {
+                      return options.filter((option: SelectOption) => option.value !== 'test4');
                     },
-                    {
-                      label: '고급',
-                      value: '2',
-                      node: (
-                        <FormRow
-                          provider={provider}
-                          name={'라디오커스텀_모달_이름'}
-                          element={
-                            <InputModalSelectorFormField
-                              modalConfig={{
-                                content: <ChannelListModal />,
-                              }}
-                              transformModalData={(data: any) => ({
-                                라디오커스텀_모달_아이디: data.channelId,
-                                라디오커스텀_모달_이름: data.channelName,
-                              })}
-                            />
-                          }
-                        />
-                      ),
+                    optionsNode: [
+                      {
+                        value: 'value1',
+                        node: (
+                          <FormRow
+                            provider={provider}
+                            name={'라디오커스텀_인풋'}
+                            element={<Input />}
+                          />
+                        ),
+                      },
+                      {
+                        value: 'value2',
+                        node: (
+                          <FormRow
+                            provider={provider}
+                            name={'라디오커스텀_모달_이름'}
+                            element={
+                              <InputModalSelectorFormField
+                                modalConfig={{
+                                  content: <ChannelListModal />,
+                                }}
+                                transformModalData={(data: any) => ({
+                                  라디오커스텀_모달_아이디: data.channelId,
+                                  라디오커스텀_모달_이름: data.channelName,
+                                })}
+                              />
+                            }
+                          />
+                        ),
+                      },
+                    ],
+                  }}
+                />
+              }
+            />
+          </ContentsRow>
+          {/* dropdown */}
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name={'DropdownCodeGroup'}
+              element={
+                <DropdownFormField
+                  optionsConfig={{
+                    codeGroup: 'test',
+                  }}
+                />
+              }
+            />
+          </ContentsRow>
+          {/* dropdown */}
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name={'DropdownApi'}
+              element={
+                <DropdownFormField
+                  optionsConfig={{
+                    labelField: 'cdName',
+                    valueField: 'cdId',
+                    api: {
+                      fn: LabelMessagesService.fetchChannelMock,
+                      params: watch('DropdownCodeGroup') || '', // fn 실행시 파라미터 값 전달
                     },
-                  ]}
+                  }}
                 />
               }
             />
@@ -253,7 +294,7 @@ function RouteComponent() {
             <FormRow provider={provider} name={'썸네일'} />
           </ContentsRow>
           {/* 폰넘버 */}
-          <ContentsRow>
+          {/* <ContentsRow>
             <FormRow
               provider={provider}
               name={'폰넘버'}
@@ -265,7 +306,7 @@ function RouteComponent() {
                 />
               }
             />
-          </ContentsRow>
+          </ContentsRow> */}
         </MainContents>
         <SubContents>
           <Input />
@@ -280,6 +321,18 @@ function RouteComponent() {
  */
 const formConfig: DynamicFormConfig = {
   builders: [
+    {
+      name: 'DropdownCodeGroup',
+      type: 'custom',
+      label: 'Dropdown - DropdownFormField(codeGroup)',
+      value: '',
+    },
+    {
+      name: 'DropdownApi',
+      type: 'custom',
+      label: 'Dropdown - DropdownFormField(api)',
+      value: '',
+    },
     {
       name: '폰넘버',
       type: 'custom',

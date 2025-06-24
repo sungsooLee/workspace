@@ -105,7 +105,7 @@ export interface DropdownOption {
 
 export interface SelectOption {
   label: string;
-  value: string;
+  value: string | number;
   disabled?: boolean;
   subLabel?: string;
   icon?: React.ComponentType<{ className?: string }>;
