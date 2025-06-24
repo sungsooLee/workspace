@@ -8,13 +8,21 @@ import {
   useGridBox,
   useModal,
 } from '@learnway/ui';
-import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import { cn, DATE_TIME_FORMAT, getDateToString, SelectOption } from '@learnway/shared';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { translationQueryOptions } from '@entities/translation/service/translation.queries';
-import { CODE_GROUP, SearchBoxConfig, useCurrentRoute, useSearchBox } from '@learnway/hooks';
+import {
+  CODE_GROUP,
+  SearchBoxConfig,
+  useCurrentRoute,
+  useSearchBox,
+  useLanguageMap,
+  useCodeStore,
+} from '@learnway/hooks';
+import { useWatch } from 'react-hook-form';
 import { SearchBox } from '@shared/ui/search-box';
 import { CellContext } from '@tanstack/react-table';
 import {
@@ -40,7 +48,18 @@ type TranslationType = {
 function RouteComponent() {
   const { confirm, alert, open: openModal } = useModal();
   const { state } = useCurrentRoute();
-  const { provider: sProvider, getValues, onFormChange, onFormValid } = useSearchBox(searchConfig);
+  const {
+    provider: sProvider,
+    getValues,
+    onFormChange,
+    onFormValid,
+    setOptions,
+    control,
+    setValue,
+  } = useSearchBox(searchConfig);
+  const { getCode } = useCodeStore();
+  const { getLanguageName } = useLanguageMap();
+  const keyTypeCode = useWatch({ control, name: 'keyTypeCode' });
 
   const { update } = useTranslation({
     onSuccess: () => {
@@ -152,6 +171,29 @@ function RouteComponent() {
   };
 
   useEffect(() => {
+    const updateTargetLocaleOptions = async () => {
+      const allOptions = await getCode(CODE_GROUP['pms.multilingual.LangCountryCode']);
+      const baseOptions = [{ value: '', label: 'LABEL.form.label.select' }];
+      const currentTargetLocale = getValues('targetLocale');
+
+      if (keyTypeCode === 'HRD_CENTER_MENU') {
+        const filteredOptions = allOptions.filter((option) => option.value === 'EN');
+        const newOptions = [...baseOptions, ...filteredOptions];
+        setOptions('targetLocale', newOptions);
+
+        const availableValues = newOptions.map((option) => option.value);
+        if (currentTargetLocale && !availableValues.includes(currentTargetLocale)) {
+          setValue('targetLocale', '');
+        }
+      } else {
+        setOptions('targetLocale', [...baseOptions, ...allOptions]);
+      }
+    };
+
+    updateTargetLocaleOptions();
+  }, [keyTypeCode]);
+
+  useEffect(() => {
     init();
   }, []);
 
@@ -230,11 +272,7 @@ function RouteComponent() {
                     {/*번역중인언어*/}
                     <span className={'normal_text'}>
                       {t('LABEL.platform.system.multilingual.currentTranslationLanguage')} :{' '}
-                      {currentTargetLocale
-                        ? t(
-                            `SYSTEM_COMMON_CODE.pms.multilingual.LanguageType.${currentTargetLocale}`,
-                          )
-                        : ''}
+                      {currentTargetLocale ? getLanguageName(currentTargetLocale) : ''}
                     </span>
                   </>
                 }
@@ -272,13 +310,6 @@ const searchConfig: SearchBoxConfig = {
         optionsConfig: {
           options: [{ value: '', label: 'LABEL.form.label.select' }],
           codeGroup: CODE_GROUP['pms.multilingual.LangCountryCode'],
-          /*type: 'self',
-          excludeValues: ['kr'],
-          filter: {
-            target: 'keyType',
-            value: 'HRD_CENTER_MENU',
-            fn: (options: SelectOption[]) => options.filter((option) => option.value === 'en'),
-          },*/
         },
       },
       {

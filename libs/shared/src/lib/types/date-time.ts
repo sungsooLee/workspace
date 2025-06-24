@@ -3,6 +3,7 @@ export const DATE_TIME_FORMAT = {
   MONTH: 'dateFormatMonth',
   MONTH_DAY: 'dateFormatMonthDay',
   DATE: 'dateFormatDay',
+  DATE_SERVER: 'dateFormatDayServer',
   DATETIME_HOUR: 'dateTimeFormatHour',
   DATETIME_MIN: 'dateTimeFormatHourMinute',
   DATETIME_SEC: 'dateTimeFormatHourSecond',

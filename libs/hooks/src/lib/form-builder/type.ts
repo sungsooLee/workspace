@@ -8,7 +8,7 @@ import {
   RefObject,
 } from 'react';
 import { UseFormReturn } from 'react-hook-form';
-import { CODE_GROUP_TYPE } from '../code/constants';
+import { CODE_GROUP_TYPE } from '../use-code-store/constants';
 
 export interface SelectOption {
   label: string;
