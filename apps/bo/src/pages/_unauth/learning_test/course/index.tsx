@@ -39,6 +39,7 @@ function RouteComponent() {
    * @param {any} row - 선택된 행 데이터
    */
   const handleGridRowSelect = (rows: any) => {
+    console.log('handleGridRowSelect.rows {} => ', rows);
     rows && setSelectedCourses(rows);
   };
 
@@ -57,10 +58,11 @@ function RouteComponent() {
       content: <CourseTypeOptionCardModal />,
       width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
     });
+    console.log('handleCourseOpenClick.value {} => ', value);
     router.navigate({
-      to: '/platform/system/multilingual',
+      to: '/learning_test/course/create/view',
       state: {
-        courseType: 'CATEGORY', // 다국어 분류 - 공통코드
+        courseType: value, // 다국어 분류 - 공통코드
       },
     });
     // 선택한 유형의 등록 페이지로 이동

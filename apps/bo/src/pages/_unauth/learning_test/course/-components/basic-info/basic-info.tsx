@@ -1,6 +1,6 @@
 import { DropdownFormField } from '@features/form';
 import { CategoryChoiceModal, ChannelListModal, TeacherListModal } from '@features/learning/course';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import {
   Button,
   CheckboxGroupFormField,
@@ -97,6 +97,9 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
                     value: '페키지',
                   },
                 ]}
+                optionsConfig={{
+                  codeGroup: CODE_GROUP['lms.course.CourseType'],
+                }}
               />
             }
           />
