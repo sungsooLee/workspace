@@ -47,9 +47,12 @@ function RouteComponent() {
         { name: '--gray35', textColor: '--white', code: '' },
         { name: '--gray50', textColor: '--white', code: '' },
         { name: '--gray65', textColor: '--white', code: '' },
-        { name: '--gray75', textColor: '--gray10', code: '' },
-        { name: '--gray85', textColor: '--gray10', code: '' },
-        { name: '--gray95', textColor: '--gray10', code: '' },
+        { name: '--gray75', textColor: '', code: '' },
+        { name: '--gray85', textColor: '', code: '' },
+        { name: '--gray90', textColor: '', code: '' },
+        { name: '--gray92', textColor: '', code: '' },
+        { name: '--gray95', textColor: '', code: '' },
+        { name: '--gray98', textColor: '', code: '' },
         {
           name: '--white',
           textColor: '--gray10',
@@ -74,6 +77,7 @@ function RouteComponent() {
         { name: '--blue65', textColor: '', code: '' },
         { name: '--blue75', textColor: '', code: '' },
         { name: '--blue85', textColor: '', code: '' },
+
         { name: '--blue95', textColor: '', code: '' },
       ],
     },
@@ -93,7 +97,7 @@ function RouteComponent() {
     },
     {
       title: 'Etc',
-      description: ['그라데이션'],
+      description: ['그라데이션 컬러', 'background:var(--gradient01)', 'bg-[var(--gradient01)]'],
       colors: [{ name: '--gradient01', textColor: '--white', code: '' }],
     },
   ];
