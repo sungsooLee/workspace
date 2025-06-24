@@ -43,10 +43,7 @@ import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inn
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import { MenuDetail } from '../../../../types/entities/menu';
 import { useWatch } from 'react-hook-form';
-import {
-  DuplicateCheckInputFormField,
-  DuplicateState,
-} from '@features/tenant/management/ui/duplicate-check-input-form-field';
+import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
 import { isEqual } from 'lodash';
 import { useQueryClient } from '@tanstack/react-query';
 

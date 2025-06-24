@@ -33,6 +33,33 @@
     & + .btn {
       @apply ml-[8px];
     }
+    &[class*='only_icon'] {
+      @apply justify-center;
+      &.ts {
+        @apply w-[24px] min-w-[24px];
+      }
+      &.xs {
+        @apply w-[28px] min-w-[28px];
+      }
+      &.sm {
+        @apply w-[32px] min-w-[32px];
+      }
+      &.md {
+        @apply w-[36px] min-w-[36px];
+      }
+      &.lg {
+        @apply w-[40px] min-w-[40px];
+      }
+      &.xl {
+        @apply w-[48px] min-w-[48px];
+      }
+      &.xl2 {
+        @apply w-[52px] min-w-[52px];
+      }
+    }
+    svg {
+      @apply shrink-0;
+    }
   }
 }
 .primary {
@@ -228,5 +255,23 @@
   }
   &.xs {
     @apply !min-h-[24px];
+  }
+}
+.ghost {
+  @apply bg-white !px-0;
+  &:hover {
+    @apply bg-[var(--gray98)];
+  }
+  &:active {
+    @apply bg-[var(--gray95)];
+  }
+  &:disabled {
+    @apply bg-[var(--gray98)];
+    svg {
+      @apply stroke-[var(--gray75)];
+    }
+  }
+  svg {
+    @apply stroke-[var(--gray10)];
   }
 }

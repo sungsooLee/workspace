@@ -56,7 +56,7 @@ const TenantUserListComponent: FC<any> = ({ rootPath }) => {
     onFormChange,
     onFormValid,
   } = useSearchBox(searchConfig);
-  const { config: gConfig, gridFetch } = useGridBox(gridConfig);
+  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
 
   const tenantIdWatch = useWatch({ control: searchProvider.control, name: 'tenantId' });
 

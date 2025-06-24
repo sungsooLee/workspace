@@ -574,6 +574,18 @@
       "notificationDelete": {
         "title": "알림을 모두 삭제하시겠습니까?",
         "message": "알림을 삭제한 후에는 알림을 조회할 수 없습니다."
+      },
+      "fileDelete": {
+        "title": "파일을 삭제하겠습니까?",
+        "message": "선택한 파일이 모두 삭제됩니다."
+      },
+      "fileSelectForDelete": {
+        "title": "파일을 선택해 주세요.",
+        "message": "삭제할 파일을 먼저 선택해 주세요."
+      },
+      "fileSelectForDownload": {
+        "title": "파일을 선택해 주세요.",
+        "message": "저장할 파일을 먼저 선택해 주세요."
       }
     },
     "platform": {
