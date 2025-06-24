@@ -33,7 +33,7 @@
   }
 
   [class*='divider'] + [class*='table_box'] {
-    @apply !mt-[16px];
+    @apply mt-[16px];
   }
 }
 .selected_area {
