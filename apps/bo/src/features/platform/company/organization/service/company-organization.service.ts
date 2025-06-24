@@ -1,4 +1,5 @@
 import { TreeNode } from '@learnway/ui';
+import { t } from 'i18next';
 import { EnTreeEventPosition } from '@types';
 
 export const findOrganizationPathById = (
@@ -12,7 +13,7 @@ export const findOrganizationPathById = (
     // 현재 노드의 제목을 임시 경로에 추가
     const currentTitles = [...titles];
     if (node.key !== 'root') {
-      currentTitles.push(node.title || 'no name');
+      currentTitles.push(node.deptName || 'no name');
     }
 
     // 현재 노드가 대상 노드인지 확인
@@ -33,9 +34,9 @@ export const findOrganizationPathById = (
   return '';
 };
 
-export const transformDepartmentApiDataToTreeData = (apiData: any) => {
+export const transformDepartmentApiDataToTreeData = (apiData: any, rootName = 'ROOT') => {
   //const dataArray = Array.isArray(apiData) ? apiData : [apiData];
-  const root = { deptId: 'root', deptName: 'ROOT', childList: [] };
+  const root = { deptId: 'root', deptName: rootName, childList: [] };
   if (apiData && apiData.length > 0) {
     root.childList = apiData;
   }
@@ -45,12 +46,17 @@ export const transformDepartmentApiDataToTreeData = (apiData: any) => {
     if (!nodes) return [];
 
     return nodes.map((node: any) => {
+      const memberCount = node.deptMemberCount;
+      const nodeTitle =
+        node.deptId !== 'root'
+          ? node.deptName + ' (' + t('{{count}}명', { count: memberCount.toLocaleString() }) + ')'
+          : node.deptName;
       // 새로운 노드 객체 생성
       const transformedNode = {
         ...node,
         // 필수 트리 속성
         key: node.deptId?.toString(),
-        title: node.deptName,
+        title: nodeTitle,
 
         parentKey: node.parentDeptId?.toString() || node.companyCode,
         children: node.childList || [],

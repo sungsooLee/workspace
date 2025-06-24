@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
-import { IcoSearch, IcoPlus, IcoDownload, IcoClose } from '@learnway/icons';
+import { IcoSearch, IcoPlus, IcoDownload, IcoClose, IcoArrowForward } from '@learnway/icons';
 
 export const Route = createFileRoute('/_guide/guide/buttons')({
   component: RouteComponent,
@@ -12,7 +12,7 @@ function RouteComponent() {
       <div>
         <h2 className="guide_tit2">Button Component Guide</h2>
         <p className="loc react">/libs/ui/src/lib/button/button.tsx</p>
-        <p className="info">size(높이 기준) : xs(28), sm(32), md(36), lg(40)</p>
+        <p className="info">size(높이 기준) : sm(28), md(36), lg(44) ,xl(48) ,xl2(52)</p>
         <div className="code_example">
           <pre className="code_block">
             <code>
@@ -20,7 +20,7 @@ function RouteComponent() {
 import { Button } from '@learnway/ui';
 
 // 적용방법(예시)
-<Button variant="primary" size="xs">버튼</Button>`}
+<Button variant="primary" size="sm">버튼</Button>`}
             </code>
           </pre>
         </div>
@@ -29,9 +29,6 @@ import { Button } from '@learnway/ui';
           <h3 className="guide_tit3">Primary Button</h3>
           <div className="flex_box">
             <div className="desc">
-              <Button variant="primary" size="xs">
-                버튼
-              </Button>
               <Button variant="primary" size="sm">
                 버튼
               </Button>
@@ -41,19 +38,116 @@ import { Button } from '@learnway/ui';
               <Button variant="primary" size="lg">
                 버튼
               </Button>
-              <Button variant="primary" size="lg" disabled>
+              <Button variant="primary" size="xl">
                 버튼
               </Button>
+              <Button variant="primary" size="xl2" disabled>
+                버튼
+              </Button>
+              <Button
+                variant="primary"
+                size="xl2"
+                onlyIcon={true}
+                icon={<IcoPlus width={20} height={20} />}
+              />
             </div>
           </div>
 
           <div className="code_example">
             <pre className="code_block">
               <code>
-                {`<Button variant="primary" size="xs">버튼</Button>
+                {`
 <Button variant="primary" size="sm">버튼</Button>
 <Button variant="primary" size="md">버튼</Button>
-<Button variant="primary" size="lg">버튼</Button>`}
+<Button variant="primary" size="lg">버튼</Button>
+<Button variant="primary" size="xl">버튼</Button>
+<Button variant="primary" size="xl2">버튼</Button>
+<Button variant="primary" size="xl2" onlyIcon={true} icon={<IcoPlus width={24} height={24} />} />`}
+              </code>
+            </pre>
+          </div>
+
+          <h3 className="guide_tit3">secondary Button</h3>
+          <div className="flex_box">
+            <div className="desc">
+              <Button variant="secondary" size="sm">
+                버튼
+              </Button>
+              <Button variant="secondary" size="md">
+                버튼
+              </Button>
+              <Button variant="secondary" size="lg">
+                버튼
+              </Button>
+              <Button variant="secondary" size="xl">
+                버튼
+              </Button>
+              <Button variant="secondary" size="xl2" disabled>
+                버튼
+              </Button>
+              <Button
+                variant="secondary"
+                size="xl2"
+                onlyIcon={true}
+                icon={<IcoPlus width={16} height={16} />}
+              />
+            </div>
+          </div>
+
+          <div className="code_example">
+            <pre className="code_block">
+              <code>
+                {`
+<Button variant="secondary" size="sm">버튼</Button>
+<Button variant="secondary" size="md">버튼</Button>
+<Button variant="secondary" size="lg">버튼</Button>
+<Button variant="secondary" size="xl">버튼</Button>
+<Button variant="secondary" size="xl2">버튼</Button>
+<Button variant="secondary" size="xl2" onlyIcon={true} icon={<IcoPlus width={24} height={24} />} />`}
+              </code>
+            </pre>
+          </div>
+
+          <h3 className="guide_tit3">ghost Button(아이콘만 들어갈때 사용)</h3>
+          <div className="flex_box">
+            <div className="desc">
+              <Button
+                variant="ghost"
+                size="xs"
+                onlyIcon={true}
+                icon={<IcoPlus width={16} height={16} />}
+              />
+              <Button
+                variant="ghost"
+                size="sm"
+                onlyIcon={true}
+                icon={<IcoPlus width={16} height={16} />}
+              />
+              <Button
+                variant="ghost"
+                size="md"
+                onlyIcon={true}
+                icon={<IcoPlus width={16} height={16} />}
+              />
+              <Button
+                variant="ghost"
+                size="lg"
+                onlyIcon={true}
+                icon={<IcoPlus width={16} height={16} />}
+                disabled
+              />
+            </div>
+          </div>
+
+          <div className="code_example">
+            <pre className="code_block">
+              <code>
+                {`
+<Button variant="ghost" size="xs" onlyIcon={true} icon={<IcoPlus width={16} height={16} />} />
+<Button variant="ghost" size="sm" onlyIcon={true} icon={<IcoPlus width={16} height={16} />} />
+<Button variant="ghost" size="md" onlyIcon={true} icon={<IcoPlus width={16} height={16} />} />
+<Button variant="ghost" size="lg" onlyIcon={true} icon={<IcoPlus width={16} height={16} />} />
+`}
               </code>
             </pre>
           </div>

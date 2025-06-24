@@ -40,9 +40,9 @@ export function useGetRoleUserMe(siteScope: string) {
  * @description 나의 역할 신청 목록
  * @param roleApplicationId
  */
-export function useGetRoleApplicationList(siteScope: string) {
+export function useGetRoleApplicationList(payload: any) {
   return useQuery({
-    ...queryOptions.getRoleApplicationList(siteScope),
+    ...queryOptions.getRoleApplicationList(payload),
   });
 }
 
@@ -113,6 +113,26 @@ export function useSaveUsers(options: any) {
   });
   return {
     saveUsersRole: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
+export function useRoleApplication(options: any) {
+  const mutation = useMutation({
+    ...mutateOptions.createRoleApplication(),
+    onSuccess: async (data, variables, context) => {
+      if (options.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...options,
+  });
+  return {
+    createRoleApplication: (payload: any, callback?: any) => {
       mutation.mutate(payload, callback);
     },
     isSuccess: mutation.isSuccess,

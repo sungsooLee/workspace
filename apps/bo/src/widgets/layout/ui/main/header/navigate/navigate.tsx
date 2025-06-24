@@ -8,6 +8,11 @@ import { useActiveMenuDepthState, useMenuHierarchy } from '@learnway/auth/entiti
 import styles from './navigate.module.css';
 import { cn } from '@learnway/shared';
 
+function findMenuPath(menu: Menu | undefined) {
+  if (!menu) return;
+  if (menu.path) return menu.path;
+  if (menu.children) return findMenuPath(menu?.children[0]);
+}
 function NavigateComponent() {
   const { t } = useTranslation();
   const [activeMenuDepthMenu, setActiveMenuDepthMenu] = useActiveMenuDepthState();
@@ -42,7 +47,7 @@ function NavigateComponent() {
         <ul>
           {visibleMenu?.map((menu: Menu, index: number) => {
             const isActive = menu.menuId === activeMenuDepthMenu?.[0]?.menuId;
-            const path = menu.path ? menu.path : menu.children?.[0]?.path;
+            const path = findMenuPath(menu);
             const menuName =
               import.meta.env.VITE_LANGUAGE_DEV === 'true'
                 ? t(`${menu.menuName}`)

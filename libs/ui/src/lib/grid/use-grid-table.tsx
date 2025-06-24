@@ -88,7 +88,7 @@ export function useGridTable<T extends object>(
   });
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(() =>
     columns.reduce((acc, col) => {
-      acc[col.id as string] = true;
+      acc[col.accessorKey as string] = !(col.meta?.hidden || false);
       return acc;
     }, {} as VisibilityState),
   );

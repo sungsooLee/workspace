@@ -14,6 +14,7 @@ export interface AccordionItem {
   title: string | React.ReactNode;
   children?: React.ReactNode;
   active?: boolean;
+  tenantMappingMenuId?: number;
 }
 
 export interface AccordionComponentProps {

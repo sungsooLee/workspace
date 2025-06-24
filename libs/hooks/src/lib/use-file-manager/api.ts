@@ -39,6 +39,10 @@ export default class FileManagerService {
   static fileDownload(fileUuid: string) {
     return fileDownload({ url: `${PMSApiPrefix()}/file/${fileUuid}/download` });
   }
+  // 파일 복수 다운로드
+  static filesDownload(fileUuids: string[]) {
+    return fileDownload({ url: `${PMSApiPrefix()}/file/files/${fileUuids.join(',')}/download` });
+  }
 
   // TODO. 아래 3가지는 요건이 없어서 추가하지 않았음
   // 파일 그룹 목록 조회

@@ -1,23 +1,18 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css';
 
-import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { Button, GridBox, useGridBox } from '@learnway/ui';
+import { cn } from '@learnway/shared';
+import { GridBox, useGridBox } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
-
-import { isEqual } from 'lodash';
-
 import { EnOrganizationShowType } from './company-organization-tree';
-
-import { transformDepartmentApiDataToTreeData } from '@features/platform/company/organization/service/company-organization.service';
-
 import { queryOptions as departmentQuery } from '@entities/department/service/department.queries';
 import { hmgQueryOptions as hmgDepartmentQuery } from '@entities/department/service/hmg-department.queries';
+import { EnGlobalConst } from '@types';
 
 /**
  * 화면번호: NLP_BO_TMS_1111_03 테넌트-회사조직 대상자 (조직)
@@ -36,12 +31,7 @@ const CompanyOrganizationInfoUserComponent = ({
 
   const [gridConfig, setGridConfig] = useState<any>(gridConfigOrg);
 
-  const {
-    provider: searchProvider,
-    getValues,
-    onFormChange,
-    onFormValid,
-  } = useSearchBox(searchConfig);
+  const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
 
   const getSearchParam = () => {
     const retval = { ...getValues(), companyCode: companyCode, parentDeptId: deptId };
@@ -71,7 +61,7 @@ const CompanyOrganizationInfoUserComponent = ({
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
       <div className={cn(boxStyles.start, boxStyles.inner)}>
         <div className="grid_wrap">
-          <GridBox config={gConfig} columns={columns} showNumberingColumn />
+          <GridBox config={gConfig} columns={columns} showNumberingColumn title={t('유저 목록')} />
         </div>
       </div>
     </>
@@ -85,21 +75,27 @@ const searchConfig: SearchBoxConfig = {
     [
       {
         name: 'hrInfoManageType',
-        type: 'text',
-        label: t('유저등록유형'),
+        type: 'dropdown',
+        label: t('유저 등록 유형'),
         value: '',
+        presetOptionLabel: t('전체'),
+        optionsConfig: {
+          codeGroup: CODE_GROUP['pms.company.HrInfoManageType'],
+        },
       },
       {
         name: 'deptName',
         type: 'text',
         label: t('소속'),
         value: '',
+        placeholder: t('입력'),
       },
       {
         name: 'employeeNumber',
         type: 'text',
         label: t('사번'),
         value: '',
+        placeholder: t('입력'),
       },
     ],
   ],
@@ -110,10 +106,10 @@ const gridConfigOrg = {
   columns: [],
   data: [],
 
-  pagination: {
-    pageSize: 20,
-    pageIndex: 0,
-    totalRows: 0,
+  gridState: {
+    page: 0,
+    size: 10,
+    sort: [],
   },
 };
 
@@ -122,18 +118,19 @@ const gridConfigPlat = {
   columns: [],
   data: [],
 
-  pagination: {
-    pageSize: 20,
-    pageIndex: 0,
-    totalRows: 0,
+  gridState: {
+    page: 0,
+    size: 10,
+    sort: [],
   },
 };
 
 const columnHelper = createColumnHelper<any>();
 const columns = [
   columnHelper.accessor('hrInfoManageType', {
-    cell: (info) => info.getValue(),
-    header: t('유저등록유형'),
+    cell: (info) =>
+      t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.HrInfoManageType.${info.getValue()}`),
+    header: t('유저 등록 유형'),
     size: 100,
   }),
   columnHelper.accessor('companyName', {
