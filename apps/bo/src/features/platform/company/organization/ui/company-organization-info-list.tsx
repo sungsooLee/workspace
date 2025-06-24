@@ -31,8 +31,6 @@ const CompanyOrganizationInfoListComponent = ({
   deptId: number;
   companyHrInfoManageType: string;
 }) => {
-  const router = useRouter();
-
   const { confirm: openConfirm, alert: openAlert } = useModal();
   const [gridConfig, setGridConfig] = useState<any>(gridConfigOrg);
   const [tableInstance, setTableInstance] = useState<Table<any>>();
@@ -71,6 +69,10 @@ const CompanyOrganizationInfoListComponent = ({
         setGridConfig(gridConfigPlat);
     }
   }, [showType]);
+
+  useEffect(() => {
+    gridFetch(getSearchParam());
+  }, [deptId]);
 
   const columnHelper = createColumnHelper<any>();
   let columns = [

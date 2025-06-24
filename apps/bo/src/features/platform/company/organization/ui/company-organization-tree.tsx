@@ -1,7 +1,5 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useState, useRef } from 'react';
-import { useRouter } from '@tanstack/react-router';
+import React, { useEffect, useState } from 'react';
 import { useWatch } from 'react-hook-form';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 
 import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
@@ -9,32 +7,21 @@ import { SectionLayout } from '@widgets/layout/ui/container/section-layout/secti
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 
-import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import { cn } from '@learnway/shared';
 import {
   Button,
   ChipListModalSelectorFormField,
   ContentsRow,
   Input,
-  RadioGroupFormField,
   TextareaFormField,
   TreeBox,
   Tabs,
-  TreeType,
   TreeNode,
   useModal,
 } from '@learnway/ui';
-import {
-  useSearchBox,
-  SearchBoxConfig,
-  CODE_GROUP,
-  useDynamicForm,
-  DynamicFormConfig,
-} from '@learnway/hooks';
+import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 
-import { ContentsHistoryInfoFormField, FormRow, FormSubTitle, SwitchFormField } from '@shared/ui';
-import { SearchBox } from '@shared/ui/search-box';
-
-import { isEqual } from 'lodash';
+import { ContentsHistoryInfoFormField, FormRow, FormSubTitle } from '@shared/ui';
 
 import { transformDepartmentApiDataToTreeData } from '@features/platform/company/organization/service/company-organization.service';
 import { findOrganizationPathById } from '@features/platform/company';
@@ -76,7 +63,6 @@ const TenantCompanyOrganizationTreeComponent = ({
   companyCode: string;
   showType: string;
 }) => {
-  const router = useRouter();
   const { confirm: openConfirm, alert: openAlert } = useModal();
 
   const [deptTreeData, setDeptTreeData] = useState([]);
@@ -323,12 +309,12 @@ const TenantCompanyOrganizationTreeComponent = ({
     console.log('### handleOnSubmit', data);
     const payload: any = {
       companyCode: companyCode,
-      parentDeptId: data.parentDeptId,
       sortOrder: 1,
       managerEmployeeNumberUuid: data.managerEmployeeNumber[0]?.uuid,
       deptName: data.deptName.fieldValue,
       deptDesc: data.deptDesc,
     };
+    if (data.parentDeptId.length > 0) payload.parentDeptId = data.parentDeptId;
     if (formMode === EnFormMode.ADD) {
       if (await openConfirm('저장 하시겠습니까?')) {
         createDepartment(payload);
