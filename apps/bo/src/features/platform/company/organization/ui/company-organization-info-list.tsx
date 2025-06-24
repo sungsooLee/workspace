@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useRouter } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { cn } from '@learnway/shared';
@@ -12,7 +11,6 @@ import { queryOptions as departmentQuery } from '@entities/department/service/de
 import { hmgQueryOptions as hmgDepartmentQuery } from '@entities/department/service/hmg-department.queries';
 import { useDeleteDepartment } from '@entities/department/service/department.hook';
 import { EnGlobalConst } from '@types';
-import CompaniesService from '@entities/companies/api/companies';
 
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css';
 

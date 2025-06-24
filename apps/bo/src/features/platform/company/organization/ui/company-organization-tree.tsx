@@ -217,8 +217,8 @@ const TenantCompanyOrganizationTreeComponent = ({
       setDeptTreeData(transformedData);
       if (transformedData?.length > 0) {
         const root = transformedData[0];
-        const company = root?.children[0];
-        setSelectedNode(company);
+        const companyNode = root?.children[0];
+        setSelectedNode(companyNode);
       }
     }
   }, [departmentTreeData]);
@@ -232,8 +232,8 @@ const TenantCompanyOrganizationTreeComponent = ({
       setDeptTreeData(transformedData);
       if (transformedData?.length > 0) {
         const root = transformedData[0];
-        const company = root?.children[0];
-        setSelectedNode(company);
+        const companyNode = root?.children[0];
+        setSelectedNode(companyNode);
       }
     }
   }, [hmgDepartmentTreeData]);
@@ -363,18 +363,23 @@ const TenantCompanyOrganizationTreeComponent = ({
       return (
         <div className={'gap-10px flex'}>
           <div className={'flex items-center'}>
-            <Button
-              label={t('하위 조직 추가')}
-              variant={
-                node?.key === selectedNode?.key && formMode === EnFormMode.ADD ? 'primary' : 'gray2'
-              }
-              size="xs"
-              type="button"
-              stopPropagation
-              onClick={(e) => {
-                handleAppendSubOrganization(node, level);
-              }}
-            />
+            {company?.hrInfoManageType === 'MANUAL_MANAGE' && (
+              <Button
+                label={t('하위 조직 추가')}
+                variant={
+                  node?.key === selectedNode?.key && formMode === EnFormMode.ADD
+                    ? 'primary'
+                    : 'gray2'
+                }
+                size="xs"
+                type="button"
+                stopPropagation
+                onClick={(e) => {
+                  handleAppendSubOrganization(node, level);
+                }}
+                disabled={company?.hrInfoManageType === 'AUTO_MANAGE'}
+              />
+            )}
             <Button
               label={t('선택')}
               variant={

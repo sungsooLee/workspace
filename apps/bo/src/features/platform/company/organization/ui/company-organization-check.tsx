@@ -60,14 +60,20 @@ const CompanyOrganizationCheckComponent = ({ companyCode }: { companyCode: strin
 
   useEffect(() => {
     if (departmentTreeData) {
-      const transformedData = transformDepartmentApiDataToTreeData(departmentTreeData);
+      const transformedData = transformDepartmentApiDataToTreeData(
+        departmentTreeData,
+        t('러닝웨이 - 조직'),
+      );
       setDeptTreeData(transformedData);
     }
   }, [departmentTreeData]);
 
   useEffect(() => {
     if (hmgDepartmentTreeData) {
-      const transformedData = transformDepartmentApiDataToTreeData(hmgDepartmentTreeData);
+      const transformedData = transformDepartmentApiDataToTreeData(
+        hmgDepartmentTreeData,
+        t('조직'),
+      );
       setHmgDeptTreeData(transformedData);
     }
   }, [hmgDepartmentTreeData]);
