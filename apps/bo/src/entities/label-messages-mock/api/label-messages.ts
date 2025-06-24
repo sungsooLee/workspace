@@ -71,9 +71,9 @@ export default class LabelMessagesService {
   static async fetchChannelMock<T = any>(key?: string): Promise<T> {
     return new Promise((resolve) => {
       setTimeout(() => {
-        const response = getMockCourseType();
+        const response = getMockCourseType(key);
         resolve(response as T);
-      }, 3000);
+      }, 1000);
     }); // Mock 코드는 주석 처리 또는 삭제 필요
   }
 }
@@ -99,9 +99,9 @@ export const mockData = (params?: LabelMessagesQueryParams): PaginationResponse<
     if (!sortType) {
       return 0;
     } else if (sortKey && sortType === 'desc') {
-      return b[sortKey].localeCompare(a[sortKey]);
+      return b[sortKey]?.localeCompare(a[sortKey]);
     } else if (sortKey) {
-      return a[sortKey].localeCompare(b[sortKey]);
+      return a[sortKey]?.localeCompare(b[sortKey]);
     }
   });
   return {

@@ -269,6 +269,9 @@ export type UseDynamicFormResult = {
     isFieldRequired: (fieldName: string) => boolean;
   };
 
+  /** 필드 값 변화를 감시하는 함수 */
+  watch: UseFormReturn['watch'];
+
   /**   builders에  설정된 필드에 clearFormError 호출 과 value 값에 해당 하는 object를 리턴함 */
   getInitByBuilders: () => any;
 };
@@ -349,10 +352,15 @@ export interface OptionsConfig<T = any> {
   codeGroup?: CODE_GROUP_TYPE; // 옵션을 가져오기 위한 코드 그룹.
   options?: SelectOption[]; // 미리 정의된 정적 옵션
   api?: ApiProps; // 옵션을 가져오기 위한 API.
+  labelField?: string; // 옵션 레이블 필드
+  valueField?: string; // 옵션 값 필드
+  transformOptions?: (options: SelectOption[]) => SelectOption[]; // 옵션 변환 함수
   optionsNode?: {
+    // 옵션 노드 추가 옵션
     value: string | number;
     node: ReactNode;
-  }; // 옵션에 대한 커스텀 노드
+    hideLabel?: boolean; // 옵션 label 대신 커스텀 노드를 사용하고 싶을 때 사용
+  }[];
   [key: string]: any; // TODO. 기존 소스 에러 방지를 위해 추가해 둠
 }
 // TODO. Form 은 외부에서 주입이 가능하지만 SearchBox 는 외부 주입이 불가능 하므로 아래와 같은

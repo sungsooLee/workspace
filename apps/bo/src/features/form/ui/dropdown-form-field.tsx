@@ -19,19 +19,13 @@ const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormFieldT
       optionsConfig,
       dropdownConfig,
       currentOptionsState,
-      labelField = 'label',
-      valueField = 'value',
       ...props
     },
     ref,
   ) => {
-    const options = useFormOptions(
-      initOptions,
-      optionsConfig,
-      currentOptionsState,
-      labelField,
-      valueField,
-    );
+    const options = useFormOptions(initOptions, optionsConfig, currentOptionsState);
+
+    console.log('options', options);
 
     return (
       options && (
