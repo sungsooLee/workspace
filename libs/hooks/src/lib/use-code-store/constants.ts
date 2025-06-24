@@ -55,6 +55,7 @@ export const CODE_GROUP = {
   'pms.company.ApplicationProcess': 'pms.company.ApplicationProcess',
   'pms.company.ApprovalMatrix': 'pms.company.ApprovalMatrix',
   'pms.company.CompanyType': 'pms.company.CompanyType',
+  'pms.company.FileStorageType': 'pms.company.FileStorageType',
   'pms.company.HrDataSource': 'pms.company.HrDataSource',
   'pms.company.HrInfoManageType': 'pms.company.HrInfoManageType',
   'pms.company.IpAccessControlType': 'pms.company.IpAccessControlType',

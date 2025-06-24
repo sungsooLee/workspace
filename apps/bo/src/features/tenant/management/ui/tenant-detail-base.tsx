@@ -220,7 +220,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
 
       <ContentsRow>
         <FormRow provider={provider} name="isUsed" />
-        <FormRow provider={provider} name="fileStorageTypeChannel" />
+        <FormRow provider={provider} name="fileStorageTypeChannelList" />
         <FormRow provider={provider} name="fileStorageTypeBase" />
       </ContentsRow>
       <ContentsRow>
@@ -326,32 +326,23 @@ const formConfig: DynamicFormConfig = {
       guideText: t('보안 서약  사용 여부를 설정할 수 있습니다.'),
     },
     {
-      name: 'fileStorageTypeChannel',
-      type: 'radio-group',
+      name: 'fileStorageTypeChannelList',
+      type: 'checkbox-group',
       label: t('파일 저장 설정(채널)'),
-      value: '',
-      options: [
-        { label: 'AWS(국내)', value: 'AWS_INTERNAL' },
-        { label: 'AWS(해외)', value: 'AWS_EXTERNAL' },
-        { label: 'HMG Cloud', value: 'HMG_CLOUD' },
-      ],
-      // optionsConfig: {
-      //   codeGroup: CODE_GROUP['pms.company.CompanyType'],
-      // },
+      format: 'array',
+      value: [],
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.company.FileStorageType'],
+      },
     },
     {
       name: 'fileStorageTypeBase',
       type: 'radio-group',
       label: t('파일 저장 설정(채널 외)'),
-      value: '',
-      options: [
-        { label: 'AWS(국내)', value: 'AWS_INTERNAL' },
-        { label: 'AWS(해외)', value: 'AWS_EXTERNAL' },
-        { label: 'HMG Cloud', value: 'HMG_CLOUD' },
-      ],
-      // optionsConfig: {
-      //   codeGroup: CODE_GROUP['pms.company.CompanyType'],
-      // },
+      value: 'AWS_INTERNAL',
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.company.FileStorageType'],
+      },
     },
     {
       name: 'tenantDesc',
@@ -461,7 +452,7 @@ const formConfig: DynamicFormConfig = {
     tenantTagList: { required: true },
     companyTenantList: { required: true },
     isUsed: { required: true },
-    channelFile: { required: true },
+    fileStorageTypeChannelList: { required: true },
     device: {
       required: {
         fn: (values) => {
