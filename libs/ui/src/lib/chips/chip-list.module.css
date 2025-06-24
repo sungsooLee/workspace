@@ -32,7 +32,7 @@
   &.wordwrap {
     @apply min-h-[120px] p-[12px];
     & + [class*='btn_search'] {
-      @apply !mt-[12px];
+      @apply !mt-[8px];
     }
   }
   &.readonly {

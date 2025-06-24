@@ -1,8 +1,8 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 import type { TreeNode, TreeProps } from './type';
 import { useMemo, useState } from 'react';
 import { Button } from '../button/button';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import styles from './tree.module.css'; // Tree module CSS
 import { cn } from '@learnway/shared';
 import { TreeView } from './tree';
@@ -11,6 +11,7 @@ import { TreeBox } from './tree-box';
 import { Checkbox } from '../checkbox/checkbox';
 import { CountText } from '../elements/count-text/count-text';
 import { t } from 'i18next';
+import { FormSubTitle } from '../base-form/form-sub-title';
 
 type Props = Pick<TreeProps, 'onCustomNodeClick' | 'treeId' | 'searchKeyword'> & {
   sourceTitle?: string;
@@ -172,39 +173,42 @@ export const ShuttleTreeToChips = ({
         <IcoNarrowRight width={24} height={24} stroke={'#C8d2e5'} />
       </div>
       <div className={layoutStyles.inner}>
-        <div className={titleStyles.title_wrap}>
-          <h3 className={titleStyles.title}>{targetTitle || title}</h3>
-          <div className={layoutStyles.btn_wrap}>
-            {showConditionSettings &&
-              (isConditionSettingsMode ? (
-                <Button
-                  variant="text"
-                  size="sm"
-                  className={layoutStyles.btn_text}
-                  onClick={() => handleSetIsConditionSettingsMode(false)}
-                >
-                  {'조건적용'}
-                </Button>
-              ) : (
-                <Button
-                  variant="text"
-                  size="sm"
-                  className={layoutStyles.btn_text}
-                  onClick={() => handleSetIsConditionSettingsMode(true)}
-                >
-                  {'조건설정'}
-                </Button>
-              ))}
-            <Button
-              variant="text"
-              size="sm"
-              className={layoutStyles.btn_text}
-              onClick={handleRemoveAllItem}
-            >
-              {t('LABEL.button.deleteAll')}
-            </Button>
-          </div>
-        </div>
+        <FormSubTitle
+          label={targetTitle || title}
+          actionNode={
+            <>
+              {showConditionSettings &&
+                (isConditionSettingsMode ? (
+                  <Button
+                    variant="text"
+                    size="sm"
+                    className={layoutStyles.btn_text}
+                    onClick={() => handleSetIsConditionSettingsMode(false)}
+                  >
+                    {'조건적용'}
+                  </Button>
+                ) : (
+                  <Button
+                    variant="text"
+                    size="sm"
+                    className={layoutStyles.btn_text}
+                    onClick={() => handleSetIsConditionSettingsMode(true)}
+                  >
+                    {'조건설정'}
+                  </Button>
+                ))}
+              <Button
+                variant="text"
+                size="sm"
+                className={layoutStyles.btn_text}
+                onClick={handleRemoveAllItem}
+              >
+                {t('LABEL.button.deleteAll')}
+              </Button>
+            </>
+          }
+          underLine={true}
+        />
         <div className={styles.data_wrap}>
           {actualSelectedItems.length === 0 ? (
             <div className={styles.no_data}>{t('LABEL.noData', { type: t('LABEL.selected') })}</div>

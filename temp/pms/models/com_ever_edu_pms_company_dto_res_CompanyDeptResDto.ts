@@ -2,10 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_pms_company_dto_res_CompanyLoginRestrictionResDto } from './com_ever_edu_pms_company_dto_res_CompanyLoginRestrictionResDto';
-/**
- * 부서
- */
+import type { com_ever_edu_pms_company_dto_res_CompanyDeptSimpleResDto } from './com_ever_edu_pms_company_dto_res_CompanyDeptSimpleResDto';
 export type com_ever_edu_pms_company_dto_res_CompanyDeptResDto = {
     /**
      * 부서ID
@@ -28,6 +25,10 @@ export type com_ever_edu_pms_company_dto_res_CompanyDeptResDto = {
      */
     managerEmployeeNumber?: string;
     /**
+     * 매니저 사원번호 Uuid
+     */
+    managerEmployeeNumberUuid?: string;
+    /**
      * 매니저 성명
      */
     managerName?: string;
@@ -40,6 +41,10 @@ export type com_ever_edu_pms_company_dto_res_CompanyDeptResDto = {
      */
     deptEngName?: string;
     /**
+     * 부서 설명
+     */
+    deptDesc?: string;
+    /**
      * 사용여부
      */
     isUsed?: boolean;
@@ -50,7 +55,7 @@ export type com_ever_edu_pms_company_dto_res_CompanyDeptResDto = {
     /**
      * 상위부서코드
      */
-    parent?: number;
+    parentDeptId?: number;
     /**
      * 부서 구성원 수
      */
@@ -72,9 +77,9 @@ export type com_ever_edu_pms_company_dto_res_CompanyDeptResDto = {
      */
     companyType?: com_ever_edu_pms_company_dto_res_CompanyDeptResDto.companyType;
     /**
-     * 로그인 제한 정보
+     * 상위 부서리스트
      */
-    companyLoginRestrictionList?: Array<com_ever_edu_pms_company_dto_res_CompanyLoginRestrictionResDto>;
+    parentDeptList?: Array<com_ever_edu_pms_company_dto_res_CompanyDeptSimpleResDto>;
     /**
      * 등록자ID
      */
@@ -92,7 +97,7 @@ export type com_ever_edu_pms_company_dto_res_CompanyDeptResDto = {
      */
     modifiedDate?: string;
     /**
-     * 하위메뉴
+     * 하위부서
      */
     childList?: Array<com_ever_edu_pms_company_dto_res_CompanyDeptResDto>;
 };

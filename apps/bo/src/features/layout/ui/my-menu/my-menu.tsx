@@ -1,4 +1,4 @@
-import { memo, useMemo, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { ChipList, Popover, List, Button } from '@learnway/ui';
@@ -32,6 +32,9 @@ const PopoverContent = () => {
     userNo: authUser?.userId,
   });
 
+  // 즐겨찾기 메뉴
+  const [list, setList] = useState<any[]>([]);
+
   const { updateMenu } = useUpdateUser();
   const { asyncMenus } = useAsycFetchMenusForceRefatch();
   const { deleteMenuFavorites } = useDeleteMenuFavorites();
@@ -53,18 +56,33 @@ const PopoverContent = () => {
     }));
   }, [menus]);
 
-  // 즐겨찾기 메뉴
-  const menuFavoritesOptions = useMemo(() => {
-    if (!menuFavorites) return [];
-    return menuFavorites?.map((menu: any) => ({
-      ...menu,
-      id: menu.menuId,
-      name:
-        import.meta.env.VITE_LANGUAGE_DEV === 'true'
-          ? t(`${menu.menuName}`)
-          : t(`HRD_CENTER_MENU.${menu.menuCode}`),
-    }));
+  useEffect(() => {
+    if (!menuFavorites) return;
+
+    setList(
+      menuFavorites?.map((menu: any) => ({
+        ...menu,
+        id: menu.menuId,
+        name:
+          import.meta.env.VITE_LANGUAGE_DEV === 'true'
+            ? t(`${menu.menuName}`)
+            : t(`HRD_CENTER_MENU.${menu.menuCode}`),
+      })),
+    );
   }, [menuFavorites]);
+
+  // 즐겨찾기 메뉴
+  // const menuFavoritesOptions = useMemo(() => {
+  //   if (!menuFavorites) return [];
+  //   return menuFavorites?.map((menu: any) => ({
+  //     ...menu,
+  //     id: menu.menuId,
+  //     name:
+  //       import.meta.env.VITE_LANGUAGE_DEV === 'true'
+  //         ? t(`${menu.menuName}`)
+  //         : t(`HRD_CENTER_MENU.${menu.menuCode}`),
+  //   }));
+  // }, [menuFavorites]);
 
   // 즐겨찾기 별표시 상태 ( 별표시 누르면 메뉴 삭제라서 제거 )
   // const [isFavorites, setIsFavorites] = useState<boolean[]>([true, true, true, true, true]);
@@ -79,9 +97,9 @@ const PopoverContent = () => {
     //   return newToggled;
     // });
 
-    console.log('menuOptions[index] :: ', menuFavoritesOptions[index]);
+    console.log('menuOptions[index] :: ', list[index]);
 
-    deleteMenuFavorites(menuFavoritesOptions[index].id, {
+    deleteMenuFavorites(list[index].id, {
       onSuccess: async (data: any) => {
         console.log('data', data);
         refetch();
@@ -90,9 +108,7 @@ const PopoverContent = () => {
           updateMenu(menus);
           setActiveMenuDepth((prev) => {
             return prev?.map((menu) =>
-              menu.menuId === menuFavoritesOptions[index].id
-                ? { ...menu, isFavorite: false }
-                : menu,
+              menu.menuId === list[index].id ? { ...menu, isFavorite: false } : menu,
             );
           });
         }
@@ -131,10 +147,10 @@ const PopoverContent = () => {
         )}
       </div>
       <strong className={styles.tit}>{t('LABEL.common.favorites')}</strong>
-      {menuFavoritesOptions?.length > 0 ? (
+      {list?.length > 0 ? (
         <div className={styles.menu_list}>
           <List
-            options={menuFavoritesOptions}
+            options={list}
             // value={value}
             valueField={'id'}
             draggable
@@ -162,18 +178,28 @@ const PopoverContent = () => {
             )}
             onOptionsOrderChange={(newOptions: any, over: any) => {
               if (over && newOptions && newOptions[over.index])
-                moveMenuFavorites(
-                  {
-                    favoritesMenuId: newOptions[over.index].favoritesMenuId,
-                    sortOrder: over.index + 1,
-                  },
-                  {
-                    onSuccess: (data: any) => {
-                      console.log('data', data);
-                      refetch();
-                    },
-                  },
+                setList(
+                  newOptions?.map((menu: any) => ({
+                    ...menu,
+                    id: menu.menuId,
+                    name:
+                      import.meta.env.VITE_LANGUAGE_DEV === 'true'
+                        ? t(`${menu.menuName}`)
+                        : t(`HRD_CENTER_MENU.${menu.menuCode}`),
+                  })),
                 );
+              moveMenuFavorites(
+                {
+                  favoritesMenuId: newOptions[over.index].favoritesMenuId,
+                  sortOrder: over.index + 1,
+                },
+                {
+                  onSuccess: (data: any) => {
+                    console.log('data', data);
+                    refetch();
+                  },
+                },
+              );
             }}
           />
         </div>

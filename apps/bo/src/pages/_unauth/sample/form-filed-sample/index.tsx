@@ -19,6 +19,7 @@ import { ChannelListModal, ManagerListModal, TeacherListModal } from '@features/
 import { ContentsButtons, MainContents, PageContainer } from '@widgets/layout';
 import { FormRow } from '@shared/ui';
 import { SubContents } from '@widgets/layout/ui/container/slot/sub-contents';
+import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
 
 export const Route = createFileRoute('/_unauth/sample/form-filed-sample/')({
   component: RouteComponent,
@@ -71,6 +72,10 @@ function RouteComponent() {
           />
         </ContentsButtons>
         <MainContents>
+          {/* dropdown */}
+          <ContentsRow>
+            <FormRow provider={provider} name={'Dropdown'} element={<DropdownFormField />} />
+          </ContentsRow>
           {/* 라디오 */}
           <ContentsRow>
             <FormRow provider={provider} name={'라디오'} />
@@ -280,6 +285,12 @@ function RouteComponent() {
  */
 const formConfig: DynamicFormConfig = {
   builders: [
+    {
+      name: 'Dropdown',
+      type: 'custom',
+      label: 'Dropdown - DropdownFormField',
+      value: '',
+    },
     {
       name: '폰넘버',
       type: 'custom',
