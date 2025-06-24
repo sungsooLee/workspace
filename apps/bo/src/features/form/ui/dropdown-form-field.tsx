@@ -6,6 +6,8 @@ interface DropdownFormFieldType extends BaseFormFieldProps<string> {
   options?: SelectOption[];
   optionsConfig?: OptionsConfig;
   dropdownConfig?: DropdownComponentProps;
+  labelField?: string;
+  valueField?: string;
 }
 
 const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormFieldType>(
@@ -17,13 +19,19 @@ const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormFieldT
       optionsConfig,
       dropdownConfig,
       currentOptionsState,
+      labelField = 'label',
+      valueField = 'value',
       ...props
     },
     ref,
   ) => {
-    const options = useFormOptions(initOptions, optionsConfig, currentOptionsState);
-
-    console.log('options', options);
+    const options = useFormOptions(
+      initOptions,
+      optionsConfig,
+      currentOptionsState,
+      labelField,
+      valueField,
+    );
 
     return (
       options && (

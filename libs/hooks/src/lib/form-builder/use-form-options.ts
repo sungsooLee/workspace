@@ -8,11 +8,15 @@ import { OptionsConfig, SelectOption } from './type';
  * @param options
  * @param optionsConfig
  * @param currentOptionsState
+ * @param labelField
+ * @param valueField
  */
 const useFormOptionsHook = (
   options?: SelectOption[],
   optionsConfig?: OptionsConfig,
   currentOptionsState?: [SelectOption[], (options: SelectOption[]) => void],
+  labelField = 'label',
+  valueField = 'value',
 ) => {
   const internalOptionsState = useState<SelectOption[]>([]);
   const [currentOptions, setCurrentOptions] = currentOptionsState || internalOptionsState;
@@ -30,6 +34,17 @@ const useFormOptionsHook = (
   };
 
   /**
+   * 필드 매핑을 적용하는 함수
+   */
+  const applyFieldMapping = (options: any[]): SelectOption[] => {
+    return options.map((option) => ({
+      ...option,
+      label: option[labelField] || option.label || '',
+      value: option[valueField] || option.value || '',
+    }));
+  };
+
+  /**
    * CodeGroup에서 옵션을 가져오는 함수
    */
   const getCodeGroupOptions = async (codeGroup: string): Promise<SelectOption[]> => {
@@ -37,7 +52,8 @@ const useFormOptionsHook = (
     const optionConfigOptions: SelectOption[] = optionsConfig?.options || [];
     const codeStoreOptions = await getCode(codeGroup);
     const allOptions = [...optionConfigOptions, ...codeStoreOptions];
-    return applyTranslation(allOptions);
+    const mappedOptions = applyFieldMapping(allOptions);
+    return applyTranslation(mappedOptions);
   };
 
   /**
@@ -46,7 +62,8 @@ const useFormOptionsHook = (
   const getApiOptions = async (api: OptionsConfig['api']): Promise<SelectOption[]> => {
     if (!api) return [];
     const { fn, params } = api;
-    return await fn(params);
+    const apiOptions = await fn(params);
+    return applyFieldMapping(apiOptions);
   };
 
   /**
@@ -76,9 +93,10 @@ const useFormOptionsHook = (
 
   useEffect(() => {
     if (options) {
-      setCurrentOptions(options);
+      const mappedOptions = applyFieldMapping(options);
+      setCurrentOptions(mappedOptions);
     }
-  }, [options?.length]);
+  }, [options?.length, labelField, valueField]);
 
   return currentOptions;
 };
