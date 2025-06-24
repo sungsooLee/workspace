@@ -1,0 +1,14 @@
+.nlp--badge {
+  &.xs {
+    @apply h-[2.2rem];
+  }
+  &.sm {
+    @apply h-[2.4rem];
+  }
+  &.md {
+    @apply h-[3.2rem] rounded-[6px];
+  }
+  &.lg {
+    @apply h-[4.4rem] rounded-[8px];
+  }
+}

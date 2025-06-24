@@ -2,7 +2,10 @@
   &.badge {
     @apply inline-flex h-auto w-auto items-center justify-center overflow-hidden bg-transparent text-center;
     .label {
-      @apply pointer-events-none flex items-center justify-center !bg-transparent px-0;
+      @apply pointer-events-none flex items-center justify-center !bg-transparent px-0 font-normal;
+      &.bold {
+        @apply !font-semibold;
+      }
     }
     &.dot {
       @apply h-[8px] w-[8px] rounded-[4px];
@@ -70,6 +73,30 @@
       }
       button {
         @apply !h-auto leading-[11px];
+      }
+    }
+    &.rounded_full {
+      @apply !rounded-full;
+    }
+    &.gray {
+      @apply rounded-[4px] bg-[var(--gray95)];
+      .label {
+        @apply label-sm text-[var(--gray10)];
+      }
+      &.outline {
+        @apply border border-solid border-[var(--gray85)] bg-white;
+        .label {
+          @apply label-sm text-[var(--gray35)];
+        }
+      }
+    }
+    &.primary {
+      @apply rounded-[4px] bg-[var(--blue50)];
+      .label {
+        @apply label-sm text-white;
+        &.bold {
+          @apply label-sm-b;
+        }
       }
     }
   }
