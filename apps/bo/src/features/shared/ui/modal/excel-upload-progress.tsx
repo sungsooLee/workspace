@@ -10,18 +10,36 @@ import {
   IcoUploadCloud,
 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { UploadFile } from '@learnway/hooks';
+import { formatFileSize, UploadStatus } from '@learnway/hooks';
 import { useDropzone } from 'react-dropzone';
 
-// 바이트를 자동 포맷된 문자열로 변환
-export const dpSize = (bytes: number, digits = 2): string => {
-  if (!bytes || bytes === 0) return '';
-  if (bytes < 1024 * 1024) return `${bytes.toLocaleString()} B`;
-  if (bytes < 1024 * 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(digits)} MB`;
-  return `${(bytes / (1024 * 1024 * 1024)).toFixed(digits)} GB`;
-};
+export interface UploadFile {
+  file: File; // 파일
+  extension: string; // 확장자
+  name: string; // 실제 원본 파일명
+  size: number; // 파일 사이즈
+  displaySize: string; // 포맷팅된 사이즈
+  progress: number; // 업로드 Progress
+  status: UploadStatus; // 파일 상태
+  message?: string;
+}
 
-const DndFileProgressComponent: FC<any> = ({
+interface FileProgressProps {
+  files: UploadFile[];
+  addFiles: (files: File[]) => void;
+  onRemove?: (fileId: string) => void;
+  onRetry?: (fileId: string) => void;
+  onPause?: (id: string) => void;
+  onResume?: (id: string) => void;
+  acceptFiles: string[] | string;
+  maxFileCount: number;
+  maxFileSize: number;
+  wrapSize?: string;
+  guideText?: string;
+  errorMessage?: string;
+}
+
+const DndFileProgressComponent: FC<FileProgressProps> = ({
   files,
   addFiles,
   onRemove,
@@ -34,6 +52,7 @@ const DndFileProgressComponent: FC<any> = ({
 }) => {
   const acceptFileString = useMemo(() => {
     if (!acceptFiles) return '';
+    if (typeof acceptFiles === 'string') return acceptFiles;
     return acceptFiles
       .map((acceptFile: any) => (acceptFile.startsWith('.') ? acceptFile : `.${acceptFile}`))
       .join(', ')
@@ -103,7 +122,7 @@ const DndFileProgressComponent: FC<any> = ({
      */
     const renderDeleteButton = (hasDelete = true) =>
       hasDelete && (
-        <Button className={styles.btn_delete} onlyIcon onClick={() => onRemove(file.id)}>
+        <Button className={styles.btn_delete} onlyIcon onClick={() => onRemove?.(file.name)}>
           <IcoTrash03 width={20} height={20} stroke="#131C30" />
         </Button>
       );
@@ -120,7 +139,7 @@ const DndFileProgressComponent: FC<any> = ({
       uploading: (
         <>
           {renderControl(
-            <Button className={styles.btn_status} onlyIcon onClick={() => onPause(file.id)}>
+            <Button className={styles.btn_status} onlyIcon onClick={() => onPause?.(file.name)}>
               <IcoPause width={20} height={20} fill="#A9AFB8" />
             </Button>,
           )}
@@ -133,7 +152,7 @@ const DndFileProgressComponent: FC<any> = ({
       idle: (
         <>
           {renderControl(
-            <Button className={styles.btn_status} onlyIcon onClick={() => onPause(file.id)}>
+            <Button className={styles.btn_status} onlyIcon onClick={() => onPause?.(file.name)}>
               <IcoPause width={20} height={20} fill="#A9AFB8" />
             </Button>,
           )}
@@ -192,7 +211,9 @@ const DndFileProgressComponent: FC<any> = ({
             <Button
               className={styles.btn_status}
               onlyIcon
-              onClick={() => (file.status === 'paused' ? onResume(file.id) : onRetry(file.id))}
+              onClick={() =>
+                file.status === 'paused' ? onResume?.(file.name) : onRetry?.(file.name)
+              }
             >
               <IcoRefresh width={20} height={20} fill="#00AFD5" />
             </Button>,
@@ -218,7 +239,7 @@ const DndFileProgressComponent: FC<any> = ({
               </strong>
               <span
                 className={styles.file_guide}
-              >{`${acceptFileString} ${maxFileCount === 1 ? ` / 최대 1개 파일` : ''} ${maxFileSize ? `/ Max file size : ${dpSize(maxFileSize)}` : ''} `}</span>
+              >{`${acceptFileString} ${maxFileCount === 1 ? ` / 최대 1개 파일` : ''} ${maxFileSize ? `/ Max file size : ${formatFileSize(maxFileSize)}` : ''} `}</span>
               <input {...getInputProps()} accept={acceptFileString} />
             </Button>
           </div>
@@ -227,11 +248,11 @@ const DndFileProgressComponent: FC<any> = ({
         {/* 파일 업로드 후 */}
         {files.length > 0 && (
           <div className={styles.upload_status}>
-            {files.map((file: any) => (
-              <div className={styles.file_item}>
+            {files.map((file) => (
+              <div className={styles.file_item} key={file.name}>
                 <div className={styles.file_name}>
                   <IcoFileExcel width={'24'} height={'25'} className={styles.icon_type} />
-                  <em className={styles.name}>{file.fileName}</em>
+                  <em className={styles.name}>{file.name}</em>
                 </div>
                 <p className={styles.status_view}>
                   <em className={styles.file_size}>{file.displaySize}</em>

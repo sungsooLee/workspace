@@ -6,9 +6,10 @@ import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-content
 import { cn, httpService } from '@learnway/shared';
 import { IcoDownload } from '@learnway/icons';
 import { NoticeBox } from '@shared/ui';
-import { useS3Uploader } from '@learnway/hooks';
-import { ExcelUploadProgress } from './excel-upload-progress'; // 파일 업로드
+import { formatFileSize, useS3Uploader } from '@learnway/hooks';
+import { ExcelUploadProgress, UploadFile } from './excel-upload-progress'; // 파일 업로드
 import { PMSApiPrefix } from '@learnway/config';
+import { compact } from 'lodash';
 
 interface ExcelUploadModalProps {
   validateUrl: string;
@@ -27,6 +28,18 @@ interface ValidationResult {
     row: number;
     message: string;
   }>;
+}
+
+function toUploadFile(file: File): UploadFile {
+  return {
+    file,
+    extension: file.name.split('.').pop() || '',
+    name: file.name,
+    size: file.size,
+    displaySize: formatFileSize(file.size),
+    progress: 0,
+    status: 'validating',
+  };
 }
 
 const ExcelUploadModalComponent = ({
@@ -185,7 +198,7 @@ const ExcelUploadModalComponent = ({
             onRetry={onRetry}
           /> */}
           <ExcelUploadProgress
-            files={[]}
+            files={compact([uploadedFile]).map(toUploadFile)}
             maxFileCount={maxFileCount}
             maxFileSize={maxFileSize}
             addFiles={handleFileSelect}
