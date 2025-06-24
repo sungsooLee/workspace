@@ -70,8 +70,10 @@ export default class LabelMessagesService {
    */
   static async fetchChannelMock<T = any>(key?: string): Promise<T> {
     return new Promise((resolve) => {
-      const response = getMockCourseType();
-      resolve(response as T);
+      setTimeout(() => {
+        const response = getMockCourseType();
+        resolve(response as T);
+      }, 3000);
     }); // Mock 코드는 주석 처리 또는 삭제 필요
   }
 }

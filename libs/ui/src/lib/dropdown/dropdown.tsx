@@ -15,7 +15,7 @@ import { t } from 'i18next';
 import { ALL_OPTION } from '@learnway/hooks';
 
 export interface ReactSelectComponentProps {
-  options: DropdownOption[];
+  options: any[]; // DropdownOption[]에서 any[]로 변경
   value?: DropdownOption | readonly DropdownOption[] | null;
   defaultValue?: SingleValue<DropdownOption> | MultiValue<DropdownOption>;
   placeholder?: string;
@@ -34,6 +34,8 @@ export interface ReactSelectComponentProps {
   className?: string;
   name?: string;
   noOptionsMessage?: string;
+  labelField?: string; // 추가
+  valueField?: string; // 추가
   onBlur?: () => void;
   onChange?: (
     newValue: SingleValue<DropdownOption> | MultiValue<DropdownOption>,
@@ -185,11 +187,22 @@ const PrimitiveComponent = forwardRef<any, ReactSelectComponentProps>(
       name,
       noOptionsMessage,
       onBlur,
+      labelField = 'label',
+      valueField = 'value',
       ...props
     },
     ref,
   ) => {
     const uuid = useCreation(() => getRandomId(), []);
+
+    // 옵션을 react-select 형식으로 변환
+    // const normalizedOptions = useMemo(() => {
+    //   return options.map((option) => ({
+    //     value: option[valueField],
+    //     label: option[labelField],
+    //     originalData: option, // 원본 데이터 보존
+    //   }));
+    // }, [options, labelField, valueField]);
 
     // const dropdownClass = `nlp--dropdown nlp--dropdown-${size} nlp--dropdown-${variant} ${className} w-full`;
     const dropdownClass = `select_wrap nlp--dropdown-${size} nlp--dropdown-${variant} ${className} `;
@@ -217,6 +230,8 @@ const PrimitiveComponent = forwardRef<any, ReactSelectComponentProps>(
     const handleMenuOpen = () => {
       setIsMenuOpen(true);
     };
+
+    console.log('-------------------222', { options, labelField, valueField });
 
     return (
       <div
@@ -280,16 +295,27 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
       disabled,
       readOnly,
       noOptionsMessage,
+      labelField = 'label',
+      valueField = 'value',
       ...props
     },
     ref,
   ) => {
+    // 옵션을 react-select 형식으로 변환
+    const normalizedOptions = useMemo(() => {
+      return options.map((option) => ({
+        value: option[valueField],
+        label: option[labelField],
+        originalData: option,
+      }));
+    }, [options, labelField, valueField]);
+
     const optionsWithPreset = useMemo(
       () => [
         ...(presetOptionLabel ? [{ value: ALL_OPTION, label: presetOptionLabel }] : []),
-        ...options,
+        ...normalizedOptions,
       ],
-      [options, isMulti, presetOptionLabel],
+      [normalizedOptions, isMulti, presetOptionLabel],
     );
 
     useEffect(() => {
@@ -377,8 +403,11 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
       }
     };
 
+    console.log('-------------------', { optionsWithPreset, labelField, valueField });
+
     return (
       <PrimitiveComponent
+        {...props}
         ref={ref}
         value={selectedOptions as DropdownOption | DropdownOption[]}
         onChange={handleChange}
@@ -388,7 +417,8 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
         isReadonly={readOnly}
         isDisabled={disabled}
         noOptionsMessage={noOptionsMessage}
-        {...props}
+        labelField={labelField}
+        valueField={valueField}
       />
     );
   },

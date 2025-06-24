@@ -71,22 +71,6 @@ function RouteComponent() {
           />
         </ContentsButtons>
         <MainContents>
-          {/* dropdown */}
-          <ContentsRow>
-            <FormRow
-              provider={provider}
-              name={'Dropdown'}
-              element={
-                <DropdownFormField
-                  optionsConfig={{
-                    api: {
-                      fn: LabelMessagesService.fetchChannelMock,
-                    },
-                  }}
-                />
-              }
-            />
-          </ContentsRow>
           {/* 라디오 */}
           <ContentsRow>
             <FormRow provider={provider} name={'라디오'} />
@@ -132,6 +116,27 @@ function RouteComponent() {
                       ),
                     },
                   ]}
+                />
+              }
+            />
+          </ContentsRow>
+          {/* dropdown */}
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name={'Dropdown'}
+              element={
+                <DropdownFormField
+                  dropdownConfig={{
+                    labelField: 'cdName',
+                    valueField: 'cdId',
+                  }}
+                  optionsConfig={{
+                    api: {
+                      fn: LabelMessagesService.fetchChannelMock,
+                      params: {},
+                    },
+                  }}
                 />
               }
             />
@@ -269,7 +274,7 @@ function RouteComponent() {
             <FormRow provider={provider} name={'썸네일'} />
           </ContentsRow>
           {/* 폰넘버 */}
-          <ContentsRow>
+          {/* <ContentsRow>
             <FormRow
               provider={provider}
               name={'폰넘버'}
@@ -281,7 +286,7 @@ function RouteComponent() {
                 />
               }
             />
-          </ContentsRow>
+          </ContentsRow> */}
         </MainContents>
         <SubContents>
           <Input />
