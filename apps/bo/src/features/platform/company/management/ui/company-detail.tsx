@@ -28,6 +28,7 @@ import CompaniesService from '@entities/companies/api/companies';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import { LoginAuthenticationSettingInformation } from './login-authentication-setting-information';
 
 const EMAIL_REGEX =
   /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
@@ -507,55 +508,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
       </ContentsRow>
 
       <FormSubTitle label={t('로그인 및 인증 설정 정보')} lineType="dark" />
-      <ContentsRow>
-        <ContentsRowItem>
-          <FormRow
-            provider={provider}
-            name={'isUseSso'}
-            className={dynamicFormStyles.form_item_horizontal}
-          />
-          <FormDisplay provider={provider} dependencies={[{ name: 'isUseSso', value: true }]}>
-            <FormRow
-              provider={provider}
-              name={'ssoTypeList'}
-              element={<CheckboxGroupFormField />}
-            />
-          </FormDisplay>
-        </ContentsRowItem>
-        <ContentsRowItem>
-          <FormRow provider={provider} name={'passwordAuthType'} />
-        </ContentsRowItem>
-      </ContentsRow>
-
-      <ContentsRow>
-        <ContentsRowItem>
-          <FormRow
-            provider={provider}
-            name={'isUseTwoFactorAuth'}
-            className={dynamicFormStyles.form_item_horizontal}
-          ></FormRow>
-          <FormDisplay
-            provider={provider}
-            dependencies={[{ name: 'isUseTwoFactorAuth', value: true }]}
-          >
-            <FormRow
-              provider={provider}
-              name={'twoFactorAuthPlatformTypeList'}
-              element={<CheckboxGroupFormField />}
-            />
-          </FormDisplay>
-        </ContentsRowItem>
-      </ContentsRow>
-      <FormDisplay provider={provider} dependencies={[{ name: 'isUseTwoFactorAuth', value: true }]}>
-        <ContentsRow>
-          <FormRow
-            className={dynamicFormStyles.w_half}
-            provider={provider}
-            name={'twoFactorAuthType'}
-            element={<RadioGroupFormField />}
-          />
-        </ContentsRow>
-      </FormDisplay>
+      <LoginAuthenticationSettingInformation provider={provider} />
 
       <div className="grid_wrap py-10">
         <GridBox

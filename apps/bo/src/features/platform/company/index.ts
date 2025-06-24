@@ -4,6 +4,7 @@ export * from './management/ui/company-detail-hr';
 export * from './management/ui/company-detail-ht-link';
 export * from './management/ui/company-detail';
 export * from './management/ui/company-list';
+export * from './management/ui/login-authentication-setting-information';
 export * from './organization/service/company-organization.service';
 export * from './organization/ui/company-organization-check';
 export * from './organization/ui/company-organization-detail-tree';
