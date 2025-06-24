@@ -173,6 +173,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
       parentRoleId: node.key.toString(),
       sortOrder: sortOrder,
     });
+    setSelectedRoleNode(node);
     setFormMode(EnFormMode.ADD);
   };
 
@@ -221,7 +222,11 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                 e.stopPropagation();
                 handlerAddButionClick(node);
               }}
-              variant="gray2"
+              variant={
+                formMode === EnFormMode.ADD && selectedRoleNode.key === node.key
+                  ? 'primary'
+                  : 'gray2'
+              }
               size={'xs'}
               type={'button'}
             >
@@ -237,10 +242,9 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
     <SectionLayout contentsRatio={'thirty'}>
       <TreeContainer>
         <TreeBox
-          maxDepth={5}
           data={roleTreeData}
           treeId="1"
-          type="SAME_LEVEL_ONLY"
+          type="SAME_PARENT_ONLY"
           showSearchKeyword
           initLevel={2}
           title={t('역할 목록')}
@@ -349,11 +353,11 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                           content: <CompanyShuttleModal />,
                           title: '',
                           width: 'xl',
-                          height: 'fix',
                         }}
                         chipList={{
                           labelField: 'name',
                           valueField: 'companyId',
+                          wordwrap: true,
                         }}
                       />
                     }
@@ -418,7 +422,6 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                         modalConfig={{
                           title: '',
                           width: 'xl',
-                          height: 'fix',
                           content: <ChannelListChoiceModal />,
                         }}
                       />

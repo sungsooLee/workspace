@@ -75,7 +75,7 @@ const searchConfig: SearchBoxConfig = {
         value: '',
         presetOptionLabel: t('LABEL.form.label.select', '선택'),
         options: [],
-        format: 'number',
+        format: 'object',
         isSearchable: true,
         isClearable: true,
       },
