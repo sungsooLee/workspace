@@ -136,7 +136,7 @@ export function useLoginTimer() {
 
   const [remainingTime, setRemainingTime] = useState<string>('');
 
-  const intervalRef = useRef<NodeJS.Timer>();
+  const intervalRef = useRef<NodeJS.Timer | null>(null);
 
   useEffect(() => {
     if (!exp) return;
@@ -152,13 +152,21 @@ export function useLoginTimer() {
       const seconds = (remainingSeconds % 60).toString().padStart(2, '0');
 
       // setRemainingTime(`${hours}:${minutes}:${seconds}`);
-      setRemainingTime(`${minutes}:${seconds}`);
+
+      // remainingSeconds 음수 방지
+      if (remainingSeconds >= 0) {
+        setRemainingTime(`${minutes}:${seconds}`);
+      }
+
       if (remainingSeconds <= REISSUE_TIME && remainingSeconds > 0 && !showAlert) {
         setShowAlert(true);
         handleReissue();
-      } else if (remainingSeconds === 0) {
-        handleLogout();
-        intervalRef.current && clearInterval(intervalRef.current);
+      } else if (remainingSeconds <= 0) {
+        if (intervalRef.current) {
+          handleLogout();
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
+        }
       }
     };
 
