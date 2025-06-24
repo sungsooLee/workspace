@@ -22,12 +22,12 @@ const CompanyOrganizationInfoListComponent = ({
   companyCode,
   showType,
   deptId,
-  companyHrInfoManageType,
+  //companyHrInfoManageType,
 }: {
   companyCode: string;
   showType: string;
   deptId: number;
-  companyHrInfoManageType: string;
+  //companyHrInfoManageType: string;
 }) => {
   const { confirm: openConfirm, alert: openAlert } = useModal();
   const [gridConfig, setGridConfig] = useState<any>(gridConfigOrg);
@@ -103,7 +103,7 @@ const CompanyOrganizationInfoListComponent = ({
     }),
   ] as ColumnDef<any, unknown>[];
 
-  if (showType === EnOrganizationShowType.platform && companyHrInfoManageType === 'MANUAL_MANAGE') {
+  if (showType === EnOrganizationShowType.platform) {
     const checkboxColumn = columnHelper.accessor('checkbox', {
       // 상태에 따른 checkbox disabled를 위해 checkbox 따로 구현
       id: 'select-check',
@@ -171,24 +171,12 @@ const CompanyOrganizationInfoListComponent = ({
           <GridBox
             config={gConfig}
             columns={columns}
-            showNumberingColumn={
-              showType === EnOrganizationShowType.origin ||
-              companyHrInfoManageType !== 'MANUAL_MANAGE'
-            }
+            showNumberingColumn={showType === EnOrganizationShowType.origin}
             hideRowSelectionCheckBox
-            multiple={
-              showType === EnOrganizationShowType.platform &&
-              companyHrInfoManageType === 'MANUAL_MANAGE'
-            }
+            multiple={showType === EnOrganizationShowType.platform}
             title={t('조직 목록')}
-            showRemove={
-              showType === EnOrganizationShowType.platform &&
-              companyHrInfoManageType === 'MANUAL_MANAGE'
-            }
-            excelButtons={
-              showType === EnOrganizationShowType.platform &&
-              companyHrInfoManageType === 'MANUAL_MANAGE' && <GridExcelUploadButton />
-            }
+            showRemove={showType === EnOrganizationShowType.platform}
+            excelButtons={showType === EnOrganizationShowType.platform && <GridExcelUploadButton />}
             onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
             onRemoveClick={handleRemoveClick}
           />

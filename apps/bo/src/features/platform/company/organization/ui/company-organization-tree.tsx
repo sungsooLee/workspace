@@ -72,7 +72,7 @@ const TenantCompanyOrganizationTreeComponent = ({
   const [formMode, setFormMode] = useState(EnFormMode.NONE);
   const [pathString, setPathString] = useState<string>();
   const [disableEditing, setDisableEditing] = useState(false);
-  const [company, setCompany] = useState<any>();
+  //const [company, setCompany] = useState<any>();
 
   const { provider, fetchData, onSubmit, onFormChange, getValues, getInitByBuilders, control } =
     useDynamicForm(formConfig);
@@ -173,7 +173,7 @@ const TenantCompanyOrganizationTreeComponent = ({
         companyCode={companyCode}
         showType={showType}
         deptId={selectedNode?.deptId}
-        companyHrInfoManageType={company?.hrInfoManageType}
+        //companyHrInfoManageType={company?.hrInfoManageType}
       />
     );
   };
@@ -188,14 +188,14 @@ const TenantCompanyOrganizationTreeComponent = ({
     );
   };
 
-  useEffect(() => {
-    // 부서 수정/삭제 시 회사의 인사 데이터 수동 관리 유형을 확인하기 위해 조회
-    const init = async () => {
-      const data: any[] = await CompaniesService.fetch(companyCode);
-      setCompany({ ...data });
-    };
-    init();
-  }, []);
+  // useEffect(() => {
+  //   // 부서 수정/삭제 시 회사의 인사 데이터 수동 관리 유형을 확인하기 위해 조회
+  //   const init = async () => {
+  //     const data: any[] = await CompaniesService.fetch(companyCode);
+  //     setCompany({ ...data });
+  //   };
+  //   init();
+  // }, []);
 
   useEffect(() => {
     if (viewNode) {
@@ -271,11 +271,11 @@ const TenantCompanyOrganizationTreeComponent = ({
       console.log('### fetchData', data);
       fetchData(data);
       setDisableEditing(
-        company.hrInfoManageType === 'AUTO_MANAGE' ||
-          departmentData.hrInfoManageType === 'AUTO_MANAGE',
+        //company.hrInfoManageType === 'AUTO_MANAGE' ||
+        departmentData.hrInfoManageType === 'AUTO_MANAGE',
       );
-      console.log('### company', company);
-      console.log('#### company.hrInfoManageType', company.hrInfoManageType);
+      //console.log('### company', company);
+      //console.log('#### company.hrInfoManageType', company.hrInfoManageType);
       console.log('#### departmentData.hrInfoManageType', departmentData.hrInfoManageType);
     }
   }, [departmentData]);
@@ -363,23 +363,18 @@ const TenantCompanyOrganizationTreeComponent = ({
       return (
         <div className={'gap-10px flex'}>
           <div className={'flex items-center'}>
-            {company?.hrInfoManageType === 'MANUAL_MANAGE' && (
-              <Button
-                label={t('하위 조직 추가')}
-                variant={
-                  node?.key === selectedNode?.key && formMode === EnFormMode.ADD
-                    ? 'primary'
-                    : 'gray2'
-                }
-                size="xs"
-                type="button"
-                stopPropagation
-                onClick={(e) => {
-                  handleAppendSubOrganization(node, level);
-                }}
-                disabled={company?.hrInfoManageType === 'AUTO_MANAGE'}
-              />
-            )}
+            <Button
+              label={t('하위 조직 추가')}
+              variant={
+                node?.key === selectedNode?.key && formMode === EnFormMode.ADD ? 'primary' : 'gray2'
+              }
+              size="xs"
+              type="button"
+              stopPropagation
+              onClick={(e) => {
+                handleAppendSubOrganization(node, level);
+              }}
+            />
             <Button
               label={t('선택')}
               variant={
