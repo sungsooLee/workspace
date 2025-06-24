@@ -11,8 +11,9 @@ import { useEffect, useState } from 'react';
 import { SearchBox } from '@shared/ui/search-box';
 import { MyRoleExtendModal } from './my-role-extend-modal';
 import { Link } from '@tanstack/react-router';
-import { roleManagerQueryOptions } from '@entities/role/service/role-manage.queries';
+import { roleManagerQueryOptions, roleQueryKeys } from '@entities/role/service/role-manage.queries';
 import { dateDiff } from '@learnway/shared';
+import { useQueryClient } from '@tanstack/react-query';
 
 const MyRoleComponent = () => {
   const { state } = useCurrentRoute();
@@ -21,6 +22,11 @@ const MyRoleComponent = () => {
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
   const { open: openModal } = useModal();
   const [selectedRow, setSelectedRow] = useState<any | null>(null);
+
+  function handleRefetch() {
+    onFormChange();
+    gridFetch();
+  }
 
   function handleOnSearch(query: Record<string, any>) {
     console.log('### query', query);
@@ -41,7 +47,7 @@ const MyRoleComponent = () => {
 
   const handleExtend = () => {
     openModal({
-      content: <MyRoleExtendModal data={selectedRow} type="request" />,
+      content: <MyRoleExtendModal data={selectedRow} type="request" callback={handleRefetch} />,
       width: 'md',
     });
   };

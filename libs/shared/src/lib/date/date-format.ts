@@ -55,6 +55,8 @@ export function getDateTimeFormat(dateTimeFormat = DATE_TIME_FORMAT.DATE, locale
       return timeFormatHourMinuteSecond(locale);
     case DATE_TIME_FORMAT.DATE:
       return timeFormatDate(locale);
+    case DATE_TIME_FORMAT.DATE_SERVER: // 서버 전송
+      return timeFormatDateToServer(locale);
     default:
       return dateTimeFormat;
   }
@@ -93,6 +95,19 @@ export function timeFormatDate(locale?: string) {
   switch (currentLocale) {
     case 'en':
       return 'MM-DD-YYYY';
+    case 'ko':
+    case 'ja':
+    case 'cn':
+    case 'zh-cn':
+    default:
+      return 'YYYY-MM-DD';
+  }
+}
+
+export function timeFormatDateToServer(locale?: string) {
+  const currentLocale = locale || getDefaultLang();
+  switch (currentLocale) {
+    case 'en':
     case 'ko':
     case 'ja':
     case 'cn':

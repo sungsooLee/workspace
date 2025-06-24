@@ -168,6 +168,14 @@ export default class RoleManagerService {
   static fetchRoleApplication(roleApplicationId: number) {
     return httpService.get<any>(`${PMSApiPrefix()}/role-applications/${roleApplicationId}`);
   }
+
+  /**
+   * @description 나의 역할 신청 조회 (단건) userUuid, roleId, startDate, endDate, reason, status
+   * @returns
+   */
+  static createRoleApplication(payload: any) {
+    return httpService.post<any>(`${PMSApiPrefix()}/role-applications`, payload);
+  }
 }
 
 function genCreateRole(payload: any) {

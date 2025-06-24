@@ -4,36 +4,42 @@ import { DateRangePickerFormField } from '@features/learning/ui/resource/date-ra
 import {
   Button,
   ContentsRow,
-  FormDateRangePicker,
-  Input,
   ModalBody,
   ModalContainer,
   ModalFooter,
   ModalTitle,
-  RadioGroupFormField,
+  RangeDatePicker,
   useModal,
 } from '@learnway/ui';
 import { FormRow, FormSubTitle } from '@shared/ui';
 import { t } from 'i18next';
 import { FC, useEffect } from 'react';
 import { formUtils } from '@entities/form-utils';
-import { useGetRoleApplication } from '@entities/role/service/role-manage.hook';
+import { useGetRoleApplication, useRoleApplication } from '@entities/role/service/role-manage.hook';
+import { DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
+
+import styles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import dayjs from 'dayjs';
 
 type MyRoleModal = 'request' | 'view';
-const MyRoleExtendModalComponent: FC<any> = ({ type, data }: { type: MyRoleModal; data: any }) => {
-  console.log('data :: ', data);
 
+const MyRoleExtendModalComponent: FC<{
+  type: MyRoleModal;
+  data: any;
+  callback?: () => void;
+}> = ({ type, data, callback }: { type: MyRoleModal; data: any; callback?: () => void }) => {
   const { close: closeModal } = useModal();
   const { provider, fetchData, onSubmit, onFormChange } = useDynamicForm(formConfig);
 
   const { data: viewData } = useGetRoleApplication(data?.roleApplicationId ?? undefined);
-
-  console.log('### viewData', viewData);
+  const { createRoleApplication } = useRoleApplication({});
 
   useEffect(() => {
     if (!viewData) return;
 
     onFormChange({
+      roleId: viewData.roleId,
+      userUuid: viewData.userUuid,
       userName: viewData.userName,
       roleName: viewData.roleName,
       currentRolePeriod: `${viewData.startDate} ~ ${viewData.endDate}`,
@@ -42,8 +48,23 @@ const MyRoleExtendModalComponent: FC<any> = ({ type, data }: { type: MyRoleModal
 
   const isApprovedInfo = false;
   const handleOnSubmit = (node: any) => {
-    console.log('onsubmit', node);
-    closeModal(node);
+    console.log('### node', node);
+    createRoleApplication(
+      {
+        userUuid: node.userUuid,
+        roleId: node.roleId,
+        startDate: formatDate(node.requestRolePeriod?.from, DATE_TIME_FORMAT.DATE_SERVER),
+        endDate: formatDate(node.requestRolePeriod?.to, DATE_TIME_FORMAT.DATE_SERVER),
+        reason: node.reason,
+        status: 'EXTEND', // 연장 이넘코드
+      },
+      {
+        onSuccess: () => {
+          callback?.();
+          closeModal(node);
+        },
+      },
+    );
   };
 
   useEffect(() => {
@@ -72,10 +93,27 @@ const MyRoleExtendModalComponent: FC<any> = ({ type, data }: { type: MyRoleModal
               <FormRow
                 provider={provider}
                 name={'requestRolePeriod'}
-                element={<DateRangePickerFormField />}
+                element={
+                  <DateRangePickerFormField
+                    minDate={dayjs().toDate()}
+                    maxDate={dayjs().add(2, 'year').toDate()}
+                  />
+                }
               />
             </ContentsRow>
           </FormDisplay>
+          {/* <FormDisplay
+            provider={provider}
+            dependencies={[{ name: 'requestRolePeriodEnable', value: true }]}
+          >
+            <ContentsRow>
+              <FormRow
+                provider={provider}
+                name={'requestRolePeriod2'}
+                element={<RangeDatePicker size="lg" className={styles.datepicker_item} />}
+              />
+            </ContentsRow>
+          </FormDisplay> */}
           <ContentsRow className="mb-4">
             <FormRow provider={provider} name={'reason'} />
           </ContentsRow>
@@ -114,10 +152,24 @@ export const MyRoleExtendModal = MyRoleExtendModalComponent;
 const formConfig: DynamicFormConfig = {
   builders: [
     {
+      name: 'userUuid',
+      type: 'text',
+      label: t('신청자'),
+      value: '',
+      disabled: true,
+    },
+    {
       name: 'userName',
       type: 'text',
       label: t('신청자'),
       value: '',
+      disabled: true,
+    },
+    {
+      name: 'roleId',
+      type: 'number',
+      label: t('HRD 담당자 역할 아이디'),
+      value: 0,
       disabled: true,
     },
     {
@@ -144,6 +196,12 @@ const formConfig: DynamicFormConfig = {
         to: formUtils.nowDate({ unit: 'day', offset: 30 }),
       },
     },
+    // {
+    //   name: 'requestRolePeriod2',
+    //   type: 'custom',
+    //   label: t('권한 신청 시작/종료일'),
+    //   value: [formUtils.nowDate(), formUtils.nowDate({ unit: 'day', offset: 30 })],
+    // },
     {
       name: 'requestRolePeriodEnable',
       type: 'custom',
@@ -190,10 +248,10 @@ const formConfig: DynamicFormConfig = {
     },
   ],
   validator: {
-    approveRolePeriod: {
+    requestRolePeriod: {
       required: true,
     },
-    reson: {
+    reason: {
       required: true,
     },
   },
