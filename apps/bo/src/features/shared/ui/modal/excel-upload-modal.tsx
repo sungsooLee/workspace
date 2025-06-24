@@ -1,5 +1,5 @@
 // IA011 / NLP_BO_PMS_1100_4
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css';
 import {
   Badge,
@@ -87,14 +87,14 @@ const ExcelUploadModalComponent = ({
   const maxFileCount = 1;
   const maxFileSize = 1024 * 1024 * 10;
 
-  const acceptFileString = useMemo(() => {
-    if (!acceptFiles) return '';
-    if (typeof acceptFiles === 'string') return acceptFiles;
-    return acceptFiles
-      .map((acceptFile: any) => (acceptFile.startsWith('.') ? acceptFile : `.${acceptFile}`))
-      .join(', ')
-      .toUpperCase();
-  }, [acceptFiles]);
+  const acceptFileString = useMemo(
+    () =>
+      acceptFiles
+        .map((acceptFile: any) => (acceptFile.startsWith('.') ? acceptFile : `.${acceptFile}`))
+        .join(', ')
+        .toUpperCase(),
+    [acceptFiles],
+  );
 
   const { close: closeModal } = useModal();
 
@@ -194,6 +194,13 @@ const ExcelUploadModalComponent = ({
     );
   };
 
+  const reset = () => {
+    setFiles([]);
+    setIsLoading(false);
+    setStatus(null);
+    setValidationResult(null);
+  };
+
   /**
    * 파일의 상태에 따라 적절한 버튼 UI를 렌더링하는 함수
    * @param {UploadFile} file - 업로드 대상 파일 객체
@@ -212,7 +219,7 @@ const ExcelUploadModalComponent = ({
      */
     const renderDeleteButton = (hasDelete = true) =>
       hasDelete && (
-        <Button className={styles.btn_delete} onlyIcon onClick={() => {} /*onRemove(file.name)*/}>
+        <Button className={styles.btn_delete} onlyIcon onClick={reset}>
           <IcoTrash03 width={20} height={20} stroke="#131C30" />
         </Button>
       );
@@ -221,25 +228,6 @@ const ExcelUploadModalComponent = ({
      * 파일 상태와 대응하는 JSX 템플릿 맵
      */
     const statusMap: Record<string, JSX.Element> = {
-      /**
-       * 업로드 중 (uploading) 상태:
-       * - 일시 중지(Pause) 버튼을 렌더링
-       * - 삭제 버튼 영역 비어 있음
-       */
-      [Status.UPLOADING]: (
-        <>
-          {renderControl(
-            <Button
-              className={styles.btn_status}
-              onlyIcon
-              onClick={() => {} /*onPause(file.name)*/}
-            >
-              <IcoPause width={20} height={20} fill="#A9AFB8" />
-            </Button>,
-          )}
-          <div className={styles.delele_btn_wrap}></div>
-        </>
-      ),
       /**
        * 완료 (completed) 상태:
        */
@@ -265,23 +253,14 @@ const ExcelUploadModalComponent = ({
         </>
       ),
       /**
-       * 기본 상태 (default):
+       * 기본 상태 - 업로드 중 (uploading) 상태:
+       * - 제어 아이콘 비어 있음
+       * - 삭제 버튼 영역 비어 있음
        */
       default: (
         <>
-          {renderControl(
-            <Button
-              className={styles.btn_status}
-              onlyIcon
-              onClick={
-                () => {}
-                // file.status === 'paused' ? onResume?.(file.name) : onRetry?.(file.name)
-              }
-            >
-              <IcoRefresh width={20} height={20} fill="#00AFD5" />
-            </Button>,
-          )}
-          <div className={styles.delele_btn_wrap}>{renderDeleteButton(true)}</div>
+          {renderControl(<></>)}
+          <div className={styles.delele_btn_wrap}></div>
         </>
       ),
     };
