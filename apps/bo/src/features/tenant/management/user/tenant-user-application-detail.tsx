@@ -37,7 +37,7 @@ import {
   CompanyChoiceModal,
   OrganizationChoiceTreeModal,
 } from '@features/shared';
-import { EnFormMode, EnGlobalConst } from '@types';
+import { EnFormMode, EnGlobalConst, EMAIL_REGEX } from '@types';
 
 import { useCreateCompany, useUpdateCompany, useFetchCompany } from '@entities/companies';
 import CompaniesService from '@entities/companies/api/companies';
