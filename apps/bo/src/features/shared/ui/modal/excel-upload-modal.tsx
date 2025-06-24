@@ -7,8 +7,8 @@ import { cn, httpService } from '@learnway/shared';
 import { IcoDownload } from '@learnway/icons';
 import { NoticeBox } from '@shared/ui';
 import { useS3Uploader } from '@learnway/hooks';
-import { DndFileProgress } from './dnd-file-progress'; // 파일 업로드
-import { PMSApiPrefix } from '../../../../../../../libs/config/src';
+import { ExcelUploadProgress } from './excel-upload-progress'; // 파일 업로드
+import { PMSApiPrefix } from '@learnway/config';
 
 interface ExcelUploadModalProps {
   validateUrl: string;
@@ -184,7 +184,7 @@ const ExcelUploadModalComponent = ({
             onResume={onResume}
             onRetry={onRetry}
           /> */}
-          <DndFileProgress
+          <ExcelUploadProgress
             files={[]}
             maxFileCount={maxFileCount}
             maxFileSize={maxFileSize}
