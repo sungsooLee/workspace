@@ -6,7 +6,7 @@ export interface DndFileProgressProps {
   addFiles: (files: File[]) => void;
   onPause: (id: string) => void;
   onResume: (id: string) => void;
-  acceptFiles: string[];
+  inputAccept?: string;
   maxFileCount: number;
   maxFileSize: number;
   wrapSize?: string;

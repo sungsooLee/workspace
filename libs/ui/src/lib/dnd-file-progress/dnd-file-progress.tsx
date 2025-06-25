@@ -9,7 +9,7 @@ import {
   IcoTrash03,
   IcoUploadCloud,
 } from '@learnway/icons';
-import { acceptFilesToAccept, cn } from '@learnway/shared';
+import { cn } from '@learnway/shared';
 import { UploadFile } from '@learnway/hooks';
 import { useDropzone } from 'react-dropzone';
 import { DndFileProgressProps } from './types';
@@ -22,15 +22,13 @@ const DndFileProgressComponent: FC<DndFileProgressProps> = ({
   onPause,
   onResume,
   onRetry,
-  acceptFiles,
+  inputAccept,
   maxFileCount,
   maxFileSize,
   wrapSize,
   guideText,
   errorMessage,
 }) => {
-  const acceptFileString = useMemo(() => acceptFilesToAccept(acceptFiles), [acceptFiles]);
-
   const onDrop = useCallback((acceptedFiles: File[]) => {
     addFiles(acceptedFiles);
   }, []);
@@ -209,8 +207,8 @@ const DndFileProgressComponent: FC<DndFileProgressProps> = ({
                   '영역을 클릭하거나 파일을 마우스로 끌어놓으세요',
                 )}
               </strong>
-              <span className={styles.file_guide}>{`${acceptFileString}`}</span>
-              <input {...getInputProps()} accept={acceptFileString} />
+              <span className={styles.file_guide}>{`${inputAccept}`}</span>
+              <input {...getInputProps()} accept={inputAccept} />
             </Button>
           </div>
         )}

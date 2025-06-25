@@ -69,10 +69,10 @@ export const fileDownload = async ({
  * @returns HTML input의 'accept' 속성에 사용될 수 있는 문자열입니다.
  * 입력 배열이 null 또는 undefined이거나 비어있으면 빈 문자열을 반환합니다.
  */
-export const acceptFilesToAccept = (acceptFiles: string[]): string => {
+export const acceptFilesToAccept = (acceptFiles: string[]): string | undefined => {
   // acceptFiles 배열이 없거나 비어있는 경우 빈 문자열을 즉시 반환합니다.
   if (!acceptFiles?.length) {
-    return '';
+    return undefined;
   }
 
   // 각 파일 확장자/MIME 타입에 대해 처리합니다.

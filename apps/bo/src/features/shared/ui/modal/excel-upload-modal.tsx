@@ -31,7 +31,6 @@ import { t } from 'i18next';
 
 interface ExcelUploadModalProps {
   validateUrl: string;
-  uploadUrl: string;
   templateUrls?: {
     xlsx?: string;
     csv?: string;
@@ -78,11 +77,7 @@ function toUploadFile(file: File): UploadFile {
   };
 }
 
-const ExcelUploadModalComponent = ({
-  validateUrl,
-  uploadUrl,
-  templateUrls,
-}: ExcelUploadModalProps) => {
+const ExcelUploadModalComponent = ({ validateUrl, templateUrls }: ExcelUploadModalProps) => {
   const acceptFiles = ['xlsx', 'xls'];
   const maxFileCount = 1;
   const maxFileSize = 1024 * 1024 * 10;

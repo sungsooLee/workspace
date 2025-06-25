@@ -71,7 +71,6 @@ const AttachmentFormFieldComponent = forwardRef<
         maxFileCount={maxFileCount}
         maxFileSize={maxFileSize}
         addFiles={handleAddFiles}
-        acceptFiles={[]}
         onRemove={onRemove}
         onPause={onPause}
         onResume={onResume}
