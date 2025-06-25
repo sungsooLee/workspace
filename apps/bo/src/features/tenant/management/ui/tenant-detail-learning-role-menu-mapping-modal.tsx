@@ -304,7 +304,7 @@ const TenantDetailLearningRoleMenuMappingModalComponent: FC<any> = ({
                 <div className={layoutStyles.inner_contents}>
                   <DndTreeView
                     treeId="mapping-tenant-menu-tree"
-                    type={'SAME_LEVEL_ONLY'}
+                    type={'DRAG_DROP'}
                     data={roleMenuTree}
                     nodeButtons={renderMenuDeleteButtons}
                     onAction={handleTargetAction}
