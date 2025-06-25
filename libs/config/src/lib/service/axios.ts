@@ -109,7 +109,7 @@ export function initAxios(extendConfig?: axiosConfig) {
     const refresh_token = tokenService.refreshToken;
     if (!refresh_token) {
       tokenService.clear();
-      if (typeof window !== 'undefined') {
+      if (typeof window !== 'undefined' && !config.url.includes('/login')) {
         const loginPath = getLoginPath();
         window.location.href = loginPath;
       }
