@@ -1,11 +1,11 @@
 .menu-portal-size-lg,
 .nlp-select__menu,
 .nlp-select__menu-list {
-  @apply !rounded-[8px];
+  @apply !rounded-[6px];
 }
 
 .nlp-select__value-container {
   [class*='nlp-select__placeholder'] {
-    @apply !text-[var(--gray8)];
+    @apply !text-[var(--gray75)];
   }
 }
