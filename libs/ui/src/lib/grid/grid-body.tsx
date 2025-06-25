@@ -22,11 +22,17 @@ export const GridBody = <T extends object>({
   return (
     <tbody>
       {table.getRowModel().rows.map((row) => {
-        const isSubRow = row.depth > 0;
+        const depth = (row.original as any)?._depth ?? row.depth;
+        const isSubRow = depth > 0;
+
         return (
           <tr
             key={row.id}
-            className={cn(row.getIsSelected() && styles.selected, isSubRow && styles.appended)}
+            className={cn(
+              row.getIsSelected() && styles.selected,
+              isSubRow && styles.appended,
+              depth > 0 && styles.appended,
+            )}
             onClick={() => !row.getIsGrouped() && !disabledSelectionToggle && row.toggleSelected()}
             onDoubleClick={() => onRowDoubleClick?.(row.original)}
           >
@@ -57,6 +63,10 @@ interface GridCellProps<T extends object> {
 export const GridCell = <T extends object>({ row, cell, lastPinnedColumnId }: GridCellProps<T>) => {
   const isPinnedLeft = cell.column.getIsPinned() === 'left';
   const isLastPinnedColumn = isPinnedLeft && cell.column.id === lastPinnedColumnId;
+
+  const depth = (row.original as any)?._depth ?? row.depth;
+  const showHierarchyIcon = cell.column.columnDef.meta?.showHierarchyIcon;
+  const shouldShowIcon = showHierarchyIcon && depth > 0;
 
   const cellStyle = {
     background: cell.getIsGrouped()
@@ -104,7 +114,10 @@ export const GridCell = <T extends object>({ row, cell, lastPinnedColumnId }: Gr
           cell.getContext(),
         )
       ) : cell.getIsPlaceholder() ? null : (
-        flexRender(cell.column.columnDef.cell, cell.getContext())
+        <>
+          {shouldShowIcon && depth > 0 && <>ㄴ</>}
+          {flexRender(cell.column.columnDef.cell, cell.getContext())}
+        </>
         // 다양한 케이스 추가 작업 후 추가 필요.
         // <WordWrap text={flexRender(cell.column.columnDef.cell, cell.getContext())} />
       )}

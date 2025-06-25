@@ -383,58 +383,6 @@ const fetchInfiniteData = async ({ tableState }: any): Promise<Person[]> => {
 
   return data;
 };
-// 가상 스크롤
-// const InfiniteScrollTable = () => {
-//   const [tableState, setTableState] = useState({
-//     sorting: [] as SortingState,
-//     filters: [] as ColumnFiltersState,
-//   });
-//   const { data, isLoading } = useQuery({
-//     queryKey: ['PersonEntity', tableState] as const,
-//     queryFn: () => fetchInfiniteData({ tableState }),
-//   });
-//   const handleStateChange = (newState: GridState) => {
-//     setTableState((prev) => ({
-//       ...prev,
-//       sorting: newState.sorting || prev.sorting,
-//       filters: newState.filters || prev.filters,
-//     }));
-//   };
-//   return (
-//     <div className="p-4">
-//       <GridBox
-//         data={data || []}
-//         columns={columns}
-//         onStateChange={handleStateChange}
-//         isLoading={isLoading}
-//         title="가상 스크롤"
-//         multiple={true}
-//       />
-//     </div>
-//   );
-// };
-
-// export const WithInfiniteScroll: Story = {
-//   name: '가상 스크롤',
-//   decorators: [
-//     (Story) => (
-//       <ReactQueryConfigProvider>
-//         <Story />
-//         <ModalWrapper />
-//       </ReactQueryConfigProvider>
-//     ),
-//   ],
-//   render: () => <InfiniteScrollTable />,
-//   parameters: {
-//     docs: {
-//       description: {
-//         story: `
-//   가상 스크롤이 적용된 그리드.
-//         `,
-//       },
-//     },
-//   },
-// };
 
 // 페이지네이션 테이블 컴포넌트
 export const WithPagination: Story = {
@@ -1214,6 +1162,7 @@ const transformDataForTable = (data: any[], depth = 0): any[] => {
     console.log(depth);
     const transformedItem = {
       ...item,
+      depth: depth,
       className: depth > 0 ? 'expanded-row' : '',
     };
 
@@ -1254,7 +1203,7 @@ const ExpandedTable = () => {
 };
 // 확장 컬럼
 export const WithExpandColumn: Story = {
-  name: '확장 컬럼',
+  name: '상/하위 행(접기/펼치기 O)',
   decorators: [
     (Story) => (
       <ReactQueryConfigProvider>
@@ -1267,27 +1216,6 @@ export const WithExpandColumn: Story = {
 };
 const columnHelper2 = createColumnHelper<any>();
 const expandedColumns2 = [
-  // columnHelper2.accessor('expand', {
-  //   cell: ({ row }) => {
-  //     const toggleExpanded = () => {
-  //       row.toggleExpanded();
-  //     };
-  //     return (
-  //       <div
-  //         style={{
-  //           cursor: row.getCanExpand() ? 'pointer' : 'default',
-  //         }}
-  //         onClick={row.getCanExpand() ? toggleExpanded : undefined}
-  //       >
-  //         {row.getCanExpand() && <button>{row.getIsExpanded() ? '👇' : '👉'}</button>}
-  //       </div>
-  //     );
-  //   },
-  //   header: '확장',
-  //   size: 100,
-  //   enableSorting: false,
-  // }),
-
   // 콘텐츠명
   columnHelper2.accessor('contentName', {
     cell: ({ row, getValue }) => {
@@ -1295,6 +1223,9 @@ const expandedColumns2 = [
     },
     header: '콘텐츠명',
     enableGrouping: false,
+    meta: {
+      showHierarchyIcon: true,
+    },
   }),
 
   // 콘텐츠 타입
@@ -1574,3 +1505,26 @@ const tmpExpandData = [
     ],
   },
 ];
+
+/////
+
+const SubRows = () => {
+  return (
+    <div className="p-4">
+      <GridBox data={tmpExpandData} columns={expandedColumns2} flattenSubRows={true} />
+    </div>
+  );
+};
+
+export const SubRowExpandColumn: Story = {
+  name: '상/하위 행(접기/펼치기 X)',
+  decorators: [
+    (Story) => (
+      <ReactQueryConfigProvider>
+        <Story />
+        <ModalWrapper />
+      </ReactQueryConfigProvider>
+    ),
+  ],
+  render: () => <SubRows />,
+};

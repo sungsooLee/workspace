@@ -157,7 +157,7 @@ import { Button } from '@learnway/ui';
                 <IcoPlus width={16} height={16} stroke="#131C30" />
               </Button>
               <Button variant="expand" size="sm" onlyIcon>
-                <IcoPlus width={16} height={16} stroke="#131C30" /> 확장
+                <IcoPlus width={16} height={16} stroke="#131C30" />
               </Button>
               <Button variant="expand" size="xs" onlyIcon>
                 <IcoPlus width={16} height={16} stroke="#131C30" />
@@ -173,7 +173,7 @@ import { Button } from '@learnway/ui';
 </Button>
 
 <Button variant="expand" size="sm" onlyIcon>
-    <IcoPlus width={16} height={16} stroke="#131C30" /> 확장
+    <IcoPlus width={16} height={16} stroke="#131C30" />
 </Button>
 
 <Button variant="expand" size="xs" onlyIcon>

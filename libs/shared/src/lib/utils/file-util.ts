@@ -83,8 +83,8 @@ export const acceptFilesToAccept = (acceptFiles: string[]): string | undefined =
       // 간단하고 정확한 MIME type 판별 방식: 슬래시(/)가 있으며, 앞뒤가 비어 있지 않은가
       const isMimeType =
         /^[a-zA-Z0-9.+-]+\/[a-zA-Z0-9.+-]+$/.test(trimmed) || trimmed.includes('*');
-      // 확장자면 대문자로 변환
-      return isMimeType ? trimmed : `.${trimmed.toUpperCase()}`;
+      // 확장자면 대문자로 변환 > 대소문자 변환은 필요 없을듯
+      return isMimeType || trimmed.startsWith('.') ? trimmed : `.${trimmed}`;
     })
     .join(', ');
 };

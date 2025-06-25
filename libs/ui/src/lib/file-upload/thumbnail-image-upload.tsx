@@ -87,7 +87,8 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
     const {
       addFiles: thumbnailAddFiles,
       files: thumbnailFiles,
-      stats: { status, inputAccept = 'image/*' },
+      stats: { status },
+      inputAccept = 'image/*',
     } = useS3Uploader({
       ...uploadConfig,
       s3Path: 'public/thumbnail',

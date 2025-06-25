@@ -103,10 +103,7 @@ function RouteComponent() {
           }
           excelButtons={
             <>
-              <GridExcelUploadButton
-                url="/multilingual/exportExcel"
-                validateUrl="/multilingual/excelUploadValidation"
-              />
+              <GridExcelUploadButton validateUrl="/multilingual/excelUploadValidation" />
               <GridExcelDownloadButton
                 url={`${LMSApiPrefix()}/multilingual/exportExcel`}
                 params={getValues()}

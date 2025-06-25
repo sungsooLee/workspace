@@ -753,8 +753,8 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'course-introduction/detail',
     pageType: 'Page',
-    completionDate: '',
-    lastUpdateDate: '',
+    completionDate: '2025-04-29',
+    lastUpdateDate: '2025-06-25',
     remarks:
       '- introduction.tsx\n- 수강신청 불가 팝업창들 course-information-popup.tsx (반려팝업 미결정)',
   },
