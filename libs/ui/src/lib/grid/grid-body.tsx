@@ -1,6 +1,7 @@
 import React, { CSSProperties } from 'react';
 import { Cell, flexRender, Row, Table } from '@tanstack/react-table';
 import { cn } from '@learnway/shared';
+import { IcoDownArrow } from '@learnway/icons';
 
 import styles from './grid-body.module.css';
 import { WordWrap } from '../word-wrap/word-wrap';
@@ -90,6 +91,7 @@ export const GridCell = <T extends object>({ row, cell, lastPinnedColumnId }: Gr
         styles.tbody_td,
         isPinnedLeft && styles.td_pinned_left,
         isLastPinnedColumn && styles.td_pinned_last,
+        shouldShowIcon && styles.show_icon,
         cell.column.columnDef.meta?.cellClass,
       )}
       style={cellStyle}
@@ -107,7 +109,7 @@ export const GridCell = <T extends object>({ row, cell, lastPinnedColumnId }: Gr
           {flexRender(cell.column.columnDef.cell, cell.getContext())} ({row.subRows.length})
         </button>
       ) : row.getCanExpand() ? (
-        <div>{flexRender(cell.column.columnDef.cell, cell.getContext())}</div>
+        <>{flexRender(cell.column.columnDef.cell, cell.getContext())}</>
       ) : cell.getIsAggregated() ? (
         flexRender(
           cell.column.columnDef.aggregatedCell ?? cell.column.columnDef.cell,
@@ -115,7 +117,9 @@ export const GridCell = <T extends object>({ row, cell, lastPinnedColumnId }: Gr
         )
       ) : cell.getIsPlaceholder() ? null : (
         <>
-          {shouldShowIcon && depth > 0 && <>ㄴ</>}
+          {shouldShowIcon && depth > 0 && (
+            <IcoDownArrow width={16} height={16} stroke={'#4C515E'} className={styles.depth_icon} />
+          )}
           {flexRender(cell.column.columnDef.cell, cell.getContext())}
         </>
         // 다양한 케이스 추가 작업 후 추가 필요.

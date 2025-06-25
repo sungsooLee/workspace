@@ -81,7 +81,7 @@ function RouteComponent() {
                 placeholder="선택"
                 variant="default"
                 isMulti={false}
-                size={'sm'}
+                size={'lg'}
                 presetOptionLabel={'전체'}
               />
             </div>
