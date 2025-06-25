@@ -83,6 +83,10 @@ function RouteComponent() {
                 type: 'custom',
                 label: t('라디오 - api'),
                 value: [],
+                validation: {
+                  required: true,
+                  format: 'array',
+                },
               }}
               element={
                 <RadioGroupFormField
@@ -242,10 +246,6 @@ function RouteComponent() {
                 type: 'custom',
                 label: '채널 - InputModalSelectorFormField',
                 value: '',
-                validation: {
-                  required: true,
-                  format: 'string',
-                },
               }}
               element={
                 <InputModalSelectorFormField
@@ -282,10 +282,6 @@ function RouteComponent() {
                 placeholder: '',
                 description: '',
                 maxLength: 10,
-                validation: {
-                  required: true,
-                  format: 'string',
-                },
               }}
             />
           </ContentsRow>
@@ -300,10 +296,6 @@ function RouteComponent() {
                 value: '',
                 placeholder: '',
                 description: '',
-                validation: {
-                  required: true,
-                  format: 'string',
-                },
               }}
             />
           </ContentsRow>
@@ -477,13 +469,6 @@ function RouteComponent() {
                 value: '',
                 placeholder: '',
                 description: '',
-                validation: {
-                  required: {
-                    fn: (values) => !!values.managerId, // managerId가 있을 때만 필수
-                    message: '운영자를 선택해주세요.',
-                  },
-                  format: 'string',
-                },
               }}
               element={
                 <InputModalSelectorFormField
