@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useRouterState } from '@tanstack/react-router';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
 import { cn } from '@learnway/shared';
 import {
@@ -219,7 +220,11 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       </ContentsRow>
 
       <ContentsRow>
-        <FormRow provider={provider} name="isUsed" />
+        <FormRow
+          provider={provider}
+          name="isUsed"
+          className={dynamicFormStyles.form_item_horizontal}
+        />
         <FormRow provider={provider} name="fileStorageTypeChannelList" />
         <FormRow provider={provider} name="fileStorageTypeBase" />
       </ContentsRow>

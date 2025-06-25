@@ -7,6 +7,8 @@ import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 
+import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+
 import {
   Button,
   CheckboxGroupFormField,
@@ -197,7 +199,11 @@ function RouteComponent() {
           </ContentsRow>
 
           <ContentsRow>
-            <FormRow provider={provider} name="isUsed" />
+            <FormRow
+              provider={provider}
+              name="isUsed"
+              className={dynamicFormStyles.form_item_horizontal}
+            />
             <FormRow provider={provider} name="fileStorageTypeChannelList" />
             <FormRow provider={provider} name="fileStorageTypeBase" />
           </ContentsRow>
@@ -310,7 +316,7 @@ const formConfig: DynamicFormConfig = {
       type: 'checkbox-group',
       label: t('파일 저장 설정(채널)'),
       format: 'array',
-      value: [],
+      value: ['AWS_INTERNAL', 'HMG_CLOUD'],
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.FileStorageType'],
       },
