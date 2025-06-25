@@ -436,7 +436,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
           <TreeContainer>
             <DndTreeView
               treeId="1"
-              type="SAME_LEVEL_ONLY"
+              type="SAME_PARENT_ONLY"
               data={treeData}
               selectedNode={selectedNode}
               expandedKeys={expandedKeys}
