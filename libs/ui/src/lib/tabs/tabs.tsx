@@ -114,11 +114,13 @@ export const TabsComponent = forwardRef<
           'nlp--tabs',
           styles.start,
           styles.tabs,
-          className,
           size && styles[size],
+          size,
           type && styles[type],
+          type,
           variant && styles[variant],
           showContentBorder && styles.show_border,
+          className,
         )}
         value={value}
         ref={ref}
@@ -143,7 +145,6 @@ export const TabsComponent = forwardRef<
                   className={styles.alarm_view}
                   option={{ label: '', value: '' }}
                   variant="dot"
-                  status="primary"
                 />
               )}
             </Primitive.Trigger>

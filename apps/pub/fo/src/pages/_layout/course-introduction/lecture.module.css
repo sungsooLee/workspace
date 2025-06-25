@@ -3,6 +3,19 @@
     @apply rounded-[16px] border-[1px] border-solid border-[var(--secondary3)] p-[24px];
     &.course_option {
       @apply border-none p-0;
+      .box {
+        .date {
+          span {
+            @apply title2 text-[var(--blue50)];
+          }
+        }
+        .tit {
+          @apply title4-b text-[var(--gray10)];
+        }
+        dt {
+          @apply body-sm;
+        }
+      }
     }
     .box {
       .date {

@@ -26,7 +26,7 @@ const RichTextEditor = () => {
     }
   };
   return (
-    <div className={'nlp--editor-container relative w-[780px] w-full'}>
+    <div className={'nlp--editor-container relative w-full'}>
       <ModalContext>
         <FloatingModalContext scrollTarget={scrollTarget}>
           <ToolbarPlugin />

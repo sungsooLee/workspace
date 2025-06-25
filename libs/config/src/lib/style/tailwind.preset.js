@@ -27,6 +27,12 @@ module.exports = {
           9: 'var(--secondary9)',
           10: 'var(--secondary10)',
         },
+        status: {
+          1: '#ff4646',
+          2: '#ffb902',
+          3: '#3eb838',
+          4: '#C8D2E5',
+        },
         gray: {
           1: '#f4f8ff',
           2: '#eaf1fa',
@@ -37,13 +43,37 @@ module.exports = {
           7: '#747d91',
           8: '#5c636e',
           9: '#3e4550',
-          10: '#131c30',
+          10: '#131416', // default
+          25: '#33363D',
+          35: '#4D525C',
+          50: '#6B7280',
+          65: '#959BA7',
+          75: '#B7BBC3',
+          85: '#D3D5DA',
+          90: '#DEDFE3',
+          92: '#E6E7EA',
+          95: '#EFF0F1',
+          98: '#F9FAFA',
         },
-        status: {
-          1: '#ff4646',
-          2: '#ffb902',
-          3: '#3eb838',
-          4: '#C8D2E5',
+        blue: {
+          blue10: '#000E29',
+          blue25: '#00287A',
+          blue35: '#003CB2',
+          blue50: '#0056FF', // default
+          blue65: '#4D88FF',
+          blue75: '#80AAFF',
+          blue85: '#E5EEFF',
+          blue95: '#F5F8FF',
+        },
+        red: {
+          10: '#2E0700',
+          25: '#ffb902',
+          35: '#3eb838',
+          50: '#C8D2E5', // default
+          65: '#F05638',
+          75: '#F58B75',
+          85: '#FBBEB2',
+          95: '#FCD2CA',
         },
       },
     },
@@ -58,7 +88,7 @@ module.exports = {
     }),
     function ({ addComponents }) {
       const baseTitle = {
-        letterSpacing: '-0.3px',
+        letterSpacing: '0',
         lineHeight: '140%',
       };
 
@@ -424,10 +454,258 @@ module.exports = {
           fontWeight: '700',
         },
 
+        // FO 최신가이드
+        // Display
+        '.display1': {
+          ...baseTitle,
+          fontSize: '4rem',
+          fontWeight: '400',
+          '@screen mobile': {
+            fontSize: '2.2rem',
+          },
+        },
+
+        '.display1-b': {
+          ...baseTitle,
+          fontSize: '4rem',
+          fontWeight: '600',
+          '@screen mobile': {
+            fontSize: '2.2rem',
+          },
+        },
+
+        '.headline1': {
+          ...baseTitle,
+          fontSize: '2.2rem',
+          fontWeight: '400',
+        },
+
+        '.headline1-b': {
+          ...baseTitle,
+          fontSize: '2.2rem',
+          fontWeight: '600',
+        },
+
+        '.headline2': {
+          ...baseTitle,
+          fontSize: '2.4rem',
+          fontWeight: '400',
+        },
+
+        '.headline2-b': {
+          ...baseTitle,
+          fontSize: '2.4rem',
+          fontWeight: '600',
+        },
+
+        '.headline3': {
+          ...baseTitle,
+          fontSize: '2.8rem',
+          fontWeight: '400',
+        },
+
+        '.headline3-b': {
+          ...baseTitle,
+          fontSize: '2.8rem',
+          fontWeight: '600',
+        },
+
+        '.headline4': {
+          ...baseTitle,
+          fontSize: '3.2rem',
+          fontWeight: '400',
+        },
+
+        '.headline4-b': {
+          ...baseTitle,
+          fontSize: '3.2rem',
+          fontWeight: '600',
+        },
+
         '.ellipsis': {
           overflow: 'hidden',
           textOverflow: 'ellipsis',
           whiteSpace: 'nowrap',
+        },
+
+        '.title1': {
+          ...baseTitle,
+          fontSize: '1.3rem',
+          fontWeight: '400',
+        },
+
+        '.title1-b': {
+          ...baseTitle,
+          fontSize: '1.3rem',
+          fontWeight: '600',
+        },
+
+        '.title2': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '400',
+        },
+
+        '.title2-b': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '600',
+        },
+
+        '.title3': {
+          ...baseTitle,
+          fontSize: '1.6rem',
+          fontWeight: '400',
+        },
+
+        '.title3-b': {
+          ...baseTitle,
+          fontSize: '1.6rem',
+          fontWeight: '600',
+        },
+
+        '.title4': {
+          ...baseTitle,
+          fontSize: '1.8rem',
+          fontWeight: '400',
+        },
+
+        '.title4-b': {
+          ...baseTitle,
+          fontSize: '1.8rem',
+          fontWeight: '600',
+        },
+
+        '.title5': {
+          ...baseTitle,
+          fontSize: '2rem',
+          fontWeight: '400',
+        },
+
+        '.title5-b': {
+          ...baseTitle,
+          fontSize: '2rem',
+          fontWeight: '600',
+        },
+
+        '.body-lg': {
+          ...baseTitle,
+          fontSize: '1.8rem',
+          fontWeight: '400',
+        },
+
+        '.body-lg-b': {
+          ...baseTitle,
+          fontSize: '1.8rem',
+          fontWeight: '600',
+        },
+
+        '.body-md': {
+          ...baseTitle,
+          fontSize: '1.6rem',
+          fontWeight: '400',
+        },
+
+        '.body-md-b': {
+          ...baseTitle,
+          fontSize: '1.6rem',
+          fontWeight: '600',
+        },
+
+        '.body-sm': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '400',
+        },
+
+        '.body-sm-b': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '600',
+        },
+
+        '.body-xsm': {
+          ...baseTitle,
+          fontSize: '1.2rem',
+          fontWeight: '400',
+        },
+
+        '.body-xsm-b': {
+          ...baseTitle,
+          fontSize: '1.2rem',
+          fontWeight: '600',
+        },
+
+        '.label-xl': {
+          ...baseTitle,
+          fontSize: '1.6rem',
+          fontWeight: '400',
+        },
+
+        '.label-xl-b': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '600',
+        },
+
+        '.label-lg': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '400',
+        },
+
+        '.label-lg-b': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '600',
+        },
+
+        '.label-md': {
+          ...baseTitle,
+          fontSize: '1.3rem',
+          fontWeight: '400',
+        },
+
+        '.label-md-b': {
+          ...baseTitle,
+          fontSize: '1.3rem',
+          fontWeight: '600',
+        },
+
+        '.label-sm': {
+          ...baseTitle,
+          fontSize: '1.2rem',
+          fontWeight: '400',
+        },
+
+        '.label-sm-b': {
+          ...baseTitle,
+          fontSize: '1.2rem',
+          fontWeight: '600',
+        },
+
+        '.label-xs': {
+          ...baseTitle,
+          fontSize: '1.1rem',
+          fontWeight: '400',
+        },
+
+        '.label-xs-b': {
+          ...baseTitle,
+          fontSize: '1.1rem',
+          fontWeight: '600',
+        },
+
+        '.label-lg': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '400',
+        },
+
+        '.label-lg-b': {
+          ...baseTitle,
+          fontSize: '1.4rem',
+          fontWeight: '600',
         },
 
         '.min-w-auto': {

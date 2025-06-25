@@ -13,7 +13,15 @@ import {
   Panel,
   useToast,
 } from '@learnway/ui';
-import { IcoHeart, IcoUser01, IcoStar, IcoCaution, IcoClock01, IcoPlay } from '@learnway/icons';
+import {
+  IcoHeart,
+  IcoUser01,
+  IcoStar,
+  IcoCaution,
+  IcoClock01,
+  IcoPlay,
+  IcoAvatar,
+} from '@learnway/icons';
 import {
   CourseDashboard,
   CourseIntroduction, // 과정소개
@@ -40,7 +48,6 @@ import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
 import bnrImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 import logoHyundai from '@learnway/styles/fo/assets/images/common/logo_hyundai.png';
 import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
-import { GoogleOtpGuideButton } from '@/libs/auth/src';
 
 export const Route = createFileRoute('/_layout/course-introduction/detail')({
   component: RouteComponent,
@@ -367,25 +374,24 @@ function RouteComponent() {
               <strong className={packageInformationStyles.tit}>
                 패키지 타이틀패키지 타이틀패키지 타이틀패키지 타이틀패키지 타이틀
               </strong>
+              {/* 퍼블수정 20250624 아이콘 변경 및 색상 수정 */}
               <div className={packageInformationStyles.count_box}>
                 <div className={packageInformationStyles.box}>
-                  <IcoStar width={16} height={16} stroke="#ffb902" fill="#ffb902" />
+                  <IcoStar width={16} height={16} stroke="#0056ff" fill="#0056ff" />
                   <span>4.2</span>
                 </div>
                 <div className={packageInformationStyles.box}>
-                  <IcoHeart width={16} height={16} stroke="#6f798b" fill="none" />
+                  <IcoHeart width={16} height={16} stroke="#f58b75" fill="#f58b75" />
                   <span>500</span>
                 </div>
                 <div className={packageInformationStyles.box}>
-                  <IcoUser01 width={16} height={16} stroke="#6f798b" />
+                  <IcoAvatar width={16} height={16} fill="#a1c2ff" />
                   <span>77,500</span>
                 </div>
               </div>
               {/* 구독 */}
               <div className={packageInformationStyles.subscribe_box}>
-                <span className={packageInformationStyles.channel}>
-                  <img src={logoHyundai} alt="" />
-                </span>
+                {/* 퍼블수정 20250624 로고 삭제 */}
                 <strong className={packageInformationStyles.channel_name}>
                   현대오토에버 (elBls)
                 </strong>
@@ -422,14 +428,16 @@ function RouteComponent() {
                 <Panel hideHeaderUnderline type="rounded" className={styles.result_box}>
                   <div>
                     <IcoCaution width={40} height={40} stroke={'#A9AFB8'} />
-                    <p>현재 수강 신청 가능한 차수가 없습니다.</p>
+                    {/* 퍼블수정 20250624 태그 수정 */}
+                    <strong>현재 수강 신청 가능한 차수가 없습니다.</strong>
                   </div>
                 </Panel>
 
                 {/* 인원마감/대기신청 */}
                 <Panel hideHeaderUnderline type="rounded" className={styles.result_box}>
                   <div>
-                    <IcoClock01 width={40} height={40} stroke={'#00afd5'} />
+                    {/* 퍼블수정 20250624 색상 수정 */}
+                    <IcoClock01 width={40} height={40} stroke={'#0056ff'} />
                     <strong>오전 10:00 수강신청이 시작됩니다!</strong>
                     <p>수강신청일시는 예고없이 변경될수 있습니다.</p>
                   </div>
