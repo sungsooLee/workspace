@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type com_ever_edu_pms_educationplace_dto_req_EducationPlaceTenantReqDto = {
-    tenantId: number;
+export type com_ever_edu_global_excel_dto_res_ExcelDownloadReasonResDto = {
+    logId?: number;
 };
 

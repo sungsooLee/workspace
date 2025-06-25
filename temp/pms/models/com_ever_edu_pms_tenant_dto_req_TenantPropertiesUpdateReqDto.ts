@@ -8,48 +8,40 @@ export type com_ever_edu_pms_tenant_dto_req_TenantPropertiesUpdateReqDto = {
      */
     tenantId?: number;
     /**
-     * 수강 신청 결재라인 사용 여부
+     * 수강신청 설정 여부
      */
-    isUseApprovalLine?: boolean;
+    isEnrollOption?: boolean;
     /**
-     * 학습시간 제한 여부
+     * 교재 설정 여부
      */
-    isLimitLearningTime?: boolean;
+    isTextBookOption?: boolean;
     /**
-     * 1일 진도 제한 여부
+     * 강사 설정 여부
      */
-    isLimitDailyProgress?: boolean;
+    isInstructorOption?: boolean;
     /**
-     * 진도 초기화 사용 여부
+     * 이수기준 설정 여부
      */
-    isResetProgress?: boolean;
+    isPassOption?: boolean;
     /**
-     * 교재 사용 여부
+     * 커뮤니케니티 설정 여부
      */
-    isUseTextbook?: boolean;
+    isCommunicationOption?: boolean;
     /**
-     * 1인당 교육비 사용 여부
+     * 학습환경 설정 여부
      */
-    isUseTrainingCostPerPerson?: boolean;
+    isLearningEnvOption?: boolean;
     /**
-     * 고용보험 환급 사용 여부
+     * 학습제어 설정 여부
      */
-    isUseEmploymentInsuranceRefund?: boolean;
+    isLearningControlOption?: boolean;
     /**
-     * 수료증 제공 여부
+     * 사전/연관학습 설정 여부
      */
-    isProvideCertificate?: boolean;
+    isRelatedCourseOption?: boolean;
     /**
-     * 학습 포인트(마일리지) 사용 여부
+     * 행정항목 설정 여부
      */
-    isUseLearningPoint?: boolean;
-    /**
-     * 사전 레벨 테스트 사용 여부
-     */
-    isUsePreLevelTest?: boolean;
-    /**
-     * 과정 플래그 사용 여부
-     */
-    isUseCourseFlag?: boolean;
+    isAdminDataOption?: boolean;
 };
 

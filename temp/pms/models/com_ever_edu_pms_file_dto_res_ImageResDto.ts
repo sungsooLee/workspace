@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type com_ever_edu_pms_file_dto_res_ThumbnailImageResDto = {
+export type com_ever_edu_pms_file_dto_res_ImageResDto = {
     /**
      * 저정소유형. Enum(FileUploadStatus) - S3|HMG
      */

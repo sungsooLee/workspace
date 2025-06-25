@@ -214,6 +214,7 @@ export class FoFileService {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
+                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },
@@ -239,7 +240,6 @@ export class FoFileService {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
-                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },
@@ -265,6 +265,58 @@ export class FoFileService {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 파일그룹 다운로드
+     * 파일그룹의 모든 파일을 압축로 다운로드한다.
+     * @param groupUuid 파일그룹 UUID
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static fileGroupDownload(
+        groupUuid: string,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/file/group/{groupUuid}/download',
+            path: {
+                'groupUuid': groupUuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 복수 파일 다운로드
+     * 복수 파일을 다운로드한다.
+     * @param fileUuids 파일 UUID, ","로 여러개의 파일 UUID를 전달받는다
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static multiFileDownload(
+        fileUuids: string,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/file/files/{fileUuids}/download',
+            path: {
+                'fileUuids': fileUuids,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },

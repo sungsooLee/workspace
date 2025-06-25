@@ -39,9 +39,9 @@ export type com_ever_edu_pms_file_dto_res_FileCopyInternalResDto = {
      */
     reposType?: com_ever_edu_pms_file_dto_res_FileCopyInternalResDto.reposType;
     /**
-     * S3버킷명(저정소유형이 "S3"인 경우)
+     * 버킷명(S3 Bucket 개념의 최상위 저장소 구분)
      */
-    s3Bucket?: string;
+    bucket?: string;
     /**
      * 파일경로: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)<br> Ex&gt; upload/community/board/2025/01/02/file.ppt
      */

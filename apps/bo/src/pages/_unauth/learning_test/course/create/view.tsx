@@ -1,5 +1,5 @@
 import { Button, Divider, Tabs } from '@learnway/ui';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
@@ -16,6 +16,7 @@ export const Route = createFileRoute('/_unauth/learning_test/course/create/view'
 });
 
 function RouteComponent() {
+  const router = useRouter();
   // 통합된 ref 객체로 관리
   const tabRefs = useRef<Record<string, TabFormRef | null>>({
     a: null, // BasicInfo
@@ -28,7 +29,10 @@ function RouteComponent() {
   const [formData, setFormData] = React.useState<Record<string, any>>({});
 
   const handleListClick = () => {
-    console.log('handleExportCourse');
+    console.log('handleListClick');
+    router.navigate({
+      to: '/learning_test/course',
+    });
   };
 
   const handleDeleteClick = () => {

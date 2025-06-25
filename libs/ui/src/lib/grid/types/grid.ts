@@ -72,6 +72,11 @@ declare module '@tanstack/react-table' {
     cellClass?: '';
 
     /**
+     * 컬럼 정렬 key 값 설정시 사용
+     */
+    sortKey?: string;
+
+    /**
      * flattenSubRows가 true 일 경우에 true로 설정하면 depth에 따라 들여쓰기 아이콘 표시
      */
     showHierarchyIcon?: boolean;
