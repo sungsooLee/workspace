@@ -133,7 +133,7 @@ function RouteComponent() {
   const customExcelButtons = (
     <>
       <GridExcelUploadButton
-        url="/multilingual/exportExcel"
+        // url="/multilingual/exportExcel"
         validateUrl="/multilingual/excelUploadValidation"
         disabled={data && data.content && data.content.length === 0}
       />
