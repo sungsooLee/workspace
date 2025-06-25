@@ -35,6 +35,15 @@
     .nlp-select__option {
       @apply !h-[36px] !min-h-[36px];
     }
+    .nlp-select__single-value,
+    .nlp-select__placeholder {
+      @apply !text-[1.3rem];
+    }
+    .nlp-select__dropdown-indicator {
+      svg {
+        @apply h-[16px] w-[16px];
+      }
+    }
   }
   &.nlp--dropdown-lg {
     .nlp-select__control {
@@ -43,18 +52,27 @@
     .nlp-select__option {
       @apply !h-[44px] !min-h-[44px];
     }
+    .nlp-select__single-value,
+    .nlp-select__placeholder {
+      @apply !text-[1.6rem];
+    }
+    .nlp-select__dropdown-indicator {
+      svg {
+        @apply h-[20px] w-[20px];
+      }
+    }
   }
 
   &.error {
     .nlp-select__control {
-      @apply !border-[var(--status1)];
+      @apply !border-[var(--red50)];
     }
   }
   &.readonly,
   &.disabled {
     @apply pointer-events-none cursor-auto;
     .nlp-select__control {
-      @apply !border-[var(--gray1)] !bg-[var(--gray1)];
+      @apply !border-[var(--gray85)] !bg-[var(--gray98)];
       .nlp-select__single-value {
         @apply text-[var(--gray8)];
       }
@@ -66,9 +84,9 @@
 }
 
 .nlp-select__option {
-  @apply flex !h-[32px] !min-h-[32px] items-center !text-[var(--gray10)];
+  @apply flex !h-[36px] !min-h-[36px] items-center !text-[var(--gray10)];
   [class*='select_item'] {
-    @apply !px-[12px] leading-[120%] !text-[var(--gray10)];
+    @apply h-[100%] !px-[12px] !text-[var(--gray10)];
   }
   &.nlp-select__option--is-selected {
     @apply rounded-[4px] !bg-[var(--blue95)];
@@ -84,5 +102,33 @@
 .nlp-select__menu-portal {
   .nlp-select__menu-list {
     @apply !border-[var(--blue50)] p-[12px];
+  }
+}
+
+/* md 사이즈일때 펼침메뉴 */
+.menu-portal-size-md {
+  .nlp-select__option {
+    @apply !h-[36px] !min-h-[36px];
+    [class*='select_item'] {
+      @apply !text-[1.3rem];
+    }
+  }
+
+  .nlp-select__menu-list {
+    @apply !rounded-[6px];
+  }
+}
+
+/* lg 사이즈일때 펼침메뉴 */
+.menu-portal-size-lg {
+  .nlp-select__option {
+    @apply !h-[44px] !min-h-[44px];
+    [class*='select_item'] {
+      @apply !text-[1.4rem];
+    }
+  }
+
+  .nlp-select__menu-list {
+    @apply !rounded-[8px];
   }
 }
