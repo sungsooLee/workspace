@@ -24,7 +24,7 @@ import { cn, gridStateToSortQueryParams } from '@learnway/shared'; // t 함수 �
 import styles from './grid.module.css';
 import { Checkbox } from '../checkbox/checkbox';
 import { Button } from '../button/button';
-import { IcoArrowDown, IcoArrowUp } from '@learnway/icons';
+import { IcoArrowDown, IcoArrowUp, IcoArrowDownDouble, IcoArrowUpDouble } from '@learnway/icons';
 
 // useGridTable의 반환 타입 정의 (필요한 부분만 예시)
 interface UseGridTableReturn<T extends object> {
@@ -120,9 +120,9 @@ export function useGridTable<T extends object>(
         }}
       >
         {table.getIsAllRowsExpanded() ? (
-          <IcoArrowUp width={16} height={16} stroke={'#6F798B'} />
+          <IcoArrowUpDouble width={16} height={16} stroke={'#4C515E'} fill={'none'} />
         ) : (
-          <IcoArrowDown width={16} height={16} stroke={'#6F798B'} />
+          <IcoArrowDownDouble width={16} height={16} stroke={'#4C515E'} fill={'none'} />
         )}
       </div>
     ),
