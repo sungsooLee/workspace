@@ -1,11 +1,88 @@
-.menu-portal-size-lg,
-.nlp-select__menu,
-.nlp-select__menu-list {
-  @apply !rounded-[6px];
+.nlp-select__control {
+  @apply rounded-[8px] !border-[var(--gray85)] pr-[16px];
+  &.nlp-select__control--is-focused {
+    @apply !border-[var(--blue50)];
+  }
 }
 
 .nlp-select__value-container {
-  [class*='nlp-select__placeholder'] {
+  @apply !px-[16px];
+  .nlp-select__placeholder {
     @apply !text-[var(--gray75)];
+  }
+}
+
+.select_wrap {
+  [aria-selected='true'] {
+    @apply !bg-[var(--blue95)];
+  }
+
+  .nlp-select__control--is-disabled {
+    @apply !bg-[var(--gray1)] !text-[var(--gray4)];
+  }
+  .nlp-select__placeholder {
+    @apply !text-[var(--gray75)];
+  }
+
+  .nlp-select__single-value {
+    @apply !text-[var(--gray10)];
+  }
+
+  &.nlp--dropdown-md {
+    .nlp-select__control {
+      @apply !min-h-[36px] !rounded-[6px];
+    }
+    .nlp-select__option {
+      @apply !h-[36px] !min-h-[36px];
+    }
+  }
+  &.nlp--dropdown-lg {
+    .nlp-select__control {
+      @apply !min-h-[44px] !rounded-[8px];
+    }
+    .nlp-select__option {
+      @apply !h-[44px] !min-h-[44px];
+    }
+  }
+
+  &.error {
+    .nlp-select__control {
+      @apply !border-[var(--status1)];
+    }
+  }
+  &.readonly,
+  &.disabled {
+    @apply pointer-events-none cursor-auto;
+    .nlp-select__control {
+      @apply !border-[var(--gray1)] !bg-[var(--gray1)];
+      .nlp-select__single-value {
+        @apply text-[var(--gray8)];
+      }
+    }
+  }
+  &.disabled .nlp-select__control .nlp-select__single-value {
+    @apply text-[var(--gray5)];
+  }
+}
+
+.nlp-select__option {
+  @apply flex !h-[32px] !min-h-[32px] items-center !text-[var(--gray10)];
+  [class*='select_item'] {
+    @apply !px-[12px] leading-[120%] !text-[var(--gray10)];
+  }
+  &.nlp-select__option--is-selected {
+    @apply rounded-[4px] !bg-[var(--blue95)];
+    [class*='select_item'] {
+      @apply !font-[600];
+    }
+  }
+  &:hover {
+    @apply !bg-[var(--gray95)];
+  }
+}
+
+.nlp-select__menu-portal {
+  .nlp-select__menu-list {
+    @apply !border-[var(--blue50)] p-[12px];
   }
 }
