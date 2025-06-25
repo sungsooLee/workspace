@@ -226,7 +226,8 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
                     options={[
                       { label: t('선택'), value: '' },
                       { label: t('회사'), value: 'companyName' },
-                      { label: t('사용자ID'), value: 'userId' },
+                      { label: t('조직'), value: 'deptName' },
+                      { label: t('사용자ID'), value: 'email' },
                       { label: t('이름'), value: 'userName' },
                     ]}
                     disabled={formMode === EnFormMode.NONE}
@@ -345,35 +346,33 @@ const columnHelper = createColumnHelper<any>();
 
 // 속성명 변경 필요
 const columns = [
-  columnHelper.accessor('isInHouse', {
-    // id: 'isInHouse',
-    cell: (info) => (info.getValue() ? '사내' : '사외'),
-    header: t('구분'),
-    size: 60,
-  }),
   columnHelper.accessor('companyName', {
     // id: 'companyName',
     cell: (info) => info.getValue(),
     header: t('회사'),
     size: 80,
+    meta: { sortKey: 'userEntity.companyEntity.name' },
   }),
   columnHelper.accessor('deptName', {
     // id: 'deptName',
     cell: (info) => info.getValue(),
     header: t('조직'),
     size: 90,
+    meta: { sortKey: 'userEntity.deptEntity.deptName' },
   }),
-  columnHelper.accessor('userId', {
+  columnHelper.accessor('email', {
     // id: 'userId',
     cell: (info) => info.getValue(),
     header: t('사용자ID'),
     size: 60,
+    meta: { sortKey: 'userEntity.email' },
   }),
   columnHelper.accessor('userName', {
     // id: 'userName',
     cell: (info) => info.getValue(),
     header: t('이름'),
     size: 80,
+    meta: { sortKey: 'userEntity.name' },
   }),
   columnHelper.accessor('isUsed', {
     // id: 'isUsed',
@@ -393,35 +392,4 @@ const columns = [
     header: t('역할 종료일'),
     size: 140,
   }),
-  // columnHelper.accessor('9', {
-  //   header: '데이터 접근 범위',
-  //   size: 232,
-  //   cell: (info) => {
-  //     return (
-  //       <>
-  //         <Button
-  //           onClick={() => {
-  //             const rowData = info.row.original;
-  //             // const currentApiList = getValues('apiMappingMenuList') || [];
-  //             // const updatedApiList = currentApiList.filter(
-  //             //   (item: any) => item.apiId !== rowData.apiId,
-  //             // );
-  //             // fetchData({ ...getValues(), apiMappingMenuList: updatedApiList });
-  //           }}
-  //           variant="gray2"
-  //           size={'xs'}
-  //           type={'button'}
-  //         >
-  //           회사
-  //         </Button>
-  //         <Button variant="gray2" size={'xs'} type={'button'}>
-  //           채널
-  //         </Button>
-  //         <Button variant="gray2" size={'xs'} type={'button'}>
-  //           팀
-  //         </Button>
-  //       </>
-  //     );
-  //   },
-  // }),
 ];
