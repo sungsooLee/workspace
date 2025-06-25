@@ -25,19 +25,15 @@ const DropdownFormFieldComponent = forwardRef<HTMLDivElement, DropdownFormFieldT
   ) => {
     const options = useFormOptions(initOptions, optionsConfig, currentOptionsState);
 
-    console.log('options', options);
-
     return (
-      options && (
-        <Dropdown
-          {...props}
-          {...dropdownConfig}
-          ref={ref}
-          value={value}
-          options={options}
-          onChange={onChange}
-        />
-      )
+      <Dropdown
+        {...props}
+        {...dropdownConfig}
+        ref={ref}
+        value={value}
+        options={options}
+        onChange={onChange}
+      />
     );
   },
 );
