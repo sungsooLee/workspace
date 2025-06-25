@@ -47,7 +47,7 @@ export const fileDownload = async ({
   // 다운로드를 위한 a 태그 생성 및 클릭 트리거
   const link = document.createElement('a');
   link.href = blobUrl;
-  link.setAttribute('download', response.fileName || 'file');
+  link.setAttribute('download', decodeURI(response.fileName || 'file'));
   document.body.appendChild(link);
   link.click();
 

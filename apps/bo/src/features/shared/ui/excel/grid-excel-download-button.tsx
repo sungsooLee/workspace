@@ -36,7 +36,7 @@ const GridExcelDownloadButtonComponent: React.FC<ExcelButtonsProps> = ({
 
     const executeDownload = async (params: Record<string, any>) => {
       await fileDownload({
-        url: url,
+        url,
         params,
         method,
       });
