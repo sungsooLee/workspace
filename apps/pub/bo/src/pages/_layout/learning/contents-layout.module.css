@@ -8,7 +8,7 @@
       @apply w-[276px] shrink-0;
     }
     .main_contents {
-      @apply relative ml-[32px] flex-grow pl-[32px];
+      @apply relative ml-[32px] min-w-0 flex-1 pl-[32px];
       &::before {
         @apply absolute left-0 top-0 h-full w-[1px] bg-[var(--gray4)] content-[''];
       }

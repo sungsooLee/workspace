@@ -1,7 +1,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { Tabs } from '@learnway/ui';
+import { SplitPanel, Tabs } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import { NoticeBox } from '../../../../../../bo/src/shared/ui/';
 import { SectionLayout } from '../-components/section-layout';
@@ -76,10 +76,10 @@ function RouteComponent() {
           ]}
           type="bullet"
         />
-        <SectionLayout isLineVisible={true}>
+        <SplitPanel divider={true}>
           <MainWidget />
           <MainWidgetDetail />
-        </SectionLayout>
+        </SplitPanel>
       </div>
     </PageContainer>
   );

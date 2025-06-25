@@ -182,7 +182,7 @@ const QuestionInfoComponent: FC<{}> = ({}) => {
   ] as ColumnDef<any, unknown>[];
   return (
     <div className={styles.wrap}>
-      <FormSubTitle label={'기본정보'} />
+      <FormSubTitle label={'기본정보'} noLine />
       <div className={cn(tableStyles.start, tableStyles.wrap)}>
         <table>
           <caption>{'기본정보'}</caption>
