@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useCodeStore } from './use-code-store';
+import { useCodeStore } from '../use-code-store/use-code-store';
 
 export interface UseCodeGroupOptions {
   /** 의존성 배열 - 이 값들이 변경되면 다시 fetch */
@@ -54,15 +54,13 @@ export const useCodeGroupItem = <T = any>(
   codeId: string,
   options: UseCodeGroupOptions = {},
 ) => {
-  const { data, loading, error, refetch } = useCodeGroup<T>(groupName, options);
+  const { data, refetch } = useCodeGroup<T>(groupName, options);
 
   const item = data.find((code: any) => code.cdId === codeId || code.id === codeId);
 
   return {
     item,
     data,
-    loading,
-    error,
     refetch,
   };
 };

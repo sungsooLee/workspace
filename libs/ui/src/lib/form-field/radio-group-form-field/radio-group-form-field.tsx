@@ -48,7 +48,7 @@ const RadioGroupFormFieldComponent = forwardRef<HTMLDivElement, RadioGroupFormFi
         style={cols ? { gridTemplateColumns: `repeat(${cols}, 1fr)` } : undefined}
         name={name}
         defaultValue={value}
-        options={radioOptions}
+        options={radioOptions as RadioGroupOption[]}
         cols={cols}
         onValueChange={onChange}
         {...props}
