@@ -10,6 +10,7 @@ import {
   InputModalSelectorFormField,
   ListModalSelectorFormField,
   RadioGroupFormField,
+  CheckboxGroupFormField,
   SelectOption,
   useModal,
 } from '@learnway/ui';
@@ -19,7 +20,6 @@ import { ContentsButtons, MainContents, PageContainer } from '@widgets/layout';
 import { SubContents } from '@widgets/layout/ui/container/slot/sub-contents';
 import { t } from 'i18next';
 import LabelMessagesService from '../../../../entities/label-messages-mock/api/label-messages';
-import { CheckboxGroupFormField } from '@features/form';
 
 export const Route = createFileRoute('/_unauth/sample/form-filed-sample/')({
   component: RouteComponent,
