@@ -5,7 +5,7 @@ export { ReactComponent as IcoCheck } from './lib/ic_check.svg'; // 20*20 Check
 export { ReactComponent as IcoCheck02 } from './lib/ic_check02.svg';
 export { ReactComponent as IcoStar } from './lib/ic_star.svg'; // 20*20 Star fill
 export { ReactComponent as IcoStar02 } from './lib/ic_star02.svg'; // Star line
-export { ReactComponent as IcoGridFilter } from './lib/ic_arrow_up_double.svg'; // 16*16 grid filter
+export { ReactComponent as IcoGridFilter } from './lib/ic_grid_filter.svg'; // 16*16 grid filter
 export { ReactComponent as IcoDownload } from './lib/ic_download.svg'; // 16*16 grid download
 export { ReactComponent as IcoMinus } from './lib/ic_minus.svg'; // 16*16 grid download
 export { ReactComponent as IcoPlus } from './lib/ic_plus.svg'; // 16*16 grid download
@@ -105,7 +105,8 @@ export { ReactComponent as IcoFaceId01 } from './lib/ic_face-id-01.svg'; // mpas
 export { ReactComponent as IcoCompanion } from './lib/ic_companion.svg'; // admin fail
 export { ReactComponent as IcoProgress } from './lib/ic_progress.svg'; // admin progress
 export { ReactComponent as IcoFilter } from './lib/ic_filter.svg'; // filter
-export { ReactComponent as IcoArrowDownDouble } from './lib/ic_arrow_down_double.svg'; // filter
+export { ReactComponent as IcoArrowDownDouble } from './lib/ic_arrow_down_double.svg';
+export { ReactComponent as IcoArrowUpDouble } from './lib/ic_arrow_up_double.svg';
 export { ReactComponent as IcoNarrowRight } from './lib/ic_arrow_narrow_right.svg'; // transfer grid
 export { ReactComponent as IcoGridOrder } from './lib/ic_grid_order.svg'; // grid order
 export { ReactComponent as IcoFileImg } from './lib/ic_file_img.svg'; // image
@@ -152,6 +153,7 @@ export { ReactComponent as IcoClock10Forward } from './lib/ic_clock_10_forward.s
 export { ReactComponent as IcoBackward } from './lib/ic_backward.svg';
 export { ReactComponent as IcoList } from './lib/ic_list.svg';
 export { ReactComponent as IcoAvatar } from './lib/ic_avatar.svg';
+export { ReactComponent as IcoSymbol } from './lib/ic_symbol.svg';
 //export Default as Information from './lib/information.svg?react';
 
 //import Information from './lib/information.svg';

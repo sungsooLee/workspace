@@ -316,7 +316,7 @@ const TestInfoComponent: FC<{}> = ({}) => {
           '해당 시험지는 과정에서 사용 중입니다. 일부 정보만 변경할 수 있고, 삭제는 할 수 없습니다.',
         ]}
       />
-      <SplitPanel size={['auto', 305]} divider>
+      <SplitPanel size={['auto', 416]} divider>
         <div>
           <FormSubTitle label={'기본 정보'} lineType={'dark'} />
           <ContentsRow>

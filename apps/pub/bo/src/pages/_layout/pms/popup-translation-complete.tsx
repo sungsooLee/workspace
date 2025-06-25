@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
@@ -74,7 +75,7 @@ function RouteComponent() {
           </Tooltip>
         </ModalTitle>
         <ModalBody>
-          <FormSubTitle label={'타이틀'} />
+          <FormSubTitle label={'타이틀'} noLine />
           <div className={cn(tableStyles.start, tableStyles.wrap)}>
             <table>
               <caption>{'번역언어정보'}</caption>
