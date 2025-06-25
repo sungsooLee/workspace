@@ -4,6 +4,7 @@
 /* eslint-disable */
 import type { com_ever_edu_global_s3_dto_req_CompleteUploadReqDto } from '../models/com_ever_edu_global_s3_dto_req_CompleteUploadReqDto';
 import type { com_ever_edu_global_s3_dto_req_InitiateUploadReqDto } from '../models/com_ever_edu_global_s3_dto_req_InitiateUploadReqDto';
+import type { com_ever_edu_global_s3_dto_res_AbortUploadResDto } from '../models/com_ever_edu_global_s3_dto_res_AbortUploadResDto';
 import type { com_ever_edu_global_s3_dto_res_CompleteUploadResDto } from '../models/com_ever_edu_global_s3_dto_res_CompleteUploadResDto';
 import type { com_ever_edu_global_s3_dto_res_InitiateUploadResDto } from '../models/com_ever_edu_global_s3_dto_res_InitiateUploadResDto';
 import type { com_ever_edu_global_s3_dto_res_ListUploadPartsResDto } from '../models/com_ever_edu_global_s3_dto_res_ListUploadPartsResDto';
@@ -130,13 +131,13 @@ export class BoS3FileService {
      * S3 멀티파트 업로드 Abort 요청한다.
      * @param uploadId S3 업로드Id
      * @param key S3 키, S3 파일 경로로 사용<br>S3경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)
-     * @returns void
+     * @returns com_ever_edu_global_s3_dto_res_AbortUploadResDto OK
      * @throws ApiError
      */
     public static abortUpload1(
         uploadId: string,
         key: string,
-    ): CancelablePromise<void> {
+    ): CancelablePromise<com_ever_edu_global_s3_dto_res_AbortUploadResDto> {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/admin/api/v1/file/s3/multipart/{uploadId}',

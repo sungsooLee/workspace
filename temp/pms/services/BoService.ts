@@ -11,12 +11,10 @@ import type { com_ever_edu_pms_channel_dto_res_ChannelRandomUrlResDto } from '..
 import type { com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto } from '../models/com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto';
 import type { com_ever_edu_pms_company_dto_req_CompanyCreateReqDto } from '../models/com_ever_edu_pms_company_dto_req_CompanyCreateReqDto';
 import type { com_ever_edu_pms_company_dto_req_CompanyDeptDeleteReqDto } from '../models/com_ever_edu_pms_company_dto_req_CompanyDeptDeleteReqDto';
+import type { com_ever_edu_pms_company_dto_req_CompanyDeptReqDto } from '../models/com_ever_edu_pms_company_dto_req_CompanyDeptReqDto';
 import type { com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto } from '../models/com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto';
 import type { com_ever_edu_pms_company_dto_res_CompanyDeptResDto } from '../models/com_ever_edu_pms_company_dto_res_CompanyDeptResDto';
 import type { com_ever_edu_pms_company_dto_res_CompanyResDto } from '../models/com_ever_edu_pms_company_dto_res_CompanyResDto';
-import type { com_ever_edu_pms_educationplace_dto_req_EducationPlaceSaveReqDto } from '../models/com_ever_edu_pms_educationplace_dto_req_EducationPlaceSaveReqDto';
-import type { com_ever_edu_pms_educationplace_dto_req_EducationPlaceUpdateReqDto } from '../models/com_ever_edu_pms_educationplace_dto_req_EducationPlaceUpdateReqDto';
-import type { com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto } from '../models/com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto';
 import type { com_ever_edu_pms_form_dto_req_FormReqDto$CustomForm } from '../models/com_ever_edu_pms_form_dto_req_FormReqDto$CustomForm';
 import type { com_ever_edu_pms_form_dto_req_FormReqDto$OptionalForm } from '../models/com_ever_edu_pms_form_dto_req_FormReqDto$OptionalForm';
 import type { com_ever_edu_pms_form_dto_res_FormResDto$Form } from '../models/com_ever_edu_pms_form_dto_res_FormResDto$Form';
@@ -65,6 +63,7 @@ import type { com_ever_edu_pms_role_dto_req_RoleUpdateReqDto } from '../models/c
 import type { com_ever_edu_pms_role_dto_req_RoleUserGroupReqDto } from '../models/com_ever_edu_pms_role_dto_req_RoleUserGroupReqDto';
 import type { com_ever_edu_pms_role_dto_req_RoleUserReqDto } from '../models/com_ever_edu_pms_role_dto_req_RoleUserReqDto';
 import type { com_ever_edu_pms_role_dto_res_RoleApiResDto } from '../models/com_ever_edu_pms_role_dto_res_RoleApiResDto';
+import type { com_ever_edu_pms_role_dto_res_RoleApplicationHistoryResDto } from '../models/com_ever_edu_pms_role_dto_res_RoleApplicationHistoryResDto';
 import type { com_ever_edu_pms_role_dto_res_RoleApplicationResDto } from '../models/com_ever_edu_pms_role_dto_res_RoleApplicationResDto';
 import type { com_ever_edu_pms_role_dto_res_RoleMenuResDto } from '../models/com_ever_edu_pms_role_dto_res_RoleMenuResDto';
 import type { com_ever_edu_pms_role_dto_res_RoleResDto } from '../models/com_ever_edu_pms_role_dto_res_RoleResDto';
@@ -114,8 +113,6 @@ import type { org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_r
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyDeptResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyDeptResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyDeptUserResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyDeptUserResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyResDto';
-import type { org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceHistoryResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceHistoryResDto';
-import type { org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$ListOnAdmin';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_notification_dto_res_EmailRecordResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_notification_dto_res_EmailRecordResDto';
@@ -1111,76 +1108,50 @@ export class BoService {
         });
     }
     /**
-     * 교육장소 정보 조회
-     * 교육장소 상세 정보를 조회한다.
-     * @param educationPlaceUuid
-     * @returns com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto OK
+     * 회사 부서 상세 조회
+     * 회사 부서 상세 조회한다.
+     * @param deptId
+     * @returns com_ever_edu_pms_company_dto_res_CompanyDeptResDto OK
      * @throws ApiError
      */
-    public static getEducationPlaceInfo1(
-        educationPlaceUuid: string,
-    ): CancelablePromise<com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto> {
+    public static getDeportmentDetail(
+        deptId: number,
+    ): CancelablePromise<com_ever_edu_pms_company_dto_res_CompanyDeptResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/admin/api/v1/education/place/{educationPlaceUuid}',
+            url: '/admin/api/v1/department/{deptId}',
             path: {
-                'educationPlaceUuid': educationPlaceUuid,
+                'deptId': deptId,
             },
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
-                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },
         });
     }
     /**
-     * 교육장소 수정
-     * 교육장소 정보를 수정한다.
-     * @param educationPlaceUuid
+     * 회사 부서 수정
+     * 회사 부서 수정한다.
+     * @param deptId
      * @param requestBody
-     * @returns com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto OK
+     * @returns com_ever_edu_pms_company_dto_res_CompanyDeptResDto OK
      * @throws ApiError
      */
-    public static modifyEducationPlace(
-        educationPlaceUuid: string,
-        requestBody: com_ever_edu_pms_educationplace_dto_req_EducationPlaceUpdateReqDto,
-    ): CancelablePromise<com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto> {
+    public static updateDeportment(
+        deptId: number,
+        requestBody: com_ever_edu_pms_company_dto_req_CompanyDeptReqDto,
+    ): CancelablePromise<com_ever_edu_pms_company_dto_res_CompanyDeptResDto> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/admin/api/v1/education/place/{educationPlaceUuid}',
+            url: '/admin/api/v1/department/{deptId}',
             path: {
-                'educationPlaceUuid': educationPlaceUuid,
+                'deptId': deptId,
             },
             body: requestBody,
             mediaType: 'application/json',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 교육장소 삭제
-     * 교육장소 정보를 삭제한다.
-     * @param educationPlaceUuid
-     * @returns number OK
-     * @throws ApiError
-     */
-    public static removeEducationPlace(
-        educationPlaceUuid: string,
-    ): CancelablePromise<number> {
-        return __request(OpenAPI, {
-            method: 'DELETE',
-            url: '/admin/api/v1/education/place/{educationPlaceUuid}',
-            path: {
-                'educationPlaceUuid': educationPlaceUuid,
-            },
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
@@ -1627,6 +1598,7 @@ export class BoService {
      * @param page Zero-based page index (0..N)
      * @param size The size of the page to be returned
      * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param tenantId 테넌트Id
      * @param tenantName 테넌트명
      * @param companyName 회사명
      * @param companyCode 회사코드
@@ -1640,6 +1612,7 @@ export class BoService {
         page?: number,
         size: number = 10,
         sort?: Array<string>,
+        tenantId?: string,
         tenantName?: string,
         companyName?: string,
         companyCode?: string,
@@ -1654,6 +1627,7 @@ export class BoService {
                 'page': page,
                 'size': size,
                 'sort': sort,
+                'tenantId': tenantId,
                 'tenantName': tenantName,
                 'companyName': companyName,
                 'companyCode': companyCode,
@@ -2001,6 +1975,36 @@ export class BoService {
                 401: `Unauthorized`,
                 404: `Not Found`,
                 405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 다국어 JSON 생성
+     * JSON 생성
+     * @param locale
+     * @param keyTypeCode
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static findMultilingualJson(
+        locale: string,
+        keyTypeCode?: 'SYSTEM_COMMON_CODE' | 'LEARNER_MENU' | 'HRD_CENTER_MENU' | 'LABEL' | 'MESSAGE',
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/multilingual/{locale}/multilingualJson',
+            path: {
+                'locale': locale,
+            },
+            query: {
+                'keyTypeCode': keyTypeCode,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },
@@ -2502,38 +2506,56 @@ export class BoService {
         });
     }
     /**
-     * 교육장소 목록 조회
-     * 교육장소 목록 정보를 조회한다.
+     * 회사 부서 목록 조회
+     * 회사 부서 목록 정보를 조회한다.
      * @param page Zero-based page index (0..N)
      * @param size The size of the page to be returned
      * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-     * @param educationPlaceTypecd 교육장소유형코드 [CAMPUS,SERVISE_TECH,ME_CLUSTER ... ]
-     * @param isReservationUsed 예약사용여부
+     * @param companyCode 회사코드
+     * @param companyId 회사Id
+     * @param companyName 회사명
+     * @param isUseLinkageSystem 연동시스템 사용여부
+     * @param companyType 회사유형
+     * @param regStrDate 등록검색시작일(yyyyMMdd)
+     * @param regEndDate 등록검색종료일(yyyyMMdd)
      * @param isUsed 사용여부
-     * @param educationPlaceCodeName 교육장소코드명
-     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto OK
+     * @param parentDeptId 상위 부서ID
+     * @param deptId 부서ID
+     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyDeptResDto OK
      * @throws ApiError
      */
-    public static getEducationPlaceList1(
+    public static getDeportmentList(
         page?: number,
         size: number = 10,
         sort?: Array<string>,
-        educationPlaceTypecd?: string,
-        isReservationUsed?: string,
-        isUsed?: string,
-        educationPlaceCodeName?: string,
-    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto> {
+        companyCode?: string,
+        companyId?: string,
+        companyName?: string,
+        isUseLinkageSystem?: 'true' | 'false',
+        companyType?: string,
+        regStrDate?: string,
+        regEndDate?: string,
+        isUsed?: 'true' | 'false',
+        parentDeptId?: string,
+        deptId?: string,
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyDeptResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/admin/api/v1/education/place',
+            url: '/admin/api/v1/department',
             query: {
                 'page': page,
                 'size': size,
                 'sort': sort,
-                'educationPlaceTypecd': educationPlaceTypecd,
-                'isReservationUsed': isReservationUsed,
+                'companyCode': companyCode,
+                'companyId': companyId,
+                'companyName': companyName,
+                'isUseLinkageSystem': isUseLinkageSystem,
+                'companyType': companyType,
+                'regStrDate': regStrDate,
+                'regEndDate': regEndDate,
                 'isUsed': isUsed,
-                'educationPlaceCodeName': educationPlaceCodeName,
+                'parentDeptId': parentDeptId,
+                'deptId': deptId,
             },
             errors: {
                 400: `Bad Request`,
@@ -2545,18 +2567,18 @@ export class BoService {
         });
     }
     /**
-     * 교육장소 등록
-     * 교육장소 정보를 저장한다.
+     * 회사 부서 등록
+     * 회사 부서 등록한다.
      * @param requestBody
-     * @returns com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto OK
+     * @returns com_ever_edu_pms_company_dto_res_CompanyDeptResDto OK
      * @throws ApiError
      */
-    public static registerEducationPlace(
-        requestBody: com_ever_edu_pms_educationplace_dto_req_EducationPlaceSaveReqDto,
-    ): CancelablePromise<com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto> {
+    public static registerDeportment(
+        requestBody: com_ever_edu_pms_company_dto_req_CompanyDeptReqDto,
+    ): CancelablePromise<com_ever_edu_pms_company_dto_res_CompanyDeptResDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/admin/api/v1/education/place',
+            url: '/admin/api/v1/department',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -2602,6 +2624,7 @@ export class BoService {
      * @param page Zero-based page index (0..N)
      * @param size The size of the page to be returned
      * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param tenantId
      * @param isUseLinkageSystem 연동시스템 사용여부
      * @param companyCode 회사코드
      * @param name 회사명
@@ -2619,6 +2642,7 @@ export class BoService {
         page?: number,
         size: number = 10,
         sort?: Array<string>,
+        tenantId?: number,
         isUseLinkageSystem?: string,
         companyCode?: string,
         name?: string,
@@ -2637,6 +2661,7 @@ export class BoService {
                 'page': page,
                 'size': size,
                 'sort': sort,
+                'tenantId': tenantId,
                 'isUseLinkageSystem': isUseLinkageSystem,
                 'companyCode': companyCode,
                 'name': name,
@@ -2855,6 +2880,31 @@ export class BoService {
             },
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 메뉴 상세 조회
+     * 메뉴 상세 조회
+     * @param menuId
+     * @returns com_ever_edu_pms_menu_dto_res_MenuResDto$DetailOnAdmin OK
+     * @throws ApiError
+     */
+    public static findDetailById(
+        menuId: number,
+    ): CancelablePromise<com_ever_edu_pms_menu_dto_res_MenuResDto$DetailOnAdmin> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/internal/api/v1/menus/{menuId}/detail',
+            path: {
+                'menuId': menuId,
+            },
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
@@ -3176,15 +3226,24 @@ export class BoService {
         });
     }
     /**
-     * 사용자 조회(단건)
-     * 사용자를 조회한다.
+     * 유저그룹검색 팝업 조회 - 직군/직무/호칭/보직
+     * 유저그룹검색 팝업 조회 - 직군/직무/호칭/보직
+     * @param userGroupType
+     * @param userGroupName
      * @returns com_ever_edu_pms_user_dto_res_UserGroupDto OK
      * @throws ApiError
      */
-    public static findByUserId(): CancelablePromise<Array<com_ever_edu_pms_user_dto_res_UserGroupDto>> {
+    public static getUserGroups(
+        userGroupType?: 'ORGANIZATION' | 'JOB_GROUP' | 'JOB' | 'JOB_TITLE' | 'JOB_POSITION' | 'CUSTOM_GROUP',
+        userGroupName?: string,
+    ): CancelablePromise<Array<com_ever_edu_pms_user_dto_res_UserGroupDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/admin/api/v1/userGroup/userGroups',
+            url: '/admin/api/v1/userGroup/user-groups',
+            query: {
+                'userGroupType': userGroupType,
+                'userGroupName': userGroupName,
+            },
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
@@ -3256,6 +3315,7 @@ export class BoService {
     /**
      * 테넌트 목록 조회(공통팝업용)
      * 테넌트 목록 조회(공통팝업용)
+     * @param tenantId 테넌트Id
      * @param tenantName 테넌트명
      * @param companyName 회사명
      * @param companyCode 회사코드
@@ -3266,6 +3326,7 @@ export class BoService {
      * @throws ApiError
      */
     public static getTenantSimpleList1(
+        tenantId?: string,
         tenantName?: string,
         companyName?: string,
         companyCode?: string,
@@ -3277,6 +3338,7 @@ export class BoService {
             method: 'GET',
             url: '/admin/api/v1/tenants/simple-list',
             query: {
+                'tenantId': tenantId,
                 'tenantName': tenantName,
                 'companyName': companyName,
                 'companyCode': companyCode,
@@ -3299,6 +3361,7 @@ export class BoService {
      * @param page Zero-based page index (0..N)
      * @param size The size of the page to be returned
      * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param tenantId 테넌트Id
      * @param tenantName 테넌트명
      * @param companyName 회사명
      * @param companyCode 회사코드
@@ -3312,6 +3375,7 @@ export class BoService {
         page?: number,
         size: number = 2147483647,
         sort?: Array<string>,
+        tenantId?: string,
         tenantName?: string,
         companyName?: string,
         companyCode?: string,
@@ -3326,6 +3390,7 @@ export class BoService {
                 'page': page,
                 'size': size,
                 'sort': sort,
+                'tenantId': tenantId,
                 'tenantName': tenantName,
                 'companyName': companyName,
                 'companyCode': companyCode,
@@ -3509,6 +3574,31 @@ export class BoService {
         });
     }
     /**
+     * 내 역할 목록 조회
+     * 현재 로그인한 사용자의 역할 목록을 조회한다.
+     * @param siteScope
+     * @returns com_ever_edu_pms_role_dto_res_RoleResDto OK
+     * @throws ApiError
+     */
+    public static getMyRoles1(
+        siteScope: 'FO' | 'BO',
+    ): CancelablePromise<Array<com_ever_edu_pms_role_dto_res_RoleResDto>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/roles/me',
+            query: {
+                'siteScope': siteScope,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * 역할 신청 조회(단건)
      * 역할 신청을 조회한다.
      * @param id
@@ -3523,6 +3613,74 @@ export class BoService {
             url: '/admin/api/v1/role-applications/{id}',
             path: {
                 'id': id,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 내 역할 신청 목록 조회
+     * 현재 로그인한 사용자의 역할 신청 목록을 조회한다.
+     * @param pageable
+     * @param roleId
+     * @param tenantId
+     * @param channelUuid
+     * @param isExpired
+     * @param status
+     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleApplicationResDto OK
+     * @throws ApiError
+     */
+    public static getRoleApplications2(
+        pageable: org_springdoc_core_converters_models_Pageable,
+        roleId?: number,
+        tenantId?: number,
+        channelUuid?: string,
+        isExpired?: boolean,
+        status?: 'NEW' | 'EXTEND' | 'APPROVED' | 'REJECTED',
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleApplicationResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/role-applications/me',
+            query: {
+                'pageable': pageable,
+                'roleId': roleId,
+                'tenantId': tenantId,
+                'channelUuid': channelUuid,
+                'isExpired': isExpired,
+                'status': status,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 역할 신청 이력 조회
+     * 역할 신청 이력을 조회한다.
+     * @param userUuid
+     * @param createdDate
+     * @returns com_ever_edu_pms_role_dto_res_RoleApplicationHistoryResDto OK
+     * @throws ApiError
+     */
+    public static getRoleApplicationHistories1(
+        userUuid: string,
+        createdDate: string,
+    ): CancelablePromise<Array<com_ever_edu_pms_role_dto_res_RoleApplicationHistoryResDto>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/role-applications/histories',
+            query: {
+                'userUuid': userUuid,
+                'createdDate': createdDate,
             },
             errors: {
                 400: `Bad Request`,
@@ -3787,36 +3945,6 @@ export class BoService {
         });
     }
     /**
-     * 다국어 JSON 생성
-     * JSON 생성
-     * @param locale
-     * @param keyTypeCode
-     * @returns any OK
-     * @throws ApiError
-     */
-    public static findMultilingualJson(
-        locale: string,
-        keyTypeCode?: 'SYSTEM_COMMON_CODE' | 'LEARNER_MENU' | 'HRD_CENTER_MENU' | 'LABEL' | 'MESSAGE',
-    ): CancelablePromise<any> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/multilingual/{locale}/multilingualJson',
-            path: {
-                'locale': locale,
-            },
-            query: {
-                'keyTypeCode': keyTypeCode,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
      * 다국어 엑셀 다운로드
      * 다국어 엑셀 다운로드
      * @param keyTypeCode
@@ -3991,7 +4119,7 @@ export class BoService {
      * @returns com_ever_edu_pms_menu_dto_res_MenuResDto$DetailOnAdmin OK
      * @throws ApiError
      */
-    public static findDetailById(
+    public static findDetailById1(
         menuId: number,
     ): CancelablePromise<com_ever_edu_pms_menu_dto_res_MenuResDto$DetailOnAdmin> {
         return __request(OpenAPI, {
@@ -4038,21 +4166,21 @@ export class BoService {
      * BO GNB 테넌트메뉴목록 트리 조회
      * GNB 메뉴 목록을 트리구조로 조회한다.
      * @param tenantId
-     * @param roleIds
+     * @param roleId
      * @param deviceType
      * @returns com_ever_edu_pms_menu_dto_res_GnbTenantMenuTreeDto OK
      * @throws ApiError
      */
     public static findTenantMenu1(
         tenantId: number,
-        roleIds?: Array<string>,
+        roleId?: number,
         deviceType?: string,
     ): CancelablePromise<com_ever_edu_pms_menu_dto_res_GnbTenantMenuTreeDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/menus/tenantTree',
             query: {
-                'roleIds': roleIds,
+                'roleId': roleId,
                 'tenantId': tenantId,
                 'deviceType': deviceType,
             },
@@ -4264,134 +4392,6 @@ export class BoService {
         });
     }
     /**
-     * 교육장소 이력 목록 조회
-     * 교육장소 이력 목록 정보를 조회한다.
-     * @param page Zero-based page index (0..N)
-     * @param size The size of the page to be returned
-     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-     * @param educationPlaceHistoryUuid
-     * @param tentantName 테넌트명
-     * @param managerName 담당자
-     * @param managerId 아이디(이메일)
-     * @param educationHistoryTypecd 이력구분코드
-     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceHistoryResDto OK
-     * @throws ApiError
-     */
-    public static getEducationPlaceHistoryList(
-        page?: number,
-        size: number = 10,
-        sort?: Array<string>,
-        educationPlaceHistoryUuid?: string,
-        tentantName?: string,
-        managerName?: string,
-        managerId?: string,
-        educationHistoryTypecd?: string,
-    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceHistoryResDto> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/education/place/history',
-            query: {
-                'page': page,
-                'size': size,
-                'sort': sort,
-                'educationPlaceHistoryUuid': educationPlaceHistoryUuid,
-                'tentantName': tentantName,
-                'managerName': managerName,
-                'managerId': managerId,
-                'educationHistoryTypecd': educationHistoryTypecd,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 회사 부서 목록 조회
-     * 회사 부서 목록 정보를 조회한다.
-     * @param companyCode 회사코드
-     * @param page Zero-based page index (0..N)
-     * @param size The size of the page to be returned
-     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-     * @param companyName 회사명
-     * @param isUseLinkageSystem 연동시스템 사용여부
-     * @param companyType 회사유형
-     * @param regStrDate 등록검색시작일(yyyyMMdd)
-     * @param regEndDate 등록검색종료일(yyyyMMdd)
-     * @param isUsed 사용여부
-     * @param parentDeptId 상위 부서ID
-     * @param deptId 부서ID
-     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyDeptResDto OK
-     * @throws ApiError
-     */
-    public static getDeportmentList(
-        companyCode: string,
-        page?: number,
-        size: number = 10,
-        sort?: Array<string>,
-        companyName?: string,
-        isUseLinkageSystem?: 'true' | 'false',
-        companyType?: string,
-        regStrDate?: string,
-        regEndDate?: string,
-        isUsed?: 'true' | 'false',
-        parentDeptId?: string,
-        deptId?: string,
-    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyDeptResDto> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/department',
-            query: {
-                'page': page,
-                'size': size,
-                'sort': sort,
-                'companyCode': companyCode,
-                'companyName': companyName,
-                'isUseLinkageSystem': isUseLinkageSystem,
-                'companyType': companyType,
-                'regStrDate': regStrDate,
-                'regEndDate': regEndDate,
-                'isUsed': isUsed,
-                'parentDeptId': parentDeptId,
-                'deptId': deptId,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 회사 부서 삭제
-     * 회사 부서를 삭제한다.
-     * @param requestBody
-     * @returns any OK
-     * @throws ApiError
-     */
-    public static deleteDeportment(
-        requestBody: com_ever_edu_pms_company_dto_req_CompanyDeptDeleteReqDto,
-    ): CancelablePromise<any> {
-        return __request(OpenAPI, {
-            method: 'DELETE',
-            url: '/admin/api/v1/department',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
      * 회사 부서 유저 목록 조회
      * 회사 부서의 (하위부서포함) 유저 목록 정보를 조회한다.
      * @param companyCode 회사코드
@@ -4464,13 +4464,105 @@ export class BoService {
         });
     }
     /**
-     * 회사 부서 하위 목록 조회
-     * 회사 부서의 하위 목록 정보를 조회한다.
-     * @param companyCode 회사코드
-     * @param parentDeptId 부서Id
+     * 회사 부서 목록 조회 (팝업)
+     * 회사 부서 목록 정보를 조회한다.(팝업)
      * @param page Zero-based page index (0..N)
      * @param size The size of the page to be returned
      * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param companyCode 회사코드
+     * @param companyId 회사Id
+     * @param companyName 회사명
+     * @param isUseLinkageSystem 연동시스템 사용여부
+     * @param companyType 회사유형
+     * @param regStrDate 등록검색시작일(yyyyMMdd)
+     * @param regEndDate 등록검색종료일(yyyyMMdd)
+     * @param isUsed 사용여부
+     * @param parentDeptId 상위 부서ID
+     * @param deptId 부서ID
+     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyDeptResDto OK
+     * @throws ApiError
+     */
+    public static getDeportmentListPopup(
+        page?: number,
+        size: number = 10,
+        sort?: Array<string>,
+        companyCode?: string,
+        companyId?: string,
+        companyName?: string,
+        isUseLinkageSystem?: 'true' | 'false',
+        companyType?: string,
+        regStrDate?: string,
+        regEndDate?: string,
+        isUsed?: 'true' | 'false',
+        parentDeptId?: string,
+        deptId?: string,
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyDeptResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/department/popup',
+            query: {
+                'page': page,
+                'size': size,
+                'sort': sort,
+                'companyCode': companyCode,
+                'companyId': companyId,
+                'companyName': companyName,
+                'isUseLinkageSystem': isUseLinkageSystem,
+                'companyType': companyType,
+                'regStrDate': regStrDate,
+                'regEndDate': regEndDate,
+                'isUsed': isUsed,
+                'parentDeptId': parentDeptId,
+                'deptId': deptId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 부서명 (deptName) 중복체크
+     * 회사코드의 등록여부를 조회한다.
+     * @param deptName 부서명
+     * @param companyId 회사id
+     * @param deptId 부서Id (수정만 필수)
+     * @returns boolean OK
+     * @throws ApiError
+     */
+    public static getExistDeptName(
+        deptName: string,
+        companyId?: string,
+        deptId?: string,
+    ): CancelablePromise<boolean> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/department/companyName/exist',
+            query: {
+                'companyId': companyId,
+                'deptName': deptName,
+                'deptId': deptId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 회사 부서 하위 목록 조회
+     * 회사 부서의 하위 목록 정보를 조회한다.
+     * @param companyCode 회사코드
+     * @param page Zero-based page index (0..N)
+     * @param size The size of the page to be returned
+     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param parentDeptId 부서Id
      * @param deptName 부서명
      * @param deptManagerName 부서장 이름
      * @param hrInfoManageType 조직등록유형(인사 데이터 수동 관리 유형)
@@ -4479,10 +4571,10 @@ export class BoService {
      */
     public static getDeportmentChildList1(
         companyCode: string,
-        parentDeptId: string,
         page?: number,
         size: number = 10,
         sort?: Array<string>,
+        parentDeptId?: string,
         deptName?: string,
         deptManagerName?: string,
         hrInfoManageType?: string,
@@ -4516,6 +4608,7 @@ export class BoService {
      * @param page Zero-based page index (0..N)
      * @param size The size of the page to be returned
      * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param tenantId
      * @param isUseLinkageSystem 연동시스템 사용여부
      * @param companyCode 회사코드
      * @param name 회사명
@@ -4533,6 +4626,7 @@ export class BoService {
         page?: number,
         size: number = 10,
         sort?: Array<string>,
+        tenantId?: number,
         isUseLinkageSystem?: string,
         companyCode?: string,
         name?: string,
@@ -4551,6 +4645,7 @@ export class BoService {
                 'page': page,
                 'size': size,
                 'sort': sort,
+                'tenantId': tenantId,
                 'isUseLinkageSystem': isUseLinkageSystem,
                 'companyCode': companyCode,
                 'name': name,
@@ -4756,6 +4851,30 @@ export class BoService {
             path: {
                 'menuId': menuId,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 회사 부서 삭제
+     * 회사 부서를 삭제한다.
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static deleteDeportment(
+        requestBody: com_ever_edu_pms_company_dto_req_CompanyDeptDeleteReqDto,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/admin/api/v1/department/remove',
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,

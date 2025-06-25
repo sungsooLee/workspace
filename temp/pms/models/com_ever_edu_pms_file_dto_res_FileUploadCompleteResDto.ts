@@ -24,7 +24,7 @@ export type com_ever_edu_pms_file_dto_res_FileUploadCompleteResDto = {
      */
     fileSize?: number;
     /**
-     * 파일세부경로, 3Depth 경로<br>경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)<br> Ex&gt;upload/community/board/2025/01/02/file.ppt -&gt;/2025/01/02
+     * 파일세부경로, 3Depth 경로<br>경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)<br>Ex&gt;upload/community/board/2025/01/02/file.ppt -&gt;/2025/01/02
      */
     detailPath?: string;
     /**

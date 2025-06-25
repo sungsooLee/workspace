@@ -4,6 +4,10 @@
 /* eslint-disable */
 export type com_ever_edu_pms_tenant_dto_req_TenantSearchReqDto$SearchByAdmin = {
     /**
+     * 테넌트Id
+     */
+    tenantId?: number;
+    /**
      * 테넌트명
      */
     tenantName?: string;

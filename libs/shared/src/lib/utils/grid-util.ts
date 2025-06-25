@@ -45,22 +45,29 @@ export const getRowSelectionByList = (tableInstance: Table<any>, list: any[], ke
 };
 
 /**
- * GridState의 정렬 상태를 쿼리 파라미터 문자열 배열로 변환합니다.
+ * GridState의 정렬 상태(sorting)를 쿼리 파라미터 문자열 배열로 변환합니다.
  *
- * 각 정렬 조건은 "columnId,asc" 또는 "columnId,desc" 형태의 문자열로 변환됩니다.
+ * - 각 정렬 조건은 "컬럼ID,asc" 또는 "컬럼ID,desc" 형태의 문자열로 반환됩니다.
+ * - columns 배열이 주어지면, 컬럼의 meta.sortKey가 있으면 해당 값을 우선 사용합니다.
+ *   (예: meta: { sortKey: 'xxx' } 이면 "xxx,asc" 형태로 반환)
  *
  * 예시:
- * 입력: [{ id: 'name', desc: false }, { id: 'age', desc: true }]
- * 출력: ["name,asc", "age,desc"]
+ *   입력: [{ id: 'name', desc: false }, { id: 'age', desc: true }]
+ *   출력: ["name,asc", "age,desc"]
  *
- * @param {GridState} state - 정렬 정보가 포함된 그리드 상태 객체
- * @returns {string[]} 쿼리 파라미터로 사용할 수 있는 정렬 문자열 배열
+ * @param state   정렬 정보(sorting)가 포함된 그리드 상태 객체 (GridState)
+ * @param columns (선택) 컬럼 정의 배열. meta.sortKey가 있으면 우선 사용
+ * @returns       쿼리 파라미터로 사용할 수 있는 정렬 문자열 배열
  */
-// export const gridStateToSortQueryParams = (state: GridState): string[] => {
-export const gridStateToSortQueryParams = (state: any): string[] => {
+export const gridStateToSortQueryParams = (state: any, columns: any = []): string[] => {
   if (!state.sorting || state.sorting.length === 0) return [];
 
-  return state.sorting.map(({ id, desc }: any) => `${id},${desc ? 'desc' : 'asc'}`);
+  return state.sorting.map(({ id, desc }: any) => {
+    // columns 배열에서 id와 일치하는 컬럼을 찾고, meta.sortKey가 있으면 해당 값 사용
+    const column = columns.find((column: any) => column.accessorKey === id);
+    const sortKey = column?.meta?.sortKey || id;
+    return `${sortKey},${desc ? 'desc' : 'asc'}`;
+  });
 };
 
 /**

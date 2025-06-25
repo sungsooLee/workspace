@@ -20,6 +20,7 @@ export * from './lib/utils/data-util';
 export * from './lib/utils/depsAreSame';
 export * from './lib/utils/file-util';
 export * from './lib/utils/grid-util';
+export * from './lib/utils/mock-data-util';
 export * from './lib/utils/query';
 export * from './lib/utils/random-generator';
 export * from './lib/utils/tree';

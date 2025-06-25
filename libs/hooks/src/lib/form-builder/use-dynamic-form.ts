@@ -95,6 +95,7 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
     clearErrors,
     setValue,
     trigger,
+    watch,
   } = methods;
   /**
    * 폼 제출 핸들러를 생성하는 함수.
@@ -233,6 +234,7 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
     onFormChange,
     onFormFocus: handleFocus,
     control: extendedControl,
+    watch,
     getInitByBuilders: getInitByBuilders,
   };
 };

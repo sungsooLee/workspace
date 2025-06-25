@@ -4,11 +4,11 @@
 /* eslint-disable */
 export type com_ever_edu_pms_role_dto_req_RoleCreateReqDto = {
     /**
-     * 사이트 구분
+     * 사이트 구분(cmmon.SiteScope)
      */
     siteScope?: com_ever_edu_pms_role_dto_req_RoleCreateReqDto.siteScope;
     /**
-     * 역할 타입
+     * 역할 타입(pms.role.RoleType)
      */
     roleType?: com_ever_edu_pms_role_dto_req_RoleCreateReqDto.roleType;
     /**
@@ -28,7 +28,7 @@ export type com_ever_edu_pms_role_dto_req_RoleCreateReqDto = {
      */
     description?: string;
     /**
-     * 테넌트 적용 범위
+     * 테넌트 적용 범위(pms.role.TenantScope)
      */
     tenantScope?: com_ever_edu_pms_role_dto_req_RoleCreateReqDto.tenantScope;
     /**
@@ -36,7 +36,7 @@ export type com_ever_edu_pms_role_dto_req_RoleCreateReqDto = {
      */
     tenantId?: number;
     /**
-     * 회사 적용 범위
+     * 회사 적용 범위(pms.role.CompanyScope)
      */
     companyScope?: com_ever_edu_pms_role_dto_req_RoleCreateReqDto.companyScope;
     /**
@@ -44,7 +44,7 @@ export type com_ever_edu_pms_role_dto_req_RoleCreateReqDto = {
      */
     companyIds?: Array<number>;
     /**
-     * 채널 적용 범위
+     * 채널 적용 범위(pms.role.ChannelScope)
      */
     channelScope?: com_ever_edu_pms_role_dto_req_RoleCreateReqDto.channelScope;
     /**
@@ -52,7 +52,7 @@ export type com_ever_edu_pms_role_dto_req_RoleCreateReqDto = {
      */
     channelUuids?: Array<string>;
     /**
-     * 팀 적용 범위
+     * 팀 적용 범위(pms.role.DeptScope)
      */
     deptScope?: com_ever_edu_pms_role_dto_req_RoleCreateReqDto.deptScope;
     /**
@@ -66,14 +66,14 @@ export type com_ever_edu_pms_role_dto_req_RoleCreateReqDto = {
 };
 export namespace com_ever_edu_pms_role_dto_req_RoleCreateReqDto {
     /**
-     * 사이트 구분
+     * 사이트 구분(cmmon.SiteScope)
      */
     export enum siteScope {
         FO = 'FO',
         BO = 'BO',
     }
     /**
-     * 역할 타입
+     * 역할 타입(pms.role.RoleType)
      */
     export enum roleType {
         PLATFORM_MANAGER = 'PLATFORM_MANAGER',
@@ -85,14 +85,14 @@ export namespace com_ever_edu_pms_role_dto_req_RoleCreateReqDto {
         TUTOR = 'TUTOR',
     }
     /**
-     * 테넌트 적용 범위
+     * 테넌트 적용 범위(pms.role.TenantScope)
      */
     export enum tenantScope {
         ALL = 'ALL',
         CURRENT_TENANT = 'CURRENT_TENANT',
     }
     /**
-     * 회사 적용 범위
+     * 회사 적용 범위(pms.role.CompanyScope)
      */
     export enum companyScope {
         ALL = 'ALL',
@@ -100,7 +100,7 @@ export namespace com_ever_edu_pms_role_dto_req_RoleCreateReqDto {
         MANUAL = 'MANUAL',
     }
     /**
-     * 채널 적용 범위
+     * 채널 적용 범위(pms.role.ChannelScope)
      */
     export enum channelScope {
         ALL = 'ALL',
@@ -109,7 +109,7 @@ export namespace com_ever_edu_pms_role_dto_req_RoleCreateReqDto {
         MANUAL = 'MANUAL',
     }
     /**
-     * 팀 적용 범위
+     * 팀 적용 범위(pms.role.DeptScope)
      */
     export enum deptScope {
         ALL = 'ALL',

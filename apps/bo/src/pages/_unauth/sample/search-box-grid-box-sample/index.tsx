@@ -129,7 +129,12 @@ const gridConfig = {
       size: 200,
     },
     // 라벨/메세지
-    { name: 'labelMessageName', label: t('LABEL.grid.column.labelMessage'), size: 200 },
+    {
+      name: 'labelMessageName',
+      label: t('LABEL.grid.column.labelMessage'),
+      size: 200,
+      meta: { sortKey: 'xxx' },
+    },
     // 사용여부
     {
       name: 'isUsed',

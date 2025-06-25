@@ -386,7 +386,7 @@ export function useGridTable<T extends object>(
   // 그리드 상태 변화(e.g. 필터, 소팅, 순서, visibility)에 따른 콜백 전달
   useEffect(() => {
     onStateChange?.({
-      sort: gridStateToSortQueryParams({ sorting }),
+      sort: gridStateToSortQueryParams({ sorting }, columns),
     });
   }, [sorting]);
 

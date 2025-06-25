@@ -208,6 +208,7 @@ const ChipsSearchField = (args: any) => {
                 labelField: 'name',
                 valueField: 'name',
                 hideBorder: true,
+                visibleCount: 2,
               }}
               modalConfig={{
                 content: <TestModal />,
