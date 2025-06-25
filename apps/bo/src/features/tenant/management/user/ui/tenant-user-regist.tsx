@@ -314,7 +314,12 @@ const columns = [
     header: '정/부',
     accessorKey: 'isUsed',
     size: 170,
-    cell: (info: CellContext<any, boolean>) => <EditSwitchCell info={info} />,
+    cell: (info: CellContext<any, boolean>) => (
+      <EditSwitchCell
+        info={info}
+        switchConfig={{ label: (value: boolean) => (value ? t('정') : t('부')) }}
+      />
+    ),
     meta: {
       headerAlign: 'center',
       cellAlign: 'center',
