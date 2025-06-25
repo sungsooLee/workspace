@@ -121,7 +121,7 @@ const useFormOptionsHook = (
     if (!options && optionsConfig) {
       initOptionConfig();
     }
-  }, [optionsConfig, options]);
+  }, []);
 
   // 정적 옵션이 변경될 때마다 필드 매핑 적용
   useEffect(() => {
@@ -129,7 +129,7 @@ const useFormOptionsHook = (
       const mappedOptions = applyFieldMapping(options);
       setCurrentOptions(mappedOptions);
     }
-  }, [options]);
+  }, [options?.length]);
 
   return currentOptions;
 };
