@@ -9,7 +9,6 @@ import {
   Input,
   InputModalSelectorFormField,
   ListModalSelectorFormField,
-  PhoneNumberFormField,
   RadioGroupFormField,
   SelectOption,
   useModal,
@@ -20,6 +19,7 @@ import { ContentsButtons, MainContents, PageContainer } from '@widgets/layout';
 import { SubContents } from '@widgets/layout/ui/container/slot/sub-contents';
 import { t } from 'i18next';
 import LabelMessagesService from '../../../../entities/label-messages-mock/api/label-messages';
+import { CheckboxGroupFormField } from '@features/form';
 
 export const Route = createFileRoute('/_unauth/sample/form-filed-sample/')({
   component: RouteComponent,
@@ -260,9 +260,39 @@ function RouteComponent() {
               }
             />
           </ContentsRow>
-          {/* 강의실설정 */}
+          {/* checkbox codeGroup */}
           <ContentsRow>
-            <FormRow provider={provider} name={'강의실설정'} />
+            <FormRow
+              provider={provider}
+              name={'checkboxCodeGroup'}
+              element={
+                <CheckboxGroupFormField
+                  optionsConfig={{ codeGroup: 'test' }}
+                  showSelectAll
+                  cols={4}
+                />
+              }
+            />
+          </ContentsRow>
+          {/* checkbox api */}
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name={'checkboxApi'}
+              element={
+                <CheckboxGroupFormField
+                  optionsConfig={{
+                    labelField: 'cdName',
+                    valueField: 'cdId',
+                    api: {
+                      fn: LabelMessagesService.fetchChannelMock,
+                    },
+                  }}
+                  showSelectAll
+                  cols={4}
+                />
+              }
+            />
           </ContentsRow>
           {/* 운영자 & 연락처 */}
           <ContentsRow>
@@ -474,18 +504,16 @@ const formConfig: DynamicFormConfig = {
       description: '',
     },
     {
-      name: '강의실설정',
-      type: 'checkbox-group',
-      label: t('강의실 설정'),
-      format: 'array',
-      options: Array(10)
-        .fill(null)
-        .map((d, i) => ({ value: `value${i}`, label: `label${i}`, disabled: i === 1 })),
-      value: ['value1'],
-      placeholder: '',
-      description: '',
-      showSelectAll: true,
-      cols: 4,
+      name: 'checkboxCodeGroup',
+      type: 'custom',
+      label: t('checkbox - checkboxGroupFormField(codeGroup)'),
+      value: [],
+    },
+    {
+      name: 'checkboxApi',
+      type: 'custom',
+      label: t('checkbox - checkboxGroupFormField(api)'),
+      value: [],
     },
     {
       name: 'managerId',

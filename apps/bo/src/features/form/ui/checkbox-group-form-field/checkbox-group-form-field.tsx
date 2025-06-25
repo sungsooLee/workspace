@@ -1,5 +1,5 @@
 import { forwardRef, Fragment, useEffect, useState } from 'react';
-import { Checkbox, CheckboxComponentProps } from '../../checkbox/checkbox';
+import { Checkbox, CheckboxComponentProps } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import styles from './checkbox-group-form-field.module.css';
 import { BaseFormFieldProps, OptionsConfig, SelectOption, useFormOptions } from '@learnway/hooks';
@@ -20,7 +20,6 @@ const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, CheckboxGroup
   (
     {
       value = [],
-      onChange,
       options: initOptions,
       optionsConfig,
       cols,
@@ -28,6 +27,7 @@ const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, CheckboxGroup
       showSelectAll,
       checkGroupConfig,
       checkboxConfig,
+      onChange,
     },
     ref,
   ) => {
@@ -35,9 +35,6 @@ const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, CheckboxGroup
     const { t } = useTranslation();
     const [allCheck, setAllCheck] = useState(false);
     const options = useFormOptions(initOptions, optionsConfig);
-    const disabledCheckBox = checkGroupConfig?.disabledCheckBox
-      ? checkGroupConfig?.disabledCheckBox
-      : [];
 
     /**
      * 개별 체크박스의 체크 상태가 변경될 때 호출되는 함수입니다.
@@ -73,6 +70,7 @@ const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, CheckboxGroup
     useEffect(() => {
       setAllCheck(value.length === options.length);
     }, [value]);
+
     useEffect(() => {
       setAllCheck(value.length === options.length);
     }, [options]);
