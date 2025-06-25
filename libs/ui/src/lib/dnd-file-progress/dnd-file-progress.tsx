@@ -22,22 +22,13 @@ const DndFileProgressComponent: FC<DndFileProgressProps> = ({
   onPause,
   onResume,
   onRetry,
-  acceptFiles,
+  inputAccept,
   maxFileCount,
   maxFileSize,
   wrapSize,
   guideText,
   errorMessage,
 }) => {
-  const acceptFileString = useMemo(() => {
-    if (!acceptFiles) return '';
-    if (typeof acceptFiles === 'string') return acceptFiles;
-    return acceptFiles
-      .map((acceptFile: any) => (acceptFile.startsWith('.') ? acceptFile : `.${acceptFile}`))
-      .join(', ')
-      .toUpperCase();
-  }, [acceptFiles]);
-
   const onDrop = useCallback((acceptedFiles: File[]) => {
     addFiles(acceptedFiles);
   }, []);
@@ -216,8 +207,8 @@ const DndFileProgressComponent: FC<DndFileProgressProps> = ({
                   '영역을 클릭하거나 파일을 마우스로 끌어놓으세요',
                 )}
               </strong>
-              <span className={styles.file_guide}>{`${acceptFileString}`}</span>
-              <input {...getInputProps()} accept={acceptFileString} />
+              <span className={styles.file_guide}>{`${inputAccept}`}</span>
+              <input {...getInputProps()} accept={inputAccept} />
             </Button>
           </div>
         )}
