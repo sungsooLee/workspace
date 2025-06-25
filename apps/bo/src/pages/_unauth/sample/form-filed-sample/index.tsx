@@ -3,6 +3,7 @@ import { ChannelListModal, ManagerListModal, TeacherListModal } from '@features/
 import { useDynamicForm } from '@learnway/hooks';
 import {
   Button,
+  CheckboxGroupFormField,
   ChipListModalSelectorFormField,
   ContentsRow,
   EditorFormField,
@@ -10,14 +11,12 @@ import {
   InputModalSelectorFormField,
   ListModalSelectorFormField,
   RadioGroupFormField,
-  CheckboxGroupFormField,
   SelectOption,
   useModal,
 } from '@learnway/ui';
 import { FormRow } from '@shared/ui';
 import { createFileRoute } from '@tanstack/react-router';
 import { ContentsButtons, MainContents, PageContainer } from '@widgets/layout';
-import { SubContents } from '@widgets/layout/ui/container/slot/sub-contents';
 import { t } from 'i18next';
 import LabelMessagesService from '../../../../entities/label-messages-mock/api/label-messages';
 
@@ -243,6 +242,10 @@ function RouteComponent() {
                 type: 'custom',
                 label: '채널 - InputModalSelectorFormField',
                 value: '',
+                validation: {
+                  required: true,
+                  format: 'string',
+                },
               }}
               element={
                 <InputModalSelectorFormField
@@ -279,6 +282,10 @@ function RouteComponent() {
                 placeholder: '',
                 description: '',
                 maxLength: 10,
+                validation: {
+                  required: true,
+                  format: 'string',
+                },
               }}
             />
           </ContentsRow>
@@ -293,6 +300,10 @@ function RouteComponent() {
                 value: '',
                 placeholder: '',
                 description: '',
+                validation: {
+                  required: true,
+                  format: 'string',
+                },
               }}
             />
           </ContentsRow>
@@ -345,6 +356,16 @@ function RouteComponent() {
                 value: [],
                 placeholder: '',
                 description: '',
+                validation: {
+                  required: true,
+                  format: 'array',
+                  conditions: [
+                    {
+                      fn: (values) => values.강사 && values.강사.length > 0,
+                      message: '최소 1명 이상의 강사를 선택해주세요.',
+                    },
+                  ],
+                },
               }}
               element={
                 <ChipListModalSelectorFormField
@@ -456,6 +477,13 @@ function RouteComponent() {
                 value: '',
                 placeholder: '',
                 description: '',
+                validation: {
+                  required: {
+                    fn: (values) => !!values.managerId, // managerId가 있을 때만 필수
+                    message: '운영자를 선택해주세요.',
+                  },
+                  format: 'string',
+                },
               }}
               element={
                 <InputModalSelectorFormField

@@ -75,12 +75,17 @@ const DynamicFormContainer: FC<FormRowProps> = ({
   const styles = style === 'bo' ? boStyles : foStyles;
   const { t } = useTranslation();
 
-  // fieldConfig가 제공되면 필드를 등록
+  // fieldConfig가 제공되면 필드를 등록하고 validation 설정
   useEffect(() => {
     if (fieldConfig && provider.registerField) {
       // FormRow의 name prop을 fieldConfig.name으로 자동 설정
       const configWithName = { ...fieldConfig, name } as FormConfig;
       provider.registerField(configWithName);
+
+      // fieldConfig에 validation이 있으면 동적으로 추가
+      if (fieldConfig.validation && provider.addValidator) {
+        provider.addValidator(name, fieldConfig.validation);
+      }
     }
   }, [fieldConfig, name, provider]);
 

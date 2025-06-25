@@ -14,6 +14,8 @@ import { buildJodObject, ValidatorConfig, ValidatorFormat } from '@learnway/shar
 export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynamicFormResult => {
   // 동적 필드 관리를 위한 상태
   const [dynamicBuilders, setDynamicBuilders] = useState<FormConfig[]>(config.builders);
+  // 동적 validator 관리를 위한 상태
+  const [dynamicValidator, setDynamicValidator] = useState<any>(config.validator || {});
 
   // 초기값 생성: 각 빌더의 기본 값을 설정
   const defaultValues = extractDynamicFormDefaultValues(dynamicBuilders);
@@ -25,13 +27,13 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
    * Dynamic Config 에서는 좀더 편하게 쓰기 위해 약간의 타입이 달라서 buildJodObject 에 맞게 수정 한다.
    */
   const validator = useMemo<ValidatorConfig>(() => {
-    const { validator = {} } = config; // validator가 없으면 빈 객체로 설정
+    const validatorData = dynamicValidator; // 동적 validator 사용
     return dynamicBuilders.reduce((acc, builder) => {
       const key = builder.name;
       const analogyFormat = typeof builder.value as ValidatorFormat;
       let format = builder.format || analogyFormat;
 
-      const existingValidator = validator[key] as any;
+      const existingValidator = validatorData[key] as any;
       if (existingValidator && existingValidator.format) {
         format = existingValidator.format;
       }
@@ -73,7 +75,7 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
       }
       return acc;
     }, {} as ValidatorConfig);
-  }, [dynamicBuilders, config.validator]);
+  }, [dynamicBuilders, dynamicValidator]);
   // Zod 스키마 생성 (유효성 검증 스키마)
   const schema = buildJodObject(validator);
   // react-hook-form 훅 초기화
@@ -224,6 +226,19 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
     }
   };
 
+  /**
+   * 동적으로 validator를 추가하는 함수
+   *
+   * @param fieldName - 필드 이름
+   * @param validation - validation 설정
+   */
+  const addValidator = (fieldName: string, validation: any) => {
+    setDynamicValidator((prev: any) => ({
+      ...prev,
+      [fieldName]: validation,
+    }));
+  };
+
   // control 확장: 기본 control에 isFieldRequired 메서드 추가
   const extendedControl: DynamicFormProvider['control'] = {
     ...control,
@@ -253,6 +268,7 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
       originalValues,
       clearFormError: clearErrors,
       registerField,
+      addValidator,
     },
     onFormValid: trigger,
     fetchData,

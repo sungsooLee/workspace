@@ -236,6 +236,8 @@ export type DynamicFormProvider = {
   clearFormError: (field: string) => void;
   /** 동적으로 필드를 등록하는 함수 */
   registerField: (fieldConfig: FormConfig) => void;
+  /** 동적으로 validator를 추가하는 함수 */
+  addValidator: (fieldName: string, validation: any) => void;
 };
 
 /**
@@ -325,9 +327,36 @@ type FormFieldProps<Props = {}> = ForwardRefExoticComponent<
 
 export type FormFieldConfig = Record<string, FormFieldProps<any>>;
 
-// FormConfig에서 name을 optional로 만든 타입
+// FormConfig에서 name을 optional로 만든 타입 + validation 속성 추가
 export type FormRowFieldConfig = Omit<FormConfig, 'name'> & {
   name?: string;
+  /** 필드별 validation 설정 */
+  validation?: {
+    /** 필수 필드 여부 */
+    required?:
+      | boolean
+      | string
+      | {
+          fn?: (values: Record<string, any>) => boolean;
+          message?: string;
+        };
+    /** 커스텀 validation 조건들 */
+    conditions?: {
+      fn: (values: Record<string, any>) => boolean;
+      message?: string;
+    }[];
+    /** 데이터 형식 지정 */
+    format?:
+      | 'string'
+      | 'number'
+      | 'date'
+      | 'datetime'
+      | 'email'
+      | 'array'
+      | 'object'
+      | 'password'
+      | 'phone-number';
+  };
 };
 
 export interface FormRowProps {
