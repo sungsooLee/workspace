@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useWatch } from 'react-hook-form';
 import { t } from 'i18next';
-
+import { useQueryClient } from '@tanstack/react-query';
 import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
@@ -15,6 +15,7 @@ import {
   Input,
   TextareaFormField,
   TreeBox,
+  TreeContainer,
   Tabs,
   TreeNode,
   useModal,
@@ -32,8 +33,10 @@ import {
   useGetCompanyDepartmentTree,
   useCreateDepartment,
   useUpdateDepartment,
-  DepartmentService,
+  useMoveDepartment,
   useDeleteDepartment,
+  DepartmentService,
+  queryKeys,
 } from '@entities/department';
 
 import { CompanyOrganizationInfoList } from './company-organization-info-list';
@@ -64,6 +67,7 @@ const TenantCompanyOrganizationTreeComponent = ({
   showType: string;
 }) => {
   const { confirm: openConfirm, alert: openAlert } = useModal();
+  const queryClient = useQueryClient();
 
   const [deptTreeData, setDeptTreeData] = useState([]);
   const [selectedNode, setSelectedNode] = useState<any>();
@@ -115,6 +119,16 @@ const TenantCompanyOrganizationTreeComponent = ({
           fetchData(getInitByBuilders());
         },
       });
+    },
+  });
+  const { move: moveDepartment } = useMoveDepartment({
+    onSuccess: (data: any) => {
+      refetch();
+      // if (selectedNode?.deptId) {
+      //   await queryClient.invalidateQueries({
+      //     queryKey: [...queryKeys.detail(Number(selectedNode.deptId))],
+      //   });
+      // }
     },
   });
 
@@ -399,39 +413,25 @@ const TenantCompanyOrganizationTreeComponent = ({
     switch (event.type) {
       case 'NODE_MOVE': {
         const nodeInfo = event;
-        console.log('NODE_MOVE', event);
-        if (nodeInfo.sourceNode.menuId) {
+        console.log('### NODE_MOVE', event);
+        if (nodeInfo.sourceNode.deptId) {
           if (nodeInfo.position === 'INSIDE') {
-            // const payload = {
-            //   id: nodeInfo.sourceNode.menuId,
-            //   destinationParentId: nodeInfo.targetNode?.menuId,
-            //   sortSeq: 1,
-            // };
-            // moveCategory(payload, {
-            //   onSuccess: async (data: any) => {
-            //     if (selectedNode?.categoryId) {
-            //       await queryClient.invalidateQueries({
-            //         queryKey: [...queryKeys.detail(Number(selectedNode.categoryId))],
-            //       });
-            //     }
-            //   },
-            // });
+            const payload = {
+              deptId: nodeInfo.sourceNode.deptId,
+              companyCode: companyCode,
+              parentDeptId: nodeInfo.targetNode?.deptId,
+              sortOrder: 1,
+            };
+            moveDepartment(payload);
           } else {
             const targetIndex = nodeInfo.targetIndex!;
             const payload = {
-              id: nodeInfo.sourceNode.menuId,
-              destinationParentId: nodeInfo.targetNode?.parentKey,
-              sortSeq: targetIndex + 1,
+              deptId: nodeInfo.sourceNode.deptId,
+              companyCode: companyCode,
+              parentDeptId: nodeInfo.targetNode?.parentKey,
+              sortOrder: targetIndex + 1,
             };
-            // moveCategory(payload, {
-            //   onSuccess: async (data: any) => {
-            //     if (selectedNode?.categoryId) {
-            //       await queryClient.invalidateQueries({
-            //         queryKey: [...queryKeys.detail(Number(selectedNode.categoryId))],
-            //       });
-            //     }
-            //   },
-            // });
+            moveDepartment(payload);
           }
           break;
         }
@@ -441,19 +441,21 @@ const TenantCompanyOrganizationTreeComponent = ({
 
   return (
     <SectionLayout contentsRatio={'thirty'}>
-      <TreeBox
-        data={deptTreeData}
-        treeId="1"
-        type={showType === EnOrganizationShowType.origin ? 'SHUTTLE_LIST' : 'SAME_LEVEL_ONLY'}
-        showSearchKeyword
-        initLevel={2}
-        title={showType === EnOrganizationShowType.origin ? t('조직-원본') : t('조직-플랫폼')}
-        selectedNode={viewNode}
-        handleSelectedNodeChange={handleSelectedNodeChange}
-        renderNodeButtons={renderTreeCustomButtonNode}
-        onAction={handleTreeAction}
-        minDraggableLevel={2}
-      />
+      <TreeContainer>
+        <TreeBox
+          data={deptTreeData}
+          treeId="1"
+          type={showType === EnOrganizationShowType.origin ? 'SHUTTLE_LIST' : 'SAME_LEVEL_ONLY'}
+          showSearchKeyword
+          initLevel={2}
+          title={showType === EnOrganizationShowType.origin ? t('조직-원본') : t('조직-플랫폼')}
+          selectedNode={viewNode}
+          handleSelectedNodeChange={handleSelectedNodeChange}
+          renderNodeButtons={renderTreeCustomButtonNode}
+          onAction={handleTreeAction}
+          minDraggableLevel={2}
+        />
+      </TreeContainer>
       {formMode === EnFormMode.NONE && (
         <div className={cn(styles.start, styles.wrap)}>
           <div className={cn(layoutStyles.inner)}>

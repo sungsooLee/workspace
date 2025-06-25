@@ -88,3 +88,28 @@ export function useDeleteDepartment(options: any) {
     data: mutation.data,
   };
 }
+
+export function useMoveDepartment(options: any) {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    ...mutateOptions.move(),
+    onSuccess: async (data: any, variables, context) => {
+      // 공통 메세지 처리 등...
+      queryClient.invalidateQueries({ queryKey: queryKeys.list });
+      if (options.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...options,
+  });
+
+  return {
+    move: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
