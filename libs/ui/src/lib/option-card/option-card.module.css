@@ -30,7 +30,7 @@
         &.active {
           @apply border-transparent;
           &::after {
-            @apply absolute left-0 top-0 h-full w-full rounded-[10px] border-[2px] border-solid border-[var(--secondary1)] content-[''];
+            @apply absolute left-0 top-0 h-full w-full rounded-[10px] border-[2px] border-solid border-[var(--blue50)] content-[''];
           }
         }
       }

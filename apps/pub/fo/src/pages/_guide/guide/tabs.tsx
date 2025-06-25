@@ -44,8 +44,6 @@ function RouteComponent() {
     {
       title: 'Tab B',
       key: 'b',
-      count: true,
-      number: '0',
       alarm: true,
       content: <h2>Tab B content</h2>,
     },
@@ -127,7 +125,7 @@ content: (
         </pre>
       </div>
       <div className="group">
-        <h3 className="guide_tit3">Tabs fill Case</h3>
+        {/* <h3 className="guide_tit3">Tabs fill Case</h3>
         <div className="flex_box">
           <div className="desc w-full">
             <Tabs selectedTabKey={selectedTabKey} items={items} type="fill" />
@@ -150,20 +148,20 @@ content: (
               size="sm"
             />
           </div>
-        </div>
+        </div> */}
         <h3 className="guide_tit3">Tabs line Case</h3>
         <div className="flex_box">
           <div className="desc w-full">
             <Tabs selectedTabKey={selectedTabKey} items={items} type="line" />
           </div>
         </div>
-        <h3 className="guide_tit3">Tabs line(count, number, alarm) Case</h3>
+        <h3 className="guide_tit3">Tabs line(alarm) Case</h3>
         <div className="flex_box">
           <div className="desc w-full">
             <Tabs selectedTabKey={selectedTabKey} items={items2} type="line" variant="gray" />
           </div>
         </div>
-        <h3 className="guide_tit3">Tabs round Case</h3>
+        {/* <h3 className="guide_tit3">Tabs round Case</h3>
         <div className="flex_box">
           <div className="desc w-full">
             <Tabs selectedTabKey={selectedTabKey} items={items} type="round" />
@@ -192,7 +190,7 @@ content: (
           <div className="desc w-full">
             <Tabs items={items} type="segment" size="md" />
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

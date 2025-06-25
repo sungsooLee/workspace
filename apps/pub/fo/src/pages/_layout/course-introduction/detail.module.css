@@ -64,7 +64,7 @@
     }
 
     .sub_box {
-      @apply scrollbar max-h-[700px] overflow-y-auto overflow-x-hidden rounded-[16px] border-[1px] border-solid border-[var(--gray5)] p-[24px];
+      @apply scrollbar max-h-[700px] overflow-y-auto overflow-x-hidden rounded-[16px] border-[1px] border-solid border-[var(--gray5)] p-[32px];
       & + .sub_box {
         @apply mt-[24px];
       }
@@ -93,20 +93,20 @@
       .result_box {
         @apply p-0;
         & > div {
-          @apply !p-[24px];
+          @apply !px-[24px] !py-[32px];
           svg {
             @apply mx-auto;
           }
           strong {
-            @apply body_3_b mt-[4px] block text-center leading-[22px] text-[var(--gray8)];
+            @apply body_1_r mt-[4px] block text-center leading-[22px] text-[var(--gray8)];
           }
           p {
-            @apply body_3_r mt-[4px] text-center leading-[22px] text-[var(--gray7)];
+            @apply body_2_r mt-[4px] text-center leading-[22px] text-[var(--gray7)];
           }
         }
       }
       .course_btn_wrap {
-        @apply sticky -bottom-[24px] left-0 -mb-[24px] -ml-[24px] w-[calc(100%+48px)] bg-white p-[24px];
+        @apply sticky -bottom-[32px] left-0 -mb-[32px] -ml-[32px] w-[calc(100%+64px)] bg-white p-[32px] pt-[16px];
       }
     }
   }

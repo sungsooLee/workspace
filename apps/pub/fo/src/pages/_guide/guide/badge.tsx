@@ -45,7 +45,80 @@ import { Badge } from '@learnway/ui';
             <Badge option={{ label: '', value: '' }} variant="dot" status="error" size="sm" />
           </div>
         </div>
-        <h3 className="guide_tit3">Badge number 타입</h3>
+        <h3 className="guide_tit3">Badge gray 타입</h3>
+        <div className="flex_box">
+          <div className="desc">
+            <Badge option={{ label: '태그 라벨', value: 'a' }} status="gray" size="xs" />
+            <Badge
+              option={{ label: '태그 라벨', value: 'a' }}
+              status="gray"
+              size="sm"
+              labelType={'bold'}
+            />
+            <Badge option={{ label: '태그 라벨', value: 'a' }} status="gray" size="md" rounded />
+            <Badge
+              option={{ label: '태그 라벨', value: 'a' }}
+              status="gray"
+              size="lg"
+              rounded
+              labelType={'bold'}
+            />
+          </div>
+        </div>
+        <h3 className="guide_tit3">Badge gray outline 타입</h3>
+        <div className="flex_box">
+          <div className="desc">
+            <Badge
+              option={{ label: '태그 라벨', value: 'a' }}
+              variant="outline"
+              status="gray"
+              size="xs"
+            />
+            <Badge
+              option={{ label: '태그 라벨', value: 'a' }}
+              variant="outline"
+              status="gray"
+              size="sm"
+              labelType={'bold'}
+            />
+            <Badge
+              option={{ label: '태그 라벨', value: 'a' }}
+              variant="outline"
+              status="gray"
+              size="md"
+              rounded
+            />
+            <Badge
+              option={{ label: '태그 라벨', value: 'a' }}
+              variant="outline"
+              status="gray"
+              size="lg"
+              rounded
+              labelType={'bold'}
+            />
+          </div>
+        </div>
+        <h3 className="guide_tit3">Badge primary 타입</h3>
+        <div className="flex_box">
+          <div className="desc">
+            <Badge option={{ label: '태그 라벨', value: 'a' }} status="primary" size="xs" />
+            <Badge
+              option={{ label: '태그 라벨', value: 'a' }}
+              status="primary"
+              size="sm"
+              labelType={'bold'}
+            />
+            <Badge option={{ label: '태그 라벨', value: 'a' }} status="primary" size="md" rounded />
+            <Badge
+              option={{ label: '태그 라벨', value: 'a' }}
+              status="primary"
+              size="lg"
+              rounded
+              labelType={'bold'}
+            />
+          </div>
+        </div>
+        {/* <h3 className="guide_tit3">Badge number 타입</h3>
         <div className="flex_box">
           <div className="desc">
             <Badge option={{ label: '1', value: 'A' }} variant="number" status="primary" />
@@ -109,7 +182,7 @@ import { Badge } from '@learnway/ui';
             <Badge option={{ label: '99', value: 'D' }} variant="number" status="new" size="sm" />
             <Badge option={{ label: '999+', value: 'D' }} variant="number" status="new" size="sm" />
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

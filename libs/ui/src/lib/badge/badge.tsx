@@ -8,15 +8,40 @@ import { Button } from '../button/button';
 
 export interface BadgeComponentProps extends PropsWithChildren {
   option: SelectOption;
-  variant?: 'dot' | 'number' | 'flag' | 'text';
-  status?: 'primary' | 'disabled' | 'success' | 'warning' | 'caution' | 'new' | 'error' | 'ing';
+  variant?: 'dot' | 'number' | 'flag' | 'text' | 'outline' | 'alpha';
+  status?:
+    | 'primary'
+    | 'disabled'
+    | 'success'
+    | 'warning'
+    | 'caution'
+    | 'new'
+    | 'error'
+    | 'ing'
+    | 'gray'
+    | 'blue';
   size?: 'xs' | 'sm' | 'md' | 'lg'; // xs(28) , sm(32) , md(36), lg(40)
+  rounded?: boolean;
+  labelType?: 'regular' | 'bold';
   className?: string;
   onClick?: (option: SelectOption) => void;
 }
 
 const BadgeComponent = forwardRef<HTMLElement, BadgeComponentProps>(
-  ({ className, variant, size, status, onClick, option: { label, value }, ...props }, ref) => {
+  (
+    {
+      className,
+      variant,
+      size,
+      status,
+      rounded,
+      labelType,
+      onClick,
+      option: { label, value },
+      ...props
+    },
+    ref,
+  ) => {
     const handleClick = (event: React.MouseEvent) => {
       const option: SelectOption = {
         label,
@@ -34,13 +59,15 @@ const BadgeComponent = forwardRef<HTMLElement, BadgeComponentProps>(
           styles.badge,
           className,
           'nlp--badge',
+          rounded && styles.rounded_full,
           variant && styles[variant],
           status && styles[status],
           size && styles[size],
+          size,
         )}
         onClick={handleClick}
       >
-        <Button className={cn(styles.label)} variant="text">
+        <Button className={cn(styles.label, labelType && styles[labelType])} variant="text">
           {label}
         </Button>
       </span>
