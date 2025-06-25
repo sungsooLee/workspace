@@ -70,6 +70,11 @@ declare module '@tanstack/react-table' {
      * cell class
      */
     cellClass?: '';
+
+    /**
+     * flattenSubRows가 true 일 경우에 true로 설정하면 depth에 따라 들여쓰기 아이콘 표시
+     */
+    showHierarchyIcon?: boolean;
   }
 }
 
@@ -142,6 +147,11 @@ export interface GridProps<T> {
    * 테이블 해더 표시 여부
    */
   hideHeader?: boolean;
+
+  /**
+   * 하위 행(속성 : subRows/children)을 펼쳐서 평평하게 표시할지 여부
+   */
+  flattenSubRows?: boolean;
 
   /**
    * 정적 그룹핑 설정을 포함하는 객체입니다.
