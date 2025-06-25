@@ -340,16 +340,14 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
     if (categoryDetail) {
       const mappedUserGroups: any = [];
       if (categoryDetail?.whiteList?.combines) {
-        categoryDetail?.whiteList.combines.forEach(
-          (combine: { combineType: string; combineValue: number }) => {
-            if (combine.combineType === 'USER_GROUP') {
-              mappedUserGroups.push({
-                label: combine.combineValuePath,
-                value: combine.combineValue,
-              });
-            }
-          },
-        );
+        categoryDetail?.whiteList.combines.forEach((combine) => {
+          if (combine.combineType === 'USER_GROUP') {
+            mappedUserGroups.push({
+              label: combine.combineValuePath,
+              value: combine.combineValue,
+            });
+          }
+        });
       }
       const location = findMenuPathById(treeData, selectedNode?.menuId);
       fetchData({
