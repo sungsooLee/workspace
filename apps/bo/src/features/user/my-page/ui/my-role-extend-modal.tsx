@@ -4,11 +4,13 @@ import { DateRangePickerFormField } from '@features/learning/ui/resource/date-ra
 import {
   Button,
   ContentsRow,
+  Input,
   ModalBody,
   ModalContainer,
   ModalFooter,
   ModalTitle,
   RangeDatePicker,
+  Textarea,
   useModal,
 } from '@learnway/ui';
 import { FormRow, FormSubTitle } from '@shared/ui';
@@ -28,6 +30,7 @@ const MyRoleExtendModalComponent: FC<{
   data: any;
   callback?: () => void;
 }> = ({ type, data, callback }: { type: MyRoleModal; data: any; callback?: () => void }) => {
+  console.log('### modal data ', data);
   const { close: closeModal } = useModal();
   const { provider, fetchData, onSubmit, onFormChange } = useDynamicForm(formConfig);
 
@@ -38,17 +41,27 @@ const MyRoleExtendModalComponent: FC<{
     if (!viewData) return;
 
     onFormChange({
+      requestRolePeriod: { from: new Date(viewData.startDate), to: new Date(viewData.endDate) },
       roleId: viewData.roleId,
       userUuid: viewData.userUuid,
       userName: viewData.userName,
       roleName: viewData.roleName,
       currentRolePeriod: `${viewData.startDate} ~ ${viewData.endDate}`,
+      status: viewData.status,
+      createdDate: formatDate(viewData.createdDate, DATE_TIME_FORMAT.DATETIME_MIN),
+      reason: viewData.reason,
     });
   }, [viewData]);
 
   const isApprovedInfo = false;
   const handleOnSubmit = (node: any) => {
     console.log('### node', node);
+
+    if (type === 'view') {
+      closeModal(node);
+      return;
+    }
+
     createRoleApplication(
       {
         userUuid: node.userUuid,
@@ -95,6 +108,7 @@ const MyRoleExtendModalComponent: FC<{
                 name={'requestRolePeriod'}
                 element={
                   <DateRangePickerFormField
+                    disabled={type === 'view'}
                     minDate={dayjs().toDate()}
                     maxDate={dayjs().add(2, 'year').toDate()}
                   />
@@ -115,12 +129,16 @@ const MyRoleExtendModalComponent: FC<{
             </ContentsRow>
           </FormDisplay> */}
           <ContentsRow className="mb-4">
-            <FormRow provider={provider} name={'reason'} />
+            <FormRow
+              provider={provider}
+              name={'reason'}
+              element={<Textarea disabled={type === 'view'} />}
+            />
           </ContentsRow>
           {type === 'view' && (
             <ContentsRow>
-              <FormRow provider={provider} name={'approveStatus'} />
-              <FormRow provider={provider} name={'requestDate'} />
+              <FormRow provider={provider} name={'status'} element={<Input disabled />} />
+              <FormRow provider={provider} name={'createdDate'} element={<Input disabled />} />
             </ContentsRow>
           )}
 
@@ -139,7 +157,7 @@ const MyRoleExtendModalComponent: FC<{
           )}
         </ModalBody>
         <ModalFooter>
-          <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
+          {/* <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={() => closeModal()} /> */}
           <Button type="submit" label={t('확인')} variant={'primary'} size={'lg'} />
         </ModalFooter>
       </ModalContainer>
@@ -216,13 +234,13 @@ const formConfig: DynamicFormConfig = {
       maxLength: 150,
     },
     {
-      name: 'approveStatus',
+      name: 'status',
       type: 'text',
       label: t('신청 상태'),
       value: '',
     },
     {
-      name: 'requestDate',
+      name: 'createdDate',
       type: 'text',
       label: t('신청일'),
       value: '',
