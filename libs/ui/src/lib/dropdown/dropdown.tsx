@@ -137,7 +137,7 @@ const clearIndicator = (props: any) => {
  */
 const MenuPortal = (props: any) => {
   const variant = props.selectProps?.['data-variant'] || 'default';
-  const size = props.selectProps?.['data-size'] || 'default';
+  const size = props.selectProps?.['size'] || 'default';
   const optionsCount = props.options.length;
 
   const className = cn(
@@ -195,7 +195,6 @@ const PrimitiveComponent = forwardRef<any, ReactSelectComponentProps>(
     const dropdownClass = `select_wrap nlp--dropdown-${size} nlp--dropdown-${variant} ${className} `;
     const customProps = {
       'data-variant': variant,
-      'data-size': size,
       ...props,
     };
 

@@ -114,6 +114,7 @@
     }
   }
 
+  .nlp-select__menu,
   .nlp-select__menu-list {
     @apply !rounded-[6px];
   }
@@ -128,6 +129,7 @@
     }
   }
 
+  .nlp-select__menu,
   .nlp-select__menu-list {
     @apply !rounded-[8px];
   }
