@@ -388,7 +388,7 @@ export const transformRoleApiDataToTreeData = (apiData: any) => {
   // const dataArray = Array.isArray(apiData) ? apiData : [apiData];
   const dataArray = [{ name: 'ROOT', _type: 'R', children: [...apiData] }];
 
-  const transform = (nodes: any) => {
+  const transform = (nodes: any, depth = 0) => {
     if (!nodes) return [];
 
     return nodes.map((node: any) => {
@@ -401,13 +401,14 @@ export const transformRoleApiDataToTreeData = (apiData: any) => {
 
         parentKey: node.parentRoleId || 'root', // parentRoleId를 parentKey로 변환
         children: node.children || [],
+        depth: depth,
       };
       if (node._type) {
         transformedNode.key = 'root';
       }
       // 자식 노드가 있는 경우 재귀적으로 변환
       if (node.children && node.children.length > 0) {
-        transformedNode.children = transform(node.children);
+        transformedNode.children = transform(node.children, depth + 1);
       }
 
       return transformedNode;

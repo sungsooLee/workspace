@@ -244,7 +244,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
         <TreeBox
           data={roleTreeData}
           treeId="1"
-          type="SAME_PARENT_ONLY"
+          type="SAME_LEVEL_ONLY"
           showSearchKeyword
           initLevel={2}
           title={t('역할 목록')}
