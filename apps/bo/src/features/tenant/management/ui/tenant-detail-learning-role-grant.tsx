@@ -227,7 +227,7 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
                       { label: t('선택'), value: '' },
                       { label: t('회사'), value: 'companyName' },
                       { label: t('조직'), value: 'deptName' },
-                      { label: t('사용자ID'), value: 'email' },
+                      { label: t('사번'), value: 'employeeNumber' },
                       { label: t('이름'), value: 'userName' },
                     ]}
                     disabled={formMode === EnFormMode.NONE}
@@ -360,12 +360,12 @@ const columns = [
     size: 90,
     meta: { sortKey: 'userEntity.deptEntity.deptName' },
   }),
-  columnHelper.accessor('email', {
+  columnHelper.accessor('employeeNumber', {
     // id: 'userId',
     cell: (info) => info.getValue(),
-    header: t('사용자ID'),
+    header: t('사번'),
     size: 60,
-    meta: { sortKey: 'userEntity.email' },
+    meta: { sortKey: 'userEntity.employeeNumber' },
   }),
   columnHelper.accessor('userName', {
     // id: 'userName',
