@@ -234,6 +234,8 @@ export type DynamicFormProvider = {
   originalValues: Record<string, any>;
   /** 필드 에러 제거 */
   clearFormError: (field: string) => void;
+  /** 동적으로 필드를 등록하는 함수 */
+  registerField: (fieldConfig: FormConfig) => void;
 };
 
 /**
@@ -323,6 +325,11 @@ type FormFieldProps<Props = {}> = ForwardRefExoticComponent<
 
 export type FormFieldConfig = Record<string, FormFieldProps<any>>;
 
+// FormConfig에서 name을 optional로 만든 타입
+export type FormRowFieldConfig = Omit<FormConfig, 'name'> & {
+  name?: string;
+};
+
 export interface FormRowProps {
   className?: string;
   provider: DynamicFormProvider;
@@ -332,6 +339,7 @@ export interface FormRowProps {
   formFieldConfig: FormFieldConfig;
   style?: 'bo' | 'fo';
   infoNode?: ReactNode;
+  fieldConfig?: FormRowFieldConfig; // name이 optional인 필드 설정
 }
 
 /*===================================

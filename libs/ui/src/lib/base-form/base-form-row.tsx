@@ -7,6 +7,7 @@ import { Button, DynamicFormField, Tooltip } from '@learnway/ui';
 import {
   DynamicFormContextProvider,
   FormRowProps,
+  FormConfig,
   useDynamicFormContext,
   useFormRow,
 } from '@learnway/hooks';
@@ -35,6 +36,7 @@ const BaseFormRowComponent: FC<FormRowProps> = ({
   formFieldConfig,
   style,
   infoNode,
+  fieldConfig,
 }) => {
   return (
     <DynamicFormContextProvider>
@@ -47,6 +49,7 @@ const BaseFormRowComponent: FC<FormRowProps> = ({
         formFieldConfig={formFieldConfig}
         style={style}
         infoNode={infoNode}
+        fieldConfig={fieldConfig}
       />
     </DynamicFormContextProvider>
   );
@@ -63,6 +66,7 @@ const DynamicFormContainer: FC<FormRowProps> = ({
   formFieldConfig,
   style = 'bo',
   infoNode,
+  fieldConfig,
 }) => {
   /*
    * 구조는 동일하고 스타일만 다르다고 전달 받아서 스타일 분리 만 합니다.
@@ -70,7 +74,22 @@ const DynamicFormContainer: FC<FormRowProps> = ({
    * */
   const styles = style === 'bo' ? boStyles : foStyles;
   const { t } = useTranslation();
-  const { formConfig, isRequired, error, fieldRefs } = useFormRow(provider, children, name);
+
+  // fieldConfig가 제공되면 필드를 등록
+  useEffect(() => {
+    if (fieldConfig && provider.registerField) {
+      // FormRow의 name prop을 fieldConfig.name으로 자동 설정
+      const configWithName = { ...fieldConfig, name } as FormConfig;
+      provider.registerField(configWithName);
+    }
+  }, [fieldConfig, name, provider]);
+
+  const { formConfig, isRequired, error, fieldRefs } = useFormRow(
+    provider,
+    children,
+    name,
+    fieldConfig as FormConfig | undefined,
+  );
   const { guideText, infoArea, onChangeInfoArea, onChangeGuideText } = useDynamicFormContext();
   const FormConfigComponent = formFieldConfig[formConfig.type as keyof typeof formFieldConfig];
 
@@ -106,6 +125,11 @@ const DynamicFormContainer: FC<FormRowProps> = ({
       onChangeGuideText(formGuideText);
     }
   }, [formGuideText]);
+
+  // hidden 타입인 경우 화면에 렌더링하지 않음
+  if (formConfig.type === 'hidden') {
+    return null;
+  }
 
   return (
     <div
