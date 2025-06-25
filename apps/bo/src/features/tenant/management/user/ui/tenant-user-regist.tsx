@@ -259,6 +259,7 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
                 valueField: 'value',
                 wordwrap: true,
               }}
+              disabled
             />
           }
         />
@@ -397,10 +398,15 @@ const formConfig: DynamicFormConfig = {
 
     {
       name: 'userState',
-      type: 'text',
+      type: 'radio-group',
       label: t('재직 상태'),
-      value: '',
-      placeholder: '',
+      value: '1',
+      options: [
+        { label: '재직', value: '1' },
+        { label: '정직', value: '2' },
+        { label: '휴직', value: '3' },
+        { label: '퇴사', value: '4' },
+      ],
     },
     {
       name: 'userModifyDate',

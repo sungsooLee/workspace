@@ -11,7 +11,7 @@ import {
   TenantUserList,
   TenantUserRegistApplicationList,
 } from '@features/tenant';
-import { TenantUserApplicationDetail } from '@features/tenant/management/user/tenant-user-application-detail';
+import { TenantUserApplicationDetail } from '@features/tenant';
 
 export const Route = createFileRoute('/_layout/platform/tenant/user/application-detail')({
   component: RouteComponent,
@@ -32,13 +32,13 @@ function RouteComponent() {
           />
         </LinkBox>
         <Button
-          label={t('LABEL.button.reset')}
+          label={t('반려')}
           variant="gray2"
           size="sm"
           //onClick={() => router.navigate({ to: '/platform/tenant/management/regist' })}
         />
         <Button
-          label={t('LABEL.button.save')}
+          label={t('승인')}
           variant="primary"
           size="sm"
           //onClick={() => router.navigate({ to: '/platform/tenant/management/regist' })}
