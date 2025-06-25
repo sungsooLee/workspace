@@ -136,6 +136,9 @@
       }
       .group {
         .guide_tit3 {
+          + .guide_tit4 {
+            margin-top: 0;
+          }
           + div {
             .guide_tit4 {
               margin-top: 0;
@@ -188,6 +191,9 @@
             code {
               margin-top: 10px;
             }
+          }
+          + .guide_tit4 {
+            margin-top: 20px;
           }
         }
       }

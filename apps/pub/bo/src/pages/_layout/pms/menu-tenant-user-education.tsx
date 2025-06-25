@@ -43,7 +43,7 @@ function RouteComponent() {
     <PageContainer>
       {/* main_contents */}
       <div className={styles.main_contents}>
-        <FormSubTitle label={'유저 정보'} />
+        <FormSubTitle label={'유저 정보'} noLine />
         <div className={cn(tableStyles.start, tableStyles.wrap)}>
           <table>
             <caption>{'기본정보'}</caption>

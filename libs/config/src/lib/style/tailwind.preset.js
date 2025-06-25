@@ -104,7 +104,7 @@ module.exports = {
             borderWidth: '4px',
             borderStyle: 'solid',
             borderColor: 'transparent',
-            backgroundColor: 'var(--gray4)',
+            backgroundColor: 'var(--scroll-thumb)',
             backgroundClip: 'padding-box',
           },
           '&::-webkit-scrollbar-track': {

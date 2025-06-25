@@ -1,0 +1,14 @@
+.start {
+  &.notice {
+    @apply rounded-[8px] border-[1px] border-solid border-[var(--blue50)] bg-[#f5f8ff] p-[24px] shadow-[0_2px_6px_rgba(0,0,0,.2)];
+    .tit {
+      @apply body-lg-b flex items-center text-[var(--blue50)];
+      svg {
+        @apply mr-[4px];
+      }
+    }
+    .txt {
+      @apply body-md mt-[12px] text-[var(--gray50)];
+    }
+  }
+}
