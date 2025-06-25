@@ -49,6 +49,7 @@ export const useGridBox = <T = any>(
   const handleGridStateChange = useCallback(
     (newState: GridBoxState) => {
       const params = getParams?.() ?? {};
+      console.log('newState', newState);
       fetchGridData(params, newState);
     },
     [fetchGridData, getParams],

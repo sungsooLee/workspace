@@ -316,7 +316,7 @@ const AttachmentComponent = ({
       <div className={cn(styles.file_wrap, styles.type_excel)} {...getRootProps()}>
         {files.length === 0 ? (
           <div className={styles.attach_area}>
-            <Button className={styles.btn_file}>
+            <Button className={styles.btn_file} onClick={handleOpen}>
               <IcoUploadCloud width={'40'} height={'40'} stroke={'#131C30'} />
               <strong className={styles.file_title}>
                 {'영역을 클릭하거나 파일을 마우스로 끌어놓으세요'}

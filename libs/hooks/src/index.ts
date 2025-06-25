@@ -21,3 +21,4 @@ export * from './lib/router/router.hook';
 export * from './lib/use-code-store/use-code-store';
 export * from './lib/use-code-store/constants';
 export * from './lib/use-language-map';
+export * from './lib/code/use-code-group';

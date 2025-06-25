@@ -70,6 +70,11 @@ declare module '@tanstack/react-table' {
      * cell class
      */
     cellClass?: '';
+
+    /**
+     * 컬럼 정렬 key 값 설정시 사용
+     */
+    sortKey?: string;
   }
 }
 

@@ -8,13 +8,14 @@ import type { com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto } from
 import type { com_ever_edu_pms_channel_dto_res_ChannelResDto } from '../models/com_ever_edu_pms_channel_dto_res_ChannelResDto';
 import type { com_ever_edu_pms_channel_entity_ChannelRequestEntity } from '../models/com_ever_edu_pms_channel_entity_ChannelRequestEntity';
 import type { com_ever_edu_pms_company_dto_res_CompanyResDto } from '../models/com_ever_edu_pms_company_dto_res_CompanyResDto';
-import type { com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto } from '../models/com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto';
 import type { com_ever_edu_pms_menu_dto_res_GnbTenantMenuTreeDto } from '../models/com_ever_edu_pms_menu_dto_res_GnbTenantMenuTreeDto';
 import type { com_ever_edu_pms_notification_dto_req_AlarmSaveReqDto } from '../models/com_ever_edu_pms_notification_dto_req_AlarmSaveReqDto';
 import type { com_ever_edu_pms_notification_dto_req_AlarmSendReqDto } from '../models/com_ever_edu_pms_notification_dto_req_AlarmSendReqDto';
 import type { com_ever_edu_pms_notification_dto_res_AlarmResDto } from '../models/com_ever_edu_pms_notification_dto_res_AlarmResDto';
 import type { com_ever_edu_pms_role_dto_req_RoleApplicationReqDto } from '../models/com_ever_edu_pms_role_dto_req_RoleApplicationReqDto';
+import type { com_ever_edu_pms_role_dto_res_RoleApplicationHistoryResDto } from '../models/com_ever_edu_pms_role_dto_res_RoleApplicationHistoryResDto';
 import type { com_ever_edu_pms_role_dto_res_RoleApplicationResDto } from '../models/com_ever_edu_pms_role_dto_res_RoleApplicationResDto';
+import type { com_ever_edu_pms_role_dto_res_RoleResDto } from '../models/com_ever_edu_pms_role_dto_res_RoleResDto';
 import type { com_ever_edu_pms_tenant_dto_req_TenantCreateReqDto } from '../models/com_ever_edu_pms_tenant_dto_req_TenantCreateReqDto';
 import type { com_ever_edu_pms_tenant_dto_req_TenantPropertiesUpdateReqDto } from '../models/com_ever_edu_pms_tenant_dto_req_TenantPropertiesUpdateReqDto';
 import type { com_ever_edu_pms_tenant_dto_req_TenantSearchReqDto$SearchByAdmin } from '../models/com_ever_edu_pms_tenant_dto_req_TenantSearchReqDto$SearchByAdmin';
@@ -42,7 +43,6 @@ import type { com_ever_edu_pms_user_dto_res_FindMyIdResDto } from '../models/com
 import type { com_ever_edu_pms_user_dto_res_IsEmailExistsResDto } from '../models/com_ever_edu_pms_user_dto_res_IsEmailExistsResDto';
 import type { com_ever_edu_pms_user_dto_res_UserResDto } from '../models/com_ever_edu_pms_user_dto_res_UserResDto';
 import type { org_springdoc_core_converters_models_Pageable } from '../models/org_springdoc_core_converters_models_Pageable';
-import type { org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleApplicationResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleApplicationResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin';
 import type { org_springframework_web_servlet_mvc_method_annotation_SseEmitter } from '../models/org_springframework_web_servlet_mvc_method_annotation_SseEmitter';
@@ -575,40 +575,6 @@ export class FoService {
         });
     }
     /**
-     * 역할 신청 목록 조회
-     * 역할 신청 목록을 조회한다.
-     * @param pageable
-     * @param roleId
-     * @param isUsed
-     * @param isExpired
-     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleApplicationResDto OK
-     * @throws ApiError
-     */
-    public static getRoleApplications(
-        pageable: org_springdoc_core_converters_models_Pageable,
-        roleId?: number,
-        isUsed?: boolean,
-        isExpired?: boolean,
-    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleApplicationResDto> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/user/api/v1/role-applications',
-            query: {
-                'pageable': pageable,
-                'roleId': roleId,
-                'isUsed': isUsed,
-                'isExpired': isExpired,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
      * 권한 신청
      * 권한을 신청한다.
      * @param requestBody
@@ -1021,6 +987,7 @@ export class FoService {
      * @param page Zero-based page index (0..N)
      * @param size The size of the page to be returned
      * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param tenantId 테넌트Id
      * @param tenantName 테넌트명
      * @param companyName 회사명
      * @param companyCode 회사코드
@@ -1034,6 +1001,7 @@ export class FoService {
         page?: number,
         size: number = 2147483647,
         sort?: Array<string>,
+        tenantId?: string,
         tenantName?: string,
         companyName?: string,
         companyCode?: string,
@@ -1048,6 +1016,7 @@ export class FoService {
                 'page': page,
                 'size': size,
                 'sort': sort,
+                'tenantId': tenantId,
                 'tenantName': tenantName,
                 'companyName': companyName,
                 'companyCode': companyCode,
@@ -1093,6 +1062,25 @@ export class FoService {
         });
     }
     /**
+     * 내 역할 목록 조회
+     * 현재 로그인한 사용자의 역할 목록을 조회한다.
+     * @returns com_ever_edu_pms_role_dto_res_RoleResDto OK
+     * @throws ApiError
+     */
+    public static getMyRoles(): CancelablePromise<Array<com_ever_edu_pms_role_dto_res_RoleResDto>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/roles/me',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * 역할 신청 조회(단건)
      * 역할 신청을 조회한다.
      * @param id
@@ -1107,6 +1095,74 @@ export class FoService {
             url: '/user/api/v1/role-applications/{id}',
             path: {
                 'id': id,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 내 역할 신청 목록 조회
+     * 현재 로그인한 사용자의 역할 신청 목록을 조회한다.
+     * @param pageable
+     * @param roleId
+     * @param tenantId
+     * @param channelUuid
+     * @param isExpired
+     * @param status
+     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleApplicationResDto OK
+     * @throws ApiError
+     */
+    public static getRoleApplications(
+        pageable: org_springdoc_core_converters_models_Pageable,
+        roleId?: number,
+        tenantId?: number,
+        channelUuid?: string,
+        isExpired?: boolean,
+        status?: 'NEW' | 'EXTEND' | 'APPROVED' | 'REJECTED',
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleApplicationResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/role-applications/me',
+            query: {
+                'pageable': pageable,
+                'roleId': roleId,
+                'tenantId': tenantId,
+                'channelUuid': channelUuid,
+                'isExpired': isExpired,
+                'status': status,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 역할 신청 이력 조회
+     * 역할 신청 이력을 조회한다.
+     * @param userUuid
+     * @param createdDate
+     * @returns com_ever_edu_pms_role_dto_res_RoleApplicationHistoryResDto OK
+     * @throws ApiError
+     */
+    public static getRoleApplicationHistories(
+        userUuid: string,
+        createdDate: string,
+    ): CancelablePromise<Array<com_ever_edu_pms_role_dto_res_RoleApplicationHistoryResDto>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/role-applications/histories',
+            query: {
+                'userUuid': userUuid,
+                'createdDate': createdDate,
             },
             errors: {
                 400: `Bad Request`,
@@ -1147,21 +1203,21 @@ export class FoService {
      * FO GNB 테넌트메뉴목록 트리 조회
      * GNB 테넌트 메뉴 목록을 트리구조로 조회한다.
      * @param tenantId
-     * @param roleIds
+     * @param roleId
      * @param deviceType
      * @returns com_ever_edu_pms_menu_dto_res_GnbTenantMenuTreeDto OK
      * @throws ApiError
      */
     public static findTenantMenu(
         tenantId: number,
-        roleIds?: Array<string>,
+        roleId?: number,
         deviceType?: string,
     ): CancelablePromise<com_ever_edu_pms_menu_dto_res_GnbTenantMenuTreeDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/user/api/v1/menus/tenantTree',
             query: {
-                'roleIds': roleIds,
+                'roleId': roleId,
                 'tenantId': tenantId,
                 'deviceType': deviceType,
             },
@@ -1169,75 +1225,6 @@ export class FoService {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 교육장소 목록 조회
-     * 교육장소 목록 정보를 조회한다.
-     * @param page Zero-based page index (0..N)
-     * @param size The size of the page to be returned
-     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-     * @param educationPlaceTypecd 교육장소유형코드 [CAMPUS,SERVISE_TECH,ME_CLUSTER ... ]
-     * @param isReservationUsed 예약사용여부
-     * @param isUsed 사용여부
-     * @param educationPlaceCodeName 교육장소코드명
-     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto OK
-     * @throws ApiError
-     */
-    public static getEducationPlaceList(
-        page?: number,
-        size: number = 10,
-        sort?: Array<string>,
-        educationPlaceTypecd?: string,
-        isReservationUsed?: string,
-        isUsed?: string,
-        educationPlaceCodeName?: string,
-    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/user/api/v1/education/place',
-            query: {
-                'page': page,
-                'size': size,
-                'sort': sort,
-                'educationPlaceTypecd': educationPlaceTypecd,
-                'isReservationUsed': isReservationUsed,
-                'isUsed': isUsed,
-                'educationPlaceCodeName': educationPlaceCodeName,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 교육장소 정보 조회
-     * 교육장소 상세 정보를 조회한다.
-     * @param educationPlaceUuid
-     * @returns com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto OK
-     * @throws ApiError
-     */
-    public static getEducationPlaceInfo(
-        educationPlaceUuid: string,
-    ): CancelablePromise<com_ever_edu_pms_educationplace_dto_res_EducationPlaceResDto> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/user/api/v1/education/place/{educationPlaceUuid}',
-            path: {
-                'educationPlaceUuid': educationPlaceUuid,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },

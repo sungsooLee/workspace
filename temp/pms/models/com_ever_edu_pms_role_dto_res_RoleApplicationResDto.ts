@@ -81,10 +81,6 @@ export type com_ever_edu_pms_role_dto_res_RoleApplicationResDto = {
      */
     createdBy?: string;
     /**
-     * 사용 여부
-     */
-    isUsed?: boolean;
-    /**
      * 신청일
      */
     createdDate?: string;
