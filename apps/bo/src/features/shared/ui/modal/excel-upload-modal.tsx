@@ -361,7 +361,7 @@ const ExcelUploadModalComponent = ({ validateUrl, templateUrls }: ExcelUploadMod
           variant={'primary'}
           size={'lg'}
           onClick={() => closeModal(validationResult?.successRows)}
-          disabled={!Boolean(status === Status.COMPLETED && validationResult?.successRows?.length)}
+          disabled={!(status === Status.COMPLETED && validationResult?.successRows?.length)}
         />
       </ModalFooter>
     </ModalContainer>
