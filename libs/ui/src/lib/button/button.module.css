@@ -77,6 +77,21 @@
     @apply hidden;
   }
 }
+.soft {
+  @apply label-sm rounded-[4px] bg-[var(--gray98)] text-[var(--gray10)];
+  &:hover {
+    @apply bg-[var(--gray95)];
+  }
+  &:active {
+    @apply bg-[var(--gray92)];
+  }
+  &:disabled {
+    @apply bg-[var(--gray95)] text-[var(--gray75)];
+  }
+  svg {
+    @apply stroke-[var(--gray75)];
+  }
+}
 .line {
   @apply justify-center rounded-[4px] border-[1px] border-solid border-[var(--secondary1)] bg-[var(--white)] text-[var(--secondary1)];
   &:hover {

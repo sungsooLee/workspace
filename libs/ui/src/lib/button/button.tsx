@@ -27,7 +27,8 @@ export type ButtonVariantType =
   | 'outline'
   | 'gray-outline'
   | 'ghost'
-  | 'link';
+  | 'link'
+  | 'soft';
 
 /**
  * 버튼의 크기 타입
