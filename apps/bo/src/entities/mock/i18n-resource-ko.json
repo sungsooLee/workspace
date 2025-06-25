@@ -200,8 +200,12 @@
         "category": "카테고리",
         "tenant": "테넌트",
         "channel": "채널",
-        "tenantCategory": "테넌트 카테고리"
+        "tenantCategory": "테넌트 카테고리",
+        "hrdRole": "HRD 담당자 역할",
+        "userRole": "학습자 역할"
       },
+      "expired": "만료",
+      "valid": "정상",
       "hrdCenter": "HRD 센터",
       "monthLater": "1개월 후 변경",
       "login": "로그인",
@@ -574,6 +578,18 @@
       "notificationDelete": {
         "title": "알림을 모두 삭제하시겠습니까?",
         "message": "알림을 삭제한 후에는 알림을 조회할 수 없습니다."
+      },
+      "fileDelete": {
+        "title": "파일을 삭제하겠습니까?",
+        "message": "선택한 파일이 모두 삭제됩니다."
+      },
+      "fileSelectForDelete": {
+        "title": "파일을 선택해 주세요.",
+        "message": "삭제할 파일을 먼저 선택해 주세요."
+      },
+      "fileSelectForDownload": {
+        "title": "파일을 선택해 주세요.",
+        "message": "저장할 파일을 먼저 선택해 주세요."
       }
     },
     "platform": {
@@ -586,7 +602,7 @@
           "currentTranslationLanguage": "번역중인 언어",
           "multilingualKey": "코드 (메뉴 코드/카테고리 코드/공통코드/라벨 코드/메세지 코드)",
           "translation": "기준명 (메뉴명/카테고리명/공통코드명/라벨명/메세지명)",
-          "baseLanguage": "번역명(한국어)",
+          "baseLanguage": "기준명(한국어)",
           "targetLanguage": "번역명(번역언어)",
           "totalTranslatedCount": "번역완료",
           "platform-message": "라벨/메세지 관리",
@@ -597,21 +613,23 @@
           "placeholder": {
             "multilingualKey": {
               "default": "코드를 입력하세요.",
-              "HRD_CENTER_MENU": "메뉴 코드를 입력하세요.",
-              "LEARNER_MENU": "메뉴 코드를 입력하세요.",
+              "HRD_CENTER_MENU": "HRD 센터 메뉴 코드를 입력하세요.",
+              "LEARNER_MENU": "학습자 메뉴 코드를 입력하세요.",
               "LABEL": "라벨 코드를 입력하세요.",
               "COMMON_CODE": "공통코드 key 를 입력하세요.",
               "CATEGORY": "카테고리 코드를 입력하세요.",
-              "MESSAGE": "메세지 코드를 입력하세요."
+              "MESSAGE": "메세지 코드를 입력하세요.",
+              "SYSTEM_COMMON_CODE": "시스템 공통 코드를 입력하세요."
             },
             "translation": {
               "default": "기준명을 입력하세요.",
-              "HRD_CENTER_MENU": "메뉴명을 입력하세요.",
-              "LEARNER_MENU": "메뉴명을 입력하세요.",
+              "HRD_CENTER_MENU": "HRD 센터 메뉴명을 입력하세요.",
+              "LEARNER_MENU": "학습자 메뉴명을 입력하세요.",
               "LABEL": "라벨명을 입력하세요.",
               "COMMON_CODE": "공통코드를 입력하세요.",
               "CATEGORY": "카테고리 명을 입력하세요.",
-              "MESSAGE": "메세지를 입력하세요."
+              "MESSAGE": "메세지를 입력하세요.",
+              "SYSTEM_COMMON_CODE": "시스템 공통 코드명을 입력하세요."
             }
           }
         }

@@ -61,7 +61,7 @@ function RouteComponent() {
     {
       title: '회원가입 신청',
       key: 't2',
-      content: <TenantUserRegistApplicationList />,
+      content: <TenantUserRegistApplicationList rootPath="/platform" />,
     },
   ];
 

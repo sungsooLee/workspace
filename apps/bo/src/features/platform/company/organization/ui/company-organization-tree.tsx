@@ -1,7 +1,5 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useState, useRef } from 'react';
-import { useRouter } from '@tanstack/react-router';
+import React, { useEffect, useState } from 'react';
 import { useWatch } from 'react-hook-form';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 
 import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
@@ -9,32 +7,21 @@ import { SectionLayout } from '@widgets/layout/ui/container/section-layout/secti
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 
-import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import { cn } from '@learnway/shared';
 import {
   Button,
   ChipListModalSelectorFormField,
   ContentsRow,
   Input,
-  RadioGroupFormField,
   TextareaFormField,
   TreeBox,
   Tabs,
-  TreeType,
   TreeNode,
   useModal,
+  TreeEventPayload,
 } from '@learnway/ui';
-import {
-  useSearchBox,
-  SearchBoxConfig,
-  CODE_GROUP,
-  useDynamicForm,
-  DynamicFormConfig,
-} from '@learnway/hooks';
-
-import { ContentsHistoryInfoFormField, FormRow, FormSubTitle, SwitchFormField } from '@shared/ui';
-import { SearchBox } from '@shared/ui/search-box';
-
-import { isEqual } from 'lodash';
+import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
+import { ContentsHistoryInfoFormField, FormRow, FormSubTitle } from '@shared/ui';
 
 import { transformDepartmentApiDataToTreeData } from '@features/platform/company/organization/service/company-organization.service';
 import { findOrganizationPathById } from '@features/platform/company';
@@ -76,7 +63,6 @@ const TenantCompanyOrganizationTreeComponent = ({
   companyCode: string;
   showType: string;
 }) => {
-  const router = useRouter();
   const { confirm: openConfirm, alert: openAlert } = useModal();
 
   const [deptTreeData, setDeptTreeData] = useState([]);
@@ -86,7 +72,7 @@ const TenantCompanyOrganizationTreeComponent = ({
   const [formMode, setFormMode] = useState(EnFormMode.NONE);
   const [pathString, setPathString] = useState<string>();
   const [disableEditing, setDisableEditing] = useState(false);
-  const [company, setCompany] = useState<any>();
+  //const [company, setCompany] = useState<any>();
 
   const { provider, fetchData, onSubmit, onFormChange, getValues, getInitByBuilders, control } =
     useDynamicForm(formConfig);
@@ -187,7 +173,7 @@ const TenantCompanyOrganizationTreeComponent = ({
         companyCode={companyCode}
         showType={showType}
         deptId={selectedNode?.deptId}
-        companyHrInfoManageType={company?.hrInfoManageType}
+        //companyHrInfoManageType={company?.hrInfoManageType}
       />
     );
   };
@@ -202,14 +188,14 @@ const TenantCompanyOrganizationTreeComponent = ({
     );
   };
 
-  useEffect(() => {
-    // 부서 수정/삭제 시 회사의 인사 데이터 수동 관리 유형을 확인하기 위해 조회
-    const init = async () => {
-      const data: any[] = await CompaniesService.fetch(companyCode);
-      setCompany({ ...data });
-    };
-    init();
-  }, []);
+  // useEffect(() => {
+  //   // 부서 수정/삭제 시 회사의 인사 데이터 수동 관리 유형을 확인하기 위해 조회
+  //   const init = async () => {
+  //     const data: any[] = await CompaniesService.fetch(companyCode);
+  //     setCompany({ ...data });
+  //   };
+  //   init();
+  // }, []);
 
   useEffect(() => {
     if (viewNode) {
@@ -231,8 +217,8 @@ const TenantCompanyOrganizationTreeComponent = ({
       setDeptTreeData(transformedData);
       if (transformedData?.length > 0) {
         const root = transformedData[0];
-        const company = root?.children[0];
-        setSelectedNode(company);
+        const companyNode = root?.children[0];
+        setSelectedNode(companyNode);
       }
     }
   }, [departmentTreeData]);
@@ -246,8 +232,8 @@ const TenantCompanyOrganizationTreeComponent = ({
       setDeptTreeData(transformedData);
       if (transformedData?.length > 0) {
         const root = transformedData[0];
-        const company = root?.children[0];
-        setSelectedNode(company);
+        const companyNode = root?.children[0];
+        setSelectedNode(companyNode);
       }
     }
   }, [hmgDepartmentTreeData]);
@@ -285,11 +271,11 @@ const TenantCompanyOrganizationTreeComponent = ({
       console.log('### fetchData', data);
       fetchData(data);
       setDisableEditing(
-        company.hrInfoManageType === 'AUTO_MANAGE' ||
-          departmentData.hrInfoManageType === 'AUTO_MANAGE',
+        //company.hrInfoManageType === 'AUTO_MANAGE' ||
+        departmentData.hrInfoManageType === 'AUTO_MANAGE',
       );
-      console.log('### company', company);
-      console.log('#### company.hrInfoManageType', company.hrInfoManageType);
+      //console.log('### company', company);
+      //console.log('#### company.hrInfoManageType', company.hrInfoManageType);
       console.log('#### departmentData.hrInfoManageType', departmentData.hrInfoManageType);
     }
   }, [departmentData]);
@@ -323,12 +309,12 @@ const TenantCompanyOrganizationTreeComponent = ({
     console.log('### handleOnSubmit', data);
     const payload: any = {
       companyCode: companyCode,
-      parentDeptId: data.parentDeptId,
       sortOrder: 1,
       managerEmployeeNumberUuid: data.managerEmployeeNumber[0]?.uuid,
       deptName: data.deptName.fieldValue,
       deptDesc: data.deptDesc,
     };
+    if (data.parentDeptId.length > 0) payload.parentDeptId = data.parentDeptId;
     if (formMode === EnFormMode.ADD) {
       if (await openConfirm('저장 하시겠습니까?')) {
         createDepartment(payload);
@@ -408,18 +394,65 @@ const TenantCompanyOrganizationTreeComponent = ({
       );
     }
   };
+
+  const handleTreeAction = (event: TreeEventPayload) => {
+    switch (event.type) {
+      case 'NODE_MOVE': {
+        const nodeInfo = event;
+        console.log('NODE_MOVE', event);
+        if (nodeInfo.sourceNode.menuId) {
+          if (nodeInfo.position === 'INSIDE') {
+            // const payload = {
+            //   id: nodeInfo.sourceNode.menuId,
+            //   destinationParentId: nodeInfo.targetNode?.menuId,
+            //   sortSeq: 1,
+            // };
+            // moveCategory(payload, {
+            //   onSuccess: async (data: any) => {
+            //     if (selectedNode?.categoryId) {
+            //       await queryClient.invalidateQueries({
+            //         queryKey: [...queryKeys.detail(Number(selectedNode.categoryId))],
+            //       });
+            //     }
+            //   },
+            // });
+          } else {
+            const targetIndex = nodeInfo.targetIndex!;
+            const payload = {
+              id: nodeInfo.sourceNode.menuId,
+              destinationParentId: nodeInfo.targetNode?.parentKey,
+              sortSeq: targetIndex + 1,
+            };
+            // moveCategory(payload, {
+            //   onSuccess: async (data: any) => {
+            //     if (selectedNode?.categoryId) {
+            //       await queryClient.invalidateQueries({
+            //         queryKey: [...queryKeys.detail(Number(selectedNode.categoryId))],
+            //       });
+            //     }
+            //   },
+            // });
+          }
+          break;
+        }
+      }
+    }
+  };
+
   return (
     <SectionLayout contentsRatio={'thirty'}>
       <TreeBox
         data={deptTreeData}
         treeId="1"
-        type="SHUTTLE_LIST"
+        type={showType === EnOrganizationShowType.origin ? 'SHUTTLE_LIST' : 'SAME_LEVEL_ONLY'}
         showSearchKeyword
         initLevel={2}
         title={showType === EnOrganizationShowType.origin ? t('조직-원본') : t('조직-플랫폼')}
         selectedNode={viewNode}
         handleSelectedNodeChange={handleSelectedNodeChange}
         renderNodeButtons={renderTreeCustomButtonNode}
+        onAction={handleTreeAction}
+        minDraggableLevel={2}
       />
       {formMode === EnFormMode.NONE && (
         <div className={cn(styles.start, styles.wrap)}>

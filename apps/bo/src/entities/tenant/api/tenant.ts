@@ -60,5 +60,7 @@ function genTenantCreate(payload: any) {
     isCommonCategory: payload.isCommonCategory,
     isTenantCategory: payload.isTenantCategory,
     langCountryCodeTypeList: payload.langCountryCodeTypeList,
+    fileStorageTypeChannelList: payload.fileStorageTypeChannelList,
+    fileStorageTypeBase: payload.fileStorageTypeBase,
   };
 }

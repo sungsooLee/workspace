@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { t } from 'i18next';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
@@ -17,6 +17,8 @@ import { SearchBox } from '@shared/ui/search-box';
 import { IcoRefresh02 } from '@learnway/icons';
 import { useQueryClient } from '@tanstack/react-query';
 import { usersQueryOptions } from '@entities/users/service/users.queries';
+import { useWatch } from 'react-hook-form';
+import { queryOptions } from '@entities/department';
 
 const UserShuttleComponent = () => {
   const ref = useRef<ShuttleGridToGridImperative>(null);
@@ -27,13 +29,30 @@ const UserShuttleComponent = () => {
   const { close } = useModal();
 
   const queryClient = useQueryClient();
-  const { provider: sProvider } = useSearchBox(searchConfig);
+  const { provider: sProvider, setValue, setOptions } = useSearchBox(searchConfig);
+  const companyId = useWatch({ control: sProvider.control, name: 'companyId' });
+
+  useEffect(() => {
+    if (!companyId && companyId !== 0) return;
+
+    (async () => {
+      const { content } = await queryClient.fetchQuery(queryOptions.list({ companyId }));
+      setValue('deptId', '');
+      if (content)
+        setOptions(
+          'deptId',
+          content.map((_: any) => ({ value: _.deptId, label: _.deptName })),
+        );
+    })();
+  }, [companyId]);
 
   /**
    * @param data
    */
   const handleOnSearch = (data: any) => {
-    const queryPromise = queryClient.fetchQuery(usersQueryOptions.list(data));
+    const queryPromise = queryClient.fetchQuery(
+      usersQueryOptions.all({ ...data, page: 0, size: 2000 }),
+    );
     queryPromise.then((data) => {
       setGrideData(data.content);
     });
@@ -111,9 +130,14 @@ const searchConfig: SearchBoxConfig = {
       },
       {
         name: 'deptId',
-        type: 'text',
+        type: 'dropdown',
         label: t('소속'),
         value: '',
+        presetOptionLabel: t('LABEL.form.label.select', '선택'),
+        options: [],
+        format: 'object',
+        isSearchable: true,
+        isClearable: true,
       },
       {
         name: 'userNo',

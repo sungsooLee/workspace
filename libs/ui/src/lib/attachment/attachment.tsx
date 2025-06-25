@@ -8,24 +8,30 @@ import {
   IcoTrash03,
   IcoUploadCloud,
 } from '@learnway/icons';
-import { cn, SelectOption } from '@learnway/shared';
-import { UploadFile } from '@learnway/hooks';
+import { cn } from '@learnway/shared';
+import { UploadFile, useFileManager } from '@learnway/hooks';
 import { useDropzone } from 'react-dropzone';
 import { Button } from '../button/button';
 import { Badge } from '../badge/badge';
 import { ProgressBar } from '../progress/progress-bar/progress-bar';
-import { DndFileProgressProps } from '../dnd-file-progress/types';
 import { Info, Paperclip } from 'lucide-react';
 import { Checkbox } from '../checkbox/checkbox';
+import { useModal } from '../modal/modal.hook';
 import { t } from 'i18next';
+import { AttachmentProps } from './types';
 
-// 바이트를 자동 포맷된 문자열로 변환
-const dpSize = (bytes: number, digits = 2): string => {
-  if (!bytes || bytes === 0) return '';
-  if (bytes < 1024 * 1024) return `${bytes.toLocaleString()} B`;
-  if (bytes < 1024 * 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(digits)} MB`;
-  return `${(bytes / (1024 * 1024 * 1024)).toFixed(digits)} GB`;
-};
+function formatBytes(bytes: number, decimals = 2): string {
+  if (bytes === 0) return '0 Bytes';
+
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB'];
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  const formatted = parseFloat((bytes / Math.pow(k, i)).toFixed(dm));
+
+  return `${formatted} ${sizes[i]}`;
+}
 
 const AttachmentComponent = ({
   files,
@@ -37,7 +43,8 @@ const AttachmentComponent = ({
   acceptFiles,
   maxFileCount,
   maxFileSize,
-}: DndFileProgressProps) => {
+  isDownloadCase = false,
+}: AttachmentProps) => {
   const acceptFileString = useMemo(() => {
     if (!acceptFiles || typeof acceptFiles === 'string') return '';
     return acceptFiles
@@ -48,7 +55,7 @@ const AttachmentComponent = ({
 
   const isOverMaxFileCount = files.length >= maxFileCount;
 
-  const [value, setValue] = useState<string[]>([]);
+  const [checkedValues, setCheckedValues] = useState<string[]>([]);
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
@@ -61,21 +68,60 @@ const AttachmentComponent = ({
   const { getRootProps, getInputProps, inputRef, open } = useDropzone({
     onDrop,
     multiple: true,
-    maxFiles: maxFileCount || 999,
+    maxFiles: maxFileCount,
     maxSize: maxFileSize,
+    noClick: true,
+    noKeyboard: true,
   });
 
-  const removeFile = () => {
-    // setFiles(prev => prev.filter(f => f !== file));
-    value.forEach((id) => {
-      onRemove(id);
-    });
+  // 파일 다이얼로그 열기 + input 초기화
+  const handleOpen = () => {
+    open();
+  };
+
+  const { fileDownload, filesDownload } = useFileManager();
+
+  const { alert: openAlert } = useModal();
+
+  const removeFile = async () => {
+    if (checkedValues.length === 0) {
+      await openAlert({
+        title: t('LABEL.confirm.fileSelectForDelete.title'),
+        content: t('LABEL.confirm.fileSelectForDelete.message'),
+      });
+    } else {
+      await openAlert({
+        isConfirm: true,
+        title: t('LABEL.confirm.fileDelete.title'),
+        content: t('LABEL.confirm.fileDelete.message'),
+        onClose: (isConfirm) => {
+          if (isConfirm) {
+            checkedValues.forEach((id) => {
+              onRemove(id);
+            });
+          }
+        },
+      });
+    }
+  };
+
+  const downloadFile = async () => {
+    if (checkedValues.length === 0) {
+      await openAlert({
+        title: t('LABEL.confirm.fileSelectForDownload.title'),
+        content: t('LABEL.confirm.fileSelectForDownload.message'),
+      });
+    } else if (checkedValues.length === 1) {
+      await fileDownload(checkedValues[0]);
+    } else {
+      await filesDownload(checkedValues);
+    }
   };
 
   const handleCheckChange = (checked: boolean, checkedValue: string) => {
-    const checkOptions = [...value, checkedValue];
-    const unCheckOptions = value?.filter((d: string) => d !== checkedValue);
-    setValue(checked ? checkOptions : unCheckOptions);
+    const checkOptions = [...checkedValues, checkedValue];
+    const unCheckOptions = checkedValues?.filter((d: string) => d !== checkedValue);
+    setCheckedValues(checked ? checkOptions : unCheckOptions);
   };
 
   /**
@@ -84,6 +130,7 @@ const AttachmentComponent = ({
    * @returns {JSX.Element} 상태에 맞는 JSX 엘리먼트 반환
    */
   const renderFileProgress = (file: UploadFile) => {
+    if (isDownloadCase) return;
     /**
      * 주어진 상태 코드에 따라 렌더링할 텍스트를 반환하는 함수
      * @param {string} status - 파일의 상태 코드
@@ -239,27 +286,30 @@ const AttachmentComponent = ({
   return (
     <div className={cn(styles.start, styles.wrap)}>
       <div className="flex items-center justify-between rounded bg-white px-4 py-3">
-        <div className="flex items-center gap-2 text-sm text-gray-700">
+        <div className="flex items-center gap-2 text-lg text-gray-700">
           <span>파일올리기</span>
-          <Paperclip className="h-4 w-4 text-gray-500" />
+          <Paperclip className="h-5 w-5 text-gray-500" />
           <span className="text-[#00bcd4]">{`${files.length}/${maxFileCount}`}개</span>
           <span className="text-[#00bcd4]">
-            {dpSize(files.reduce((acc, cur) => acc + cur.size, 0))}
+            {formatBytes(files.reduce((acc, cur) => acc + cur.size, 0))}
           </span>
         </div>
-        <div className="flex items-center gap-3 text-sm text-gray-400">
+        <div className="flex items-center gap-3 text-lg text-gray-400">
           <div className="flex items-center gap-1">
-            <Info className="h-4 w-4" />
-            <span>{`최대 ${maxFileCount}개, 최대 파일 사이즈 ${dpSize(maxFileSize)}`}</span>
+            <Info className="h-5 w-5" />
+            <span>{`최대 ${maxFileCount}개, 최대 파일 사이즈 ${formatBytes(maxFileSize)}`}</span>
           </div>
           <Button
             label="추가"
             type="button"
             variant="primary"
             size="ts"
-            onClick={open}
-            // disabled={isOverMaxFileCount}
+            onClick={handleOpen}
+            disabled={isOverMaxFileCount}
           />
+          {isDownloadCase && (
+            <Button label="저장" type="button" variant="primary" size="ts" onClick={downloadFile} />
+          )}
           <Button label="삭제" type="button" variant="primary" size="ts" onClick={removeFile} />
         </div>
       </div>
@@ -282,8 +332,7 @@ const AttachmentComponent = ({
                 <div className="mr-3">
                   <Checkbox
                     onCheckedChange={(checked: boolean) => handleCheckChange(checked, file.id)}
-                    checked={value.indexOf(file.id) >= 0}
-                    // disabled={disabled || item.disabled}
+                    checked={checkedValues.indexOf(file.id) >= 0}
                   />
                 </div>
                 <div className={styles.file_name}>

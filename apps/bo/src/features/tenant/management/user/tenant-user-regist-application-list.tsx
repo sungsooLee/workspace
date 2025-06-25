@@ -15,10 +15,11 @@ import { useFetchAuthUser } from '@learnway/auth/entities';
 
 import { SearchBox } from '@shared/ui/search-box';
 
+import { usersQueryOptions } from '@entities/users/service/users.queries';
 import { tenantQueryOptions } from '@entities/tenant';
 
 const _global = {
-  linkClick: (tenantId: number, tenantName: string) => {
+  linkClick: (userUuid: string) => {
     return;
   },
 };
@@ -37,12 +38,11 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
 
   const [companyCodes, setCompanyCodes] = useState<string[]>([]);
 
-  _global.linkClick = (tenantId: number, tenantName: string) => {
+  _global.linkClick = (userUuid: string) => {
     router.navigate({
-      to: `${rootPath}/tenant/management/user-group/handmade-detail`,
+      to: `${rootPath}/tenant/user/application-detail`,
       state: {
-        tenantId: tenantId,
-        tenantName: tenantName,
+        userUuid: userUuid,
         listParam: getValues(),
       },
     });
@@ -136,7 +136,7 @@ const searchConfig: SearchBoxConfig = {
         name: 'tenantId',
         type: 'dropdown',
         label: t('테넌트'),
-        format: 'number',
+        format: 'object',
         value: '',
         presetOptionLabel: t('LABEL.form.label.select'),
         options: [],
@@ -145,7 +145,7 @@ const searchConfig: SearchBoxConfig = {
         name: 'companyId',
         type: 'dropdown',
         label: t('회사'),
-        format: 'number',
+        format: 'object',
         value: '',
         presetOptionLabel: t('LABEL.form.label.select'),
         options: [],
@@ -191,7 +191,7 @@ const searchConfig: SearchBoxConfig = {
 };
 
 const gridConfig = {
-  query: '',
+  query: usersQueryOptions.list,
   columns: [],
   data: [],
 
@@ -243,12 +243,20 @@ const columns = [
     header: t('이메일'),
     size: 114,
   }),
-  columnHelper.accessor('opt5', {
-    cell: (info) => info.getValue(),
+  columnHelper.accessor('employeeNumber', {
+    cell: (info) => {
+      return (
+        <Button
+          label={`${info.getValue()}`}
+          className="link"
+          onClick={() => _global.linkClick(info.row.original.uuid)}
+        />
+      );
+    },
     header: t('사번'),
     size: 114,
   }),
-  columnHelper.accessor('opt6', {
+  columnHelper.accessor('name', {
     cell: (info) => info.getValue(),
     header: t('이름'),
     size: 114,

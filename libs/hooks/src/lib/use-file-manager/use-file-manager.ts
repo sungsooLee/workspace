@@ -43,7 +43,10 @@ const useFileManagerHook = () => {
   const fileDownload = async (fileUuid: string): Promise<void> => {
     await FileManagerService.fileDownload(fileUuid);
   };
-
+  // 파일 복수 다운로드
+  const filesDownload = async (fileUuids: string[]): Promise<void> => {
+    await FileManagerService.filesDownload(fileUuids);
+  };
   return {
     uploadImageFile,
     deleteImageFile,
@@ -52,6 +55,7 @@ const useFileManagerHook = () => {
     createFileGroupFiles,
     deleteFileInfo,
     fileDownload,
+    filesDownload,
   };
 };
 

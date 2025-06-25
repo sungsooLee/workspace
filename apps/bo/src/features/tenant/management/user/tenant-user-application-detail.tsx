@@ -37,35 +37,19 @@ import {
   CompanyChoiceModal,
   OrganizationChoiceTreeModal,
 } from '@features/shared';
-import { EnFormMode, EnGlobalConst } from '@types';
+import { EnFormMode, EnGlobalConst, EMAIL_REGEX } from '@types';
 
 import { useCreateCompany, useUpdateCompany, useFetchCompany } from '@entities/companies';
 import CompaniesService from '@entities/companies/api/companies';
 import { LoginAuthenticationSettingInformation } from '@features/platform/company';
 
-const EMAIL_REGEX =
-  /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
-
-const duplicateCheckEmployeeNumber = async (companyCode: string) => {
-  const result = false;
-
-  if (result) return DuplicateState.duplicated;
-  else return DuplicateState.ok;
-};
-
-const duplicateCheckEmail = async (companyCode: string) => {
-  const result = false;
-
-  if (result) return DuplicateState.duplicated;
-  else return DuplicateState.ok;
-};
 /**
- * 화면번호: NLP_BO_TMS_1111_09
+ *
  * @param props
  * @param ref
  * @returns
  */
-const TenantUserRegistComponent = (props: any, ref: any) => {
+const TenantUserApplicationDetailComponent = (props: any, ref: any) => {
   const router = useRouter();
   const routerState = useRouterState();
 
@@ -118,6 +102,24 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
 
   return (
     <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
+      <FormSubTitle label={t('개인 정보')} lineType="dark" />
+      <ContentsRow>
+        <FormRow provider={provider} name="name" />
+        <FormRow provider={provider} name="employeeNumber" element={<Input />} />
+
+        <FormRow provider={provider} name="email" element={<Input />} />
+      </ContentsRow>
+      <ContentsRow>
+        <FormRow provider={provider} name="birthday" element={<DatePicker displayType="day" />} />
+        <FormRow provider={provider} name="userGender" />
+        <FormRow provider={provider} name="region" element={<Input disabled={true} />} />
+      </ContentsRow>
+      <ContentsRow>
+        <FormRow provider={provider} name="phoneNumber" />
+        <FormRow provider={provider} name="companyNumber" />
+        <div className={formStyles.form_item}></div>
+      </ContentsRow>
+
       <FormSubTitle label={t('회사/조직 정보')} lineType="dark" />
       <ContentsRow>
         <FormRow provider={provider} name="companyName" element={<Input disabled={true} />}>
@@ -157,34 +159,6 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       <ContentsRow>
         <FormRow provider={provider} name="userState" />
         <FormRow provider={provider} name="userModifyDate" element={<Input disabled={true} />} />
-        <div className={formStyles.form_item}></div>
-      </ContentsRow>
-
-      <FormSubTitle label={t('개인 정보')} lineType="dark" />
-      <ContentsRow>
-        <FormRow provider={provider} name="name" />
-        <FormRow
-          provider={provider}
-          name="employeeNumber"
-          element={
-            <DuplicateCheckInputFormField onDuplicationCheck={duplicateCheckEmployeeNumber} />
-          }
-        />
-
-        <FormRow
-          provider={provider}
-          name="email"
-          element={<DuplicateCheckInputFormField onDuplicationCheck={duplicateCheckEmail} />}
-        />
-      </ContentsRow>
-      <ContentsRow>
-        <FormRow provider={provider} name="birthday" element={<DatePicker displayType="day" />} />
-        <FormRow provider={provider} name="userGender" />
-        <FormRow provider={provider} name="region" element={<Input disabled={true} />} />
-      </ContentsRow>
-      <ContentsRow>
-        <FormRow provider={provider} name="phoneNumber" />
-        <FormRow provider={provider} name="companyNumber" />
         <div className={formStyles.form_item}></div>
       </ContentsRow>
 
@@ -249,6 +223,9 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
         <div className={formStyles.form_item}></div>
       </ContentsRow>
       <ContentsRow>
+        <FormRow provider={provider} name="" />
+      </ContentsRow>
+      <ContentsRow>
         <FormRow
           provider={provider}
           name="tenant"
@@ -263,17 +240,11 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
           }
         />
       </ContentsRow>
-      <FormSubTitle label={t('로그인 및 인증 설정 정보')} lineType="dark" />
-      <LoginAuthenticationSettingInformation provider={provider} />
-      <ContentsRow>
-        <FormRow provider={provider} name="loginRestriction" />
-      </ContentsRow>
     </form>
   );
 };
 
-export const TenantUserRegist = forwardRef(TenantUserRegistComponent);
-
+export const TenantUserApplicationDetail = forwardRef(TenantUserApplicationDetailComponent);
 const columns = [
   {
     header: '직군',

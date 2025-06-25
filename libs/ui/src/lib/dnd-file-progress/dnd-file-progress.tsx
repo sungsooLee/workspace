@@ -15,14 +15,6 @@ import { useDropzone } from 'react-dropzone';
 import { DndFileProgressProps } from './types';
 import { t } from 'i18next';
 
-// 바이트를 자동 포맷된 문자열로 변환
-export const dpSize = (bytes: number, digits = 2): string => {
-  if (!bytes || bytes === 0) return '';
-  if (bytes < 1024 * 1024) return `${bytes.toLocaleString()} B`;
-  if (bytes < 1024 * 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(digits)} MB`;
-  return `${(bytes / (1024 * 1024 * 1024)).toFixed(digits)} GB`;
-};
-
 const DndFileProgressComponent: FC<DndFileProgressProps> = ({
   files,
   addFiles,
@@ -219,7 +211,10 @@ const DndFileProgressComponent: FC<DndFileProgressProps> = ({
             <Button className={styles.btn_file}>
               <IcoUploadCloud width={'40'} height={'40'} stroke={'#131C30'} />
               <strong className={styles.file_title}>
-                {t('LABEL.message.upload.uploadDescription')}
+                {t(
+                  'LABEL.message.upload.uploadDescription',
+                  '영역을 클릭하거나 파일을 마우스로 끌어놓으세요',
+                )}
               </strong>
               <span className={styles.file_guide}>{`${acceptFileString}`}</span>
               <input {...getInputProps()} accept={acceptFileString} />

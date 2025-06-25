@@ -19,7 +19,7 @@
     @apply !h-[5.2rem] text-[1.6rem];
   }
   &.primary {
-    @apply bg-[var(--blue50)] text-white;
+    @apply bg-[var(--blue50)] !font-semibold text-white;
     &:hover {
       @apply bg-[var(--blue65)];
     }

@@ -386,7 +386,7 @@ export const moveNodeCheck = (events: any) => {
 
 export const transformRoleApiDataToTreeData = (apiData: any) => {
   // const dataArray = Array.isArray(apiData) ? apiData : [apiData];
-  const dataArray = [{ roleId: 'root', name: 'ROOT', children: [...apiData] }];
+  const dataArray = [{ name: 'ROOT', _type: 'R', children: [...apiData] }];
 
   const transform = (nodes: any) => {
     if (!nodes) return [];
@@ -402,7 +402,9 @@ export const transformRoleApiDataToTreeData = (apiData: any) => {
         parentKey: node.parentRoleId || 'root', // parentRoleId를 parentKey로 변환
         children: node.children || [],
       };
-
+      if (node._type) {
+        transformedNode.key = 'root';
+      }
       // 자식 노드가 있는 경우 재귀적으로 변환
       if (node.children && node.children.length > 0) {
         transformedNode.children = transform(node.children);
@@ -417,7 +419,7 @@ export const transformRoleApiDataToTreeData = (apiData: any) => {
 
 export const moveRoleCheck = (events: any) => {
   const targetIndex = events.targetIndex + 1;
-  return {
+  const retValue = {
     roleId: events.sourceNode.roleId,
     body: {
       sortOrder: targetIndex,
@@ -427,4 +429,29 @@ export const moveRoleCheck = (events: any) => {
           : events.targetNode.roleId,
     },
   };
+  switch (events.position) {
+    case 'BEFORE': {
+      if (events.sourceNode.level === events.targetNode.level) {
+        return { ...retValue, parentRoleId: events.targetNode.parentKey };
+      }
+      break;
+    }
+    case 'INSIDE':
+      if (events.sourceNode.level === events.targetNode.level + 1) {
+        return {
+          ...retValue,
+          parentRoleId: events.targetNode.key,
+        };
+      }
+      break;
+    case 'AFTER':
+      if (events.sourceNode.level === events.targetNode.level) {
+        return {
+          ...retValue,
+          parentRoleId: events.targetNode.parentKey,
+        };
+      }
+      break;
+  }
+  return undefined;
 };

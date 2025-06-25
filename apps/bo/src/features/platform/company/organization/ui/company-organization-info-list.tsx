@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useRouter } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { cn } from '@learnway/shared';
@@ -12,7 +11,6 @@ import { queryOptions as departmentQuery } from '@entities/department/service/de
 import { hmgQueryOptions as hmgDepartmentQuery } from '@entities/department/service/hmg-department.queries';
 import { useDeleteDepartment } from '@entities/department/service/department.hook';
 import { EnGlobalConst } from '@types';
-import CompaniesService from '@entities/companies/api/companies';
 
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css';
 
@@ -24,15 +22,13 @@ const CompanyOrganizationInfoListComponent = ({
   companyCode,
   showType,
   deptId,
-  companyHrInfoManageType,
+  //companyHrInfoManageType,
 }: {
   companyCode: string;
   showType: string;
   deptId: number;
-  companyHrInfoManageType: string;
+  //companyHrInfoManageType: string;
 }) => {
-  const router = useRouter();
-
   const { confirm: openConfirm, alert: openAlert } = useModal();
   const [gridConfig, setGridConfig] = useState<any>(gridConfigOrg);
   const [tableInstance, setTableInstance] = useState<Table<any>>();
@@ -72,6 +68,10 @@ const CompanyOrganizationInfoListComponent = ({
     }
   }, [showType]);
 
+  useEffect(() => {
+    gridFetch(getSearchParam());
+  }, [deptId]);
+
   const columnHelper = createColumnHelper<any>();
   let columns = [
     columnHelper.accessor('hrInfoManageType', {
@@ -103,7 +103,7 @@ const CompanyOrganizationInfoListComponent = ({
     }),
   ] as ColumnDef<any, unknown>[];
 
-  if (showType === EnOrganizationShowType.platform && companyHrInfoManageType === 'MANUAL_MANAGE') {
+  if (showType === EnOrganizationShowType.platform) {
     const checkboxColumn = columnHelper.accessor('checkbox', {
       // 상태에 따른 checkbox disabled를 위해 checkbox 따로 구현
       id: 'select-check',
@@ -171,24 +171,12 @@ const CompanyOrganizationInfoListComponent = ({
           <GridBox
             config={gConfig}
             columns={columns}
-            showNumberingColumn={
-              showType === EnOrganizationShowType.origin ||
-              companyHrInfoManageType !== 'MANUAL_MANAGE'
-            }
+            showNumberingColumn={showType === EnOrganizationShowType.origin}
             hideRowSelectionCheckBox
-            multiple={
-              showType === EnOrganizationShowType.platform &&
-              companyHrInfoManageType === 'MANUAL_MANAGE'
-            }
+            multiple={showType === EnOrganizationShowType.platform}
             title={t('조직 목록')}
-            showRemove={
-              showType === EnOrganizationShowType.platform &&
-              companyHrInfoManageType === 'MANUAL_MANAGE'
-            }
-            excelButtons={
-              showType === EnOrganizationShowType.platform &&
-              companyHrInfoManageType === 'MANUAL_MANAGE' && <GridExcelUploadButton />
-            }
+            showRemove={showType === EnOrganizationShowType.platform}
+            excelButtons={showType === EnOrganizationShowType.platform && <GridExcelUploadButton />}
             onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
             onRemoveClick={handleRemoveClick}
           />

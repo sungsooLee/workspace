@@ -3,31 +3,34 @@ import { useTranslation } from 'react-i18next';
 
 import { duration, DATE_TIME_FORMAT } from '@learnway/shared';
 import { useModal } from '@learnway/ui';
+import { useLoginTimer } from '../service/authorization.hook';
 
-const TIME_LIMIT_VERIFY = 300; // 5분
+// const TIME_LIMIT_VERIFY = 300; // 5분
 
 function SessionTimeoutConfirmComponent() {
   const { close } = useModal();
   const { t } = useTranslation();
-  const [seconds, setSeconds] = useState(TIME_LIMIT_VERIFY);
+  // const [seconds, setSeconds] = useState(TIME_LIMIT_VERIFY);
 
-  const timerText = duration(seconds, DATE_TIME_FORMAT.MIN_SEC);
+  // const timerText = duration(seconds, DATE_TIME_FORMAT.MIN_SEC);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setSeconds((prev) => {
-        if (prev <= 1) {
-          clearInterval(interval); // 0이 되면 타이머 멈춤
-          console.log('close modal');
-          close();
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
+  const { time } = useLoginTimer();
 
-    return () => clearInterval(interval);
-  }, []);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setSeconds((prev) => {
+  //       if (prev <= 1) {
+  //         clearInterval(interval); // 0이 되면 타이머 멈춤
+  //         console.log('close modal');
+  //         close();
+  //         return 0;
+  //       }
+  //       return prev - 1;
+  //     });
+  //   }, 1000);
+
+  //   return () => clearInterval(interval);
+  // }, []);
 
   return (
     <>
@@ -35,7 +38,7 @@ function SessionTimeoutConfirmComponent() {
       <br />
       로그인 시간을 연장하시겠습니까?
       <div className="time">
-        남은시간 : <strong>{timerText}</strong>
+        남은시간 : <strong>{time}</strong>
       </div>
     </>
   );

@@ -17,6 +17,7 @@ import {
   Switch,
   TextareaFormField,
   TreeBox,
+  TreeContainer,
   TreeNode,
 } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm, CODE_GROUP } from '@learnway/hooks';
@@ -172,6 +173,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
       parentRoleId: node.key.toString(),
       sortOrder: sortOrder,
     });
+    setSelectedRoleNode(node);
     setFormMode(EnFormMode.ADD);
   };
 
@@ -220,7 +222,11 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                 e.stopPropagation();
                 handlerAddButionClick(node);
               }}
-              variant="gray2"
+              variant={
+                formMode === EnFormMode.ADD && selectedRoleNode.key === node.key
+                  ? 'primary'
+                  : 'gray2'
+              }
               size={'xs'}
               type={'button'}
             >
@@ -234,18 +240,20 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
 
   return (
     <SectionLayout contentsRatio={'thirty'}>
-      <TreeBox
-        data={roleTreeData}
-        treeId="1"
-        type="SAME_LEVEL_ONLY"
-        showSearchKeyword
-        initLevel={2}
-        title={t('역할 목록')}
-        onAction={handleTreeAction}
-        selectedNode={selectedRoleNode}
-        renderNodeButtons={renderNodeButtons}
-        handleSelectedNodeChange={handleRoleSelect}
-      />
+      <TreeContainer>
+        <TreeBox
+          data={roleTreeData}
+          treeId="1"
+          type="SAME_PARENT_ONLY"
+          showSearchKeyword
+          initLevel={2}
+          title={t('역할 목록')}
+          onAction={handleTreeAction}
+          selectedNode={selectedRoleNode}
+          renderNodeButtons={renderNodeButtons}
+          handleSelectedNodeChange={handleRoleSelect}
+        />
+      </TreeContainer>
       <div className={cn(styles.start, styles.wrap)}>
         <div className={cn(layoutStyles.inner)}>
           <form onSubmit={onSubmit(handleOnSubmit)}>

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useRouter } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 
@@ -27,8 +26,6 @@ const CompanyOrganizationInfoUserComponent = ({
   deptId: number;
   showType: string;
 }) => {
-  const router = useRouter();
-
   const [gridConfig, setGridConfig] = useState<any>(gridConfigOrg);
 
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
@@ -55,6 +52,10 @@ const CompanyOrganizationInfoUserComponent = ({
         setGridConfig(gridConfigPlat);
     }
   }, [showType]);
+
+  useEffect(() => {
+    gridFetch(getSearchParam());
+  }, [deptId]);
 
   return (
     <>

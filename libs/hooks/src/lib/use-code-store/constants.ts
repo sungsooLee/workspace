@@ -55,6 +55,7 @@ export const CODE_GROUP = {
   'pms.company.ApplicationProcess': 'pms.company.ApplicationProcess',
   'pms.company.ApprovalMatrix': 'pms.company.ApprovalMatrix',
   'pms.company.CompanyType': 'pms.company.CompanyType',
+  'pms.company.FileStorageType': 'pms.company.FileStorageType',
   'pms.company.HrDataSource': 'pms.company.HrDataSource',
   'pms.company.HrInfoManageType': 'pms.company.HrInfoManageType',
   'pms.company.IpAccessControlType': 'pms.company.IpAccessControlType',
@@ -110,5 +111,6 @@ export const CODE_GROUP = {
   'pms.multilingual.LangCountryCode': 'pms.multilingual.LangCountryCode',
   'pms.role.RoleType': 'pms.role.RoleType',
   'manual.bo.role.roidId': 'manual.bo.role.roidId',
+  'manual.code.expired': 'manual.code.expired', // 만료여부 정상,만료
 };
 export type CODE_GROUP_TYPE = (typeof CODE_GROUP)[keyof typeof CODE_GROUP];

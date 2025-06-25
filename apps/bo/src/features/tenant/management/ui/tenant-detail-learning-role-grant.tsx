@@ -135,8 +135,22 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
   };
 
   const handleBatchClick = async () => {
-    const data = await openModal({ content: <TenantDetailLearningRoleGrantRangeModal /> });
-    handleOnSearch();
+    const batchRows = tableInstance?.getSelectedRowModel().rows.map((item: any) => item.original);
+    if (batchRows && batchRows.length > 0) {
+      const data = await openModal({
+        width: 'xl',
+        height: 'fix',
+        content: (
+          <TenantDetailLearningRoleGrantRangeModal
+            roleId={selectedRole.roleId}
+            userList={batchRows}
+          />
+        ),
+      });
+      handleOnSearch();
+    } else {
+      alert('사용자를 선택하세요.');
+    }
   };
 
   const handleDeleteButtonClick = () => {
