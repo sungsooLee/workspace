@@ -2,9 +2,9 @@ import { useRef } from 'react';
 import { t } from 'i18next';
 import { Button, ModalBody, ModalContainer, ModalTitle, useModal, ModalFooter } from '@learnway/ui';
 import { TrainingPlaceDetail } from '@features/learning/training-place/training-place-detail';
-import { EnFormMode } from '@types';
+import { EnFormMode, EnPageMode } from '@types';
 
-const TrainingPlaceDetailModalComponent = ({ mode }: { mode: EnFormMode }) => {
+const TrainingPlaceDetailModalComponent = ({ mode, uuid }: { mode: EnFormMode; uuid: string }) => {
   const { close: closeModal } = useModal();
   const formRef = useRef(1);
 
@@ -22,7 +22,7 @@ const TrainingPlaceDetailModalComponent = ({ mode }: { mode: EnFormMode }) => {
     <ModalContainer>
       <ModalTitle>{mode === EnFormMode.VIEW ? t('교육공간 상세') : t('교육공간 등록')}</ModalTitle>
       <ModalBody>
-        <TrainingPlaceDetail ref={formRef} mode={mode} />
+        <TrainingPlaceDetail ref={formRef} pageMode={EnPageMode.MODAL} mode={mode} uuid={uuid} />
       </ModalBody>
       <ModalFooter>
         <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={handleOnClose} />

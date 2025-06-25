@@ -12,13 +12,10 @@ import {
 } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
-
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { queryOptions } from '@entities/channel/service/channel.queries';
-import { useRouter } from '@tanstack/react-router';
 
 const ChannelListModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
-  const router = useRouter();
   const { close: closeModal } = useModal();
 
   const searchConfig: SearchBoxConfig = {
@@ -43,40 +40,49 @@ const ChannelListModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
         },
         {
           name: 'channelName',
-          type: 'text',
+          type: 'dropdown',
           label: t('채널'),
-          format: 'object',
           value: '',
+          options: [
+            { value: '', label: '전체' },
+            { value: 'COMMON_CODE', label: t('채널') },
+          ],
         },
         {
           name: 'companyId',
-          type: 'text',
+          type: 'dropdown',
           label: t('회사'),
-          format: 'object',
-          value: '',
+          value: undefined,
+          optionsConfig: {
+            codeGroup: CODE_GROUP['manual.company.companyId'],
+          },
+          format: 'number',
+          isSearchable: true,
+          isClearable: true,
+          placeholder: '입력 선택',
         },
       ],
       [
         {
           name: 'channelOwnerId',
           label: t('채널 소유자'),
-          type: 'custom',
+          type: 'text',
           value: '',
           placeholder: '이름 / 소속 / 팀명',
         },
         {
-          name: 'isUniversalChannel',
-          type: 'radio-group',
-          label: t('채널유형'),
-          value: 'N',
+          name: 'isSecretChannel',
+          type: 'dropdown',
+          label: t('채널 구분'),
+          value: true,
           options: [
             {
-              value: 'Y',
-              label: t('유니버설'),
+              value: true,
+              label: t('비밀채널'),
             },
             {
-              value: 'N',
-              label: t('일반'),
+              value: false,
+              label: t('일반채널'),
             },
           ],
         },
@@ -87,8 +93,8 @@ const ChannelListModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
           value: '',
           options: [
             { value: '', label: t('전체') },
-            { value: 2, label: t('사용') },
-            { value: 3, label: t('미사용') },
+            { value: 'true', label: t('사용') },
+            { value: 'false', label: t('미사용') },
           ],
         },
       ],
@@ -164,14 +170,6 @@ const ChannelListModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
     if (!selectedRow) closeModal();
     closeModal(selectedRow);
   };
-
-  // grid
-  const [pageIndex, setPageIndex] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
-
-  /**
-   * @param data
-   */
 
   return (
     <ModalContainer>

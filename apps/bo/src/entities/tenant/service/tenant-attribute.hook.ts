@@ -5,7 +5,7 @@ import {
   tenantAttributeMutateOptions,
 } from './tenant-attribute.queries';
 
-export function useTenantAttributeCompany(tenantId: number) {
+export function useTenantAttributeCompany(tenantId?: number) {
   return useQuery(queryOptions.all(tenantId));
 }
 

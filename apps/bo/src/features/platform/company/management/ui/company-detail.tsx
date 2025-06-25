@@ -12,6 +12,7 @@ import {
   ContentsRowItem,
   Switch,
   CheckboxGroupFormField,
+  FormGuideText,
 } from '@learnway/ui';
 import dayjs from 'dayjs';
 import { FormRow, FormSubTitle, ContentsHistoryInfoFormField } from '@shared/ui';
@@ -546,19 +547,61 @@ const CompanyDetailComponent = (props: any, ref: any) => {
         </ContentsRow>
       </FormDisplay>
       <ContentsRow>
-        <FormRow provider={provider} name={'playerControlLimitType'} />
-        <FormRow provider={provider} name={'focusModeType'} />
+        <ContentsRowItem>
+          <FormRow
+            provider={provider}
+            name="isPlayerControlLimit"
+            className={dynamicFormStyles.form_item_horizontal}
+          />
+          <FormDisplay
+            provider={provider}
+            dependencies={[{ name: 'isPlayerControlLimit', value: true }]}
+          >
+            <FormRow provider={provider} name="playerControlLimitType" />
+          </FormDisplay>
+        </ContentsRowItem>
+        <ContentsRowItem>
+          <FormRow
+            provider={provider}
+            name="isPlayBackRateLimit"
+            className={dynamicFormStyles.form_item_horizontal}
+          />
+          <FormDisplay
+            provider={provider}
+            dependencies={[{ name: 'isPlayBackRateLimit', value: true }]}
+          >
+            <FormRow provider={provider} name="playBackRateLimitType" />
+          </FormDisplay>
+        </ContentsRowItem>
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name={'captureBlockType'} />
+        <ContentsRowItem>
+          <FormRow
+            provider={provider}
+            name="isCaptureBlockType"
+            className={dynamicFormStyles.form_item_horizontal}
+          />
+          <FormDisplay
+            provider={provider}
+            dependencies={[{ name: 'isCaptureBlockType', value: true }]}
+          >
+            <FormRow provider={provider} name="captureBlockType" />
+          </FormDisplay>
+          <div className={cn(formStyles.form_item)}>
+            <FormGuideText>
+              {t(
+                '회사설정 기준인 경우 과정 등록과 무관하게 회사 기준으로 제한이 됩니다. 테스트용 Guide Text',
+              )}
+            </FormGuideText>
+          </div>
+        </ContentsRowItem>
+        <ContentsRowItem>
+          <FormRow provider={provider} name={'focusModeType'} />
+        </ContentsRowItem>
+      </ContentsRow>
+      <ContentsRow>
         <FormRow provider={provider} name={'ipAccessControlTypeFo'} />
-      </ContentsRow>
-      <ContentsRow>
-        <FormRow
-          provider={provider}
-          name={'ipAccessControlTypeBo'}
-          className={dynamicFormStyles.w_half}
-        />
+        <FormRow provider={provider} name={'ipAccessControlTypeBo'} />
       </ContentsRow>
 
       {/* <FormSubTitle label={'결재라인 설정 정보'} lineType="dark" />
@@ -808,9 +851,7 @@ const formConfig: DynamicFormConfig = {
       type: 'switch',
       label: t('워터 마크 사용'),
       value: true,
-      guideText: t(
-        '워터마크는 학습창(동영상과 e-book)에서만 노출되며, 과정 등록 시 설정 옵션이 우선 적용됩니다.',
-      ),
+      guideText: t('워터마크는 학습창(동영상과 e-book)에서만 노출합니다.'),
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
@@ -835,16 +876,42 @@ const formConfig: DynamicFormConfig = {
       guideText: t('워터마크 노출 위치를 지정할 수 있습니다.'),
     },
     {
+      name: 'isPlayerControlLimit',
+      type: 'switch',
+      label: t('동영상 탐색바 제한'),
+      value: true,
+      switchConfig: {
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+      guideText: t('회사설정 기준인 경우 과정 등록과 무관하게 회사 기준으로 제한이 됩니다.'),
+    },
+    {
       name: 'playerControlLimitType',
       type: 'radio-group',
-      label: t('플레이어 재생바 제어 제한'),
+      label: '',
       value: 'BASIS_COMPANY',
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.SettingBasisType'],
       },
-      guideText: t(
-        '사용 설정 시 학습창 내 플레이어의 재생바를 이동할 수 없으며, 배속 기능도 사용할 수 없습니다.',
-      ),
+    },
+    {
+      name: 'isPlayBackRateLimit',
+      type: 'switch',
+      label: t('동영상 배속 제한'),
+      value: true,
+      switchConfig: {
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+      guideText: t('회사설정 기준인 경우 과정 등록과 무관하게 회사 기준으로 제한이 됩니다.'),
+    },
+    {
+      name: 'playBackRateLimitType',
+      type: 'radio-group',
+      label: '',
+      value: 'BASIS_COMPANY',
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.company.SettingBasisType'],
+      },
     },
     {
       name: 'focusModeType',
@@ -857,14 +924,22 @@ const formConfig: DynamicFormConfig = {
       guideText: t('사용 설정 시 학습창이 전체화면으로 노출되고 마우스 외부 이동이 불가합니다.'),
     },
     {
+      name: 'isCaptureBlockType',
+      type: 'switch',
+      label: t('학습창 캡쳐 방지'),
+      value: true,
+      switchConfig: {
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
+    {
       name: 'captureBlockType',
       type: 'radio-group',
-      label: t('학습창 캡쳐 방지'),
+      label: '',
       value: 'BASIS_COMPANY',
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.SettingBasisType'],
       },
-      guideText: t('사용 설정 시 학습창 화면을 캡쳐할 수 없습니다.'),
     },
     {
       name: 'ipAccessControlTypeFo',

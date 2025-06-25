@@ -130,12 +130,18 @@ function RouteComponent() {
     update(uploadData);
   }, [data]);
 
+  const handleExcelUpload = async (data: Record<string, any>) => {
+    console.log('🚀 ~ handleExcelUpload ~ data:', data);
+    // data post 처리 로직
+  };
+
   const customExcelButtons = (
     <>
       <GridExcelUploadButton
-        url="/multilingual/exportExcel"
+        // url="/multilingual/exportExcel"
         validateUrl="/multilingual/excelUploadValidation"
         disabled={data && data.content && data.content.length === 0}
+        onUpload={handleExcelUpload}
       />
       <GridExcelDownloadButton
         url={`${PMSApiPrefix()}/multilingual/exportExcel`}

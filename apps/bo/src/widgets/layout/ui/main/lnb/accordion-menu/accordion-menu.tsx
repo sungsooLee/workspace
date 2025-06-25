@@ -54,7 +54,7 @@ const AccordionMenuComponent = ({
 
         let active = false;
         if (activeMenuDepth && activeMenuDepth[depth - 1]) {
-          active = activeMenuDepth[depth - 1]?.path === menu?.path;
+          active = activeMenuDepth[depth - 1]?.tenantMappingMenuId === menu?.tenantMappingMenuId;
         } else if (depth === 4 && activeMenuDepth) {
           const currentPath = router.state.location.pathname;
           active = currentPath === menu?.path;

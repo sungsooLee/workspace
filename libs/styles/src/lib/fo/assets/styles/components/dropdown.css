@@ -1,11 +1,136 @@
-.menu-portal-size-lg,
-.nlp-select__menu,
-.nlp-select__menu-list {
-  @apply !rounded-[8px];
+.nlp-select__control {
+  @apply rounded-[8px] !border-[var(--gray85)] pr-[16px];
+  &.nlp-select__control--is-focused {
+    @apply !border-[var(--blue50)];
+  }
 }
 
 .nlp-select__value-container {
-  [class*='nlp-select__placeholder'] {
-    @apply !text-[var(--gray8)];
+  @apply !px-[16px];
+  .nlp-select__placeholder {
+    @apply !text-[var(--gray75)];
+  }
+}
+
+.select_wrap {
+  [aria-selected='true'] {
+    @apply !bg-[var(--blue95)];
+  }
+
+  .nlp-select__control--is-disabled {
+    @apply !bg-[var(--gray1)] !text-[var(--gray4)];
+  }
+  .nlp-select__placeholder {
+    @apply !text-[var(--gray75)];
+  }
+
+  .nlp-select__single-value {
+    @apply !text-[var(--gray10)];
+  }
+
+  &.nlp--dropdown-md {
+    .nlp-select__control {
+      @apply !min-h-[36px] !rounded-[6px];
+    }
+    .nlp-select__option {
+      @apply !h-[36px] !min-h-[36px];
+    }
+    .nlp-select__single-value,
+    .nlp-select__placeholder {
+      @apply !text-[1.3rem];
+    }
+    .nlp-select__dropdown-indicator {
+      svg {
+        @apply h-[16px] w-[16px];
+      }
+    }
+  }
+  &.nlp--dropdown-lg {
+    .nlp-select__control {
+      @apply !min-h-[44px] !rounded-[8px];
+    }
+    .nlp-select__option {
+      @apply !h-[44px] !min-h-[44px];
+    }
+    .nlp-select__single-value,
+    .nlp-select__placeholder {
+      @apply !text-[1.6rem];
+    }
+    .nlp-select__dropdown-indicator {
+      svg {
+        @apply h-[20px] w-[20px];
+      }
+    }
+  }
+
+  &.error {
+    .nlp-select__control {
+      @apply !border-[var(--red50)];
+    }
+  }
+  &.readonly,
+  &.disabled {
+    @apply pointer-events-none cursor-auto;
+    .nlp-select__control {
+      @apply !border-[var(--gray85)] !bg-[var(--gray98)];
+      .nlp-select__single-value {
+        @apply text-[var(--gray8)];
+      }
+    }
+  }
+  &.disabled .nlp-select__control .nlp-select__single-value {
+    @apply text-[var(--gray5)];
+  }
+}
+
+.nlp-select__option {
+  @apply flex !h-[36px] !min-h-[36px] items-center !text-[var(--gray10)];
+  [class*='select_item'] {
+    @apply h-[100%] !px-[12px] !text-[var(--gray10)];
+  }
+  &.nlp-select__option--is-selected {
+    @apply rounded-[4px] !bg-[var(--blue95)];
+    [class*='select_item'] {
+      @apply !font-[600];
+    }
+  }
+  &:hover {
+    @apply !bg-[var(--gray95)];
+  }
+}
+
+.nlp-select__menu-portal {
+  .nlp-select__menu-list {
+    @apply !border-[var(--blue50)] p-[12px];
+  }
+}
+
+/* md 사이즈일때 펼침메뉴 */
+.menu-portal-size-md {
+  .nlp-select__option {
+    @apply !h-[36px] !min-h-[36px];
+    [class*='select_item'] {
+      @apply !text-[1.3rem];
+    }
+  }
+
+  .nlp-select__menu,
+  .nlp-select__menu-list {
+    @apply !rounded-[6px];
+  }
+}
+
+/* lg 사이즈일때 펼침메뉴 */
+.menu-portal-size-lg {
+  .nlp-select__option {
+    @apply !h-[44px] !min-h-[44px];
+    [class*='select_item'] {
+      @apply !text-[1.4rem];
+    }
+  }
+
+  .nlp-select__menu,
+  .nlp-select__menu-list {
+    @apply !rounded-[8px];
   }
 }
