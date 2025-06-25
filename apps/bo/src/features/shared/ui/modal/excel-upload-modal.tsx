@@ -12,7 +12,7 @@ import {
   useModal,
 } from '@learnway/ui';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import { cn, httpService } from '@learnway/shared';
+import { acceptFilesToAccept, cn, httpService } from '@learnway/shared';
 import {
   IcoComplete02,
   IcoDownload,
@@ -87,14 +87,7 @@ const ExcelUploadModalComponent = ({
   const maxFileCount = 1;
   const maxFileSize = 1024 * 1024 * 10;
 
-  const acceptFileString = useMemo(
-    () =>
-      acceptFiles
-        .map((acceptFile: any) => (acceptFile.startsWith('.') ? acceptFile : `.${acceptFile}`))
-        .join(', ')
-        .toUpperCase(),
-    [acceptFiles],
-  );
+  const acceptFileString = useMemo(() => acceptFilesToAccept(acceptFiles), [acceptFiles]);
 
   const { close: closeModal } = useModal();
 

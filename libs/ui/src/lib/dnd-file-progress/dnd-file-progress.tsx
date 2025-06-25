@@ -9,7 +9,7 @@ import {
   IcoTrash03,
   IcoUploadCloud,
 } from '@learnway/icons';
-import { cn } from '@learnway/shared';
+import { acceptFilesToAccept, cn } from '@learnway/shared';
 import { UploadFile } from '@learnway/hooks';
 import { useDropzone } from 'react-dropzone';
 import { DndFileProgressProps } from './types';
@@ -29,14 +29,7 @@ const DndFileProgressComponent: FC<DndFileProgressProps> = ({
   guideText,
   errorMessage,
 }) => {
-  const acceptFileString = useMemo(() => {
-    if (!acceptFiles) return '';
-    if (typeof acceptFiles === 'string') return acceptFiles;
-    return acceptFiles
-      .map((acceptFile: any) => (acceptFile.startsWith('.') ? acceptFile : `.${acceptFile}`))
-      .join(', ')
-      .toUpperCase();
-  }, [acceptFiles]);
+  const acceptFileString = useMemo(() => acceptFilesToAccept(acceptFiles), [acceptFiles]);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     addFiles(acceptedFiles);

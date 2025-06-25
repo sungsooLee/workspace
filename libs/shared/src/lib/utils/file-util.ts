@@ -69,10 +69,10 @@ export const fileDownload = async ({
  * @returns HTML input의 'accept' 속성에 사용될 수 있는 문자열입니다.
  * 입력 배열이 null 또는 undefined이거나 비어있으면 빈 문자열을 반환합니다.
  */
-export const acceptFilesToAccept = (acceptFiles: string[]): string | undefined => {
+export const acceptFilesToAccept = (acceptFiles: string[]): string => {
   // acceptFiles 배열이 없거나 비어있는 경우 빈 문자열을 즉시 반환합니다.
   if (!acceptFiles?.length) {
-    return undefined;
+    return '';
   }
 
   // 각 파일 확장자/MIME 타입에 대해 처리합니다.
@@ -83,8 +83,8 @@ export const acceptFilesToAccept = (acceptFiles: string[]): string | undefined =
       // 간단하고 정확한 MIME type 판별 방식: 슬래시(/)가 있으며, 앞뒤가 비어 있지 않은가
       const isMimeType =
         /^[a-zA-Z0-9.+-]+\/[a-zA-Z0-9.+-]+$/.test(trimmed) || trimmed.includes('*');
-      // 확장자면 대문자로 변환
-      return isMimeType ? trimmed : `.${trimmed.toUpperCase()}`;
+      // 확장자면 대문자로 변환 > 대소문자 변환은 필요 없을듯
+      return isMimeType || trimmed.startsWith('.') ? trimmed : `.${trimmed}`;
     })
     .join(', ');
 };

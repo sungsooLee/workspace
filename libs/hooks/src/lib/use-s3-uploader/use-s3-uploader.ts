@@ -72,7 +72,7 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
 
     return {
       status,
-      accept: acceptFiles,
+      acceptFiles,
       inputAccept: acceptFilesToAccept(acceptFiles),
       maxFileCount,
       total: files.length,
@@ -210,8 +210,6 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
       );
     });
   }, [files]);
-
-  // const accept={acceptFileString}
 
   /**
    * 설정 값 변경시 자동 업로드 활성화

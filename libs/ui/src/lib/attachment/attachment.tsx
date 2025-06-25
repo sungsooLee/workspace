@@ -8,7 +8,7 @@ import {
   IcoTrash03,
   IcoUploadCloud,
 } from '@learnway/icons';
-import { cn } from '@learnway/shared';
+import { acceptFilesToAccept, cn } from '@learnway/shared';
 import { UploadFile, useFileManager } from '@learnway/hooks';
 import { useDropzone } from 'react-dropzone';
 import { Button } from '../button/button';
@@ -45,13 +45,7 @@ const AttachmentComponent = ({
   maxFileSize,
   isDownloadCase = false,
 }: AttachmentProps) => {
-  const acceptFileString = useMemo(() => {
-    if (!acceptFiles || typeof acceptFiles === 'string') return '';
-    return acceptFiles
-      .map((acceptFile) => (acceptFile.startsWith('.') ? acceptFile : `.${acceptFile}`))
-      .join(', ')
-      .toUpperCase();
-  }, [acceptFiles]);
+  const acceptFileString = useMemo(() => acceptFilesToAccept(acceptFiles), [acceptFiles]);
 
   const isOverMaxFileCount = files.length >= maxFileCount;
 
