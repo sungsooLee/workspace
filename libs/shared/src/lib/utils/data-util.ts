@@ -158,3 +158,23 @@ export const mergeEnumDataWithKeys = (
     return result;
   });
 };
+
+/**
+ * 계층 구조 데이터를 평면화하여 depth 정보를 추가하는 함수
+ * children 또는 subRows 속성을 가진 객체들을 재귀적으로 평면화 진행.
+ */
+export const flattenHierarchicalData = (items: any[], depth = 0): any[] => {
+  const result: any[] = [];
+
+  items.forEach((item) => {
+    const flatItem = { ...item, depth: depth };
+    result.push(flatItem);
+
+    const children = item.children || item.subRows;
+    if (children && Array.isArray(children) && children.length > 0) {
+      result.push(...flattenHierarchicalData(children, depth + 1));
+    }
+  });
+
+  return result;
+};

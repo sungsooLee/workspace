@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState, useRef } from 'react';
 import {
   Button,
   CountText,
@@ -60,9 +60,11 @@ function RouteComponent() {
   const { getCode } = useCodeStore();
   const { getLanguageName } = useLanguageMap();
   const keyTypeCode = useWatch({ control, name: 'keyTypeCode' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { update } = useTranslation({
     onSuccess: () => {
+      setIsSubmitting(false);
       gridFetch(getValues());
     },
   });
@@ -105,7 +107,8 @@ function RouteComponent() {
    * 번역본 저장
    */
   const handleSaveMultilingual = useCallback(async () => {
-    console.log('data => ', data);
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     if (!data) return;
     if (
       !(await confirm({
@@ -133,7 +136,7 @@ function RouteComponent() {
   const customExcelButtons = (
     <>
       <GridExcelUploadButton
-        url="/multilingual/exportExcel"
+        url="/multilingual/excelUpload"
         validateUrl="/multilingual/excelUploadValidation"
         disabled={data && data.content && data.content.length === 0}
       />
@@ -248,7 +251,8 @@ function RouteComponent() {
             variant="primary"
             disabled={
               getValues('targetLocale') === '' ||
-              (data && data.content && data.content.length === 0)
+              (data && data.content && data.content.length === 0) ||
+              isSubmitting
             }
             size="sm"
             onClick={handleSaveMultilingual}
