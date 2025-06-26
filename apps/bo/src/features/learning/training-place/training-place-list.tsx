@@ -9,6 +9,7 @@ import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 import { EnGlobalConst, EnPageMode } from '@types';
 import { queryOptions } from '@entities/training-place/service/space.queries';
 import { Link } from '@tanstack/react-router';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
@@ -21,8 +22,9 @@ const TrainingPlaceListComponent = ({
   onAddClick?: any;
   onSelect?: any;
 }) => {
-  const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
+  const { provider: searchProvider, getValues, setOptions, setValue } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
+  const { data: loginUser } = useFetchAuthUser();
 
   useEffect(() => {
     gridFetch();
@@ -31,6 +33,17 @@ const TrainingPlaceListComponent = ({
   const handleOnSearch = useCallback((data: any) => {
     gridFetch(data);
   }, []);
+
+  useEffect(() => {
+    if (!loginUser) return;
+
+    const tenantIdOptions = loginUser.tenants.map((tenant) => ({
+      value: tenant.tenantId,
+      label: tenant.tenantName,
+    }));
+    setOptions('tenantId', tenantIdOptions);
+    if (loginUser.activeTenant) setValue('tenantId', loginUser.activeTenant.tenantId ?? '');
+  }, [loginUser]);
 
   const columnHelper = createColumnHelper<any>();
 
@@ -57,7 +70,7 @@ const TrainingPlaceListComponent = ({
             <Link
               to={'/learning/training-place/detail'}
               state={{
-                learningSpaceUuid: info.row.original.learningSpaceUuid,
+                learningSpaceId: info.row.original.learningSpaceId,
               }}
               className="link"
             >
@@ -154,12 +167,11 @@ const searchConfig: SearchBoxConfig = {
       {
         name: 'tenantId',
         type: 'dropdown',
-        format: 'number',
+        format: 'object',
         label: t('테넌트'),
-        value: undefined,
-        optionsConfig: {
-          codeGroup: CODE_GROUP['manual.tenant.tenantId'],
-        },
+        value: '',
+        options: [],
+        placeholder: t('선택'),
       },
       {
         name: 'onOffLineType',

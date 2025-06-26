@@ -4,7 +4,13 @@ import { Button, ModalBody, ModalContainer, ModalTitle, useModal, ModalFooter } 
 import { TrainingPlaceDetail } from '@features/learning/training-place/training-place-detail';
 import { EnFormMode, EnPageMode } from '@types';
 
-const TrainingPlaceDetailModalComponent = ({ mode, uuid }: { mode: EnFormMode; uuid: string }) => {
+const TrainingPlaceDetailModalComponent = ({
+  mode,
+  spaceId,
+}: {
+  mode: EnFormMode;
+  spaceId: number;
+}) => {
   const { close: closeModal } = useModal();
   const formRef = useRef(1);
 
@@ -22,7 +28,12 @@ const TrainingPlaceDetailModalComponent = ({ mode, uuid }: { mode: EnFormMode; u
     <ModalContainer>
       <ModalTitle>{mode === EnFormMode.VIEW ? t('교육공간 상세') : t('교육공간 등록')}</ModalTitle>
       <ModalBody>
-        <TrainingPlaceDetail ref={formRef} pageMode={EnPageMode.MODAL} mode={mode} uuid={uuid} />
+        <TrainingPlaceDetail
+          ref={formRef}
+          pageMode={EnPageMode.MODAL}
+          mode={mode}
+          spaceId={spaceId}
+        />
       </ModalBody>
       <ModalFooter>
         <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={handleOnClose} />

@@ -2,8 +2,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { queryKeys, queryOptions, mutateOptions } from './space.queries';
 
-export function useFetchSpace(code: string) {
-  return useQuery({ ...queryOptions.detail(code) });
+export function useFetchSpace(id: number) {
+  return useQuery({ ...queryOptions.detail(id) });
 }
 
 export function useCreateSpace(options: any) {

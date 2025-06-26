@@ -16,12 +16,13 @@ export const Route = createFileRoute('/_layout/learning/training-place/detail')(
 function RouteComponent() {
   const router = useRouter();
   const routerState = useRouterState();
-  const learningSpaceUuid = routerState.location.state?.learningSpaceUuid;
+  const learningSpaceId = routerState.location.state?.learningSpaceId;
   const formRef = useRef(1);
 
   useEffect(() => {
-    if (!learningSpaceUuid) router.navigate({ to: '/learning/training-place' });
-  }, [learningSpaceUuid]);
+    console.log('### learningSpaceUuid', learningSpaceId);
+    if (!learningSpaceId) router.navigate({ to: '/learning/training-place' });
+  }, [learningSpaceId]);
 
   const handleSaveClick = () => {
     console.log('formRef', formRef);
@@ -50,7 +51,7 @@ function RouteComponent() {
           ref={formRef}
           pageMode={EnPageMode.PAGE}
           mode={EnFormMode.VIEW}
-          uuid={learningSpaceUuid}
+          spaceId={learningSpaceId}
         />
       </MainContents>
     </PageContainer>
