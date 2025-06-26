@@ -110,7 +110,7 @@ const ExcelUploadModalComponent = ({ validateUrl, templateUrls }: ExcelUploadMod
           faultRows?: number[];
           totalRows?: number;
         } = await httpService.post(`${PMSApiPrefix()}` + validateUrl, formData, {
-          timeout: 1000 * 60,
+          timeout: 1000 * 120,
         });
         const {
           result: success,

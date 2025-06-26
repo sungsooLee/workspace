@@ -38,13 +38,17 @@ export const mutateOptions = {
     mutationFn: (payload: { locale: string }) => TranslationService.deployTranslation(payload),
   }),
   createByExcel: () => ({
-    mtationFn: (
-      payload: {
+    mutationFn: ({
+      data,
+      params,
+    }: {
+      data: {
         keyTypeCode: string;
         multilingualKey: string;
         baseLanguage: string;
         targetLanguage: string;
-      }[],
-    ) => TranslationService.createTranslationByExcel(payload),
+      }[];
+      params?: any;
+    }) => TranslationService.createTranslationByExcel(data, params),
   }),
 };

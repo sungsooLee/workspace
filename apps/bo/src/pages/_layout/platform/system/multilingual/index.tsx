@@ -185,9 +185,11 @@ function RouteComponent() {
   }, [data, isSubmitting, confirm, getValues, update]);
 
   const handleExcelUpload = async (data: Record<string, any>[]) => {
-    console.log('🚀 ~ handleExcelUpload ~ data:', data);
-    createByExcel(data);
-    // data post 처리 로직
+    const targetLocale = getValues('targetLocale');
+    await createByExcel({
+      data,
+      params: { targetLocale: targetLocale.toLowerCase() },
+    });
   };
 
   const customExcelButtons = (
