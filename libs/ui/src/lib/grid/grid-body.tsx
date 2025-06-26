@@ -1,6 +1,7 @@
 import React, { CSSProperties } from 'react';
 import { Cell, flexRender, Row, Table } from '@tanstack/react-table';
 import { cn } from '@learnway/shared';
+import { IcoDownArrow } from '@learnway/icons';
 
 import styles from './grid-body.module.css';
 import { WordWrap } from '../word-wrap/word-wrap';
@@ -22,11 +23,17 @@ export const GridBody = <T extends object>({
   return (
     <tbody>
       {table.getRowModel().rows.map((row) => {
-        const isSubRow = row.depth > 0;
+        const depth = (row.original as any)?._depth ?? row.depth;
+        const isSubRow = depth > 0;
+
         return (
           <tr
             key={row.id}
-            className={cn(row.getIsSelected() && styles.selected, isSubRow && styles.appended)}
+            className={cn(
+              row.getIsSelected() && styles.selected,
+              isSubRow && styles.appended,
+              depth > 0 && styles.appended,
+            )}
             onClick={() => !row.getIsGrouped() && !disabledSelectionToggle && row.toggleSelected()}
             onDoubleClick={() => onRowDoubleClick?.(row.original)}
           >
@@ -58,6 +65,10 @@ export const GridCell = <T extends object>({ row, cell, lastPinnedColumnId }: Gr
   const isPinnedLeft = cell.column.getIsPinned() === 'left';
   const isLastPinnedColumn = isPinnedLeft && cell.column.id === lastPinnedColumnId;
 
+  const depth = (row.original as any)?._depth ?? row.depth;
+  const showHierarchyIcon = cell.column.columnDef.meta?.showHierarchyIcon;
+  const shouldShowIcon = showHierarchyIcon && depth > 0;
+
   const cellStyle = {
     background: cell.getIsGrouped()
       ? '#0aff0082'
@@ -80,6 +91,7 @@ export const GridCell = <T extends object>({ row, cell, lastPinnedColumnId }: Gr
         styles.tbody_td,
         isPinnedLeft && styles.td_pinned_left,
         isLastPinnedColumn && styles.td_pinned_last,
+        shouldShowIcon && styles.show_icon,
         cell.column.columnDef.meta?.cellClass,
       )}
       style={cellStyle}
@@ -97,14 +109,19 @@ export const GridCell = <T extends object>({ row, cell, lastPinnedColumnId }: Gr
           {flexRender(cell.column.columnDef.cell, cell.getContext())} ({row.subRows.length})
         </button>
       ) : row.getCanExpand() ? (
-        <div>{flexRender(cell.column.columnDef.cell, cell.getContext())}</div>
+        <>{flexRender(cell.column.columnDef.cell, cell.getContext())}</>
       ) : cell.getIsAggregated() ? (
         flexRender(
           cell.column.columnDef.aggregatedCell ?? cell.column.columnDef.cell,
           cell.getContext(),
         )
       ) : cell.getIsPlaceholder() ? null : (
-        flexRender(cell.column.columnDef.cell, cell.getContext())
+        <>
+          {shouldShowIcon && depth > 0 && (
+            <IcoDownArrow width={16} height={16} stroke={'#4C515E'} className={styles.depth_icon} />
+          )}
+          {flexRender(cell.column.columnDef.cell, cell.getContext())}
+        </>
         // 다양한 케이스 추가 작업 후 추가 필요.
         // <WordWrap text={flexRender(cell.column.columnDef.cell, cell.getContext())} />
       )}

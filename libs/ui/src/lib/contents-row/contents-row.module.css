@@ -64,6 +64,11 @@
   & + [class*='title_wrap'] + .horizontal {
     @apply !pb-[12px];
   }
+  [class*='nlp--contents-row-item'] {
+    & > div:nth-last-child(2) {
+      @apply pb-0;
+    }
+  }
 }
 [class*='title_wrap'] + .row {
   &.horizontal {
@@ -73,5 +78,8 @@
   }
 }
 .title_mode {
-  @apply mb-[16px] border-b-[1px] border-solid border-[var(--gray8)];
+  @apply mb-[16px] border-b-[1px] border-solid border-[var(--gray8)] pb-[16px];
+  & > div > label {
+    @apply font-semibold;
+  }
 }

@@ -6,11 +6,13 @@ export const tenantAttributeQueryKeys = {
 };
 
 export const tenantAttributeQueryOptions = {
-  all: (tenantId: number) => ({
-    queryKey: [...tenantAttributeQueryKeys.all],
-    queryFn: () =>
-      tenantId ? TenantAttributeService.findTenantAttributeCompany(tenantId) : getQuerySkipToken(),
-  }),
+  all: (tenantId?: number) =>
+    tenantId
+      ? {
+          queryKey: [...tenantAttributeQueryKeys.all],
+          queryFn: () => TenantAttributeService.findTenantAttributeCompany(tenantId),
+        }
+      : getQuerySkipToken<any>(),
 };
 
 export const tenantAttributeMutateOptions = {

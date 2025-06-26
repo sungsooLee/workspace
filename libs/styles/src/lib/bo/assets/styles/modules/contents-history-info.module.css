@@ -15,7 +15,7 @@
       }
     }
     .btn_info {
-      @apply absolute right-[16px] top-1/2 ml-auto w-[58px] shrink-0 -translate-y-1/2 !font-normal;
+      @apply absolute right-[16px] top-1/2 ml-auto w-auto shrink-0 -translate-y-1/2 !font-normal;
     }
     &.column {
       p + p {

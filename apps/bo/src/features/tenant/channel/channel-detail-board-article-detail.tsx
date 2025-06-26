@@ -121,7 +121,6 @@ const ChannelDetailBoardArticleDetailComponent = () => {
           files={[]}
           maxFileCount={maxFileCount}
           maxFileSize={maxFileSize}
-          acceptFiles={[]}
           addFiles={addFiles}
           onRemove={onRemove}
           onPause={onPause}

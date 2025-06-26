@@ -1,6 +1,9 @@
 export interface Combine {
   combineType: string;
   combineValue: number;
+  combineValueName: string;
+  combineValueType: string;
+  combineValuePath: string;
 }
 export interface WhiteList {
   groupId: number;

@@ -22,7 +22,7 @@ export interface BadgeComponentProps extends PropsWithChildren {
     | 'blue';
   size?: 'xs' | 'sm' | 'md' | 'lg'; // xs(28) , sm(32) , md(36), lg(40)
   rounded?: boolean;
-  labelType?: 'regular' | 'bold';
+  labelType?: 'normal' | 'bold';
   className?: string;
   onClick?: (option: SelectOption) => void;
 }

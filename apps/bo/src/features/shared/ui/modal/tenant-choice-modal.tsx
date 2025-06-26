@@ -67,8 +67,8 @@ const TenantModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
           value: '',
           options: [
             { value: '', label: t('전체') },
-            { value: 2, label: t('사용') },
-            { value: 3, label: t('미사용') },
+            { value: 'true', label: t('사용') },
+            { value: 'false', label: t('미사용') },
           ],
         },
       ],

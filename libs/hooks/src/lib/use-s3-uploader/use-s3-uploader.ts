@@ -72,8 +72,6 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
 
     return {
       status,
-      accept: acceptFiles,
-      inputAccept: acceptFilesToAccept(acceptFiles),
       maxFileCount,
       total: files.length,
       uploading: statusCount.uploading,
@@ -211,7 +209,7 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
     });
   }, [files]);
 
-  // const accept={acceptFileString}
+  const inputAccept = useMemo(() => acceptFilesToAccept(acceptFiles), [acceptFiles]);
 
   /**
    * 설정 값 변경시 자동 업로드 활성화
@@ -232,6 +230,7 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
     stats,
     // 업로드 상태 및 CRUD 기능 반환
     files, // 파일 리스트
+    inputAccept,
     addFiles, // 파일 추가
     onRemove, // 파일 제거
     onStart: (id: string) => startUpload(id, files, setFiles), // 업로드 시작

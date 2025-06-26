@@ -43,14 +43,38 @@ const GridComponent = forwardRef(
       clientSideSorting,
       onTableInstanceChange,
       showExpandColumn,
+      flattenSubRows,
     }: GridProps<T>,
     ref: any,
   ) => {
     const tableContainerRef = useRef<HTMLDivElement>(null);
 
+    // flattenSubRows->true ? subrows, children의 배열 flat하게 만들고 스타일 주기 위함.
+    const flattenData = useMemo(() => {
+      if (!flattenSubRows) return data;
+
+      const flatten = (items: any[], depth = 0): any[] => {
+        const result: any[] = [];
+
+        items.forEach((item) => {
+          const flatItem = { ...item, _depth: depth };
+          result.push(flatItem);
+
+          const children = item.children || item.subRows;
+          if (children && Array.isArray(children) && children.length > 0) {
+            result.push(...flatten(children, depth + 1));
+          }
+        });
+
+        return result;
+      };
+
+      return flatten(data);
+    }, [data, flattenSubRows]);
+
     // useGridTable 훅 사용
     const { table, lastPinnedColumnId } = useGridTable({
-      data,
+      data: flattenData,
       columns,
       rowId,
       multiple,
