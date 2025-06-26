@@ -64,6 +64,11 @@
   & + [class*='title_wrap'] + .horizontal {
     @apply !pb-[12px];
   }
+  [class*='nlp--contents-row-item'] {
+    & > div:nth-last-child(2) {
+      @apply pb-0;
+    }
+  }
 }
 [class*='title_wrap'] + .row {
   &.horizontal {
