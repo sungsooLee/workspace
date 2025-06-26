@@ -9,7 +9,7 @@
         }
       }
       .modal-content {
-        @apply px-[32px] !pb-[32px] !pt-0;
+        @apply px-[32px] !pb-[16px] !pt-0;
         & > div {
           @apply body-md text-[var(--gray35)];
         }

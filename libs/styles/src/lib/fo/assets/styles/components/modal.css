@@ -9,7 +9,7 @@
     }
   }
   .modal-content {
-    @apply p-[32px];
+    @apply p-[32px] !pb-[16px];
     p {
       @apply body-md text-[var(--gray35)];
     }
@@ -27,7 +27,7 @@
   }
   .modal-content {
     & + div {
-      @apply p-[32px];
+      @apply p-[32px] pt-[16px];
       .nlp--button {
         & + .nlp--button {
           @apply !ml-[8px];
