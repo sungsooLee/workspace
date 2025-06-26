@@ -25,7 +25,7 @@ const TenantModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
         {
           required: true,
           name: 'tenantId',
-          type: 'dropdown',
+          type: 'auto-dropdown',
           format: 'number',
           label: t('테넌트'),
           value: undefined,
@@ -44,6 +44,8 @@ const TenantModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
           type: 'dropdown',
           label: t('회사'),
           value: '',
+          format: 'object',
+          presetOptionLabel: t('LABEL.form.label.all'),
           optionsConfig: {
             codeGroup: CODE_GROUP['manual.company.companyCode'],
           },
