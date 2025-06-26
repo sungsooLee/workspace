@@ -21,7 +21,7 @@ const TooltipComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Too
   ) => {
     return (
       <Primitive.Provider>
-        <Primitive.Root>
+        <Primitive.Root open>
           <Primitive.Trigger className={cn(styles.tooltip_btn, className)}>
             {children}
           </Primitive.Trigger>
@@ -30,10 +30,11 @@ const TooltipComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Too
               side={side}
               align={align}
               className={cn(styles.start, styles.tooltip_content)}
-              sideOffset={10}>
+              sideOffset={10}
+            >
               {content}
               <span className={styles.arrow}>
-                <IcoTooltipArrow width={10} height={10} fill="#333333" />
+                <IcoTooltipArrow width={10} height={10} />
               </span>
             </Primitive.Content>
           </Primitive.Portal>

@@ -122,6 +122,7 @@ import {
   IcoBoxPlus,
   IcoMessageText,
   IcoProgressComplete,
+  IcoTooltipArrow02,
 } from '@learnway/icons';
 
 export const Route = createFileRoute('/_guide/guide/icon')({
@@ -290,6 +291,7 @@ import { IcoAlertCircleGray } from '@learnway/icons'; // 사용할 icon 함수�
             <IcoBoxMinus width={30} height={30} stroke="#4C515E" />
             <IcoBoxPlus width={30} height={30} stroke="#4C515E" />
             <IcoMessageText width={30} height={30} stroke="#4C515E" />
+            <IcoTooltipArrow02 width={12} height={8} fill="#4D525C" />
           </div>
         </div>
       </div>
