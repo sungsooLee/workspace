@@ -323,10 +323,10 @@ const formConfig: DynamicFormConfig = {
       type: 'custom',
       label: '카테고리',
       format: 'array',
-      value: [
-        { value: 'tenant1', label: '테넌트1' },
-        { value: 'tenant2', label: '테넌트2' },
-      ],
+      // value: [
+      //   { value: 'tenant1', label: '테넌트1' },
+      //   { value: 'tenant2', label: '테넌트2' },
+      // ],
       placeholder: '',
       description: '',
     },
