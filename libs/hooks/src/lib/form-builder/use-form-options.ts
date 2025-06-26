@@ -2,6 +2,8 @@ import { useEffect, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCodeStore } from '../use-code-store/use-code-store';
 import { OptionsConfig, SelectOption } from './type';
+import { CODE_GROUP } from '../use-code-store/constants';
+import { getMockOption } from '@learnway/shared';
 
 /**
  * Form 에서 CodeGroup에 대한 로딩을 위한 커스텀 훅
@@ -59,13 +61,9 @@ const useFormOptionsHook = (
    * @returns 코드 그룹에서 가져온 옵션 배열
    */
   const getCodeGroupOptions = async (codeGroup: string): Promise<SelectOption[]> => {
-    // test code group
-    if (codeGroup === 'test') {
-      return [
-        { label: 'test1', value: 'test1' },
-        { label: 'test2', value: 'test2' },
-        { label: 'test3', value: 'test3' },
-      ];
+    // mock code group
+    if (['test', CODE_GROUP['mock.options.use'], CODE_GROUP['mock.options.possible']].includes(codeGroup)) {
+      return getMockOption(codeGroup);
     }
 
     // optionsConfig > options 에 등록된 값은 조회와 상관없이 앞에 선언 됩니다.

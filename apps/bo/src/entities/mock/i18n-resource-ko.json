@@ -721,6 +721,12 @@
       "page": {
         "tenant": "테넌트담당자"
       }
+    },
+    "mock": {
+      "impossible": "불가능",
+      "possible": "가능",
+      "unuse": "미사용",
+      "use": "사용"
     }
   },
   "pms.multilingual.KeyTypeCode": {

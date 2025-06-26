@@ -130,7 +130,7 @@ function RouteComponent() {
     update(uploadData);
   }, [data]);
 
-  const handleExcelUpload = async (data: Record<string, any>) => {
+  const handleExcelUpload = async (data: Record<string, any>[]) => {
     console.log('🚀 ~ handleExcelUpload ~ data:', data);
     // data post 처리 로직
   };

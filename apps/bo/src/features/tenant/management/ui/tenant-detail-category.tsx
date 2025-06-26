@@ -100,7 +100,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
   });
 
   const { data: categoryDetail } = useFetchTenantCategoryDetail(tenantId, selectedNode?.menuId);
-  const { data: userGroups } = useFetchUserGroups();
+
   // 카테고리 코드 체크는 마스터/테넌트 카테고리 공통 사용
   const { checkExistsCategory: checkExists } = useCheckExistsCategory({});
 
@@ -340,17 +340,14 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
     if (categoryDetail) {
       const mappedUserGroups: any = [];
       if (categoryDetail?.whiteList?.combines) {
-        categoryDetail?.whiteList.combines.forEach(
-          (combine: { combineType: string; combineValue: number }) => {
-            if (combine.combineType === 'USER_GROUP' && userGroups) {
-              userGroups.forEach((group: { userGroupId: number; userGroupName: string }) => {
-                if (group.userGroupId === combine.combineValue) {
-                  mappedUserGroups.push({ label: group.userGroupName, value: group.userGroupId });
-                }
-              });
-            }
-          },
-        );
+        categoryDetail?.whiteList.combines.forEach((combine) => {
+          if (combine.combineType === 'USER_GROUP') {
+            mappedUserGroups.push({
+              label: combine.combineValuePath,
+              value: combine.combineValue,
+            });
+          }
+        });
       }
       const location = findMenuPathById(treeData, selectedNode?.menuId);
       fetchData({
@@ -499,6 +496,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
                 element={
                   <DuplicateCheckInputFormField
                     onDuplicationCheck={duplicateCheck}
+                    inputType={'alphanumeric'}
                     disabled={
                       mode === EnFormMode.NONE ||
                       !isTenantManager ||
@@ -571,7 +569,8 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
                     modalConfig={{
                       content: <UserGroupTabsChoiceModal />,
                       title: '',
-                      width: 'x1',
+                      width: 'xl',
+                      height: 'fix',
                     }}
                     showAddButton
                     chipList={{

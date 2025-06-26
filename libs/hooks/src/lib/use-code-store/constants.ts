@@ -1,4 +1,6 @@
 export const CODE_GROUP = {
+  'mock.options.use': 'mock.options.use', // 미사용, 사용
+  'mock.options.possible': 'mock.options.possible', // 불가능, 가능
   'cmmon.DayOfWeekType': 'cmmon.DayOfWeekType',
   'cmmon.TelCountryCode': 'cmmon.TelCountryCode',
   'cms.content.ContentsAddInfoType': 'cms.content.ContentsAddInfoType',
@@ -22,6 +24,7 @@ export const CODE_GROUP = {
   'lms.blackwhite.BlackAndWhiteType': 'lms.blackwhite.BlackAndWhiteType',
   'lms.category.CategoryType': 'lms.category.CategoryType',
   'lms.course.ApprovalLineType': 'lms.course.ApprovalLineType',
+  'lms.course.WaitListPickMethodType': 'lms.course.WaitListPickMethodType',
   'lms.course.BookDeliveryInfoScopeType': 'lms.course.BookDeliveryInfoScopeType',
   'lms.course.CourseSubType': 'lms.course.CourseSubType',
   'lms.course.CourseType': 'lms.course.CourseType',
@@ -32,6 +35,7 @@ export const CODE_GROUP = {
   'lms.course.PassMethodType': 'lms.course.PassMethodType',
   'lms.course.PlaceType': 'lms.course.PlaceType',
   'lms.course.TrainingLevelType': 'lms.course.TrainingLevelType',
+  'lms.course.LearningSpaceType': 'lms.course.LearningSpaceType',
   'lms.course.TrainingPlatformType': 'lms.course.TrainingPlatformType',
   'lms.course.WaitListAssignType': 'lms.course.WaitListAssignType',
   'lms.course.WaitListEnrollMethodType': 'lms.course.WaitListEnrollMethodType',
@@ -44,6 +48,7 @@ export const CODE_GROUP = {
   'lms.enroll.LangLevelTestPreferGenderType': 'lms.enroll.LangLevelTestPreferGenderType',
   'lms.space.OnOffLineType': 'lms.space.OnOffLineType',
   'pms.api.ApiMethodCode': 'pms.api.ApiMethodCode',
+  'pms.approval.ApprovalLineType': 'pms.approval.ApprovalLineType',
   'pms.api.ApiNodeType': 'pms.api.ApiNodeType',
   'pms.api.ApiScopeCode': 'pms.api.ApiScopeCode',
   'pms.approval.ApprovalBusinessType': 'pms.approval.ApprovalBusinessType',

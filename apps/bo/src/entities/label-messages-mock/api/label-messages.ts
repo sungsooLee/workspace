@@ -73,7 +73,7 @@ export default class LabelMessagesService {
       setTimeout(() => {
         const response = getMockCourseType(key);
         resolve(response as T);
-      }, 1000);
+      }, 100);
     }); // Mock 코드는 주석 처리 또는 삭제 필요
   }
 }
