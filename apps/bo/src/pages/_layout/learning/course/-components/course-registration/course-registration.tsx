@@ -58,6 +58,7 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationPro
             provider={provider}
             name={'수강신청'}
             label={'수강신청'}
+            value={true}
             element={<SwitchFormField />}
           />
         </ContentsRow>
