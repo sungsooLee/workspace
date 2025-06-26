@@ -16,6 +16,7 @@
       }
     }
     .tab_title {
+      @apply mt-[60px];
       .box {
         @apply flex w-full items-start border-b-[1px] border-solid border-[var(--gray3)];
       }
@@ -110,7 +111,7 @@
       }
     }
     .card_swiper {
-      @apply w-full;
+      @apply mt-[40px] w-full;
       [class*='swiper-slide'] {
         @apply !w-full;
       }
