@@ -24,8 +24,8 @@ export const useCodeGroup = <T = any>(
     if (!groupName) return;
 
     try {
-      const result = await getCode(groupName);
-      setData(result as T[]);
+      const response = await getCode(groupName);
+      setData(response as T[]);
     } catch (err) {
       setData(mockData || []);
     }
