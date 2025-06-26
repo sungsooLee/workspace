@@ -1,5 +1,5 @@
 .nlp--button {
-  @apply !px-[10px] !font-normal leading-[1.4rem] tracking-normal;
+  @apply rounded-[6px] !px-[10px] leading-[1.4rem] tracking-normal;
   &.xs {
     @apply !h-[2rem] text-[1.2rem];
   }
@@ -19,7 +19,7 @@
     @apply !h-[5.2rem] text-[1.6rem];
   }
   &.primary {
-    @apply bg-[var(--blue50)] !font-semibold text-white;
+    @apply !label-xl-b bg-[var(--blue50)] text-white;
     &:hover {
       @apply bg-[var(--blue65)];
     }
@@ -36,8 +36,9 @@
       @apply stroke-[#fff];
     }
   }
-  &.secondary {
-    @apply rounded-[4px] border border-solid border-[var(--gray75)] bg-[#fff] text-[var(--gray10)];
+  &.secondary,
+  &.gray {
+    @apply !label-xl-b rounded-[4px] border border-solid border-[var(--gray75)] bg-[#fff] text-[var(--gray10)];
     &:hover {
       @apply bg-[var(--gray95)];
     }

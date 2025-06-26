@@ -1,6 +1,6 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import {
   Button,
@@ -542,16 +542,11 @@ function RouteComponent() {
       </ModalContainer>
     );
   };
-  // 한번만 실행
-  const hasRun = useRef(false);
   useEffect(() => {
-    if (!hasRun.current) {
-      openModal({
-        width: 'xl', // sm(600px), md(800px), lg(1024px), xl(1400px)
-        content: <QuestionAddContent />,
-      });
-      hasRun.current = true;
-    }
+    openModal({
+      width: 'xl', // sm(600px), md(800px), lg(1024px), xl(1400px)
+      content: <QuestionAddContent />,
+    });
   }, [openModal]);
   return <div>Hello "/_layout/learning/popup-question-detail"!</div>;
 }

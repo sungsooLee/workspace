@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import {
   Button,
@@ -47,18 +47,13 @@ function RouteComponent() {
       </ModalContainer>
     );
   };
-  // 한번만 실행
-  const hasRun = useRef(false);
   useEffect(() => {
-    if (!hasRun.current) {
-      openModal({
-        // title: '',
-        width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
-        content: <FileUploadContent />,
-        // footer: <CustomFooter />,
-      });
-      hasRun.current = true;
-    }
+    openModal({
+      // title: '',
+      width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
+      content: <FileUploadContent />,
+      // footer: <CustomFooter />,
+    });
   }, [openModal]);
   return <div>파일 업로드 팝업</div>;
 }

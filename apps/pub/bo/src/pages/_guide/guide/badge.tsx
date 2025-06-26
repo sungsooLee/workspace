@@ -11,9 +11,10 @@ function RouteComponent() {
       <h2 className="guide_tit2">Badge Component Guide</h2>
       <p className="loc react">/libs/ui/src/lib/badge/badge.tsx</p>
       <p className="info">
-        variant: 'dot' | 'number' | 'flag';
+        variant: 'dot' | 'number' | 'flag' | 'text';
         <br />
-        status: 'primary' | 'disabled' | 'success' | 'warning' | 'caution' | 'new' | 'error';
+        status: 'primary' | 'disabled' | 'success' | 'warning' | 'caution' | 'new' | 'error' |
+        'line';
       </p>
       <div className="code_example">
         <pre className="code_block">
@@ -116,6 +117,8 @@ import { Badge } from '@learnway/ui';
             <Badge option={{ label: 'text', value: 'A' }} variant="text" status="new" />
             <Badge option={{ label: '승인', value: 'B' }} variant="text" status="primary" />
             <Badge option={{ label: '승인대기', value: 'C' }} variant="text" status="warning" />
+            <Badge option={{ label: '대표', value: 'D' }} variant="text" status="line" />
+            <Badge option={{ label: '반려', value: 'E' }} variant="text" status="cancel" />
           </div>
         </div>
       </div>

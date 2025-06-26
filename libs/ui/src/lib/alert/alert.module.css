@@ -1,7 +1,7 @@
 .btn_wrap {
   @apply flex justify-center pt-[16px];
   .btn_cancel + .btn_confirm {
-    @apply ml-[8px];
+    @apply !ml-[8px];
   }
   button {
     @apply !min-w-[80px];

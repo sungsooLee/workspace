@@ -1,7 +1,7 @@
 import { memo, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { Button, Popover } from '@learnway/ui';
-import { IcoArrowDown } from '@learnway/icons';
+import { IcoArrowDown, IcoFormRequired } from '@learnway/icons';
 import { Arrays, Education } from '../../../../features/layout';
 
 import dropdownPopoverStyles from '../../../../shared/ui/dropdown-popover/dropdown-popover.module.css';

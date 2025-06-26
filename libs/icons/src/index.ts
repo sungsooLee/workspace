@@ -53,6 +53,7 @@ export { ReactComponent as IcoAlertCircle } from './lib/ic_alert_circle02.svg'; 
 export { ReactComponent as IcoAlertCircleGray } from './lib/ic_alert_circle_gray.svg';
 export { ReactComponent as IcoAlertCircle03 } from './lib/ic_alert_circle_03.svg';
 export { ReactComponent as IcoTooltipArrow } from './lib/ic_tooltip_arrow.svg'; // Tooltip arrow 12*13
+export { ReactComponent as IcoTooltipArrow02 } from './lib/ic_tooltip_arrow02.svg';
 export { ReactComponent as IcoCloseCircle } from './lib/ic_close_circle.svg'; // close circle 24*24
 export { ReactComponent as IcLogOut01 } from './lib/ic_log_out_01.svg'; // logout
 export { ReactComponent as IcoUploadCloud } from './lib/ic_upload_cloud.svg'; // file upload 24*24

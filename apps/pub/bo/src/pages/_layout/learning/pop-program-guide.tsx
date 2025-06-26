@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import {
@@ -97,15 +97,11 @@ function RouteComponent() {
       </ModalContainer>
     );
   };
-  const hasRun = useRef(false);
   useEffect(() => {
-    if (!hasRun.current) {
-      openModal({
-        width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
-        content: <GuideContent />,
-      });
-      hasRun.current = true;
-    }
-  }, []);
+    openModal({
+      width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
+      content: <GuideContent />,
+    });
+  }, [openModal]);
   return <div>제작프로그램/가이드 다운로드 팝업</div>;
 }

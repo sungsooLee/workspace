@@ -41,6 +41,7 @@ import { Input } from '@learnway/ui';
               placeholder="입력하세요."
               value={'dsadshdbhdbhbhbh'}
               maxLength={20}
+              readOnly
             />
           </div>
         </div>

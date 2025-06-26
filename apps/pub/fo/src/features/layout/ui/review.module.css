@@ -1,75 +1,27 @@
 .start {
   &.review_wrap {
-    & > div {
-      & + div {
-        @apply mt-[12px];
+    @apply flex h-[240px] w-[280px] flex-col justify-between rounded-[12px] border-[1px] border-solid border-[var(--gray90)] p-[14px];
+    .star {
+      @apply flex items-center;
+      svg {
+        @apply mr-[4px];
       }
     }
-    .review {
-      @apply rounded-[8px] border-[1px] border-solid border-[var(--gray5)] p-[16px];
-      .profile {
-        @apply flex items-center;
-        .info_avata {
-          @apply h-[40px] w-[40px];
-          img {
-            @apply h-[40px] w-[40px];
-          }
-        }
-        .information {
-          @apply relative ml-[8px] w-full flex-1;
-          .box {
-            @apply flex items-center overflow-hidden;
-            strong {
-              @apply title_6_b text-[var(--gray8)];
-            }
-            .star {
-              @apply relative ml-[8px] flex items-center pl-[8px];
-              &::before {
-                @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray5)] content-[''];
-              }
-            }
-            span {
-              @apply body_3_r relative -ml-[9px] inline-block pl-[8px] pr-[16px] align-top leading-[20px] text-[var(--gray7)];
-              &::before {
-                @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray5)] content-[''];
-              }
-              &:last-of-type {
-                @apply pr-0;
-              }
-            }
-            .pin {
-              @apply ml-[10px] inline-block;
-            }
-            & + .box {
-              @apply mt-[2px];
-            }
-          }
-          .setting {
-            @apply absolute right-0 top-0;
-          }
-        }
+    .txt {
+      @apply body-md mt-[16px] text-[#0d0e11];
+    }
+    .profile {
+      @apply flex flex-1 items-center;
+      .info_avata {
+        @apply h-[48px] w-[48px];
       }
-      .txt {
-        @apply body_3_r mt-[12px] text-[var(--gray7)];
-      }
-      .count_box {
-        @apply mt-[12px];
-        button {
-          @apply body_3_r text-[var(--gray7)];
-          svg {
-            @apply mr-[8px] inline-block;
-          }
-          & + button {
-            @apply ml-[16px] leading-[22px];
-          }
-          &.active {
-            svg {
-              @apply fill-[#00afd5];
-            }
-            path {
-              @apply stroke-[#00afd5];
-            }
-          }
+      .txt_box {
+        @apply ml-[12px];
+        strong {
+          @apply title3-b leading-[22px] text-[var(--gray10)];
+        }
+        span {
+          @apply title2 leading-[20px] text-[var(--gray50)];
         }
       }
     }
@@ -80,17 +32,6 @@
   @screen mobile {
     .start {
       &.review_wrap {
-        .review {
-          .profile {
-            .information {
-              .box {
-                &:nth-child(2) {
-                  @apply block;
-                }
-              }
-            }
-          }
-        }
       }
     }
   }
