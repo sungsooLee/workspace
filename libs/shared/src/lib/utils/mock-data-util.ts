@@ -1,3 +1,6 @@
+import { t } from 'i18next';
+
+
 export const getMockCourseType = (key?: string) => {
   return [
     {
@@ -49,4 +52,44 @@ export const getMockCourseType = (key?: string) => {
       key,
     },
   ];
+};
+
+
+export const getMockOption = (codeGroup: string) => {
+  // 테스트
+  if (codeGroup === 'test') {
+    return [
+      { label: 'test1', value: 'test1' },
+      { label: 'test2', value: 'test2' },
+      { label: 'test3', value: 'test3' },
+    ];
+  }
+  // 미사용/사용
+  if (codeGroup === 'mock.options.use') {
+    return [
+      {
+        value: 'N',
+        label: t('LABEL.mock.unuse'),
+      },
+      {
+        value: 'Y',
+        label: t('LABEL.mock.use'),
+      },
+    ];
+  }
+  // 불가능/가능
+  if (codeGroup === 'mock.options.possible') {
+    return [
+      {
+        value: 'N',
+        label: t('LABEL.mock.impossible'),
+      },
+      {
+        value: 'Y',
+        label: t('LABEL.mock.possible'),
+      },
+    ];
+  }
+  //
+  return [];
 };

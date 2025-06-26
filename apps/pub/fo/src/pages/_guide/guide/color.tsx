@@ -77,8 +77,10 @@ function RouteComponent() {
         { name: '--blue65', textColor: '', code: '' },
         { name: '--blue75', textColor: '', code: '' },
         { name: '--blue85', textColor: '', code: '' },
-
+        { name: '--blue90', textColor: '', code: '' },
+        { name: '--blue92', textColor: '', code: '' },
         { name: '--blue95', textColor: '', code: '' },
+        { name: '--blue98', textColor: '', code: '' },
       ],
     },
     {
@@ -92,7 +94,10 @@ function RouteComponent() {
         { name: '--red65', textColor: '--white', code: '' },
         { name: '--red75', textColor: '', code: '' },
         { name: '--red85', textColor: '', code: '' },
+        { name: '--red90', textColor: '', code: '' },
+        { name: '--red92', textColor: '', code: '' },
         { name: '--red95', textColor: '', code: '' },
+        { name: '--red98', textColor: '', code: '' },
       ],
     },
     {

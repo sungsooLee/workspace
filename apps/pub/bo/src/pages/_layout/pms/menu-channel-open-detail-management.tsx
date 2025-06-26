@@ -18,7 +18,7 @@ function RouteComponent() {
       <PageContainer>
         {/* main_contents */}
         <div className={styles.main_contents}>
-          <FormSubTitle label={'신청정보'} />
+          <FormSubTitle label={'신청정보'} noLine />
           <div className={cn(tableStyles.start, tableStyles.wrap)}>
             <table>
               <caption>{'신청정보'}</caption>
@@ -100,7 +100,7 @@ function RouteComponent() {
               </tbody>
             </table>
           </div>
-          <FormSubTitle label={'접수정보'} />
+          <FormSubTitle label={'접수정보'} noLine />
           <div className={cn(tableStyles.start, tableStyles.wrap)}>
             <table>
               <caption>{'접수정보'}</caption>
@@ -150,7 +150,7 @@ function RouteComponent() {
               </tbody>
             </table>
           </div>
-          <FormSubTitle label={'반려정보'} />
+          <FormSubTitle label={'반려정보'} noLine />
           <div className={cn(tableStyles.start, tableStyles.wrap)}>
             <table>
               <caption>{'반려정보'}</caption>

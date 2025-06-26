@@ -16,13 +16,16 @@ function RouteComponent() {
   const thumbnailRef = useRef<HTMLInputElement>(null);
   const [imageUrl, setImageUrl] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
-  const { addFiles, files, stats } = useS3Uploader({ s3Path: 'upload/learning/resource/video' });
+  const { addFiles, files, stats, inputAccept } = useS3Uploader({
+    s3Path: 'upload/learning/resource/video',
+  });
   const {
     addFiles: thumbnailAddFiles,
     files: thumbnailFiles,
     stats: thumbnailStats,
   } = useS3Uploader({
     s3Path: 'public/thumbnail',
+    acceptFiles: ['image/*'],
   });
   const { open: openModal } = useModal();
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -103,7 +106,7 @@ function RouteComponent() {
           <input
             ref={thumbnailRef}
             type={'file'}
-            accept={'image/*'}
+            accept={inputAccept}
             style={{ display: 'none' }}
             onChange={handleThumbnailChange}
           />

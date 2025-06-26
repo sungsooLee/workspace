@@ -15,7 +15,7 @@ const TrainingPlaceChoiceModalComponent = ({ onAddClick }: { onAddClick?: any })
       <ModalTitle>{t('교육공간 선택')}</ModalTitle>
       <ModalBody>
         <TrainingPlaceList
-          mode={EnPageMode.MODAL}
+          pageMode={EnPageMode.MODAL}
           onAddClick={onAddClick}
           onSelect={handleOnSelect}
         />

@@ -6,7 +6,7 @@ export interface AttachmentProps {
   addFiles: (files: File[]) => void;
   onPause: (id: string) => void;
   onResume: (id: string) => void;
-  acceptFiles: string[] | string;
+  inputAccept?: string;
   maxFileCount: number;
   maxFileSize: number;
   wrapSize?: string;

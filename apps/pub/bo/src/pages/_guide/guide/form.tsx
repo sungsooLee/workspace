@@ -58,11 +58,12 @@ function RouteComponent() {
   const acceptFiles = ['PNG, JPG, GIF, PDF'];
   const maxFileCount = 0;
   const maxFileSize = 1024 * 1024 * 50;
-  const { stats, files, addFiles, onPause, onRetry, onResume, onRemove } = useS3Uploader({
-    s3Path: 'upload/learning/resource/video',
-    maxFileCount,
-    acceptFiles,
-  });
+  const { stats, files, addFiles, onPause, onRetry, onResume, onRemove, inputAccept } =
+    useS3Uploader({
+      s3Path: 'upload/learning/resource/video',
+      maxFileCount,
+      acceptFiles,
+    });
   return (
     <div>
       <h2 className="guide_tit2">Form Guide</h2>
@@ -146,7 +147,7 @@ import formStyles from '../../assets/styles/modules/form.module.css';
             maxFileCount={maxFileCount}
             maxFileSize={maxFileSize}
             addFiles={addFiles}
-            acceptFiles={acceptFiles}
+            inputAccept={inputAccept}
             onRemove={onRemove}
             onPause={onPause}
             onResume={onResume}

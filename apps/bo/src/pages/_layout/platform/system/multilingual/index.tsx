@@ -174,34 +174,38 @@ function RouteComponent() {
     });
     update(uploadData);
   }, [data, isSubmitting, confirm, getValues, update]);
+  }, [data]);
 
-  const customExcelButtons = useMemo(
-    () => (
-      <>
-        <GridExcelUploadButton
-          url="/multilingual/excelUpload"
-          validateUrl="/multilingual/excelUploadValidation"
-          disabled={!data?.content?.length}
-        />
-        <GridExcelDownloadButton
-          url={`${PMSApiPrefix()}/multilingual/exportExcel`}
-          params={getValues()}
-          disabled={!data?.content?.length}
-          onBeforeDownload={async () => {
-            const keyTypeCode = getValues('keyTypeCode');
-            const targetLocale = getValues('targetLocale');
-            if (!keyTypeCode || !targetLocale) {
-              alert({
-                type: 'warning',
-                content: t('분류와 번역언어는 필수 항목입니다.'),
-              });
-              throw new Error(t('분류와 번역언어는 필수 항목입니다.'));
-            }
-          }}
-        />
-      </>
-    ),
-    [data?.content?.length, getValues, alert],
+  const handleExcelUpload = async (data: Record<string, any>[]) => {
+    console.log('🚀 ~ handleExcelUpload ~ data:', data);
+    // data post 처리 로직
+  };
+
+  const customExcelButtons = (
+    <>
+      <GridExcelUploadButton
+        // url="/multilingual/exportExcel"
+        validateUrl="/multilingual/excelUploadValidation"
+        disabled={data && data.content && data.content.length === 0}
+        onUpload={handleExcelUpload}
+      />
+      <GridExcelDownloadButton
+        url={`${PMSApiPrefix()}/multilingual/exportExcel`}
+        params={getValues()}
+        disabled={data && data.content && data.content.length === 0}
+        onBeforeDownload={async () => {
+          const keyTypeCode = getValues('keyTypeCode');
+          const targetLocale = getValues('targetLocale');
+          if (keyTypeCode === '' || targetLocale === '') {
+            alert({
+              type: 'warning',
+              content: t('분류와 번역언어는 필수 항목입니다.'),
+            });
+            throw new Error(t('분류와 번역언어는 필수 항목입니다.'));
+          }
+        }}
+      />
+    </>
   );
 
   const init = async () => {

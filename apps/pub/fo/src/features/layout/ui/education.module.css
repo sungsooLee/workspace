@@ -1,6 +1,6 @@
 .start {
   &.education {
-    @apply rounded-[16px] border-[1px] border-solid border-[var(--gray3)] px-[24px] pt-[24px];
+    @apply rounded-[16px] border-[1px] border-solid border-[var(--gray3)] px-[32px] pt-[32px];
     &.disabled {
       .info_box {
         .txt_box {
@@ -41,7 +41,7 @@
             @apply label_3_r ml-[8px] inline-block rounded-[4px] border-[1px] border-solid border-[var(--gray6)] bg-[var(--gray1)] px-[6px] py-[4px] leading-[11px] text-[var(--gray8)];
           }
           p {
-            @apply title5-b mt-[4px] text-[var(--gray8)];
+            @apply title5-b mt-[6px] text-[var(--gray8)];
           }
         }
       }
@@ -67,9 +67,15 @@
         }
       }
       .more_list {
-        @apply mt-[24px] flex flex-wrap;
+        @apply flex flex-wrap;
+        dl {
+          @apply mt-[4px];
+        }
+        dt {
+          @apply min-w-[64px];
+        }
         .full {
-          @apply flex w-full;
+          @apply !mt-[24px] flex w-full;
           dd {
             @apply flex-1;
             &::before {
@@ -107,11 +113,11 @@
       }
     }
     .btn_action {
-      @apply -mx-[24px] mt-[24px] w-[calc(100%+48px)] border-t-[1px] border-solid border-[var(--gray3)];
+      @apply -mx-[24px] mt-[32px] w-[calc(100%+48px)] border-t-[1px] border-solid border-[var(--gray3)];
       button {
-        @apply flex h-[40px] w-full items-center justify-center;
+        @apply flex h-[56px] w-full items-center justify-center;
         span {
-          @apply body_3_r text-[var(--gray8)];
+          @apply label-xl text-[var(--gray8)];
         }
         svg {
           @apply ml-[3px];

@@ -91,11 +91,17 @@ const collectNames = (children: ReactNode): string[] => {
   return names;
 };
 
-export const useFormRow = (provider: DynamicFormProvider, children: ReactNode, name: string) => {
+export const useFormRow = (
+  provider: DynamicFormProvider,
+  children: ReactNode,
+  name: string,
+  fieldConfig?: FormConfig,
+) => {
   const { control, builders, formState, fieldRefs, ...providerProps } = provider;
   const { t } = useTranslation();
 
-  const formConfig = getBuilderConfig(provider.builders, name);
+  // fieldConfig가 제공되면 우선 사용, 그렇지 않으면 기존 방식대로 builders에서 찾기
+  const formConfig = fieldConfig || getBuilderConfig(provider.builders, name);
 
   // 필드가 필수인지 확인
   const isRequired = control.isFieldRequired(name);

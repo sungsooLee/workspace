@@ -32,7 +32,7 @@ function RouteComponent() {
     <div>
       <h2 className="guide_tit2">Dropdown Component Guide</h2>
       <p className="loc react">/libs/ui/src/lib/dropdown/dropdown.tsx</p>
-      <p className="info">size(높이 기준) : sm(32), md(36), lg(40)</p>
+      <p className="info">size(높이 기준) : md(36), lg(44)</p>
       <div className="code_example">
         <pre className="code_block">
           <code>
@@ -69,6 +69,8 @@ function RouteComponent() {
       </div>
       <div className="group">
         <h3 className="guide_tit3">default (variant="Default")</h3>
+
+        <h4 className="guide_tit4">md(36px)</h4>
         <div className="flex_box">
           <div className="desc w-full">
             <Dropdown
@@ -78,7 +80,22 @@ function RouteComponent() {
               placeholder="선택"
               variant="default"
               isMulti={false}
-              size={'sm'}
+              size={'md'}
+            />
+          </div>
+        </div>
+
+        <h4 className="guide_tit4">lg(44px)</h4>
+        <div className="flex_box">
+          <div className="desc w-full">
+            <Dropdown
+              options={options}
+              value={selectedValues}
+              onChange={(selected) => setSelectedValues(selected)}
+              placeholder="선택"
+              variant="default"
+              isMulti={false}
+              size={'lg'}
             />
           </div>
         </div>

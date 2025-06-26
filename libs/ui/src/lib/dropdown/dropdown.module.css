@@ -47,7 +47,7 @@
   }
   &[class*='nlp--dropdown-lg'] {
     [class*='nlp-select__control'] {
-      @apply !min-h-[40px] rounded-[8px] !border-[var(--gray5)] pr-[16px];
+      @apply !min-h-[40px] rounded-[8px] pr-[16px];
       .nlp-select__single-value {
         @apply pl-[8px];
       }

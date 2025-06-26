@@ -226,7 +226,7 @@ const MainBasicInfoCopmonent: FC<{}> = ({}) => {
           <div className={formStyles.input_box}>
             <RadioGroupFormField
               options={[
-                { value: 'a', label: '설절안함' },
+                { value: 'a', label: '설정안함' },
                 { value: 'b', label: '오늘 하루 안보기' },
                 { value: 'c', label: '3일동안 안보기' },
                 { value: 'd', label: '7일동안 안보기' },

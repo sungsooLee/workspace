@@ -109,7 +109,9 @@ function RouteComponent() {
   const handleTrainingPlaceDetail = (mode: EnFormMode) => {
     openModal({
       width: 'xl',
-      content: <TrainingPlaceDetailModal mode={mode} />,
+      content: (
+        <TrainingPlaceDetailModal mode={mode} uuid={'5b5412bc-93d4-45d8-aa01-0fdbc9e2e668'} />
+      ),
       onClose(data: any) {
         console.log('교육공간 등록 결과', data);
       },
@@ -629,7 +631,8 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'thumbnails',
       label: t('썸네일'),
-      type: 'thumbnail-list-v2',
+      type: 'thumbnail-list',
+      imageStorageType: 'public',
       max: 3,
       format: 'array',
       value: [],

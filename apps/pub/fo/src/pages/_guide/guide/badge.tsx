@@ -11,9 +11,14 @@ function RouteComponent() {
       <h2 className="guide_tit2">Badge Component Guide</h2>
       <p className="loc react">/libs/ui/src/lib/badge/badge.tsx</p>
       <p className="info">
-        variant: 'dot' | 'number' | 'flag';
+        variant: 'dot' | 'number' | 'flag' | 'outline';
         <br />
-        status: 'primary' | 'disabled' | 'success' | 'warning' | 'caution' | 'new' | 'error';
+        status: 'primary' | 'disabled' | 'success' | 'warning' | 'caution' | 'new' | 'error' |
+        'gray';
+        <br />
+        rounded: boolean; // 라운드 여부
+        <br />
+        labelType : 'bold' | 'normal'; // 라벨 폰트 bold / normal
       </p>
       <div className="code_example">
         <pre className="code_block">
