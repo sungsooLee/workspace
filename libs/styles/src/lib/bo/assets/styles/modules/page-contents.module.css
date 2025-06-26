@@ -1,6 +1,6 @@
 /* page-content.module.css */
 .main_contents {
-  @apply box-border min-h-full flex-grow;
+  @apply box-border min-h-full min-w-0 flex-1;
   [role='tablist']:first-child {
     @apply mb-[32px];
   }

@@ -1,3 +1,4 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
@@ -272,7 +273,7 @@ function RouteComponent() {
         <ModalTitle>{'문항추가'}</ModalTitle>
         <ModalBody>
           <div className={cn(popupStyles.wrap, styles.start)}>
-            <FormSubTitle label={'기본정보'} />
+            <FormSubTitle label={'기본정보'} noLine />
             <div className={cn(tableStyles.start, tableStyles.wrap)}>
               <table>
                 <caption>{'기본정보'}</caption>

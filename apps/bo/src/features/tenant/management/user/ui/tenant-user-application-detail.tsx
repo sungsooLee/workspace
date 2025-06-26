@@ -23,6 +23,7 @@ import {
   GridFormField,
   EditDropdownCell,
   EditSwitchCell,
+  TextareaFormField,
 } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm, CODE_GROUP } from '@learnway/hooks';
 import { cn, DATE_TIME_FORMAT, getDateToString, getStringToDate } from '@learnway/shared';
@@ -104,61 +105,41 @@ const TenantUserApplicationDetailComponent = (props: any, ref: any) => {
     <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
       <FormSubTitle label={t('개인 정보')} lineType="dark" />
       <ContentsRow>
-        <FormRow provider={provider} name="name" />
-        <FormRow provider={provider} name="employeeNumber" element={<Input />} />
+        <FormRow provider={provider} name="name" element={<Input disabled />} />
+        <FormRow provider={provider} name="employeeNumber" element={<Input disabled />} />
 
-        <FormRow provider={provider} name="email" element={<Input />} />
+        <FormRow provider={provider} name="email" element={<Input disabled />} />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name="birthday" element={<DatePicker displayType="day" />} />
-        <FormRow provider={provider} name="userGender" />
-        <FormRow provider={provider} name="region" element={<Input disabled={true} />} />
+        <FormRow provider={provider} name="birthday" element={<Input disabled />} />
+        <FormRow provider={provider} name="userGender" element={<Input disabled />} />
+        <FormRow provider={provider} name="region" element={<Input disabled />} />
       </ContentsRow>
       <ContentsRow>
         <FormRow provider={provider} name="phoneNumber" />
         <FormRow provider={provider} name="companyNumber" />
-        <div className={formStyles.form_item}></div>
+        <FormRow provider={provider} name="joinDate" element={<Input disabled />} />
       </ContentsRow>
 
       <FormSubTitle label={t('회사/조직 정보')} lineType="dark" />
       <ContentsRow>
-        <FormRow provider={provider} name="companyName" element={<Input disabled={true} />}>
-          <Button
-            label={t('조회')}
-            variant="gray"
-            size="sm"
-            stopPropagation
-            onClick={handleCompanySearchButtonClick}
-          />
-        </FormRow>
-        <FormRow provider={provider} name="firstDept" element={<Input disabled={true} />} />
-        <FormRow provider={provider} name="lastDept" element={<Input disabled={true} />} />
+        <FormRow provider={provider} name="companyName" element={<Input disabled />} />
+        <FormRow provider={provider} name="firstDept" element={<Input disabled />} />
+        <FormRow provider={provider} name="lastDept" element={<Input disabled />} />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name="userPosition" />
-        <FormRow provider={provider} name="userTitle" />
-        <FormRow provider={provider} name="userGroupType" />
+        <FormRow provider={provider} name="userPosition" element={<Input disabled />} />
+        <FormRow provider={provider} name="userTitle" element={<Input disabled />} />
+        <FormRow provider={provider} name="userGroupType" element={<Input disabled />} />
       </ContentsRow>
       <ContentsRow>
-        <FormRow
-          provider={provider}
-          name={'userJoining'}
-          element={<DatePicker displayType="day" />}
-        />
-        <FormRow
-          provider={provider}
-          name={'userResignation'}
-          element={<DatePicker displayType="day" />}
-        />
-        <FormRow
-          provider={provider}
-          name={'userPromotion'}
-          element={<DatePicker displayType="day" />}
-        />
+        <FormRow provider={provider} name={'userJoining'} element={<Input disabled />} />
+        <FormRow provider={provider} name={'userResignation'} element={<Input disabled />} />
+        <FormRow provider={provider} name={'userPromotion'} element={<Input disabled />} />
       </ContentsRow>
       <ContentsRow>
         <FormRow provider={provider} name="userState" />
-        <FormRow provider={provider} name="userModifyDate" element={<Input disabled={true} />} />
+        <FormRow provider={provider} name="userModifyDate" element={<Input disabled />} />
         <div className={formStyles.form_item}></div>
       </ContentsRow>
 
@@ -205,25 +186,25 @@ const TenantUserApplicationDetailComponent = (props: any, ref: any) => {
       </FormDisplay>
 
       <ContentsRow>
-        <FormRow provider={provider} name="accountState" />
         <FormRow
           provider={provider}
-          name="accountLastUpdateDate"
-          element={<Input disabled={true} />}
+          name="accountState"
+          element={<RadioGroupFormField disabled />}
         />
+        <FormRow provider={provider} name="accountLastUpdateDate" element={<Input disabled />} />
         <FormRow
           provider={provider}
           name="accountDormancyUpdateDate"
-          element={<Input disabled={true} />}
+          element={<Input disabled />}
         />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name="approvalStat" element={<Input disabled={true} />} />
-        <FormRow provider={provider} name="approvalStateDate" element={<Input disabled={true} />} />
+        <FormRow provider={provider} name="approvalStat" element={<Input disabled />} />
+        <FormRow provider={provider} name="approvalStateDate" element={<Input disabled />} />
         <div className={formStyles.form_item}></div>
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name="" />
+        <FormRow provider={provider} name="rejectReason" element={<TextareaFormField disabled />} />
       </ContentsRow>
       <ContentsRow>
         <FormRow
@@ -236,6 +217,7 @@ const TenantUserApplicationDetailComponent = (props: any, ref: any) => {
                 valueField: 'value',
                 wordwrap: true,
               }}
+              disabled
             />
           }
         />
@@ -368,10 +350,15 @@ const formConfig: DynamicFormConfig = {
 
     {
       name: 'userState',
-      type: 'text',
+      type: 'radio-group',
       label: t('재직 상태'),
-      value: '',
-      placeholder: '',
+      value: '1',
+      options: [
+        { label: '재직', value: '1' },
+        { label: '정직', value: '2' },
+        { label: '휴직', value: '3' },
+        { label: '퇴사', value: '4' },
+      ],
     },
     {
       name: 'userModifyDate',
@@ -461,6 +448,13 @@ const formConfig: DynamicFormConfig = {
       value: 'KOR_82',
     },
     {
+      label: t('회원가입일'),
+      name: 'joinDate',
+      type: 'hidden',
+      format: 'string',
+      value: '',
+    },
+    {
       label: '',
       name: 'jobManagement',
       type: 'custom',
@@ -536,6 +530,12 @@ const formConfig: DynamicFormConfig = {
       label: t('승인상태 최종 변경일'),
       value: '',
       placeholder: ' ',
+    },
+    {
+      name: 'rejectReason',
+      type: 'text-area',
+      label: t('반려 사유'),
+      value: '',
     },
     {
       name: 'tenant',

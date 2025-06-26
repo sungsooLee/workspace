@@ -26,7 +26,7 @@ function RouteComponent() {
         </Button>
       </ContentsButtons>
       <MainContents>
-        <TrainingPlaceList mode={EnPageMode.PAGE} />
+        <TrainingPlaceList pageMode={EnPageMode.PAGE} />
       </MainContents>
     </PageContainer>
   );

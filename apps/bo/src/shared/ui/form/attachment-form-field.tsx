@@ -20,25 +20,6 @@ interface AttachmentFormFieldProps extends BaseFormFieldProps<string[]> {
   type: LEARNING_TYPE;
 }
 
-const acceptFiles = {
-  [LEARNING_TYPE.VIDEO]: [
-    'MP4',
-    'WMV',
-    'TS',
-    'AVI',
-    'MKV',
-    'MTS',
-    'MOV',
-    'MXF',
-    'MPEG',
-    'MPG',
-    'WEBM',
-    'ASF',
-    'SKM',
-    'K3G',
-  ],
-};
-
 /**
  * 폼 필드용 썸네일 이미지 업로드 컴포넌트
  * `Attachment` 컴포넌트를 래핑하여 폼 시스템의 `value`와 `onChange` 패턴을 따릅니다.
@@ -65,7 +46,6 @@ const AttachmentFormFieldComponent = forwardRef<
     const { stats, files, addFiles, onPause, onRetry, onResume, onRemove } = useS3Uploader({
       s3Path: 'upload/content/original',
       maxFileCount,
-      acceptFiles: acceptFiles[type],
     });
 
     const [errorMessage, setErrorMessage] = useState('');
@@ -91,7 +71,6 @@ const AttachmentFormFieldComponent = forwardRef<
         maxFileCount={maxFileCount}
         maxFileSize={maxFileSize}
         addFiles={handleAddFiles}
-        acceptFiles={acceptFiles[type]}
         onRemove={onRemove}
         onPause={onPause}
         onResume={onResume}

@@ -2,6 +2,10 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { queryKeys, queryOptions, mutateOptions } from './space.queries';
 
+export function useFetchSpace(code: string) {
+  return useQuery({ ...queryOptions.detail(code) });
+}
+
 export function useCreateSpace(options: any) {
   const queryClient = useQueryClient();
 
@@ -24,5 +28,26 @@ export function useCreateSpace(options: any) {
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
     data: mutation.data,
+  };
+}
+
+export function useCheckExistsSpaceCode(options: any) {
+  const { mutate, isSuccess, isError } = useMutation({
+    ...mutateOptions.checkExists(),
+    onSuccess: async (data, variables, context) => {
+      if (options.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...mutateOptions,
+  });
+
+  return {
+    checkExistsSpaceCode: (payload: any, callback?: any) => {
+      mutate(payload, callback);
+      options?.onSuccess?.(false);
+    },
+    isSuccess,
+    isError,
   };
 }

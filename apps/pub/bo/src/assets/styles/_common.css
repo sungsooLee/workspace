@@ -49,9 +49,3 @@ html body[data-scroll-locked] {
 body[data-scroll-locked][data-scroll-locked] {
   overflow: auto !important;
 }
-
-/* 공통 레이아웃(정렬) */
-.lnb-open main {
-  /* lnb open */
-  @apply relative !max-w-[calc(100vw-280px)];
-}

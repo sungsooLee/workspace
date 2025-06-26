@@ -109,7 +109,9 @@ function RouteComponent() {
   const handleTrainingPlaceDetail = (mode: EnFormMode) => {
     openModal({
       width: 'xl',
-      content: <TrainingPlaceDetailModal mode={mode} />,
+      content: (
+        <TrainingPlaceDetailModal mode={mode} uuid={'5b5412bc-93d4-45d8-aa01-0fdbc9e2e668'} />
+      ),
       onClose(data: any) {
         console.log('교육공간 등록 결과', data);
       },

@@ -42,7 +42,7 @@ export const transformDepartmentApiDataToTreeData = (apiData: any, rootName = 'R
   }
   const dataArray = [root];
 
-  const transform = (nodes: any) => {
+  const transform = (nodes: any, depth = 0) => {
     if (!nodes) return [];
 
     return nodes.map((node: any) => {
@@ -58,9 +58,10 @@ export const transformDepartmentApiDataToTreeData = (apiData: any, rootName = 'R
         key: node.deptId?.toString(),
         title: nodeTitle,
 
-        parentKey: node.parentDeptId?.toString() || node.companyCode,
+        parentKey: node.parentDeptId?.toString() || '',
         children: node.childList || [],
         _nodeType: 'D',
+        depth: depth,
       };
 
       if (!node.deptId && !node.parentDeptId) {
@@ -72,7 +73,7 @@ export const transformDepartmentApiDataToTreeData = (apiData: any, rootName = 'R
 
       // 자식 노드가 있는 경우 재귀적으로 변환
       if (node.childList && node.childList.length > 0) {
-        transformedNode.children = transform(node.childList);
+        transformedNode.children = transform(node.childList, depth + 1);
       }
 
       return transformedNode;

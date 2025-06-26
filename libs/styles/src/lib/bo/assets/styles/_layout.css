@@ -2,35 +2,6 @@
 body:not(:has(.layout_wrap)) main .scroll_inner {
   @apply min-h-[calc(100vh-40px)];
 }
-body main {
-  @apply !max-w-[100vw];
-  [class*='content_wrap'] {
-    & > div {
-      @apply !max-w-[calc(100vw-80px)];
-      & > div {
-        @apply !max-w-[calc(100vw-144px)];
-      }
-    }
-  }
-  [class*='nlp--contents-row'] [class*='grid_wrap'] {
-    @apply !max-w-[calc(100vw-144px)];
-  }
-}
-.lnb-open main {
-  /* lnb open */
-  @apply !max-w-[calc(100vw-280px)];
-  [class*='content_wrap'] {
-    & > div {
-      @apply min-w-[1080px] !max-w-[calc(100vw-360px)] overflow-x-auto;
-      & > div {
-        @apply !max-w-[calc(100vw-424px)];
-      }
-    }
-  }
-  [class*='grid'] {
-    @apply !max-w-[calc(100vw-426px)];
-  }
-}
 
 body.scrolled {
   @apply overflow-x-auto overflow-y-hidden;
@@ -81,34 +52,5 @@ body.scrolled {
   @apply max-h-[calc(100vh-244px)] overflow-y-hidden;
   & > div {
     @apply max-h-[calc(100vh-308px)] overflow-y-hidden;
-  }
-}
-
-.content_wrap.tab_visible {
-  @apply mt-[60px];
-  & > div {
-    @apply min-h-[calc(100vh-304px)];
-  }
-  .page_tabs > [role='tablist'] {
-    @apply absolute -top-[60px] left-[40px] w-[calc(100%-80px)];
-  }
-}
-
-body {
-  main [class*='content_wrap'].tab_visible {
-    & > div {
-      @apply min-h-[calc(100vh-304px)] w-full !max-w-[calc(100vw-80px)] !rounded-none !border-0 !bg-transparent !p-0;
-      & > div {
-        @apply !max-w-[calc(100vw-80px)] px-[32px] pb-[40px] pt-[24px];
-      }
-    }
-  }
-  &.lnb-open {
-    main [class*='content_wrap'].tab_visible > div {
-      @apply !max-w-[calc(100vw-360px)];
-      & > div {
-        @apply !max-w-[calc(100vw-144px)];
-      }
-    }
   }
 }

@@ -111,6 +111,7 @@ import { Route as GuideGuideGridImport } from './pages/_guide/guide/grid'
 import { Route as GuideGuideFormImport } from './pages/_guide/guide/form'
 import { Route as GuideGuideDropDownImport } from './pages/_guide/guide/drop-down'
 import { Route as GuideGuideDatePickerImport } from './pages/_guide/guide/date-picker'
+import { Route as GuideGuideDataDisplayImport } from './pages/_guide/guide/data-display'
 import { Route as GuideGuideCssImport } from './pages/_guide/guide/css'
 import { Route as GuideGuideColorImport } from './pages/_guide/guide/color'
 import { Route as GuideGuideChipsImport } from './pages/_guide/guide/chips'
@@ -739,6 +740,12 @@ const GuideGuideDatePickerRoute = GuideGuideDatePickerImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const GuideGuideDataDisplayRoute = GuideGuideDataDisplayImport.update({
+  id: '/guide/data-display',
+  path: '/guide/data-display',
+  getParentRoute: () => GuideRoute,
+} as any)
+
 const GuideGuideCssRoute = GuideGuideCssImport.update({
   id: '/guide/css',
   path: '/guide/css',
@@ -1124,6 +1131,13 @@ declare module '@tanstack/react-router' {
       path: '/guide/css'
       fullPath: '/guide/css'
       preLoaderRoute: typeof GuideGuideCssImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/data-display': {
+      id: '/_guide/guide/data-display'
+      path: '/guide/data-display'
+      fullPath: '/guide/data-display'
+      preLoaderRoute: typeof GuideGuideDataDisplayImport
       parentRoute: typeof GuideImport
     }
     '/_guide/guide/date-picker': {
@@ -1625,6 +1639,7 @@ interface GuideRouteChildren {
   GuideGuideChipsRoute: typeof GuideGuideChipsRoute
   GuideGuideColorRoute: typeof GuideGuideColorRoute
   GuideGuideCssRoute: typeof GuideGuideCssRoute
+  GuideGuideDataDisplayRoute: typeof GuideGuideDataDisplayRoute
   GuideGuideDatePickerRoute: typeof GuideGuideDatePickerRoute
   GuideGuideDropDownRoute: typeof GuideGuideDropDownRoute
   GuideGuideFormRoute: typeof GuideGuideFormRoute
@@ -1672,6 +1687,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideChipsRoute: GuideGuideChipsRoute,
   GuideGuideColorRoute: GuideGuideColorRoute,
   GuideGuideCssRoute: GuideGuideCssRoute,
+  GuideGuideDataDisplayRoute: GuideGuideDataDisplayRoute,
   GuideGuideDatePickerRoute: GuideGuideDatePickerRoute,
   GuideGuideDropDownRoute: GuideGuideDropDownRoute,
   GuideGuideFormRoute: GuideGuideFormRoute,
@@ -1864,6 +1880,7 @@ export interface FileRoutesByFullPath {
   '/guide/chips': typeof GuideGuideChipsRoute
   '/guide/color': typeof GuideGuideColorRoute
   '/guide/css': typeof GuideGuideCssRoute
+  '/guide/data-display': typeof GuideGuideDataDisplayRoute
   '/guide/date-picker': typeof GuideGuideDatePickerRoute
   '/guide/drop-down': typeof GuideGuideDropDownRoute
   '/guide/form': typeof GuideGuideFormRoute
@@ -1973,6 +1990,7 @@ export interface FileRoutesByTo {
   '/guide/chips': typeof GuideGuideChipsRoute
   '/guide/color': typeof GuideGuideColorRoute
   '/guide/css': typeof GuideGuideCssRoute
+  '/guide/data-display': typeof GuideGuideDataDisplayRoute
   '/guide/date-picker': typeof GuideGuideDatePickerRoute
   '/guide/drop-down': typeof GuideGuideDropDownRoute
   '/guide/form': typeof GuideGuideFormRoute
@@ -2086,6 +2104,7 @@ export interface FileRoutesById {
   '/_guide/guide/chips': typeof GuideGuideChipsRoute
   '/_guide/guide/color': typeof GuideGuideColorRoute
   '/_guide/guide/css': typeof GuideGuideCssRoute
+  '/_guide/guide/data-display': typeof GuideGuideDataDisplayRoute
   '/_guide/guide/date-picker': typeof GuideGuideDatePickerRoute
   '/_guide/guide/drop-down': typeof GuideGuideDropDownRoute
   '/_guide/guide/form': typeof GuideGuideFormRoute
@@ -2197,6 +2216,7 @@ export interface FileRouteTypes {
     | '/guide/chips'
     | '/guide/color'
     | '/guide/css'
+    | '/guide/data-display'
     | '/guide/date-picker'
     | '/guide/drop-down'
     | '/guide/form'
@@ -2305,6 +2325,7 @@ export interface FileRouteTypes {
     | '/guide/chips'
     | '/guide/color'
     | '/guide/css'
+    | '/guide/data-display'
     | '/guide/date-picker'
     | '/guide/drop-down'
     | '/guide/form'
@@ -2416,6 +2437,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/chips'
     | '/_guide/guide/color'
     | '/_guide/guide/css'
+    | '/_guide/guide/data-display'
     | '/_guide/guide/date-picker'
     | '/_guide/guide/drop-down'
     | '/_guide/guide/form'
@@ -2549,6 +2571,7 @@ export const routeTree = rootRoute
         "/_guide/guide/chips",
         "/_guide/guide/color",
         "/_guide/guide/css",
+        "/_guide/guide/data-display",
         "/_guide/guide/date-picker",
         "/_guide/guide/drop-down",
         "/_guide/guide/form",
@@ -2806,6 +2829,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/css": {
       "filePath": "_guide/guide/css.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/data-display": {
+      "filePath": "_guide/guide/data-display.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/date-picker": {

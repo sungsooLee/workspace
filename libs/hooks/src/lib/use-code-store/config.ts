@@ -70,7 +70,7 @@ export const codeOptions: CodeApiConfig = {
       return [
         ...data.content.map((item: any) => ({
           label: item.tenantName,
-          value: String(item.tenantId),
+          value: item.tenantId,
         })),
       ];
     },
@@ -85,7 +85,7 @@ export const codeOptions: CodeApiConfig = {
       return [
         ...data.map((item: any) => ({
           label: item.name,
-          value: String(item.roleId),
+          value: item.roleId,
         })),
       ];
     },

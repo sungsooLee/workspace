@@ -7,7 +7,7 @@ import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 import { TrainingPlaceDetail } from '@features/learning/training-place/training-place-detail';
-import { EnFormMode } from '@types';
+import { EnFormMode, EnPageMode } from '@types';
 
 export const Route = createFileRoute('/_layout/learning/training-place/regist')({
   component: RouteComponent,
@@ -40,7 +40,7 @@ function RouteComponent() {
         </Button>
       </ContentsButtons>
       <MainContents>
-        <TrainingPlaceDetail ref={formRef} mode={EnFormMode.ADD} />
+        <TrainingPlaceDetail ref={formRef} pageMode={EnPageMode.PAGE} mode={EnFormMode.ADD} />
       </MainContents>
     </PageContainer>
   );

@@ -83,4 +83,13 @@ export class DepartmentService {
   static deleteDepartment(payload: any) {
     return httpService.delete<any>(`${PMSApiPrefix()}/department/remove`, payload);
   }
+
+  /**
+   * 회사 부서 순서 변경
+   * @param payload
+   * @returns
+   */
+  static moveDeparment(payload: any) {
+    return httpService.put<any>(`${PMSApiPrefix()}/department/${payload.deptId}/dnd`, payload);
+  }
 }

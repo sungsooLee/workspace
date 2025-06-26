@@ -44,11 +44,12 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
   const { close, open } = useModal();
   const maxFileCount = 1;
   const maxFileSize = 1024 * 1024 * 10;
-  const { stats, files, addFiles, onPause, onRetry, onResume, onRemove } = useS3Uploader({
-    s3Path: 'upload/content/original',
-    maxFileCount,
-    acceptFiles: acceptFiles[type],
-  });
+  const { stats, files, addFiles, onPause, onRetry, onResume, onRemove, inputAccept } =
+    useS3Uploader({
+      s3Path: 'upload/content/original',
+      maxFileCount,
+      acceptFiles: acceptFiles[type],
+    });
   const { createFileGroupFiles } = useFileManager();
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -126,7 +127,7 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
               maxFileCount={maxFileCount}
               maxFileSize={maxFileSize}
               addFiles={handleAddFiles}
-              acceptFiles={acceptFiles[type]}
+              inputAccept={inputAccept}
               onRemove={onRemove}
               onPause={onPause}
               onResume={onResume}
