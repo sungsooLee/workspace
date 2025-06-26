@@ -1,4 +1,4 @@
-import { queryOptions } from '@entities/label-messages/service/label-messages.queries';
+import { queryOptions } from '@entities/course/service/course.queries';
 import { CourseTypeOptionCardModal } from '@features/learning/course';
 import { GridExcelDownloadButton, GridExcelUploadButton } from '@features/shared';
 import { LMSApiPrefix } from '@learnway/config';
@@ -6,7 +6,7 @@ import { useSearchBox } from '@learnway/hooks';
 import { Button, Divider, GridBox, useGridBox, useModal } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { LabelMessagesQueryParams } from '@types';
+import { CoursesQueryParams } from '@types';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
@@ -222,11 +222,7 @@ const searchConfig: any = {
 
 const gridConfig = {
   title: t('LABEL.grid.title.courseList'),
-  query: queryOptions.all<LabelMessagesQueryParams>,
-  // data: [
-  //   { labelMessageId: 1, labelMessageType: 'a', labelMessageMultilingulKey: 'a' },
-  //   { labelMessageId: 2, labelMessageType: 'a2', labelMessageMultilingulKey: 'a2' },
-  // ],
+  query: queryOptions.all<CoursesQueryParams>,
   columns: [
     // 테넌트
     { name: 'tenant', label: () => t('LABEL.grid.column.tenant'), size: 140 },
