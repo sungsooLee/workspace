@@ -84,6 +84,7 @@ const ExcelUploadModalComponent = ({ validateUrl, templateUrls }: ExcelUploadMod
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState<Status | null>(null);
   const [validationResult, setValidationResult] = useState<ValidationResult | null>(null);
+  const [progressMessage, setProgressMessage] = useState<string>('');
 
   // 파일 선택 시 자동 유효성 검사 실행
   const handleFileSelect = useCallback(
@@ -94,11 +95,14 @@ const ExcelUploadModalComponent = ({ validateUrl, templateUrls }: ExcelUploadMod
       setStatus(Status.UPLOADING);
       setFiles(compact([file]).map(toUploadFile));
       setIsLoading(true);
+      setProgressMessage('파일을 업로드하고 있습니다...');
 
       try {
         // FormData로 파일 전송
         const formData = new FormData();
         formData.append('file', file);
+        
+        setProgressMessage('파일 검증 중입니다. 잠시만 기다려주세요...');
 
         // const response = await fetch(`${, {
         //   method: 'POST',
@@ -128,9 +132,11 @@ const ExcelUploadModalComponent = ({ validateUrl, templateUrls }: ExcelUploadMod
         if (success) {
           setStatus(Status.COMPLETED);
           setFiles((prev) => prev.map((_) => ({ ..._, status: Status.COMPLETED, progress: 100 })));
+          setProgressMessage('업로드가 완료되었습니다.');
         } else {
           setStatus(Status.FAILED);
           setFiles((prev) => prev.map((_) => ({ ..._, status: Status.FAILED, progress: 100 })));
+          setProgressMessage('업로드 중 오류가 발생했습니다.');
         }
       } catch (error: any) {
         console.error('Validation error:', error);
@@ -144,6 +150,7 @@ const ExcelUploadModalComponent = ({ validateUrl, templateUrls }: ExcelUploadMod
           setFiles((prev) => prev.map((_) => ({ ..._, status: Status.FAILED })));
         }
         setFiles((prev) => prev.map((_) => ({ ..._, status: Status.FAILED, progress: 100 })));
+        setProgressMessage('업로드 중 오류가 발생했습니다.');
       } finally {
         setIsLoading(false);
       }
@@ -179,6 +186,7 @@ const ExcelUploadModalComponent = ({ validateUrl, templateUrls }: ExcelUploadMod
     setIsLoading(false);
     setStatus(null);
     setValidationResult(null);
+    setProgressMessage('');
   };
 
   /**
@@ -298,6 +306,11 @@ const ExcelUploadModalComponent = ({ validateUrl, templateUrls }: ExcelUploadMod
             <div className={styles.title_box}>
               <div className={styles.title_info}>
                 <h3 className={styles.sub_title}>{t('업로드 결과')}</h3>
+                {isLoading && progressMessage && (
+                  <p className={cn(styles.status_text, 'text-blue-600')}>
+                    {progressMessage}
+                  </p>
+                )}
                 {status === Status.FAILED && (
                   <p className={cn(styles.status_text)}>
                     {t('실패')}
