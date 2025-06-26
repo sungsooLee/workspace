@@ -5,7 +5,7 @@ import { t } from 'i18next';
 
 interface ExcelButtonsProps {
   validateUrl?: string;
-  onUpload?: (data: Record<string, any>) => Promise<void>;
+  onUpload?: (data: Record<string, any>[]) => Promise<void>;
   disabled?: boolean;
   className?: string;
 }
