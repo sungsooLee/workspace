@@ -1,6 +1,6 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { cn } from '@learnway/shared';
@@ -119,15 +119,11 @@ function RouteComponent() {
       </ModalContainer>
     );
   };
-  const hasRun = useRef(false);
   useEffect(() => {
-    if (!hasRun.current) {
-      openModal({
-        width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
-        content: <TabContents />,
-      });
-      hasRun.current = true;
-    }
+    openModal({
+      width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
+      content: <TabContents />,
+    });
   }, [openModal]);
   return <div>플랫폼관리_라벨다국어관리_번역완료현황</div>;
 }

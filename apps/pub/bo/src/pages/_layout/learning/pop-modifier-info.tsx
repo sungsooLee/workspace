@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { Button, useModal, ModalContainer, ModalBody, ModalFooter, ModalTitle } from '@learnway/ui';
@@ -39,15 +39,11 @@ function RouteComponent() {
       </ModalContainer>
     );
   };
-  const hasRun = useRef(false);
   useEffect(() => {
-    if (!hasRun.current) {
-      openModal({
-        width: 'sm', // sm(600px), md(800px), lg(1024px), xl(1400px)
-        content: <InfoContent />,
-      });
-      hasRun.current = true;
-    }
-  }, []);
+    openModal({
+      width: 'sm', // sm(600px), md(800px), lg(1024px), xl(1400px)
+      content: <InfoContent />,
+    });
+  }, [openModal]);
   return <div>제작프로그램/가이드 다운로드 팝업</div>;
 }
