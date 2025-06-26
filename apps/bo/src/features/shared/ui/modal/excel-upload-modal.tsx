@@ -1,5 +1,5 @@
 // IA011 / NLP_BO_PMS_1100_4
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, useEffect } from 'react';
 import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css';
 import {
   Badge,
@@ -85,6 +85,24 @@ const ExcelUploadModalComponent = ({ validateUrl, templateUrls }: ExcelUploadMod
   const [status, setStatus] = useState<Status | null>(null);
   const [validationResult, setValidationResult] = useState<ValidationResult | null>(null);
   const [progressMessage, setProgressMessage] = useState<string>('');
+  const [dots, setDots] = useState<string>('.');
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isLoading) {
+      interval = setInterval(() => {
+        setDots((prev) => {
+          if (prev === '...') return '.';
+          if (prev === '..') return '...';
+          if (prev === '.') return '..';
+          return '.';
+        });
+      }, 1000);
+    } else {
+      setDots('.');
+    }
+    return () => clearInterval(interval);
+  }, [isLoading]);
 
   // 파일 선택 시 자동 유효성 검사 실행
   const handleFileSelect = useCallback(
@@ -101,8 +119,8 @@ const ExcelUploadModalComponent = ({ validateUrl, templateUrls }: ExcelUploadMod
         // FormData로 파일 전송
         const formData = new FormData();
         formData.append('file', file);
-        
-        setProgressMessage('파일 검증 중입니다. 잠시만 기다려주세요...');
+
+        setProgressMessage('파일 검증 중입니다. 잠시만 기다려주세요');
 
         // const response = await fetch(`${, {
         //   method: 'POST',
@@ -309,6 +327,7 @@ const ExcelUploadModalComponent = ({ validateUrl, templateUrls }: ExcelUploadMod
                 {isLoading && progressMessage && (
                   <p className={cn(styles.status_text, 'text-blue-600')}>
                     {progressMessage}
+                    {dots}
                   </p>
                 )}
                 {status === Status.FAILED && (
