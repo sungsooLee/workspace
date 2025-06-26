@@ -1,6 +1,6 @@
 import { DropdownFormField } from '@features/form';
 import { CategoryChoiceModal, ChannelListModal, TeacherListModal } from '@features/learning/course';
-import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import {
   Button,
   CheckboxGroupFormField,
@@ -11,13 +11,14 @@ import {
   InputModalSelectorFormField,
   ListModalSelectorFormField,
   PhoneNumberFormField,
+  RadioGroupFormField,
   TextareaFormField,
 } from '@learnway/ui';
-import { FormRow, FormSubTitle } from '@shared/ui';
-import { t } from 'i18next';
+import { FormRow2, FormSubTitle } from '@shared/ui';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TabFormRef } from '../common/tab-form-ref';
+import RoleManagerService from '@entities/role/api/role-manager';
 
 interface BasicInfoProps {
   dummy?: any;
@@ -29,7 +30,9 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
   ({ dummy, onSave, initialData }, ref) => {
     const { t } = useTranslation();
 
-    const { provider, getValues, fetchData, onFormValid, formState } = useDynamicForm(formConfig);
+    const { provider, getValues, fetchData, onFormValid, formState } = useDynamicForm2({
+      builders: [],
+    });
 
     const handleOnSubmit = (data: any) => {
       console.log('data {} => ', data);
@@ -66,37 +69,13 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         {/*유형, 채널*/}
         <ContentsRow>
           {/*유형*/}
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'유형'}
+            label={'유형'}
+            required={true}
             element={
               <DropdownFormField
-                options={[
-                  {
-                    label: '이러닝',
-                    value: '이러닝',
-                  },
-                  {
-                    label: '클래스',
-                    value: '클래스',
-                  },
-                  {
-                    label: '라이브',
-                    value: '라이브',
-                  },
-                  {
-                    label: '시험',
-                    value: '시험',
-                  },
-                  {
-                    label: '설문',
-                    value: '설문',
-                  },
-                  {
-                    label: '페키지',
-                    value: '페키지',
-                  },
-                ]}
                 optionsConfig={{
                   codeGroup: CODE_GROUP['lms.course.CourseType'],
                 }}
@@ -104,21 +83,18 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             }
           />
           {/*채널*/}
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'채널'}
+            label={'채널'}
             element={
               <DropdownFormField
-                options={[
-                  {
-                    label: '채널1',
-                    value: '채널1',
+                optionsConfig={{
+                  api: {
+                    fn: RoleManagerService.fetchRoleMe,
+                    params: 'BO',
                   },
-                  {
-                    label: '채널2',
-                    value: '채널2',
-                  },
-                ]}
+                }}
               />
             }
           />
@@ -128,7 +104,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         <FormSubTitle label={t('공개대상')} />
         {/*테넌트*/}
         <ContentsRow>
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'테넌트'}
             element={
@@ -143,9 +119,11 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         </ContentsRow>
         {/*카테고리*/}
         <ContentsRow>
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'카테고리'}
+            label={'카테고리'}
+            value={[]}
             element={
               <ListModalSelectorFormField
                 deletable
@@ -161,9 +139,10 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         </ContentsRow>
         {/*학습대상(유저그룹)*/}
         <ContentsRow>
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'학습대상'}
+            label={'학습대상'}
             element={
               <ChipListModalSelectorFormField
                 modalConfig={{ content: <TeacherListModal channelId={getValues()?.channelId} /> }}
@@ -182,13 +161,14 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         <FormSubTitle label={t('과정소개')} />
         {/*언어 설정*/}
         <ContentsRow>
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'언어 설정'}
+            label={'언어 설정'}
             element={
-              <InputModalSelectorFormField
-                modalConfig={{
-                  content: <ChannelListModal />,
+              <DropdownFormField
+                optionsConfig={{
+                  codeGroup: CODE_GROUP['pms.multilingual.LangCountryCode'],
                 }}
               />
             }
@@ -196,70 +176,53 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         </ContentsRow>
         {/*과정명*/}
         <ContentsRow>
-          <FormRow provider={provider} name={'과정명'} element={<Input maxLength={40} />} />
+          <FormRow2
+            provider={provider}
+            name={'과정명'}
+            label={'과정명'}
+            element={<Input maxLength={40} />}
+          />
         </ContentsRow>
         {/*과정 요약*/}
         <ContentsRow>
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'과정 요약'}
+            label={'과정 요약'}
             element={<TextareaFormField maxLength={500} />}
           />
         </ContentsRow>
         {/*교육 내용*/}
         <ContentsRow>
-          <FormRow provider={provider} name={'교육 내용'} element={<EditorFormField />} />
+          <FormRow2
+            provider={provider}
+            name={'교육 내용'}
+            label={'교육 내용'}
+            element={<EditorFormField />}
+          />
         </ContentsRow>
         <ContentsRow>
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'난이도'}
+            label={'난이도'}
             element={
-              <CheckboxGroupFormField
-                options={[
-                  {
-                    label: '없음',
-                    value: '',
-                  },
-                  {
-                    label: '입문',
-                    value: '1',
-                  },
-                  {
-                    label: '초급',
-                    value: '2',
-                  },
-                  {
-                    label: '중급',
-                    value: '3',
-                  },
-                  {
-                    label: '고급',
-                    value: '4',
-                  },
-                ]}
+              <RadioGroupFormField
+                optionsConfig={{
+                  codeGroup: CODE_GROUP['lms.course.TrainingLevelType'],
+                }}
               />
             }
           />
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'교육공간'}
+            label={'교육공간'}
             element={
-              <CheckboxGroupFormField
-                options={[
-                  {
-                    label: '차세대 학습플렛폼',
-                    value: '1',
-                  },
-                  {
-                    label: '공간선택',
-                    value: '2',
-                  },
-                  {
-                    label: '직접입력',
-                    value: '3',
-                  },
-                ]}
+              <RadioGroupFormField
+                optionsConfig={{
+                  codeGroup: CODE_GROUP['lms.course.LearningSpaceType'],
+                }}
               />
             }
           />
@@ -270,9 +233,10 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         {/*담당자*/}
         <ContentsRow>
           {/*담당자*/}
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'담당자'}
+            label={'담당자'}
             element={
               <InputModalSelectorFormField
                 modalConfig={{
@@ -282,9 +246,10 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             }
           />
           {/*담당자-연락처*/}
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'담당자연락처'}
+            label={'담당자연락처'}
             element={
               <PhoneNumberFormField
                 fields={{ nationCode: '담당자연락처코드', number: '담당자연락처' }}
@@ -295,14 +260,20 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             }
           />
           {/*담당자-이메일*/}
-          <FormRow provider={provider} name={'담당자이메일'} element={<Input />} />
+          <FormRow2
+            provider={provider}
+            name={'담당자이메일'}
+            label={'담당자이메일'}
+            element={<Input />}
+          />
         </ContentsRow>
         {/*운영자*/}
         <ContentsRow>
           {/*운영자*/}
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'운영자'}
+            label={'운영자'}
             element={
               <InputModalSelectorFormField
                 modalConfig={{
@@ -312,9 +283,10 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             }
           />
           {/*운영자-연락처*/}
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'운영자연락처'}
+            label={'운영자연락처'}
             element={
               <PhoneNumberFormField
                 fields={{ nationCode: '운영자연락처코드', number: '운영자연락처' }}
@@ -325,7 +297,12 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             }
           />
           {/*운영자-이메일*/}
-          <FormRow provider={provider} name={'운영자이메일'} element={<Input />} />
+          <FormRow2
+            provider={provider}
+            name={'운영자이메일'}
+            label={'운영자이메일'}
+            element={<Input />}
+          />
         </ContentsRow>
       </div>
     );
@@ -334,238 +311,238 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
 
 export const BasicInfo = BasicInfoComponent;
 
-const formConfig: DynamicFormConfig = {
-  builders: [
-    // 유형
-    {
-      name: '유형',
-      type: 'custom',
-      label: '유형',
-      value: '',
-    },
-    // 유형 ID
-    {
-      name: '유형아이디',
-      type: 'hidden',
-      value: '',
-    },
-    // 채널
-    {
-      name: '채널',
-      type: 'custom',
-      label: '채널',
-      value: '',
-    },
-    // 채널 ID
-    {
-      name: '채널아이디',
-      type: 'hidden',
-      value: '',
-    },
-    // 테넌트
-    {
-      name: '테넌트',
-      type: 'custom',
-      label: '테넌트',
-      format: 'array',
-      options: [
-        { value: 'tenant1', label: '테넌트1' },
-        { value: 'tenant2', label: '테넌트2' },
-      ],
-      value: ['tenant1', 'tenant2'],
-      placeholder: '',
-      description: '',
-    },
-    // 카테고리
-    {
-      name: '카테고리',
-      type: 'custom',
-      label: '카테고리',
-      format: 'array',
-      value: [
-        { value: 'tenant1', label: '테넌트1' },
-        { value: 'tenant2', label: '테넌트2' },
-      ],
-      placeholder: '',
-      description: '',
-    },
-    // 학습대상
-    {
-      name: '학습대상',
-      type: 'custom',
-      label: '학습대상',
-      format: 'array',
-      value: ['현대자동차 A', '현대자동차 B', '현대자동차 C'],
-      placeholder: '',
-      description: '',
-    },
-    // 언어 설정
-    {
-      name: '언어 설정',
-      type: 'custom',
-      label: '언어 설정',
-      value: '',
-    },
-    // 과정명
-    {
-      name: '과정명',
-      type: 'text',
-      label: '과정명',
-      value: '',
-      placeholder: '',
-      description: '',
-    },
-    //과정 요약
-    {
-      name: '과정 요약',
-      type: 'custom',
-      label: '과정 요약',
-      value: '',
-      placeholder: '',
-      description: '',
-    },
-    // 교육 내용
-    {
-      name: '교육 내용',
-      type: 'custom',
-      label: t('교육 내용'),
-      value: '',
-    },
-    // 난이도
-    {
-      name: '난이도',
-      type: 'custom',
-      label: t('난이도'),
-      value: [],
-    },
-    // 교육공간
-    {
-      name: '교육공간',
-      type: 'custom',
-      label: '교육공간',
-      value: [],
-    },
-    // 담당자
-    {
-      name: '담당자',
-      type: 'custom',
-      label: '담당자',
-      value: '',
-    },
-    // 담당자연락처
-    {
-      name: '담당자연락처',
-      type: 'custom',
-      label: '담당자연락처',
-      value: '',
-    },
-    // 담당자이메일
-    {
-      name: '담당자이메일',
-      type: 'custom',
-      label: '담당자이메일',
-      value: '',
-    },
-    // 운영자
-    {
-      name: '운영자',
-      type: 'custom',
-      label: '운영자',
-      value: '',
-    },
-    // 운영자연락처
-    {
-      name: '운영자연락처',
-      type: 'custom',
-      label: '운영자연락처',
-      value: '',
-    },
-    // 운영자이메일
-    {
-      name: '운영자이메일',
-      type: 'custom',
-      label: '운영자이메일',
-      value: '',
-    },
-  ],
-  // validator: {
-  //   유형: {
-  //     format: 'string',
-  //     required: true,
-  //   },
-  //   채널: {
-  //     format: 'string',
-  //     required: true,
-  //   },
-  //   테넌트: {
-  //     format: 'array',
-  //     required: true,
-  //   },
-  //   카테고리: {
-  //     format: 'array',
-  //     required: true,
-  //   },
-  //   학습대상: {
-  //     format: 'array',
-  //     required: true,
-  //   },
-  //   과정명: {
-  //     format: 'string',
-  //     required: true,
-  //     conditions: [
-  //       {
-  //         fn: (values) => {
-  //           return values.과정명.trim().length === 0;
-  //         },
-  //         message: '과정명을 입력해주세요.',
-  //       },
-  //       {
-  //         fn: (values) => {
-  //           return values.과정명.trim().length > 40;
-  //         },
-  //         message: '과정명은 40자 이내로 입력해주세요.',
-  //       },
-  //     ],
-  //   },
-  //   과정요약: {
-  //     format: 'string',
-  //     required: false,
-  //     conditions: [
-  //       {
-  //         fn: (values) => {
-  //           return values.과정요약 && values.과정요약.trim().length > 40;
-  //         },
-  //         message: '과정 요약은 40자 이내로 입력해주세요.',
-  //       },
-  //     ],
-  //   },
-  //   담당자이메일: {
-  //     format: 'email',
-  //     required: false,
-  //     conditions: [
-  //       {
-  //         fn: (values) => {
-  //           if (!values.담당자이메일 || values.담당자이메일.trim().length === 0) return false;
-  //           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  //           return !emailRegex.test(values.담당자이메일.trim());
-  //         },
-  //         message: '올바른 이메일 형식을 입력해주세요.',
-  //       },
-  //     ],
-  //   },
-  //   운영자이메일: {
-  //     format: 'email',
-  //     required: false,
-  //     conditions: [
-  //       {
-  //         fn: (values) => {
-  //           if (!values.운영자이메일 || values.운영자이메일.trim().length === 0) return false;
-  //           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  //           return !emailRegex.test(values.운영자이메일.trim());
-  //         },
-  //         message: '올바른 이메일 형식을 입력해주세요.',
-  //       },
-  //     ],
-  //   },
-  // },
-};
+// const formConfig: DynamicFormConfig = {
+//   builders: [
+//     // 유형
+//     {
+//       name: '유형',
+//       type: 'custom',
+//       label: '유형',
+//       value: '',
+//     },
+//     // 유형 ID
+//     {
+//       name: '유형아이디',
+//       type: 'hidden',
+//       value: '',
+//     },
+//     // 채널
+//     {
+//       name: '채널',
+//       type: 'custom',
+//       label: '채널',
+//       value: '',
+//     },
+//     // 채널 ID
+//     {
+//       name: '채널아이디',
+//       type: 'hidden',
+//       value: '',
+//     },
+//     // 테넌트
+//     {
+//       name: '테넌트',
+//       type: 'custom',
+//       label: '테넌트',
+//       format: 'array',
+//       options: [
+//         { value: 'tenant1', label: '테넌트1' },
+//         { value: 'tenant2', label: '테넌트2' },
+//       ],
+//       value: ['tenant1', 'tenant2'],
+//       placeholder: '',
+//       description: '',
+//     },
+//     // 카테고리
+//     {
+//       name: '카테고리',
+//       type: 'custom',
+//       label: '카테고리',
+//       format: 'array',
+//       value: [
+//         { value: 'tenant1', label: '테넌트1' },
+//         { value: 'tenant2', label: '테넌트2' },
+//       ],
+//       placeholder: '',
+//       description: '',
+//     },
+//     // 학습대상
+//     {
+//       name: '학습대상',
+//       type: 'custom',
+//       label: '학습대상',
+//       format: 'array',
+//       value: ['현대자동차 A', '현대자동차 B', '현대자동차 C'],
+//       placeholder: '',
+//       description: '',
+//     },
+//     // 언어 설정
+//     {
+//       name: '언어 설정',
+//       type: 'custom',
+//       label: '언어 설정',
+//       value: '',
+//     },
+//     // 과정명
+//     {
+//       name: '과정명',
+//       type: 'text',
+//       label: '과정명',
+//       value: '',
+//       placeholder: '',
+//       description: '',
+//     },
+//     //과정 요약
+//     {
+//       name: '과정 요약',
+//       type: 'custom',
+//       label: '과정 요약',
+//       value: '',
+//       placeholder: '',
+//       description: '',
+//     },
+//     // 교육 내용
+//     {
+//       name: '교육 내용',
+//       type: 'custom',
+//       label: t('교육 내용'),
+//       value: '',
+//     },
+//     // 난이도
+//     {
+//       name: '난이도',
+//       type: 'custom',
+//       label: t('난이도'),
+//       value: [],
+//     },
+//     // 교육공간
+//     {
+//       name: '교육공간',
+//       type: 'custom',
+//       label: '교육공간',
+//       value: [],
+//     },
+//     // 담당자
+//     {
+//       name: '담당자',
+//       type: 'custom',
+//       label: '담당자',
+//       value: '',
+//     },
+//     // 담당자연락처
+//     {
+//       name: '담당자연락처',
+//       type: 'custom',
+//       label: '담당자연락처',
+//       value: '',
+//     },
+//     // 담당자이메일
+//     {
+//       name: '담당자이메일',
+//       type: 'custom',
+//       label: '담당자이메일',
+//       value: '',
+//     },
+//     // 운영자
+//     {
+//       name: '운영자',
+//       type: 'custom',
+//       label: '운영자',
+//       value: '',
+//     },
+//     // 운영자연락처
+//     {
+//       name: '운영자연락처',
+//       type: 'custom',
+//       label: '운영자연락처',
+//       value: '',
+//     },
+//     // 운영자이메일
+//     {
+//       name: '운영자이메일',
+//       type: 'custom',
+//       label: '운영자이메일',
+//       value: '',
+//     },
+//   ],
+//   // validator: {
+//   //   유형: {
+//   //     format: 'string',
+//   //     required: true,
+//   //   },
+//   //   채널: {
+//   //     format: 'string',
+//   //     required: true,
+//   //   },
+//   //   테넌트: {
+//   //     format: 'array',
+//   //     required: true,
+//   //   },
+//   //   카테고리: {
+//   //     format: 'array',
+//   //     required: true,
+//   //   },
+//   //   학습대상: {
+//   //     format: 'array',
+//   //     required: true,
+//   //   },
+//   //   과정명: {
+//   //     format: 'string',
+//   //     required: true,
+//   //     conditions: [
+//   //       {
+//   //         fn: (values) => {
+//   //           return values.과정명.trim().length === 0;
+//   //         },
+//   //         message: '과정명을 입력해주세요.',
+//   //       },
+//   //       {
+//   //         fn: (values) => {
+//   //           return values.과정명.trim().length > 40;
+//   //         },
+//   //         message: '과정명은 40자 이내로 입력해주세요.',
+//   //       },
+//   //     ],
+//   //   },
+//   //   과정요약: {
+//   //     format: 'string',
+//   //     required: false,
+//   //     conditions: [
+//   //       {
+//   //         fn: (values) => {
+//   //           return values.과정요약 && values.과정요약.trim().length > 40;
+//   //         },
+//   //         message: '과정 요약은 40자 이내로 입력해주세요.',
+//   //       },
+//   //     ],
+//   //   },
+//   //   담당자이메일: {
+//   //     format: 'email',
+//   //     required: false,
+//   //     conditions: [
+//   //       {
+//   //         fn: (values) => {
+//   //           if (!values.담당자이메일 || values.담당자이메일.trim().length === 0) return false;
+//   //           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+//   //           return !emailRegex.test(values.담당자이메일.trim());
+//   //         },
+//   //         message: '올바른 이메일 형식을 입력해주세요.',
+//   //       },
+//   //     ],
+//   //   },
+//   //   운영자이메일: {
+//   //     format: 'email',
+//   //     required: false,
+//   //     conditions: [
+//   //       {
+//   //         fn: (values) => {
+//   //           if (!values.운영자이메일 || values.운영자이메일.trim().length === 0) return false;
+//   //           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+//   //           return !emailRegex.test(values.운영자이메일.trim());
+//   //         },
+//   //         message: '올바른 이메일 형식을 입력해주세요.',
+//   //       },
+//   //     ],
+//   //   },
+//   // },
+// };
