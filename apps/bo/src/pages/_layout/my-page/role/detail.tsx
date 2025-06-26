@@ -66,6 +66,7 @@ function RouteComponent() {
 
   useEffect(() => {
     if (state?.roleId) {
+      onFormChangeSearchBox({ roleId: state?.roleId });
       gridFetch({ roleId: state?.roleId });
     }
   }, []);
@@ -84,11 +85,17 @@ function RouteComponent() {
         roleDescription: roleData.description,
         tenantScope: roleData.tenantScope,
         companyScope: roleData.companyScope,
-        companies: roleData.companies,
+        companies: roleData.companies?.map((company: any) => ({
+          value: company.companyId,
+          label: company.companyName,
+        })),
         deptScope: roleData.deptScope,
-        depts: roleData.depts,
+        depts: roleData.depts?.map((dept: any) => ({ value: dept.deptId, label: dept.deptName })),
         channelScope: roleData.channelScope,
-        channels: roleData.channels,
+        channels: roleData.channels?.map((company: any) => ({
+          value: company.channelId,
+          label: company.channelName,
+        })),
       });
     }
   }, [roleData]);
@@ -179,7 +186,7 @@ function RouteComponent() {
           </ContentsRow>
           <FormDisplay
             provider={provider}
-            dependencies={[{ name: 'deptScope', value: EnChannelScope.MANUAL }]}
+            dependencies={[{ name: 'deptScope', value: EnDeptScope.MANUAL }]}
           >
             <div className="chiplist_modal_wrap">
               <FormRow
@@ -202,27 +209,11 @@ function RouteComponent() {
           </ContentsRow>
           <FormDisplay
             provider={provider}
+            condition={'or'}
             dependencies={[
-              { name: 'channelScope', value: EnChannelScope.CURRENT_COMPANY_INCLUSIVE },
+              { name: 'channelScope', value: EnChannelScope.CURRENT_CHANNEL_INCLUSIVE },
+              { name: 'channelScope', value: EnChannelScope.MANUAL },
             ]}
-          >
-            <div className="chiplist_modal_wrap">
-              <FormRow
-                provider={provider}
-                name={'channels'}
-                element={
-                  <ChipListModalSelectorFormField
-                    disabled={true}
-                    hideCloseButton
-                    showAddButton={false}
-                  />
-                }
-              />
-            </div>
-          </FormDisplay>
-          <FormDisplay
-            provider={provider}
-            dependencies={[{ name: 'channelScope', value: EnChannelScope.MANUAL }]}
           >
             <div className="chiplist_modal_wrap">
               <FormRow
@@ -269,6 +260,11 @@ const searchConfig: SearchBoxConfig = {
           to: undefined,
         },
       },
+      {
+        name: 'roldId',
+        type: 'hidden',
+        value: '',
+      },
     ],
   ],
 };
@@ -313,7 +309,6 @@ const formConfig: DynamicFormConfig = {
       type: 'textarea',
       label: t('역할 설명'),
       value: '설명입니다',
-      disabled: true,
       readOnly: true,
     },
     // 테넌트
@@ -343,8 +338,14 @@ const formConfig: DynamicFormConfig = {
       label: '',
       type: 'chip-list',
       format: 'array',
-      value: [{ label: '회사1', value: 'id0' }],
-      placeholder: '',
+      readOnly: true,
+      value: [],
+      chipListConfig: {
+        showInput: false,
+        labelField: 'label',
+        valueField: 'value',
+        wordwrap: true,
+      },
     },
     // 조직
     {
@@ -357,24 +358,36 @@ const formConfig: DynamicFormConfig = {
         codeGroup: CODE_GROUP['pms.role.DeptScope'],
       },
     },
-    { name: 'depts', label: '', type: 'chip-list', value: [{ label: '부서1', value: 'id0' }] },
+    {
+      name: 'depts',
+      label: '',
+      type: 'chip-list',
+      value: [],
+      readOnly: true,
+      chipListConfig: {
+        showInput: false,
+        labelField: 'label',
+        valueField: 'value',
+        wordwrap: true,
+      },
+    },
+    // 채널
     {
       name: 'channelScope',
       type: 'radio-group',
       label: t('채널 접근 범위'),
       disabled: true,
-      value: EnChannelScope.MANUAL,
+      value: EnChannelScope.ALL,
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.role.ChannelScope'],
       },
     },
-    // 채널
     {
       name: 'channels',
       type: 'chip-list',
       label: '',
-      value: [{ label: '채널1', value: 'id0' }],
-      disabled: true,
+      value: [],
+      readOnly: true,
       chipListConfig: {
         showInput: false,
         labelField: 'label',
