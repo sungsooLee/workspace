@@ -12,7 +12,8 @@ export type com_ever_edu_lms_course_dto_res_CourseInternalResDto = {
     channelUuid?: string;
     channelName?: string;
     openingYear?: number;
-    isUsed?: boolean;
+    courseValidityStartDate?: string;
+    courseValidityEndDate?: string;
 };
 export namespace com_ever_edu_lms_course_dto_res_CourseInternalResDto {
     export enum courseType {

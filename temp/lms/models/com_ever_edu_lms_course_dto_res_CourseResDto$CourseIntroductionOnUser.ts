@@ -6,7 +6,6 @@ import type { com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto } fro
 import type { com_ever_edu_lms_course_dto_res_CourseResDto$TagNameWrapper } from './com_ever_edu_lms_course_dto_res_CourseResDto$TagNameWrapper';
 import type { com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser } from './com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser';
 import type { com_ever_edu_lms_curriculum_dto_CurriculumInfoDto } from './com_ever_edu_lms_curriculum_dto_CurriculumInfoDto';
-import type { com_ever_edu_xternal_channel_dto_res_ChannelInfoDto } from './com_ever_edu_xternal_channel_dto_res_ChannelInfoDto';
 export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseIntroductionOnUser = {
     courseUUID?: string;
     thumbnailUrl?: string;
@@ -16,7 +15,6 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseIntroductionOnUse
     shareCount?: number;
     starRating?: number;
     courseType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseIntroductionOnUser.courseType;
-    channelInfo?: com_ever_edu_xternal_channel_dto_res_ChannelInfoDto;
     primaryCategoryPath?: string;
     relatedCourse?: Array<com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto>;
     learningSpaceType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseIntroductionOnUser.learningSpaceType;

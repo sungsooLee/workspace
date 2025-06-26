@@ -29,6 +29,7 @@ import type { com_ever_edu_lms_course_dto_req_CourseSearchReqDto$SearchByAdminDt
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1 } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1';
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2 } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2';
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep3 } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep3';
+import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4';
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew';
 import type { com_ever_edu_lms_course_dto_req_SequenceDeleteReqDto } from '../models/com_ever_edu_lms_course_dto_req_SequenceDeleteReqDto';
 import type { com_ever_edu_lms_course_dto_req_SequenceSaveReqDto } from '../models/com_ever_edu_lms_course_dto_req_SequenceSaveReqDto';
@@ -56,7 +57,7 @@ import { request as __request } from '../core/request';
 export class BoService {
     /**
      * 테넌트 카테고리 조정(제한된 업데이트)
-     * 테넌트 카테고리를 조정(제한된 업데이트)한다.
+     * 테넌트 카테고리를 조정(제한된 업데이트)한다.<br>* 공통 카테고리는 사용여부만 변경됨.
      * @param tenantId
      * @param categoryId
      * @param requestBody
@@ -210,6 +211,35 @@ export class BoService {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/admin/api/v1/sequence/list-update',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 과정 생성 마법사4
+     * 과정 개설 > 4. 과정 상세 정보 저장
+     * @param courseId
+     * @param requestBody
+     * @returns number OK
+     * @throws ApiError
+     */
+    public static wizard4(
+        courseId: number,
+        requestBody: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4,
+    ): CancelablePromise<number> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/admin/api/v1/course/wizard4/{courseId}',
+            path: {
+                'courseId': courseId,
+            },
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -1041,18 +1071,43 @@ export class BoService {
     /**
      * 교육 장소 상세 조회
      * 교육장소 UUID로 상세정보를 조회한다.
-     * @param learningSpaceUuid
+     * @param learningSpaceId
      * @returns com_ever_edu_lms_space_dto_res_LearningSpaceAdminResDto OK
      * @throws ApiError
      */
-    public static findByUuid(
-        learningSpaceUuid: string,
+    public static findById(
+        learningSpaceId: number,
     ): CancelablePromise<com_ever_edu_lms_space_dto_res_LearningSpaceAdminResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/admin/api/v1/space/{learningSpaceUuid}',
+            url: '/admin/api/v1/space/{learningSpaceId}',
             path: {
-                'learningSpaceUuid': learningSpaceUuid,
+                'learningSpaceId': learningSpaceId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 교육 장소 코드 중복 확인
+     * 중복: TRUE, 중복아님: FALSE
+     * @param learningSpaceCode
+     * @returns boolean OK
+     * @throws ApiError
+     */
+    public static isDuplicateLearningSpaceCode(
+        learningSpaceCode: string,
+    ): CancelablePromise<boolean> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/space/duplicate/{learningSpaceCode}',
+            path: {
+                'learningSpaceCode': learningSpaceCode,
             },
             errors: {
                 400: `Bad Request`,
@@ -1350,7 +1405,7 @@ export class BoService {
      * @returns any OK
      * @throws ApiError
      */
-    public static findByUuid1(
+    public static findByUuid(
         courseId: number,
         courseType: 'ELEARNING1' | 'ELEARNING2' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
     ): CancelablePromise<any> {
