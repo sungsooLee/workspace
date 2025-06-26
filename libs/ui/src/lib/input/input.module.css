@@ -20,13 +20,19 @@
     @apply border-[var(--gray7)];
   }
   &.read_only {
-    @apply border-[1px] border-solid !border-[var(--gray1)] bg-[var(--gray1)] text-[var(--gray8)];
+    @apply border-[1px] border-solid !border-[var(--gray1)] bg-[var(--gray1)];
+    .input {
+      @apply text-[var(--gray8)];
+    }
     &.focused {
       @apply border-[var(--gray1)];
     }
   }
   &.disabled {
-    @apply border border-solid !border-[var(--gray1)] bg-[var(--gray1)] text-[var(--gray5)];
+    @apply border border-solid !border-[var(--gray1)] bg-[var(--gray1)];
+    .input {
+      @apply text-[var(--gray5)];
+    }
   }
   &.error {
     @apply border-[var(--status1)];
