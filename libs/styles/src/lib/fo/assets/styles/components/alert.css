@@ -3,16 +3,18 @@
   .nlp--alert {
     &.nlp--modal-content {
       h2 {
+        @apply !h-auto !border-0;
         & > div {
           @apply !title4-b !text-[var(--gray10)];
         }
       }
       .modal-content {
+        @apply px-[32px] !pb-[32px] !pt-0;
         & > div {
           @apply body-md text-[var(--gray35)];
         }
         & + div {
-          @apply !px-[32px];
+          @apply !p-[32px] !pt-[16px];
         }
       }
       &:has(.scrolled) .modal-content + div {

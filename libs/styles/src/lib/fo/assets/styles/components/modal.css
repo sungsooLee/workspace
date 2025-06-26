@@ -1,5 +1,5 @@
 .nlp--modal {
-  @apply !rounded-[8px];
+  @apply !rounded-[12px];
   h2 {
     @apply border-b-[1px] border-solid border-[var(--gray90)] px-[32px];
   }
@@ -27,7 +27,7 @@
   }
   .modal-content {
     & + div {
-      @apply px-[32px];
+      @apply p-[32px];
       .nlp--button {
         & + .nlp--button {
           @apply !ml-[8px];
