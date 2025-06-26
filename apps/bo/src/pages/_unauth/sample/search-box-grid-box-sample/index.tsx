@@ -51,6 +51,7 @@ const searchConfig: SearchBoxConfig = {
           { value: '', label: '전체' },
           { value: 'COMMON_CODE', label: t('채널') },
         ],
+        tooltip: '채널 설명',
       },
       {
         name: '테넌트',
