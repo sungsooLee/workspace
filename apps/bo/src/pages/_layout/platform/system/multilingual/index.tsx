@@ -91,6 +91,7 @@ function RouteComponent() {
   const gridConfig = useMemo(() => createGridConfig(handleCellClick), [handleCellClick]);
 
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
+  const gridStateRef = useRef<any>(null); // 그리드 상태 저장용
 
   // 커스텀 훅을 사용한 간단한 변경사항 확인
   const { confirmChanges } = useUnsavedChangesConfirm(originalDataRef.current, data?.content, {
@@ -119,6 +120,7 @@ function RouteComponent() {
       ...gConfig,
       onStateChange: async (state: any) => {
         if (!(await confirmChanges())) return;
+        gridStateRef.current = state; // 그리드 상태 저장
         setShouldUpdateOriginalData(true); // 소트 후 새 데이터로 originalData 업데이트
         originalOnStateChange?.(state);
       },
@@ -133,7 +135,7 @@ function RouteComponent() {
     setCurrentTargetLocale(getValues('targetLocale'));
     originalDataRef.current = null; // 검색 시 즉시 초기화
     setShouldUpdateOriginalData(true); // 검색 시 originalData 업데이트 허용
-    gridFetch(getValues());
+    gridFetch(getValues(), gridStateRef.current);
   };
 
   /**
