@@ -598,22 +598,18 @@ const { close: closeModal } = useModal();
         <div className="code_example">
           <pre className="code_block">
             <code>{`// import
-import { useEffect, useRef, useState } from 'react';
+import { useEffect } from 'react';
 import { Button, useModal } from '@learnway/ui';
 
 // 호출
 const { open: openModal, close: closeModal } = useModal();
 
 // 자동모달 띄우기
-const hasRun = useRef(false);
 useEffect(() => {
-  if (!hasRun.current) {
-    openModal({
-      width: 'xl', // sm(600px), md(800px), lg(1024px), xl(1400px)
-      content: <NoticeDetailPopup />, // 페이지 팝업 콤포넌트 or 팝업 내용
-    });
-    hasRun.current = true;
-  }
+  openModal({
+    width: 'xl', // sm(600px), md(800px), lg(1024px), xl(1400px)
+    content: <NoticeDetailPopup />, // 페이지 팝업 콤포넌트 or 팝업 내용
+  });
 }, [openModal]);`}</code>
           </pre>
         </div>

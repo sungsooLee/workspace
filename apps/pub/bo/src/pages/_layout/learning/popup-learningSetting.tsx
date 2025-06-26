@@ -1,6 +1,6 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import {
@@ -461,17 +461,12 @@ function RouteComponent() {
       </ModalContainer>
     );
   };
-  // 한번만 실행
-  const hasRun = useRef(false);
   useEffect(() => {
-    if (!hasRun.current) {
-      openModal({
-        // title: '',
-        width: 'xl', // sm(600px), md(800px), lg(1024px), xl(1400px)
-        content: <SettingItemContent />,
-      });
-      hasRun.current = true;
-    }
+    openModal({
+      // title: '',
+      width: 'xl', // sm(600px), md(800px), lg(1024px), xl(1400px)
+      content: <SettingItemContent />,
+    });
   }, [openModal]);
   return <div>Hello "/_layout/learning/popup-learningSetting"!</div>;
 }

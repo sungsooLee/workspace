@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import {
@@ -173,16 +173,11 @@ function RouteComponent() {
       </ModalContainer>
     );
   };
-  // 한번만 실행
-  const hasRun = useRef(false);
   useEffect(() => {
-    if (!hasRun.current) {
-      openModal({
-        width: 'xl', // sm(600px), md(800px), lg(1024px), xl(1400px)
-        content: <UserSearchContent />,
-      });
-      hasRun.current = true;
-    }
+    openModal({
+      width: 'xl', // sm(600px), md(800px), lg(1024px), xl(1400px)
+      content: <UserSearchContent />,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openModal]);
   return <div>Hello "/_layout/common/pop-user-search-check"!</div>;

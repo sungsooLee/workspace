@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import {
@@ -270,16 +270,12 @@ function RouteComponent() {
       </ModalContainer>
     );
   };
-  const hasRun = useRef(false);
   useEffect(() => {
-    if (!hasRun.current) {
-      openModal({
-        width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
-        content: <FileUploadContent />,
-      });
-      hasRun.current = true;
-    }
-  }, []);
+    openModal({
+      width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
+      content: <FileUploadContent />,
+    });
+  }, [openModal]);
   return (
     <div className={cn(styles.start, styles.wrap)}>
       {/* info_wrap : 상단 타이틀 버튼 영역 */}
