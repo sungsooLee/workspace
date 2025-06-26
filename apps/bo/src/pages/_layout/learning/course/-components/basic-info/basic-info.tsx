@@ -1,5 +1,8 @@
+import ChannelService from '@entities/channel/api/channel';
+import RoleManagerService from '@entities/role/api/role-manager';
 import { DropdownFormField } from '@features/form';
-import { CategoryChoiceModal, ChannelListModal, TeacherListModal } from '@features/learning/course';
+import { CategoryChoiceModal, ChannelListModal } from '@features/learning/course';
+import { UserGroupTabsChoiceModal } from '@features/shared';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import {
   Button,
@@ -18,7 +21,6 @@ import { FormRow2, FormSubTitle } from '@shared/ui';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TabFormRef } from '../common/tab-form-ref';
-import RoleManagerService from '@entities/role/api/role-manager';
 
 interface BasicInfoProps {
   dummy?: any;
@@ -30,7 +32,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
   ({ dummy, onSave, initialData }, ref) => {
     const { t } = useTranslation();
 
-    const { provider, getValues, fetchData, onFormValid, formState } = useDynamicForm2({
+    const { provider, getValues, fetchData, onFormValid, formState, watch } = useDynamicForm2({
       builders: [],
     });
 
@@ -73,9 +75,9 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             provider={provider}
             name={'유형'}
             label={'유형'}
+            required={true}
             element={
               <DropdownFormField
-                presetOptionLabel={t('LABEL.form.label.select', '선택')}
                 optionsConfig={{
                   codeGroup: CODE_GROUP['lms.course.CourseType'],
                 }}
@@ -93,10 +95,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             label={'채널'}
             element={
               <DropdownFormField
-                presetOptionLabel={t('LABEL.form.label.select', '선택')}
                 optionsConfig={{
-                  labelField: 'name',
-                  valueField: 'tenantId',
                   api: {
                     fn: RoleManagerService.fetchRoleMe,
                     params: 'BO',
@@ -118,15 +117,24 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
           <FormRow2
             provider={provider}
             name={'테넌트'}
-            label={'테넌트'}
             element={
               <CheckboxGroupFormField
-                options={[
-                  { value: 'tenant1', label: '테넌트1' },
-                  { value: 'tenant2', label: '테넌트2' },
-                ]}
+                optionsConfig={{
+                  api: {
+                    fn: ChannelService.getChannelDetail,
+                    params: getValues()?.채널,
+                    select: (data: any) => data?.tenantList || [],
+                    enabled: !!getValues()?.채널 && !!getValues()?.유형,
+                  },
+                  labelField: 'tenantName',
+                  valueField: 'tenantId',
+                }}
               />
             }
+            validation={{
+              required: true,
+              format: 'array',
+            }}
           />
         </ContentsRow>
         {/*카테고리*/}
@@ -147,6 +155,10 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
                 actionNode={<Button variant="text" size="sm" label={t('추가')} />}
               />
             }
+            validation={{
+              required: true,
+              format: 'array',
+            }}
           />
         </ContentsRow>
         {/*학습대상(유저그룹)*/}
@@ -157,7 +169,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             label={'학습대상'}
             element={
               <ChipListModalSelectorFormField
-                modalConfig={{ content: <TeacherListModal channelId={getValues()?.channelId} /> }}
+                modalConfig={{ content: <UserGroupTabsChoiceModal /> }}
                 chipList={{
                   labelField: 'name',
                   valueField: 'id',
@@ -179,16 +191,11 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             label={'언어 설정'}
             element={
               <DropdownFormField
-                presetOptionLabel={t('LABEL.form.label.select', '선택')}
                 optionsConfig={{
                   codeGroup: CODE_GROUP['pms.multilingual.LangCountryCode'],
                 }}
               />
             }
-            validation={{
-              required: true,
-              format: 'object',
-            }}
           />
         </ContentsRow>
         {/*과정명*/}
@@ -242,10 +249,6 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
                 }}
               />
             }
-            validation={{
-              required: true,
-              format: 'object',
-            }}
           />
           <FormRow2
             provider={provider}
