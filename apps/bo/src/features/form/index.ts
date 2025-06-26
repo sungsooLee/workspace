@@ -1,3 +1,4 @@
+export * from './ui/autocomplete-dropdown-form-field';
 export * from './ui/dropdown-form-field';
 export * from './ui/duplicate-check-input-form-field';
 export * from './ui/form-display';
