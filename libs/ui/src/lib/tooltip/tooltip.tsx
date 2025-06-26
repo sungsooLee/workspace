@@ -1,6 +1,6 @@
 import React, { forwardRef, ReactNode } from 'react';
 import { cn } from '@learnway/shared';
-import { IcoTooltipArrow } from '@learnway/icons';
+import { IcoTooltipArrow, IcoTooltipArrow02 } from '@learnway/icons';
 
 import * as Primitive from '@radix-ui/react-tooltip';
 import styles from './tooltip.module.css';
@@ -45,9 +45,9 @@ const TooltipComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Too
               {content}
               <span className={styles.arrow}>
                 {arrowType !== 'gray' ? (
-                  <IcoTooltipArrow width={10} height={10} fill="#333333" />
+                  <IcoTooltipArrow width={10} height={10} />
                 ) : (
-                  <IcoTooltipArrow width={10} height={10} fill="#333333" />
+                  <IcoTooltipArrow02 width={10} height={10} />
                 )}
               </span>
             </Primitive.Content>
