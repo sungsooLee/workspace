@@ -37,4 +37,14 @@ export const mutateOptions = {
   deploy: () => ({
     mutationFn: (payload: { locale: string }) => TranslationService.deployTranslation(payload),
   }),
+  createByExcel: () => ({
+    mtationFn: (
+      payload: {
+        keyTypeCode: string;
+        multilingualKey: string;
+        baseLanguage: string;
+        targetLanguage: string;
+      }[],
+    ) => TranslationService.createTranslationByExcel(payload),
+  }),
 };

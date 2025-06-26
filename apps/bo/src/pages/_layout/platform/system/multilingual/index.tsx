@@ -71,6 +71,13 @@ function RouteComponent() {
     },
   });
 
+  const { createByExcel } = useTranslation({
+    onSuccess: () => {
+      setShouldUpdateOriginalData(true);
+      gridFetch(getValues());
+    },
+  });
+
   const { deploy } = useDeployTranslation({});
   const router = useRouter();
   const [currentTargetLocale, setCurrentTargetLocale] = useState<string>('');
@@ -135,7 +142,7 @@ function RouteComponent() {
     setCurrentTargetLocale(getValues('targetLocale'));
     originalDataRef.current = null; // 검색 시 즉시 초기화
     setShouldUpdateOriginalData(true); // 검색 시 originalData 업데이트 허용
-    gridFetch(getValues(), gridStateRef.current);
+    gridFetch(getValues(), { ...gridStateRef.current, page: 0 });
   };
 
   /**
@@ -179,6 +186,7 @@ function RouteComponent() {
 
   const handleExcelUpload = async (data: Record<string, any>[]) => {
     console.log('🚀 ~ handleExcelUpload ~ data:', data);
+    createByExcel(data);
     // data post 처리 로직
   };
 
@@ -186,13 +194,13 @@ function RouteComponent() {
     <>
       <GridExcelUploadButton
         validateUrl="/multilingual/excelUploadValidation"
-        disabled={data && data.content && data.content.length === 0}
+        disabled={!data || (data && data.content && data.content.length === 0)}
         onUpload={handleExcelUpload}
       />
       <GridExcelDownloadButton
         url={`${PMSApiPrefix()}/multilingual/exportExcel`}
-        params={getValues()}
-        disabled={data && data.content && data.content.length === 0}
+        params={{ ...getValues(), targetLocale: getValues('targetLocale').toLowerCase() }}
+        disabled={!data || (data && data.content && data.content.length === 0)}
         onBeforeDownload={async () => {
           const keyTypeCode = getValues('keyTypeCode');
           const targetLocale = getValues('targetLocale');
