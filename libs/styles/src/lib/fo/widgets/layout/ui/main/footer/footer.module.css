@@ -4,7 +4,7 @@
   &.footer {
     @apply body_3_r relative bg-[--primary1] pb-[56px] pt-[56px] text-left text-[var(--gray7)];
     .footer_area {
-      @apply relative m-auto w-[1180px];
+      @apply relative m-auto w-[1440px] px-[40px];
 
       .menu_list {
         @apply flex-col;
