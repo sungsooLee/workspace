@@ -95,6 +95,8 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
               <DropdownFormField
                 presetOptionLabel={t('LABEL.form.label.select', '선택')}
                 optionsConfig={{
+                  labelField: 'name',
+                  valueField: 'tenantId',
                   api: {
                     fn: RoleManagerService.fetchRoleMe,
                     params: 'BO',
@@ -116,6 +118,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
           <FormRow2
             provider={provider}
             name={'테넌트'}
+            label={'테넌트'}
             element={
               <CheckboxGroupFormField
                 options={[
