@@ -5,6 +5,9 @@
 export type com_ever_edu_lms_blackwhite_dto_res_BlackAndWhiteDto$Combine = {
     combineType?: com_ever_edu_lms_blackwhite_dto_res_BlackAndWhiteDto$Combine.combineType;
     combineValue?: number;
+    combineValueName?: string;
+    combineValueType?: string;
+    combineValuePath?: string;
 };
 export namespace com_ever_edu_lms_blackwhite_dto_res_BlackAndWhiteDto$Combine {
     export enum combineType {

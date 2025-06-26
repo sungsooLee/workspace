@@ -8,7 +8,7 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2 = {
      */
     wizardStep: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2.wizardStep;
     /**
-     * 수강신청 사용 여부
+     * 수강신청 설정 여부
      */
     isEnrollRequired: boolean;
     /**

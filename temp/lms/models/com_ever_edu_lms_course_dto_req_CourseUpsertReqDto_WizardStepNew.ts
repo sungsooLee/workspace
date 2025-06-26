@@ -8,9 +8,9 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew = {
      */
     courseType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew.courseType;
     /**
-     * 채널id
+     * 채널 uuid
      */
-    channelId: number;
+    channelUuid: string;
     /**
      * 테넌트 ID 배열
      */

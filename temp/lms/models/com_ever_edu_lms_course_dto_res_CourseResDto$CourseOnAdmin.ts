@@ -132,7 +132,9 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
      */
     tagNames?: Array<com_ever_edu_lms_course_dto_res_CourseResDto$TagNameWrapper>;
     courseValidityStartDate?: string;
+    courseValidityStartHour?: number;
     courseValidityEndDate?: string;
+    courseValidityEndHour?: number;
 };
 export namespace com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin {
     export enum wizardStep {

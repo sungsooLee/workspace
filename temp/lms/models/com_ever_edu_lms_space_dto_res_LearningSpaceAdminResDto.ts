@@ -2,16 +2,15 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_xternal_tenant_dto_res_TenantResDto } from './com_ever_edu_xternal_tenant_dto_res_TenantResDto';
 export type com_ever_edu_lms_space_dto_res_LearningSpaceAdminResDto = {
     /**
-     * 교육공간을 사용하는 테넌트 목록
+     * 테넌트 ID
      */
-    tenants?: Array<com_ever_edu_xternal_tenant_dto_res_TenantResDto>;
+    tenantId?: number;
     /**
-     * 교육공간 UUID
+     * 교육공간 ID
      */
-    learningSpaceUuid?: string;
+    learningSpaceId?: number;
     /**
      * 교육공간 이름
      */
@@ -48,10 +47,6 @@ export type com_ever_edu_lms_space_dto_res_LearningSpaceAdminResDto = {
      * 메모
      */
     notes?: string;
-    /**
-     * 강의장 연계 가능 여부
-     */
-    isLectureHallCoordinated?: boolean;
     /**
      * 사용여부
      */

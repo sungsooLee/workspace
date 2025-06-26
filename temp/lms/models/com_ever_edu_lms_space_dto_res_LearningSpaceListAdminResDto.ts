@@ -14,11 +14,15 @@ export type com_ever_edu_lms_space_dto_res_LearningSpaceListAdminResDto = {
     /**
      * 교육공간 UUID
      */
-    learningSpaceUuid?: string;
+    learningSpaceId?: number;
     /**
      * 교육공간 이름
      */
     learningSpaceName?: string;
+    /**
+     * 온라인: URL, 오프라인: 주소
+     */
+    addressUrl?: string;
     /**
      * 미리보기(약도 또는 Link URL)
      */
