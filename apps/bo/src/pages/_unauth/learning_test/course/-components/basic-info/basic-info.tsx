@@ -1,6 +1,6 @@
 import { DropdownFormField } from '@features/form';
 import { CategoryChoiceModal, ChannelListModal, TeacherListModal } from '@features/learning/course';
-import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import {
   Button,
   CheckboxGroupFormField,
@@ -14,8 +14,7 @@ import {
   RadioGroupFormField,
   TextareaFormField,
 } from '@learnway/ui';
-import { FormRow, FormSubTitle } from '@shared/ui';
-import { t } from 'i18next';
+import { FormRow2, FormSubTitle } from '@shared/ui';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TabFormRef } from '../common/tab-form-ref';
@@ -31,7 +30,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
   ({ dummy, onSave, initialData }, ref) => {
     const { t } = useTranslation();
 
-    const { provider, getValues, fetchData, onFormValid, formState } = useDynamicForm({
+    const { provider, getValues, fetchData, onFormValid, formState } = useDynamicForm2({
       builders: [],
     });
 
@@ -70,7 +69,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         {/*유형, 채널*/}
         <ContentsRow>
           {/*유형*/}
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'유형'}
             label={'유형'}
@@ -84,7 +83,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             }
           />
           {/*채널*/}
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'채널'}
             label={'채널'}
@@ -105,7 +104,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         <FormSubTitle label={t('공개대상')} />
         {/*테넌트*/}
         <ContentsRow>
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'테넌트'}
             element={
@@ -120,7 +119,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         </ContentsRow>
         {/*카테고리*/}
         <ContentsRow>
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'카테고리'}
             label={'카테고리'}
@@ -140,7 +139,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         </ContentsRow>
         {/*학습대상(유저그룹)*/}
         <ContentsRow>
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'학습대상'}
             label={'학습대상'}
@@ -162,7 +161,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         <FormSubTitle label={t('과정소개')} />
         {/*언어 설정*/}
         <ContentsRow>
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'언어 설정'}
             label={'언어 설정'}
@@ -177,7 +176,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         </ContentsRow>
         {/*과정명*/}
         <ContentsRow>
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'과정명'}
             label={'과정명'}
@@ -186,7 +185,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         </ContentsRow>
         {/*과정 요약*/}
         <ContentsRow>
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'과정 요약'}
             label={'과정 요약'}
@@ -195,7 +194,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         </ContentsRow>
         {/*교육 내용*/}
         <ContentsRow>
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'교육 내용'}
             label={'교육 내용'}
@@ -203,7 +202,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
           />
         </ContentsRow>
         <ContentsRow>
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'난이도'}
             label={'난이도'}
@@ -215,7 +214,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
               />
             }
           />
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'교육공간'}
             label={'교육공간'}
@@ -234,7 +233,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         {/*담당자*/}
         <ContentsRow>
           {/*담당자*/}
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'담당자'}
             label={'담당자'}
@@ -247,7 +246,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             }
           />
           {/*담당자-연락처*/}
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'담당자연락처'}
             label={'담당자연락처'}
@@ -261,7 +260,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             }
           />
           {/*담당자-이메일*/}
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'담당자이메일'}
             label={'담당자이메일'}
@@ -271,7 +270,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         {/*운영자*/}
         <ContentsRow>
           {/*운영자*/}
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'운영자'}
             label={'운영자'}
@@ -284,7 +283,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             }
           />
           {/*운영자-연락처*/}
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'운영자연락처'}
             label={'운영자연락처'}
@@ -298,7 +297,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             }
           />
           {/*운영자-이메일*/}
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'운영자이메일'}
             label={'운영자이메일'}

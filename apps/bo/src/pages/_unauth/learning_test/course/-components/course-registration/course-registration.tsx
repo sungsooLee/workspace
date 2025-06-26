@@ -1,8 +1,8 @@
 import { ContentsRow, RadioGroupFormField } from '@learnway/ui';
 import React, { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FormRow, FormSubTitle, SwitchFormField } from '@shared/ui';
-import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { FormRow2, SwitchFormField } from '@shared/ui';
+import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import { DropdownFormField } from '@features/form';
 import { TabFormRef } from '../common/tab-form-ref';
 import { FormDisplay } from '@features/form/ui/form-display';
@@ -17,7 +17,7 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationPro
   ({ dummy, initialData }, ref) => {
     const { t } = useTranslation();
     // const { provider, getValues, fetchData } = dynamicForm;
-    const { provider, getValues, fetchData, onFormValid, formState } = useDynamicForm({
+    const { provider, getValues, fetchData, onFormValid, formState } = useDynamicForm2({
       builders: [],
     });
 
@@ -54,7 +54,7 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationPro
         {/*수강신청*/}
         {/* <FormSubTitle label={t('수강신청')} /> */}
         <ContentsRow type={'horizontal'} titleMode>
-          <FormRow
+          <FormRow2
             provider={provider}
             name={'수강신청'}
             label={'수강신청'}
@@ -65,7 +65,7 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationPro
         <FormDisplay provider={provider} dependencies={[{ name: '수강신청', value: true }]}>
           <ContentsRow>
             {/*승인 결재 라인*/}
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'승인 결재 라인'}
               label={'승인 결재 라인'}
@@ -78,7 +78,7 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationPro
               }
             />
             {/*정원*/}
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'정원'}
               label={'정원'}
@@ -94,7 +94,7 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationPro
           {/*수강신청 대기, 차수 중복수강*/}
           <ContentsRow>
             {/*수강신청 대기*/}
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'수강신청 대기'}
               label={'수강신청 대기'}
@@ -107,7 +107,7 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationPro
               }
             />
             {/*차수 중복수강*/}
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'차수 중복수강'}
               label={'차수 중복수강'}
@@ -123,7 +123,7 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationPro
           {/*사전 레벨테스트, 교재 배송지 수집*/}
           <ContentsRow>
             {/*사전 레벨테스트*/}
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'사전 레벨테스트'}
               label={'사전 레벨테스트'}
@@ -136,7 +136,7 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationPro
               }
             />
             {/*교재 배송지 수집*/}
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'교재 배송지 수집'}
               label={'교재 배송지 수집'}

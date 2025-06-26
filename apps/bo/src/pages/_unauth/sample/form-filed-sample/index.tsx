@@ -1,6 +1,5 @@
 import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
 import { ChannelListModal, ManagerListModal, TeacherListModal } from '@features/learning/course';
-import { useDynamicForm } from '@learnway/hooks';
 import {
   Button,
   CheckboxGroupFormField,
@@ -15,11 +14,12 @@ import {
   TextareaFormField,
   useModal,
 } from '@learnway/ui';
-import { ChipListFormField, FormRow, ThumbnailListFormField } from '@shared/ui';
+import { ChipListFormField, FormRow2, ThumbnailListFormField } from '@shared/ui';
 import { createFileRoute } from '@tanstack/react-router';
 import { ContentsButtons, MainContents, PageContainer } from '@widgets/layout';
 import { t } from 'i18next';
 import LabelMessagesService from '../../../../entities/label-messages-mock/api/label-messages';
+import { useDynamicForm2 } from '@learnway/hooks';
 
 export const Route = createFileRoute('/_unauth/sample/form-filed-sample/')({
   component: RouteComponent,
@@ -27,7 +27,7 @@ export const Route = createFileRoute('/_unauth/sample/form-filed-sample/')({
 
 function RouteComponent() {
   const { open: openModal } = useModal();
-  const { provider, onSubmit, control, getValues, watch } = useDynamicForm({ builders: [] });
+  const { provider, onSubmit, control, getValues, watch } = useDynamicForm2({ builders: [] });
 
   // DropdownCodeGroup 필드 값 감시
   const dropdownCodeGroupValue = watch('DropdownCodeGroup');
@@ -79,7 +79,7 @@ function RouteComponent() {
         <MainContents>
           {/* 라디오 api*/}
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'radioApi'}
               label={t('라디오 - api')}
@@ -102,7 +102,7 @@ function RouteComponent() {
           </ContentsRow>
           {/* 라디오 codeGroup*/}
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'radioCodeGroup'}
               label={t('라디오 - 코드그룹')}
@@ -111,7 +111,7 @@ function RouteComponent() {
           </ContentsRow>
           {/* 라디오 + custom node */}
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'radioCodeGroupWithNode'}
               label={t('라디오 - 코드그룹 - 노드')}
@@ -126,7 +126,7 @@ function RouteComponent() {
                       {
                         value: 'test1',
                         node: (
-                          <FormRow
+                          <FormRow2
                             provider={provider}
                             name={'라디오커스텀_인풋'}
                             value={''}
@@ -138,13 +138,13 @@ function RouteComponent() {
                         value: 'test2',
                         node: (
                           <>
-                            <FormRow
+                            <FormRow2
                               provider={provider}
                               name={'라디오커스텀_모달_아이디'}
                               type={'hidden'}
                               value={''}
                             />
-                            <FormRow
+                            <FormRow2
                               provider={provider}
                               name={'라디오커스텀_모달_이름'}
                               value={''}
@@ -171,7 +171,7 @@ function RouteComponent() {
           </ContentsRow>
           {/* dropdown codeGroup*/}
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'DropdownCodeGroup'}
               label={'Dropdown - DropdownFormField(codeGroup)'}
@@ -186,7 +186,7 @@ function RouteComponent() {
           </ContentsRow>
           {/* dropdown api*/}
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'DropdownApi'}
               label={'Dropdown - DropdownFormField(api)'}
@@ -206,8 +206,8 @@ function RouteComponent() {
           </ContentsRow>
           {/* 채널 */}
           <ContentsRow>
-            <FormRow provider={provider} name={'channelId'} type={'hidden'} />
-            <FormRow
+            <FormRow2 provider={provider} name={'channelId'} type={'hidden'} />
+            <FormRow2
               provider={provider}
               name={'channelName'}
               label={'채널 - InputModalSelectorFormField'}
@@ -222,7 +222,7 @@ function RouteComponent() {
           </ContentsRow>
           {/* Editor */}
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'에디터'}
               label={'Editor - EditorFormField'}
@@ -234,7 +234,7 @@ function RouteComponent() {
           </ContentsRow>
           {/* 과정명 */}
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'과정명'}
               label={t('과정명')}
@@ -244,7 +244,7 @@ function RouteComponent() {
           </ContentsRow>
           {/* 과정내용 */}
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'과정내용'}
               label={t('과정내용')}
@@ -253,7 +253,7 @@ function RouteComponent() {
           </ContentsRow>
           {/* ChipListFormField */}
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'태그'}
               label={t('태그 - 인풋 칩 리스트')}
@@ -270,7 +270,7 @@ function RouteComponent() {
           </ContentsRow>
           {/* 강사 */}
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'강사'}
               label={t('강사 - ChipListModalSelectorFormField')}
@@ -300,7 +300,7 @@ function RouteComponent() {
           </ContentsRow>
           {/* 강사2 */}
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'강사2'}
               label={t('강사 - ChipListModalSelectorFormField')}
@@ -329,7 +329,7 @@ function RouteComponent() {
           </ContentsRow>
           {/* checkbox codeGroup */}
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'checkboxCodeGroup'}
               label={t('checkbox - checkboxGroupFormField(codeGroup)')}
@@ -345,7 +345,7 @@ function RouteComponent() {
           </ContentsRow>
           {/* checkbox api */}
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'checkboxApi'}
               label={t('checkbox - checkboxGroupFormField(api)')}
@@ -367,8 +367,8 @@ function RouteComponent() {
           </ContentsRow>
           {/* 운영자 & 연락처 */}
           <ContentsRow>
-            <FormRow provider={provider} name={'managerId'} type={'hidden'} value={''} />
-            <FormRow
+            <FormRow2 provider={provider} name={'managerId'} type={'hidden'} value={''} />
+            <FormRow2
               provider={provider}
               name={'managerName'}
               label={t('운영자 - InputModalSelectorFormField')}
@@ -388,7 +388,7 @@ function RouteComponent() {
           </ContentsRow>
           {/* 테넌트 */}
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'테넌트'}
               label={t('테넌트 - 우측 액션버튼 + chip list')}
@@ -399,7 +399,7 @@ function RouteComponent() {
           </ContentsRow>
           {/* 공개범위 */}
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'공개범위'}
               label={t('공개범위 - ListModalSelectorFormField')}
@@ -429,7 +429,7 @@ function RouteComponent() {
           </ContentsRow>
           {/* 썸네일 리스트 */}
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'썸네일'}
               label={t('ThumbnailListFormField')}
@@ -443,7 +443,7 @@ function RouteComponent() {
           </ContentsRow>
           {/* 폰넘버 */}
           {/* <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'폰넘버'}
               element={
