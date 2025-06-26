@@ -6,7 +6,7 @@ import { SearchBox } from '@shared/ui/search-box';
 import { MyRoleExtendModal } from './my-role-extend-modal';
 import { Link, useRouter, useRouterState } from '@tanstack/react-router';
 import { roleManagerQueryOptions } from '@entities/role/service/role-manage.queries';
-import { dateDiff } from '@learnway/shared';
+import { DATE_TIME_FORMAT, dateDiff, formatDate } from '@learnway/shared';
 import { createColumnHelper } from '@tanstack/react-table';
 
 const MyRoleComponent = (route: any) => {
@@ -27,7 +27,15 @@ const MyRoleComponent = (route: any) => {
 
   function handleOnSearch(query: Record<string, any>) {
     console.log('### query', query);
-    gridFetch(compactValues(query));
+    gridFetch({
+      ...compactValues(query),
+      startDate: query.rolePeriod.from
+        ? formatDate(query.rolePeriod.from, DATE_TIME_FORMAT.DATE_SERVER)
+        : undefined,
+      endDate: query.rolePeriod.to
+        ? formatDate(query.rolePeriod.to, DATE_TIME_FORMAT.DATE_SERVER)
+        : undefined,
+    });
   }
 
   useEffect(() => {
@@ -88,7 +96,7 @@ const MyRoleComponent = (route: any) => {
 
 export const MyRole = MyRoleComponent;
 
-const searchConfig = {
+const searchConfig: any = {
   builders: [
     [
       {
@@ -96,9 +104,10 @@ const searchConfig = {
         type: 'dropdown',
         label: t('HRD 담당자 역할'),
         value: '',
+        format: 'object',
         presetOptionLabel: t('LABEL.form.label.all'),
         optionsConfig: {
-          codeGroup: CODE_GROUP['manual.bo.role.roidId'],
+          codeGroup: CODE_GROUP['manual.bo.my.role.roidId'],
         },
       },
       {
@@ -106,9 +115,11 @@ const searchConfig = {
         type: 'dropdown',
         label: t('테넌트'),
         value: '',
+        format: 'object',
         presetOptionLabel: t('LABEL.form.label.all'),
         optionsConfig: {
-          codeGroup: CODE_GROUP['manual.tenant.tenantId'],
+          codeGroup: CODE_GROUP['manual.bo.my.tenant.tenantId'],
+          // codeGroup: CODE_GROUP['manual.tenant.tenantId'],
         },
       },
       {
@@ -144,6 +155,15 @@ const searchConfig = {
           codeGroup: CODE_GROUP['pms.role.RoleApplicationStatus'],
         },
       },
+      {
+        name: 'rolePeriod',
+        type: 'date-range',
+        label: t('역할 기간'),
+        value: {
+          from: undefined,
+          to: undefined,
+        },
+      },
     ],
   ],
 };
@@ -167,26 +187,31 @@ const createGridColumns = (onCellClick: (data: any) => void) => [
     size: 227,
     cell: (info) => {
       return (
-        <Button variant="link" size="lg" onClick={() => onCellClick(info.row.original)}>
+        <Button
+          className="text-ellipsis"
+          variant="link"
+          size="lg"
+          onClick={() => onCellClick(info.row.original)}
+        >
           {info.row.original.roleName}
         </Button>
       );
     },
+    meta: {
+      sortKey: 'roleEntity.name',
+    },
   }),
-
   columnHelper.accessor('tenantName', {
     header: t('테넌트'),
     size: 227,
     meta: {
-      cellAlign: 'center',
+      sortKey: 'roleEntity.tenantEntity.tenantName',
     },
   }),
   columnHelper.accessor('channels', {
     header: t('채널'),
     size: 227,
-    meta: {
-      cellAlign: 'center',
-    },
+    enableSorting: false,
     cell: (info) => {
       const channelList = [
         {
@@ -218,13 +243,14 @@ const createGridColumns = (onCellClick: (data: any) => void) => [
   columnHelper.accessor('endDate', {
     header: t('역할 종료일'),
     size: 227,
+    meta: {
+      cellAlign: 'center',
+    },
   }),
   columnHelper.accessor('expired', {
     header: t('만료 여부'),
     size: 104,
-    meta: {
-      cellAlign: 'center',
-    },
+    enableSorting: false,
     cell: (info) => {
       const diff = dateDiff(info.row.original.endDate, new Date());
       if (diff !== undefined && 0 >= diff) {
@@ -237,8 +263,5 @@ const createGridColumns = (onCellClick: (data: any) => void) => [
   columnHelper.accessor('status', {
     header: t('신청 상태'),
     size: 104,
-    meta: {
-      cellAlign: 'center',
-    },
   }),
 ];

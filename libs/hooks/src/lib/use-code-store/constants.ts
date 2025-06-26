@@ -103,14 +103,15 @@ export const CODE_GROUP = {
   'pms.user.UserGroupType': 'pms.user.UserGroupType',
   'pms.user.UserState': 'pms.user.UserState',
   'vps.video.FfmpegTaskType': 'vps.video.FfmpegTaskType',
+  'pms.multilingual.LangCountryCode': 'pms.multilingual.LangCountryCode',
+  'pms.role.RoleType': 'pms.role.RoleType',
   'manual.code': 'manual.code',
   'manual.code2': 'manual.code2',
   'manual.company.companyId': 'manual.company.companyId',
   'manual.company.companyCode': 'manual.company.companyCode',
-  'manual.tenant.tenantId': 'manual.tenant.tenantId',
-  'pms.multilingual.LangCountryCode': 'pms.multilingual.LangCountryCode',
-  'pms.role.RoleType': 'pms.role.RoleType',
-  'manual.bo.role.roidId': 'manual.bo.role.roidId',
+  'manual.tenant.tenantId': 'manual.tenant.tenantId', // 전체 테넌트
+  'manual.bo.my.tenant.tenantId': 'manual.bo.my.tenant.tenantId', // 나의 테넌트
+  'manual.bo.my.role.roidId': 'manual.bo.my.role.roidId', // 나의 역할
   'manual.code.expired': 'manual.code.expired', // 만료여부 정상,만료
 };
 export type CODE_GROUP_TYPE = (typeof CODE_GROUP)[keyof typeof CODE_GROUP];

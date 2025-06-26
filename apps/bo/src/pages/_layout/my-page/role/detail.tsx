@@ -4,6 +4,7 @@ import { t } from 'i18next';
 
 import {
   CODE_GROUP,
+  compactValues,
   DynamicFormConfig,
   SearchBoxConfig,
   useCurrentRoute,
@@ -95,9 +96,18 @@ function RouteComponent() {
   /**
    * @param data
    */
-  const handleOnSearch = (data: any) => {
-    console.log('### handleOnSearch:: ', data);
-    gridFetch();
+  const handleOnSearch = (query: any) => {
+    console.log('### handleOnSearch:: ', query);
+    gridFetch({
+      roleId: state?.roleId,
+      ...compactValues(query),
+      createdDateFrom: query.createPeriod.from
+        ? formatDate(query.createPeriod.from, DATE_TIME_FORMAT.DATE_SERVER)
+        : undefined,
+      createdDateTo: query.createPeriod.to
+        ? formatDate(query.createPeriod.to, DATE_TIME_FORMAT.DATE_SERVER)
+        : undefined,
+    });
   };
 
   const handleCellClick = useCallback(
@@ -110,17 +120,6 @@ function RouteComponent() {
     },
     [openModal],
   );
-
-  // const handleCellClick = useCallback(
-  //   (data: any) => {
-  //     console.log('data', data);
-  //     openModal({
-  //       content: <MyRoleExtendModal data={selectedRow} type="view" />,
-  //       width: 'md',
-  //     });
-  //   },
-  //   [openModal],
-  // );
 
   const gridColumns = useMemo(() => createGridColumns(handleCellClick), [handleCellClick]);
 
@@ -262,12 +261,12 @@ const searchConfig: SearchBoxConfig = {
         },
       },
       {
-        name: 'requestDate',
+        name: 'createPeriod',
         type: 'date-range',
         label: t('신청일'),
         value: {
-          from: formUtils.nowDate({ unit: 'day', offset: -30 }),
-          to: formUtils.nowDate(),
+          from: undefined,
+          to: undefined,
         },
       },
     ],
@@ -315,6 +314,7 @@ const formConfig: DynamicFormConfig = {
       label: t('역할 설명'),
       value: '설명입니다',
       disabled: true,
+      readOnly: true,
     },
     // 테넌트
     {
@@ -396,6 +396,9 @@ const createGridColumns = (onCellClick: (data: any) => void) => [
   columnHelper.accessor('roleName', {
     header: t('HRD 담당자 역할'),
     size: 206,
+    meta: {
+      sortKey: 'roleEntity.name',
+    },
   }),
   columnHelper.accessor('startDate', {
     header: t('역할 시작일'),
@@ -424,6 +427,7 @@ const createGridColumns = (onCellClick: (data: any) => void) => [
     meta: {
       cellAlign: 'center',
     },
+    enableSorting: false,
     cell: (info) => {
       return (
         <Button variant="gray2" size="xs" onClick={() => onCellClick(info.row.original)}>
