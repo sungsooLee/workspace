@@ -231,7 +231,6 @@ const PrimitiveComponent = forwardRef<any, ReactSelectComponentProps>(
         )}
       >
         <Select
-          menuIsOpen
           id={uuid}
           ref={ref}
           options={options}
