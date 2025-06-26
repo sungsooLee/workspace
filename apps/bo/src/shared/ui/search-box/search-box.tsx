@@ -23,7 +23,7 @@ import { SelectOption } from '@learnway/hooks';
  * @param provider - 상태 및 폼 제어 객체
  * @param onSearch - 검색 실행 시 호출될 함수
  */
-const SearchBoxComponent: FC<SearchBoxProps> = ({ provider, onSearch }) => {
+const SearchBoxComponent: FC<SearchBoxProps> = ({ provider, onSearch, onBeforeSubmit }) => {
   const {
     builders: initBuilders,
     onFormChange,
@@ -81,12 +81,20 @@ const SearchBoxComponent: FC<SearchBoxProps> = ({ provider, onSearch }) => {
    *
    * @param event - 키보드 이벤트 객체
    */
-  const handleKeyDown = (event: KeyboardEvent<HTMLFormElement>) => {
+  const handleKeyDown = async (event: KeyboardEvent<HTMLFormElement>) => {
     // 엔터 키(Enter) 입력 시 폼 제출
     if (event.key === 'Enter') {
       event.preventDefault();
 
       const form = event.currentTarget;
+      if (!form) return;
+
+      // onBeforeSubmit이 있으면 먼저 실행
+      if (onBeforeSubmit) {
+        const shouldProceed = await onBeforeSubmit();
+        if (!shouldProceed) return;
+      }
+
       const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
       form.dispatchEvent(submitEvent);
     }

@@ -8,4 +8,5 @@ export interface SearchBoxProps {
   provider: SearchBoxProvider;
   // validator 객체는 각 필드에 대한 유효성 스키마를 포함합니다.
   onSearch?: (data: Record<string, any>) => void;
+  onBeforeSubmit?: () => Promise<boolean>;
 }
