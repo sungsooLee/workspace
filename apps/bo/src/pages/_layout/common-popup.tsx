@@ -631,7 +631,8 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'thumbnails',
       label: t('썸네일'),
-      type: 'thumbnail-list-v2',
+      type: 'thumbnail-list',
+      imageStorageType: 'public',
       max: 3,
       format: 'array',
       value: [],
