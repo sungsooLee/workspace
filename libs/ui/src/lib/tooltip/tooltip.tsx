@@ -12,11 +12,21 @@ interface TooltipComponentProps extends Primitive.TooltipProps {
   align?: 'start' | 'center' | 'end';
   className?: string;
   sideOffset?: number;
+  arrowType?: 'gray' | 'black';
 }
 
 const TooltipComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, TooltipComponentProps>(
   (
-    { children, className, content, side = 'bottom', align = 'start', sideOffset = 5, ...props },
+    {
+      children,
+      className,
+      content,
+      side = 'bottom',
+      align = 'start',
+      sideOffset = 5,
+      arrowType,
+      ...props
+    },
     ref,
   ) => {
     return (
@@ -34,7 +44,11 @@ const TooltipComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Too
             >
               {content}
               <span className={styles.arrow}>
-                <IcoTooltipArrow width={10} height={10} />
+                {arrowType !== 'gray' ? (
+                  <IcoTooltipArrow width={10} height={10} fill="#333333" />
+                ) : (
+                  <IcoTooltipArrow width={10} height={10} fill="#333333" />
+                )}
               </span>
             </Primitive.Content>
           </Primitive.Portal>

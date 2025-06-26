@@ -1,13 +1,38 @@
 .nlp--modal {
+  @apply !rounded-[8px];
   h2 {
-    @apply border-[var(--gray5)];
+    @apply border-b-[1px] border-solid border-[var(--gray90)] px-[32px];
+  }
+  .nlp--button {
+    &[aria-label='Close'] {
+      @apply right-[24px] top-[20px] !px-0;
+    }
+  }
+  .modal-content {
+    @apply p-[32px];
+    p {
+      @apply body-md text-[var(--gray35)];
+    }
   }
 }
 
 .nlp--modal-content {
+  & > h2 {
+    @apply !h-[65px];
+  }
   .auth--btn_wrap {
     button {
       @apply w-auto;
+    }
+  }
+  .modal-content {
+    & + div {
+      @apply px-[32px];
+      .nlp--button {
+        & + .nlp--button {
+          @apply !ml-[8px];
+        }
+      }
     }
   }
 }
