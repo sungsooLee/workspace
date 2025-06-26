@@ -67,7 +67,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
     {
       className,
       imageStorageType,
-      options: ownerOptions,
+      options: ownerOptions = [],
       description,
       max,
       uploadConfig,

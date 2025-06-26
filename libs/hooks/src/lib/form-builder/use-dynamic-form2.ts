@@ -1,7 +1,7 @@
 import { FormEvent, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { DynamicFormConfig, DynamicFormProvider, UseDynamicFormResult } from './type';
+import { DynamicFormConfig, DynamicFormProvider, FormConfig, UseDynamicFormResult } from './type';
 import { extractDynamicFormDefaultValues } from './util';
 import { buildJodObject, ValidatorConfig, ValidatorFormat } from '@learnway/shared';
 
@@ -11,9 +11,14 @@ import { buildJodObject, ValidatorConfig, ValidatorFormat } from '@learnway/shar
  * @param config - 동적 폼 설정 객체 (DynamicFormConfig)
  * @returns 동적 폼 생성 및 관리에 필요한 메서드와 provider 객체
  */
-export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynamicFormResult => {
+export const useDynamicForm2 = <T extends DynamicFormConfig>(config: T): UseDynamicFormResult => {
+  // 동적 필드 관리를 위한 상태
+  const [dynamicBuilders, setDynamicBuilders] = useState<FormConfig[]>(config.builders);
+  // 동적 validator 관리를 위한 상태
+  const [dynamicValidator, setDynamicValidator] = useState<any>(config.validator || {});
+
   // 초기값 생성: 각 빌더의 기본 값을 설정
-  const defaultValues = extractDynamicFormDefaultValues(config.builders);
+  const defaultValues = extractDynamicFormDefaultValues(dynamicBuilders);
 
   // 원본 값 상태 설정
   const [originalValues, setOriginalValues] = useState(defaultValues);
@@ -22,16 +27,22 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
    * Dynamic Config 에서는 좀더 편하게 쓰기 위해 약간의 타입이 달라서 buildJodObject 에 맞게 수정 한다.
    */
   const validator = useMemo<ValidatorConfig>(() => {
-    const { builders, validator = {} } = config; // validator가 없으면 빈 객체로 설정
-    return builders.reduce((acc, builder) => {
+    const validatorData = dynamicValidator; // 동적 validator 사용
+    return dynamicBuilders.reduce((acc, builder) => {
       const key = builder.name;
       const analogyFormat = typeof builder.value as ValidatorFormat;
       let format = builder.format || analogyFormat;
 
-      const existingValidator = validator[key] as any;
+      const existingValidator = validatorData[key] as any;
       if (existingValidator && existingValidator.format) {
         format = existingValidator.format;
       }
+
+      // validator 가 없으면 넘어간다.
+      if (!existingValidator) {
+        return acc;
+      }
+
       acc[key] = {
         format,
         required: { required: false },
@@ -70,7 +81,7 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
       }
       return acc;
     }, {} as ValidatorConfig);
-  }, []);
+  }, [dynamicBuilders, dynamicValidator]);
   // Zod 스키마 생성 (유효성 검증 스키마)
   const schema = buildJodObject(validator);
   // react-hook-form 훅 초기화
@@ -109,7 +120,7 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
       handleSubmit(
         (data) => {
           const objectParams: Record<string, any> = {};
-          config.builders.forEach((prop) => {
+          dynamicBuilders.forEach((prop) => {
             const value = data[prop.name];
             // TODO date-range 에 대한 form data set 변경이 필요한경우 여기에 작성
             objectParams[prop.name] = value ?? '';
@@ -194,6 +205,46 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
     setOriginalValues(data || defaultValues);
   };
 
+  /**
+   * 동적으로 필드를 등록하는 함수
+   *
+   * @param fieldConfig - 등록할 필드 설정
+   */
+  const registerField = (fieldConfig: FormConfig) => {
+    setDynamicBuilders((prev) => {
+      // 이미 등록된 필드인지 확인
+      const existingFieldIndex = prev.findIndex((builder) => builder.name === fieldConfig.name);
+
+      if (existingFieldIndex !== -1) {
+        // 기존 필드가 있으면 업데이트
+        const newBuilders = [...prev];
+        newBuilders[existingFieldIndex] = fieldConfig;
+        return newBuilders;
+      } else {
+        // 새 필드 추가
+        return [...prev, fieldConfig];
+      }
+    });
+
+    // react-hook-form에 필드 기본값 설정
+    if (!getValues()[fieldConfig.name]) {
+      setValue(fieldConfig.name, fieldConfig.value);
+    }
+  };
+
+  /**
+   * 동적으로 validator를 추가하는 함수
+   *
+   * @param fieldName - 필드 이름
+   * @param validation - validation 설정
+   */
+  const addValidator = (fieldName: string, validation: any) => {
+    setDynamicValidator((prev: any) => ({
+      ...prev,
+      [fieldName]: validation,
+    }));
+  };
+
   // control 확장: 기본 control에 isFieldRequired 메서드 추가
   const extendedControl: DynamicFormProvider['control'] = {
     ...control,
@@ -202,7 +253,7 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
 
   const getInitByBuilders = () => {
     const initData: { [key: string]: any } = {};
-    config.builders.forEach((item) => {
+    dynamicBuilders.forEach((item) => {
       clearErrors(item.name);
       initData[item.name] = item.value;
     });
@@ -213,7 +264,7 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
   return {
     provider: {
       control: extendedControl,
-      builders: config.builders,
+      builders: dynamicBuilders,
       fieldRefs,
       formState,
       onFormChange,
@@ -222,8 +273,8 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
       onFormFocus: handleFocus,
       originalValues,
       clearFormError: clearErrors,
-      registerField: () => null,
-      addValidator: () => null,
+      registerField,
+      addValidator,
     },
     onFormValid: trigger,
     fetchData,
