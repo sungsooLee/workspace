@@ -13,7 +13,7 @@ function RouteComponent() {
   return (
     <PageContainer>
       <MainContents>
-        <MyRole />
+        <MyRole route={Route} />
       </MainContents>
     </PageContainer>
   );

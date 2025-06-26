@@ -125,7 +125,7 @@ const ListComponent = function ({
       modifiers={[restrictToVerticalAxis]}
     >
       <SortableContext
-        items={options.map((item) => item[valueField])}
+        items={options?.map((item) => item?.[valueField])}
         strategy={verticalListSortingStrategy}
       >
         <ul

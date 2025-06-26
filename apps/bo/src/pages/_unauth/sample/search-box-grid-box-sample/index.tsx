@@ -114,6 +114,11 @@ const searchConfig: SearchBoxConfig = {
       },
     ],
   ],
+  validator: {
+    채널: {
+      required: true,
+    },
+  },
 };
 
 const gridConfig = {

@@ -4,51 +4,84 @@ import { DateRangePickerFormField } from '@features/learning/ui/resource/date-ra
 import {
   Button,
   ContentsRow,
+  Input,
   ModalBody,
   ModalContainer,
   ModalFooter,
   ModalTitle,
   RangeDatePicker,
+  Textarea,
   useModal,
 } from '@learnway/ui';
 import { FormRow, FormSubTitle } from '@shared/ui';
 import { t } from 'i18next';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { formUtils } from '@entities/form-utils';
 import { useGetRoleApplication, useRoleApplication } from '@entities/role/service/role-manage.hook';
 import { DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
 
-import styles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import dayjs from 'dayjs';
 
-type MyRoleModal = 'request' | 'view';
+// request - 연장신청, view 보기, approvel - 승인/반려
+type MyRoleModal = 'request' | 'view' | 'approvel';
 
 const MyRoleExtendModalComponent: FC<{
   type: MyRoleModal;
   data: any;
   callback?: () => void;
 }> = ({ type, data, callback }: { type: MyRoleModal; data: any; callback?: () => void }) => {
+  console.log('### modal data ', data);
   const { close: closeModal } = useModal();
   const { provider, fetchData, onSubmit, onFormChange } = useDynamicForm(formConfig);
 
   const { data: viewData } = useGetRoleApplication(data?.roleApplicationId ?? undefined);
   const { createRoleApplication } = useRoleApplication({});
 
+  const isApprovelInfoUse = useMemo(() => {
+    if (!viewData) return false;
+    if (viewData.lastModifiedBy && viewData.modifiedDate) {
+      return true;
+    } else {
+      return false;
+    }
+  }, [viewData]);
+
   useEffect(() => {
     if (!viewData) return;
 
+    if (type === 'request') {
+      onFormChange({
+        userUuid: viewData.userUuid,
+        roleId: viewData.roleId,
+        userName: `${viewData.companyName} > ${viewData.deptName} ${viewData.userName}`,
+        roleName: viewData.roleName,
+        currentRolePeriod: `${viewData.startDate} ~ ${viewData.endDate}`,
+      });
+      return;
+    }
+
     onFormChange({
+      requestRolePeriod: { from: new Date(viewData.startDate), to: new Date(viewData.endDate) },
       roleId: viewData.roleId,
       userUuid: viewData.userUuid,
-      userName: viewData.userName,
+      userName: `${viewData.companyName} > ${viewData.deptName} ${viewData.userName}`,
       roleName: viewData.roleName,
       currentRolePeriod: `${viewData.startDate} ~ ${viewData.endDate}`,
+      status: viewData.status,
+      createdDate: formatDate(viewData.createdDate, DATE_TIME_FORMAT.DATETIME_MIN),
+      reason: viewData.reason,
+      rejectReason: viewData.rejectReason ?? '',
     });
-  }, [viewData]);
+  }, [viewData, type]);
 
-  const isApprovedInfo = false;
   const handleOnSubmit = (node: any) => {
     console.log('### node', node);
+
+    if (type !== 'request') {
+      closeModal(node);
+      return;
+    }
+
     createRoleApplication(
       {
         userUuid: node.userUuid,
@@ -95,6 +128,7 @@ const MyRoleExtendModalComponent: FC<{
                 name={'requestRolePeriod'}
                 element={
                   <DateRangePickerFormField
+                    disabled={type === 'view'}
                     minDate={dayjs().toDate()}
                     maxDate={dayjs().add(2, 'year').toDate()}
                   />
@@ -115,31 +149,37 @@ const MyRoleExtendModalComponent: FC<{
             </ContentsRow>
           </FormDisplay> */}
           <ContentsRow className="mb-4">
-            <FormRow provider={provider} name={'reason'} />
+            <FormRow
+              provider={provider}
+              name={'reason'}
+              element={<Textarea disabled={type === 'view'} />}
+            />
           </ContentsRow>
           {type === 'view' && (
             <ContentsRow>
-              <FormRow provider={provider} name={'approveStatus'} />
-              <FormRow provider={provider} name={'requestDate'} />
+              <FormRow provider={provider} name={'status'} element={<Input disabled />} />
+              <FormRow provider={provider} name={'createdDate'} element={<Input disabled />} />
             </ContentsRow>
           )}
 
           {/* 승인 반려 정보 있을때 */}
-          {isApprovedInfo && (
+          {isApprovelInfoUse && (
             <>
               <FormSubTitle label={t('관리자 권한 승인 정보')} />
               <ContentsRow>
                 <FormRow provider={provider} name={'approveDate'} />
                 <FormRow provider={provider} name={'approveUser'} />
               </ContentsRow>
-              <ContentsRow>
-                <FormRow provider={provider} name={'rejectReason'} />
-              </ContentsRow>
+              {viewData?.rejectReason !== '' && (
+                <ContentsRow>
+                  <FormRow provider={provider} name={'rejectReason'} />
+                </ContentsRow>
+              )}
             </>
           )}
         </ModalBody>
         <ModalFooter>
-          <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
+          {/* <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={() => closeModal()} /> */}
           <Button type="submit" label={t('확인')} variant={'primary'} size={'lg'} />
         </ModalFooter>
       </ModalContainer>
@@ -192,8 +232,10 @@ const formConfig: DynamicFormConfig = {
       label: t('권한 신청 시작/종료일'),
       // value: '',
       value: {
-        from: formUtils.nowDate(),
-        to: formUtils.nowDate({ unit: 'day', offset: 30 }),
+        // from: formUtils.nowDate(),
+        // to: formUtils.nowDate({ unit: 'day', offset: 30 }),
+        from: undefined,
+        to: undefined,
       },
     },
     // {
@@ -216,13 +258,13 @@ const formConfig: DynamicFormConfig = {
       maxLength: 150,
     },
     {
-      name: 'approveStatus',
+      name: 'status',
       type: 'text',
       label: t('신청 상태'),
       value: '',
     },
     {
-      name: 'requestDate',
+      name: 'createdDate',
       type: 'text',
       label: t('신청일'),
       value: '',

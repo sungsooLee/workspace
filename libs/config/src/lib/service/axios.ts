@@ -71,8 +71,12 @@ export function initAxios(extendConfig?: axiosConfig) {
       },
       // response rejected 상태가 401인 경우 reissue
       onRejected: async (error: any) => {
-        console.log('onRejected', error);
+        console.log('- onRejected', error);
         const { config, response: errorResponse } = error;
+
+        console.log('|  config ', config);
+        console.log('|  config.url ', config.url);
+        console.log('|  check url ', config.url.includes('/token-reissue'));
         // error
         if (errorResponse?.status === 401 && !config.url.includes('/token-reissue')) {
           return await reissueProccess(error);
@@ -100,9 +104,15 @@ export function initAxios(extendConfig?: axiosConfig) {
 
   // accessToken 만료인 경우 refreshToken을 이용해 accessToken 갱신
   const reissueProccess = async (error: any): Promise<any> => {
+    console.log('reissueProccess', error);
     const { config, response: errorResponse } = error;
     const refresh_token = tokenService.refreshToken;
     if (!refresh_token) {
+      tokenService.clear();
+      if (typeof window !== 'undefined' && !config.url.includes('/login')) {
+        const loginPath = getLoginPath();
+        window.location.href = loginPath;
+      }
       return Promise.reject(error);
     }
 

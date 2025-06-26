@@ -16,6 +16,11 @@ const DateRangeFormFieldComponent: FC<any> = ({ value, onChange, onChangeGuideTe
   };
 
   useEffect(() => {
+    setFrom(value.from);
+    setTo(value.to);
+  }, [value]);
+
+  useEffect(() => {
     console.log('onChangeGuideText => ', onChangeGuideText);
   }, []);
 

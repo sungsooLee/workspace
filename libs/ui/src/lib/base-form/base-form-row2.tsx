@@ -1,4 +1,4 @@
-import React, { Children, FC, isValidElement, memo, ReactNode, useEffect, useMemo } from 'react';
+import React, { FC, isValidElement, memo, ReactNode, useEffect, useMemo } from 'react';
 import { cn } from '@learnway/shared';
 import boStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import foStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
@@ -6,9 +6,10 @@ import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
 import { Button, DynamicFormField, Tooltip } from '@learnway/ui';
 import {
   DynamicFormContextProvider,
+  FormConfig,
   FormRowProps,
   useDynamicFormContext,
-  useFormRow,
+  useFormRow2,
 } from '@learnway/hooks';
 import { FormGuideText } from './form-guide-text';
 import { useTranslation } from 'react-i18next';
@@ -35,6 +36,7 @@ const BaseFormRowComponent: FC<FormRowProps> = ({
   formFieldConfig,
   style,
   infoNode,
+  fieldConfig,
 }) => {
   return (
     <DynamicFormContextProvider>
@@ -47,12 +49,13 @@ const BaseFormRowComponent: FC<FormRowProps> = ({
         formFieldConfig={formFieldConfig}
         style={style}
         infoNode={infoNode}
+        fieldConfig={fieldConfig}
       />
     </DynamicFormContextProvider>
   );
 };
 
-export const BaseFormRow = memo(BaseFormRowComponent);
+export const BaseFormRow2 = memo(BaseFormRowComponent);
 
 const DynamicFormContainer: FC<FormRowProps> = ({
   className,
@@ -63,6 +66,7 @@ const DynamicFormContainer: FC<FormRowProps> = ({
   formFieldConfig,
   style = 'bo',
   infoNode,
+  fieldConfig,
 }) => {
   /*
    * 구조는 동일하고 스타일만 다르다고 전달 받아서 스타일 분리 만 합니다.
@@ -70,7 +74,27 @@ const DynamicFormContainer: FC<FormRowProps> = ({
    * */
   const styles = style === 'bo' ? boStyles : foStyles;
   const { t } = useTranslation();
-  const { formConfig, isRequired, error, fieldRefs } = useFormRow(provider, children, name);
+
+  // fieldConfig가 제공되면 필드를 등록하고 validation 설정
+  useEffect(() => {
+    if (fieldConfig && provider.registerField) {
+      // FormRow의 name prop을 fieldConfig.name으로 자동 설정
+      const configWithName = { ...fieldConfig, name } as FormConfig;
+      provider.registerField(configWithName);
+
+      // fieldConfig에 validation이 있으면 동적으로 추가
+      if (fieldConfig.validation && provider.addValidator) {
+        provider.addValidator(name, fieldConfig.validation);
+      }
+    }
+  }, [fieldConfig, name, provider]);
+
+  const { formConfig, isRequired, error, fieldRefs } = useFormRow2(
+    provider,
+    children,
+    name,
+    fieldConfig as FormConfig | undefined,
+  );
   const { guideText, infoArea, onChangeInfoArea, onChangeGuideText } = useDynamicFormContext();
   const FormConfigComponent = formFieldConfig[formConfig.type as keyof typeof formFieldConfig];
 
@@ -106,6 +130,11 @@ const DynamicFormContainer: FC<FormRowProps> = ({
       onChangeGuideText(formGuideText);
     }
   }, [formGuideText]);
+
+  // hidden 타입인 경우 화면에 렌더링하지 않음
+  if (formConfig.type === 'hidden') {
+    return null;
+  }
 
   return (
     <div

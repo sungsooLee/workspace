@@ -417,44 +417,50 @@ export const munu = [
 
 export const guide = [
   {
+    screenName: '폼 샘플',
+    pageId: '/sample/form-filed-sample',
+    pageType: 'Page',
+    memo: '', // 비고
+  },
+  {
     screenName: '폼타입3',
-    pageId: 'menu/type3',
+    pageId: '/menu/type3',
     pageType: 'Page',
     memo: '', // 비고
   },
   {
     screenName: '폼타입4',
-    pageId: 'menu/type4',
+    pageId: '/menu/type4',
     pageType: 'Page',
     memo: '', // 비고
   },
   {
     screenName: '폼타입5',
-    pageId: 'menu/type5',
+    pageId: '/menu/type5',
     pageType: 'Page',
     memo: '', // 비고
   },
   {
     screenName: '폼타입6',
-    pageId: 'menu/type6',
+    pageId: '/menu/type6',
     pageType: 'Page',
     memo: '', // 비고
   },
   {
     screenName: '공통팝업',
-    pageId: 'common-popup',
+    pageId: '/common-popup',
     pageType: 'Page',
     memo: '공통 팝업', // 비고
   },
   {
     screenName: '영상 플레이어',
-    pageId: 'player-demo',
+    pageId: '/player-demo',
     pageType: 'Page',
     memo: '영상 플레이어', // 비고
   },
   {
     screenName: 'SearchBox 데모',
-    pageId: 'search-box-demo',
+    pageId: '/search-box-demo',
     pageType: 'Page',
     memo: 'SearchBox 데모', // 비고
   },

@@ -1,7 +1,7 @@
 import { CodeApiConfig, CodeOption } from './types';
 import { CODE_GROUP } from './constants';
 import { httpService } from '@learnway/shared';
-import { PMSApiPrefix } from '@learnway/config';
+import { PMSApiPrefix, queryConfig } from '@learnway/config';
 
 /**
  * 기본 코드 조회 API 가 아닌 케이스만 작성 해준다.
@@ -76,20 +76,32 @@ export const codeOptions: CodeApiConfig = {
     },
     disableCache: true,
   },
-  [CODE_GROUP['manual.bo.role.roidId']]: {
+  [CODE_GROUP['manual.bo.my.tenant.tenantId']]: {
     api: async () => {
-      const data: any = await httpService.get<any>(`${PMSApiPrefix()}/roles/me`, {
-        siteScope: 'BO',
-      });
-
-      return [
-        ...data.map((item: any) => ({
-          label: item.name,
-          value: item.roleId,
-        })),
-      ];
+      const queryClient = queryConfig.getQueryClient();
+      const { tenants } = queryClient.getQueryData(['auth-user']);
+      if (!tenants) return [];
+      return tenants.map((item: any) => ({
+        label: item.tenantName,
+        value: item.tenantId,
+      }));
     },
-    // disableCache: true,
+    disableCache: true,
+  },
+  [CODE_GROUP['manual.bo.my.role.roidId']]: {
+    api: async () => {
+      // const data: any = await httpService.get<any>(`${PMSApiPrefix()}/roles/me`, {
+      //   siteScope: 'BO',
+      // });
+      const queryClient = queryConfig.getQueryClient();
+      const { roles } = queryClient.getQueryData(['auth-user']);
+      if (!roles) return [];
+      return roles.map((item: any) => ({
+        label: item.roleName,
+        value: item.roleId,
+      }));
+    },
+    disableCache: true,
   },
   [CODE_GROUP['manual.code.expired']]: {
     api: 'default',
