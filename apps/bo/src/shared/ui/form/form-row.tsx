@@ -24,6 +24,7 @@ const FormRowComponent: FC<FormRowProps> = ({
   name,
   element,
   infoNode,
+  fieldConfig,
 }) => {
   return (
     <BaseFormRow
@@ -34,6 +35,7 @@ const FormRowComponent: FC<FormRowProps> = ({
       children={children}
       element={element}
       infoNode={infoNode}
+      fieldConfig={fieldConfig}
     />
   );
 };

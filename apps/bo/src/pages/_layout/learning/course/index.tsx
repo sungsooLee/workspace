@@ -104,7 +104,7 @@ function RouteComponent() {
           excelButtons={
             <>
               <GridExcelUploadButton
-                url="/multilingual/exportExcel"
+                // url="/multilingual/exportExcel"
                 validateUrl="/multilingual/excelUploadValidation"
               />
               <GridExcelDownloadButton
