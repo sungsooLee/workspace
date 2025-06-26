@@ -559,6 +559,11 @@ const CompanyDetailComponent = (props: any, ref: any) => {
           >
             <FormRow provider={provider} name="playerControlLimitType" />
           </FormDisplay>
+          <div className={cn(formStyles.form_item)}>
+            <FormGuideText>
+              {t('회사설정 기준인 경우 과정 등록과 무관하게 회사 기준으로 제한이 됩니다.')}
+            </FormGuideText>
+          </div>
         </ContentsRowItem>
         <ContentsRowItem>
           <FormRow
@@ -572,6 +577,11 @@ const CompanyDetailComponent = (props: any, ref: any) => {
           >
             <FormRow provider={provider} name="playBackRateLimitType" />
           </FormDisplay>
+          <div className={cn(formStyles.form_item)}>
+            <FormGuideText>
+              {t('회사설정 기준인 경우 과정 등록과 무관하게 회사 기준으로 제한이 됩니다.')}
+            </FormGuideText>
+          </div>
         </ContentsRowItem>
       </ContentsRow>
       <ContentsRow>
@@ -589,9 +599,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
           </FormDisplay>
           <div className={cn(formStyles.form_item)}>
             <FormGuideText>
-              {t(
-                '회사설정 기준인 경우 과정 등록과 무관하게 회사 기준으로 제한이 됩니다. 테스트용 Guide Text',
-              )}
+              {t('회사설정 기준인 경우 과정 등록과 무관하게 회사 기준으로 제한이 됩니다.')}
             </FormGuideText>
           </div>
         </ContentsRowItem>
@@ -794,7 +802,6 @@ const formConfig: DynamicFormConfig = {
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
-      guideText: t('SSO 로그인 사용 여부를 설정합니다.'),
     },
     {
       name: 'ssoTypeList',
@@ -825,7 +832,6 @@ const formConfig: DynamicFormConfig = {
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
-      guideText: t('로그인 2차 인증 사용하는 경우 2차 인증 유형을 선택할 수 있습니다.'),
     },
     {
       name: 'twoFactorAuthType',
@@ -835,6 +841,7 @@ const formConfig: DynamicFormConfig = {
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.TwoFactorAuthType'],
       },
+      guideText: t('로그인 2차 인증 사용하는 경우 2차 인증 유형을 선택할 수 있습니다.'),
     },
     {
       name: 'twoFactorAuthPlatformTypeList',
@@ -844,7 +851,6 @@ const formConfig: DynamicFormConfig = {
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.TwoFactorAuthPlatformType'],
       },
-      guideText: t('2차 로그인 인증 여부를 설정할 수 있습니다.'),
     },
     {
       name: 'isUseWatermark',
@@ -883,7 +889,6 @@ const formConfig: DynamicFormConfig = {
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
-      guideText: t('회사설정 기준인 경우 과정 등록과 무관하게 회사 기준으로 제한이 됩니다.'),
     },
     {
       name: 'playerControlLimitType',
@@ -902,7 +907,6 @@ const formConfig: DynamicFormConfig = {
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
-      guideText: t('회사설정 기준인 경우 과정 등록과 무관하게 회사 기준으로 제한이 됩니다.'),
     },
     {
       name: 'playBackRateLimitType',

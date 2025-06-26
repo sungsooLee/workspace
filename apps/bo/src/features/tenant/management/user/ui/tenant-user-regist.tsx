@@ -602,7 +602,6 @@ const formConfig: DynamicFormConfig = {
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.SsoType'],
       },
-      guideText: t('SSO 로그인 사용 여부를 설정합니다.'),
     },
     {
       name: 'passwordAuthType',
@@ -643,7 +642,6 @@ const formConfig: DynamicFormConfig = {
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.TwoFactorAuthPlatformType'],
       },
-      guideText: t('2차 로그인 인증 여부를 설정할 수 있습니다.'),
     },
 
     // 종료
