@@ -174,7 +174,6 @@ function RouteComponent() {
     });
     update(uploadData);
   }, [data, isSubmitting, confirm, getValues, update]);
-  }, [data]);
 
   const handleExcelUpload = async (data: Record<string, any>[]) => {
     console.log('🚀 ~ handleExcelUpload ~ data:', data);
@@ -184,7 +183,6 @@ function RouteComponent() {
   const customExcelButtons = (
     <>
       <GridExcelUploadButton
-        // url="/multilingual/exportExcel"
         validateUrl="/multilingual/excelUploadValidation"
         disabled={data && data.content && data.content.length === 0}
         onUpload={handleExcelUpload}
