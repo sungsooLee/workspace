@@ -37,7 +37,7 @@ export interface ShuttleGridToChipsProps<T>
    * 우측 그리드의 제목
    */
   rightTitle?: string;
-  selectedItems: { id: string; name: string }[];
+  selectedItems?: { id: string; name: string }[];
   onSelectedChange: (newSelected: { id: string; name: string }[]) => void;
 }
 
