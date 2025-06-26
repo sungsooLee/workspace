@@ -66,6 +66,12 @@
           &[class*='title'] {
             @apply body_bo_2_b bg-[var(--gray1)] text-[var(--gray9)];
           }
+          &.show_icon {
+            @apply relative pl-[30px];
+            .depth_icon {
+              @apply absolute left-[8px] top-1/2 -translate-y-1/2;
+            }
+          }
 
           &:has(> div) {
             @apply w-full py-[4px];

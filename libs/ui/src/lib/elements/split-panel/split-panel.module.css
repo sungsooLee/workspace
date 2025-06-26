@@ -11,6 +11,9 @@
   }
 }
 
-[class*='divider'] + .start {
-  @apply mt-[32px];
+[class*='divider'],
+[class*='notice'] {
+  & + .start {
+    @apply mt-[32px];
+  }
 }

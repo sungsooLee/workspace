@@ -8,15 +8,16 @@ import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 import { EnGlobalConst, EnPageMode } from '@types';
 import { queryOptions } from '@entities/training-place/service/space.queries';
+import { Link } from '@tanstack/react-router';
 
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
 const TrainingPlaceListComponent = ({
-  mode,
+  pageMode,
   onAddClick,
   onSelect,
 }: {
-  mode: EnPageMode;
+  pageMode: EnPageMode;
   onAddClick?: any;
   onSelect?: any;
 }) => {
@@ -49,15 +50,34 @@ const TrainingPlaceListComponent = ({
     }),
     columnHelper.accessor('learningSpaceName', {
       header: t('교육공간명'),
+      cell: (info) => {
+        if (pageMode === EnPageMode.MODAL) return info.getValue();
+        else
+          return (
+            <Link
+              to={'/learning/training-place/detail'}
+              state={{
+                learningSpaceUuid: info.row.original.learningSpaceUuid,
+              }}
+              className="link"
+            >
+              {info.row.original.learningSpaceName}
+            </Link>
+          );
+      },
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('addressUrl', {
+      header: t('주소 / URL'),
       cell: (info) => info.getValue(),
       enableGrouping: false,
-      size: 180,
+      size: 390,
     }),
     columnHelper.accessor('isUsed', {
       header: t('사용여부'),
       cell: (info) => (info.getValue() ? t('사용') : t('미사용')),
       enableGrouping: false,
-      size: 180,
+      size: 150,
       meta: {
         cellAlign: 'center',
       },
@@ -68,26 +88,30 @@ const TrainingPlaceListComponent = ({
     if (onSelect) onSelect(row.original);
   };
 
-  switch (mode) {
+  switch (pageMode) {
     case EnPageMode.PAGE:
       columns.push(
         columnHelper.accessor('preview', {
           header: t('미리보기'),
-          cell: (info) => <Button variant="gray" label={t('미리보기')} />,
+          cell: (info) =>
+            info.row.original.onOffLineType === 'ONLINE' ? (
+              <Button
+                variant="gray"
+                label={t('미리보기')}
+                onClick={() => window.open(info.row.original.preview, '_blank')}
+              />
+            ) : (
+              <Button variant="gray" label={t('미리보기')} />
+            ),
           enableGrouping: false,
-          size: 180,
+          size: 150,
+          meta: {
+            cellAlign: 'center',
+          },
         }),
       );
       break;
     case EnPageMode.MODAL:
-      columns.push(
-        columnHelper.accessor('address', {
-          header: t('주소'),
-          cell: (info) => info.getValue(),
-          enableGrouping: false,
-          size: 180,
-        }),
-      );
       columns.push(
         columnHelper.accessor('preview', {
           header: t('선택'),
@@ -95,7 +119,10 @@ const TrainingPlaceListComponent = ({
             <Button variant="gray" label={t('선택')} onClick={() => onHandleSelect(info.row)} />
           ),
           enableGrouping: false,
-          size: 180,
+          size: 150,
+          meta: {
+            cellAlign: 'center',
+          },
         }),
       );
       break;
@@ -109,7 +136,7 @@ const TrainingPlaceListComponent = ({
             config={gConfig}
             columns={columns}
             title={t('교육공간 목록')}
-            showAdd={mode === EnPageMode.MODAL && onAddClick}
+            showAdd={pageMode === EnPageMode.MODAL && onAddClick}
             onAddClick={onAddClick}
             disabledSelectionToggle
           />

@@ -11,7 +11,7 @@ import {
   ShuttleGridToGridImperative,
 } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
-import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
+import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { queryOptions } from '@entities/channel/service/channel.queries';
 import { useQueryClient } from '@tanstack/react-query';
@@ -26,22 +26,35 @@ const ChannelShuttleModalComponent = forwardRef((_) => {
       [
         {
           name: 'tenantId',
-          type: 'text',
+          type: 'dropdown',
+          format: 'number',
           label: t('테넌트'),
-          format: 'object',
-          value: '',
+          value: undefined,
+          optionsConfig: {
+            codeGroup: CODE_GROUP['manual.tenant.tenantId'],
+          },
+          dropdownConfig: {
+            onchange: () => {
+              return '';
+            },
+            isSearchable: true,
+            placeholder: '입력 또는 선택',
+          },
         },
         {
           name: 'channelName',
-          type: 'text',
+          type: 'dropdown',
           label: t('채널'),
-          format: 'object',
           value: '',
+          options: [
+            { value: '', label: '전체' },
+            { value: 'COMMON_CODE', label: t('채널') },
+          ],
         },
         {
           name: 'channelOwnerId',
           label: t('채널 소유자'),
-          type: 'custom',
+          type: 'text',
           value: '',
           placeholder: '이름 / 소속 / 팀명',
         },
@@ -52,8 +65,8 @@ const ChannelShuttleModalComponent = forwardRef((_) => {
           value: '',
           options: [
             { value: '', label: t('전체') },
-            { value: 2, label: t('사용') },
-            { value: 3, label: t('미사용') },
+            { value: 'true', label: t('사용') },
+            { value: 'false', label: t('미사용') },
           ],
         },
       ],

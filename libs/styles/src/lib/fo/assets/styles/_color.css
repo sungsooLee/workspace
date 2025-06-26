@@ -62,8 +62,11 @@
   --blue50: #0056ff; /* default */
   --blue65: #4d88ff;
   --blue75: #80aaff;
-  --blue85: #e5eeff;
-  --blue95: #f5f8ff;
+  --blue85: #b2ccff;
+  --blue90: #c7daff;
+  --blue92: #d6e4ff;
+  --blue95: #e5eeff;
+  --blue98: #f5f8ff;
 
   /* red */
   --red10: #2e0700;
@@ -73,7 +76,10 @@
   --red65: #f05638;
   --red75: #f58b75;
   --red85: #fbbeb2;
-  --red95: #fcd2ca;
+  --red90: #fcd2ca;
+  --red92: #fddfd8;
+  --red95: #feefec;
+  --red98: #fef7f6;
 
   /* etc */
   --gradient1: linear-gradient(to right, #4d88ff, #7673fc);

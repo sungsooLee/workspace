@@ -108,17 +108,17 @@ import { Button } from '@learnway/ui';
             </pre>
           </div>
 
-          <h3 className="guide_tit3">ghost Button(아이콘만 들어갈때 사용)</h3>
+          <h3 className="guide_tit3">아이콘 Button(아이콘만 들어갈때 사용)</h3>
           <div className="flex_box">
             <div className="desc">
               <Button
-                variant="ghost"
+                variant="primary"
                 size="xs"
                 onlyIcon={true}
                 icon={<IcoPlus width={16} height={16} />}
               />
               <Button
-                variant="ghost"
+                variant="secondary"
                 size="sm"
                 onlyIcon={true}
                 icon={<IcoPlus width={16} height={16} />}
@@ -143,10 +143,33 @@ import { Button } from '@learnway/ui';
             <pre className="code_block">
               <code>
                 {`
-<Button variant="ghost" size="xs" onlyIcon={true} icon={<IcoPlus width={16} height={16} />} />
-<Button variant="ghost" size="sm" onlyIcon={true} icon={<IcoPlus width={16} height={16} />} />
+<Button variant="primary" size="xs" onlyIcon={true} icon={<IcoPlus width={16} height={16} />} />
+<Button variant="secondary" size="sm" onlyIcon={true} icon={<IcoPlus width={16} height={16} />} />
 <Button variant="ghost" size="md" onlyIcon={true} icon={<IcoPlus width={16} height={16} />} />
 <Button variant="ghost" size="lg" onlyIcon={true} icon={<IcoPlus width={16} height={16} />} />
+`}
+              </code>
+            </pre>
+          </div>
+
+          <h3 className="guide_tit3">soft Button</h3>
+          <div className="flex_box">
+            <div className="desc">
+              <Button variant="soft" size="xs" label={'버튼'} />
+              <Button variant="soft" size="sm" label={'버튼'} />
+              <Button variant="soft" size="md" label={'버튼'} />
+              <Button variant="soft" size="lg" disabled label={'버튼'} />
+            </div>
+          </div>
+
+          <div className="code_example">
+            <pre className="code_block">
+              <code>
+                {`
+<Button variant="soft" size="xs" label={'버튼'} />
+<Button variant="soft" size="sm" label={'버튼'} />
+<Button variant="soft" size="md" label={'버튼'} />
+<Button variant="soft" size="lg" disabled label={'버튼'} />
 `}
               </code>
             </pre>
@@ -254,7 +277,7 @@ import { Button } from '@learnway/ui';
                 <IcoPlus width={16} height={16} stroke="#131C30" />
               </Button>
               <Button variant="expand" size="sm" onlyIcon>
-                <IcoPlus width={16} height={16} stroke="#131C30" /> 확장
+                <IcoPlus width={16} height={16} stroke="#131C30" />
               </Button>
               <Button variant="expand" size="xs" onlyIcon>
                 <IcoPlus width={16} height={16} stroke="#131C30" />

@@ -4,15 +4,13 @@ import { IcoUploadCloud } from '@learnway/icons';
 import { t } from 'i18next';
 
 interface ExcelButtonsProps {
-  url?: string;
   validateUrl?: string;
-  onUpload?: () => Promise<void>;
+  onUpload?: (data: Record<string, any>) => Promise<void>;
   disabled?: boolean;
   className?: string;
 }
 
 const GridExcelUploadButtonComponent: React.FC<ExcelButtonsProps> = ({
-  url,
   validateUrl,
   onUpload,
   disabled = false,
@@ -22,13 +20,12 @@ const GridExcelUploadButtonComponent: React.FC<ExcelButtonsProps> = ({
 
   // 업로드
   const handleUpload = async () => {
-    if (onUpload) await onUpload();
-    if (url && validateUrl) {
-      console.log('?');
-      await openModal({
-        content: <ExcelUploadModal validateUrl={validateUrl} uploadUrl={url} />,
+    if (validateUrl) {
+      const result = await openModal({
+        content: <ExcelUploadModal validateUrl={validateUrl} />,
         width: 'lg',
       });
+      if (result) onUpload?.(result);
     }
   };
 

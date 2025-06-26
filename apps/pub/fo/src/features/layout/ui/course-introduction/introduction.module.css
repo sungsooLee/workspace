@@ -4,17 +4,8 @@
     h2 {
       @apply title_5_b text-[var(--gray9)];
     }
-    .learn_box {
-      @apply mt-[16px] rounded-[8px] bg-[var(--secondary6)] p-[24px];
-      .tit_box {
-        @apply mb-[16px] flex items-center;
-        img {
-          @apply mr-[8px] h-[32px] w-[32px];
-        }
-        strong {
-          @apply title_6_b text-[var(--gray8)];
-        }
-      }
+    .notice {
+      @apply mt-[24px];
     }
     .info_box {
       @apply mt-[40px];

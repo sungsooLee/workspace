@@ -1,11 +1,12 @@
 import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { ChipList, SelectOption, Button, Avatar } from '@learnway/ui';
-import { IcoArrowDown } from '@learnway/icons';
+import { IcoArrowDown, IcoSymbol } from '@learnway/icons';
 import { Review, ReviewRating, Curriculum } from '../../../../features/layout';
 
 import operatorStyles from '../../../../pages/_layout/course-introduction/operator.module.css';
 import definitionListStyles from '../../../../pages/_layout/course-introduction/definition-list.module.css';
+import dataNoticeStyles from '../../../../shared/ui/data-display/notice.module.css';
 import bulletStyles from '../../../../shared/ui/list/bullet.module.css';
 import styles from './introduction.module.css';
 
@@ -31,27 +32,19 @@ const CourseIntroductionCompoment = () => {
 
   return (
     <div className={`${styles.start} ${styles.introduction}`}>
-      <h2>과정소개</h2>
+      <h2>과정 한눈에 파악하기</h2>
 
-      {/* notice */}
-      <div className={styles.learn_box}>
-        <div className={styles.tit_box}>
-          <img src={learnImg} alt="" />
-          <strong>이런 걸 배워요!</strong>
+      {/* dataNoticeStyles module */}
+      <div className={`${dataNoticeStyles.start} ${dataNoticeStyles.notice} ${styles.notice}`}>
+        <div className={dataNoticeStyles.tit}>
+          <IcoSymbol width={20} height={20} />
+          AI가 요약한 과정 핵심내용
         </div>
-        {/* bullet module */}
-        <div className={`${bulletStyles.start} ${bulletStyles.list}`}>
-          <ul>
-            <li>
-              본 과정은 다양한 OPIC 문제에 대한 답변 연습을 통해 고급영어 말하기를 완성할 수 있도록
-              도와주는 과정입니다.
-            </li>
-            <li>
-              OPIC IH 이상의 등급을 받는 데 도움을 받을 수 있는 과정이며 다양한 OPIC 문제에 대한
-              답변 연습을 통해 고급 영어 말하기 능력을 키울 수 있습니다.
-            </li>
-          </ul>
-        </div>
+        <p className={dataNoticeStyles.txt}>
+          본 과정에서는 데이터 자동화, 보고서 생성, 반복 업무 최적화 등 실무에 바로 적용 가능한
+          파이썬 활용을 손쉽게 해결하는 방법을 단계별로 배웁니다. 비전공자도 이해할 수 있도록
+          단계별로 구성되어 있어 실무 문제 해결 역량 향상을 목표로 합니다.
+        </p>
       </div>
 
       {/* chip */}

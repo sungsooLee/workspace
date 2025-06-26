@@ -40,19 +40,11 @@ const AttachmentComponent = ({
   onPause,
   onResume,
   onRetry,
-  acceptFiles,
+  inputAccept,
   maxFileCount,
   maxFileSize,
   isDownloadCase = false,
 }: AttachmentProps) => {
-  const acceptFileString = useMemo(() => {
-    if (!acceptFiles || typeof acceptFiles === 'string') return '';
-    return acceptFiles
-      .map((acceptFile) => (acceptFile.startsWith('.') ? acceptFile : `.${acceptFile}`))
-      .join(', ')
-      .toUpperCase();
-  }, [acceptFiles]);
-
   const isOverMaxFileCount = files.length >= maxFileCount;
 
   const [checkedValues, setCheckedValues] = useState<string[]>([]);
@@ -322,7 +314,7 @@ const AttachmentComponent = ({
                 {'영역을 클릭하거나 파일을 마우스로 끌어놓으세요'}
               </strong>
               <span className={styles.file_guide}>{`모든 파일 확장자`}</span>
-              <input ref={inputRef} {...getInputProps()} accept={acceptFileString} />
+              <input ref={inputRef} {...getInputProps()} accept={inputAccept} />
             </Button>
           </div>
         ) : (

@@ -6,7 +6,4 @@
       @apply !translate-y-1/2;
     }
   }
-  [class*='notice'] + div {
-    @apply min-h-[calc(100vh-500px)];
-  }
 }

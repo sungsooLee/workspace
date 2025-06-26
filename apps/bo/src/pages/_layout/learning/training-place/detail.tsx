@@ -1,6 +1,6 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { t } from 'i18next';
-import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { Button } from '@learnway/ui';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
@@ -9,13 +9,19 @@ import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 import { TrainingPlaceDetail } from '@features/learning/training-place/training-place-detail';
 import { EnFormMode, EnPageMode } from '@types';
 
-export const Route = createFileRoute('/_layout/learning/training-place/regist')({
+export const Route = createFileRoute('/_layout/learning/training-place/detail')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   const router = useRouter();
+  const routerState = useRouterState();
+  const learningSpaceUuid = routerState.location.state?.learningSpaceUuid;
   const formRef = useRef(1);
+
+  useEffect(() => {
+    if (!learningSpaceUuid) router.navigate({ to: '/learning/training-place' });
+  }, [learningSpaceUuid]);
 
   const handleSaveClick = () => {
     console.log('formRef', formRef);
@@ -40,7 +46,12 @@ function RouteComponent() {
         </Button>
       </ContentsButtons>
       <MainContents>
-        <TrainingPlaceDetail ref={formRef} pageMode={EnPageMode.PAGE} mode={EnFormMode.ADD} />
+        <TrainingPlaceDetail
+          ref={formRef}
+          pageMode={EnPageMode.PAGE}
+          mode={EnFormMode.VIEW}
+          uuid={learningSpaceUuid}
+        />
       </MainContents>
     </PageContainer>
   );

@@ -73,5 +73,8 @@
   }
 }
 .title_mode {
-  @apply mb-[16px] pb-[16px] border-b-[1px] border-solid border-[var(--gray8)];
+  @apply mb-[16px] border-b-[1px] border-solid border-[var(--gray8)] pb-[16px];
+  & > div > label {
+    @apply font-semibold;
+  }
 }

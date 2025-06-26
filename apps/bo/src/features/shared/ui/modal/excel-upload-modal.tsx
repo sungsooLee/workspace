@@ -12,13 +12,11 @@ import {
   useModal,
 } from '@learnway/ui';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import { cn, httpService } from '@learnway/shared';
+import { acceptFilesToAccept, cn, httpService } from '@learnway/shared';
 import {
   IcoComplete02,
   IcoDownload,
   IcoFileExcel,
-  IcoPause,
-  IcoRefresh,
   IcoTrash03,
   IcoUploadCloud,
 } from '@learnway/icons';
@@ -31,7 +29,6 @@ import { t } from 'i18next';
 
 interface ExcelUploadModalProps {
   validateUrl: string;
-  uploadUrl: string;
   templateUrls?: {
     xlsx?: string;
     csv?: string;
@@ -39,13 +36,9 @@ interface ExcelUploadModalProps {
 }
 interface ValidationResult {
   success: boolean;
-  totalRows: number;
-  successRows: number;
-  failedRows: number;
-  errors?: Array<{
-    row: number;
-    message: string;
-  }>;
+  totalRows?: number;
+  successRows?: Record<string, any>[];
+  failedRows?: number[];
   errorMessage?: string;
 }
 
@@ -78,23 +71,12 @@ function toUploadFile(file: File): UploadFile {
   };
 }
 
-const ExcelUploadModalComponent = ({
-  validateUrl,
-  uploadUrl,
-  templateUrls,
-}: ExcelUploadModalProps) => {
+const ExcelUploadModalComponent = ({ validateUrl, templateUrls }: ExcelUploadModalProps) => {
   const acceptFiles = ['xlsx', 'xls'];
   const maxFileCount = 1;
   const maxFileSize = 1024 * 1024 * 10;
 
-  const acceptFileString = useMemo(
-    () =>
-      acceptFiles
-        .map((acceptFile: any) => (acceptFile.startsWith('.') ? acceptFile : `.${acceptFile}`))
-        .join(', ')
-        .toUpperCase(),
-    [acceptFiles],
-  );
+  const acceptFileString = useMemo(() => acceptFilesToAccept(acceptFiles), [acceptFiles]);
 
   const { close: closeModal } = useModal();
 
@@ -122,48 +104,46 @@ const ExcelUploadModalComponent = ({
         //   method: 'POST',
         //   body: formData,
         // });
-        const response = await httpService.post(`${PMSApiPrefix()}` + validateUrl, formData);
+        const response: {
+          result: boolean;
+          dataList?: Record<string, any>[];
+          faultRows?: number[];
+          totalRows?: number;
+        } = await httpService.post(`${PMSApiPrefix()}` + validateUrl, formData, {
+          timeout: 1000 * 60,
+        });
+        const {
+          result: success,
+          dataList: successRows,
+          faultRows: failedRows,
+          totalRows,
+        } = response;
 
-        // const result: ValidationResult = await response.json();
-        console.log(response);
-
-        // if (response.ok) {
-        //   setValidationResult(result);
-        //   setUploadStep('validated');
-        // } else {
-        //   throw new Error('유효성 검사 실패');
-        // }
-        setStatus(Status.COMPLETED);
+        setValidationResult({
+          success,
+          totalRows,
+          successRows,
+          failedRows,
+        });
+        if (success) {
+          setStatus(Status.COMPLETED);
+          setFiles((prev) => prev.map((_) => ({ ..._, status: Status.COMPLETED, progress: 100 })));
+        } else {
+          setStatus(Status.FAILED);
+          setFiles((prev) => prev.map((_) => ({ ..._, status: Status.FAILED, progress: 100 })));
+        }
       } catch (error: any) {
         console.error('Validation error:', error);
         setStatus(Status.FAILED);
-        if (!error.status) {
-          setFiles((prev) => prev.map((_) => ({ ..._, status: Status.FAILED })));
-          return setValidationResult({
-            success: false,
-            totalRows: 0,
-            successRows: 0,
-            failedRows: 0,
-            errorMessage: error.message,
-          });
-        }
-        setFiles((prev) => prev.map((_) => ({ ..._, status: Status.FAILED, progress: 100 })));
-        if (error.code === 'B116') {
-          return setValidationResult({
-            success: false,
-            totalRows: 0,
-            successRows: 0,
-            failedRows: 0,
-            errorMessage: error.message,
-          });
-        }
         setValidationResult({
           success: false,
           totalRows: 0,
-          successRows: 0,
-          failedRows: 0,
-          errors: [{ row: 0, message: '유효성 검사 중 오류가 발생했습니다.' }],
+          errorMessage: error.message,
         });
+        if (!error.status) {
+          setFiles((prev) => prev.map((_) => ({ ..._, status: Status.FAILED })));
+        }
+        setFiles((prev) => prev.map((_) => ({ ..._, status: Status.FAILED, progress: 100 })));
       } finally {
         setIsLoading(false);
       }
@@ -323,7 +303,7 @@ const ExcelUploadModalComponent = ({
                     {t('실패')}
                     {Boolean(validationResult?.failedRows) && (
                       <span className={cn(styles.data_text, styles.error)}>
-                        {validationResult?.failedRows} {t('행')}
+                        {validationResult?.failedRows?.length} {t('행')}
                       </span>
                     )}
                   </p>
@@ -333,7 +313,7 @@ const ExcelUploadModalComponent = ({
                     {t('완료')}
                     {Boolean(validationResult?.successRows) && (
                       <span className={cn(styles.data_text)}>
-                        {validationResult?.successRows} {t('행')}
+                        {validationResult?.successRows?.length} {t('행')}
                       </span>
                     )}
                   </p>
@@ -356,10 +336,12 @@ const ExcelUploadModalComponent = ({
             </div>
             <div className={styles.result_wrap}>
               {validationResult && (
-                <p className={styles.status_text}>
+                <pre className={styles.status_text}>
                   {validationResult?.errorMessage ||
-                    validationResult?.errors?.map((e) => `{${e.row}${t('행')}} ${e.message}`)}
-                </p>
+                    validationResult?.failedRows
+                      ?.map((row) => `{${row}${t('행')}} ${t('데이터를 확인해주세요.')}`)
+                      .join('\n')}
+                </pre>
               )}
             </div>
             <NoticeBox
@@ -378,8 +360,8 @@ const ExcelUploadModalComponent = ({
           label={t('확인')}
           variant={'primary'}
           size={'lg'}
-          onClick={() => closeModal()}
-          disabled
+          onClick={() => closeModal(validationResult?.successRows)}
+          disabled={!(status === Status.COMPLETED && validationResult?.successRows?.length)}
         />
       </ModalFooter>
     </ModalContainer>
