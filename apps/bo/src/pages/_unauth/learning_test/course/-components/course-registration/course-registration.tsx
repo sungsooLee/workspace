@@ -2,7 +2,7 @@ import { ContentsRow, RadioGroupFormField } from '@learnway/ui';
 import React, { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormRow, FormSubTitle, SwitchFormField } from '@shared/ui';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { DropdownFormField } from '@features/form';
 import { TabFormRef } from '../common/tab-form-ref';
 import { FormDisplay } from '@features/form/ui/form-display';
@@ -17,8 +17,9 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationPro
   ({ dummy, initialData }, ref) => {
     const { t } = useTranslation();
     // const { provider, getValues, fetchData } = dynamicForm;
-    const { provider, getValues, onSubmit, onFormValid, formState, fetchData } =
-      useDynamicForm(formConfig);
+    const { provider, getValues, fetchData, onFormValid, formState } = useDynamicForm({
+      builders: [],
+    });
 
     const handleOnSubmit = (data: any) => {
       console.log('data {} => ', data);
@@ -52,8 +53,13 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationPro
       <div>
         {/*수강신청*/}
         {/* <FormSubTitle label={t('수강신청')} /> */}
-        <ContentsRow type={'horizontal'}>
-          <FormRow provider={provider} name={'수강신청'} />
+        <ContentsRow type={'horizontal'} titleMode>
+          <FormRow
+            provider={provider}
+            name={'수강신청'}
+            label={'수강신청'}
+            element={<SwitchFormField />}
+          />
         </ContentsRow>
         {/*승인 결재 라인, 정원*/}
         <FormDisplay provider={provider} dependencies={[{ name: '수강신청', value: true }]}>
@@ -62,18 +68,12 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationPro
             <FormRow
               provider={provider}
               name={'승인 결재 라인'}
+              label={'승인 결재 라인'}
               element={
                 <DropdownFormField
-                  options={[
-                    {
-                      label: '결재라인1',
-                      value: '결재라인1',
-                    },
-                    {
-                      label: '결재라인2',
-                      value: '결재라인2',
-                    },
-                  ]}
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['pms.approval.ApprovalLineType'],
+                  }}
                 />
               }
             />
@@ -81,18 +81,12 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationPro
             <FormRow
               provider={provider}
               name={'정원'}
+              label={'정원'}
               element={
                 <RadioGroupFormField
-                  options={[
-                    {
-                      label: 'option1',
-                      value: 'option1',
-                    },
-                    {
-                      label: 'option2',
-                      value: 'option2',
-                    },
-                  ]}
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['mock.options.use'],
+                  }}
                 />
               }
             />
@@ -103,18 +97,12 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationPro
             <FormRow
               provider={provider}
               name={'수강신청 대기'}
+              label={'수강신청 대기'}
               element={
                 <RadioGroupFormField
-                  options={[
-                    {
-                      label: 'option1',
-                      value: 'option1',
-                    },
-                    {
-                      label: 'option2',
-                      value: 'option2',
-                    },
-                  ]}
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['lms.course.WaitListPickMethodType'],
+                  }}
                 />
               }
             />
@@ -122,18 +110,12 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationPro
             <FormRow
               provider={provider}
               name={'차수 중복수강'}
+              label={'차수 중복수강'}
               element={
                 <RadioGroupFormField
-                  options={[
-                    {
-                      label: 'option1',
-                      value: 'option1',
-                    },
-                    {
-                      label: 'option2',
-                      value: 'option2',
-                    },
-                  ]}
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['mock.options.possible'],
+                  }}
                 />
               }
             />
@@ -144,18 +126,12 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationPro
             <FormRow
               provider={provider}
               name={'사전 레벨테스트'}
+              label={'사전 레벨테스트'}
               element={
                 <RadioGroupFormField
-                  options={[
-                    {
-                      label: 'option1',
-                      value: 'option1',
-                    },
-                    {
-                      label: 'option2',
-                      value: 'option2',
-                    },
-                  ]}
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['mock.options.use'],
+                  }}
                 />
               }
             />
@@ -163,18 +139,12 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationPro
             <FormRow
               provider={provider}
               name={'교재 배송지 수집'}
+              label={'교재 배송지 수집'}
               element={
                 <RadioGroupFormField
-                  options={[
-                    {
-                      label: 'option1',
-                      value: 'option1',
-                    },
-                    {
-                      label: 'option2',
-                      value: 'option2',
-                    },
-                  ]}
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['mock.options.use'],
+                  }}
                 />
               }
             />
@@ -187,90 +157,90 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationPro
 
 export const CourseRegistration = CourseRegistrationComponent;
 
-const formConfig: DynamicFormConfig = {
-  builders: [
-    {
-      name: '수강신청',
-      type: 'switch',
-      label: '수강신청',
-      value: true,
-      switchConfig: {
-        label: (value: boolean) => (value ? '사용' : '미사용'),
-      },
-    },
-    // 승인 결재 라인
-    {
-      name: '승인 결재 라인',
-      type: 'custom',
-      label: '승인 결재 라인',
-      format: 'string',
-      value: '',
-    },
-    // 정원
-    {
-      name: '정원',
-      type: 'custom',
-      label: '정원',
-      format: 'string',
-      value: '',
-    },
-    // 수강신청 대기
-    {
-      name: '수강신청 대기',
-      type: 'custom',
-      label: '수강신청 대기',
-      format: 'string',
-      value: '',
-    },
-    // 차수 중복수강
-    {
-      name: '차수 중복수강',
-      type: 'custom',
-      label: '차수 중복수강',
-      format: 'string',
-      value: '',
-    },
-    // 사전 레벨테스트
-    {
-      name: '사전 레벨테스트',
-      type: 'custom',
-      label: '사전 레벨테스트',
-      format: 'string',
-      value: '',
-    },
-    // 교재 배송지 수집
-    {
-      name: '교재 배송지 수집',
-      type: 'custom',
-      label: '교재 배송지 수집',
-      format: 'string',
-      value: '',
-    },
-  ],
-  // validator: {
-  //   '승인 결재 라인': {
-  //     format: 'string',
-  //     required: true,
-  //   },
-  //   정원: {
-  //     format: 'string',
-  //     required: true,
-  //   },
-  //   '수강신청 대기': {
-  //     format: 'string',
-  //     required: true,
-  //   },
-  //   '차수 중복수강': {
-  //     format: 'string',
-  //     required: true,
-  //   },
-  //   '사전 레벨테스트': {
-  //     format: 'string',
-  //     required: true,
-  //   },
-  //   '교재 배송지 수집': {
-  //     format: 'string',
-  //     required: true,
-  //   },
-  // },
-};
+// const formConfig: DynamicFormConfig = {
+//   builders: [
+//     {
+//       name: '수강신청',
+//       type: 'switch',
+//       label: '수강신청',
+//       value: true,
+//       switchConfig: {
+//         label: (value: boolean) => (value ? '사용' : '미사용'),
+//       },
+//     },
+//     // 승인 결재 라인
+//     {
+//       name: '승인 결재 라인',
+//       type: 'custom',
+//       label: '승인 결재 라인',
+//       format: 'string',
+//       value: '',
+//     },
+//     // 정원
+//     {
+//       name: '정원',
+//       type: 'custom',
+//       label: '정원',
+//       format: 'string',
+//       value: '',
+//     },
+//     // 수강신청 대기
+//     {
+//       name: '수강신청 대기',
+//       type: 'custom',
+//       label: '수강신청 대기',
+//       format: 'string',
+//       value: '',
+//     },
+//     // 차수 중복수강
+//     {
+//       name: '차수 중복수강',
+//       type: 'custom',
+//       label: '차수 중복수강',
+//       format: 'string',
+//       value: '',
+//     },
+//     // 사전 레벨테스트
+//     {
+//       name: '사전 레벨테스트',
+//       type: 'custom',
+//       label: '사전 레벨테스트',
+//       format: 'string',
+//       value: '',
+//     },
+//     // 교재 배송지 수집
+//     {
+//       name: '교재 배송지 수집',
+//       type: 'custom',
+//       label: '교재 배송지 수집',
+//       format: 'string',
+//       value: '',
+//     },
+//   ],
+//   // validator: {
+//   //   '승인 결재 라인': {
+//   //     format: 'string',
+//   //     required: true,
+//   //   },
+//   //   정원: {
+//   //     format: 'string',
+//   //     required: true,
+//   //   },
+//   //   '수강신청 대기': {
+//   //     format: 'string',
+//   //     required: true,
+//   //   },
+//   //   '차수 중복수강': {
+//   //     format: 'string',
+//   //     required: true,
+//   //   },
+//   //   '사전 레벨테스트': {
+//   //     format: 'string',
+//   //     required: true,
+//   //   },
+//   //   '교재 배송지 수집': {
+//   //     format: 'string',
+//   //     required: true,
+//   //   },
+//   // },
+// };

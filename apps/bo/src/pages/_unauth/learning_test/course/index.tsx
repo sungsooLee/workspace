@@ -60,7 +60,7 @@ function RouteComponent() {
     });
     console.log('handleCourseOpenClick.value {} => ', value);
     router.navigate({
-      to: '/learning_test/course/create/view',
+      to: '/learning/course/create/view',
       state: {
         courseType: value, // 다국어 분류 - 공통코드
       },
@@ -103,7 +103,10 @@ function RouteComponent() {
           }
           excelButtons={
             <>
-              <GridExcelUploadButton validateUrl="/multilingual/excelUploadValidation" />
+              <GridExcelUploadButton
+                // url="/multilingual/exportExcel"
+                validateUrl="/multilingual/excelUploadValidation"
+              />
               <GridExcelDownloadButton
                 url={`${LMSApiPrefix()}/multilingual/exportExcel`}
                 params={getValues()}

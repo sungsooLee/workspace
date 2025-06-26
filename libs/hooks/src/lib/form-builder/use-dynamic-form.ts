@@ -37,6 +37,12 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
       if (existingValidator && existingValidator.format) {
         format = existingValidator.format;
       }
+
+      // validator 가 없으면 넘어간다.
+      if (!existingValidator) {
+        return acc;
+      }
+
       acc[key] = {
         format,
         required: { required: false },
