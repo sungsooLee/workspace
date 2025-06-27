@@ -13,7 +13,6 @@ import { SearchBoxProps } from './type';
 import { cn } from '@learnway/shared';
 import { IcoArrowDownDouble, IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
-import styles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { t } from 'i18next';
 import { SelectOption } from '@learnway/hooks';
 
