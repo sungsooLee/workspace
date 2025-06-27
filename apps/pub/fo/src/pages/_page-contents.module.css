@@ -2,10 +2,10 @@
 .start {
   @apply flex items-start justify-between;
   .main_contents {
-    @apply flex-1;
+    @apply w-[880px] flex-1;
   }
   .sub_contents {
-    @apply relative ml-[40px] w-[360px];
+    @apply relative ml-[40px] w-[440px];
   }
   .vertical_line {
     @apply hidden;

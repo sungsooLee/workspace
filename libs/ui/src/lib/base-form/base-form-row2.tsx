@@ -13,6 +13,7 @@ import {
 } from '@learnway/hooks';
 import { FormGuideText } from './form-guide-text';
 import { useTranslation } from 'react-i18next';
+import { log } from 'console';
 
 /**
  * FormRowComponent
@@ -75,20 +76,6 @@ const DynamicFormContainer: FC<FormRowProps> = ({
   const styles = style === 'bo' ? boStyles : foStyles;
   const { t } = useTranslation();
 
-  // fieldConfig가 제공되면 필드를 등록하고 validation 설정
-  useEffect(() => {
-    if (fieldConfig && provider.registerField) {
-      // FormRow의 name prop을 fieldConfig.name으로 자동 설정
-      const configWithName = { ...fieldConfig, name } as FormConfig;
-      provider.registerField(configWithName);
-
-      // fieldConfig에 validation이 있으면 동적으로 추가
-      if (fieldConfig.validation && provider.addValidator) {
-        provider.addValidator(name, fieldConfig.validation);
-      }
-    }
-  }, [fieldConfig, name, provider]);
-
   const { formConfig, isRequired, error, fieldRefs } = useFormRow2(
     provider,
     children,
@@ -120,11 +107,28 @@ const DynamicFormContainer: FC<FormRowProps> = ({
   const formInfoArea = useMemo(() => extractFormItem(children, 'FormInfoArea'), [children]);
   const formGuideText = useMemo(() => extractFormItem(children, 'FormGuideText'), [children]);
 
+  // fieldConfig가 제공되면 필드를 등록하고 validation 설정
+  useEffect(() => {
+    if (fieldConfig && provider.registerField) {
+      console.log('fieldConfig', fieldConfig);
+      // FormRow의 name prop을 fieldConfig.name으로 자동 설정
+      const configWithName = { ...fieldConfig, name } as FormConfig;
+      provider.registerField(configWithName);
+
+      // fieldConfig에 validation이 있으면 동적으로 추가
+      if (fieldConfig.validation && provider.addValidator) {
+        provider.addValidator(name, fieldConfig.validation);
+      }
+    }
+  }, [name]); // name만 dependency로 사용하여 무한 루프 방지
+
   useEffect(() => {
     if (formInfoArea) {
+      console.log('formInfoArea', formInfoArea);
       onChangeInfoArea(formInfoArea);
     }
   }, [formInfoArea]);
+
   useEffect(() => {
     if (formGuideText) {
       onChangeGuideText(formGuideText);

@@ -1,4 +1,4 @@
-import React, { FC, memo } from 'react';
+import React, { FC, memo, useEffect } from 'react';
 import { BaseFormRow2 } from '@learnway/ui';
 import { FormRowFieldConfig, FormRowProps as BaseFormRowProps } from '@learnway/hooks';
 import { formFieldConfig } from './form-field-config';
@@ -15,6 +15,7 @@ import { formFieldConfig } from './form-field-config';
  * @param children - 폼 필드들 (DynamicFormField 포함)
  * @param name - 필드 이름 (필수)
  * @param element - 렌더링할 폼 필드 컴포넌트
+ * @param labelKey - 번역 키 (label 대신 사용)
  */
 type FormRowProps = Omit<BaseFormRowProps, 'formFieldConfig' | 'fieldConfig'> &
   Partial<Omit<FormRowFieldConfig, 'name'>>;
@@ -29,6 +30,7 @@ const FormRowComponent: FC<FormRowProps> = ({
   // fieldConfig 속성들을 개별 props로 직접 받음
   type,
   label,
+  labelKey, // 새로운 prop
   value,
   description,
   placeholder,
@@ -41,7 +43,14 @@ const FormRowComponent: FC<FormRowProps> = ({
   options,
   ...restProps
 }) => {
-  // 개별 props들로 fieldConfig 구성
+  // validation prop이 있으면 동적으로 등록
+  // useEffect(() => {
+  //   if (validation && provider.addValidator && name) {
+  //     provider.addValidator(name, validation);
+  //   }
+  // }, [name, JSON.stringify(validation), provider.addValidator]); // JSON.stringify로 안전한 비교
+
+  // 간단한 fieldConfig 구성
   const fieldConfig: FormRowFieldConfig = {
     type: type || 'custom',
     label,

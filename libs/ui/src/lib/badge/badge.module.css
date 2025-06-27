@@ -71,10 +71,10 @@
           @apply text-white;
         }
       }
-      &.line {
-        @apply border border-solid border-[var(--secondary1)] bg-white;
+      &.fill {
+        @apply border border-solid border-[var(--secondary6)] bg-[var(--secondary6)];
         .label {
-          @apply text-[var(--secondary1)];
+          @apply text-[var(--secondary3)];
         }
       }
       &.cancel {

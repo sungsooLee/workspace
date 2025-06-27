@@ -9,6 +9,7 @@ import {
   GridBox,
   useModal,
   useGridBox,
+  Divider,
 } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
@@ -18,7 +19,6 @@ import { queryOptions } from '@entities/department/service/department.queries';
 
 const UserGroupModalComponent: FC<any> = () => {
   const { close: closeModal } = useModal();
-  const [deptOptions, setDeptOptions] = useState<any[]>([]);
 
   const searchConfig: SearchBoxConfig = {
     builders: [
@@ -32,24 +32,17 @@ const UserGroupModalComponent: FC<any> = () => {
         {
           name: 'opt1',
           type: 'text',
-          label: t('본부/사업부'),
+          label: t('실'),
           value: '',
         },
-        {
-          name: 'dept',
-          type: 'dropdown',
-          label: t('부서'),
-          value: '',
-          options: deptOptions,
-        },
-      ],
-      [
         {
           name: 'num',
           type: 'text',
           label: t('소속'),
           value: '',
         },
+      ],
+      [
         {
           name: 'userNo',
           type: 'text',
@@ -104,15 +97,14 @@ const UserGroupModalComponent: FC<any> = () => {
       <ModalBody>
         <div className={popupStyles.wrap}>
           <SearchBox provider={sProvider} onSearch={handleOnSearch} />
-          <div className={popupStyles.container}>
-            <GridBox
-              onRowSelect={handleRowSelect}
-              config={config}
-              columns={columns}
-              showColumnSettings={false}
-              title={t('유저조회목록')}
-            />
-          </div>
+          <Divider />
+          <GridBox
+            onRowSelect={handleRowSelect}
+            config={config}
+            columns={columns}
+            showColumnSettings={false}
+            title={t('유저조회목록')}
+          />
         </div>
       </ModalBody>
       <ModalFooter>

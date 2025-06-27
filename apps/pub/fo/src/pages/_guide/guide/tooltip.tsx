@@ -13,6 +13,7 @@ function RouteComponent() {
   //       <h4 className="bg-gray-3 h-20">Content Body</h4>
   //     </div>
   //   );
+
   return (
     <div>
       <h2 className="guide_tit2">Tooltip Component Guide</h2>
@@ -45,13 +46,13 @@ import { IcoAlertCircle } from '@learnway/icons'; // 아이콘
       </div>
 
       <div className="group">
-        <h3 className="guide_tit3">툴립 (아이콘) side="top" align="start"</h3>
+        <h3 className="guide_tit3">툴립 (아이콘) bgType="gray"</h3>
         <h4 className="guide_tit4">side="top" align="start"</h4>
         <div className="flex_box">
           <div className="desc">
             <Tooltip side="top" align="start" content={'tooltip content'} bgType="gray">
               <Button onlyIcon>
-                <IcoAlertCircle width={16} height={17} fill="#A9AFB8" /> (side="top" align="start")
+                <IcoAlertCircle width={16} height={17} fill="#A9AFB8" />
               </Button>
             </Tooltip>
           </div>
@@ -137,7 +138,7 @@ import { IcoAlertCircle } from '@learnway/icons'; // 아이콘
         <h4 className="guide_tit4">side="left" align="end"</h4>
         <div className="flex_box">
           <div className="desc">
-            <Tooltip side="right" align="end" content={'tooltip content'} bgType="gray">
+            <Tooltip side="left" align="end" content={'tooltip content'} bgType="gray">
               <Button onlyIcon>
                 <IcoAlertCircle width={16} height={17} fill="#A9AFB8" />
               </Button>

@@ -12,7 +12,7 @@ import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { t } from 'i18next';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/_unauth/learning_test/course/')({
@@ -23,7 +23,10 @@ function RouteComponent() {
   const router = useRouter();
   const { t } = useTranslation();
   const { open: openModal } = useModal();
+
+  // builders 방식으로 폼 설정 (validation이 제대로 작동하도록)
   const { provider, getValues, onSubmit } = useDynamicForm2();
+
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
   const [selectedCourses, setSelectedCourses] = useState<any[]>([]);
 
@@ -69,6 +72,8 @@ function RouteComponent() {
     });
     // 선택한 유형의 등록 페이지로 이동
   };
+
+  console.log('xxxxx');
 
   return (
     <PageContainer>

@@ -237,7 +237,8 @@ function RouteComponent() {
 
   useEffect(() => {
     const updateTargetLocaleOptions = async () => {
-      const allOptions = await getCode(CODE_GROUP['pms.multilingual.LangCountryCode']);
+      const langCode = await getCode(CODE_GROUP['pms.multilingual.LangCountryCode']);
+      const allOptions = langCode.filter((option) => option.value !== 'KO');
       const baseOptions = [{ value: '', label: t('LABEL.form.label.select') }];
       const currentTargetLocale = getValues('targetLocale');
 

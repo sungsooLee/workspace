@@ -117,7 +117,7 @@ import { Badge } from '@learnway/ui';
             <Badge option={{ label: 'text', value: 'A' }} variant="text" status="new" />
             <Badge option={{ label: '승인', value: 'B' }} variant="text" status="primary" />
             <Badge option={{ label: '승인대기', value: 'C' }} variant="text" status="warning" />
-            <Badge option={{ label: '대표', value: 'D' }} variant="text" status="line" />
+            <Badge option={{ label: '대표', value: 'D' }} variant="text" status="fill" />
             <Badge option={{ label: '반려', value: 'E' }} variant="text" status="cancel" />
           </div>
         </div>
