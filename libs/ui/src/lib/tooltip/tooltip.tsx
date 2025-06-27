@@ -44,11 +44,7 @@ const TooltipComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Too
             >
               {content}
               <span className={styles.arrow}>
-                {bgType !== 'gray' ? (
-                  <IcoTooltipArrow width={10} height={10} />
-                ) : (
-                  <IcoTooltipArrow02 width={10} height={10} />
-                )}
+                {bgType !== 'gray' ? <IcoTooltipArrow /> : <IcoTooltipArrow02 />}
               </span>
             </Primitive.Content>
           </Primitive.Portal>
