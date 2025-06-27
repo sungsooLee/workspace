@@ -31,7 +31,7 @@ const TooltipComponent = forwardRef<React.ElementRef<typeof Primitive.Root>, Too
   ) => {
     return (
       <Primitive.Provider>
-        <Primitive.Root open>
+        <Primitive.Root>
           <Primitive.Trigger className={cn(styles.tooltip_btn, className)}>
             {children}
           </Primitive.Trigger>
