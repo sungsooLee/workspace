@@ -16,3 +16,16 @@ export interface AllUserGroupResponse {
   userCount: number;
   userUuids: string[];
 }
+
+export interface UserGroupsParam {
+  userGroupType: UserGroupType;
+  userGroupName: string;
+}
+
+export interface UsersByIdsParam {
+  companyName: string;
+  deptName: string;
+  employeeNumber: string;
+  name: string;
+  accountStatus: string;
+}

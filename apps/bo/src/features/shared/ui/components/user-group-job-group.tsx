@@ -3,14 +3,14 @@ import { useEffect, useRef, useState } from 'react';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useQueryClient } from '@tanstack/react-query';
-import { AllUserGroupResponse } from '@types';
 import { queryOptions } from '@entities/user-group';
+import { AllUserGroupResponse } from '@types';
 
-type UserGroupJobTitleComponentProps = {
+type UserGroupJobGroupComponentProps = {
   handleSetOption: (data: any) => void;
 };
 
-const UserGroupJobTitleComponent = ({ handleSetOption }: UserGroupJobTitleComponentProps) => {
+const UserGroupJobGroupComponent = ({ handleSetOption }: UserGroupJobGroupComponentProps) => {
   const ref = useRef<ShuttleGridToChipsImperative>(null);
   const queryClient = useQueryClient();
 
@@ -18,7 +18,7 @@ const UserGroupJobTitleComponent = ({ handleSetOption }: UserGroupJobTitleCompon
   const [gridData, setGrideData] = useState<AllUserGroupResponse[]>([]);
 
   const handleOnSearch = async () => {
-    const response = await queryClient.fetchQuery(queryOptions.all({ userGroupType: 'JOB_TITLE' }));
+    const response = await queryClient.fetchQuery(queryOptions.all({ userGroupType: 'JOB_GROUP' }));
     setGrideData(response);
   };
 
@@ -37,12 +37,12 @@ const UserGroupJobTitleComponent = ({ handleSetOption }: UserGroupJobTitleCompon
       cell: (info) => info.getValue(),
     }),
     columnHelper.accessor('userGroupName', {
-      header: t('호칭'),
+      header: t('직군'),
       cell: (info) => info.getValue(),
     }),
     columnHelper.accessor('userCount', {
       header: t('대상자'),
-      cell: (info) => info.getValue(),
+      cell: (info) => `${info.getValue()}명`,
     }),
   ] as ColumnDef<any, unknown>[];
 
@@ -55,10 +55,10 @@ const UserGroupJobTitleComponent = ({ handleSetOption }: UserGroupJobTitleCompon
       gridData={gridData}
       columns={columns}
       rowKey={'userGroupId'}
-      leftTitle={t('유저그룹 - 호칭')}
+      leftTitle={t('유저그룹 - 직군')}
       rightTitle={t('선택 유저그룹 목록')}
     />
   );
 };
 
-export const UserGroupJobTitle = UserGroupJobTitleComponent;
+export const UserGroupJobGroup = UserGroupJobGroupComponent;
