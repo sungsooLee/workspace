@@ -40,6 +40,7 @@ export const menuManageQueryOptions = {
     queryKey: queryKeys.detail(menuId),
     queryFn: () => MenuMangeService.fetchMenuDetail(menuId),
     placeholder: keepPreviousData,
+    enabled: !!menuId,
   }),
 };
 
