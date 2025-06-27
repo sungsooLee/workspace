@@ -17,13 +17,12 @@ export function useMenuManageFetchTree(menuScopeCode: string, locale: string) {
   return useQuery(queryOptions.tree(menuScopeCode, locale));
 }
 
-export function useMenuTree(menuScopeCode: string, locale: string, options?: any) {
-  return useApiQuery<any, { menuScopeCode: string; locale: string }>(
-    MenuManageApi.menuTree,
-    { menuScopeCode, locale },
-    queryKeys.menuTree(menuScopeCode, locale),
-    options,
-  );
+export function useMenuTree(menuScopeCode: string, locale: string) {
+  return useQuery(queryOptions.tree(menuScopeCode, locale));
+}
+
+export function useMenuManageDetail(menuId: string) {
+  return useQuery(queryOptions.detail(menuId));
 }
 
 export function useFetchMenuFavorites(payload: any) {
@@ -60,15 +59,6 @@ export function useUpdateMenu(options: any) {
     ...mutation,
     update: mutation.mutate,
   };
-}
-
-export function useMenuManageDetail(menuId: string, options?: any) {
-  return useApiQuery<MenuDetail, { menuId: string }>(
-    MenuManageApi.detail,
-    { menuId },
-    queryKeys.detail(menuId),
-    options,
-  );
 }
 
 export function useCheckExistsMenu(options?: {
