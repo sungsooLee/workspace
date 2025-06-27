@@ -415,46 +415,67 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
     });
   };
 
+  const calculateSortOrder = (nodeInfo: any) => {
+    if (nodeInfo.position === 'INSIDE') {
+      // 타겟 노드의 자식으로 이동 - 항상 첫 번째 자식이 되도록
+      return 1;
+    }
+
+    const sourceNode = nodeInfo.sourceNode;
+    const targetNode = nodeInfo.targetNode;
+
+    if (!targetNode || !targetNode.sortOrder) {
+      // targetNode의 sortOrder가 없으면 targetIndex 기반으로 계산
+      return nodeInfo.position === 'BEFORE' ? nodeInfo.targetIndex + 1 : nodeInfo.targetIndex + 2;
+    }
+
+    // 같은 부모 내에서 이동하는 경우, 소스와 타겟의 sortOrder 관계를 고려
+    const sourceSortOrder = sourceNode.sortOrder || 0;
+    const targetSortOrder = targetNode.sortOrder;
+    const sameParent = sourceNode.parentKey === targetNode.parentKey;
+
+    if (nodeInfo.position === 'BEFORE') {
+      // 타겟 노드 앞에 삽입
+      if (sameParent && sourceSortOrder < targetSortOrder) {
+        // 낮은 순서 -> 높은 순서로 이동: 소스가 제거되므로 -1 보정
+        return targetSortOrder - 1;
+      }
+      return targetSortOrder;
+    } else {
+      // 타겟 노드 뒤에 삽입 (AFTER)
+      if (sameParent && sourceSortOrder < targetSortOrder) {
+        // 낮은 순서 -> 높은 순서로 이동: 소스가 제거되므로 보정 없이 타겟 순서 사용
+        return targetSortOrder;
+      }
+      return targetSortOrder + 1;
+    }
+  };
+
   const handleTreeAction = (event: TreeEventPayload) => {
     switch (event.type) {
       case 'NODE_MOVE': {
         const nodeInfo = event;
-        if (nodeInfo.position === 'INSIDE') {
-          const payload = {
-            menuId: nodeInfo.sourceNode.menuId,
-            destinationParentId: nodeInfo.targetNode?.menuId,
-            sortOrder: 1,
-            menuScopeCode: menuScope,
-          };
-          moveMenu(payload, {
-            onSuccess: async (data: any) => {
-              if (selectedNode?.menuId) {
-                await queryClient.invalidateQueries({
-                  queryKey: [...queryKeys.detail(selectedNode.menuId)],
-                });
-              }
-            },
-          });
-        } else {
-          const targetIndex = nodeInfo.targetIndex!;
-          // position이 'BEFORE'면 targetIndex, 'AFTER'면 targetIndex + 1
-          const sortOrder = nodeInfo.position === 'BEFORE' ? targetIndex + 1 : targetIndex + 2;
-          const payload = {
-            menuId: nodeInfo.sourceNode.menuId,
-            destinationParentId: nodeInfo.targetNode?.parentKey,
-            sortOrder: sortOrder,
-            menuScopeCode: menuScope,
-          };
-          moveMenu(payload, {
-            onSuccess: async (data: any) => {
-              if (selectedNode?.menuId) {
-                await queryClient.invalidateQueries({
-                  queryKey: [...queryKeys.detail(selectedNode.menuId)],
-                });
-              }
-            },
-          });
-        }
+        const sortOrder = calculateSortOrder(nodeInfo);
+
+        const payload = {
+          menuId: nodeInfo.sourceNode.menuId,
+          destinationParentId:
+            nodeInfo.position === 'INSIDE'
+              ? nodeInfo.targetNode?.menuId
+              : nodeInfo.targetNode?.parentKey,
+          sortOrder: sortOrder,
+          menuScopeCode: menuScope,
+        };
+
+        moveMenu(payload, {
+          onSuccess: async (data: any) => {
+            if (selectedNode?.menuId) {
+              await queryClient.invalidateQueries({
+                queryKey: [...queryKeys.detail(selectedNode.menuId)],
+              });
+            }
+          },
+        });
 
         break;
       }
