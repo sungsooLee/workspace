@@ -23,7 +23,7 @@ const DndFileProgressComponent: FC<DndFileProgressProps> = ({
   onResume,
   onRetry,
   inputAccept,
-  maxFileCount,
+  maxFileCount = 1,
   maxFileSize,
   wrapSize,
   guideText,
@@ -34,7 +34,8 @@ const DndFileProgressComponent: FC<DndFileProgressProps> = ({
   }, []);
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
-    maxFiles: maxFileSize || 999,
+    maxFiles: maxFileSize,
+    multiple: maxFileCount > 1,
   });
 
   /**

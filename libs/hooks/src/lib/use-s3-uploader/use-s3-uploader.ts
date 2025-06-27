@@ -1,46 +1,54 @@
-import { S3UploaderConfig, UploadFile, UploadStatus } from './types';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useUploadTask } from './use-upload-task';
-import { resumeUpload, startUpload } from './upload-manger';
+import { UploadFile, S3UploaderConfig, UploadStatus, UploadType } from './types';
 import { acceptFilesToAccept, formatDate, getRandomId } from '@learnway/shared';
 import { formatFileSize, normalizePath, updateFile } from './utils';
-import { abortMultiPartUpload } from './api';
+import {
+  createFileGroup,
+  saveTempFileInfo,
+  issuePresignedUrlBySingle,
+  completeFileUpload,
+  initMultiPartUpload,
+  issuePresignedUrlByPart,
+  completedMultiPartUpload,
+  abortMultiPartUpload,
+  deleteFileInfo,
+} from './api';
 
-const DEFAULT_MULTIPART_THRESHOLD = 10 * 1204 * 1024;
+const DEFAULT_MULTIPART_THRESHOLD = 5 * 1024 * 1024; // 5MB
 
 /**
- * React 커스텀 훅: S3 파일 업로드 관리
- * - AWS S3 업로드를 위한 상태 관리 및 작업 툴을 제공
- * - 단일 파일 및 멀티파트 업로드 지원
- * - 업로드 준비, 진행, 중단, 재시도 등의 전반적인 업로드 라이프사이클 관리
- *
- * @param config S3UploaderConfig
- *               { sync: boolean } - 순차 업로드 여부
- *               { auto: boolean } - 파일 추가 시 자동 업로드
+ * 새로운 S3 업로더 훅 - 단순화된 구조
+ * UploadFile[] 상태만 관리하고 직접 API 호출
  */
 const useS3UploaderHook = (config: S3UploaderConfig) => {
   const {
-    auto = true,
-    async = false,
-    multipartThreshold = DEFAULT_MULTIPART_THRESHOLD,
     s3Path,
-    maxFileCount = 1,
-    maxFileSize = -1,
+    groupConfig,
+    groupMode = 'batch',
+    auto = true,
+    async = true,
+    multipartThreshold = DEFAULT_MULTIPART_THRESHOLD,
     acceptFiles = [],
+    maxFileCount = 10,
+    maxFileSize = 0,
   } = config;
 
-  // 현재 업로드 상태를 관리하는 state
+  // 파일 상태 관리
   const [files, setFiles] = useState<UploadFile[]>([]);
+
+  // 배치 모드에서 그룹 UUID 저장 (한 번 생성 후 재사용)
+  const [batchGroupUuid, setBatchGroupUuid] = useState<string | undefined>(groupConfig?.groupUuid);
+
+  // 업로드 통계 계산
   const stats = useMemo(() => {
-    let status = 'idle';
-    // 상태별 카운트 계산
-    const statusCount = files.reduce<Record<UploadStatus, number>>(
+    const statusCount = files.reduce(
       (acc, file) => {
-        acc[file.status] = (acc[file.status] || 0) + 1; // 상태별로 카운팅
+        acc[file.status] = (acc[file.status] || 0) + 1;
         return acc;
       },
       {
         validating: 0,
+        'group-needed': 0,
         idle: 0,
         uploading: 0,
         paused: 0,
@@ -48,8 +56,11 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
         failed: 0,
         aborted: 0,
         'validating-error': 0,
+        grouping: 0,
       },
     );
+
+    let status: string = 'idle';
     if (files.length > 0) {
       if (statusCount.uploading > 0) {
         status = 'uploading';
@@ -80,168 +91,686 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
       completed: statusCount.completed,
       aborted: statusCount.aborted,
       'validating-error': statusCount['validating-error'],
+      'group-needed': statusCount['group-needed'],
+      grouping: statusCount.grouping,
     };
-  }, [files]);
-  // useUploadTask 를 통해 작업 큐 생성
-  const { addTask, removeTask } = useUploadTask({
-    files,
-    executeTask: (id) => startUpload(id, files, setFiles), // 업로드 실행
-    resumeTask: (id) => resumeUpload(id, files, setFiles), // 업로드 재개 실행
-  });
-  /**
-   * 파일추가
-   * - 유니크 ID 및 S3 Key 를 생성하고 파일을 업로드 대기 상태로 만듬
-   * - 파일 크기에 따라 단일 업로드 또는 멀티 파트 업로드 방식 지정
-   * @param files 사용자가 추가한 파일 리스트
-   */
-  const addFiles = async (files: File[]) => {
-    if (!files || files.length === 0) return;
-    if (maxFileCount === 1 && files.length > 0) {
-      await onRemove();
-    }
-    const newFiles = files.map((file) => {
-      const detailPath = formatDate(new Date(), '/YYYY/MM/DD');
-      console.log('detailPath =>', detailPath);
-      const id = getRandomId(); // 각 파일에 고유 ID 생성
-      const fileName = file.name;
-      const extension = fileName.split('.').pop() || ''; // 파일 확장자 추출
-      const s3FileName = id + '.' + extension.toLowerCase(); // S3 파일 이름 생성
-      const key = normalizePath(s3Path) + detailPath + '/' + s3FileName; // S3 KEY 경로 설정
-      console.log('key =>', key);
-      const size = file.size;
-      const uploadType = size > multipartThreshold ? 'multi-part' : 'single-part'; // 업로드 방식 결정
-      return {
-        id,
-        file,
-        uploadType,
-        extension,
-        s3FileName,
-        fileName,
-        size,
-        displaySize: formatFileSize(size),
-        progress: 0, // 업로드 프로그레스
-        status: 'validating', // 업로드 대기 상태
-        key,
-        parts: [], // 멀티파트 정보
-        basicPath: normalizePath(s3Path),
-        detailPath: detailPath,
-      };
-    }) as UploadFile[];
-    // files 상태에 파일 추가
-    setFiles((prev) => [...prev, ...newFiles]);
-  };
-  /**
-   * 파일 제거
-   * 업로드 중단 후 파일 리스트에서 제거
-   * @param id 제거할 파일의 ID
-   */
-  const onRemove = async (id?: string) => {
-    if (id) {
-      await onAbort(id); // 업로드 중단
-      await removeTask(id); // 큐에서 제거
-      setFiles((prev) => prev.filter((f) => f.id !== id)); // 파일목록에서 제거
-    } else {
-      for (const file of files) {
-        await onAbort(file.id); // 업로드 중단
-        await removeTask(file.id); // 큐에서 제거
-      }
-      setFiles([]); // 파일목록초기화
-    }
-  };
+  }, [files, maxFileCount]);
 
-  /**
-   * 업로드 중단
-   * 진행중인 업로드 중단 및 AWS S3 세션 종료
-   * @param id 중단할 파일의 아이디
-   */
-  const onAbort = async (id: string) => {
-    const target = files.find((f) => f.id === id);
-    if (!target || !target.uploadId) return;
-    target.controller?.abort(); // AbortController로 업로드 중단
-    await abortMultiPartUpload(target.uploadId, target.key);
-
-    // 파일 상태를 'aborted'로 갱신
-    setFiles((prev) => updateFile(prev, id, { status: 'aborted' }));
-  };
-
-  /**
-   * 실패한 업로드 재시도
-   * - 기존 업로드 세션을 중단한 뒤 새 업로드 진행
-   * @param id 재시도할 파일의 아이디
-   */
-  const onRetry = async (id: string) => {
-    await onAbort(id);
-    await startUpload(id, files, setFiles);
-  };
-
-  const autoUploadProcess = useCallback(async () => {
-    const idleFiles = files.filter((f) => f.status === 'idle'); // 대기 상태의 파일만 처리
-    if (idleFiles.length === 0) return;
-    if (async) {
-      // 순차적으로 업로드 (큐 방식)
-      idleFiles.forEach((f) => addTask(f.id));
-    } else {
-      // 병렬로 업로드
-      idleFiles.forEach((f) => startUpload(f.id, files, setFiles));
-    }
-  }, [async, files]);
-
-  const fileValidating = useCallback(() => {
-    const validatingFiles = files.filter((f) => f.status === 'validating'); // 유효성 상태의 파일만 처리
-    if (validatingFiles.length === 0) return;
-    validatingFiles.forEach((file) => {
-      let isError = false;
-      let message = '';
-      if (maxFileSize > 0 && file.file.size > maxFileSize) {
-        isError = true;
-        message = 'size error';
-      }
-      if (acceptFiles.length > 0 && !acceptFiles.includes(file.extension.toUpperCase())) {
-        isError = true;
-        message = 'extension error';
-      }
-      setFiles((prev) =>
-        updateFile(prev, file.id, {
-          status: isError ? 'validating-error' : 'idle',
-          message,
-        }),
-      );
-    });
-  }, [files]);
-
+  // input accept 계산
   const inputAccept = useMemo(() => acceptFilesToAccept(acceptFiles), [acceptFiles]);
 
-  /**
-   * 설정 값 변경시 자동 업로드 활성화
-   */
-  useEffect(() => {
-    if (!auto) return;
-    autoUploadProcess();
-  }, [auto, files]);
+  // 파일 추가
+  const addFiles = useCallback(
+    async (newFiles: File[]) => {
+      if (!newFiles || newFiles.length === 0) return;
 
-  /**
-   * 파일 변경시 유효성 체크
-   */
+      // TODO: 단일 파일 모드일 때 기존 파일 제거 로직 구현
+      if (maxFileCount === 1 && newFiles.length > 0) {
+        setFiles([]);
+      }
+
+      // TODO: 파일을 UploadFile 형태로 변환하는 로직 구현
+      const uploadFiles: UploadFile[] = newFiles.map((file) => {
+        const detailPath = formatDate(new Date(), '/YYYY/MM/DD');
+        const id = getRandomId();
+        const fileName = file.name;
+        const extension = fileName.split('.').pop() || '';
+        const s3FileName = id + '.' + extension.toLowerCase();
+        const key = normalizePath(s3Path) + detailPath + '/' + s3FileName;
+        const size = file.size;
+        const uploadType =
+          size > multipartThreshold ? UploadType.MULTI_PART : UploadType.SINGLE_PART;
+
+        return {
+          id,
+          file,
+          uploadType,
+          extension,
+          s3FileName,
+          fileName,
+          size,
+          displaySize: formatFileSize(size),
+          progress: 0,
+          status: 'validating',
+          key,
+          parts: [],
+          basicPath: normalizePath(s3Path),
+          detailPath: detailPath,
+        };
+      });
+
+      setFiles((prev) => [...prev, ...uploadFiles]);
+    },
+    [s3Path, multipartThreshold, maxFileCount],
+  );
+
+  const validateFiles = (validatingFiles: UploadFile[]) => {
+    // 한 번의 setFiles 호출로 모든 파일 업데이트
+    setFiles((prev) => {
+      let updatedFiles = prev;
+
+      validatingFiles.forEach((file) => {
+        let isError = false;
+        let message = '';
+
+        if (maxFileSize > 0 && file.file.size > maxFileSize) {
+          isError = true;
+          message = 'size error';
+        }
+
+        if (acceptFiles.length > 0 && !acceptFiles.includes(file.extension.toUpperCase())) {
+          isError = true;
+          message = 'extension error';
+        }
+
+        if (isError) {
+          updatedFiles = updateFile(updatedFiles, file.id, {
+            status: 'validating-error',
+            message,
+          });
+        } else {
+          // groupConfig가 있으면 'grouping', 없으면 'idle' 상태로 설정
+          const nextStatus = groupConfig ? 'grouping' : 'idle';
+          updatedFiles = updateFile(updatedFiles, file.id, {
+            status: nextStatus,
+            message,
+          });
+        }
+      });
+
+      return updatedFiles;
+    });
+  };
+
+  // 그룹 생성 (공통 로직)
+  const executeCreateFileGroup = async (basicPath: string) => {
+    if (!groupConfig) {
+      throw new Error('Group config is required');
+    }
+
+    const groupResponse = await createFileGroup({
+      affairsType: groupConfig.affairsType,
+      reposType: 'S3',
+      basicPath,
+      languageCode: groupConfig.languageCode || 'ko',
+    });
+
+    if (!groupResponse?.groupUuid) {
+      throw new Error('Failed to create file group');
+    }
+
+    return groupResponse.groupUuid;
+  };
+
+  // 그룹 생성 및 파일 정보 저장
+  const createGroup = async (
+    groupNeededFiles: UploadFile[],
+    groupConfig: S3UploaderConfig['groupConfig'],
+    groupMode: 'individual' | 'batch',
+  ) => {
+    if (!groupConfig || groupNeededFiles.length === 0) return;
+
+    try {
+      if (groupMode === 'batch') {
+        // 배치 모드: 하나의 그룹에 모든 파일 추가
+        let groupUuid = batchGroupUuid;
+
+        // groupUuid가 없으면 새로 생성
+        if (!groupUuid) {
+          groupUuid = await executeCreateFileGroup(groupNeededFiles[0].basicPath);
+          setBatchGroupUuid(groupUuid); // 배치 그룹 UUID 저장
+        }
+
+        // 모든 파일을 idle 상태로 변경하고 groupUuid 저장
+        setFiles((prev) => {
+          let updatedFiles = prev;
+          groupNeededFiles.forEach((file) => {
+            updatedFiles = updateFile(updatedFiles, file.id, {
+              status: 'idle',
+              groupUuid, // groupUuid 저장
+            });
+          });
+          return updatedFiles;
+        });
+      } else {
+        // 개별 모드: 각 파일별로 개별 그룹 생성
+        const updatePromises = groupNeededFiles.map(async (file) => {
+          try {
+            const groupUuid = await executeCreateFileGroup(file.basicPath);
+
+            return {
+              id: file.id,
+              updates: {
+                status: 'idle',
+                groupUuid, // groupUuid 저장
+              },
+            };
+          } catch (error) {
+            console.error('🚀 createGroupAndSaveFiles ~ error:', error);
+            return {
+              id: file.id,
+              updates: {
+                status: 'failed',
+                message: 'Group creation failed',
+              },
+            };
+          }
+        });
+
+        const updates = await Promise.all(updatePromises);
+        const validUpdates = updates.filter((update) => update !== undefined);
+
+        if (validUpdates.length > 0) {
+          // 모든 업데이트를 한 번의 setFiles 호출로 처리
+          setFiles((prev) => {
+            let updatedFiles = prev;
+            validUpdates.forEach((update) => {
+              if (update) {
+                updatedFiles = updateFile(
+                  updatedFiles,
+                  update.id,
+                  update.updates as Partial<UploadFile>,
+                );
+              }
+            });
+            return updatedFiles;
+          });
+        }
+      }
+    } catch (error) {
+      console.error('🚀 createGroupAndSaveFiles ~ error:', error);
+      // 에러 시 파일 상태를 failed로 변경
+      setFiles((prev) => {
+        let updatedFiles = prev;
+        groupNeededFiles.forEach((file) => {
+          updatedFiles = updateFile(updatedFiles, file.id, {
+            status: 'failed',
+            message: 'Group creation failed',
+          });
+        });
+        return updatedFiles;
+      });
+    }
+  };
+
+  // 파일 유효성 검사 실행
   useEffect(() => {
-    fileValidating();
-  }, [files]);
+    const validatingFiles = files.filter((f) => f.status === 'validating');
+    if (validatingFiles.length === 0) return;
+
+    validateFiles(validatingFiles);
+  }, [
+    files.filter((f) => f.status === 'validating').length,
+    maxFileSize,
+    acceptFiles,
+    groupConfig,
+  ]);
+
+  // 그룹 생성 처리 실행
+  useEffect(() => {
+    const groupNeededFiles = files.filter((f) => f.status === 'grouping');
+    if (groupNeededFiles.length === 0) return;
+
+    createGroup(groupNeededFiles, groupConfig, groupMode);
+  }, [files.filter((f) => f.status === 'grouping').length, groupConfig, groupMode]);
+
+  // Single-part 업로드
+  const singlePartUpload = async (file: UploadFile) => {
+    // AbortController 생성 및 저장
+    const controller = new AbortController();
+    setFiles((prev) => updateFile(prev, file.id, { controller }));
+
+    try {
+      // 1. Presigned URL 요청
+      const presignedRes = await issuePresignedUrlBySingle(file.key);
+      if (!presignedRes?.url) {
+        throw new Error('Failed to get presigned URL');
+      }
+
+      // 2. 파일 업로드 (AbortController 사용)
+      const uploadRes = await fetch(presignedRes.url, {
+        method: 'PUT',
+        body: file.file,
+        headers: {
+          'Content-Type': file.file.type,
+        },
+        signal: controller.signal,
+      });
+
+      if (!uploadRes.ok) {
+        throw new Error(`Upload failed: ${uploadRes.status}`);
+      }
+
+      // 3. 업로드 완료 처리
+      if (groupConfig && file.fileUuid) {
+        const completeRes = await completeFileUpload(file.fileUuid);
+        if (!completeRes) {
+          throw new Error('Failed to complete upload');
+        }
+      }
+
+      // 4. 상태를 completed로 변경
+      setFiles((prev) =>
+        updateFile(prev, file.id, {
+          status: 'completed',
+          progress: 100,
+        }),
+      );
+    } catch (error) {
+      // AbortError 처리 - 현재 상태에 따라 구분
+      if (error instanceof Error && error.name === 'AbortError') {
+        // 현재 상태가 paused면 pause로 처리, 아니면 abort로 처리 (상태 변경 없음)
+        const currentFile = files.find((f) => f.id === file.id);
+        if (currentFile?.status === 'paused') {
+          console.log('singlePartUpload ~ paused (no status change):', file.id);
+        } else {
+          console.log('singlePartUpload ~ aborted (no status change):', file.id);
+        }
+        return;
+      }
+
+      console.error('singlePartUpload ~ error:', error);
+
+      // 에러 시 상태를 failed로 변경
+      setFiles((prev) =>
+        updateFile(prev, file.id, {
+          status: 'failed',
+          message: error instanceof Error ? error.message : 'Upload failed',
+        }),
+      );
+    } finally {
+      // controller 정리
+      setFiles((prev) => updateFile(prev, file.id, { controller: undefined }));
+    }
+  };
+
+  // Multi-part 업로드
+  const multiPartUpload = async (file: UploadFile) => {
+    // AbortController 생성 또는 기존 것 사용
+    const controller = file.controller || new AbortController();
+    if (!file.controller) {
+      setFiles((prev) => updateFile(prev, file.id, { controller }));
+    }
+
+    try {
+      let uploadId = file.uploadId;
+      let existingParts: { ETag: string; PartNumber: number }[] = file.parts || [];
+
+      // 1. 멀티파트 업로드 초기화 (uploadId가 없으면)
+      if (!uploadId) {
+        const initRes = await initMultiPartUpload(file.key);
+        if (!initRes?.uploadId) {
+          throw new Error('Failed to initialize multipart upload');
+        }
+        uploadId = initRes.uploadId;
+        setFiles((prev) => updateFile(prev, file.id, { uploadId }));
+      }
+
+      // 2. 파일을 청크로 분할 (5MB 기준)
+      const chunkSize = 5 * 1024 * 1024; // 5MB
+      const chunks: Blob[] = [];
+      for (let i = 0; i < file.file.size; i += chunkSize) {
+        chunks.push(file.file.slice(i, i + chunkSize));
+      }
+
+      // 3. 각 청크 업로드 (이미 업로드된 부분은 건너뛰기)
+      for (let i = 0; i < chunks.length; i++) {
+        const partNumber = i + 1;
+
+        // 이미 업로드된 part는 건너뛰기
+        if (existingParts.some((part) => part.PartNumber === partNumber)) {
+          continue;
+        }
+
+        // 중단 체크
+        if (controller.signal.aborted) {
+          const abortError = new Error('Upload aborted');
+          abortError.name = 'AbortError';
+          throw abortError;
+        }
+
+        const chunk = chunks[i];
+
+        // Part presigned URL 요청
+        const presignedRes = await issuePresignedUrlByPart({
+          uploadId,
+          partNumber,
+          key: file.key,
+        });
+
+        if (!presignedRes?.url) {
+          throw new Error(`Failed to get presigned URL for part ${partNumber}`);
+        }
+
+        // 청크 업로드 (AbortController 사용)
+        const uploadRes = await fetch(presignedRes.url, {
+          method: 'PUT',
+          body: chunk,
+          signal: controller.signal,
+        });
+
+        if (!uploadRes.ok) {
+          throw new Error(`Failed to upload part ${partNumber}: ${uploadRes.status}`);
+        }
+
+        const etag = uploadRes.headers.get('ETag');
+        if (!etag) {
+          throw new Error(`No ETag received for part ${partNumber}`);
+        }
+
+        const newPart = {
+          ETag: etag.replace(/"/g, ''), // 따옴표 제거
+          PartNumber: partNumber,
+        };
+
+        existingParts.push(newPart);
+
+        // parts 정보 업데이트
+        setFiles((prev) => updateFile(prev, file.id, { parts: [...existingParts] }));
+
+        // 진행률 업데이트
+        const progress = Math.round(((i + 1) / chunks.length) * 100);
+        setFiles((prev) => updateFile(prev, file.id, { progress }));
+      }
+
+      // 4. 멀티파트 업로드 완료
+      const completeRes = await completedMultiPartUpload({
+        uploadId,
+        key: file.key,
+        parts: existingParts,
+      });
+
+      if (!completeRes) {
+        throw new Error('Failed to complete multipart upload');
+      }
+
+      // 5. 업로드 완료 처리 (groupConfig가 있는 경우에만)
+      if (groupConfig && file.fileUuid) {
+        const fileCompleteRes = await completeFileUpload(file.fileUuid, {
+          key: file.key,
+          uploadId,
+          parts: existingParts,
+        });
+        if (!fileCompleteRes) {
+          throw new Error('Failed to complete file upload');
+        }
+      }
+
+      // 6. 상태를 completed로 변경
+      setFiles((prev) =>
+        updateFile(prev, file.id, {
+          status: 'completed',
+          progress: 100,
+          parts: existingParts,
+        }),
+      );
+    } catch (error) {
+      // AbortError 처리 - 현재 상태에 따라 구분
+      if (error instanceof Error && error.name === 'AbortError') {
+        // 현재 상태가 paused면 pause로 처리, 아니면 abort로 처리 (상태 변경 없음)
+        const currentFile = files.find((f) => f.id === file.id);
+        if (currentFile?.status === 'paused') {
+          console.log('multiPartUpload ~ paused (no status change):', file.id);
+        } else {
+          console.log('multiPartUpload ~ aborted (no status change):', file.id);
+        }
+        return;
+      }
+
+      console.error('multiPartUpload ~ error:', error);
+
+      // 에러 시 상태를 failed로 변경
+      setFiles((prev) =>
+        updateFile(prev, file.id, {
+          status: 'failed',
+          message: error instanceof Error ? error.message : 'Upload failed',
+        }),
+      );
+    } finally {
+      // controller 정리
+      setFiles((prev) => updateFile(prev, file.id, { controller: undefined }));
+    }
+  };
+
+  // 임시 파일 정보 저장 (공통 로직)
+  const executeSaveTempFileInfo = async (file: UploadFile) => {
+    if (!file.groupUuid) {
+      throw new Error('Group UUID is required');
+    }
+
+    try {
+      const tempFileInfo = await saveTempFileInfo(file.groupUuid, {
+        detailPath: file.detailPath,
+        files: [
+          {
+            s3UploadType: file.uploadType,
+            originalFileName: file.fileName,
+            serverFileName: file.s3FileName,
+            fileSize: file.size,
+          },
+        ],
+      });
+
+      if (!tempFileInfo) {
+        throw new Error('Failed to save temp file info');
+      }
+
+      // fileUuid를 파일에 주입
+      return {
+        ...file,
+        fileUuid: tempFileInfo.fileUuid,
+      };
+    } catch (error) {
+      console.error('saveTempFileInfoWithConfig ~ error:', error);
+      throw error;
+    }
+  };
+
+  // 파일 업로드 시작
+  const startUpload = async (id: string) => {
+    // 파일 찾기
+    let file = files.find((f) => f.id === id);
+    if (!file) {
+      console.error('startUpload ~ file not found:', id);
+      return;
+    }
+
+    // 이미 업로드 중이면 중복 실행 방지
+    if (file.status === 'uploading') {
+      return;
+    }
+
+    // 상태를 uploading으로 변경
+    setFiles((prev) => updateFile(prev, id, { status: 'uploading' }));
+
+    // fileUuid가 없으면 임시 파일 정보 저장
+    if (!file.fileUuid && groupConfig && file.groupUuid) {
+      try {
+        file = await executeSaveTempFileInfo(file);
+        setFiles((prev) =>
+          updateFile(prev, id, {
+            fileUuid: file?.fileUuid,
+          }),
+        );
+      } catch (error) {
+        console.error('startUpload ~ temp file info save error:', error);
+        setFiles((prev) =>
+          updateFile(prev, id, {
+            status: 'failed',
+            message: 'Failed to save temp file info',
+          }),
+        );
+        return;
+      }
+    }
+
+    if (file.uploadType === UploadType.SINGLE_PART) {
+      await singlePartUpload(file);
+    } else {
+      await multiPartUpload(file);
+    }
+  };
+
+  // 업로드 시작 처리 실행
+  useEffect(() => {
+    // auto가 false이면 자동 업로드하지 않음
+    if (!auto) {
+      return;
+    }
+
+    const idleFiles = files.filter((f) => f.status === 'idle');
+    if (idleFiles.length === 0) return;
+
+    if (async) {
+      // 순차 업로드
+      idleFiles.forEach((file) => {
+        startUpload(file.id);
+      });
+    } else {
+      // 병렬 업로드
+      Promise.all(idleFiles.map((file) => startUpload(file.id)));
+    }
+  }, [files.filter((f) => f.status === 'idle').length, async, auto]);
+
+  // 파일 제거
+  const onRemove = useCallback(
+    async (id?: string) => {
+      if (!id) {
+        // id가 없으면 모든 파일 제거
+        // fileUuid가 있는 파일들 먼저 백엔드에서 삭제
+        const filesWithUuid = files.filter((f) => f.fileUuid);
+        if (filesWithUuid.length > 0) {
+          try {
+            await Promise.all(filesWithUuid.map((file) => deleteFileInfo(file.fileUuid!)));
+          } catch (error) {
+            console.error('onRemove ~ backend delete error:', error);
+          }
+        }
+        setFiles([]);
+        return;
+      }
+
+      // 파일 찾기
+      const file = files.find((f) => f.id === id);
+      if (!file) {
+        console.error('onRemove ~ file not found:', id);
+        return;
+      }
+
+      // 업로드 중인 경우 중단 처리
+      if (file.status === 'uploading') {
+        // 상태를 aborted로 변경
+        setFiles((prev) => updateFile(prev, id, { status: 'aborted' }));
+
+        // AbortController가 있으면 중단
+        if (file.controller) {
+          file.controller.abort();
+        }
+
+        // 멀티파트 업로드 중이면 S3에서도 중단
+        if (file.uploadType === UploadType.MULTI_PART && file.uploadId) {
+          try {
+            await abortMultiPartUpload(file.uploadId, file.key);
+          } catch (error) {
+            console.error('onRemove ~ abort error:', error);
+          }
+        }
+      }
+
+      // fileUuid가 있으면 백엔드에서도 삭제
+      if (file.fileUuid) {
+        try {
+          await deleteFileInfo(file.fileUuid);
+        } catch (error) {
+          console.error('onRemove ~ backend delete error:', error);
+        }
+      }
+
+      // 파일 목록에서 제거
+      setFiles((prev) => prev.filter((f) => f.id !== id));
+    },
+    [files],
+  );
+
+  // 파일 일시정지
+  const onPause = useCallback(
+    (id: string) => {
+      const file = files.find((f) => f.id === id);
+      if (!file) {
+        console.error('onPause ~ file not found:', id);
+        return;
+      }
+
+      // 업로드 중인 경우 일시정지 가능
+      if (file.status === 'uploading') {
+        // 상태를 paused로 먼저 변경
+        setFiles((prev) => updateFile(prev, id, { status: 'paused' }));
+
+        // AbortController로 현재 요청만 중단
+        if (file.controller) {
+          file.controller.abort();
+        }
+      }
+    },
+    [files],
+  );
+
+  // 파일 재시도
+  const onRetry = useCallback(
+    async (id: string) => {
+      const file = files.find((f) => f.id === id);
+      if (!file) {
+        console.error('onRetry ~ file not found:', id);
+        return;
+      }
+
+      // 실패, 중단, 일시정지된 파일만 재시도 가능
+      if (file.status === 'failed' || file.status === 'aborted' || file.status === 'paused') {
+        // 상태를 uploading으로 변경
+        setFiles((prev) =>
+          updateFile(prev, id, {
+            status: 'uploading',
+            progress: 0,
+            message: undefined,
+            controller: new AbortController(),
+          }),
+        );
+
+        // 업로드 타입에 따라 재시도
+        if (file.uploadType === UploadType.SINGLE_PART) {
+          await singlePartUpload(file);
+        } else if (file.uploadType === UploadType.MULTI_PART) {
+          await multiPartUpload(file);
+        }
+      } else {
+        console.log('onRetry ~ cannot retry (not failed/aborted/paused):', id);
+      }
+    },
+    [files],
+  );
+
+  // 파일 재개 (retry로 bypass)
+  const onResume = useCallback(
+    async (id: string) => {
+      await onRetry(id);
+    },
+    [onRetry],
+  );
 
   return {
+    // 상태
+    files,
     stats,
-    // 업로드 상태 및 CRUD 기능 반환
-    files, // 파일 리스트
     inputAccept,
-    addFiles, // 파일 추가
-    onRemove, // 파일 제거
-    onStart: (id: string) => startUpload(id, files, setFiles), // 업로드 시작
-    onRetry, // 업로드 재시도
-    onPause: (id: string) => {
-      // 업로드 중단
-      const target = files.find((f) => f.id === id);
-      if (!target || !target.uploadId) return;
-      target?.controller?.abort();
-    },
-    onResume: (id: string) => addTask(id, 'resume'), // 업로드 재개
+    groupUuid: batchGroupUuid,
+
+    // 파일 관리
+    addFiles,
+    onRemove,
+    onRetry,
+    onPause,
+    onResume,
+    onStart: startUpload,
   };
 };
 
