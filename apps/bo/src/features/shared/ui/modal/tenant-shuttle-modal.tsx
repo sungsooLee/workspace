@@ -9,6 +9,7 @@ import {
   useModal,
   ShuttleGridToGrid,
   ShuttleGridToGridImperative,
+  Divider,
 } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
@@ -145,6 +146,7 @@ const TenantShuttleModalComponent = forwardRef((_) => {
       <ModalBody>
         <div className={popupStyles.wrap}>
           <SearchBox provider={sProvider} onSearch={handleOnSearch} />
+          <Divider />
           <ShuttleGridToGrid
             ref={ref}
             onSelectedChange={(data: any) => {

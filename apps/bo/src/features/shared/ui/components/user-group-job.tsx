@@ -1,19 +1,30 @@
 import { ShuttleGridToChips, ShuttleGridToChipsImperative } from '@learnway/ui';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
+import { AllUserGroupResponse } from '@types';
+import { queryOptions } from '@entities/user-group';
+import { useQueryClient } from '@tanstack/react-query';
 
-const UserGroupJobComponent = ({ menuScopeCode, selectedApiKeys }: any) => {
+type UserGroupJobComponentProps = {
+  handleSetOption: (data: any) => void;
+};
+
+const UserGroupJobComponent = ({ handleSetOption }: UserGroupJobComponentProps) => {
   const ref = useRef<ShuttleGridToChipsImperative>(null);
-  const [option, setOption] = useState<any>();
-  const [gridData, setGrideData] = useState<any[]>([]);
+  const queryClient = useQueryClient();
 
-  const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
-  const [selectedItems, setSelectedItems] = useState<any[]>([]);
+  const [option, setOption] = useState<{ id: string; name: string }[]>([]);
+  const [gridData, setGrideData] = useState<AllUserGroupResponse[]>([]);
 
-  const handleSelectedItemsChange = (items: { key: string; fullPath: string }[]) => {
-    setSelectedItems(items);
+  const handleOnSearch = async () => {
+    const response = await queryClient.fetchQuery(queryOptions.all({ userGroupType: 'JOB' }));
+    setGrideData(response);
   };
+
+  useEffect(() => {
+    handleOnSearch();
+  }, []);
 
   const columnHelper = createColumnHelper();
   const columns = [
@@ -25,11 +36,15 @@ const UserGroupJobComponent = ({ menuScopeCode, selectedApiKeys }: any) => {
       header: t('회사'),
       cell: (info) => info.getValue(),
     }),
-    columnHelper.accessor('position', {
-      header: t('보직'),
+    columnHelper.accessor('userGroupSubName', {
+      header: t('직군'),
       cell: (info) => info.getValue(),
     }),
-    columnHelper.accessor('memberCount', {
+    columnHelper.accessor('userGroupName', {
+      header: t('직무'),
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor('userCount', {
       header: t('대상자'),
       cell: (info) => info.getValue(),
     }),
@@ -38,13 +53,12 @@ const UserGroupJobComponent = ({ menuScopeCode, selectedApiKeys }: any) => {
   return (
     <ShuttleGridToChips
       ref={ref}
-      onSelectedChange={(data: any) => {
-        setOption(data);
-      }}
+      selectedItems={option}
+      onSelectedChange={setOption}
       showNumberingColumn={false}
       gridData={gridData}
       columns={columns}
-      rowKey={'userId'}
+      rowKey={'userGroupId'}
       leftTitle={t('유저그룹 - 직무')}
       rightTitle={t('선택 유저그룹 목록')}
     />

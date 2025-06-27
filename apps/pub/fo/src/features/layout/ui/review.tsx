@@ -22,12 +22,12 @@ const ReviewComponent = ({ className }: ReviewProps) => {
         <IcoStar width={20} height={20} fill="#0056ff" />
         <IcoStar width={20} height={20} fill="#ede0f7" stroke="#d6dae1" />
       </div>
-      <p className={styles.txt}>text</p>
+      <p className={styles.txt}>“넘 좋은것 같아요! 단, ....”</p>
       <div className={styles.profile}>
         <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
         <div className={styles.txt_box}>
-          <strong>aa</strong>
-          <span>bb</span>
+          <strong>김현우님의 리뷰</strong>
+          <span>전략사업본부 소속</span>
         </div>
       </div>
     </div>

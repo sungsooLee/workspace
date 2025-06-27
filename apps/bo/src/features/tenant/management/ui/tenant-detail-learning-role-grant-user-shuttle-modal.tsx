@@ -14,6 +14,7 @@ import {
   ShuttleGridToGridImperative,
   ContentsRow,
   useModal,
+  Divider,
 } from '@learnway/ui';
 import { IcoRefresh02 } from '@learnway/icons';
 import {
@@ -123,6 +124,7 @@ const TenantDetailLearningRoleGrantUserShuttleModalComponent = ({ roleId }: { ro
       <ModalTitle>{t('유저조회')}</ModalTitle>
       <ModalBody>
         <SearchBox provider={sProvider} onSearch={handleOnSearch} />
+        <Divider />
         <ShuttleGridToGrid
           ref={ref}
           onSelectedChange={(data: any) => {

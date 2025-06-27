@@ -9,6 +9,7 @@ import {
   GridBox,
   useModal,
   useGridBox,
+  Divider,
 } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
@@ -185,15 +186,14 @@ const ChannelListModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
       <ModalBody>
         <div className={popupStyles.wrap}>
           <SearchBox provider={sProvider} onSearch={handleOnSearch} />
-          <div className={popupStyles.container}>
-            <GridBox
-              onRowSelect={handleRowSelect}
-              config={gConfig}
-              //   columns={columns}
-              // showColumnSettings={false}
-              title={t('채널 목록')}
-            />
-          </div>
+          <Divider />
+          <GridBox
+            onRowSelect={handleRowSelect}
+            config={gConfig}
+            //   columns={columns}
+            // showColumnSettings={false}
+            title={t('채널 목록')}
+          />
         </div>
       </ModalBody>
       <ModalFooter>

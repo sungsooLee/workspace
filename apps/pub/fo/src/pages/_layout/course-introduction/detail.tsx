@@ -39,6 +39,7 @@ import {
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import pageContentsStyles from '../../_page-contents.module.css';
+import pageFullInner from '../../../widgets/layout/ui/container/page-full-inner.module.css';
 import definitionListStyles from './definition-list.module.css';
 import packageInformationStyles from './package-information.module.css';
 import lectureStyles from './lecture.module.css';
@@ -108,6 +109,9 @@ function RouteComponent() {
           <CourseIntroduction />
           <CourseEducation />
           <CourseReview />
+          <div className={cn(pageFullInner.start, pageFullInner.inner, pageFullInner.gray98)}>
+            <div className={pageFullInner.contents}>abcdefg</div>
+          </div>
         </div>
       ),
     },

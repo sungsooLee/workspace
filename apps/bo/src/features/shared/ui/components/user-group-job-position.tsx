@@ -1,16 +1,16 @@
 import { ShuttleGridToChips, ShuttleGridToChipsImperative } from '@learnway/ui';
 import { useEffect, useRef, useState } from 'react';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
-import { useQueryClient } from '@tanstack/react-query';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { queryOptions } from '@entities/user-group';
 import { AllUserGroupResponse } from '@types';
+import { useQueryClient } from '@tanstack/react-query';
 
-type UserGroupOccupationComponentProps = {
+type UserGroupJobPositionComponentProps = {
   handleSetOption: (data: any) => void;
 };
 
-const UserGroupOccupationComponent = ({ handleSetOption }: UserGroupOccupationComponentProps) => {
+const UserGroupJobPositionComponent = ({ handleSetOption }: UserGroupJobPositionComponentProps) => {
   const ref = useRef<ShuttleGridToChipsImperative>(null);
   const queryClient = useQueryClient();
 
@@ -18,7 +18,9 @@ const UserGroupOccupationComponent = ({ handleSetOption }: UserGroupOccupationCo
   const [gridData, setGrideData] = useState<AllUserGroupResponse[]>([]);
 
   const handleOnSearch = async () => {
-    const response = await queryClient.fetchQuery(queryOptions.all({ userGroupType: 'JOB' }));
+    const response = await queryClient.fetchQuery(
+      queryOptions.all({ userGroupType: 'JOB_POSITION' }),
+    );
     setGrideData(response);
   };
 
@@ -36,13 +38,13 @@ const UserGroupOccupationComponent = ({ handleSetOption }: UserGroupOccupationCo
       header: t('회사'),
       cell: (info) => info.getValue(),
     }),
-    columnHelper.accessor('userGroupSubName', {
-      header: t('직군'),
+    columnHelper.accessor('userGroupName', {
+      header: t('보직'),
       cell: (info) => info.getValue(),
     }),
     columnHelper.accessor('userCount', {
       header: t('대상자'),
-      cell: (info) => `${info.getValue()}명`,
+      cell: (info) => info.getValue(),
     }),
   ] as ColumnDef<any, unknown>[];
 
@@ -55,10 +57,10 @@ const UserGroupOccupationComponent = ({ handleSetOption }: UserGroupOccupationCo
       gridData={gridData}
       columns={columns}
       rowKey={'userGroupId'}
-      leftTitle={t('유저그룹 - 직군')}
+      leftTitle={t('유저그룹 - 보직')}
       rightTitle={t('선택 유저그룹 목록')}
     />
   );
 };
 
-export const UserGroupOccupation = UserGroupOccupationComponent;
+export const UserGroupJobPosition = UserGroupJobPositionComponent;
