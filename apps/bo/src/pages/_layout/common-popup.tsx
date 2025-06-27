@@ -20,9 +20,15 @@ import {
   OrganizationShuttleTreeModal,
   TrainingPlaceChoiceModal,
   TrainingPlaceDetailModal,
-  ImagePreviewModal,
 } from '@features/shared';
-import { Button, ChipListModalSelectorFormField, ContentsRow, Input, useModal } from '@learnway/ui';
+import {
+  Button,
+  ChipListModalSelectorFormField,
+  ContentsRow,
+  Input,
+  PreviewImage,
+  useModal,
+} from '@learnway/ui';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
@@ -475,7 +481,7 @@ function RouteComponent() {
                   openModal({
                     width: 'full',
                     height: 'full',
-                    content: <ImagePreviewModal imageUrl={imageFileUrl} />,
+                    content: <PreviewImage imageUrl={imageFileUrl} />,
                     headerActionNode: (
                       <Button onlyIcon onClick={() => downloadByUrl(imageFileUrl)}>
                         <IcoDownload width={40} height={40} stroke="#131C30" />
