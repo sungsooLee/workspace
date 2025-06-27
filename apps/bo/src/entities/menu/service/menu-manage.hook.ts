@@ -1,11 +1,11 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   mutateOptions,
   queryKeys,
   menuManageQueryOptions as queryOptions,
 } from './menu-manage.queries';
-import { useApiMutation, useApiQuery } from '../../../shared/lib/use-authorized-query';
-import { MenuManageApi } from '../api/menu-manage';
+import { useApiQuery } from '../../../shared/lib/use-authorized-query';
+import MenuMangerService, { MenuManageApi } from '../api/menu-manage';
 import { MenuDetail } from '../../../types/entities/menu';
 import { useState } from 'react';
 
@@ -30,13 +30,15 @@ export function useFetchMenuFavorites(payload: any) {
 }
 
 export function useCreateMenu(options: any) {
-  const mutation = useApiMutation(MenuManageApi.create, undefined, {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (payload: any) => MenuMangerService.createMenu(payload),
     onSuccess: async (data, variables, context) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.all });
       if (options.onSuccess) {
         options.onSuccess(data, variables, context);
       }
     },
-    invalidateQueries: [queryKeys.all],
     ...options,
   });
   return {
@@ -46,13 +48,15 @@ export function useCreateMenu(options: any) {
 }
 
 export function useUpdateMenu(options: any) {
-  const mutation = useApiMutation(MenuManageApi.update, undefined, {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (payload: any) => MenuMangerService.updateMenu(payload),
     onSuccess: async (data, variables, context) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.all });
       if (options.onSuccess) {
         options.onSuccess(data, variables, context);
       }
     },
-    invalidateQueries: [queryKeys.all],
     ...options,
   });
   return {
@@ -114,13 +118,15 @@ export function useCheckExistsMenu(options?: {
 }
 
 export function useDeleteMenu(options: any) {
-  const mutation = useApiMutation(MenuManageApi.delete, undefined, {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (payload: any) => MenuMangerService.deleteMenu(payload),
     onSuccess: async (data, variables, context) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.all });
       if (options.onSuccess) {
         options.onSuccess(data, variables, context);
       }
     },
-    invalidateQueries: [queryKeys.all],
     ...options,
   });
 
@@ -131,13 +137,15 @@ export function useDeleteMenu(options: any) {
 }
 
 export function useMoveMenu(options: any) {
-  const mutation = useApiMutation(MenuManageApi.move, undefined, {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (payload: any) => MenuMangerService.moveMenu(payload),
     onSuccess: async (data, variables, context) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.all });
       if (options.onSuccess) {
         options.onSuccess(data, variables, context);
       }
     },
-    invalidateQueries: [queryKeys.all],
     ...options,
   });
   return {
