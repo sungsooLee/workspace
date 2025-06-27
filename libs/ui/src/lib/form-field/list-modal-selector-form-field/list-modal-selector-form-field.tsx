@@ -91,10 +91,10 @@ const ListModalSelectorFormFieldComponent = forwardRef<
         </div>
 
         <List
+          {...listProps}
           checkable
           deletable
           className={styles.list}
-          {...listProps}
           options={value}
           onOptionDeleteClick={handleOptionDeleteClick}
         />

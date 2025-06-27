@@ -50,7 +50,7 @@ function RootComponent() {
       {isUnderBreakpoint && <MinWidthRequired />}
       <ModalWrapper />
       <ToastWrapper />
-      <ReactQueryDevtools />
+      {import.meta.env.VITE_APP_ENV === 'local' && <ReactQueryDevtools />}
     </>
   );
 }

@@ -3,10 +3,10 @@ export const DATE_TIME_FORMAT = {
   MONTH: 'dateFormatMonth',
   MONTH_DAY: 'dateFormatMonthDay',
   DATE: 'dateFormatDay',
-  DATE_SERVER: 'dateFormatDayServer',
-  DATETIME_HOUR: 'dateTimeFormatHour',
-  DATETIME_MIN: 'dateTimeFormatHourMinute',
-  DATETIME_SEC: 'dateTimeFormatHourSecond',
+  DATE_SERVER: 'dateFormatDayServer', // MM-DD
+  DATETIME_HOUR: 'dateTimeFormatHour', // YYYY-MM-DD HH
+  DATETIME_MIN: 'dateTimeFormatHourMinute', // YYYY-MM-DD HH:mm
+  DATETIME_SEC: 'dateTimeFormatHourSecond', // YYYY-MM-DD HH:mm:ss
   DATETIME_WEEK_SEC: 'dateTimeFormatWeekHourSecond',
   DATETIME_MLS: 'dateTimeFormatHourMilliSecond',
   HOUR_MIN: 'timeFormatHourMinute',

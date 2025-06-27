@@ -1,6 +1,6 @@
 import { useEffect, useCallback } from 'react';
 import { t } from 'i18next';
-import { Button } from '@learnway/ui';
+import { Button, Divider } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
@@ -130,18 +130,15 @@ const TrainingPlaceListComponent = ({
   return (
     <>
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
-      <div className={cn(boxStyles.start, boxStyles.inner)}>
-        <div className="grid_wrap">
-          <GridBox
-            config={gConfig}
-            columns={columns}
-            title={t('교육공간 목록')}
-            showAdd={pageMode === EnPageMode.MODAL && onAddClick}
-            onAddClick={onAddClick}
-            disabledSelectionToggle
-          />
-        </div>
-      </div>
+      <Divider />
+      <GridBox
+        config={gConfig}
+        columns={columns}
+        title={t('교육공간 목록')}
+        showAdd={pageMode === EnPageMode.MODAL && onAddClick}
+        onAddClick={onAddClick}
+        disabledSelectionToggle
+      />
     </>
   );
 };

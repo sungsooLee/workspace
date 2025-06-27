@@ -3,7 +3,6 @@ import { cn } from '@learnway/shared';
 import { IcoArrowPrev, IcoArrowNext } from '@learnway/icons';
 // style
 import styles from '@learnway/styles/bo/assets/styles/modules/pop-image-preview.module.css';
-import { ModalBody, ModalContainer } from '../modal/modal-container';
 import { Button } from '../button/button';
 
 type Props = {
@@ -29,31 +28,27 @@ const PreviewImageModalComponent = ({ imageUrl }: Props) => {
   const isMin = step <= min;
   const isMax = step >= max;
   return (
-    <ModalContainer>
-      <ModalBody>
-        <div className={cn(styles.start, styles.img_wrap)}>
-          <img src={imageUrls[step]} alt="" />
-          {isMultiImage && (
-            <>
-              <Button
-                onlyIcon
-                icon={<IcoArrowPrev width={32} height={32} />}
-                className={styles.btn_prev}
-                disabled={isMin}
-                onClick={decrement}
-              />
-              <Button
-                onlyIcon
-                icon={<IcoArrowNext width={32} height={32} />}
-                className={styles.btn_next}
-                disabled={isMax}
-                onClick={increment}
-              />
-            </>
-          )}
-        </div>
-      </ModalBody>
-    </ModalContainer>
+    <div className="flex h-screen w-screen items-start justify-center overflow-y-auto overflow-x-hidden">
+      <img className="block h-auto w-full" src={imageUrls[step]} alt="" />
+      {isMultiImage && (
+        <>
+          <Button
+            onlyIcon
+            icon={<IcoArrowPrev width={32} height={32} />}
+            className={styles.btn_prev}
+            disabled={isMin}
+            onClick={decrement}
+          />
+          <Button
+            onlyIcon
+            icon={<IcoArrowNext width={32} height={32} />}
+            className={styles.btn_prev}
+            disabled={isMax}
+            onClick={increment}
+          />
+        </>
+      )}
+    </div>
   );
 };
 

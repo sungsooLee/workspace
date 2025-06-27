@@ -27,3 +27,18 @@
     }
   }
 }
+
+.data_wrap {
+  .selected_item {
+    @apply flex min-h-[40px] w-full items-center justify-between rounded-[8px] bg-[var(--gray1)] px-[16px];
+    & + .selected_item {
+      @apply mt-[12px];
+    }
+    &:first-child {
+      @apply mt-[20px];
+    }
+  }
+  .no_data {
+    @apply h-[250px] pt-0;
+  }
+}

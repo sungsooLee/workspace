@@ -207,13 +207,23 @@ export class HttpService {
             throw error.response?.data;
           }
 
-          // 서버 오류 등 기타 에러
-          eventService.emit(HTTP_EVENTS.ERROR, {
-            title: 'Request Error',
-            message: '서버 통신 중 오류가 발생했습니다.',
-            status: error.response?.status,
-            url,
-          });
+          // 502 Bad Gateway - 서버 배포
+          if (error.response?.status === 502) {
+            eventService.emit(HTTP_EVENTS.SERVER_DOWN, {
+              title: 'Server Maintenance',
+              message: '서버가 배포 중입니다. 잠시 후 다시 시도해주세요.',
+              status: 502,
+              url,
+            });
+          } else {
+            // 서버 오류 등 기타 에러
+            eventService.emit(HTTP_EVENTS.ERROR, {
+              title: 'Request Error',
+              message: '서버 통신 중 오류가 발생했습니다.',
+              status: error.response?.status,
+              url,
+            });
+          }
           console.log('axios.error', error);
         } else {
           // 알 수 없는 에러

@@ -9,6 +9,7 @@ import {
   GridBox,
   useModal,
   useGridBox,
+  Divider,
 } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
@@ -104,15 +105,14 @@ const UserGroupModalComponent: FC<any> = () => {
       <ModalBody>
         <div className={popupStyles.wrap}>
           <SearchBox provider={sProvider} onSearch={handleOnSearch} />
-          <div className={popupStyles.container}>
-            <GridBox
-              onRowSelect={handleRowSelect}
-              config={config}
-              columns={columns}
-              showColumnSettings={false}
-              title={t('유저조회목록')}
-            />
-          </div>
+          <Divider />
+          <GridBox
+            onRowSelect={handleRowSelect}
+            config={config}
+            columns={columns}
+            showColumnSettings={false}
+            title={t('유저조회목록')}
+          />
         </div>
       </ModalBody>
       <ModalFooter>

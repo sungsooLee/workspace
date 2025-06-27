@@ -20,9 +20,15 @@ import {
   OrganizationShuttleTreeModal,
   TrainingPlaceChoiceModal,
   TrainingPlaceDetailModal,
-  ImagePreviewModal,
 } from '@features/shared';
-import { Button, ChipListModalSelectorFormField, ContentsRow, Input, useModal } from '@learnway/ui';
+import {
+  Button,
+  ChipListModalSelectorFormField,
+  ContentsRow,
+  Input,
+  PreviewImage,
+  useModal,
+} from '@learnway/ui';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
@@ -150,8 +156,8 @@ function RouteComponent() {
                     width: 'xl',
                   }}
                   chipList={{
-                    labelField: 'company',
-                    valueField: 'id',
+                    labelField: 'name',
+                    valueField: 'companyId',
                     wordwrap: true,
                   }}
                 />
@@ -170,8 +176,8 @@ function RouteComponent() {
                     width: 'xl',
                   }}
                   chipList={{
-                    labelField: 'company',
-                    valueField: 'id',
+                    labelField: 'name',
+                    valueField: 'companyId',
                     wordwrap: true,
                   }}
                 />
@@ -456,7 +462,7 @@ function RouteComponent() {
                   e.stopPropagation();
                   openModal({
                     width: 'xl',
-                    content: <UserGroupTabsChoiceModal />,
+                    content: <UserGroupTabsChoiceModal initialTab="OCCUPATION" />,
                   });
                 }}
               >
@@ -475,7 +481,7 @@ function RouteComponent() {
                   openModal({
                     width: 'full',
                     height: 'full',
-                    content: <ImagePreviewModal imageUrl={imageFileUrl} />,
+                    content: <PreviewImage imageUrl={imageFileUrl} />,
                     headerActionNode: (
                       <Button onlyIcon onClick={() => downloadByUrl(imageFileUrl)}>
                         <IcoDownload width={40} height={40} stroke="#131C30" />
@@ -631,7 +637,8 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'thumbnails',
       label: t('썸네일'),
-      type: 'thumbnail-list-v2',
+      type: 'thumbnail-list',
+      imageStorageType: 'public',
       max: 3,
       format: 'array',
       value: [],

@@ -32,16 +32,30 @@ const useTranslationHook = (options?: any) => {
     },
   });
 
+  const { mutate: createByExcelMutate } = useMutation({
+    ...mutateOptions.createByExcel(),
+    onSuccess: async (data: any, variables, context) => {
+      console.log('data => ', data);
+      if (options?.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+  });
+
   const handleSave = (saveData: any) => {
     saveMutate(saveData);
   };
   const handleUpdate = (modifyData: any) => {
     updateMutate(modifyData);
   };
+  const handleCreateByExcel = (saveData: any) => {
+    createByExcelMutate(saveData);
+  };
 
   return {
     save: handleSave,
     update: handleUpdate,
+    createByExcel: handleCreateByExcel,
   };
 };
 

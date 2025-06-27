@@ -6,5 +6,5 @@ export const Route = createFileRoute('/_unauth/500')({
 });
 
 function RouteComponent() {
-  return <ErrorComponent error={'test'}></ErrorComponent>;
+  return <ErrorComponent error={''}></ErrorComponent>;
 }

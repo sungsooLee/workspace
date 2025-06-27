@@ -8,6 +8,7 @@ const DateRangePickerFormFieldComponent: FC<any> = ({
   onChangeGuideText,
   minDate,
   maxDate,
+  ...props
 }) => {
   const [from, setFrom] = useState(value.from ?? undefined);
   const [to, setTo] = useState(value.to ?? undefined);
@@ -28,6 +29,7 @@ const DateRangePickerFormFieldComponent: FC<any> = ({
   return (
     <>
       <DatePicker
+        {...props}
         onChange={handleFromDate}
         value={from}
         minDate={minDate}
@@ -36,6 +38,7 @@ const DateRangePickerFormFieldComponent: FC<any> = ({
       />
       <span className={styles.dash}></span>
       <DatePicker
+        {...props}
         onChange={handleToDate}
         value={to}
         minDate={minDate}

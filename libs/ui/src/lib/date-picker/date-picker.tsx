@@ -168,6 +168,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
   }, [dateFormat]);
 
   const handleChange = (date: Date | string | null) => {
+    if (readOnly || disabled) return;
     let parsedDate: Date | undefined;
 
     if (typeof date === 'string') {

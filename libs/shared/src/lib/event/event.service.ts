@@ -1,6 +1,7 @@
 export const HTTP_EVENTS = {
   ERROR: 'http:error',
   REACT_QUERY_ERROR: 'reactQuery:error',
+  SERVER_DOWN: 'http:serverDown',
 };
 
 // 에러 이벤트 데이터 타입

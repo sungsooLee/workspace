@@ -22,13 +22,25 @@ const ModalContainerComponent: React.FC<ModalContainerProps> = ({
   const FooterSlot = getSlot(children, ModalFooter);
 
   const contentRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
+  const footerRef = useRef<HTMLDivElement>(null);
+  const maxHeight = 718;
+
   const [isScrollable, setIsScrollable] = useState(false);
+  const [contentMaxHeight, setContentMaxHeight] = useState<number>(0);
 
   useEffect(() => {
     const checkScroll = () => {
-      if (contentRef.current) {
-        setIsScrollable(contentRef.current.scrollHeight > 588);
-      }
+      if (!contentRef.current) return;
+
+      const titleHeight = titleRef.current?.offsetHeight ?? 0;
+      const footerHeight = footerRef.current?.offsetHeight ?? 0;
+
+      const maxContentHeight = maxHeight - titleHeight - footerHeight;
+
+      setContentMaxHeight(maxContentHeight);
+
+      setIsScrollable(contentRef.current.scrollHeight > maxContentHeight);
     };
 
     checkScroll();
@@ -47,7 +59,9 @@ const ModalContainerComponent: React.FC<ModalContainerProps> = ({
   return (
     <div className={cn(styles.start, className, 'nlp--modal-content')}>
       {/* title */}
-      <Primitive.Title className={styles.title}>{TitleSlot}</Primitive.Title>
+      <Primitive.Title ref={titleRef} className={styles.title}>
+        {TitleSlot}
+      </Primitive.Title>
       {/* description */}
       {DescSlot && (
         <Primitive.Description className={styles.description}>{DescSlot}</Primitive.Description>
@@ -56,11 +70,16 @@ const ModalContainerComponent: React.FC<ModalContainerProps> = ({
       <div
         ref={contentRef}
         className={cn(styles.contents, isScrollable && styles.scrolled, 'modal-content')}
+        style={{ maxHeight: contentMaxHeight }}
       >
         {BodySlot}
       </div>
       {/* footer */}
-      {FooterSlot && <div className={styles.footer}>{FooterSlot}</div>}
+      {FooterSlot && (
+        <div ref={footerRef} className={styles.footer}>
+          {FooterSlot}
+        </div>
+      )}
     </div>
   );
 };

@@ -1,8 +1,8 @@
 import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
 import { ChannelListModal, ManagerListModal, TeacherListModal } from '@features/learning/course';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import {
   Button,
+  CheckboxGroupFormField,
   ChipListModalSelectorFormField,
   ContentsRow,
   EditorFormField,
@@ -11,26 +11,36 @@ import {
   ListModalSelectorFormField,
   RadioGroupFormField,
   SelectOption,
+  TextareaFormField,
   useModal,
 } from '@learnway/ui';
-import { FormRow } from '@shared/ui';
+import { ChipListFormField, FormRow2, ThumbnailListFormField } from '@shared/ui';
 import { createFileRoute } from '@tanstack/react-router';
 import { ContentsButtons, MainContents, PageContainer } from '@widgets/layout';
-import { SubContents } from '@widgets/layout/ui/container/slot/sub-contents';
 import { t } from 'i18next';
 import LabelMessagesService from '../../../../entities/label-messages-mock/api/label-messages';
-import { CheckboxGroupFormField } from '@features/form';
+import { useDynamicForm2 } from '@learnway/hooks';
 
-export const Route = createFileRoute('/_unauth/sample/form-filed-sample/')({
+export const Route = createFileRoute('/_unauth/sample/form-field-sample/')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   const { open: openModal } = useModal();
-  const { provider, onSubmit, control, getValues, watch } = useDynamicForm(formConfig);
+  const { provider, onSubmit, getValues, watch } = useDynamicForm2();
 
   // DropdownCodeGroup 필드 값 감시
-  const dropdownCodeGroupValue = watch('DropdownCodeGroup');
+  const dropdownCodeGroup = watch('DropdownCodeGroup');
+
+  const handleSetValue = () => {
+    const { onFormChange } = provider;
+    const newValues = {
+      라디오커스텀: '2',
+      라디오커스텀_모달_아이디: 'channel_id1',
+      라디오커스텀_모달_이름: 'channel_name1',
+    };
+    onFormChange(newValues);
+  };
 
   const handleOnSubmit = (data: any) => {
     console.log('data {} => ', data);
@@ -49,15 +59,7 @@ function RouteComponent() {
             variant="primary"
             size="sm"
             label={'set value'}
-            onClick={() => {
-              const { onFormChange } = provider;
-              const newValues = {
-                라디오커스텀: '2',
-                라디오커스텀_모달_아이디: 'channel_id1',
-                라디오커스텀_모달_이름: 'channel_name1',
-              };
-              onFormChange(newValues);
-            }}
+            onClick={handleSetValue}
           />
           <Button
             type={'button'}
@@ -77,9 +79,14 @@ function RouteComponent() {
         <MainContents>
           {/* 라디오 api*/}
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'radioApi'}
+              label={t('라디오 - api')}
+              validation={{
+                required: true,
+                format: 'array',
+              }}
               element={
                 <RadioGroupFormField
                   optionsConfig={{
@@ -95,17 +102,19 @@ function RouteComponent() {
           </ContentsRow>
           {/* 라디오 codeGroup*/}
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'radioCodeGroup'}
+              label={t('라디오 - 코드그룹')}
               element={<RadioGroupFormField optionsConfig={{ codeGroup: 'test' }} />}
             />
           </ContentsRow>
           {/* 라디오 + custom node */}
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'radioCodeGroupWithNode'}
+              label={t('라디오 - 코드그룹 - 커스텀노드')}
               element={
                 <RadioGroupFormField
                   optionsConfig={{
@@ -117,9 +126,10 @@ function RouteComponent() {
                       {
                         value: 'test1',
                         node: (
-                          <FormRow
+                          <FormRow2
                             provider={provider}
                             name={'라디오커스텀_인풋'}
+                            value={''}
                             element={<Input />}
                           />
                         ),
@@ -127,21 +137,30 @@ function RouteComponent() {
                       {
                         value: 'test2',
                         node: (
-                          <FormRow
-                            provider={provider}
-                            name={'라디오커스텀_모달_이름'}
-                            element={
-                              <InputModalSelectorFormField
-                                modalConfig={{
-                                  content: <ChannelListModal />,
-                                }}
-                                transformModalData={(data: any) => ({
-                                  라디오커스텀_모달_아이디: data.channelId,
-                                  라디오커스텀_모달_이름: data.channelName,
-                                })}
-                              />
-                            }
-                          />
+                          <>
+                            <FormRow2
+                              provider={provider}
+                              name={'라디오커스텀_모달_아이디'}
+                              type={'hidden'}
+                              value={''}
+                            />
+                            <FormRow2
+                              provider={provider}
+                              name={'라디오커스텀_모달_이름'}
+                              value={''}
+                              element={
+                                <InputModalSelectorFormField
+                                  modalConfig={{
+                                    content: <ChannelListModal />,
+                                  }}
+                                  transformModalData={(data: any) => ({
+                                    라디오커스텀_모달_아이디: data.channelId,
+                                    라디오커스텀_모달_이름: data.channelName,
+                                  })}
+                                />
+                              }
+                            />
+                          </>
                         ),
                       },
                     ],
@@ -152,9 +171,10 @@ function RouteComponent() {
           </ContentsRow>
           {/* dropdown codeGroup*/}
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'DropdownCodeGroup'}
+              label={'Dropdown - codeGroup 사용'}
               element={
                 <DropdownFormField
                   optionsConfig={{
@@ -166,17 +186,61 @@ function RouteComponent() {
           </ContentsRow>
           {/* dropdown api*/}
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'DropdownApi'}
+              label={'Dropdown - api 사용'}
               element={
                 <DropdownFormField
                   optionsConfig={{
                     labelField: 'cdName',
                     valueField: 'cdId',
                     api: {
-                      fn: LabelMessagesService.fetchChannelMock,
-                      params: watch('DropdownCodeGroup') || '', // fn 실행시 파라미터 값 전달
+                      fn: (param?: string) => LabelMessagesService.fetchChannelMock(param),
+                    },
+                  }}
+                />
+              }
+            />
+          </ContentsRow>
+          {/* dropdown codeGroup relation*/}
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'DropdownCodeGroupRelation'}
+              label={`Dropdown - codeGroup ('Dropdown - codeGroup 사용' 변경시 재조회)`}
+              element={
+                <DropdownFormField
+                  key={`dropdown-relation-${dropdownCodeGroup}`}
+                  optionsConfig={{
+                    codeGroup: 'test',
+                    transformOptions: (options: SelectOption[]) => {
+                      return options.filter(
+                        (option: SelectOption) => option.value !== dropdownCodeGroup,
+                      );
+                    },
+                  }}
+                />
+              }
+            />
+          </ContentsRow>
+          {/* dropdown api*/}
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'DropdownApiRelation'}
+              label={`Dropdown - api ('Dropdown - codeGroup 사용' 변경시 재조회)`}
+              element={
+                <DropdownFormField
+                  key={`dropdown-api-relation-${dropdownCodeGroup}`}
+                  optionsConfig={{
+                    labelField: 'cdName',
+                    valueField: 'cdId',
+                    api: {
+                      fn: () => {
+                        console.log('dropdownCodeGroup =>=>=>=>=> ', dropdownCodeGroup);
+                        return LabelMessagesService.fetchChannelMock(dropdownCodeGroup);
+                      },
                     },
                   }}
                 />
@@ -185,9 +249,11 @@ function RouteComponent() {
           </ContentsRow>
           {/* 채널 */}
           <ContentsRow>
-            <FormRow
+            <FormRow2 provider={provider} name={'channelId'} type={'hidden'} />
+            <FormRow2
               provider={provider}
               name={'channelName'}
+              label={'채널 - InputModalSelectorFormField'}
               element={
                 <InputModalSelectorFormField
                   modalConfig={{
@@ -199,29 +265,70 @@ function RouteComponent() {
           </ContentsRow>
           {/* Editor */}
           <ContentsRow>
-            <FormRow provider={provider} name={'에디터'} element={<EditorFormField />} />
+            <FormRow2
+              provider={provider}
+              name={'에디터'}
+              label={'Editor - EditorFormField'}
+              value={
+                '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"editor sample text.....","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+              }
+              element={<EditorFormField />}
+            />
           </ContentsRow>
           {/* 과정명 */}
           <ContentsRow>
-            <FormRow provider={provider} name={'과정명'} />
+            <FormRow2
+              provider={provider}
+              name={'과정명'}
+              label={t('과정명')}
+              maxLength={10}
+              element={<Input />}
+            />
           </ContentsRow>
           {/* 과정내용 */}
           <ContentsRow>
-            <FormRow provider={provider} name={'과정내용'} />
+            <FormRow2
+              provider={provider}
+              name={'과정내용'}
+              label={t('과정내용')}
+              element={<TextareaFormField />}
+            />
           </ContentsRow>
-          {/* 대표이미지 */}
-          {/* TODO: className 제거 */}
+          {/* ChipListFormField */}
           <ContentsRow>
-            <FormRow provider={provider} name={'대표이미지'} />
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider} name={'태그'} />
+            <FormRow2
+              provider={provider}
+              name={'태그'}
+              label={t('태그 - 인풋 칩 리스트')}
+              format={'array'}
+              value={['현대자동차 A', '현대자동차 B', '현대자동차 C']}
+              element={
+                <ChipListFormField
+                  chipListConfig={{
+                    emptyMessage: 'XCXC',
+                  }}
+                />
+              }
+            />
           </ContentsRow>
           {/* 강사 */}
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'강사'}
+              label={t('강사 - ChipListModalSelectorFormField')}
+              format={'array'}
+              value={[]}
+              validation={{
+                required: true,
+                format: 'array',
+                conditions: [
+                  {
+                    fn: (values: any) => values.강사 && values.강사.length > 0,
+                    message: '최소 1명 이상의 강사를 선택해주세요.',
+                  },
+                ],
+              }}
               element={
                 <ChipListModalSelectorFormField
                   modalConfig={{ content: <TeacherListModal channelId={getValues()?.channelId} /> }}
@@ -236,9 +343,12 @@ function RouteComponent() {
           </ContentsRow>
           {/* 강사2 */}
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'강사2'}
+              label={t('강사 - ChipListModalSelectorFormField')}
+              format={'array'}
+              value={[]}
               element={
                 <ChipListModalSelectorFormField
                   showAddButton
@@ -262,9 +372,11 @@ function RouteComponent() {
           </ContentsRow>
           {/* checkbox codeGroup */}
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'checkboxCodeGroup'}
+              label={t('checkbox - checkboxGroupFormField(codeGroup)')}
+              value={[]}
               element={
                 <CheckboxGroupFormField
                   optionsConfig={{ codeGroup: 'test' }}
@@ -276,9 +388,11 @@ function RouteComponent() {
           </ContentsRow>
           {/* checkbox api */}
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'checkboxApi'}
+              label={t('checkbox - checkboxGroupFormField(api)')}
+              value={[]}
               element={
                 <CheckboxGroupFormField
                   optionsConfig={{
@@ -296,9 +410,12 @@ function RouteComponent() {
           </ContentsRow>
           {/* 운영자 & 연락처 */}
           <ContentsRow>
-            <FormRow
+            <FormRow2 provider={provider} name={'managerId'} type={'hidden'} value={''} />
+            <FormRow2
               provider={provider}
               name={'managerName'}
+              label={t('운영자 - InputModalSelectorFormField')}
+              format={'string'}
               element={
                 <InputModalSelectorFormField
                   modalConfig={{
@@ -314,13 +431,25 @@ function RouteComponent() {
           </ContentsRow>
           {/* 테넌트 */}
           <ContentsRow>
-            <FormRow provider={provider} name={'테넌트'} />
+            <FormRow2
+              provider={provider}
+              name={'테넌트'}
+              label={t('테넌트 - 우측 액션버튼 + chip list')}
+              format={'array'}
+              value={[{ label: 'AA', value: 'value1' }]}
+              chipListConfig={{}}
+            />
           </ContentsRow>
           {/* 공개범위 */}
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'공개범위'}
+              label={t('공개범위 - ListModalSelectorFormField')}
+              format={'array'}
+              value={[{ targetId: 'target1', targetName: 'targetname1' }]}
+              placeholder={''}
+              description={''}
               element={
                 <ListModalSelectorFormField
                   modalConfig={{
@@ -343,11 +472,21 @@ function RouteComponent() {
           </ContentsRow>
           {/* 썸네일 리스트 */}
           <ContentsRow>
-            <FormRow provider={provider} name={'썸네일'} />
+            <FormRow2
+              provider={provider}
+              name={'썸네일'}
+              label={t('ThumbnailListFormField')}
+              format={'array'}
+              value={[
+                'https://lodash.com/assets/img/lodash.svg',
+                'https://lodash.com/assets/img/lodash.svg',
+              ]}
+              element={<ThumbnailListFormField />}
+            />
           </ContentsRow>
           {/* 폰넘버 */}
           {/* <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'폰넘버'}
               element={
@@ -360,211 +499,9 @@ function RouteComponent() {
             />
           </ContentsRow> */}
         </MainContents>
-        <SubContents>
-          <Input />
-        </SubContents>
       </PageContainer>
     </form>
   );
 }
 
-/**
- * 필수값 : name, type
- */
-const formConfig: DynamicFormConfig = {
-  builders: [
-    {
-      name: 'radioApi',
-      type: 'custom',
-      label: t('라디오 - api'),
-      value: [],
-    },
-    {
-      name: 'radioCodeGroup',
-      type: 'radio-group',
-      label: t('라디오 - 코드그룹'),
-      value: [],
-    },
-    {
-      name: 'radioCodeGroupWithNode',
-      type: 'custom',
-      label: t('라디오 - 코드그룹 - 노드'),
-      value: [],
-    },
-    {
-      name: '라디오커스텀_인풋',
-      type: 'custom',
-      value: '',
-    },
-    {
-      name: '라디오커스텀_모달_아이디',
-      type: 'hidden',
-      value: '',
-    },
-    {
-      name: '라디오커스텀_모달_이름',
-      type: 'custom',
-      value: '',
-    },
-    {
-      name: 'DropdownCodeGroup',
-      type: 'custom',
-      label: 'Dropdown - DropdownFormField(codeGroup)',
-      value: '',
-    },
-    {
-      name: 'DropdownApi',
-      type: 'custom',
-      label: 'Dropdown - DropdownFormField(api)',
-      value: '',
-    },
-    {
-      name: '폰넘버',
-      type: 'custom',
-      label: '폰넘버 - PhoneNumberFormField',
-      value: '',
-    },
-    {
-      name: 'channelId',
-      type: 'hidden',
-      value: '',
-    },
-    {
-      name: 'channelName',
-      type: 'custom',
-      label: '채널 - InputModalSelectorFormField',
-      value: '',
-    },
-    {
-      name: '에디터',
-      type: 'custom',
-      label: 'Editor - EditorFormField',
-      value:
-        '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"editor sample text.....","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}',
-    },
-    {
-      name: '과정명',
-      type: 'text',
-      label: t('과정명'),
-      value: '',
-      placeholder: '',
-      description: '',
-      maxLength: 10,
-    },
-    {
-      name: '과정내용',
-      type: 'textarea',
-      label: t('과정내용'),
-      value: '',
-      placeholder: '',
-      description: '',
-    },
-    {
-      name: '대표이미지',
-      type: 'thumbnail-image-upload',
-      label: t('대표이미지'),
-      format: 'array',
-      value: [
-        { id: '1', path: 'https://lodash.com/assets/img/lodash.svg' },
-        { id: '2', path: 'https://lodash.com/assets/img/lodash.svg' },
-        { id: '3', path: 'https://lodash.com/assets/img/lodash.svg' },
-        { id: '4', path: 'https://lodash.com/assets/img/lodash.svg' },
-      ],
-      placeholder: '',
-      description: '',
-    },
-    {
-      name: '태그',
-      type: 'chip-list',
-      label: t('태그 - 인풋 칩 리스트'),
-      format: 'array',
-      value: ['현대자동차 A', '현대자동차 B', '현대자동차 C'],
-      // placeholder: '',
-      description: '',
-      chipListConfig: {
-        emptyMessage: 'XCXC',
-      },
-    },
-    {
-      name: '강사',
-      type: 'custom',
-      label: t('강사 - ChipListModalSelectorFormField'),
-      format: 'array',
-      value: [],
-      placeholder: '',
-      description: '',
-    },
-    {
-      name: '강사2',
-      type: 'custom',
-      label: t('강사 - ChipListModalSelectorFormField'),
-      format: 'array',
-      value: [],
-      placeholder: '',
-      description: '',
-    },
-    {
-      name: 'checkboxCodeGroup',
-      type: 'custom',
-      label: t('checkbox - checkboxGroupFormField(codeGroup)'),
-      value: [],
-    },
-    {
-      name: 'checkboxApi',
-      type: 'custom',
-      label: t('checkbox - checkboxGroupFormField(api)'),
-      value: [],
-    },
-    {
-      name: 'managerId',
-      type: 'hidden',
-      value: '',
-    },
-    {
-      name: 'managerName',
-      type: 'custom',
-      label: t('운영자 - InputModalSelectorFormField'),
-      format: 'string',
-      value: '',
-      placeholder: '',
-      description: '',
-    },
-    {
-      name: '연락처',
-      type: 'custom',
-      label: t('연락처 - 인풋 + label + 인풋'),
-      value: '',
-      placeholder: '',
-      description: '',
-    },
-    {
-      name: '테넌트',
-      type: 'chip-list',
-      label: t('테넌트 - 우측 액션버튼 + chip list'),
-      format: 'array',
-      value: [{ label: 'AA', value: 'value1' }],
-      placeholder: '',
-      description: '',
-      chipListConfig: {},
-    },
-    {
-      name: '공개범위',
-      type: 'custom',
-      label: t('공개범위 - ListModalSelectorFormField'),
-      format: 'array',
-      value: [{ targetId: 'target1', targetName: 'targetname1' }],
-      placeholder: '',
-      description: '',
-    },
-    {
-      name: '썸네일',
-      type: 'thumbnail-list',
-      label: t('ThumbnailListFormField'),
-      format: 'array',
-      value: [
-        'https://lodash.com/assets/img/lodash.svg',
-        'https://lodash.com/assets/img/lodash.svg',
-      ],
-    },
-  ],
-};
+// formConfig는 더 이상 필요하지 않습니다. 각 FormRow에서 fieldConfig prop으로 직접 설정합니다.

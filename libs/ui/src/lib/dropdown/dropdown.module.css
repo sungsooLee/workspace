@@ -96,9 +96,6 @@
   }
 }
 
-[class*='select__menu'] {
-  @apply !scrollbar !max-h-[167px];
-}
 [class*='menu-portal-large'] {
   [class*='select__menu'] {
     @apply !max-h-[334px];

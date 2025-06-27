@@ -1,12 +1,13 @@
-import { queryOptions } from '@entities/label-messages/service/label-messages.queries';
+import { queryOptions } from '@entities/course/service/course.queries';
+import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
 import { CourseTypeOptionCardModal } from '@features/learning/course';
 import { GridExcelDownloadButton, GridExcelUploadButton } from '@features/shared';
 import { LMSApiPrefix } from '@learnway/config';
-import { useSearchBox } from '@learnway/hooks';
-import { Button, Divider, GridBox, useGridBox, useModal } from '@learnway/ui';
-import { SearchBox } from '@shared/ui/search-box';
+import { useDynamicForm2 } from '@learnway/hooks';
+import { Button, ContentsRow, Divider, GridBox, Input, useGridBox, useModal } from '@learnway/ui';
+import { FormRow2, SearchBoxForm } from '@shared/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { LabelMessagesQueryParams } from '@types';
+import { CoursesQueryParams } from '@types';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
@@ -22,7 +23,7 @@ function RouteComponent() {
   const router = useRouter();
   const { t } = useTranslation();
   const { open: openModal } = useModal();
-  const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
+  const { provider, getValues, onSubmit } = useDynamicForm2();
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
   const [selectedCourses, setSelectedCourses] = useState<any[]>([]);
 
@@ -31,6 +32,7 @@ function RouteComponent() {
    * @param {any} data - 검색 조건 데이터
    */
   const handleOnSearch = useCallback((data: any) => {
+    console.log('handleOnSearch.data {} => ', data);
     gridFetch(data);
   }, []);
 
@@ -60,7 +62,7 @@ function RouteComponent() {
     });
     console.log('handleCourseOpenClick.value {} => ', value);
     router.navigate({
-      to: '/learning_test/course/create/view',
+      to: '/learning/course/create/view',
       state: {
         courseType: value, // 다국어 분류 - 공통코드
       },
@@ -88,7 +90,77 @@ function RouteComponent() {
       </ContentsButtons>
       <MainContents>
         {/* 검색 */}
-        <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
+        <SearchBoxForm onSearch={onSubmit(handleOnSearch)}>
+          <ContentsRow>
+            {/*테넌트*/}
+            <FormRow2
+              provider={provider}
+              name={'tenant'}
+              label={t('LABEL.form.label.tenant')}
+              element={<DropdownFormField options={[]} />}
+              validation={{
+                required: true,
+                format: 'object',
+              }}
+            />
+            {/*채널*/}
+            <FormRow2
+              provider={provider}
+              name={'channel'}
+              label={t('LABEL.form.label.channel')}
+              element={<DropdownFormField options={[]} />}
+              validation={{
+                required: true,
+                format: 'object',
+              }}
+            />
+            {/*개설년도*/}
+            <FormRow2
+              provider={provider}
+              name={'openingDate'}
+              label={t('LABEL.form.label.openingDate')}
+              element={<DropdownFormField options={[]} />}
+            />
+            {/*과정유형*/}
+            <FormRow2
+              provider={provider}
+              name={'courseType'}
+              label={t('LABEL.form.label.courseType')}
+              element={<DropdownFormField options={[]} />}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            {/* 사용여부 */}
+            <FormRow2
+              provider={provider}
+              name={'useYn'}
+              label={t('LABEL.form.label.useYn')}
+              element={<DropdownFormField options={[]} />}
+            />
+            {/* 담당자/운영자 */}
+            <FormRow2
+              provider={provider}
+              name={'adminName'}
+              label={t('LABEL.form.label.coordinator/Operator')}
+              element={<DropdownFormField options={[]} />}
+            />
+            {/* 과정코드 */}
+            <FormRow2
+              provider={provider}
+              name={'courseCode'}
+              label={t('LABEL.form.label.courseCode')}
+              element={<Input />}
+            />
+            {/* 과정명 */}
+            <FormRow2
+              provider={provider}
+              name={'courseName'}
+              label={t('LABEL.form.label.courseName')}
+              element={<Input />}
+            />
+          </ContentsRow>
+        </SearchBoxForm>
+        {/* <SearchBox provider={searchProvider} onSearch={handleOnSearch} /> */}
         {/* Divider */}
         <Divider />
         {/* 그리드 */}
@@ -103,7 +175,10 @@ function RouteComponent() {
           }
           excelButtons={
             <>
-              <GridExcelUploadButton validateUrl="/multilingual/excelUploadValidation" />
+              <GridExcelUploadButton
+                // url="/multilingual/exportExcel"
+                validateUrl="/multilingual/excelUploadValidation"
+              />
               <GridExcelDownloadButton
                 url={`${LMSApiPrefix()}/multilingual/exportExcel`}
                 params={getValues()}
@@ -127,103 +202,99 @@ function RouteComponent() {
   );
 }
 
-const searchConfig: any = {
-  builders: [
-    [
-      // 테넌트
-      {
-        name: 'tenant',
-        type: 'dropdown',
-        label: t('LABEL.form.label.tenant'),
-        value: '',
-        options: [
-          { value: '', label: '전체' },
-          { value: 'true', label: '사용' },
-          { value: 'false', label: '미사용' },
-        ],
-      },
-      // 채널
-      {
-        name: 'channel',
-        type: 'dropdown',
-        label: t('LABEL.form.label.channel'),
-        value: '',
-        options: [
-          { value: '', label: '전체' },
-          { value: 'true', label: '사용' },
-          { value: 'false', label: '미사용' },
-        ],
-      },
-      // 개설년도
-      {
-        name: 'openingDate',
-        type: 'dropdown',
-        label: t('LABEL.form.label.openingDate'),
-        value: '',
-        options: [
-          { value: '', label: '전체' },
-          { value: 'true', label: '사용' },
-          { value: 'false', label: '미사용' },
-        ],
-      },
-      // 과정유형
-      {
-        name: 'courseType',
-        type: 'dropdown',
-        label: t('LABEL.form.label.courseType'),
-        value: '',
-        options: [
-          { value: '', label: '전체' },
-          { value: 'true', label: '사용' },
-          { value: 'false', label: '미사용' },
-        ],
-      },
-    ],
-    [
-      // 사용여부
-      {
-        name: 'useYn',
-        type: 'dropdown',
-        label: t('LABEL.form.label.useYn'),
-        value: '',
-        options: [
-          { value: '', label: '전체' },
-          { value: 'true', label: '사용' },
-          { value: 'false', label: '미사용' },
-        ],
-      },
-      // 담당자/운영자
-      {
-        name: 'adminName',
-        type: 'text',
-        label: t('LABEL.form.label.coordinator/Operator'),
-        value: '',
-      },
-      // 과정코드
-      {
-        name: 'courseCode',
-        type: 'text',
-        label: t('LABEL.form.label.courseCode'),
-        value: '',
-      },
-      // 과정명
-      {
-        name: 'courseName',
-        type: 'text',
-        label: t('LABEL.form.label.courseName'),
-        value: '',
-      },
-    ],
-  ],
-};
+// const searchConfig: any = {
+//   builders: [
+//     [
+//       // 테넌트
+//       {
+//         name: 'tenant',
+//         type: 'dropdown',
+//         label: t('LABEL.form.label.tenant'),
+//         value: '',
+//         options: [
+//           { value: '', label: '전체' },
+//           { value: 'true', label: '사용' },
+//           { value: 'false', label: '미사용' },
+//         ],
+//       },
+//       // 채널
+//       {
+//         name: 'channel',
+//         type: 'dropdown',
+//         label: t('LABEL.form.label.channel'),
+//         value: '',
+//         options: [
+//           { value: '', label: '전체' },
+//           { value: 'true', label: '사용' },
+//           { value: 'false', label: '미사용' },
+//         ],
+//       },
+//       // 개설년도
+//       {
+//         name: 'openingDate',
+//         type: 'dropdown',
+//         label: t('LABEL.form.label.openingDate'),
+//         value: '',
+//         options: [
+//           { value: '', label: '전체' },
+//           { value: 'true', label: '사용' },
+//           { value: 'false', label: '미사용' },
+//         ],
+//       },
+//       // 과정유형
+//       {
+//         name: 'courseType',
+//         type: 'dropdown',
+//         label: t('LABEL.form.label.courseType'),
+//         value: '',
+//         options: [
+//           { value: '', label: '전체' },
+//           { value: 'true', label: '사용' },
+//           { value: 'false', label: '미사용' },
+//         ],
+//       },
+//     ],
+//     [
+//       // 사용여부
+//       {
+//         name: 'useYn',
+//         type: 'dropdown',
+//         label: t('LABEL.form.label.useYn'),
+//         value: '',
+//         options: [
+//           { value: '', label: '전체' },
+//           { value: 'true', label: '사용' },
+//           { value: 'false', label: '미사용' },
+//         ],
+//       },
+//       // 담당자/운영자
+//       {
+//         name: 'adminName',
+//         type: 'text',
+//         label: t('LABEL.form.label.coordinator/Operator'),
+//         value: '',
+//       },
+//       // 과정코드
+//       {
+//         name: 'courseCode',
+//         type: 'text',
+//         label: t('LABEL.form.label.courseCode'),
+//         value: '',
+//       },
+//       // 과정명
+//       {
+//         name: 'courseName',
+//         type: 'text',
+//         label: t('LABEL.form.label.courseName'),
+//         value: '',
+//       },
+//     ],
+//   ],
+// };
 
 const gridConfig = {
   title: t('LABEL.grid.title.courseList'),
-  query: queryOptions.all<LabelMessagesQueryParams>,
-  // data: [
-  //   { labelMessageId: 1, labelMessageType: 'a', labelMessageMultilingulKey: 'a' },
-  //   { labelMessageId: 2, labelMessageType: 'a2', labelMessageMultilingulKey: 'a2' },
-  // ],
+  query: queryOptions.all<CoursesQueryParams>,
   columns: [
     // 테넌트
     { name: 'tenant', label: () => t('LABEL.grid.column.tenant'), size: 140 },

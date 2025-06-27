@@ -36,8 +36,12 @@ export default class TranslationService {
     );
   }
 
-  static createTranslationByExcel(payload: any) {
-    return httpService.post<any>(`${PMSApiPrefix()}/multilingual/excelUpload`, payload);
+  static createTranslationByExcel(payload: any, params?: any) {
+    const { targetLocale } = params;
+    return httpService.post<any>(
+      `${PMSApiPrefix()}/multilingual/excelUpload?targetLocale=${targetLocale}`,
+      payload,
+    );
   }
 
   static fetchTranslationExists(param: any) {

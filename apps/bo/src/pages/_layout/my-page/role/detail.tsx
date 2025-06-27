@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 
 import {
   CODE_GROUP,
+  compactValues,
   DynamicFormConfig,
   SearchBoxConfig,
   useCurrentRoute,
@@ -26,7 +27,7 @@ import {
 } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { ChipListFormField, ContentsHistoryInfoFormField, FormRow, FormSubTitle } from '@shared/ui';
-import { cn } from '@learnway/shared';
+import { cn, DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import { EnChannelScope, EnCompanyScope, EnDeptScope, EnTenantScope } from '@types';
 import { FormDisplay } from '@features/form/ui/form-display';
@@ -34,6 +35,7 @@ import { formUtils } from '@entities/form-utils';
 import { createColumnHelper } from '@tanstack/react-table';
 import { useFetchRole } from '@entities/role/service/role-manage.hook';
 import { MyRoleExtendModal } from '@features/user/my-page/ui/my-role-extend-modal';
+import { roleManagerQueryOptions } from '@entities/role/service/role-manage.queries';
 
 export const Route = createFileRoute('/_layout/my-page/role/detail')({
   component: RouteComponent,
@@ -42,102 +44,84 @@ export const Route = createFileRoute('/_layout/my-page/role/detail')({
 
 function RouteComponent() {
   const { state } = useCurrentRoute(Route);
+  const router = useRouter();
 
+  console.log('### detail state,', state);
   const { confirm, alert, open: openModal } = useModal();
-  const { provider: sProvider, getValues } = useSearchBox(searchConfig);
+  const {
+    provider: sProvider,
+    getValues,
+    onFormChange: onFormChangeSearchBox,
+    onFormValid,
+  } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
   const { provider, fetchData, onSubmit, onFormChange, clearFormError, control } =
     useDynamicForm(formConfig);
 
   const { data: roleData } = useFetchRole(state?.roleId);
 
-  const [selectedRow, setSelectedRow] = useState<any | null>(null);
-
-  console.log('### roleData', roleData);
-
   const handleSubmit = (data: any) => {
     console.log('### handleSubmit :', data);
   };
 
   useEffect(() => {
-    if (state?.roleId) return;
-    // console.log('### state', state);
-    // throw new Error('state not set');
-  }, [state]);
+    if (state?.roleId) {
+      onFormChangeSearchBox({ roleId: state?.roleId });
+      gridFetch({ roleId: state?.roleId });
+    }
+  }, []);
+
+  // useEffect(() => {
+  //   if (state?.roleId) return;
+  //   router.history.canGoBack() && router.history.back();
+  // }, [state]);
 
   useEffect(() => {
     if (roleData) {
-      //   {
-      //     "roleData.roleId": 1,
-      //     "roleData.siteScope": "BO",
-      //     "roleData.roleType": "PLATFORM_MANAGER",
-      //     "roleData.parentRoleId": null,
-      //     "roleData.sortOrder": 1,
-      //     "roleData.name": "플랫폼 담당자",
-      //     "roleData.description": "플랫폼 담당자",
-      //     "roleData.tenantScope": "ALL",
-      //     "roleData.tenantId": 1,
-      //     "roleData.companyScope": "ALL",
-      //     "roleData.companies": [],
-      //     "roleData.channelScope": "ALL",
-      //     "roleData.channels": [],
-      //     "roleData.deptScope": "ALL",
-      //     "roleData.depts": [],
-      //     "roleData.isUsed": true,
-      //     "roleData.createdBy": "anonymousUser",
-      //     "roleData.createdDate": "2025-05-02T17:37:20.608Z",
-      //     "roleData.lastModifiedBy": "anonymousUser",
-      //     "roleData.modifiedDate": "2025-05-02T17:37:20.608Z"
-      // },
-      // roleData.roleId
-      // roleData.siteScope
-      // roleData.roleType
-      // roleData.parentRoleId
-      // roleData.sortOrder
-      // roleData.name
-      // roleData.description
-      // roleData.tenantScope
-      // roleData.tenantId
-      // roleData.companyScope
-      // roleData.companies
-      // roleData.channelScope
-      // roleData.channels
-      // roleData.deptScope
-      // roleData.depts
-      // roleData.isUsed
-      // roleData.createdBy
-      // roleData.createdDate
-      // roleData.lastModifiedBy
-      // roleData.modifiedDate
-      // onFormChange({
-      //   roleId: roleData.roleId,
-      //   roleCd: '',
-      //   roleName: roleData.name,
-      //   roleDescription: roleData.description,
-      //   tenantScope: roleData.tenantScope,
-      //   companyScope: roleData.companyScope,
-      //   companies: roleData.companies,
-      //   deptScope: roleData.deptScope,
-      //   depts: roleData.depts,
-      //   channelScope: roleData.channelScope,
-      //   channels: roleData.channels,
-      // });
+      onFormChange({
+        roleId: roleData.roleId,
+        roleCd: '',
+        roleName: roleData.name,
+        roleDescription: roleData.description,
+        tenantScope: roleData.tenantScope,
+        companyScope: roleData.companyScope,
+        companies: roleData.companies?.map((company: any) => ({
+          value: company.companyId,
+          label: company.companyName,
+        })),
+        deptScope: roleData.deptScope,
+        depts: roleData.depts?.map((dept: any) => ({ value: dept.deptId, label: dept.deptName })),
+        channelScope: roleData.channelScope,
+        channels: roleData.channels?.map((company: any) => ({
+          value: company.channelId,
+          label: company.channelName,
+        })),
+      });
     }
   }, [roleData]);
 
-  console.log('selectedRow', selectedRow);
   /**
    * @param data
    */
-  const handleOnSearch = (data: any) => {
-    console.log('handleOnSearch:: ', data);
+  const handleOnSearch = (query: any) => {
+    console.log('### handleOnSearch:: ', query);
+    gridFetch({
+      roleId: state?.roleId,
+      ...compactValues(query),
+      createdDateFrom: query.createPeriod.from
+        ? formatDate(query.createPeriod.from, DATE_TIME_FORMAT.DATE_SERVER)
+        : undefined,
+      createdDateTo: query.createPeriod.to
+        ? formatDate(query.createPeriod.to, DATE_TIME_FORMAT.DATE_SERVER)
+        : undefined,
+    });
   };
 
   const handleCellClick = useCallback(
     (data: any) => {
       console.log('data', data);
       openModal({
-        content: <MyRoleExtendModal data={selectedRow} type="view" />,
+        content: <MyRoleExtendModal data={data} type="view" />,
         width: 'md',
       });
     },
@@ -149,7 +133,7 @@ function RouteComponent() {
   return (
     <PageContainer>
       <ContentsButtons>
-        <Link to="/my-page/role">
+        <Link to="/my-page/role" state={{ listParam: state.listParam }}>
           <Button type="button" variant="point" size="sm">
             목록
           </Button>
@@ -161,9 +145,6 @@ function RouteComponent() {
           disabledSelectionToggle
           showNumberingColumn={true}
           columns={gridColumns}
-          onRowSelect={(row: any) => {
-            setSelectedRow(row);
-          }}
           config={gConfig}
         />
         <form style={{ marginTop: 20 }} onSubmit={onSubmit(handleSubmit)}>
@@ -205,7 +186,7 @@ function RouteComponent() {
           </ContentsRow>
           <FormDisplay
             provider={provider}
-            dependencies={[{ name: 'deptScope', value: EnChannelScope.MANUAL }]}
+            dependencies={[{ name: 'deptScope', value: EnDeptScope.MANUAL }]}
           >
             <div className="chiplist_modal_wrap">
               <FormRow
@@ -228,27 +209,11 @@ function RouteComponent() {
           </ContentsRow>
           <FormDisplay
             provider={provider}
+            condition={'or'}
             dependencies={[
-              { name: 'channelScope', value: EnChannelScope.CURRENT_COMPANY_INCLUSIVE },
+              { name: 'channelScope', value: EnChannelScope.CURRENT_CHANNEL_INCLUSIVE },
+              { name: 'channelScope', value: EnChannelScope.MANUAL },
             ]}
-          >
-            <div className="chiplist_modal_wrap">
-              <FormRow
-                provider={provider}
-                name={'channels'}
-                element={
-                  <ChipListModalSelectorFormField
-                    disabled={true}
-                    hideCloseButton
-                    showAddButton={false}
-                  />
-                }
-              />
-            </div>
-          </FormDisplay>
-          <FormDisplay
-            provider={provider}
-            dependencies={[{ name: 'channelScope', value: EnChannelScope.MANUAL }]}
           >
             <div className="chiplist_modal_wrap">
               <FormRow
@@ -277,59 +242,43 @@ const searchConfig: SearchBoxConfig = {
   builders: [
     [
       {
-        name: 'requestStatus',
+        name: 'status',
         type: 'dropdown',
-        label: t('신청상태'),
+        label: t('신청 상태'),
         value: '',
-        options: [
-          { value: '', label: t('전체') },
-          { value: '승인', label: t('승인') },
-          { value: '반려', label: t('반려') },
-        ],
+        presetOptionLabel: t('LABEL.form.label.all'),
+        optionsConfig: {
+          codeGroup: CODE_GROUP['pms.role.RoleApplicationStatus'],
+        },
       },
       {
-        name: 'requestDate',
+        name: 'createPeriod',
         type: 'date-range',
         label: t('신청일'),
         value: {
-          from: formUtils.nowDate({ unit: 'day', offset: -30 }),
-          to: formUtils.nowDate(),
+          from: undefined,
+          to: undefined,
         },
+      },
+      {
+        name: 'roldId',
+        type: 'hidden',
+        value: '',
       },
     ],
   ],
 };
 
 const gridConfig = {
-  query: '',
-  columns: [],
-
+  // query: '',
+  query: roleManagerQueryOptions.getRoleApplicationList,
   pagination: {
-    pageSize: 20,
     pageIndex: 0,
+    pageSize: 20,
     totalRows: 0,
   },
+  columns: [],
   data: [],
-  // data: [
-  //   {
-  //     id: 1,
-  //     role: '태넌트 관리자',
-  //     rolePeriod: '2025-10-10 ~ 2025-11-10',
-  //     approveStatus: '승인',
-  //     createDate: '2025-10-10',
-  //     approveDate: '2025-10-10',
-  //     approveUser: '김현대',
-  //   },
-  //   {
-  //     id: 2,
-  //     role: '채널 관리자',
-  //     rolePeriod: '2025-10-10 ~ 2025-11-10',
-  //     approveStatus: '반려',
-  //     createDate: '2025-10-10',
-  //     approveDate: '2025-10-10',
-  //     approveUser: '김현대',
-  //   },
-  // ],
 };
 
 const formConfig: DynamicFormConfig = {
@@ -339,34 +288,35 @@ const formConfig: DynamicFormConfig = {
       type: 'text',
       label: t('역할ID'),
       value: '',
-      disabled: true,
+      readOnly: true,
     },
     {
       name: 'roleCd',
       type: 'text',
       label: t('역할코드'),
       value: '',
-      disabled: true,
+      readOnly: true,
     },
     {
       name: 'roleName',
       type: 'text',
       label: t('역할명'),
       value: '',
-      disabled: true,
+      readOnly: true,
     },
     {
       name: 'roleDescription',
       type: 'textarea',
       label: t('역할 설명'),
       value: '설명입니다',
-      disabled: true,
+      readOnly: true,
     },
     // 테넌트
     {
       name: 'tenantScope',
       type: 'radio-group',
       label: t('테넌트 접근 범위'),
+      disabled: true,
       value: EnTenantScope.ALL,
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.role.TenantScope'],
@@ -378,6 +328,7 @@ const formConfig: DynamicFormConfig = {
       type: 'radio-group',
       label: t('회사 접근 범위'),
       value: EnCompanyScope.ALL,
+      disabled: true,
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.role.CompanyScope'],
       },
@@ -387,36 +338,56 @@ const formConfig: DynamicFormConfig = {
       label: '',
       type: 'chip-list',
       format: 'array',
-      value: [{ label: '회사1', value: 'id0' }],
-      placeholder: '',
+      readOnly: true,
+      value: [],
+      chipListConfig: {
+        showInput: false,
+        labelField: 'label',
+        valueField: 'value',
+        wordwrap: true,
+      },
     },
     // 조직
     {
       name: 'deptScope',
       type: 'radio-group',
       label: t('조직 접근 범위'),
+      disabled: true,
       value: EnDeptScope.ALL,
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.role.DeptScope'],
       },
     },
-    { name: 'depts', label: '', type: 'chip-list', value: [{ label: '부서1', value: 'id0' }] },
     {
-      name: 'channelScope',
-      type: 'radio-group',
-      label: t('채널 접근 범위'),
-      value: EnChannelScope.MANUAL,
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.role.ChannelScope'],
+      name: 'depts',
+      label: '',
+      type: 'chip-list',
+      value: [],
+      readOnly: true,
+      chipListConfig: {
+        showInput: false,
+        labelField: 'label',
+        valueField: 'value',
+        wordwrap: true,
       },
     },
     // 채널
     {
+      name: 'channelScope',
+      type: 'radio-group',
+      label: t('채널 접근 범위'),
+      disabled: true,
+      value: EnChannelScope.ALL,
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.role.ChannelScope'],
+      },
+    },
+    {
       name: 'channels',
       type: 'chip-list',
       label: '',
-      value: [{ label: '채널1', value: 'id0' }],
-      disabled: true,
+      value: [],
+      readOnly: true,
       chipListConfig: {
         showInput: false,
         labelField: 'label',
@@ -437,23 +408,39 @@ const columnHelper = createColumnHelper<any>();
 const createGridColumns = (onCellClick: (data: any) => void) => [
   columnHelper.accessor('roleName', {
     header: t('HRD 담당자 역할'),
-    size: 248,
+    size: 206,
+    meta: {
+      sortKey: 'roleEntity.name',
+    },
   }),
-  columnHelper.accessor('rolePeriod', {
-    header: t('권한 기간'),
-    size: 248,
+  columnHelper.accessor('startDate', {
+    header: t('역할 시작일'),
+    size: 206,
     meta: {
       cellAlign: 'center',
     },
   }),
-  columnHelper.accessor('approveStatus', {
+  columnHelper.accessor('endDate', {
+    header: t('역할 종료일'),
+    size: 206,
+    meta: {
+      cellAlign: 'center',
+    },
+  }),
+  columnHelper.accessor('status', {
     header: t('신청 상태'),
-    size: 248,
+    size: 206,
     meta: {
       cellAlign: 'center',
     },
   }),
   columnHelper.accessor('approveInfo', {
+    header: t('신청 현황'),
+    size: 104,
+    meta: {
+      cellAlign: 'center',
+    },
+    enableSorting: false,
     cell: (info) => {
       return (
         <Button variant="gray2" size="xs" onClick={() => onCellClick(info.row.original)}>
@@ -461,28 +448,54 @@ const createGridColumns = (onCellClick: (data: any) => void) => [
         </Button>
       );
     },
-    header: t('신청 현황'),
-    size: 104,
-    meta: {
-      cellAlign: 'center',
-    },
   }),
-  columnHelper.accessor('createDate', {
+  columnHelper.accessor('createdDate', {
     header: t('신청일'),
-    size: 248,
+    size: 206,
     meta: {
       cellAlign: 'center',
     },
+    cell: (info) => {
+      return `${formatDate(info.row.original.createdDate, DATE_TIME_FORMAT.DATETIME_MIN)}`;
+    },
   }),
-  columnHelper.accessor('approveUser', {
+  columnHelper.accessor('lastModifiedBy', {
     header: t('결재자'),
     size: 104,
   }),
-  columnHelper.accessor('approveDate', {
+  columnHelper.accessor('modifiedDate', {
     header: t('결재일'),
-    size: 248,
+    size: 206,
     meta: {
       cellAlign: 'center',
     },
+    cell: (info) => {
+      return `${formatDate(info.row.original.modifiedDate, DATE_TIME_FORMAT.DATETIME_MIN)}`;
+    },
   }),
 ];
+
+// {
+//   "roleApplicationId": 18,
+//   "companyId": 54,
+//   "companyName": "현대오토에버",
+//   "deptId": 1,
+//   "deptName": "개발팀",
+//   "userUuid": "c39270e2-3f6d-11f0-9435-0218a74d52f7",
+//   "userName": "이창기",
+//   "employeeNumber": "9496504",
+//   "roleId": 65,
+//   "roleName": "현대카드HRD역할\"'`~!@#$%^&*()_+-={}|[]:\\\";'<>?",
+//   "tenantId": 2,
+//   "tenantName": "현대카드\uD83D\uDC68‍\uD83D\uDCBB\uD83D\uDD25\uD83D\uDCAF\uD83D\uDE80",
+//   "channels": [],
+//   "startDate": "2025-06-24",
+//   "endDate": "2025-07-28",
+//   "reason": "test",
+//   "status": "EXTEND",
+//   "rejectReason": null,
+//   "createdBy": "c39270e2-3f6d-11f0-9435-0218a74d52f7",
+//   "createdDate": "2025-06-24T04:51:09.250Z",
+//   "lastModifiedBy": null,
+//   "modifiedDate": null
+// },
