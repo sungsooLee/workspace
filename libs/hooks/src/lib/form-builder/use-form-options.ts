@@ -85,7 +85,9 @@ const useFormOptionsHook = (
    * @returns API에서 가져온 옵션 배열
    */
   const getApiOptions = async (api: OptionsConfig['api']): Promise<SelectOption[]> => {
-    if (!api || api.enabled === false) return [];
+    if (!api || api.enabled === false) {
+      return [];
+    }
     const { fn, select } = api;
     const apiOptions = await fn();
     const newOptions = select ? select(apiOptions) : apiOptions;

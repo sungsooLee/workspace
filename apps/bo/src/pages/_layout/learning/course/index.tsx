@@ -72,7 +72,7 @@ function RouteComponent() {
   };
 
   // console.log(generateYears(10));
-  console.log(111)
+  console.log(generateYears(10))
 
   return (
     <PageContainer>
@@ -101,7 +101,7 @@ function RouteComponent() {
               provider={provider}
               name={'tenant'}
               label={t('LABEL.form.label.tenant')}
-              element={<DropdownFormField options={[]} />}
+              element={<DropdownFormField options={[]} presetOptionLabel={t('LABEL.form.label.select', '선택')} />}
               validation={{
                 required: true,
                 format: 'object',
@@ -112,7 +112,7 @@ function RouteComponent() {
               provider={provider}
               name={'channel'}
               label={t('LABEL.form.label.channel')}
-              element={<DropdownFormField options={[]} />}
+              element={<DropdownFormField options={[]} presetOptionLabel={t('LABEL.form.label.select')} />}
               validation={{
                 required: true,
                 format: 'object',
@@ -123,14 +123,14 @@ function RouteComponent() {
               provider={provider}
               name={'openingDate'}
               label={t('LABEL.form.label.openingDate')}
-              element={<DropdownFormField options={generateYears(10)} />}
+              element={<DropdownFormField options={generateYears(10)} presetOptionLabel={t('LABEL.form.label.all')} />}
             />
             {/*과정유형*/}
             <FormRow2
               provider={provider}
               name={'courseType'}
               label={t('LABEL.form.label.courseType')}
-              element={<DropdownFormField optionsConfig={{
+              element={<DropdownFormField presetOptionLabel={t('LABEL.form.label.all')} optionsConfig={{
                 codeGroup: CODE_GROUP['lms.course.CourseType']
               }} />}
             />
@@ -141,7 +141,7 @@ function RouteComponent() {
               provider={provider}
               name={'useYn'}
               label={t('LABEL.form.label.useYn')}
-              element={<DropdownFormField optionsConfig={{
+              element={<DropdownFormField presetOptionLabel={t('LABEL.form.label.all')} optionsConfig={{
                 codeGroup: CODE_GROUP['mock.options.use']
               }} />}
             />

@@ -21,6 +21,7 @@ const DynamicFormFieldComponent: FC<DynamicFormFieldProps> = ({
         if (isValidElement(component)) {
           return cloneElement(component, {
             ...props,
+            ...(component.props || {}), // 컴포넌트 props
             ref,
             control,
             name,
