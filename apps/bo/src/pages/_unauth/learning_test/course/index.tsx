@@ -12,7 +12,7 @@ import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { t } from 'i18next';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/_unauth/learning_test/course/')({
@@ -23,7 +23,90 @@ function RouteComponent() {
   const router = useRouter();
   const { t } = useTranslation();
   const { open: openModal } = useModal();
-  const { provider, getValues, onSubmit } = useDynamicForm2();
+
+  // builders 방식으로 폼 설정 (validation이 제대로 작동하도록)
+  const { provider, getValues, onSubmit } = useDynamicForm2({
+    builders: [
+      {
+        name: 'tenant',
+        type: 'dropdown',
+        label: 'LABEL.form.label.tenant',
+        value: '',
+        options: [
+          { value: '', label: '전체' },
+          { value: 'test1', label: '테스트1' },
+          { value: 'test2', label: '테스트2' },
+        ],
+      },
+      {
+        name: 'channel',
+        type: 'dropdown',
+        label: 'LABEL.form.label.channel',
+        value: '',
+        options: [
+          { value: '', label: '전체' },
+          { value: 'ch1', label: '채널1' },
+          { value: 'ch2', label: '채널2' },
+        ],
+      },
+      {
+        name: 'openingDate',
+        type: 'dropdown',
+        label: 'LABEL.form.label.openingDate',
+        value: '',
+        options: [
+          { value: '', label: '전체' },
+          { value: '2024', label: '2024년' },
+          { value: '2023', label: '2023년' },
+        ],
+      },
+      {
+        name: 'courseType',
+        type: 'dropdown',
+        label: 'LABEL.form.label.courseType',
+        value: '',
+        options: [
+          { value: '', label: '전체' },
+          { value: 'online', label: '온라인' },
+          { value: 'offline', label: '오프라인' },
+        ],
+      },
+      {
+        name: 'useYn',
+        type: 'dropdown',
+        label: 'LABEL.form.label.useYn',
+        value: '',
+        options: [
+          { value: '', label: '전체' },
+          { value: 'Y', label: '사용' },
+          { value: 'N', label: '미사용' },
+        ],
+      },
+      {
+        name: 'adminName',
+        type: 'text',
+        label: 'LABEL.form.label.coordinator/Operator',
+        value: '',
+      },
+      {
+        name: 'courseCode',
+        type: 'text',
+        label: 'LABEL.form.label.courseCode',
+        value: '',
+      },
+      {
+        name: 'courseName',
+        type: 'text',
+        label: 'LABEL.form.label.courseName',
+        value: '',
+      },
+    ],
+    validator: {
+      tenant: { required: true },
+      channel: { required: true },
+    },
+  });
+
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
   const [selectedCourses, setSelectedCourses] = useState<any[]>([]);
 
@@ -69,6 +152,8 @@ function RouteComponent() {
     });
     // 선택한 유형의 등록 페이지로 이동
   };
+
+  console.log('xxxxx');
 
   return (
     <PageContainer>

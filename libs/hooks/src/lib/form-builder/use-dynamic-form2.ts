@@ -1,4 +1,4 @@
-import { FormEvent, useMemo, useRef, useState } from 'react';
+import { FormEvent, useMemo, useRef, useState, useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DynamicFormConfig, DynamicFormProvider, FormConfig, UseDynamicFormResult } from './type';
@@ -90,14 +90,25 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
       return acc;
     }, {} as ValidatorConfig);
   }, [dynamicBuilders, dynamicValidator]);
-  // Zod 스키마 생성 (유효성 검증 스키마)
-  const schema = buildJodObject(validator);
+
+  // Zod 스키마 생성 (유효성 검증 스키마) - dynamicValidator 변경 시 재생성
+  const schema = useMemo(() => {
+    return buildJodObject(validator);
+  }, [validator]);
+
   // react-hook-form 훅 초기화
   const methods = useForm({
     mode: 'onSubmit',
     defaultValues,
     resolver: zodResolver(schema),
   });
+
+  // schema가 변경될 때마다 resolver 업데이트
+  useEffect(() => {
+    methods.clearErrors(); // 기존 에러 클리어
+    // resolver를 동적으로 업데이트하는 것은 react-hook-form에서 직접 지원하지 않음
+    // 대신 form을 재초기화하거나 manual validation을 사용해야 함
+  }, [schema, methods]);
 
   // 각 필드의 DOM 노드를 저장할 ref 객체
   const fieldRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -158,9 +169,25 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
    * @param fieldName
    */
   const isFieldRequired = (fieldName: string): boolean => {
+    // 기본 validator에서 확인
     const config = validator[fieldName];
-    if (!config || typeof config.required !== 'object' || config.required === null) return false;
-    return config.required.required || false;
+    if (config && typeof config.required === 'object' && config.required !== null) {
+      if (config.required.required) return true;
+    }
+
+    // 동적으로 추가된 validator에서도 확인
+    const dynamicConfig = dynamicValidator[fieldName];
+    if (dynamicConfig) {
+      if (typeof dynamicConfig === 'boolean') return dynamicConfig;
+      if (typeof dynamicConfig === 'object' && dynamicConfig.required) {
+        if (typeof dynamicConfig.required === 'boolean') return dynamicConfig.required;
+        if (typeof dynamicConfig.required === 'object' && dynamicConfig.required.required) {
+          return dynamicConfig.required.required;
+        }
+      }
+    }
+
+    return false;
   };
 
   /**
@@ -168,29 +195,35 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
    *
    * @param fieldName - 포커스를 설정할 필드 이름
    */
-  const handleFocus = (fieldName: string) => {
-    const field = fieldRefs.current[fieldName];
-    if (field) {
-      field.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      field.focus();
-    }
-    setFocus(fieldName);
-  };
+  const handleFocus = useCallback(
+    (fieldName: string) => {
+      const field = fieldRefs.current[fieldName];
+      if (field) {
+        field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        field.focus();
+      }
+      setFocus(fieldName);
+    },
+    [setFocus],
+  );
 
   /**
    * 필드 값 초기화
    *
    * @param values - 새로운 초기값 (선택 사항)
    */
-  const onFormChange = (values?: Record<string, any>) => {
-    if (values) {
-      Object.entries(values).forEach(([key, value]) => {
-        setValue(key, value);
-      });
-    } else {
-      reset(originalValues);
-    }
-  };
+  const onFormChange = useCallback(
+    (values?: Record<string, any>) => {
+      if (values) {
+        Object.entries(values).forEach(([key, value]) => {
+          setValue(key, value);
+        });
+      } else {
+        reset(originalValues);
+      }
+    },
+    [setValue, reset, originalValues],
+  );
 
   /**
    * 필드 오류 설정 함수
@@ -198,47 +231,56 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
    * @param fieldName - 필드 이름
    * @param message - 오류 메시지
    */
-  const setFormError = (fieldName: string, message: string) => {
-    setError(fieldName, { type: 'manual', message });
-    handleFocus(fieldName);
-  };
+  const setFormError = useCallback(
+    (fieldName: string, message: string) => {
+      setError(fieldName, { type: 'manual', message });
+      handleFocus(fieldName);
+    },
+    [setError, handleFocus],
+  );
 
   /**
    * 서버에서 받아온 데이터를 설정하는 함수
    *
    * @param data - 서버에서 받아온 데이터
    */
-  const fetchData = (data?: Record<string, any>) => {
-    reset(data || defaultValues);
-    setOriginalValues(data || defaultValues);
-  };
+  const fetchData = useCallback(
+    (data?: Record<string, any>) => {
+      reset(data || defaultValues);
+      setOriginalValues(data || defaultValues);
+    },
+    [reset, defaultValues],
+  );
 
   /**
    * 동적으로 필드를 등록하는 함수
    *
    * @param fieldConfig - 등록할 필드 설정
    */
-  const registerField = (fieldConfig: FormConfig) => {
-    setDynamicBuilders((prev) => {
-      // 이미 등록된 필드인지 확인
-      const existingFieldIndex = prev.findIndex((builder) => builder.name === fieldConfig.name);
+  const registerField = useCallback(
+    (fieldConfig: FormConfig) => {
+      setDynamicBuilders((prev) => {
+        // 이미 등록된 필드인지 확인
+        const existingFieldIndex = prev.findIndex((builder) => builder.name === fieldConfig.name);
 
-      if (existingFieldIndex !== -1) {
-        // 기존 필드가 있으면 업데이트
-        const newBuilders = [...prev];
-        newBuilders[existingFieldIndex] = fieldConfig;
-        return newBuilders;
-      } else {
-        // 새 필드 추가
-        return [...prev, fieldConfig];
+        if (existingFieldIndex !== -1) {
+          // 기존 필드가 있으면 업데이트
+          const newBuilders = [...prev];
+          newBuilders[existingFieldIndex] = fieldConfig;
+          return newBuilders;
+        } else {
+          // 새 필드 추가
+          return [...prev, fieldConfig];
+        }
+      });
+
+      // react-hook-form에 필드 기본값 설정
+      if (!getValues()[fieldConfig.name]) {
+        setValue(fieldConfig.name, fieldConfig.value);
       }
-    });
-
-    // react-hook-form에 필드 기본값 설정
-    if (!getValues()[fieldConfig.name]) {
-      setValue(fieldConfig.name, fieldConfig.value);
-    }
-  };
+    },
+    [getValues, setValue],
+  );
 
   /**
    * 동적으로 validator를 추가하는 함수
@@ -246,18 +288,21 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
    * @param fieldName - 필드 이름
    * @param validation - validation 설정
    */
-  const addValidator = (fieldName: string, validation: any) => {
+  const addValidator = useCallback((fieldName: string, validation: any) => {
     setDynamicValidator((prev: any) => ({
       ...prev,
       [fieldName]: validation,
     }));
-  };
+  }, []);
 
   // control 확장: 기본 control에 isFieldRequired 메서드 추가
-  const extendedControl: DynamicFormProvider['control'] = {
-    ...control,
-    isFieldRequired,
-  };
+  const extendedControl: DynamicFormProvider['control'] = useMemo(
+    () => ({
+      ...control,
+      isFieldRequired,
+    }),
+    [control, isFieldRequired],
+  );
 
   const getInitByBuilders = () => {
     const initData: { [key: string]: any } = {};
@@ -268,9 +313,9 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
     return initData;
   };
 
-  // provider 객체 반환
-  return {
-    provider: {
+  // provider 객체를 useMemo로 메모이제이션
+  const provider = useMemo(
+    () => ({
       control: extendedControl,
       builders: dynamicBuilders,
       fieldRefs,
@@ -283,7 +328,22 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
       clearFormError: clearErrors,
       registerField,
       addValidator,
-    },
+    }),
+    [
+      extendedControl,
+      dynamicBuilders,
+      formState,
+      originalValues,
+      onFormChange,
+      handleFocus,
+      registerField,
+      addValidator,
+    ],
+  );
+
+  // provider 객체 반환
+  return {
+    provider,
     onFormValid: trigger,
     fetchData,
     onSubmit: formSubmit,
