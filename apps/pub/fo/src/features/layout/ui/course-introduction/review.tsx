@@ -9,7 +9,7 @@ import imgNudge from '@learnway/styles/fo/assets/images/common/img_nudge.png';
 
 const CourseReviewCompoment = () => {
   // 퍼블수정 20250625 swiper (작업 진행 예정)
-  const itemSwiper = [<Review />, <Review />, <Review />];
+  const itemSwiper = [<Review />, <Review />, <Review />, <Review />, <Review />, <Review />];
 
   return (
     <div className={`${styles.start} ${styles.review_wrap}`}>
@@ -35,9 +35,9 @@ const CourseReviewCompoment = () => {
         <Carousel
           items={itemSwiper}
           className={`${styles.review_swiper}`}
-          // spaceBetween={20}
+          spaceBetween={20}
           slidesPerView={3}
-          // navigation={true}
+          navigation={true}
         />
       </div>
     </div>
