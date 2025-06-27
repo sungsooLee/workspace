@@ -10,9 +10,9 @@
     .info_box {
       @apply mt-[40px];
       .tit_box {
-        @apply mb-[8px] flex items-center justify-between;
+        @apply mb-[20px] flex items-center justify-between;
         strong {
-          @apply title_6_b text-[var(--gray8)];
+          @apply headline1-b text-[#232326];
         }
       }
       &.pds {
@@ -23,17 +23,17 @@
 
       .evaluation_box {
         & > ul {
-          @apply mb-[8px] flex w-full items-start;
+          @apply mb-[24px] flex w-full items-start;
           li {
-            @apply flex-1 rounded-[8px] bg-[var(--secondary5)] py-[8px];
+            @apply flex-1 rounded-[999px] bg-[var(--blue98)] py-[24px];
             span {
-              @apply body_4_r block text-center text-[var(--gray8)];
+              @apply title2-b block text-center leading-[20px] text-[var(--gray10)];
             }
             strong {
-              @apply body_3_b block text-center text-[var(--secondary10)];
+              @apply headline1-b block text-center leading-[30px] text-[var(--blue50)];
             }
             & + li {
-              @apply ml-[8px];
+              @apply ml-[20px];
             }
           }
         }
@@ -66,7 +66,7 @@
     }
 
     .package_box {
-      @apply mt-[24px];
+      @apply mt-[32px];
       .img_box {
         img {
           @apply w-full overflow-hidden rounded-[16px];
@@ -77,12 +77,12 @@
         & > div {
           @apply border-none p-0;
           & > div {
-            @apply gap-[4px];
+            @apply gap-x-[8px] gap-y-[10px];
             span {
-              @apply rounded-[8px];
+              @apply !h-auto !min-h-[inherit] rounded-[24px] bg-[var(--gray95)];
             }
             button {
-              @apply text-[var(--gray8)];
+              @apply !px-0 text-[var(--gray10)];
             }
           }
         }
@@ -97,15 +97,6 @@
       &.introduction {
         h2 {
           @apply title_6_b;
-        }
-        .learn_box {
-          @apply mt-[8px] p-[16px];
-          img {
-            @apply h-[24px] w-[24px];
-          }
-          strong {
-            @apply title_7_b;
-          }
         }
         .info_box {
           @apply mt-[24px];

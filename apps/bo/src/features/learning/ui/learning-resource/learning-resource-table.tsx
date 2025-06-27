@@ -44,7 +44,9 @@ function LearningResourceTableComponent() {
           value: '',
           format: 'number',
           presetOptionLabel: t('LABEL.form.label.select', '선택'),
-          options: [],
+          optionsConfig: {
+            codeGroup: CODE_GROUP['manual.bo.my.tenant.tenantId'],
+          },
         },
         {
           name: 'channelUuid',
@@ -302,17 +304,6 @@ function LearningResourceTableComponent() {
   const [valuesWithLabel, setValuesWithLabel] = useState<Record<string, SelectOption>>({});
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const [tableInstance, setTableInstance] = useState<Table<any>>(); // Grid 로부터 받을 table 인스턴스를 저장할 상태
-
-  //user정보로 tenant 설정
-  useEffect(() => {
-    if (!user) return;
-
-    if (user.activeTenant) setValue('tenantId', user.activeTenant.tenantId ?? '');
-    setOptions(
-      'tenantId',
-      user.tenants.map((tenant) => ({ value: tenant.tenantId, label: tenant.tenantName })),
-    );
-  }, [user]);
 
   // tenant 정보로 channel 설정
   const tenantId = useWatch({ control: searchProvider.control, name: 'tenantId' });

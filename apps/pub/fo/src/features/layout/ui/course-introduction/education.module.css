@@ -1,12 +1,12 @@
 .start {
   &.education_wrap {
     h2 {
-      @apply title_5_b text-[var(--gray9)];
+      @apply headline3-b mb-[24px] text-[var(--gray10)];
     }
     .filter_wrap {
-      @apply mt-[16px] flex items-center justify-between;
+      @apply flex items-center justify-between;
       .date {
-        @apply title_6_b text-[var(--gray9)];
+        @apply label-xl-b text-[var(--gray10)];
       }
       .filter {
         @apply flex items-center;

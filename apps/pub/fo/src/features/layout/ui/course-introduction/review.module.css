@@ -1,39 +1,40 @@
 .start {
   &.review_wrap {
-    h2 {
-      @apply title_5_b flex items-center leading-[22px] text-[var(--gray9)];
-      span {
-        @apply title_5_r ml-[4px] inline-block leading-[22px] text-[var(--gray7)];
+    .tit_box {
+      @apply flex items-center justify-between;
+      h2 {
+        @apply headline3-b flex items-center text-[var(--gray10)];
+        span {
+          @apply headline2-b ml-[8px] inline-block text-[var(--blue50)];
+        }
+      }
+      p {
+        @apply label-lg text-[var(--gray35)];
       }
     }
-    .review_rating {
-      @apply mt-[16px];
+
+    .rating_wrap {
+      @apply mt-[24px] flex items-start;
+      .know_box {
+        @apply flex h-[180px] w-[210px] flex-col items-center justify-center rounded-[12px] bg-[var(--gray98)];
+        img {
+          @apply h-[48px] w-[48px];
+        }
+        p {
+          @apply title4-b mt-[16px] text-center text-[var(--gray35)];
+        }
+      }
+      .review_rating {
+        @apply ml-[20px] h-[180px] flex-1;
+      }
     }
 
     .review_box {
       @apply mt-[24px];
-      .review_list {
-        li {
-          & > div {
-            & + div {
-              @apply mt-[12px];
-            }
-          }
-          & + li {
-            @apply mt-[24px];
-          }
-        }
-      }
-      .more_box {
-        @apply relative mt-[20px];
-        .btn_more {
-          @apply relative flex w-full items-center justify-center;
-          span {
-            @apply body_3_r text-[var(--gray8)];
-          }
-        }
-        &::before {
-          @apply pointer-events-none absolute bottom-0 left-0 h-[96px] w-full bg-gradient-to-t from-white to-transparent content-[''];
+      .review_swiper {
+        @apply w-full;
+        [class*='swiper-slide'] {
+          @apply !w-[280px];
         }
       }
     }

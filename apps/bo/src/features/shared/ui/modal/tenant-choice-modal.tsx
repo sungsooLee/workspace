@@ -36,6 +36,7 @@ const TenantModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
             onchange: () => {
               return '';
             },
+            isSearchable: true,
             placeholder: '입력 또는 선택',
           },
         },
@@ -44,6 +45,8 @@ const TenantModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
           type: 'dropdown',
           label: t('회사'),
           value: '',
+          format: 'object',
+          presetOptionLabel: t('LABEL.form.label.all'),
           optionsConfig: {
             codeGroup: CODE_GROUP['manual.company.companyCode'],
           },
@@ -51,6 +54,7 @@ const TenantModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
             onchange: () => {
               return '';
             },
+            isSearchable: true,
             placeholder: '입력 또는 선택',
           },
         },

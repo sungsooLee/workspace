@@ -31,7 +31,7 @@ function RouteComponent() {
   const handleListClick = () => {
     console.log('handleListClick');
     router.navigate({
-      to: '/learning_test/course',
+      to: '/learning/course',
     });
   };
 

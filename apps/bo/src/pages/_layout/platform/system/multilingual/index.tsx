@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState, useRef } from 'react';
 import {
   Button,
   CountText,
@@ -21,6 +21,7 @@ import {
   useSearchBox,
   useLanguageMap,
   useCodeStore,
+  useUnsavedChangesConfirm,
 } from '@learnway/hooks';
 import { useWatch } from 'react-hook-form';
 import { SearchBox } from '@shared/ui/search-box';
@@ -60,15 +61,30 @@ function RouteComponent() {
   const { getCode } = useCodeStore();
   const { getLanguageName } = useLanguageMap();
   const keyTypeCode = useWatch({ control, name: 'keyTypeCode' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { update } = useTranslation({
     onSuccess: () => {
+      setIsSubmitting(false);
+      setShouldUpdateOriginalData(true); // 변경 후 OriginalData 갱신하기 위함.
       gridFetch(getValues());
     },
   });
+
+  const { createByExcel } = useTranslation({
+    onSuccess: () => {
+      setShouldUpdateOriginalData(true);
+      gridFetch(getValues());
+    },
+  });
+
   const { deploy } = useDeployTranslation({});
   const router = useRouter();
   const [currentTargetLocale, setCurrentTargetLocale] = useState<string>('');
+
+  const [successTranslationCount, setSuccessTranslationCount] = useState<number>(0);
+  const originalDataRef = useRef<any>(null);
+  const [shouldUpdateOriginalData, setShouldUpdateOriginalData] = useState<boolean>(true);
 
   const handleCellClick = useCallback(
     (data: any) => {
@@ -82,30 +98,67 @@ function RouteComponent() {
   const gridConfig = useMemo(() => createGridConfig(handleCellClick), [handleCellClick]);
 
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
+  const gridStateRef = useRef<any>(null); // 그리드 상태 저장용
 
-  const [successTranslationCount, setSuccessTranslationCount] = useState<number>(0);
+  // 커스텀 훅을 사용한 간단한 변경사항 확인
+  const { confirmChanges } = useUnsavedChangesConfirm(originalDataRef.current, data?.content, {
+    compareFields: ['targetLanguage'], // 비교할 필드 지정
+    deepCompare: false,
+    confirmFunction: confirm,
+    confirmOptions: {
+      title: t('LABEL.confirm.unsaved.title'),
+      content: t('LABEL.confirm.unsaved.message'),
+    },
+  });
+
+  const withUnsavedChangesCheck = useCallback(
+    <T extends any[]>(action: (...args: T) => void | Promise<void>) => {
+      return async (...args: T) => {
+        if (!(await confirmChanges())) return;
+        await action(...args);
+      };
+    },
+    [confirmChanges],
+  );
+
+  const wrappedGridConfig = useMemo(() => {
+    const originalOnStateChange = gConfig.onStateChange;
+    return {
+      ...gConfig,
+      onStateChange: async (state: any) => {
+        if (!(await confirmChanges())) return;
+        gridStateRef.current = state; // 그리드 상태 저장
+        setShouldUpdateOriginalData(true); // 소트 후 새 데이터로 originalData 업데이트
+        originalOnStateChange?.(state);
+      },
+    };
+  }, [gConfig, confirmChanges]);
+
   /**
    * @param data
    */
-  const handleOnSearch = useCallback((form: any) => {
+  const handleOnSearch = async (form: any) => {
+    if (!(await confirmChanges())) return;
     setCurrentTargetLocale(getValues('targetLocale'));
-    gridFetch(form);
-  }, []);
+    originalDataRef.current = null; // 검색 시 즉시 초기화
+    setShouldUpdateOriginalData(true); // 검색 시 originalData 업데이트 허용
+    gridFetch(getValues(), { ...gridStateRef.current, page: 0 });
+  };
 
   /**
    *  번역본 S3 배포
    */
-  const handleDeployMultilingual = () => {
+  const handleDeployMultilingual = withUnsavedChangesCheck(async () => {
     const locale = getValues('targetLocale').toLowerCase();
     deploy({ locale: locale });
-    // alert('준비중입니다.');
-  };
+  });
 
   /**
    * 번역본 저장
    */
   const handleSaveMultilingual = useCallback(async () => {
-    console.log('data => ', data);
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     if (!data) return;
     if (
       !(await confirm({
@@ -113,6 +166,7 @@ function RouteComponent() {
         content: t('LABEL.platform.system.multilingual.save-content'),
       }))
     ) {
+      setIsSubmitting(false);
       return;
     }
     const uploadData: TranslationType = {
@@ -128,25 +182,27 @@ function RouteComponent() {
       });
     });
     update(uploadData);
-  }, [data]);
+  }, [data, isSubmitting, confirm, getValues, update]);
 
   const handleExcelUpload = async (data: Record<string, any>[]) => {
-    console.log('🚀 ~ handleExcelUpload ~ data:', data);
-    // data post 처리 로직
+    const targetLocale = getValues('targetLocale');
+    await createByExcel({
+      data,
+      params: { targetLocale: targetLocale.toLowerCase() },
+    });
   };
 
   const customExcelButtons = (
     <>
       <GridExcelUploadButton
-        // url="/multilingual/exportExcel"
         validateUrl="/multilingual/excelUploadValidation"
-        disabled={data && data.content && data.content.length === 0}
+        disabled={!data || (data && data.content && data.content.length === 0)}
         onUpload={handleExcelUpload}
       />
       <GridExcelDownloadButton
         url={`${PMSApiPrefix()}/multilingual/exportExcel`}
-        params={getValues()}
-        disabled={data && data.content && data.content.length === 0}
+        params={{ ...getValues(), targetLocale: getValues('targetLocale').toLowerCase() }}
+        disabled={!data || (data && data.content && data.content.length === 0)}
         onBeforeDownload={async () => {
           const keyTypeCode = getValues('keyTypeCode');
           const targetLocale = getValues('targetLocale');
@@ -179,7 +235,7 @@ function RouteComponent() {
   useEffect(() => {
     const updateTargetLocaleOptions = async () => {
       const allOptions = await getCode(CODE_GROUP['pms.multilingual.LangCountryCode']);
-      const baseOptions = [{ value: '', label: 'LABEL.form.label.select' }];
+      const baseOptions = [{ value: '', label: t('LABEL.form.label.select') }];
       const currentTargetLocale = getValues('targetLocale');
 
       if (keyTypeCode === 'HRD_CENTER_MENU') {
@@ -204,12 +260,21 @@ function RouteComponent() {
   }, []);
 
   useEffect(() => {
-    if (data && data.content && data.content.length > 0) {
+    if (data?.content?.length > 0) {
       setSuccessTranslationCount(data.content[0].targetTranslatedCount);
+      console.log('새 데이터:', data.content);
+      if (shouldUpdateOriginalData) {
+        originalDataRef.current = JSON.parse(JSON.stringify(data.content));
+        console.log('originalData 업데이트됨:', originalDataRef.current);
+        setShouldUpdateOriginalData(false);
+      }
     } else {
       setSuccessTranslationCount(0);
+      if (shouldUpdateOriginalData) {
+        originalDataRef.current = null;
+      }
     }
-  }, [data]);
+  }, [data?.content]);
 
   return (
     <div>
@@ -220,9 +285,9 @@ function RouteComponent() {
               type="button"
               variant="point"
               size="sm"
-              onClick={() => {
+              onClick={withUnsavedChangesCheck(() => {
                 router.navigate({ to: '/platform/menu' });
-              }}
+              })}
             >
               {t('LABEL.platform.system.multilingual.platform-menu')}
             </Button>
@@ -231,11 +296,9 @@ function RouteComponent() {
               type="button"
               variant="point"
               size="sm"
-              onClick={() => {
-                router.navigate({
-                  to: '/platform/label-message',
-                });
-              }}
+              onClick={withUnsavedChangesCheck(() => {
+                router.navigate({ to: '/platform/label-message' });
+              })}
             >
               {t('LABEL.platform.system.multilingual.platform-message')}
             </Button>
@@ -254,7 +317,8 @@ function RouteComponent() {
             variant="primary"
             disabled={
               getValues('targetLocale') === '' ||
-              (data && data.content && data.content.length === 0)
+              (data && data.content && data.content.length === 0) ||
+              isSubmitting
             }
             size="sm"
             onClick={handleSaveMultilingual}
@@ -263,11 +327,15 @@ function RouteComponent() {
           </Button>
         </ContentsButtons>
         <MainContents>
-          <SearchBox provider={sProvider} onSearch={handleOnSearch} />
+          <SearchBox
+            provider={sProvider}
+            onSearch={handleOnSearch}
+            onBeforeSubmit={confirmChanges}
+          />
           <div className={cn(boxStyles.start, boxStyles.inner)}>
             <div className="grid_wrap">
               <TableBox
-                config={gConfig}
+                config={wrappedGridConfig}
                 titleCustomNode={
                   <>
                     {/*번역완료 개수*/}
@@ -324,9 +392,9 @@ const searchConfig: SearchBoxConfig = {
         label: 'LABEL.platform.system.multilingual.translationStatus',
         value: '',
         options: [
-          { value: '', label: 'LABEL.all' },
-          { value: 'true', label: 'pms.multilingual.Is_Translation.true' },
-          { value: 'false', label: 'pms.multilingual.Is_Translation.false' },
+          { value: '', label: t('LABEL.all') },
+          { value: 'true', label: t('pms.multilingual.Is_Translation.true') },
+          { value: 'false', label: t('pms.multilingual.Is_Translation.false') },
         ],
       },
     ],

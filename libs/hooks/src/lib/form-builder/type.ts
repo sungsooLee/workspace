@@ -56,6 +56,8 @@ export type ApiType = (param?: any) => {
 export type ApiProps = {
   fn: (params?: any) => Promise<any>;
   params?: any;
+  enabled?: boolean;
+  select?: (data: any) => any; // tanstack query 의 select 와 동일한 기능
 };
 
 /**

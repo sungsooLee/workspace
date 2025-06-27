@@ -47,6 +47,8 @@ const TenantShuttleModalComponent = forwardRef((_) => {
           type: 'dropdown',
           label: t('회사'),
           value: '',
+          format: 'object',
+          presetOptionLabel: t('LABEL.form.label.all'),
           optionsConfig: {
             codeGroup: CODE_GROUP['manual.company.companyCode'],
           },

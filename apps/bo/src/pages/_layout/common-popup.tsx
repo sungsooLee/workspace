@@ -150,8 +150,8 @@ function RouteComponent() {
                     width: 'xl',
                   }}
                   chipList={{
-                    labelField: 'company',
-                    valueField: 'id',
+                    labelField: 'name',
+                    valueField: 'companyId',
                     wordwrap: true,
                   }}
                 />
@@ -170,8 +170,8 @@ function RouteComponent() {
                     width: 'xl',
                   }}
                   chipList={{
-                    labelField: 'company',
-                    valueField: 'id',
+                    labelField: 'name',
+                    valueField: 'companyId',
                     wordwrap: true,
                   }}
                 />

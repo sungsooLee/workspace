@@ -4,11 +4,11 @@
 /* eslint-disable */
 export type com_ever_edu_lms_space_dto_req_LearningSpaceSaveReqDto = {
     /**
-     * 교육공간을 사용하는 테넌트
+     * 테넌트 ID
      */
-    tenantIds: Array<number>;
+    tenantId: number;
     /**
-     * 교육공간 온/오프라인 유형
+     * 교육공간 유형(온/오프라인)
      */
     onOffLineType: com_ever_edu_lms_space_dto_req_LearningSpaceSaveReqDto.onOffLineType;
     /**
@@ -44,17 +44,13 @@ export type com_ever_edu_lms_space_dto_req_LearningSpaceSaveReqDto = {
      */
     notes?: string;
     /**
-     * 강의장 연계 가능 여부
-     */
-    isLectureHallCoordinated?: boolean;
-    /**
      * 사용 여부
      */
     isUsed: boolean;
 };
 export namespace com_ever_edu_lms_space_dto_req_LearningSpaceSaveReqDto {
     /**
-     * 교육공간 온/오프라인 유형
+     * 교육공간 유형(온/오프라인)
      */
     export enum onOffLineType {
         ONLINE = 'ONLINE',

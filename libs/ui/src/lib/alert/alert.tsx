@@ -158,7 +158,13 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
         </ModalTitle>
         {content && (
           <ModalBody>
-            <div ref={contentRef} className={cn(styles.content, isScrolled && styles.scrolled)}>
+            <div
+              ref={contentRef}
+              className={cn(styles.content, {
+                [styles.scrolled]: isScrolled,
+                scrolled: isScrolled,
+              })}
+            >
               {isString(content) ? t(content) : content}
             </div>
           </ModalBody>

@@ -30,7 +30,7 @@ const ThumbnailImageUploadFormFieldComponent = forwardRef<
   (
     {
       imageStorageType = 'S3',
-      value, // 폼 필드의 현재 값 (string[] 타입, 이미지 경로 배열)
+      value = [], // 폼 필드의 현재 값 (string[] 타입, 이미지 경로 배열)
       onChange, // 폼 필드 값이 변경될 때 호출되는 콜백 함수
       uploadConfig,
       ...props // 나머지 HTMLDivElement 속성들

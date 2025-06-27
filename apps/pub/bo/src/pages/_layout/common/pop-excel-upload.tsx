@@ -1,5 +1,5 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import {
@@ -303,16 +303,11 @@ function RouteComponent() {
       </ModalContainer>
     );
   };
-  // 한번만 실행
-  const hasRun = useRef(false);
   useEffect(() => {
-    if (!hasRun.current) {
-      openModal({
-        width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
-        content: <ExcelUploadContents />,
-      });
-      hasRun.current = true;
-    }
+    openModal({
+      width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
+      content: <ExcelUploadContents />,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openModal]);
   return <div>공통 엑셀업로드 팝업</div>;

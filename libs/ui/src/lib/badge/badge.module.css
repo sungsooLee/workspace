@@ -52,7 +52,7 @@
       }
     }
     &.text {
-      @apply label_3_r rounded-[2px] px-[6px] py-[4px];
+      @apply label_3_r rounded-[4px] px-[6px] py-[4px];
       &.new {
         @apply bg-[#ffeded];
         .label {
@@ -67,6 +67,18 @@
       }
       &.warning {
         @apply bg-[var(--status2)];
+        .label {
+          @apply text-white;
+        }
+      }
+      &.line {
+        @apply border border-solid border-[var(--secondary1)] bg-white;
+        .label {
+          @apply text-[var(--secondary1)];
+        }
+      }
+      &.cancel {
+        @apply bg-[var(--status1)];
         .label {
           @apply text-white;
         }

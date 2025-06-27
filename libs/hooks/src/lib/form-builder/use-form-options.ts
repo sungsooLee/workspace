@@ -62,7 +62,11 @@ const useFormOptionsHook = (
    */
   const getCodeGroupOptions = async (codeGroup: string): Promise<SelectOption[]> => {
     // mock code group
-    if (['test', CODE_GROUP['mock.options.use'], CODE_GROUP['mock.options.possible']].includes(codeGroup)) {
+    if (
+      ['test', CODE_GROUP['mock.options.use'], CODE_GROUP['mock.options.possible']].includes(
+        codeGroup,
+      )
+    ) {
       return getMockOption(codeGroup);
     }
 
@@ -80,10 +84,11 @@ const useFormOptionsHook = (
    * @returns API에서 가져온 옵션 배열
    */
   const getApiOptions = async (api: OptionsConfig['api']): Promise<SelectOption[]> => {
-    if (!api) return [];
-    const { fn, params } = api;
+    if (!api || api.enabled === false) return [];
+    const { fn, params, select } = api;
     const apiOptions = await fn(params);
-    return applyFieldMapping(apiOptions);
+    const newOptions = select ? select(apiOptions) : apiOptions;
+    return applyFieldMapping(newOptions);
   };
 
   /**

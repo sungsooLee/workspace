@@ -11,46 +11,44 @@ interface ReviewRatingProps {
 const ReviewRatingComponent = ({ className }: ReviewRatingProps) => {
   return (
     <div className={`${styles.start} ${styles.rating_box} ${className}`}>
-      <div className={styles.box}>
-        <strong className={styles.tit}>총 평점</strong>
-        <p className={styles.number}>
-          <IcoStar width={32} height={32} fill="#ffb902" />
-          4.2
-        </p>
-      </div>
-      <div className={styles.box}>
-        <strong className={styles.tit}>전체 참가자수</strong>
-        <p className={styles.number}>999,999+</p>
-      </div>
-      <div className={styles.box}>
-        <ul>
-          <li>
-            <span>5점</span>
-            <ProgressBar progress={100} />
-            <span>999,999+</span>
-          </li>
-          <li>
-            <span>4점</span>
-            <ProgressBar progress={40} />
-            <span>10</span>
-          </li>
-          <li>
-            <span>3점</span>
-            <ProgressBar progress={40} />
-            <span>999,999+</span>
-          </li>
-          <li>
-            <span>2점</span>
-            <ProgressBar progress={40} />
-            <span>999,999+</span>
-          </li>
-          <li>
-            <span>1점</span>
-            <ProgressBar progress={40} />
-            <span>999,999+</span>
-          </li>
-        </ul>
-      </div>
+      <ul>
+        <li>
+          <div className={styles.box}>
+            <p>직무 역량 향상에 도움이 돼요</p>
+            <div>
+              <ProgressBar progress={89} />
+              <span className={styles.blue}>89%</span>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div className={styles.box}>
+            <p>실무에 적용하기 유용해요</p>
+            <div>
+              <ProgressBar progress={76} />
+              <span>76%</span>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div className={styles.box}>
+            <p>직무 역량 향상에 도움이 돼요</p>
+            <div>
+              <ProgressBar progress={18} />
+              <span>18%</span>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div className={styles.box}>
+            <p>직무 역량 향상에 도움이 돼요</p>
+            <div>
+              <ProgressBar progress={3} />
+              <span>3%</span>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   );
 };

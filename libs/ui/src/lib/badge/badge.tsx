@@ -19,6 +19,8 @@ export interface BadgeComponentProps extends PropsWithChildren {
     | 'error'
     | 'ing'
     | 'gray'
+    | 'line'
+    | 'cancel'
     | 'blue';
   size?: 'xs' | 'sm' | 'md' | 'lg'; // xs(28) , sm(32) , md(36), lg(40)
   rounded?: boolean;

@@ -166,13 +166,6 @@ const CourseIntroductionCompoment = () => {
 
         <div className={styles.img_box}>
           <img src={discriminationImg} alt="" />
-          <p>
-            어드민에서 에디터를 활용하여 내용을 입력했을 경우 이렇게 나오도록 합니다.
-            <br />
-            이미지가 먼저 나오고, 이미지에 대한 설명이 나오도록 합니다.
-            <br />
-            관리자는 에디터에서 제목, 내용, 이미지를 등록하고 링크추가도 가능합니다.
-          </p>
         </div>
       </div>
 

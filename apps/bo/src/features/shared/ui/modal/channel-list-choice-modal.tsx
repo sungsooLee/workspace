@@ -24,7 +24,7 @@ const ChannelListModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
         {
           name: 'tenantId',
           type: 'dropdown',
-          format: 'number',
+          format: 'object',
           label: t('테넌트'),
           value: undefined,
           optionsConfig: {
@@ -35,28 +35,34 @@ const ChannelListModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
               return '';
             },
             isSearchable: true,
-            placeholder: '입력 또는 선택',
+            placeholder: '입력 선택',
           },
         },
         {
           name: 'channelName',
           type: 'dropdown',
           label: t('채널'),
-          value: '',
-          options: [
-            { value: '', label: '전체' },
-            { value: 'COMMON_CODE', label: t('채널') },
-          ],
+          value: undefined,
+          format: 'object',
+          options: [{ value: 'COMMON_CODE', label: t('채널') }],
+          dropdownConfig: {
+            onchange: () => {
+              return '';
+            },
+            isSearchable: true,
+            placeholder: '입력 선택',
+          },
         },
         {
           name: 'companyId',
           type: 'dropdown',
           label: t('회사'),
-          value: undefined,
+          format: 'object',
+          value: '',
+          presetOptionLabel: t('LABEL.form.label.all'),
           optionsConfig: {
             codeGroup: CODE_GROUP['manual.company.companyId'],
           },
-          format: 'number',
           isSearchable: true,
           isClearable: true,
           placeholder: '입력 선택',
@@ -68,20 +74,22 @@ const ChannelListModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
           label: t('채널 소유자'),
           type: 'text',
           value: '',
-          placeholder: '이름 / 소속 / 팀명',
+          placeholder: '입력',
         },
         {
           name: 'isSecretChannel',
           type: 'dropdown',
           label: t('채널 구분'),
-          value: true,
+          value: '',
+          format: 'object',
+          presetOptionLabel: t('LABEL.form.label.all'),
           options: [
             {
-              value: true,
+              value: '비밀채널',
               label: t('비밀채널'),
             },
             {
-              value: false,
+              value: '일반채널',
               label: t('일반채널'),
             },
           ],
@@ -91,8 +99,8 @@ const ChannelListModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
           type: 'dropdown',
           label: t('사용여부'),
           value: '',
+          presetOptionLabel: t('LABEL.form.label.all'),
           options: [
-            { value: '', label: t('전체') },
             { value: 'true', label: t('사용') },
             { value: 'false', label: t('미사용') },
           ],

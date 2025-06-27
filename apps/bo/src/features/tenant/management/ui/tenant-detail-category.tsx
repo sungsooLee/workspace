@@ -42,7 +42,6 @@ import {
   transformMenuApiDataToTreeData,
 } from '../service/tenant-detail-tree.service';
 import { useFetchTenantCategoryDetail } from '@entities/tenant/service/tenant-category.hook';
-import { useFetchUserGroups } from '@entities/users/service/user-groups.hook';
 import { useCheckExistsCategory } from '@entities/category';
 
 import { UserGroupTabsChoiceModal } from '@features/shared';
