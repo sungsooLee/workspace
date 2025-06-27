@@ -1,59 +1,51 @@
 import { t } from 'i18next';
 
-
 export const getMockCourseType = (key?: string) => {
   return [
     {
       cdGroupId: 'lms.course.CourseType',
       cdId: 'ELEARNING1',
-      cdName: '이러닝(상시)',
+      cdName: '이러닝(상시)' + (key ? ' - ' + key : ''),
       cdContent: 'ELEARNING1 에 대한 설명입니다.(enum에서 정의해주세요.)',
       multilingualKey: 'lms.course.CourseType.ELEARNING1',
-      key,
     },
     {
       cdGroupId: 'lms.course.CourseType',
       cdId: 'ELEARNING2',
-      cdName: '이러닝(정규)',
+      cdName: '이러닝(정규)' + (key ? ' - ' + key : ''),
       cdContent: 'ELEARNING2 에 대한 설명입니다.(enum에서 정의해주세요.)',
       multilingualKey: 'lms.course.CourseType.ELEARNING2',
-      key,
     },
     {
       cdGroupId: 'lms.course.CourseType',
       cdId: 'CLASS',
-      cdName: '클래스',
+      cdName: '클래스' + (key ? ' - ' + key : ''),
       cdContent: 'CLASS 에 대한 설명입니다.(enum에서 정의해주세요.)',
       multilingualKey: 'lms.course.CourseType.CLASS',
-      key,
     },
     {
       cdGroupId: 'lms.course.CourseType',
       cdId: 'LIVE',
-      cdName: 'LIVE',
+      cdName: 'LIVE' + (key ? ' - ' + key : ''),
       cdContent: 'LIVE 에 대한 설명입니다.(enum에서 정의해주세요.)',
       multilingualKey: 'lms.course.CourseType.LIVE',
-      key,
     },
     {
       cdGroupId: 'lms.course.CourseType',
       cdId: 'EXAM',
-      cdName: '시험',
+      cdName: '시험' + (key ? ' - ' + key : ''),
       cdContent: 'EXAM 에 대한 설명입니다.(enum에서 정의해주세요.)',
       multilingualKey: 'lms.course.CourseType.EXAM',
-      key,
     },
     {
       cdGroupId: 'lms.course.CourseType',
       cdId: 'SURVEY',
-      cdName: '설문',
+      cdName: '설문' + (key ? ' - ' + key : ''),
       cdContent: 'SURVEY 에 대한 설명입니다.(enum에서 정의해주세요.)',
       multilingualKey: 'lms.course.CourseType.SURVEY',
-      key,
     },
   ];
 };
-
 
 export const getMockOption = (codeGroup: string) => {
   // 테스트
@@ -90,6 +82,10 @@ export const getMockOption = (codeGroup: string) => {
       },
     ];
   }
-  //
+  // testCourseType
+  if (codeGroup === 'testCourseType') {
+    return getMockCourseType();
+  }
+  // default
   return [];
 };
