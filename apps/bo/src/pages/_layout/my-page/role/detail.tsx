@@ -288,21 +288,21 @@ const formConfig: DynamicFormConfig = {
       type: 'text',
       label: t('역할ID'),
       value: '',
-      disabled: true,
+      readOnly: true,
     },
     {
       name: 'roleCd',
       type: 'text',
       label: t('역할코드'),
       value: '',
-      disabled: true,
+      readOnly: true,
     },
     {
       name: 'roleName',
       type: 'text',
       label: t('역할명'),
       value: '',
-      disabled: true,
+      readOnly: true,
     },
     {
       name: 'roleDescription',
@@ -468,6 +468,9 @@ const createGridColumns = (onCellClick: (data: any) => void) => [
     size: 206,
     meta: {
       cellAlign: 'center',
+    },
+    cell: (info) => {
+      return `${formatDate(info.row.original.modifiedDate, DATE_TIME_FORMAT.DATETIME_MIN)}`;
     },
   }),
 ];

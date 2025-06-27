@@ -131,6 +131,7 @@ const MyRoleExtendModalComponent: FC<{
                 element={
                   <DateRangePickerFormField
                     readOnly={type === 'view'}
+                    // disabled={type === 'view'}
                     minDate={dayjs().toDate()}
                     maxDate={dayjs().add(2, 'year').toDate()}
                   />
@@ -165,7 +166,7 @@ const MyRoleExtendModalComponent: FC<{
           )}
 
           {/* 승인 반려 정보 있을때 */}
-          {isApprovelInfoUse && (
+          {type !== 'request' && isApprovelInfoUse && (
             <>
               <FormSubTitle label={t('관리자 권한 승인 정보')} />
               <ContentsRow>
@@ -202,35 +203,35 @@ const formConfig: DynamicFormConfig = {
       type: 'text',
       label: t('신청자'),
       value: '',
-      disabled: true,
+      readOnly: true,
     },
     {
       name: 'userName',
       type: 'text',
       label: t('신청자'),
       value: '',
-      disabled: true,
+      readOnly: true,
     },
     {
       name: 'roleId',
       type: 'number',
       label: t('HRD 담당자 역할 아이디'),
       value: 0,
-      disabled: true,
+      readOnly: true,
     },
     {
       name: 'roleName',
       type: 'text',
       label: t('HRD 담당자 역할'),
       value: '',
-      disabled: true,
+      readOnly: true,
     },
     {
       name: 'currentRolePeriod',
       type: 'text',
       label: t('권한 기간'),
       value: '',
-      disabled: true,
+      readOnly: true,
     },
     {
       name: 'requestRolePeriod',
