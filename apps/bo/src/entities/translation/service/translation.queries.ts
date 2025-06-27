@@ -1,5 +1,5 @@
 import TranslationService from '../api/translation';
-import { Tenant } from '../../../types';
+import { MultilingualExcel, MultilingualUpdateReqParams, Tenant } from '@types';
 import TenantService from '../../tenant/api/tenant';
 import { skipToken } from '@tanstack/react-query';
 
@@ -24,11 +24,9 @@ export const translationQueryOptions = {
 };
 
 export const mutateOptions = {
-  create: () => ({
-    mutationFn: (payload: Tenant) => TranslationService.createTranslation(payload),
-  }),
   update: () => ({
-    mutationFn: (payload: Tenant) => TranslationService.updateTranslation(payload),
+    mutationFn: (payload: MultilingualUpdateReqParams) =>
+      TranslationService.updateTranslation(payload),
   }),
   delete: () => ({
     mutationFn: (tenantId?: number) =>
@@ -42,13 +40,8 @@ export const mutateOptions = {
       data,
       params,
     }: {
-      data: {
-        keyTypeCode: string;
-        multilingualKey: string;
-        baseLanguage: string;
-        targetLanguage: string;
-      }[];
-      params?: any;
+      data: MultilingualExcel[];
+      params: { targetLocale: string };
     }) => TranslationService.createTranslationByExcel(data, params),
   }),
 };

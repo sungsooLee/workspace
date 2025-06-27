@@ -54,7 +54,7 @@ export const TranslationStatusPopup = (props: TranslationStatusPopupProps) => {
       columnHelper.accessor('translation', {
         cell: (info) => {
           const value = info.getValue();
-          return value ? '번역 완료' : '번역 미완료';
+          return value || value === '' ? '번역 완료' : '번역 미완료';
         },
         header: t('번역상태'),
       }),
