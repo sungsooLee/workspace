@@ -65,16 +65,14 @@ const CompanyModalComponent = forwardRef((props, ref) => {
         <div className={popupStyles.wrap}>
           <SearchBox provider={sProvider} onSearch={handleOnSearch} />
           <Divider />
-          <div className={popupStyles.container}>
-            <GridBox
-              onRowSelect={handleRowSelect}
-              config={config}
-              columns={columns}
-              showNumberingColumn
-              visibleRowCount={7}
-              title={t('회사')}
-            />
-          </div>
+          <GridBox
+            onRowSelect={handleRowSelect}
+            config={config}
+            columns={columns}
+            showNumberingColumn
+            visibleRowCount={7}
+            title={t('회사')}
+          />
         </div>
       </ModalBody>
       <ModalFooter>

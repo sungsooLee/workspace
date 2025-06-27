@@ -1,5 +1,5 @@
 .nlp-select__control {
-  @apply rounded-[8px] !border-[var(--gray85)] pr-[16px];
+  @apply rounded-[8px] !border-[var(--gray75)] pr-[16px];
   &.nlp-select__control--is-focused {
     @apply !border-[var(--blue50)];
   }

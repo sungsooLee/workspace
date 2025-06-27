@@ -1,6 +1,6 @@
 .start {
   &.review_wrap {
-    @apply flex h-[240px] w-[280px] flex-col justify-between rounded-[12px] border-[1px] border-solid border-[var(--gray90)] p-[14px];
+    @apply flex h-[240px] w-[280px] flex-col justify-between rounded-[12px] border-[1px] border-solid border-[var(--gray90)] p-[24px];
     .star {
       @apply flex items-center;
       svg {
@@ -11,17 +11,17 @@
       @apply body-md mt-[16px] text-[#0d0e11];
     }
     .profile {
-      @apply flex flex-1 items-center;
+      @apply flex flex-1 items-end;
       .info_avata {
         @apply h-[48px] w-[48px];
       }
       .txt_box {
         @apply ml-[12px];
         strong {
-          @apply title3-b leading-[22px] text-[var(--gray10)];
+          @apply title3-b block leading-[22px] text-[var(--gray10)];
         }
         span {
-          @apply title2 leading-[20px] text-[var(--gray50)];
+          @apply title2 block leading-[20px] text-[var(--gray50)];
         }
       }
     }
