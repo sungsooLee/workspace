@@ -141,6 +141,19 @@ export function useCreateMyRoleApplication(options: any) {
   };
 }
 
+export function useApproveRoleApplication(options: any) {
+  const mutation = useMutation({
+    ...mutateOptions.approveRoleApplications(),
+    ...options,
+  });
+  return {
+    approve: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    ...mutation,
+  };
+}
+
 // 실제 API를 사용하는 훅
 interface RoleHookOptions {
   onRoleCreateSuccess?: (data: any, variables: any, context: any) => void;

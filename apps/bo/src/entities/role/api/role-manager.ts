@@ -184,6 +184,24 @@ export default class RoleManagerService {
   static fetchRoleApplications(params: any) {
     return httpService.get<any>(`${PMSApiPrefix()}/role-applications`, params);
   }
+
+  /**
+   * 역할 신청 승인/반려
+   * @param payload
+   * @returns
+   */
+  static approveRoleApplication(payload: any) {
+    return httpService.post<any>(`${PMSApiPrefix()}/role-applications/approve`, payload);
+  }
+
+  /**
+   * 역할 신청 이력 조회
+   * @param id
+   * @returns
+   */
+  static fetchRoleApplicationHistories(id: number) {
+    return httpService.get<any>(`${PMSApiPrefix()}/role-applications/histories`);
+  }
 }
 
 function genCreateRole(payload: any) {

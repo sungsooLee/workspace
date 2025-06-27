@@ -202,4 +202,8 @@ export const roleMutateOptions = {
     mutationFn: (payload: RoleApplicationParam) =>
       RoleManagerService.createMyRoleApplication(payload),
   }),
+
+  approveRoleApplications: () => ({
+    mutationFn: (payload: any) => RoleManagerService.approveRoleApplication(payload),
+  }),
 };

@@ -912,6 +912,7 @@ const formConfig: DynamicFormConfig = {
       name: 'playBackRateLimitType',
       type: 'radio-group',
       label: '',
+      format: 'object',
       value: 'BASIS_COMPANY',
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.SettingBasisType'],
