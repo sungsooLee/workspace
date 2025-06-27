@@ -1,4 +1,4 @@
-import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   mutateOptions,
   queryKeys,
@@ -8,7 +8,6 @@ import { useApiMutation, useApiQuery } from '../../../shared/lib/use-authorized-
 import { MenuManageApi } from '../api/menu-manage';
 import { MenuDetail } from '../../../types/entities/menu';
 import { useState } from 'react';
-import { callbackify } from 'util';
 
 export function useMenuMangeFetchMenus() {
   return useQuery(queryOptions.all());
