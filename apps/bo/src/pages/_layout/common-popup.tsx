@@ -453,21 +453,42 @@ function RouteComponent() {
               <span className="text-yellow-500">{'진행중'}</span>
             </div>
             <div className="h-1 w-full border-white bg-slate-700" />
-            <div className="flex gap-4">
-              <Button
-                size={'xs'}
-                className="btn_table flex-1"
-                variant={'gray2'}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openModal({
-                    width: 'xl',
-                    content: <UserGroupTabsChoiceModal initialTab="OCCUPATION" />,
-                  });
-                }}
-              >
-                {'유저그룹검색'}
-              </Button>
+            <Button
+              size={'xs'}
+              className="btn_table flex-1"
+              variant={'gray2'}
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal({
+                  width: 'xl',
+                  content: <UserGroupTabsChoiceModal initialTab="JOB_GROUP" />,
+                });
+              }}
+            >
+              {'유저그룹검색'}
+            </Button>
+            <div className="flex justify-between gap-4">
+              <span>유저그룹 조회(조직) 팝업</span>
+              <span className="text-yellow-500">{'진행중'}</span>
+            </div>
+            <div className="flex justify-between gap-4">
+              <span>유저그룹 조회(보직) 팝업</span>
+              <span className="text-green-400">{'완료'}</span>
+            </div>
+            <div className="flex justify-between gap-4">
+              <span>유저그룹 조회(직군) 팝업</span>
+              <span className="text-green-400">{'완료'}</span>
+            </div>
+            <div className="flex justify-between gap-4">
+              <span>유저그룹 조회(호칭) 팝업</span>
+              <span className="text-green-400">{'완료'}</span>
+            </div>
+            <div className="flex justify-between gap-4">
+              <span>유저그룹 조회(직무) 팝업</span>
+              <span className="text-green-400">{'완료'}</span>
+            </div>
+            <div className="flex justify-between gap-4">
+              <span>유저그룹 조회(사용자 정의) 팝업</span>
               <span className="text-yellow-500">{'진행중'}</span>
             </div>
             <div className="h-1 w-full border-white bg-slate-700" />
