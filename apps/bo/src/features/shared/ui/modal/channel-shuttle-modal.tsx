@@ -139,7 +139,7 @@ const ChannelShuttleModalComponent = forwardRef((_) => {
             showNumberingColumn={false}
             gridData={gridData}
             columns={columns}
-            rowKey={'channelId'}
+            rowKey={'channelUuid'}
             leftTitle={t('채널 목록')}
             rightTitle={t('채널 선택')}
           />

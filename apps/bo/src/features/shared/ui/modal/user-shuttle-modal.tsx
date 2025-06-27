@@ -82,7 +82,7 @@ const UserShuttleComponent = () => {
           showNumberingColumn={false}
           gridData={gridData}
           columns={columns}
-          rowKey={'userId'}
+          rowKey={'uuid'}
           leftTitle={t('유저조회목록')}
           rightTitle={t('유저 선택')}
         />

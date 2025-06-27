@@ -61,16 +61,18 @@ const MyRoleExtendModalComponent: FC<{
     }
 
     onFormChange({
-      requestRolePeriod: { from: new Date(viewData.startDate), to: new Date(viewData.endDate) },
+      requestRolePeriod: { from: new Date(viewData.startDate), to: new Date(viewData.endDate) }, // 권한 시작일 / 권한 종료일 (요청)
       roleId: viewData.roleId,
       userUuid: viewData.userUuid,
       userName: `${viewData.companyName} > ${viewData.deptName} ${viewData.userName}`,
       roleName: viewData.roleName,
       currentRolePeriod: `${viewData.startDate} ~ ${viewData.endDate}`,
-      status: viewData.status,
+      status: viewData.status, // 승인 상태
       createdDate: formatDate(viewData.createdDate, DATE_TIME_FORMAT.DATETIME_MIN),
-      reason: viewData.reason,
-      rejectReason: viewData.rejectReason ?? '',
+      reason: viewData.reason, // 신청 사유
+      rejectReason: viewData.rejectReason ?? '', // 반려 사유
+      approveDate: formatDate(viewData.modifiedDate, DATE_TIME_FORMAT.DATETIME_MIN), // 승인/반려일
+      approveUser: viewData.lastModifiedBy, // 승인/반려자
     });
   }, [viewData, type]);
 
@@ -128,7 +130,8 @@ const MyRoleExtendModalComponent: FC<{
                 name={'requestRolePeriod'}
                 element={
                   <DateRangePickerFormField
-                    disabled={type === 'view'}
+                    readOnly={type === 'view'}
+                    // disabled={type === 'view'}
                     minDate={dayjs().toDate()}
                     maxDate={dayjs().add(2, 'year').toDate()}
                   />
@@ -152,27 +155,31 @@ const MyRoleExtendModalComponent: FC<{
             <FormRow
               provider={provider}
               name={'reason'}
-              element={<Textarea disabled={type === 'view'} />}
+              element={<Textarea readOnly={type === 'view'} />}
             />
           </ContentsRow>
           {type === 'view' && (
             <ContentsRow>
-              <FormRow provider={provider} name={'status'} element={<Input disabled />} />
-              <FormRow provider={provider} name={'createdDate'} element={<Input disabled />} />
+              <FormRow provider={provider} name={'status'} element={<Input readOnly />} />
+              <FormRow provider={provider} name={'createdDate'} element={<Input readOnly />} />
             </ContentsRow>
           )}
 
           {/* 승인 반려 정보 있을때 */}
-          {isApprovelInfoUse && (
+          {type !== 'request' && isApprovelInfoUse && (
             <>
               <FormSubTitle label={t('관리자 권한 승인 정보')} />
               <ContentsRow>
-                <FormRow provider={provider} name={'approveDate'} />
-                <FormRow provider={provider} name={'approveUser'} />
+                <FormRow provider={provider} name={'approveDate'} element={<Input readOnly />} />
+                <FormRow provider={provider} name={'approveUser'} element={<Input readOnly />} />
               </ContentsRow>
               {viewData?.rejectReason !== '' && (
                 <ContentsRow>
-                  <FormRow provider={provider} name={'rejectReason'} />
+                  <FormRow
+                    provider={provider}
+                    name={'rejectReason'}
+                    element={<Textarea readOnly />}
+                  />
                 </ContentsRow>
               )}
             </>
@@ -196,35 +203,35 @@ const formConfig: DynamicFormConfig = {
       type: 'text',
       label: t('신청자'),
       value: '',
-      disabled: true,
+      readOnly: true,
     },
     {
       name: 'userName',
       type: 'text',
       label: t('신청자'),
       value: '',
-      disabled: true,
+      readOnly: true,
     },
     {
       name: 'roleId',
       type: 'number',
       label: t('HRD 담당자 역할 아이디'),
       value: 0,
-      disabled: true,
+      readOnly: true,
     },
     {
       name: 'roleName',
       type: 'text',
       label: t('HRD 담당자 역할'),
       value: '',
-      disabled: true,
+      readOnly: true,
     },
     {
       name: 'currentRolePeriod',
       type: 'text',
       label: t('권한 기간'),
       value: '',
-      disabled: true,
+      readOnly: true,
     },
     {
       name: 'requestRolePeriod',
