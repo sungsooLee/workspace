@@ -86,8 +86,8 @@ const useFormOptionsHook = (
    */
   const getApiOptions = async (api: OptionsConfig['api']): Promise<SelectOption[]> => {
     if (!api || api.enabled === false) return [];
-    const { fn, params, select } = api;
-    const apiOptions = await fn(params);
+    const { fn, select } = api;
+    const apiOptions = await fn();
     const newOptions = select ? select(apiOptions) : apiOptions;
     return applyFieldMapping(newOptions);
   };

@@ -196,7 +196,7 @@ function RouteComponent() {
                     labelField: 'cdName',
                     valueField: 'cdId',
                     api: {
-                      fn: LabelMessagesService.fetchChannelMock,
+                      fn: (param?: string) => LabelMessagesService.fetchChannelMock(param),
                     },
                   }}
                 />
@@ -237,16 +237,10 @@ function RouteComponent() {
                     labelField: 'cdName',
                     valueField: 'cdId',
                     api: {
-                      fn: (params: any) => LabelMessagesService.fetchChannelMock(params),
-                    },
-                    transformOptions: (options: SelectOption[]) => {
-                      // 코드그룹 변경시 코드그룹 값 추가
-                      return options.map((option: SelectOption) => ({
-                        ...option,
-                        label: dropdownCodeGroup
-                          ? option.cdName + ' - ' + dropdownCodeGroup
-                          : option.cdName,
-                      }));
+                      fn: () => {
+                        console.log('dropdownCodeGroup =>=>=>=>=> ', dropdownCodeGroup);
+                        return LabelMessagesService.fetchChannelMock(dropdownCodeGroup);
+                      },
                     },
                   }}
                 />
