@@ -71,6 +71,7 @@ export namespace com_ever_edu_global_security_AuthUser$AuthUserRole {
      */
     export enum companyScope {
         ALL = 'ALL',
+        CURRENT_TENANT_COMPANY = 'CURRENT_TENANT_COMPANY',
         CURRENT_COMPANY = 'CURRENT_COMPANY',
         MANUAL = 'MANUAL',
     }
@@ -79,7 +80,7 @@ export namespace com_ever_edu_global_security_AuthUser$AuthUserRole {
      */
     export enum deptScope {
         ALL = 'ALL',
-        CURRENT_TEAM = 'CURRENT_TEAM',
+        CURRENT_TENANT_TEAM = 'CURRENT_TENANT_TEAM',
         CURRENT_TEAM_INCLUSIVE = 'CURRENT_TEAM_INCLUSIVE',
         MANUAL = 'MANUAL',
     }
@@ -88,9 +89,9 @@ export namespace com_ever_edu_global_security_AuthUser$AuthUserRole {
      */
     export enum channelScope {
         ALL = 'ALL',
-        CURRENT_CHANNEL = 'CURRENT_CHANNEL',
-        CURRENT_CHANNEL_INCLUSIVE = 'CURRENT_CHANNEL_INCLUSIVE',
+        CURRENT_TENANT_CHANNEL = 'CURRENT_TENANT_CHANNEL',
         MANUAL = 'MANUAL',
+        CURRENT_CHANNEL_INCLUSIVE = 'CURRENT_CHANNEL_INCLUSIVE',
     }
 }
 

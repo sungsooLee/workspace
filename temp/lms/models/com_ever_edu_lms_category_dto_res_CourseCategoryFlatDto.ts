@@ -3,7 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * 카테고리 경로 노출
+ * 카테고리 목록
  */
 export type com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto = {
     categoryId?: number;
@@ -11,6 +11,7 @@ export type com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto = {
     categoryCode?: string;
     categoryContent?: string;
     categoryPath?: string;
+    isPrimary?: boolean;
     tenantIds?: Array<number>;
 };
 

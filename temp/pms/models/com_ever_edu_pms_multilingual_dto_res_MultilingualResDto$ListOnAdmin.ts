@@ -12,6 +12,10 @@ export type com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin
      */
     keyType?: com_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin.keyType;
     /**
+     * 다국어 분류명
+     */
+    keyTypeName?: string;
+    /**
      * 다국어 코드
      */
     multilingualKey?: string;
