@@ -57,6 +57,7 @@ const AutoCompleteDropdownFormFieldComponent = forwardRef<HTMLDivElement, Dropdo
           onChange?.(value);
         }}
         loadOptions={handleRoleLoadOptions}
+        size={'sm'}
       />
     );
   },
