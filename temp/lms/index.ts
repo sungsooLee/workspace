@@ -7,8 +7,14 @@ export { CancelablePromise, CancelError } from './core/CancelablePromise';
 export { OpenAPI } from './core/OpenAPI';
 export type { OpenAPIConfig } from './core/OpenAPI';
 
+export type { com_ever_edu_external_tenant_dto_res_TenantResDto } from './models/com_ever_edu_external_tenant_dto_res_TenantResDto';
 export type { com_ever_edu_global_exception_dto_ErrorResponse } from './models/com_ever_edu_global_exception_dto_ErrorResponse';
 export type { com_ever_edu_global_exception_dto_ErrorResponse$FieldError } from './models/com_ever_edu_global_exception_dto_ErrorResponse$FieldError';
+export type { com_ever_edu_lms_azx_dto_req_AzxListFilterReqDto } from './models/com_ever_edu_lms_azx_dto_req_AzxListFilterReqDto';
+export type { com_ever_edu_lms_azx_dto_req_AzxSaveReqDto } from './models/com_ever_edu_lms_azx_dto_req_AzxSaveReqDto';
+export type { com_ever_edu_lms_azx_dto_req_AzxUpdateDto } from './models/com_ever_edu_lms_azx_dto_req_AzxUpdateDto';
+export type { com_ever_edu_lms_azx_dto_res_AzxAdminResDto } from './models/com_ever_edu_lms_azx_dto_res_AzxAdminResDto';
+export type { com_ever_edu_lms_azx_dto_res_AzxListAdminResDto } from './models/com_ever_edu_lms_azx_dto_res_AzxListAdminResDto';
 export { com_ever_edu_lms_badge_dto_req_BadgeComponentSaveReqDto } from './models/com_ever_edu_lms_badge_dto_req_BadgeComponentSaveReqDto';
 export type { com_ever_edu_lms_badge_dto_req_BadgeGroupSaveReqDto } from './models/com_ever_edu_lms_badge_dto_req_BadgeGroupSaveReqDto';
 export type { com_ever_edu_lms_badge_dto_req_BadgeGroupSearchReqDto$SearchByAdminDto } from './models/com_ever_edu_lms_badge_dto_req_BadgeGroupSearchReqDto$SearchByAdminDto';
@@ -47,6 +53,7 @@ export { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2 } from '
 export { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep3 } from './models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep3';
 export { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 } from './models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4';
 export { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew } from './models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew';
+export type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TagNameWrapper } from './models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TagNameWrapper';
 export type { com_ever_edu_lms_course_dto_req_SequenceDeleteReqDto } from './models/com_ever_edu_lms_course_dto_req_SequenceDeleteReqDto';
 export type { com_ever_edu_lms_course_dto_req_SequenceSaveReqDto } from './models/com_ever_edu_lms_course_dto_req_SequenceSaveReqDto';
 export type { com_ever_edu_lms_course_dto_req_SequenceSearchReqDto$ByAdmin } from './models/com_ever_edu_lms_course_dto_req_SequenceSearchReqDto$ByAdmin';
@@ -95,6 +102,7 @@ export type { com_ever_edu_lms_student_dto_res_StudentHistoryDto$OnAdmin } from 
 export type { com_ever_edu_lms_student_dto_res_StudentHistoryDto$OnUser } from './models/com_ever_edu_lms_student_dto_res_StudentHistoryDto$OnUser';
 export type { org_springdoc_core_converters_models_Pageable } from './models/org_springdoc_core_converters_models_Pageable';
 export type { org_springdoc_core_converters_models_SortObject } from './models/org_springdoc_core_converters_models_SortObject';
+export type { org_springframework_data_domain_PageCom_ever_edu_lms_azx_dto_res_AzxListAdminResDto } from './models/org_springframework_data_domain_PageCom_ever_edu_lms_azx_dto_res_AzxListAdminResDto';
 export type { org_springframework_data_domain_PageCom_ever_edu_lms_badge_dto_res_BadgeGroupListResDto$OnAdmin } from './models/org_springframework_data_domain_PageCom_ever_edu_lms_badge_dto_res_BadgeGroupListResDto$OnAdmin';
 export type { org_springframework_data_domain_PageCom_ever_edu_lms_badge_dto_res_BadgeListResDto$OnAdmin } from './models/org_springframework_data_domain_PageCom_ever_edu_lms_badge_dto_res_BadgeListResDto$OnAdmin';
 export type { org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CourseListAdminResDto } from './models/org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CourseListAdminResDto';
@@ -106,6 +114,7 @@ export type { org_springframework_data_domain_PageCom_ever_edu_lms_student_dto_r
 export type { PageableObject } from './models/PageableObject';
 
 export { BoService } from './services/BoService';
+export { BoAzxService } from './services/BoAzxService';
 export { BoInternalApiService } from './services/BoInternalApiService';
 export { FoService } from './services/FoService';
 export { InternalApiService } from './services/InternalApiService';

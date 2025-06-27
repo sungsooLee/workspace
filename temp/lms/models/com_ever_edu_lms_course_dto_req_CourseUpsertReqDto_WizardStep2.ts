@@ -24,7 +24,7 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2 = {
      */
     maxEnrollQuota?: number;
     /**
-     * 수강 신청 대기자 선정 방식 (lms.course.WaitListPickMethodType)
+     * 수강 신청 대기 (lms.course.WaitListPickMethodType)
      */
     waitListPickMethodType?: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2.waitListPickMethodType;
     /**
@@ -32,7 +32,7 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2 = {
      */
     maxWaitlistQuota?: number;
     /**
-     * 중복 수강신청 제한 여부
+     * 차수 중복수강
      */
     isDuplicateEnrollAllowed?: boolean;
     /**
@@ -67,7 +67,7 @@ export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2 
         DEPEND_COMPANY = 'DEPEND_COMPANY',
     }
     /**
-     * 수강 신청 대기자 선정 방식 (lms.course.WaitListPickMethodType)
+     * 수강 신청 대기 (lms.course.WaitListPickMethodType)
      */
     export enum waitListPickMethodType {
         NONE = 'NONE',

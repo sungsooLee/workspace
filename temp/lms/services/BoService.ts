@@ -37,6 +37,7 @@ import type { com_ever_edu_lms_course_dto_req_SequenceSearchReqDto$ByAdmin } fro
 import type { com_ever_edu_lms_course_dto_req_SequenceUpdateEnrollConfDto } from '../models/com_ever_edu_lms_course_dto_req_SequenceUpdateEnrollConfDto';
 import type { com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto } from '../models/com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto';
 import type { com_ever_edu_lms_course_dto_res_CourseConfigResDto } from '../models/com_ever_edu_lms_course_dto_res_CourseConfigResDto';
+import type { com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin } from '../models/com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin';
 import type { com_ever_edu_lms_course_dto_res_SequenceResDto$onAdmin } from '../models/com_ever_edu_lms_course_dto_res_SequenceResDto$onAdmin';
 import type { com_ever_edu_lms_enroll_dto_event_EnrollQueueEvent } from '../models/com_ever_edu_lms_enroll_dto_event_EnrollQueueEvent';
 import type { com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByAdmin } from '../models/com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByAdmin';
@@ -427,7 +428,7 @@ export class BoService {
      * @returns number OK
      * @throws ApiError
      */
-    public static save2(
+    public static save3(
         requestBody: com_ever_edu_lms_badge_dto_req_BadgeSaveReqDto,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
@@ -527,7 +528,7 @@ export class BoService {
      * @returns number OK
      * @throws ApiError
      */
-    public static save3(
+    public static save4(
         requestBody: com_ever_edu_lms_badge_dto_req_BadgeGroupSaveReqDto,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
@@ -640,7 +641,7 @@ export class BoService {
      * @returns number OK
      * @throws ApiError
      */
-    public static save(
+    public static save1(
         requestBody: com_ever_edu_lms_space_dto_req_LearningSpaceSaveReqDto,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
@@ -792,7 +793,7 @@ export class BoService {
      * @returns number OK
      * @throws ApiError
      */
-    public static save1(
+    public static save2(
         requestBody: com_ever_edu_lms_category_dto_req_CategoryMasterSaveRequestDto,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
@@ -917,7 +918,7 @@ export class BoService {
      * @returns any OK
      * @throws ApiError
      */
-    public static save4(
+    public static save5(
         requestBody: com_ever_edu_lms_badge_dto_req_BadgeMappingGroupSaveReqDto,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -1175,6 +1176,61 @@ export class BoService {
         });
     }
     /**
+     * 과정 조회
+     * 과정 id를 통해 조회한다.
+     * @param courseId
+     * @returns com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin OK
+     * @throws ApiError
+     */
+    public static findByCourseId(
+        courseId: number,
+    ): CancelablePromise<com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/course/{courseId}',
+            path: {
+                'courseId': courseId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 과정 삭제
+     * 과정을 논리적으로 삭제한다.
+     * @param courseId
+     * @param courseType
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static findByUuid(
+        courseId: number,
+        courseType: 'ELEARNING1' | 'ELEARNING2' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/admin/api/v1/course/{courseId}',
+            path: {
+                'courseId': courseId,
+            },
+            query: {
+                'courseType': courseType,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * 과정 항목 설정 정보
      * 채널, 과정유형에 설정된 항목 설정정보 조회(채널 선택시 호출)
      * @param channelId
@@ -1388,36 +1444,6 @@ export class BoService {
             url: '/admin/api/v1/enroll',
             body: requestBody,
             mediaType: 'application/json',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 과정 삭제
-     * 과정을 논리적으로 삭제한다.
-     * @param courseId
-     * @param courseType
-     * @returns any OK
-     * @throws ApiError
-     */
-    public static findByUuid(
-        courseId: number,
-        courseType: 'ELEARNING1' | 'ELEARNING2' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
-    ): CancelablePromise<any> {
-        return __request(OpenAPI, {
-            method: 'DELETE',
-            url: '/admin/api/v1/course/{courseId}',
-            path: {
-                'courseId': courseId,
-            },
-            query: {
-                'courseType': courseType,
-            },
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
