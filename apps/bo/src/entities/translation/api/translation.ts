@@ -1,11 +1,16 @@
 import { httpService, objectToQueryString } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
-
-import { Tenant } from '../../../types';
+import { PaginationResponse, Tenant } from '../../../types';
+import {
+  MultilingualListItem,
+  MultilingualQueryParams,
+} from '../../../types/entities/multilingual';
 
 export default class TranslationService {
-  static fetchTranslations(params: any) {
-    return httpService.get<any>(`${PMSApiPrefix()}/multilingual`, params);
+  static fetchTranslations<T = MultilingualListItem>(
+    params: MultilingualQueryParams,
+  ): Promise<PaginationResponse<T>> {
+    return httpService.get<PaginationResponse<T>>(`${PMSApiPrefix()}/multilingual`, params);
   }
   static fetchTranslation(messageId: string) {
     return httpService.get<any>(`/pms-module/admin/api/v1/i18n/${messageId}`);
