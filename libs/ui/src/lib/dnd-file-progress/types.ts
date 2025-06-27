@@ -8,7 +8,7 @@ export interface DndFileProgressProps {
   onResume: (id: string) => void;
   inputAccept?: string;
   maxFileCount: number;
-  maxFileSize: number;
+  maxFileSize?: number;
   wrapSize?: string;
   guideText?: string;
   errorMessage?: string;
