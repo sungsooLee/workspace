@@ -30,9 +30,9 @@ export function useGetRoleUserGroups(roleCode: string) {
   });
 }
 
-export function useGetRoleUserMe(siteScope: string) {
+export function useGetMyRoles(siteScope: string) {
   return useQuery({
-    ...queryOptions.getRoleMe(siteScope),
+    ...queryOptions.getMyRoles(siteScope),
   });
 }
 
@@ -40,9 +40,9 @@ export function useGetRoleUserMe(siteScope: string) {
  * @description 나의 역할 신청 목록
  * @param roleApplicationId
  */
-export function useGetRoleApplicationList(payload: any) {
+export function useGetMyRoleApplications(payload: any) {
   return useQuery({
-    ...queryOptions.getRoleApplicationList(payload),
+    ...queryOptions.getMyRoleApplications(payload),
   });
 }
 
@@ -50,9 +50,9 @@ export function useGetRoleApplicationList(payload: any) {
  * @description 나의 역할 신청조회 단건
  * @param roleApplicationId
  */
-export function useGetRoleApplication(roleApplicationId: number) {
+export function useGetMyRoleApplication(roleApplicationId: number) {
   return useQuery({
-    ...queryOptions.getRoleApplication(roleApplicationId),
+    ...queryOptions.getMyRoleApplication(roleApplicationId),
     enabled: !!roleApplicationId,
   });
 }
@@ -121,9 +121,9 @@ export function useSaveUsers(options: any) {
   };
 }
 
-export function useRoleApplication(options: any) {
+export function useCreateMyRoleApplication(options: any) {
   const mutation = useMutation({
-    ...mutateOptions.createRoleApplication(),
+    ...mutateOptions.createMyRoleApplication(),
     onSuccess: async (data, variables, context) => {
       if (options.onSuccess) {
         options.onSuccess(data, variables, context);
