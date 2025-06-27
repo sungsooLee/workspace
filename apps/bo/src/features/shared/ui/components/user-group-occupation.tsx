@@ -6,7 +6,11 @@ import { useQueryClient } from '@tanstack/react-query';
 import { queryOptions } from '@entities/user-group';
 import { AllUserGroupResponse } from '@types';
 
-const UserGroupOccupationComponent = () => {
+type UserGroupOccupationComponentProps = {
+  handleSetOption: (data: any) => void;
+};
+
+const UserGroupOccupationComponent = ({ handleSetOption }: UserGroupOccupationComponentProps) => {
   const ref = useRef<ShuttleGridToChipsImperative>(null);
   const queryClient = useQueryClient();
 

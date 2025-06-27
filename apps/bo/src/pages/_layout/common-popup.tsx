@@ -462,7 +462,7 @@ function RouteComponent() {
                   e.stopPropagation();
                   openModal({
                     width: 'xl',
-                    content: <UserGroupTabsChoiceModal />,
+                    content: <UserGroupTabsChoiceModal initialTab="OCCUPATION" />,
                   });
                 }}
               >
