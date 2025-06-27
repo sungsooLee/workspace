@@ -1,15 +1,16 @@
 .start {
   @apply relative w-[calc(100vw-12px)] py-[80px];
+  &::before {
+    @apply absolute -left-[6px] top-0 h-full w-[7px] content-[''];
+  }
+  &::after {
+    @apply absolute -right-[6px] top-0 h-full w-[7px] content-[''];
+  }
+
   &.inner {
-    @apply min-w-[1440px] translate-x-[calc(-50%+680px)] overflow-hidden;
+    @apply min-w-[1440px] translate-x-[calc(-50%+680px)];
     .contents {
       @apply mx-auto w-[1440px] px-[40px];
-    }
-    &::before {
-      @apply absolute -left-[6px] top-0 h-full w-[7px] content-[''];
-    }
-    &::after {
-      @apply absolute -right-[6px] top-0 h-full w-[7px] content-[''];
     }
   }
 
@@ -19,7 +20,7 @@
     inner_sm : 780px
   */
   &.inner_sm {
-    @apply min-w-[780px] translate-x-[calc(-50%+390px)] overflow-hidden;
+    @apply min-w-[780px] translate-x-[calc(-50%+390px)];
     .contents {
       @apply mx-auto w-[780px] overflow-hidden;
     }
