@@ -124,9 +124,9 @@
     }
     &[data-side='right'] {
       &[data-align='start'] {
-        @apply -translate-y-[6px];
+        @apply mt-0 -translate-y-[8px];
         .arrow {
-          @apply bottom-[24px] left-0 -ml-[10px] rotate-[90deg];
+          @apply left-0 top-[12px] -ml-[10px] rotate-[90deg];
         }
       }
       &[data-align='center'] {
@@ -165,7 +165,7 @@
       &[data-align='start'] {
         @apply -translate-y-[6px];
         .arrow {
-          @apply right-0 top-[12px] -mr-[8px] rotate-[270deg];
+          @apply right-0 top-[12px] -mr-[10px] rotate-[270deg];
         }
       }
       &[data-align='center'] {
@@ -177,7 +177,7 @@
       &[data-align='end'] {
         @apply translate-y-[8px];
         .arrow {
-          @apply bottom-[12px] right-0 -mr-[8px] rotate-[270deg];
+          @apply bottom-[12px] right-0 -mr-[10px] rotate-[270deg];
         }
       }
     }
