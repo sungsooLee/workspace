@@ -97,6 +97,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
                   api: {
                     fn: RoleManagerService.fetchRoleMe,
                     params: 'BO',
+                    select: (data: any) => data?.channels || [],
                   },
                 }}
               />
