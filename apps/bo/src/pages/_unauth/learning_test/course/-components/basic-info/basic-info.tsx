@@ -32,9 +32,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
   ({ dummy, onSave, initialData }, ref) => {
     const { t } = useTranslation();
 
-    const { provider, getValues, fetchData, onFormValid, formState, watch } = useDynamicForm2({
-      builders: [],
-    });
+    const { provider, getValues, fetchData, onFormValid, formState, watch } = useDynamicForm2();
 
     const handleOnSubmit = (data: any) => {
       console.log('data {} => ', data);
@@ -99,6 +97,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
                   api: {
                     fn: RoleManagerService.fetchRoleMe,
                     params: 'BO',
+                    select: (data: any) => data?.channels || [],
                   },
                 }}
               />

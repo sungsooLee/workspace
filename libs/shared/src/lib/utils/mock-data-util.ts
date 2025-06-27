@@ -1,6 +1,5 @@
 import { t } from 'i18next';
 
-
 export const getMockCourseType = (key?: string) => {
   return [
     {
@@ -54,7 +53,6 @@ export const getMockCourseType = (key?: string) => {
   ];
 };
 
-
 export const getMockOption = (codeGroup: string) => {
   // 테스트
   if (codeGroup === 'test') {
@@ -90,6 +88,10 @@ export const getMockOption = (codeGroup: string) => {
       },
     ];
   }
-  //
+  // testCourseType
+  if (codeGroup === 'testCourseType') {
+    return getMockCourseType();
+  }
+  // default
   return [];
 };

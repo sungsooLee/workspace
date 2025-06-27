@@ -67,7 +67,8 @@ const useFormOptionsHook = (
         codeGroup,
       )
     ) {
-      return getMockOption(codeGroup);
+      const mockOptions = getMockOption(codeGroup);
+      return applyFieldMapping(mockOptions);
     }
 
     // optionsConfig > options 에 등록된 값은 조회와 상관없이 앞에 선언 됩니다.

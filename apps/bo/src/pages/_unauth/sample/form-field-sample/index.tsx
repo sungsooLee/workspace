@@ -21,16 +21,16 @@ import { t } from 'i18next';
 import LabelMessagesService from '../../../../entities/label-messages-mock/api/label-messages';
 import { useDynamicForm2 } from '@learnway/hooks';
 
-export const Route = createFileRoute('/_unauth/sample/form-filed-sample/')({
+export const Route = createFileRoute('/_unauth/sample/form-field-sample/')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   const { open: openModal } = useModal();
-  const { provider, onSubmit, control, getValues, watch } = useDynamicForm2({ builders: [] });
+  const { provider, onSubmit, getValues, watch } = useDynamicForm2();
 
   // DropdownCodeGroup 필드 값 감시
-  const dropdownCodeGroupValue = watch('DropdownCodeGroup');
+  const dropdownCodeGroup = watch('DropdownCodeGroup');
 
   const handleSetValue = () => {
     const { onFormChange } = provider;
@@ -114,7 +114,7 @@ function RouteComponent() {
             <FormRow2
               provider={provider}
               name={'radioCodeGroupWithNode'}
-              label={t('라디오 - 코드그룹 - 노드')}
+              label={t('라디오 - 코드그룹 - 커스텀노드')}
               element={
                 <RadioGroupFormField
                   optionsConfig={{
@@ -174,7 +174,7 @@ function RouteComponent() {
             <FormRow2
               provider={provider}
               name={'DropdownCodeGroup'}
-              label={'Dropdown - DropdownFormField(codeGroup)'}
+              label={'Dropdown - codeGroup 사용'}
               element={
                 <DropdownFormField
                   optionsConfig={{
@@ -189,7 +189,7 @@ function RouteComponent() {
             <FormRow2
               provider={provider}
               name={'DropdownApi'}
-              label={'Dropdown - DropdownFormField(api)'}
+              label={'Dropdown - api 사용'}
               element={
                 <DropdownFormField
                   optionsConfig={{
@@ -197,7 +197,56 @@ function RouteComponent() {
                     valueField: 'cdId',
                     api: {
                       fn: LabelMessagesService.fetchChannelMock,
-                      params: watch('DropdownCodeGroup') || '', // fn 실행시 파라미터 값 전달
+                    },
+                  }}
+                />
+              }
+            />
+          </ContentsRow>
+          {/* dropdown codeGroup relation*/}
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'DropdownCodeGroupRelation'}
+              label={`Dropdown - codeGroup ('Dropdown - codeGroup 사용' 변경시 재조회)`}
+              element={
+                <DropdownFormField
+                  key={`dropdown-relation-${dropdownCodeGroup}`}
+                  optionsConfig={{
+                    codeGroup: 'test',
+                    transformOptions: (options: SelectOption[]) => {
+                      return options.filter(
+                        (option: SelectOption) => option.value !== dropdownCodeGroup,
+                      );
+                    },
+                  }}
+                />
+              }
+            />
+          </ContentsRow>
+          {/* dropdown api*/}
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'DropdownApiRelation'}
+              label={`Dropdown - api ('Dropdown - codeGroup 사용' 변경시 재조회)`}
+              element={
+                <DropdownFormField
+                  key={`dropdown-api-relation-${dropdownCodeGroup}`}
+                  optionsConfig={{
+                    labelField: 'cdName',
+                    valueField: 'cdId',
+                    api: {
+                      fn: (params: any) => LabelMessagesService.fetchChannelMock(params),
+                    },
+                    transformOptions: (options: SelectOption[]) => {
+                      // 코드그룹 변경시 코드그룹 값 추가
+                      return options.map((option: SelectOption) => ({
+                        ...option,
+                        label: dropdownCodeGroup
+                          ? option.cdName + ' - ' + dropdownCodeGroup
+                          : option.cdName,
+                      }));
                     },
                   }}
                 />

@@ -11,11 +11,19 @@ import { buildJodObject, ValidatorConfig, ValidatorFormat } from '@learnway/shar
  * @param config - 동적 폼 설정 객체 (DynamicFormConfig)
  * @returns 동적 폼 생성 및 관리에 필요한 메서드와 provider 객체
  */
-export const useDynamicForm2 = <T extends DynamicFormConfig>(config: T): UseDynamicFormResult => {
+export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDynamicFormResult => {
+  // 기본 config 설정
+  const defaultConfig: DynamicFormConfig = {
+    builders: [],
+    validator: {},
+  };
+
+  const finalConfig = config || defaultConfig;
+
   // 동적 필드 관리를 위한 상태
-  const [dynamicBuilders, setDynamicBuilders] = useState<FormConfig[]>(config.builders);
+  const [dynamicBuilders, setDynamicBuilders] = useState<FormConfig[]>(finalConfig.builders);
   // 동적 validator 관리를 위한 상태
-  const [dynamicValidator, setDynamicValidator] = useState<any>(config.validator || {});
+  const [dynamicValidator, setDynamicValidator] = useState<any>(finalConfig.validator || {});
 
   // 초기값 생성: 각 빌더의 기본 값을 설정
   const defaultValues = extractDynamicFormDefaultValues(dynamicBuilders);
