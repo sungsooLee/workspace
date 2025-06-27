@@ -27,8 +27,8 @@ const ChannelShuttleModalComponent = forwardRef((_) => {
         {
           name: 'tenantId',
           type: 'dropdown',
-          format: 'number',
           label: t('테넌트'),
+          format: 'object',
           value: undefined,
           optionsConfig: {
             codeGroup: CODE_GROUP['manual.tenant.tenantId'],
@@ -38,25 +38,30 @@ const ChannelShuttleModalComponent = forwardRef((_) => {
               return '';
             },
             isSearchable: true,
-            placeholder: '입력 또는 선택',
+            placeholder: '입력 선택',
           },
         },
         {
           name: 'channelName',
           type: 'dropdown',
           label: t('채널'),
-          value: '',
-          options: [
-            { value: '', label: '전체' },
-            { value: 'COMMON_CODE', label: t('채널') },
-          ],
+          format: 'object',
+          value: undefined,
+          options: [{ value: 'COMMON_CODE', label: t('채널') }],
+          dropdownConfig: {
+            onchange: () => {
+              return '';
+            },
+            isSearchable: true,
+            placeholder: '입력 선택',
+          },
         },
         {
           name: 'channelOwnerId',
           label: t('채널 소유자'),
           type: 'text',
           value: '',
-          placeholder: '이름 / 소속 / 팀명',
+          placeholder: '입력',
         },
         {
           name: 'isUsed',

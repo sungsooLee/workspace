@@ -25,7 +25,7 @@ const TenantModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
         {
           required: true,
           name: 'tenantId',
-          type: 'auto-dropdown',
+          type: 'dropdown',
           format: 'number',
           label: t('테넌트'),
           value: undefined,
@@ -36,6 +36,7 @@ const TenantModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
             onchange: () => {
               return '';
             },
+            isSearchable: true,
             placeholder: '입력 또는 선택',
           },
         },
@@ -53,6 +54,7 @@ const TenantModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
             onchange: () => {
               return '';
             },
+            isSearchable: true,
             placeholder: '입력 또는 선택',
           },
         },
