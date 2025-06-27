@@ -132,7 +132,7 @@ export function useDeleteMenu(options: any) {
 
   return {
     ...mutation,
-    delete: mutation.mutate,
+    delete: (payload: any, callback?: any) => mutation.mutate(payload, callback),
   };
 }
 
@@ -150,7 +150,7 @@ export function useMoveMenu(options: any) {
   });
   return {
     ...mutation,
-    move: mutation.mutate,
+    move: (payload: any, callback?: any) => mutation.mutate(payload, callback),
   };
 }
 

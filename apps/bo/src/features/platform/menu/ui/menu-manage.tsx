@@ -81,9 +81,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { data } = useMenuTree(menuScope, 'ko');
-  const { data: detailData } = useMenuManageDetail(selectedNode?.menuId || '', {
-    enabled: !!selectedNode?.menuId,
-  });
+  const { data: detailData } = useMenuManageDetail(selectedNode?.menuId || '');
 
   const { create: createMenu } = useCreateMenu({});
   const { update: updateMenu } = useUpdateMenu({});
@@ -439,10 +437,12 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
           });
         } else {
           const targetIndex = nodeInfo.targetIndex!;
+          // position이 'BEFORE'면 targetIndex, 'AFTER'면 targetIndex + 1
+          const sortOrder = nodeInfo.position === 'BEFORE' ? targetIndex + 1 : targetIndex + 2;
           const payload = {
             menuId: nodeInfo.sourceNode.menuId,
             destinationParentId: nodeInfo.targetNode?.parentKey,
-            sortOrder: targetIndex + 1,
+            sortOrder: sortOrder,
             menuScopeCode: menuScope,
           };
           moveMenu(payload, {
