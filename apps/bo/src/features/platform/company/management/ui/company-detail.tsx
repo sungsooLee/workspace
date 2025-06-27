@@ -59,18 +59,19 @@ const CompanyDetailComponent = (props: any, ref: any) => {
           checkState: DuplicateState.okStart,
         },
       };
-      // 기등록된 회사의 NULL 치환
-      const convertedData = replaceNullValues(initialData, [
-        'companyMemberJoinTypeList',
-        'serviceTypeList',
-        'ssoTypeList',
-        'twoFactorAuthPlatformTypeList',
-      ]);
-      console.log('##### initialData', convertedData);
-      fetchData(convertedData);
-      setTimeout(() => {
-        fetchData(convertedData);
-      }, 10000);
+      // // 기등록된 회사의 NULL 치환
+      // const convertedData = replaceNullValues(initialData, [
+      //   'companyMemberJoinTypeList',
+      //   'serviceTypeList',
+      //   'ssoTypeList',
+      //   'twoFactorAuthPlatformTypeList',
+      // ]);
+      console.log('##### initialData', initialData);
+      fetchData(initialData);
+      console.log('##### getValues', getValues());
+      // setTimeout(() => {
+      //   fetchData(initialData);
+      // }, 10000);
 
       const loginRestrictions = detailData.companyLoginRestrictionList.map((limit: any) => ({
         ...limit,
@@ -144,8 +145,9 @@ const CompanyDetailComponent = (props: any, ref: any) => {
     },
   });
 
-  const handleOnSubmit = async (data: any) => {
-    console.log('#### handleOnSubmit', data);
+  const handleOnSubmit = async () => {
+    // onSubmit에서 받아오는 데이터가 null -> 공백으로 넘어와서, getValues 사용
+    const data = getValues();
     console.log('loginRestrictTimeSettings', loginRestrictTimeSettings);
 
     const loginRestrictions = loginRestrictTimeSettings.map((item) => ({
@@ -691,6 +693,7 @@ const formConfig: DynamicFormConfig = {
       name: 'linkageSystem',
       type: 'radio-group',
       label: t('회원 가입 유형'),
+      format: 'object',
       value: 'GIM',
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.LinkageSystem'],
