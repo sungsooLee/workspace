@@ -510,7 +510,7 @@ function RouteComponent() {
               >
                 {'회사조직조회팝업'}
               </Button>
-              <span className="text-yellow-500">{'진행중'}</span>
+              <span className="text-green-400">{'완료'}</span>
             </div>
             <div className="flex gap-4">
               <Button
@@ -534,7 +534,7 @@ function RouteComponent() {
               >
                 {'회사조직조회 셔틀팝업'}
               </Button>
-              <span className="text-yellow-500">{'진행중'}</span>
+              <span className="text-green-400">{'완료'}</span>
             </div>
             <div className="h-1 w-full border-white bg-slate-700" />
             <div className="flex gap-4">
