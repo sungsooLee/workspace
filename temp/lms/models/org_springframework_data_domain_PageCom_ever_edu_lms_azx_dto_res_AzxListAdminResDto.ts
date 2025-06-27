@@ -2,14 +2,14 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_lms_badge_dto_res_BadgeGroupListResDto$OnAdmin } from './com_ever_edu_lms_badge_dto_res_BadgeGroupListResDto$OnAdmin';
+import type { com_ever_edu_lms_azx_dto_res_AzxListAdminResDto } from './com_ever_edu_lms_azx_dto_res_AzxListAdminResDto';
 import type { org_springdoc_core_converters_models_SortObject } from './org_springdoc_core_converters_models_SortObject';
 import type { PageableObject } from './PageableObject';
-export type org_springframework_data_domain_PageCom_ever_edu_lms_badge_dto_res_BadgeGroupListResDto$OnAdmin = {
+export type org_springframework_data_domain_PageCom_ever_edu_lms_azx_dto_res_AzxListAdminResDto = {
     totalPages?: number;
     totalElements?: number;
     size?: number;
-    content?: Array<com_ever_edu_lms_badge_dto_res_BadgeGroupListResDto$OnAdmin>;
+    content?: Array<com_ever_edu_lms_azx_dto_res_AzxListAdminResDto>;
     number?: number;
     sort?: Array<org_springdoc_core_converters_models_SortObject>;
     pageable?: PageableObject;

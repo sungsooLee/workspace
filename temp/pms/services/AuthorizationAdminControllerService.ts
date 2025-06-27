@@ -45,7 +45,7 @@ export class AuthorizationAdminControllerService {
      * @returns com_ever_edu_global_dto_ResponseDtoCom_ever_edu_pms_authorization_dto_res_AuthorizationResDto$DetailOnAdminDto OK
      * @throws ApiError
      */
-    public static update3(
+    public static update4(
         authorizationNo: number,
         requestBody: com_ever_edu_pms_authorization_dto_req_AuthorizationUpdateDto,
     ): CancelablePromise<com_ever_edu_global_dto_ResponseDtoCom_ever_edu_pms_authorization_dto_res_AuthorizationResDto$DetailOnAdminDto> {

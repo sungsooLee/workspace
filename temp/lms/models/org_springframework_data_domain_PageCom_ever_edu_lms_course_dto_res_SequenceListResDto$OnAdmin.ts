@@ -12,8 +12,8 @@ export type org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_
     content?: Array<com_ever_edu_lms_course_dto_res_SequenceListResDto$OnAdmin>;
     number?: number;
     sort?: Array<org_springdoc_core_converters_models_SortObject>;
-    numberOfElements?: number;
     pageable?: PageableObject;
+    numberOfElements?: number;
     first?: boolean;
     last?: boolean;
     empty?: boolean;

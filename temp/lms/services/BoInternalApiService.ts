@@ -10,17 +10,20 @@ export class BoInternalApiService {
     /**
      * Simple 과정 정보 목록 조회 - Internal API
      * 간략한 과정 정보 목록을 조회한다.<BR>예를 들어 Module-CMS에서 커리큘럼ID 목록으로 과정 정보를 조회하기 위해 호출
+     * @param channelUuid 채널 UUID
      * @param curriculumIds 커리큘럼ID를 ","로 연결하여 전달
      * @returns com_ever_edu_lms_course_dto_res_CourseInternalResDto OK
      * @throws ApiError
      */
     public static findMappingCourseByChannelIds(
+        channelUuid: string,
         curriculumIds: string,
     ): CancelablePromise<Array<com_ever_edu_lms_course_dto_res_CourseInternalResDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/internal/api/v1/courses',
             query: {
+                'channelUuid': channelUuid,
                 'curriculumIds': curriculumIds,
             },
             errors: {

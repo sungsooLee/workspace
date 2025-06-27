@@ -95,6 +95,7 @@ export namespace com_ever_edu_pms_role_dto_res_RoleTreeResDto {
      */
     export enum companyScope {
         ALL = 'ALL',
+        CURRENT_TENANT_COMPANY = 'CURRENT_TENANT_COMPANY',
         CURRENT_COMPANY = 'CURRENT_COMPANY',
         MANUAL = 'MANUAL',
     }
@@ -103,16 +104,16 @@ export namespace com_ever_edu_pms_role_dto_res_RoleTreeResDto {
      */
     export enum channelScope {
         ALL = 'ALL',
-        CURRENT_CHANNEL = 'CURRENT_CHANNEL',
-        CURRENT_CHANNEL_INCLUSIVE = 'CURRENT_CHANNEL_INCLUSIVE',
+        CURRENT_TENANT_CHANNEL = 'CURRENT_TENANT_CHANNEL',
         MANUAL = 'MANUAL',
+        CURRENT_CHANNEL_INCLUSIVE = 'CURRENT_CHANNEL_INCLUSIVE',
     }
     /**
      * 팀 적용 범위
      */
     export enum deptScope {
         ALL = 'ALL',
-        CURRENT_TEAM = 'CURRENT_TEAM',
+        CURRENT_TENANT_TEAM = 'CURRENT_TENANT_TEAM',
         CURRENT_TEAM_INCLUSIVE = 'CURRENT_TEAM_INCLUSIVE',
         MANUAL = 'MANUAL',
     }

@@ -87,9 +87,9 @@ export type com_ever_edu_global_security_AuthUser = {
      */
     loginFailCount?: number;
     /**
-     * 회원상태코드
+     * 계정활성화일시
      */
-    userState?: com_ever_edu_global_security_AuthUser.userState;
+    enabledDate?: string;
     /**
      * 계정잠김일시
      */
@@ -147,16 +147,6 @@ export namespace com_ever_edu_global_security_AuthUser {
         HELLO_HMG = 'HELLO_HMG',
         EDU_SERVICE = 'EDU_SERVICE',
         ETC = 'ETC',
-    }
-    /**
-     * 회원상태코드
-     */
-    export enum userState {
-        WAIT = 'WAIT',
-        NORMAL = 'NORMAL',
-        HALT = 'HALT',
-        LEAVE = 'LEAVE',
-        DELETE = 'DELETE',
     }
     /**
      * 비밀번호 인증 유형
