@@ -36,15 +36,17 @@ import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module
 import { GridExcelDownloadButton, GridExcelUploadButton } from '@features/shared';
 import { TranslationStatusPopup } from '@features/platform/system/multilingual/translation-status-popup';
 import { PMSApiPrefix } from '@learnway/config';
+// import { MultilingualUpdateReqParams } from '../../../../../types/entities/multilingual';
+import { MultilingualUpdateReqParams } from '@types';
 
 export const Route = createFileRoute('/_layout/platform/system/multilingual/')({
   component: RouteComponent,
 });
-type TranslationType = {
-  keyTypeCode: string;
-  targetLocale: string;
-  translations: { multilingualKey: string; translation: string }[];
-};
+// type TranslationType = {
+//   keyTypeCode: string;
+//   targetLocale: string;
+//   translations: { multilingualKey: string; translation: string }[];
+// };
 
 function RouteComponent() {
   const { confirm, alert, open: openModal } = useModal();
@@ -169,7 +171,7 @@ function RouteComponent() {
       setIsSubmitting(false);
       return;
     }
-    const uploadData: TranslationType = {
+    const uploadData: MultilingualUpdateReqParams = {
       keyTypeCode: getValues('keyTypeCode'),
       targetLocale: getValues('targetLocale').toLowerCase(),
       translations: [],
@@ -203,6 +205,7 @@ function RouteComponent() {
         url={`${PMSApiPrefix()}/multilingual/exportExcel`}
         params={{ ...getValues(), targetLocale: getValues('targetLocale').toLowerCase() }}
         disabled={!data || (data && data.content && data.content.length === 0)}
+        dataCount={data?.content?.length}
         onBeforeDownload={async () => {
           const keyTypeCode = getValues('keyTypeCode');
           const targetLocale = getValues('targetLocale');
@@ -262,10 +265,8 @@ function RouteComponent() {
   useEffect(() => {
     if (data?.content?.length > 0) {
       setSuccessTranslationCount(data.content[0].targetTranslatedCount);
-      console.log('새 데이터:', data.content);
       if (shouldUpdateOriginalData) {
         originalDataRef.current = JSON.parse(JSON.stringify(data.content));
-        console.log('originalData 업데이트됨:', originalDataRef.current);
         setShouldUpdateOriginalData(false);
       }
     } else {
@@ -307,6 +308,10 @@ function RouteComponent() {
             type="button"
             variant="point"
             // disabled={isSaveDisable}
+            disabled={
+              getValues('targetLocale') === '' ||
+              (data && data.content && data.content.length === 0)
+            }
             size="sm"
             onClick={handleDeployMultilingual}
           >
