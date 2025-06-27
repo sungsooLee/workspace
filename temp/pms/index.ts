@@ -61,6 +61,7 @@ export type { com_ever_edu_pms_channel_dto_res_ChannelResDto } from './models/co
 export { com_ever_edu_pms_channel_entity_ChannelRequestEntity } from './models/com_ever_edu_pms_channel_entity_ChannelRequestEntity';
 export { com_ever_edu_pms_company_dto_req_CompanyCreateReqDto } from './models/com_ever_edu_pms_company_dto_req_CompanyCreateReqDto';
 export type { com_ever_edu_pms_company_dto_req_CompanyDeptDeleteReqDto } from './models/com_ever_edu_pms_company_dto_req_CompanyDeptDeleteReqDto';
+export type { com_ever_edu_pms_company_dto_req_CompanyDeptDndReqDto } from './models/com_ever_edu_pms_company_dto_req_CompanyDeptDndReqDto';
 export type { com_ever_edu_pms_company_dto_req_CompanyDeptReqDto } from './models/com_ever_edu_pms_company_dto_req_CompanyDeptReqDto';
 export { com_ever_edu_pms_company_dto_req_CompanyLoginRestrictionDetailReqDto } from './models/com_ever_edu_pms_company_dto_req_CompanyLoginRestrictionDetailReqDto';
 export { com_ever_edu_pms_company_dto_req_CompanyLoginRestrictionReqDto } from './models/com_ever_edu_pms_company_dto_req_CompanyLoginRestrictionReqDto';
@@ -220,6 +221,7 @@ export type { com_ever_edu_pms_user_dto_req_ExtendPasswordChangeDateReqDto } fro
 export type { com_ever_edu_pms_user_dto_req_IssueNewPasswordReqDto } from './models/com_ever_edu_pms_user_dto_req_IssueNewPasswordReqDto';
 export type { com_ever_edu_pms_user_dto_req_SendVerifyEmailReqDto } from './models/com_ever_edu_pms_user_dto_req_SendVerifyEmailReqDto';
 export type { com_ever_edu_pms_user_dto_req_SendVerifyPhoneNumberReqDto } from './models/com_ever_edu_pms_user_dto_req_SendVerifyPhoneNumberReqDto';
+export { com_ever_edu_pms_user_dto_req_UserGroupSearchReqDto$SearchByAdmin } from './models/com_ever_edu_pms_user_dto_req_UserGroupSearchReqDto$SearchByAdmin';
 export type { com_ever_edu_pms_user_dto_req_UserRegisterReqDto } from './models/com_ever_edu_pms_user_dto_req_UserRegisterReqDto';
 export { com_ever_edu_pms_user_dto_req_UserSaveReqDto$SaveByAdminDto } from './models/com_ever_edu_pms_user_dto_req_UserSaveReqDto$SaveByAdminDto';
 export { com_ever_edu_pms_user_dto_req_UserUpdateReqDto$UpdateByAdminDto } from './models/com_ever_edu_pms_user_dto_req_UserUpdateReqDto$UpdateByAdminDto';
@@ -230,8 +232,9 @@ export type { com_ever_edu_pms_user_dto_res_ConfirmPasswordResDto } from './mode
 export type { com_ever_edu_pms_user_dto_res_FindMyIdResDto } from './models/com_ever_edu_pms_user_dto_res_FindMyIdResDto';
 export type { com_ever_edu_pms_user_dto_res_IsEmailExistsResDto } from './models/com_ever_edu_pms_user_dto_res_IsEmailExistsResDto';
 export type { com_ever_edu_pms_user_dto_res_UserGroupDto } from './models/com_ever_edu_pms_user_dto_res_UserGroupDto';
+export type { com_ever_edu_pms_user_dto_res_UserGroupTargetDto } from './models/com_ever_edu_pms_user_dto_res_UserGroupTargetDto';
 export type { com_ever_edu_pms_user_dto_res_UserGroupTreeDto } from './models/com_ever_edu_pms_user_dto_res_UserGroupTreeDto';
-export { com_ever_edu_pms_user_dto_res_UserResDto } from './models/com_ever_edu_pms_user_dto_res_UserResDto';
+export type { com_ever_edu_pms_user_dto_res_UserResDto } from './models/com_ever_edu_pms_user_dto_res_UserResDto';
 export type { com_ever_edu_pms_widget_dto_req_TenantWidgetCreateReqDto } from './models/com_ever_edu_pms_widget_dto_req_TenantWidgetCreateReqDto';
 export type { com_ever_edu_pms_widget_dto_req_TenantWidgetUpdateReqDto } from './models/com_ever_edu_pms_widget_dto_req_TenantWidgetUpdateReqDto';
 export type { com_ever_edu_pms_widget_dto_req_WidgetSearchReqDto$SearchByAdmin } from './models/com_ever_edu_pms_widget_dto_req_WidgetSearchReqDto$SearchByAdmin';
@@ -269,6 +272,7 @@ export type { org_springframework_data_domain_PageCom_ever_edu_pms_schedule_dto_
 export type { org_springframework_data_domain_PageCom_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin } from './models/org_springframework_data_domain_PageCom_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin';
 export type { org_springframework_data_domain_PageCom_ever_edu_pms_terms_dto_res_TermsAgreementResDto$ListOnAdmin } from './models/org_springframework_data_domain_PageCom_ever_edu_pms_terms_dto_res_TermsAgreementResDto$ListOnAdmin';
 export type { org_springframework_data_domain_PageCom_ever_edu_pms_terms_dto_res_TermsResDto$ListOnAdmin } from './models/org_springframework_data_domain_PageCom_ever_edu_pms_terms_dto_res_TermsResDto$ListOnAdmin';
+export type { org_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_UserGroupTargetDto } from './models/org_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_UserGroupTargetDto';
 export type { org_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_UserResDto } from './models/org_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_UserResDto';
 export type { org_springframework_data_domain_PageCom_ever_edu_pms_widget_dto_res_WidgetResDto$ListOnAdmin } from './models/org_springframework_data_domain_PageCom_ever_edu_pms_widget_dto_res_WidgetResDto$ListOnAdmin';
 export type { org_springframework_data_domain_PageCom_ever_edu_pms_widget_dto_res_WidgetResDto$PopupListOnTenant } from './models/org_springframework_data_domain_PageCom_ever_edu_pms_widget_dto_res_WidgetResDto$PopupListOnTenant';

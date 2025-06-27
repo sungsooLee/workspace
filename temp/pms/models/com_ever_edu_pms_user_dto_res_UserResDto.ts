@@ -38,10 +38,6 @@ export type com_ever_edu_pms_user_dto_res_UserResDto = {
      */
     phoneNumber?: string;
     /**
-     * 회원상태코드
-     */
-    userState?: com_ever_edu_pms_user_dto_res_UserResDto.userState;
-    /**
      * 회원기본언어셋코드
      */
     locale?: {
@@ -95,16 +91,4 @@ export type com_ever_edu_pms_user_dto_res_UserResDto = {
      */
     modifiedDate?: string;
 };
-export namespace com_ever_edu_pms_user_dto_res_UserResDto {
-    /**
-     * 회원상태코드
-     */
-    export enum userState {
-        WAIT = 'WAIT',
-        NORMAL = 'NORMAL',
-        HALT = 'HALT',
-        LEAVE = 'LEAVE',
-        DELETE = 'DELETE',
-    }
-}
 

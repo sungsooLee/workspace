@@ -14,6 +14,10 @@ export type com_ever_edu_pms_role_dto_res_RoleUserResDto = {
      */
     email?: string;
     /**
+     * 사번
+     */
+    employeeNumber?: string;
+    /**
      * 사용자 이름
      */
     userName?: string;

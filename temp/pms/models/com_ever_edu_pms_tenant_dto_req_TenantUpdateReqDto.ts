@@ -37,11 +37,11 @@ export type com_ever_edu_pms_tenant_dto_req_TenantUpdateReqDto = {
     /**
      * 파일 저장 설정(채널)
      */
-    fileStorageTypeChannel: com_ever_edu_pms_tenant_dto_req_TenantUpdateReqDto.fileStorageTypeChannel;
+    fileStorageTypeChannelList: Array<'AWS_INTERNAL' | 'AWS_EXTERNAL' | 'HMG_CLOUD'>;
     /**
      * 파일 저장 설정(기본)
      */
-    fileStorageTypeBase: com_ever_edu_pms_tenant_dto_req_TenantUpdateReqDto.fileStorageTypeBase;
+    fileStorageTypeBase?: com_ever_edu_pms_tenant_dto_req_TenantUpdateReqDto.fileStorageTypeBase;
     /**
      * 사용여부
      */
@@ -76,14 +76,6 @@ export type com_ever_edu_pms_tenant_dto_req_TenantUpdateReqDto = {
     langCountryCodeTypeList?: Array<'KO' | 'EN' | 'ES' | 'AR' | 'RU' | 'FR' | 'PT' | 'ID' | 'ZH' | 'VI' | 'TR' | 'TH' | 'DE' | 'HE' | 'NE' | 'FA' | 'HI' | 'JA' | 'MS' | 'IT' | 'SK' | 'RO' | 'HR' | 'ET'>;
 };
 export namespace com_ever_edu_pms_tenant_dto_req_TenantUpdateReqDto {
-    /**
-     * 파일 저장 설정(채널)
-     */
-    export enum fileStorageTypeChannel {
-        AWS_INTERNAL = 'AWS_INTERNAL',
-        AWS_EXTERNAL = 'AWS_EXTERNAL',
-        HMG_CLOUD = 'HMG_CLOUD',
-    }
     /**
      * 파일 저장 설정(기본)
      */

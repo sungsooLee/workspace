@@ -203,6 +203,7 @@ function RouteComponent() {
         url={`${PMSApiPrefix()}/multilingual/exportExcel`}
         params={{ ...getValues(), targetLocale: getValues('targetLocale').toLowerCase() }}
         disabled={!data || (data && data.content && data.content.length === 0)}
+        dataCount={data?.content?.length}
         onBeforeDownload={async () => {
           const keyTypeCode = getValues('keyTypeCode');
           const targetLocale = getValues('targetLocale');
@@ -262,10 +263,8 @@ function RouteComponent() {
   useEffect(() => {
     if (data?.content?.length > 0) {
       setSuccessTranslationCount(data.content[0].targetTranslatedCount);
-      console.log('새 데이터:', data.content);
       if (shouldUpdateOriginalData) {
         originalDataRef.current = JSON.parse(JSON.stringify(data.content));
-        console.log('originalData 업데이트됨:', originalDataRef.current);
         setShouldUpdateOriginalData(false);
       }
     } else {

@@ -125,17 +125,33 @@ export type com_ever_edu_pms_company_dto_req_CompanyCreateReqDto = {
      */
     watermarkPosition?: com_ever_edu_pms_company_dto_req_CompanyCreateReqDto.watermarkPosition;
     /**
+     * 플레이어 재생바 제어 제한 사용여부
+     */
+    isPlayerControlLimit?: boolean;
+    /**
      * 플레이어 재생바 제어 제한 유형
      */
     playerControlLimitType?: com_ever_edu_pms_company_dto_req_CompanyCreateReqDto.playerControlLimitType;
     /**
-     * 이러닝 집중 모드 유형
+     * 동영상 배속 제한 사용여부
      */
-    focusModeType?: com_ever_edu_pms_company_dto_req_CompanyCreateReqDto.focusModeType;
+    isPlayBackRateLimit?: boolean;
+    /**
+     * 플레이어 재생바 제어 제한 유형
+     */
+    playBackRateLimitType?: com_ever_edu_pms_company_dto_req_CompanyCreateReqDto.playBackRateLimitType;
+    /**
+     * 학습창 캡처 방지 사용여부
+     */
+    isCaptureBlockType?: boolean;
     /**
      * 학습창 캡처 방지 유형
      */
     captureBlockType?: com_ever_edu_pms_company_dto_req_CompanyCreateReqDto.captureBlockType;
+    /**
+     * 이러닝 집중 모드 유형
+     */
+    focusModeType?: com_ever_edu_pms_company_dto_req_CompanyCreateReqDto.focusModeType;
     /**
      * IP 접근 제한 설정(FO)
      */
@@ -760,9 +776,9 @@ export namespace com_ever_edu_pms_company_dto_req_CompanyCreateReqDto {
         NONE = 'NONE',
     }
     /**
-     * 이러닝 집중 모드 유형
+     * 플레이어 재생바 제어 제한 유형
      */
-    export enum focusModeType {
+    export enum playBackRateLimitType {
         BASIS_COMPANY = 'BASIS_COMPANY',
         BASIS_COURSE = 'BASIS_COURSE',
         NONE = 'NONE',
@@ -771,6 +787,14 @@ export namespace com_ever_edu_pms_company_dto_req_CompanyCreateReqDto {
      * 학습창 캡처 방지 유형
      */
     export enum captureBlockType {
+        BASIS_COMPANY = 'BASIS_COMPANY',
+        BASIS_COURSE = 'BASIS_COURSE',
+        NONE = 'NONE',
+    }
+    /**
+     * 이러닝 집중 모드 유형
+     */
+    export enum focusModeType {
         BASIS_COMPANY = 'BASIS_COMPANY',
         BASIS_COURSE = 'BASIS_COURSE',
         NONE = 'NONE',
