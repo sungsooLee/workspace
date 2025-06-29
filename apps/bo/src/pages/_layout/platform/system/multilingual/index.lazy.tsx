@@ -9,7 +9,7 @@ import {
   useModal,
 } from '@learnway/ui';
 import { cn, DATE_TIME_FORMAT, getDateToString, SelectOption } from '@learnway/shared';
-import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
@@ -39,7 +39,7 @@ import { PMSApiPrefix } from '@learnway/config';
 // import { MultilingualUpdateReqParams } from '../../../../../types/entities/multilingual';
 import { MultilingualUpdateReqParams } from '@types';
 
-export const Route = createFileRoute('/_layout/platform/system/multilingual/')({
+export const Route = createLazyFileRoute('/_layout/platform/system/multilingual/')({
   component: RouteComponent,
 });
 // type TranslationType = {

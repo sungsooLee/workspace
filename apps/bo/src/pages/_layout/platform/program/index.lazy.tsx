@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
+import { createLazyFileRoute } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { Tabs } from '@learnway/ui';
 import { cn } from '@learnway/shared';
@@ -13,7 +13,7 @@ import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-
 import { ProgramTree } from '../../../../features/platform/program/ui/program-tree';
 import { SectionLayout } from '../../../../widgets/layout/ui/container/section-layout/section-layout';
 
-export const Route = createFileRoute('/_layout/platform/program/')({
+export const Route = createLazyFileRoute('/_layout/platform/program/')({
   component: RouteComponent,
   ...pageRouteConfig({
     meta: {

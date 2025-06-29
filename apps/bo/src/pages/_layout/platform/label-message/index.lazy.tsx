@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { Button, GridBox, useGridBox, GridBoxState, Divider, SplitPanel } from '@learnway/ui';
-import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { CODE_GROUP, useSearchBox } from '@learnway/hooks';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
@@ -16,7 +16,7 @@ import { DATE_TIME_FORMAT, formatISODateString, getRowSelectionByList } from '@l
 import { Table } from '@tanstack/react-table';
 import { MessageDetail } from '../../../../features/platform/label-message/ui/detail';
 
-export const Route = createFileRoute('/_layout/platform/label-message/')({
+export const Route = createLazyFileRoute('/_layout/platform/label-message/')({
   component: RouteComponent,
 });
 
