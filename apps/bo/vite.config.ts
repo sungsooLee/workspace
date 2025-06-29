@@ -23,6 +23,9 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 4200,
       host: 'localhost',
+      hmr: {
+        overlay: false,
+      },
       proxy: {
         '/juso-api': {
           target: 'https://business.juso.go.kr',
@@ -31,6 +34,9 @@ export default defineConfig(({ mode }) => {
           rewrite: (path) => path.replace(/^\/juso-api/, ''),
         },
       },
+    },
+    optimizeDeps: {
+      exclude: ['@tanstack/router-devtools', '@tanstack/react-query-devtools'],
     },
     preview: {
       port: 4300,
