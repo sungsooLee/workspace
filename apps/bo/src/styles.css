@@ -24,9 +24,11 @@
   }
   html {
     @apply text-[62.5%];
+    font-display: swap;
   }
   body {
     @apply text-[1.6rem] font-normal leading-[1.6] text-[--gray9];
+    font-display: swap;
   }
   body,
   html {
@@ -46,6 +48,14 @@
       'Segoe UI Emoji',
       'Segoe UI Symbol',
       sans-serif;
+  }
+
+  /* Font loading optimization */
+  @font-face {
+    font-family: 'Pretendard Variable';
+    font-style: normal;
+    font-display: swap;
+    src: local('Pretendard Variable');
   }
 }
 
