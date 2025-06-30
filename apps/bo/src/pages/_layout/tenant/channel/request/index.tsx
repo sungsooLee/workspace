@@ -16,7 +16,7 @@ import { SearchBox } from '@shared/ui/search-box';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { queryOptions as requestChannelQueryOptions } from '@entities/channel/service/request-channel.queries';
 import { formUtils } from '@entities/form-utils';
-import { ChannelRejectModal } from '@features/shared';
+import { RejectModal } from '@features/shared';
 import {
   useApproveRequestChannel,
   useRejectRequestChannel,
@@ -274,7 +274,7 @@ function RouteComponent() {
     if (selectedRows.length > 0) {
       openModal({
         width: 'sm',
-        content: <ChannelRejectModal />,
+        content: <RejectModal />,
         onClose(data: any) {
           console.log('reason', data);
           if (data) {

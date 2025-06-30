@@ -9,6 +9,7 @@ export * from './notification';
 export * from './program';
 export * from './react-query';
 export * from './role';
+export * from './role-application';
 export * from './sequence';
 export * from './signup';
 export * from './tenant-category';

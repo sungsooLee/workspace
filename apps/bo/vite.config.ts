@@ -35,9 +35,9 @@ export default defineConfig(({ mode }) => {
         },
       },
     },
-    optimizeDeps: {
-      exclude: ['@tanstack/router-devtools', '@tanstack/react-query-devtools'],
-    },
+    // optimizeDeps: {
+    //   exclude: ['@tanstack/router-devtools', '@tanstack/react-query-devtools'],
+    // },
     preview: {
       port: 4300,
       host: 'localhost',

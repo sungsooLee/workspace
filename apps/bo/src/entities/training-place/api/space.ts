@@ -11,8 +11,8 @@ export default class SpaceService {
     return httpService.post<any>(`${LMSApiPrefix()}/space`, payload);
   }
 
-  static fetch(uuid: string) {
-    return httpService.get<any>(`${LMSApiPrefix()}/space/${uuid}`);
+  static fetch(id: number) {
+    return httpService.get<any>(`${LMSApiPrefix()}/space/${id}`);
   }
 
   static existsCode(code: string) {

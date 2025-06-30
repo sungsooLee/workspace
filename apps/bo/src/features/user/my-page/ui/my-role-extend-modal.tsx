@@ -17,7 +17,10 @@ import { FormRow, FormSubTitle } from '@shared/ui';
 import { t } from 'i18next';
 import { FC, useEffect, useMemo } from 'react';
 import { formUtils } from '@entities/form-utils';
-import { useGetRoleApplication, useRoleApplication } from '@entities/role/service/role-manage.hook';
+import {
+  useGetMyRoleApplication,
+  useCreateMyRoleApplication,
+} from '@entities/role/service/role-manage.hook';
 import { DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
 
 import dayjs from 'dayjs';
@@ -31,15 +34,15 @@ const MyRoleExtendModalComponent: FC<{
   callback?: () => void;
 }> = ({ type, data, callback }: { type: MyRoleModal; data: any; callback?: () => void }) => {
   console.log('### modal data ', data);
-  const { close: closeModal } = useModal();
+  const { close: closeModal, alert: openAlert, showSaveComplete, closeAll } = useModal();
   const { provider, fetchData, onSubmit, onFormChange } = useDynamicForm(formConfig);
 
-  const { data: viewData } = useGetRoleApplication(data?.roleApplicationId ?? undefined);
-  const { createRoleApplication } = useRoleApplication({});
+  const { data: viewData } = useGetMyRoleApplication(data?.roleApplicationId ?? undefined);
+  const { createMyRoleApplication } = useCreateMyRoleApplication({});
 
   const isApprovelInfoUse = useMemo(() => {
     if (!viewData) return false;
-    if (viewData.lastModifiedBy && viewData.modifiedDate) {
+    if (viewData.approvedDate && viewData.approver) {
       return true;
     } else {
       return false;
@@ -51,10 +54,10 @@ const MyRoleExtendModalComponent: FC<{
 
     if (type === 'request') {
       onFormChange({
-        userUuid: viewData.userUuid,
-        roleId: viewData.roleId,
-        userName: `${viewData.companyName} > ${viewData.deptName} ${viewData.userName}`,
-        roleName: viewData.roleName,
+        userUuid: viewData.applicant.uuid,
+        roleId: viewData.role.roleId,
+        userName: `${viewData.applicant.company.name} > ${viewData.applicant.dept.deptName} ${viewData.applicant.name}`,
+        roleName: viewData.role.name,
         currentRolePeriod: `${viewData.startDate} ~ ${viewData.endDate}`,
       });
       return;
@@ -62,19 +65,37 @@ const MyRoleExtendModalComponent: FC<{
 
     onFormChange({
       requestRolePeriod: { from: new Date(viewData.startDate), to: new Date(viewData.endDate) }, // 권한 시작일 / 권한 종료일 (요청)
-      roleId: viewData.roleId,
-      userUuid: viewData.userUuid,
-      userName: `${viewData.companyName} > ${viewData.deptName} ${viewData.userName}`,
-      roleName: viewData.roleName,
+      roleId: viewData.role.roleId,
+      userUuid: viewData.applicant.uuid,
+      userName: `${viewData.applicant.company.name} > ${viewData.applicant.dept.deptName} ${viewData.applicant.name}(${viewData.applicant.employeeNumber})`,
+      roleName: viewData.role.name,
       currentRolePeriod: `${viewData.startDate} ~ ${viewData.endDate}`,
       status: viewData.status, // 승인 상태
       createdDate: formatDate(viewData.createdDate, DATE_TIME_FORMAT.DATETIME_MIN),
       reason: viewData.reason, // 신청 사유
       rejectReason: viewData.rejectReason ?? '', // 반려 사유
-      approveDate: formatDate(viewData.modifiedDate, DATE_TIME_FORMAT.DATETIME_MIN), // 승인/반려일
-      approveUser: viewData.lastModifiedBy, // 승인/반려자
+      approveDate: formatDate(viewData.approvedDate, DATE_TIME_FORMAT.DATETIME_MIN), // 승인/반려일
+      approveUser: viewData.approver
+        ? `${viewData.approver?.company.name} > ${viewData.approver?.dept.deptName} ${viewData.approver?.name}(${viewData.approver?.employeeNumber})`
+        : '', // 승인/반려자
     });
   }, [viewData, type]);
+
+  type CustomError = {
+    code: string;
+    message: string;
+  };
+
+  function isCustomError(error: unknown): error is CustomError {
+    return (
+      typeof error === 'object' &&
+      error !== null &&
+      'code' in error &&
+      'message' in error &&
+      typeof (error as any).code === 'string' &&
+      typeof (error as any).message === 'string'
+    );
+  }
 
   const handleOnSubmit = (node: any) => {
     console.log('### node', node);
@@ -84,9 +105,9 @@ const MyRoleExtendModalComponent: FC<{
       return;
     }
 
-    createRoleApplication(
+    createMyRoleApplication(
       {
-        userUuid: node.userUuid,
+        applicantUuid: node.userUuid,
         roleId: node.roleId,
         startDate: formatDate(node.requestRolePeriod?.from, DATE_TIME_FORMAT.DATE_SERVER),
         endDate: formatDate(node.requestRolePeriod?.to, DATE_TIME_FORMAT.DATE_SERVER),
@@ -96,7 +117,19 @@ const MyRoleExtendModalComponent: FC<{
       {
         onSuccess: () => {
           callback?.();
-          closeModal(node);
+          showSaveComplete({
+            onClose: () => {
+              closeAll();
+            },
+          });
+        },
+        onError: (error: unknown) => {
+          console.log('### error', error);
+          if (isCustomError(error) && error.code === 'B306') {
+            openAlert({
+              content: error.message,
+            });
+          }
         },
       },
     );
@@ -185,10 +218,12 @@ const MyRoleExtendModalComponent: FC<{
             </>
           )}
         </ModalBody>
-        <ModalFooter>
-          {/* <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={() => closeModal()} /> */}
-          <Button type="submit" label={t('확인')} variant={'primary'} size={'lg'} />
-        </ModalFooter>
+        {type === 'request' && (
+          <ModalFooter>
+            <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
+            <Button type="submit" label={t('확인')} variant={'primary'} size={'lg'} />
+          </ModalFooter>
+        )}
       </ModalContainer>
     </form>
   );

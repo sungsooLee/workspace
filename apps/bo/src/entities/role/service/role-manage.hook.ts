@@ -5,6 +5,7 @@ import {
   roleMutateOptions as mutateOptions,
 } from './role-manage.queries';
 import { useModal } from '@learnway/ui';
+import { RoleApplication, RoleApplicationParam } from '@types';
 
 export function useFetchRole(roleCode: string) {
   return useQuery({ ...queryOptions.getRole(roleCode), enabled: !!roleCode });
@@ -30,9 +31,9 @@ export function useGetRoleUserGroups(roleCode: string) {
   });
 }
 
-export function useGetRoleUserMe(siteScope: string) {
+export function useGetMyRoles(siteScope: string) {
   return useQuery({
-    ...queryOptions.getRoleMe(siteScope),
+    ...queryOptions.getMyRoles(siteScope),
   });
 }
 
@@ -40,9 +41,9 @@ export function useGetRoleUserMe(siteScope: string) {
  * @description 나의 역할 신청 목록
  * @param roleApplicationId
  */
-export function useGetRoleApplicationList(payload: any) {
+export function useGetMyRoleApplications(payload: any) {
   return useQuery({
-    ...queryOptions.getRoleApplicationList(payload),
+    ...queryOptions.getMyRoleApplications(payload),
   });
 }
 
@@ -50,9 +51,10 @@ export function useGetRoleApplicationList(payload: any) {
  * @description 나의 역할 신청조회 단건
  * @param roleApplicationId
  */
-export function useGetRoleApplication(roleApplicationId: number) {
-  return useQuery({
-    ...queryOptions.getRoleApplication(roleApplicationId),
+
+export function useGetMyRoleApplication<T = RoleApplication>(roleApplicationId: number) {
+  return useQuery<unknown, unknown, T>({
+    ...queryOptions.getMyRoleApplication(roleApplicationId),
     enabled: !!roleApplicationId,
   });
 }
@@ -121,9 +123,9 @@ export function useSaveUsers(options: any) {
   };
 }
 
-export function useRoleApplication(options: any) {
-  const mutation = useMutation({
-    ...mutateOptions.createRoleApplication(),
+export function useCreateMyRoleApplication<T = RoleApplicationParam>(options: any) {
+  const mutation = useMutation<unknown, unknown, T>({
+    ...mutateOptions.createMyRoleApplication(),
     onSuccess: async (data, variables, context) => {
       if (options.onSuccess) {
         options.onSuccess(data, variables, context);
@@ -132,12 +134,25 @@ export function useRoleApplication(options: any) {
     ...options,
   });
   return {
-    createRoleApplication: (payload: any, callback?: any) => {
+    createMyRoleApplication: (payload: T, callback?: any) => {
       mutation.mutate(payload, callback);
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
     data: mutation.data,
+  };
+}
+
+export function useApproveRoleApplication(options: any) {
+  const mutation = useMutation({
+    ...mutateOptions.approveRoleApplications(),
+    ...options,
+  });
+  return {
+    approve: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    ...mutation,
   };
 }
 

@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { useSearchBox } from '@learnway/hooks';
 import { useCreation } from 'ahooks';
 import { cn } from '@learnway/shared';
@@ -16,7 +16,7 @@ import { GridBox, useGridBox } from '@learnway/ui';
 
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
-export const Route = createFileRoute('/_layout/platform/system/widget/')({
+export const Route = createLazyFileRoute('/_layout/platform/system/widget/')({
   component: RouteComponent,
 });
 

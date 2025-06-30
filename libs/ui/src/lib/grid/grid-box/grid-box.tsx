@@ -1,4 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
+import { IcoCopy, IcoMinus, IcoPlus } from '@learnway/icons';
+import { cn, gridBoxStateToGridState } from '@learnway/shared';
+import { createColumnHelper, Table } from '@tanstack/react-table';
 import React, {
   forwardRef,
   useCallback,
@@ -8,7 +11,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { createColumnHelper, Table } from '@tanstack/react-table';
+import { useTranslation } from 'react-i18next';
 import {
   Button,
   CountText,
@@ -18,9 +21,7 @@ import {
   GridImperative,
   Pagination,
 } from '../../../';
-import { IcoCopy, IcoMinus, IcoPlus } from '@learnway/icons';
-import { cn, gridBoxStateToGridState } from '@learnway/shared';
-import { useTranslation } from 'react-i18next';
+import { GridBoxColumn } from '../types/grid-box';
 import { GridBoxSearchInput, GridBoxSearchInputCondition } from './grid-box-search-input';
 import styles from './grid-box.module.css';
 
@@ -73,7 +74,7 @@ const GridBoxComponent = <T extends object>(
     onStateChange = props.onStateChange,
     onDataChange,
   } = config;
-  const columnHelper = createColumnHelper<any>();
+  const columnHelper = createColumnHelper<T>();
   // GridImperative Ref
   const gridRef = useRef<GridImperative>(null);
   // 마지막으로 onStateChange 사용된 params를 저장하는 Ref
@@ -81,7 +82,7 @@ const GridBoxComponent = <T extends object>(
   // 마지막으로 onStateChange 사용된 params를 저장하는 Ref
   const initialSortRef = useRef<boolean>(false);
   // table instance
-  const [tableInstance, setTableInstance] = useState<Table<any>>(); // GridComponent로부터 받을 table 인스턴스를 저장할 상태
+  const [tableInstance, setTableInstance] = useState<Table<T>>(); // GridComponent로부터 받을 table 인스턴스를 저장할 상태
 
   // 테스트 후 삭제 예정
   const data = gridData?.content || props.data || config?.data || [];
@@ -123,9 +124,9 @@ const GridBoxComponent = <T extends object>(
    */
   const girdColumns = useMemo(() => {
     return columns
-      ?.filter((column: any) => column.type !== 'numbering')
-      ?.map((column: any) => {
-        return columnHelper.accessor(column.name, {
+      ?.filter((column: GridBoxColumn<T>) => column.type !== 'numbering')
+      ?.map((column: GridBoxColumn<T>) => {
+        return columnHelper.accessor(column.name as any, {
           cell: (info) => {
             if (column.render) {
               // render 함수 내부에서 필요한 값(page, row 등)은 info 객체나 클로저로 접근
@@ -147,7 +148,7 @@ const GridBoxComponent = <T extends object>(
    * TODO: props로 받은 columns로 완전히 대체 후 삭제 예정
    */
   const showNumberingColumn =
-    columns?.find((d: any) => d.type === 'numbering') || props.showNumberingColumn;
+    columns?.find((d: GridBoxColumn<T>) => d.type === 'numbering') || props.showNumberingColumn;
 
   /**
    * pagination 설정
@@ -225,7 +226,7 @@ const GridBoxComponent = <T extends object>(
   );
 
   // GridComponent로부터 table 인스턴스를 받았을 때 호출될 핸들러
-  const handleTableInstanceChange = useCallback((table: Table<any>) => {
+  const handleTableInstanceChange = useCallback((table: Table<T>) => {
     console.log('Table instance received:', table);
     setTableInstance(table);
     // onTableInstanceChange callback prop
@@ -244,7 +245,7 @@ const GridBoxComponent = <T extends object>(
       };
       dispatchStateChange(newState);
     },
-    [props.pagination, onStateChange],
+    [onStateChange],
   );
 
   /**
@@ -257,7 +258,7 @@ const GridBoxComponent = <T extends object>(
       };
       dispatchStateChange(newState);
     },
-    [props.pagination, onStateChange],
+    [onStateChange],
   );
 
   /**
@@ -277,16 +278,19 @@ const GridBoxComponent = <T extends object>(
     [onStateChange, data],
   );
 
-  const dispatchStateChange = (state: GridBoxState) => {
-    const newParams = {
-      ...lastDispatchGridBoxStateRef.current,
-      ...state, // 새로 받은 정렬 정보
-    };
-    // params를 업데이트하기 전에 ref에 저장
-    lastDispatchGridBoxStateRef.current = newParams;
-    props.onStateChange?.(newParams);
-    onStateChange?.(newParams);
-  };
+  const dispatchStateChange = useCallback(
+    (state: GridBoxState) => {
+      const newParams = {
+        ...lastDispatchGridBoxStateRef.current,
+        ...state, // 새로 받은 정렬 정보
+      };
+      // params를 업데이트하기 전에 ref에 저장
+      lastDispatchGridBoxStateRef.current = newParams;
+      props.onStateChange?.(newParams);
+      onStateChange?.(newParams);
+    },
+    [props.onStateChange, onStateChange],
+  );
 
   // console.log('grid-box ::', {
   //   paginationProps,
@@ -319,7 +323,10 @@ const GridBoxComponent = <T extends object>(
 
         <div className={styles.button_info}>
           {/* 검색 인풋 */}
-          <GridBoxSearchInput columns={props.columns || []} onEnterKeyDown={handleSearchClick} />
+          <GridBoxSearchInput
+            columns={(props.columns as GridBoxColumn<T>[]) || []}
+            onEnterKeyDown={handleSearchClick}
+          />
           {/* 외부에서 받은 커스텀 버튼 노드 */}
           {customButtonNode}
           {/* 엑셀 버튼 */}

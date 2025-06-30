@@ -1,4 +1,5 @@
 // import { DateRangePickerFormField } from '@features/learning/ui/resource/date-range-picker-form-field';
+import { DateFormField } from './date-form-field';
 import { DateRangeFormField } from './date-range-form-field';
 import {
   AutoCompleteDropdownFormField,
@@ -11,4 +12,5 @@ export const searchFieldConfig = {
   dropdown: DropdownFormField,
   'auto-dropdown': AutoCompleteDropdownFormField,
   'date-range': DateRangeFormField,
+  date: DateFormField,
 };

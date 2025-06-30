@@ -4,7 +4,7 @@ import { getQuerySkipToken } from '@learnway/shared';
 export const queryKeys = {
   all: ['spaces'] as const,
   list: ['space-page'] as const,
-  detail: (uuid: string) => [...queryKeys.all, uuid] as const,
+  detail: (id: number) => [...queryKeys.all, id] as const,
 };
 
 export const queryOptions = {
@@ -14,11 +14,11 @@ export const queryOptions = {
     cacheTime: 0,
     staleTime: 0,
   }),
-  detail: (uuid?: string) =>
-    uuid
+  detail: (id?: number) =>
+    id
       ? {
-          queryKey: queryKeys.detail(uuid),
-          queryFn: (): Promise<any> => SpaceService.fetch(uuid),
+          queryKey: queryKeys.detail(id),
+          queryFn: (): Promise<any> => SpaceService.fetch(id),
         }
       : getQuerySkipToken<any>(),
 };

@@ -59,18 +59,19 @@ const CompanyDetailComponent = (props: any, ref: any) => {
           checkState: DuplicateState.okStart,
         },
       };
-      // 기등록된 회사의 NULL 치환
-      const convertedData = replaceNullValues(initialData, [
-        'companyMemberJoinTypeList',
-        'serviceTypeList',
-        'ssoTypeList',
-        'twoFactorAuthPlatformTypeList',
-      ]);
-      console.log('##### initialData', convertedData);
-      fetchData(convertedData);
-      setTimeout(() => {
-        fetchData(convertedData);
-      }, 10000);
+      // // 기등록된 회사의 NULL 치환
+      // const convertedData = replaceNullValues(initialData, [
+      //   'companyMemberJoinTypeList',
+      //   'serviceTypeList',
+      //   'ssoTypeList',
+      //   'twoFactorAuthPlatformTypeList',
+      // ]);
+      console.log('##### initialData', initialData);
+      fetchData(initialData);
+      console.log('##### getValues', getValues());
+      // setTimeout(() => {
+      //   fetchData(initialData);
+      // }, 10000);
 
       const loginRestrictions = detailData.companyLoginRestrictionList.map((limit: any) => ({
         ...limit,
@@ -144,8 +145,9 @@ const CompanyDetailComponent = (props: any, ref: any) => {
     },
   });
 
-  const handleOnSubmit = async (data: any) => {
-    console.log('#### handleOnSubmit', data);
+  const handleOnSubmit = async () => {
+    // onSubmit에서 받아오는 데이터가 null -> 공백으로 넘어와서, getValues 사용
+    const data = getValues();
     console.log('loginRestrictTimeSettings', loginRestrictTimeSettings);
 
     const loginRestrictions = loginRestrictTimeSettings.map((item) => ({
@@ -559,6 +561,11 @@ const CompanyDetailComponent = (props: any, ref: any) => {
           >
             <FormRow provider={provider} name="playerControlLimitType" />
           </FormDisplay>
+          <div className={cn(formStyles.form_item)}>
+            <FormGuideText>
+              {t('회사설정 기준인 경우 과정 등록과 무관하게 회사 기준으로 제한이 됩니다.')}
+            </FormGuideText>
+          </div>
         </ContentsRowItem>
         <ContentsRowItem>
           <FormRow
@@ -572,6 +579,11 @@ const CompanyDetailComponent = (props: any, ref: any) => {
           >
             <FormRow provider={provider} name="playBackRateLimitType" />
           </FormDisplay>
+          <div className={cn(formStyles.form_item)}>
+            <FormGuideText>
+              {t('회사설정 기준인 경우 과정 등록과 무관하게 회사 기준으로 제한이 됩니다.')}
+            </FormGuideText>
+          </div>
         </ContentsRowItem>
       </ContentsRow>
       <ContentsRow>
@@ -589,9 +601,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
           </FormDisplay>
           <div className={cn(formStyles.form_item)}>
             <FormGuideText>
-              {t(
-                '회사설정 기준인 경우 과정 등록과 무관하게 회사 기준으로 제한이 됩니다. 테스트용 Guide Text',
-              )}
+              {t('회사설정 기준인 경우 과정 등록과 무관하게 회사 기준으로 제한이 됩니다.')}
             </FormGuideText>
           </div>
         </ContentsRowItem>
@@ -683,6 +693,7 @@ const formConfig: DynamicFormConfig = {
       name: 'linkageSystem',
       type: 'radio-group',
       label: t('회원 가입 유형'),
+      format: 'object',
       value: 'GIM',
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.LinkageSystem'],
@@ -794,7 +805,6 @@ const formConfig: DynamicFormConfig = {
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
-      guideText: t('SSO 로그인 사용 여부를 설정합니다.'),
     },
     {
       name: 'ssoTypeList',
@@ -825,7 +835,6 @@ const formConfig: DynamicFormConfig = {
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
-      guideText: t('로그인 2차 인증 사용하는 경우 2차 인증 유형을 선택할 수 있습니다.'),
     },
     {
       name: 'twoFactorAuthType',
@@ -835,6 +844,7 @@ const formConfig: DynamicFormConfig = {
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.TwoFactorAuthType'],
       },
+      guideText: t('로그인 2차 인증 사용하는 경우 2차 인증 유형을 선택할 수 있습니다.'),
     },
     {
       name: 'twoFactorAuthPlatformTypeList',
@@ -844,7 +854,6 @@ const formConfig: DynamicFormConfig = {
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.TwoFactorAuthPlatformType'],
       },
-      guideText: t('2차 로그인 인증 여부를 설정할 수 있습니다.'),
     },
     {
       name: 'isUseWatermark',
@@ -883,7 +892,6 @@ const formConfig: DynamicFormConfig = {
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
-      guideText: t('회사설정 기준인 경우 과정 등록과 무관하게 회사 기준으로 제한이 됩니다.'),
     },
     {
       name: 'playerControlLimitType',
@@ -902,12 +910,12 @@ const formConfig: DynamicFormConfig = {
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
-      guideText: t('회사설정 기준인 경우 과정 등록과 무관하게 회사 기준으로 제한이 됩니다.'),
     },
     {
       name: 'playBackRateLimitType',
       type: 'radio-group',
       label: '',
+      format: 'object',
       value: 'BASIS_COMPANY',
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.SettingBasisType'],
