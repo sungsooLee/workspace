@@ -13,6 +13,8 @@ import {
   abortMultiPartUpload,
   deleteFileInfo,
 } from './api';
+import { FileInfo } from '../use-file-manager/type';
+import { first, uniq } from 'lodash';
 
 /**
  * 새로운 S3 업로더 훅 - 단순화된 구조
@@ -51,6 +53,7 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
         uploading: 0,
         paused: 0,
         completed: 0,
+        fetched: 0,
         failed: 0,
         aborted: 0,
         'validating-error': 0,
@@ -148,6 +151,13 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
       let updatedFiles = prev;
 
       validatingFiles.forEach((file) => {
+        if (!file.file) {
+          return updateFile(updatedFiles, file.id, {
+            status: 'fetched',
+            message: '',
+          });
+        }
+
         let isError = false;
         let message = '';
 
@@ -314,6 +324,7 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
 
   // Single-part 업로드
   const singlePartUpload = async (file: UploadFile) => {
+    if (!file.file) return;
     // AbortController 생성 및 저장
     const controller = new AbortController();
     setFiles((prev) => updateFile(prev, file.id, { controller }));
@@ -384,6 +395,7 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
 
   // Multi-part 업로드
   const multiPartUpload = async (file: UploadFile) => {
+    if (!file.file) return;
     // AbortController 생성 또는 기존 것 사용
     const controller = file.controller || new AbortController();
     if (!file.controller) {
@@ -755,6 +767,33 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
     [onRetry],
   );
 
+  // fetch된 파일 설정
+  const onFetch = (files: FileInfo[]) => {
+    setFiles((prev) => {
+      const fetchedFiles: UploadFile[] = files.map((file) => ({
+        id: file.fileUuid,
+        detailPath: file.detailPath,
+        fileName: file.originalFileName,
+        extension: file.originalFileName.split('.').pop() || '',
+        s3FileName: file.serverFileName,
+        key: file.filePath,
+        size: file.fileSize,
+        uploadType:
+          file.fileSize > multipartThreshold ? UploadType.MULTI_PART : UploadType.SINGLE_PART,
+        status: 'fetched',
+        displaySize: formatFileSize(file.fileSize),
+        progress: 0,
+        fileUrl: file.fileUrl,
+        parts: [],
+        basicPath: file.group.basicPath,
+        groupUuid: file.group.groupUuid,
+      }));
+      return [...prev, ...fetchedFiles];
+    });
+    const groupUuids = uniq(files.map((file) => file.group.groupUuid));
+    if (groupUuids.length === 1) setBatchGroupUuid(first(groupUuids));
+  };
+
   return {
     // 상태
     files,
@@ -769,6 +808,7 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
     onPause,
     onResume,
     onStart: startUpload,
+    onFetch,
   };
 };
 

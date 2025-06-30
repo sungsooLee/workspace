@@ -39,6 +39,10 @@ const useFileManagerHook = () => {
   const deleteFileInfo = async (fileUuid: string): Promise<void> => {
     await FileManagerService.deleteFileInfo(fileUuid);
   };
+  // 파일 정보 조회
+  const getFileInfo = async (fileUuid: string): Promise<FileInfo> => {
+    return await FileManagerService.getFileInfo(fileUuid);
+  };
   // 파일 다운로드
   const fileDownload = async (fileUuid: string): Promise<void> => {
     await FileManagerService.fileDownload(fileUuid);
@@ -54,6 +58,7 @@ const useFileManagerHook = () => {
     createFileGroupInfo,
     createFileGroupFiles,
     deleteFileInfo,
+    getFileInfo,
     fileDownload,
     filesDownload,
   };

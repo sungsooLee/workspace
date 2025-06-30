@@ -674,7 +674,8 @@ const formConfig: DynamicFormConfig = {
         affairsType: 'PMS',
         languageCode: 'ko',
       },
-      value: ['f63f7e9a-04b7-4f5e-9bfb-37e2de234b41', '40ebfa6e-0f1d-45f6-ac3d-8f4964619e9f'],
+      value: [],
+      // value: ['f63f7e9a-04b7-4f5e-9bfb-37e2de234b41', '40ebfa6e-0f1d-45f6-ac3d-8f4964619e9f'],
     },
   ],
 };

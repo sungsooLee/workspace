@@ -5,8 +5,10 @@ import {
   BaseFormFieldProps,
   DEFAULT_MULTIPART_THRESHOLD,
   S3UploaderConfig,
+  useFileManager,
   useS3Uploader,
 } from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
+import { compact, difference, map } from 'lodash';
 
 /**
  * AttachmentFormField 컴포넌트의 props 인터페이스
@@ -44,7 +46,8 @@ const AttachmentFormFieldComponent = forwardRef<
     },
     ref, // forwardRef로 전달받은 Ref 객체
   ) => {
-    const { stats, files, addFiles, onPause, onRetry, onResume, onRemove, inputAccept } =
+    const { getFileInfo } = useFileManager();
+    const { stats, files, addFiles, onPause, onRetry, onResume, onRemove, onFetch, inputAccept } =
       useS3Uploader({
         s3Path,
         groupConfig,
@@ -68,6 +71,19 @@ const AttachmentFormFieldComponent = forwardRef<
     useEffect(() => {
       setFileUuids(value);
     }, [value]); // `value` prop이 변경될 때마다 실행
+
+    async function fetchFileInfo(uuids: string[]) {
+      const fileInfos = await Promise.all(uuids.map(getFileInfo));
+      onFetch(fileInfos);
+    }
+
+    useEffect(() => {
+      const uploadFileUuid = compact(map(files, ({ fileUuid }) => fileUuid));
+      const existed = difference(fileUuids, uploadFileUuid);
+      if (existed.length) {
+        fetchFileInfo(existed);
+      }
+    }, [fileUuids]);
 
     // `Attachment` 컴포넌트를 렌더링하고 필요한 props를 전달합니다.
     return (

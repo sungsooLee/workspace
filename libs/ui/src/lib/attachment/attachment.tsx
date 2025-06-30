@@ -118,6 +118,7 @@ const AttachmentComponent = ({
    * @returns {JSX.Element} 상태에 맞는 JSX 엘리먼트 반환
    */
   const renderFileProgress = (file: UploadFile) => {
+    if (file.status === 'fetched') return null;
     /**
      * 주어진 상태 코드에 따라 렌더링할 텍스트를 반환하는 함수
      * @param {string} status - 파일의 상태 코드
@@ -158,7 +159,7 @@ const AttachmentComponent = ({
     /**
      * 제어 아이콘(버튼 또는 기타 요소)을 감싸는 래퍼를 렌더링하는 함수
      */
-    const renderControl = (icon: JSX.Element, extraClass = '') => (
+    const renderControl = (icon?: JSX.Element, extraClass = '') => (
       <div className={`${styles.control_wrap} ${extraClass}`}>{icon}</div>
     );
 
@@ -176,6 +177,12 @@ const AttachmentComponent = ({
      * 파일 상태와 대응하는 JSX 템플릿 맵
      */
     const statusMap: Record<string, JSX.Element> = {
+      fetched: (
+        <>
+          {renderControl()}
+          {renderDeleteButton()}
+        </>
+      ),
       /**
        * 업로드 중 (uploading) 상태:
        * - 일시 중지(Pause) 버튼을 렌더링
@@ -299,9 +306,9 @@ const AttachmentComponent = ({
           <Button label="삭제" type="button" variant="primary" size="ts" onClick={removeFile} />
         </div>
       </div>
-      <div className={cn(styles.file_wrap, styles.type_excel)} {...getRootProps()}>
+      <div className={cn(styles.file_wrap, styles.type_excel)}>
         <div className={cn(styles.attach_area, files.length > 0 && 'hidden')}>
-          <Button className={styles.btn_file}>
+          <Button className={styles.btn_file} {...getRootProps()}>
             <IcoUploadCloud width={'40'} height={'40'} stroke={'#131C30'} />
             <strong className={styles.file_title}>
               {'영역을 클릭하거나 파일을 마우스로 끌어놓으세요'}
@@ -312,7 +319,7 @@ const AttachmentComponent = ({
         </div>
         <div className={cn(styles.upload_status, files.length === 0 && 'hidden')}>
           {files.map((file: UploadFile) => (
-            <div className={styles.file_item}>
+            <div className={styles.file_item} key={file.id}>
               <div className="mr-3">
                 <Checkbox
                   onClick={(e) => e.stopPropagation()}
