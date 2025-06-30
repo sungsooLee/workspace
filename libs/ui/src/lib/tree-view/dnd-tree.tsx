@@ -68,6 +68,7 @@ interface DndTreeNodeProps {
   draggedNodeKey?: string | null; // 현재 드래그 중인 노드 키 추가
   minDraggableLevel?: number;
   moveIcon?: boolean;
+  isFirstSibling?: boolean; // 형제 노드들 중 첫 번째인지 여부
 }
 
 const DndTreeNode: React.FC<DndTreeNodeProps> = ({
@@ -92,6 +93,7 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
   draggedNodeKey,
   minDraggableLevel,
   moveIcon,
+  isFirstSibling = false,
 }) => {
   const [dropPosition, setDropPosition] = useState<NodeMovePositionType | null>(null);
   const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -272,13 +274,12 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
       }
     }
 
-    // MaxDepth 검증
+    // MaxDepth 검증 - BEFORE/AFTER는 같은 레벨이므로 제한하지 않음
     if (maxDepth !== undefined) {
       const draggedNodeMaxDepth = getNodeMaxDepth(effectiveDraggedNode);
-      // INSIDE 드롭을 가정한 레벨 계산
-      const finalLevel = level + 1;
-      if (finalLevel + draggedNodeMaxDepth - 1 > maxDepth) {
-        return false;
+      const insideFinalLevel = level + 1;
+      if (insideFinalLevel + draggedNodeMaxDepth - 1 > maxDepth) {
+        //
       }
     }
 
@@ -462,6 +463,15 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
   const shouldDisableInsideDrop = useMemo(() => {
     if (!effectiveDraggedNode) return false;
 
+    // MaxDepth 검증 - INSIDE 드롭 시 depth 초과 여부 확인
+    if (maxDepth !== undefined) {
+      const draggedNodeMaxDepth = getNodeMaxDepth(effectiveDraggedNode);
+      const insideFinalLevel = level + 1;
+      if (insideFinalLevel + draggedNodeMaxDepth - 1 > maxDepth) {
+        return true; // INSIDE 드롭 비활성화
+      }
+    }
+
     if (treeType === 'SAME_PARENT_ONLY') {
       const sourceParentKey = effectiveDraggedNode.parentKey || effectiveDraggedNode.parentId;
       const currentNodeParentKey = node.parentKey || node.parentId;
@@ -478,7 +488,7 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
     }
 
     return false;
-  }, [treeType, effectiveDraggedNode, node.key, node.parentKey, node.parentId, level]);
+  }, [treeType, effectiveDraggedNode, node.key, node.parentKey, node.parentId, level, maxDepth]);
 
   // 드롭 영역 설정 (INSIDE) - 하위 노드로 이동
   const { setNodeRef: setDropInsideRef, isOver: isOverInside } = useDroppable({
@@ -575,41 +585,41 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
 
   return (
     <div style={{ position: 'relative' }} className={styles.tree_item}>
-      {/* BEFORE 드롭 영역 - 더 큰 영역으로 개선 */}
-      <div
-        ref={setDropBeforeRef}
-        style={{
-          position: 'relative',
-          height: isGlobalDragging ? '10px' : '2px',
-          // height: '10px',
-          backgroundColor:
-            (isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE')) &&
-            isValidDropTarget()
-              ? 'rgba(33, 150, 243, 0.2)'
-              : 'transparent',
-          marginBottom: '0px',
-          marginLeft: `${level * 28}px`,
-          borderRadius: '2px',
-          // transition: 'height 0.2s ease',
-        }}
-      >
-        {/* 드롭 라인 표시 */}
-        {(isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE')) &&
-          isValidDropTarget() && (
-            <div
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '0',
-                right: '0',
-                height: '2px',
-                backgroundColor: '#2196f3',
-                borderRadius: '1px',
-                transform: 'translateY(-50%)',
-              }}
-            />
-          )}
-      </div>
+      {/* BEFORE 드롭 영역 - 첫 번째 형제 노드에만 표시 */}
+      {isFirstSibling && (
+        <div
+          ref={setDropBeforeRef}
+          style={{
+            position: 'relative',
+            height: isGlobalDragging ? '10px' : '2px',
+            backgroundColor:
+              (isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE')) &&
+              isValidDropTarget()
+                ? 'rgba(33, 150, 243, 0.2)'
+                : 'transparent',
+            marginBottom: '0px',
+            marginLeft: `${level * 28}px`,
+            borderRadius: '2px',
+          }}
+        >
+          {/* 드롭 라인 표시 */}
+          {(isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE')) &&
+            isValidDropTarget() && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '0',
+                  right: '0',
+                  height: '2px',
+                  backgroundColor: '#2196f3',
+                  borderRadius: '1px',
+                  transform: 'translateY(-50%)',
+                }}
+              />
+            )}
+        </div>
+      )}
 
       {/* 노드 콘텐츠 */}
       <div
@@ -749,7 +759,7 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
       {/* 자식 노드들 */}
       {hasChildren && isExpanded && (
         <div className={styles.tree_children}>
-          {node.children!.map((child) => (
+          {node.children!.map((child, index) => (
             <DndTreeNode
               key={child.key}
               node={child}
@@ -772,6 +782,8 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
               draggedNode={effectiveDraggedNode}
               draggedNodeKey={effectiveDraggedNodeKey}
               minDraggableLevel={minDraggableLevel}
+              moveIcon={moveIcon}
+              isFirstSibling={index === 0}
             />
           ))}
         </div>
@@ -1165,7 +1177,7 @@ export const DndTreeView: React.FC<TreeProps> = ({
     <div className={cn(styles.tree_wrap, 'tree_wrap')}>
       <div className={styles.tree}>
         {treeData.length > 0 && hasVisibleNodes ? (
-          treeData.map((node) => (
+          treeData.map((node, index) => (
             <DndTreeNode
               key={node.key}
               node={node}
@@ -1191,6 +1203,7 @@ export const DndTreeView: React.FC<TreeProps> = ({
               draggedNodeKey={currentDraggedNodeKey}
               minDraggableLevel={minDraggableLevel}
               moveIcon={moveIcon}
+              isFirstSibling={index === 0}
             />
           ))
         ) : (
