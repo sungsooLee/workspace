@@ -7,7 +7,7 @@ import {
   useModal,
 } from '@learnway/ui';
 import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '@shared/ui';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useRouterState } from '@tanstack/react-router';
 import { ContentsButtons, MainContents, PageContainer } from '@widgets/layout';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { SubContents } from '@widgets/layout/ui/container/slot/sub-contents';
@@ -143,8 +143,11 @@ function RouteComponent() {
         label: t('썸네일'),
         name: 'thumbnails',
         type: 'thumbnail-list',
+        max: 3,
         format: 'array',
         value: [],
+        description:
+          '파일 사이즈 000 x 000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 00개 / 파일용량 최대 00 MB',
       },
       {
         label: t('태그'),
@@ -180,16 +183,17 @@ function RouteComponent() {
         type: 'switch',
         format: 'boolean',
         switchConfig: {
-          label: (value: boolean) => (value ? '활용가능' : '활용불가'),
+          label: (value: boolean) => (value ? '활용 가능' : '활용 불가'),
         },
         guideText: '해당 학습자원으로 교육 과정을 개설할 수 없습니다.',
-        value: true,
+        value: false,
       },
       {
         label: t('공유채널 설정'),
         name: 'sharedChannels',
         type: 'custom',
         format: 'array',
+        tooltip: '공유채널 설정',
         value: [
           {
             tenantId: 'tenantId1',
@@ -199,7 +203,6 @@ function RouteComponent() {
             checked: true,
           },
         ],
-        guideText: '공유채널 설정',
       },
       {
         label: t('검수확인'),
@@ -248,6 +251,10 @@ function RouteComponent() {
       thumbnails: true,
       tags: true,
       sharedChannels: true,
+      isTrainingSupport: true,
+      isInspectionConfirmed: true,
+      isCopyrightConfirmed: true,
+      isSecurityConfirmed: true,
     },
   };
 
@@ -259,28 +266,45 @@ function RouteComponent() {
 
   const { provider, onSubmit, control, getValues, fetchData } = useDynamicForm(formConfig);
   const { open: openModal } = useModal();
-  const handleOnSubmit = () => {
-    //
-  };
 
-  const save = () => {
-    console.log('save');
-  };
-  const { confirm: openConfirm } = useModal();
-
-  const onSave = async () => {
+  const handleOnSubmit = async (data: any) => {
     const feedback = await openConfirm({
       title: t('LABEL.confirm.save.title'),
       content: t('LABEL.confirm.save.message'),
     });
-    feedback && save();
+    if (feedback) {
+      const params = {
+        tenantId,
+        tenantName: '',
+        channelUuid: data.channelUuids.fieldValue,
+        languageCountryCode: 'KO',
+        fileUuid: '',
+      };
+      console.log(params, 'params');
+      // save(params);
+    }
   };
+
+  const routerState = useRouterState();
+  const tenantId = routerState.location.state?.tenantId;
+
+  const save = async (params: {
+    tenantId: string;
+    tenantName: string;
+    channelUuid: string;
+    languageCountryCode: string;
+    fileUuid: string;
+  }) => {
+    await learningResourceQueryOptions.createHTML5Draft(params);
+  };
+  const { confirm: openConfirm } = useModal();
+
   const goList = async () => {
     const feedback = await openConfirm({
       title: t('LABEL.confirm.list.title'),
       content: t('LABEL.confirm.list.message'),
     });
-    feedback && save();
+    // feedback && save();
   };
   const onDelete = async () => {
     const feedback = await openConfirm({
@@ -289,7 +313,7 @@ function RouteComponent() {
         <p>{`모든 정보가 삭제되며 복구 불가합니다.\n삭제 후 학습자원 조회화면으로 이동합니다.`}</p>
       ),
     });
-    feedback && save();
+    // feedback && save();
   };
 
   const onFileChange = async (params: { contentUuid: string; fileUuid: string }) => {
@@ -314,7 +338,7 @@ function RouteComponent() {
 
   const onPreview = async () => {
     const contentUuid = '';
-    const result = await learningResourceQueryOptions.getHTML5Resource({ contentUuid });
+    const result = await learningResourceQueryOptions.getHTML5Resource(contentUuid);
   };
 
   return (
@@ -327,7 +351,7 @@ function RouteComponent() {
           <Button type={'button'} variant="point" size="sm" onClick={onDelete}>
             삭제
           </Button>
-          <Button type={'button'} variant="point" size="sm" onClick={onSave}>
+          <Button type={'submit'} variant="point" size="sm">
             저장
           </Button>
         </ContentsButtons>
@@ -360,7 +384,7 @@ function RouteComponent() {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider} name={'manager'} />
-            {/* <FormRow provider={provider} name={'contact'} /> */}
+            <FormRow provider={provider} name={'contact'} />
           </ContentsRow>
 
           <ContentsRow type={'horizontal'} className={'inactive'}>
@@ -423,6 +447,9 @@ function RouteComponent() {
           <ContentsRow>
             {/* 키워드 */}
             <FormRow provider={provider} name="keywords" />
+          </ContentsRow>
+          <ContentsRow type={'horizontal'} className={'inactive'}>
+            <FormRow provider={provider} name="isTrainingSupport" />
           </ContentsRow>
           <ContentsRow>
             <FormRow
