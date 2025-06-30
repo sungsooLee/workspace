@@ -201,7 +201,9 @@ export default class RoleManagerService {
    * @returns
    */
   static fetchRoleApplicationHistories(id: number) {
-    return httpService.get<any>(`${PMSApiPrefix()}/role-applications/histories`);
+    return httpService.get<any>(`${PMSApiPrefix()}/role-applications/histories`, {
+      roleApplicationId: id,
+    });
   }
 }
 
