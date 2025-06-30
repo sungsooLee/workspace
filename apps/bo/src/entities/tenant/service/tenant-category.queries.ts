@@ -38,7 +38,7 @@ export const queryOptions = {
 
 export const mutateOptions = {
   create: () => ({
-    mutationFn: (payload: any) => TenantCategoryService.createTenantCategory(payload),
+    mutationFn: (payload: any) => TenantCategoryService.createTenaㅈntCategory(payload),
   }),
   update: () => ({
     mutationFn: (payload: any) => TenantCategoryService.updateTenantCategory(payload),

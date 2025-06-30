@@ -2,7 +2,7 @@ import ChannelService from '@entities/channel/api/channel';
 import RoleManagerService from '@entities/role/api/role-manager';
 import { DropdownFormField } from '@features/form';
 import { CategoryChoiceModal, ChannelListModal } from '@features/learning/course';
-import { UserChoiceModal, UserGroupTabsChoiceModal } from '@features/shared';
+import { TrainingPlaceChoiceModal, UserChoiceModal, UserGroupTabsChoiceModal } from '@features/shared';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import {
   Button,
@@ -135,7 +135,6 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             provider={provider}
             name={'categories'}
             label={'카테고리'}
-            value={[]}
             element={
               <ListModalSelectorFormField
                 deletable
@@ -232,7 +231,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
           />
           <FormRow2
             provider={provider}
-            name={'trainingLevelType'}
+            name={'learningSpaceType'}
             label={'교육공간'}
             element={
               <RadioGroupFormField
@@ -256,12 +255,13 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
                             element={
                               <InputModalSelectorFormField
                                 modalConfig={{
-                                  content: <ChannelListModal />,
+                                  content: <TrainingPlaceChoiceModal />,
                                 }}
-                                transformModalData={(data: any) => ({
-                                  라디오커스텀_모달_아이디: data.channelId,
-                                  라디오커스텀_모달_이름: data.channelName,
-                                })}
+                                transformModalData={(data: any) => console.log(data)}
+                                // transformModalData={(data: any) => ({
+                                //   learningSpaceId: data.channelId,
+                                //   learningSpaceName: data.channelName,
+                                // })}
                               />
                             }
                           />
@@ -273,7 +273,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
                       node: (
                         <FormRow2
                           provider={provider}
-                          name={'learningSpaceName'}
+                          name={'learningSpaceNameKeyIn'}
                           value={''}
                           element={<Input />}
                         />
@@ -293,7 +293,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
           {/*담당자*/}
           <FormRow2
             provider={provider}
-            name={'learningSpaceName'}
+            name={'coordinatorName'}
             label={'담당자'}
             element={
               <InputModalSelectorFormField
@@ -303,7 +303,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
                 }}
                 transformModalData={(data: any) => ({
                   coordinatorId: data.uuid,
-                  learningSpaceName: `${data.name}/${data?.dept?.deptName}`,
+                  coordinatorName: `${data.name}/${data?.dept?.deptName}`,
                 })}
               />
             }
