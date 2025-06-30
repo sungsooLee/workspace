@@ -14,36 +14,34 @@ import subTitleStyles from '@learnway/styles/bo/assets/styles/modules/form-sub-t
 import { CountText } from '../elements/count-text/count-text';
 import { DndTreeView } from './dnd-tree';
 
-const TreeBoxComponent = <T extends object>(
-  {
-    treeId,
-    data,
-    showSearchKeyword,
-    initLevel = 1,
-    onAction,
-    closeLevel,
-    clientTree,
-    title,
-    renderNodeButtons,
-    handleSelectedNodeChange,
-    type,
-    customButtonNode,
-    selectedNode,
-    expandedKeys: externalExpandedKeys, //외부에서 전달받은 expandedKeys
-    onExpandedKeysChange,
-    onCustomNodeClick,
-    shouldDisableClick,
-    showTotalCount,
-    selectedItems,
-    sourceTreeId,
-    maxDepth,
-    isSelectableNode,
-    customDropValidator,
-    minDraggableLevel,
-    ...props
-  }: any,
-  // ref: React.Ref
-) => {
+const TreeBoxComponent = <T extends object>({
+  treeId,
+  data,
+  showSearchKeyword,
+  initLevel = 1,
+  onAction,
+  closeLevel,
+  clientTree,
+  title,
+  renderNodeButtons,
+  handleSelectedNodeChange,
+  type,
+  customButtonNode,
+  selectedNode,
+  expandedKeys: externalExpandedKeys, //외부에서 전달받은 expandedKeys
+  onExpandedKeysChange,
+  onCustomNodeClick,
+  shouldDisableClick,
+  showTotalCount,
+  selectedItems,
+  sourceTreeId,
+  maxDepth,
+  isSelectableNode,
+  customDropValidator,
+  minDraggableLevel,
+  moveIcon,
+  ...props
+}: any) => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [internalExpandedKeys, setInternalExpandedKeys] = useState<string[]>([]);
 
@@ -185,6 +183,7 @@ const TreeBoxComponent = <T extends object>(
           isSelectableNode={isSelectableNode}
           customDropValidator={customDropValidator}
           minDraggableLevel={minDraggableLevel}
+          moveIcon={moveIcon}
           // {...props}
         />
       </div>
