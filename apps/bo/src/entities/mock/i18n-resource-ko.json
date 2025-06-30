@@ -590,6 +590,10 @@
       "fileSelectForDownload": {
         "title": "파일을 선택해 주세요.",
         "message": "저장할 파일을 먼저 선택해 주세요."
+      },
+      "unsaved": {
+        "title": "작업을 계속하시겠습니까?",
+        "message": "변경하신 내용이 저장되지 않습니다."
       }
     },
     "platform": {
@@ -721,6 +725,12 @@
       "page": {
         "tenant": "테넌트담당자"
       }
+    },
+    "mock": {
+      "impossible": "불가능",
+      "possible": "가능",
+      "unuse": "미사용",
+      "use": "사용"
     }
   },
   "pms.multilingual.KeyTypeCode": {

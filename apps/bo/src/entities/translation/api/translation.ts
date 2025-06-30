@@ -1,26 +1,27 @@
-import { httpService, objectToQueryString } from '@learnway/shared';
+import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
-
-import { Tenant } from '../../../types';
+import { PaginationResponse } from '../../../types';
+import {
+  MultilingualListItem,
+  MultilingualQueryParams,
+  MultilingualUpdateReqParams,
+} from '../../../types/entities/multilingual';
+import { AxiosResponse } from 'axios';
 
 export default class TranslationService {
-  static fetchTranslations(params: any) {
-    return httpService.get<any>(`${PMSApiPrefix()}/multilingual`, params);
-  }
-  static fetchTranslation(messageId: string) {
-    return httpService.get<any>(`/pms-module/admin/api/v1/i18n/${messageId}`);
-  }
-  static updateTranslation(payload: any) {
-    return httpService.put<Tenant>(`${PMSApiPrefix()}/multilingual`, payload);
-  }
-  static createTranslation(payload: any) {
-    return httpService.post<Tenant>(`/pms-module/admin/api/v1/i18n`, payload);
+  // 다국어 관리 - 목록 조회
+  static fetchTranslations<T = MultilingualListItem>(
+    params: MultilingualQueryParams,
+  ): Promise<PaginationResponse<T>> {
+    return httpService.get<PaginationResponse<T>>(`${PMSApiPrefix()}/multilingual`, params);
   }
 
-  static deleteTranslation(id: number) {
-    return httpService.delete<Tenant>(`/pms-module/admin/api/v1/i18n`, { id });
+  // 다국어 관리 - 저장
+  static updateTranslation(payload: MultilingualUpdateReqParams) {
+    return httpService.put<AxiosResponse>(`${PMSApiPrefix()}/multilingual`, payload);
   }
 
+  // 다국어 관리 - 배포
   static deployTranslation(payload: any) {
     const { locale } = payload;
     return httpService.post<any>(
@@ -36,8 +37,12 @@ export default class TranslationService {
     );
   }
 
-  static createTranslationByExcel(payload: any) {
-    return httpService.post<any>(`${PMSApiPrefix()}/multilingual/excelUpload`, payload);
+  static createTranslationByExcel(payload: any, params: { targetLocale: string }) {
+    const { targetLocale } = params;
+    return httpService.post<any>(
+      `${PMSApiPrefix()}/multilingual/excelUpload?targetLocale=${targetLocale}`,
+      payload,
+    );
   }
 
   static fetchTranslationExists(param: any) {

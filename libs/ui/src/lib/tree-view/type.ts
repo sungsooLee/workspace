@@ -144,6 +144,7 @@ export interface TreeProps {
   isSelectableNode?: (node: TreeNode) => boolean;
   customDropValidator?: CustomDropValidator; // 커스텀 드랍 유효성 체크 - 사용하는 쪽에서 제약 추가를 위해 추가함.
   minDraggableLevel?: number; // 드래그 가능한 최소 레벨 정의
+  moveIcon?: boolean; // 셔틀트리에서 사용하는 무브 아이콘 사용 여부
 }
 // 드랍 위치 감지를 위한 타입
 export interface IndicatorPosition {

@@ -8,7 +8,7 @@ export type com_ever_edu_lms_space_dto_req_LearningSpaceListReqDto = {
      */
     tenantId?: number;
     /**
-     * 온/오프라인 구분
+     * 교육공간 타입(온/오프라인 구분)
      */
     onOffLineType?: com_ever_edu_lms_space_dto_req_LearningSpaceListReqDto.onOffLineType;
     /**
@@ -22,7 +22,7 @@ export type com_ever_edu_lms_space_dto_req_LearningSpaceListReqDto = {
 };
 export namespace com_ever_edu_lms_space_dto_req_LearningSpaceListReqDto {
     /**
-     * 온/오프라인 구분
+     * 교육공간 타입(온/오프라인 구분)
      */
     export enum onOffLineType {
         ONLINE = 'ONLINE',

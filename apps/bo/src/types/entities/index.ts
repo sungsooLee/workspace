@@ -14,3 +14,5 @@ export * from './signup';
 export * from './tenant-category';
 export * from './tenant';
 export * from './widgets';
+export * from './user-group';
+export * from './multilingual';

@@ -110,6 +110,7 @@ export interface SelectOption {
   subLabel?: string;
   icon?: React.ComponentType<{ className?: string }>;
   extra?: any;
+  [key: string]: any;
 }
 
 /**

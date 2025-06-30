@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @nx/enforce-module-boundaries */
 import { createFileRoute } from '@tanstack/react-router';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { cn } from '@learnway/shared';
 
 import {
@@ -173,15 +173,11 @@ function RouteComponent() {
       </ModalContainer>
     );
   };
-  const hasRun = useRef(false);
   useEffect(() => {
-    if (!hasRun.current) {
-      openModal({
-        width: 'lg', // sm(600px), md(800px), lg(1024px), xl(1400px)
-        content: <PackageContent />,
-      });
-      hasRun.current = true;
-    }
+    openModal({
+      width: 'lg', // sm(600px), md(800px), lg(1024px), xl(1400px)
+      content: <PackageContent />,
+    });
   }, [openModal]);
   return <div>Hello "/_layout/pms/pop-data-range-setting"!</div>;
 }

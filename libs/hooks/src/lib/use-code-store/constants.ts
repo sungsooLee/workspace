@@ -1,4 +1,6 @@
 export const CODE_GROUP = {
+  'mock.options.use': 'mock.options.use', // 미사용, 사용
+  'mock.options.possible': 'mock.options.possible', // 불가능, 가능
   'cmmon.DayOfWeekType': 'cmmon.DayOfWeekType',
   'cmmon.TelCountryCode': 'cmmon.TelCountryCode',
   'cms.content.ContentsAddInfoType': 'cms.content.ContentsAddInfoType',
@@ -22,6 +24,7 @@ export const CODE_GROUP = {
   'lms.blackwhite.BlackAndWhiteType': 'lms.blackwhite.BlackAndWhiteType',
   'lms.category.CategoryType': 'lms.category.CategoryType',
   'lms.course.ApprovalLineType': 'lms.course.ApprovalLineType',
+  'lms.course.WaitListPickMethodType': 'lms.course.WaitListPickMethodType',
   'lms.course.BookDeliveryInfoScopeType': 'lms.course.BookDeliveryInfoScopeType',
   'lms.course.CourseSubType': 'lms.course.CourseSubType',
   'lms.course.CourseType': 'lms.course.CourseType',
@@ -32,6 +35,7 @@ export const CODE_GROUP = {
   'lms.course.PassMethodType': 'lms.course.PassMethodType',
   'lms.course.PlaceType': 'lms.course.PlaceType',
   'lms.course.TrainingLevelType': 'lms.course.TrainingLevelType',
+  'lms.course.LearningSpaceType': 'lms.course.LearningSpaceType',
   'lms.course.TrainingPlatformType': 'lms.course.TrainingPlatformType',
   'lms.course.WaitListAssignType': 'lms.course.WaitListAssignType',
   'lms.course.WaitListEnrollMethodType': 'lms.course.WaitListEnrollMethodType',
@@ -44,6 +48,7 @@ export const CODE_GROUP = {
   'lms.enroll.LangLevelTestPreferGenderType': 'lms.enroll.LangLevelTestPreferGenderType',
   'lms.space.OnOffLineType': 'lms.space.OnOffLineType',
   'pms.api.ApiMethodCode': 'pms.api.ApiMethodCode',
+  'pms.approval.ApprovalLineType': 'pms.approval.ApprovalLineType',
   'pms.api.ApiNodeType': 'pms.api.ApiNodeType',
   'pms.api.ApiScopeCode': 'pms.api.ApiScopeCode',
   'pms.approval.ApprovalBusinessType': 'pms.approval.ApprovalBusinessType',
@@ -103,14 +108,15 @@ export const CODE_GROUP = {
   'pms.user.UserGroupType': 'pms.user.UserGroupType',
   'pms.user.UserState': 'pms.user.UserState',
   'vps.video.FfmpegTaskType': 'vps.video.FfmpegTaskType',
+  'pms.multilingual.LangCountryCode': 'pms.multilingual.LangCountryCode',
+  'pms.role.RoleType': 'pms.role.RoleType',
   'manual.code': 'manual.code',
   'manual.code2': 'manual.code2',
   'manual.company.companyId': 'manual.company.companyId',
   'manual.company.companyCode': 'manual.company.companyCode',
-  'manual.tenant.tenantId': 'manual.tenant.tenantId',
-  'pms.multilingual.LangCountryCode': 'pms.multilingual.LangCountryCode',
-  'pms.role.RoleType': 'pms.role.RoleType',
-  'manual.bo.role.roidId': 'manual.bo.role.roidId',
+  'manual.tenant.tenantId': 'manual.tenant.tenantId', // 전체 테넌트
+  'manual.bo.my.tenant.tenantId': 'manual.bo.my.tenant.tenantId', // 나의 테넌트
+  'manual.bo.my.role.roidId': 'manual.bo.my.role.roidId', // 나의 역할
   'manual.code.expired': 'manual.code.expired', // 만료여부 정상,만료
 };
 export type CODE_GROUP_TYPE = (typeof CODE_GROUP)[keyof typeof CODE_GROUP];

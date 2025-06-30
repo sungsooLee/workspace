@@ -1,6 +1,5 @@
 /* quick-menu.module.css */
 .start {
-  @apply relative z-[1] bg-[#012277];
   .menu_wrap {
     @apply flex justify-end;
     .menu_list {

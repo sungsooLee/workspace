@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import {
   ModalBody,
@@ -46,16 +46,11 @@ function RouteComponent() {
       </ModalContainer>
     );
   };
-  // 한번만 실행
-  const hasRun = useRef(false);
   useEffect(() => {
-    if (!hasRun.current) {
-      openModal({
-        width: 'xl', // sm(600px), md(800px), lg(1024px), xl(1400px)
-        content: <UserSearchContent />,
-      });
-      hasRun.current = true;
-    }
+    openModal({
+      width: 'xl', // sm(600px), md(800px), lg(1024px), xl(1400px)
+      content: <UserSearchContent />,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openModal]);
   return <div>유저조회</div>;

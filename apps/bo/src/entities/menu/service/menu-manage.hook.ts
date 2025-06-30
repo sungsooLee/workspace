@@ -1,14 +1,13 @@
-import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   mutateOptions,
   queryKeys,
   menuManageQueryOptions as queryOptions,
 } from './menu-manage.queries';
-import { useApiMutation, useApiQuery } from '../../../shared/lib/use-authorized-query';
-import { MenuManageApi } from '../api/menu-manage';
+import { useApiQuery } from '../../../shared/lib/use-authorized-query';
+import MenuMangerService, { MenuManageApi } from '../api/menu-manage';
 import { MenuDetail } from '../../../types/entities/menu';
 import { useState } from 'react';
-import { callbackify } from 'util';
 
 export function useMenuMangeFetchMenus() {
   return useQuery(queryOptions.all());
@@ -18,13 +17,12 @@ export function useMenuManageFetchTree(menuScopeCode: string, locale: string) {
   return useQuery(queryOptions.tree(menuScopeCode, locale));
 }
 
-export function useMenuTree(menuScopeCode: string, locale: string, options?: any) {
-  return useApiQuery<any, { menuScopeCode: string; locale: string }>(
-    MenuManageApi.menuTree,
-    { menuScopeCode, locale },
-    queryKeys.menuTree(menuScopeCode, locale),
-    options,
-  );
+export function useMenuTree(menuScopeCode: string, locale: string) {
+  return useQuery(queryOptions.tree(menuScopeCode, locale));
+}
+
+export function useMenuManageDetail(menuId: string) {
+  return useQuery(queryOptions.detail(menuId));
 }
 
 export function useFetchMenuFavorites(payload: any) {
@@ -32,13 +30,15 @@ export function useFetchMenuFavorites(payload: any) {
 }
 
 export function useCreateMenu(options: any) {
-  const mutation = useApiMutation(MenuManageApi.create, undefined, {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (payload: any) => MenuMangerService.createMenu(payload),
     onSuccess: async (data, variables, context) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.all });
       if (options.onSuccess) {
         options.onSuccess(data, variables, context);
       }
     },
-    invalidateQueries: [queryKeys.all],
     ...options,
   });
   return {
@@ -48,28 +48,21 @@ export function useCreateMenu(options: any) {
 }
 
 export function useUpdateMenu(options: any) {
-  const mutation = useApiMutation(MenuManageApi.update, undefined, {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (payload: any) => MenuMangerService.updateMenu(payload),
     onSuccess: async (data, variables, context) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.all });
       if (options.onSuccess) {
         options.onSuccess(data, variables, context);
       }
     },
-    invalidateQueries: [queryKeys.all],
     ...options,
   });
   return {
     ...mutation,
     update: mutation.mutate,
   };
-}
-
-export function useMenuManageDetail(menuId: string, options?: any) {
-  return useApiQuery<MenuDetail, { menuId: string }>(
-    MenuManageApi.detail,
-    { menuId },
-    queryKeys.detail(menuId),
-    options,
-  );
 }
 
 export function useCheckExistsMenu(options?: {
@@ -125,35 +118,39 @@ export function useCheckExistsMenu(options?: {
 }
 
 export function useDeleteMenu(options: any) {
-  const mutation = useApiMutation(MenuManageApi.delete, undefined, {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (payload: any) => MenuMangerService.deleteMenu(payload),
     onSuccess: async (data, variables, context) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.all });
       if (options.onSuccess) {
         options.onSuccess(data, variables, context);
       }
     },
-    invalidateQueries: [queryKeys.all],
     ...options,
   });
 
   return {
     ...mutation,
-    delete: mutation.mutate,
+    delete: (payload: any, callback?: any) => mutation.mutate(payload, callback),
   };
 }
 
 export function useMoveMenu(options: any) {
-  const mutation = useApiMutation(MenuManageApi.move, undefined, {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (payload: any) => MenuMangerService.moveMenu(payload),
     onSuccess: async (data, variables, context) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.all });
       if (options.onSuccess) {
         options.onSuccess(data, variables, context);
       }
     },
-    invalidateQueries: [queryKeys.all],
     ...options,
   });
   return {
     ...mutation,
-    move: mutation.mutate,
+    move: (payload: any, callback?: any) => mutation.mutate(payload, callback),
   };
 }
 

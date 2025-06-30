@@ -79,14 +79,24 @@ export default class LearningResourceService {
     });
   }
 
+  // 단건 HTML5 임시 컨텐츠 생성
+  static createHTML5Draft(params: {
+    tenantId: string;
+    tenantName: string;
+    channelUuid: string;
+    languageCountryCode: string;
+    fileUuid: string;
+  }) {
+    return httpService.post(`${CMSApiPrefix()}/html5/draft`, params);
+  }
   // HTML5 동영상 콘텐츠 관리
-  static updateHTML5FileChange(params: { contentUuid: string; fileUuid: string }): Promise<any> {
-    return httpService.put(`${CMSApiPrefix()}/html5/file/change`, params);
+  static updateHTML5FileChange(body: { contentUuid: string; fileUuid: string }): Promise<any> {
+    return httpService.put(`${CMSApiPrefix()}/html5/file/change`, body);
   }
 
   // HTML5 동영상 콘텐츠 리소스 조회
-  static fetchHTML5Resource(params: { contentUuid: string }) {
-    return httpService.put(`${CMSApiPrefix()}/html5/${params.contentUuid}/resource`, params);
+  static fetchHTML5Resource(contentUuid: string) {
+    return httpService.get(`${CMSApiPrefix()}/html5/${contentUuid}/resource`);
   }
 
   static fetchProgramGuideDownload() {

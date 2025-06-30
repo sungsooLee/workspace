@@ -9,6 +9,7 @@ export const queryKeys = {
   mappingCourses: ['mapping-courses'] as const,
   sharedHistories: ['shared-histories'] as const,
   programGuideDownload: ['program-guide-download'] as const,
+  html5Draft: ['html5-draft'] as const,
   html5FileChange: ['html5-file-change'] as const,
   html5Resource: ['html5-resource'] as const,
 };
@@ -71,6 +72,19 @@ export const learningResourceQueryOptions = {
     enabled: false,
   }),
 
+  createHTML5Draft: (params: {
+    tenantId: string;
+    tenantName: string;
+    channelUuid: string;
+    languageCountryCode: string;
+    fileUuid: string;
+  }) => ({
+    queryKey: queryKeys.html5Draft,
+    queryFn: () => LearningResourceService.createHTML5Draft(params),
+    cacheTime: 0,
+    staleTime: 0,
+    enabled: true,
+  }),
   updateHTML5FileChange: (params: { contentUuid: string; fileUuid: string }) => ({
     queryKey: queryKeys.html5FileChange,
     queryFn: () => LearningResourceService.updateHTML5FileChange(params),
@@ -78,9 +92,9 @@ export const learningResourceQueryOptions = {
     staleTime: 0,
     enabled: true,
   }),
-  getHTML5Resource: (params: { contentUuid: string }) => ({
+  getHTML5Resource: (contentUuid: string) => ({
     queryKey: queryKeys.html5Resource,
-    queryFn: () => LearningResourceService.fetchHTML5Resource(params),
+    queryFn: () => LearningResourceService.fetchHTML5Resource(contentUuid),
     cacheTime: 0,
     staleTime: 0,
     enabled: true,

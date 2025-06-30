@@ -9,7 +9,7 @@ export type com_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin = {
     tenantName?: string;
     tenantSite?: string;
     isSecurityPledge?: boolean;
-    fileStorageTypeChannel?: com_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin.fileStorageTypeChannel;
+    fileStorageTypeChannelList?: Array<'AWS_INTERNAL' | 'AWS_EXTERNAL' | 'HMG_CLOUD'>;
     fileStorageTypeBase?: com_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin.fileStorageTypeBase;
     isUsed?: boolean;
     tenantUserList?: Array<com_ever_edu_pms_tenant_dto_res_TenantResDto$UserResDto>;
@@ -20,11 +20,6 @@ export type com_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin = {
     modifiedDate?: string;
 };
 export namespace com_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin {
-    export enum fileStorageTypeChannel {
-        AWS_INTERNAL = 'AWS_INTERNAL',
-        AWS_EXTERNAL = 'AWS_EXTERNAL',
-        HMG_CLOUD = 'HMG_CLOUD',
-    }
     export enum fileStorageTypeBase {
         AWS_INTERNAL = 'AWS_INTERNAL',
         AWS_EXTERNAL = 'AWS_EXTERNAL',

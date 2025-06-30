@@ -4,6 +4,7 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import {
   Button,
+  Divider,
   ModalBody,
   ModalContainer,
   ModalFooter,
@@ -72,6 +73,7 @@ const UserShuttleComponent = () => {
       <ModalTitle>{t('유저조회')}</ModalTitle>
       <ModalBody>
         <SearchBox provider={sProvider} onSearch={handleOnSearch} />
+        <Divider />
         <ShuttleGridToGrid
           ref={ref}
           onSelectedChange={(data: any) => {
@@ -80,7 +82,7 @@ const UserShuttleComponent = () => {
           showNumberingColumn={false}
           gridData={gridData}
           columns={columns}
-          rowKey={'userId'}
+          rowKey={'uuid'}
           leftTitle={t('유저조회목록')}
           rightTitle={t('유저 선택')}
         />

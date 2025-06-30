@@ -49,6 +49,12 @@
     & + [class*='nlp--contents-row'] {
       @apply pt-[12px];
     }
+    &.title_mode {
+      @apply pb-[12px];
+      & + .row {
+        @apply !pt-0;
+      }
+    }
     &:has(label + div + p) {
       [class*='nlp--switch'] {
         @apply !translate-y-0;
@@ -63,6 +69,11 @@
   }
   & + [class*='title_wrap'] + .horizontal {
     @apply !pb-[12px];
+  }
+  [class*='nlp--contents-row-item'] {
+    & > div:nth-last-child(2) {
+      @apply pb-0;
+    }
   }
 }
 [class*='title_wrap'] + .row {

@@ -4,9 +4,9 @@
 /* eslint-disable */
 export type com_ever_edu_lms_course_dto_req_CourseSearchReqDto$SearchByAdminDto = {
     /**
-     * 채널id
+     * 채널 UUID
      */
-    channelId: number;
+    channelUuid: string;
     /**
      * 테넌트id
      */

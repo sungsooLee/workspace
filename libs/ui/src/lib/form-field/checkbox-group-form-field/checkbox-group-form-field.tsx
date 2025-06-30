@@ -35,9 +35,6 @@ const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, CheckboxGroup
     const { t } = useTranslation();
     const [allCheck, setAllCheck] = useState(false);
     const options = useFormOptions(initOptions, optionsConfig);
-    const disabledCheckBox = checkGroupConfig?.disabledCheckBox
-      ? checkGroupConfig?.disabledCheckBox
-      : [];
 
     /**
      * 개별 체크박스의 체크 상태가 변경될 때 호출되는 함수입니다.

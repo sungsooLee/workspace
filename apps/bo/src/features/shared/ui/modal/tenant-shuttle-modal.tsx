@@ -9,6 +9,7 @@ import {
   useModal,
   ShuttleGridToGrid,
   ShuttleGridToGridImperative,
+  Divider,
 } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
@@ -47,6 +48,8 @@ const TenantShuttleModalComponent = forwardRef((_) => {
           type: 'dropdown',
           label: t('회사'),
           value: '',
+          format: 'object',
+          presetOptionLabel: t('LABEL.form.label.all'),
           optionsConfig: {
             codeGroup: CODE_GROUP['manual.company.companyCode'],
           },
@@ -143,6 +146,7 @@ const TenantShuttleModalComponent = forwardRef((_) => {
       <ModalBody>
         <div className={popupStyles.wrap}>
           <SearchBox provider={sProvider} onSearch={handleOnSearch} />
+          <Divider />
           <ShuttleGridToGrid
             ref={ref}
             onSelectedChange={(data: any) => {

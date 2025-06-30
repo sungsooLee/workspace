@@ -2,6 +2,8 @@ import { useEffect, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCodeStore } from '../use-code-store/use-code-store';
 import { OptionsConfig, SelectOption } from './type';
+import { CODE_GROUP } from '../use-code-store/constants';
+import { getMockOption } from '@learnway/shared';
 
 /**
  * Form 에서 CodeGroup에 대한 로딩을 위한 커스텀 훅
@@ -59,13 +61,14 @@ const useFormOptionsHook = (
    * @returns 코드 그룹에서 가져온 옵션 배열
    */
   const getCodeGroupOptions = async (codeGroup: string): Promise<SelectOption[]> => {
-    // test code group
-    if (codeGroup === 'test') {
-      return [
-        { label: 'test1', value: 'test1' },
-        { label: 'test2', value: 'test2' },
-        { label: 'test3', value: 'test3' },
-      ];
+    // mock code group
+    if (
+      ['test', CODE_GROUP['mock.options.use'], CODE_GROUP['mock.options.possible']].includes(
+        codeGroup,
+      )
+    ) {
+      const mockOptions = getMockOption(codeGroup);
+      return applyFieldMapping(mockOptions);
     }
 
     // optionsConfig > options 에 등록된 값은 조회와 상관없이 앞에 선언 됩니다.
@@ -82,10 +85,13 @@ const useFormOptionsHook = (
    * @returns API에서 가져온 옵션 배열
    */
   const getApiOptions = async (api: OptionsConfig['api']): Promise<SelectOption[]> => {
-    if (!api) return [];
-    const { fn, params } = api;
-    const apiOptions = await fn(params);
-    return applyFieldMapping(apiOptions);
+    if (!api || api.enabled === false) {
+      return [];
+    }
+    const { fn, select } = api;
+    const apiOptions = await fn();
+    const newOptions = select ? select(apiOptions) : apiOptions;
+    return applyFieldMapping(newOptions);
   };
 
   /**

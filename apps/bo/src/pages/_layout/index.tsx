@@ -148,7 +148,7 @@ export const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: 'GNB, LNB, 알람, My 메뉴', // 비고
-    end: false,
+    end: true,
   },
   {
     screenName: '로그인',
@@ -156,8 +156,8 @@ export const munu = [
     screenId: 'NLP_BO_LOG_1000',
     pageType: 'Page',
     completionDate: '-',
-    memo: '회원,회사,역할,로그인프로세스 정의필요', // 비고
-    end: false,
+    memo: '', // 비고
+    end: true,
   },
   {
     screenName: '회원가입 진행현황',
@@ -184,7 +184,7 @@ export const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업중 apiX', // 비고
-    end: false,
+    end: true,
   },
   {
     screenName: '나의 권한',
@@ -193,7 +193,7 @@ export const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업중 apiX', // 비고
-    end: false,
+    end: true,
   },
   {
     screenName: '나의 권한 상세',
@@ -417,6 +417,12 @@ export const munu = [
 
 export const guide = [
   {
+    screenName: '폼 샘플',
+    pageId: 'sample/form-filed-sample',
+    pageType: 'Page',
+    memo: '', // 비고
+  },
+  {
     screenName: '폼타입3',
     pageId: 'menu/type3',
     pageType: 'Page',
@@ -436,7 +442,7 @@ export const guide = [
   },
   {
     screenName: '폼타입6',
-    pageId: 'menu/type6',
+    pageId: '/menu/type6',
     pageType: 'Page',
     memo: '', // 비고
   },

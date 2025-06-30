@@ -3,7 +3,7 @@
   &.container {
     @apply border-[1px] border-solid border-[var(--gray4)];
     .inner {
-      @apply relative m-auto w-[1180px];
+      @apply relative m-auto w-[1440px] px-[40px];
     }
     .breadcrums {
       @apply flex h-[46px] items-center bg-[var(--gray1)];

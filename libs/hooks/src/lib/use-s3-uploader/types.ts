@@ -1,5 +1,11 @@
 export interface S3UploaderConfig {
   s3Path: string;
+  groupConfig?: {
+    affairsType: 'PMS' | 'CMS' | 'LMS';
+    languageCode?: string; // 기본값: 'ko'
+    groupUuid?: string; // 기존 그룹 UUID (전달받은 경우 사용)
+  };
+  groupMode?: 'individual' | 'batch'; // 파일 그룹 생성 방식: 개별 생성 | 배치 생성
   auto?: boolean; // 자동 업로드 여부 기본 true
   async?: boolean; // 병렬 업로드 여부 기본 true
   multipartThreshold?: number; // 멀티파트 업로드 기준 사이즈
@@ -8,18 +14,24 @@ export interface S3UploaderConfig {
   maxFileSize?: number; // 단일 파일 허용 용량 (단위: 바이트)
 }
 export type UploadStatus =
-  | 'validating'
-  | 'idle'
-  | 'uploading'
-  | 'paused'
-  | 'completed'
-  | 'failed'
-  | 'aborted'
-  | 'validating-error';
+  | 'validating' // 파일 검증 중
+  | 'grouping' // 그룹 생성 중
+  | 'idle' // 업로드 대기
+  | 'uploading' // 업로드 중
+  | 'paused' // 업로드 일시정지
+  | 'completed' // 업로드 완료
+  | 'failed' // 업로드 실패
+  | 'aborted' // 업로드 중단
+  | 'validating-error'; // 파일 검증 실패
 
 export interface UploadPart {
   ETag: string;
   PartNumber: number;
+}
+
+export enum UploadType {
+  SINGLE_PART = 'S3_SINGLEPART',
+  MULTI_PART = 'S3_MULTIPART',
 }
 
 // AbortController
@@ -27,7 +39,7 @@ export interface UploadPart {
 export interface UploadFile {
   id: string; // 파일 아이디
   file: File; // 파일
-  uploadType: 'multi-part' | 'single-part';
+  uploadType: UploadType;
   extension: string; // 확장자
   s3FileName: string; // s3 업로드 할 파일명
   fileName: string; // 실제 원본 파일명
@@ -36,6 +48,8 @@ export interface UploadFile {
   progress: number; // 업로드 Progress
   status: UploadStatus; // 파일 상태
   uploadId?: string; // 업로드 아이디
+  fileUuid?: string; // 파일 UUID (임시 저장 후 받는 ID)
+  groupUuid?: string; // 그룹 UUID (그룹 생성 후 받는 ID)
   key: string; // S3 업로드 KEY
   parts: UploadPart[]; // 멀티 part 시 사용
   contentType?: string;
@@ -74,7 +88,7 @@ export type InitMultiPartUploadRes = {
 /**
  * Part 별 Presigend URL 요청 req
  */
-export type PartPresigendReq = {
+export type PartPresignedReq = {
   uploadId: string; // 업로드 아이디
   partNumber: number; // 발급 받을 PartNumber
   key: string; // 파일명 경로 + 파일명
@@ -124,4 +138,40 @@ export type MultiFilePartRes = {
       ETag: string;
     },
   ];
+};
+
+/**
+ * 파일 정보 임시 저장 요청
+ */
+export type SaveTempFileInfoReq = {
+  detailPath: string;
+  files: Array<{
+    s3UploadType: UploadType;
+    originalFileName: string;
+    serverFileName: string;
+    fileSize: number;
+  }>;
+};
+
+/**
+ * 파일 정보 임시 저장 응답
+ */
+export type SaveTempFileInfoRes = {
+  fileUuid: string;
+  uploadId?: string;
+  s3Key?: string;
+  files?: Array<{
+    fileUuid: string;
+    uploadId?: string;
+    s3Key?: string;
+  }>;
+};
+
+/**
+ * 파일 업로드 완료 요청
+ */
+export type CompleteFileUploadReq = {
+  key: string;
+  uploadId: string;
+  parts: UploadPart[];
 };

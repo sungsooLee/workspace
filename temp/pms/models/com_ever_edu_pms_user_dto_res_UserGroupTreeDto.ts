@@ -9,6 +9,5 @@ export type com_ever_edu_pms_user_dto_res_UserGroupTreeDto = {
     fullName?: string;
     children?: Array<com_ever_edu_pms_user_dto_res_UserGroupTreeDto>;
     userCount?: number;
-    userUuids?: Array<string>;
 };
 

@@ -4,7 +4,7 @@ import { useCreation } from 'ahooks';
 import AsyncSelect from 'react-select/async';
 import { map } from 'lodash';
 
-import { IcoDelete03 } from '@learnway/icons';
+import { IcoDelete03, IcoArrowDown } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 
 import { DropdownOption } from '../type';
@@ -28,6 +28,15 @@ export interface AutoCompleteDropdownComponentProps
   onChange?: (newValue?: any, actionMeta?: ActionMeta<any>) => void;
 }
 
+// 화살표
+const dropdownIndicator = (props: any) => {
+  return (
+    <components.DropdownIndicator {...props}>
+      <IcoArrowDown width={16} height={16} stroke="#131C30" className={styles.icon_arrow} />
+    </components.DropdownIndicator>
+  );
+};
+
 // clear 버튼
 const clearIndicator = (props: any) => {
   return (
@@ -36,6 +45,24 @@ const clearIndicator = (props: any) => {
         <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
       </Button>
     </components.ClearIndicator>
+  );
+};
+
+const MenuPortal = (props: any) => {
+  const variant = props.selectProps?.['data-variant'] || 'default';
+  const size = props.selectProps?.['data-size'] || 'default';
+  const optionsCount = props.options.length;
+
+  const className = cn(
+    'menu-portal',
+    variant && `menu-portal-variant-${variant}`, // 퍼블에서 필요 ex) menu-portal-chip, menu-portal-text
+    size && `menu-portal-size-${size}`, // 퍼블에서 필요 ex) menu-portal-chip, menu-portal-text
+    optionsCount >= 10 && 'menu-portal-large', // 옵션이 10개 이상이면 사이즈가 커야됨. 스타일 추가 필요.
+  );
+  return (
+    <components.MenuPortal {...props}>
+      <div className={className}>{props.children}</div>
+    </components.MenuPortal>
   );
 };
 
@@ -95,6 +122,7 @@ const PrimitiveComponent = forwardRef<any, PrimitiveComponentProps>(
 
     const customProps = {
       'data-variant': variant,
+      'data-size': size,
       ...props,
     };
 
@@ -120,7 +148,9 @@ const PrimitiveComponent = forwardRef<any, PrimitiveComponentProps>(
           defaultOptions={defaultOptions}
           cacheOptions={cacheOptions}
           components={{
+            DropdownIndicator: dropdownIndicator,
             ClearIndicator: clearIndicator,
+            MenuPortal,
           }}
           noOptionsMessage={messageCallbacks.noOptionsMessage}
           loadingMessage={messageCallbacks.loadingMessage}

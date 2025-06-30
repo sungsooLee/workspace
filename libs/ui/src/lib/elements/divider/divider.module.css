@@ -19,5 +19,8 @@ form {
     &.horizontal {
       @apply mt-[8px];
     }
+    & + [class*='table_box'] {
+      @apply mt-[16px];
+    }
   }
 }
