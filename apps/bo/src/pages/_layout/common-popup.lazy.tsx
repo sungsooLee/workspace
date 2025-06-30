@@ -578,11 +578,7 @@ function RouteComponent() {
                   e.stopPropagation();
                   openModal({
                     width: 'xl',
-                    content: (
-                      <TrainingPlaceChoiceModal
-                        onAddClick={() => handleTrainingPlaceDetail(EnFormMode.ADD)}
-                      />
-                    ),
+                    content: <TrainingPlaceChoiceModal />,
                     onClose(data: any) {
                       console.log('교육공간 선택 결과', data);
                     },
