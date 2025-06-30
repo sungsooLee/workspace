@@ -17,7 +17,10 @@ import { FormRow, FormSubTitle } from '@shared/ui';
 import { t } from 'i18next';
 import { FC, useEffect, useMemo } from 'react';
 import { formUtils } from '@entities/form-utils';
-import { useGetRoleApplication, useRoleApplication } from '@entities/role/service/role-manage.hook';
+import {
+  useGetMyRoleApplication,
+  useCreateMyRoleApplication,
+} from '@entities/role/service/role-manage.hook';
 import { DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
 
 import dayjs from 'dayjs';
@@ -34,8 +37,8 @@ const MyRoleExtendModalComponent: FC<{
   const { close: closeModal } = useModal();
   const { provider, fetchData, onSubmit, onFormChange } = useDynamicForm(formConfig);
 
-  const { data: viewData } = useGetRoleApplication(data?.roleApplicationId ?? undefined);
-  const { createRoleApplication } = useRoleApplication({});
+  const { data: viewData } = useGetMyRoleApplication(data?.roleApplicationId ?? undefined);
+  const { createRoleApplication } = useCreateMyRoleApplication({});
 
   const isApprovelInfoUse = useMemo(() => {
     if (!viewData) return false;

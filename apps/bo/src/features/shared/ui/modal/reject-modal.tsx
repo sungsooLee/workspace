@@ -15,7 +15,7 @@ import { FormRow } from '@shared/ui';
 
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 
-const ChannelRejectModalComponent: FC<any> = () => {
+const RejectModalComponent: FC<any> = () => {
   const { close } = useModal();
   const { provider, onSubmit } = useDynamicForm(formConfig);
 
@@ -48,7 +48,7 @@ const ChannelRejectModalComponent: FC<any> = () => {
   );
 };
 
-export const ChannelRejectModal = ChannelRejectModalComponent;
+export const RejectModal = RejectModalComponent;
 
 const formConfig: DynamicFormConfig = {
   builders: [
@@ -57,7 +57,7 @@ const formConfig: DynamicFormConfig = {
       type: 'textarea',
       label: t('반려 사유'),
       value: '',
-      placeholder: '반려 시 반려 사유를 반드시 입력해 주세요.',
+      placeholder: t('반려 시 반려 사유를 반드시 입력해 주세요.'),
       maxLength: 150,
     },
   ],

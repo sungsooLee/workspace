@@ -146,7 +146,7 @@ export default class RoleManagerService {
    * @param siteScope (FO/BO)
    * @returns
    */
-  static fetchRoleMe(siteScope: string) {
+  static fetchMyRoles(siteScope: string) {
     return httpService.get<any>(`${PMSApiPrefix()}/roles/me`, {
       siteScope,
     });
@@ -156,7 +156,7 @@ export default class RoleManagerService {
    * 나의 역할 신청 목록 조회
    * @returns
    */
-  static fetchRoleApplicationList(payload: any) {
+  static fetchMyRoleApplications(payload: any) {
     return httpService.get<any>(`${PMSApiPrefix()}/role-applications/me`, payload);
   }
 
@@ -165,7 +165,7 @@ export default class RoleManagerService {
    * @roleApplicationId 신청 아이디
    * @returns
    */
-  static fetchRoleApplication(roleApplicationId: number) {
+  static fetchMyRoleApplication(roleApplicationId: number) {
     return httpService.get<any>(`${PMSApiPrefix()}/role-applications/${roleApplicationId}`);
   }
 
@@ -173,8 +173,34 @@ export default class RoleManagerService {
    * @description 나의 역할 신청 조회 (단건) userUuid, roleId, startDate, endDate, reason, status
    * @returns
    */
-  static createRoleApplication(payload: any) {
+  static createMyRoleApplication(payload: any) {
     return httpService.post<any>(`${PMSApiPrefix()}/role-applications`, payload);
+  }
+
+  /**
+   * 역할 신청 목록 조회
+   * @param params
+   */
+  static fetchRoleApplications(params: any) {
+    return httpService.get<any>(`${PMSApiPrefix()}/role-applications`, params);
+  }
+
+  /**
+   * 역할 신청 승인/반려
+   * @param payload
+   * @returns
+   */
+  static approveRoleApplication(payload: any) {
+    return httpService.post<any>(`${PMSApiPrefix()}/role-applications/approve`, payload);
+  }
+
+  /**
+   * 역할 신청 이력 조회
+   * @param id
+   * @returns
+   */
+  static fetchRoleApplicationHistories(id: number) {
+    return httpService.get<any>(`${PMSApiPrefix()}/role-applications/histories`);
   }
 }
 

@@ -1,4 +1,4 @@
-import React, { useRef, useImperativeHandle, forwardRef, useEffect } from 'react';
+import React, { useRef, useImperativeHandle, forwardRef, useEffect, useState } from 'react';
 import { t } from 'i18next';
 import { useRouter } from '@tanstack/react-router';
 import { useModal, ContentsRow, TextareaFormField, Input, RadioGroupFormField } from '@learnway/ui';
@@ -10,6 +10,7 @@ import { AddressSearchModal } from '@features/shared/ui/modal/address-search-mod
 import { DropdownFormField, InputFormField } from '@features/form';
 import { useFetchSpace, useCreateSpace } from '@entities/training-place';
 import { EnFormMode, EnPageMode } from '@types';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 import SpaceService from '@entities/training-place/api/space';
 
 const URL_REGEX =
@@ -18,18 +19,170 @@ const URL_REGEX =
 const TrainingPlaceDetailComponent = (props: any, ref: any) => {
   const router = useRouter();
   const { open: openModal, alert: openAlert, confirm: openConfirm, close: closeModal } = useModal();
-  const { provider, fetchData, onSubmit, onFormChange, getValues, control } =
-    useDynamicForm(formConfig);
 
-  const { data: detailData, refetch } = useFetchSpace(props.uuid);
+  const [tenantIdOptions, setTenantIdOptions] = useState<any[]>([]);
+
+  const formConfig: DynamicFormConfig = {
+    builders: [
+      {
+        name: 'tenantId',
+        type: 'dropdown',
+        format: 'object',
+        label: t('테넌트'),
+        value: '',
+        presetOptionLabel: t('선택'),
+        options: tenantIdOptions,
+      },
+      {
+        name: 'onOffLineType',
+        type: 'radio-group',
+        label: t('교육공간 타입'),
+        value: 'ONLINE',
+        optionsConfig: {
+          codeGroup: CODE_GROUP['lms.space.OnOffLineType'],
+        },
+      },
+      {
+        name: 'learningSpaceCode',
+        type: 'custom',
+        label: t('교육공간 코드'),
+        value: { fieldValue: '', checkState: DuplicateState.needInput },
+        format: 'object',
+        placeholder: '',
+        maxlength: 20,
+      },
+      {
+        name: 'learningSpaceName',
+        type: 'text',
+        label: t('교육공간명'),
+        value: '',
+        placeholder: '',
+        maxLength: 40,
+      },
+      {
+        name: 'postalCode',
+        type: 'hidden',
+        value: '',
+      },
+      {
+        name: 'isUsed',
+        type: 'radio-group',
+        label: t('사용 여부'),
+        value: true,
+        format: 'boolean',
+        options: [
+          { value: true, label: t('사용') },
+          { value: false, label: t('미사용') },
+        ],
+      },
+      {
+        name: 'linkUrl',
+        type: 'text',
+        label: t('링크주소'),
+        value: '',
+        placeholder: t('http://를 포함한 전체 URL을 입력하세요.'),
+      },
+      {
+        name: 'address',
+        type: 'text',
+        label: t('주소'),
+        value: '',
+        placeholder: '',
+      },
+      {
+        name: 'addressDetail',
+        type: 'text',
+        label: t('상세 주소'),
+        value: '',
+        placeholder: '',
+        maxLength: 50,
+      },
+      {
+        name: 'mapFileGroupUuid',
+        type: 'text',
+        label: t('약도 파일'),
+        value: '',
+        placeholder: '',
+      },
+      {
+        name: 'notes',
+        type: 'textarea',
+        label: t('메모'),
+        value: '',
+        placeholder: '',
+        maxLength: 500,
+      },
+    ],
+    validator: {
+      tenantId: true,
+      onOffLineType: true,
+      learningSpaceName: true,
+      learningSpaceCode: {
+        format: 'object',
+        required: true,
+        conditions: [
+          {
+            fn: (values) => {
+              const fieldValue = values.learningSpaceCode.fieldValue;
+              if (fieldValue === '') return true;
+              return false;
+            },
+            message: t('LABEL.form.validation.needInput', { code: t('교육공간 코드') }),
+          },
+          {
+            fn: (values: Record<string, any>) =>
+              values.learningSpaceCode.checkState === DuplicateState.check ||
+              values.learningSpaceCode.checkState === DuplicateState.needInput,
+            message: t('LABEL.form.validation.check', { code: t('교육공간 코드') }),
+          },
+          {
+            fn: (values: Record<string, any>) =>
+              values.learningSpaceCode.checkState === DuplicateState.duplicated,
+            message: t('LABEL.form.validation.duplicated', { code: t('교육공간 코드') }),
+          },
+        ],
+      },
+      isUsed: true,
+      linkUrl: {
+        required: (values) => values.onOffLineType === 'ONLINE',
+        conditions: [
+          {
+            fn: (values) => {
+              if (values.linkUrl.trim().length === 0) return false;
+              const pattern = new RegExp(URL_REGEX, 'i');
+              return !pattern.test(values.linkUrl.trim());
+            },
+            message: t('URL 형식에 맞게 입력해 주세요.'),
+          },
+        ],
+      },
+    },
+  };
+
+  const { provider, fetchData, onSubmit, onFormChange, getValues, setValue, control } =
+    useDynamicForm(formConfig);
+  const { data: loginUser } = useFetchAuthUser();
+
+  const { data: detailData, refetch } = useFetchSpace(props.spaceId);
 
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
+    if (!loginUser) return;
+
+    const tenantIdOptions = loginUser.tenants.map((tenant) => ({
+      value: tenant.tenantId,
+      label: tenant.tenantName,
+    }));
+    setTenantIdOptions(tenantIdOptions);
+    if (loginUser.activeTenant) setValue('tenantId', loginUser.activeTenant.tenantId ?? '');
+  }, [loginUser]);
+
+  useEffect(() => {
     if (props.mode === EnFormMode.VIEW && detailData) {
+      console.log('### detailData', detailData);
       const initialData = {
         ...detailData,
-        tenantId: detailData.tenants[0].tenantId,
         learningSpaceCode: {
           fieldValue: detailData.learningSpaceCode,
           checkState: DuplicateState.okStart,
@@ -204,142 +357,3 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
 };
 
 export const TrainingPlaceDetail = forwardRef(TrainingPlaceDetailComponent);
-
-const formConfig: DynamicFormConfig = {
-  builders: [
-    {
-      name: 'tenantId',
-      type: 'dropdown',
-      format: 'number',
-      label: t('테넌트'),
-      value: '',
-      presetOptionLabel: t('선택'),
-      optionsConfig: {
-        codeGroup: CODE_GROUP['manual.tenant.tenantId'],
-      },
-    },
-    {
-      name: 'onOffLineType',
-      type: 'radio-group',
-      label: t('교육공간 타입'),
-      value: 'ONLINE',
-      optionsConfig: {
-        codeGroup: CODE_GROUP['lms.space.OnOffLineType'],
-      },
-    },
-    {
-      name: 'learningSpaceCode',
-      type: 'custom',
-      label: t('교육공간 코드'),
-      value: { fieldValue: '', checkState: DuplicateState.needInput },
-      format: 'object',
-      placeholder: '',
-      maxlength: 20,
-    },
-    {
-      name: 'learningSpaceName',
-      type: 'text',
-      label: t('교육공간명'),
-      value: '',
-      placeholder: '',
-      maxLength: 40,
-    },
-    {
-      name: 'postalCode',
-      type: 'hidden',
-      value: '',
-    },
-    {
-      name: 'isUsed',
-      type: 'radio-group',
-      label: t('사용 여부'),
-      value: true,
-      format: 'boolean',
-      options: [
-        { value: true, label: t('사용') },
-        { value: false, label: t('미사용') },
-      ],
-    },
-    {
-      name: 'linkUrl',
-      type: 'text',
-      label: t('링크주소'),
-      value: '',
-      placeholder: t('http://를 포함한 전체 URL을 입력하세요.'),
-    },
-    {
-      name: 'address',
-      type: 'text',
-      label: t('주소'),
-      value: '',
-      placeholder: '',
-    },
-    {
-      name: 'addressDetail',
-      type: 'text',
-      label: t('상세 주소'),
-      value: '',
-      placeholder: '',
-      maxLength: 50,
-    },
-    {
-      name: 'mapFileGroupUuid',
-      type: 'text',
-      label: t('약도 파일'),
-      value: '',
-      placeholder: '',
-    },
-    {
-      name: 'notes',
-      type: 'textarea',
-      label: t('메모'),
-      value: '',
-      placeholder: '',
-      maxLength: 500,
-    },
-  ],
-  validator: {
-    tenantId: true,
-    onOffLineType: true,
-    learningSpaceName: true,
-    learningSpaceCode: {
-      format: 'object',
-      required: true,
-      conditions: [
-        {
-          fn: (values) => {
-            const fieldValue = values.learningSpaceCode.fieldValue;
-            if (fieldValue === '') return true;
-            return false;
-          },
-          message: t('LABEL.form.validation.needInput', { code: t('교육공간 코드') }),
-        },
-        {
-          fn: (values: Record<string, any>) =>
-            values.learningSpaceCode.checkState === DuplicateState.check ||
-            values.learningSpaceCode.checkState === DuplicateState.needInput,
-          message: t('LABEL.form.validation.check', { code: t('교육공간 코드') }),
-        },
-        {
-          fn: (values: Record<string, any>) =>
-            values.learningSpaceCode.checkState === DuplicateState.duplicated,
-          message: t('LABEL.form.validation.duplicated', { code: t('교육공간 코드') }),
-        },
-      ],
-    },
-    isUsed: true,
-    linkUrl: {
-      required: (values) => values.onOffLineType === 'ONLINE',
-      conditions: [
-        {
-          fn: (values) => {
-            if (values.linkUrl.trim().length === 0) return false;
-            const pattern = new RegExp(URL_REGEX, 'i');
-            return !pattern.test(values.linkUrl.trim());
-          },
-          message: t('URL 형식에 맞게 입력해 주세요.'),
-        },
-      ],
-    },
-  },
-};
