@@ -159,6 +159,7 @@ const columns = [
     meta: {
       filterType: 'text',
       align: 'left', // 기본 정렬 - 헤더와 셀 모두 적용
+      size: 'auto',
     },
     enableGrouping: false,
   }),
@@ -180,6 +181,19 @@ const columns = [
     enableGrouping: false,
   }),
 
+  // columnHelper.accessor('visits', {
+  //   cell: (info) => info.getValue(),
+  //   header: 'Visits',
+  //   footer: (props) => {
+  //     const total = props.table
+  //       .getRowModel()
+  //       .rows.reduce((sum, row) => sum + row.getValue<number>('visits'), 0);
+  //     return `Total: ${total}`;
+  //   },
+  //   meta: {
+  //     filterType: 'range',
+  //   },
+  // }),
   columnHelper.accessor('visits', {
     cell: (info) => info.getValue(),
     header: 'Visits',
@@ -193,55 +207,42 @@ const columns = [
       filterType: 'range',
     },
   }),
-  columnHelper.accessor('visits', {
-    cell: (info) => info.getValue(),
-    header: 'Visits',
-    footer: (props) => {
-      const total = props.table
-        .getRowModel()
-        .rows.reduce((sum, row) => sum + row.getValue<number>('visits'), 0);
-      return `Total: ${total}`;
-    },
-    meta: {
-      filterType: 'range',
-    },
-  }),
-  columnHelper.accessor('status', {
-    cell: (info) => info.getValue(),
-    header: 'Status',
-    getGroupingValue: (row) => `${row.status}`,
-    enableGrouping: true,
-    aggregationFn: 'count',
-    meta: {
-      filterType: 'select',
-      filterOptions: [
-        { label: '활성', value: 'active' },
-        { label: '비활성', value: 'inactive' },
-      ],
-    },
-  }),
-  columnHelper.accessor('progress', {
-    cell: (info) => info.getValue(),
-    header: 'Progress',
-    meta: {
-      filterType: 'range',
-    },
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('preview', {
-    cell: (info) => info.getValue(),
-    header: '미리보기',
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('download', {
-    cell: (info) => info.getValue(),
-    header: 'download',
-    enableGrouping: false,
-    meta: {
-      headerAlign: 'left', // 헤더만 가운데 정렬
-      cellAlign: 'center', // 셀은 오른쪽 정렬
-    },
-  }),
+  // columnHelper.accessor('status', {
+  //   cell: (info) => info.getValue(),
+  //   header: 'Status',
+  //   getGroupingValue: (row) => `${row.status}`,
+  //   enableGrouping: true,
+  //   aggregationFn: 'count',
+  //   meta: {
+  //     filterType: 'select',
+  //     filterOptions: [
+  //       { label: '활성', value: 'active' },
+  //       { label: '비활성', value: 'inactive' },
+  //     ],
+  //   },
+  // }),
+  // columnHelper.accessor('progress', {
+  //   cell: (info) => info.getValue(),
+  //   header: 'Progress',
+  //   meta: {
+  //     filterType: 'range',
+  //   },
+  //   enableGrouping: false,
+  // }),
+  // columnHelper.accessor('preview', {
+  //   cell: (info) => info.getValue(),
+  //   header: '미리보기',
+  //   enableGrouping: false,
+  // }),
+  // columnHelper.accessor('download', {
+  //   cell: (info) => info.getValue(),
+  //   header: 'download',
+  //   enableGrouping: false,
+  //   meta: {
+  //     headerAlign: 'left', // 헤더만 가운데 정렬
+  //     cellAlign: 'center', // 셀은 오른쪽 정렬
+  //   },
+  // }),
 ];
 
 const BaseTable = () => {
@@ -824,19 +825,19 @@ export const TemplateColumnAlign: any = (args: any) => {
       meta: { headerAlign: 'left' },
       columns: [
         {
-          accessorKey: 'name',
+          accessorKey: 'name1',
           header: 'Cell left',
           size: 100,
           meta: { headerAlign: 'left', cellAlign: 'left' },
         },
         {
-          accessorKey: 'name',
+          accessorKey: 'name2',
           header: 'Cell center',
           size: 100,
           meta: { headerAlign: 'center', cellAlign: 'center' },
         },
         {
-          accessorKey: 'name',
+          accessorKey: 'name3',
           header: 'Cell right',
           size: 100,
           meta: { headerAlign: 'right', cellAlign: 'right' },
@@ -844,25 +845,25 @@ export const TemplateColumnAlign: any = (args: any) => {
       ],
     },
     {
-      accessorKey: 'name',
+      accessorKey: 'name4',
       header: 'Header center',
       size: 100,
       meta: { headerAlign: 'center' },
       columns: [
         {
-          accessorKey: 'name',
+          accessorKey: 'name5',
           header: 'Cell left',
           size: 100,
           meta: { headerAlign: 'left', cellAlign: 'left' },
         },
         {
-          accessorKey: 'name',
+          accessorKey: 'name6',
           header: 'Cell center',
           size: 100,
           meta: { headerAlign: 'center', cellAlign: 'center' },
         },
         {
-          accessorKey: 'name',
+          accessorKey: 'name7',
           header: 'Cell right',
           size: 100,
           meta: { headerAlign: 'right', cellAlign: 'right' },
@@ -870,25 +871,25 @@ export const TemplateColumnAlign: any = (args: any) => {
       ],
     },
     {
-      accessorKey: 'name',
+      accessorKey: 'name8',
       header: 'Header right',
       size: 100,
       meta: { headerAlign: 'right' },
       columns: [
         {
-          accessorKey: 'name',
+          accessorKey: 'name9',
           header: 'Cell left',
           size: 100,
           meta: { headerAlign: 'left', cellAlign: 'left' },
         },
         {
-          accessorKey: 'name',
+          accessorKey: 'name10',
           header: 'Cell center',
           size: 100,
           meta: { headerAlign: 'center', cellAlign: 'center' },
         },
         {
-          accessorKey: 'name',
+          accessorKey: 'name11',
           header: 'Cell right',
           size: 100,
           meta: { headerAlign: 'right', cellAlign: 'right' },

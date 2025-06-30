@@ -30,7 +30,9 @@ export const GridHeader = <T extends object>({ table, lastPinnedColumnId }: Grid
             );
 
             const thStyle = {
-              width: columnDef.meta?.size || header.getSize(),
+              width: columnDef.meta?.size || `${header.getSize()}px`, // px 단위로 명시
+              minWidth: `${header.getSize()}px`,
+              maxWidth: `${header.getSize()}px`,
               position: isPinnedLeft && styles.th_sticky,
               left: isPinnedLeft ? `${column.getStart('left')}px` : undefined,
               // zIndex: isPinnedLeft ? 3 : undefined, // 헤더는 더 높은 z-index
@@ -50,10 +52,19 @@ export const GridHeader = <T extends object>({ table, lastPinnedColumnId }: Grid
                 style={thStyle}
                 onClick={column.getToggleSortingHandler()}
               >
-                {/* render */}
-                {header.isPlaceholder ? null : flexRender(columnDef.header, header.getContext())}
-                {/* sort */}
-                {column.getCanSort() && <SortIcon direction={column.getIsSorted()} />}
+                <div className={styles.th_content}>
+                  {/* render */}
+                  {header.isPlaceholder ? null : flexRender(columnDef.header, header.getContext())}
+                  {/* sort */}
+                  {column.getCanSort() && <SortIcon direction={column.getIsSorted()} />}
+                </div>
+                {column.getCanResize() && (
+                  <div
+                    onMouseDown={header.getResizeHandler()}
+                    onTouchStart={header.getResizeHandler()}
+                    className={cn(styles.resizer, column.getIsResizing() && styles.resizing)}
+                  />
+                )}
               </th>
             );
           })}

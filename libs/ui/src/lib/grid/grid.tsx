@@ -1,4 +1,12 @@
-import React, { CSSProperties, forwardRef, useImperativeHandle, useMemo, useRef } from 'react';
+import React, {
+  CSSProperties,
+  forwardRef,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+  useEffect,
+} from 'react';
 import { cn } from '@learnway/shared';
 import { useTranslation } from 'react-i18next';
 
@@ -143,14 +151,15 @@ const GridComponent = forwardRef(
       [visibleRowCount, rowHeight, table, data?.length],
     );
 
-    const tableStyle = useMemo(
-      () =>
-        ({
-          width: '100%',
-          tableLayout: 'fixed',
-        }) as CSSProperties,
-      [],
-    );
+    const tableStyle = useMemo(() => {
+      const totalSize = table.getCenterTotalSize();
+
+      return {
+        width: totalSize,
+        tableLayout: 'auto', // auto로 변경하여 개별 컬럼만 리사이즈되도록
+        // minWidth: '100%', // 최소 너비는 100%로 설정
+      } as CSSProperties;
+    }, [table]);
 
     // console.log('grid.tsx', { data });
 

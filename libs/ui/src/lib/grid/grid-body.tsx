@@ -77,7 +77,7 @@ export const GridCell = <T extends object>({ row, cell, lastPinnedColumnId }: Gr
         cell.getIsPlaceholder()
         ? '#ff000042'
         : '',
-    width: cell.column.getSize(),
+    width: `${cell.column.getSize()}px`,
     // position: isPinnedLeft && styles.td_sticky,
     textAlign: cell.column.columnDef.meta?.cellAlign || 'left',
     position: isPinnedLeft ? 'sticky' : undefined,
