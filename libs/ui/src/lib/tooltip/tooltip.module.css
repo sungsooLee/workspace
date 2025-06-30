@@ -168,7 +168,7 @@
         }
       }
       &[data-align='center'] {
-        @apply translate-y-[2px];
+        @apply translate-y-[0];
         .arrow {
           @apply right-0 top-1/2 -mr-[10px] -mt-[4px] rotate-[270deg];
         }
