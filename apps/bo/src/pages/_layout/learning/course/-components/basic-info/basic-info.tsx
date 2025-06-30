@@ -133,7 +133,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'categoryIds'}
+            name={'categories'}
             label={'카테고리'}
             value={[]}
             element={
@@ -156,7 +156,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'whiteListIds'}
+            name={'whiteList'}
             label={'학습대상'}
             element={
               <ChipListModalSelectorFormField
