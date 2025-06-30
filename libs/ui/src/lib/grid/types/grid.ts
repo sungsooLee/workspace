@@ -359,3 +359,17 @@ export interface GridImperative {
    */
   toggleAllRowsSelected: (selected: boolean) => void;
 }
+
+/**
+ * 데이터 없을 때 표시할 메세지
+ */
+export interface GridEmptyMessageProps {
+  emptyMessage?: string;
+}
+
+/**
+ * 데이터 로딩 중 표시할 메세지
+ */
+export interface GridLoadingProps<T> {
+  table: Table<T>;
+}
