@@ -33,12 +33,12 @@ const CheckboxComponent = forwardRef<
   const { t } = useTranslation();
   const uuid = getRandomId();
   return (
-    <div className={cn(styles.start, 'nlp--checkbox', className)}>
+    <div className={cn(styles.start, 'nlp--checkbox', size, className)}>
       <Primitive.Root
         {...props}
         id={uuid}
         ref={ref}
-        className={cn(styles.checkbox_root, size && styles[size], variant && styles[variant])}
+        className={cn(styles.checkbox_root, size && styles[size], size, variant && styles[variant])}
         disabled={disabled}
         type={'button'}
       >

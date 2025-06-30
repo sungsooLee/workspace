@@ -10,7 +10,7 @@ function RouteComponent() {
     <div>
       <h2 className="guide_tit2">Checkbox Component Guide</h2>
       <p className="loc react">/libs/ui/src/lib/checkbox/checkbox.tsx</p>
-      <p className="info">size(높이 기준) : xs(12), sm(16), md(18), lg(24-basic)</p>
+      <p className="info">size(높이 기준) : md(20), lg(24-basic)</p>
       <div className="code_example">
         <pre className="code_block">
           <code>
@@ -28,29 +28,29 @@ import { Checkbox } from '@learnway/ui';
           <div className="desc">
             <Checkbox label="default" />
             <Checkbox label="default" size="md" />
-            <Checkbox label="default" size="sm" />
-            <Checkbox label="default" size="xs" />
+            {/* <Checkbox label="default" size="sm" />
+            <Checkbox label="default" size="xs" /> */}
           </div>
         </div>
 
         <div className="code_example">
           <pre className="code_block">
-            <code>{`<Checkbox label="default" />
-<Checkbox label="default" size="md" />
-<Checkbox label="default" size="sm" />
-<Checkbox label="default" size="xs" />`}</code>
+            <code>{`<Checkbox label="default" size="lg" />
+<Checkbox label="default" size="md" />`}</code>
           </pre>
         </div>
         <h3 className="guide_tit3">disabled</h3>
         <div className="flex_box">
           <div className="desc">
-            <Checkbox label="disabled" disabled />
+            <Checkbox label="disabled" disabled checked />
+            <Checkbox label="disabled" disabled checked size="md" />
           </div>
         </div>
 
         <div className="code_example">
           <pre className="code_block">
-            <code>{`<Checkbox label="disabled" disabled />`}</code>
+            <code>{`<Checkbox label="disabled" disabled />
+<Checkbox label="disabled" disabled size="md" />`}</code>
           </pre>
         </div>
       </div>
