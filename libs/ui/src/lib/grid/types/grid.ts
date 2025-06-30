@@ -223,6 +223,13 @@ export interface GridProps<T> {
   onStateChange?: (state: GridBoxState) => void;
 
   /**
+   * 특정 행의 선택 가능 여부를 결정하는 함수
+   * @param row - 행 데이터
+   * @returns 선택 가능하면 true, 불가능하면 false
+   */
+  getRowCanSelect?: (row: T) => boolean;
+
+  /**
    * 데이터 변경 시 호출되는 콜백 함수입니다.
    * @param {T[]} data 변경된 데이터 배열
    */

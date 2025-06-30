@@ -33,7 +33,13 @@ function RouteComponent() {
       <MainContents>
         <SearchBox provider={sProvider} onSearch={handleOnSearch} />
         <Divider />
-        <GridBox config={gConfig} showNumberingColumn onRowDoubleClick={handleOnRowDoubleClick} />
+        <GridBox
+          config={gConfig}
+          showNumberingColumn
+          multiple
+          getRowCanSelect={(row: LabelMessage) => row.labelMessageMultilingulKey !== 'key5'} // 라벨/메세지 코드 값이 'key5' 인 경우 선택 불가
+          onRowDoubleClick={handleOnRowDoubleClick}
+        />
       </MainContents>
     </PageContainer>
   );
