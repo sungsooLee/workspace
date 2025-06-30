@@ -84,7 +84,7 @@ const StepperComponent = forwardRef<HTMLElement, StepperComponentProps>(
           >
             {/* icon or step value */}
             <div className={styles.step_status}>
-              {d.isActive || d.isComplete ? (
+              {d.isActive || d.isComplete || variant === 'check' ? (
                 <IcoCheckboxChecked
                   width={20}
                   height={20}
