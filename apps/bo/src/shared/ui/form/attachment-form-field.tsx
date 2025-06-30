@@ -1,3 +1,4 @@
+// IA011 / NLP_BO_PMS_1100_5
 import { forwardRef, useEffect, useState } from 'react';
 import { Attachment } from '@learnway/ui'; // @learnway/ui에서 Attachment 컴포넌트 import
 import {
@@ -43,18 +44,6 @@ const AttachmentFormFieldComponent = forwardRef<
     },
     ref, // forwardRef로 전달받은 Ref 객체
   ) => {
-    console.log(
-      '🚀 ~ useS3Uploader:',
-      s3Path,
-      groupConfig,
-      groupMode,
-      auto,
-      async,
-      multipartThreshold,
-      acceptFiles,
-      maxFileCount,
-      maxFileSize,
-    );
     const { stats, files, addFiles, onPause, onRetry, onResume, onRemove, inputAccept } =
       useS3Uploader({
         s3Path,
@@ -67,15 +56,6 @@ const AttachmentFormFieldComponent = forwardRef<
         maxFileCount,
         maxFileSize,
       });
-    console.log('🚀 useS3Uploader ~ files:', files);
-
-    const [errorMessage, setErrorMessage] = useState('');
-
-    const handleAddFiles = (files: File[]) => {
-      console.log('🚀 ~ handleAddFiles ~ files:', files);
-      setErrorMessage('');
-      addFiles(files);
-    };
 
     /**
      * `value` prop (부모 폼으로부터 받은 이미지 경로 배열)이 변경될 때마다
@@ -90,7 +70,7 @@ const AttachmentFormFieldComponent = forwardRef<
     return (
       <Attachment
         files={files}
-        addFiles={handleAddFiles}
+        addFiles={addFiles}
         onRemove={onRemove}
         onPause={onPause}
         onResume={onResume}
@@ -98,8 +78,6 @@ const AttachmentFormFieldComponent = forwardRef<
         inputAccept={inputAccept}
         maxFileCount={maxFileCount}
         maxFileSize={maxFileSize}
-        guideText={t('LABEL.message.learningResourceFileUploadModal.uploaderGuideText')}
-        errorMessage={errorMessage}
         wrapSize={'lg'}
         {...props} // Attachment에 전달될 수 있는 나머지 props (예: className)
       />

@@ -1,3 +1,4 @@
+// IA011 / NLP_BO_PMS_1100_5
 import { useCallback, useState } from 'react';
 import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css';
 import {
@@ -19,6 +20,7 @@ import { Badge } from '../badge/badge';
 import { Button } from '../button/button';
 import { Checkbox } from '../checkbox/checkbox';
 import { useModal } from '../modal/modal.hook';
+import { compact, first, get, map } from 'lodash';
 
 function formatBytes(bytes: number, decimals = 2): string {
   if (bytes === 0) return '0 Bytes';
@@ -43,14 +45,10 @@ const AttachmentComponent = ({
   inputAccept,
   maxFileCount,
   maxFileSize,
-  isDownloadCase = false,
-  wrapSize,
-  guideText,
-  errorMessage,
 }: AttachmentProps) => {
   const isOverMaxFileCount = files.length >= maxFileCount;
 
-  const [checkedValues, setCheckedValues] = useState<string[]>([]);
+  const [checkedValues, setCheckedValues] = useState<UploadFile[]>([]);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     addFiles(acceptedFiles);
@@ -66,9 +64,11 @@ const AttachmentComponent = ({
   };
 
   const handleCheckChange = (checked: boolean, checkedValue: string) => {
-    const checkOptions = [...checkedValues, checkedValue];
-    const unCheckOptions = checkedValues?.filter((d: string) => d !== checkedValue);
-    setCheckedValues(checked ? checkOptions : unCheckOptions);
+    setCheckedValues((prev) =>
+      checked
+        ? compact([...prev, files.find(({ id }) => id === checkedValue)])
+        : prev.filter(({ id }) => id !== checkedValue),
+    );
   };
 
   const { fileDownload, filesDownload } = useFileManager();
@@ -88,7 +88,7 @@ const AttachmentComponent = ({
         content: t('LABEL.confirm.fileDelete.message'),
         onClose: (isConfirm) => {
           if (isConfirm) {
-            checkedValues.forEach((id) => {
+            checkedValues.forEach(({ id }) => {
               onRemove(id);
             });
           }
@@ -104,9 +104,11 @@ const AttachmentComponent = ({
         content: t('LABEL.confirm.fileSelectForDownload.message'),
       });
     } else if (checkedValues.length === 1) {
-      await fileDownload(checkedValues[0]);
+      const uuid = get(first(checkedValues), 'fileUuid');
+      if (uuid) await fileDownload(uuid);
     } else {
-      await filesDownload(checkedValues);
+      const uuids = compact(map(checkedValues, 'fileUuid'));
+      await filesDownload(uuids);
     }
   };
 
@@ -116,7 +118,6 @@ const AttachmentComponent = ({
    * @returns {JSX.Element} 상태에 맞는 JSX 엘리먼트 반환
    */
   const renderFileProgress = (file: UploadFile) => {
-    if (isDownloadCase) return;
     /**
      * 주어진 상태 코드에 따라 렌더링할 텍스트를 반환하는 함수
      * @param {string} status - 파일의 상태 코드
@@ -292,47 +293,45 @@ const AttachmentComponent = ({
             onClick={handleOpen}
             disabled={isOverMaxFileCount}
           />
-          {isDownloadCase && (
+          {files.length > 0 && (
             <Button label="저장" type="button" variant="primary" size="ts" onClick={downloadFile} />
           )}
           <Button label="삭제" type="button" variant="primary" size="ts" onClick={removeFile} />
         </div>
       </div>
       <div className={cn(styles.file_wrap, styles.type_excel)} {...getRootProps()}>
-        {files.length === 0 ? (
-          <div className={styles.attach_area}>
-            <Button className={styles.btn_file}>
-              <IcoUploadCloud width={'40'} height={'40'} stroke={'#131C30'} />
-              <strong className={styles.file_title}>
-                {'영역을 클릭하거나 파일을 마우스로 끌어놓으세요'}
-              </strong>
-              <span className={styles.file_guide}>{`모든 파일 확장자`}</span>
-              <input {...getInputProps()} accept={inputAccept} />
-            </Button>
-          </div>
-        ) : (
-          <div className={styles.upload_status}>
-            {files.map((file: UploadFile) => (
-              <div className={styles.file_item}>
-                <div className="mr-3">
-                  <Checkbox
-                    onCheckedChange={(checked: boolean) => handleCheckChange(checked, file.id)}
-                    checked={checkedValues.indexOf(file.id) >= 0}
-                  />
-                </div>
-                <div className={styles.file_name}>
-                  <IcoFileExcel width={'24'} height={'25'} className={styles.icon_type} />
-                  <em className={styles.name}>{file.fileName}</em>
-                </div>
-                <p className={styles.status_view}>
-                  <em className={styles.file_size}>{file.displaySize}</em>
-                </p>
-                <div className={styles.progress_area}>{renderFileProgress(file)}</div>
-                {renderFileProcessButton(file)}
+        <div className={cn(styles.attach_area, files.length > 0 && 'hidden')}>
+          <Button className={styles.btn_file}>
+            <IcoUploadCloud width={'40'} height={'40'} stroke={'#131C30'} />
+            <strong className={styles.file_title}>
+              {'영역을 클릭하거나 파일을 마우스로 끌어놓으세요'}
+            </strong>
+            <span className={styles.file_guide}>{`모든 파일 확장자`}</span>
+            <input {...getInputProps()} accept={inputAccept} />
+          </Button>
+        </div>
+        <div className={cn(styles.upload_status, files.length === 0 && 'hidden')}>
+          {files.map((file: UploadFile) => (
+            <div className={styles.file_item}>
+              <div className="mr-3">
+                <Checkbox
+                  onClick={(e) => e.stopPropagation()}
+                  onCheckedChange={(checked: boolean) => handleCheckChange(checked, file.id)}
+                  checked={Boolean(checkedValues.find(({ id }) => id === file.id))}
+                />
               </div>
-            ))}
-          </div>
-        )}
+              <div className={styles.file_name}>
+                <IcoFileExcel width={'24'} height={'25'} className={styles.icon_type} />
+                <em className={styles.name}>{file.fileName}</em>
+              </div>
+              <p className={styles.status_view}>
+                <em className={styles.file_size}>{file.displaySize}</em>
+              </p>
+              <div className={styles.progress_area}>{renderFileProgress(file)}</div>
+              {renderFileProcessButton(file)}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
