@@ -44,6 +44,7 @@ const GridComponent = forwardRef(
       onTableInstanceChange,
       showExpandColumn,
       flattenSubRows,
+      getRowCanSelect,
     }: GridProps<T>,
     ref: React.Ref<GridImperative>,
   ) => {
@@ -94,6 +95,7 @@ const GridComponent = forwardRef(
       showNumberingColumn, // props로 전달
       onTableInstanceChange, // table 인스턴스 전달 콜백
       showExpandColumn,
+      getRowCanSelect,
     });
 
     // 부모 컴포넌트에서 grid 특정 기능 수행시 필요
@@ -172,6 +174,7 @@ const GridComponent = forwardRef(
               lastPinnedColumnId={lastPinnedColumnId}
               disabledSelectionToggle={disabledSelectionToggle}
               onRowDoubleClick={onRowDoubleClick}
+              getRowCanSelect={getRowCanSelect}
             />
           )}
           {isLoading && <GridLoading<T> table={table} />}
