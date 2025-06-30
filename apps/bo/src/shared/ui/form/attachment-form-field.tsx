@@ -61,31 +61,56 @@ const AttachmentFormFieldComponent = forwardRef<
       });
 
     const [fileUuids, setFileUuids] = useState<string[]>([]);
-    console.log('🚀 ~ name, fileUuids:', name, fileUuids);
 
     /**
-     * `value` prop (부모 폼으로부터 받은 이미지 경로 배열)이 변경될 때마다
-     * 내부 `options` 상태를 동기화합니다.
-     * 이를 통해 폼 외부에서 `value`가 변경되어도 UI가 올바르게 업데이트됩니다.
+     * `value` 가 변경될 때마다 fileUuids를 set
      */
     useEffect(() => {
       setFileUuids(value);
     }, [value]); // `value` prop이 변경될 때마다 실행
 
+    /**
+     * 서버에서 파일정보를 가져와서 files에 추가
+     */
     async function fetchFileInfo(uuids: string[]) {
       const fileInfos = await Promise.all(uuids.map(getFileInfo));
       onFetch(fileInfos);
     }
 
+    /**
+     * fileUuid가 변경될 때마다 기존 files와 비교하여 추가된 파일이 있는 경우 서버에서 fetch 실행
+     */
     useEffect(() => {
-      const uploadFileUuid = compact(map(files, ({ fileUuid }) => fileUuid));
+      const uploadFileUuid = compact(
+        map(
+          files.filter(({ status }) => ['fetched', 'completed'].includes(status)),
+          ({ fileUuid }) => fileUuid,
+        ),
+      );
       const existed = difference(fileUuids, uploadFileUuid);
       if (existed.length) {
         fetchFileInfo(existed);
       }
     }, [fileUuids]);
 
-    // `Attachment` 컴포넌트를 렌더링하고 필요한 props를 전달합니다.
+    /**
+     * files가 변경될 때마다 기존 fileUuid와 비교하여
+     * 변경이 있는 경우 onChange를 실행하여 상위 react-form으로 전달함
+     */
+    useEffect(() => {
+      const uploadedFileUuid = compact(
+        map(
+          files.filter(({ status }) => ['fetched', 'completed'].includes(status)),
+          ({ fileUuid }) => fileUuid,
+        ),
+      );
+      const added = difference(uploadedFileUuid, fileUuids);
+      const removed = difference(fileUuids, uploadedFileUuid);
+      if (added.length || removed.length) {
+        onChange(uploadedFileUuid);
+      }
+    }, [files]);
+
     return (
       <>
         <Attachment
@@ -99,7 +124,7 @@ const AttachmentFormFieldComponent = forwardRef<
           maxFileCount={maxFileCount}
           maxFileSize={maxFileSize}
           wrapSize={'lg'}
-          {...props} // Attachment에 전달될 수 있는 나머지 props (예: className)
+          {...props}
         />
         <input type="hidden" name={name} value={fileUuids} />
       </>

@@ -772,6 +772,7 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
     setFiles((prev) => {
       const fetchedFiles: UploadFile[] = files.map((file) => ({
         id: file.fileUuid,
+        fileUuid: file.fileUuid,
         detailPath: file.detailPath,
         fileName: file.originalFileName,
         extension: file.originalFileName.split('.').pop() || '',
