@@ -11,5 +11,9 @@ import { GridBoxProps } from '../types';
  * @returns React component
  */
 export const TableBox = forwardRef(<T extends object>(props: GridBoxProps<T>, ref: any) => {
-  return <GridBox {...props} ref={ref} disabledSelectionToggle tableMode />;
-});
+  return <GridBox {...(props as any)} ref={ref} disabledSelectionToggle tableMode />;
+}) as <T extends object>(props: GridBoxProps<T> & { ref?: React.Ref<any> }) => React.ReactElement;
+
+// export const TableBox = forwardRef(<T extends object>(props: GridBoxProps<T>, ref: any) => {
+//   return <GridBox {...props} ref={ref} disabledSelectionToggle tableMode />;
+// });
