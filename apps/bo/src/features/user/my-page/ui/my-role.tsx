@@ -7,13 +7,15 @@ import { MyRoleExtendModal } from './my-role-extend-modal';
 import { Link, useRouter, useRouterState } from '@tanstack/react-router';
 import { roleManagerQueryOptions } from '@entities/role/service/role-manage.queries';
 import { DATE_TIME_FORMAT, dateDiff, formatDate } from '@learnway/shared';
-import { createColumnHelper } from '@tanstack/react-table';
+import { CellContext, createColumnHelper } from '@tanstack/react-table';
+import { RoleApplication } from '@types';
 
 const MyRoleComponent = (route: any) => {
   const router = useRouter();
 
   // const routerState = useRouterState();
   const { state } = useCurrentRoute();
+  const { close: closeModal, alert: openAlert, showSaveComplete } = useModal();
 
   const { provider: sProvider, getValues, onFormChange, onFormValid } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
@@ -60,11 +62,11 @@ const MyRoleComponent = (route: any) => {
   };
 
   const handleCellClick = useCallback(
-    (data: any) => {
+    (data: RoleApplication) => {
       console.log('data', data);
       router.navigate({
         to: '/my-page/role/detail',
-        state: { roleId: data.roleId, listParam: getValues() },
+        state: { roleId: data.role.roleId, listParam: getValues() },
       });
     },
     [openModal],
@@ -107,7 +109,7 @@ const searchConfig: any = {
         format: 'object',
         presetOptionLabel: t('LABEL.form.label.all'),
         optionsConfig: {
-          codeGroup: CODE_GROUP['manual.bo.my.role.roidId'],
+          codeGroup: CODE_GROUP['manual.bo.my.role.roleId'],
         },
       },
       {
@@ -185,7 +187,7 @@ const createGridColumns = (onCellClick: (data: any) => void) => [
   columnHelper.accessor('roleName', {
     header: t('HRD 담당자 역할'),
     size: 227,
-    cell: (info) => {
+    cell: (info: CellContext<RoleApplication, any>) => {
       return (
         <Button
           className="text-ellipsis"
@@ -193,7 +195,7 @@ const createGridColumns = (onCellClick: (data: any) => void) => [
           size="lg"
           onClick={() => onCellClick(info.row.original)}
         >
-          {info.row.original.roleName}
+          {info.row.original.role.name}
         </Button>
       );
     },
@@ -206,6 +208,9 @@ const createGridColumns = (onCellClick: (data: any) => void) => [
     size: 227,
     meta: {
       sortKey: 'roleEntity.tenantEntity.tenantName',
+    },
+    cell: (info: CellContext<RoleApplication, any>) => {
+      return `${info.row.original.role.tenantName}`;
     },
   }),
   columnHelper.accessor('channels', {

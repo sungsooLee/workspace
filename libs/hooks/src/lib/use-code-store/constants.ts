@@ -116,7 +116,7 @@ export const CODE_GROUP = {
   'manual.company.companyCode': 'manual.company.companyCode',
   'manual.tenant.tenantId': 'manual.tenant.tenantId', // 전체 테넌트
   'manual.bo.my.tenant.tenantId': 'manual.bo.my.tenant.tenantId', // 나의 테넌트
-  'manual.bo.my.role.roidId': 'manual.bo.my.role.roidId', // 나의 역할
+  'manual.bo.my.role.roleId': 'manual.bo.my.role.roleId', // 나의 역할
   'manual.code.expired': 'manual.code.expired', // 만료여부 정상,만료
 };
 export type CODE_GROUP_TYPE = (typeof CODE_GROUP)[keyof typeof CODE_GROUP];
