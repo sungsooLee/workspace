@@ -8,7 +8,7 @@ import {
   ModalTitle,
   useModal,
 } from '@learnway/ui';
-import { useFileManager, useS3Uploader } from '@learnway/hooks';
+import { useS3Uploader } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { LEARNING_TYPE } from '@learnway/config';
 import { t } from 'i18next';
@@ -42,15 +42,18 @@ const acceptFiles = {
 
 const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) => {
   const { close, open } = useModal();
-  const maxFileCount = 1;
-  const maxFileSize = 1024 * 1024 * 10;
+  const maxFileCount = 100;
   const { stats, files, addFiles, onPause, onRetry, onResume, onRemove, inputAccept } =
     useS3Uploader({
       s3Path: 'upload/content/original',
+      groupConfig: {
+        affairsType: 'CMS',
+        languageCode: 'ko',
+      },
+      groupMode: 'individual',
       maxFileCount,
       acceptFiles: acceptFiles[type],
     });
-  const { createFileGroupFiles } = useFileManager();
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleAddFiles = (files: File[]) => {
@@ -66,34 +69,6 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
     close(files);
   }, [files]);
 
-  const initFileInfo = useCallback(async () => {
-    const createFiles = files
-      .filter((file) => file.status === 'completed')
-      .map((file) => {
-        return {
-          affairsType: 'PMS',
-          reposType: 'S3',
-          languageCode: 'ko',
-          detailPath: file.detailPath,
-          basicPath: file.basicPath,
-          files: [
-            {
-              fileUploadType: file.uploadType === 'single-part' ? 'S3_SINGLEPART' : 'S3_MULTIPART',
-              originalFileName: file.fileName,
-              serverFileName: file.s3FileName,
-              fileSize: file.size,
-            },
-          ],
-        };
-      });
-    // const response = await createFileGroupFiles(createFiles[0] as CreateFileGroupFilesInfoReq[]);
-    const response = await createFileGroupFiles(createFiles[0] as any); // 타입 에러 수정 필요
-    console.log('response => ', response);
-    console.log('createFiles => ', createFiles);
-
-    handleEncoding();
-  }, [files]);
-
   useEffect(() => {
     if (stats.status === 'validating-error' && files.length === 1) {
       if (files[0].message === 'size error') {
@@ -105,7 +80,7 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
       onRemove();
     }
     if (stats.status === 'completed') {
-      initFileInfo();
+      handleEncoding();
     }
   }, [stats]);
   return (
@@ -125,7 +100,6 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
             <DndFileProgress
               files={files}
               maxFileCount={maxFileCount}
-              maxFileSize={maxFileSize}
               addFiles={handleAddFiles}
               inputAccept={inputAccept}
               onRemove={onRemove}

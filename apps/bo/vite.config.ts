@@ -15,6 +15,7 @@ const isTest = process.env.NODE_ENV === 'test';
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   const basePath = env.VITE_BO_BASE_PATH || '';
+  const isProduction = mode === 'production';
 
   return {
     root: __dirname,
@@ -22,6 +23,9 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 4200,
       host: 'localhost',
+      hmr: {
+        overlay: false,
+      },
       proxy: {
         '/juso-api': {
           target: 'https://business.juso.go.kr',
@@ -31,6 +35,9 @@ export default defineConfig(({ mode }) => {
         },
       },
     },
+    optimizeDeps: {
+      exclude: ['@tanstack/router-devtools', '@tanstack/react-query-devtools'],
+    },
     preview: {
       port: 4300,
       host: 'localhost',
@@ -38,9 +45,18 @@ export default defineConfig(({ mode }) => {
     plugins: [
       nxViteTsPaths(),
       nxCopyAssetsPlugin(['*.md']),
-      !isTest && TanStackRouterVite({ autoCodeSplitting: true }),
+      !isTest &&
+        TanStackRouterVite({
+          autoCodeSplitting: true,
+          generatedRouteTree: './src/routeTree.gen.ts',
+        }),
       viteReact(),
-      svgr(),
+      svgr({
+        include: '**/*.svg',
+        icon: true,
+        titleProp: false,
+        descProp: false,
+      }),
     ],
     resolve: {
       alias: [
@@ -55,26 +71,48 @@ export default defineConfig(({ mode }) => {
         { find: '@widgets', replacement: path.resolve(__dirname, 'src/widgets') },
       ],
     },
-    // Uncomment this if you are using workers.
-    // worker: {
-    //  plugins: [ nxViteTsPaths() ],
-    // },
-    // base: process.env.NODE_ENV === 'local' ? '' : '/bo',
+    esbuild: {
+      drop: isProduction ? ['console', 'debugger'] : [],
+      legalComments: 'none',
+    },
     base: basePath,
     build: {
       outDir: '../../dist/apps/bo',
       assetsDir: 'assets',
       emptyOutDir: true,
       reportCompressedSize: true,
-      commonjsOptions: {
-        transformMixedEsModules: true,
-      },
+      sourcemap: false,
+      minify: 'esbuild',
+      target: 'es2020',
+      cssCodeSplit: true,
       rollupOptions: {
         output: {
           entryFileNames: 'assets/[name].[hash].js',
           chunkFileNames: 'assets/[name].[hash].js',
-          assetFileNames: 'assets/[name].[hash][extname]',
+          assetFileNames: (assetInfo) => {
+            const fileName = assetInfo.names?.[0] || assetInfo.originalFileName || 'asset';
+            const info = fileName.split('.');
+            const ext = info[info.length - 1];
+            if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(ext)) {
+              return `assets/images/[name].[hash].[ext]`;
+            }
+            if (/woff2?|eot|ttf|otf/i.test(ext)) {
+              return `assets/fonts/[name].[hash].[ext]`;
+            }
+            return `assets/[name].[hash].[ext]`;
+          },
+          manualChunks: {
+            vendor: ['react', 'react-dom', 'react-router-dom'],
+            ui: [
+              '@radix-ui/react-dialog',
+              '@radix-ui/react-dropdown-menu',
+              '@radix-ui/react-select',
+            ],
+            tanstack: ['@tanstack/react-query', '@tanstack/react-router', '@tanstack/react-table'],
+            utils: ['lodash', 'lodash-es', 'dayjs', 'date-fns'],
+          },
         },
+        external: [],
       },
     },
     test: {

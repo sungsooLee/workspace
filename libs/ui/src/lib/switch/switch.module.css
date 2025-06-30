@@ -39,6 +39,11 @@
   &[data-label-align='right'] > button {
     @apply order-first;
   }
+  &:has(.switch_root[aria-checked='true']) {
+    .label {
+      @apply text-[var(--secondary1)];
+    }
+  }
 }
 
 .active {

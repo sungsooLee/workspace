@@ -50,8 +50,9 @@ const AccordionMenuComponent = ({
     return (menus ?? [])
       .filter((menu) => menu.isHiddenMenu === false)
       .map((menu: Menu, index: number) => {
-        const children = menu?.children?.filter((m: Menu) => m.isHiddenMenu === false);
+        const childrenMenu = menu?.children?.filter((m: Menu) => m.isHiddenMenu === false);
 
+        const hasChildren = childrenMenu && childrenMenu.length > 0;
         let active = false;
         if (activeMenuDepth && activeMenuDepth[depth - 1]) {
           active = activeMenuDepth[depth - 1]?.tenantMappingMenuId === menu?.tenantMappingMenuId;
@@ -71,7 +72,7 @@ const AccordionMenuComponent = ({
               </span>
             </div>
           ),
-          children: children && (
+          children: hasChildren && (
             <AccordionMenu menus={(menu?.children as Menu[]) || []} depth={depth + 1} />
           ),
           active,

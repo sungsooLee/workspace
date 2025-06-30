@@ -1,4 +1,4 @@
-import { UserGroupType } from '@types';
+import { UserGroupsParam } from '@types';
 import UserGroupsService from '../api/user-group';
 
 export const queryKeys = {
@@ -6,7 +6,7 @@ export const queryKeys = {
 };
 
 export const queryOptions = {
-  all: (params?: { userGroupType?: UserGroupType; userGroupName?: string }) => ({
+  all: (params?: Partial<UserGroupsParam>) => ({
     queryKey: queryKeys.all,
     queryFn: () => UserGroupsService.fetchAllUserGroups(params),
     cacheTime: 0,

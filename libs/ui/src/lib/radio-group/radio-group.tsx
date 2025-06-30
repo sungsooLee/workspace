@@ -41,7 +41,9 @@ const RadioGroupComponent = forwardRef<
           'nlp--radio',
           styles.start,
           size && styles[size],
+          size,
           orientation === 'vertical' && styles.vertical,
+          orientation,
           className,
         )}
         defaultValue={defaultValue}

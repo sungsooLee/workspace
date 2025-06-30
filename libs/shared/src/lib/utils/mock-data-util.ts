@@ -1,4 +1,19 @@
 import { t } from 'i18next';
+import { SelectOption } from '../types/select-option';
+
+/**
+ * 년도 옵션을 만들어준다.
+ * 올해 기준으로 이전 년도.....
+ */
+export const generateYears = (count: number): SelectOption[] => {
+  const currentYear = new Date().getFullYear();
+  return Array
+    .from({ length: count + 1 }, (d, i) => currentYear - i)
+    .map((d, i) => ({
+      value: String(d),
+      label: String(d),
+    }) as SelectOption);
+}
 
 export const getMockCourseType = (key?: string) => {
   return [

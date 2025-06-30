@@ -11,22 +11,23 @@ import {
 } from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { UserGroupOrganization } from '../components/user-group-organization';
-import { UserGroupPosition } from '../components/user-group-position';
-import { UserGroupOccupation } from '../components/user-group-occupation';
+import { UserGroupJobPosition } from '../components/user-group-job-position';
+import { UserGroupJobGroup } from '../components/user-group-job-group';
 import { UserGroupJobTitle } from '../components/user-group-job-title';
 import { UserGroupJob } from '../components/user-group-job';
 import { UserGroupCustom } from '../components/user-group-custom';
 import { IcoRefresh02 } from '@learnway/icons';
+import { UserGroupType } from '@types';
 
 type UserGroupTabModalProps = {
-  initialTab?: 'ORGANIZATION' | 'OCCUPATION' | 'TENANT' | 'JOB_TITLE' | 'POSITION' | 'CUSTOM';
+  initialTab?: UserGroupType;
 };
 
 const UserGroupTabModalComponent = forwardRef(
   ({ initialTab = 'ORGANIZATION' }: UserGroupTabModalProps) => {
     const { close: closeModal } = useModal();
 
-    const [selectedTabKey, setSelectedTabKey] = useState<string>(initialTab);
+    const [selectedTabKey, setSelectedTabKey] = useState<UserGroupType>(initialTab);
 
     const [option, setOption] = useState<any>();
 
@@ -51,23 +52,23 @@ const UserGroupTabModalComponent = forwardRef(
               },
               {
                 title: t('직군'),
-                key: 'OCCUPATION',
-                content: <UserGroupOccupation handleSetOption={setOption} />,
+                key: 'JOB_GROUP',
+                content: <UserGroupJobGroup handleSetOption={setOption} />,
               },
               {
                 title: t('직무'),
-                key: 'TENANT',
-                content: <UserGroupJob />,
+                key: 'JOB',
+                content: <UserGroupJob handleSetOption={setOption} />,
               },
               {
                 title: t('호칭'),
                 key: 'JOB_TITLE',
-                content: <UserGroupJobTitle />,
+                content: <UserGroupJobTitle handleSetOption={setOption} />,
               },
               {
                 title: t('보직'),
-                key: 'POSITION',
-                content: <UserGroupPosition />,
+                key: 'JOB_POSITION',
+                content: <UserGroupJobPosition handleSetOption={setOption} />,
               },
               {
                 title: '사용자 정의',
@@ -82,7 +83,7 @@ const UserGroupTabModalComponent = forwardRef(
             onTabChange={(tabKey) => {
               if (tabKey !== selectedTabKey) {
                 setOption(undefined);
-                setSelectedTabKey(tabKey);
+                setSelectedTabKey(tabKey as UserGroupType);
               }
             }}
           />
