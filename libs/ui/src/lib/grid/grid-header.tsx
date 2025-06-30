@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, useCallback, useRef } from 'react';
 import { flexRender, Table } from '@tanstack/react-table';
 import { cn } from '@learnway/shared';
 import { IcoGridOrder } from '@learnway/icons';
@@ -13,6 +13,44 @@ interface GridHeaderProps<T extends object> {
 }
 
 export const GridHeader = <T extends object>({ table, lastPinnedColumnId }: GridHeaderProps<T>) => {
+  const resizeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const resizeColumnRef = useRef<string | null>(null);
+
+  const handleResizeEnd = useCallback((columnId: string, newSize: number) => {
+    if (resizeTimeoutRef.current) {
+      clearTimeout(resizeTimeoutRef.current);
+    }
+
+    resizeTimeoutRef.current = setTimeout(() => {
+      console.log(`resize`);
+      resizeColumnRef.current = null;
+    }, 300);
+  }, []);
+
+  const createCustomResizeHandler = useCallback(
+    (header: any) => {
+      const originalHandler = header.getResizeHandler();
+
+      return (event: React.MouseEvent | React.TouchEvent) => {
+        resizeColumnRef.current = header.column.id;
+
+        originalHandler(event);
+
+        const handleMouseUp = () => {
+          if (resizeColumnRef.current) {
+            const currentSize = header.getSize();
+            handleResizeEnd(resizeColumnRef.current, currentSize);
+          }
+          document.removeEventListener('mouseup', handleMouseUp);
+          document.removeEventListener('touchend', handleMouseUp);
+        };
+
+        document.addEventListener('mouseup', handleMouseUp);
+        document.addEventListener('touchend', handleMouseUp);
+      };
+    },
+    [handleResizeEnd],
+  );
   return (
     <thead>
       {table.getHeaderGroups().map((headerGroup) => (
@@ -50,7 +88,11 @@ export const GridHeader = <T extends object>({ table, lastPinnedColumnId }: Grid
                   columnDef.meta?.headerAlign === 'center' && styles.text_center,
                 )}
                 style={thStyle}
-                onClick={column.getToggleSortingHandler()}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  column.getToggleSortingHandler()?.(e);
+                }}
               >
                 <div className={styles.th_content}>
                   {/* render */}
@@ -60,8 +102,12 @@ export const GridHeader = <T extends object>({ table, lastPinnedColumnId }: Grid
                 </div>
                 {column.getCanResize() && (
                   <div
-                    onMouseDown={header.getResizeHandler()}
-                    onTouchStart={header.getResizeHandler()}
+                    onMouseDown={createCustomResizeHandler(header)}
+                    onTouchStart={createCustomResizeHandler(header)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                    }}
                     className={cn(styles.resizer, column.getIsResizing() && styles.resizing)}
                   />
                 )}
