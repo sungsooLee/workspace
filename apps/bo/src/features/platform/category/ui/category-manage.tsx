@@ -324,44 +324,67 @@ export const CategoryManage = () => {
     }
   };
 
+  const calculateSortSeq = (nodeInfo: any) => {
+    if (nodeInfo.position === 'INSIDE') {
+      // 타겟 노드의 자식으로 이동 - 항상 첫 번째 자식이 되도록
+      return 1;
+    }
+
+    const sourceNode = nodeInfo.sourceNode;
+    const targetNode = nodeInfo.targetNode;
+    
+    if (!targetNode || !targetNode.sortSeq) {
+      // targetNode의 sortSeq가 없으면 targetIndex 기반으로 계산
+      return nodeInfo.position === 'BEFORE' ? nodeInfo.targetIndex + 1 : nodeInfo.targetIndex + 2;
+    }
+
+    // 같은 부모 내에서 이동하는 경우, 소스와 타겟의 sortSeq 관계를 고려
+    const sourceSortSeq = sourceNode.sortSeq || 0;
+    const targetSortSeq = targetNode.sortSeq;
+    const sameParent = sourceNode.parentKey === targetNode.parentKey;
+
+    if (nodeInfo.position === 'BEFORE') {
+      // 타겟 노드 앞에 삽입
+      if (sameParent && sourceSortSeq < targetSortSeq) {
+        // 낮은 순서 -> 높은 순서로 이동: 소스가 제거되므로 -1 보정
+        return targetSortSeq - 1;
+      }
+      return targetSortSeq;
+    } else {
+      // 타겟 노드 뒤에 삽입 (AFTER)
+      if (sameParent && sourceSortSeq < targetSortSeq) {
+        // 낮은 순서 -> 높은 순서로 이동: 소스가 제거되므로 보정 없이 타겟 순서 사용
+        return targetSortSeq;
+      }
+      return targetSortSeq + 1;
+    }
+  };
+
   const handleTreeAction = (event: TreeEventPayload) => {
     switch (event.type) {
       case 'NODE_MOVE': {
         const nodeInfo = event;
         console.log(event);
         if (nodeInfo.sourceNode.menuId) {
-          if (nodeInfo.position === 'INSIDE') {
-            const payload = {
-              id: nodeInfo.sourceNode.menuId,
-              destinationParentId: nodeInfo.targetNode?.menuId,
-              sortSeq: 1,
-            };
-            moveCategory(payload, {
-              onSuccess: async (data: any) => {
-                if (selectedNode?.categoryId) {
-                  await queryClient.invalidateQueries({
-                    queryKey: [...queryKeys.detail(Number(selectedNode.categoryId))],
-                  });
-                }
-              },
-            });
-          } else {
-            const targetIndex = nodeInfo.targetIndex!;
-            const payload = {
-              id: nodeInfo.sourceNode.menuId,
-              destinationParentId: nodeInfo.targetNode?.parentKey,
-              sortSeq: targetIndex + 1,
-            };
-            moveCategory(payload, {
-              onSuccess: async (data: any) => {
-                if (selectedNode?.categoryId) {
-                  await queryClient.invalidateQueries({
-                    queryKey: [...queryKeys.detail(Number(selectedNode.categoryId))],
-                  });
-                }
-              },
-            });
-          }
+          const sortSeq = calculateSortSeq(nodeInfo);
+          
+          const payload = {
+            id: nodeInfo.sourceNode.menuId,
+            destinationParentId: nodeInfo.position === 'INSIDE' 
+              ? nodeInfo.targetNode?.menuId 
+              : nodeInfo.targetNode?.parentKey,
+            sortSeq: sortSeq,
+          };
+
+          moveCategory(payload, {
+            onSuccess: async (data: any) => {
+              if (selectedNode?.categoryId) {
+                await queryClient.invalidateQueries({
+                  queryKey: [...queryKeys.detail(Number(selectedNode.categoryId))],
+                });
+              }
+            },
+          });
           break;
         }
       }

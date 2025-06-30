@@ -3,7 +3,7 @@ import { cn } from '@learnway/shared';
 import boStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import foStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
-import { Button, DynamicFormField, Tooltip } from '../../index';
+import { Button, DynamicFormField, Tooltip } from '@learnway/ui';
 import {
   DynamicFormContextProvider,
   FormConfig,
@@ -13,6 +13,7 @@ import {
 } from '@learnway/hooks';
 import { FormGuideText } from './form-guide-text';
 import { useTranslation } from 'react-i18next';
+import { log } from 'console';
 
 /**
  * FormRowComponent
@@ -75,8 +76,6 @@ const DynamicFormContainer: FC<FormRowProps> = ({
   const styles = style === 'bo' ? boStyles : foStyles;
   const { t } = useTranslation();
 
-  // validation은 FormRow2에서 직접 처리하므로 여기서는 제거
-
   const { formConfig, isRequired, error, fieldRefs } = useFormRow2(
     provider,
     children,
@@ -108,11 +107,28 @@ const DynamicFormContainer: FC<FormRowProps> = ({
   const formInfoArea = useMemo(() => extractFormItem(children, 'FormInfoArea'), [children]);
   const formGuideText = useMemo(() => extractFormItem(children, 'FormGuideText'), [children]);
 
+  // fieldConfig가 제공되면 필드를 등록하고 validation 설정
+  useEffect(() => {
+    if (fieldConfig && provider.registerField) {
+      console.log('fieldConfig', fieldConfig);
+      // FormRow의 name prop을 fieldConfig.name으로 자동 설정
+      const configWithName = { ...fieldConfig, name } as FormConfig;
+      provider.registerField(configWithName);
+
+      // fieldConfig에 validation이 있으면 동적으로 추가
+      if (fieldConfig.validation && provider.addValidator) {
+        provider.addValidator(name, fieldConfig.validation);
+      }
+    }
+  }, [name]); // name만 dependency로 사용하여 무한 루프 방지
+
   useEffect(() => {
     if (formInfoArea) {
+      console.log('formInfoArea', formInfoArea);
       onChangeInfoArea(formInfoArea);
     }
   }, [formInfoArea]);
+
   useEffect(() => {
     if (formGuideText) {
       onChangeGuideText(formGuideText);
@@ -150,7 +166,7 @@ const DynamicFormContainer: FC<FormRowProps> = ({
           {formConfig.tooltip && (
             <Tooltip
               className={styles.tooltip}
-              // side="right" //툴크 위치가 제각각 다르게 노출 되는 현상있음.
+              // side="right" //툴팁 위치가 제각각 다르게 노출 되는 현상있음.
               // align="start"
               content={t(formConfig.tooltip as any)}
             >

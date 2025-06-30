@@ -34,6 +34,10 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
 
     const { provider, getValues, fetchData, onFormValid, formState, watch } = useDynamicForm2();
 
+    const channel = watch('채널');
+
+    console.log('chadd', channel);
+
     const handleOnSubmit = (data: any) => {
       console.log('data {} => ', data);
     };
@@ -73,7 +77,6 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             provider={provider}
             name={'유형'}
             label={'유형'}
-            required={true}
             element={
               <DropdownFormField
                 optionsConfig={{
@@ -95,8 +98,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
               <DropdownFormField
                 optionsConfig={{
                   api: {
-                    fn: RoleManagerService.fetchRoleMe,
-                    params: 'BO',
+                    fn: () => RoleManagerService.fetchRoleMe('BO'),
                     select: (data: any) => data?.channels || [],
                   },
                 }}
@@ -116,14 +118,15 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
           <FormRow2
             provider={provider}
             name={'테넌트'}
+            label={'테넌트'}
             element={
               <CheckboxGroupFormField
+                key={`tenant-${channel}`}
                 optionsConfig={{
                   api: {
-                    fn: ChannelService.getChannelDetail,
-                    params: getValues()?.채널,
+                    fn: () => ChannelService.getChannelDetail(channel),
                     select: (data: any) => data?.tenantList || [],
-                    enabled: !!getValues()?.채널 && !!getValues()?.유형,
+                    enabled: false,
                   },
                   labelField: 'tenantName',
                   valueField: 'tenantId',

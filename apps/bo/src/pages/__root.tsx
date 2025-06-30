@@ -1,16 +1,24 @@
-import { useEffect } from 'react';
+import { useEffect, Suspense, lazy } from 'react';
 import { Outlet, createRootRouteWithContext, useRouter } from '@tanstack/react-router';
-import { TanStackRouterDevtools } from '@tanstack/router-devtools';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-
 import { ModalWrapper, ToastWrapper, useModalStore } from '@learnway/ui';
 import { useGlobalRouterEvent } from '@learnway/hooks';
 import { setupErrorToastListener } from '@learnway/shared';
-// import { useWindowSize } from 'react-use';
 import { MinWidthRequired } from '../widgets/layout/ui/min-width-required';
 import { useBreakpointModalClose } from '../shared/lib/breakpoint-modal.hook';
 import { NotFound } from '@features/layout';
 import { useFetchAuthUser, useRenewalMenuStateFromRouting } from '@learnway/auth/entities';
+
+const TanStackRouterDevtools = lazy(() =>
+  import.meta.env.VITE_APP_ENV === 'local'
+    ? import('@tanstack/router-devtools').then((res) => ({ default: res.TanStackRouterDevtools }))
+    : Promise.resolve({ default: () => null }),
+);
+
+const ReactQueryDevtools = lazy(() =>
+  import.meta.env.VITE_APP_ENV === 'local'
+    ? import('@tanstack/react-query-devtools').then((res) => ({ default: res.ReactQueryDevtools }))
+    : Promise.resolve({ default: () => null }),
+);
 
 interface RouterContext {
   setPageRouteState?: any;
@@ -50,7 +58,12 @@ function RootComponent() {
       {isUnderBreakpoint && <MinWidthRequired />}
       <ModalWrapper />
       <ToastWrapper />
-      {import.meta.env.VITE_APP_ENV === 'local' && <ReactQueryDevtools />}
+      {import.meta.env.VITE_APP_ENV === 'local' && (
+        <Suspense fallback={null}>
+          <ReactQueryDevtools />
+          <TanStackRouterDevtools />
+        </Suspense>
+      )}
     </>
   );
 }
