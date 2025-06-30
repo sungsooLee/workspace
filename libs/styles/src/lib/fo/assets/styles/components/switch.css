@@ -21,7 +21,7 @@
     @apply !text-[var(--gray35)];
   }
   &:has([aria-checked='true']) > label {
-    @apply !text-[var(--blue50)];
+    @apply !font-semibold tracking-[-0.035em] !text-[var(--blue50)];
   }
   &:has([data-disabled]) > label {
     @apply !text-[var(--gray75)];
