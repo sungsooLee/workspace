@@ -20,9 +20,9 @@ function generateType(obj, path = []) {
     const value = obj[key];
     const fullPath = [...path, key];
     if (typeof value === 'object') {
-      result += `${'  '.repeat(fullPath.length)}${key}: {\n${generateType(value, fullPath)}${'  '.repeat(fullPath.length)}};\n`;
+      result += `'${''.repeat(fullPath.length)}${key}': {\n${generateType(value, fullPath)}${''.repeat(fullPath.length)}};\n`;
     } else {
-      result += `${'  '.repeat(fullPath.length)}${key}: string;\n`;
+      result += `'${''.repeat(fullPath.length)}${key}': string;\n`;
     }
   }
   return result;
