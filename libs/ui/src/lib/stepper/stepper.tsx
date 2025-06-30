@@ -80,6 +80,7 @@ const StepperComponent = forwardRef<HTMLElement, StepperComponentProps>(
               d.isActive && styles.active,
               d.isComplete && styles.complete,
             )}
+            role={enableMoveStep ? 'button' : undefined}
             onClick={() => enableMoveStep && handleClick(d)}
           >
             {/* icon or step value */}
