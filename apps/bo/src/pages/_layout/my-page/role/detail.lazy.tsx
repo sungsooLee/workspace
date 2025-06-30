@@ -271,7 +271,7 @@ const searchConfig: SearchBoxConfig = {
 
 const gridConfig = {
   // query: '',
-  query: roleManagerQueryOptions.getRoleApplicationList,
+  query: roleManagerQueryOptions.getMyRoleApplications,
   pagination: {
     pageIndex: 0,
     pageSize: 20,

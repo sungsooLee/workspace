@@ -95,7 +95,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
               <DropdownFormField
                 optionsConfig={{
                   api: {
-                    fn: RoleManagerService.fetchRoleMe,
+                    fn: RoleManagerService.fetchMyRoles,
                     params: 'BO',
                     select: (data: any) => data?.channels || [],
                   },

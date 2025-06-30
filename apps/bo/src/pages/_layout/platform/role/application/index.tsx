@@ -207,7 +207,7 @@ const searchConfig: SearchBoxConfig = {
         value: '',
         presetOptionLabel: t('LABEL.form.label.all'),
         optionsConfig: {
-          codeGroup: CODE_GROUP['manual.bo.role.roidId'],
+          codeGroup: CODE_GROUP['manual.bo.my.role.roidId'],
         },
       },
       {
