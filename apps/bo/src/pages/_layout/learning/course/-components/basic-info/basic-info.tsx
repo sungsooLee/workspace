@@ -2,7 +2,7 @@ import ChannelService from '@entities/channel/api/channel';
 import RoleManagerService from '@entities/role/api/role-manager';
 import { DropdownFormField } from '@features/form';
 import { CategoryChoiceModal, ChannelListModal } from '@features/learning/course';
-import { UserGroupTabsChoiceModal } from '@features/shared';
+import { UserChoiceModal, UserGroupTabsChoiceModal } from '@features/shared';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import {
   Button,
@@ -36,7 +36,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
 
     const channelUuid = watch('channelUuid');
 
-    console.log('chadd', channelUuid);
+    // console.log('chadd', channelUuid);
 
     const handleOnSubmit = (data: any) => {
       console.log('data {} => ', data);
@@ -52,8 +52,8 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
 
         return {
           isValid,
-          data: isValid ? data : undefined,
-          errors: isValid ? undefined : errors,
+          data,
+          errors,
         };
       },
     }));
@@ -84,10 +84,6 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
                 }}
               />
             }
-            validation={{
-              required: false,
-              format: 'object',
-            }}
           />
           {/*채널*/}
           <FormRow2
@@ -102,12 +98,9 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
                     select: (data: any) => data?.channels || [],
                   },
                 }}
+                options={[{label: 'channel A', value: 9999}]}
               />
             }
-            validation={{
-              required: false,
-              format: 'object',
-            }}
           />
         </ContentsRow>
 
@@ -131,12 +124,9 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
                   labelField: 'tenantName',
                   valueField: 'tenantId',
                 }}
+                options={[{tenantName: 'tenant A', tenantId: 1111},{tenantName: 'tenant B', tenantId: 2222}]}
               />
             }
-            validation={{
-              required: false,
-              format: 'array',
-            }}
           />
         </ContentsRow>
         {/*카테고리*/}
@@ -149,7 +139,10 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             element={
               <ListModalSelectorFormField
                 deletable
-                modalConfig={{ content: <CategoryChoiceModal />, width: 'lg' }}
+                modalConfig={() => ({
+                  content: <CategoryChoiceModal tenantIds={getValues().tenantIds} />,
+                  width: 'lg',
+                })}
                 transformModalData={(data: any) => ({
                   value: data.id,
                   label: data.name,
@@ -157,10 +150,6 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
                 actionNode={<Button variant="text" size="sm" label={t('추가')} />}
               />
             }
-            validation={{
-              required: false,
-              format: 'array',
-            }}
           />
         </ContentsRow>
         {/*학습대상(유저그룹)*/}
@@ -207,10 +196,6 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             name={'courseName'}
             label={'과정명'}
             element={<Input maxLength={40} />}
-            validation={{
-              required: false,
-              format: 'object',
-            }}
           />
         </ContentsRow>
         {/*과정 요약*/}
@@ -220,10 +205,6 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             name={'courseSummary'}
             label={'과정 요약'}
             element={<TextareaFormField maxLength={500} />}
-            validation={{
-              required: false,
-              format: 'object',
-            }}
           />
         </ContentsRow>
         {/*교육 내용*/}
@@ -233,10 +214,6 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             name={'courseContent'}
             label={'교육 내용'}
             element={<EditorFormField />}
-            validation={{
-              required: false,
-              format: 'object',
-            }}
           />
         </ContentsRow>
         <ContentsRow>
@@ -320,14 +297,15 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             element={
               <InputModalSelectorFormField
                 modalConfig={{
-                  content: <ChannelListModal />,
+                  content: <UserChoiceModal />,
+                  width: 'xl',
                 }}
+                transformModalData={(data: any) => ({
+                  coordinatorId: data.uuid,
+                  learningSpaceName: `${data.name}/${data?.dept?.deptName}`,
+                })}
               />
             }
-            validation={{
-              required: false,
-              format: 'object',
-            }}
           />
           {/*담당자-연락처*/}
           <FormRow2
@@ -368,14 +346,14 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             element={
               <InputModalSelectorFormField
                 modalConfig={{
-                  content: <ChannelListModal />,
+                  content: <UserChoiceModal />,
                 }}
+                transformModalData={(data: any) => ({
+                  operatorId: data.uuid,
+                  operatorName: `${data.name}/${data?.dept?.deptName}`,
+                })}
               />
             }
-            validation={{
-              required: false,
-              format: 'object',
-            }}
           />
           {/*운영자-연락처*/}
           <FormRow2
