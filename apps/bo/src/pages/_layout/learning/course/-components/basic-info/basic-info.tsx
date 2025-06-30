@@ -34,9 +34,9 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
 
     const { provider, getValues, fetchData, onFormValid, formState, watch } = useDynamicForm2();
 
-    const channel = watch('채널');
+    const channelUuid = watch('channelUuid');
 
-    console.log('chadd', channel);
+    console.log('chadd', channelUuid);
 
     const handleOnSubmit = (data: any) => {
       console.log('data {} => ', data);
@@ -75,7 +75,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
           {/*유형*/}
           <FormRow2
             provider={provider}
-            name={'유형'}
+            name={'courseId'}
             label={'유형'}
             element={
               <DropdownFormField
@@ -85,14 +85,14 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
               />
             }
             validation={{
-              required: true,
+              required: false,
               format: 'object',
             }}
           />
           {/*채널*/}
           <FormRow2
             provider={provider}
-            name={'채널'}
+            name={'channelUuid'}
             label={'채널'}
             element={
               <DropdownFormField
@@ -105,7 +105,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
               />
             }
             validation={{
-              required: true,
+              required: false,
               format: 'object',
             }}
           />
@@ -117,16 +117,16 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'테넌트'}
+            name={'tenantIds'}
             label={'테넌트'}
             element={
               <CheckboxGroupFormField
-                key={`tenant-${channel}`}
+                key={`tenant-${channelUuid}`}
                 optionsConfig={{
                   api: {
-                    fn: () => ChannelService.getChannelDetail(channel),
+                    fn: () => ChannelService.getChannelDetail(channelUuid),
                     select: (data: any) => data?.tenantList || [],
-                    enabled: false,
+                    enabled: !!channelUuid,
                   },
                   labelField: 'tenantName',
                   valueField: 'tenantId',
@@ -134,7 +134,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
               />
             }
             validation={{
-              required: true,
+              required: false,
               format: 'array',
             }}
           />
@@ -143,7 +143,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'카테고리'}
+            name={'categoryIds'}
             label={'카테고리'}
             value={[]}
             element={
@@ -158,7 +158,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
               />
             }
             validation={{
-              required: true,
+              required: false,
               format: 'array',
             }}
           />
@@ -167,7 +167,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'학습대상'}
+            name={'whiteListIds'}
             label={'학습대상'}
             element={
               <ChipListModalSelectorFormField
@@ -189,7 +189,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'언어 설정'}
+            name={'language'}
             label={'언어 설정'}
             element={
               <DropdownFormField
@@ -204,11 +204,11 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'과정명'}
+            name={'courseName'}
             label={'과정명'}
             element={<Input maxLength={40} />}
             validation={{
-              required: true,
+              required: false,
               format: 'object',
             }}
           />
@@ -217,11 +217,11 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'과정 요약'}
+            name={'courseSummary'}
             label={'과정 요약'}
             element={<TextareaFormField maxLength={500} />}
             validation={{
-              required: true,
+              required: false,
               format: 'object',
             }}
           />
@@ -230,11 +230,11 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'교육 내용'}
+            name={'courseContent'}
             label={'교육 내용'}
             element={<EditorFormField />}
             validation={{
-              required: true,
+              required: false,
               format: 'object',
             }}
           />
@@ -242,7 +242,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'난이도'}
+            name={'trainingLevelType'}
             label={'난이도'}
             element={
               <RadioGroupFormField
@@ -254,12 +254,54 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
           />
           <FormRow2
             provider={provider}
-            name={'교육공간'}
+            name={'trainingLevelType'}
             label={'교육공간'}
             element={
               <RadioGroupFormField
                 optionsConfig={{
                   codeGroup: CODE_GROUP['lms.course.LearningSpaceType'],
+                  optionsNode: [
+                    {
+                      value: 'REGISTERED', // 장소선택
+                      node: (
+                        <>
+                          <FormRow2
+                            provider={provider}
+                            name={'learningSpaceId'}
+                            type={'hidden'}
+                            value={''}
+                          />
+                          <FormRow2
+                            provider={provider}
+                            name={'learningSpaceName'}
+                            value={''}
+                            element={
+                              <InputModalSelectorFormField
+                                modalConfig={{
+                                  content: <ChannelListModal />,
+                                }}
+                                transformModalData={(data: any) => ({
+                                  라디오커스텀_모달_아이디: data.channelId,
+                                  라디오커스텀_모달_이름: data.channelName,
+                                })}
+                              />
+                            }
+                          />
+                        </>
+                      ),
+                    },
+                    {
+                      value: 'MANUAL', // 직접입력
+                      node: (
+                        <FormRow2
+                          provider={provider}
+                          name={'learningSpaceName'}
+                          value={''}
+                          element={<Input />}
+                        />
+                      ),
+                    },
+                  ],
                 }}
               />
             }
@@ -273,7 +315,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
           {/*담당자*/}
           <FormRow2
             provider={provider}
-            name={'담당자'}
+            name={'learningSpaceName'}
             label={'담당자'}
             element={
               <InputModalSelectorFormField
@@ -283,18 +325,18 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
               />
             }
             validation={{
-              required: true,
+              required: false,
               format: 'object',
             }}
           />
           {/*담당자-연락처*/}
           <FormRow2
             provider={provider}
-            name={'담당자연락처'}
+            name={'coordinatorTelNo'}
             label={'담당자연락처'}
             element={
               <PhoneNumberFormField
-                fields={{ nationCode: '담당자연락처코드', number: '담당자연락처' }}
+                fields={{ nationCode: 'coordinatorTelCountryCode', number: 'coordinatorTelNo' }}
                 phoneNumberConfig={{
                   options: [{ value: 'KOR_82', label: '+82' }],
                 }}
@@ -304,9 +346,16 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
           {/*담당자-이메일*/}
           <FormRow2
             provider={provider}
-            name={'담당자이메일'}
+            name={'coordinatorEmail'}
             label={'담당자이메일'}
             element={<Input />}
+          />
+          {/*담당자 ID - hidden */}
+          <FormRow2
+            provider={provider}
+            name={'coordinatorId'}
+            type={'hidden'}
+            value={''}
           />
         </ContentsRow>
         {/*운영자*/}
@@ -314,7 +363,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
           {/*운영자*/}
           <FormRow2
             provider={provider}
-            name={'운영자'}
+            name={'operatorName'}
             label={'운영자'}
             element={
               <InputModalSelectorFormField
@@ -324,18 +373,18 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
               />
             }
             validation={{
-              required: true,
+              required: false,
               format: 'object',
             }}
           />
           {/*운영자-연락처*/}
           <FormRow2
             provider={provider}
-            name={'운영자연락처'}
+            name={'operatorTelNo'}
             label={'운영자연락처'}
             element={
               <PhoneNumberFormField
-                fields={{ nationCode: '운영자연락처코드', number: '운영자연락처' }}
+                fields={{ nationCode: 'operatorTelCountryCode', number: 'operatorTelNo' }}
                 phoneNumberConfig={{
                   options: [{ value: 'KOR_82', label: '+82' }],
                 }}
@@ -345,9 +394,16 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
           {/*운영자-이메일*/}
           <FormRow2
             provider={provider}
-            name={'운영자이메일'}
+            name={'operatorEmail'}
             label={'운영자이메일'}
             element={<Input />}
+          />
+          {/*운영자 ID - hidden */}
+          <FormRow2
+            provider={provider}
+            name={'operatorId'}
+            type={'hidden'}
+            value={''}
           />
         </ContentsRow>
       </div>
