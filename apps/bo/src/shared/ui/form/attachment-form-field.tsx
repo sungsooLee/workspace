@@ -1,24 +1,18 @@
 import { forwardRef, useEffect, useState } from 'react';
 import { Attachment } from '@learnway/ui'; // @learnway/ui에서 Attachment 컴포넌트 import
-import { BaseFormFieldProps, useS3Uploader } from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
-import { LEARNING_TYPE } from '@learnway/config';
+import {
+  BaseFormFieldProps,
+  DEFAULT_MULTIPART_THRESHOLD,
+  S3UploaderConfig,
+  useS3Uploader,
+} from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
 import { t } from 'i18next';
 
 /**
  * AttachmentFormField 컴포넌트의 props 인터페이스
  * 폼 필드로서 Attachment 컴포넌트를 래핑하여 폼 시스템과 통합합니다.
  */
-interface AttachmentFormFieldProps extends BaseFormFieldProps<string[]> {
-  /**
-   * 더미 속성 (현재 코드에서 사용되지 않음)
-   * @deprecated 이 prop은 현재 코드에서 사용되지 않습니다.
-   */
-  dummy?: any;
-  maxFileCount?: number;
-  maxFileSize?: number;
-  isDownloadCase?: boolean;
-  type: LEARNING_TYPE;
-}
+type AttachmentFormFieldProps = BaseFormFieldProps<string[]> & S3UploaderConfig;
 
 /**
  * 폼 필드용 썸네일 이미지 업로드 컴포넌트
@@ -33,24 +27,52 @@ const AttachmentFormFieldComponent = forwardRef<
 >(
   (
     {
+      s3Path,
+      groupConfig,
+      groupMode = 'batch',
+      auto = true,
+      async = true,
+      multipartThreshold = DEFAULT_MULTIPART_THRESHOLD,
+      acceptFiles = [],
       maxFileCount = 10,
-      maxFileSize = 1024 * 1024 * 50,
+      maxFileSize = 0,
       value,
       onChange,
       type,
-      isDownloadCase = false,
       ...props // 나머지 HTMLDivElement 속성들
     },
     ref, // forwardRef로 전달받은 Ref 객체
   ) => {
-    const { stats, files, addFiles, onPause, onRetry, onResume, onRemove } = useS3Uploader({
-      s3Path: 'upload/content/original',
+    console.log(
+      '🚀 ~ useS3Uploader:',
+      s3Path,
+      groupConfig,
+      groupMode,
+      auto,
+      async,
+      multipartThreshold,
+      acceptFiles,
       maxFileCount,
-    });
+      maxFileSize,
+    );
+    const { stats, files, addFiles, onPause, onRetry, onResume, onRemove, inputAccept } =
+      useS3Uploader({
+        s3Path,
+        groupConfig,
+        groupMode,
+        auto,
+        async,
+        multipartThreshold,
+        acceptFiles,
+        maxFileCount,
+        maxFileSize,
+      });
+    console.log('🚀 useS3Uploader ~ files:', files);
 
     const [errorMessage, setErrorMessage] = useState('');
 
     const handleAddFiles = (files: File[]) => {
+      console.log('🚀 ~ handleAddFiles ~ files:', files);
       setErrorMessage('');
       addFiles(files);
     };
@@ -68,17 +90,17 @@ const AttachmentFormFieldComponent = forwardRef<
     return (
       <Attachment
         files={files}
-        maxFileCount={maxFileCount}
-        maxFileSize={maxFileSize}
         addFiles={handleAddFiles}
         onRemove={onRemove}
         onPause={onPause}
         onResume={onResume}
         onRetry={onRetry}
+        inputAccept={inputAccept}
+        maxFileCount={maxFileCount}
+        maxFileSize={maxFileSize}
         guideText={t('LABEL.message.learningResourceFileUploadModal.uploaderGuideText')}
         errorMessage={errorMessage}
         wrapSize={'lg'}
-        isDownloadCase={isDownloadCase}
         {...props} // Attachment에 전달될 수 있는 나머지 props (예: className)
       />
     );

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { UploadFile, S3UploaderConfig, UploadStatus, UploadType } from './types';
+import { UploadFile, S3UploaderConfig, UploadType, DEFAULT_MULTIPART_THRESHOLD } from './types';
 import { acceptFilesToAccept, formatDate, getRandomId } from '@learnway/shared';
 import { formatFileSize, normalizePath, updateFile } from './utils';
 import {
@@ -13,8 +13,6 @@ import {
   abortMultiPartUpload,
   deleteFileInfo,
 } from './api';
-
-const DEFAULT_MULTIPART_THRESHOLD = 5 * 1024 * 1024; // 5MB
 
 /**
  * 새로운 S3 업로더 훅 - 단순화된 구조

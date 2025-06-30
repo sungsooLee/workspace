@@ -42,28 +42,25 @@ const AttachmentComponent = ({
   onRetry,
   inputAccept,
   maxFileCount,
-  maxFileSize,
+  maxFileSize = 10 * 1024 * 1024,
   isDownloadCase = false,
 }: AttachmentProps) => {
-  const isOverMaxFileCount = files.length >= maxFileCount;
+  // const isOverMaxFileCount = files.length >= maxFileCount;
 
   const [checkedValues, setCheckedValues] = useState<string[]>([]);
 
-  const onDrop = useCallback(
-    (acceptedFiles: File[]) => {
-      if (isOverMaxFileCount) return;
-      addFiles(acceptedFiles);
-    },
-    [files],
-  );
+  const onDrop = (acceptedFiles: File[]) => {
+    console.log('🚀 ~ acceptedFiles:', acceptedFiles);
+    // if (isOverMaxFileCount) return;
+    addFiles(acceptedFiles);
+  };
 
-  const { getRootProps, getInputProps, inputRef, open } = useDropzone({
+  const { getRootProps, getInputProps, open } = useDropzone({
     onDrop,
-    multiple: true,
-    maxFiles: maxFileCount,
+    multiple: maxFileCount > 1,
     maxSize: maxFileSize,
-    noClick: true,
-    noKeyboard: true,
+    // noClick: true,
+    // noKeyboard: true,
   });
 
   // 파일 다이얼로그 열기 + input 초기화
@@ -297,7 +294,7 @@ const AttachmentComponent = ({
             variant="primary"
             size="ts"
             onClick={handleOpen}
-            disabled={isOverMaxFileCount}
+            // disabled={isOverMaxFileCount}
           />
           {isDownloadCase && (
             <Button label="저장" type="button" variant="primary" size="ts" onClick={downloadFile} />
@@ -314,7 +311,7 @@ const AttachmentComponent = ({
                 {'영역을 클릭하거나 파일을 마우스로 끌어놓으세요'}
               </strong>
               <span className={styles.file_guide}>{`모든 파일 확장자`}</span>
-              <input ref={inputRef} {...getInputProps()} accept={inputAccept} />
+              <input {...getInputProps()} accept={inputAccept} />
             </Button>
           </div>
         ) : (

@@ -1,3 +1,4 @@
+export const DEFAULT_MULTIPART_THRESHOLD = 5 * 1024 * 1024; // 5MB
 export interface S3UploaderConfig {
   s3Path: string;
   groupConfig?: {

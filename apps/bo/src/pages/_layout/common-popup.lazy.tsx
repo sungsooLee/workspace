@@ -669,6 +669,11 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'attachment',
       type: 'attachment',
+      s3Path: 'upload/temp/attachment',
+      groupConfig: {
+        affairsType: 'PMS',
+        languageCode: 'ko',
+      },
       label: '',
       value: '',
     },
