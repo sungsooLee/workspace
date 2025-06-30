@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useState } from 'react';
 import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css';
 import {
   IcoComplete02,
@@ -11,14 +11,14 @@ import {
 import { cn } from '@learnway/shared';
 import { UploadFile, useFileManager } from '@learnway/hooks';
 import { useDropzone } from 'react-dropzone';
-import { Button } from '../button/button';
-import { Badge } from '../badge/badge';
-import { ProgressBar } from '../progress/progress-bar/progress-bar';
+import { AttachmentProps } from './types';
+import { t } from 'i18next';
 import { Info, Paperclip } from 'lucide-react';
+import { ProgressBar } from '../progress/progress-bar/progress-bar';
+import { Badge } from '../badge/badge';
+import { Button } from '../button/button';
 import { Checkbox } from '../checkbox/checkbox';
 import { useModal } from '../modal/modal.hook';
-import { t } from 'i18next';
-import { AttachmentProps } from './types';
 
 function formatBytes(bytes: number, decimals = 2): string {
   if (bytes === 0) return '0 Bytes';
@@ -42,30 +42,33 @@ const AttachmentComponent = ({
   onRetry,
   inputAccept,
   maxFileCount,
-  maxFileSize = 10 * 1024 * 1024,
+  maxFileSize,
   isDownloadCase = false,
+  wrapSize,
+  guideText,
+  errorMessage,
 }: AttachmentProps) => {
-  // const isOverMaxFileCount = files.length >= maxFileCount;
+  const isOverMaxFileCount = files.length >= maxFileCount;
 
   const [checkedValues, setCheckedValues] = useState<string[]>([]);
 
-  const onDrop = (acceptedFiles: File[]) => {
-    console.log('🚀 ~ acceptedFiles:', acceptedFiles);
-    // if (isOverMaxFileCount) return;
+  const onDrop = useCallback((acceptedFiles: File[]) => {
     addFiles(acceptedFiles);
-  };
-
+  }, []);
   const { getRootProps, getInputProps, open } = useDropzone({
     onDrop,
-    multiple: maxFileCount > 1,
-    maxSize: maxFileSize,
-    // noClick: true,
-    // noKeyboard: true,
+    maxFiles: maxFileSize || 999,
   });
 
   // 파일 다이얼로그 열기 + input 초기화
   const handleOpen = () => {
     open();
+  };
+
+  const handleCheckChange = (checked: boolean, checkedValue: string) => {
+    const checkOptions = [...checkedValues, checkedValue];
+    const unCheckOptions = checkedValues?.filter((d: string) => d !== checkedValue);
+    setCheckedValues(checked ? checkOptions : unCheckOptions);
   };
 
   const { fileDownload, filesDownload } = useFileManager();
@@ -105,12 +108,6 @@ const AttachmentComponent = ({
     } else {
       await filesDownload(checkedValues);
     }
-  };
-
-  const handleCheckChange = (checked: boolean, checkedValue: string) => {
-    const checkOptions = [...checkedValues, checkedValue];
-    const unCheckOptions = checkedValues?.filter((d: string) => d !== checkedValue);
-    setCheckedValues(checked ? checkOptions : unCheckOptions);
   };
 
   /**
@@ -271,7 +268,6 @@ const AttachmentComponent = ({
     // 파일 상태에 따른 컴포넌트 반환 (일치하지 않는 상태는 기본 상태로 처리)
     return statusMap[file.status] || statusMap.default;
   };
-
   return (
     <div className={cn(styles.start, styles.wrap)}>
       <div className="flex items-center justify-between rounded bg-white px-4 py-3">
@@ -294,7 +290,7 @@ const AttachmentComponent = ({
             variant="primary"
             size="ts"
             onClick={handleOpen}
-            // disabled={isOverMaxFileCount}
+            disabled={isOverMaxFileCount}
           />
           {isDownloadCase && (
             <Button label="저장" type="button" variant="primary" size="ts" onClick={downloadFile} />
@@ -305,7 +301,7 @@ const AttachmentComponent = ({
       <div className={cn(styles.file_wrap, styles.type_excel)} {...getRootProps()}>
         {files.length === 0 ? (
           <div className={styles.attach_area}>
-            <Button className={styles.btn_file} onClick={handleOpen}>
+            <Button className={styles.btn_file}>
               <IcoUploadCloud width={'40'} height={'40'} stroke={'#131C30'} />
               <strong className={styles.file_title}>
                 {'영역을 클릭하거나 파일을 마우스로 끌어놓으세요'}
