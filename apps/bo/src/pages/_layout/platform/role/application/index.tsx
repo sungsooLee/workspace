@@ -8,7 +8,11 @@ import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
-import { useApproveRoleApplication, roleApplicationQueryOptions } from '@entities/role';
+import {
+  useApproveRoleApplication,
+  roleApplicationQueryOptions,
+  roleManagerQueryOptions,
+} from '@entities/role';
 import { EnGlobalConst } from '@types';
 import { RejectModal, RoleApplicationHistoryModal } from '@features/shared';
 import { MyRoleExtendModal } from '@features/user/my-page/ui/my-role-extend-modal';
@@ -17,6 +21,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
+import { size } from 'lodash';
 
 export const Route = createFileRoute('/_layout/platform/role/application/')({
   component: RouteComponent,
@@ -52,20 +57,31 @@ function RouteComponent() {
   useEffect(() => {
     if (!loginUser) return;
     if (loginUser.activeTenant?.tenantId) {
-      (async () => {
-        const companys = await queryClient.fetchQuery(
-          companysQueryOptions.tenantCompany(loginUser.activeTenant?.tenantId),
-        );
-
-        const companyIdOptions = companys.map((item) => ({
-          label: item.name,
-          value: item.companyId,
-        }));
-        console.log(companyIdOptions);
-        setOptions('companyId', companyIdOptions);
-      })();
+      getCompanyOptions(loginUser.activeTenant?.tenantId);
+      getRoleOptions(loginUser.activeTenant?.tenantId);
     }
   }, [loginUser]);
+
+  const getCompanyOptions = async (tenantId?: number) => {
+    const companies = await queryClient.fetchQuery(companysQueryOptions.tenantCompany(tenantId));
+
+    const companyIdOptions = companies.map((item) => ({
+      label: item.name,
+      value: item.companyId,
+    }));
+    setOptions('companyId', companyIdOptions);
+  };
+
+  const getRoleOptions = async (tenantId?: number) => {
+    const roles = await queryClient.fetchQuery(
+      roleManagerQueryOptions.list({ tenantId: tenantId, size: 5000 }),
+    );
+    const roleIdOptions = roles.content.map((item: any) => ({
+      label: item.name,
+      value: item.roleId,
+    }));
+    setOptions('roleId', roleIdOptions);
+  };
 
   const handleOnSearch = useCallback((data: any) => {
     console.log('data', data);
@@ -197,6 +213,7 @@ const searchConfig: SearchBoxConfig = {
         type: 'dropdown',
         label: t('회사'),
         value: '',
+        format: 'object',
         isSearchable: true,
         isClearable: true,
         placeholder: '입력 선택',
@@ -224,9 +241,6 @@ const searchConfig: SearchBoxConfig = {
         value: '',
         format: 'object',
         presetOptionLabel: t('LABEL.form.label.all'),
-        optionsConfig: {
-          codeGroup: CODE_GROUP['manual.bo.my.role.roleId'],
-        },
       },
       {
         name: 'status',
