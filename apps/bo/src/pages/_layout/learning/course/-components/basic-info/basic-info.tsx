@@ -162,11 +162,12 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
               <ChipListModalSelectorFormField
                 modalConfig={{ content: <UserGroupTabsChoiceModal /> }}
                 chipList={{
-                  labelField: 'name',
-                  valueField: 'id',
+                  labelField: 'fullPath',
+                  valueField: 'key',
                   wordwrap: true,
                 }}
                 showAddButton
+                // transformModalData={(data: any) => console.log('data', data)}
               />
             }
           />
