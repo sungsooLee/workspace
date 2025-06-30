@@ -227,7 +227,7 @@ export interface GridProps<T> {
    * @param row - 행 데이터
    * @returns 선택 가능하면 true, 불가능하면 false
    */
-  getRowCanSelect?: (row: T) => boolean;
+  isRowSelectable?: (row: T) => boolean;
 
   /**
    * 데이터 변경 시 호출되는 콜백 함수입니다.
