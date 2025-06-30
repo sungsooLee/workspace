@@ -22,7 +22,13 @@ const RoleApplicationHistoryModalComponent = ({ applicationId }: { applicationId
     <ModalContainer>
       <ModalTitle>{t('이력')}</ModalTitle>
       <ModalBody>
-        <GridBox data={gridData} columns={columns} title={t('이력 목록')} visibleRowCount={4} />
+        <GridBox
+          data={gridData}
+          columns={columns}
+          title={t('이력 목록')}
+          visibleRowCount={4}
+          height={200}
+        />
       </ModalBody>
     </ModalContainer>
   );
