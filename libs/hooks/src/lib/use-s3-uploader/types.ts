@@ -1,3 +1,4 @@
+export const DEFAULT_MULTIPART_THRESHOLD = 5 * 1024 * 1024; // 5MB
 export interface S3UploaderConfig {
   s3Path: string;
   groupConfig?: {
@@ -20,6 +21,7 @@ export type UploadStatus =
   | 'uploading' // 업로드 중
   | 'paused' // 업로드 일시정지
   | 'completed' // 업로드 완료
+  | 'fetched' // 서버에서 가져옴
   | 'failed' // 업로드 실패
   | 'aborted' // 업로드 중단
   | 'validating-error'; // 파일 검증 실패
@@ -38,7 +40,7 @@ export enum UploadType {
 // https://developer.mozilla.org/ko/docs/Web/API/AbortController
 export interface UploadFile {
   id: string; // 파일 아이디
-  file: File; // 파일
+  file?: File; // 파일
   uploadType: UploadType;
   extension: string; // 확장자
   s3FileName: string; // s3 업로드 할 파일명

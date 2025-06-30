@@ -27,10 +27,12 @@ export interface FileInfo {
   serverFileName: string;
   fileSize: number;
   detailPath: string;
+  filePath: string;
   fileType: string;
   uploadStatus: string;
   deleteYn: boolean;
   useYn: boolean;
+  fileUrl?: string;
 }
 // 파일 그룹 정보
 export interface FileGroupInfo {
