@@ -7,7 +7,6 @@ import {
   S3UploaderConfig,
   useS3Uploader,
 } from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
-import { t } from 'i18next';
 
 /**
  * AttachmentFormField 컴포넌트의 props 인터페이스
@@ -37,6 +36,7 @@ const AttachmentFormFieldComponent = forwardRef<
       acceptFiles = [],
       maxFileCount = 10,
       maxFileSize = 0,
+      name,
       value,
       onChange,
       type,
@@ -57,30 +57,36 @@ const AttachmentFormFieldComponent = forwardRef<
         maxFileSize,
       });
 
+    const [fileUuids, setFileUuids] = useState<string[]>([]);
+    console.log('🚀 ~ name, fileUuids:', name, fileUuids);
+
     /**
      * `value` prop (부모 폼으로부터 받은 이미지 경로 배열)이 변경될 때마다
      * 내부 `options` 상태를 동기화합니다.
      * 이를 통해 폼 외부에서 `value`가 변경되어도 UI가 올바르게 업데이트됩니다.
      */
     useEffect(() => {
-      // setFiles(valueToOptions(value));
+      setFileUuids(value);
     }, [value]); // `value` prop이 변경될 때마다 실행
 
     // `Attachment` 컴포넌트를 렌더링하고 필요한 props를 전달합니다.
     return (
-      <Attachment
-        files={files}
-        addFiles={addFiles}
-        onRemove={onRemove}
-        onPause={onPause}
-        onResume={onResume}
-        onRetry={onRetry}
-        inputAccept={inputAccept}
-        maxFileCount={maxFileCount}
-        maxFileSize={maxFileSize}
-        wrapSize={'lg'}
-        {...props} // Attachment에 전달될 수 있는 나머지 props (예: className)
-      />
+      <>
+        <Attachment
+          files={files}
+          addFiles={addFiles}
+          onRemove={onRemove}
+          onPause={onPause}
+          onResume={onResume}
+          onRetry={onRetry}
+          inputAccept={inputAccept}
+          maxFileCount={maxFileCount}
+          maxFileSize={maxFileSize}
+          wrapSize={'lg'}
+          {...props} // Attachment에 전달될 수 있는 나머지 props (예: className)
+        />
+        <input type="hidden" name={name} value={fileUuids} />
+      </>
     );
   },
 );
