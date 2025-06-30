@@ -397,7 +397,7 @@ const GridBoxComponent = <T extends object>(
         onChange={props.onChange || onDataChange}
         onStateChange={handleStateChange}
         onTableInstanceChange={handleTableInstanceChange}
-        getRowCanSelect={props.getRowCanSelect as ((row: object) => boolean) | undefined}
+        isRowSelectable={props.isRowSelectable as ((row: object) => boolean) | undefined}
       />
       {/* 페이지네이션 */}
       {!paginationProps.disabled && (

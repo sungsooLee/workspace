@@ -228,7 +228,7 @@ export function useGridTable<T extends object>(
       </div>
     ),
     cell: ({ row }: { row: Row<T> }) => {
-      const canSelect = props.getRowCanSelect ? props.getRowCanSelect(row.original) : true;
+      const canSelect = props.isRowSelectable ? props.isRowSelectable(row.original) : true;
       return (
         <div style={{ width: '100%', textAlign: 'center', paddingRight: 0 }}>
           <Checkbox
@@ -349,8 +349,8 @@ export function useGridTable<T extends object>(
     getCoreRowModel: getCoreRowModel(),
     getGroupedRowModel: getGroupedRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
-    enableRowSelection: props.getRowCanSelect
-      ? (row: Row<T>) => props.getRowCanSelect!(row.original)
+    enableRowSelection: props.isRowSelectable
+      ? (row: Row<T>) => props.isRowSelectable!(row.original)
       : true,
     enableSubRowSelection: false,
     onRowSelectionChange: multiple

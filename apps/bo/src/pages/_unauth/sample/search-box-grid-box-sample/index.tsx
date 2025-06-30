@@ -37,7 +37,7 @@ function RouteComponent() {
           config={gConfig}
           showNumberingColumn
           multiple
-          getRowCanSelect={(row: LabelMessage) => row.labelMessageMultilingulKey !== 'key5'} // 라벨/메세지 코드 값이 'key5' 인 경우 선택 불가
+          isRowSelectable={(row: LabelMessage) => row.labelMessageMultilingulKey !== 'key5'} // 라벨/메세지 코드 값이 'key5' 인 경우 선택 불가
           onRowDoubleClick={handleOnRowDoubleClick}
         />
       </MainContents>
