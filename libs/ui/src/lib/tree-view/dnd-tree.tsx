@@ -719,43 +719,6 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
         </div>
       </div>
 
-      {/* AFTER 드롭 영역 - 더 큰 영역으로 개선 */}
-      <div
-        ref={setDropAfterRef}
-        style={{
-          position: 'relative',
-          height: isGlobalDragging ? '10px' : '2px',
-          // height: '10px',
-
-          backgroundColor:
-            (isOverAfter || (isDraggedFromOtherTree && dropPosition === 'AFTER')) &&
-            isValidDropTarget()
-              ? 'rgba(33, 150, 243, 0.2)'
-              : 'transparent',
-          marginTop: '0px',
-          marginLeft: `${level * 28}px`,
-          borderRadius: '2px',
-          // transition: 'height 0.2s ease',
-        }}
-      >
-        {/* 드롭 라인 표시 */}
-        {(isOverAfter || (isDraggedFromOtherTree && dropPosition === 'AFTER')) &&
-          isValidDropTarget() && (
-            <div
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '0',
-                right: '0',
-                height: '2px',
-                backgroundColor: '#2196f3',
-                borderRadius: '1px',
-                transform: 'translateY(-50%)',
-              }}
-            />
-          )}
-      </div>
-
       {/* 자식 노드들 */}
       {hasChildren && isExpanded && (
         <div className={styles.tree_children}>
@@ -786,6 +749,76 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
               isFirstSibling={index === 0}
             />
           ))}
+
+          {/* 펼쳐진 노드의 모든 children 이후에 이 노드의 AFTER 드롭존 표시 */}
+          <div
+            ref={setDropAfterRef}
+            style={{
+              position: 'relative',
+              height: isGlobalDragging ? '10px' : '2px',
+              backgroundColor:
+                (isOverAfter || (isDraggedFromOtherTree && dropPosition === 'AFTER')) &&
+                isValidDropTarget()
+                  ? 'rgba(33, 150, 243, 0.2)'
+                  : 'transparent',
+              marginTop: '0px',
+              marginLeft: `${level * 28}px`,
+              borderRadius: '2px',
+            }}
+          >
+            {/* 드롭 라인 표시 */}
+            {(isOverAfter || (isDraggedFromOtherTree && dropPosition === 'AFTER')) &&
+              isValidDropTarget() && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '0',
+                    right: '0',
+                    height: '2px',
+                    backgroundColor: '#2196f3',
+                    borderRadius: '1px',
+                    transform: 'translateY(-50%)',
+                  }}
+                />
+              )}
+          </div>
+        </div>
+      )}
+
+      {/* AFTER 드롭 영역 - children이 없거나 접혀있는 경우에만 표시 */}
+      {(!hasChildren || !isExpanded) && (
+        <div
+          ref={setDropAfterRef}
+          style={{
+            position: 'relative',
+            height: isGlobalDragging ? '10px' : '2px',
+            backgroundColor:
+              (isOverAfter || (isDraggedFromOtherTree && dropPosition === 'AFTER')) &&
+              isValidDropTarget()
+                ? 'rgba(33, 150, 243, 0.2)'
+                : 'transparent',
+            marginTop: '0px',
+            marginLeft: `${level * 28}px`,
+            borderRadius: '2px',
+          }}
+        >
+          {/* 드롭 라인 표시 */}
+          {(isOverAfter || (isDraggedFromOtherTree && dropPosition === 'AFTER')) &&
+            isValidDropTarget() && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '0',
+                  right: '0',
+                  height: '2px',
+                  backgroundColor: '#2196f3',
+                  borderRadius: '1px',
+                  transform: 'translateY(-50%)',
+                }}
+              />
+            )}
         </div>
       )}
     </div>
