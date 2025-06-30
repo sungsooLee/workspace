@@ -3,7 +3,7 @@ import { cn } from '@learnway/shared';
 import boStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import foStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
-import { Button, DynamicFormField, Tooltip } from '@learnway/ui';
+import { Button, DynamicFormField, Tooltip } from '../../index';
 import {
   DynamicFormContextProvider,
   FormConfig,
@@ -75,19 +75,7 @@ const DynamicFormContainer: FC<FormRowProps> = ({
   const styles = style === 'bo' ? boStyles : foStyles;
   const { t } = useTranslation();
 
-  // fieldConfig가 제공되면 필드를 등록하고 validation 설정
-  useEffect(() => {
-    if (fieldConfig && provider.registerField) {
-      // FormRow의 name prop을 fieldConfig.name으로 자동 설정
-      const configWithName = { ...fieldConfig, name } as FormConfig;
-      provider.registerField(configWithName);
-
-      // fieldConfig에 validation이 있으면 동적으로 추가
-      if (fieldConfig.validation && provider.addValidator) {
-        provider.addValidator(name, fieldConfig.validation);
-      }
-    }
-  }, [fieldConfig, name, provider]);
+  // validation은 FormRow2에서 직접 처리하므로 여기서는 제거
 
   const { formConfig, isRequired, error, fieldRefs } = useFormRow2(
     provider,
@@ -162,7 +150,7 @@ const DynamicFormContainer: FC<FormRowProps> = ({
           {formConfig.tooltip && (
             <Tooltip
               className={styles.tooltip}
-              // side="right" //툴팁 위치가 제각각 다르게 노출 되는 현상있음.
+              // side="right" //툴크 위치가 제각각 다르게 노출 되는 현상있음.
               // align="start"
               content={t(formConfig.tooltip as any)}
             >

@@ -13,6 +13,7 @@ import {
 import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import {
+  queryKeys,
   queryOptions,
   useCreateLabelMessage,
   useFetchLabelMessage,
@@ -63,7 +64,6 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
   const { mutate: create } = useCreateLabelMessage({
     onSuccess: async (response: any) => {
       await showSaveComplete();
-      console.log('useCreateLabelMessage :: onSuccess', response);
       setResetKey((prev) => prev + 1);
       onSuccessSave?.(response);
       setIsSubmitting(false);
@@ -77,10 +77,10 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
   const { mutate: update } = useUpdateLabelMessage({
     onSuccess: async (response: any) => {
       await showUpdateComplete();
-      console.log('useUpdateLabelMessage :: onSuccess', response);
       setResetKey((prev) => prev + 1);
       onSuccessSave?.(response);
       setIsSubmitting(false);
+      queryClient.invalidateQueries({ queryKey: queryKeys.detail(response?.labelMessageId) });
     },
     onError: () => {
       setIsSubmitting(false);

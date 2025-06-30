@@ -17,7 +17,7 @@ import { formFieldConfig } from './form-field-config';
  * @param element - 렌더링할 폼 필드 컴포넌트
  */
 type FormRowProps = Omit<BaseFormRowProps, 'formFieldConfig' | 'fieldConfig'> &
-  Partial<Omit<FormRowFieldConfig, 'name'>>;
+  Partial<Omit<FormRowFieldConfig, 'name' | 'label' | 'tooltip'>>;
 
 const FormRowComponent: FC<FormRowProps> = ({
   className,
@@ -41,7 +41,7 @@ const FormRowComponent: FC<FormRowProps> = ({
   options,
   ...restProps
 }) => {
-  // 개별 props들로 fieldConfig 구성
+  // 간단한 fieldConfig 구성 (validation 처리 제거)
   const fieldConfig: FormRowFieldConfig = {
     type: type || 'custom',
     label,

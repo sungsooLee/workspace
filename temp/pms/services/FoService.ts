@@ -693,16 +693,21 @@ export class FoService {
     /**
      * 알람 보내기
      * 알람 보내기
+     * @param userUuid
      * @param requestBody
      * @returns any OK
      * @throws ApiError
      */
     public static sendAlarm(
+        userUuid: string,
         requestBody: com_ever_edu_pms_notification_dto_req_AlarmSendReqDto,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v1/alarm/send',
+            url: '/api/v1/alarm/send/{userUuid}',
+            path: {
+                'userUuid': userUuid,
+            },
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -1107,12 +1112,16 @@ export class FoService {
     }
     /**
      * 내 역할 신청 목록 조회
-     * 현재 로그인한 사용자의 역할 신청 목록을 조회한다.
+     * 현재 로그인한 사용자의 역할 신청 목록을 조회한다.(정렬 키: 역할명(roleEntity.name), 테넌트명(roleEntity.tenantEntity.tenantName), 역할 시작일(startDate), 역할 종료일(endDate), 신청 상태(status))
      * @param pageable
      * @param roleId
      * @param tenantId
      * @param channelUuid
      * @param isExpired
+     * @param startDate
+     * @param endDate
+     * @param createdDateFrom
+     * @param createdDateTo
      * @param status
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleApplicationResDto OK
      * @throws ApiError
@@ -1123,6 +1132,10 @@ export class FoService {
         tenantId?: number,
         channelUuid?: string,
         isExpired?: boolean,
+        startDate?: string,
+        endDate?: string,
+        createdDateFrom?: string,
+        createdDateTo?: string,
         status?: 'NEW' | 'EXTEND' | 'APPROVED' | 'REJECTED',
     ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleApplicationResDto> {
         return __request(OpenAPI, {
@@ -1134,6 +1147,10 @@ export class FoService {
                 'tenantId': tenantId,
                 'channelUuid': channelUuid,
                 'isExpired': isExpired,
+                'startDate': startDate,
+                'endDate': endDate,
+                'createdDateFrom': createdDateFrom,
+                'createdDateTo': createdDateTo,
                 'status': status,
             },
             errors: {
@@ -1148,21 +1165,18 @@ export class FoService {
     /**
      * 역할 신청 이력 조회
      * 역할 신청 이력을 조회한다.
-     * @param userUuid
-     * @param createdDate
+     * @param roleApplicationId
      * @returns com_ever_edu_pms_role_dto_res_RoleApplicationHistoryResDto OK
      * @throws ApiError
      */
     public static getRoleApplicationHistories(
-        userUuid: string,
-        createdDate: string,
+        roleApplicationId: number,
     ): CancelablePromise<Array<com_ever_edu_pms_role_dto_res_RoleApplicationHistoryResDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/user/api/v1/role-applications/histories',
             query: {
-                'userUuid': userUuid,
-                'createdDate': createdDate,
+                'roleApplicationId': roleApplicationId,
             },
             errors: {
                 400: `Bad Request`,
@@ -1277,13 +1291,19 @@ export class FoService {
     /**
      * 알람 신청
      * 알람 신청
+     * @param userUuid
      * @returns org_springframework_web_servlet_mvc_method_annotation_SseEmitter OK
      * @throws ApiError
      */
-    public static subscribe(): CancelablePromise<org_springframework_web_servlet_mvc_method_annotation_SseEmitter> {
+    public static subscribe(
+        userUuid: string,
+    ): CancelablePromise<org_springframework_web_servlet_mvc_method_annotation_SseEmitter> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/alarm/subscribe',
+            url: '/api/v1/alarm/subscribe/{userUuid}',
+            path: {
+                'userUuid': userUuid,
+            },
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
@@ -1296,13 +1316,19 @@ export class FoService {
     /**
      * 알람 해지
      * 알람 해지
+     * @param id
      * @returns any OK
      * @throws ApiError
      */
-    public static close(): CancelablePromise<any> {
+    public static close(
+        id: string,
+    ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/alarm/close',
+            url: '/api/v1/alarm/close/{id}',
+            path: {
+                'id': id,
+            },
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,

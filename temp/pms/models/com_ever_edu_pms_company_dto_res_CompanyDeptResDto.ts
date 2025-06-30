@@ -3,6 +3,9 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { com_ever_edu_pms_company_dto_res_CompanyDeptSimpleResDto } from './com_ever_edu_pms_company_dto_res_CompanyDeptSimpleResDto';
+/**
+ * 부서
+ */
 export type com_ever_edu_pms_company_dto_res_CompanyDeptResDto = {
     /**
      * 부서ID

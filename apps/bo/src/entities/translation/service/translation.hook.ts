@@ -2,25 +2,14 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { mutateOptions } from './translation.queries';
 import { useModal } from '@learnway/ui';
 import { translationQueryOptions as queryOptions } from './translation.queries';
+import { MultilingualUpdateReqParams } from '@types';
 
 const useTranslationHook = (options?: any) => {
   const { alert: openAlert } = useModal();
-  const { mutate: saveMutate } = useMutation({
-    ...mutateOptions.create(),
-    onSuccess: async (data: any, variables, context) => {
-      openAlert({
-        content: '정상적으로 저장되었습니다.',
-        type: 'complete',
-      });
-      if (options?.onSuccess) {
-        options.onSuccess(data, variables, context);
-      }
-    },
-  });
 
   const { mutate: updateMutate } = useMutation({
     ...mutateOptions.update(),
-    onSuccess: async (data: any, variables, context) => {
+    onSuccess: async (data, variables, context) => {
       console.log('data => ', data);
       openAlert({
         content: '정상적으로 수정되었습니다.',
@@ -42,18 +31,15 @@ const useTranslationHook = (options?: any) => {
     },
   });
 
-  const handleSave = (saveData: any) => {
-    saveMutate(saveData);
-  };
-  const handleUpdate = (modifyData: any) => {
+  const handleUpdate = (modifyData: MultilingualUpdateReqParams) => {
     updateMutate(modifyData);
   };
+
   const handleCreateByExcel = (saveData: any) => {
     createByExcelMutate(saveData);
   };
 
   return {
-    save: handleSave,
     update: handleUpdate,
     createByExcel: handleCreateByExcel,
   };
@@ -66,8 +52,6 @@ export function useTranslationStatus(multilingualId: number) {
 }
 
 export function useDeployTranslation(options: any) {
-  const queryClient = useQueryClient();
-
   const mutation = useMutation({
     ...mutateOptions.deploy(),
     onSuccess: async (dataTagErrorSymbol, variables, context) => {
