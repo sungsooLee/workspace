@@ -86,10 +86,6 @@ export interface ButtonComponentProps extends React.ButtonHTMLAttributes<HTMLBut
    */
   underline?: boolean;
   /**
-   * 화살표 아이콘 표시 여부
-   */
-  arrowIcon?: boolean;
-  /**
    * 클릭 이벤트 발생 시 이벤트 전파를 중지할지 여부
    */
   stopPropagation?: boolean;
@@ -113,7 +109,6 @@ const ButtonComponent = forwardRef<HTMLButtonElement, ButtonComponentProps>(
       size,
       label,
       underline = false,
-      arrowIcon = false,
       type = 'button',
       onClick,
       stopPropagation,
@@ -169,8 +164,8 @@ const ButtonComponent = forwardRef<HTMLButtonElement, ButtonComponentProps>(
         {/* 아이콘 정렬이 'right'이고 icon prop이 있을 때 아이콘 표시 */}
         {iconAlign === 'right' && icon}
 
-        {/* arrowIcon이 true 일때 화살표 아이콘 표시 */}
-        {arrowIcon && <IcoArrowForward className={styles.icon_arrow} />}
+        {/* variant가 arrow 일때 화살표 아이콘 표시 */}
+        {variant === 'arrow' && <IcoArrowForward className={styles.icon_arrow} />}
       </button>
     );
   },

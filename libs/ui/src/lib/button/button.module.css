@@ -320,5 +320,6 @@
 }
 .arrow {
   .icon_arrow {
+    @apply h-[16px] w-[16px] stroke-[var(--gray35)];
   }
 }
