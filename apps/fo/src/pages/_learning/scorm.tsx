@@ -14,18 +14,12 @@ import { BrowserFooter, MobileResponsiveContainerFooter } from '@shared/m.ui';
 
 import styles from '@learnway/styles/fo/pages/_layout/my-page/privacy/withdraw-menbership.module.css';
 
-import ScormPlayer from '../../features/scorm/ui/scorm-player';
+import { ScormPlayer } from '../../features/scorm/ui/scorm-player';
 
 export const Route = createFileRoute('/_learning/scorm')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  return (
-    <div className={`${styles.start} ${styles.secession}`}>
-      <div className={styles.bullet_notice}>
-        <ScormPlayer />
-      </div>
-    </div>
-  );
+  return <ScormPlayer contentUuid="2f17e8a6-a160-4768-8bd0-0f5f74b2acdc" />;
 }

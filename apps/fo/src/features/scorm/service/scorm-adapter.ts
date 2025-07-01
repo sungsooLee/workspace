@@ -73,7 +73,7 @@ const SCORM2004_DIAGNOSTIC = {
 
 function debug(str: string, ...optionParams: any[]) {
   console.log(str, ...optionParams);
-  console.trace();
+  //console.trace();
   //if(isDebug){
   //    $("#debugArea").append(str+"</br>");
   //    var dwin=document.getElementById("debugArea");
