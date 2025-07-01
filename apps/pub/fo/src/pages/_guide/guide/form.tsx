@@ -152,11 +152,14 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
               </span>
             </label>
             {/* file upload case */}
-            <div className={cn(formStyles.input_box, formStyles.line)}>
-              <Input id="name-1-2" type="text" value="업로드 파일명" className="bd_none" />
-              <span className={formStyles.count}>
-                <em className={formStyles.num}>7</em>/150
-              </span>
+            <div className={cn(formStyles.input_box)}>
+              <Input
+                id="name-1-2"
+                type="text"
+                value="업로드 파일명"
+                className="bd_none"
+                maxLength={150}
+              />
             </div>
           </div>
         </ContentsRow>
@@ -256,12 +259,14 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                 className={formStyles.btn_toggle}
                 onlyIcon
                 onClick={() => toggleContent(1)}
-                aria-expanded={toggleSections[1] || false}>
+                aria-expanded={toggleSections[1] || false}
+              >
                 <IcoArrowDown width={20} height={20} stroke="#4C515E" />
               </Button>
             </label>
             <div
-              className={`${formStyles.input_box_wrap} ${toggleSections[1] ? formStyles.open : ''}`}>
+              className={`${formStyles.input_box_wrap} ${toggleSections[1] ? formStyles.open : ''}`}
+            >
               <div className={formStyles.input_box}>
                 <Input id="name-1-7" type="text" disabled value="김현대" placeholder="" />
                 <Button variant="gray" size="lg">
@@ -330,7 +335,8 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                 className={formStyles.tooltip}
                 side="right"
                 align="start"
-                content={'tooltip content'}>
+                content={'tooltip content'}
+              >
                 <Button onlyIcon>
                   <IcoAlertCircle width={16} height={17} fill="#A9AFB8" />
                 </Button>
@@ -346,7 +352,6 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                 placeholder="한글, 영문, 숫자 포함 9자 이하"
                 showInput
                 prefixCharacter="#"
-                onChange={handleChange}
               />
             </div>
             <p className={formStyles.text_limit}>
@@ -364,12 +369,14 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                 className={formStyles.btn_toggle}
                 onlyIcon
                 onClick={() => toggleContent(2)}
-                aria-expanded={toggleSections[2] || false}>
+                aria-expanded={toggleSections[2] || false}
+              >
                 <IcoArrowDown width={20} height={20} stroke="#4C515E" />
               </Button>
             </label>
             <div
-              className={`${formStyles.input_box_wrap} ${toggleSections[2] ? formStyles.open : ''}`}>
+              className={`${formStyles.input_box_wrap} ${toggleSections[2] ? formStyles.open : ''}`}
+            >
               <div className={formStyles.input_box}>
                 <Textarea
                   id="name-1-9"
@@ -377,12 +384,10 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                   cols={33}
                   placeholder="컨텐츠 개요는 AI 자동 추출되어 표기됩니다."
                   resize="none"
-                  size="lg"
+                  maxLength={2500}
+                  readOnly
                 />
               </div>
-              <p className={formStyles.text_limit}>
-                <em className={formStyles.num}>0</em>/2500
-              </p>
             </div>
           </div>
         </ContentsRow>
@@ -396,12 +401,14 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                 className={formStyles.btn_toggle}
                 onlyIcon
                 onClick={() => toggleContent(3)}
-                aria-expanded={toggleSections[3] || false}>
+                aria-expanded={toggleSections[3] || false}
+              >
                 <IcoArrowDown width={20} height={20} stroke="#4C515E" />
               </Button>
             </label>
             <div
-              className={`${formStyles.input_box_wrap} ${toggleSections[3] ? formStyles.open : ''}`}>
+              className={`${formStyles.input_box_wrap} ${toggleSections[3] ? formStyles.open : ''}`}
+            >
               <div className={formStyles.input_box}>
                 <Textarea
                   id="name-1-10"
@@ -409,12 +416,10 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                   cols={33}
                   placeholder="키워드는 AI 자동 추출되어 표기됩니다."
                   resize="none"
-                  size="lg"
+                  maxLength={2500}
+                  disabled
                 />
               </div>
-              <p className={formStyles.text_limit}>
-                <em className={formStyles.num}>0</em>/2500
-              </p>
             </div>
           </div>
         </ContentsRow>
@@ -470,12 +475,14 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                 className={formStyles.btn_toggle}
                 onlyIcon
                 onClick={() => toggleContent(4)}
-                aria-expanded={toggleSections[4] || false}>
+                aria-expanded={toggleSections[4] || false}
+              >
                 <IcoArrowDown width={20} height={20} stroke="#4C515E" />
               </Button>
             </label>
             <div
-              className={`${formStyles.input_box_wrap} ${toggleSections[4] ? formStyles.open : ''}`}>
+              className={`${formStyles.input_box_wrap} ${toggleSections[4] ? formStyles.open : ''}`}
+            >
               <div className={formStyles.input_box}>
                 <Dropdown
                   className={cn(formStyles.select_option, formStyles.lg)}
@@ -555,7 +562,8 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                 className={formStyles.tooltip}
                 side="right"
                 align="start"
-                content={'마켓플레이스 공개설정111111'}>
+                content={'마켓플레이스 공개설정111111'}
+              >
                 <Button onlyIcon>
                   <IcoAlertCircle width={16} height={17} fill="#A9AFB8" />
                 </Button>
@@ -583,7 +591,8 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                 className={formStyles.tooltip}
                 side="right"
                 align="start"
-                content={'공유채널 설정2222222'}>
+                content={'공유채널 설정2222222'}
+              >
                 <Button onlyIcon>
                   <IcoAlertCircle width={16} height={17} fill="#A9AFB8" />
                 </Button>

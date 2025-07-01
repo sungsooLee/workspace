@@ -6,16 +6,16 @@
       li {
         .box {
           @apply flex items-center;
-          p {
-            @apply title2-b flex-1 text-[var(--gray10)];
+          strong {
+            @apply title3-b mr-[24px] inline-block text-[var(--gray35)];
           }
           div {
-            @apply flex items-center;
+            @apply flex flex-1 items-center;
             & > div {
-              @apply w-[227px];
+              @apply w-[full] flex-1;
               & > div {
                 div {
-                  @apply bg-[var(--blue50)];
+                  @apply bg-[#0099ff];
                 }
               }
             }

@@ -1,12 +1,33 @@
 .nlp--switch {
   [class*='switch_root'] {
-    @apply !h-[28px] !w-[50px] !rounded-[20px];
+    @apply !h-[28px] !w-[50px] !rounded-[20px] !bg-[var(--gray75)];
     [class*='switch_thumb'] {
       @apply !h-[22px] !w-[22px] !rounded-[22px];
       &[data-state='checked'] {
         @apply !translate-x-[26px];
       }
     }
+    &[aria-checked='true'] {
+      @apply !bg-[var(--blue50)];
+      &[data-disabled] {
+        @apply !bg-[var(--blue90)];
+      }
+    }
+    &[data-disabled] {
+      @apply !bg-[var(--gray90)];
+    }
+  }
+  & > label {
+    @apply !text-[var(--gray35)];
+  }
+  &:has([aria-checked='true']) > label {
+    @apply !font-semibold tracking-[-0.035em] !text-[var(--blue50)];
+  }
+  &:has([data-disabled]) > label {
+    @apply !text-[var(--gray75)];
+  }
+  &:has([aria-checked='true'][data-disabled]) > label {
+    @apply !text-[var(--blue75)];
   }
 }
 
