@@ -2,23 +2,26 @@ import { ShuttleGridToChips, ShuttleGridToChipsImperative } from '@learnway/ui';
 import { useEffect, useRef, useState } from 'react';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
-import { AllUserGroupResponse } from '@types';
+import { UserGroupsResponse } from '@types';
 import { queryOptions } from '@entities/user-group';
 import { useQueryClient } from '@tanstack/react-query';
 
 type UserGroupJobComponentProps = {
+  tenantIds: number[];
   handleSetOption: (data: any) => void;
 };
 
-const UserGroupJobComponent = ({ handleSetOption }: UserGroupJobComponentProps) => {
+const UserGroupJobComponent = ({ tenantIds, handleSetOption }: UserGroupJobComponentProps) => {
   const ref = useRef<ShuttleGridToChipsImperative>(null);
   const queryClient = useQueryClient();
 
   const [option, setOption] = useState<{ id: string; name: string }[]>([]);
-  const [gridData, setGrideData] = useState<AllUserGroupResponse[]>([]);
+  const [gridData, setGrideData] = useState<UserGroupsResponse[]>([]);
 
   const handleOnSearch = async () => {
-    const response = await queryClient.fetchQuery(queryOptions.all({ userGroupType: 'JOB' }));
+    const response = await queryClient.fetchQuery(
+      queryOptions.usergroups(tenantIds, { userGroupType: 'JOB' }),
+    );
     setGrideData(response);
   };
 
