@@ -41,7 +41,7 @@ import { FormRow, SwitchFormField } from '../../../../shared/ui';
 
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import { MenuDetail } from '../../../../types/entities/menu';
+import { ApiMappingMenuDetail, MenuDetail } from '../../../../types/entities/menu';
 import { useWatch } from 'react-hook-form';
 import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
 import { isEqual } from 'lodash';
@@ -130,16 +130,18 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
 
   const initialFromValuesRef = useRef<any>(null);
 
-  const handleOnSubmit = (node: any) => {
+  const handleOnSubmit = (node: Record<string, any>) => {
     const apiMappingKeys = [] as number[];
-    node.apiMappingMenuList.forEach((i: any) => apiMappingKeys.push(i.apiId));
+    node.apiMappingMenuList.forEach(
+      (i: ApiMappingMenuDetail) => i.apiId && apiMappingKeys.push(i.apiId),
+    );
     if (formMode === FORM_MODE.VIEW) {
       const updateData = {
         ...node,
-        menuCode: node.code.fieldValue,
+        menuCode: node.code && node.code.fieldValue,
         menuId: selectedNode?.menuId,
-        isWebExposed: node.deviceNames.includes(DEVICE_NAME.PC),
-        isMobileExposed: node.deviceNames.includes(DEVICE_NAME.Mobile),
+        isWebExposed: node.deviceNames && node.deviceNames.includes(DEVICE_NAME.PC),
+        isMobileExposed: node.deviceNames && node.deviceNames.includes(DEVICE_NAME.Mobile),
         apiMappingMenuList: apiMappingKeys,
         sortOrder: node.sortOrder,
         menuScope: menuScope,
@@ -149,10 +151,10 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
       //
       const createData = {
         ...node,
-        menuCode: node.code.fieldValue,
+        menuCode: node.code && node.code.fieldValue,
         parentId: parentNode?.menuId,
-        isWebExposed: node.deviceNames.includes(DEVICE_NAME.PC),
-        isMobileExposed: node.deviceNames.includes(DEVICE_NAME.Mobile),
+        isWebExposed: node.deviceNames && node.deviceNames.includes(DEVICE_NAME.PC),
+        isMobileExposed: node.deviceNames && node.deviceNames.includes(DEVICE_NAME.Mobile),
         apiMappingMenuList: apiMappingKeys,
         sortOrder:
           parentNode?.children && parentNode.children.length > 0
