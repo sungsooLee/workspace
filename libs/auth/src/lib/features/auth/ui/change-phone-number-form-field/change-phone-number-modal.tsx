@@ -32,7 +32,7 @@ const ChangePhoneNumberModalComponent = ({ widget }: { widget: any }) => {
 
   const {
     provider,
-    fetchData,
+    updateFormData,
     control,
     getValues,
     onFormValid,
@@ -55,7 +55,7 @@ const ChangePhoneNumberModalComponent = ({ widget }: { widget: any }) => {
     if (!authUser) {
       return;
     }
-    fetchData({
+    updateFormData({
       currentPhoneNumber: userDetail?.phoneNumber,
       currentPhoneNumberNationCode: authUser.phoneNumberNationCode,
     });

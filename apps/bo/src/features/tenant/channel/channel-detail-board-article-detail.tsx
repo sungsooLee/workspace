@@ -26,7 +26,7 @@ const ChannelDetailBoardArticleDetailComponent = () => {
   const maxFileCount = 5;
   const maxFileSize = 1024 * 1024 * 50;
 
-  const { provider, fetchData, onSubmit, setFormError, clearFormError, getValues } =
+  const { provider, updateFormData, onSubmit, setFormError, clearFormError, getValues } =
     useDynamicForm(formConfig);
 
   const { stats, files, addFiles, onPause, onRetry, onResume, onRemove } = useS3Uploader({

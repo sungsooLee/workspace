@@ -35,8 +35,15 @@ const CategoryViewComponent: FC<any> = ({
   const { data } = useFetchCategoryDetail(selectedNode?.menuId, mode);
 
   // TODO: 역할에 따라서 메타 설정이 다르면 Config 설정 어떻게 분기 처리?
-  const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
-    useDynamicForm(formConfig);
+  const {
+    provider,
+    updateFormData,
+    onSubmit,
+    onFormChange,
+    getValues,
+    clearFormError,
+    setFormError,
+  } = useDynamicForm(formConfig);
   const [isSuccessCodeCheck, setIsSuccessCodeCheck] = useState(false);
   const [codeCheckState, setCodeCheckState] = useState<'none' | 'success' | 'duplicate' | 'error'>(
     'none',
@@ -67,7 +74,7 @@ const CategoryViewComponent: FC<any> = ({
           sortSeq: selectedNode?.children?.length ?? 0 + 1,
           isUsed: data.isUsed,
         };
-        fetchData(initialData);
+        updateFormData(initialData);
         setCodeCheckState('none');
         initialFromValuesRef.current = { ...initialData };
       }
@@ -88,7 +95,7 @@ const CategoryViewComponent: FC<any> = ({
         sortSeq: (selectedNode?.children?.length ?? 0) + 1,
         isUsed: false,
       };
-      fetchData(initialData);
+      updateFormData(initialData);
     } else if (mode === 'init') {
       const initialData = {
         location: '',
@@ -103,7 +110,7 @@ const CategoryViewComponent: FC<any> = ({
         sortSeq: 0,
         isUsed: false,
       };
-      fetchData(initialData);
+      updateFormData(initialData);
       setCodeCheckState('none');
     }
   }

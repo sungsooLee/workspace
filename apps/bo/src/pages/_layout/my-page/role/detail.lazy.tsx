@@ -61,7 +61,7 @@ function RouteComponent() {
     onFormValid,
   } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
-  const { provider, fetchData, onSubmit, onFormChange, clearFormError, control } =
+  const { provider, updateFormData, onSubmit, onFormChange, clearFormError, control } =
     useDynamicForm(formConfig);
 
   const { data: roleData } = useFetchRole(state?.roleId);

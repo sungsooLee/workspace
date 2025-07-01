@@ -70,8 +70,15 @@ function RouteComponent() {
     getExceptionValues,
   );
 
-  const { provider, fetchData, onSubmit, onFormChange, setFormError, clearFormError, getValues } =
-    useDynamicForm(formConfig);
+  const {
+    provider,
+    updateFormData,
+    onSubmit,
+    onFormChange,
+    setFormError,
+    clearFormError,
+    getValues,
+  } = useDynamicForm(formConfig);
 
   const handleTabChange = (tabKey: string) => {
     if (tabKey !== selectedTabKey) {

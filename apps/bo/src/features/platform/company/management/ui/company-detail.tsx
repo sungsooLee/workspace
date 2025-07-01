@@ -43,7 +43,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
 
   const { open: openModal, confirm: openConfirm, alert: openAlert } = useModal();
   const [tableInstance, setTableInstance] = useState<Table<any>>();
-  const { provider, fetchData, onSubmit, onFormChange, getValues, control } =
+  const { provider, updateFormData, onSubmit, onFormChange, getValues, control } =
     useDynamicForm(formConfig);
 
   const tempLoginRestrictTimeSetting = React.useRef<any>(null);
@@ -67,10 +67,10 @@ const CompanyDetailComponent = (props: any, ref: any) => {
       //   'twoFactorAuthPlatformTypeList',
       // ]);
       console.log('##### initialData', initialData);
-      fetchData(initialData);
+      updateFormData(initialData);
       console.log('##### getValues', getValues());
       // setTimeout(() => {
-      //   fetchData(initialData);
+      //   updateFormData(initialData);
       // }, 10000);
 
       const loginRestrictions = detailData.companyLoginRestrictionList.map((limit: any) => ({

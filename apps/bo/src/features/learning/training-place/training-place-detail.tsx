@@ -159,7 +159,7 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
     },
   };
 
-  const { provider, fetchData, onSubmit, onFormChange, getValues, setValue, control } =
+  const { provider, updateFormData, onSubmit, onFormChange, getValues, setValue, control } =
     useDynamicForm(formConfig);
   const { data: loginUser } = useFetchAuthUser();
 
@@ -183,7 +183,7 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
         },
       };
       console.log('### initialData', initialData);
-      fetchData(initialData);
+      updateFormData(initialData);
     }
   }, [detailData]);
 
@@ -221,7 +221,7 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
 
   const handleAddressSearchResult = (address: any) => {
     console.log('address', address);
-    fetchData({ ...getValues(), address: address.roadAddr, postalCode: address.zipNo });
+    updateFormData({ ...getValues(), address: address.roadAddr, postalCode: address.zipNo });
   };
 
   const handleSearchAddress = async () => {

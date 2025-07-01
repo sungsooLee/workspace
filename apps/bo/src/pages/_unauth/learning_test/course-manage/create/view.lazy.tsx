@@ -17,7 +17,7 @@ export const Route = createLazyFileRoute('/_unauth/learning_test/course-manage/c
 function RouteComponent() {
   // const [formConfig, setFormConfig] = useState<DynamicFormConfig>(formConfigBasic);
   const dynamicForm = useDynamicForm(formConfig);
-  const { provider, onSubmit, control, getValues, fetchData } = dynamicForm; //useDynamicForm(formConfig);
+  const { provider, onSubmit, control, getValues, updateFormData } = dynamicForm; //useDynamicForm(formConfig);
 
   const [test, setTest] = React.useState<any>('');
 

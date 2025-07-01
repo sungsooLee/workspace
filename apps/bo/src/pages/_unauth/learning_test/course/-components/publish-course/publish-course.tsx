@@ -15,8 +15,9 @@ interface PublishCourseProps {
 const PublishCourseComponent = forwardRef<TabFormRef, PublishCourseProps>(
   ({ dummy, initialData }, ref) => {
     const { t } = useTranslation();
-    // const { provider, getValues, fetchData } = dynamicForm;
-    const { provider, getValues, onSubmit, onFormValid, formState, fetchData } = useDynamicForm2();
+    // const { provider, getValues, updateFormData } = dynamicForm;
+    const { provider, getValues, onSubmit, onFormValid, formState, updateFormData } =
+      useDynamicForm2();
 
     const handleOnSubmit = (data: any) => {
       console.log('data {} => ', data);
@@ -42,7 +43,7 @@ const PublishCourseComponent = forwardRef<TabFormRef, PublishCourseProps>(
       console.log('PuComponent init');
       // 초기 데이터가 있으면 설정
       if (initialData) {
-        fetchData(initialData);
+        updateFormData(initialData);
       }
     }, [initialData]);
 
