@@ -277,9 +277,11 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
     // MaxDepth 검증 - BEFORE/AFTER는 같은 레벨이므로 제한하지 않음
     if (maxDepth !== undefined) {
       const draggedNodeMaxDepth = getNodeMaxDepth(effectiveDraggedNode);
+      // INSIDE 드롭만 검증 (BEFORE/AFTER는 같은 레벨이므로 depth 증가 없음)
       const insideFinalLevel = level + 1;
       if (insideFinalLevel + draggedNodeMaxDepth - 1 > maxDepth) {
-        //
+        // INSIDE 드롭이 불가능하더라도 BEFORE/AFTER는 가능할 수 있으므로
+        // 여기서는 false를 반환하지 않고 계속 진행
       }
     }
 
@@ -329,7 +331,7 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
     const isThisNodeBeingDragged =
       isDragging && globalSourceTreeId === treeId && effectiveDraggedNodeKey === node.key;
     if (isThisNodeBeingDragged) {
-      styles.push('opacity-50 bg-[var(--gray1)]');
+      styles.push('opacity-60 bg-blue-50 border-2 border-blue-300 shadow-lg ');
     }
 
     // 선택 스타일
@@ -503,22 +505,25 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
     disabled: shouldDisableInsideDrop,
   });
 
-  // 접기/펴기 토글
-  const handleToggleExpand = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setExpandedKeys((prev) =>
-      isExpanded ? prev.filter((k) => k !== node.key) : [...prev, node.key],
-    );
-  };
+  // 접기/펴기 토글 - 메모이제이션
+  const handleToggleExpand = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      setExpandedKeys((prev) =>
+        isExpanded ? prev.filter((k) => k !== node.key) : [...prev, node.key],
+      );
+    },
+    [isExpanded, node.key, setExpandedKeys],
+  );
 
-  // 노드 클릭
-  const handleClick = () => {
+  // 노드 클릭 - 메모이제이션
+  const handleClick = useCallback(() => {
     if (node && onNodeClick) onNodeClick(node);
     if (node === selectedNode && onNodeClick) onNodeClick(null);
     if (onCustomNodeClick) {
       onCustomNodeClick({ ...node, level });
     }
-  };
+  }, [node, onNodeClick, selectedNode, onCustomNodeClick, level]);
 
   // 검색어 하이라이팅
   const highlightMatch = (text: string) => {
@@ -583,6 +588,55 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
     );
   };
 
+  const renderAfterDropZone = () => {
+    const isDropZoneHovered = isOverAfter || (isDraggedFromOtherTree && dropPosition === 'AFTER');
+    const isValidDrop = isValidDropTarget();
+
+    const getDropZoneHeight = () => {
+      if (!isValidDrop) return '0px';
+      if (isDropZoneHovered && isValidDrop) return '16px'; // 호버 시
+      if (isGlobalDragging || effectiveDraggedNode) return '10px'; // 드래그 중
+      return '2px';
+    };
+
+    return (
+      <div
+        ref={setDropAfterRef}
+        style={{
+          position: 'relative',
+          height: getDropZoneHeight(),
+          backgroundColor:
+            isDropZoneHovered && isValidDrop ? 'rgba(33, 150, 243, 0.3)' : 'transparent',
+          marginTop: '0px',
+          marginLeft: `${level * 28}px`,
+          borderRadius: '2px',
+          transition: 'height 0.2s ease, background-color 0.2s ease, opacity 0.2s ease',
+          cursor: isDropZoneHovered && isValidDrop ? 'copy' : 'default',
+          opacity: isValidDrop ? 1 : 0,
+        }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        {/* 드롭 라인 표시 */}
+        {isDropZoneHovered && isValidDrop && (
+          <div
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '0',
+              right: '0',
+              height: '3px',
+              backgroundColor: '#2196f3',
+              borderRadius: '2px',
+              transform: 'translateY(-50%)',
+              boxShadow: '0 0 8px rgba(33, 150, 243, 0.6), 0 0 16px rgba(33, 150, 243, 0.3)',
+            }}
+          />
+        )}
+      </div>
+    );
+  };
+
   return (
     <div style={{ position: 'relative' }} className={styles.tree_item}>
       {/* BEFORE 드롭 영역 - 첫 번째 형제 노드에만 표시 */}
@@ -591,17 +645,37 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
           ref={setDropBeforeRef}
           style={{
             position: 'relative',
-            height: isGlobalDragging ? '10px' : '2px',
-            backgroundColor:
-              (isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE')) &&
-              isValidDropTarget()
-                ? 'rgba(33, 150, 243, 0.2)'
-                : 'transparent',
+            height: (() => {
+              const isDropZoneHovered =
+                isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE');
+              const isValidDrop = isValidDropTarget();
+              if (!isValidDrop) return '0px';
+              if (isDropZoneHovered && isValidDrop) return '16px'; // 호버 시
+              if (isGlobalDragging || effectiveDraggedNode) return '12px'; // 드래그 중
+              return '2px';
+            })(),
+            backgroundColor: (() => {
+              const isDropZoneHovered =
+                isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE');
+              const isValidDrop = isValidDropTarget();
+              if (isDropZoneHovered && isValidDrop) return 'rgba(33, 150, 243, 0.3)';
+              return 'transparent';
+            })(),
             marginBottom: '0px',
             marginLeft: `${level * 28}px`,
             borderRadius: '2px',
+            transition: 'height 0.2s ease, background-color 0.2s ease, opacity 0.2s ease',
+            cursor:
+              (isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE')) &&
+              isValidDropTarget()
+                ? 'copy'
+                : 'default',
+            opacity: isValidDropTarget() ? 1 : 0,
           }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
+          {/* {node.title + ` ` + node.depth} */}
           {/* 드롭 라인 표시 */}
           {(isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE')) &&
             isValidDropTarget() && (
@@ -611,9 +685,9 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
                   top: '50%',
                   left: '0',
                   right: '0',
-                  height: '2px',
+                  height: '3px',
                   backgroundColor: '#2196f3',
-                  borderRadius: '1px',
+                  borderRadius: '2px',
                   transform: 'translateY(-50%)',
                 }}
               />
@@ -637,12 +711,22 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
             isValidDropTarget()
               ? '2px dashed #2196f3'
               : '1px solid transparent',
+          backgroundColor:
+            (isOverInside || (isDraggedFromOtherTree && dropPosition === 'INSIDE')) &&
+            isValidDropTarget()
+              ? 'rgba(33, 150, 243, 0.05)'
+              : undefined,
           // borderRadius: '4px',
           transition: 'all 0.2s ease',
         }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onClick={handleClick}
+        role="treeitem"
+        aria-expanded={hasChildren ? isExpanded : undefined}
+        aria-level={level + 1}
+        aria-selected={selectedNode?.key === node.key}
+        tabIndex={0}
       >
         {/* 드롭 인사이드 영역 */}
         <div
@@ -719,10 +803,15 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
         </div>
       </div>
 
+      {/* 자식이 없거나 접혀있는 노드의 AFTER 드롭존 */}
+      {(!hasChildren || !isExpanded) &&
+        (treeType !== 'SAME_LEVEL_ONLY' || !effectiveDraggedNode || isValidDropTarget()) &&
+        renderAfterDropZone()}
+
       {/* 자식 노드들 */}
       {hasChildren && isExpanded && (
         <div className={styles.tree_children}>
-          {node.children!.map((child, index) => (
+          {node.children!.map((child, index, array) => (
             <DndTreeNode
               key={child.key}
               node={child}
@@ -749,78 +838,15 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
               isFirstSibling={index === 0}
             />
           ))}
-
-          {/* 펼쳐진 노드의 모든 children 이후에 이 노드의 AFTER 드롭존 표시 */}
-          <div
-            ref={setDropAfterRef}
-            style={{
-              position: 'relative',
-              height: isGlobalDragging ? '10px' : '2px',
-              backgroundColor:
-                (isOverAfter || (isDraggedFromOtherTree && dropPosition === 'AFTER')) &&
-                isValidDropTarget()
-                  ? 'rgba(33, 150, 243, 0.2)'
-                  : 'transparent',
-              marginTop: '0px',
-              marginLeft: `${level * 28}px`,
-              borderRadius: '2px',
-            }}
-          >
-            {/* 드롭 라인 표시 */}
-            {(isOverAfter || (isDraggedFromOtherTree && dropPosition === 'AFTER')) &&
-              isValidDropTarget() && (
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '0',
-                    right: '0',
-                    height: '2px',
-                    backgroundColor: '#2196f3',
-                    borderRadius: '1px',
-                    transform: 'translateY(-50%)',
-                  }}
-                />
-              )}
-          </div>
         </div>
       )}
-
-      {/* AFTER 드롭 영역 - children이 없거나 접혀있는 경우에만 표시 */}
-      {(!hasChildren || !isExpanded) && (
-        <div
-          ref={setDropAfterRef}
-          style={{
-            position: 'relative',
-            height: isGlobalDragging ? '10px' : '2px',
-            backgroundColor:
-              (isOverAfter || (isDraggedFromOtherTree && dropPosition === 'AFTER')) &&
-              isValidDropTarget()
-                ? 'rgba(33, 150, 243, 0.2)'
-                : 'transparent',
-            marginTop: '0px',
-            marginLeft: `${level * 28}px`,
-            borderRadius: '2px',
-          }}
-        >
-          {/* 드롭 라인 표시 */}
-          {(isOverAfter || (isDraggedFromOtherTree && dropPosition === 'AFTER')) &&
-            isValidDropTarget() && (
-              <div
-                style={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '0',
-                  right: '0',
-                  height: '2px',
-                  backgroundColor: '#2196f3',
-                  borderRadius: '1px',
-                  transform: 'translateY(-50%)',
-                }}
-              />
-            )}
-        </div>
-      )}
+      {/* SAME_LEVEL_ONLY에서 드래그 중이고 이 노드 뒤로 드롭이 실제로 가능한 경우에만 AFTER 드롭존 표시 */}
+      {hasChildren &&
+        isExpanded &&
+        treeType === 'SAME_LEVEL_ONLY' &&
+        (isGlobalDragging || effectiveDraggedNode) &&
+        isValidDropTarget() &&
+        renderAfterDropZone()}
     </div>
   );
 };
