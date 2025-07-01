@@ -476,7 +476,9 @@ function RouteComponent() {
       {/* 단일로 사용하는 경우 : 첨부 후 케이스 */}
       <div className={styles.upload_single}>
         <div className={styles.view_file}>
+          {/* 퍼블수정 20250701 : 파일 첨부 후 구분 클래스 추가(attached) S  */}
           <div className={cn(styles.attach_area, styles.attached)}>
+            {/* 퍼블수정 20250701 : 파일 첨부 후 구분 클래스 추가(attached) E  */}
             <p className={styles.attach_view}>
               <IcoPpt width={'20'} height={'21'} className={styles.icon_type} />
               <span className={styles.attached_name}>{'파일명.png'}</span>

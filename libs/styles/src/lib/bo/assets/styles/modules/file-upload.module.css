@@ -153,7 +153,7 @@
             @apply mr-[10px] w-[20px] shrink-0;
           }
           .attached_name {
-            @apply input_bo_1_r ellipsis max-w-[calc(100%-60px)] text-[var(--gray8)];
+            @apply input_bo_1_r ellipsis max-w-[calc(100%-60px)] text-[var(--gray8)] underline;
           }
         }
         .btn_clear {
