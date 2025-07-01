@@ -15,7 +15,7 @@ export function useWigetComponentConfig(componentId: string, isPreview = false) 
       if (isPreview) {
         return config.fetchPreviewData();
       }
-      return await config.fetchData(queryClient);
+      return await config.updateFormData(queryClient);
     }, [config]),
   };
 }

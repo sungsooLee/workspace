@@ -12,21 +12,24 @@ const useModal = (): useModalReturnValue => {
   /**
    * 일반 모달을 엽니다.
    *
-   * @param config - 모달 설정 객체 (ModalConfig)
+   * @param config - 모달 설정 객체 (ModalConfig) 또는 설정을 반환하는 함수
    * @returns Promise<any> - 모달 닫힘 시 전달된 데이터로 resolve됩니다.
    *
    * 기본적으로 모바일 환경에선 전체 너비(m_full), 그 외엔 'md' 너비를 사용합니다.
    * config.onClose가 있다면 해당 콜백도 함께 호출됩니다.
    */
   const open = useCallback(
-    (config: ModalConfig): Promise<any> => {
+    (config: ModalConfig | (() => ModalConfig)): Promise<any> => {
       return new Promise((resolve, reject) => {
+        // 함수형 config인 경우 호출하여 실제 config 값을 가져옴
+        const resolvedConfig = typeof config === 'function' ? config() : config;
+
         const newConfig: ModalConfig = {
-          ...config,
+          ...resolvedConfig,
           id: getRandomId(),
-          width: config.width ?? (isMobile ? 'm_full' : 'md'), // modal 은 기본 width 'md'
+          width: resolvedConfig.width ?? (isMobile ? 'm_full' : 'md'), // modal 은 기본 width 'md'
           onClose: (data?: any) => {
-            config?.onClose?.(data);
+            resolvedConfig?.onClose?.(data);
             resolve(data);
           },
         };
@@ -65,12 +68,12 @@ const useModal = (): useModalReturnValue => {
         const defaultProps =
           typeof props === 'string'
             ? {
-                title: props,
-                onClose: () => null,
-              }
+              title: props,
+              onClose: () => null,
+            }
             : {
-                ...props,
-              };
+              ...props,
+            };
         const config: ModalConfig = {
           id: getRandomId(),
           content: createElement(Alert, {
@@ -105,14 +108,14 @@ const useModal = (): useModalReturnValue => {
         const defaultProps =
           typeof props === 'string'
             ? {
-                title: props,
-                isConfirm: true,
-                onClose: () => null,
-              }
+              title: props,
+              isConfirm: true,
+              onClose: () => null,
+            }
             : {
-                ...props,
-                isConfirm: true,
-              };
+              ...props,
+              isConfirm: true,
+            };
         const config = {
           id: getRandomId(),
           content: createElement(Alert, defaultProps),

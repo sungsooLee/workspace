@@ -8,7 +8,7 @@ import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 
-export const Route = createLazyFileRoute('/_layout/tenant/channel/regist')({
+export const Route = createLazyFileRoute('/_layout/tenant/channel/management/regist')({
   component: RouteComponent,
 });
 
@@ -24,7 +24,7 @@ function RouteComponent() {
           <Button
             variant="point"
             size="sm"
-            onClick={() => router.navigate({ to: '/tenant/channel' })}
+            onClick={() => router.navigate({ to: '/tenant/channel/management' })}
           >
             {t('LABEL.button.list')}
           </Button>

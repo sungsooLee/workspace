@@ -3,7 +3,7 @@ import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
 import { CourseTypeOptionCardModal } from '@features/learning/course';
 import { GridExcelDownloadButton, GridExcelUploadButton } from '@features/shared';
 import { LMSApiPrefix } from '@learnway/config';
-import { useDynamicForm2 } from '@learnway/hooks';
+import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import { Button, ContentsRow, Divider, GridBox, Input, useGridBox, useModal } from '@learnway/ui';
 import { FormRow2, SearchBoxForm } from '@shared/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
@@ -12,8 +12,9 @@ import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { t } from 'i18next';
-import { useCallback, useState, useMemo } from 'react';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { generateYears } from '@learnway/shared';
 
 export const Route = createFileRoute('/_unauth/learning_test/course/')({
   component: RouteComponent,
@@ -23,10 +24,7 @@ function RouteComponent() {
   const router = useRouter();
   const { t } = useTranslation();
   const { open: openModal } = useModal();
-
-  // builders 방식으로 폼 설정 (validation이 제대로 작동하도록)
   const { provider, getValues, onSubmit } = useDynamicForm2();
-
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
   const [selectedCourses, setSelectedCourses] = useState<any[]>([]);
 
@@ -73,7 +71,8 @@ function RouteComponent() {
     // 선택한 유형의 등록 페이지로 이동
   };
 
-  console.log('xxxxx');
+  // console.log(generateYears(10));
+  console.log(generateYears(10))
 
   return (
     <PageContainer>
@@ -102,7 +101,7 @@ function RouteComponent() {
               provider={provider}
               name={'tenant'}
               label={t('LABEL.form.label.tenant')}
-              element={<DropdownFormField options={[]} />}
+              element={<DropdownFormField options={[]} presetOptionLabel={t('LABEL.form.label.select', '선택')} />}
               validation={{
                 required: true,
                 format: 'object',
@@ -113,7 +112,7 @@ function RouteComponent() {
               provider={provider}
               name={'channel'}
               label={t('LABEL.form.label.channel')}
-              element={<DropdownFormField options={[]} />}
+              element={<DropdownFormField options={[]} presetOptionLabel={t('LABEL.form.label.select')} />}
               validation={{
                 required: true,
                 format: 'object',
@@ -124,14 +123,16 @@ function RouteComponent() {
               provider={provider}
               name={'openingDate'}
               label={t('LABEL.form.label.openingDate')}
-              element={<DropdownFormField options={[]} />}
+              element={<DropdownFormField options={generateYears(10)} presetOptionLabel={t('LABEL.form.label.all')} />}
             />
             {/*과정유형*/}
             <FormRow2
               provider={provider}
               name={'courseType'}
               label={t('LABEL.form.label.courseType')}
-              element={<DropdownFormField options={[]} />}
+              element={<DropdownFormField presetOptionLabel={t('LABEL.form.label.all')} optionsConfig={{
+                codeGroup: CODE_GROUP['lms.course.CourseType']
+              }} />}
             />
           </ContentsRow>
           <ContentsRow>
@@ -140,14 +141,16 @@ function RouteComponent() {
               provider={provider}
               name={'useYn'}
               label={t('LABEL.form.label.useYn')}
-              element={<DropdownFormField options={[]} />}
+              element={<DropdownFormField presetOptionLabel={t('LABEL.form.label.all')} optionsConfig={{
+                codeGroup: CODE_GROUP['mock.options.use']
+              }} />}
             />
             {/* 담당자/운영자 */}
             <FormRow2
               provider={provider}
               name={'adminName'}
               label={t('LABEL.form.label.coordinator/Operator')}
-              element={<DropdownFormField options={[]} />}
+              element={<Input />}
             />
             {/* 과정코드 */}
             <FormRow2
@@ -206,96 +209,6 @@ function RouteComponent() {
     </PageContainer>
   );
 }
-
-// const searchConfig: any = {
-//   builders: [
-//     [
-//       // 테넌트
-//       {
-//         name: 'tenant',
-//         type: 'dropdown',
-//         label: t('LABEL.form.label.tenant'),
-//         value: '',
-//         options: [
-//           { value: '', label: '전체' },
-//           { value: 'true', label: '사용' },
-//           { value: 'false', label: '미사용' },
-//         ],
-//       },
-//       // 채널
-//       {
-//         name: 'channel',
-//         type: 'dropdown',
-//         label: t('LABEL.form.label.channel'),
-//         value: '',
-//         options: [
-//           { value: '', label: '전체' },
-//           { value: 'true', label: '사용' },
-//           { value: 'false', label: '미사용' },
-//         ],
-//       },
-//       // 개설년도
-//       {
-//         name: 'openingDate',
-//         type: 'dropdown',
-//         label: t('LABEL.form.label.openingDate'),
-//         value: '',
-//         options: [
-//           { value: '', label: '전체' },
-//           { value: 'true', label: '사용' },
-//           { value: 'false', label: '미사용' },
-//         ],
-//       },
-//       // 과정유형
-//       {
-//         name: 'courseType',
-//         type: 'dropdown',
-//         label: t('LABEL.form.label.courseType'),
-//         value: '',
-//         options: [
-//           { value: '', label: '전체' },
-//           { value: 'true', label: '사용' },
-//           { value: 'false', label: '미사용' },
-//         ],
-//       },
-//     ],
-//     [
-//       // 사용여부
-//       {
-//         name: 'useYn',
-//         type: 'dropdown',
-//         label: t('LABEL.form.label.useYn'),
-//         value: '',
-//         options: [
-//           { value: '', label: '전체' },
-//           { value: 'true', label: '사용' },
-//           { value: 'false', label: '미사용' },
-//         ],
-//       },
-//       // 담당자/운영자
-//       {
-//         name: 'adminName',
-//         type: 'text',
-//         label: t('LABEL.form.label.coordinator/Operator'),
-//         value: '',
-//       },
-//       // 과정코드
-//       {
-//         name: 'courseCode',
-//         type: 'text',
-//         label: t('LABEL.form.label.courseCode'),
-//         value: '',
-//       },
-//       // 과정명
-//       {
-//         name: 'courseName',
-//         type: 'text',
-//         label: t('LABEL.form.label.courseName'),
-//         value: '',
-//       },
-//     ],
-//   ],
-// };
 
 const gridConfig = {
   title: t('LABEL.grid.title.courseList'),

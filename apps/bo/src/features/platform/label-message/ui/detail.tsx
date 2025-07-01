@@ -44,7 +44,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // const
-  const { provider, onSubmit, onFormChange, getValues, fetchData, clearFormError, control } =
+  const { provider, onSubmit, onFormChange, getValues, updateFormData, clearFormError, control } =
     useDynamicForm(currentConfig);
   const typeWatch = useWatch({ control, name: 'labelMessageType' });
 
@@ -102,7 +102,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
         initData[item.name] = item.value;
       });
       onFormChange({});
-      fetchData({ ...initData });
+      updateFormData({ ...initData });
     }
   }, [labelMessageId]);
 
@@ -117,7 +117,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
         lastDuplicateText: data?.labelMessageMultilingulKey || '',
         isDuplicateCheck: !isCreateMode,
       };
-      fetchData(d);
+      updateFormData(d);
     }
   }, [data, labelMessageId, isCreateMode]);
 

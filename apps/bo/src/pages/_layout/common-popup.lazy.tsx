@@ -59,7 +59,7 @@ function RouteComponent() {
   const { open } = useModal();
   const { open: openModal } = useModal();
   const [organizations, setOrganizations] = useState<any>([]);
-  const { provider, onSubmit, control, getValues, fetchData } = useDynamicForm(formConfig);
+  const { provider, onSubmit, control, getValues, updateFormData } = useDynamicForm(formConfig);
 
   const handleLabelUpdate = async () => {
     const langPath = jsonToPaths(langCodes.LABEL);
@@ -94,7 +94,7 @@ function RouteComponent() {
 
   const handleAddressSearchResult = (address: any) => {
     console.log('address', address);
-    fetchData({ zipNo: address.zipNo, address: address.roadAddr });
+    updateFormData({ zipNo: address.zipNo, address: address.roadAddr });
   };
 
   const downloadByUrl = (url: string) => {
@@ -226,6 +226,9 @@ function RouteComponent() {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider} name="attachment" />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider} name="singleAttachment" />
           </ContentsRow>
         </MainContents>
         <SubContents>
@@ -459,7 +462,7 @@ function RouteComponent() {
                 e.stopPropagation();
                 openModal({
                   width: 'xl',
-                  content: <UserGroupTabsChoiceModal initialTab="JOB_GROUP" />,
+                  content: <UserGroupTabsChoiceModal tenantIds={[1]} initialTab="JOB_GROUP" />,
                 });
               }}
             >
@@ -669,6 +672,18 @@ const formConfig: DynamicFormConfig = {
         languageCode: 'ko',
       },
       value: ['f63f7e9a-04b7-4f5e-9bfb-37e2de234b41', '40ebfa6e-0f1d-45f6-ac3d-8f4964619e9f'],
+    },
+    {
+      name: 'singleAttachment',
+      type: 'single-attachment',
+      label: '약도 이미지 첨부',
+      acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
+      s3Path: 'upload/tmp/attachment',
+      groupConfig: {
+        affairsType: 'PMS',
+        languageCode: 'ko',
+      },
+      value: '',
     },
   ],
 };

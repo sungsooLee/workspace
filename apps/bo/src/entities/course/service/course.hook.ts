@@ -1,4 +1,4 @@
-import type { UseMutationResult, UseQueryResult } from '@tanstack/react-query';
+import type { UseMutationResult, UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { mutateOptions, queryOptions } from './course.queries';
@@ -15,20 +15,25 @@ import { useModal } from '@learnway/ui';
 /**
  * 모든 코스 목록을 가져오는 쿼리 훅.
  * @param params - 코스 목록 조회 쿼리 파라미터.
+ * @param options - 추가 쿼리 옵션.
  */
-export function useFetchCourses(
+export const useFetchCourses = <T = Course>(
   params: CoursesQueryParams,
-): UseQueryResult<PaginationResponse<Course>, Error> {
-  return useQuery(queryOptions.all(params));
-}
+  options?: UseQueryOptions<PaginationResponse<T>, Error>,
+): UseQueryResult<PaginationResponse<T>, Error> => {
+  return useQuery({ ...queryOptions.all<T>(params), ...options });
+};
 
 /**
  * 특정 ID의 코스 정보를 가져오는 쿼리 훅.
  * @param id - 조회할 코스의 ID.
  */
-export function useFetchCourse(id: number): UseQueryResult<Course, Error> {
-  return useQuery(queryOptions.get(id));
-}
+export const useFetchCourse = <T = Course>(
+  id: number,
+  options?: UseQueryOptions<T, Error>,
+): UseQueryResult<T, Error> => {
+  return useQuery({ ...queryOptions.get<T>(id), ...options });
+};
 
 /**
  * 새로운 코스를 생성하는 뮤테이션 훅.
@@ -210,9 +215,11 @@ export const useUpdateCourseWizard5 = (
 /**
  * 과정 항목 설정 정보 조회
  * @param params - 코스 목록 조회 쿼리 파라미터.
+ * @param options - 추가 쿼리 옵션.
  */
-export function useFetchCourseConfig(
+export const useFetchCourseConfig = <T = CourseConfig>(
   params: CourseConfigQueryParams,
-): UseQueryResult<CourseConfig, Error> {
-  return useQuery(queryOptions.getCourseConfig(params));
-}
+  options?: UseQueryOptions<T, Error>,
+): UseQueryResult<T, Error> => {
+  return useQuery({ ...queryOptions.getCourseConfig<T>(params), ...options });
+};

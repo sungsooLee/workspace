@@ -4,21 +4,27 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useQueryClient } from '@tanstack/react-query';
 import { queryOptions } from '@entities/user-group';
-import { AllUserGroupResponse } from '@types';
+import { UserGroupsResponse } from '@types';
 
 type UserGroupJobGroupComponentProps = {
+  tenantIds: number[];
   handleSetOption: (data: any) => void;
 };
 
-const UserGroupJobGroupComponent = ({ handleSetOption }: UserGroupJobGroupComponentProps) => {
+const UserGroupJobGroupComponent = ({
+  tenantIds,
+  handleSetOption,
+}: UserGroupJobGroupComponentProps) => {
   const ref = useRef<ShuttleGridToChipsImperative>(null);
   const queryClient = useQueryClient();
 
   const [option, setOption] = useState<{ id: string; name: string }[]>([]);
-  const [gridData, setGrideData] = useState<AllUserGroupResponse[]>([]);
+  const [gridData, setGrideData] = useState<UserGroupsResponse[]>([]);
 
   const handleOnSearch = async () => {
-    const response = await queryClient.fetchQuery(queryOptions.all({ userGroupType: 'JOB_GROUP' }));
+    const response = await queryClient.fetchQuery(
+      queryOptions.usergroups(tenantIds, { userGroupType: 'JOB_GROUP' }),
+    );
     setGrideData(response);
   };
 

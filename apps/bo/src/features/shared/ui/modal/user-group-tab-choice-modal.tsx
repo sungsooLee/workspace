@@ -21,10 +21,11 @@ import { UserGroupType } from '@types';
 
 type UserGroupTabModalProps = {
   initialTab?: UserGroupType;
+  tenantIds: number[];
 };
 
 const UserGroupTabModalComponent = forwardRef(
-  ({ initialTab = 'ORGANIZATION' }: UserGroupTabModalProps) => {
+  ({ initialTab = 'ORGANIZATION', tenantIds }: UserGroupTabModalProps) => {
     const { close: closeModal } = useModal();
 
     const [selectedTabKey, setSelectedTabKey] = useState<UserGroupType>(initialTab);
@@ -48,27 +49,29 @@ const UserGroupTabModalComponent = forwardRef(
               {
                 title: '조직',
                 key: 'ORGANIZATION',
-                content: <UserGroupOrganization handleSetOption={setOption} />,
+                content: (
+                  <UserGroupOrganization tenantIds={tenantIds} handleSetOption={setOption} />
+                ),
               },
               {
                 title: t('직군'),
                 key: 'JOB_GROUP',
-                content: <UserGroupJobGroup handleSetOption={setOption} />,
+                content: <UserGroupJobGroup tenantIds={tenantIds} handleSetOption={setOption} />,
               },
               {
                 title: t('직무'),
                 key: 'JOB',
-                content: <UserGroupJob handleSetOption={setOption} />,
+                content: <UserGroupJob tenantIds={tenantIds} handleSetOption={setOption} />,
               },
               {
                 title: t('호칭'),
                 key: 'JOB_TITLE',
-                content: <UserGroupJobTitle handleSetOption={setOption} />,
+                content: <UserGroupJobTitle tenantIds={tenantIds} handleSetOption={setOption} />,
               },
               {
                 title: t('보직'),
                 key: 'JOB_POSITION',
-                content: <UserGroupJobPosition handleSetOption={setOption} />,
+                content: <UserGroupJobPosition tenantIds={tenantIds} handleSetOption={setOption} />,
               },
               {
                 title: '사용자 정의',

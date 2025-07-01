@@ -103,8 +103,15 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
   // 카테고리 코드 체크는 마스터/테넌트 카테고리 공통 사용
   const { checkExistsCategory: checkExists } = useCheckExistsCategory({});
 
-  const { provider, fetchData, onSubmit, onFormChange, setFormError, clearFormError, getValues } =
-    useDynamicForm(formConfig);
+  const {
+    provider,
+    updateFormData,
+    onSubmit,
+    onFormChange,
+    setFormError,
+    clearFormError,
+    getValues,
+  } = useDynamicForm(formConfig);
 
   const clearAllFormErrors = () => {
     formConfig.builders.forEach((item) => clearFormError(item.name));
@@ -155,7 +162,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
       parentCategoryName: node.title,
       sortSeq: (selectedNode?.children?.length ?? 0) + 1,
     };
-    fetchData(fdat);
+    updateFormData(fdat);
   };
 
   const handleSave = (payload: any) => {
@@ -349,7 +356,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
         });
       }
       const location = findMenuPathById(treeData, selectedNode?.menuId);
-      fetchData({
+      updateFormData({
         ...categoryDetail,
         location: location,
         code: { fieldValue: categoryDetail.categoryCode, checkState: DuplicateState.okStart },
@@ -566,7 +573,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
                   <ChipListModalSelectorFormField
                     disabled={mode === EnFormMode.NONE}
                     modalConfig={{
-                      content: <UserGroupTabsChoiceModal />,
+                      content: <UserGroupTabsChoiceModal tenantIds={[]} />,
                       title: '',
                       width: 'xl',
                       height: 'fix',

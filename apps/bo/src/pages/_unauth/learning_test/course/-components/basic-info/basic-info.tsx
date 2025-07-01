@@ -1,8 +1,12 @@
 import ChannelService from '@entities/channel/api/channel';
 import RoleManagerService from '@entities/role/api/role-manager';
 import { DropdownFormField } from '@features/form';
-import { CategoryChoiceModal, ChannelListModal } from '@features/learning/course';
-import { UserGroupTabsChoiceModal } from '@features/shared';
+import { CategoryChoiceModal } from '@features/learning/course';
+import {
+  TrainingPlaceChoiceModal,
+  UserChoiceModal,
+  UserGroupTabsChoiceModal,
+} from '@features/shared';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import {
   Button,
@@ -32,7 +36,12 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
   ({ dummy, onSave, initialData }, ref) => {
     const { t } = useTranslation();
 
-    const { provider, getValues, fetchData, onFormValid, formState, watch } = useDynamicForm2();
+    const { provider, getValues, updateFormData, onFormValid, formState, watch } =
+      useDynamicForm2();
+
+    const channelUuid = watch('channelUuid');
+
+    // console.log('chadd', channelUuid);
 
     const handleOnSubmit = (data: any) => {
       console.log('data {} => ', data);
@@ -48,8 +57,8 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
 
         return {
           isValid,
-          data: isValid ? data : undefined,
-          errors: isValid ? undefined : errors,
+          data,
+          errors,
         };
       },
     }));
@@ -58,7 +67,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
       console.log('BasicInfoComponent init');
       // 초기 데이터가 있으면 설정
       if (initialData) {
-        fetchData(initialData);
+        updateFormData(initialData);
       }
     }, [initialData]);
 
@@ -71,9 +80,8 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
           {/*유형*/}
           <FormRow2
             provider={provider}
-            name={'유형'}
+            name={'courseId'}
             label={'유형'}
-            required={true}
             element={
               <DropdownFormField
                 optionsConfig={{
@@ -81,31 +89,23 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
                 }}
               />
             }
-            validation={{
-              required: true,
-              format: 'object',
-            }}
           />
           {/*채널*/}
           <FormRow2
             provider={provider}
-            name={'채널'}
+            name={'channelUuid'}
             label={'채널'}
             element={
               <DropdownFormField
                 optionsConfig={{
                   api: {
-                    fn: RoleManagerService.fetchMyRoles,
-                    params: 'BO',
+                    fn: () => RoleManagerService.fetchMyRoles('BO'),
                     select: (data: any) => data?.channels || [],
                   },
                 }}
+                options={[{ label: 'channel A', value: 9999 }]}
               />
             }
-            validation={{
-              required: true,
-              format: 'object',
-            }}
           />
         </ContentsRow>
 
@@ -115,38 +115,41 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'테넌트'}
+            name={'tenantIds'}
+            label={'테넌트'}
             element={
               <CheckboxGroupFormField
+                key={`tenant-${channelUuid}`}
                 optionsConfig={{
                   api: {
-                    fn: ChannelService.getChannelDetail,
-                    params: getValues()?.채널,
+                    fn: () => ChannelService.getChannelDetail(channelUuid),
                     select: (data: any) => data?.tenantList || [],
-                    enabled: !!getValues()?.채널 && !!getValues()?.유형,
+                    enabled: !!channelUuid,
                   },
                   labelField: 'tenantName',
                   valueField: 'tenantId',
                 }}
+                options={[
+                  { tenantName: 'tenant A', tenantId: 1111 },
+                  { tenantName: 'tenant B', tenantId: 2222 },
+                ]}
               />
             }
-            validation={{
-              required: true,
-              format: 'array',
-            }}
           />
         </ContentsRow>
         {/*카테고리*/}
         <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'카테고리'}
+            name={'categories'}
             label={'카테고리'}
-            value={[]}
             element={
               <ListModalSelectorFormField
                 deletable
-                modalConfig={{ content: <CategoryChoiceModal />, width: 'lg' }}
+                modalConfig={() => ({
+                  content: <CategoryChoiceModal tenantIds={getValues().tenantIds} />,
+                  width: 'lg',
+                })}
                 transformModalData={(data: any) => ({
                   value: data.id,
                   label: data.name,
@@ -154,27 +157,24 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
                 actionNode={<Button variant="text" size="sm" label={t('추가')} />}
               />
             }
-            validation={{
-              required: true,
-              format: 'array',
-            }}
           />
         </ContentsRow>
         {/*학습대상(유저그룹)*/}
         <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'학습대상'}
+            name={'whiteList'}
             label={'학습대상'}
             element={
               <ChipListModalSelectorFormField
-                modalConfig={{ content: <UserGroupTabsChoiceModal /> }}
+                modalConfig={{ content: <UserGroupTabsChoiceModal tenantIds={[]} /> }}
                 chipList={{
-                  labelField: 'name',
-                  valueField: 'id',
+                  labelField: 'fullPath',
+                  valueField: 'key',
                   wordwrap: true,
                 }}
                 showAddButton
+                // transformModalData={(data: any) => console.log('data', data)}
               />
             }
           />
@@ -186,7 +186,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'언어 설정'}
+            name={'language'}
             label={'언어 설정'}
             element={
               <DropdownFormField
@@ -201,45 +201,33 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'과정명'}
+            name={'courseName'}
             label={'과정명'}
             element={<Input maxLength={40} />}
-            validation={{
-              required: true,
-              format: 'object',
-            }}
           />
         </ContentsRow>
         {/*과정 요약*/}
         <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'과정 요약'}
+            name={'courseSummary'}
             label={'과정 요약'}
             element={<TextareaFormField maxLength={500} />}
-            validation={{
-              required: true,
-              format: 'object',
-            }}
           />
         </ContentsRow>
         {/*교육 내용*/}
         <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'교육 내용'}
+            name={'courseContent'}
             label={'교육 내용'}
             element={<EditorFormField />}
-            validation={{
-              required: true,
-              format: 'object',
-            }}
           />
         </ContentsRow>
         <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'난이도'}
+            name={'trainingLevelType'}
             label={'난이도'}
             element={
               <RadioGroupFormField
@@ -251,12 +239,55 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
           />
           <FormRow2
             provider={provider}
-            name={'교육공간'}
+            name={'learningSpaceType'}
             label={'교육공간'}
             element={
               <RadioGroupFormField
                 optionsConfig={{
                   codeGroup: CODE_GROUP['lms.course.LearningSpaceType'],
+                  optionsNode: [
+                    {
+                      value: 'REGISTERED', // 장소선택
+                      node: (
+                        <>
+                          <FormRow2
+                            provider={provider}
+                            name={'learningSpaceId'}
+                            type={'hidden'}
+                            value={''}
+                          />
+                          <FormRow2
+                            provider={provider}
+                            name={'learningSpaceName'}
+                            value={''}
+                            element={
+                              <InputModalSelectorFormField
+                                modalConfig={{
+                                  content: <TrainingPlaceChoiceModal />,
+                                }}
+                                transformModalData={(data: any) => console.log(data)}
+                                // transformModalData={(data: any) => ({
+                                //   learningSpaceId: data.channelId,
+                                //   learningSpaceName: data.channelName,
+                                // })}
+                              />
+                            }
+                          />
+                        </>
+                      ),
+                    },
+                    {
+                      value: 'MANUAL', // 직접입력
+                      node: (
+                        <FormRow2
+                          provider={provider}
+                          name={'learningSpaceNameKeyIn'}
+                          value={''}
+                          element={<Input />}
+                        />
+                      ),
+                    },
+                  ],
                 }}
               />
             }
@@ -270,28 +301,29 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
           {/*담당자*/}
           <FormRow2
             provider={provider}
-            name={'담당자'}
+            name={'coordinatorName'}
             label={'담당자'}
             element={
               <InputModalSelectorFormField
                 modalConfig={{
-                  content: <ChannelListModal />,
+                  content: <UserChoiceModal />,
+                  width: 'xl',
                 }}
+                transformModalData={(data: any) => ({
+                  coordinatorId: data.uuid,
+                  coordinatorName: `${data.name}/${data?.dept?.deptName}`,
+                })}
               />
             }
-            validation={{
-              required: true,
-              format: 'object',
-            }}
           />
           {/*담당자-연락처*/}
           <FormRow2
             provider={provider}
-            name={'담당자연락처'}
+            name={'coordinatorTelNo'}
             label={'담당자연락처'}
             element={
               <PhoneNumberFormField
-                fields={{ nationCode: '담당자연락처코드', number: '담당자연락처' }}
+                fields={{ nationCode: 'coordinatorTelCountryCode', number: 'coordinatorTelNo' }}
                 phoneNumberConfig={{
                   options: [{ value: 'KOR_82', label: '+82' }],
                 }}
@@ -301,38 +333,40 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
           {/*담당자-이메일*/}
           <FormRow2
             provider={provider}
-            name={'담당자이메일'}
+            name={'coordinatorEmail'}
             label={'담당자이메일'}
             element={<Input />}
           />
+          {/*담당자 ID - hidden */}
+          <FormRow2 provider={provider} name={'coordinatorId'} type={'hidden'} value={''} />
         </ContentsRow>
         {/*운영자*/}
         <ContentsRow>
           {/*운영자*/}
           <FormRow2
             provider={provider}
-            name={'운영자'}
+            name={'operatorName'}
             label={'운영자'}
             element={
               <InputModalSelectorFormField
                 modalConfig={{
-                  content: <ChannelListModal />,
+                  content: <UserChoiceModal />,
                 }}
+                transformModalData={(data: any) => ({
+                  operatorId: data.uuid,
+                  operatorName: `${data.name}/${data?.dept?.deptName}`,
+                })}
               />
             }
-            validation={{
-              required: true,
-              format: 'object',
-            }}
           />
           {/*운영자-연락처*/}
           <FormRow2
             provider={provider}
-            name={'운영자연락처'}
+            name={'operatorTelNo'}
             label={'운영자연락처'}
             element={
               <PhoneNumberFormField
-                fields={{ nationCode: '운영자연락처코드', number: '운영자연락처' }}
+                fields={{ nationCode: 'operatorTelCountryCode', number: 'operatorTelNo' }}
                 phoneNumberConfig={{
                   options: [{ value: 'KOR_82', label: '+82' }],
                 }}
@@ -342,10 +376,12 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
           {/*운영자-이메일*/}
           <FormRow2
             provider={provider}
-            name={'운영자이메일'}
+            name={'operatorEmail'}
             label={'운영자이메일'}
             element={<Input />}
           />
+          {/*운영자 ID - hidden */}
+          <FormRow2 provider={provider} name={'operatorId'} type={'hidden'} value={''} />
         </ContentsRow>
       </div>
     );

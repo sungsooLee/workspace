@@ -159,6 +159,12 @@
         .btn_clear {
           @apply absolute right-[8px] top-1/2 w-[20px] shrink-0 -translate-y-1/2;
         }
+        &.attached {
+          @apply border-[var(--gray1)] bg-[var(--gray1)];
+          .text {
+            @apply text-[var(--gray8)];
+          }
+        }
       }
     }
     .btn_attach {

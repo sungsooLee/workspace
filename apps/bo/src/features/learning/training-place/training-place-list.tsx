@@ -1,17 +1,15 @@
 import { useEffect, useCallback } from 'react';
 import { t } from 'i18next';
-import { Button, Divider } from '@learnway/ui';
-import { cn } from '@learnway/shared';
+import { Button, Divider, useModal, PreviewImage } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
-import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
+import { useSearchBox, SearchBoxConfig, CODE_GROUP, useFileManager } from '@learnway/hooks';
 import { EnGlobalConst, EnPageMode } from '@types';
 import { queryOptions } from '@entities/training-place/service/space.queries';
 import { Link } from '@tanstack/react-router';
 import { useFetchAuthUser } from '@learnway/auth/entities';
-
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
+import { IcoDownload } from '@learnway/icons';
 
 const TrainingPlaceListComponent = ({
   pageMode,
@@ -22,9 +20,12 @@ const TrainingPlaceListComponent = ({
   onAddClick?: any;
   onSelect?: any;
 }) => {
-  const { provider: searchProvider, getValues, setOptions, setValue } = useSearchBox(searchConfig);
+  const { open: openModal } = useModal();
+  const { provider: searchProvider, getValues, setValue } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
   const { data: loginUser } = useFetchAuthUser();
+
+  const { getFileInfo, fileDownload } = useFileManager();
 
   useEffect(() => {
     gridFetch();
@@ -35,14 +36,8 @@ const TrainingPlaceListComponent = ({
   }, []);
 
   useEffect(() => {
-    if (!loginUser) return;
-
-    const tenantIdOptions = loginUser.tenants.map((tenant) => ({
-      value: tenant.tenantId,
-      label: tenant.tenantName,
-    }));
-    setOptions('tenantId', tenantIdOptions);
-    if (loginUser.activeTenant) setValue('tenantId', loginUser.activeTenant.tenantId ?? '');
+    if (loginUser && loginUser.activeTenant)
+      setValue('tenantId', loginUser.activeTenant.tenantId ?? '');
   }, [loginUser]);
 
   const columnHelper = createColumnHelper<any>();
@@ -82,7 +77,9 @@ const TrainingPlaceListComponent = ({
     }),
     columnHelper.accessor('addressUrl', {
       header: t('주소 / URL'),
-      cell: (info) => info.getValue(),
+      cell: (info) => {
+        return info.getValue();
+      },
       enableGrouping: false,
       size: 390,
     }),
@@ -101,21 +98,50 @@ const TrainingPlaceListComponent = ({
     if (onSelect) onSelect(row.original);
   };
 
+  const onHandlePreview = async (preview: string) => {
+    const mapFile = await getFileInfo(preview);
+    if (mapFile && mapFile.fileUrl) {
+      console.log('### fileUrl', mapFile.fileUrl);
+      openModal({
+        width: 'full',
+        height: 'full',
+        content: <PreviewImage imageUrl={mapFile.fileUrl} />,
+        headerActionNode: (
+          <Button onlyIcon onClick={() => fileDownload(preview)}>
+            <IcoDownload width={40} height={40} stroke="#131C30" />
+          </Button>
+        ),
+      });
+    }
+  };
+
   switch (pageMode) {
     case EnPageMode.PAGE:
       columns.push(
         columnHelper.accessor('preview', {
           header: t('미리보기'),
-          cell: (info) =>
-            info.row.original.onOffLineType === 'ONLINE' ? (
-              <Button
-                variant="gray"
-                label={t('미리보기')}
-                onClick={() => window.open(info.row.original.preview, '_blank')}
-              />
-            ) : (
-              <Button variant="gray" label={t('미리보기')} />
-            ),
+          cell: (info) => {
+            switch (info.row.original.onOffLineType) {
+              case 'ONLINE':
+                return (
+                  <Button
+                    variant="gray"
+                    label={t('미리보기')}
+                    onClick={() => window.open(info.row.original.preview, '_blank')}
+                  />
+                );
+              case 'OFFLINE':
+                if (info.row.original.preview.length > 0)
+                  return (
+                    <Button
+                      variant="gray"
+                      label={t('미리보기')}
+                      onClick={() => onHandlePreview(info.row.original.preview)}
+                    />
+                  );
+            }
+            return '';
+          },
           enableGrouping: false,
           size: 150,
           meta: {
@@ -167,7 +193,9 @@ const searchConfig: SearchBoxConfig = {
         format: 'object',
         label: t('테넌트'),
         value: '',
-        options: [],
+        optionsConfig: {
+          codeGroup: CODE_GROUP['manual.bo.my.tenant.tenantId'],
+        },
         placeholder: t('선택'),
       },
       {

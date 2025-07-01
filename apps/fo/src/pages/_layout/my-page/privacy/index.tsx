@@ -53,7 +53,7 @@ function RouteComponent() {
   console.log('state', state);
 
   const { t } = useTranslation();
-  const { provider, onSubmit, onFormChange, control, getValues, setFormError, fetchData } =
+  const { provider, onSubmit, onFormChange, control, getValues, setFormError, updateFormData } =
     useDynamicForm(authFormConfig);
 
   const { data: authUser } = useFetchAuthUser();
@@ -66,7 +66,7 @@ function RouteComponent() {
       return;
     }
 
-    fetchData({
+    updateFormData({
       userIdEmail: authUser.email,
       nameEmployeeNumber: `${authUser.name} / ${authUser.employeeNumber}`,
       password: `********`,

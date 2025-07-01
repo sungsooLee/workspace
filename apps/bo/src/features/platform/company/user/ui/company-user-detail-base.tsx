@@ -20,7 +20,7 @@ import { DynamicFormConfig, useDynamicForm, CODE_GROUP } from '@learnway/hooks';
 import { FormSubTitle, FormRow, ContentsHistoryInfoFormField } from '@shared/ui';
 
 const CompanyUserDetailBaseComponent: FC<any> = ({ userInfo }) => {
-  const { provider, control, fetchData, onSubmit, setFormError, clearFormError, getValues } =
+  const { provider, control, updateFormData, onSubmit, setFormError, clearFormError, getValues } =
     useDynamicForm(formConfig);
   const [roleData, setRoleData] = useState<any[]>([]);
 
@@ -36,7 +36,7 @@ const CompanyUserDetailBaseComponent: FC<any> = ({ userInfo }) => {
         companyName: userInfo.company.name,
         deptName: userInfo.dept.deptName,
       };
-      fetchData(value);
+      updateFormData(value);
     }
   }, [userInfo]);
   return (

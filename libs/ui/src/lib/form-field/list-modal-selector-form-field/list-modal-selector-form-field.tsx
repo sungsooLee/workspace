@@ -12,7 +12,7 @@ import { IcoPlus } from '@learnway/icons';
 
 export interface ListModalSelectorFormFieldProps extends BaseFormFieldProps<any[]> {
   /** Modal component props */
-  modalConfig: ModalConfig;
+  modalConfig: ModalConfig | (() => ModalConfig);
   /** Button component props */
   button?: ButtonComponentProps;
   /** List component props */

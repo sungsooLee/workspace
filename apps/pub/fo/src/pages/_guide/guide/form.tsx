@@ -384,11 +384,10 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                   cols={33}
                   placeholder="컨텐츠 개요는 AI 자동 추출되어 표기됩니다."
                   resize="none"
+                  maxLength={2500}
+                  readOnly
                 />
               </div>
-              <p className={formStyles.text_limit}>
-                <em className={formStyles.num}>0</em>/2500
-              </p>
             </div>
           </div>
         </ContentsRow>
@@ -417,11 +416,10 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                   cols={33}
                   placeholder="키워드는 AI 자동 추출되어 표기됩니다."
                   resize="none"
+                  maxLength={2500}
+                  disabled
                 />
               </div>
-              <p className={formStyles.text_limit}>
-                <em className={formStyles.num}>0</em>/2500
-              </p>
             </div>
           </div>
         </ContentsRow>

@@ -6,6 +6,7 @@ import {
   CoursesQueryParams,
   PaginationResponse,
 } from '../../../types';
+import { UseQueryOptions } from '@tanstack/react-query';
 
 export const queryKeys = {
   all: ['courses'] as const,
@@ -16,12 +17,12 @@ export const queryKeys = {
 
 export const queryOptions = {
   // 과정 목록 조회
-  all: <T = Course>(params: CoursesQueryParams) => ({
+  all: <T = Course>(params: CoursesQueryParams): UseQueryOptions<PaginationResponse<T>> => ({
     queryKey: queryKeys.all,
     queryFn: async (): Promise<PaginationResponse<T>> => CourseService.fetchAll(params),
   }),
   // 과정 상세 조회
-  get: (id: number) => ({
+  get: <T = Course>(id: number): UseQueryOptions<T> => ({
     queryKey: queryKeys.get(id),
     queryFn: () => CourseService.fetch(id),
   }),

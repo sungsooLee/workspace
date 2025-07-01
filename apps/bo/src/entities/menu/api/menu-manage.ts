@@ -2,6 +2,7 @@ import menuMock from '../../mock/menu.json';
 import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
 import { createPmsUrl, registerApi } from '../../../shared/lib/use-authorized-query';
+import { MenuTreeResponse } from '@types';
 
 /**
  * PMS > 메뉴관리 API 모음
@@ -25,8 +26,8 @@ export default class MenuMangerService {
   /**
    * FO/BO 메뉴 목록 트리 조회
    */
-  static fetchMenuTree(menuScopeCode: string, locale: string): Promise<any> {
-    return httpService.get<any>(
+  static fetchMenuTree(menuScopeCode: string, locale: string): Promise<MenuTreeResponse> {
+    return httpService.get<MenuTreeResponse>(
       `${PMSApiPrefix()}/menus/tree?menuScopeCode=${menuScopeCode}&locale=${locale}`,
     );
   }
