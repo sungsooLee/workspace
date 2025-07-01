@@ -1,5 +1,42 @@
 .nlp--checkbox {
   label {
-    @apply !text-[1.4rem];
+    @apply !label-xl !text-[var(--gray35)];
+  }
+  [role='checkbox'] {
+    @apply !h-[2.2rem] !w-[2.2rem];
+    &[aria-checked='true'] {
+      @apply !border-[var(--blue50)] !bg-[var(--blue50)];
+    }
+    &:disabled {
+      @apply !border-[var(--gray90)] !bg-[var(--gray90)];
+    }
+  }
+  &:has([role='checkbox'][aria-checked='true']) {
+    [role='checkbox'] ~ label {
+      @apply !font-semibold !tracking-[-0.035em];
+    }
+  }
+  &:has([role='checkbox']:disabled) {
+    [role='checkbox'] ~ label {
+      @apply !font-normal !text-[var(--gray75)];
+    }
+  }
+  &.lg {
+    [role='checkbox'] {
+      @apply !h-[2.2rem] !w-[2.2rem];
+    }
+  }
+  &.md {
+    [role='checkbox'] {
+      @apply !h-[1.8rem] !w-[1.8rem];
+    }
+    label {
+      @apply !label-lg;
+    }
+    &:has([aria-checked='true']) {
+      label {
+        @apply !tracking-[-0.05em];
+      }
+    }
   }
 }

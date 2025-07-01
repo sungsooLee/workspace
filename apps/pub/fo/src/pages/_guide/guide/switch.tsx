@@ -67,39 +67,39 @@ import { Switch } from '@learnway/ui';
         <h3 className="guide_tit3">Switch Label이 앞에 있는 경우</h3>
         <div className="flex_box">
           <div className="desc">
-            <Switch id="id-4" label="Label" reversed />
+            <Switch id="id-4" label="Label" />
           </div>
         </div>
 
         <div className="code_example">
           <pre className="code_block">
-            <code>{`<Switch id="id-4" label="Label" reversed />`}</code>
+            <code>{`<Switch id="id-4" label="Label" />`}</code>
           </pre>
         </div>
 
-        <h3 className="guide_tit3">Switch Checked</h3>
+        <h3 className="guide_tit3">Switch Checked(label : 오른쪽)</h3>
         <div className="flex_box">
           <div className="desc">
-            <Switch id="id-5" label="Label" checked reversed />
+            <Switch id="id-5" label="Label" checked labelAlign={'right'} />
           </div>
         </div>
 
         <div className="code_example">
           <pre className="code_block">
-            <code>{`<Switch id="id-5" label="Label" checked reversed />`}</code>
+            <code>{`<Switch id="id-5" label="Label" checked labelAlign={'right'} />`}</code>
           </pre>
         </div>
 
-        <h3 className="guide_tit3">Switch Disabled</h3>
+        <h3 className="guide_tit3">Switch Disabled(label : 오른쪽)</h3>
         <div className="flex_box">
           <div className="desc">
-            <Switch id="id-6" label="Label" disabled reversed />
+            <Switch id="id-6" label="Label" disabled labelAlign={'right'} />
           </div>
         </div>
 
         <div className="code_example">
           <pre className="code_block">
-            <code>{`<Switch id="id-6" label="Label" disabled reversed />`}</code>
+            <code>{`<Switch id="id-6" label="Label" disabled labelAlign={'right'} />`}</code>
           </pre>
         </div>
       </div>

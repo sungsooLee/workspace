@@ -46,7 +46,7 @@ const handleChange = (event: SelectOption) => {
   console.log(event);
 };
 
-<Stepper items={items} enableMoveStep onChange={handleChange} />
+<Stepper items={items} selectedStep={'step3'} onChange={handleChange} variant="check" />
 `}
           </code>
         </pre>
@@ -54,8 +54,6 @@ const handleChange = (event: SelectOption) => {
       <div className="group">
         <h3 className="guide_tit3">stepper FO 기본</h3>
         <Stepper items={items} selectedStep={'step3'} onChange={handleChange} variant="check" />
-        <h3 className="guide_tit3">stepper BO 기본</h3>
-        <Stepper items={items} enableMoveStep onChange={handleChange} />
       </div>
     </div>
   );

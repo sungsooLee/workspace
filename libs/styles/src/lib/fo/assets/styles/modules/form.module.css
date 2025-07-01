@@ -91,7 +91,7 @@
 .input_box {
   @apply flex w-full items-center space-x-[8px];
   .input {
-    @apply flex-auto;
+    @apply flex-1 !rounded-[8px];
   }
   .text {
     @apply whitespace-nowrap text-[1.4rem] leading-[1.6rem] text-[var(--gray8)];
@@ -205,7 +205,10 @@ hr.divider {
   [class*='form_item'] {
     [class*='input_box'] {
       & > button {
-        @apply !px-[20px];
+        @apply !min-h-[4.4rem] !px-[20px];
+      }
+      [class*='input'] {
+        @apply !min-h-[4.4rem];
       }
     }
   }
