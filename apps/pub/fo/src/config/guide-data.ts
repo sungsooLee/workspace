@@ -1600,6 +1600,16 @@ export const guideData = [
     remarks: '- html.tsx\n- 개발화면 확인 필요',
   },
   {
+    screenId: 'NLP_FO_CLA_1029',
+    screenName: '강의실_학습창_웹_iframe',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: 'iframe',
+    pageType: 'Page',
+    completionDate: '2025-06-30',
+    lastUpdateDate: '',
+    remarks: '- iframe.tsx\n- 개발화면 확인 필요',
+  },
+  {
     screenId: 'NLP_FO_CLA_1030',
     screenName: '강의실_학습창_웹_위키',
     layoutType: '', // 자동 분리됨 작성x
@@ -1686,7 +1696,16 @@ export const guideData = [
     lastUpdateDate: '',
     remarks: '- html-m.tsx',
   },
-
+  {
+    screenId: 'NLP_FO_CLA_MA_1029',
+    screenName: 'M_강의실_학습창_웹_iframe',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: 'iframe-m',
+    pageType: 'Page',
+    completionDate: '2025-06-30',
+    lastUpdateDate: '',
+    remarks: '- iframe-m.tsx',
+  },
   {
     screenId: 'NLP_FO_CLA_MA_1030',
     screenName: 'M_강의실_학습창_웹_위키',
