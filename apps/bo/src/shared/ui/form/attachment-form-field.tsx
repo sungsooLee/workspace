@@ -37,7 +37,7 @@ const AttachmentFormFieldComponent = forwardRef<
       multipartThreshold = DEFAULT_MULTIPART_THRESHOLD,
       acceptFiles = [],
       maxFileCount = 10,
-      maxFileSize = 0,
+      maxFileSize = 5 * 1024 * 1024,
       name,
       value,
       onChange,
