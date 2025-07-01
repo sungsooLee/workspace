@@ -1,8 +1,12 @@
 import ChannelService from '@entities/channel/api/channel';
 import RoleManagerService from '@entities/role/api/role-manager';
 import { DropdownFormField } from '@features/form';
-import { CategoryChoiceModal, ChannelListModal } from '@features/learning/course';
-import { TrainingPlaceChoiceModal, UserChoiceModal, UserGroupTabsChoiceModal } from '@features/shared';
+import { CategoryChoiceModal } from '@features/learning/course';
+import {
+  TrainingPlaceChoiceModal,
+  UserChoiceModal,
+  UserGroupTabsChoiceModal,
+} from '@features/shared';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import {
   Button,
@@ -32,7 +36,8 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
   ({ dummy, onSave, initialData }, ref) => {
     const { t } = useTranslation();
 
-    const { provider, getValues, fetchData, onFormValid, formState, watch } = useDynamicForm2();
+    const { provider, getValues, updateFormData, onFormValid, formState, watch } =
+      useDynamicForm2();
 
     const channelUuid = watch('channelUuid');
 
@@ -62,7 +67,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
       console.log('BasicInfoComponent init');
       // 초기 데이터가 있으면 설정
       if (initialData) {
-        fetchData(initialData);
+        updateFormData(initialData);
       }
     }, [initialData]);
 
@@ -75,7 +80,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
           {/*유형*/}
           <FormRow2
             provider={provider}
-            name={'courseId'}
+            name={'courseType'}
             label={'유형'}
             element={
               <DropdownFormField
@@ -98,7 +103,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
                     select: (data: any) => data?.channels || [],
                   },
                 }}
-                options={[{label: 'channel A', value: 9999}]}
+                options={[{ label: 'channel A', value: 9999 }]}
               />
             }
           />
@@ -124,7 +129,10 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
                   labelField: 'tenantName',
                   valueField: 'tenantId',
                 }}
-                options={[{tenantName: 'tenant A', tenantId: 1111},{tenantName: 'tenant B', tenantId: 2222}]}
+                options={[
+                  { tenantName: 'tenant A', tenantId: 1111 },
+                  { tenantName: 'tenant B', tenantId: 2222 },
+                ]}
               />
             }
           />
@@ -330,12 +338,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             element={<Input />}
           />
           {/*담당자 ID - hidden */}
-          <FormRow2
-            provider={provider}
-            name={'coordinatorId'}
-            type={'hidden'}
-            value={''}
-          />
+          <FormRow2 provider={provider} name={'coordinatorId'} type={'hidden'} value={''} />
         </ContentsRow>
         {/*운영자*/}
         <ContentsRow>
@@ -378,12 +381,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             element={<Input />}
           />
           {/*운영자 ID - hidden */}
-          <FormRow2
-            provider={provider}
-            name={'operatorId'}
-            type={'hidden'}
-            value={''}
-          />
+          <FormRow2 provider={provider} name={'operatorId'} type={'hidden'} value={''} />
         </ContentsRow>
       </div>
     );
