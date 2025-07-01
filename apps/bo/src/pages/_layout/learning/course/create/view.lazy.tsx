@@ -49,7 +49,7 @@ function RouteComponent() {
 
       if (result.isValid) {
         console.log(`${activeTab} 탭 유효성 검사 통과:`, result.data);
-        setFormData((prev) => ({ ...prev, ...result.data }));
+        // setFormData((prev) => ({ ...prev, ...result.data }));
         // 여기서 저장 로직을 실행
         console.log('저장할 데이터:', result.data);
         // API 호출 등 저장 로직
@@ -108,6 +108,13 @@ function RouteComponent() {
             type="button"
             variant="point"
             size="sm"
+            label={'SET'}
+            onClick={() => setFormData(getDummyData())}
+          />
+          <Button
+            type="button"
+            variant="point"
+            size="sm"
             label={'목록'}
             onClick={handleListClick}
           />
@@ -140,3 +147,51 @@ function RouteComponent() {
     </form>
   );
 }
+
+const getDummyData = () => {
+  const response = {
+    "courseId": "ELEARNING1",
+    "channelUuid": 9999,
+    "tenantIds": [
+      2222,
+      1111
+    ],
+    "whiteList": [
+      {
+        "key": "66",
+        "title": "test1",
+        "apiUuid": "bc1fd644-b6c5-42fc-b2ff-796fa7b3d03d",
+        "apiId": "66",
+        "apiNodeType": "API",
+        "apiMethod": "GET",
+        "apiName": "test1",
+        "apiScope": "FO",
+        "apiUrl": "test1234",
+        "depth": null,
+        "parentId": 1,
+        "sortOrder": 2,
+        "isUsed": true,
+        "apiDesc": "1234",
+        "children": [],
+        "fullPath": "ROOT > test1",
+        "_visible": true
+      }
+    ],
+    "language": "KO",
+    "courseName": "과정명...",
+    "courseSummary": "과장 요약",
+    "courseContent": "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"교육 내용\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1,\"textFormat\":0,\"textStyle\":\"\"}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}",
+    "trainingLevelType": "BASIC",
+    "learningSpaceName": "신민제/개발팀",
+    "operatorName": "김지훈/개발팀",
+    "operatorId": "c39280c3-3f6d-11f0-9435-0218a74d52f7",
+    "coordinatorId": "c3929798-3f6d-11f0-9435-0218a74d5224",
+    "learningSpaceType": "LEARNING_WAY",
+    "coordinatorName": "이현주/개발팀",
+    "coordinatorTelNo": "33332222",
+    "coordinatorEmail": "담당자@email.com",
+    "operatorTelNo": "44445555",
+    "operatorEmail": "운영자@email.com"
+  };
+  return response;
+};

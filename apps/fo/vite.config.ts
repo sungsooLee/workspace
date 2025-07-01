@@ -25,10 +25,10 @@ export default defineConfig(({ mode }) => {
       host: 'localhost',
     },
     plugins: [
+      !isTest && TanStackRouterVite({ autoCodeSplitting: true }),
       react(),
       nxViteTsPaths(),
       nxCopyAssetsPlugin(['*.md']),
-      !isTest && TanStackRouterVite({ autoCodeSplitting: true }),
       svgr(),
     ],
     // Uncomment this if you are using workers.

@@ -150,11 +150,11 @@ function RouteComponent() {
           label={t('초기화')}
         />
         <Button
-          variant="point"
+          variant="primary"
           size="sm"
           onClick={handleModifyButtonClick}
           disabled={!buttonShowTabs.includes(selectedTabKey)}
-          label={t('수정')}
+          label={t('LABEL.button.save')}
         ></Button>
       </ContentsButtons>
       <MainContents>

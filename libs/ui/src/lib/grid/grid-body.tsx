@@ -12,6 +12,7 @@ interface GridBodyProps<T extends object> {
   lastPinnedColumnId: string | undefined;
   disabledSelectionToggle?: boolean;
   onRowDoubleClick?: (selectedRow: any) => void;
+  isRowSelectable?: (row: T) => boolean;
 }
 
 export const GridBody = <T extends object>({
@@ -19,12 +20,14 @@ export const GridBody = <T extends object>({
   lastPinnedColumnId,
   disabledSelectionToggle,
   onRowDoubleClick,
+  isRowSelectable,
 }: GridBodyProps<T>) => {
   return (
     <tbody>
       {table.getRowModel().rows.map((row) => {
         const depth = (row.original as any)?._depth ?? row.depth;
         const isSubRow = depth > 0;
+        const canSelect = isRowSelectable ? isRowSelectable(row.original) : true;
 
         return (
           <tr
@@ -34,7 +37,9 @@ export const GridBody = <T extends object>({
               isSubRow && styles.appended,
               depth > 0 && styles.appended,
             )}
-            onClick={() => !row.getIsGrouped() && !disabledSelectionToggle && row.toggleSelected()}
+            onClick={() =>
+              !row.getIsGrouped() && !disabledSelectionToggle && canSelect && row.toggleSelected()
+            }
             onDoubleClick={() => onRowDoubleClick?.(row.original)}
           >
             {row.getVisibleCells().map((cell: Cell<T, unknown>) => (

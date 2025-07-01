@@ -50,8 +50,15 @@ const TenantDetailLearningRoleGrantRangeModalComponent = ({
     1: false,
   });
 
-  const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
-    useDynamicForm(formConfig);
+  const {
+    provider,
+    updateFormData,
+    onSubmit,
+    onFormChange,
+    getValues,
+    clearFormError,
+    setFormError,
+  } = useDynamicForm(formConfig);
 
   const { saveUsersRole: saveRoleUsers } = useSaveUsers({});
 

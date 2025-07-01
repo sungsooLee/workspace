@@ -1,6 +1,12 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  UseQueryOptions,
+} from '@tanstack/react-query';
 
 import { queryOptions, mutateOptions, queryKeys } from './tenant-category.queries';
+import { Category } from '@types';
 
 export function useFetchTenantCategory(tenantId: number) {
   return useQuery(queryOptions.all(tenantId));
@@ -144,4 +150,12 @@ export function useMappingTenantCategory(tenantId: number, options: any) {
     isError: mutation.isError,
     data: mutation.data,
   };
+}
+
+// [BO] 과정 생성 카테고리 팝업
+export function useFetchTenantCategoryTreePopup(tenantIds: Array<number>, options?: Omit<UseQueryOptions<Category, Error>, 'queryKey' | 'queryFn'>) {
+  return useQuery({
+    ...queryOptions.fetchTenantCategoryTreePopup(tenantIds),
+    ...options,
+  });
 }

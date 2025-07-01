@@ -18,6 +18,7 @@ import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 import { FormSubTitle, FormRow } from '@shared/ui';
 
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import { useGetRequestChannelDetail } from '@entities/channel/service/request-channel.hook';
 
 export const Route = createLazyFileRoute('/_layout/tenant/channel/request/detail')({
@@ -31,7 +32,8 @@ function RouteComponent() {
 
   const { data, refetch } = useGetRequestChannelDetail(channelRequestUuid);
 
-  const { provider, fetchData, onSubmit, getValues, onFormChange } = useDynamicForm(formConfig);
+  const { provider, updateFormData, onSubmit, getValues, onFormChange } =
+    useDynamicForm(formConfig);
 
   useEffect(() => {
     if (data) {
@@ -50,7 +52,7 @@ function RouteComponent() {
         sabun: '',
         name: data.reqeusterName,
         requestDate: getDateToString(new Date(data.requestDate), DATE_TIME_FORMAT.DATETIME_SEC),
-        status: t('pms.channel.ChannelApprovalStatus.' + data.approvalStatusTypecd),
+        status: t('pms.channel.ChannelApprovalStatusType.' + data.approvalStatusTypecd),
         approval: data.approverName,
         approvalDate:
           data.approvalDate !== null
@@ -62,7 +64,7 @@ function RouteComponent() {
         isEnabled: '',
         isUsed: '',
       };
-      fetchData(initialData);
+      updateFormData(initialData);
     }
   }, [data]);
 
@@ -113,12 +115,10 @@ function RouteComponent() {
             element={<Input disabled={true} />}
           />
           <FormRow provider={provider} name={'tenantName'} element={<Input disabled={true} />} />
-        </ContentsRow>
-        <ContentsRow>
           <FormRow provider={provider} name={'channelName'} element={<Input disabled={true} />} />
-          <FormRow provider={provider} name={'channelId'} element={<Input disabled={true} />} />
         </ContentsRow>
         <ContentsRow>
+          <FormRow provider={provider} name={'channelId'} element={<Input disabled={true} />} />
           <FormRow
             provider={provider}
             name={'channelType'}
@@ -130,7 +130,6 @@ function RouteComponent() {
           <FormRow
             provider={provider}
             name={'channelMainLinkContent'}
-            className={dynamicFormStyles.w_half}
             element={<Input disabled={true} />}
           />
         </ContentsRow>
@@ -152,12 +151,10 @@ function RouteComponent() {
         <ContentsRow>
           <FormRow provider={provider} name={'companyName'} element={<Input disabled={true} />} />
           <FormRow provider={provider} name={'affiliation'} element={<Input disabled={true} />} />
-        </ContentsRow>
-        <ContentsRow>
           <FormRow provider={provider} name={'sabun'} element={<Input disabled={true} />} />
-          <FormRow provider={provider} name={'name'} element={<Input disabled={true} />} />
         </ContentsRow>
         <ContentsRow>
+          <FormRow provider={provider} name={'name'} element={<Input disabled={true} />} />
           <FormRow provider={provider} name={'requestDate'} element={<Input disabled={true} />} />
           <FormRow provider={provider} name={'status'} element={<Input disabled={true} />} />
         </ContentsRow>
@@ -165,6 +162,7 @@ function RouteComponent() {
         <ContentsRow>
           <FormRow provider={provider} name={'approval'} element={<Input disabled={true} />} />
           <FormRow provider={provider} name={'approvalDate'} element={<Input disabled={true} />} />
+          <div className={cn(formStyles.form_item)}></div>
         </ContentsRow>
         {data && data.approvalStatusTypecd === 'REJECTED' && (
           <ContentsRow>
@@ -179,10 +177,12 @@ function RouteComponent() {
         <ContentsRow>
           <FormRow provider={provider} name={'open'} element={<Input disabled={true} />} />
           <FormRow provider={provider} name={'openDate'} element={<Input disabled={true} />} />
+          <FormRow provider={provider} name={'isUsed'} element={<Input disabled={true} />} />
         </ContentsRow>
         <ContentsRow>
           <FormRow provider={provider} name={'isEnabled'} element={<Input disabled={true} />} />
-          <FormRow provider={provider} name={'isUsed'} element={<Input disabled={true} />} />
+          <div className={cn(formStyles.form_item)}></div>
+          <div className={cn(formStyles.form_item)}></div>
         </ContentsRow>
       </MainContents>
     </PageContainer>
@@ -215,7 +215,7 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'channelId',
       type: 'text',
-      label: t('채널 아이디'),
+      label: t('채널 핸들'),
       value: '',
       placeholder: '',
     },
@@ -349,7 +349,7 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'isEnabled',
       type: 'text',
-      label: t('활성화 여부'),
+      label: t('노출 여부'),
       value: '',
       placeholder: '',
     },

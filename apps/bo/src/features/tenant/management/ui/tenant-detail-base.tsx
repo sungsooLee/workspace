@@ -54,8 +54,15 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       refetch();
     },
   });
-  const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
-    useDynamicForm(formConfig);
+  const {
+    provider,
+    updateFormData,
+    onSubmit,
+    onFormChange,
+    getValues,
+    clearFormError,
+    setFormError,
+  } = useDynamicForm(formConfig);
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -120,7 +127,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       if (tenantData.tenantTagList && tenantData.tenantTagList.length > 0) {
         tag = tenantData.tenantTagList.map((item) => item.tagName).join(',');
       }
-      fetchData({
+      updateFormData({
         ...tenantData,
         tenantName: { fieldValue: tenantData.tenantName, checkState: DuplicateState.okStart },
         logoImageUrl: logoImageUrl,

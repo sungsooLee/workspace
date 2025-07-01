@@ -16,16 +16,22 @@
     .rating_wrap {
       @apply mt-[24px] flex items-start;
       .know_box {
-        @apply flex h-[180px] w-[210px] flex-col items-center justify-center rounded-[12px] bg-[var(--gray98)];
-        img {
-          @apply h-[48px] w-[48px];
+        @apply flex h-[200px] w-[230px] flex-col items-center justify-center rounded-[12px] bg-[var(--gray98)];
+        span {
+          @apply title3 text-[var(--gray35)];
         }
-        p {
-          @apply title4-b mt-[16px] text-center text-[var(--gray35)];
+        div {
+          @apply flex items-center;
+          svg {
+            @apply mr-[2px];
+          }
+          strong {
+            @apply headline3-b text-[var(--gray10)];
+          }
         }
       }
       .review_rating {
-        @apply ml-[20px] h-[180px] flex-1;
+        @apply ml-[20px] h-[200px] flex-1;
       }
     }
 

@@ -295,6 +295,13 @@ export interface GridBoxProps<T extends object = object>
 
   clientSideSorting?: boolean;
   clientSideFiltering?: boolean;
+
+  /**
+   * 특정 행의 선택 가능 여부를 결정하는 함수
+   * @param row - 행 데이터
+   * @returns 선택 가능하면 true, 불가능하면 false
+   */
+  isRowSelectable?: (row: T) => boolean;
 }
 
 /**

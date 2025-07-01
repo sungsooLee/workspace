@@ -24,7 +24,7 @@ import { useModal } from '@learnway/ui';
 
 import { queryOptions } from '@entities/channel/service/channel.queries';
 
-export const Route = createFileRoute('/_layout/tenant/channel/')({
+export const Route = createFileRoute('/_layout/tenant/channel/management/')({
   component: RouteComponent,
 });
 
@@ -52,7 +52,7 @@ function RouteComponent() {
               onClose(data: any) {
                 if (data) {
                   router.navigate({
-                    to: '/tenant/channel/regist',
+                    to: '/tenant/channel/management/regist',
                     state: { method: 'request', channelRequestUuid: data.channelRequestUuid },
                   });
                 }
@@ -66,7 +66,10 @@ function RouteComponent() {
           variant="primary"
           size="sm"
           onClick={() =>
-            router.navigate({ to: '/tenant/channel/regist', state: { method: 'direct' } })
+            router.navigate({
+              to: '/tenant/channel/management/regist',
+              state: { method: 'direct' },
+            })
           }
         >
           {t('채널 직접 개설')}

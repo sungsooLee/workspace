@@ -1,10 +1,11 @@
 import { httpService } from '@learnway/shared';
 import { LMSApiPrefix } from '@learnway/config';
 import { PageableContent } from '@types';
+import { SpaceListItem, Space } from 'src/types/entities/space';
 
 export default class SpaceService {
   static fetchList(params: any) {
-    return httpService.get<PageableContent<any>>(`${LMSApiPrefix()}/space`, params);
+    return httpService.get<PageableContent<SpaceListItem>>(`${LMSApiPrefix()}/space`, params);
   }
 
   static create(payload: any) {
@@ -12,7 +13,7 @@ export default class SpaceService {
   }
 
   static fetch(id: number) {
-    return httpService.get<any>(`${LMSApiPrefix()}/space/${id}`);
+    return httpService.get<Space>(`${LMSApiPrefix()}/space/${id}`);
   }
 
   static existsCode(code: string) {

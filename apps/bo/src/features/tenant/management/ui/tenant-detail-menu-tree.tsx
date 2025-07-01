@@ -70,7 +70,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
 
   const tenantId = routerState.location.state?.tenantId;
 
-  const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, control } =
+  const { provider, updateFormData, onSubmit, onFormChange, getValues, clearFormError, control } =
     useDynamicForm(formConfig);
   const prevDataRef = React.useRef(null);
   const { alert, open: openModal, confirm: openConfirm } = useModal();
@@ -199,7 +199,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
         deviceNames.push(EnDeviceType.isMobile);
       }
       setApiMappingMenuList(detailData.apiMappingMenuList);
-      fetchData({
+      updateFormData({
         ...detailData,
         deviceNames: deviceNames,
         location: location,

@@ -94,7 +94,7 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
   };
 
   // const { provider: sProvider, getValues } = useSearchBox(searchConfig);
-  const { provider, onSubmit, clearFormError, fetchData, onFormChange } =
+  const { provider, onSubmit, clearFormError, updateFormData, onFormChange } =
     useDynamicForm(formConfig);
   const { config, gridFetch } = useGridBox(gridConfig, getGridParams);
 

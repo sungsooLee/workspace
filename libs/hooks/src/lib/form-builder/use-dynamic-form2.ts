@@ -244,7 +244,7 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
    *
    * @param data - 서버에서 받아온 데이터
    */
-  const fetchData = useCallback(
+  const updateFormData = useCallback(
     (data?: Record<string, any>) => {
       reset(data || defaultValues);
       setOriginalValues(data || defaultValues);
@@ -345,7 +345,7 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
   return {
     provider,
     onFormValid: trigger,
-    fetchData,
+    updateFormData: updateFormData,
     onSubmit: formSubmit,
     setFormError,
     getValues,

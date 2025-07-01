@@ -20,7 +20,7 @@ export const useCodeGroup = <T = any>(
   const { getCode } = useCodeStore();
   const [data, setData] = useState<T[]>([]);
 
-  const fetchData = useCallback(async () => {
+  const updateFormData = useCallback(async () => {
     if (!groupName) return;
 
     try {
@@ -32,12 +32,12 @@ export const useCodeGroup = <T = any>(
   }, [getCode, groupName]);
 
   useEffect(() => {
-    fetchData();
-  }, [fetchData, ...deps]);
+    updateFormData();
+  }, [updateFormData, ...deps]);
 
   return {
     data,
-    refetch: fetchData,
+    refetch: updateFormData,
   };
 };
 

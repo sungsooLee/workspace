@@ -5,6 +5,7 @@ import {
   roleMutateOptions as mutateOptions,
 } from './role-manage.queries';
 import { useModal } from '@learnway/ui';
+import { RoleApplication, RoleApplicationParam } from '@types';
 
 export function useFetchRole(roleCode: string) {
   return useQuery({ ...queryOptions.getRole(roleCode), enabled: !!roleCode });
@@ -50,8 +51,9 @@ export function useGetMyRoleApplications(payload: any) {
  * @description 나의 역할 신청조회 단건
  * @param roleApplicationId
  */
-export function useGetMyRoleApplication(roleApplicationId: number) {
-  return useQuery({
+
+export function useGetMyRoleApplication<T = RoleApplication>(roleApplicationId: number) {
+  return useQuery<unknown, unknown, T>({
     ...queryOptions.getMyRoleApplication(roleApplicationId),
     enabled: !!roleApplicationId,
   });
@@ -121,8 +123,8 @@ export function useSaveUsers(options: any) {
   };
 }
 
-export function useCreateMyRoleApplication(options: any) {
-  const mutation = useMutation({
+export function useCreateMyRoleApplication<T = RoleApplicationParam>(options: any) {
+  const mutation = useMutation<unknown, unknown, T>({
     ...mutateOptions.createMyRoleApplication(),
     onSuccess: async (data, variables, context) => {
       if (options.onSuccess) {
@@ -132,7 +134,7 @@ export function useCreateMyRoleApplication(options: any) {
     ...options,
   });
   return {
-    createRoleApplication: (payload: any, callback?: any) => {
+    createMyRoleApplication: (payload: T, callback?: any) => {
       mutation.mutate(payload, callback);
     },
     isSuccess: mutation.isSuccess,

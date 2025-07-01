@@ -63,7 +63,7 @@ const SystemCodeGridComponent = ({ data }: any) => {
   const [tableInstance, setTableInstance] = useState<Table<any>>();
   const { data: detailData } = useSystemCodeDetail(selectedRow?.enumNames);
 
-  const { provider, fetchData } = useDynamicForm(formConfig);
+  const { provider, updateFormData } = useDynamicForm(formConfig);
 
   const handleRowSelect = (row: any) => {
     setSelectedDetailRow(null);
@@ -80,8 +80,8 @@ const SystemCodeGridComponent = ({ data }: any) => {
       const referenceVal = selectedDetailRow?.referenceVal1
         ? JSON.stringify(selectedDetailRow.referenceVal1, null, 2)
         : '';
-      fetchData({ ...selectedDetailRow, referenceVal1: referenceVal });
-    } else fetchData({});
+      updateFormData({ ...selectedDetailRow, referenceVal1: referenceVal });
+    } else updateFormData({});
   }, [selectedDetailRow]);
 
   const selectFirstRow = useCallback(() => {
@@ -97,7 +97,7 @@ const SystemCodeGridComponent = ({ data }: any) => {
   }, [data]);
 
   useEffect(() => {
-    fetchData({});
+    updateFormData({});
     if (data && data.length > 0) {
       const timeoutId = setTimeout(selectFirstRow, 100);
       return () => clearTimeout(timeoutId);

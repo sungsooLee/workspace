@@ -1,0 +1,41 @@
+.nlp--radio {
+  [role='radio'] {
+    &[aria-checked='true'] {
+      @apply !border-[var(--blue50)];
+      [data-state='checked']::after {
+        @apply !h-[11px] !w-[11px] !bg-[var(--blue50)];
+      }
+    }
+  }
+  label {
+    @apply !label-xl !text-[var(--gray35)];
+  }
+  &:has([role='radio']) {
+    &[aria-checked='true'] label {
+      @apply !font-semibold;
+    }
+  }
+  &.lg {
+    [role='radio'] {
+      @apply !h-[2.2rem] !w-[2.2rem];
+    }
+  }
+  &.md {
+    [role='radio'] {
+      @apply !h-[1.8rem] !w-[1.8rem];
+      &[aria-checked='true'] {
+        [data-state='checked']::after {
+          @apply !h-[9px] !w-[9px];
+        }
+      }
+    }
+    label {
+      @apply !label-lg;
+    }
+  }
+  &.vertical {
+    & > div:not(:first-child) {
+      @apply mt-[4px];
+    }
+  }
+}

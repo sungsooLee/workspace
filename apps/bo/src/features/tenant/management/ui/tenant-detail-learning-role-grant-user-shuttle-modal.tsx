@@ -54,8 +54,15 @@ const TenantDetailLearningRoleGrantUserShuttleModalComponent = ({ roleId }: { ro
     setOptions,
     setValue,
   } = useSearchBox(searchConfig);
-  const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
-    useDynamicForm(formConfig);
+  const {
+    provider,
+    updateFormData,
+    onSubmit,
+    onFormChange,
+    getValues,
+    clearFormError,
+    setFormError,
+  } = useDynamicForm(formConfig);
 
   const { saveUsersRole: saveRoleUsers } = useSaveUsers({});
 

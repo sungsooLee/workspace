@@ -49,8 +49,15 @@ export const CategoryManage = () => {
   const [formMode, setFormMode] = useState(FORM_MODE.NONE);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
-    useDynamicForm(formConfig);
+  const {
+    provider,
+    updateFormData,
+    onSubmit,
+    onFormChange,
+    getValues,
+    clearFormError,
+    setFormError,
+  } = useDynamicForm(formConfig);
   const queryClient = useQueryClient();
   const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
   const [lastCreatedMenuId, setLastCreatedMenuId] = useState<string | null>(null);
@@ -145,7 +152,7 @@ export const CategoryManage = () => {
           sortSeq: selectedNode?.children?.length ?? 0 + 1,
           isUsed: detailData.isUsed,
         };
-        fetchData({ ...initialData });
+        updateFormData({ ...initialData });
         initialFromValuesRef.current = { ...initialData };
         console.log(initialFromValuesRef.current);
       }
@@ -158,7 +165,7 @@ export const CategoryManage = () => {
     });
     if (isReset) {
       onFormChange();
-      if (formMode === FORM_MODE.VIEW) fetchData({ ...initialFromValuesRef.current });
+      if (formMode === FORM_MODE.VIEW) updateFormData({ ...initialFromValuesRef.current });
     }
   };
 
@@ -172,7 +179,7 @@ export const CategoryManage = () => {
 
     const location = (node?.menuId && findMenuPathById(treeData, node.menuId)) ?? '';
 
-    fetchData({
+    updateFormData({
       ...initData,
       parentKey: node.menuId,
       parentMenuName: node.name,
@@ -332,7 +339,7 @@ export const CategoryManage = () => {
 
     const sourceNode = nodeInfo.sourceNode;
     const targetNode = nodeInfo.targetNode;
-    
+
     if (!targetNode || !targetNode.sortSeq) {
       // targetNode의 sortSeq가 없으면 targetIndex 기반으로 계산
       return nodeInfo.position === 'BEFORE' ? nodeInfo.targetIndex + 1 : nodeInfo.targetIndex + 2;
@@ -367,12 +374,13 @@ export const CategoryManage = () => {
         console.log(event);
         if (nodeInfo.sourceNode.menuId) {
           const sortSeq = calculateSortSeq(nodeInfo);
-          
+
           const payload = {
             id: nodeInfo.sourceNode.menuId,
-            destinationParentId: nodeInfo.position === 'INSIDE' 
-              ? nodeInfo.targetNode?.menuId 
-              : nodeInfo.targetNode?.parentKey,
+            destinationParentId:
+              nodeInfo.position === 'INSIDE'
+                ? nodeInfo.targetNode?.menuId
+                : nodeInfo.targetNode?.parentKey,
             sortSeq: sortSeq,
           };
 
@@ -399,7 +407,7 @@ export const CategoryManage = () => {
       formConfig.builders.forEach((item) => {
         initData[item.name] = item.value;
       });
-      fetchData({ ...initData });
+      updateFormData({ ...initData });
     }
   }, [formMode]);
 

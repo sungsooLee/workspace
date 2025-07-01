@@ -6,7 +6,7 @@ export type UserGroupType =
   | 'JOB_POSITION'
   | 'CUSTOM_GROUP';
 
-export interface AllUserGroupResponse {
+export interface UserGroupsResponse {
   userGroupId: number;
   userGroupName: string;
   userGroupSubName: string;
@@ -15,6 +15,14 @@ export interface AllUserGroupResponse {
   fullName: string;
   userCount: number;
   userUuids: string[];
+}
+
+export interface OrganizationTreeResponse {
+  id: number;
+  name: string;
+  type: string;
+  fullName: string;
+  children: OrganizationTreeResponse[];
 }
 
 export interface UserGroupsParam {

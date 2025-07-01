@@ -1,24 +1,20 @@
+// IA011 / NLP_BO_PMS_1100_5
 import { forwardRef, useEffect, useState } from 'react';
 import { Attachment } from '@learnway/ui'; // @learnway/ui에서 Attachment 컴포넌트 import
-import { BaseFormFieldProps, useS3Uploader } from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
-import { LEARNING_TYPE } from '@learnway/config';
-import { t } from 'i18next';
+import {
+  BaseFormFieldProps,
+  DEFAULT_MULTIPART_THRESHOLD,
+  S3UploaderConfig,
+  useFileManager,
+  useS3Uploader,
+} from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
+import { compact, difference, map } from 'lodash';
 
 /**
  * AttachmentFormField 컴포넌트의 props 인터페이스
  * 폼 필드로서 Attachment 컴포넌트를 래핑하여 폼 시스템과 통합합니다.
  */
-interface AttachmentFormFieldProps extends BaseFormFieldProps<string[]> {
-  /**
-   * 더미 속성 (현재 코드에서 사용되지 않음)
-   * @deprecated 이 prop은 현재 코드에서 사용되지 않습니다.
-   */
-  dummy?: any;
-  maxFileCount?: number;
-  maxFileSize?: number;
-  isDownloadCase?: boolean;
-  type: LEARNING_TYPE;
-}
+type AttachmentFormFieldProps = BaseFormFieldProps<string[]> & S3UploaderConfig;
 
 /**
  * 폼 필드용 썸네일 이미지 업로드 컴포넌트
@@ -33,54 +29,105 @@ const AttachmentFormFieldComponent = forwardRef<
 >(
   (
     {
+      s3Path,
+      groupConfig,
+      groupMode = 'batch',
+      auto = true,
+      async = true,
+      multipartThreshold = DEFAULT_MULTIPART_THRESHOLD,
+      acceptFiles = [],
       maxFileCount = 10,
-      maxFileSize = 1024 * 1024 * 50,
+      maxFileSize = 5 * 1024 * 1024,
+      name,
       value,
       onChange,
       type,
-      isDownloadCase = false,
       ...props // 나머지 HTMLDivElement 속성들
     },
     ref, // forwardRef로 전달받은 Ref 객체
   ) => {
-    const { stats, files, addFiles, onPause, onRetry, onResume, onRemove } = useS3Uploader({
-      s3Path: 'upload/content/original',
-      maxFileCount,
-    });
+    const { getFileInfo } = useFileManager();
+    const { stats, files, addFiles, onPause, onRetry, onResume, onRemove, onFetch, inputAccept } =
+      useS3Uploader({
+        s3Path,
+        groupConfig,
+        groupMode,
+        auto,
+        async,
+        multipartThreshold,
+        acceptFiles,
+        maxFileCount,
+        maxFileSize,
+      });
 
-    const [errorMessage, setErrorMessage] = useState('');
-
-    const handleAddFiles = (files: File[]) => {
-      setErrorMessage('');
-      addFiles(files);
-    };
+    const [fileUuids, setFileUuids] = useState<string[]>([]);
 
     /**
-     * `value` prop (부모 폼으로부터 받은 이미지 경로 배열)이 변경될 때마다
-     * 내부 `options` 상태를 동기화합니다.
-     * 이를 통해 폼 외부에서 `value`가 변경되어도 UI가 올바르게 업데이트됩니다.
+     * `value` 가 변경될 때마다 fileUuids를 set
      */
     useEffect(() => {
-      // setFiles(valueToOptions(value));
+      setFileUuids(value);
     }, [value]); // `value` prop이 변경될 때마다 실행
 
-    // `Attachment` 컴포넌트를 렌더링하고 필요한 props를 전달합니다.
+    /**
+     * 서버에서 파일정보를 가져와서 files에 추가
+     */
+    async function fetchFileInfo(uuids: string[]) {
+      const fileInfos = await Promise.all(uuids.map(getFileInfo));
+      onFetch(fileInfos);
+    }
+
+    /**
+     * fileUuid가 변경될 때마다 기존 files와 비교하여 추가된 파일이 있는 경우 서버에서 fetch 실행
+     */
+    useEffect(() => {
+      const uploadFileUuid = compact(
+        map(
+          files.filter(({ status }) => ['fetched', 'completed'].includes(status)),
+          ({ fileUuid }) => fileUuid,
+        ),
+      );
+      const existed = difference(fileUuids, uploadFileUuid);
+      if (existed.length) {
+        fetchFileInfo(existed);
+      }
+    }, [fileUuids]);
+
+    /**
+     * files가 변경될 때마다 기존 fileUuid와 비교하여
+     * 변경이 있는 경우 onChange를 실행하여 상위 react-form으로 전달함
+     */
+    useEffect(() => {
+      const uploadedFileUuid = compact(
+        map(
+          files.filter(({ status }) => ['fetched', 'completed'].includes(status)),
+          ({ fileUuid }) => fileUuid,
+        ),
+      );
+      const added = difference(uploadedFileUuid, fileUuids);
+      const removed = difference(fileUuids, uploadedFileUuid);
+      if (added.length || removed.length) {
+        onChange(uploadedFileUuid);
+      }
+    }, [files]);
+
     return (
-      <Attachment
-        files={files}
-        maxFileCount={maxFileCount}
-        maxFileSize={maxFileSize}
-        addFiles={handleAddFiles}
-        onRemove={onRemove}
-        onPause={onPause}
-        onResume={onResume}
-        onRetry={onRetry}
-        guideText={t('LABEL.message.learningResourceFileUploadModal.uploaderGuideText')}
-        errorMessage={errorMessage}
-        wrapSize={'lg'}
-        isDownloadCase={isDownloadCase}
-        {...props} // Attachment에 전달될 수 있는 나머지 props (예: className)
-      />
+      <>
+        <Attachment
+          files={files}
+          addFiles={addFiles}
+          onRemove={onRemove}
+          onPause={onPause}
+          onResume={onResume}
+          onRetry={onRetry}
+          inputAccept={inputAccept}
+          maxFileCount={maxFileCount}
+          maxFileSize={maxFileSize}
+          wrapSize={'lg'}
+          {...props}
+        />
+        <input type="hidden" name={name} value={fileUuids} />
+      </>
     );
   },
 );

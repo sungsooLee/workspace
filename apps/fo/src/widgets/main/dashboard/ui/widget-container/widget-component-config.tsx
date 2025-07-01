@@ -5,7 +5,7 @@ import { tenantQueryOptions } from '../../../../../entities/tenant';
 export const widgetComponentConfig: any = {
   'completion-status-widget': {
     component: CompletionStatusWidget,
-    fetchData: async (queryClient: any) => {
+    updateFormData: async (queryClient: any) => {
       return await queryClient.fetchQuery(tenantQueryOptions.byUser());
     },
     fetchPreviewData: () => {

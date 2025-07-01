@@ -3,6 +3,7 @@ import {
   UseMutationResult,
   useQuery,
   useQueryClient,
+  UseQueryOptions,
   UseQueryResult,
 } from '@tanstack/react-query';
 import { mutateOptions, queryKeys, queryOptions } from './label-messages.queries';
@@ -18,22 +19,31 @@ import { useModal } from '@learnway/ui';
  * 라벨 메시지 목록을 가져오는 쿼리 훅.
  * 선택적 쿼리 파라미터를 사용하여 결과 필터링, 페이지네이션 등을 할 수 있습니다.
  * @param [queryParam] - 라벨 메시지 목록 조회에 사용될 선택적 쿼리 파라미터.
+ * @param options - 추가 쿼리 옵션.
  * @returns 쿼리 결과를 담은 객체.
  */
-export const useFetchLabelMessages = (
+export const useFetchLabelMessages = <T = LabelMessage>(
   queryParam?: LabelMessagesQueryParams,
-): UseQueryResult<PaginationResponse<LabelMessage>, Error> => {
-  return useQuery(queryOptions.all(queryParam));
+  options?: UseQueryOptions<PaginationResponse<T>, Error>,
+): UseQueryResult<PaginationResponse<T>, Error> => {
+  return useQuery({ ...queryOptions.all<T>(queryParam), ...options });
 };
 
 /**
  * 특정 ID의 라벨 메시지 상세 정보를 가져오는 쿼리 훅.
  * ID를 기반으로 캐시되거나 새로 데이터를 불러옵니다.
  * @param id - 조회할 라벨 메시지의 고유 ID.
+ * @param options - 추가 쿼리 옵션.
  * @returns 쿼리 결과를 담은 객체.
  */
-export const useFetchLabelMessage = (id: number): UseQueryResult<LabelMessage, Error> => {
-  return useQuery<LabelMessage>(queryOptions.detail(id));
+export const useFetchLabelMessage = <T = LabelMessage>(
+  id: number,
+  options?: UseQueryOptions<T, Error>,
+): UseQueryResult<T, Error> => {
+  return useQuery({
+    ...queryOptions.detail<T>(id),
+    ...options,
+  });
 };
 
 /**

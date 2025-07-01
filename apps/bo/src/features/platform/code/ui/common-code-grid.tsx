@@ -122,7 +122,7 @@ const CommonCodeGridComponent = ({
   const { alert: openAlert, confirm: openConfirm } = useModal();
   const { showSaveComplete, showDeleteComplete, showUpdateComplete } = useModal();
 
-  const { provider, onSubmit, fetchData, clearFormError, onFormChange, getValues, formState } =
+  const { provider, onSubmit, updateFormData, clearFormError, onFormChange, getValues, formState } =
     useDynamicForm(formConfig);
   const { create: createCode } = useCreateCommonCode({
     page,
@@ -277,7 +277,7 @@ const CommonCodeGridComponent = ({
     if (detailData && !isLoading && formMode === FORM_MODE.VIEW && !dataProcessed) {
       console.log(detailData);
       const data = detailData as any;
-      fetchData({ ...data, cdSeq: data.cdSeq ? data.cdSeq + '' : '' });
+      updateFormData({ ...data, cdSeq: data.cdSeq ? data.cdSeq + '' : '' });
       // 데이터 처리 완료 표시
       setDataProcessed(true);
     }

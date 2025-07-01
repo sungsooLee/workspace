@@ -57,7 +57,7 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
 
   const prevDataRef = useRef(null);
 
-  const { provider, fetchData, onSubmit, onFormChange, clearFormError, control } =
+  const { provider, updateFormData, onSubmit, onFormChange, clearFormError, control } =
     useDynamicForm(formConfig);
 
   const clearAllFormErrors = () => {
@@ -114,7 +114,7 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
   useEffect(() => {
     if (detailData) {
       const parentNode = findParentNode(treeData, detailData?.apiId.toString());
-      fetchData({
+      updateFormData({
         ...detailData,
         apiId: detailData?.apiId.toString() || 0,
         parentId: parentNode?.apiId.toString() || '',
@@ -130,7 +130,7 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
       initData[item.name] = item.value;
     });
 
-    fetchData({
+    updateFormData({
       ...initData,
       fullPath: node?.fullPath,
       parentName: node?.apiName,
@@ -167,7 +167,7 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
 
     const sourceNode = nodeInfo.sourceNode;
     const targetNode = nodeInfo.targetNode;
-    
+
     if (!targetNode || !targetNode.sortOrder) {
       // targetNode의 sortOrder가 없으면 targetIndex 기반으로 계산
       return nodeInfo.position === 'BEFORE' ? nodeInfo.targetIndex + 1 : nodeInfo.targetIndex + 2;
@@ -201,12 +201,13 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
         const nodeInfo = event;
         if (nodeInfo) {
           const sortOrder = calculateSortOrder(nodeInfo);
-          
+
           const payload = {
             apiUuid: nodeInfo.sourceNode.apiUuid,
-            destinationParentId: nodeInfo.position === 'INSIDE' 
-              ? nodeInfo.targetNode?.apiId 
-              : nodeInfo.targetNode?.parentId,
+            destinationParentId:
+              nodeInfo.position === 'INSIDE'
+                ? nodeInfo.targetNode?.apiId
+                : nodeInfo.targetNode?.parentId,
             sortOrder: sortOrder,
             apiScopeCode: menuScope,
           };
@@ -333,7 +334,7 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
               formConfig.builders.forEach((item) => {
                 initData[item.name] = item.value;
               });
-              fetchData({ ...initData });
+              updateFormData({ ...initData });
               setFormMode(FORM_MODE.NONE);
             },
           });

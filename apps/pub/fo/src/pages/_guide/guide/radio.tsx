@@ -8,10 +8,10 @@ export const Route = createFileRoute('/_guide/guide/radio')({
 function RouteComponent() {
   return (
     <div>
-      <h2 className="guide_tit2">Checkbox Component Guide</h2>
+      <h2 className="guide_tit2">Radio Component Guide</h2>
       <p className="loc react">/libs/ui/src/lib/radio/radio.tsx</p>
       <p className="info">
-        size(높이 기준) : xs(12), sm(16), md(18), lg(24-basic)
+        size(높이 기준) : md(20), lg(24-basic)
         <br />
         orientation : vertical, horizontal
       </p>
@@ -54,6 +54,7 @@ import { RadioGroup } from '@learnway/ui';
                 { value: 'type1-3', label: 'ccccc' },
               ]}
               orientation="vertical"
+              size="lg"
             />
           </div>
           <div className="desc">
@@ -66,16 +67,6 @@ import { RadioGroup } from '@learnway/ui';
               size="md"
             />
           </div>
-          <div className="desc">
-            <RadioGroup
-              options={[
-                { value: 'type3-1', label: 'aaaaa' },
-                { value: 'type3-2', label: 'bbbbb' },
-                { value: 'type3-3', label: 'ccccc' },
-              ]}
-              size="sm"
-            />
-          </div>
         </div>
         <div className="code_example">
           <pre className="code_block">
@@ -85,6 +76,7 @@ import { RadioGroup } from '@learnway/ui';
     { value: 'type1-2', label: 'bbbbb' },
     { value: 'type1-3', label: 'ccccc' },
   ]}
+  size="lg"
 />
 
 <RadioGroup
@@ -95,15 +87,7 @@ import { RadioGroup } from '@learnway/ui';
   ]}
   size="md"
 />
-
-<RadioGroup
-  options={[
-    { value: 'type3-1', label: 'aaaaa' },
-    { value: 'type3-2', label: 'bbbbb' },
-    { value: 'type3-3', label: 'ccccc' },
-  ]}
-  size="sm"
-/>`}</code>
+`}</code>
           </pre>
         </div>
       </div>
@@ -119,6 +103,7 @@ import { RadioGroup } from '@learnway/ui';
                 { value: 'type4-3', label: 'ffff' },
               ]}
               disabled
+              size="lg"
             />
           </div>
         </div>
@@ -131,6 +116,7 @@ import { RadioGroup } from '@learnway/ui';
     { value: 'type4-3', label: 'ffff' },
   ]}
   disabled
+  size="lg"
 />`}</code>
           </pre>
         </div>
