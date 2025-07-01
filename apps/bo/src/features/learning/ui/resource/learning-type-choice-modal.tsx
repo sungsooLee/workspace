@@ -118,8 +118,12 @@ const learningTypes = [
     icon: <IcoEntrust />,
     description: '설명문구2줄설명',
   },
-  { label: '블로그', value: getRandomId(), icon: <IcoBlog />, description: '설명문구2줄설명' },
-
+  {
+    label: '블로그',
+    value: LEARNING_TYPE.BLOG,
+    icon: <IcoBlog />,
+    description: '설명문구2줄설명',
+  },
   {
     label: '시험지',
     value: LEARNING_TYPE.TEST_PAGER,
