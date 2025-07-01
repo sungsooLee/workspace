@@ -21,6 +21,8 @@ import {
   UniqueIdentifier,
 } from '@dnd-kit/core';
 import { snapCenterToCursor } from '@dnd-kit/modifiers';
+import { IcoFile01, IcoFolder } from '@learnway/icons';
+import styles from './tree.module.css'; // Tree module CSS
 
 interface DragState {
   node: TreeNode | null;
@@ -55,6 +57,7 @@ interface TreeContextType {
       onDragOver?: (event: DragOverEvent) => void;
       onDragEnd?: (event: DragEndEvent) => void;
       removeNode?: (nodeKey: string) => void;
+      resetLocalDragState?: () => void;
     },
   ) => void;
 }
@@ -87,22 +90,27 @@ export const TreeProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     document.body.classList.remove('dragging-active');
     document.body.style.userSelect = '';
     // document.body.style.overflow = '';
+
+    treeCallbacksRef.current.forEach((callbacks) => {
+      if (callbacks.resetLocalDragState) {
+        callbacks.resetLocalDragState();
+      }
+    });
   }, []);
 
   const registerTreeCallbacks = useCallback((treeId: string, callbacks: any) => {
     treeCallbacksRef.current.set(treeId, callbacks);
   }, []);
 
-  // DnD 센서 설정
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
-      distance: 3,
+      distance: 8,
     },
   });
   const touchSensor = useSensor(TouchSensor, {
     activationConstraint: {
-      delay: 150,
-      tolerance: 3,
+      delay: 100,
+      tolerance: 5,
     },
   });
   const sensors = useSensors(mouseSensor, touchSensor);
@@ -242,22 +250,36 @@ export const TreeProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           {activeId && dragState.node ? (
             <div
               style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
                 padding: '8px 12px',
                 backgroundColor: 'white',
                 border: '2px solid #2196f3',
-                borderRadius: '6px',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                borderRadius: '8px',
+                boxShadow: '0 8px 25px rgba(0,0,0,0.15)',
                 fontSize: '14px',
                 fontWeight: '500',
                 color: '#333',
-                maxWidth: '200px',
+                maxWidth: '250px',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 cursor: 'grabbing',
+                transform: 'rotate(2deg)',
+                transition: 'transform 0.2s ease',
               }}
             >
-              {dragState.node.title}
+              <span style={{ flexShrink: 0, display: 'flex', alignItems: 'center' }}>
+                {dragState.node.children && dragState.node.children.length > 0 ? (
+                  <IcoFolder stroke="#131C30" className={styles.icon_folder} />
+                ) : (
+                  <IcoFile01 width={'16'} height={'16'} stroke={'#131C30'} fill={'none'} />
+                )}
+              </span>
+              <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                {dragState.node.title}
+              </span>
             </div>
           ) : null}
         </DragOverlay>

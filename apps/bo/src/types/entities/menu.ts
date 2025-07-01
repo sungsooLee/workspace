@@ -55,6 +55,7 @@ export interface MenuDetail {
   parentCode: string;
   parentName: string;
   apiMappingMenuList: ApiMappingMenuDetail[];
+  fullPath?: string;
 }
 
 export type ApiMappingMenuDetail = {

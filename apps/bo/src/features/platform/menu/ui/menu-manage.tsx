@@ -172,7 +172,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
       const { parentId } = data;
 
       if (parentId !== null) {
-        if (typeWatch.length === 0) {
+        if (typeWatch.length === 0 && prevTypeWatchRef.current.length > 0) {
           openAlert({
             content: t('LABEL.form.validation.selectAtLeastCount', { count: 1 }),
           });
@@ -219,13 +219,12 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
     if (detailData && treeData) {
       if (formMode === FORM_MODE.VIEW) {
         const data = detailData as MenuDetail;
-        const location = selectedNode && findMenuPathById(treeData, selectedNode.menuId);
         const deviceNames = [];
         if (data.isWebExposed) deviceNames.push(DEVICE_NAME.PC);
         if (data.isMobileExposed) deviceNames.push(DEVICE_NAME.Mobile);
         const formData = {
           ...data,
-          location: location,
+          location: detailData.fullPath,
           parentCode: data.parentName,
           code: { fieldValue: data.menuCode, checkState: DuplicateState.okStart },
           deviceNames: deviceNames,
