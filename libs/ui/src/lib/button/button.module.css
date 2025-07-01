@@ -290,3 +290,15 @@
     @apply stroke-[var(--gray10)];
   }
 }
+.underline {
+  @apply !font-normal;
+  &.sm {
+    @apply label-sm !h-[1.8rem] text-[var(--gray35)];
+  }
+  &.md {
+    @apply label-lg !h-[2rem] text-[var(--gray35)];
+  }
+  &.lg {
+    @apply label-xl !h-[2.2rem] text-[var(--gray35)];
+  }
+}

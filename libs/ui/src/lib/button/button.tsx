@@ -80,6 +80,10 @@ export interface ButtonComponentProps extends React.ButtonHTMLAttributes<HTMLBut
    */
   label?: string;
   /**
+   * 버튼의 하단 라인 여부
+   */
+  underline?: boolean;
+  /**
    * 클릭 이벤트 발생 시 이벤트 전파를 중지할지 여부
    */
   stopPropagation?: boolean;
@@ -102,6 +106,7 @@ const ButtonComponent = forwardRef<HTMLButtonElement, ButtonComponentProps>(
       variant,
       size,
       label,
+      underline = false,
       type = 'button',
       onClick,
       stopPropagation,
@@ -139,6 +144,7 @@ const ButtonComponent = forwardRef<HTMLButtonElement, ButtonComponentProps>(
           size && styles[size],
           size,
           onlyIcon && 'only_icon',
+          underline && styles.underline,
           className,
         )}
         disabled={disabled || isLoading}

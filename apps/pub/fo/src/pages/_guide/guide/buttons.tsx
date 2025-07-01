@@ -413,6 +413,25 @@ import { Button } from '@learnway/ui';
               </code>
             </pre>
           </div>
+
+          <h3 className="guide_tit3">Underline Button</h3>
+          <div className="flex_box">
+            <div className="desc">
+              <Button size="sm" underline={true} label={'버튼'} />
+              <Button size="md" underline={true} label={'버튼'} />
+              <Button size="lg" underline={true} label={'버튼'} />
+            </div>
+          </div>
+
+          <div className="code_example">
+            <pre className="code_block">
+              <code>
+                {`<Button size="sm" underline={true} label={'버튼'} />
+<Button size="md" underline={true} label={'버튼'} />
+<Button size="lg" underline={true} label={'버튼'} />`}
+              </code>
+            </pre>
+          </div>
         </div>
       </div>
     </div>
