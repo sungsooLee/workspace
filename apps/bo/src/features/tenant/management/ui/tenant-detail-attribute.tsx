@@ -296,11 +296,9 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
             <Tooltip
               className={styles.tooltip}
               content={
-                <pre>
-                  {t(
-                    '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다. ',
-                  )}
-                </pre>
+                t(
+                  '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다. ',
+                )
               }
             >
               <Button onlyIcon>
@@ -396,11 +394,9 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
             <Tooltip
               className={styles.tooltip}
               content={
-                <pre>
-                  {t(
-                    '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다. ',
-                  )}
-                </pre>
+                t(
+                  '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다. ',
+                )
               }
             >
               <Button onlyIcon>
@@ -435,11 +431,9 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
             <Tooltip
               className={styles.tooltip}
               content={
-                <pre>
-                  {t(
-                    '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
-                  )}
-                </pre>
+                t(
+                  '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
+                )
               }
             >
               <Button onlyIcon>
@@ -580,11 +574,9 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
             <Tooltip
               className={styles.tooltip}
               content={
-                <pre>
-                  {t(
-                    '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
-                  )}
-                </pre>
+                t(
+                  '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
+                )
               }
             >
               <Button onlyIcon>
@@ -626,11 +618,9 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
             <Tooltip
               className={styles.tooltip}
               content={
-                <pre>
-                  {t(
-                    '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
-                  )}
-                </pre>
+                t(
+                  '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
+                )
               }
             >
               <Button onlyIcon>
