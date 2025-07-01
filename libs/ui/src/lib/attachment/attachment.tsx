@@ -56,6 +56,7 @@ const AttachmentComponent = ({
   const { getRootProps, getInputProps, open } = useDropzone({
     onDrop,
     maxFiles: maxFileSize || 999,
+    multiple: maxFileCount > 1,
   });
 
   // 파일 다이얼로그 열기 + input 초기화

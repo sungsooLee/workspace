@@ -676,8 +676,9 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'singleAttachment',
       type: 'single-attachment',
-      s3Path: 'upload/tmp/attachment',
+      label: '약도 이미지 첨부',
       acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
+      s3Path: 'upload/tmp/attachment',
       groupConfig: {
         affairsType: 'PMS',
         languageCode: 'ko',

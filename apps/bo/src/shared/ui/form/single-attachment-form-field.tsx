@@ -1,14 +1,16 @@
 // IA011 / NLP_BO_PMS_1100_5
 import { forwardRef, useEffect, useState } from 'react';
-import { Attachment } from '@learnway/ui'; // @learnway/ui에서 Attachment 컴포넌트 import
+import { SingleAttachment } from '@learnway/ui'; // @learnway/ui에서 Attachment 컴포넌트 import
 import {
   BaseFormFieldProps,
   DEFAULT_MULTIPART_THRESHOLD,
+  formatFileSize,
   S3UploaderConfig,
   useFileManager,
   useS3Uploader,
 } from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
-import { compact, difference, first, map } from 'lodash';
+import { compact, first, map } from 'lodash';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
 /**
  * AttachmentFormField 컴포넌트의 props 인터페이스
@@ -37,7 +39,7 @@ const SingleAttachmentFormFieldComponent = forwardRef<
       multipartThreshold = DEFAULT_MULTIPART_THRESHOLD,
       acceptFiles = [],
       maxFileCount = 1,
-      maxFileSize = 0,
+      maxFileSize = 5 * 1024 * 1024,
       name,
       value,
       onChange,
@@ -109,22 +111,27 @@ const SingleAttachmentFormFieldComponent = forwardRef<
     }, [files]);
 
     return (
-      <>
-        <Attachment
-          files={files}
-          addFiles={addFiles}
-          onRemove={onRemove}
-          onPause={onPause}
-          onResume={onResume}
-          onRetry={onRetry}
-          inputAccept={inputAccept}
-          maxFileCount={maxFileCount}
-          maxFileSize={maxFileSize}
-          wrapSize={'lg'}
-          {...props}
-        />
+      <div className={formStyles.form_item}>
+        <div className={formStyles.input_box}>
+          <SingleAttachment
+            files={files}
+            addFiles={addFiles}
+            onRemove={onRemove}
+            onPause={onPause}
+            onResume={onResume}
+            onRetry={onRetry}
+            inputAccept={inputAccept}
+            maxFileCount={maxFileCount}
+            maxFileSize={maxFileSize}
+            wrapSize={'lg'}
+            {...props}
+          />
+        </div>
         <input type="hidden" name={name} value={fileUuid} />
-      </>
+        <p className={formStyles.guide_text}>
+          {`${'확장자'} ${acceptFiles.join(', ')} / ${'업로드 가능'} ${maxFileCount} ${'개'} / ${'파일용량 최대'} ${formatFileSize(maxFileSize)}`}
+        </p>
+      </div>
     );
   },
 );

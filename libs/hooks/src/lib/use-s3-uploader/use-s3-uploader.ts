@@ -166,7 +166,10 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
           message = 'size error';
         }
 
-        if (acceptFiles.length > 0 && !acceptFiles.includes(file.extension.toUpperCase())) {
+        if (
+          acceptFiles.length > 0 &&
+          !acceptFiles.map((accept) => accept.toUpperCase()).includes(file.extension.toUpperCase())
+        ) {
           isError = true;
           message = 'extension error';
         }
