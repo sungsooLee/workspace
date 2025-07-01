@@ -192,7 +192,7 @@ const useSearchBoxHook = <T extends SearchBoxConfig>(config: T): UseSearchBoxRet
    *
    * @param data - 서버에서 받아온 데이터
    */
-  const fetchData = (data: Record<string, any>) => {
+  const updateFormData = (data: Record<string, any>) => {
     reset(data);
     setOriginalValues(data);
   };
@@ -248,7 +248,7 @@ const useSearchBoxHook = <T extends SearchBoxConfig>(config: T): UseSearchBoxRet
       setOptions,
     },
     onFormValid: trigger,
-    fetchData,
+    updateFormData: updateFormData,
     setFormError,
     getValues,
     getValuesWithLabel,

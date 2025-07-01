@@ -265,7 +265,7 @@ function RouteComponent() {
     { title: '파일형식', text: 'ZIP' },
   ];
 
-  const { provider, onSubmit, control, getValues, fetchData } = useDynamicForm(formConfig);
+  const { provider, onSubmit, control, getValues, updateFormData } = useDynamicForm(formConfig);
   const { open: openModal } = useModal();
 
   const handleOnSubmit = async (data: any) => {

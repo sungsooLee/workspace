@@ -18,7 +18,7 @@ interface BasicInfoProps {
 
 const BasicInfoComponent = forwardRef<HTMLDivElement, BasicInfoProps>(({ dynamicForm }, ref) => {
   const { t } = useTranslation();
-  const { provider, getValues, fetchData } = dynamicForm;
+  const { provider, getValues, updateFormData } = dynamicForm;
   // const { provider, getValues, onSubmit } = useDynamicForm(formConfig);
 
   const handleOnSubmit = (data: any) => {
@@ -27,7 +27,7 @@ const BasicInfoComponent = forwardRef<HTMLDivElement, BasicInfoProps>(({ dynamic
 
   useEffect(() => {
     console.log('BasicInfoComponent init');
-    // fetchData({});
+    // updateFormData({});
   }, []);
 
   return (

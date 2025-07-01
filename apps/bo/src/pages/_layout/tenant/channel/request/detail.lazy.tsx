@@ -31,7 +31,8 @@ function RouteComponent() {
 
   const { data, refetch } = useGetRequestChannelDetail(channelRequestUuid);
 
-  const { provider, fetchData, onSubmit, getValues, onFormChange } = useDynamicForm(formConfig);
+  const { provider, updateFormData, onSubmit, getValues, onFormChange } =
+    useDynamicForm(formConfig);
 
   useEffect(() => {
     if (data) {
@@ -62,7 +63,7 @@ function RouteComponent() {
         isEnabled: '',
         isUsed: '',
       };
-      fetchData(initialData);
+      updateFormData(initialData);
     }
   }, [data]);
 

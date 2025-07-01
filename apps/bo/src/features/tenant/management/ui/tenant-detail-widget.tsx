@@ -77,7 +77,7 @@ const TenantDetailWidgetComponent: FC<any> = () => {
 
   const { open: openModal, confirm: openConfirm } = useModal();
 
-  const { provider, fetchData, getValues, onFormChange } = useDynamicForm(formConfig);
+  const { provider, updateFormData, getValues, onFormChange } = useDynamicForm(formConfig);
 
   // data hook
   const { data: widgetsData, refetch } = useAllTenantWidget(tenantId);
@@ -138,7 +138,7 @@ const TenantDetailWidgetComponent: FC<any> = () => {
     fetchInfo.isWebExposed && device.push(EnDeviceType.isPc);
     fetchInfo.isMobileExposed && device.push(EnDeviceType.isMobile);
     fetchInfo.device = device;
-    fetchData(fetchInfo);
+    updateFormData(fetchInfo);
     setFormMode(EnFormMode.VIEW);
   };
 

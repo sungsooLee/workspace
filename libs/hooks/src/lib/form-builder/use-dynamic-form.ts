@@ -189,7 +189,7 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
    *
    * @param data - 서버에서 받아온 데이터
    */
-  const fetchData = (data?: Record<string, any>) => {
+  const updateFormData = (data?: Record<string, any>) => {
     reset(data || defaultValues);
     setOriginalValues(data || defaultValues);
   };
@@ -226,8 +226,7 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
       addValidator: () => null,
     },
     onFormValid: trigger,
-    fetchData,
-    updateFormData: fetchData,
+    updateFormData: updateFormData,
     onSubmit: formSubmit,
     setFormError,
     getValues,

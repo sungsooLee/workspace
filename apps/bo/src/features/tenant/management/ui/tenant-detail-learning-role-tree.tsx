@@ -97,7 +97,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
     },
   });
 
-  const { provider, onSubmit, clearFormError, fetchData, onFormChange } =
+  const { provider, onSubmit, clearFormError, updateFormData, onFormChange } =
     useDynamicForm(formConfig);
   const { data, refetch } = useFetchRoleTree(tenantId, siteScope);
   const { data: roleDetail } = useFetchRole(selectedRoleNode?.roleId || undefined);
@@ -168,7 +168,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
       initData[item.name] = item.value;
     });
     const sortOrder = node.children.length + 1;
-    fetchData({
+    updateFormData({
       ...initData,
       parentRoleId: node.key.toString(),
       sortOrder: sortOrder,
@@ -194,7 +194,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
     if (roleDetail) {
       console.log('roleDetail', roleDetail);
       const parentRoleId = roleDetail.parentRoleId ? roleDetail.parentRoleId.toString() : 'root';
-      fetchData({
+      updateFormData({
         ...roleDetail,
         parentRoleId: parentRoleId,
         companyIds: roleDetail.companies.map((item: any) => ({

@@ -25,8 +25,8 @@ interface DetailInfoProps {
 const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
   ({ dummy, initialData }, ref) => {
     const { t } = useTranslation();
-    // const { provider, getValues, fetchData } = dynamicForm;
-    const { provider, getValues, onSubmit, onFormValid, formState, fetchData } =
+    // const { provider, getValues, updateFormData } = dynamicForm;
+    const { provider, getValues, onSubmit, onFormValid, formState, updateFormData } =
       useDynamicForm(formConfig);
 
     const handleOnSubmit = (data: any) => {
@@ -53,7 +53,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
       console.log('DetailInfoComponent init');
       // 초기 데이터가 있으면 설정
       if (initialData) {
-        fetchData(initialData);
+        updateFormData(initialData);
       }
     }, [initialData]);
 

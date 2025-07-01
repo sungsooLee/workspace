@@ -11,7 +11,7 @@ interface CourseRegistrationProps {
 const CourseRegistrationComponent = forwardRef<HTMLDivElement, CourseRegistrationProps>(
   ({ dynamicForm }, ref) => {
     const { t } = useTranslation();
-    const { provider, getValues, fetchData } = dynamicForm;
+    const { provider, getValues, updateFormData } = dynamicForm;
     // const { provider, getValues, onSubmit } = useDynamicForm(formConfig);
 
     const handleOnSubmit = (data: any) => {
@@ -20,7 +20,7 @@ const CourseRegistrationComponent = forwardRef<HTMLDivElement, CourseRegistratio
 
     useEffect(() => {
       console.log('CourseRegistrationComponent init');
-      // fetchData({});
+      // updateFormData({});
     }, []);
 
     return (

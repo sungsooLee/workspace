@@ -14,8 +14,15 @@ import fileUploadStyles from '@learnway/styles/bo/assets/styles/modules/file-upl
 import { IcoFormRequired, IcoPpt, IcoTrash03 } from '@learnway/icons';
 
 const TenantDetailBannerViewComponent: FC<{}> = ({}) => {
-  const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
-    useDynamicForm(formConfig);
+  const {
+    provider,
+    updateFormData,
+    onSubmit,
+    onFormChange,
+    getValues,
+    clearFormError,
+    setFormError,
+  } = useDynamicForm(formConfig);
   return (
     <div className={cn(styles.start, styles.wrap)}>
       <FormSubTitle

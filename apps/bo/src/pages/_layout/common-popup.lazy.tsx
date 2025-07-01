@@ -59,7 +59,7 @@ function RouteComponent() {
   const { open } = useModal();
   const { open: openModal } = useModal();
   const [organizations, setOrganizations] = useState<any>([]);
-  const { provider, onSubmit, control, getValues, fetchData } = useDynamicForm(formConfig);
+  const { provider, onSubmit, control, getValues, updateFormData } = useDynamicForm(formConfig);
 
   const handleLabelUpdate = async () => {
     const langPath = jsonToPaths(langCodes.LABEL);
@@ -94,7 +94,7 @@ function RouteComponent() {
 
   const handleAddressSearchResult = (address: any) => {
     console.log('address', address);
-    fetchData({ zipNo: address.zipNo, address: address.roadAddr });
+    updateFormData({ zipNo: address.zipNo, address: address.roadAddr });
   };
 
   const downloadByUrl = (url: string) => {

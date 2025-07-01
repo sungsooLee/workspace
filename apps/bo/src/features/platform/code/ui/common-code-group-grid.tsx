@@ -75,7 +75,7 @@ const CommonCodeGroupGridComponent = ({
 
   const { alert: openAlert, confirm: openConfirm } = useModal();
 
-  const { provider, onSubmit, fetchData, clearFormError, onFormChange, getValues, formState } =
+  const { provider, onSubmit, updateFormData, clearFormError, onFormChange, getValues, formState } =
     useDynamicForm(formConfig);
 
   const { mutate: createCodeGroup } = useCreateCommonCodeGroup({
@@ -218,7 +218,7 @@ const CommonCodeGroupGridComponent = ({
   // 데이터가 로드되면 폼에 채우기
   useEffect(() => {
     if (detailData && !isLoading && formMode === FORM_MODE.VIEW && !dataProcessed) {
-      fetchData(detailData);
+      updateFormData(detailData);
       setDataProcessed(true);
     }
   }, [detailData, isLoading, formMode, dataProcessed]);
