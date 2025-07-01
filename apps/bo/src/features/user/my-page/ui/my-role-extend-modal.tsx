@@ -35,7 +35,7 @@ const MyRoleExtendModalComponent: FC<{
 }> = ({ type, data, callback }: { type: MyRoleModal; data: any; callback?: () => void }) => {
   console.log('### modal data ', data);
   const { close: closeModal, alert: openAlert, showSaveComplete, closeAll } = useModal();
-  const { provider, fetchData, onSubmit, onFormChange } = useDynamicForm(formConfig);
+  const { provider, updateFormData, onSubmit, onFormChange } = useDynamicForm(formConfig);
 
   const { data: viewData } = useGetMyRoleApplication(data?.roleApplicationId ?? undefined);
   const { createMyRoleApplication } = useCreateMyRoleApplication({});

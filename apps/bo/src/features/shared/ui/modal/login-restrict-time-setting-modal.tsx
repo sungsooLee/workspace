@@ -37,7 +37,7 @@ const LoginRestrictTimeSettingModalComponent: FC<any> = ({
 
   console.log('### mode', mode);
 
-  const { provider, control, onSubmit, fetchData } = useDynamicForm(formConfig);
+  const { provider, control, onSubmit, updateFormData } = useDynamicForm(formConfig);
 
   const watchedRestrictionType = useWatch({
     control: control,
@@ -110,7 +110,7 @@ const LoginRestrictTimeSettingModalComponent: FC<any> = ({
           },
         })),
       };
-      fetchData(convertedData);
+      updateFormData(convertedData);
     }
   }, []);
 

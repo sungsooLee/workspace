@@ -44,7 +44,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
   const { t } = useTranslation();
   const [isCreateMode, setIsCreateMode] = React.useState(true);
   const { confirm: openConfirm } = useModal();
-  const { provider, onSubmit, onFormChange, getValues, fetchData, clearFormError } =
+  const { provider, onSubmit, onFormChange, getValues, updateFormData, clearFormError } =
     useDynamicForm(formConfig);
   const { data } = useFetchLabelMessage(labelMessageId);
   const formDisabled = labelMessageId === 0;
@@ -78,7 +78,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
     // 생성 모드는 폼 내용 초기화
     if (isCreate) {
       onFormChange({});
-      fetchData({});
+      updateFormData({});
     }
   }, [labelMessageId]);
 
@@ -93,7 +93,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
       lastDuplicateText: data?.labelMessageMultilingulKey || '',
       isDuplicateCheck: !isCreateMode,
     };
-    fetchData(d);
+    updateFormData(d);
   }, [data, labelMessageId, isCreateMode]);
 
   /**

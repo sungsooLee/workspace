@@ -25,7 +25,7 @@ interface DetailInfoProps {
 const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
   ({ dummy, initialData }, ref) => {
     const { t } = useTranslation();
-    // const { provider, getValues, fetchData } = dynamicForm;
+    // const { provider, getValues, updateFormData } = dynamicForm;
     const { provider, getValues, onSubmit, onFormValid, formState, updateFormData } =
       useDynamicForm2();
 

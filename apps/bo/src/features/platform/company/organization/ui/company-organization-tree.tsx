@@ -78,8 +78,15 @@ const TenantCompanyOrganizationTreeComponent = ({
   const [disableEditing, setDisableEditing] = useState(false);
   //const [company, setCompany] = useState<any>();
 
-  const { provider, fetchData, onSubmit, onFormChange, getValues, getInitByBuilders, control } =
-    useDynamicForm(formConfig);
+  const {
+    provider,
+    updateFormData,
+    onSubmit,
+    onFormChange,
+    getValues,
+    getInitByBuilders,
+    control,
+  } = useDynamicForm(formConfig);
 
   const { data: departmentTreeData, refetch } = useGetCompanyDepartmentTree(
     showType === EnOrganizationShowType.platform ? [companyCode] : [],
@@ -116,7 +123,7 @@ const TenantCompanyOrganizationTreeComponent = ({
         onClose: () => {
           setFormMode(EnFormMode.EMPTY);
           refetch();
-          fetchData(getInitByBuilders());
+          updateFormData(getInitByBuilders());
         },
       });
     },
@@ -166,7 +173,7 @@ const TenantCompanyOrganizationTreeComponent = ({
     };
     initdata.parentDeptId = node.deptId ? node.deptId.toString() : '';
     console.log('### initdata', initdata);
-    fetchData(initdata);
+    updateFormData(initdata);
     setSelectedNode(node);
     setViewNode(null);
     setFormMode(EnFormMode.ADD);
@@ -282,8 +289,8 @@ const TenantCompanyOrganizationTreeComponent = ({
         parentDeptId: departmentData.parentDeptId ? departmentData.parentDeptId.toString() : '',
         deptDesc: departmentData.deptDesc ?? '',
       };
-      console.log('### fetchData', data);
-      fetchData(data);
+      console.log('### updateFormData', data);
+      updateFormData(data);
       setDisableEditing(
         //company.hrInfoManageType === 'AUTO_MANAGE' ||
         departmentData.hrInfoManageType === 'AUTO_MANAGE',

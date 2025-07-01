@@ -37,7 +37,7 @@ const ChannelDetailComponent: FC<any> = ({ mode, method, requestId }) => {
   const { t } = useTranslation();
   const [pageMode, setPageMode] = useState(mode);
 
-  const { provider, fetchData, onSubmit, setFormError, clearFormError, getValues } =
+  const { provider, updateFormData, onSubmit, setFormError, clearFormError, getValues } =
     useDynamicForm(formConfig);
   const { provider: searchProvider, getValues: getSearchValues } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch, data: gridData } = useGridBox(gridConfig, getValues);
@@ -98,7 +98,7 @@ const ChannelDetailComponent: FC<any> = ({ mode, method, requestId }) => {
         usePreLevelTesting: true,
         useCourseFlag: true,
       };
-      fetchData(initialData);
+      updateFormData(initialData);
     } else if (pageMode === 'view') {
       // TODO
     }

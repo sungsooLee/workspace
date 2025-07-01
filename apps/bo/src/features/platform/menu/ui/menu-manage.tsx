@@ -99,7 +99,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
     return DuplicateState.ok;
   };
 
-  const { provider, fetchData, onSubmit, onFormChange, clearFormError, control, getValues } =
+  const { provider, updateFormData, onSubmit, onFormChange, clearFormError, control, getValues } =
     useDynamicForm(formConfig);
   const typeWatch = useWatch({ control, name: 'deviceNames' });
   const prevTypeWatchRef = useRef<string[]>([]);
@@ -174,7 +174,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
           openAlert({
             content: t('LABEL.form.validation.selectAtLeastCount', { count: 1 }),
           });
-          fetchData({ ...getValues(), deviceNames: prevTypeWatchRef.current });
+          updateFormData({ ...getValues(), deviceNames: prevTypeWatchRef.current });
         } else {
           prevTypeWatchRef.current = typeWatch;
         }
@@ -228,7 +228,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
           code: { fieldValue: data.menuCode, checkState: DuplicateState.okStart },
           deviceNames: deviceNames,
         };
-        fetchData({ ...formData });
+        updateFormData({ ...formData });
         initialFromValuesRef.current = { ...formData };
         prevTypeWatchRef.current = deviceNames;
         setFormMode(FORM_MODE.VIEW);
@@ -285,7 +285,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
       deviceNames: ['PC'],
     };
 
-    fetchData(addFormData);
+    updateFormData(addFormData);
 
     // 등록 모드에서 초기값 설정 (변경사항 감지를 위해)
     initialFromValuesRef.current = { ...addFormData };
@@ -327,7 +327,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
               const updatedApiList = currentApiList.filter(
                 (item: any) => item.apiId !== rowData.apiId,
               );
-              fetchData({ ...getValues(), apiMappingMenuList: updatedApiList });
+              updateFormData({ ...getValues(), apiMappingMenuList: updatedApiList });
             }}
             variant="gray2"
             size={'xs'}
@@ -355,7 +355,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
       content: <MenuApiMappingModal menuScopeCode={menuScope} selectedApiKeys={keyArray} />,
       width: 'xl',
     });
-    fetchData({ ...getValues(), apiMappingMenuList: [...selectApis] });
+    updateFormData({ ...getValues(), apiMappingMenuList: [...selectApis] });
   };
 
   const update = (payload: any) => {
@@ -512,9 +512,9 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
     if (isReset) {
       onFormChange();
       if (FORM_MODE.ADD === formMode) {
-        fetchData({ apiMappingMenuList: [] });
+        updateFormData({ apiMappingMenuList: [] });
       } else if (FORM_MODE.VIEW === formMode) {
-        if (initialFromValuesRef.current) fetchData({ ...initialFromValuesRef.current });
+        if (initialFromValuesRef.current) updateFormData({ ...initialFromValuesRef.current });
       }
     }
   };
@@ -537,7 +537,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
               formConfig.builders.forEach((item) => {
                 initData[item.name] = item.value;
               });
-              fetchData({ ...initData });
+              updateFormData({ ...initData });
               setFormMode(FORM_MODE.NONE);
             },
           });

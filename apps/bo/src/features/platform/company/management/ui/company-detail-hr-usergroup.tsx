@@ -76,7 +76,12 @@ const CompanyDetailHRUsergroupComponent: FC<any> = () => {
   };
 
   const { getCode } = useCodeStore();
-  const { control, provider: searchProvider, getValues, fetchData } = useSearchBox(searchConfig);
+  const {
+    control,
+    provider: searchProvider,
+    getValues,
+    updateFormData,
+  } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
 
   const watchedCompany = useWatch({

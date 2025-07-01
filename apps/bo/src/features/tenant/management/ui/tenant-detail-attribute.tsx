@@ -58,9 +58,10 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
   const { open: openModal, confirm: openConfirm } = useModal();
 
   const { getCode } = useCodeStore();
-  const { provider, fetchData, onSubmit, onFormChange, getValues } = useDynamicForm(formConfig);
-  const { provider: pBase, fetchData: fetchBaseData } = useDynamicForm(formBaseConfig);
-  const { provider: pTerms, fetchData: fetchTermsData } = useDynamicForm(formTermsConfig);
+  const { provider, updateFormData, onSubmit, onFormChange, getValues } =
+    useDynamicForm(formConfig);
+  const { provider: pBase, updateFormData: fetchBaseData } = useDynamicForm(formBaseConfig);
+  const { provider: pTerms, updateFormData: fetchTermsData } = useDynamicForm(formTermsConfig);
 
   const { update } = useUpdateTenantAttributeCompany(tenantId, {
     onSuccess: (data: any) => {
@@ -110,7 +111,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
       setLangOptions(options);
 
       // properties 변경 설정
-      fetchData({ ...attributeData });
+      updateFormData({ ...attributeData });
     }
   }, [attributeData]);
 

@@ -1,7 +1,6 @@
 import { useEffect, useCallback } from 'react';
 import { t } from 'i18next';
 import { Button, Divider } from '@learnway/ui';
-import { cn } from '@learnway/shared';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
@@ -10,8 +9,6 @@ import { EnGlobalConst, EnPageMode } from '@types';
 import { queryOptions } from '@entities/training-place/service/space.queries';
 import { Link } from '@tanstack/react-router';
 import { useFetchAuthUser } from '@learnway/auth/entities';
-
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
 const TrainingPlaceListComponent = ({
   pageMode,
@@ -22,7 +19,7 @@ const TrainingPlaceListComponent = ({
   onAddClick?: any;
   onSelect?: any;
 }) => {
-  const { provider: searchProvider, getValues, setOptions, setValue } = useSearchBox(searchConfig);
+  const { provider: searchProvider, getValues, setValue } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
   const { data: loginUser } = useFetchAuthUser();
 
@@ -35,14 +32,8 @@ const TrainingPlaceListComponent = ({
   }, []);
 
   useEffect(() => {
-    if (!loginUser) return;
-
-    const tenantIdOptions = loginUser.tenants.map((tenant) => ({
-      value: tenant.tenantId,
-      label: tenant.tenantName,
-    }));
-    setOptions('tenantId', tenantIdOptions);
-    if (loginUser.activeTenant) setValue('tenantId', loginUser.activeTenant.tenantId ?? '');
+    if (loginUser && loginUser.activeTenant)
+      setValue('tenantId', loginUser.activeTenant.tenantId ?? '');
   }, [loginUser]);
 
   const columnHelper = createColumnHelper<any>();
@@ -167,7 +158,9 @@ const searchConfig: SearchBoxConfig = {
         format: 'object',
         label: t('테넌트'),
         value: '',
-        options: [],
+        optionsConfig: {
+          codeGroup: CODE_GROUP['manual.bo.my.tenant.tenantId'],
+        },
         placeholder: t('선택'),
       },
       {

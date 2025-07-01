@@ -41,11 +41,11 @@ const TenantDetailAttributeCompanyComponent = (
   const formRef = useRef<HTMLFormElement>(null);
 
   const { open: openModal, confirm: openConfirm } = useModal();
-  const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, control } =
+  const { provider, updateFormData, onSubmit, onFormChange, getValues, clearFormError, control } =
     useDynamicForm(formConfig);
   const { update } = useUpdateTenantAttributeCompany(tenantId, {
     onSuccess: (data: any) => {
-      fetchData(data);
+      updateFormData(data);
       onUpdateComplete?.();
     },
   });
@@ -72,7 +72,7 @@ const TenantDetailAttributeCompanyComponent = (
 
   useEffect(() => {
     console.log(tenantName, attributeData);
-    fetchData({ ...attributeData, tenantName: tenantName });
+    updateFormData({ ...attributeData, tenantName: tenantName });
   }, [attributeData]);
 
   return (
