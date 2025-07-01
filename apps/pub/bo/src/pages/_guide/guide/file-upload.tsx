@@ -476,7 +476,7 @@ function RouteComponent() {
       {/* 단일로 사용하는 경우 : 첨부 후 케이스 */}
       <div className={styles.upload_single}>
         <div className={styles.view_file}>
-          <div className={styles.attach_area}>
+          <div className={cn(styles.attach_area, styles.attached)}>
             <p className={styles.attach_view}>
               <IcoPpt width={'20'} height={'21'} className={styles.icon_type} />
               <span className={styles.attached_name}>{'파일명.png'}</span>
