@@ -755,6 +755,7 @@ import formStyles from '../../assets/styles/modules/form.module.css';
                 placeholder="입력"
                 className="lg"
                 showSearchIcon
+                readOnly
               />
             </div>
             <p className={cn(formStyles.guide_text)}>기본 메시지</p>
