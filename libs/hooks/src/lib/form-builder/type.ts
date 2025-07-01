@@ -249,6 +249,8 @@ export type UseDynamicFormResult = {
   provider: DynamicFormProvider;
   /** 서버에서 받은 데이터를 기반으로 값 업데이트 */
   fetchData: (data?: Record<string, any>) => void;
+  /** 폼 데이터 업데이트 함수 (fetchData 대체 예정)*/
+  updateFormData: (data?: Record<string, any>) => void;
   /** 제출 이벤트 핸들러 */
   onSubmit: (onValid: (data: Record<string, any>) => void) => FormEventHandler<HTMLFormElement>;
   /** 필드에 에러 메시지 설정 */

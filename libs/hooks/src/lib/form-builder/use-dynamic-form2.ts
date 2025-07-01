@@ -346,6 +346,7 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
     provider,
     onFormValid: trigger,
     fetchData,
+    updateFormData: fetchData,
     onSubmit: formSubmit,
     setFormError,
     getValues,
