@@ -40,8 +40,11 @@
   &.pd_none {
     @apply pb-[0];
   }
+  .form_label {
+    @apply label-lg-b text-[var(--gray35)];
+  }
   .guide_text {
-    @apply mt-[8px] text-[1.2rem] font-normal leading-[16px] text-[var(--gray6)];
+    @apply label-md mt-[8px] text-[var(--gray50)];
     &:empty {
       @apply hidden;
     }
@@ -90,9 +93,15 @@
 }
 .input_box {
   @apply flex w-full items-center space-x-[8px];
-  .input {
-    @apply flex-1 !rounded-[8px];
+  [class*='nlp--input'] {
+    input {
+      @apply !h-[4.2rem] !min-h-[4.2rem] flex-1 !rounded-[8px];
+    }
+    & + button {
+      @apply !h-[4.4rem] !rounded-[8px];
+    }
   }
+
   .text {
     @apply whitespace-nowrap text-[1.4rem] leading-[1.6rem] text-[var(--gray8)];
   }
@@ -185,10 +194,10 @@
   .status {
     @apply ml-[2px] inline-flex align-text-top;
     &.required svg {
-      fill: #00afd5;
+      @apply !fill-[var(--blue75)];
     }
     &.error svg {
-      fill: #00afd5;
+      @apply !fill-[var(--blue75)];
     }
   }
 }
@@ -201,15 +210,15 @@ hr.divider {
   @apply h-[1px] w-full bg-[#EDF0F7];
 }
 
-[class*='nlp--contents-row'] {
+/* [class*='nlp--contents-row'] {
   [class*='form_item'] {
     [class*='input_box'] {
-      & > button {
-        @apply !min-h-[4.4rem] !px-[20px];
+      & > [class*='nlp--button'] {
+        @apply !h-[4.4rem] !min-h-[4.4rem] !rounded-[8px] !px-[20px];
       }
       [class*='input'] {
-        @apply !min-h-[4.4rem];
+        @apply !min-h-[4.2rem];
       }
     }
   }
-}
+} */
