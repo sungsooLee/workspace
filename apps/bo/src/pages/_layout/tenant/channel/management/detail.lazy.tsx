@@ -14,7 +14,7 @@ import { ChannelDetailRole } from '@features/tenant/channel/channel-detail-role'
 import { ChannelDetailHome } from '@features/tenant/channel/channel-detail-home';
 import { ChannelDetailBoard } from '@features/tenant/channel/channel-detail-board';
 
-export const Route = createLazyFileRoute('/_layout/tenant/channel/detail')({
+export const Route = createLazyFileRoute('/_layout/tenant/channel/management/detail')({
   component: RouteComponent,
 });
 
