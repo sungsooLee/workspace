@@ -20,8 +20,6 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
   const router = useRouter();
   const { open: openModal, alert: openAlert, confirm: openConfirm, close: closeModal } = useModal();
 
-  const [tenantIdOptions, setTenantIdOptions] = useState<any[]>([]);
-
   const formConfig: DynamicFormConfig = {
     builders: [
       {
@@ -31,7 +29,9 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
         label: t('테넌트'),
         value: '',
         presetOptionLabel: t('선택'),
-        options: tenantIdOptions,
+        optionsConfig: {
+          codeGroup: CODE_GROUP['manual.bo.my.tenant.tenantId'],
+        },
       },
       {
         name: 'onOffLineType',
@@ -168,14 +168,8 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    if (!loginUser) return;
-
-    const tenantIdOptions = loginUser.tenants.map((tenant) => ({
-      value: tenant.tenantId,
-      label: tenant.tenantName,
-    }));
-    setTenantIdOptions(tenantIdOptions);
-    if (loginUser.activeTenant) setValue('tenantId', loginUser.activeTenant.tenantId ?? '');
+    if (loginUser && loginUser.activeTenant)
+      setValue('tenantId', loginUser.activeTenant.tenantId ?? '');
   }, [loginUser]);
 
   useEffect(() => {
@@ -259,11 +253,11 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
       learningSpaceCode: data.learningSpaceCode.fieldValue,
     };
     if (props.mode === EnFormMode.ADD) {
-      if (await openConfirm('저장 하시겠습니까?')) {
+      if (await openConfirm(t('저장 하시겠습니까?'))) {
         create(payload);
       }
     } else if (props.mode === EnFormMode.VIEW) {
-      if (await openConfirm('수정 하시겠습니까?')) {
+      if (await openConfirm(t('수정 하시겠습니까?'))) {
         // TODO. API 준비중
         //update(payload);
       }
@@ -272,7 +266,7 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
 
   return (
     <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
-      <FormSubTitle label={'기본정보'} lineType="dark" />
+      <FormSubTitle label={t('기본정보')} lineType="dark" />
       <ContentsRow>
         <FormRow
           provider={provider}
@@ -344,7 +338,7 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
         </ContentsRow>
       </FormDisplay>
 
-      <FormSubTitle label={'기타정보'} lineType="dark" />
+      <FormSubTitle label={t('기타정보')} lineType="dark" />
       <ContentsRow>
         <FormRow
           provider={provider}

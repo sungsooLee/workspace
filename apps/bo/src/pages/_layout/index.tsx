@@ -369,6 +369,15 @@ export const munu = [
     end: false,
   },
   {
+    screenName: '역할 신청 관리',
+    pageId: 'platform/role/application',
+    screenId: 'NLP_BO_PMS_1112',
+    pageType: 'Page',
+    completionDate: '2025-07-01',
+    memo: '작업 완료',
+    end: true,
+  },
+  {
     screenName: '회사 관리',
     pageId: 'platform/company/management',
     screenId: 'NLP_BO_TMS_1300',
