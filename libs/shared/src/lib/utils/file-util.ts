@@ -88,3 +88,18 @@ export const acceptFilesToAccept = (acceptFiles: string[]): string | undefined =
     })
     .join(', ');
 };
+
+/**
+ * 파일 이름과 확장자 분리
+ */
+export function splitFileName(fileName: string) {
+  const splitted = fileName.split('.');
+  if (splitted.length === 1 || (splitted[0] === '' && splitted.length === 2)) {
+    return { base: fileName, ext: '' };
+  }
+
+  return {
+    ext: splitted.pop(),
+    base: splitted.join('.'),
+  };
+}
