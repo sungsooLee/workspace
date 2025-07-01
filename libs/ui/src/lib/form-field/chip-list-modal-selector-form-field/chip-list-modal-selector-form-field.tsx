@@ -19,6 +19,8 @@ export interface ChipListModalSelectorFormFieldProps extends BaseFormFieldProps<
   showAddButton?: boolean;
   /** 1개만 선택 가능 */
   selectOnlyOne?: boolean;
+  /** modalData 에서 받은 내용의 조작을 위한 함수 - onFormChange(modalData) 시 사용 */
+  transformModalData?: (modalData?: any) => void;
 }
 
 /**
@@ -38,7 +40,7 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
       value = [],
       showAddButton,
       selectOnlyOne,
-      onChange: ownerOnChange,
+      transformModalData,
       chipList: chipListProps = {
         labelField: 'label',
         valueField: 'value',
@@ -47,6 +49,7 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
       actionNode,
       control,
       disabled,
+      onChange: ownerOnChange,
     },
     ref,
   ) => {
@@ -68,10 +71,11 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
     const handleSearchClick = async () => {
       const modalData = await openModal(modalConfig);
       const newValue = mergeValue(modalData);
+      const transformData = transformModalData ? transformModalData(newValue) : newValue;
       // form onChange
-      ownerOnChange?.(newValue);
+      ownerOnChange?.(transformData);
       // form config 에서 onClose 설정한 경우 callback 실행
-      modalConfig?.onClose?.(modalData);
+      modalConfig?.onClose?.(transformData);
     };
 
     const handlerChipDelete = (option: any) => {
