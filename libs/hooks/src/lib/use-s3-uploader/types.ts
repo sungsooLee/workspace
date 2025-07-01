@@ -1,18 +1,16 @@
 export const DEFAULT_MULTIPART_THRESHOLD = 5 * 1024 * 1024; // 5MB
 export interface S3UploaderConfig {
   s3Path: string;
-  groupConfig?: {
-    affairsType: 'PMS' | 'CMS' | 'LMS';
-    languageCode?: string; // 기본값: 'ko'
-    groupUuid?: string; // 기존 그룹 UUID (전달받은 경우 사용)
-  };
-  groupMode?: 'individual' | 'batch'; // 파일 그룹 생성 방식: 개별 생성 | 배치 생성
+  affairsType: 'PMS' | 'CMS' | 'LMS';
+  languageCode?: string; // 기본값: 'ko'
+  groupUuid?: string; // 기존 그룹 UUID (전달받은 경우 사용)
+  groupMode?: 'individual' | 'batch'; // 파일 그룹 생성 방식: 개별 생성 | 배치 생성, 기본값: 'batch
   auto?: boolean; // 자동 업로드 여부 기본 true
   async?: boolean; // 병렬 업로드 여부 기본 true
-  multipartThreshold?: number; // 멀티파트 업로드 기준 사이즈
+  multipartThreshold?: number; // 멀티파트 업로드 기준 사이즈, 기본값 5MB
   acceptFiles?: string[]; // 허용할 파일 형식 (예: ["png"] , 확장자)
-  maxFileCount?: number; // 허용할 최대 파일 개수
-  maxFileSize?: number; // 단일 파일 허용 용량 (단위: 바이트)
+  maxFileCount?: number; // 허용할 최대 파일 개수, 기본값: 10
+  maxFileSize?: number; // 단일 파일 허용 용량 (단위: 바이트), 기본값 5MB
 }
 export type UploadStatus =
   | 'validating' // 파일 검증 중
