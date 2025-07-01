@@ -1,6 +1,6 @@
 import { memo, useState } from 'react';
 import { Button, Carousel } from '@learnway/ui';
-import { IcoArrowDown } from '@learnway/icons';
+import { IcoStar } from '@learnway/icons';
 import { Review, ReviewRating } from '../../../../features/layout';
 
 import styles from './review.module.css';
@@ -21,12 +21,11 @@ const CourseReviewCompoment = () => {
       </div>
       <div className={styles.rating_wrap}>
         <div className={styles.know_box}>
-          <img src={imgNudge} alt="" />
-          <p>
-            직무 역량 향상에
-            <br />
-            도움이 돼요
-          </p>
+          <span>총 평점</span>
+          <div>
+            <IcoStar width={36} height={36} fill="#0056ff" />
+            <strong>4.2</strong>
+          </div>
         </div>
         {/* review rating */}
         <ReviewRating className={styles.review_rating} />

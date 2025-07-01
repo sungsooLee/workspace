@@ -40,18 +40,30 @@ const columnHelper = createColumnHelper<any>();
 
 const columns = [
   columnHelper.accessor('createdDate', {
-    header: t('일시'),
-    cell: (info) =>
-      info.getValue() === null
-        ? ''
-        : getDateToString(new Date(info.row.original.createdDate), DATE_TIME_FORMAT.DATETIME_SEC),
+    header: t('일시'), //approvedDate
+    cell: (info) => {
+      console.log('row', info.row.original);
+      if (info.row.original.status === 'APPROVED' || info.row.original.status === 'REJECTED')
+        return getDateToString(
+          new Date(info.row.original.approvedDate),
+          DATE_TIME_FORMAT.DATETIME_SEC,
+        );
+      return getDateToString(
+        new Date(info.row.original.createdDate),
+        DATE_TIME_FORMAT.DATETIME_SEC,
+      );
+    },
     enableGrouping: false,
     size: 180,
   }),
   columnHelper.accessor('createdBy', {
     header: t('이력 생성자 정보'),
-    cell: (info) =>
-      info.row.original.applicant.name + ' / ' + info.row.original.applicant.employeeNumber,
+    cell: (info) => {
+      console.log('row', info.row.original);
+      if (info.row.original.status === 'APPROVED' || info.row.original.status === 'REJECTED')
+        return info.row.original.approver.name + ' / ' + info.row.original.approver.employeeNumber;
+      return info.row.original.applicant.name + ' / ' + info.row.original.applicant.employeeNumber;
+    },
     enableGrouping: false,
     size: 180,
   }),

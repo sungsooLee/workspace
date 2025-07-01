@@ -109,7 +109,7 @@ function RouteComponent() {
           <CourseIntroduction />
           <CourseEducation />
           <CourseReview />
-          <div className={cn(pageFullInner.start, pageFullInner.inner, pageFullInner.gray98)}>
+          <div className={cn(pageFullInner.start, pageFullInner.inner, pageFullInner.bg_sec1)}>
             <div className={pageFullInner.contents}>abcdefg</div>
           </div>
         </div>

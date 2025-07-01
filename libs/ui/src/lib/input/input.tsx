@@ -428,9 +428,10 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
               type === 'url' ||
               inputType === 'alphanumeric' ||
               inputType === 'url') && (
-              <div
-                className={styles.count}
-              >{`${(value?.toString() || '').length} / ${maxLength}`}</div>
+              <div className={styles.count}>
+                <span className={styles.current}>{(value?.toString() || '').length}</span> /{' '}
+                {maxLength}
+              </div>
             )}
           {/* 아이콘 (돋보기, 검색) */}
           {showSearchIcon && (

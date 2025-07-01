@@ -13,7 +13,7 @@ import {
   roleApplicationQueryOptions,
   roleManagerQueryOptions,
 } from '@entities/role';
-import { EnGlobalConst } from '@types';
+import { EnGlobalConst, LabelMessage } from '@types';
 import { RejectModal, RoleApplicationHistoryModal } from '@features/shared';
 import { MyRoleExtendModal } from '@features/user/my-page/ui/my-role-extend-modal';
 import { useFetchAuthUser } from '@learnway/auth/entities';
@@ -164,6 +164,11 @@ function RouteComponent() {
     approveRoleApplication(payload);
   };
 
+  const handleOnSelectable = (row: any) => {
+    const disabled = row.status === 'APPROVED' || row.status === 'REJECTED';
+    return !disabled;
+  };
+
   _global.linkClick = (row: any) => {
     openModal({
       content: <MyRoleExtendModal data={row} type="view" />,
@@ -197,6 +202,7 @@ function RouteComponent() {
                 </>
               }
               onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
+              isRowSelectable={handleOnSelectable}
             />
           </div>
         </div>
