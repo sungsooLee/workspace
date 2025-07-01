@@ -20,7 +20,19 @@ export interface StepperComponentProps {
 }
 
 const StepperComponent = forwardRef<HTMLElement, StepperComponentProps>(
-  ({ className, items, selectedStep, onChange, enableMoveStep, variant, orientation='horizontal', ...props }, ref) => {
+  (
+    {
+      className,
+      items,
+      selectedStep,
+      onChange,
+      enableMoveStep,
+      variant,
+      orientation = 'horizontal',
+      ...props
+    },
+    ref,
+  ) => {
     const [selectedItem, setSelectedItem] = useState<SelectOption>();
 
     useEffect(() => {
@@ -51,7 +63,15 @@ const StepperComponent = forwardRef<HTMLElement, StepperComponentProps>(
     };
 
     return (
-      <div className={cn(className, 'nlp-stepper', styles.stepper, variant && styles[variant] && styles[orientation])}>
+      <div
+        className={cn(
+          className,
+          'nlp-stepper',
+          styles.stepper,
+          variant && styles[variant],
+          orientation && styles[orientation],
+        )}
+      >
         {stepperItems?.map((d: any, index: number) => (
           <div
             key={d.value}
@@ -60,11 +80,12 @@ const StepperComponent = forwardRef<HTMLElement, StepperComponentProps>(
               d.isActive && styles.active,
               d.isComplete && styles.complete,
             )}
+            role={enableMoveStep ? 'button' : undefined}
             onClick={() => enableMoveStep && handleClick(d)}
           >
             {/* icon or step value */}
             <div className={styles.step_status}>
-              {d.isActive || d.isComplete ? (
+              {d.isActive || d.isComplete || variant === 'check' ? (
                 <IcoCheckboxChecked
                   width={20}
                   height={20}

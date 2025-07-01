@@ -1,4 +1,4 @@
-import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { Button, useModal } from '@learnway/ui';
 import { LearningResourceFileUploadModal, LearningTypeChoiceModal } from '@features/learning';
 import { LEARNING_TYPE } from '@learnway/config';
@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { ChannelChoiceModal } from '@features/shared';
 import { LearningResourceTable } from '@features/learning/ui/learning-resource';
 
-export const Route = createFileRoute('/_layout/learning/learning-resource/')({
+export const Route = createLazyFileRoute('/_layout/learning/learning-resource/')({
   component: RouteComponent,
 });
 

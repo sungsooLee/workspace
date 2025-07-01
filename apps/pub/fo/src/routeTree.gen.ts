@@ -18,6 +18,8 @@ import { Route as AuthImport } from './pages/_auth'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
 import { Route as LearningVideoMImport } from './pages/_learning/video-m'
 import { Route as LearningVideoImport } from './pages/_learning/video'
+import { Route as LearningIframeMImport } from './pages/_learning/iframe-m'
+import { Route as LearningIframeImport } from './pages/_learning/iframe'
 import { Route as LearningHtmlMImport } from './pages/_learning/html-m'
 import { Route as LearningHtmlImport } from './pages/_learning/html'
 import { Route as LearningGalleryMImport } from './pages/_learning/gallery-m'
@@ -159,6 +161,18 @@ const LearningVideoMRoute = LearningVideoMImport.update({
 const LearningVideoRoute = LearningVideoImport.update({
   id: '/video',
   path: '/video',
+  getParentRoute: () => LearningRoute,
+} as any)
+
+const LearningIframeMRoute = LearningIframeMImport.update({
+  id: '/iframe-m',
+  path: '/iframe-m',
+  getParentRoute: () => LearningRoute,
+} as any)
+
+const LearningIframeRoute = LearningIframeImport.update({
+  id: '/iframe',
+  path: '/iframe',
   getParentRoute: () => LearningRoute,
 } as any)
 
@@ -1049,6 +1063,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearningHtmlMImport
       parentRoute: typeof LearningImport
     }
+    '/_learning/iframe': {
+      id: '/_learning/iframe'
+      path: '/iframe'
+      fullPath: '/iframe'
+      preLoaderRoute: typeof LearningIframeImport
+      parentRoute: typeof LearningImport
+    }
+    '/_learning/iframe-m': {
+      id: '/_learning/iframe-m'
+      path: '/iframe-m'
+      fullPath: '/iframe-m'
+      preLoaderRoute: typeof LearningIframeMImport
+      parentRoute: typeof LearningImport
+    }
     '/_learning/video': {
       id: '/_learning/video'
       path: '/video'
@@ -1812,6 +1840,8 @@ interface LearningRouteChildren {
   LearningGalleryMRoute: typeof LearningGalleryMRoute
   LearningHtmlRoute: typeof LearningHtmlRoute
   LearningHtmlMRoute: typeof LearningHtmlMRoute
+  LearningIframeRoute: typeof LearningIframeRoute
+  LearningIframeMRoute: typeof LearningIframeMRoute
   LearningVideoRoute: typeof LearningVideoRoute
   LearningVideoMRoute: typeof LearningVideoMRoute
 }
@@ -1827,6 +1857,8 @@ const LearningRouteChildren: LearningRouteChildren = {
   LearningGalleryMRoute: LearningGalleryMRoute,
   LearningHtmlRoute: LearningHtmlRoute,
   LearningHtmlMRoute: LearningHtmlMRoute,
+  LearningIframeRoute: LearningIframeRoute,
+  LearningIframeMRoute: LearningIframeMRoute,
   LearningVideoRoute: LearningVideoRoute,
   LearningVideoMRoute: LearningVideoMRoute,
 }
@@ -1868,6 +1900,8 @@ export interface FileRoutesByFullPath {
   '/gallery-m': typeof LearningGalleryMRoute
   '/html': typeof LearningHtmlRoute
   '/html-m': typeof LearningHtmlMRoute
+  '/iframe': typeof LearningIframeRoute
+  '/iframe-m': typeof LearningIframeMRoute
   '/video': typeof LearningVideoRoute
   '/video-m': typeof LearningVideoMRoute
   '/': typeof LayoutIndexRoute
@@ -1978,6 +2012,8 @@ export interface FileRoutesByTo {
   '/gallery-m': typeof LearningGalleryMRoute
   '/html': typeof LearningHtmlRoute
   '/html-m': typeof LearningHtmlMRoute
+  '/iframe': typeof LearningIframeRoute
+  '/iframe-m': typeof LearningIframeMRoute
   '/video': typeof LearningVideoRoute
   '/video-m': typeof LearningVideoMRoute
   '/': typeof LayoutIndexRoute
@@ -2092,6 +2128,8 @@ export interface FileRoutesById {
   '/_learning/gallery-m': typeof LearningGalleryMRoute
   '/_learning/html': typeof LearningHtmlRoute
   '/_learning/html-m': typeof LearningHtmlMRoute
+  '/_learning/iframe': typeof LearningIframeRoute
+  '/_learning/iframe-m': typeof LearningIframeMRoute
   '/_learning/video': typeof LearningVideoRoute
   '/_learning/video-m': typeof LearningVideoMRoute
   '/_layout/': typeof LayoutIndexRoute
@@ -2204,6 +2242,8 @@ export interface FileRouteTypes {
     | '/gallery-m'
     | '/html'
     | '/html-m'
+    | '/iframe'
+    | '/iframe-m'
     | '/video'
     | '/video-m'
     | '/'
@@ -2313,6 +2353,8 @@ export interface FileRouteTypes {
     | '/gallery-m'
     | '/html'
     | '/html-m'
+    | '/iframe'
+    | '/iframe-m'
     | '/video'
     | '/video-m'
     | '/'
@@ -2425,6 +2467,8 @@ export interface FileRouteTypes {
     | '/_learning/gallery-m'
     | '/_learning/html'
     | '/_learning/html-m'
+    | '/_learning/iframe'
+    | '/_learning/iframe-m'
     | '/_learning/video'
     | '/_learning/video-m'
     | '/_layout/'
@@ -2655,6 +2699,8 @@ export const routeTree = rootRoute
         "/_learning/gallery-m",
         "/_learning/html",
         "/_learning/html-m",
+        "/_learning/iframe",
+        "/_learning/iframe-m",
         "/_learning/video",
         "/_learning/video-m"
       ]
@@ -2781,6 +2827,14 @@ export const routeTree = rootRoute
     },
     "/_learning/html-m": {
       "filePath": "_learning/html-m.tsx",
+      "parent": "/_learning"
+    },
+    "/_learning/iframe": {
+      "filePath": "_learning/iframe.tsx",
+      "parent": "/_learning"
+    },
+    "/_learning/iframe-m": {
+      "filePath": "_learning/iframe-m.tsx",
       "parent": "/_learning"
     },
     "/_learning/video": {

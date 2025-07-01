@@ -1,13 +1,24 @@
 import { t } from 'i18next';
 import { ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui';
-import { EnPageMode } from '@types';
+import { EnFormMode, EnPageMode } from '@types';
 import { TrainingPlaceList } from '@features/learning/training-place/training-place-list';
+import { TrainingPlaceDetailModal } from './training-place-detail-modal';
 
-const TrainingPlaceChoiceModalComponent = ({ onAddClick }: { onAddClick?: any }) => {
-  const { close: closeModal } = useModal();
+const TrainingPlaceChoiceModalComponent = () => {
+  const { close: closeModal, open: openModal } = useModal();
 
   const handleOnSelect = (data: any) => {
     closeModal(data);
+  };
+
+  const handleOnAdd = () => {
+    openModal({
+      width: 'xl',
+      content: <TrainingPlaceDetailModal mode={EnFormMode.ADD} />,
+      onClose(data: any) {
+        console.log('교육공간 등록 결과', data);
+      },
+    });
   };
 
   return (
@@ -16,7 +27,7 @@ const TrainingPlaceChoiceModalComponent = ({ onAddClick }: { onAddClick?: any })
       <ModalBody>
         <TrainingPlaceList
           pageMode={EnPageMode.MODAL}
-          onAddClick={onAddClick}
+          onAddClick={handleOnAdd}
           onSelect={handleOnSelect}
         />
       </ModalBody>

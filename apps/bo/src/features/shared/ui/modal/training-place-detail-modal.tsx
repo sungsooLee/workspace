@@ -9,7 +9,7 @@ const TrainingPlaceDetailModalComponent = ({
   spaceId,
 }: {
   mode: EnFormMode;
-  spaceId: number;
+  spaceId?: number;
 }) => {
   const { close: closeModal } = useModal();
   const formRef = useRef(1);

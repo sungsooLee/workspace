@@ -8,12 +8,20 @@ import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
-import { useApproveRoleApplication, roleApplicationQueryOptions } from '@entities/role';
-import { EnGlobalConst } from '@types';
+import {
+  useApproveRoleApplication,
+  roleApplicationQueryOptions,
+  roleManagerQueryOptions,
+} from '@entities/role';
+import { EnGlobalConst, LabelMessage } from '@types';
 import { RejectModal, RoleApplicationHistoryModal } from '@features/shared';
 import { MyRoleExtendModal } from '@features/user/my-page/ui/my-role-extend-modal';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+import { useQueryClient } from '@tanstack/react-query';
 
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
+import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
+import { size } from 'lodash';
 
 export const Route = createFileRoute('/_layout/platform/role/application/')({
   component: RouteComponent,
@@ -29,8 +37,11 @@ const _global = {
 };
 
 function RouteComponent() {
+  const { data: loginUser } = useFetchAuthUser();
+  const queryClient = useQueryClient();
+
   const { alert: openAlert, confirm: openConfirm, open: openModal } = useModal();
-  const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
+  const { provider: searchProvider, getValues, setOptions } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
   const [tableInstance, setTableInstance] = useState<Table<any>>();
   const { approve: approveRoleApplication } = useApproveRoleApplication({
@@ -43,11 +54,42 @@ function RouteComponent() {
     gridFetch();
   }, []);
 
+  useEffect(() => {
+    if (!loginUser) return;
+    if (loginUser.activeTenant?.tenantId) {
+      getCompanyOptions(loginUser.activeTenant?.tenantId);
+      getRoleOptions(loginUser.activeTenant?.tenantId);
+    }
+  }, [loginUser]);
+
+  const getCompanyOptions = async (tenantId?: number) => {
+    const companies = await queryClient.fetchQuery(companysQueryOptions.tenantCompany(tenantId));
+
+    const companyIdOptions = companies.map((item) => ({
+      label: item.name,
+      value: item.companyId,
+    }));
+    setOptions('companyId', companyIdOptions);
+  };
+
+  const getRoleOptions = async (tenantId?: number) => {
+    const roles = await queryClient.fetchQuery(
+      roleManagerQueryOptions.list({ tenantId: tenantId, size: 5000 }),
+    );
+    const roleIdOptions = roles.content.map((item: any) => ({
+      label: item.name,
+      value: item.roleId,
+    }));
+    setOptions('roleId', roleIdOptions);
+  };
+
   const handleOnSearch = useCallback((data: any) => {
     console.log('data', data);
     const searchData = {
       ...data,
-      createdDate: data.createdDate ? getDateToString(new Date(data.createdDate), 'YYYYMMDD') : '',
+      createdDate: data.createdDate
+        ? getDateToString(new Date(data.createdDate), 'YYYY-MM-DD')
+        : '',
     };
     gridFetch(searchData);
   }, []);
@@ -80,7 +122,7 @@ function RouteComponent() {
 
   const handleOnReject = () => {
     const rows = tableInstance?.getSelectedRowModel().rows;
-    if (rows?.length == 0) {
+    if (rows?.length === 0) {
       openAlert({
         title: t('대상자를 선택해 주세요.'),
         content: t('대상자를 먼저 선택한 후에 진행해 주세요.'),
@@ -122,8 +164,12 @@ function RouteComponent() {
     approveRoleApplication(payload);
   };
 
+  const handleOnSelectable = (row: any) => {
+    const disabled = row.status === 'APPROVED' || row.status === 'REJECTED';
+    return !disabled;
+  };
+
   _global.linkClick = (row: any) => {
-    // TODO Modal 이름 및 위치 변경 필요
     openModal({
       content: <MyRoleExtendModal data={row} type="view" />,
       width: 'md',
@@ -156,7 +202,7 @@ function RouteComponent() {
                 </>
               }
               onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
-              disabledSelectionToggle
+              isRowSelectable={handleOnSelectable}
             />
           </div>
         </div>
@@ -172,10 +218,7 @@ const searchConfig: SearchBoxConfig = {
         name: 'companyId',
         type: 'dropdown',
         label: t('회사'),
-        value: undefined,
-        optionsConfig: {
-          codeGroup: CODE_GROUP['manual.company.companyId'],
-        },
+        value: '',
         format: 'object',
         isSearchable: true,
         isClearable: true,
@@ -202,10 +245,8 @@ const searchConfig: SearchBoxConfig = {
         type: 'dropdown',
         label: t('HRD 담당자 역할'),
         value: '',
+        format: 'object',
         presetOptionLabel: t('LABEL.form.label.all'),
-        optionsConfig: {
-          codeGroup: CODE_GROUP['manual.bo.my.role.roleId'],
-        },
       },
       {
         name: 'status',
