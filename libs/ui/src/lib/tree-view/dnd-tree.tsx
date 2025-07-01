@@ -353,6 +353,24 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
     return insideFinalLevel + draggedNodeMaxDepth - 1 > maxDepth;
   }, [effectiveDraggedNode, maxDepth, level, globalSourceTreeId, treeId]);
 
+  // CustomDropValidator로 인한 드롭 불가 상태 확인
+  const isCustomValidatorBlocked = useMemo(() => {
+    if (!effectiveDraggedNode || !customDropValidator || globalSourceTreeId !== treeId)
+      return false;
+
+    // 모든 드롭 위치(BEFORE, INSIDE, AFTER)에 대해 검증
+    const positions: NodeMovePositionType[] = ['BEFORE', 'INSIDE', 'AFTER'];
+
+    return positions.every((position) => {
+      return !customDropValidator({
+        sourceNode: effectiveDraggedNode,
+        targetNode: node,
+        dropPosition: position,
+        level,
+      });
+    });
+  }, [effectiveDraggedNode, customDropValidator, node, level, globalSourceTreeId, treeId]);
+
   const nodeStyle = useMemo(() => {
     const styles = [];
 
@@ -405,6 +423,11 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
       styles.push('opacity-60 bg-gray-100 cursor-not-allowed');
     }
 
+    // CustomDropValidator로 인한 드롭 불가 스타일
+    if (isCustomValidatorBlocked) {
+      styles.push('opacity-60 bg-gray-100 cursor-not-allowed');
+    }
+
     // 검색 하이라이트
     if (hasSearchMatch) {
       styles.push('bg-yellow-50');
@@ -422,6 +445,7 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
     node.constraints,
     isInvalidDropTarget,
     isMaxDepthExceeded,
+    isCustomValidatorBlocked,
     hasSearchMatch,
   ]);
 
@@ -723,9 +747,6 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
               return '2px dashed #2196f3';
             }
             if (isInsideHover && !isValidDrop) {
-              if (isMaxDepthExceeded) {
-                return '2px dashed #f97316'; // 주황색 - MaxDepth 초과
-              }
               return '2px dashed #ef4444'; // 빨간색 - 일반 드롭 불가
             }
             return '2px solid transparent';
