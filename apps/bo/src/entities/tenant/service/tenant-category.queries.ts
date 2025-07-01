@@ -3,7 +3,8 @@ import TenantCategoryService from '@entities/tenant/api/tenant-category';
 export const queryKeys = {
   all: (tenantId: number) => ['tenant-category', tenantId] as const,
   detail: (tenantId: number, id: number) => ['tenant-category', tenantId, id] as const,
-  getTenantCategoryTreePopup: (tenantIds: Array<number>) => ['tenant-category-tree-popup', tenantIds] as const,
+  getTenantCategoryTreePopup: (tenantIds: Array<number>) =>
+    ['tenant-category-tree-popup', tenantIds] as const,
 };
 
 export const queryOptions = {
@@ -33,12 +34,12 @@ export const queryOptions = {
     queryKey: queryKeys.getTenantCategoryTreePopup(tenantIds),
     queryFn: async () => TenantCategoryService.fetchTenantCategoryTreePopup(tenantIds),
     enabled: !!tenantIds?.length,
-  })
+  }),
 };
 
 export const mutateOptions = {
   create: () => ({
-    mutationFn: (payload: any) => TenantCategoryService.createTenaㅈntCategory(payload),
+    mutationFn: (payload: any) => TenantCategoryService.createTenantCategory(payload),
   }),
   update: () => ({
     mutationFn: (payload: any) => TenantCategoryService.updateTenantCategory(payload),
