@@ -291,14 +291,34 @@
   }
 }
 .underline {
-  @apply !font-normal;
+  @apply !bg-white !px-0 !font-normal text-[var(--gray35)] underline-offset-4;
+  text-decoration: underline;
+  &:hover {
+    @apply text-[var(--gray10)];
+  }
+  &:disabled {
+    @apply text-[var(--gray75)];
+  }
   &.sm {
-    @apply label-sm !h-[1.8rem] text-[var(--gray35)];
+    @apply label-sm !h-[1.8rem];
   }
   &.md {
-    @apply label-lg !h-[2rem] text-[var(--gray35)];
+    @apply label-lg !h-[2rem];
   }
   &.lg {
-    @apply label-xl !h-[2.2rem] text-[var(--gray35)];
+    @apply label-xl !h-[2.2rem];
+  }
+  &.primary {
+    @apply !text-[var(--blue50)];
+    &:hover {
+      @apply !text-[var(--blue35)];
+    }
+    &:disabled {
+      @apply !text-[var(--blue75)];
+    }
+  }
+}
+.arrow {
+  .icon_arrow {
   }
 }

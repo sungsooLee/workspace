@@ -420,6 +420,7 @@ import { Button } from '@learnway/ui';
               <Button size="sm" underline={true} label={'버튼'} />
               <Button size="md" underline={true} label={'버튼'} />
               <Button size="lg" underline={true} label={'버튼'} />
+              <Button size="lg" underline={true} label={'버튼'} disabled />
             </div>
           </div>
 
@@ -428,9 +429,40 @@ import { Button } from '@learnway/ui';
               <code>
                 {`<Button size="sm" underline={true} label={'버튼'} />
 <Button size="md" underline={true} label={'버튼'} />
-<Button size="lg" underline={true} label={'버튼'} />`}
+<Button size="lg" underline={true} label={'버튼'} />
+<Button size="lg" underline={true} label={'버튼'} disabled />`}
               </code>
             </pre>
+          </div>
+
+          <h3 className="guide_tit3">Underline Primary Button</h3>
+          <div className="flex_box">
+            <div className="desc">
+              <Button size="sm" variant={'primary'} underline={true} label={'버튼'} />
+              <Button size="md" variant={'primary'} underline={true} label={'버튼'} />
+              <Button size="lg" variant={'primary'} underline={true} label={'버튼'} />
+              <Button size="lg" variant={'primary'} underline={true} label={'버튼'} disabled />
+            </div>
+          </div>
+
+          <div className="code_example">
+            <pre className="code_block">
+              <code>
+                {`<Button size="sm" variant={'primary'} underline={true} label={'버튼'} />
+<Button size="md" variant={'primary'} underline={true} label={'버튼'} />
+<Button size="lg" variant={'primary'} underline={true} label={'버튼'} />
+<Button size="lg" variant={'primary'} underline={true} label={'버튼'} disabled />`}
+              </code>
+            </pre>
+          </div>
+
+          <h3 className="guide_tit3">Arrow Button</h3>
+          <div className="flex_box">
+            <div className="desc">
+              <Button variant="arrow" size="sm" label={'버튼'} />
+              <Button variant="arrow" size="md" label={'버튼'} />
+              <Button variant="arrow" size="lg" label={'버튼'} />
+            </div>
           </div>
         </div>
       </div>
