@@ -122,6 +122,7 @@ import { Route as GuideGuideCarouselImport } from './pages/_guide/guide/carousel
 import { Route as GuideGuideButtonsImport } from './pages/_guide/guide/buttons'
 import { Route as GuideGuideBannerImport } from './pages/_guide/guide/banner'
 import { Route as GuideGuideBadgeImport } from './pages/_guide/guide/badge'
+import { Route as GuideGuideAvatarImport } from './pages/_guide/guide/avatar'
 import { Route as GuideGuideAlertImport } from './pages/_guide/guide/alert'
 
 // Create/Update Routes
@@ -808,6 +809,12 @@ const GuideGuideBadgeRoute = GuideGuideBadgeImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const GuideGuideAvatarRoute = GuideGuideAvatarImport.update({
+  id: '/guide/avatar',
+  path: '/guide/avatar',
+  getParentRoute: () => GuideRoute,
+} as any)
+
 const GuideGuideAlertRoute = GuideGuideAlertImport.update({
   id: '/guide/alert',
   path: '/guide/alert',
@@ -1103,6 +1110,13 @@ declare module '@tanstack/react-router' {
       path: '/guide/alert'
       fullPath: '/guide/alert'
       preLoaderRoute: typeof GuideGuideAlertImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/avatar': {
+      id: '/_guide/guide/avatar'
+      path: '/guide/avatar'
+      fullPath: '/guide/avatar'
+      preLoaderRoute: typeof GuideGuideAvatarImport
       parentRoute: typeof GuideImport
     }
     '/_guide/guide/badge': {
@@ -1659,6 +1673,7 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 interface GuideRouteChildren {
   GuideGuideAlertRoute: typeof GuideGuideAlertRoute
+  GuideGuideAvatarRoute: typeof GuideGuideAvatarRoute
   GuideGuideBadgeRoute: typeof GuideGuideBadgeRoute
   GuideGuideBannerRoute: typeof GuideGuideBannerRoute
   GuideGuideButtonsRoute: typeof GuideGuideButtonsRoute
@@ -1707,6 +1722,7 @@ interface GuideRouteChildren {
 
 const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideAlertRoute: GuideGuideAlertRoute,
+  GuideGuideAvatarRoute: GuideGuideAvatarRoute,
   GuideGuideBadgeRoute: GuideGuideBadgeRoute,
   GuideGuideBannerRoute: GuideGuideBannerRoute,
   GuideGuideButtonsRoute: GuideGuideButtonsRoute,
@@ -1906,6 +1922,7 @@ export interface FileRoutesByFullPath {
   '/video-m': typeof LearningVideoMRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
+  '/guide/avatar': typeof GuideGuideAvatarRoute
   '/guide/badge': typeof GuideGuideBadgeRoute
   '/guide/banner': typeof GuideGuideBannerRoute
   '/guide/buttons': typeof GuideGuideButtonsRoute
@@ -2018,6 +2035,7 @@ export interface FileRoutesByTo {
   '/video-m': typeof LearningVideoMRoute
   '/': typeof LayoutIndexRoute
   '/guide/alert': typeof GuideGuideAlertRoute
+  '/guide/avatar': typeof GuideGuideAvatarRoute
   '/guide/badge': typeof GuideGuideBadgeRoute
   '/guide/banner': typeof GuideGuideBannerRoute
   '/guide/buttons': typeof GuideGuideButtonsRoute
@@ -2134,6 +2152,7 @@ export interface FileRoutesById {
   '/_learning/video-m': typeof LearningVideoMRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_guide/guide/alert': typeof GuideGuideAlertRoute
+  '/_guide/guide/avatar': typeof GuideGuideAvatarRoute
   '/_guide/guide/badge': typeof GuideGuideBadgeRoute
   '/_guide/guide/banner': typeof GuideGuideBannerRoute
   '/_guide/guide/buttons': typeof GuideGuideButtonsRoute
@@ -2248,6 +2267,7 @@ export interface FileRouteTypes {
     | '/video-m'
     | '/'
     | '/guide/alert'
+    | '/guide/avatar'
     | '/guide/badge'
     | '/guide/banner'
     | '/guide/buttons'
@@ -2359,6 +2379,7 @@ export interface FileRouteTypes {
     | '/video-m'
     | '/'
     | '/guide/alert'
+    | '/guide/avatar'
     | '/guide/badge'
     | '/guide/banner'
     | '/guide/buttons'
@@ -2473,6 +2494,7 @@ export interface FileRouteTypes {
     | '/_learning/video-m'
     | '/_layout/'
     | '/_guide/guide/alert'
+    | '/_guide/guide/avatar'
     | '/_guide/guide/badge'
     | '/_guide/guide/banner'
     | '/_guide/guide/buttons'
@@ -2607,6 +2629,7 @@ export const routeTree = rootRoute
       "filePath": "_guide.tsx",
       "children": [
         "/_guide/guide/alert",
+        "/_guide/guide/avatar",
         "/_guide/guide/badge",
         "/_guide/guide/banner",
         "/_guide/guide/buttons",
@@ -2851,6 +2874,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/alert": {
       "filePath": "_guide/guide/alert.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/avatar": {
+      "filePath": "_guide/guide/avatar.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/badge": {

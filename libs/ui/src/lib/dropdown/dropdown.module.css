@@ -8,6 +8,9 @@
   [role='checkbox'] {
     @apply mr-[4px];
   }
+  & > span {
+    @apply truncate;
+  }
 }
 
 .select_wrap {

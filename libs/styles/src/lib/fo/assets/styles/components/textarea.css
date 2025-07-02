@@ -10,15 +10,15 @@
     }
   }
   &:has(.nlp--textarea:read-only) {
-    @apply !border-[var(--gray75)] bg-[var(--gray98)];
+    @apply !border-[var(--gray75)] !bg-[var(--gray98)];
     .nlp--textarea {
-      @apply label-xl text-[var(--gray10)];
+      @apply label-xl !bg-[var(--gray98)] text-[var(--gray10)];
     }
   }
   &:has(.nlp--textarea:disabled) {
-    @apply !border-[var(--gray75)] bg-[var(--gray98)];
+    @apply !border-[var(--gray75)] !bg-[var(--gray98)];
     .nlp--textarea {
-      @apply label-xl text-[var(--gray75)];
+      @apply label-xl !bg-[var(--gray98)] text-[var(--gray75)];
     }
   }
 }

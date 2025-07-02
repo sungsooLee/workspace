@@ -39,12 +39,12 @@ const PopoverContent = () => {
   };
 
   return (
-    <div className={`${styles.start} ${styles.avata_area}`}>
+    <div className={`${styles.start} ${styles.avatar_area}`}>
       <div className={styles.profile_info}>
-        <div className={styles.avata_img}>
+        <div className={styles.avatar_img}>
           {/* 퍼블수정 20250318 : 아바타 사진 수정 */}
           {hasAvataImage ? (
-            <div className={styles.avata_box}>
+            <div className={styles.avatar_box}>
               {/* <span className={cn(fallbackStyles.fallback, styles.name)}>
                 <em className={cn(fallbackStyles.fallback, styles.text)}>{'김'}</em>
               </span> */}
@@ -52,7 +52,7 @@ const PopoverContent = () => {
             </div>
           ) : (
             // 아바타 이미지 없는 경우 CASE
-            <div className={styles.avata_box}>
+            <div className={styles.avatar_box}>
               <span className={cn(fallbackStyles.fallback, styles.name)}>
                 <em className={cn(fallbackStyles.fallback, styles.text)}>{'김'}</em>
               </span>

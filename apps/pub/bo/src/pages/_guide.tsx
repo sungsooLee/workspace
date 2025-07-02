@@ -55,6 +55,7 @@ function RouteComponent() {
         { label: 'InputTimer', path: '/guide/input-timer' },
         { label: 'Popover', path: '/guide/popover' },
         { label: 'Icon', path: '/guide/icon' },
+        { label: 'Avatar', path: '/guide/avatar' },
       ],
     },
   ];

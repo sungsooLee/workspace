@@ -64,21 +64,20 @@
       }
     }
 
-    .sub_box {
-      @apply scrollbar max-h-[700px] overflow-y-auto overflow-x-hidden rounded-[16px] border-[1px] border-solid border-[var(--gray5)] p-[32px];
-      & + .sub_box {
-        @apply mt-[24px];
-      }
+    .sub_tit {
+      @apply mt-[40px];
       .tit_box {
         @apply mb-[8px];
         strong {
-          @apply title_6_b inline-block text-[var(--gray9)];
+          @apply headline1-b inline-block text-[var(--gray10)];
           em {
-            @apply title_6_b ml-[4px] inline-block text-[#00afd5];
+            @apply headline1-b ml-[6px] inline-block text-[var(--blue50)];
           }
         }
       }
-
+    }
+    .sub_box {
+      @apply scrollbar max-h-[700px] overflow-y-auto overflow-x-hidden rounded-[16px] border-[1px] border-solid border-[var(--gray5)] p-[32px];
       .sub_package_content {
         @apply relative mt-[16px] pl-[26px];
         &::before {

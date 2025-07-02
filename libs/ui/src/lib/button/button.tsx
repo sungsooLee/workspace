@@ -2,6 +2,7 @@ import React, { forwardRef } from 'react';
 import { Loader2 } from 'lucide-react';
 
 import { cn } from '@learnway/shared';
+import { IcoArrowForward } from '@learnway/icons';
 
 import styles from './button.module.css';
 
@@ -28,6 +29,7 @@ export type ButtonVariantType =
   | 'gray-outline'
   | 'ghost'
   | 'link'
+  | 'arrow'
   | 'soft';
 
 /**
@@ -80,6 +82,10 @@ export interface ButtonComponentProps extends React.ButtonHTMLAttributes<HTMLBut
    */
   label?: string;
   /**
+   * 버튼의 하단 라인 여부
+   */
+  underline?: boolean;
+  /**
    * 클릭 이벤트 발생 시 이벤트 전파를 중지할지 여부
    */
   stopPropagation?: boolean;
@@ -102,6 +108,7 @@ const ButtonComponent = forwardRef<HTMLButtonElement, ButtonComponentProps>(
       variant,
       size,
       label,
+      underline = false,
       type = 'button',
       onClick,
       stopPropagation,
@@ -139,6 +146,7 @@ const ButtonComponent = forwardRef<HTMLButtonElement, ButtonComponentProps>(
           size && styles[size],
           size,
           onlyIcon && 'only_icon',
+          underline && styles.underline,
           className,
         )}
         disabled={disabled || isLoading}
@@ -155,6 +163,9 @@ const ButtonComponent = forwardRef<HTMLButtonElement, ButtonComponentProps>(
 
         {/* 아이콘 정렬이 'right'이고 icon prop이 있을 때 아이콘 표시 */}
         {iconAlign === 'right' && icon}
+
+        {/* variant가 arrow 일때 화살표 아이콘 표시 */}
+        {variant === 'arrow' && <IcoArrowForward className={styles.icon_arrow} />}
       </button>
     );
   },
