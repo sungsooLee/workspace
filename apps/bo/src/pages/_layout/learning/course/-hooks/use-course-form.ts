@@ -194,9 +194,11 @@ export const useCourseForm = () => {
 const getDummyCourseData = () => {
   const response = {
     courseType: 'ELEARNING1',
-    channelUuid: 9999,
-    tenantIds: [2222, 1111],
-    whiteList: [
+    channelUuid: '67bbca16-4180-4982-a4e0-d192212dd7c2',
+    tenantIds: [2, 3],
+    categoryIds: [11, 22, 33],
+    primaryCategoryId: 1,
+    targetList: [
       {
         key: '66',
         title: 'test1',
@@ -225,10 +227,12 @@ const getDummyCourseData = () => {
     trainingLevelType: 'BASIC',
     learningSpaceName: '신민제/개발팀',
     operatorName: '김지훈/개발팀',
-    operatorId: 'c39280c3-3f6d-11f0-9435-0218a74d52f7',
-    coordinatorId: 'c3929798-3f6d-11f0-9435-0218a74d5224',
+    operatorUuid: 'c39280c3-3f6d-11f0-9435-0218a74d52f7',
+    operatorDeptName: '개발팀',
+    coordinatorUuid: 'c3929798-3f6d-11f0-9435-0218a74d5224',
     learningSpaceType: 'LEARNING_WAY',
     coordinatorName: '이현주/개발팀',
+    coordinatorDeptName: '개발팀',
     coordinatorTelNo: '33332222',
     coordinatorEmail: '담당자@email.com',
     operatorTelNo: '44445555',

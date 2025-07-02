@@ -16,6 +16,7 @@ import { useExpStore } from '../store/use-exp-store';
 export const authUserQueryKeys = queryKeys;
 
 export function useFetchAuthUser<T = AuthUser>() {
+  console.log('------------------------ useFetchAuthUser');
   return useQuery<unknown, unknown, T>(queryOptions.authUser());
 }
 
@@ -138,44 +139,44 @@ export function useLoginTimer() {
 
   const intervalRef = useRef<NodeJS.Timer | null>(null);
 
-  useEffect(() => {
-    if (!exp) return;
-
-    const update = () => {
-      const remainingSeconds = getRemainingTime(exp);
-      const hours = Math.floor(remainingSeconds / 3600)
-        .toString()
-        .padStart(2, '0');
-      const minutes = Math.floor((remainingSeconds % 3600) / 60)
-        .toString()
-        .padStart(2, '0');
-      const seconds = (remainingSeconds % 60).toString().padStart(2, '0');
-
-      // setRemainingTime(`${hours}:${minutes}:${seconds}`);
-
-      // remainingSeconds 음수 방지
-      if (remainingSeconds >= 0) {
-        setRemainingTime(`${minutes}:${seconds}`);
-      }
-
-      if (remainingSeconds <= REISSUE_TIME && remainingSeconds > 0 && !showAlert) {
-        setShowAlert(true);
-        handleReissue();
-      } else if (remainingSeconds <= 0) {
-        if (intervalRef.current) {
-          handleLogout();
-          clearInterval(intervalRef.current);
-          intervalRef.current = null;
-        }
-      }
-    };
-
-    update();
-
-    const interval = setInterval(update, 1000);
-    intervalRef.current = interval;
-    return () => clearInterval(interval);
-  }, [exp, showAlert]);
+  // useEffect(() => {
+  //   if (!exp) return;
+  //
+  //   const update = () => {
+  //     const remainingSeconds = getRemainingTime(exp);
+  //     const hours = Math.floor(remainingSeconds / 3600)
+  //       .toString()
+  //       .padStart(2, '0');
+  //     const minutes = Math.floor((remainingSeconds % 3600) / 60)
+  //       .toString()
+  //       .padStart(2, '0');
+  //     const seconds = (remainingSeconds % 60).toString().padStart(2, '0');
+  //
+  //     // setRemainingTime(`${hours}:${minutes}:${seconds}`);
+  //
+  //     // remainingSeconds 음수 방지
+  //     if (remainingSeconds >= 0) {
+  //       setRemainingTime(`${minutes}:${seconds}`);
+  //     }
+  //
+  //     if (remainingSeconds <= REISSUE_TIME && remainingSeconds > 0 && !showAlert) {
+  //       setShowAlert(true);
+  //       handleReissue();
+  //     } else if (remainingSeconds <= 0) {
+  //       if (intervalRef.current) {
+  //         handleLogout();
+  //         clearInterval(intervalRef.current);
+  //         intervalRef.current = null;
+  //       }
+  //     }
+  //   };
+  //
+  //   update();
+  //
+  //   const interval = setInterval(update, 1000);
+  //   intervalRef.current = interval;
+  //   return () => clearInterval(interval);
+  // }, [exp, showAlert]);
 
   function getRemainingTime(exp: string) {
     try {
@@ -235,28 +236,28 @@ export function useLoginTimer() {
     });
   }
 
-  useEffect(() => {
-    const handler = (e: StorageEvent) => {
-      if (e.key !== 'exp-storage') return;
-      if (!e.newValue) return;
-
-      try {
-        const newState = JSON.parse(e.newValue);
-        const newExp = newState?.state?.exp;
-
-        if (typeof newExp === 'string') {
-          useExpStore.getState().setExp(newExp);
-        } else {
-          useExpStore.getState().reset();
-        }
-      } catch (err) {
-        console.error('Failed to sync auth state from localStorage:', err);
-      }
-    };
-
-    window.addEventListener('storage', handler);
-    return () => window.removeEventListener('storage', handler);
-  }, []);
+  // useEffect(() => {
+  //   const handler = (e: StorageEvent) => {
+  //     if (e.key !== 'exp-storage') return;
+  //     if (!e.newValue) return;
+  //
+  //     try {
+  //       const newState = JSON.parse(e.newValue);
+  //       const newExp = newState?.state?.exp;
+  //
+  //       if (typeof newExp === 'string') {
+  //         useExpStore.getState().setExp(newExp);
+  //       } else {
+  //         useExpStore.getState().reset();
+  //       }
+  //     } catch (err) {
+  //       console.error('Failed to sync auth state from localStorage:', err);
+  //     }
+  //   };
+  //
+  //   window.addEventListener('storage', handler);
+  //   return () => window.removeEventListener('storage', handler);
+  // }, []);
 
   return {
     time: remainingTime,

@@ -82,7 +82,7 @@ export interface CoursesQueryParams extends PaginationRequest {
   /**
    * 채널id
    */
-  channelId: number;
+  channelUuid: number;
   /**
    * 테넌트id
    */
@@ -184,13 +184,13 @@ export interface Course {
   /**
    * 담당자 ID
    */
-  coordinatorId?: number;
+  coordinatorUuid?: number;
   /**
    * 담당자 이름
    */
   coordinatorName?: string;
   /**
-   * 부서이름
+   * 담당자 부서이름
    */
   coordinatorDeptName?: string;
   /**
@@ -208,7 +208,7 @@ export interface Course {
   /**
    * 운영자 ID
    */
-  operatorId?: number;
+  operatorUuid?: number;
   /**
    * 운영자 이름
    */
