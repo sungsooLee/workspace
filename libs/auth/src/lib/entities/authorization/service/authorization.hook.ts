@@ -123,6 +123,9 @@ export function useLogoutUser(mutationOptions = {}) {
   };
 }
 
+/**
+ * @description 로그인 팝업 노출 훅
+ */
 export function useLoginTimer() {
   // 로그인 연장 팝업 5분 남았을때 생성
   const REISSUE_TIME = 60 * 5; // 5분
@@ -133,8 +136,6 @@ export function useLoginTimer() {
   const { reissue } = useReissue();
   const { exp, showAlert, setShowAlert, reset } = useExpStore((state) => state);
   const { alert: openAlert, confirm: openConfirm, closeAll } = useModal();
-
-  const [remainingTime, setRemainingTime] = useState<string>('');
 
   const intervalRef = useRef<NodeJS.Timer | null>(null);
 
@@ -155,7 +156,7 @@ export function useLoginTimer() {
 
       // remainingSeconds 음수 방지
       if (remainingSeconds >= 0) {
-        setRemainingTime(`${minutes}:${seconds}`);
+        // setRemainingTime(`${minutes}:${seconds}`);
       }
 
       if (remainingSeconds <= REISSUE_TIME && remainingSeconds > 0 && !showAlert) {
@@ -257,8 +258,44 @@ export function useLoginTimer() {
     window.addEventListener('storage', handler);
     return () => window.removeEventListener('storage', handler);
   }, []);
+}
 
-  return {
-    time: remainingTime,
-  };
+/**
+ * @description  로그인 남은시간 반환 (내부상태 있음.)
+ */
+export function useLoginTimerDisplay() {
+  const { exp } = useExpStore((s) => ({ exp: s.exp }));
+  const [remainingTime, setRemainingTime] = useState<string>('00:00');
+
+  useEffect(() => {
+    if (!exp) return;
+
+    const update = () => {
+      const remainingSeconds = getRemainingTime(exp);
+
+      const minutes = Math.floor((remainingSeconds % 3600) / 60)
+        .toString()
+        .padStart(2, '0');
+      const seconds = (remainingSeconds % 60).toString().padStart(2, '0');
+
+      if (remainingSeconds >= 0) {
+        setRemainingTime(`${minutes}:${seconds}`);
+      }
+    };
+
+    update();
+    const interval = setInterval(update, 1000); // 1초 단위 표시
+    return () => clearInterval(interval);
+  }, [exp]);
+
+  function getRemainingTime(exp: string) {
+    try {
+      const now = dayjs().utc().unix() * 1000;
+      return Math.floor((parseInt(exp) - now) / 1000);
+    } catch {
+      return 0;
+    }
+  }
+
+  return { time: remainingTime };
 }
