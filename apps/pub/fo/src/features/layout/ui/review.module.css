@@ -8,12 +8,12 @@
       }
     }
     .txt {
-      @apply body-md mt-[16px] text-[#0d0e11];
+      @apply body-md mt-[16px] line-clamp-3 overflow-hidden text-ellipsis text-[#0d0e11];
     }
     .profile {
       @apply flex flex-1 items-end;
       .info_avata {
-        @apply h-[48px] w-[48px];
+        @apply h-[48px] w-[48px] rounded-[50%];
       }
       .txt_box {
         @apply ml-[12px];

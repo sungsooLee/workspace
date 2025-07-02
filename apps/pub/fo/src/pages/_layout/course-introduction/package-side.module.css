@@ -5,18 +5,19 @@
     .package_box {
       .acc_package {
         & > div {
+          @apply rounded-[12px] border-[1px] border-solid border-[var(--gray90)] !p-[32px];
           & > button {
             @apply relative max-h-none py-0 pr-[30px];
             & > span {
-              @apply px-0;
+              @apply !min-h-[inherit] px-0;
             }
             & + div {
               @apply bg-inherit;
             }
             svg {
-              @apply absolute right-0 top-0 mr-0 mt-0 h-[20px] w-[20px] stroke-[var(--gray7)];
+              @apply absolute right-0 top-[2px] mr-0 mt-0 h-[20px] w-[20px] stroke-[var(--gray7)];
             }
-            [data-state='oepn'] {
+            &[data-state='open'] {
               svg {
                 @apply rotate-180;
               }
@@ -27,17 +28,8 @@
           }
         }
         .sub_package_title {
-          & > div {
-            & > div {
-              & > div:nth-child(1) {
-                @apply w-[120px];
-              }
-              & > div {
-                & > p {
-                  @apply body_3_r max-h-none !whitespace-normal break-words;
-                }
-              }
-            }
+          p {
+            @apply title4-b leading-[24px] text-[var(--gray10)];
           }
         }
       }
@@ -46,14 +38,21 @@
 }
 
 .sub_package_content {
-  @apply relative mt-[16px] pl-[26px];
-  &::before {
-    @apply absolute left-[8px] top-0 h-full w-[2px] bg-[var(--gray4)] content-[''];
-  }
-  p {
-    @apply body_3_r text-[var(--gray9)];
-    & + p {
-      @apply mt-[16px];
+  @apply mt-[20px];
+  & > div {
+    & + div {
+      @apply mt-[12px];
+    }
+    & > div {
+      & > div {
+        @apply !w-[120px];
+      }
+      & > div {
+        @apply flex items-center;
+        & > p {
+          @apply body-md !line-clamp-3 !max-h-none !whitespace-normal break-words !leading-[24px] text-[var(--gray35)];
+        }
+      }
     }
   }
 }
