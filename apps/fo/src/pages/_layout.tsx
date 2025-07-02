@@ -24,12 +24,13 @@ function LayoutComponent() {
   const { data } = useFetchAuthUser();
   const { data: tenant } = useFetchTenant(data?.activeTenant?.tenantId);
 
-  useEffect(() => {
-    if (!tenant) {
-      return;
-    }
-    document.title = tenant.windowTitle ?? '';
-  }, [tenant]);
+  // title 제거
+  // useEffect(() => {
+  //   if (!tenant) {
+  //     return;
+  //   }
+  //   document.title = tenant.windowTitle ?? '';
+  // }, [tenant]);
 
   return (
     <div className={`${styles.start} ${styles.layout_wrap}`}>

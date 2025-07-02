@@ -1,5 +1,6 @@
 import { useEffect, Suspense, lazy } from 'react';
 import { Outlet, createRootRouteWithContext, useRouter } from '@tanstack/react-router';
+
 import { ModalWrapper, ToastWrapper, useModalStore } from '@learnway/ui';
 import { useGlobalRouterEvent } from '@learnway/hooks';
 import { setupErrorToastListener } from '@learnway/shared';
@@ -7,6 +8,7 @@ import { MinWidthRequired } from '../widgets/layout/ui/min-width-required';
 import { useBreakpointModalClose } from '../shared/lib/breakpoint-modal.hook';
 import { NotFound } from '@features/layout';
 import { useFetchAuthUser, useRenewalMenuStateFromRouting } from '@learnway/auth/entities';
+import { PageRouteContext } from '@learnway/shared';
 
 const TanStackRouterDevtools = lazy(() =>
   import.meta.env.VITE_APP_ENV === 'local'
@@ -20,12 +22,7 @@ const ReactQueryDevtools = lazy(() =>
     : Promise.resolve({ default: () => null }),
 );
 
-interface RouterContext {
-  setPageRouteState?: any;
-  queryClient?: any;
-}
-
-export const Route = createRootRouteWithContext<RouterContext>()({
+export const Route = createRootRouteWithContext<PageRouteContext>()({
   component: RootComponent,
   notFoundComponent: NotFound,
 });
