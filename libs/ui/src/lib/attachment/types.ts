@@ -13,4 +13,6 @@ export interface AttachmentProps {
   guideText?: string;
   errorMessage?: string;
   isDownloadCase?: boolean;
+  readOnly?: boolean;
+  disabled?: boolean;
 }

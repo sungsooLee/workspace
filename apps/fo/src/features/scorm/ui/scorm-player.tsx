@@ -4,20 +4,11 @@ import styles from './iframe.module.css';
 
 import { ScormAdapter } from '../service/scorm-adapter';
 
-import { useFetchScoResource } from '@entities/scorm/service/scorm-rte.hook';
-
 const win: any = window;
 win.API_1484_11 = new ScormAdapter();
 
 const ScormPlayerComponent: FC<any> = ({ contentUuid, iframeHeight = 900, iframeWidth = 1300 }) => {
   const [iframeUrl, setIframeUrl] = useState<string>();
-  const { data } = useFetchScoResource(contentUuid);
-
-  useEffect(() => {
-    if (data) {
-      console.log('data', data);
-    }
-  }, [data]);
 
   return (
     <div className={`${styles.start} ${styles.iframe}`}>
