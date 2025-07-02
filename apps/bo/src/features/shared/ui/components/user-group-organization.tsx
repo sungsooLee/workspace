@@ -1,11 +1,9 @@
-import { findNodesByKeys, ShuttleTreeToChipsV2, TreeNode } from '@learnway/ui';
+import { ShuttleTreeToChipsV2, TreeNode } from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { useEffect, useState } from 'react';
-import { useFetchPrograms } from '../../../../entities/program/service/program-manage.hook';
 import { cn } from '@learnway/shared';
-import { transformApiDataToApiTreeData } from '@features/platform/menu/service/menu.service';
-import { useQueryClient } from '@tanstack/react-query';
-import { queryOptions } from '@entities/user-group';
+import { useFetchOrganizationTree } from '@entities/user-group';
+import { OrganizationTreeResponse } from '@types';
 
 type UserGroupOrganizationComponentProps = {
   tenantIds: number[];
@@ -20,37 +18,19 @@ const UserGroupOrganizationComponent = ({
 
   const [selectedItems, setSelectedItems] = useState<any[]>([]);
 
-  const queryClient = useQueryClient();
-
-  const handleOnSearch = async () => {
-    const response = await queryClient.fetchQuery(queryOptions.organizationTree(tenantIds));
-    // setTreeData(response);
-  };
+  const { data } = useFetchOrganizationTree(tenantIds);
 
   useEffect(() => {
-    handleOnSearch();
-  }, []);
-  // useEffect(() => {
-  //   if (data) {
-  //     const transformedData = transformApiDataToApiTreeData(data);
-  //     setTreeData(transformedData);
+    if (data && data.length > 0) {
+      const transformedData = transformApiDataToTreeData(data);
+      setTreeData(transformedData);
+    }
+  }, [data]);
 
-  //     if (transformedData && transformedData.length > 0 && expandedKeys.length === 0) {
-  //       const firstLevelKeys = transformedData.map((node: any) => node.key);
-  //       setExpandedKeys(firstLevelKeys);
-  //     }
-  //     if (selectedApiKeys && selectedApiKeys.length > 0) {
-  //       console.log(selectedApiKeys);
-  //       const selectedNodes = findNodesByKeys(transformedData, selectedApiKeys);
-  //       setSelectedItems(selectedNodes);
-  //     }
-  //   }
-  // }, [data, selectedApiKeys]);
-
-  const handleSelectedItemsChange = (items: { key: string; fullPath: string }[]) => {
-    setSelectedItems(items);
-    // 테스트를 위해 임의로 삽입
-    handleSetOption(items);
+  const handleSelectedItemsChange = (value: TreeNode) => {
+    setSelectedItems((prev) =>
+      prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value],
+    );
   };
 
   return (
@@ -60,6 +40,7 @@ const UserGroupOrganizationComponent = ({
           sourceTitle="유저그룹 - 조직"
           targetTitle="선택 유저그룹 목록"
           treeData={treeData}
+          selectedKey="fullName"
           selectedItems={selectedItems}
           handleSelectItem={handleSelectedItemsChange}
         />
@@ -69,3 +50,26 @@ const UserGroupOrganizationComponent = ({
 };
 
 export const UserGroupOrganization = UserGroupOrganizationComponent;
+
+const transformApiDataToTreeData = (apiData: OrganizationTreeResponse[]): TreeNode[] => {
+  const transform = (nodes: OrganizationTreeResponse[], parentId?: number) => {
+    if (!nodes) return [];
+
+    return nodes.map((node) => {
+      const transformedNode = {
+        ...node,
+        key: node.id.toString(),
+        title: node.name,
+        parentId,
+      } as unknown as TreeNode;
+
+      if (node.children && node.children.length > 0) {
+        transformedNode.children = transform(node.children, transformedNode.id);
+      }
+
+      return transformedNode;
+    });
+  };
+
+  return transform(apiData);
+};
