@@ -7,6 +7,9 @@
         th {
           &.th_wrap {
             @apply body_bo_4_b relative h-[40px] overflow-hidden text-ellipsis whitespace-nowrap px-[8px] align-middle;
+            .th_content {
+              @apply flex items-center h-full;
+            }
             .icon_up,
             .icon_down,
             .btn_filter {
@@ -20,6 +23,15 @@
             }
             [class*='nlp--checkbox'] {
               @apply mt-[5px];
+            }
+            .resizer {
+              @apply absolute right-0 top-0 h-full w-[5px] bg-transparent cursor-col-resize select-none touch-none;
+              &:hover {
+                @apply bg-blue-500;
+              }
+              &.resizing {
+                @apply bg-blue-600 opacity-100;
+              }
             }
             &:not(:first-child) {
               border-left: 1px solid var(--gray3) !important;

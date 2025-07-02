@@ -1,6 +1,4 @@
 export * from './auth/const/auth.constant';
-export * from './auth/service/auth.service';
-export * from './auth/service/validator.service';
 export * from './auth/ui/auth-form/auth-form';
 export * from './auth/ui/auth-tool-form-field/auth-tool-form-field';
 export * from './auth/ui/change-password-form-field/change-password-form-field';
@@ -12,6 +10,6 @@ export * from './auth/ui/change-user-id-form-field/change-user-id-modal';
 export * from './auth/ui/google-otp-guide-button/google-otp-guide-button';
 export * from './auth/ui/google-otp-guide-button/google-otp-guide-modal';
 export * from './auth/ui/password-verify/password-verify-modal';
-export * from './auth/ui/sessionTimeoutConfirm';
+export * from './auth/ui/session-timeout-confirm';
 export * from './auth/ui/verify-user-id-form-field/verify-user-id-form-field';
 export * from './auth/ui/withdraw-menbership-button/withdraw-menbership-button';

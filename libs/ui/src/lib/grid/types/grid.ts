@@ -306,6 +306,19 @@ export interface GridProps<T> {
    * 확장 컬럼 표시 여부
    */
   showExpandColumn?: boolean;
+
+  /**
+   * 컬럼 리사이즈 활성화 여부
+   * true: 컬럼 리사이즈 가능, false: 고정 폭 사용
+   */
+  enableColumnResize?: boolean;
+
+  /**
+   * 행별 커스텀 className을 반환하는 함수
+   * @param row - 행 데이터
+   * @returns 적용할 CSS 클래스명
+   */
+  getRowClassName?: (row: T) => string;
 }
 
 /**
