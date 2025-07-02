@@ -1,4 +1,4 @@
-import { ShuttleTreeToChipsV2, TreeNode } from '@learnway/ui';
+import { flattenNodeWithChildren, ShuttleTreeToChipsV2, TreeNode } from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { useEffect, useState } from 'react';
 import { cn } from '@learnway/shared';
@@ -27,10 +27,31 @@ const UserGroupCustomComponent = ({
     }
   }, [data]);
 
-  const handleSelectedItemsChange = (value: TreeNode) => {
+  // 단일 선택
+  const handleSelectItem = (value: TreeNode) => {
     setSelectedItems((prev) =>
       prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value],
     );
+  };
+
+  // 하위 노드 전체 선택
+  const handleSelectItemWithChildren = (value: TreeNode) => {
+    let nodesToAdd = [value];
+    if (value.children && value.children.length > 0) {
+      nodesToAdd = flattenNodeWithChildren(value);
+    }
+
+    // const selectableNodes = nodesToAdd.filter((node) => node.apiNodeType === 'API');
+
+    const filteredNodesToAdd = nodesToAdd.filter(
+      (n) => !selectedItems.some((item) => item.key === n.key),
+    );
+
+    setSelectedItems([...selectedItems, ...filteredNodesToAdd]);
+  };
+
+  const cancelSelectItem = (value: TreeNode) => {
+    setSelectedItems((prev) => prev.filter((v) => v !== value));
   };
 
   return (
@@ -42,7 +63,8 @@ const UserGroupCustomComponent = ({
           treeData={treeData}
           selectedKey="fullName"
           selectedItems={selectedItems}
-          handleSelectItem={handleSelectedItemsChange}
+          handleSelectItem={handleSelectItemWithChildren}
+          cancelSelectItem={cancelSelectItem}
         />
       </div>
     </div>

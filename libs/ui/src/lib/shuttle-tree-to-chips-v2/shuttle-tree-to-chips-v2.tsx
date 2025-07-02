@@ -15,6 +15,7 @@ type ShuttleTreeToChipsV2Props = {
   selectedKey: string;
   selectedItems: TreeNode[];
   handleSelectItem: (node: TreeNode) => void;
+  cancelSelectItem: (node: TreeNode) => void;
   sourceTitle: string;
   targetTitle: string;
 };
@@ -24,6 +25,7 @@ export const ShuttleTreeToChipsV2 = ({
   selectedKey,
   selectedItems,
   handleSelectItem,
+  cancelSelectItem,
   sourceTitle,
   targetTitle,
 }: ShuttleTreeToChipsV2Props) => {
@@ -133,7 +135,6 @@ export const ShuttleTreeToChipsV2 = ({
                       }}
                     />
                   )}
-                  {/* fullPath 대신 특정 속성? 값을 갖고오는 로직 추가 필요한 것 같음. */}
                   <span className={styles.selected_text}>{item[selectedKey]}</span>
                 </div>
                 <Button className={styles.btn_close}>
@@ -141,7 +142,7 @@ export const ShuttleTreeToChipsV2 = ({
                     width={20}
                     height={20}
                     stroke="#131C30"
-                    onClick={() => handleSelectItem(item)}
+                    onClick={() => cancelSelectItem(item)}
                   />
                 </Button>
               </div>
