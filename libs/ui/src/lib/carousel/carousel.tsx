@@ -1,39 +1,61 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useRef } from 'react';
 import { Swiper, SwiperProps, SwiperSlide } from 'swiper/react';
-
+import { Autoplay, FreeMode, Navigation, Pagination } from 'swiper/modules';
+import type { NavigationOptions } from 'swiper/types/modules/navigation';
 import { cn } from '@learnway/shared';
-
-import styles from './carousel.module.css';
+import { Button } from '../button/button';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
-import { Autoplay, FreeMode, Navigation, Pagination } from 'swiper/modules';
+import styles from './carousel.module.css';
 
 export interface CarouselComponentProps extends SwiperProps {
   items: Array<React.ReactNode>;
   className?: string;
+  showNavigation?: boolean;
 }
 
 const CarouselComponent = forwardRef<React.ElementRef<typeof Swiper>, CarouselComponentProps>(
-  ({ className, items, ...props }, ref) => {
+  ({ className, items, showNavigation = false, ...props }, ref) => {
+    const prevRef = useRef<HTMLButtonElement>(null);
+    const nextRef = useRef<HTMLButtonElement>(null);
+
+    // Navigation Buttons
+    const renderNavigationButtons = () => (
+      <>
+        <Button ref={prevRef} className={cn(styles.navigation_btn, styles.prev_btn, 'prev_btn')} />
+        <Button ref={nextRef} className={cn(styles.navigation_btn, styles.next_btn, 'next_btn')} />
+      </>
+    );
+
     return (
-      <Swiper
-        {...props}
-        ref={ref}
-        className={cn(styles.swiper, className, 'nlp-carousel')}
-        modules={[FreeMode, Pagination, Navigation, Autoplay]}
-        // onSlideChange={() => console.log('slide change')}
-        // onSwiper={(swiper) => console.log(swiper)}
-      >
-        {/* items */}
-        {items.map((item, index) => (
-          <SwiperSlide key={index} className={cn(styles.swiper_slide)}>
-            {item}
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      <div className={cn(styles.start, 'nlp--carousel-wrap')}>
+        {showNavigation && renderNavigationButtons()}
+        <Swiper
+          {...props}
+          ref={ref}
+          className={cn(styles.swiper, className, 'nlp-carousel')}
+          modules={[FreeMode, Pagination, Navigation, Autoplay]}
+          navigation={false} // 초기에는 false로 설정
+          onInit={(swiper) => {
+            if (showNavigation && swiper.params.navigation) {
+              const navigation = swiper.params.navigation as NavigationOptions;
+              navigation.prevEl = prevRef.current;
+              navigation.nextEl = nextRef.current;
+              swiper.navigation.init();
+              swiper.navigation.update();
+            }
+          }}
+        >
+          {items.map((item, index) => (
+            <SwiperSlide key={index} className={cn(styles.swiper_slide)}>
+              {item}
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
     );
   },
 );

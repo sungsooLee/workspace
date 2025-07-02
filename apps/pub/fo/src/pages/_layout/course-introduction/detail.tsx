@@ -429,7 +429,7 @@ function RouteComponent() {
             className={`${styles.card_swiper}`}
             spaceBetween={0}
             slidesPerView={1}
-            navigation={true}
+            showNavigation={true}
           />
 
           <div className={styles.tab_title}>
