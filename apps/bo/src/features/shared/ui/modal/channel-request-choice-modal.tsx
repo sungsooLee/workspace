@@ -116,7 +116,7 @@ const ChannelRequestChoiceModalComponent = () => {
       enableGrouping: false,
     }),
     columnHelper.accessor('approvalStatusTypecd', {
-      cell: (info) => t('pms.channel.ChannelApprovalStatus.' + info.getValue()),
+      cell: (info) => t('pms.channel.ChannelApprovalStatusType.' + info.getValue()),
       header: '신청 상태',
       enableGrouping: false,
       size: 100,
@@ -185,7 +185,9 @@ const searchConfig: SearchBoxConfig = {
         label: t('신청상태'),
         value: 'ACCEPTED',
         optionsConfig: {
-          options: [{ value: 'ACCEPTED', label: t('pms.channel.ChannelApprovalStatus.ACCEPTED') }],
+          options: [
+            { value: 'ACCEPTED', label: t('pms.channel.ChannelApprovalStatusType.ACCEPTED') },
+          ],
         },
       },
     ],

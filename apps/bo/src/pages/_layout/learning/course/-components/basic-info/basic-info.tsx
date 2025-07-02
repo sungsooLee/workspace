@@ -167,7 +167,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             label={'학습대상'}
             element={
               <ChipListModalSelectorFormField
-                modalConfig={{ content: <UserGroupTabsChoiceModal /> }}
+                modalConfig={{ content: <UserGroupTabsChoiceModal tenantIds={[]} /> }}
                 chipList={{
                   labelField: 'fullPath',
                   valueField: 'key',

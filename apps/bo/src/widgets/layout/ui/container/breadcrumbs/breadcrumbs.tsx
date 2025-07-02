@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { Fragment, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useMatchRoute } from '@tanstack/react-router';
 
@@ -25,9 +25,9 @@ function BreadcrumbsComponent() {
         </li>
         {activeMenuDepthMenu &&
           activeMenuDepthMenu.map((menu: Menu, i: number) => {
-            if (i === 0) return <></>;
+            if (i === 0) return <Fragment key={`bread_${menu.menuId}_${i}`}></Fragment>;
             return (
-              <li key={`bread_${menu.key}_${i}`} className={styles.link_item}>
+              <li key={`bread_${menu.menuId}_${i}`} className={styles.link_item}>
                 <Link
                   to={menu.path}
                   className={matchRoute({ to: menu?.path }) ? styles.active : ''}

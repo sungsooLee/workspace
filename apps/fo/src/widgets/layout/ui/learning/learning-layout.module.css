@@ -1,0 +1,15 @@
+.start {
+  @apply w-full;
+  &.container {
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.container {
+        @apply pt-[56px];
+      }
+    }
+  }
+}

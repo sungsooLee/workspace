@@ -1,13 +1,34 @@
 import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
-import { AllUserGroupResponse, UserGroupsParam, UsersByIdsParam } from '@types';
+import {
+  UserGroupsResponse,
+  UserGroupsParam,
+  UsersByIdsParam,
+  OrganizationTreeResponse,
+} from '@types';
 
 export default class UserGroupService {
-  static fetchAllUserGroups(params?: Partial<UserGroupsParam>): Promise<AllUserGroupResponse[]> {
-    return httpService.get(`${PMSApiPrefix()}/userGroup/user-groups`, params);
+  static fetchUserGroups(
+    tenantIds: number[],
+    params?: Partial<UserGroupsParam>,
+  ): Promise<UserGroupsResponse[]> {
+    return httpService.get(`${PMSApiPrefix()}/userGroup/user-groups`, {
+      tenantIds,
+      ...params,
+    });
   }
 
-  static fetchUsersByIds(params: Partial<UsersByIdsParam>): Promise<AllUserGroupResponse[]> {
+  static fetchOrganizationTree(
+    tenantIds: number[],
+    tenantName?: string,
+  ): Promise<OrganizationTreeResponse[]> {
+    return httpService.get(`${PMSApiPrefix()}/userGroup/organization-tree`, {
+      tenantIds,
+      tenantName,
+    });
+  }
+
+  static fetchUsersByIds(params: Partial<UsersByIdsParam>): Promise<UserGroupsResponse[]> {
     return httpService.get(`${PMSApiPrefix()}/userGroup/users/by-ids`, params);
   }
 }

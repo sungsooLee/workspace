@@ -66,7 +66,8 @@ const ChannelDetailComponent: FC<any> = ({ mode, method, requestId }) => {
         tenantName: request?.tenantName,
         requestDate:
           request && getDateToString(new Date(request.requestDate), DATE_TIME_FORMAT.DATETIME_SEC),
-        status: request && t('pms.channel.ChannelApprovalStatus.' + request.approvalStatusTypecd),
+        status:
+          request && t('pms.channel.ChannelApprovalStatusType.' + request.approvalStatusTypecd),
         channelLearningContent: request?.channelLearningContent,
         channelPurposeContent: request?.channelPurposeContent,
         channelName: request?.channelName,
