@@ -123,6 +123,37 @@ import { Badge } from '@learnway/ui';
             />
           </div>
         </div>
+        <h3 className="guide_tit3">Badge blue alpha 타입</h3>
+        <div className="flex_box">
+          <div className="desc">
+            <Badge
+              option={{ label: '태그 라벨', value: 'a' }}
+              status="blue"
+              variant="alpha"
+              size="xs"
+            />
+            <Badge
+              option={{ label: '태그 라벨', value: 'a' }}
+              status="blue"
+              variant="alpha"
+              size="sm"
+            />
+            <Badge
+              option={{ label: '태그 라벨', value: 'a' }}
+              status="blue"
+              variant="alpha"
+              size="md"
+              rounded
+            />
+            <Badge
+              option={{ label: '태그 라벨', value: 'a' }}
+              status="blue"
+              variant="alpha"
+              size="lg"
+              rounded
+            />
+          </div>
+        </div>
         {/* <h3 className="guide_tit3">Badge number 타입</h3>
         <div className="flex_box">
           <div className="desc">
