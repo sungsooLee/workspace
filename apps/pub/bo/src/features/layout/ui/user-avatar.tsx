@@ -38,7 +38,7 @@ const PopoverContent = () => {
   };
 
   return (
-    <div className={`${styles.start} ${styles.avata_area}`}>
+    <div className={`${styles.start} ${styles.avatar_area}`}>
       {/* 퍼블수정 20240513 : 수정 S */}
       <div className={styles.profile_info}>
         <div className={styles.avata_img}>

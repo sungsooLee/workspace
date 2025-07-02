@@ -86,6 +86,10 @@ export interface ButtonComponentProps extends React.ButtonHTMLAttributes<HTMLBut
    */
   underline?: boolean;
   /**
+   * 버튼 내 (아이콘, 텍스트) 정렬 - 가로, 세로
+   */
+  direction?: 'row' | 'column';
+  /**
    * 클릭 이벤트 발생 시 이벤트 전파를 중지할지 여부
    */
   stopPropagation?: boolean;
@@ -109,6 +113,7 @@ const ButtonComponent = forwardRef<HTMLButtonElement, ButtonComponentProps>(
       size,
       label,
       underline = false,
+      direction = 'row',
       type = 'button',
       onClick,
       stopPropagation,
@@ -147,6 +152,7 @@ const ButtonComponent = forwardRef<HTMLButtonElement, ButtonComponentProps>(
           size,
           onlyIcon && 'only_icon',
           underline && styles.underline,
+          direction && styles[direction],
           className,
         )}
         disabled={disabled || isLoading}

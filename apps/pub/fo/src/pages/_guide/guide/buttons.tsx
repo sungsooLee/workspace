@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
-import { IcoSearch, IcoPlus, IcoDownload, IcoClose, IcoArrowForward } from '@learnway/icons';
+import { IcoSearch, IcoPlus, IcoDownload, IcoClose, IcoHeart } from '@learnway/icons';
 
 export const Route = createFileRoute('/_guide/guide/buttons')({
   component: RouteComponent,
@@ -475,6 +475,19 @@ import { Button } from '@learnway/ui';
 </Button>`}
               </code>
             </pre>
+          </div>
+
+          <h3 className="guide_tit3">icon + text 정렬 Button</h3>
+          <div className="flex_box">
+            <div className="desc">
+              <Button
+                size="lg"
+                variant="gray"
+                icon={<IcoHeart width={18} height={18} stroke="#f58b75" fill="#f58b75" />}
+                label={'922'}
+                direction={'column'}
+              />
+            </div>
           </div>
         </div>
       </div>
