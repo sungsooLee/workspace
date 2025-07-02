@@ -232,7 +232,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
     columnHelper.accessor('Delete', {
       cell: (info) => {
         return (
-          <Button disabled={true} variant="gray2" size={'xs'} type={'button'}>
+          <Button disabled={roleInfo !== 'PLATFORM'} variant="gray2" size={'xs'} type={'button'}>
             {t('삭제')}
           </Button>
         );
