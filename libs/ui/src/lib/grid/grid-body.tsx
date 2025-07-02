@@ -13,6 +13,7 @@ interface GridBodyProps<T extends object> {
   disabledSelectionToggle?: boolean;
   onRowDoubleClick?: (selectedRow: any) => void;
   isRowSelectable?: (row: T) => boolean;
+  getRowClassName?: (row: T) => string;
 }
 
 export const GridBody = <T extends object>({
@@ -21,6 +22,7 @@ export const GridBody = <T extends object>({
   disabledSelectionToggle,
   onRowDoubleClick,
   isRowSelectable,
+  getRowClassName,
 }: GridBodyProps<T>) => {
   return (
     <tbody>
@@ -36,6 +38,7 @@ export const GridBody = <T extends object>({
               row.getIsSelected() && styles.selected,
               isSubRow && styles.appended,
               depth > 0 && styles.appended,
+              getRowClassName?.(row.original),
             )}
             onClick={() =>
               !row.getIsGrouped() && !disabledSelectionToggle && canSelect && row.toggleSelected()

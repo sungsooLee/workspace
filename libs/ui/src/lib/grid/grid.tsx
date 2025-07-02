@@ -45,6 +45,8 @@ const GridComponent = forwardRef(
       showExpandColumn,
       flattenSubRows,
       isRowSelectable,
+      enableColumnResize = false,
+      getRowClassName,
     }: GridProps<T>,
     ref: React.Ref<GridImperative>,
   ) => {
@@ -96,6 +98,7 @@ const GridComponent = forwardRef(
       onTableInstanceChange, // table 인스턴스 전달 콜백
       showExpandColumn,
       isRowSelectable,
+      enableColumnResize,
     });
 
     // 부모 컴포넌트에서 grid 특정 기능 수행시 필요
@@ -150,14 +153,22 @@ const GridComponent = forwardRef(
     );
 
     const tableStyle = useMemo(() => {
-      const totalSize = table.getCenterTotalSize();
-
-      return {
-        width: totalSize,
-        tableLayout: 'auto', // auto로 변경하여 개별 컬럼만 리사이즈되도록
-        // minWidth: '100%', // 최소 너비는 100%로 설정
-      } as CSSProperties;
-    }, [table]);
+      if (enableColumnResize) {
+        const totalSize = table.getCenterTotalSize();
+        return {
+          //리사이즈 일때 스타일
+          width: totalSize,
+          tableLayout: 'auto',
+          minWidth: '100%',
+        } as CSSProperties;
+      } else {
+        return {
+          // 리사이즈가 아닐때 스타일
+          width: '100%',
+          tableLayout: 'fixed',
+        } as CSSProperties;
+      }
+    }, [table, enableColumnResize]);
 
     // console.log('grid.tsx', { data });
 
@@ -176,6 +187,7 @@ const GridComponent = forwardRef(
               disabledSelectionToggle={disabledSelectionToggle}
               onRowDoubleClick={onRowDoubleClick}
               isRowSelectable={isRowSelectable}
+              getRowClassName={getRowClassName}
             />
           )}
           {isLoading && <GridLoading<T> table={table} />}

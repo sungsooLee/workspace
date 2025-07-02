@@ -13,44 +13,17 @@ interface GridHeaderProps<T extends object> {
 }
 
 export const GridHeader = <T extends object>({ table, lastPinnedColumnId }: GridHeaderProps<T>) => {
-  const resizeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const resizeColumnRef = useRef<string | null>(null);
 
-  const handleResizeEnd = useCallback((columnId: string, newSize: number) => {
-    if (resizeTimeoutRef.current) {
-      clearTimeout(resizeTimeoutRef.current);
-    }
+  const createCustomResizeHandler = useCallback((header: any) => {
+    const originalHandler = header.getResizeHandler();
 
-    resizeTimeoutRef.current = setTimeout(() => {
-      console.log(`resize`);
-      resizeColumnRef.current = null;
-    }, 300);
+    return (event: React.MouseEvent | React.TouchEvent) => {
+      resizeColumnRef.current = header.column.id;
+
+      originalHandler(event);
+    };
   }, []);
-
-  const createCustomResizeHandler = useCallback(
-    (header: any) => {
-      const originalHandler = header.getResizeHandler();
-
-      return (event: React.MouseEvent | React.TouchEvent) => {
-        resizeColumnRef.current = header.column.id;
-
-        originalHandler(event);
-
-        const handleMouseUp = () => {
-          if (resizeColumnRef.current) {
-            const currentSize = header.getSize();
-            handleResizeEnd(resizeColumnRef.current, currentSize);
-          }
-          document.removeEventListener('mouseup', handleMouseUp);
-          document.removeEventListener('touchend', handleMouseUp);
-        };
-
-        document.addEventListener('mouseup', handleMouseUp);
-        document.addEventListener('touchend', handleMouseUp);
-      };
-    },
-    [handleResizeEnd],
-  );
   return (
     <thead>
       {table.getHeaderGroups().map((headerGroup) => (

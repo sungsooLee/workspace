@@ -28,7 +28,7 @@ import {
   TableBox,
 } from '@learnway/ui';
 import { IcoArrowDown, IcoArrowUp, IcoDownload, IcoSetting } from '@learnway/icons';
-import { getRandomId, getRowSelectionByList } from '@learnway/shared';
+import { cn, getRandomId, getRowSelectionByList } from '@learnway/shared';
 import { PaginationResponse } from '../../../../bo/src/types';
 
 export default {
@@ -159,7 +159,7 @@ const columns = [
     meta: {
       filterType: 'text',
       align: 'left', // 기본 정렬 - 헤더와 셀 모두 적용
-      size: 'auto',
+      // size: 'auto',
     },
     enableGrouping: false,
   }),
@@ -207,42 +207,42 @@ const columns = [
       filterType: 'range',
     },
   }),
-  // columnHelper.accessor('status', {
-  //   cell: (info) => info.getValue(),
-  //   header: 'Status',
-  //   getGroupingValue: (row) => `${row.status}`,
-  //   enableGrouping: true,
-  //   aggregationFn: 'count',
-  //   meta: {
-  //     filterType: 'select',
-  //     filterOptions: [
-  //       { label: '활성', value: 'active' },
-  //       { label: '비활성', value: 'inactive' },
-  //     ],
-  //   },
-  // }),
-  // columnHelper.accessor('progress', {
-  //   cell: (info) => info.getValue(),
-  //   header: 'Progress',
-  //   meta: {
-  //     filterType: 'range',
-  //   },
-  //   enableGrouping: false,
-  // }),
-  // columnHelper.accessor('preview', {
-  //   cell: (info) => info.getValue(),
-  //   header: '미리보기',
-  //   enableGrouping: false,
-  // }),
-  // columnHelper.accessor('download', {
-  //   cell: (info) => info.getValue(),
-  //   header: 'download',
-  //   enableGrouping: false,
-  //   meta: {
-  //     headerAlign: 'left', // 헤더만 가운데 정렬
-  //     cellAlign: 'center', // 셀은 오른쪽 정렬
-  //   },
-  // }),
+  columnHelper.accessor('status', {
+    cell: (info) => info.getValue(),
+    header: 'Status',
+    getGroupingValue: (row) => `${row.status}`,
+    enableGrouping: true,
+    aggregationFn: 'count',
+    meta: {
+      filterType: 'select',
+      filterOptions: [
+        { label: '활성', value: 'active' },
+        { label: '비활성', value: 'inactive' },
+      ],
+    },
+  }),
+  columnHelper.accessor('progress', {
+    cell: (info) => info.getValue(),
+    header: 'Progress',
+    meta: {
+      filterType: 'range',
+    },
+    enableGrouping: false,
+  }),
+  columnHelper.accessor('preview', {
+    cell: (info) => info.getValue(),
+    header: '미리보기',
+    enableGrouping: false,
+  }),
+  columnHelper.accessor('download', {
+    cell: (info) => info.getValue(),
+    header: 'download',
+    enableGrouping: false,
+    meta: {
+      headerAlign: 'left', // 헤더만 가운데 정렬
+      cellAlign: 'center', // 셀은 오른쪽 정렬
+    },
+  }),
 ];
 
 const BaseTable = () => {
@@ -269,6 +269,13 @@ const BaseTable = () => {
   return (
     <div className="p-4">
       <GridBox
+        enableColumnResize={true}
+        getRowClassName={(row) => {
+          const person = row as Person;
+          console.log(person);
+          if (person.age >= 30) return 'bg-blue-100';
+          return '';
+        }}
         data={data?.data ?? []}
         columns={columns}
         onStateChange={handleStateChange}

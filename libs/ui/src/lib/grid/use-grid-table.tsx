@@ -60,6 +60,7 @@ export function useGridTable<T extends object>(
     autoSelectFirstRow,
     tableMode, // tableMode 추가
     onTableInstanceChange, // table 인스턴스 전달 콜백
+    enableColumnResize = false,
   } = props;
 
   const { t } = useTranslation();
@@ -368,9 +369,9 @@ export function useGridTable<T extends object>(
     enableGrouping: true,
     enableExpanding: true,
     enablePinning: true,
-    enableColumnResizing: true,
-    columnResizeMode: 'onChange',
-    columnResizeDirection: 'ltr',
+    enableColumnResizing: enableColumnResize,
+    columnResizeMode: enableColumnResize ? 'onChange' : undefined,
+    columnResizeDirection: enableColumnResize ? 'ltr' : undefined,
     ...(clientSideFiltering && { getFilteredRowModel: getFilteredRowModel() }),
     ...(clientSideSorting && { getSortedRowModel: getSortedRowModel() }),
     manualSorting: !clientSideSorting,
