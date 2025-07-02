@@ -41,6 +41,7 @@ function RouteComponent() {
             sequenceId: 1,
             courceId: 1,
             scoId: showItem.scoId,
+            itemURL: showItem.itemUrl,
           });
         }
       }
