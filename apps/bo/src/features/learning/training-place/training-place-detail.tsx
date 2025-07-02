@@ -8,7 +8,12 @@ import { FormRow, FormSubTitle } from '@shared/ui';
 import { DynamicFormConfig, useDynamicForm, CODE_GROUP } from '@learnway/hooks';
 import { AddressSearchModal } from '@features/shared/ui/modal/address-search-modal';
 import { DropdownFormField } from '@features/form';
-import { useFetchSpace, useCreateSpace } from '@entities/training-place';
+import {
+  useFetchSpace,
+  useCreateSpace,
+  useUpdateSpace,
+  useDeleteSpace,
+} from '@entities/training-place';
 import { EnFormMode, EnPageMode } from '@types';
 import SpaceService from '@entities/training-place/api/space';
 import { SingleAttachmentFormField } from '@shared/ui/form/single-attachment-form-field';
@@ -51,12 +56,20 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
         form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
       }
     },
+    deleteData() {
+      openConfirm({
+        title: t('삭제 하시겠습니까?'),
+        onClose: (value: boolean) => {
+          value && deleteSpace(props.spaceId);
+        },
+      });
+    },
     clearForm() {
       onFormChange();
     },
   }));
 
-  const { create } = useCreateSpace({
+  const { create: createSpace } = useCreateSpace({
     onSuccess: (data: any) => {
       openAlert({
         title: t('저장되었습니다.'),
@@ -66,6 +79,28 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
               completeModal(data);
             }, 0);
           } else router.navigate({ to: '/learning/training-place' });
+        },
+      });
+    },
+  });
+
+  const { update: updateSpace } = useUpdateSpace({
+    onSuccess: () => {
+      openAlert({
+        title: t('저장되었습니다.'),
+        onClose: () => {
+          router.navigate({ to: '/learning/training-place' });
+        },
+      });
+    },
+  });
+
+  const { delete: deleteSpace } = useDeleteSpace({
+    onSuccess: () => {
+      openAlert({
+        title: t('삭제되었습니다.'),
+        onClose: () => {
+          router.navigate({ to: '/learning/training-place' });
         },
       });
     },
@@ -110,19 +145,23 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
       return;
     }
     console.log('#### handleOnSubmit', data);
-    const payload = {
-      ...data,
-      tenantIds: [data.tenantId],
-      learningSpaceCode: data.learningSpaceCode.fieldValue,
-    };
+
     if (props.mode === EnFormMode.ADD) {
+      const payload = {
+        ...data,
+        learningSpaceCode: data.learningSpaceCode.fieldValue,
+      };
       if (await openConfirm(t('저장 하시겠습니까?'))) {
-        create(payload);
+        createSpace(payload);
       }
     } else if (props.mode === EnFormMode.VIEW) {
+      const payload = {
+        ...data,
+        learningSpaceId: props.spaceId,
+        learningSpaceCode: data.learningSpaceCode.fieldValue,
+      };
       if (await openConfirm(t('수정 하시겠습니까?'))) {
-        // TODO. API 준비중
-        //update(payload);
+        updateSpace(payload);
       }
     }
   };
@@ -134,12 +173,12 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
         <FormRow
           provider={provider}
           name={'tenantId'}
-          element={<DropdownFormField readOnly={formDisabled} />}
+          element={<DropdownFormField readOnly={props.mode === EnFormMode.VIEW} />}
         />
         <FormRow
           provider={provider}
           name={'onOffLineType'}
-          element={<RadioGroupFormField disabled={formDisabled} />}
+          element={<RadioGroupFormField disabled={props.mode === EnFormMode.VIEW} />}
         />
       </ContentsRow>
       <ContentsRow>
