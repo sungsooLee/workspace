@@ -24,6 +24,7 @@ export interface AuthUser {
   activeRole?: Role;
   mainTenantId?: number;
   menus?: any;
+  myRoles?: any; // 나의 역할 목록 조회 결과
   avataImage?: string;
   latestLoginDatetime?: Date;
   phoneNumberNationCode?: string;
