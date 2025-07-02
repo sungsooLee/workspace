@@ -94,6 +94,12 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider} name={'userInfos'} />
           </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider} name="attachment" />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider} name="singleAttachment" />
+          </ContentsRow>
         </MainContents>
         <SubContents>
           <MovieInfo />
@@ -302,6 +308,28 @@ const detailConfig: DynamicFormConfig = {
       type: 'text',
       value: '',
       placeholder: 'D 파일명',
+    },
+    {
+      name: 'attachment',
+      type: 'attachment',
+      uploadConfig: {
+        languageCode: 'ko',
+        affairsType: 'PMS',
+        s3Path: 'upload/temp/attachment',
+      },
+      value: [],
+    },
+    {
+      name: 'singleAttachment',
+      type: 'single-attachment',
+      label: '약도 이미지 첨부',
+      uploadConfig: {
+        languageCode: 'ko',
+        affairsType: 'PMS',
+        s3Path: 'upload/content/image',
+        acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
+      },
+      value: '',
     },
   ],
   validator: {

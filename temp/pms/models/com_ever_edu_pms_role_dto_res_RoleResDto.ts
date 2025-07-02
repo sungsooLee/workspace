@@ -42,6 +42,10 @@ export type com_ever_edu_pms_role_dto_res_RoleResDto = {
      */
     tenantId?: number;
     /**
+     * 테넌트명
+     */
+    tenantName?: string;
+    /**
      * 회사 적용 범위
      */
     companyScope?: com_ever_edu_pms_role_dto_res_RoleResDto.companyScope;

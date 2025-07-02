@@ -82,7 +82,7 @@ function RouteComponent() {
       }
       // 블로그
       case LEARNING_TYPE.BLOG: {
-        router.navigate({ to: '/learning/resource/blog/view' });
+        router.navigate({ to: '/learning/resource/blog/regist' });
         break;
       }
       // 이북

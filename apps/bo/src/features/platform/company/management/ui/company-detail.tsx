@@ -243,7 +243,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
   const chooseUserGroup = () => {
     openModal({
       width: 'xl',
-      content: <UserGroupTabsChoiceModal />,
+      content: <UserGroupTabsChoiceModal tenantIds={[]} />,
       onClose(data: any) {
         console.log('### selectedUserGroups', data);
         if (data) {
@@ -266,7 +266,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
   const changeUserGroup = (info: any) => {
     openModal({
       width: 'xl',
-      content: <UserGroupTabsChoiceModal />,
+      content: <UserGroupTabsChoiceModal tenantIds={[]} />,
       onClose(data: any) {
         console.log('### selectedUserGroups', data);
         console.log('### info', info);

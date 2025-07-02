@@ -21,6 +21,7 @@ export type com_ever_edu_pms_menu_dto_res_MenuResDto$DetailOnAdmin = {
     parentId?: number;
     parentCode?: string;
     parentName?: string;
+    fullPath?: string;
     apiMappingMenuList?: Array<com_ever_edu_pms_menu_dto_res_MenuResDto$ApiMappingMenuDto>;
 };
 

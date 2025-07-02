@@ -163,6 +163,11 @@ const CompanyOrganizationInfoListComponent = ({
     }
   };
 
+  const handleOnSelectable = (row: any) => {
+    const disabled = row.hrInfoManageType !== 'MANUAL_MANAGE';
+    return !disabled;
+  };
+
   return (
     <>
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
@@ -179,6 +184,7 @@ const CompanyOrganizationInfoListComponent = ({
             excelButtons={showType === EnOrganizationShowType.platform && <GridExcelUploadButton />}
             onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
             onRemoveClick={handleRemoveClick}
+            isRowSelectable={handleOnSelectable}
           />
         </div>
       </div>

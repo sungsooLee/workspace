@@ -41,6 +41,10 @@ import type { com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin } from 
 import type { com_ever_edu_lms_course_dto_res_SequenceResDto$onAdmin } from '../models/com_ever_edu_lms_course_dto_res_SequenceResDto$onAdmin';
 import type { com_ever_edu_lms_enroll_dto_event_EnrollQueueEvent } from '../models/com_ever_edu_lms_enroll_dto_event_EnrollQueueEvent';
 import type { com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByAdmin } from '../models/com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByAdmin';
+import type { com_ever_edu_lms_instructor_dto_req_InstructorSaveReqDto } from '../models/com_ever_edu_lms_instructor_dto_req_InstructorSaveReqDto';
+import type { com_ever_edu_lms_instructor_dto_req_InstructorSearchReqDto } from '../models/com_ever_edu_lms_instructor_dto_req_InstructorSearchReqDto';
+import type { com_ever_edu_lms_instructor_dto_req_InstructorUpdateReqDto } from '../models/com_ever_edu_lms_instructor_dto_req_InstructorUpdateReqDto';
+import type { com_ever_edu_lms_instructor_dto_res_InstructorResDto } from '../models/com_ever_edu_lms_instructor_dto_res_InstructorResDto';
 import type { com_ever_edu_lms_space_dto_req_LearningSpaceListReqDto } from '../models/com_ever_edu_lms_space_dto_req_LearningSpaceListReqDto';
 import type { com_ever_edu_lms_space_dto_req_LearningSpaceSaveReqDto } from '../models/com_ever_edu_lms_space_dto_req_LearningSpaceSaveReqDto';
 import type { com_ever_edu_lms_space_dto_res_LearningSpaceAdminResDto } from '../models/com_ever_edu_lms_space_dto_res_LearningSpaceAdminResDto';
@@ -50,6 +54,7 @@ import type { org_springframework_data_domain_PageCom_ever_edu_lms_badge_dto_res
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_badge_dto_res_BadgeListResDto$OnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_badge_dto_res_BadgeListResDto$OnAdmin';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CourseListAdminResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CourseListAdminResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_SequenceListResDto$OnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_SequenceListResDto$OnAdmin';
+import type { org_springframework_data_domain_PageCom_ever_edu_lms_instructor_dto_res_InstructorSearchResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_instructor_dto_res_InstructorSearchResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_space_dto_res_LearningSpaceListAdminResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_space_dto_res_LearningSpaceListAdminResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_student_dto_res_StudentHistoryDto$OnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_student_dto_res_StudentHistoryDto$OnAdmin';
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -224,6 +229,85 @@ export class BoService {
         });
     }
     /**
+     * 강사 목록 조회
+     * 강사 목록 조회
+     * @param pageable
+     * @param reqDto
+     * @returns org_springframework_data_domain_PageCom_ever_edu_lms_instructor_dto_res_InstructorSearchResDto OK
+     * @throws ApiError
+     */
+    public static findPage6(
+        pageable: org_springdoc_core_converters_models_Pageable,
+        reqDto: com_ever_edu_lms_instructor_dto_req_InstructorSearchReqDto,
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_lms_instructor_dto_res_InstructorSearchResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/instructor',
+            query: {
+                'pageable': pageable,
+                'reqDto': reqDto,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 강사 수정
+     * 강사 수정
+     * @param requestBody
+     * @returns number OK
+     * @throws ApiError
+     */
+    public static update(
+        requestBody: com_ever_edu_lms_instructor_dto_req_InstructorUpdateReqDto,
+    ): CancelablePromise<number> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/admin/api/v1/instructor',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 강사 등록
+     * 강사 등록
+     * @param requestBody
+     * @returns number OK
+     * @throws ApiError
+     */
+    public static save2(
+        requestBody: com_ever_edu_lms_instructor_dto_req_InstructorSaveReqDto,
+    ): CancelablePromise<number> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/instructor',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * 과정 생성 마법사4
      * 과정 개설 > 4. 과정 상세 정보 저장
      * @param courseId
@@ -347,7 +431,7 @@ export class BoService {
      * @returns number OK
      * @throws ApiError
      */
-    public static update(
+    public static update1(
         categoryId: number,
         requestBody: com_ever_edu_lms_category_dto_req_CategoryMasterUpdateRequestDto,
     ): CancelablePromise<number> {
@@ -404,7 +488,7 @@ export class BoService {
      * @returns number OK
      * @throws ApiError
      */
-    public static update1(
+    public static update2(
         requestBody: com_ever_edu_lms_badge_dto_req_BadgeUpdateReqDto,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
@@ -428,7 +512,7 @@ export class BoService {
      * @returns number OK
      * @throws ApiError
      */
-    public static save3(
+    public static save4(
         requestBody: com_ever_edu_lms_badge_dto_req_BadgeSaveReqDto,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
@@ -452,7 +536,7 @@ export class BoService {
      * @returns number OK
      * @throws ApiError
      */
-    public static delete2(
+    public static delete3(
         requestBody: com_ever_edu_lms_badge_dto_req_BadgeUpdateReqDto,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
@@ -477,7 +561,7 @@ export class BoService {
      * @returns org_springframework_data_domain_PageCom_ever_edu_lms_badge_dto_res_BadgeListResDto$OnAdmin OK
      * @throws ApiError
      */
-    public static findPage7(
+    public static findPage8(
         params: com_ever_edu_lms_badge_dto_req_BadgeSearchReqDto$SearchByAdminDto,
         pageable: org_springdoc_core_converters_models_Pageable,
     ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_lms_badge_dto_res_BadgeListResDto$OnAdmin> {
@@ -504,7 +588,7 @@ export class BoService {
      * @returns number OK
      * @throws ApiError
      */
-    public static update2(
+    public static update3(
         requestBody: com_ever_edu_lms_badge_dto_req_BadgeGroupUpdateReqDto,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
@@ -528,7 +612,7 @@ export class BoService {
      * @returns number OK
      * @throws ApiError
      */
-    public static save4(
+    public static save5(
         requestBody: com_ever_edu_lms_badge_dto_req_BadgeGroupSaveReqDto,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
@@ -793,7 +877,7 @@ export class BoService {
      * @returns number OK
      * @throws ApiError
      */
-    public static save2(
+    public static save3(
         requestBody: com_ever_edu_lms_category_dto_req_CategoryMasterSaveRequestDto,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
@@ -918,7 +1002,7 @@ export class BoService {
      * @returns any OK
      * @throws ApiError
      */
-    public static save5(
+    public static save6(
         requestBody: com_ever_edu_lms_badge_dto_req_BadgeMappingGroupSaveReqDto,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -1148,6 +1232,58 @@ export class BoService {
         });
     }
     /**
+     * 강사 상세 조회
+     * 강사 상세 조회
+     * @param instructorId
+     * @returns com_ever_edu_lms_instructor_dto_res_InstructorResDto OK
+     * @throws ApiError
+     */
+    public static findById1(
+        instructorId: number,
+    ): CancelablePromise<com_ever_edu_lms_instructor_dto_res_InstructorResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/instructor/{instructorId}',
+            path: {
+                'instructorId': instructorId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 강사 삭제
+     * 강사 삭제
+     * @param instructorId
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static delete1(
+        instructorId: number,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/admin/api/v1/instructor/{instructorId}',
+            path: {
+                'instructorId': instructorId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * 과정 목록 조회
      * 과정 목록을 조회한다.
      * @param pageable
@@ -1155,7 +1291,7 @@ export class BoService {
      * @returns org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CourseListAdminResDto OK
      * @throws ApiError
      */
-    public static findPage6(
+    public static findPage7(
         pageable: org_springdoc_core_converters_models_Pageable,
         params: com_ever_edu_lms_course_dto_req_CourseSearchReqDto$SearchByAdminDto,
     ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CourseListAdminResDto> {
@@ -1204,22 +1340,17 @@ export class BoService {
      * 과정 삭제
      * 과정을 논리적으로 삭제한다.
      * @param courseId
-     * @param courseType
      * @returns any OK
      * @throws ApiError
      */
     public static findByUuid(
         courseId: number,
-        courseType: 'ELEARNING1' | 'ELEARNING2' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/admin/api/v1/course/{courseId}',
             path: {
                 'courseId': courseId,
-            },
-            query: {
-                'courseType': courseType,
             },
             errors: {
                 400: `Bad Request`,
@@ -1460,7 +1591,7 @@ export class BoService {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete1(
+    public static delete2(
         categoryId: number,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -1485,7 +1616,7 @@ export class BoService {
      * @returns number OK
      * @throws ApiError
      */
-    public static delete3(
+    public static delete4(
         badgeGroupId: number,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
