@@ -476,6 +476,7 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
                     name={'apiUrl'}
                     element={
                       <Input
+                        id="apiUrl"
                         disabled={FORM_MODE.NONE === formMode}
                         hiddenPlaceholder={formMode === FORM_MODE.NONE}
                         inputType="url"

@@ -127,6 +127,7 @@ export * from './lib/input/input-timer';
 export * from './lib/input/input';
 export * from './lib/input/search-input';
 export * from './lib/input/type';
+export * from './lib/input/use-input-validation';
 export * from './lib/list/list';
 export * from './lib/list/type';
 export * from './lib/modal/modal-container';

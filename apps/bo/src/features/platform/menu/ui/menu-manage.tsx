@@ -680,6 +680,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
                 name={'path'}
                 element={
                   <Input
+                    id="path"
                     disabled={formMode === FORM_MODE.NONE}
                     hiddenPlaceholder={formMode === FORM_MODE.NONE}
                     inputType={'url'}

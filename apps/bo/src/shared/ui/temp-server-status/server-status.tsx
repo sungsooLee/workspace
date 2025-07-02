@@ -1,6 +1,4 @@
 import { memo, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useLocation } from '@tanstack/react-router';
 import { Popover } from '@learnway/ui';
 
 interface ServerStatus {
@@ -38,8 +36,6 @@ const PopoverContent = ({ serverStatus }: { serverStatus: ServerStatus }) => {
 };
 
 const ServerStatusComponent = () => {
-  const { t } = useTranslation();
-  const location = useLocation();
   const [serverStatus, setServerStatus] = useState<ServerStatus>({
     status: 'error',
     message: '상태 확인 중...',
@@ -47,7 +43,7 @@ const ServerStatusComponent = () => {
 
   const checkServerStatus = async () => {
     try {
-      const response = await fetch('/pms-module/spec/api/v1/login', {
+      const response = await fetch('/pms-module/spec/api/v1/sso/healthcheck', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -76,7 +72,7 @@ const ServerStatusComponent = () => {
 
   useEffect(() => {
     checkServerStatus();
-  }, [location.pathname]);
+  }, []);
 
   const getStatusIcon = () => {
     switch (serverStatus.status) {
