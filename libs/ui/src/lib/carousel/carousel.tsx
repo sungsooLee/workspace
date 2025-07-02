@@ -18,7 +18,7 @@ export interface CarouselComponentProps extends SwiperProps {
 }
 
 const CarouselComponent = forwardRef<React.ElementRef<typeof Swiper>, CarouselComponentProps>(
-  ({ className, items, enableNavigation = true, ...props }, ref) => {
+  ({ className, items, enableNavigation = false, ...props }, ref) => {
     const prevRef = useRef<HTMLDivElement>(null);
     const nextRef = useRef<HTMLDivElement>(null);
     return (
