@@ -1,9 +1,32 @@
+/* avatar.module.css */
+
 .start {
-  @apply flex h-[32px] w-[32px] items-center justify-center overflow-hidden rounded-[16px] bg-[var(--secondary1)];
-  .image {
-    @apply h-full w-full object-cover;
+  @apply flex items-center justify-center overflow-hidden rounded-[100%] bg-[var(--blue35)] font-[600];
+  /* 사이즈별 클래스 */
+  &.size--sm {
+    @apply h-[32px] w-[32px] text-[1.4rem];
   }
-  .fallback {
-    @apply body_2_b text-white;
+  &.size--md {
+    @apply h-[40px] w-[40px] text-[1.8rem];
   }
+  &.size--lg {
+    @apply h-[48px] w-[48px] text-[2rem];
+  }
+  &.size--xl {
+    @apply h-[56px] w-[56px] text-[2.2rem];
+  }
+  &.size--2xl {
+    @apply h-[72px] w-[72px] text-[2.8rem];
+  }
+  &.size--3xl {
+    @apply h-[100px] w-[100px] text-[4rem];
+  }
+}
+
+.image {
+  @apply h-full w-full object-cover;
+}
+
+.fallback {
+  @apply text-white;
 }
