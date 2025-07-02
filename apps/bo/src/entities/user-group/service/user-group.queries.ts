@@ -2,13 +2,20 @@ import { UserGroupsParam } from '@types';
 import UserGroupsService from '../api/user-group';
 
 export const queryKeys = {
-  all: ['all-user-groups'] as const,
+  usergroups: ['user-groups'] as const,
+  organizationTree: ['organization-tree'] as const,
 };
 
 export const queryOptions = {
-  all: (params?: Partial<UserGroupsParam>) => ({
-    queryKey: queryKeys.all,
-    queryFn: () => UserGroupsService.fetchAllUserGroups(params),
+  usergroups: (tenantIds: number[], params?: Partial<UserGroupsParam>) => ({
+    queryKey: queryKeys.usergroups,
+    queryFn: () => UserGroupsService.fetchUserGroups(tenantIds, params),
+    cacheTime: 0,
+    staleTime: 0,
+  }),
+  organizationTree: (tenantIds: number[], tenantName?: string) => ({
+    queryKey: queryKeys.organizationTree,
+    queryFn: () => UserGroupsService.fetchOrganizationTree(tenantIds, tenantName),
     cacheTime: 0,
     staleTime: 0,
   }),

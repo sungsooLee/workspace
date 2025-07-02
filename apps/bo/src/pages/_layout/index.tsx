@@ -422,6 +422,24 @@ export const munu = [
     memo: '작업 중',
     end: false,
   },
+  {
+    screenName: '채널 개설 신청 관리',
+    pageId: 'tenant/channel/request',
+    screenId: 'NLP_BO_CHN_1401',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중',
+    end: false,
+  },
+  {
+    screenName: '채널 관리',
+    pageId: 'tenant/channel/management',
+    screenId: 'NLP_BO_CHN_1000',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중',
+    end: false,
+  },
 ];
 
 export const guide = [

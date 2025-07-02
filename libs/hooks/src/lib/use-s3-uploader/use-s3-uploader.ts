@@ -23,21 +23,24 @@ import { first, uniq } from 'lodash';
 const useS3UploaderHook = (config: S3UploaderConfig) => {
   const {
     s3Path,
-    groupConfig,
+    // groupConfig,
+    affairsType,
+    languageCode = 'ko',
+    groupUuid,
     groupMode = 'batch',
     auto = true,
     async = true,
     multipartThreshold = DEFAULT_MULTIPART_THRESHOLD,
     acceptFiles = [],
     maxFileCount = 10,
-    maxFileSize = 0,
+    maxFileSize = 5 * 1024 * 1024,
   } = config;
 
   // 파일 상태 관리
   const [files, setFiles] = useState<UploadFile[]>([]);
 
   // 배치 모드에서 그룹 UUID 저장 (한 번 생성 후 재사용)
-  const [batchGroupUuid, setBatchGroupUuid] = useState<string | undefined>(groupConfig?.groupUuid);
+  const [batchGroupUuid, setBatchGroupUuid] = useState<string | undefined>(groupUuid);
 
   // 업로드 통계 계산
   const stats = useMemo(() => {
@@ -166,7 +169,10 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
           message = 'size error';
         }
 
-        if (acceptFiles.length > 0 && !acceptFiles.includes(file.extension.toUpperCase())) {
+        if (
+          acceptFiles.length > 0 &&
+          !acceptFiles.map((accept) => accept.toUpperCase()).includes(file.extension.toUpperCase())
+        ) {
           isError = true;
           message = 'extension error';
         }
@@ -178,7 +184,7 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
           });
         } else {
           // groupConfig가 있으면 'grouping', 없으면 'idle' 상태로 설정
-          const nextStatus = groupConfig ? 'grouping' : 'idle';
+          const nextStatus = 'grouping'; //groupConfig ? 'grouping' : 'idle';
           updatedFiles = updateFile(updatedFiles, file.id, {
             status: nextStatus,
             message,
@@ -192,15 +198,15 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
 
   // 그룹 생성 (공통 로직)
   const executeCreateFileGroup = async (basicPath: string) => {
-    if (!groupConfig) {
-      throw new Error('Group config is required');
-    }
+    // if (!groupConfig) {
+    //   throw new Error('Group config is required');
+    // }
 
     const groupResponse = await createFileGroup({
-      affairsType: groupConfig.affairsType,
+      affairsType,
       reposType: 'S3',
       basicPath,
-      languageCode: groupConfig.languageCode || 'ko',
+      languageCode,
     });
 
     if (!groupResponse?.groupUuid) {
@@ -213,10 +219,11 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
   // 그룹 생성 및 파일 정보 저장
   const createGroup = async (
     groupNeededFiles: UploadFile[],
-    groupConfig: S3UploaderConfig['groupConfig'],
+    // groupConfig: S3UploaderConfig['groupConfig'],
     groupMode: 'individual' | 'batch',
   ) => {
-    if (!groupConfig || groupNeededFiles.length === 0) return;
+    // if (!groupConfig || groupNeededFiles.length === 0) return;
+    if (groupNeededFiles.length === 0) return;
 
     try {
       if (groupMode === 'batch') {
@@ -307,20 +314,15 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
     if (validatingFiles.length === 0) return;
 
     validateFiles(validatingFiles);
-  }, [
-    files.filter((f) => f.status === 'validating').length,
-    maxFileSize,
-    acceptFiles,
-    groupConfig,
-  ]);
+  }, [files.filter((f) => f.status === 'validating').length, maxFileSize, acceptFiles]);
 
   // 그룹 생성 처리 실행
   useEffect(() => {
     const groupNeededFiles = files.filter((f) => f.status === 'grouping');
     if (groupNeededFiles.length === 0) return;
 
-    createGroup(groupNeededFiles, groupConfig, groupMode);
-  }, [files.filter((f) => f.status === 'grouping').length, groupConfig, groupMode]);
+    createGroup(groupNeededFiles, groupMode);
+  }, [files.filter((f) => f.status === 'grouping').length, groupMode]);
 
   // Single-part 업로드
   const singlePartUpload = async (file: UploadFile) => {
@@ -351,7 +353,8 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
       }
 
       // 3. 업로드 완료 처리
-      if (groupConfig && file.fileUuid) {
+      // if (groupConfig && file.fileUuid) {
+      if (file.fileUuid) {
         const completeRes = await completeFileUpload(file.fileUuid);
         if (!completeRes) {
           throw new Error('Failed to complete upload');
@@ -495,7 +498,8 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
       }
 
       // 5. 업로드 완료 처리 (groupConfig가 있는 경우에만)
-      if (groupConfig && file.fileUuid) {
+      // if (groupConfig && file.fileUuid) {
+      if (file.fileUuid) {
         const fileCompleteRes = await completeFileUpload(file.fileUuid, {
           key: file.key,
           uploadId,
@@ -594,7 +598,8 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
     setFiles((prev) => updateFile(prev, id, { status: 'uploading' }));
 
     // fileUuid가 없으면 임시 파일 정보 저장
-    if (!file.fileUuid && groupConfig && file.groupUuid) {
+    // if (!file.fileUuid && groupConfig && file.groupUuid) {
+    if (!file.fileUuid && file.groupUuid) {
       try {
         file = await executeSaveTempFileInfo(file);
         setFiles((prev) =>

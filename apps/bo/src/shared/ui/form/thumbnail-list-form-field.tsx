@@ -8,7 +8,7 @@ import { S3UploaderConfig, BaseFormFieldProps } from '@learnway/hooks'; // @lear
  */
 interface ThumbnailImageUploadFormFieldProps extends BaseFormFieldProps<string[]> {
   uploadConfig?: S3UploaderConfig;
-  imageStorageType?: 'public' | 'S3';
+  imageStorageType?: 'public' | 'db-manage';
   /**
    * 더미 속성 (현재 코드에서 사용되지 않음)
    * @deprecated 이 prop은 현재 코드에서 사용되지 않습니다.
@@ -29,7 +29,7 @@ const ThumbnailImageUploadFormFieldComponent = forwardRef<
 >(
   (
     {
-      imageStorageType = 'S3',
+      imageStorageType = 'public',
       value = [], // 폼 필드의 현재 값 (string[] 타입, 이미지 경로 배열)
       onChange, // 폼 필드 값이 변경될 때 호출되는 콜백 함수
       uploadConfig,
