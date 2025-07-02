@@ -2,6 +2,7 @@ import {
   ColumnDef,
   ColumnFiltersState,
   ColumnPinningState,
+  ColumnSizingState,
   getCoreRowModel,
   getExpandedRowModel,
   getFilteredRowModel,
@@ -34,6 +35,7 @@ interface UseGridTableReturn<T extends object> {
   columnVisibility: VisibilityState;
   columnOrder: string[];
   rowSelection: RowSelectionState;
+  columnSizing: ColumnSizingState;
   isInitialSelectionEffect: React.MutableRefObject<boolean>;
   lastPinnedColumnId: string; // 마지막 고정 열의 ID
 }
@@ -58,6 +60,7 @@ export function useGridTable<T extends object>(
     autoSelectFirstRow,
     tableMode, // tableMode 추가
     onTableInstanceChange, // table 인스턴스 전달 콜백
+    enableColumnResize = false,
   } = props;
 
   const { t } = useTranslation();
@@ -66,6 +69,7 @@ export function useGridTable<T extends object>(
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+  const [columnSizing, setColumnSizing] = useState<ColumnSizingState>({});
 
   const isInitialSelectionEffect = useRef(true);
   const prevSelectedRowIdsRef = useRef<string[]>([]); // rowSelection 변경 체크를 위한 ref
@@ -314,7 +318,9 @@ export function useGridTable<T extends object>(
   const table = useReactTable({
     data,
     columns: tableColumns,
-    defaultColumn: { minSize: 50 },
+    defaultColumn: {
+      minSize: 50,
+    },
     state: {
       columnOrder,
       columnVisibility,
@@ -323,6 +329,7 @@ export function useGridTable<T extends object>(
       rowSelection,
       grouping: groupingState,
       expanded,
+      columnSizing,
       ...(pagination && {
         pagination: {
           pageIndex: pagination.pageIndex,
@@ -337,6 +344,7 @@ export function useGridTable<T extends object>(
     onColumnFiltersChange: setColumnFilters,
     onExpandedChange: setExpanded,
     onColumnPinningChange: setColumnPinningState,
+    onColumnSizingChange: setColumnSizing,
     onPaginationChange: (updater) => {
       if (!pagination) return;
       const newPagination =
@@ -361,6 +369,9 @@ export function useGridTable<T extends object>(
     enableGrouping: true,
     enableExpanding: true,
     enablePinning: true,
+    enableColumnResizing: enableColumnResize,
+    columnResizeMode: enableColumnResize ? 'onChange' : undefined,
+    columnResizeDirection: enableColumnResize ? 'ltr' : undefined,
     ...(clientSideFiltering && { getFilteredRowModel: getFilteredRowModel() }),
     ...(clientSideSorting && { getSortedRowModel: getSortedRowModel() }),
     manualSorting: !clientSideSorting,
@@ -455,6 +466,7 @@ export function useGridTable<T extends object>(
     columnVisibility,
     columnOrder,
     rowSelection,
+    columnSizing,
     isInitialSelectionEffect,
     lastPinnedColumnId,
   };
