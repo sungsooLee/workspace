@@ -309,6 +309,7 @@ const TenantDetailCategoryMappingModalComponent: FC<any> = ({ tenantId, onNodeCh
                     expandedKeys={commonCategoryTreeExpandedKeys}
                     onExpandedKeysChange={handleCommonCategoryTreeExpandChange}
                     //onSelectedNodeChange={handleSelectedNodeChange}
+                    moveIcon={true}
                   />
                 </div>
 

@@ -141,93 +141,105 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
   });
 
   // 특정 위치에 대한 드롭 유효성 검사
-  const isValidDropTargetForPosition = useCallback((position: NodeMovePositionType) => {
-    if (!effectiveDraggedNode) return true; // 드래그 중이 아니면 항상 유효
+  const isValidDropTargetForPosition = useCallback(
+    (position: NodeMovePositionType) => {
+      if (!effectiveDraggedNode) return true; // 드래그 중이 아니면 항상 유효
 
-    // 같은 트리에서 자기 자신으로는 드롭할 수 없음
-    if (effectiveDraggedNode.key === node.key) {
-      return false;
-    }
-
-    // 같은 트리에서 자식 노드로는 드롭할 수 없음 (순환 참조 방지)
-    if (globalSourceTreeId === treeId) {
-      const isDescendant = (parentNode: TreeNode, childKey: string): boolean => {
-        if (!parentNode.children) return false;
-        return parentNode.children.some(
-          (child) => child.key === childKey || isDescendant(child, childKey),
-        );
-      };
-
-      if (isDescendant(effectiveDraggedNode, node.key)) {
+      // 같은 트리에서 자기 자신으로는 드롭할 수 없음
+      if (effectiveDraggedNode.key === node.key) {
         return false;
       }
-    }
 
-    // 제약 조건 확인
-    if (node.constraints?.drop === false) {
-      return false;
-    }
+      // 같은 트리에서 자식 노드로는 드롭할 수 없음 (순환 참조 방지)
+      if (globalSourceTreeId === treeId) {
+        const isDescendant = (parentNode: TreeNode, childKey: string): boolean => {
+          if (!parentNode.children) return false;
+          return parentNode.children.some(
+            (child) => child.key === childKey || isDescendant(child, childKey),
+          );
+        };
 
-    // 트리 타입에 따른 유효성 검사
-    if (treeType === 'SAME_LEVEL_ONLY') {
-      const draggedLevel = effectiveDraggedNode.level || effectiveDraggedNode.depth || 0;
-
-      if (position === 'BEFORE' || position === 'AFTER') {
-        // BEFORE/AFTER는 같은 레벨이어야 함
-        return draggedLevel === level;
-      } else if (position === 'INSIDE') {
-        // INSIDE는 드래그된 노드가 타겟보다 한 레벨 아래여야 함
-        return draggedLevel === level + 1;
-      }
-    }
-
-    if (treeType === 'SAME_PARENT_ONLY') {
-      const sourceParentKey = effectiveDraggedNode.parentKey || effectiveDraggedNode.parentId;
-      const currentNodeParentKey = node.parentKey || node.parentId;
-
-      if (position === 'INSIDE') {
-        return node.key === sourceParentKey;
-      } else if (position === 'BEFORE' || position === 'AFTER') {
-        // BEFORE/AFTER는 같은 부모를 가진 형제 노드들끼리만 가능
-        if (sourceParentKey !== currentNodeParentKey) {
-          return false;
-        }
-        // 추가: 같은 부모 노드 자체로는 BEFORE/AFTER 드롭 불가 (부모는 INSIDE만)
-        if (node.key === sourceParentKey) {
+        if (isDescendant(effectiveDraggedNode, node.key)) {
           return false;
         }
       }
-    }
 
-    // MaxDepth 검증
-    if (maxDepth !== undefined && position === 'INSIDE') {
-      const draggedNodeMaxDepth = getNodeMaxDepth(effectiveDraggedNode);
-      const insideFinalLevel = level + 1;
-      if (insideFinalLevel + draggedNodeMaxDepth - 1 > maxDepth) {
+      // 제약 조건 확인
+      if (node.constraints?.drop === false) {
         return false;
       }
-    }
 
-    // 커스텀 검증 로직이 있다면 실행
-    if (customDropValidator) {
-      return customDropValidator({
-        sourceNode: effectiveDraggedNode,
-        targetNode: node,
-        dropPosition: position,
-        level,
-      });
-    }
+      // 트리 타입에 따른 유효성 검사
+      if (treeType === 'SAME_LEVEL_ONLY') {
+        const draggedLevel = effectiveDraggedNode.level || effectiveDraggedNode.depth || 0;
 
-    return true;
-  }, [effectiveDraggedNode, node, customDropValidator, level, treeType, maxDepth, globalSourceTreeId, treeId]);
+        if (position === 'BEFORE' || position === 'AFTER') {
+          // BEFORE/AFTER는 같은 레벨이어야 함
+          return draggedLevel === level;
+        } else if (position === 'INSIDE') {
+          // INSIDE는 드래그된 노드가 타겟보다 한 레벨 아래여야 함
+          return draggedLevel === level + 1;
+        }
+      }
+
+      if (treeType === 'SAME_PARENT_ONLY') {
+        const sourceParentKey = effectiveDraggedNode.parentKey || effectiveDraggedNode.parentId;
+        const currentNodeParentKey = node.parentKey || node.parentId;
+
+        if (position === 'INSIDE') {
+          return node.key === sourceParentKey;
+        } else if (position === 'BEFORE' || position === 'AFTER') {
+          // BEFORE/AFTER는 같은 부모를 가진 형제 노드들끼리만 가능
+          if (sourceParentKey !== currentNodeParentKey) {
+            return false;
+          }
+          // 추가: 같은 부모 노드 자체로는 BEFORE/AFTER 드롭 불가 (부모는 INSIDE만)
+          if (node.key === sourceParentKey) {
+            return false;
+          }
+        }
+      }
+
+      // MaxDepth 검증
+      if (maxDepth !== undefined && position === 'INSIDE') {
+        const draggedNodeMaxDepth = getNodeMaxDepth(effectiveDraggedNode);
+        const insideFinalLevel = level + 1;
+        if (insideFinalLevel + draggedNodeMaxDepth - 1 > maxDepth) {
+          return false;
+        }
+      }
+
+      // 커스텀 검증 로직이 있다면 실행
+      if (customDropValidator) {
+        return customDropValidator({
+          sourceNode: effectiveDraggedNode,
+          targetNode: node,
+          dropPosition: position,
+          level,
+        });
+      }
+
+      return true;
+    },
+    [
+      effectiveDraggedNode,
+      node,
+      customDropValidator,
+      level,
+      treeType,
+      maxDepth,
+      globalSourceTreeId,
+      treeId,
+    ],
+  );
 
   // 현재 노드가 유효한 드롭 대상인지 확인 (어떤 위치든 하나라도 유효하면 true)
   const isValidDropTarget = useCallback(() => {
     if (!effectiveDraggedNode) return true; // 드래그 중이 아니면 항상 유효
 
     // 하나라도 유효한 위치가 있으면 유효한 드롭 대상
-    return ['BEFORE', 'INSIDE', 'AFTER'].some(pos => 
-      isValidDropTargetForPosition(pos as NodeMovePositionType)
+    return ['BEFORE', 'INSIDE', 'AFTER'].some((pos) =>
+      isValidDropTargetForPosition(pos as NodeMovePositionType),
     );
   }, [effectiveDraggedNode, isValidDropTargetForPosition]);
 
@@ -295,6 +307,70 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
     });
   }, [effectiveDraggedNode, customDropValidator, node, level, globalSourceTreeId, treeId]);
 
+  // SAME_LEVEL_ONLY에서 다른 레벨 노드들의 시각적 처리를 위한 상태
+  const shouldCollapseForSameLevel = useMemo(() => {
+    if (!effectiveDraggedNode || treeType !== 'SAME_LEVEL_ONLY' || globalSourceTreeId !== treeId)
+      return false;
+
+    const draggedLevel = effectiveDraggedNode.level || effectiveDraggedNode.depth || 0;
+
+    // 자기 자신은 제외
+    if (effectiveDraggedNodeKey === node.key) return false;
+
+    // SAME_LEVEL_ONLY에서 가능한 경우들:
+    // 1. BEFORE/AFTER: draggedLevel === level (같은 레벨)
+    // 2. INSIDE: draggedLevel === level + 1 (드래그 노드가 타겟보다 한 레벨 아래)
+
+    const canBefore = draggedLevel === level;
+    const canInside = draggedLevel === level + 1;
+
+    // 어떤 위치로도 이동할 수 없으면 회색 배경 표시
+    return !canBefore && !canInside;
+  }, [effectiveDraggedNode, treeType, level, globalSourceTreeId, treeId, effectiveDraggedNodeKey]);
+
+  // 드래그 시작 시 CustomValidator로 인해 이동할 수 없는 노드 표시
+  const isCustomValidatorGrayedOut = useMemo(() => {
+    if (!effectiveDraggedNode || !customDropValidator || globalSourceTreeId !== treeId)
+      return false;
+
+    // 드래그 중이고 현재 노드가 드래그되는 노드가 아닌 경우
+    if (effectiveDraggedNodeKey === node.key) return false;
+
+    // 하나라도 드롭 위치에서 제한이 있으면 회색 배경 표시
+    const positions: NodeMovePositionType[] = ['BEFORE', 'INSIDE', 'AFTER'];
+
+    return positions.some((position) => {
+      return !customDropValidator({
+        sourceNode: effectiveDraggedNode,
+        targetNode: node,
+        dropPosition: position,
+        level,
+      });
+    });
+  }, [
+    effectiveDraggedNode,
+    customDropValidator,
+    node,
+    level,
+    globalSourceTreeId,
+    treeId,
+    effectiveDraggedNodeKey,
+  ]);
+
+  // 현재 노드가 드래그된 노드의 하위 노드인지 확인 (순환 참조 방지)
+  const isDescendantOfDraggedNode = useMemo(() => {
+    if (!effectiveDraggedNode || globalSourceTreeId !== treeId) return false;
+
+    const isDescendant = (parentNode: TreeNode, childKey: string): boolean => {
+      if (!parentNode.children) return false;
+      return parentNode.children.some(
+        (child) => child.key === childKey || isDescendant(child, childKey),
+      );
+    };
+
+    return isDescendant(effectiveDraggedNode, node.key);
+  }, [effectiveDraggedNode, node.key, globalSourceTreeId, treeId]);
+
   const nodeStyle = useMemo(() => {
     const styles = [];
 
@@ -338,7 +414,7 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
       if (treeType === 'SAME_LEVEL_ONLY') {
         styles.push('opacity-60 bg-gray-100 cursor-not-allowed');
       } else {
-        styles.push('opacity-75 cursor-not-allowed');
+        styles.push('opacity-60 bg-gray-100 cursor-not-allowed');
       }
     }
 
@@ -349,6 +425,16 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
 
     // CustomDropValidator로 인한 드롭 불가 스타일
     if (isCustomValidatorBlocked) {
+      styles.push('opacity-60 bg-gray-100 cursor-not-allowed');
+    }
+
+    // 드래그 시작 시 CustomValidator로 인해 이동할 수 없는 노드 회색 배경
+    if (isCustomValidatorGrayedOut) {
+      styles.push('opacity-60 bg-gray-100 cursor-not-allowed');
+    }
+
+    // SAME_LEVEL_ONLY에서 다른 레벨 노드들 축소 표시
+    if (shouldCollapseForSameLevel) {
       styles.push('opacity-60 bg-gray-100 cursor-not-allowed');
     }
 
@@ -370,6 +456,8 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
     isInvalidDropTarget,
     isMaxDepthExceeded,
     isCustomValidatorBlocked,
+    isCustomValidatorGrayedOut,
+    shouldCollapseForSameLevel,
     hasSearchMatch,
   ]);
 
@@ -564,8 +652,8 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
             return '1px dashed transparent';
           })(),
           cursor: isDropZoneHovered && isValidDrop ? 'copy' : 'default',
-          opacity: (isGlobalDragging || effectiveDraggedNode) ? 1 : 0,
-          transform: isDropZoneHovered && isValidDrop ? 'scaleY(1.1)' : 'scaleY(1)',
+          opacity: isGlobalDragging || effectiveDraggedNode ? 1 : 0,
+          transform: isDropZoneHovered && isValidDrop ? 'scaleY(1.2)' : 'scaleY(1)',
           zIndex: 20,
         }}
         onMouseEnter={() => setIsHovered(true)}
@@ -576,68 +664,76 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
 
   return (
     <div style={{ position: 'relative' }} className={styles.tree_item}>
-      {/* BEFORE 드롭 영역 - 첫 번째 형제 노드에만 표시 */}
-      {isFirstSibling && (isGlobalDragging || effectiveDraggedNode) && (
-        <div
-          ref={setDropBeforeRef}
-          style={{
-            position: 'relative',
-            height: (() => {
-              const isDropZoneHovered =
-                isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE');
-              if (!(isGlobalDragging || effectiveDraggedNode)) return '0px';
-              if (isDropZoneHovered) return '20px'; // 호버 시 더 넓게 (유효성과 관계없이)
-              return '12px'; // 드래그 중 얇게
-            })(),
-            backgroundColor: (() => {
-              const isDropZoneHovered =
-                isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE');
-              const isValidDrop = isValidDropTargetForPosition('BEFORE');
-              if (isDropZoneHovered && isValidDrop) return 'rgba(33, 150, 243, 0.15)';
-              if (isDropZoneHovered && !isValidDrop) return 'rgba(239, 68, 68, 0.15)'; // 연한 빨간색 - 무효한 드롭
-              return 'transparent';
-            })(),
-            marginBottom: '0px',
-            marginLeft: `${level * 28}px`,
-            borderRadius: '4px',
-            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-            border: (() => {
-              const isDropZoneHovered =
-                isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE');
-              const isValidDrop = isValidDropTargetForPosition('BEFORE');
-              if (isDropZoneHovered && isValidDrop) return '2px dashed #2196f3';
-              if (isDropZoneHovered && !isValidDrop) return '2px dashed #ef4444'; // 빨간색 - 무효한 드롭
-              return '1px dashed transparent';
-            })(),
-            cursor:
-              (isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE')) &&
-              isValidDropTargetForPosition('BEFORE')
-                ? 'copy'
-                : 'default',
-            opacity: (isGlobalDragging || effectiveDraggedNode) ? 1 : 0,
-            transform: (() => {
-              const isDropZoneHovered =
-                isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE');
-              const isValidDrop = isValidDropTargetForPosition('BEFORE');
-              return isDropZoneHovered && isValidDrop ? 'scaleY(1.1)' : 'scaleY(1)';
-            })(),
-            zIndex: 20,
-          }}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        ></div>
-      )}
+      {/* BEFORE 드롭 영역 - 모든 노드에 표시 (단, 자기 자신과 하위 노드 제외) */}
+      {(isGlobalDragging || effectiveDraggedNode) &&
+        effectiveDraggedNodeKey !== node.key &&
+        !isDescendantOfDraggedNode &&
+        !shouldCollapseForSameLevel && (
+          <div
+            ref={setDropBeforeRef}
+            style={{
+              position: 'relative',
+              height: (() => {
+                const isDropZoneHovered =
+                  isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE');
+                if (!(isGlobalDragging || effectiveDraggedNode)) return '0px';
+                if (isDropZoneHovered) return '20px'; // 호버 시 더 넓게 (유효성과 관계없이)
+                return isFirstSibling ? '12px' : '8px';
+              })(),
+              backgroundColor: (() => {
+                const isDropZoneHovered =
+                  isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE');
+                const isValidDrop = isValidDropTargetForPosition('BEFORE');
+                if (isDropZoneHovered && isValidDrop) return 'rgba(33, 150, 243, 0.15)';
+                if (isDropZoneHovered && !isValidDrop) return 'rgba(239, 68, 68, 0.15)'; // 연한 빨간색 - 무효한 드롭
+                return 'transparent';
+              })(),
+              marginBottom: '0px',
+              marginLeft: `${level * 28}px`,
+              borderRadius: '4px',
+              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+              border: (() => {
+                const isDropZoneHovered =
+                  isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE');
+                const isValidDrop = isValidDropTargetForPosition('BEFORE');
+                if (isDropZoneHovered && isValidDrop) return '2px dashed #2196f3';
+                if (isDropZoneHovered && !isValidDrop) return '2px dashed #ef4444'; // 빨간색 - 무효한 드롭
+                return '1px dashed transparent';
+              })(),
+              cursor:
+                (isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE')) &&
+                isValidDropTargetForPosition('BEFORE')
+                  ? 'copy'
+                  : 'default',
+              opacity: isGlobalDragging || effectiveDraggedNode ? 1 : 0,
+              transform: (() => {
+                const isDropZoneHovered =
+                  isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE');
+                const isValidDrop = isValidDropTargetForPosition('BEFORE');
+                return isDropZoneHovered && isValidDrop ? 'scaleY(1.2)' : 'scaleY(1)';
+              })(),
+              zIndex: 20,
+            }}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          ></div>
+        )}
 
       {/* 노드 콘텐츠 */}
       <div
         ref={setDragNodeRef}
-        className={cn(nodeStyle, styles.tree_inner)}
+        className={cn(
+          nodeStyle,
+          styles.tree_inner,
+          isDraggable && styles.draggable_hint,
+          isDraggable && styles.enhanced_hover,
+        )}
         style={{
           paddingLeft: `${level * 28}px`,
           display: 'flex',
           alignItems: 'center',
           minHeight: '40px',
-          margin: '2px 0',
+          margin: shouldCollapseForSameLevel ? '0px 0' : '2px 0', // SAME_LEVEL_ONLY에서 다른 레벨은 마진 제거
           opacity: isDragging ? 0.7 : 1,
           cursor: isDraggable ? 'grab' : 'default',
           border: (() => {
@@ -646,7 +742,7 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
             const isValidDrop = isValidDropTargetForPosition('INSIDE');
 
             if (isInsideHover && isValidDrop) {
-              return '2px dashed #2196f3';
+              return '3px dashed #2196f3'; // INSIDE 우선순위 강화 (더 두꺼운 테두리)
             }
             if (isInsideHover && !isValidDrop) {
               return '2px dashed #ef4444'; // 빨간색 - 일반 드롭 불가
@@ -659,7 +755,7 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
             const isValidDrop = isValidDropTargetForPosition('INSIDE');
 
             if (isInsideHover && isValidDrop) {
-              return 'rgba(33, 150, 243, 0.08)';
+              return 'rgba(33, 150, 243, 0.12)'; // INSIDE 우선순위로 더 진한 배경
             }
             if (isInsideHover && !isValidDrop) {
               return 'rgba(239, 68, 68, 0.08)'; // 연한 빨간색 - 일반 드롭 불가
@@ -684,14 +780,10 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
             const isInsideHover =
               isOverInside || (isDraggedFromOtherTree && dropPosition === 'INSIDE');
             const isValidDrop = isValidDropTargetForPosition('INSIDE');
-
             if (isInsideHover && isValidDrop) {
-              return '0 6px 16px rgba(33, 150, 243, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1)';
+              return '0 0 12px rgba(33, 150, 243, 0.6)'; // INSIDE 우선순위 강화
             }
-            if (isInsideHover && !isValidDrop) {
-              return '0 2px 8px rgba(239, 68, 68, 0.2)'; // 빨간색 그림자 - 일반 드롭 불가
-            }
-            return undefined;
+            return 'none';
           })(),
         }}
         onMouseEnter={() => setIsHovered(true)}
@@ -785,9 +877,21 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
         </div>
       </div>
 
-      {/* 자식이 없거나 접혀있는 노드의 AFTER 드롭존 */}
-      {(!hasChildren || !isExpanded) &&
+      {treeType !== 'SAME_LEVEL_ONLY' &&
         (isGlobalDragging || effectiveDraggedNode) &&
+        effectiveDraggedNodeKey !== node.key &&
+        !isDescendantOfDraggedNode &&
+        !shouldCollapseForSameLevel &&
+        renderAfterDropZone()}
+
+      {treeType === 'SAME_LEVEL_ONLY' &&
+        !hasChildren &&
+        !isExpanded &&
+        (isGlobalDragging || effectiveDraggedNode) &&
+        effectiveDraggedNodeKey !== node.key &&
+        !isDescendantOfDraggedNode &&
+        !shouldCollapseForSameLevel &&
+        isValidDropTargetForPosition('AFTER') &&
         renderAfterDropZone()}
 
       {/* 자식 노드들 */}
@@ -826,6 +930,9 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
       {hasChildren &&
         isExpanded &&
         (isGlobalDragging || effectiveDraggedNode) &&
+        effectiveDraggedNodeKey !== node.key &&
+        !isDescendantOfDraggedNode &&
+        !shouldCollapseForSameLevel &&
         isValidDropTargetForPosition('AFTER') &&
         renderAfterDropZone()}
     </div>
