@@ -1,5 +1,5 @@
 .nlp--button {
-  @apply rounded-[6px] !px-[10px] leading-[1.4rem] tracking-normal;
+  @apply !rounded-[6px] !px-[10px] leading-[1.4rem] tracking-normal;
   &.xs {
     @apply h-[2rem] text-[1.2rem];
   }
@@ -19,7 +19,7 @@
     @apply h-[5.2rem] text-[1.6rem];
   }
   &.primary {
-    @apply bg-[var(--blue50)] text-white;
+    @apply !rounded-[8px] bg-[var(--blue50)] text-white;
     &:hover {
       @apply bg-[var(--blue65)];
     }
@@ -59,6 +59,7 @@
     @apply !ml-0;
   }
   &[class*='only_icon'] {
+    @apply !rounded-[6px];
     &.xs {
       @apply !h-[20px] !w-[20px] !min-w-[20px];
     }
