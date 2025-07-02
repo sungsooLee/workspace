@@ -145,8 +145,8 @@ export class FoFileService {
         });
     }
     /**
-     * 파일정보 삭제
-     * 파일 정보를 삭제한다. isDeleletd 값 false 업데이트
+     * 파일삭제
+     * 파일의 상태를 삭제 상태로 변경한다.<br>물리적 파일 삭제는 수행하지 않는다.
      * @param fileUuid 파일 UUID
      * @returns boolean OK
      * @throws ApiError
@@ -170,33 +170,8 @@ export class FoFileService {
         });
     }
     /**
-     * 이미지 파일 URL 정보 조회
-     * 이미지 파일 URL 정보를 조회한다.
-     * @param fileUuid 파일 UUID
-     * @returns string OK
-     * @throws ApiError
-     */
-    public static getImageFileUrl(
-        fileUuid: string,
-    ): CancelablePromise<string> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/user/api/v1/file/{fileUuid}/image/url',
-            path: {
-                'fileUuid': fileUuid,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
      * 파일 다운로드
-     * 파일을 다운로드한다.
+     * 서버 저장소에 있는 파일을 다운로드한다.<br> 필요 시 파일 복호화 처리가 수행된다.
      * @param fileUuid 파일 UUID
      * @returns any OK
      * @throws ApiError
@@ -222,7 +197,7 @@ export class FoFileService {
     }
     /**
      * 템플릿 파일 다운로드
-     * 템플릿 파일을 다운로드한다.
+     * S3에 저장되어 있는 템플릿 파일을 다운로드한다.
      * @param templateFileName 템플릿 파일이름
      * @returns any OK
      * @throws ApiError
@@ -272,7 +247,7 @@ export class FoFileService {
     }
     /**
      * 파일그룹 다운로드
-     * 파일그룹의 모든 파일을 압축로 다운로드한다.
+     * 파일그룹에 속한 모든 파일로 압축 파일을 생성 후 다운로드한다.<br>필요 시 파일 복호화 처리가 수행된다.
      * @param groupUuid 파일그룹 UUID
      * @returns any OK
      * @throws ApiError
@@ -298,7 +273,7 @@ export class FoFileService {
     }
     /**
      * 복수 파일 다운로드
-     * 복수 파일을 다운로드한다.
+     * 서버 저장소에 있는 복수의 파일을 다운로드한다.<br>필요 시 파일 복호화 처리가 수행된다.
      * @param fileUuids 파일 UUID, ","로 여러개의 파일 UUID를 전달받는다
      * @returns any OK
      * @throws ApiError

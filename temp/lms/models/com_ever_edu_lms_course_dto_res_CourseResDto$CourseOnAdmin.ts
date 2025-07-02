@@ -25,6 +25,9 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
     courseContent?: string;
     trainingLevelType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.trainingLevelType;
     learningSpaceType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.learningSpaceType;
+    learningSpaceId?: number;
+    learningSpaceName?: string;
+    learningSpaceNameKeyIn?: string;
     coordinatorId?: number;
     /**
      * 담당자 이름
