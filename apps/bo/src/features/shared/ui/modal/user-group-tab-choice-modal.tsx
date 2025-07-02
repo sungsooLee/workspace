@@ -76,7 +76,7 @@ const UserGroupTabModalComponent = forwardRef(
               {
                 title: '사용자 정의',
                 key: 'CUSTOM',
-                content: <UserGroupCustom />,
+                content: <UserGroupCustom tenantIds={tenantIds} handleSetOption={setOption} />,
               },
             ]}
             type="line"
