@@ -1,3 +1,6 @@
+import { ScormXmlHttpRequest } from './scorm-xml-http-request';
+import { CMSApiPrefix } from '@learnway/config';
+
 /*
  * 기존 소스  Scorm2004Handler.js
  */
@@ -88,6 +91,9 @@ function debug(str: string, ...optionParams: any[]) {
  */
 
 export class ScormAdapter {
+  scormConfig = {};
+  accessToken = '';
+  sxhr: ScormXmlHttpRequest;
   isInitialized = false;
   isTerminated = false;
   lastErrorCode = '0';
@@ -119,6 +125,12 @@ export class ScormAdapter {
   p_edu_end_dt = null;
   p_lctr_num = null;
   p_lib_yn = null;
+
+  constructor(accessToken: string, scormConfig: any) {
+    this.accessToken = accessToken;
+    this.scormConfig = scormConfig;
+    this.sxhr = new ScormXmlHttpRequest(accessToken);
+  }
 
   InitializeAPIEM() {
     debug('Call InitializeAPIEM');
@@ -158,10 +170,10 @@ export class ScormAdapter {
 
     //alert("Initialize \n error : "+ this.GetLastError() );
 
-    var ret = '';
-    var lastErrorCode = '0';
-    var tempScilIn = null;
-
+    let ret = '';
+    let lastErrorCode = '0';
+    let tempScilIn = null;
+    this.sxhr.send('POST', `${CMSApiPrefix}/scorm/rte/initialize`, JSON.stringify({}));
     // $.ajax({
     //   async: false,
     //   type: 'POST',

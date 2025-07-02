@@ -33,6 +33,12 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true,
           secure: false,
         },
+        '/upload': {
+          target:
+            'http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com',
+          changeOrigin: true,
+          secure: false,
+        },
       },
     },
     preview: {
