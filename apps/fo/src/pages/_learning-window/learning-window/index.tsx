@@ -14,10 +14,10 @@ import { BrowserFooter, MobileResponsiveContainerFooter } from '@shared/m.ui';
 
 import styles from '@learnway/styles/fo/pages/_layout/my-page/privacy/withdraw-menbership.module.css';
 
-import { ScormPlayer, ScormPlayerConfigProperties } from '../../features/scorm/ui/scorm-player';
+import { ScormPlayer, ScormPlayerConfigProperties } from '@features/scorm/ui/scorm-player';
 import { useGetContentDetail } from '@entities/content/service/content.hook';
 
-export const Route = createFileRoute('/_learning-window/scorm')({
+export const Route = createFileRoute('/_learning-window/learning-window/')({
   component: RouteComponent,
 });
 
