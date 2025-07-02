@@ -3,6 +3,7 @@ import {
   useLoginUser,
   useReissue,
   useUpdateUser,
+  useUpdateAuthUser,
   useAsycFetchMenus,
 } from '@learnway/auth/entities';
 import { AUTH_ERROR_CODE } from '@learnway/auth/features/auth';
@@ -12,6 +13,7 @@ import { useModal } from '@learnway/ui';
 import { cookieService, MutateCallback } from '@learnway/shared';
 import { usePermissionStore } from '../../../shared/lib/permission-store';
 import { t } from 'i18next';
+import RoleManagerService from '../../../entities/role/api/role-manager';
 
 interface LoginParams {
   username: string;
@@ -25,6 +27,7 @@ export function useAuthSignin() {
   const { reissue } = useReissue();
   const { updateMenu } = useUpdateUser();
   const { asyncMenus } = useAsycFetchMenus();
+  const { update: updateAuthUser } = useUpdateAuthUser();
   // const { alert: openAlert } = useModal();
 
   return {
@@ -35,7 +38,12 @@ export function useAuthSignin() {
       return await login(payload, {
         ...callback,
         onSuccess: async (data, variables, context) => {
+          // 메뉴 조회
           const menus = await asyncMenus(data.activeTenant?.tenantId);
+          // 나의 역할 목록 조회
+          const myRoles = await RoleManagerService.fetchMyRoles('BO');
+          // 역할 정보를 전역 상태에 저장
+          updateAuthUser({ myRoles });
 
           if (payload.saveId) {
             cookieService.set('SAVED_USER_ID', payload.username);
