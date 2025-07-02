@@ -46,12 +46,11 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
   const { stats, files, addFiles, onPause, onRetry, onResume, onRemove, inputAccept } =
     useS3Uploader({
       s3Path: 'upload/content/original',
-      groupConfig: {
-        affairsType: 'CMS',
-        languageCode: 'ko',
-      },
+      affairsType: 'CMS',
+      languageCode: 'ko',
       groupMode: 'individual',
       maxFileCount,
+      maxFileSize: 20 * 1024 * 1024,
       acceptFiles: acceptFiles[type],
     });
   const [errorMessage, setErrorMessage] = useState('');

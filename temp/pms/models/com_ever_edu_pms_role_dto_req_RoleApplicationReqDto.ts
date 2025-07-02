@@ -4,13 +4,13 @@
 /* eslint-disable */
 export type com_ever_edu_pms_role_dto_req_RoleApplicationReqDto = {
     /**
-     * 사용자 UUID
-     */
-    userUuid: string;
-    /**
      * 역할 ID
      */
     roleId: number;
+    /**
+     * 신청자 UUID
+     */
+    applicantUuid: string;
     /**
      * 권한 시작일
      */

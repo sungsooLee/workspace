@@ -154,6 +154,9 @@
           }
           .attached_name {
             @apply input_bo_1_r ellipsis max-w-[calc(100%-60px)] text-[var(--gray8)] underline;
+            &:disabled {
+              @apply !text-[var(--gray5)];
+            }
           }
         }
         .btn_clear {

@@ -31,6 +31,8 @@ const SingleAttachmentComponent = ({
   inputAccept,
   maxFileCount,
   maxFileSize,
+  readOnly,
+  disabled,
 }: AttachmentProps) => {
   const onDrop = useCallback((acceptedFiles: File[]) => {
     addFiles(acceptedFiles);
@@ -75,23 +77,25 @@ const SingleAttachmentComponent = ({
                   onClick={() => fileDownload(get(first(files), 'fileUuid', ''))}
                 />
                 <Button
-                  className={styles.attached_name}
+                  className={cn(styles.attached_name, styles.disabled)}
                   onClick={() => fileDownload(get(first(files), 'fileUuid', ''))}
+                  disabled={disabled}
                 >
                   <span className="flex-1 truncate">{base}</span>
                   {ext && <span className="flex-none">.{ext}</span>}
                 </Button>
               </p>
               <Button
-                className={styles.btn_clear}
+                className={cn(styles.btn_clear, (readOnly || disabled) && 'hidden')}
                 onlyIcon
                 onClick={() => onRemove(get(first(files), 'id', ''))}
+                disabled={readOnly || disabled}
               >
                 <IcoTrash03 width={20} height={20} stroke="#131C30" />
               </Button>
             </div>
           ) : (
-            <div className={styles.attach_area}>
+            <div className={cn(styles.attach_area, (readOnly || disabled) && styles.attached)}>
               <p className={styles.text}>{'버튼을 클릭하여 파일을 추가하세요.'}</p>
             </div>
           )}
@@ -101,13 +105,13 @@ const SingleAttachmentComponent = ({
           size={'sm'}
           variant={'gray'}
           {...getRootProps()}
-          disabled={Boolean(files.length)}
+          disabled={Boolean(files.length) || readOnly || disabled}
         >
           <input
             type="file"
             {...getInputProps()}
             accept={inputAccept}
-            disabled={Boolean(files.length)}
+            disabled={Boolean(files.length) || readOnly || disabled}
           />
           {'파일첨부'}
         </Button>

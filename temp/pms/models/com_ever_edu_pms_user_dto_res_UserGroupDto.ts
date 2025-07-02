@@ -10,6 +10,5 @@ export type com_ever_edu_pms_user_dto_res_UserGroupDto = {
     companyName?: string;
     fullName?: string;
     userCount?: number;
-    userUuids?: Array<string>;
 };
 

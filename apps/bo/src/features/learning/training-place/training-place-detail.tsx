@@ -295,15 +295,14 @@ const formConfig: DynamicFormConfig = {
       name: 'mapFileGroupUuid',
       type: 'single-attachment',
       label: t('약도 파일'),
-      acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
-      value: '',
-      s3Path: 'upload/learning/space',
-      groupConfig: {
-        affairsType: 'LMS',
+      uploadConfig: {
         languageCode: 'ko',
+        affairsType: 'LMS',
+        s3Path: 'upload/content/image',
+        acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
+        maxFileSize: 10 * 1024 * 1024,
       },
-      maxFileCount: 1,
-      maxFileSize: 10 * 1024 * 1024,
+      value: '',
     },
     {
       name: 'notes',

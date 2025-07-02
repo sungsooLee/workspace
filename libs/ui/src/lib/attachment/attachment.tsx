@@ -47,6 +47,8 @@ const AttachmentComponent = ({
   inputAccept,
   maxFileCount,
   maxFileSize,
+  readOnly,
+  disabled,
 }: AttachmentProps) => {
   const isOverMaxFileCount = files.length >= maxFileCount;
 
@@ -171,7 +173,12 @@ const AttachmentComponent = ({
      */
     const renderDeleteButton = (hasDelete = true) =>
       hasDelete && (
-        <Button className={styles.btn_delete} onlyIcon onClick={() => onRemove(file.id)}>
+        <Button
+          className={cn(styles.btn_delete, (readOnly || disabled) && 'invisible')}
+          onlyIcon
+          onClick={() => onRemove(file.id)}
+          disabled={readOnly || disabled}
+        >
           <IcoTrash03 width={20} height={20} stroke="#131C30" />
         </Button>
       );
@@ -194,7 +201,12 @@ const AttachmentComponent = ({
       uploading: (
         <>
           {renderControl(
-            <Button className={styles.btn_status} onlyIcon onClick={() => onPause(file.id)}>
+            <Button
+              className={styles.btn_status}
+              onlyIcon
+              onClick={() => onPause(file.id)}
+              disabled={readOnly || disabled}
+            >
               <IcoPause width={20} height={20} fill="#A9AFB8" />
             </Button>,
           )}
@@ -207,7 +219,12 @@ const AttachmentComponent = ({
       idle: (
         <>
           {renderControl(
-            <Button className={styles.btn_status} onlyIcon onClick={() => onPause(file.id)}>
+            <Button
+              className={styles.btn_status}
+              onlyIcon
+              onClick={() => onPause(file.id)}
+              disabled={readOnly || disabled}
+            >
               <IcoPause width={20} height={20} fill="#A9AFB8" />
             </Button>,
           )}
@@ -267,6 +284,7 @@ const AttachmentComponent = ({
               className={styles.btn_status}
               onlyIcon
               onClick={() => (file.status === 'paused' ? onResume(file.id) : onRetry(file.id))}
+              disabled={readOnly || disabled}
             >
               <IcoRefresh width={20} height={20} fill="#00AFD5" />
             </Button>,
@@ -304,7 +322,13 @@ const AttachmentComponent = ({
               className={styles.info_text}
             >{`최대 ${maxFileCount}개, 최대 파일 사이즈 ${formatBytes(maxFileSize)}`}</span>
           </p>
-          <Button variant="line" size="sm" className={styles.btn_add} onClick={handleOpen}>
+          <Button
+            variant="line"
+            size="sm"
+            className={styles.btn_add}
+            disabled={readOnly || disabled}
+            onClick={handleOpen}
+          >
             {'추가'}
           </Button>
           {Boolean(files.length) && (
@@ -312,7 +336,7 @@ const AttachmentComponent = ({
               variant="line"
               size="sm"
               className={styles.btn_add}
-              disabled={checkedValues.length === 0}
+              disabled={checkedValues.length === 0 || disabled}
               onClick={downloadFile}
             >
               {'저장'}
@@ -322,7 +346,7 @@ const AttachmentComponent = ({
             variant="line"
             size="sm"
             className={styles.btn_delete}
-            disabled={checkedValues.length === 0}
+            disabled={checkedValues.length === 0 || readOnly || disabled}
             onClick={removeFile}
           >
             {'삭제'}
@@ -331,7 +355,7 @@ const AttachmentComponent = ({
       </div>
       <div className={cn(styles.file_wrap)}>
         <div className={cn(styles.attach_area, files.length > 0 && 'hidden')}>
-          <Button className={styles.btn_file} {...getRootProps()}>
+          <Button className={styles.btn_file} {...getRootProps()} disabled={readOnly || disabled}>
             <IcoUploadCloud width="40" height="40" stroke={'#131C30'} />
             <strong className={styles.file_title}>
               {'영역을 클릭하거나 파일을 마우스로 끌어놓으세요'}
@@ -351,6 +375,7 @@ const AttachmentComponent = ({
                 onClick={(e) => e.stopPropagation()}
                 onCheckedChange={(checked: boolean) => handleCheckChange(checked, file.id)}
                 checked={Boolean(checkedValues.find(({ id }) => id === file.id))}
+                disabled={disabled}
               />
               <div className={styles.file_name}>
                 <IcoFileExcel width="24" height="25" className={styles.icon_type} />
