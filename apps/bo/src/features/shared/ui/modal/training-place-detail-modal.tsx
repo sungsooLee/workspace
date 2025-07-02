@@ -14,10 +14,14 @@ const TrainingPlaceDetailModalComponent = ({
   const { close: closeModal } = useModal();
   const formRef = useRef(1);
 
-  const handleSaveClick = () => {
+  const handleOnSave = () => {
     console.log('formRef', formRef);
     const detail: any = formRef.current;
     detail.saveData();
+  };
+
+  const handleOnComplete = (data: any) => {
+    closeModal(data);
   };
 
   const handleOnClose = () => {
@@ -33,11 +37,19 @@ const TrainingPlaceDetailModalComponent = ({
           pageMode={EnPageMode.MODAL}
           mode={mode}
           spaceId={spaceId}
+          onComplete={handleOnComplete}
         />
       </ModalBody>
       <ModalFooter>
-        <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={handleOnClose} />
-        <Button label={t('확인')} variant={'primary'} size={'lg'} onClick={handleSaveClick} />
+        {mode === EnFormMode.ADD && (
+          <>
+            <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={handleOnClose} />
+            <Button label={t('확인')} variant={'primary'} size={'lg'} onClick={handleOnSave} />
+          </>
+        )}
+        {mode === EnFormMode.VIEW && (
+          <Button label={t('확인')} variant={'primary'} size={'lg'} onClick={handleOnClose} />
+        )}
       </ModalFooter>
     </ModalContainer>
   );

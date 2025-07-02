@@ -6,6 +6,7 @@ export interface TextareaFormFieldProps {
   onChange?: (value: any) => void;
   resize?: 'none' | 'both' | 'horizontal' | 'vertical';
   disabled?: boolean;
+  readOnly?: boolean;
   maxLength?: number;
   size?: 'xs' | 'sm' | 'md'; // textarea 높이(basic : md)
 }

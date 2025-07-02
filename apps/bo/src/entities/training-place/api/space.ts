@@ -12,8 +12,16 @@ export default class SpaceService {
     return httpService.post<any>(`${LMSApiPrefix()}/space`, payload);
   }
 
+  static update(payload: any) {
+    return httpService.put<any>(`${LMSApiPrefix()}/space/${payload.learningSpaceId}`, payload);
+  }
+
   static fetch(id: number) {
     return httpService.get<Space>(`${LMSApiPrefix()}/space/${id}`);
+  }
+
+  static dalete(id: number) {
+    return httpService.delete<Space>(`${LMSApiPrefix()}/space/${id}`);
   }
 
   static existsCode(code: string) {

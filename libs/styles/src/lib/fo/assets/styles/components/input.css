@@ -22,11 +22,19 @@
   }
   &[class*='disabled'] {
     @apply !border-[var(--gray75)];
+    [class*='after_area'] {
+      button svg {
+        @apply stroke-[var(--gray75)];
+      }
+    }
   }
   &[class*='read_only'] {
     @apply !border-[var(--gray75)];
   }
   &[class*='focused'] {
-    @apply !border-[var(--blue50)];
+    @apply border-[var(--blue50)];
+  }
+  &[class*='error'] {
+    @apply border-[var(--red50)];
   }
 }

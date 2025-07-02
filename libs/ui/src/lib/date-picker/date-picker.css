@@ -16,7 +16,7 @@
 }
 
 .react-datepicker {
-  @apply border border-solid !border-[var(--gray7)] p-[16px];
+  @apply border border-solid border-[var(--gray7)] p-[16px];
 }
 
 .react-datepicker__day--keyboard-selected,
@@ -56,7 +56,7 @@
 }
 
 .datepicker_input {
-  @apply input_3_r !h-[32px] w-full truncate rounded-[4px] border border-solid !border-[var(--gray4)] text-[var(--gray8)];
+  @apply input_3_r !h-[32px] w-full truncate rounded-[4px] border border-solid border-[var(--gray4)] text-[var(--gray8)];
   &:focus {
     @apply border-[#747D91];
   }
@@ -295,7 +295,10 @@
 }
 
 .nlp--datepicker-time {
-  @apply h-[32px] w-full gap-0;
+  @apply w-full gap-0;
+  .datepicker_input {
+    @apply h-[32px];
+  }
   & > div {
     @apply flex-1;
     & + div {
@@ -303,7 +306,9 @@
     }
   }
   &.lg {
-    @apply h-[40px];
+    .datepicker_input {
+      @apply h-[40px];
+    }
   }
 }
 

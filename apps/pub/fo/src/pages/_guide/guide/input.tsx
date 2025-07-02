@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Input } from '@learnway/ui';
+import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
+import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic.form.module.css';
 
 export const Route = createFileRoute('/_guide/guide/input')({
   component: RouteComponent,
@@ -32,10 +34,12 @@ import { Input } from '@learnway/ui';
       </div>
 
       <div className="group">
-        <h3 className="guide_tit3">Size(40px)</h3>
+        <h3 className="guide_tit3">Size(44px)</h3>
         <div className="flex_box">
           <div className="desc w-full">
-            <Input id="name" type="text" placeholder="입력하세요." value="" size="lg" />
+            <div className={formStyles.input_box}>
+              <Input id="name" type="text" placeholder="입력하세요." value="" size="lg" />
+            </div>
           </div>
         </div>
       </div>

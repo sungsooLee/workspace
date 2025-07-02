@@ -1,20 +1,16 @@
-import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { duration, DATE_TIME_FORMAT } from '@learnway/shared';
 import { useModal } from '@learnway/ui';
-import { useLoginTimer } from '../service/authorization.hook';
+import { useLoginTimerDisplay } from '../service/authorization.hook';
 
 // const TIME_LIMIT_VERIFY = 300; // 5분
 
 function SessionTimeoutConfirmComponent() {
   const { close } = useModal();
   const { t } = useTranslation();
+  const { time } = useLoginTimerDisplay();
   // const [seconds, setSeconds] = useState(TIME_LIMIT_VERIFY);
-
-  // const timerText = duration(seconds, DATE_TIME_FORMAT.MIN_SEC);
-
-  const { time } = useLoginTimer();
+  // const time = duration(seconds, DATE_TIME_FORMAT.MIN_SEC);
 
   // useEffect(() => {
   //   const interval = setInterval(() => {
