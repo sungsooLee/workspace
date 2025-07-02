@@ -6,16 +6,22 @@ import { cn } from '@learnway/shared';
 
 import styles from './avatar.module.css';
 
+type AvatarSizeType = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
+
 interface AvatarComponentProps extends React.ComponentProps<typeof Primitive.Root> {
   imageUrl?: string;
   fallback?: ReactNode;
   className?: string;
+  size?: AvatarSizeType;
 }
 
 const AvatarComponent = forwardRef<React.ElementRef<typeof Primitive.Avatar>, AvatarComponentProps>(
-  ({ imageUrl, className, fallback }, ref) => {
+  ({ imageUrl, className, fallback, size = 'md' }, ref) => {
     return (
-      <Primitive.Root className={cn('nlp--avatar', className, styles.start)}>
+      <Primitive.Root
+        ref={ref}
+        className={cn('nlp--avatar', className, styles.start, styles[`size--${size}`])}
+      >
         <Primitive.Image className={styles.image} src={imageUrl} />
         <Primitive.Fallback className={styles.fallback} delayMs={600}>
           {fallback}
