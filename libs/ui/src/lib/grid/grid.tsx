@@ -45,6 +45,8 @@ const GridComponent = forwardRef(
       showExpandColumn,
       flattenSubRows,
       isRowSelectable,
+      enableColumnResize = false,
+      getRowClassName,
     }: GridProps<T>,
     ref: React.Ref<GridImperative>,
   ) => {
@@ -96,6 +98,7 @@ const GridComponent = forwardRef(
       onTableInstanceChange, // table 인스턴스 전달 콜백
       showExpandColumn,
       isRowSelectable,
+      enableColumnResize,
     });
 
     // 부모 컴포넌트에서 grid 특정 기능 수행시 필요
@@ -149,14 +152,23 @@ const GridComponent = forwardRef(
       [visibleRowCount, rowHeight, table, data?.length],
     );
 
-    const tableStyle = useMemo(
-      () =>
-        ({
+    const tableStyle = useMemo(() => {
+      if (enableColumnResize) {
+        const totalSize = table.getCenterTotalSize();
+        return {
+          //리사이즈 일때 스타일
+          width: totalSize,
+          tableLayout: 'auto',
+          minWidth: '100%',
+        } as CSSProperties;
+      } else {
+        return {
+          // 리사이즈가 아닐때 스타일
           width: '100%',
           tableLayout: 'fixed',
-        }) as CSSProperties,
-      [],
-    );
+        } as CSSProperties;
+      }
+    }, [table, enableColumnResize]);
 
     // console.log('grid.tsx', { data });
 
@@ -175,6 +187,7 @@ const GridComponent = forwardRef(
               disabledSelectionToggle={disabledSelectionToggle}
               onRowDoubleClick={onRowDoubleClick}
               isRowSelectable={isRowSelectable}
+              getRowClassName={getRowClassName}
             />
           )}
           {isLoading && <GridLoading<T> table={table} />}

@@ -28,7 +28,7 @@ import {
   TableBox,
 } from '@learnway/ui';
 import { IcoArrowDown, IcoArrowUp, IcoDownload, IcoSetting } from '@learnway/icons';
-import { getRandomId, getRowSelectionByList } from '@learnway/shared';
+import { cn, getRandomId, getRowSelectionByList } from '@learnway/shared';
 import { PaginationResponse } from '../../../../bo/src/types';
 
 export default {
@@ -159,6 +159,7 @@ const columns = [
     meta: {
       filterType: 'text',
       align: 'left', // 기본 정렬 - 헤더와 셀 모두 적용
+      // size: 'auto',
     },
     enableGrouping: false,
   }),
@@ -180,19 +181,19 @@ const columns = [
     enableGrouping: false,
   }),
 
-  columnHelper.accessor('visits', {
-    cell: (info) => info.getValue(),
-    header: 'Visits',
-    footer: (props) => {
-      const total = props.table
-        .getRowModel()
-        .rows.reduce((sum, row) => sum + row.getValue<number>('visits'), 0);
-      return `Total: ${total}`;
-    },
-    meta: {
-      filterType: 'range',
-    },
-  }),
+  // columnHelper.accessor('visits', {
+  //   cell: (info) => info.getValue(),
+  //   header: 'Visits',
+  //   footer: (props) => {
+  //     const total = props.table
+  //       .getRowModel()
+  //       .rows.reduce((sum, row) => sum + row.getValue<number>('visits'), 0);
+  //     return `Total: ${total}`;
+  //   },
+  //   meta: {
+  //     filterType: 'range',
+  //   },
+  // }),
   columnHelper.accessor('visits', {
     cell: (info) => info.getValue(),
     header: 'Visits',
@@ -268,6 +269,13 @@ const BaseTable = () => {
   return (
     <div className="p-4">
       <GridBox
+        enableColumnResize={true}
+        getRowClassName={(row) => {
+          const person = row as Person;
+          console.log(person);
+          if (person.age >= 30) return 'bg-blue-100';
+          return '';
+        }}
         data={data?.data ?? []}
         columns={columns}
         onStateChange={handleStateChange}
@@ -824,19 +832,19 @@ export const TemplateColumnAlign: any = (args: any) => {
       meta: { headerAlign: 'left' },
       columns: [
         {
-          accessorKey: 'name',
+          accessorKey: 'name1',
           header: 'Cell left',
           size: 100,
           meta: { headerAlign: 'left', cellAlign: 'left' },
         },
         {
-          accessorKey: 'name',
+          accessorKey: 'name2',
           header: 'Cell center',
           size: 100,
           meta: { headerAlign: 'center', cellAlign: 'center' },
         },
         {
-          accessorKey: 'name',
+          accessorKey: 'name3',
           header: 'Cell right',
           size: 100,
           meta: { headerAlign: 'right', cellAlign: 'right' },
@@ -844,25 +852,25 @@ export const TemplateColumnAlign: any = (args: any) => {
       ],
     },
     {
-      accessorKey: 'name',
+      accessorKey: 'name4',
       header: 'Header center',
       size: 100,
       meta: { headerAlign: 'center' },
       columns: [
         {
-          accessorKey: 'name',
+          accessorKey: 'name5',
           header: 'Cell left',
           size: 100,
           meta: { headerAlign: 'left', cellAlign: 'left' },
         },
         {
-          accessorKey: 'name',
+          accessorKey: 'name6',
           header: 'Cell center',
           size: 100,
           meta: { headerAlign: 'center', cellAlign: 'center' },
         },
         {
-          accessorKey: 'name',
+          accessorKey: 'name7',
           header: 'Cell right',
           size: 100,
           meta: { headerAlign: 'right', cellAlign: 'right' },
@@ -870,25 +878,25 @@ export const TemplateColumnAlign: any = (args: any) => {
       ],
     },
     {
-      accessorKey: 'name',
+      accessorKey: 'name8',
       header: 'Header right',
       size: 100,
       meta: { headerAlign: 'right' },
       columns: [
         {
-          accessorKey: 'name',
+          accessorKey: 'name9',
           header: 'Cell left',
           size: 100,
           meta: { headerAlign: 'left', cellAlign: 'left' },
         },
         {
-          accessorKey: 'name',
+          accessorKey: 'name10',
           header: 'Cell center',
           size: 100,
           meta: { headerAlign: 'center', cellAlign: 'center' },
         },
         {
-          accessorKey: 'name',
+          accessorKey: 'name11',
           header: 'Cell right',
           size: 100,
           meta: { headerAlign: 'right', cellAlign: 'right' },
