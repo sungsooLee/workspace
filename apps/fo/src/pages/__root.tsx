@@ -5,7 +5,7 @@ import { ModalWrapper, useModalStore } from '@learnway/ui';
 import { useGlobalRouterEvent } from '@learnway/hooks';
 import { PageRouteContext } from '@learnway/shared';
 import { useRenewalMenuStateFromRouting } from '@learnway/auth/entities';
-import { useSessionTimout } from '@learnway/auth/features';
+// import { useSessionTimout } from '@learnway/auth/features';
 import { NotFound } from '@features/layout';
 
 const TanStackRouterDevtools = lazy(() =>
@@ -29,7 +29,7 @@ function RootComponent() {
   const { closeAll } = useModalStore();
 
   useRenewalMenuStateFromRouting();
-  useSessionTimout();
+  // useSessionTimout();
 
   // router event subscribe
   useGlobalRouterEvent({

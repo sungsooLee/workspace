@@ -1,17 +1,16 @@
-// import { useTokenStore } from './../../../../../../config/src/lib/store/token-store';
-import { useQuery, useMutation, useQueryClient, MutateOptions } from '@tanstack/react-query';
-import { useRouter } from '@tanstack/react-router';
-
-import { DATE_TIME_FORMAT, duration, type MutateCallback } from '@learnway/shared';
-
-import type { AuthUser } from '../../../types';
-import { queryKeys, queryOptions, mutateOptions } from './authorization.queries';
 import { createElement, useEffect, useRef, useState } from 'react';
+import { useRouter } from '@tanstack/react-router';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
-import { useModal } from '@learnway/ui';
 import { useTranslation } from 'react-i18next';
-import { SessionTimeoutConfirm } from '../ui/sessionTimeoutConfirm';
+
+import { type MutateCallback } from '@learnway/shared';
+import { useModal } from '@learnway/ui';
+
+import { SessionTimeoutConfirm } from '../../../features';
+import type { AuthUser } from '../../../types';
 import { useExpStore } from '../store/use-exp-store';
+import { mutateOptions, queryKeys, queryOptions } from './authorization.queries';
 
 export const authUserQueryKeys = queryKeys;
 
@@ -144,20 +143,6 @@ export function useLoginTimer() {
 
     const update = () => {
       const remainingSeconds = getRemainingTime(exp);
-      const hours = Math.floor(remainingSeconds / 3600)
-        .toString()
-        .padStart(2, '0');
-      const minutes = Math.floor((remainingSeconds % 3600) / 60)
-        .toString()
-        .padStart(2, '0');
-      const seconds = (remainingSeconds % 60).toString().padStart(2, '0');
-
-      // setRemainingTime(`${hours}:${minutes}:${seconds}`);
-
-      // remainingSeconds 음수 방지
-      if (remainingSeconds >= 0) {
-        // setRemainingTime(`${minutes}:${seconds}`);
-      }
 
       if (remainingSeconds <= REISSUE_TIME && remainingSeconds > 0 && !showAlert) {
         setShowAlert(true);
