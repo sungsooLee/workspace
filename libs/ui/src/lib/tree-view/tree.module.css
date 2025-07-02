@@ -250,3 +250,176 @@ body.tree-dragging .tree div:not(.tree-node-dragging):hover {
     background-color: transparent;
   }
 }
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes bounceX {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateX(0);
+  }
+  40% {
+    transform: translateX(-3px);
+  }
+  60% {
+    transform: translateX(-1px);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* 드래그 시작 시 가이드 힌트 */
+.drag-guide-hint {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(33, 150, 243, 0.9);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 1000;
+  animation: fadeInUp 0.3s ease;
+  pointer-events: none;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* 드롭존 우선순위 표시 강화 */
+.drop-zone-priority-high {
+  box-shadow: 0 0 12px rgba(33, 150, 243, 0.6);
+  border-width: 3px !important;
+  z-index: 15 !important;
+}
+
+.drop-zone-priority-medium {
+  box-shadow: 0 0 8px rgba(33, 150, 243, 0.4);
+  z-index: 10 !important;
+}
+
+/* 레벨 기반 드롭존 개선 */
+.drop-zone-level-0 {
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
+  border-width: 2.5px !important;
+}
+
+.drop-zone-level-1 {
+  box-shadow: 0 1px 6px rgba(33, 150, 243, 0.2);
+}
+
+.drop-zone-level-2-plus {
+  box-shadow: 0 1px 4px rgba(33, 150, 243, 0.15);
+}
+
+/* 개선된 호버 애니메이션 */
+.enhanced-hover {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.enhanced-hover:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 드래그 가능한 노드 힌트 */
+.draggable-hint {
+  position: relative;
+}
+
+.draggable-hint::before {
+  content: '';
+  position: absolute;
+  left: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2px;
+  height: 20px;
+  background: linear-gradient(to bottom, transparent, #2196f3, transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+body.dragging-active .draggable-hint::before {
+  opacity: 0.6;
+}
+
+/* 드롭 성공시 개선된 애니메이션 */
+.enhanced-success-drop {
+  animation: enhancedSuccessDrop 0.6s ease;
+}
+
+@keyframes enhancedSuccessDrop {
+  0% {
+    background-color: rgba(76, 175, 80, 0.1);
+    transform: scale(1);
+  }
+  25% {
+    background-color: rgba(76, 175, 80, 0.3);
+    transform: scale(1.02);
+  }
+  50% {
+    background-color: rgba(76, 175, 80, 0.2);
+    transform: scale(1.01);
+  }
+  100% {
+    background-color: transparent;
+    transform: scale(1);
+  }
+}
+
+body.dragging-active {
+  user-select: none;
+  cursor: grabbing !important;
+}
+
+body.dragging-active * {
+  pointer-events: none;
+}
+
+body.dragging-active [data-dnd-context] {
+  pointer-events: auto;
+}
+
+.drop-zone-active {
+  position: relative;
+}
+
+.drop-zone-active::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, transparent, rgba(33, 150, 243, 0.1), transparent);
+  border-radius: 6px;
+  animation: slideIn 0.2s ease;
+}

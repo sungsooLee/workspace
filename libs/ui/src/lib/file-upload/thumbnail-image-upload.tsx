@@ -6,13 +6,13 @@ import { Button } from '../button/button';
 import { Input } from '../input/input';
 import styles from './thumbnail-image-upload.module.css';
 import { IcoUploadCloud } from '@learnway/icons';
-import { S3UploaderConfig, useFileManager, useS3Uploader } from '@learnway/hooks';
+import { formatFileSize, S3UploaderConfig, useFileManager, useS3Uploader } from '@learnway/hooks';
 
 export interface ThumbnailImageUploadProps {
   /**
    * 썸네일 이미지 업로드 타입 (이미지 경로 올릴지 결정되는 값)
    */
-  imageStorageType?: 'public' | 'S3';
+  imageStorageType?: 'public' | 'db-manage';
   /**
    * 썸네일 이미지 옵션 배열 (초기값 또는 부모로부터 제어되는 값)
    */
@@ -92,10 +92,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
       files: thumbnailFiles,
       stats: { status },
       inputAccept = 'image/*',
-    } = useS3Uploader({
-      ...uploadConfig,
-      s3Path: 'public/thumbnail',
-    });
+    } = useS3Uploader({ ...uploadConfig, s3Path: 'upload/content/image', affairsType: 'LMS' });
 
     const { uploadImageFile, deleteImageFile } = useFileManager();
     const disabled = useMemo(
@@ -116,7 +113,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
     const handleFilesChange = () => {
       const files = fileInputRef.current?.files;
       if (files && files.length) {
-        if (imageStorageType === 'S3') {
+        if (imageStorageType === 'db-manage') {
           thumbnailAddFiles(Array.from(files));
         } else if (imageStorageType === 'public') {
           const thumbnailFiles = Array.from(files);
@@ -140,7 +137,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
             id: thumbnailImageInfo.filePath,
             path: thumbnailImageInfo.imageUrl,
             size: thumbnailImageInfo.fileSize,
-            displaySize: '40',
+            displaySize: formatFileSize(thumbnailImageInfo.fileSize),
             fileName: thumbnailImageInfo.originalFileName,
             uploadType: thumbnailImageInfo.reposType,
           };

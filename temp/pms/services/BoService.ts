@@ -89,8 +89,6 @@ import type { com_ever_edu_pms_user_dto_req_ExtendPasswordChangeDateReqDto } fro
 import type { com_ever_edu_pms_user_dto_req_IssueNewPasswordReqDto } from '../models/com_ever_edu_pms_user_dto_req_IssueNewPasswordReqDto';
 import type { com_ever_edu_pms_user_dto_req_SendVerifyEmailReqDto } from '../models/com_ever_edu_pms_user_dto_req_SendVerifyEmailReqDto';
 import type { com_ever_edu_pms_user_dto_req_SendVerifyPhoneNumberReqDto } from '../models/com_ever_edu_pms_user_dto_req_SendVerifyPhoneNumberReqDto';
-import type { com_ever_edu_pms_user_dto_req_UserGroupSearchReqDto$SearchByAdmin } from '../models/com_ever_edu_pms_user_dto_req_UserGroupSearchReqDto$SearchByAdmin';
-import type { com_ever_edu_pms_user_dto_req_UserGroupUuidReqDto$SearchByAdmin } from '../models/com_ever_edu_pms_user_dto_req_UserGroupUuidReqDto$SearchByAdmin';
 import type { com_ever_edu_pms_user_dto_req_UserRegisterReqDto } from '../models/com_ever_edu_pms_user_dto_req_UserRegisterReqDto';
 import type { com_ever_edu_pms_user_dto_req_UserSaveReqDto$SaveByAdminDto } from '../models/com_ever_edu_pms_user_dto_req_UserSaveReqDto$SaveByAdminDto';
 import type { com_ever_edu_pms_user_dto_req_UserUpdateReqDto$UpdateByAdminDto } from '../models/com_ever_edu_pms_user_dto_req_UserUpdateReqDto$UpdateByAdminDto';
@@ -1585,44 +1583,6 @@ export class BoService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/admin/api/v1/users/confirm-password',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 유저그룹 대상자 조회 팝업
-     * 유저그룹 대상자 조회 팝업
-     * @param params
-     * @param requestBody
-     * @param page Zero-based page index (0..N)
-     * @param size The size of the page to be returned
-     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_UserGroupTargetDto OK
-     * @throws ApiError
-     */
-    public static findByUuids(
-        params: com_ever_edu_pms_user_dto_req_UserGroupSearchReqDto$SearchByAdmin,
-        requestBody: com_ever_edu_pms_user_dto_req_UserGroupUuidReqDto$SearchByAdmin,
-        page?: number,
-        size: number = 10,
-        sort?: Array<string>,
-    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_UserGroupTargetDto> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/admin/api/v1/userGroup/users/by-uuids',
-            query: {
-                'page': page,
-                'size': size,
-                'sort': sort,
-                'params': params,
-            },
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -3316,44 +3276,16 @@ export class BoService {
         });
     }
     /**
-     * 회사 상세 - 유저그룹 조직 트리 조회
-     * 회사 상세 - 유저그룹 조직 트리 조회
-     * @param companyId
-     * @param companyName
-     * @returns com_ever_edu_pms_user_dto_res_UserGroupTreeDto OK
-     * @throws ApiError
-     */
-    public static getCompanyTree(
-        companyId: number,
-        companyName?: string,
-    ): CancelablePromise<com_ever_edu_pms_user_dto_res_UserGroupTreeDto> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/userGroup/{companyId}/organization-tree',
-            path: {
-                'companyId': companyId,
-            },
-            query: {
-                'companyName': companyName,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
      * 유저그룹검색 팝업 조회 - 직군/직무/호칭/보직
      * 유저그룹검색 팝업 조회 - 직군/직무/호칭/보직
+     * @param tenantIds
      * @param userGroupType
      * @param userGroupName
      * @returns com_ever_edu_pms_user_dto_res_UserGroupDto OK
      * @throws ApiError
      */
     public static getUserGroups(
+        tenantIds: Array<number>,
         userGroupType?: 'ORGANIZATION' | 'JOB_GROUP' | 'JOB' | 'JOB_TITLE' | 'JOB_POSITION' | 'CUSTOM_GROUP',
         userGroupName?: string,
     ): CancelablePromise<Array<com_ever_edu_pms_user_dto_res_UserGroupDto>> {
@@ -3363,6 +3295,62 @@ export class BoService {
             query: {
                 'userGroupType': userGroupType,
                 'userGroupName': userGroupName,
+                'tenantIds': tenantIds,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 유저그룹 유저 조회 -하위조직 대상자 포함 조회 - 조직/직군/직무/호칭/보직
+     * 유저그룹의 하위 그룹의 대상자 포함하여 조회한다.<br>* 조직(ORGANIZATION)/직군(JOB_GROUP)/직무(JOB)/호칭(JOB_TITLE)/보직(JOB_POSITION)/사용자정의(CUSTOM_GROUP) 등 사용 - enum:UserGroupType
+     * @param page Zero-based page index (0..N)
+     * @param size The size of the page to be returned
+     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param userGroupType 유저그룹유형 (enum : UserGroupType)
+     * @param companyId 회사Id
+     * @param companyCode 코드
+     * @param deptName 소속명(부서계층 중 최종부서)
+     * @param userGroupIds
+     * @param employeeNumber 사원번호
+     * @param userName 이름
+     * @param accountStatus 계정상태 (enum:AccountStatus)
+     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_UserGroupTargetDto OK
+     * @throws ApiError
+     */
+    public static findBySubdirectoryUserList(
+        page?: number,
+        size: number = 10,
+        sort?: Array<string>,
+        userGroupType?: string,
+        companyId?: string,
+        companyCode?: string,
+        deptName?: string,
+        userGroupIds?: Array<number>,
+        employeeNumber?: string,
+        userName?: string,
+        accountStatus?: string,
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_UserGroupTargetDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/userGroup/subdirectory/users',
+            query: {
+                'page': page,
+                'size': size,
+                'sort': sort,
+                'userGroupType': userGroupType,
+                'companyId': companyId,
+                'companyCode': companyCode,
+                'deptName': deptName,
+                'userGroupIds': userGroupIds,
+                'employeeNumber': employeeNumber,
+                'userName': userName,
+                'accountStatus': accountStatus,
             },
             errors: {
                 400: `Bad Request`,
@@ -3376,11 +3364,13 @@ export class BoService {
     /**
      * 유저그룹검색 팝업 조회 - 조직
      * 유저그룹검색 팝업 조회 - 조직
+     * @param tenantIds
      * @param tenantName
      * @returns com_ever_edu_pms_user_dto_res_UserGroupTreeDto OK
      * @throws ApiError
      */
     public static getOrganizationTree(
+        tenantIds: Array<number>,
         tenantName?: string,
     ): CancelablePromise<Array<com_ever_edu_pms_user_dto_res_UserGroupTreeDto>> {
         return __request(OpenAPI, {
@@ -3388,6 +3378,60 @@ export class BoService {
             url: '/admin/api/v1/userGroup/organization-tree',
             query: {
                 'tenantName': tenantName,
+                'tenantIds': tenantIds,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 회사별 유저그룹검색 팝업 조회 - 직군/직무/호칭/보직
+     * 회사별 유저그룹검색 팝업 조회 - 직군/직무/호칭/보직
+     * @param userGroupType
+     * @param companyId
+     * @returns com_ever_edu_pms_user_dto_res_UserGroupDto OK
+     * @throws ApiError
+     */
+    public static getCompanyUserGroups(
+        userGroupType: 'ORGANIZATION' | 'JOB_GROUP' | 'JOB' | 'JOB_TITLE' | 'JOB_POSITION' | 'CUSTOM_GROUP',
+        companyId: number,
+    ): CancelablePromise<Array<com_ever_edu_pms_user_dto_res_UserGroupDto>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/userGroup/company/user-groups',
+            query: {
+                'userGroupType': userGroupType,
+                'companyId': companyId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 회사별 - 유저그룹 조직 트리 조회
+     * 회사별 - 유저그룹 조직 트리 조회
+     * @param companyId
+     * @returns com_ever_edu_pms_user_dto_res_UserGroupTreeDto OK
+     * @throws ApiError
+     */
+    public static getCompanyTree(
+        companyId: number,
+    ): CancelablePromise<com_ever_edu_pms_user_dto_res_UserGroupTreeDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/userGroup/company/organization-tree',
+            query: {
+                'companyId': companyId,
             },
             errors: {
                 400: `Bad Request`,
@@ -4549,7 +4593,7 @@ export class BoService {
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyDeptUserResDto OK
      * @throws ApiError
      */
-    public static getDeportmentUserList(
+    public static getDeportmentUserList1(
         companyCode: string,
         page?: number,
         size: number = 10,

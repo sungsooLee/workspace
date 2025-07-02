@@ -15,6 +15,7 @@ export const CODE_GROUP = {
   'cms.video.VideoProcessingStatusCode': 'cms.video.VideoProcessingStatusCode',
   'cms.video.VideoProgressStatus': 'cms.video.VideoProgressStatus',
   'cms.video.VideoUrlSupportType': 'cms.video.VideoUrlSupportType',
+  'cms.video.PlayBackRate': 'cms.video.PlayBackRate',
   'lms.badge.BadgeCompletionType': 'lms.badge.BadgeCompletionType',
   'lms.badge.BadgeComponentType': 'lms.badge.BadgeComponentType',
   'lms.badge.BadgeType': 'lms.badge.BadgeType',
@@ -29,6 +30,7 @@ export const CODE_GROUP = {
   'lms.course.CourseSubType': 'lms.course.CourseSubType',
   'lms.course.CourseType': 'lms.course.CourseType',
   'lms.course.DeviceRestrictType': 'lms.course.DeviceRestrictType',
+  'lms.course.InstructorAssignType': 'lms.course.InstructorAssignType',
   'lms.course.LangLevelTestScopeType': 'lms.course.LangLevelTestScopeType',
   'lms.course.LearningRestrictAreaType': 'lms.course.LearningRestrictAreaType',
   'lms.course.LearningRestrictTimeType': 'lms.course.LearningRestrictTimeType',
@@ -40,6 +42,8 @@ export const CODE_GROUP = {
   'lms.course.WaitListAssignType': 'lms.course.WaitListAssignType',
   'lms.course.WaitListEnrollMethodType': 'lms.course.WaitListEnrollMethodType',
   'lms.course.WizardStep': 'lms.course.WizardStep',
+  'lms.course.RecognizedStudyMinType': 'lms.course.RecognizedStudyMinType',
+  'lms.course.CommunityType': 'lms.course.CommunityType',
   'lms.enroll.EnrollButtonState': 'lms.enroll.EnrollButtonState',
   'lms.enroll.EnrollCriteriaType': 'lms.enroll.EnrollCriteriaType',
   'lms.enroll.EnrollQueueStatusType': 'lms.enroll.EnrollQueueStatusType',
@@ -55,7 +59,7 @@ export const CODE_GROUP = {
   'pms.approval.ApprovalProgressStatus': 'pms.approval.ApprovalProgressStatus',
   'pms.approval.ApprovalRequestStatus': 'pms.approval.ApprovalRequestStatus',
   'pms.approval.ApproverType': 'pms.approval.ApproverType',
-  'pms.channel.ChannelApprovalStatus': 'pms.channel.ChannelApprovalStatus',
+  'pms.channel.ChannelApprovalStatusType': 'pms.channel.ChannelApprovalStatusType',
   'pms.channel.ChannelSecretType': 'pms.channel.ChannelSecretType',
   'pms.company.ApplicationProcess': 'pms.company.ApplicationProcess',
   'pms.company.ApprovalMatrix': 'pms.company.ApprovalMatrix',
@@ -116,7 +120,7 @@ export const CODE_GROUP = {
   'manual.company.companyCode': 'manual.company.companyCode',
   'manual.tenant.tenantId': 'manual.tenant.tenantId', // 전체 테넌트
   'manual.bo.my.tenant.tenantId': 'manual.bo.my.tenant.tenantId', // 나의 테넌트
-  'manual.bo.my.role.roidId': 'manual.bo.my.role.roidId', // 나의 역할
+  'manual.bo.my.role.roleId': 'manual.bo.my.role.roleId', // 나의 역할
   'manual.code.expired': 'manual.code.expired', // 만료여부 정상,만료
 };
 export type CODE_GROUP_TYPE = (typeof CODE_GROUP)[keyof typeof CODE_GROUP];

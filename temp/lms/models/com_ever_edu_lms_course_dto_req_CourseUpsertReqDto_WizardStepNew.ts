@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_WizardStepNew } from './com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_WizardStepNew';
 export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew = {
     /**
      * 과정타입 (lms.course.CourseType)
@@ -26,7 +27,7 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew = {
     /**
      * 학습대상-유저그룹(화이트 그룹리스트)
      */
-    whiteListIds?: Array<number>;
+    whiteList?: Array<com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_WizardStepNew>;
     /**
      * 언어 설정
      */
@@ -56,9 +57,13 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew = {
      */
     learningSpaceId?: number;
     /**
-     * 교육 장소 직접입력
+     * 교육 장소(선택입력)
      */
     learningSpaceName?: string;
+    /**
+     * 교육 장소 직접입력
+     */
+    learningSpaceNameKeyIn?: string;
     /**
      * 담당자 ID
      */

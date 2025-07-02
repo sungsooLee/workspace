@@ -1,5 +1,6 @@
 import { GridBoxState, GridProps } from './grid';
 import React from 'react';
+import { Table } from '@tanstack/react-table';
 import { GridBoxSearchInputCondition } from '../grid-box/grid-box-search-input';
 import { PaginationResponse } from '../../type';
 
@@ -294,6 +295,46 @@ export interface GridBoxProps<T extends object = object>
 
   clientSideSorting?: boolean;
   clientSideFiltering?: boolean;
+
+  /**
+   * 특정 행의 선택 가능 여부를 결정하는 함수
+   * @param row - 행 데이터
+   * @returns 선택 가능하면 true, 불가능하면 false
+   */
+  isRowSelectable?: (row: T) => boolean;
+}
+
+/**
+ * GridBox에서 사용하는 사용자 정의 컬럼 타입 정의
+ */
+export interface GridBoxColumn<T = unknown> {
+  /** 컬럼의 고유 식별자 또는 데이터 접근 키 */
+  name: string;
+  /** 컬럼 헤더에 표시될 제목 */
+  label: string;
+  /** 컬럼 타입 (numbering, data 등) */
+  type?: string;
+  /** 컬럼 너비 */
+  size?: number;
+  /** 정렬 활성화 여부 */
+  enableSorting?: boolean;
+  /** 검색 가능 여부 */
+  searchable?: boolean;
+  /** 컬럼 메타 정보 */
+  meta?: {
+    filterType?: 'text' | 'range' | 'select';
+    filterOptions?: { label: string; value: string }[];
+    cellAlign?: 'left' | 'center' | 'right';
+    [key: string]: unknown;
+  };
+  /** 셀 렌더링 함수 */
+  render?: (info: {
+    getValue: () => unknown;
+    row: { original: T };
+    cell: unknown;
+    column: unknown;
+    table: Table<T>;
+  }) => React.ReactNode;
 }
 
 export interface GridBoxPagination {

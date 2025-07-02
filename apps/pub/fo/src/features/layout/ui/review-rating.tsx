@@ -14,7 +14,7 @@ const ReviewRatingComponent = ({ className }: ReviewRatingProps) => {
       <ul>
         <li>
           <div className={styles.box}>
-            <p>직무 역량 향상에 도움이 돼요</p>
+            <strong>5점</strong>
             <div>
               <ProgressBar progress={89} />
               <span className={styles.blue}>89%</span>
@@ -23,28 +23,37 @@ const ReviewRatingComponent = ({ className }: ReviewRatingProps) => {
         </li>
         <li>
           <div className={styles.box}>
-            <p>실무에 적용하기 유용해요</p>
+            <strong>4점</strong>
             <div>
-              <ProgressBar progress={76} />
-              <span>76%</span>
+              <ProgressBar progress={40} />
+              <span>40%</span>
             </div>
           </div>
         </li>
         <li>
           <div className={styles.box}>
-            <p>직무 역량 향상에 도움이 돼요</p>
+            <strong>3점</strong>
             <div>
-              <ProgressBar progress={18} />
-              <span>18%</span>
+              <ProgressBar progress={30} />
+              <span>30%</span>
             </div>
           </div>
         </li>
         <li>
           <div className={styles.box}>
-            <p>직무 역량 향상에 도움이 돼요</p>
+            <strong>2점</strong>
             <div>
-              <ProgressBar progress={3} />
-              <span>3%</span>
+              <ProgressBar progress={10} />
+              <span>10%</span>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div className={styles.box}>
+            <strong>1점</strong>
+            <div>
+              <ProgressBar progress={0} />
+              <span>0%</span>
             </div>
           </div>
         </li>

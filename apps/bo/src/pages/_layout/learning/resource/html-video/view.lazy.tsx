@@ -198,7 +198,7 @@ function RouteComponent() {
     },
   };
 
-  const { provider, onSubmit, control, getValues, fetchData } = useDynamicForm(formConfig);
+  const { provider, onSubmit, control, getValues, updateFormData } = useDynamicForm(formConfig);
   const handleOnSubmit = () => {
     //
   };

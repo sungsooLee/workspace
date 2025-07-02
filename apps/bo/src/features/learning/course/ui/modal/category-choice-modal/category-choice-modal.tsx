@@ -10,10 +10,12 @@ import {
 } from '@learnway/ui';
 import { useTranslation } from 'react-i18next';
 import styles from './category-choice-modal.module.css';
+import { useFetchTenantCategoryTreePopup } from '@entities/tenant';
+import { transformApiDataToApiTreeData } from '@features/platform/menu';
 
 export interface CategoryChoiceModalProps {
-  dummy?: boolean;
-  channelId?: string; // parameter test
+  /** 테넌트 아이디 배열 */
+  tenantIds: Array<number>;
 }
 
 /**
@@ -24,17 +26,14 @@ export interface CategoryChoiceModalProps {
  * @constructor
  */
 const CategoryChoiceModalComponent = forwardRef<HTMLDivElement, CategoryChoiceModalProps>(
-  ({ channelId, ...props }, ref) => {
+  ({ tenantIds, ...props }, ref) => {
     const { t } = useTranslation();
     const { close: closeModal } = useModal();
-    const { data: gridData }: any = getMockData();
+    const { data: treeData } = useFetchTenantCategoryTreePopup(tenantIds, {select: (response: any) => transformApiDataToApiTreeData(response)});
     const [selectedRows, setSelectedRows] = useState();
     const [selectedItems, setSelectedItems] = useState<any[]>([]);
-    const columns = [{ header: t('강사명'), accessorKey: 'name' }];
 
-    const handleRowsSelect = (rows: any) => {
-      setSelectedRows(rows);
-    };
+    console.log('Category ChoiceModalComponent', {tenantIds, treeData});
 
     const handleItemsChange = (items: any[]) => {
       setSelectedItems(items);
@@ -42,16 +41,16 @@ const CategoryChoiceModalComponent = forwardRef<HTMLDivElement, CategoryChoiceMo
 
     return (
       <ModalContainer>
-        <ModalTitle>{t('카테고리 조회')}</ModalTitle>
+        <ModalTitle>{t('카테고리 선택')}</ModalTitle>
         <ModalBody>
           <div className={styles.wrap}>
             <ShuttleTreeToChips
               title="source"
               displayKey="title"
-              targetTitle="카테고리 목록"
-              sourceTitle="카테고리 선택"
+              targetTitle="공통 카테고리 선택"
+              sourceTitle="선택 카테고리 목록"
               treeId="category-tree"
-              sourceData={[]}
+              sourceData={treeData}
               // selectedItems={selectedItems}
               initLevel={1}
               onItemsChange={handleItemsChange}

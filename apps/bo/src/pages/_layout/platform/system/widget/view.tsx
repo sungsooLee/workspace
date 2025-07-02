@@ -37,7 +37,7 @@ function RouteComponent() {
   const router = useRouter();
   const { widgetCode, processType, getWidget } = useWidgets();
 
-  const { provider, control, onSubmit, fetchData, getValues, onFormChange, setFormError } =
+  const { provider, control, onSubmit, updateFormData, getValues, onFormChange, setFormError } =
     useDynamicForm(formConfig);
 
   const data = useWatch({
@@ -55,7 +55,7 @@ function RouteComponent() {
       ...widget,
       devices: [],
     };
-    fetchData(values);
+    updateFormData(values);
   };
 
   /**

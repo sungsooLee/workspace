@@ -1,6 +1,7 @@
 import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
 import { Role } from '../../../types/entities/role';
+import { PaginationResponse, RoleApplication } from '@types';
 
 /**
  * PMS > 역할관리 API 모음
@@ -156,7 +157,7 @@ export default class RoleManagerService {
    * 나의 역할 신청 목록 조회
    * @returns
    */
-  static fetchMyRoleApplications(payload: any) {
+  static fetchMyRoleApplications(payload: any): Promise<PaginationResponse<RoleApplication>> {
     return httpService.get<any>(`${PMSApiPrefix()}/role-applications/me`, payload);
   }
 
@@ -165,7 +166,7 @@ export default class RoleManagerService {
    * @roleApplicationId 신청 아이디
    * @returns
    */
-  static fetchMyRoleApplication(roleApplicationId: number) {
+  static fetchMyRoleApplication(roleApplicationId: number): Promise<RoleApplication> {
     return httpService.get<any>(`${PMSApiPrefix()}/role-applications/${roleApplicationId}`);
   }
 
@@ -200,7 +201,9 @@ export default class RoleManagerService {
    * @returns
    */
   static fetchRoleApplicationHistories(id: number) {
-    return httpService.get<any>(`${PMSApiPrefix()}/role-applications/histories`);
+    return httpService.get<any>(`${PMSApiPrefix()}/role-applications/histories`, {
+      roleApplicationId: id,
+    });
   }
 }
 

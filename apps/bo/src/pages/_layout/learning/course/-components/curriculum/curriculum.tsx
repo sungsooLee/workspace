@@ -15,8 +15,8 @@ interface curriculumProps {
 const CurriculumComponent = forwardRef<TabFormRef, curriculumProps>(
   ({ dummy, initialData }, ref) => {
     const { t } = useTranslation();
-    // const { provider, getValues, fetchData } = dynamicForm;
-    const { provider, getValues, onSubmit, onFormValid, formState, fetchData } =
+    // const { provider, getValues, updateFormData } = dynamicForm;
+    const { provider, getValues, onSubmit, onFormValid, formState, updateFormData } =
       useDynamicForm(formConfig);
 
     const handleOnSubmit = (data: any) => {
@@ -43,7 +43,7 @@ const CurriculumComponent = forwardRef<TabFormRef, curriculumProps>(
       console.log('curriculumComponent init');
       // 초기 데이터가 있으면 설정
       if (initialData) {
-        fetchData(initialData);
+        updateFormData(initialData);
       }
     }, [initialData]);
 

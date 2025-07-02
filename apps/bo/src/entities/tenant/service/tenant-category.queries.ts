@@ -3,6 +3,8 @@ import TenantCategoryService from '@entities/tenant/api/tenant-category';
 export const queryKeys = {
   all: (tenantId: number) => ['tenant-category', tenantId] as const,
   detail: (tenantId: number, id: number) => ['tenant-category', tenantId, id] as const,
+  getTenantCategoryTreePopup: (tenantIds: Array<number>) =>
+    ['tenant-category-tree-popup', tenantIds] as const,
 };
 
 export const queryOptions = {
@@ -26,6 +28,12 @@ export const queryOptions = {
       return data;
     },
     enabled: !!tenantId && !!id,
+  }),
+  // [BO] 과정 생성 카테고리 팝업
+  fetchTenantCategoryTreePopup: (tenantIds: Array<number>) => ({
+    queryKey: queryKeys.getTenantCategoryTreePopup(tenantIds),
+    queryFn: async () => TenantCategoryService.fetchTenantCategoryTreePopup(tenantIds),
+    enabled: !!tenantIds?.length,
   }),
 };
 

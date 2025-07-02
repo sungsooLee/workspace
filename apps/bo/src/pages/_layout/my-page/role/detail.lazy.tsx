@@ -29,10 +29,16 @@ import { SearchBox } from '@shared/ui/search-box';
 import { ChipListFormField, ContentsHistoryInfoFormField, FormRow, FormSubTitle } from '@shared/ui';
 import { cn, DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-import { EnChannelScope, EnCompanyScope, EnDeptScope, EnTenantScope } from '@types';
+import {
+  EnChannelScope,
+  EnCompanyScope,
+  EnDeptScope,
+  EnTenantScope,
+  RoleApplication,
+} from '@types';
 import { FormDisplay } from '@features/form/ui/form-display';
 import { formUtils } from '@entities/form-utils';
-import { createColumnHelper } from '@tanstack/react-table';
+import { CellContext, createColumnHelper } from '@tanstack/react-table';
 import { useFetchRole } from '@entities/role/service/role-manage.hook';
 import { MyRoleExtendModal } from '@features/user/my-page/ui/my-role-extend-modal';
 import { roleManagerQueryOptions } from '@entities/role/service/role-manage.queries';
@@ -55,7 +61,7 @@ function RouteComponent() {
     onFormValid,
   } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
-  const { provider, fetchData, onSubmit, onFormChange, clearFormError, control } =
+  const { provider, updateFormData, onSubmit, onFormChange, clearFormError, control } =
     useDynamicForm(formConfig);
 
   const { data: roleData } = useFetchRole(state?.roleId);
@@ -412,6 +418,9 @@ const createGridColumns = (onCellClick: (data: any) => void) => [
     meta: {
       sortKey: 'roleEntity.name',
     },
+    cell: (info: CellContext<RoleApplication, any>) => {
+      return `${info.row.original.role.name}`;
+    },
   }),
   columnHelper.accessor('startDate', {
     header: t('역할 시작일'),
@@ -459,18 +468,23 @@ const createGridColumns = (onCellClick: (data: any) => void) => [
       return `${formatDate(info.row.original.createdDate, DATE_TIME_FORMAT.DATETIME_MIN)}`;
     },
   }),
-  columnHelper.accessor('lastModifiedBy', {
+  columnHelper.accessor('approver', {
     header: t('결재자'),
     size: 104,
+    cell: (info: CellContext<RoleApplication, any>) => {
+      return info.row.original.approver ? `${info.row.original.approver.name}` : '';
+    },
   }),
-  columnHelper.accessor('modifiedDate', {
+  columnHelper.accessor('approvedDate', {
     header: t('결재일'),
     size: 206,
     meta: {
       cellAlign: 'center',
     },
-    cell: (info) => {
-      return `${formatDate(info.row.original.modifiedDate, DATE_TIME_FORMAT.DATETIME_MIN)}`;
+    cell: (info: CellContext<RoleApplication, any>) => {
+      return info.row.original.approvedDate
+        ? `${formatDate(info.row.original.approvedDate, DATE_TIME_FORMAT.DATETIME_MIN)}`
+        : '';
     },
   }),
 ];

@@ -18,7 +18,7 @@ export class BoAzxService {
      * @returns com_ever_edu_lms_azx_dto_res_AzxAdminResDto OK
      * @throws ApiError
      */
-    public static findById1(
+    public static findById2(
         azxId: number,
     ): CancelablePromise<com_ever_edu_lms_azx_dto_res_AzxAdminResDto> {
         return __request(OpenAPI, {
@@ -44,7 +44,7 @@ export class BoAzxService {
      * @returns number OK
      * @throws ApiError
      */
-    public static update3(
+    public static update4(
         azxId: number,
         requestBody: com_ever_edu_lms_azx_dto_req_AzxUpdateDto,
     ): CancelablePromise<number> {
@@ -72,7 +72,7 @@ export class BoAzxService {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete4(
+    public static delete5(
         azxId: number,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {

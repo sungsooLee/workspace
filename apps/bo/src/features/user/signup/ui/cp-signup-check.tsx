@@ -18,8 +18,15 @@ export const CPSignupCheck = () => {
 
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const { provider, fetchData, onSubmit, onFormChange, getValues, clearFormError, setFormError } =
-    useDynamicForm(formConfig);
+  const {
+    provider,
+    updateFormData,
+    onSubmit,
+    onFormChange,
+    getValues,
+    clearFormError,
+    setFormError,
+  } = useDynamicForm(formConfig);
   const { setBusinessCode, setCpPage, reset } = useSignupStore((state) => state);
 
   const handleOnSubmit = (data: any) => {

@@ -230,20 +230,23 @@ export function useGridTable<T extends object>(
         />
       </div>
     ),
-    cell: ({ row }: { row: Row<T> }) => (
-      <div style={{ width: '100%', textAlign: 'center', paddingRight: 0 }}>
-        <Checkbox
-          checked={row.getIsSelected()}
-          disabled={row.getIsGrouped()}
-          onCheckedChange={(checked) => {
-            if (!row.getIsGrouped()) {
-              row.toggleSelected(!!checked);
-              // row.getToggleSelectedHandler();
-            }
-          }}
-        />
-      </div>
-    ),
+    cell: ({ row }: { row: Row<T> }) => {
+      const canSelect = props.isRowSelectable ? props.isRowSelectable(row.original) : true;
+      return (
+        <div style={{ width: '100%', textAlign: 'center', paddingRight: 0 }}>
+          <Checkbox
+            checked={row.getIsSelected()}
+            disabled={row.getIsGrouped() || !canSelect}
+            onCheckedChange={(checked) => {
+              if (!row.getIsGrouped() && canSelect) {
+                row.toggleSelected(!!checked);
+                // row.getToggleSelectedHandler();
+              }
+            }}
+          />
+        </div>
+      );
+    },
   });
 
   const tableColumns = useMemo(() => {
@@ -353,7 +356,9 @@ export function useGridTable<T extends object>(
     getCoreRowModel: getCoreRowModel(),
     getGroupedRowModel: getGroupedRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
-    enableRowSelection: true,
+    enableRowSelection: props.isRowSelectable
+      ? (row: Row<T>) => props.isRowSelectable!(row.original)
+      : true,
     enableSubRowSelection: false,
     onRowSelectionChange: multiple
       ? handleRowSelectionChangeForMultiple

@@ -1,4 +1,4 @@
-import { Role } from '@types';
+import { Role, RoleApplicationParam } from '@types';
 import RoleManagerService from '../api/role-manager';
 import TenantMenuManageService from '@entities/menu/api/menu-tenant-manage';
 import MenuMangerService from '@entities/menu/api/menu-manage';
@@ -153,15 +153,6 @@ export const roleApplicationQueryOptions = {
 type roleParam = {
   roleId: string;
   body: any;
-};
-
-type RoleApplicationParam = {
-  userUuid: string;
-  roleId: number;
-  startDate: string;
-  endDate: string;
-  reason: string;
-  status: string;
 };
 
 export const roleMutateOptions = {

@@ -154,10 +154,19 @@
           }
           .attached_name {
             @apply input_bo_1_r ellipsis max-w-[calc(100%-60px)] text-[var(--gray8)] underline;
+            &:disabled {
+              @apply !text-[var(--gray5)];
+            }
           }
         }
         .btn_clear {
           @apply absolute right-[8px] top-1/2 w-[20px] shrink-0 -translate-y-1/2;
+        }
+        &.attached {
+          @apply border-[var(--gray1)] bg-[var(--gray1)];
+          .text {
+            @apply text-[var(--gray8)];
+          }
         }
       }
     }

@@ -41,7 +41,7 @@ import { FormRow, SwitchFormField } from '../../../../shared/ui';
 
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import { MenuDetail } from '../../../../types/entities/menu';
+import { ApiMappingMenuDetail, MenuDetail } from '../../../../types/entities/menu';
 import { useWatch } from 'react-hook-form';
 import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
 import { isEqual } from 'lodash';
@@ -99,7 +99,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
     return DuplicateState.ok;
   };
 
-  const { provider, fetchData, onSubmit, onFormChange, clearFormError, control, getValues } =
+  const { provider, updateFormData, onSubmit, onFormChange, clearFormError, control, getValues } =
     useDynamicForm(formConfig);
   const typeWatch = useWatch({ control, name: 'deviceNames' });
   const prevTypeWatchRef = useRef<string[]>([]);
@@ -130,16 +130,18 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
 
   const initialFromValuesRef = useRef<any>(null);
 
-  const handleOnSubmit = (node: any) => {
+  const handleOnSubmit = (node: Record<string, any>) => {
     const apiMappingKeys = [] as number[];
-    node.apiMappingMenuList.forEach((i: any) => apiMappingKeys.push(i.apiId));
+    node.apiMappingMenuList.forEach(
+      (i: ApiMappingMenuDetail) => i.apiId && apiMappingKeys.push(i.apiId),
+    );
     if (formMode === FORM_MODE.VIEW) {
       const updateData = {
         ...node,
-        menuCode: node.code.fieldValue,
+        menuCode: node.code && node.code.fieldValue,
         menuId: selectedNode?.menuId,
-        isWebExposed: node.deviceNames.includes(DEVICE_NAME.PC),
-        isMobileExposed: node.deviceNames.includes(DEVICE_NAME.Mobile),
+        isWebExposed: node.deviceNames && node.deviceNames.includes(DEVICE_NAME.PC),
+        isMobileExposed: node.deviceNames && node.deviceNames.includes(DEVICE_NAME.Mobile),
         apiMappingMenuList: apiMappingKeys,
         sortOrder: node.sortOrder,
         menuScope: menuScope,
@@ -149,10 +151,10 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
       //
       const createData = {
         ...node,
-        menuCode: node.code.fieldValue,
+        menuCode: node.code && node.code.fieldValue,
         parentId: parentNode?.menuId,
-        isWebExposed: node.deviceNames.includes(DEVICE_NAME.PC),
-        isMobileExposed: node.deviceNames.includes(DEVICE_NAME.Mobile),
+        isWebExposed: node.deviceNames && node.deviceNames.includes(DEVICE_NAME.PC),
+        isMobileExposed: node.deviceNames && node.deviceNames.includes(DEVICE_NAME.Mobile),
         apiMappingMenuList: apiMappingKeys,
         sortOrder:
           parentNode?.children && parentNode.children.length > 0
@@ -170,11 +172,11 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
       const { parentId } = data;
 
       if (parentId !== null) {
-        if (typeWatch.length === 0) {
+        if (typeWatch.length === 0 && prevTypeWatchRef.current.length > 0) {
           openAlert({
             content: t('LABEL.form.validation.selectAtLeastCount', { count: 1 }),
           });
-          fetchData({ ...getValues(), deviceNames: prevTypeWatchRef.current });
+          updateFormData({ ...getValues(), deviceNames: prevTypeWatchRef.current });
         } else {
           prevTypeWatchRef.current = typeWatch;
         }
@@ -217,18 +219,17 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
     if (detailData && treeData) {
       if (formMode === FORM_MODE.VIEW) {
         const data = detailData as MenuDetail;
-        const location = selectedNode && findMenuPathById(treeData, selectedNode.menuId);
         const deviceNames = [];
         if (data.isWebExposed) deviceNames.push(DEVICE_NAME.PC);
         if (data.isMobileExposed) deviceNames.push(DEVICE_NAME.Mobile);
         const formData = {
           ...data,
-          location: location,
+          location: detailData.fullPath,
           parentCode: data.parentName,
           code: { fieldValue: data.menuCode, checkState: DuplicateState.okStart },
           deviceNames: deviceNames,
         };
-        fetchData({ ...formData });
+        updateFormData({ ...formData });
         initialFromValuesRef.current = { ...formData };
         prevTypeWatchRef.current = deviceNames;
         setFormMode(FORM_MODE.VIEW);
@@ -285,7 +286,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
       deviceNames: ['PC'],
     };
 
-    fetchData(addFormData);
+    updateFormData(addFormData);
 
     // 등록 모드에서 초기값 설정 (변경사항 감지를 위해)
     initialFromValuesRef.current = { ...addFormData };
@@ -327,7 +328,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
               const updatedApiList = currentApiList.filter(
                 (item: any) => item.apiId !== rowData.apiId,
               );
-              fetchData({ ...getValues(), apiMappingMenuList: updatedApiList });
+              updateFormData({ ...getValues(), apiMappingMenuList: updatedApiList });
             }}
             variant="gray2"
             size={'xs'}
@@ -355,7 +356,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
       content: <MenuApiMappingModal menuScopeCode={menuScope} selectedApiKeys={keyArray} />,
       width: 'xl',
     });
-    fetchData({ ...getValues(), apiMappingMenuList: [...selectApis] });
+    updateFormData({ ...getValues(), apiMappingMenuList: [...selectApis] });
   };
 
   const update = (payload: any) => {
@@ -512,9 +513,9 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
     if (isReset) {
       onFormChange();
       if (FORM_MODE.ADD === formMode) {
-        fetchData({ apiMappingMenuList: [] });
+        updateFormData({ apiMappingMenuList: [] });
       } else if (FORM_MODE.VIEW === formMode) {
-        if (initialFromValuesRef.current) fetchData({ ...initialFromValuesRef.current });
+        if (initialFromValuesRef.current) updateFormData({ ...initialFromValuesRef.current });
       }
     }
   };
@@ -537,7 +538,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
               formConfig.builders.forEach((item) => {
                 initData[item.name] = item.value;
               });
-              fetchData({ ...initData });
+              updateFormData({ ...initData });
               setFormMode(FORM_MODE.NONE);
             },
           });

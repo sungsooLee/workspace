@@ -59,7 +59,7 @@ function RouteComponent() {
   const { open } = useModal();
   const { open: openModal } = useModal();
   const [organizations, setOrganizations] = useState<any>([]);
-  const { provider, onSubmit, control, getValues, fetchData } = useDynamicForm(formConfig);
+  const { provider, onSubmit, control, getValues, updateFormData } = useDynamicForm(formConfig);
 
   const handleLabelUpdate = async () => {
     const langPath = jsonToPaths(langCodes.LABEL);
@@ -94,7 +94,7 @@ function RouteComponent() {
 
   const handleAddressSearchResult = (address: any) => {
     console.log('address', address);
-    fetchData({ zipNo: address.zipNo, address: address.roadAddr });
+    updateFormData({ zipNo: address.zipNo, address: address.roadAddr });
   };
 
   const downloadByUrl = (url: string) => {
@@ -226,6 +226,9 @@ function RouteComponent() {
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider} name="attachment" />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider} name="singleAttachment" />
           </ContentsRow>
         </MainContents>
         <SubContents>
@@ -459,7 +462,7 @@ function RouteComponent() {
                 e.stopPropagation();
                 openModal({
                   width: 'xl',
-                  content: <UserGroupTabsChoiceModal initialTab="JOB_GROUP" />,
+                  content: <UserGroupTabsChoiceModal tenantIds={[1]} initialTab="JOB_GROUP" />,
                 });
               }}
             >
@@ -578,11 +581,7 @@ function RouteComponent() {
                   e.stopPropagation();
                   openModal({
                     width: 'xl',
-                    content: (
-                      <TrainingPlaceChoiceModal
-                        onAddClick={() => handleTrainingPlaceDetail(EnFormMode.ADD)}
-                      />
-                    ),
+                    content: <TrainingPlaceChoiceModal />,
                     onClose(data: any) {
                       console.log('교육공간 선택 결과', data);
                     },
@@ -667,7 +666,23 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'attachment',
       type: 'attachment',
-      label: '',
+      uploadConfig: {
+        languageCode: 'ko',
+        affairsType: 'PMS',
+        s3Path: 'upload/temp/attachment',
+      },
+      value: [],
+    },
+    {
+      name: 'singleAttachment',
+      type: 'single-attachment',
+      label: '약도 이미지 첨부',
+      uploadConfig: {
+        languageCode: 'ko',
+        affairsType: 'LMS',
+        s3Path: 'upload/content/image',
+        acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
+      },
       value: '',
     },
   ],

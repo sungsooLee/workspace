@@ -1,23 +1,15 @@
-import React, {
-  CSSProperties,
-  forwardRef,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-  useState,
-  useEffect,
-} from 'react';
 import { cn } from '@learnway/shared';
+import React, { CSSProperties, forwardRef, useImperativeHandle, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { GridProps } from './types/grid';
+import { GridEmptyMessageProps, GridImperative, GridLoadingProps, GridProps } from './types/grid';
 
 import styles from './grid.module.css';
 
 // 새로 분리된 훅 import
-import { useGridTable } from './use-grid-table';
-import { GridHeader } from './grid-header';
 import { GridBody } from './grid-body';
+import { GridHeader } from './grid-header';
+import { useGridTable } from './use-grid-table';
 
 const GridComponent = forwardRef(
   <T extends object>(
@@ -52,8 +44,9 @@ const GridComponent = forwardRef(
       onTableInstanceChange,
       showExpandColumn,
       flattenSubRows,
+      isRowSelectable,
     }: GridProps<T>,
-    ref: any,
+    ref: React.Ref<GridImperative>,
   ) => {
     const tableContainerRef = useRef<HTMLDivElement>(null);
 
@@ -102,6 +95,7 @@ const GridComponent = forwardRef(
       showNumberingColumn, // props로 전달
       onTableInstanceChange, // table 인스턴스 전달 콜백
       showExpandColumn,
+      isRowSelectable,
     });
 
     // 부모 컴포넌트에서 grid 특정 기능 수행시 필요
@@ -112,7 +106,9 @@ const GridComponent = forwardRef(
       selectRowById: (idField: string, idValue: string) => {
         const row = table
           .getRowModel()
-          .rows.find(({ original }: any) => original?.[idField] === idValue);
+          .rows.find(
+            ({ original }) => (original as Record<string, unknown>)?.[idField] === idValue,
+          );
         if (row) {
           table.setRowSelection({ [row.id]: true }); // table 인스턴스 사용
           return true;
@@ -122,7 +118,9 @@ const GridComponent = forwardRef(
       toggleRowById: (idField: string, idValue: string) => {
         const selectedRow = table
           .getSelectedRowModel()
-          .rows.find(({ original }: any) => original?.[idField] === idValue);
+          .rows.find(
+            ({ original }) => (original as Record<string, unknown>)?.[idField] === idValue,
+          );
         selectedRow?.toggleSelected();
       },
       toggleAllRowsSelected: (selected: boolean) => {
@@ -177,9 +175,10 @@ const GridComponent = forwardRef(
               lastPinnedColumnId={lastPinnedColumnId}
               disabledSelectionToggle={disabledSelectionToggle}
               onRowDoubleClick={onRowDoubleClick}
+              isRowSelectable={isRowSelectable}
             />
           )}
-          {isLoading && <GridLoading table={table} />}
+          {isLoading && <GridLoading<T> table={table} />}
         </table>
         {!data?.length && <GridEmptyMessage emptyMessage={emptyMessage} />}
       </div>
@@ -189,7 +188,7 @@ const GridComponent = forwardRef(
 
 export const Grid = GridComponent;
 
-const GridEmptyMessage = ({ emptyMessage }: any) => {
+const GridEmptyMessage = ({ emptyMessage }: GridEmptyMessageProps) => {
   const { t } = useTranslation();
   return (
     <div className={styles.empty_message_container}>
@@ -200,7 +199,7 @@ const GridEmptyMessage = ({ emptyMessage }: any) => {
   );
 };
 
-const GridLoading = ({ table }: any) => {
+const GridLoading = <T,>({ table }: GridLoadingProps<T>) => {
   return (
     <tbody>
       <tr>

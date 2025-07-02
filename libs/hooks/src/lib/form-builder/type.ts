@@ -247,8 +247,8 @@ export type DynamicFormProvider = {
 export type UseDynamicFormResult = {
   /** 동적 폼 프로바이더 객체 */
   provider: DynamicFormProvider;
-  /** 서버에서 받은 데이터를 기반으로 값 업데이트 */
-  fetchData: (data?: Record<string, any>) => void;
+  /** 폼 데이터 업데이트 함수 (updateFormData 대체 예정)*/
+  updateFormData: (data?: Record<string, any>) => void;
   /** 제출 이벤트 핸들러 */
   onSubmit: (onValid: (data: Record<string, any>) => void) => FormEventHandler<HTMLFormElement>;
   /** 필드에 에러 메시지 설정 */
@@ -532,7 +532,7 @@ export type UseSearchBoxReturn = {
    * @param data - 서버에서 받아온 값 객체
    * - key는 필드 이름, value는 해당 필드의 값
    */
-  fetchData: (data: Record<string, any>) => void;
+  updateFormData: (data: Record<string, any>) => void;
 
   /**
    * 특정 필드에 에러 메시지 설정 함수

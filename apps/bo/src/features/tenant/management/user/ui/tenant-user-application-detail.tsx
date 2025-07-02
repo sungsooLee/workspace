@@ -60,7 +60,7 @@ const TenantUserApplicationDetailComponent = (props: any, ref: any) => {
 
   const companyCodes = routerState.location.state?.companyCodes;
 
-  const { provider, fetchData, onSubmit, onFormChange, getValues, control } =
+  const { provider, updateFormData, onSubmit, onFormChange, getValues, control } =
     useDynamicForm(formConfig);
 
   useImperativeHandle(ref, () => ({

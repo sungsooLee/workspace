@@ -30,6 +30,10 @@ export type com_ever_edu_pms_file_dto_res_FileInfoDetailResDto = {
      */
     filePath?: string;
     /**
+     * S3|HMG 파일 Url
+     */
+    fileUrl?: string;
+    /**
      * 파일유형. 코드그룹(pms.file.FileType) - IMAGE|VIDEO|DOC|TXT|WEB|ZIP|ETC
      */
     fileType?: com_ever_edu_pms_file_dto_res_FileInfoDetailResDto.fileType;
