@@ -112,16 +112,6 @@ function RouteComponent() {
     });
   };
 
-  const handleTrainingPlaceDetail = (mode: EnFormMode) => {
-    openModal({
-      width: 'xl',
-      content: <TrainingPlaceDetailModal mode={mode} spaceId={5} />,
-      onClose(data: any) {
-        console.log('교육공간 등록 결과', data);
-      },
-    });
-  };
-
   return (
     <form onSubmit={onSubmit(handleOnSubmit)}>
       <PageContainer>
@@ -565,7 +555,12 @@ function RouteComponent() {
                 className="btn_table flex-1"
                 variant={'gray2'}
                 stopPropagation
-                onClick={(e) => handleTrainingPlaceDetail(EnFormMode.VIEW)}
+                onClick={(e) => {
+                  openModal({
+                    width: 'xl',
+                    content: <TrainingPlaceDetailModal mode={EnFormMode.VIEW} spaceId={10} />,
+                  });
+                }}
               >
                 {'교육공간 조회 팝업'}
               </Button>
@@ -577,8 +572,8 @@ function RouteComponent() {
                 size={'xs'}
                 className="btn_table flex-1"
                 variant={'gray2'}
+                stopPropagation
                 onClick={(e) => {
-                  e.stopPropagation();
                   openModal({
                     width: 'xl',
                     content: <TrainingPlaceChoiceModal />,
@@ -598,7 +593,15 @@ function RouteComponent() {
                 className="btn_table flex-1"
                 variant={'gray2'}
                 stopPropagation
-                onClick={(e) => handleTrainingPlaceDetail(EnFormMode.ADD)}
+                onClick={(e) => {
+                  openModal({
+                    width: 'xl',
+                    content: <TrainingPlaceDetailModal mode={EnFormMode.ADD} />,
+                    onClose(data: any) {
+                      console.log('교육공간 등록 결과', data);
+                    },
+                  });
+                }}
               >
                 {'교육공간 등록 팝업'}
               </Button>

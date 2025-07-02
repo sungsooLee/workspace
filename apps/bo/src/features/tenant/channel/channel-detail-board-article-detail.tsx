@@ -1,38 +1,16 @@
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import {
-  ContentsRow,
-  ChipListModalSelectorFormField,
-  Input,
-  Button,
-  DndFileProgress,
-} from '@learnway/ui';
+import { ContentsRow, ChipListModalSelectorFormField, Input } from '@learnway/ui';
 import { FormRow, FormSubTitle } from '@shared/ui';
-import {
-  DynamicFormConfig,
-  useDynamicForm,
-  useS3Uploader,
-  useSearchBox,
-  SearchBoxConfig,
-} from '@learnway/hooks';
+import { DynamicFormConfig, useDynamicForm, useSearchBox, SearchBoxConfig } from '@learnway/hooks';
 import { FormDisplay } from '@features/form/ui/form-display';
 import { formUtils } from '@entities/form-utils';
 import { t } from 'i18next';
-import { IcoPaperClip } from '@learnway/icons';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
 const ChannelDetailBoardArticleDetailComponent = () => {
-  const maxFileCount = 5;
-  const maxFileSize = 1024 * 1024 * 50;
-
   const { provider, updateFormData, onSubmit, setFormError, clearFormError, getValues } =
     useDynamicForm(formConfig);
-
-  const { stats, files, addFiles, onPause, onRetry, onResume, onRemove } = useS3Uploader({
-    s3Path: 'upload/learning/resource/video',
-    maxFileCount,
-  });
 
   return (
     <>
@@ -79,56 +57,9 @@ const ChannelDetailBoardArticleDetailComponent = () => {
       <ContentsRow>
         <FormRow provider={provider} name={'content'} />
       </ContentsRow>
-
-      <ContentsRow type={'horizontal'}>
-        {/* form_item */}
-        <div className={formStyles.form_item}>
-          <label htmlFor="name" className={formStyles.form_label}>
-            <span className={formStyles.form_text}>파일 올리기</span>
-            <span className={formStyles.file_info}>
-              <IcoPaperClip
-                width={'16'}
-                height={'17'}
-                stroke={'#131C30'}
-                className={formStyles.icon_clip}
-              />
-              <span className={formStyles.file_length}>
-                <strong className={formStyles.num}>0</strong>
-                {'개'}
-              </span>
-              <span className={formStyles.file_volume}>
-                <em className={formStyles.volume}>0</em>
-                {'KB'}
-              </span>
-            </span>
-          </label>
-          <div className={formStyles.input_box}>
-            <span className={formStyles.sub_text}>{'최대 5개, 최대 파일 사이즈 50MB'}</span>
-            <Button variant={'line'} size={'sm'} className={formStyles.btn_add}>
-              {'추가'}
-            </Button>
-            <Button variant={'line'} size={'sm'} className={formStyles.btn_save}>
-              {'저장'}
-            </Button>
-            <Button variant={'line'} size={'sm'} disabled className={formStyles.btn_delete}>
-              {'삭제'}
-            </Button>
-          </div>
-        </div>
+      <ContentsRow>
+        <FormRow provider={provider} name={'attachment'} />
       </ContentsRow>
-      <div className={dynamicFormStyles.dnd_wrap}>
-        <DndFileProgress
-          files={[]}
-          maxFileCount={maxFileCount}
-          maxFileSize={maxFileSize}
-          addFiles={addFiles}
-          onRemove={onRemove}
-          onPause={onPause}
-          onResume={onResume}
-          onRetry={onRetry}
-        />
-      </div>
-
       <FormSubTitle label={t('게시물 설정 정보')} lineType={'dark'} />
       <ContentsRow>
         <FormRow provider={provider} name={'isSecret'}>
@@ -240,6 +171,18 @@ const formConfig: DynamicFormConfig = {
       type: 'textarea',
       label: t('내용'),
       value: '',
+    },
+    {
+      name: 'attachment',
+      type: 'attachment',
+      uploadConfig: {
+        languageCode: 'ko',
+        affairsType: 'PMS',
+        s3Path: 'upload/temp/attachment', // 업무에 맞는 폴더로 변경해야 합니다.
+        maxFileCount: 5,
+        maxFileSize: 50 * 1024 * 1024,
+      },
+      value: [],
     },
     {
       name: 'isSecret',

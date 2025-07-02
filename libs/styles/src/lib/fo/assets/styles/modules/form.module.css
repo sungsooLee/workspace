@@ -49,7 +49,7 @@
       @apply hidden;
     }
     &.error {
-      @apply text-[var(--status1)];
+      @apply text-[var(--red50)];
     }
   }
   .sub_test {

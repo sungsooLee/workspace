@@ -33,6 +33,11 @@
     .input {
       @apply text-[var(--gray5)];
     }
+    .after_area {
+      button svg {
+        @apply stroke-[#D6DAE1];
+      }
+    }
   }
   &.error {
     @apply border-[var(--status1)];

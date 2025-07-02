@@ -1,15 +1,15 @@
 /* user-avatar.module.css */
 .start {
-  &.avata_area {
+  &.avatar_area {
     @apply min-w-[360px] rounded-[8px] border border-solid border-[var(--gray3)] bg-[var(--white)] shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
     .profile_info {
       @apply pb-[32px] pt-[36px];
-      .avata_img {
+      .avatar_img {
         @apply m-auto text-center;
         .start {
           @apply h-[66px] w-[66px];
         }
-        .avata_box {
+        .avatar_box {
           @apply flex items-center justify-center;
           .info_avata {
             @apply h-[66px] w-[66px];
@@ -60,7 +60,7 @@
         @apply border-t border-solid border-[var(--gray3)];
         a,
         button {
-          @apply button_2_r block px-[24px] py-[20px];
+          @apply button_2_r block !px-[24px] py-[20px];
         }
       }
     }
@@ -75,6 +75,6 @@
 
 .btn_avatar {
   img {
-    @apply h-[36px] w-[36px];
+    @apply h-full w-full;
   }
 }

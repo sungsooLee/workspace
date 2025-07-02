@@ -20,7 +20,7 @@ function LayoutComponent() {
   const { data } = useFetchAuthUser();
   const { data: tenant } = useFetchTenant(data?.activeTenant?.tenantId);
   // 로그아웃 처리 타이머
-  const { time } = useLoginTimer();
+  useLoginTimer();
 
   useEffect(() => {
     if (!tenant) {
@@ -32,9 +32,9 @@ function LayoutComponent() {
 
   return (
     <div className="layout_wrap">
-      {import.meta.env.VITE_APP_ENV === 'local' && (
+      {/* {import.meta.env.VITE_APP_ENV === 'local' && (
         <div className="absolute right-96 top-5 z-50 h-10 w-10 text-red-600">{time}</div>
-      )}
+      )} */}
       <Layout>
         <Outlet />
       </Layout>

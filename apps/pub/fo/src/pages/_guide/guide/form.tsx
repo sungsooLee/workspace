@@ -130,8 +130,8 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                 id="name"
                 type="text"
                 placeholder="입력"
-                disabled
                 value="최근 콘테츠 등록한 채널명 또는 최근 생성된 채널명"
+                error
               />
               <Button variant="gray" size="lg">
                 선택
@@ -736,6 +736,7 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                 placeholder="입력"
                 className="lg"
                 showSearchIcon
+                disabled
               />
             </div>
             <p className={cn(formStyles.guide_text)}>기본 메시지</p>

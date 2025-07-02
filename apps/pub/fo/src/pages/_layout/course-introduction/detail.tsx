@@ -124,6 +124,39 @@ function RouteComponent() {
       value: 'a',
       title: (
         <div className={packageSideStyles.sub_package_title}>
+          <p>반드시 알아야하는 파이썬 기본지식 반드시 알아야하는 파이썬</p>
+        </div>
+      ),
+      children: (
+        <div className={packageSideStyles.sub_package_content}>
+          <div
+            className={cn(
+              thumnailStyles.start,
+              thumnailStyles.thumbnail,
+              thumnailStyles.horizontal,
+            )}
+          >
+            {/* link (찜 기능과 겹침으로 따로 빠짐) */}
+            <Link to="" className={thumnailStyles.link}></Link>
+
+            <div className={thumnailStyles.thumnail_box}>
+              {/* img */}
+              <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
+                <ul className={thumnailImgStyles.label}>
+                  <li style={{ backgroundColor: '#00afd5' }}>New</li>
+                </ul>
+                <div className={thumnailImgStyles.img}>
+                  <img src={listImage1} alt="" />
+                </div>
+              </div>
+              {/* txt */}
+              <div className={thumnailStyles.text_box}>
+                <p className={thumnailStyles.text}>
+                  필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정
+                </p>
+              </div>
+            </div>
+          </div>
           <div
             className={cn(
               thumnailStyles.start,
@@ -154,19 +187,16 @@ function RouteComponent() {
           </div>
         </div>
       ),
-      children: (
-        <div className={packageSideStyles.sub_package_content}>
-          <p>필수 개발 과정 Spring Framework활한 OpenAPI 서비스 개발</p>
-          <p>필수 개발 과정 Spring Framework활한 OpenAPI 서비스 개발</p>
-          <p>필수 개발 과정 Spring Framework활한 OpenAPI 서비스 개발</p>
-          <p>필수 개발 과정 Spring Framework활한 OpenAPI 서비스 개발</p>
-        </div>
-      ),
     },
     {
       value: 'b',
       title: (
         <div className={packageSideStyles.sub_package_title}>
+          <p>관리자 대상 법정 필수 패키지</p>
+        </div>
+      ),
+      children: (
+        <div className={packageSideStyles.sub_package_content}>
           <div
             className={cn(
               thumnailStyles.start,
@@ -189,13 +219,14 @@ function RouteComponent() {
               </div>
               {/* txt */}
               <div className={thumnailStyles.text_box}>
-                <p className={thumnailStyles.text}>필수개발과정</p>
+                <p className={thumnailStyles.text}>
+                  필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정
+                </p>
               </div>
             </div>
           </div>
         </div>
       ),
-      children: <div className={packageSideStyles.sub_package_content}>Content B</div>,
     },
   ];
 
@@ -398,7 +429,7 @@ function RouteComponent() {
             className={`${styles.card_swiper}`}
             spaceBetween={0}
             slidesPerView={1}
-            navigation={true}
+            showNavigation={true}
           />
 
           <div className={styles.tab_title}>
@@ -552,14 +583,14 @@ function RouteComponent() {
 
           {/* 패키지 */}
           <div
-            className={`${packageSideStyles.start} ${packageSideStyles.package} ${styles.sub_box} `}
+            className={`${packageSideStyles.start} ${packageSideStyles.package} ${styles.sub_tit}`}
           >
             <div className={styles.tit_box}>
               <strong>
                 패키지<em>10</em>
               </strong>
             </div>
-            <div className={packageSideStyles.package_box}>
+            <div className={`${packageSideStyles.package_box}`}>
               <Accordion
                 items={accordionValueItems}
                 value={accordionValue}
@@ -568,58 +599,6 @@ function RouteComponent() {
                 type={'multiple'}
               />
             </div>
-          </div>
-
-          {/* 연관 과정 */}
-          <div
-            className={`${relatedSideStyles.start} ${relatedSideStyles.related} ${styles.sub_box} `}
-          >
-            <div className={styles.tit_box}>
-              <strong>
-                연관 과정<em>20</em>
-              </strong>
-            </div>
-            <ul className={relatedSideStyles.procedure_box}>
-              <li>
-                {/* thumnail module */}
-                <div
-                  className={cn(
-                    thumnailStyles.start,
-                    thumnailStyles.thumbnail,
-                    thumnailStyles.horizontal,
-                  )}
-                >
-                  {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-                  <Link to="" className={thumnailStyles.link}></Link>
-
-                  <div className={thumnailStyles.thumnail_box}>
-                    {/* img */}
-                    <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
-                      <ul className={thumnailImgStyles.label}>
-                        <li style={{ backgroundColor: '#00afd5' }}>New</li>
-                      </ul>
-                      <div className={thumnailImgStyles.img}>
-                        <img src={listImage1} alt="" />
-                      </div>
-                    </div>
-                    {/* txt */}
-                    <div className={thumnailStyles.text_box}>
-                      <div className={thumnailStyles.type}>
-                        {/* type */}
-                        <span className={thumnailStyles.txt}>동영상</span>
-                        <span className={thumnailStyles.time}>
-                          {/* time icon */}
-                          <IcoPlay width={12} height={12} fill="#6f798b" />
-                          {/* time */}
-                          04:59
-                        </span>
-                      </div>
-                      <p className={thumnailStyles.text}>필수개발과정</p>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            </ul>
           </div>
         </div>
       </div>

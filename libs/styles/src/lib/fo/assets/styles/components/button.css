@@ -1,25 +1,25 @@
 .nlp--button {
-  @apply rounded-[6px] !px-[10px] leading-[1.4rem] tracking-normal;
+  @apply !rounded-[6px] !px-[10px] leading-[1.4rem] tracking-normal;
   &.xs {
-    @apply !h-[2rem] text-[1.2rem];
+    @apply h-[2rem] text-[1.2rem];
   }
   &.sm {
-    @apply !h-[2.8rem] text-[1.2rem];
+    @apply label-sm-b h-[2.8rem];
   }
   &.md {
-    @apply text-[1.2rem];
+    @apply label-sm-b;
   }
   &.lg {
-    @apply !h-[4.8rem] text-[1.4rem];
+    @apply label-lg-b h-[4.8rem];
   }
   &.xl {
-    @apply text-[1.6rem];
+    @apply label-xl-b;
   }
   &.xl2 {
-    @apply !h-[5.2rem] text-[1.6rem];
+    @apply h-[5.2rem] text-[1.6rem];
   }
   &.primary {
-    @apply !label-xl-b bg-[var(--blue50)] text-white;
+    @apply !rounded-[8px] bg-[var(--blue50)] text-white;
     &:hover {
       @apply bg-[var(--blue65)];
     }
@@ -59,11 +59,12 @@
     @apply !ml-0;
   }
   &[class*='only_icon'] {
+    @apply !rounded-[6px];
     &.xs {
-      @apply !w-[20px] !min-w-[20px];
+      @apply !h-[20px] !w-[20px] !min-w-[20px];
     }
     &.sm {
-      @apply !w-[28px] !min-w-[28px];
+      @apply !h-[28px] !w-[28px] !min-w-[28px];
     }
     &.lg {
       @apply !w-[48px] !min-w-[48px];
