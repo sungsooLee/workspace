@@ -411,7 +411,11 @@
     },
     "form": {
       "input": {
-        "placeholder": "값을 입력 하세요.",
+        "placeholder": "값을 입력하세요.",
+        "placeholder1": "{{type}}을 입력하세요.",
+        "placeholder2": "{{type}}를 입력하세요.",
+        "placeholder3": "{{field}}을 {{inputType}}하세요.",
+        "placeholder4": "{{field}}를 {{inputType}}하세요.",
         "id": "아이디",
         "email": "이메일",
         "idEmail": "아이디/이메일",
@@ -562,6 +566,10 @@
         "title": "저장 하시겠습니까?",
         "message": "입력한 정보로 저장됩니다."
       },
+      "cancel": {
+        "title": "취소 하시겠습니까?",
+        "message": "입력한 정보로 저장되지 않고,\n{{type}} 조회 화면으로 이동합니다."
+      },
       "modify": {
         "title": "수정 하시겠습니까?",
         "message": "입력한 정보로 수정됩니다."
@@ -596,6 +604,10 @@
       "unsaved": {
         "title": "작업을 계속하시겠습니까?",
         "message": "변경하신 내용이 저장되지 않습니다."
+      },
+      "goList": {
+        "title": "목록으로 이동하시겠습니까?",
+        "message": "목록 이동 시 입력한 정보가 저장되지 않습니다."
       }
     },
     "platform": {
