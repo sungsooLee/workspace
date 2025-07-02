@@ -1,0 +1,21 @@
+.start {
+  @apply relative;
+  .navigation_btn {
+    @apply absolute top-1/2 z-[1] flex h-[48px] w-[48px] -translate-y-1/2 items-center justify-center rounded-[24px] bg-[var(--white)] shadow-[0px_2px_4px_rgba(0,0,0,0.08)];
+    &::after {
+      @apply flex h-[24px] w-[24px] bg-[24px_auto] bg-[center_center] bg-no-repeat text-transparent content-[''];
+    }
+  }
+  .prev_btn {
+    @apply left-0 -translate-x-1/2;
+    &::after {
+      @apply bg-[url(../../assets/images/icon/ic_arrow_backward.png)];
+    }
+  }
+  .next_btn {
+    @apply right-0 translate-x-1/2;
+    &::after {
+      @apply bg-[url(../../assets/images/icon/ic_arrow_forward.png)];
+    }
+  }
+}

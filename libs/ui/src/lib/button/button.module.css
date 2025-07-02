@@ -27,7 +27,7 @@
     &.lg,
     &.xl {
       &:has(svg) {
-        @apply !px-[8px];
+        @apply px-[8px];
       }
     }
     & + .btn {
@@ -61,265 +61,302 @@
       @apply shrink-0;
     }
   }
-}
-.primary {
-  @apply justify-center rounded-[4px] bg-[var(--secondary1)] !font-bold text-[white];
-  &:hover {
-    @apply bg-[var(--secondary2)];
-  }
-  &:active {
-    @apply bg-[var(--secondary3)];
-  }
-  &:disabled {
-    @apply bg-[var(--gray5)] text-[var(--gray2)];
-  }
-  &::before {
-    @apply hidden;
-  }
-}
-.soft {
-  @apply label-sm rounded-[4px] bg-[var(--gray98)] text-[var(--gray10)];
-  &:hover {
-    @apply bg-[var(--gray95)];
-  }
-  &:active {
-    @apply bg-[var(--gray92)];
-  }
-  &:disabled {
-    @apply bg-[var(--gray95)] text-[var(--gray75)];
-  }
-  svg {
-    @apply stroke-[var(--gray75)];
-  }
-}
-.line {
-  @apply justify-center rounded-[4px] border-[1px] border-solid border-[var(--secondary1)] bg-[var(--white)] text-[var(--secondary1)];
-  &:hover {
-    @apply border-[1px] border-solid border-[var(--secondary2)] text-[var(--secondary2)];
-  }
-  &:active {
-    @apply border-[1px] border-solid border-[var(--secondary3)] text-[var(--secondary3)];
-  }
-  &:disabled {
-    @apply border-[1px] border-solid border-[var(--gray1)] bg-[var(--gray1)] text-[var(--gray5)];
-  }
-}
-.gray {
-  @apply justify-center rounded-[4px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] text-[var(--gray8)];
-  &:hover {
-    @apply border-[1px] border-solid border-[var(--gray3)] text-[var(--gray7)];
-  }
-  &:active {
-    @apply border-[1px] border-solid border-[var(--gray7)] text-[var(--gray8)];
-    svg {
-      @apply stroke-[var(--gray8)];
+  &.primary {
+    @apply justify-center rounded-[4px] bg-[var(--secondary1)] !font-bold text-[white];
+    &:hover {
+      @apply bg-[var(--secondary2)];
+    }
+    &:active {
+      @apply bg-[var(--secondary3)];
+    }
+    &:disabled {
+      @apply bg-[var(--gray5)] text-[var(--gray2)];
+    }
+    &::before {
+      @apply hidden;
     }
   }
-  &:disabled {
-    @apply border-[1px] border-solid border-[var(--gray1)] bg-[var(--gray1)] text-[var(--gray5)];
-  }
-}
-.gray2 {
-  @apply justify-center rounded-[4px] border-[1px] border-solid border-[var(--gray5)] bg-[var(--white)] text-[var(--gray8)];
-  &:hover {
-    @apply border-[1px] border-solid border-[var(--gray4)] text-[var(--gray8)];
-  }
-  &:active {
-    @apply border-[1px] border-solid border-[var(--gray6)] text-[var(--gray9)];
-  }
-  &:disabled {
-    @apply border-[1px] border-solid border-[var(--gray1)] bg-[var(--gray1)] !font-normal text-[var(--gray5)];
-    svg {
-      @apply stroke-[var(--gray5)];
+  &.soft {
+    @apply label-sm rounded-[4px] bg-[var(--gray98)] text-[var(--gray10)];
+    &:hover {
+      @apply bg-[var(--gray95)];
     }
-  }
-}
-.search {
-  @apply justify-center rounded-[4px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] pl-[8px] pr-[10px] text-[var(--gray8)];
-  svg {
-    @apply -ml-[2px] mr-[2px];
-  }
-  &:hover {
-    @apply border-[1px] border-solid border-[var(--gray3)] text-[var(--gray7)];
-    svg {
-      @apply stroke-[var(--gray7)];
+    &:active {
+      @apply bg-[var(--gray92)];
     }
-  }
-  &:active {
-    @apply border-[1px] border-solid border-[var(--gray7)] text-[var(--gray8)];
-    svg {
-      @apply stroke-[var(--gray8)];
+    &:disabled {
+      @apply bg-[var(--gray95)] text-[var(--gray75)];
     }
-  }
-  &:disabled {
-    @apply border-[1px] border-solid border-[var(--gray1)] bg-[var(--gray1)] text-[var(--gray5)];
-    svg {
-      @apply stroke-[var(--gray5)];
-    }
-  }
-}
-.expand {
-  @apply min-w-[32px] justify-center rounded-[4px] border-[1px] border-solid border-[var(--gray4)] px-[8px];
-  &.sm {
-    @apply px-[8px];
-  }
-  &.xs {
-    @apply px-[6px];
-  }
-  &:hover {
-    @apply border-[1px] border-solid border-[var(--gray3)];
-    svg {
-      @apply stroke-[(--gray7)];
-    }
-  }
-  &:active {
-    @apply border-[1px] border-solid border-[var(--gray5)];
-  }
-  &:disabled {
-    @apply border-[1px] border-solid border-[var(--gray3)] bg-[var(--gray3)];
-    svg {
-      @apply stroke-[(--gray5)];
-    }
-  }
-}
-.expand2 {
-  @apply justify-center rounded-[4px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--gray3)] px-[8px] text-[var(--primary2)];
-  svg {
-    @apply mr-[2px];
-  }
-  &:hover {
-    @apply border-[1px] border-solid border-[var(--gray4)] bg-[var(--gray2)] text-[var(--primary3)];
-    svg {
-      @apply stroke-[(--gray7)];
-    }
-  }
-  &:active {
-    @apply border-[1px] border-solid border-[var(--gray4)] bg-[var(--gray4)] text-[var(--primary2)];
-    svg {
-      @apply stroke-[(--gray9)];
-    }
-  }
-  &:disabled {
-    @apply border-[1px] border-solid border-[var(--gray4)] bg-[var(--gray3)] text-[var(--gray6)];
-    svg {
-      @apply stroke-[(--gray6)];
-    }
-  }
-}
-.save {
-  @apply justify-center rounded-[4px] bg-[var(--gray7)] !font-bold text-[var(--white)];
-  &:hover {
-    @apply bg-[var(--gray6)];
-  }
-  &:active {
-    @apply bg-[var(--gray8)];
-  }
-  &:disabled {
-    @apply bg-[var(--gray3)] text-[var(--gray6)];
-  }
-  &::before {
-    @apply hidden;
-  }
-}
-.point {
-  @apply justify-center rounded-[4px] border-[1px] border-solid border-[var(--primary2)] bg-[var(--white)] text-[var(--primary2)];
-  svg {
-    @apply stroke-[(--primary2)];
-  }
-  &:hover {
-    @apply border-[1px] border-solid border-[var(--primary3)] text-[var(--primary3)];
-    svg {
-      @apply stroke-[(--primary3)];
-    }
-  }
-  &:active {
-    @apply border-[1px] border-solid border-[var(--primary1)] text-[var(--primary1)];
-    svg {
-      @apply stroke-[(--primary2)];
-    }
-  }
-  &:disabled {
-    @apply border-[1px] border-solid border-[var(--gray2)] bg-[var(--gray2)] text-[var(--gray6)];
-    svg {
-      @apply stroke-[(--gray6)];
-    }
-  }
-}
-.text {
-  @apply justify-center rounded-[4px] bg-[var(--white)] px-[8px] font-normal text-[var(--gray9)];
-  &:hover {
-    @apply text-[var(--gray7)];
-    svg {
-      @apply stroke-[var(--gray7)];
-    }
-  }
-  &:active {
-    @apply bg-[var(--gray1)] text-[var(--gray9)];
-  }
-  &:disabled {
-    @apply bg-white !font-normal text-[var(--gray5)];
-    svg {
-      @apply stroke-[var(--gray5)];
-    }
-  }
-}
-.chips {
-  @apply justify-center rounded-full bg-[var(--gray2)] px-[12px] text-[var(--gray9)];
-  svg {
-    @apply ml-[2px];
-  }
-  &.xs {
-    @apply !min-h-[24px];
-  }
-}
-.ghost {
-  @apply bg-white !px-0;
-  &:hover {
-    @apply bg-[var(--gray98)];
-  }
-  &:active {
-    @apply bg-[var(--gray95)];
-  }
-  &:disabled {
-    @apply bg-[var(--gray98)];
     svg {
       @apply stroke-[var(--gray75)];
     }
   }
-  svg {
-    @apply stroke-[var(--gray10)];
-  }
-}
-.underline {
-  @apply !bg-white !px-0 !font-normal text-[var(--gray35)] underline-offset-4;
-  text-decoration: underline;
-  &:hover {
-    @apply text-[var(--gray10)];
-  }
-  &:disabled {
-    @apply text-[var(--gray75)];
-  }
-  &.sm {
-    @apply label-sm !h-[1.8rem];
-  }
-  &.md {
-    @apply label-lg !h-[2rem];
-  }
-  &.lg {
-    @apply label-xl !h-[2.2rem];
-  }
-  &.primary {
-    @apply !text-[var(--blue50)];
+  &.line {
+    @apply justify-center rounded-[4px] border-[1px] border-solid border-[var(--secondary1)] bg-[var(--white)] text-[var(--secondary1)];
     &:hover {
-      @apply !text-[var(--blue35)];
+      @apply border-[1px] border-solid border-[var(--secondary2)] text-[var(--secondary2)];
+    }
+    &:active {
+      @apply border-[1px] border-solid border-[var(--secondary3)] text-[var(--secondary3)];
     }
     &:disabled {
-      @apply !text-[var(--blue75)];
+      @apply border-[1px] border-solid border-[var(--gray1)] bg-[var(--gray1)] text-[var(--gray5)];
     }
   }
-}
-.arrow {
-  .icon_arrow {
-    @apply h-[16px] w-[16px] stroke-[var(--gray35)];
+  &.gray {
+    @apply justify-center rounded-[4px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] text-[var(--gray8)];
+    &:hover {
+      @apply border-[1px] border-solid border-[var(--gray3)] text-[var(--gray7)];
+    }
+    &:active {
+      @apply border-[1px] border-solid border-[var(--gray7)] text-[var(--gray8)];
+      svg {
+        @apply stroke-[var(--gray8)];
+      }
+    }
+    &:disabled {
+      @apply border-[1px] border-solid border-[var(--gray1)] bg-[var(--gray1)] text-[var(--gray5)];
+    }
+  }
+  &.gray2 {
+    @apply justify-center rounded-[4px] border-[1px] border-solid border-[var(--gray5)] bg-[var(--white)] text-[var(--gray8)];
+    &:hover {
+      @apply border-[1px] border-solid border-[var(--gray4)] text-[var(--gray8)];
+    }
+    &:active {
+      @apply border-[1px] border-solid border-[var(--gray6)] text-[var(--gray9)];
+    }
+    &:disabled {
+      @apply border-[1px] border-solid border-[var(--gray1)] bg-[var(--gray1)] !font-normal text-[var(--gray5)];
+      svg {
+        @apply stroke-[var(--gray5)];
+      }
+    }
+  }
+  &.search {
+    @apply justify-center rounded-[4px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] pl-[8px] pr-[10px] text-[var(--gray8)];
+    svg {
+      @apply -ml-[2px] mr-[2px];
+    }
+    &:hover {
+      @apply border-[1px] border-solid border-[var(--gray3)] text-[var(--gray7)];
+      svg {
+        @apply stroke-[var(--gray7)];
+      }
+    }
+    &:active {
+      @apply border-[1px] border-solid border-[var(--gray7)] text-[var(--gray8)];
+      svg {
+        @apply stroke-[var(--gray8)];
+      }
+    }
+    &:disabled {
+      @apply border-[1px] border-solid border-[var(--gray1)] bg-[var(--gray1)] text-[var(--gray5)];
+      svg {
+        @apply stroke-[var(--gray5)];
+      }
+    }
+  }
+  &.expand {
+    @apply min-w-[32px] justify-center rounded-[4px] border-[1px] border-solid border-[var(--gray4)] px-[8px];
+    &.sm {
+      @apply px-[8px];
+    }
+    &.xs {
+      @apply px-[6px];
+    }
+    &:hover {
+      @apply border-[1px] border-solid border-[var(--gray3)];
+      svg {
+        @apply stroke-[(--gray7)];
+      }
+    }
+    &:active {
+      @apply border-[1px] border-solid border-[var(--gray5)];
+    }
+    &:disabled {
+      @apply border-[1px] border-solid border-[var(--gray3)] bg-[var(--gray3)];
+      svg {
+        @apply stroke-[(--gray5)];
+      }
+    }
+  }
+  &.expand2 {
+    @apply justify-center rounded-[4px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--gray3)] px-[8px] text-[var(--primary2)];
+    svg {
+      @apply mr-[2px];
+    }
+    &:hover {
+      @apply border-[1px] border-solid border-[var(--gray4)] bg-[var(--gray2)] text-[var(--primary3)];
+      svg {
+        @apply stroke-[(--gray7)];
+      }
+    }
+    &:active {
+      @apply border-[1px] border-solid border-[var(--gray4)] bg-[var(--gray4)] text-[var(--primary2)];
+      svg {
+        @apply stroke-[(--gray9)];
+      }
+    }
+    &:disabled {
+      @apply border-[1px] border-solid border-[var(--gray4)] bg-[var(--gray3)] text-[var(--gray6)];
+      svg {
+        @apply stroke-[(--gray6)];
+      }
+    }
+  }
+  &.save {
+    @apply justify-center rounded-[4px] bg-[var(--gray7)] !font-bold text-[var(--white)];
+    &:hover {
+      @apply bg-[var(--gray6)];
+    }
+    &:active {
+      @apply bg-[var(--gray8)];
+    }
+    &:disabled {
+      @apply bg-[var(--gray3)] text-[var(--gray6)];
+    }
+    &::before {
+      @apply hidden;
+    }
+  }
+  &.point {
+    @apply justify-center rounded-[4px] border-[1px] border-solid border-[var(--primary2)] bg-[var(--white)] text-[var(--primary2)];
+    svg {
+      @apply stroke-[(--primary2)];
+    }
+    &:hover {
+      @apply border-[1px] border-solid border-[var(--primary3)] text-[var(--primary3)];
+      svg {
+        @apply stroke-[(--primary3)];
+      }
+    }
+    &:active {
+      @apply border-[1px] border-solid border-[var(--primary1)] text-[var(--primary1)];
+      svg {
+        @apply stroke-[(--primary2)];
+      }
+    }
+    &:disabled {
+      @apply border-[1px] border-solid border-[var(--gray2)] bg-[var(--gray2)] text-[var(--gray6)];
+      svg {
+        @apply stroke-[(--gray6)];
+      }
+    }
+  }
+  &.text {
+    @apply justify-center rounded-[4px] bg-[var(--white)] px-[8px] font-normal text-[var(--gray9)];
+    &:hover {
+      @apply text-[var(--gray7)];
+      svg {
+        @apply stroke-[var(--gray7)];
+      }
+    }
+    &:active {
+      @apply bg-[var(--gray1)] text-[var(--gray9)];
+    }
+    &:disabled {
+      @apply bg-white !font-normal text-[var(--gray5)];
+      svg {
+        @apply stroke-[var(--gray5)];
+      }
+    }
+  }
+  &.chips {
+    @apply justify-center rounded-full bg-[var(--gray2)] px-[12px] text-[var(--gray9)];
+    svg {
+      @apply ml-[2px];
+    }
+    &.xs {
+      @apply !min-h-[24px];
+    }
+  }
+  &.ghost {
+    @apply bg-white !px-0;
+    &:hover {
+      @apply bg-[var(--gray98)];
+    }
+    &:active {
+      @apply bg-[var(--gray95)];
+    }
+    &:disabled {
+      @apply bg-[var(--gray98)];
+      svg {
+        @apply stroke-[var(--gray75)];
+      }
+    }
+    svg {
+      @apply stroke-[var(--gray10)];
+    }
+  }
+  &.underline {
+    @apply !bg-white !px-0 !font-normal text-[var(--gray35)] underline-offset-4;
+    text-decoration: underline;
+    &:hover {
+      @apply text-[var(--gray50)];
+    }
+    &:active {
+      @apply text-[var(--gray10)];
+    }
+    &:disabled {
+      @apply text-[var(--gray75)];
+    }
+    &.sm {
+      @apply !label-sm !h-[1.8rem];
+    }
+    &.md {
+      @apply !label-lg !h-[2rem];
+    }
+    &.lg {
+      @apply !label-xl !h-[2.2rem];
+    }
+    &.primary {
+      @apply !text-[var(--blue50)];
+      &:hover {
+        @apply !text-[var(--blue65)];
+      }
+      &:active {
+        @apply !text-[var(--blue35)];
+      }
+      &:disabled {
+        @apply !text-[var(--blue75)];
+      }
+    }
+  }
+  &.arrow {
+    @apply label-sm !px-0 text-[var(--gray35)];
+    .icon_arrow {
+      @apply h-[16px] w-[16px] stroke-[var(--gray35)];
+    }
+    &:has(svg) {
+      @apply !px-0;
+    }
+    &.sm {
+      @apply !label-sm !h-[1.8rem];
+    }
+    &.md {
+      @apply !label-lg !h-[2rem];
+    }
+    &.lg {
+      @apply !label-xl !h-[2.2rem] !px-0;
+    }
+    &:hover {
+      @apply text-[var(--gray50)];
+      .icon_arrow {
+        @apply stroke-[var(--gray50)];
+      }
+    }
+    &:active {
+      @apply text-[var(--gray10)];
+      .icon_arrow {
+        @apply stroke-[var(--gray10)];
+      }
+    }
+    &:disabled {
+      @apply text-[var(--gray75)];
+      .icon_arrow {
+        @apply stroke-[var(--gray75)];
+      }
+    }
   }
 }
