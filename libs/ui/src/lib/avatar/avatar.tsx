@@ -22,7 +22,7 @@ const AvatarComponent = forwardRef<React.ElementRef<typeof Primitive.Avatar>, Av
         ref={ref}
         className={cn('nlp--avatar', className, styles.start, styles[`size--${size}`])}
       >
-        <Primitive.Image className={styles.image} src={imageUrl} />
+        <Primitive.Image className={styles.image} src={imageUrl} alt="User avatar" />
         <Primitive.Fallback className={styles.fallback} delayMs={600}>
           {fallback}
         </Primitive.Fallback>
