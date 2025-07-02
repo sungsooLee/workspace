@@ -3,9 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { com_ever_edu_pms_channel_dto_res_ChannelMappingTenantResDto } from './com_ever_edu_pms_channel_dto_res_ChannelMappingTenantResDto';
-/**
- * 채널 목록
- */
 export type com_ever_edu_pms_channel_dto_res_ChannelResDto = {
     channelUuid?: string;
     channelName?: string;

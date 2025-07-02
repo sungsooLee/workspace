@@ -14,6 +14,14 @@ export type com_ever_edu_pms_user_dto_res_UserResDto = {
      */
     employeeNumber?: string;
     /**
+     * GUCC ID
+     */
+    guccId?: string;
+    /**
+     * 연동시스템
+     */
+    linkageSystem?: com_ever_edu_pms_user_dto_res_UserResDto.linkageSystem;
+    /**
      * 성명
      */
     name?: string;
@@ -26,19 +34,52 @@ export type com_ever_edu_pms_user_dto_res_UserResDto = {
      */
     birthday?: string;
     /**
-     * Email
+     * 성별
+     */
+    gender?: com_ever_edu_pms_user_dto_res_UserResDto.gender;
+    /**
+     * 이메일
      */
     email?: string;
     /**
-     * 회사 전화번호
+     * 휴대폰 국가번호
      */
-    companyTelephoneNumber?: string;
+    phoneNationNumber?: string;
     /**
-     * 휴대전화번호
+     * 휴대폰 번호
      */
     phoneNumber?: string;
     /**
-     * 회원기본언어셋코드
+     * 직장전화 국가번호
+     */
+    companyPhoneNationNumber?: string;
+    /**
+     * 직장전화 번호
+     */
+    companyPhoneNumber?: string;
+    company?: com_ever_edu_pms_company_dto_res_CompanyResDto;
+    dept?: com_ever_edu_pms_company_dto_res_CompanyDeptResDto;
+    /**
+     * 국가코드
+     */
+    nationCd?: {
+        language?: string;
+        script?: string;
+        variant?: string;
+        displayName?: string;
+        country?: string;
+        unicodeLocaleAttributes?: Array<string>;
+        unicodeLocaleKeys?: Array<string>;
+        displayLanguage?: string;
+        displayScript?: string;
+        displayCountry?: string;
+        displayVariant?: string;
+        extensionKeys?: Array<string>;
+        iso3Language?: string;
+        iso3Country?: string;
+    };
+    /**
+     * 언어코드
      */
     locale?: {
         language?: string;
@@ -57,38 +98,115 @@ export type com_ever_edu_pms_user_dto_res_UserResDto = {
         iso3Country?: string;
     };
     /**
-     * 최종로그인일시
-     */
-    lastLoginDate?: string;
-    /**
      * 로그인실패횟수
      */
     loginFailCount?: number;
-    company?: com_ever_edu_pms_company_dto_res_CompanyResDto;
-    dept?: com_ever_edu_pms_company_dto_res_CompanyDeptResDto;
     /**
-     * 사용자구분
+     * 최종 로그인 일시
      */
-    accountType?: string;
+    lastLoginDate?: string;
     /**
-     * 근무지코드
+     * 비밀번호 변경 일자
      */
-    workPlaceCode?: string;
+    passwordChangeDate?: string;
     /**
-     * 등록자ID
+     * 입사일자
      */
-    createdBy?: string;
+    joinDate?: string;
     /**
-     * 등록일시
+     * 현직급승진일자
      */
-    createdDate?: string;
+    promotionDate?: string;
     /**
-     * 최종수정자ID
+     * 휴직여부
      */
-    lastModifiedBy?: string;
+    isOnLeave?: boolean;
     /**
-     * 최종수정일시
+     * 정직여부
      */
-    modifiedDate?: string;
+    isSuspended?: boolean;
+    /**
+     * 퇴직일자
+     */
+    retireDate?: string;
+    /**
+     * 계정활성화일시
+     */
+    enabledDate?: string;
+    /**
+     * 계정잠김일시
+     */
+    lockedDate?: string;
+    /**
+     * 휴면계정전환일시
+     */
+    dormantDate?: string;
+    /**
+     * 회원탈퇴일시
+     */
+    deletedDate?: string;
+    /**
+     * SSO 유형
+     */
+    ssoType?: com_ever_edu_pms_user_dto_res_UserResDto.ssoType;
+    /**
+     * 비밀번호 인증 유형
+     */
+    authType?: com_ever_edu_pms_user_dto_res_UserResDto.authType;
+    /**
+     * 최근 접속 FO 테넌트 ID
+     */
+    lastVisitedFoTenantId?: number;
+    /**
+     * 최근 접속 FO 역할 ID
+     */
+    lastVisitedFoRoleId?: number;
+    /**
+     * 최근 접속 BO 테넌트 ID
+     */
+    lastVisitedBoTenantId?: number;
+    /**
+     * 최근 접속 BO 역할 ID
+     */
+    lastVisitedBoRoleId?: number;
 };
+export namespace com_ever_edu_pms_user_dto_res_UserResDto {
+    /**
+     * 연동시스템
+     */
+    export enum linkageSystem {
+        GIM = 'GIM',
+        HSW = 'HSW',
+        KSW = 'KSW',
+        DMSSH = 'DMSSH',
+        DMSSK = 'DMSSK',
+        DDMSH = 'DDMSH',
+        DDMSK = 'DDMSK',
+        VAATZ = 'VAATZ',
+        GETIS = 'GETIS',
+    }
+    /**
+     * 성별
+     */
+    export enum gender {
+        MALE = 'MALE',
+        FEMALE = 'FEMALE',
+    }
+    /**
+     * SSO 유형
+     */
+    export enum ssoType {
+        HMG_SSO = 'HMG_SSO',
+        AUTOWAY = 'AUTOWAY',
+        AES_LINK = 'AES_Link',
+    }
+    /**
+     * 비밀번호 인증 유형
+     */
+    export enum authType {
+        PLATFORM = 'PLATFORM',
+        HMG_SSO = 'HMG_SSO',
+        AUTOWAY = 'AUTOWAY',
+    }
+}
 

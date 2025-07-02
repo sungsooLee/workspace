@@ -3,7 +3,6 @@ import { forwardRef, useEffect, useState } from 'react';
 import { Attachment } from '@learnway/ui'; // @learnway/ui에서 Attachment 컴포넌트 import
 import {
   BaseFormFieldProps,
-  DEFAULT_MULTIPART_THRESHOLD,
   S3UploaderConfig,
   useFileManager,
   useS3Uploader,
@@ -14,7 +13,9 @@ import { compact, difference, map } from 'lodash';
  * AttachmentFormField 컴포넌트의 props 인터페이스
  * 폼 필드로서 Attachment 컴포넌트를 래핑하여 폼 시스템과 통합합니다.
  */
-type AttachmentFormFieldProps = BaseFormFieldProps<string[]> & S3UploaderConfig;
+interface AttachmentFormFieldProps extends BaseFormFieldProps<string[]> {
+  uploadConfig: S3UploaderConfig;
+}
 
 /**
  * 폼 필드용 썸네일 이미지 업로드 컴포넌트
@@ -29,15 +30,7 @@ const AttachmentFormFieldComponent = forwardRef<
 >(
   (
     {
-      s3Path,
-      groupConfig,
-      groupMode = 'batch',
-      auto = true,
-      async = true,
-      multipartThreshold = DEFAULT_MULTIPART_THRESHOLD,
-      acceptFiles = [],
-      maxFileCount = 10,
-      maxFileSize = 5 * 1024 * 1024,
+      uploadConfig,
       name,
       value,
       onChange,
@@ -46,15 +39,29 @@ const AttachmentFormFieldComponent = forwardRef<
     },
     ref, // forwardRef로 전달받은 Ref 객체
   ) => {
+    const {
+      s3Path,
+      affairsType,
+      languageCode = 'ko',
+      groupUuid,
+      groupMode = 'batch',
+      auto = true,
+      async = true,
+      acceptFiles = [],
+      maxFileCount = 10,
+      maxFileSize = 5 * 1024 * 1024,
+    } = uploadConfig;
+
     const { getFileInfo } = useFileManager();
     const { stats, files, addFiles, onPause, onRetry, onResume, onRemove, onFetch, inputAccept } =
       useS3Uploader({
         s3Path,
-        groupConfig,
+        affairsType,
+        languageCode,
+        groupUuid,
         groupMode,
         auto,
         async,
-        multipartThreshold,
         acceptFiles,
         maxFileCount,
         maxFileSize,
