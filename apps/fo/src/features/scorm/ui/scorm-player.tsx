@@ -2,10 +2,11 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 
 import styles from './iframe.module.css';
 
+import { useFetchAuthUser } from '@learnway/auth/entities';
+
 import { ScormAdapter } from '../service/scorm-adapter';
 
-import { useGetContentDetail } from '@entities/content/service/content.hook';
-import { useFetchAuthUser } from '@learnway/auth/entities';
+import { useGetScormRteScoUrl } from '@entities/scorm/service/scorm-rte.hook';
 
 export interface ScormPlayerConfigProperties {
   /** 과정 차수 ID */
@@ -20,7 +21,6 @@ export interface ScormPlayerConfigProperties {
   orgnId: number;
   /** Scorm Manifest Item element Id */
   scoId: string;
-  itemUrl: string;
 }
 
 const ScormPlayerComponent: FC<any> = ({
@@ -28,20 +28,44 @@ const ScormPlayerComponent: FC<any> = ({
 }: {
   scormConfig: ScormPlayerConfigProperties;
 }) => {
-  const { data: loginUser } = useFetchAuthUser();
   const [iframeUrl, setIframeUrl] = useState<string>();
+  const [queryParam, setQueryParam] = useState<any>();
 
-  console.log('scormConfig', scormConfig, loginUser);
+  const { data: loginUser } = useFetchAuthUser();
+  const { data: scoInfo } = useGetScormRteScoUrl(queryParam);
+
+  useEffect(() => {
+    if (!scoInfo) return;
+    const win: any = window;
+
+    console.log('scoUrl', scoInfo);
+    let itemUrl = scoInfo.itemURL;
+
+    if (win.__ENV__?.APP_ENV === 'local') {
+      const url = new URL(itemUrl);
+      itemUrl = url.pathname;
+    }
+
+    setIframeUrl(itemUrl);
+  }, [scoInfo]);
 
   useEffect(() => {
     if (!loginUser) return;
+    if (!scormConfig) return;
+    const param = {
+      ...scormConfig,
+    };
+    setQueryParam(param);
+
     const win: any = window;
     win.API_1484_11 = new ScormAdapter((loginUser as any).accessToken, scormConfig);
+
     return () => {
+      console.log('end Player');
       const win: any = window;
       delete win.API_1484_11;
     };
-  }, [loginUser]);
+  }, [loginUser, scormConfig]);
 
   return (
     <div className={`${styles.start} ${styles.iframe}`}>
@@ -51,7 +75,7 @@ const ScormPlayerComponent: FC<any> = ({
         //src="/public/8807/resources/01/index.html"
         //src="/html/hkscorm/index_lms.html"
         // src="/html/lf_new_model/resources/01/index.html"
-        src={scormConfig?.itemUrl}
+        src={iframeUrl}
         title="SCORM Content"
         className={styles.iframe}
       />

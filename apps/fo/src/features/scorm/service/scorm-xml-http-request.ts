@@ -2,6 +2,7 @@
  * Scorm 용 sync API
  */
 export class ScormXmlHttpRequest {
+  baseURL = import.meta.env.VITE_AXIOS_BASE_URL;
   bearerToken: string | undefined;
   constructor(token: string) {
     this.bearerToken = token;
@@ -20,8 +21,8 @@ export class ScormXmlHttpRequest {
     console.trace();
     const x = xhr || this.getXHR();
 
-    x.open(method, url, false);
-    xhr.setRequestHeader('Authorization', `Bearer ${this.bearerToken}`);
+    x.open(method, `${this.baseURL}${url}`, false);
+    x.setRequestHeader('Authorization', `Bearer ${this.bearerToken}`);
     x.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     if (data) x.send(data);
     else x.send();

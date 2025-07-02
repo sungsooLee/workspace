@@ -91,7 +91,7 @@ function debug(str: string, ...optionParams: any[]) {
  */
 
 export class ScormAdapter {
-  scormConfig = {};
+  scormConfig: any;
   accessToken = '';
   sxhr: ScormXmlHttpRequest;
   isInitialized = false;
@@ -173,7 +173,20 @@ export class ScormAdapter {
     let ret = '';
     let lastErrorCode = '0';
     let tempScilIn = null;
-    this.sxhr.send('POST', `${CMSApiPrefix}/scorm/rte/initialize`, JSON.stringify({}));
+    console.log('config', this.scormConfig);
+
+    // const retval = this.sxhr.send(
+    //   'POST',
+    //   `${CMSApiPrefix()}/scorm/rte/initialize`,
+    //   JSON.stringify({
+    //     sequenceId: this.scormConfig.sequenceId,
+    //     courseId: this.scormConfig.courseId,
+    //     curriculumId: this.scormConfig.curriculumId,
+    //     orgnId: this.scormConfig.orgnId,
+    //     scoId: this.scormConfig.scoId,
+    //   }),
+    // );
+    // console.log('result', retval);
     // $.ajax({
     //   async: false,
     //   type: 'POST',

@@ -17,7 +17,7 @@ import styles from '@learnway/styles/fo/pages/_layout/my-page/privacy/withdraw-m
 import { ScormPlayer, ScormPlayerConfigProperties } from '../../features/scorm/ui/scorm-player';
 import { useGetContentDetail } from '@entities/content/service/content.hook';
 
-export const Route = createFileRoute('/_learning/scorm')({
+export const Route = createFileRoute('/_learning-window/scorm')({
   component: RouteComponent,
 });
 
@@ -30,32 +30,22 @@ function RouteComponent() {
   useEffect(() => {
     const win: any = window;
     if (data) {
-      if (win.__ENV__?.APP_ENV === 'local') {
-        console.log('data', data);
-        data.children.forEach((item: any) => {
-          item.items.forEach((ci: any) => {
-            const url = new URL(ci.itemUrl);
-            ci.itemUrl = url.pathname;
-            console.log('------', ci);
-          });
-        });
-      }
       if (data.children && data.children.length > 0) {
         if (data.children[0].items.length > 0) {
-          const showItem = data.children[0].items[0];
+          const baseItem = data.children[0];
+          const showItem = baseItem.items[0];
           setScormConfig({
             contentUuid: contentUuid,
-            curriculumId: 0,
-            orgnId: 0,
-            sequenceId: 0,
-            courceId: 0,
+            curriculumId: 1,
+            orgnId: baseItem.orgnId,
+            sequenceId: 1,
+            courceId: 1,
             scoId: showItem.scoId,
-            itemUrl: showItem.itemUrl,
           });
         }
       }
     }
   }, [data]);
 
-  return <ScormPlayer scormConfig={scormConfig} />;
+  return scormConfig && <ScormPlayer scormConfig={scormConfig} />;
 }

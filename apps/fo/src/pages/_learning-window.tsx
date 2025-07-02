@@ -3,7 +3,7 @@ import { Outlet, createFileRoute, useRouter, Link, useLocation } from '@tanstack
 import { useTranslation } from 'react-i18next';
 import styles from './_learning.module.css';
 import { LearningLayout } from '../widgets/layout';
-export const Route = createFileRoute('/_learning')({
+export const Route = createFileRoute('/_learning-window')({
   component: LayoutComponent,
 });
 

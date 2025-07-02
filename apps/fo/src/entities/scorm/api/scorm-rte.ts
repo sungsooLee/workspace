@@ -37,4 +37,8 @@ export default class ScormRteService {
   static getLastError(param: any): Promise<any> {
     return httpService.get<any>(`${CMSApiPrefix()}/scorm/rte/error/code`, param);
   }
+
+  static getScoUrl(param: any) {
+    return httpService.get<any>(`${CMSApiPrefix()}/scorm/rte/sco/url`, param);
+  }
 }
