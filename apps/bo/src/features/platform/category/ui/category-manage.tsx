@@ -72,6 +72,7 @@ export const CategoryManage = () => {
     showDeleteComplete,
     showUpdateComplete,
   } = useModal();
+  const [formKey, setFormKey] = useState(Date.now());
 
   // 추후 현재 locale 정보 값 파라미터로 넘겨주기.
   const { data, refetch } = useFetchCategory();
@@ -172,6 +173,8 @@ export const CategoryManage = () => {
   //하위 메뉴 추가 버튼
   const handleAddSubMenu = (node: TreeNode) => {
     clearAllFormErrors();
+    setFormKey(Date.now());
+
     const initData: { [key: string]: any } = {};
     formConfig.builders.forEach((item) => {
       initData[item.name] = item.value;
@@ -403,6 +406,8 @@ export const CategoryManage = () => {
     if (formMode === FORM_MODE.NONE) {
       setSelectedNode(null);
       clearAllFormErrors();
+      setFormKey(Date.now());
+
       const initData: { [key: string]: any } = {};
       formConfig.builders.forEach((item) => {
         initData[item.name] = item.value;
@@ -508,10 +513,18 @@ export const CategoryManage = () => {
                 name={'code'}
                 element={
                   <DuplicateCheckInputFormField
+                    key={`code-${formKey}`}
+                    id="code"
                     onDuplicationCheck={duplicateCheck}
                     disabled={formMode === FORM_MODE.NONE}
                     hiddenPlaceholder={formMode === FORM_MODE.NONE}
                     inputType={'alphanumeric'}
+                    onValidationError={(message: string) => {
+                      setFormError('code', message);
+                    }}
+                    onValidationSuccess={() => {
+                      clearFormError('code');
+                    }}
                   />
                 }
               />

@@ -58,7 +58,7 @@ function RootComponent() {
       <ToastWrapper />
       {(import.meta.env.VITE_APP_ENV === 'local' || import.meta.env.VITE_APP_ENV === 'dev') && (
         <Suspense fallback={null}>
-          <ServerStatus />
+          {/* <ServerStatus /> */}
           <ReactQueryDevtools />
           <TanStackRouterDevtools />
         </Suspense>

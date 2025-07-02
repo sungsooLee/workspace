@@ -927,7 +927,8 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
         </div>
       )}
       {/* 확장된 노드의 AFTER 드롭존 - 모든 트리 타입에서 지원 */}
-      {hasChildren &&
+      {treeType === 'SAME_LEVEL_ONLY' &&
+        hasChildren &&
         isExpanded &&
         (isGlobalDragging || effectiveDraggedNode) &&
         effectiveDraggedNodeKey !== node.key &&
