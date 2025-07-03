@@ -1505,7 +1505,7 @@ export const guideData = [
     pageId: 'video',
     pageType: 'Page',
     completionDate: '2025-05-12',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-03',
     remarks: '- video.tsx\n- 다음 강의(modal) next-learning-popup.tsx',
   },
   {
@@ -1639,7 +1639,7 @@ export const guideData = [
     pageId: 'video-m',
     pageType: 'Page',
     completionDate: '2025-05-13',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-03',
     remarks: '- video-m.tsx',
   },
 

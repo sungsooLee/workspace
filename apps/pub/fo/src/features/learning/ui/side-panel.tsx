@@ -97,7 +97,8 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
                                   <span>4:11</span>
                                 </div>
                               </li>
-                              <li>
+                              {/* 퍼블수정 20250703 현재 학습 active 추가 */}
+                              <li className={styles.active}>
                                 <div className={styles.step_box}>
                                   <ProgressCheck progress={50} />
                                   <p>스콤아이템</p>

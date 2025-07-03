@@ -6,7 +6,6 @@ import {
   ModalContainer,
   ModalTitle,
   ModalFooter,
-  Panel,
 } from '@learnway/ui';
 
 import { IcoCaution, IcoClock01 } from '@learnway/icons';
@@ -21,14 +20,15 @@ import packageInformationStyles from '../../../pages/_layout/course-introduction
 import styles from './course-selection-popup.module.css';
 
 const CourseSelectionPopupComponent = () => {
-  const [courseValues, setCourseValues] = useState<string>();
+  // 퍼블수정 20250703 초기값 추가 및 임의 날짜 데이터 수정
+  const [courseValues, setCourseValues] = useState<string | undefined>(undefined);
   const courseOptions = [
     {
       label: '스마트제조를 위한 스마트공장 구축 및 추진실무 - MES 구축',
       value: 'a',
       original: {
         number: '1차',
-        date: '2026-01-15 ~ 2026-01-04',
+        date: '2026-01-15 ~ 2026-01-20',
         definitionList: [
           {
             tit: '잔여석',
@@ -46,7 +46,7 @@ const CourseSelectionPopupComponent = () => {
       value: 'b',
       original: {
         number: '2차',
-        date: '2026-01-15 ~ 2026-01-04',
+        date: '2026-01-15 ~ 2026-01-20',
         definitionList: [
           {
             tit: '잔여석',
@@ -101,8 +101,9 @@ const CourseSelectionPopupComponent = () => {
                 <div className={`${packageInformationStyles.box} ${styles.box}`}>
                   {/* definitionListStyles module */}
                   <div className={`${definitionListStyles.start} ${definitionListStyles.list}`}>
-                    {original.definitionList.map((item: any) => (
-                      <dl>
+                    {/* 퍼블수정 20250703 key값 추가 */}
+                    {original.definitionList.map((item: any, index: number) => (
+                      <dl key={index}>
                         <dt>{item.tit}</dt>
                         <dd>{item.txt}</dd>
                       </dl>

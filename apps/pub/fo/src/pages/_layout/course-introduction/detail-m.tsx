@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { Button, Tabs, useModal, Textarea, Accordion, useToast } from '@learnway/ui';
+import { Button, Tabs, useModal, Accordion, useToast } from '@learnway/ui';
 import { IcoHeart, IcoUser01, IcoArrowDown, IcoPlay } from '@learnway/icons';
 import { MobileView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
@@ -13,13 +13,13 @@ import {
   CourseReview, // 후기
   CourseInformationPopup, // 수강신청 불가 팝업창들 및 반려 팝업
   CourseFixedButton, // 수강신청 버튼
+  CourseCancelReasonPopup, // 수강신청 취소 사유 입력
 } from '../../../features/layout';
 
 import packageSideStyles from './package-side.module.css';
 import relatedSideStyles from './related-side.module.css';
 import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
 import thumnailImgStyles from '../../../shared/ui/thumnail/thumnail-img.module.css';
-import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import definitionListStyles from './definition-list.module.css';
 import packageInformationStyles from './package-information.module.css';
 import styles from './detail-m.module.css';
@@ -42,7 +42,7 @@ function RouteComponent() {
   const [packageInformation, setPackageInformation] = useState(true);
 
   // 탭
-  const [selectedTabKey, setSelectedTabKey] = useState<string>('');
+  const [selectedTabKey, setSelectedTabKey] = useState<string>('1');
   const [selectedTabTitle, setSelectedTabTitle] = useState<number>(0);
 
   // 탭 타이틀
@@ -81,9 +81,10 @@ function RouteComponent() {
   ];
 
   // 수강신청 취소 신청
-  const CourseCencelConfirm = () => {
+  // 퍼블수정 20250703 함수명 변경 및 title Fragment 삭제
+  const handleCourseCancelConfirm = () => {
     openConfirm({
-      title: <>수강 신청을 취소하시겠습니까?</>,
+      title: '수강 신청을 취소하시겠습니까?',
       content: (
         <>
           지금 취소하실 경우,
@@ -96,41 +97,21 @@ function RouteComponent() {
     });
   };
 
-  // 수강신청 취소 사유 입력
-  const CourseCencelReasonConfirm = () => {
-    openConfirm({
-      title: <>수강신청 취소 사유를 입력해주세요</>,
-      content: (
-        <div className={`${formStyles.form_item} ${styles.form_item}`}>
-          <div className={formStyles.input_box}>
-            <Textarea
-              id="textarea"
-              rows={2}
-              cols={2}
-              resize="none"
-              placeholder="Text"
-              maxLength={100}
-              className={formStyles.textarea}
-            />
-          </div>
-        </div>
-      ),
-      okButtonLabel: '확인',
-      cancelButtonLabel: '취소',
-    });
-  };
+  // 퍼블수정 20250703 수강신청 취소 사유 popup으로 변경 (CourseCancelReasonPopup)
 
   // 수창취소 완료
-  const CourseCencelCompleteAlert = () => {
+  // 퍼블수정 20250703 함수명 변경 및 title Fragment 삭제
+  const handleCourseCancelCompleteAlert = () => {
     openAlert({
-      title: <>수강취소 되었습니다</>,
+      title: '수강취소 되었습니다',
     });
   };
 
   // 수강신청 알림
-  const CourseAlarmAlert = () => {
+  // 퍼블수정 20250703 함수명 변경 및 title Fragment 삭제
+  const handleCourseAlarmAlert = () => {
     openAlert({
-      title: <>수강신청 알림</>,
+      title: '수강신청 알림',
       content: (
         <>
           수강신청이 가능할 때 연락드리겠습니다.
@@ -142,9 +123,10 @@ function RouteComponent() {
   };
 
   // 수강대기자 등록
-  const CourseWaitAlert = () => {
+  // 퍼블수정 20250703 함수명 변경 및 title Fragment 삭제
+  const handleCourseWaitAlert = () => {
     openAlert({
-      title: <>수강대기자 등록</>,
+      title: '수강대기자 등록',
       content: (
         <>
           본 과정의 수강신청 대기자로 등록되었습니다.
@@ -158,9 +140,10 @@ function RouteComponent() {
   };
 
   // 차수 알림 등록
-  const CourseTimeAlert = () => {
+  // 퍼블수정 20250703 함수명 변경 및 title Fragment 삭제
+  const handleCourseTimeAlert = () => {
     openAlert({
-      title: <>차수 알림 등록</>,
+      title: '차수 알림 등록',
       content: (
         <>
           본 과정의 차수 오픈시 연락드리겠습니다.
@@ -181,7 +164,7 @@ function RouteComponent() {
   };
 
   // 패키지 아코디언
-  const [accordionValue, setAccordionValue] = useState<string>('');
+  const [accordionValue, setAccordionValue] = useState<string>('a');
   const accordionValueItems = [
     {
       value: 'a',
@@ -266,7 +249,14 @@ function RouteComponent() {
     <div className={`${styles.start} ${styles.package_wrap}`}>
       <div className={styles.thumbnail_img}>
         {/* 플레이 버튼 o */}
-        <Button>
+        <Button
+          onClick={() =>
+            openModal({
+              width: 'sm',
+              content: <CourseCancelReasonPopup />,
+            })
+          }
+        >
           <img src={bnrImage1} alt="" />
           <div className={styles.img_play}>
             <img src={playImg} alt="" />
@@ -346,8 +336,9 @@ function RouteComponent() {
       <div className={styles.tab_title}>
         <div className={styles.box}>
           {tabTitle.map((item, index) => (
+            // 퍼블수정 20250703 key 값 수정
             <Button
-              key={item.tabNumber}
+              key={index}
               className={selectedTabTitle === index ? styles.active : ''}
               onClick={() => handleTab(item.tabNumber, index)}
             >
