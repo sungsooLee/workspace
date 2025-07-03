@@ -7,10 +7,8 @@ import { Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { FormSubTitle } from '@shared/ui';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP, useCodeStore } from '@learnway/hooks';
-
-import { queryOptions } from '@entities/user-group/service/user-group-company.queries';
 import { EnUserGroupType } from '@types';
-import { useWatch } from 'react-hook-form';
+import { queryOptions } from '@entities/user-group/service/user-group-company.queries';
 
 interface CompanyDetailHRUsergroupProps {
   userGroupId?: number;
