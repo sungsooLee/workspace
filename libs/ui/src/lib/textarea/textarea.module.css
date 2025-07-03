@@ -33,4 +33,7 @@
   .text_limit {
     @apply flex justify-end pb-[11px] pr-[12px] text-[12px] font-normal leading-[1rem] text-[var(--gray6)];
   }
+  &.error {
+    @apply border-[var(--status1)];
+  }
 }
