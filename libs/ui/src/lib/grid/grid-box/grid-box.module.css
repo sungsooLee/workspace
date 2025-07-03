@@ -64,7 +64,7 @@
       @apply text-[var(--gray9)];
     }
     .button_info {
-      @apply mb-[8px] flex min-h-[32px] items-center;
+      @apply mb-[8px] flex min-h-[32px] flex-1 items-center justify-end;
       [class*='nlp--checkbox'] {
         @apply mr-[12px];
         & + [class*='nlp--button'] {
@@ -85,8 +85,11 @@
           @apply !w-[108px];
         }
         & + [class*='nlp--input'] {
-          @apply mx-[8px] !w-[180px];
+          @apply mx-[8px] !w-[180px] !max-w-[180px];
         }
+      }
+      [class*='nlp--input'] {
+        @apply !w-[180px] !max-w-[180px];
       }
       &:empty {
         @apply hidden;
