@@ -30,6 +30,8 @@ export type ButtonVariantType =
   | 'ghost'
   | 'link'
   | 'arrow'
+  | 'share'
+  | 'heart'
   | 'soft';
 
 /**
