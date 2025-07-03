@@ -154,7 +154,7 @@ import { IcoAlertCircleGray } from '@learnway/icons'; // 사용할 icon 함수�
 // 적용방법(예시)
 <IcoAlertCircleGray width={24} height={24} stroke="#444" fill="" />
 
- // CSS활용 예시
+ // CSS활용 예시 (권장)
 <IcoAlertCircleGray className={styles.ico} />
 
 // CSS

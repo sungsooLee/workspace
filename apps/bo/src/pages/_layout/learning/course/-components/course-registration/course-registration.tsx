@@ -16,7 +16,6 @@ interface CourseRegistrationProps {
 const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationProps>(
   ({ dummy, initialData }, ref) => {
     const { t } = useTranslation();
-    // const { provider, getValues, updateFormData } = dynamicForm;
     const { provider, getValues, updateFormData, onFormValid, formState } = useDynamicForm2({
       builders: [],
     });
@@ -35,8 +34,8 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationPro
 
         return {
           isValid,
-          data: isValid ? data : undefined,
-          errors: isValid ? undefined : errors,
+          data,
+          errors,
         };
       },
     }));

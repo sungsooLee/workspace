@@ -26,7 +26,6 @@
               @apply px-[6px];
             }
           }
-
           [class*='link'] {
             @apply !body_bo_2_r text-[var(--gray7)] underline;
             & + [class*='link'] {
@@ -75,6 +74,9 @@
 
           &:has(> div) {
             @apply w-full py-[4px];
+          }
+          &:has([class*='nlp--switch']) {
+            @apply pt-[6px];
           }
           & > div {
             &[role='radiogroup'] {

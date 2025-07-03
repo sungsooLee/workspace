@@ -25,11 +25,14 @@ const TrainingPlaceListComponent = (props: TrainingPlaceListProps, ref: any) => 
 
   useEffect(() => {
     gridFetch();
-  }, []);
+  }, [gridFetch]);
 
-  const handleOnSearch = useCallback((data: any) => {
-    gridFetch(data);
-  }, []);
+  const handleOnSearch = useCallback(
+    (data: any) => {
+      gridFetch(data);
+    },
+    [gridFetch],
+  );
 
   useImperativeHandle(ref, () => ({
     reload() {

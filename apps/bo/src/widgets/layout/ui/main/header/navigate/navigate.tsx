@@ -15,7 +15,7 @@ function findMenuPath(menu: Menu | undefined) {
 }
 function NavigateComponent() {
   const { t } = useTranslation();
-  const [activeMenuDepthMenu, setActiveMenuDepthMenu] = useActiveMenuDepthState();
+  const { activeMenuDepthMenu } = useActiveMenuDepthState((state) => state);
   const { data } = useMenuHierarchy();
   // const matchRoute = useMatchRoute();
 

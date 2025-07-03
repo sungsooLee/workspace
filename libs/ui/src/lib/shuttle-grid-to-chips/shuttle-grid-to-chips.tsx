@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import { cn } from '@learnway/shared';
 import { GridBoxProps } from '../grid/types';
 import styles from './shuttle-grid-to-chips.module.css';
@@ -65,6 +65,7 @@ const ShuttleGridToChipsComponent = <T,>(
     rowKey,
     className,
     leftTitle,
+    rightTitle,
     selectedItems = [],
     onSelectedChange,
   }: ShuttleGridToChipsProps<T>,
@@ -129,17 +130,19 @@ const ShuttleGridToChipsComponent = <T,>(
     // setRightGridData(selectedRows);
   };
 
-  /**
-   * `rightGridData` 상태가 변경될 때마다 `onSelectedChange` 콜백을 호출하여 부모에게 변경된 데이터를 알립니다.
-   */
-  // useEffect(() => {
-  //   onSelectedChange?.(rightGridData);
-  // }, [rightGridData]);
-
   // 항목 제거 핸들러
   const handleRemoveItem = (deleteId: string) => {
     const newItems = selectedItems.filter(({ id }) => id !== deleteId);
     onSelectedChange(newItems);
+  };
+
+  /**
+   * 우측 그리드의 '전체 삭제' 버튼 클릭 시 호출되는 핸들러.
+   * 우측 그리드의 모든 데이터를 비웁니다.
+   */
+  const removeAll = () => {
+    // 좌측 그리드 전체 행 선택 해제, 로직 실행하면 handleLeftGridRowsSelect 실행됨
+    leftTableInstance?.setRowSelection({});
   };
 
   return (
@@ -153,7 +156,6 @@ const ShuttleGridToChipsComponent = <T,>(
           columns={leftGridColumns} // 좌측 그리드 컬럼 정의
           multiple // 다중 선택 가능
           disabledSelectionToggle // 선택 체크박스 비활성화 (버튼으로 선택 제어)
-          showSelectAll // '전체 선택' 기능 표시
           hideRowSelectionCheckBox={hideRowSelectionCheckBox} // 행 선택 체크박스 숨김 여부
           showNumberingColumn={showNumberingColumn} // 번호 매김 컬럼 표시 여부
           onRowsSelect={handleLeftGridRowsSelect} // 행 선택 시 호출되는 핸들러
@@ -166,14 +168,9 @@ const ShuttleGridToChipsComponent = <T,>(
       </div>
       <div className={styles.grid_wrap}>
         <div className={titleStyles.title_wrap}>
-          {/* <h3 className={titleStyles.title}>{targetTitle || title}</h3> */}
+          <h3 className={titleStyles.title}>{rightTitle}</h3>
           <div className={layoutStyles.btn_wrap}>
-            <Button
-              variant="text"
-              size="sm"
-              className={layoutStyles.btn_text}
-              // onClick={handleRemoveAllItem}
-            >
+            <Button variant="text" size="sm" className={layoutStyles.btn_text} onClick={removeAll}>
               {'전체삭제'}
             </Button>
           </div>

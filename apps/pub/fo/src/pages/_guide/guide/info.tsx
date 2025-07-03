@@ -9,7 +9,12 @@ function RouteComponent() {
     <div>
       <h2 className="guide_tit2">Guide Info</h2>
       <h3 className="guide_tit3">소개</h3>
-      <div className="info">APP : FO(학습자),BO(관리자),libs(공통)</div>
+      <div className="info">
+        APP : FO(학습자),BO(관리자),libs(공통)
+        <br />- 퍼블 작업 폴더 : pub &gt; fo(FO) / pub &gt; bo(BO)
+        <br />- FO 기본서체 : 'NanumBarunGothic' / BO 기본서체 : 'Pretendard Variable' / 다국어 :
+        기본 시스템 폰트
+      </div>
       <h3 className="guide_tit3">체크사항</h3>
       <ul className="info_ul">
         <li>

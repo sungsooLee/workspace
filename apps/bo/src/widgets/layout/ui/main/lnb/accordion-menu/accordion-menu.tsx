@@ -30,17 +30,17 @@ const AccordionMenuComponent = ({
   const { t } = useTranslation();
   const router = useRouter();
   const [value, setValue] = useState<string[] | undefined>();
-  const [activeMenuDepth] = useActiveMenuDepthState();
+  const { activeMenuDepthMenu } = useActiveMenuDepthState((state) => state);
 
   /**
    * current routing menu의 경우 accordion open
    */
   useEffect(() => {
-    if (!activeMenuDepth || !activeMenuDepth?.length || !activeMenuDepth?.[depth - 1]) {
+    if (!activeMenuDepthMenu || !activeMenuDepthMenu?.length || !activeMenuDepthMenu?.[depth - 1]) {
       return;
     }
-    setValue([...(value ?? []), activeMenuDepth[depth - 1].key]);
-  }, [activeMenuDepth, depth]);
+    setValue([...(value ?? []), activeMenuDepthMenu[depth - 1].key]);
+  }, [activeMenuDepthMenu, depth]);
 
   /**
    * active: current routing menu (4 depth에 한해 적용 - 디자인 정의)
@@ -54,9 +54,10 @@ const AccordionMenuComponent = ({
 
         const hasChildren = childrenMenu && childrenMenu.length > 0;
         let active = false;
-        if (activeMenuDepth && activeMenuDepth[depth - 1]) {
-          active = activeMenuDepth[depth - 1]?.tenantMappingMenuId === menu?.tenantMappingMenuId;
-        } else if (depth === 4 && activeMenuDepth) {
+        if (activeMenuDepthMenu && activeMenuDepthMenu[depth - 1]) {
+          active =
+            activeMenuDepthMenu[depth - 1]?.tenantMappingMenuId === menu?.tenantMappingMenuId;
+        } else if (depth === 4 && activeMenuDepthMenu) {
           const currentPath = router.state.location.pathname;
           active = currentPath === menu?.path;
         }
@@ -79,7 +80,7 @@ const AccordionMenuComponent = ({
           tenantMappingMenuId: menu.tenantMappingMenuId,
         } as AccordionItem;
       });
-  }, [menus, activeMenuDepth, router.state.location.pathname]);
+  }, [menus, activeMenuDepthMenu, router.state.location.pathname]);
 
   useEffect(() => {
     if (openAll === undefined) {
@@ -94,8 +95,8 @@ const AccordionMenuComponent = ({
       );
     } else {
       let menuValue: SetStateAction<string[] | undefined> = [];
-      if (activeMenuDepth) {
-        const currentMenul = activeMenuDepth[depth - 1];
+      if (activeMenuDepthMenu) {
+        const currentMenul = activeMenuDepthMenu[depth - 1];
         menuValue = map(
           items.filter((item) => item.tenantMappingMenuId === currentMenul?.tenantMappingMenuId),
           'value',

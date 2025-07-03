@@ -1,7 +1,7 @@
 import ChannelService from '@entities/channel/api/channel';
 import RoleManagerService from '@entities/role/api/role-manager';
 import { DropdownFormField } from '@features/form';
-import { CategoryChoiceModal, ChannelListModal } from '@features/learning/course';
+import { CategoryChoiceModal } from '@features/learning/course';
 import {
   TrainingPlaceChoiceModal,
   UserChoiceModal,
@@ -80,7 +80,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
           {/*유형*/}
           <FormRow2
             provider={provider}
-            name={'courseId'}
+            name={'courseType'}
             label={'유형'}
             element={
               <DropdownFormField
@@ -163,7 +163,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
         <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'whiteList'}
+            name={'targetList'}
             label={'학습대상'}
             element={
               <ChipListModalSelectorFormField

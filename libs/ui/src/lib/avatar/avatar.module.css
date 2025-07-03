@@ -1,7 +1,7 @@
 /* avatar.module.css */
 
 .start {
-  @apply flex items-center justify-center overflow-hidden rounded-[100%] bg-[var(--blue35)] font-[600];
+  @apply flex items-center justify-center overflow-hidden rounded-[100%] bg-[var(--blue35)] font-[600] leading-[140%];
   /* 사이즈별 클래스 */
   &.size--sm {
     @apply h-[32px] w-[32px] text-[1.4rem];

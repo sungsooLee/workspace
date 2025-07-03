@@ -44,7 +44,7 @@ export function useRenewalMenuStateFromRouting() {
   const state = useRouterState();
 
   const { data: authUser } = useFetchAuthUser();
-  const [, setActiveMenuDepth] = useActiveMenuDepthState();
+  const { setActiveMenuDepthMenu } = useActiveMenuDepthState();
   const { setMenus } = useLayoutStore((state) => state); // 최근본 메뉴
 
   useEffect(() => {
@@ -71,7 +71,7 @@ export function useRenewalMenuStateFromRouting() {
         if (menu.path === path) {
           depths.unshift(menu);
           if (menu.depth === 1) {
-            setActiveMenuDepth(depths);
+            setActiveMenuDepthMenu(depths);
           } else {
             recursiveCallById(menu.parentNode.tenantMappingMenuId);
           }
@@ -85,7 +85,7 @@ export function useRenewalMenuStateFromRouting() {
         if (menu.tenantMappingMenuId === id) {
           depths.unshift(menu);
           if (menu.depth === 1) {
-            setActiveMenuDepth(depths);
+            setActiveMenuDepthMenu(depths);
           } else {
             recursiveCallById(menu.parentNode.tenantMappingMenuId);
           }

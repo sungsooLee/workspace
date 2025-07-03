@@ -10,7 +10,7 @@ import styles from './breadcrumbs.module.css';
 
 function BreadcrumbsComponent() {
   const { t } = useTranslation();
-  const [activeMenuDepthMenu] = useActiveMenuDepthState();
+  const { activeMenuDepthMenu } = useActiveMenuDepthState((state) => state);
 
   const matchRoute = useMatchRoute();
 
