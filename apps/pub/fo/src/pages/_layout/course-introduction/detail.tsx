@@ -448,7 +448,7 @@ function RouteComponent() {
                   <span>500</span>
                 </div>
                 <div className={packageInformationStyles.box}>
-                  <IcoAvatar width={16} height={16} fill="#a1c2ff" />
+                  <IcoAvatar width={16} height={16} />
                   <span>77,500</span>
                 </div>
               </div>
