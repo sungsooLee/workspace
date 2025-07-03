@@ -12,9 +12,7 @@ import { widgetsQueryOptions } from '../../../../../entities/widgets';
 import { SearchBox } from '../../../../../shared/ui/search-box';
 
 import { WidgetPreviewButton } from '../../../../../features/platform';
-import { GridBox, useGridBox } from '@learnway/ui';
-
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
+import { Divider, GridBox, useGridBox } from '@learnway/ui';
 
 export const Route = createLazyFileRoute('/_layout/platform/system/widget/')({
   component: RouteComponent,
@@ -64,19 +62,16 @@ function RouteComponent() {
     <PageContainer>
       <MainContents>
         <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
-        <div className={cn(boxStyles.start, boxStyles.inner)}>
-          <div className="grid_wrap">
-            <GridBox
-              config={gridConfig}
-              onRowSelect={(row: any) => {
-                router.navigate({
-                  to: '/platform/system/widget/view',
-                  state: { widgetCode: row?.widgetCode },
-                });
-              }}
-            />
-          </div>
-        </div>
+        <Divider />
+        <GridBox
+          config={gridConfig}
+          onRowSelect={(row: any) => {
+            router.navigate({
+              to: '/platform/system/widget/view',
+              state: { widgetCode: row?.widgetCode },
+            });
+          }}
+        />
       </MainContents>
     </PageContainer>
   );

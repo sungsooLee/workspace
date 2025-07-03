@@ -1,7 +1,15 @@
 import { useEffect, useCallback, useState } from 'react';
 import { t } from 'i18next';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, Checkbox, GridBox, useGridBox, useGridBoxConfig, useModal } from '@learnway/ui';
+import {
+  Button,
+  Checkbox,
+  Divider,
+  GridBox,
+  useGridBox,
+  useGridBoxConfig,
+  useModal,
+} from '@learnway/ui';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
@@ -19,7 +27,6 @@ import { MyRoleExtendModal } from '@features/user/my-page/ui/my-role-extend-moda
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { useQueryClient } from '@tanstack/react-query';
 
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
 import { size } from 'lodash';
 
@@ -187,25 +194,22 @@ function RouteComponent() {
     <PageContainer>
       <MainContents>
         <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
-        <div className={cn(boxStyles.start, boxStyles.inner)}>
-          <div className="grid_wrap">
-            <GridBox
-              config={gConfig}
-              columns={columns}
-              multiple
-              title={t('역할신청 목록')}
-              hideRowSelectionCheckBox
-              customButtonNode={
-                <>
-                  <Button variant="text" label={t('승인')} onClick={handleOnApprove} />
-                  <Button variant="text" label={t('반려')} onClick={handleOnReject} />
-                </>
-              }
-              onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
-              isRowSelectable={handleOnSelectable}
-            />
-          </div>
-        </div>
+        <Divider />
+        <GridBox
+          config={gConfig}
+          columns={columns}
+          multiple
+          title={t('역할신청 목록')}
+          hideRowSelectionCheckBox
+          customButtonNode={
+            <>
+              <Button variant="text" label={t('승인')} onClick={handleOnApprove} />
+              <Button variant="text" label={t('반려')} onClick={handleOnReject} />
+            </>
+          }
+          onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
+          isRowSelectable={handleOnSelectable}
+        />
       </MainContents>
     </PageContainer>
   );

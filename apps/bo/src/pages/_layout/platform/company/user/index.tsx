@@ -3,15 +3,13 @@ import { t } from 'i18next';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { Button, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
+import { Button, Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 import { formUtils } from '@entities/form-utils';
-
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
 export const Route = createFileRoute('/_layout/platform/company/user/')({
   component: RouteComponent,
@@ -36,11 +34,8 @@ function RouteComponent() {
     <PageContainer>
       <MainContents>
         <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
-        <div className={cn(boxStyles.start, boxStyles.inner)}>
-          <div className="grid_wrap">
-            <GridBox config={gConfig} columns={columns} title="유저 목록" />
-          </div>
-        </div>
+        <Divider />
+        <GridBox config={gConfig} columns={columns} title="유저 목록" />
       </MainContents>
     </PageContainer>
   );

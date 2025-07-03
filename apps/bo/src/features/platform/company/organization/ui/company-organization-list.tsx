@@ -3,9 +3,8 @@ import { useRouter, useRouterState, Link } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { Button, GridBox, useGridBox } from '@learnway/ui';
+import { Button, Divider, GridBox, useGridBox } from '@learnway/ui';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 
 import { useFetchAuthUser } from '@learnway/auth/entities';
@@ -94,11 +93,8 @@ const CompanyOrganizationListComponent = ({ rootPath }: { rootPath: string }) =>
   return (
     <>
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
-      <div className={cn(boxStyles.start, boxStyles.inner)}>
-        <div className="grid_wrap">
-          <GridBox config={gConfig} columns={columns} />
-        </div>
-      </div>
+      <Divider />
+      <GridBox config={gConfig} columns={columns} />
     </>
   );
 };
