@@ -69,7 +69,9 @@ const CompanyDetailHRLinkComponent: FC<any> = ({ type }: CompanyDetailHRLinkProp
         data={data}
         columns={linkColumns}
         title={t('유저그룹') + ' - ' + linkTitle}
-        onSearchClick={handleGridSearchClick}
+        onSearchClick={(data: any) => {
+          console.log('####', data);
+        }}
       />
       <CompanyDetailHRUsergroup userGroupId={userGroupId} userGroupType={type} />
     </SplitPanel>
