@@ -1,0 +1,9 @@
+.start {
+  &.card_list {
+    & > button {
+      & + button {
+        @apply mt-[12px];
+      }
+    }
+  }
+}

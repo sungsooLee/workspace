@@ -1,0 +1,20 @@
+.start {
+  &.package_card {
+    @apply flex w-full items-center !px-0;
+    .img_box {
+      @apply relative;
+      span {
+        @apply label-sm-b absolute left-[8px] top-[8px] inline-block rounded-[4px] bg-[var(--blue50)] px-[6px] py-[3px] text-white;
+      }
+      .img {
+        @apply h-[90px] w-[160px] overflow-hidden rounded-[8px];
+        img {
+          @apply h-auto w-full;
+        }
+      }
+    }
+    p {
+      @apply body-md ml-[16px] flex-1 text-left leading-[24px] text-[var(--gray35)];
+    }
+  }
+}

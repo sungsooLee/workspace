@@ -8,14 +8,7 @@ import { SearchBox } from '@shared/ui/search-box';
 import { FormSubTitle } from '@shared/ui';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP, useCodeStore } from '@learnway/hooks';
 
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
-import { queryOptions } from '@entities/user-group/service/user-group-company.queries';
-import { EnUserGroupType } from '@types';
-
-interface CompanyDetailHRUsergroupProps {
-  userGroupId?: number;
-  userGroupType: EnUserGroupType;
-}
+import { useWatch } from 'react-hook-form';
 
 const CompanyDetailHRUsergroupComponent: FC<any> = ({
   userGroupId,
