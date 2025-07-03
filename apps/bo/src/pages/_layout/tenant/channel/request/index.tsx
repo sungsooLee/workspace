@@ -4,11 +4,17 @@ import { t } from 'i18next';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { Button, Checkbox, GridBox, useGridBox, useGridBoxConfig, useModal } from '@learnway/ui';
+import {
+  Button,
+  Checkbox,
+  Divider,
+  GridBox,
+  useGridBox,
+  useGridBoxConfig,
+  useModal,
+} from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
-import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
@@ -174,46 +180,40 @@ function RouteComponent() {
   return (
     <PageContainer>
       <MainContents>
-        <div className={cn(searchStyles.start, searchStyles.wrap)}>
-          <SearchBox provider={sProvider} onSearch={handleOnSearch} />
-        </div>
-
-        <div className={cn(boxStyles.start, boxStyles.inner)}>
-          <div className="grid_wrap">
-            <GridBox
-              config={gConfig}
-              columns={columns}
-              multiple
-              showColumnSettings={false}
-              hideRowSelectionCheckBox={true}
-              onRowsSelect={handleGridRowsSelect}
-              title={t('채널 개설 신청 목록')}
-              customButtonNode={
-                <>
-                  <Button
-                    variant="text"
-                    size="sm"
-                    className={layoutStyles.btn_text}
-                    disabled={selectedRows.length === 0}
-                    label={t('접수')}
-                    stopPropagation
-                    onClick={handleAcceptClick}
-                  />
-                  <Button
-                    variant="text"
-                    size="sm"
-                    className={layoutStyles.btn_text}
-                    disabled={selectedRows.length === 0}
-                    label={t('반려')}
-                    stopPropagation
-                    onClick={handleRejectClick}
-                  />
-                </>
-              }
-              isRowSelectable={handleOnSelectable}
-            />
-          </div>
-        </div>
+        <SearchBox provider={sProvider} onSearch={handleOnSearch} />
+        <Divider />
+        <GridBox
+          config={gConfig}
+          columns={columns}
+          multiple
+          showColumnSettings={false}
+          hideRowSelectionCheckBox={true}
+          onRowsSelect={handleGridRowsSelect}
+          title={t('채널 개설 신청 목록')}
+          customButtonNode={
+            <>
+              <Button
+                variant="text"
+                size="sm"
+                className={layoutStyles.btn_text}
+                disabled={selectedRows.length === 0}
+                label={t('접수')}
+                stopPropagation
+                onClick={handleAcceptClick}
+              />
+              <Button
+                variant="text"
+                size="sm"
+                className={layoutStyles.btn_text}
+                disabled={selectedRows.length === 0}
+                label={t('반려')}
+                stopPropagation
+                onClick={handleRejectClick}
+              />
+            </>
+          }
+          isRowSelectable={handleOnSelectable}
+        />
       </MainContents>
     </PageContainer>
   );

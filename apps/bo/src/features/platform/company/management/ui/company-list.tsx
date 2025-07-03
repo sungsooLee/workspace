@@ -4,13 +4,11 @@ import { t } from 'i18next';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { Link } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
+import { Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 import { queryOptions } from '@entities/companies/service/companies.queries';
 import { EnGlobalConst } from '@types';
-
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
 const CompanyListComponent = () => {
   const location = useLocation();
@@ -91,11 +89,8 @@ const CompanyListComponent = () => {
   return (
     <>
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
-      <div className={cn(boxStyles.start, boxStyles.inner)}>
-        <div className="grid_wrap">
-          <GridBox config={gConfig} columns={columns} title="회사 목록" />
-        </div>
-      </div>
+      <Divider />
+      <GridBox config={gConfig} columns={columns} title="회사 목록" />
     </>
   );
 };
