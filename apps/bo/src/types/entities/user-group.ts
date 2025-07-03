@@ -27,7 +27,7 @@ export interface OrganizationTreeResponse {
 
 export interface UserGroupsParam {
   userGroupType: UserGroupType;
-  userGroupName: string;
+  userGroupName?: string;
 }
 
 export interface UsersByIdsParam {
@@ -35,5 +35,16 @@ export interface UsersByIdsParam {
   deptName: string;
   employeeNumber: string;
   name: string;
+  accountStatus: string;
+}
+
+export interface SubdirectoryUsersParam {
+  userGroupType: UserGroupType;
+  companyId: string;
+  companyCode: string;
+  deptName: string;
+  userGroupIds: number[];
+  employeeNumber: string;
+  userName: string;
   accountStatus: string;
 }
