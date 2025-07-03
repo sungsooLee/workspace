@@ -1,16 +1,16 @@
 import { createLazyFileRoute } from '@tanstack/react-router';
-import { Player, PlayerContainer, usePlayer } from '@learnway/ui';
+import { VideoPlayer, VideoPlayerContainer, useVideoPlayer } from '@learnway/ui';
 
-export const Route = createLazyFileRoute('/_unauth/player-demo')({
+export const Route = createLazyFileRoute('/_unauth/video-player-demo')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const player = usePlayer();
+  const player = useVideoPlayer();
 
   return (
-    <PlayerContainer ref={player.playerContainerRef} {...player}>
-      <Player
+    <VideoPlayerContainer ref={player.playerContainerRef} {...player}>
+      <VideoPlayer
         ref={player.playerRef}
         playing={player.playing}
         onProgress={player.onProgress}
@@ -33,6 +33,6 @@ function RouteComponent() {
           },
         }}
       />
-    </PlayerContainer>
+    </VideoPlayerContainer>
   );
 }

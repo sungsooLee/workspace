@@ -1,5 +1,5 @@
 import { Volume2, VolumeX } from 'lucide-react';
-import { PlayerContainerProps } from '../types';
+import { VideoPlayerContainerProps } from '../types';
 import {
   IcoExpand,
   IcoPlayerPause,
@@ -28,7 +28,7 @@ const BottomProgressBar = ({
   changePlaybackRate,
   handleSeek,
 }: Pick<
-  PlayerContainerProps,
+  VideoPlayerContainerProps,
   | 'isFullscreen'
   | 'currentTime'
   | 'subtitlesVisible'

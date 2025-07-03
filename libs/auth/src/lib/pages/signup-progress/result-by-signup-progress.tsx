@@ -25,7 +25,7 @@ export function ResultBySignupProgressPage({ route }: any) {
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.signup_step}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
           <ProccessResult
-            title={t('LABEL.message.signupProgressResult01')}
+            title={t('LABEL.messages.signupProgressResult01')}
             className={styles.success_info}
           >
             {t('LABEL.common.applicationDateTime')} : <strong>YYYY-MM-DD</strong>

@@ -88,8 +88,8 @@ export function SearchAccountPage({ route, enableTab = true, hiddenIcon = true }
         onError: (error: any) => {
           // 인증 성공 후 사용자 정보 조회 실패
           alert({
-            title: 'LABEL.message.invalidInputInformation',
-            content: 'LABEL.message.invalidInputInformationDescription',
+            title: 'LABEL.messages.invalidInputInformation',
+            content: 'LABEL.messages.invalidInputInformationDescription',
           });
         },
       },

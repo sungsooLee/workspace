@@ -1,4 +1,4 @@
-import type { PlayerContainerProps } from './types';
+import type { VideoPlayerContainerProps } from './types';
 import { forwardRef, useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import LessonTitle from './components/lesson-title';
@@ -10,7 +10,7 @@ import RightSideBar from './components/right-side-bar';
 
 const AUTO_HIDE_DELAY = 3000; // 3
 
-const PlayerContainerComponent = forwardRef<HTMLDivElement, PlayerContainerProps>(
+const VideoPlayerContainerComponent = forwardRef<HTMLDivElement, VideoPlayerContainerProps>(
   ({ children, showCurriculumSection, ...props }, ref) => {
     const [isHovered, setIsHovered] = useState(false);
 
@@ -99,6 +99,6 @@ const PlayerContainerComponent = forwardRef<HTMLDivElement, PlayerContainerProps
   },
 );
 
-PlayerContainerComponent.displayName = 'PlayerContainer';
+VideoPlayerContainerComponent.displayName = 'VideoPlayerContainer';
 
-export const PlayerContainer = PlayerContainerComponent;
+export const VideoPlayerContainer = VideoPlayerContainerComponent;

@@ -136,9 +136,9 @@ function RouteComponent() {
       </div>
 
       <NoticeBox title={t('LABEL.common.caution')} className={styles.notice}>
-        <dd>{t('LABEL.message.cautionChangeInformationHsw')}</dd>
+        <dd>{t('LABEL.messages.cautionChangeInformationHsw')}</dd>
         <dd>
-          {t('LABEL.message.cautionChangeInformationDdms')}{' '}
+          {t('LABEL.messages.cautionChangeInformationDdms')}{' '}
           <Link to={'/'}>{t('LABEL.common.goToDdms')} &#62;</Link>
         </dd>
       </NoticeBox>
@@ -146,10 +146,10 @@ function RouteComponent() {
       <div className={styles.bullet_notice}>
         <dl>
           <dt>{t('LABEL.common.withdrawMembership')}</dt>
-          <dd>{t('LABEL.message.cautionWithdrawMembership01')}</dd>
-          <dd>{t('LABEL.message.cautionWithdrawMembership02')}</dd>
+          <dd>{t('LABEL.messages.cautionWithdrawMembership01')}</dd>
+          <dd>{t('LABEL.messages.cautionWithdrawMembership02')}</dd>
           <dd>
-            {t('LABEL.message.cautionWithdrawMembership03')}
+            {t('LABEL.messages.cautionWithdrawMembership03')}
             <WithdrawMembershipButton />
           </dd>
         </dl>

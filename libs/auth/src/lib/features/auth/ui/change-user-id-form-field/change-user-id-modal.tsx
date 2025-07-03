@@ -93,7 +93,7 @@ const ChangeUserIdModalComponent = ({ widget }: { widget: any }) => {
         onSuccess: async (d, variables, context) => {
           updateEmail(data.email);
           verifyTimerCounter.set(0);
-          await alert('LABEL.message.updateEmailIdResultMessage');
+          await alert('LABEL.messages.updateEmailIdResultMessage');
           closeModal(data.email);
         },
         onError: handleVerifyError,
@@ -102,7 +102,7 @@ const ChangeUserIdModalComponent = ({ widget }: { widget: any }) => {
   };
 
   const handleVerifyError = () => {
-    setFormError('verificationCode', t('LABEL.message.invalidAuthNumber'));
+    setFormError('verificationCode', t('LABEL.messages.invalidAuthNumber'));
   };
 
   return (

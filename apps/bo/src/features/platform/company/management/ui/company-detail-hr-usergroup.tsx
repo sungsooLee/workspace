@@ -10,54 +10,16 @@ import { useSearchBox, SearchBoxConfig, CODE_GROUP, useCodeStore } from '@learnw
 
 import { useWatch } from 'react-hook-form';
 
-const CompanyDetailHRUsergroupComponent: FC<any> = () => {
+const CompanyDetailHRUsergroupComponent: FC<any> = ({
+  userGroupId,
+  userGroupType,
+}: CompanyDetailHRUsergroupProps) => {
   const routerState = useRouterState();
-  const companyCode = routerState.location.state?.companyCode;
-
-  const [companyOptions, setCompanyOptions] = useState<any[]>([]);
-  const [partOptions, setPartOptions] = useState<any[]>([]);
-  const [deptOptions, setDeptOptions] = useState<any[]>([]);
-  const [affiliationOptions, setAffiliationOptions] = useState<any[]>([]);
+  const companyId = routerState.location.state?.companyId;
 
   const searchConfig: SearchBoxConfig = {
     builders: [
       [
-        {
-          name: 'company',
-          type: 'dropdown',
-          label: t('회사'),
-          value: '',
-          options: companyOptions,
-          dropdownConfig: {
-            onChange: (value: any) => {
-              console.log('===== onchange', value);
-              return '';
-            },
-          },
-        },
-        {
-          name: 'part',
-          type: 'dropdown',
-          label: t('본부/사업부'),
-          value: '',
-          options: partOptions,
-        },
-        {
-          name: 'dept',
-          type: 'dropdown',
-          label: t('부서'),
-          value: '',
-          options: deptOptions,
-        },
-      ],
-      [
-        {
-          name: 'affiliation',
-          type: 'dropdown',
-          label: t('소속'),
-          value: '',
-          options: affiliationOptions,
-        },
         {
           name: 'employeeNumber',
           type: 'text',
@@ -65,7 +27,7 @@ const CompanyDetailHRUsergroupComponent: FC<any> = () => {
           value: '',
         },
         {
-          name: 'name',
+          name: 'userName',
           type: 'text',
           label: t('이름'),
           value: '',
@@ -74,50 +36,33 @@ const CompanyDetailHRUsergroupComponent: FC<any> = () => {
     ],
   };
 
-  const { getCode } = useCodeStore();
-  const {
-    control,
-    provider: searchProvider,
-    getValues,
-    updateFormData,
-  } = useSearchBox(searchConfig);
+  const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
 
-  const watchedCompany = useWatch({
-    control: control,
-    name: ['company'],
-  });
-  const watchedPart = useWatch({
-    control: control,
-    name: ['part'],
-  });
-  const watchedDept = useWatch({
-    control: control,
-    name: ['dept'],
-  });
+  useEffect(() => {
+    // if (userGroupId) {
+    //   console.log('## userGroupType', userGroupType);
+    //   gridFetch({
+    //     userGroupType: userGroupType,
+    //     companyId: companyId,
+    //     userGroupIds: [userGroupId],
+    //   });
+    // }
+    gridFetch({
+      userGroupType: userGroupType,
+      companyId: companyId,
+      userGroupIds: userGroupId ? [userGroupId] : [],
+    });
+  }, [userGroupId]);
 
   const handleOnSearch = useCallback((data: any) => {
-    //gridFetch(data);
+    gridFetch({
+      ...data,
+      userGroupType: userGroupType,
+      companyId: companyId,
+      userGroupIds: [userGroupId],
+    });
   }, []);
-
-  useEffect(() => {
-    const init = async () => {
-      const data: any[] = await getCode(CODE_GROUP['manual.company.companyCode']);
-      setCompanyOptions([...data]);
-    };
-    init();
-  }, []);
-
-  const [selectedCompanyCode, setSelectedCompanyCode] = useState<string>('');
-
-  useEffect(() => {
-    const selectCompanyCode: string = watchedCompany[0];
-    if (selectCompanyCode !== companyCode) {
-      setSelectedCompanyCode(selectCompanyCode);
-    }
-  }, [watchedCompany]);
-
-  // TODO. 추후 관련 API 나오면 추가
 
   return (
     <>
@@ -132,7 +77,7 @@ const CompanyDetailHRUsergroupComponent: FC<any> = () => {
 export const CompanyDetailHRUsergroup = CompanyDetailHRUsergroupComponent;
 
 const gridConfig: useGridBoxConfig = {
-  query: '',
+  query: queryOptions.userGroupUsers,
   columns: [
     {
       name: 'no1',
@@ -142,61 +87,49 @@ const gridConfig: useGridBoxConfig = {
   ],
   data: [],
 
-  pagination: {
-    pageSize: 10,
-    pageIndex: 0,
-    totalRows: 0,
+  gridState: {
+    page: 0,
+    size: 10,
+    sort: [],
   },
 };
 
 const columnHelper = createColumnHelper<any>();
 
 const columns = [
-  columnHelper.accessor('company', {
+  columnHelper.accessor('companyName', {
     cell: (info) => info.getValue(),
     header: '회사',
-    size: 200,
+    size: 160,
     enableGrouping: false,
   }),
-  columnHelper.accessor('part', {
-    cell: (info) => info.getValue(),
-    header: '본부/사업부',
-    size: 200,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('dept', {
-    cell: (info) => info.getValue(),
-    header: '부서',
-    size: 200,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('affiliation', {
+  columnHelper.accessor('deptName', {
     cell: (info) => info.getValue(),
     header: '소속',
-    size: 200,
+    size: 160,
     enableGrouping: false,
   }),
   columnHelper.accessor('employeeNumber', {
     cell: (info) => info.getValue(),
     header: '사번',
-    size: 200,
+    size: 160,
     enableGrouping: false,
   }),
-  columnHelper.accessor('name', {
+  columnHelper.accessor('userName', {
     cell: (info) => info.getValue(),
     header: '이름',
-    size: 200,
+    size: 160,
     enableGrouping: false,
   }),
-  columnHelper.accessor('employmentStatus', {
+  columnHelper.accessor('status', {
     cell: (info) => info.getValue(),
     header: '재직여부',
-    size: 200,
+    size: 80,
     enableGrouping: false,
   }),
   columnHelper.accessor('accountStatus', {
     cell: (info) => info.getValue(),
     header: '계정상태',
-    size: 100,
+    size: 80,
   }),
 ] as ColumnDef<any, unknown>[];

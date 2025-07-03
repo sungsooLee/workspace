@@ -124,7 +124,7 @@ export const roleManagerQueryOptions = {
   }),
   // 나의 역할 신청 목록 조회
   getMyRoleApplications: (payload: any) => ({
-    queryKey: [...roleQueryKeys.myApplications],
+    queryKey: [...roleQueryKeys.myApplications, payload.roleId],
     queryFn: async () =>
       payload ? RoleManagerService.fetchMyRoleApplications(payload) : getQuerySkipToken(),
   }),

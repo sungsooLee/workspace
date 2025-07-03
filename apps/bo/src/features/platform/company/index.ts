@@ -1,3 +1,4 @@
+export * from './management/service/company-management.service';
 export * from './management/ui/company-detail-hr-organization';
 export * from './management/ui/company-detail-hr-usergroup';
 export * from './management/ui/company-detail-hr';
