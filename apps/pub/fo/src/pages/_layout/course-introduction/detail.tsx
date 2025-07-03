@@ -1,13 +1,15 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import {
   Button,
   Tabs,
   Accordion,
+  EmptyText,
   OptionCard,
   OptionCardItem,
   useModal,
+  Textarea,
   Panel,
   useToast,
   Carousel,
@@ -16,7 +18,16 @@ import {
   ProgressBar,
   Avatar,
 } from '@learnway/ui';
-import { IcoHeart, IcoStar, IcoCaution, IcoClock01, IcoAvatar, IcoSymbol } from '@learnway/icons';
+import {
+  IcoHeart,
+  IcoUser01,
+  IcoStar,
+  IcoCaution,
+  IcoClock01,
+  IcoPlay,
+  IcoAvatar,
+  IcoSymbol,
+} from '@learnway/icons';
 import {
   CourseDashboard,
   CourseIntroduction, // 과정소개
@@ -24,9 +35,9 @@ import {
   CourseReview, // 후기
   CourseInformationPopup, // 수강신청 불가 팝업창들 및 반려 팝업
   CourseFixedButton, // 수강신청 버튼
-  CourseCancelReasonPopup, // 수강신청 취소 사유 입력
 } from '../../../features/layout';
 
+import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import pageContentsStyles from '../../_page-contents.module.css';
 import pageFullInner from '../../../widgets/layout/ui/container/page-full-inner.module.css';
 import definitionListStyles from './definition-list.module.css';
@@ -35,12 +46,14 @@ import lectureStyles from './lecture.module.css';
 import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
 import thumnailImgStyles from '../../../shared/ui/thumnail/thumnail-img.module.css';
 import packageSideStyles from './package-side.module.css';
+import relatedSideStyles from './related-side.module.css';
 
 import styles from './detail.module.css';
 
 // 이미지
 import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
 import bnrImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
+import logoHyundai from '@learnway/styles/fo/assets/images/common/logo_hyundai.png';
 import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 
 export const Route = createFileRoute('/_layout/course-introduction/detail')({
@@ -48,12 +61,13 @@ export const Route = createFileRoute('/_layout/course-introduction/detail')({
 });
 
 function RouteComponent() {
+  const { open: openModal } = useModal();
   const { confirm: openConfirm } = useModal();
   const { alert: openAlert } = useModal();
 
   // 탭
   const [selectedTabKey, setSelectedTabKey] = useState<string>('1');
-  const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0);
+  const [selectedTabTitle, setSelectedTabTitle] = useState<number>(0);
 
   // 탭 타이틀
   const tabTitle = [
@@ -64,7 +78,7 @@ function RouteComponent() {
   ];
   const handleTab = (key: string, index: number) => {
     setSelectedTabKey(key);
-    setSelectedTabIndex(index);
+    setSelectedTabTitle(index);
   };
 
   // 공통 컴포넌트 수정 요청중 (수정예정)
@@ -104,7 +118,7 @@ function RouteComponent() {
   ];
 
   // 패키지 아코디언
-  const [accordionValue, setAccordionValue] = useState<string>('a');
+  const [accordionValue, setAccordionValue] = useState<string>('');
   const accordionValueItems = [
     {
       value: 'a',
@@ -217,15 +231,14 @@ function RouteComponent() {
   ];
 
   // 수강신청 있는 과정
-  // 퍼블수정 20250703 초기값 추가 및 임의 날짜 데이터 수정
-  const [courseValues, setCourseValues] = useState<string | undefined>(undefined);
+  const [courseValues, setCourseValues] = useState<string>();
   const courseOptions = [
     {
       label: '스마트제조를 위한 스마트공장 구축 및 추진실무 - MES 구축',
       value: 'a',
       original: {
         number: '1차',
-        date: '2026-01-15 ~ 2026-01-20',
+        date: '2026-01-15 ~ 2026-01-04',
         definitionList: [
           {
             tit: '잔여석',
@@ -243,7 +256,7 @@ function RouteComponent() {
       value: 'b',
       original: {
         number: '2차',
-        date: '2026-01-15 ~ 2026-01-20',
+        date: '2026-01-15 ~ 2026-01-04',
         definitionList: [
           {
             tit: '잔여석',
@@ -259,10 +272,9 @@ function RouteComponent() {
   ];
 
   // 수강신청 취소 신청
-  // 퍼블수정 20250703 함수명 변경 및 title Fragment 삭제
-  const handleCourseCancelConfirm = () => {
+  const CourseCencelConfirm = () => {
     openConfirm({
-      title: '수강 신청을 취소하시겠습니까?',
+      title: <>수강 신청을 취소하시겠습니까?</>,
       content: (
         <>
           지금 취소하실 경우,
@@ -275,21 +287,41 @@ function RouteComponent() {
     });
   };
 
-  // 퍼블수정 20250703 수강신청 취소 사유 popup으로 변경 (CourseCancelReasonPopup)
+  // 수강신청 취소 사유 입력
+  const CourseCencelReasonConfirm = () => {
+    openConfirm({
+      title: <>수강신청 취소 사유를 입력해주세요</>,
+      content: (
+        <div className={`${formStyles.form_item} ${styles.form_item}`}>
+          <div className={formStyles.input_box}>
+            <Textarea
+              id="textarea"
+              rows={2}
+              cols={2}
+              resize="none"
+              placeholder="Text"
+              maxLength={100}
+              className={formStyles.textarea}
+            />
+          </div>
+        </div>
+      ),
+      okButtonLabel: '확인',
+      cancelButtonLabel: '취소',
+    });
+  };
 
   // 수창취소 완료
-  // 퍼블수정 20250703 함수명 변경 및 title Fragment 삭제
-  const handleCourseCancelCompleteAlert = () => {
+  const CourseCencelCompleteAlert = () => {
     openAlert({
-      title: '수강취소 되었습니다',
+      title: <>수강취소 되었습니다</>,
     });
   };
 
   // 수강신청 알림
-  // 퍼블수정 20250703 함수명 변경 및 title Fragment 삭제
-  const handleCourseAlarmAlert = () => {
+  const CourseAlarmAlert = () => {
     openAlert({
-      title: '수강신청 알림',
+      title: <>수강신청 알림</>,
       content: (
         <>
           수강신청이 가능할 때 연락드리겠습니다.
@@ -301,10 +333,9 @@ function RouteComponent() {
   };
 
   // 수강대기자 등록
-  // 퍼블수정 20250703 함수명 변경 및 title Fragment 삭제
-  const handleCourseWaitAlert = () => {
+  const CourseWaitAlert = () => {
     openAlert({
-      title: '수강대기자 등록',
+      title: <>수강대기자 등록</>,
       content: (
         <>
           본 과정의 수강신청 대기자로 등록되었습니다.
@@ -318,10 +349,9 @@ function RouteComponent() {
   };
 
   // 차수 알림 등록
-  // 퍼블수정 20250703 함수명 변경 및 title Fragment 삭제
-  const handleCourseTimeAlert = () => {
+  const CourseTimeAlert = () => {
     openAlert({
-      title: '차수 알림 등록',
+      title: <>차수 알림 등록</>,
       content: (
         <>
           본 과정의 차수 오픈시 연락드리겠습니다.
@@ -406,8 +436,8 @@ function RouteComponent() {
             <div className={styles.box}>
               {tabTitle.map((item, index) => (
                 <Button
-                  key={index}
-                  className={selectedTabIndex === index ? styles.active : ''}
+                  key={item.tabNumber}
+                  className={selectedTabTitle === index ? styles.active : ''}
                   onClick={() => handleTab(item.tabNumber, index)}
                 >
                   {item.title}
@@ -530,9 +560,8 @@ function RouteComponent() {
                         <div
                           className={`${definitionListStyles.start} ${definitionListStyles.list}`}
                         >
-                          {/* 퍼블수정 20250703 key값 추가 */}
-                          {original.definitionList.map((item: any, index: number) => (
-                            <dl key={index}>
+                          {original.definitionList.map((item: any) => (
+                            <dl>
                               <dt>{item.tit}</dt>
                               <dd>{item.txt}</dd>
                             </dl>
