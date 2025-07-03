@@ -1,0 +1,8 @@
+/* Button Components Style */
+.nlp_button {
+  background-color: var(--secondary1);
+  @apply h-[40px] rounded-[4px] px-[12px] text-center text-[1.4rem] leading-[1.4] text-white;
+  &.ico {
+    @apply bg-[url('../../../../assets/images/icon/ic_search.svg')] bg-[length:20px_20px] bg-[position:10px_12px];
+  }
+}

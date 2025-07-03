@@ -1,0 +1,64 @@
+@import '../../../libs/config/src/lib/style/theme/bo.css';
+
+/*
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+*/
+@import 'tailwindcss/base';
+@import 'tailwindcss/utilities';
+
+/*
+@import './assets/styles/components/index.css';
+@import './assets/styles/global.css';
+*/
+@import '../../../libs/styles/src/lib/bo/assets/styles/components/index.css';
+@import '../../../libs/styles/src/lib/bo/assets/styles/global.css';
+
+@layer base {
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    @apply text-[62.5%];
+    font-display: swap;
+  }
+  body {
+    @apply text-[1.6rem] font-normal leading-[1.6] text-[--gray9];
+    font-display: swap;
+  }
+  body,
+  html {
+    font-family:
+      'Pretendard Variable',
+      Pretendard,
+      -apple-system,
+      BlinkMacSystemFont,
+      system-ui,
+      Roboto,
+      'Helvetica Neue',
+      'Segoe UI',
+      'Apple SD Gothic Neo',
+      'Noto Sans KR',
+      'Malgun Gothic',
+      'Apple Color Emoji',
+      'Segoe UI Emoji',
+      'Segoe UI Symbol',
+      sans-serif;
+  }
+
+  /* Font loading optimization */
+  @font-face {
+    font-family: 'Pretendard Variable';
+    font-style: normal;
+    font-display: swap;
+    src: local('Pretendard Variable');
+  }
+}
+
+#root {
+  @apply text-[--gray9];
+}

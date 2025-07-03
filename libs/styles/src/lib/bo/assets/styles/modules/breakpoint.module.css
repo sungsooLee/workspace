@@ -1,0 +1,13 @@
+/* breakpoint.module.css */
+.start {
+  @apply flex h-screen w-screen items-center justify-center bg-[#F2F4F9];
+  .guide_wrap {
+    @apply relative flex flex-col items-center justify-center text-center;
+    &::before {
+      @apply mb-[40px] inline-flex h-[240px] w-[240px] items-center justify-center overflow-hidden rounded-[120px] bg-white bg-[url('../../images/common/bg_breakpoint_guide.png')] bg-[115px_auto] bg-center bg-no-repeat content-[''];
+    }
+    .text {
+      @apply title_bo_1_b text-[var(--gray9)];
+    }
+  }
+}

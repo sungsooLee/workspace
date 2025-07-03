@@ -1,0 +1,5 @@
+.start {
+  &.html {
+    @apply flex min-h-[calc(100dvh-56px)] items-center bg-[rgba(0,0,0,.8)] pb-[150px];
+  }
+}

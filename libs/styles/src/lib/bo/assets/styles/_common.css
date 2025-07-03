@@ -1,0 +1,44 @@
+/* _common.css 공통 */
+
+* {
+  @apply scrollbar;
+}
+
+:root {
+  --img-path: '../images/';
+  --font-family:
+    'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto,
+    'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans', 'Malgun Gothic',
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+  --scroll-thumb: var(--gray4) !important;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+html {
+  font-family: var(--font-family);
+}
+
+body {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--gray9);
+  line-height: 160%;
+  @apply scrollbar;
+}
+
+strong {
+  font-weight: 600;
+}
+
+/* radix scroll */
+html body[data-scroll-locked] {
+  overflow: visible !important;
+  margin-right: 0 !important;
+}
+
+body[data-scroll-locked][data-scroll-locked] {
+  overflow: auto !important;
+}

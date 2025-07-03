@@ -1,0 +1,18 @@
+/* popup-layout.module.css */
+.start {
+  &.wrap {
+    @apply w-full;
+    .contents {
+      @apply flex flex-wrap items-stretch justify-between;
+      .left_contents {
+        @apply w-[300px];
+      }
+      .main_contents {
+        @apply relative w-[calc(100%-365px)];
+        &::before {
+          @apply absolute -left-[32px] top-0 h-full w-[1px] bg-[var(--gray4)] content-[''];
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+/* Button Components Style */
+._start {
+  .nlp_button {
+    background-color: var(--secondary1);
+    @apply px-12 py-10;
+  }
+}

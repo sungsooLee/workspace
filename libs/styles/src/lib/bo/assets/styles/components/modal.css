@@ -1,0 +1,7 @@
+.nlp--modal-content {
+  .auth--btn_wrap {
+    button {
+      @apply w-auto;
+    }
+  }
+}

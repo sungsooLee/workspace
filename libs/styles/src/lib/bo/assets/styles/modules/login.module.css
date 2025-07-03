@@ -1,0 +1,293 @@
+/* login.module.css */
+.start {
+  &.auth_wrap {
+    /* 공통 */
+    .auth_box {
+      @apply relative z-0 p-[40px] text-left;
+      input {
+        @apply !min-h-[40px] rounded-[8px];
+      }
+      label + div {
+        @apply -mb-[4px] mt-[4px];
+      }
+      .search_info {
+        @apply mb-[48px] pt-[8px];
+      }
+
+      h4.title {
+        @apply title_6_b mt-[32px] pb-[16px] text-left text-[var(--gray9)];
+      }
+
+      .title_box {
+        @apply pb-[16px];
+        h4.title {
+          @apply pb-0;
+        }
+        .txt_info {
+          @apply body_3_r mt-[4px] text-[var(--gray7)];
+        }
+      }
+
+      .signup_info {
+        + h4.title {
+          @apply mt-[48px];
+        }
+      }
+
+      .step_box {
+        @apply mb-[48px] pl-[140px] pr-[140px];
+      }
+
+      .search_info {
+        @apply body_2_r text-center text-[var(--gray7)];
+        strong {
+          @apply text-[var(--gray8)];
+        }
+      }
+
+      .signup_select {
+        .radio_card {
+          @apply flex items-center justify-center gap-[16px] text-center;
+
+          button {
+            @apply m-auto h-[126px] w-full flex-col justify-center rounded-[16px] border-[1px] border-solid border-[var(--gray5)] text-center text-[var(--gray8)];
+            span {
+              @apply body_3_r mt-[8px] block text-[var(--gray7)];
+            }
+            svg {
+              @apply stroke-[var(--primary1)] opacity-30;
+            }
+            &[aria-checked='true'] {
+              @apply border-[var(--primary1)] text-[var(--primary1)] shadow-[0px_3px_6px_rgba(0,0,0,0.08)];
+              span {
+                @apply body_3_b text-[var(--primary1)];
+              }
+              svg {
+                @apply opacity-100;
+              }
+            }
+          }
+        }
+        + .auth_form {
+          @apply mt-[48px];
+          + .signup_noti {
+            @apply mt-[8px];
+          }
+        }
+        + .select_txt {
+          @apply body_bo_2_r mt-[32px] text-center text-[#6F798B];
+        }
+      }
+
+      .success_info {
+        @apply text-center;
+        .ico {
+          @apply m-auto inline-flex h-[56px] w-[56px] items-center justify-center rounded-full border-[3px] border-solid border-[#00AFD5] stroke-[#00AFD5];
+          &.fail {
+            @apply border-none stroke-none;
+            svg {
+              @apply fill-none;
+              circle {
+                @apply stroke-[#FFB902];
+              }
+              path {
+                @apply stroke-[#FFB902];
+              }
+            }
+          }
+          &.progress {
+            @apply border-none stroke-none;
+            svg {
+              @apply fill-none;
+            }
+          }
+        }
+        h3.title {
+          @apply title_5_b mt-[24px];
+        }
+        .noti {
+          @apply body_bo_2_r mt-[8px] leading-[1.6] text-[var(--gray7)];
+        }
+        .noti_box {
+          @apply title_5_b mt-[24px] bg-[#EDFCFF] px-[32px] py-[32px] text-[#009ABC];
+        }
+        .btn_txt {
+          @apply body_3_r mt-[24px] text-[var(--gray8)] underline;
+        }
+        .text {
+          @apply body_3_r mt-[8px] text-[var(--gray7)];
+        }
+      }
+
+      .signup_noti {
+        @apply mt-[16px] rounded-[8px] bg-[var(--gray1)] p-[16px];
+        .check_point {
+          @apply body_4_r text-left text-[var(--gray7)];
+          dt {
+            @apply body_4_b flex items-center justify-start;
+            svg {
+              @apply mr-[4px];
+            }
+          }
+          dd {
+            @apply relative mt-[8px] pl-[10px];
+            + dd {
+              @apply mt-[4px];
+            }
+            &::before {
+              @apply absolute left-[0] top-[6px] h-[4px] w-[4px] rounded-full bg-[var(--gray6)] content-[''];
+            }
+          }
+        }
+      }
+
+      .auth_info {
+        @apply body_3_r mb-[48px] rounded-[8px] bg-[var(--secondary5)] p-[16px] text-[var(--secondary3)];
+        p .date {
+          @apply body_3_b ml-[4px] inline-block text-[var(--secondary3)];
+        }
+      }
+      .success_info + .auth_info {
+        @apply mt-[24px];
+      }
+    }
+
+    /* 중간 라인 버튼 */
+    .btn_txt {
+      @apply text-center;
+      a {
+        @apply body_3_r text-[var(--gray8)] underline;
+      }
+      & + .signup_noti {
+        @apply pt-[24px];
+      }
+    }
+    .auth_form {
+      & + .btn_txt {
+        @apply pt-[8px];
+      }
+      & + .auth_form {
+        @apply mt-[16px] border-t-[1px] border-solid border-[#e3e9ef] pt-[24px];
+      }
+    }
+
+    /* 하단 버튼 */
+    .btn_wrap {
+      @apply mt-[48px] flex items-center justify-center;
+      button {
+        @apply w-full flex-1 !rounded-[8px];
+        & + button {
+          @apply ml-[12px];
+        }
+      }
+    }
+
+    /* 로그인 */
+    &.login {
+      .login_info {
+        @apply mt-[8px] flex items-center justify-between;
+        .id_save {
+          label {
+            @apply text-[1.4rem] text-[var(--gray8)];
+          }
+        }
+        .info {
+          @apply body_3_r flex gap-[24px] text-[var(--gray7)];
+          a {
+            @apply underline;
+          }
+        }
+      }
+      .btn_box {
+        @apply mt-[24px];
+        .btn {
+          @apply w-full !rounded-[8px];
+        }
+      }
+
+      .sns_login {
+        @apply relative mt-[40px] text-center;
+        .list {
+          @apply mt-[24px] flex items-center justify-center gap-[24px];
+          > li {
+            @apply h-[48px] w-[48px];
+          }
+        }
+        &::before {
+          @apply absolute left-[0] top-[12px] block h-[1px] w-full bg-[var(--gray4)] content-[""];
+          z-index: 0;
+        }
+        .tit_sns {
+          @apply body_2_r relative m-auto inline-block h-[26px] w-[180px] bg-[var(--white)] text-[var(--gray7)];
+          z-index: 2;
+        }
+        .noti {
+          @apply body_bo_2_r mt-[24px] text-[var(--gray7)];
+        }
+      }
+
+      .login_guide {
+        @apply body_3_r flex items-center justify-center text-[var(--gray7)];
+        .btn_join {
+          @apply text-[var(--secondary3)];
+        }
+        a {
+          @apply text-[var(--gray7)] underline;
+          + a {
+            @apply ml-[16px];
+          }
+        }
+        svg {
+          @apply mr-[4px];
+        }
+      }
+    }
+
+    /* 회원가입 유형 */
+    &.signup_step {
+      .signup_check {
+        @apply rounded-[8px] border-[1px] border-solid border-[var(--gray5)] p-[24px] text-left;
+        ul {
+          > li {
+            @apply mt-[16px] flex items-center justify-between;
+            .btn_view {
+              @apply body_3_r text-[var(--gray8)] underline;
+            }
+          }
+        }
+      }
+
+      .check_all {
+        @apply flex border-b border-solid border-[var(--gray4)] pb-[16px];
+      }
+    }
+
+    /* 아이디/비밀번호 찾기 */
+    &.search_account {
+      .signup_select {
+        + .auth_form {
+          @apply mt-[48px];
+          + .signup_noti {
+            @apply mt-[8px];
+          }
+        }
+      }
+    }
+
+    /* 가입완료, 찾기완료 */
+    &.search_account {
+      .search_info {
+        @apply body_2_r text-center text-[var(--gray7)];
+        strong {
+          @apply text-[var(--gray8)];
+        }
+      }
+    }
+    /* MPASS 인증 */
+    &.mpass_cert {
+      .search_info {
+        @apply pt-0;
+      }
+    }
+  }
+}

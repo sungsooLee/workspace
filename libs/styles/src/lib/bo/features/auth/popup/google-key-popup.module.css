@@ -1,0 +1,29 @@
+/* google-key-popup.module.css */
+.start {
+  &.google_key_popup {
+    @apply text-center;
+    .otp_key {
+      @apply mt-[8px] rounded-[8px] bg-[var(--secondary5)] px-[24px] py-[24px] text-center;
+      .txt {
+        @apply body_3_r block w-full text-[#045161];
+      }
+      .key {
+        @apply title_5_b mt-[8px] text-[#045161];
+      }
+    }
+    .txt_info {
+      @apply body_3_r mt-[24px] text-[#6F798B];
+    }
+
+    .noti_info_txt {
+      @apply mt-[24px];
+      button,
+      a {
+        @apply body_3_r text-center text-[#4C515E] underline;
+      }
+    }
+    .signup_noti {
+      @apply mt-[32px];
+    }
+  }
+}

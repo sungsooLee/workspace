@@ -1,0 +1,31 @@
+.start {
+  @apply body_2_r m-auto flex-col justify-center whitespace-pre text-center text-[#131C30];
+  svg {
+    @apply m-auto rotate-180;
+  }
+  .txt {
+    @apply mt-[12px];
+  }
+  .noti {
+    @apply body_3_r mt-[4px] text-[#6F798B];
+  }
+  strong {
+    @apply text-[var(--gray8)];
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      svg {
+        @apply h-[32px] w-[32px];
+      }
+      .txt {
+        @apply body_3_r;
+      }
+      strong {
+        @apply text-[var(--gray8)];
+      }
+    }
+  }
+}

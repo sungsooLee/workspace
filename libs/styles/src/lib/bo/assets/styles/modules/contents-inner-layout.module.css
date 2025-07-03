@@ -1,0 +1,107 @@
+/* contents-layout.module.css */
+.start {
+  &.wrap {
+    @apply relative flex w-full justify-between;
+    &::before {
+      @apply absolute left-1/2 top-0 flex h-full w-[1px] shadow-[1px_0_0_0_var(--gray4)] content-[''];
+    }
+    .inner {
+      @apply relative z-[1] w-[calc(50%-32px)] items-stretch;
+      div + .inner_contents {
+        @apply relative mt-[16px];
+      }
+    }
+    &.ratio_third {
+      .inner {
+        @apply min-h-[calc(100vh-435px)];
+        & + .inner > div:first-child,
+        & + .inner form > div:first-child {
+          @apply ml-[32px] w-[calc(100%-32px)];
+        }
+        &:first-child {
+          @apply w-[calc(100%-485px)] shrink-0;
+        }
+        &:not(:first-child) {
+          @apply relative w-[452px] shrink-0;
+          .inner_contents {
+            @apply pl-[32px];
+          }
+          &::before {
+            @apply left-0;
+          }
+        }
+        &.scrollHidden {
+          @apply overflow-hidden;
+          .inner_contents {
+            @apply pt-0;
+          }
+        }
+      }
+      &::before {
+        @apply left-auto right-[451px];
+      }
+      &.common_code {
+        .inner {
+          @apply min-h-[calc(100vh-447px)];
+          .inner_contents {
+            @apply pb-[48px];
+          }
+        }
+        &::before {
+          @apply h-[calc(100%-64px)];
+        }
+      }
+    }
+    &.contents_category {
+    }
+    &.pop_layout {
+      .inner {
+        @apply !h-auto w-[calc(50%-48px)];
+      }
+      .transfer_arrow {
+        @apply relative flex w-[40px] shrink-0 items-stretch;
+        svg {
+          @apply absolute left-1/2 top-1/2 z-[1] -translate-x-1/2 items-center justify-center bg-white content-[''];
+        }
+      }
+    }
+    [class*='section_layout'] {
+      & > div::before {
+        @apply hidden;
+      }
+    }
+  }
+}
+.grid_layout_wrap {
+  @apply flex w-full flex-wrap justify-between;
+  & > div:first-child {
+    @apply w-[calc(35%-16px)] shrink-0;
+    & + div {
+      @apply w-[calc(65%-16px)] shrink-0;
+    }
+  }
+}
+.btn_wrap {
+  @apply inline-flex items-center;
+  button {
+    @apply !font-normal;
+    &.btn_text + .btn_text {
+      &::before {
+        @apply mr-[16px] inline-flex h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
+      }
+    }
+    svg {
+      @apply mr-[4px];
+    }
+  }
+}
+
+[class*='nlp--modal-content'] .start::before {
+  @apply h-full;
+}
+
+[class*='divider'] {
+  & + .start {
+    @apply mt-[32px];
+  }
+}

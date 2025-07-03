@@ -1,0 +1,56 @@
+/* 결과 모듈 */
+.start {
+  @apply text-center;
+  .ico {
+    @apply m-auto inline-flex items-center justify-center;
+    svg {
+      @apply h-[56px] w-[56px];
+    }
+    .ico1 {
+      @apply stroke-[#00AFD5];
+    }
+    .ico2 {
+      @apply stroke-[#FFB902];
+    }
+    + h3.title {
+      @apply mt-[24px];
+    }
+  }
+  h3.title {
+    @apply title_5_b;
+  }
+  .noti {
+    @apply body_bo_2_r mt-[8px] leading-[1.6] text-[var(--gray7)];
+  }
+  .noti_box {
+    @apply mt-[24px];
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      @apply text-center;
+      .ico {
+        svg {
+          @apply h-[56px] w-[56px];
+        }
+        .ico1 {
+          @apply h-[32px] w-[32px];
+        }
+        .ico2 {
+          @apply h-[32px] w-[32px];
+        }
+        + h3.title {
+        }
+      }
+      h3.title {
+        @apply body_3_b mt-[12px];
+      }
+      .noti {
+      }
+      .noti_box {
+      }
+    }
+  }
+}

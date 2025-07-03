@@ -1,0 +1,15 @@
+.search_info {
+  @apply body_2_r m-auto flex-col justify-center pb-[32px] text-[#131C30];
+  svg {
+    @apply m-auto rotate-180;
+  }
+  .txt {
+    @apply mt-[12px];
+  }
+  strong {
+    @apply text-[var(--gray8)];
+  }
+}
+.auth_form {
+  @apply mt-[48px];
+}

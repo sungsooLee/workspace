@@ -1,0 +1,33 @@
+/* header.module.css */
+.start {
+  .header {
+    @apply relative box-border h-[100px] min-w-[1200px] bg-[#012277] px-[32px] transition-all duration-150 ease-in-out;
+    h1 {
+      @apply inline-flex align-top;
+      img {
+        @apply h-[40px] w-auto;
+      }
+      [class*='nlp--logo'] {
+        @apply flex h-[50px] pt-[5px];
+      }
+      .title {
+        @apply relative ml-[6px] box-border inline-flex h-[40px] pl-[6px] pt-[15px] text-[16px] font-bold text-white;
+        &::before {
+          @apply absolute left-0 top-[33px] -mt-[12px] h-[12px] w-[1px] bg-white opacity-30 content-[''];
+        }
+      }
+    }
+    .nav_area {
+      @apply flex h-[50px] items-center pr-[150px];
+    }
+    .util {
+      @apply absolute right-[36px] top-[6px] flex items-center;
+      button:not(:nth-child(1)) {
+        @apply ml-[20px];
+      }
+    }
+    .quick_menu {
+      @apply absolute bottom-0 right-0 z-auto h-[50px] w-auto bg-[#012277] pr-[32px] pt-[5px];
+    }
+  }
+}

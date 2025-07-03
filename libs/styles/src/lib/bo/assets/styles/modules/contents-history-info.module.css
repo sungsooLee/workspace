@@ -1,0 +1,32 @@
+/* editInfoStyles.module.css */
+.start {
+  &.wrap {
+    @apply relative flex w-full flex-wrap items-center break-words rounded-[8px] bg-[#f6f8fd] p-[16px] pr-[93px];
+    p {
+      @apply body_4_r flex shrink-0 items-center text-[var(--gray9)];
+      span {
+        @apply ml-[8px] inline-flex text-[var(--gray7)];
+      }
+      & + p {
+        @apply ml-[12px];
+        &::before {
+          @apply mr-[12px] inline-flex h-[12px] w-[1px] bg-[var(--gray3)] content-[''];
+        }
+      }
+    }
+    .btn_info {
+      @apply absolute right-[16px] top-1/2 ml-auto w-auto shrink-0 -translate-y-1/2 !font-normal;
+    }
+    &.column {
+      p + p {
+        @apply ml-0 mt-[4px] pl-0;
+        &::before {
+          @apply !hidden;
+        }
+      }
+    }
+  }
+}
+[class*='nlp--contents-row'] + .start {
+  @apply mt-[20px];
+}

@@ -1,0 +1,44 @@
+/* mpass-modal.module.css */
+.mpass_modal {
+  @apply text-center;
+  .title_box {
+    @apply py-[24px] text-center;
+    .tit {
+      @apply title_5_b text-[var[--gray9]];
+    }
+    .txt {
+      @apply body_3_r mt-[8px] text-[var(--gray7)];
+    }
+  }
+
+  .guide_info {
+    @apply rounded-[8px] bg-[var(--gray1)] px-[24px] py-[24px];
+    .info_box {
+      @apply border-b-[1px] border-solid border-[var(--gray5)] pb-[24px] text-center;
+      .time {
+        @apply title_6_b text-[var(--gray8)];
+        strong {
+          @apply text-[var(--secondary3)];
+        }
+      }
+      .info {
+        @apply body_3_r mt-[8px] text-[var(--gray7)];
+      }
+    }
+
+    .guide_box {
+      @apply flex items-center justify-between pt-[24px] text-center;
+      .img {
+        img {
+          @apply mx-auto max-w-[160px];
+        }
+      }
+      .desc {
+        @apply body_3_r mt-[16px] text-[var(--gray7)];
+      }
+    }
+  }
+  .inquiry {
+    @apply input_3_r pt-[24px];
+  }
+}

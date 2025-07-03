@@ -1,0 +1,47 @@
+import TranslationService from '../api/translation';
+import { MultilingualExcel, MultilingualUpdateReqParams, Tenant } from '@types';
+import TenantService from '../../tenant/api/tenant';
+import { skipToken } from '@tanstack/react-query';
+
+export const queryKeys = {
+  all: ['translation-all'] as const,
+  get: ['translation'] as const,
+  getStatus: (multilingualId: number) => ['translation-status', multilingualId],
+  deploy: (locale: string) => ['translation-locale', locale],
+};
+
+export const translationQueryOptions = {
+  all: (params: any) => ({
+    queryKey: queryKeys.all,
+    queryFn: () => TranslationService.fetchTranslations(params),
+    cacheTime: 0,
+    staleTime: 0,
+  }),
+  getStatus: (multilingualId: number) => ({
+    queryKey: queryKeys.getStatus(multilingualId),
+    queryFn: () => TranslationService.fetchTranslationStatus(multilingualId),
+  }),
+};
+
+export const mutateOptions = {
+  update: () => ({
+    mutationFn: (payload: MultilingualUpdateReqParams) =>
+      TranslationService.updateTranslation(payload),
+  }),
+  delete: () => ({
+    mutationFn: (tenantId?: number) =>
+      tenantId ? TenantService.deleteTenant(tenantId) : skipToken,
+  }),
+  deploy: () => ({
+    mutationFn: (payload: { locale: string }) => TranslationService.deployTranslation(payload),
+  }),
+  createByExcel: () => ({
+    mutationFn: ({
+      data,
+      params,
+    }: {
+      data: MultilingualExcel[];
+      params: { targetLocale: string };
+    }) => TranslationService.createTranslationByExcel(data, params),
+  }),
+};

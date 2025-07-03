@@ -1,0 +1,59 @@
+.start {
+  @apply w-full;
+  .chips_modal_wrap {
+    @apply flex h-auto min-h-[30px] w-full flex-wrap items-start overflow-hidden rounded-[4px] border border-solid border-[var(--gray4)];
+    .btn_search {
+      @apply mr-[10px] mt-[4px] flex flex-auto items-start justify-end;
+    }
+    .chips_wapper {
+      @apply h-auto;
+    }
+    span {
+      @apply !h-[24px] !min-h-[24px];
+      button {
+        @apply !input_bo_2_r !min-h-[23px];
+        & + button {
+          @apply !min-h-[1.4rem];
+        }
+      }
+    }
+    .chip_list {
+      @apply pl-[12px];
+      [class*='nlp--chips'] {
+        @apply !h-[24px] !min-h-[24px];
+      }
+      &.disabled {
+        @apply w-full;
+      }
+    }
+    &:has(.btn_search) {
+      .chip_list {
+        @apply w-auto;
+      }
+    }
+  }
+  &.type_wordwrap {
+    .chips_modal_wrap {
+      @apply mt-[8px] items-start;
+      .btn_search {
+        @apply mt-[6px];
+      }
+    }
+  }
+}
+
+.custom_btn_wrap {
+  @apply relative z-[1] -mt-[38px] flex items-center justify-end;
+  [class*='nlp--button'] {
+    @apply !button_bo_2_r inline-flex items-center !text-[var(--gray8)];
+    svg {
+      @apply mr-[4px];
+    }
+    & + [class*='nlp--button'] {
+      @apply !ml-0;
+      &::before {
+        @apply mr-[8px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
+      }
+    }
+  }
+}

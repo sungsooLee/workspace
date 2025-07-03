@@ -1,0 +1,137 @@
+.start {
+  &.course {
+    @apply m-auto w-[780px];
+    h2 {
+      @apply title_4_b mb-[16px] mt-[24px] text-[var(--gray9)];
+    }
+
+    .input_wrap {
+      @apply mt-[32px] rounded-[16px] border-[1px] border-solid border-[var(--gray4)] p-[24px];
+      .input_area {
+        .tit_box {
+          strong {
+            @apply title_6_b text-[var(--gray8)];
+          }
+        }
+        .box {
+          @apply mt-[24px];
+          & > div {
+            @apply border-t-0;
+            & > div {
+              @apply pb-0;
+            }
+            & + div {
+              @apply mt-[16px];
+            }
+          }
+          .input_box {
+            @apply items-start;
+            & > div {
+              @apply flex-1;
+            }
+          }
+          .option_card {
+            @apply gap-[8px];
+            button {
+              span {
+                @apply button_3_r !text-[var(--gray8)];
+              }
+              &[class*='active'] {
+                @apply !border-[var(--primary1)];
+                span {
+                  @apply button_3_b !text-[var(--primary1)];
+                }
+              }
+            }
+          }
+          .item_col_full {
+            & > div {
+              @apply mb-0;
+              & > div {
+                & + div {
+                  @apply mt-[10px];
+                }
+              }
+            }
+          }
+          .input_date {
+            @apply flex w-full items-center gap-[8px];
+            & > div {
+              @apply flex-1;
+            }
+          }
+        }
+        & + .input_area {
+          @apply mt-[32px] border-t-[1px] border-solid border-[var(--gray3)] pt-[32px];
+        }
+      }
+    }
+    .notice {
+      @apply mt-[32px] rounded-[16px];
+      dd {
+        button {
+          @apply label_12_500 ml-[8px] text-[var(--secondary3)] underline;
+        }
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.course {
+        @apply m-auto w-full px-[20px] pb-[80px] pt-[16px];
+        & > h2 {
+          @apply hidden;
+        }
+        .input_wrap {
+          @apply mt-[32px] border-none px-0 py-0;
+          .input_area {
+            & + .input_area {
+              @apply mt-[24px] pt-[24px];
+            }
+            .item_col_full {
+              & > div {
+                & > div {
+                  & + div {
+                    @apply mt-[8px];
+                  }
+                }
+              }
+              button {
+                @apply mt-[8px] w-full;
+              }
+            }
+          }
+        }
+        .notice {
+          @apply mt-[24px];
+          dd {
+            @apply grid;
+            button {
+              @apply ml-0 mt-[4px];
+            }
+          }
+        }
+        .btn_wrap {
+          @apply mt-0;
+        }
+      }
+    }
+  }
+}
+
+/* 접수증 */
+.accepting_popup {
+  @apply flex flex-col items-center py-[8px];
+  svg {
+    @apply stroke-none;
+  }
+  strong {
+    @apply title_5_b mt-[16px] block text-center text-[var(--gray9)];
+  }
+  p {
+    @apply body_3_r mt-[8px] text-center text-[var(--gray7)];
+  }
+}

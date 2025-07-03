@@ -1,0 +1,6 @@
+/* role-list.module.css */
+.start {
+  .contents_wrap {
+    @apply block;
+  }
+}

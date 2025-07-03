@@ -1,0 +1,9 @@
+/* banner-list.module.css */
+.start {
+  &.wrap {
+    @apply w-full pb-[16px];
+    .contents_wrap {
+      @apply block;
+    }
+  }
+}

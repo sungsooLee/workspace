@@ -1,0 +1,444 @@
+import { createFileRoute, Link } from '@tanstack/react-router';
+import { Button, GridBox, Tooltip, Checkbox } from '@learnway/ui';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { useState } from 'react';
+import {
+  IcoDownload,
+  IcoInfoCircle,
+  IcoClock01,
+  IcoClipboard,
+  IcoCopy,
+  IcoAlertCircle,
+} from '@learnway/icons';
+import { WordWrap } from './-component/word-wrap';
+
+export const Route = createFileRoute('/_guide/guide/grid')({
+  component: RouteComponent,
+});
+
+function RouteComponent() {
+  const [pageNumber, setPageIndex] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const data: any[] = [
+    {
+      firstName: <WordWrap text={'과정명과정명과정명과정명과정명과정명과정명'} />,
+      lastName: 'linsley',
+      age: 24,
+      visits: 100,
+      status: 'Active',
+      progress: 50,
+      preview: (
+        <Link to={'/'} className="link" disabled>
+          미리보기
+        </Link>
+      ),
+      download: (
+        <Button className="download" onlyIcon>
+          <IcoDownload width={16} height={16} stroke={'#747D91'} />
+        </Button>
+      ),
+      procedure: (
+        <Button size={'xs'} className="btn_table" variant={'gray2'}>
+          {'과정개설'}
+        </Button>
+      ),
+      course: (
+        <Tooltip
+          side="bottom"
+          align="end"
+          content={'과정명과정명과정명과정명과정명과정명과정명 전체노출툴팁입니다'}
+        >
+          {'과정명'}
+        </Tooltip>
+      ),
+      link: (
+        <Button size={'xs'} className="link_icon" onlyIcon disabled>
+          <IcoInfoCircle width={16} height={16} stroke={'#4C515E'} fill={'none'} />
+        </Button>
+      ),
+      dataRange: (
+        <>
+          <Button size={'xs'} className="btn_table" variant={'gray2'}>
+            {'회사'}
+          </Button>
+          <Button size={'xs'} className="btn_table" variant={'gray2'}>
+            {'채널'}
+          </Button>
+          <Button size={'xs'} className="btn_table" variant={'gray2'}>
+            {'팀'}
+          </Button>
+        </>
+      ),
+    },
+    {
+      firstName: 'tandy',
+      lastName: 'miller',
+      age: 40,
+      visits: 40,
+      status: 'Inactive',
+      progress: 80,
+      preview: <Button className="link">미리보기</Button>,
+      download: (
+        <Button className="download" onlyIcon>
+          <IcoDownload width={16} height={16} stroke={'#747D91'} />
+        </Button>
+      ),
+      procedure: (
+        <Button size={'xs'} className="btn_table" variant={'gray2'}>
+          {'과정개설'}
+        </Button>
+      ),
+      course: (
+        // <Tooltip
+        //   side="bottom"
+        //   align="end"
+        //   content={'과정명과정명과정명과정명과정명과정명과정명 전체노출툴팁입니다'}
+        // >
+        //   {'과정명'}
+        // </Tooltip>
+        <WordWrap text={'과정명과정명과정명과정명과정명과정명과정명'} />
+      ),
+      link: (
+        <Button size={'xs'} className="link_icon" onlyIcon>
+          <IcoInfoCircle width={16} height={16} stroke={'#4C515E'} fill={'none'} />
+        </Button>
+      ),
+    },
+    {
+      firstName: 'tandy',
+      lastName: 'miller',
+      age: 40,
+      visits: 40,
+      status: 'Inactive',
+      progress: 80,
+      preview: (
+        <Link to={'/'} className="link">
+          미리보기
+        </Link>
+      ),
+      download: (
+        <Button className="download" onlyIcon>
+          <IcoDownload width={16} height={16} stroke={'#747D91'} />
+        </Button>
+      ),
+      procedure: (
+        <Button size={'xs'} className="btn_table" variant={'gray2'}>
+          {'과정개설'}
+        </Button>
+      ),
+      course: (
+        <Tooltip
+          side="bottom"
+          align="end"
+          content={'과정명과정명과정명과정명과정명과정명과정명 전체노출툴팁입니다'}
+        >
+          {'과정명'}
+        </Tooltip>
+      ),
+      link: (
+        <Button size={'xs'} className="link_icon" onlyIcon>
+          <IcoInfoCircle width={16} height={16} stroke={'#4C515E'} fill={'none'} />
+        </Button>
+      ),
+    },
+    {
+      firstName: 'tandy',
+      lastName: 'miller',
+      age: 40,
+      visits: 40,
+      status: 'Inactive',
+      progress: 80,
+      preview: (
+        <Link to={'/'} className="link">
+          미리보기
+        </Link>
+      ),
+      download: (
+        <Button className="download" onlyIcon>
+          <IcoDownload width={16} height={16} stroke={'#747D91'} />
+        </Button>
+      ),
+      procedure: (
+        <Button size={'xs'} className="btn_table" variant={'gray2'}>
+          {'과정개설'}
+        </Button>
+      ),
+      course: (
+        <>
+          <Link to={'/'} className="link">
+            미리보기
+          </Link>
+          <Link to={'/'} className="link">
+            문항관리
+          </Link>
+        </>
+      ),
+      link: (
+        <Button size={'xs'} className="link_icon" onlyIcon>
+          <IcoInfoCircle width={16} height={16} stroke={'#4C515E'} fill={'none'} />
+        </Button>
+      ),
+    },
+    {
+      firstName: 'tandy',
+      lastName: 'miller',
+      age: 40,
+      visits: 40,
+      status: 'Inactive',
+      progress: 80,
+      preview: (
+        <Link to={'/'} className="link">
+          미리보기
+        </Link>
+      ),
+      download: (
+        <Button className="download" onlyIcon>
+          <IcoDownload width={16} height={16} stroke={'#747D91'} />
+        </Button>
+      ),
+      procedure: (
+        <Button size={'xs'} className="btn_table" variant={'gray2'}>
+          {'과정개설'}
+        </Button>
+      ),
+      course: (
+        <span className="icon_wrap">
+          <IcoClipboard width={16} height={16} />
+          {'20개'}
+        </span>
+      ),
+      link: (
+        <Button size={'xs'} className="link_icon" onlyIcon>
+          <IcoInfoCircle width={16} height={16} stroke={'#4C515E'} fill={'none'} />
+        </Button>
+      ),
+    },
+    {
+      firstName: 'tandy',
+      lastName: 'miller',
+      age: 40,
+      visits: 40,
+      status: 'Inactive',
+      progress: 80,
+      preview: (
+        <>
+          <Link to={'/'} className="link">
+            미리보기
+          </Link>
+          <Link to={'/'} className="link">
+            문항관리
+          </Link>
+        </>
+      ),
+      download: (
+        <Button className="download" onlyIcon>
+          <IcoDownload width={16} height={16} stroke={'#747D91'} />
+        </Button>
+      ),
+      procedure: (
+        <Button size={'xs'} className="btn_table" variant={'gray2'}>
+          {'과정개설'}
+        </Button>
+      ),
+      course: (
+        <span className="icon_wrap">
+          <IcoClock01 width={16} height={16} stroke={'#4c515e'} />
+          {'02:00:00'}
+        </span>
+      ),
+      link: (
+        <Button size={'xs'} className="link_icon" onlyIcon>
+          <IcoInfoCircle width={16} height={16} stroke={'#4C515E'} fill={'none'} />
+        </Button>
+      ),
+    },
+  ];
+
+  const columnHelper = createColumnHelper<any>();
+
+  const columns = [
+    columnHelper.accessor('firstName', {
+      cell: (info) => info.getValue(),
+      header: 'First Name',
+      footer: (props) => `Total: ${props.table.getRowModel().rows.length}`,
+      meta: {
+        filterType: 'text',
+      },
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('lastName', {
+      cell: (info) => info.getValue(),
+      header: 'Last Name',
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('age', {
+      cell: (info) => info.getValue(),
+      header: 'Age',
+      meta: {
+        filterType: 'range',
+      },
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('visits', {
+      cell: (info) => info.getValue(),
+      header: 'Visits',
+      footer: (props) => {
+        const total = props.table
+          .getRowModel()
+          .rows.reduce((sum, row) => sum + row.getValue<number>('visits'), 0);
+        return `Total: ${total}`;
+      },
+      meta: {
+        filterType: 'range',
+      },
+    }),
+    columnHelper.accessor('status', {
+      cell: (info) => info.getValue(),
+      header: 'Status',
+      getGroupingValue: (row) => `${row.status}`,
+      enableGrouping: true,
+      aggregationFn: 'count',
+      meta: {
+        filterType: 'select',
+        filterOptions: [
+          { label: '활성', value: 'active' },
+          { label: '비활성', value: 'inactive' },
+        ],
+      },
+    }),
+    columnHelper.accessor('progress', {
+      cell: (info) => info.getValue(),
+      header: 'Progress',
+      meta: {
+        filterType: 'range',
+      },
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('preview', {
+      cell: (info) => info.getValue(),
+      header: '미리보기',
+      size: 100,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('download', {
+      cell: (info) => info.getValue(),
+      header: '다운로드',
+      enableGrouping: false,
+      size: 100,
+      meta: {
+        headerAlign: 'left', // 헤더만 가운데 정렬
+        cellAlign: 'center', // 셀은 오른쪽 정렬
+      },
+    }),
+    columnHelper.accessor('procedure', {
+      cell: (info) => info.getValue(),
+      header: '과정개설',
+      size: 100,
+      enableGrouping: false,
+      meta: {
+        headerAlign: 'left', // 헤더만 가운데 정렬
+        cellAlign: 'center', // 셀은 오른쪽 정렬
+      },
+    }),
+    columnHelper.accessor('course', {
+      cell: (info) => info.getValue(),
+      header: '과정명',
+      size: 220,
+    }),
+    columnHelper.accessor('link', {
+      cell: (info) => info.getValue(),
+      header: '링크',
+      size: 90,
+      meta: {
+        headerAlign: 'left', // 헤더만 가운데 정렬
+        cellAlign: 'center', // 셀은 오른쪽 정렬
+      },
+    }),
+    columnHelper.accessor('dataRange', {
+      cell: (info) => info.getValue(),
+      header: '데이터 접근 범위',
+      size: 230,
+      meta: {
+        headerAlign: 'left', // 헤더만 가운데 정렬
+        cellAlign: 'center', // 셀은 오른쪽 정렬
+      },
+    }),
+  ] as ColumnDef<any, unknown>[];
+
+  return (
+    <div className="content">
+      <div className="nlp--titlewrap">
+        <h2 className="guide_tit2">Grid Table Component Guide(작업중)</h2>
+        <p className="loc react">/libs/ui/src/lib/grid/</p>
+        <p className="info">케이스가 많아 케이스 추가될때 해당 스타일 적용 필요</p>
+        <div className="code_example">
+          <pre className="code_block">
+            <code>
+              {`// 초기 import
+import { GridBox } from '@learnway/ui';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+
+<GridBox
+  data={data}
+  columns={columns}
+  pagination={{
+    pageSize,
+    pageNumber,
+    totalPages: 100,
+    onPageChange: setPageIndex,
+    onPageSizeChange: setPageSize,
+  }}
+/>
+`}
+            </code>
+          </pre>
+        </div>
+        <div className="group">
+          <h3 className="guide_tit3">Grid Example</h3>
+        </div>
+        <GridBox
+          data={data}
+          columns={columns}
+          multiple
+          showSelectedCount={true}
+          showNumberingColumn={true}
+          pagination={{
+            pageSize,
+            pageNumber,
+            totalPages: 100,
+            onPageChange: setPageIndex,
+            onPageSizeChange: setPageSize,
+          }}
+          columnPinning={{ columns: ['firstName', 'lastName'] }}
+          title="타이틀"
+          titleCustomNode={
+            <div className="custom_info_wrap">
+              <strong className="table_tit">{'타이틀'}</strong>
+              <span className="count_info">{'5'}</span>
+              <span className="normal_text">{'텍스트'}</span>
+            </div>
+          }
+          guideText={'텍스트'}
+          customButtonNode={
+            <>
+              <Checkbox label={'나의 학습자원'} size={'md'} />
+              <Button
+                label={'프로그램/가이드 다운로드'}
+                icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
+              />
+              {/* 퍼블수정 2025-06-10 버튼 케이스 추가 S */}
+              <span className={'type_tooltip'}>
+                <Button label={'일괄설정'} variant={'text'} />
+                <Tooltip side={'bottom'} align={'start'} content={'tooltip content'}>
+                  <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
+                </Tooltip>
+              </span>
+              {/* 퍼블수정 2025-06-10 버튼 케이스 추가 E */}
+              <Button label={'복사'} icon={<IcoCopy width={16} height={16} stroke={'#131c30'} />} />
+            </>
+          }
+        />
+      </div>
+    </div>
+  );
+}

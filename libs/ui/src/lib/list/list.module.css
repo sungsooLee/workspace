@@ -1,0 +1,67 @@
+/* list.module.css */
+.start {
+  @apply w-full select-none flex-col rounded-[4px] border-[1px] border-solid border-[var(--gray6)] bg-[var(--white)];
+  &.border_none {
+    @apply border-0;
+  }
+  &.type_full {
+    .item {
+      @apply !px-0;
+      .line {
+        @apply flex flex-grow-[1] items-center justify-between px-[12px] py-[11px];
+        & > div {
+          @apply flex w-full items-center;
+          & + button {
+            @apply ml-[8px] h-[24px] w-[24px] shrink-0;
+          }
+          & > div {
+            @apply shrink-0;
+          }
+          & > div + span {
+            @apply ml-[8px] w-auto max-w-[210px] flex-auto shrink-0 overflow-hidden overflow-ellipsis whitespace-nowrap;
+          }
+        }
+      }
+      & + .item {
+        @apply mt-[16px];
+      }
+    }
+  }
+  .item {
+    @apply body_bo_2_r flex min-h-[40px] items-center justify-between overflow-hidden rounded-[2px] px-[8px] text-[var(--gray8)];
+    .inner {
+      @apply flex flex-grow-[1] items-center;
+      &.line {
+        @apply rounded-[8px] border border-solid border-[var(--gray4)];
+      }
+    }
+    [class*='nlp--checkbox'] {
+      label {
+        @apply input_bo_1_r !tracking-[-0.035em] text-[var(--gray8)];
+      }
+      button[role='checkbox'] {
+        &[aria-checked='true'] ~ label {
+          @apply !font-normal;
+        }
+      }
+      & + .clear {
+        @apply ml-[4px];
+      }
+    }
+    &:has([class*='nlp--checkbox']) {
+      @apply min-h-[24px];
+      &:not(:first-child) {
+        @apply mt-[4px];
+      }
+    }
+    &.active {
+      @apply bg-[#d8f8ff];
+    }
+    &.invalid [class*='nlp--checkbox'] label {
+      @apply text-[var(--status1)];
+    }
+  }
+  .btn_drag {
+    @apply ml-[16px] h-[24px] w-[24px] shrink-0;
+  }
+}

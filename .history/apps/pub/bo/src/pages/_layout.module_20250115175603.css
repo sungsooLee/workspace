@@ -1,0 +1,29 @@
+/* _layout.module.css */
+
+.bo_wrap {
+  max-width: 1920px;
+  min-width: 1440px;
+  width: 100%;
+  overflow-x: hidden;
+  .header {
+    background-color: #012277;
+    @apply px-[32px];
+    h1 {
+      img {
+        @apply h-[60px] w-auto;
+      }
+    }
+    .nav {
+      ul {
+        @apply flex justify-start;
+        > li {
+          a {
+            &hover {
+              font-weight: 600;
+            }
+          }
+        }
+      }
+    }
+  }
+}

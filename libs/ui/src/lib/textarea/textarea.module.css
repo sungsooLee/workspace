@@ -1,0 +1,36 @@
+.textarea_wrap {
+  @apply w-full overflow-hidden rounded-[4px] border border-solid border-[var(--gray4)];
+  .textarea {
+    @apply scrollbar body_bo_2_r box-border h-[100px] w-full overflow-y-auto overflow-x-hidden px-[16px] py-[12px] text-[var(--gray8)];
+    &.xs {
+      @apply h-[30px];
+    }
+    &.sm {
+      @apply h-[50px];
+    }
+    &.none {
+      @apply resize-none;
+    }
+    &::placeholder {
+      @apply text-[var(--gray5)];
+    }
+    &:focus {
+      @apply border-0;
+    }
+  }
+  &.readonly {
+    @apply pointer-events-none border-[var(--gray1)] !bg-[var(--gray1)];
+    .textarea {
+      @apply !bg-[var(--gray1)] text-[#4c515e];
+    }
+  }
+  &.disabled {
+    @apply border-[var(--gray1)] bg-[var(--gray1)];
+    .textarea {
+      @apply !bg-[var(--gray1)] !text-[#a9afb8];
+    }
+  }
+  .text_limit {
+    @apply flex justify-end pb-[11px] pr-[12px] text-[12px] font-normal leading-[1rem] text-[var(--gray6)];
+  }
+}

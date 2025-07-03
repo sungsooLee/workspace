@@ -1,0 +1,17 @@
+/* admin-auth-step3.module.css */
+.start {
+  .auth_box {
+    .signup_info {
+      @apply px-[80px];
+    }
+    .signup_noti {
+      @apply mt-[16px];
+    }
+    .auth_form {
+      @apply mt-[48px];
+    }
+    .btn_wrap {
+      @apply mt-[48px];
+    }
+  }
+}

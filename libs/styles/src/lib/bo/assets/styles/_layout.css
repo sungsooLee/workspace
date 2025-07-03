@@ -1,0 +1,56 @@
+/* layout */
+body:not(:has(.layout_wrap)) main .scroll_inner {
+  @apply min-h-[calc(100vh-40px)];
+}
+
+body.scrolled {
+  @apply overflow-x-auto overflow-y-hidden;
+  .layout_wrap {
+    header {
+      @apply !h-[50px] !overflow-hidden;
+      h1,
+      .util,
+      .option_menu {
+        @apply !hidden;
+      }
+    }
+    .container_inner {
+      @apply !min-h-[calc(100vh-50px)];
+      .scroll_inner {
+        @apply relative !min-h-[calc(100vh-90px)];
+        & > .title_wrap {
+          @apply z-[5];
+          &::before {
+            @apply absolute -bottom-[1px] left-0 z-[0] h-[2px] w-full bg-[url('../../assets/images/common/bg_sticky_line.png')] bg-[auto_2px] bg-[position:left_center] bg-repeat-x content-[''];
+          }
+          &::after {
+            @apply absolute bottom-0 left-[40px] z-[1] h-[1px] w-[calc(100%-80px)] bg-[var(--gray4)] content-[''];
+          }
+        }
+        .content_wrap > div {
+          @apply min-h-[calc(100vh-198px)];
+        }
+      }
+    }
+  }
+  [class*='nlp--lnb'] {
+    @apply max-h-[calc(100vh-50px)];
+  }
+}
+
+.layout_wrap {
+  .scroll_inner {
+    @apply !h-[calc(100vh-140px)];
+  }
+}
+
+.content_wrap > div {
+  @apply min-h-[calc(100vh-248px)];
+}
+
+.content_wrap.scroll_hidden {
+  @apply max-h-[calc(100vh-244px)] overflow-y-hidden;
+  & > div {
+    @apply max-h-[calc(100vh-308px)] overflow-y-hidden;
+  }
+}

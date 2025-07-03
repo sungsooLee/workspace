@@ -1,0 +1,102 @@
+.start {
+  @apply pt-[2px];
+  &.chips {
+    @apply mr-0 inline-flex min-h-[2.8rem] items-center justify-center rounded-full bg-[#d8f8ff] px-[10px] text-[13px] font-light text-[var(--gray9)];
+    .label {
+      @apply inline-block overflow-hidden text-ellipsis whitespace-nowrap pointer-events-none min-h-[2.8rem];
+      &.button_mode {
+        @apply pointer-events-auto;
+      }
+      & + button {
+        @apply ml-[2px];
+      }
+    }
+  }
+  &.chips_box {
+    @apply min-h-[3.2rem] min-w-full rounded-[4px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] px-[12px] pb-[6px] pt-[6px];
+    .input_chips {
+      @apply border-0 pl-0;
+    }
+    &.wordwrap {
+      [class*='nlp--input'] + div {
+        @apply pb-[6px];
+        &:empty {
+          @apply !hidden;
+        }
+      }
+    }
+    &.border_none {
+      @apply border-0;
+    }
+  }
+  &.wordwrap {
+    @apply min-h-[120px] p-[12px];
+    & + [class*='btn_search'] {
+      @apply !mt-[8px];
+    }
+  }
+  &.readonly {
+    @apply border-[var(--gray1)] bg-[var(--gray1)];
+  }
+  &.disabled {
+    @apply border-[var(--gray1)] bg-[var(--gray1)];
+  }
+  .chips_wapper {
+    @apply flex max-w-fit flex-wrap gap-x-[8px] gap-y-[12px];
+    .btn_chips {
+      &.ts {
+        @apply !h-[2rem] !min-h-[2rem] px-[8px];
+        button:nth-last-child(1) {
+          @apply ml-[8px] rounded-full bg-[#6f798b];
+          svg {
+            @apply ml-0 w-[10px] stroke-white;
+          }
+        }
+      }
+      &.xs {
+        @apply !h-[2.4rem] !min-h-[2.4rem];
+        button {
+          @apply text-[1.3rem] text-[var(--gray9)];
+        }
+      }
+      &.sm {
+        @apply min-h-[3.2rem];
+      }
+      &.md {
+        @apply min-h-[3.6rem];
+      }
+      &.lg {
+        @apply min-h-[4rem];
+      }
+      &.line {
+        @apply rounded-[8px] border border-solid border-[#06226a] bg-[var(--white)];
+        span,
+        button {
+          @apply button_3_b text-[#06226a];
+        }
+        .close {
+          @apply h-[16px] w-[16px] stroke-[#06226a];
+        }
+      }
+      &.round2 {
+        @apply bg-[var(--gray2)];
+        [class*='nlp--button']:nth-last-child(1) {
+          @apply h-[16px] w-[16px] !bg-transparent;
+          svg {
+            @apply h-[14px] w-[14px] !stroke-[#131C30];
+          }
+        }
+      }
+    }
+    &.vertical {
+      @apply flex-col;
+    }
+  }
+  .close {
+    @apply ml-[2px] h-auto w-[12px];
+  }
+}
+
+.empty_message {
+  @apply body_bo_2_r w-full pt-[6px] text-center text-[var(--gray7)];
+}

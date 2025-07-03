@@ -1,0 +1,399 @@
+import dayjs from 'dayjs';
+
+import { DATE_TIME_FORMAT } from '../types';
+import { getDefaultLang } from '../i18n/i18n';
+
+export function initTimeLocale() {
+  changeTimeLocale(getDefaultLang());
+}
+
+export function changeTimeLocale(lang: string) {
+  // datejs i18n
+  // ref: https://day.js.org/docs/en/i18n/loading-into-browser
+  // ref: https://github.com/ant-design/antd-dayjs-webpack-plugin
+  // support locale
+  // import 'dayjs/locale/ko';
+  // import 'dayjs/locale/en';
+  // import 'dayjs/locale/ja';
+  // import 'dayjs/locale/zh-cn';
+  switch (lang) {
+    case 'en':
+    case 'ko':
+    case 'ja':
+      dayjs.locale(lang);
+      break;
+    case 'cn':
+    case 'zh-cn':
+      dayjs.locale('zh-cn');
+      break;
+  }
+}
+
+export function getDateTimeFormat(dateTimeFormat = DATE_TIME_FORMAT.DATE, locale?: string) {
+  switch (dateTimeFormat) {
+    case DATE_TIME_FORMAT.YEAR:
+      return timeFormatYear(locale);
+    case DATE_TIME_FORMAT.MONTH:
+      return timeFormatMonth(locale);
+    case DATE_TIME_FORMAT.MONTH_DAY:
+      return timeFormatMonthDate(locale);
+    case DATE_TIME_FORMAT.DATETIME_HOUR:
+      return timeFormatHour(locale);
+    case DATE_TIME_FORMAT.DATETIME_MIN:
+      return timeFormatMinute(locale);
+    case DATE_TIME_FORMAT.DATETIME_SEC:
+      return timeFormatSecond(locale);
+    case DATE_TIME_FORMAT.DATETIME_WEEK_SEC:
+      return timeFormatWeekSecond(locale);
+    case DATE_TIME_FORMAT.DATETIME_MLS:
+      return timeFormatMilliSecond(locale);
+    case DATE_TIME_FORMAT.HOUR_MIN:
+      return timeFormatHourMinute(locale);
+    case DATE_TIME_FORMAT.MIN_SEC:
+      return timeFormatMinuteSecond(locale);
+    case DATE_TIME_FORMAT.HOUR_MIN_SEC:
+      return timeFormatHourMinuteSecond(locale);
+    case DATE_TIME_FORMAT.DATE:
+      return timeFormatDate(locale);
+    case DATE_TIME_FORMAT.DATE_SERVER: // 서버 전송
+      return timeFormatDateToServer(locale);
+    default:
+      return dateTimeFormat;
+  }
+}
+
+export function timeFormatYear(locale?: string) {
+  const currentLocale = locale || getDefaultLang();
+  switch (currentLocale) {
+    case 'en':
+    case 'ko':
+    case 'ja':
+    case 'cn':
+    case 'zh-cn':
+    default:
+      return 'YYYY';
+  }
+}
+
+export function timeFormatMonth(locale?: string) {
+  const currentLocale = locale || getDefaultLang();
+  switch (currentLocale) {
+    case 'en':
+      return 'MMM YYYY';
+    case 'ko':
+    case 'ja':
+    case 'cn':
+    case 'zh-cn':
+    default:
+      return 'YYYY-MM';
+  }
+}
+
+export function timeFormatDate(locale?: string) {
+  // TODO: const locale = dayjs.locale();
+  const currentLocale = locale || getDefaultLang();
+  switch (currentLocale) {
+    case 'en':
+      return 'MM-DD-YYYY';
+    case 'ko':
+    case 'ja':
+    case 'cn':
+    case 'zh-cn':
+    default:
+      return 'YYYY-MM-DD';
+  }
+}
+
+export function timeFormatDateToServer(locale?: string) {
+  const currentLocale = locale || getDefaultLang();
+  switch (currentLocale) {
+    case 'en':
+    case 'ko':
+    case 'ja':
+    case 'cn':
+    case 'zh-cn':
+    default:
+      return 'YYYY-MM-DD';
+  }
+}
+
+export function timeFormatMonthDate(locale?: string) {
+  const currentLocale = locale || getDefaultLang();
+  switch (currentLocale) {
+    case 'en':
+      return 'MMM/DD';
+    case 'ko':
+    case 'ja':
+    case 'cn':
+    case 'zh-cn':
+    default:
+      return 'MM-DD';
+  }
+}
+
+export function timeFormatMonthHourMinDate(locale?: string) {
+  const currentLocale = locale || getDefaultLang();
+  switch (currentLocale) {
+    case 'en':
+      return 'MMM/DD HH:mm';
+    case 'ko':
+    case 'ja':
+    case 'cn':
+    case 'zh-cn':
+    default:
+      return 'MM-DD HH:mm';
+  }
+}
+
+export function timeFormatHour(locale?: string) {
+  const currentLocale = locale || getDefaultLang();
+  switch (currentLocale) {
+    case 'en':
+      return 'MMM/DD/YYYY HH';
+    case 'ko':
+    case 'ja':
+    case 'cn':
+    case 'zh-cn':
+    default:
+      return 'YYYY-MM-DD HH';
+  }
+}
+
+export function timeFormatMinute(locale?: string) {
+  const currentLocale = locale || getDefaultLang();
+  switch (currentLocale) {
+    case 'en':
+      return 'MMM/DD/YYYY HH:mm';
+    case 'ko':
+    case 'ja':
+    case 'cn':
+    case 'zh-cn':
+    default:
+      return 'YYYY-MM-DD HH:mm';
+  }
+}
+
+export function timeFormatHourMinute(locale?: string) {
+  const currentLocale = locale || getDefaultLang();
+  switch (currentLocale) {
+    case 'en':
+      return 'HH:mm';
+    case 'ko':
+    case 'ja':
+    case 'cn':
+    case 'zh-cn':
+    default:
+      return 'HH:mm';
+  }
+}
+
+export function timeFormatMinuteSecond(locale?: string) {
+  const currentLocale = locale || getDefaultLang();
+  switch (currentLocale) {
+    case 'en':
+      return 'mm:ss';
+    case 'ko':
+    case 'ja':
+    case 'cn':
+    case 'zh-cn':
+    default:
+      return 'mm:ss';
+  }
+}
+
+export function timeFormatHourMinuteSecond(locale?: string) {
+  const currentLocale = locale || getDefaultLang();
+  switch (currentLocale) {
+    case 'en':
+      return 'HH:mm:ss';
+    case 'ko':
+    case 'ja':
+    case 'cn':
+    case 'zh-cn':
+    default:
+      return 'HH:mm:ss';
+  }
+}
+
+export function timeFormatSecond(locale?: string) {
+  const currentLocale = locale || getDefaultLang();
+  switch (currentLocale) {
+    case 'en':
+      return 'MMM/DD/YYYY HH:mm:ss';
+    case 'ko':
+    case 'ja':
+    case 'cn':
+    case 'zh-cn':
+    default:
+      return 'YYYY-MM-DD HH:mm:ss';
+  }
+}
+
+export function timeFormatWeekSecond(locale?: string) {
+  const currentLocale = locale || getDefaultLang();
+  switch (currentLocale) {
+    case 'en':
+      return 'MMM/DD/YYYY(ddd) HH:mm:ss';
+    case 'ko':
+    case 'ja':
+    case 'cn':
+    case 'zh-cn':
+    default:
+      return 'YYYY-MM-DD(ddd) HH:mm:ss';
+  }
+}
+
+export function timeFormatMilliSecond(locale?: string) {
+  const currentLocale = locale || getDefaultLang();
+  switch (currentLocale) {
+    case 'en':
+      return 'MMM/DD/YYYY HH:mm:ss.SSS';
+    case 'ko':
+    case 'ja':
+    case 'cn':
+    case 'zh-cn':
+    default:
+      return 'YYYY-MM-DD HH:mm:ss.SSS';
+  }
+}
+
+/**
+ * ISO 날짜 문자열을 포맷팅된 날짜/시간 문자열로 변환합니다.
+ * @param dateString ISO 형식의 날짜 문자열 (예: "2025-04-11T06:02:02.416Z")
+ * @param format 적용할 포맷 (기본값: DATE_TIME_FORMAT.DATETIME_SEC)
+ * @returns 포맷팅된 날짜 문자열 또는 빈 문자열(유효하지 않은 날짜)
+ */
+export function formatISODateString(
+  dateString: string | null | undefined,
+  format: DATE_TIME_FORMAT = DATE_TIME_FORMAT.DATETIME_SEC,
+): string {
+  if (!dateString) return '';
+
+  const date = dayjs(dateString);
+  if (!date.isValid()) return '';
+
+  const formatStr = getDateTimeFormat(format);
+  return date.format(formatStr);
+}
+
+export function convertDateFormatToFns(dateFormat: string): string {
+  // dayjs 포맷을 date-fns 포맷으로 변환
+  let fnsFormat = dateFormat;
+
+  // 연도
+  fnsFormat = fnsFormat.replace(/YYYY/g, 'yyyy');
+  fnsFormat = fnsFormat.replace(/YY/g, 'yy');
+
+  // 월
+  fnsFormat = fnsFormat.replace(/MMMM/g, 'LLLL'); // 전체 월 이름
+  fnsFormat = fnsFormat.replace(/MMM/g, 'LLL'); // 축약 월 이름
+  fnsFormat = fnsFormat.replace(/MM/g, 'LL'); // 2자리 월 (01-12)
+  fnsFormat = fnsFormat.replace(/M/g, 'L'); // 1-2자리 월 (1-12)
+
+  // 일
+  fnsFormat = fnsFormat.replace(/DD/g, 'dd'); // 2자리 일 (01-31)
+  fnsFormat = fnsFormat.replace(/D/g, 'd'); // 1-2자리 일 (1-31)
+
+  // 시간
+  fnsFormat = fnsFormat.replace(/HH/g, 'HH'); // 24시간 형식 (00-23)
+  fnsFormat = fnsFormat.replace(/H/g, 'H'); // 24시간 형식 (0-23)
+  fnsFormat = fnsFormat.replace(/hh/g, 'hh'); // 12시간 형식 (01-12)
+  fnsFormat = fnsFormat.replace(/h/g, 'h'); // 12시간 형식 (1-12)
+
+  // 분
+  fnsFormat = fnsFormat.replace(/mm/g, 'mm'); // 2자리 분 (00-59)
+  fnsFormat = fnsFormat.replace(/m/g, 'm'); // 1-2자리 분 (0-59)
+
+  // 초
+  fnsFormat = fnsFormat.replace(/ss/g, 'ss'); // 2자리 초 (00-59)
+  fnsFormat = fnsFormat.replace(/s/g, 's'); // 1-2자리 초 (0-59)
+
+  // 밀리초
+  fnsFormat = fnsFormat.replace(/SSS/g, 'SSS'); // 3자리 밀리초
+
+  // 요일
+  fnsFormat = fnsFormat.replace(/dddd/g, 'EEEE'); // 전체 요일 이름
+  fnsFormat = fnsFormat.replace(/ddd/g, 'EEE'); // 축약 요일 이름
+
+  // AM/PM
+  fnsFormat = fnsFormat.replace(/A/g, 'a'); // AM/PM
+  fnsFormat = fnsFormat.replace(/a/g, 'a'); // am/pm
+
+  console.log('convertDateFormatToFns:', dateFormat, '->', fnsFormat);
+
+  return fnsFormat;
+}
+
+/**
+ * 현재 날짜/시간을 기반으로 placeholder를 생성하는 함수
+ */
+export function getDateTimePlaceholder(dateTimeFormat: DATE_TIME_FORMAT, locale?: string): string {
+  const currentLocale = locale || getDefaultLang();
+  const now = new Date();
+  const formatString = getDateTimeFormat(dateTimeFormat, currentLocale);
+
+  return dayjs(now).format(formatString);
+}
+
+/**
+ * 특정 타입에 맞는 placeholder를 생성하는 함수
+ */
+export function getDatePickerPlaceholder(
+  type:
+    | 'year'
+    | 'month'
+    | 'day'
+    | 'time'
+    | 'time-hm'
+    | 'time-step'
+    | 'day-time'
+    | 'day-time-hm'
+    | 'day-time-hms',
+  locale?: string,
+): string {
+  const currentLocale = locale || getDefaultLang();
+  const now = new Date();
+
+  switch (type) {
+    case 'year':
+      return getDateTimePlaceholder(DATE_TIME_FORMAT.YEAR, currentLocale);
+
+    case 'month':
+      return getDateTimePlaceholder(DATE_TIME_FORMAT.MONTH, currentLocale);
+
+    case 'day':
+      return getDateTimePlaceholder(DATE_TIME_FORMAT.DATE, currentLocale);
+
+    case 'time':
+      return dayjs(now).format('HH:mm:ss');
+
+    case 'time-hm':
+      return dayjs(now).format('HH:mm');
+
+    case 'time-step': {
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const displayHours = hours % 12 || 12;
+
+      if (currentLocale === 'ko') {
+        const ampm = hours >= 12 ? '오후' : '오전';
+        return `${ampm} ${displayHours}:${String(minutes).padStart(2, '0')}`;
+      } else {
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        return `${displayHours}:${String(minutes).padStart(2, '0')} ${ampm}`;
+      }
+    }
+
+    case 'day-time':
+      return getDateTimePlaceholder(DATE_TIME_FORMAT.DATETIME_HOUR, currentLocale);
+
+    case 'day-time-hm':
+      return getDateTimePlaceholder(DATE_TIME_FORMAT.DATETIME_MIN, currentLocale);
+
+    case 'day-time-hms':
+      return getDateTimePlaceholder(DATE_TIME_FORMAT.DATETIME_SEC, currentLocale);
+
+    default:
+      return '';
+  }
+}

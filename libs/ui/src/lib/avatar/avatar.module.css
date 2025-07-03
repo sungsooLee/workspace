@@ -1,0 +1,9 @@
+.start {
+  @apply flex h-[32px] w-[32px] items-center justify-center overflow-hidden rounded-[16px] bg-[var(--secondary1)];
+  .image {
+    @apply h-full w-full object-cover;
+  }
+  .fallback {
+    @apply body_2_b text-white;
+  }
+}

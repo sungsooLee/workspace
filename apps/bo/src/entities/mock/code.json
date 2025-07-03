@@ -1,0 +1,353 @@
+[
+  {
+    "groupCode": "LANGUAGE_CODE",
+    "name": "언어코드",
+    "description": "Refer to ISO 639-1 for list of languages and codes.",
+    "codes": [
+      {
+        "code": "de",
+        "name": "Deutsch",
+        "codes": [{
+          "code": "1",
+          "name": "Deutsch"
+        },
+          {
+            "code": "2",
+            "name": "English"
+          },
+          {
+            "code": "3",
+            "name": "Français"
+          },
+          {
+            "code": "4",
+            "name": "Español"
+          },
+          {
+            "code": "5",
+            "name": "中文 (Zhōngwén)"
+          }]
+      },
+      {
+        "code": "ko",
+        "name": "한국어",
+        "codes" : [
+          {
+            "code": "ko",
+            "name": "한국어"
+          },
+          {
+            "code": "kr",
+            "name": "대한민국"
+          },
+          {
+            "code": "h1",
+            "name": "한글"
+          },
+          {
+            "code": "kor",
+            "name": "한국"
+          },
+          {
+            "code": "han",
+            "name": "조선말"
+          }
+        ]
+      },
+      {
+        "code": "jp",
+        "name": "日本語",
+        "codes": [
+          {
+            "code": "ja",
+            "name": "日本語"
+          },
+          {
+            "code": "jp",
+            "name": "日本"
+          },
+          {
+            "code": "n1",
+            "name": "일본어 1급"
+          },
+          {
+            "code": "nih",
+            "name": "にほんご"
+          },
+          {
+            "code": "jpn",
+            "name": "ジャパン語"
+          }
+        ]
+      },
+      {
+        "code": "en",
+        "name": "English",
+        "codes": [
+          {
+            "code": "en",
+            "name": "English"
+          },
+          {
+            "code": "us",
+            "name": "American English"
+          },
+          {
+            "code": "uk",
+            "name": "British English"
+          },
+          {
+            "code": "au",
+            "name": "Australian English"
+          },
+          {
+            "code": "eng",
+            "name": "Global English"
+          }
+        ]
+      },
+      {
+        "code": "zh",
+        "name": "中文",
+        "codes": [
+          {
+            "code": "zh",
+            "name": "中文 (Simplified)"
+          },
+          {
+            "code": "zh_CN",
+            "name": "中文 (Mainland)"
+          },
+          {
+            "code": "zh_TW",
+            "name": "繁體中文 (Traditional)"
+          },
+          {
+            "code": "cn",
+            "name": "汉语"
+          },
+          {
+            "code": "mand",
+            "name": "Mandarin"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "groupCode": "COURSE_CATEGORY",
+    "name": "과정카테고리",
+    "description": "과정카테고리설명",
+    "codes": [
+      {
+        "code": "0",
+        "name": "기타"
+      },
+      {
+        "code": "A1",
+        "name": "경영관리"
+      },
+      {
+        "code": "B1",
+        "name": "외국어"
+      },
+      {
+        "code": "C1",
+        "name": "정보기술"
+      },
+      {
+        "code": "D1",
+        "name": "시사/교양"
+      }
+    ]
+  },
+  {
+    "groupCode": "OPEN_COMPANY_CODE",
+    "name": "공개범위 회사코드",
+    "description": "공개범위 회사코드",
+    "codes": [
+      {
+        "code": "0101000000",
+        "name": "현대자동차"
+      },
+      {
+        "code": "0102000000",
+        "name": "기아자동차"
+      },
+      {
+        "code": "AUTOMCHNCH",
+        "name": "일반정비업체(현대)"
+      },
+      {
+        "code": "AUTOMCHNCK",
+        "name": "일반정비업체(기아)"
+      },
+      {
+        "code": "HB0001",
+        "name": "국내영업(H) 협력사"
+      },
+      {
+        "code": "HZ0101",
+        "name": "현대 비인가교육협력사"
+      },
+      {
+        "code": "KZ0101",
+        "name": "기아 비인가교육협력사"
+      },
+      {
+        "code": "coperation",
+        "name": "상생협력"
+      },
+      {
+        "code": "cp01000000",
+        "name": "교육운영협력사"
+      },
+      {
+        "code": "gpwc",
+        "name": "GPWC"
+      }
+    ]
+  },
+  {
+    "groupCode": "pms.multilingual.KeyTypeCode",
+    "name": "다국어 키타입 코드",
+    "description": "다국어 키타입 코드",
+    "codes": [
+      {
+        "code": "MENU",
+        "name": "HRD센터 메뉴"
+      },
+      {
+        "code": "COMMON_CODE",
+        "name": "공통코드"
+      },
+      {
+        "code": "CATEGORY",
+        "name": "카테고리"
+      },
+      {
+        "code": "LABEL",
+        "name": "라벨"
+      },
+      {
+        "code": "MESSAGE",
+        "name": "메세지"
+      }
+    ]
+  },
+  {
+    "groupCode": "pms.multilingual",
+    "name": "다국어",
+    "description": "다국어",
+    "codes": [
+      {
+        "code": "kr",
+        "name": "한국어"
+      },
+      {
+        "code": "en",
+        "name": "영어"
+      },
+      {
+        "code": "ar",
+        "name": "아랍어"
+      },
+      {
+        "code": "zh",
+        "name": "중국어"
+      },
+      {
+        "code": "zh-TW",
+        "name": "중국어(대만)"
+      },
+      {
+        "code": "hr",
+        "name": "크로아티아어"
+      },
+      {
+        "code": "de",
+        "name": "독일어"
+      },
+      {
+        "code": "en-AU",
+        "name": "영어(호주)"
+      },
+      {
+        "code": "et",
+        "name": "에스토니아어"
+      },
+      {
+        "code": "fr",
+        "name": "프랑스어"
+      },
+      {
+        "code": "he",
+        "name": "히브리어"
+      },
+      {
+        "code": "hi",
+        "name": "힌디어"
+      },
+      {
+        "code": "id",
+        "name": "인도네시아어"
+      },
+      {
+        "code": "it",
+        "name": "이탈리아어"
+      },
+      {
+        "code": "ja",
+        "name": "일본어"
+      },
+      {
+        "code": "fo",
+        "name": "네팔어"
+      },
+      {
+        "code": "fa",
+        "name": "페르시아어"
+      },
+      {
+        "code": "pt",
+        "name": "포르투칼어"
+      },
+      {
+        "code": "pt-BR",
+        "name": "포르투칼어(브라질)"
+      },
+      {
+        "code": "ro",
+        "name": "루마니아어"
+      },
+      {
+        "code": "ru",
+        "name": "러시아어"
+      },
+      {
+        "code": "sl",
+        "name": "슬로베니아어"
+      },
+      {
+        "code": "es",
+        "name": "스페인어"
+      },
+      {
+        "code": "es-LT",
+        "name": "스페인어(라틴)"
+      },
+      {
+        "code": "th",
+        "name": "태국어"
+      },
+      {
+        "code": "tr-TR",
+        "name": "튀르키예어"
+      },
+      {
+        "code": "vi",
+        "name": "베트남어"
+      }
+    ]
+  }
+]

@@ -1,0 +1,494 @@
+import { createFileRoute } from '@tanstack/react-router';
+
+import { GuidePopupProps, PageContainer } from '@widgets/layout/ui/container/page-container';
+import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
+import style from './index.module.css';
+import { pageRouteConfig } from '@features/auth/index';
+
+export const Route = createFileRoute('/_layout/')({
+  component: HomeComponent,
+  ...pageRouteConfig({
+    meta: {
+      title: '개발 현황',
+    },
+  }),
+});
+
+const guideProps: GuidePopupProps = {
+  title: '도움말',
+  description:
+    '도움말 메시지 입니다.도움말 메시지 입니다.도움말 메시지 입니다.도움말 메시지 입니다.도움말 메시지 입니다.도움말 메시지 입니다.도움말 메시지 입니다.도움말 메시지 입니다.도움말 메시지 입니다.도움말 메시지 입니다.도움말 메시지 입니다.도움말 메시지 입니다.',
+  descriptions: [
+    '도움말 목록 입니다.',
+    '도움말 목록 입니다.',
+    '도움말 목록 입니다.',
+    '도움말 목록 입니다.',
+    '도움말 목록 입니다.',
+    '도움말 목록 입니다.',
+    '도움말 목록 입니다.',
+    '도움말 목록 입니다.',
+    '도움말 목록 입니다.',
+    '도움말 목록 입니다.',
+    '도움말 목록 입니다.',
+    '도움말 목록 입니다.',
+  ],
+};
+
+function HomeComponent() {
+  return (
+    <PageContainer showFavoriteButton guidePopupProps={guideProps}>
+      <MainContents>
+        <h3>Dash Board</h3>
+        <div className={style.guide_wrap}>
+          <div className={style.preview}>
+            <div className={style.guide_box}>
+              <div style={{ marginBottom: 10 }}>
+                <h3>M0</h3>
+              </div>
+              <table className={style.pub_table} style={{ width: '100%' }}>
+                <thead>
+                  <tr>
+                    <th scope="col">스크린 명</th>
+                    <th scope="col">페이지링크(화면아이디)</th>
+                    <th scope="col">페이지타입</th>
+                    <th scope="col">완료일</th>
+                    <th scope="col">비고</th>
+                    <th scope="col">상태</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {munu.map((item, index) => (
+                    <tr key={index} className="h-[20px]">
+                      <td className="text-left">{item.screenName}</td>
+                      <td className={style.pages}>
+                        <a href={item.pageId} target="_blank" rel="noopener noreferrer">
+                          {item.pageId}
+                        </a>
+                        <span className={style.screen}>
+                          {item.screenId ? `(${item.screenId})` : ''}
+                        </span>
+                      </td>
+                      <td>{item.pageType}</td>
+                      <td>{item.completionDate || '-'}</td>
+                      <td className={style.remarks}>{item.memo}</td>
+                      <td className={`${item.end ? style.completed : style.status}`}>
+                        {item.end ? '완료' : '진행중'}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <div style={{ marginBottom: 10, marginTop: 40 }}>
+                <h3>Guide</h3>
+              </div>
+              <table className={style.pub_table} style={{ width: '100%' }}>
+                <thead>
+                  <tr>
+                    <th scope="col">스크린 명</th>
+                    <th scope="col">페이지링크(화면아이디)</th>
+                    <th scope="col">페이지타입</th>
+                    <th scope="col">비고</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {guide.map((item, index) => (
+                    <tr key={index} className="h-[20px]">
+                      <td className="text-left">{item.screenName}</td>
+                      <td className={style.pages}>
+                        <a href={item.pageId} target="_blank" rel="noopener noreferrer">
+                          {item.pageId}
+                        </a>
+                      </td>
+                      <td>{item.pageType}</td>
+                      <td className={style.remarks}>{item.memo}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </MainContents>
+    </PageContainer>
+  );
+}
+
+// 완료시 completionDate 에 날짜를 기입해주세요. (ex.2024-12.31)
+
+// screenName: 스크린 명
+// pageId: 화면 경로(파일명) .tsx 생략
+// screenId: 스크린아이디
+// pageType: 페이지 타입 Page,Pop-up
+// completionDate: 완료일
+// memo: 비고
+// end: true, false
+export const munu = [
+  {
+    screenName: '404',
+    pageId: '404',
+    screenId: '-',
+    pageType: 'Page',
+    completionDate: '2025-06-19',
+    memo: '404', // 비고
+    end: true,
+  },
+  {
+    screenName: '500',
+    pageId: '500',
+    screenId: '-',
+    pageType: 'Page',
+    completionDate: '2025-06-19',
+    memo: '500', // 비고
+    end: true,
+  },
+  {
+    screenName: 'GNB/LNB',
+    pageId: '/',
+    screenId: 'NLP_BO_COM_1000',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: 'GNB, LNB, 알람, My 메뉴', // 비고
+    end: true,
+  },
+  {
+    screenName: '로그인',
+    pageId: 'login',
+    screenId: 'NLP_BO_LOG_1000',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '', // 비고
+    end: true,
+  },
+  {
+    screenName: '회원가입 진행현황',
+    pageId: 'signup-progress',
+    screenId: 'NLP_BO_LOG_1000',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중 api X', // 비고
+    end: false,
+  },
+  {
+    screenName: '관리자 회원가입',
+    pageId: 'signup',
+    screenId: 'NLP_BO_LOG_1000',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중 api X', // 비고
+    end: false,
+  },
+  {
+    screenName: '나의 정보',
+    pageId: 'my-page/info',
+    screenId: 'NLP_BO_COM_1000',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업중 apiX', // 비고
+    end: true,
+  },
+  {
+    screenName: '나의 권한',
+    pageId: 'my-page/role',
+    screenId: 'NLP_BO_COM_1000',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업중 apiX', // 비고
+    end: true,
+  },
+  {
+    screenName: '나의 권한 상세',
+    pageId: 'my-page/role/detail',
+    screenId: 'NLP_BO_COM_1000',
+    pageType: 'Page',
+    completionDate: '-',
+    lastUpdateDate: '-',
+    memo: '작업중 apiX', // 비고
+    end: false,
+  },
+  {
+    screenName: '나의 학습자원 조회',
+    pageId: 'learning/learning-resource',
+    screenId: 'NLP_BO_CMS_1001',
+    pageType: 'Page',
+    completionDate: '-',
+    lastUpdateDate: '-',
+    memo: '작업중', // 비고
+    end: false,
+  },
+  {
+    screenName: '공통 카테고리',
+    pageId: 'platform/category',
+    screenId: 'NLP_BO_TMS_1120',
+    pageType: 'Page',
+    completionDate: '2025-06-17',
+    memo: '작업 완료', // 비고
+    end: true,
+  },
+  {
+    screenName: '시스템 공통코드 그룹관리',
+    pageId: 'platform/code/system-code',
+    screenId: 'NLP_BO_PMS_1401_01',
+    pageType: 'Page',
+    completionDate: '2025-06-13',
+    memo: '작업 완료', // 비고
+    end: true,
+  },
+  {
+    screenName: '메뉴 관리',
+    pageId: 'platform/menu',
+    screenId: 'NLP_BO_PMS_1200',
+    pageType: 'Page',
+    completionDate: '2025-06-11',
+    memo: '작업 완료', // 비고
+    end: true,
+  },
+  {
+    screenName: '위젯 관리',
+    pageId: 'platform/widget',
+    screenId: 'NLP_BO_PMS_1310',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중', // 비고
+    end: false,
+  },
+  {
+    screenName: '라벨/메시지 관리',
+    pageId: 'platform/label-message',
+    screenId: 'NLP_BO_PMS_1406',
+    pageType: 'Page',
+    completionDate: '2025-05-30',
+    memo: '작업 완료', // 비고
+    end: true,
+  },
+  {
+    screenName: '프로그램 관리',
+    pageId: 'platform/program',
+    screenId: 'NLP_BO_PMS_1403',
+    pageType: 'Page',
+    completionDate: '2025-06-12',
+    memo: '작업 완료', // 비고
+    end: true,
+  },
+  {
+    screenName: '시스템 번역',
+    pageId: 'platform/system/multilingual',
+    screenId: 'NLP_BO_PMS_1421',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 완료', // 비고
+    end: false,
+  },
+  {
+    screenName: '테넌트 관리',
+    pageId: 'tenant/management',
+    screenId: 'NLP_BO_TMS_1000',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중(조회옵션)', // 비고
+    end: false,
+  },
+  {
+    screenName: '테넌트 상세',
+    pageId: 'tenant/management/detail',
+    screenId: 'NLP_BO_TMS_1003_00_04, NLP_BO_TMS_1003_02 등등',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중 - /tenant/management 에서 조회 후 테넌트명 클릭',
+    end: false,
+  },
+  {
+    screenName: '플렛폼 테넌트 관리',
+    pageId: 'platform/tenant/management',
+    screenId: 'NLP_BO_TMS_1000',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중',
+    end: false,
+  },
+  {
+    screenName: '테넌트 상세(플렛폼)',
+    pageId: 'platform/tenant/management/detail',
+    screenId: 'NLP_BO_TMS_1002,NLP_BO_TMS_1002_01 등등',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중 - /platform/tenant/management 에서 조회 후 테넌트명 클릭',
+    end: false,
+  },
+  {
+    screenName: '플렛폼 테넌트 등록',
+    pageId: 'platform/tenant/management/regist',
+    screenId: 'NLP_BO_TMS_1001',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중 (등록 가능)',
+    end: false,
+  },
+  {
+    screenName: '플렛폼 테넌트 유저 관리',
+    pageId: 'platform/tenant/user',
+    screenId: 'NLP_BO_TMS_1111_07, NLP_BO_TMS_1111_15',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중',
+    end: false,
+  },
+  {
+    screenName: '플렛폼 테넌트 조직 관리',
+    pageId: 'platform/tenant/organization',
+    screenId: 'NLP_BO_TMS_1111_01',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중 (api - 회사목록api사용)',
+    end: false,
+  },
+  {
+    screenName: '플렛폼 테넌트 조직 관리 - 상세',
+    pageId: 'platform/tenant/organization/detail',
+    screenId: 'NLP_BO_TMS_1111_03',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중 (api x)- /platform/tenant/organization 검색 후 회사명 클릭',
+    end: false,
+  },
+  {
+    screenName: '플렛폼 테넌트 유저그룹 수동 관리',
+    pageId: 'platform/tenant/usr-group/manual',
+    screenId: 'NLP_BO_PMS_2001',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중 (api x) - 화면만',
+    end: false,
+  },
+  {
+    screenName: '플렛폼 테넌트 유저그룹 등록 상세',
+    pageId: 'platform/tenant/usr-group/manual-detail',
+    screenId: 'NLP_BO_PMS_2002',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중 (api x) - 화면만',
+    end: false,
+  },
+  {
+    screenName: '역할 신청 관리',
+    pageId: 'platform/role/application',
+    screenId: 'NLP_BO_PMS_1112',
+    pageType: 'Page',
+    completionDate: '2025-07-01',
+    memo: '작업 완료',
+    end: true,
+  },
+  {
+    screenName: '회사 관리',
+    pageId: 'platform/company/management',
+    screenId: 'NLP_BO_TMS_1300',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 완료',
+    end: true,
+  },
+  {
+    screenName: '회사 조직 관리',
+    pageId: 'platform/company/organization',
+    screenId: 'NLP_BO_TMS_1301',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중',
+    end: false,
+  },
+  {
+    screenName: '회사 유저 관리',
+    pageId: 'platform/company/user',
+    screenId: 'NLP_BO_TMS_1303',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중',
+    end: false,
+  },
+  {
+    screenName: 'HR 연동 이력',
+    pageId: 'platform/company/hr-history',
+    screenId: 'NLP_BO_TMS_1306',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중',
+    end: false,
+  },
+  {
+    screenName: '교육공간 관리',
+    pageId: 'learning/training-place',
+    screenId: 'NLP_BO_LMS_0029',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중',
+    end: false,
+  },
+  {
+    screenName: '채널 개설 신청 관리',
+    pageId: 'tenant/channel/request',
+    screenId: 'NLP_BO_CHN_1401',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중',
+    end: false,
+  },
+  {
+    screenName: '채널 관리',
+    pageId: 'tenant/channel/management',
+    screenId: 'NLP_BO_CHN_1000',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중',
+    end: false,
+  },
+];
+
+export const guide = [
+  {
+    screenName: '폼 샘플',
+    pageId: 'sample/form-filed-sample',
+    pageType: 'Page',
+    memo: '', // 비고
+  },
+  {
+    screenName: '폼타입3',
+    pageId: 'menu/type3',
+    pageType: 'Page',
+    memo: '', // 비고
+  },
+  {
+    screenName: '폼타입4',
+    pageId: 'menu/type4',
+    pageType: 'Page',
+    memo: '', // 비고
+  },
+  {
+    screenName: '폼타입5',
+    pageId: 'menu/type5',
+    pageType: 'Page',
+    memo: '', // 비고
+  },
+  {
+    screenName: '폼타입6',
+    pageId: '/menu/type6',
+    pageType: 'Page',
+    memo: '', // 비고
+  },
+  {
+    screenName: '공통팝업',
+    pageId: 'common-popup',
+    pageType: 'Page',
+    memo: '공통 팝업', // 비고
+  },
+  {
+    screenName: '영상 플레이어',
+    pageId: 'player-demo',
+    pageType: 'Page',
+    memo: '영상 플레이어', // 비고
+  },
+  {
+    screenName: 'SearchBox 데모',
+    pageId: 'search-box-demo',
+    pageType: 'Page',
+    memo: 'SearchBox 데모', // 비고
+  },
+];

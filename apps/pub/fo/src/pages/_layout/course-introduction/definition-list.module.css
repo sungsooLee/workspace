@@ -1,0 +1,22 @@
+.start {
+  &.list {
+    dl {
+      @apply table-row;
+      dt {
+        @apply body-md table-cell min-w-[56px] py-[2px] leading-[22px] text-[var(--gray50)];
+      }
+      dd {
+        @apply body-md relative py-[2px] pl-[8px] leading-[22px] text-[var(--gray35)];
+        &::before {
+          @apply absolute left-0 top-[7px] h-[12px] w-px bg-[var(--gray5)] content-[''];
+        }
+        em {
+          @apply text-[var(--status1)];
+        }
+        button {
+          @apply ml-[8px] h-[24px] rounded-[4px];
+        }
+      }
+    }
+  }
+}

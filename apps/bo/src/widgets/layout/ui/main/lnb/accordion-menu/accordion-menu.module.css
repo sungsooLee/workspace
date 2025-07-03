@@ -1,0 +1,37 @@
+.start {
+  &.depth2 {
+    div > button {
+      [class*='accordion_title'] {
+        @apply pl-[6px];
+      }
+    }
+  }
+  &.depth3 {
+    div > button {
+      [class*='accordion_title'] {
+        @apply pl-[24px];
+      }
+    }
+  }
+  &.depth4 {
+    div > button {
+      [class*='accordion_title'] {
+        @apply pl-[48px];
+      }
+      & > [class*='accordion_title'] {
+        &[class*='active'] {
+          @apply body_bo_2_b bg-[#EDFCFF] text-[var(--secondary1)];
+          svg {
+            @apply !stroke-[var(--secondary1)];
+          }
+        }
+      }
+    }
+  }
+  [data-status='active'] {
+    @apply font-bold;
+  }
+}
+
+.active {
+}

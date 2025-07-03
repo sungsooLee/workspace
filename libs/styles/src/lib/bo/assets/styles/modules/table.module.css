@@ -1,0 +1,51 @@
+/* table.module.css */
+.start {
+  &.wrap {
+    @apply border-t-[1px] border-solid border-[var(--gray9)] pt-[4px];
+    table {
+      @apply w-full table-fixed border-collapse;
+      caption {
+        @apply sr-only;
+      }
+      tbody {
+        tr {
+          th {
+            @apply body_bo_2_b h-[56px] border-b-[1px] border-solid border-[var(--gray2)] py-[14px] pr-[24px] text-left align-middle text-[var(--gray7)];
+            &.align_top {
+              @apply align-top;
+            }
+          }
+          td {
+            @apply body_bo_2_r border-b-[1px] border-solid border-[var(--gray2)] py-[12px] align-middle;
+          }
+        }
+      }
+    }
+    .link {
+      @apply text-[var(--gray7)] underline;
+    }
+    .box {
+      @apply flex items-center justify-between pr-[80px];
+    }
+    .text {
+      &_point {
+        @apply text-[var(--secondary1)];
+      }
+      &_error {
+        @apply text-[var(--status1)];
+      }
+    }
+    & + [class*='title_wrap'] {
+      @apply !mt-[32px] !border-t-0 pt-0;
+    }
+    & + [class*='table_box'] {
+      @apply mt-[48px];
+    }
+  }
+  & + [class*='nlp--tabs'] {
+    @apply mt-[48px];
+  }
+}
+[class*='title_wrap'] + .start {
+  @apply -mt-[8px];
+}

@@ -1,0 +1,19 @@
+/* Button Components Style */
+.nlp_button {
+  background-color: var(--secondary1);
+  @apply h-[40px] rounded-[4px] px-[12px] text-center text-[1.4rem] leading-[1.4] text-white;
+  &.icon {
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0iY29sb3IiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xNy41IDE3LjVMMTIuNTAwMSAxMi41TTE0LjE2NjcgOC4zMzMzM0MxNC4xNjY3IDExLjU1NSAxMS41NTUgMTQuMTY2NyA4LjMzMzMzIDE0LjE2NjdDNS4xMTE2NyAxNC4xNjY3IDIuNSAxMS41NTUgMi41IDguMzMzMzNDMi41IDUuMTExNjcgNS4xMTE2NyAyLjUgOC4zMzMzMyAyLjVDMTEuNTU1IDIuNSAxNC4xNjY3IDUuMTExNjcgMTQuMTY2NyA4LjMzMzMzWiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K');
+    @apply bg-[length:20px_20px] bg-[position:10px_center] bg-no-repeat pl-[32px];
+    fill: #000;
+  }
+  &:hover {
+    background-color: var(--secondary2);
+  }
+  &:active {
+    background-color: var(--secondary3);
+  }
+  &.disabled {
+    background-color: var(--gray5);
+  }
+}

@@ -1,0 +1,205 @@
+/* dropdown.css */
+.container {
+  @apply line-clamp-1 flex w-full flex-wrap;
+}
+
+.select_item {
+  @apply body_bo_2_r flex items-center px-[8px] py-0 text-[#4C515E];
+  [role='checkbox'] {
+    @apply mr-[4px];
+  }
+}
+
+.select_wrap {
+  @apply w-full;
+  .focused {
+    .icon_arrow {
+      @apply rotate-180 transition-all duration-300 ease-in-out;
+    }
+  }
+  [aria-selected='true'] {
+    @apply !bg-[var(--secondary5)];
+  }
+  /* .readonly {
+    .nlp-select__control {
+      @apply pointer-events-none !border-[var(--gray4)] bg-[#f6f8fd];
+      .nlp-select__single-value {
+        @apply pl-[8px] text-[#4c515e];
+      }
+    }
+  } */
+  [class*='nlp-select__control--is-disabled'] {
+    @apply !bg-[var(--gray1)] !text-[var(--gray4)];
+  }
+  [class*='nlp-select__placeholder'] {
+    @apply !text-[var(--gray5)];
+  }
+
+  &[class*='nlp--dropdown-sm'] {
+    [class*='nlp-select__control'] {
+      @apply !min-h-[32px] border-[var(--gray4)];
+    }
+  }
+  &[class*='nlp--dropdown-md'] {
+    [class*='nlp-select__control'] {
+      @apply !min-h-[36px];
+    }
+  }
+  &[class*='nlp--dropdown-lg'] {
+    [class*='nlp-select__control'] {
+      @apply !min-h-[40px] rounded-[8px] pr-[16px];
+      .nlp-select__single-value {
+        @apply pl-[8px];
+      }
+    }
+  }
+  &[class*='nlp--dropdown-text'] {
+    [class*='nlp-select__control'] {
+      @apply h-[32px];
+      [class*='nlp-select__value-container'] {
+        @apply relative !flex max-h-[32px] w-full py-0;
+        .container {
+          @apply flex h-[30px] items-center;
+          span {
+            @apply input_bo_1_r text-[var(--gray9)];
+          }
+        }
+        input {
+          @apply sr-only;
+        }
+      }
+      [class*='nlp-select__indicators'] {
+        @apply h-[32px] max-h-[32px];
+      }
+    }
+    [class*='focused'] [class*='nlp-select__control'] {
+      @apply border-[var(--gray7)];
+    }
+  }
+  &[class*='error'] {
+    [class*='nlp-select__control'] {
+      @apply !border-[var(--status1)];
+    }
+  }
+  &.readonly,
+  &.disabled {
+    @apply pointer-events-none cursor-auto;
+    [class*='nlp-select__control'] {
+      @apply !border-[var(--gray1)] !bg-[var(--gray1)];
+      [class*='nlp-select__single-value'] {
+        @apply text-[var(--gray8)];
+      }
+    }
+  }
+  &.disabled [class*='nlp-select__control'] [class*='nlp-select__single-value'] {
+    @apply text-[var(--gray5)];
+  }
+}
+
+[class*='menu-portal-large'] {
+  [class*='select__menu'] {
+    @apply !max-h-[334px];
+  }
+}
+[class*='nlp-select__control'] {
+  @apply h-[32px] min-h-[32px] !cursor-pointer items-center border-[#C8D2E5] pr-[8px];
+
+  [class*='nlp-select__dropdown-indicator'] {
+    svg {
+      @apply rotate-0 transition-all duration-300 ease-in-out;
+    }
+  }
+  &[class*='nlp-select__control--menu-is-open'] {
+    [class*='nlp-select__dropdown-indicator'] {
+      svg {
+        @apply rotate-180 transition-all duration-300 ease-in-out;
+      }
+    }
+  }
+}
+[class*='nlp-select__control--is-focused'] {
+  @apply !border-[#6F798B] bg-[var(--white)] !shadow-none;
+}
+
+[class*='nlp-select__option'] {
+  @apply flex !h-[32px] !min-h-[32px] !cursor-pointer items-center !px-0;
+  &[class*='nlp-select__option--is-selected'] {
+    @apply !bg-[#edfcff];
+  }
+  &:hover {
+    @apply !rounded-[4px] !bg-[var(--gray1)];
+  }
+}
+[class*='select__option--is-focused'] {
+  @apply !bg-transparent;
+}
+[class*='nlp-select__menu'] {
+  @apply z-auto !shadow-none;
+}
+[class*='nlp-select__menu-list'] {
+  @apply rounded-[4px] border border-solid border-[var(--gray7)];
+}
+[class*='nlp-select__control--menu-is-open'] {
+  @apply border-[#6F798B];
+  &:hover {
+    @apply !border-[#6F798B];
+  }
+}
+[class*='nlp-select__single-value'],
+[class*='nlp-select__placeholder'] {
+  @apply input_bo_1_r mx-0 text-left text-[var(--gray8)];
+}
+[class*='nlp-select__indicator-separator'] {
+  @apply hidden;
+}
+[class*='nlp-select__multi-value__remove'] {
+  @apply !bg-transparent;
+  &:hover {
+    @apply !bg-transparent;
+    svg {
+      @apply fill-inherit;
+    }
+  }
+}
+[class*='nlp-select__multi-value__label'] {
+  @apply !bg-transparent;
+}
+[class*='nlp-select__input-container'],
+[class*='nlp-select__value-container'] {
+  @apply !body_bo_2_r !m-0 !py-0;
+}
+[class*='nlp-select__indicator'] {
+  @apply !p-0;
+}
+[class*='nlp-select__clear-indicator'] {
+  @apply mr-[8px];
+}
+[class*='nlp-select__multi-value'] {
+  @apply !m-0 flex h-[23px] items-center justify-center !rounded-full !bg-[#d8f8ff] px-[6px] !text-[14px] text-[var(--gray9)];
+  & + [class*='nlp-select__multi-value'] {
+    @apply !ml-[4px] rounded-full bg-[#6f789b] !px-0;
+  }
+}
+
+[class*='nlp-select__multi-value__remove'] {
+  @apply h-[14px] w-[14px] !bg-[#6f798b] p-0;
+  svg {
+    @apply h-[10px] w-[10px];
+    path {
+      @apply fill-white;
+    }
+  }
+  &:hover {
+    @apply !bg-[#6f798b];
+  }
+}
+
+[class*='nlp-select__menu-portal'] {
+  @apply pointer-events-auto !z-[151];
+  [class*='menu-portal-variant-text'] {
+    [class*='nlp-select__menu'] {
+      [class*='nlp-select__menu-list'] {
+      }
+    }
+  }
+}

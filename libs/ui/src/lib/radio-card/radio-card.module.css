@@ -1,0 +1,16 @@
+/* style은 화면 모듈css에서 작업 */
+.start {
+  @apply flex items-center justify-center gap-[16px] text-center;
+  .radio {
+    @apply m-auto flex w-full items-center justify-center text-center;
+    .item {
+      div {
+        @apply flex flex-col items-center justify-center;
+      }
+
+      &[aria-checked='true'] {
+        @apply block;
+      }
+    }
+  }
+}

@@ -1,0 +1,60 @@
+.start {
+  &.search_popover {
+    @apply table w-[800px] table-fixed rounded-[16px] bg-white p-[32px] shadow-[0_2px_6px_rgba(0,0,0,.2)];
+    & > div {
+      @apply table-cell w-1/2;
+      &:nth-child(1) {
+        @apply pr-[24px];
+      }
+      &:nth-child(2) {
+        @apply relative pl-[24px];
+        &::before {
+          @apply absolute left-0 top-0 h-full w-px bg-[var(--gray5)] content-[''];
+        }
+      }
+    }
+    .area_right {
+      .area_box {
+        & + .area_box {
+          @apply mt-[32px];
+        }
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.search_popover {
+        @apply fixed bottom-[inherit] left-0 top-[56px] block h-[calc(100%-56px)] w-[100dvw] translate-y-0 overflow-y-scroll rounded-none px-[20px] py-[16px] shadow-none;
+        & > div {
+          @apply block w-full;
+          & + div {
+            @apply relative mt-[24px] pt-[36px];
+            &::before {
+              @apply absolute -left-[20px] top-0 h-[12px] w-[calc(100%+40px)] bg-[var(--gray1)] content-[''];
+            }
+          }
+        }
+        .area_left {
+          @apply pr-0;
+        }
+        .area_right {
+          @apply pl-0;
+          &::before {
+            @apply hidden;
+          }
+          .area_box {
+            & + .area_box {
+              @apply relative mt-[24px] pt-[36px];
+            }
+            &::before {
+              @apply absolute -left-[20px] top-0 h-[12px] w-[calc(100%+40px)] bg-[var(--gray1)] content-[''];
+            }
+          }
+        }
+      }
+    }
+  }
+}

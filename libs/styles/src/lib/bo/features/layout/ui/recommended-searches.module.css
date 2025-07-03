@@ -1,0 +1,16 @@
+.start {
+  &.recommended {
+    .tit_box {
+      @apply flex items-center justify-between;
+      strong {
+        @apply body_3_b text-[var(--gray9)];
+      }
+    }
+    .recommended_box {
+      @apply mt-[12px];
+      button {
+        @apply button_3_r mb-[8px] ml-[0] mr-[8px] whitespace-nowrap rounded-[8px] bg-[#f6f8fd] px-[12px] py-[6px];
+      }
+    }
+  }
+}

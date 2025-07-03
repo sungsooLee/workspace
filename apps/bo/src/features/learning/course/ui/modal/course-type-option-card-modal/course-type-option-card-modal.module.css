@@ -1,0 +1,15 @@
+.wrap {
+  @apply relative;
+  .title {
+    @apply title_bo_3_b;
+  }
+  .select_wrap {
+    button {
+      span {
+        &:nth-last-child(1) {
+          @apply line-clamp-2;
+        }
+      }
+    }
+  }
+}

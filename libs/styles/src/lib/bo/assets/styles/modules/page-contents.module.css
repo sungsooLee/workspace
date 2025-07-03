@@ -1,0 +1,20 @@
+/* page-content.module.css */
+.main_contents {
+  @apply box-border min-h-full min-w-0 flex-1;
+  [role='tablist']:first-child {
+    @apply mb-[32px];
+  }
+}
+.sub_contents {
+  @apply relative ml-[32px] box-border min-w-[448px] shrink-0 pl-[32px];
+  &::before {
+    @apply absolute left-0 top-0 h-full w-[1px] bg-[var(--gray4)] content-[''];
+  }
+}
+.vertical_line {
+  @apply hidden;
+}
+
+[class*='nlp--modal'] [class*='nlp--modal-content'] .main_contents {
+  @apply max-w-full;
+}

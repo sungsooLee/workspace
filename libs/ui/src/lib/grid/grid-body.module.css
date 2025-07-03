@@ -1,0 +1,142 @@
+/* grid-body.module.module.css */
+[class*='grid'] {
+  table {
+    tbody {
+      tr {
+        @apply !h-[40px] !min-h-[40px] border-b border-solid !border-[var(--gray3)];
+        td {
+          @apply body_bo_2_r h-full overflow-hidden text-ellipsis whitespace-nowrap px-[8px] py-[8px] align-middle text-[var(--gray7)];
+          [class*='nlp--button'] {
+            @apply !min-w-auto button_bo_4_r !h-[20px] !text-[1.2rem];
+          }
+          [class*='nlp--checkbox'] {
+            @apply mt-[6px];
+            button {
+              &:read-only,
+              &:disabled {
+                @apply !border-[var(--gray5)];
+              }
+            }
+          }
+          [class*='nlp--button'] {
+            &:disabled svg {
+              @apply stroke-[#d6dae1];
+            }
+            &:not([class*='link']) {
+              @apply px-[6px];
+            }
+          }
+
+          [class*='link'] {
+            @apply !body_bo_2_r text-[var(--gray7)] underline;
+            & + [class*='link'] {
+              @apply ml-[6px];
+            }
+            &:disabled,
+            &[aria-disabled='true'] {
+              @apply border-[var(--gray5)] text-[var(--gray5)];
+            }
+          }
+          [class*='nlp--input'] {
+            input {
+              @apply min-h-[22px] w-full bg-transparent px-[12px] text-[14px] font-normal text-[var(--gray9)];
+              &::placeholder {
+                @apply text-[1.2rem];
+              }
+            }
+          }
+          [class*='btn_table'] {
+            @apply !min-w-[3.2rem];
+            & + [class*='btn_table'] {
+              @apply !ml-[4px];
+            }
+          }
+          [class*='nlp--datepicker-time'] {
+            @apply mt-[4px] !h-[24px];
+            [class*='datepicker_input'] {
+              @apply !h-[24px];
+            }
+          }
+          [class*='icon_wrap'] {
+            @apply body_bo_2_r flex items-center text-[var(--gray7)];
+            svg {
+              @apply mr-[6px];
+            }
+          }
+          &[class*='title'] {
+            @apply body_bo_2_b bg-[var(--gray1)] text-[var(--gray9)];
+          }
+          &.show_icon {
+            @apply relative pl-[30px];
+            .depth_icon {
+              @apply absolute left-[8px] top-1/2 -translate-y-1/2;
+            }
+          }
+
+          &:has(> div) {
+            @apply w-full py-[4px];
+          }
+          & > div {
+            &[role='radiogroup'] {
+              @apply py-[6px];
+            }
+          }
+          & + td {
+            border-left: 1px solid var(--gray2) !important;
+          }
+        }
+        &:not(.selected) {
+          .td_pinned_left {
+            @apply bg-white;
+          }
+        }
+        &.selected {
+          td {
+            @apply !bg-[#edfcff];
+          }
+        }
+        &:nth-last-child(1) td {
+          @apply !border-b-0;
+        }
+      }
+    }
+  }
+}
+
+.expanded {
+}
+
+.appended > td {
+  @apply bg-[#F6F8FD];
+}
+
+.td_pinned_left {
+  @apply !z-[3] !h-[40px] !border-l-0 border-b-[1px] bg-white;
+  &.td_pinned_last {
+    &::after {
+      @apply absolute right-0 top-0 z-[1] h-full w-[1px] bg-[var(--gray5)] content-[''];
+    }
+  }
+  &:not(:first-child) {
+    &::before {
+      @apply absolute left-0 top-0 z-[1] h-full w-[1px] bg-[var(--gray3)] content-[''];
+    }
+  }
+  & + td:not(.td_pinned_left) {
+    @apply !border-l-0;
+  }
+}
+[class*='th_pinned_left'] {
+  &:last-of-type {
+    @apply !hidden;
+  }
+}
+
+[class*='table'] {
+  table tbody td {
+    @apply !border-[var(--gray4)];
+    & + td {
+      @apply !border-[var(--gray4)];
+    }
+  }
+}

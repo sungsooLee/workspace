@@ -1,0 +1,79 @@
+/* user-avatar.module.css */
+.start {
+  &.avata_area {
+    @apply min-w-[360px] rounded-[8px] border border-solid border-[var(--gray3)] bg-[var(--white)] shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
+    .profile_info {
+      @apply pb-[32px] pt-[36px];
+      .avata_img {
+        @apply relative mx-auto h-[74px] w-[128px];
+        .info_avata {
+          @apply absolute left-0 top-0 z-[1] h-[74px] w-[74px] bg-transparent p-[4px];
+          img {
+            @apply h-full w-full overflow-hidden rounded-full border border-solid border-transparent;
+          }
+        }
+        .logo_wrap {
+          @apply absolute right-0 top-0 z-0 h-[74px] w-[74px] shrink-0 p-[4px];
+          .logo_img {
+            @apply h-full w-full overflow-hidden rounded-full border border-solid border-[var(--gray2)];
+          }
+        }
+        .name {
+          @apply absolute left-0 top-0 z-[1] flex h-[74px] w-[74px] bg-transparent p-[4px];
+          .text {
+            @apply title_3_b flex h-full w-full items-center justify-center overflow-hidden rounded-full border border-solid border-transparent bg-[#00AFD5] text-white;
+          }
+        }
+        .start {
+          @apply h-[66px] w-[66px];
+        }
+      }
+      .info_avata {
+        @apply m-auto h-[66px] w-[66px];
+      }
+      .profile {
+        @apply m-auto max-w-[300px] px-[34px];
+        .name {
+          @apply body_1_b ellipsis mt-[16px] block text-center text-[var(--gray9)];
+        }
+        .tenant,
+        .team {
+          @apply body_3_r ellipsis mt-[8px] block text-center text-[var(--gray7)];
+        }
+        .team {
+          @apply ellipsis mt-[0] overflow-hidden text-ellipsis whitespace-nowrap;
+        }
+      }
+    }
+    .info_list {
+      > li {
+        @apply border-t border-solid border-[var(--gray3)];
+        a,
+        button {
+          @apply button_2_r block px-[24px] py-[20px];
+        }
+      }
+    }
+    .logout_wrap {
+      @apply flex w-full flex-1 items-center justify-between border-t-[1px] border-solid border-[var(--gray3)] px-[24px] py-[20px];
+      .btn_log {
+        @apply w-auto pl-0;
+      }
+      .customer_info {
+        @apply button_4_r text-[var(--gray6)];
+      }
+    }
+    .btn_log {
+      @apply button_2_r flex w-full items-center;
+      svg {
+        @apply mr-[10px];
+      }
+    }
+  }
+}
+
+.btn_avatar {
+  img {
+    @apply h-[32px] w-[32px];
+  }
+}

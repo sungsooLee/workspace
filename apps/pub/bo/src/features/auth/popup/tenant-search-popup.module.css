@@ -1,0 +1,20 @@
+/* tenant-search-popup.module.css */
+.start {
+  &.wrap {
+    .search_box {
+      @apply mb-[24px] w-full gap-[10px];
+      .select_area {
+        @apply !w-[170px] shrink-0;
+      }
+      .input_area {
+        @apply flex-auto;
+        input {
+          @apply w-full;
+        }
+      }
+      .btn_area {
+        @apply !w-[56px] shrink-0 !px-[5px];
+      }
+    }
+  }
+}

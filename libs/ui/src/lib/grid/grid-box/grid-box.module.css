@@ -1,0 +1,151 @@
+/* grid-box.module.css */
+
+.table_box {
+  @apply flex w-full select-none flex-col;
+  .table_info {
+    @apply flex w-full items-center justify-between;
+    .title_info {
+      @apply mb-[8px] flex min-h-[32px] items-center;
+      .guide_text {
+        @apply ml-[16px] text-[1.4rem] font-normal leading-[1.4rem] text-[var(--gray7)];
+      }
+      .custom_node {
+        @apply text-[1.4rem] font-normal leading-[1.4rem] text-[var(--gray7)];
+        [class*='normal_text'] {
+          @apply ml-[16px] font-normal;
+        }
+      }
+      &:empty {
+        @apply hidden;
+      }
+    }
+    .title {
+      @apply title_bo_4_b text-[var(--gray9)];
+      &.table_title {
+        @apply body_3_r;
+      }
+      & + button:first-child {
+        @apply ml-auto;
+      }
+    }
+    .sub_info {
+      @apply title_bo_4_b relative ml-[12px] mr-auto pl-[12px] text-[var(--gray9)];
+      .num {
+        @apply title_bo_4_b ml-[2px] inline-flex text-[var(--secondary1)];
+      }
+      &::before {
+        @apply absolute left-0 top-1/2 flex h-[12px] w-[1px] -translate-y-1/2 bg-[var(--gray5)] content-[''];
+      }
+    }
+    button {
+      @apply button_bo_2_r !font-normal;
+      &:not([role='checkbox']) {
+        svg {
+          @apply mr-[4px];
+        }
+      }
+    }
+    button {
+      & + button {
+        &::before {
+          @apply mr-[12px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
+        }
+      }
+      & + [class*='type_tooltip'] {
+        &::before {
+          @apply mx-[8px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
+        }
+      }
+    }
+    .btn_excel {
+      @apply text-[var(--gray9)];
+    }
+    .btn_setting {
+      @apply text-[var(--gray9)];
+    }
+    .button_info {
+      @apply mb-[8px] flex min-h-[32px] items-center;
+      [class*='nlp--checkbox'] {
+        @apply mr-[12px];
+        & + [class*='nlp--button'] {
+          &::before {
+            @apply mr-[12px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
+          }
+        }
+      }
+      [class*='nlp--button'] {
+        @apply shrink-0;
+        & + [class*='nlp--button'] {
+          @apply !ml-0;
+        }
+      }
+      [class*='select_wrap'] {
+        @apply w-auto;
+        [class*='nlp-select__control'] {
+          @apply !w-[108px];
+        }
+        & + [class*='nlp--input'] {
+          @apply mx-[8px] !w-[180px];
+        }
+      }
+      &:empty {
+        @apply hidden;
+      }
+    }
+    &:empty {
+      @apply !hidden;
+    }
+    &.type_table {
+      @apply min-h-[22px];
+      .title {
+        @apply body_3_r;
+      }
+    }
+  }
+  & + [class*='nlp--contents-row'] {
+    @apply mt-[24px];
+  }
+  & + .table_box {
+    @apply mt-[32px];
+  }
+}
+
+[class*='grid_info'] {
+  @apply text-[1.2rem] text-[var(--gray7)];
+  [class*='num'] {
+    @apply text-[var(--secondary1)];
+  }
+}
+
+[class*='custom_info_wrap'] {
+  @apply flex items-center;
+  [class*='table_tit'] {
+    @apply body_2_b inline-flex items-center text-[var(--gray9)];
+    &:not(:first-child)::before {
+      @apply mx-[12px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
+    }
+  }
+  [class*='count_info'] {
+    @apply body_2_b ml-[6px] inline-flex items-center text-[var(--secondary1)];
+    &[class*='point'] {
+      @apply text-[var(--status1)];
+    }
+  }
+}
+
+[class*='type_tooltip'] {
+  @apply relative !ml-[8px] flex items-center;
+  button {
+    &[data-state] {
+      @apply !mr-0;
+      &::before {
+        @apply hidden;
+      }
+    }
+  }
+  & + [class*='nlp--button'] {
+    &::before {
+      @apply ml-[8px] mr-[12px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
+    }
+  }
+}

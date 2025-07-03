@@ -1,0 +1,44 @@
+/* signup-step3.module.css */
+.start {
+  .step_box {
+    @apply mb-[48px] pl-[140px] pr-[140px];
+  }
+
+  .btn_wrap {
+    @apply mt-[48px];
+  }
+
+  &.signup_step {
+    .signup_check {
+      @apply rounded-[8px] border-[1px] border-solid border-[#e3e9ef] p-[24px] text-left;
+      ul {
+        > li {
+          @apply mt-[16px] flex items-center justify-between;
+          .btn_view {
+            @apply body_3_r text-[var(--gray8)] underline;
+          }
+        }
+      }
+    }
+
+    .check_all {
+      @apply flex border-b border-solid border-[#e3e9ef] pb-[16px];
+      label {
+        @apply text-[#4c515e];
+      }
+    }
+  }
+
+  .title_box {
+    @apply body_2_b mt-[32px] pb-[16px] text-left;
+    h4.title {
+      @apply pb-0;
+    }
+    .txt_info {
+      @apply body_3_r mt-[4px] text-[#6f798b];
+    }
+  }
+  .divider {
+    @apply mt-[16px];
+  }
+}

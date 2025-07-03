@@ -1,0 +1,5 @@
+/* Button Components Style */
+.nlp_button {
+  background-color: var(--secondary1);
+  @apply h-[40px] px-[12px] text-center text-white;
+}

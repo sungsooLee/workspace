@@ -1,0 +1,131 @@
+/* eslint-disable @nx/enforce-module-boundaries */
+import React, { useState, useEffect } from 'react';
+import { createFileRoute, Outlet, Link, useLocation } from '@tanstack/react-router';
+import '../../../../../libs/styles/src/lib/bo/assets/styles/global.css';
+import '../../../../../libs/styles/src/lib/bo/assets/styles/guide.css';
+// import styles from './_guide.module.css';
+export const Route = createFileRoute('/_guide')({
+  component: RouteComponent,
+});
+
+function RouteComponent() {
+  const menuItems = [
+    {
+      title: 'Guide',
+      subItems: [
+        { label: '소개', path: '/guide/info' },
+        { label: '컬러', path: '/guide/color' },
+        { label: '타이포그래픽', path: '/guide/typography' },
+        { label: 'CSS', path: '/guide/css' },
+        { label: 'Form', path: '/guide/form' },
+        { label: '이미지', path: '/guide/image' },
+        { label: 'E-mail(피드백메일)', path: '/guide/email' },
+      ],
+    },
+    {
+      title: 'Component',
+      subItems: [
+        { label: 'BO_searchBox', path: '/guide/search-box' },
+        { label: 'Buttons', path: '/guide/buttons' },
+        { label: 'Input', path: '/guide/input' },
+        { label: 'Textarea', path: '/guide/textarea' },
+        { label: 'Alert, Confirm', path: '/guide/alert' },
+        { label: 'Modal', path: '/guide/modal' },
+        { label: 'Grid', path: '/guide/grid' },
+        { label: 'Table', path: '/guide/table' },
+        { label: 'Checkbox', path: '/guide/checkbox' },
+        { label: 'Radio', path: '/guide/radio' },
+        { label: 'Select', path: '/guide/select' },
+        { label: 'Dropdown', path: '/guide/drop-down' },
+        { label: 'DatePicker', path: '/guide/date-picker' },
+        { label: 'Tooltip', path: '/guide/tooltip' },
+        { label: 'Chips', path: '/guide/chips' },
+        { label: 'Switch', path: '/guide/switch' },
+        { label: 'Carousel', path: '/guide/carousel' },
+        { label: 'Pagination', path: '/guide/pagination' },
+        { label: 'Stepper', path: '/guide/stepper' },
+        { label: 'Tabs', path: '/guide/tabs' },
+        { label: 'Progress', path: '/guide/progress' },
+        { label: 'Badge', path: '/guide/badge' },
+        { label: 'Spinner', path: '/guide/spinner' },
+        { label: 'OptionCard', path: '/guide/optionCard' },
+        { label: 'NoticeBox', path: '/guide/notice-box' },
+        { label: 'Panel', path: '/guide/panel' },
+        { label: 'PhoneNumber', path: '/guide/phone-number' },
+        { label: 'InputTimer', path: '/guide/input-timer' },
+        { label: 'Popover', path: '/guide/popover' },
+        { label: 'Icon', path: '/guide/icon' },
+      ],
+    },
+  ];
+  const [visibleList, setVisibleList] = useState({});
+
+  type VisibleList = {
+    [key: string]: boolean;
+  };
+
+  const toggleVisibility = (key: string): void => {
+    setVisibleList((prevState: VisibleList) => ({
+      ...prevState,
+      [key]: !prevState[key],
+    }));
+  };
+
+  const location = useLocation();
+  const [currentPath, setCurrentPath] = useState(location.pathname);
+
+  useEffect(() => {
+    setCurrentPath(location.pathname);
+  }, [location.pathname]);
+
+  const scrollToTop = (): void => {
+    const previewElement = document.querySelector('.preview');
+    if (previewElement) {
+      previewElement.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  return (
+    <div className="guide_wrap">
+      <div className="aside">
+        <h1>
+          <Link to={'/guide'}>Publish Guide(BO)</Link>
+        </h1>
+        <div className="menu">
+          <ul>
+            {menuItems.map(({ title, subItems }) => (
+              <li key={title}>
+                <span className="tit" onClick={() => toggleVisibility(title)}>
+                  {title}
+                  <span className="arrow">▼</span>
+                </span>
+                {subItems && !visibleList[title] && (
+                  <ul>
+                    {subItems.map(({ label, path }) => (
+                      <li key={path} className={currentPath === path ? 'active' : ''}>
+                        <Link to={path}>{label}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <div className="preview">
+        <div className="guide_box">
+          <Outlet />
+        </div>
+      </div>
+
+      <button onClick={scrollToTop} className="btn_top">
+        ↑
+      </button>
+    </div>
+  );
+}

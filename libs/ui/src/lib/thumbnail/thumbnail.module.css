@@ -1,0 +1,52 @@
+.start {
+  @apply relative;
+  &.thumbnail {
+    @apply max-w-[128px] overflow-hidden rounded-[4px];
+    /* &:nth-last-child(1) {
+      img {
+        @apply filter-none;
+      }
+      &.active {
+        .thumbnail_image {
+          @apply opacity-100;
+        }
+      }
+    } */
+    &.active {
+      &.selected {
+        img {
+          @apply opacity-40;
+        }
+      }
+      img {
+        @apply opacity-40;
+      }
+    }
+  }
+
+  .checkbox {
+    @apply absolute right-[6px] top-[6px] z-[3];
+  }
+
+  .indexNumber {
+    @apply button_bo_4_r absolute left-[4px] top-[4px] z-[1] inline-flex h-[14px] w-[17px] items-center justify-center rounded-[7px] bg-[#131C30] bg-opacity-30 text-white;
+    &:empty {
+      @apply hidden;
+    }
+  }
+
+  .sizeText {
+    @apply button_bo_4_r absolute bottom-[4px] right-[4px] z-[1] text-white;
+  }
+
+  .thumbnail_image {
+    @apply h-[84px] w-[128px] brightness-[80%] filter;
+    &.default_image {
+      @apply brightness-[100%];
+    }
+  }
+
+  .btn_delete {
+    @apply cursor-pointer bg-transparent;
+  }
+}

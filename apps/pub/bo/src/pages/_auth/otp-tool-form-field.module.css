@@ -1,0 +1,11 @@
+.signup_select {
+  + .auth_form {
+    @apply mt-[48px];
+    + .signup_noti {
+      @apply mt-[8px];
+    }
+  }
+  + .select_txt {
+    @apply body_bo_2_r mt-[32px] text-center text-[#6F798B];
+  }
+}

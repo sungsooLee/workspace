@@ -1,0 +1,27 @@
+.start {
+  /* breadCrumbs */
+  .breadcrumbs {
+    @apply flex min-h-[40px] items-center border-b-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] pl-[40px];
+    li {
+      &:nth-child(1) {
+        svg {
+          @apply mr-[6px];
+          & + svg {
+            @apply ml-[0];
+          }
+        }
+      }
+      &:not(:nth-child(1)) {
+        svg {
+          @apply mx-[8px];
+        }
+      }
+      a {
+        @apply body_bo_2_r flex items-center text-[var(--gray8)];
+        &.active {
+          @apply text-[var(--gray8)];
+        }
+      }
+    }
+  }
+}

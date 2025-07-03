@@ -1,0 +1,21 @@
+/* category.module.css */
+.start {
+  .btn_category {
+    @apply mr-[32px] inline-block h-[40px] w-[40px] rounded-[8px] border border-solid border-[var(--gray5)];
+    svg {
+      @apply m-auto;
+    }
+    &.active {
+      @apply border-[var(--primary2)] bg-[var(--primary2)];
+    }
+  }
+}
+
+/* mobile */
+:global(body.mobile) {
+  .start {
+    .btn_category {
+      @apply mr-[0];
+    }
+  }
+}

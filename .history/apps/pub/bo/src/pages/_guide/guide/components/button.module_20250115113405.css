@@ -1,0 +1,27 @@
+/* Button Components Style */
+.nlp_button {
+  background-color: var(--secondary1);
+  box-sizing: border-box;
+  line-height: 40px;
+  @apply h-[40px] rounded-[4px] px-[12px] text-center text-[1.4rem] leading-[1.4] text-white;
+  &.h-32 {
+    line-height: 32px;
+  }
+  &.icon {
+    @apply bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE3LjUgMTcuNUwxMi41MDAxIDEyLjVNMTQuMTY2NyA4LjMzMzMzQzE0LjE2NjcgMTEuNTU1IDExLjU1NSAxNC4xNjY3IDguMzMzMzMgMTQuMTY2N0M1LjExMTY3IDE0LjE2NjcgMi41IDExLjU1NSAyLjUgOC4zMzMzM0MyLjUgNS4xMTE2NyA1LjExMTY3IDIuNSA4LjMzMzMzIDIuNUMxMS41NTUgMi41IDE0LjE2NjcgNS4xMTE2NyAxNC4xNjY3IDguMzMzMzNaIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPgo=')] bg-[length:20px_20px] bg-[position:10px_center] bg-no-repeat pl-[32px];
+  }
+  &:hover {
+    background-color: var(--secondary2);
+  }
+  &:active {
+    background-color: var(--secondary3);
+  }
+  &.disabled {
+    background-color: var(--gray5);
+  }
+  &.outline {
+    background-color: var(--white);
+    border: 1px solid var(--secondary1);
+    color: var(--secondary1);
+  }
+}

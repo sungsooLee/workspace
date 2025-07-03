@@ -1,0 +1,18 @@
+/* Button Components Style */
+.nlp_button {
+  background-color: var(--secondary1);
+  @apply h-[40px] rounded-[4px] px-[12px] text-center text-[1.4rem] leading-[1.4] text-white;
+  &.icon {
+    @apply bg-[url('../../../../assets/images/icon/ic_search_white.svg')] bg-[length:20px_20px] bg-[position:10px_center] bg-no-repeat pl-[32px];
+    filter: invert(var(--gray1));
+  }
+  &:hover {
+    background-color: var(--secondary2);
+  }
+  &:active {
+    background-color: var(--secondary3);
+  }
+  &.disabled {
+    background-color: var(--gray5);
+  }
+}

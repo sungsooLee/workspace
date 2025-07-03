@@ -1,0 +1,19 @@
+.start {
+  @apply flex w-full flex-wrap items-stretch;
+  .panel {
+    @apply min-w-0 flex-1 shrink-0;
+    &[style*='width'] {
+      @apply flex-none;
+    }
+  }
+  .divider {
+    @apply !mx-[32px] !flex h-auto !w-[1px] shrink-0 bg-[var(--gray4)];
+  }
+}
+
+[class*='divider'],
+[class*='notice'] {
+  & + .start {
+    @apply mt-[32px];
+  }
+}

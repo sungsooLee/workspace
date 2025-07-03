@@ -1,0 +1,11 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/utilities';
+
+@import './_reset.css';
+@import './_color.css';
+@import './_common.css';
+@import './_form.css';
+@import './_pages.css';
+@import './components/index.css';
+@import './modules/form.module.css';
+@import './modules/dynamic.form.module.css';

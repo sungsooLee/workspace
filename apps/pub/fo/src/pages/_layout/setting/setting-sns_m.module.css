@@ -1,0 +1,24 @@
+.start {
+  &.sns_wrap {
+    ul {
+      li {
+        @apply px-[20px] py-[16px];
+        .box {
+          @apply flex items-center justify-between;
+          .tit {
+            @apply flex flex-1 items-center;
+            img {
+              @apply mr-[8px] h-[40px] w-[40px] rounded-[50%];
+            }
+            strong {
+              @apply body_3_r text-[var(--gray9)];
+            }
+          }
+        }
+        & + li {
+          @apply border-t-[1px] border-solid border-[var(--gray3)];
+        }
+      }
+    }
+  }
+}

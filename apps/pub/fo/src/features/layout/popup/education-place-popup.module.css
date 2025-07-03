@@ -1,0 +1,52 @@
+.start {
+  &.education_wrap {
+    .addr_box {
+      strong {
+        @apply title_6_b block text-[var(--gray8)];
+      }
+      .number {
+        @apply mt-[8px] flex items-center;
+        dt,
+        dd {
+          @apply body_bo_2_r inline-block leading-[22px] text-[var(--gray7)];
+        }
+        dd {
+          @apply ml-[4px];
+        }
+      }
+      .addr {
+        @apply mt-[8px] flex items-center;
+        dt,
+        dd {
+          @apply body_bo_2_r inline-block leading-[22px] text-[var(--gray7)];
+        }
+        dd {
+          @apply ml-[4px];
+          button {
+            @apply ml-[8px] text-[var(--gray8)] underline underline-offset-[4px];
+          }
+        }
+      }
+    }
+    .map {
+      @apply mt-[24px];
+    }
+  }
+}
+
+.copy {
+  @apply body_3_r relative rounded-[4px] bg-[var(--primary1)] px-[16px] py-[8px] leading-[22px] text-white;
+  &::before {
+    @apply absolute -top-[10px] left-[10px] rotate-[90deg] border-b-[10px] border-r-[15px] border-t-[10px] border-solid border-[var(--primary1)] border-b-transparent border-t-transparent content-[''];
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .copy {
+      &::before {
+        @apply left-[50%] -translate-x-[50%];
+      }
+    }
+  }
+}

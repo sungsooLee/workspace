@@ -1,0 +1,50 @@
+/* _color.css */
+
+/* font, BG */
+:root {
+  /* Grey Scale */
+  --FO_white: #ffffff;
+  --FO_grey9: #0c0f15;
+  --FO_grey8: #4c515e;
+  --FO_grey7: #6f798b;
+  --FO_grey6: #a9afb8;
+  --FO_grey5: #d6dae1; /* Disable_txt, Inputfield */
+  --FO_grey4: #e3e9ef;
+  --FO_grey3: #edf0f7; /* Table_line */
+  --FO_grey2: #f2f5fb; /* Table_bg */
+  --FO_grey1: #f6f8fd; /* BG */
+
+  /* button */
+  --FO_pri: #07287e;
+  --FO_pri_01: #0f3492; /* 버튼 호버 */
+  --FO_pri_02: #06226a; /* 버튼 프레스 */
+
+  --FO_sec_01: #00afd5;
+  --FO_sec_01_01: #00b6de; /* 버튼 호버 */
+  --FO_sec_01_02: #009abc; /* 버튼 프레스 */
+  --FO_sec_02: #b2e7f2; /* disable */
+  --FO_sec_02_01: #edfcff; /* bg */
+  --FO_sec_03: #ffdada; /* red plus */
+  --FO_sec_03_01: #ffeded; /* red bg */
+
+  /* Primary */
+  --FO_pri: #07287e;
+  --FO_pri_01: #0f3492; /* 버튼 호버 */
+  --FO_pri_01_02: #06226a; /* 버튼 프레스 */
+  --FO_pri_01_03: #3f5da8; /* bg 위 라인컬러 */
+
+  /* Secondary */
+  --FO_sec_01: #00afd5;
+  --FO_sec_01_01: #00b6de; /* 버튼 호버 */
+  --FO_sec_01_02: #009abc; /* 버튼 프레스 */
+  --FO_sec_02: #b2e7f2; /* disable */
+  --FO_sec_02_01: #edfcff; /* bg */
+  --FO_sec_03: #ffdada; /* red plus */
+  --FO_sec_03_01: #ffeded; /* red bg */
+
+  /* Support */
+  --FO_su_01: #ff4646; /* Error */
+  --FO_su_02: #ffb902; /* Warning */
+  --FO_su_03: #3eb838; /* Complete */
+  --FO_su_04: #926bea; /* icon */
+}

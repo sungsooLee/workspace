@@ -1,0 +1,26 @@
+/* divider.module.css */
+
+.divider {
+  @apply bg-[var(--gray4)];
+}
+
+/* 수평 구분선 */
+.horizontal {
+  @apply h-[1px] w-full;
+}
+
+/* 수직 구분선 */
+.vertical {
+  @apply h-full w-[1px];
+}
+
+form {
+  & + .divider {
+    &.horizontal {
+      @apply mt-[8px];
+    }
+    & + [class*='table_box'] {
+      @apply mt-[16px];
+    }
+  }
+}

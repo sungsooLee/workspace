@@ -1,0 +1,34 @@
+/* contents_row.css */
+.form_row {
+  .nlp--contents-row {
+    @apply flex w-full gap-[32px] text-left;
+    label > span {
+      @apply body_bo_2_r text-[var(--gray9)];
+    }
+
+    .nlp--contents-row {
+      @apply mt-[12px];
+    }
+    & + .nlp--contents-row {
+      &.no_line {
+        @apply border-t-0 pt-0;
+      }
+    }
+  }
+
+  .col {
+    @apply flex-col;
+    &.no_line {
+      .nlp--contents-row {
+        & + .nlp--contents-row {
+          @apply !border-t-0 !pt-0;
+        }
+      }
+    }
+    &:has(.nlp--contents-row .form_item) {
+      + hr.divider {
+        @apply mt-[12px];
+      }
+    }
+  }
+}

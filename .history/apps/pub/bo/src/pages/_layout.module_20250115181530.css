@@ -1,0 +1,35 @@
+/* _layout.module.css */
+
+.bo_wrap {
+  max-width: 1920px;
+  min-width: 1440px;
+  width: 100%;
+  overflow-x: hidden;
+  .header {
+    background-color: #012277;
+    @apply px-[32px];
+    h1 {
+      img {
+        @apply h-[60px] w-auto;
+      }
+    }
+    .nav {
+      ul {
+        @apply flex justify-start gap-[48px];
+        > li {
+          a {
+            color: var(--white);
+            @apply inline-flex h-[56px] items-center text-[2rem];
+            &:hover {
+              @apply font-bold;
+            }
+          }
+        }
+      }
+    }
+  }
+  .bo_container {
+    background: #333;
+    @apply flex justify-start;
+  }
+}

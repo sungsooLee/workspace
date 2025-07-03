@@ -1,0 +1,126 @@
+/* 페이지 관련 css */
+/* 회원가입 */
+.auth--box {
+  @apply px-[40px] py-[48px];
+  .nlp--input input {
+    @apply !min-h-[40px] !rounded-[8px] px-[16px];
+    &:read-only {
+      @apply !border-[var(--gray1)];
+    }
+  }
+  div + .auth--signup-select {
+    @apply mt-[48px];
+  }
+  label + div {
+    @apply !mt-[8px];
+  }
+  .no_line + .no_line {
+    @apply mt-[24px] !border-t-[1px] !border-solid !border-[#edf0f7] pt-[32px];
+  }
+  .no_line {
+    .nlp--contents-row {
+      @apply border-0 pt-0;
+    }
+  }
+  .nlp--input + .nlp--button {
+    @apply !rounded-[8px] border-[#a9afb8] font-normal;
+  }
+  .textarea_wrap {
+    @apply rounded-[8px];
+  }
+  [class*='nlp--contents-row'] label {
+    @apply !text-[#4c515e];
+  }
+  [class*='nlp--input'] input::placeholder {
+    @apply !text-[#a9afb8];
+  }
+}
+
+h4.auth--title {
+  @apply title_6_b mt-[32px] pb-[16px] text-left text-[var(--gray9)];
+}
+
+.auth--signup-select {
+  @apply w-full;
+  .nlp--radio {
+    @apply flex items-center justify-center gap-[16px] text-center;
+
+    button {
+      @apply body_3_b m-auto h-[126px] w-full flex-col justify-center rounded-[16px] border-[1px] border-solid border-[#D6DAE1] text-center text-[#A9AFB8];
+      span {
+        @apply mt-[8px] block text-[#A9AFB8];
+      }
+      svg {
+        @apply !stroke-[#A9AFB8];
+      }
+      &[aria-checked='true'] {
+        @apply !border-[#0F3492] !text-[#0F3492] shadow-[0px_3px_6px_rgba(0,0,0,0.08)];
+        span {
+          @apply !text-[#0F3492];
+        }
+        svg {
+          @apply !stroke-[#0F3492];
+        }
+      }
+    }
+    & > div:nth-last-child(1) {
+      button {
+        &[aria-checked='true'] svg {
+          @apply opacity-100;
+        }
+        svg {
+          @apply opacity-30;
+        }
+      }
+    }
+  }
+}
+
+.auth--btn_wrap {
+  @apply flex items-center justify-between;
+  button {
+    @apply w-full rounded-[8px];
+    &.max {
+      @apply m-auto max-w-[294px];
+    }
+    &.min {
+      @apply m-auto max-w-[200px];
+    }
+    &:first-child {
+      @apply !font-normal;
+    }
+  }
+}
+
+/* chips modal */
+[class*='chiplist_modal_wrap'] {
+  @apply w-full;
+}
+
+/* notice-box */
+[class*='nlp--tabs'] + [class*='notice'] {
+  @apply mt-[16px];
+}
+
+/* dnd file wrap */
+.dnd_file_wrap > div > div {
+  @apply !h-[320px];
+}
+
+/* title */
+.nlp--tabs + .title_wrap {
+  @apply !border-t-0 !pt-0;
+}
+.content_wrap .title_wrap {
+  .title {
+    @apply title_bo_4_b text-[var(--gray9)];
+  }
+  &::before,
+  &::after {
+    @apply hidden;
+  }
+}
+
+.content_wrap div + .title_wrap {
+  @apply mt-[24px];
+}

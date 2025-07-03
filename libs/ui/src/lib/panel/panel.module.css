@@ -1,0 +1,33 @@
+.start {
+  .header {
+    @apply mb-[8px] flex h-[40px] flex-row items-center justify-between;
+    .title {
+      @apply title_5_b flex-1 text-[#131C30];
+    }
+    .actions {
+      @apply body_3_r text-[var(--gray8)];
+    }
+    button {
+      @apply flex flex-row-reverse items-center gap-[8px];
+      svg {
+        @apply h-[16px] w-[16px];
+      }
+    }
+  }
+  .body {
+    .col {
+    }
+    &.line {
+      @apply border border-solid border-[#D6DAE1] bg-[var(--white)];
+    }
+    &.fill {
+      @apply bg-transparent;
+    }
+    &.rounded {
+      @apply rounded-[8px] border border-solid border-[var(--gray5)];
+    }
+    &.rounded_fill {
+      @apply rounded-[16px] bg-[var(--gray1)];
+    }
+  }
+}

@@ -1,0 +1,29 @@
+/* Button Components Style */
+.nlp_button {
+  background-color: var(--secondary1);
+  box-sizing: border-box;
+  line-height: 40px;
+  color: var(--white);
+  @apply inline-flex h-[40px] items-center rounded-[4px] px-[12px] text-center text-[1.4rem];
+  &[class*='ic_'] {
+    @apply bg-[length:18px_18px] bg-[position:10px_center] bg-no-repeat pl-[32px];
+  }
+  &:hover {
+    background-color: var(--secondary2);
+  }
+  &:active {
+    background-color: var(--secondary3);
+  }
+  &.disabled {
+    background-color: var(--gray5);
+  }
+  &.outline {
+    background-color: var(--white);
+    border: 1px solid var(--secondary1);
+    color: var(--secondary1);
+    &:active {
+      border-color: var(--secondary3);
+      color: var(--secondary3);
+    }
+  }
+}

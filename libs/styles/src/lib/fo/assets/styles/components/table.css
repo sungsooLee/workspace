@@ -1,0 +1,30 @@
+.table {
+  table {
+    @apply border-[#131C30];
+    thead {
+      tr {
+        th {
+          @apply !body_3_r !h-[42px] !border-r-[0] text-[#131C30];
+          .th_cell {
+          }
+          svg {
+          }
+          &:not(:first-child) {
+            @apply border-l-[0];
+          }
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        td {
+          @apply !body_3_r !h-[42px] !min-h-[42px];
+          &:not(:first-child) {
+            @apply !border-l-[0];
+          }
+        }
+      }
+    }
+  }
+}

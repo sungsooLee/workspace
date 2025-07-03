@@ -1,0 +1,73 @@
+/* accordion.module.css */
+.start {
+  & > .accordion_item {
+    & > .accordion_btn {
+      @apply relative box-border flex w-full items-center overflow-hidden rounded-[8px];
+      svg {
+        @apply mr-[6px] h-[16px] w-[16px];
+      }
+      & > span {
+        @apply flex h-full min-h-[38px] w-full items-center pl-[6px] text-left text-[14px] leading-[22px] text-[var(--gray9)];
+      }
+      &:hover {
+        @apply bg-[#EDFCFF];
+      }
+      & > [class*='accordion_title'] {
+        &[class*='active'] {
+          @apply bg-[#EDFCFF] !text-[var(--secondary1)];
+          svg {
+            @apply stroke-[var(--secondary1)] !font-bold;
+          }
+          span {
+            @apply font-bold;
+          }
+        }
+      }
+      &:has(+ div[hidden]) {
+        [class*='accordion_title'] {
+          &[class*='active'] {
+            @apply bg-[#EDFCFF] !text-[var(--secondary1)];
+            svg {
+              @apply stroke-[var(--secondary1)] font-bold;
+            }
+          }
+        }
+      }
+      & > [data-state='closed'] > button {
+        & > [class*='accordion_title'] {
+          &[class*='active'] {
+            @apply bg-[#EDFCFF] !text-[var(--secondary1)];
+            svg {
+              @apply stroke-[var(--secondary1)] font-bold;
+            }
+          }
+        }
+      }
+      &:has(+ div[data-state='open'] > [class*='nlp--accordion'] [class*='active'])
+        [class*='accordion_title'] {
+        @apply bg-white !text-[var(--gray9)];
+        svg {
+          @apply stroke-[var(--gray9)];
+        }
+      }
+    }
+  }
+}
+
+@keyframes slideDown {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}

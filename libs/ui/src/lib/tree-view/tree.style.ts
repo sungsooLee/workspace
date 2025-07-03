@@ -1,0 +1,61 @@
+// 기본 스타일 정의
+export const dropStyles = {
+  valid: {
+    before: {
+      position: 'absolute' as const,
+      width: '100%',
+      height: '2px',
+      backgroundColor: '#3b82f6',
+      top: '-1px',
+      zIndex: 10,
+      pointerEvents: 'none' as const,
+    },
+    after: {
+      position: 'absolute' as const,
+      width: '100%',
+      height: '2px',
+      backgroundColor: '#3b82f6',
+      bottom: '-1px',
+      zIndex: 10,
+      pointerEvents: 'none' as const,
+    },
+    inside: {
+      position: 'absolute' as const,
+      inset: 0,
+      backgroundColor: 'rgba(59, 130, 246, 0.1)',
+      borderRadius: '0.25rem',
+      border: '1px solid rgba(59, 130, 246, 0.3)',
+      zIndex: 10,
+      pointerEvents: 'none' as const,
+    },
+  },
+  invalid: {
+    before: {
+      position: 'absolute' as const,
+      width: '100%',
+      height: '2px',
+      backgroundColor: '#ef4444',
+      top: '-1px',
+      zIndex: 20,
+      pointerEvents: 'none' as const,
+    },
+    after: {
+      position: 'absolute' as const,
+      width: '100%',
+      height: '2px',
+      backgroundColor: '#ef4444',
+      bottom: '-1px',
+      zIndex: 20,
+      pointerEvents: 'none' as const,
+    },
+    inside: {
+      position: 'absolute' as const,
+      inset: 0,
+      backgroundColor: 'rgba(239, 68, 68, 0.1)',
+      borderRadius: '0.25rem',
+      border: '1px solid rgba(239, 68, 68, 0.3)',
+      zIndex: 20,
+      pointerEvents: 'none' as const,
+    },
+  },
+};

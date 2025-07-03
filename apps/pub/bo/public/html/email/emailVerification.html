@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>이메일 인증폼</title>
+  </head>
+  <body>
+    <!-- 이메일 폼 -->
+    <div style="padding: 0; margin: 0 auto; max-width: 680px; width: 100%">
+      <div style="border: 1px solid #d6dae1; border-radius: 16px">
+        <div
+          style="
+            margin: 0;
+            padding: 17px 20px;
+            vertical-align: top;
+            border-bottom: 1px solid #edf0f7;
+          "
+        >
+          <h2 style="margin: 0; padding: 0">
+            <img
+              src="http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/public/logo.png"
+              alt="Learning way"
+              style="height: 20px"
+            />
+          </h2>
+        </div>
+
+        <div style="margin: 0; padding: 40px">
+          <div style="margin: 0; padding: 0">
+            <h3
+              style="
+                margin: 0;
+                padding: 0;
+                font-weight: 600;
+                color: #4c515e;
+                font-size: 14px;
+                text-align: center;
+              "
+              th:text="#{template.email.emailVerificationHeader}"
+            ></h3>
+            <p
+              style="
+                margin: 10px 0 0;
+                padding: 0;
+                color: #6f798b;
+                font-size: 14px;
+                line-height: 1.6;
+                text-align: center;
+              "
+              th:text="#{template.email.emailVerificationParagraph1}"
+            ></p>
+          </div>
+
+          <div
+            style="
+              margin: 40px 0 0;
+              padding: 18px;
+              background: #edfcff;
+              border-radius: 8px;
+              text-align: center;
+            "
+          >
+            <strong
+              style="font-weight: 600; color: #045161; font-size: 26px"
+              th:text="${verificationCode}"
+            ></strong>
+          </div>
+
+          <div
+            style="
+              margin: 16px 0 0;
+              padding: 0;
+              color: #6f798b;
+              font-size: 14px;
+              text-align: center;
+            "
+            th:text="#{template.email.emailVerificationParagraph2}"
+          ></div>
+        </div>
+      </div>
+
+      <div style="margin: 32px 0 0; padding: 0; text-align: center">
+        <div style="margin: 0; padding: 0; color: #6f798b; font-size: 12px">
+          <span style="color: #6f798b"
+            >copyright © 2023 Hyundai-Autoever. All rights reserved.</span
+          >
+          <p
+            style="margin: 10px 0 0; padding: 0; color: #a9afb8; font-size: 12px"
+            th:text="#{template.email.emailVerificationFooter}"
+          ></p>
+        </div>
+      </div>
+    </div>
+    <!--// 이메일 폼 -->
+  </body>
+</html>

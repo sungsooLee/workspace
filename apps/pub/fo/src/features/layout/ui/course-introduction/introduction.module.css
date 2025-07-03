@@ -1,0 +1,140 @@
+.start {
+  &.introduction {
+    @apply pt-[26px];
+    h2 {
+      @apply title_5_b text-[var(--gray9)];
+    }
+    .notice {
+      @apply mt-[24px];
+    }
+    .info_box {
+      @apply mt-[40px];
+      .tit_box {
+        @apply mb-[20px] flex items-center justify-between;
+        strong {
+          @apply headline1-b text-[#232326];
+        }
+      }
+      &.pds {
+        button {
+          @apply w-[100px];
+        }
+      }
+
+      .evaluation_box {
+        & > ul {
+          @apply mb-[24px] flex w-full items-start;
+          li {
+            @apply flex-1 rounded-[999px] bg-[var(--blue98)] py-[24px];
+            span {
+              @apply title2-b block text-center leading-[20px] text-[var(--gray10)];
+            }
+            strong {
+              @apply headline1-b block text-center leading-[30px] text-[var(--blue50)];
+            }
+            & + li {
+              @apply ml-[20px];
+            }
+          }
+        }
+        & > div {
+          ul {
+            li {
+              @apply body_4_r leading-[19px];
+              & + li {
+                @apply mt-[4px];
+              }
+            }
+          }
+        }
+      }
+      .img_box {
+        img {
+          @apply w-full;
+        }
+        p {
+          @apply body_3_r mt-[8px] leading-[22px] text-[var(--gray7)];
+        }
+      }
+    }
+
+    .operator_box {
+      @apply mt-[40px];
+      & > strong {
+        @apply title_6_b mb-[8px] block text-[var(--gray8)];
+      }
+    }
+
+    .package_box {
+      @apply mt-[32px];
+      .img_box {
+        img {
+          @apply w-full overflow-hidden rounded-[16px];
+        }
+      }
+      .chip_box {
+        @apply mt-[24px];
+        & > div {
+          @apply border-none p-0;
+          & > div {
+            @apply gap-x-[8px] gap-y-[10px];
+            span {
+              @apply !h-auto !min-h-[inherit] rounded-[24px] bg-[var(--gray95)];
+            }
+            button {
+              @apply !px-0 text-[var(--gray10)];
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.introduction {
+        h2 {
+          @apply title_6_b;
+        }
+        .info_box {
+          @apply mt-[24px];
+          .tit_box {
+            @apply mb-[8px];
+            strong {
+              @apply title_7_b;
+            }
+          }
+          .evaluation_box {
+            & > ul {
+              @apply block;
+              & > li {
+                & + li {
+                  @apply ml-0 mt-[8px];
+                }
+              }
+            }
+          }
+          &.pds {
+            button {
+              @apply w-[100px];
+            }
+          }
+        }
+
+        .operator_box {
+          @apply mt-[24px];
+          strong {
+            @apply title_7_b;
+          }
+          & > div {
+            & + div {
+              @apply mt-[8px];
+            }
+          }
+        }
+      }
+    }
+  }
+}

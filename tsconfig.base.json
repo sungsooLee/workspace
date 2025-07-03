@@ -1,0 +1,32 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@learnway/config": ["libs/config/src/index.ts"],
+      "@learnway/config/*": ["libs/config/src/lib/*"],
+      "@learnway/hooks": ["libs/hooks/src/index.ts"],
+      "@learnway/icons": ["libs/icons/src/index.ts"],
+      "@learnway/shared": ["libs/shared/src/index.ts"],
+      "@learnway/styles/*": ["libs/styles/src/lib/*"],
+      "@learnway/ui": ["libs/ui/src/index.ts"],
+      "@learnway/auth/*": ["libs/auth/src/lib/*"],
+      "@learnway/bo-components": ["apps/bo/src/shared/storybook.ts"],
+      "@learnway/types": ["libs/types/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "temp"]
+}

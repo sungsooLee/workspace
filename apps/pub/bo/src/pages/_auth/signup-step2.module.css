@@ -1,0 +1,15 @@
+/* signup-step2.module.css */
+.start {
+  .step_box {
+    @apply mb-[32px] pl-[140px] pr-[140px];
+  }
+  h4 {
+    @apply pt-[16px];
+  }
+  .signup_noti {
+    @apply mt-[48px];
+  }
+  .btn_wrap {
+    @apply mt-[32px];
+  }
+}

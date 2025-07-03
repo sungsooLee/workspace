@@ -1,0 +1,68 @@
+.start {
+  @apply relative inline-flex items-center;
+
+  .checkbox_root {
+    @apply flex h-[2rem] w-[2rem] items-center justify-center overflow-hidden rounded-[4px] border border-solid border-[var(--gray5)] bg-[var(--white)];
+    &[data-state='checked'] {
+      .checkbox_indicator {
+        @apply flex h-[2rem] w-[2rem] items-center justify-center;
+      }
+      & ~ .label {
+        @apply !font-semibold tracking-[-0.035em];
+      }
+    }
+    &.round {
+      @apply rounded-full;
+      &[data-state='checked'] {
+        .checkbox_indicator {
+          @apply rounded-full;
+        }
+      }
+    }
+    &:disabled {
+      @apply border border-solid border-[var(--gray3)] bg-[var(--gray2)];
+      &[data-state='checked'] {
+        @apply !border-[var(--gray5)] !bg-[var(--gray5)];
+      }
+      & ~ .label {
+        @apply text-[var(--gray5)];
+      }
+    }
+    &.md {
+      @apply h-[1.6rem] w-[1.6rem];
+      &[data-state='checked'] {
+        .checkbox_indicator {
+          @apply h-[1.6rem] w-[1.6rem];
+        }
+      }
+    }
+    &.sm {
+      @apply h-[1.4rem] w-[1.4rem];
+      &[data-state='checked'] {
+        .checkbox_indicator {
+          @apply h-[1.4rem] w-[1.4rem];
+        }
+      }
+    }
+    &.xs {
+      @apply h-[1rem] w-[1rem];
+      &[data-state='checked'] {
+        .checkbox_indicator {
+          @apply h-[1rem] w-[1rem] rounded-[3px];
+          svg {
+            @apply h-[7px] w-[6px];
+          }
+        }
+      }
+    }
+    &[data-state='checked'] {
+      @apply border-[var(--secondary1)] bg-[var(--secondary1)];
+    }
+  }
+  .label {
+    @apply button_3_r ml-[6px] text-[1.2rem] leading-[1rem] text-[var(--gray8)];
+    &:empty {
+      @apply !hidden;
+    }
+  }
+}

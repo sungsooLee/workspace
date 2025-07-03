@@ -1,0 +1,120 @@
+import { useState } from 'react';
+import { Input } from '../../input/input';
+import { debounce } from 'lodash'; // grid CSS
+import { Button } from '../../button/button';
+import { useModal } from '../../modal/modal.hook';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle } from '../../modal/modal-container';
+import { useTranslation } from 'react-i18next';
+
+interface FilterContentProps {
+  column: string;
+  type: 'text' | 'range' | 'select';
+  // initialValue: string | [number, number] | string[];
+  initialValue: unknown;
+  onApply: (value: any) => void;
+  // 여러 가지 선택 사항을 위한 props
+  options?: {
+    label: string;
+    value: string;
+  }[];
+}
+
+export const FilterContent = ({
+  column,
+  type,
+  initialValue,
+  onApply,
+  options = [],
+}: FilterContentProps) => {
+  const { close: closeModal } = useModal();
+  const { t } = useTranslation();
+
+  const getInitialValue = () => {
+    if (type === 'range') {
+      if (Array.isArray(initialValue) && initialValue.length === 2) {
+        return initialValue as [number, number];
+      }
+      return [0, 0] as [number, number];
+    }
+    if (type === 'select') {
+      return (initialValue as string[]) || [];
+    }
+    return (initialValue as string) || '';
+  };
+
+  const [value, setValue] = useState<string | [number, number] | string[]>(getInitialValue());
+
+  const handleReset = () => {
+    setValue(type === 'range' ? [0, 0] : type === 'select' ? [] : '');
+  };
+
+  const handleApply = () => {
+    onApply(value);
+    closeModal();
+  };
+  return (
+    <ModalContainer>
+      <ModalTitle>{t('필터')}</ModalTitle>
+      <ModalBody>
+        {type === 'range' && (
+          <div className="space-y-3">
+            <div className="flex flex-col">
+              <label className="text-[1.4rem] text-[#3e4550]">최소값</label>
+              <Input
+                type="number"
+                value={(value as [number, number])[0]}
+                onChange={(e) => setValue(([_, max]) => [Number(e.target.value), max as number])}
+                className="w-full"
+              />
+            </div>
+            <div className="flex flex-col">
+              <label className="text-[1.4rem] text-[#3e4550]">최대값</label>
+              <Input
+                type="number"
+                value={(value as [number, number])[1]}
+                onChange={(e) => setValue(([min, _]) => [min as number, Number(e.target.value)])}
+                className="w-full"
+              />
+            </div>
+          </div>
+        )}
+
+        {type === 'text' && (
+          <Input
+            value={typeof value === 'string' ? value : ''}
+            onChange={debounce((value) => {
+              setValue(value as string);
+            }, 100)}
+            placeholder="Search..."
+            className="w-full"
+          />
+        )}
+
+        {/* {type === 'select' && (
+        <div className="min-h-[200px]">
+          <MultiSelect
+            options={options}
+            value={value as string[]}
+            onChange={(newValue) => setValue(newValue)}
+            placeholder="필터를 설정한 옵션을 선택하세요.."
+            maxCount={5}
+          />
+        </div>
+      )} */}
+      </ModalBody>
+      <ModalFooter>
+        <div className="modal_button">
+          <Button variant="gray" size="lg" onClick={handleReset}>
+            초기화
+          </Button>
+          <Button variant="gray" size="lg" onClick={() => closeModal()}>
+            취소
+          </Button>
+          <Button variant="primary" size="lg" onClick={handleApply}>
+            적용
+          </Button>
+        </div>
+      </ModalFooter>
+    </ModalContainer>
+  );
+};

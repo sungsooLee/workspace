@@ -1,0 +1,21 @@
+/* foote.module.css */
+.start {
+  &.footer_fixed {
+    @apply fixed bottom-[5px] left-0 h-[50px] w-full;
+    .fixed_menu {
+      .menu_list {
+        @apply flex w-full items-center justify-between;
+        > li {
+          @apply w-full items-end;
+          a,
+          button {
+            @apply m-auto flex w-full flex-col items-center justify-end;
+            span {
+              @apply body_4_b mt-[5px] block;
+            }
+          }
+        }
+      }
+    }
+  }
+}

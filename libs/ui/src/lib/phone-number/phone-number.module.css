@@ -1,0 +1,46 @@
+.start {
+  &.wrap {
+    @apply flex w-full items-center gap-[8px];
+    [class*='select_wrap'] {
+      @apply !max-w-[120px] shrink-0;
+    }
+    .input_area {
+      @apply min-w-0 flex-1;
+    }
+    &.lg {
+      .select_area button {
+        @apply min-h-[40px] rounded-[8px] border-[#D6DAE1];
+        &[aria-expanded='true'] {
+          @apply border-[#6F798B];
+        }
+      }
+      .input_area {
+        @apply min-h-[40px] rounded-[8px] border-[#D6DAE1];
+      }
+    }
+    &.readonly {
+      @apply pointer-events-none;
+      [class*='nlp-select__control'] {
+        @apply !border-[var(--gray1)] !bg-[var(--gray1)];
+        [class*='nlp-select__dropdown-indicator'] svg {
+          @apply !stroke-[var(--gray5)];
+        }
+      }
+    }
+    &.disabled {
+      @apply pointer-events-none;
+      [class*='nlp-select__control'] {
+        @apply !border-[var(--gray1)];
+        [class*='nlp-select__single-value'] {
+          @apply !text-[var(--gray5)];
+        }
+        [class*='nlp-select__dropdown-indicator'] svg {
+          @apply !stroke-[var(--gray5)];
+        }
+      }
+    }
+  }
+}
+.readonly {
+  @apply relative;
+}

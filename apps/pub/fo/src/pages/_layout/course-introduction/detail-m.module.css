@@ -1,0 +1,97 @@
+.start {
+  &.package_wrap {
+    @apply relative px-[20px] pb-[80px];
+    .thumbnail_img {
+      button {
+        @apply relative;
+        .img_play {
+          @apply absolute left-1/2 top-1/2 h-[56px] w-[56px] -translate-x-1/2 -translate-y-1/2;
+          img {
+            @apply h-[56px] w-[56px];
+          }
+        }
+      }
+      img {
+        @apply w-full overflow-hidden rounded-[16px];
+      }
+    }
+    .sub_box {
+      @apply relative mt-[16px] pb-[28px];
+      &::after {
+        @apply absolute bottom-0 left-0 -mx-[20px] h-[12px] w-[calc(100%+40px)] bg-[var(--gray2)] content-[''];
+      }
+    }
+    .tab_title {
+      @apply sticky left-0 top-[56px] z-[10] -mx-[20px] w-[calc(100%+40px)] overflow-x-scroll bg-white;
+      .box {
+        @apply flex h-auto w-fit min-w-full whitespace-nowrap border-b-[1px] border-solid border-[var(--gray3)] px-[20px];
+      }
+      button {
+        @apply button_2_r relative h-[56px] whitespace-nowrap py-[16px] text-[var(--gray7)];
+        em {
+          @apply ml-[4px] inline-block text-[var(--gray6)];
+        }
+        &.active {
+          @apply !button_2_b text-[var(--gray9)];
+          em {
+            @apply text-[var(--secondary1)];
+          }
+          &::after {
+            @apply absolute -bottom-[1px] left-0 h-[2px] w-full bg-[var(--gray9)] content-[''];
+          }
+        }
+        & + button {
+          @apply ml-[40px];
+        }
+      }
+    }
+    .tab_wrap {
+      .tab {
+        & > div:nth-child(1) {
+          @apply hidden;
+        }
+        & > div {
+          &:nth-child(1) {
+            @apply -mx-[20px] w-[calc(100%+40px)] px-[20px];
+          }
+        }
+        .introduction_content {
+          & > div {
+            @apply mt-[24px];
+            &:nth-child(1) {
+              @apply mt-0;
+            }
+          }
+        }
+      }
+    }
+
+    .sub_contents {
+      @apply visible relative mt-[24px] pt-[12px];
+      &::after {
+        @apply absolute left-0 top-0 -mx-[20px] h-[12px] w-[calc(100%+40px)] bg-[var(--gray2)] content-[''];
+      }
+      .sub_box {
+        @apply my-0 py-[24px];
+        .tit_box {
+          @apply mb-[8px];
+          strong {
+            @apply title_6_b inline-block text-[var(--gray9)];
+            em {
+              @apply title_6_b ml-[4px] inline-block text-[#00afd5];
+            }
+          }
+        }
+        &::after {
+          @apply !hidden;
+        }
+        + .sub_box {
+          @apply relative pt-[24px];
+          &::before {
+            @apply absolute left-0 top-0 -mx-[20px] h-[1px] w-[calc(100%+40px)] bg-[var(--gray3)] content-[''];
+          }
+        }
+      }
+    }
+  }
+}

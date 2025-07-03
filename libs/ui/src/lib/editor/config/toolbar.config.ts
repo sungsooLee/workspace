@@ -1,0 +1,183 @@
+// 상수: 폰트 크기 제한 및 기본값
+import { ElementFormatType } from 'lexical';
+import { ReactComponent as TextParagraph } from '../assets/images/icons/text-paragraph.svg';
+import { ReactComponent as TypeH1 } from '../assets/images/icons/type-h1.svg';
+import { ReactComponent as TypeH2 } from '../assets/images/icons/type-h2.svg';
+import { ReactComponent as TypeH3 } from '../assets/images/icons/type-h3.svg';
+import { ReactComponent as TypeH4 } from '../assets/images/icons/type-h4.svg';
+import { ReactComponent as TypeH5 } from '../assets/images/icons/type-h5.svg';
+import { ReactComponent as TypeH6 } from '../assets/images/icons/type-h6.svg';
+import { ReactComponent as ListUl } from '../assets/images/icons/list-ul.svg';
+import { ReactComponent as ListOL } from '../assets/images/icons/list-ol.svg';
+import { ReactComponent as Quote } from '../assets/images/icons/chat-square-quote.svg';
+import { ReactComponent as Check } from '../assets/images/icons/square-check.svg';
+import { ReactComponent as HorizontalRule } from '../assets/images/icons/horizontal-rule.svg';
+import { ReactComponent as FileImage } from '../assets/images/icons/file-image.svg';
+import { ReactComponent as Table } from '../assets/images/icons/table.svg';
+import { ReactComponent as Video } from '../assets/images/icons/video.svg';
+import { ReactComponent as TextLeft } from '../assets/images/icons/text-left.svg';
+import { ReactComponent as TextRight } from '../assets/images/icons/text-right.svg';
+import { ReactComponent as TextCenter } from '../assets/images/icons/text-center.svg';
+
+import { ReactComponent as TextOutdent } from '../assets/images/icons/outdent.svg';
+import { ReactComponent as TextIndent } from '../assets/images/icons/indent.svg';
+
+export const MIN_ALLOWED_FONT_SIZE = 8; // 최소 허용 폰트 크기
+export const MAX_ALLOWED_FONT_SIZE = 72; // 최대 허용 폰트 크기
+export const DEFAULT_FONT_SIZE = 15; // 기본 폰트 크기
+
+// 루트 타입을 이름으로 매핑
+export const rootTypeToRootName = {
+  root: 'Root', // 기본 루트
+  table: 'Table', // 표
+};
+
+// 블록 타입을 이름으로 매핑
+export const blockTypeItems = [
+  {
+    icon: TextParagraph,
+    label: '일반',
+    value: 'paragraph',
+  },
+  {
+    icon: TypeH1,
+    label: '제목 1',
+    value: 'h1',
+  },
+  {
+    icon: TypeH2,
+    label: '제목 2',
+    blockType: 'heading',
+    value: 'h2',
+  },
+  {
+    icon: TypeH3,
+    label: '제목 3',
+    value: 'h3',
+  },
+  {
+    icon: TypeH4,
+    label: '제목 4',
+    value: 'h4',
+  },
+  // 현재 폰트 사이즈에서는 지원되지 않음  폰트 사이즈 재설정 해야 구분 됨
+  /*{
+    icon: TypeH5,
+    label: '제목 5',
+    value: 'h5',
+    active: false,
+  },
+  {
+    icon: TypeH6,
+    label: '제목 6',
+    value: 'h6',
+    active: false,
+  },*/
+  {
+    icon: ListUl,
+    label: '숫자 목록',
+    value: 'number',
+  },
+  {
+    icon: ListOL,
+    label: '점 목록',
+    value: 'bullet',
+  },
+  {
+    icon: Check,
+    label: '체크 목록',
+    value: 'check',
+  },
+  {
+    icon: Quote,
+    label: '인용구',
+    value: 'quote',
+  },
+];
+export type BlockValueType =
+  | 'paragraph'
+  | 'h1'
+  | 'h2'
+  | 'h3'
+  | 'number'
+  | 'bullet'
+  | 'check'
+  | 'quote';
+// 초기 툴바 상태 정의
+export const INITIAL_TOOLBAR_STATE = {
+  bgColor: '#fff', // 배경색
+  blockType: 'paragraph' as BlockValueType, // 기본 블록 타입
+  canRedo: false, // redo(다시 실행) 가능 여부
+  canUndo: false, // undo(실행 취소) 가능 여부
+  codeLanguage: '', // 코드 언어
+  elementFormat: 'left' as ElementFormatType, // 요소 정렬
+  fontColor: '#000', // 글자 색상
+  fontFamily: 'Arial', // 글꼴
+  fontSize: `${DEFAULT_FONT_SIZE}px`, // 현재 폰트 크기
+  isBold: false, // 굵게 설정 여부
+  isCode: false, // 코드 블록 여부
+  isImageCaption: false, // 이미지 캡션 여부
+  isItalic: false, // 기울임 여부
+  isLink: false, // 링크 여부
+  isRTL: false, // 오른쪽 정렬 여부
+  isStrikethrough: false, // 취소선 여부
+  isSubscript: false, // 아래 첨자 여부
+  isSuperscript: false, // 위 첨자 여부
+  isUnderline: false, // 밑줄 여부
+  isLowercase: false, // 소문자 여부
+  isUppercase: false, // 대문자 여부
+  isCapitalize: false, // 첫 글자 대문자 여부
+  rootType: 'root' as keyof typeof rootTypeToRootName, // 기본 루트 타입
+};
+
+// 삽입 아이템
+export const insertItems = [
+  {
+    icon: HorizontalRule,
+    label: '가로 구분선',
+    value: 'horizontal-rule',
+  },
+  {
+    icon: FileImage,
+    label: '이미지',
+    value: 'image',
+  },
+  {
+    icon: Table,
+    label: '표',
+    value: 'table',
+  },
+  {
+    icon: Video,
+    label: '동영상',
+    value: 'video',
+  },
+];
+
+export const elementFormatType = [
+  {
+    icon: TextLeft,
+    label: '좌측 정렬',
+    value: 'left',
+  },
+  {
+    icon: TextRight,
+    label: '우측 정렬',
+    value: 'right',
+  },
+  {
+    icon: TextCenter,
+    label: '가운데 정렬',
+    value: 'center',
+  },
+  {
+    icon: TextOutdent,
+    label: '내어쓰기',
+    value: 'outdent',
+  },
+  {
+    icon: TextIndent,
+    label: '들여쓰기',
+    value: 'indent',
+  },
+];

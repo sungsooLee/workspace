@@ -1,0 +1,6 @@
+/* channel-role-info.module.css */
+.start {
+  [role='tablist'] {
+    @apply mb-[32px];
+  }
+}

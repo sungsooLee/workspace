@@ -1,0 +1,25 @@
+.start {
+  &.auto_complete_popover {
+    @apply w-[800px] rounded-[8px] bg-white p-[8px] shadow-[0_2px_6px_rgba(0,0,0,.2)];
+    ul {
+      li {
+        button {
+          @apply body_3_r w-full px-[12px] py-[8px] text-[var(--gray9)];
+          em {
+            @apply text-[var(--secondary1)];
+          }
+        }
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.auto_complete_popover {
+        @apply fixed bottom-[inherit] left-0 top-[56px] block h-[calc(100%-56px)] w-[100dvw] translate-y-0 overflow-y-scroll rounded-none px-[20px] py-[16px] shadow-none;
+      }
+    }
+  }
+}

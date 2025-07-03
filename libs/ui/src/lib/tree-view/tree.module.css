@@ -1,0 +1,315 @@
+.tree_wrap {
+  @apply scrollbar max-h-[800px] w-full select-none overflow-y-auto overflow-x-hidden;
+  .tree {
+    [draggable='true'] {
+      cursor: grab;
+    }
+
+    [draggable='true']:active {
+      cursor: grabbing;
+    }
+    .node_title {
+      @apply body_bo_2_r text-[var(--gray8)];
+    }
+    .tree_item {
+      @apply relative resize-none;
+      .tree_inner {
+        @apply relative flex min-h-[40px] items-center pl-[28px];
+        .drag_wrap {
+          @apply ml-auto flex items-center;
+          & > div {
+            @apply mr-[8px];
+          }
+        }
+        .btn_area {
+          @apply ml-auto;
+          .btn_select {
+            @apply !h-[20px] !min-w-[34px] !px-0;
+          }
+        }
+        .folder_wrap {
+          @apply mr-[6px];
+        }
+        & > div {
+          @apply relative pl-[28px];
+          .has_children {
+            @apply absolute left-0 top-1/2 -mt-[10px];
+          }
+        }
+        /* &:not(.root_menu) {
+          @apply bg-[url(../../assets/images/bg/bg_tree_line.png)] bg-[10px_auto] bg-[left_6px_top_12px] bg-no-repeat !pl-[18px];
+        } */
+        &.root_menu {
+          .tree_menu {
+            @apply mr-0;
+          }
+        }
+
+        &:hover {
+          @apply bg-[var(--gray1)];
+        }
+        & + .tree_children {
+          .tree_item .tree_inner {
+            @apply bg-[left_6px_top_12px];
+            & + .tree_children {
+              .tree_item .tree_inner {
+                @apply bg-[left_26px_top_12px] !pl-[56px];
+                & > .has_children {
+                  @apply left-[28px];
+                }
+                & + .tree_children {
+                  .tree_item .tree_inner {
+                    @apply bg-[left_46px_top_12px] !pl-[84px];
+                    & > .has_children {
+                      @apply left-[56px];
+                    }
+                    & + .tree_children {
+                      .tree_item .tree_inner {
+                        @apply bg-[left_66px_top_12px] !pl-[112px];
+                        & > .has_children {
+                          @apply left-[84px];
+                        }
+                        & + .tree_children {
+                          .tree_item .tree_inner {
+                            @apply bg-[left_66px_top_12px] !pl-[140px];
+                            & > .has_children {
+                              @apply left-[112px];
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      .tree_menu {
+        @apply mr-[8px] flex h-[21px] w-[20px] cursor-pointer items-center justify-center;
+        .icon_home {
+          @apply !h-[16px] !w-[16px];
+        }
+      }
+      .folder_wrap {
+        @apply flex h-[21px] w-[20px] items-center justify-center;
+        .icon_folder {
+          @apply !h-[16px] !w-[16px];
+        }
+      }
+    }
+
+    .has_children {
+    }
+    .icon_folder {
+      @apply shrink-0;
+    }
+    .icon_plus {
+      @apply h-[21px] !w-[20px] shrink-0;
+      rect {
+        @apply stroke-[#07287E];
+      }
+      path {
+        @apply stroke-[#8C97AE];
+      }
+    }
+    .icon_minus {
+      @apply h-[21px] !w-[20px] shrink-0;
+      rect {
+        @apply stroke-[#07287E];
+      }
+      path {
+        @apply stroke-[#8C97AE];
+      }
+    }
+  }
+}
+
+.no_data {
+  @apply body_bo_2_r flex w-full items-center justify-center pt-[100px] text-[var(--gray6)];
+}
+
+.data_wrap {
+  .selected_item {
+    @apply flex min-h-[40px] w-full items-center justify-between rounded-[8px] bg-[var(--gray1)] px-[16px];
+    & + .selected_item {
+      @apply mt-[12px];
+    }
+    &:first-child {
+      @apply mt-[20px];
+    }
+  }
+  .no_data {
+    @apply h-[250px] pt-0;
+  }
+}
+
+/* 드래그 중인 노드 스타일 */
+.tree-node-dragging {
+  opacity: 0.6 !important;
+  transform: scale(0.98);
+  border: 1px dashed #3b82f6 !important;
+  background-color: #eff6ff !important;
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+  pointer-events: none;
+}
+
+/* 드래그 중인 노드의 자식 노드들 (숨김 효과) */
+.tree-node-dragging + .tree-children {
+  opacity: 0.5;
+}
+
+/* 드래그 이미지 (커서 옆에 표시되는 요소) */
+.drag-node-image {
+  pointer-events: none;
+  z-index: 9999;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.2));
+}
+
+/* 드래그 중인 상태일 때 드랍 가능한 영역 강조 */
+body.tree-dragging .tree div:not(.tree-node-dragging):hover {
+  background-color: #f0f9ff;
+  transition: background-color 0.2s ease;
+}
+
+/* 드랍 위치 표시자 애니메이션 */
+.drop-indicator-before,
+.drop-indicator-after {
+  height: 2px;
+  background-color: #3b82f6;
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  animation: pulse 1.5s infinite;
+}
+
+.drop-indicator-before {
+  top: -1px;
+}
+
+.drop-indicator-after {
+  bottom: -1px;
+}
+
+.drop-indicator-inside {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(59, 130, 246, 0.1);
+  border: 2px dashed #3b82f6;
+  border-radius: 4px;
+  z-index: 5;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes invalidPulse {
+  0% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translateX(-1px);
+  }
+  20%,
+  80% {
+    transform: translateX(2px);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translateX(-2px);
+  }
+  40%,
+  60% {
+    transform: translateX(2px);
+  }
+}
+
+.tree-node-success-drop {
+  animation: successDrop 0.5s ease;
+}
+
+@keyframes successDrop {
+  0% {
+    background-color: rgba(59, 130, 246, 0.1);
+  }
+  50% {
+    background-color: rgba(59, 130, 246, 0.3);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes bounceX {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateX(0);
+  }
+  40% {
+    transform: translateX(-3px);
+  }
+  60% {
+    transform: translateX(-1px);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+body.dragging-active {
+  user-select: none;
+  cursor: grabbing !important;
+}
+
+body.dragging-active * {
+  pointer-events: none;
+}
+
+body.dragging-active [data-dnd-context] {
+  pointer-events: auto;
+}
+
+.drop-zone-active {
+  position: relative;
+}
+
+.drop-zone-active::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, transparent, rgba(33, 150, 243, 0.1), transparent);
+  border-radius: 6px;
+  animation: slideIn 0.2s ease;
+}

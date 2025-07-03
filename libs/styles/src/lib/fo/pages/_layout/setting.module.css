@@ -1,0 +1,39 @@
+.start {
+  &.setting_wrap {
+    .list {
+      li {
+        & > a,
+        & > button {
+          @apply flex items-center justify-between px-[20px] py-[17px];
+          strong {
+            @apply body_3_r flex-1 text-[var(--gray9)];
+          }
+          span {
+            @apply body_3_r flex items-center text-[var(--gray8)];
+            svg {
+              @apply ml-[2px];
+            }
+          }
+        }
+        .box {
+          @apply flex items-center justify-between px-[20px] py-[17px];
+          strong {
+            @apply body_3_r text-[var(--gray9)];
+          }
+          span {
+            @apply body_3_r text-[var(--gray7)];
+          }
+        }
+        & + li {
+          @apply border-t-[1px] border-solid border-[var(--gray3)];
+        }
+        &.no_line {
+          @apply !border-t-0;
+        }
+      }
+      & + .list {
+        @apply border-t-[12px] border-solid border-[var(--gray2)];
+      }
+    }
+  }
+}

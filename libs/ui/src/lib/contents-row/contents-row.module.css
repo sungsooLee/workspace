@@ -1,0 +1,91 @@
+/* contents-row.module.css */
+.row {
+  /* form */
+  @apply flex w-full items-start justify-start gap-[32px];
+  .row {
+    @apply mt-[12px];
+  }
+  & + .row,
+  & + .col {
+    @apply pt-[12px];
+    &.no_line {
+      @apply border-0 pt-0;
+    }
+  }
+  & + &.horizontal {
+    @apply pb-[12px];
+    [class*='nlp--switch'] {
+      @apply translate-y-0;
+    }
+    /* & + &.horizontal {
+      @apply pb-0;
+    } */
+  }
+  &.horizontal {
+    @apply pb-0;
+    & > div {
+      @apply !flex flex-row flex-wrap pb-0;
+      label {
+        @apply flex-1;
+        & + div {
+          @apply mt-0 flex flex-1 justify-end;
+        }
+      }
+    }
+    & + .row {
+      @apply border-0 pt-0;
+    }
+    & + .horizontal {
+      @apply mt-0 border-t-[1px] border-[var(--gray2)] py-[12px];
+    }
+    &[class*='nlp--contents-row'] {
+      &[class*='inactive'] {
+        @apply pb-0;
+        & > div {
+          @apply pb-0;
+        }
+      }
+    }
+    & + [class*='nlp--contents-row'] {
+      @apply pt-[12px];
+    }
+    &.title_mode {
+      @apply pb-[12px];
+      & + .row {
+        @apply !pt-0;
+      }
+    }
+    &:has(label + div + p) {
+      [class*='nlp--switch'] {
+        @apply !translate-y-0;
+      }
+    }
+    /* [class*='nlp--switch'] {
+      @apply translate-y-1/2;
+    } */
+    label ~ p {
+      @apply w-full !flex-none;
+    }
+  }
+  & + [class*='title_wrap'] + .horizontal {
+    @apply !pb-[12px];
+  }
+  [class*='nlp--contents-row-item'] {
+    & > div:nth-last-child(2) {
+      @apply pb-0;
+    }
+  }
+}
+[class*='title_wrap'] + .row {
+  &.horizontal {
+    [class*='nlp--switch'] {
+      @apply translate-y-0;
+    }
+  }
+}
+.title_mode {
+  @apply mb-[16px] border-b-[1px] border-solid border-[var(--gray8)] pb-[16px];
+  & > div > label {
+    @apply font-semibold;
+  }
+}

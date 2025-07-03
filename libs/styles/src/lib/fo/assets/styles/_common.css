@@ -1,0 +1,57 @@
+/* _common.css 공통 */
+
+* {
+  @apply scrollbar;
+}
+
+:root {
+  --font-family:
+    'NanumBarunGothic', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue',
+    'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans', 'Malgun Gothic', 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+  --scroll-thumb: var(--gray65) !important;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+html {
+  font-family: var(--font-family) !important;
+}
+
+body {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--gray10);
+  line-height: 160%;
+  overflow-x: hidden;
+  @apply scrollbar;
+}
+
+strong {
+  font-weight: 600;
+}
+
+/* 일반 */
+[dir='ltr'] {
+  direction: ltr;
+  @apply text-left;
+}
+
+/* 아랍어 html에  dir="rtl" 추가 */
+[dir='rtl'] {
+  direction: rtl;
+  @apply flex-row-reverse text-right;
+}
+[dir='rtl'] p,
+[dir='rtl'] div,
+[dir='rtl'] li,
+[dir='rtl'] button {
+  direction: rtl;
+  @apply !text-right;
+}
+
+/* mobile */
+body.mobile {
+}

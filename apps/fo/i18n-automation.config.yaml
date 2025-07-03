@@ -1,0 +1,17 @@
+runOn: vite
+extract:
+  targetPaths:
+    - src
+  outputPath: public/locales
+  locales:
+    - ko
+    - en
+  namespaces:
+    - common
+
+tWrap:
+  targetPaths:
+    - src
+  ignorePaths:
+    - test
+    - stories

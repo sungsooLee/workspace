@@ -1,0 +1,50 @@
+.start {
+  .signup_check {
+    @apply mt-[48px] rounded-[8px] border-[1px] border-solid border-[#E3E9EF] p-[24px] text-left;
+    ul {
+      > li {
+        @apply mt-[16px] flex items-center justify-between;
+        .btn_view {
+          @apply body_3_r text-[var(--gray8)] underline;
+        }
+      }
+    }
+  }
+
+  .check_all {
+    @apply flex border-b border-solid border-[var(--gray4)] pb-[16px];
+    .all {
+      label {
+        @apply body_bo_2_r;
+      }
+    }
+  }
+  .btn_wrap {
+    @apply mt-[48px];
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      .signup_check {
+        @apply mt-[32px];
+        ul {
+          > li {
+            .btn_view {
+            }
+          }
+        }
+      }
+
+      .check_all {
+        .all {
+          label {
+          }
+        }
+      }
+      .btn_wrap {
+      }
+    }
+  }
+}

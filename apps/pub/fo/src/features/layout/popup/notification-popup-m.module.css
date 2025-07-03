@@ -1,0 +1,19 @@
+.start {
+  &.alarm_wrap {
+    @apply -mx-[20px] -my-[16px] h-auto w-[calc(100%+40px)];
+  }
+}
+
+.alarm_header {
+  @apply mr-[40px] flex w-full items-center justify-between;
+  .btn_setting {
+    @apply ml-auto;
+  }
+}
+
+.alarm_state {
+  @apply inline-grid rounded-[8px] bg-[var(--white)] p-[8px] shadow-[0px_2px_6px_rgba(0,0,0,0.08)];
+  button {
+    @apply body_3_r !m-0 block w-[104px] px-[12px] py-[8px] text-left leading-[22px];
+  }
+}

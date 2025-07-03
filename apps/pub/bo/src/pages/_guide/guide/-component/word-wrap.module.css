@@ -1,0 +1,15 @@
+/* word-wrap.module.css */
+.start {
+  &.word_wrap {
+    @apply flex h-full w-full items-center;
+    .word_area {
+      @apply w-full whitespace-nowrap;
+      button {
+        @apply inline-block max-w-full truncate;
+      }
+      .text {
+        @apply inline-block;
+      }
+    }
+  }
+}

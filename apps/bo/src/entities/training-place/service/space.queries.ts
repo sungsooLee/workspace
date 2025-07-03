@@ -1,0 +1,33 @@
+import SpaceService from '../api/space';
+import { getQuerySkipToken } from '@learnway/shared';
+
+export const queryKeys = {
+  all: ['spaces'] as const,
+  list: ['space-page'] as const,
+  detail: (id: number) => [...queryKeys.all, id] as const,
+};
+
+export const queryOptions = {
+  list: (params: any) => ({
+    queryKey: queryKeys.list,
+    queryFn: () => SpaceService.fetchList(params),
+    cacheTime: 0,
+    staleTime: 0,
+  }),
+  detail: (id?: number) =>
+    id
+      ? {
+          queryKey: queryKeys.detail(id),
+          queryFn: (): Promise<any> => SpaceService.fetch(id),
+        }
+      : getQuerySkipToken<any>(),
+};
+
+export const mutateOptions = {
+  create: () => ({
+    mutationFn: (payload: any) => SpaceService.create(payload),
+  }),
+  checkExists: () => ({
+    mutationFn: (code: string) => SpaceService.existsCode(code),
+  }),
+};

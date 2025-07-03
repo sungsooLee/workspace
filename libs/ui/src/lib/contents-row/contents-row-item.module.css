@@ -1,0 +1,10 @@
+/* contents-row-item.module.css */
+.start {
+  @apply flex flex-1 flex-col flex-wrap;
+  & > div {
+    @apply !mt-0 w-full !pt-0;
+  }
+  label + div {
+    @apply mt-0;
+  }
+}

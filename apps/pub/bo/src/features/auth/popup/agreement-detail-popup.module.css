@@ -1,0 +1,5 @@
+.start {
+  .details {
+    @apply body_bo_2_r mt-[16px] max-h-[518px] overflow-y-auto rounded-[8px] border border-solid border-[#D6DAE1] px-[16px] py-[12px] leading-[1.6] text-[#4C515E];
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "ui",
+  "version": "0.0.1",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./index.mjs",
+      "require": "./index.js"
+    }
+  },
+  "peerDependencies": {
+    "zustand": "^x.x.x",
+    "storybook": "^x.x.x",
+    "postcss": "^x.x.x",
+    "autoprefixer": "^x.x.x",
+    "@tanstack/react-table": "^x.x.x",
+    "@tanstack/react-virtual": "^x.x.x",
+    "zod": "^x.x.x"
+  }
+}

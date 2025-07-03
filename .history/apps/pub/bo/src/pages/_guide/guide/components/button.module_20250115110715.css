@@ -1,0 +1,18 @@
+/* Button Components Style */
+.nlp_button {
+  background-color: var(--secondary1);
+  @apply h-[40px] rounded-[4px] px-[12px] text-center text-[1.4rem] leading-[1.4] text-white;
+  &.icon {
+    @apply bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M17.5%2017.5L12.5001%2012.5M14.1667%208.33333C14.1667%2011.555%2011.555%2014.1667%208.33333%2014.1667C5.11167%2014.1667%202.5%2011.555%202.5%208.33333C2.5%205.11167%205.11167%202.5%208.33333%202.5C11.555%202.5%2014.1667%205.11167%2014.1667%208.33333Z%22%20stroke%3D%22white%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-[length:20px_20px] bg-[position:10px_center] bg-no-repeat pl-[32px];
+    fill: #000;
+  }
+  &:hover {
+    background-color: var(--secondary2);
+  }
+  &:active {
+    background-color: var(--secondary3);
+  }
+  &.disabled {
+    background-color: var(--gray5);
+  }
+}

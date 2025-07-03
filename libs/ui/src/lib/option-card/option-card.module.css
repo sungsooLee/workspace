@@ -1,0 +1,39 @@
+.start {
+  &.option_card_wrap {
+    @apply grid w-full gap-[8px];
+    &.type_flex {
+      @apply flex flex-wrap;
+    }
+    .card_item {
+      @apply button_3_r relative m-0 flex min-h-[40px] flex-col items-center justify-center rounded-[8px] border border-solid border-[#d6dae1] bg-[var(--white)] text-[#4c515e];
+      .label {
+        @apply body_3_b block text-center text-[var(--gray9)];
+      }
+      .icon {
+        @apply mb-[16px] inline-block h-[32px] w-auto fill-none stroke-[#06226A];
+      }
+      .description {
+        @apply body_bo_4_r text-[var(--gray8)];
+      }
+      &.active {
+        @apply border-[#06226a] font-bold text-[#06226a] shadow-[0px_3px_6px_rgba(0,0,0,0.08)];
+      }
+      &.lg {
+        @apply min-h-[158px] justify-start px-[24px] pt-[24px];
+        .label {
+          @apply leading-[1.6rem];
+        }
+        .description {
+          @apply mt-[2px] leading-[1.6rem];
+        }
+        &:hover,
+        &.active {
+          @apply border-transparent;
+          &::after {
+            @apply absolute left-0 top-0 h-full w-full rounded-[10px] border-[2px] border-solid border-[var(--blue50)] content-[''];
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+/* carousel */
+.swiper {
+  [class^='swiper-button'] {
+    @apply h-[48px] w-[48px] rounded-[24px] bg-[var(--white)] shadow-[0px_2px_4px_rgba(0,0,0,0.08)];
+    &::after {
+      @apply h-[24px] w-[24px] bg-[24px_auto] bg-[center_center] bg-no-repeat text-transparent;
+    }
+    &.swiper-button-disabled {
+      @apply hidden;
+    }
+  }
+  .swiper-button-prev {
+    &::after {
+      @apply bg-[url(../../images/icon/ic_arrow_backward.png)];
+    }
+  }
+  .swiper-button-next {
+    &::after {
+      @apply bg-[url(../../images/icon/ic_arrow_forward.png)];
+    }
+  }
+}

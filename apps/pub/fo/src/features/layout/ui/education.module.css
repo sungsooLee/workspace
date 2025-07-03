@@ -1,0 +1,175 @@
+.start {
+  &.education {
+    @apply rounded-[16px] border-[1px] border-solid border-[var(--gray3)] px-[32px] pt-[32px];
+    &.disabled {
+      .info_box {
+        .txt_box {
+          .box {
+            .state,
+            .date {
+              @apply whitespace-nowrap text-[var(--gray6)];
+            }
+            .state {
+              &::before {
+                @apply bg-[var(--gray6)];
+              }
+            }
+          }
+        }
+      }
+    }
+    .info_box {
+      @apply flex items-center justify-between;
+      & + .info_box {
+        @apply mt-[20px] border-t-[1px] border-solid border-[var(--gray3)] pt-[20px];
+      }
+      .txt_box {
+        @apply flex-1;
+        .box {
+          @apply flex items-center;
+          .state,
+          .date {
+            @apply title3 text-[var(--blue50)];
+          }
+          .state {
+            @apply relative ml-[8px] pl-[8px];
+            &::before {
+              @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--secondary3)] content-[''];
+            }
+          }
+          .label {
+            @apply label_3_r ml-[8px] inline-block rounded-[4px] border-[1px] border-solid border-[var(--gray6)] bg-[var(--gray1)] px-[6px] py-[4px] leading-[11px] text-[var(--gray8)];
+          }
+          p {
+            @apply title5-b mt-[6px] text-[var(--gray8)];
+          }
+        }
+      }
+      .list {
+        @apply flex w-full flex-wrap;
+        dl {
+          @apply w-1/2;
+          dt {
+            @apply pr-[8px] leading-[22px];
+          }
+          dd {
+            @apply table-cell leading-[22px] text-[var(--gray8)];
+            button {
+              @apply body-md ml-[12px] !px-0 leading-[28px] text-[var(--gray50)] underline underline-offset-[4px];
+            }
+            em {
+              @apply body-md text-[var(--blue50)];
+            }
+          }
+          &:nth-child(n + 3) {
+            @apply mt-[4px];
+          }
+        }
+      }
+      .more_list {
+        @apply flex flex-wrap;
+        dl {
+          @apply mt-[4px];
+        }
+        dt {
+          @apply min-w-[64px];
+        }
+        .full {
+          @apply !mt-[24px] flex w-full;
+          dd {
+            @apply flex-1;
+            &::before {
+              @apply hidden;
+            }
+          }
+        }
+        .evaluation_box {
+          & > ul {
+            @apply flex w-full items-start;
+            li {
+              @apply flex-1 rounded-[40px] bg-[var(--gray95)] py-[12px];
+              span {
+                @apply title1-b block text-center text-[var(--gray8)];
+              }
+              strong {
+                @apply title4-b mt-[4px] block text-center leading-[24px] text-[var(--blue50)];
+              }
+              & + li {
+                @apply ml-[8px];
+              }
+            }
+          }
+          & > div {
+            @apply mt-[24px];
+            ul {
+              li {
+                & + li {
+                  @apply mt-[4px];
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .btn_action {
+      @apply -mx-[24px] mt-[32px] w-[calc(100%+48px)] border-t-[1px] border-solid border-[var(--gray3)];
+      button {
+        @apply flex h-[56px] w-full items-center justify-center;
+        span {
+          @apply label-xl text-[var(--gray8)];
+        }
+        svg {
+          @apply ml-[3px];
+        }
+        &.active {
+          svg {
+            @apply rotate-180;
+          }
+        }
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.education {
+        @apply px-[16px] pt-[16px];
+        .info_box {
+          @apply block;
+          .btn_box {
+            @apply mt-[8px];
+            button {
+              @apply !m-0 w-full;
+            }
+          }
+          .list {
+            dl {
+              @apply w-full;
+              & + dl {
+                @apply mt-0;
+              }
+            }
+          }
+          .more_list {
+            .evaluation_box {
+              ul {
+                @apply block;
+                li {
+                  & + li {
+                    @apply ml-0 mt-[8px];
+                  }
+                }
+              }
+            }
+          }
+        }
+        .btn_action {
+          @apply mt-[16px];
+        }
+      }
+    }
+  }
+}

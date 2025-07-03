@@ -1,0 +1,17 @@
+.start {
+  &.license {
+    @apply mt-[24px];
+    h2 {
+      @apply title_4_b text-[var(--gray9)];
+    }
+    ul {
+      @apply mt-[32px];
+      li {
+        @apply px-[20px] py-[17px];
+        & + li {
+          @apply border-t-[1px] border-solid border-[var(--gray3)];
+        }
+      }
+    }
+  }
+}

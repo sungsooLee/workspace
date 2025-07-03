@@ -1,0 +1,47 @@
+.btn_wrap {
+  @apply flex justify-center pt-[16px];
+  .btn_cancel + .btn_confirm {
+    @apply !ml-[8px];
+  }
+  button {
+    @apply !min-w-[80px];
+  }
+}
+.icon {
+  @apply mb-[8px] flex items-center justify-center;
+  & + .title {
+    @apply pt-[8px];
+  }
+}
+.alert_wrap {
+  @apply pt-[24px];
+  .icon:empty {
+    @apply !hidden;
+  }
+  .title {
+    @apply !static text-left;
+  }
+  & > h2 {
+    @apply flex !h-auto flex-col items-start !justify-start border-b-0 !px-[20px] !py-0 text-left;
+    & > div {
+      word-break: break-all;
+    }
+    & + div {
+      @apply body_3_r scrollbar mt-[8px] max-h-[140px] overflow-hidden overflow-y-auto p-0 !px-[20px] text-left text-[#747D91];
+    }
+  }
+  &:has(.scrolled) [class*='modal-content'] + div {
+    @apply mt-[20px] border-t-[1px] border-solid border-[var(--gray4)];
+  }
+}
+.title {
+  @apply flex max-h-[80px] items-start justify-start text-left text-[1.8rem] font-bold text-[var(--gray9)];
+}
+.description {
+  @apply scrollbar block max-h-[140px] overflow-y-auto overflow-x-hidden pb-[20px] pt-[8px] text-left text-[1.4rem] font-normal text-[var(--gray7)];
+}
+.alert_footer {
+  .btn_wrap {
+    @apply pt-0;
+  }
+}

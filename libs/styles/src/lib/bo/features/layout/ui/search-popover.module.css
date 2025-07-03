@@ -1,0 +1,24 @@
+.start {
+  &.search_popover {
+    @apply table w-[800px] table-fixed rounded-[16px] bg-white p-[32px] shadow-[0_2px_6px_rgba(0,0,0,.2)];
+    & > div {
+      @apply table-cell w-1/2;
+      &:nth-child(1) {
+        @apply pr-[24px];
+      }
+      &:nth-child(2) {
+        @apply relative pl-[24px];
+        &::before {
+          @apply absolute left-0 top-0 h-full w-px bg-[var(--gray5)] content-[''];
+        }
+      }
+    }
+    .area_right {
+      .area_box {
+        & + .area_box {
+          @apply mt-[32px];
+        }
+      }
+    }
+  }
+}

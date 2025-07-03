@@ -1,0 +1,5 @@
+.start {
+  .details {
+    @apply body_3_r leading-[1.6] text-[#4C515E];
+  }
+}
