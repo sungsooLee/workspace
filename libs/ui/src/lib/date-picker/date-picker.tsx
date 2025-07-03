@@ -332,6 +332,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
           locale={currentLocale}
           timeIntervals={minuteStep}
           timeCaption=""
+          popperContainer={({ children }) => <div className="datepicker-portal">{children}</div>}
         />
       </div>
     );
@@ -372,6 +373,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
           }}
           selected={selectedDate}
           placeholderText={getPlaceholderByType('year', currentLocale)}
+          popperContainer={({ children }) => <div className="datepicker-portal">{children}</div>}
         />
         {/* <CustomYearPicker selectedDate={selectedDate} onChange={handleChange} /> */}
       </div>
@@ -404,6 +406,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
           renderCustomHeader={(headerProps: any) => (
             <CustomDatePickerHeader {...headerProps} locale={currentLocale} type={'year'} />
           )}
+          popperContainer={({ children }) => <div className="datepicker-portal">{children}</div>}
         />
       </div>
     );
@@ -441,6 +444,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
               <CustomDatePickerHeader {...headerProps} locale={currentLocale} />
             )}
             locale={currentLocale}
+            popperContainer={({ children }) => <div className="datepicker-portal">{children}</div>}
           />
         </div>
 
@@ -489,6 +493,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
         )}
         locale={currentLocale}
         // placeholderText={dynamicPlaceholder}
+        popperContainer={({ children }) => <div className="datepicker-portal">{children}</div>}
       />
     </div>
   );
