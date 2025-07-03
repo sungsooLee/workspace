@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import { cn } from '@learnway/shared';
 import { t } from 'i18next';
-import { TreeView } from './tree';
 import { getAllKeysByTree, getKeysByLevel } from './tree.service';
-import { TreeContainer } from './tree.context';
 
 import { Button } from '../button/button';
 import { Input } from '../input/input';
@@ -11,8 +9,13 @@ import { Input } from '../input/input';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 import subTitleStyles from '@learnway/styles/bo/assets/styles/modules/form-sub-title.module.css';
-import { CountText } from '../elements/count-text/count-text';
 import { DndTreeView } from './dnd-tree';
+import { TreeNode } from './type';
+
+type TreeBoxProps = {
+  data: TreeNode[];
+  renderNodeButtons: (node: TreeNode, level: number) => React.ReactNode;
+} & Record<string, any>;
 
 const TreeBoxComponent = <T extends object>({
   treeId,
@@ -41,7 +44,7 @@ const TreeBoxComponent = <T extends object>({
   minDraggableLevel,
   moveIcon,
   ...props
-}: any) => {
+}: TreeBoxProps) => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [internalExpandedKeys, setInternalExpandedKeys] = useState<string[]>([]);
 
