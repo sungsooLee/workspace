@@ -1,18 +1,13 @@
-import { LoginErrorAlert } from './../ui/login-error-alert';
 import {
+  useAsycFetchMenus,
   useLoginUser,
   useReissue,
-  useUpdateUser,
   useUpdateAuthUser,
-  useAsycFetchMenus,
+  useUpdateUser,
 } from '@learnway/auth/entities';
-import { AUTH_ERROR_CODE } from '@learnway/auth/features/auth';
 import type { AuthUser } from '@learnway/auth/types';
-import { useModal } from '@learnway/ui';
 
 import { cookieService, MutateCallback } from '@learnway/shared';
-import { usePermissionStore } from '../../../shared/lib/permission-store';
-import { t } from 'i18next';
 import RoleManagerService from '../../../entities/role/api/role-manager';
 
 interface LoginParams {
