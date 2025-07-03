@@ -93,7 +93,7 @@ const PopoverContent = () => {
     //     return <li key={`MY-PROFILE-TENAT${index}`}>{tenant.name}</li>;
     //   })}
     // </div>
-    <div className={`${styles.start} ${styles.avata_area}`}>
+    <div className={`${styles.start} ${styles.avatar_area}`}>
       <div className={styles.profile_info}>
         <div className={styles.avata_img}>
           <Avatar
