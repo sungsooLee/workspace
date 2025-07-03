@@ -1,11 +1,10 @@
-import { useState, useMemo } from 'react';
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { useState } from 'react';
+import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import {
   Button,
   Tabs,
   Accordion,
-  EmptyText,
   OptionCard,
   OptionCardItem,
   useModal,
@@ -18,16 +17,7 @@ import {
   ProgressBar,
   Avatar,
 } from '@learnway/ui';
-import {
-  IcoHeart,
-  IcoUser01,
-  IcoStar,
-  IcoCaution,
-  IcoClock01,
-  IcoPlay,
-  IcoAvatar,
-  IcoSymbol,
-} from '@learnway/icons';
+import { IcoHeart, IcoStar, IcoCaution, IcoClock01, IcoAvatar, IcoSymbol } from '@learnway/icons';
 import {
   CourseDashboard,
   CourseIntroduction, // 과정소개
@@ -35,11 +25,8 @@ import {
   CourseReview, // 후기
   CourseInformationPopup, // 수강신청 불가 팝업창들 및 반려 팝업
   CourseFixedButton, // 수강신청 버튼
-<<<<<<< HEAD
-=======
   CourseCancelReasonPopup, // 수강신청 취소 사유 입력
   PackageCardList, // 패키지 카드
->>>>>>> 02575ac97bc89623e8321d61685479519ad55ca1
 } from '../../../features/layout';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
@@ -48,10 +35,7 @@ import pageFullInner from '../../../widgets/layout/ui/container/page-full-inner.
 import definitionListStyles from './definition-list.module.css';
 import packageInformationStyles from './package-information.module.css';
 import lectureStyles from './lecture.module.css';
-import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
-import thumnailImgStyles from '../../../shared/ui/thumnail/thumnail-img.module.css';
 import packageSideStyles from './package-side.module.css';
-import relatedSideStyles from './related-side.module.css';
 
 import styles from './detail.module.css';
 
@@ -143,12 +127,8 @@ function RouteComponent() {
   ];
 
   // 패키지 아코디언
-<<<<<<< HEAD
-  const [accordionValue, setAccordionValue] = useState<string>('');
-=======
   const [accordionValue, setAccordionValue] = useState<string>('a');
   // 퍼블수정 20250703 수정
->>>>>>> 02575ac97bc89623e8321d61685479519ad55ca1
   const accordionValueItems = [
     {
       value: 'a',
