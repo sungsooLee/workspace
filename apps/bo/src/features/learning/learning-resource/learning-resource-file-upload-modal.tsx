@@ -71,10 +71,10 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
   useEffect(() => {
     if (stats.status === 'validating-error' && files.length === 1) {
       if (files[0].message === 'size error') {
-        setErrorMessage('LABEL.message.learningResourceFileUploadModal.sizeError');
+        setErrorMessage('LABEL.messages.learningResourceFileUploadModal.sizeError');
       }
       if (files[0].message === 'extension error') {
-        setErrorMessage(t('LABEL.message.learningResourceFileUploadModal.extensionError'));
+        setErrorMessage(t('LABEL.messages.learningResourceFileUploadModal.extensionError'));
       }
       onRemove();
     }
@@ -92,7 +92,7 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
           </div>
           <div className={popupStyles.title_wrap}>
             <p className={popupStyles.text}>
-              {t('LABEL.message.learningResourceFileUploadModal.uploaderLabel')}
+              {t('LABEL.messages.learningResourceFileUploadModal.uploaderLabel')}
             </p>
           </div>
           <div className={popupStyles.pop_contents}>
@@ -105,7 +105,7 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
               onPause={onPause}
               onResume={onResume}
               onRetry={onRetry}
-              guideText={t('LABEL.message.learningResourceFileUploadModal.uploaderGuideText')}
+              guideText={t('LABEL.messages.learningResourceFileUploadModal.uploaderGuideText')}
               errorMessage={errorMessage}
               wrapSize={'lg'}
             />

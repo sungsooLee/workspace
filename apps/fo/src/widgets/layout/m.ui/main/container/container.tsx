@@ -10,12 +10,12 @@ interface PageContainerComponentProps {
 }
 
 function PageContainerComponent({ children }: PageContainerComponentProps) {
-  const [activeMenuDepth] = useActiveMenuDepthState();
+  const { activeMenuDepthMenu } = useActiveMenuDepthState((state) => state);
 
   const isLeafPage = useCreation(() => {
-    const children = last(activeMenuDepth)?.children;
+    const children = last(activeMenuDepthMenu)?.children;
     return !children || !children?.length;
-  }, [activeMenuDepth]);
+  }, [activeMenuDepthMenu]);
 
   return (
     <div className="bg-secondary-1 flex flex-col">

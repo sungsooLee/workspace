@@ -27,8 +27,8 @@ const NotificationComponent = ({ notifications }: { notifications: Notification[
       {notifications.length === 0 ? (
         <p className={styles.empty}>
           <IcoBell03 width={48} height={48} stroke="#a9afbb" className={styles.ico_bell} />
-          {t('LABEL.message.notificationEmpty')}
-          <span className={styles.sub_text}>{t('LABEL.message.notificationSaveDay')}</span>
+          {t('LABEL.messages.notificationEmpty')}
+          <span className={styles.sub_text}>{t('LABEL.messages.notificationSaveDay')}</span>
         </p>
       ) : (
         <ul className={styles.info_list}>

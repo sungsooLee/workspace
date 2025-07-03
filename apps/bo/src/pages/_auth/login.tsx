@@ -184,7 +184,7 @@ function RouteComponent() {
         });
         break;
       default:
-        openAlert({ title: t('LABEL.message.invalidInputInformation'), content: error?.message });
+        openAlert({ title: t('LABEL.messages.invalidInputInformation'), content: error?.message });
         break;
     }
   };

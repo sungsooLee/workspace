@@ -3,7 +3,7 @@ import { cn } from '@learnway/shared';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useModal, Button } from '@learnway/ui';
 
-import styles from './video.module.css';
+import styles from './learning.module.css';
 
 import bnrImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 

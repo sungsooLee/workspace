@@ -8,7 +8,7 @@
           &.th_wrap {
             @apply body_bo_4_b relative h-[40px] overflow-hidden text-ellipsis whitespace-nowrap px-[8px] align-middle;
             .th_content {
-              @apply flex items-center h-full;
+              @apply flex h-full items-center;
             }
             .icon_up,
             .icon_down,
@@ -25,7 +25,7 @@
               @apply mt-[5px];
             }
             .resizer {
-              @apply absolute right-0 top-0 h-full w-[5px] bg-transparent cursor-col-resize select-none touch-none;
+              @apply absolute right-0 top-0 h-full w-[5px] cursor-col-resize touch-none select-none bg-transparent;
               &:hover {
                 @apply bg-blue-500;
               }
@@ -49,6 +49,11 @@
             }
             &.th_sticky {
               @apply !z-[4];
+            }
+            &.text_center {
+              .th_content {
+                @apply justify-center;
+              }
             }
           }
           &:not([colspan='1']) {

@@ -53,7 +53,7 @@ registerToastHandler((config: any) => {
 });
 
 function App() {
-  const [, setPageRouteState] = usePageRouteState();
+  const { setPageRouteState } = usePageRouteState();
   return (
     <QueryClientProvider client={queryConfig.getQueryClient()}>
       <AppConfigProvider>

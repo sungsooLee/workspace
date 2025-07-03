@@ -1,16 +1,16 @@
 .nlp--button {
   @apply !rounded-[6px] !px-[10px] leading-[1.4rem] tracking-normal;
   &.xs {
-    @apply h-[2rem] text-[1.2rem];
+    @apply !h-[2rem] text-[1.2rem];
   }
   &.sm {
-    @apply label-sm-b h-[2.8rem];
+    @apply label-sm-b !h-[2.8rem];
   }
   &.md {
     @apply label-sm-b;
   }
   &.lg {
-    @apply label-lg-b h-[4.8rem];
+    @apply label-lg-b !h-[4.8rem];
   }
   &.xl {
     @apply label-xl-b;
@@ -54,9 +54,6 @@
     svg {
       @apply stroke-[var(--gray10)];
     }
-  }
-  & + .nlp--button {
-    @apply !ml-0;
   }
   &[class*='only_icon'] {
     @apply !rounded-[6px];

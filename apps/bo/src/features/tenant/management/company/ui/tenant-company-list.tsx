@@ -5,9 +5,7 @@ import { t } from 'i18next';
 
 import { PageContainer, MainContents, ContentsButtons } from '@widgets/layout';
 
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css';
-
-import { Button, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
+import { Button, Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 
@@ -45,11 +43,8 @@ const TenantCompanyListComponent: FC<any> = () => {
   return (
     <>
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
-      <div className={cn(boxStyles.start, boxStyles.inner)}>
-        <div className="grid_wrap">
-          <GridBox config={gConfig} columns={columns} showNumberingColumn title="회사 목록" />
-        </div>
-      </div>
+      <Divider />
+      <GridBox config={gConfig} columns={columns} showNumberingColumn title="회사 목록" />
     </>
   );
 };

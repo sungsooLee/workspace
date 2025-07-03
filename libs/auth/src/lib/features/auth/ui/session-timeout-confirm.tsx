@@ -10,7 +10,7 @@ function SessionTimeoutConfirmComponent() {
 
   return (
     <>
-      <p className="whitespace-break-spaces">{t('LABEL.message.sessionExtensionConfirm')}</p>
+      <p className="whitespace-break-spaces">{t('LABEL.messages.sessionExtensionConfirm')}</p>
       <div className="time">
         {t('LABEL.common.remainingTime')} : <strong>{time}</strong>
       </div>

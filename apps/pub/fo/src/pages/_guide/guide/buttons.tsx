@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
-import { IcoSearch, IcoPlus, IcoDownload, IcoClose, IcoArrowForward } from '@learnway/icons';
+import { IcoSearch, IcoPlus, IcoDownload, IcoClose, IcoHeart, IcoShare } from '@learnway/icons';
 
 export const Route = createFileRoute('/_guide/guide/buttons')({
   component: RouteComponent,
@@ -473,6 +473,52 @@ import { Button } from '@learnway/ui';
 <Button variant="chips" size="sm" iconAlign="right">
     선택 <IcoClose width={12} height={12} stroke="#131C30" />
 </Button>`}
+              </code>
+            </pre>
+          </div>
+
+          <h3 className="guide_tit3">icon + text 정렬 Button</h3>
+          <div className="flex_box">
+            <div className="desc">
+              <Button
+                size="lg"
+                variant="heart"
+                icon={<IcoHeart width={20} height={20} stroke="#f58b75" fill="#f58b75" />}
+                label={'922'}
+                direction={'column'}
+              />
+              <Button
+                size="lg"
+                variant="heart"
+                icon={<IcoHeart width={20} height={20} stroke="#f58b75" fill="#f58b75" />}
+                label={'922'}
+                direction={'column'}
+                disabled
+              />
+              <Button
+                size="lg"
+                variant="share"
+                icon={<IcoShare width={20} height={20} stroke="#4D525C" />}
+                label={'공유'}
+                direction={'column'}
+              />
+              <Button
+                size="lg"
+                variant="share"
+                icon={<IcoShare width={20} height={20} stroke="#4D525C" />}
+                label={'공유'}
+                direction={'column'}
+                disabled
+              />
+            </div>
+          </div>
+          <div className="code_example">
+            <pre className="code_block">
+              <code>
+                {`<Button size="lg" variant="heart" icon={<IcoHeart width={20} height={20} stroke="#f58b75" fill="#f58b75" />} label={'922'} direction={'column'} />
+<Button size="lg" variant="heart" icon={<IcoHeart width={20} height={20} stroke="#f58b75" fill="#f58b75" />} label={'922'} direction={'column'} disabled />
+<Button size="lg" variant="share" icon={<IcoShare width={20} height={20} stroke="#4D525C" />} label={'공유'} direction={'column'} />
+<Button size="lg" variant="share" icon={<IcoShare width={20} height={20} stroke="#4D525C" />} label={'공유'} direction={'column'} disabled />`}
               </code>
             </pre>
           </div>

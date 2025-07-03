@@ -1,181 +1,103 @@
-# Learning way
+# reximer-project 22
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+## Getting started
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+To make it easy for you to get started with GitLab, here's a list of recommended next steps.
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/next?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
 
-## Git Convention
+## Add your files
 
-Git Branch
-
-화면단위로 브랜치 생성하여 관리
-
-```
-feature/개발계획서 Screen ID
-```
-
-Commit Convention
-
-- feat: 새로운 기능에 대한 커밋
-- fix: 버그 수정에 대한 커밋
-- build: 빌드 관련 파일 수정 / 모듈 설치 또는 삭제에 대한 커밋
-- chore: 그 외 자잘한 수정에 대한 커밋
-- ci: ci 관련 설정 수정에 대한 커밋
-- docs: 문서 수정에 대한 커밋
-- style: 코드 스타일 혹은 포맷 등에 관한 커밋
-- refactor: 코드 리팩토링에 대한 커밋
-- test: 테스트 코드 수정에 대한 커밋.
-- perf: 성능 개선에 대한 커밋
-
-```sh
-feat: [Screen_ID] Create fe project
-```
-
-## Install package
-
-```sh
-npm install -g pnpm
-```
-
-In project
-
-```sh
-pnpm install
-```
-
-※ "self-signed certificate in certificate chain" 에러 발생 시
-
-for windows
-
-```sh
-// node config : process.env.NODE_TLS_REJECT_UNAUTHORIZED
-set NODE_TLS_REJECT_UNAUTHORIZED=0
-
-// npm config
-npm config set strict-ssl false
-```
-
-for linux or mac
-
-```sh
-export NODE_TLS_REJECT_UNAUTHORIZED=0
-```
-
-## Run tasks
-
-To run the dev server for your app, use:
-
-```sh
-npm run dev:fo
-```
-
-To create a production bundle:
-
-```sh
-npm run build:fo
-```
-
-Add shadcn-ui component to libs/component, run:
-
-```sh
-npm run shadcn-add %comp%
-```
-
-lib 추가 방법
-
-```sh
-  #npx nx g @nx/react:lib {추가할lib명} --directory=libs/{추가할lib명}
-  npx nx g @nx/react:lib editor --directory=libs/editor
-```
-
-app 추가 방법
+- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
+- [ ] [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
 
 ```
- #npx nx g @nx/react:lib {추가할app명} --directory=libs/{추가할app명}
- npx nx g @nx/react:app storybook --directory=apps/storybook
+cd existing_repo
+git remote add origin https://gitlab.com/reximer-group/reximer-project.git
+git branch -M main
+git push -uf origin main
 ```
 
-test coverage 컬럼 정의
+## Integrate with your tools
 
-% Stmts:
+- [ ] [Set up project integrations](https://gitlab.com/reximer-group/reximer-project/-/settings/integrations)
 
-Statement Coverage (구문 커버리지): 실행된 **코드 구문(Statements)**의 비율.
-예: if, const, 함수 호출 등의 모든 실행 가능한 코드 구문이 테스트되었는지를 나타냅니다.
-% Branch:
+## Collaborate with your team
 
-Branch Coverage (분기 커버리지): 조건문이나 분기문(if, switch, ?: 등)의 모든 경우가 테스트되었는지를 나타냅니다.
-예: if (condition)의 true와 false 두 가지 경우가 모두 테스트되었는지 확인.
-% Funcs:
+- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
+- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
+- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
+- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
+- [ ] [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
 
-Function Coverage (함수 커버리지): 정의된 함수가 테스트된 비율.
-예: 함수가 선언되었을 뿐 실행되지 않았다면 커버리지에 포함되지 않습니다.
-% Lines:
+## Test and Deploy
 
-Line Coverage (라인 커버리지): 실제로 실행된 **코드 줄(Line)**의 비율.
-예: 블록 내 코드가 실행되지 않았으면 라인 커버리지가 부족하게 됩니다.
-Uncovered Line #s:
+Use the built-in continuous integration in GitLab.
 
-테스트되지 않은 코드 줄 번호를 표시.
-예: editor.tsx 파일에서 15-16번째 줄이 테스트되지 않은 것으로 표시됨
+- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/)
+- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
+- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
+- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
+- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+---
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+# Editing this README
 
-## Add new projects
+When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
 
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
+## Suggestions for a good README
 
-Use the plugin's generator to create new projects.
+Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
 
-To generate a new application, use:
+## Name
 
-```sh
-npx nx g @nx/next:app demo
-```
+Choose a self-explaining name for your project.
 
-To generate a new library, use:
+## Description
 
-```sh
-npx nx g @nx/react:lib mylib
-```
+Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
 
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
+## Badges
 
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## Visuals
 
-## Install Nx Console
+Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+## Installation
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
 
-## Useful links
+## Usage
 
-Learn more:
+Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
-- [Learn more about this workspace setup](https://nx.dev/nx-api/next?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## Support
 
-And join the Nx community:
+Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
 
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## Roadmap
 
-## Test
+If you have ideas for releases in the future, it is a good idea to list them in the README.
 
-### fireEvent
+## Contributing
 
-- fireEvent는 React Testing Library에서 제공하는 유틸리티 함수로, DOM 이벤트(예: click, change, blur, submit 등)를 프로그램matically(프로그램 코드로) 발생시킬 때 사용
+State if you are open to contributions and what your requirements are for accepting them.
 
-### 테스트 접근 방법
+For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
 
-1. 컴포넌트의 의존성 파악하기
+You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+
+## Authors and acknowledgment
+
+Show your appreciation to those who have contributed to the project.
+
+## License
+
+For open source projects, say how it is licensed.
+
+## Project status
+
+If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.

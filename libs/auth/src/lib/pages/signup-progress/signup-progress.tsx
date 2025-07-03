@@ -64,7 +64,7 @@ export function SignupProgressPage({ route }: any) {
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.password_input}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
           <EmbededAlert className={styles.search_info}>
-            {t('LABEL.message.signupProgressGuide')}
+            {t('LABEL.messages.signupProgressGuide')}
           </EmbededAlert>
 
           <div className={cn(styles.auth_form, 'no_line', 'col')}>
@@ -74,7 +74,7 @@ export function SignupProgressPage({ route }: any) {
           </div>
 
           <NoticeBox title={t('LABEL.common.caution')} className={styles.signup_noti}>
-            <dd>{t('LABEL.message.cautionSignupProgress')}</dd>
+            <dd>{t('LABEL.messages.cautionSignupProgress')}</dd>
           </NoticeBox>
 
           <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>

@@ -22,8 +22,6 @@ interface Props {
 const GnbTenantSelecteComponent = ({ className }: Props) => {
   const router = useRouter();
 
-  const [_, setActiveMenuDepth] = useActiveMenuDepthState();
-
   const { data: authUser } = useFetchAuthUser();
   const { asyncMenus } = useAsycFetchMenusForceRefatch();
   const { updateMenu, updateActiveTenant } = useUpdateUser();

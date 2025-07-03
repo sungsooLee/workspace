@@ -2,12 +2,12 @@ import { FC, useEffect, useState, useCallback } from 'react';
 import { Tabs } from '@learnway/ui';
 import { CompanyDetailHROrganization } from './company-detail-hr-organization';
 import { CompanyDetailHRLink } from './company-detail-ht-link';
-import { EnCompanyHrLinkType } from '@types';
+import { EnUserGroupType } from '@types';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
 const CompanyDetailHRComponent: FC<any> = () => {
-  const [selectedTabKey, setSelectedTabKey] = useState<string>(EnCompanyHrLinkType.POSITION);
+  const [selectedTabKey, setSelectedTabKey] = useState<string>(EnUserGroupType.ORGANIZATION);
 
   const handleTabChange = (tabKey: string) => {
     if (tabKey !== selectedTabKey) {
@@ -18,28 +18,28 @@ const CompanyDetailHRComponent: FC<any> = () => {
   const menuItems = [
     {
       title: '조직',
-      key: EnCompanyHrLinkType.ORGANIZATION,
+      key: EnUserGroupType.ORGANIZATION,
       content: <CompanyDetailHROrganization />,
     },
     {
       title: '직군',
-      key: EnCompanyHrLinkType.GROUP,
-      content: <CompanyDetailHRLink type={EnCompanyHrLinkType.GROUP} />,
+      key: EnUserGroupType.JOB_GROUP,
+      content: <CompanyDetailHRLink type={EnUserGroupType.JOB_GROUP} />,
     },
     {
       title: '직무',
-      key: EnCompanyHrLinkType.ROLE,
-      content: <CompanyDetailHRLink type={EnCompanyHrLinkType.ROLE} />,
+      key: EnUserGroupType.JOB,
+      content: <CompanyDetailHRLink type={EnUserGroupType.JOB} />,
     },
     {
       title: '호칭',
-      key: EnCompanyHrLinkType.DESIGNATION,
-      content: <CompanyDetailHRLink type={EnCompanyHrLinkType.DESIGNATION} />,
+      key: EnUserGroupType.JOB_TITLE,
+      content: <CompanyDetailHRLink type={EnUserGroupType.JOB_TITLE} />,
     },
     {
       title: '보직',
-      key: EnCompanyHrLinkType.POSITION,
-      content: <CompanyDetailHRLink type={EnCompanyHrLinkType.POSITION} />,
+      key: EnUserGroupType.JOB_POSITION,
+      content: <CompanyDetailHRLink type={EnUserGroupType.JOB_POSITION} />,
     },
   ];
 

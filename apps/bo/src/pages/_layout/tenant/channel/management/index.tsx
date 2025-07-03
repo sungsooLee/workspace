@@ -5,7 +5,6 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
 import { cn } from '@learnway/shared';
 import {
@@ -16,6 +15,7 @@ import {
   Input,
   useGridBox,
   useGridBoxConfig,
+  Divider,
 } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
@@ -77,18 +77,15 @@ function RouteComponent() {
       </ContentsButtons>
       <MainContents>
         <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
-        <div className={cn(boxStyles.start, boxStyles.inner)}>
-          <div className="grid_wrap">
-            <GridBox
-              config={gConfig}
-              columns={columns}
-              // showColumnSettings={false}
-              // showNumberingColumn={true}
-              // multiple
-              title="채널 목록"
-            />
-          </div>
-        </div>
+        <Divider />
+        <GridBox
+          config={gConfig}
+          columns={columns}
+          // showColumnSettings={false}
+          // showNumberingColumn={true}
+          // multiple
+          title="채널 목록"
+        />
       </MainContents>
     </PageContainer>
   );

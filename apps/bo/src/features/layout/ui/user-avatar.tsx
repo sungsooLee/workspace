@@ -45,7 +45,7 @@ export const PopoverContent = () => {
   };
 
   return (
-    <div className={`${styles.start} ${styles.avata_area}`}>
+    <div className={`${styles.start} ${styles.avatar_area}`}>
       <div className={styles.profile_info}>
         <div className={styles.avata_img}>
           <Avatar
@@ -112,7 +112,11 @@ const AvatarComponent = () => {
 
   return (
     <Popover popoverContent={<PopoverContent />}>
-      <Avatar imageUrl={authUser?.avataImage} fallback={<AvataFallback name={authUser?.name} />} />
+      <Avatar
+        imageUrl={authUser?.avataImage}
+        fallback={<AvataFallback name={authUser?.name} />}
+        size="sm"
+      />
     </Popover>
   );
 };

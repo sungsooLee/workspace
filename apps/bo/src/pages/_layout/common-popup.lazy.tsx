@@ -424,7 +424,7 @@ function RouteComponent() {
               >
                 {'유저그룹 대상자 조회 팝업(공통)'}
               </Button>
-              <span className="text-yellow-500">{'진행중'}</span>
+              <span className="text-green-400">{'완료'}</span>
             </div>
             <div className="flex gap-4">
               <Button
@@ -435,13 +435,13 @@ function RouteComponent() {
                   e.stopPropagation();
                   openModal({
                     width: 'xl',
-                    content: <UserGroupOrganizationShuttleModal />,
+                    content: <UserGroupOrganizationShuttleModal tenantIds={[1, 2, 3]} />,
                   });
                 }}
               >
                 {'유저그룹 조회 팝업(조직만)'}
               </Button>
-              <span className="text-yellow-500">{'진행중'}</span>
+              <span className="text-green-400">{'완료'}</span>
             </div>
             <div className="h-1 w-full border-white bg-slate-700" />
             <Button
@@ -452,7 +452,9 @@ function RouteComponent() {
                 e.stopPropagation();
                 openModal({
                   width: 'xl',
-                  content: <UserGroupTabsChoiceModal tenantIds={[1]} initialTab="JOB_GROUP" />,
+                  content: (
+                    <UserGroupTabsChoiceModal tenantIds={[1, 2, 3, 4]} initialTab="ORGANIZATION" />
+                  ),
                 });
               }}
             >
@@ -460,7 +462,7 @@ function RouteComponent() {
             </Button>
             <div className="flex justify-between gap-4">
               <span>유저그룹 조회(조직) 팝업</span>
-              <span className="text-yellow-500">{'진행중'}</span>
+              <span className="text-green-400">{'완료'}</span>
             </div>
             <div className="flex justify-between gap-4">
               <span>유저그룹 조회(보직) 팝업</span>
@@ -480,7 +482,7 @@ function RouteComponent() {
             </div>
             <div className="flex justify-between gap-4">
               <span>유저그룹 조회(사용자 정의) 팝업</span>
-              <span className="text-yellow-500">{'진행중'}</span>
+              <span className="text-green-400">{'완료'}</span>
             </div>
             <div className="h-1 w-full border-white bg-slate-700" />
             <div className="flex gap-4">
@@ -660,7 +662,7 @@ const formConfig: DynamicFormConfig = {
       label: t('썸네일'),
       type: 'thumbnail-list',
       imageStorageType: 'public',
-      max: 3,
+      max: 1,
       format: 'array',
       value: [],
       description:

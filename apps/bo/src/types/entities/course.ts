@@ -82,7 +82,7 @@ export interface CoursesQueryParams extends PaginationRequest {
   /**
    * 채널id
    */
-  channelId: number;
+  channelUuid: number;
   /**
    * 테넌트id
    */
@@ -117,14 +117,18 @@ export interface CoursesQueryParams extends PaginationRequest {
  * 과정 정보
  */
 export interface Course {
-  // 과정 아이디
+  /**
+   * 과정 아이디
+   */
   courseId?: number;
-
-  // STEP1
   /**
    * 과정 생성/수정 마법사 타입 (lms.course.WizardStep)
    */
   wizardStep?: 'STEP1' | 'STEP2' | 'STEP3' | 'STEP4' | 'STEP5' | 'FULL_UPDATE';
+  /**
+   * 과정유형
+   */
+  courseType?: string;
   /**
    * 채널 uuid
    */
@@ -180,13 +184,13 @@ export interface Course {
   /**
    * 담당자 ID
    */
-  coordinatorId?: number;
+  coordinatorUuid?: number;
   /**
    * 담당자 이름
    */
   coordinatorName?: string;
   /**
-   * 부서이름
+   * 담당자 부서이름
    */
   coordinatorDeptName?: string;
   /**
@@ -204,7 +208,7 @@ export interface Course {
   /**
    * 운영자 ID
    */
-  operatorId?: number;
+  operatorUuid?: number;
   /**
    * 운영자 이름
    */

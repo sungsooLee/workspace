@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { cn } from '@learnway/shared';
-import { Checkbox, GridBox, useGridBox, useModal } from '@learnway/ui';
+import { Checkbox, Divider, GridBox, useGridBox, useModal } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 import { GridExcelUploadButton } from '@features/shared';
@@ -11,8 +11,6 @@ import { queryOptions as departmentQuery } from '@entities/department/service/de
 import { hmgQueryOptions as hmgDepartmentQuery } from '@entities/department/service/hmg-department.queries';
 import { useDeleteDepartment } from '@entities/department/service/department.hook';
 import { EnGlobalConst } from '@types';
-
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css';
 
 /**
  * 화면번호: NLP_BO_TMS_1111_03 테넌트-회사조직 대상자 (조직)
@@ -171,23 +169,20 @@ const CompanyOrganizationInfoListComponent = ({
   return (
     <>
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
-      <div className={cn(boxStyles.start, boxStyles.inner)}>
-        <div className="grid_wrap">
-          <GridBox
-            config={gConfig}
-            columns={columns}
-            showNumberingColumn={showType === EnOrganizationShowType.origin}
-            hideRowSelectionCheckBox
-            multiple={showType === EnOrganizationShowType.platform}
-            title={t('조직 목록')}
-            showRemove={showType === EnOrganizationShowType.platform}
-            excelButtons={showType === EnOrganizationShowType.platform && <GridExcelUploadButton />}
-            onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
-            onRemoveClick={handleRemoveClick}
-            isRowSelectable={handleOnSelectable}
-          />
-        </div>
-      </div>
+      <Divider />
+      <GridBox
+        config={gConfig}
+        columns={columns}
+        showNumberingColumn={showType === EnOrganizationShowType.origin}
+        hideRowSelectionCheckBox
+        multiple={showType === EnOrganizationShowType.platform}
+        title={t('조직 목록')}
+        showRemove={showType === EnOrganizationShowType.platform}
+        excelButtons={showType === EnOrganizationShowType.platform && <GridExcelUploadButton />}
+        onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
+        onRemoveClick={handleRemoveClick}
+        isRowSelectable={handleOnSelectable}
+      />
     </>
   );
 };

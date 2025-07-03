@@ -37,7 +37,7 @@ function ExcelDownloadReasonModalCompoment({
 }: ExcelDownloadReasonModalComponentProps) {
   const { close: closeModal } = useModal();
   const { data: user } = useFetchAuthUser();
-  const [activeMenuDepth] = useActiveMenuDepthState();
+  const { activeMenuDepthMenu } = useActiveMenuDepthState((state) => state);
   const { getCode } = useCodeStore();
 
   const formConfig: DynamicFormConfig = {
@@ -88,7 +88,7 @@ function ExcelDownloadReasonModalCompoment({
         type: 'text',
         label: t('LABEL.form.label.menuPath', '메뉴 경로'),
         readOnly: true,
-        value: activeMenuDepth?.map((menu) => menu.menuName).join(' > '),
+        value: activeMenuDepthMenu?.map((menu) => menu.menuName).join(' > '),
       },
       {
         name: 'requestParameter',

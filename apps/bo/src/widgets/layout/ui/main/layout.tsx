@@ -20,7 +20,7 @@ function LayoutComponent({ children }: LayoutComponentProps) {
   const { t } = useTranslation();
 
   const { data } = useFetchAuthUser();
-  const [activeMenuDepth] = useActiveMenuDepthState();
+  const { activeMenuDepthMenu } = useActiveMenuDepthState((state) => state);
   // const { width } = useWindowSize();
 
   // if (width < 1000) {
@@ -28,10 +28,10 @@ function LayoutComponent({ children }: LayoutComponentProps) {
   // }
 
   if (
-    activeMenuDepth &&
-    activeMenuDepth?.length &&
-    activeMenuDepth[0].children &&
-    activeMenuDepth[0].children?.length > 0
+    activeMenuDepthMenu &&
+    activeMenuDepthMenu?.length &&
+    activeMenuDepthMenu[0].children &&
+    activeMenuDepthMenu[0].children?.length > 0
   ) {
     return (
       <>

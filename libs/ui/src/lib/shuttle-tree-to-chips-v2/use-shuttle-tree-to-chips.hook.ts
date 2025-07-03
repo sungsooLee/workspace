@@ -1,0 +1,48 @@
+import { useState } from 'react';
+import { TreeNode } from '../tree-view/type';
+import { flattenNodeWithChildren } from '../tree-view/tree.service';
+
+const useShuttleTreeToChips = () => {
+  const [selectedItems, setSelectedItems] = useState<TreeNode[]>([]);
+
+  // 단일 선택
+  const handleSelectItem = (value: TreeNode) => {
+    setSelectedItems((prev) =>
+      prev.includes(value) ? prev.filter(({ key }) => key !== value.key) : [...prev, value],
+    );
+  };
+
+  // 하위 노드 전체 선택
+  const handleSelectItemWithChildren = (value: TreeNode) => {
+    let nodesToAdd = [value];
+    if (value.children && value.children.length > 0) {
+      nodesToAdd = flattenNodeWithChildren(value);
+    }
+
+    // const selectableNodes = nodesToAdd.filter((node) => node.apiNodeType === 'API');
+
+    const filteredNodesToAdd = nodesToAdd.filter(
+      (n) => !selectedItems.some((item) => item.key === n.key),
+    );
+
+    setSelectedItems([...selectedItems, ...filteredNodesToAdd]);
+  };
+
+  const cancelSelectItem = (value: TreeNode) => {
+    setSelectedItems((prev) => prev.filter((v) => v !== value));
+  };
+
+  const cancelAll = () => {
+    setSelectedItems([]);
+  };
+
+  return {
+    selectedItems,
+    handleSelectItem,
+    handleSelectItemWithChildren,
+    cancelSelectItem,
+    cancelAll,
+  };
+};
+
+export { useShuttleTreeToChips };

@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState, useRef } from 'react'
 import {
   Button,
   CountText,
+  Divider,
   EditInputCell,
   EditTextareaCell,
   TableBox,
@@ -32,7 +33,6 @@ import {
 } from '@entities/translation/service/translation.hook';
 import { t } from 'i18next';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 import { GridExcelDownloadButton, GridExcelUploadButton } from '@features/shared';
 import { TranslationStatusPopup } from '@features/platform/system/multilingual/translation-status-popup';
 import { PMSApiPrefix } from '@learnway/config';
@@ -338,30 +338,27 @@ function RouteComponent() {
             onSearch={handleOnSearch}
             onBeforeSubmit={confirmChanges}
           />
-          <div className={cn(boxStyles.start, boxStyles.inner)}>
-            <div className="grid_wrap">
-              <TableBox
-                config={wrappedGridConfig}
-                titleCustomNode={
-                  <>
-                    {/*번역완료 개수*/}
-                    <CountText
-                      label={t('pms.multilingual.Is_Translation.true', '')}
-                      count={successTranslationCount}
-                    />
-                    {/*번역중인언어*/}
-                    <span className={'normal_text'}>
-                      {t('LABEL.platform.system.multilingual.currentTranslationLanguage')} :{' '}
-                      {currentTargetLocale ? getLanguageName(currentTargetLocale) : ''}
-                    </span>
-                  </>
-                }
-                excelButtons={customExcelButtons}
-                // showExcelDownload={true}
-                // showUpload={true}
-              />
-            </div>
-          </div>
+          <Divider />
+          <TableBox
+            config={wrappedGridConfig}
+            titleCustomNode={
+              <>
+                {/*번역완료 개수*/}
+                <CountText
+                  label={t('pms.multilingual.Is_Translation.true', '')}
+                  count={successTranslationCount}
+                />
+                {/*번역중인언어*/}
+                <span className={'normal_text'}>
+                  {t('LABEL.platform.system.multilingual.currentTranslationLanguage')} :{' '}
+                  {currentTargetLocale ? getLanguageName(currentTargetLocale) : ''}
+                </span>
+              </>
+            }
+            excelButtons={customExcelButtons}
+            // showExcelDownload={true}
+            // showUpload={true}
+          />
         </MainContents>
       </PageContainer>
     </div>

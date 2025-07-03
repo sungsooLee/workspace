@@ -1,8 +1,0 @@
-.start {
-  &.iframe {
-    @apply flex min-h-[100dvh] items-center bg-[var(--gray9)];
-    .iframe {
-      @apply h-[100dvh] w-[100%];
-    }
-  }
-}

@@ -54,6 +54,7 @@ import { RadioGroup } from '@learnway/ui';
                 { value: 'type1-3', label: 'ccccc' },
               ]}
               orientation="vertical"
+              defaultValue="type1"
             />
           </div>
           <div className="desc">
@@ -118,6 +119,7 @@ import { RadioGroup } from '@learnway/ui';
                 { value: 'type4-2', label: 'eeee' },
                 { value: 'type4-3', label: 'ffff' },
               ]}
+              defaultValue="type4-1"
               disabled
             />
           </div>

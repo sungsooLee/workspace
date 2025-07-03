@@ -1,5 +1,6 @@
 import { memo, ReactNode } from 'react';
-import { useActiveMenuDepthState } from '../../../../../features/platform';
+// import { useActiveMenuDepthState } from '../../../../../../../../../libs/auth/src/lib/entities/menu';
+import { useActiveMenuDepthState } from '@learnway/auth/entities';
 import { useCreation } from 'ahooks';
 import { last } from 'lodash';
 
@@ -10,12 +11,12 @@ interface PageContainerComponentProps {
 }
 
 function PageContainerComponent({ children }: PageContainerComponentProps) {
-  const [activeMenuDepth] = useActiveMenuDepthState();
+  const { activeMenuDepthMenu } = useActiveMenuDepthState();
 
   const isLeafPage = useCreation(() => {
-    const children = last(activeMenuDepth)?.children;
+    const children = last(activeMenuDepthMenu)?.children;
     return !children || !children?.length;
-  }, [activeMenuDepth]);
+  }, [activeMenuDepthMenu]);
 
   return (
     <div className="bg-secondary-1 flex flex-col">
