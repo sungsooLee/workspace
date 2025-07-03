@@ -3,7 +3,7 @@ import { useRouterState } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { cn } from '@learnway/shared';
-import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
+import { Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { FormSubTitle } from '@shared/ui';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP, useCodeStore } from '@learnway/hooks';
@@ -75,11 +75,8 @@ const CompanyDetailHRUsergroupComponent: FC<any> = ({
     <>
       <FormSubTitle label={t('유저그룹 대상자')} lineType={'light'} />
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
-      <div className={cn(boxStyles.start, boxStyles.inner)}>
-        <div className="grid_wrap">
-          <GridBox config={gConfig} columns={columns} title={t('유저그룹 대상자 목록')} />
-        </div>
-      </div>
+      <Divider />
+      <GridBox config={gConfig} columns={columns} title={t('유저그룹 대상자 목록')} />
     </>
   );
 };
