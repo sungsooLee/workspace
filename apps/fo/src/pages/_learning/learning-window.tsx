@@ -21,7 +21,7 @@ function RouteComponent() {
   const [scormConfig, setScormConfig] = useState<ScormPlayerConfigProperties>();
   const [videoInfo, setVideoInfo] = useState<any>();
 
-  const { curriculum, playInfo, setBaseInfo } = useLearningWindowStore((state) => state);
+  const { curriculum, playInfo } = useLearningWindowStore((state) => state);
   const { data: scormInfo } = useGetScormRteScoInfo(scormConfig);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ function RouteComponent() {
         curriculumId: playInfo.curriculumId,
         orgnId: playInfo.orgnId,
         sequenceId: playInfo.sequenceId,
-        courceId: playInfo.courseId,
+        courseId: playInfo.courseId,
         scoId: playInfo.scoId,
       };
 
@@ -51,7 +51,7 @@ function RouteComponent() {
       const learningInfo = { ...routerState.location.state };
       console.log('state info ', learningInfo);
       if (learningInfo.curriculumId) {
-        setBaseInfo(learningInfo);
+        useLearningWindowStore.getState().setBaseInfo(learningInfo);
       }
     })();
   }, []);

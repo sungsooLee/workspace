@@ -83,7 +83,7 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
               </div>
               <div className={styles.contents_box}>
                 {/* 커리큘럼 */}
-                {curriculum && (
+                {menuContents[0] && curriculum && (
                   <div className={styles.curriculum}>
                     <ul>
                       {curriculum.moduleList.map((module: any) => {
@@ -110,7 +110,7 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
                                         }
                                       >
                                         <div className={styles.step_box}>
-                                          <ProgressCheck progress={100} />
+                                          <ProgressCheck progress={50} />
                                           <p>{lesson.lessonName}</p>
                                           <span>--:--</span>
                                         </div>

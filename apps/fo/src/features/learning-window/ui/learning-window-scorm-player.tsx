@@ -1,8 +1,10 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 
-import styles from './iframe.module.css';
+import styles from '@learnway/styles/fo/pages/_learning/learning.module.css';
+import stylesMobile from '@learnway/styles/fo/pages/_learning/learning-m.module.css';
 
 import { useFetchAuthUser } from '@learnway/auth/entities';
+import { useIsMobile } from '@learnway/hooks';
 
 import { ScormHandler } from '../service/scorm-handler';
 
@@ -12,7 +14,7 @@ export interface ScormPlayerConfigProperties {
   /** 과정 차수 ID */
   sequenceId: number;
   /** 과정Id */
-  courceId: number;
+  courseId: number;
   /** 커리큘럼Id */
   curriculumId: number;
   /** 콘텐츠 UUID */
@@ -28,6 +30,7 @@ const LearningWindowScormPlayerComponent: FC<any> = ({
 }: {
   scormConfig: ScormPlayerConfigProperties;
 }) => {
+  const isMobile = useIsMobile();
   const [iframeUrl, setIframeUrl] = useState<string>();
   const [queryParam, setQueryParam] = useState<any>();
 
@@ -61,7 +64,13 @@ const LearningWindowScormPlayerComponent: FC<any> = ({
   }, [loginUser, scormInfo]);
 
   return (
-    <div className={`${styles.start} ${styles.iframe}`}>
+    <div
+      className={
+        isMobile
+          ? `${stylesMobile.start} ${stylesMobile.iframe}`
+          : `${styles.start} ${styles.iframe}`
+      }
+    >
       {/* IFrame */}
       <iframe
         //src="http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/public/8807/resources/01/index.html"
@@ -70,7 +79,7 @@ const LearningWindowScormPlayerComponent: FC<any> = ({
         // src="/html/lf_new_model/resources/01/index.html"
         src={iframeUrl}
         title="SCORM Content"
-        className={styles.iframe}
+        className={isMobile ? stylesMobile.iframe : styles.iframe}
       />
     </div>
   );

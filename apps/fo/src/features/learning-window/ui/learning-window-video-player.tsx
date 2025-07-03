@@ -1,9 +1,9 @@
-import { Player, usePlayer } from '@learnway/ui';
+import { VideoPlayer, useVideoPlayer } from '@learnway/ui';
 
 const LearningWindowVideoPlayerComponent = () => {
-  const player = usePlayer();
+  const player = useVideoPlayer();
   return (
-    <Player
+    <VideoPlayer
       ref={player.playerRef}
       playing={player.playing}
       onProgress={player.onProgress}
