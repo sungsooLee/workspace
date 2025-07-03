@@ -14,7 +14,7 @@
     @apply mt-[40px];
     &.pds {
       button {
-        @apply w-[100px];
+        @apply min-w-[100px];
       }
     }
   }
