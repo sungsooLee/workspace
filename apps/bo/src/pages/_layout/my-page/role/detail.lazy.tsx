@@ -1,7 +1,12 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
 import { createLazyFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
+import { useCallback, useEffect, useMemo } from 'react';
 
+import { useFetchRole } from '@entities/role/service/role-manage.hook';
+import { roleManagerQueryOptions } from '@entities/role/service/role-manage.queries';
+import { pageRouteConfig } from '@features/auth';
+import { FormDisplay } from '@features/form/ui/form-display';
+import { MyRoleExtendModal } from '@features/user/my-page/ui/my-role-extend-modal';
 import {
   CODE_GROUP,
   compactValues,
@@ -11,24 +16,20 @@ import {
   useDynamicForm,
   useSearchBox,
 } from '@learnway/hooks';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { pageRouteConfig } from '@features/auth';
-import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
+import { cn, DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import {
   Button,
   ChipListModalSelectorFormField,
   ContentsRow,
-  DatePicker,
   GridBox,
   RadioGroupFormField,
   useGridBox,
   useModal,
 } from '@learnway/ui';
+import { ContentsHistoryInfoFormField, FormRow, FormSubTitle } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
-import { ChipListFormField, ContentsHistoryInfoFormField, FormRow, FormSubTitle } from '@shared/ui';
-import { cn, DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+import { CellContext, createColumnHelper } from '@tanstack/react-table';
 import {
   EnChannelScope,
   EnCompanyScope,
@@ -36,12 +37,9 @@ import {
   EnTenantScope,
   RoleApplication,
 } from '@types';
-import { FormDisplay } from '@features/form/ui/form-display';
-import { formUtils } from '@entities/form-utils';
-import { CellContext, createColumnHelper } from '@tanstack/react-table';
-import { useFetchRole } from '@entities/role/service/role-manage.hook';
-import { MyRoleExtendModal } from '@features/user/my-page/ui/my-role-extend-modal';
-import { roleManagerQueryOptions } from '@entities/role/service/role-manage.queries';
+import { PageContainer } from '@widgets/layout/ui/container/page-container';
+import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
+import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 
 export const Route = createLazyFileRoute('/_layout/my-page/role/detail')({
   component: RouteComponent,
@@ -53,16 +51,14 @@ function RouteComponent() {
   const router = useRouter();
 
   console.log('### detail state,', state);
-  const { confirm, alert, open: openModal } = useModal();
+  const { open: openModal } = useModal();
   const {
     provider: sProvider,
     getValues,
     onFormChange: onFormChangeSearchBox,
-    onFormValid,
   } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
-  const { provider, updateFormData, onSubmit, onFormChange, clearFormError, control } =
-    useDynamicForm(formConfig);
+  const { provider, onSubmit, onFormChange } = useDynamicForm(formConfig);
 
   const { data: roleData } = useFetchRole(state?.roleId);
 
@@ -74,13 +70,10 @@ function RouteComponent() {
     if (state?.roleId) {
       onFormChangeSearchBox({ roleId: state?.roleId });
       gridFetch({ roleId: state?.roleId });
+    } else {
+      router.history.canGoBack() && router.history.back();
     }
   }, []);
-
-  // useEffect(() => {
-  //   if (state?.roleId) return;
-  //   router.history.canGoBack() && router.history.back();
-  // }, [state]);
 
   useEffect(() => {
     if (roleData) {
@@ -267,8 +260,9 @@ const searchConfig: SearchBoxConfig = {
         },
       },
       {
-        name: 'roldId',
+        name: 'roleId',
         type: 'hidden',
+        format: 'object',
         value: '',
       },
     ],

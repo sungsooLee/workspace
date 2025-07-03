@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
 
-export const usePlayer = () => {
+export const useVideoPlayer = () => {
   const playerContainerRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<ReactPlayer>(null);
   const [playing, setPlaying] = useState(false);

@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
 
-export type PlayerContainerProps = {
+export type VideoPlayerContainerProps = {
   showCurriculumSection: boolean;
   playing: boolean;
   isFullscreen: boolean;

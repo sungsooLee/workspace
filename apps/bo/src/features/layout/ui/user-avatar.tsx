@@ -112,7 +112,11 @@ const AvatarComponent = () => {
 
   return (
     <Popover popoverContent={<PopoverContent />}>
-      <Avatar imageUrl={authUser?.avataImage} fallback={<AvataFallback name={authUser?.name} />} />
+      <Avatar
+        imageUrl={authUser?.avataImage}
+        fallback={<AvataFallback name={authUser?.name} />}
+        size="sm"
+      />
     </Popover>
   );
 };

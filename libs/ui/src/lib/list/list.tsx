@@ -226,13 +226,7 @@ const SortableItem = ({
             className={cn(styles.clear)}
             onlyIcon
             onClick={(event: React.MouseEvent) => onDelete?.(event, item)}
-            icon={
-              checkable ? (
-                <IcoDelete04 width={20} height={20} fill={'none'} stroke={'#4C515E'} />
-              ) : (
-                <IcoDelete03 width={20} height={20} fill={'#A9AFB8'} stroke={'#ffffff'} />
-              )
-            }
+            icon={<IcoDelete04 width={20} height={20} fill={'none'} stroke={'#4C515E'} />}
           />
         )}
       </div>
@@ -244,7 +238,7 @@ const SortableItem = ({
           {...attributes}
           {...listeners}
         >
-          <IcoMenu01 width={24} height={24} fill="#A9AFB8" stroke="#8c97ae" />
+          <IcoMenu01 width={24} height={24} fill="#A9AFB8" stroke="#3E4550" />
         </Button>
       )}
     </li>

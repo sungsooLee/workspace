@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import {
   Button,
@@ -25,6 +25,7 @@ import {
   CourseInformationPopup, // 수강신청 불가 팝업창들 및 반려 팝업
   CourseFixedButton, // 수강신청 버튼
   CourseCancelReasonPopup, // 수강신청 취소 사유 입력
+  PackageCardList, // 패키지 카드
 } from '../../../features/layout';
 
 import pageContentsStyles from '../../_page-contents.module.css';
@@ -32,8 +33,6 @@ import pageFullInner from '../../../widgets/layout/ui/container/page-full-inner.
 import definitionListStyles from './definition-list.module.css';
 import packageInformationStyles from './package-information.module.css';
 import lectureStyles from './lecture.module.css';
-import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
-import thumnailImgStyles from '../../../shared/ui/thumnail/thumnail-img.module.css';
 import packageSideStyles from './package-side.module.css';
 
 import styles from './detail.module.css';
@@ -48,23 +47,24 @@ export const Route = createFileRoute('/_layout/course-introduction/detail')({
 });
 
 function RouteComponent() {
+  const { open: openModal } = useModal();
   const { confirm: openConfirm } = useModal();
   const { alert: openAlert } = useModal();
 
   // 탭
-  const [selectedTabKey, setSelectedTabKey] = useState<string>('1');
-  const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0);
+  const [selectedTabKey, setSelectedTabKey] = useState<string>('0');
+  const [selectedTabTitle, setSelectedTabTitle] = useState<number>(0);
 
   // 탭 타이틀
   const tabTitle = [
-    { title: '대시보드', tabNumber: '1' },
-    { title: '과정소개', tabNumber: '2' },
-    { title: '교육일정', tabNumber: '2' }, // 과정소개 탭 안에서 교욱일정이 있기 때문에 tabNumber값 동일
-    { title: '후기', count: '0', tabNumber: '2' }, // 과정소개 탭 안에서 후기가 있기 때문에 tabNumber값 동일
+    { title: '대시보드', tabNumber: '0' },
+    { title: '과정소개', tabNumber: '1' },
+    { title: '교육일정', tabNumber: '1' }, // 과정소개 탭 안에서 교욱일정이 있기 때문에 tabNumber값 동일
+    { title: '후기', count: '0', tabNumber: '1' }, // 과정소개 탭 안에서 후기가 있기 때문에 tabNumber값 동일
   ];
   const handleTab = (key: string, index: number) => {
     setSelectedTabKey(key);
-    setSelectedTabIndex(index);
+    setSelectedTabTitle(index);
   };
 
   // 공통 컴포넌트 수정 요청중 (수정예정)
@@ -80,7 +80,7 @@ function RouteComponent() {
   const items = [
     {
       title: '대시보드',
-      key: '1',
+      key: '0',
       content: (
         <div className={styles.dashboard_content}>
           <CourseDashboard />
@@ -89,7 +89,7 @@ function RouteComponent() {
     },
     {
       title: '과정소개',
-      key: '2',
+      key: '1',
       content: (
         <div className={styles.introduction_content}>
           <CourseIntroduction />
@@ -103,8 +103,29 @@ function RouteComponent() {
     },
   ];
 
+  // 퍼블수정 20250703 패키지 카드 리스트 값 추가
+  // 패키지 카드
+  const packageCardValue = [
+    {
+      label: '패키지',
+      imgSrc: listImage1,
+      text: '필수 개발 과정 Spring Framework OpenAPI 서비스 필수요소 1',
+    },
+    {
+      label: '패키지',
+      imgSrc: listImage1,
+      text: '필수 개발 과정 Spring Framework OpenAPI 서비스 필수요소 2',
+    },
+    {
+      label: '패키지',
+      imgSrc: listImage1,
+      text: '필수 개발 과정 Spring Framework OpenAPI 서비스 필수요소 3',
+    },
+  ];
+
   // 패키지 아코디언
   const [accordionValue, setAccordionValue] = useState<string>('a');
+  // 퍼블수정 20250703 수정
   const accordionValueItems = [
     {
       value: 'a',
@@ -114,64 +135,10 @@ function RouteComponent() {
         </div>
       ),
       children: (
-        <div className={packageSideStyles.sub_package_content}>
-          <div
-            className={cn(
-              thumnailStyles.start,
-              thumnailStyles.thumbnail,
-              thumnailStyles.horizontal,
-            )}
-          >
-            {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-            <Link to="" className={thumnailStyles.link}></Link>
-
-            <div className={thumnailStyles.thumnail_box}>
-              {/* img */}
-              <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
-                <ul className={thumnailImgStyles.label}>
-                  <li style={{ backgroundColor: '#00afd5' }}>New</li>
-                </ul>
-                <div className={thumnailImgStyles.img}>
-                  <img src={listImage1} alt="" />
-                </div>
-              </div>
-              {/* txt */}
-              <div className={thumnailStyles.text_box}>
-                <p className={thumnailStyles.text}>
-                  필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정
-                </p>
-              </div>
-            </div>
-          </div>
-          <div
-            className={cn(
-              thumnailStyles.start,
-              thumnailStyles.thumbnail,
-              thumnailStyles.horizontal,
-            )}
-          >
-            {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-            <Link to="" className={thumnailStyles.link}></Link>
-
-            <div className={thumnailStyles.thumnail_box}>
-              {/* img */}
-              <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
-                <ul className={thumnailImgStyles.label}>
-                  <li style={{ backgroundColor: '#00afd5' }}>New</li>
-                </ul>
-                <div className={thumnailImgStyles.img}>
-                  <img src={listImage1} alt="" />
-                </div>
-              </div>
-              {/* txt */}
-              <div className={thumnailStyles.text_box}>
-                <p className={thumnailStyles.text}>
-                  필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <PackageCardList
+          cardListData={packageCardValue}
+          className={packageSideStyles.sub_package_content}
+        />
       ),
     },
     {
@@ -182,42 +149,15 @@ function RouteComponent() {
         </div>
       ),
       children: (
-        <div className={packageSideStyles.sub_package_content}>
-          <div
-            className={cn(
-              thumnailStyles.start,
-              thumnailStyles.thumbnail,
-              thumnailStyles.horizontal,
-            )}
-          >
-            {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-            <Link to="" className={thumnailStyles.link}></Link>
-
-            <div className={thumnailStyles.thumnail_box}>
-              {/* img */}
-              <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
-                <ul className={thumnailImgStyles.label}>
-                  <li style={{ backgroundColor: '#00afd5' }}>New</li>
-                </ul>
-                <div className={thumnailImgStyles.img}>
-                  <img src={listImage1} alt="" />
-                </div>
-              </div>
-              {/* txt */}
-              <div className={thumnailStyles.text_box}>
-                <p className={thumnailStyles.text}>
-                  필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <PackageCardList
+          cardListData={packageCardValue}
+          className={packageSideStyles.sub_package_content}
+        />
       ),
     },
   ];
 
   // 수강신청 있는 과정
-  // 퍼블수정 20250703 초기값 추가 및 임의 날짜 데이터 수정
   const [courseValues, setCourseValues] = useState<string | undefined>(undefined);
   const courseOptions = [
     {
@@ -225,7 +165,7 @@ function RouteComponent() {
       value: 'a',
       original: {
         number: '1차',
-        date: '2026-01-15 ~ 2026-01-20',
+        date: '2026-01-15 ~ 2026-01-04',
         definitionList: [
           {
             tit: '잔여석',
@@ -243,7 +183,7 @@ function RouteComponent() {
       value: 'b',
       original: {
         number: '2차',
-        date: '2026-01-15 ~ 2026-01-20',
+        date: '2026-01-15 ~ 2026-01-04',
         definitionList: [
           {
             tit: '잔여석',
@@ -277,7 +217,7 @@ function RouteComponent() {
 
   // 퍼블수정 20250703 수강신청 취소 사유 popup으로 변경 (CourseCancelReasonPopup)
 
-  // 수창취소 완료
+  // 수강취소 완료
   // 퍼블수정 20250703 함수명 변경 및 title Fragment 삭제
   const handleCourseCancelCompleteAlert = () => {
     openAlert({
@@ -394,20 +334,21 @@ function RouteComponent() {
             {/* <img src={bnrImage1} alt="" /> */}
           </div>
 
-          <Carousel
+          {/* 퍼블 홀딩 */}
+          {/* <Carousel
             items={itemSwiper}
             className={`${styles.card_swiper}`}
             spaceBetween={0}
             slidesPerView={1}
             showNavigation={true}
-          />
+          /> */}
 
           <div className={styles.tab_title}>
             <div className={styles.box}>
               {tabTitle.map((item, index) => (
                 <Button
                   key={index}
-                  className={selectedTabIndex === index ? styles.active : ''}
+                  className={selectedTabTitle === index ? styles.active : ''}
                   onClick={() => handleTab(item.tabNumber, index)}
                 >
                   {item.title}
@@ -448,7 +389,7 @@ function RouteComponent() {
                   <span>500</span>
                 </div>
                 <div className={packageInformationStyles.box}>
-                  <IcoAvatar width={16} height={16} fill="#a1c2ff" />
+                  <IcoAvatar width={16} height={16} />
                   <span>77,500</span>
                 </div>
               </div>
@@ -530,7 +471,6 @@ function RouteComponent() {
                         <div
                           className={`${definitionListStyles.start} ${definitionListStyles.list}`}
                         >
-                          {/* 퍼블수정 20250703 key값 추가 */}
                           {original.definitionList.map((item: any, index: number) => (
                             <dl key={index}>
                               <dt>{item.tit}</dt>
@@ -567,7 +507,6 @@ function RouteComponent() {
                 value={accordionValue}
                 className={packageSideStyles.acc_package}
                 onValueChange={(value) => setAccordionValue(value as string)}
-                type={'multiple'}
               />
             </div>
           </div>

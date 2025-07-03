@@ -126,7 +126,7 @@ const PopoverContent = () => {
           <div className={styles.empty}>
             <IcoClock01 className={styles.icon_menu} width={48} height={48} stroke="#8C97AE" />
             <p className={cn(styles.text, 'whitespace-pre-wrap')}>
-              {t('LABEL.message.recentMenuInfo')}
+              {t('LABEL.messages.recentMenuInfo')}
             </p>
           </div>
         ) : (
@@ -208,7 +208,7 @@ const PopoverContent = () => {
         <div className={styles.empty}>
           <IcoStar02 className={styles.icon_menu} width={48} height={48} stroke="#8C97AE" />
           <p className={cn(styles.text, 'whitespace-pre-wrap')}>
-            {t('LABEL.message.favoritesMenuInfo')}
+            {t('LABEL.messages.favoritesMenuInfo')}
           </p>
         </div>
       )}

@@ -5,5 +5,8 @@
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "prettier.requireConfig": true,
-  "nxConsole.generateAiAgentRules": true
+  "nxConsole.generateAiAgentRules": true,
+  "workbench.editorAssociations": {
+    "*.svg": "default" // SVG를 기본 텍스트 편집기로 열기
+  }
 }

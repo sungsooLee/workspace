@@ -1,7 +1,7 @@
 /* avatar.module.css */
 
 .start {
-  @apply flex items-center justify-center overflow-hidden rounded-[100%] bg-[var(--blue35)] font-[600] leading-[140%];
+  @apply flex items-center justify-center overflow-hidden rounded-full;
   /* 사이즈별 클래스 */
   &.size--sm {
     @apply h-[32px] w-[32px] text-[1.4rem];
@@ -28,5 +28,5 @@
 }
 
 .fallback {
-  @apply text-white;
+  @apply flex h-full w-full items-center justify-center bg-[#00afd5] font-semibold leading-[140%] text-white;
 }

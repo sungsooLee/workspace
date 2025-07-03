@@ -127,7 +127,7 @@ function RouteComponent() {
                 </Button>
               </li>
             </ul>
-            <div className={styles.noti}>{t('LABEL.message.loginGuide')}</div>
+            <div className={styles.noti}>{t('LABEL.messages.loginGuide')}</div>
           </div>
         </div>
 

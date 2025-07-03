@@ -41,8 +41,8 @@ export function ChangePasswordPage({ route }: any) {
 
   const handleSuccess = async () => {
     await alert({
-      title: t('LABEL.message.changePasswordSuccess'),
-      content: t('LABEL.message.changePasswordSuccessGuide'),
+      title: t('LABEL.messages.changePasswordSuccess'),
+      content: t('LABEL.messages.changePasswordSuccessGuide'),
     });
     logout();
   };
@@ -55,8 +55,8 @@ export function ChangePasswordPage({ route }: any) {
 
   const handleCancel = async () => {
     const callback = await confirm({
-      title: t('LABEL.message.cancelConfirm'),
-      content: t('LABEL.message.passwordNotChangedGuide'),
+      title: t('LABEL.messages.cancelConfirm'),
+      content: t('LABEL.messages.passwordNotChangedGuide'),
     });
     if (callback) {
       logout();
@@ -114,13 +114,13 @@ export function ChangePasswordPage({ route }: any) {
             </Button>
           </div>
           <NoticeBox title={t('LABEL.common.caution')} className={styles.signup_noti}>
-            <dd>{t('LABEL.message.cautionPasswordInput01')}</dd>
-            <dd>{t('LABEL.message.cautionPasswordInput02')}</dd>
-            <dd>{t('LABEL.message.cautionPasswordInput03')}</dd>
-            <dd>{t('LABEL.message.cautionPasswordInput04')}</dd>
-            {/* <dd>{t('LABEL.message.cautionPasswordInput05')}</dd> */}
+            <dd>{t('LABEL.messages.cautionPasswordInput01')}</dd>
+            <dd>{t('LABEL.messages.cautionPasswordInput02')}</dd>
+            <dd>{t('LABEL.messages.cautionPasswordInput03')}</dd>
+            <dd>{t('LABEL.messages.cautionPasswordInput04')}</dd>
+            {/* <dd>{t('LABEL.messages.cautionPasswordInput05')}</dd> */}
             {/* <dd>
-              {t('LABEL.message.cautionPasswordInput06')} <GoogleOtpGuideButton />
+              {t('LABEL.messages.cautionPasswordInput06')} <GoogleOtpGuideButton />
             </dd> */}
           </NoticeBox>
 
@@ -179,7 +179,7 @@ const passwordFormConfig: DynamicFormConfig = {
       conditions: [
         {
           fn: (values: Record<string, any>) => values.password !== values.confirm_password,
-          message: 'LABEL.message.validationConfirmPassword',
+          message: 'LABEL.messages.validationConfirmPassword',
           path: 'confirm_password',
         },
       ],

@@ -3,12 +3,10 @@ import { t } from 'i18next';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { cn } from '@learnway/shared';
-import { Button, GridBox, Checkbox, useGridBox, useGridBoxConfig } from '@learnway/ui';
+import { Button, GridBox, Checkbox, useGridBox, useGridBoxConfig, Divider } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
 import { formUtils } from '@entities/form-utils';
-
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
 interface ChannelDetailBoardArticleListProps {
   onArticleClick?: (articleId: number) => void;
@@ -103,17 +101,14 @@ const ChannelDetailBoardArticleListComponent = ({
   return (
     <>
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
-      <div className={cn(boxStyles.start, boxStyles.inner)}>
-        <div className="grid_wrap">
-          <GridBox
-            config={gConfig}
-            columns={columns}
-            showNumberingColumn={true}
-            title="게시물 목록"
-            customButtonNode={<Checkbox size="sm" label={t('내가 등록한 게시물')} />}
-          />
-        </div>
-      </div>
+      <Divider />
+      <GridBox
+        config={gConfig}
+        columns={columns}
+        showNumberingColumn={true}
+        title="게시물 목록"
+        customButtonNode={<Checkbox size="sm" label={t('내가 등록한 게시물')} />}
+      />
     </>
   );
 };

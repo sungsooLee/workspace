@@ -57,7 +57,7 @@ function AuthFormComponent({
   includeUserId = false,
   onSuccess,
   onCancel,
-  noticeBoxLabel = 'LABEL.message.searchAccountNotice', // 본인 명의의 인증 수단 정보를 정확히 입력해 주세요.
+  noticeBoxLabel = 'LABEL.messages.searchAccountNotice', // 본인 명의의 인증 수단 정보를 정확히 입력해 주세요.
 }: AuthFormComponentProps) {
   const { t } = useTranslation();
 
@@ -194,7 +194,7 @@ function AuthFormComponent({
   };
 
   const handleVerifyError = () => {
-    setFormError('verificationCode', t('LABEL.message.invalidAuthNumber'));
+    setFormError('verificationCode', t('LABEL.messages.invalidAuthNumber'));
   };
 
   const handleCancel = () => {

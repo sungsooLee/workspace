@@ -31,8 +31,8 @@ const ChangePasswordModalComponent = () => {
       {
         onSuccess: async () => {
           await alert({
-            title: t('LABEL.message.changePasswordSuccess'),
-            content: t('LABEL.message.changePasswordSuccessGuide'),
+            title: t('LABEL.messages.changePasswordSuccess'),
+            content: t('LABEL.messages.changePasswordSuccessGuide'),
           });
           closeModal();
         },
@@ -56,11 +56,11 @@ const ChangePasswordModalComponent = () => {
           </ContentsRow>
 
           <NoticeBox title={t('LABEL.common.caution')} className={styles.signup_noti}>
-            <dd>{t('LABEL.message.cautionPasswordInput01')}</dd>
-            <dd>{t('LABEL.message.cautionPasswordInput02')}</dd>
-            <dd>{t('LABEL.message.cautionPasswordInput03')}</dd>
-            <dd>{t('LABEL.message.cautionPasswordInput04')}</dd>
-            <dd>{t('LABEL.message.cautionPasswordInput05')}</dd>
+            <dd>{t('LABEL.messages.cautionPasswordInput01')}</dd>
+            <dd>{t('LABEL.messages.cautionPasswordInput02')}</dd>
+            <dd>{t('LABEL.messages.cautionPasswordInput03')}</dd>
+            <dd>{t('LABEL.messages.cautionPasswordInput04')}</dd>
+            <dd>{t('LABEL.messages.cautionPasswordInput05')}</dd>
           </NoticeBox>
         </ModalBody>
         <ModalFooter>
@@ -123,7 +123,7 @@ const passwordFormConfig: DynamicFormConfig = {
       conditions: [
         {
           fn: (values: Record<string, any>) => values.password !== values.confirm_password,
-          message: 'LABEL.message.validationConfirmPassword',
+          message: 'LABEL.messages.validationConfirmPassword',
           path: 'confirm_password',
         },
       ],

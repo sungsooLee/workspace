@@ -481,7 +481,7 @@ export const guide = [
   },
   {
     screenName: '영상 플레이어',
-    pageId: 'player-demo',
+    pageId: 'video-player-demo',
     pageType: 'Page',
     memo: '영상 플레이어', // 비고
   },
