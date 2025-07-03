@@ -6,75 +6,19 @@ export function useFetchSpace(id: number) {
   return useQuery({ ...queryOptions.detail(id) });
 }
 
-export function useCreateSpace(options: any) {
+export function useSpaceMutation(type: 'create' | 'update' | 'delete', options: any) {
   const queryClient = useQueryClient();
-
   const mutation = useMutation({
-    ...mutateOptions.create(),
-    onSuccess: async (data: any, variables, context) => {
-      // 공통 메세지 처리 등...
+    ...mutateOptions[type](),
+    onSuccess: async (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.list });
-      if (options.onSuccess) {
-        options.onSuccess(data, variables, context);
-      }
+      if (options.onSuccess) await options.onSuccess(data, variables, context);
     },
     ...options,
   });
 
   return {
-    create: (payload: any, callback?: any) => {
-      mutation.mutate(payload, callback);
-    },
-    isSuccess: mutation.isSuccess,
-    isError: mutation.isError,
-    data: mutation.data,
-  };
-}
-
-export function useUpdateSpace(options: any) {
-  const queryClient = useQueryClient();
-
-  const mutation = useMutation({
-    ...mutateOptions.update(),
-    onSuccess: async (data: any, variables, context) => {
-      // 공통 메세지 처리 등...
-      queryClient.invalidateQueries({ queryKey: queryKeys.list });
-      if (options.onSuccess) {
-        options.onSuccess(data, variables, context);
-      }
-    },
-    ...options,
-  });
-
-  return {
-    update: (payload: any, callback?: any) => {
-      mutation.mutate(payload, callback);
-    },
-    isSuccess: mutation.isSuccess,
-    isError: mutation.isError,
-    data: mutation.data,
-  };
-}
-
-export function useDeleteSpace(options: any) {
-  const queryClient = useQueryClient();
-
-  const mutation = useMutation({
-    ...mutateOptions.delete(),
-    onSuccess: async (data: any, variables, context) => {
-      // 공통 메세지 처리 등...
-      queryClient.invalidateQueries({ queryKey: queryKeys.list });
-      if (options.onSuccess) {
-        options.onSuccess(data, variables, context);
-      }
-    },
-    ...options,
-  });
-
-  return {
-    delete: (payload: any, callback?: any) => {
-      mutation.mutate(payload, callback);
-    },
+    mutate: (payload: any, callback?: any) => mutation.mutate(payload, callback),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
     data: mutation.data,
@@ -89,13 +33,11 @@ export function useCheckExistsSpaceCode(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...mutateOptions,
   });
 
   return {
     checkExistsSpaceCode: (payload: any, callback?: any) => {
       mutate(payload, callback);
-      options?.onSuccess?.(false);
     },
     isSuccess,
     isError,

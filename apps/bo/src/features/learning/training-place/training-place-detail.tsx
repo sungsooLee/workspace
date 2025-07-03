@@ -8,29 +8,38 @@ import { FormRow, FormSubTitle } from '@shared/ui';
 import { DynamicFormConfig, useDynamicForm, CODE_GROUP } from '@learnway/hooks';
 import { AddressSearchModal } from '@features/shared/ui/modal/address-search-modal';
 import { DropdownFormField } from '@features/form';
-import {
-  useFetchSpace,
-  useCreateSpace,
-  useUpdateSpace,
-  useDeleteSpace,
-} from '@entities/training-place';
+import { useSpaceMutation } from '@entities/training-place';
 import { EnFormMode, EnPageMode } from '@types';
 import SpaceService from '@entities/training-place/api/space';
 import { SingleAttachmentFormField } from '@shared/ui/form/single-attachment-form-field';
+import { Space } from 'src/types/entities/space';
 
 const URL_REGEX =
   /((https?:\/\/(www\.)?)|(www\.))[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)(?<![-.+():%])/;
 
-const TrainingPlaceDetailComponent = (props: any, ref: any) => {
+interface TrainingPlaceDetailProps {
+  spaceId?: number;
+  pageMode: EnPageMode;
+  mode: EnFormMode;
+  onComplete?: (data: any) => void;
+}
+
+const TrainingPlaceDetailComponent = (props: TrainingPlaceDetailProps, ref: any) => {
   const router = useRouter();
   const { open: openModal, alert: openAlert, confirm: openConfirm, close: closeModal } = useModal();
-
-  const { provider, updateFormData, onSubmit, onFormChange, getValues, setValue, control } =
+  const [savedId, setSavedId] = useState(undefined);
+  const { provider, updateFormData, onSubmit, onFormChange, getValues } =
     useDynamicForm(formConfig);
 
-  const { data: detailData, refetch } = useFetchSpace(props.spaceId);
+  const [detailData, setDetailData] = useState<Space>();
 
   const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    (async () => {
+      if (props.spaceId) setDetailData(await SpaceService.fetch(props.spaceId));
+    })();
+  }, []);
 
   useEffect(() => {
     if (props.mode === EnFormMode.VIEW && detailData) {
@@ -46,6 +55,10 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
       updateFormData(initialData);
     }
   }, [detailData]);
+
+  useEffect(() => {
+    if (savedId && props.onComplete) props.onComplete({ spaceId: savedId });
+  }, [savedId, props]);
 
   useImperativeHandle(ref, () => ({
     saveData() {
@@ -69,46 +82,28 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
     },
   }));
 
-  const { create: createSpace } = useCreateSpace({
-    onSuccess: (data: any) => {
-      openAlert({
-        title: t('저장되었습니다.'),
-        onClose: () => {
-          if (props.pageMode === EnPageMode.MODAL) {
-            setTimeout(() => {
-              completeModal(data);
-            }, 0);
-          } else router.navigate({ to: '/learning/training-place' });
-        },
-      });
-    },
-  });
-
-  const { update: updateSpace } = useUpdateSpace({
-    onSuccess: () => {
-      openAlert({
-        title: t('저장되었습니다.'),
-        onClose: () => {
-          router.navigate({ to: '/learning/training-place' });
-        },
-      });
-    },
-  });
-
-  const { delete: deleteSpace } = useDeleteSpace({
-    onSuccess: () => {
-      openAlert({
-        title: t('삭제되었습니다.'),
-        onClose: () => {
-          router.navigate({ to: '/learning/training-place' });
-        },
-      });
-    },
-  });
-
-  const completeModal = (spaceId: number) => {
-    props.onComplete({ spaceId: spaceId });
+  const mutationHandler = (data: any, title: string) => {
+    openAlert({
+      title: title,
+      onClose: () => {
+        if (props.pageMode === EnPageMode.MODAL && data) {
+          setSavedId(data);
+        } else router.navigate({ to: '/learning/training-place' });
+      },
+    });
   };
+
+  const { mutate: createSpace } = useSpaceMutation('create', {
+    onSuccess: (data: any) => mutationHandler(data, t('저장되었습니다.')),
+  });
+
+  const { mutate: updateSpace } = useSpaceMutation('update', {
+    onSuccess: () => mutationHandler(undefined, t('저장되었습니다.')),
+  });
+
+  const { mutate: deleteSpace } = useSpaceMutation('delete', {
+    onSuccess: () => mutationHandler(undefined, t('삭제되었습니다.')),
+  });
 
   const duplicateCheck = async (learningSpaceCode: string) => {
     const result: boolean = await SpaceService.existsCode(learningSpaceCode);

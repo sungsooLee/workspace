@@ -8,6 +8,8 @@ import { IcoDelete03, IcoSearch, IcoSearchWrite } from '@learnway/icons';
 
 import styles from './input.module.css';
 import { useTranslation } from 'react-i18next';
+import { useInputValidation, VALIDATION_RULES } from './use-input-validation';
+import { useFormContext } from 'react-hook-form';
 
 export interface InputProps extends Omit<NumericFormatProps, 'type'> {
   type?: 'text' | 'number' | 'mask' | 'password' | 'tel' | 'file' | 'alphanumeric' | 'url';
@@ -35,6 +37,9 @@ export interface InputProps extends Omit<NumericFormatProps, 'type'> {
   inputType?: string;
   showAlphanumericToast?: boolean; // alphanumeric 타입에서 잘못된 문자 입력 시 토스트 메시지 표시 여부
   showUrlToast?: boolean; // url 타입에서 잘못된 문자 입력 시 토스트 메시지 표시 여부
+  validationErrorMessage?: string; // 검증 에러 메시지
+  onValidationError?: (message: string) => void; // 검증 에러 콜백
+  onValidationSuccess?: () => void; // 검증 성공 콜백
 }
 
 const InputComponent = forwardRef<HTMLInputElement, InputProps>(
@@ -69,12 +74,16 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       inputType,
       showAlphanumericToast = true,
       showUrlToast = true,
+      validationErrorMessage,
+      onValidationError,
+      onValidationSuccess,
       ...props
     },
     ref,
   ) => {
     const { t } = useTranslation();
 
+    const formContext = useFormContext?.() || null;
     const placeholderText = useMemo(() => {
       if (hiddenPlaceholder) return '';
       if (placeholder) return t(placeholder);
@@ -84,53 +93,58 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
     }, [placeholder, props?.label, hiddenPlaceholder]);
 
     const [isFocused, setIsFocused] = useState(false);
-    const [showToast, setShowToast] = useState(false);
-    const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const [hasValidationError, setHasValidationError] = useState(false);
 
-    // 영문/숫자만 허용하는 정규식
-    const alphanumericRegex = /^[a-zA-Z0-9.]*$/;
-    // URL에 허용되는 문자 정규식 (영문, 숫자, URL 특수문자)
-    const urlRegex = /^[a-zA-Z0-9\-._~:/?#[\]@!$&'()*+,;=%]*$/;
-    ///
-    const handleAlphanumericChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // 검증 규칙 설정
+    const getValidationRule = () => {
+      if (type === 'alphanumeric' || inputType === 'alphanumeric') {
+        return VALIDATION_RULES.alphanumeric;
+      }
+      if (type === 'url' || inputType === 'url') {
+        return VALIDATION_RULES.url;
+      }
+      return undefined;
+    };
+
+    const {
+      validateInput,
+      handleKeyDown: validationHandleKeyDown,
+      handlePaste: validationHandlePaste,
+      clearValidationError,
+    } = useInputValidation({
+      label: props?.label,
+      validationRule: getValidationRule(),
+      onValidationError: (message) => {
+        setHasValidationError(true);
+        if (formContext?.setError && id) {
+          formContext.setError(id, {
+            type: 'validation',
+            message: message,
+          });
+        }
+        onValidationError?.(message);
+      },
+    });
+    // 검증이 필요한 타입의 입력 처리
+    const handleValidatedChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const inputValue = event.target.value;
 
-      if (alphanumericRegex.test(inputValue)) {
+      if (validateInput(inputValue)) {
+        if (hasValidationError) setHasValidationError(false);
+        clearValidationError();
+
+        if (formContext?.clearErrors && id) {
+          formContext.clearErrors(id);
+        }
+
+        // 검증 성공 콜백 호출
+        onValidationSuccess?.();
         handleInputChange(inputValue);
       }
     };
 
-    const handleAlphanumericKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      const allowedKeys = [
-        'Backspace',
-        'Delete',
-        'ArrowLeft',
-        'ArrowRight',
-        'ArrowUp',
-        'ArrowDown',
-        'Home',
-        'End',
-        'Tab',
-        'Enter',
-        'Escape',
-      ];
-
-      if (event.ctrlKey || event.metaKey) {
-        return;
-      }
-
-      if (!allowedKeys.includes(event.key) && !alphanumericRegex.test(event.key)) {
-        event.preventDefault();
-
-        // 토스트 메시지 표시
-        if (showAlphanumericToast) {
-          if (toastTimeoutRef.current) {
-            clearTimeout(toastTimeoutRef.current);
-          }
-          setShowToast(true);
-          toastTimeoutRef.current = setTimeout(() => setShowToast(false), 3000);
-        }
-      }
+    const handleValidatedKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      validationHandleKeyDown(event);
 
       if (event.key === 'Enter') {
         event.preventDefault();
@@ -140,89 +154,6 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       onKeyDown?.(event);
     };
 
-    const handleAlphanumericPaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
-      const pastedText = event.clipboardData.getData('text');
-
-      if (!alphanumericRegex.test(pastedText)) {
-        event.preventDefault();
-
-        // 토스트 메시지 표시
-        if (showAlphanumericToast) {
-          if (toastTimeoutRef.current) {
-            clearTimeout(toastTimeoutRef.current);
-          }
-          setShowToast(true);
-          toastTimeoutRef.current = setTimeout(() => setShowToast(false), 3000);
-        }
-      }
-    };
-
-    // URL 타입 핸들러들
-    const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const inputValue = event.target.value;
-
-      if (urlRegex.test(inputValue)) {
-        handleInputChange(inputValue);
-      }
-    };
-
-    const handleUrlKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      const allowedKeys = [
-        'Backspace',
-        'Delete',
-        'ArrowLeft',
-        'ArrowRight',
-        'ArrowUp',
-        'ArrowDown',
-        'Home',
-        'End',
-        'Tab',
-        'Enter',
-        'Escape',
-      ];
-
-      if (event.ctrlKey || event.metaKey) {
-        return;
-      }
-
-      if (!allowedKeys.includes(event.key) && !urlRegex.test(event.key)) {
-        event.preventDefault();
-
-        // 토스트 메시지 표시
-        if (showUrlToast) {
-          if (toastTimeoutRef.current) {
-            clearTimeout(toastTimeoutRef.current);
-          }
-          setShowToast(true);
-          toastTimeoutRef.current = setTimeout(() => setShowToast(false), 3000);
-        }
-      }
-
-      if (event.key === 'Enter') {
-        event.preventDefault();
-        onEnterKeyDown?.();
-      }
-
-      onKeyDown?.(event);
-    };
-
-    const handleUrlPaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
-      const pastedText = event.clipboardData.getData('text');
-
-      if (!urlRegex.test(pastedText)) {
-        event.preventDefault();
-
-        // 토스트 메시지 표시
-        if (showUrlToast) {
-          if (toastTimeoutRef.current) {
-            clearTimeout(toastTimeoutRef.current);
-          }
-          setShowToast(true);
-          toastTimeoutRef.current = setTimeout(() => setShowToast(false), 3000);
-        }
-      }
-    };
-    ///
     const handleInputChange = (value: any) => {
       const changeEvent = {
         target: {
@@ -261,7 +192,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
           isFocused && styles.focused,
           disabled && styles.disabled,
           readOnly && styles.read_only,
-          error ? styles.error : '',
+          error || hasValidationError ? styles.error : '',
           'nlp--input',
         )}
       >
@@ -304,7 +235,10 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             }}
             maxLength={maxLength}
           />
-        ) : type === 'alphanumeric' || inputType === 'alphanumeric' ? (
+        ) : type === 'alphanumeric' ||
+          inputType === 'alphanumeric' ||
+          type === 'url' ||
+          inputType === 'url' ? (
           <input
             ref={ref}
             id={id}
@@ -319,33 +253,11 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
               borderNone ? styles.bd_none : '',
               error ? styles.error : '',
             )}
-            onKeyDown={handleAlphanumericKeyDown}
+            onKeyDown={handleValidatedKeyDown}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
-            onChange={handleAlphanumericChange}
-            onPaste={handleAlphanumericPaste}
-            maxLength={maxLength}
-          />
-        ) : type === 'url' || inputType === 'url' ? (
-          <input
-            ref={ref}
-            id={id}
-            value={value || ''}
-            readOnly={readOnly}
-            disabled={disabled}
-            type="text"
-            placeholder={placeholderText}
-            className={cn(
-              styles.input,
-              className,
-              borderNone ? styles.bd_none : '',
-              error ? styles.error : '',
-            )}
-            onKeyDown={handleUrlKeyDown}
-            onFocus={handleInputFocus}
-            onBlur={handleInputBlur}
-            onChange={handleUrlChange}
-            onPaste={handleUrlPaste}
+            onChange={handleValidatedChange}
+            onPaste={validationHandlePaste}
             maxLength={maxLength}
           />
         ) : type === 'file' ? (
@@ -402,6 +314,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             maxLength={maxLength}
           />
         )}
+
         {/* 삭제 버튼 | 단위 | 입력글자수/최대입력가능글자수 */}
         <div className={cn(styles.after_area)}>
           {/* 삭제 버튼 */}

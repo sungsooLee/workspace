@@ -22,6 +22,8 @@ interface DuplicateCheckInputFormFieldPros<T = any> extends BaseFormFieldProps {
    * @returns
    */
   onDuplicationCheck: (value: string) => Promise<DuplicateState>;
+  onValidationError?: (message: string) => void;
+  onValidationSuccess?: () => void;
   dupConfig?: {
     langCode: {
       ok: string; // 언어 코드
@@ -55,6 +57,8 @@ export const DuplicateCheckInputFormField = forwardRef<
         },
       },
       inputType,
+      onValidationError,
+      onValidationSuccess,
       ...props
     },
     ref,
@@ -156,6 +160,9 @@ export const DuplicateCheckInputFormField = forwardRef<
           disabled={disabled}
           type={inputType}
           inputType={inputType}
+          onValidationError={onValidationError}
+          onValidationSuccess={onValidationSuccess}
+          label={label}
           {...props}
         />
         <Button

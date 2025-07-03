@@ -15,12 +15,10 @@ export const Route = createLazyFileRoute('/_layout/learning/training-place/regis
 
 function RouteComponent() {
   const router = useRouter();
-  const formRef = useRef(1);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleSaveClick = () => {
-    console.log('formRef', formRef);
-    const detail: any = formRef.current;
-    detail.saveData();
+    if (formRef.current?.saveData) formRef.current.saveData();
   };
 
   return (

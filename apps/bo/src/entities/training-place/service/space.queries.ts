@@ -31,7 +31,7 @@ export const mutateOptions = {
     mutationFn: (payload: any) => SpaceService.update(payload),
   }),
   delete: () => ({
-    mutationFn: (id: number) => SpaceService.dalete(id),
+    mutationFn: (id: number) => SpaceService.delete(id),
   }),
   checkExists: () => ({
     mutationFn: (code: string) => SpaceService.existsCode(code),

@@ -10,7 +10,13 @@ import { queryOptions } from '@entities/training-place/service/space.queries';
 import { Link } from '@tanstack/react-router';
 import { IcoDownload } from '@learnway/icons';
 
-const TrainingPlaceListComponent = (props: any, ref: any) => {
+interface TrainingPlaceListProps {
+  pageMode: EnPageMode;
+  onSelect?: (data: any) => void;
+  onAdd?: () => void;
+}
+
+const TrainingPlaceListComponent = (props: TrainingPlaceListProps, ref: any) => {
   const { open: openModal } = useModal();
   const { provider: searchProvider, getValues, setValue } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
@@ -166,8 +172,8 @@ const TrainingPlaceListComponent = (props: any, ref: any) => {
         config={gConfig}
         columns={columns}
         title={t('교육공간 목록')}
-        showAdd={props.pageMode === EnPageMode.MODAL && props.onAddClick}
-        onAddClick={props.onAddClick}
+        showAdd={props.pageMode === EnPageMode.MODAL}
+        onAddClick={props.onAdd}
         disabledSelectionToggle
       />
     </>

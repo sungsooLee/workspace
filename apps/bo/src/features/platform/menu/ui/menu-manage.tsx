@@ -74,6 +74,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [lastCreatedMenuId, setLastCreatedMenuId] = useState<string | null>(null);
   const [skipConfirmation, setSkipConfirmation] = useState(false);
+  const [formKey, setFormKey] = useState(Date.now());
   const { open: openModal, confirm: openConfirm, alert: openAlert } = useModal();
   const prevDataRef = useRef<any>(null);
   const router = useRouter();
@@ -99,8 +100,16 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
     return DuplicateState.ok;
   };
 
-  const { provider, updateFormData, onSubmit, onFormChange, clearFormError, control, getValues } =
-    useDynamicForm(formConfig);
+  const {
+    provider,
+    updateFormData,
+    onSubmit,
+    onFormChange,
+    clearFormError,
+    control,
+    getValues,
+    setFormError,
+  } = useDynamicForm(formConfig);
   const typeWatch = useWatch({ control, name: 'deviceNames' });
   const prevTypeWatchRef = useRef<string[]>([]);
 
@@ -249,6 +258,10 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
     //   }
     // }
 
+    // 모든 검증 에러 클리어
+    clearAllFormErrors();
+    setFormKey(Date.now());
+
     setSelectedNode(node);
     if (node) {
       setFormMode(FORM_MODE.VIEW);
@@ -271,7 +284,11 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
     //   }
     // }
 
+    // 모든 검증 에러 클리어
     clearAllFormErrors();
+    // 폼 키 갱신으로 Input 컴포넌트 리렌더링
+    setFormKey(Date.now());
+
     const initData: { [key: string]: any } = {};
     formConfig.builders.forEach((item) => {
       initData[item.name] = item.value;
@@ -629,10 +646,18 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
                 name={'code'}
                 element={
                   <DuplicateCheckInputFormField
+                    key={`code-${formKey}`}
+                    id="code"
                     onDuplicationCheck={duplicateCheck}
                     disabled={formMode === FORM_MODE.NONE}
                     inputType={'alphanumeric'}
                     hiddenPlaceholder={formMode === FORM_MODE.NONE}
+                    onValidationError={(message: string) => {
+                      setFormError('code', message);
+                    }}
+                    onValidationSuccess={() => {
+                      clearFormError('code');
+                    }}
                   />
                 }
               />
@@ -680,9 +705,17 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
                 name={'path'}
                 element={
                   <Input
+                    key={`path-${formKey}`}
+                    id="path"
                     disabled={formMode === FORM_MODE.NONE}
                     hiddenPlaceholder={formMode === FORM_MODE.NONE}
                     inputType={'url'}
+                    onValidationError={(message) => {
+                      setFormError('path', message);
+                    }}
+                    onValidationSuccess={() => {
+                      clearFormError('path');
+                    }}
                   />
                 }
               />

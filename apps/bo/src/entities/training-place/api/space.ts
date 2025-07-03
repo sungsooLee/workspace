@@ -20,7 +20,7 @@ export default class SpaceService {
     return httpService.get<Space>(`${LMSApiPrefix()}/space/${id}`);
   }
 
-  static dalete(id: number) {
+  static delete(id: number) {
     return httpService.delete<Space>(`${LMSApiPrefix()}/space/${id}`);
   }
 

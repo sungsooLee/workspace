@@ -4,11 +4,10 @@ import { ModalBody, ModalContainer, ModalTitle, useModal, ModalFooter, Button } 
 import { EnFormMode, EnPageMode } from '@types';
 import { TrainingPlaceList } from '@features/learning/training-place/training-place-list';
 import { TrainingPlaceDetail } from '@features/learning/training-place/training-place-detail';
-import { TrainingPlaceDetailModal } from './training-place-detail-modal';
 
 const TrainingPlaceChoiceModalComponent = () => {
-  const { close: closeModal, open: openModal } = useModal();
-  const childRef = useRef();
+  const { close: closeModal } = useModal();
+  const childRef = useRef<HTMLFormElement>(null);
 
   const [formMode, setFormMode] = useState(EnFormMode.NONE);
 
@@ -21,8 +20,7 @@ const TrainingPlaceChoiceModalComponent = () => {
   };
 
   const handleOnSave = () => {
-    const detail: any = childRef.current;
-    detail.saveData();
+    if (childRef.current?.saveData) childRef.current.saveData();
   };
 
   const changeToList = () => {
@@ -38,7 +36,7 @@ const TrainingPlaceChoiceModalComponent = () => {
         {formMode === EnFormMode.NONE && (
           <TrainingPlaceList
             pageMode={EnPageMode.MODAL}
-            onAddClick={handleOnAdd}
+            onAdd={handleOnAdd}
             onSelect={handleOnSelect}
           />
         )}

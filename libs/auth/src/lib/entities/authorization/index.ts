@@ -6,4 +6,3 @@ export * from './service/authorization.service';
 export * from './service/verifications.hook';
 export * from './state/session-timeout.state';
 export * from './store/use-exp-store';
-export * from './ui/sessionTimeoutConfirm';

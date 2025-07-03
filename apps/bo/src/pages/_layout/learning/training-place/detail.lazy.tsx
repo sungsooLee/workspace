@@ -16,24 +16,20 @@ export const Route = createLazyFileRoute('/_layout/learning/training-place/detai
 function RouteComponent() {
   const router = useRouter();
   const routerState = useRouterState();
-  const { open: openConfirm } = useModal();
 
   const learningSpaceId = routerState.location.state?.learningSpaceId;
-  const formRef = useRef();
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    console.log('### learningSpaceUuid', learningSpaceId);
     if (!learningSpaceId) router.navigate({ to: '/learning/training-place' });
-  }, [learningSpaceId]);
+  }, [learningSpaceId, router]);
 
   const handleSaveClick = () => {
-    const detail: any = formRef.current;
-    detail.saveData();
+    if (formRef.current?.saveData) formRef.current.saveData();
   };
 
   const handleDeleteClick = async () => {
-    const detail: any = formRef.current;
-    detail.deleteData();
+    if (formRef.current?.deleteData) formRef.current.deleteData();
   };
 
   return (
