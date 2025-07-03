@@ -10,8 +10,6 @@ import { Curriculum } from '../-components/curriculum/curriculum';
 import { DetailInfo } from '../-components/detail-info/detail-info';
 import { PublishCourse } from '../-components/publish-course/publish-course';
 import { useCourseForm } from '../-hooks/use-course-form';
-import { useUserDetail } from '@learnway/auth/entities/user/service/users.hook';
-import { useFetchAuthUser } from '@learnway/auth/entities/authorization/service/authorization.hook';
 
 export const Route = createLazyFileRoute('/_layout/learning/course/create/view')({
   component: RouteComponent,
@@ -34,11 +32,6 @@ function RouteComponent() {
     loadMockData,
     setFormDataComplete,
   } = useCourseForm();
-
-  const { data: authUser } = useFetchAuthUser(); // 로그인 시 정보
-  const { data: user } = useUserDetail(); // 유저 상세조회API 통한 정보
-  console.log('authUser', authUser);
-  console.log('user', user);
 
   // 최초 데이터 로드
   useEffect(() => {
