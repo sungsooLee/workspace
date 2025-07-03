@@ -25,6 +25,7 @@ import {
   CourseInformationPopup, // 수강신청 불가 팝업창들 및 반려 팝업
   CourseFixedButton, // 수강신청 버튼
   CourseCancelReasonPopup, // 수강신청 취소 사유 입력
+  PackageCardList, // 패키지 카드
 } from '../../../features/layout';
 
 import pageContentsStyles from '../../_page-contents.module.css';
@@ -103,8 +104,29 @@ function RouteComponent() {
     },
   ];
 
+  // 퍼블수정 20250703 패키지 카드 리스트 값 추가
+  // 패키지 카드
+  const packageCardValue = [
+    {
+      label: '패키지',
+      imgSrc: listImage1,
+      text: '필수 개발 과정 Spring Framework OpenAPI 서비스 필수요소 1',
+    },
+    {
+      label: '패키지',
+      imgSrc: listImage1,
+      text: '필수 개발 과정 Spring Framework OpenAPI 서비스 필수요소 2',
+    },
+    {
+      label: '패키지',
+      imgSrc: listImage1,
+      text: '필수 개발 과정 Spring Framework OpenAPI 서비스 필수요소 3',
+    },
+  ];
+
   // 패키지 아코디언
   const [accordionValue, setAccordionValue] = useState<string>('a');
+  // 퍼블수정 20250703 수정
   const accordionValueItems = [
     {
       value: 'a',
@@ -114,64 +136,10 @@ function RouteComponent() {
         </div>
       ),
       children: (
-        <div className={packageSideStyles.sub_package_content}>
-          <div
-            className={cn(
-              thumnailStyles.start,
-              thumnailStyles.thumbnail,
-              thumnailStyles.horizontal,
-            )}
-          >
-            {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-            <Link to="" className={thumnailStyles.link}></Link>
-
-            <div className={thumnailStyles.thumnail_box}>
-              {/* img */}
-              <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
-                <ul className={thumnailImgStyles.label}>
-                  <li style={{ backgroundColor: '#00afd5' }}>New</li>
-                </ul>
-                <div className={thumnailImgStyles.img}>
-                  <img src={listImage1} alt="" />
-                </div>
-              </div>
-              {/* txt */}
-              <div className={thumnailStyles.text_box}>
-                <p className={thumnailStyles.text}>
-                  필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정
-                </p>
-              </div>
-            </div>
-          </div>
-          <div
-            className={cn(
-              thumnailStyles.start,
-              thumnailStyles.thumbnail,
-              thumnailStyles.horizontal,
-            )}
-          >
-            {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-            <Link to="" className={thumnailStyles.link}></Link>
-
-            <div className={thumnailStyles.thumnail_box}>
-              {/* img */}
-              <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
-                <ul className={thumnailImgStyles.label}>
-                  <li style={{ backgroundColor: '#00afd5' }}>New</li>
-                </ul>
-                <div className={thumnailImgStyles.img}>
-                  <img src={listImage1} alt="" />
-                </div>
-              </div>
-              {/* txt */}
-              <div className={thumnailStyles.text_box}>
-                <p className={thumnailStyles.text}>
-                  필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <PackageCardList
+          cardListData={packageCardValue}
+          className={packageSideStyles.sub_package_content}
+        />
       ),
     },
     {
@@ -182,36 +150,10 @@ function RouteComponent() {
         </div>
       ),
       children: (
-        <div className={packageSideStyles.sub_package_content}>
-          <div
-            className={cn(
-              thumnailStyles.start,
-              thumnailStyles.thumbnail,
-              thumnailStyles.horizontal,
-            )}
-          >
-            {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-            <Link to="" className={thumnailStyles.link}></Link>
-
-            <div className={thumnailStyles.thumnail_box}>
-              {/* img */}
-              <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
-                <ul className={thumnailImgStyles.label}>
-                  <li style={{ backgroundColor: '#00afd5' }}>New</li>
-                </ul>
-                <div className={thumnailImgStyles.img}>
-                  <img src={listImage1} alt="" />
-                </div>
-              </div>
-              {/* txt */}
-              <div className={thumnailStyles.text_box}>
-                <p className={thumnailStyles.text}>
-                  필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정필수개발과정
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <PackageCardList
+          cardListData={packageCardValue}
+          className={packageSideStyles.sub_package_content}
+        />
       ),
     },
   ];
