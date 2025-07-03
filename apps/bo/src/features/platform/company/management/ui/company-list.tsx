@@ -53,6 +53,7 @@ const CompanyListComponent = () => {
           to={location.pathname + '/detail'}
           state={{
             companyCode: info.row.original.companyCode,
+            companyId: info.row.original.companyId,
           }}
           className="link"
         >
