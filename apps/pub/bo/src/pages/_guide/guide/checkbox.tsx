@@ -44,6 +44,7 @@ import { Checkbox } from '@learnway/ui';
         <h3 className="guide_tit3">disabled</h3>
         <div className="flex_box">
           <div className="desc">
+            <Checkbox label="disabled" disabled checked />
             <Checkbox label="disabled" disabled />
           </div>
         </div>
