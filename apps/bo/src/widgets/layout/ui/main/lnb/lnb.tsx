@@ -13,10 +13,10 @@ import styles from './lnb.module.css';
 function LNBComponent() {
   const { t } = useTranslation();
 
-  const [activeMenuDepth] = useActiveMenuDepthState();
+  const { activeMenuDepthMenu } = useActiveMenuDepthState((state) => state);
 
   const [toggleLnb, setToggleLnb] = useState<boolean>(false);
-  const [menus, setMenus] = useState<any>(activeMenuDepth?.[0]?.children);
+  const [menus, setMenus] = useState<any>(activeMenuDepthMenu?.[0]?.children);
   const [openAll, setOpenAll] = useState<boolean | undefined>(undefined);
   const [openAllButtonState, setOpenAllButtonState] = useState<boolean>(false); // LNB 최상단 타이틀 active
 
@@ -25,15 +25,15 @@ function LNBComponent() {
   useEffect(() => {
     setOpenAll(false);
     setOpenAllButtonState(false);
-  }, [activeMenuDepth?.[0]?.menuCode]);
+  }, [activeMenuDepthMenu?.[0]?.menuCode]);
 
   useEffect(() => {
-    if (!activeMenuDepth?.[0]?.children) {
+    if (!activeMenuDepthMenu?.[0]?.children) {
       return;
     }
     setToggleLnb(true);
-    setMenus(activeMenuDepth?.[0]?.children);
-  }, [activeMenuDepth?.[0]?.children]);
+    setMenus(activeMenuDepthMenu?.[0]?.children);
+  }, [activeMenuDepthMenu?.[0]?.children]);
 
   // 25-02-13 Lnb 추가
   useEffect(() => {
@@ -48,7 +48,7 @@ function LNBComponent() {
     };
   }, [toggleLnb]);
 
-  if (!activeMenuDepth?.[0]) {
+  if (!activeMenuDepthMenu?.[0]) {
     return <></>;
   }
 
@@ -85,8 +85,8 @@ function LNBComponent() {
           >
             <span className={styles.lnb_title_text}>
               {import.meta.env.VITE_LANGUAGE_DEV === 'true'
-                ? t(`${activeMenuDepth[0].menuName}`)
-                : t(`HRD_CENTER_MENU.${activeMenuDepth[0].menuCode}`)}
+                ? t(`${activeMenuDepthMenu[0].menuName}`)
+                : t(`HRD_CENTER_MENU.${activeMenuDepthMenu[0].menuCode}`)}
             </span>
             <IcoArrowDown width={16} height={16} stroke="#131C30" />
           </Button>

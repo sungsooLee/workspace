@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
 
-import { useActiveMenuDepthState } from '../../../../features/platform';
+// import { useActiveMenuDepthState } from '@learnway/auth/entities';
 import { LNB } from './lnb/lnb';
 
 import { Header } from './header/header';
@@ -16,7 +16,7 @@ interface LayoutComponentProps {
 function LayoutComponent({ children }: LayoutComponentProps) {
   const { t } = useTranslation();
 
-  const [activeMenuDepth] = useActiveMenuDepthState();
+  // const { activeMenuDepthMenu } = useActiveMenuDepthState();
 
   // if (
   //   activeMenuDepth &&

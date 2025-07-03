@@ -6,7 +6,7 @@ import { cn } from '@learnway/shared';
 import { Accordion, AccordionItem } from '@learnway/ui';
 
 import { Menu } from '../../../../../../types/entities';
-import { useActiveMenuDepthState } from '../../../../../../features/platform';
+import { useActiveMenuDepthState } from '@learnway/auth/entities';
 
 import styles from './accordion-menu.module.css';
 import { useCreation } from 'ahooks';
@@ -31,7 +31,7 @@ const AccordionMenuComponent = ({
   onMenuClick,
 }: AccordionMenuComponentProps) => {
   const [value, setValue] = useState<string[] | undefined>();
-  const [activeMenuDepth] = useActiveMenuDepthState();
+  const { activeMenuDepthMenu, setActiveMenuDepthMenu } = useActiveMenuDepthState((state) => state);
   const router = useRouter();
 
   /**
@@ -53,19 +53,19 @@ const AccordionMenuComponent = ({
       return;
     }
 
-    if (!activeMenuDepth || !activeMenuDepth?.length || !activeMenuDepth?.[depth - 1]) {
+    if (!activeMenuDepthMenu || !activeMenuDepthMenu?.length || !activeMenuDepthMenu?.[depth - 1]) {
       return;
     }
-    setValue([...(value ?? []), activeMenuDepth[depth - 1].key]);
-  }, [activeMenuDepth, depth, isMockData]);
+    setValue([...(value ?? []), activeMenuDepthMenu[depth - 1].key]);
+  }, [activeMenuDepthMenu, depth, isMockData]);
 
   const items = useCreation(() => {
     return (menus ?? []).map((menu: Menu) => {
       const active =
         !isMockData &&
-        activeMenuDepth &&
-        activeMenuDepth[depth - 1] &&
-        activeMenuDepth[depth - 1]?.path === menu?.path;
+        activeMenuDepthMenu &&
+        activeMenuDepthMenu[depth - 1] &&
+        activeMenuDepthMenu[depth - 1]?.path === menu?.path;
 
       return {
         value: menu.key,
@@ -85,7 +85,7 @@ const AccordionMenuComponent = ({
         active,
       } as AccordionItem;
     });
-  }, [menus, activeMenuDepth, isMockData]);
+  }, [menus, activeMenuDepthMenu, isMockData]);
 
   useEffect(() => {
     if (openAll === undefined) {

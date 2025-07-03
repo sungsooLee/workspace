@@ -7,7 +7,7 @@ import { useFetchAuthUser, useFetchMenus } from '@learnway/auth/entities';
 // import { useFetchMenus } from '../../../entities/menu';
 import { Menu, HookData } from '../../../types';
 
-import { useActiveMenuDepthState } from '../../../features/platform';
+import { useActiveMenuDepthState } from '@learnway/auth/entities';
 
 /**
  * 메뉴 정보를 트리 구조로 반환
@@ -37,14 +37,14 @@ export function useRenewalMenuStateFromRouting() {
   const state = useRouterState();
 
   const { data: authUser } = useFetchAuthUser();
-  const [, setActiveMenuDepth] = useActiveMenuDepthState();
+  const { setActiveMenuDepthMenu } = useActiveMenuDepthState();
 
   useEffect(() => {
     if (!authUser?.menus) {
       return;
     }
     if (state.location.pathname === '/') {
-      setActiveMenuDepth([]);
+      setActiveMenuDepthMenu([]);
       return;
     }
     const depths: Menu[] = [];
@@ -53,7 +53,7 @@ export function useRenewalMenuStateFromRouting() {
         if (menu.path === path) {
           depths.unshift(menu);
           if (menu.depth === 1) {
-            setActiveMenuDepth(depths);
+            setActiveMenuDepthMenu(depths as any);
           } else {
             recursiveCall(menu.parentNode.path);
           }

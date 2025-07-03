@@ -19,11 +19,11 @@ function ContainerHeaderComponent() {
 
   const { meta } = useCurrentRoute();
   /*
-  const [activeMenuDepth] = useActiveMenuDepthState();
+  const { activeMenuDepthMenu } = useActiveMenuDepthState(state => state);
 
   const title = useCreation(() => {
-    return last(activeMenuDepth)?.title ?? '모바일 페이지 제목';
-  }, [activeMenuDepth]);
+    return last(activeMenuDepthMenu)?.title ?? '모바일 페이지 제목';
+  }, [activeMenuDepthMenu]);
 */
   const handleBack = () => {
     if (canGoBack) {
