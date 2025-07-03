@@ -7,8 +7,7 @@ import {
   useModal,
 } from '@learnway/ui';
 import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '@shared/ui';
-import { useRouterState } from '@tanstack/react-router';
-import { createLazyFileRoute } from '@tanstack/react-router';
+import { createLazyFileRoute, useRouterState } from '@tanstack/react-router';
 import { ContentsButtons, MainContents, PageContainer } from '@widgets/layout';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { SubContents } from '@widgets/layout/ui/container/slot/sub-contents';
