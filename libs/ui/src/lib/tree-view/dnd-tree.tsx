@@ -663,7 +663,7 @@ const DndTreeNode: React.FC<DndTreeNodeProps> = ({
   };
 
   return (
-    <div style={{ position: 'relative' }} className={styles.tree_item}>
+    <div className={styles.tree_item}>
       {/* BEFORE 드롭 영역 - 모든 노드에 표시 (단, 자기 자신과 하위 노드 제외) */}
       {(isGlobalDragging || effectiveDraggedNode) &&
         effectiveDraggedNodeKey !== node.key &&
