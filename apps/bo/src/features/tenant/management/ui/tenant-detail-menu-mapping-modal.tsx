@@ -252,6 +252,7 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
                     expandedKeys={baseMenuTreeExpandedKeys}
                     onExpandedKeysChange={handleBaseMenuTreeExpandChange}
                     //onSelectedNodeChange={handleSelectedNodeChange}
+                    moveIcon={true}
                   />
                 </div>
 

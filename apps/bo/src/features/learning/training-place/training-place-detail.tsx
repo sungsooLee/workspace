@@ -7,32 +7,39 @@ import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
 import { FormRow, FormSubTitle } from '@shared/ui';
 import { DynamicFormConfig, useDynamicForm, CODE_GROUP } from '@learnway/hooks';
 import { AddressSearchModal } from '@features/shared/ui/modal/address-search-modal';
-import { DropdownFormField, InputFormField } from '@features/form';
-import { useFetchSpace, useCreateSpace } from '@entities/training-place';
+import { DropdownFormField } from '@features/form';
+import { useSpaceMutation } from '@entities/training-place';
 import { EnFormMode, EnPageMode } from '@types';
-import { useFetchAuthUser } from '@learnway/auth/entities';
 import SpaceService from '@entities/training-place/api/space';
 import { SingleAttachmentFormField } from '@shared/ui/form/single-attachment-form-field';
+import { Space } from 'src/types/entities/space';
 
 const URL_REGEX =
   /((https?:\/\/(www\.)?)|(www\.))[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)(?<![-.+():%])/;
 
-const TrainingPlaceDetailComponent = (props: any, ref: any) => {
+interface TrainingPlaceDetailProps {
+  spaceId?: number;
+  pageMode: EnPageMode;
+  mode: EnFormMode;
+  onComplete?: (data: any) => void;
+}
+
+const TrainingPlaceDetailComponent = (props: TrainingPlaceDetailProps, ref: any) => {
   const router = useRouter();
   const { open: openModal, alert: openAlert, confirm: openConfirm, close: closeModal } = useModal();
-
-  const { provider, updateFormData, onSubmit, onFormChange, getValues, setValue, control } =
+  const [savedId, setSavedId] = useState(undefined);
+  const { provider, updateFormData, onSubmit, onFormChange, getValues } =
     useDynamicForm(formConfig);
-  const { data: loginUser } = useFetchAuthUser();
 
-  const { data: detailData, refetch } = useFetchSpace(props.spaceId);
+  const [detailData, setDetailData] = useState<Space>();
 
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    if (loginUser && loginUser.activeTenant)
-      setValue('tenantId', loginUser.activeTenant.tenantId ?? '');
-  }, [loginUser]);
+    (async () => {
+      if (props.spaceId) setDetailData(await SpaceService.fetch(props.spaceId));
+    })();
+  }, []);
 
   useEffect(() => {
     if (props.mode === EnFormMode.VIEW && detailData) {
@@ -49,6 +56,10 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
     }
   }, [detailData]);
 
+  useEffect(() => {
+    if (savedId && props.onComplete) props.onComplete({ spaceId: savedId });
+  }, [savedId, props]);
+
   useImperativeHandle(ref, () => ({
     saveData() {
       console.log('saveData');
@@ -58,20 +69,40 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
         form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
       }
     },
+    deleteData() {
+      openConfirm({
+        title: t('삭제 하시겠습니까?'),
+        onClose: (value: boolean) => {
+          value && deleteSpace(props.spaceId);
+        },
+      });
+    },
     clearForm() {
       onFormChange();
     },
   }));
 
-  const { create } = useCreateSpace({
-    onSuccess: () => {
-      openAlert({
-        title: t('저장되었습니다.'),
-        onClose: () => {
-          router.navigate({ to: '/learning/training-place' });
-        },
-      });
-    },
+  const mutationHandler = (data: any, title: string) => {
+    openAlert({
+      title: title,
+      onClose: () => {
+        if (props.pageMode === EnPageMode.MODAL && data) {
+          setSavedId(data);
+        } else router.navigate({ to: '/learning/training-place' });
+      },
+    });
+  };
+
+  const { mutate: createSpace } = useSpaceMutation('create', {
+    onSuccess: (data: any) => mutationHandler(data, t('저장되었습니다.')),
+  });
+
+  const { mutate: updateSpace } = useSpaceMutation('update', {
+    onSuccess: () => mutationHandler(undefined, t('저장되었습니다.')),
+  });
+
+  const { mutate: deleteSpace } = useSpaceMutation('delete', {
+    onSuccess: () => mutationHandler(undefined, t('삭제되었습니다.')),
   });
 
   const duplicateCheck = async (learningSpaceCode: string) => {
@@ -109,19 +140,23 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
       return;
     }
     console.log('#### handleOnSubmit', data);
-    const payload = {
-      ...data,
-      tenantIds: [data.tenantId],
-      learningSpaceCode: data.learningSpaceCode.fieldValue,
-    };
+
     if (props.mode === EnFormMode.ADD) {
+      const payload = {
+        ...data,
+        learningSpaceCode: data.learningSpaceCode.fieldValue,
+      };
       if (await openConfirm(t('저장 하시겠습니까?'))) {
-        create(payload);
+        createSpace(payload);
       }
     } else if (props.mode === EnFormMode.VIEW) {
+      const payload = {
+        ...data,
+        learningSpaceId: props.spaceId,
+        learningSpaceCode: data.learningSpaceCode.fieldValue,
+      };
       if (await openConfirm(t('수정 하시겠습니까?'))) {
-        // TODO. API 준비중
-        //update(payload);
+        updateSpace(payload);
       }
     }
   };
@@ -133,19 +168,19 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
         <FormRow
           provider={provider}
           name={'tenantId'}
-          element={<DropdownFormField disabled={formDisabled} />}
+          element={<DropdownFormField readOnly={props.mode === EnFormMode.VIEW} />}
         />
         <FormRow
           provider={provider}
           name={'onOffLineType'}
-          element={<RadioGroupFormField disabled={formDisabled} />}
+          element={<RadioGroupFormField disabled={props.mode === EnFormMode.VIEW} />}
         />
       </ContentsRow>
       <ContentsRow>
         <FormRow
           provider={provider}
           name={'learningSpaceName'}
-          element={<Input disabled={formDisabled} />}
+          element={<Input readOnly={formDisabled} />}
         />
         <FormRow
           provider={provider}
@@ -153,7 +188,7 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
           element={
             <DuplicateCheckInputFormField
               onDuplicationCheck={duplicateCheck}
-              disabled={formDisabled}
+              readOnly={formDisabled}
             />
           }
         />
@@ -164,7 +199,7 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
           <FormRow
             provider={provider}
             name={'linkUrl'}
-            element={<Input disabled={formDisabled} />}
+            element={<Input readOnly={formDisabled} />}
           />
           {isUsedFormField}
         </ContentsRow>
@@ -176,25 +211,20 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
             provider={provider}
             name={'address'}
             element={
-              <Input
-                showSearchIcon
-                onEnterKeyDown={handleSearchAddress}
-                readOnly
-                disabled={formDisabled}
-              />
+              <Input showSearchIcon={!formDisabled} onEnterKeyDown={handleSearchAddress} readOnly />
             }
           />
           <FormRow
             provider={provider}
             name={'addressDetail'}
-            element={<Input disabled={formDisabled} />}
+            element={<Input readOnly={formDisabled} />}
           />
         </ContentsRow>
         <ContentsRow>
           <FormRow
             provider={provider}
             name={'mapFileGroupUuid'}
-            element={<SingleAttachmentFormField disabled={formDisabled} />}
+            element={<SingleAttachmentFormField readOnly={formDisabled} />}
           />
           {isUsedFormField}
         </ContentsRow>
@@ -205,7 +235,7 @@ const TrainingPlaceDetailComponent = (props: any, ref: any) => {
         <FormRow
           provider={provider}
           name={'notes'}
-          element={<TextareaFormField resize={'none'} size="sm" disabled={formDisabled} />}
+          element={<TextareaFormField resize={'none'} size="sm" readOnly={formDisabled} />}
         />
       </ContentsRow>
     </form>

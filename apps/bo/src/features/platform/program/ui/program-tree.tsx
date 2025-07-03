@@ -300,8 +300,6 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
 
   const customDropValidator = useCallback<CustomDropValidator>(
     ({ sourceNode, targetNode, dropPosition }) => {
-      // console.log(`targetNode:`, targetNode);
-      // console.log(`dropPosition:`, dropPosition);
       if (dropPosition === 'INSIDE' && targetNode.apiNodeType !== 'FOLDER') {
         return false;
       }
@@ -478,6 +476,7 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
                     name={'apiUrl'}
                     element={
                       <Input
+                        id="apiUrl"
                         disabled={FORM_MODE.NONE === formMode}
                         hiddenPlaceholder={formMode === FORM_MODE.NONE}
                         inputType="url"

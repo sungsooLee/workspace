@@ -108,5 +108,10 @@
         @apply text-white;
       }
     }
+    &.blue {
+      &.alpha {
+        @apply label-sm rounded-[4px] bg-[var(--blue95)] text-[var(--gray10)];
+      }
+    }
   }
 }

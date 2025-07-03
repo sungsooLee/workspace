@@ -6,7 +6,7 @@
     .select_value_wrap {
       @apply flex items-center justify-center;
       button {
-        @apply body_3_b text-[var(--gray8)];
+        @apply body_3_b !px-0 text-[var(--gray8)];
         & + button {
           @apply ml-[25px];
         }

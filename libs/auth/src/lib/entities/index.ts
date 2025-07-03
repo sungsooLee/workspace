@@ -6,7 +6,6 @@ export * from './authorization/service/authorization.service';
 export * from './authorization/service/verifications.hook';
 export * from './authorization/state/session-timeout.state';
 export * from './authorization/store/use-exp-store';
-export * from './authorization/ui/sessionTimeoutConfirm';
 export * from './menu/api/menu';
 export * from './menu/service/menu.hook';
 export * from './menu/service/menu.service';

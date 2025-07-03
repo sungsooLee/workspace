@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, useCallback, useRef } from 'react';
 import { flexRender, Table } from '@tanstack/react-table';
 import { cn } from '@learnway/shared';
 import { IcoGridOrder } from '@learnway/icons';
@@ -13,6 +13,17 @@ interface GridHeaderProps<T extends object> {
 }
 
 export const GridHeader = <T extends object>({ table, lastPinnedColumnId }: GridHeaderProps<T>) => {
+  const resizeColumnRef = useRef<string | null>(null);
+
+  const createCustomResizeHandler = useCallback((header: any) => {
+    const originalHandler = header.getResizeHandler();
+
+    return (event: React.MouseEvent | React.TouchEvent) => {
+      resizeColumnRef.current = header.column.id;
+
+      originalHandler(event);
+    };
+  }, []);
   return (
     <thead>
       {table.getHeaderGroups().map((headerGroup) => (
@@ -30,7 +41,9 @@ export const GridHeader = <T extends object>({ table, lastPinnedColumnId }: Grid
             );
 
             const thStyle = {
-              width: columnDef.meta?.size || header.getSize(),
+              width: columnDef.meta?.size || `${header.getSize()}px`, // px 단위로 명시
+              minWidth: `${header.getSize()}px`,
+              maxWidth: `${header.getSize()}px`,
               position: isPinnedLeft && styles.th_sticky,
               left: isPinnedLeft ? `${column.getStart('left')}px` : undefined,
               // zIndex: isPinnedLeft ? 3 : undefined, // 헤더는 더 높은 z-index
@@ -48,12 +61,29 @@ export const GridHeader = <T extends object>({ table, lastPinnedColumnId }: Grid
                   columnDef.meta?.headerAlign === 'center' && styles.text_center,
                 )}
                 style={thStyle}
-                onClick={column.getToggleSortingHandler()}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  column.getToggleSortingHandler()?.(e);
+                }}
               >
-                {/* render */}
-                {header.isPlaceholder ? null : flexRender(columnDef.header, header.getContext())}
-                {/* sort */}
-                {column.getCanSort() && <SortIcon direction={column.getIsSorted()} />}
+                <div className={styles.th_content}>
+                  {/* render */}
+                  {header.isPlaceholder ? null : flexRender(columnDef.header, header.getContext())}
+                  {/* sort */}
+                  {column.getCanSort() && <SortIcon direction={column.getIsSorted()} />}
+                </div>
+                {column.getCanResize() && (
+                  <div
+                    onMouseDown={createCustomResizeHandler(header)}
+                    onTouchStart={createCustomResizeHandler(header)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                    }}
+                    className={cn(styles.resizer, column.getIsResizing() && styles.resizing)}
+                  />
+                )}
               </th>
             );
           })}

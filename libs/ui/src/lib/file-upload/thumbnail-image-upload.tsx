@@ -92,7 +92,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
       files: thumbnailFiles,
       stats: { status },
       inputAccept = 'image/*',
-    } = useS3Uploader({ ...uploadConfig, s3Path: 'upload/content/image', affairsType: 'LMS' });
+    } = useS3Uploader({ s3Path: 'upload/content/image', affairsType: 'LMS', ...uploadConfig });
 
     const { uploadImageFile, deleteImageFile } = useFileManager();
     const disabled = useMemo(

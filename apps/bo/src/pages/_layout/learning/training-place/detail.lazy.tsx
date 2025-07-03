@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'react';
 import { t } from 'i18next';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { Button } from '@learnway/ui';
+import { Button, useModal } from '@learnway/ui';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
@@ -16,18 +16,20 @@ export const Route = createLazyFileRoute('/_layout/learning/training-place/detai
 function RouteComponent() {
   const router = useRouter();
   const routerState = useRouterState();
+
   const learningSpaceId = routerState.location.state?.learningSpaceId;
-  const formRef = useRef(1);
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    console.log('### learningSpaceUuid', learningSpaceId);
     if (!learningSpaceId) router.navigate({ to: '/learning/training-place' });
-  }, [learningSpaceId]);
+  }, [learningSpaceId, router]);
 
   const handleSaveClick = () => {
-    console.log('formRef', formRef);
-    const detail: any = formRef.current;
-    detail.saveData();
+    if (formRef.current?.saveData) formRef.current.saveData();
+  };
+
+  const handleDeleteClick = async () => {
+    if (formRef.current?.deleteData) formRef.current.deleteData();
   };
 
   return (
@@ -42,6 +44,9 @@ function RouteComponent() {
             {t('LABEL.button.list')}
           </Button>
         </LinkBox>
+        <Button variant="point" size="sm" onClick={handleDeleteClick}>
+          {t('LABEL.button.delete')}
+        </Button>
         <Button variant="primary" size="sm" onClick={handleSaveClick}>
           {t('LABEL.button.save')}
         </Button>

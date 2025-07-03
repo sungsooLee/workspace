@@ -1,0 +1,63 @@
+.datepicker_input,
+.input_time {
+  @apply border-[var(--gray75)];
+  &::placeholder {
+    @apply text-[var(--gray75)];
+  }
+  &:read-only {
+    @apply !border-[var(--gray75)] !bg-[var(--gray98)] text-[var(--gray10)];
+  }
+  &:disabled {
+    @apply !border-[var(--gray75)] !bg-[var(--gray98)] text-[var(--gray75)];
+  }
+  &:focus {
+    @apply !border-[var(--blue50)];
+  }
+}
+
+[class*='nlp--datepicker'] {
+  .react-datepicker-wrapper .react-datepicker__input-container {
+    .react-datepicker__calendar-icon {
+      @apply right-[16px];
+    }
+    .react-datepicker__close-icon {
+      @apply right-[44px];
+    }
+    input[type='text'] {
+      @apply label-xl border-[var(--gray75)] text-[var(--gray10)];
+      &::placeholder {
+        @apply text-[var(--gray75)];
+      }
+      &:read-only {
+        @apply !border-[var(--gray75)] !bg-[var(--gray98)] text-[var(--gray10)];
+      }
+      &:disabled {
+        @apply !border-[var(--gray75)] !bg-[var(--gray98)] text-[var(--gray75)];
+      }
+      &:focus {
+        @apply !border-[var(--blue50)];
+      }
+    }
+    &:has(input:disabled) svg {
+      @apply stroke-[var(--gray75)];
+    }
+  }
+  .react-datepicker {
+    @apply border-[var(--gray75)];
+  }
+  &.lg {
+    .react-datepicker__input-container {
+      .datepicker_input {
+        @apply label-xl !h-[44px] py-[12px] pl-[16px] pr-[76px] text-[var(--gray10)];
+      }
+    }
+    .input_time {
+      @apply label-xl !h-[44px] bg-[position:right_16px_center] py-[12px] pl-[16px] pr-[76px] text-[var(--gray10)];
+    }
+    .react-datepicker__view-calendar-icon {
+      input[type='text'] {
+        @apply label-xl !h-[44px] py-[12px] pl-[16px] pr-[76px] text-[var(--gray10)];
+      }
+    }
+  }
+}

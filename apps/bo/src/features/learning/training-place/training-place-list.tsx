@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useImperativeHandle, forwardRef } from 'react';
 import { t } from 'i18next';
 import { Button, Divider, useModal, PreviewImage } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
@@ -8,22 +8,18 @@ import { useSearchBox, SearchBoxConfig, CODE_GROUP, useFileManager } from '@lear
 import { EnGlobalConst, EnPageMode } from '@types';
 import { queryOptions } from '@entities/training-place/service/space.queries';
 import { Link } from '@tanstack/react-router';
-import { useFetchAuthUser } from '@learnway/auth/entities';
 import { IcoDownload } from '@learnway/icons';
 
-const TrainingPlaceListComponent = ({
-  pageMode,
-  onAddClick,
-  onSelect,
-}: {
+interface TrainingPlaceListProps {
   pageMode: EnPageMode;
-  onAddClick?: any;
-  onSelect?: any;
-}) => {
+  onSelect?: (data: any) => void;
+  onAdd?: () => void;
+}
+
+const TrainingPlaceListComponent = (props: TrainingPlaceListProps, ref: any) => {
   const { open: openModal } = useModal();
   const { provider: searchProvider, getValues, setValue } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
-  const { data: loginUser } = useFetchAuthUser();
 
   const { getFileInfo, fileDownload } = useFileManager();
 
@@ -35,10 +31,12 @@ const TrainingPlaceListComponent = ({
     gridFetch(data);
   }, []);
 
-  useEffect(() => {
-    if (loginUser && loginUser.activeTenant)
-      setValue('tenantId', loginUser.activeTenant.tenantId ?? '');
-  }, [loginUser]);
+  useImperativeHandle(ref, () => ({
+    reload() {
+      console.log('reload');
+      gridFetch();
+    },
+  }));
 
   const columnHelper = createColumnHelper<any>();
 
@@ -59,7 +57,7 @@ const TrainingPlaceListComponent = ({
     columnHelper.accessor('learningSpaceName', {
       header: t('교육공간명'),
       cell: (info) => {
-        if (pageMode === EnPageMode.MODAL) return info.getValue();
+        if (props.pageMode === EnPageMode.MODAL) return info.getValue();
         else
           return (
             <Link
@@ -95,7 +93,7 @@ const TrainingPlaceListComponent = ({
   ] as ColumnDef<any, unknown>[];
 
   const onHandleSelect = (row: any) => {
-    if (onSelect) onSelect(row.original);
+    if (props.onSelect) props.onSelect(row.original);
   };
 
   const onHandlePreview = async (preview: string) => {
@@ -115,7 +113,7 @@ const TrainingPlaceListComponent = ({
     }
   };
 
-  switch (pageMode) {
+  switch (props.pageMode) {
     case EnPageMode.PAGE:
       columns.push(
         columnHelper.accessor('preview', {
@@ -174,15 +172,15 @@ const TrainingPlaceListComponent = ({
         config={gConfig}
         columns={columns}
         title={t('교육공간 목록')}
-        showAdd={pageMode === EnPageMode.MODAL && onAddClick}
-        onAddClick={onAddClick}
+        showAdd={props.pageMode === EnPageMode.MODAL}
+        onAddClick={props.onAdd}
         disabledSelectionToggle
       />
     </>
   );
 };
 
-export const TrainingPlaceList = TrainingPlaceListComponent;
+export const TrainingPlaceList = forwardRef(TrainingPlaceListComponent);
 
 const searchConfig: SearchBoxConfig = {
   builders: [
@@ -196,7 +194,7 @@ const searchConfig: SearchBoxConfig = {
         optionsConfig: {
           codeGroup: CODE_GROUP['manual.bo.my.tenant.tenantId'],
         },
-        placeholder: t('선택'),
+        presetOptionLabel: t('선택'),
       },
       {
         name: 'onOffLineType',
