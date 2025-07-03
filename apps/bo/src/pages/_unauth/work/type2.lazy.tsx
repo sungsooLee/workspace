@@ -313,7 +313,7 @@ const detailConfig: DynamicFormConfig = {
       name: 'attachment',
       type: 'attachment',
       uploadConfig: {
-        languageCode: 'ko',
+        languageCode: 'KO',
         affairsType: 'PMS',
         s3Path: 'upload/temp/attachment',
       },
@@ -324,7 +324,7 @@ const detailConfig: DynamicFormConfig = {
       type: 'single-attachment',
       label: '약도 이미지 첨부',
       uploadConfig: {
-        languageCode: 'ko',
+        languageCode: 'KO',
         affairsType: 'PMS',
         s3Path: 'upload/content/image',
         acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
