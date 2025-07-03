@@ -18,7 +18,7 @@ import { NextLearningPopup } from './popup/next-learning-popup';
 import styles from '@learnway/styles/fo/pages/_learning/side-panel/side-panel.module.css';
 
 import { ChartNoAxesColumnDecreasing } from 'lucide-react';
-import { useLearningWindowStore } from '@widgets/layout/service/learning-window.store';
+import { useLearningWindow } from '@widgets/layout/service/learning-window.store';
 
 interface ChildData {
   className?: string;
@@ -30,7 +30,7 @@ interface SidePanelProps {
 }
 
 const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
-  const { curriculum, playInfo } = useLearningWindowStore((state) => state);
+  const { curriculum, playInfo } = useLearningWindow();
   const { open: openModal } = useModal();
 
   const [menuSelected, setMenuSelected] = useState(false); // content 영역 show/hide

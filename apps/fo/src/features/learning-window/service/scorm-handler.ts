@@ -7,6 +7,11 @@ import { ScormDataManager } from './scorm-data-manager';
  *
  */
 export class ScormHandler {
+  scormInfo: any;
+  constructor(scormInfo: any) {
+    this.scormInfo = scormInfo;
+    console.log('scormInfo', scormInfo);
+  }
   srte = new ScormRteClient();
   dm = new ScormDataManager(this.srte.getErrorManager());
 

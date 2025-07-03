@@ -45,21 +45,19 @@ const LearningWindowScormPlayerComponent: FC<any> = ({
     if (!loginUser) return;
     if (!scormInfo) return;
     console.log(scormInfo);
-    const win: any = window;
 
     let itemUrl = scormInfo.itemURL;
 
-    if (win.__ENV__?.APP_ENV === 'local') {
+    if ((window as any).__ENV__?.APP_ENV === 'local') {
       const url = new URL(itemUrl);
       itemUrl = url.pathname;
     }
-    win.API_1484_11 = new ScormHandler();
+    (window as any).API_1484_11 = new ScormHandler(scormInfo);
 
     setIframeUrl(itemUrl);
     return () => {
       console.log('end Player');
-      const win: any = window;
-      delete win.API_1484_11;
+      delete (window as any).API_1484_11;
     };
   }, [loginUser, scormInfo]);
 
@@ -71,7 +69,6 @@ const LearningWindowScormPlayerComponent: FC<any> = ({
           : `${styles.start} ${styles.iframe}`
       }
     >
-      {/* IFrame */}
       <iframe
         //src="http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/public/8807/resources/01/index.html"
         //src="/public/8807/resources/01/index.html"

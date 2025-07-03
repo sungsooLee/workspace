@@ -5,7 +5,7 @@ import { t } from 'i18next';
 
 import { LearningWindowScormPlayer, ScormPlayerConfigProperties } from '@features/learning-window';
 import { useGetContentDetail } from '@entities/content/service/content.hook';
-import { useLearningWindowStore } from '@widgets/layout/service/learning-window.store';
+import { useLearningWindow } from '@widgets/layout/service/learning-window.store';
 import { useGetScormRteScoInfo } from '@entities/scorm/service/scorm-rte.hook';
 import { LearningWindowVideoPlayer } from '@features/learning-window/ui/learning-window-video-player';
 import { EnContentType } from '@types';
@@ -21,7 +21,7 @@ function RouteComponent() {
   const [scormConfig, setScormConfig] = useState<ScormPlayerConfigProperties>();
   const [videoInfo, setVideoInfo] = useState<any>();
 
-  const { curriculum, playInfo } = useLearningWindowStore((state) => state);
+  const { curriculum, playInfo, setBaseInfo } = useLearningWindow();
   const { data: scormInfo } = useGetScormRteScoInfo(scormConfig);
 
   useEffect(() => {
@@ -51,7 +51,7 @@ function RouteComponent() {
       const learningInfo = { ...routerState.location.state };
       console.log('state info ', learningInfo);
       if (learningInfo.curriculumId) {
-        useLearningWindowStore.getState().setBaseInfo(learningInfo);
+        setBaseInfo(learningInfo);
       }
     })();
   }, []);
