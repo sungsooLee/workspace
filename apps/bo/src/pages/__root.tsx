@@ -9,6 +9,7 @@ import { useBreakpointModalClose } from '../shared/lib/breakpoint-modal.hook';
 import { NotFound } from '@features/layout';
 import { useFetchAuthUser, useRenewalMenuStateFromRouting } from '@learnway/auth/entities';
 import { PageRouteContext } from '@learnway/shared';
+import { ServerStatus } from '../shared/ui/temp-server-status/server-status';
 
 const TanStackRouterDevtools = lazy(() =>
   import.meta.env.VITE_APP_ENV === 'local'
@@ -55,8 +56,9 @@ function RootComponent() {
       {isUnderBreakpoint && <MinWidthRequired />}
       <ModalWrapper />
       <ToastWrapper />
-      {import.meta.env.VITE_APP_ENV === 'local' && (
+      {(import.meta.env.VITE_APP_ENV === 'local' || import.meta.env.VITE_APP_ENV === 'dev') && (
         <Suspense fallback={null}>
+          {/* <ServerStatus /> */}
           <ReactQueryDevtools />
           <TanStackRouterDevtools />
         </Suspense>

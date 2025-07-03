@@ -92,15 +92,15 @@ function RouteComponent() {
         tenantScope: roleData.tenantScope,
         companyScope: roleData.companyScope,
         companies: roleData.companies?.map((company: any) => ({
-          value: company.companyId,
-          label: company.companyName,
+          value: company.id,
+          label: company.name,
         })),
         deptScope: roleData.deptScope,
-        depts: roleData.depts?.map((dept: any) => ({ value: dept.deptId, label: dept.deptName })),
+        depts: roleData.depts?.map((dept: any) => ({ value: dept.id, label: dept.name })),
         channelScope: roleData.channelScope,
-        channels: roleData.channels?.map((company: any) => ({
-          value: company.channelId,
-          label: company.channelName,
+        channels: roleData.channels?.map((channel: any) => ({
+          value: channel.uuid,
+          label: channel.name,
         })),
       });
     }

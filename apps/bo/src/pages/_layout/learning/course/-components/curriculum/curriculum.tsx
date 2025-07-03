@@ -15,7 +15,7 @@ interface curriculumProps {
 const CurriculumComponent = forwardRef<TabFormRef, curriculumProps>(
   ({ dummy, initialData }, ref) => {
     const { t } = useTranslation();
-    // const { provider, getValues, updateFormData } = dynamicForm;
+    // const { provider, getValues, fetchData } = dynamicForm;
     const { provider, getValues, onSubmit, onFormValid, formState, updateFormData } =
       useDynamicForm(formConfig);
 
@@ -33,8 +33,8 @@ const CurriculumComponent = forwardRef<TabFormRef, curriculumProps>(
 
         return {
           isValid,
-          data: isValid ? data : undefined,
-          errors: isValid ? undefined : errors,
+          data,
+          errors,
         };
       },
     }));

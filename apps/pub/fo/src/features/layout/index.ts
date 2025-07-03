@@ -55,3 +55,4 @@ export * from './popup/course-selection-popup';
 export * from './ui/course-introduction/course-fixed-button';
 export * from './popup/category-depth-popup-m';
 export * from './ui/edu-licenses/licenses-history';
+export * from './popup/course-cancel-reason-popup';

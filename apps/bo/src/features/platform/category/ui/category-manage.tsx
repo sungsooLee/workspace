@@ -11,7 +11,7 @@ import {
   TreeContainer,
   findParentNode,
 } from '@learnway/ui';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   useCheckExistsCategory,
   useCreateCategory,
@@ -49,21 +49,21 @@ export const CategoryManage = () => {
   const [formMode, setFormMode] = useState(FORM_MODE.NONE);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const {
-    provider,
-    updateFormData,
-    onSubmit,
-    onFormChange,
-    getValues,
-    clearFormError,
-    setFormError,
-  } = useDynamicForm(formConfig);
+  const { provider, updateFormData, onSubmit, onFormChange, clearFormError, setFormError } =
+    useDynamicForm(formConfig);
   const queryClient = useQueryClient();
   const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
   const [lastCreatedMenuId, setLastCreatedMenuId] = useState<string | null>(null);
-  const clearAllFormErrors = () => {
+
+  const clearAllFormErrors = useCallback(() => {
     formConfig.builders.forEach((item) => clearFormError(item.name));
-  };
+  }, [clearFormError]);
+
+  const resetInputValidations = useCallback(() => {
+    clearAllFormErrors();
+    setResetTrigger((prev) => prev + 1);
+  }, [clearAllFormErrors]);
+
   const initialFromValuesRef = useRef<any>(null);
 
   const {
@@ -72,6 +72,7 @@ export const CategoryManage = () => {
     showDeleteComplete,
     showUpdateComplete,
   } = useModal();
+  const [resetTrigger, setResetTrigger] = useState(0);
 
   // 추후 현재 locale 정보 값 파라미터로 넘겨주기.
   const { data, refetch } = useFetchCategory();
@@ -139,6 +140,8 @@ export const CategoryManage = () => {
   useEffect(() => {
     if (detailData && treeData) {
       if (formMode === FORM_MODE.VIEW) {
+        resetInputValidations();
+
         const location = selectedNode?.menuId && findMenuPathById(treeData, selectedNode?.menuId);
         const initialData = selectedNode && {
           location: detailData.categoryPath || location,
@@ -171,7 +174,7 @@ export const CategoryManage = () => {
 
   //하위 메뉴 추가 버튼
   const handleAddSubMenu = (node: TreeNode) => {
-    clearAllFormErrors();
+    resetInputValidations();
     const initData: { [key: string]: any } = {};
     formConfig.builders.forEach((item) => {
       initData[item.name] = item.value;
@@ -371,7 +374,6 @@ export const CategoryManage = () => {
     switch (event.type) {
       case 'NODE_MOVE': {
         const nodeInfo = event;
-        console.log(event);
         if (nodeInfo.sourceNode.menuId) {
           const sortSeq = calculateSortSeq(nodeInfo);
 
@@ -402,7 +404,6 @@ export const CategoryManage = () => {
   useEffect(() => {
     if (formMode === FORM_MODE.NONE) {
       setSelectedNode(null);
-      clearAllFormErrors();
       const initData: { [key: string]: any } = {};
       formConfig.builders.forEach((item) => {
         initData[item.name] = item.value;
@@ -508,10 +509,18 @@ export const CategoryManage = () => {
                 name={'code'}
                 element={
                   <DuplicateCheckInputFormField
+                    key={`code-${resetTrigger}`}
+                    id="code"
                     onDuplicationCheck={duplicateCheck}
                     disabled={formMode === FORM_MODE.NONE}
                     hiddenPlaceholder={formMode === FORM_MODE.NONE}
                     inputType={'alphanumeric'}
+                    onValidationError={(message: string) => {
+                      setFormError('code', message);
+                    }}
+                    onValidationSuccess={() => {
+                      clearFormError('code');
+                    }}
                   />
                 }
               />

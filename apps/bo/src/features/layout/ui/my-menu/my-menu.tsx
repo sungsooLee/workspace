@@ -25,7 +25,7 @@ const PopoverContent = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
-  const [_, setActiveMenuDepth] = useActiveMenuDepthState();
+  const { activeMenuDepthMenu, setActiveMenuDepthMenu } = useActiveMenuDepthState();
   const { data: authUser } = useFetchAuthUser();
   const { data: menuFavorites, refetch } = useFetchMenuFavorites({
     tenantId: authUser?.activeTenant?.tenantId,
@@ -106,11 +106,12 @@ const PopoverContent = () => {
         if (authUser?.activeTenant?.tenantId) {
           const menus = await asyncMenus(authUser?.activeTenant?.tenantId);
           updateMenu(menus);
-          setActiveMenuDepth((prev) => {
-            return prev?.map((menu) =>
-              menu.menuId === list[index].id ? { ...menu, isFavorite: false } : menu,
-            );
-          });
+          const update = activeMenuDepthMenu?.map((menu) =>
+            menu.menuId === list[index].id ? { ...menu, isFavorite: false } : menu,
+          );
+          if (update) {
+            setActiveMenuDepthMenu([...update]);
+          }
         }
       },
     });

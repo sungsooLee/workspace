@@ -17,25 +17,14 @@ const CompanyDetailHROrganizationComponent: FC<any> = () => {
   const { t } = useTranslation();
 
   return (
-    <>
-      <div className="p-10">
-        <NoticeBox
-          descriptions={[
-            t('자동 유저그룹은 인사 DB를 기준으로 특정 시간에 배치로 자동 매핑됩니다.'),
-            t('회사별로 자동 매핑되며, 유저그룹 설정 시 사용할 수 있습니다.'),
-            t('기준일 {2025-05-15}'),
-          ]}
-        />
-      </div>
-      <SectionLayout contentsRatio={'thirty'}>
-        <CompanyOrganizationDetailTree title={t('유저그룹 - 조직')} />
-        <div className={cn(styles.start, styles.wrap)}>
-          <div className={cn(layoutStyles.inner)}>
-            <CompanyDetailHRUsergroup />
-          </div>
+    <SectionLayout contentsRatio={'thirty'}>
+      <CompanyOrganizationDetailTree title={t('유저그룹 - 조직')} />
+      <div className={cn(styles.start, styles.wrap)}>
+        <div className={cn(layoutStyles.inner)}>
+          <CompanyDetailHRUsergroup />
         </div>
-      </SectionLayout>
-    </>
+      </div>
+    </SectionLayout>
   );
 };
 

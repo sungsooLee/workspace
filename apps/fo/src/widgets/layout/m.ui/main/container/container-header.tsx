@@ -20,12 +20,12 @@ function ContainerHeaderComponent() {
 
   const { meta } = useCurrentRoute();
 
-  const [activeMenuDepth] = useActiveMenuDepthState();
+  const { activeMenuDepthMenu } = useActiveMenuDepthState((state) => state);
 
   const title = useCreation(() => {
-    const currentMenuCode = last(activeMenuDepth)?.menuCode;
+    const currentMenuCode = last(activeMenuDepthMenu)?.menuCode;
     return currentMenuCode ? `MENU.${currentMenuCode}` : meta?.title;
-  }, [activeMenuDepth]);
+  }, [activeMenuDepthMenu]);
 
   const handleBack = () => {
     if (canGoBack) {

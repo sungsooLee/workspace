@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, forwardRef, useImperativeHandle } from 'react';
+import { useEffect, useRef, useState, forwardRef, useImperativeHandle, useCallback } from 'react';
 import { t } from 'i18next';
 import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { useRouter } from '@tanstack/react-router';
@@ -74,6 +74,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [lastCreatedMenuId, setLastCreatedMenuId] = useState<string | null>(null);
   const [skipConfirmation, setSkipConfirmation] = useState(false);
+  const [resetTrigger, setResetTrigger] = useState(0);
   const { open: openModal, confirm: openConfirm, alert: openAlert } = useModal();
   const prevDataRef = useRef<any>(null);
   const router = useRouter();
@@ -99,14 +100,27 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
     return DuplicateState.ok;
   };
 
-  const { provider, updateFormData, onSubmit, onFormChange, clearFormError, control, getValues } =
-    useDynamicForm(formConfig);
+  const {
+    provider,
+    updateFormData,
+    onSubmit,
+    onFormChange,
+    clearFormError,
+    control,
+    getValues,
+    setFormError,
+  } = useDynamicForm(formConfig);
   const typeWatch = useWatch({ control, name: 'deviceNames' });
   const prevTypeWatchRef = useRef<string[]>([]);
 
-  const clearAllFormErrors = () => {
+  const clearAllFormErrors = useCallback(() => {
     formConfig.builders.forEach((item) => clearFormError(item.name));
-  };
+  }, [clearFormError]);
+
+  const resetInputValidations = useCallback(() => {
+    clearAllFormErrors();
+    setResetTrigger((prev) => prev + 1);
+  }, [clearAllFormErrors]);
 
   const hasFormChanges = () => {
     const currentValues = getValues();
@@ -132,9 +146,10 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
 
   const handleOnSubmit = (node: Record<string, any>) => {
     const apiMappingKeys = [] as number[];
-    node.apiMappingMenuList.forEach(
-      (i: ApiMappingMenuDetail) => i.apiId && apiMappingKeys.push(i.apiId),
-    );
+    node.apiMappingMenuList &&
+      node.apiMappingMenuList.forEach(
+        (i: ApiMappingMenuDetail) => i.apiId && apiMappingKeys.push(i.apiId),
+      );
     if (formMode === FORM_MODE.VIEW) {
       const updateData = {
         ...node,
@@ -146,6 +161,8 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
         sortOrder: node.sortOrder,
         menuScope: menuScope,
       };
+      console.log(apiMappingKeys);
+      console.log(updateData);
       update(updateData);
     } else if (formMode === FORM_MODE.ADD) {
       //
@@ -224,6 +241,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
         if (data.isMobileExposed) deviceNames.push(DEVICE_NAME.Mobile);
         const formData = {
           ...data,
+          apiMappingMenuList: data?.apiMappingMenuList ?? [],
           location: detailData.fullPath,
           parentCode: data.parentName,
           code: { fieldValue: data.menuCode, checkState: DuplicateState.okStart },
@@ -249,6 +267,9 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
     //   }
     // }
 
+    // 모든 검증 에러 클리어
+    resetInputValidations();
+
     setSelectedNode(node);
     if (node) {
       setFormMode(FORM_MODE.VIEW);
@@ -271,7 +292,9 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
     //   }
     // }
 
-    clearAllFormErrors();
+    // 모든 검증 에러 클리어
+    resetInputValidations();
+
     const initData: { [key: string]: any } = {};
     formConfig.builders.forEach((item) => {
       initData[item.name] = item.value;
@@ -350,7 +373,8 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
 
   const handleApiMapping = async () => {
     const selectedApiKeys = getValues('apiMappingMenuList');
-    const keyArray = selectedApiKeys.map((item: TreeNode) => item.apiUuid.toString());
+    const keyArray =
+      selectedApiKeys && selectedApiKeys.map((item: TreeNode) => item.apiUuid.toString());
 
     const selectApis = await openModal({
       content: <MenuApiMappingModal menuScopeCode={menuScope} selectedApiKeys={keyArray} />,
@@ -629,10 +653,19 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
                 name={'code'}
                 element={
                   <DuplicateCheckInputFormField
+                    key={`code-${resetTrigger}`}
+                    id="code"
                     onDuplicationCheck={duplicateCheck}
                     disabled={formMode === FORM_MODE.NONE}
                     inputType={'alphanumeric'}
                     hiddenPlaceholder={formMode === FORM_MODE.NONE}
+                    onValidationError={(message: string) => {
+                      setFormError('code', message);
+                    }}
+                    onValidationSuccess={() => {
+                      console.log(';');
+                      clearFormError('code');
+                    }}
                   />
                 }
               />
@@ -680,9 +713,17 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
                 name={'path'}
                 element={
                   <Input
+                    key={`path-${resetTrigger}`}
+                    id="path"
                     disabled={formMode === FORM_MODE.NONE}
                     hiddenPlaceholder={formMode === FORM_MODE.NONE}
                     inputType={'url'}
+                    onValidationError={(message) => {
+                      setFormError('path', message);
+                    }}
+                    onValidationSuccess={() => {
+                      clearFormError('path');
+                    }}
                   />
                 }
               />

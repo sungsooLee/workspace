@@ -23,7 +23,9 @@ const listGridColumns = [
   columnHelper.accessor('enumNames', {
     cell: ({ getValue }) => getValue(),
     header: t('LABEL.cdGroupId'),
-    size: 280,
+    meta: {
+      size: 'auto',
+    },
   }),
 ];
 // };

@@ -12,12 +12,10 @@ const TrainingPlaceDetailModalComponent = ({
   spaceId?: number;
 }) => {
   const { close: closeModal } = useModal();
-  const formRef = useRef(1);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleOnSave = () => {
-    console.log('formRef', formRef);
-    const detail: any = formRef.current;
-    detail.saveData();
+    if (formRef.current?.saveData) formRef.current.saveData();
   };
 
   const handleOnComplete = (data: any) => {

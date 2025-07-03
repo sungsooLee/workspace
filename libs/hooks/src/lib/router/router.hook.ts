@@ -9,7 +9,7 @@ import { usePageRouteState } from './page-route.state';
 
 export function useGlobalRouterEvent(callback?: RouteEventCallback) {
   const router = useRouter();
-  const [pageRouteState, setPageRouteState] = usePageRouteState();
+  const { setPageRouteState } = usePageRouteState();
 
   useEffect(() => {
     const unsubscribe = router.subscribe(
@@ -35,7 +35,7 @@ export function useGlobalRouterEvent(callback?: RouteEventCallback) {
 }
 
 export function useCurrentRoute<T = any>(route?: any): CurrentRoute<T> {
-  const [pageRouteState] = usePageRouteState();
+  const { pageRouteState } = usePageRouteState((state) => state);
   const location = useLocation();
   const matches = useMatches();
 
