@@ -23,7 +23,7 @@ export interface ScormPlayerConfigProperties {
   scoId: string;
 }
 
-const ScormPlayerComponent: FC<any> = ({
+const LearningWindowScormPlayerComponent: FC<any> = ({
   scormConfig,
 }: {
   scormConfig: ScormPlayerConfigProperties;
@@ -76,4 +76,4 @@ const ScormPlayerComponent: FC<any> = ({
   );
 };
 
-export const ScormPlayer = ScormPlayerComponent;
+export const LearningWindowScormPlayer = LearningWindowScormPlayerComponent;

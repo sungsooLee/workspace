@@ -15,7 +15,8 @@ import {
 import { CurriculumPopup } from './popup/curriculum-popup';
 import { NextLearningPopup } from './popup/next-learning-popup';
 
-import styles from './side-panel.module.css';
+import styles from '@learnway/styles/fo/pages/_learning/side-panel/side-panel.module.css';
+
 import { ChartNoAxesColumnDecreasing } from 'lucide-react';
 import { useLearningWindowStore } from '@widgets/layout/service/learning-window.store';
 

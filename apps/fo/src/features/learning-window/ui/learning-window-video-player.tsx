@@ -1,6 +1,6 @@
 import { Player, usePlayer } from '@learnway/ui';
 
-const VideoPlayerComponent = () => {
+const LearningWindowVideoPlayerComponent = () => {
   const player = usePlayer();
   return (
     <Player
@@ -29,4 +29,4 @@ const VideoPlayerComponent = () => {
   );
 };
 
-export const VideoPlayer = VideoPlayerComponent;
+export const LearningWindowVideoPlayer = LearningWindowVideoPlayerComponent;

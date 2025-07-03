@@ -4,7 +4,8 @@ import { cn } from '@learnway/shared';
 
 import { MobileView, BrowserView } from 'react-device-detect';
 import { SidePanel } from '../side-panel/side-panel';
-import styles from './learning-container.module.css';
+import styles from '@learnway/styles/fo/pages/_learning/learning-container/learning-container.module.css';
+
 import { ChartNoAxesColumnDecreasing } from 'lucide-react';
 
 interface LearningContainerComponentProps {

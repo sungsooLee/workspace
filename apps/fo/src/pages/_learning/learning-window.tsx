@@ -3,11 +3,11 @@ import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-rout
 
 import { t } from 'i18next';
 
-import { ScormPlayer, ScormPlayerConfigProperties } from '@features/learning-window';
+import { LearningWindowScormPlayer, ScormPlayerConfigProperties } from '@features/learning-window';
 import { useGetContentDetail } from '@entities/content/service/content.hook';
 import { useLearningWindowStore } from '@widgets/layout/service/learning-window.store';
 import { useGetScormRteScoUrl } from '@entities/scorm/service/scorm-rte.hook';
-import { VideoPlayer } from '@features/learning-window/ui/video-player';
+import { VideoPlayer } from '@features/learning-window/ui/learning-window-video-player';
 
 export const Route = createFileRoute('/_learning/learning-window')({
   component: RouteComponent,
@@ -52,7 +52,7 @@ function RouteComponent() {
 
   return (
     <>
-      {scormConfig && <ScormPlayer scormConfig={scormConfig} />}
+      {scormConfig && <LearningWindowScormPlayer scormConfig={scormConfig} />}
       {videoInfo && <VideoPlayer />}
     </>
   );

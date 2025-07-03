@@ -8,11 +8,20 @@ interface LearningWindowStoreData {
   curriculum: any;
   playInfo: any;
   setBaseInfo: (v: any) => void;
-  getCurrentLesson: () => any;
 }
 const getLessonInfo = (nowCurriculum: any, moduleId?: number, lessonId?: number) => {
+  if (!nowCurriculum.moduleList || nowCurriculum.moduleList.size === 0) {
+    console.error('moduleList is not Set or List empity', nowCurriculum);
+    return;
+  }
+
   let module = nowCurriculum.moduleList.find((m: any) => m.moduleId === moduleId);
   if (!module) module = nowCurriculum.moduleList[0];
+
+  if (!module.lessonList || module.lessonList.size === 0) {
+    console.error('lessonList is not set or List empity', module);
+  }
+
   let lesson = module.lessonList.find((l: any) => l.lessonId === lessonId);
   if (!lesson) lesson = module.lessonList[0];
   const playInfo = {
@@ -49,10 +58,5 @@ export const useLearningWindowStore = create<LearningWindowStoreData>((set, get)
       console.log('playInfo', playInfo);
       set((state) => ({ baseInfo: v, curriculum: retval, playInfo: playInfo }));
     })();
-  },
-  getCurrentLesson() {
-    const nowCurriculum = get().curriculum;
-    const module = nowCurriculum.moduleList[0];
-    const lesson = module.lessonList[0];
   },
 }));
