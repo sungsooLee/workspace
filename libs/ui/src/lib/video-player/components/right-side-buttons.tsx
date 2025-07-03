@@ -1,9 +1,9 @@
 import { List, Pencil, MessageSquare, Headphones, SkipBack, SkipForward } from 'lucide-react';
-import { PlayerContainerProps } from '../types';
+import { VideoPlayerContainerProps } from '../types';
 
 const RightSideButtons = ({
   toggleCurriculumSection,
-}: Pick<PlayerContainerProps, 'toggleCurriculumSection'>) => {
+}: Pick<VideoPlayerContainerProps, 'toggleCurriculumSection'>) => {
   return (
     <div className="absolute right-4 top-1/4 flex flex-col items-center gap-6 text-gray-700">
       {/* 상단 메뉴 박스 */}

@@ -1,4 +1,4 @@
-import { PlayerContainerProps } from '../types';
+import { VideoPlayerContainerProps } from '../types';
 import { IcoClock10Back, IcoClock10Forward, IcoPlayerPause, IcoPlayerPlay } from '@learnway/icons';
 
 const CentralControlButton = ({
@@ -6,7 +6,10 @@ const CentralControlButton = ({
   handleForward,
   handleRewind,
   togglePlay,
-}: Pick<PlayerContainerProps, 'playing' | 'handleRewind' | 'togglePlay' | 'handleForward'>) => {
+}: Pick<
+  VideoPlayerContainerProps,
+  'playing' | 'handleRewind' | 'togglePlay' | 'handleForward'
+>) => {
   return (
     <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-6">
       <button onClick={handleRewind}>

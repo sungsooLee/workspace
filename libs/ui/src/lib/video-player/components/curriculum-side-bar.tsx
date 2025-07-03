@@ -1,10 +1,10 @@
 import { CheckCircle, Circle, X } from 'lucide-react';
 import { useState } from 'react';
-import { PlayerContainerProps } from '../types';
+import { VideoPlayerContainerProps } from '../types';
 
 const CurriculumSidebar = ({
   toggleCurriculumSection,
-}: Pick<PlayerContainerProps, 'toggleCurriculumSection'>) => {
+}: Pick<VideoPlayerContainerProps, 'toggleCurriculumSection'>) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const sideMenu = [
