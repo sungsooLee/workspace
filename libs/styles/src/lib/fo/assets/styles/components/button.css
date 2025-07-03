@@ -55,9 +55,6 @@
       @apply stroke-[var(--gray10)];
     }
   }
-  & + .nlp--button {
-    @apply !ml-0;
-  }
   &[class*='only_icon'] {
     @apply !rounded-[6px];
     &.xs {

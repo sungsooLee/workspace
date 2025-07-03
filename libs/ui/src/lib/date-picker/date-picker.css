@@ -1,4 +1,7 @@
 /* datepicker.css */
+.datepicker-portal {
+  @apply absolute z-[90];
+}
 .nlp--datepicker {
   @apply flex w-full items-center;
   .datepicker_wrap {
