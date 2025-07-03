@@ -1,10 +1,10 @@
 import { Pencil, MessageSquare, Headphones, SkipBack, SkipForward } from 'lucide-react';
-import { PlayerContainerProps } from '../types';
+import { VideoPlayerContainerProps } from '../types';
 import { IcoList } from '@learnway/icons';
 
 const RightSideBar = ({
   toggleCurriculumSection,
-}: Pick<PlayerContainerProps, 'toggleCurriculumSection'>) => {
+}: Pick<VideoPlayerContainerProps, 'toggleCurriculumSection'>) => {
   return (
     <aside className="flex h-screen flex-col justify-between bg-white p-4 text-[#111]">
       {/* 상단 메뉴 박스 */}

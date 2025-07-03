@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { PlayerContainerProps } from '../types';
+import { VideoPlayerContainerProps } from '../types';
 
 const MENU = {
   ROOT: 'root',
@@ -13,7 +13,7 @@ type MenuType = (typeof MENU)[keyof typeof MENU];
 
 const SettingsPopover = ({
   changePlaybackRate,
-}: Pick<PlayerContainerProps, 'changePlaybackRate'>) => {
+}: Pick<VideoPlayerContainerProps, 'changePlaybackRate'>) => {
   const [activeMenu, setActiveMenu] = useState<MenuType>(MENU.ROOT);
   const [selected, setSelected] = useState({
     speed: '1x',
