@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { queryOptions } from './user-group.queries';
 import { UserGroupsParam } from '@types';
 
-export function useFetchUserGroups(tenantIds: number[], params?: Partial<UserGroupsParam>) {
+export function useFetchUserGroups(tenantIds: number[], params: UserGroupsParam) {
   return useQuery(queryOptions.usergroups(tenantIds, params));
 }
 

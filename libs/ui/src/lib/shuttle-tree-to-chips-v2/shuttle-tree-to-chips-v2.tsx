@@ -16,6 +16,7 @@ type ShuttleTreeToChipsV2Props = {
   selectedItems: TreeNode[];
   handleSelectItem: (node: TreeNode) => void;
   cancelSelectItem: (node: TreeNode) => void;
+  cancelAll: () => void;
   sourceTitle: string;
   targetTitle: string;
 };
@@ -26,6 +27,7 @@ export const ShuttleTreeToChipsV2 = ({
   selectedItems,
   handleSelectItem,
   cancelSelectItem,
+  cancelAll,
   sourceTitle,
   targetTitle,
 }: ShuttleTreeToChipsV2Props) => {
@@ -113,7 +115,12 @@ export const ShuttleTreeToChipsV2 = ({
                     {'조건설정'}
                   </Button>
                 ))}
-              <Button variant="text" size="sm" className={layoutStyles.btn_text}>
+              <Button
+                variant="text"
+                size="sm"
+                className={layoutStyles.btn_text}
+                onClick={cancelAll}
+              >
                 {t('LABEL.button.deleteAll')}
               </Button>
             </>

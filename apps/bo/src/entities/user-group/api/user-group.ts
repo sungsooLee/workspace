@@ -5,12 +5,13 @@ import {
   UserGroupsParam,
   UsersByIdsParam,
   OrganizationTreeResponse,
+  SubdirectoryUsersParam,
 } from '@types';
 
 export default class UserGroupService {
   static fetchUserGroups(
     tenantIds: number[],
-    params?: Partial<UserGroupsParam>,
+    params: UserGroupsParam,
   ): Promise<UserGroupsResponse[]> {
     return httpService.get(`${PMSApiPrefix()}/userGroup/user-groups`, {
       tenantIds,
@@ -26,6 +27,11 @@ export default class UserGroupService {
       tenantIds,
       tenantName,
     });
+  }
+  static subdirectoryUsers(
+    params: Partial<SubdirectoryUsersParam>,
+  ): Promise<OrganizationTreeResponse[]> {
+    return httpService.get(`${PMSApiPrefix()}/userGroup/subdirectory/users`, params);
   }
 
   static fetchUsersByIds(params: Partial<UsersByIdsParam>): Promise<UserGroupsResponse[]> {

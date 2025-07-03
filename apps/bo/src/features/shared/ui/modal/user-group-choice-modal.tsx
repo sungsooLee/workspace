@@ -12,10 +12,10 @@ import {
   Divider,
 } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
-import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
+import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { queryOptions } from '@entities/department/service/department.queries';
+import { queryOptions } from '@entities/user-group/service/user-group.queries';
 
 const UserGroupModalComponent: FC<any> = () => {
   const { close: closeModal } = useModal();
@@ -24,27 +24,40 @@ const UserGroupModalComponent: FC<any> = () => {
     builders: [
       [
         {
-          name: 'compayId',
-          type: 'text',
+          required: true,
+          name: 'companyId',
+          type: 'dropdown',
           label: t('회사'),
-          value: '',
+          value: undefined,
+          optionsConfig: {
+            codeGroup: CODE_GROUP['manual.company.companyId'],
+          },
+          format: 'number',
+          isSearchable: true,
+          isClearable: true,
+          placeholder: '입력 선택',
         },
         {
-          name: 'opt1',
+          name: 'companyCode',
           type: 'text',
           label: t('실'),
           value: '',
         },
         {
-          name: 'num',
-          type: 'text',
+          name: 'deptId',
+          type: 'dropdown',
           label: t('소속'),
           value: '',
+          presetOptionLabel: t('LABEL.form.label.select', '선택'),
+          options: [],
+          format: 'object',
+          isSearchable: true,
+          isClearable: true,
         },
       ],
       [
         {
-          name: 'userNo',
+          name: 'employeeNumber',
           type: 'text',
           label: t('사번'),
           value: '',
@@ -62,7 +75,7 @@ const UserGroupModalComponent: FC<any> = () => {
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);
 
   const gridConfig = {
-    query: queryOptions.list,
+    query: queryOptions.subdirectoryUsers,
     columns: [],
     data: [],
     pagination: {
@@ -131,15 +144,8 @@ const columns = [
   columnHelper.accessor('managerName', {
     id: 'managerName',
     cell: (info) => info.getValue(),
-    header: '본부/사업부',
+    header: '실',
     size: 210,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('deptName', {
-    id: 'deptName',
-    cell: (info) => info.getValue(),
-    header: '부서',
-    size: 150,
     enableGrouping: false,
   }),
   columnHelper.accessor('deptEngName', {
