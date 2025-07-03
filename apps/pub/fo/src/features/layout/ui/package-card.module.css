@@ -18,3 +18,20 @@
     }
   }
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.package_card {
+        .img_box {
+          .img {
+            @apply h-[67px] w-[120px];
+          }
+        }
+        p {
+          @apply body-sm;
+        }
+      }
+    }
+  }
+}
