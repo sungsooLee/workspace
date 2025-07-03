@@ -9,7 +9,7 @@ import { CompanyDetailHRUsergroup } from './company-detail-hr-usergroup';
 
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
-import { EnCompanyHrLinkType } from '@types';
+import { EnUserGroupType } from '@types';
 
 const CompanyDetailHRLinkComponent: FC<any> = ({ type }) => {
   const routerState = useRouterState();
@@ -22,19 +22,19 @@ const CompanyDetailHRLinkComponent: FC<any> = ({ type }) => {
 
   useEffect(() => {
     switch (type) {
-      case EnCompanyHrLinkType.GROUP:
+      case EnUserGroupType.JOB_GROUP:
         setLinkTitle(t('직군'));
         setLinkColumns([...columnsPrev, ...linkColumnsForGroup, ...columnsNext]);
         break;
-      case EnCompanyHrLinkType.ROLE:
+      case EnUserGroupType.JOB:
         setLinkTitle(t('직무'));
         setLinkColumns([...columnsPrev, ...linkColumnsForRole, ...columnsNext]);
         break;
-      case EnCompanyHrLinkType.DESIGNATION:
+      case EnUserGroupType.JOB_TITLE:
         setLinkTitle(t('호칭'));
         setLinkColumns([...columnsPrev, ...linkColumnsForDesignation, ...columnsNext]);
         break;
-      case EnCompanyHrLinkType.POSITION:
+      case EnUserGroupType.JOB_POSITION:
         setLinkTitle(t('보직'));
         setLinkColumns([...columnsPrev, ...linkColumnsForPosition, ...columnsNext]);
         break;

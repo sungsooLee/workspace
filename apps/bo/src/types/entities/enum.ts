@@ -57,12 +57,13 @@ export enum EnUserState {
 }
 
 // 회사 HR 연동 유형
-export enum EnCompanyHrLinkType {
+export enum EnUserGroupType {
   ORGANIZATION = 'ORGANIZATION', // 조직
-  GROUP = 'GROUP', // 직군
-  ROLE = 'ROLE', // 직무
-  DESIGNATION = 'DESIGNATION', // 호칭
-  POSITION = 'POSITION', // 보직
+  JOB_GROUP = 'JOB_GROUP', // 직군
+  JOB = 'JOB', // 직무
+  JOB_TITLE = 'JOB_TITLE', // 호칭
+  JOB_POSITION = 'JOB_POSITION', // 보직
+  CUSTOM_GROUP = 'CUSTOM_GROUP', // 사용자 정의
 }
 
 //Tree Event Position
