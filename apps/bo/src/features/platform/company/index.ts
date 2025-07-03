@@ -8,7 +8,7 @@ export * from './management/ui/company-list';
 export * from './management/ui/login-authentication-setting-information';
 export * from './organization/service/company-organization.service';
 export * from './organization/ui/company-organization-check';
-export * from './organization/ui/company-organization-detail-tree';
+export * from './management/ui/company-organization-detail-tree';
 export * from './organization/ui/company-organization-info-list';
 export * from './organization/ui/company-organization-info-user';
 export * from './organization/ui/company-organization-list';

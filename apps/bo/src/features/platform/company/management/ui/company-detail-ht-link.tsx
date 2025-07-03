@@ -1,14 +1,9 @@
 import { FC, useEffect, useState, useCallback } from 'react';
 import { t } from 'i18next';
 import { useRouterState } from '@tanstack/react-router';
-import { useTranslation } from 'react-i18next';
-import { cn } from '@learnway/shared';
 import { GridBox, Button, SplitPanel } from '@learnway/ui';
-import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 import { CompanyDetailHRUsergroup } from './company-detail-hr-usergroup';
 
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 import { EnUserGroupType } from '@types';
 import { useGetCompanyUserGroups } from '@entities/user-group/service/user-group-company.hook';
 
@@ -16,6 +11,7 @@ const _global = {
   selectClick: (userGroupId: number) => {
     return;
   },
+  selectedUserGroupId: '',
 };
 
 interface CompanyDetailHRLinkProps {
@@ -36,6 +32,7 @@ const CompanyDetailHRLinkComponent: FC<any> = ({ type }: CompanyDetailHRLinkProp
   _global.selectClick = (userGroupId: number) => {
     setUserGroupId(userGroupId);
   };
+  _global.selectedUserGroupId = userGroupId;
 
   useEffect(() => {
     switch (type) {
@@ -69,6 +66,7 @@ const CompanyDetailHRLinkComponent: FC<any> = ({ type }: CompanyDetailHRLinkProp
         data={data}
         columns={linkColumns}
         title={t('유저그룹') + ' - ' + linkTitle}
+        disabledSelectionToggle
         onSearchClick={(data: any) => {
           console.log('####', data);
         }}
@@ -82,7 +80,7 @@ export const CompanyDetailHRLink = CompanyDetailHRLinkComponent;
 
 // 공통 컬럼
 const columnsPrev = [
-  { name: 'companyName', accessorKey: 'companyName', header: '회사', size: 115 },
+  { name: 'companyName', accessorKey: 'companyName', header: t('회사'), size: 115 },
 ];
 const columnsNext = [
   {
@@ -99,7 +97,9 @@ const columnsNext = [
     size: 95,
     cell: (info: any) => (
       <Button
-        variant="gray"
+        variant={
+          info.row.original.userGroupId === _global.selectedUserGroupId ? 'primary' : 'gray2'
+        }
         label={t('선택')}
         onClick={() => {
           _global.selectClick(info.row.original.userGroupId);
@@ -123,15 +123,15 @@ const linkColumnsForGroup = [
 ];
 const linkColumnsForRole = [
   {
-    name: 'userGroupName',
-    accessorKey: 'userGroupName',
+    name: 'userGroupSubName',
+    accessorKey: 'userGroupSubName',
     header: t('직군'),
     size: 115,
     searchable: true,
   },
   {
-    name: 'userGroupSubName',
-    accessorKey: 'userGroupSubName',
+    name: 'userGroupName',
+    accessorKey: 'userGroupName',
     header: t('직무'),
     size: 115,
     searchable: true,
@@ -150,13 +150,6 @@ const linkColumnsForPosition = [
   {
     name: 'userGroupName',
     accessorKey: 'userGroupName',
-    header: t('소속'),
-    size: 115,
-    searchable: true,
-  },
-  {
-    name: 'userGroupSubName',
-    accessorKey: 'userGroupSubName',
     header: t('보직'),
     size: 115,
     searchable: true,

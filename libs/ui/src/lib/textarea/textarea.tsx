@@ -18,6 +18,7 @@ export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextArea
   hiddenPlaceholder?: boolean;
   inputType?: string;
   showKoreanToast?: boolean; // 한글 타입에서 잘못된 문자 입력 시 토스트 메시지 표시 여부
+  error?: boolean;
 }
 
 const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaProps>(
@@ -35,6 +36,7 @@ const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaProps>(
       hiddenPlaceholder,
       inputType,
       showKoreanToast = true,
+      error,
       ...props
     },
     ref,
@@ -163,6 +165,7 @@ const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaProps>(
               'nlp--textarea',
               resize && styles[resize],
               size && styles[size],
+              error ? styles.error : '',
             )}
             placeholder={placeholderText}
             maxLength={maxLength}

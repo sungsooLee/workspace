@@ -37,7 +37,7 @@ export type ValidatorConfig = {
           required?: boolean;
           fn?: (values: Record<string, any>) => boolean;
           // 필수 값 오류 발생 시 표시할 메시지 (옵션)
-          message?: string;
+          message?: string | ((values: Record<string, any>) => string);
           // 필수 값 오류 발생 위치
           path?: string;
         };
@@ -57,7 +57,7 @@ export type ValidatorConfig = {
       /**
        * 오류 발생 시 표시할 메시지 (옵션)
        */
-      message?: string;
+      message?: string | ((values: Record<string, any>) => string);
 
       /**
        * 오류가 발생한 값의 위치 설정 (옵션)

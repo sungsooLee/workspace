@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isEqual } from 'lodash';
 import { BaseFormFieldProps, useDynamicFormContext } from '@learnway/hooks';
@@ -24,12 +24,14 @@ interface DuplicateCheckInputFormFieldPros<T = any> extends BaseFormFieldProps {
   onDuplicationCheck: (value: string) => Promise<DuplicateState>;
   onValidationError?: (message: string) => void;
   onValidationSuccess?: () => void;
+  clearFormError?: (fieldName: string) => void;
   dupConfig?: {
     langCode: {
       ok: string; // 언어 코드
       duplicated: string;
       reCheck: string;
       needInput: string;
+      check: string;
     };
   };
 }
@@ -40,6 +42,7 @@ export const DuplicateCheckInputFormField = forwardRef<
 >(
   (
     {
+      key,
       control,
       label,
       value,
@@ -54,57 +57,69 @@ export const DuplicateCheckInputFormField = forwardRef<
           duplicated: 'LABEL.form.validation.duplicated',
           reCheck: 'LABEL.form.validation.reCheck',
           needInput: 'LABEL.form.validation.needInput',
+          check: 'LABEL.form.validation.check',
         },
       },
       inputType,
       onValidationError,
       onValidationSuccess,
+      clearFormError,
+      error,
       ...props
     },
     ref,
   ) => {
     const { t } = useTranslation();
     const { guideText, onChangeGuideText } = useDynamicFormContext();
-    const [editionValue, setEditionValue] = useState<DuplicateField>(value);
 
-    const prevValueRef = useRef<DuplicateField>(value);
-    const isInternalChangeRef = useRef(false);
+    // 안전한 기본값 설정
+    const currentValue = value || { fieldValue: '', checkState: DuplicateState.needInput };
 
-    //console.log('control', control);
     const handleChangeField = (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (
-        editionValue.checkState === DuplicateState.ok ||
-        editionValue.checkState === DuplicateState.okStart
+      const newFieldValue = e.target.value;
+      if (currentValue.checkState === DuplicateState.duplicated) {
+        onChangeGuideText(
+          <span style={{ color: 'red' }}>{t(dupConfig.langCode.check, { code: label })}</span>,
+        );
+        // onChange?.({ checkState: DuplicateState.check, fieldValue: newFieldValue });
+        onChange?.({ checkState: DuplicateState.check, fieldValue: newFieldValue });
+      } else if (
+        currentValue.checkState === DuplicateState.ok ||
+        currentValue.checkState === DuplicateState.okStart
       ) {
-        if (control.getFieldState(name).error?.message) {
+        if (control?.getFieldState(name)?.error?.message) {
           control.setError(name, {});
         }
         // onChangeGuideText(
-        //   <span style={{ color: 'red' }}>{t(dupConfig.langCode.reCheck, { code: label })}</span>,
+        //   <span style={{ color: 'red' }}>{t(dupConfig.langCode.check, { code: label })}</span>,
         // );
-
-        setEditionValue({ checkState: DuplicateState.check, fieldValue: e.target.value });
+        // 상태를 check로 변경하고 새 값으로 업데이트
+        onChange?.({ checkState: DuplicateState.check, fieldValue: newFieldValue });
       } else {
-        if (editionValue.fieldValue !== e.target.value) {
-          setEditionValue({ ...editionValue, fieldValue: e.target.value });
-        }
+        // 일반적인 입력 상황에서는 fieldValue만 업데이트
+        onChange?.({ ...currentValue, fieldValue: newFieldValue });
       }
     };
 
-    const handleDupplicationCheckButtonClick = () => {
-      if (!editionValue.fieldValue) {
-        control.setError(name, { message: t(dupConfig.langCode.needInput, { code: label }) });
+    const handleDuplicationCheckButtonClick = () => {
+      if (!currentValue.fieldValue) {
+        console.log('needInput 메시지 생성 - label:', label);
+        control?.setError(name, {
+          type: 'duplicate',
+          message: t(dupConfig.langCode.needInput, { code: label }),
+        });
         return;
       }
       if (onDuplicationCheck) {
-        const prom = onDuplicationCheck(editionValue.fieldValue);
+        const prom = onDuplicationCheck(currentValue.fieldValue);
         prom
           .then((state) => {
             switch (state) {
               case DuplicateState.ok:
-                if (control.getFieldState(name).error?.message) {
+                if (control?.getFieldState(name)?.error?.message) {
                   control.setError(name, {});
                 }
+                onValidationSuccess?.();
                 onChangeGuideText(
                   <span style={{ color: 'blue' }}>
                     {t(dupConfig.langCode.ok, { code: label })}
@@ -112,49 +127,39 @@ export const DuplicateCheckInputFormField = forwardRef<
                 );
                 break;
               case DuplicateState.duplicated:
-                control.setError(name, {
+                control?.setError(name, {
+                  type: 'duplicate',
                   message: t(dupConfig.langCode.duplicated, { code: label }),
                 });
                 break;
               default:
                 break;
             }
-            setEditionValue({ ...editionValue, checkState: state });
+            onChange?.({ ...currentValue, checkState: state });
           })
           .catch((error) => {
-            control.setError(name, { message: t(dupConfig.langCode.reCheck, { code: label }) });
-            setEditionValue({ ...editionValue, checkState: DuplicateState.check });
+            control?.setError(name, {
+              type: 'duplicate',
+              message: t(dupConfig.langCode.reCheck, { code: label }),
+            });
+            onChange?.({ ...currentValue, checkState: DuplicateState.check });
           });
       }
     };
 
+    // guideText 정리 로직
     useEffect(() => {
-      if (isInternalChangeRef.current || isEqual(prevValueRef.current, editionValue)) {
-        isInternalChangeRef.current = false;
-        return;
-      }
-
-      prevValueRef.current = editionValue;
-      onChange?.(editionValue);
-    }, [editionValue, onChange]);
-
-    useEffect(() => {
-      const fieldState = control.getFieldState(name);
-      if (!fieldState.isDirty && guideText) {
+      const fieldState = control?.getFieldState(name);
+      if (!fieldState?.isDirty && guideText) {
         onChangeGuideText('');
       }
-
-      if (value && !isEqual(value, editionValue)) {
-        isInternalChangeRef.current = true;
-        setEditionValue(value);
-        prevValueRef.current = value;
-      }
-    }, [value, control, name, guideText, onChangeGuideText]);
+    }, [control, name, guideText, onChangeGuideText]);
 
     return (
       <div className="flex w-full gap-x-2">
         <Input
-          value={editionValue.fieldValue}
+          {...props}
+          value={currentValue.fieldValue}
           onChange={handleChangeField}
           maxLength={maxLength}
           disabled={disabled}
@@ -163,18 +168,18 @@ export const DuplicateCheckInputFormField = forwardRef<
           onValidationError={onValidationError}
           onValidationSuccess={onValidationSuccess}
           label={label}
-          {...props}
+          error={error}
         />
         <Button
           type="button"
           variant="gray"
           size="sm"
           label={t('LABEL.button.duplication')}
-          onClick={handleDupplicationCheckButtonClick}
+          onClick={handleDuplicationCheckButtonClick}
           disabled={
             disabled ||
-            editionValue.checkState === DuplicateState.ok ||
-            editionValue.checkState === DuplicateState.okStart
+            currentValue.checkState === DuplicateState.ok ||
+            currentValue.checkState === DuplicateState.okStart
           }
         />
       </div>

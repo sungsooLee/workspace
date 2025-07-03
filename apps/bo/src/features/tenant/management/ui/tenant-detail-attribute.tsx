@@ -130,8 +130,6 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
     const langValue = getValues('langCountryCodeTypeList');
   }, [langCountryCodeTypeListOptions]);
 
-  console.log('###', attributeData)
-
   return (
     <>
       <FormSubTitle label={t('테넌트 기본 정보')} lineType={'dark'} />

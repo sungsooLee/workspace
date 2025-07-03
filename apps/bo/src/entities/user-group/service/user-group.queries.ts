@@ -1,10 +1,10 @@
-import { SubdirectoryUsersParam, UserGroupsParam } from '@types';
+import { UserGroupsParam } from '@types';
 import UserGroupsService from '../api/user-group';
 
 export const queryKeys = {
   usergroups: ['user-groups'] as const,
   organizationTree: ['organization-tree'] as const,
-  subdirectoryUsers: ['subdirecory-users'] as const,
+  blackwhiteUsers: ['blackwhite-users'] as const,
 };
 
 export const queryOptions = {
@@ -20,10 +20,8 @@ export const queryOptions = {
     cacheTime: 0,
     staleTime: 0,
   }),
-  subdirectoryUsers: (params: Partial<SubdirectoryUsersParam>) => ({
-    queryKey: queryKeys.subdirectoryUsers,
-    queryFn: () => UserGroupsService.subdirectoryUsers(params),
-    cacheTime: 0,
-    staleTime: 0,
+  blackwhiteUsers: (params: any) => ({
+    queryKey: ['blackwhite-users', params.companyId, params.page],
+    queryFn: () => UserGroupsService.fetchBlackwhiteUsers(params),
   }),
 };
