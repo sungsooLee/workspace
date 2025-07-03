@@ -6,7 +6,7 @@ import { useFetchAuthUser } from '@learnway/auth/entities';
 
 import { ScormHandler } from '../service/scorm-handler';
 
-import { useGetScormRteScoUrl } from '@entities/scorm/service/scorm-rte.hook';
+import { useGetScormRteScoInfo } from '@entities/scorm/service/scorm-rte.hook';
 
 export interface ScormPlayerConfigProperties {
   /** 과정 차수 ID */
@@ -32,7 +32,7 @@ const LearningWindowScormPlayerComponent: FC<any> = ({
   const [queryParam, setQueryParam] = useState<any>();
 
   const { data: loginUser } = useFetchAuthUser();
-  const { data: scormInfo } = useGetScormRteScoUrl(queryParam);
+  const { data: scormInfo } = useGetScormRteScoInfo(queryParam);
   useEffect(() => {
     if (!scormConfig) return;
     setQueryParam(scormConfig);

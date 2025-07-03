@@ -9,7 +9,7 @@ interface LearningWindowStoreData {
   playInfo: any;
   setBaseInfo: (v: any) => void;
 }
-const getLessonInfo = (nowCurriculum: any, moduleId?: number, lessonId?: number) => {
+const getLessonInfo = (baseInfo: any, nowCurriculum: any, moduleId?: number, lessonId?: number) => {
   if (!nowCurriculum.moduleList || nowCurriculum.moduleList.size === 0) {
     console.error('moduleList is not Set or List empity', nowCurriculum);
     return;
@@ -25,6 +25,9 @@ const getLessonInfo = (nowCurriculum: any, moduleId?: number, lessonId?: number)
   let lesson = module.lessonList.find((l: any) => l.lessonId === lessonId);
   if (!lesson) lesson = module.lessonList[0];
   const playInfo = {
+    courseId: baseInfo.courseId,
+    sequenceId: baseInfo.sequenceId,
+    curriculumId: baseInfo.curriculumId,
     moduleId: module.moduleId,
     mappingModuleType: module.mappingModuleType,
     lessonId: lesson.lessonId,
@@ -42,8 +45,8 @@ export const useLearningWindowStore = create<LearningWindowStoreData>((set, get)
   playInfo: undefined,
 
   setPlayInfo(moduleId: number, lessonId: number) {
-    const nowCurriculum = get().curriculum;
-    const playInfo = getLessonInfo(nowCurriculum, moduleId, lessonId);
+    const { curriculum: nowCurriculum, baseInfo: nowBaseInfo } = get();
+    const playInfo = getLessonInfo(nowBaseInfo, nowCurriculum, moduleId, lessonId);
 
     set((state) => ({ ...state, playInfo: playInfo }));
   },
@@ -54,7 +57,7 @@ export const useLearningWindowStore = create<LearningWindowStoreData>((set, get)
         .getQueryClient()
         .fetchQuery(curriculumnQueryOptions.detail(v.curriculumId));
       console.log('retval', retval);
-      const playInfo = getLessonInfo(retval);
+      const playInfo = getLessonInfo(v, retval);
       console.log('playInfo', playInfo);
       set((state) => ({ baseInfo: v, curriculum: retval, playInfo: playInfo }));
     })();

@@ -9,11 +9,11 @@ export const scormRteQueryKeys = {
 };
 
 export const scormRteQueryOptions = {
-  scoUrl: (param?: any) =>
+  scoInfo: (param?: any) =>
     param
       ? {
           queryKey: scormRteQueryKeys.scoUrl(param),
-          queryFn: () => ScormRteService.getScoUrl(param),
+          queryFn: () => ScormRteService.getScoInfo(param),
         }
       : getQuerySkipToken<any>(),
 };
