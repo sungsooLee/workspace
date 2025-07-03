@@ -14,11 +14,10 @@ import { useS3Uploader } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { LEARNING_TYPE } from '@learnway/config';
 import { t } from 'i18next';
-import { ChannelChoiceModal } from '@features/shared';
 
 interface Props {
   channel: {
-    channelId: string;
+    channelUuid: string;
     channelName: string;
   };
   type: LEARNING_TYPE;
@@ -43,7 +42,7 @@ const acceptFiles = {
 };
 
 const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) => {
-  const { close, open } = useModal();
+  const { close } = useModal();
   const maxFileCount = 100;
   const { stats, files, addFiles, onPause, onRetry, onResume, onRemove, inputAccept } =
     useS3Uploader({
@@ -73,7 +72,7 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
   useEffect(() => {
     if (stats.status === 'validating-error' && files.length === 1) {
       if (files[0].message === 'size error') {
-        setErrorMessage('LABEL.messages.learningResourceFileUploadModal.sizeError');
+        setErrorMessage(t('LABEL.messages.learningResourceFileUploadModal.sizeError'));
       }
       if (files[0].message === 'extension error') {
         setErrorMessage(t('LABEL.messages.learningResourceFileUploadModal.extensionError'));
