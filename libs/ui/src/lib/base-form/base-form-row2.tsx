@@ -110,7 +110,7 @@ const DynamicFormContainer: FC<FormRowProps> = ({
   // fieldConfig가 제공되면 필드를 등록하고 validation 설정
   useEffect(() => {
     if (fieldConfig && provider.registerField) {
-      console.log('fieldConfig', fieldConfig);
+      // console.log('fieldConfig', fieldConfig);
       // FormRow의 name prop을 fieldConfig.name으로 자동 설정
       const configWithName = { ...fieldConfig, name } as FormConfig;
       provider.registerField(configWithName);

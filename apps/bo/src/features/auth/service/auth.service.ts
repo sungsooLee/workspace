@@ -3,6 +3,7 @@ import {
   useLoginUser,
   useReissue,
   useUpdateUser,
+  useUpdateAuthUser,
   useAsycFetchMenus,
 } from '@learnway/auth/entities';
 import { AUTH_ERROR_CODE } from '@learnway/auth/features/auth';
@@ -12,6 +13,7 @@ import { useModal } from '@learnway/ui';
 import { cookieService, MutateCallback } from '@learnway/shared';
 import { usePermissionStore } from '../../../shared/lib/permission-store';
 import { t } from 'i18next';
+import RoleManagerService from '../../../entities/role/api/role-manager';
 
 interface LoginParams {
   username: string;
@@ -25,7 +27,17 @@ export function useAuthSignin() {
   const { reissue } = useReissue();
   const { updateMenu } = useUpdateUser();
   const { asyncMenus } = useAsycFetchMenus();
+  const { update: updateAuthUser } = useUpdateAuthUser();
   // const { alert: openAlert } = useModal();
+
+  // 공통 함수: 메뉴와 역할 정보 업데이트
+  const updateMenusAndRoles = async (tenantId: number) => {
+    const [menus, myRoles] = await Promise.all([
+      asyncMenus(tenantId),
+      RoleManagerService.fetchMyRoles('BO'),
+    ]);
+    return updateAuthUser({ menus, myRoles });
+  };
 
   return {
     login: async (
@@ -35,31 +47,27 @@ export function useAuthSignin() {
       return await login(payload, {
         ...callback,
         onSuccess: async (data, variables, context) => {
-          const menus = await asyncMenus(data.activeTenant?.tenantId);
-
-          if (payload.saveId) {
-            cookieService.set('SAVED_USER_ID', payload.username);
-          } else {
-            cookieService.remove('SAVED_USER_ID');
-          }
-          callback?.onSuccess && callback.onSuccess(updateMenu(menus), {}, {});
+          // 메뉴와 역할 정보 업데이트
+          const updatedUser = await updateMenusAndRoles(data.activeTenant?.tenantId);
+          // 아이디 저장 여부 값에 따라 쿠키 설정
+          payload.saveId
+            ? cookieService.set('SAVED_USER_ID', payload.username)
+            : cookieService.remove('SAVED_USER_ID');
+          // callback 실행
+          callback?.onSuccess?.(updatedUser, {}, {});
         },
         onError: async (error, variables, context) => {
           // loginErrorAlert(error);
           callback?.onError && callback.onError(error, variables, context);
         },
       });
-      /*
-      } catch (e) {
-        console.log('login error ', e);
-        throw e;
-      }*/
     },
     reissue: async (): Promise<AuthUser | undefined> => {
       const user = await reissue();
-      const menus = await asyncMenus(user?.activeTenant.tenantId);
+      // 메뉴와 역할 정보 업데이트
+      const updatedUser = await updateMenusAndRoles(user.activeTenant?.tenantId);
       // await usePermissionStore.getState().fetchPermissions(); //임시 사용가능한 API 목록 Fetch
-      return updateMenu(menus);
+      return updatedUser;
     },
   };
 }

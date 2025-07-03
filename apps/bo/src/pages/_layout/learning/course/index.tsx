@@ -5,7 +5,7 @@ import { GridExcelDownloadButton, GridExcelUploadButton } from '@features/shared
 import { LMSApiPrefix } from '@learnway/config';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import { Button, ContentsRow, Divider, GridBox, Input, useGridBox, useModal } from '@learnway/ui';
-import { FormRow2, SearchBoxForm } from '@shared/ui';
+import { FormRow2, SearchBoxForm, TenantChannelDropdownFormField } from '@shared/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { CoursesQueryParams } from '@types';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
@@ -15,6 +15,7 @@ import { t } from 'i18next';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { generateYears } from '@learnway/shared';
+import { queryKeys, useFetchAuthUser } from '@learnway/auth/entities';
 
 export const Route = createFileRoute('/_layout/learning/course/')({
   component: RouteComponent,
@@ -24,9 +25,12 @@ function RouteComponent() {
   const router = useRouter();
   const { t } = useTranslation();
   const { open: openModal } = useModal();
-  const { provider, getValues, onSubmit } = useDynamicForm2();
+  const { provider, getValues, onSubmit, watch } = useDynamicForm2();
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
   const [selectedCourses, setSelectedCourses] = useState<any[]>([]);
+
+  const { data: authUser } = useFetchAuthUser(); // 로그인 시 정보
+  console.log('authUser', { authUser });
 
   /**
    * 검색 실행 시 호출되는 핸들러
@@ -72,7 +76,7 @@ function RouteComponent() {
   };
 
   // console.log(generateYears(10));
-  console.log(generateYears(10))
+  console.log(generateYears(10));
 
   return (
     <PageContainer>
@@ -99,9 +103,16 @@ function RouteComponent() {
             {/*테넌트*/}
             <FormRow2
               provider={provider}
-              name={'tenant'}
+              name={'tenantId'}
               label={t('LABEL.form.label.tenant')}
-              element={<DropdownFormField options={[]} presetOptionLabel={t('LABEL.form.label.select', '선택')} />}
+              element={
+                <DropdownFormField
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['manual.bo.my.tenant.tenantId'],
+                  }}
+                  presetOptionLabel={t('LABEL.form.label.select', '선택')}
+                />
+              }
               validation={{
                 required: true,
                 format: 'object',
@@ -110,9 +121,9 @@ function RouteComponent() {
             {/*채널*/}
             <FormRow2
               provider={provider}
-              name={'channel'}
+              name={'channelUuid'}
               label={t('LABEL.form.label.channel')}
-              element={<DropdownFormField options={[]} presetOptionLabel={t('LABEL.form.label.select')} />}
+              element={<TenantChannelDropdownFormField tenantId={watch('tenantId')} />}
               validation={{
                 required: true,
                 format: 'object',
@@ -123,16 +134,26 @@ function RouteComponent() {
               provider={provider}
               name={'openingDate'}
               label={t('LABEL.form.label.openingDate')}
-              element={<DropdownFormField options={generateYears(10)} presetOptionLabel={t('LABEL.form.label.all')} />}
+              element={
+                <DropdownFormField
+                  options={generateYears(10)}
+                  presetOptionLabel={t('LABEL.form.label.all')}
+                />
+              }
             />
             {/*과정유형*/}
             <FormRow2
               provider={provider}
               name={'courseType'}
               label={t('LABEL.form.label.courseType')}
-              element={<DropdownFormField presetOptionLabel={t('LABEL.form.label.all')} optionsConfig={{
-                codeGroup: CODE_GROUP['lms.course.CourseType']
-              }} />}
+              element={
+                <DropdownFormField
+                  presetOptionLabel={t('LABEL.form.label.all')}
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['lms.course.CourseType'],
+                  }}
+                />
+              }
             />
           </ContentsRow>
           <ContentsRow>
@@ -141,9 +162,14 @@ function RouteComponent() {
               provider={provider}
               name={'useYn'}
               label={t('LABEL.form.label.useYn')}
-              element={<DropdownFormField presetOptionLabel={t('LABEL.form.label.all')} optionsConfig={{
-                codeGroup: CODE_GROUP['mock.options.use']
-              }} />}
+              element={
+                <DropdownFormField
+                  presetOptionLabel={t('LABEL.form.label.all')}
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['mock.options.use'],
+                  }}
+                />
+              }
             />
             {/* 담당자/운영자 */}
             <FormRow2

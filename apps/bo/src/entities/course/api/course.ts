@@ -39,7 +39,7 @@ export default class CourseService {
    * @returns 생성된 과정 정보 Promise.
    */
   static async create(payload: Course): Promise<Course> {
-    return httpService.post<Course>(`${LMSApiPrefix()}/wizard/new`, payload);
+    return httpService.post<Course>(`${LMSApiPrefix()}/course/wizard/new`, payload);
   }
 
   /**
