@@ -28,6 +28,7 @@ import { CompanyShuttleModal, CompanyChoiceModal, UserChoiceModal } from '@featu
 import TenantService from '@entities/tenant/api/tenant';
 import { isEqual } from 'lodash';
 import { EnDeviceType, EnUseCategory } from '@types';
+import { SingleAttachmentFormField } from '@shared/ui/form/single-attachment-form-field';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/management/regist')({
   component: RouteComponent,
@@ -152,7 +153,7 @@ function RouteComponent() {
             <FormRow
               provider={provider}
               name="logoImageUrl"
-              element={<ThumbnailListFormField uploadConfig={s3UploadConfig} />}
+              element={<ThumbnailListFormField uploadConfig={s3UploadConfig} max={1}/>}
             />
           </ContentsRow>
           <ContentsRow>
