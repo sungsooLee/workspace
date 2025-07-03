@@ -395,6 +395,10 @@ function LearningResourceTableComponent() {
         showNumberingColumn
         multiple
         onRowsSelect={setSelectedRows}
+        getRowClassName={(row) => {
+          // if (row == child) return 'bg-[--secondary9]';
+          return '';
+        }}
         customButtonNode={
           <>
             <Button
