@@ -9,9 +9,6 @@
       & > span {
         @apply flex h-full min-h-[38px] w-full items-center pl-[6px] text-left text-[14px] leading-[22px] text-[var(--gray9)];
       }
-      &:hover {
-        @apply bg-[#EDFCFF];
-      }
       & > [class*='accordion_title'] {
         &[class*='active'] {
           @apply bg-[#EDFCFF] !text-[var(--secondary1)];
@@ -49,6 +46,16 @@
         svg {
           @apply stroke-[var(--gray9)];
         }
+      }
+    }
+  }
+}
+
+[class*='nlp--lnb'] .start {
+  & > .accordion_item {
+    & > .accordion_btn {
+      &:hover {
+        @apply bg-[#EDFCFF];
       }
     }
   }
