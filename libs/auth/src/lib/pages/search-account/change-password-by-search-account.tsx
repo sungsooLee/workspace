@@ -50,8 +50,8 @@ export function ChangePasswordBySearchAccountPage({ route }: any) {
 
   const handleSuccess = () => {
     openAlert({
-      title: t('LABEL.message.changePasswordSuccess'),
-      content: t('LABEL.message.changePasswordSuccessGuide'),
+      title: t('LABEL.messages.changePasswordSuccess'),
+      content: t('LABEL.messages.changePasswordSuccessGuide'),
     });
     router.navigate({ to: '/login' });
   };
@@ -74,13 +74,13 @@ export function ChangePasswordBySearchAccountPage({ route }: any) {
           </div>
 
           <NoticeBox title={t('LABEL.common.caution')} className={styles.signup_noti}>
-            <dd>{t('LABEL.message.cautionPasswordInput01')}</dd>
-            <dd>{t('LABEL.message.cautionPasswordInput02')}</dd>
-            <dd>{t('LABEL.message.cautionPasswordInput03')}</dd>
-            <dd>{t('LABEL.message.cautionPasswordInput04')}</dd>
-            <dd>{t('LABEL.message.cautionPasswordInput05')}</dd>
+            <dd>{t('LABEL.messages.cautionPasswordInput01')}</dd>
+            <dd>{t('LABEL.messages.cautionPasswordInput02')}</dd>
+            <dd>{t('LABEL.messages.cautionPasswordInput03')}</dd>
+            <dd>{t('LABEL.messages.cautionPasswordInput04')}</dd>
+            <dd>{t('LABEL.messages.cautionPasswordInput05')}</dd>
             <dd>
-              {t('LABEL.message.cautionPasswordInput06')} <GoogleOtpGuideButton />
+              {t('LABEL.messages.cautionPasswordInput06')} <GoogleOtpGuideButton />
             </dd>
           </NoticeBox>
 
@@ -131,7 +131,7 @@ const passwordFormConfig: DynamicFormConfig = {
           fn: (values: Record<string, any>) => {
             return values.password === values.confirm_password ? false : true;
           },
-          message: 'LABEL.message.validationConfirmPassword',
+          message: 'LABEL.messages.validationConfirmPassword',
           path: 'confirm_password',
         },
       ],

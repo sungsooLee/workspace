@@ -204,7 +204,7 @@ export function useLoginTimer() {
   async function handleReissue() {
     console.log('handleReissue');
     openConfirm({
-      title: t('LABEL.message.loginExtensionAlert'),
+      title: t('LABEL.messages.loginExtensionAlert'),
       content: createElement(SessionTimeoutConfirm),
       okButtonLabel: t('LABEL.common.loginExtension'),
       cancelButtonLabel: t('LABEL.common.cancel'),

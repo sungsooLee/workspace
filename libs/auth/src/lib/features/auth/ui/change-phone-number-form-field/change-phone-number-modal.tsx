@@ -121,7 +121,7 @@ const ChangePhoneNumberModalComponent = ({ widget }: { widget: any }) => {
         onSuccess: async () => {
           updatePhoneNumber(payload, {
             onSuccess: async (d, variables, context) => {
-              await alert('LABEL.message.updatePhoneNumberResultMessage');
+              await alert('LABEL.messages.updatePhoneNumberResultMessage');
               closeModal({
                 number: variables.newPhoneNumber,
                 nationCode: variables.newPhoneNumberNationCode,
