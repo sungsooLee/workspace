@@ -21,8 +21,6 @@ export interface ScormPlayerConfigProperties {
   orgnId: number;
   /** Scorm Manifest Item element Id */
   scoId: string;
-
-  itemURL: string;
 }
 
 const ScormPlayerComponent: FC<any> = ({
@@ -34,25 +32,25 @@ const ScormPlayerComponent: FC<any> = ({
   const [queryParam, setQueryParam] = useState<any>();
 
   const { data: loginUser } = useFetchAuthUser();
+  const { data: scormInfo } = useGetScormRteScoUrl(queryParam);
+  useEffect(() => {
+    if (!scormConfig) return;
+    setQueryParam(scormConfig);
+  }, [scormConfig]);
 
   useEffect(() => {
     if (!loginUser) return;
-    if (!scormConfig) return;
-    const param = {
-      ...scormConfig,
-    };
-
-    setQueryParam(param);
-
+    if (!scormInfo) return;
+    console.log(scormInfo);
     const win: any = window;
 
-    let itemUrl = scormConfig.itemURL;
+    let itemUrl = scormInfo.itemURL;
 
     if (win.__ENV__?.APP_ENV === 'local') {
       const url = new URL(itemUrl);
       itemUrl = url.pathname;
     }
-    win.API_1484_11 = new ScormHandler((loginUser as any).accessToken, scormConfig);
+    win.API_1484_11 = new ScormHandler();
 
     setIframeUrl(itemUrl);
     return () => {
@@ -60,7 +58,7 @@ const ScormPlayerComponent: FC<any> = ({
       const win: any = window;
       delete win.API_1484_11;
     };
-  }, [loginUser, scormConfig]);
+  }, [loginUser, scormInfo]);
 
   return (
     <div className={`${styles.start} ${styles.iframe}`}>

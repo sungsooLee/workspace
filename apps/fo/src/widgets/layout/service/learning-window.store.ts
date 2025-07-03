@@ -13,7 +13,7 @@ interface LearningWindowStoreData {
 const getLessonInfo = (nowCurriculum: any, moduleId?: number, lessonId?: number) => {
   let module = nowCurriculum.moduleList.find((m: any) => m.moduleId === moduleId);
   if (!module) module = nowCurriculum.moduleList[0];
-  let lesson = module.lessonList.find((l: any) => l.lessonId === lessonId)[0];
+  let lesson = module.lessonList.find((l: any) => l.lessonId === lessonId);
   if (!lesson) lesson = module.lessonList[0];
   const playInfo = {
     moduleId: module.moduleId,
@@ -44,7 +44,9 @@ export const useLearningWindowStore = create<LearningWindowStoreData>((set, get)
       const retval = await queryConfig
         .getQueryClient()
         .fetchQuery(curriculumnQueryOptions.detail(v.curriculumId));
+      console.log('retval', retval);
       const playInfo = getLessonInfo(retval);
+      console.log('playInfo', playInfo);
       set((state) => ({ baseInfo: v, curriculum: retval, playInfo: playInfo }));
     })();
   },

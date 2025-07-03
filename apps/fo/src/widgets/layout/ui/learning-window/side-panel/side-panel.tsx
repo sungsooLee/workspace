@@ -29,7 +29,7 @@ interface SidePanelProps {
 }
 
 const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
-  const { curriculum, setBaseInfo } = useLearningWindowStore((state) => state);
+  const { curriculum, playInfo } = useLearningWindowStore((state) => state);
   const { open: openModal } = useModal();
 
   const [menuSelected, setMenuSelected] = useState(false); // content 영역 show/hide
@@ -68,7 +68,6 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
     { tit: 'FAQ', icon: IcoLearning04 },
   ];
 
-  console.log('~~~~~~~', curriculum);
   return (
     <div className={`${styles.start} ${menuSelected ? styles.active : ''}`}>
       {isMobile || (
@@ -103,6 +102,11 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
                                     return (
                                       <li
                                         key={`learning-window-lesson-${module.moduleId}_${lesson.lessonId}`}
+                                        className={
+                                          playInfo && playInfo.lessonId === lesson.lessonId
+                                            ? styles.active
+                                            : ''
+                                        }
                                       >
                                         <div className={styles.step_box}>
                                           <ProgressCheck progress={100} />

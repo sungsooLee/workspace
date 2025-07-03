@@ -17,6 +17,7 @@ import styles from '@learnway/styles/fo/pages/_layout/my-page/privacy/withdraw-m
 import { ScormPlayer, ScormPlayerConfigProperties } from '@features/learning-window';
 import { useGetContentDetail } from '@entities/content/service/content.hook';
 import { useLearningWindowStore } from '@widgets/layout/service/learning-window.store';
+import { useGetScormRteScoUrl } from '@entities/scorm/service/scorm-rte.hook';
 
 export const Route = createFileRoute('/_learning-window/learning-window/')({
   component: RouteComponent,
@@ -26,30 +27,28 @@ function RouteComponent() {
   const router = useRouter();
   const routerState = useRouterState();
 
-  const contentUuid = '2f17e8a6-a160-4768-8bd0-0f5f74b2acdc';
   const [scormConfig, setScormConfig] = useState<ScormPlayerConfigProperties>();
 
-  const { curriculum, setBaseInfo } = useLearningWindowStore((state) => state);
+  const { curriculum, playInfo, setBaseInfo } = useLearningWindowStore((state) => state);
+  const { data: scormInfo } = useGetScormRteScoUrl(scormConfig);
 
   useEffect(() => {
-    if (!curriculum) return;
+    if (!scormInfo) return;
+    console.log(scormInfo);
+  }, [scormInfo]);
 
-    // if (data.children && data.children.length > 0) {
-    //   if (data.children[0].items.length > 0) {
-    //     const baseItem = data.children[0];
-    //     const showItem = baseItem.items[0];
-    //     setScormConfig({
-    //       contentUuid: contentUuid,
-    //       curriculumId: 1,
-    //       orgnId: baseItem.orgnId,
-    //       sequenceId: 1,
-    //       courceId: 1,
-    //       scoId: showItem.scoId,
-    //       itemURL: showItem.itemUrl,
-    //     });
-    //   }
-    // }
-  }, [curriculum]);
+  useEffect(() => {
+    if (!playInfo) return;
+
+    setScormConfig({
+      contentUuid: playInfo.contentUuid,
+      curriculumId: playInfo.curriculumId,
+      orgnId: playInfo.orgnId,
+      sequenceId: playInfo.sequenceId,
+      courceId: playInfo.courceId,
+      scoId: playInfo.scoId,
+    });
+  }, [playInfo]);
 
   useEffect(() => {
     (async () => {

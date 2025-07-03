@@ -35,7 +35,7 @@ export class ScormHandler {
       this.srte.setUserNavRequest('_none_');
 
       // build request (ClientRTS:450)
-      var reqdata = {
+      const reqdata: any = {
         mActivityID: this.srte.getActivityID(),
         mStateID: this.srte.getStateID(),
         mStudentID: this.srte.getUserID(),
@@ -45,7 +45,7 @@ export class ScormHandler {
         mNumAttempt: this.srte.getNumAttempts(),
       };
       // post to lms : this.srte.getServletURL()
-      var resp = this.srte.send(reqdata);
+      const resp = this.srte.send(reqdata);
       // get datamodel back : reponse.mActivityData
       // set valid requests : mValidRequests
       this.dm.fromJSON(resp);
@@ -71,7 +71,7 @@ export class ScormHandler {
       return result;
     }
 
-    top.frames['LMSFrame'].setUIState(false);
+    //top.frames['LMSFrame'].setUIState(false);
 
     if (this.srte.getTerminatedState()) {
       this.srte.getErrorManager().setCurrentErrorCode('143');
@@ -111,7 +111,7 @@ export class ScormHandler {
     };
     this.dm.clearcalllist();
     // ClientRTS:1293
-    const resp: string = this.srte.send(reqdata);
+    const resp: any = this.srte.send(reqdata);
 
     if (resp.mError !== 'OK') {
       this.srte.getErrorManager().setCurrentErrorCode('101');
@@ -121,8 +121,8 @@ export class ScormHandler {
       this.dm.fromJSON(resp);
     }
 
-    top.frames['LMSFrame'].setUIState(true);
-    top.frames['LMSFrame'].refreshMenu();
+    //top.frames['LMSFrame'].setUIState(true);
+    //top.frames['LMSFrame'].refreshMenu();
 
     this.srte.log(
       'Commit Returned Error Code ' + this.srte.getErrorManager().getCurrentErrorCode(),
@@ -200,26 +200,26 @@ export class ScormHandler {
     // get value of exit...
     const exitvalue = this.dm.getValue('cmi.exit') || '';
     let tempevent = '_none_';
-    let isChoice = false;
-    let isJump = false;
+    // let isChoice = false;
+    // let isJump = false;
 
     // figure out event
     tempevent = exitvalue === 'time-out' || exitvalue === 'logout' ? 'exitAll' : exitvalue;
-    if (event.indexOf('}jump') > -1) {
-      try {
-        tempevent = /{target=(.*)}jump/.exec(foo)[1];
-      } catch (e) {
-        tempevent = '_none_';
-      }
-      isJump = true;
-    } else if (event.indexOf('}choice')) {
-      try {
-        tempevent = /{target=(.*)}choice/.exec(foo)[1];
-      } catch (e) {
-        tempevent = '_none_';
-      }
-      isChoice = true;
-    }
+    // if (event.indexOf('}jump') > -1) {
+    //   try {
+    //     tempevent = /{target=(.*)}jump/.exec(foo)[1];
+    //   } catch (e) {
+    //     tempevent = '_none_';
+    //   }
+    //   isJump = true;
+    // } else if (event.indexOf('}choice')) {
+    //   try {
+    //     tempevent = /{target=(.*)}choice/.exec(foo)[1];
+    //   } catch (e) {
+    //     tempevent = '_none_';
+    //   }
+    //   isChoice = true;
+    // }
 
     // now handle the event ClientRTS:734
     if (
@@ -231,9 +231,9 @@ export class ScormHandler {
       ) &&
       tempevent !== '_none_'
     ) {
-      if (isChoice) top.frames['LMSFrame'].doChoiceEvent(tempevent);
-      else if (isJump) top.frames['LMSFrame'].doJumpEvent(tempevent);
-      else top.frames['LMSFrame'].doNavEvent(tempevent);
+      // if (isChoice) top.frames['LMSFrame'].doChoiceEvent(tempevent);
+      // else if (isJump) top.frames['LMSFrame'].doJumpEvent(tempevent);
+      // else top.frames['LMSFrame'].doNavEvent(tempevent);
     }
 
     this.srte.log(
