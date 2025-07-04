@@ -48,6 +48,11 @@ import { IcoDownload } from '@learnway/icons';
 
 import { EnFormMode } from '@types';
 
+import {
+  useDeployTranslation,
+  useTranslation,
+} from '@entities/translation/service/translation.hook';
+
 export const Route = createLazyFileRoute('/_layout/common-popup')({
   component: RouteComponent,
 });
@@ -88,6 +93,12 @@ function RouteComponent() {
     URL.revokeObjectURL(url);
     link.remove();
   };
+
+  const { deploy } = useDeployTranslation({});
+  const handleDeployKorMenu = () => {
+    deploy({ locale: 'ko' });
+  };
+
   const handleOnSubmit = (data: any) => {
     console.log('data {} => ', data);
   };
@@ -209,6 +220,13 @@ function RouteComponent() {
               variant="primary"
               size="sm"
               onClick={handleLabelUpdate}
+            />
+            <Button
+              label="한국어 다국어 배포"
+              type="button"
+              variant="primary"
+              size="sm"
+              onClick={handleDeployKorMenu}
             />
           </ContentsRow>
           <ContentsRow>
