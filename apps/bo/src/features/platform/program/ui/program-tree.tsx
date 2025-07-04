@@ -287,7 +287,7 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
         onClose: (value: boolean) => {
           if (value) {
             createProgram(
-              { ...node, apiScope: menuScope, sortOrder: 1 },
+              { ...node, apiScope: menuScope },
               {
                 onSuccess: (data: any) => {
                   if (data && data.apiId) {
