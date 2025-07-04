@@ -5,10 +5,9 @@ import { t } from 'i18next';
 
 import { LearningWindowScormPlayer, ScormPlayerConfigProperties } from '@features/learning-window';
 import { useGetContentDetail } from '@entities/content/service/content.hook';
-import { useLearningWindow } from '@widgets/layout/service/learning-window.store';
 import { useGetScormRteScoInfo } from '@entities/scorm/service/scorm-rte.hook';
 import { LearningWindowVideoPlayer } from '@features/learning-window/ui/learning-window-video-player';
-import { EnContentType } from '@types';
+import { EnContentType, LearningWindowLayout, useLearningWindow } from '@learnway/ui';
 
 export const Route = createFileRoute('/_learning/learning-window')({
   component: RouteComponent,
@@ -21,7 +20,7 @@ function RouteComponent() {
   const [scormConfig, setScormConfig] = useState<ScormPlayerConfigProperties>();
   const [videoInfo, setVideoInfo] = useState<any>();
 
-  const { curriculum, playInfo, setBaseInfo } = useLearningWindow();
+  const { baseInfo, playInfo, setBaseInfo, setCurriculum } = useLearningWindow();
   const { data: scormInfo } = useGetScormRteScoInfo(scormConfig);
 
   useEffect(() => {
@@ -47,6 +46,9 @@ function RouteComponent() {
   }, [playInfo]);
 
   useEffect(() => {
+    if (!baseInfo) return;
+  }, [baseInfo]);
+  useEffect(() => {
     (async () => {
       const learningInfo = { ...routerState.location.state };
       console.log('state info ', learningInfo);
@@ -56,10 +58,5 @@ function RouteComponent() {
     })();
   }, []);
 
-  return (
-    <>
-      {scormConfig && <LearningWindowScormPlayer playInfo={playInfo} scormConfig={scormConfig} />}
-      {videoInfo && <LearningWindowVideoPlayer />}
-    </>
-  );
+  return <LearningWindowLayout />;
 }

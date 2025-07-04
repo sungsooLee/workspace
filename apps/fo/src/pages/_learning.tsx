@@ -11,11 +11,5 @@ export const Route = createFileRoute('/_learning')({
 function LayoutComponent() {
   const { t, i18n } = useTranslation();
   const router = useRouter();
-  return (
-    <div className={`${styles.start} ${styles.layout_wrap}`}>
-      <LearningLayout>
-        <Outlet />
-      </LearningLayout>
-    </div>
-  );
+  return <Outlet />;
 }
