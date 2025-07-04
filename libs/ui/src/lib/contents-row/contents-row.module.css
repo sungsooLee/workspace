@@ -83,6 +83,9 @@
     }
   }
 }
+[class*='dynamic-form-field-label'] > span {
+  @apply body_3_r;
+}
 .title_mode {
   @apply mb-[16px] border-b-[1px] border-solid border-[var(--gray8)] pb-[16px];
   & > div > label {
