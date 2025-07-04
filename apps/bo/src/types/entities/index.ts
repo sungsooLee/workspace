@@ -18,3 +18,4 @@ export * from './tenant';
 export * from './widgets';
 export * from './user-group';
 export * from './multilingual';
+export * from './learning-resource';

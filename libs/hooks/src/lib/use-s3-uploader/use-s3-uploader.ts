@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { UploadFile, S3UploaderConfig, UploadType, DEFAULT_MULTIPART_THRESHOLD } from './types';
-import { acceptFilesToAccept, formatDate, getRandomId } from '@learnway/shared';
+import { acceptFilesToAccept, formatDate, getDefaultLang, getRandomId } from '@learnway/shared';
 import { formatFileSize, normalizePath, updateFile } from './utils';
 import {
   createFileGroup,
@@ -15,7 +15,6 @@ import {
 } from './api';
 import { FileInfo } from '../use-file-manager/type';
 import { first, uniq } from 'lodash';
-import { getDefaultLang } from '@learnway/config';
 
 /**
  * 새로운 S3 업로더 훅 - 단순화된 구조

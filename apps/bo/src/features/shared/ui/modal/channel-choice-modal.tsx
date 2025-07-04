@@ -19,6 +19,7 @@ import { RoleInfo } from '@types';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { AuthUser } from '@learnway/auth/types';
 import { useState } from 'react';
+import { get } from 'lodash';
 
 interface Channel {
   channelUuid: string;
@@ -79,7 +80,8 @@ const ChannelChoicePopupComponent = () => {
   const handleOnConfirm = () => {
     if (!selectedRow) return;
 
-    close(selectedRow);
+    const tenantId = get(getValues(), 'tenantId');
+    close({ ...selectedRow, tenantId });
   };
 
   const handleOnClose = () => {
@@ -96,7 +98,13 @@ const ChannelChoicePopupComponent = () => {
       </ModalBody>
       <ModalFooter>
         <Button label={t('취소')} variant="gray" size="lg" onClick={handleOnClose} />
-        <Button label={t('다음')} variant="primary" size="lg" onClick={handleOnConfirm} />
+        <Button
+          label={t('다음')}
+          variant="primary"
+          size="lg"
+          onClick={handleOnConfirm}
+          disabled={!selectedRow}
+        />
       </ModalFooter>
     </ModalContainer>
   );

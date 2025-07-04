@@ -1,6 +1,6 @@
 // IA106 / NLP_BO_CMS_1060
 
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import {
   Button,
   DndFileProgress,
@@ -14,11 +14,13 @@ import { S3_PATH, useS3Uploader } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { LEARNING_TYPE } from '@learnway/config';
 import { t } from 'i18next';
+import { map } from 'lodash';
 
 interface Props {
   channel: {
     channelUuid: string;
     channelName: string;
+    tenantId: string;
   };
   type: LEARNING_TYPE;
 }
@@ -48,7 +50,6 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
     useS3Uploader({
       s3Path: S3_PATH['upload/content/original'],
       affairsType: 'CMS',
-      groupMode: 'individual',
       maxFileCount,
       maxFileSize: 20 * 1024 * 1024,
       acceptFiles: acceptFiles[type],
@@ -65,7 +66,7 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
   };
 
   const onConfirm = useCallback(async () => {
-    close(files);
+    close(map(files, 'fileUuid'));
   }, [files]);
 
   useEffect(() => {

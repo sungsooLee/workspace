@@ -1,7 +1,13 @@
 import { fileDownload, httpService } from '@learnway/shared';
 import { faker } from '@faker-js/faker';
 import { CMSApiPrefix, PMSApiPrefix } from '@learnway/config';
-import { BlogCreateReq, BlogUpdateReq, BlogWatchLogReq } from '@types';
+import {
+  BlogCreateReq,
+  BlogUpdateReq,
+  BlogWatchLogReq,
+  PostDraftVideosParams,
+  PostDraftVideosRes,
+} from '@types';
 
 export default class LearningResourceService {
   static fetchChannelsByTenantId(tenantId: string | number): Promise<any> {
@@ -15,6 +21,10 @@ export default class LearningResourceService {
 
   static fetchContents(params: any): Promise<any> {
     return httpService.get(`${CMSApiPrefix()}/contents`, params);
+  }
+
+  static postDraftVideos(params: PostDraftVideosParams): Promise<PostDraftVideosRes> {
+    return httpService.post(`${CMSApiPrefix()}/videos/draft`, params);
   }
 
   static async fetchS3FileDownload(key: string, fileName: string): Promise<void> {

@@ -1,14 +1,17 @@
-// IA102, IA105 / NLP_BO_CMS_1001, NLP_BO_CMS_1017
+// IA102, IA105, IA106 / NLP_BO_CMS_1001, NLP_BO_CMS_1017, NLP_BO_CMS_1060
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { Button, useModal } from '@learnway/ui';
 import { LearningResourceFileUploadModal, LearningTypeChoiceModal } from '@features/learning';
-import { LEARNING_TYPE } from '@learnway/config';
+import { getDefaultLang, LEARNING_TYPE } from '@learnway/config';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { useState } from 'react';
 import { ChannelChoiceModal } from '@features/shared';
 import { LearningResourceTable } from '@features/learning/ui/learning-resource';
+import { usePostDraftVideos } from '@entities/learning-resource';
+import { PostDraftVideosRes } from '@types';
+import { pick } from 'lodash';
 
 export const Route = createLazyFileRoute('/_layout/learning/learning-resource/')({
   component: RouteComponent,
@@ -19,6 +22,32 @@ function RouteComponent() {
   const { open: openModal } = useModal();
   // 등록 팝업 호출 여부
   const [displayContent, setDisplayContent] = useState(true);
+
+  const [listParam, setListParam] = useState<
+    { tenantId: string; channelUuid: string } | undefined
+  >();
+
+  const { create: postDraftVideos } = usePostDraftVideos({
+    onSuccess: (result: PostDraftVideosRes) => {
+      if (result.contents.length === 1) {
+        return router.navigate({
+          to: '/learning/resource/video/view',
+          state: {
+            contentUuid: result.contents[0].contentUuid,
+          },
+        });
+      }
+      setDisplayContent(true);
+      console.log('🚀 ~ beforeNav ~ listParam:', listParam);
+      router.navigate({
+        to: '/learning/learning-resource',
+        state: {
+          listParam,
+        },
+        replace: true,
+      });
+    },
+  });
 
   /**
    * 학습 컨텐츠를 등록하기 위한 Dialog 호출
@@ -40,14 +69,20 @@ function RouteComponent() {
           content: <ChannelChoiceModal />,
         });
         if (channelInfo) {
-          const videoUploadResult = await openModal({
+          const fileUuids = await openModal({
             content: (
               <LearningResourceFileUploadModal channel={channelInfo} type={LEARNING_TYPE.VIDEO} />
             ),
             width: 'lg',
           });
-          if (videoUploadResult) {
-            router.navigate({ to: '/learning_test/resource/view/video' });
+          if (fileUuids) {
+            setListParam(pick(channelInfo, ['tenantId', 'channelUuid']));
+            postDraftVideos({
+              languageCountryCode: getDefaultLang().toUpperCase(),
+              tenantId: channelInfo.tenantId,
+              channelUuid: channelInfo.channelUuid,
+              fileUuids,
+            });
             break;
           }
         }
