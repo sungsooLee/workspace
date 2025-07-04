@@ -23,6 +23,12 @@
       .logo_img {
         @apply h-full w-full overflow-hidden rounded-full border border-solid border-[var(--gray2)];
       }
+      .ico_area {
+        @apply flex h-full w-full items-center justify-center overflow-hidden rounded-full bg-[var(--gray3)];
+        .logo_ico {
+          @apply fill-none !stroke-white;
+        }
+      }
     }
     .name {
       @apply absolute left-0 top-0 z-[1] flex h-[120px] w-[120px] bg-transparent p-[6px];

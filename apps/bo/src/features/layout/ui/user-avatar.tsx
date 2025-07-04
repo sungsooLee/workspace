@@ -3,12 +3,11 @@ import { useTranslation } from 'react-i18next';
 // import { t } from 'i18next';
 
 import { useRouter, Link } from '@tanstack/react-router';
-import { map } from 'lodash';
 import { useCreation } from 'ahooks';
 
 import { Avatar, Popover, Button, useModal } from '@learnway/ui';
-import { IcLogOut01 } from '@learnway/icons';
-import imgLogo from '@assets/images/temp/img_temp_company_logo.png';
+import { IcLogOut01, IcoBuilding01 } from '@learnway/icons';
+import { cn } from '@learnway/shared';
 
 import styles from './user-avatar.module.css';
 import { useFetchAuthUser, useLogoutUser, useUserDetail } from '@learnway/auth/entities';
@@ -57,8 +56,12 @@ export const PopoverContent = () => {
             <Avatar
               imageUrl={authUser?.activeTenant?.logoImageUrl}
               className={styles.info_avata}
+              fallbackClassName={'bg-[var(--gray3)]'}
               fallback={
-                <img src={'https://github.com/shadcn.png'} alt="" className={styles.logo_img} />
+                <span className={styles.ico_area}>
+                  <IcoBuilding01 width={32} height={32} className={styles.logo_ico} />
+                </span>
+                // <img src={'https://github.com/shadcn.png'} alt="" className={styles.logo_img} />
               }
             />
           </span>
