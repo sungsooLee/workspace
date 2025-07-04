@@ -35,7 +35,8 @@ function RouteComponent() {
           {/* 회원유형 모듈 */}
           <div
             className={cn(memberToolFormField.signup_select, 'auth--signup-select')}
-            role="radiogroup">
+            role="radiogroup"
+          >
             <RadioCard
               options={[
                 {

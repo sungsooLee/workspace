@@ -7,9 +7,9 @@
         @apply pointer-events-auto;
       }
       & + button {
-        @apply ml-[8px] flex h-[14px] w-[14px] shrink-0 items-center justify-center rounded-full bg-[#6f798b];
+        @apply ml-[8px] flex h-[14px] !w-[14px] shrink-0 items-center justify-center !rounded-full bg-[#6f798b];
         svg {
-          @apply ml-0 h-[10px] w-[10px] stroke-[#fff];
+          @apply mx-0 h-[10px] w-[10px] stroke-[#fff];
         }
       }
     }
