@@ -1,5 +1,5 @@
 import { ShuttleGridToChips, ShuttleGridToChipsImperative } from '@learnway/ui';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useFetchUserGroups } from '@entities/user-group';
@@ -38,6 +38,10 @@ const UserGroupJobComponent = ({ tenantIds, handleSetOption }: UserGroupJobCompo
       cell: (info) => info.getValue(),
     }),
   ] as ColumnDef<any, unknown>[];
+
+  useEffect(() => {
+    if (option.length > 0) handleSetOption(option);
+  }, [option]);
 
   return (
     <ShuttleGridToChips
