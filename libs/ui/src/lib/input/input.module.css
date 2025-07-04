@@ -24,6 +24,12 @@
     .input {
       @apply text-[var(--gray8)];
     }
+    .after_area .count {
+      @apply text-[var(--gray8)];
+      .current {
+        @apply text-[var(--gray8)];
+      }
+    }
     &.focused {
       @apply border-[var(--gray1)];
     }
@@ -36,6 +42,12 @@
     .after_area {
       button svg {
         @apply stroke-[#D6DAE1];
+      }
+      .count {
+        @apply text-[var(--gray5)];
+        .current {
+          @apply text-[var(--gray5)];
+        }
       }
     }
   }

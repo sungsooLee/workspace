@@ -33,7 +33,7 @@
   }
   &.disabled {
     .label {
-      @apply text-[var(--gray5)];
+      @apply !text-[var(--gray5)];
     }
   }
   &[data-label-align='right'] > button {

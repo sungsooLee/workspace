@@ -115,7 +115,7 @@ const RoleGrantComponent: FC<{}> = ({}) => {
       <FormSubTitle
         label={'역할 부여'}
         actionNode={<Button label={'저장'} variant={'save'} size={'sm'} />}
-        lineType={'light'}
+        lineType={'dark'}
       />
       <div className={styles.contents_wrap}>
         {/* search-box */}

@@ -67,7 +67,7 @@
   }
   .input_box {
     [class*='nlp--input'] + [class*='nlp--button'] {
-      @apply !px-[10px];
+      @apply !mb-0 !h-[32px] !px-[10px];
     }
   }
   label + .input_box {

@@ -19,4 +19,7 @@
       @apply title_bo_4_b ml-[2px] text-[var(--secondary1)];
     }
   }
+  & + div {
+    @apply mt-[16px];
+  }
 }

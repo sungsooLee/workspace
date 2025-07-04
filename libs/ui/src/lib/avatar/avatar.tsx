@@ -12,18 +12,19 @@ interface AvatarComponentProps extends React.ComponentProps<typeof Primitive.Roo
   imageUrl?: string;
   fallback?: ReactNode;
   className?: string;
+  fallbackClassName?: string;
   size?: AvatarSizeType;
 }
 
 const AvatarComponent = forwardRef<React.ElementRef<typeof Primitive.Avatar>, AvatarComponentProps>(
-  ({ imageUrl, className, fallback, size = 'md' }, ref) => {
+  ({ imageUrl, className, fallbackClassName, fallback, size = 'md' }, ref) => {
     return (
       <Primitive.Root
         ref={ref}
         className={cn('nlp--avatar', className, styles.start, styles[`size--${size}`])}
       >
         <Primitive.Image className={styles.image} src={imageUrl} alt="User avatar" />
-        <Primitive.Fallback className={styles.fallback} delayMs={600}>
+        <Primitive.Fallback className={cn(styles.fallback, fallbackClassName)} delayMs={600}>
           {fallback}
         </Primitive.Fallback>
       </Primitive.Root>

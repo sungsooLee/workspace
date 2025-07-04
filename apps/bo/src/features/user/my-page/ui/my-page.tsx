@@ -14,6 +14,7 @@ import imgLogo from '@assets/images/temp/img_temp_company_logo.png';
 import contentsStyles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 import styles from './my-page.module.css';
+import { IcoBuilding01 } from '@learnway/icons';
 
 export const AvataFallback = ({ name }: { name?: string }) => {
   const firstUnit = useCreation(() => {
@@ -56,8 +57,12 @@ export function MyPage() {
                 imageUrl={authUser?.activeTenant?.logoImageUrl}
                 // imageUrl="https://github.com/shadcn.png"
                 className={styles.info_avata}
+                fallbackClassName={'bg-[var(--gray3)]'}
                 fallback={
-                  <img src={'https://github.com/shadcn.png'} alt="" className={styles.logo_img} />
+                  // <img src={'https://github.com/shadcn.png'} alt="" className={styles.logo_img} />
+                  <span className={styles.ico_area}>
+                    <IcoBuilding01 width={64} height={64} className={styles.logo_ico} />
+                  </span>
                 }
               />
             </span>
