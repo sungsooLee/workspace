@@ -76,7 +76,7 @@ const ChipComponent = forwardRef<HTMLElement, ChipComponentProps>(
 
         {/* close button */}
         {!hideCloseButton && (
-          <Button onClick={handleDeleteClick}>
+          <Button onClick={handleDeleteClick} onlyIcon>
             <IcoClose02 stroke="#131C30" className={styles.close} />
           </Button>
         )}

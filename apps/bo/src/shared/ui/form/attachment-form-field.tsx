@@ -42,7 +42,7 @@ const AttachmentFormFieldComponent = forwardRef<
     const {
       s3Path,
       affairsType,
-      languageCode = 'ko',
+      languageCode,
       groupUuid,
       groupMode = 'batch',
       auto = true,

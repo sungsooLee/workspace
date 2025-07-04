@@ -40,7 +40,7 @@
       @apply ml-[8px];
     }
     &[class*='only_icon'] {
-      @apply justify-center;
+      @apply justify-center !px-0;
       &.ts {
         @apply w-[24px] min-w-[24px];
       }

@@ -57,7 +57,7 @@ function RouteComponent() {
       <div className={cn(styles.auth_box, 'auth--box')}>
         <div className={styles.signup_info}>
           <div className={styles.step_box}>
-            <Stepper items={items} variant="check" selectedStep="step4" />
+            <Stepper items={items} variant="number" selectedStep="step4" />
           </div>
         </div>
         <h4 className={cn(styles.title, 'auth--title')}>{'관리자 권한 신청 정보'}</h4>

@@ -36,7 +36,7 @@ import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { FormRow } from '@shared/ui';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { DynamicFormConfig, S3_PATH, useDynamicForm } from '@learnway/hooks';
 import { SubContents } from '@widgets/layout/ui/container/slot/sub-contents';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 
@@ -672,7 +672,6 @@ const formConfig: DynamicFormConfig = {
       name: 'attachment',
       type: 'attachment',
       uploadConfig: {
-        languageCode: 'ko',
         affairsType: 'PMS',
         s3Path: 'upload/temp/attachment',
       },
@@ -683,9 +682,8 @@ const formConfig: DynamicFormConfig = {
       type: 'single-attachment',
       label: '약도 이미지 첨부',
       uploadConfig: {
-        languageCode: 'ko',
         affairsType: 'LMS',
-        s3Path: 'upload/content/image',
+        s3Path: S3_PATH['upload/content/image'],
         acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
       },
       value: '',

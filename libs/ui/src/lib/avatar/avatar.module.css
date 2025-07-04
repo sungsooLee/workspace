@@ -28,5 +28,5 @@
 }
 
 .fallback {
-  @apply flex h-full w-full items-center justify-center bg-[#00afd5] font-semibold leading-[140%] text-white;
+  @apply flex h-full w-full items-center justify-center rounded-full bg-[#00afd5] font-semibold leading-[140%] text-white;
 }

@@ -32,6 +32,10 @@ const UserGroupCustomComponent = ({
     }
   }, [data]);
 
+  useEffect(() => {
+    if (selectedItems.length > 0) handleSetOption(selectedItems);
+  }, [selectedItems]);
+
   return (
     <div className={styles.wrap}>
       <div className={cn(styles.pop_contents, 'h-full')}>

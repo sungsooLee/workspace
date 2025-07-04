@@ -10,7 +10,10 @@
         @apply body_3_b block text-center text-[var(--gray9)];
       }
       .icon {
-        @apply mb-[16px] inline-block h-[32px] w-auto fill-none stroke-[#06226A];
+        @apply mb-[16px] flex h-[32px] w-auto shrink-0 fill-none stroke-[#06226A];
+        svg {
+          @apply !h-full !w-full;
+        }
       }
       .description {
         @apply body_bo_4_r text-[var(--gray8)];

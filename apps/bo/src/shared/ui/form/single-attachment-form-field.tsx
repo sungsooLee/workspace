@@ -44,13 +44,13 @@ const SingleAttachmentFormFieldComponent = forwardRef<
     const {
       s3Path,
       affairsType,
-      languageCode = 'ko',
+      languageCode,
       groupUuid,
       groupMode = 'batch',
       auto = true,
       async = true,
       acceptFiles = [],
-      maxFileCount = 10,
+      maxFileCount = 1,
       maxFileSize = 5 * 1024 * 1024,
     } = uploadConfig;
 

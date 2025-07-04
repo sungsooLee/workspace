@@ -152,7 +152,7 @@ const MyRoleExtendModalComponent: FC<{
             <FormRow provider={provider} name={'roleName'} />
             <FormRow provider={provider} name={'currentRolePeriod'} />
           </ContentsRow>
-          <FormSubTitle className="mt-3" label={t('관리자 권한 신청 정보')} />
+          <FormSubTitle label={t('관리자 권한 신청 정보')} />
           <FormDisplay
             provider={provider}
             dependencies={[{ name: 'requestRolePeriodEnable', value: true }]}
@@ -184,7 +184,7 @@ const MyRoleExtendModalComponent: FC<{
               />
             </ContentsRow>
           </FormDisplay> */}
-          <ContentsRow className="mb-4">
+          <ContentsRow>
             <FormRow
               provider={provider}
               name={'reason'}
