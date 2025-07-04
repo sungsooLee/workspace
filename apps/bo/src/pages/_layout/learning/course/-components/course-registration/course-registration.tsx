@@ -6,7 +6,7 @@ import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import { DropdownFormField } from '@features/form';
 import { TabFormRef } from '../common/tab-form-ref';
 import { FormDisplay } from '@features/form/ui/form-display';
-import { Course, CourseConfig } from '@types';
+import { Course, CourseConfig, CourseConfigOptionType } from '@types';
 
 interface CourseRegistrationProps {
   dummy?: any;
@@ -60,7 +60,7 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationPro
             provider={provider}
             name={'isEnrollRequired'}
             label={'수강신청'}
-            element={<SwitchFormField />}
+            element={<SwitchFormField disabled={courseConfig.enrollOption === 'IMPOSSIBLE'} />}
           />
         </ContentsRow>
         {/*승인 결재 라인, 정원*/}

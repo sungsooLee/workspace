@@ -160,7 +160,7 @@ export interface Course {
   /**
    * 학습대상-유저그룹(화이트 그룹리스트)
    */
-  targetList?: Array<any>;
+  targetList?: Array<CourseTarget>;
   /**
    * 언어 설정
    */
@@ -542,43 +542,45 @@ export interface CourseConfigQueryParams {
 /**
  * 과정 항목 설정 정보 응답
  */
+export type CourseConfigOptionType = 'IMPOSSIBLE' | 'OPTIONAL' | 'MANDATORY';
+
 export interface CourseConfig {
   /**
    * 수강신청 설정
    */
-  enrollOption: string;
+  enrollOption: CourseConfigOptionType;
   /**
    * 학습 환경 설정
    */
-  learningEnvOption: string;
+  learningEnvOption: CourseConfigOptionType;
   /**
    * 학습 제어 설정
    */
-  learningControlOption: string;
+  learningControlOption: CourseConfigOptionType;
   /**
    * 이수기준 설정
    */
-  passOption: string;
+  passOption: CourseConfigOptionType;
   /**
    * 커뮤니티 설정
    */
-  communicationOption: string;
+  communicationOption: CourseConfigOptionType;
   /**
    * 강사 설정
    */
-  instructorOption: string;
+  instructorOption: CourseConfigOptionType;
   /**
    * 교재 설정
    */
-  textBookOption: string;
+  textBookOption: CourseConfigOptionType;
   /**
    * 사전/연관학습 설정
    */
-  relatedCourseOption: string;
+  relatedCourseOption: CourseConfigOptionType;
   /**
    * 행정항목 설정
    */
-  adminDataOption: string;
+  adminDataOption: CourseConfigOptionType;
   /**
    * 사용가능 컨텐츠 설정
    */
@@ -586,5 +588,16 @@ export interface CourseConfig {
   /**
    * 파일 저장소 유형
    */
-  fileStorageType: string;
+  fileStorageType: 'AWS_INTERNAL' | 'AWS_EXTERNAL';
+}
+
+/**
+ * 학습대상
+ */
+export interface CourseTarget {
+  groupId: number;
+  combiners: Array<{
+    combineType: string;
+    combineValue: number;
+  }>;
 }

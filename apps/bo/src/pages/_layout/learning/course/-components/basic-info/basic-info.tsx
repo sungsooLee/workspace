@@ -43,12 +43,6 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
       useDynamicForm2();
 
     const channelUuid = watch('channelUuid');
-    const courseType = watch('courseType');
-
-    // const { data: courseConfig } = useFetchCourseConfig({
-    //   channelId: channelUuid,
-    //   courseType: courseType,
-    // });
 
     console.log('----- basic', { formData, courseConfig });
 
@@ -107,12 +101,8 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             element={
               <DropdownFormField
                 optionsConfig={{
-                  api: {
-                    fn: () => RoleManagerService.fetchMyRoles('BO'),
-                    select: (data: any) => data?.channels || [],
-                  },
+                  codeGroup: CODE_GROUP['manual.bo.my.channels'],
                 }}
-                options={[{ label: 'channel A', value: 9999 }]}
               />
             }
           />
@@ -130,19 +120,20 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
               <CheckboxGroupFormField
                 key={`tenant-${channelUuid}`}
                 optionsConfig={{
-                  api: {
-                    fn: () => ChannelService.getChannelDetail(channelUuid),
-                    select: (data: any) => data?.tenantList || [],
-                    enabled: !!channelUuid,
-                  },
-                  labelField: 'tenantName',
-                  valueField: 'tenantId',
+                  codeGroup: CODE_GROUP['manual.bo.my.tenant.tenantId'],
+                  // api: {
+                  //   fn: () => ChannelService.getChannelDetail(channelUuid),
+                  //   select: (data: any) => data?.tenantList || [],
+                  //   enabled: !!channelUuid,
+                  // },
+                  // labelField: 'tenantName',
+                  // valueField: 'tenantId',
                 }}
-                options={[
-                  { tenantName: 'tenant A', tenantId: 1 },
-                  { tenantName: 'tenant B', tenantId: 2 },
-                  { tenantName: 'tenant C', tenantId: 3 },
-                ]}
+                // options={[
+                //   { tenantName: 'tenant A', tenantId: 1 },
+                //   { tenantName: 'tenant B', tenantId: 2 },
+                //   { tenantName: 'tenant C', tenantId: 3 },
+                // ]}
               />
             }
           />
@@ -184,9 +175,19 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
                 modalConfig={() => ({
                   content: <UserGroupTabsChoiceModal tenantIds={getValues().tenantIds} />,
                 })}
-                transformModalData={(data: any) => console.log(data)}
+                transformModalData={(modalData: Array<any>) => {
+                  return modalData.map((d: any) => ({
+                    groupId: undefined, // 추가되는 경우 그룹ID 없음
+                    combiners: {
+                      combineType: 'JOB_ROLE',
+                      combineValue: d.id,
+                    },
+                    name: d.name,
+                    // combiners: d?.combiners || [],
+                  }));
+                }}
                 chipList={{
-                  labelField: 'fullPath',
+                  labelField: 'name',
                   valueField: 'key',
                   wordwrap: true,
                 }}
@@ -326,8 +327,9 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
                   content: <UserChoiceModal />,
                 }}
                 transformModalData={(data: any) => ({
-                  coordinatorId: data.uuid,
+                  coordinatorUuid: data.uuid,
                   coordinatorName: `${data.name}/${data?.dept?.deptName}`,
+                  coordinatorDeptName: `${data.name}/${data?.dept?.deptName}`,
                 })}
               />
             }
@@ -369,8 +371,9 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
                   content: <UserChoiceModal />,
                 }}
                 transformModalData={(data: any) => ({
-                  operatorId: data.uuid,
+                  operatorUuid: data.uuid,
                   operatorName: `${data.name}/${data?.dept?.deptName}`,
+                  operatorDeptName: `${data.name}/${data?.dept?.deptName}`,
                 })}
               />
             }

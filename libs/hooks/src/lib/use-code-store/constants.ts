@@ -122,5 +122,6 @@ export const CODE_GROUP = {
   'manual.bo.my.tenant.tenantId': 'manual.bo.my.tenant.tenantId', // 나의 테넌트
   'manual.bo.my.role.roleId': 'manual.bo.my.role.roleId', // 나의 역할
   'manual.code.expired': 'manual.code.expired', // 만료여부 정상,만료
+  'manual.bo.my.channels': 'manual.bo.my.channelsd', // 로그인 유저 채널정보 (api 개발 전 임시 사용)
 };
 export type CODE_GROUP_TYPE = (typeof CODE_GROUP)[keyof typeof CODE_GROUP];

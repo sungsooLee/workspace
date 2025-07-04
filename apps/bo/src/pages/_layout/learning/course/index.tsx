@@ -38,8 +38,6 @@ function RouteComponent() {
     };
   }, [selectedRows]);
 
-  console.log('buttonState', buttonState);
-
   /**
    * 검색 실행 시 호출되는 핸들러
    * @param {any} data - 검색 조건 데이터
@@ -82,9 +80,6 @@ function RouteComponent() {
     });
     // 선택한 유형의 등록 페이지로 이동
   };
-
-  // console.log(generateYears(10));
-  console.log(generateYears(10));
 
   return (
     <PageContainer>

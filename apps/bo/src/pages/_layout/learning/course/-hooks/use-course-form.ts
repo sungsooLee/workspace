@@ -1,7 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
 import { TabFormRef } from '../-components/common/tab-form-ref';
 
-// import { useUpdateCourseWizard1 } from '@entities/course/api/use-update-course-wizard1';
 import {
   useCreateCourse,
   useUpdateCourseWizard1,
@@ -13,8 +12,9 @@ import {
 import { useQueryClient } from '@tanstack/react-query';
 import { queryOptions } from '@entities/course/service/course.queries';
 import { Course, CourseConfig } from '@types';
+import { undefined } from 'zod';
 
-export const useCourseForm = () => {
+export const useCourseForm = (courseType?: string) => {
   // QueryClient 인스턴스
   const queryClient = useQueryClient();
   // 각 탭별 저장 훅
@@ -36,12 +36,24 @@ export const useCourseForm = () => {
 
   // 전체 폼 데이터 상태
   const [data, setData] = useState<{ formData: Course; courseConfig: CourseConfig }>({
-    formData: {} as Course,
+    formData: {
+      courseType, // state 에 과정유형 있는 경우 설정
+      learningSpaceNameKeyIn: 'x', // 값 없으면 저장 에러, api 수정되면 삭제
+      categories: [
+        // 카테고리 팝업 api 연동되면 삭제
+        {
+          categoryId: 11,
+          name: '1-1',
+          categoryCode: 'category11',
+          categoryContent: '',
+          categoryPath: 'ROOT>한글명-CATE00011>1-1',
+          isPrimary: false,
+          tenantIds: [2],
+        },
+      ],
+    } as Course,
     courseConfig: {} as CourseConfig,
   });
-
-  // 로딩 상태
-  const [isLoading, setIsLoading] = useState(false);
 
   // 현재 활성 탭
   const [activeTab, setActiveTab] = useState('STEP1');
@@ -50,16 +62,6 @@ export const useCourseForm = () => {
   const setTabRef = useCallback((tabKey: string, ref: TabFormRef | null) => {
     tabRefs.current[tabKey] = ref;
   }, []);
-
-  // 폼 데이터 업데이트
-  // const updateFormData = useCallback((newData: Record<string, any>) => {
-  //   setData((prev) => ({ ...prev, ...newData }));
-  // }, []);
-
-  // 전체 폼 데이터 설정
-  // const setFormDataComplete = useCallback((data: Record<string, any>) => {
-  //   setData(data);
-  // }, []);
 
   // 특정 탭의 유효성 검사
   const validateTab = useCallback(async (tabKey: string) => {
@@ -102,8 +104,6 @@ export const useCourseForm = () => {
   // 데이터 조회
   const loadCourseData = useCallback(
     async (courseId: number) => {
-      setIsLoading(true);
-
       try {
         // 과정 상세 조회
         const rowData: Course = await queryClient.fetchQuery(queryOptions.get(courseId));
@@ -120,8 +120,6 @@ export const useCourseForm = () => {
       } catch (error) {
         console.error('데이터 조회 중 오류:', error);
         return { success: false, error };
-      } finally {
-        setIsLoading(false);
       }
     },
     [queryClient],
@@ -131,10 +129,11 @@ export const useCourseForm = () => {
   const saveCourseData = useCallback(
     async (data: any) => {
       const courseId = data?.formData?.courseId || data.courseId;
+      const requestData = formDataToRequestData(data, activeTab);
 
       if (!courseId) {
-        console.log('새로운 과정 생성:', data);
-        return await createCourse.mutateAsync(data);
+        console.log('새로운 과정 생성:', requestData);
+        return await createCourse.mutateAsync(requestData);
       }
 
       const saveFunction = getTabSaveFunction(activeTab);
@@ -142,8 +141,7 @@ export const useCourseForm = () => {
         throw new Error(`${activeTab} 탭에 대한 저장 함수가 정의되지 않았습니다.`);
       }
 
-      console.log(`${activeTab} 탭 업데이트:`, data);
-      const requestData = formDataToRequestData(data, activeTab);
+      console.log(`${activeTab} 탭 업데이트:`, requestData);
       return await saveFunction.mutateAsync(requestData);
     },
     [data, activeTab, createCourse, getTabSaveFunction],
@@ -151,8 +149,6 @@ export const useCourseForm = () => {
 
   // 현재 활성 탭 저장
   const saveCurrentTab = useCallback(async () => {
-    setIsLoading(true);
-
     try {
       // 1. 유효성 검사
       const validation = await validateTab(activeTab);
@@ -164,13 +160,11 @@ export const useCourseForm = () => {
       // 2. API 호출 (상태 업데이트는 재조회에서 처리)
       console.log(`${activeTab} 탭 유효성 검사 통과:`, validation.data);
       await saveCourseData(validation.data);
-
+      // 3. 리턴
       return { success: true, data: validation.data };
     } catch (error) {
       console.error('저장 중 오류:', error);
       return { success: false, error };
-    } finally {
-      setIsLoading(false);
     }
   }, [activeTab, validateTab, saveCourseData]);
 
@@ -184,7 +178,7 @@ export const useCourseForm = () => {
     // setData((prev) => ({ ...prev, formData, courseConfig }));
     setData((prev) => ({
       ...prev,
-      formData: getDummyCourse(),
+      formData: getDummyCourse2(),
       courseConfig: getDummyCourseConfig(),
     }));
   }, []);
@@ -192,7 +186,6 @@ export const useCourseForm = () => {
   return {
     // 상태
     data,
-    isLoading,
     activeTab,
     tabRefs,
 
@@ -217,6 +210,10 @@ const responseDataToFormData = (response: Course) => {
     primaryCategoryId: 1, // 서버에서 받으면 삭제
     categoryIds: response?.cartegories?.map((d: any) => d.categoryId), // 카테고리 아이디
     tenantIds: response?.tenantList?.map((d: any) => d.tenantId), // 테넌트 아이디
+    targetList: response?.targetList?.map((d: any) => ({
+      ...d,
+      name: d?.combiners?.[0]?.combineValue,
+    })),
   };
 };
 
@@ -227,14 +224,17 @@ const formDataToRequestData = (formData: Record<string, any>, activeTab: string)
   const newFormData = {
     ...formData,
     categoryIds: formData?.categories?.map((d: any) => d.categoryId), // 카테고리 아이디
-    targetListIds: formData?.targetList?.map((d: any) => d.key), // 학습대상 아이디
+    targetList: formData?.targetList?.map((d: any) => ({ ...d, name: undefined })), // 학습대상 아이디
     wizardStep: activeTab,
+    primaryCategoryId: 1, // 서버에서 받으면 삭제
+    coordinatorTelCountryCode: 'KOR_82',
+    operatorTelCountryCode: 'KOR_82',
   };
   // 수강신청
   return newFormData;
 };
 
-const getDummyCourseConfig = () => {
+const getDummyCourseConfig = (): CourseConfig => {
   return {
     enrollOption: 'IMPOSSIBLE',
     learningEnvOption: 'OPTIONAL',
@@ -256,47 +256,79 @@ const getDummyCourse = () => {
     courseType: 'ELEARNING2',
     channelUuid: '67bbca16-4180-4982-a4e0-d192212dd7c2',
     tenantIds: [2, 3],
-    categoryIds: [11, 22, 33],
-    primaryCategoryId: 1,
-    targetList: [
+    categories: [
       {
-        key: '66',
-        title: 'test1',
-        apiUuid: 'bc1fd644-b6c5-42fc-b2ff-796fa7b3d03d',
-        apiId: '66',
-        apiNodeType: 'API',
-        apiMethod: 'GET',
-        apiName: 'test1',
-        apiScope: 'FO',
-        apiUrl: 'test1234',
-        depth: null,
-        parentId: 1,
-        sortOrder: 2,
-        isUsed: true,
-        apiDesc: '1234',
-        children: [],
-        fullPath: 'ROOT > test1',
-        _visible: true,
+        categoryId: 11,
+        name: '1-1',
+        categoryCode: 'category11',
+        categoryContent: '',
+        categoryPath: 'ROOT>한글명-CATE00011>1-1',
+        isPrimary: false,
+        tenantIds: [2],
       },
     ],
+    primaryCategoryId: 1,
+    targetList: [],
     language: 'KO',
     courseName: '과정명...',
     courseSummary: '과장 요약',
     courseContent:
       '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"교육 내용","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}',
     trainingLevelType: 'BASIC',
-    learningSpaceName: '신민제/개발팀',
+    learningSpaceName: '장소',
     operatorName: '김지훈/개발팀',
     operatorUuid: 'c39280c3-3f6d-11f0-9435-0218a74d52f7',
     operatorDeptName: '개발팀',
     coordinatorUuid: 'c3929798-3f6d-11f0-9435-0218a74d5224',
-    learningSpaceType: 'LEARNING_WAY',
+    learningSpaceType: 'MANUAL',
     coordinatorName: '이현주/개발팀',
     coordinatorDeptName: '개발팀',
     coordinatorTelNo: '33332222',
     coordinatorEmail: '담당자@email.com',
     operatorTelNo: '44445555',
     operatorEmail: '운영자@email.com',
+    learningSpaceNameKeyIn: 'xx',
   };
   return response;
+};
+
+// 더미 데이터 함수
+const getDummyCourse2 = () => {
+  return {
+    courseType: 'CLASS',
+    channelUuid: '67bbca16-4180-4982-a4e0-d192212dd7c2',
+    tenantIds: [2, 3],
+    categories: [
+      {
+        categoryId: 11,
+        name: '1-1',
+        categoryCode: 'category11',
+        categoryContent: '',
+        categoryPath: 'ROOT>한글명-CATE00011>1-1',
+        isPrimary: false,
+        tenantIds: [2],
+      },
+    ],
+    primaryCategoryId: 1,
+    targetList: [],
+    language: 'KO',
+    courseName: '과정명...',
+    courseSummary: '과장 요약',
+    courseContent:
+      '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"교육 내용","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}',
+    trainingLevelType: 'BASIC',
+    learningSpaceName: '장소',
+    operatorName: '김지훈/개발팀',
+    operatorUuid: 'c39280c3-3f6d-11f0-9435-0218a74d52f7',
+    operatorDeptName: '개발팀',
+    coordinatorUuid: 'c3929798-3f6d-11f0-9435-0218a74d5224',
+    learningSpaceType: 'MANUAL',
+    coordinatorName: '이현주/개발팀',
+    coordinatorDeptName: '개발팀',
+    coordinatorTelNo: '33332222',
+    coordinatorEmail: '담당자@email.com',
+    operatorTelNo: '44445555',
+    operatorEmail: '운영자@email.com',
+    learningSpaceNameKeyIn: 'xx',
+  };
 };

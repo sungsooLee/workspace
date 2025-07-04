@@ -178,3 +178,32 @@ export const flattenHierarchicalData = (items: any[], depth = 0): any[] => {
 
   return result;
 };
+
+/**
+ * 데이터 목록에서 특정 key 값으로 중복을 제거한 결과를 반환하는 함수
+ *
+ * @template T - 배열 요소 타입
+ * @param {T[]} list - 중복을 제거할 데이터 배열
+ * @param {keyof T} key - 중복을 판단할 기준 key
+ * @returns {T[]} - key 기준으로 중복이 제거된 배열
+ *
+ * @example
+ * const arr = [
+ *   { id: 1, name: 'A' },
+ *   { id: 2, name: 'B' },
+ *   { id: 1, name: 'C' },
+ * ];
+ * const result = uniqueByKey(arr, 'id');
+ * // result: [{ id: 1, name: 'A' }, { id: 2, name: 'B' }]
+ */
+export function uniqueByKey<T>(list: T[], key: keyof T): T[] {
+  const seen = new Set();
+  return list.filter((item) => {
+    const value = item[key];
+    if (seen.has(value)) {
+      return false;
+    }
+    seen.add(value);
+    return true;
+  });
+}

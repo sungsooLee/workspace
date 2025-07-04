@@ -64,8 +64,8 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
       }
       const key = chipListProps?.valueField || 'value';
       const list = Array.isArray(modalData) ? modalData : [modalData];
-      const filters = list.filter((d: any) => !value.find((n: any) => n[key] === d[key]));
-      return [...value, ...filters];
+      const filters = list.filter((d: any) => !value?.find((n: any) => n[key] === d[key]));
+      return [...(value || []), ...filters];
     };
 
     const handleSearchClick = async () => {

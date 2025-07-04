@@ -67,8 +67,6 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
     },
     ref,
   ) => {
-    console.log('xxxxx', options);
-
     const [inputValue, setInputValue] = useState<string>('');
     const overCount = options?.length - visibleCount;
     const isOverCount = overCount > 0;

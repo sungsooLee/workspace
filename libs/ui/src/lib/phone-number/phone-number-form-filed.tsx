@@ -33,6 +33,7 @@ const PhoneNumberFormFieldComponent = forwardRef<HTMLDivElement, PhoneNumberForm
      * @param changeValue
      */
     const handleOnChange = (changeValue: PhoneNumberValue) => {
+      console.log('>>>>>>', changeValue);
       onFormChange({
         [fields.nationCode]: changeValue.nationCode,
         [fields.number]: changeValue.number,

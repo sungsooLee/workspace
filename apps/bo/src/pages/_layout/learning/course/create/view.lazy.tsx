@@ -1,4 +1,4 @@
-import { Button, Divider, Tabs } from '@learnway/ui';
+import { Button, Divider, Tabs, useModal } from '@learnway/ui';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
@@ -17,22 +17,16 @@ export const Route = createLazyFileRoute('/_layout/learning/course/create/view')
 
 function RouteComponent() {
   const router = useRouter();
+  const { showSaveComplete } = useModal();
+
   // 라우터 state에서 courseId 가져오기
-  const courseId = router.state.location.state?.courseId;
+  const { courseId, courseType } = router.state.location.state;
 
   console.log('Course ID', courseId);
 
   // 커스텀 훅 사용
-  const {
-    data,
-    isLoading,
-    activeTab,
-    setTabRef,
-    loadCourseData,
-    saveCurrentTab,
-    changeTab,
-    loadMockData,
-  } = useCourseForm();
+  const { data, activeTab, setTabRef, loadCourseData, saveCurrentTab, changeTab, loadMockData } =
+    useCourseForm(courseType);
 
   // 최초 데이터 로드
   useEffect(() => {
@@ -61,7 +55,8 @@ function RouteComponent() {
     const result = await saveCurrentTab();
 
     if (result.success) {
-      console.log('저장 성공:', result.data);
+      // 저장 성골 알럿
+      await showSaveComplete();
       // 저장 성공 후 목록으로 이동
       moveListPage();
     } else {
@@ -118,7 +113,6 @@ function RouteComponent() {
             size="sm"
             label={'SET'}
             onClick={() => loadMockData()}
-            disabled={isLoading}
           />
           <Button
             type="button"
@@ -126,7 +120,6 @@ function RouteComponent() {
             size="sm"
             label={'목록'}
             onClick={handleListClick}
-            disabled={isLoading}
           />
           <Divider orientation={'vertical'} />
           <Button
@@ -135,15 +128,14 @@ function RouteComponent() {
             size="sm"
             label={'삭제'}
             onClick={handleDeleteClick}
-            disabled={isLoading || !courseId}
+            disabled={!courseId}
           />
           <Button
             type="button"
             variant="primary"
             size="sm"
-            label={isLoading ? '저장 중...' : '저장'}
+            label={'저장'}
             onClick={handleSaveClick}
-            disabled={isLoading}
           />
         </ContentsButtons>
         <MainContents>
