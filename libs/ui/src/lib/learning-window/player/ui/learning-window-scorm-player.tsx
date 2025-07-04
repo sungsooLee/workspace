@@ -10,21 +10,6 @@ import { ScormHandler } from '../service/scorm-handler';
 import { ScormDataManager } from '../service/scorm-data-manager';
 import { ScormRteClient } from '../service/scorm-rte-client';
 
-export interface ScormPlayerConfigProperties {
-  /** 과정 차수 ID */
-  sequenceId: number;
-  /** 과정Id */
-  courseId: number;
-  /** 커리큘럼Id */
-  curriculumId: number;
-  /** 콘텐츠 UUID */
-  contentUuid: string;
-  /** 스콤 콘텐츠 구성(Organization) Id */
-  orgnId: number;
-  /** Scorm Manifest Item element Id */
-  scoId: string;
-}
-
 const LearningWindowScormPlayerComponent: FC<any> = ({
   playInfo,
   scormInfo,

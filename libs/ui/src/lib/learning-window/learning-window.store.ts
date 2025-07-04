@@ -21,17 +21,61 @@ export interface PlayInfo {
   scoId?: string;
   contentType: EnContentType;
 }
+export interface ScormPlayerConfigProperties {
+  /** 과정 차수 ID */
+  sequenceId: number;
+  /** 과정Id */
+  courseId: number;
+  /** 커리큘럼Id */
+  curriculumId: number;
+  /** 콘텐츠 UUID */
+  contentUuid: string;
+  /** 스콤 콘텐츠 구성(Organization) Id */
+  orgnId: number;
+  /** Scorm Manifest Item element Id */
+  scoId: string;
+}
+interface BaseInfo {
+  courseId: number;
+  sequenceId: number;
+  curriculumId: number;
+}
+
+interface PlayListItem {
+  moduleId: number;
+  lessonId: number;
+  lessonName: string;
+  moduleName: string;
+}
+
+interface Curriculum {
+  moduleList: Module[];
+}
+
+interface Module {
+  moduleId: number;
+  mappingModuleType: string;
+  lessonList: Lesson[];
+}
+
+interface Lesson {
+  lessonId: number;
+  contentUuid: string;
+  orgnId?: number;
+  scoId?: string;
+  contentType: EnContentType;
+}
 
 interface LearningWindowStoreData {
   playIndex: number;
-  baseInfo: any;
-  curriculum: any;
-  playInfo: any;
-  playList: any[];
-  setBaseInfo: (v: any) => void;
-  setPlayInfo: (v: any) => void;
-  setCurriculum: (v: any) => void;
-  setPlayList: (v: any[]) => void;
+  baseInfo?: BaseInfo;
+  curriculum?: Curriculum;
+  playInfo?: PlayInfo;
+  playList?: PlayListItem[];
+  setBaseInfo: (v?: BaseInfo) => void;
+  setPlayInfo: (v?: PlayInfo) => void;
+  setCurriculum: (v?: Curriculum) => void;
+  setPlayList: (v?: PlayListItem[]) => void;
 
   scormInfo: any;
   setScormInfo: (v: any) => void;
@@ -42,31 +86,32 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
   baseInfo: undefined,
   curriculum: undefined,
   playInfo: undefined,
-  playList: [],
+  playList: undefined,
   scormInfo: undefined,
-  setPlayInfo(playInfo: any) {
+
+  setPlayInfo(playInfo?: PlayInfo) {
     if (!playInfo) return;
     const playList = get().playList;
-    set((state) => ({ playInfo }));
-    playList?.forEach((item, index) => {
-      if (item.moduleId === playInfo.moduleId && item.lessonId === playInfo.lessonId) {
-        set((state) => ({
-          playIndex: index,
-        }));
-      }
+    const index = playList?.findIndex(
+      (item) => item.moduleId === playInfo.moduleId && item.lessonId === playInfo.lessonId,
+    );
+    set({
+      playInfo,
+      playIndex: index !== -1 ? index : 0,
     });
   },
 
-  setBaseInfo: (baseInfo: any) => {
+  setBaseInfo(baseInfo?: BaseInfo) {
     set((state) => ({ baseInfo }));
   },
-  setCurriculum: (curriculum: any) => {
+
+  setCurriculum(curriculum?: Curriculum) {
     set((state) => ({ curriculum }));
   },
-  setPlayList: (playList: any[]) => {
+  setPlayList(playList?: PlayListItem[]) {
     set((state) => ({ playList }));
   },
-  setScormInfo: (scormInfo: any) => {
+  setScormInfo(scormInfo: any) {
     set((state) => ({ scormInfo }));
   },
 }));
@@ -92,7 +137,7 @@ export const useLearningWindow = () => {
     nowCurriculum: any,
     moduleId?: number,
     lessonId?: number,
-  ) => {
+  ): PlayInfo | undefined => {
     if (!nowCurriculum?.moduleList?.length) {
       console.error('moduleList is not set or empty', nowCurriculum);
       return undefined;
@@ -127,7 +172,12 @@ export const useLearningWindow = () => {
     const playList: any[] = [];
     curriculum.moduleList.forEach((module: any) => {
       module?.lessonList?.forEach((lesson: any) => {
-        playList.push({ moduleId: module.moduleId, lessonId: lesson.lessonId });
+        playList.push({
+          moduleId: module.moduleId,
+          lessonId: lesson.lessonId,
+          lessonName: lesson.lessonName,
+          moduleName: module.moduleName,
+        });
       });
     });
     setPlayList(playList);
@@ -147,6 +197,30 @@ export const useLearningWindow = () => {
     setPlayInfo(playInfo);
   };
 
+  const gotoNextLesson = () => {
+    const nextPoint = _playIndex + 1;
+    console.log('------', nextPoint, _playList?.length);
+    if (_playList && _playList.length > nextPoint) {
+      console.log('------2222');
+      const data = _playList[nextPoint];
+      handleSetPlayInfo(data.moduleId, data.lessonId);
+      return true;
+    } else {
+      return false;
+    }
+  };
+  const gotoBeforeLesson = () => {
+    const nextPoint = _playIndex - 1;
+    console.log('before ----', nextPoint, _playList?.length);
+    if (_playList && _playList.length > nextPoint && nextPoint >= 0) {
+      console.log('before----2222');
+      const data = _playList[nextPoint];
+      handleSetPlayInfo(data.moduleId, data.lessonId);
+      return true;
+    } else {
+      return false;
+    }
+  };
   return {
     playIndex: _playIndex,
     playList: _playList,
@@ -162,5 +236,7 @@ export const useLearningWindow = () => {
      * BO 미리 보기 설정용
      */
     directPlayInfo: setPlayInfo,
+    gotoNextLesson,
+    gotoBeforeLesson,
   };
 };

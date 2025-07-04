@@ -1,16 +1,31 @@
-import { memo } from 'react';
-import { ModalBody, ModalContainer, ModalTitle, ModalFooter, Button } from '@learnway/ui';
+import { FC, memo } from 'react';
+import styles from '@learnway/styles/fo/pages/_learning/side-panel/popup/next-learning-popup.module.css';
+import {
+  ModalBody,
+  ModalContainer,
+  ModalTitle,
+  ModalFooter,
+  Button,
+  useLearningWindow,
+  useModal,
+} from '../../../../../';
 import { IcoRefresh02, IcoPrevNext } from '@learnway/icons';
 
-import styles from '@learnway/styles/fo/pages/_learning/side-panel/popup/next-learning-popup.module.css';
-
-const NextLearningPopupComponent = () => {
+const NextLearningPopupComponent: FC<any> = ({ isNext }) => {
+  const { open: openModal, close: closeModal } = useModal();
+  const { playIndex, playList, gotoNextLesson, gotoBeforeLesson } = useLearningWindow();
+  const addValue = isNext ? 1 : -1;
+  const hanldeNextButtonClick = () => {
+    const retval = isNext ? gotoNextLesson() : gotoBeforeLesson();
+    if (retval) closeModal();
+  };
   return (
     <ModalContainer>
-      <ModalTitle>{'다음 강의'}</ModalTitle>
+      <ModalTitle>{isNext ? '다음 강의' : '이전 강의'}</ModalTitle>
       <ModalBody>
         <div className={`${styles.start} ${styles.learning}`}>
-          레슨 2 이북 (다음 레슨 제목이 옵니다)
+          {playList ? playList[playIndex + addValue].moduleName : ''} (
+          {playList ? playList[playIndex + addValue].lessonName : ''})
         </div>
       </ModalBody>
       <ModalFooter>
@@ -18,8 +33,14 @@ const NextLearningPopupComponent = () => {
           <IcoRefresh02 width={24} height={24} stroke="#6f798b" fill="#fff" />
           <span>다시보기</span>
         </Button>
-        <Button variant={'primary'} size={'lg'} className={styles.btn_learning}>
-          <span>다음 강의</span>
+        <Button
+          variant={'primary'}
+          size={'lg'}
+          className={styles.btn_learning}
+          preventDefault
+          onClick={hanldeNextButtonClick}
+        >
+          <span>{isNext ? '다음 강의' : '이전 강의'}</span>
           <IcoPrevNext width={24} height={24} stroke="#fff" />
         </Button>
       </ModalFooter>

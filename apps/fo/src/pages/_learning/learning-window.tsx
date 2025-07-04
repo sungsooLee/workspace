@@ -3,11 +3,15 @@ import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-rout
 
 import { t } from 'i18next';
 
-import { LearningWindowScormPlayer, ScormPlayerConfigProperties } from '@features/learning-window';
 import { useGetCurriculumnDetail } from '@entities/curriculum/service/curriculum.hook';
 import { useGetScormRteScoInfo } from '@entities/scorm/service/scorm-rte.hook';
 
-import { EnContentType, LearningWindowLayout, useLearningWindow } from '@learnway/ui';
+import {
+  EnContentType,
+  LearningWindowLayout,
+  useLearningWindow,
+  ScormPlayerConfigProperties,
+} from '@learnway/ui';
 import { ScormRteService } from '@entities/scorm/api/scorm-rte';
 
 export const Route = createFileRoute('/_learning/learning-window')({
@@ -40,17 +44,17 @@ function RouteComponent() {
   useEffect(() => {
     if (!playInfo) return;
     console.log('playInfo config', playInfo);
-    if (playInfo.contentType === EnContentType.SCORM) {
-      const config = {
-        contentUuid: playInfo.contentUuid,
-        curriculumId: playInfo.curriculumId,
-        orgnId: playInfo.orgnId,
-        sequenceId: playInfo.sequenceId,
-        courseId: playInfo.courseId,
-        scoId: playInfo.scoId,
-      };
-
-      setScormConfig(config);
+    switch (playInfo.contentType) {
+      case EnContentType.SCORM:
+        setScormConfig({
+          contentUuid: playInfo.contentUuid,
+          curriculumId: playInfo.curriculumId,
+          orgnId: playInfo.orgnId,
+          sequenceId: playInfo.sequenceId,
+          courseId: playInfo.courseId,
+          scoId: playInfo.scoId,
+        });
+        break;
     }
   }, [playInfo]);
 
@@ -60,13 +64,11 @@ function RouteComponent() {
   }, [curriculum]);
 
   useEffect(() => {
-    (async () => {
-      const learningInfo = { ...routerState.location.state };
-      console.log('state info ', learningInfo);
-      if (learningInfo.curriculumId) {
-        setBaseInfo(learningInfo);
-      }
-    })();
+    const learningInfo = { ...routerState.location.state };
+    console.log('state info ', learningInfo);
+    if (learningInfo.curriculumId) {
+      setBaseInfo(learningInfo);
+    }
   }, []);
 
   return <LearningWindowLayout scormRteService={scormRteService} />;

@@ -17,7 +17,6 @@ import { NextLearningPopup } from './popup/next-learning-popup';
 
 import styles from '@learnway/styles/fo/pages/_learning/side-panel/side-panel.module.css';
 
-import { ChartNoAxesColumnDecreasing } from 'lucide-react';
 import { useLearningWindow } from '../../learning-window.store';
 
 interface ChildData {
@@ -30,7 +29,7 @@ interface SidePanelProps {
 }
 
 const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
-  const { curriculum, playInfo } = useLearningWindow();
+  const { curriculum, playInfo, playList, playIndex, setPlayInfo } = useLearningWindow();
   const { open: openModal } = useModal();
 
   const [menuSelected, setMenuSelected] = useState(false); // content 영역 show/hide
@@ -108,6 +107,9 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
                                             ? styles.active
                                             : ''
                                         }
+                                        onClick={() => {
+                                          setPlayInfo(module.moduleId, lesson.lessonId);
+                                        }}
                                       >
                                         <div className={styles.step_box}>
                                           <ProgressCheck progress={50} />
@@ -164,15 +166,24 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
           ))}
         </div>
         <div className={styles.control}>
-          <Button disabled>
-            <IcoPrevPlay width={isMobile ? 20 : 32} height={isMobile ? 20 : 32} />
-            <span>이전</span>
-          </Button>
           <Button
+            disabled={!(playIndex !== 0 && playList && playIndex < playList.length)}
             onClick={() =>
               openModal({
                 width: 's',
                 content: <NextLearningPopup />,
+              })
+            }
+          >
+            <IcoPrevPlay width={isMobile ? 20 : 32} height={isMobile ? 20 : 32} />
+            <span>이전</span>
+          </Button>
+          <Button
+            disabled={!(playList && playList.length > playIndex + 1)}
+            onClick={() =>
+              openModal({
+                width: 's',
+                content: <NextLearningPopup isNext={true} />,
               })
             }
           >
