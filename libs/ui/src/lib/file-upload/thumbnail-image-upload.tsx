@@ -212,6 +212,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
               disabled={disabled}
               icon={<IcoUploadCloud width={24} height={24} stroke="#747d91" />}
               onClick={handleButtonClick}
+              direction={'column'}
             >
               <span className={styles.text}>썸네일 업로드</span>
             </Button>

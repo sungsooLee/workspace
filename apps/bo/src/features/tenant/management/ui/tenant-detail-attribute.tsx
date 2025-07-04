@@ -200,7 +200,18 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
               </Button>
             </Tooltip>
           }
-          actionNode={<FormRow provider={provider} name={'isEnrollOption'} />}
+          actionNode={
+            <FormRow
+              provider={provider}
+              name={'isEnrollOption'}
+              element={
+                <>
+                  {t('사용')}
+                  <Switch disabled={true} checked={true}/>
+                </>
+              }
+            />
+          }
         />
         <FormDisplay provider={provider} dependencies={[{ name: 'isEnrollOption', value: true }]}>
           <ContentsRow>
@@ -255,83 +266,92 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
           </ContentsRow>
         </FormDisplay>
 
-        <FormSubTitle
-          label={t('교재')}
-          lineType={'dark'}
-          titleNode={
-            <Tooltip
-              className={styles.tooltip}
-              content={t(
-                '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다. ',
-              )}
-            >
-              <Button onlyIcon>
-                <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
-              </Button>
-            </Tooltip>
-          }
-          actionNode={<FormRow provider={provider} name={'isTextBookOption'} />}
-        />
-        <FormDisplay provider={provider} dependencies={[{ name: 'isTextBookOption', value: true }]}>
-          <ContentsRow>
-            <div className={formStyles.form_item}>
-              <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
-                <span className={styles.form_text}> {t('교재명')}</span>
-              </label>
-              <p className={formStyles.guide_text}>{t('교재명을 설정합니다.')}</p>
-            </div>
-            <div className={formStyles.form_item}>
-              <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
-                <span className={styles.form_text}> {t('교재비')}</span>
-              </label>
-              <p className={formStyles.guide_text}>{t('교재 비용을  설정합니다.')}</p>
-            </div>
-            <div className={formStyles.form_item}></div>
-          </ContentsRow>
-        </FormDisplay>
-        <FormSubTitle
-          label={t('강사')}
-          lineType={'dark'}
-          titleNode={
-            <Tooltip
-              className={styles.tooltip}
-              content={
-                t(
-                  '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다. ',
-                )
+        {
+          ( props.roleInfo === 'PLATFORM' || attributeData?.isTextBookOption ) && <>
+            <FormSubTitle
+              label={t('교재')}
+              lineType={'dark'}
+              titleNode={
+                <Tooltip
+                  className={styles.tooltip}
+                  content={t(
+                    '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다. ',
+                  )}
+                >
+                  <Button onlyIcon>
+                    <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
+                  </Button>
+                </Tooltip>
               }
+              actionNode={<FormRow provider={provider} name={'isTextBookOption'} />}
+            />
+            <FormDisplay provider={provider} dependencies={[{ name: 'isTextBookOption', value: true }]}>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('교재명')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>{t('교재명을 설정합니다.')}</p>
+                </div>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('교재비')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>{t('교재 비용을  설정합니다.')}</p>
+                </div>
+                <div className={formStyles.form_item}></div>
+              </ContentsRow>
+            </FormDisplay>
+          </>
+        }
+
+        {
+          (props.roleInfo === 'PLATFORM' || attributeData?.isInstructorOption) && <>
+            <FormSubTitle
+              label={t('강사')}
+              lineType={'dark'}
+              titleNode={
+                <Tooltip
+                  className={styles.tooltip}
+                  content={
+                    t(
+                      '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다. ',
+                    )
+                  }
+                >
+                  <Button onlyIcon>
+                    <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
+                  </Button>
+                </Tooltip>
+              }
+              actionNode={<FormRow provider={provider} name={'isInstructorOption'} />}
+            />
+            <FormDisplay
+              provider={provider}
+              dependencies={[{ name: 'isInstructorOption', value: true }]}
             >
-              <Button onlyIcon>
-                <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
-              </Button>
-            </Tooltip>
-          }
-          actionNode={<FormRow provider={provider} name={'isInstructorOption'} />}
-        />
-        <FormDisplay
-          provider={provider}
-          dependencies={[{ name: 'isInstructorOption', value: true }]}
-        >
-          <ContentsRow>
-            <div className={formStyles.form_item}>
-              <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
-                <span className={styles.form_text}> {t('강사')}</span>
-              </label>
-              <p className={formStyles.guide_text}>
-                {t('강사가 과정을 진행 시 강사를 설정합니다.')}
-              </p>
-            </div>
-            <div className={formStyles.form_item}>
-              <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
-                <span className={styles.form_text}> {t('튜터')}</span>
-              </label>
-              <p className={formStyles.guide_text}>
-                {t('튜터가 과정을 진행 시 튜터를 설정합니다.')}
-              </p>
-            </div>
-            <div className={formStyles.form_item}></div>
-          </ContentsRow>
-        </FormDisplay>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('강사')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>
+                    {t('강사가 과정을 진행 시 강사를 설정합니다.')}
+                  </p>
+                </div>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('튜터')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>
+                    {t('튜터가 과정을 진행 시 튜터를 설정합니다.')}
+                  </p>
+                </div>
+                <div className={formStyles.form_item}></div>
+              </ContentsRow>
+            </FormDisplay>
+          </>
+        }
 
         <FormSubTitle
           label={t('이수 기준')}
@@ -346,7 +366,18 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
               </Button>
             </Tooltip>
           }
-          actionNode={<FormRow provider={provider} name={'isPassOption'} />}
+          actionNode={
+            <FormRow
+              provider={provider}
+              name={'isPassOption'}
+              element={
+                <>
+                  {t('사용')}
+                  <Switch disabled={true} checked={true}/>
+                </>
+              }
+            />
+          }
         />
         <FormDisplay provider={provider} dependencies={[{ name: 'isPassOption', value: true }]}>
           <ContentsRow>
@@ -387,286 +418,552 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
           </ContentsRow>
         </FormDisplay>
 
-        <FormSubTitle
-          label={t('커뮤니티')}
-          lineType={'dark'}
-          titleNode={
-            <Tooltip
-              className={styles.tooltip}
-              content={
-                t(
-                  '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다. ',
-                )
+        {
+          (props.roleInfo === 'PLATFORM' || attributeData?.isCommunicationOption) && <>
+            <FormSubTitle
+              label={t('커뮤니티')}
+              lineType={'dark'}
+              titleNode={
+                <Tooltip
+                  className={styles.tooltip}
+                  content={
+                    t(
+                      '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다. ',
+                    )
+                  }
+                >
+                  <Button onlyIcon>
+                    <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
+                  </Button>
+                </Tooltip>
               }
+              actionNode={<FormRow provider={provider} name={'isCommunicationOption'} />}
+            />
+            <FormDisplay
+              provider={provider}
+              dependencies={[{ name: 'isCommunicationOption', value: true }]}
             >
-              <Button onlyIcon>
-                <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
-              </Button>
-            </Tooltip>
-          }
-          actionNode={<FormRow provider={provider} name={'isCommunicationOption'} />}
-        />
-        <FormDisplay
-          provider={provider}
-          dependencies={[{ name: 'isCommunicationOption', value: true }]}
-        >
-          <ContentsRow>
-            <div className={formStyles.form_item}>
-              <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
-                <span className={styles.form_text}> {t('커뮤니티 및 공유 설정')}</span>
-              </label>
-              <p className={formStyles.guide_text}>
-                {t('과정 상세의 공지사항, 커뮤니티 등을 설정합니다.')}
-              </p>
-            </div>
-            <div className={formStyles.form_item}></div>
-            <div className={formStyles.form_item}></div>
-          </ContentsRow>
-        </FormDisplay>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('커뮤니티 및 공유 설정')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>
+                    {t('과정 상세의 공지사항, 커뮤니티 등을 설정합니다.')}
+                  </p>
+                </div>
+                <div className={formStyles.form_item}></div>
+                <div className={formStyles.form_item}></div>
+              </ContentsRow>
+            </FormDisplay>
+          </>
+        }
 
-        <FormSubTitle
-          label={t('학습환경')}
-          lineType={'dark'}
-          titleNode={
-            <Tooltip
-              className={styles.tooltip}
-              content={
-                t(
-                  '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
-                )
+        {
+          (props.roleInfo === 'PLATFORM' || attributeData?.isLearningEnvOption) && <>
+            <FormSubTitle
+              label={t('학습환경')}
+              lineType={'dark'}
+              titleNode={
+                <Tooltip
+                  className={styles.tooltip}
+                  content={
+                    t(
+                      '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
+                    )
+                  }
+                >
+                  <Button onlyIcon>
+                    <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
+                  </Button>
+                </Tooltip>
               }
+              actionNode={<FormRow provider={provider} name={'isLearningEnvOption'} />}
+            />
+            <FormDisplay
+              provider={provider}
+              dependencies={[{ name: 'isLearningEnvOption', value: true }]}
             >
-              <Button onlyIcon>
-                <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
-              </Button>
-            </Tooltip>
-          }
-          actionNode={<FormRow provider={provider} name={'isLearningEnvOption'} />}
-        />
-        <FormDisplay
-          provider={provider}
-          dependencies={[{ name: 'isLearningEnvOption', value: true }]}
-        >
-          <ContentsRow>
-            <div className={formStyles.form_item}>
-              <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
-                <span className={styles.form_text}> {t('기기 제한')}</span>
-              </label>
-              <p className={formStyles.guide_text}>
-                {t('PC, 모바일 등 학습 가능한 기기를 설정합니다.')}
-              </p>
-            </div>
-            <div className={formStyles.form_item}>
-              <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
-                <span className={styles.form_text}> {t('네트워크 제한')}</span>
-              </label>
-              <p className={formStyles.guide_text}>
-                {t('과정 학습 시 사내망, 사외망 접속 제한을 설정합니다. ')}
-              </p>
-            </div>
-            <div className={formStyles.form_item}>
-              <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
-                <span className={styles.form_text}> {t('학습시간 제한')}</span>
-              </label>
-              <p className={formStyles.guide_text}>
-                {t('근무시간 기준 학습시간 제한을 설정합니다.')}
-              </p>
-            </div>
-          </ContentsRow>
-          <ContentsRow>
-            <div className={formStyles.form_item}>
-              <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
-                <span className={styles.form_text}> {t('복습 제한')}</span>
-              </label>
-              <p className={formStyles.guide_text}>{t('과정 복습에 제한을 설정합니다.')}</p>
-            </div>
-            <div className={formStyles.form_item}>
-              <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
-                <span className={styles.form_text}> {t('화면 캡쳐 방지')}</span>
-              </label>
-              <p className={formStyles.guide_text}>
-                {t('학습창 화면 캡쳐 방지 여부를 설정합니다.')}
-              </p>
-            </div>
-            <div className={formStyles.form_item}>
-              <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
-                <span className={styles.form_text}> {t('학습전 보안 서약')}</span>
-              </label>
-              <p className={formStyles.guide_text}>{t('학습전 보안 서약 여부를 설정합니다 ')}</p>
-            </div>
-          </ContentsRow>
-        </FormDisplay>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('기기 제한')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>
+                    {t('PC, 모바일 등 학습 가능한 기기를 설정합니다.')}
+                  </p>
+                </div>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('네트워크 제한')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>
+                    {t('과정 학습 시 사내망, 사외망 접속 제한을 설정합니다. ')}
+                  </p>
+                </div>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('학습시간 제한')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>
+                    {t('근무시간 기준 학습시간 제한을 설정합니다.')}
+                  </p>
+                </div>
+              </ContentsRow>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('복습 제한')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>{t('과정 복습에 제한을 설정합니다.')}</p>
+                </div>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('화면 캡쳐 방지')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>
+                    {t('학습창 화면 캡쳐 방지 여부를 설정합니다.')}
+                  </p>
+                </div>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('학습전 보안 서약')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>{t('학습전 보안 서약 여부를 설정합니다 ')}</p>
+                </div>
+              </ContentsRow>
+            </FormDisplay>
+          </>
+        }
 
-        <FormSubTitle
-          label={t('학습제어')}
-          lineType={'dark'}
-          titleNode={
-            <Tooltip
-              className={styles.tooltip}
-              content={
-                <pre>
+        {
+          (props.roleInfo === 'PLATFORM' || attributeData?.isLearningControlOption) && <>
+            <FormSubTitle
+              label={t('학습제어')}
+              lineType={'dark'}
+              titleNode={
+                <Tooltip
+                  className={styles.tooltip}
+                  content={
+                    <pre>
                   {t(
                     '테넌트 상세 설정이 채널 개설 시 기본 출력되며,\n 채널에서 최종 사용 여부를 설정할 수 있습니다.',
                   )}
                 </pre>
+                  }
+                >
+                  <Button onlyIcon>
+                    <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
+                  </Button>
+                </Tooltip>
               }
+              actionNode={<FormRow provider={provider} name={'isLearningControlOption'} />}
+            />
+            <FormDisplay
+              provider={provider}
+              dependencies={[{ name: 'isLearningControlOption', value: true }]}
             >
-              <Button onlyIcon>
-                <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
-              </Button>
-            </Tooltip>
-          }
-          actionNode={<FormRow provider={provider} name={'isLearningControlOption'} />}
-        />
-        <FormDisplay
-          provider={provider}
-          dependencies={[{ name: 'isLearningControlOption', value: true }]}
-        >
-          <ContentsRow>
-            <div className={formStyles.form_item}>
-              <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
-                <span className={styles.form_text}> {t('1일 진도제한')}</span>
-              </label>
-              <p className={formStyles.guide_text}>{t('1일 진도제한 여부를 설정합니다.')}</p>
-            </div>
-            <div className={formStyles.form_item}>
-              <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
-                <span className={styles.form_text}> {t('진도 초기화')}</span>
-              </label>
-              <p className={formStyles.guide_text}>
-                {t('학습한 과정의 진도 초기화 여부를 설정합니다.')}
-              </p>
-            </div>
-            <div className={formStyles.form_item}>
-              <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
-                <span className={styles.form_text}> {t('순차 학습')}</span>
-              </label>
-              <p className={formStyles.guide_text}>
-                {t('과정 기준 순서로 학습 진행 여부를 설정합니다.')}
-              </p>
-            </div>
-          </ContentsRow>
-          <ContentsRow>
-            <div className={formStyles.form_item}>
-              <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
-                <span className={styles.form_text}> {t('동영상 탐색바 제한')}</span>
-              </label>
-              <p className={formStyles.guide_text}>
-                {t('동영상 탐색바의 기능 제한을 설정합니다.')}
-              </p>
-            </div>
-            <div className={formStyles.form_item}>
-              <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
-                <span className={styles.form_text}> {t('동영상 배속 제한')}</span>
-              </label>
-              <p className={formStyles.guide_text}>
-                {t('동영상 학습 시 재생 배속 제한을 설정합니다.')}
-              </p>
-            </div>
-            <div className={formStyles.form_item}></div>
-          </ContentsRow>
-        </FormDisplay>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('1일 진도제한')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>{t('1일 진도제한 여부를 설정합니다.')}</p>
+                </div>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('진도 초기화')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>
+                    {t('학습한 과정의 진도 초기화 여부를 설정합니다.')}
+                  </p>
+                </div>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('순차 학습')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>
+                    {t('과정 기준 순서로 학습 진행 여부를 설정합니다.')}
+                  </p>
+                </div>
+              </ContentsRow>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('동영상 탐색바 제한')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>
+                    {t('동영상 탐색바의 기능 제한을 설정합니다.')}
+                  </p>
+                </div>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('동영상 배속 제한')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>
+                    {t('동영상 학습 시 재생 배속 제한을 설정합니다.')}
+                  </p>
+                </div>
+                <div className={formStyles.form_item}></div>
+              </ContentsRow>
+            </FormDisplay>
+          </>
+        }
 
-        <FormSubTitle
-          label={t('사전/연관학습')}
-          lineType={'dark'}
-          titleNode={
-            <Tooltip
-              className={styles.tooltip}
-              content={
-                t(
-                  '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
-                )
+        {
+          (props.roleInfo === 'PLATFORM' || attributeData?.isRelatedCourseOption) && <>
+            <FormSubTitle
+              label={t('사전/연관학습')}
+              lineType={'dark'}
+              titleNode={
+                <Tooltip
+                  className={styles.tooltip}
+                  content={
+                    t(
+                      '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
+                    )
+                  }
+                >
+                  <Button onlyIcon>
+                    <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
+                  </Button>
+                </Tooltip>
               }
+              actionNode={<FormRow provider={provider} name={'isRelatedCourseOption'} />}
+            />
+            <FormDisplay
+              provider={provider}
+              dependencies={[{ name: 'isRelatedCourseOption', value: true }]}
             >
-              <Button onlyIcon>
-                <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
-              </Button>
-            </Tooltip>
-          }
-          actionNode={<FormRow provider={provider} name={'isRelatedCourseOption'} />}
-        />
-        <FormDisplay
-          provider={provider}
-          dependencies={[{ name: 'isRelatedCourseOption', value: true }]}
-        >
-          <ContentsRow>
-            <div className={formStyles.form_item}>
-              <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
-                <span className={styles.form_text}> {t('사전 필수 과정')}</span>
-              </label>
-              <p className={formStyles.guide_text}>
-                {t('과정 학습 전 필수 학습 과정을 설정합니다.')}
-              </p>
-            </div>
-            <div className={formStyles.form_item}>
-              <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
-                <span className={styles.form_text}> {t('연관 학습')}</span>
-              </label>
-              <p className={formStyles.guide_text}>
-                {t('등록 과정과 연관된 학습 과정을 설정합니다. ')}
-              </p>
-            </div>
-            <div className={formStyles.form_item}></div>
-          </ContentsRow>
-        </FormDisplay>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('사전 필수 과정')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>
+                    {t('과정 학습 전 필수 학습 과정을 설정합니다.')}
+                  </p>
+                </div>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('연관 학습')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>
+                    {t('등록 과정과 연관된 학습 과정을 설정합니다. ')}
+                  </p>
+                </div>
+                <div className={formStyles.form_item}></div>
+              </ContentsRow>
+            </FormDisplay>
+          </>
+        }
 
-        <FormSubTitle
-          label={t('행정 항목')}
-          lineType={'dark'}
-          titleNode={
-            <Tooltip
-              className={styles.tooltip}
-              content={
-                t(
-                  '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
-                )
+        {
+          (props.roleInfo === 'PLATFORM' || attributeData?.isAdminDataOption) && <>
+            <FormSubTitle
+              label={t('행정 항목')}
+              lineType={'dark'}
+              titleNode={
+                <Tooltip
+                  className={styles.tooltip}
+                  content={
+                    t(
+                      '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
+                    )
+                  }
+                >
+                  <Button onlyIcon>
+                    <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
+                  </Button>
+                </Tooltip>
               }
+              actionNode={<FormRow provider={provider} name={'isAdminDataOption'}/>}
+            />
+            <FormDisplay
+              provider={provider}
+              dependencies={[{ name: 'isAdminDataOption', value: true }]}
             >
-              <Button onlyIcon>
-                <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
-              </Button>
-            </Tooltip>
-          }
-          actionNode={<FormRow provider={provider} name={'isAdminDataOption'} />}
-        />
-        <FormDisplay
-          provider={provider}
-          dependencies={[{ name: 'isAdminDataOption', value: true }]}
-        >
-          <ContentsRow>
-            <div className={formStyles.form_item}>
-              <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
-                <span className={styles.form_text}> {t('HMG 과정 데이터 표준 분류')}</span>
-              </label>
-              <p className={formStyles.guide_text}>{t('과정 표준 분류를 설정합니다.')}</p>
-            </div>
-            <div className={formStyles.form_item}>
-              <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
-                <span className={styles.form_text}> {t('1인당 교육비 ')}</span>
-              </label>
-              <p className={formStyles.guide_text}>{t('1인당 교육비 사용 금액을 설정합니다.')}</p>
-            </div>
-            <div className={formStyles.form_item}>
-              <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
-                <span className={styles.form_text}> {t('고용보험 환급')}</span>
-              </label>
-              <p className={formStyles.guide_text}>
-                {t('고용보험 환급 대상 과정 여부를 설정합니다.')}
-              </p>
-            </div>
-          </ContentsRow>
-          <ContentsRow>
-            <div className={formStyles.form_item}>
-              <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
-                <span className={styles.form_text}> {t('과정 플래그')}</span>
-              </label>
-              <p className={formStyles.guide_text}>{t('과정 플래그 기능을 설정합니다.')}</p>
-            </div>
-            <div className={formStyles.form_item}></div>
-            <div className={formStyles.form_item}></div>
-          </ContentsRow>
-        </FormDisplay>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('HMG 과정 데이터 표준 분류')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>{t('과정 표준 분류를 설정합니다.')}</p>
+                </div>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('1인당 교육비 ')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>{t('1인당 교육비 사용 금액을 설정합니다.')}</p>
+                </div>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('고용보험 환급')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>
+                    {t('고용보험 환급 대상 과정 여부를 설정합니다.')}
+                  </p>
+                </div>
+              </ContentsRow>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('과정 플래그')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>{t('과정 플래그 기능을 설정합니다.')}</p>
+                </div>
+                <div className={formStyles.form_item}></div>
+                <div className={formStyles.form_item}></div>
+              </ContentsRow>
+            </FormDisplay>
+          </>
+        }
+
+        {/* TODO BE API 수정 시 response data 작업 */}
+        {
+          (props.roleInfo === 'PLATFORM') && <>
+            <FormSubTitle
+              label={t('완성차 테넌트 전용 항목')}
+              lineType={'dark'}
+              titleNode={
+                <Tooltip
+                  className={styles.tooltip}
+                  content={
+                    t(
+                      '완성차 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
+                    )
+                  }
+                >
+                  <Button onlyIcon>
+                    <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
+                  </Button>
+                </Tooltip>
+              }
+              actionNode={<FormRow provider={provider} name={'todoIsCar'} />}
+            />
+            <FormDisplay
+              provider={provider}
+              dependencies={[{ name: 'todoIsCar', value: true }]}
+            >
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('테넌트 전용항목')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>{t('테넌트 전용항목')}</p>
+                </div>
+                <div className={formStyles.form_item}></div>
+                <div className={formStyles.form_item}></div>
+              </ContentsRow>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('테넌트 전용항목')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>{t('테넌트 전용항목')}</p>
+                </div>
+                <div className={formStyles.form_item}></div>
+                <div className={formStyles.form_item}></div>
+              </ContentsRow>
+            </FormDisplay>
+          </>
+        }
+
+        {
+          (props.roleInfo === 'PLATFORM') && <>
+            <FormSubTitle
+              label={t('로템 테넌트 전용 항목')}
+              lineType={'dark'}
+              titleNode={
+                <Tooltip
+                  className={styles.tooltip}
+                  content={
+                    t(
+                      '로템 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
+                    )
+                  }
+                >
+                  <Button onlyIcon>
+                    <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
+                  </Button>
+                </Tooltip>
+              }
+              actionNode={<FormRow provider={provider} name={'todoIsRowTotem'} />}
+            />
+            <FormDisplay
+              provider={provider}
+              dependencies={[{ name: 'todoIsRowTotem', value: true }]}
+            >
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('테넌트 전용항목')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>{t('테넌트 전용항목')}</p>
+                </div>
+                <div className={formStyles.form_item}></div>
+                <div className={formStyles.form_item}></div>
+              </ContentsRow>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('테넌트 전용항목')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>{t('테넌트 전용항목')}</p>
+                </div>
+                <div className={formStyles.form_item}></div>
+                <div className={formStyles.form_item}></div>
+              </ContentsRow>
+            </FormDisplay>
+          </>
+        }
+
+        {
+          (props.roleInfo === 'PLATFORM') && <>
+            <FormSubTitle
+              label={t('위탁 테넌트 전용 항목')}
+              lineType={'dark'}
+              titleNode={
+                <Tooltip
+                  className={styles.tooltip}
+                  content={
+                    t(
+                      '위탁 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
+                    )
+                  }
+                >
+                  <Button onlyIcon>
+                    <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
+                  </Button>
+                </Tooltip>
+              }
+              actionNode={<FormRow provider={provider} name={'todoIsConsignment'} />}
+            />
+            <FormDisplay
+              provider={provider}
+              dependencies={[{ name: 'todoIsConsignment', value: true }]}
+            >
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('테넌트 전용항목')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>{t('테넌트 전용항목')}</p>
+                </div>
+                <div className={formStyles.form_item}></div>
+                <div className={formStyles.form_item}></div>
+              </ContentsRow>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('테넌트 전용항목')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>{t('테넌트 전용항목')}</p>
+                </div>
+                <div className={formStyles.form_item}></div>
+                <div className={formStyles.form_item}></div>
+              </ContentsRow>
+            </FormDisplay>
+          </>
+        }
+
+        {
+          (props.roleInfo === 'PLATFORM') && <>
+            <FormSubTitle
+              label={t('위아 테넌트 전용 항목')}
+              lineType={'dark'}
+              titleNode={
+                <Tooltip
+                  className={styles.tooltip}
+                  content={
+                    t(
+                      '위아 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
+                    )
+                  }
+                >
+                  <Button onlyIcon>
+                    <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
+                  </Button>
+                </Tooltip>
+              }
+              actionNode={<FormRow provider={provider} name={'todoIsWeAre'} />}
+            />
+            <FormDisplay
+              provider={provider}
+              dependencies={[{ name: 'todoIsWeAre', value: true }]}
+            >
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('테넌트 전용항목')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>{t('테넌트 전용항목')}</p>
+                </div>
+                <div className={formStyles.form_item}></div>
+                <div className={formStyles.form_item}></div>
+              </ContentsRow>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('테넌트 전용항목')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>{t('테넌트 전용항목')}</p>
+                </div>
+                <div className={formStyles.form_item}></div>
+                <div className={formStyles.form_item}></div>
+              </ContentsRow>
+            </FormDisplay>
+          </>
+        }
+
+        {
+          (props.roleInfo === 'PLATFORM') && <>
+            <FormSubTitle
+              label={t('오토에버 테넌트 전용 항목')}
+              lineType={'dark'}
+              titleNode={
+                <Tooltip
+                  className={styles.tooltip}
+                  content={
+                    t(
+                      '오토에버 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
+                    )
+                  }
+                >
+                  <Button onlyIcon>
+                    <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
+                  </Button>
+                </Tooltip>
+              }
+              actionNode={<FormRow provider={provider} name={'todoIsAutoEver'} />}
+            />
+            <FormDisplay
+              provider={provider}
+              dependencies={[{ name: 'todoIsAutoEver', value: true }]}
+            >
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('테넌트 전용항목')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>{t('테넌트 전용항목')}</p>
+                </div>
+                <div className={formStyles.form_item}></div>
+                <div className={formStyles.form_item}></div>
+              </ContentsRow>
+              <ContentsRow>
+                <div className={formStyles.form_item}>
+                  <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
+                    <span className={styles.form_text}> {t('테넌트 전용항목')}</span>
+                  </label>
+                  <p className={formStyles.guide_text}>{t('테넌트 전용항목')}</p>
+                </div>
+                <div className={formStyles.form_item}></div>
+                <div className={formStyles.form_item}></div>
+              </ContentsRow>
+            </FormDisplay>
+          </>
+        }
       </form>
     </>
   );

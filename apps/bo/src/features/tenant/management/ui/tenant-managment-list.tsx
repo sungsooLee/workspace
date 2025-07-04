@@ -5,10 +5,8 @@ import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
 import { useQueryClient } from '@tanstack/react-query';
 import { t } from 'i18next';
 
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
-
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { Button, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
+import { Button, Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 
@@ -114,11 +112,8 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
   return (
     <>
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
-      <div className={cn(boxStyles.start, boxStyles.inner)}>
-        <div className="grid_wrap">
-          <GridBox config={gConfig} columns={columns} showNumberingColumn />
-        </div>
-      </div>
+      <Divider />
+      <GridBox config={gConfig} columns={columns} showNumberingColumn />
     </>
   );
 };

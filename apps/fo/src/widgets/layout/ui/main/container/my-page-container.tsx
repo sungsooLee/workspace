@@ -12,7 +12,7 @@ interface MyPageContainerComponentProps {
 
 function MyPageContainerComponent({ children }: MyPageContainerComponentProps) {
   const { t } = useTranslation();
-  const [activeMenuDepth] = useActiveMenuDepthState();
+  const { activeMenuDepthMenu } = useActiveMenuDepthState((state) => state);
 
   const { meta } = useCurrentRoute();
   /*

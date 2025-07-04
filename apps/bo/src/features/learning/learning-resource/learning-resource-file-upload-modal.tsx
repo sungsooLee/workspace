@@ -1,3 +1,5 @@
+// IA106 / NLP_BO_CMS_1060
+
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import {
   Button,
@@ -12,11 +14,10 @@ import { useS3Uploader } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { LEARNING_TYPE } from '@learnway/config';
 import { t } from 'i18next';
-import { ChannelChoiceModal } from '@features/shared';
 
 interface Props {
   channel: {
-    channelId: string;
+    channelUuid: string;
     channelName: string;
   };
   type: LEARNING_TYPE;
@@ -41,7 +42,7 @@ const acceptFiles = {
 };
 
 const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) => {
-  const { close, open } = useModal();
+  const { close } = useModal();
   const maxFileCount = 100;
   const { stats, files, addFiles, onPause, onRetry, onResume, onRemove, inputAccept } =
     useS3Uploader({
@@ -71,10 +72,10 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
   useEffect(() => {
     if (stats.status === 'validating-error' && files.length === 1) {
       if (files[0].message === 'size error') {
-        setErrorMessage('LABEL.message.learningResourceFileUploadModal.sizeError');
+        setErrorMessage(t('LABEL.messages.learningResourceFileUploadModal.sizeError'));
       }
       if (files[0].message === 'extension error') {
-        setErrorMessage(t('LABEL.message.learningResourceFileUploadModal.extensionError'));
+        setErrorMessage(t('LABEL.messages.learningResourceFileUploadModal.extensionError'));
       }
       onRemove();
     }
@@ -92,7 +93,7 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
           </div>
           <div className={popupStyles.title_wrap}>
             <p className={popupStyles.text}>
-              {t('LABEL.message.learningResourceFileUploadModal.uploaderLabel')}
+              {t('LABEL.messages.learningResourceFileUploadModal.uploaderLabel')}
             </p>
           </div>
           <div className={popupStyles.pop_contents}>
@@ -105,7 +106,7 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
               onPause={onPause}
               onResume={onResume}
               onRetry={onRetry}
-              guideText={t('LABEL.message.learningResourceFileUploadModal.uploaderGuideText')}
+              guideText={t('LABEL.messages.learningResourceFileUploadModal.uploaderGuideText')}
               errorMessage={errorMessage}
               wrapSize={'lg'}
             />

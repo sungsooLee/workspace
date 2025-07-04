@@ -1,110 +1,102 @@
+// IA105 / NLP_BO_CMS_1017
+
 import {
   Button,
-  List,
   ModalBody,
   ModalContainer,
   ModalTitle,
   ModalFooter,
   useModal,
+  Divider,
+  GridBox,
+  useGridBox,
+  useGridBoxConfig,
 } from '@learnway/ui';
-import styles from '@learnway/styles/bo/assets/styles/modules/popup-search.module.css';
 import { t } from 'i18next';
-import React, { useState } from 'react';
-import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { SearchBox } from '../../../../shared/ui/search-box';
-import { cn } from '@learnway/shared';
-import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import { RoleInfo } from '@types';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+import { AuthUser } from '@learnway/auth/types';
+import { useState } from 'react';
+
+interface Channel {
+  channelUuid: string;
+  channelName: string;
+}
 
 const ChannelChoicePopupComponent = () => {
   const { close } = useModal();
-  const { provider: sProvider } = useSearchBox(searchConfig);
-  const [option, setOption] = useState<{ value: string; label: string }>();
-  const [options, setOptions] = useState([
-    { value: 'type1', label: '경영지원시스템 채널 01' },
-    { value: 'type2', label: '경영지원시스템 채널 02' },
-    { value: 'type3', label: '경영지원시스템 채널 03' },
-    { value: 'type4', label: '경영지원시스템 채널 04' },
-    { value: 'type5', label: '경영지원시스템 채널 05' },
-    { value: 'type6', label: '경영지원시스템 채널 06' },
-    { value: 'type7', label: '경영지원시스템 채널 07' },
-    { value: 'type8', label: '경영지원시스템 채널 08' },
-    { value: 'type9', label: '경영지원시스템 채널 09' },
-    { value: 'type10', label: '경영지원시스템 채널 10' },
-    { value: 'type11', label: '경영지원시스템 채널 11' },
-    { value: 'type12', label: '경영지원시스템 채널 12' },
-    { value: 'type13', label: '경영지원시스템 채널 13' },
-    { value: 'type14', label: '경영지원시스템 채널 14' },
-    { value: 'type15', label: '경영지원시스템 채널 15' },
-    { value: 'type16', label: '경영지원시스템 채널 16' },
-    { value: 'type17', label: '경영지원시스템 채널 17' },
-    { value: 'type18', label: '경영지원시스템 채널 18' },
-    { value: 'type19', label: '경영지원시스템 채널 19' },
-    { value: 'type20', label: '경영지원시스템 채널 20' },
-    { value: 'type21', label: '경영지원시스템 채널 21' },
-  ]);
-  /**
-   * @param data
-   */
-  const handleOnSearch = (data: Record<string, any>) => {
-    console.log('searchData {} => ', data);
-    /* const newOptions = [
-      { value: 'type11', label: '경영지원시스템 채널 11' },
-      { value: 'type12', label: '경영지원시스템 채널 12' },
-      { value: 'type13', label: '경영지원시스템 채널 13' },
-      { value: 'type14', label: '경영지원시스템 채널 14' },
-      { value: 'type15', label: '경영지원시스템 채널 15' },
-      { value: 'type16', label: '경영지원시스템 채널 16' },
-      { value: 'type17', label: '경영지원시스템 채널 17' },
-      { value: 'type18', label: '경영지원시스템 채널 18' },
-      { value: 'type19', label: '경영지원시스템 채널 19' },
-      { value: 'type20', label: '경영지원시스템 채널 20' },
-      { value: 'type21', label: '경영지원시스템 채널 21' },
-    ];
-    setOptions((state) => [...state, ...newOptions]);
-    */
+
+  const { data: { myRoles } = {} } = useFetchAuthUser<AuthUser>();
+
+  const getChannels = ({ tenantId, channelName }: { tenantId: number; channelName: string }) => {
+    // 업무 API로 이 함수를 대체해야 함
+    const channels =
+      myRoles
+        ?.filter((d: RoleInfo) => !tenantId || d.tenantId === tenantId) // 테넌트 필터
+        ?.map((d: RoleInfo) => d.channels) // 채널만 추출
+        ?.flat() // 2차원 배열을 1차원 배열로
+        ?.filter((c: any) => c.name.includes(channelName)) // 이름 필터
+        ?.map(({ uuid, name }: any) => ({
+          channelName: name,
+          channelUuid: uuid,
+        })) || [];
+    return {
+      data: channels,
+    };
+  };
+
+  const gridConfig: useGridBoxConfig = {
+    query: (params: any) => {
+      return {
+        queryKey: ['get-channels-by-tenant-and-role'],
+        queryFn: () => getChannels(params),
+      };
+    },
+    columns: [
+      {
+        size: 676,
+        name: 'channelUuid',
+        label: t('채널명'),
+        render: (_: any) => _.row.original.channelName,
+      },
+    ],
+    gridState: {
+      page: 0,
+      size: 10,
+    },
+  };
+
+  const { provider: sProvider, getValues } = useSearchBox(searchConfig);
+  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
+  const [selectedRow, setSelectedRow] = useState<Channel | null>(null);
+
+  const handleOnSearch = (query: Record<string, any>) => {
+    gridFetch(query);
+  };
+
+  const handleOnConfirm = () => {
+    if (!selectedRow) return;
+
+    close(selectedRow);
   };
 
   const handleOnClose = () => {
-    close({
-      channelId: '',
-      channelName: '',
-    });
-  };
-  const handleOnConfirm = () => {
-    if (!option) return;
-    close({ channelId: option.value, channelName: option.label });
+    close();
   };
 
   return (
     <ModalContainer>
-      <ModalTitle>{'등록 채널을 선택하세요.'}</ModalTitle>
+      <ModalTitle>{t('채널 선택')}</ModalTitle>
       <ModalBody>
-        <div className={popupStyles.wrap}>
-          <div className={cn(styles.start, styles.wrap)}>
-            <div className={styles.contents}>
-              {/* form */}
-              {options.length > 20 && <SearchBox provider={sProvider} onSearch={handleOnSearch} />}
-              <div className={styles.channel_wrap}>
-                <List
-                  value={option}
-                  options={options}
-                  onOptionSelect={(option) => setOption(option)}
-                  hideBorder
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+        <SearchBox provider={sProvider} onSearch={handleOnSearch} />
+        <Divider />
+        <GridBox config={gConfig} showNumberingColumn onRowSelect={setSelectedRow} />
       </ModalBody>
       <ModalFooter>
-        <Button label={'취소'} variant={'gray'} size={'lg'} onClick={handleOnClose} />
-        <Button
-          type={'button'}
-          label={'확인'}
-          variant={'primary'}
-          size={'lg'}
-          onClick={handleOnConfirm}
-        />
+        <Button label={t('취소')} variant="gray" size="lg" onClick={handleOnClose} />
+        <Button label={t('다음')} variant="primary" size="lg" onClick={handleOnConfirm} />
       </ModalFooter>
     </ModalContainer>
   );
@@ -116,39 +108,25 @@ const searchConfig: SearchBoxConfig = {
   builders: [
     [
       {
-        name: 'tenant',
+        name: 'tenantId',
         type: 'dropdown',
         label: t('테넌트'),
         value: '',
-        options: [
-          { value: '', label: '전체' },
-          { value: 'tenantA', label: t('테넌트A') },
-          { value: 'tenantB', label: t('테넌트B') },
-          { value: 'tenantC', label: t('테넌트C') },
-          { value: 'tenantD', label: t('테넌트D') },
-          { value: 'tenantE', label: t('테넌트E') },
-        ],
+        format: 'number',
+        presetOptionLabel: t('선택'),
+        optionsConfig: {
+          codeGroup: CODE_GROUP['manual.bo.my.tenant.tenantId'],
+        },
       },
       {
-        name: 'channel',
-        type: 'dropdown',
-        label: t('채널'),
-        value: '',
-        options: [
-          { value: '', label: '전체' },
-          { value: 'channelA', label: t('채널A') },
-          { value: 'channelB', label: t('채널B') },
-          { value: 'channelC', label: t('채널C') },
-          { value: 'channelD', label: t('채널D') },
-          { value: 'channelE', label: t('채널E') },
-        ],
-      },
-      {
-        name: 'manager',
+        name: 'channelName',
         type: 'text',
-        label: t('담당자'),
+        label: t('채널명'),
         value: '',
       },
     ],
   ],
+  validator: {
+    tenantId: true,
+  },
 };

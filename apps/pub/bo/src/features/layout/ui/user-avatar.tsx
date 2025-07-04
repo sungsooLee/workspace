@@ -38,7 +38,7 @@ const PopoverContent = () => {
   };
 
   return (
-    <div className={`${styles.start} ${styles.avata_area}`}>
+    <div className={`${styles.start} ${styles.avatar_area}`}>
       {/* 퍼블수정 20240513 : 수정 S */}
       <div className={styles.profile_info}>
         <div className={styles.avata_img}>
@@ -101,7 +101,7 @@ const AvatarCompoment = () => {
       sideOffset={10}
     >
       {hasAvataImage ? (
-        <Avatar imageUrl="https://github.com/shadcn.png" />
+        <Avatar imageUrl="https://github.com/shadcn.png" size="sm" />
       ) : (
         // 아바타 이미지 없는 경우 CASE
         <span className={styles.name}>

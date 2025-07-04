@@ -78,7 +78,11 @@ export function initAxios(extendConfig?: axiosConfig) {
         console.log('|  config.url ', config.url);
         console.log('|  check url ', config.url.includes('/token-reissue'));
         // error
-        if (errorResponse?.status === 401 && !config.url.includes('/token-reissue')) {
+        if (
+          errorResponse?.status === 401 &&
+          !config.url.includes('/token-reissue') &&
+          !config.url.includes('/login')
+        ) {
           return await reissueProccess(error);
         }
 
@@ -104,15 +108,15 @@ export function initAxios(extendConfig?: axiosConfig) {
 
   // accessToken 만료인 경우 refreshToken을 이용해 accessToken 갱신
   const reissueProccess = async (error: any): Promise<any> => {
-    console.log('reissueProccess', error);
+    console.log('| reissueProccess', error);
     const { config, response: errorResponse } = error;
     const refresh_token = tokenService.refreshToken;
     if (!refresh_token) {
-      tokenService.clear();
-      if (typeof window !== 'undefined' && !config.url.includes('/login')) {
-        const loginPath = getLoginPath();
-        window.location.href = loginPath;
-      }
+      redirectLoginPage();
+      // if (typeof window !== 'undefined' && !config.url.includes('/login')) {
+      // const loginPath = getLoginPath();
+      // window.location.href = loginPath;
+      // }
       return Promise.reject(error);
     }
 
@@ -124,19 +128,36 @@ export function initAxios(extendConfig?: axiosConfig) {
         },
         { headers: { 'refresh-token': `${refresh_token}` } },
       );
-      tokenService.accessToken = data.headers['access-token'];
-      tokenService.refreshToken = data.headers['refresh-token'];
-      config.headers.authorization = `Bearer ${tokenService.accessToken}`;
-      return await axios(config);
-    } catch (error) {
-      tokenService.clear();
-      if (typeof window !== 'undefined') {
-        const loginPath = getLoginPath();
-        window.location.href = loginPath;
+      console.log('| refresh', data);
+
+      if (data && data.headers['access-token'] && data.headers['refresh-token']) {
+        tokenService.accessToken = data.headers['access-token'];
+        tokenService.refreshToken = data.headers['refresh-token'];
+        config.headers.authorization = `Bearer ${tokenService.accessToken}`;
+        // 이전 요청 재 실행
+        return await axios(config);
+      } else {
+        redirectLoginPage();
+        return Promise.reject(error);
       }
+    } catch (error) {
+      redirectLoginPage();
+      // if (typeof window !== 'undefined') {
+      //   const loginPath = getLoginPath();
+      //   window.location.href = loginPath;
+      // }
       return Promise.reject(error);
     }
   };
+
+  function redirectLoginPage() {
+    // alert('Logout');
+    console.log('### redirect ###');
+    tokenService.clear();
+    const loginPath = getLoginPath();
+    window.location.href = loginPath;
+    return;
+  }
 
   httpService.init({ interceptors });
 }

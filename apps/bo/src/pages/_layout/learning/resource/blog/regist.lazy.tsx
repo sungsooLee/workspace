@@ -8,9 +8,13 @@ import {
   ContentsRow,
   Divider,
   InputModalSelectorFormField,
+  Tooltip,
   useModal,
 } from '@learnway/ui';
+import { cn } from '@learnway/shared';
+import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
 import { DateRangePickerFormField } from '@features/learning/ui/resource/date-range-picker-form-field';
+import { DurationTimeFormField } from '@features/learning/ui/resource/duration-time-form-field';
 import { Company } from '@learnway/types';
 import { FormRow, FormRow2 } from '@shared/ui';
 import { FormDisplay } from '@features/form';
@@ -18,7 +22,7 @@ import { ContentsButtons, MainContents, PageContainer, SubContents } from '@widg
 import { ChannelListChoiceModal, CompanyChoiceModal, ManagerChoiceModal } from '@features/shared';
 
 import styles from './blog-detail.module.css';
-// import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
 export const Route = createLazyFileRoute('/_layout/learning/resource/blog/regist')({
   component: RouteComponent,
@@ -93,19 +97,17 @@ function RouteComponent() {
         tooltip: t('사용기한 내 콘텐츠 공유/교육자원활용이 가능합니다.'),
       },
       {
-        name: 'contentUseStartDate',
+        name: 'contentUseDate',
         type: 'custom',
-        format: 'object',
-        value: '',
-        fields: {
-          from: 'contentUseStartDate',
-          to: 'contentUseEndDate',
+        // format: 'object',
+        value: {
+          from: undefined, // contentUseStartDate
+          to: undefined, // contentUseEndDate
         },
-      },
-      {
-        name: 'contentUseEndDate',
-        type: 'hidden',
-        value: '',
+        fields: {
+          from: undefined,
+          to: undefined,
+        },
       },
       {
         label: t('외주개발업체 정보'),
@@ -157,17 +159,16 @@ function RouteComponent() {
           number: 'vendorTelNo',
         },
       },
-      {
-        label: t('블로그 내용'),
-        name: 'blogContent',
-        type: 'custom',
-        value: '',
-      },
+      // {
+      //   label: t('블로그 내용'),
+      //   name: 'blogContent',
+      //   type: 'custom',
+      //   value: '',
+      // },
       {
         label: t('학습 시간'),
         name: 'contentDuration', // contentTime
         type: 'custom',
-        // value: '',
         format: 'object',
         value: {
           hour: 0,
@@ -180,9 +181,16 @@ function RouteComponent() {
         label: t('썸네일'),
         name: 'contentThumbnailFileGroupUuid',
         type: 'thumbnail-list',
-        max: 3,
         format: 'array',
         value: [],
+        max: 1,
+        uploadConfig: {
+          languageCode: 'ko',
+          affairsType: 'CMS',
+          s3Path: 'upload/content/image', // BE에 확인 필요
+          acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
+          maxFileCount: 1,
+        },
         description: '학습자원을 표현하는 썸네일을 선택하거나 업로드 하세요. (미선택 시 자동 선택)',
       },
       {
@@ -190,10 +198,16 @@ function RouteComponent() {
         name: 'tags',
         format: 'array',
         type: 'chip-list',
-        placeholder: '한글, 영문, 숫자 포함 9자 이하 태그를 입력하세요.(9자 초과할 경우 얼럿)',
+        chipListConfig: {
+          showInput: true,
+          labelField: 'label',
+          valueField: 'value',
+          wordwrap: true,
+        },
+        value: [],
+        placeHolder: '한글, 영문, 숫자 포함 9자 이하 태그를 입력하세요.(9자 초과할 경우 얼럿)',
         limitPlaceholder: '여러개의 태그는 쉼표로 구분',
         tooltip: '태그는 학습자원 검색 시 활용되고, 학습자에게는 10개까지만 보여집니다.',
-        value: [],
       },
       {
         label: t('학습자원개요 (AI 자동 추출)'),
@@ -220,7 +234,7 @@ function RouteComponent() {
         format: 'boolean',
         value: false,
         switchConfig: {
-          label: (value: boolean) => (value ? '사용' : '미사용'),
+          label: (value: boolean) => (value ? '활용' : '활용 불가'),
         },
       },
       {
@@ -245,7 +259,7 @@ function RouteComponent() {
         type: 'checkbox',
         format: 'boolean',
         value: false,
-        guideText: '등록하고자 한 학습자원이며, 정상적으로 보여짐이 확인되었습니다.',
+        guideText: t('등록하고자 한 학습자원이며, 정상적으로 보여짐이 확인되었습니다.'),
         checkConfig: {
           reverse: true,
         },
@@ -256,8 +270,9 @@ function RouteComponent() {
         type: 'checkbox',
         format: 'boolean',
         value: false,
-        guideText:
+        guideText: t(
           '저작권법(제25조2항)에 따라 학습자원(동영상,이미지 등)은 해당 학습플랫폼에서만 이용가능하며, 이 외의 공간에서 저작물을 공유 또는 게시하는 행위는 저작권법 위반에 해당될 수 있음에  동의합니다.',
+        ),
         checkConfig: {
           reverse: true,
         },
@@ -268,8 +283,9 @@ function RouteComponent() {
         type: 'checkbox',
         format: 'boolean',
         value: false,
-        guideText:
+        guideText: t(
           '캡쳐방지기능 사용 미 설정 시, 불법복제, 무단사용, 저작권 침해 위험에 노출되고, 이에 따른 피해를 입을 수 있음에 인지합니다.',
+        ),
         checkConfig: {
           reverse: true,
         },
@@ -280,44 +296,81 @@ function RouteComponent() {
       contentName: true,
       coordinatorName: true,
       coordinatorUuid: true,
-      coordinatorTelNo: true,
+      coordinatorTelNo: {
+        format: 'phone-number',
+        required: true,
+      },
       isLimitExist: true, // isUnlimited 값을 반대로 설정해야 함
-      contentUseStartDate: {
-        required: {
-          fn: (values: Record<string, any>) => {
-            console.log('fn', values);
-            return !!values.isLimitExist;
+      contentUseDate: {
+        required: true,
+        conditions: [
+          {
+            fn: (values: Record<string, any>) => {
+              if (values.isLimitExist) {
+                return !values.contentUseDate.from || !values.contentUseDate.to;
+              }
+              return false;
+            },
+            message: t('LABEL.form.input.placeholder3', {
+              field: t('시작일 및 종료일'),
+              inputType: t('LABEL.form.input.select'),
+            }),
           },
-        },
-      },
-      contentUseEndDate: {
-        required: {
-          fn: (values: Record<string, any>) => {
-            return !!values.isLimitExist && values.contentUseStartDate <= values.contentUseEndDate;
+          {
+            fn: (values: Record<string, any>) => {
+              console.log(values);
+              if (!!values.contentUseDate.from && !!values.contentUseDate.to) {
+                return !(values.contentUseDate.from < values.contentUseDate.to);
+              }
+              return false;
+            },
+            message: t('시작일은 종료일보다 이전이어야 합니다.'),
           },
-        },
+        ],
       },
-      blogContent: true,
+      // blogContent: true,
       contentDuration: {
-        required: {
-          fn: (values: Record<string, { hour: number; minute: number; second: number }>) => {
-            console.log(values);
-            // return (
-            //   values.contentDuration.hour === 0 &&
-            //   values.contentDuration.minute === 0 &&
-            //   values.contentDuration.second === 0
-            // );
-            return values.contentDuration.second > 0;
+        required: true,
+        conditions: [
+          {
+            fn: (values: Record<string, { hour: number; minute: number; second: number }>) => {
+              const { hour, minute, second } = values.contentDuration;
+              return !(hour > 0 || minute > 0 || second > 0);
+            },
+            message: t('학습시간은 1초 이상으로 설정하여야 합니다.'),
           },
-          message: t('학습시간을 입력해 주세요.'),
-        },
+        ],
       },
       contentThumbnailFileGroupUuid: true,
       tags: true,
       isCourseUsed: true,
-      isInspected: true,
-      isCopyrighted: true,
-      isContentSecured: true,
+      isInspected: {
+        required: true,
+        conditions: [
+          {
+            fn: (values: Record<string, any>) => !values.isInspected,
+            message: t("'검수 확인' 체크하세요."),
+          },
+        ],
+      },
+      isCopyrighted: {
+        required: true,
+        conditions: [
+          {
+            fn: (values: Record<string, any>) => !values.isCopyrighted,
+            message: t("'저작권 확인' 체크하세요."),
+          },
+        ],
+      },
+      isContentSecured: {
+        required: true,
+        conditions: [
+          {
+            fn: (values: Record<string, any>) => !values.isContentSecured,
+            message: t("'보안 확인' 체크하세요."),
+          },
+        ],
+      },
     },
   };
 
@@ -327,8 +380,15 @@ function RouteComponent() {
   const { open: openModal, confirm: openConfirm } = useModal();
   const router = useRouter();
 
-  const { provider, onSubmit, control, getValues, updateFormData, onFormChange } =
-    useDynamicForm(formConfig);
+  const {
+    provider,
+    onSubmit,
+    // control,
+    // getValues,
+    // updateFormData,
+    formState,
+    onFormChange: handleFormChange,
+  } = useDynamicForm(formConfig);
 
   const handleOnSubmit = async (data: any): Promise<void> => {
     console.log(data);
@@ -345,24 +405,26 @@ function RouteComponent() {
     }
   };
 
-  const handleClickGoListButton = () => {
-    openConfirm({
-      title: t('LABEL.confirm.goList.title'),
-      content: t('LABEL.confirm.goList.message'),
-      onClose: (result: boolean) => {
-        result && router.navigate({ to: '/learning/learning-resource' });
-      },
-    });
+  const handleClickGoListButton = async () => {
+    if (
+      await openConfirm({
+        title: t('LABEL.confirm.goList.title'),
+        content: t('LABEL.confirm.goList.message'),
+      })
+    ) {
+      router.navigate({ to: '/learning/learning-resource' });
+    }
   };
 
-  const handleClickCancelButton = () => {
-    openConfirm({
-      title: t('LABEL.confirm.cancel.title'),
-      content: t('LABEL.confirm.cancel.message', { type: t('학습자원') }),
-      onClose: (result: boolean) => {
-        result && router.navigate({ to: '/learning/learning-resource' });
-      },
-    });
+  const handleClickCancelButton = async () => {
+    if (
+      await openConfirm({
+        title: t('LABEL.confirm.cancel.title'),
+        content: t('LABEL.confirm.cancel.message', { type: t('학습자원') }),
+      })
+    ) {
+      router.navigate({ to: '/learning/learning-resource' });
+    }
   };
 
   return (
@@ -388,6 +450,7 @@ function RouteComponent() {
         </ContentsButtons>
 
         <MainContents>
+          {/* 채널 */}
           <ContentsRow>
             <FormRow
               provider={provider}
@@ -409,14 +472,17 @@ function RouteComponent() {
             />
           </ContentsRow>
 
+          {/* 학습자원명 */}
           <ContentsRow>
             <FormRow provider={provider} name="contentName" />
           </ContentsRow>
 
+          {/* 학습자원 설명 */}
           <ContentsRow>
             <FormRow provider={provider} name="description" />
           </ContentsRow>
 
+          {/* 담당자 */}
           <ContentsRow>
             <FormRow
               provider={provider}
@@ -435,15 +501,17 @@ function RouteComponent() {
                   onFormChange={(
                     values: Record<string, { coordinatorUuid: string; coordinatorName: string }>,
                   ) => {
-                    onFormChange(values);
+                    handleFormChange(values);
                   }}
                 />
               }
             />
             <FormRow2 provider={provider} type="hidden" name="coordinatorUuid" />
+            {/* 담당자 연락처 */}
             <FormRow provider={provider} name="coordinatorTelNo" />
           </ContentsRow>
 
+          {/* 사용기한 */}
           <ContentsRow type="horizontal" className="inactive">
             <FormRow provider={provider} name="isLimitExist" />
           </ContentsRow>
@@ -452,12 +520,13 @@ function RouteComponent() {
             <ContentsRow className="pt-0">
               <FormRow
                 provider={provider}
-                name="contentUseStartDate"
+                name="contentUseDate"
                 element={<DateRangePickerFormField />}
               />
             </ContentsRow>
           </FormDisplay>
 
+          {/* 외주개발업체 정보 */}
           <ContentsRow type="horizontal" className="inactive">
             <FormRow provider={provider} name="isVendored" />
           </ContentsRow>
@@ -481,7 +550,7 @@ function RouteComponent() {
                     onFormChange={(
                       values: Record<string, { vendorCode: string; vendorName: string }>,
                     ) => {
-                      onFormChange(values);
+                      handleFormChange(values);
                     }}
                   />
                 }
@@ -494,8 +563,112 @@ function RouteComponent() {
               <FormRow provider={provider} name="vendorTelNo" />
             </ContentsRow>
           </FormDisplay>
+
+          {/* 블로그 내용 (에디터 팝업 호출) */}
+          <ContentsRow type="horizontal">
+            <div className={formStyles.form_item}>
+              <label htmlFor="" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>블로그 내용</span>
+                <span className={cn(formStyles.status, formStyles.required)}>
+                  <IcoFormRequired width={8} height={8} />
+                </span>
+              </label>
+              <div className={formStyles.input_box}>
+                <span className={formStyles.info_area}>
+                  <Button variant="search" size="sm">
+                    블로그 꾸미기
+                  </Button>
+                </span>
+              </div>
+            </div>
+          </ContentsRow>
+
+          {/* 학습 시간 */}
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name="contentDuration"
+              element={<DurationTimeFormField />}
+            />
+          </ContentsRow>
+
+          {/* 썸네일 */}
+          <ContentsRow>
+            <FormRow provider={provider} name="contentThumbnailFileGroupUuid" />
+          </ContentsRow>
+
+          {/* 태그 */}
+          <ContentsRow>
+            <FormRow provider={provider} name="tags" />
+          </ContentsRow>
+
+          {/* 학습자원 개요 */}
+          <ContentsRow>
+            <FormRow provider={provider} name="learningResourceOverview" />
+          </ContentsRow>
+
+          {/* 키워드 개요 */}
+          <ContentsRow>
+            <FormRow provider={provider} name="keywords" />
+          </ContentsRow>
+
+          {/* 교육자원활용 여부 */}
+          <ContentsRow type="horizontal" className="inactive">
+            <FormRow provider={provider} name="isCourseUsed" />
+          </ContentsRow>
+
+          {/* 공유채널 설정 */}
+          <ContentsRow type="horizontal">
+            <div className={formStyles.form_item}>
+              <label htmlFor="" className={formStyles.form_label}>
+                <span className={formStyles.form_text}>공유채널 설정</span>
+                <Tooltip
+                  className={formStyles.tooltip}
+                  side="bottom"
+                  align="start"
+                  content={'설정된 채널에 해당 학습자원이 공유됩니다.'}
+                >
+                  <Button onlyIcon>
+                    <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
+                  </Button>
+                </Tooltip>
+              </label>
+              <div className={formStyles.input_box}>
+                <span className={formStyles.info_area}>
+                  <Button variant="search" size="sm">
+                    채널선택
+                  </Button>
+                </span>
+              </div>
+            </div>
+          </ContentsRow>
+
+          {/* 필수 확인 영역 */}
+          <div className={formStyles.form_contents_wrap}>
+            <strong className={formStyles.tit_sub}>
+              최종 확인
+              <span className={cn(formStyles.status, formStyles.required)}>
+                <IcoFormRequired width={8} height={8} />
+              </span>
+            </strong>
+            <div className={formStyles.form_contents}>
+              {/* 검수 확인 */}
+              <ContentsRow>
+                <FormRow provider={provider} name="isInspected" />
+              </ContentsRow>
+              {/* 저작권 확인 */}
+              <ContentsRow>
+                <FormRow provider={provider} name="isCopyrighted" />
+              </ContentsRow>
+              {/* 보안 확인 */}
+              <ContentsRow>
+                <FormRow provider={provider} name="isContentSecured" />
+              </ContentsRow>
+            </div>
+          </div>
         </MainContents>
 
+        {/* 썸네일 영역 */}
         <SubContents>
           <div className={styles.sub_container}>
             <strong className={styles.title}>{t('블로그')}</strong>

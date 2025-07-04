@@ -28,7 +28,7 @@ const PasswordVerifyModalComponent = () => {
       title: <div>{t('LABEL.common.inputPassword')}</div>,
       content: (
         <div className="whitespace-pre-wrap">
-          {t('LABEL.message.passwordConfirmFail')}
+          {t('LABEL.messages.passwordConfirmFail')}
           <div className="error">
             {t('LABEL.common.passwordVerifyCount', { count: data.loginFailCount })}
           </div>
@@ -81,7 +81,7 @@ const PasswordVerifyModalComponent = () => {
 
   const handleVerifyError = () => {
     console.log('handleVerifyError');
-    setFormError('password', t('LABEL.message.invalidAuthNumber'));
+    setFormError('password', t('LABEL.messages.invalidAuthNumber'));
     // router.navigate({ to: '/my-page/privacy', state: { confirmPassword: 'true' } as any });
   };
 
@@ -92,7 +92,7 @@ const PasswordVerifyModalComponent = () => {
 
         <ModalBody>
           <EmbededAlert className={styles.search_info} hiddenIcon>
-            {t(`LABEL.message.passwordVerifyForChangePassword`)}
+            {t(`LABEL.messages.passwordVerifyForChangePassword`)}
           </EmbededAlert>
 
           <ContentsRow>

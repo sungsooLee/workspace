@@ -4,7 +4,7 @@ import { t } from 'i18next';
 import { FormSubTitle, FormRow, ContentsHistoryInfoFormField } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { cn } from '@learnway/shared';
-import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
+import { Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
 import {
   DynamicFormConfig,
   useDynamicForm,
@@ -13,8 +13,6 @@ import {
   CODE_GROUP,
 } from '@learnway/hooks';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 
 const CompanyUserDetailLearningHistoryComponent: FC<any> = () => {
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);
@@ -26,11 +24,8 @@ const CompanyUserDetailLearningHistoryComponent: FC<any> = () => {
   return (
     <>
       <SearchBox provider={sProvider} onSearch={handleOnSearch} />
-      <div className={cn(boxStyles.start, boxStyles.inner)}>
-        <div className="grid_wrap">
-          <GridBox config={gConfig} columns={columns} title={t('교육 이력 목록')} />
-        </div>
-      </div>
+      <Divider />
+      <GridBox config={gConfig} columns={columns} title={t('교육 이력 목록')} />
     </>
   );
 };

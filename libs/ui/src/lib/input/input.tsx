@@ -169,6 +169,18 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
     };
 
     const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+      // 피드백 메시지 관련 초기화
+      if (validateInput(event.target.value) && hasValidationError) {
+        setHasValidationError(false);
+        clearValidationError();
+        if (formContext?.clearErrors && id) {
+          const fieldState = formContext.getFieldState?.(id);
+          if (fieldState?.error?.type === 'validation') {
+            formContext.clearErrors(id);
+          }
+        }
+        onValidationSuccess?.();
+      }
       setIsFocused(false);
       onBlur?.(event);
     };

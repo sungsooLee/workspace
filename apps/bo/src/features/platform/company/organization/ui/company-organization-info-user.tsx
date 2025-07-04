@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css';
-
 import { cn } from '@learnway/shared';
-import { GridBox, useGridBox } from '@learnway/ui';
+import { Divider, GridBox, useGridBox } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 import { EnOrganizationShowType } from './company-organization-tree';
@@ -60,11 +58,8 @@ const CompanyOrganizationInfoUserComponent = ({
   return (
     <>
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
-      <div className={cn(boxStyles.start, boxStyles.inner)}>
-        <div className="grid_wrap">
-          <GridBox config={gConfig} columns={columns} showNumberingColumn title={t('유저 목록')} />
-        </div>
-      </div>
+      <Divider />
+      <GridBox config={gConfig} columns={columns} showNumberingColumn title={t('유저 목록')} />
     </>
   );
 };

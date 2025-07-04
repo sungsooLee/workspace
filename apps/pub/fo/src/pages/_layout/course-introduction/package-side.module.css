@@ -56,3 +56,24 @@
     }
   }
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.package {
+        .package_box {
+          .acc_package {
+            & > div {
+              @apply !p-[24px];
+            }
+            .sub_package_title {
+              p {
+                @apply title3-b leading-[22px] text-[var(--gray10)];
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

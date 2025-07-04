@@ -53,6 +53,7 @@ import {
   IcoRefresh02,
   IcoSearch,
   IcoStatusFail,
+  IcoDelete04,
 } from '@learnway/icons';
 import { FormSubTitle } from '../../../../../../bo/src/shared/ui/form';
 
@@ -969,7 +970,6 @@ function RouteComponent() {
                     { id: '5', path: 'https://lodash.com/assets/img/lodash.svg' },
                     { id: '6', path: defaultImg } /* default 추천 썸네일 */,
                   ]}
-                  disabled={true}
                   onChange={(options: ImageOption[]) => console.log('onChange', options)}
                   onCheckedChange={(options: ImageOption[]) =>
                     console.log('onCheckedChange', options)
@@ -1152,9 +1152,13 @@ function RouteComponent() {
                       <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
                         자막 변경
                       </Button>
-                      <Button onlyIcon className={dynamicFormStyles.btn_delete}>
-                        <IcoCloseCircle width={24} height={24} fill="#D6DAE1" stroke="#ffffff" />
-                      </Button>
+                      <Button
+                        onlyIcon
+                        className={dynamicFormStyles.btn_delete}
+                        icon={
+                          <IcoDelete04 width={20} height={20} fill={'none'} stroke={'#4C515E'} />
+                        }
+                      />
                     </ContentsRow>
                     <ContentsRow className={dynamicFormStyles.row_inner}>
                       <Dropdown
@@ -1172,9 +1176,13 @@ function RouteComponent() {
                       <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
                         자막 변경
                       </Button>
-                      <Button onlyIcon className={dynamicFormStyles.btn_delete}>
-                        <IcoCloseCircle width={24} height={24} fill="#D6DAE1" stroke="#ffffff" />
-                      </Button>
+                      <Button
+                        onlyIcon
+                        className={dynamicFormStyles.btn_delete}
+                        icon={
+                          <IcoDelete04 width={20} height={20} fill={'none'} stroke={'#4C515E'} />
+                        }
+                      />
                     </ContentsRow>
                     <ContentsRow className={dynamicFormStyles.row_inner}>
                       <Dropdown
@@ -1192,9 +1200,13 @@ function RouteComponent() {
                       <Button variant="gray" size="sm" className={dynamicFormStyles.btn_edit}>
                         자막 변경
                       </Button>
-                      <Button onlyIcon className={dynamicFormStyles.btn_delete}>
-                        <IcoCloseCircle width={24} height={24} fill="#D6DAE1" stroke="#ffffff" />
-                      </Button>
+                      <Button
+                        onlyIcon
+                        className={dynamicFormStyles.btn_delete}
+                        icon={
+                          <IcoDelete04 width={20} height={20} fill={'none'} stroke={'#4C515E'} />
+                        }
+                      />
                     </ContentsRow>
                     <ContentsRow className={dynamicFormStyles.row_inner}>
                       <Dropdown

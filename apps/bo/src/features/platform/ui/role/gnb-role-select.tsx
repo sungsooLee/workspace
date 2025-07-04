@@ -23,7 +23,7 @@ interface Props {
 const GnbRoleSelectComponent = ({ className }: Props) => {
   const router = useRouter();
 
-  const [_, setActiveMenuDepth] = useActiveMenuDepthState();
+  const { setActiveMenuDepthMenu } = useActiveMenuDepthState();
 
   const { data: authUser } = useFetchAuthUser();
   const { asyncMenus } = useAsycFetchMenusForceRefatch();
@@ -79,7 +79,7 @@ const GnbRoleSelectComponent = ({ className }: Props) => {
     });
     const menus = await asyncMenus(newValue.tenantId);
     updateMenu(menus);
-    setActiveMenuDepth([]);
+    setActiveMenuDepthMenu([]);
     router.navigate({ to: '/' });
   };
 
@@ -112,7 +112,7 @@ const GnbRoleSelectComponent = ({ className }: Props) => {
 
     const menus = await asyncMenus(newValue.tenantId);
     updateMenu(menus);
-    setActiveMenuDepth([]);
+    setActiveMenuDepthMenu([]);
     router.navigate({ to: '/' });
   };
 

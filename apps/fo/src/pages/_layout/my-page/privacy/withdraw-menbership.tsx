@@ -42,8 +42,8 @@ function RouteComponent() {
       onSuccess: async () => {
         logout();
         await alert({
-          title: t('LABEL.message.alertWithdrawMembershipSuccessTitle'),
-          content: t('LABEL.message.alertWithdrawMembershipSuccess'),
+          title: t('LABEL.messages.alertWithdrawMembershipSuccessTitle'),
+          content: t('LABEL.messages.alertWithdrawMembershipSuccess'),
         });
         router.navigate({ to: '/login' });
       },
@@ -59,18 +59,18 @@ function RouteComponent() {
       <div className={styles.box}>
         <div className={styles.confirm}>
           <IcoCaution03 width={32} height={32} stroke="#ff4646"></IcoCaution03>
-          <p className="whitespace-break-spaces">{t('LABEL.message.alertWithdrawMembership')}</p>
+          <p className="whitespace-break-spaces">{t('LABEL.messages.alertWithdrawMembership')}</p>
         </div>
 
         <div className={styles.bullet_notice}>
           <ul>
-            <li>{t('LABEL.message.cautionWithdrawMembership01')}</li>
-            <li>{t('LABEL.message.cautionWithdrawMembership02')}</li>
-            <li>{t('LABEL.message.cautionWithdrawMembership03')}</li>
+            <li>{t('LABEL.messages.cautionWithdrawMembership01')}</li>
+            <li>{t('LABEL.messages.cautionWithdrawMembership02')}</li>
+            <li>{t('LABEL.messages.cautionWithdrawMembership03')}</li>
           </ul>
           <Checkbox
             size="lg"
-            label={t('LABEL.message.agreeToBeTheInstructions')}
+            label={t('LABEL.messages.agreeToBeTheInstructions')}
             onCheckedChange={(checked: boolean) => setAgree(checked)}
           />
         </div>

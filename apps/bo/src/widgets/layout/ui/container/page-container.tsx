@@ -69,7 +69,9 @@ const PageContainerComponent: FC<{
   guidePopupProps,
 }) => {
   const { meta } = useCurrentRoute();
-  const [activeMenuDepth, setActiveMenuDepth] = useActiveMenuDepthState();
+  const { activeMenuDepthMenu: activeMenuDepth, setActiveMenuDepthMenu } = useActiveMenuDepthState(
+    (state) => state,
+  );
   const currentMenu = last(activeMenuDepth);
 
   const { data: authUser } = useFetchAuthUser();
@@ -200,11 +202,12 @@ const PageContainerComponent: FC<{
             if (authUser?.activeTenant?.tenantId) {
               const menus = await asyncMenus(authUser?.activeTenant?.tenantId);
               updateMenu(menus);
-              setActiveMenuDepth((prev) => {
-                return prev?.map((menu) =>
-                  menu.menuId === currentMenu.menuId ? { ...menu, isFavorite: true } : menu,
-                );
-              });
+              const update = activeMenuDepth?.map((menu) =>
+                menu.menuId === currentMenu.menuId ? { ...menu, isFavorite: true } : menu,
+              );
+              if (update) {
+                setActiveMenuDepthMenu([...update]);
+              }
             }
           },
           onError: (data: any) => {
@@ -224,11 +227,12 @@ const PageContainerComponent: FC<{
           if (authUser?.activeTenant?.tenantId) {
             const menus = await asyncMenus(authUser?.activeTenant?.tenantId);
             updateMenu(menus);
-            setActiveMenuDepth((prev) => {
-              return prev?.map((menu) =>
-                menu.menuId === currentMenu.menuId ? { ...menu, isFavorite: false } : menu,
-              );
-            });
+            const update = activeMenuDepth?.map((menu) =>
+              menu.menuId === currentMenu.menuId ? { ...menu, isFavorite: false } : menu,
+            );
+            if (update) {
+              setActiveMenuDepthMenu([...update]);
+            }
           }
         },
       });

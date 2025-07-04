@@ -329,6 +329,7 @@ const formConfig: DynamicFormConfig = {
         languageCode: 'ko',
         affairsType: 'LMS',
         s3Path: 'upload/content/image',
+        //s3Path: 'upload/learningSpace/map', // TODO. S3 권한 정책 정해지면 변경할 것.
         acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
         maxFileSize: 10 * 1024 * 1024,
       },

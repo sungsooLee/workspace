@@ -5,7 +5,7 @@ import { useRouter } from '@tanstack/react-router';
 import { useQueryClient } from '@tanstack/react-query';
 import { t } from 'i18next';
 import {
-  DuplicateCheckInputFormField,
+  // DuplicateCheckInputFormField,
   FormRow,
   FormSubTitle,
   SwitchFormField,
@@ -19,7 +19,8 @@ import {
   useFetchLabelMessage,
   useUpdateLabelMessage,
 } from '@entities/label-messages';
-import { useWatch } from 'react-hook-form';
+import { UseFormReturn, useWatch } from 'react-hook-form';
+import { DuplicateCheckInputFormField, DuplicateState } from '../../../form';
 
 interface MessageDetailProps {
   /**
@@ -40,17 +41,25 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
   const [isCreateMode, setIsCreateMode] = React.useState(true);
   const { confirm: openConfirm, showSaveComplete, showUpdateComplete } = useModal();
   const [currentConfig, setCurrentConfig] = useState(() => createFormConfig('LABEL'));
-  const [resetKey, setResetKey] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // const
-  const { provider, onSubmit, onFormChange, getValues, updateFormData, clearFormError, control } =
-    useDynamicForm(currentConfig);
+  const {
+    provider,
+    onSubmit,
+    onFormChange,
+    getValues,
+    updateFormData,
+    clearFormError,
+    control,
+    setFormError,
+  } = useDynamicForm(currentConfig);
   const typeWatch = useWatch({ control, name: 'labelMessageType' });
 
   useEffect(() => {
     if (typeWatch) {
-      const newConfig = createFormConfig(typeWatch);
+      clearAllFormErrors();
+      const newConfig = createFormConfig(typeWatch, getValues);
       setCurrentConfig(newConfig);
     }
   }, [typeWatch]);
@@ -64,7 +73,6 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
   const { mutate: create } = useCreateLabelMessage({
     onSuccess: async (response: any) => {
       await showSaveComplete();
-      setResetKey((prev) => prev + 1);
       onSuccessSave?.(response);
       setIsSubmitting(false);
     },
@@ -77,7 +85,6 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
   const { mutate: update } = useUpdateLabelMessage({
     onSuccess: async (response: any) => {
       await showUpdateComplete();
-      setResetKey((prev) => prev + 1);
       onSuccessSave?.(response);
       setIsSubmitting(false);
       queryClient.invalidateQueries({ queryKey: queryKeys.detail(response?.labelMessageId) });
@@ -113,7 +120,11 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
     if (!isCreateMode && data) {
       const d = {
         ...data,
-        labelMessageId,
+        labelMessageId: data.labelMessageId,
+        labelMessageMultilingulKey: {
+          fieldValue: data?.labelMessageMultilingulKey || '',
+          checkState: DuplicateState.okStart,
+        },
         lastDuplicateText: data?.labelMessageMultilingulKey || '',
         isDuplicateCheck: !isCreateMode,
       };
@@ -148,6 +159,8 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
     console.log('data {} => ', data);
     const payload = {
       ...data,
+      labelMessageMultilingulKey:
+        data.labelMessageMultilingulKey && data.labelMessageMultilingulKey.fieldValue,
       labelMessageId: isCreateMode ? '' : data?.labelMessageId,
     };
 
@@ -157,33 +170,26 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
         content: t('LABEL.confirm.save.message'),
       });
       isAdd && create(payload);
+      if (!isAdd) setIsSubmitting(false);
     } else {
       const isUpdate = await openConfirm({
         title: t('LABEL.confirm.modify.title'),
         content: t('LABEL.confirm.modify.message'),
       });
       isUpdate && update(payload);
+      if (!isUpdate) setIsSubmitting(false);
     }
   };
 
-  /**
-   * 입력된 값에 대한 중복 여부를 비동기적으로 확인합니다.
-   * 특정 키(`labelMessageMultilingulKey`)를 사용하여 서버에 중복 검사를 요청하고,
-   * 검사 결과를 기반으로 유효성 여부를 반환합니다.
-   *
-   * @async
-   * @function checkDuplicate
-   * @returns {Promise<boolean>} 중복이 없으면 `true`, 중복이 있거나 검사 오류 시 `false`를 반환하는 Promise입니다.
-   */
-  const checkDuplicate = async () => {
-    const params = {
-      labelMessageMultilingulKey: getValues()?.labelMessageMultilingulKey,
-    };
-    const result = (await queryClient.fetchQuery(queryOptions.all(params))) as any;
+  const duplicateCheck = async (code: string) => {
+    const result = (await queryClient.fetchQuery(
+      queryOptions.all({ labelMessageMultilingulKey: code }),
+    )) as any;
     const content = result?.content;
     const isValid =
       content?.filter((d: any) => d?.labelMessageId !== getValues()?.labelMessageId)?.length === 0;
-    return isValid;
+    if (!isValid) return DuplicateState.duplicated;
+    return DuplicateState.ok;
   };
 
   return (
@@ -219,17 +225,24 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
             name={'labelMessageMultilingulKey'}
             element={
               <DuplicateCheckInputFormField
-                idKey={resetKey}
-                inputType={'alphanumeric'}
-                query={queryOptions.all}
-                clearFormError={clearFormError}
-                duplicationCheckFn={checkDuplicate}
+                id="labelMessageMultilingulKey"
+                label={
+                  typeWatch === 'LABEL'
+                    ? t('LABEL.form.label.labelCode')
+                    : t('LABEL.form.label.messageCode')
+                }
+                onDuplicationCheck={duplicateCheck}
                 disabled={formDisabled}
-                onSuccess={(isValid: boolean, checkValue: string) => {
-                  onFormChange({ isDuplicateCheck: isValid, lastDuplicateText: checkValue });
-                }}
+                inputType={'alphanumeric'}
                 placeholder={t('LABEL.common.placeholder2', { type: t('LABEL.cdId') })}
                 hiddenPlaceholder={formDisabled}
+                onValidationError={(message: string) => {
+                  setFormError('labelMessageMultilingulKey', message);
+                }}
+                onValidationSuccess={() => {
+                  clearFormError('labelMessageMultilingulKey');
+                }}
+                clearFormError={clearFormError}
               />
             }
           />
@@ -310,99 +323,127 @@ export const MessageDetail = MessageDetailComponent;
 /**
  * 필수값 : name, type
  */
-const createFormConfig = (messageType = 'LABEL'): DynamicFormConfig => ({
-  builders: [
-    {
-      name: 'labelMessageType',
-      label: t('LABEL.form.label.category'),
-      type: 'radio-group',
-      format: 'string',
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.labelmessage.LabelMessageType'],
-      },
-      value: 'LABEL',
-    },
-    {
-      name: 'labelMessageMultilingulKey',
-      label:
-        messageType === 'LABEL'
-          ? t('LABEL.form.label.labelCode')
-          : t('LABEL.form.label.messageCode'),
-      type: 'custom',
-      value: '',
-      maxLength: 150,
-    },
-    {
-      name: 'labelMessageName',
-      label:
-        messageType === 'LABEL'
-          ? t('LABEL.form.label.labelName')
-          : t('LABEL.form.label.messageName'),
-      type: 'textarea',
-      format: 'string',
-      value: '',
-      maxLength: 150,
-    },
-    {
-      name: 'labelMessageDesc',
-      label: t('LABEL.form.label.description'),
-      type: 'textarea',
-      value: '',
-      maxLength: 150,
-    },
-    {
-      name: 'isUsed',
-      label: t('LABEL.form.label.useYn'),
-      type: 'switch',
-      value: true,
-      format: 'boolean',
-    },
-    {
-      name: 'labelMessageId',
-      format: 'number',
-      type: 'hidden',
-      value: '',
-    },
-    {
-      name: 'isDuplicateCheck',
-      format: 'boolean',
-      type: 'hidden',
-      value: false,
-    },
-    {
-      name: 'lastDuplicateText',
-      format: 'string',
-      type: 'hidden',
-      value: '',
-    },
-  ],
-  validator: {
-    labelMessageType: {
-      required: true,
-    },
-    labelMessageMultilingulKey: {
-      required: true,
-    },
-    labelMessageName: {
-      required: true,
-    },
-    isDuplicateCheck: {
-      required: false,
-      conditions: [
-        // 중복체크 하지 않았을때 or 중복체크 후 값 변경 후 중복체크 하지 않았을때
-        {
-          fn: (values) => {
-            return (
-              !values?.isDuplicateCheck ||
-              values?.labelMessageMultilingulKey !== values?.lastDuplicateText
-            );
-          },
-          message: t('LABEL.form.validation.check', {
-            code: t('LABEL.form.label.labelMessageCode'),
-          }),
-          path: 'labelMessageMultilingulKey',
+const createFormConfig = (
+  messageType = 'LABEL',
+  getValues?: UseFormReturn['getValues'],
+): DynamicFormConfig => {
+  const codeLabel =
+    getValues && getValues('labelMessageType') === 'MESSAGE'
+      ? t('LABEL.form.label.messageCode')
+      : t('LABEL.form.label.labelCode');
+  return {
+    builders: [
+      {
+        name: 'labelMessageType',
+        label: t('LABEL.form.label.category'),
+        type: 'radio-group',
+        format: 'string',
+        optionsConfig: {
+          codeGroup: CODE_GROUP['pms.labelmessage.LabelMessageType'],
         },
-      ],
+        value: 'LABEL',
+      },
+      {
+        name: 'labelMessageMultilingulKey',
+        label: codeLabel,
+        type: 'custom',
+        value: { fieldValue: '', checkState: DuplicateState.needInput },
+        maxLength: 150,
+      },
+      {
+        name: 'labelMessageName',
+        label:
+          messageType === 'LABEL'
+            ? t('LABEL.form.label.labelName')
+            : t('LABEL.form.label.messageName'),
+        type: 'textarea',
+        format: 'string',
+        value: '',
+        maxLength: 150,
+      },
+      {
+        name: 'labelMessageDesc',
+        label: t('LABEL.form.label.description'),
+        type: 'textarea',
+        value: '',
+        maxLength: 150,
+      },
+      {
+        name: 'isUsed',
+        label: t('LABEL.form.label.useYn'),
+        type: 'switch',
+        value: true,
+        format: 'boolean',
+      },
+      {
+        name: 'labelMessageId',
+        format: 'number',
+        type: 'hidden',
+        value: '',
+      },
+      {
+        name: 'lastDuplicateText',
+        format: 'string',
+        type: 'hidden',
+        value: '',
+      },
+    ],
+    validator: {
+      labelMessageType: {
+        required: true,
+      },
+      labelMessageMultilingulKey: {
+        format: 'object',
+        required: true,
+        conditions: [
+          {
+            fn: (values) => {
+              const fieldValue = values.labelMessageMultilingulKey.fieldValue;
+              if (fieldValue === '') return true;
+              return false;
+            },
+            message: (values) => {
+              const currentType = values?.labelMessageType || messageType;
+              const currentCodeLabel =
+                currentType === 'LABEL'
+                  ? t('LABEL.form.label.labelCode')
+                  : t('LABEL.form.label.messageCode');
+              return t('LABEL.form.validation.needInput', { code: currentCodeLabel });
+            },
+          },
+          {
+            fn: (values: Record<string, any>) => {
+              return (
+                values.labelMessageMultilingulKey.checkState === DuplicateState.check ||
+                values.labelMessageMultilingulKey.checkState === DuplicateState.needInput
+              );
+            },
+            message: (values) => {
+              const currentType = values?.labelMessageType || messageType;
+              const currentCodeLabel =
+                currentType === 'LABEL'
+                  ? t('LABEL.form.label.labelCode')
+                  : t('LABEL.form.label.messageCode');
+              return t('LABEL.form.validation.check', { code: currentCodeLabel });
+            },
+          },
+          {
+            fn: (values: Record<string, any>) =>
+              values.labelMessageMultilingulKey.checkState === DuplicateState.duplicated,
+            message: (values) => {
+              const currentType = values?.labelMessageType || messageType;
+              const currentCodeLabel =
+                currentType === 'LABEL'
+                  ? t('LABEL.form.label.labelCode')
+                  : t('LABEL.form.label.messageCode');
+              return t('LABEL.form.validation.duplicated', { code: currentCodeLabel });
+            },
+          },
+        ],
+      },
+      labelMessageName: {
+        required: true,
+      },
     },
-  },
-});
+  };
+};

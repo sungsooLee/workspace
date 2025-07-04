@@ -10,7 +10,7 @@
   },
   "MESSAGE": {},
   "LABEL": {
-    "message": {
+    "messages": {
       "adminSignupNotice": "본인인증 후 관리자 권한 신청을 할 수 있습니다.",
       "searchAccountNotice": "본인 명의의 인증 수단 정보를 정확히 입력해 주세요.",
       "searchAccountResult": "입력하신 정보로 가입된 아이디는\n 아래와 같습니다.",
@@ -109,7 +109,6 @@
     "cdGroupAbbreviationEnglishName": "그룹코드 약어영문",
     "cdGroupContent": "내용",
     "label": "라벨",
-    "message": "메세지",
     "cdSeq": "순서",
     "cdContent": "내용",
     "referenceVal1": "참고 1",
@@ -190,6 +189,7 @@
       }
     },
     "common": {
+      "message": "메세지",
       "date": {
         "hoursAgo": "{{time}}시간 전",
         "minutesAgo": "{{time}}분 전"

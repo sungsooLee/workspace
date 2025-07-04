@@ -24,7 +24,7 @@ function RouteComponent() {
 
   useEffect(() => {
     if (!companyCode) router.navigate({ to: '/platform/company/management' });
-  }, [companyCode]);
+  }, [companyCode, router]);
 
   const handleTabChange = (tabKey: string) => {
     if (tabKey !== selectedTabKey) {

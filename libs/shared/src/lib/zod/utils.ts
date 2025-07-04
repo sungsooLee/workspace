@@ -136,11 +136,12 @@ export const buildJodObject = (validator: ValidatorConfig): ZodSchema => {
           (config.fn && typeof config.fn === 'function' ? config.fn(data) : true) &&
           isData
         ) {
+          const message = typeof config.message === 'function' ? config.message(data) : config.message;
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
             path: [config.path],
             params: { validation: 'required' },
-            ...(config.message && { message: config.message }),
+            ...(message && { message }),
           });
         }
       });
@@ -149,11 +150,12 @@ export const buildJodObject = (validator: ValidatorConfig): ZodSchema => {
     if (conditionsSuperRefine.length > 0) {
       conditionsSuperRefine.forEach(({ config }) => {
         if (config.fn ? config.fn(data) : false) {
+          const message = typeof config.message === 'function' ? config.message(data) : config.message;
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
             path: [config.path],
             params: { validation: 'conditions' },
-            ...(config.message && { message: config.message }),
+            ...(message && { message }),
           });
         }
       });

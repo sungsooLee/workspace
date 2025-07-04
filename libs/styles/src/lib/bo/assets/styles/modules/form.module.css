@@ -367,7 +367,7 @@
     @apply relative;
   }
   .checkbox {
-    @apply absolute left-0 top-[3px];
+    @apply absolute left-0 top-[3px] z-[1];
   }
   .form_contents {
     @apply rounded-[8px] border border-solid border-[#d6dae1] p-[16px];

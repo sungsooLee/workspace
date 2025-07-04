@@ -25,7 +25,7 @@ export function ResultBySearchAccountPage({ route }: any) {
       <div className={cn(styles.auth_box, 'auth--box')}>
         {state?.email ? (
           <ProccessResult
-            title={t('LABEL.message.searchAccountResult')}
+            title={t('LABEL.messages.searchAccountResult')}
             className={styles.success_info}
           >
             <div className={styles.result_message}>{state.email}</div>
@@ -33,7 +33,7 @@ export function ResultBySearchAccountPage({ route }: any) {
         ) : (
           <ProccessResult
             isSuccess={false}
-            title={t('LABEL.message.searchAccountResultNotFound')}
+            title={t('LABEL.messages.searchAccountResultNotFound')}
             className={styles.success_info}
           ></ProccessResult>
         )}

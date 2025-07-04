@@ -5,12 +5,13 @@ import {
   UserGroupsParam,
   UsersByIdsParam,
   OrganizationTreeResponse,
+  PageableContent,
 } from '@types';
 
 export default class UserGroupService {
   static fetchUserGroups(
     tenantIds: number[],
-    params?: Partial<UserGroupsParam>,
+    params: UserGroupsParam,
   ): Promise<UserGroupsResponse[]> {
     return httpService.get(`${PMSApiPrefix()}/userGroup/user-groups`, {
       tenantIds,
@@ -26,6 +27,12 @@ export default class UserGroupService {
       tenantIds,
       tenantName,
     });
+  }
+  static fetchBlackwhiteUsers(body: any) {
+    return httpService.post<PageableContent<any>>(
+      `${PMSApiPrefix()}/userGroup/blackwhite/users?page=${body.page}&size=${body.size}`,
+      body,
+    );
   }
 
   static fetchUsersByIds(params: Partial<UsersByIdsParam>): Promise<UserGroupsResponse[]> {

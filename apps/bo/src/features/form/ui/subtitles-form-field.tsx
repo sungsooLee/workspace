@@ -4,7 +4,7 @@ import { useFieldArray } from 'react-hook-form';
 import { Button, ContentsRow, Dropdown, DropdownOption, Input } from '@learnway/ui';
 import { LOCALES } from '@learnway/config';
 import { t } from 'i18next';
-import { IcoCloseCircle } from '@learnway/icons';
+import { IcoDelete04 } from '@learnway/icons';
 import style from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import { ActionMeta, MultiValue, SingleValue } from 'react-select';
@@ -92,9 +92,11 @@ const SubTitlesFormFieldComponent = forwardRef<HTMLDivElement, BaseFormFieldProp
               >
                 자막 변경
               </Button>
-              <Button onlyIcon className={dynamicFormStyles.btn_delete}>
-                <IcoCloseCircle width={24} height={24} fill="#D6DAE1" stroke="#ffffff" />
-              </Button>
+              <Button
+                onlyIcon
+                className={dynamicFormStyles.btn_delete}
+                icon={<IcoDelete04 width={20} height={20} fill={'none'} stroke={'#4C515E'} />}
+              />
             </ContentsRow>
           ))}
           <ContentsRow className={dynamicFormStyles.row_inner}>

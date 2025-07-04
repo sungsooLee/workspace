@@ -39,7 +39,7 @@ declare module '@tanstack/react-router' {
 appConfig.init({});
 
 function App() {
-  const [, setPageRouteState] = usePageRouteState();
+  const { setPageRouteState } = usePageRouteState();
   // Inject the returned value from the hook into the router context
   return (
     <QueryClientProvider client={queryConfig.getQueryClient()}>

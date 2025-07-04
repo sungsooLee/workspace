@@ -2,14 +2,14 @@ import { memo } from 'react';
 import { Link, useMatchRoute } from '@tanstack/react-router';
 
 import type { Menu } from '../../../../../../types';
-import { useActiveMenuDepthState } from '../../../../../../features/platform';
+import { useActiveMenuDepthState } from '@learnway/auth/entities';
 
 import { useMenuHierarchy } from '../../../../service/menu.service';
 
 import styles from './navigate.module.css';
 
 function NavigateComponent() {
-  const [activeMenuDepthMenu] = useActiveMenuDepthState();
+  const { activeMenuDepthMenu } = useActiveMenuDepthState((state) => state);
   const { data } = useMenuHierarchy();
 
   const matchRoute = useMatchRoute();
@@ -30,7 +30,8 @@ function NavigateComponent() {
                       activeMenuDepthMenu?.[0]?.path === menu?.path)
                       ? styles._active
                       : ''
-                  }>
+                  }
+                >
                   {menu.title}
                 </Link>
               </li>

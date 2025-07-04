@@ -27,7 +27,7 @@ export interface OrganizationTreeResponse {
 
 export interface UserGroupsParam {
   userGroupType: UserGroupType;
-  userGroupName: string;
+  userGroupName?: string;
 }
 
 export interface UsersByIdsParam {
@@ -37,3 +37,24 @@ export interface UsersByIdsParam {
   name: string;
   accountStatus: string;
 }
+
+export interface BlackwhiteUsersParam {
+  groups: Group[];
+  userGroupType: UserGroupType;
+  companyId: string;
+  companyCode: string;
+  deptName: string;
+  userGroupIds: number[];
+  employeeNumber: string;
+  userName: string;
+  accountStatus: string;
+}
+
+type Combiner = {
+  combineType: string;
+  combineValue: number;
+};
+
+type Group = {
+  combiners: Combiner[];
+};

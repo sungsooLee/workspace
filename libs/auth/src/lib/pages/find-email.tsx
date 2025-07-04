@@ -58,7 +58,7 @@ export function FindEmailPage({ route }: any) {
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.password_input}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
           <EmbededAlert className={styles.search_info}>
-            {t('LABEL.message.findEmailInfo01')}
+            {t('LABEL.messages.findEmailInfo01')}
           </EmbededAlert>
 
           <div className={cn(styles.auth_form, 'no_line', 'col')}>
@@ -68,7 +68,7 @@ export function FindEmailPage({ route }: any) {
           </div>
 
           <NoticeBox title={t('LABEL.common.caution')} className={styles.signup_noti}>
-            <dd> {t('LABEL.message.findEmailInfo02')}</dd>
+            <dd> {t('LABEL.messages.findEmailInfo02')}</dd>
           </NoticeBox>
 
           <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>

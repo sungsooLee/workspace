@@ -10,7 +10,7 @@ interface PageContainerComponentProps {
 }
 
 function PageContainerComponent({ children }: PageContainerComponentProps) {
-  const [activeMenuDepth] = useActiveMenuDepthState();
+  const { activeMenuDepthMenu } = useActiveMenuDepthState((state) => state);
 
   const { meta } = useCurrentRoute();
   /*

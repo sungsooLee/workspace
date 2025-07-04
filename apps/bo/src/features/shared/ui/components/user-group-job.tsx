@@ -2,9 +2,7 @@ import { ShuttleGridToChips, ShuttleGridToChipsImperative } from '@learnway/ui';
 import { useEffect, useRef, useState } from 'react';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
-import { UserGroupsResponse } from '@types';
-import { queryOptions } from '@entities/user-group';
-import { useQueryClient } from '@tanstack/react-query';
+import { useFetchUserGroups } from '@entities/user-group';
 
 type UserGroupJobComponentProps = {
   tenantIds: number[];
@@ -13,21 +11,9 @@ type UserGroupJobComponentProps = {
 
 const UserGroupJobComponent = ({ tenantIds, handleSetOption }: UserGroupJobComponentProps) => {
   const ref = useRef<ShuttleGridToChipsImperative>(null);
-  const queryClient = useQueryClient();
+  const { data = [] } = useFetchUserGroups(tenantIds, { userGroupType: 'JOB' });
 
   const [option, setOption] = useState<{ id: string; name: string }[]>([]);
-  const [gridData, setGrideData] = useState<UserGroupsResponse[]>([]);
-
-  const handleOnSearch = async () => {
-    const response = await queryClient.fetchQuery(
-      queryOptions.usergroups(tenantIds, { userGroupType: 'JOB' }),
-    );
-    setGrideData(response);
-  };
-
-  useEffect(() => {
-    handleOnSearch();
-  }, []);
 
   const columnHelper = createColumnHelper();
   const columns = [
@@ -53,13 +39,17 @@ const UserGroupJobComponent = ({ tenantIds, handleSetOption }: UserGroupJobCompo
     }),
   ] as ColumnDef<any, unknown>[];
 
+  useEffect(() => {
+    if (option.length > 0) handleSetOption(option);
+  }, [option]);
+
   return (
     <ShuttleGridToChips
       ref={ref}
       selectedItems={option}
       onSelectedChange={setOption}
       showNumberingColumn={false}
-      gridData={gridData}
+      gridData={data}
       columns={columns}
       rowKey={'userGroupId'}
       leftTitle={t('유저그룹 - 직무')}

@@ -1,3 +1,6 @@
 .nlp--avatar {
   @apply h-[36px] w-[36px];
+  [class*='fallback'] {
+    @apply !bg-[var(--blue65)];
+  }
 }

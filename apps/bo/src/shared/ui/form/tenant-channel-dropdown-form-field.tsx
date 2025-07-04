@@ -1,9 +1,9 @@
-import { DropdownFormField } from '@features/form';
+import { forwardRef, useMemo } from 'react';
+import { t } from 'i18next';
+import { DropdownFormField } from '../../../features/form/ui/dropdown-form-field';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { AuthUser, RoleInfo } from '@learnway/auth/types';
 import { BaseFormFieldProps } from '@learnway/hooks';
-import { forwardRef, useMemo } from 'react';
-import { t } from 'i18next';
 
 interface TenantChannelDropdownFormFieldProps extends BaseFormFieldProps<boolean> {
   tenantId: number;
