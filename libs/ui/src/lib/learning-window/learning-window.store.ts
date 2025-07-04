@@ -45,6 +45,7 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
   playList: [],
   scormInfo: undefined,
   setPlayInfo(playInfo: any) {
+    if (!playInfo) return;
     const playList = get().playList;
     set((state) => ({ playInfo }));
     playList?.forEach((item, index) => {
@@ -136,7 +137,7 @@ export const useLearningWindow = () => {
     setCurriculum(curriculum);
     setPlayListByCurriculum(curriculum);
     if (_baseInfo) {
-      const playInfo = genPlayInfoByCurriculum(_baseInfo, _curriculum);
+      const playInfo = genPlayInfoByCurriculum(_baseInfo, curriculum);
       setPlayInfo(playInfo);
     }
   };

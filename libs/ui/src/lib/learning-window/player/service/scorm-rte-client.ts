@@ -21,8 +21,9 @@ export class ScormRteClient {
   _courseID = '';
   _numAttempts = 0;
   _errorManager = new ScormErrorManager();
-  constructor(playInfo: any) {
+  constructor(playInfo: any, scormRteService: any) {
     this.playInfo = playInfo;
+    this.ScormRteService = scormRteService;
   }
   // _comm = new srte_xhr(_servletURL);
 

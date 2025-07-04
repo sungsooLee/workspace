@@ -7,6 +7,8 @@ import styles from '@learnway/styles/fo/pages/_learning/learning.module.css';
 import stylesMobile from '@learnway/styles/fo/pages/_learning/learning-m.module.css';
 
 import { ScormHandler } from '../service/scorm-handler';
+import { ScormDataManager } from '../service/scorm-data-manager';
+import { ScormRteClient } from '../service/scorm-rte-client';
 
 export interface ScormPlayerConfigProperties {
   /** 과정 차수 ID */
@@ -26,11 +28,11 @@ export interface ScormPlayerConfigProperties {
 const LearningWindowScormPlayerComponent: FC<any> = ({
   playInfo,
   scormInfo,
-  scormHandler,
+  scormRteService,
 }: {
   playInfo: any;
   scormInfo: any;
-  scormHandler: ScormHandler;
+  scormRteService: any;
 }) => {
   const [iframeUrl, setIframeUrl] = useState<string>();
 
@@ -45,7 +47,11 @@ const LearningWindowScormPlayerComponent: FC<any> = ({
       itemUrl = url.pathname;
     }
 
-    (window as any).API_1484_11 = scormHandler;
+    const scrc = new ScormRteClient(playInfo, scormRteService);
+    const dm = new ScormDataManager(scrc.getErrorManager());
+    dm.fromJSON(scormInfo);
+
+    (window as any).API_1484_11 = new ScormHandler(scrc, dm);
 
     setIframeUrl(itemUrl);
     return () => {

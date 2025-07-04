@@ -1,13 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 
 import { t } from 'i18next';
 
 import { LearningWindowScormPlayer, ScormPlayerConfigProperties } from '@features/learning-window';
-import { useGetContentDetail } from '@entities/content/service/content.hook';
+import { useGetCurriculumnDetail } from '@entities/curriculum/service/curriculum.hook';
 import { useGetScormRteScoInfo } from '@entities/scorm/service/scorm-rte.hook';
-import { LearningWindowVideoPlayer } from '@features/learning-window/ui/learning-window-video-player';
+
 import { EnContentType, LearningWindowLayout, useLearningWindow } from '@learnway/ui';
+import { ScormRteService } from '@entities/scorm/api/scorm-rte';
 
 export const Route = createFileRoute('/_learning/learning-window')({
   component: RouteComponent,
@@ -20,12 +21,20 @@ function RouteComponent() {
   const [scormConfig, setScormConfig] = useState<ScormPlayerConfigProperties>();
   const [videoInfo, setVideoInfo] = useState<any>();
 
-  const { baseInfo, playInfo, setBaseInfo, setCurriculum } = useLearningWindow();
+  const { baseInfo, playInfo, setBaseInfo, setCurriculum, setScormInfo } = useLearningWindow();
   const { data: scormInfo } = useGetScormRteScoInfo(scormConfig);
+  const { data: curriculum } = useGetCurriculumnDetail(baseInfo?.curriculumId);
+
+  const scormRteService = useMemo(() => {
+    return {
+      initialize: ScormRteService.initialize,
+      commit: ScormRteService.commit,
+    };
+  }, []);
 
   useEffect(() => {
     if (!scormInfo) return;
-    console.log(scormInfo);
+    setScormInfo(scormInfo);
   }, [scormInfo]);
 
   useEffect(() => {
@@ -46,8 +55,10 @@ function RouteComponent() {
   }, [playInfo]);
 
   useEffect(() => {
-    if (!baseInfo) return;
-  }, [baseInfo]);
+    if (!curriculum) return;
+    setCurriculum(curriculum);
+  }, [curriculum]);
+
   useEffect(() => {
     (async () => {
       const learningInfo = { ...routerState.location.state };
@@ -58,5 +69,5 @@ function RouteComponent() {
     })();
   }, []);
 
-  return <LearningWindowLayout />;
+  return <LearningWindowLayout scormRteService={scormRteService} />;
 }

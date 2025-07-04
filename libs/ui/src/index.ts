@@ -207,3 +207,4 @@ export * from './lib/preview-image/preview-image';
 
 export * from './lib/learning-window/learning-window-layout';
 export * from './lib/learning-window/learning-window.store';
+export * from './lib/learning-window/player/service/scorm-handler';

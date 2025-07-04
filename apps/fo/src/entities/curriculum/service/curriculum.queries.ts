@@ -5,11 +5,11 @@ import { CurriculumService } from '../api/curriculum';
 
 export const curriculumQueryKeys = {
   all: ['curriculum'] as const,
-  detail: (curriculumId: string) => [...curriculumQueryKeys.all, curriculumId] as const,
+  detail: (curriculumId: number) => [...curriculumQueryKeys.all, curriculumId] as const,
 };
 
 export const curriculumnQueryOptions = {
-  detail: (curriculumId?: string) =>
+  detail: (curriculumId?: number) =>
     curriculumId
       ? {
           queryKey: curriculumQueryKeys.detail(curriculumId),
