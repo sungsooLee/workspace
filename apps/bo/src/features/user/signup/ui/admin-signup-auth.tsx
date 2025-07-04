@@ -34,7 +34,7 @@ export function AdminSignupAuth() {
             defaultValues={defaultAuthValues}
             onSuccess={(data: any) => handleSuccess(data)}
             onCancel={() => handleCancel()}
-            noticeBoxLabel="LABEL.message.adminSignupNotice"
+            noticeBoxLabel="LABEL.messages.adminSignupNotice"
           />
         </div>
         <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>

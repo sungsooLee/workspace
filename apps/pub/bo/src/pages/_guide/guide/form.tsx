@@ -63,6 +63,7 @@ function RouteComponent() {
       s3Path: 'upload/learning/resource/video',
       maxFileCount,
       acceptFiles,
+      affairsType: 'PMS',
     });
   return (
     <div>
