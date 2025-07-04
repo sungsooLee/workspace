@@ -1,9 +1,11 @@
+import { PostDraftVideosParams } from '@types';
 import LearningResourceService from '../api/learning-resource';
 
 export const queryKeys = {
   channelsByTenantId: ['channels-by-tenant-id'] as const,
   userByUuid: ['user-by-uuid'] as const,
   contents: ['contents'] as const,
+  createDraftVideo: ['create-draft-video'] as const,
   s3FileDownload: ['file-s3-download'] as const,
   learningResources: ['learning-resources'] as const,
   mappingCourses: ['mapping-courses'] as const,
@@ -35,6 +37,10 @@ export const learningResourceQueryOptions = {
     cacheTime: 0,
     staleTime: 0,
     enabled: true,
+  }),
+  postDraftVideos: (params: PostDraftVideosParams) => ({
+    queryKey: queryKeys.createDraftVideo,
+    queryFn: () => LearningResourceService.postDraftVideos(params),
   }),
   getS3FileDownload: (key: string, fileName: string) => ({
     queryKey: queryKeys.s3FileDownload,
@@ -98,5 +104,11 @@ export const learningResourceQueryOptions = {
     cacheTime: 0,
     staleTime: 0,
     enabled: true,
+  }),
+};
+
+export const mutateOptions = {
+  postDraftVideos: () => ({
+    mutationFn: (params: PostDraftVideosParams) => LearningResourceService.postDraftVideos(params),
   }),
 };

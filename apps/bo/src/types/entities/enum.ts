@@ -90,3 +90,38 @@ export enum EnPageMode {
  */
 export const EMAIL_REGEX =
   /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
+
+/**
+ * UploadedFileStatus
+ */
+export enum FileStatus {
+  TEMPORARY_SAVE = 'TEMPORARY_SAVE',
+  COMPLETE = 'COMPLETE',
+  ONGOING = 'ONGOING',
+  FAIL = 'FAIL',
+}
+
+/**
+ * UploadedFileType
+ */
+export enum FileType {
+  IMAGE = 'IMAGE',
+  VIDEO = 'VIDEO',
+  DOC = 'DOC',
+  TXT = 'TXT',
+  WEB = 'WEB',
+  ZIP = 'ZIP',
+  ETC = 'ETC',
+}
+
+/**
+ * UploadedFileProcessingStatus
+ */
+export enum ProcessingStatus {
+  NONE = 'NONE',
+  FAIL = 'FAIL',
+  COMPLETE = 'COMPLETE',
+  STARTED = 'STARTED',
+  ENCODING = 'ENCODING',
+  UPLOADING = 'UPLOADING',
+}

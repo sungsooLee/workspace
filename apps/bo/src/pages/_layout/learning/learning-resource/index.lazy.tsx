@@ -2,13 +2,15 @@
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { Button, useModal } from '@learnway/ui';
 import { LearningResourceFileUploadModal, LearningTypeChoiceModal } from '@features/learning';
-import { LEARNING_TYPE } from '@learnway/config';
+import { getDefaultLang, LEARNING_TYPE } from '@learnway/config';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { useState } from 'react';
 import { ChannelChoiceModal } from '@features/shared';
 import { LearningResourceTable } from '@features/learning/ui/learning-resource';
+import { usePostDraftVideos } from '@entities/learning-resource';
+import { PostDraftVideosRes } from '@types';
 
 export const Route = createLazyFileRoute('/_layout/learning/learning-resource/')({
   component: RouteComponent,
@@ -19,6 +21,16 @@ function RouteComponent() {
   const { open: openModal } = useModal();
   // 등록 팝업 호출 여부
   const [displayContent, setDisplayContent] = useState(true);
+  const { create: postDraftVideos } = usePostDraftVideos({
+    onSuccess: (result: PostDraftVideosRes) => {
+      if (result.contents.length === 1) {
+        router.navigate({
+          to: '/learning/resource/video/view',
+        });
+      }
+      setDisplayContent(true);
+    },
+  });
 
   /**
    * 학습 컨텐츠를 등록하기 위한 Dialog 호출
@@ -46,14 +58,20 @@ function RouteComponent() {
             ),
             width: 'lg',
           });
-          // console.log(
-          //   '🚀 ~ handleRegister ~channelInfo, fileUuids, languageCode:',
-          //   channelInfo,
-          //   fileUuids,
-          //   getDefaultLang().toUpperCase(),
-          // );
+          console.log(
+            '🚀 ~ handleRegister ~channelInfo, fileUuids, languageCode:',
+            channelInfo,
+            fileUuids,
+            getDefaultLang().toUpperCase(),
+          );
           if (fileUuids) {
-            router.navigate({ to: '/learning_test/resource/view/video' });
+            postDraftVideos({
+              languageCountryCode: getDefaultLang().toUpperCase(),
+              tenantId: channelInfo.tenantId,
+              channelUuid: channelInfo.channelUuid,
+              fileUuids,
+            });
+            // router.navigate({ to: '/learning_test/resource/view/video' });
             break;
           }
         }
