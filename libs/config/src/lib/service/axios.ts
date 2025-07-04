@@ -1,6 +1,7 @@
+import { useActiveMenuDepthState } from '../../../../auth/src/lib/entities/menu';
 import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import axios from 'axios';
-import { isFunction } from 'lodash';
+import { isFunction, last } from 'lodash';
 import qs from 'qs'; // qs 라이브러리 임포트
 import { HttpMethod, httpService } from '@learnway/shared';
 
@@ -58,8 +59,12 @@ export function initAxios(extendConfig?: axiosConfig) {
       // request 시 accessToken을 header로 전송
       onFulfilled: function (config: InternalAxiosRequestConfig<any>) {
         const accessToken = tokenService.accessToken;
+        const state = useActiveMenuDepthState.getState().activeMenuDepthMenu;
         if (accessToken) {
           config.headers['Authorization'] = `Bearer ${accessToken}`;
+        }
+        if (state) {
+          config.headers['Menu-Id'] = last(state)?.menuId;
         }
         return config;
       },

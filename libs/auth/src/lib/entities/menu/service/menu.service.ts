@@ -8,7 +8,7 @@ import { useFetchAuthUser } from '../../authorization';
 import { useFetchMenus } from './menu.hook';
 import { Menu } from '../../../types';
 
-import { useActiveMenuDepthState } from '../state/menu.state';
+import { useActiveMenuDepthState } from '../store/use-active-menu-depth';
 import { useLayoutStore } from '../store/use-layout-sotre';
 import { useModal } from '@learnway/ui';
 

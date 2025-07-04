@@ -9,6 +9,6 @@ export * from './authorization/store/use-exp-store';
 export * from './menu/api/menu';
 export * from './menu/service/menu.hook';
 export * from './menu/service/menu.service';
-export * from './menu/state/menu.state';
+export * from './menu/store/use-active-menu-depth';
 export * from './menu/store/use-layout-sotre';
 export * from './user/service/users.hook';
