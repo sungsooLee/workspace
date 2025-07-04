@@ -83,7 +83,6 @@ function RouteComponent() {
                 isMulti={false}
                 size={'sm'}
                 presetOptionLabel={'전체'}
-                disabled
               />
             </div>
           </div>
