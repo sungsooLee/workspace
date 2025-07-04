@@ -28,7 +28,7 @@ export const translationQueryOptions = {
   }),
   checkExists: (keyTypeCode: string, messageCode: string) => ({
     queryKey: queryKeys.checkExists(keyTypeCode, messageCode),
-    queryFn: () => TranslationService.fetchTranslationExists(keyTypeCode, messageCode),
+    queryFn: () => TranslationService.fetchTranslationExists({ keyTypeCode, messageCode }),
   }),
 };
 
