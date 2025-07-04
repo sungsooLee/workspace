@@ -124,7 +124,7 @@ export interface Course {
   /**
    * 과정 생성/수정 마법사 타입 (lms.course.WizardStep)
    */
-  wizardStep?: 'STEP1' | 'STEP2' | 'STEP3' | 'STEP4' | 'STEP5' | 'FULL_UPDATE';
+  wizardStep?: string; // 'STEP1' | 'STEP2' | 'STEP3' | 'STEP4' | 'STEP5' | 'FULL_UPDATE';
   /**
    * 과정유형
    */
@@ -138,6 +138,10 @@ export interface Course {
    */
   tenantIds?: Array<number>;
   /**
+   * 테넌트 배열
+   */
+  tenantList?: Array<any>;
+  /**
    * 대표 카테고리 id
    */
   primaryCategoryId?: number;
@@ -146,9 +150,17 @@ export interface Course {
    */
   categoryIds?: Array<number>;
   /**
+   * 카테고리 배열
+   */
+  cartegories?: Array<any>;
+  /**
+   * 학습대상-ID 배열
+   */
+  targetListIds?: Array<number>;
+  /**
    * 학습대상-유저그룹(화이트 그룹리스트)
    */
-  whiteListIds?: Array<number>;
+  targetList?: Array<CourseTarget>;
   /**
    * 언어 설정
    */
@@ -184,7 +196,7 @@ export interface Course {
   /**
    * 담당자 ID
    */
-  coordinatorUuid?: number;
+  coordinatorUuid?: string;
   /**
    * 담당자 이름
    */
@@ -208,7 +220,7 @@ export interface Course {
   /**
    * 운영자 ID
    */
-  operatorUuid?: number;
+  operatorUuid?: string;
   /**
    * 운영자 이름
    */
@@ -520,53 +532,55 @@ export interface CourseConfigQueryParams {
   /**
    * 채널id
    */
-  channelId: number;
+  channelId?: number;
   /**
-   * 과정id
+   * 과정유형
    */
-  courseId: string;
+  courseType?: string;
 }
 
 /**
  * 과정 항목 설정 정보 응답
  */
+export type CourseConfigOptionType = 'IMPOSSIBLE' | 'OPTIONAL' | 'MANDATORY';
+
 export interface CourseConfig {
   /**
    * 수강신청 설정
    */
-  enrollOption: string;
+  enrollOption: CourseConfigOptionType;
   /**
    * 학습 환경 설정
    */
-  learningEnvOption: string;
+  learningEnvOption: CourseConfigOptionType;
   /**
    * 학습 제어 설정
    */
-  learningControlOption: string;
+  learningControlOption: CourseConfigOptionType;
   /**
    * 이수기준 설정
    */
-  passOption: string;
+  passOption: CourseConfigOptionType;
   /**
    * 커뮤니티 설정
    */
-  communicationOption: string;
+  communicationOption: CourseConfigOptionType;
   /**
    * 강사 설정
    */
-  instructorOption: string;
+  instructorOption: CourseConfigOptionType;
   /**
    * 교재 설정
    */
-  textBookOption: string;
+  textBookOption: CourseConfigOptionType;
   /**
    * 사전/연관학습 설정
    */
-  relatedCourseOption: string;
+  relatedCourseOption: CourseConfigOptionType;
   /**
    * 행정항목 설정
    */
-  adminDataOption: string;
+  adminDataOption: CourseConfigOptionType;
   /**
    * 사용가능 컨텐츠 설정
    */
@@ -574,5 +588,16 @@ export interface CourseConfig {
   /**
    * 파일 저장소 유형
    */
-  fileStorageType: string;
+  fileStorageType: 'AWS_INTERNAL' | 'AWS_EXTERNAL';
+}
+
+/**
+ * 학습대상
+ */
+export interface CourseTarget {
+  groupId: number;
+  combiners: Array<{
+    combineType: string;
+    combineValue: number;
+  }>;
 }

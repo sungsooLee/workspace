@@ -7,13 +7,14 @@ import { SelectOption } from '../types/select-option';
  */
 export const generateYears = (count: number): SelectOption[] => {
   const currentYear = new Date().getFullYear();
-  return Array
-    .from({ length: count + 1 }, (d, i) => currentYear - i)
-    .map((d, i) => ({
-      value: String(d),
-      label: String(d),
-    }) as SelectOption);
-}
+  return Array.from({ length: count + 1 }, (d, i) => currentYear - i).map(
+    (d, i) =>
+      ({
+        value: String(d),
+        label: String(d),
+      }) as SelectOption,
+  );
+};
 
 export const getMockCourseType = (key?: string) => {
   return [
@@ -75,11 +76,11 @@ export const getMockOption = (codeGroup: string) => {
   if (codeGroup === 'mock.options.use') {
     return [
       {
-        value: 'N',
+        value: false,
         label: t('LABEL.mock.unuse'),
       },
       {
-        value: 'Y',
+        value: true,
         label: t('LABEL.mock.use'),
       },
     ];
@@ -88,11 +89,11 @@ export const getMockOption = (codeGroup: string) => {
   if (codeGroup === 'mock.options.possible') {
     return [
       {
-        value: 'N',
+        value: false,
         label: t('LABEL.mock.impossible'),
       },
       {
-        value: 'Y',
+        value: true,
         label: t('LABEL.mock.possible'),
       },
     ];

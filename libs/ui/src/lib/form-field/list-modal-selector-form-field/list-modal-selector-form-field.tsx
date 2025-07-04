@@ -59,7 +59,7 @@ const ListModalSelectorFormFieldComponent = forwardRef<
 
     const handleButtonClick = async () => {
       const data = await openModal(modalConfig);
-      const transformData = transformModalData ? transformModalData(data) : data;
+      const transformData = transformModalData && data ? transformModalData(data) : data;
       console.log(transformData);
       transformData && appendSelectedChipOptions(transformData);
     };

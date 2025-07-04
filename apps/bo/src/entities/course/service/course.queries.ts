@@ -30,6 +30,7 @@ export const queryOptions = {
   getCourseConfig: <T = CourseConfig>(queryParams: CourseConfigQueryParams) => ({
     queryKey: queryKeys.getCourseConfig(queryParams),
     queryFn: () => CourseService.fetchCourseConfig<T>(queryParams),
+    enabled: !!queryParams.channelId && !!queryParams.courseType,
   }),
 };
 

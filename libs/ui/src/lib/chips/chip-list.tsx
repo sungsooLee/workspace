@@ -70,7 +70,7 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
     const [inputValue, setInputValue] = useState<string>('');
     const overCount = options?.length - visibleCount;
     const isOverCount = overCount > 0;
-    const displayOptions = isOverCount ? options?.slice(0, visibleCount) : [...options];
+    const displayOptions = isOverCount ? options?.slice(0, visibleCount) : [...(options || [])];
     const isShowEmptyMessage = !displayOptions?.length && emptyMessage && !showInput;
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {

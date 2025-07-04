@@ -3,6 +3,7 @@ import { httpService } from '@learnway/shared';
 import { Code, CodeApiType } from './types';
 import { codeOptions } from './config';
 import { PMSApiPrefix } from '@learnway/config';
+import { useCodeStore } from './use-code-store';
 
 /**
  * 기본 코드 조회 함수
@@ -63,5 +64,34 @@ export const fetchCodeGroup = async <K extends CODE_GROUP_TYPE>(
   } catch (e: any) {
     console.error(e);
     return [...customOptions];
+  }
+};
+
+/**
+ * 캐시된 데이터만 확인하는 동기식 코드 라벨 반환 함수 (API 호출 없음)
+ * @param codeGroup 코드 그룹 이름
+ * @param codeValue 찾을 코드값
+ * @param defaultValue 코드를 찾을 수 없을 때 반환할 기본값
+ * @returns 코드 라벨 또는 기본값
+ */
+export const getCodeLabel = (
+  codeGroup: CODE_GROUP_TYPE,
+  codeValue: string,
+  defaultValue = '',
+): string => {
+  if (!codeValue || !codeGroup) return defaultValue;
+
+  try {
+    const store = useCodeStore.getState();
+    const cachedData = store.code[codeGroup];
+
+    if (!cachedData?.length) return defaultValue;
+
+    const foundItem = cachedData.find((item: any) => item.cdId === codeValue);
+
+    return foundItem?.['cdName'] || defaultValue;
+  } catch (error) {
+    console.error('getCodeLabelSync error:', error);
+    return defaultValue;
   }
 };
