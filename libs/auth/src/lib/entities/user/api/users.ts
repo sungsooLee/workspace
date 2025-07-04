@@ -50,7 +50,7 @@ export default class UsersService {
 
   // GNB 유저 역할 정보 조회
   static getUserGnbRole() {
-    return httpService.get<any>(`/${PMSApiPrefix()}users/me`);
+    return httpService.get<any>(`/${PMSApiPrefix()}/users/me`);
   }
 
   // GNB 테넌트/역할 선택
@@ -60,6 +60,6 @@ export default class UsersService {
     lastVisitedBoTenantId?: number;
     lastVisitedBoRoleId?: number;
   }) {
-    return httpService.put<any>(`${PMSApiPrefix()}users/visit-tenant-role`, payload);
+    return httpService.put<any>(`${PMSApiPrefix()}/users/visit-tenant-role`, payload);
   }
 }
