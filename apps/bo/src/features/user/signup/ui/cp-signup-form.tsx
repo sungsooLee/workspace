@@ -44,7 +44,7 @@ export const CPSignupForm = () => {
         <div className={cn(styles.auth_box, 'auth--box')}>
           <div className={styles.signup_info}>
             <div className={styles.step_box}>
-              <Stepper items={cpItems} variant="check" selectedStep="step3" />
+              <Stepper items={cpItems} variant="number" selectedStep="step3" />
             </div>
           </div>
 

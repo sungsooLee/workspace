@@ -1,7 +1,7 @@
 import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { Avatar, Button, Popover, useModal } from '@learnway/ui';
-import { IcLogOut01 } from '@learnway/icons';
+import { IcLogOut01, IcoBuilding01 } from '@learnway/icons';
 import styles from './user-avatar.module.css';
 
 /* company logo image */
@@ -42,7 +42,7 @@ const PopoverContent = () => {
       {/* 퍼블수정 20240513 : 수정 S */}
       <div className={styles.profile_info}>
         <div className={styles.avata_img}>
-          {hasAvataImage ? (
+          {!hasAvataImage ? (
             <>
               <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
               <span className={styles.logo_wrap}>
@@ -56,7 +56,12 @@ const PopoverContent = () => {
                 <em className={styles.text}>{'김'}</em>
               </span>
               <span className={styles.logo_wrap}>
-                <img src={imgLogo} alt="" className={styles.logo_img} />
+                {/* 회사 로고 CASE */}
+                {/* <img src={imgLogo} alt="" className={styles.logo_img} /> */}
+                {/* 회사 로고 없는 경우 CASE */}
+                <span className={styles.ico_area}>
+                  <IcoBuilding01 width={32} height={32} className={styles.logo_ico} />
+                </span>
               </span>
             </>
           )}

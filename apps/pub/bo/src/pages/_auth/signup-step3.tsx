@@ -39,7 +39,12 @@ function RouteComponent() {
         <div className={cn(styles.auth_box, 'auth--box')}>
           <div className={styles.signup_info}>
             <div className={styles.step_box}>
-              <Stepper items={items} onChange={handleChange} variant="check" selectedStep="step3" />
+              <Stepper
+                items={items}
+                onChange={handleChange}
+                variant="number"
+                selectedStep="step3"
+              />
             </div>
           </div>
 
@@ -303,7 +308,8 @@ function RouteComponent() {
                       width: 'sm',
                       content: <AgreementDetailPopup />,
                     })
-                  }>
+                  }
+                >
                   <IcoArrowForward width={14} height={14} stroke="#131C30" />{' '}
                 </Button>
               </li>
@@ -316,7 +322,8 @@ function RouteComponent() {
                       width: 'sm',
                       content: <AgreementDetailPopup />,
                     })
-                  }>
+                  }
+                >
                   <IcoArrowForward width={14} height={14} stroke="#131C30" />{' '}
                 </Button>
               </li>
@@ -329,7 +336,8 @@ function RouteComponent() {
                       width: 'sm',
                       content: <AgreementDetailPopup />,
                     })
-                  }>
+                  }
+                >
                   <IcoArrowForward width={14} height={14} stroke="#131C30" />{' '}
                 </Button>
               </li>
@@ -342,7 +350,8 @@ function RouteComponent() {
                       width: 'sm',
                       content: <AgreementDetailPopup />,
                     })
-                  }>
+                  }
+                >
                   <IcoArrowForward width={14} height={14} stroke="#131C30" />{' '}
                 </Button>
               </li>
@@ -355,7 +364,8 @@ function RouteComponent() {
                       width: 'sm',
                       content: <AgreementDetailPopup />,
                     })
-                  }>
+                  }
+                >
                   <IcoArrowForward width={14} height={14} stroke="#131C30" />{' '}
                 </Button>
               </li>
