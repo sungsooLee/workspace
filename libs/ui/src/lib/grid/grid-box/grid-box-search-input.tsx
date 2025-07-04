@@ -75,7 +75,6 @@ export const GridBoxSearchInput: FC<GridBoxSearchInputProps> = ({ columns, onEnt
           options={options}
           value={condition?.key}
           placeholder={'검색할 컬럼을 선택하세요'}
-          className={'w-[50px]'}
           onChange={(newValue: any) => setCondition({ key: newValue, value: condition?.value })}
         />
       )}
@@ -83,7 +82,6 @@ export const GridBoxSearchInput: FC<GridBoxSearchInputProps> = ({ columns, onEnt
       {options?.length > 0 && (
         <Input
           value={condition?.value}
-          className={'w-[50px]'}
           showSearchIcon
           searchIconType={'search'}
           onChange={(e) => setCondition({ key: condition?.key, value: e.target.value })}

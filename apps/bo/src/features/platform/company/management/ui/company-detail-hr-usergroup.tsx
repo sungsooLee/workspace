@@ -2,7 +2,6 @@ import { FC, useEffect, useState, useCallback } from 'react';
 import { useRouterState } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
-import { cn } from '@learnway/shared';
 import { Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { FormSubTitle } from '@shared/ui';
@@ -104,37 +103,37 @@ const columnHelper = createColumnHelper<any>();
 const columns = [
   columnHelper.accessor('companyName', {
     cell: (info) => info.getValue(),
-    header: '회사',
+    header: t('회사'),
     size: 160,
     enableGrouping: false,
   }),
   columnHelper.accessor('deptName', {
     cell: (info) => info.getValue(),
-    header: '소속',
+    header: t('소속'),
     size: 160,
     enableGrouping: false,
   }),
   columnHelper.accessor('employeeNumber', {
     cell: (info) => info.getValue(),
-    header: '사번',
+    header: t('사번'),
     size: 160,
     enableGrouping: false,
   }),
   columnHelper.accessor('userName', {
     cell: (info) => info.getValue(),
-    header: '이름',
+    header: t('이름'),
     size: 160,
     enableGrouping: false,
   }),
   columnHelper.accessor('status', {
     cell: (info) => info.getValue(),
-    header: '재직여부',
+    header: t('재직여부'),
     size: 80,
     enableGrouping: false,
   }),
   columnHelper.accessor('accountStatus', {
     cell: (info) => info.getValue(),
-    header: '계정상태',
+    header: t('계정상태'),
     size: 80,
   }),
 ] as ColumnDef<any, unknown>[];
