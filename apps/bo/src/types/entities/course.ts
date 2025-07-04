@@ -138,6 +138,10 @@ export interface Course {
    */
   tenantIds?: Array<number>;
   /**
+   * 테넌트 배열
+   */
+  tenantList?: Array<any>;
+  /**
    * 대표 카테고리 id
    */
   primaryCategoryId?: number;
@@ -528,7 +532,7 @@ export interface CourseConfigQueryParams {
   /**
    * 채널id
    */
-  channelId?: string;
+  channelId?: number;
   /**
    * 과정유형
    */

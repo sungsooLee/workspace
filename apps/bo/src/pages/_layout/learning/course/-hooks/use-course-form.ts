@@ -106,12 +106,13 @@ export const useCourseForm = () => {
 
       try {
         // 과정 상세 조회
-        const formData: Course = await queryClient.fetchQuery(queryOptions.get(courseId));
+        const rowData: Course = await queryClient.fetchQuery(queryOptions.get(courseId));
+        const formData = responseDataToFormData(rowData);
         // 과정 항목 설정 정보 조회
         const courseConfig: CourseConfig = await queryClient.fetchQuery(
           queryOptions.getCourseConfig({
             courseType: formData.courseType,
-            channelId: formData.channelUuid,
+            channelId: 1, //formData.channelUuid,
           }),
         );
         setData((prev) => ({ ...prev, formData, courseConfig }));
@@ -208,29 +209,43 @@ export const useCourseForm = () => {
 };
 
 /**
- *
+ * 응답 데이터를 폼 데이터로 변환
+ */
+const responseDataToFormData = (response: Course) => {
+  return {
+    ...response,
+    primaryCategoryId: 1, // 서버에서 받으면 삭제
+    categoryIds: response?.cartegories?.map((d: any) => d.categoryId), // 카테고리 아이디
+    tenantIds: response?.tenantList?.map((d: any) => d.tenantId), // 테넌트 아이디
+  };
+};
+
+/**
+ * 폼 데이터를 요청 데이터로 변환
  */
 const formDataToRequestData = (formData: Record<string, any>, activeTab: string): Course => {
-  return {
+  const newFormData = {
     ...formData,
-    wizardStep: activeTab,
     categoryIds: formData?.categories?.map((d: any) => d.categoryId), // 카테고리 아이디
     targetListIds: formData?.targetList?.map((d: any) => d.key), // 학습대상 아이디
+    wizardStep: activeTab,
   };
+  // 수강신청
+  return newFormData;
 };
 
 const getDummyCourseConfig = () => {
   return {
     enrollOption: 'IMPOSSIBLE',
-    learningEnvOption: 'IMPOSSIBLE',
-    learningControlOption: 'IMPOSSIBLE',
-    passOption: 'IMPOSSIBLE',
-    communicationOption: 'IMPOSSIBLE',
-    instructorOption: 'IMPOSSIBLE',
-    textBookOption: 'IMPOSSIBLE',
-    relatedCourseOption: 'IMPOSSIBLE',
-    adminDataOption: 'IMPOSSIBLE',
-    allowedContentTypes: ['VIDEO'],
+    learningEnvOption: 'OPTIONAL',
+    learningControlOption: 'OPTIONAL',
+    passOption: 'MANDATORY',
+    communicationOption: 'OPTIONAL',
+    instructorOption: 'OPTIONAL',
+    textBookOption: 'OPTIONAL',
+    relatedCourseOption: 'OPTIONAL',
+    adminDataOption: 'OPTIONAL',
+    allowedContentTypes: ['VIDEO', 'EXAM', 'ASSIGNMENT'],
     fileStorageType: 'AWS_INTERNAL',
   };
 };

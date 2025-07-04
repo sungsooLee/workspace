@@ -139,8 +139,9 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
                   valueField: 'tenantId',
                 }}
                 options={[
-                  { tenantName: 'tenant A', tenantId: 1111 },
-                  { tenantName: 'tenant B', tenantId: 2222 },
+                  { tenantName: 'tenant A', tenantId: 1 },
+                  { tenantName: 'tenant B', tenantId: 2 },
+                  { tenantName: 'tenant C', tenantId: 3 },
                 ]}
               />
             }
@@ -180,7 +181,10 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             label={'학습대상'}
             element={
               <ChipListModalSelectorFormField
-                modalConfig={{ content: <UserGroupTabsChoiceModal tenantIds={[]} /> }}
+                modalConfig={() => ({
+                  content: <UserGroupTabsChoiceModal tenantIds={getValues().tenantIds} />,
+                })}
+                transformModalData={(data: any) => console.log(data)}
                 chipList={{
                   labelField: 'fullPath',
                   valueField: 'key',

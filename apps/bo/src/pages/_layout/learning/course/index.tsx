@@ -252,7 +252,7 @@ const gridConfig = {
     // 채널
     { name: 'channelName', label: () => t('LABEL.grid.column.channel'), size: 90 },
     // 과정코드
-    { name: 'courseCode', label: () => t('LABEL.grid.column.courseCode'), size: 90 },
+    { name: 'courseId', label: () => t('LABEL.grid.column.courseCode'), size: 90 },
     // 개설연도
     { name: 'openingYear', label: () => t('LABEL.grid.column.openingDate'), size: 90 },
     // 과정유형
