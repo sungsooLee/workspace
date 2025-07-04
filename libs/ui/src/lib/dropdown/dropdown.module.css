@@ -94,8 +94,13 @@
       }
     }
   }
-  &.disabled [class*='nlp-select__control'] [class*='nlp-select__single-value'] {
-    @apply text-[var(--gray5)];
+  &.disabled {
+    [class*='nlp-select__control'] [class*='nlp-select__single-value'] {
+      @apply text-[var(--gray5)];
+    }
+    [class*='nlp-select__indicator'] svg {
+      @apply stroke-[var(--gray5)];
+    }
   }
 }
 
