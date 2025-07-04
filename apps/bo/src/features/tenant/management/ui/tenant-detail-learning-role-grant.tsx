@@ -197,7 +197,7 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
         />
       </TreeContainer>
       <div className={cn(styles.start, styles.wrap)}>
-        <FormSubTitle label={t('역할 정보')} lineType="light" />
+        <FormSubTitle label={t('역할 정보')} lineType="dark" />
         <div className={styles.contents_wrap}>
           <div className={formStyles.form_item}>
             <label htmlFor="name-id" className={formStyles.form_label} style={{ marginBottom: 20 }}>
