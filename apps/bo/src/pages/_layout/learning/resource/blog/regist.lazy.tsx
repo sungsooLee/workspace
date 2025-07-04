@@ -184,6 +184,7 @@ function RouteComponent() {
         format: 'array',
         value: [],
         max: 1,
+        imageStorageType: 'db-manage',
         uploadConfig: {
           affairsType: 'CMS',
           s3Path: S3_PATH['upload/content/image'], // BE에 확인 필요
