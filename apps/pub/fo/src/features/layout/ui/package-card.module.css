@@ -1,6 +1,6 @@
 .start {
   &.package_card {
-    @apply flex w-full items-center !px-0;
+    @apply !mx-0 flex w-full items-center !px-0;
     .img_box {
       @apply relative;
       span {

@@ -26,10 +26,10 @@ const RichTextEditor = () => {
     }
   };
   return (
-    <div className={'nlp--editor-container relative w-full'}>
-      <ModalContext>
-        <FloatingModalContext scrollTarget={scrollTarget}>
-          <ToolbarPlugin />
+    <ModalContext>
+      <FloatingModalContext scrollTarget={scrollTarget}>
+        <ToolbarPlugin />
+        <div className={'nlp--editor-container relative w-full'}>
           <div className="nlp--editor-content relative">
             <RichTextPlugin
               contentEditable={
@@ -53,9 +53,9 @@ const RichTextEditor = () => {
               <TableHoverActionsPlugin anchorElem={scrollTarget} />
             </>
           )}
-        </FloatingModalContext>
-      </ModalContext>
-    </div>
+        </div>
+      </FloatingModalContext>
+    </ModalContext>
   );
 };
 
