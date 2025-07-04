@@ -73,7 +73,12 @@ const CompanyDetailHRUsergroupComponent: FC<any> = ({
       <FormSubTitle label={t('유저그룹 대상자')} lineType={'light'} />
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
       <Divider />
-      <GridBox config={gConfig} columns={columns} title={t('유저그룹 대상자 목록')} />
+      <GridBox
+        config={gConfig}
+        columns={columns}
+        title={t('유저그룹 대상자 목록')}
+        disabledSelectionToggle
+      />
     </>
   );
 };

@@ -157,6 +157,7 @@ function RouteComponent() {
           <Divider />
           <SplitPanel size={['auto', 450]} divider>
             <GridBox
+              enableColumnResize
               config={gConfig}
               title={t('목록')}
               showNumberingColumn
@@ -235,7 +236,7 @@ const gridConfig = {
         return info.getValue() === 'LABEL' ? (
           <span>{t('LABEL.label')}</span>
         ) : info.getValue() === 'MESSAGE' ? (
-          <span>{t('LABEL.message')}</span>
+          <span>{t('LABEL.common.message')}</span>
         ) : (
           <span>{info.getValue()}</span>
         );

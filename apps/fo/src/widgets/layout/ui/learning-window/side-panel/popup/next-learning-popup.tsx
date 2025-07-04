@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { ModalBody, ModalContainer, ModalTitle, ModalFooter, Button } from '@learnway/ui';
 import { IcoRefresh02, IcoPrevNext } from '@learnway/icons';
 
-import styles from './next-learning-popup.module.css';
+import styles from '@learnway/styles/fo/pages/_learning/side-panel/popup/next-learning-popup.module.css';
 
 const NextLearningPopupComponent = () => {
   return (

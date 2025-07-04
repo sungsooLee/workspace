@@ -38,7 +38,8 @@ export interface UsersByIdsParam {
   accountStatus: string;
 }
 
-export interface SubdirectoryUsersParam {
+export interface BlackwhiteUsersParam {
+  groups: Group[];
   userGroupType: UserGroupType;
   companyId: string;
   companyCode: string;
@@ -48,3 +49,12 @@ export interface SubdirectoryUsersParam {
   userName: string;
   accountStatus: string;
 }
+
+type Combiner = {
+  combineType: string;
+  combineValue: number;
+};
+
+type Group = {
+  combiners: Combiner[];
+};

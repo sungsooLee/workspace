@@ -33,6 +33,7 @@ export const useGridBox = <T = any>(
       const queryOptions = initialConfig.query(mergedParams);
       const result = convertPaginationResponse(
         await queryClient.fetchQuery(queryOptions),
+        mergedParams,
       ) as PaginationResponse<T>;
       if (result) {
         setGridData(result);
@@ -88,18 +89,18 @@ export const useGridBox = <T = any>(
  * PaginationResponse 타입이 아닌 response 데이터를 PaginationResponse 타입으로 변환
  * @param response
  */
-const convertPaginationResponse = <T>(response: any): PaginationResponse<T> => {
+const convertPaginationResponse = <T>(response: any, params: any): PaginationResponse<T> => {
   if (response?.pageable) {
     return response as PaginationResponse<T>;
   }
   const content = response?.content ?? response?.data ?? response ?? [];
   return {
     content,
-    totalElements: 1000,
+    totalElements: content.length || 1000,
     totalPages: 0,
-    size: 20,
+    size: params.size || 20,
     number: 1,
-    numberOfElements: 20,
+    numberOfElements: content.length || 20,
   } as PaginationResponse<T>;
 };
 

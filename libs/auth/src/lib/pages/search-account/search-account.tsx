@@ -116,8 +116,8 @@ export function SearchAccountPage({ route, enableTab = true, hiddenIcon = true }
         <EmbededAlert className={enableTab === false ? styles.dormant : ''} hiddenIcon={hiddenIcon}>
           {t(
             selectedTabKey === 'account'
-              ? `LABEL.message.canCheckAccountAfterVerifying`
-              : `LABEL.message.canUpdatePasswordAfterVerifying`,
+              ? `LABEL.messages.canCheckAccountAfterVerifying`
+              : `LABEL.messages.canUpdatePasswordAfterVerifying`,
           )}
         </EmbededAlert>
 
