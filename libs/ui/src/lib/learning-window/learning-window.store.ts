@@ -20,6 +20,7 @@ export interface PlayInfo {
   orgnId?: number;
   scoId?: string;
   contentType: EnContentType;
+  lessonName?: string;
 }
 export interface ScormPlayerConfigProperties {
   /** 과정 차수 ID */
@@ -164,6 +165,7 @@ export const useLearningWindow = () => {
       orgnId: lesson.orgnId,
       scoId: lesson.scoId,
       contentType: lesson.contentType,
+      lessonName: lesson.lessonName,
     };
     return playInfo;
   };

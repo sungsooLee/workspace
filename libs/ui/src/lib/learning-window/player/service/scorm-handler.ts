@@ -37,7 +37,7 @@ export class ScormHandler {
       this.srte.setWasPreviousButtonPushed(false);
       this.srte.setWasNextButtonPushed(false);
       this.srte.setWasTOCPushed(false);
-      this.srte.setUserNavRequest('_none_');
+      //this.srte.setUserNavRequest('_none_');
 
       // build request (ClientRTS:450)
       // const reqdata: any = {
@@ -254,18 +254,18 @@ export class ScormHandler {
     let val = 'false';
 
     if (this.srte.getTerminatedState()) {
-      const result = this.srte.getErrorManager().setCurrentErrorCode('133');
+      this.srte.getErrorManager().setCurrentErrorCode('133');
       this.srte.log(
         'SetValue Returned Error Code ' + this.srte.getErrorManager().getCurrentErrorCode(),
       );
-      return result;
+      return 'false';
     }
     if (!this.srte.isInitialized()) {
-      const result = this.srte.getErrorManager().setCurrentErrorCode('132');
+      this.srte.getErrorManager().setCurrentErrorCode('132');
       this.srte.log(
         'SetValue Returned Error Code ' + this.srte.getErrorManager().getCurrentErrorCode(),
       );
-      return result;
+      return 'false';
     }
 
     this.dm.setValue(dmelement, value);
