@@ -118,17 +118,41 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
           onValid(objectParams);
         },
         (errors) => {
-          console.log('Validation Errors:', errors);
-          // 첫 번째 에러 필드의 키를 추출
-          const firstErrorKey = Object.keys(errors)[0];
+          // 첫 번째 에러 필드의 키를 추출 - builders 순서에 따라
+          const firstErrorKey = config.builders.find((builder) => errors[builder.name])?.name;
+
           if (firstErrorKey) {
-            const errorFieldRef = fieldRefs.current[firstErrorKey] as HTMLDivElement | null;
-            // 에러가 있는 필드로 스크롤 및 포커스 이동
-            if (errorFieldRef) {
-              errorFieldRef.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              errorFieldRef.focus();
+            // 현재 포커스된 요소가 이미 에러 필드 중 하나인지 확인
+            const currentFocusedField = document.activeElement;
+            const errorFieldNames = Object.keys(errors);
+            const isAlreadyFocusedOnErrorField = errorFieldNames.some((errorFieldName) => {
+              const errorField = fieldRefs.current[errorFieldName];
+              return errorField && errorField.contains(currentFocusedField);
+            });
+
+            // 이미 에러 필드에 포커스가 있다면 추가로 포커스를 변경하지 않음
+            if (!isAlreadyFocusedOnErrorField) {
+              // 다른 setError 호출이 완료된 후에 포커스를 설정하도록 지연
+              setTimeout(() => {
+                const errorFieldRef = fieldRefs.current[firstErrorKey] as HTMLDivElement | null;
+
+                if (errorFieldRef) {
+                  // 에러가 있는 필드로 스크롤 이동
+                  errorFieldRef.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                  // 해당 필드 내의 실제 input 요소를 찾아서 포커스 설정
+                  // DuplicateCheckTextField가 정상적으로 포커스 안되어서 해당 소스 추가
+                  const inputElement = errorFieldRef.querySelector(
+                    'input, textarea, select',
+                  ) as HTMLElement;
+                  if (inputElement) {
+                    inputElement.focus();
+                  } else {
+                    errorFieldRef.focus();
+                  }
+                }
+              }, 50);
             }
-            setFocus(firstErrorKey);
           }
         },
       )();

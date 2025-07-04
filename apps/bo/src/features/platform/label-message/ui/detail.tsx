@@ -256,6 +256,7 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
                   placeholder={t('LABEL.common.placeholder1', {
                     type: t('LABEL.form.label.labelName'),
                   })}
+                  hiddenPlaceholder={formDisabled}
                 />
               ) : (
                 // <Textarea

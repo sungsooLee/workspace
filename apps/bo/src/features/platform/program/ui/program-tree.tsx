@@ -489,7 +489,7 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
                         type="url"
                         validation={{
                           onError: (msg) => setFormError('apiUrl', msg),
-                          onSuccess: () => clearFormError('path'),
+                          onSuccess: () => clearFormError('apiUrl'),
                         }}
                       />
                     }
