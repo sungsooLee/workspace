@@ -30,7 +30,7 @@ export default class UsersService {
 
   // 비밀번호 유효기간 업데이트 1개월연장
   static updatePasswordExpireDate(payload: { days: number }) {
-    return httpService.post<any>(`/pms-module/admin/users/extend-password-change-date`, payload);
+    return httpService.post<any>(`${PMSApiPrefix()}/users/extend-password-change-date`, payload);
   }
 
   // 비밀번호 확인
@@ -45,14 +45,12 @@ export default class UsersService {
 
   // 유저 상세정보 조회
   static getUser() {
-    return httpService.get<any>(`/pms-module/user/api/v1/users/me`);
-    // return httpService.get<any>(`${PMSApiPrefix()}/users/me`);
+    return httpService.get<any>(`${PMSApiPrefix()}/users/me`);
   }
 
   // GNB 유저 역할 정보 조회
   static getUserGnbRole() {
-    return httpService.get<any>(`/pms-module/user/api/v1/users/me`);
-    // return httpService.get<any>(`${PMSApiPrefix()}/users/me`);
+    return httpService.get<any>(`/${PMSApiPrefix()}users/me`);
   }
 
   // GNB 테넌트/역할 선택
@@ -62,7 +60,6 @@ export default class UsersService {
     lastVisitedBoTenantId?: number;
     lastVisitedBoRoleId?: number;
   }) {
-    return httpService.put<any>(`/pms-module/admin/api/v1/users/visit-tenant-role`, payload);
-    // return httpService.get<any>(`${PMSApiPrefix()}/users/me`);
+    return httpService.put<any>(`${PMSApiPrefix()}users/visit-tenant-role`, payload);
   }
 }
