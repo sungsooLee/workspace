@@ -1,5 +1,12 @@
 // IA102 / NLP_BO_CMS_1001
-import { ALL_OPTION, CODE_GROUP, useSearchBox, compactValues, SelectOption } from '@learnway/hooks';
+import {
+  ALL_OPTION,
+  CODE_GROUP,
+  useSearchBox,
+  compactValues,
+  SelectOption,
+  useCurrentRoute,
+} from '@learnway/hooks';
 import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
 import { SearchBox } from '@shared/ui/search-box';
 import {
@@ -13,7 +20,6 @@ import {
 } from '@learnway/ui';
 import { IcoClock01, IcoCopy, IcoDownload, IcoAlertCircle } from '@learnway/icons';
 import { t } from 'i18next';
-import { Table } from '@tanstack/react-table';
 import { useEffect, useState } from 'react';
 import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { ModifierInfoModal } from './learning-resource-modifier-info-modal';
@@ -22,18 +28,21 @@ import { BatchSettingModal } from './learning-resource-batch-setting-modal';
 import { first, get, map, some, uniq } from 'lodash';
 import { CopyModal } from './learning-resource-copy-modal';
 import { useRouter } from '@tanstack/react-router';
-import { useFetchAuthUser } from '@learnway/auth/entities';
 import { useWatch } from 'react-hook-form';
 import { useQueryClient } from '@tanstack/react-query';
 import { GridExcelDownloadButton } from '@features/shared';
 import { CMSApiPrefix } from '@learnway/config';
 
 function LearningResourceTableComponent() {
+  const {
+    state: { listParam },
+  } = useCurrentRoute();
+  const [isFetchedByListParam, setIsFetchedByListParam] = useState(false);
+
   const router = useRouter();
   const { open: openModal, alert } = useModal();
 
   const queryClient = useQueryClient();
-  const { data: user } = useFetchAuthUser();
 
   const searchConfig: any = {
     builders: [
@@ -299,12 +308,13 @@ function LearningResourceTableComponent() {
     getValuesWithLabel,
     setOptions,
     setValue,
+    onFormChange,
+    onFormValid,
   } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const [params, setParams] = useState<Record<string, any>>({});
   const [valuesWithLabel, setValuesWithLabel] = useState<Record<string, SelectOption>>({});
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
-  const [tableInstance, setTableInstance] = useState<Table<any>>(); // Grid 로부터 받을 table 인스턴스를 저장할 상태
 
   // tenant 정보로 channel 설정
   const tenantId = useWatch({ control: searchProvider.control, name: 'tenantId' });
@@ -315,7 +325,10 @@ function LearningResourceTableComponent() {
       const { content } = await queryClient.fetchQuery(
         learningResourceQueryOptions.getChannelsByTenantId(tenantId),
       );
-      setValue('channelUuid', '');
+      if (listParam && !isFetchedByListParam)
+        // listParam에 의한 tenantId변경
+        setIsFetchedByListParam(true);
+      else setValue('channelUuid', '');
       if (content)
         setOptions(
           'channelUuid',
@@ -331,6 +344,18 @@ function LearningResourceTableComponent() {
     setValuesWithLabel(getValuesWithLabel());
     gridFetch(processedQuery);
   }
+
+  useEffect(() => {
+    if (!listParam) return;
+    console.log('🚀 ~ useEffect ~ listParam:', listParam);
+    onFormChange(listParam);
+
+    (async () => {
+      if (await onFormValid()) {
+        handleSearch(getValues());
+      }
+    })();
+  }, [listParam]);
 
   function handleShare() {
     console.log('🚀 ~ handleShare ~ params:', params);
@@ -462,7 +487,6 @@ function LearningResourceTableComponent() {
             />
           </>
         }
-        onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
       />
     </>
   );

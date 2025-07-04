@@ -26,16 +26,20 @@ export const Route = createLazyFileRoute('/_layout/learning/resource/video/view'
 });
 
 function RouteComponent() {
-  const router = useRouter();
   const {
-    state: { permission },
+    state: { contentUuid },
   } = useCurrentRoute();
+  console.log('🚀 ~ RouteComponent ~ contentUuid:', contentUuid); // 컨텐츠 조회해서 formfield 에 뿌려야 함
+
+  const router = useRouter();
   const { t } = useTranslation();
   const { provider, onSubmit } = useDynamicForm<typeof formConfig>(formConfig);
 
   const handleFormSubmit = (data: DynamicFormValues<typeof formConfig>) => {
     console.log(data);
   };
+
+  const permission = 'READ' as string; //user permission 정보 가져와야 함
 
   const openModal = () => {
     // 모달 다으면 oncofmr(value)

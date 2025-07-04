@@ -11,6 +11,7 @@ import { ChannelChoiceModal } from '@features/shared';
 import { LearningResourceTable } from '@features/learning/ui/learning-resource';
 import { usePostDraftVideos } from '@entities/learning-resource';
 import { PostDraftVideosRes } from '@types';
+import { pick } from 'lodash';
 
 export const Route = createLazyFileRoute('/_layout/learning/learning-resource/')({
   component: RouteComponent,
@@ -21,14 +22,30 @@ function RouteComponent() {
   const { open: openModal } = useModal();
   // 등록 팝업 호출 여부
   const [displayContent, setDisplayContent] = useState(true);
+
+  const [listParam, setListParam] = useState<
+    { tenantId: string; channelUuid: string } | undefined
+  >();
+
   const { create: postDraftVideos } = usePostDraftVideos({
     onSuccess: (result: PostDraftVideosRes) => {
       if (result.contents.length === 1) {
-        router.navigate({
+        return router.navigate({
           to: '/learning/resource/video/view',
+          state: {
+            contentUuid: result.contents[0].contentUuid,
+          },
         });
       }
       setDisplayContent(true);
+      console.log('🚀 ~ beforeNav ~ listParam:', listParam);
+      router.navigate({
+        to: '/learning/learning-resource',
+        state: {
+          listParam,
+        },
+        replace: true,
+      });
     },
   });
 
@@ -58,20 +75,14 @@ function RouteComponent() {
             ),
             width: 'lg',
           });
-          console.log(
-            '🚀 ~ handleRegister ~channelInfo, fileUuids, languageCode:',
-            channelInfo,
-            fileUuids,
-            getDefaultLang().toUpperCase(),
-          );
           if (fileUuids) {
+            setListParam(pick(channelInfo, ['tenantId', 'channelUuid']));
             postDraftVideos({
               languageCountryCode: getDefaultLang().toUpperCase(),
               tenantId: channelInfo.tenantId,
               channelUuid: channelInfo.channelUuid,
               fileUuids,
             });
-            // router.navigate({ to: '/learning_test/resource/view/video' });
             break;
           }
         }
