@@ -61,7 +61,6 @@ export const CategoryManage = () => {
 
   const resetInputValidations = useCallback(() => {
     clearAllFormErrors();
-    setResetTrigger((prev) => prev + 1);
   }, [clearAllFormErrors]);
 
   const initialFromValuesRef = useRef<any>(null);
@@ -72,7 +71,6 @@ export const CategoryManage = () => {
     showDeleteComplete,
     showUpdateComplete,
   } = useModal();
-  const [resetTrigger, setResetTrigger] = useState(0);
 
   // 추후 현재 locale 정보 값 파라미터로 넘겨주기.
   const { data, refetch } = useFetchCategory();
@@ -509,7 +507,6 @@ export const CategoryManage = () => {
                 name={'code'}
                 element={
                   <DuplicateCheckInputFormField
-                    key={`code-${resetTrigger}`}
                     id="code"
                     onDuplicationCheck={duplicateCheck}
                     disabled={formMode === FORM_MODE.NONE}

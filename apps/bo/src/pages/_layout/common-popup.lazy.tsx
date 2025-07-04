@@ -424,7 +424,7 @@ function RouteComponent() {
               >
                 {'유저그룹 대상자 조회 팝업(공통)'}
               </Button>
-              <span className="text-yellow-500">{'진행중'}</span>
+              <span className="text-green-400">{'완료'}</span>
             </div>
             <div className="flex gap-4">
               <Button
@@ -441,7 +441,7 @@ function RouteComponent() {
               >
                 {'유저그룹 조회 팝업(조직만)'}
               </Button>
-              <span className="text-yellow-500">{'진행중'}</span>
+              <span className="text-green-400">{'완료'}</span>
             </div>
             <div className="h-1 w-full border-white bg-slate-700" />
             <Button
@@ -662,7 +662,7 @@ const formConfig: DynamicFormConfig = {
       label: t('썸네일'),
       type: 'thumbnail-list',
       imageStorageType: 'public',
-      max: 3,
+      max: 1,
       format: 'array',
       value: [],
       description:

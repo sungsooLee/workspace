@@ -12,10 +12,13 @@ import {
   IcoXclose,
   IcoLinkblank,
 } from '@learnway/icons';
-import { CurriculumPopup, NextLearningPopup } from '../../../features/learning';
+import { CurriculumPopup } from './popup/curriculum-popup';
+import { NextLearningPopup } from './popup/next-learning-popup';
 
-import styles from './side-panel.module.css';
+import styles from '@learnway/styles/fo/pages/_learning/side-panel/side-panel.module.css';
+
 import { ChartNoAxesColumnDecreasing } from 'lucide-react';
+import { useLearningWindow } from '@widgets/layout/service/learning-window.store';
 
 interface ChildData {
   className?: string;
@@ -27,6 +30,7 @@ interface SidePanelProps {
 }
 
 const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
+  const { curriculum, playInfo } = useLearningWindow();
   const { open: openModal } = useModal();
 
   const [menuSelected, setMenuSelected] = useState(false); // content 영역 show/hide
@@ -79,80 +83,46 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
               </div>
               <div className={styles.contents_box}>
                 {/* 커리큘럼 */}
-                {menuContents[0] && (
+                {menuContents[0] && curriculum && (
                   <div className={styles.curriculum}>
                     <ul>
-                      <li>
-                        <div className={styles.box}>
-                          <div className={styles.header}>
-                            <strong>모듈명</strong>
-                            <span>13:40</span>
-                          </div>
-                          <div className={styles.contents}>
-                            <ul className={styles.step}>
-                              <li>
-                                <div className={styles.step_box}>
-                                  <ProgressCheck progress={100} />
-                                  <p>스콤아이템</p>
-                                  <span>4:11</span>
-                                </div>
-                              </li>
-                              <li>
-                                <div className={styles.step_box}>
-                                  <ProgressCheck progress={50} />
-                                  <p>스콤아이템</p>
-                                  <span>4:11</span>
-                                </div>
-                              </li>
-                              <li>
-                                <div className={styles.step_box}>
-                                  <ProgressCheck progress={0} />
-                                  <p>스콤아이템</p>
-                                  <span>4:11</span>
-                                </div>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div className={styles.box}>
-                          <div className={styles.header}>
-                            <strong>모듈명</strong>
-                            <span>13:40</span>
-                          </div>
-                          <div className={styles.contents}>
-                            <ul className={styles.step}>
-                              <li>
-                                <div className={styles.step_box}>
-                                  <ProgressCheck progress={100} />
-                                  <p>스콤아이템</p>
-                                  <span>4:11</span>
-                                </div>
-                              </li>
-                              <li>
-                                <div className={styles.step_box}>
-                                  <ProgressCheck progress={50} />
-                                  <p>
-                                    스콤아이템
-                                    <Link to="">
-                                      <IcoLinkblank width={16} height={16} stroke="#4c515e" />
-                                    </Link>
-                                  </p>
-                                  <span>4:11</span>
-                                </div>
-                              </li>
-                              <li>
-                                <div className={styles.step_box}>
-                                  <ProgressCheck progress={0} />
-                                  <p>스콤아이템</p>
-                                  <span>4:11</span>
-                                </div>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </li>
+                      {curriculum.moduleList.map((module: any) => {
+                        return (
+                          <li key={`learning-window-module-${module.moduleId}`}>
+                            <div className={styles.box}>
+                              <div className={styles.header}>
+                                <strong>{module.moduleName}</strong>
+                                <span>--:--</span>
+                              </div>
+                              <div className={styles.contents}>
+                                <ul
+                                  key={`learning-window-module-ul-${module.moduleId}`}
+                                  className={styles.step}
+                                >
+                                  {module.lessonList.map((lesson: any) => {
+                                    return (
+                                      <li
+                                        key={`learning-window-lesson-${module.moduleId}_${lesson.lessonId}`}
+                                        className={
+                                          playInfo && playInfo.lessonId === lesson.lessonId
+                                            ? styles.active
+                                            : ''
+                                        }
+                                      >
+                                        <div className={styles.step_box}>
+                                          <ProgressCheck progress={50} />
+                                          <p>{lesson.lessonName}</p>
+                                          <span>--:--</span>
+                                        </div>
+                                      </li>
+                                    );
+                                  })}
+                                </ul>
+                              </div>
+                            </div>
+                          </li>
+                        );
+                      })}
                     </ul>
                   </div>
                 )}

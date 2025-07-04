@@ -5,7 +5,7 @@ import {
   UserGroupsParam,
   UsersByIdsParam,
   OrganizationTreeResponse,
-  SubdirectoryUsersParam,
+  PageableContent,
 } from '@types';
 
 export default class UserGroupService {
@@ -28,10 +28,11 @@ export default class UserGroupService {
       tenantName,
     });
   }
-  static subdirectoryUsers(
-    params: Partial<SubdirectoryUsersParam>,
-  ): Promise<OrganizationTreeResponse[]> {
-    return httpService.get(`${PMSApiPrefix()}/userGroup/subdirectory/users`, params);
+  static fetchBlackwhiteUsers(body: any) {
+    return httpService.post<PageableContent<any>>(
+      `${PMSApiPrefix()}/userGroup/blackwhite/users?page=${body.page}&size=${body.size}`,
+      body,
+    );
   }
 
   static fetchUsersByIds(params: Partial<UsersByIdsParam>): Promise<UserGroupsResponse[]> {

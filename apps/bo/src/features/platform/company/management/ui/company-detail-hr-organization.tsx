@@ -1,7 +1,7 @@
 import { FC, useEffect, useState, useCallback } from 'react';
 import { t } from 'i18next';
 import { CompanyDetailHRUsergroup } from './company-detail-hr-usergroup';
-import { CompanyOrganizationDetailTree } from '@features/platform/company/organization/ui/company-organization-detail-tree';
+import { CompanyOrganizationDetailTree } from '@features/platform/company/management/ui/company-organization-detail-tree';
 
 import { EnUserGroupType } from '@types';
 import { SplitPanel } from '@learnway/ui';

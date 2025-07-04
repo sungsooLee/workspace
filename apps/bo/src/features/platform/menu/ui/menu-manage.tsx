@@ -74,7 +74,6 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [lastCreatedMenuId, setLastCreatedMenuId] = useState<string | null>(null);
   const [skipConfirmation, setSkipConfirmation] = useState(false);
-  const [resetTrigger, setResetTrigger] = useState(0);
   const { open: openModal, confirm: openConfirm, alert: openAlert } = useModal();
   const prevDataRef = useRef<any>(null);
   const router = useRouter();
@@ -117,10 +116,9 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
     formConfig.builders.forEach((item) => clearFormError(item.name));
   }, [clearFormError]);
 
-  const resetInputValidations = useCallback(() => {
-    clearAllFormErrors();
-    setResetTrigger((prev) => prev + 1);
-  }, [clearAllFormErrors]);
+  // const resetInputValidations = useCallback(() => {
+  //   clearAllFormErrors();
+  // }, [clearAllFormErrors]);
 
   const hasFormChanges = () => {
     const currentValues = getValues();
@@ -161,8 +159,6 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
         sortOrder: node.sortOrder,
         menuScope: menuScope,
       };
-      console.log(apiMappingKeys);
-      console.log(updateData);
       update(updateData);
     } else if (formMode === FORM_MODE.ADD) {
       //
@@ -268,7 +264,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
     // }
 
     // 모든 검증 에러 클리어
-    resetInputValidations();
+    clearAllFormErrors();
 
     setSelectedNode(node);
     if (node) {
@@ -293,7 +289,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
     // }
 
     // 모든 검증 에러 클리어
-    resetInputValidations();
+    clearAllFormErrors();
 
     const initData: { [key: string]: any } = {};
     formConfig.builders.forEach((item) => {
@@ -653,7 +649,6 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
                 name={'code'}
                 element={
                   <DuplicateCheckInputFormField
-                    key={`code-${resetTrigger}`}
                     id="code"
                     onDuplicationCheck={duplicateCheck}
                     disabled={formMode === FORM_MODE.NONE}
@@ -663,7 +658,6 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
                       setFormError('code', message);
                     }}
                     onValidationSuccess={() => {
-                      console.log(';');
                       clearFormError('code');
                     }}
                   />
@@ -713,7 +707,6 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
                 name={'path'}
                 element={
                   <Input
-                    key={`path-${resetTrigger}`}
                     id="path"
                     disabled={formMode === FORM_MODE.NONE}
                     hiddenPlaceholder={formMode === FORM_MODE.NONE}

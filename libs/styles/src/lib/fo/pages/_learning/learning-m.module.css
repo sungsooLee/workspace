@@ -1,0 +1,91 @@
+.start {
+  &.blog {
+    @apply pb-[150px];
+  }
+  &.ebook {
+    @apply pb-[150px];
+  }
+  &.file {
+    @apply relative h-[calc(100dvh-56px)] w-full overflow-hidden bg-[#444];
+    .file_box {
+      @apply absolute left-1/2 top-[calc(50%-75px)] flex w-[calc(100%-40px)] -translate-x-1/2 -translate-y-1/2 items-center rounded-[8px] border-[1px] border-solid border-[var(--gray5)] bg-white p-[16px];
+      p {
+        @apply body_4_r flex-1 text-[var(--gray8)];
+      }
+      button {
+        @apply button_5_r ml-[24px] h-[24px] rounded-[4px] px-[8px] leading-[24px];
+      }
+    }
+  }
+  &.gallery_wrap {
+    @apply bg-black;
+    .photo_wrap {
+      @apply relative flex h-[calc(100dvh-56px)] w-full flex-col justify-center overflow-hidden pb-[150px];
+      .photo {
+        @apply relative flex items-center text-center;
+        .img {
+          @apply mx-auto overflow-hidden !px-0;
+          img {
+            @apply max-h-[calc((100dvh-56px-150px)/2)] w-full max-w-full rounded-none;
+          }
+        }
+        .btn_prev {
+          @apply absolute left-[8px] top-1/2 m-0 -translate-y-1/2 rounded-[8px] bg-[rgba(19,28,48,.7)] p-[8px];
+        }
+        .btn_next {
+          @apply absolute right-[8px] top-1/2 m-0 -translate-y-1/2 rounded-[8px] bg-[rgba(19,28,48,.7)] p-[8px];
+          svg {
+            @apply rotate-180;
+          }
+        }
+      }
+      .swiper {
+        @apply w-full pt-[24px];
+        [class*='swiper-wrapper'] {
+          @apply flex items-center;
+        }
+        [class*='swiper-slide'] {
+          @apply h-[64px] w-[64px];
+          button {
+            @apply h-full w-full rounded-none bg-black !px-0;
+            img {
+              @apply mx-auto max-h-[64px] max-w-[64px] object-contain;
+            }
+          }
+          &[class*='swiper-slide-active'] {
+            @apply h-[72px] w-[72px] border-[4px] border-solid border-[var(--secondary1)];
+          }
+        }
+      }
+    }
+  }
+  &.html {
+    @apply flex min-h-[calc(100dvh-56px)] items-center bg-[rgba(0,0,0,.8)] pb-[150px];
+  }
+  &.iframe {
+    @apply flex min-h-[calc(100dvh-56px)] items-center bg-[rgba(0,0,0,.8)] pb-[150px];
+    .iframe {
+      @apply h-[100dvh] w-[100%];
+    }
+  }
+  &.video {
+    @apply pb-[150px];
+  }
+}
+
+[class*='panel_active'] {
+  .start {
+    &.gallery_wrap {
+      .photo_wrap {
+        .photo {
+          @apply mr-0;
+        }
+        .swiper {
+          & > div {
+            @apply mx-[42px] max-w-[calc(100%-550px-84px)];
+          }
+        }
+      }
+    }
+  }
+}

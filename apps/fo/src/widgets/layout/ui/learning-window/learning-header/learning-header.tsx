@@ -7,7 +7,7 @@ import { IcoArrowBackward } from '@learnway/icons';
 
 import { cn } from '@learnway/shared';
 
-import styles from './learning-header.module.css';
+import styles from '@learnway/styles/fo/pages/_learning/learning-header/learning-header.module.css';
 
 function LearningHeaderComponent() {
   return (

@@ -167,7 +167,7 @@ export type FormValidatorConfig = {
                */
               fn?: (values: Record<string, any>) => boolean;
               // 필수 값 오류 발생 시 표시할 메시지 (옵션)
-              message?: string;
+              message?: string | ((values: Record<string, any>) => string);
               // 필수 값 오류 발생 위치
               path?: string;
             };
@@ -187,7 +187,7 @@ export type FormValidatorConfig = {
           /**
            * 오류 발생 시 표시할 메시지 (옵션)
            */
-          message?: string;
+          message?: string | ((values: Record<string, any>) => string);
 
           /**
            * 오류가 발생한 값의 위치 설정 (옵션)
@@ -339,12 +339,12 @@ export type FormRowFieldConfig = Omit<FormConfig, 'name'> & {
       | string
       | {
           fn?: (values: Record<string, any>) => boolean;
-          message?: string;
+          message?: string | ((values: Record<string, any>) => string);
         };
     /** 커스텀 validation 조건들 */
     conditions?: {
       fn: (values: Record<string, any>) => boolean;
-      message?: string;
+      message?: string | ((values: Record<string, any>) => string);
     }[];
     /** 데이터 형식 지정 */
     format?:
