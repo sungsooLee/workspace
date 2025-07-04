@@ -45,7 +45,13 @@ export default class TranslationService {
     );
   }
 
-  static fetchTranslationExists(keyTypeCode: string, messageCode: string) {
+  static fetchTranslationExists({
+    keyTypeCode,
+    messageCode,
+  }: {
+    keyTypeCode: string;
+    messageCode: string;
+  }) {
     return httpService.get<any>(
       `${PMSApiPrefix()}/multilingual/exists?keyTypeCode=${keyTypeCode}&messageCode=${messageCode}`,
     );
