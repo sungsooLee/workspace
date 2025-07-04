@@ -9,6 +9,7 @@ import {
   Button,
   ContentsRow,
   DatePicker,
+  Editor,
 } from '@learnway/ui';
 import { Navigation } from 'swiper/modules';
 
@@ -41,6 +42,7 @@ function RouteComponent() {
       >
         모달 팝업 열기
       </Button>
+      <Editor value={undefined} />
     </div>
   );
 }

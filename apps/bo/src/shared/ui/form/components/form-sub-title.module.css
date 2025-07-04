@@ -44,6 +44,11 @@
     [role='radiogroup'] + button {
       @apply ml-[16px];
     }
+    &:has([class*='nlp--switch']) {
+      .title_area + div {
+        @apply text-[14px] font-normal leading-[1.4rem] text-[var(--gray6)];
+      }
+    }
     &.light {
       @apply border-b-[1px] border-solid border-[var(--gray4)] pb-[8px];
     }
