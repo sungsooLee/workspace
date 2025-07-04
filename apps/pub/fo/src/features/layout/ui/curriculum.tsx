@@ -1,4 +1,7 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
+import { cn } from '@learnway/shared';
+import { IcoClock01 } from '@learnway/icons';
+import { Accordion } from '@learnway/ui';
 
 import styles from './curriculum.module.css';
 
@@ -7,58 +10,95 @@ interface CurriculumProps {
 }
 
 const CurriculumComponent = ({ className }: CurriculumProps) => {
+  const [curriculumValue, setCurriculumValue] = useState<string>('a');
+  const accordionValueItems = [
+    {
+      value: 'a',
+      title: (
+        <div className={styles.title}>
+          <p>
+            1일 업무를 10분만에 해결하는 파이썬 업무자동화<span>1시간</span>
+          </p>
+        </div>
+      ),
+      children: (
+        <ol className={styles.list}>
+          <li>
+            <div className={styles.box}>
+              <p>1.현업사례로 보는 업무자동화에 파이썬이 필요한 이유</p>
+              <div>
+                <span>이북</span>
+                <span>
+                  <IcoClock01 width={20} height={20} stroke="#131416" />
+                  <span>1시간 3분</span>
+                </span>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div className={styles.box}>
+              <p>2.현업사례로 보는 업무자동화에 파이썬이 필요한 이유</p>
+              <div>
+                <span>동영상</span>
+                <span>
+                  <IcoClock01 width={20} height={20} stroke="#131416" />
+                  <span>1시간 3분</span>
+                </span>
+              </div>
+            </div>
+          </li>
+        </ol>
+      ),
+    },
+    {
+      value: 'b',
+      title: (
+        <div className={styles.title}>
+          <p>
+            1일 업무를 10분만에 해결하는 파이썬 업무자동화<span>1시간</span>
+          </p>
+        </div>
+      ),
+      children: (
+        <ol className={styles.list}>
+          <li>
+            <div className={styles.box}>
+              <p>1.현업사례로 보는 업무자동화에 파이썬이 필요한 이유</p>
+              <div>
+                <span>이북</span>
+                <span>
+                  <IcoClock01 width={20} height={20} stroke="#131416" />
+                  <span>1시간 3분</span>
+                </span>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div className={styles.box}>
+              <p>2.현업사례로 보는 업무자동화에 파이썬이 필요한 이유</p>
+              <div>
+                <span>동영상</span>
+                <span>
+                  <IcoClock01 width={20} height={20} stroke="#131416" />
+                  <span>1시간 3분</span>
+                </span>
+              </div>
+            </div>
+          </li>
+        </ol>
+      ),
+    },
+  ];
+
   return (
-    <div className={`${styles.start} ${styles.curriculum} ${styles.className}`}>
-      <ol>
-        <li>
-          <div className={styles.tit_box}>
-            <strong>1. 안전교육 | 강사 이승훈(현대오토에버 L&D플랫폼팀)</strong>
-            <span>완료</span>
-          </div>
-          <div className={styles.txt_box}>
-            <ul>
-              <li>
-                <p>산업안전보건/공정안전관리/산업보건관리/물질안전보건/일반안전관리</p>
-                <span>8시간</span>
-              </li>
-              <li>
-                <p>산업안전보건/공정안전관리/산업보건관리/물질안전보건/일반안전관리</p>
-                <span>8시간</span>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li>
-          <div className={styles.tit_box}>
-            <strong>2. 사업장 교육 1 (강사 김지선)</strong>
-          </div>
-          <div className={styles.txt_box}>
-            <ul>
-              <li>
-                <p>산업안전보건/공정안전관리/산업보건관리/물질안전보건/일반안전관리</p>
-                <span>8시간</span>
-              </li>
-              <li>
-                <p>산업안전보건/공정안전관리/산업보건관리/물질안전보건/일반안전관리</p>
-                <span>8시간</span>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li>
-          <div className={styles.tit_box}>
-            <strong>3. 사업장 교육 2 (강사 : 이승훈 )</strong>
-          </div>
-          <div className={styles.txt_box}>
-            <ul>
-              <li>
-                <p>냉연공정의 이해(PL/TCM, CAL 등)</p>
-                <span>2시간</span>
-              </li>
-            </ul>
-          </div>
-        </li>
-      </ol>
+    <div className={cn(styles.start, styles.curriculum, className)}>
+      <Accordion
+        items={accordionValueItems}
+        value={curriculumValue}
+        className={styles.acc_curriculum}
+        onValueChange={(value) => setCurriculumValue(value as string)}
+        type="multiple"
+      />
     </div>
   );
 };

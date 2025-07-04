@@ -16,7 +16,25 @@ import {
   ProgressBar,
   Avatar,
 } from '@learnway/ui';
-import { IcoHeart, IcoStar, IcoCaution, IcoClock01, IcoAvatar, IcoSymbol } from '@learnway/icons';
+import {
+  IcoHeart,
+  IcoStar,
+  IcoCaution,
+  IcoClock01,
+  IcoAvatar,
+  IcoSymbol,
+  IcoBook,
+  IcoBuilding,
+  IcoCategory,
+  IcoDivice,
+  IcoLevel,
+  IcoLocation,
+  IcoPrize,
+  IcoSubtitles02,
+  IcoTime,
+  IcoEye,
+  IcoArrowDown,
+} from '@learnway/icons';
 import {
   CourseDashboard,
   CourseIntroduction, // 과정소개
@@ -316,6 +334,9 @@ function RouteComponent() {
     <div>2</div>,
   ];
 
+  const [listCategoryOpen, setListCategoryOpen] = useState<boolean>(true);
+  const [listSubTitleOpen, setListSubTitleOpen] = useState<boolean>(false);
+
   return (
     <div className={`${styles.start} ${styles.package_wrap}`}>
       {/* page contents */}
@@ -389,7 +410,7 @@ function RouteComponent() {
                   <span>500</span>
                 </div>
                 <div className={packageInformationStyles.box}>
-                  <IcoAvatar width={16} height={16} />
+                  <IcoEye width={16} height={16} stroke="#0056ff" />
                   <span>77,500</span>
                 </div>
               </div>
@@ -410,20 +431,65 @@ function RouteComponent() {
               </div>
               {/* 학습정보 */}
               <div className={packageInformationStyles.list_box}>
-                {/* definitionListStyles module */}
-                <div className={`${definitionListStyles.start} ${definitionListStyles.list}`}>
-                  <dl>
-                    <dt>학습유형</dt>
-                    <dd>패키지</dd>
-                  </dl>
-                  <dl>
-                    <dt>카테고리</dt>
-                    <dd>
-                      Quality &gt; Service &gt; Hydrogen/Electricity &gt; Ioniq 5 &gt; NE PE &gt;
-                      Technical Information
-                    </dd>
-                  </dl>
-                </div>
+                <ul>
+                  <li>
+                    <IcoBook width={20} height={20} stroke="#4d525c" fill="none" />
+                    <p>동영상</p>
+                  </li>
+                  <li className={listCategoryOpen === true ? packageInformationStyles.open : ''}>
+                    <IcoCategory width={20} height={20} stroke="#4d525c" fill="none" />
+                    <p>Quality Service Hydrogen/Electricitysf Service Hydrogen/Electricitysf</p>
+                    <Button
+                      onClick={() =>
+                        listCategoryOpen === true
+                          ? setListCategoryOpen(false)
+                          : setListCategoryOpen(true)
+                      }
+                    >
+                      <IcoArrowDown width={20} height={20} stroke="#4d525c" />
+                    </Button>
+                  </li>
+                  <li>
+                    <IcoLocation width={20} height={20} stroke="#4d525c" fill="none" />
+                    <p>온라인 비대면</p>
+                  </li>
+                  <li>
+                    <IcoTime width={20} height={20} stroke="#4d525c" fill="none" />
+                    <p>1시간 24분</p>
+                  </li>
+                  <li>
+                    <IcoBuilding width={20} height={20} stroke="#4d525c" fill="none" />
+                    <p>야나두</p>
+                  </li>
+                  <li>
+                    <IcoDivice width={20} height={20} stroke="#4d525c" fill="none" />
+                    <p>앱, 웹, 모바일전용, 사외IP전용</p>
+                  </li>
+                  <li>
+                    <IcoLevel width={20} height={20} stroke="#4d525c" fill="none" />
+                    <p>중급</p>
+                  </li>
+                  <li>
+                    <IcoPrize width={20} height={20} stroke="#4d525c" fill="none" />
+                    <p>발급</p>
+                  </li>
+                  <li className={listSubTitleOpen === true ? packageInformationStyles.open : ''}>
+                    <IcoSubtitles02 width={20} height={20} stroke="#4d525c" fill="none" />
+                    <p>
+                      한국어, Aracic, Chinese Taiwan, Deutsch, English, Frensh, Indonesian,
+                      Japanese, Malay, Nepali, Portuguese
+                    </p>
+                    <Button
+                      onClick={() =>
+                        listSubTitleOpen === true
+                          ? setListSubTitleOpen(false)
+                          : setListSubTitleOpen(true)
+                      }
+                    >
+                      <IcoArrowDown width={20} height={20} stroke="#4d525c" />
+                    </Button>
+                  </li>
+                </ul>
               </div>
 
               {/* 강의 */}
