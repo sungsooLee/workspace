@@ -20,9 +20,11 @@ function RouteComponent() {
   // 라우터 state에서 courseId 가져오기
   const courseId = router.state.location.state?.courseId;
 
+  console.log('Course ID', courseId);
+
   // 커스텀 훅 사용
   const {
-    formData,
+    data,
     isLoading,
     activeTab,
     setTabRef,
@@ -30,7 +32,6 @@ function RouteComponent() {
     saveCurrentTab,
     changeTab,
     loadMockData,
-    setFormDataComplete,
   } = useCourseForm();
 
   // 최초 데이터 로드
@@ -78,32 +79,34 @@ function RouteComponent() {
     () => [
       {
         title: '기본정보 설정',
-        key: 'a',
-        content: <BasicInfo ref={(ref) => setTabRef('a', ref)} initialData={formData} />,
+        key: 'STEP1',
+        content: <BasicInfo ref={(ref) => setTabRef('STEP1', ref)} data={data} />,
       },
       {
         title: '수강신청 설정',
-        key: 'b',
-        content: <CourseRegistration ref={(ref) => setTabRef('b', ref)} initialData={formData} />,
+        key: 'STEP2',
+        content: <CourseRegistration ref={(ref) => setTabRef('STEP2', ref)} data={data} />,
       },
       {
         title: '커리큘럼 설정',
-        key: 'c',
-        content: <Curriculum ref={(ref) => setTabRef('c', ref)} initialData={formData} />,
+        key: 'STEP3',
+        content: <Curriculum ref={(ref) => setTabRef('STEP3', ref)} data={data} />,
       },
       {
         title: '상세 설정',
-        key: 'd',
-        content: <DetailInfo ref={(ref) => setTabRef('d', ref)} initialData={formData} />,
+        key: 'STEP4',
+        content: <DetailInfo ref={(ref) => setTabRef('STEP4', ref)} data={data} />,
       },
       {
         title: '강의 설정',
-        key: 'e',
-        content: <PublishCourse ref={(ref) => setTabRef('e', ref)} initialData={formData} />,
+        key: 'STEP5',
+        content: <PublishCourse ref={(ref) => setTabRef('STEP5', ref)} data={data} />,
       },
     ],
-    [formData, setTabRef],
+    [data, setTabRef],
   );
+
+  console.log('------- view.lazy');
 
   return (
     <form>

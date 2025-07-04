@@ -5,15 +5,16 @@ import { useTranslation } from 'react-i18next';
 import { TabFormRef } from '../common/tab-form-ref';
 import { Button, SplitPanel, TreeBox, TreeContainer } from '@learnway/ui';
 import { IcoMinus, IcoPlus } from '@learnway/icons';
+import { Course, CourseConfig } from '@types';
 
 interface curriculumProps {
   dummy?: any;
   // dynamicForm: UseDynamicFormResult;
-  initialData?: any;
+  data: { formData: Course; courseConfig: CourseConfig };
 }
 
 const CurriculumComponent = forwardRef<TabFormRef, curriculumProps>(
-  ({ dummy, initialData }, ref) => {
+  ({ dummy, data: { formData, courseConfig } }, ref) => {
     const { t } = useTranslation();
     // const { provider, getValues, fetchData } = dynamicForm;
     const { provider, getValues, onSubmit, onFormValid, formState, updateFormData } =
@@ -42,10 +43,10 @@ const CurriculumComponent = forwardRef<TabFormRef, curriculumProps>(
     useEffect(() => {
       console.log('curriculumComponent init');
       // 초기 데이터가 있으면 설정
-      if (initialData) {
-        updateFormData(initialData);
+      if (formData) {
+        updateFormData(formData);
       }
-    }, [initialData]);
+    }, [formData]);
 
     return (
       <div>

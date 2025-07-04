@@ -3,19 +3,18 @@ import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
 import { CourseTypeOptionCardModal } from '@features/learning/course';
 import { GridExcelDownloadButton, GridExcelUploadButton } from '@features/shared';
 import { LMSApiPrefix } from '@learnway/config';
-import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
+import { CODE_GROUP, getCodeLabel, useDynamicForm2 } from '@learnway/hooks';
 import { Button, ContentsRow, Divider, GridBox, Input, useGridBox, useModal } from '@learnway/ui';
 import { FormRow2, SearchBoxForm, TenantChannelDropdownFormField } from '@shared/ui';
-import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { CoursesQueryParams } from '@types';
+import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
+import { CourseListItem, CoursesQueryParams } from '@types';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { t } from 'i18next';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { generateYears } from '@learnway/shared';
-import { queryKeys, useFetchAuthUser } from '@learnway/auth/entities';
 
 export const Route = createFileRoute('/_layout/learning/course/')({
   component: RouteComponent,
@@ -27,10 +26,19 @@ function RouteComponent() {
   const { open: openModal } = useModal();
   const { provider, getValues, onSubmit, watch } = useDynamicForm2();
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
-  const [selectedCourses, setSelectedCourses] = useState<any[]>([]);
+  const [selectedRows, setSelectedRows] = useState<CourseListItem[]>([]);
 
-  const { data: authUser } = useFetchAuthUser(); // 로그인 시 정보
-  console.log('authUser', { authUser });
+  // 버튼 활성화/비활성화 상태를 관리
+  const buttonState = useMemo(() => {
+    const count = selectedRows?.length;
+    const hasSelection = count > 0;
+    return {
+      copy: hasSelection, // 복사 버튼 활성화 조건
+      share: hasSelection, // 공유 버튼 활성화 조건 (나중에 다른 조건 추가 가능)
+    };
+  }, [selectedRows]);
+
+  console.log('buttonState', buttonState);
 
   /**
    * 검색 실행 시 호출되는 핸들러
@@ -45,9 +53,9 @@ function RouteComponent() {
    * 그리드의 행 선택 시 호출되는 핸들러
    * @param {any} row - 선택된 행 데이터
    */
-  const handleGridRowSelect = (rows: any) => {
-    console.log('handleGridRowSelect.rows {} => ', rows);
-    rows && setSelectedCourses(rows);
+  const handleGridRowsSelect = (rows: CourseListItem[]) => {
+    console.log('handleGridRowsSelect.rows {} => ', rows);
+    setSelectedRows(rows);
   };
 
   /**
@@ -81,6 +89,9 @@ function RouteComponent() {
   return (
     <PageContainer>
       <ContentsButtons>
+        <Link to="/learning/course/create/view" state={{ courseId: 5 }} className="link">
+          상세 테스트
+        </Link>
         <Button
           type="button"
           variant="point"
@@ -194,7 +205,6 @@ function RouteComponent() {
             />
           </ContentsRow>
         </SearchBoxForm>
-        {/* <SearchBox provider={searchProvider} onSearch={handleOnSearch} /> */}
         {/* Divider */}
         <Divider />
         {/* 그리드 */}
@@ -202,10 +212,18 @@ function RouteComponent() {
           config={gConfig}
           multiple
           showNumberingColumn
-          showCopy
-          onRowSelect={handleGridRowSelect}
+          copyButton={{
+            disabled: buttonState.copy,
+            onClick: () => console.log('Copy click'),
+          }}
+          onRowsSelect={handleGridRowsSelect}
           customButtonNode={
-            <Button variant="text" size="sm" label={t('LABEL.grid.header.toShare')} />
+            <Button
+              variant="text"
+              size="sm"
+              label={t('LABEL.grid.header.toShare')}
+              disabled={!buttonState.share}
+            />
           }
           excelButtons={
             <>
@@ -216,17 +234,6 @@ function RouteComponent() {
               <GridExcelDownloadButton
                 url={`${LMSApiPrefix()}/multilingual/exportExcel`}
                 params={getValues()}
-                onBeforeDownload={async () => {
-                  const keyTypeCode = getValues('keyTypeCode');
-                  const targetLocale = getValues('targetLocale');
-                  if (keyTypeCode === '' || targetLocale === '') {
-                    alert({
-                      type: 'warning',
-                      content: t('분류와 번역언어는 필수 항목입니다.'),
-                    });
-                    throw new Error(t('분류와 번역언어는 필수 항목입니다.'));
-                  }
-                }}
               />
             </>
           }
@@ -241,37 +248,55 @@ const gridConfig = {
   query: queryOptions.all<CoursesQueryParams>,
   columns: [
     // 테넌트
-    { name: 'tenant', label: () => t('LABEL.grid.column.tenant'), size: 140 },
+    { name: 'tenantName', label: () => t('LABEL.grid.column.tenant'), size: 140 },
     // 채널
-    { name: 'channel', label: () => t('LABEL.grid.column.channel'), size: 90 },
+    { name: 'channelName', label: () => t('LABEL.grid.column.channel'), size: 90 },
     // 과정코드
     { name: 'courseCode', label: () => t('LABEL.grid.column.courseCode'), size: 90 },
     // 개설연도
-    { name: 'openingDate', label: () => t('LABEL.grid.column.openingDate'), size: 90 },
+    { name: 'openingYear', label: () => t('LABEL.grid.column.openingDate'), size: 90 },
     // 과정유형
-    { name: 'courseType', label: () => t('LABEL.grid.column.courseType'), size: 90 },
+    {
+      name: 'courseType',
+      label: () => t('LABEL.grid.column.courseType'),
+      size: 90,
+      render: (info: any) => getCodeLabel(CODE_GROUP['lms.course.CourseType'], info.getValue()),
+    },
     // 찜
-    { name: 'favorite', label: () => t('LABEL.grid.column.favorite'), size: 40 },
+    { name: 'isBookmarks', label: () => t('LABEL.grid.column.favorite'), size: 40 },
     // 과정명
-    { name: 'courseName', label: () => t('LABEL.grid.column.courseName'), size: 200 },
+    {
+      name: 'courseName',
+      label: () => t('LABEL.grid.column.courseName'),
+      size: 300,
+      render: ({ row }: any) => (
+        <Link
+          to="/learning/course/create/view"
+          state={{ courseId: row.original.courseId }}
+          className="link"
+        >
+          {row.original.courseName}
+        </Link>
+      ),
+    },
     // 사용
-    { name: 'useYn', label: () => t('LABEL.grid.column.use'), size: 90 },
+    { name: 'isUsed', label: () => t('LABEL.grid.column.use'), size: 90 },
     // 차수
-    { name: 'session', label: () => t('LABEL.grid.column.session'), size: 90 },
+    { name: 'sequenceCount', label: () => t('LABEL.grid.column.session'), size: 90 },
     // 조회
-    { name: 'search', label: () => t('LABEL.grid.column.search'), size: 90 },
+    { name: 'viewCount', label: () => t('LABEL.grid.column.search'), size: 90 },
     // 좋아요
-    { name: 'like', label: () => t('LABEL.grid.column.like'), size: 90 },
+    { name: 'likesCount', label: () => t('LABEL.grid.column.like'), size: 90 },
     // 공유
-    { name: 'share', label: () => t('LABEL.grid.column.share'), size: 90 },
+    { name: 'shareCount', label: () => t('LABEL.grid.column.share'), size: 90 },
     // 후기
-    { name: 'review', label: () => t('LABEL.grid.column.review'), size: 90 },
+    { name: 'reviewCount', label: () => t('LABEL.grid.column.review'), size: 90 },
     // 수강생
-    { name: 'student', label: () => t('LABEL.grid.column.student'), size: 90 },
+    { name: 'studentCount', label: () => t('LABEL.grid.column.student'), size: 90 },
     // 담당자
-    { name: 'manager', label: () => t('LABEL.grid.column.manager'), size: 90 },
+    { name: 'coordinatorName', label: () => t('LABEL.grid.column.manager'), size: 90 },
     // 운영자
-    { name: 'operator', label: () => t('LABEL.grid.column.operator'), size: 90 },
+    { name: 'operatorName', label: () => t('LABEL.grid.column.operator'), size: 90 },
     // 미리보기
     { name: 'preview', label: () => t('LABEL.grid.column.preview'), size: 90 },
     // URL

@@ -49,7 +49,7 @@ const useFormOptionsHook = (
       return options.map((option) => ({
         ...option,
         label: option[optionsConfig?.labelField || 'label'] || option.label || '',
-        value: option[optionsConfig?.valueField || 'value'] || option.value || '',
+        value: option[optionsConfig?.valueField || 'value'] || option.value,
       }));
     },
     [optionsConfig?.labelField, optionsConfig?.valueField],

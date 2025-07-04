@@ -124,7 +124,7 @@ export interface Course {
   /**
    * 과정 생성/수정 마법사 타입 (lms.course.WizardStep)
    */
-  wizardStep?: 'STEP1' | 'STEP2' | 'STEP3' | 'STEP4' | 'STEP5' | 'FULL_UPDATE';
+  wizardStep?: string; // 'STEP1' | 'STEP2' | 'STEP3' | 'STEP4' | 'STEP5' | 'FULL_UPDATE';
   /**
    * 과정유형
    */
@@ -146,9 +146,17 @@ export interface Course {
    */
   categoryIds?: Array<number>;
   /**
+   * 카테고리 배열
+   */
+  cartegories?: Array<any>;
+  /**
+   * 학습대상-ID 배열
+   */
+  targetListIds?: Array<number>;
+  /**
    * 학습대상-유저그룹(화이트 그룹리스트)
    */
-  whiteListIds?: Array<number>;
+  targetList?: Array<any>;
   /**
    * 언어 설정
    */
@@ -184,7 +192,7 @@ export interface Course {
   /**
    * 담당자 ID
    */
-  coordinatorUuid?: number;
+  coordinatorUuid?: string;
   /**
    * 담당자 이름
    */
@@ -208,7 +216,7 @@ export interface Course {
   /**
    * 운영자 ID
    */
-  operatorUuid?: number;
+  operatorUuid?: string;
   /**
    * 운영자 이름
    */
@@ -520,11 +528,11 @@ export interface CourseConfigQueryParams {
   /**
    * 채널id
    */
-  channelId: number;
+  channelId?: string;
   /**
-   * 과정id
+   * 과정유형
    */
-  courseId: string;
+  courseType?: string;
 }
 
 /**

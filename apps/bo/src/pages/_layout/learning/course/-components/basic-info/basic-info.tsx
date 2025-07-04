@@ -25,23 +25,32 @@ import { FormRow2, FormSubTitle } from '@shared/ui';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TabFormRef } from '../common/tab-form-ref';
+import { useFetchCourseConfig } from '@entities/course';
+import { Course, CourseConfig } from '@types';
 
 interface BasicInfoProps {
   dummy?: any;
   onSave?: () => void;
+  data: { formData: Course; courseConfig: CourseConfig };
   initialData?: any;
 }
 
 const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
-  ({ dummy, onSave, initialData }, ref) => {
+  ({ dummy, onSave, data: { formData, courseConfig } }, ref) => {
     const { t } = useTranslation();
 
     const { provider, getValues, updateFormData, onFormValid, formState, watch } =
       useDynamicForm2();
 
     const channelUuid = watch('channelUuid');
+    const courseType = watch('courseType');
 
-    // console.log('chadd', channelUuid);
+    // const { data: courseConfig } = useFetchCourseConfig({
+    //   channelId: channelUuid,
+    //   courseType: courseType,
+    // });
+
+    console.log('----- basic', { formData, courseConfig });
 
     const handleOnSubmit = (data: any) => {
       console.log('data {} => ', data);
@@ -66,10 +75,10 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
     useEffect(() => {
       console.log('BasicInfoComponent init');
       // 초기 데이터가 있으면 설정
-      if (initialData) {
-        updateFormData(initialData);
+      if (formData) {
+        updateFormData(formData);
       }
-    }, [initialData]);
+    }, [formData]);
 
     return (
       <div>
@@ -154,6 +163,10 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
                   value: data.id,
                   label: data.name,
                 })}
+                list={{
+                  labelField: 'name',
+                  valueField: 'categoryId',
+                }}
                 actionNode={<Button variant="text" size="sm" label={t('추가')} />}
               />
             }
@@ -307,7 +320,6 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
               <InputModalSelectorFormField
                 modalConfig={{
                   content: <UserChoiceModal />,
-                  width: 'xl',
                 }}
                 transformModalData={(data: any) => ({
                   coordinatorId: data.uuid,
