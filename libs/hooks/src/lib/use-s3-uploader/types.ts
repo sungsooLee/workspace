@@ -1,6 +1,8 @@
+import { S3_PATH_TYPE } from './constants';
+
 export const DEFAULT_MULTIPART_THRESHOLD = 5 * 1024 * 1024; // 5MB
 export interface S3UploaderConfig {
-  s3Path: string;
+  s3Path: S3_PATH_TYPE;
   affairsType: 'PMS' | 'CMS' | 'LMS';
   languageCode?: string; // 기본값: 'ko'
   groupUuid?: string; // 기존 그룹 UUID (전달받은 경우 사용)

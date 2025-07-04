@@ -5,7 +5,7 @@ import { useModal, ContentsRow, TextareaFormField, Input, RadioGroupFormField } 
 import { FormDisplay } from '@features/form/ui/form-display';
 import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
 import { FormRow, FormSubTitle } from '@shared/ui';
-import { DynamicFormConfig, useDynamicForm, CODE_GROUP } from '@learnway/hooks';
+import { DynamicFormConfig, useDynamicForm, CODE_GROUP, S3_PATH } from '@learnway/hooks';
 import { AddressSearchModal } from '@features/shared/ui/modal/address-search-modal';
 import { DropdownFormField } from '@features/form';
 import { useSpaceMutation } from '@entities/training-place';
@@ -326,10 +326,9 @@ const formConfig: DynamicFormConfig = {
       type: 'single-attachment',
       label: t('약도 파일'),
       uploadConfig: {
-        languageCode: 'ko',
+        languageCode: 'KO',
         affairsType: 'LMS',
-        s3Path: 'upload/content/image',
-        //s3Path: 'upload/learningSpace/map', // TODO. S3 권한 정책 정해지면 변경할 것.
+        s3Path: S3_PATH['upload/content/image'],
         acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
         maxFileSize: 10 * 1024 * 1024,
       },

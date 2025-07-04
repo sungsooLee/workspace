@@ -11,7 +11,7 @@ import { PageContainer } from '../../../widgets/layout/ui/container/page-contain
 import { queryOptions as codeQueryOptions } from '../../../entities/api-mock/service/mock-code.queries';
 import { MovieInfo } from '../../../widgets/contents/movie-info';
 import { FC } from 'react';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { DynamicFormConfig, S3_PATH, useDynamicForm } from '@learnway/hooks';
 import { FormRow } from '../../../shared/ui/form';
 
 export const Route = createLazyFileRoute('/_unauth/work/type2')({
@@ -326,7 +326,7 @@ const detailConfig: DynamicFormConfig = {
       uploadConfig: {
         languageCode: 'KO',
         affairsType: 'PMS',
-        s3Path: 'upload/content/image',
+        s3Path: S3_PATH['upload/content/image'],
         acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
       },
       value: '',

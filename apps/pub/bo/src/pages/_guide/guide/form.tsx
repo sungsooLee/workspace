@@ -23,7 +23,7 @@ import {
   IcoCloseCircle,
   IcoPaperClip,
 } from '@learnway/icons';
-import { useS3Uploader } from '@learnway/hooks';
+import { S3_PATH, useS3Uploader } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
 import { ContentsHistoryInfoFormField } from '../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
@@ -60,7 +60,7 @@ function RouteComponent() {
   const maxFileSize = 1024 * 1024 * 50;
   const { stats, files, addFiles, onPause, onRetry, onResume, onRemove, inputAccept } =
     useS3Uploader({
-      s3Path: 'upload/learning/resource/video',
+      s3Path: S3_PATH['upload/content/image'],
       maxFileCount,
       acceptFiles,
       affairsType: 'PMS',

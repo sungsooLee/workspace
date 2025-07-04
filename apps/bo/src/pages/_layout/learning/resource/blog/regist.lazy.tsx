@@ -1,7 +1,7 @@
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useFetchAuthUser } from '@learnway/auth/entities';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { DynamicFormConfig, S3_PATH, useDynamicForm } from '@learnway/hooks';
 import {
   Button,
   ChipListModalSelectorFormField,
@@ -185,9 +185,8 @@ function RouteComponent() {
         value: [],
         max: 1,
         uploadConfig: {
-          languageCode: 'ko',
           affairsType: 'CMS',
-          s3Path: 'upload/content/image', // BE에 확인 필요
+          s3Path: S3_PATH['upload/content/image'], // BE에 확인 필요
           acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
           maxFileCount: 1,
         },
