@@ -1,14 +1,13 @@
-.nlp--content-editable {
-  border: 0;
-  font-size: 15px;
-  display: block;
-  position: relative;
-  outline: 0;
-  padding: 8px 28px 40px;
-  min-height: 150px;
+.nlp--editor-container {
+  resize: vertical;
+  @apply scrollbar max-h-[400px] overflow-y-auto;
 }
-.nlp--tool-bar {
-  @apply body_bo_2_r;
+
+.nlp--content-editable {
+  @apply box-border border-0 py-[16px] pl-[16px] pr-[calc(100%-880px)] outline-none;
+}
+.nlp--editor-tool-bar {
+  @apply body_bo_2_r sticky left-0 top-0 z-[1] w-full bg-white;
 }
 .nlp--content-editable-placeholder {
   @apply body_bo_2_r !text-[var(--gray5)];
