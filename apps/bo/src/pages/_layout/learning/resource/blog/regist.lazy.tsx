@@ -1,28 +1,30 @@
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useFetchAuthUser } from '@learnway/auth/entities';
+import { Company } from '@learnway/types';
 import { DynamicFormConfig, S3_PATH, useDynamicForm } from '@learnway/hooks';
 import {
   Button,
   ChipListModalSelectorFormField,
   ContentsRow,
   Divider,
+  EditorFormField,
   InputModalSelectorFormField,
-  Tooltip,
   useModal,
 } from '@learnway/ui';
-import { cn } from '@learnway/shared';
-import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
+import { cn, getParsedDataFromString } from '@learnway/shared';
+import { IcoFormRequired } from '@learnway/icons';
+import { BlogCreateReq } from '@types';
+import { FormRow, FormRow2 } from '@shared/ui';
+import { ChannelListChoiceModal, CompanyChoiceModal, ManagerChoiceModal } from '@features/shared';
+import { SharedChannelGridFormField } from '@features/learning';
 import { DateRangePickerFormField } from '@features/learning/ui/resource/date-range-picker-form-field';
 import { DurationTimeFormField } from '@features/learning/ui/resource/duration-time-form-field';
-import { Company } from '@learnway/types';
-import { FormRow, FormRow2 } from '@shared/ui';
 import { FormDisplay } from '@features/form';
 import { ContentsButtons, MainContents, PageContainer, SubContents } from '@widgets/layout';
-import { ChannelListChoiceModal, CompanyChoiceModal, ManagerChoiceModal } from '@features/shared';
 
-import styles from './blog-detail.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import styles from './blog-detail.module.css';
 
 export const Route = createLazyFileRoute('/_layout/learning/resource/blog/regist')({
   component: RouteComponent,
@@ -69,11 +71,16 @@ function RouteComponent() {
         placeholder: t('LABEL.form.input.placeholder1', { type: t('담당자명') }),
       },
       {
-        label: '',
         name: 'coordinatorUuid',
         type: 'hidden',
         format: 'string',
         value: '',
+      },
+      {
+        name: 'coordinatorNationCode',
+        type: 'hidden',
+        format: 'string',
+        value: 'KOR_82',
       },
       {
         label: t('연락처'),
@@ -99,7 +106,6 @@ function RouteComponent() {
       {
         name: 'contentUseDate',
         type: 'custom',
-        // format: 'object',
         value: {
           from: undefined, // contentUseStartDate
           to: undefined, // contentUseEndDate
@@ -128,10 +134,9 @@ function RouteComponent() {
         placeholder: t('LABEL.form.input.placeholder1', { type: t('개발업체명') }),
       },
       {
-        label: '',
         name: 'vendorCode',
         type: 'hidden',
-        format: 'string',
+        format: 'number',
         value: '',
       },
       {
@@ -142,12 +147,17 @@ function RouteComponent() {
         value: '',
         placeholder: t('LABEL.form.input.placeholder1', { type: t('개발업체 담당자명') }),
       },
+      // {
+      //   name: 'vendorCoordinatorUuid',
+      //   type: 'hidden',
+      //   format: 'string',
+      //   value: '',
+      // },
       {
-        label: '',
-        name: 'vendorCoordinatorUuid',
+        name: 'vendorTelNoNationCode',
         type: 'hidden',
         format: 'string',
-        value: '',
+        value: 'KOR_82',
       },
       {
         label: t('외주개발업체 연락처'),
@@ -159,12 +169,13 @@ function RouteComponent() {
           number: 'vendorTelNo',
         },
       },
-      // {
-      //   label: t('블로그 내용'),
-      //   name: 'blogContent',
-      //   type: 'custom',
-      //   value: '',
-      // },
+      {
+        label: t('블로그 내용'),
+        name: 'blogContent',
+        type: 'custom',
+        format: 'string',
+        value: '',
+      },
       {
         label: t('학습 시간'),
         name: 'contentDuration', // contentTime
@@ -192,6 +203,12 @@ function RouteComponent() {
           maxFileCount: 1,
         },
         description: '학습자원을 표현하는 썸네일을 선택하거나 업로드 하세요. (미선택 시 자동 선택)',
+      },
+      {
+        name: 'selectedContentThumbnailFileUuid',
+        type: 'hidden',
+        format: 'string',
+        value: 'f7d7cbce-23b4-4be0-99ab-cb56e182b8b8', // 임시 설정
       },
       {
         label: t('태그'),
@@ -244,13 +261,13 @@ function RouteComponent() {
         format: 'array',
         tooltip: '공유채널 설정',
         value: [
-          {
-            tenantId: 'tenantId1',
-            tenantName: 'tenantName1',
-            channelId: 'Channel Id1',
-            channelName: 'Channel Name1',
-            checked: true,
-          },
+          // {
+          //   tenantId: 'tenantId1',
+          //   tenantName: 'tenantName1',
+          //   channelId: 'Channel Id1',
+          //   channelName: 'Channel Name1',
+          //   checked: true,
+          // },
         ],
       },
       {
@@ -296,6 +313,7 @@ function RouteComponent() {
       contentName: true,
       coordinatorName: true,
       coordinatorUuid: true,
+      coordinatorNationCode: true,
       coordinatorTelNo: {
         format: 'phone-number',
         required: true,
@@ -328,7 +346,37 @@ function RouteComponent() {
           },
         ],
       },
-      // blogContent: true,
+      blogContent: true,
+      vendorName: {
+        required: {
+          fn: (values: Record<string, any>) => {
+            if (values.isVendored) {
+              return !values.vendorCode && !values.vendorName;
+            }
+            return false;
+          },
+        },
+      },
+      vendorCoordinatorName: {
+        required: {
+          fn: (values: Record<string, any>) => {
+            if (values.isVendored) {
+              return !values.vendorCoordinatorName;
+            }
+            return false;
+          },
+        },
+      },
+      vendorTelNo: {
+        required: {
+          fn: (values: Record<string, any>) => {
+            if (values.isVendored) {
+              return !values.vendorTelNo;
+            }
+            return false;
+          },
+        },
+      },
       contentDuration: {
         required: true,
         conditions: [
@@ -375,8 +423,6 @@ function RouteComponent() {
   };
 
   const { data: loginUser } = useFetchAuthUser();
-  const tenantId = loginUser?.activeTenant?.tenantId;
-
   const { open: openModal, confirm: openConfirm } = useModal();
   const router = useRouter();
 
@@ -386,13 +432,50 @@ function RouteComponent() {
     // control,
     // getValues,
     // updateFormData,
-    formState,
     onFormChange: handleFormChange,
   } = useDynamicForm(formConfig);
 
   const handleOnSubmit = async (data: any): Promise<void> => {
-    console.log(data);
-    // TODO: isUnlimited = !data.isLimitExist
+    const tenantId = loginUser?.activeTenant?.tenantId;
+
+    const { hour, minute, second } = data.contentDuration;
+    const contentTime = hour * 60 * 60 + minute * 60 + second;
+
+    const payload: Partial<BlogCreateReq> = {
+      tenantId,
+      contentName: data.contentName,
+      languageCountryCode: 'KO',
+      channelUuid: data.channelUuid?.[0].channelUuid,
+      description: data.description,
+      coordinatorUuid: data.coordinatorUuid,
+      coordinatorName: data.coordinatorName,
+      coordinatorTelNo: data.coordinatorTelNo,
+      contentUseStartDate: data.contentUseDate?.from,
+      contentUseEndDate: data.contentUseDate?.to,
+      isUnlimited: !data.isLimitExist,
+      contentTime,
+      isVendored: data.isVendored,
+      vendorCode: data.vendorCode,
+      vendorName: data.vendorName,
+      vendorCoordinatorName: data.vendorCoordinatorName,
+      vendorTelNo: data.vendorTelNo,
+      contentThumbnailFileGroupUuid: data.contentThumbnailFileGroupUuid?.[0],
+      selectedContentThumbnailFileUuid: data.selectedContentThumbnailFileUuid,
+      isCourseUsed: data.isCourseUsed,
+      isContentSecured: data.isContentSecured,
+      isInspected: data.isInspected,
+      isCopyrighted: data.isCopyrighted,
+      isSecured: true,
+      isDeleted: false,
+      isOpened: true,
+      tags: data.tags,
+      blogContent: getParsedDataFromString(data.blogContent),
+      // FIXME: BE에 아래 값 문의 필요
+      contentAddInfoType: 'VIDEO_ADD_INFO',
+      contentAddInfo: 100,
+    };
+
+    console.log('payload ===>', payload);
 
     if (
       await openConfirm({
@@ -544,11 +627,11 @@ function RouteComponent() {
                       content: <CompanyChoiceModal />,
                     }}
                     transformModalData={(data: Company) => ({
-                      vendorCode: data.companyCode,
+                      vendorCode: data.companyId,
                       vendorName: data.name,
                     })}
                     onFormChange={(
-                      values: Record<string, { vendorCode: string; vendorName: string }>,
+                      values: Record<string, { vendorCode: number; vendorName: string }>,
                     ) => {
                       handleFormChange(values);
                     }}
@@ -559,28 +642,14 @@ function RouteComponent() {
             </ContentsRow>
             <ContentsRow>
               <FormRow provider={provider} name="vendorCoordinatorName" />
-              <FormRow2 provider={provider} type="hidden" name="vendorCoordinatorUuid" />
+              {/*<FormRow2 provider={provider} type="hidden" name="vendorCoordinatorUuid" />*/}
               <FormRow provider={provider} name="vendorTelNo" />
             </ContentsRow>
           </FormDisplay>
 
           {/* 블로그 내용 (에디터 팝업 호출) */}
-          <ContentsRow type="horizontal">
-            <div className={formStyles.form_item}>
-              <label htmlFor="" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>블로그 내용</span>
-                <span className={cn(formStyles.status, formStyles.required)}>
-                  <IcoFormRequired width={8} height={8} />
-                </span>
-              </label>
-              <div className={formStyles.input_box}>
-                <span className={formStyles.info_area}>
-                  <Button variant="search" size="sm">
-                    블로그 꾸미기
-                  </Button>
-                </span>
-              </div>
-            </div>
+          <ContentsRow>
+            <FormRow provider={provider} name="blogContent" element={<EditorFormField />} />
           </ContentsRow>
 
           {/* 학습 시간 */}
@@ -595,6 +664,7 @@ function RouteComponent() {
           {/* 썸네일 */}
           <ContentsRow>
             <FormRow provider={provider} name="contentThumbnailFileGroupUuid" />
+            <FormRow2 provider={provider} type="hidden" name="selectedContentThumbnailFileUuid" />
           </ContentsRow>
 
           {/* 태그 */}
@@ -618,29 +688,12 @@ function RouteComponent() {
           </ContentsRow>
 
           {/* 공유채널 설정 */}
-          <ContentsRow type="horizontal">
-            <div className={formStyles.form_item}>
-              <label htmlFor="" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>공유채널 설정</span>
-                <Tooltip
-                  className={formStyles.tooltip}
-                  side="bottom"
-                  align="start"
-                  content={'설정된 채널에 해당 학습자원이 공유됩니다.'}
-                >
-                  <Button onlyIcon>
-                    <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
-                  </Button>
-                </Tooltip>
-              </label>
-              <div className={formStyles.input_box}>
-                <span className={formStyles.info_area}>
-                  <Button variant="search" size="sm">
-                    채널선택
-                  </Button>
-                </span>
-              </div>
-            </div>
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name="sharedChannels"
+              element={<SharedChannelGridFormField />}
+            />
           </ContentsRow>
 
           {/* 필수 확인 영역 */}

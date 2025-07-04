@@ -178,3 +178,16 @@ export const flattenHierarchicalData = (items: any[], depth = 0): any[] => {
 
   return result;
 };
+
+/**
+ * JSON 형식의 문자열을 파싱하여 객체를 반환한다.
+ * @param value
+ * @returns 파싱된 객체 데이터
+ */
+export const getParsedDataFromString = (value: string): object => {
+  try {
+    return JSON.parse(value);
+  } catch (e) {
+    return {};
+  }
+};

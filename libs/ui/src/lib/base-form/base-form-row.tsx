@@ -168,12 +168,14 @@ const DynamicFormContainer: FC<FormRowProps> = ({
         {children}
       </div>
       {/* 안내 텍스트 또는 에러 메시지 렌더링 */}
-      {!error.isError &&
-        (guideText ? (
+      {
+        /* !error.isError && */
+        guideText ? (
           <FormGuideText>{guideText}</FormGuideText>
         ) : (
           formConfig.guideText && <FormGuideText>{t(formConfig.guideText as any)}</FormGuideText>
-        ))}
+        )
+      }
       {error.isError && (
         <p className={cn(styles.guide_text, styles.error, 'dynamic-form-field-error')}>
           {t(error.message as any)}

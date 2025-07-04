@@ -19,16 +19,17 @@ const DurationTimeFormFieldComponent = forwardRef<
   BaseFormFieldProps<TimeValueType>
 >(({ value, onChange }, ref) => {
   const [durationTime, setDurationTime] = useState<TimeValueType>({
-    hour: value.hour,
-    minute: value.minute,
-    second: value.second,
+    hour: value?.hour ?? 0,
+    minute: value?.minute ?? 0,
+    second: value?.second ?? 0,
   });
 
-  // 숫자 제한 추가하기!
   const handleChangeTimeValue = (key: TimeChangeKeyType) => (e: ChangeEvent<HTMLInputElement>) => {
     let convertedValue = Number(e.target.value);
     if (isNaN(convertedValue) || convertedValue < 0) {
       convertedValue = 0;
+    } else if (key !== 'hour' && convertedValue > 59) {
+      convertedValue = 59;
     }
 
     const updatedDurationTime = { ...durationTime, [key]: convertedValue };
