@@ -9,11 +9,9 @@ export class ScormDataManager {
   }
 
   fromJSON(dmjs: any) {
-    if (dmjs.elems) {
-      this.elements = dmjs.elems;
-    }
-    if (dmjs.validrequests) {
-      this.validrequests = dmjs.validrequests;
+    if (dmjs.objectInfo) {
+      this.elements = dmjs.objectInfo;
+      console.log('dmjs', dmjs);
     }
   }
   calllist() {
@@ -28,7 +26,7 @@ export class ScormDataManager {
     let ret = '';
     try {
       ret = this.elements[element];
-      if (ret === undefined) {
+      if (ret === undefined || ret === null) {
         this.errmgr.setCurrentErrorCode(403);
         ret = '';
       }

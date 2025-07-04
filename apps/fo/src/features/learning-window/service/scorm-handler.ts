@@ -2,18 +2,18 @@ import { ScormRteClient } from './scorm-rte-client';
 import { ScormDataManager } from './scorm-data-manager';
 
 /**
- * ASIS: AjaxDMHandlerAPI
- * 를 ScormAdapter 로 변경
+ * ASIS: AjaxDMHandlerAPI <- Sample RTE class
+ * 를 ScormHandler 로 변경
  *
  */
 export class ScormHandler {
-  scormInfo: any;
-  constructor(scormInfo: any) {
-    this.scormInfo = scormInfo;
-    console.log('scormInfo', scormInfo);
+  srte: ScormRteClient;
+  dm: ScormDataManager;
+
+  constructor(srte: ScormRteClient, dm: ScormDataManager) {
+    this.srte = srte;
+    this.dm = dm;
   }
-  srte = new ScormRteClient();
-  dm = new ScormDataManager(this.srte.getErrorManager());
 
   // SCORM API
   Initialize(param: string) {
@@ -40,20 +40,22 @@ export class ScormHandler {
       this.srte.setUserNavRequest('_none_');
 
       // build request (ClientRTS:450)
-      const reqdata: any = {
-        mActivityID: this.srte.getActivityID(),
-        mStateID: this.srte.getStateID(),
-        mStudentID: this.srte.getUserID(),
-        mUserName: this.srte.getUserName(),
-        mCourseID: this.srte.getCourseID(),
-        mRequestType: 1,
-        mNumAttempt: this.srte.getNumAttempts(),
-      };
+      // const reqdata: any = {
+      //   mActivityID: this.srte.getActivityID(),
+      //   mStateID: this.srte.getStateID(),
+      //   mStudentID: this.srte.getUserID(),
+      //   mUserName: this.srte.getUserName(),
+      //   mCourseID: this.srte.getCourseID(),
+      //   mRequestType: 1,
+      //   mNumAttempt: this.srte.getNumAttempts(),
+      // };
       // post to lms : this.srte.getServletURL()
-      const resp = this.srte.send(reqdata);
+
+      this.srte.restAsyncInitialize();
+
       // get datamodel back : reponse.mActivityData
       // set valid requests : mValidRequests
-      this.dm.fromJSON(resp);
+      //this.dm.fromJSON(resp);
       this.srte.setInitializedState(true);
       this.srte.getErrorManager().clearCurrentErrorCode();
       result = 'true';
@@ -116,15 +118,15 @@ export class ScormHandler {
     };
     this.dm.clearcalllist();
     // ClientRTS:1293
-    const resp: any = this.srte.send(reqdata);
+    this.srte.restAsyncCommit(this.dm.elements);
 
-    if (resp.mError !== 'OK') {
-      this.srte.getErrorManager().setCurrentErrorCode('101');
-    } else {
-      this.srte.getErrorManager().clearCurrentErrorCode();
-      result = 'true';
-      this.dm.fromJSON(resp);
-    }
+    // if (resp.mError !== 'OK') {
+    //   this.srte.getErrorManager().setCurrentErrorCode('101');
+    // } else {
+    this.srte.getErrorManager().clearCurrentErrorCode();
+    result = 'true';
+    // this.dm.fromJSON(resp);
+    // }
 
     //top.frames['LMSFrame'].setUIState(true);
     //top.frames['LMSFrame'].refreshMenu();

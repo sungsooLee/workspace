@@ -1,7 +1,7 @@
 import { httpService } from '@learnway/shared';
 import { CMSApiPrefix } from '@learnway/config';
 
-export default class ScormRteService {
+export class ScormRteService {
   static commit(payload: any): Promise<any> {
     return httpService.put<any>(`${CMSApiPrefix()}/scorm/rte/commit`, payload);
   }

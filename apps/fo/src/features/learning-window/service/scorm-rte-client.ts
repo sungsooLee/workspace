@@ -1,5 +1,8 @@
 import { ScormErrorManager } from './scorm-error-manager';
+import { ScormRteService } from '@entities/scorm/api/scorm-rte';
 export class ScormRteClient {
+  playInfo: any;
+
   _logging_on = false;
   _initializedState = false;
   _terminatedState = false;
@@ -18,7 +21,9 @@ export class ScormRteClient {
   _courseID = '';
   _numAttempts = 0;
   _errorManager = new ScormErrorManager();
-
+  constructor(playInfo: any) {
+    this.playInfo = playInfo;
+  }
   // _comm = new srte_xhr(_servletURL);
 
   isInitialized() {
@@ -193,5 +198,18 @@ export class ScormRteClient {
   getInitializedState = this.isInitialized;
   setInitializedState(init: boolean) {
     this._initializedState = init;
+  }
+
+  async restAsyncInitialize() {
+    console.log('restAsyncInitialize - called');
+    const retval = await ScormRteService.initialize(this.playInfo);
+    console.log('restAsyncInitialize', retval);
+  }
+
+  async restAsyncCommit(data: any) {
+    console.log('commit data', data);
+    const payload = { ...this.playInfo, objectInfo: data };
+    const retval = await ScormRteService.commit(payload);
+    console.log('end commit ', retval);
   }
 }

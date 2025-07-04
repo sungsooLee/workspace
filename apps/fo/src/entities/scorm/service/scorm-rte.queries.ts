@@ -1,7 +1,7 @@
 import { getQuerySkipToken, convertHierarchyNode, getRandomId } from '@learnway/shared';
 import { isMobile } from 'react-device-detect';
 
-import ScormRteService from '../api/scorm-rte';
+import { ScormRteService } from '../api/scorm-rte';
 
 export const scormRteQueryKeys = {
   all: ['scorm-rte'] as const,

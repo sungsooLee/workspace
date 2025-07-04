@@ -58,7 +58,7 @@ function RouteComponent() {
 
   return (
     <>
-      {scormConfig && <LearningWindowScormPlayer scormConfig={scormConfig} />}
+      {scormConfig && <LearningWindowScormPlayer playInfo={playInfo} scormConfig={scormConfig} />}
       {videoInfo && <LearningWindowVideoPlayer />}
     </>
   );
