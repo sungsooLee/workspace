@@ -200,7 +200,7 @@ function RouteComponent() {
 
   // 수강신청 취소 신청
   // 퍼블수정 20250703 함수명 변경 및 title Fragment 삭제
-  const handleCourseCancelConfirm = () => {
+  const CourseCancelConfirm = () => {
     openConfirm({
       title: '수강 신청을 취소하시겠습니까?',
       content: (
@@ -219,7 +219,7 @@ function RouteComponent() {
 
   // 수강취소 완료
   // 퍼블수정 20250703 함수명 변경 및 title Fragment 삭제
-  const handleCourseCancelCompleteAlert = () => {
+  const CourseCancelCompleteAlert = () => {
     openAlert({
       title: '수강취소 되었습니다',
     });
@@ -227,7 +227,7 @@ function RouteComponent() {
 
   // 수강신청 알림
   // 퍼블수정 20250703 함수명 변경 및 title Fragment 삭제
-  const handleCourseAlarmAlert = () => {
+  const CourseAlarmAlert = () => {
     openAlert({
       title: '수강신청 알림',
       content: (
@@ -242,7 +242,7 @@ function RouteComponent() {
 
   // 수강대기자 등록
   // 퍼블수정 20250703 함수명 변경 및 title Fragment 삭제
-  const handleCourseWaitAlert = () => {
+  const CourseWaitAlert = () => {
     openAlert({
       title: '수강대기자 등록',
       content: (
@@ -259,7 +259,7 @@ function RouteComponent() {
 
   // 차수 알림 등록
   // 퍼블수정 20250703 함수명 변경 및 title Fragment 삭제
-  const handleCourseTimeAlert = () => {
+  const CourseTimeAlert = () => {
     openAlert({
       title: '차수 알림 등록',
       content: (
