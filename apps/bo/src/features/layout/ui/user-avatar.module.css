@@ -7,7 +7,7 @@
       .avata_img {
         @apply relative mx-auto h-[74px] w-[128px];
         .info_avata {
-          @apply absolute left-0 top-0 z-[1] h-[74px] w-[74px] bg-transparent p-[4px];
+          @apply absolute left-0 top-0 z-[1] h-[74px] w-[74px] rounded-full bg-transparent p-[4px];
           img {
             @apply h-full w-full overflow-hidden rounded-full border border-solid border-transparent;
           }
@@ -16,6 +16,9 @@
           @apply absolute right-0 top-0 z-0 h-[74px] w-[74px] shrink-0 p-[4px];
           .logo_img {
             @apply h-full w-full overflow-hidden rounded-full border border-solid border-[var(--gray2)];
+          }
+          img {
+            @apply absolute left-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full;
           }
         }
         .name {
@@ -29,7 +32,10 @@
         }
       }
       .info_avata {
-        @apply m-auto h-[66px] w-[66px];
+        @apply m-auto h-[66px] w-[66px] overflow-hidden rounded-full;
+        img {
+          @apply h-full w-full;
+        }
       }
       .profile {
         @apply m-auto max-w-[300px] px-[34px];
