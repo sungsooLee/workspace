@@ -233,16 +233,13 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
                 }
                 onDuplicationCheck={duplicateCheck}
                 disabled={formDisabled}
-                inputType={'alphanumeric'}
+                type={'alphanumeric'}
                 placeholder={t('LABEL.common.placeholder2', { type: t('LABEL.cdId') })}
                 hiddenPlaceholder={formDisabled}
-                onValidationError={(message: string) => {
-                  setFormError('labelMessageMultilingulKey', message);
+                validation={{
+                  onError: (msg: string) => setFormError('labelMessageMultilingulKey', msg),
+                  onSuccess: () => clearFormError('labelMessageMultilingulKey'),
                 }}
-                onValidationSuccess={() => {
-                  clearFormError('labelMessageMultilingulKey');
-                }}
-                clearFormError={clearFormError}
               />
             }
           />

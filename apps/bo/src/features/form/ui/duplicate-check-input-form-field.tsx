@@ -2,7 +2,7 @@ import { forwardRef, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isEqual } from 'lodash';
 import { BaseFormFieldProps, useDynamicFormContext } from '@learnway/hooks';
-import { Button, Input } from '@learnway/ui';
+import { Button, Input, InputValidationConfig } from '@learnway/ui';
 
 export enum DuplicateState {
   needInput = 'needInput', // 최초 등록 상태인 경우 사용
@@ -34,6 +34,7 @@ interface DuplicateCheckInputFormFieldPros<T = any> extends BaseFormFieldProps {
       check: string;
     };
   };
+  validation?: InputValidationConfig;
 }
 
 export const DuplicateCheckInputFormField = forwardRef<
@@ -60,11 +61,12 @@ export const DuplicateCheckInputFormField = forwardRef<
           check: 'LABEL.form.validation.check',
         },
       },
-      inputType,
+      validation,
       onValidationError,
       onValidationSuccess,
       clearFormError,
       error,
+      type,
       ...props
     },
     ref,
@@ -163,10 +165,8 @@ export const DuplicateCheckInputFormField = forwardRef<
           onChange={handleChangeField}
           maxLength={maxLength}
           disabled={disabled}
-          type={inputType}
-          inputType={inputType}
-          onValidationError={onValidationError}
-          onValidationSuccess={onValidationSuccess}
+          type={type}
+          validation={validation}
           label={label}
           error={error}
         />

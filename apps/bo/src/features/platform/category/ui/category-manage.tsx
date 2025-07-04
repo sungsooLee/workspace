@@ -511,12 +511,10 @@ export const CategoryManage = () => {
                     onDuplicationCheck={duplicateCheck}
                     disabled={formMode === FORM_MODE.NONE}
                     hiddenPlaceholder={formMode === FORM_MODE.NONE}
-                    inputType={'alphanumeric'}
-                    onValidationError={(message: string) => {
-                      setFormError('code', message);
-                    }}
-                    onValidationSuccess={() => {
-                      clearFormError('code');
+                    type={'alphanumeric'}
+                    validation={{
+                      onError: (msg: string) => setFormError('code', msg),
+                      onSuccess: () => clearFormError('code'),
                     }}
                   />
                 }

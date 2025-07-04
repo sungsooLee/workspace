@@ -28,7 +28,8 @@ export const DuplicateCheckInputFormField = forwardRef<
       label,
       duplicationCheckFn,
       placeholder,
-      inputType,
+      type,
+      validation,
       ...props
     },
     ref,
@@ -100,8 +101,8 @@ export const DuplicateCheckInputFormField = forwardRef<
           onChange={onChange}
           disabled={disabled}
           placeholder={placeholder}
-          type={inputType}
-          inputType={inputType}
+          type={type}
+          validation={validation}
           {...props}
         />
         <Button

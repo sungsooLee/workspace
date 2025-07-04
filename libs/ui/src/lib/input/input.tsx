@@ -11,6 +11,12 @@ import { useTranslation } from 'react-i18next';
 import { useInputValidation, VALIDATION_RULES } from './use-input-validation';
 import { useFormContext } from 'react-hook-form';
 
+export interface InputValidationConfig {
+  customErrorMessage?: string; // 커스텀 에러 메시지
+  onError?: (message: string) => void; // 검증 에러 콜백
+  onSuccess?: () => void; // 검증 성공 콜백
+}
+
 export interface InputProps extends Omit<NumericFormatProps, 'type'> {
   type?: 'text' | 'number' | 'mask' | 'password' | 'tel' | 'file' | 'alphanumeric' | 'url';
   id?: string;
@@ -34,12 +40,7 @@ export interface InputProps extends Omit<NumericFormatProps, 'type'> {
   onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
   label?: string;
   hiddenPlaceholder?: boolean;
-  inputType?: string;
-  showAlphanumericToast?: boolean; // alphanumeric 타입에서 잘못된 문자 입력 시 토스트 메시지 표시 여부
-  showUrlToast?: boolean; // url 타입에서 잘못된 문자 입력 시 토스트 메시지 표시 여부
-  validationErrorMessage?: string; // 검증 에러 메시지
-  onValidationError?: (message: string) => void; // 검증 에러 콜백
-  onValidationSuccess?: () => void; // 검증 성공 콜백
+  validation?: InputValidationConfig; // 검증 관련 설정
 }
 
 const InputComponent = forwardRef<HTMLInputElement, InputProps>(
@@ -71,12 +72,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       maxLength,
       onFocus,
       hiddenPlaceholder,
-      inputType,
-      showAlphanumericToast = true,
-      showUrlToast = true,
-      validationErrorMessage,
-      onValidationError,
-      onValidationSuccess,
+      validation,
       ...props
     },
     ref,
@@ -97,10 +93,10 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
 
     // 검증 규칙 설정
     const getValidationRule = () => {
-      if (type === 'alphanumeric' || inputType === 'alphanumeric') {
+      if (type === 'alphanumeric') {
         return VALIDATION_RULES.alphanumeric;
       }
-      if (type === 'url' || inputType === 'url') {
+      if (type === 'url') {
         return VALIDATION_RULES.url;
       }
       return undefined;
@@ -119,10 +115,10 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
         if (formContext?.setError && id) {
           formContext.setError(id, {
             type: 'validation',
-            message: message,
+            message: validation?.customErrorMessage || message,
           });
         }
-        onValidationError?.(message);
+        validation?.onError?.(message);
       },
     });
     // 검증이 필요한 타입의 입력 처리
@@ -138,7 +134,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
         }
 
         // 검증 성공 콜백 호출
-        onValidationSuccess?.();
+        validation?.onSuccess?.();
         handleInputChange(inputValue);
       }
     };
@@ -179,7 +175,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             formContext.clearErrors(id);
           }
         }
-        onValidationSuccess?.();
+        validation?.onSuccess?.();
       }
       setIsFocused(false);
       onBlur?.(event);
@@ -247,10 +243,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             }}
             maxLength={maxLength}
           />
-        ) : type === 'alphanumeric' ||
-          inputType === 'alphanumeric' ||
-          type === 'url' ||
-          inputType === 'url' ? (
+        ) : type === 'alphanumeric' || type === 'url' ? (
           <input
             ref={ref}
             id={id}
@@ -350,9 +343,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             (type === 'text' ||
               type === 'password' ||
               type === 'alphanumeric' ||
-              type === 'url' ||
-              inputType === 'alphanumeric' ||
-              inputType === 'url') && (
+              type === 'url') && (
               <div className={styles.count}>
                 <span className={styles.current}>{(value?.toString() || '').length}</span> /{' '}
                 {maxLength}
