@@ -112,7 +112,7 @@ const ChangeUserIdModalComponent = ({ widget }: { widget: any }) => {
 
         <ModalBody>
           <EmbededAlert className={styles.search_info} hiddenIcon>
-            {t(`LABEL.message.canUpdateEmailAfterVerifying`)}
+            {t(`LABEL.messages.canUpdateEmailAfterVerifying`)}
           </EmbededAlert>
 
           <ContentsRow type="no_line">

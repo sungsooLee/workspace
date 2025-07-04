@@ -92,7 +92,7 @@ const PasswordVerifyModalComponent = () => {
 
         <ModalBody>
           <EmbededAlert className={styles.search_info} hiddenIcon>
-            {t(`LABEL.message.passwordVerifyForChangePassword`)}
+            {t(`LABEL.messages.passwordVerifyForChangePassword`)}
           </EmbededAlert>
 
           <ContentsRow>
