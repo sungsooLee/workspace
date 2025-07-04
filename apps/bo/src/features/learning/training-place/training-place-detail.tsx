@@ -326,7 +326,6 @@ const formConfig: DynamicFormConfig = {
       type: 'single-attachment',
       label: t('약도 파일'),
       uploadConfig: {
-        languageCode: 'KO',
         affairsType: 'LMS',
         s3Path: S3_PATH['upload/content/image'],
         acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],

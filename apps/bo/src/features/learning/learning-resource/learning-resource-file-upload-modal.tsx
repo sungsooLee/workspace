@@ -48,7 +48,6 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
     useS3Uploader({
       s3Path: S3_PATH['upload/content/original'],
       affairsType: 'CMS',
-      languageCode: 'KO',
       groupMode: 'individual',
       maxFileCount,
       maxFileSize: 20 * 1024 * 1024,
