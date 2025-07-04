@@ -3,10 +3,7 @@ import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-rout
 
 import { t } from 'i18next';
 
-import {
-  LearningWindowScormPlayer,
-  ScormPlayerConfigProperties,
-} from './player/ui/learning-window-scorm-player';
+import { LearningWindowScormPlayer } from './player/ui/learning-window-scorm-player';
 
 import { LearningWindowVideoPlayer } from './player/ui/learning-window-video-player';
 
