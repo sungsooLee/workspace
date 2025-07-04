@@ -70,7 +70,7 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
     const [inputValue, setInputValue] = useState<string>('');
     const overCount = options?.length - visibleCount;
     const isOverCount = overCount > 0;
-    const displayOptions = isOverCount ? options?.slice(0, visibleCount) : [...options];
+    const displayOptions = isOverCount ? options?.slice(0, visibleCount) : [...(options || [])];
     const isShowEmptyMessage = !displayOptions?.length && emptyMessage && !showInput;
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -168,8 +168,8 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
 export const ChipList = ChipListComponent;
 
 const ChipListMoreContent = ({ options, labelField, valueField }: any) => {
-  return options?.map((d: any) => (
-    <div className={'border-1 flex flex-col p-1'}>
+  return options?.map((d: any, i: number) => (
+    <div className={'border-1 flex flex-col p-1'} key={`${d[valueField]}-${i}`}>
       <Chip
         key={d[valueField]}
         option={d}

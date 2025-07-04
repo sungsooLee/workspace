@@ -37,25 +37,42 @@ export const ShuttleTreeToChipsV2 = ({
 
   const [isConditionSettingsMode, setIsConditionSettingsMode] = useState<boolean>(false);
 
-  const [checkedValues, setCheckedValues] = useState<string[]>([]);
+  const [checkedValues, setCheckedValues] = useState<TreeNode[]>([]);
 
-  const on = (value: string) => {
-    setCheckedValues((prev) => (prev.includes(value) ? prev : [...prev, value]));
+  const on = (newValue: TreeNode) => {
+    setCheckedValues((prev) =>
+      prev.some(({ key }) => key === newValue.key) ? prev : [...prev, newValue],
+    );
   };
 
-  const off = (value: string) => {
-    setCheckedValues((prev) => prev.filter((v) => v !== value));
+  const off = (newValue: TreeNode) => {
+    setCheckedValues((prev) => prev.filter(({ key }) => key !== newValue.key));
   };
 
   const handleSetIsConditionSettingsMode = (value: boolean) => {
+    if (!value) {
+      setIsConditionSettingsMode(false);
+      setCheckedValues([]);
+    }
     setIsConditionSettingsMode(value);
   };
 
-  useEffect(() => {
-    if (!isShowConditionSettingsMode) {
-      setIsConditionSettingsMode(false);
+  const applyConditionSetting = () => {
+    if (checkedValues.length > 0) {
+      const newKey = {
+        isCombined: true,
+        key: checkedValues.map(({ key }) => key).join(','),
+        fullName: checkedValues.map(({ fullName }) => fullName).join(' & '),
+      };
+      handleSelectItem(newKey);
     }
-  }, [isShowConditionSettingsMode]);
+    handleSetIsConditionSettingsMode(false);
+  };
+
+  const handleCancel = (deleteItem: TreeNode) => {
+    off(deleteItem);
+    cancelSelectItem(deleteItem);
+  };
 
   return (
     <div className={cn(layoutStyles.start, layoutStyles.wrap, layoutStyles.pop_layout)}>
@@ -101,7 +118,7 @@ export const ShuttleTreeToChipsV2 = ({
                     variant="text"
                     size="sm"
                     className={layoutStyles.btn_text}
-                    onClick={() => handleSetIsConditionSettingsMode(false)}
+                    onClick={applyConditionSetting}
                   >
                     {'조건적용'}
                   </Button>
@@ -136,20 +153,21 @@ export const ShuttleTreeToChipsV2 = ({
                 <div className="flex items-center gap-2">
                   {isConditionSettingsMode && (
                     <Checkbox
-                      checked={checkedValues.includes(item.key)}
+                      checked={checkedValues.some(({ key }) => key === item.key)}
                       onCheckedChange={(checked) => {
-                        checked ? on(item.key) : off(item.key);
+                        checked ? on(item) : off(item);
                       }}
+                      disabled={item?.isCombined}
                     />
                   )}
-                  <span className={styles.selected_text}>{item[selectedKey]}</span>
+                  <HighlightAmpersand text={item[selectedKey]} />
                 </div>
                 <Button className={styles.btn_close}>
                   <IcoXclose
                     width={20}
                     height={20}
                     stroke="#131C30"
-                    onClick={() => cancelSelectItem(item)}
+                    onClick={() => handleCancel(item)}
                   />
                 </Button>
               </div>
@@ -158,5 +176,25 @@ export const ShuttleTreeToChipsV2 = ({
         </div>
       </div>
     </div>
+  );
+};
+
+interface HighlightAmpersandProps {
+  text: string;
+}
+
+const HighlightAmpersand: React.FC<HighlightAmpersandProps> = ({ text }) => {
+  return (
+    <span>
+      {text.split('').map((char, index) =>
+        char === '&' ? (
+          <span key={index} className="text-[#00AFD5]">
+            {char}
+          </span>
+        ) : (
+          <span key={index}>{char}</span>
+        ),
+      )}
+    </span>
   );
 };

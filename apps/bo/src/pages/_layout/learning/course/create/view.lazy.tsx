@@ -1,4 +1,4 @@
-import { Button, Divider, Tabs } from '@learnway/ui';
+import { Button, Divider, Tabs, useModal } from '@learnway/ui';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
@@ -17,21 +17,16 @@ export const Route = createLazyFileRoute('/_layout/learning/course/create/view')
 
 function RouteComponent() {
   const router = useRouter();
+  const { showSaveComplete } = useModal();
+
   // 라우터 state에서 courseId 가져오기
-  const courseId = router.state.location.state?.courseId;
+  const { courseId, courseType } = router.state.location.state;
+
+  console.log('Course ID', courseId);
 
   // 커스텀 훅 사용
-  const {
-    formData,
-    isLoading,
-    activeTab,
-    setTabRef,
-    loadCourseData,
-    saveCurrentTab,
-    changeTab,
-    loadMockData,
-    setFormDataComplete,
-  } = useCourseForm();
+  const { data, activeTab, setTabRef, loadCourseData, saveCurrentTab, changeTab, loadMockData } =
+    useCourseForm(courseType);
 
   // 최초 데이터 로드
   useEffect(() => {
@@ -60,7 +55,8 @@ function RouteComponent() {
     const result = await saveCurrentTab();
 
     if (result.success) {
-      console.log('저장 성공:', result.data);
+      // 저장 성골 알럿
+      await showSaveComplete();
       // 저장 성공 후 목록으로 이동
       moveListPage();
     } else {
@@ -78,32 +74,34 @@ function RouteComponent() {
     () => [
       {
         title: '기본정보 설정',
-        key: 'a',
-        content: <BasicInfo ref={(ref) => setTabRef('a', ref)} initialData={formData} />,
+        key: 'STEP1',
+        content: <BasicInfo ref={(ref) => setTabRef('STEP1', ref)} data={data} />,
       },
       {
         title: '수강신청 설정',
-        key: 'b',
-        content: <CourseRegistration ref={(ref) => setTabRef('b', ref)} initialData={formData} />,
+        key: 'STEP2',
+        content: <CourseRegistration ref={(ref) => setTabRef('STEP2', ref)} data={data} />,
       },
       {
         title: '커리큘럼 설정',
-        key: 'c',
-        content: <Curriculum ref={(ref) => setTabRef('c', ref)} initialData={formData} />,
+        key: 'STEP3',
+        content: <Curriculum ref={(ref) => setTabRef('STEP3', ref)} data={data} />,
       },
       {
         title: '상세 설정',
-        key: 'd',
-        content: <DetailInfo ref={(ref) => setTabRef('d', ref)} initialData={formData} />,
+        key: 'STEP4',
+        content: <DetailInfo ref={(ref) => setTabRef('STEP4', ref)} data={data} />,
       },
       {
         title: '강의 설정',
-        key: 'e',
-        content: <PublishCourse ref={(ref) => setTabRef('e', ref)} initialData={formData} />,
+        key: 'STEP5',
+        content: <PublishCourse ref={(ref) => setTabRef('STEP5', ref)} data={data} />,
       },
     ],
-    [formData, setTabRef],
+    [data, setTabRef],
   );
+
+  console.log('------- view.lazy');
 
   return (
     <form>
@@ -115,7 +113,6 @@ function RouteComponent() {
             size="sm"
             label={'SET'}
             onClick={() => loadMockData()}
-            disabled={isLoading}
           />
           <Button
             type="button"
@@ -123,7 +120,6 @@ function RouteComponent() {
             size="sm"
             label={'목록'}
             onClick={handleListClick}
-            disabled={isLoading}
           />
           <Divider orientation={'vertical'} />
           <Button
@@ -132,15 +128,14 @@ function RouteComponent() {
             size="sm"
             label={'삭제'}
             onClick={handleDeleteClick}
-            disabled={isLoading || !courseId}
+            disabled={!courseId}
           />
           <Button
             type="button"
             variant="primary"
             size="sm"
-            label={isLoading ? '저장 중...' : '저장'}
+            label={'저장'}
             onClick={handleSaveClick}
-            disabled={isLoading}
           />
         </ContentsButtons>
         <MainContents>

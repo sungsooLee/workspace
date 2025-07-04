@@ -57,8 +57,15 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
 
   const prevDataRef = useRef(null);
 
-  const { provider, updateFormData, onSubmit, onFormChange, clearFormError, control } =
-    useDynamicForm(formConfig);
+  const {
+    provider,
+    updateFormData,
+    onSubmit,
+    onFormChange,
+    clearFormError,
+    control,
+    setFormError,
+  } = useDynamicForm(formConfig);
 
   const clearAllFormErrors = () => {
     formConfig.builders.forEach((item) => clearFormError(item.name));
@@ -280,7 +287,7 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
         onClose: (value: boolean) => {
           if (value) {
             createProgram(
-              { ...node, apiScope: menuScope, sortOrder: 1 },
+              { ...node, apiScope: menuScope },
               {
                 onSuccess: (data: any) => {
                   if (data && data.apiId) {
@@ -479,7 +486,11 @@ const ProgramTreeComponent: FC<any> = ({ menuScope }) => {
                         id="apiUrl"
                         disabled={FORM_MODE.NONE === formMode}
                         hiddenPlaceholder={formMode === FORM_MODE.NONE}
-                        inputType="url"
+                        type="url"
+                        validation={{
+                          onError: (msg) => setFormError('apiUrl', msg),
+                          onSuccess: () => clearFormError('apiUrl'),
+                        }}
                       />
                     }
                   />

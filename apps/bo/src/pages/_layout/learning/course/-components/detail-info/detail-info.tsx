@@ -15,15 +15,16 @@ import { FormRow, FormRow2, FormSubTitle } from '@shared/ui';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TabFormRef } from '../common/tab-form-ref';
+import { Course, CourseConfig } from '@types';
 
 interface DetailInfoProps {
   dummy?: any;
   // dynamicForm: UseDynamicFormResult;
-  initialData?: any;
+  data: { formData: Course; courseConfig: CourseConfig };
 }
 
 const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
-  ({ dummy, initialData }, ref) => {
+  ({ dummy, data: { formData, courseConfig } }, ref) => {
     const { t } = useTranslation();
     // const { provider, getValues, fetchData } = dynamicForm;
     const { provider, getValues, onSubmit, onFormValid, formState, updateFormData } =
@@ -52,10 +53,10 @@ const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
     useEffect(() => {
       console.log('DetailInfoComponent init');
       // 초기 데이터가 있으면 설정
-      if (initialData) {
-        updateFormData(initialData);
+      if (formData) {
+        updateFormData(formData);
       }
-    }, [initialData]);
+    }, [formData]);
 
     return (
       <div>

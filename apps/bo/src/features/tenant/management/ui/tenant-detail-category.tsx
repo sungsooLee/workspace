@@ -502,7 +502,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
                 element={
                   <DuplicateCheckInputFormField
                     onDuplicationCheck={duplicateCheck}
-                    inputType={'alphanumeric'}
+                    type={'alphanumeric'}
                     disabled={
                       mode === EnFormMode.NONE ||
                       !isTenantManager ||
@@ -510,6 +510,10 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
                         selectedNode &&
                         selectedNode.categoryType !== EnCategoryType.TENANT)
                     }
+                    validation={{
+                      onError: (msg: string) => setFormError('code', msg),
+                      onSuccess: () => clearFormError('code'),
+                    }}
                   />
                 }
               />

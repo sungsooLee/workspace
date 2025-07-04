@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { Button, Stepper, ContentsRow, Input, RadioCard, Select, InputTimer } from '@learnway/ui';
+import { Button, Stepper, ContentsRow, Input, RadioCard, InputTimer, Dropdown } from '@learnway/ui';
 import { IcoCaution, IcoFormRequired, IcoPhone02, IcoMail } from '@learnway/icons';
 import styles from './admin-auth-step3.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
@@ -36,7 +36,7 @@ function RouteComponent() {
       <div className={cn(styles.auth_box, 'auth--box')}>
         <div className={styles.signup_info}>
           <div className={styles.step_box}>
-            <Stepper items={items} variant="check" selectedStep="step3" />
+            <Stepper items={items} variant="number" selectedStep="step3" />
           </div>
         </div>
         <div className={cn(styles.signup_select, 'auth--signup-select')} role="radiogroup">

@@ -6,15 +6,16 @@ import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import { DropdownFormField } from '@features/form';
 import { TabFormRef } from '../common/tab-form-ref';
 import { FormDisplay } from '@features/form/ui/form-display';
+import { Course, CourseConfig, CourseConfigOptionType } from '@types';
 
 interface CourseRegistrationProps {
   dummy?: any;
   // dynamicForm: UseDynamicFormResult;
-  initialData?: any;
+  data: { formData: Course; courseConfig: CourseConfig };
 }
 
 const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationProps>(
-  ({ dummy, initialData }, ref) => {
+  ({ dummy, data: { formData, courseConfig } }, ref) => {
     const { t } = useTranslation();
     const { provider, getValues, updateFormData, onFormValid, formState } = useDynamicForm2({
       builders: [],
@@ -43,10 +44,12 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationPro
     useEffect(() => {
       console.log('CourseRegistrationComponent init');
       // 초기 데이터가 있으면 설정
-      if (initialData) {
-        updateFormData(initialData);
+      if (formData) {
+        updateFormData(formData);
       }
-    }, [initialData]);
+    }, [formData]);
+
+    console.log('CourseRegistrationComponent initialData', getValues());
 
     return (
       <div>
@@ -55,18 +58,18 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationPro
         <ContentsRow type={'horizontal'} titleMode>
           <FormRow2
             provider={provider}
-            name={'수강신청'}
+            name={'isEnrollRequired'}
             label={'수강신청'}
-            element={<SwitchFormField />}
+            element={<SwitchFormField disabled={courseConfig.enrollOption === 'IMPOSSIBLE'} />}
           />
         </ContentsRow>
         {/*승인 결재 라인, 정원*/}
-        <FormDisplay provider={provider} dependencies={[{ name: '수강신청', value: true }]}>
+        <FormDisplay provider={provider} dependencies={[{ name: 'isEnrollRequired', value: true }]}>
           <ContentsRow>
             {/*승인 결재 라인*/}
             <FormRow2
               provider={provider}
-              name={'승인 결재 라인'}
+              name={'approvalLineType'}
               label={'승인 결재 라인'}
               element={
                 <DropdownFormField
@@ -79,7 +82,7 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationPro
             {/*정원*/}
             <FormRow2
               provider={provider}
-              name={'정원'}
+              name={'isMaxEnrollQuotaRestricted'}
               label={'정원'}
               element={
                 <RadioGroupFormField
@@ -95,7 +98,7 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationPro
             {/*수강신청 대기*/}
             <FormRow2
               provider={provider}
-              name={'수강신청 대기'}
+              name={'waitListPickMethodType'}
               label={'수강신청 대기'}
               element={
                 <RadioGroupFormField
@@ -108,7 +111,7 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationPro
             {/*차수 중복수강*/}
             <FormRow2
               provider={provider}
-              name={'차수 중복수강'}
+              name={'isDuplicateEnrollAllowed'}
               label={'차수 중복수강'}
               element={
                 <RadioGroupFormField
@@ -120,34 +123,34 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseRegistrationPro
             />
           </ContentsRow>
           {/*사전 레벨테스트, 교재 배송지 수집*/}
-          <ContentsRow>
-            {/*사전 레벨테스트*/}
-            <FormRow2
-              provider={provider}
-              name={'사전 레벨테스트'}
-              label={'사전 레벨테스트'}
-              element={
-                <RadioGroupFormField
-                  optionsConfig={{
-                    codeGroup: CODE_GROUP['mock.options.use'],
-                  }}
-                />
-              }
-            />
-            {/*교재 배송지 수집*/}
-            <FormRow2
-              provider={provider}
-              name={'교재 배송지 수집'}
-              label={'교재 배송지 수집'}
-              element={
-                <RadioGroupFormField
-                  optionsConfig={{
-                    codeGroup: CODE_GROUP['mock.options.use'],
-                  }}
-                />
-              }
-            />
-          </ContentsRow>
+          {/*<ContentsRow>*/}
+          {/*  /!*사전 레벨테스트*!/*/}
+          {/*  <FormRow2*/}
+          {/*    provider={provider}*/}
+          {/*    name={'사전 레벨테스트'}*/}
+          {/*    label={'사전 레벨테스트'}*/}
+          {/*    element={*/}
+          {/*      <RadioGroupFormField*/}
+          {/*        optionsConfig={{*/}
+          {/*          codeGroup: CODE_GROUP['mock.options.use'],*/}
+          {/*        }}*/}
+          {/*      />*/}
+          {/*    }*/}
+          {/*  />*/}
+          {/*교재 배송지 수집*/}
+          {/*  <FormRow2*/}
+          {/*    provider={provider}*/}
+          {/*    name={'교재 배송지 수집'}*/}
+          {/*    label={'교재 배송지 수집'}*/}
+          {/*    element={*/}
+          {/*      <RadioGroupFormField*/}
+          {/*        optionsConfig={{*/}
+          {/*          codeGroup: CODE_GROUP['mock.options.use'],*/}
+          {/*        }}*/}
+          {/*      />*/}
+          {/*    }*/}
+          {/*  />*/}
+          {/*</ContentsRow>*/}
         </FormDisplay>
       </div>
     );

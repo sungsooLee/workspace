@@ -63,6 +63,7 @@ function RouteComponent() {
   const { getCode } = useCodeStore();
   const { getLanguageName } = useLanguageMap();
   const keyTypeCode = useWatch({ control, name: 'keyTypeCode' });
+  const targetLocale = useWatch({ control, name: 'targetLocale' });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { update } = useTranslation({
@@ -97,7 +98,10 @@ function RouteComponent() {
     [openModal],
   );
 
-  const gridConfig = useMemo(() => createGridConfig(handleCellClick), [handleCellClick]);
+  const gridConfig = useMemo(
+    () => createGridConfig(handleCellClick, currentTargetLocale),
+    [handleCellClick, currentTargetLocale],
+  );
 
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const gridStateRef = useRef<any>(null); // 그리드 상태 저장용
@@ -237,8 +241,8 @@ function RouteComponent() {
 
   useEffect(() => {
     const updateTargetLocaleOptions = async () => {
-      const langCode = await getCode(CODE_GROUP['pms.multilingual.LangCountryCode']);
-      const allOptions = langCode.filter((option) => option.value !== 'KO');
+      const allOptions = await getCode(CODE_GROUP['pms.multilingual.LangCountryCode']);
+      // const allOptions = langCode.filter((option) => option.value !== 'KO');
       const baseOptions = [{ value: '', label: t('LABEL.form.label.select') }];
       const currentTargetLocale = getValues('targetLocale');
 
@@ -278,6 +282,8 @@ function RouteComponent() {
     }
   }, [data?.content]);
 
+  console.log(data && data.content);
+
   return (
     <div>
       <PageContainer>
@@ -309,21 +315,21 @@ function RouteComponent() {
             type="button"
             variant="point"
             // disabled={isSaveDisable}
-            disabled={
-              getValues('targetLocale') === '' ||
-              (data && data.content && data.content.length === 0)
-            }
+            disabled={targetLocale === ''}
             size="sm"
             onClick={handleDeployMultilingual}
           >
             {t('LABEL.button.deploy')}
           </Button>
+
           <Button
             type="button"
             variant="primary"
             disabled={
-              getValues('targetLocale') === '' ||
-              (data && data.content && data.content.length === 0) ||
+              targetLocale === '' ||
+              !data ||
+              !data.content ||
+              data.content.length === 0 ||
               isSubmitting
             }
             size="sm"
@@ -444,7 +450,7 @@ const searchConfig: SearchBoxConfig = {
   },
 };
 
-const createGridConfig = (onCellClick: (data: any) => void) => ({
+const createGridConfig = (onCellClick: (data: any) => void, currentTargetLocale: string) => ({
   query: translationQueryOptions.all,
   columns: [
     {
@@ -484,6 +490,10 @@ const createGridConfig = (onCellClick: (data: any) => void) => ({
       label: t('LABEL.platform.system.multilingual.targetLanguage'),
       accessorKey: 'text',
       render: (info: CellContext<any, string>) => {
+        const isReadOnly = currentTargetLocale === 'KO';
+        if (isReadOnly) {
+          return <span>{info.getValue()}</span>;
+        }
         return info.row.getValue('keyType') === 'MESSAGE' ||
           info.row.getValue('keyType') === 'LABEL' ? (
           <EditTextareaCell info={info} textarea={{ maxLength: 150 }} />

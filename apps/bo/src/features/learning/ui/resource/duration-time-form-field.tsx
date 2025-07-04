@@ -1,9 +1,12 @@
 import { ChangeEvent, forwardRef, useState } from 'react';
+import { NumberFormatValues } from 'react-number-format';
 import { BaseFormFieldProps } from '@learnway/hooks';
 import { Input } from '@learnway/ui';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+
+type TimeChangeKeyType = 'hour' | 'minute' | 'second';
 
 type TimeValueType = {
   hour: number;
@@ -16,27 +19,28 @@ const DurationTimeFormFieldComponent = forwardRef<
   BaseFormFieldProps<TimeValueType>
 >(({ value, onChange }, ref) => {
   const [durationTime, setDurationTime] = useState<TimeValueType>({
-    hour: value.hour,
-    minute: value.minute,
-    second: value.second,
+    hour: value?.hour ?? 0,
+    minute: value?.minute ?? 0,
+    second: value?.second ?? 0,
   });
 
-  const handleChangeHour = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = Number(e.target.value);
-    onChange({ hour: value, minute: durationTime.minute, second: durationTime.second });
-    setDurationTime({ ...durationTime, hour: Number(e.target.value) });
+  const handleChangeTimeValue = (key: TimeChangeKeyType) => (e: ChangeEvent<HTMLInputElement>) => {
+    let convertedValue = Number(e.target.value);
+    if (isNaN(convertedValue) || convertedValue < 0) {
+      convertedValue = 0;
+    } else if (key !== 'hour' && convertedValue > 59) {
+      convertedValue = 59;
+    }
+
+    const updatedDurationTime = { ...durationTime, [key]: convertedValue };
+    setDurationTime(updatedDurationTime);
+    onChange(updatedDurationTime);
   };
 
-  const handleChangeMinute = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = Number(e.target.value);
-    onChange({ hour: durationTime.hour, minute: value, second: durationTime.second });
-    setDurationTime({ ...durationTime, minute: Number(e.target.value) });
-  };
-
-  const handleChangeSecond = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = Number(e.target.value);
-    onChange({ hour: durationTime.hour, minute: durationTime.minute, second: value });
-    setDurationTime({ ...durationTime, second: Number(e.target.value) });
+  const handleNumberValueAllowed = (key: TimeChangeKeyType) => (values: NumberFormatValues) => {
+    const { floatValue = 0 } = values;
+    const isInputAllowed = key === 'hour' ? floatValue >= 0 : floatValue >= 0 && floatValue <= 59;
+    return isInputAllowed;
   };
 
   return (
@@ -47,30 +51,37 @@ const DurationTimeFormFieldComponent = forwardRef<
             type="number"
             className={formStyles.input_time}
             value={durationTime.hour}
-            onChange={handleChangeHour}
+            onChange={handleChangeTimeValue('hour')}
             placeholder="0"
             suffixText="시간"
+            isAllowed={handleNumberValueAllowed('hour')}
           />
           <Input
             type="number"
             className={formStyles.input_time}
             value={durationTime.minute}
-            onChange={handleChangeMinute}
+            onChange={handleChangeTimeValue('minute')}
             placeholder="0"
             suffixText="분"
+            maxLength={2}
+            isAllowed={handleNumberValueAllowed('minute')}
           />
           <Input
             type="number"
             className={formStyles.input_time}
             value={durationTime.second}
-            onChange={handleChangeSecond}
+            onChange={handleChangeTimeValue('second')}
             placeholder="0"
             suffixText="초"
+            maxLength={2}
+            isAllowed={handleNumberValueAllowed('second')}
           />
         </div>
       </div>
     </div>
   );
 });
+
+DurationTimeFormFieldComponent.displayName = 'DurationTimeFormField';
 
 export const DurationTimeFormField = DurationTimeFormFieldComponent;

@@ -15,6 +15,7 @@ import {
 } from './api';
 import { FileInfo } from '../use-file-manager/type';
 import { first, uniq } from 'lodash';
+import { getDefaultLang } from '@learnway/config';
 
 /**
  * 새로운 S3 업로더 훅 - 단순화된 구조
@@ -25,7 +26,7 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
     s3Path,
     // groupConfig,
     affairsType,
-    languageCode = 'ko',
+    languageCode = getDefaultLang().toUpperCase(),
     groupUuid,
     groupMode = 'batch',
     auto = true,

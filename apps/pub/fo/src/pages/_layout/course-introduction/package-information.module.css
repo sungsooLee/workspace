@@ -35,9 +35,34 @@
     }
     .list_box {
       @apply border-t-[1px] border-solid border-[var(--gray3)] pt-[16px];
-      dl {
-        dt {
-          @apply min-w-[64px] pr-[8px];
+      ul {
+        li {
+          @apply relative pl-[32px] pr-[28px];
+          & + li {
+            @apply mt-[8px];
+          }
+          &.open {
+            p {
+              @apply whitespace-normal;
+            }
+            button {
+              svg {
+                @apply rotate-180;
+              }
+            }
+          }
+          p {
+            @apply body-md overflow-hidden text-ellipsis whitespace-nowrap leading-[24px] text-[var(--gray35)];
+          }
+          svg {
+            @apply absolute left-0 top-[2px] stroke-[1px];
+          }
+          button {
+            @apply absolute right-0 top-[2px] m-0 h-[20px] w-[20px] p-0;
+            svg {
+              @apply mx-0;
+            }
+          }
         }
       }
     }

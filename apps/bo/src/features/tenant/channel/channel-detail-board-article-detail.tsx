@@ -176,7 +176,6 @@ const formConfig: DynamicFormConfig = {
       name: 'attachment',
       type: 'attachment',
       uploadConfig: {
-        languageCode: 'ko',
         affairsType: 'PMS',
         s3Path: 'upload/temp/attachment', // 업무에 맞는 폴더로 변경해야 합니다.
         maxFileCount: 5,

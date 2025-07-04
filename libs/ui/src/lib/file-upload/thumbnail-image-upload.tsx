@@ -6,7 +6,13 @@ import { Button } from '../button/button';
 import { Input } from '../input/input';
 import styles from './thumbnail-image-upload.module.css';
 import { IcoUploadCloud } from '@learnway/icons';
-import { formatFileSize, S3UploaderConfig, useFileManager, useS3Uploader } from '@learnway/hooks';
+import {
+  formatFileSize,
+  S3_PATH,
+  S3UploaderConfig,
+  useFileManager,
+  useS3Uploader,
+} from '@learnway/hooks';
 
 export interface ThumbnailImageUploadProps {
   /**
@@ -79,7 +85,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
     ref,
   ) => {
     // S3 버킷의 기본 경로 TODO: (하드코딩되어 있음, 환경 변수로....)
-    const S3_PATH =
+    const S3_URL =
       'http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/';
     // 파일 입력 필드에 접근하기 위한 Ref
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -92,7 +98,11 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
       files: thumbnailFiles,
       stats: { status },
       inputAccept = 'image/*',
-    } = useS3Uploader({ s3Path: 'upload/content/image', affairsType: 'LMS', ...uploadConfig });
+    } = useS3Uploader({
+      s3Path: S3_PATH['upload/content/image'],
+      affairsType: 'LMS',
+      ...uploadConfig,
+    });
 
     const { uploadImageFile, deleteImageFile } = useFileManager();
     const disabled = useMemo(
@@ -131,7 +141,10 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
           const id = getRandomId(); // 각 파일에 고유 ID 생성
           formData.append('multipartFile', file);
           formData.append('reposType', 'S3'); // S3 || HMG
-          formData.append('filePath', `public/image/thumbnail/${today}/${id}.${extension}`); // file Path: 파일경로: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명) ex public/board/thumbnail/2025/06/02/thumbnail.jpg
+          formData.append(
+            'filePath',
+            `${S3_PATH['public/image/thumbnail']}/${today}/${id}.${extension}`,
+          ); // file Path: 파일경로: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명) ex public/board/thumbnail/2025/06/02/thumbnail.jpg
           const thumbnailImageInfo = await uploadImageFile(formData);
           return {
             id: thumbnailImageInfo.filePath,
@@ -179,7 +192,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
           const newOption = {
             ...file,
             id: file?.id,
-            path: S3_PATH + file?.key,
+            path: S3_URL + file?.key,
           };
           const newThumbnailImageInfoList = [...thumbnailImageInfoList, newOption];
           setThumbnailImageInfoList(newThumbnailImageInfoList);
@@ -212,6 +225,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
               disabled={disabled}
               icon={<IcoUploadCloud width={24} height={24} stroke="#747d91" />}
               onClick={handleButtonClick}
+              direction={'column'}
             >
               <span className={styles.text}>썸네일 업로드</span>
             </Button>

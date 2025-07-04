@@ -2,6 +2,7 @@ export * from './api';
 export * from './category';
 export * from './common-code';
 export * from './course';
+export * from './learning-resource';
 export * from './enum';
 export * from './label-meesage';
 export * from './menu';

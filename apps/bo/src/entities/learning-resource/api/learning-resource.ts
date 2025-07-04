@@ -1,6 +1,7 @@
 import { fileDownload, httpService } from '@learnway/shared';
 import { faker } from '@faker-js/faker';
 import { CMSApiPrefix, PMSApiPrefix } from '@learnway/config';
+import { BlogCreateReq, BlogUpdateReq, BlogWatchLogReq } from '@types';
 
 export default class LearningResourceService {
   static fetchChannelsByTenantId(tenantId: string | number): Promise<any> {
@@ -109,5 +110,25 @@ export default class LearningResourceService {
         content: sharedHistories,
       });
     });
+  }
+
+  // 단건 블로그 컨텐츠 조회
+  static fetchBlogResource(contentUuid: string) {
+    return httpService.get(`${CMSApiPrefix()}/blog/${contentUuid}/resource`);
+  }
+
+  // 단건 블로그 컨텐츠 생성
+  static createBlogContent(body: BlogCreateReq) {
+    return httpService.post(`${CMSApiPrefix()}/blog/save`, body);
+  }
+
+  // 단건 블로그 컨텐츠 수정
+  static updateBlogContent(body: BlogUpdateReq) {
+    return httpService.put(`${CMSApiPrefix()}/blog/update`, body);
+  }
+
+  // 블로그 사용/조회 이력 저장
+  static saveBlogWatchLog(body: BlogWatchLogReq) {
+    return httpService.put(`${CMSApiPrefix()}/blog/watch-log`, body);
   }
 }

@@ -37,7 +37,7 @@ function RouteComponent() {
       <div className={cn(styles.auth_box, 'auth--box')}>
         <div className={styles.signup_info}>
           <div className={styles.step_box}>
-            <Stepper items={itemsToShow} variant="check" selectedStep="step1" />
+            <Stepper items={itemsToShow} variant="number" selectedStep="step1" />
           </div>
 
           <div className={cn(styles.signup_select, 'auth--signup-select')} role="radiogroup">

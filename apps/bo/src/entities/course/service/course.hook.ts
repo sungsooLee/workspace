@@ -10,7 +10,6 @@ import {
   MutationHookOptions,
   PaginationResponse,
 } from '../../../types';
-import { useModal } from '@learnway/ui';
 
 /**
  * 모든 코스 목록을 가져오는 쿼리 훅.
@@ -43,17 +42,9 @@ export const useFetchCourse = <T = Course>(
 export const useCreateCourse = (
   options?: MutationHookOptions<Course, Error, Course, unknown>,
 ): UseMutationResult<Course, Error, Course, unknown> => {
-  const { showSaveComplete } = useModal();
   return useMutation({
     ...mutateOptions.create(),
     ...options,
-    onSuccess: async (data, variables, context) => {
-      await showSaveComplete();
-      // 추가적인 성공 처리 로직이 있다면 실행
-      if (options?.onSuccess) {
-        options.onSuccess(data, variables, context);
-      }
-    },
   });
 };
 
@@ -65,17 +56,9 @@ export const useCreateCourse = (
 export const useUpdateCourse = (
   options?: MutationHookOptions<Course, Error, Course, unknown>,
 ): UseMutationResult<Course, Error, Course, unknown> => {
-  const { showUpdateComplete } = useModal();
   return useMutation({
     ...mutateOptions.update(),
     ...options,
-    onSuccess: async (data, variables, context) => {
-      await showUpdateComplete();
-      // 추가적인 성공 처리 로직이 있다면 실행
-      if (options?.onSuccess) {
-        options.onSuccess(data, variables, context);
-      }
-    },
   });
 };
 
@@ -88,17 +71,9 @@ export const useDeleteCourse = (
   options?: MutationHookOptions<any, Error, number, unknown>,
 ): UseMutationResult<any, Error, number, unknown> => {
   // 반환 타입 any는 실제 API 응답 타입으로 명시 권장
-  const { showDeleteComplete } = useModal();
   return useMutation({
     ...mutateOptions.delete(),
     ...options,
-    onSuccess: async (data, variables, context) => {
-      await showDeleteComplete();
-      // 추가적인 성공 처리 로직이 있다면 실행
-      if (options?.onSuccess) {
-        options.onSuccess(data, variables, context);
-      }
-    },
   });
 };
 
@@ -110,17 +85,9 @@ export const useDeleteCourse = (
 export const useUpdateCourseWizard1 = (
   options?: MutationHookOptions<Course, Error, Course, unknown>,
 ): UseMutationResult<Course, Error, Course, unknown> => {
-  const { showSaveComplete } = useModal();
   return useMutation({
     ...mutateOptions.updateWizard1(),
     ...options,
-    onSuccess: async (data, variables, context) => {
-      await showSaveComplete();
-      // 추가적인 성공 처리 로직이 있다면 실행
-      if (options?.onSuccess) {
-        options.onSuccess(data, variables, context);
-      }
-    },
   });
 };
 
@@ -132,17 +99,9 @@ export const useUpdateCourseWizard1 = (
 export const useUpdateCourseWizard2 = (
   options?: MutationHookOptions<Course, Error, Course, unknown>,
 ): UseMutationResult<Course, Error, Course, unknown> => {
-  const { showSaveComplete } = useModal();
   return useMutation({
     ...mutateOptions.updateWizard2(),
     ...options,
-    onSuccess: async (data, variables, context) => {
-      await showSaveComplete();
-      // 추가적인 성공 처리 로직이 있다면 실행
-      if (options?.onSuccess) {
-        options.onSuccess(data, variables, context);
-      }
-    },
   });
 };
 
@@ -154,17 +113,9 @@ export const useUpdateCourseWizard2 = (
 export const useUpdateCourseWizard3 = (
   options?: MutationHookOptions<Course, Error, Course, unknown>,
 ): UseMutationResult<Course, Error, Course, unknown> => {
-  const { showSaveComplete } = useModal();
   return useMutation({
     ...mutateOptions.updateWizard3(),
     ...options,
-    onSuccess: async (data, variables, context) => {
-      await showSaveComplete();
-      // 추가적인 성공 처리 로직이 있다면 실행
-      if (options?.onSuccess) {
-        options.onSuccess(data, variables, context);
-      }
-    },
   });
 };
 
@@ -176,17 +127,9 @@ export const useUpdateCourseWizard3 = (
 export const useUpdateCourseWizard4 = (
   options?: MutationHookOptions<Course, Error, Course, unknown>,
 ): UseMutationResult<Course, Error, Course, unknown> => {
-  const { showSaveComplete } = useModal();
   return useMutation({
     ...mutateOptions.updateWizard4(),
     ...options,
-    onSuccess: async (data, variables, context) => {
-      await showSaveComplete();
-      // 추가적인 성공 처리 로직이 있다면 실행
-      if (options?.onSuccess) {
-        options.onSuccess(data, variables, context);
-      }
-    },
   });
 };
 
@@ -198,17 +141,9 @@ export const useUpdateCourseWizard4 = (
 export const useUpdateCourseWizard5 = (
   options?: MutationHookOptions<Course, Error, Course, unknown>,
 ): UseMutationResult<Course, Error, Course, unknown> => {
-  const { showSaveComplete } = useModal();
   return useMutation({
     ...mutateOptions.updateWizard5(),
     ...options,
-    onSuccess: async (data, variables, context) => {
-      await showSaveComplete();
-      // 추가적인 성공 처리 로직이 있다면 실행
-      if (options?.onSuccess) {
-        options.onSuccess(data, variables, context);
-      }
-    },
   });
 };
 

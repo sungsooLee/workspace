@@ -156,6 +156,15 @@ export { ReactComponent as IcoList } from './lib/ic_list.svg';
 export { ReactComponent as IcoAvatar } from './lib/ic_avatar.svg';
 export { ReactComponent as IcoSymbol } from './lib/ic_symbol.svg';
 export { ReactComponent as IcoFilePng } from './lib/ic_file_png.svg';
+export { ReactComponent as IcoBook } from './lib/ic_book.svg';
+export { ReactComponent as IcoBuilding } from './lib/ic_building.svg';
+export { ReactComponent as IcoCategory } from './lib/ic_category.svg';
+export { ReactComponent as IcoDivice } from './lib/ic_divice.svg';
+export { ReactComponent as IcoLevel } from './lib/ic_level.svg';
+export { ReactComponent as IcoLocation } from './lib/ic_location.svg';
+export { ReactComponent as IcoPrize } from './lib/ic_prize.svg';
+export { ReactComponent as IcoSubtitles02 } from './lib/ic_subtitles_02.svg';
+export { ReactComponent as IcoTime } from './lib/ic_time.svg';
 //export Default as Information from './lib/information.svg?react';
 
 //import Information from './lib/information.svg';

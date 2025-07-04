@@ -2,7 +2,6 @@ import { useRef, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
-
 import { IcoRefresh02 } from '@learnway/icons';
 import {
   Button,
@@ -16,10 +15,8 @@ import {
   useModal,
 } from '@learnway/ui';
 import { SearchBoxConfig, useSearchBox, CODE_GROUP } from '@learnway/hooks';
-
 import { SearchBox } from '@shared/ui/search-box';
 import { queryOptions as companyQueryOptions } from '@entities/companies/service/companies.queries';
-
 import { EnGlobalConst } from '@types';
 /**
  * 화면번호: NLP_BO_TMS_1001_19_01
@@ -36,15 +33,11 @@ const CompanyShuttleComponent = () => {
   const queryClient = useQueryClient();
   const { provider: sProvider } = useSearchBox(searchConfig);
 
-  /**
-   * @param data
-   */
   const handleOnSearch = (data: any) => {
-    const queryPromise = queryClient.fetchQuery(companyQueryOptions.all(data));
+    const queryPromise = queryClient.fetchQuery(companyQueryOptions.listPopupAll(data));
     queryPromise.then((data) => {
       setGrideData(data.content);
     });
-    //TODO fetch
   };
 
   const handleOnClose = () => {
@@ -115,10 +108,22 @@ const searchConfig: SearchBoxConfig = {
         },
       },
       {
-        name: 'name',
-        type: 'text',
+        name: 'companyCode',
+        type: 'dropdown',
         label: t('회사'),
         value: '',
+        format: 'object',
+        presetOptionLabel: t('LABEL.form.label.all'),
+        optionsConfig: {
+          codeGroup: CODE_GROUP['manual.company.companyCode'],
+        },
+        dropdownConfig: {
+          onchange: () => {
+            return '';
+          },
+          isSearchable: true,
+          placeholder: '입력 또는 선택',
+        },
       },
     ],
   ],
@@ -146,8 +151,8 @@ const columns = [
     size: 132,
   }),
 
-  columnHelper.accessor('callNumber', {
-    id: 'callNumber',
+  columnHelper.accessor('managerPhone', {
+    id: 'managerPhone',
     cell: (info) => info.getValue(),
     header: t('대표전화'),
     size: 132,

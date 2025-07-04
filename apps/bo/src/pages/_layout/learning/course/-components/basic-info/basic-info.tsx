@@ -25,15 +25,18 @@ import { FormRow2, FormSubTitle } from '@shared/ui';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TabFormRef } from '../common/tab-form-ref';
+import { useFetchCourseConfig } from '@entities/course';
+import { Course, CourseConfig } from '@types';
 
 interface BasicInfoProps {
   dummy?: any;
   onSave?: () => void;
+  data: { formData: Course; courseConfig: CourseConfig };
   initialData?: any;
 }
 
 const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
-  ({ dummy, onSave, initialData }, ref) => {
+  ({ dummy, onSave, data: { formData, courseConfig } }, ref) => {
     const { t } = useTranslation();
 
     const { provider, getValues, updateFormData, onFormValid, formState, watch } =
@@ -41,7 +44,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
 
     const channelUuid = watch('channelUuid');
 
-    // console.log('chadd', channelUuid);
+    console.log('----- basic', { formData, courseConfig });
 
     const handleOnSubmit = (data: any) => {
       console.log('data {} => ', data);
@@ -66,10 +69,10 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
     useEffect(() => {
       console.log('BasicInfoComponent init');
       // 초기 데이터가 있으면 설정
-      if (initialData) {
-        updateFormData(initialData);
+      if (formData) {
+        updateFormData(formData);
       }
-    }, [initialData]);
+    }, [formData]);
 
     return (
       <div>
@@ -98,12 +101,8 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             element={
               <DropdownFormField
                 optionsConfig={{
-                  api: {
-                    fn: () => RoleManagerService.fetchMyRoles('BO'),
-                    select: (data: any) => data?.channels || [],
-                  },
+                  codeGroup: CODE_GROUP['manual.bo.my.channels'],
                 }}
-                options={[{ label: 'channel A', value: 9999 }]}
               />
             }
           />
@@ -121,18 +120,20 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
               <CheckboxGroupFormField
                 key={`tenant-${channelUuid}`}
                 optionsConfig={{
-                  api: {
-                    fn: () => ChannelService.getChannelDetail(channelUuid),
-                    select: (data: any) => data?.tenantList || [],
-                    enabled: !!channelUuid,
-                  },
-                  labelField: 'tenantName',
-                  valueField: 'tenantId',
+                  codeGroup: CODE_GROUP['manual.bo.my.tenant.tenantId'],
+                  // api: {
+                  //   fn: () => ChannelService.getChannelDetail(channelUuid),
+                  //   select: (data: any) => data?.tenantList || [],
+                  //   enabled: !!channelUuid,
+                  // },
+                  // labelField: 'tenantName',
+                  // valueField: 'tenantId',
                 }}
-                options={[
-                  { tenantName: 'tenant A', tenantId: 1111 },
-                  { tenantName: 'tenant B', tenantId: 2222 },
-                ]}
+                // options={[
+                //   { tenantName: 'tenant A', tenantId: 1 },
+                //   { tenantName: 'tenant B', tenantId: 2 },
+                //   { tenantName: 'tenant C', tenantId: 3 },
+                // ]}
               />
             }
           />
@@ -154,6 +155,10 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
                   value: data.id,
                   label: data.name,
                 })}
+                list={{
+                  labelField: 'name',
+                  valueField: 'categoryId',
+                }}
                 actionNode={<Button variant="text" size="sm" label={t('추가')} />}
               />
             }
@@ -167,9 +172,22 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
             label={'학습대상'}
             element={
               <ChipListModalSelectorFormField
-                modalConfig={{ content: <UserGroupTabsChoiceModal tenantIds={[]} /> }}
+                modalConfig={() => ({
+                  content: <UserGroupTabsChoiceModal tenantIds={getValues().tenantIds} />,
+                })}
+                transformModalData={(modalData: Array<any>) => {
+                  return modalData.map((d: any) => ({
+                    groupId: undefined, // 추가되는 경우 그룹ID 없음
+                    combiners: {
+                      combineType: 'JOB_ROLE',
+                      combineValue: d.id,
+                    },
+                    name: d.name,
+                    // combiners: d?.combiners || [],
+                  }));
+                }}
                 chipList={{
-                  labelField: 'fullPath',
+                  labelField: 'name',
                   valueField: 'key',
                   wordwrap: true,
                 }}
@@ -307,11 +325,11 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
               <InputModalSelectorFormField
                 modalConfig={{
                   content: <UserChoiceModal />,
-                  width: 'xl',
                 }}
                 transformModalData={(data: any) => ({
-                  coordinatorId: data.uuid,
+                  coordinatorUuid: data.uuid,
                   coordinatorName: `${data.name}/${data?.dept?.deptName}`,
+                  coordinatorDeptName: `${data.name}/${data?.dept?.deptName}`,
                 })}
               />
             }
@@ -353,8 +371,9 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
                   content: <UserChoiceModal />,
                 }}
                 transformModalData={(data: any) => ({
-                  operatorId: data.uuid,
+                  operatorUuid: data.uuid,
                   operatorName: `${data.name}/${data?.dept?.deptName}`,
+                  operatorDeptName: `${data.name}/${data?.dept?.deptName}`,
                 })}
               />
             }

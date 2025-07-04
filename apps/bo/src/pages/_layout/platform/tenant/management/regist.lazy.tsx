@@ -17,7 +17,7 @@ import {
   TextareaFormField,
   useModal,
 } from '@learnway/ui';
-import { CODE_GROUP, DynamicFormConfig, useCodeStore, useDynamicForm } from '@learnway/hooks';
+import { CODE_GROUP, DynamicFormConfig, S3_PATH, useCodeStore, useDynamicForm } from '@learnway/hooks';
 
 import { FormSubTitle, FormRow, ThumbnailListFormField } from '@shared/ui';
 
@@ -28,7 +28,6 @@ import { CompanyShuttleModal, CompanyChoiceModal, UserChoiceModal } from '@featu
 import TenantService from '@entities/tenant/api/tenant';
 import { isEqual } from 'lodash';
 import { EnDeviceType, EnUseCategory } from '@types';
-import { SingleAttachmentFormField } from '@shared/ui/form/single-attachment-form-field';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/management/regist')({
   component: RouteComponent,
@@ -150,11 +149,12 @@ function RouteComponent() {
             />
           </ContentsRow>
           <ContentsRow>
-            <FormRow
-              provider={provider}
-              name="logoImageUrl"
-              element={<ThumbnailListFormField uploadConfig={s3UploadConfig} max={1}/>}
-            />
+            {/*<FormRow*/}
+            {/*  provider={provider}*/}
+            {/*  name="logoImageUrl"*/}
+            {/*  element={<ThumbnailListFormField uploadConfig={s3UploadConfig} max={1}/>}*/}
+            {/*/>*/}
+            <FormRow provider={provider} name="logoImageUrl" />
           </ContentsRow>
           <ContentsRow>
             <FormRow
@@ -261,17 +261,34 @@ const formConfig: DynamicFormConfig = {
       placeholder: '',
       maxLength: 150,
     },
+    // {
+    //   label: t('테넌트 로고'),
+    //   name: 'logoImageUrl',
+    //   type: 'custom',
+    //   format: 'array',
+    //   value: [],
+    //   tooltip: t('테넌트에 사용할 로고로 파일 1개만 등록할 수 있습니다.'),
+    //   guideText: t(
+    //     '파일 사이즈 000x000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 1개 / 파일용량 최대 50MB',
+    //   ),
+    // },
     {
       label: t('테넌트 로고'),
       name: 'logoImageUrl',
-      type: 'custom',
+      type: 'thumbnail-list',
       format: 'array',
       value: [],
+      max: 1,
       tooltip: t('테넌트에 사용할 로고로 파일 1개만 등록할 수 있습니다.'),
-      guideText: t(
-        '파일 사이즈 000x000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 1개 / 파일용량 최대 50MB',
-      ),
+      uploadConfig: {
+        affairsType: 'PMS',
+        s3Path: S3_PATH['upload/content/image'], // BE에 확인 필요
+        acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
+        maxFileCount: 1,
+      },
+      description: '파일 사이즈 000x000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 1개 / 파일용량 최대 50MB',
     },
+
     {
       name: 'tenantUserList',
       label: t('테넌트 담당자'),

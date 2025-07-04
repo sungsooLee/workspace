@@ -652,13 +652,13 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
                     id="code"
                     onDuplicationCheck={duplicateCheck}
                     disabled={formMode === FORM_MODE.NONE}
-                    inputType={'alphanumeric'}
+                    type={'alphanumeric'}
                     hiddenPlaceholder={formMode === FORM_MODE.NONE}
-                    onValidationError={(message: string) => {
-                      setFormError('code', message);
-                    }}
-                    onValidationSuccess={() => {
-                      clearFormError('code');
+                    validation={{
+                      onError: (msg: string) => {
+                        setFormError('code', msg);
+                      },
+                      onSuccess: () => clearFormError('code'),
                     }}
                   />
                 }
@@ -710,12 +710,10 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
                     id="path"
                     disabled={formMode === FORM_MODE.NONE}
                     hiddenPlaceholder={formMode === FORM_MODE.NONE}
-                    inputType={'url'}
-                    onValidationError={(message) => {
-                      setFormError('path', message);
-                    }}
-                    onValidationSuccess={() => {
-                      clearFormError('path');
+                    type={'url'}
+                    validation={{
+                      onError: (msg) => setFormError('path', msg),
+                      onSuccess: () => clearFormError('path'),
                     }}
                   />
                 }

@@ -26,7 +26,7 @@ export function AdminSignupAuth() {
       <div className={cn(styles.auth_box, 'auth--box')}>
         <div className={styles.signup_info}>
           <div className={styles.step_box}>
-            <Stepper items={adminItems} variant="check" selectedStep="step3" />
+            <Stepper items={adminItems} variant="number" selectedStep="step3" />
           </div>
         </div>
         <div className={cn(styles.signup_select, 'auth--signup-select')} role="radiogroup">
@@ -34,7 +34,7 @@ export function AdminSignupAuth() {
             defaultValues={defaultAuthValues}
             onSuccess={(data: any) => handleSuccess(data)}
             onCancel={() => handleCancel()}
-            noticeBoxLabel="LABEL.message.adminSignupNotice"
+            noticeBoxLabel="LABEL.messages.adminSignupNotice"
           />
         </div>
         <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>

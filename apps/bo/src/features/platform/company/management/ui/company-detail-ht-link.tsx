@@ -26,6 +26,7 @@ const CompanyDetailHRLinkComponent: FC<any> = ({ type }: CompanyDetailHRLinkProp
   const [linkColumns, setLinkColumns] = useState<any[]>([]);
 
   const [userGroupId, setUserGroupId] = useState<any>(null);
+  const [filteredData, setFilteredData] = useState<any[]>([]);
 
   const { data, refetch } = useGetCompanyUserGroups({ userGroupType: type, companyId: companyId });
 
@@ -53,25 +54,40 @@ const CompanyDetailHRLinkComponent: FC<any> = ({ type }: CompanyDetailHRLinkProp
         setLinkColumns([...columnsPrev, ...linkColumnsForPosition, ...columnsNext]);
         break;
     }
-  }, []);
+  }, [type]);
 
-  const handleGridSearchClick = useCallback((condition: any) => {
-    console.log('handleGridSearchClick', condition);
-    //setFetchParams({ ...params, ...{ [condition.key]: condition.value } });
-  }, []);
+  useEffect(() => {
+    if (data) setFilteredData([...data]);
+  }, [data]);
+
+  const handleGridSearchClick = useCallback(
+    (condition: any) => {
+      console.log('handleGridSearchClick', condition);
+      const searchValue = condition.value.trim();
+      if (searchValue.length > 0) {
+        const filterd = data.filter(
+          (row: any) => row[condition.key] && row[condition.key].includes(searchValue),
+        );
+        setFilteredData(filterd);
+      } else setFilteredData(data);
+    },
+    [data],
+  );
 
   return (
     <SplitPanel size={['40%', 'auto']} divider>
       <GridBox
-        data={data}
+        data={filteredData}
         columns={linkColumns}
         title={t('유저그룹') + ' - ' + linkTitle}
         disabledSelectionToggle
-        onSearchClick={(data: any) => {
-          console.log('####', data);
-        }}
+        onSearchClick={handleGridSearchClick}
       />
-      <CompanyDetailHRUsergroup userGroupId={userGroupId} userGroupType={type} />
+      <CompanyDetailHRUsergroup
+        userGroupId={userGroupId}
+        userGroupType={type}
+        enableInquiryAll={false}
+      />
     </SplitPanel>
   );
 };

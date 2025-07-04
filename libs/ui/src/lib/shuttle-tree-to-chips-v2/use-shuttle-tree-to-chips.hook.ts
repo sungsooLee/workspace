@@ -7,9 +7,17 @@ const useShuttleTreeToChips = () => {
 
   // 단일 선택
   const handleSelectItem = (value: TreeNode) => {
-    setSelectedItems((prev) =>
-      prev.includes(value) ? prev.filter(({ key }) => key !== value.key) : [...prev, value],
-    );
+    if (value.isCombined) {
+      setSelectedItems((prev) =>
+        prev.some(({ key }) => key === value.key) ? prev : [value, ...prev],
+      );
+    } else {
+      setSelectedItems((prev) =>
+        prev.some(({ key }) => key === value.key)
+          ? prev.filter(({ key }) => key !== value.key)
+          : [value, ...prev],
+      );
+    }
   };
 
   // 하위 노드 전체 선택

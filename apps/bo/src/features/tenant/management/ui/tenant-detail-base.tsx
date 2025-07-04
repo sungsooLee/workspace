@@ -3,10 +3,8 @@ import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useRouterState } from '@tanstack/react-router';
 
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
-import { cn } from '@learnway/shared';
 import {
   CheckboxGroupFormField,
   ChipListModalSelectorFormField,
@@ -14,17 +12,15 @@ import {
   TextareaFormField,
   useModal,
 } from '@learnway/ui';
-import { CODE_GROUP, DynamicFormConfig, useCodeStore, useDynamicForm } from '@learnway/hooks';
+import { CODE_GROUP, DynamicFormConfig, S3_PATH, useCodeStore, useDynamicForm } from '@learnway/hooks';
 
 import {
   FormSubTitle,
-  ContentsHistoryInfoFormField,
   FormRow,
-  ThumbnailListFormField,
 } from '@shared/ui';
 
 import { isEqual } from 'lodash';
-import { CompanyShuttleModal, CompanyChoiceModal, UserChoiceModal } from '@features/shared';
+import { CompanyChoiceModal, UserChoiceModal } from '@features/shared';
 import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
 import { useFetchTenant, useUpdateTenant } from '@entities/tenant';
 import TenantService from '@entities/tenant/api/tenant';
@@ -180,7 +176,8 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name="logoImageUrl" element={<ThumbnailListFormField />} />
+        {/*<FormRow provider={provider} name="logoImageUrl" element={<ThumbnailListFormField />} />*/}
+        <FormRow provider={provider} name="logoImageUrl" />
       </ContentsRow>
       <ContentsRow>
         <FormRow
@@ -279,12 +276,19 @@ const formConfig: DynamicFormConfig = {
       maxLength: 150,
     },
     {
-      label: t('테넌트 로고 (Size : 000x000)'),
+      label: t('테넌트 로고'),
       name: 'logoImageUrl',
-      type: 'custom',
+      type: 'thumbnail-list',
       format: 'array',
       value: [],
       tooltip: t('테넌트에 사용할 로고로 파일 1개만 등록할 수 있습니다.'),
+      uploadConfig: {
+        affairsType: 'PMS',
+        s3Path: S3_PATH['upload/content/image'], // BE에 확인 필요
+        acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
+        maxFileCount: 1,
+      },
+      description: '파일 사이즈 000x000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 1개 / 파일용량 최대 50MB',
     },
     {
       name: 'tenantUserList',

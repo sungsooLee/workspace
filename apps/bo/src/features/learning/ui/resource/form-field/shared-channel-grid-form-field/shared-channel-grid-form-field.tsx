@@ -82,9 +82,9 @@ const SharedChannelGridFormFieldComponent = forwardRef<
   return (
     <div className={cn(styles.start, 'nlp--shared-channel-grid-form-field')} ref={ref}>
       <div className={'text-right'}>
-        <span>{`${t('채널')} ${value?.length || 0}${t('개')}`}</span>
+        <span className={'mr-4'}>{`${t('채널')} ${value?.length || 0}${t('개')}`}</span>
         <Button
-          variant={'point'}
+          variant={'search'}
           size={'lg'}
           label={t('채널선택')}
           onClick={handleChannelModalButtonClick}

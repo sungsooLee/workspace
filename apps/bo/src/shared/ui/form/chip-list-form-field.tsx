@@ -73,7 +73,7 @@ const ChipListFormFieldComponent = forwardRef<HTMLDivElement, ChipListFormFieldP
         />
         {limitPlaceholder && (
           <p className={formStyles.text_limit}>
-            {limitPlaceholder},<em className={formStyles.num}>{value?.length || 0}개</em>/
+            {limitPlaceholder},&nbsp;<em className={formStyles.num}>{value?.length || 0}개</em>/
             {limitSize}개
           </p>
         )}

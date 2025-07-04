@@ -47,7 +47,7 @@ const GridBoxComponent = <T extends object>(
     showRemoveAll,
     showAdd,
     showRemove,
-    showCopy,
+    copyButton,
     titleCustomNode,
     customButtonNode,
     guideText,
@@ -374,13 +374,13 @@ const GridBoxComponent = <T extends object>(
             />
           )}
           {/* 복사 */}
-          {showCopy && (
+          {copyButton && (
             <Button
+              {...copyButton}
               variant="outline"
               size="sm"
-              label={t('LABEL.grid.header.copy', '복사')}
+              label={copyButton.label || t('LABEL.grid.header.copy', '복사')}
               icon={<IcoCopy width={16} height={16} stroke={'#131C30'} />}
-              onClick={handleRemoveClick}
             />
           )}
         </div>

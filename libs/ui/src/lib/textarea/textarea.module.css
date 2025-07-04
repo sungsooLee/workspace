@@ -21,13 +21,25 @@
   &.readonly {
     @apply pointer-events-none border-[var(--gray1)] !bg-[var(--gray1)];
     .textarea {
-      @apply !bg-[var(--gray1)] text-[#4c515e];
+      @apply bg-[var(--gray1)] text-[var(--gray8)];
+    }
+    .text_limit {
+      @apply text-[var(--gray8)];
+      span {
+        @apply text-[var(--gray8)];
+      }
     }
   }
   &.disabled {
     @apply border-[var(--gray1)] bg-[var(--gray1)];
     .textarea {
-      @apply !bg-[var(--gray1)] !text-[#a9afb8];
+      @apply bg-[var(--gray1)] text-[var(--gray5)];
+    }
+    .text_limit {
+      @apply text-[var(--gray5)];
+      span {
+        @apply text-[var(--gray5)];
+      }
     }
   }
   .text_limit {

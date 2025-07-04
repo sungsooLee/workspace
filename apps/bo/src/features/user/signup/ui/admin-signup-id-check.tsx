@@ -60,7 +60,7 @@ export function AdminSignupIdCheck() {
         <div className={cn(styles.auth_box, 'auth--box')}>
           <div className={styles.signup_info}>
             <div className={styles.step_box}>
-              <Stepper items={adminItems} variant="check" selectedStep="step2" />
+              <Stepper items={adminItems} variant="number" selectedStep="step2" />
             </div>
           </div>
           <h4 className={cn(styles.title, 'auth--title')}>{'아이디 확인'}</h4>

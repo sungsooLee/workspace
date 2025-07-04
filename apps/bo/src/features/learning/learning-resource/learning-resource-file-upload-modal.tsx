@@ -10,7 +10,7 @@ import {
   ModalTitle,
   useModal,
 } from '@learnway/ui';
-import { useS3Uploader } from '@learnway/hooks';
+import { S3_PATH, useS3Uploader } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { LEARNING_TYPE } from '@learnway/config';
 import { t } from 'i18next';
@@ -46,9 +46,8 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
   const maxFileCount = 100;
   const { stats, files, addFiles, onPause, onRetry, onResume, onRemove, inputAccept } =
     useS3Uploader({
-      s3Path: 'upload/content/original',
+      s3Path: S3_PATH['upload/content/original'],
       affairsType: 'CMS',
-      languageCode: 'ko',
       groupMode: 'individual',
       maxFileCount,
       maxFileSize: 20 * 1024 * 1024,
@@ -128,10 +127,3 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
 };
 
 export const LearningResourceFileUploadModal = LearningResourceFileUploadModalComponent;
-
-const uploadConfig = {
-  isAuto: true,
-  maxFileCount: 1,
-  maxFileSize: 1024 * 1024 * 1024,
-  s3Path: '/learning/resource/video',
-};

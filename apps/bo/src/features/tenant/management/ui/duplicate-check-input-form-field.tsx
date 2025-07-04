@@ -59,7 +59,8 @@ export const DuplicateCheckInputFormField = forwardRef<
           needInput: 'LABEL.form.validation.needInput',
         },
       },
-      inputType,
+      // inputType,
+      type,
       ...props
     },
     ref,
@@ -159,8 +160,7 @@ export const DuplicateCheckInputFormField = forwardRef<
           onChange={handleChangeField}
           maxLength={maxLength}
           disabled={disabled}
-          type={inputType}
-          inputType={inputType}
+          type={type}
           {...props}
         />
         <Button
