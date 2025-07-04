@@ -51,6 +51,10 @@ export function useTranslationStatus(multilingualId: number) {
   return useQuery(queryOptions.getStatus(multilingualId));
 }
 
+export function useTranslationExists(keyTypeCode: string, messageCode: string) {
+  return useQuery(queryOptions.checkExists(keyTypeCode, messageCode));
+}
+
 export function useDeployTranslation(options: any) {
   const mutation = useMutation({
     ...mutateOptions.deploy(),

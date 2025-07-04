@@ -1,5 +1,5 @@
 import TranslationService from '../api/translation';
-import { MultilingualExcel, MultilingualUpdateReqParams, Tenant } from '@types';
+import { keyTypeCode, MultilingualExcel, MultilingualUpdateReqParams, Tenant } from '@types';
 import TenantService from '../../tenant/api/tenant';
 import { skipToken } from '@tanstack/react-query';
 
@@ -8,6 +8,11 @@ export const queryKeys = {
   get: ['translation'] as const,
   getStatus: (multilingualId: number) => ['translation-status', multilingualId],
   deploy: (locale: string) => ['translation-locale', locale],
+  checkExists: (keyTypeCode: string, messageCode: string) => [
+    'translation-exists',
+    keyTypeCode,
+    messageCode,
+  ],
 };
 
 export const translationQueryOptions = {
@@ -20,6 +25,10 @@ export const translationQueryOptions = {
   getStatus: (multilingualId: number) => ({
     queryKey: queryKeys.getStatus(multilingualId),
     queryFn: () => TranslationService.fetchTranslationStatus(multilingualId),
+  }),
+  checkExists: (keyTypeCode: string, messageCode: string) => ({
+    queryKey: queryKeys.checkExists(keyTypeCode, messageCode),
+    queryFn: () => TranslationService.fetchTranslationExists(keyTypeCode, messageCode),
   }),
 };
 

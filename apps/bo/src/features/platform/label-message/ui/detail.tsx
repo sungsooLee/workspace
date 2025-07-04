@@ -19,6 +19,7 @@ import {
   useFetchLabelMessage,
   useUpdateLabelMessage,
 } from '@entities/label-messages';
+import { translationQueryOptions } from '@entities/translation';
 import { UseFormReturn, useWatch } from 'react-hook-form';
 import { DuplicateCheckInputFormField, DuplicateState } from '../../../form';
 
@@ -61,6 +62,18 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
       clearAllFormErrors();
       const newConfig = createFormConfig(typeWatch, getValues);
       setCurrentConfig(newConfig);
+
+      // 타입이 변경되면 중복체크 상태를 초기화
+      const currentValues = getValues();
+      if (currentValues.labelMessageMultilingulKey?.fieldValue) {
+        updateFormData({
+          ...currentValues,
+          labelMessageMultilingulKey: {
+            ...currentValues.labelMessageMultilingulKey,
+            checkState: DuplicateState.check,
+          },
+        });
+      }
     }
   }, [typeWatch]);
 
@@ -182,14 +195,21 @@ const MessageDetailComponent = ({ labelMessageId, onSuccessSave }: MessageDetail
   };
 
   const duplicateCheck = async (code: string) => {
-    const result = (await queryClient.fetchQuery(
-      queryOptions.all({ labelMessageMultilingulKey: code }),
-    )) as any;
-    const content = result?.content;
-    const isValid =
-      content?.filter((d: any) => d?.labelMessageId !== getValues()?.labelMessageId)?.length === 0;
-    if (!isValid) return DuplicateState.duplicated;
+    const keyTypeCode = getValues('labelMessageType');
+    const result = await queryClient.fetchQuery(
+      translationQueryOptions.checkExists(keyTypeCode, code),
+    );
+
+    if (result) return DuplicateState.duplicated;
     return DuplicateState.ok;
+    // const result = (await queryClient.fetchQuery(
+    //   queryOptions.all({ labelMessageMultilingulKey: code }),
+    // )) as any;
+    // const content = result?.content;
+    // const isValid =
+    //   content?.filter((d: any) => d?.labelMessageId !== getValues()?.labelMessageId)?.length === 0;
+    // if (!isValid) return DuplicateState.duplicated;
+    // return DuplicateState.ok;
   };
 
   return (
