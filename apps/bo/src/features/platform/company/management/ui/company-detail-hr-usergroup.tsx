@@ -12,11 +12,13 @@ import { queryOptions } from '@entities/user-group/service/user-group-company.qu
 interface CompanyDetailHRUsergroupProps {
   userGroupId?: number;
   userGroupType: EnUserGroupType;
+  enableInquiryAll?: boolean;
 }
 
 const CompanyDetailHRUsergroupComponent: FC<any> = ({
   userGroupId,
   userGroupType,
+  enableInquiryAll = true,
 }: CompanyDetailHRUsergroupProps) => {
   const routerState = useRouterState();
   const companyId = routerState.location.state?.companyId;
@@ -52,21 +54,30 @@ const CompanyDetailHRUsergroupComponent: FC<any> = ({
     //     userGroupIds: [userGroupId],
     //   });
     // }
-    gridFetch({
-      userGroupType: userGroupType,
-      companyId: companyId,
-      userGroupIds: userGroupId ? [userGroupId] : [],
-    });
-  }, [userGroupId]);
+    console.log('### enableInquiryAll', enableInquiryAll);
+    console.log('### userGroupId', userGroupId);
+    if (enableInquiryAll || userGroupId) {
+      gridFetch({
+        userGroupType: userGroupType,
+        companyId: companyId,
+        userGroupIds: userGroupId ? [userGroupId] : [],
+      });
+    }
+  }, [enableInquiryAll, companyId, userGroupType, userGroupId, gridFetch]);
 
-  const handleOnSearch = useCallback((data: any) => {
-    gridFetch({
-      ...data,
-      userGroupType: userGroupType,
-      companyId: companyId,
-      userGroupIds: [userGroupId],
-    });
-  }, []);
+  const handleOnSearch = useCallback(
+    (data: any) => {
+      if (enableInquiryAll || userGroupId) {
+        gridFetch({
+          ...data,
+          userGroupType: userGroupType,
+          companyId: companyId,
+          userGroupIds: userGroupId ? [userGroupId] : [],
+        });
+      }
+    },
+    [enableInquiryAll, companyId, userGroupType, userGroupId, gridFetch],
+  );
 
   return (
     <>
@@ -78,6 +89,8 @@ const CompanyDetailHRUsergroupComponent: FC<any> = ({
         columns={columns}
         title={t('유저그룹 대상자 목록')}
         disabledSelectionToggle
+        emptyMessage={t('좌측 유저 그룹을 선택하면  유저 그룹 대상자를 확인할 수 있습니다.')}
+        height={70}
       />
     </>
   );
