@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useCallback } from 'react';
+import { useState, forwardRef, useCallback } from 'react';
 import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
 import { t } from 'i18next';
 
@@ -6,9 +6,6 @@ import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-content
 
 import {
   Button,
-  ContentsRow,
-  DynamicFormField,
-  Input,
   ModalBody,
   ModalContainer,
   ModalFooter,
@@ -71,7 +68,7 @@ const CompanyModalComponent = forwardRef((props, ref) => {
             columns={columns}
             showNumberingColumn
             visibleRowCount={7}
-            title={t('회사')}
+            title={t('회사목록')}
           />
         </div>
       </ModalBody>
@@ -101,17 +98,29 @@ const searchConfig: SearchBoxConfig = {
         },
       },
       {
-        name: 'name',
-        type: 'text',
+        name: 'companyCode',
+        type: 'dropdown',
         label: t('회사'),
         value: '',
+        format: 'object',
+        presetOptionLabel: t('LABEL.form.label.all'),
+        optionsConfig: {
+          codeGroup: CODE_GROUP['manual.company.companyCode'],
+        },
+        dropdownConfig: {
+          onchange: () => {
+            return '';
+          },
+          isSearchable: true,
+          placeholder: '입력 또는 선택',
+        },
       },
     ],
   ],
 };
 
 const gridConfig: useGridBoxConfig = {
-  query: companyQueryOptions.list,
+  query: companyQueryOptions.listPopup,
   columns: [],
   data: [],
 };
@@ -139,12 +148,12 @@ const columns = [
     header: t('사업자 등록번호'),
     size: 220,
   }),
-  columnHelper.accessor('callNumber', {
+  columnHelper.accessor('managerPhone', {
     cell: (info) => info.getValue(),
     header: t('대표 전화'),
     size: 210,
   }),
-  columnHelper.accessor('email', {
+  columnHelper.accessor('managerEmail', {
     cell: (info) => info.getValue(),
     header: t('대표 이메일'),
     size: 210,

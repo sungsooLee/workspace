@@ -6,6 +6,7 @@ import { Company } from '@learnway/types';
 export const queryKeys = {
   all: ['companies'] as const,
   list: ['companies-page'] as const,
+  listPopup: ['companies-popup'] as const,
   detail: (code: string) => [...queryKeys.all, code] as const,
 };
 
@@ -17,6 +18,18 @@ export const queryOptions = {
   list: (params: any) => ({
     queryKey: queryKeys.list,
     queryFn: () => CompaniesService.fetchList(params),
+    cacheTime: 0,
+    staleTime: 0,
+  }),
+  listPopup: (params: any) => ({
+    queryKey: queryKeys.listPopup,
+    queryFn: () => CompaniesService.fetchListPopup(params),
+    cacheTime: 0,
+    staleTime: 0,
+  }),
+  listPopupAll: (params: any) => ({
+    queryKey: queryKeys.listPopup,
+    queryFn: () => CompaniesService.fetchListPopupAll(params),
     cacheTime: 0,
     staleTime: 0,
   }),
