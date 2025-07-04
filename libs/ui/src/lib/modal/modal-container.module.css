@@ -29,6 +29,9 @@
   & > [class*='nlp--tabs'] > [role='tablist'] {
     @apply mb-[24px];
   }
+  &:has([class*='react-datepicker-popper']) {
+    @apply !pb-[300px];
+  }
 }
 .btn_wrap {
   button {
