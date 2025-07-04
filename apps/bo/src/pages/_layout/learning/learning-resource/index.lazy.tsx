@@ -1,4 +1,4 @@
-// IA102, IA105 / NLP_BO_CMS_1001, NLP_BO_CMS_1017
+// IA102, IA105, IA106 / NLP_BO_CMS_1001, NLP_BO_CMS_1017, NLP_BO_CMS_1060
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { Button, useModal } from '@learnway/ui';
 import { LearningResourceFileUploadModal, LearningTypeChoiceModal } from '@features/learning';
@@ -40,13 +40,19 @@ function RouteComponent() {
           content: <ChannelChoiceModal />,
         });
         if (channelInfo) {
-          const videoUploadResult = await openModal({
+          const fileUuids = await openModal({
             content: (
               <LearningResourceFileUploadModal channel={channelInfo} type={LEARNING_TYPE.VIDEO} />
             ),
             width: 'lg',
           });
-          if (videoUploadResult) {
+          // console.log(
+          //   '🚀 ~ handleRegister ~channelInfo, fileUuids, languageCode:',
+          //   channelInfo,
+          //   fileUuids,
+          //   getDefaultLang().toUpperCase(),
+          // );
+          if (fileUuids) {
             router.navigate({ to: '/learning_test/resource/view/video' });
             break;
           }

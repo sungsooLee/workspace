@@ -324,7 +324,7 @@ function RouteComponent() {
     const videoUploadResult = await openModal({
       content: (
         <LearningResourceFileUploadModal
-          channel={{ channelUuid: '', channelName: '' }}
+          channel={{ channelUuid: '', channelName: '', tenantId: '' }}
           type={LEARNING_TYPE.VIDEO}
         />
       ),

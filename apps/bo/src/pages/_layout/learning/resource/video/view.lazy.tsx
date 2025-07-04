@@ -55,7 +55,7 @@ function RouteComponent() {
             <Button
               variant="point"
               size="sm"
-              onClick={() => router.navigate({ to: '/learning/resource' })}
+              onClick={() => router.navigate({ to: '/learning/learning-resource' })}
             >
               목록
             </Button>
