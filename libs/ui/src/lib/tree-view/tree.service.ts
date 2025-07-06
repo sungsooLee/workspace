@@ -194,42 +194,6 @@ export const insertNodeAtPosition = (
   return result;
 };
 
-// export const insertNodeAtPosition = (
-//   nodes: TreeNode[],
-//   targetKey: string | null,
-//   newNode: TreeNode,
-//   position?: NodeMovePositionType,
-// ): TreeNode[] => {
-//   for (let i = 0; i < nodes.length; i++) {
-//     const node = nodes[i];
-//     if (node.key === targetKey) {
-//       const result = [...nodes];
-//       switch (position) {
-//         case 'BEFORE' as NodeMovePositionType:
-//           result.splice(i, 0, newNode);
-//           return result;
-//         case 'INSIDE' as NodeMovePositionType:
-//           return addNodeToParent(nodes, targetKey, newNode);
-//         case 'AFTER' as NodeMovePositionType:
-//           result.splice(i + 1, 0, newNode);
-//           return result;
-//         default:
-//           result.splice(i + 1, 0, newNode);
-//           return result;
-//       }
-//     }
-//   }
-
-//   return nodes.map((node) => {
-//     if (!node.children) return node;
-
-//     return {
-//       ...node,
-//       children: insertNodeAtPosition(node.children, targetKey, newNode, position),
-//     };
-//   });
-// };
-
 export const findSiblingNodes = (nodes: TreeNode[], targetKey: string): TreeNode[] => {
   if (nodes.some((node) => node.key === targetKey)) {
     return nodes;
@@ -342,15 +306,12 @@ export const isValidDrop = (
 
   if (targetPath.includes(sourceKey)) return false;
 
-  // New validation for SAME_LEVEL_ONLY type
   if (treeType === 'SAME_LEVEL_ONLY') {
     const sourceNode = getNodeWithLevel(treeData, sourceKey);
     const targetNode = getNodeWithLevel(treeData, targetKey);
 
     if (!sourceNode || !targetNode) return false;
 
-    // For "INSIDE" drops, the target level + 1 should equal the source level
-    // because we're checking if we can drop inside that target node at the next level
     if (dropPosition === 'INSIDE') {
       return sourceNode.level === targetNode.level + 1;
     }
@@ -449,7 +410,7 @@ export const getAllKeysByTree = (treeData: TreeNode[]) => {
   const getAllKeys = (nodes: TreeNode[]): string[] => {
     return nodes.reduce((keys: string[], node) => {
       keys.push(node.key);
-      if (node.children?.length) {
+      if (node.children?.length && node.children.length > 0) {
         keys.push(...getAllKeys(node.children));
       }
 

@@ -145,6 +145,8 @@ export interface TreeProps {
   customDropValidator?: CustomDropValidator; // 커스텀 드랍 유효성 체크 - 사용하는 쪽에서 제약 추가를 위해 추가함.
   minDraggableLevel?: number; // 드래그 가능한 최소 레벨 정의
   moveIcon?: boolean; // 셔틀트리에서 사용하는 무브 아이콘 사용 여부
+  isLoading?: boolean; // 로딩 상태 표시
+  skeletonNodeCount?: number; // 스켈레톤 노드 개수 (기본값: 5)
 }
 // 드랍 위치 감지를 위한 타입
 export interface IndicatorPosition {
@@ -219,8 +221,22 @@ export interface DropInfo {
   sourceNode?: TreeNode | null;
 }
 
-export interface TreeBoxProps extends TreeProps {
-  initLevel: number;
+/**
+ * TreeBox 컴포넌트 Props
+ */
+export interface TreeBoxProps extends Omit<TreeProps, 'expandedKeys' | 'onExpandedKeysChange'> {
+  showSearchKeyword?: boolean;
+  initLevel?: number;
+  closeLevel?: number;
+  title?: string;
+  renderNodeButtons?: (node: TreeNode, level: number) => React.ReactNode;
+  handleSelectedNodeChange?: (node: TreeNode) => void;
+  customButtonNode?: React.ReactNode;
+  showTotalCount?: boolean;
+
+  // 확장된 키 관리 (외부에서 제어할 때만 사용)
+  expandedKeys?: string[];
+  onExpandedKeysChange?: (keys: string[]) => void;
 }
 
 export type CustomDropValidator = (params: {
@@ -230,3 +246,51 @@ export type CustomDropValidator = (params: {
   level: number;
   treeData?: TreeNode[];
 }) => boolean;
+
+/**
+ * 드래그 데이터 인터페이스
+ */
+export interface DragData {
+  id: string;
+  node: TreeNode;
+  level: number;
+}
+
+/**
+ * 드롭존 데이터 인터페이스
+ */
+export interface DropZoneData {
+  id: string;
+  node: TreeNode;
+  level: number;
+  position: NodeMovePositionType;
+  treeId: string;
+}
+
+/**
+ * DndTreeNode 컴포넌트 Props
+ */
+export interface DndTreeNodeProps {
+  node: EnhancedTreeNode;
+  level: number;
+  expandedKeys: string[];
+  setExpandedKeys: (keys: string[] | ((prev: string[]) => string[])) => void;
+  selectedNode?: TreeNode | null;
+  onNodeClick?: (node: TreeNode | null) => void;
+  nodeButtons?: (node: TreeNode, level: number) => React.ReactNode;
+  searchKeyword?: string;
+  onCustomNodeClick?: (node: TreeNode) => void;
+  shouldDisableClick?: (node: TreeNode, level: number) => boolean;
+  selectedItems?: string[];
+  sourceTreeId?: string;
+  treeId: string;
+  treeType?: string;
+  isDraggable: boolean;
+  maxDepth?: number;
+  customDropValidator?: (params: any) => boolean;
+  draggedNode?: TreeNode | null;
+  draggedNodeKey?: string | null;
+  minDraggableLevel?: number;
+  moveIcon?: boolean;
+  isFirstSibling?: boolean;
+}

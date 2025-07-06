@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { cn } from '@learnway/shared';
 import { t } from 'i18next';
-import { TreeView } from './tree';
 import { getAllKeysByTree, getKeysByLevel } from './tree.service';
-import { TreeContainer } from './tree.context';
+import { TreeBoxProps } from './type';
 
 import { Button } from '../button/button';
 import { Input } from '../input/input';
@@ -11,10 +10,9 @@ import { Input } from '../input/input';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 import subTitleStyles from '@learnway/styles/bo/assets/styles/modules/form-sub-title.module.css';
-import { CountText } from '../elements/count-text/count-text';
 import { DndTreeView } from './dnd-tree';
 
-const TreeBoxComponent = <T extends object>({
+const TreeBoxComponent: React.FC<TreeBoxProps> = ({
   treeId,
   data,
   showSearchKeyword,
@@ -40,8 +38,9 @@ const TreeBoxComponent = <T extends object>({
   customDropValidator,
   minDraggableLevel,
   moveIcon,
-  ...props
-}: any) => {
+  isLoading,
+  skeletonNodeCount,
+}) => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [internalExpandedKeys, setInternalExpandedKeys] = useState<string[]>([]);
 
@@ -184,7 +183,8 @@ const TreeBoxComponent = <T extends object>({
           customDropValidator={customDropValidator}
           minDraggableLevel={minDraggableLevel}
           moveIcon={moveIcon}
-          // {...props}
+          isLoading={isLoading}
+          skeletonNodeCount={skeletonNodeCount}
         />
       </div>
     </div>

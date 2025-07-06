@@ -73,7 +73,7 @@ export const CategoryManage = () => {
   } = useModal();
 
   // 추후 현재 locale 정보 값 파라미터로 넘겨주기.
-  const { data, refetch } = useFetchCategory();
+  const { data, refetch, isLoading } = useFetchCategory();
   const { data: detailData } = useFetchCategoryDetail(selectedNode?.id);
 
   const { create } = useCreateCategory({});
@@ -445,6 +445,7 @@ export const CategoryManage = () => {
             return node && node.level !== 0;
           }}
           selectedNode={selectedNode}
+          isLoading={isLoading}
         />
       </TreeContainer>
       <div className={layoutStyles.inner}>
