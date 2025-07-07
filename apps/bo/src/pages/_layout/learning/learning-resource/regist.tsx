@@ -28,7 +28,7 @@ function RouteComponent() {
     onSuccess: (result: PostDraftVideosRes) => {
       if (result.contents.length === 1) {
         return router.navigate({
-          to: '/learning/resource/video/view',
+          to: '/learning/learning-resource/video/view',
           state: {
             contentUuid: result.contents[0].contentUuid,
           },

@@ -185,7 +185,12 @@ function LearningResourceTableComponent() {
             onClick={(e) => {
               e.stopPropagation();
               // 유형별 상세 화면으로 이동해야 함
-              router.navigate({ to: '/learning_test/resource/view/video' });
+              router.navigate({
+                to: '/learning/learning-resource/video/view',
+                state: {
+                  contentUuid: _.row.original.contentUuid,
+                },
+              });
             }}
           >
             {_.getValue()}
