@@ -1,5 +1,3 @@
-import ChannelService from '@entities/channel/api/channel';
-import RoleManagerService from '@entities/role/api/role-manager';
 import { DropdownFormField } from '@features/form';
 import { CategoryChoiceModal } from '@features/learning/course';
 import {
@@ -25,8 +23,8 @@ import { FormRow2, FormSubTitle } from '@shared/ui';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TabFormRef } from '../common/tab-form-ref';
-import { useFetchCourseConfig } from '@entities/course';
 import { Course, CourseConfig } from '@types';
+import { getRandomId } from '@learnway/shared';
 
 interface BasicInfoProps {
   dummy?: any;
@@ -179,13 +177,16 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
                   console.log('modalData', modalData);
                   return modalData.map((d: any) => {
                     return {
-                      combiners: d.groups || [
-                        {
-                          combineType: 'JOB_ROLE',
-                          combineValue: d?.userGroupIds?.[0],
-                        },
-                      ],
-                      name: d.name,
+                      combiners: d.groups?.length
+                        ? d.groups
+                        : [
+                            {
+                              combineType: 'JOB_ROLE',
+                              combineValue: d?.userGroupIds?.[0],
+                            },
+                          ],
+                      name: d.name || 'xx',
+                      groupKey: getRandomId(),
                     };
                   });
                 }}
