@@ -1,4 +1,4 @@
-import { PostDraftVideosParams } from '@types';
+import { BlogCreateReq, BlogUpdateReq, BlogWatchLogReq, PostDraftVideosParams } from '@types';
 import LearningResourceService from '../api/learning-resource';
 
 export const queryKeys = {
@@ -14,6 +14,7 @@ export const queryKeys = {
   html5Draft: ['html5-draft'] as const,
   html5FileChange: ['html5-file-change'] as const,
   html5Resource: ['html5-resource'] as const,
+  blogResource: ['blog-resource'] as const,
 };
 
 export const learningResourceQueryOptions = {
@@ -105,10 +106,26 @@ export const learningResourceQueryOptions = {
     staleTime: 0,
     enabled: true,
   }),
+  getBlogContent: (contentUuid: string) => ({
+    queryKey: queryKeys.blogResource,
+    queryFn: () => LearningResourceService.fetchBlogResource(contentUuid),
+    cacheTime: 0,
+    staleTime: 0,
+    enabled: true,
+  }),
 };
 
 export const mutateOptions = {
   postDraftVideos: () => ({
     mutationFn: (params: PostDraftVideosParams) => LearningResourceService.postDraftVideos(params),
+  }),
+  createBlogContent: () => ({
+    mutationFn: (params: BlogCreateReq) => LearningResourceService.createBlogContent(params),
+  }),
+  updateBlogContent: () => ({
+    mutationFn: (params: BlogUpdateReq) => LearningResourceService.updateBlogContent(params),
+  }),
+  saveBlogWatchLog: () => ({
+    mutationFn: (params: BlogWatchLogReq) => LearningResourceService.saveBlogWatchLog(params),
   }),
 };

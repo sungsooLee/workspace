@@ -33,6 +33,18 @@ export interface AuthUser {
   lastVisitedFoRoleId: number | null;
   lastVisitedFoTenantId: number | null;
   myRoles?: RoleInfo[]; // 나의 역할 목록 조회 결과
+  company?: {
+    companyId?: number;
+    companyCode?: string;
+    name?: string;
+    engName?: string;
+  };
+  dept?: {
+    deptId?: number;
+    deptCode?: string;
+    deptName?: string;
+    deptEngName?: string;
+  };
 }
 
 export interface AuthSSOHealthcheck {
