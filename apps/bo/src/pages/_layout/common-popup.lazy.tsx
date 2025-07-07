@@ -436,7 +436,13 @@ function RouteComponent() {
                   e.stopPropagation();
                   openModal({
                     width: 'xl',
-                    content: <UserGroupChoiceModal />,
+                    content: (
+                      <UserGroupChoiceModal
+                        userGroupIds={[4, 3, 2, 1]}
+                        userGroupType="ORGANIZATION"
+                        groups={[]}
+                      />
+                    ),
                   });
                 }}
               >
