@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
 import { ChipList, SelectOption, Avatar, Button } from '@learnway/ui';
-import { IcoSymbol, IcoArrowNext } from '@learnway/icons';
+import { IcoSymbol, IcoArrowForward } from '@learnway/icons';
 import { Curriculum } from '../../../../features/layout';
 
 import operatorStyles from '../../../../pages/_layout/course-introduction/operator.module.css';
@@ -47,10 +47,8 @@ const CourseIntroductionCompoment = () => {
       </div>
 
       {/* chip */}
-      <div className={styles.package_box}>
-        <div className={styles.chip_box}>
-          <ChipList options={options} prefixCharacter="#" hideCloseButton />
-        </div>
+      <div className={styles.chip_box}>
+        <ChipList options={options} prefixCharacter="#" hideCloseButton />
       </div>
 
       {/* 교육목표 */}
@@ -251,7 +249,7 @@ const CourseIntroductionCompoment = () => {
       <div className={styles.more_box}>
         <Button>
           과정 정보 펼치기
-          <IcoArrowNext width={16} height={16} stroke="#4d525c" />
+          <IcoArrowForward width={16} height={16} stroke="#4d525c" />
         </Button>
       </div>
     </div>
