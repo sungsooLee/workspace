@@ -397,7 +397,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
             element={
               <DropdownFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['lms.course.CourseType'],
+                  codeGroup: CODE_GROUP['lms.course.HmgStandardMainCategory'],
                 }}
               />
             }
@@ -410,7 +410,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
             element={
               <DropdownFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['lms.course.CourseType'],
+                  codeGroup: CODE_GROUP['lms.course.HmgStandardSubCategory'],
                 }}
               />
             }
