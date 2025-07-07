@@ -62,9 +62,11 @@ enum EnTabKeys {
 const TenantCompanyOrganizationTreeComponent = ({
   companyCode,
   showType,
+  roleInfo,
 }: {
   companyCode: string;
   showType: string;
+  roleInfo: string;
 }) => {
   const { confirm: openConfirm, alert: openAlert } = useModal();
   const queryClient = useQueryClient();
@@ -145,6 +147,7 @@ const TenantCompanyOrganizationTreeComponent = ({
   });
 
   const handleSelectedNodeChange = (node: any) => {
+    if( roleInfo === 'TENANT' && showType === EnOrganizationShowType.origin ) { return; }
     console.log('##### handleSelectedNodeChange', node);
     if (node.key !== 'root' && node.parentKey !== 'root') {
       const location = findOrganizationPathById(deptTreeData, node.key);

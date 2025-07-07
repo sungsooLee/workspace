@@ -30,17 +30,14 @@ const UserGroupOrganizationComponent = ({
     if (selectedItems.length > 0) {
       const newOption: BlackwhiteUsersParam = {
         userGroupType: 'ORGANIZATION',
-        companyId: '',
-        companyCode: '',
         deptName: '',
         userGroupIds: selectedItems.filter(({ isCombined }) => !isCombined).map(({ id }) => id),
-        employeeNumber: '',
-        userName: '',
         accountStatus: 'NORMAL',
         groups: selectedItems
           .filter(({ isCombined }) => isCombined)
-          .map(({ ids }) => ({
+          .map(({ ids, fullName }) => ({
             combiners: ids.map((id: number) => ({ combineType: 'USER_GROUP', combineValue: id })),
+            name: fullName,
           })),
       };
       handleSetOption(newOption);

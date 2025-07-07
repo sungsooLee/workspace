@@ -291,7 +291,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
   const handleUserGroupMemberView = () => {
     openModal({
       width: 'xl',
-      content: <UserGroupChoiceModal />,
+      content: <UserGroupChoiceModal userGroupIds={[]} userGroupType="ORGANIZATION" groups={[]} />,
     });
   };
 
@@ -459,14 +459,18 @@ const CompanyDetailComponent = (props: any, ref: any) => {
 
   return (
     <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
-      {
-        (props.roleInfo !== 'TENANT') && <>
+      {props.roleInfo !== 'TENANT' && (
+        <>
           <FormSubTitle label={t('회사 인사 데이터 관리 정보')} lineType="dark" />
           <ContentsRow>
             <FormRow provider={provider} name={'companyType'} element={<RadioGroupFormField />} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider} name={'hrInfoManageType'} element={<RadioGroupFormField />} />
+            <FormRow
+              provider={provider}
+              name={'hrInfoManageType'}
+              element={<RadioGroupFormField />}
+            />
           </ContentsRow>
           <FormDisplay
             provider={provider}
@@ -485,7 +489,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
             </ContentsRow>
           </FormDisplay>
         </>
-      }
+      )}
 
       <FormSubTitle label={t('회사 기본 정보')} lineType="dark" />
       <ContentsRow>

@@ -41,20 +41,22 @@ export interface UsersByIdsParam {
 export interface BlackwhiteUsersParam {
   groups: Group[];
   userGroupType: UserGroupType;
-  companyId: string;
-  companyCode: string;
+  companyId?: string;
+  companyCode?: string;
   deptName: string;
   userGroupIds: number[];
-  employeeNumber: string;
-  userName: string;
+  employeeNumber?: string;
+  userName?: string;
   accountStatus: 'NORMAL';
 }
 
 type Combiner = {
   combineType: 'USER_GROUP';
   combineValue: number;
+  combineName: string;
 };
 
 type Group = {
   combiners: Combiner[];
+  name: string;
 };
