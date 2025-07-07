@@ -15,6 +15,7 @@ import {
   LearningWindowBaseInfo,
 } from '@learnway/ui';
 import { ScormRteService } from '@entities/scorm/api/scorm-rte';
+import { useVideoWatchLog } from '@entities/video/service/video.hook';
 
 export const Route = createFileRoute('/_learning/learning-window')({
   component: RouteComponent,
@@ -26,6 +27,7 @@ function RouteComponent() {
 
   const [scormConfig, setScormConfig] = useState<ScormPlayerConfigProperties>();
   const [videoConfig, setVideoConfig] = useState<any>();
+  const [videoStart, setVideoStart] = useState<number>(0);
 
   const { baseInfo, playInfo, setVideoInfo, setBaseInfo, setCurriculum, setScormInfo } =
     useLearningWindow();
@@ -38,6 +40,23 @@ function RouteComponent() {
       commit: ScormRteService.commit,
     };
   }, []);
+  const { watchLog } = useVideoWatchLog();
+  const handleVideoProgress = (state: any) => {
+    const payload = {
+      courseSequenceId: baseInfo?.sequenceId,
+      courseId: baseInfo?.courseId,
+      curriculumId: baseInfo?.curriculumId,
+      moduleId: playInfo?.moduleId,
+      lessonId: playInfo?.lessonId,
+      contentUuid: playInfo?.contentUuid,
+      videoStartTime: videoStart,
+      videoEndTime: state.playedSeconds,
+      speed: state.speed,
+    };
+    setVideoStart(state.playedSeconds);
+    console.log('handleVideo', payload);
+    watchLog(payload);
+  };
 
   useEffect(() => {
     if (!scormInfo) return;
@@ -47,7 +66,8 @@ function RouteComponent() {
   useEffect(() => {
     if (!videoInfo) return;
     console.log('vidoeInfo', videoInfo);
-    setVideoInfo(videoInfo);
+    setVideoStart(0);
+    setVideoInfo({ ...videoInfo, playItem: videoInfo.children[0].m3u8Url });
   }, [videoInfo]);
 
   useEffect(() => {
@@ -88,5 +108,7 @@ function RouteComponent() {
     }
   }, []);
 
-  return <LearningWindowLayout scormRteService={scormRteService} />;
+  return (
+    <LearningWindowLayout scormRteService={scormRteService} onVideoProgress={handleVideoProgress} />
+  );
 }

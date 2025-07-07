@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import { isMobile } from 'react-device-detect';
 
 import stylesWeb from '@learnway/styles/fo/pages/_learning/learning.module.css';
@@ -7,11 +7,12 @@ import stylesMobile from '@learnway/styles/fo/pages/_learning/learning-m.module.
 import { useVideoPlayer } from '../../../video-player/hooks/video-player.hook';
 import { VideoPlayer } from '../../../video-player/video-player';
 import { VideoPlayerContainer } from '../../../video-player/video-player-container';
+import { vi } from 'date-fns/locale';
 
 const styles = isMobile ? stylesMobile : stylesWeb;
 
-const LearningWindowVideoPlayerComponent: FC<any> = ({ videoInfo }) => {
-  const player = useVideoPlayer();
+const LearningWindowVideoPlayerComponent: FC<any> = ({ videoInfo, onProgress }) => {
+  const player = useVideoPlayer({ onProgressCallback: onProgress });
   return (
     <div className={styles.start}>
       <VideoPlayerContainer
@@ -22,11 +23,10 @@ const LearningWindowVideoPlayerComponent: FC<any> = ({ videoInfo }) => {
         <VideoPlayer
           ref={player.playerRef}
           playing={player.playing}
+          progressInterval={1000 * 10}
           onProgress={player.onProgress}
           onDuration={player.onDuration}
-          url={
-            'http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/upload/content/video/2025/2/2/master.m3u8'
-          }
+          url={videoInfo.masterVideo}
           // config={{
           //   file: {
           //     // attributes: {
