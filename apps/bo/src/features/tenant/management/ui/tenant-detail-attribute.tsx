@@ -102,6 +102,13 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
       tenantInfo.isCommonCategory && useCategory.push(EnUseCategory.isCommonCategory);
       tenantInfo.isTenantCategory && useCategory.push(EnUseCategory.isTenantCategory);
 
+      // boolean 값이 null 일 때 default = false
+      attributeData.isCarTenantCustomOption = false;
+      attributeData.isRotemTenantCustomOption = false;
+      attributeData.isOutsourcingTenantCustomOption = false;
+      attributeData.isWiaTenantCustomOption = false;
+      attributeData.isAutoeverTenantCustomOption = false;
+
       fetchBaseData({ ...tenantInfo, device: device, useCategory: useCategory });
 
       const langValues = tenantInfo?.langCountryCodeTypeList ?? [];
@@ -207,7 +214,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
               element={
                 <>
                   {t('사용')}
-                  <Switch disabled={true} checked={true}/>
+                  <Switch disabled={props.roleInfo !== 'PLATFORM'} checked={true}/>
                 </>
               }
             />
@@ -373,7 +380,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
               element={
                 <>
                   {t('사용')}
-                  <Switch disabled={true} checked={true}/>
+                  <Switch disabled={props.roleInfo !== 'PLATFORM'} checked={true}/>
                 </>
               }
             />
@@ -719,9 +726,8 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
           </>
         }
 
-        {/* TODO BE API 수정 시 response data 작업 */}
         {
-          (props.roleInfo === 'PLATFORM') && <>
+          (props.roleInfo === 'PLATFORM' || attributeData?.isCarTenantCustomOption) && <>
             <FormSubTitle
               label={t('완성차 테넌트 전용 항목')}
               lineType={'dark'}
@@ -739,11 +745,11 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
                   </Button>
                 </Tooltip>
               }
-              actionNode={<FormRow provider={provider} name={'todoIsCar'} />}
+              actionNode={<FormRow provider={provider} name={'isCarTenantCustomOption'} />}
             />
             <FormDisplay
               provider={provider}
-              dependencies={[{ name: 'todoIsCar', value: true }]}
+              dependencies={[{ name: 'isCarTenantCustomOption', value: true }]}
             >
               <ContentsRow>
                 <div className={formStyles.form_item}>
@@ -770,7 +776,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
         }
 
         {
-          (props.roleInfo === 'PLATFORM') && <>
+          (props.roleInfo === 'PLATFORM' || attributeData?.isRotemTenantCustomOption ) && <>
             <FormSubTitle
               label={t('로템 테넌트 전용 항목')}
               lineType={'dark'}
@@ -788,11 +794,11 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
                   </Button>
                 </Tooltip>
               }
-              actionNode={<FormRow provider={provider} name={'todoIsRowTotem'} />}
+              actionNode={<FormRow provider={provider} name={'isRotemTenantCustomOption'} />}
             />
             <FormDisplay
               provider={provider}
-              dependencies={[{ name: 'todoIsRowTotem', value: true }]}
+              dependencies={[{ name: 'isRotemTenantCustomOption', value: true }]}
             >
               <ContentsRow>
                 <div className={formStyles.form_item}>
@@ -819,7 +825,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
         }
 
         {
-          (props.roleInfo === 'PLATFORM') && <>
+          (props.roleInfo === 'PLATFORM' || attributeData?.isOutsourcingTenantCustomOption) && <>
             <FormSubTitle
               label={t('위탁 테넌트 전용 항목')}
               lineType={'dark'}
@@ -837,11 +843,11 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
                   </Button>
                 </Tooltip>
               }
-              actionNode={<FormRow provider={provider} name={'todoIsConsignment'} />}
+              actionNode={<FormRow provider={provider} name={'isOutsourcingTenantCustomOption'} />}
             />
             <FormDisplay
               provider={provider}
-              dependencies={[{ name: 'todoIsConsignment', value: true }]}
+              dependencies={[{ name: 'isOutsourcingTenantCustomOption', value: true }]}
             >
               <ContentsRow>
                 <div className={formStyles.form_item}>
@@ -868,7 +874,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
         }
 
         {
-          (props.roleInfo === 'PLATFORM') && <>
+          (props.roleInfo === 'PLATFORM' || attributeData?.isWiaTenantCustomOption) && <>
             <FormSubTitle
               label={t('위아 테넌트 전용 항목')}
               lineType={'dark'}
@@ -886,11 +892,11 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
                   </Button>
                 </Tooltip>
               }
-              actionNode={<FormRow provider={provider} name={'todoIsWeAre'} />}
+              actionNode={<FormRow provider={provider} name={'isWiaTenantCustomOption'} />}
             />
             <FormDisplay
               provider={provider}
-              dependencies={[{ name: 'todoIsWeAre', value: true }]}
+              dependencies={[{ name: 'isWiaTenantCustomOption', value: true }]}
             >
               <ContentsRow>
                 <div className={formStyles.form_item}>
@@ -917,7 +923,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
         }
 
         {
-          (props.roleInfo === 'PLATFORM') && <>
+          (props.roleInfo === 'PLATFORM' || attributeData?.isAutoeverTenantCustomOption) && <>
             <FormSubTitle
               label={t('오토에버 테넌트 전용 항목')}
               lineType={'dark'}
@@ -935,11 +941,11 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
                   </Button>
                 </Tooltip>
               }
-              actionNode={<FormRow provider={provider} name={'todoIsAutoEver'} />}
+              actionNode={<FormRow provider={provider} name={'isAutoeverTenantCustomOption'} />}
             />
             <FormDisplay
               provider={provider}
-              dependencies={[{ name: 'todoIsAutoEver', value: true }]}
+              dependencies={[{ name: 'isAutoeverTenantCustomOption', value: true }]}
             >
               <ContentsRow>
                 <div className={formStyles.form_item}>
@@ -1169,6 +1175,51 @@ const formConfig: DynamicFormConfig = {
     },
     {
       name: 'isAdminDataOption', // 행정 항묵
+      type: 'switch',
+      label: '',
+      value: false,
+      switchConfig: {
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
+    {
+      name: 'isCarTenantCustomOption', // 완성차 테넌트 전용 항목
+      type: 'switch',
+      label: '',
+      value: false,
+      switchConfig: {
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
+    {
+      name: 'isRotemTenantCustomOption', // 로템 테넌트 전용 항목
+      type: 'switch',
+      label: '',
+      value: false,
+      switchConfig: {
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
+    {
+      name: 'isOutsourcingTenantCustomOption', // 위탁 테넌트 전용 항목
+      type: 'switch',
+      label: '',
+      value: false,
+      switchConfig: {
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
+    {
+      name: 'isWiaTenantCustomOption', // 위아 테넌트 전용 항목
+      type: 'switch',
+      label: '',
+      value: false,
+      switchConfig: {
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
+    {
+      name: 'isAutoeverTenantCustomOption', // 오토에버 테넌트 전용 항목
       type: 'switch',
       label: '',
       value: false,
