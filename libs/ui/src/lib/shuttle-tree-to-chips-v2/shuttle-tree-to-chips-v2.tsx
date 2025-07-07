@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Button } from '../button/button';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import styles from './tree.module.css'; // Tree module CSS
@@ -61,6 +61,7 @@ export const ShuttleTreeToChipsV2 = ({
     if (checkedValues.length > 0) {
       const newKey = {
         isCombined: true,
+        ids: checkedValues.map(({ id }) => id),
         key: checkedValues.map(({ key }) => key).join(','),
         fullName: checkedValues.map(({ fullName }) => fullName).join(' & '),
       };

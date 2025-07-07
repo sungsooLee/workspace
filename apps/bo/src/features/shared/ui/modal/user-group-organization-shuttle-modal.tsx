@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { t } from 'i18next';
 import { UserGroupOrganization } from '@features/shared';
 import { IcoRefresh02 } from '@learnway/icons';
+import { BlackwhiteUsersParam } from '@types';
 
 type Props = {
   tenantIds: number[];
@@ -11,7 +12,7 @@ type Props = {
 const UserGroupOrganizationShuttleModalComponent = ({ tenantIds }: Props) => {
   const { close: closeModal } = useModal();
 
-  const [option, setOption] = useState<any>();
+  const [option, setOption] = useState<BlackwhiteUsersParam>();
 
   const handleOnClose = () => {
     closeModal();

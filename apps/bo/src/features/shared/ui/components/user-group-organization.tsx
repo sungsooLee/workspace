@@ -3,11 +3,11 @@ import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.mod
 import { useEffect, useState } from 'react';
 import { cn } from '@learnway/shared';
 import { useFetchOrganizationTree } from '@entities/user-group';
-import { OrganizationTreeResponse } from '@types';
+import { BlackwhiteUsersParam, OrganizationTreeResponse } from '@types';
 
 type UserGroupOrganizationComponentProps = {
   tenantIds: number[];
-  handleSetOption: (data: any) => void;
+  handleSetOption: (data: BlackwhiteUsersParam) => void;
 };
 
 const UserGroupOrganizationComponent = ({
@@ -27,7 +27,24 @@ const UserGroupOrganizationComponent = ({
   }, [data]);
 
   useEffect(() => {
-    if (selectedItems.length > 0) handleSetOption(selectedItems);
+    if (selectedItems.length > 0) {
+      const newOption: BlackwhiteUsersParam = {
+        userGroupType: 'ORGANIZATION',
+        companyId: '',
+        companyCode: '',
+        deptName: '',
+        userGroupIds: selectedItems.filter(({ isCombined }) => !isCombined).map(({ id }) => id),
+        employeeNumber: '',
+        userName: '',
+        accountStatus: 'NORMAL',
+        groups: selectedItems
+          .filter(({ isCombined }) => isCombined)
+          .map(({ ids }) => ({
+            combiners: ids.map((id: number) => ({ combineType: 'USER_GROUP', combineValue: id })),
+          })),
+      };
+      handleSetOption(newOption);
+    }
   }, [selectedItems]);
 
   return (
