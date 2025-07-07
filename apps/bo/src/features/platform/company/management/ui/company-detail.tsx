@@ -459,29 +459,33 @@ const CompanyDetailComponent = (props: any, ref: any) => {
 
   return (
     <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
-      <FormSubTitle label={t('회사 인사 데이터 관리 정보')} lineType="dark" />
-      <ContentsRow>
-        <FormRow provider={provider} name={'companyType'} element={<RadioGroupFormField />} />
-      </ContentsRow>
-      <ContentsRow>
-        <FormRow provider={provider} name={'hrInfoManageType'} element={<RadioGroupFormField />} />
-      </ContentsRow>
-      <FormDisplay
-        provider={provider}
-        dependencies={[{ name: 'hrInfoManageType', value: 'MANUAL_MANAGE' }]}
-      >
-        <ContentsRow>
-          <FormRow provider={provider} name={'companyMemberJoinTypeList'} />
-        </ContentsRow>
-      </FormDisplay>
-      <FormDisplay
-        provider={provider}
-        dependencies={[{ name: 'hrInfoManageType', value: 'AUTO_MANAGE' }]}
-      >
-        <ContentsRow>
-          <FormRow provider={provider} name={'linkageSystem'} />
-        </ContentsRow>
-      </FormDisplay>
+      {
+        (props.roleInfo !== 'TENANT') && <>
+          <FormSubTitle label={t('회사 인사 데이터 관리 정보')} lineType="dark" />
+          <ContentsRow>
+            <FormRow provider={provider} name={'companyType'} element={<RadioGroupFormField />} />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow provider={provider} name={'hrInfoManageType'} element={<RadioGroupFormField />} />
+          </ContentsRow>
+          <FormDisplay
+            provider={provider}
+            dependencies={[{ name: 'hrInfoManageType', value: 'MANUAL_MANAGE' }]}
+          >
+            <ContentsRow>
+              <FormRow provider={provider} name={'companyMemberJoinTypeList'} />
+            </ContentsRow>
+          </FormDisplay>
+          <FormDisplay
+            provider={provider}
+            dependencies={[{ name: 'hrInfoManageType', value: 'AUTO_MANAGE' }]}
+          >
+            <ContentsRow>
+              <FormRow provider={provider} name={'linkageSystem'} />
+            </ContentsRow>
+          </FormDisplay>
+        </>
+      }
 
       <FormSubTitle label={t('회사 기본 정보')} lineType="dark" />
       <ContentsRow>
