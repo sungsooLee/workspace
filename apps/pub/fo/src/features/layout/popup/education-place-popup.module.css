@@ -2,29 +2,22 @@
   &.education_wrap {
     .addr_box {
       strong {
-        @apply title_6_b block text-[var(--gray8)];
+        @apply title4-b block text-[var(--gray10)];
       }
       .number {
         @apply mt-[8px] flex items-center;
         dt,
         dd {
-          @apply body_bo_2_r inline-block leading-[22px] text-[var(--gray7)];
+          @apply body-md inline-block text-[var(--gray35)];
         }
         dd {
           @apply ml-[4px];
         }
       }
       .addr {
-        @apply mt-[8px] flex items-center;
-        dt,
-        dd {
-          @apply body_bo_2_r inline-block leading-[22px] text-[var(--gray7)];
-        }
-        dd {
-          @apply ml-[4px];
-          button {
-            @apply ml-[8px] text-[var(--gray8)] underline underline-offset-[4px];
-          }
+        @apply body-md mt-[8px] flex items-center text-[var(--gray35)];
+        button {
+          @apply label-xl ml-[12px] text-[var(--gray35)] underline underline-offset-[4px];
         }
       }
     }
@@ -35,9 +28,9 @@
 }
 
 .copy {
-  @apply body_3_r relative rounded-[4px] bg-[var(--primary1)] px-[16px] py-[8px] leading-[22px] text-white;
+  @apply body-sm relative rounded-[6px] bg-[var(--gray35)] px-[16px] py-[8px] leading-[22px] text-white;
   &::before {
-    @apply absolute -top-[10px] left-[10px] rotate-[90deg] border-b-[10px] border-r-[15px] border-t-[10px] border-solid border-[var(--primary1)] border-b-transparent border-t-transparent content-[''];
+    @apply absolute -top-[10px] left-[10px] rotate-[90deg] border-b-[10px] border-r-[15px] border-t-[10px] border-solid border-[var(--gray35)] border-b-transparent border-t-transparent content-[''];
   }
 }
 

@@ -473,7 +473,7 @@ const StandaloneTimeInput = ({
                 style={{
                   backgroundColor: m === selectedMinute ? '#EDFCFF' : 'transparent',
                   cursor: selectionStep === 'minute' ? 'pointer' : 'default',
-                  opacity: selectionStep !== 'hour' ? 1 : 0.3,
+                  // opacity: selectionStep !== 'hour' ? 1 : 0.3,
                 }}
               >
                 {formatNumber(m)}
