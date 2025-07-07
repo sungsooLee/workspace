@@ -21,7 +21,9 @@ import {
 } from '@learnway/hooks';
 import { FormDisplay, SubTitlesFormField } from '@features/form';
 import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '@shared/ui';
-import { useTranslation } from 'react-i18next';
+import { useQuery } from '@tanstack/react-query';
+import { learningResourceQueryOptions } from '@entities/learning-resource';
+import { NotFound } from '@features/layout';
 
 export const Route = createLazyFileRoute('/_layout/learning/learning-resource/video/view')({
   component: RouteComponent,
@@ -31,10 +33,11 @@ function RouteComponent() {
   const {
     state: { contentUuid },
   } = useCurrentRoute();
-  console.log('🚀 ~ RouteComponent ~ contentUuid:', contentUuid); // 컨텐츠 조회해서 formfield 에 뿌려야 함
+  const { data, error: fetchError } = useQuery(
+    learningResourceQueryOptions.getContent(contentUuid),
+  );
 
   const router = useRouter();
-  const { t } = useTranslation();
   const { provider, onSubmit } = useDynamicForm<typeof formConfig>(formConfig);
 
   const handleFormSubmit = (data: DynamicFormValues<typeof formConfig>) => {
@@ -42,6 +45,16 @@ function RouteComponent() {
   };
 
   const permission = 'READ' as string; //user permission 정보 가져와야 함
+
+  if (fetchError) {
+    console.log('🚀 ~ RouteComponent ~ fetchError:', fetchError);
+    return <NotFound />;
+  }
+
+  if (!data) {
+    return <PageContainer />;
+  }
+  console.log('🚀 ~ RouteComponent ~ data:', data);
 
   const openModal = () => {
     // 모달 다으면 oncofmr(value)

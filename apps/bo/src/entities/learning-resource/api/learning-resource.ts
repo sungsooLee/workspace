@@ -5,6 +5,7 @@ import {
   BlogCreateReq,
   BlogUpdateReq,
   BlogWatchLogReq,
+  GetContentDetailRes,
   PostDraftVideosParams,
   PostDraftVideosRes,
 } from '@types';
@@ -21,6 +22,10 @@ export default class LearningResourceService {
 
   static fetchContents(params: any): Promise<any> {
     return httpService.get(`${CMSApiPrefix()}/contents`, params);
+  }
+
+  static fetchContent(contentUuid: string): Promise<GetContentDetailRes> {
+    return httpService.get(`${CMSApiPrefix()}/content/${contentUuid}`);
   }
 
   static postDraftVideos(params: PostDraftVideosParams): Promise<PostDraftVideosRes> {
