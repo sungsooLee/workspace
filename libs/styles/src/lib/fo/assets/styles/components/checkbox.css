@@ -1,4 +1,5 @@
 .nlp--checkbox {
+  @apply align-top;
   label {
     @apply !label-xl !text-[var(--gray35)];
   }
@@ -23,7 +24,10 @@
   }
   &.lg {
     [role='checkbox'] {
-      @apply !h-[2.5rem] !w-[2.2rem];
+      @apply !h-[2.25rem] !w-[2.2rem];
+      & + label {
+        @apply !tracking-normal;
+      }
     }
   }
   &.md {
