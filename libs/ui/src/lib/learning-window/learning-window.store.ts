@@ -36,10 +36,10 @@ export interface ScormPlayerConfigProperties {
   /** Scorm Manifest Item element Id */
   scoId?: string;
 }
-interface BaseInfo {
-  courseId: number;
-  sequenceId: number;
-  curriculumId: number;
+export interface LearningWindowBaseInfo {
+  courseId?: number;
+  sequenceId?: number;
+  curriculumId?: number;
 }
 
 interface PlayListItem {
@@ -69,11 +69,11 @@ interface Lesson {
 
 interface LearningWindowStoreData {
   playIndex: number;
-  baseInfo?: BaseInfo;
+  baseInfo?: LearningWindowBaseInfo;
   curriculum?: Curriculum;
   playInfo?: PlayInfo;
   playList?: PlayListItem[];
-  setBaseInfo: (v?: BaseInfo) => void;
+  setBaseInfo: (v?: LearningWindowBaseInfo) => void;
   setPlayInfo: (v?: PlayInfo) => void;
   setCurriculum: (v?: Curriculum) => void;
   setPlayList: (v?: PlayListItem[]) => void;
@@ -102,7 +102,7 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
     });
   },
 
-  setBaseInfo(baseInfo?: BaseInfo) {
+  setBaseInfo(baseInfo?: LearningWindowBaseInfo) {
     set((state) => ({ baseInfo }));
   },
 

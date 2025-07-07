@@ -11,6 +11,7 @@ import {
   LearningWindowLayout,
   useLearningWindow,
   ScormPlayerConfigProperties,
+  LearningWindowBaseInfo,
 } from '@learnway/ui';
 import { ScormRteService } from '@entities/scorm/api/scorm-rte';
 
@@ -64,7 +65,9 @@ function RouteComponent() {
   }, [curriculum]);
 
   useEffect(() => {
-    const learningInfo = { ...routerState.location.state };
+    const learningInfo = {
+      ...routerState.location.state,
+    } as LearningWindowBaseInfo;
     console.log('state info ', learningInfo);
     if (learningInfo.curriculumId) {
       setBaseInfo(learningInfo);
