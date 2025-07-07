@@ -375,6 +375,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
     const selectApis = await openModal({
       content: <MenuApiMappingModal menuScopeCode={menuScope} selectedApiKeys={keyArray} />,
       width: 'xl',
+      height: 'fix',
     });
     updateFormData({ ...getValues(), apiMappingMenuList: [...selectApis] });
   };
