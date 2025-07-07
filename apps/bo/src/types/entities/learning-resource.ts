@@ -1,5 +1,16 @@
 import { FileStatus, FileType, ProcessingStatus } from './enum';
 
+/**
+ * VIDEO_ADD_INFO: 초 단위 (비디오, 블로그)
+ * EXAM_ADD_INFO: 건수 단위 (시험지, 문제은행, 설문지)
+ */
+export enum ContentAddInfoType {
+  VIDEO = 'VIDEO_ADD_INFO',
+  // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
+  BLOG = 'VIDEO_ADD_INFO',
+  EXAM = 'EXAM_ADD_INFO',
+}
+
 export interface BlogCreateReq {
   contentName: string;
   languageCountryCode: string;
@@ -8,6 +19,7 @@ export interface BlogCreateReq {
   description: string;
   coordinatorUuid: string;
   coordinatorName: string;
+  coordinatorTelCountryCode: string;
   coordinatorTelNo: string;
   blogContent: object;
   contentTime: number;
@@ -19,6 +31,7 @@ export interface BlogCreateReq {
   vendorName: string;
   // vendorCoordinatorUuid: string; // 개발업체담당자명은 직접입력으로 명시되어 있음
   vendorCoordinatorName: string;
+  vendorTelCountryCode: string;
   vendorTelNo: string;
   contentThumbnailFileGroupUuid: string;
   selectedContentThumbnailFileUuid: string;
@@ -30,12 +43,21 @@ export interface BlogCreateReq {
   isDeleted: boolean;
   isOpened: boolean;
   tags: string[];
-  contentAddInfoType?: string;
-  contentAddInfo?: number;
+  contentAddInfoType: string;
+  contentAddInfo: number;
 }
 
 export interface BlogUpdateReq extends BlogCreateReq {
   contentUuid: string;
+}
+
+export interface BlogPostRes extends BlogCreateReq {
+  contentUuid: string;
+  createType: string;
+  contentType: string;
+  contentStatusCode: string;
+  aiSummary: string;
+  aiKeyword: string;
 }
 
 export type BlogWatchLogReq = {

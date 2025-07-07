@@ -1,5 +1,6 @@
 import { Company } from './company';
 import { CompanyDept } from './companyDept';
+import { RoleInfo, Tenant } from '@learnway/auth/types';
 
 export interface UserState {
   /**
@@ -78,6 +79,8 @@ export type User = {
   loginFailCount?: number;
   company?: Company;
   dept?: CompanyDept;
+  tenants?: Tenant[];
+  roles?: RoleInfo[];
   /**
    * 사용자구분
    */

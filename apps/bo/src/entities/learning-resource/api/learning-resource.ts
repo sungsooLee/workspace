@@ -139,6 +139,6 @@ export default class LearningResourceService {
 
   // 블로그 사용/조회 이력 저장
   static saveBlogWatchLog(body: BlogWatchLogReq) {
-    return httpService.put(`${CMSApiPrefix()}/blog/watch-log`, body);
+    return httpService.post(`${CMSApiPrefix()}/blog/watch-log`, body);
   }
 }
