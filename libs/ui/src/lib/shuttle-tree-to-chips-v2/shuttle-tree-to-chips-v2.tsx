@@ -78,6 +78,7 @@ export const ShuttleTreeToChipsV2 = ({
     <div className={cn(layoutStyles.start, layoutStyles.wrap, layoutStyles.pop_layout)}>
       <div className={layoutStyles.inner}>
         <TreeBox
+          treeId={'ShuttleListTree'}
           data={treeData}
           type="SHUTTLE_LIST"
           title={sourceTitle}
