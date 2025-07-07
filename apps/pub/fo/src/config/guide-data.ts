@@ -755,8 +755,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '2025-04-29',
     lastUpdateDate: '2025-06-25',
-    remarks:
-      '- introduction.tsx\n- 수강신청 불가 팝업창들 course-information-popup.tsx (반려팝업 미결정)',
+    remarks: '- introduction.tsx',
   },
   {
     screenId: 'NLP_FO_LEC_1022',
@@ -886,8 +885,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks:
-      '- introduction.tsx\n- tooltip 확인중\n- 수강신청 불가 팝업창들 course-information-popup.tsx (반려 팝업 미결정)\n- 차수선택 팝업 course-selection-popup.tsx',
+    remarks: '- introduction.tsx\n- tooltip 확인중\n- 차수선택 팝업 course-selection-popup.tsx',
   },
   {
     screenId: 'NLP_FO_LEC_MA_1004',

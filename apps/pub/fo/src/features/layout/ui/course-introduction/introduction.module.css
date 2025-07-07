@@ -1,6 +1,5 @@
 .start {
   &.introduction {
-    @apply pt-[26px];
     h2 {
       @apply title_5_b text-[var(--gray9)];
     }
@@ -8,7 +7,7 @@
       @apply mt-[24px];
     }
     .info_box {
-      @apply mt-[40px];
+      @apply mt-[60px];
       .tit_box {
         @apply mb-[20px] flex items-center justify-between;
         strong {
@@ -65,27 +64,26 @@
       }
     }
 
-    .package_box {
+    .chip_box {
       @apply mt-[32px];
-      .img_box {
-        img {
-          @apply w-full overflow-hidden rounded-[16px];
-        }
-      }
-      .chip_box {
-        @apply mt-[24px];
+      & > div {
+        @apply border-none p-0;
         & > div {
-          @apply border-none p-0;
-          & > div {
-            @apply gap-x-[8px] gap-y-[10px];
-            span {
-              @apply !h-auto !min-h-[inherit] rounded-[24px] bg-[var(--gray95)];
-            }
-            button {
-              @apply !px-0 text-[var(--gray10)];
-            }
+          @apply gap-x-[8px] gap-y-[10px];
+          span {
+            @apply !h-auto !min-h-[inherit] rounded-[24px] bg-[var(--gray95)];
+          }
+          button {
+            @apply !px-0 text-[var(--gray10)];
           }
         }
+      }
+    }
+
+    .more_box {
+      @apply flex h-[120px] items-center justify-center;
+      button {
+        @apply label-lg-b rounded-[8px] border-[1px] border-solid border-[var(--gray75)] p-[12px] leading-[20px] text-[var(--gray35)];
       }
     }
   }

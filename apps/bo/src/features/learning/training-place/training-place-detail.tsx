@@ -13,6 +13,7 @@ import { EnFormMode, EnPageMode } from '@types';
 import SpaceService from '@entities/training-place/api/space';
 import { SingleAttachmentFormField } from '@shared/ui/form/single-attachment-form-field';
 import { Space } from 'src/types/entities/space';
+import { AddressSearchFormField } from '@shared/ui/form/address-search-form-field';
 
 const URL_REGEX =
   /((https?:\/\/(www\.)?)|(www\.))[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)(?<![-.+():%])/;
@@ -207,13 +208,7 @@ const TrainingPlaceDetailComponent = (props: TrainingPlaceDetailProps, ref: any)
       {/* Offline */}
       <FormDisplay provider={provider} dependencies={[{ name: 'onOffLineType', value: 'OFFLINE' }]}>
         <ContentsRow>
-          <FormRow
-            provider={provider}
-            name={'address'}
-            element={
-              <Input showSearchIcon={!formDisabled} onEnterKeyDown={handleSearchAddress} readOnly />
-            }
-          />
+          <FormRow provider={provider} name={'address'} element={<AddressSearchFormField />} />
           <FormRow
             provider={provider}
             name={'addressDetail'}
@@ -284,11 +279,6 @@ const formConfig: DynamicFormConfig = {
       maxLength: 40,
     },
     {
-      name: 'postalCode',
-      type: 'hidden',
-      value: '',
-    },
-    {
       name: 'isUsed',
       type: 'radio-group',
       label: t('사용 여부'),
@@ -308,10 +298,21 @@ const formConfig: DynamicFormConfig = {
     },
     {
       name: 'address',
-      type: 'text',
+      type: 'custom',
       label: t('주소'),
       value: '',
-      placeholder: t('조회 버튼을 클릭하여 주소를 입력하세요'),
+      format: 'string',
+      fields: {
+        postalCode: 'postalCode',
+        address: 'address',
+      },
+    },
+    {
+      label: '',
+      name: 'postalCode',
+      type: 'hidden',
+      format: 'string',
+      value: '',
     },
     {
       name: 'addressDetail',

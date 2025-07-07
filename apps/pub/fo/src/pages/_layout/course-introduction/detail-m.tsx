@@ -11,7 +11,6 @@ import {
   CourseIntroduction, // 과정소개
   CourseEducation, // 교육일정
   CourseReview, // 후기
-  CourseInformationPopup, // 수강신청 불가 팝업창들 및 반려 팝업
   CourseFixedButton, // 수강신청 버튼
   CourseCancelReasonPopup, // 수강신청 취소 사유 입력
   PackageCardList, // 패키지 카드
