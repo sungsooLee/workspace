@@ -1,8 +1,7 @@
-import { CodeApiConfig, CodeOption } from './types';
+import { CodeApiConfig } from './types';
 import { CODE_GROUP } from './constants';
 import { httpService, uniqueByKey } from '@learnway/shared';
 import { PMSApiPrefix, queryConfig } from '@learnway/config';
-import { RoleInfo } from '@learnway/auth/types';
 
 /**
  * 기본 코드 조회 API 가 아닌 케이스만 작성 해준다.
@@ -121,7 +120,7 @@ export const codeOptions: CodeApiConfig = {
     api: async () => {
       const queryClient = queryConfig.getQueryClient();
       const { myRoles } = queryClient.getQueryData(['auth-user']);
-      const channels = myRoles?.flatMap((item: RoleInfo) => item.channels);
+      const channels = myRoles?.flatMap((item: any) => item.channels);
       if (!channels) return [];
       const options = channels.map((d: any) => ({
         label: d.name,
