@@ -2,14 +2,13 @@ import { memo } from 'react';
 import { useRouter, useCanGoBack } from '@tanstack/react-router';
 import { isMobile } from 'react-device-detect';
 
-import { Button } from '../../../../';
-
 import { IcoArrowBackward } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 
 import styles from '@learnway/styles/fo/pages/_learning/learning-header/learning-header.module.css';
 
 import { useLearningWindow } from '../../learning-window.store';
+import { Button } from '../../../button/button';
 
 function LearningHeaderComponent() {
   const router = useRouter();
