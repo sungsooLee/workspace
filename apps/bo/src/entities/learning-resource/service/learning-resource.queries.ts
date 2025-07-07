@@ -5,6 +5,7 @@ export const queryKeys = {
   channelsByTenantId: ['channels-by-tenant-id'] as const,
   userByUuid: ['user-by-uuid'] as const,
   contents: ['contents'] as const,
+  contentDetail: ['content-detail'] as const,
   createDraftVideo: ['create-draft-video'] as const,
   s3FileDownload: ['file-s3-download'] as const,
   learningResources: ['learning-resources'] as const,
@@ -38,6 +39,10 @@ export const learningResourceQueryOptions = {
     cacheTime: 0,
     staleTime: 0,
     enabled: true,
+  }),
+  getContent: (contentUuid: string) => ({
+    queryKey: queryKeys.contentDetail,
+    queryFn: () => LearningResourceService.fetchContent(contentUuid),
   }),
   postDraftVideos: (params: PostDraftVideosParams) => ({
     queryKey: queryKeys.createDraftVideo,
