@@ -1,24 +1,26 @@
-import React from 'react';
+//  IA105 / NLP_BO_CMS_1016 / 학습자원조회_나의 학습자원_등록_동영상(자체)
+
 import { createLazyFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { Button, ContentsRow, DynamicFormField, InputModalSelectorFormField } from '@learnway/ui';
-import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
-import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
-import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
-import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
-import { MovieInfo } from '../../../../../features/learning';
-import { ChannelChoiceModal, ManagerChoiceModal } from '../../../../../features/shared';
-import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
+import { Button, ContentsRow, InputModalSelectorFormField } from '@learnway/ui';
+import {
+  PageContainer,
+  ContentsButtons,
+  LinkBox,
+  MainContents,
+  SubContents,
+} from '@widgets/layout';
+import { MovieInfo } from '@features/learning';
+import { ChannelChoiceModal, ManagerChoiceModal } from '@features/shared';
+import { DateRangePickerFormField } from '@features/learning/ui/resource/date-range-picker-form-field';
 import {
   DynamicFormConfig,
   DynamicFormValues,
   useCurrentRoute,
   useDynamicForm,
 } from '@learnway/hooks';
-import { FormDisplay } from '../../../../../features/form/ui/form-display';
-import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../../shared/ui/form';
-import { SubTitlesFormField } from '../../../../../features/form/ui';
-import { LinkBox } from '../../../../../widgets/layout/ui/container/slot/link-box';
+import { FormDisplay, SubTitlesFormField } from '@features/form';
+import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '@shared/ui';
 import { useTranslation } from 'react-i18next';
 
 export const Route = createLazyFileRoute('/_layout/learning/resource/video/view')({
