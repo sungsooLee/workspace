@@ -508,7 +508,7 @@ function RouteComponent() {
       isOpened: true,
       tags: data.tags,
       blogContent: getParsedDataFromString(data.blogContent),
-      contentAddInfoType: ContentAddInfoType.BLOG,
+      contentAddInfoType: ContentAddInfoType.VIDEO_ADD_INFO, // 블로그(초)
       contentAddInfo: contentTime,
     };
 

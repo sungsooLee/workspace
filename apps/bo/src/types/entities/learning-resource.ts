@@ -8,17 +8,6 @@ import {
   ContentAddInfoType,
 } from './enum';
 
-/**
- * VIDEO_ADD_INFO: 초 단위 (비디오, 블로그)
- * EXAM_ADD_INFO: 건수 단위 (시험지, 문제은행, 설문지)
- */
-export enum ContentAddInfoType {
-  VIDEO = 'VIDEO_ADD_INFO',
-  // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
-  BLOG = 'VIDEO_ADD_INFO',
-  EXAM = 'EXAM_ADD_INFO',
-}
-
 export interface BlogCreateReq {
   contentName: string;
   languageCountryCode: string;
