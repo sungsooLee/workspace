@@ -47,11 +47,11 @@ export interface BlackwhiteUsersParam {
   userGroupIds: number[];
   employeeNumber: string;
   userName: string;
-  accountStatus: string;
+  accountStatus: 'NORMAL';
 }
 
 type Combiner = {
-  combineType: string;
+  combineType: 'USER_GROUP';
   combineValue: number;
 };
 

@@ -44,7 +44,7 @@ function RouteComponent() {
         </Button>
       </ContentsButtons>
       <MainContents>
-        <CompanyDetail ref={formRef} mode={EnFormMode.VIEW} />
+        <CompanyDetail ref={formRef} mode={EnFormMode.VIEW} roleInfo={'TENANT'}/>
       </MainContents>
     </PageContainer>
   );

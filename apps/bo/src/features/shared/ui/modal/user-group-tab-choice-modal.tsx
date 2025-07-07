@@ -17,7 +17,7 @@ import { UserGroupJobTitle } from '../components/user-group-job-title';
 import { UserGroupJob } from '../components/user-group-job';
 import { UserGroupCustom } from '../components/user-group-custom';
 import { IcoRefresh02 } from '@learnway/icons';
-import { UserGroupType } from '@types';
+import { BlackwhiteUsersParam, UserGroupType } from '@types';
 
 type UserGroupTabModalProps = {
   initialTab?: UserGroupType;
@@ -30,7 +30,7 @@ const UserGroupTabModalComponent = forwardRef(
 
     const [selectedTabKey, setSelectedTabKey] = useState<UserGroupType>(initialTab);
 
-    const [option, setOption] = useState<any>();
+    const [option, setOption] = useState<BlackwhiteUsersParam>();
 
     const handleOnClose = () => {
       closeModal();
