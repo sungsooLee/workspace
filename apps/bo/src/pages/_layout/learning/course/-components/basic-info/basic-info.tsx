@@ -176,6 +176,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
                   content: <UserGroupTabsChoiceModal tenantIds={getValues().tenantIds} />,
                 })}
                 transformModalData={(modalData: Array<any>) => {
+                  console.log('modalData', modalData);
                   return modalData.map((d: any) => ({
                     groupId: undefined, // 추가되는 경우 그룹ID 없음
                     combiners: {
