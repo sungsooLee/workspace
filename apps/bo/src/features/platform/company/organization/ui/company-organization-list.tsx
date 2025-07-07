@@ -24,7 +24,7 @@ const _global = {
  * NLP_BO_TMS_1111_01 : 임시 회사 api 호출
  * @returns
  */
-const CompanyOrganizationListComponent = ({ rootPath }: { rootPath: string }) => {
+const CompanyOrganizationListComponent = ({ rootPath, roleInfo }: { rootPath: string, roleInfo: string }) => {
   const router = useRouter();
   const routerState = useRouterState();
 
@@ -64,6 +64,7 @@ const CompanyOrganizationListComponent = ({ rootPath }: { rootPath: string }) =>
       state: {
         companyCode: companyCode,
         listParam: getValues(),
+        roleInfo: roleInfo,
       },
     });
   };
