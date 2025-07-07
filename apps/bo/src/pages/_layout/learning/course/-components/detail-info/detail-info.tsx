@@ -397,7 +397,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
             element={
               <DropdownFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['lms.course.CourseType'],
+                  codeGroup: CODE_GROUP['lms.course.HmgStandardMainCategory'],
                 }}
               />
             }
@@ -410,7 +410,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
             element={
               <DropdownFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['lms.course.CourseType'],
+                  codeGroup: CODE_GROUP['lms.course.HmgStandardSubCategory'],
                 }}
               />
             }
@@ -468,7 +468,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
             element={<></>}
           />
         </ContentsRow>
-        오토에버 위탁 전용
+        {/*오토에버 위탁 전용*/}
         <FormSubTitle label={t('오토에버 위탁 전용')} />
         {/* 사전 레벨테스트, 교재 배송지 수집 */}
         <ContentsRow>
@@ -480,7 +480,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
             element={
               <RadioGroupFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['lms.course.CourseType'],
+                  codeGroup: CODE_GROUP['mock.options.use'],
                 }}
               />
             }
@@ -493,7 +493,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
             element={
               <RadioGroupFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['lms.course.CourseType'],
+                  codeGroup: CODE_GROUP['mock.options.use'],
                 }}
               />
             }

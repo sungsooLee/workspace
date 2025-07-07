@@ -2,19 +2,11 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type com_ever_edu_lms_space_dto_req_LearningSpaceSaveReqDto = {
+export type com_ever_edu_lms_space_dto_req_LearningSpaceUpdateReqDto = {
     /**
-     * 테넌트 ID
+     * 교육공간 명
      */
-    tenantId: number;
-    /**
-     * 교육공간 유형(온/오프라인)
-     */
-    onOffLineType: com_ever_edu_lms_space_dto_req_LearningSpaceSaveReqDto.onOffLineType;
-    /**
-     * 교육공간 이름
-     */
-    learningSpaceName: string;
+    learningSpaceName?: string;
     /**
      * 교육공간 코드
      */
@@ -48,13 +40,4 @@ export type com_ever_edu_lms_space_dto_req_LearningSpaceSaveReqDto = {
      */
     isUsed: boolean;
 };
-export namespace com_ever_edu_lms_space_dto_req_LearningSpaceSaveReqDto {
-    /**
-     * 교육공간 유형(온/오프라인)
-     */
-    export enum onOffLineType {
-        ONLINE = 'ONLINE',
-        OFFLINE = 'OFFLINE',
-    }
-}
 

@@ -35,12 +35,12 @@ export class InternalApiService {
      * 차수의 교육담당자 찾기
      * 교육 담당자를 조회한다.
      * @param enrollId
-     * @returns number OK
+     * @returns string OK
      * @throws ApiError
      */
     public static findCourseCoordinator(
         enrollId: number,
-    ): CancelablePromise<number> {
+    ): CancelablePromise<string> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/internal/api/v1/enroll/{enrollId}',

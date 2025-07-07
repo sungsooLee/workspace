@@ -247,6 +247,7 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 = {
      * 위탁 소유 회사 이름
      */
     outsourcingCompanyName?: string;
+    learningSpaceNameValid?: boolean;
 };
 export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 {
     /**

@@ -176,19 +176,22 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
                   content: <UserGroupTabsChoiceModal tenantIds={getValues().tenantIds} />,
                 })}
                 transformModalData={(modalData: Array<any>) => {
-                  return modalData.map((d: any) => ({
-                    groupId: undefined, // 추가되는 경우 그룹ID 없음
-                    combiners: {
-                      combineType: 'JOB_ROLE',
-                      combineValue: d.id,
-                    },
-                    name: d.name,
-                    // combiners: d?.combiners || [],
-                  }));
+                  console.log('modalData', modalData);
+                  return modalData.map((d: any) => {
+                    return {
+                      combiners: d.groups || [
+                        {
+                          combineType: 'JOB_ROLE',
+                          combineValue: d?.userGroupIds?.[0],
+                        },
+                      ],
+                      name: d.name,
+                    };
+                  });
                 }}
                 chipList={{
                   labelField: 'name',
-                  valueField: 'key',
+                  valueField: 'groupKey',
                   wordwrap: true,
                 }}
                 showAddButton
@@ -283,11 +286,10 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
                                 modalConfig={{
                                   content: <TrainingPlaceChoiceModal />,
                                 }}
-                                transformModalData={(data: any) => console.log(data)}
-                                // transformModalData={(data: any) => ({
-                                //   learningSpaceId: data.channelId,
-                                //   learningSpaceName: data.channelName,
-                                // })}
+                                transformModalData={(data: any) => ({
+                                  learningSpaceId: data.learningSpaceId,
+                                  learningSpaceName: data.learningSpaceName,
+                                })}
                               />
                             }
                           />

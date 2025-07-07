@@ -44,7 +44,7 @@ export class BoAzxService {
      * @returns number OK
      * @throws ApiError
      */
-    public static update4(
+    public static update5(
         azxId: number,
         requestBody: com_ever_edu_lms_azx_dto_req_AzxUpdateDto,
     ): CancelablePromise<number> {
@@ -72,7 +72,7 @@ export class BoAzxService {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete5(
+    public static delete6(
         azxId: number,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {

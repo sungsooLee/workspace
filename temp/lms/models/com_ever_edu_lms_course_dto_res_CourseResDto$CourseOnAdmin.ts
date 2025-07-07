@@ -3,22 +3,25 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { com_ever_edu_external_tenant_dto_res_TenantResDto } from './com_ever_edu_external_tenant_dto_res_TenantResDto';
-import type { com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto } from './com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto';
 import type { com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto } from './com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto';
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TagNameWrapper } from './com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TagNameWrapper';
 import type { com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto } from './com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto';
+import type { com_ever_edu_lms_course_dto_res_CourseTargetAudienceResDto } from './com_ever_edu_lms_course_dto_res_CourseTargetAudienceResDto';
 export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
     wizardStep?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.wizardStep;
     courseId?: number;
     courseType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.courseType;
     channelUuid?: string;
     tenantList?: Array<com_ever_edu_external_tenant_dto_res_TenantResDto>;
+    /**
+     * 대표카테고리 ID
+     */
     primaryCategoryId?: number;
     /**
      * 카테고리 목록
      */
     categories?: Array<com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto>;
-    whiteList?: Array<com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto>;
+    targetList?: Array<com_ever_edu_lms_course_dto_res_CourseTargetAudienceResDto>;
     language?: string;
     courseName?: string;
     courseSummary?: string;
@@ -28,7 +31,7 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
     learningSpaceId?: number;
     learningSpaceName?: string;
     learningSpaceNameKeyIn?: string;
-    coordinatorId?: number;
+    coordinatorUuid?: string;
     /**
      * 담당자 이름
      */
@@ -46,7 +49,7 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
      * 담당자 이메일
      */
     coordinatorEmail?: string;
-    operatorId?: number;
+    operatorUuid?: string;
     /**
      * 운영자 이름
      */
