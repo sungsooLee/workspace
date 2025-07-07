@@ -11,9 +11,9 @@ import type { com_ever_edu_lms_enroll_dto_req_EnrollSearchDto$SearchByUser } fro
 import type { com_ever_edu_lms_enroll_dto_res_EnrollResDto$DetailOnUser } from '../models/com_ever_edu_lms_enroll_dto_res_EnrollResDto$DetailOnUser';
 import type { com_ever_edu_lms_search_course_dto_req_CourseSearchReqDto$OnUser } from '../models/com_ever_edu_lms_search_course_dto_req_CourseSearchReqDto$OnUser';
 import type { com_ever_edu_lms_search_course_dto_res_CourseSearchResDto$OnUser } from '../models/com_ever_edu_lms_search_course_dto_res_CourseSearchResDto$OnUser';
-import type { com_ever_edu_lms_search_logs_dto_req_SearchLogRequestDto } from '../models/com_ever_edu_lms_search_logs_dto_req_SearchLogRequestDto';
-import type { com_ever_edu_lms_search_logs_dto_res_SearchLogPopularResponseDto } from '../models/com_ever_edu_lms_search_logs_dto_res_SearchLogPopularResponseDto';
-import type { com_ever_edu_lms_search_logs_dto_res_SearchLogResponseDto } from '../models/com_ever_edu_lms_search_logs_dto_res_SearchLogResponseDto';
+import type { com_ever_edu_lms_search_keyword_dto_req_SearchKeywordRequestDto } from '../models/com_ever_edu_lms_search_keyword_dto_req_SearchKeywordRequestDto';
+import type { com_ever_edu_lms_search_keyword_dto_res_SearchKeywordPopularResponseDto } from '../models/com_ever_edu_lms_search_keyword_dto_res_SearchKeywordPopularResponseDto';
+import type { com_ever_edu_lms_search_keyword_dto_res_SearchKeywordResponseDto } from '../models/com_ever_edu_lms_search_keyword_dto_res_SearchKeywordResponseDto';
 import type { com_ever_edu_lms_student_dto_req_StudentSearchDto$SearchByUser } from '../models/com_ever_edu_lms_student_dto_req_StudentSearchDto$SearchByUser';
 import type { org_springdoc_core_converters_models_Pageable } from '../models/org_springdoc_core_converters_models_Pageable';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_enroll_dto_res_EnrollResDto$onUserList } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_enroll_dto_res_EnrollResDto$onUserList';
@@ -23,26 +23,6 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class FoService {
     /**
-     * 타이탄 테스트
-     * 한 테넌트 내의 인기 검색어 10개를 보여준다.
-     * @returns string OK
-     * @throws ApiError
-     */
-    public static test(): CancelablePromise<string> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/user/api/v1/search-logs',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                405: `Method Not Allowed`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
      * 한 사용자의 검색을 저장하는 행위이다. 각 사용자별로 저장한다.
      * 사용자가 검색어를 입력할때 마다 테넌트별 사용자의 검색어 정보를 저장한다..
      * @param requestBody
@@ -50,11 +30,11 @@ export class FoService {
      * @throws ApiError
      */
     public static saveSearchLogs(
-        requestBody: com_ever_edu_lms_search_logs_dto_req_SearchLogRequestDto,
+        requestBody: com_ever_edu_lms_search_keyword_dto_req_SearchKeywordRequestDto,
     ): CancelablePromise<string> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/user/api/v1/search-logs',
+            url: '/user/api/v1/search-keyword',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -147,7 +127,7 @@ export class FoService {
      * @throws ApiError
      */
     public static saveAutoCompleteKeyword(
-        requestBody: com_ever_edu_lms_search_logs_dto_req_SearchLogRequestDto,
+        requestBody: com_ever_edu_lms_search_keyword_dto_req_SearchKeywordRequestDto,
     ): CancelablePromise<string> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -242,22 +222,42 @@ export class FoService {
         });
     }
     /**
+     * 타이탄 테스트
+     * 한 테넌트 내의 인기 검색어 10개를 보여준다.
+     * @returns string OK
+     * @throws ApiError
+     */
+    public static test(): CancelablePromise<string> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/search-logs',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * 한 테넌트별 한 사용자의 최근 검색어 조회
      * 한 테넌트별 한 사용자의 최근 10개 검색어를 조회합니다.
-     * @param tenantUuid
+     * @param tenantId
      * @param userUuid
-     * @returns com_ever_edu_lms_search_logs_dto_res_SearchLogResponseDto OK
+     * @returns com_ever_edu_lms_search_keyword_dto_res_SearchKeywordResponseDto OK
      * @throws ApiError
      */
     public static getRecentSearchLogs(
-        tenantUuid: string,
+        tenantId: string,
         userUuid: string,
-    ): CancelablePromise<Array<com_ever_edu_lms_search_logs_dto_res_SearchLogResponseDto>> {
+    ): CancelablePromise<Array<com_ever_edu_lms_search_keyword_dto_res_SearchKeywordResponseDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/user/api/v1/search-logs/{tenantUuid}/{userUuid}/recent',
+            url: '/user/api/v1/search-logs/{tenantId}/{userUuid}/recent',
             path: {
-                'tenantUuid': tenantUuid,
+                'tenantId': tenantId,
                 'userUuid': userUuid,
             },
             errors: {
@@ -272,18 +272,18 @@ export class FoService {
     /**
      * 한 테넌트별 상위 인기 검색어 10개 조회
      * 한 테넌트 내의 인기 검색어 10개를 보여준다.
-     * @param tenantUuid
-     * @returns com_ever_edu_lms_search_logs_dto_res_SearchLogPopularResponseDto OK
+     * @param tenantId
+     * @returns com_ever_edu_lms_search_keyword_dto_res_SearchKeywordPopularResponseDto OK
      * @throws ApiError
      */
     public static getPopularSearchLogs(
-        tenantUuid: string,
-    ): CancelablePromise<Array<com_ever_edu_lms_search_logs_dto_res_SearchLogPopularResponseDto>> {
+        tenantId: string,
+    ): CancelablePromise<Array<com_ever_edu_lms_search_keyword_dto_res_SearchKeywordPopularResponseDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/user/api/v1/search-logs/{tenantUuid}/popular-logs',
+            url: '/user/api/v1/search-logs/{tenantId}/popular-logs',
             path: {
-                'tenantUuid': tenantUuid,
+                'tenantId': tenantId,
             },
             errors: {
                 400: `Bad Request`,
@@ -382,20 +382,20 @@ export class FoService {
     /**
      * 한 테넌트별 키워드의 자동완성 기능
      * 한 테넌트 내의 키워드 입력시 자동 완성을 제공해주는 기능이다.
-     * @param tenantUuid
+     * @param tenantId
      * @param keyword
-     * @returns com_ever_edu_lms_search_logs_dto_res_SearchLogResponseDto OK
+     * @returns com_ever_edu_lms_search_keyword_dto_res_SearchKeywordResponseDto OK
      * @throws ApiError
      */
     public static getKeywordAutoComplete(
-        tenantUuid: string,
+        tenantId: string,
         keyword: string,
-    ): CancelablePromise<Array<com_ever_edu_lms_search_logs_dto_res_SearchLogResponseDto>> {
+    ): CancelablePromise<Array<com_ever_edu_lms_search_keyword_dto_res_SearchKeywordResponseDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/user/api/v1/auto-complete/{tenantUuid}/{keyword}',
+            url: '/user/api/v1/auto-complete/{tenantId}/{keyword}',
             path: {
-                'tenantUuid': tenantUuid,
+                'tenantId': tenantId,
                 'keyword': keyword,
             },
             errors: {
@@ -410,20 +410,20 @@ export class FoService {
     /**
      * 한 테넌트별 한 사용자가 검색한 검색어를 모두 삭제한다.
      * 한 테넌트별 한 사용자의 검색어를 모두 삭제 처리한다.
-     * @param tenantUuid
+     * @param tenantId
      * @param userUuid
      * @returns string OK
      * @throws ApiError
      */
     public static deleteSearchLogs(
-        tenantUuid: string,
+        tenantId: string,
         userUuid: string,
     ): CancelablePromise<string> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/user/api/v1/search-logs/{tenantUuid}/{userUuid}',
+            url: '/user/api/v1/search-logs/{tenantId}/{userUuid}',
             path: {
-                'tenantUuid': tenantUuid,
+                'tenantId': tenantId,
                 'userUuid': userUuid,
             },
             errors: {
@@ -438,22 +438,22 @@ export class FoService {
     /**
      * 한 테넌트별 한 사용자의 하나의 검색어 삭제
      * 한 테넌트별 한 사용자의 하나의 검색어 삭제한다
-     * @param tenantUuid
+     * @param tenantId
      * @param userUuid
      * @param keyword
      * @returns string OK
      * @throws ApiError
      */
     public static deleteSearchLog(
-        tenantUuid: string,
+        tenantId: string,
         userUuid: string,
         keyword: string,
     ): CancelablePromise<string> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/user/api/v1/search-logs/{tenantUuid}/{userUuid}/{keyword}',
+            url: '/user/api/v1/search-logs/{tenantId}/{userUuid}/{keyword}',
             path: {
-                'tenantUuid': tenantUuid,
+                'tenantId': tenantId,
                 'userUuid': userUuid,
                 'keyword': keyword,
             },

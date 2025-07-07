@@ -4,10 +4,6 @@
 /* eslint-disable */
 export type com_ever_edu_lms_instructor_dto_req_InstructorUpdateReqDto = {
     /**
-     * 강사 ID
-     */
-    instructorId: number;
-    /**
      * 역할 부여 기간 시작일자
      */
     startDate: string;
