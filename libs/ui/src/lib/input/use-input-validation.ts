@@ -102,7 +102,7 @@ export const useInputValidation = (options: UseInputValidationOptions = {}) => {
 
 export const VALIDATION_RULES = {
   alphanumeric: {
-    regex: /^[a-zA-Z0-9.]*$/,
+    regex: /^[a-zA-Z0-9._|]*$/,
     errorMessageKey: 'LABEL.form.validation.alphanumeric',
   },
   url: {
