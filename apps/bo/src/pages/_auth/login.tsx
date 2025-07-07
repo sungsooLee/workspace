@@ -333,7 +333,7 @@ const detailConfig: DynamicFormConfig = {
       name: 'password',
       type: 'text',
       label: 'LABEL.form.input.password',
-      maxLength: 10,
+      // maxLength: 10,
       value: '',
     },
     {
