@@ -3,7 +3,6 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 
 import styles from '@learnway/styles/fo/pages/_learning/learning.module.css';
-//import styles from '@learnwary/styles/fo/pages/_learning.module.css';
 import stylesMobile from '@learnway/styles/fo/pages/_learning/learning-m.module.css';
 
 import { ScormHandler } from '../service/scorm-handler';

@@ -1,4 +1,5 @@
-import { VideoPlayer, useVideoPlayer } from '@learnway/ui';
+import { useVideoPlayer } from '../../../video-player/hooks/video-player.hook';
+import { VideoPlayer } from '../../../video-player/video-player';
 
 const LearningWindowVideoPlayerComponent = () => {
   const player = useVideoPlayer();
