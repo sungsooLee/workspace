@@ -343,7 +343,7 @@ function LearningResourceTableComponent() {
   }, [tenantId]);
 
   function handleSearch(rawQuery: Record<string, any>) {
-    const processedQuery = compactValues({ ...rawQuery, isMockUp: true });
+    const processedQuery = compactValues(rawQuery);
 
     setParams(processedQuery);
     setValuesWithLabel(getValuesWithLabel());
