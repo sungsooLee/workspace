@@ -23,7 +23,7 @@
   }
   &.lg {
     [role='checkbox'] {
-      @apply !h-[2.2rem] !w-[2.2rem];
+      @apply !h-[2.5rem] !w-[2.2rem];
     }
   }
   &.md {
