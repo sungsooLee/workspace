@@ -311,6 +311,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
       <div className={cn('nlp--datepicker-wrap', 'nlp--datepicker-time-hm', size)} ref={ref}>
         <Primitive
           showIcon
+          toggleCalendarOnIconClick
           shouldCloseOnSelect
           readOnly={readOnly}
           disabled={disabled}
@@ -347,6 +348,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
       <div className={cn('nlp--datepicker', 'nlp--datepicker-year', size)} ref={ref}>
         <Primitive
           showIcon
+          toggleCalendarOnIconClick
           dateFormat={dateFormat}
           shouldCloseOnSelect
           readOnly={readOnly}
@@ -384,6 +386,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
       <div className={cn('nlp--datepicker', 'nlp--datepicker-month', size)} ref={ref}>
         <Primitive
           showIcon
+          toggleCalendarOnIconClick
           dateFormat={dateFormat}
           shouldCloseOnSelect
           readOnly={readOnly}
@@ -423,6 +426,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
         <div className="nlp--datepicker-calendar">
           <Primitive
             showIcon
+            toggleCalendarOnIconClick
             dateFormat="yyyy-MM-dd"
             shouldCloseOnSelect
             readOnly={readOnly}
@@ -468,6 +472,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
     <div className={cn('nlp--datepicker-time', size)} ref={ref}>
       <Primitive
         showIcon
+        toggleCalendarOnIconClick
         dateFormat={dateFormat}
         dateFormatCalendar={parseDateFormat}
         shouldCloseOnSelect
