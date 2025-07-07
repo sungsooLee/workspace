@@ -37,10 +37,8 @@
   --status2: #ffb902; /* Warning */
   --status3: #3eb838; /* Complete */
   --status4: #926bea; /* icon */
-}
 
-/* 최신 가이드 */
-:root {
+  /* 최신 가이드 */
   /* gray */
   --gray10: #131416; /* default */
   --gray25: #33363d;
