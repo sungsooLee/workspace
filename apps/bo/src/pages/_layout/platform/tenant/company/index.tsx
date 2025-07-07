@@ -181,7 +181,7 @@ const columns = [
     ),
   }),
   columnHelper.accessor('isUsed', {
-    header: t('사용여부'),
+    header: t('회사정보 사용'),
     cell: (info) => (info.getValue() ? t('사용') : t('미사용')),
   }),
   columnHelper.accessor('lastModifiedBy', {

@@ -23,7 +23,7 @@ function RouteComponent() {
   return (
     <PageContainer>
       <MainContents>
-        <TenantCompanyOrganizationList rootPath="/platform" />
+        <TenantCompanyOrganizationList rootPath="/platform" roleInfo={'TENANT'}/>
       </MainContents>
     </PageContainer>
   );

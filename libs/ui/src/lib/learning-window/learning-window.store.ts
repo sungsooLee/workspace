@@ -24,22 +24,22 @@ export interface PlayInfo {
 }
 export interface ScormPlayerConfigProperties {
   /** 과정 차수 ID */
-  sequenceId: number;
+  sequenceId?: number;
   /** 과정Id */
-  courseId: number;
+  courseId?: number;
   /** 커리큘럼Id */
-  curriculumId: number;
+  curriculumId?: number;
   /** 콘텐츠 UUID */
-  contentUuid: string;
+  contentUuid?: string;
   /** 스콤 콘텐츠 구성(Organization) Id */
-  orgnId: number;
+  orgnId?: number;
   /** Scorm Manifest Item element Id */
-  scoId: string;
+  scoId?: string;
 }
-interface BaseInfo {
-  courseId: number;
-  sequenceId: number;
-  curriculumId: number;
+export interface LearningWindowBaseInfo {
+  courseId?: number;
+  sequenceId?: number;
+  curriculumId?: number;
 }
 
 interface PlayListItem {
@@ -69,11 +69,11 @@ interface Lesson {
 
 interface LearningWindowStoreData {
   playIndex: number;
-  baseInfo?: BaseInfo;
+  baseInfo?: LearningWindowBaseInfo;
   curriculum?: Curriculum;
   playInfo?: PlayInfo;
   playList?: PlayListItem[];
-  setBaseInfo: (v?: BaseInfo) => void;
+  setBaseInfo: (v?: LearningWindowBaseInfo) => void;
   setPlayInfo: (v?: PlayInfo) => void;
   setCurriculum: (v?: Curriculum) => void;
   setPlayList: (v?: PlayListItem[]) => void;
@@ -102,7 +102,7 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
     });
   },
 
-  setBaseInfo(baseInfo?: BaseInfo) {
+  setBaseInfo(baseInfo?: LearningWindowBaseInfo) {
     set((state) => ({ baseInfo }));
   },
 

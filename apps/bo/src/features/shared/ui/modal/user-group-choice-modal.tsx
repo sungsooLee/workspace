@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { t } from 'i18next';
 import {
   Button,
@@ -19,8 +19,25 @@ import { queryOptions } from '@entities/user-group/service/user-group.queries';
 import { useQueryClient } from '@tanstack/react-query';
 import { useWatch } from 'react-hook-form';
 import { queryOptions as departmentQueryOptions } from '@entities/department';
+import { BlackwhiteUsersParam } from '@types';
 
-const UserGroupModalComponent: FC<any> = () => {
+const UserGroupModalComponent = ({
+  userGroupIds,
+  userGroupType,
+  groups,
+}: Pick<BlackwhiteUsersParam, 'userGroupIds' | 'userGroupType' | 'groups'>) => {
+  const gridConfig = {
+    query: (data: any) =>
+      queryOptions.blackwhiteUsers({ ...data, userGroupIds, userGroupType, groups }),
+    columns: [],
+    data: [],
+    pagination: {
+      pageSize: 10,
+      pageIndex: 1,
+      totalRows: 2,
+    },
+  };
+
   const { close: closeModal } = useModal();
   const { provider: sProvider, getValues, setOptions, setValue } = useSearchBox(searchConfig);
   const { config, gridFetch } = useGridBox(gridConfig, getValues);
@@ -90,11 +107,12 @@ const searchConfig: SearchBoxConfig = {
         name: 'companyId',
         type: 'dropdown',
         label: t('회사'),
-        value: undefined,
+        format: 'object',
+        value: '',
+        presetOptionLabel: t('LABEL.form.label.all'),
         optionsConfig: {
           codeGroup: CODE_GROUP['manual.company.companyId'],
         },
-        format: 'number',
         isSearchable: true,
         isClearable: true,
         placeholder: '입력 선택',
@@ -132,17 +150,6 @@ const searchConfig: SearchBoxConfig = {
       },
     ],
   ],
-};
-
-const gridConfig = {
-  query: queryOptions.blackwhiteUsers,
-  columns: [],
-  data: [],
-  pagination: {
-    pageSize: 10,
-    pageIndex: 1,
-    totalRows: 2,
-  },
 };
 const columnHelper = createColumnHelper<any>();
 const columns = [

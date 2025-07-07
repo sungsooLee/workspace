@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Button } from '../button/button';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import styles from './tree.module.css'; // Tree module CSS
@@ -37,6 +37,11 @@ export const ShuttleTreeToChipsV2 = ({
 
   const [isConditionSettingsMode, setIsConditionSettingsMode] = useState<boolean>(false);
 
+  const isCombinedNodeKeys = useMemo<string[][]>(
+    () => selectedItems.filter(({ isCombined }) => isCombined).map(({ keys }) => keys),
+    [selectedItems],
+  );
+
   const [checkedValues, setCheckedValues] = useState<TreeNode[]>([]);
 
   const on = (newValue: TreeNode) => {
@@ -61,10 +66,13 @@ export const ShuttleTreeToChipsV2 = ({
     if (checkedValues.length > 0) {
       const newKey = {
         isCombined: true,
-        key: checkedValues.map(({ key }) => key).join(','),
+        ids: checkedValues.map(({ id }) => id),
+        key: checkedValues.map(({ key }) => key).join('-'),
+        keys: checkedValues.map(({ key }) => key),
         fullName: checkedValues.map(({ fullName }) => fullName).join(' & '),
       };
       handleSelectItem(newKey);
+      checkedValues.forEach((checkedValue) => handleSelectItem(checkedValue));
     }
     handleSetIsConditionSettingsMode(false);
   };
@@ -78,6 +86,7 @@ export const ShuttleTreeToChipsV2 = ({
     <div className={cn(layoutStyles.start, layoutStyles.wrap, layoutStyles.pop_layout)}>
       <div className={layoutStyles.inner}>
         <TreeBox
+          treeId={'ShuttleListTree'}
           data={treeData}
           type="SHUTTLE_LIST"
           title={sourceTitle}
@@ -93,6 +102,7 @@ export const ShuttleTreeToChipsV2 = ({
                   e.stopPropagation();
                   handleSelectItem(node);
                 }}
+                disabled={isCombinedNodeKeys.some((keys) => keys.includes(node.key))}
                 variant={isAlreadySelected ? 'primary' : 'gray2'}
                 size={'ts'}
                 type={'button'}
