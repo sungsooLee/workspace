@@ -1,11 +1,8 @@
 import {
-  Button,
   ContentsRow,
-  DynamicFormField,
   Input,
   ModalBody,
   ModalContainer,
-  ModalFooter,
   ModalTitle,
   Textarea,
   useModal,
@@ -91,11 +88,11 @@ const ApiInfoModalComponent = ({ apiId }: any) => {
           </div>
         </div>
       </ModalBody>
-      <ModalFooter>
-        <Button onClick={() => close()} size={'lg'} variant={'primary'}>
+      {/* <ModalFooter> */}
+      {/* <Button onClick={() => close()} size={'lg'} variant={'primary'}>
           확인
-        </Button>
-      </ModalFooter>
+        </Button> */}
+      {/* </ModalFooter> */}
     </ModalContainer>
   );
 };
