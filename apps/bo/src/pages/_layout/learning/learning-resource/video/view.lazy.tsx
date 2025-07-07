@@ -14,6 +14,7 @@ import { MovieInfo } from '@features/learning';
 import { ChannelChoiceModal, ManagerChoiceModal } from '@features/shared';
 import { DateRangePickerFormField } from '@features/learning/ui/resource/date-range-picker-form-field';
 import {
+  CODE_GROUP,
   DynamicFormConfig,
   DynamicFormValues,
   useCurrentRoute,
@@ -24,6 +25,7 @@ import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '@shared/ui';
 import { useQuery } from '@tanstack/react-query';
 import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { NotFound } from '@features/layout';
+import { useEffect } from 'react';
 
 export const Route = createLazyFileRoute('/_layout/learning/learning-resource/video/view')({
   component: RouteComponent,
@@ -38,7 +40,11 @@ function RouteComponent() {
   );
 
   const router = useRouter();
-  const { provider, onSubmit } = useDynamicForm<typeof formConfig>(formConfig);
+  const { provider, onSubmit, onFormChange } = useDynamicForm<typeof formConfig>(formConfig);
+
+  useEffect(() => {
+    if (data) onFormChange(data);
+  }, [data]);
 
   const handleFormSubmit = (data: DynamicFormValues<typeof formConfig>) => {
     console.log(data);
@@ -92,7 +98,7 @@ function RouteComponent() {
           <Button variant="point" size="sm">
             삭제
           </Button>
-          <Button type={'submit'} variant="primary" size="sm">
+          <Button type="submit" variant="primary" size="sm">
             {permission === 'WRITE' ? '저장' : '수정'}
           </Button>
         </ContentsButtons>
@@ -101,7 +107,7 @@ function RouteComponent() {
             {/*채널*/}
             <FormRow
               provider={provider}
-              name={'channelName'}
+              name="channelName"
               element={
                 <InputModalSelectorFormField
                   modalConfig={{
@@ -112,20 +118,21 @@ function RouteComponent() {
                 />
               }
             />
+            <FormRow provider={provider} name="langCountryCode" />
           </ContentsRow>
           <ContentsRow>
             {/*학습자원명*/}
-            <FormRow provider={provider} name={'learningResourceName'} />
+            <FormRow provider={provider} name="contentName" />
           </ContentsRow>
           <ContentsRow>
             {/*학습자원 설명*/}
-            <FormRow provider={provider} name={'learningResourceDescription'} />
+            <FormRow provider={provider} name="description" />
           </ContentsRow>
           <ContentsRow>
             {/*담당자*/}
             <FormRow
               provider={provider}
-              name={'managerName'}
+              name="coordinatorName"
               element={
                 <InputModalSelectorFormField
                   modalConfig={{
@@ -137,35 +144,32 @@ function RouteComponent() {
               }
             />
             {/*연락처*/}
-            <FormRow provider={provider} name={'contact'} />
+            <FormRow provider={provider} name="coordinatorTelNo" />
           </ContentsRow>
-          <ContentsRow type={'horizontal'}>
+          <ContentsRow type="horizontal">
             {/*사용기한*/}
-            <FormRow provider={provider} name={'expirationDate'} />
+            <FormRow provider={provider} name="isUnlimited" />
           </ContentsRow>
-          <FormDisplay provider={provider} dependencies={[{ name: 'expirationDate', value: true }]}>
+          <FormDisplay provider={provider} dependencies={[{ name: 'isUnlimited', value: false }]}>
             <ContentsRow>
               <FormRow
                 provider={provider}
-                name={'expirationDateFrom'}
+                name="contentUseDate"
                 element={<DateRangePickerFormField />}
               />
             </ContentsRow>
           </FormDisplay>
           {/*외주개발업체 정보*/}
-          <ContentsRow type={'horizontal'} className={'inactive'}>
-            <FormRow provider={provider} name={'isExternalDevelopmentCompany'} />
+          <ContentsRow type="horizontal" className="inactive">
+            <FormRow provider={provider} name="isVendored" />
           </ContentsRow>
           {/*외주개발업체 상세*/}
-          <FormDisplay
-            provider={provider}
-            dependencies={[{ name: 'isExternalDevelopmentCompany', value: true }]}
-          >
+          <FormDisplay provider={provider} dependencies={[{ name: 'isVendored', value: true }]}>
             <ContentsRow>
               {/*외부개발업체*/}
               <FormRow
                 provider={provider}
-                name={'externalDevelopmentCompany'}
+                name="vendorName"
                 element={
                   <InputModalSelectorFormField
                     modalConfig={{
@@ -179,15 +183,14 @@ function RouteComponent() {
             </ContentsRow>
             <ContentsRow>
               {/*외주개발업체 담당자*/}
-              <FormRow provider={provider} name={'externalDevelopmentCompanyManager'} />
+              <FormRow provider={provider} name="vendorCoordinatorName" />
               {/*외주개발업체 연락처*/}
-              <FormRow provider={provider} name={'externalDevelopmentCompanyContact'} />
+              <FormRow provider={provider} name="vendorTelNo" />
             </ContentsRow>
           </FormDisplay>
-
           <ContentsRow>
             {/*썸네일*/}
-            <FormRow provider={provider} name="thumbnails" />
+            <FormRow provider={provider} name="contentThumbnailFileGroupUuid" />
           </ContentsRow>
           <ContentsRow>
             {/*태그*/}
@@ -195,22 +198,17 @@ function RouteComponent() {
           </ContentsRow>
           <ContentsRow>
             {/*학습자원개요*/}
-            <FormRow provider={provider} name="learningResourceOverview" />
+            <FormRow provider={provider} name="aiSummary" />
           </ContentsRow>
-
           <ContentsRow>
             {/* 키워드 */}
-            <FormRow provider={provider} name="keywords" />
+            <FormRow provider={provider} name="aiKeyword" />
           </ContentsRow>
-          <ContentsRow type={'horizontal'} className={'inactive'}>
+          <ContentsRow type="horizontal" className="inactive">
             {/* 교육지원활용 여부 */}
-            <FormRow provider={provider} name="isTrainingSupport" />
+            <FormRow provider={provider} name="isCourseUsed" />
           </ContentsRow>
-          <ContentsRow type={'horizontal'} className={'inactive'}>
-            {/* 보안컨텐츠 여부 */}
-            <FormRow provider={provider} name="isSecurityContent" />
-          </ContentsRow>
-          <ContentsRow type={'horizontal'} className={'inactive'}>
+          <ContentsRow type="horizontal" className="inactive">
             {/* 자막 여부 */}
             <FormRow provider={provider} name={'isSubtitles'} />
           </ContentsRow>
@@ -222,13 +220,13 @@ function RouteComponent() {
           </FormDisplay>
           <FormGroup title={'최종확인'} required={true}>
             <ContentsRow>
-              <FormRow provider={provider} name={'isInspectionConfirmed'} />
+              <FormRow provider={provider} name={'isInspected'} />
             </ContentsRow>
             <ContentsRow>
-              <FormRow provider={provider} name={'isCopyrightConfirmed'} />
+              <FormRow provider={provider} name={'isCopyrighted'} />
             </ContentsRow>
             <ContentsRow>
-              <FormRow provider={provider} name={'isSecurityConfirmed'} />
+              <FormRow provider={provider} name={'isSecured'} />
             </ContentsRow>
           </FormGroup>
           <ContentsHistoryInfoFormField />
@@ -259,8 +257,18 @@ const formConfig: DynamicFormConfig = {
       value: '',
     },
     {
+      label: '언어',
+      name: 'langCountryCode',
+      type: 'dropdown',
+      format: 'string',
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.multilingual.LangCountryCode'],
+      },
+      value: '',
+    },
+    {
       label: '학습자원명',
-      name: 'learningResourceName',
+      name: 'contentName',
       type: 'text',
       format: 'string',
       value: '',
@@ -269,7 +277,7 @@ const formConfig: DynamicFormConfig = {
     },
     {
       label: '학습자원설명',
-      name: 'learningResourceDescription',
+      name: 'description',
       type: 'textarea',
       format: 'string',
       value: '',
@@ -284,7 +292,7 @@ const formConfig: DynamicFormConfig = {
     },
     {
       label: '담당자',
-      name: 'managerName',
+      name: 'coordinatorName',
       type: 'custom',
       format: 'string',
       value: '',
@@ -298,43 +306,52 @@ const formConfig: DynamicFormConfig = {
     },
     {
       label: '연락처',
-      name: 'contact',
+      name: 'coordinatorTelNo',
       type: 'phone-number',
       format: 'string',
       value: '',
       fields: {
         nationCode: 'nationCode',
-        number: 'contact',
+        number: 'coordinatorTelNo',
       },
     },
     {
       label: '사용기한',
-      name: 'expirationDate',
+      name: 'isUnlimited',
       type: 'switch',
       format: 'boolean',
       value: false,
+      invert: true, // true일 때 switch를 끄고 false일 때 키는 옵션
       switchConfig: {
-        label: (value: boolean) => (value ? '기간설정' : '무기한'),
+        label: (value: boolean) => (value ? '무기한' : '기간설정'),
       },
       tooltip: '사용기한 내 콘텐츠 공유/교육자원활용이  가능합니다.',
     },
     {
-      name: 'expirationDateFrom',
+      name: 'contentUseDate',
       type: 'custom',
-      value: '',
+      value: {
+        from: undefined, //'contentUseStartDate',
+        to: undefined, //'contentUseEndDate',
+      },
       fields: {
-        from: 'expirationDateFrom',
-        to: 'expirationDateTo',
+        from: undefined, //'contentUseStartDate',
+        to: undefined, //'contentUseEndDate',
       },
     },
     {
-      name: 'expirationDateTo',
+      name: 'contentUseStartDate',
+      type: 'hidden',
+      value: '',
+    },
+    {
+      name: 'contentUseEndDate',
       type: 'hidden',
       value: '',
     },
     {
       label: '외주개발업체정보',
-      name: 'isExternalDevelopmentCompany',
+      name: 'isVendored',
       type: 'switch',
       format: 'boolean',
       value: false,
@@ -343,38 +360,48 @@ const formConfig: DynamicFormConfig = {
       },
     },
     {
+      name: 'vendorCoordinatorUuid',
+      type: 'hidden',
+      value: '',
+    },
+    {
       label: t('외주개발업체'),
-      name: 'externalDevelopmentCompany',
+      name: 'vendorName',
       type: 'custom',
       value: '',
     },
     {
+      name: 'vendorCoordinatorUuid',
+      type: 'hidden',
+      value: '',
+    },
+    {
       label: t('외주개발업체 담당자'),
-      name: 'externalDevelopmentCompanyManager',
+      name: 'vendorCoordinatorName',
       type: 'text',
       value: '',
     },
     {
-      name: 'externalDevelopmentCompanyNationCode',
+      name: 'vendorNationCode',
       type: 'hidden',
       value: 'KR',
     },
     {
       label: t('외주개발업체 연락처'),
-      name: 'externalDevelopmentCompanyContact',
+      name: 'vendorTelNo',
       type: 'phone-number',
       value: '',
       fields: {
-        nationCode: 'externalDevelopmentCompanyNationCode',
-        number: 'externalDevelopmentCompanyContact',
+        nationCode: 'vendorNationCode',
+        number: 'vendorTelNo',
       },
     },
     {
       label: t('썸네일'),
-      name: 'thumbnails',
+      name: 'contentThumbnailFileGroupUuid',
       type: 'thumbnail-list',
       format: 'array',
-      value: [],
+      value: '',
     },
     {
       label: t('태그'),
@@ -388,7 +415,7 @@ const formConfig: DynamicFormConfig = {
     },
     {
       label: t('학습자원개요 (AI 자동 추출)'),
-      name: 'learningResourceOverview',
+      name: 'aiSummary',
       type: 'textarea',
       readOnly: true,
       placeholder: '키워드는 AI 자동 추출되어 표기 됩니다.',
@@ -397,7 +424,7 @@ const formConfig: DynamicFormConfig = {
     },
     {
       label: t('키워드 (AI 자동 추출)'),
-      name: 'keywords',
+      name: 'aiKeyword',
       type: 'textarea',
       readOnly: true,
       placeholder: '키워드는 AI 자동 추출되어 표기 됩니다.',
@@ -406,25 +433,13 @@ const formConfig: DynamicFormConfig = {
     },
     {
       label: t('교육지원활용 여부'),
-      name: 'isTrainingSupport',
+      name: 'isCourseUsed',
       type: 'switch',
       format: 'boolean',
       switchConfig: {
         label: (value: boolean) => (value ? '활용가능' : '활용불가'),
       },
       guideText: '해당 학습자원으로 교육 과정을 개설할 수 없습니다.',
-      value: true,
-    },
-    {
-      label: t('보안컨텐츠여부'),
-      name: 'isSecurityContent',
-      type: 'switch',
-      format: 'boolean',
-      switchConfig: {
-        label: (value: boolean) => (value ? '보안 적용' : '보안 미적용'),
-      },
-      guideText:
-        '동영상에 워터마크가 제공되고, DRM 솔루션 적용 및 화면캡쳐 방지 기능이 적용되어 동영상 보안을 강화할수 없습니다.',
       value: true,
     },
     {
@@ -447,7 +462,7 @@ const formConfig: DynamicFormConfig = {
     },
     {
       label: t('검수확인'),
-      name: 'isInspectionConfirmed',
+      name: 'isInspected',
       type: 'checkbox',
       format: 'boolean',
       guideText: '등록하고자 한 동영상이며, 처음부터 끝까지 정상적으로 재생됨이 확인되었습니다.',
@@ -458,7 +473,7 @@ const formConfig: DynamicFormConfig = {
     },
     {
       label: t('저작권확인'),
-      name: 'isCopyrightConfirmed',
+      name: 'isCopyrighted',
       format: 'boolean',
       guideText:
         '저작권법(제25조2항)에 따라 학습자원(동영상,이미지등)은 해당 학습플랫폼에서만 이용가능하며, 이 외의 공간에서 저작물을 공유 또는 게시하는 행위는 저작권법 위반에 해당될 수 있음에 동의합니다.',
@@ -470,7 +485,7 @@ const formConfig: DynamicFormConfig = {
     },
     {
       label: t('보안확인'),
-      name: 'isSecurityConfirmed',
+      name: 'isSecured',
       format: 'boolean',
       guideText:
         '보안콘텐츠 미 설정 시, 불법복제, 무단사용,저작권 침해 위험에 노출되고, 이에 따른 피해를 입을 수 있음에 인지합니다',
