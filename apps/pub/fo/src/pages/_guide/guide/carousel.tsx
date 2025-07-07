@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { memo, useEffect, useRef, useState } from 'react';
 import { IcoArrowBackward, IcoArrowForward } from '@learnway/icons';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Chip, SelectOption } from '@learnway/ui';
+import { Carousel, Chip, SelectOption } from '@learnway/ui';
 import { Navigation } from 'swiper/modules';
 
 export const Route = createFileRoute('/_guide/guide/carousel')({
@@ -97,25 +97,18 @@ if (swiperRef.current && prevRef.current && nextRef.current) {
         <h3 className="guide_tit3">Swiper</h3>
         <div className="flex_box">
           <div className="desc">
-            <Swiper
+            <Carousel
               ref={swiperRef}
               spaceBetween={8}
               slidesPerView="auto"
-              loop={false}
+              items={[<h3>item A</h3>, <h3>item B</h3>, <h3>item C</h3>]}
+              loop={true}
               modules={[Navigation]}
-              className="recent_swiper flex w-[450px] justify-start">
-              <div className="lists">
-                {items.map((item, index) => (
-                  <SwiperSlide
-                    key={index}
-                    className="slide flex w-auto items-center justify-start gap-[8px] overflow-hidden whitespace-nowrap">
-                    <Chip className="item" option={{ label: item.label, value: item.value }} />
-                  </SwiperSlide>
-                ))}
-              </div>
-            </Swiper>
+              showNavigation={true}
+              className="recent_swiper flex w-[450px] justify-start"
+            />
 
-            <div ref={prevRef} className="recent_button_prev">
+            {/* <div ref={prevRef} className="recent_button_prev">
               <div className="btn">
                 <IcoArrowBackward width={20} height={20} stroke="#6F798B" />
               </div>
@@ -124,7 +117,7 @@ if (swiperRef.current && prevRef.current && nextRef.current) {
               <div className="btn">
                 <IcoArrowForward width={20} height={20} stroke="#6F798B" />
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 

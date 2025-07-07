@@ -5,6 +5,9 @@
     &::after {
       @apply flex h-[24px] w-[24px] bg-[24px_auto] bg-[center_center] bg-no-repeat text-transparent content-[''];
     }
+    &[class*='swiper-button-disabled'] {
+      @apply !hidden;
+    }
   }
   .prev_btn {
     @apply left-0 -translate-x-1/2;
