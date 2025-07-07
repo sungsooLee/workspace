@@ -1,8 +1,8 @@
-import { memo, useState } from 'react';
+import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
-import { ChipList, SelectOption, Button, Avatar } from '@learnway/ui';
-import { IcoArrowDown, IcoSymbol } from '@learnway/icons';
-import { Review, ReviewRating, Curriculum } from '../../../../features/layout';
+import { ChipList, SelectOption, Avatar, Button } from '@learnway/ui';
+import { IcoSymbol, IcoArrowNext } from '@learnway/icons';
+import { Curriculum } from '../../../../features/layout';
 
 import operatorStyles from '../../../../pages/_layout/course-introduction/operator.module.css';
 import definitionListStyles from '../../../../pages/_layout/course-introduction/definition-list.module.css';
@@ -10,7 +10,6 @@ import dataNoticeStyles from '../../../../shared/ui/data-display/notice.module.c
 import bulletStyles from '../../../../shared/ui/list/bullet.module.css';
 import styles from './introduction.module.css';
 
-import learnImg from '@learnway/styles/fo/assets/images/common/img_learn.png';
 import discriminationImg from '@learnway/styles/fo/assets/images/temp/img_discrimination.png';
 
 const CourseIntroductionCompoment = () => {
@@ -91,6 +90,17 @@ const CourseIntroductionCompoment = () => {
         </div>
       </div>
 
+      {/* 다른 강의와의 차별점 */}
+      <div className={styles.info_box}>
+        <div className={styles.tit_box}>
+          <strong>다른 강의와의 차별점</strong>
+        </div>
+
+        <div className={styles.img_box}>
+          <img src={discriminationImg} alt="" />
+        </div>
+      </div>
+
       {/* 이런 학습자에게 유익해요! */}
       <div className={styles.info_box}>
         <div className={styles.tit_box}>
@@ -156,46 +166,6 @@ const CourseIntroductionCompoment = () => {
         </div>
       </div>
 
-      {/* 퍼블수정 20250519 : 자료실 삭제 */}
-
-      {/* 다른 강의와의 차별점 */}
-      <div className={styles.info_box}>
-        <div className={styles.tit_box}>
-          <strong>다른 강의와의 차별점</strong>
-        </div>
-
-        <div className={styles.img_box}>
-          <img src={discriminationImg} alt="" />
-        </div>
-      </div>
-
-      {/* 과정 및 학습제한 안내 */}
-      <div className={styles.info_box}>
-        <div className={styles.tit_box}>
-          <strong>과정 및 학습제한 안내</strong>
-        </div>
-        {/* bullet module */}
-        <div className={`${bulletStyles.start} ${bulletStyles.list}`}>
-          <ul>
-            <li>
-              연계학습 : 본 과정은 야나두 웹사이트 및 앱을 사용하는 과정입니다. 앱을 다운로드
-              받아주세요.
-            </li>
-            <li>
-              보안프로그램 : 본 과정은 보안프로그램을 설치해야 하는 과정입니다. 학습 전,
-              <Link to="">보안프로그램</Link>을 먼저 설치해주세요.
-            </li>
-            <li>승인필요 : 본 과정은 수강신청 후 팀장 및 교육담당자 승인이 필요합니다.</li>
-            <li>학습장소 : 본 과정은 사내에서만 학습 하실 수 있습니다.</li>
-            <li>학습시간 : 근무시간(오전9시 ~ 오후 6시)에는 학습 하실 수 없습니다.</li>
-            <li>학습시간 : 근무시간(오전9시 ~ 오후 6시)에만 학습 하실 수 있습니다.</li>
-            <li>1일 진도 : 하루에 30%만 학습 하실 수 있습니다.</li>
-            <li>복습제한 : 본 과정은 복습을 하실 수 없습니다.</li>
-            <li>중복수강 : 본 과정은 중복 수강을 하실 수 없습니다.</li>
-          </ul>
-        </div>
-      </div>
-
       {/* 강사소개 */}
       <div className={styles.operator_box}>
         <strong>강사소개</strong>
@@ -248,6 +218,41 @@ const CourseIntroductionCompoment = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* 과정 및 학습제한 안내 */}
+      <div className={styles.info_box}>
+        <div className={styles.tit_box}>
+          <strong>과정 및 학습제한 안내</strong>
+        </div>
+        {/* bullet module */}
+        <div className={`${bulletStyles.start} ${bulletStyles.list}`}>
+          <ul>
+            <li>
+              연계학습 : 본 과정은 야나두 웹사이트 및 앱을 사용하는 과정입니다. 앱을 다운로드
+              받아주세요.
+            </li>
+            <li>
+              보안프로그램 : 본 과정은 보안프로그램을 설치해야 하는 과정입니다. 학습 전,
+              <Link to="">보안프로그램</Link>을 먼저 설치해주세요.
+            </li>
+            <li>승인필요 : 본 과정은 수강신청 후 팀장 및 교육담당자 승인이 필요합니다.</li>
+            <li>학습장소 : 본 과정은 사내에서만 학습 하실 수 있습니다.</li>
+            <li>학습시간 : 근무시간(오전9시 ~ 오후 6시)에는 학습 하실 수 없습니다.</li>
+            <li>학습시간 : 근무시간(오전9시 ~ 오후 6시)에만 학습 하실 수 있습니다.</li>
+            <li>1일 진도 : 하루에 30%만 학습 하실 수 있습니다.</li>
+            <li>복습제한 : 본 과정은 복습을 하실 수 없습니다.</li>
+            <li>중복수강 : 본 과정은 중복 수강을 하실 수 없습니다.</li>
+          </ul>
+        </div>
+      </div>
+
+      {/* 과정 정보 접기/펼치기 */}
+      <div className={styles.more_box}>
+        <Button>
+          과정 정보 펼치기
+          <IcoArrowNext width={16} height={16} stroke="#4d525c" />
+        </Button>
       </div>
     </div>
   );

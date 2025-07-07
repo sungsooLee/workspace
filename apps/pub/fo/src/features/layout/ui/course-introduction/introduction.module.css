@@ -1,6 +1,5 @@
 .start {
   &.introduction {
-    @apply pt-[26px];
     h2 {
       @apply title_5_b text-[var(--gray9)];
     }
@@ -86,6 +85,12 @@
             }
           }
         }
+      }
+    }
+    .more_box {
+      @apply flex h-[120px] items-center justify-center;
+      button {
+        @apply label-lg-b rounded-[8px] border-[1px] border-solid border-[var(--gray75)] p-[12px] leading-[20px] text-[var(--gray35)];
       }
     }
   }

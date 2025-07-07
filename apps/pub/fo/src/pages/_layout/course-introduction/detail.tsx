@@ -334,6 +334,7 @@ function RouteComponent() {
     <div>2</div>,
   ];
 
+  // 학습유형 리스트 open, close
   const [listCategoryOpen, setListCategoryOpen] = useState<boolean>(true);
   const [listSubTitleOpen, setListSubTitleOpen] = useState<boolean>(false);
 
@@ -515,7 +516,6 @@ function RouteComponent() {
 
                 {/* 강의 정보 */}
                 <OptionCard
-                  className={packageInformationStyles.course_card}
                   cols={1}
                   size="lg"
                   value={courseValues}
