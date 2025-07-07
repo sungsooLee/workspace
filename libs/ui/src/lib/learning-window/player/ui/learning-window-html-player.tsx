@@ -10,41 +10,38 @@ import { ScormDataManager } from '../service/scorm-data-manager';
 import { ScormRteClient } from '../service/scorm-rte-client';
 
 const styles = isMobile ? stylesMobile : stylesWeb;
-
-const LearningWindowScormPlayerComponent: FC<any> = ({
+const LearningWindowHtmlPlayerComponent: FC<any> = ({
   playInfo,
-  scormInfo,
-  scormRteService,
+  htmlInfo,
 }: {
   playInfo: any;
-  scormInfo: any;
-  scormRteService: any;
+  htmlInfo: any;
 }) => {
   const [iframeUrl, setIframeUrl] = useState<string>();
 
   useEffect(() => {
-    if (!scormInfo) return;
-    console.log(scormInfo);
+    if (!htmlInfo) return;
+    console.log(htmlInfo);
 
-    let itemUrl = scormInfo.itemURL;
+    let itemUrl = htmlInfo.itemURL;
 
     if ((window as any).__ENV__?.APP_ENV === 'local') {
       const url = new URL(itemUrl);
       itemUrl = url.pathname;
     }
 
-    const scrc = new ScormRteClient(playInfo, scormRteService);
-    const dm = new ScormDataManager(scrc.getErrorManager());
-    dm.fromJSON(scormInfo);
+    // const scrc = new ScormRteClient(playInfo, scormRteService);
+    // const dm = new ScormDataManager(scrc.getErrorManager());
+    // dm.fromJSON(htmlInfo);
 
-    (window as any).API_1484_11 = new ScormHandler(scrc, dm);
+    //(window as any).API_1484_11 = new ScormHandler(scrc, dm);
 
     setIframeUrl(itemUrl);
-    return () => {
-      console.log('end Player');
-      delete (window as any).API_1484_11;
-    };
-  }, [scormInfo]);
+    // return () => {
+    //   console.log('end Player');
+    //   delete (window as any).API_1484_11;
+    // };
+  }, [htmlInfo]);
 
   return (
     <div className={`${styles.start} ${styles.iframe}`}>
@@ -54,11 +51,11 @@ const LearningWindowScormPlayerComponent: FC<any> = ({
         //src="/html/hkscorm/index_lms.html"
         // src="/html/lf_new_model/resources/01/index.html"
         src={iframeUrl}
-        title="SCORM Content"
+        title="HTML Content"
         className={styles.iframe}
       />
     </div>
   );
 };
 
-export const LearningWindowScormPlayer = LearningWindowScormPlayerComponent;
+export const LearningWindowScormPlayer = LearningWindowHtmlPlayerComponent;

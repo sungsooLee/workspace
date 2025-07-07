@@ -77,9 +77,14 @@ interface LearningWindowStoreData {
   setPlayInfo: (v?: PlayInfo) => void;
   setCurriculum: (v?: Curriculum) => void;
   setPlayList: (v?: PlayListItem[]) => void;
+  clearInfo: () => void;
 
   scormInfo: any;
   setScormInfo: (v: any) => void;
+  galleryInfo: any;
+  setGalleryInfo: (v: any) => void;
+  videoInfo: any;
+  setVideoInfo: (v: any) => void;
 }
 
 const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
@@ -89,6 +94,8 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
   playInfo: undefined,
   playList: undefined,
   scormInfo: undefined,
+  galleryInfo: undefined,
+  videoInfo: undefined,
 
   setPlayInfo(playInfo?: PlayInfo) {
     if (!playInfo) return;
@@ -115,11 +122,31 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
   setScormInfo(scormInfo: any) {
     set((state) => ({ scormInfo }));
   },
+  setGalleryInfo(galleryInfo: any) {
+    set((state) => ({
+      galleryInfo,
+    }));
+  },
+
+  setVideoInfo(videoInfo: any) {
+    set((state) => ({
+      videoInfo,
+    }));
+  },
+
+  clearInfo() {
+    set((state) => ({
+      galleryInfo: undefined,
+      scormInfo: undefined,
+    }));
+  },
 }));
 
 export const useLearningWindow = () => {
   const {
     scormInfo,
+    galleryInfo,
+    videoInfo,
     playIndex: _playIndex,
     playList: _playList,
     baseInfo: _baseInfo,
@@ -131,6 +158,9 @@ export const useLearningWindow = () => {
     setPlayList,
 
     setScormInfo,
+    setGalleryInfo,
+    setVideoInfo,
+    clearInfo,
   } = useLearningWindowStore((state) => state);
 
   const genPlayInfoByCurriculum = (
@@ -232,13 +262,18 @@ export const useLearningWindow = () => {
     setBaseInfo,
     scormInfo,
     setScormInfo,
+    galleryInfo,
+    setGalleryInfo,
+    videoInfo,
+    setVideoInfo,
     setPlayInfo: handleSetPlayInfo,
     setCurriculum: handleSetCurriculum,
+    gotoNextLesson,
+    gotoBeforeLesson,
+    clearInfo,
     /**
      * BO 미리 보기 설정용
      */
     directPlayInfo: setPlayInfo,
-    gotoNextLesson,
-    gotoBeforeLesson,
   };
 };

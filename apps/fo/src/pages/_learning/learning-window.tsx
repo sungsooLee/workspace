@@ -5,6 +5,7 @@ import { t } from 'i18next';
 
 import { useGetCurriculumnDetail } from '@entities/curriculum/service/curriculum.hook';
 import { useGetScormRteScoInfo } from '@entities/scorm/service/scorm-rte.hook';
+import { useGetContentDetail } from '@entities/content/service/content.hook';
 
 import {
   EnContentType,
@@ -24,12 +25,13 @@ function RouteComponent() {
   const routerState = useRouterState();
 
   const [scormConfig, setScormConfig] = useState<ScormPlayerConfigProperties>();
-  const [videoInfo, setVideoInfo] = useState<any>();
+  const [videoConfig, setVideoConfig] = useState<any>();
 
-  const { baseInfo, playInfo, setBaseInfo, setCurriculum, setScormInfo } = useLearningWindow();
+  const { baseInfo, playInfo, setVideoInfo, setBaseInfo, setCurriculum, setScormInfo } =
+    useLearningWindow();
   const { data: scormInfo } = useGetScormRteScoInfo(scormConfig);
   const { data: curriculum } = useGetCurriculumnDetail(baseInfo?.curriculumId);
-
+  const { data: videoInfo } = useGetContentDetail(videoConfig?.contentUuid);
   const scormRteService = useMemo(() => {
     return {
       initialize: ScormRteService.initialize,
@@ -41,6 +43,12 @@ function RouteComponent() {
     if (!scormInfo) return;
     setScormInfo(scormInfo);
   }, [scormInfo]);
+
+  useEffect(() => {
+    if (!videoInfo) return;
+    console.log('vidoeInfo', videoInfo);
+    setVideoInfo(videoInfo);
+  }, [videoInfo]);
 
   useEffect(() => {
     if (!playInfo) return;
@@ -56,6 +64,12 @@ function RouteComponent() {
           scoId: playInfo.scoId,
         });
         break;
+      case EnContentType.VIDEO:
+        setVideoConfig({
+          contentUuid: playInfo.contentUuid,
+        });
+
+      default:
     }
   }, [playInfo]);
 

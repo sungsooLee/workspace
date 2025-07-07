@@ -10,7 +10,8 @@ import { LearningWindowGalleryPlayer } from './player/ui/learning-window-gallery
 import { EnContentType, useLearningWindow } from './learning-window.store';
 
 const LearningWindowComponent: FC<any> = ({ scormRteService }) => {
-  const { scormInfo, setScormInfo, curriculum, playInfo, setBaseInfo } = useLearningWindow();
+  const { scormInfo, videoInfo, galleryInfo, setScormInfo, curriculum, playInfo, setBaseInfo } =
+    useLearningWindow();
 
   return (
     <>
@@ -21,8 +22,8 @@ const LearningWindowComponent: FC<any> = ({ scormRteService }) => {
           scormRteService={scormRteService}
         />
       )}
-      {/* {videoInfo && <LearningWindowVideoPlayer />} */}
-      <LearningWindowGalleryPlayer />
+      {videoInfo && <LearningWindowVideoPlayer />}
+      {galleryInfo && <LearningWindowGalleryPlayer />}
     </>
   );
 };
