@@ -54,6 +54,7 @@ import {
   useDeployTranslation,
   useTranslation,
 } from '@entities/translation/service/translation.hook';
+import { PreviewLearningWindow } from '@features/learning/learning-resource/preview-learning-window';
 
 export const Route = createLazyFileRoute('/_layout/common-popup')({
   component: RouteComponent,
@@ -605,7 +606,7 @@ function RouteComponent() {
                   });
                 }}
               >
-                {'컨텐츠 미리 보기 팝업'}
+                {'교육공간 등록 결과'}
               </Button>
               <span className="text-yellow-500">{'진행중'}</span>
             </div>
@@ -618,14 +619,16 @@ function RouteComponent() {
                 onClick={(e) => {
                   openModal({
                     width: 'full',
-                    content: <LearningWindowLayout />,
+                    content: (
+                      <PreviewLearningWindow contentUuid="0d325ece-c155-4927-944d-dfc873fff97b" />
+                    ),
                     onClose(data: any) {
-                      console.log('교육공간 등록 결과', data);
+                      console.log('컨텐츠 미리 보기 팝업', data);
                     },
                   });
                 }}
               >
-                {'교육공간 등록 팝업'}
+                {'컨텐츠 미리 보기 팝업'}
               </Button>
               <span className="text-yellow-500">{'진행중'}</span>
             </div>

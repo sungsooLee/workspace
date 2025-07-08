@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { $generateHtmlFromNodes } from '@lexical/html';
+import { createEditor } from 'lexical';
 
 import { isMobile } from 'react-device-detect';
 
@@ -18,21 +19,29 @@ const LearningWindowBlogPlayerComponent: FC<any> = ({
   playInfo: any;
   blogInfo: any;
 }) => {
-  const [jsonInfo, setJsonInfo] = useState<any>();
+  const [htmlString, setHtmlString] = useState<string>('');
 
   useEffect(() => {
     if (!blogInfo) return;
     console.log(blogInfo);
 
-    const jsonInfo = blogInfo.json;
+    const newJsonInfo = blogInfo.blogContent;
+    const editor = createEditor();
+    editor.setEditorState(editor.parseEditorState(newJsonInfo));
+    let htmlContent = '';
+    editor.update(() => {
+      htmlContent = $generateHtmlFromNodes(editor, null);
+    });
 
-    setJsonInfo(jsonInfo);
+    console.log(htmlContent);
+    setHtmlString(htmlContent);
   }, [blogInfo]);
 
   return (
     <div className={`${styles.start} ${styles.blog}`}>
       <div className={styles.header_color}></div>
-      {jsonInfo && $generateHtmlFromNodes(jsonInfo)}
+      <div dangerouslySetInnerHTML={{ __html: htmlString }}></div>
+      {/* {htmlContent && $generateHtmlFromNodes(jsonInfo, null)} */}
     </div>
   );
 };
