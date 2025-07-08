@@ -155,12 +155,14 @@ const columns = [
     size: 104,
   }),
   columnHelper.accessor('c2', {
-    cell: (info) => info.getValue(),
+    cell: (info) => t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.Status.${info.getValue()}`),
     header: t('재직여부'),
     size: 60,
   }),
-  columnHelper.accessor('userState', {
-    header: '계정상태',
+  columnHelper.accessor('accountStatus', {
+    cell: (info) =>
+      t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.AccountStatus.${info.getValue()}`),
+    header: t('계정상태'),
     size: 60,
   }),
 ] as ColumnDef<any, unknown>[];
