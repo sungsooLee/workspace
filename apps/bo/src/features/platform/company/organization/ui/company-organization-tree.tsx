@@ -20,6 +20,7 @@ import {
   TreeNode,
   useModal,
   TreeEventPayload,
+  SplitPanel,
 } from '@learnway/ui';
 import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 import { ContentsHistoryInfoFormField, FormRow, FormSubTitle } from '@shared/ui';
@@ -147,7 +148,9 @@ const TenantCompanyOrganizationTreeComponent = ({
   });
 
   const handleSelectedNodeChange = (node: any) => {
-    if( roleInfo === 'TENANT' && showType === EnOrganizationShowType.origin ) { return; }
+    if (roleInfo === 'TENANT' && showType === EnOrganizationShowType.origin) {
+      return;
+    }
     console.log('##### handleSelectedNodeChange', node);
     if (node.key !== 'root' && node.parentKey !== 'root') {
       const location = findOrganizationPathById(deptTreeData, node.key);
@@ -450,12 +453,13 @@ const TenantCompanyOrganizationTreeComponent = ({
   };
 
   return (
-    <SectionLayout contentsRatio={'thirty'}>
+    <SplitPanel size={[600, 'auto']} divider>
       <TreeContainer>
         <TreeBox
           data={deptTreeData}
           treeId="1"
           type={showType === EnOrganizationShowType.origin ? 'SHUTTLE_LIST' : 'SAME_LEVEL_ONLY'}
+          showSearchLabel={t('조직')}
           showSearchKeyword
           initLevel={2}
           title={showType === EnOrganizationShowType.origin ? t('조직-원본') : t('조직-플랫폼')}
@@ -601,7 +605,7 @@ const TenantCompanyOrganizationTreeComponent = ({
           </div>
         </div>
       )}
-    </SectionLayout>
+    </SplitPanel>
   );
 };
 

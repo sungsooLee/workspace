@@ -84,6 +84,7 @@ const CompanyOrganizationCheckComponent = ({ companyCode }: { companyCode: strin
         data={hmgDeptTreeData}
         treeId="1"
         type="SHUTTLE_LIST"
+        showSearchLabel={t('조직')}
         showSearchKeyword
         initLevel={2}
         title={t('조직-원본')}
@@ -92,6 +93,7 @@ const CompanyOrganizationCheckComponent = ({ companyCode }: { companyCode: strin
         data={deptTreeData}
         treeId="1"
         type="SHUTTLE_LIST"
+        showSearchLabel={t('조직')}
         showSearchKeyword
         initLevel={2}
         title={t('조직-플랫폼')}

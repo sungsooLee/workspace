@@ -262,6 +262,9 @@ const columns = [
     },
     header: t('등록일시'),
     size: 192,
+    meta: {
+      cellAlign: 'center',
+    },
   }),
   columnHelper.accessor('lastModifiedBy', {
     header: '수정자',
@@ -273,5 +276,8 @@ const columns = [
     },
     header: t('수정일시'),
     size: 192,
+    meta: {
+      cellAlign: 'center',
+    },
   }),
 ] as ColumnDef<any, unknown>[];
