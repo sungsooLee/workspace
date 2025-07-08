@@ -7,11 +7,12 @@ import { LearningWindowBlogPlayer } from './player/ui/learning-window-blog-playe
 import { LearningWindowGalleryPlayer } from './player/ui/learning-window-gallery-player';
 import { LearningWindowScormPlayer } from './player/ui/learning-window-scorm-player';
 import { LearningWindowVideoPlayer } from './player/ui/learning-window-video-player';
+import { LearningWindowHtmlPlayer } from './player/ui/learning-window-html-player';
 
 import { EnContentType, useLearningWindow } from './learning-window.store';
 
 const LearningWindowComponent: FC<any> = () => {
-  const { scormInfo, videoInfo, galleryInfo, blogInfo, playInfo } = useLearningWindow();
+  const { scormInfo, videoInfo, galleryInfo, blogInfo, htmlInfo, playInfo } = useLearningWindow();
 
   return (
     <>
@@ -19,6 +20,7 @@ const LearningWindowComponent: FC<any> = () => {
       {videoInfo && <LearningWindowVideoPlayer />}
       {galleryInfo && <LearningWindowGalleryPlayer />}
       {blogInfo && <LearningWindowBlogPlayer playInfo={playInfo} blogInfo={blogInfo} />}
+      {htmlInfo && <LearningWindowHtmlPlayer htmlInfo={htmlInfo} />}
     </>
   );
 };

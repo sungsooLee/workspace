@@ -7,7 +7,8 @@ import { learningResourceQueryOptions, useFetchBlogContent } from '@entities/lea
 import { ContentType } from '@types';
 
 const PreviewLearningWindowComponent: FC<any> = ({ contentUuid }: { contentUuid: string }) => {
-  const { setBlogInfo, setVideoInfo, setPlayInfo, setScormInfo, setFuncInfo } = useLearningWindow();
+  const { setBlogInfo, setVideoInfo, setHtmlInfo, setPlayInfo, setScormInfo, setFuncInfo } =
+    useLearningWindow();
 
   const { data, error: fetchError } = useQuery(
     learningResourceQueryOptions.getContent(contentUuid),
@@ -24,6 +25,9 @@ const PreviewLearningWindowComponent: FC<any> = ({ contentUuid }: { contentUuid:
         break;
       case ContentType.VIDEO:
         setVideoInfo(data);
+        break;
+      case ContentType.HTML5_VIDEO:
+        setHtmlInfo(data.resource);
         break;
     }
     setFuncInfo({

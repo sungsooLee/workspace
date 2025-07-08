@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import type { MutateOptions } from '@tanstack/react-query';
 
-import { videoMutateOptions } from '../../video/service/video.queries';
+import { videoMutateOptions } from './video.queries';
 
 export function useVideoWatchLog(mutationOptions = {}) {
   const queryClient = useQueryClient();

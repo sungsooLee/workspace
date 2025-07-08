@@ -6,6 +6,7 @@ export enum EnContentType {
   SCORM = 'SCORM',
   IMAGE = 'IMAGE',
   BLOG = 'BLOG',
+  HTML5_VIDEO = 'HTML5_VIDEO',
   EXTERNAL_LINK = 'EXTERNAL_LINK',
 }
 
@@ -96,6 +97,9 @@ interface LearningWindowStoreData {
   setVideoInfo: (v: any) => void;
   blogInfo: any;
   setBlogInfo: (v: any) => void;
+  htmlInfo: any;
+  setHtmlInfo: (v: any) => void;
+
   funcInfo?: FunctionInfomation;
   setFuncInfo: (v: FunctionInfomation) => void;
 }
@@ -110,6 +114,7 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
   galleryInfo: undefined,
   videoInfo: undefined,
   blogInfo: undefined,
+  htmlInfo: undefined,
   funcInfo: undefined,
 
   setPlayInfo(playInfo?: PlayInfo) {
@@ -154,6 +159,12 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
       blogInfo,
     }));
   },
+  setHtmlInfo(htmlInfo: any) {
+    set((state) => ({
+      htmlInfo,
+    }));
+  },
+
   setFuncInfo(funcInfo: FunctionInfomation) {
     set((state) => ({
       funcInfo,
@@ -175,6 +186,7 @@ export const useLearningWindow = () => {
     galleryInfo,
     videoInfo,
     blogInfo,
+    htmlInfo,
     funcInfo,
     playIndex: _playIndex,
     playList: _playList,
@@ -190,6 +202,7 @@ export const useLearningWindow = () => {
     setGalleryInfo,
     setVideoInfo,
     setBlogInfo,
+    setHtmlInfo,
     setFuncInfo,
     clearInfo,
   } = useLearningWindowStore((state) => state);
@@ -300,6 +313,8 @@ export const useLearningWindow = () => {
     setVideoInfo,
     blogInfo,
     setBlogInfo,
+    htmlInfo,
+    setHtmlInfo,
     funcInfo,
     setFuncInfo,
     setPlayInfo: handleSetPlayInfo,

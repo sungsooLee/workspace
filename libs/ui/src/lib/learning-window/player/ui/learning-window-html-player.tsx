@@ -21,7 +21,7 @@ const LearningWindowHtmlPlayerComponent: FC<any> = ({
 
   useEffect(() => {
     if (!htmlInfo) return;
-    console.log(htmlInfo);
+    console.log('html', htmlInfo);
 
     let itemUrl = htmlInfo.startFileUrl;
 
@@ -29,7 +29,7 @@ const LearningWindowHtmlPlayerComponent: FC<any> = ({
       const url = new URL(itemUrl);
       itemUrl = url.pathname;
     }
-
+    console.log('--------------------', itemUrl);
     // const scrc = new ScormRteClient(playInfo, scormRteService);
     // const dm = new ScormDataManager(scrc.getErrorManager());
     // dm.fromJSON(htmlInfo);
@@ -58,4 +58,4 @@ const LearningWindowHtmlPlayerComponent: FC<any> = ({
   );
 };
 
-export const LearningWindowScormPlayer = LearningWindowHtmlPlayerComponent;
+export const LearningWindowHtmlPlayer = LearningWindowHtmlPlayerComponent;

@@ -49,20 +49,22 @@ function RouteComponent() {
   const { watchLog } = useVideoWatchLog();
 
   const handleVideoProgress = (state: any) => {
-    const payload = {
-      courseSequenceId: baseInfo?.sequenceId,
-      courseId: baseInfo?.courseId,
-      curriculumId: baseInfo?.curriculumId,
-      moduleId: playInfo?.moduleId,
-      lessonId: playInfo?.lessonId,
-      contentUuid: playInfo?.contentUuid,
-      videoStartTime: videoStart,
-      videoEndTime: state.playedSeconds,
-      speed: state.speed,
-    };
-    setVideoStart(state.playedSeconds);
-    console.log('handleVideo', payload);
-    watchLog(payload);
+    if (playInfo?.contentType === EnContentType.VIDEO) {
+      const payload = {
+        courseSequenceId: baseInfo?.sequenceId,
+        courseId: baseInfo?.courseId,
+        curriculumId: baseInfo?.curriculumId,
+        moduleId: playInfo?.moduleId,
+        lessonId: playInfo?.lessonId,
+        contentUuid: playInfo?.contentUuid,
+        videoStartTime: videoStart,
+        videoEndTime: state.playedSeconds,
+        speed: state.speed,
+      };
+      setVideoStart(state.playedSeconds);
+      console.log('handleVideo', payload);
+      watchLog(payload);
+    }
   };
 
   useEffect(() => {

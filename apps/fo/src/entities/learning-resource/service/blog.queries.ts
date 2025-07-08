@@ -13,7 +13,7 @@ export const blogQueryOptions = {
     contentUuid
       ? {
           queryKey: blogQueryKeys.resouce(contentUuid),
-          queryFn: () => BlogService.getBlogResouce(contentUuid),
+          queryFn: () => BlogService.getBlogResource(contentUuid),
         }
       : getQuerySkipToken<any>(),
 
