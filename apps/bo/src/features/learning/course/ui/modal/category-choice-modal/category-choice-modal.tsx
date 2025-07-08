@@ -11,7 +11,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import styles from './category-choice-modal.module.css';
 import { useFetchTenantCategoryTreePopup } from '@entities/tenant';
-import { transformApiDataToApiTreeData } from '@features/platform/menu';
+import { transformApiDataToApiTreeData } from '@features/platform-management/platform/menu-managemnet';
 
 export interface CategoryChoiceModalProps {
   /** 테넌트 아이디 배열 */
@@ -29,11 +29,13 @@ const CategoryChoiceModalComponent = forwardRef<HTMLDivElement, CategoryChoiceMo
   ({ tenantIds, ...props }, ref) => {
     const { t } = useTranslation();
     const { close: closeModal } = useModal();
-    const { data: treeData } = useFetchTenantCategoryTreePopup(tenantIds, {select: (response: any) => transformApiDataToApiTreeData(response)});
+    const { data: treeData } = useFetchTenantCategoryTreePopup(tenantIds, {
+      select: (response: any) => transformApiDataToApiTreeData(response),
+    });
     const [selectedRows, setSelectedRows] = useState();
     const [selectedItems, setSelectedItems] = useState<any[]>([]);
 
-    console.log('Category ChoiceModalComponent', {tenantIds, treeData});
+    console.log('Category ChoiceModalComponent', { tenantIds, treeData });
 
     const handleItemsChange = (items: any[]) => {
       setSelectedItems(items);
