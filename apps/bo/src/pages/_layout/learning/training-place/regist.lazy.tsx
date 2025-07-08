@@ -6,7 +6,7 @@ import { Button } from '@learnway/ui';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
-import { TrainingPlaceDetail } from '@features/learning/training-place/training-place-detail';
+import { TrainingPlaceDetail } from '@features/learning-operate-support/learning-space/learning-space-management/training-place-detail';
 import { EnFormMode, EnPageMode } from '@types';
 
 export const Route = createLazyFileRoute('/_layout/learning/training-place/regist')({

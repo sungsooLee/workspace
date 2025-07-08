@@ -18,6 +18,7 @@ cache:
 build:
   stage: build
   image: node:18
+  interruptible: true
   rules:
     - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH =~ /^build-.*/'
       variables:
@@ -54,6 +55,7 @@ deploy:
   image:
     name: amazon/aws-cli:2.15.0
     entrypoint: ['']
+  interruptible: true
   dependencies: # build 단계의 artifacts 를 사용.
     - build
   script:

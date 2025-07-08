@@ -10,8 +10,8 @@ import {
   TenantUserRegist,
   TenantUserList,
   TenantUserRegistApplicationList,
-} from '@features/tenant';
-import { TenantUserApplicationDetail } from '@features/tenant';
+} from '@features/platform-management/tenant';
+import { TenantUserApplicationDetail } from '@features/platform-management/tenant';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/user/application-detail')({
   component: RouteComponent,

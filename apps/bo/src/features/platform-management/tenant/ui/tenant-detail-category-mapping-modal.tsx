@@ -17,59 +17,83 @@ import { cn } from '@learnway/shared';
 import { IcoNarrowRight } from '@learnway/icons';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import popContentsStyles from '@features/platform-management/tenant/ui/pop-contents-layout.module.css';
+import popContentsStyles from './pop-contents-layout.module.css';
+//import { transformApiDataToTreeData } from '@features/category/service/category.service';
 import { transformApiDataToTreeData } from '@features/platform-management/platform/category-managemnet';
-
-import { useFetchCategory } from '@entities/category';
 import {
-  getAllParentAndChildrenByKey,
-  getAllParentAndAllChildById,
-  getFirstExpandKeys,
-  getAllTreeKeys,
-  getAllParent,
-  getNodeByKey,
-  genMap,
-  deleteNodeByNode,
-  copyTreeNode,
-  moveNodePosition,
-} from '@features/platform-management/tenant';
+  useFetchTenantCategory,
+  useMappingTenantCategory,
+  useDeleteTenantCategory,
+  useMoveTenantCategory,
+} from '@entities/tenant/service/tenant-category.hook';
+import { useFetchCategory } from '@entities/category';
+import { getFirstExpandKeys, getAllTreeKeys } from '@features/platform-management/tenant/service/tenant-detail-tree.service';
+
+type ActionFunction = (payload: any) => void;
 
 /**
  * 화면번호: NLP_BO_TMS_1002_02 (카테고리 테넌트 매핑)
  * @param param0
  * @returns
  */
-const CategoryChoiceTreeModalModalComponent = () => {
-  const [commonCategoryTreeData, setCommonCategoryTreeData] = useState<any>([]);
+const TenantDetailCategoryMappingModalComponent: FC<any> = ({ tenantId, onNodeChange }) => {
+  const [commonCategoryTreeData, setCommonCategoryTreeData] = useState([]);
   const [commonCategoryTreeExpandedKeys, setCommonCategoryTreeExpandedKeys] = useState<string[]>(
     [],
   );
   const [commonCategoryTreeAllKeys, setCommonCategoryAllKeys] = useState<string[]>([]);
-
-  const [selectedCategoryTreeData, setSelectedCategoryTreeData] = useState<any[]>([]);
-  const [selectedCategoryTreeAllKeys, setSelectedCategoryTreeAllKeys] = useState<string[]>([]);
-  const [selectedCategoryTreeExpandedKeys, setSelectedCategoryTreeExpandedKeys] = useState<
-    string[]
-  >([]);
+  const [commonCategoryTreeSelectedNode, setCommonCategoryTreeSelectedNode] =
+    useState<TreeNode | null>(null);
+  const [tenantCategoryTreeData, setTenantCategoryTreeData] = useState([]);
+  const [tenantCategoryTreeExpandedKeys, setTenantCategoryTreeExpandedKeys] = useState<string[]>(
+    [],
+  );
+  const [tenantCategoryTreeAllKeys, setTenantCategoryTreeAllKeys] = useState<string[]>([]);
 
   const { open: openModal, close: closeModal, confirm: openConfirm, alert: openAlert } = useModal();
 
   const { data: commonCategories } = useFetchCategory();
+  const { data: tenantCategories, refetch } = useFetchTenantCategory(tenantId);
+
+  const { mapping: mappingTenantCategory } = useMappingTenantCategory(tenantId, {
+    onSuccess: async (data: any) => {
+      await refetch();
+      if (onNodeChange) {
+        onNodeChange();
+      }
+    },
+  });
+  const { move: moveTenantCategory } = useMoveTenantCategory(tenantId, {
+    onSuccess: async (data: any) => {
+      await refetch();
+      if (onNodeChange) {
+        onNodeChange();
+      }
+    },
+  });
+
+  const { delete: deleteTenantCategory } = useDeleteTenantCategory(tenantId, {
+    onSuccess: async (data: any) => {
+      await refetch();
+      if (onNodeChange) {
+        onNodeChange();
+      }
+    },
+  });
 
   const handleCommonCategoryTreeExpandChange = (keys: string[]) => {
     if (keys && keys.length > 0) {
       setCommonCategoryTreeExpandedKeys(keys);
     }
   };
-
   const handleTenantCategoryTreeExpandChange = (keys: string[]) => {
     if (keys && keys.length > 0) {
-      setSelectedCategoryTreeExpandedKeys(keys);
+      setTenantCategoryTreeExpandedKeys(keys);
     }
   };
 
   const handleDeleteTenantCategory = (node: TreeNode) => {
-    if (node.children) {
+    if (node.children && node.children.length > 0) {
       openAlert({
         title: '삭제할 수 없습니다.',
         content: '하위 카테고리가 존재 시 삭제할 수 없습니다.',
@@ -81,61 +105,102 @@ const CategoryChoiceTreeModalModalComponent = () => {
       content: <p>삭제 후 복구할 수 없습니다.</p>,
       onClose: (value: boolean) => {
         if (value) {
-          console.log(value);
+          const payload: any = {};
+          payload.tenantId = tenantId;
+          payload.categoryId = node.key;
+          deleteTenantCategory(payload);
         }
       },
     });
   };
 
   const handleTargetAction = async (event: any) => {
-    console.log(event);
+    const nodeInfo = event;
+    const sourceNode = event.sourceNode;
+    const targetNode = event.targetNode;
+    if (nodeInfo.type === 'NODE_SELECT') return false;
+    console.log('### event', event);
+    console.log('### sourceNode', sourceNode);
+    console.log('### targetNode', targetNode);
 
-    switch (event.type) {
+    let excutable: ActionFunction | undefined;
+
+    let parentKey = targetNode.parentKey;
+    let sortSeq = 1;
+    let targetDepth = targetNode.depth;
+    switch (nodeInfo.position) {
+      case 'INSIDE':
+        parentKey = targetNode.key;
+        targetDepth = targetNode.depth + 1;
+        break;
+      case 'BEFORE':
+        sortSeq = targetNode.sortSeq;
+        break;
+      case 'AFTER':
+        sortSeq = targetNode.sortSeq + 1;
+        break;
+    }
+    if (sourceNode.depth !== targetDepth) {
+      alert(
+        '동일한 레벨 내에서만 매핑 및 이동이 가능합니다. src:' +
+          sourceNode.depth +
+          '/dest:' +
+          targetDepth,
+      );
+      return false;
+    }
+    if (sourceNode.parentKey !== parentKey) {
+      alert(
+        '동일한 부모 카테고리에만 매핑 및 이동이 가능합니다. src:' +
+          sourceNode.parentKey +
+          '/dest:' +
+          parentKey,
+      );
+      return false;
+    }
+    const sourceCategoryId = sourceNode.key;
+    switch (nodeInfo.type) {
       case 'NODE_COPY':
-        if (event.sourceTreeId === 'common-tree') {
-          if (selectedCategoryTreeAllKeys.includes(event.sourceNode.key)) {
-            alert('이미 매핑된 카테고리입니다.');
-            return false;
-          }
-          const oldCopyMenu = copyTreeNode(event, commonCategoryTreeData, selectedCategoryTreeData);
-          const firstLevelKeys = oldCopyMenu.map((node: TreeNode) => node.key);
-          setSelectedCategoryTreeExpandedKeys(firstLevelKeys);
-
-          setSelectedCategoryTreeData(oldCopyMenu);
+        if (nodeInfo.sourceTreeId !== 'mapping-common-tree') {
+          return false;
         }
+        if (tenantCategoryTreeAllKeys.includes(sourceCategoryId)) {
+          alert('이미 매핑된 카테고리입니다.');
+          return false;
+        }
+        excutable = mappingTenantCategory;
         break;
       case 'NODE_MOVE':
-        setSelectedCategoryTreeData((predata) => {
-          moveNodePosition(event, predata);
-          return [...predata];
-        });
+        excutable = moveTenantCategory;
         break;
+    }
+    if (excutable) {
+      const payload: any = {};
+      payload.tenantId = tenantId;
+      payload.categoryId = sourceNode.key;
+      payload.data = {};
+      payload.data.destinationParentId = parentKey;
+      payload.data.sortSeq = sortSeq;
+      console.log('### payload', payload);
+      excutable(payload);
     }
   };
 
-  useEffect(() => {
-    if (commonCategories) {
-      const transformedData = transformApiDataToTreeData(commonCategories);
-      setCommonCategoryTreeData(transformedData);
-      if (transformedData && transformedData.length > 0) {
-        const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
-        setCommonCategoryTreeExpandedKeys(firstLevelKeys);
-        const allKeys = getAllTreeKeys(transformedData);
-        setCommonCategoryAllKeys(allKeys);
-        const root = { ...transformedData[0] };
-        root.children = [];
-        setSelectedCategoryTreeAllKeys([root.key]);
-        setSelectedCategoryTreeData([root]);
-      }
-    }
-  }, [commonCategories]);
-
-  useEffect(() => {
-    if (selectedCategoryTreeData) {
-      const allKeys = getAllTreeKeys(selectedCategoryTreeData);
-      setSelectedCategoryTreeAllKeys(allKeys);
-    }
-  }, [selectedCategoryTreeData]);
+  const renderCommonCategorySelectButtons = (node: TreeNode, level: number) => {
+    return (
+      <div className={'gap-10px flex'}>
+        <div className={'flex items-center'}>
+          {level == 0 ? (
+            ''
+          ) : (
+            <Button variant="gray2" size={'xs'} type={'button'}>
+              {t('선택')}
+            </Button>
+          )}
+        </div>
+      </div>
+    );
+  };
 
   const renderTenantCategoryDeleteButtons = (node: TreeNode, level: number) => {
     if (node.categoryType === 'COMMON')
@@ -158,6 +223,39 @@ const CategoryChoiceTreeModalModalComponent = () => {
         </div>
       );
   };
+
+  useEffect(() => {
+    if (commonCategories) {
+      console.log(commonCategories);
+      const transformedData = transformApiDataToTreeData(commonCategories);
+      setCommonCategoryTreeData(transformedData);
+      if (transformedData && transformedData.length > 0) {
+        const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
+        setCommonCategoryTreeExpandedKeys(firstLevelKeys);
+        const allKeys = getAllTreeKeys(transformedData);
+        setCommonCategoryAllKeys(allKeys);
+      }
+    }
+  }, [commonCategories]);
+
+  useEffect(() => {
+    if (tenantCategories) {
+      console.log('### refetch! TenantCategories', tenantCategories);
+      const transformedData = transformApiDataToTreeData(tenantCategories);
+      console.log('### transformedData', transformedData);
+      setTenantCategoryTreeData(transformedData);
+      console.log('### tenantCategoryTreeExpandedKeys', tenantCategoryTreeExpandedKeys);
+      if (transformedData && transformedData.length > 0) {
+        if (tenantCategoryTreeExpandedKeys.length === 0) {
+          const firstLevelKeys = transformedData.map((node: TreeNode) => node.key);
+          setTenantCategoryTreeExpandedKeys(firstLevelKeys);
+        }
+        const allKeys = getAllTreeKeys(transformedData);
+        console.log('## allKeys', allKeys);
+        setTenantCategoryTreeAllKeys(allKeys);
+      }
+    }
+  }, [tenantCategories]);
 
   return (
     <ModalContainer>
@@ -203,7 +301,7 @@ const CategoryChoiceTreeModalModalComponent = () => {
                 </div>
                 <div className={layoutStyles.inner_contents}>
                   <DndTreeView
-                    treeId="common-tree"
+                    treeId="mapping-common-tree"
                     type={'DRAG_DROP'}
                     data={commonCategoryTreeData}
                     // nodeButtons={renderBaseSelectButtons}
@@ -211,6 +309,7 @@ const CategoryChoiceTreeModalModalComponent = () => {
                     expandedKeys={commonCategoryTreeExpandedKeys}
                     onExpandedKeysChange={handleCommonCategoryTreeExpandChange}
                     //onSelectedNodeChange={handleSelectedNodeChange}
+                    moveIcon={true}
                   />
                 </div>
 
@@ -232,9 +331,7 @@ const CategoryChoiceTreeModalModalComponent = () => {
                   <div className={titleStyles.title_area}>
                     <h3 className={titleStyles.title}>{t('카테고리 매핑 선택')}</h3>
                     <strong className={titleStyles.sub_title}>{t('전체')}</strong>
-                    <span className={titleStyles.num}>
-                      {selectedCategoryTreeAllKeys?.length - 1}
-                    </span>
+                    <span className={titleStyles.num}>{tenantCategoryTreeAllKeys?.length - 1}</span>
                   </div>
                   <div className={layoutStyles.btn_wrap}>
                     <Button
@@ -242,8 +339,8 @@ const CategoryChoiceTreeModalModalComponent = () => {
                       size="sm"
                       className={layoutStyles.btn_text}
                       onClick={() => {
-                        if (selectedCategoryTreeData) {
-                          const allKeys = getAllTreeKeys(selectedCategoryTreeData);
+                        if (tenantCategoryTreeData) {
+                          const allKeys = getAllTreeKeys(tenantCategoryTreeData);
                           handleTenantCategoryTreeExpandChange(allKeys);
                         }
                       }}
@@ -255,7 +352,7 @@ const CategoryChoiceTreeModalModalComponent = () => {
                       size="sm"
                       className={layoutStyles.btn_text}
                       onClick={() => {
-                        const firstKeys = getFirstExpandKeys(selectedCategoryTreeData);
+                        const firstKeys = getFirstExpandKeys(tenantCategoryTreeData);
                         handleTenantCategoryTreeExpandChange(firstKeys || []);
                       }}
                     >
@@ -265,12 +362,12 @@ const CategoryChoiceTreeModalModalComponent = () => {
                 </div>
                 <div className={layoutStyles.inner_contents}>
                   <DndTreeView
-                    treeId="selected-tree"
+                    treeId="mapping-tenant-tree"
                     type={'SAME_LEVEL_ONLY'}
-                    data={selectedCategoryTreeData}
+                    data={tenantCategoryTreeData}
                     nodeButtons={renderTenantCategoryDeleteButtons}
                     onAction={handleTargetAction}
-                    expandedKeys={selectedCategoryTreeExpandedKeys}
+                    expandedKeys={tenantCategoryTreeExpandedKeys}
                     onExpandedKeysChange={handleTenantCategoryTreeExpandChange}
                     // onSelectedNodeChange={handleSelectedNodeChange}
                   />
@@ -283,16 +380,11 @@ const CategoryChoiceTreeModalModalComponent = () => {
         </TreeContainer>
       </ModalBody>
       <ModalFooter>
-        <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
-        <Button
-          label={t('적용')}
-          variant={'primary'}
-          size={'lg'}
-          onClick={() => closeModal(selectedCategoryTreeData)}
-        />
+        {/* <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={() => closeModal()} /> */}
+        <Button label={t('닫기')} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
       </ModalFooter>
     </ModalContainer>
   );
 };
 
-export const CategoryChoiceTreeModal = CategoryChoiceTreeModalModalComponent;
+export const TenantDetailCategoryMappingModal = TenantDetailCategoryMappingModalComponent;
