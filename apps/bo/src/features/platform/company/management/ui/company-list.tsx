@@ -84,6 +84,9 @@ const CompanyListComponent = () => {
               DATE_TIME_FORMAT.DATETIME_SEC,
             ),
       enableGrouping: false,
+      meta: {
+        cellAlign: 'center',
+      },
     }),
   ] as ColumnDef<any, unknown>[];
 
@@ -121,18 +124,18 @@ const searchConfig: SearchBoxConfig = {
       {
         name: 'isUsed',
         type: 'dropdown',
-        label: t('회사정보 사용'),
+        label: t('사용 여부'),
         value: '',
         options: [
           { value: '', label: t('전체') },
-          { value: true, label: t('사용') },
-          { value: false, label: t('미사용') },
+          { value: 'true', label: t('사용') },
+          { value: 'false', label: t('미사용') },
         ],
       },
       {
         name: 'modifyDate',
         type: 'date-range',
-        label: t('수정일'),
+        label: t('수정 기간'),
         value: {
           from: undefined,
           to: undefined,
