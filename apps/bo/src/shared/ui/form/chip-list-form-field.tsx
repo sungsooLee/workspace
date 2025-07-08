@@ -24,7 +24,7 @@ export interface ChipListFormFieldProps extends BaseFormFieldProps<string[]> {
  */
 const ChipListFormFieldComponent = forwardRef<HTMLDivElement, ChipListFormFieldProps>(
   (
-    { value = [], onChange, placeHolder, limitPlaceholder, limitSize = 200, chipListConfig },
+    { value = [], onChange, placeholder, limitPlaceholder, limitSize = 200, chipListConfig },
     ref,
   ) => {
     /**
@@ -66,7 +66,7 @@ const ChipListFormFieldComponent = forwardRef<HTMLDivElement, ChipListFormFieldP
           className={formStyles.chips_wrap}
           options={value}
           // options={value.map((val) => ({ value: val, label: val }))}
-          placeholder={placeHolder}
+          placeholder={placeholder}
           hideBorder
           onAddInputEnterKeyDown={handleAddInputEnterKeyDown}
           onChipDeleteClick={handlerChipDelete}
