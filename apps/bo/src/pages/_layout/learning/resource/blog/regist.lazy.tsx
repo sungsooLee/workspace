@@ -1,7 +1,8 @@
+import { useEffect } from 'react';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useFetchAuthUser } from '@learnway/auth/entities';
-import { Company } from '@learnway/types';
+import { Company, User } from '@learnway/types';
 import { DynamicFormConfig, S3_PATH, useDynamicForm } from '@learnway/hooks';
 import {
   Button,
@@ -12,16 +13,18 @@ import {
   InputModalSelectorFormField,
   useModal,
 } from '@learnway/ui';
-import { cn, getParsedDataFromString } from '@learnway/shared';
+import { RoleInfo } from '@learnway/auth/types';
+import { cn, getParsedDataFromString, isEmptyData } from '@learnway/shared';
 import { IcoFormRequired } from '@learnway/icons';
-import { BlogCreateReq } from '@types';
+import { BlogCreateReq, BlogPostRes, ContentAddInfoType, EnChannelScope } from '@types';
 import { FormRow, FormRow2 } from '@shared/ui';
-import { ChannelListChoiceModal, CompanyChoiceModal, ManagerChoiceModal } from '@features/shared';
+import { ChannelListChoiceModal, CompanyChoiceModal, UserChoiceModal } from '@features/shared';
 import { SharedChannelGridFormField } from '@features/learning';
 import { DateRangePickerFormField } from '@features/learning/ui/resource/date-range-picker-form-field';
 import { DurationTimeFormField } from '@features/learning/ui/resource/duration-time-form-field';
 import { FormDisplay } from '@features/form';
 import { ContentsButtons, MainContents, PageContainer, SubContents } from '@widgets/layout';
+import { useCreateBlogContent } from '@entities/learning-resource';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import styles from './blog-detail.module.css';
@@ -77,7 +80,7 @@ function RouteComponent() {
         value: '',
       },
       {
-        name: 'coordinatorNationCode',
+        name: 'coordinatorTelCountryCode',
         type: 'hidden',
         format: 'string',
         value: 'KOR_82',
@@ -88,7 +91,7 @@ function RouteComponent() {
         type: 'phone-number',
         value: '',
         fields: {
-          nationCode: 'coordinatorNationCode',
+          nationCode: 'coordinatorTelCountryCode',
           number: 'coordinatorTelNo',
         },
       },
@@ -107,8 +110,8 @@ function RouteComponent() {
         name: 'contentUseDate',
         type: 'custom',
         value: {
-          from: undefined, // contentUseStartDate
-          to: undefined, // contentUseEndDate
+          from: undefined,
+          to: undefined,
         },
         fields: {
           from: undefined,
@@ -154,7 +157,7 @@ function RouteComponent() {
       //   value: '',
       // },
       {
-        name: 'vendorTelNoNationCode',
+        name: 'vendorTelCountryCode',
         type: 'hidden',
         format: 'string',
         value: 'KOR_82',
@@ -165,7 +168,7 @@ function RouteComponent() {
         type: 'phone-number',
         value: '',
         fields: {
-          nationCode: 'vendorTelNoNationCode',
+          nationCode: 'vendorTelCountryCode',
           number: 'vendorTelNo',
         },
       },
@@ -208,7 +211,7 @@ function RouteComponent() {
         name: 'selectedContentThumbnailFileUuid',
         type: 'hidden',
         format: 'string',
-        value: 'f7d7cbce-23b4-4be0-99ab-cb56e182b8b8', // 임시 설정
+        value: '',
       },
       {
         label: t('태그'),
@@ -313,7 +316,7 @@ function RouteComponent() {
       contentName: true,
       coordinatorName: true,
       coordinatorUuid: true,
-      coordinatorNationCode: true,
+      coordinatorTelCountryCode: true,
       coordinatorTelNo: {
         format: 'phone-number',
         required: true,
@@ -422,26 +425,59 @@ function RouteComponent() {
     },
   };
 
-  const { data: loginUser } = useFetchAuthUser();
-  const { open: openModal, confirm: openConfirm } = useModal();
-  const router = useRouter();
-
   const {
     provider,
     onSubmit,
     // control,
-    // getValues,
-    // updateFormData,
+    getValues,
+    updateFormData,
     onFormChange: handleFormChange,
   } = useDynamicForm(formConfig);
 
+  const { data: loginUser } = useFetchAuthUser();
+
+  useEffect(() => {
+    const myChannelAuths = loginUser?.myRoles?.map((item: RoleInfo) => item.channelScope) || [];
+
+    // 등록자가 채널소유자 or 채널구성원일 경우 default로 등록자 정보 입력
+    // coordinatorName: `${data.name}/${data?.dept?.deptName}/${data?.company?.name}`,
+    if (
+      !isEmptyData(loginUser) &&
+      myChannelAuths.includes(EnChannelScope.CURRENT_CHANNEL_INCLUSIVE)
+    ) {
+      updateFormData({
+        ...getValues(),
+        coordinatorUuid: loginUser?.uuid,
+        coordinatorName: `${loginUser?.name}/${loginUser?.dept?.deptName}/${loginUser?.company?.name}`,
+        coordinatorTelCountryCode: loginUser?.phoneNumberNationCode,
+        coordinatorTelNo: loginUser?.phoneNumber,
+      });
+    }
+  }, [loginUser]);
+
+  const { open: openModal, confirm: openConfirm } = useModal();
+  const router = useRouter();
+
+  const { create: createBlogContent } = useCreateBlogContent({
+    onSuccess: (result: BlogPostRes) => {
+      if (result?.contentUuid) {
+        return router.navigate({
+          to: '/learning/resource/blog/view',
+          state: {
+            contentUuid: result.contentUuid,
+          },
+        });
+      }
+    },
+  });
+
   const handleOnSubmit = async (data: any): Promise<void> => {
-    const tenantId = loginUser?.activeTenant?.tenantId;
+    const tenantId = loginUser?.activeTenant?.tenantId as number;
 
     const { hour, minute, second } = data.contentDuration;
     const contentTime = hour * 60 * 60 + minute * 60 + second;
 
-    const payload: Partial<BlogCreateReq> = {
+    const payload: BlogCreateReq = {
       tenantId,
       contentName: data.contentName,
       languageCountryCode: 'KO',
@@ -449,6 +485,7 @@ function RouteComponent() {
       description: data.description,
       coordinatorUuid: data.coordinatorUuid,
       coordinatorName: data.coordinatorName,
+      coordinatorTelCountryCode: data.coordinatorTelCountryCode,
       coordinatorTelNo: data.coordinatorTelNo,
       contentUseStartDate: data.contentUseDate?.from,
       contentUseEndDate: data.contentUseDate?.to,
@@ -458,9 +495,10 @@ function RouteComponent() {
       vendorCode: data.vendorCode,
       vendorName: data.vendorName,
       vendorCoordinatorName: data.vendorCoordinatorName,
+      vendorTelCountryCode: data.vendorTelCountryCode,
       vendorTelNo: data.vendorTelNo,
-      contentThumbnailFileGroupUuid: data.contentThumbnailFileGroupUuid?.[0],
-      selectedContentThumbnailFileUuid: data.selectedContentThumbnailFileUuid,
+      contentThumbnailFileGroupUuid: data.contentThumbnailFileGroupUuid?.[0], // '17312669-0032-4d94-9ecd-5891a44e407c'
+      selectedContentThumbnailFileUuid: data.selectedContentThumbnailFileUuid, // '3a68f885-880f-4507-aac6-56d30bef328a'
       isCourseUsed: data.isCourseUsed,
       isContentSecured: data.isContentSecured,
       isInspected: data.isInspected,
@@ -470,9 +508,8 @@ function RouteComponent() {
       isOpened: true,
       tags: data.tags,
       blogContent: getParsedDataFromString(data.blogContent),
-      // FIXME: BE에 아래 값 문의 필요
-      contentAddInfoType: 'VIDEO_ADD_INFO',
-      contentAddInfo: 100,
+      contentAddInfoType: ContentAddInfoType.VIDEO_ADD_INFO, // 블로그(초)
+      contentAddInfo: contentTime,
     };
 
     console.log('payload ===>', payload);
@@ -480,11 +517,10 @@ function RouteComponent() {
     if (
       await openConfirm({
         title: t('LABEL.confirm.save.title'),
-        content: t('입력한 정보로 등록 후 상세화면으로 이동합니다.'),
+        content: t('입력한 정보로 저장합니다.'),
       })
     ) {
-      // TODO: 저장 로직 수행 후 상세화면 이동
-      router.navigate({ to: '/learning/resource/blog/view' });
+      createBlogContent(payload);
     }
   };
 
@@ -575,14 +611,18 @@ function RouteComponent() {
                   modalConfig={{
                     title: '',
                     width: 'md',
-                    content: <ManagerChoiceModal />,
+                    content: <UserChoiceModal title="담당자" />,
                   }}
-                  transformModalData={(data: any) => ({
-                    coordinatorUuid: data.managerId,
-                    coordinatorName: data.managerName,
+                  transformModalData={(data: User) => ({
+                    coordinatorUuid: data.uuid,
+                    coordinatorName: `${data.name}/${data?.dept?.deptName}/${data?.company?.name}`,
+                    coordinatorTelNo: data.phoneNumber,
                   })}
                   onFormChange={(
-                    values: Record<string, { coordinatorUuid: string; coordinatorName: string }>,
+                    values: Record<
+                      string,
+                      { coordinatorUuid: string; coordinatorName: string; coordinatorTelNo: string }
+                    >,
                   ) => {
                     handleFormChange(values);
                   }}

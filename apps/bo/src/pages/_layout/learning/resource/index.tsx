@@ -42,7 +42,10 @@ function RouteComponent() {
           content: <LearningResourceFileUploadModal />,
           width: 'lg',
         });*/
-        router.navigate({ to: '/learning/resource/video/view', state: { permission: 'WRITE' } });
+        router.navigate({
+          to: '/learning/learning-resource/video/view',
+          state: { permission: 'WRITE' },
+        });
         break;
       }
       // HTML 동영상

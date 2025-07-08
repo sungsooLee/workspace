@@ -8,6 +8,7 @@ import {
   IcoStar,
   IcoGridFilter,
   IcoDownload,
+  IcoDownload02,
   IcoMinus,
   IcoPlus,
   IcoSetting,
@@ -123,6 +124,8 @@ import {
   IcoMessageText,
   IcoProgressComplete,
   IcoTooltipArrow02,
+  IcoPdf,
+  IcoLock,
 } from '@learnway/icons';
 
 export const Route = createFileRoute('/_guide/guide/icon')({
@@ -177,6 +180,7 @@ import { IcoAlertCircleGray } from '@learnway/icons'; // 사용할 icon 함수�
             <IcoStar width={30} height={30} stroke="#4C515E" />
             <IcoGridFilter width={30} height={30} stroke="#4C515E" />
             <IcoDownload width={30} height={30} stroke="#4C515E" />
+            <IcoDownload02 width={20} height={20} stroke="#4C515E" />
             <IcoMinus width={30} height={30} stroke="#4C515E" />
             <IcoPlus width={30} height={30} stroke="#4C515E" />
             <IcoSetting width={30} height={30} stroke="#4C515E" />
@@ -292,6 +296,8 @@ import { IcoAlertCircleGray } from '@learnway/icons'; // 사용할 icon 함수�
             <IcoBoxPlus width={30} height={30} stroke="#4C515E" />
             <IcoMessageText width={30} height={30} stroke="#4C515E" />
             <IcoTooltipArrow02 width={12} height={8} fill="#4D525C" />
+            <IcoPdf width={24} height={24} fill="#4D525C" />
+            <IcoLock width={24} height={24} fill="#4D525C" />
           </div>
         </div>
       </div>

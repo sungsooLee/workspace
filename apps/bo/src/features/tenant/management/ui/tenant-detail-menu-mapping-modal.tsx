@@ -18,7 +18,6 @@ import { IcoNarrowRight } from '@learnway/icons';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import popContentsStyles from './pop-contents-layout.module.css';
-import { transformApiDataToTreeData } from '@features/platform/menu/service/menu.service';
 import { transformMenuApiDataToTreeData } from '@features/tenant/management/service/tenant-detail-tree.service';
 import { useMenuManageFetchTree } from '@entities/menu/service/menu-manage.hook';
 import {
@@ -33,6 +32,7 @@ import {
   getAllTreeKeys,
   moveTenantMenuNodeCheck,
 } from '../service/tenant-detail-tree.service';
+import { transformApiDataToTreeData } from '@features/platform-management/platform/menu-managemnet';
 
 /**
  * 화면번호: NLP_BO_TMS_1002_01_02 (학습자메뉴매핑), NLP_BO_TMS_1002_01_05 (HRD 메뉴 매핑)

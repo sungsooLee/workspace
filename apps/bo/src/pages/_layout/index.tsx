@@ -418,9 +418,9 @@ export const munu = [
     pageId: 'learning/training-place',
     screenId: 'NLP_BO_LMS_0029',
     pageType: 'Page',
-    completionDate: '-',
-    memo: '작업 중',
-    end: false,
+    completionDate: '2025-07-07',
+    memo: '작업 완료',
+    end: true,
   },
   {
     screenName: '채널 개설 신청 관리',

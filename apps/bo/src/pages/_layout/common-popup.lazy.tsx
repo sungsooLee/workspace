@@ -30,6 +30,7 @@ import {
   PreviewImage,
   useModal,
 } from '@learnway/ui';
+import { AddressSearchFormField } from '@shared/ui/form/address-search-form-field';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
@@ -185,34 +186,8 @@ function RouteComponent() {
             />
           </ContentsRow>
           <ContentsRow>
-            <div className={dynamicFormStyles.address_wrap}>
-              <div className={dynamicFormStyles.info_address}>
-                <FormRow
-                  provider={provider}
-                  name={'zipNo'}
-                  className={dynamicFormStyles.post_input}
-                  element={<Input disabled={true} />}
-                />
-                <FormRow
-                  provider={provider}
-                  name={'address'}
-                  className={dynamicFormStyles.address_input}
-                  element={<Input disabled={true} />}
-                >
-                  <Button
-                    className={dynamicFormStyles.btn_find}
-                    variant={'gray'}
-                    size={'sm'}
-                    onClick={handleAddressSearch}
-                  >
-                    {t('LABEL.button.searchZipNo')}
-                  </Button>
-                </FormRow>
-              </div>
-              <div className={dynamicFormStyles.detail_address}>
-                <FormRow provider={provider} name={'addressDetail'} element={<Input />} />
-              </div>
-            </div>
+            <FormRow provider={provider} name={'address'} element={<AddressSearchFormField />} />
+            <FormRow provider={provider} name={'addressDetail'} />
           </ContentsRow>
           <ContentsRow>
             <Button
@@ -682,25 +657,30 @@ const formConfig: DynamicFormConfig = {
       description: '',
     },
     {
-      name: 'zipNo',
-      type: 'text',
-      label: t('LABEL.form.label.address'),
+      name: 'address',
+      type: 'custom',
+      label: t('주소'),
       value: '',
-      placeholder: t('LABEL.form.placeholder.zipNo'),
+      format: 'string',
+      fields: {
+        postalCode: 'postalCode',
+        address: 'address',
+      },
     },
     {
-      name: 'address',
-      type: 'text',
-      label: t('LABEL.form.label.address'),
+      label: '',
+      name: 'postalCode',
+      type: 'hidden',
+      format: 'string',
       value: '',
-      placeholder: t('LABEL.form.placeholder.address'),
     },
     {
       name: 'addressDetail',
       type: 'text',
-      label: '',
+      label: t('상세 주소'),
       value: '',
-      placeholder: t('LABEL.form.placeholder.addressDetail'),
+      placeholder: '',
+      maxLength: 50,
     },
     {
       name: 'thumbnails',

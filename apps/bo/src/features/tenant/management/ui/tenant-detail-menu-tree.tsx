@@ -29,7 +29,6 @@ import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 
 import { EnFormMode } from '@types';
 import { TenantDetailMenuMappingModal } from './tenant-detail-menu-mapping-modal';
-import { ApiInfoModal } from '@features/platform/menu/ui/api-info-modal';
 /** Hook 정의 */
 import {
   useChangeMenuTenentDnd,
@@ -39,7 +38,6 @@ import {
   useUpdateMenuTenant,
 } from '@entities/menu/service/tenant-menu-manage.hook';
 /** method import */
-import { findMenuPathById } from '@features/platform/menu/service/menu.service';
 import {
   getAllTreeKeys,
   getFirstExpandKeys,
@@ -48,6 +46,10 @@ import {
 } from '../service/tenant-detail-tree.service';
 
 import { EnDeviceType } from '@types';
+import {
+  ApiInfoModal,
+  findMenuPathById,
+} from '@features/platform-management/platform/menu-managemnet';
 
 //Column Helper 정의
 const columnHelper = createColumnHelper<any>();

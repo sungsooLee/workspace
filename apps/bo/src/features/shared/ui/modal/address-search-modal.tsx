@@ -35,7 +35,7 @@ const RESERVED_WORD_SQL = [
   'TRUNCATE',
 ];
 
-const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
+const AddressSearchModalComponent: FC<any> = () => {
   const { close } = useModal();
 
   const [searchValue, setSearchValue] = useState('');
@@ -121,8 +121,7 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
   };
 
   const handleSelect = (item: any) => {
-    onSelect(item);
-    close();
+    close(item);
   };
 
   const handlePageChange = (pageNumber: number) => {
@@ -137,9 +136,7 @@ const AddressSearchModalComponent: FC<any> = ({ onSelect }) => {
     ) : null;
   };
 
-
-
-  console.log('address-seach-modal', {totalPages, pageIndex});
+  console.log('address-seach-modal', { totalPages, pageIndex });
   return (
     <ModalContainer>
       <ModalTitle>{t('LABEL.modal.addressSearch.title')}</ModalTitle>

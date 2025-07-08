@@ -125,3 +125,50 @@ export enum ProcessingStatus {
   ENCODING = 'ENCODING',
   UPLOADING = 'UPLOADING',
 }
+
+/**
+ * ContentStatusCode
+ * 콘텐츠 상태 코드
+ * Enum(ContentStatusCode)
+ */
+export enum ContentStatusCode {
+  TEMPORARY_SAVE = 'TEMPORARY_SAVE',
+  SAVED = 'SAVED',
+  DELETED = 'DELETED',
+}
+
+/**
+ * ContentCreateType
+ * 콘텐츠 생성 유형
+ */
+export enum ContentCreateType {
+  MANUAL = 'MANUAL',
+  TRASLATE = 'TRASLATE',
+  SHARED = 'SHARED',
+}
+
+/**
+ * ContentAddInfoType
+ * Enum(ContentAddInfoType)
+ */
+export enum ContentAddInfoType {
+  VIDEO_ADD_INFO = 'VIDEO_ADD_INFO', // 초
+  EXAM_ADD_INFO = 'EXAM_ADD_INFO', // 건수
+}
+
+/**
+ * ContentType
+ * 콘텐츠 분류 코드
+ * Enum(ContentType)
+ */
+export enum ContentType {
+  VIDEO = 'VIDEO',
+  EXAM = 'EXAM',
+  SURVEY = 'SURVEY',
+  ASSIGNMENT = 'ASSIGNMENT',
+  HTML5 = 'HTML5',
+  YOUTUBE = 'YOUTUBE',
+  BLOG = 'BLOG',
+  SCORM = 'SCORM',
+  DEFAULT = 'DEFAULT',
+}

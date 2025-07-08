@@ -7,6 +7,7 @@ export { ReactComponent as IcoStar } from './lib/ic_star.svg'; // 20*20 Star fil
 export { ReactComponent as IcoStar02 } from './lib/ic_star02.svg'; // Star line
 export { ReactComponent as IcoGridFilter } from './lib/ic_grid_filter.svg'; // 16*16 grid filter
 export { ReactComponent as IcoDownload } from './lib/ic_download.svg'; // 16*16 grid download
+export { ReactComponent as IcoDownload02 } from './lib/ic_download02.svg';
 export { ReactComponent as IcoMinus } from './lib/ic_minus.svg'; // 16*16 grid download
 export { ReactComponent as IcoPlus } from './lib/ic_plus.svg'; // 16*16 grid download
 export { ReactComponent as IcoSetting } from './lib/ic_setting.svg'; // 16*16 grid download
@@ -165,6 +166,8 @@ export { ReactComponent as IcoLocation } from './lib/ic_location.svg';
 export { ReactComponent as IcoPrize } from './lib/ic_prize.svg';
 export { ReactComponent as IcoSubtitles02 } from './lib/ic_subtitles_02.svg';
 export { ReactComponent as IcoTime } from './lib/ic_time.svg';
+export { ReactComponent as IcoPdf } from './lib/ic_pdf.svg';
+export { ReactComponent as IcoLock } from './lib/ic_lock.svg';
 //export Default as Information from './lib/information.svg?react';
 
 //import Information from './lib/information.svg';

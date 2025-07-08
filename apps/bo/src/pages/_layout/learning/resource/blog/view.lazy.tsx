@@ -1,5 +1,6 @@
+import { useEffect } from 'react';
+import { createLazyFileRoute, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { createLazyFileRoute } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
 import { ContentsButtons, MainContents, PageContainer, SubContents } from '@widgets/layout';
 
@@ -10,6 +11,12 @@ export const Route = createLazyFileRoute('/_layout/learning/resource/blog/view')
 });
 
 function RouteComponent() {
+  const router = useRouterState();
+
+  useEffect(() => {
+    console.log('blog detail router info', router.location.state);
+  }, []);
+
   return (
     <PageContainer>
       <ContentsButtons>

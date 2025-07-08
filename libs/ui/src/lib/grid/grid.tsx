@@ -10,6 +10,7 @@ import styles from './grid.module.css';
 import { GridBody } from './grid-body';
 import { GridHeader } from './grid-header';
 import { useGridTable } from './use-grid-table';
+import { TooltipProvider } from './tooltip-context';
 
 const GridComponent = forwardRef(
   <T extends object>(
@@ -170,30 +171,30 @@ const GridComponent = forwardRef(
       }
     }, [table, enableColumnResize]);
 
-    // console.log('grid.tsx', { data });
-
     return (
-      <div
-        className={cn(gridClass, !data?.length && styles.no_data)}
-        style={gridStyle}
-        ref={tableContainerRef}
-      >
-        <table style={tableStyle}>
-          {!hideHeader && <GridHeader table={table} lastPinnedColumnId={lastPinnedColumnId} />}
-          {!isLoading && (
-            <GridBody
-              table={table}
-              lastPinnedColumnId={lastPinnedColumnId}
-              disabledSelectionToggle={disabledSelectionToggle}
-              onRowDoubleClick={onRowDoubleClick}
-              isRowSelectable={isRowSelectable}
-              getRowClassName={getRowClassName}
-            />
-          )}
-          {isLoading && <GridLoading<T> table={table} />}
-        </table>
-        {!data?.length && <GridEmptyMessage emptyMessage={emptyMessage} />}
-      </div>
+      <TooltipProvider>
+        <div
+          className={cn(gridClass, !data?.length && styles.no_data)}
+          style={gridStyle}
+          ref={tableContainerRef}
+        >
+          <table style={tableStyle}>
+            {!hideHeader && <GridHeader table={table} lastPinnedColumnId={lastPinnedColumnId} />}
+            {!isLoading && (
+              <GridBody
+                table={table}
+                lastPinnedColumnId={lastPinnedColumnId}
+                disabledSelectionToggle={disabledSelectionToggle}
+                onRowDoubleClick={onRowDoubleClick}
+                isRowSelectable={isRowSelectable}
+                getRowClassName={getRowClassName}
+              />
+            )}
+            {isLoading && <GridLoading<T> table={table} />}
+          </table>
+          {!data?.length && <GridEmptyMessage emptyMessage={emptyMessage} />}
+        </div>
+      </TooltipProvider>
     );
   },
 );

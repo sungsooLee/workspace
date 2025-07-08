@@ -81,7 +81,6 @@ const CourseSelectionPopupComponent = () => {
 
           {/* 강의 정보 */}
           <OptionCard
-            className={packageInformationStyles.course_card}
             cols={1}
             size="lg"
             value={courseValues}
