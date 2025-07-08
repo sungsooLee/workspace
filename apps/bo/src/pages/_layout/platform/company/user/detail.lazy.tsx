@@ -12,7 +12,7 @@ import { FormSubTitle } from '@shared/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 
-import { CompanyUserDetail } from '@features/platform/company';
+import { CompanyUserDetail } from '@features/platform-management/company';
 
 export const Route = createLazyFileRoute('/_layout/platform/company/user/detail')({
   component: RouteComponent,

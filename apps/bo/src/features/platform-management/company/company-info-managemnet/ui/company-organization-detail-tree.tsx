@@ -2,7 +2,7 @@ import { FC, useEffect, useState, useCallback } from 'react';
 import { t } from 'i18next';
 import { useRouterState } from '@tanstack/react-router';
 import { TreeBox, TreeNode, Button, TreeContainer } from '@learnway/ui';
-import { transformUserGroupOrganizationApiDataToTreeData } from '@features/platform/company';
+import { transformUserGroupOrganizationApiDataToTreeData } from '@features/platform-management/company';
 import { useGetCompanyOrganizationTree } from '@entities/user-group/service/user-group-company.hook';
 
 interface CompanyOrganizationDetailTreeProps {

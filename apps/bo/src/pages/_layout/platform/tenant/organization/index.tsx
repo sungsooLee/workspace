@@ -9,7 +9,7 @@ import { Button, GridBox, useGridBox } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 
-import { TenantCompanyOrganizationList } from '@features/platform/company';
+import { TenantCompanyOrganizationList } from '@features/platform-management/company';
 
 export const Route = createFileRoute('/_layout/platform/tenant/organization/')({
   component: RouteComponent,
@@ -23,7 +23,7 @@ function RouteComponent() {
   return (
     <PageContainer>
       <MainContents>
-        <TenantCompanyOrganizationList rootPath="/platform" roleInfo={'TENANT'}/>
+        <TenantCompanyOrganizationList rootPath="/platform" roleInfo={'TENANT'} />
       </MainContents>
     </PageContainer>
   );

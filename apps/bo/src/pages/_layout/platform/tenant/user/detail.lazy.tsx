@@ -15,7 +15,7 @@ import {
   CompanyUserDetail,
   CompanyUserDetailBase,
   CompanyUserDetailLearningHistory,
-} from '@features/platform/company';
+} from '@features/platform-management/company';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/user/detail')({
   component: RouteComponent,

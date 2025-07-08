@@ -10,7 +10,7 @@ import {
   EnOrganizationShowType,
   TenantCompanyOrganizationTree,
   CompanyOrganizationCheck,
-} from '@features/platform/company';
+} from '@features/platform-management/company';
 
 const CompanyOrganizationComponent = () => {
   const routerState = useRouterState();

@@ -25,8 +25,8 @@ import {
 import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 import { ContentsHistoryInfoFormField, FormRow, FormSubTitle } from '@shared/ui';
 
-import { transformDepartmentApiDataToTreeData } from '@features/platform/company/organization/service/company-organization.service';
-import { findOrganizationPathById } from '@features/platform/company';
+import { transformDepartmentApiDataToTreeData } from '@features/platform-management/company/company-organization-management/service/company-organization.service';
+import { findOrganizationPathById } from '@features/platform-management/company';
 
 import {
   useGetCompanyDepartmentDetail,
