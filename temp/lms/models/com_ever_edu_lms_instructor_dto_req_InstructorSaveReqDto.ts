@@ -102,8 +102,6 @@ export type com_ever_edu_lms_instructor_dto_req_InstructorSaveReqDto = {
      * 강사 경력 개월
      */
     carreerMonth: number;
-    internalEssentialValid?: boolean;
-    externalEssentialValid?: boolean;
 };
 export namespace com_ever_edu_lms_instructor_dto_req_InstructorSaveReqDto {
     /**
