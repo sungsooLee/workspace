@@ -27,7 +27,7 @@ import {
   useMoveTenantCategory,
 } from '@entities/tenant/service/tenant-category.hook';
 import { useFetchCategory } from '@entities/category';
-import { getFirstExpandKeys, getAllTreeKeys } from '../service/tenant-detail-tree.service';
+import { getFirstExpandKeys, getAllTreeKeys } from '@features/platform-management/tenant/service/tenant-detail-tree.service';
 
 type ActionFunction = (payload: any) => void;
 

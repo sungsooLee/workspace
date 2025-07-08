@@ -43,7 +43,7 @@ import {
   getFirstExpandKeys,
   moveTenantMenuNodeCheck,
   transformMenuApiDataToTreeData,
-} from '../service/tenant-detail-tree.service';
+} from '@features/platform-management/tenant/service/tenant-detail-tree.service';
 
 import { EnDeviceType } from '@types';
 import {

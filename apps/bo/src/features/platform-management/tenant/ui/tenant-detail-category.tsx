@@ -43,7 +43,7 @@ import {
   getAllTreeKeys,
   getFirstExpandKeys,
   transformMenuApiDataToTreeData,
-} from '../service/tenant-detail-tree.service';
+} from '@features/platform-management/tenant/service/tenant-detail-tree.service';
 import { useFetchTenantCategoryDetail } from '@entities/tenant/service/tenant-category.hook';
 import { useCheckExistsCategory } from '@entities/category';
 

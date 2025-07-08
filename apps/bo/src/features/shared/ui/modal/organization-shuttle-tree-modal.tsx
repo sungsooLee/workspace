@@ -4,7 +4,7 @@ import { t } from 'i18next';
 import { cn } from '@learnway/shared';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import popContentsStyles from '@features/tenant/management/ui/pop-contents-layout.module.css';
+import popContentsStyles from '@features/platform-management/tenant/ui/pop-contents-layout.module.css';
 
 import {
   ModalBody,
