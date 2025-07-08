@@ -7,12 +7,18 @@
         @apply title_bo_4_b text-[var(--gray9)];
       }
       & + div {
-        @apply flex items-center justify-end;
+        @apply flex flex-1 items-center justify-end;
         [class*='nlp--input'] {
-          @apply mr-[8px] w-[120px];
+          @apply mr-[8px] w-[160px];
         }
         [class*='nlp--button'] {
           @apply w-auto flex-none;
+        }
+        [class*='select_wrap'] {
+          @apply w-[100px];
+          & + div {
+            @apply ml-[8px];
+          }
         }
       }
     }

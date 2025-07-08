@@ -10,10 +10,10 @@
     @apply label-sm-b;
   }
   &.lg {
-    @apply label-lg-b !h-[4.8rem];
+    @apply label-lg-b !h-[4.4rem];
   }
   &.xl {
-    @apply label-xl-b;
+    @apply label-xl-b !h-[4.8rem];
   }
   &.xl2 {
     @apply h-[5.2rem] text-[1.6rem];
