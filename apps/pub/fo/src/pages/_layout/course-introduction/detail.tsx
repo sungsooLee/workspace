@@ -215,8 +215,8 @@ function RouteComponent() {
     },
   ];
 
-  // Confirm
-  // 수강중복 안내
+  // Confirm 퍼블수정 20250708 (전체적으로 수정)
+  // 인원마감 + 수강대기 안내
   const CourseDeadlineConfirm = () => {
     openConfirm({
       title: '수강인원이 마감되었습니다.',
@@ -258,8 +258,8 @@ function RouteComponent() {
     });
   };
 
-  // Alert
-  // 수강대기 신청
+  // Alert 퍼블수정 20250708 (전체적으로 수정)
+  // 수강대기 신청 완료
   const CourseWaitAlert = () => {
     openAlert({
       title: '수강대기 신청',
@@ -395,7 +395,7 @@ function RouteComponent() {
         <div className={pageContentsStyles.main_contents}>
           <div className={styles.thumbnail_img}>
             {/* 플레이 버튼 o */}
-            <Button onClick={() => CourseCancelConfirm()}>
+            <Button onClick={() => CourseCancelCompleteAlert()}>
               <img src={bnrImage1} alt="" />
               <div className={styles.img_play}>
                 <img src={playImg} alt="" />
