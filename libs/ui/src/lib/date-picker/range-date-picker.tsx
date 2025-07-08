@@ -200,8 +200,8 @@ const RangeDatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, RangeDa
 
   return (
     <div className={cn('nlp--datepicker-time', 'nlp--datepicker-from-to', size)} ref={ref}>
-      <div className="flex w-full flex-row">
-        <div className="nlp--datepicker-calendar flex flex-1 flex-row">
+      <div className="flex flex-row">
+        <div className="nlp--datepicker-calendar flex flex-row space-x-2">
           <Primitive
             ref={startPickerRef}
             showIcon
