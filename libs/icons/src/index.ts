@@ -168,6 +168,7 @@ export { ReactComponent as IcoSubtitles02 } from './lib/ic_subtitles_02.svg';
 export { ReactComponent as IcoTime } from './lib/ic_time.svg';
 export { ReactComponent as IcoPdf } from './lib/ic_pdf.svg';
 export { ReactComponent as IcoLock } from './lib/ic_lock.svg';
+export { ReactComponent as IcoEssential } from './lib/ic_essential.svg';
 //export Default as Information from './lib/information.svg?react';
 
 //import Information from './lib/information.svg';
