@@ -74,12 +74,12 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
     const isShowEmptyMessage = !displayOptions?.length && emptyMessage && !showInput;
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-      setInputValue(event.target.value);
+      setInputValue(event.target.value?.replace(/,/g, '')); // 콤마 제거
     };
 
     const handleInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
       const value = (event.target as HTMLInputElement).value?.trim();
-      if (event.key === 'Enter' && value) {
+      if ((event.key === 'Enter' || event.key === ',') && value) {
         setInputValue('');
         onAddInputEnterKeyDown?.(value);
       }
