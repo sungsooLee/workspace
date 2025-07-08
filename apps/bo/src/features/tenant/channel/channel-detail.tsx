@@ -12,7 +12,7 @@ import {
   TextareaFormField,
   RadioGroupFormField,
 } from '@learnway/ui';
-import { DuplicateCodeGuideText } from '@features/platform/category';
+import { DuplicateCodeGuideText } from '@features/platform-management/platform/category-managemnet';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { FormSubTitle, ThumbnailListFormField, ChipListFormField } from '@shared/ui';

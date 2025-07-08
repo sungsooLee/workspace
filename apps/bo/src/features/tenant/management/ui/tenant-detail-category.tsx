@@ -20,7 +20,10 @@ import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inn
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
-import { DuplicateCodeGuideText, findMenuPathById } from '@features/platform/category';
+import {
+  DuplicateCodeGuideText,
+  findMenuPathById,
+} from '@features/platform-management/platform/category-managemnet';
 
 import { TenantDetailCategoryMappingModal } from './tenant-detail-category-mapping-modal';
 import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
@@ -35,7 +38,7 @@ import {
   useCreateTenantCategory,
 } from '@entities/tenant/service/tenant-category.hook';
 import { useFetchTenant } from '@entities/tenant';
-import { transformApiDataToTreeData } from '@features/platform/category';
+import { transformApiDataToTreeData } from '@features/platform-management/platform/category-managemnet';
 import {
   getAllTreeKeys,
   getFirstExpandKeys,

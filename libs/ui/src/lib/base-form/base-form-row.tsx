@@ -3,7 +3,6 @@ import { cn } from '@learnway/shared';
 import boStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import foStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
-import { Button, DynamicFormField, Tooltip } from '@learnway/ui';
 import {
   DynamicFormContextProvider,
   FormRowProps,
@@ -12,6 +11,9 @@ import {
 } from '@learnway/hooks';
 import { FormGuideText } from './form-guide-text';
 import { useTranslation } from 'react-i18next';
+import { Tooltip } from '../tooltip/tooltip';
+import { Button } from '../button/button';
+import { DynamicFormField } from '../dynamic-form-field/dynamic-form-field';
 
 /**
  * FormRowComponent
@@ -168,14 +170,13 @@ const DynamicFormContainer: FC<FormRowProps> = ({
         {children}
       </div>
       {/* 안내 텍스트 또는 에러 메시지 렌더링 */}
-      {
-        /* !error.isError && */
-        guideText ? (
+      {!error.isError &&
+        (guideText ? (
           <FormGuideText>{guideText}</FormGuideText>
         ) : (
           formConfig.guideText && <FormGuideText>{t(formConfig.guideText as any)}</FormGuideText>
-        )
-      }
+        ))}
+
       {error.isError && (
         <p className={cn(styles.guide_text, styles.error, 'dynamic-form-field-error')}>
           {t(error.message as any)}
