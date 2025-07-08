@@ -10,7 +10,7 @@ import {
   TenantUserRegist,
   TenantUserList,
   TenantUserRegistApplicationList,
-} from '@features/tenant';
+} from '@features/platform-management/tenant';
 import {
   CompanyUserDetail,
   CompanyUserDetailBase,

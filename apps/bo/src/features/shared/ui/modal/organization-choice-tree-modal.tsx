@@ -22,17 +22,9 @@ import { transformDepartmentApiDataToTreeData } from '@features/platform-managem
 
 import { useGetCompanyDepartmentTree } from '@entities/department';
 import {
-  getAllParentAndChildrenByKey,
-  getAllParentAndAllChildById,
-  getFirstExpandKeys,
   getAllTreeKeys,
   getAllParent,
-  getNodeByKey,
-  genMap,
-  deleteNodeByNode,
-  copyTreeNode,
-  moveNodePosition,
-} from '@features/tenant';
+} from '@features/platform-management/tenant';
 import { findOrganizationPathById } from '@features/platform-management/company';
 
 /**

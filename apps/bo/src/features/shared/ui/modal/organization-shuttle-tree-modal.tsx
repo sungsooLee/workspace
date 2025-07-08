@@ -39,7 +39,7 @@ import {
   genMap,
   deleteNodeByNode,
   copyTreeNode,
-} from '@features/tenant';
+} from '@features/platform-management/tenant';
 import { findOrganizationPathById } from '@features/platform-management/company';
 
 /**

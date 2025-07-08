@@ -32,7 +32,7 @@ import {
   deleteNodeByNode,
   copyTreeNode,
   moveNodePosition,
-} from '@features/tenant';
+} from '@features/platform-management/tenant';
 
 /**
  * 화면번호: NLP_BO_TMS_1002_02 (카테고리 테넌트 매핑)

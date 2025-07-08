@@ -36,7 +36,7 @@ import {
   genMap,
   deleteNodeByNode,
   copyTreeNode,
-} from '@features/tenant';
+} from '@features/platform-management/tenant';
 
 import { isEqual } from 'lodash';
 
