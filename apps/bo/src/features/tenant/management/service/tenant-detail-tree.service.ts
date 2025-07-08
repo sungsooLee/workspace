@@ -1,6 +1,5 @@
 import { TreeNode } from '@learnway/ui';
 import { EnTreeEventPosition } from '@types';
-import { getMenuTile } from '@features/platform/menu/service/menu.service';
 
 export const getAllTreeKeys = (treeData: TreeNode[]) => {
   const recursive = (nodes: TreeNode[]): string[] => {
