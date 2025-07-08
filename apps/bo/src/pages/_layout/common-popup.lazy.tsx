@@ -26,6 +26,7 @@ import {
   ChipListModalSelectorFormField,
   ContentsRow,
   Input,
+  LearningWindowLayout,
   PreviewImage,
   useModal,
 } from '@learnway/ui';
@@ -623,6 +624,26 @@ function RouteComponent() {
                   openModal({
                     width: 'xl',
                     content: <TrainingPlaceDetailModal mode={EnFormMode.ADD} />,
+                    onClose(data: any) {
+                      console.log('교육공간 등록 결과', data);
+                    },
+                  });
+                }}
+              >
+                {'컨텐츠 미리 보기 팝업'}
+              </Button>
+              <span className="text-yellow-500">{'진행중'}</span>
+            </div>
+            <div className="flex gap-4">
+              <Button
+                size={'xs'}
+                className="btn_table flex-1"
+                variant={'gray2'}
+                stopPropagation
+                onClick={(e) => {
+                  openModal({
+                    width: 'full',
+                    content: <LearningWindowLayout />,
                     onClose(data: any) {
                       console.log('교육공간 등록 결과', data);
                     },

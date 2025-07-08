@@ -29,17 +29,20 @@ function RouteComponent() {
   const [videoConfig, setVideoConfig] = useState<any>();
   const [videoStart, setVideoStart] = useState<number>(0);
 
-  const { baseInfo, playInfo, setVideoInfo, setBaseInfo, setCurriculum, setScormInfo, clearInfo } =
-    useLearningWindow();
+  const {
+    baseInfo,
+    playInfo,
+    setVideoInfo,
+    setBaseInfo,
+    setCurriculum,
+    setScormInfo,
+    clearInfo,
+    setFuncInfo,
+  } = useLearningWindow();
   const { data: scormInfo } = useGetScormRteScoInfo(scormConfig);
   const { data: curriculum } = useGetCurriculumnDetail(baseInfo?.curriculumId);
   const { data: videoInfo } = useGetContentDetail(videoConfig?.contentUuid);
-  const scormRteService = useMemo(() => {
-    return {
-      initialize: ScormRteService.initialize,
-      commit: ScormRteService.commit,
-    };
-  }, []);
+
   const { watchLog } = useVideoWatchLog();
   const handleVideoProgress = (state: any) => {
     const payload = {
@@ -106,9 +109,13 @@ function RouteComponent() {
     if (learningInfo.curriculumId) {
       setBaseInfo(learningInfo);
     }
+
+    setFuncInfo({
+      scormInitialize: ScormRteService.initialize,
+      scormCommit: ScormRteService.commit,
+      videoOnProgress: handleVideoProgress,
+    });
   }, []);
 
-  return (
-    <LearningWindowLayout scormRteService={scormRteService} onVideoProgress={handleVideoProgress} />
-  );
+  return <LearningWindowLayout />;
 }

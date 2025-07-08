@@ -8,22 +8,18 @@ import stylesMobile from '@learnway/styles/fo/pages/_learning/learning-m.module.
 import { ScormHandler } from '../service/scorm-handler';
 import { ScormDataManager } from '../service/scorm-data-manager';
 import { ScormRteClient } from '../service/scorm-rte-client';
+import { useLearningWindow } from '../../learning-window.store';
 
 const styles = isMobile ? stylesMobile : stylesWeb;
 
-const LearningWindowScormPlayerComponent: FC<any> = ({
-  playInfo,
-  scormInfo,
-  scormRteService,
-}: {
-  playInfo: any;
-  scormInfo: any;
-  scormRteService: any;
-}) => {
+const LearningWindowScormPlayerComponent: FC<any> = () => {
   const [iframeUrl, setIframeUrl] = useState<string>();
+  const { playInfo, scormInfo, funcInfo } = useLearningWindow();
 
   useEffect(() => {
     if (!scormInfo) return;
+    if (!funcInfo) return;
+
     console.log(scormInfo);
 
     let itemUrl = scormInfo.itemURL;
@@ -32,6 +28,10 @@ const LearningWindowScormPlayerComponent: FC<any> = ({
       const url = new URL(itemUrl);
       itemUrl = url.pathname;
     }
+    const scormRteService: any = {
+      initialize: funcInfo.scormInitialize,
+      commit: funcInfo.scormCommit,
+    };
 
     const scrc = new ScormRteClient(playInfo, scormRteService);
     const dm = new ScormDataManager(scrc.getErrorManager());
@@ -44,7 +44,7 @@ const LearningWindowScormPlayerComponent: FC<any> = ({
       console.log('end Player');
       delete (window as any).API_1484_11;
     };
-  }, [scormInfo]);
+  }, [funcInfo, scormInfo]);
 
   return (
     <div className={`${styles.start} ${styles.iframe}`}>

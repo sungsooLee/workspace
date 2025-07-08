@@ -32,7 +32,7 @@ const LearningWindowBlogPlayerComponent: FC<any> = ({
   return (
     <div className={`${styles.start} ${styles.blog}`}>
       <div className={styles.header_color}></div>
-      {$generateHtmlFromNodes(jsonInfo)}
+      {jsonInfo && $generateHtmlFromNodes(jsonInfo)}
     </div>
   );
 };

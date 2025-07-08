@@ -10,23 +10,17 @@ import { LearningWindowVideoPlayer } from './player/ui/learning-window-video-pla
 
 import { EnContentType, useLearningWindow } from './learning-window.store';
 
-const LearningWindowComponent: FC<any> = ({ scormRteService, onVideoProgress }) => {
+const LearningWindowComponent: FC<any> = () => {
   const { scormInfo, videoInfo, galleryInfo, playInfo, blogInfo } = useLearningWindow();
 
   return (
     <>
-      {scormInfo && (
-        <LearningWindowBlogPlayer
-          playInfo={playInfo}
-          scormInfo={scormInfo}
-          scormRteService={scormRteService}
-        />
-      )}
+      {scormInfo && <LearningWindowScormPlayer />}
       {videoInfo && (
         <LearningWindowVideoPlayer videoInfo={videoInfo} onProgress={onVideoProgress} />
       )}
       {galleryInfo && <LearningWindowGalleryPlayer />}
-      {blogInfo && <LearningWindowBlogPlayer />}
+      {blogInfo && <LearningWindowBlogPlayer blogInfo={blogInfo} />}
     </>
   );
 };

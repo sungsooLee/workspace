@@ -68,6 +68,13 @@ interface Lesson {
   contentType: EnContentType;
 }
 
+interface FunctionInfomation {
+  scormInitialize: (payload: any) => void;
+  scormCommit: (payload: any) => void;
+  videoOnProgress: (payload: any) => void;
+  curriculum: (payload: any) => void;
+}
+
 interface LearningWindowStoreData {
   playIndex: number;
   baseInfo?: LearningWindowBaseInfo;
@@ -88,6 +95,8 @@ interface LearningWindowStoreData {
   setVideoInfo: (v: any) => void;
   blogInfo: any;
   setBlogInfo: (v: any) => void;
+  funcInfo?: FunctionInfomation;
+  setFuncInfo: (v: FunctionInfomation) => void;
 }
 
 const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
@@ -100,6 +109,7 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
   galleryInfo: undefined,
   videoInfo: undefined,
   blogInfo: undefined,
+  funcInfo: undefined,
 
   setPlayInfo(playInfo?: PlayInfo) {
     if (!playInfo) return;
@@ -143,6 +153,11 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
       blogInfo,
     }));
   },
+  setFuncInfo(funcInfo: FunctionInfomation) {
+    set((state) => ({
+      funcInfo,
+    }));
+  },
 
   clearInfo() {
     set((state) => ({
@@ -159,6 +174,7 @@ export const useLearningWindow = () => {
     galleryInfo,
     videoInfo,
     blogInfo,
+    funcInfo,
     playIndex: _playIndex,
     playList: _playList,
     baseInfo: _baseInfo,
@@ -173,6 +189,7 @@ export const useLearningWindow = () => {
     setGalleryInfo,
     setVideoInfo,
     setBlogInfo,
+    setFuncInfo,
     clearInfo,
   } = useLearningWindowStore((state) => state);
 
@@ -282,6 +299,8 @@ export const useLearningWindow = () => {
     setVideoInfo,
     blogInfo,
     setBlogInfo,
+    funcInfo,
+    setFuncInfo,
     setPlayInfo: handleSetPlayInfo,
     setCurriculum: handleSetCurriculum,
     gotoNextLesson,
