@@ -620,7 +620,8 @@ function RouteComponent() {
                   openModal({
                     width: 'full',
                     content: (
-                      <PreviewLearningWindow contentUuid="0d325ece-c155-4927-944d-dfc873fff97b" />
+                      // <PreviewLearningWindow contentUuid="0d325ece-c155-4927-944d-dfc873fff97b" />
+                      <PreviewLearningWindow contentUuid="809fad98-0911-4712-a989-7848671c8e4c" />
                     ),
                     onClose(data: any) {
                       console.log('컨텐츠 미리 보기 팝업', data);

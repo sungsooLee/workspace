@@ -7,11 +7,17 @@ import stylesMobile from '@learnway/styles/fo/pages/_learning/learning-m.module.
 import { useVideoPlayer } from '../../../video-player/hooks/video-player.hook';
 import { VideoPlayer } from '../../../video-player/video-player';
 import { VideoPlayerContainer } from '../../../video-player/video-player-container';
+import { useLearningWindow } from '../../learning-window.store';
 
 const styles = isMobile ? stylesMobile : stylesWeb;
 
-const LearningWindowVideoPlayerComponent: FC<any> = ({ videoInfo, onProgress }) => {
-  const player = useVideoPlayer({ onProgressCallback: onProgress });
+const LearningWindowVideoPlayerComponent: FC<any> = () => {
+  const { videoInfo, funcInfo } = useLearningWindow();
+
+  const handleOnProgress = (state: any) => {
+    funcInfo?.videoOnProgress(state);
+  };
+  const player = useVideoPlayer({ onProgressCallback: handleOnProgress });
   return (
     <div className={styles.start}>
       <VideoPlayerContainer

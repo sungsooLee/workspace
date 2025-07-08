@@ -7,7 +7,7 @@ import { learningResourceQueryOptions, useFetchBlogContent } from '@entities/lea
 import { ContentType } from '@types';
 
 const PreviewLearningWindowComponent: FC<any> = ({ contentUuid }: { contentUuid: string }) => {
-  const { setBlogInfo, setPlayInfo, setScormInfo } = useLearningWindow();
+  const { setBlogInfo, setVideoInfo, setPlayInfo, setScormInfo, setFuncInfo } = useLearningWindow();
 
   const { data, error: fetchError } = useQuery(
     learningResourceQueryOptions.getContent(contentUuid),
@@ -15,6 +15,7 @@ const PreviewLearningWindowComponent: FC<any> = ({ contentUuid }: { contentUuid:
 
   useEffect(() => {
     if (!data) return;
+    console.log('content data', data);
     switch (data.contentType) {
       case ContentType.SCORM:
         break;
@@ -22,8 +23,25 @@ const PreviewLearningWindowComponent: FC<any> = ({ contentUuid }: { contentUuid:
         setBlogInfo(data);
         break;
       case ContentType.VIDEO:
+        setVideoInfo(data);
         break;
     }
+    setFuncInfo({
+      scormInitialize: async (payload) => {
+        console.log('scormInitialize called ', payload);
+        return 'true';
+      },
+      scormCommit: async (payload) => {
+        console.log('scormCommit called', payload);
+        return 'true';
+      },
+      curriculum: (payload) => {
+        console.log('curriculum called', payload);
+      },
+      videoOnProgress: (payload) => {
+        console.log('videoOnProgress called', payload);
+      },
+    });
   }, [data]);
 
   return <LearningWindowLayout />;

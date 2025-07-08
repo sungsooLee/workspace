@@ -11,16 +11,14 @@ import { LearningWindowVideoPlayer } from './player/ui/learning-window-video-pla
 import { EnContentType, useLearningWindow } from './learning-window.store';
 
 const LearningWindowComponent: FC<any> = () => {
-  const { scormInfo, videoInfo, galleryInfo, playInfo, blogInfo } = useLearningWindow();
+  const { scormInfo, videoInfo, galleryInfo, blogInfo, playInfo } = useLearningWindow();
 
   return (
     <>
       {scormInfo && <LearningWindowScormPlayer />}
-      {videoInfo && (
-        <LearningWindowVideoPlayer videoInfo={videoInfo} onProgress={onVideoProgress} />
-      )}
+      {videoInfo && <LearningWindowVideoPlayer />}
       {galleryInfo && <LearningWindowGalleryPlayer />}
-      {blogInfo && <LearningWindowBlogPlayer blogInfo={blogInfo} />}
+      {blogInfo && <LearningWindowBlogPlayer playInfo={playInfo} blogInfo={blogInfo} />}
     </>
   );
 };
