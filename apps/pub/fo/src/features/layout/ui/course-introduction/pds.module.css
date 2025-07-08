@@ -1,13 +1,13 @@
 .start {
   .pds_box {
-    @apply flex w-full items-center justify-between p-[16px];
+    @apply flex w-full items-center justify-between px-[24px] py-[34px];
     span {
-      @apply body_3_r flex items-center text-left leading-[26px] text-[var(--gray8)];
+      @apply label-xl flex items-center text-left leading-[26px] text-[var(--gray35)];
       &:first-child {
         @apply flex-1;
       }
       &.size {
-        @apply mr-[25px] inline-block text-center;
+        @apply mr-[24px] inline-block text-center;
       }
       svg {
         @apply mr-[3px];
@@ -16,10 +16,16 @@
     button {
       @apply w-[73px];
     }
+    .ico_pds {
+      @apply mr-[4px];
+    }
+    .ico_lock {
+      @apply ml-[8px];
+    }
   }
   [class*='nlp--panel'] {
     + [class*='nlp--panel'] {
-      @apply mt-[16px];
+      @apply mt-[12px];
     }
   }
 }

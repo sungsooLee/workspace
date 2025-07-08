@@ -55,6 +55,9 @@
       @apply stroke-[var(--gray10)];
     }
   }
+  &.line {
+    @apply !border-[var(--blue50)] text-[var(--blue50)];
+  }
   &[class*='only_icon'] {
     @apply !rounded-[6px];
     &.xs {
