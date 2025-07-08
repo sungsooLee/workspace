@@ -70,6 +70,9 @@
   & + [class*='title_wrap'] + .horizontal {
     @apply !pb-[12px];
   }
+  & + &.title_mode {
+    @apply mt-[24px];
+  }
   [class*='nlp--contents-row-item'] {
     & > div:nth-last-child(2) {
       @apply pb-0;
@@ -88,7 +91,7 @@
 }
 .title_mode {
   @apply mb-[16px] border-b-[1px] border-solid border-[var(--gray8)] pb-[16px];
-  & > div > label {
-    @apply font-semibold;
+  & > div > label span {
+    @apply !title_bo_4_b text-[var(--gray9)];
   }
 }
