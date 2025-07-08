@@ -6,12 +6,12 @@ import { LinkBox } from '../../../../../widgets/layout/ui/container/slot/link-bo
 import { Button, ContentsRow, DynamicFormField, InputModalSelectorFormField } from '@learnway/ui';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../../shared/ui/form';
+import { FormDisplay } from '../../../../../features/form/ui/form-display';
 import {
+  DateRangePickerFormField,
   ResourceImageListFormField,
   SharedChannelGridFormField,
-} from '../../../../../features/learning';
-import { FormDisplay } from '../../../../../features/form/ui/form-display';
-import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
+} from '@features/form/ui';
 import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
 import React from 'react';
 import { t } from 'i18next';

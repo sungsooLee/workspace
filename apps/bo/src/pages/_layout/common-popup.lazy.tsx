@@ -54,7 +54,7 @@ import {
   useDeployTranslation,
   useTranslation,
 } from '@entities/translation/service/translation.hook';
-import { PreviewLearningWindow } from '@features/learning/learning-resource/preview-learning-window';
+import { PreviewLearningWindow } from '@features/learning-resource/learning-resource-management/ui/preview-learning-window';
 
 export const Route = createLazyFileRoute('/_layout/common-popup')({
   component: RouteComponent,
