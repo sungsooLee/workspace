@@ -13,10 +13,10 @@ const TenantChannelDropdownFormFieldComponent = forwardRef<
   HTMLDivElement,
   TenantChannelDropdownFormFieldProps
 >(({ value, onChange, tenantId, ...props }, ref) => {
-  const { data: { myRoles } = {} } = useFetchAuthUser<AuthUser>();
+  const { data } = useFetchAuthUser<AuthUser>();
 
   const options = useMemo(() => {
-    return myRoles
+    return data?.myRoles
       ?.filter((d: RoleInfo) => d.tenantId === tenantId) // 테넌트 필터
       ?.map((d: RoleInfo) => d.channels) // 채널만 추출
       ?.flat() // 2차원 배열을 1차원 배열로
@@ -25,9 +25,8 @@ const TenantChannelDropdownFormFieldComponent = forwardRef<
         label: name,
         value: uuid,
       }));
-  }, [myRoles, tenantId]);
+  }, [data?.myRoles, tenantId]);
 
-  console.log('TenantChannelDropdownFormFieldComponent => ', { options, tenantId });
   return (
     <DropdownFormField
       {...props}
