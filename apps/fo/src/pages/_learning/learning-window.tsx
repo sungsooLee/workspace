@@ -4,8 +4,8 @@ import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-rout
 import { t } from 'i18next';
 
 import { useGetCurriculumnDetail } from '@entities/curriculum/service/curriculum.hook';
-import { useGetScormRteScoInfo } from '@entities/scorm/service/scorm-rte.hook';
-import { useGetContentDetail } from '@entities/content/service/content.hook';
+import { useGetScormRteScoInfo } from '@entities/learning-resource/service/scorm-rte.hook';
+import { useGetContentDetail } from '@entities/learning-resource/service/content.hook';
 
 import {
   EnContentType,
@@ -14,9 +14,9 @@ import {
   ScormPlayerConfigProperties,
   LearningWindowBaseInfo,
 } from '@learnway/ui';
-import { ScormRteService } from '@entities/scorm/api/scorm-rte';
-import { useVideoWatchLog } from '@entities/video/service/video.hook';
-import { useGetBlogResource } from '@entities/blog/service/content.hook';
+import { ScormRteService } from '@entities/learning-resource/api/scorm-rte';
+import { useVideoWatchLog } from '@entities/learning-resource/service/video.hook';
+import { useGetBlogResource } from '@entities/learning-resource/service/blog.hook';
 
 export const Route = createFileRoute('/_learning/learning-window')({
   component: RouteComponent,
@@ -74,8 +74,9 @@ function RouteComponent() {
     if (!videoInfo) return;
     console.log('vidoeInfo', videoInfo);
     setVideoStart(0);
-    setVideoInfo({ ...videoInfo, playItem: videoInfo.children[0].m3u8Url });
+    setVideoInfo(videoInfo);
   }, [videoInfo]);
+
   useEffect(() => {
     if (!blogInfo) return;
     setBlogInfo(blogInfo);
