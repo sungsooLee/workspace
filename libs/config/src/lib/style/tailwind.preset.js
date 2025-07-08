@@ -76,6 +76,14 @@ module.exports = {
           95: '#FCD2CA',
         },
       },
+      boxShadow: {
+        10: '0 1px 3px rgba(0, 0, 0, 0.10)',
+        20: '0 2px 6px rgba(0, 0, 0, 0.10)',
+        30: '0 4px 8px rgba(0, 0, 0, 0.10)',
+        40: '0 6px 15px rgba(0, 0, 0, 0.10)',
+        50: '0 10px 25px rgba(0, 0, 0, 0.10)',
+        60: '0 15px 35px rgba(0, 0, 0, 0.10)',
+      },
     },
   },
   plugins: [
