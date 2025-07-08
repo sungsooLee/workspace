@@ -3,10 +3,14 @@ import { t } from 'i18next';
 import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
 import { UserChoice } from '../components/user-choice';
 
+type UserChoiceModalComponentProps = {
+  title?: string;
+};
+
 /**
  * 화면 번호 NLP_BO_TMS_1100_02 : 유저 조회(공통)
  */
-const UserModalComponent = forwardRef((_, ref) => {
+const UserModalComponent = forwardRef(({ title = '유저' }: UserChoiceModalComponentProps, ref) => {
   const { close: closeModal } = useModal();
 
   const [selectedRow, setSelectedRow] = useState();
@@ -25,7 +29,7 @@ const UserModalComponent = forwardRef((_, ref) => {
 
   return (
     <ModalContainer>
-      <ModalTitle>{t('유저 조회')}</ModalTitle>
+      <ModalTitle>{t(`${title} 조회`)}</ModalTitle>
       <ModalBody>
         <UserChoice handleRowSelect={handleRowSelect} />
       </ModalBody>

@@ -220,3 +220,29 @@ export function uniqueByKey<T>(list: T[], key: keyof T): T[] {
     return true;
   });
 }
+
+/**
+ * 매개변수 value가 undefined이거나 비어 있는지 여부를 반환한다.
+ * @param value
+ * @returns {boolean} 빈 값 여부
+ */
+export function isEmptyData(value: unknown): boolean {
+  switch (typeof value) {
+    case 'undefined':
+      return true;
+    case 'string':
+      return value.trim() === '';
+    case 'object':
+      if (value === null) {
+        return true;
+      }
+
+      if (value instanceof Map || value instanceof Set) {
+        return value.size === 0;
+      }
+
+      return Object.keys(value).length === 0;
+  }
+
+  return false;
+}

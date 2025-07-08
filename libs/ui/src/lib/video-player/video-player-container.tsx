@@ -2,11 +2,7 @@ import type { VideoPlayerContainerProps } from './types';
 import { forwardRef, useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import LessonTitle from './components/lesson-title';
-import CentralControlButton from './components/central-control-button';
 import BottomProgressBar from './components/bottom-progress-bar';
-import RightSideButtons from './components/right-side-buttons';
-import CurriculumSidebar from './components/curriculum-side-bar';
-import RightSideBar from './components/right-side-bar';
 
 const AUTO_HIDE_DELAY = 3000; // 3
 
@@ -61,17 +57,17 @@ const VideoPlayerContainerComponent = forwardRef<HTMLDivElement, VideoPlayerCont
           </div>
 
           {/* 중앙 제어 버튼 */}
-          <div
+          {/* <div
             className={clsx({
               'opacity-100': isHovered,
               'opacity-0': !isHovered,
             })}
           >
             <CentralControlButton {...props} />
-          </div>
+          </div> */}
 
           {/* 오른쪽 사이드 버튼 */}
-          {!showCurriculumSection && (
+          {/* {!showCurriculumSection && (
             <div
               className={clsx({
                 'opacity-100': isHovered,
@@ -80,7 +76,7 @@ const VideoPlayerContainerComponent = forwardRef<HTMLDivElement, VideoPlayerCont
             >
               <RightSideButtons {...props} />
             </div>
-          )}
+          )} */}
 
           {/* 하단 진행바 */}
           <div
@@ -92,8 +88,8 @@ const VideoPlayerContainerComponent = forwardRef<HTMLDivElement, VideoPlayerCont
             <BottomProgressBar {...props} />
           </div>
         </div>
-        {showCurriculumSection && <CurriculumSidebar {...props} />}
-        {showCurriculumSection && <RightSideBar {...props} />}
+        {/* {showCurriculumSection && <CurriculumSidebar {...props} />}
+        {showCurriculumSection && <RightSideBar {...props} />} */}
       </div>
     );
   },

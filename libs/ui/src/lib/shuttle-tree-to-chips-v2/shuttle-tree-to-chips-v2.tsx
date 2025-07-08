@@ -37,6 +37,11 @@ export const ShuttleTreeToChipsV2 = ({
 
   const [isConditionSettingsMode, setIsConditionSettingsMode] = useState<boolean>(false);
 
+  const isCombinedNodeKeys = useMemo<string[][]>(
+    () => selectedItems.filter(({ isCombined }) => isCombined).map(({ keys }) => keys),
+    [selectedItems],
+  );
+
   const [checkedValues, setCheckedValues] = useState<TreeNode[]>([]);
 
   const on = (newValue: TreeNode) => {
@@ -62,10 +67,12 @@ export const ShuttleTreeToChipsV2 = ({
       const newKey = {
         isCombined: true,
         ids: checkedValues.map(({ id }) => id),
-        key: checkedValues.map(({ key }) => key).join(','),
+        key: checkedValues.map(({ key }) => key).join('-'),
+        keys: checkedValues.map(({ key }) => key),
         fullName: checkedValues.map(({ fullName }) => fullName).join(' & '),
       };
       handleSelectItem(newKey);
+      checkedValues.forEach((checkedValue) => handleSelectItem(checkedValue));
     }
     handleSetIsConditionSettingsMode(false);
   };
@@ -95,6 +102,7 @@ export const ShuttleTreeToChipsV2 = ({
                   e.stopPropagation();
                   handleSelectItem(node);
                 }}
+                disabled={isCombinedNodeKeys.some((keys) => keys.includes(node.key))}
                 variant={isAlreadySelected ? 'primary' : 'gray2'}
                 size={'ts'}
                 type={'button'}

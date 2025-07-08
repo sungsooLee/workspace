@@ -1,7 +1,10 @@
 import { useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
+type UseVideoPlayer = {
+  onProgressCallback?: (state: { played: number; playedSeconds: number }) => void;
+};
 
-export const useVideoPlayer = () => {
+export const useVideoPlayer = ({ onProgressCallback }: UseVideoPlayer = {}) => {
   const playerContainerRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<ReactPlayer>(null);
   const [playing, setPlaying] = useState(false);
@@ -110,6 +113,7 @@ export const useVideoPlayer = () => {
     setPlayed(state.played);
     setCurrentTime(state.playedSeconds);
     updateSubtitles(state.playedSeconds);
+    onProgressCallback && onProgressCallback(state);
   };
 
   // 🧭 총 재생시간 설정
