@@ -1,13 +1,13 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { pageRouteConfig } from '../../../../features/auth';
-import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
-import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
-import { SearchBox } from '../../../../shared/ui/search-box';
+import { pageRouteConfig } from '@features/auth';
+import { PageContainer } from '@widgets/layout/ui/container/page-container';
+import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
+import { SearchBox } from '@shared/ui';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { t } from 'i18next';
-import { SystemCodeGrid } from '../../../../features/platform/code/ui/system-code-grid';
-import { useSystemCodeList } from '../../../../entities/common-code/service/system-code.hook';
+import { useSystemCodeList } from '@entities/common-code/service/system-code.hook';
 import { useEffect, useState } from 'react';
+import { SystemCodeGrid } from '@features/platform-management/platform/code-managemnet/ui/system-code-grid';
 
 export const Route = createFileRoute('/_layout/platform/code/system-code')({
   component: RouteComponent,

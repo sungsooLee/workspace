@@ -218,9 +218,8 @@ export const DndTreeView: React.FC<TreeProps> = ({
           ))
         ) : (
           <div>
-            {searchKeyword
-              ? `검색 결과가 없습니다: "${searchKeyword}"`
-              : '트리에 노드가 없습니다. 노드를 추가해주세요.'}
+            {!isLoading &&
+              (searchKeyword ? `"${searchKeyword}" 검색 결과가 없습니다` : '노드를 추가해주세요')}
           </div>
         )}
 

@@ -19,7 +19,7 @@ import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inn
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import popContentsStyles from './pop-contents-layout.module.css';
 //import { transformApiDataToTreeData } from '@features/category/service/category.service';
-import { transformApiDataToTreeData } from '@features/platform/category';
+import { transformApiDataToTreeData } from '@features/platform-management/platform/category-managemnet';
 import {
   useFetchTenantCategory,
   useMappingTenantCategory,

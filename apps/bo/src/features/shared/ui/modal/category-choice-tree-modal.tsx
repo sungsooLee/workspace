@@ -18,7 +18,7 @@ import { IcoNarrowRight } from '@learnway/icons';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import popContentsStyles from '@features/tenant/management/ui/pop-contents-layout.module.css';
-import { transformApiDataToTreeData } from '@features/platform/category';
+import { transformApiDataToTreeData } from '@features/platform-management/platform/category-managemnet';
 
 import { useFetchCategory } from '@entities/category';
 import {
