@@ -111,6 +111,9 @@ function RouteComponent() {
     }
 
     setFuncInfo({
+      curriculum: (payload: any) => {
+        console.log(payload);
+      },
       scormInitialize: ScormRteService.initialize,
       scormCommit: ScormRteService.commit,
       videoOnProgress: handleVideoProgress,
