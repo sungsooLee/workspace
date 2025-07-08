@@ -10,9 +10,8 @@ import {
   MainContents,
   SubContents,
 } from '@widgets/layout';
-import { MovieInfo } from '@features/learning';
 import { ChannelChoiceModal, ManagerChoiceModal } from '@features/shared';
-import { DateRangePickerFormField } from '@features/learning/ui/resource/date-range-picker-form-field';
+import { DateRangePickerFormField } from '@features/form/ui';
 import {
   CODE_GROUP,
   DynamicFormConfig,
@@ -26,6 +25,7 @@ import { useQuery } from '@tanstack/react-query';
 import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { NotFound } from '@features/layout';
 import { useEffect } from 'react';
+import { MovieInfo } from '@features/learning-resource';
 
 export const Route = createLazyFileRoute('/_layout/learning/learning-resource/video/view')({
   component: RouteComponent,

@@ -3,8 +3,8 @@ import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { Link } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
-import { SearchBox } from '../../../../shared/ui/search-box';
 import { GridBox, useGridBox } from '@learnway/ui';
+import { SearchBox } from '@shared/ui';
 
 const MappingCoursePopupComponent = () => {
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);

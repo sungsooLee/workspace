@@ -19,15 +19,15 @@ import { IcoFormRequired } from '@learnway/icons';
 import { BlogCreateReq, BlogPostRes, ContentAddInfoType, EnChannelScope } from '@types';
 import { FormRow, FormRow2 } from '@shared/ui';
 import { ChannelListChoiceModal, CompanyChoiceModal, UserChoiceModal } from '@features/shared';
-import { SharedChannelGridFormField } from '@features/learning';
-import { DateRangePickerFormField } from '@features/learning/ui/resource/date-range-picker-form-field';
-import { DurationTimeFormField } from '@features/learning/ui/resource/duration-time-form-field';
+import { SharedChannelGridFormField } from '@features/form/ui';
+import { DateRangePickerFormField } from '@features/form/ui';
 import { FormDisplay } from '@features/form';
 import { ContentsButtons, MainContents, PageContainer, SubContents } from '@widgets/layout';
 import { useCreateBlogContent } from '@entities/learning-resource';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import styles from './blog-detail.module.css';
+import { DurationTimeFormField } from '@features/form/ui';
 
 export const Route = createLazyFileRoute('/_layout/learning/resource/blog/regist')({
   component: RouteComponent,

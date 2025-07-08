@@ -29,7 +29,7 @@ import {
 import { useState } from 'react';
 import { LEARNING_TYPE } from '@learnway/config';
 import { getRandomId } from '@learnway/shared';
-import { EbookInstallGuideModal } from '../../../learning/ui/resource/e-book-install-guide-modal';
+import { EbookInstallGuideModal } from './e-book-install-guide-modal';
 
 // 학습 유형 선택 팝업 컴포넌트
 const LearningTypeChoiceModalComponent = () => {
