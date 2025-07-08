@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { FC, useState, useRef } from 'react';
 import { isMobile } from 'react-device-detect';
 
 import stylesWeb from '@learnway/styles/fo/pages/_learning/learning.module.css';
@@ -15,7 +15,7 @@ import { Carousel } from '../../../carousel/carousel';
 
 const styles = isMobile ? stylesMobile : stylesWeb;
 
-const LearningWindowGalleryPlayerComponent = () => {
+const LearningWindowGalleryPlayerComponent: FC<any> = () => {
   // swiper
   const swiperRef = useRef<any>(null);
 

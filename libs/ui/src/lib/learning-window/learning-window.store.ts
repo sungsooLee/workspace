@@ -57,6 +57,7 @@ interface Module {
   moduleId: number;
   mappingModuleType: string;
   lessonList: Lesson[];
+  moduleName: string;
 }
 
 interface Lesson {
@@ -85,6 +86,8 @@ interface LearningWindowStoreData {
   setGalleryInfo: (v: any) => void;
   videoInfo: any;
   setVideoInfo: (v: any) => void;
+  blogInfo: any;
+  setBlogInfo: (v: any) => void;
 }
 
 const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
@@ -96,10 +99,11 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
   scormInfo: undefined,
   galleryInfo: undefined,
   videoInfo: undefined,
+  blogInfo: undefined,
 
   setPlayInfo(playInfo?: PlayInfo) {
     if (!playInfo) return;
-    const playList = get().playList;
+    const playList = get().playList || [];
     const index = playList?.findIndex(
       (item) => item.moduleId === playInfo.moduleId && item.lessonId === playInfo.lessonId,
     );
@@ -134,10 +138,17 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
     }));
   },
 
+  setBlogInfo(blogInfo: any) {
+    set((state) => ({
+      blogInfo,
+    }));
+  },
+
   clearInfo() {
     set((state) => ({
       galleryInfo: undefined,
       scormInfo: undefined,
+      videoInfo: undefined,
     }));
   },
 }));
@@ -147,6 +158,7 @@ export const useLearningWindow = () => {
     scormInfo,
     galleryInfo,
     videoInfo,
+    blogInfo,
     playIndex: _playIndex,
     playList: _playList,
     baseInfo: _baseInfo,
@@ -160,6 +172,7 @@ export const useLearningWindow = () => {
     setScormInfo,
     setGalleryInfo,
     setVideoInfo,
+    setBlogInfo,
     clearInfo,
   } = useLearningWindowStore((state) => state);
 
@@ -202,16 +215,17 @@ export const useLearningWindow = () => {
 
   const setPlayListByCurriculum = (curriculum: any) => {
     const playList: any[] = [];
-    curriculum.moduleList.forEach((module: any) => {
-      module?.lessonList?.forEach((lesson: any) => {
-        playList.push({
-          moduleId: module.moduleId,
-          lessonId: lesson.lessonId,
-          lessonName: lesson.lessonName,
-          moduleName: module.moduleName,
+    curriculum?.moduleList &&
+      curriculum.moduleList.forEach((module: any) => {
+        module?.lessonList?.forEach((lesson: any) => {
+          playList.push({
+            moduleId: module.moduleId,
+            lessonId: lesson.lessonId,
+            lessonName: lesson.lessonName,
+            moduleName: module.moduleName,
+          });
         });
       });
-    });
     setPlayList(playList);
   };
 
@@ -266,14 +280,12 @@ export const useLearningWindow = () => {
     setGalleryInfo,
     videoInfo,
     setVideoInfo,
+    blogInfo,
+    setBlogInfo,
     setPlayInfo: handleSetPlayInfo,
     setCurriculum: handleSetCurriculum,
     gotoNextLesson,
     gotoBeforeLesson,
     clearInfo,
-    /**
-     * BO 미리 보기 설정용
-     */
-    directPlayInfo: setPlayInfo,
   };
 };

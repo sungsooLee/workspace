@@ -23,7 +23,7 @@ const LearningWindowHtmlPlayerComponent: FC<any> = ({
     if (!htmlInfo) return;
     console.log(htmlInfo);
 
-    let itemUrl = htmlInfo.itemURL;
+    let itemUrl = htmlInfo.startFileUrl;
 
     if ((window as any).__ENV__?.APP_ENV === 'local') {
       const url = new URL(itemUrl);

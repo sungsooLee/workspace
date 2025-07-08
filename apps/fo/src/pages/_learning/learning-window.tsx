@@ -29,7 +29,7 @@ function RouteComponent() {
   const [videoConfig, setVideoConfig] = useState<any>();
   const [videoStart, setVideoStart] = useState<number>(0);
 
-  const { baseInfo, playInfo, setVideoInfo, setBaseInfo, setCurriculum, setScormInfo } =
+  const { baseInfo, playInfo, setVideoInfo, setBaseInfo, setCurriculum, setScormInfo, clearInfo } =
     useLearningWindow();
   const { data: scormInfo } = useGetScormRteScoInfo(scormConfig);
   const { data: curriculum } = useGetCurriculumnDetail(baseInfo?.curriculumId);
@@ -73,6 +73,7 @@ function RouteComponent() {
   useEffect(() => {
     if (!playInfo) return;
     console.log('playInfo config', playInfo);
+    clearInfo();
     switch (playInfo.contentType) {
       case EnContentType.SCORM:
         setScormConfig({
@@ -88,8 +89,7 @@ function RouteComponent() {
         setVideoConfig({
           contentUuid: playInfo.contentUuid,
         });
-
-      default:
+        break;
     }
   }, [playInfo]);
 

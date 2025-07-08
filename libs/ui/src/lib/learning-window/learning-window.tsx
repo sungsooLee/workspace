@@ -3,20 +3,20 @@ import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-rout
 
 import { t } from 'i18next';
 
+import { LearningWindowBlogPlayer } from './player/ui/learning-window-blog-player';
+import { LearningWindowGalleryPlayer } from './player/ui/learning-window-gallery-player';
 import { LearningWindowScormPlayer } from './player/ui/learning-window-scorm-player';
 import { LearningWindowVideoPlayer } from './player/ui/learning-window-video-player';
-import { LearningWindowGalleryPlayer } from './player/ui/learning-window-gallery-player';
 
 import { EnContentType, useLearningWindow } from './learning-window.store';
 
 const LearningWindowComponent: FC<any> = ({ scormRteService, onVideoProgress }) => {
-  const { scormInfo, videoInfo, galleryInfo, setScormInfo, curriculum, playInfo, setBaseInfo } =
-    useLearningWindow();
+  const { scormInfo, videoInfo, galleryInfo, playInfo, blogInfo } = useLearningWindow();
 
   return (
     <>
       {scormInfo && (
-        <LearningWindowScormPlayer
+        <LearningWindowBlogPlayer
           playInfo={playInfo}
           scormInfo={scormInfo}
           scormRteService={scormRteService}
@@ -26,6 +26,7 @@ const LearningWindowComponent: FC<any> = ({ scormRteService, onVideoProgress }) 
         <LearningWindowVideoPlayer videoInfo={videoInfo} onProgress={onVideoProgress} />
       )}
       {galleryInfo && <LearningWindowGalleryPlayer />}
+      {blogInfo && <LearningWindowBlogPlayer />}
     </>
   );
 };

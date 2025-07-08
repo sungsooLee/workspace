@@ -7,7 +7,6 @@ import stylesMobile from '@learnway/styles/fo/pages/_learning/learning-m.module.
 import { useVideoPlayer } from '../../../video-player/hooks/video-player.hook';
 import { VideoPlayer } from '../../../video-player/video-player';
 import { VideoPlayerContainer } from '../../../video-player/video-player-container';
-import { vi } from 'date-fns/locale';
 
 const styles = isMobile ? stylesMobile : stylesWeb;
 

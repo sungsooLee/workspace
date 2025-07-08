@@ -11,7 +11,7 @@ import { ScormDataManager } from '../service/scorm-data-manager';
 import { ScormRteClient } from '../service/scorm-rte-client';
 
 const styles = isMobile ? stylesMobile : stylesWeb;
-const LearningWindowHtmlPlayerComponent: FC<any> = ({
+const LearningWindowBlogPlayerComponent: FC<any> = ({
   playInfo,
   blogInfo,
 }: {
@@ -37,4 +37,4 @@ const LearningWindowHtmlPlayerComponent: FC<any> = ({
   );
 };
 
-export const LearningWindowScormPlayer = LearningWindowHtmlPlayerComponent;
+export const LearningWindowBlogPlayer = LearningWindowBlogPlayerComponent;
