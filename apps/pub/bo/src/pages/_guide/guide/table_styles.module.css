@@ -4,7 +4,7 @@
   table {
     @apply w-full table-fixed border-collapse;
     caption {
-      @apply sr-only;
+      @apply static -m-px block h-px w-px overflow-hidden [clip:rect(1px,_1px,_1px,_1px)];
     }
     thead {
       tr {
