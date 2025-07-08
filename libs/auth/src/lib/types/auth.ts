@@ -45,6 +45,8 @@ export interface AuthUser {
     deptName?: string;
     deptEngName?: string;
   };
+
+  exp: string;
 }
 
 export interface AuthSSOHealthcheck {

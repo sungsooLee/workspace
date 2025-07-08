@@ -1,7 +1,14 @@
 import { useEffect, useState, ReactNode } from 'react';
 import { useMount } from 'ahooks';
 
-import { initI18N, initZod, initAxios, tokenService, getDefaultLang } from '@learnway/config';
+import {
+  initI18N,
+  initZod,
+  initAxios,
+  tokenService,
+  getDefaultLang,
+  setConfig,
+} from '@learnway/config';
 import { Spinner, useModal } from '@learnway/ui';
 
 import { useFetchI18nResource, useFetchCodeGroups } from '../entities/platform';
@@ -33,6 +40,7 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
   const queryClient = new QueryClient();
 
   useMount(async () => {
+    setConfig('APP_INFO', 'BO');
     tokenService.refreshToken && (await reissue());
   });
 

@@ -29,7 +29,7 @@ export function useAuthSignin() {
       return await login(payload, {
         ...callback,
         onSuccess: async (data, variables, context) => {
-          const menus = await asyncMenus(data.activeTenant?.tenantId);
+          const menus = await asyncMenus(data.activeTenant?.tenantId, data.activeRole?.roleId);
 
           if (payload.saveId) {
             cookieService.set('SAVED_USER_ID', payload.username);
@@ -46,7 +46,7 @@ export function useAuthSignin() {
     },
     reissue: async (): Promise<AuthUser | undefined> => {
       const user = await reissue();
-      const menus = await asyncMenus(user?.activeTenant?.tenantId);
+      const menus = await asyncMenus(user?.activeTenant?.tenantId, user.activeRole?.roleId);
       return updateMenu(menus);
     },
   };
