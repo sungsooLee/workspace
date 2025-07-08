@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto } from './com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto';
+import type { com_ever_edu_lms_blackwhite_dto_res_BlackAndWhiteCombinerResDto } from './com_ever_edu_lms_blackwhite_dto_res_BlackAndWhiteCombinerResDto';
 export type com_ever_edu_lms_course_dto_res_CourseTargetAudienceResDto = {
     /**
      * 학습대상 그룹 ID
@@ -11,6 +11,6 @@ export type com_ever_edu_lms_course_dto_res_CourseTargetAudienceResDto = {
     /**
      * 학습대상 유저 그룹 조합
      */
-    combiners?: Array<com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto>;
+    combiners?: Array<com_ever_edu_lms_blackwhite_dto_res_BlackAndWhiteCombinerResDto>;
 };
 

@@ -31,6 +31,7 @@ import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1 } f
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2 } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2';
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep3 } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep3';
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4';
+import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep5 } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep5';
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew';
 import type { com_ever_edu_lms_course_dto_req_SequenceDeleteReqDto } from '../models/com_ever_edu_lms_course_dto_req_SequenceDeleteReqDto';
 import type { com_ever_edu_lms_course_dto_req_SequenceSaveReqDto } from '../models/com_ever_edu_lms_course_dto_req_SequenceSaveReqDto';
@@ -392,6 +393,35 @@ export class BoService {
                 401: `Unauthorized`,
                 404: `Not Found`,
                 405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 과정 생성 마법사5
+     * 과정 생성 마법사5 입니다.
+     * @param courseId
+     * @param requestBody
+     * @returns number OK
+     * @throws ApiError
+     */
+    public static wizard5(
+        courseId: number,
+        requestBody: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep5,
+    ): CancelablePromise<number> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/admin/api/v1/course/wizard5/{courseId}',
+            path: {
+                'courseId': courseId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },

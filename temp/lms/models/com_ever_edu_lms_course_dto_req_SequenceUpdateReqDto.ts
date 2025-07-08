@@ -118,6 +118,7 @@ export namespace com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto {
      * (cms.video.PlayBackRate)
      */
     export enum maxPlayBackRate {
+        X1 = 'X1',
         X1_25 = 'X1_25',
         X1_5 = 'X1_5',
         X1_75 = 'X1_75',
