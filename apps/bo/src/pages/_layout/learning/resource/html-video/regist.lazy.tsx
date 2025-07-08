@@ -11,7 +11,7 @@ import { createLazyFileRoute, useRouterState } from '@tanstack/react-router';
 import { ContentsButtons, MainContents, PageContainer } from '@widgets/layout';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { SubContents } from '@widgets/layout/ui/container/slot/sub-contents';
-import { LearningResourceFileUploadModal, SharedChannelGridFormField } from '@features/learning';
+import { SharedChannelGridFormField } from '@features/learning';
 import styles from './test-detail.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { cn } from '@learnway/shared';
@@ -21,6 +21,7 @@ import { LEARNING_TYPE } from '@learnway/config';
 import { ChannelListChoiceModal, ManagerChoiceModal } from '@features/shared';
 import { FormDisplay } from '@features/form/ui/form-display';
 import { DateRangePickerFormField } from '@features/learning/ui/resource/date-range-picker-form-field';
+import { LearningResourceFileUploadModal } from '@features/learning-resource';
 
 export const Route = createLazyFileRoute('/_layout/learning/resource/html-video/regist')({
   component: RouteComponent,
