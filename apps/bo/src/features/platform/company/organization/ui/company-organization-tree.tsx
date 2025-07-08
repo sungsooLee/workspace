@@ -453,7 +453,7 @@ const TenantCompanyOrganizationTreeComponent = ({
   };
 
   return (
-    <SplitPanel size={[600, 'auto']} divider>
+    <SplitPanel size={[560, 'auto']} divider>
       <TreeContainer>
         <TreeBox
           data={deptTreeData}
