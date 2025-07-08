@@ -16,6 +16,7 @@ import {
 } from '@learnway/ui';
 import { ScormRteService } from '@entities/scorm/api/scorm-rte';
 import { useVideoWatchLog } from '@entities/video/service/video.hook';
+import { useGetBlogResource } from '@entities/blog/service/content.hook';
 
 export const Route = createFileRoute('/_learning/learning-window')({
   component: RouteComponent,
@@ -28,22 +29,25 @@ function RouteComponent() {
   const [scormConfig, setScormConfig] = useState<ScormPlayerConfigProperties>();
   const [videoConfig, setVideoConfig] = useState<any>();
   const [videoStart, setVideoStart] = useState<number>(0);
+  const [blogConfig, setBlogConfig] = useState<any>();
 
   const {
     baseInfo,
     playInfo,
     setVideoInfo,
+    setScormInfo,
+    setBlogInfo,
     setBaseInfo,
     setCurriculum,
-    setScormInfo,
     clearInfo,
     setFuncInfo,
   } = useLearningWindow();
   const { data: scormInfo } = useGetScormRteScoInfo(scormConfig);
   const { data: curriculum } = useGetCurriculumnDetail(baseInfo?.curriculumId);
   const { data: videoInfo } = useGetContentDetail(videoConfig?.contentUuid);
-
+  const { data: blogInfo } = useGetBlogResource(blogConfig?.contentUuid);
   const { watchLog } = useVideoWatchLog();
+
   const handleVideoProgress = (state: any) => {
     const payload = {
       courseSequenceId: baseInfo?.sequenceId,
@@ -72,6 +76,10 @@ function RouteComponent() {
     setVideoStart(0);
     setVideoInfo({ ...videoInfo, playItem: videoInfo.children[0].m3u8Url });
   }, [videoInfo]);
+  useEffect(() => {
+    if (!blogInfo) return;
+    setBlogInfo(blogInfo);
+  }, [blogInfo]);
 
   useEffect(() => {
     if (!playInfo) return;
@@ -90,6 +98,11 @@ function RouteComponent() {
         break;
       case EnContentType.VIDEO:
         setVideoConfig({
+          contentUuid: playInfo.contentUuid,
+        });
+        break;
+      case EnContentType.BLOG:
+        setBlogConfig({
           contentUuid: playInfo.contentUuid,
         });
         break;

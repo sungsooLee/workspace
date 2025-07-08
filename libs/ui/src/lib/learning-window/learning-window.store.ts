@@ -5,6 +5,7 @@ export enum EnContentType {
   EBOOK = 'EBOOK',
   SCORM = 'SCORM',
   IMAGE = 'IMAGE',
+  BLOG = 'BLOG',
   EXTERNAL_LINK = 'EXTERNAL_LINK',
 }
 
