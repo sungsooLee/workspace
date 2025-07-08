@@ -64,7 +64,6 @@ const imageFileUrl =
   'https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2';
 
 function RouteComponent() {
-  const { open } = useModal();
   const { open: openModal } = useModal();
   const [organizations, setOrganizations] = useState<any>([]);
   const { provider, onSubmit, control, getValues, updateFormData } = useDynamicForm(formConfig);
@@ -120,7 +119,7 @@ function RouteComponent() {
   };
 
   const handleAddressSearch = () => {
-    open({
+    openModal({
       width: 'sm',
       content: <AddressSearchModal onSelect={handleAddressSearchResult} />,
     });
