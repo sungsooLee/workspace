@@ -84,6 +84,9 @@ const CompanyListComponent = () => {
               DATE_TIME_FORMAT.DATETIME_SEC,
             ),
       enableGrouping: false,
+      meta: {
+        cellAlign: 'center',
+      },
     }),
   ] as ColumnDef<any, unknown>[];
 
@@ -125,8 +128,8 @@ const searchConfig: SearchBoxConfig = {
         value: '',
         options: [
           { value: '', label: t('전체') },
-          { value: true, label: t('사용') },
-          { value: false, label: t('미사용') },
+          { value: 'true', label: t('사용') },
+          { value: 'false', label: t('미사용') },
         ],
       },
       {
