@@ -124,7 +124,7 @@ const searchConfig: SearchBoxConfig = {
       {
         name: 'isUsed',
         type: 'dropdown',
-        label: t('회사정보 사용'),
+        label: t('사용 여부'),
         value: '',
         options: [
           { value: '', label: t('전체') },
@@ -135,7 +135,7 @@ const searchConfig: SearchBoxConfig = {
       {
         name: 'modifyDate',
         type: 'date-range',
-        label: t('수정일'),
+        label: t('수정 기간'),
         value: {
           from: undefined,
           to: undefined,
