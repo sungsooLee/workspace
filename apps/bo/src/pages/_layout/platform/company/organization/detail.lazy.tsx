@@ -5,7 +5,7 @@ import { Button } from '@learnway/ui';
 import { ContentsButtons } from '@widgets/layout';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { CompanyOrganization } from '@features/platform/company';
+import { CompanyOrganization } from '@features/platform-management/company';
 
 export const Route = createLazyFileRoute('/_layout/platform/company/organization/detail')({
   component: RouteComponent,

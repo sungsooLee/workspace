@@ -14,7 +14,7 @@ import { FormSubTitle } from '@shared/ui';
 import {
   CompanyUserDetailLearningHistory,
   CompanyUserDetailBase,
-} from '@features/platform/company';
+} from '@features/platform-management/company';
 import { useFetchUser } from '@entities/users/service/users.hook';
 
 enum EnCompanyUserTab {

@@ -42,7 +42,7 @@ import { EnFormMode, EnGlobalConst, EMAIL_REGEX } from '@types';
 
 import { useCreateCompany, useUpdateCompany, useFetchCompany } from '@entities/companies';
 import CompaniesService from '@entities/companies/api/companies';
-import { LoginAuthenticationSettingInformation } from '@features/platform/company';
+import { LoginAuthenticationSettingInformation } from '@features/platform-management/company';
 
 /**
  *
