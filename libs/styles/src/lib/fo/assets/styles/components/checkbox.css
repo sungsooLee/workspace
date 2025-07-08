@@ -14,7 +14,7 @@
   }
   &:has([role='checkbox'][aria-checked='true']) {
     [role='checkbox'] ~ label {
-      @apply !font-semibold !tracking-[-0.035em];
+      @apply !font-semibold;
     }
   }
   &:has([role='checkbox']:disabled) {
