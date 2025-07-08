@@ -6,6 +6,7 @@ import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CourseTabBaseProps, TabFormRef } from '../../-common/type';
 import { Course } from '@types';
+import { DateRangePickerFormField } from '@features/learning/ui/resource/date-range-picker-form-field';
 
 const PublishCourseComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
   ({ onSave, data: { formData, courseConfig } }, ref) => {
@@ -17,7 +18,7 @@ const PublishCourseComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
       validate: async () => {
         // 모든 필드에 대해 유효성 검사 수행
         const isValid = await onFormValid();
-        const data = formDataToRequestData(getValues());
+        const data = formDataToRequestData(getValues() as Course);
         const errors = formState.errors;
 
         return {
@@ -48,7 +49,7 @@ const PublishCourseComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
         <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'과정 사용유무'}
+            name={'isUsed'}
             label={'과정 사용유무'}
             element={
               <RadioGroupFormField
@@ -63,16 +64,16 @@ const PublishCourseComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
         <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'노출 기간'}
+            name={'courseValidityStartHour'}
             label={'노출 기간'}
-            element={<DateRangeFormField />}
+            element={<DateRangePickerFormField />}
           />
         </ContentsRow>
         {/*대표 이미지*/}
         {/* <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'대표 이미지'}
+            name={'thumbnailFileGroupUuid'}
             label={'대표 이미지'}
             element={<ThumbnailListFormField />}
           />
@@ -81,7 +82,7 @@ const PublishCourseComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
         <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'태그'}
+            name={'tagNames'}
             label={'태그'}
             element={
               <ChipListFormField
@@ -109,21 +110,5 @@ export const PublishCourse = PublishCourseComponent;
  */
 
 export const formDataToRequestData = (d: Course) => {
-  // 교육공간 라디오 선택에 따라 값 변경 관련 처리 (교육공간=learningSpaceType)
-  // 차세데 학습학습 플랫폼
-  if (d.learningSpaceType === 'LEARNING_WAY') {
-    d.learningSpaceId = undefined; // 교육 장소 ID
-    d.learningSpaceName = undefined; // 교육 장소(선택입력)
-    d.learningSpaceNameKeyIn = undefined; // 교육 장소 직접입력
-  }
-  // 공간선택
-  else if (d.learningSpaceType === 'REGISTERED') {
-    d.learningSpaceNameKeyIn = undefined; // 교육 장소 직접입력
-  }
-  // 직적입력
-  else if (d.learningSpaceType === 'MANUAL') {
-    d.learningSpaceId = undefined; // 교육 장소 ID
-    d.learningSpaceName = undefined; // 교육 장소(선택입력)
-  }
   return d;
 };

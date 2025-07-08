@@ -125,6 +125,9 @@ export interface Course {
    * 과정 생성/수정 마법사 타입 (lms.course.WizardStep)
    */
   wizardStep?: string; // 'STEP1' | 'STEP2' | 'STEP3' | 'STEP4' | 'STEP5' | 'FULL_UPDATE';
+
+  // STEP1 //////////////////////////////////////////////////////////////////////////////////////////
+
   /**
    * 과정유형
    */
@@ -152,7 +155,7 @@ export interface Course {
   /**
    * 카테고리 배열
    */
-  cartegories?: Array<any>;
+  categories?: Array<any>;
   /**
    * 학습대상-ID 배열
    */
@@ -250,7 +253,13 @@ export interface Course {
    */
   instructorId?: number;
 
-  // STEP2
+  /**
+   * 대표 커리큘럼id
+   */
+  primaryCurriculumId?: number;
+
+  // STEP2 //////////////////////////////////////////////////////////////////////////////////////////
+
   /**
    * 수강신청 설정 여부
    */
@@ -280,13 +289,8 @@ export interface Course {
    */
   isDuplicateEnrollAllowed?: boolean;
 
-  // STEP3
-  /**
-   * 대표 커리큘럼id
-   */
-  primaryCurriculumId?: number;
+  // STEP4 //////////////////////////////////////////////////////////////////////////////////////////
 
-  // STEP4
   /**
    * 학습 환경 설정 여부
    */
@@ -531,6 +535,41 @@ export interface Course {
    * 위탁 소유 회사 이름
    */
   outsourcingCompanyName?: string;
+
+  // STEP5 //////////////////////////////////////////////////////////////////////////////////////////
+
+  /**
+   * 사용 여부
+   */
+  isUsed: boolean;
+  /**
+   * 과정 노출 시작일
+   */
+  courseValidityStartDate: string;
+  /**
+   * 과정 노출 시작 시각
+   */
+  courseValidityStartHour: number;
+  /**
+   * 과정 노출 종료일
+   */
+  courseValidityEndDate: string;
+  /**
+   * 과정 노출 종료 시각
+   */
+  courseValidityEndHour: number;
+  /**
+   * 썸네일 이미지 Group UUID
+   */
+  thumbnailFileGroupUuid: string;
+  /**
+   * 대표 썸네일 이미지 UUID
+   */
+  primaryThumbnailFileUuid: string;
+  /**
+   * 태그 이름 목록
+   */
+  tagNames: Array<{ value: string }>;
 }
 
 /**

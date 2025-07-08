@@ -36,7 +36,7 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
     }));
 
     useEffect(() => {
-      console.log('CourseRegistrationComponent init');
+      console.log('CourseRegistrationComponent init', formData);
       // 초기 데이터가 있으면 설정
       if (formData) {
         updateFormData(formData);

@@ -35,9 +35,8 @@ export const useCourseForm = (courseType?: string) => {
 
   // 전체 폼 데이터 상태
   const [data, setData] = useState<{ formData: Course; courseConfig: CourseConfig }>({
-    formData: {
-      courseType, // state 에 과정유형 있는 경우 설정
-      learningSpaceNameKeyIn: 'x', // 값 없으면 저장 에러, api 수정되면 삭제
+    formData: responseDataToFormData({
+      courseType,
       categories: [
         // 카테고리 팝업 api 연동되면 삭제
         {
@@ -50,7 +49,7 @@ export const useCourseForm = (courseType?: string) => {
           tenantIds: [2],
         },
       ],
-    } as Course,
+    }),
     courseConfig: {} as CourseConfig,
   });
 
@@ -205,13 +204,24 @@ export const useCourseForm = (courseType?: string) => {
 const responseDataToFormData = (response: Course) => {
   return {
     ...response,
+    // step1
     primaryCategoryId: 1, // 서버에서 받으면 삭제
-    categoryIds: response?.cartegories?.map((d: any) => d.categoryId), // 카테고리 아이디
+    categoryIds: response?.categories?.map((d: any) => d.categoryId), // 카테고리 아이디
     tenantIds: response?.tenantList?.map((d: any) => d.tenantId), // 테넌트 아이디
     targetList: response?.targetList?.map((d: any) => ({
       ...d,
       name: d?.combiners?.[0]?.combineValue,
     })),
+    // step2
+    isEnrollRequired: true, // 수강신청 그룹
+    // step4
+    isLearnEnvEnabled: true, // 학습환경 설정 사용 여부
+    isLearnControlEnabled: true, // 학습제어 설정 사용 여부
+    isUsePassOption: true, // 이수기준 설정 사용 여부
+    isCommunicationToolEnabled: true, // 커뮤니티 및 공유설정 사용 여부
+    isInstructorAssigned: true, // 강사 설정 사용 여부
+    isTextbookProvided: true, // 교재 설정 사용 여부
+    isRelatedPrerequisiteCourseExisted: true, // 사전/연관학습 설정 사용 여부
   };
 };
 
