@@ -1,7 +1,6 @@
 import React, { FC, forwardRef, useEffect, useState, useRef, useImperativeHandle } from 'react';
 import { t } from 'i18next';
 import { useRouterState } from '@tanstack/react-router';
-import { FormTranslationBox } from '@features/platform/ui/platform/system/translation/form-translation-box';
 
 import { Button, ContentsRow, Input, DynamicFormField, useModal } from '@learnway/ui';
 
