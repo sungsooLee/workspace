@@ -23,20 +23,18 @@ const EducationPlacePopupComponent = () => {
               <dt>전화번호 :</dt>
               <dd>02-999-8888</dd>
             </dl>
-            <dl className={styles.addr}>
-              <dt>주소 :</dt>
-              <dd>
-                서울 강남구 테헤란로 510
-                <Popover
-                  popoverContent={<CopyPopoverCompoment />}
-                  side="bottom"
-                  align={isMobile ? 'center' : 'start'}
-                  sideOffset={10}
-                >
-                  <span>주소복사</span>
-                </Popover>
-              </dd>
-            </dl>
+            {/* 퍼블수정 20250708 마크업 수정 */}
+            <p className={styles.addr}>
+              서울 강남구 테헤란로 510
+              <Popover
+                popoverContent={<CopyPopoverCompoment />}
+                side="bottom"
+                align={isMobile ? 'center' : 'start'}
+                sideOffset={15}
+              >
+                <span>주소복사</span>
+              </Popover>
+            </p>
           </div>
           <div className={styles.map}>
             <img src={mapImage} alt="" />

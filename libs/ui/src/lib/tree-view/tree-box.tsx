@@ -11,10 +11,12 @@ import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inn
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 import subTitleStyles from '@learnway/styles/bo/assets/styles/modules/form-sub-title.module.css';
 import { DndTreeView } from './dnd-tree';
+import { Dropdown } from '../dropdown/dropdown';
 
 const TreeBoxComponent: React.FC<TreeBoxProps> = ({
   treeId,
   data,
+  showSearchLabel,
   showSearchKeyword,
   initLevel = 1,
   onAction,
@@ -126,14 +128,22 @@ const TreeBoxComponent: React.FC<TreeBoxProps> = ({
           ) : (
             <>
               {showSearchKeyword && (
-                <Input
-                  type="text"
-                  value={searchKeyword}
-                  onChange={(e) => setSearchKeyword(e.target.value)}
-                  placeholder="검색"
-                  showSearchIcon={true}
-                  searchIconType={'search'}
-                />
+                <>
+                  {showSearchLabel && (
+                    <Dropdown
+                      value={'default'}
+                      options={[{ label: showSearchLabel, value: 'default' }]}
+                    />
+                  )}
+                  <Input
+                    type="text"
+                    value={searchKeyword}
+                    onChange={(e) => setSearchKeyword(e.target.value)}
+                    placeholder="검색"
+                    showSearchIcon={true}
+                    searchIconType={'search'}
+                  />
+                </>
               )}
               <Button
                 variant="text"

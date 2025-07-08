@@ -9,7 +9,7 @@ import { Tabs, Button } from '@learnway/ui';
 
 import { useFetchAuthUser } from '@learnway/auth/entities';
 
-import { TenantUserList, TenantUserRegistApplicationList } from '@features/tenant';
+import { TenantUserList, TenantUserRegistApplicationList } from '@features/platform-management/tenant';
 
 import { tenantQueryOptions } from '@entities/tenant';
 

@@ -26,9 +26,11 @@ import {
   ChipListModalSelectorFormField,
   ContentsRow,
   Input,
+  LearningWindowLayout,
   PreviewImage,
   useModal,
 } from '@learnway/ui';
+import { AddressSearchFormField } from '@shared/ui/form/address-search-form-field';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
@@ -52,6 +54,7 @@ import {
   useDeployTranslation,
   useTranslation,
 } from '@entities/translation/service/translation.hook';
+import { PreviewLearningWindow } from '@features/learning/learning-resource/preview-learning-window';
 
 export const Route = createLazyFileRoute('/_layout/common-popup')({
   component: RouteComponent,
@@ -61,7 +64,6 @@ const imageFileUrl =
   'https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2';
 
 function RouteComponent() {
-  const { open } = useModal();
   const { open: openModal } = useModal();
   const [organizations, setOrganizations] = useState<any>([]);
   const { provider, onSubmit, control, getValues, updateFormData } = useDynamicForm(formConfig);
@@ -117,7 +119,7 @@ function RouteComponent() {
   };
 
   const handleAddressSearch = () => {
-    open({
+    openModal({
       width: 'sm',
       content: <AddressSearchModal onSelect={handleAddressSearchResult} />,
     });
@@ -184,34 +186,8 @@ function RouteComponent() {
             />
           </ContentsRow>
           <ContentsRow>
-            <div className={dynamicFormStyles.address_wrap}>
-              <div className={dynamicFormStyles.info_address}>
-                <FormRow
-                  provider={provider}
-                  name={'zipNo'}
-                  className={dynamicFormStyles.post_input}
-                  element={<Input disabled={true} />}
-                />
-                <FormRow
-                  provider={provider}
-                  name={'address'}
-                  className={dynamicFormStyles.address_input}
-                  element={<Input disabled={true} />}
-                >
-                  <Button
-                    className={dynamicFormStyles.btn_find}
-                    variant={'gray'}
-                    size={'sm'}
-                    onClick={handleAddressSearch}
-                  >
-                    {t('LABEL.button.searchZipNo')}
-                  </Button>
-                </FormRow>
-              </div>
-              <div className={dynamicFormStyles.detail_address}>
-                <FormRow provider={provider} name={'addressDetail'} element={<Input />} />
-              </div>
-            </div>
+            <FormRow provider={provider} name={'address'} element={<AddressSearchFormField />} />
+            <FormRow provider={provider} name={'addressDetail'} />
           </ContentsRow>
           <ContentsRow>
             <Button
@@ -629,7 +605,30 @@ function RouteComponent() {
                   });
                 }}
               >
-                {'교육공간 등록 팝업'}
+                {'교육공간 등록 결과'}
+              </Button>
+              <span className="text-yellow-500">{'진행중'}</span>
+            </div>
+            <div className="flex gap-4">
+              <Button
+                size={'xs'}
+                className="btn_table flex-1"
+                variant={'gray2'}
+                stopPropagation
+                onClick={(e) => {
+                  openModal({
+                    width: 'full',
+                    content: (
+                      // <PreviewLearningWindow contentUuid="0d325ece-c155-4927-944d-dfc873fff97b" />
+                      <PreviewLearningWindow contentUuid="809fad98-0911-4712-a989-7848671c8e4c" />
+                    ),
+                    onClose(data: any) {
+                      console.log('컨텐츠 미리 보기 팝업', data);
+                    },
+                  });
+                }}
+              >
+                {'컨텐츠 미리 보기 팝업'}
               </Button>
               <span className="text-yellow-500">{'진행중'}</span>
             </div>
@@ -661,25 +660,30 @@ const formConfig: DynamicFormConfig = {
       description: '',
     },
     {
-      name: 'zipNo',
-      type: 'text',
-      label: t('LABEL.form.label.address'),
+      name: 'address',
+      type: 'custom',
+      label: t('주소'),
       value: '',
-      placeholder: t('LABEL.form.placeholder.zipNo'),
+      format: 'string',
+      fields: {
+        postalCode: 'postalCode',
+        address: 'address',
+      },
     },
     {
-      name: 'address',
-      type: 'text',
-      label: t('LABEL.form.label.address'),
+      label: '',
+      name: 'postalCode',
+      type: 'hidden',
+      format: 'string',
       value: '',
-      placeholder: t('LABEL.form.placeholder.address'),
     },
     {
       name: 'addressDetail',
       type: 'text',
-      label: '',
+      label: t('상세 주소'),
       value: '',
-      placeholder: t('LABEL.form.placeholder.addressDetail'),
+      placeholder: '',
+      maxLength: 50,
     },
     {
       name: 'thumbnails',

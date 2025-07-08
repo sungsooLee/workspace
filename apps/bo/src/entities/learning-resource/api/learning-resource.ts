@@ -5,6 +5,7 @@ import {
   BlogCreateReq,
   BlogUpdateReq,
   BlogWatchLogReq,
+  GetContentDetailRes,
   PostDraftVideosParams,
   PostDraftVideosRes,
 } from '@types';
@@ -21,6 +22,10 @@ export default class LearningResourceService {
 
   static fetchContents(params: any): Promise<any> {
     return httpService.get(`${CMSApiPrefix()}/contents`, params);
+  }
+
+  static fetchContent(contentUuid: string): Promise<GetContentDetailRes> {
+    return httpService.get(`${CMSApiPrefix()}/content/${contentUuid}`);
   }
 
   static postDraftVideos(params: PostDraftVideosParams): Promise<PostDraftVideosRes> {
@@ -139,6 +144,6 @@ export default class LearningResourceService {
 
   // 블로그 사용/조회 이력 저장
   static saveBlogWatchLog(body: BlogWatchLogReq) {
-    return httpService.put(`${CMSApiPrefix()}/blog/watch-log`, body);
+    return httpService.post(`${CMSApiPrefix()}/blog/watch-log`, body);
   }
 }

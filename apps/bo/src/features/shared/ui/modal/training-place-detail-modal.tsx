@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { t } from 'i18next';
 import { Button, ModalBody, ModalContainer, ModalTitle, useModal, ModalFooter } from '@learnway/ui';
-import { TrainingPlaceDetail } from '@features/learning/training-place/training-place-detail';
+import { TrainingPlaceDetail } from '@features/learning-operate-support/learning-space/learning-space-management/training-place-detail';
 import { EnFormMode, EnPageMode } from '@types';
 
 const TrainingPlaceDetailModalComponent = ({

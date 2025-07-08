@@ -1,6 +1,7 @@
 import React, { forwardRef, useEffect } from 'react';
 import { ImageOption, ThumbnailImageUpload } from '@learnway/ui'; // @learnway/ui에서 ThumbnailImageUpload 컴포넌트 import
 import { S3UploaderConfig, BaseFormFieldProps } from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
+import { isArray } from 'lodash';
 
 /**
  * ThumbnailImageUploadFormField 컴포넌트의 props 인터페이스
@@ -88,11 +89,15 @@ const valueToOptions = (value: string[]): ImageOption[] => {
   if (!value) {
     return [];
   }
-  return value.map((path: string, index: number) => ({
-    id: path + index, // 경로를 ID로 사용
-    path, // 경로를 path로 사용
-    // ImageOption의 다른 속성 (checked, readonly 등)은 기본값 또는 필요에 따라 추가
-  }));
+
+  if (isArray(value)) {
+    return value.map((path: string, index: number) => ({
+      id: path + index, // 경로를 ID로 사용
+      path, // 경로를 path로 사용
+      // ImageOption의 다른 속성 (checked, readonly 등)은 기본값 또는 필요에 따라 추가
+    }));
+  }
+  return [];
 };
 
 /**

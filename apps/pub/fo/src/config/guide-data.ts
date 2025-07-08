@@ -755,8 +755,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '2025-04-29',
     lastUpdateDate: '2025-06-25',
-    remarks:
-      '- introduction.tsx\n- 수강신청 불가 팝업창들 course-information-popup.tsx (반려팝업 미결정)',
+    remarks: '- introduction.tsx',
   },
   {
     screenId: 'NLP_FO_LEC_1022',
@@ -769,23 +768,13 @@ export const guideData = [
     remarks: '- introduction.tsx',
   },
   {
-    screenId: 'NLP_FO_LEC_1006',
-    screenName: '과정상세_교육일정_약도보기',
-    layoutType: '', // 자동 분리됨 작성x
-    pageId: 'course-introduction/detail',
-    pageType: 'Pop-up',
-    completionDate: '2025-04-29',
-    lastUpdateDate: '',
-    remarks: '- education-place-popup.tsx\n- popover가 modal 보다 아래에 있어서 공통 문의중',
-  },
-  {
     screenId: 'NLP_FO_LEC_1004',
     screenName: '과정상세_교육일정_수강신청 알림',
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'course-introduction/detail',
     pageType: 'Pop-up',
     completionDate: '2025-04-14',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-08',
     remarks: '- detail.tsx (CourseAlarmAlert)',
   },
   {
@@ -795,8 +784,29 @@ export const guideData = [
     pageId: 'course-introduction/detail',
     pageType: 'Pop-up',
     completionDate: '2025-04-14',
-    lastUpdateDate: '',
-    remarks: '- detail.tsx (CourseWaitAlert)',
+    lastUpdateDate: '2025-07-08',
+    remarks: '- detail.tsx (CourseWaitRegistrationAlert)',
+  },
+  {
+    screenId: 'NLP_FO_LEC_1006',
+    screenName: '과정상세_교육일정_약도보기',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: 'course-introduction/detail',
+    pageType: 'Pop-up',
+    completionDate: '2025-04-29',
+    lastUpdateDate: '2025-07-08',
+    remarks: '- education-place-popup.tsx',
+  },
+  {
+    screenId: 'NLP_FO_LEC_1007',
+    screenName: '과정상세_수강신청 불가 팝업창들',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: 'course-introduction/detail',
+    pageType: 'Pop-up',
+    completionDate: '2025-04-29',
+    lastUpdateDate: '2025-07-08',
+    remarks:
+      '- detail.tsx\n- 인원마감 + 수강대기 신청가능 할 때 : CourseDeadlineConfirm\n- 수강대기 신청 완료 : CourseWaitAlert\n- 인원마감 안내 : CourseDeadlineAlert\n- 수강제한 안내 : CourseLimitAlert\n- 수강중복 안내 : CourseDuplicateConfirm',
   },
   {
     screenId: 'NLP_FO_LEC_1008',
@@ -805,8 +815,8 @@ export const guideData = [
     pageId: 'course-introduction/detail',
     pageType: 'Pop-up',
     completionDate: '2025-04-14',
-    lastUpdateDate: '',
-    remarks: '- detail.tsx (CourseCencelConfirm)',
+    lastUpdateDate: '2025-07-08',
+    remarks: '- detail.tsx (CourseCancelConfirm)',
   },
   {
     screenId: 'NLP_FO_LEC_1011',
@@ -815,8 +825,8 @@ export const guideData = [
     pageId: 'course-introduction/detail',
     pageType: 'Pop-up',
     completionDate: '2025-04-14',
-    lastUpdateDate: '',
-    remarks: '- detail.tsx (CourseCencelReasonConfirm)',
+    lastUpdateDate: '2025-07-08',
+    remarks: '- course-cancel-reason-popup.tsx',
   },
   {
     screenId: 'NLP_FO_LEC_1012',
@@ -825,8 +835,8 @@ export const guideData = [
     pageId: 'course-introduction/detail',
     pageType: 'Pop-up',
     completionDate: '2025-04-14',
-    lastUpdateDate: '',
-    remarks: '- detail.tsx (CourseCencelCompleteAlert)',
+    lastUpdateDate: '2025-07-08',
+    remarks: '- detail.tsx (CourseCancelCompleteAlert)',
   },
   {
     screenId: 'NLP_FO_LEC_1013',
@@ -886,8 +896,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '',
     lastUpdateDate: '',
-    remarks:
-      '- introduction.tsx\n- tooltip 확인중\n- 수강신청 불가 팝업창들 course-information-popup.tsx (반려 팝업 미결정)\n- 차수선택 팝업 course-selection-popup.tsx',
+    remarks: '- introduction.tsx\n- tooltip 확인중\n- 차수선택 팝업 course-selection-popup.tsx',
   },
   {
     screenId: 'NLP_FO_LEC_MA_1004',

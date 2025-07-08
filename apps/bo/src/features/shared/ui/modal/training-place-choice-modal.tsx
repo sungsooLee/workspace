@@ -2,8 +2,8 @@ import { useRef, useState } from 'react';
 import { t } from 'i18next';
 import { ModalBody, ModalContainer, ModalTitle, useModal, ModalFooter, Button } from '@learnway/ui';
 import { EnFormMode, EnPageMode } from '@types';
-import { TrainingPlaceList } from '@features/learning/training-place/training-place-list';
-import { TrainingPlaceDetail } from '@features/learning/training-place/training-place-detail';
+import { TrainingPlaceList } from '@features/learning-operate-support/learning-space/learning-space-management/training-place-list';
+import { TrainingPlaceDetail } from '@features/learning-operate-support/learning-space/learning-space-management/training-place-detail';
 
 const TrainingPlaceChoiceModalComponent = () => {
   const { close: closeModal } = useModal();

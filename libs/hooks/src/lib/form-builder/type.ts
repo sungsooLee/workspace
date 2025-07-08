@@ -318,6 +318,7 @@ export interface BaseFormFieldProps<T = any> {
   getValues: UseFormReturn['getValues'];
   customConfig: CustomConfig;
   currentOptionsState?: [SelectOption[], (options: SelectOption[]) => void];
+  invert?: boolean; // SwitchFormField 일 경우 true이면 스위치를 끄고 false이면 스위치를 끄도록 반전시켜줌
   [key: string]: any;
 }
 

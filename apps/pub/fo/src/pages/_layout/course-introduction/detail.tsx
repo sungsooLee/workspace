@@ -40,7 +40,6 @@ import {
   CourseIntroduction, // 과정소개
   CourseEducation, // 교육일정
   CourseReview, // 후기
-  CourseInformationPopup, // 수강신청 불가 팝업창들 및 반려 팝업
   CourseFixedButton, // 수강신청 버튼
   CourseCancelReasonPopup, // 수강신청 취소 사유 입력
   PackageCardList, // 패키지 카드
@@ -216,8 +215,34 @@ function RouteComponent() {
     },
   ];
 
+  // Confirm 퍼블수정 20250708 (전체적으로 수정)
+  // 인원마감 + 수강대기 안내
+  const CourseDeadlineConfirm = () => {
+    openConfirm({
+      title: '수강인원이 마감되었습니다.',
+      content: '수강대기 신청을 하시겠습니까?',
+      okButtonLabel: '수강대기 신청',
+      cancelButtonLabel: '아니요',
+    });
+  };
+
+  // 수강중복 안내
+  const CourseDuplicateConfirm = () => {
+    openConfirm({
+      title: '수강중복 안내',
+      content: (
+        <>
+          동일한 기간에 다른 클래스 스케줄이 있습니다.
+          <br />
+          그래도 수강신청 하시겠습니까?
+        </>
+      ),
+      okButtonLabel: '수강 신청',
+      cancelButtonLabel: '아니요',
+    });
+  };
+
   // 수강신청 취소 신청
-  // 퍼블수정 20250703 함수명 변경 및 title Fragment 삭제
   const CourseCancelConfirm = () => {
     openConfirm({
       title: '수강 신청을 취소하시겠습니까?',
@@ -228,12 +253,36 @@ function RouteComponent() {
           다시 수강신청을 해주셔야 합니다.
         </>
       ),
-      okButtonLabel: '취소하기',
+      okButtonLabel: '확인',
       cancelButtonLabel: '아니요',
     });
   };
 
-  // 퍼블수정 20250703 수강신청 취소 사유 popup으로 변경 (CourseCancelReasonPopup)
+  // Alert 퍼블수정 20250708 (전체적으로 수정)
+  // 수강대기 신청 완료
+  const CourseWaitAlert = () => {
+    openAlert({
+      title: '수강대기 신청',
+      content: '수강대기 신청이 완료되었습니다.',
+    });
+  };
+
+  // 인원마감 안내
+  const CourseDeadlineAlert = () => {
+    openAlert({
+      title: '인원마감 안내',
+      content: '수강대기 인원까지 모두 마감되었습니다!',
+    });
+  };
+
+  // 수강제한 안내 (카테고리 내 제한, 월별 개수 제한)
+  const CourseLimitAlert = () => {
+    openAlert({
+      title: '수강제한 안내',
+      content: '더 이상 수강 하실 수 없습니다.',
+      // content: '본 과정을 수강 하실 수 없습니다.',
+    });
+  };
 
   // 수강취소 완료
   // 퍼블수정 20250703 함수명 변경 및 title Fragment 삭제
@@ -260,7 +309,7 @@ function RouteComponent() {
 
   // 수강대기자 등록
   // 퍼블수정 20250703 함수명 변경 및 title Fragment 삭제
-  const CourseWaitAlert = () => {
+  const CourseWaitRegistrationAlert = () => {
     openAlert({
       title: '수강대기자 등록',
       content: (
@@ -334,6 +383,7 @@ function RouteComponent() {
     <div>2</div>,
   ];
 
+  // 학습유형 리스트 open, close
   const [listCategoryOpen, setListCategoryOpen] = useState<boolean>(true);
   const [listSubTitleOpen, setListSubTitleOpen] = useState<boolean>(false);
 
@@ -345,7 +395,7 @@ function RouteComponent() {
         <div className={pageContentsStyles.main_contents}>
           <div className={styles.thumbnail_img}>
             {/* 플레이 버튼 o */}
-            <Button>
+            <Button onClick={() => CourseCancelCompleteAlert()}>
               <img src={bnrImage1} alt="" />
               <div className={styles.img_play}>
                 <img src={playImg} alt="" />
@@ -515,7 +565,6 @@ function RouteComponent() {
 
                 {/* 강의 정보 */}
                 <OptionCard
-                  className={packageInformationStyles.course_card}
                   cols={1}
                   size="lg"
                   value={courseValues}

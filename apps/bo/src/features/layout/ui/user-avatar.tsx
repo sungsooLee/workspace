@@ -28,7 +28,6 @@ export const AvataFallback = ({ name }: { name?: string }) => {
 
 export const PopoverContent = () => {
   const { t } = useTranslation();
-  // const router = useRouter();
   const { confirm: openConfirm } = useModal();
   const { logout } = useLogoutUser();
 
@@ -61,7 +60,6 @@ export const PopoverContent = () => {
                 <span className={styles.ico_area}>
                   <IcoBuilding01 width={32} height={32} className={styles.logo_ico} />
                 </span>
-                // <img src={'https://github.com/shadcn.png'} alt="" className={styles.logo_img} />
               }
             />
           </span>
@@ -82,21 +80,20 @@ export const PopoverContent = () => {
           <Popover.Close asChild>
             <Link to="/my-page/role">{t('LABEL.common.myRole')}</Link>
           </Popover.Close>
-          {/* TODO  링크, 화면추가작업 */}
         </li>
         <li>
           <Popover.Close asChild>
             <Link to="/my-page/role">{t('LABEL.common.personalUserGroup')}</Link>
           </Popover.Close>
         </li>
-        <li>
-          {/* TODO ITSM 추후 진행 */}
-          {/* <Popover.Close asChild>
+        {/* TODO ITSM 추후 진행 */}
+        {/* <li>
+        <Popover.Close asChild>
             <a href={'https://naver.com'} target="_blank" rel="noopener noreferrer">
               {t('LABEL.common.itsm')}
             </a>
-          </Popover.Close> */}
-        </li>
+          </Popover.Close>
+        </li> */}
       </ul>
 
       <div className={styles.logout_wrap}>

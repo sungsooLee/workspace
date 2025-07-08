@@ -17,6 +17,7 @@ function RouteComponent() {
       subItems: [
         { label: '소개', path: '/guide/info' },
         { label: '컬러', path: '/guide/color' },
+        { label: 'Box Shadow', path: '/guide/box-shadow' },
         { label: '타이포그래픽', path: '/guide/typography' },
         { label: 'CSS', path: '/guide/css' },
         { label: '모바일', path: '/guide/mobile' },

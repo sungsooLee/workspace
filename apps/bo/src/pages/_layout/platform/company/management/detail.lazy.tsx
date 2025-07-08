@@ -6,7 +6,7 @@ import { ContentsButtons } from '@widgets/layout';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { CompanyDetail, CompanyDetailHR } from '@features/platform/company';
+import { CompanyDetail, CompanyDetailHR } from '@features/platform-management/company';
 import { EnFormMode } from '@types';
 
 export const Route = createLazyFileRoute('/_layout/platform/company/management/detail')({
