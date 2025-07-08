@@ -3,6 +3,7 @@ import { SourceProps } from 'react-player/base';
 
 export type VideoPlayerProps = {
   url?: string | string[] | SourceProps[] | MediaStream;
+  progressInterval?: number;
   playing: boolean;
   config?: Config;
 

@@ -33,7 +33,7 @@ import {
 import {
   moveRoleCheck,
   transformRoleApiDataToTreeData,
-} from '../service/tenant-detail-tree.service';
+} from '@features/platform-management/tenant/service/tenant-detail-tree.service';
 import { FormDisplay } from '@features/form/ui/form-display';
 import { EnChannelScope, EnCompanyScope, EnDeptScope, EnFormMode, EnTenantScope } from '@types';
 import {

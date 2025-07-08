@@ -12,7 +12,7 @@ import {
 } from '@learnway/ui';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { useMenuManageFetchTree } from '@entities/menu';
-import { transformMenuApiDataToTreeData } from '@features/tenant/management/service/tenant-detail-tree.service';
+import { transformMenuApiDataToTreeData } from '@features/platform-management/tenant/service/tenant-detail-tree.service';
 
 const MenuModalComponent: FC<any> = forwardRef(({ menuScopeCode }, ref) => {
   const { close } = useModal();

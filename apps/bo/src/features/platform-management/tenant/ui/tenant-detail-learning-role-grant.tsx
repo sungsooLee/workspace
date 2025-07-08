@@ -34,7 +34,7 @@ import {
   getAllTreeKeys,
   getFirstExpandKeys,
   transformRoleApiDataToTreeData,
-} from '../service/tenant-detail-tree.service';
+} from '@features/platform-management/tenant/service/tenant-detail-tree.service';
 import {
   useFetchRole,
   useFetchRoleTree,

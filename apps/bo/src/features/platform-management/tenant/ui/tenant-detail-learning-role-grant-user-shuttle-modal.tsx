@@ -25,7 +25,7 @@ import {
   CODE_GROUP,
 } from '@learnway/hooks';
 
-import { FormRow, ThumbnailListFormField } from '@shared/ui/';
+import { FormRow, ThumbnailListFormField } from '@shared/ui';
 import { DateRangeFormField } from '@shared/ui/search-box/date-range-form-field';
 
 import { SearchBox } from '@shared/ui/search-box';

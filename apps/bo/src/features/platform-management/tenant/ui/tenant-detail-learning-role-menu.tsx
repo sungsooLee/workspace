@@ -30,7 +30,7 @@ import {
   moveNodeCheck,
   transformRoleApiDataToTreeData,
   transformMenuApiDataToTreeData,
-} from '../service/tenant-detail-tree.service';
+} from '@features/platform-management/tenant/service/tenant-detail-tree.service';
 import { EnFormMode, EnTenantScope, EnCompanyScope, EnChannelScope, EnDeptScope } from '@types';
 
 const columnHelper = createColumnHelper<any>();

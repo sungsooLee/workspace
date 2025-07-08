@@ -1,6 +1,6 @@
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { FormDisplay } from '@features/form/ui/form-display';
-import { DateRangePickerFormField } from '@features/learning/ui/resource/date-range-picker-form-field';
+import { DateRangePickerFormField } from '@features/form/ui';
 import {
   Button,
   ContentsRow,

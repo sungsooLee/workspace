@@ -1,4 +1,10 @@
 // export * from './select-form-field';
 export * from './subtitles-form-field';
 export * from './dropdown-form-field';
+export * from './consignment-parameters-form-field';
+export * from './date-range-picker-form-field';
+export * from './duration-time-form-field';
+export * from './resource-image-list-form-field';
+export * from './video-duration-form-field';
+export * from './shared-channel-grid-form-field';
 export * from './type';

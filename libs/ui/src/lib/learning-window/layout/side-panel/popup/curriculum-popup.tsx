@@ -1,9 +1,14 @@
 import { useState, memo } from 'react';
 import { Link } from '@tanstack/react-router';
-import { ModalBody, ModalContainer, ModalTitle, ProgressCheck } from '@learnway/ui';
+
 import { IcoLinkblank } from '@learnway/icons';
 
 import styles from '@learnway/styles/fo/pages/_learning/side-panel/popup/curriculum-popup.module.css';
+
+import { ModalBody, ModalContainer, ModalTitle } from '../../../../modal/modal-container';
+import { ProgressCheck } from '../../../../progress/progress-check/progress-check';
+
+import { useLearningWindow } from '../../../learning-window.store';
 
 interface ChildData {
   panelState: boolean;
@@ -11,6 +16,9 @@ interface ChildData {
 
 const CurriculumPopupComponent = () => {
   const [childInfo, setChildInfo] = useState<boolean>();
+
+  const { curriculum, playInfo, playList, playIndex, setPlayInfo } = useLearningWindow();
+
   const handleChildData = (data: ChildData) => {
     setChildInfo(data.panelState);
   };
@@ -21,77 +29,46 @@ const CurriculumPopupComponent = () => {
       <ModalBody>
         <div className={`${styles.start} ${styles.curriculum_wrap}`}>
           <ul>
-            <li>
-              <div className={styles.box}>
-                <div className={styles.header}>
-                  <strong>모듈명</strong>
-                  <span>13:40</span>
-                </div>
-                <div className={styles.contents}>
-                  <ul className={styles.step}>
-                    <li>
-                      <div className={styles.step_box}>
-                        <ProgressCheck progress={100} />
-                        <p>스콤아이템</p>
-                        <span>4:11</span>
-                      </div>
-                    </li>
-                    <li>
-                      <div className={styles.step_box}>
-                        <ProgressCheck progress={50} />
-                        <p>스콤아이템</p>
-                        <span>4:11</span>
-                      </div>
-                    </li>
-                    <li>
-                      <div className={styles.step_box}>
-                        <ProgressCheck progress={0} />
-                        <p>스콤아이템</p>
-                        <span>4:11</span>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div className={styles.box}>
-                <div className={styles.header}>
-                  <strong>모듈명</strong>
-                  <span>13:40</span>
-                </div>
-                <div className={styles.contents}>
-                  <ul className={styles.step}>
-                    <li>
-                      <div className={styles.step_box}>
-                        <ProgressCheck progress={100} />
-                        <p>스콤아이템</p>
-                        <span>4:11</span>
-                      </div>
-                    </li>
-                    <li>
-                      <div className={styles.step_box}>
-                        <ProgressCheck progress={50} />
-                        <p>
-                          스콤아이템
-                          <Link to="">
-                            <IcoLinkblank width={16} height={16} stroke="#4c515e" />
-                          </Link>
-                        </p>
-                        <span>4:11</span>
-                      </div>
-                    </li>
-                    <li>
-                      <div className={styles.step_box}>
-                        <ProgressCheck progress={0} />
-                        <p>스콤아이템</p>
-                        <span>4:11</span>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </li>
+            {curriculum?.moduleList.map((module: any) => {
+              return (
+                <li key={`learning-window-module-${module.moduleId}`}>
+                  <div className={styles.box}>
+                    <div className={styles.header}>
+                      <strong>{module.moduleName}</strong>
+                      <span>--:--</span>
+                    </div>
+                    <div className={styles.contents}>
+                      <ul
+                        key={`learning-window-module-ul-${module.moduleId}`}
+                        className={styles.step}
+                      >
+                        {module.lessonList.map((lesson: any) => {
+                          return (
+                            <li
+                              key={`learning-window-lesson-${module.moduleId}_${lesson.lessonId}`}
+                              className={
+                                playInfo && playInfo.lessonId === lesson.lessonId
+                                  ? styles.active
+                                  : ''
+                              }
+                              onClick={() => {
+                                setPlayInfo(module.moduleId, lesson.lessonId);
+                              }}
+                            >
+                              <div className={styles.step_box}>
+                                <ProgressCheck progress={100} />
+                                <p>{lesson.lessonName}</p>
+                                <span>--:--</span>
+                              </div>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </ModalBody>
