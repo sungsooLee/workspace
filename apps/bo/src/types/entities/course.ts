@@ -194,6 +194,10 @@ export interface Course {
    */
   learningSpaceName?: string;
   /**
+   * 교육 장소 직접입력
+   */
+  learningSpaceNameKeyIn?: string;
+  /**
    * 담당자 ID
    */
   coordinatorUuid?: string;
@@ -245,14 +249,6 @@ export interface Course {
    * 강사ID
    */
   instructorId?: number;
-  /**
-   * 위탁 소유 회사 ID
-   */
-  outsourcingCompanyId?: number;
-  /**
-   * 위탁 소유 회사 이름
-   */
-  outsourcingCompanyName?: string;
 
   // STEP2
   /**
@@ -348,7 +344,7 @@ export interface Course {
    */
   isPlayerControlRestricted?: boolean;
   /**
-   * (cms.video.PlayBackRate)
+   * 동영상 배속 제한
    */
   maxPlayBackRate?: string;
   /**
@@ -356,7 +352,7 @@ export interface Course {
    */
   isUsePassOption?: boolean;
   /**
-   * (lms.course.PassMethodType)
+   * 이수처리 설정
    */
   passMethodType?: string;
   /**
@@ -400,7 +396,7 @@ export interface Course {
    */
   asgmtWeights?: number;
   /**
-   * (lms.course.RecognizedStudyMinType)
+   * 인정 학습시간
    */
   recognizedStudyMinType?: string;
   /**
@@ -523,6 +519,18 @@ export interface Course {
    * 튜터 이름
    */
   tutorName?: string;
+  /**
+   * 숙박 여부
+   */
+  isStayed?: boolean;
+  /**
+   * 위탁 소유 회사 ID
+   */
+  outsourcingCompanyId?: number;
+  /**
+   * 위탁 소유 회사 이름
+   */
+  outsourcingCompanyName?: string;
 }
 
 /**

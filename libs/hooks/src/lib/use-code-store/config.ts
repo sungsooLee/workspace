@@ -79,7 +79,7 @@ export const codeOptions: CodeApiConfig = {
   [CODE_GROUP['manual.bo.my.tenant.tenantId']]: {
     api: async () => {
       const queryClient = queryConfig.getQueryClient();
-      const { tenants } = queryClient.getQueryData(['auth-user']);
+      const { tenants } = queryClient.getQueryData(['auth-user']) || {};
       if (!tenants) return [];
       return tenants.map((item: any) => ({
         label: item.tenantName,
@@ -94,7 +94,7 @@ export const codeOptions: CodeApiConfig = {
       //   siteScope: 'BO',
       // });
       const queryClient = queryConfig.getQueryClient();
-      const { roles } = queryClient.getQueryData(['auth-user']);
+      const { roles } = queryClient.getQueryData(['auth-user']) || {};
       if (!roles) return [];
       return roles.map((item: any) => ({
         label: item.roleName,
@@ -119,7 +119,7 @@ export const codeOptions: CodeApiConfig = {
   [CODE_GROUP['manual.bo.my.channels']]: {
     api: async () => {
       const queryClient = queryConfig.getQueryClient();
-      const { myRoles } = queryClient.getQueryData(['auth-user']);
+      const { myRoles } = queryClient.getQueryData(['auth-user']) || {};
       const channels = myRoles?.flatMap((item: any) => item.channels);
       if (!channels) return [];
       const options = channels.map((d: any) => ({
