@@ -4,6 +4,10 @@
 /* eslint-disable */
 export type com_ever_edu_lms_instructor_dto_res_InstructorSearchResDto = {
     /**
+     * 강사 ID
+     */
+    instructorId?: number;
+    /**
      * 테넌트 이름
      */
     tenantName?: string;

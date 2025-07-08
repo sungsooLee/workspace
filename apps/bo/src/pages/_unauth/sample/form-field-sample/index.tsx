@@ -471,7 +471,7 @@ function RouteComponent() {
             />
           </ContentsRow>
           {/* 썸네일 리스트 */}
-          <ContentsRow>
+          {/* <ContentsRow>
             <FormRow2
               provider={provider}
               name={'썸네일'}
@@ -483,7 +483,7 @@ function RouteComponent() {
               ]}
               element={<ThumbnailListFormField />}
             />
-          </ContentsRow>
+          </ContentsRow> */}
           {/* 폰넘버 */}
           {/* <ContentsRow>
             <FormRow2
