@@ -23,6 +23,7 @@ const EducationPlacePopupComponent = () => {
               <dt>전화번호 :</dt>
               <dd>02-999-8888</dd>
             </dl>
+            {/* 퍼블수정 20250708 마크업 수정 */}
             <p className={styles.addr}>
               서울 강남구 테헤란로 510
               <Popover
