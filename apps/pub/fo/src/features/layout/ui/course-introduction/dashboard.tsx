@@ -1,6 +1,6 @@
 import { memo, useState } from 'react';
 import { BrowserView, isMobile, MobileView } from 'react-device-detect';
-import { IcoArrowDown, IcoCaution03 } from '@learnway/icons';
+import { IcoArrowDown, IcoCaution03, IcoDownload02, IcoLock, IcoPdf } from '@learnway/icons';
 import { Button, Panel, Popover, ProgressBar, TableBox, useModal } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import styles from './dashboard.module.css';
@@ -271,18 +271,21 @@ const CourseDashboardCompoment = () => {
         <div className={`${styles.info_box} ${styles.pds}`}>
           <div className={styles.tit_box}>
             <h3>자료실</h3>
-            <Button variant="line" size={isMobile ? 'ts' : 'sm'} className={styles.btn}>
-              전체 다운로드
+            <Button variant="text" size={isMobile ? 'ts' : 'sm'} className={styles.btn}>
+              전체 다운로드 <IcoDownload02 className={styles.ico} />
             </Button>
           </div>
 
           <div className={pdsStyles.start}>
             <Panel hideHeaderUnderline actions="" className="w_full" type="rounded">
               <div className={pdsStyles.pds_box}>
-                <span className={pdsStyles.txt}>비즈니스 영어 단어&숙어집.pdf</span>
+                <span className={pdsStyles.txt}>
+                  <IcoPdf className={styles.ico_pds} /> 비즈니스 영어 단어&숙어집.pdf
+                  <IcoLock className={styles.ico_lock} />
+                </span>
                 <div className={pdsStyles.info}>
                   <span className={pdsStyles.size}>200MB</span>
-                  <Button variant="line" size={isMobile ? 'ts' : 'sm'} className={pdsStyles.btn}>
+                  <Button variant="line" size={isMobile ? 'ts' : 'lg'} className={pdsStyles.btn}>
                     다운로드
                   </Button>
                 </div>
@@ -291,10 +294,13 @@ const CourseDashboardCompoment = () => {
 
             <Panel hideHeaderUnderline actions="" className="w_full" type="rounded">
               <div className={pdsStyles.pds_box}>
-                <span className={pdsStyles.txt}>비즈니스 영어 단어&숙어집.pdf</span>
+                <span className={pdsStyles.txt}>
+                  <IcoPdf className={styles.ico_pds} /> 비즈니스 영어 단어&숙어집.pdf
+                  <IcoLock className={styles.ico_lock} />
+                </span>
                 <div className={pdsStyles.info}>
                   <span className={pdsStyles.size}>200MB</span>
-                  <Button variant="line" size={isMobile ? 'ts' : 'sm'} className={pdsStyles.btn}>
+                  <Button variant="line" size={isMobile ? 'ts' : 'lg'} className={pdsStyles.btn}>
                     다운로드
                   </Button>
                 </div>
