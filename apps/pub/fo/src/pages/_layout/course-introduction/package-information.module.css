@@ -55,7 +55,7 @@
             @apply body-md overflow-hidden text-ellipsis whitespace-nowrap leading-[24px] text-[var(--gray35)];
           }
           svg {
-            @apply absolute left-0 top-[2px] stroke-[1px];
+            @apply absolute left-0 top-[2px];
           }
           button {
             @apply absolute right-0 top-[2px] m-0 h-[20px] w-[20px] p-0;

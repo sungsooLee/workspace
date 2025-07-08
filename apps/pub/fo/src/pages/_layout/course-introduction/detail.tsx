@@ -487,7 +487,7 @@ function RouteComponent() {
                     <p>동영상</p>
                   </li>
                   <li className={listCategoryOpen === true ? packageInformationStyles.open : ''}>
-                    <IcoCategory width={20} height={20} stroke="#4d525c" fill="none" />
+                    <IcoCategory width={20} height={20} stroke="#4d525c" />
                     <p>Quality Service Hydrogen/Electricitysf Service Hydrogen/Electricitysf</p>
                     <Button
                       onClick={() =>
@@ -500,7 +500,7 @@ function RouteComponent() {
                     </Button>
                   </li>
                   <li>
-                    <IcoLocation width={20} height={20} stroke="#4d525c" fill="none" />
+                    <IcoLocation width={20} height={20} stroke="#4d525c" />
                     <p>온라인 비대면</p>
                   </li>
                   <li>

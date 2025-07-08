@@ -1,8 +1,9 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
-import { ChipList, SelectOption, Avatar, Button } from '@learnway/ui';
-import { IcoSymbol, IcoArrowForward } from '@learnway/icons';
-import { Curriculum } from '../../../../features/layout';
+import { cn } from '@learnway/shared';
+import { ChipList, SelectOption, Avatar, Button, Accordion } from '@learnway/ui';
+import { IcoSymbol, IcoArrowForward, IcoEssential } from '@learnway/icons';
+import { Curriculum, PackageCardList } from '../../../../features/layout';
 
 import operatorStyles from '../../../../pages/_layout/course-introduction/operator.module.css';
 import definitionListStyles from '../../../../pages/_layout/course-introduction/definition-list.module.css';
@@ -10,7 +11,9 @@ import dataNoticeStyles from '../../../../shared/ui/data-display/notice.module.c
 import bulletStyles from '../../../../shared/ui/list/bullet.module.css';
 import styles from './introduction.module.css';
 
+// 이미지
 import discriminationImg from '@learnway/styles/fo/assets/images/temp/img_discrimination.png';
+import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 
 const CourseIntroductionCompoment = () => {
   const options: SelectOption[] = [
@@ -29,8 +32,76 @@ const CourseIntroductionCompoment = () => {
     { label: '스마트팩토리', value: 'M' },
   ];
 
+  // 사전 필수 과정 아코디언 카드 리스트
+  // 패키지 카드
+  const packageCardValue = [
+    {
+      imgSrc: listImage1,
+      text: '필수 개발 과정 Spring Framework OpenAPI 서비스 필수요소 1',
+    },
+    {
+      imgSrc: listImage1,
+      text: '필수 개발 과정 Spring Framework OpenAPI 서비스 필수요소 2',
+    },
+    {
+      imgSrc: listImage1,
+      text: '필수 개발 과정 Spring Framework OpenAPI 서비스 필수요소 3',
+    },
+  ];
+
+  // 사전 필수 과정 아코디언
+  const [aforetimeValue, setAforetimeValue] = useState<string>('a');
+  const aforetimeValueItems = [
+    {
+      value: 'a',
+      title: (
+        <div className={styles.aforetime_title}>
+          <p>
+            <IcoEssential width={32} height={32} />
+            사전 필수 과정이 있는 과정입니다.
+          </p>
+          <span>{aforetimeValue === 'a' ? '닫기' : '더보기'}</span>
+        </div>
+      ),
+      children: (
+        <div className={styles.aforetime_contents}>
+          <PackageCardList cardListData={packageCardValue} />
+        </div>
+      ),
+    },
+    {
+      value: 'b',
+      title: (
+        <div className={styles.aforetime_title}>
+          <p>
+            <IcoEssential width={32} height={32} />
+            사전 필수 과정이 있는 과정입니다.
+          </p>
+          <span>{aforetimeValue === 'b' ? '닫기' : '더보기'}</span>
+        </div>
+      ),
+      children: (
+        <div className={styles.aforetime_contents}>
+          <PackageCardList cardListData={packageCardValue} />
+        </div>
+      ),
+    },
+  ];
+
+  // 과정 정보 더보기
+  const [more, setMore] = useState<boolean>(false);
+
   return (
     <div className={`${styles.start} ${styles.introduction}`}>
+      <div className={styles.aforetime_box}>
+        <Accordion
+          items={aforetimeValueItems}
+          value={aforetimeValue}
+          onValueChange={(value) => setAforetimeValue(value as string)}
+          // type="multiple"
+        />
+      </div>
+
       <h2>과정 한눈에 파악하기</h2>
 
       {/* dataNoticeStyles module */}
@@ -88,167 +159,173 @@ const CourseIntroductionCompoment = () => {
         </div>
       </div>
 
-      {/* 다른 강의와의 차별점 */}
-      <div className={styles.info_box}>
-        <div className={styles.tit_box}>
-          <strong>다른 강의와의 차별점</strong>
+      <div className={cn(styles.more_box, more === true ? styles.show : '')}>
+        {/* 다른 강의와의 차별점 */}
+        <div className={styles.info_box}>
+          <div className={styles.tit_box}>
+            <strong>다른 강의와의 차별점</strong>
+          </div>
+
+          <div className={styles.img_box}>
+            <img src={discriminationImg} alt="" />
+          </div>
         </div>
 
-        <div className={styles.img_box}>
-          <img src={discriminationImg} alt="" />
-        </div>
-      </div>
-
-      {/* 이런 학습자에게 유익해요! */}
-      <div className={styles.info_box}>
-        <div className={styles.tit_box}>
-          <strong>이런 학습자에게 유익해요!</strong>
-        </div>
-        {/* bullet module */}
-        <div className={`${bulletStyles.start} ${bulletStyles.list}`}>
-          <ul>
-            <li>제조실행시스템(MES) 적용방법 이해</li>
-            <li>제조실행시스템(MES)을 활용한 기업의 생산 및 품질관리 능력 배양</li>
-          </ul>
-        </div>
-      </div>
-
-      {/* 커리큘럼 */}
-      <div className={styles.info_box}>
-        <div className={styles.tit_box}>
-          <strong>커리큘럼</strong>
-        </div>
-
-        {/* curriculum */}
-        <Curriculum />
-      </div>
-
-      {/* 이수기준 */}
-      <div className={styles.info_box}>
-        <div className={styles.tit_box}>
-          <strong>이수기준</strong>
-        </div>
-        <div className={styles.evaluation_box}>
-          <ul>
-            <li>
-              <span>총점(100%)</span>
-              <strong>70점 이상</strong>
-            </li>
-            <li>
-              <span>진도/출석(50%)</span>
-              <strong>70점 이상</strong>
-            </li>
-            <li>
-              <span>진행단계평가 (10%)</span>
-              <strong>70점 이상</strong>
-            </li>
-            <li>
-              <span>최종평가 (20%)</span>
-              <strong>70점 이상</strong>
-            </li>
-            <li>
-              <span>과제평가 (20%)</span>
-              <strong>70점 이상</strong>
-            </li>
-          </ul>
-          {/* bulletStyles */}
+        {/* 이런 학습자에게 유익해요! */}
+        <div className={styles.info_box}>
+          <div className={styles.tit_box}>
+            <strong>이런 학습자에게 유익해요!</strong>
+          </div>
+          {/* bullet module */}
           <div className={`${bulletStyles.start} ${bulletStyles.list}`}>
             <ul>
-              <li>항목의 이수기준을 교육기간 내 충족해야 수료 처리됩니다.</li>
+              <li>제조실행시스템(MES) 적용방법 이해</li>
+              <li>제조실행시스템(MES)을 활용한 기업의 생산 및 품질관리 능력 배양</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* 커리큘럼 */}
+        <div className={styles.info_box}>
+          <div className={styles.tit_box}>
+            <strong>커리큘럼</strong>
+          </div>
+
+          {/* curriculum */}
+          <Curriculum />
+        </div>
+
+        {/* 이수기준 */}
+        <div className={styles.info_box}>
+          <div className={styles.tit_box}>
+            <strong>이수기준</strong>
+          </div>
+          <div className={styles.evaluation_box}>
+            <ul>
               <li>
-                최종평가, 과제평가가 있을 시 반드시 기한 내 제출해야 합니다. (단, 제출기회는 1회)
+                <span>총점(100%)</span>
+                <strong>70점 이상</strong>
               </li>
-              <li>과제물은 반드시 문서보안을 해제해 등록해야 평가가 가능합니다.</li>
+              <li>
+                <span>진도/출석(50%)</span>
+                <strong>70점 이상</strong>
+              </li>
+              <li>
+                <span>진행단계평가 (10%)</span>
+                <strong>70점 이상</strong>
+              </li>
+              <li>
+                <span>최종평가 (20%)</span>
+                <strong>70점 이상</strong>
+              </li>
+              <li>
+                <span>과제평가 (20%)</span>
+                <strong>70점 이상</strong>
+              </li>
+            </ul>
+            {/* bulletStyles */}
+            <div className={`${bulletStyles.start} ${bulletStyles.list}`}>
+              <ul>
+                <li>항목의 이수기준을 교육기간 내 충족해야 수료 처리됩니다.</li>
+                <li>
+                  최종평가, 과제평가가 있을 시 반드시 기한 내 제출해야 합니다. (단, 제출기회는 1회)
+                </li>
+                <li>과제물은 반드시 문서보안을 해제해 등록해야 평가가 가능합니다.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* 강사소개 */}
+        <div className={styles.info_box}>
+          <div className={styles.tit_box}>
+            <strong>강사소개</strong>
+          </div>
+          {/* operator module */}
+          <div className={`${operatorStyles.start} ${operatorStyles.operator}`}>
+            <div className={operatorStyles.avatar}>
+              <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
+            </div>
+            <div className={operatorStyles.txt_box}>
+              <div className={operatorStyles.profile}>
+                <strong>김현대 사외강사</strong>
+              </div>
+              <div className={operatorStyles.definition_list}>
+                <span className={operatorStyles.txt}>현&#41; 한국산업기술협회 연구원 수석교수</span>
+                <span className={operatorStyles.txt}>현&#41; 표면처리기술사</span>
+                <span className={operatorStyles.txt}>현&#41; 한국산업인력공단 NSC 개발위원</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 과정 운영자 */}
+        <div className={styles.info_box}>
+          <div className={styles.tit_box}>
+            <strong>과정 운영자</strong>
+          </div>
+          {/* operator module */}
+          <div className={`${operatorStyles.start} ${operatorStyles.operator}`}>
+            <div className={operatorStyles.avatar}>
+              <span>김</span>
+            </div>
+            <div className={operatorStyles.txt_box}>
+              <div className={operatorStyles.profile}>
+                <strong>김지민 책임</strong>
+                <div>
+                  <span>현대오토에버</span>
+                  <span>L&D플랫폼팀</span>
+                </div>
+              </div>
+              <div className={operatorStyles.definition_list}>
+                {/* definition module */}
+                <div className={`${definitionListStyles.start} ${definitionListStyles.list}`}>
+                  <dl>
+                    <dt>이메일</dt>
+                    <dd>abc@hyundai.conm</dd>
+                  </dl>
+                  <dl>
+                    <dt>전화</dt>
+                    <dd>02-555-2323</dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 과정 및 학습제한 안내 */}
+        <div className={styles.info_box}>
+          <div className={styles.tit_box}>
+            <strong>과정 및 학습제한 안내</strong>
+          </div>
+          {/* bullet module */}
+          <div className={`${bulletStyles.start} ${bulletStyles.list}`}>
+            <ul>
+              <li>
+                연계학습 : 본 과정은 야나두 웹사이트 및 앱을 사용하는 과정입니다. 앱을 다운로드
+                받아주세요.
+              </li>
+              <li>
+                보안프로그램 : 본 과정은 보안프로그램을 설치해야 하는 과정입니다. 학습 전,
+                <Link to="">보안프로그램</Link>을 먼저 설치해주세요.
+              </li>
+              <li>승인필요 : 본 과정은 수강신청 후 팀장 및 교육담당자 승인이 필요합니다.</li>
+              <li>학습장소 : 본 과정은 사내에서만 학습 하실 수 있습니다.</li>
+              <li>학습시간 : 근무시간(오전9시 ~ 오후 6시)에는 학습 하실 수 없습니다.</li>
+              <li>학습시간 : 근무시간(오전9시 ~ 오후 6시)에만 학습 하실 수 있습니다.</li>
+              <li>1일 진도 : 하루에 30%만 학습 하실 수 있습니다.</li>
+              <li>복습제한 : 본 과정은 복습을 하실 수 없습니다.</li>
+              <li>중복수강 : 본 과정은 중복 수강을 하실 수 없습니다.</li>
             </ul>
           </div>
         </div>
       </div>
 
-      {/* 강사소개 */}
-      <div className={styles.operator_box}>
-        <strong>강사소개</strong>
-        {/* operator module */}
-        <div className={`${operatorStyles.start} ${operatorStyles.operator}`}>
-          <div className={operatorStyles.avatar}>
-            <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
-          </div>
-          <div className={operatorStyles.txt_box}>
-            <div className={operatorStyles.profile}>
-              <strong>김현대 사외강사</strong>
-            </div>
-            <div className={operatorStyles.definition_list}>
-              <span className={operatorStyles.txt}>현&#41; 한국산업기술협회 연구원 수석교수</span>
-              <span className={operatorStyles.txt}>현&#41; 표면처리기술사</span>
-              <span className={operatorStyles.txt}>현&#41; 한국산업인력공단 NSC 개발위원</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* 과정 운영자 */}
-      <div className={styles.operator_box}>
-        <strong>과정 운영자</strong>
-        {/* operator module */}
-        <div className={`${operatorStyles.start} ${operatorStyles.operator}`}>
-          <div className={operatorStyles.avatar}>
-            <span>김</span>
-          </div>
-          <div className={operatorStyles.txt_box}>
-            <div className={operatorStyles.profile}>
-              <strong>김지민 책임</strong>
-              <div>
-                <span>현대오토에버</span>
-                <span>L&D플랫폼팀</span>
-              </div>
-            </div>
-            <div className={operatorStyles.definition_list}>
-              {/* definition module */}
-              <div className={`${definitionListStyles.start} ${definitionListStyles.list}`}>
-                <dl>
-                  <dt>이메일</dt>
-                  <dd>abc@hyundai.conm</dd>
-                </dl>
-                <dl>
-                  <dt>전화</dt>
-                  <dd>02-555-2323</dd>
-                </dl>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* 과정 및 학습제한 안내 */}
-      <div className={styles.info_box}>
-        <div className={styles.tit_box}>
-          <strong>과정 및 학습제한 안내</strong>
-        </div>
-        {/* bullet module */}
-        <div className={`${bulletStyles.start} ${bulletStyles.list}`}>
-          <ul>
-            <li>
-              연계학습 : 본 과정은 야나두 웹사이트 및 앱을 사용하는 과정입니다. 앱을 다운로드
-              받아주세요.
-            </li>
-            <li>
-              보안프로그램 : 본 과정은 보안프로그램을 설치해야 하는 과정입니다. 학습 전,
-              <Link to="">보안프로그램</Link>을 먼저 설치해주세요.
-            </li>
-            <li>승인필요 : 본 과정은 수강신청 후 팀장 및 교육담당자 승인이 필요합니다.</li>
-            <li>학습장소 : 본 과정은 사내에서만 학습 하실 수 있습니다.</li>
-            <li>학습시간 : 근무시간(오전9시 ~ 오후 6시)에는 학습 하실 수 없습니다.</li>
-            <li>학습시간 : 근무시간(오전9시 ~ 오후 6시)에만 학습 하실 수 있습니다.</li>
-            <li>1일 진도 : 하루에 30%만 학습 하실 수 있습니다.</li>
-            <li>복습제한 : 본 과정은 복습을 하실 수 없습니다.</li>
-            <li>중복수강 : 본 과정은 중복 수강을 하실 수 없습니다.</li>
-          </ul>
-        </div>
-      </div>
-
       {/* 과정 정보 접기/펼치기 */}
-      <div className={styles.more_box}>
-        <Button>
-          과정 정보 펼치기
+      <div className={styles.btn_more}>
+        <Button onClick={() => setMore((prev) => !prev)}>
+          {more === true ? '과정 정보 접기' : '과정 정보 펼치기'}
           <IcoArrowForward width={16} height={16} stroke="#4d525c" />
         </Button>
       </div>
