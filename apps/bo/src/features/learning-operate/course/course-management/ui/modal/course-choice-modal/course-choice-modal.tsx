@@ -195,14 +195,6 @@ const getMockData = () => {
   };
 };
 
-// 과정유형
-// 과정코드
-// 과정명
-// 담당자
-// 운영자
-// 사용 여부
-// 개설년도
-// 과정 유효기간
 const gridConfig = {
   title: t('LABEL.grid.title.courseList'),
   query: queryOptions.getCoursePopup<CoursePopupListItem>,
