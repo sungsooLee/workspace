@@ -94,7 +94,7 @@ const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, CheckboxGroup
             <Checkbox
               {...checkboxConfig}
               onCheckedChange={(checked: boolean) => handleCheckChange(checked, item.value)}
-              checked={value.indexOf(item.value) >= 0}
+              checked={value?.indexOf(item.value) >= 0}
               label={t(item.label)}
               hideLabel={!item.label}
               disabled={disabled || item.disabled}
