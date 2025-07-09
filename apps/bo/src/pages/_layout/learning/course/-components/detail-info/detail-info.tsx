@@ -1,45 +1,35 @@
-import { DropdownFormField } from '@features/form';
-import { ChannelListModal } from '@features/learning/course/ui/modal/channel-list-modal/channel-list-modal';
-import { TeacherListModal } from '@features/learning/course/ui/modal/teacher-list-modal/teacher-list-modal';
+import { DropdownFormField, FormDisplay } from '@features/form';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import {
   Button,
   CheckboxGroupFormField,
   ChipListModalSelectorFormField,
   ContentsRow,
+  FormSubTitle,
   Input,
   InputModalSelectorFormField,
   RadioGroupFormField,
 } from '@learnway/ui';
-import { FormRow, FormRow2, FormSubTitle } from '@shared/ui';
+import { FormRow, FormRow2, SwitchFormField } from '@shared/ui';
+import { Course } from '@types';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TabFormRef } from '../common/tab-form-ref';
-import { Course, CourseConfig } from '@types';
+import { CourseTabBaseProps, TabFormRef } from '../../-common/type';
+import { values } from 'lodash';
+import { PassOptionFormField } from '../../-common/pass-option-form-field';
+import { ChannelListModal, TeacherListModal } from '@features/learning-operate/course/course-management';
 
-interface DetailInfoProps {
-  dummy?: any;
-  // dynamicForm: UseDynamicFormResult;
-  data: { formData: Course; courseConfig: CourseConfig };
-}
-
-const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
-  ({ dummy, data: { formData, courseConfig } }, ref) => {
+const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
+  ({ onSave, data: { formData, courseConfig } }, ref) => {
     const { t } = useTranslation();
-    // const { provider, getValues, fetchData } = dynamicForm;
-    const { provider, getValues, onSubmit, onFormValid, formState, updateFormData } =
-      useDynamicForm2();
-
-    const handleOnSubmit = (data: any) => {
-      console.log('data {} => ', data);
-    };
+    const { provider, getValues, onFormValid, formState, updateFormData } = useDynamicForm2();
 
     // 부모 컴포넌트에서 호출할 수 있는 유효성 검사 메서드
     useImperativeHandle(ref, () => ({
       validate: async () => {
         // 모든 필드에 대해 유효성 검사 수행
         const isValid = await onFormValid();
-        const data = getValues();
+        const data = formDataToRequestData(getValues() as Course);
         const errors = formState.errors;
 
         return {
@@ -47,6 +37,10 @@ const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
           data,
           errors,
         };
+      },
+      getValues: () => {
+        console.log('getValues', getValues());
+        return getValues();
       },
     }));
 
@@ -60,331 +54,460 @@ const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
 
     return (
       <div>
+        {/*테이블*/}
+        <ContentsRow>
+          <FormRow2
+            provider={provider}
+            name={'passOption'}
+            label={'이수기준'}
+            element={<PassOptionFormField />}
+          />
+        </ContentsRow>
         {/*학습환경*/}
-        <FormSubTitle label={t('학습환경')} />
+        <ContentsRow type={'horizontal'} titleMode>
+          <FormRow2
+            provider={provider}
+            name={'isLearnEnvEnabled'}
+            label={'학습환경'}
+            element={<SwitchFormField />}
+          />
+        </ContentsRow>
         {/* 기기 제한, 네트워크 제한, 학습시간 제한 */}
-        <ContentsRow>
-          {/*기기 제한*/}
-          <FormRow2
-            provider={provider}
-            name={'기기 제한'}
-            label={'기기 제한'}
-            element={
-              <RadioGroupFormField
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['lms.course.DeviceRestrictType'],
-                }}
-              />
-            }
-          />
-          {/*네트워크 제한*/}
-          <FormRow2
-            provider={provider}
-            name={'네트워크 제한'}
-            label={'네트워크 제한'}
-            element={
-              <RadioGroupFormField
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'],
-                }}
-              />
-            }
-          />
-          {/*학습시간 제한*/}
-          <FormRow2
-            provider={provider}
-            name={'학습시간 제한'}
-            label={'학습시간 제한'}
-            element={
-              <RadioGroupFormField
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['lms.course.LearningRestrictTimeType'],
-                }}
-              />
-            }
-          />
-        </ContentsRow>
-        {/* 복습 제한, 화면캡쳐 방지, 학습전 보안 서약 */}
-        <ContentsRow>
-          {/*복습 제한*/}
-          <FormRow2
-            provider={provider}
-            name={'복습 제한'}
-            label={'복습 제한'}
-            element={
-              <RadioGroupFormField
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'],
-                }}
-              />
-            }
-          />
-          {/*화면캡쳐 방지*/}
-          <FormRow2
-            provider={provider}
-            name={'화면캡쳐 방지'}
-            label={'화면캡쳐 방지'}
-            element={
-              <RadioGroupFormField
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'],
-                }}
-              />
-            }
-          />
-          {/*학습전 보안 서약*/}
-          <FormRow2
-            provider={provider}
-            name={'학습전 보안 서약'}
-            label={'학습전 보안 서약'}
-            element={
-              <RadioGroupFormField
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'],
-                }}
-              />
-            }
-          />
-        </ContentsRow>
+        <FormDisplay
+          provider={provider}
+          dependencies={[{ name: 'isLearnEnvEnabled', value: true }]}
+        >
+          <ContentsRow>
+            {/*기기 제한*/}
+            <FormRow2
+              provider={provider}
+              name={'deviceRestrictType'}
+              label={'기기 제한'}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['lms.course.DeviceRestrictType'],
+                  }}
+                />
+              }
+            />
+            {/*네트워크 제한*/}
+            <FormRow2
+              provider={provider}
+              name={'isIntranetRestricted'}
+              label={'네트워크 제한'}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['mock.options.use'],
+                  }}
+                />
+              }
+            />
+            {/*학습시간 제한*/}
+            <FormRow2
+              provider={provider}
+              name={'learningRestrictTimeType'}
+              label={'학습시간 제한'}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['lms.course.LearningRestrictTimeType'],
+                  }}
+                />
+              }
+            />
+          </ContentsRow>
+          {/* 복습 제한, 화면캡쳐 방지, 학습전 보안 서약 */}
+          <ContentsRow>
+            {/*복습 제한*/}
+            <FormRow2
+              provider={provider}
+              name={'isReviewRestricted'}
+              label={'복습 제한'}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['mock.options.use'],
+                  }}
+                />
+              }
+            />
+            {/*화면캡쳐 방지*/}
+            <FormRow2
+              provider={provider}
+              name={'isCaptureBlockEnabled'}
+              label={'화면캡쳐 방지'}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['mock.options.use'],
+                  }}
+                />
+              }
+            />
+            {/*학습전 보안 서약*/}
+            <FormRow2
+              provider={provider}
+              name={'isSecurityAgreementEnable'}
+              label={'학습전 보안 서약'}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['mock.options.use'],
+                  }}
+                />
+              }
+            />
+          </ContentsRow>
+        </FormDisplay>
         {/*학습제어*/}
-        <FormSubTitle label={t('학습제어')} />
+        <ContentsRow type={'horizontal'} titleMode>
+          <FormRow2
+            provider={provider}
+            name={'isLearnControlEnabled'}
+            label={'학습제어'}
+            element={<SwitchFormField />}
+          />
+        </ContentsRow>
         {/* 1일 진도제한, 진도 초기화, 순차 학습  */}
-        <ContentsRow>
-          {/* 1일 진도제한 */}
-          <FormRow2
-            provider={provider}
-            name={'1일 진도제한'}
-            label={'1일 진도제한'}
-            element={
-              <RadioGroupFormField
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'],
-                }}
-              />
-            }
-          />
-          {/* 진도 초기화 */}
-          <FormRow2
-            provider={provider}
-            name={'진도 초기화'}
-            label={'진도 초기화'}
-            element={
-              <RadioGroupFormField
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'],
-                }}
-              />
-            }
-          />
-          {/* 순차 학습  */}
-          <FormRow2
-            provider={provider}
-            name={'순차 학습'}
-            label={'순차 학습'}
-            element={
-              <RadioGroupFormField
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'],
-                }}
-              />
-            }
-          />
-        </ContentsRow>
-        {/* 동영상 탐색바 제한, 동영상 배속 제한 */}
-        <ContentsRow>
-          {/* 동영상 탐색바 제한  */}
-          <FormRow2
-            provider={provider}
-            name={'동영상 탐색바 제한'}
-            label={'동영상 탐색바 제한'}
-            element={
-              <RadioGroupFormField
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'],
-                }}
-              />
-            }
-          />
-          {/* 동영상 배속 제한 */}
-          <FormRow2
-            provider={provider}
-            name={'동영상 배속 제한'}
-            label={'동영상 배속 제한'}
-            element={
-              <RadioGroupFormField
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['cms.video.PlayBackRate'],
-                }}
-              />
-            }
-          />
-          {/* dummy */}
-          <FormRow provider={provider} name={''} />
-        </ContentsRow>
+        <FormDisplay
+          provider={provider}
+          dependencies={[{ name: 'isLearnControlEnabled', value: true }]}
+        >
+          <ContentsRow>
+            {/* 1일 진도제한 */}
+            <FormRow2
+              provider={provider}
+              name={'isDailyLearningProgressRestricted'}
+              label={'1일 진도제한'}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['mock.options.use'],
+                  }}
+                />
+              }
+            />
+            {/* 진도 초기화 */}
+            <FormRow2
+              provider={provider}
+              name={'isProgressResetEnabled'}
+              label={'진도 초기화'}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['mock.options.use'],
+                  }}
+                />
+              }
+            />
+            {/* 순차 학습  */}
+            <FormRow2
+              provider={provider}
+              name={'isSequentialLearningRequired'}
+              label={'순차 학습'}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['mock.options.use'],
+                  }}
+                />
+              }
+            />
+          </ContentsRow>
+          {/* 동영상 탐색바 제한, 동영상 배속 제한 */}
+          <ContentsRow>
+            {/* 동영상 탐색바 제한  */}
+            <FormRow2
+              provider={provider}
+              name={'isPlayerControlRestricted'}
+              label={'동영상 탐색바 제한'}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['mock.options.use'],
+                  }}
+                />
+              }
+            />
+            {/* 동영상 배속 제한 */}
+            <FormRow2
+              provider={provider}
+              name={'maxPlayBackRate'}
+              label={'동영상 배속 제한'}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['cms.video.PlayBackRate'],
+                  }}
+                />
+              }
+            />
+            {/* dummy */}
+            <FormRow provider={provider} name={''} />
+          </ContentsRow>
+        </FormDisplay>
         {/*이수기준*/}
-        <FormSubTitle label={t('이수기준')} />
-        {/* 이수처리 설정, 수료증 제공 */}
-        <ContentsRow>
-          {/* 이수처리 설정  */}
+        <ContentsRow type={'horizontal'} titleMode>
           <FormRow2
             provider={provider}
-            name={'이수처리 설정'}
-            label={'이수처리 설정'}
-            element={
-              <RadioGroupFormField
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['lms.course.PassMethodType'],
-                }}
-              />
-            }
+            name={'isUsePassOption'}
+            label={'이수기준 설정'}
+            element={<SwitchFormField />}
           />
-          {/* 수료증 제공 */}
-          <FormRow2
-            provider={provider}
-            name={'수료증 제공'}
-            label={'수료증 제공'}
-            element={
-              <RadioGroupFormField
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'],
-                }}
-              />
-            }
-          />
-          {/* dummy */}
-          <FormRow provider={provider} name={''} />
         </ContentsRow>
-        {/* 이수기준 설정 */}
-        <ContentsRow>
-          <FormRow provider={provider} name={'이수기준 설정'} element={<>EDIT GRID</>} />
-        </ContentsRow>
-        {/* 인정 학습시간, 학습 포인트 */}
-        <ContentsRow>
-          {/* 인정 학습시간  */}
+        <FormDisplay provider={provider} dependencies={[{ name: 'isUsePassOption', value: true }]}>
+          {/* 이수처리 설정, 수료증 제공 */}
+          <ContentsRow>
+            {/* 이수처리 설정  */}
+            <FormRow2
+              provider={provider}
+              name={'passMethodType'}
+              label={'이수처리 설정'}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['lms.course.PassMethodType'],
+                  }}
+                />
+              }
+            />
+            {/* 수료증 제공 */}
+            <FormRow2
+              provider={provider}
+              name={'isCertificateProvided'}
+              label={'수료증 제공'}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['mock.options.use'],
+                  }}
+                />
+              }
+            />
+            {/* dummy */}
+            <FormRow provider={provider} name={''} />
+          </ContentsRow>
+          {/* 이수기준 설정 */}
+          <ContentsRow>
+            <FormRow provider={provider} name={'이수기준 설정'} element={<>EDIT GRID</>} />
+          </ContentsRow>
+          {/* 인정 학습시간, 학습 포인트 */}
+          <ContentsRow>
+            {/* 인정 학습시간  */}
+            <FormRow2
+              provider={provider}
+              name={'recognizedStudyMinType'}
+              label={'인정 학습시간'}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['lms.course.RecognizedStudyMinType'],
+                  }}
+                />
+              }
+            />
+            {/* 학습 포인트 */}
+            <FormRow2
+              provider={provider}
+              name={'isRecognizedStudyPoint'}
+              label={'학습 포인트'}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['mock.options.use'],
+                  }}
+                />
+              }
+            />
+            {/* dummy */}
+            <FormRow provider={provider} name={''} />
+          </ContentsRow>
+        </FormDisplay>
+        {/*커뮤니티 및 공유설정*/}
+        <ContentsRow type={'horizontal'} titleMode>
           <FormRow2
             provider={provider}
-            name={'인정 학습시간'}
-            label={'인정 학습시간'}
-            element={
-              <RadioGroupFormField
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['lms.course.RecognizedStudyMinType'],
-                }}
-              />
-            }
+            name={'isCommunicationToolEnabled'}
+            label={'커뮤니티 및 공유설정'}
+            element={<SwitchFormField />}
           />
-          {/* 학습 포인트 */}
-          <FormRow2
-            provider={provider}
-            name={'학습 포인트'}
-            label={'학습 포인트'}
-            element={
-              <RadioGroupFormField
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'],
-                }}
-              />
-            }
-          />
-          {/* dummy */}
-          <FormRow provider={provider} name={''} />
         </ContentsRow>
-        {/*커뮤니티*/}
-        <FormSubTitle label={t('커뮤니티')} />
         {/* 커뮤니티 및 공유 설정 */}
-        <ContentsRow>
-          <FormRow2
-            provider={provider}
-            name={'커뮤니티'}
-            label={'커뮤니티'}
-            element={
-              <CheckboxGroupFormField
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['lms.course.CommunityType'],
-                }}
-              />
-            }
-          />
-          <FormRow2
-            provider={provider}
-            name={'과정공유'}
-            label={'과정공유'}
-            element={
-              <CheckboxGroupFormField
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'],
-                }}
-              />
-            }
-          />
-        </ContentsRow>
+        <FormDisplay
+          provider={provider}
+          dependencies={[{ name: 'isCommunicationToolEnabled', value: true }]}
+        >
+          {/* 공지사항(새소식), 학습창 댓글 */}
+          <ContentsRow>
+            {/* 공지사항(새소식) */}
+            <FormRow2
+              provider={provider}
+              name={'공지사항'}
+              label={'공지사항(새소식)'}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['mock.options.use'],
+                  }}
+                />
+              }
+            />
+            {/* 학습창 댓글 */}
+            <FormRow2
+              provider={provider}
+              name={'댓글'}
+              label={'학습창 댓글'}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['mock.options.use'],
+                  }}
+                />
+              }
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'isCommunicationToolEnabled'}
+              label={'커뮤니티'}
+              element={
+                <CheckboxGroupFormField
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['lms.course.CommunityType'],
+                  }}
+                />
+              }
+            />
+            <FormRow2
+              provider={provider}
+              name={'isSharingAllowed'}
+              label={'과정공유'}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['mock.options.use'],
+                  }}
+                />
+              }
+            />
+          </ContentsRow>
+        </FormDisplay>
         {/*강사*/}
-        <FormSubTitle label={t('강사')} />
-        {/* 강사 */}
-        <ContentsRow>
-          {/* 강사  */}
+        <ContentsRow type={'horizontal'} titleMode>
           <FormRow2
             provider={provider}
-            name={'강사'}
+            name={'isInstructorAssigned'}
             label={'강사'}
-            element={
-              <RadioGroupFormField
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['lms.course.InstructorAssignType'],
-                }}
-              />
-            }
+            element={<SwitchFormField />}
           />
         </ContentsRow>
+        {/* 강사 */}
+        <FormDisplay
+          provider={provider}
+          dependencies={[{ name: 'isInstructorAssigned', value: true }]}
+        >
+          <ContentsRow>
+            {/* 강사  */}
+            <FormRow2
+              provider={provider}
+              name={'instructorAssignType'}
+              label={'강사'}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['lms.course.InstructorAssignType'],
+                  }}
+                />
+              }
+            />
+          </ContentsRow>
+        </FormDisplay>
         {/*교재*/}
-        <FormSubTitle label={t('교재')} />
-        {/*교재명, 교재비*/}
-        <ContentsRow>
-          {/*교재명*/}
-          <FormRow2 provider={provider} name={'교재명'} element={<Input />} />
-          {/*교재비*/}
-          <FormRow2 provider={provider} name={'교재비'} element={<Input />} />
+        <ContentsRow type={'horizontal'} titleMode>
+          <FormRow2
+            provider={provider}
+            name={'isTextbookProvided'}
+            label={'교재'}
+            element={<SwitchFormField />}
+          />
         </ContentsRow>
+        <FormDisplay
+          provider={provider}
+          dependencies={[{ name: 'isTextbookProvided', value: true }]}
+        >
+          {/*교재명, 교재비*/}
+          <ContentsRow>
+            {/*교재명*/}
+            <FormRow2
+              provider={provider}
+              name={'textbookName'}
+              label={'교재명'}
+              element={<Input />}
+            />
+            {/*교재비*/}
+            <FormRow2
+              provider={provider}
+              name={'textbookFee'}
+              label={'교재비'}
+              element={<Input prefixText={'1인당'} suffixText={'원'} />}
+            />
+          </ContentsRow>
+        </FormDisplay>
         {/*사전/연관학습*/}
-        <FormSubTitle label={t('사전/연관학습')} />
-        {/*사전 필수과정*/}
-        <ContentsRow>
+        <ContentsRow type={'horizontal'} titleMode>
           <FormRow2
             provider={provider}
-            name={'사전 필수과정'}
-            label={'사전 필수과정'}
-            element={
-              <ChipListModalSelectorFormField
-                modalConfig={{ content: <TeacherListModal channelId={getValues()?.channelId} /> }}
-                chipList={{
-                  labelField: 'name',
-                  valueField: 'id',
-                  wordwrap: true,
-                }}
-                actionNode={<Button variant="text" size="sm" label={t('추가')} />}
-              />
-            }
+            name={'isRelatedPrerequisiteCourseExisted'}
+            label={'사전/연관학습'}
+            element={<SwitchFormField />}
           />
         </ContentsRow>
-        {/*연관 과정*/}
-        <ContentsRow>
-          <FormRow2
-            provider={provider}
-            name={'연관 과정'}
-            label={'연관 과정'}
-            element={
-              <ChipListModalSelectorFormField
-                modalConfig={{ content: <TeacherListModal channelId={getValues()?.channelId} /> }}
-                chipList={{
-                  labelField: 'name',
-                  valueField: 'id',
-                  wordwrap: true,
-                }}
-                actionNode={<Button variant="text" size="sm" label={t('추가')} />}
-              />
-            }
-          />
-        </ContentsRow>
+        <FormDisplay
+          provider={provider}
+          dependencies={[{ name: 'isRelatedPrerequisiteCourseExisted', value: true }]}
+        >
+          {/*사전 필수과정*/}
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'preRequisiteCourseIds'}
+              label={'사전 필수과정'}
+              element={
+                <ChipListModalSelectorFormField
+                  modalConfig={{ content: <TeacherListModal channelId={getValues()?.channelId} /> }}
+                  chipList={{
+                    labelField: 'name',
+                    valueField: 'id',
+                    wordwrap: true,
+                  }}
+                  actionNode={<Button variant="text" size="sm" label={t('추가')} />}
+                />
+              }
+            />
+          </ContentsRow>
+          {/*연관 과정*/}
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'relatedCourseIds'}
+              label={'연관 과정'}
+              element={
+                <ChipListModalSelectorFormField
+                  modalConfig={{ content: <TeacherListModal channelId={getValues()?.channelId} /> }}
+                  chipList={{
+                    labelField: 'name',
+                    valueField: 'id',
+                    wordwrap: true,
+                  }}
+                  actionNode={<Button variant="text" size="sm" label={t('추가')} />}
+                />
+              }
+            />
+          </ContentsRow>
+        </FormDisplay>
         {/*행정항목*/}
         <FormSubTitle label={t('행정항목')} />
         {/*HMG 과정 데이터 표준 대분류, 중분류*/}
@@ -392,8 +515,8 @@ const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
           {/* 대분류  */}
           <FormRow2
             provider={provider}
-            name={'대분류'}
-            label={'대분류'}
+            name={'hmgStandardMainCategory'}
+            label={'HMG 과정 데이터 표준 대분류'}
             element={
               <DropdownFormField
                 optionsConfig={{
@@ -405,8 +528,8 @@ const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
           {/* 중분류 */}
           <FormRow2
             provider={provider}
-            name={'중분류'}
-            label={'중분류'}
+            name={'hmgStandardSubCategory'}
+            label={'HMG 과정 데이터 표준 중분류'}
             element={
               <DropdownFormField
                 optionsConfig={{
@@ -421,7 +544,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
           {/* 1인당 교육비  */}
           <FormRow2
             provider={provider}
-            name={'1인당 교육비'}
+            name={'isUseTrainingCostPerPerson'}
             label={'1인당 교육비'}
             element={
               <RadioGroupFormField
@@ -434,7 +557,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
           {/* 고용보험 환급비용 */}
           <FormRow2
             provider={provider}
-            name={'고용보험 환급비용'}
+            name={'employmentInsuranceRefund'}
             label={'고용보험 환급비용'}
             element={
               <RadioGroupFormField
@@ -450,7 +573,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
           {/* 숙박 여부  */}
           <FormRow2
             provider={provider}
-            name={'숙박 여부'}
+            name={'isStayed'}
             label={'숙박 여부'}
             element={
               <RadioGroupFormField
@@ -461,73 +584,81 @@ const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
             }
           />
           {/* 추가예정 항목 */}
-          <FormRow2
-            provider={provider}
-            name={'추가예정 항목'}
-            label={'추가예정 항목'}
-            element={<></>}
-          />
+          <FormRow2 provider={provider} name={''} />
         </ContentsRow>
         {/*오토에버 위탁 전용*/}
-        <FormSubTitle label={t('오토에버 위탁 전용')} />
-        {/* 사전 레벨테스트, 교재 배송지 수집 */}
-        <ContentsRow>
-          {/* 사전 레벨테스트  */}
+        <ContentsRow type={'horizontal'} titleMode>
           <FormRow2
             provider={provider}
-            name={'사전 레벨테스트'}
-            label={'사전 레벨테스트'}
-            element={
-              <RadioGroupFormField
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'],
-                }}
-              />
-            }
-          />
-          {/* 교재 배송지 수집 */}
-          <FormRow2
-            provider={provider}
-            name={'교재 배송지 수집'}
-            label={'교재 배송지 수집'}
-            element={
-              <RadioGroupFormField
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'],
-                }}
-              />
-            }
+            name={'isUseOutsourcing'}
+            label={'오토에버 위탁 전용'}
+            element={<SwitchFormField />}
           />
         </ContentsRow>
-        {/*튜터*/}
-        <ContentsRow>
-          {/* 튜터 */}
-          <FormRow2
-            provider={provider}
-            name={'튜터'}
-            label={'튜터'}
-            element={
-              <InputModalSelectorFormField
-                modalConfig={{
-                  content: <ChannelListModal />,
-                }}
-              />
-            }
-          />
-          {/* 위탁 소유회사 */}
-          <FormRow2
-            provider={provider}
-            name={'위탁 소유회사'}
-            label={'위탁 소유회사'}
-            element={
-              <InputModalSelectorFormField
-                modalConfig={{
-                  content: <ChannelListModal />,
-                }}
-              />
-            }
-          />
-        </ContentsRow>
+        <FormDisplay provider={provider} dependencies={[{ name: 'isUseOutsourcing', value: true }]}>
+          {/* 사전 레벨테스트, 교재 배송지 수집 */}
+          <ContentsRow>
+            {/* 사전 레벨테스트  */}
+            <FormRow2
+              provider={provider}
+              name={'isPreLevelTestRequired'}
+              label={'사전 레벨테스트'}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['mock.options.use'],
+                  }}
+                />
+              }
+            />
+            {/* 교재 배송지 수집 */}
+            <FormRow2
+              provider={provider}
+              name={'isBookDeliveryInfoRequired'}
+              label={'교재 배송지 수집'}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['mock.options.use'],
+                  }}
+                />
+              }
+            />
+          </ContentsRow>
+          {/*튜터*/}
+          <ContentsRow>
+            {/* 튜터 */}
+            <FormRow2
+              provider={provider}
+              name={'tutorName'}
+              label={'튜터'}
+              element={
+                <InputModalSelectorFormField
+                  modalConfig={{
+                    content: <ChannelListModal />,
+                  }}
+                />
+              }
+            />
+            {/* 튜터 ID */}
+            <FormRow2 provider={provider} name={'tutorId'} type={'hidden'} />
+            {/* 위탁 소유회사 */}
+            <FormRow2
+              provider={provider}
+              name={'outsourcingCompanyName'}
+              label={'위탁 소유회사'}
+              element={
+                <InputModalSelectorFormField
+                  modalConfig={{
+                    content: <ChannelListModal />,
+                  }}
+                />
+              }
+            />
+            {/* 위탁 소유회사 ID */}
+            <FormRow2 provider={provider} name={'outsourcingCompanyId'} type={'hidden'} />
+          </ContentsRow>
+        </FormDisplay>
       </div>
     );
   },
@@ -535,293 +666,30 @@ const DetailInfoComponent = forwardRef<TabFormRef, DetailInfoProps>(
 
 export const DetailInfo = DetailInfoComponent;
 
-// const formConfig: DynamicFormConfig = {
-//   builders: [
-//     // 기기 제한
-//     {
-//       name: '기기 제한',
-//       type: 'custom',
-//       label: '기기 제한',
-//       format: 'string',
-//       value: '',
-//     },
-//     // 네트워크 제한
-//     {
-//       name: '네트워크 제한',
-//       type: 'custom',
-//       label: '네트워크 제한',
-//       format: 'string',
-//       value: '',
-//     },
-//     // 학습시간 제한
-//     {
-//       name: '학습시간 제한',
-//       type: 'custom',
-//       label: '학습시간 제한',
-//       format: 'string',
-//       value: '',
-//     },
-//     // 복습 제한
-//     {
-//       name: '복습 제한',
-//       type: 'custom',
-//       label: '복습 제한',
-//       format: 'string',
-//       value: '',
-//     },
-//     // 화면캡쳐 방지
-//     {
-//       name: '화면캡쳐 방지',
-//       type: 'custom',
-//       label: '화면캡쳐 방지',
-//       format: 'string',
-//       value: '',
-//     },
-//     // 학습전 보안 서약
-//     {
-//       name: '학습전 보안 서약',
-//       type: 'custom',
-//       label: '학습전 보안 서약',
-//       format: 'string',
-//       value: '',
-//     },
-//     // 1일 진도제한
-//     {
-//       name: '1일 진도제한',
-//       type: 'custom',
-//       label: '1일 진도제한',
-//       format: 'string',
-//       value: '',
-//     },
-//     // 진도 초기화
-//     {
-//       name: '진도 초기화',
-//       type: 'custom',
-//       label: '진도 초기화',
-//       format: 'string',
-//       value: '',
-//     },
-//     // 순차 학습
-//     {
-//       name: '순차 학습',
-//       type: 'custom',
-//       label: '순차 학습',
-//       format: 'string',
-//       value: '',
-//     },
-//     // 동영상 탐색바 제한
-//     {
-//       name: '동영상 탐색바 제한',
-//       type: 'custom',
-//       label: '동영상 탐색바 제한',
-//       format: 'string',
-//       value: '',
-//     },
-//     // 동영상 배속 제한
-//     {
-//       name: '동영상 배속 제한',
-//       type: 'custom',
-//       label: '동영상 배속 제한',
-//       format: 'string',
-//       value: '',
-//     },
-//     // 이수처리 설정
-//     {
-//       name: '이수처리 설정',
-//       type: 'custom',
-//       label: '이수처리 설정',
-//       format: 'string',
-//       value: '',
-//     },
-//     // 수료증 제공
-//     {
-//       name: '수료증 제공',
-//       type: 'custom',
-//       label: '수료증 제공',
-//       format: 'string',
-//       value: '',
-//     },
-//     // 이수기준 설정
-//     {
-//       name: '이수기준 설정',
-//       type: 'custom',
-//       label: '이수기준 설정',
-//       format: 'object',
-//       value: {},
-//     },
-//     // 인정 학습시간
-//     {
-//       name: '인정 학습시간',
-//       type: 'custom',
-//       label: '인정 학습시간',
-//       format: 'string',
-//       value: '',
-//     },
-//     // 학습 포인트
-//     {
-//       name: '학습 포인트',
-//       type: 'custom',
-//       label: '학습 포인트',
-//       format: 'string',
-//       value: '',
-//     },
-//     // 강사
-//     {
-//       name: '강사',
-//       type: 'custom',
-//       label: '강사',
-//       format: 'string',
-//       value: '',
-//     },
-//     // 교재명
-//     {
-//       name: '교재명',
-//       type: 'custom',
-//       label: '교재명',
-//       format: 'string',
-//       value: '',
-//     },
-//     // 교재비
-//     {
-//       name: '교재비',
-//       type: 'custom',
-//       label: '교재비',
-//       format: 'string',
-//       value: '',
-//     },
-//     // 사전 필수과정
-//     {
-//       name: '사전 필수과정',
-//       type: 'custom',
-//       label: '사전 필수과정',
-//       format: 'array',
-//       value: [],
-//     },
-//     // 연관 과정
-//     {
-//       name: '연관 과정',
-//       type: 'custom',
-//       label: '연관 과정',
-//       format: 'array',
-//       value: [],
-//     },
-//     // 대분류
-//     {
-//       name: '대분류',
-//       type: 'custom',
-//       label: '대분류',
-//       format: 'string',
-//       value: '',
-//     },
-//     // 중분류
-//     {
-//       name: '중분류',
-//       type: 'custom',
-//       label: '중분류',
-//       format: 'string',
-//       value: '',
-//     },
-//     // 1인당 교육비
-//     {
-//       name: '1인당 교육비',
-//       type: 'custom',
-//       label: '1인당 교육비',
-//       format: 'string',
-//       value: '',
-//     },
-//     // 고용보험 환급비용
-//     {
-//       name: '고용보험 환급비용',
-//       type: 'custom',
-//       label: '고용보험 환급비용',
-//       format: 'string',
-//       value: '',
-//     },
-//     // 숙박 여부
-//     {
-//       name: '숙박 여부',
-//       type: 'custom',
-//       label: '숙박 여부',
-//       format: 'string',
-//       value: '',
-//     },
-//     // 추가예정 항목
-//     {
-//       name: '추가예정 항목',
-//       type: 'custom',
-//       label: '추가예정 항목',
-//       format: 'string',
-//       value: '',
-//     },
-//     // 사전 레벨테스트
-//     {
-//       name: '사전 레벨테스트',
-//       type: 'custom',
-//       label: '사전 레벨테스트',
-//       format: 'string',
-//       value: '',
-//     },
-//     // 교재 배송지 수집
-//     {
-//       name: '교재 배송지 수집',
-//       type: 'custom',
-//       label: '교재 배송지 수집',
-//       format: 'string',
-//       value: '',
-//     },
-//     // 튜터
-//     {
-//       name: '튜터',
-//       type: 'custom',
-//       label: '튜터',
-//       format: 'string',
-//       value: '',
-//     },
-//     // 튜터 ID
-//     {
-//       name: '튜터',
-//       type: 'hidden',
-//       value: '',
-//     },
-//     // 위탁 소유회사
-//     {
-//       name: '위탁 소유회사',
-//       type: 'custom',
-//       label: '위탁 소유회사',
-//       format: 'string',
-//       value: '',
-//     },
-//     // 위탁 소유회사 ID
-//     {
-//       name: '위탁 소유회사',
-//       type: 'hidden',
-//       value: '',
-//     },
-//   ],
-//   // validator: {
-//   //   '승인 결재 라인': {
-//   //     format: 'string',
-//   //     required: true,
-//   //   },
-//   //   정원: {
-//   //     format: 'string',
-//   //     required: true,
-//   //   },
-//   //   '수강신청 대기': {
-//   //     format: 'string',
-//   //     required: true,
-//   //   },
-//   //   '차수 중복수강': {
-//   //     format: 'string',
-//   //     required: true,
-//   //   },
-//   //   '사전 레벨테스트': {
-//   //     format: 'string',
-//   //     required: true,
-//   //   },
-//   //   '교재 배송지 수집': {
-//   //     format: 'string',
-//   //     required: true,
-//   //   },
-//   // },
-// };
+/**
+ * 상세정보 컴포넌트 폼 데이터를 요청 데이터로 변환하는 함수
+ *
+ * @component Curriculum
+ * @param {Course} d - 상세정보 폼 데이터
+ * @returns {Course} 상세정보 요청 데이터
+ */
+
+export const formDataToRequestData = (d: Course) => {
+  // 교육공간 라디오 선택에 따라 값 변경 관련 처리 (교육공간=learningSpaceType)
+  // 차세데 학습학습 플랫폼
+  if (d.learningSpaceType === 'LEARNING_WAY') {
+    d.learningSpaceId = undefined; // 교육 장소 ID
+    d.learningSpaceName = undefined; // 교육 장소(선택입력)
+    d.learningSpaceNameKeyIn = undefined; // 교육 장소 직접입력
+  }
+  // 공간선택
+  else if (d.learningSpaceType === 'REGISTERED') {
+    d.learningSpaceNameKeyIn = undefined; // 교육 장소 직접입력
+  }
+  // 직적입력
+  else if (d.learningSpaceType === 'MANUAL') {
+    d.learningSpaceId = undefined; // 교육 장소 ID
+    d.learningSpaceName = undefined; // 교육 장소(선택입력)
+  }
+  return d;
+};

@@ -1,5 +1,5 @@
 import { DropdownFormField } from '@features/form';
-import { CategoryChoiceModal } from '@features/learning/course';
+import { CategoryChoiceModal } from '@features/learning-operate/course/course-management';
 import {
   TrainingPlaceChoiceModal,
   UserChoiceModal,

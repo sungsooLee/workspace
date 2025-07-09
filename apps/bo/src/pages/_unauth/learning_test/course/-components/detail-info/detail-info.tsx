@@ -1,6 +1,5 @@
 import { DropdownFormField, FormDisplay } from '@features/form';
-import { ChannelListModal } from '@features/learning/course/ui/modal/channel-list-modal/channel-list-modal';
-import { TeacherListModal } from '@features/learning/course/ui/modal/teacher-list-modal/teacher-list-modal';
+import { ChannelListModal, TeacherListModal } from '@features/learning-operate/course/course-management';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import {
   Button,
@@ -30,7 +29,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
       validate: async () => {
         // 모든 필드에 대해 유효성 검사 수행
         const isValid = await onFormValid();
-        const data = formDataToRequestData(getValues());
+        const data = formDataToRequestData(getValues() as Course);
         const errors = formState.errors;
 
         return {

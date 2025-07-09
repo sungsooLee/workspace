@@ -1,5 +1,5 @@
 import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
-import { ChannelListModal, ManagerListModal, TeacherListModal } from '@features/learning/course';
+import { ChannelListModal, ManagerListModal, TeacherListModal } from '@features/learning-operate/course/course-management';
 import {
   Button,
   CheckboxGroupFormField,

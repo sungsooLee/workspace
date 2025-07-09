@@ -1,6 +1,6 @@
 import { queryOptions } from '@entities/course/service/course.queries';
 import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
-import { CourseTypeOptionCardModal } from '@features/learning/course';
+import { CourseTypeOptionCardModal } from '@features/learning-operate/course/course-management';
 import { GridExcelDownloadButton, GridExcelUploadButton } from '@features/shared';
 import { LMSApiPrefix } from '@learnway/config';
 import { CODE_GROUP, getCodeLabel, useDynamicForm2 } from '@learnway/hooks';

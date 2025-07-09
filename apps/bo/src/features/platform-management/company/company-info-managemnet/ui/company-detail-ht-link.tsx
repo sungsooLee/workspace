@@ -8,7 +8,7 @@ import { EnUserGroupType } from '@types';
 import { useGetCompanyUserGroups } from '@entities/user-group/service/user-group-company.hook';
 
 const _global = {
-  selectClick: (userGroupId: number) => {
+  selectClick: (row: any) => {
     return;
   },
   selectedUserGroupId: '',
@@ -30,8 +30,8 @@ const CompanyDetailHRLinkComponent: FC<any> = ({ type }: CompanyDetailHRLinkProp
 
   const { data, refetch } = useGetCompanyUserGroups({ userGroupType: type, companyId: companyId });
 
-  _global.selectClick = (userGroupId: number) => {
-    setUserGroupId(userGroupId);
+  _global.selectClick = (row: any) => {
+    setUserGroupId(row.userGroupId);
   };
   _global.selectedUserGroupId = userGroupId;
 
@@ -39,19 +39,19 @@ const CompanyDetailHRLinkComponent: FC<any> = ({ type }: CompanyDetailHRLinkProp
     switch (type) {
       case EnUserGroupType.JOB_GROUP:
         setLinkTitle(t('직군'));
-        setLinkColumns([...columnsPrev, ...linkColumnsForGroup, ...columnsNext]);
+        setLinkColumns([...columnsPrev, ...LinkColumnsForGroup, ...columnsNext]);
         break;
       case EnUserGroupType.JOB:
         setLinkTitle(t('직무'));
-        setLinkColumns([...columnsPrev, ...linkColumnsForRole, ...columnsNext]);
+        setLinkColumns([...columnsPrev, ...LinkColumnsForRole, ...columnsNext]);
         break;
       case EnUserGroupType.JOB_TITLE:
         setLinkTitle(t('호칭'));
-        setLinkColumns([...columnsPrev, ...linkColumnsForDesignation, ...columnsNext]);
+        setLinkColumns([...columnsPrev, ...LinkColumnsForDesignation, ...columnsNext]);
         break;
       case EnUserGroupType.JOB_POSITION:
         setLinkTitle(t('보직'));
-        setLinkColumns([...columnsPrev, ...linkColumnsForPosition, ...columnsNext]);
+        setLinkColumns([...columnsPrev, ...LinkColumnsForPosition, ...columnsNext]);
         break;
     }
   }, [type]);
@@ -118,7 +118,7 @@ const columnsNext = [
         }
         label={t('선택')}
         onClick={() => {
-          _global.selectClick(info.row.original.userGroupId);
+          _global.selectClick(info.row.original);
         }}
       />
     ),
@@ -128,7 +128,7 @@ const columnsNext = [
   },
 ];
 
-const linkColumnsForGroup = [
+export const LinkColumnsForGroup = [
   {
     name: 'userGroupName',
     accessorKey: 'userGroupName',
@@ -137,7 +137,7 @@ const linkColumnsForGroup = [
     searchable: true,
   },
 ];
-const linkColumnsForRole = [
+export const LinkColumnsForRole = [
   {
     name: 'userGroupSubName',
     accessorKey: 'userGroupSubName',
@@ -153,7 +153,7 @@ const linkColumnsForRole = [
     searchable: true,
   },
 ];
-const linkColumnsForDesignation = [
+export const LinkColumnsForDesignation = [
   {
     name: 'userGroupName',
     accessorKey: 'userGroupName',
@@ -162,7 +162,7 @@ const linkColumnsForDesignation = [
     searchable: true,
   },
 ];
-const linkColumnsForPosition = [
+export const LinkColumnsForPosition = [
   {
     name: 'userGroupName',
     accessorKey: 'userGroupName',

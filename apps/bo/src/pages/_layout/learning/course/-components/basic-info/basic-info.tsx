@@ -1,11 +1,11 @@
 import { DropdownFormField } from '@features/form';
-import { CategoryChoiceModal } from '@features/learning/course';
 import {
   TrainingPlaceChoiceModal,
   UserChoiceModal,
   UserGroupTabsChoiceModal,
 } from '@features/shared';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
+import { getRandomId } from '@learnway/shared';
 import {
   Button,
   CheckboxGroupFormField,
@@ -22,19 +22,12 @@ import {
 import { FormRow2, FormSubTitle } from '@shared/ui';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TabFormRef } from '../common/tab-form-ref';
-import { Course, CourseConfig } from '@types';
-import { getRandomId } from '@learnway/shared';
+import { CourseTabBaseProps, TabFormRef } from '../../-common/type';
+import { Course } from '@types';
+import { CategoryChoiceModal } from '@features/learning-operate/course/course-management';
 
-interface BasicInfoProps {
-  dummy?: any;
-  onSave?: () => void;
-  data: { formData: Course; courseConfig: CourseConfig };
-  initialData?: any;
-}
-
-const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
-  ({ dummy, onSave, data: { formData, courseConfig } }, ref) => {
+const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
+  ({ onSave, data: { formData, courseConfig } }, ref) => {
     const { t } = useTranslation();
 
     const { provider, getValues, updateFormData, onFormValid, formState, watch } =
@@ -44,16 +37,12 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
 
     console.log('----- basic', { formData, courseConfig });
 
-    const handleOnSubmit = (data: any) => {
-      console.log('data {} => ', data);
-    };
-
     // 부모 컴포넌트에서 호출할 수 있는 유효성 검사 메서드
     useImperativeHandle(ref, () => ({
       validate: async () => {
         // 모든 필드에 대해 유효성 검사 수행
         const isValid = await onFormValid();
-        const data = getValues();
+        const data = formDataToRequestData(getValues() as Course);
         const errors = formState.errors;
 
         return {
@@ -61,6 +50,10 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
           data,
           errors,
         };
+      },
+      getValues: () => {
+        console.log('getValues', getValues());
+        return getValues();
       },
     }));
 
@@ -411,3 +404,31 @@ const BasicInfoComponent = forwardRef<TabFormRef, BasicInfoProps>(
 );
 
 export const BasicInfo = BasicInfoComponent;
+
+/**
+ * 과정 기본 정보 컴포넌트 폼 데이터를 요청 데이터로 변환하는 함수
+ *
+ * @component BasicInfo
+ * @param {Course} d - 과정 기본 정보 폼 데이터
+ * @returns {Course} 과정 기본 정보 요청 데이터
+ */
+
+export const formDataToRequestData = (d: Course) => {
+  // 교육공간 라디오 선택에 따라 값 변경 관련 처리 (교육공간=learningSpaceType)
+  // 차세데 학습학습 플랫폼
+  if (d.learningSpaceType === 'LEARNING_WAY') {
+    d.learningSpaceId = undefined; // 교육 장소 ID
+    d.learningSpaceName = undefined; // 교육 장소(선택입력)
+    d.learningSpaceNameKeyIn = undefined; // 교육 장소 직접입력
+  }
+  // 공간선택
+  else if (d.learningSpaceType === 'REGISTERED') {
+    d.learningSpaceNameKeyIn = undefined; // 교육 장소 직접입력
+  }
+  // 직적입력
+  else if (d.learningSpaceType === 'MANUAL') {
+    d.learningSpaceId = undefined; // 교육 장소 ID
+    d.learningSpaceName = undefined; // 교육 장소(선택입력)
+  }
+  return d;
+};

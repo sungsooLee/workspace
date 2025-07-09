@@ -6,7 +6,7 @@ import { pageRouteConfig } from '@features/auth';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { FormTranslationBox } from '@features/platform/ui/platform/system/translation/form-translation-box';
+import { FormTranslationBox } from '@shared/ui/form';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { FormRow } from '@shared/ui';
 import { useWidgets } from '@entities/widgets';

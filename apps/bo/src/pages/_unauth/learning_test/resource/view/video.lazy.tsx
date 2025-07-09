@@ -6,15 +6,15 @@ import { PageContainer } from '../../../../../widgets/layout/ui/container/page-c
 import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
-import { MovieInfo } from '../../../../../features/learning';
 import { ChannelChoiceModal, ManagerChoiceModal } from '../../../../../features/shared';
 
-import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
+import { DateRangePickerFormField } from '@features/form/ui';
 import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
 import { FormDisplay } from '../../../../../features/form/ui/form-display';
 import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../../shared/ui/form';
 import { SubTitlesFormField } from '../../../../../features/form/ui';
 import { LinkBox } from '../../../../../widgets/layout/ui/container/slot/link-box';
+import { MovieInfo } from '@features/learning-resource';
 
 export const Route = createLazyFileRoute('/_unauth/learning_test/resource/view/video')({
   component: RouteComponent,

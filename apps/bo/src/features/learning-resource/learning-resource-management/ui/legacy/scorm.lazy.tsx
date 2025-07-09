@@ -1,21 +1,20 @@
 import React from 'react';
-import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
+import { createLazyFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { Button, ContentsRow, DynamicFormField, InputModalSelectorFormField } from '@learnway/ui';
 import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
-import { SharedChannelGridFormField } from '@features/form/ui';
-import { DateRangePickerFormField } from '@features/form/ui';
+import { ScormInfo } from '@features/learning-resource';
+import { DateRangePickerFormField, SharedChannelGridFormField } from '@features/form/ui';
 import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
 import { FormDisplay } from '../../../../../features/form/ui/form-display';
 import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../../shared/ui/form';
 import { LinkBox } from '../../../../../widgets/layout/ui/container/slot/link-box';
 import { ChannelChoiceModal, ManagerChoiceModal } from '../../../../../features/shared';
-import { BlogInfo } from '@features/learning-resource';
 
-export const Route = createFileRoute('/_layout/learning/resource/view/etc')({
+export const Route = createLazyFileRoute('/_unauth/learning_test/resource/view/scorm')({
   component: RouteComponent,
 });
 
@@ -26,7 +25,6 @@ function RouteComponent() {
   const handleFormSubmit = (data: DynamicFormValues<typeof formConfig>) => {
     console.log(data);
   };
-
   return (
     <form onSubmit={onSubmit(handleFormSubmit)}>
       <PageContainer>
@@ -140,10 +138,6 @@ function RouteComponent() {
               <FormRow provider={provider} name={'externalDevelopmentCompanyContact'} />
             </ContentsRow>
           </FormDisplay>
-          {/* 블로그 내용 */}
-          <ContentsRow>
-            <FormRow provider={provider} name="blogContent" />
-          </ContentsRow>
           {/*썸네일*/}
           <ContentsRow>
             <FormRow provider={provider} name="thumbnails" />
@@ -194,7 +188,7 @@ function RouteComponent() {
           <ContentsHistoryInfoFormField />
         </MainContents>
         <SubContents>
-          <BlogInfo />
+          <ScormInfo />
         </SubContents>
       </PageContainer>
     </form>
@@ -317,12 +311,6 @@ const formConfig: DynamicFormConfig = {
         nationCode: 'externalDevelopmentCompanyNationCode',
         number: 'externalDevelopmentCompanyContact',
       },
-    },
-    {
-      label: t('블로그 내용'),
-      name: 'blogContent',
-      type: 'textarea',
-      value: '',
     },
     {
       label: t('썸네일'),
