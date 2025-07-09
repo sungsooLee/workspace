@@ -1,24 +1,23 @@
 import { ShuttleTreeToChipsV2, TreeNode, useShuttleTreeToChips } from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { cn } from '@learnway/shared';
 import { useFetchOrganizationTree } from '@entities/user-group';
-import { BlackwhiteUsersParam, OrganizationTreeResponse } from '@types';
+import { Group, OrganizationTreeResponse } from '@types';
 
 type UserGroupOrganizationComponentProps = {
   tenantIds: number[];
-  handleSetOption: (data: BlackwhiteUsersParam) => void;
+  option: Group[];
+  handleSetOption: (data: Group[]) => void;
 };
 
 const UserGroupOrganizationComponent = ({
   tenantIds,
+  option,
   handleSetOption,
 }: UserGroupOrganizationComponentProps) => {
   const { data } = useFetchOrganizationTree(tenantIds);
-
   const [treeData, setTreeData] = useState<TreeNode[]>([]);
-  const { selectedItems, handleSelectItem, cancelSelectItem, cancelAll } = useShuttleTreeToChips();
-
   useEffect(() => {
     if (data && data.length > 0) {
       const transformedData = transformApiDataToTreeData(data);
@@ -26,20 +25,34 @@ const UserGroupOrganizationComponent = ({
     }
   }, [data]);
 
+  const initValue = useMemo<TreeNode[]>(
+    () =>
+      option.map(({ key, keys, id, ids, fullName, combiners }) => ({
+        id,
+        ids,
+        key,
+        keys,
+        fullName,
+        isCombined: combiners?.length > 1,
+      })),
+    [option],
+  );
+
+  const { selectedItems, handleSelectItem, cancelSelectItem, cancelAll } =
+    useShuttleTreeToChips(initValue);
+
   useEffect(() => {
     if (selectedItems.length > 0) {
-      const newOption: BlackwhiteUsersParam = {
-        userGroupType: 'ORGANIZATION',
-        deptName: '',
-        userGroupIds: selectedItems.filter(({ isCombined }) => !isCombined).map(({ id }) => id),
-        accountStatus: 'NORMAL',
-        groups: selectedItems
-          .filter(({ isCombined }) => isCombined)
-          .map(({ ids, fullName }) => ({
-            combiners: ids.map((id: number) => ({ combineType: 'USER_GROUP', combineValue: id })),
-            name: fullName,
-          })),
-      };
+      const newOption: Group[] = selectedItems.map(({ key, keys, id, ids, fullName }) => {
+        return {
+          combiners: ids?.map((id: number) => ({ combineType: 'USER_GROUP', combineValue: id })),
+          fullName,
+          id,
+          ids,
+          key,
+          keys,
+        };
+      });
       handleSetOption(newOption);
     }
   }, [selectedItems]);
