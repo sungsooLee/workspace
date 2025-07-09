@@ -1,8 +1,7 @@
 import { useEffect, useCallback } from 'react';
-import { useLocation } from '@tanstack/react-router';
+import { useLocation, Link } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { Link } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
@@ -13,7 +12,7 @@ import { EnGlobalConst } from '@types';
 const CompanyListComponent = () => {
   const location = useLocation();
 
-  const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
+  const { provider: searchProvider, getValues } = useSearchBox(searchConfig());
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
 
   useEffect(() => {
@@ -101,7 +100,7 @@ const CompanyListComponent = () => {
 
 export const CompanyList = CompanyListComponent;
 
-const searchConfig: SearchBoxConfig = {
+const searchConfig = () => ({
   builders: [
     [
       {
@@ -161,7 +160,7 @@ const searchConfig: SearchBoxConfig = {
       ],
     },
   },
-};
+});
 
 const gridConfig: useGridBoxConfig = {
   query: queryOptions.list,

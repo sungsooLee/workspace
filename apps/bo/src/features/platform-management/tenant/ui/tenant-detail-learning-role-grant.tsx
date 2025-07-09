@@ -47,7 +47,7 @@ import { UserChoiceModal, UserShuttleModal } from '@features/shared';
 import { TenantDetailLearningRoleGrantRangeModal } from './tenant-detail-learning-role-grant-range-modal';
 import { TenantDetailLearningRoleGrantUserShuttleModal } from './tenant-detail-learning-role-grant-user-shuttle-modal';
 import { roleManagerQueryOptions } from '@entities/role/service/role-manage.queries';
-import { useSaveUsers } from '@entities/role/service/role-manage.hook';
+import { useSaveUsers } from '@entities/role';
 import { EnFormMode } from '@types';
 
 /**

@@ -24,11 +24,10 @@ const CompanyOrganizationInfoUserComponent = ({
   deptId: number;
   showType: EnOrganizationShowType;
 }) => {
-  const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
+  const { provider: searchProvider, getValues, onFormChange } = useSearchBox(searchConfig());
 
   const getSearchParam = () => {
-    const retval = { ...getValues(), companyCode: companyCode, parentDeptId: deptId };
-
+    const retval = { ...getValues(), companyCode, parentDeptId: deptId };
     return retval;
   };
   const { config: configOrigin, gridFetch: gridFetchOrigin } = useGridBox(
@@ -47,6 +46,12 @@ const CompanyOrganizationInfoUserComponent = ({
   };
 
   useEffect(() => {
+    // 부서 변경하면 SearchBox reset
+    onFormChange({
+      hrInfoManageType: '',
+      deptName: '',
+      employeeNumber: '',
+    });
     gridFetch();
   }, [deptId]);
 
@@ -87,7 +92,7 @@ const CompanyOrganizationInfoUserComponent = ({
 
 export const CompanyOrganizationUserList = CompanyOrganizationInfoUserComponent;
 
-const searchConfig: SearchBoxConfig = {
+const searchConfig = () => ({
   builders: [
     [
       {
@@ -116,7 +121,7 @@ const searchConfig: SearchBoxConfig = {
       },
     ],
   ],
-};
+});
 
 const gridConfigOrg = {
   query: hmgDepartmentQuery.user,
@@ -161,8 +166,8 @@ const columns = [
     header: t('소속'),
     size: 100,
   }),
-  columnHelper.accessor('c1', {
-    cell: (info) => info.getValue(),
+  columnHelper.accessor('isLeader', {
+    cell: (info) => (info.row.original.isLeader ? t('조직장') : t('조직원')),
     header: t('학습자 역할'),
     size: 120,
   }),
