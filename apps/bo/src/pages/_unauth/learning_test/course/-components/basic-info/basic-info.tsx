@@ -1,10 +1,6 @@
 import { DropdownFormField } from '@features/form';
 import { CategoryChoiceModal } from '@features/learning-operate/course/course-management';
-import {
-  TrainingPlaceChoiceModal,
-  UserChoiceModal,
-  UserGroupTabsChoiceModal,
-} from '@features/shared';
+import { TrainingPlaceChoiceModal, UserChoiceModal, UserGroupTabsChoiceModal } from '@shared/ui';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import { getRandomId } from '@learnway/shared';
 import {

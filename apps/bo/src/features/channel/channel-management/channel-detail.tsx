@@ -25,7 +25,7 @@ import {
 } from '@shared/ui';
 import { EnGlobalConst } from '@types';
 import { FormDisplay } from '@features/form/ui/form-display';
-import { TenantChoiceModal, UserChoiceModal } from '@features/shared';
+import { TenantChoiceModal, UserChoiceModal } from '@shared/ui';
 import {
   DynamicFormConfig,
   useDynamicForm,

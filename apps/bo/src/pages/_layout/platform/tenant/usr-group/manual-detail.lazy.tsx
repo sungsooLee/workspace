@@ -38,7 +38,7 @@ import {
   CompanyShuttleModal,
   GridExcelUploadButton,
   UserGroupChoiceModal,
-} from '@features/shared';
+} from '@shared/ui';
 
 import { EnTenantDetailTabKey } from '@types';
 

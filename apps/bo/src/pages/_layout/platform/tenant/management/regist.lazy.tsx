@@ -19,14 +19,20 @@ import {
   Tooltip,
   useModal,
 } from '@learnway/ui';
-import { CODE_GROUP, DynamicFormConfig, S3_PATH, useCodeStore, useDynamicForm } from '@learnway/hooks';
+import {
+  CODE_GROUP,
+  DynamicFormConfig,
+  S3_PATH,
+  useCodeStore,
+  useDynamicForm,
+} from '@learnway/hooks';
 
 import { FormSubTitle, FormRow } from '@shared/ui';
 
 import { useCreateTenant } from '@entities/tenant/service/tenant.hook';
 import { DuplicateCheckInputFormField, DuplicateState, FormDisplay } from '@features/form';
 import { pageRouteConfig } from '@features/auth';
-import { CompanyShuttleModal, UserChoiceModal } from '@features/shared';
+import { CompanyShuttleModal, UserChoiceModal } from '@shared/ui';
 import TenantService from '@entities/tenant/api/tenant';
 import { isEqual } from 'lodash';
 import { EnDeviceType, EnUseCategory } from '@types';
@@ -258,7 +264,7 @@ function RouteComponent() {
                 element={
                   <>
                     {t('허용')}
-                    <Switch disabled={true} checked={true}/>
+                    <Switch disabled={true} checked={true} />
                   </>
                 }
               />
@@ -333,7 +339,10 @@ function RouteComponent() {
             }
             actionNode={<FormRow provider={provider} name={'isTextBookOption'} />}
           />
-          <FormDisplay provider={provider} dependencies={[{ name: 'isTextBookOption', value: true }]}>
+          <FormDisplay
+            provider={provider}
+            dependencies={[{ name: 'isTextBookOption', value: true }]}
+          >
             <ContentsRow>
               <div className={formStyles.form_item}>
                 <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
@@ -357,11 +366,9 @@ function RouteComponent() {
             titleNode={
               <Tooltip
                 className={styles.tooltip}
-                content={
-                  t(
-                    '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다. ',
-                  )
-                }
+                content={t(
+                  '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다. ',
+                )}
               >
                 <Button onlyIcon>
                   <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
@@ -415,7 +422,7 @@ function RouteComponent() {
                 element={
                   <>
                     {t('허용')}
-                    <Switch disabled={true} checked={true}/>
+                    <Switch disabled={true} checked={true} />
                   </>
                 }
               />
@@ -427,7 +434,9 @@ function RouteComponent() {
                 <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
                   <span className={styles.form_text}> {t('이수 처리 설정')}</span>
                 </label>
-                <p className={formStyles.guide_text}>{t('과정 학습 이수 처리 여부를 설정합니다.')}</p>
+                <p className={formStyles.guide_text}>
+                  {t('과정 학습 이수 처리 여부를 설정합니다.')}
+                </p>
               </div>
               <div className={formStyles.form_item}>
                 <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
@@ -465,11 +474,9 @@ function RouteComponent() {
             titleNode={
               <Tooltip
                 className={styles.tooltip}
-                content={
-                  t(
-                    '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다. ',
-                  )
-                }
+                content={t(
+                  '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다. ',
+                )}
               >
                 <Button onlyIcon>
                   <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
@@ -501,11 +508,9 @@ function RouteComponent() {
             titleNode={
               <Tooltip
                 className={styles.tooltip}
-                content={
-                  t(
-                    '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
-                  )
-                }
+                content={t(
+                  '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
+                )}
               >
                 <Button onlyIcon>
                   <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
@@ -575,10 +580,10 @@ function RouteComponent() {
                 className={styles.tooltip}
                 content={
                   <pre>
-                  {t(
-                    '테넌트 상세 설정이 채널 개설 시 기본 출력되며,\n 채널에서 최종 사용 여부를 설정할 수 있습니다.',
-                  )}
-                </pre>
+                    {t(
+                      '테넌트 상세 설정이 채널 개설 시 기본 출력되며,\n 채널에서 최종 사용 여부를 설정할 수 있습니다.',
+                    )}
+                  </pre>
                 }
               >
                 <Button onlyIcon>
@@ -642,11 +647,9 @@ function RouteComponent() {
             titleNode={
               <Tooltip
                 className={styles.tooltip}
-                content={
-                  t(
-                    '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
-                  )
-                }
+                content={t(
+                  '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
+                )}
               >
                 <Button onlyIcon>
                   <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
@@ -685,18 +688,16 @@ function RouteComponent() {
             titleNode={
               <Tooltip
                 className={styles.tooltip}
-                content={
-                  t(
-                    '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
-                  )
-                }
+                content={t(
+                  '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
+                )}
               >
                 <Button onlyIcon>
                   <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
                 </Button>
               </Tooltip>
             }
-            actionNode={<FormRow provider={provider} name={'isAdminDataOption'}/>}
+            actionNode={<FormRow provider={provider} name={'isAdminDataOption'} />}
           />
           <FormDisplay
             provider={provider}
@@ -741,11 +742,9 @@ function RouteComponent() {
             titleNode={
               <Tooltip
                 className={styles.tooltip}
-                content={
-                  t(
-                    '완성차 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
-                  )
-                }
+                content={t(
+                  '완성차 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
+                )}
               >
                 <Button onlyIcon>
                   <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
@@ -785,11 +784,9 @@ function RouteComponent() {
             titleNode={
               <Tooltip
                 className={styles.tooltip}
-                content={
-                  t(
-                    '로템 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
-                  )
-                }
+                content={t(
+                  '로템 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
+                )}
               >
                 <Button onlyIcon>
                   <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
@@ -829,11 +826,9 @@ function RouteComponent() {
             titleNode={
               <Tooltip
                 className={styles.tooltip}
-                content={
-                  t(
-                    '위탁 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
-                  )
-                }
+                content={t(
+                  '위탁 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
+                )}
               >
                 <Button onlyIcon>
                   <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
@@ -873,11 +868,9 @@ function RouteComponent() {
             titleNode={
               <Tooltip
                 className={styles.tooltip}
-                content={
-                  t(
-                    '위아 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
-                  )
-                }
+                content={t(
+                  '위아 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
+                )}
               >
                 <Button onlyIcon>
                   <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
@@ -917,11 +910,9 @@ function RouteComponent() {
             titleNode={
               <Tooltip
                 className={styles.tooltip}
-                content={
-                  t(
-                    '오토에버 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
-                  )
-                }
+                content={t(
+                  '오토에버 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
+                )}
               >
                 <Button onlyIcon>
                   <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
@@ -1000,7 +991,8 @@ const formConfig: DynamicFormConfig = {
         acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
         maxFileCount: 1,
       },
-      description: '파일 사이즈 000x000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 1개 / 파일용량 최대 50MB',
+      description:
+        '파일 사이즈 000x000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 1개 / 파일용량 최대 50MB',
     },
 
     {
@@ -1285,7 +1277,7 @@ const formConfig: DynamicFormConfig = {
       conditions: [
         {
           fn: (values) => {
-            console.log('### Validate', values)
+            console.log('### Validate', values);
             if (values.logoImageUrl.length == 0) return true;
             return false;
           },

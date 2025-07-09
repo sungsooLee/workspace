@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { t } from 'i18next';
 import {
   ModalBody,
@@ -8,9 +8,7 @@ import {
   useModal,
   Button,
   TreeContainer,
-  TreeView,
   TreeNode,
-  TreeEventPayload,
   DndTreeView,
 } from '@learnway/ui';
 import { cn } from '@learnway/shared';
@@ -22,14 +20,8 @@ import { transformApiDataToTreeData } from '@features/platform-management/platfo
 
 import { useFetchCategory } from '@entities/category';
 import {
-  getAllParentAndChildrenByKey,
-  getAllParentAndAllChildById,
   getFirstExpandKeys,
   getAllTreeKeys,
-  getAllParent,
-  getNodeByKey,
-  genMap,
-  deleteNodeByNode,
   copyTreeNode,
   moveNodePosition,
 } from '@features/platform-management/tenant';
