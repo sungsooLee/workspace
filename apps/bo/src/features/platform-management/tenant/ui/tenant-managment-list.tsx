@@ -45,6 +45,7 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
         tenantId: tenantId,
         tenantName: tenantName,
         listParam: getValues(),
+        roleInfo: roleInfo
       },
     });
   };

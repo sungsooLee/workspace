@@ -2,7 +2,6 @@ import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } 
 import { useState } from 'react';
 import { t } from 'i18next';
 import { UserGroupOrganization } from '@features/shared';
-import { IcoRefresh02 } from '@learnway/icons';
 import { CombineUserGroup } from '@types';
 
 type Props = {
@@ -33,13 +32,6 @@ const UserGroupOrganizationShuttleModalComponent = ({
       </ModalBody>
       <ModalFooter>
         <ModalFooter>
-          <Button
-            icon={<IcoRefresh02 width={16} height={16} className="icon_refresh" />}
-            variant={'gray'}
-            size={'lg'}
-          >
-            {t('초기화')}
-          </Button>
           <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={handleOnClose} />
           <Button label={t('확인')} variant={'primary'} size={'lg'} onClick={handleOnConfirm} />
         </ModalFooter>
