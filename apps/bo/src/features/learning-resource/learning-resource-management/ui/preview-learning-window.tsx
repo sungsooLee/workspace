@@ -39,8 +39,8 @@ const PreviewLearningWindowComponent: FC<any> = ({ contentUuid }: { contentUuid:
         console.log('scormCommit called', payload);
         return 'true';
       },
-      curriculum: (payload) => {
-        console.log('curriculum called', payload);
+      lessonProgress: (payload) => {
+        console.log('lessonProgress called', payload);
       },
       videoOnProgress: (payload) => {
         console.log('videoOnProgress called', payload);
