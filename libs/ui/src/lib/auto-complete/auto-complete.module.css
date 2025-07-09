@@ -19,7 +19,7 @@
           }
         }
         [class*='nlp-select__dropdown-indicator'] svg {
-          @apply fill-white;
+          @apply fill-none;
         }
       }
     }
