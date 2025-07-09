@@ -291,7 +291,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
   const handleUserGroupMemberView = () => {
     openModal({
       width: 'xl',
-      content: <UserGroupChoiceModal userGroupIds={[]} userGroupType="ORGANIZATION" groups={[]} />,
+      content: <UserGroupChoiceModal />,
     });
   };
 
