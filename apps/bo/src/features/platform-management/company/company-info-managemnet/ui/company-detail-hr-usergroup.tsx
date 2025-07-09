@@ -126,16 +126,32 @@ const CompanyDetailHRUsergroupComponent: FC<any> = ({
         setColumns([...columnsPrev, ...columnsNext]);
         break;
       case EnUserGroupType.JOB_GROUP:
-        setColumns([...columnsPrev, ...LinkColumnsForGroup, ...columnsNext]);
+        setColumns([
+          ...columnsPrev,
+          ...LinkColumnsForGroup.map((col) => ({ ...col, searchable: false })),
+          ...columnsNext,
+        ]);
         break;
       case EnUserGroupType.JOB:
-        setColumns([...columnsPrev, ...LinkColumnsForRole, ...columnsNext]);
+        setColumns([
+          ...columnsPrev,
+          ...LinkColumnsForRole.map((col) => ({ ...col, searchable: false })),
+          ...columnsNext,
+        ]);
         break;
       case EnUserGroupType.JOB_TITLE:
-        setColumns([...columnsPrev, ...LinkColumnsForDesignation, ...columnsNext]);
+        setColumns([
+          ...columnsPrev,
+          ...LinkColumnsForDesignation.map((col) => ({ ...col, searchable: false })),
+          ...columnsNext,
+        ]);
         break;
       case EnUserGroupType.JOB_POSITION:
-        setColumns([...columnsPrev, ...LinkColumnsForPosition, ...columnsNext]);
+        setColumns([
+          ...columnsPrev,
+          ...LinkColumnsForPosition.map((col) => ({ ...col, searchable: false })),
+          ...columnsNext,
+        ]);
         break;
     }
   }, [userGroupType]);

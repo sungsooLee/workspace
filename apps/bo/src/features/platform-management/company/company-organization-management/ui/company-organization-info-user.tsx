@@ -175,7 +175,7 @@ const columns = [
     header: t('이름'),
     size: 104,
   }),
-  columnHelper.accessor('c2', {
+  columnHelper.accessor('userStatus', {
     cell: (info) => t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.Status.${info.getValue()}`),
     header: t('재직여부'),
     size: 60,

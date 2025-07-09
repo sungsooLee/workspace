@@ -19,9 +19,9 @@ export const queryKeys = {
 };
 
 export const learningResourceQueryOptions = {
-  getChannelsByTenantId: (tenantId: string | number) => ({
+  getChannelsByTenantId: (param: { tenantId: string | number; channelName?: string }) => ({
     queryKey: queryKeys.channelsByTenantId,
-    queryFn: () => LearningResourceService.fetchChannelsByTenantId(tenantId),
+    queryFn: () => LearningResourceService.fetchChannelsByTenantId(param),
     cacheTime: 0,
     staleTime: 0,
     enabled: true,

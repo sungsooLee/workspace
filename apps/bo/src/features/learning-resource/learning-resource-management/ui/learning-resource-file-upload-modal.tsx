@@ -51,7 +51,7 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({ channel, type }) 
       s3Path: S3_PATH['upload/content/original'],
       affairsType: 'CMS',
       maxFileCount,
-      maxFileSize: 20 * 1024 * 1024,
+      maxFileSize: 3 * 1024 * 1024 * 1024,
       acceptFiles: acceptFiles[type],
     });
   const [errorMessage, setErrorMessage] = useState('');

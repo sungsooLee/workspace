@@ -57,7 +57,8 @@ export const GridHeader = <T extends object>({ table, lastPinnedColumnId }: Grid
                 className={cn(
                   thClass,
                   styles.th_wrap,
-                  column.getCanSort() ? 'cursor-pointer select-none' : '',
+                  // column.getCanSort() ? 'cursor-pointer select-none' : '',
+                  column.getCanSort() && styles.sortable,
                   columnDef.meta?.headerAlign === 'center' && styles.text_center,
                 )}
                 style={thStyle}
