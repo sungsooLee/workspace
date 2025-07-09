@@ -18,7 +18,7 @@ import { SearchBox } from '@shared/ui';
 import { RoleInfo } from '@types';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { AuthUser } from '@learnway/auth/types';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { get } from 'lodash';
 
 interface Channel {
@@ -29,24 +29,26 @@ interface Channel {
 const ChannelChoicePopupComponent = () => {
   const { close } = useModal();
 
-  const { data: { myRoles } = {} } = useFetchAuthUser<AuthUser>();
+  const { data } = useFetchAuthUser<AuthUser>();
 
-  const getChannels = ({ tenantId, channelName }: { tenantId: number; channelName: string }) => {
-    // 업무 API로 이 함수를 대체해야 함
-    const channels =
-      myRoles
-        ?.filter((d: RoleInfo) => !tenantId || d.tenantId === tenantId) // 테넌트 필터
-        ?.map((d: RoleInfo) => d.channels) // 채널만 추출
-        ?.flat() // 2차원 배열을 1차원 배열로
-        ?.filter((c: any) => c.name.includes(channelName)) // 이름 필터
-        ?.map(({ uuid, name }: any) => ({
-          channelName: name,
-          channelUuid: uuid,
-        })) || [];
-    return {
-      data: channels,
+  const getChannels = useMemo(() => {
+    return ({ tenantId, channelName }: { tenantId: number; channelName: string }) => {
+      // 업무 API로 이 함수를 대체해야 함
+      const channels =
+        data?.myRoles
+          ?.filter((d: RoleInfo) => !tenantId || d.tenantId === tenantId) // 테넌트 필터
+          ?.map((d: RoleInfo) => d.channels) // 채널만 추출
+          ?.flat() // 2차원 배열을 1차원 배열로
+          ?.filter((c: any) => c.name.includes(channelName)) // 이름 필터
+          ?.map(({ uuid, name }: any) => ({
+            channelName: name,
+            channelUuid: uuid,
+          })) || [];
+      return {
+        data: channels,
+      };
     };
-  };
+  }, [data?.myRoles]);
 
   const gridConfig: useGridBoxConfig = {
     query: (params: any) => {
