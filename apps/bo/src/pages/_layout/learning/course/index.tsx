@@ -2,11 +2,12 @@ import { queryOptions } from '@entities/course/service/course.queries';
 import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
 import { CourseTypeOptionCardModal } from '@features/learning-operate/course/course-management';
 import {
-  FormRow2,
   GridExcelDownloadButton,
   GridExcelUploadButton,
-  SearchBoxForm,
+  TenantByRoleDropdownFormField,
   TenantChannelDropdownFormField,
+  SearchBoxForm,
+  FormRow2,
 } from '@shared/ui';
 import { LMSApiPrefix } from '@learnway/config';
 import { CODE_GROUP, getCodeLabel, useDynamicForm2 } from '@learnway/hooks';
@@ -78,7 +79,7 @@ function RouteComponent() {
     });
     console.log('handleCourseOpenClick.value {} => ', value);
     router.navigate({
-      to: '/learning/course/create/view',
+      to: '/learning_test/course/create/view',
       state: {
         courseType: value, // 다국어 분류 - 공통코드
       },
@@ -89,7 +90,7 @@ function RouteComponent() {
   return (
     <PageContainer>
       <ContentsButtons>
-        <Link to="/learning/course/create/view" state={{ courseId: 5 }} className="link">
+        <Link to="/learning_test/course/create/view" state={{ courseId: 5 }} className="link">
           상세 테스트
         </Link>
         <Button
@@ -112,7 +113,7 @@ function RouteComponent() {
         <SearchBoxForm onSearch={onSubmit(handleOnSearch)}>
           <ContentsRow>
             {/*테넌트*/}
-            <FormRow2
+            {/* <FormRow2
               provider={provider}
               name={'tenantId'}
               label={t('LABEL.form.label.tenant')}
@@ -124,6 +125,17 @@ function RouteComponent() {
                   presetOptionLabel={t('LABEL.form.label.select', '선택')}
                 />
               }
+              validation={{
+                required: true,
+                format: 'object',
+              }}
+            /> */}
+            {/*테넌트 신규 폼필드*/}
+            <FormRow2
+              provider={provider}
+              name={'tenantId'}
+              label={'테넌트'}
+              element={<TenantByRoleDropdownFormField />}
               validation={{
                 required: true,
                 format: 'object',
@@ -271,7 +283,7 @@ const gridConfig = {
       size: 300,
       render: ({ row }: any) => (
         <Link
-          to="/learning/course/create/view"
+          to="/learning_test/course/create/view"
           state={{ courseId: row.original.courseId }}
           className="link"
         >

@@ -1,9 +1,12 @@
+import { ChannelByRoleId, PaginationResponse } from '@types';
 import ChannelService from '../api/channel';
+import { UseQueryOptions } from '@tanstack/react-query';
 
 export const queryKeys = {
   all: ['channel'] as const,
   list: (params: any) => [...queryKeys.all, 'list', params] as const,
   detail: (channelId: number) => [...queryKeys.all, 'detail', channelId] as const,
+  channelByRoleId: (channelId: number) => ['channel-by-role-id', channelId] as const,
 };
 
 export const queryOptions = {
@@ -14,6 +17,13 @@ export const queryOptions = {
   detail: (channeId: number) => ({
     queryKey: queryKeys.detail(channeId),
     queryFn: () => ChannelService.getChannelDetail(channeId),
+  }),
+  channelByRoleId: <T = ChannelByRoleId>(
+    roleId: number,
+  ): UseQueryOptions<PaginationResponse<T>> => ({
+    queryKey: queryKeys.channelByRoleId(roleId),
+    queryFn: async (): Promise<PaginationResponse<T>> =>
+      ChannelService.fetchChannelByRoleId(roleId),
   }),
 };
 
