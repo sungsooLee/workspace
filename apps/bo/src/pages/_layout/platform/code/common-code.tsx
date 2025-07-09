@@ -5,12 +5,10 @@ import { Button, GridState } from '@learnway/ui';
 
 import { pageRouteConfig } from '@features/auth';
 import { SearchBoxConfig, useCurrentRoute, useSearchBox } from '@learnway/hooks';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { SearchBox } from '@shared/ui';
+import { SearchBox, ContentsButtons } from '@shared/ui';
 import { useCodeList } from '@entities/common-code/service/common-code.hook';
-import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { CommonCodeGrid } from '@features/platform-management/platform/code-managemnet/ui/common-code-grid';
+import { MainContents, PageContainer } from '@shared/ui';
 
 export const Route = createFileRoute('/_layout/platform/code/common-code')({
   component: RouteComponent,

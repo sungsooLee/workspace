@@ -1,6 +1,6 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 
-import { PageContainer, MainContents, ContentsButtons } from '@widgets/layout';
+import { PageContainer, MainContents, ContentsButtons } from '@shared/ui';
 import { Button } from '@learnway/ui';
 
 import { TenantManagmentList } from '@features/platform-management/tenant/ui/tenant-managment-list';

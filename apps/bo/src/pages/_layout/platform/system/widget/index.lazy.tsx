@@ -2,12 +2,11 @@ import React, { useCallback } from 'react';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { useSearchBox } from '@learnway/hooks';
 import { useCreation } from 'ahooks';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { widgetsQueryOptions } from '@entities/widgets';
 import { SearchBox } from '@shared/ui';
 import { WidgetPreviewButton } from '@features/platform';
 import { Divider, GridBox, useGridBox } from '@learnway/ui';
+import { MainContents, PageContainer } from '@shared/ui';
 
 export const Route = createLazyFileRoute('/_layout/platform/system/widget/')({
   component: RouteComponent,

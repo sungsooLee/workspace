@@ -6,17 +6,12 @@ import {
   useCodeStore,
   useDynamicForm,
 } from '@learnway/hooks';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { Button, CheckboxGroupFormField, RadioGroupFormField } from '@learnway/ui';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { ContentsRow } from '@widgets/layout/ui/container/parts/contents-row';
 import { FormRow } from '@shared/ui';
-import { CustomFormField } from '@shared/ui/form/custom-form-field';
-import { SubContents } from '@widgets/layout/ui/container/slot/sub-contents';
 import { MovieInfo } from '@widgets/contents/movie-info';
 import { DropdownFormField } from '@features/form';
 import { useEffect, useState } from 'react';
+import { MainContents, PageContainer, ContentsButtons, ContentsRow, SubContents } from '@shared/ui';
 
 export const Route = createFileRoute('/_layout/menu/type2')({
   component: RouteComponent,

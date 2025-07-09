@@ -7,13 +7,9 @@ import {
   Input,
   InputModalSelectorFormField,
 } from '@learnway/ui';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { SubContents } from '@widgets/layout/ui/container/slot/sub-contents';
-import { ContentsRow } from '@widgets/layout/ui/container/parts/contents-row';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { FormRow } from '@shared/ui';
+import { FormRow, SubContents, ContentsRow, ContentsButtons } from '@shared/ui';
+import { MainContents, PageContainer } from '@shared/ui';
 import {
   ManagerListModal,
   TeacherListModal,

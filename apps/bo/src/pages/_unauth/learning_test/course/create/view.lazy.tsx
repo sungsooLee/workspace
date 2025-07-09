@@ -1,8 +1,5 @@
 import { Button, Divider, Tabs, useModal } from '@learnway/ui';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { useEffect, useMemo } from 'react';
 import { BasicInfo } from '../-components/basic-info/basic-info';
 import { CourseRegistration } from '../-components/course-registration/course-registration';
@@ -10,6 +7,7 @@ import { Curriculum } from '../-components/curriculum/curriculum';
 import { DetailInfo } from '../-components/detail-info/detail-info';
 import { PublishCourse } from '../-components/publish-course/publish-course';
 import { useCourseForm } from '../-hooks/use-course-form';
+import { MainContents, PageContainer, ContentsButtons } from '@shared/ui';
 
 export const Route = createLazyFileRoute('/_unauth/learning_test/course/create/view')({
   component: RouteComponent,

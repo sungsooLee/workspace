@@ -4,11 +4,10 @@ import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { createFileRoute } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 import { EnGlobalConst } from '@types';
+import { MainContents, PageContainer } from '@shared/ui';
 
 export const Route = createFileRoute('/_layout/platform/company/hr-history/')({
   component: RouteComponent,

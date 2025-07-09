@@ -1,3 +1,4 @@
+import { SectionLayout } from '@shared/ui';
 import { FC, useState } from 'react';
 import { Tabs } from '@learnway/ui';
 
@@ -5,7 +6,6 @@ import { Tabs } from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
 /* tab contents */
-import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 import { TenantDetailBannerList } from './tenant-detail-banner-list';
 import { TenantDetailBannerView } from './tenant-detail-banner-view';
 

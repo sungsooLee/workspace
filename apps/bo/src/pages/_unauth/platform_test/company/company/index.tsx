@@ -1,9 +1,8 @@
 import React, { useCallback } from 'react';
 import { Button, GridBox, useGridBox } from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
-import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
-import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
+import { PageContainer, ContentsButtons, MainContents } from '@shared/ui';
+
 import { t } from 'i18next';
 import { SearchBox } from '../../../../../shared/ui/search-box';
 import { useSearchBox } from '@learnway/hooks';

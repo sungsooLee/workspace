@@ -1,6 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
-import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
+import { MainContents, PageContainer, ContentsButtons } from '@shared/ui';
 import {
   BaseFormFieldProps,
   DynamicFormConfig,
@@ -9,7 +8,6 @@ import {
 } from '@learnway/hooks';
 import { Button, ContentsRow, Input } from '@learnway/ui';
 import { FormRow } from '../../../shared/ui/form';
-import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
 import { FormDisplay } from '../../../features/form/ui/form-display';
 import { buildJodObject, ValidatorConfig } from '@learnway/shared';
 import { SubTitlesFormField } from '../../../features/form/ui';

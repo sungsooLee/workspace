@@ -11,15 +11,12 @@ import {
   TextareaFormField,
 } from '@learnway/ui';
 import { useDynamicForm, DynamicFormConfig, CODE_GROUP } from '@learnway/hooks';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
-import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 import { FormSubTitle, FormRow } from '@shared/ui';
 
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import { useGetRequestChannelDetail } from '@entities/channel/service/request-channel.hook';
+import { MainContents, PageContainer, LinkBox, ContentsButtons } from '@shared/ui';
 
 export const Route = createLazyFileRoute('/_layout/tenant/channel/request/detail')({
   component: RouteComponent,

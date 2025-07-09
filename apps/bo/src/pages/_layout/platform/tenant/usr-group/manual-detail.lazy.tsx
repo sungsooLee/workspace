@@ -3,11 +3,6 @@ import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-
 import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
 import { t } from 'i18next';
 
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
-import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
-
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
@@ -28,7 +23,7 @@ import {
   SearchBoxConfig,
 } from '@learnway/hooks';
 
-import { FormRow, FormSubTitle, SwitchFormField } from '@shared/ui';
+import { FormRow, FormSubTitle, SwitchFormField, LinkBox, ContentsButtons } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 
 import { FormDisplay } from '@features/form/ui/form-display';
@@ -41,6 +36,7 @@ import {
 } from '@shared/ui';
 
 import { EnTenantDetailTabKey } from '@types';
+import { MainContents, PageContainer } from '@shared/ui';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/usr-group/manual-detail')({
   component: RouteComponent,
@@ -93,7 +89,7 @@ function RouteComponent() {
 
     router.navigate({
       to: '/platform/tenant/usr-group/manual',
-      state: { listParam: listParam },
+      state: { listParam },
     });
   };
 

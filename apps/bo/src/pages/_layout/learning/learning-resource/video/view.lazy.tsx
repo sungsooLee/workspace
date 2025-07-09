@@ -3,13 +3,7 @@
 import { createLazyFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { Button, ContentsRow, InputModalSelectorFormField } from '@learnway/ui';
-import {
-  PageContainer,
-  ContentsButtons,
-  LinkBox,
-  MainContents,
-  SubContents,
-} from '@widgets/layout';
+import { PageContainer, MainContents, ContentsButtons, LinkBox, SubContents } from '@shared/ui';
 import { ChannelChoiceModal, ManagerChoiceModal } from '@shared/ui';
 import { DateRangePickerFormField } from '@features/form/ui';
 import {

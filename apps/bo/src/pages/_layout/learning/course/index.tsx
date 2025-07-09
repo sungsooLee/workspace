@@ -8,9 +8,7 @@ import { Button, ContentsRow, Divider, GridBox, Input, useGridBox, useModal } fr
 import { FormRow2, SearchBoxForm, TenantChannelDropdownFormField } from '@shared/ui';
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { CourseListItem, CoursesQueryParams } from '@types';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
+import { PageContainer, MainContents, ContentsButtons } from '@shared/ui';
 import { t } from 'i18next';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';

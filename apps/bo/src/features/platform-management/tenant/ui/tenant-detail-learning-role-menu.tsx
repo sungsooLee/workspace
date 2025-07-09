@@ -1,3 +1,4 @@
+import { SectionLayout } from '@shared/ui';
 import { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import { t } from 'i18next';
 import { useRouterState } from '@tanstack/react-router';
@@ -11,7 +12,6 @@ import {
   TreeNode,
   useModal,
 } from '@learnway/ui';
-import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 import { CellContext, createColumnHelper, Table } from '@tanstack/react-table';
 import { DATE_TIME_FORMAT, formatDate, getRandomId, getRowSelectionByList } from '@learnway/shared';
 
@@ -138,7 +138,10 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
   // 저장 버튼 클릭 핸들러
   const handleSaveClick = () => {
     if (!selectedRole) {
-      alert('역할을 선택해주세요.');
+      openModal({
+        content: <div>역할을 선택해주세요.</div>,
+        width: 'sm',
+      });
       return;
     }
     const saveRows = tableInstance?.getSelectedRowModel().rows;
@@ -153,7 +156,7 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
         if (!apiOriginalSelected?.includes(apiId)) {
           addApis.push({
             tenantMappingMenuId: selectedRoleMenu.tenantMappingMenuId,
-            apiId: apiId,
+            apiId,
           });
         }
       }
@@ -161,7 +164,7 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
         if (!changeApis.includes(apiId)) {
           removeApis.push({
             tenantMappingMenuId: selectedRoleMenu.tenantMappingMenuId,
-            apiId: apiId,
+            apiId,
           });
         }
       }
@@ -171,8 +174,8 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
           body: {
             addTenantMappingMenuIds: [],
             removeTenantMappingMenuIds: [],
-            addApis: addApis,
-            removeApis: removeApis,
+            addApis,
+            removeApis,
           },
         };
         console.log('payload', payload);

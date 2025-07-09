@@ -2,12 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 import { t } from 'i18next';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { Tabs, Button } from '@learnway/ui';
-import { ContentsButtons } from '@widgets/layout';
-import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { CompanyDetail, CompanyDetailHR } from '@features/platform-management/company';
 import { EnFormMode } from '@types';
+import { MainContents, PageContainer, LinkBox, ContentsButtons } from '@shared/ui';
 
 export const Route = createLazyFileRoute('/_layout/platform/company/management/detail')({
   component: RouteComponent,
