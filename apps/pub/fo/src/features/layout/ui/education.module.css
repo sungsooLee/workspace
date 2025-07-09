@@ -38,46 +38,54 @@
             }
           }
           .label {
-            @apply label_3_r ml-[8px] inline-block rounded-[4px] border-[1px] border-solid border-[var(--gray6)] bg-[var(--gray1)] px-[6px] py-[4px] leading-[11px] text-[var(--gray8)];
+            @apply label-sm-b ml-[8px] inline-block rounded-[24px] bg-[var(--gray95)] px-[8px] py-[3px] leading-[17px] text-[var(--gray10)];
           }
           p {
-            @apply title5-b mt-[6px] text-[var(--gray8)];
+            @apply title5-b mt-[6px] text-[var(--gray10)];
           }
         }
       }
       .list {
         @apply flex w-full flex-wrap;
-        dl {
-          @apply w-1/2;
-          dt {
-            @apply pr-[8px] leading-[22px];
-          }
-          dd {
-            @apply table-cell leading-[22px] text-[var(--gray8)];
+        ul {
+          @apply contents w-full;
+          li {
+            @apply flex w-[calc(50%-8px)] items-center align-top;
+            svg {
+              @apply mr-[12px];
+            }
+            span {
+              @apply body-md inline-block leading-[24px] text-[var(--gray35)];
+              em {
+                @apply text-[var(--blue50)];
+              }
+            }
             button {
               @apply body-md ml-[12px] !px-0 leading-[28px] text-[var(--gray50)] underline underline-offset-[4px];
             }
-            em {
-              @apply body-md text-[var(--blue50)];
+            &:nth-child(2n) {
+              @apply ml-[16px];
             }
-          }
-          &:nth-child(n + 3) {
-            @apply mt-[4px];
+            &:nth-child(n + 3) {
+              @apply mt-[8px];
+            }
           }
         }
       }
       .more_list {
-        @apply flex flex-wrap;
-        dl {
-          @apply mt-[4px];
-        }
-        dt {
-          @apply min-w-[64px];
+        @apply flex w-full flex-wrap;
+        & > ul {
+          & > li {
+            @apply mt-[8px];
+          }
         }
         .full {
-          @apply !mt-[24px] flex w-full;
+          @apply !mt-[24px] w-full;
+          dt {
+            @apply body-md-b text-[var(--gray10)];
+          }
           dd {
-            @apply flex-1;
+            @apply mt-[12px] p-0;
             &::before {
               @apply hidden;
             }
@@ -87,12 +95,12 @@
           & > ul {
             @apply flex w-full items-start;
             li {
-              @apply flex-1 rounded-[40px] bg-[var(--gray95)] py-[12px];
+              @apply m-0 inline-block flex-1 rounded-[40px] bg-[var(--gray95)] py-[12px] align-top;
               span {
-                @apply title1-b block text-center text-[var(--gray8)];
+                @apply title1-b block w-full text-center text-[var(--gray8)];
               }
               strong {
-                @apply title4-b mt-[4px] block text-center leading-[24px] text-[var(--blue50)];
+                @apply title4-b mt-[4px] block w-full text-center leading-[24px] text-[var(--blue50)];
               }
               & + li {
                 @apply ml-[8px];
@@ -103,6 +111,7 @@
             @apply mt-[24px];
             ul {
               li {
+                @apply ml-0 w-full;
                 & + li {
                   @apply mt-[4px];
                 }
@@ -113,7 +122,7 @@
       }
     }
     .btn_action {
-      @apply -mx-[24px] mt-[32px] w-[calc(100%+48px)] border-t-[1px] border-solid border-[var(--gray3)];
+      @apply -mx-[32px] mt-[32px] w-[calc(100%+64px)] border-t-[1px] border-solid border-[var(--gray3)];
       button {
         @apply flex h-[56px] w-full items-center justify-center;
         span {

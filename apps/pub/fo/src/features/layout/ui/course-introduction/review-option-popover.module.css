@@ -1,13 +1,13 @@
 .start {
   &.review_option {
-    @apply rounded-[4px] bg-white p-[8px] shadow-[0_2px_6px_rgba(0,0,0,.2)];
+    @apply rounded-[6px] border-[1px] border-solid border-[var(--blue50)] bg-white p-[8px] shadow-[0_2px_6px_rgba(0,0,0,.2)];
     ul {
-      @apply min-w-[84px];
+      @apply min-w-[92px];
       li {
         button {
-          @apply body_3_r w-full px-[12px] py-[8px] text-left text-[var(--gray9)];
+          @apply label-md w-full p-[10px] text-left text-[var(--gray35)];
           &:hover {
-            @apply bg-[var(--secondary5)];
+            @apply label-md-b bg-[var(--blue95)] text-[var(--gray10)];
           }
         }
       }
