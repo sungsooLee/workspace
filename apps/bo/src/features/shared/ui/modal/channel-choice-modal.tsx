@@ -20,6 +20,7 @@ import { useFetchAuthUser } from '@learnway/auth/entities';
 import { AuthUser } from '@learnway/auth/types';
 import { useMemo, useState } from 'react';
 import { get } from 'lodash';
+import { learningResourceQueryOptions } from '@entities/learning-resource';
 
 interface Channel {
   channelUuid: string;
@@ -51,12 +52,13 @@ const ChannelChoicePopupComponent = () => {
   }, [data?.myRoles]);
 
   const gridConfig: useGridBoxConfig = {
-    query: (params: any) => {
-      return {
-        queryKey: ['get-channels-by-tenant-and-role'],
-        queryFn: () => getChannels(params),
-      };
-    },
+    query: learningResourceQueryOptions.getChannelsByTenantId,
+    // query: (params: any) => {
+    //   return {
+    //     queryKey: ['get-channels-by-tenant-and-role'],
+    //     queryFn: () => getChannels(params),
+    //   };
+    // },
     columns: [
       {
         size: 676,

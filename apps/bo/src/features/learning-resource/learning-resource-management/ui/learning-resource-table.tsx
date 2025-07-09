@@ -328,7 +328,7 @@ function LearningResourceTableComponent() {
 
     (async () => {
       const { content } = await queryClient.fetchQuery(
-        learningResourceQueryOptions.getChannelsByTenantId(tenantId),
+        learningResourceQueryOptions.getChannelsByTenantId({ tenantId }),
       );
       if (listParam && !isFetchedByListParam)
         // listParam에 의한 tenantId변경
