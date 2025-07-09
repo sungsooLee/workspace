@@ -8,7 +8,7 @@
           &.th_wrap {
             @apply body_bo_4_b relative h-[40px] overflow-hidden text-ellipsis whitespace-nowrap px-[8px] align-middle;
             .th_content {
-              @apply flex h-full items-center;
+              @apply flex h-full items-center justify-between;
             }
             .icon_up,
             .icon_down,
@@ -89,6 +89,33 @@
         @apply !border-[var(--gray4)];
         &.text_center {
           @apply px-[8px];
+        }
+        &.sortable {
+          @apply relative cursor-pointer select-none;
+          svg {
+            @apply ml-auto inline-flex;
+            &.icon_up {
+              @apply rotate-180;
+            }
+          }
+        }
+        &.thead_th {
+          .th_content {
+            @apply flex items-center justify-between;
+          }
+        }
+      }
+    }
+  }
+}
+
+[class*='no_data'] {
+  table {
+    thead th {
+      &.sortable {
+        @apply cursor-auto select-none;
+        svg {
+          @apply !hidden;
         }
       }
     }

@@ -28,7 +28,11 @@
     "i18n-flat-bo": "node ./temp/scripts/flatJson.js --type=bo",
     "i18n-flat-fo": "node ./temp/scripts/flatJson.js --type=fo",
     "prepare": "husky",
-    "build:check": "node scripts/build-check.js"
+    "build:check": "node scripts/build-check.js",
+    "fsd:check": "node scripts/fsd-check.js",
+    "fsd:check:ci": "node scripts/fsd-check.js --ci",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix"
   },
   "private": true,
   "dependencies": {
@@ -210,6 +214,15 @@
     "vite-plugin-dts": "~3.8.1",
     "vite-plugin-svgr": "^4.3.0",
     "vitest": "^2.1.8"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
   },
   "nx": {}
 }

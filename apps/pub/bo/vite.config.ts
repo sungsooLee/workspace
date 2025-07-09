@@ -5,6 +5,7 @@ import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
 import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
 import svgr from '@svgr/rollup';
+import path from 'path';
 
 // vitest automatically sets NODE_ENV to 'test' when running tests
 const isTest = process.env.NODE_ENV === 'test';
@@ -38,6 +39,19 @@ export default defineConfig({
   // worker: {
   //  plugins: [ nxViteTsPaths() ],
   // },
+  resolve: {
+    alias: [
+      { find: '@/', replacement: path.resolve(__dirname, '../../bo/src') },
+      { find: '@app', replacement: path.resolve(__dirname, '../../bo/src/app') },
+      { find: '@assets', replacement: path.resolve(__dirname, '../../bo/src/assets') },
+      { find: '@entities', replacement: path.resolve(__dirname, '../../bo/src/entities') },
+      { find: '@features', replacement: path.resolve(__dirname, '../../bo/src/features') },
+      { find: '@pages', replacement: path.resolve(__dirname, '../../bo/src/pages') },
+      { find: '@shared', replacement: path.resolve(__dirname, '../../bo/src/shared') },
+      { find: '@types', replacement: path.resolve(__dirname, '../../bo/src/types') },
+      { find: '@widgets', replacement: path.resolve(__dirname, '../../bo/src/widgets') },
+    ],
+  },
   base: '/pb-bo',
   build: {
     outDir: '../../../dist/apps/pb-bo',

@@ -7,7 +7,7 @@ import styles from './education-place-popup.module.css';
 import mapImage from '@learnway/styles/fo/assets/images/temp/img_map.png';
 
 // 약도보기 popover
-const CopyPopoverCompoment = () => {
+const CopyPopoverComponent = () => {
   return <p className={styles.copy}>주소를 복사하였습니다</p>;
 };
 
@@ -27,7 +27,7 @@ const EducationPlacePopupComponent = () => {
             <p className={styles.addr}>
               서울 강남구 테헤란로 510
               <Popover
-                popoverContent={<CopyPopoverCompoment />}
+                popoverContent={<CopyPopoverComponent />}
                 side="bottom"
                 align={isMobile ? 'center' : 'start'}
                 sideOffset={15}

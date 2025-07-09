@@ -17,12 +17,12 @@ import { UserGroupJobTitle } from '../components/user-group-job-title';
 import { UserGroupJob } from '../components/user-group-job';
 import { UserGroupCustom } from '../components/user-group-custom';
 import { IcoRefresh02 } from '@learnway/icons';
-import { Group, UserGroupType } from '@types';
+import { CombineUserGroup, UserGroupType } from '@types';
 
 type UserGroupTabModalProps = {
   initialTab?: UserGroupType;
   tenantIds: number[];
-  option?: Group[];
+  option?: CombineUserGroup[];
 };
 
 const UserGroupTabModalComponent = forwardRef(
@@ -31,7 +31,7 @@ const UserGroupTabModalComponent = forwardRef(
 
     const [selectedTabKey, setSelectedTabKey] = useState<UserGroupType>(initialTab);
 
-    const [option, setOption] = useState<Group[]>(optionProp);
+    const [option, setOption] = useState<CombineUserGroup[]>(optionProp);
 
     const handleOnClose = () => {
       closeModal();
@@ -90,7 +90,13 @@ const UserGroupTabModalComponent = forwardRef(
               {
                 title: '사용자 정의',
                 key: 'CUSTOM',
-                content: <UserGroupCustom tenantIds={tenantIds} handleSetOption={setOption} />,
+                content: (
+                  <UserGroupCustom
+                    tenantIds={tenantIds}
+                    option={option}
+                    handleSetOption={setOption}
+                  />
+                ),
               },
             ]}
             type="line"

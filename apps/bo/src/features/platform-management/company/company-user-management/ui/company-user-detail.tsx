@@ -89,7 +89,7 @@ const CompanyUserDetailComponent: FC<any> = () => {
               <th scope={'row'}>{'회원가입일'}</th>
               <td>{userInfo?.createdDate}</td>
               <th scope={'row'}>{'최근 접속일'}</th>
-              <td>{userInfo?.lastLoginDate}</td>
+              <td colSpan={3}>{userInfo?.lastLoginDate}</td>
             </tr>
           </tbody>
         </table>

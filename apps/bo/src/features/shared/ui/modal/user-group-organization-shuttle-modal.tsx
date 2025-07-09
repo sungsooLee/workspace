@@ -3,11 +3,11 @@ import { useState } from 'react';
 import { t } from 'i18next';
 import { UserGroupOrganization } from '@features/shared';
 import { IcoRefresh02 } from '@learnway/icons';
-import { Group } from '@types';
+import { CombineUserGroup } from '@types';
 
 type Props = {
   tenantIds: number[];
-  option?: Group[];
+  option?: CombineUserGroup[];
 };
 
 const UserGroupOrganizationShuttleModalComponent = ({
@@ -16,7 +16,7 @@ const UserGroupOrganizationShuttleModalComponent = ({
 }: Props) => {
   const { close: closeModal } = useModal();
 
-  const [option, setOption] = useState<Group[]>(optionProp);
+  const [option, setOption] = useState<CombineUserGroup[]>(optionProp);
 
   const handleOnClose = () => {
     closeModal();
