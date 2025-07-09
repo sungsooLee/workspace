@@ -28,7 +28,6 @@ const CompanyOrganizationInfoListComponent = ({
   //companyHrInfoManageType: string;
 }) => {
   const { confirm: openConfirm, alert: openAlert } = useModal();
-  const [gridConfig, setGridConfig] = useState<any>(gridConfigOrg);
   const [tableInstance, setTableInstance] = useState<Table<any>>();
 
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
@@ -37,11 +36,30 @@ const CompanyOrganizationInfoListComponent = ({
 
     return retval;
   };
-  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getSearchParam);
+
+  const { config: configOrigin, gridFetch: gridFetchOrigin } = useGridBox(
+    gridConfigOrg,
+    getSearchParam,
+  );
+  const { config: configPlatform, gridFetch: gridFetchPlatform } = useGridBox(
+    gridConfigPlat,
+    getSearchParam,
+  );
+
+  const gridFetch = () => {
+    switch (showType) {
+      case EnOrganizationShowType.origin:
+        gridFetchOrigin(getSearchParam());
+        break;
+      case EnOrganizationShowType.platform:
+        gridFetchPlatform(getSearchParam());
+        break;
+    }
+  };
 
   const handleOnSearch = (data: any) => {
     if (companyCode) {
-      gridFetch(getSearchParam());
+      gridFetch();
     }
   };
 
@@ -57,21 +75,11 @@ const CompanyOrganizationInfoListComponent = ({
   });
 
   useEffect(() => {
-    switch (showType) {
-      case EnOrganizationShowType.origin:
-        setGridConfig(gridConfigOrg);
-        break;
-      case EnOrganizationShowType.platform:
-        setGridConfig(gridConfigPlat);
-    }
-  }, [showType]);
-
-  useEffect(() => {
-    gridFetch(getSearchParam());
+    gridFetch();
   }, [deptId]);
 
   const columnHelper = createColumnHelper<any>();
-  let columns = [
+  const columns = [
     columnHelper.accessor('hrInfoManageType', {
       cell: (info) =>
         t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.HrInfoManageType.${info.getValue()}`),
@@ -101,48 +109,46 @@ const CompanyOrganizationInfoListComponent = ({
     }),
   ] as ColumnDef<any, unknown>[];
 
-  if (showType === EnOrganizationShowType.platform) {
-    const checkboxColumn = columnHelper.accessor('checkbox', {
-      // 상태에 따른 checkbox disabled를 위해 checkbox 따로 구현
-      id: 'select-check',
-      size: 50,
-      maxSize: 50,
-      minSize: 50,
-      meta: {
-        align: 'center',
-        headerAlign: 'center',
-        cellAlign: 'center',
-      },
-      enableSorting: false,
-      header: ({ table }) => (
-        <div style={{ width: '100%', textAlign: 'center' }}>
+  const checkboxColumn = columnHelper.accessor('checkbox', {
+    // 상태에 따른 checkbox disabled를 위해 checkbox 따로 구현
+    id: 'select-check',
+    size: 50,
+    maxSize: 50,
+    minSize: 50,
+    meta: {
+      align: 'center',
+      headerAlign: 'center',
+      cellAlign: 'center',
+    },
+    enableSorting: false,
+    header: ({ table }) => (
+      <div style={{ width: '100%', textAlign: 'center' }}>
+        <Checkbox
+          checked={table.getIsAllRowsSelected()}
+          onCheckedChange={(checked) => {
+            table.toggleAllRowsSelected(!!checked);
+          }}
+        />
+      </div>
+    ),
+    cell: ({ row }) => {
+      const disabled = row.original.hrInfoManageType !== 'MANUAL_MANAGE';
+      return (
+        <div style={{ width: '100%', textAlign: 'center', paddingRight: 0 }}>
           <Checkbox
-            checked={table.getIsAllRowsSelected()}
-            onCheckedChange={(checked) => {
-              table.toggleAllRowsSelected(!!checked);
+            checked={row.getIsSelected()}
+            disabled={row.getIsGrouped() || disabled}
+            onCheckedChange={() => {
+              if (!row.getIsGrouped()) {
+                row.getToggleSelectedHandler();
+              }
             }}
           />
         </div>
-      ),
-      cell: ({ row }) => {
-        const disabled = row.original.hrInfoManageType !== 'MANUAL_MANAGE';
-        return (
-          <div style={{ width: '100%', textAlign: 'center', paddingRight: 0 }}>
-            <Checkbox
-              checked={row.getIsSelected()}
-              disabled={row.getIsGrouped() || disabled}
-              onCheckedChange={() => {
-                if (!row.getIsGrouped()) {
-                  row.getToggleSelectedHandler();
-                }
-              }}
-            />
-          </div>
-        );
-      },
-    });
-    columns = [checkboxColumn, ...columns];
-  }
+      );
+    },
+  });
+  const columnsPlatform = [checkboxColumn, ...columns];
 
   const handleRemoveClick = async () => {
     const deleteRows = tableInstance?.getSelectedRowModel().rows;
@@ -170,19 +176,30 @@ const CompanyOrganizationInfoListComponent = ({
     <>
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
       <Divider />
-      <GridBox
-        config={gConfig}
-        columns={columns}
-        showNumberingColumn={showType === EnOrganizationShowType.origin}
-        hideRowSelectionCheckBox
-        multiple={showType === EnOrganizationShowType.platform}
-        title={t('조직 목록')}
-        showRemove={showType === EnOrganizationShowType.platform}
-        excelButtons={showType === EnOrganizationShowType.platform && <GridExcelUploadButton />}
-        onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
-        onRemoveClick={handleRemoveClick}
-        isRowSelectable={handleOnSelectable}
-      />
+      {showType === EnOrganizationShowType.origin && (
+        <GridBox
+          config={configOrigin}
+          columns={columns}
+          showNumberingColumn
+          hideRowSelectionCheckBox
+          title={t('조직 목록')}
+          isRowSelectable={handleOnSelectable}
+        />
+      )}
+      {showType === EnOrganizationShowType.platform && (
+        <GridBox
+          config={configPlatform}
+          columns={columnsPlatform}
+          hideRowSelectionCheckBox
+          multiple
+          title={t('조직 목록')}
+          showRemove
+          excelButtons={<GridExcelUploadButton />}
+          onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
+          onRemoveClick={handleRemoveClick}
+          isRowSelectable={handleOnSelectable}
+        />
+      )}
     </>
   );
 };

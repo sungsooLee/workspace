@@ -24,12 +24,14 @@ import type { com_ever_edu_lms_category_dto_res_CategoryMasterDto } from '../mod
 import type { com_ever_edu_lms_category_dto_res_CategoryMasterTreeDto } from '../models/com_ever_edu_lms_category_dto_res_CategoryMasterTreeDto';
 import type { com_ever_edu_lms_category_dto_res_TenantCategoryDto } from '../models/com_ever_edu_lms_category_dto_res_TenantCategoryDto';
 import type { com_ever_edu_lms_category_dto_res_TenantCategoryTreeDto } from '../models/com_ever_edu_lms_category_dto_res_TenantCategoryTreeDto';
+import type { com_ever_edu_lms_course_dto_req_CoursePopSearchReqDto } from '../models/com_ever_edu_lms_course_dto_req_CoursePopSearchReqDto';
 import type { com_ever_edu_lms_course_dto_req_CoursePrimaryCurriculumReqDto } from '../models/com_ever_edu_lms_course_dto_req_CoursePrimaryCurriculumReqDto';
 import type { com_ever_edu_lms_course_dto_req_CourseSearchReqDto$SearchByAdminDto } from '../models/com_ever_edu_lms_course_dto_req_CourseSearchReqDto$SearchByAdminDto';
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1 } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1';
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2 } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2';
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep3 } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep3';
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4';
+import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep5 } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep5';
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew';
 import type { com_ever_edu_lms_course_dto_req_SequenceDeleteReqDto } from '../models/com_ever_edu_lms_course_dto_req_SequenceDeleteReqDto';
 import type { com_ever_edu_lms_course_dto_req_SequenceSaveReqDto } from '../models/com_ever_edu_lms_course_dto_req_SequenceSaveReqDto';
@@ -41,19 +43,24 @@ import type { com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin } from 
 import type { com_ever_edu_lms_course_dto_res_SequenceResDto$onAdmin } from '../models/com_ever_edu_lms_course_dto_res_SequenceResDto$onAdmin';
 import type { com_ever_edu_lms_enroll_dto_event_EnrollQueueEvent } from '../models/com_ever_edu_lms_enroll_dto_event_EnrollQueueEvent';
 import type { com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByAdmin } from '../models/com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByAdmin';
+import type { com_ever_edu_lms_instructor_dto_req_InstructorExcelExportReqDto } from '../models/com_ever_edu_lms_instructor_dto_req_InstructorExcelExportReqDto';
+import type { com_ever_edu_lms_instructor_dto_req_InstructorHistorySearchReqDto } from '../models/com_ever_edu_lms_instructor_dto_req_InstructorHistorySearchReqDto';
 import type { com_ever_edu_lms_instructor_dto_req_InstructorSaveReqDto } from '../models/com_ever_edu_lms_instructor_dto_req_InstructorSaveReqDto';
 import type { com_ever_edu_lms_instructor_dto_req_InstructorSearchReqDto } from '../models/com_ever_edu_lms_instructor_dto_req_InstructorSearchReqDto';
 import type { com_ever_edu_lms_instructor_dto_req_InstructorUpdateReqDto } from '../models/com_ever_edu_lms_instructor_dto_req_InstructorUpdateReqDto';
 import type { com_ever_edu_lms_instructor_dto_res_InstructorResDto } from '../models/com_ever_edu_lms_instructor_dto_res_InstructorResDto';
 import type { com_ever_edu_lms_space_dto_req_LearningSpaceListReqDto } from '../models/com_ever_edu_lms_space_dto_req_LearningSpaceListReqDto';
 import type { com_ever_edu_lms_space_dto_req_LearningSpaceSaveReqDto } from '../models/com_ever_edu_lms_space_dto_req_LearningSpaceSaveReqDto';
+import type { com_ever_edu_lms_space_dto_req_LearningSpaceUpdateReqDto } from '../models/com_ever_edu_lms_space_dto_req_LearningSpaceUpdateReqDto';
 import type { com_ever_edu_lms_space_dto_res_LearningSpaceAdminResDto } from '../models/com_ever_edu_lms_space_dto_res_LearningSpaceAdminResDto';
 import type { com_ever_edu_lms_student_dto_req_StudentSearchDto$SearchByAdmin } from '../models/com_ever_edu_lms_student_dto_req_StudentSearchDto$SearchByAdmin';
 import type { org_springdoc_core_converters_models_Pageable } from '../models/org_springdoc_core_converters_models_Pageable';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_badge_dto_res_BadgeGroupListResDto$OnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_badge_dto_res_BadgeGroupListResDto$OnAdmin';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_badge_dto_res_BadgeListResDto$OnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_badge_dto_res_BadgeListResDto$OnAdmin';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CourseListAdminResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CourseListAdminResDto';
+import type { org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CoursePopSearchResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CoursePopSearchResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_SequenceListResDto$OnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_SequenceListResDto$OnAdmin';
+import type { org_springframework_data_domain_PageCom_ever_edu_lms_instructor_dto_res_InstructorHistorySearchResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_instructor_dto_res_InstructorHistorySearchResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_instructor_dto_res_InstructorSearchResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_instructor_dto_res_InstructorSearchResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_space_dto_res_LearningSpaceListAdminResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_space_dto_res_LearningSpaceListAdminResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_student_dto_res_StudentHistoryDto$OnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_student_dto_res_StudentHistoryDto$OnAdmin';
@@ -120,6 +127,87 @@ export class BoService {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 교육 장소 상세 조회
+     * 교육장소 ID로 상세정보를 조회한다.
+     * @param learningSpaceId
+     * @returns com_ever_edu_lms_space_dto_res_LearningSpaceAdminResDto OK
+     * @throws ApiError
+     */
+    public static findById(
+        learningSpaceId: number,
+    ): CancelablePromise<com_ever_edu_lms_space_dto_res_LearningSpaceAdminResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/space/{learningSpaceId}',
+            path: {
+                'learningSpaceId': learningSpaceId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 교육 장소 정보 수정
+     * 교육 장소 정보를 수정한다.
+     * @param learningSpaceId
+     * @param requestBody
+     * @returns number OK
+     * @throws ApiError
+     */
+    public static update(
+        learningSpaceId: number,
+        requestBody: com_ever_edu_lms_space_dto_req_LearningSpaceUpdateReqDto,
+    ): CancelablePromise<number> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/admin/api/v1/space/{learningSpaceId}',
+            path: {
+                'learningSpaceId': learningSpaceId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 교육 장소 삭제
+     * 교육 장소 정보를 삭제한다.
+     * @param learningSpaceId
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static delete1(
+        learningSpaceId: number,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/admin/api/v1/space/{learningSpaceId}',
+            path: {
+                'learningSpaceId': learningSpaceId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },
@@ -229,23 +317,20 @@ export class BoService {
         });
     }
     /**
-     * 강사 목록 조회
-     * 강사 목록 조회
-     * @param pageable
-     * @param reqDto
-     * @returns org_springframework_data_domain_PageCom_ever_edu_lms_instructor_dto_res_InstructorSearchResDto OK
+     * 강사 상세 조회
+     * 강사 상세 조회
+     * @param instructorId
+     * @returns com_ever_edu_lms_instructor_dto_res_InstructorResDto OK
      * @throws ApiError
      */
-    public static findPage6(
-        pageable: org_springdoc_core_converters_models_Pageable,
-        reqDto: com_ever_edu_lms_instructor_dto_req_InstructorSearchReqDto,
-    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_lms_instructor_dto_res_InstructorSearchResDto> {
+    public static findById1(
+        instructorId: number,
+    ): CancelablePromise<com_ever_edu_lms_instructor_dto_res_InstructorResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/admin/api/v1/instructor',
-            query: {
-                'pageable': pageable,
-                'reqDto': reqDto,
+            url: '/admin/api/v1/instructor/{instructorId}',
+            path: {
+                'instructorId': instructorId,
             },
             errors: {
                 400: `Bad Request`,
@@ -260,16 +345,21 @@ export class BoService {
     /**
      * 강사 수정
      * 강사 수정
+     * @param instructorId
      * @param requestBody
      * @returns number OK
      * @throws ApiError
      */
-    public static update(
+    public static update1(
+        instructorId: number,
         requestBody: com_ever_edu_lms_instructor_dto_req_InstructorUpdateReqDto,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/admin/api/v1/instructor',
+            url: '/admin/api/v1/instructor/{instructorId}',
+            path: {
+                'instructorId': instructorId,
+            },
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -283,25 +373,55 @@ export class BoService {
         });
     }
     /**
-     * 강사 등록
-     * 강사 등록
+     * 강사 삭제
+     * 강사 삭제
+     * @param instructorId
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static delete2(
+        instructorId: number,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/admin/api/v1/instructor/{instructorId}',
+            path: {
+                'instructorId': instructorId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 과정 생성 마법사5
+     * 과정 생성 마법사5 입니다.
+     * @param courseId
      * @param requestBody
      * @returns number OK
      * @throws ApiError
      */
-    public static save2(
-        requestBody: com_ever_edu_lms_instructor_dto_req_InstructorSaveReqDto,
+    public static wizard5(
+        courseId: number,
+        requestBody: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep5,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
-            method: 'POST',
-            url: '/admin/api/v1/instructor',
+            method: 'PUT',
+            url: '/admin/api/v1/course/wizard5/{courseId}',
+            path: {
+                'courseId': courseId,
+            },
             body: requestBody,
             mediaType: 'application/json',
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
-                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },
@@ -431,7 +551,7 @@ export class BoService {
      * @returns number OK
      * @throws ApiError
      */
-    public static update1(
+    public static update2(
         categoryId: number,
         requestBody: com_ever_edu_lms_category_dto_req_CategoryMasterUpdateRequestDto,
     ): CancelablePromise<number> {
@@ -488,7 +608,7 @@ export class BoService {
      * @returns number OK
      * @throws ApiError
      */
-    public static update2(
+    public static update3(
         requestBody: com_ever_edu_lms_badge_dto_req_BadgeUpdateReqDto,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
@@ -536,7 +656,7 @@ export class BoService {
      * @returns number OK
      * @throws ApiError
      */
-    public static delete3(
+    public static delete4(
         requestBody: com_ever_edu_lms_badge_dto_req_BadgeUpdateReqDto,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
@@ -588,7 +708,7 @@ export class BoService {
      * @returns number OK
      * @throws ApiError
      */
-    public static update3(
+    public static update4(
         requestBody: com_ever_edu_lms_badge_dto_req_BadgeGroupUpdateReqDto,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
@@ -787,6 +907,85 @@ export class BoService {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 강사 목록 조회
+     * 강사 목록 조회
+     * @param pageable
+     * @param reqDto
+     * @returns org_springframework_data_domain_PageCom_ever_edu_lms_instructor_dto_res_InstructorSearchResDto OK
+     * @throws ApiError
+     */
+    public static findPage6(
+        pageable: org_springdoc_core_converters_models_Pageable,
+        reqDto: com_ever_edu_lms_instructor_dto_req_InstructorSearchReqDto,
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_lms_instructor_dto_res_InstructorSearchResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/instructor',
+            query: {
+                'pageable': pageable,
+                'reqDto': reqDto,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 강사 등록
+     * 강사 등록
+     * @param requestBody
+     * @returns number OK
+     * @throws ApiError
+     */
+    public static save2(
+        requestBody: com_ever_edu_lms_instructor_dto_req_InstructorSaveReqDto,
+    ): CancelablePromise<number> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/instructor',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 강사 목록 엑셀 다운로드
+     * 강사 관리 조회 결과를 엑셀로 다운로드한다.
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static instructorExcelExport(
+        requestBody: com_ever_edu_lms_instructor_dto_req_InstructorExcelExportReqDto,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/instructor/excel',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },
@@ -1154,31 +1353,6 @@ export class BoService {
         });
     }
     /**
-     * 교육 장소 상세 조회
-     * 교육장소 UUID로 상세정보를 조회한다.
-     * @param learningSpaceId
-     * @returns com_ever_edu_lms_space_dto_res_LearningSpaceAdminResDto OK
-     * @throws ApiError
-     */
-    public static findById(
-        learningSpaceId: number,
-    ): CancelablePromise<com_ever_edu_lms_space_dto_res_LearningSpaceAdminResDto> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/space/{learningSpaceId}',
-            path: {
-                'learningSpaceId': learningSpaceId,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
      * 교육 장소 코드 중복 확인
      * 중복: TRUE, 중복아님: FALSE
      * @param learningSpaceCode
@@ -1232,46 +1406,28 @@ export class BoService {
         });
     }
     /**
-     * 강사 상세 조회
-     * 강사 상세 조회
+     * 강사 이력 목록 조회
+     * 강사 이력 목록 조회
+     * @param pageable
      * @param instructorId
-     * @returns com_ever_edu_lms_instructor_dto_res_InstructorResDto OK
+     * @param reqDto
+     * @returns org_springframework_data_domain_PageCom_ever_edu_lms_instructor_dto_res_InstructorHistorySearchResDto OK
      * @throws ApiError
      */
-    public static findById1(
+    public static findHistoryPage(
+        pageable: org_springdoc_core_converters_models_Pageable,
         instructorId: number,
-    ): CancelablePromise<com_ever_edu_lms_instructor_dto_res_InstructorResDto> {
+        reqDto: com_ever_edu_lms_instructor_dto_req_InstructorHistorySearchReqDto,
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_lms_instructor_dto_res_InstructorHistorySearchResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/admin/api/v1/instructor/{instructorId}',
+            url: '/admin/api/v1/instructor/{instructorId}/history',
             path: {
                 'instructorId': instructorId,
             },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                405: `Method Not Allowed`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 강사 삭제
-     * 강사 삭제
-     * @param instructorId
-     * @returns any OK
-     * @throws ApiError
-     */
-    public static delete1(
-        instructorId: number,
-    ): CancelablePromise<any> {
-        return __request(OpenAPI, {
-            method: 'DELETE',
-            url: '/admin/api/v1/instructor/{instructorId}',
-            path: {
-                'instructorId': instructorId,
+            query: {
+                'pageable': pageable,
+                'reqDto': reqDto,
             },
             errors: {
                 400: `Bad Request`,
@@ -1298,6 +1454,34 @@ export class BoService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/courses',
+            query: {
+                'pageable': pageable,
+                'params': params,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 과정 조회 (팝업)
+     * 과정 조회 팝업
+     * @param pageable
+     * @param params
+     * @returns org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CoursePopSearchResDto OK
+     * @throws ApiError
+     */
+    public static findPopPage(
+        pageable: org_springdoc_core_converters_models_Pageable,
+        params: com_ever_edu_lms_course_dto_req_CoursePopSearchReqDto,
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CoursePopSearchResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/coursesPop',
             query: {
                 'pageable': pageable,
                 'params': params,
@@ -1364,20 +1548,20 @@ export class BoService {
     /**
      * 과정 항목 설정 정보
      * 채널, 과정유형에 설정된 항목 설정정보 조회(채널 선택시 호출)
-     * @param channelId
+     * @param channelUuid
      * @param courseType
      * @returns com_ever_edu_lms_course_dto_res_CourseConfigResDto OK
      * @throws ApiError
      */
     public static getCourseConfig(
-        channelId: number,
+        channelUuid: string,
         courseType: 'ELEARNING1' | 'ELEARNING2' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
     ): CancelablePromise<com_ever_edu_lms_course_dto_res_CourseConfigResDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/course/config',
             query: {
-                'channelId': channelId,
+                'channelUuid': channelUuid,
                 'courseType': courseType,
             },
             errors: {
@@ -1591,7 +1775,7 @@ export class BoService {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete2(
+    public static delete3(
         categoryId: number,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -1616,7 +1800,7 @@ export class BoService {
      * @returns number OK
      * @throws ApiError
      */
-    public static delete4(
+    public static delete5(
         badgeGroupId: number,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {

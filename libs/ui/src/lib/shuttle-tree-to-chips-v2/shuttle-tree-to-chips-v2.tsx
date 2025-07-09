@@ -31,7 +31,10 @@ export const ShuttleTreeToChipsV2 = ({
   sourceTitle,
   targetTitle,
 }: ShuttleTreeToChipsV2Props) => {
-  const isShowConditionSettingsMode = useMemo(() => selectedItems.length > 1, [selectedItems]);
+  const isShowConditionSettingsMode = useMemo(
+    () => selectedItems.filter(({ isCombined }) => !isCombined).length > 1,
+    [selectedItems],
+  );
 
   const treeBoxSelectedItems = useMemo(() => selectedItems.map(({ key }) => key), [selectedItems]);
 
@@ -63,7 +66,7 @@ export const ShuttleTreeToChipsV2 = ({
   };
 
   const applyConditionSetting = () => {
-    if (checkedValues.length > 0) {
+    if (checkedValues.length > 1) {
       const newKey = {
         isCombined: true,
         ids: checkedValues.map(({ id }) => id),

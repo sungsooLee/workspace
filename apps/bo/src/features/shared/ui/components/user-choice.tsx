@@ -58,7 +58,7 @@ const searchConfig: SearchBoxConfig = {
         required: true,
         name: 'companyId',
         type: 'dropdown',
-        label: t('회사'),
+        label: '회사',
         value: undefined,
         optionsConfig: {
           codeGroup: CODE_GROUP['manual.company.companyId'],
@@ -71,7 +71,7 @@ const searchConfig: SearchBoxConfig = {
       {
         name: 'deptId',
         type: 'dropdown',
-        label: t('소속'),
+        label: '소속',
         value: '',
         presetOptionLabel: t('LABEL.form.label.select', '선택'),
         options: [],
@@ -84,13 +84,13 @@ const searchConfig: SearchBoxConfig = {
       {
         name: 'employeeNumber',
         type: 'text',
-        label: t('사번'),
+        label: '사번',
         value: '',
       },
       {
         name: 'userName',
         type: 'text',
-        label: t('이름'),
+        label: '이름',
         value: '',
       },
     ],

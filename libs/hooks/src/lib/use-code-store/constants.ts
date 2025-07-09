@@ -50,6 +50,8 @@ export const CODE_GROUP = {
   'lms.enroll.EnrollSourceType': 'lms.enroll.EnrollSourceType',
   'lms.enroll.EnrollStatusType': 'lms.enroll.EnrollStatusType',
   'lms.enroll.LangLevelTestPreferGenderType': 'lms.enroll.LangLevelTestPreferGenderType',
+  'lms.course.HmgStandardMainCategory': 'lms.course.HmgStandardMainCategory',
+  'lms.course.HmgStandardSubCategory': 'lms.course.HmgStandardSubCategory',
   'lms.space.OnOffLineType': 'lms.space.OnOffLineType',
   'pms.api.ApiMethodCode': 'pms.api.ApiMethodCode',
   'pms.approval.ApprovalLineType': 'pms.approval.ApprovalLineType',
