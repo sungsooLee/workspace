@@ -139,7 +139,7 @@ function RouteComponent() {
     }
 
     setFuncInfo({
-      curriculum: (payload: any) => {
+      lessonProgress: (payload: any) => {
         console.log(payload);
       },
       scormInitialize: ScormRteService.initialize,
