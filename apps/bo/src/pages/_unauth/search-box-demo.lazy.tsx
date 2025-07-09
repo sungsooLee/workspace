@@ -3,7 +3,8 @@ import { ALL_OPTION, SelectOption, useSearchBox } from '@learnway/hooks';
 import { ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { createLazyFileRoute } from '@tanstack/react-router';
-import { MainContents, PageContainer } from '@widgets/layout';
+import { MainContents, PageContainer } from '@shared/ui';
+
 import { mapValues } from 'lodash';
 import { useEffect } from 'react';
 import { useWatch } from 'react-hook-form';

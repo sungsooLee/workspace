@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 
-import { PageContainer, MainContents, ContentsButtons, LinkBox } from '@widgets/layout';
+import { PageContainer, MainContents, ContentsButtons, LinkBox } from '@shared/ui';
 
 import { Tabs, Button } from '@learnway/ui';
 

@@ -4,9 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { Button, GridBox, useGridBox, GridBoxState, Divider, SplitPanel } from '@learnway/ui';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { CODE_GROUP, useSearchBox } from '@learnway/hooks';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { SearchBox } from '@shared/ui/search-box';
 import { queryOptions } from '@entities/label-messages/service/label-messages.queries';
 import { LabelMessagesQueryParams } from '@types';
@@ -15,6 +12,7 @@ import { IcoPlus } from '@learnway/icons';
 import { DATE_TIME_FORMAT, formatISODateString, getRowSelectionByList } from '@learnway/shared';
 import { Table } from '@tanstack/react-table';
 import { MessageDetail } from '@features/platform-management/platform/label-message-managemnet';
+import { MainContents, PageContainer, ContentsButtons } from '@shared/ui';
 
 export const Route = createLazyFileRoute('/_layout/platform/label-message/')({
   component: RouteComponent,

@@ -1,15 +1,10 @@
 import { createLazyFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
-import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
-import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
-import { LinkBox } from '../../../../../widgets/layout/ui/container/slot/link-box';
+import { PageContainer, ContentsButtons, LinkBox, MainContents, SubContents } from '@shared/ui';
 import { Button, ContentsRow, DynamicFormField, InputModalSelectorFormField } from '@learnway/ui';
-import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../../shared/ui/form';
-import { SharedChannelGridFormField } from '@features/form/ui';
 import { FormDisplay } from '../../../../../features/form/ui/form-display';
 import { DateRangePickerFormField, VideoDurationFormField } from '@features/form/ui';
-import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
 import React from 'react';
 import { t } from 'i18next';
 import { ChannelChoiceModal, ManagerChoiceModal } from '@shared/ui';

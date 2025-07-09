@@ -1,9 +1,8 @@
+import { SectionLayout } from '@shared/ui';
 import React, { FC, useEffect, useState } from 'react';
 import { useRouterState, useRouter } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
-
-import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 
 import {
   Button,
@@ -203,8 +202,8 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
       setApiMappingMenuList(detailData.apiMappingMenuList);
       updateFormData({
         ...detailData,
-        deviceNames: deviceNames,
-        location: location,
+        deviceNames,
+        location,
       });
       setFormMode(EnFormMode.VIEW);
     }

@@ -2,9 +2,6 @@ import React, { useCallback, useState } from 'react';
 import { Button, GridBox, SplitPanel, useGridBox } from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useSearchBox } from '@learnway/hooks';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { SearchBox } from '@shared/ui/search-box';
 import { MessageDetail } from './-components/detail';
 import { queryOptions } from '@entities/label-messages/service/label-messages.queries';
@@ -12,6 +9,7 @@ import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { LabelMessagesQueryParams } from '@types';
 import { DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
+import { MainContents, PageContainer, ContentsButtons } from '@shared/ui';
 
 export const Route = createFileRoute('/_unauth/platform_test/message/')({
   component: RouteComponent,

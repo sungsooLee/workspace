@@ -1,10 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
-import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/contents-buttons';
-import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
-import { ContentsRow } from '../../../../widgets/layout/ui/container/parts/contents-row';
-import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
+import { ContentsButtons, MainContents, ContentsRow, PageContainer } from '@shared/ui';
 import { z } from '@learnway/shared';
 import { useDynamicForm } from '@learnway/hooks';
 import { FormRow } from '../../../../shared/ui/form';

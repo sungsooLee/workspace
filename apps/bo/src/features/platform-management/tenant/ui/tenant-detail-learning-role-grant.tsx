@@ -1,10 +1,10 @@
+import { SectionLayout } from '@shared/ui';
 import { forwardRef, useEffect, useState } from 'react';
 import { useRouterState } from '@tanstack/react-router';
 import { createColumnHelper, ColumnDef, Table } from '@tanstack/react-table';
 import { UseFormGetValues, FieldValues } from 'react-hook-form';
 import { t } from 'i18next';
 
-import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form

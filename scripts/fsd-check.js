@@ -46,6 +46,7 @@ class FSDChecker {
       sameLayerViolations: 0,
       publicApiViolations: 0,
       structureViolations: 0,
+      missingIndexViolations: 0,
     };
   }
 
@@ -147,6 +148,89 @@ class FSDChecker {
   }
 
   /**
+   * 슬라이스별 index.ts 파일 존재 여부 검사
+   */
+  checkMissingIndexFiles() {
+    const layers = ['entities', 'features', 'widgets', 'pages'];
+    
+    layers.forEach(layer => {
+      const layerPath = `apps/*/src/${layer}`;
+      const sliceDirs = glob.sync(layerPath, { onlyDirectories: true });
+      
+      sliceDirs.forEach(sliceDir => {
+        // 각 슬라이스 내부의 모듈 디렉토리 찾기
+        const modules = glob.sync(`${sliceDir}/*`, { onlyDirectories: true });
+        
+        modules.forEach(moduleDir => {
+          const indexPath = path.join(moduleDir, 'index.ts');
+          const indexJsPath = path.join(moduleDir, 'index.js');
+          
+          // index.ts 또는 index.js가 존재하는지 확인
+          if (!fs.existsSync(indexPath) && !fs.existsSync(indexJsPath)) {
+            // 내부에 실제 파일이 있는지 확인 (빈 폴더는 제외)
+            const hasFiles = glob.sync(`${moduleDir}/**/*.{ts,tsx,js,jsx}`, {
+              ignore: ['**/node_modules/**', '**/dist/**']
+            }).length > 0;
+            
+            if (hasFiles) {
+              this.addViolation({
+                type: 'missing_index_violation',
+                file: moduleDir,
+                message: `${moduleDir}에 index.ts 파일이 없습니다. Public API를 위해 index.ts를 추가하세요`,
+              });
+              this.stats.missingIndexViolations++;
+            }
+          }
+        });
+      });
+    });
+  }
+
+  /**
+   * index.ts 파일의 내용 검사
+   */
+  checkIndexFileContent(filePath) {
+    if (!filePath.endsWith('/index.ts') && !filePath.endsWith('/index.js')) {
+      return;
+    }
+
+    try {
+      const content = fs.readFileSync(filePath, 'utf8');
+      const moduleDir = path.dirname(filePath);
+      
+      // 내부 구조 폴더들 확인
+      const internalDirs = ['ui', 'api', 'model', 'service', 'lib'];
+      const existingDirs = internalDirs.filter(dir => 
+        fs.existsSync(path.join(moduleDir, dir))
+      );
+      
+      // 각 내부 디렉토리에 대한 export가 있는지 확인
+      existingDirs.forEach(dir => {
+        const exportPattern = new RegExp(`from\\s+['"]\\.\\/${dir}`, 'g');
+        const hasExport = exportPattern.test(content);
+        
+        if (!hasExport) {
+          // 해당 디렉토리에 실제 파일이 있는지 확인
+          const hasFiles = glob.sync(`${moduleDir}/${dir}/**/*.{ts,tsx,js,jsx}`, {
+            ignore: ['**/node_modules/**', '**/dist/**']
+          }).length > 0;
+          
+          if (hasFiles) {
+            this.addViolation({
+              type: 'incomplete_index_violation',
+              file: filePath,
+              message: `${filePath}에서 ./${dir} 디렉토리의 export가 누락되었습니다`,
+            });
+            this.stats.missingIndexViolations++;
+          }
+        }
+      });
+    } catch (error) {
+      // 파일 읽기 오류는 무시
+    }
+  }
+
+  /**
    * 파일 분석
    */
   analyzeFile(filePath) {
@@ -156,6 +240,9 @@ class FSDChecker {
       const content = fs.readFileSync(filePath, 'utf8');
       const imports = this.extractImports(content);
       const fileLayer = this.getLayerFromPath(filePath);
+
+      // index.ts 파일 내용 검사
+      this.checkIndexFileContent(filePath);
 
       if (!fileLayer) return;
 
@@ -255,6 +342,9 @@ class FSDChecker {
     // 폴더 구조 검사
     this.checkFolderStructure();
 
+    // index.ts 파일 존재 여부 검사
+    this.checkMissingIndexFiles();
+
     this.printReport();
   }
 
@@ -279,7 +369,8 @@ class FSDChecker {
     console.log(`   • 계층 간 의존성 위반: ${this.stats.layerViolations}개`);
     console.log(`   • 같은 레벨 간 import: ${this.stats.sameLayerViolations}개`);
     console.log(`   • Public API 우회: ${this.stats.publicApiViolations}개`);
-    console.log(`   • 잘못된 폴더 구조: ${this.stats.structureViolations}개\n`);
+    console.log(`   • 잘못된 폴더 구조: ${this.stats.structureViolations}개`);
+    console.log(`   • index.ts 관련 위반: ${this.stats.missingIndexViolations}개\n`);
 
     // 위반 사항 상세 출력
     this.printViolationsByType();
@@ -306,6 +397,8 @@ class FSDChecker {
       same_layer_violation: '🔄 같은 레벨 간 import',
       public_api_violation: '📦 Public API 우회',
       structure_violation: '📁 잘못된 폴더 구조',
+      missing_index_violation: '📋 index.ts 파일 누락',
+      incomplete_index_violation: '📋 index.ts 내용 불완전',
     };
 
     Object.entries(groupedViolations).forEach(([type, violations]) => {
@@ -328,6 +421,8 @@ class FSDChecker {
     console.log(`   • CONTRIBUTING.md 문서를 참고하세요`);
     console.log(`   • 계층 간 의존성 규칙을 확인하세요`);
     console.log(`   • Public API(index.ts)를 통해 모듈을 import하세요`);
+    console.log(`   • 각 슬라이스에 index.ts 파일을 생성하세요`);
+    console.log(`   • index.ts에서 모든 내부 모듈을 적절히 export하세요`);
     console.log(`   • shared/ 계층을 활용하여 공통 코드를 분리하세요\n`);
 
     console.log(`${colors.blue}🔧 자동 수정 가능한 항목:${colors.reset}`);

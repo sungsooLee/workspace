@@ -2,13 +2,11 @@ import React, { useRef } from 'react';
 import { Button, Tabs } from '@learnway/ui';
 import { createLazyFileRoute } from '@tanstack/react-router';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { BasicInfo } from '../-components/basic-info/basic-info';
 import { CourseRegistration } from '../-components/course-registration/course-registration';
 import { formConfig as formConfigBasic } from '../-components/basic-info/form-config';
 import { formConfig as formConfigCourse } from '../-components/course-registration/form-config';
+import { MainContents, PageContainer, ContentsButtons } from '@shared/ui';
 
 export const Route = createLazyFileRoute('/_unauth/learning_test/course-manage/detail/view')({
   component: RouteComponent,

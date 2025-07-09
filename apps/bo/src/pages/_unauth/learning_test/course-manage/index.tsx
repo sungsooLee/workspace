@@ -1,10 +1,8 @@
 import React from 'react';
 import { Button, Tabs } from '@learnway/ui';
 import { createFileRoute } from '@tanstack/react-router';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { useTranslation } from 'react-i18next';
+import { MainContents, PageContainer, ContentsButtons } from '@shared/ui';
 
 export const Route = createFileRoute('/_unauth/learning_test/course-manage/')({
   component: RouteComponent,

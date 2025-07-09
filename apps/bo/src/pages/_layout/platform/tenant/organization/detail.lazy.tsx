@@ -2,13 +2,10 @@ import { useEffect } from 'react';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
 
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
-
 import { Button } from '@learnway/ui';
 
 import { CompanyOrganization } from '@features/platform-management/company';
+import { MainContents, PageContainer, ContentsButtons } from '@shared/ui';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/organization/detail')({
   component: RouteComponent,
@@ -32,7 +29,7 @@ function RouteComponent() {
     console.log('listParam-detail', listParam);
     router.navigate({
       to: '/platform/tenant/organization',
-      state: { listParam: listParam },
+      state: { listParam },
     });
   };
 

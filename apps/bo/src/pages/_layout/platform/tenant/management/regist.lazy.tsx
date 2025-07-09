@@ -2,11 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { t } from 'i18next';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
-import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
-
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
 import {
@@ -40,6 +35,7 @@ import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.modu
 import { IcoAlertCircle } from '@learnway/icons';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { cn } from '@learnway/shared';
+import { MainContents, PageContainer, LinkBox, ContentsButtons } from '@shared/ui';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/management/regist')({
   component: RouteComponent,

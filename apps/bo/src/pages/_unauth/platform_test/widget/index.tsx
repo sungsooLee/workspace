@@ -3,10 +3,7 @@ import { Button, GridBox, useGridBox } from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 
 import { useSearchBox } from '@learnway/hooks';
-
-import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/contents-buttons';
-import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
-import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
+import { PageContainer, ContentsButtons, MainContents } from '@shared/ui';
 
 import { translationQueryOptions } from '../../../../entities/translation/service/translation.queries';
 

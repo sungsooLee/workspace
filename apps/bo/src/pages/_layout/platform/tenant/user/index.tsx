@@ -3,7 +3,7 @@ import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useQueryClient } from '@tanstack/react-query';
 import { t } from 'i18next';
 
-import { PageContainer, MainContents, ContentsButtons } from '@widgets/layout';
+import { PageContainer, MainContents, ContentsButtons } from '@shared/ui';
 
 import { Tabs, Button } from '@learnway/ui';
 

@@ -5,14 +5,13 @@ import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { Button, Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { useQueryClient } from '@tanstack/react-query';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 import { formUtils } from '@entities/form-utils';
 import { EnGlobalConst } from '@types';
 import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
+import { MainContents, PageContainer } from '@shared/ui';
 
 export const Route = createFileRoute('/_layout/platform/company/user/')({
   component: RouteComponent,

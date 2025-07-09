@@ -4,10 +4,8 @@ import { t } from 'i18next';
 import { Tabs } from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import { pageRouteConfig } from '@features/auth';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ApiTree } from '@features/platform-management/platform/api-managemnet/ui/api-tree';
-import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
+import { MainContents, PageContainer, SectionLayout } from '@shared/ui';
 
 export const Route = createLazyFileRoute('/_layout/platform/program/')({
   component: RouteComponent,

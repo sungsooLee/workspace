@@ -1,8 +1,8 @@
+import { MainContents } from '@shared/ui';
 import { useRouterState, useRouter } from '@tanstack/react-router';
 import { ChannelDetail } from './channel-detail';
 import { FormSubTitle } from '@shared/ui';
 import { Button } from '@learnway/ui';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 
 import { cn } from '@learnway/shared';
 import styles from './channel-detail-base.module.css';

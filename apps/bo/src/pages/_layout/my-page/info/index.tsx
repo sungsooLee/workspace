@@ -1,10 +1,8 @@
+import { PageContainer, MainContents, ContentsButtons } from '@shared/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
 
 import { pageRouteConfig } from '@features/auth/index';
 import { MyPage } from '@features/user/my-page/ui/my-page';
-import { ContentsButtons } from '@widgets/layout';
 import { Button } from '@learnway/ui';
 import { useTranslation } from 'react-i18next';
 

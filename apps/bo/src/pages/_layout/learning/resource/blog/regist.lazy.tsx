@@ -3,7 +3,7 @@ import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { Button, Divider, useModal } from '@learnway/ui';
 import defaultImage from '@assets/images/temp/img_temp_blog_default.png';
-import { ContentsButtons, MainContents, PageContainer, SubContents } from '@widgets/layout';
+import { MainContents, PageContainer, ContentsButtons, SubContents } from '@shared/ui';
 import { BlogDetail } from './-components/blog-detail';
 
 import styles from './blog-detail.module.css';

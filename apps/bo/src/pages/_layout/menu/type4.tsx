@@ -1,6 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
-import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
+import { MainContents, PageContainer } from '@shared/ui';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { SearchBox } from '../../../shared/ui/search-box';
 import { t } from 'i18next';

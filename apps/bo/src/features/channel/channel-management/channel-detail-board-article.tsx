@@ -2,9 +2,7 @@ import { useState, useCallback } from 'react';
 import { t } from 'i18next';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
+import { ContentsButtons } from '@shared/ui';
 import { cn } from '@learnway/shared';
 import {
   Button,
@@ -22,6 +20,7 @@ import { ChannelDetailBoardArticleList } from './channel-detail-board-article-li
 import { ChannelDetailBoardArticleDetail } from './channel-detail-board-article-detail';
 
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
+import { MainContents, PageContainer } from '@shared/ui';
 
 const ChannelDetailBoardArticleComponent = () => {
   const [pageMode, setPageMode] = useState('list');

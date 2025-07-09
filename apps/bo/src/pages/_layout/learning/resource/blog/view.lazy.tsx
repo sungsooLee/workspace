@@ -5,7 +5,7 @@ import { t } from 'i18next';
 import { Button, Divider } from '@learnway/ui';
 import { isEmptyData } from '@learnway/shared';
 import defaultImage from '@assets/images/temp/img_temp_blog_default.png';
-import { ContentsButtons, MainContents, PageContainer, SubContents } from '@widgets/layout';
+import { MainContents, PageContainer, ContentsButtons, SubContents } from '@shared/ui';
 import { learningResourceQueryOptions } from '@entities/learning-resource';
 
 import { BlogDetail } from './-components/blog-detail';

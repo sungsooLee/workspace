@@ -37,9 +37,7 @@ import {
   EnTenantScope,
   RoleApplication,
 } from '@types';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
+import { MainContents, PageContainer, ContentsButtons } from '@shared/ui';
 
 export const Route = createLazyFileRoute('/_layout/my-page/role/detail')({
   component: RouteComponent,

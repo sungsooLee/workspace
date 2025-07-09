@@ -5,7 +5,7 @@ import { Button, Divider, GridBox, useGridBox } from '@learnway/ui';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { queryOptions } from '@entities/label-messages-mock';
 import { LabelMessage, LabelMessagesQueryParams } from '@types';
-import { ContentsButtons, MainContents, PageContainer } from '@widgets/layout';
+import { MainContents, PageContainer, ContentsButtons } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
 

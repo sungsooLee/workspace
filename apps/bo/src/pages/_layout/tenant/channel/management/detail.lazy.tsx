@@ -1,10 +1,6 @@
 import { useState } from 'react';
 import { t } from 'i18next';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
-import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
 import { Tabs, Button } from '@learnway/ui';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
@@ -13,6 +9,7 @@ import { ChannelDetailBase } from '@features/channel/channel-management/channel-
 import { ChannelDetailRole } from '@features/channel/channel-management/channel-detail-role';
 import { ChannelDetailHome } from '@features/channel/channel-management/channel-detail-home';
 import { ChannelDetailBoard } from '@features/channel/channel-management/channel-detail-board';
+import { MainContents, PageContainer, LinkBox, ContentsButtons } from '@shared/ui';
 
 export const Route = createLazyFileRoute('/_layout/tenant/channel/management/detail')({
   component: RouteComponent,

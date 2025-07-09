@@ -1,7 +1,7 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
-import { PageContainer, MainContents, ContentsButtons } from '@widgets/layout';
+import { PageContainer, MainContents } from '@shared/ui';
 
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';

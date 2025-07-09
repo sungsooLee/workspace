@@ -186,7 +186,20 @@ import { userQueries } from '@entities/user';
 import { useUserData } from '@features/user-management';
 ```
 
-### 4. 잘못된 폴더 위치
+### 4. Public API 우회 (Barrel/Re-export 미사용)
+
+```typescript
+// ❌ 잘못된 예시
+// features/user-management/ui/user-list.tsx
+import { UserCard } from '@entities/user/ui/user-card';
+import { userApi } from '@entities/user/api/user-api';
+
+// ✅ 올바른 해결책
+// index.ts를 통한 Public API 사용
+import { UserCard, userApi } from '@entities/user';
+```
+
+### 5. 잘못된 폴더 위치
 
 ```typescript
 // ❌ 잘못된 구조
@@ -223,9 +236,75 @@ export const authForm = () => { ... };  // 컴포넌트는 PascalCase
 export const UseAuthForm = () => { ... }; // 훅은 camelCase
 ```
 
-## 📦 Public API 패턴
+## 📦 Public API 패턴 (Barrel/Re-export)
 
-### 1. 각 레이어의 index.ts
+### 1. index.ts 파일 위치와 역할
+
+FSD 아키텍처에서 index.ts는 **각 레이어와 슬라이스마다** 선언해야 합니다:
+
+#### 슬라이스 레벨 (필수)
+각 기능이나 엔티티 폴더의 루트에 index.ts를 생성:
+
+```typescript
+// entities/user/index.ts
+export { UserCard } from './ui/user-card';
+export { userModel } from './model/user-model';
+export { userApi } from './api/user-api';
+export type { User, UserProps } from './model/types';
+
+// features/auth/index.ts  
+export { AuthForm } from './ui/auth-form';
+export { useAuth } from './model/use-auth';
+export { authApi } from './api/auth-api';
+export type { AuthFormProps } from './ui/auth-form';
+
+// widgets/header/index.ts
+export { Header } from './ui/header';
+export { useHeaderModel } from './model/use-header-model';
+```
+
+#### 레이어 레벨 (선택적)
+각 레이어 폴더에 통합 index.ts 생성:
+
+```typescript
+// entities/index.ts
+export * from './user';
+export * from './role';
+export * from './menu';
+
+// features/index.ts
+export * from './auth';
+export * from './user-management';
+export * from './role-management';
+```
+
+#### 앱 레벨 (루트)
+전체 앱의 public API:
+
+```typescript
+// src/index.ts
+export * from './entities';
+export * from './features';  
+export * from './widgets';
+export * from './shared';
+```
+
+### 2. 올바른 사용 예시
+
+```typescript
+// ✅ 올바른 import (슬라이스 레벨 index.ts 사용)
+import { UserCard, userApi } from '@entities/user';
+import { AuthForm, useAuth } from '@features/auth';
+
+// ✅ 레이어 레벨 index.ts 사용 (선택적)
+import { UserCard } from '@entities';
+
+// ❌ 잘못된 import (내부 구조 직접 접근)
+import { UserCard } from '@entities/user/ui/user-card';
+import { userApi } from '@entities/user/api/user-api';
+```
+
+### 3. 내부 구현 숨김
 
 ```typescript
 // features/auth/index.ts
@@ -233,15 +312,30 @@ export { AuthForm } from './ui/auth-form';
 export { useAuthForm } from './model/use-auth-form';
 export type { AuthFormProps } from './ui/auth-form';
 
-// 내부 구현은 숨김
+// 내부 구현은 숨김 (외부에서 접근 불가)
 // export { AuthFormImpl } from './ui/auth-form-impl'; // ❌
+// export { validateAuthForm } from './lib/validation'; // ❌
 ```
 
-### 2. 조건부 Export
+### 4. 조건부 Export
 
 ```typescript
 // 개발 환경에서만 export
-export { AuthFormDevTools } from './dev/auth-form-dev-tools';
+if (process.env.NODE_ENV === 'development') {
+  export { AuthFormDevTools } from './dev/auth-form-dev-tools';
+}
+```
+
+### 5. 타입 전용 Export
+
+```typescript
+// 타입만 export하는 경우
+export type { User, UserRole } from './model/types';
+export type { UserApiResponse } from './api/types';
+
+// 런타임 값과 타입 함께 export
+export { userApi } from './api/user-api';
+export type { UserApi } from './api/user-api';
 ```
 
 ## ✅ 코드 리뷰 체크리스트
@@ -250,8 +344,10 @@ export { AuthFormDevTools } from './dev/auth-form-dev-tools';
 
 - [ ] 올바른 계층 구조를 따르고 있는가?
 - [ ] 계층 간 의존성 규칙을 위반하지 않았는가?
-- [ ] Public API를 통해 모듈을 사용하고 있는가?
+- [ ] Public API(index.ts)를 통해 모듈을 사용하고 있는가?
 - [ ] 절대 경로를 사용하고 있는가?
+- [ ] 각 슬라이스에 적절한 index.ts가 존재하는가?
+- [ ] 내부 구조(ui/, api/, model/)에 직접 접근하지 않았는가?
 
 ### 파일 구조 검토
 
