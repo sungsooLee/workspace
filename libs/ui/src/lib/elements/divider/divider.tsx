@@ -6,7 +6,7 @@ interface DividerProps {
   orientation?: 'horizontal' | 'vertical'; // 수평 또는 수직
   spacing?: 'full' | 'inner'; // 여백 조절 (선택 사항)
   className?: string; // 추가 CSS 클래스 (선택 사항)
-  bgType?: 'normal' | 'light'; // 배경색 type 선언
+  bgType?: 'normal' | 'dark'; // 배경색 type 선언
 }
 
 export const Divider: React.FC<DividerProps> = ({

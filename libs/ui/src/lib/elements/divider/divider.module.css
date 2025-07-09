@@ -2,7 +2,7 @@
 
 .divider {
   @apply bg-[var(--gray4)];
-  &.light {
+  &.dark {
     @apply bg-[#D3D5DA];
   }
 }
