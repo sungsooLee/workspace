@@ -15,11 +15,17 @@ import {
 import { DuplicateCodeGuideText } from '@features/platform-management/platform/category-managemnet';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { FormSubTitle, ThumbnailListFormField, ChipListFormField } from '@shared/ui';
-import { ContentsHistoryInfoFormField, FormInfoArea, FormRow } from '@shared/ui';
-
+import {
+  FormSubTitle,
+  ThumbnailListFormField,
+  ChipListFormField,
+  ContentsHistoryInfoFormField,
+  FormInfoArea,
+  FormRow,
+} from '@shared/ui';
+import { EnGlobalConst } from '@types';
 import { FormDisplay } from '@features/form/ui/form-display';
-import { TenantChoiceModal, UserChoiceModal } from '@features/shared';
+import { TenantChoiceModal, UserChoiceModal } from '@shared/ui';
 import {
   DynamicFormConfig,
   useDynamicForm,
@@ -39,7 +45,7 @@ const ChannelDetailComponent: FC<any> = ({ mode, method, requestId }) => {
 
   const { provider, updateFormData, onSubmit, setFormError, clearFormError, getValues } =
     useDynamicForm(formConfig);
-  const { provider: searchProvider, getValues: getSearchValues } = useSearchBox(searchConfig);
+  const { provider: searchProvider, getValues: getSearchValues } = useSearchBox(searchConfig());
   const { config: gConfig, gridFetch, data: gridData } = useGridBox(gridConfig, getValues);
 
   const [isSuccessCodeCheck, setIsSuccessCodeCheck] = useState(false);
@@ -67,7 +73,10 @@ const ChannelDetailComponent: FC<any> = ({ mode, method, requestId }) => {
         requestDate:
           request && getDateToString(new Date(request.requestDate), DATE_TIME_FORMAT.DATETIME_SEC),
         status:
-          request && t('pms.channel.ChannelApprovalStatusType.' + request.approvalStatusTypecd),
+          request &&
+          t(
+            `${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.channel.ChannelApprovalStatusType.${request.approvalStatusTypecd}`,
+          ),
         channelLearningContent: request?.channelLearningContent,
         channelPurposeContent: request?.channelPurposeContent,
         channelName: request?.channelName,
@@ -785,7 +794,7 @@ const formConfig: DynamicFormConfig = {
   },
 };
 
-const searchConfig: SearchBoxConfig = {
+const searchConfig = (): SearchBoxConfig => ({
   builders: [
     [
       {
@@ -813,7 +822,7 @@ const searchConfig: SearchBoxConfig = {
       },
     ],
   ],
-};
+});
 
 const gridConfig: useGridBoxConfig = {
   query: '',

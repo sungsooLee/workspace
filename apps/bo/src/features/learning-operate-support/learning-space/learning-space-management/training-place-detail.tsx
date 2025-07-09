@@ -3,11 +3,10 @@ import { t } from 'i18next';
 import { useRouter } from '@tanstack/react-router';
 import { useModal, ContentsRow, TextareaFormField, Input, RadioGroupFormField } from '@learnway/ui';
 import { FormDisplay } from '@features/form/ui/form-display';
-import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
+import { DuplicateCheckInputFormField, DuplicateState, DropdownFormField } from '@features/form';
 import { FormRow, FormSubTitle } from '@shared/ui';
 import { DynamicFormConfig, useDynamicForm, CODE_GROUP, S3_PATH } from '@learnway/hooks';
-import { AddressSearchModal } from '@features/shared/ui/modal/address-search-modal';
-import { DropdownFormField } from '@features/form';
+import { AddressSearchModal } from '@shared/ui/modal/address-search-modal';
 import { useSpaceMutation } from '@entities/training-place';
 import { EnFormMode, EnPageMode } from '@types';
 import SpaceService from '@entities/training-place/api/space';
@@ -30,7 +29,7 @@ const TrainingPlaceDetailComponent = (props: TrainingPlaceDetailProps, ref: any)
   const { open: openModal, alert: openAlert, confirm: openConfirm, close: closeModal } = useModal();
   const [savedId, setSavedId] = useState(undefined);
   const { provider, updateFormData, onSubmit, onFormChange, getValues } =
-    useDynamicForm(formConfig);
+    useDynamicForm(formConfig());
 
   const [detailData, setDetailData] = useState<Space>();
 
@@ -85,7 +84,7 @@ const TrainingPlaceDetailComponent = (props: TrainingPlaceDetailProps, ref: any)
 
   const mutationHandler = (data: any, title: string) => {
     openAlert({
-      title: title,
+      title,
       onClose: () => {
         if (props.pageMode === EnPageMode.MODAL && data) {
           setSavedId(data);
@@ -239,7 +238,7 @@ const TrainingPlaceDetailComponent = (props: TrainingPlaceDetailProps, ref: any)
 
 export const TrainingPlaceDetail = forwardRef(TrainingPlaceDetailComponent);
 
-const formConfig: DynamicFormConfig = {
+const formConfig = (): DynamicFormConfig => ({
   builders: [
     {
       name: 'tenantId',
@@ -393,4 +392,4 @@ const formConfig: DynamicFormConfig = {
       required: (values) => values.onOffLineType === 'OFFLINE',
     },
   },
-};
+});

@@ -15,7 +15,7 @@ interface ChannelDetailBoardArticleListProps {
 const ChannelDetailBoardArticleListComponent = ({
   onArticleClick,
 }: ChannelDetailBoardArticleListProps) => {
-  const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
+  const { provider: searchProvider, getValues } = useSearchBox(searchConfig());
   const { config: gConfig, gridFetch, data: gridData } = useGridBox(gridConfig, getValues);
 
   const handleOnSearch = useCallback((data: any) => {
@@ -115,7 +115,7 @@ const ChannelDetailBoardArticleListComponent = ({
 
 export const ChannelDetailBoardArticleList = ChannelDetailBoardArticleListComponent;
 
-const searchConfig: SearchBoxConfig = {
+const searchConfig = (): SearchBoxConfig => ({
   builders: [
     [
       {
@@ -166,7 +166,7 @@ const searchConfig: SearchBoxConfig = {
       },
     ],
   ],
-};
+});
 
 const gridConfig: useGridBoxConfig = {
   query: '',
@@ -193,9 +193,9 @@ const gridConfig: useGridBoxConfig = {
     },
   ],
 
-  pagination: {
-    pageSize: 10,
-    pageIndex: 0,
-    totalRows: 0,
+  gridState: {
+    page: 0,
+    size: 10,
+    sort: [],
   },
 };

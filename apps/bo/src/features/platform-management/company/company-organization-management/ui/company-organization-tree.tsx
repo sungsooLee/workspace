@@ -45,7 +45,7 @@ import { CompanyOrganizationUserList } from './company-organization-info-user';
 
 import { EnFormMode } from '@types';
 import { DuplicateState, DuplicateCheckInputFormField } from '@features/form';
-import { UserChoiceModal } from '@features/shared';
+import { UserChoiceModal } from '@shared/ui';
 import CompaniesService from '@entities/companies/api/companies';
 export enum EnOrganizationShowType {
   check = 'check',

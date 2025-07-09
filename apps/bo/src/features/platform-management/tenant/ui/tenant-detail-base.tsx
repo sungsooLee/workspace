@@ -9,19 +9,24 @@ import {
   Button,
   CheckboxGroupFormField,
   ChipListModalSelectorFormField,
-  ContentsRow, Switch,
-  TextareaFormField, Tooltip,
+  ContentsRow,
+  Switch,
+  TextareaFormField,
+  Tooltip,
   useModal,
 } from '@learnway/ui';
-import { CODE_GROUP, DynamicFormConfig, S3_PATH, useCodeStore, useDynamicForm } from '@learnway/hooks';
-
 import {
-  FormSubTitle,
-  FormRow,
-} from '@shared/ui';
+  CODE_GROUP,
+  DynamicFormConfig,
+  S3_PATH,
+  useCodeStore,
+  useDynamicForm,
+} from '@learnway/hooks';
+
+import { FormSubTitle, FormRow } from '@shared/ui';
 
 import { isEqual } from 'lodash';
-import { CompanyChoiceModal, UserChoiceModal } from '@features/shared';
+import { CompanyChoiceModal, UserChoiceModal } from '@shared/ui';
 import { DuplicateCheckInputFormField, DuplicateState, FormDisplay } from '@features/form';
 import { useFetchTenant, useUpdateTenant } from '@entities/tenant';
 import TenantService from '@entities/tenant/api/tenant';
@@ -101,8 +106,14 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       isTenantCategory: data.useCategory.includes(EnUseCategory.isTenantCategory),
       tenantId: tenantId,
       tenantTagList: tagStringList.map((item: string) => ({ tagName: item })),
-      tenantUserList: data.tenantUserList.map((item: any) => ({ tenantId: tenantId, userUuid: item.uuid })),
-      companyTenantList: data.companyTenantList.map((v: any) => ({ tenantId: tenantId, companyId: v.companyId })),
+      tenantUserList: data.tenantUserList.map((item: any) => ({
+        tenantId: tenantId,
+        userUuid: item.uuid,
+      })),
+      companyTenantList: data.companyTenantList.map((v: any) => ({
+        tenantId: tenantId,
+        companyId: v.companyId,
+      })),
     };
     console.log('payload {} => ', payload);
     if (await openConfirm('저장 하시겠습니까?')) {
@@ -116,7 +127,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
 
   useEffect(() => {
     if (tenantData) {
-      console.log("#### tenantData {} => ", tenantData);
+      console.log('#### tenantData {} => ', tenantData);
 
       const device = [];
       const useCategory = [];
@@ -159,9 +170,10 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         isAdminDataOption: platformAttributeProperties.isUseAdminDataOption,
         isCarTenantCustomOption: platformAttributeProperties.isUseCarTenantCustomOption,
         isRotemTenantCustomOption: platformAttributeProperties.isUseRotemTenantCustomOption,
-        isOutsourcingTenantCustomOption: platformAttributeProperties.isUseOutsourcingTenantCustomOption,
+        isOutsourcingTenantCustomOption:
+          platformAttributeProperties.isUseOutsourcingTenantCustomOption,
         isWiaTenantCustomOption: platformAttributeProperties.isUseWiaTenantCustomOption,
-        isAutoeverTenantCustomOption: platformAttributeProperties.isUseAutoeverTenantCustomOption
+        isAutoeverTenantCustomOption: platformAttributeProperties.isUseAutoeverTenantCustomOption,
       });
     }
   }, [tenantData]);
@@ -302,7 +314,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
             element={
               <>
                 {t('허용')}
-                <Switch disabled={true} checked={true}/>
+                <Switch disabled={true} checked={true} />
               </>
             }
           />
@@ -320,9 +332,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
             <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
               <span className={styles.form_text}> {t('정원')}</span>
             </label>
-            <p className={formStyles.guide_text}>
-              {t('수강 신청 정원 사용 여부를 설정합니다. ')}
-            </p>
+            <p className={formStyles.guide_text}>{t('수강 신청 정원 사용 여부를 설정합니다. ')}</p>
           </div>
           <div className={formStyles.form_item}>
             <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
@@ -338,9 +348,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
             <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
               <span className={styles.form_text}> {t('차수 중복 수강')}</span>
             </label>
-            <p className={formStyles.guide_text}>
-              {t('동일 차수 종북 학습 여부를 설정합니다. ')}
-            </p>
+            <p className={formStyles.guide_text}>{t('동일 차수 종북 학습 여부를 설정합니다. ')}</p>
           </div>
           <div className={formStyles.form_item}>
             <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
@@ -354,9 +362,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
             <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
               <span className={styles.form_text}> {t('교재 배송지 수집 ')}</span>
             </label>
-            <p className={formStyles.guide_text}>
-              {t('교재 배송지 주소 수집 여부를 설정합니다.')}
-            </p>
+            <p className={formStyles.guide_text}>{t('교재 배송지 주소 수집 여부를 설정합니다.')}</p>
           </div>
         </ContentsRow>
       </FormDisplay>
@@ -401,11 +407,9 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         titleNode={
           <Tooltip
             className={styles.tooltip}
-            content={
-              t(
-                '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다. ',
-              )
-            }
+            content={t(
+              '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다. ',
+            )}
           >
             <Button onlyIcon>
               <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
@@ -414,26 +418,19 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         }
         actionNode={<FormRow provider={provider} name={'isInstructorOption'} />}
       />
-      <FormDisplay
-        provider={provider}
-        dependencies={[{ name: 'isInstructorOption', value: true }]}
-      >
+      <FormDisplay provider={provider} dependencies={[{ name: 'isInstructorOption', value: true }]}>
         <ContentsRow>
           <div className={formStyles.form_item}>
             <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
               <span className={styles.form_text}> {t('강사')}</span>
             </label>
-            <p className={formStyles.guide_text}>
-              {t('강사가 과정을 진행 시 강사를 설정합니다.')}
-            </p>
+            <p className={formStyles.guide_text}>{t('강사가 과정을 진행 시 강사를 설정합니다.')}</p>
           </div>
           <div className={formStyles.form_item}>
             <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
               <span className={styles.form_text}> {t('튜터')}</span>
             </label>
-            <p className={formStyles.guide_text}>
-              {t('튜터가 과정을 진행 시 튜터를 설정합니다.')}
-            </p>
+            <p className={formStyles.guide_text}>{t('튜터가 과정을 진행 시 튜터를 설정합니다.')}</p>
           </div>
           <div className={formStyles.form_item}></div>
         </ContentsRow>
@@ -459,7 +456,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
             element={
               <>
                 {t('허용')}
-                <Switch disabled={true} checked={true}/>
+                <Switch disabled={true} checked={true} />
               </>
             }
           />
@@ -509,11 +506,9 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         titleNode={
           <Tooltip
             className={styles.tooltip}
-            content={
-              t(
-                '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다. ',
-              )
-            }
+            content={t(
+              '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다. ',
+            )}
           >
             <Button onlyIcon>
               <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
@@ -545,11 +540,9 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         titleNode={
           <Tooltip
             className={styles.tooltip}
-            content={
-              t(
-                '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
-              )
-            }
+            content={t(
+              '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
+            )}
           >
             <Button onlyIcon>
               <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
@@ -599,9 +592,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
             <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
               <span className={styles.form_text}> {t('화면 캡쳐 방지')}</span>
             </label>
-            <p className={formStyles.guide_text}>
-              {t('학습창 화면 캡쳐 방지 여부를 설정합니다.')}
-            </p>
+            <p className={formStyles.guide_text}>{t('학습창 화면 캡쳐 방지 여부를 설정합니다.')}</p>
           </div>
           <div className={formStyles.form_item}>
             <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
@@ -619,10 +610,10 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
             className={styles.tooltip}
             content={
               <pre>
-                  {t(
-                    '테넌트 상세 설정이 채널 개설 시 기본 출력되며,\n 채널에서 최종 사용 여부를 설정할 수 있습니다.',
-                  )}
-                </pre>
+                {t(
+                  '테넌트 상세 설정이 채널 개설 시 기본 출력되며,\n 채널에서 최종 사용 여부를 설정할 수 있습니다.',
+                )}
+              </pre>
             }
           >
             <Button onlyIcon>
@@ -665,9 +656,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
             <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
               <span className={styles.form_text}> {t('동영상 탐색바 제한')}</span>
             </label>
-            <p className={formStyles.guide_text}>
-              {t('동영상 탐색바의 기능 제한을 설정합니다.')}
-            </p>
+            <p className={formStyles.guide_text}>{t('동영상 탐색바의 기능 제한을 설정합니다.')}</p>
           </div>
           <div className={formStyles.form_item}>
             <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
@@ -686,11 +675,9 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         titleNode={
           <Tooltip
             className={styles.tooltip}
-            content={
-              t(
-                '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
-              )
-            }
+            content={t(
+              '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
+            )}
           >
             <Button onlyIcon>
               <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
@@ -729,23 +716,18 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         titleNode={
           <Tooltip
             className={styles.tooltip}
-            content={
-              t(
-                '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
-              )
-            }
+            content={t(
+              '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
+            )}
           >
             <Button onlyIcon>
               <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
             </Button>
           </Tooltip>
         }
-        actionNode={<FormRow provider={provider} name={'isAdminDataOption'}/>}
+        actionNode={<FormRow provider={provider} name={'isAdminDataOption'} />}
       />
-      <FormDisplay
-        provider={provider}
-        dependencies={[{ name: 'isAdminDataOption', value: true }]}
-      >
+      <FormDisplay provider={provider} dependencies={[{ name: 'isAdminDataOption', value: true }]}>
         <ContentsRow>
           <div className={formStyles.form_item}>
             <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
@@ -785,11 +767,9 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         titleNode={
           <Tooltip
             className={styles.tooltip}
-            content={
-              t(
-                '완성차 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
-              )
-            }
+            content={t(
+              '완성차 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
+            )}
           >
             <Button onlyIcon>
               <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
@@ -829,11 +809,9 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         titleNode={
           <Tooltip
             className={styles.tooltip}
-            content={
-              t(
-                '로템 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
-              )
-            }
+            content={t(
+              '로템 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
+            )}
           >
             <Button onlyIcon>
               <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
@@ -873,11 +851,9 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         titleNode={
           <Tooltip
             className={styles.tooltip}
-            content={
-              t(
-                '위탁 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
-              )
-            }
+            content={t(
+              '위탁 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
+            )}
           >
             <Button onlyIcon>
               <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
@@ -917,11 +893,9 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         titleNode={
           <Tooltip
             className={styles.tooltip}
-            content={
-              t(
-                '위아 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
-              )
-            }
+            content={t(
+              '위아 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
+            )}
           >
             <Button onlyIcon>
               <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
@@ -961,11 +935,9 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         titleNode={
           <Tooltip
             className={styles.tooltip}
-            content={
-              t(
-                '오토에버 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
-              )
-            }
+            content={t(
+              '오토에버 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
+            )}
           >
             <Button onlyIcon>
               <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
@@ -1029,7 +1001,8 @@ const formConfig: DynamicFormConfig = {
         acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
         maxFileCount: 1,
       },
-      description: '파일 사이즈 000x000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 1개 / 파일용량 최대 50MB',
+      description:
+        '파일 사이즈 000x000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 1개 / 파일용량 최대 50MB',
     },
     {
       name: 'tenantUserList',

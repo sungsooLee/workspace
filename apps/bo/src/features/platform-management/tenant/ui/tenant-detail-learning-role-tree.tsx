@@ -41,7 +41,7 @@ import {
   ChannelListChoiceModal,
   CompanyShuttleModal,
   UserGroupChoiceModal,
-} from '@features/shared';
+} from '@shared/ui';
 import { DropdownFormField } from '@features/form';
 
 /**

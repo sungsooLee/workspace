@@ -30,7 +30,7 @@ import { CopyModal } from './learning-resource-copy-modal';
 import { useRouter } from '@tanstack/react-router';
 import { useWatch } from 'react-hook-form';
 import { useQueryClient } from '@tanstack/react-query';
-import { GridExcelDownloadButton } from '@features/shared';
+import { GridExcelDownloadButton } from '@shared/ui';
 import { CMSApiPrefix } from '@learnway/config';
 
 function LearningResourceTableComponent() {

@@ -28,7 +28,7 @@ import {
   BaseFormFieldProps,
   useDynamicFormContext,
 } from '@learnway/hooks';
-import { CompanyShuttleModal, ChannelChoiceModal, ChannelListChoiceModal } from '@features/shared';
+import { CompanyShuttleModal, ChannelChoiceModal, ChannelListChoiceModal } from '@shared/ui';
 import { EnFormMode, EnDeviceType } from '@types';
 import {
   useAllTenantWidget,

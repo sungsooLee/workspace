@@ -5,7 +5,7 @@ import { cn } from '@learnway/shared';
 import { Checkbox, Divider, GridBox, useGridBox, useModal } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
-import { GridExcelUploadButton } from '@features/shared';
+import { GridExcelUploadButton } from '@shared/ui';
 import { EnOrganizationShowType } from './company-organization-tree';
 import { queryOptions as departmentQuery } from '@entities/department/service/department.queries';
 import { hmgQueryOptions as hmgDepartmentQuery } from '@entities/department/service/hmg-department.queries';
@@ -30,9 +30,9 @@ const CompanyOrganizationInfoListComponent = ({
   const { confirm: openConfirm, alert: openAlert } = useModal();
   const [tableInstance, setTableInstance] = useState<Table<any>>();
 
-  const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
+  const { provider: searchProvider, getValues } = useSearchBox(searchConfig());
   const getSearchParam = () => {
-    const retval = { ...getValues(), companyCode: companyCode, parentDeptId: deptId };
+    const retval = { ...getValues(), companyCode, parentDeptId: deptId };
 
     return retval;
   };
@@ -159,7 +159,7 @@ const CompanyOrganizationInfoListComponent = ({
 
       if (await openConfirm('삭제 하시겠습니까?')) {
         const payload = {
-          companyCode: companyCode,
+          companyCode,
           deptIdList: deptIdsToRemove,
         };
         deleteDepartment(payload);
@@ -206,7 +206,7 @@ const CompanyOrganizationInfoListComponent = ({
 
 export const CompanyOrganizationInfoList = CompanyOrganizationInfoListComponent;
 
-const searchConfig: SearchBoxConfig = {
+const searchConfig = (): SearchBoxConfig => ({
   builders: [
     [
       {
@@ -235,7 +235,7 @@ const searchConfig: SearchBoxConfig = {
       },
     ],
   ],
-};
+});
 
 const gridConfigOrg = {
   query: hmgDepartmentQuery.child,
