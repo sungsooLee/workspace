@@ -37,18 +37,6 @@ export const useCourseForm = (courseType?: string) => {
   const [data, setData] = useState<{ formData: Course; courseConfig: CourseConfig }>({
     formData: responseDataToFormData({
       courseType,
-      categories: [
-        // 카테고리 팝업 api 연동되면 삭제
-        {
-          categoryId: 11,
-          name: '1-1',
-          categoryCode: 'category11',
-          categoryContent: '',
-          categoryPath: 'ROOT>한글명-CATE00011>1-1',
-          isPrimary: false,
-          tenantIds: [2],
-        },
-      ],
     } as Course),
     courseConfig: {} as CourseConfig,
   });
@@ -218,10 +206,10 @@ const responseDataToFormData = (response: Course) => {
     isLearnEnvEnabled: true, // 학습환경 설정 사용 여부
     isLearnControlEnabled: true, // 학습제어 설정 사용 여부
     isUsePassOption: true, // 이수기준 설정 사용 여부
-    // isCommunicationToolEnabled: true, // 커뮤니티 및 공유설정 사용 여부
     isInstructorAssigned: true, // 강사 설정 사용 여부
     isTextbookProvided: true, // 교재 설정 사용 여부
     isRelatedPrerequisiteCourseExisted: true, // 사전/연관학습 설정 사용 여부
+    isUseOutsourcing: true, // 오토에버 위탁 전용 설정 여부
   };
 };
 

@@ -23,7 +23,7 @@ import { FormRow2, FormSubTitle } from '@shared/ui';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CourseTabBaseProps, TabFormRef } from '../../-common/type';
-import { Course, Group } from '@types';
+import { Course } from '@types';
 import { CategoryChoiceModal } from '@features/learning-operate/course/course-management';
 
 const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
