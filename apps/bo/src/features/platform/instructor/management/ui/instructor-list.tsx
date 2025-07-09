@@ -15,7 +15,7 @@ import {
 } from '@learnway/hooks';
 import { queryOptions } from '@entities/instructor/service/instructor.queries';
 import { useQueryClient } from '@tanstack/react-query';
-import { GridExcelDownloadButton } from '@features/shared';
+import { GridExcelDownloadButton } from '@shared/ui';
 import { LMSApiPrefix } from '@learnway/config';
 
 const _global = {

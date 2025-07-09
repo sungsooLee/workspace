@@ -48,6 +48,11 @@ export interface BlogUpdateReq extends BlogCreateReq {
   contentUuid: string;
 }
 
+export interface BlogDetailRes extends GetContentDetailRes {
+  blogContent: object;
+  contentTime: number;
+}
+
 export interface BlogPostRes extends BlogCreateReq {
   contentUuid: string;
   createType: string;
@@ -71,6 +76,12 @@ export interface PostDraftVideosParams {
   tenantId: string;
   channelUuid: string;
   fileUuids: string[];
+}
+
+export interface ContentFileInfo {
+  groupUuid: string;
+  fileUuid: string;
+  imageUrl: string;
 }
 
 export interface ContentInformation {
@@ -97,13 +108,13 @@ export interface ContentInformation {
   vendorCoordinatorName: string; //	외주 개발 업체 담당자명[...]
   vendorTelNo: string; //	외주 개발 업체 연락처[...]
   contentThumbnailFileGroupUuid: string; //	썸네일 파일그룹 UUID[...]
-  thumbnailFiles: string[]; //	썸네일 파일 목록[...]
+  thumbnailFiles: ContentFileInfo[]; //	썸네일 파일 목록[...]
   selectedContentThumbnailFileUuid?: string; //	대표 썸네일 파일 UUID[...]
   isCourseUsed: boolean; //	교육자원 활용 여부[...]
   isInspected: boolean; //	검수 확인 여부[...]
   isCopyrighted: boolean; //	저작권 확인 여부[...]
   contentAddInfoType?: ContentAddInfoType; //	콘텐츠 추가정보 코드 Enum(ContentAddInfoType) - VIDEO_ADD_INFO(초)|EXAM_ADD_INFO(건수)[...]
-  contentAddInfo?: string; //	콘텐츠 추가 정보, 콘텐츠 추가정보 코드 별 초/건수 값[...]
+  contentAddInfo?: string | number; //	콘텐츠 추가 정보, 콘텐츠 추가정보 코드 별 초/건수 값[...]
   isSecured: boolean; //	보안 확인 여부[...]
   isDeleted: boolean; //	삭제 여부[...]
   isOpened: boolean; //	공개 여부[...]
@@ -126,3 +137,22 @@ export interface PostDraftVideosRes {
     isDrafted: boolean;
   }[];
 }
+
+export type MappedCourseItem = {
+  courseId: number;
+  courseUuid: string;
+  courseName: string;
+  courseType: string;
+  courseContent: string;
+  channelId?: number;
+  channelUuid?: string;
+  channelName?: string;
+  openingYear?: number;
+  courseValidityStartDate?: Date | undefined;
+  courseValidityEndDate?: Date | undefined;
+};
+
+export type CourseMappingStatusRes = {
+  hasMapping: boolean;
+  courses: MappedCourseItem[] | null;
+};

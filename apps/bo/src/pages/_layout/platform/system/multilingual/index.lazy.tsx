@@ -33,7 +33,7 @@ import {
 } from '@entities/translation/service/translation.hook';
 import { t } from 'i18next';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
-import { GridExcelDownloadButton, GridExcelUploadButton } from '@features/shared';
+import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
 import { PMSApiPrefix } from '@learnway/config';
 import { MultilingualUpdateReqParams } from '@types';
 import { TranslationStatusPopup } from '@features/platform-management/platform/multilingual-managemnet';

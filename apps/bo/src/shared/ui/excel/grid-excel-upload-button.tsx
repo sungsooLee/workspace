@@ -1,5 +1,5 @@
 import { Button, useModal } from '@learnway/ui';
-import { ExcelUploadModal } from '@features/shared';
+import { ExcelUploadModal } from '@shared/ui';
 import { IcoUploadCloud } from '@learnway/icons';
 import { t } from 'i18next';
 

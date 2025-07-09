@@ -1,10 +1,7 @@
 import { queryOptions } from '@entities/course/service/course.queries';
 import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
-import {
-  CourseChoiceModal,
-  CourseTypeOptionCardModal,
-} from '@features/learning-operate/course/course-management';
-import { GridExcelDownloadButton, GridExcelUploadButton } from '@features/shared';
+import { CourseTypeOptionCardModal } from '@features/learning-operate/course/course-management';
+import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
 import { LMSApiPrefix } from '@learnway/config';
 import { CODE_GROUP, getCodeLabel, useDynamicForm2 } from '@learnway/hooks';
 import { Button, ContentsRow, Divider, GridBox, Input, useGridBox, useModal } from '@learnway/ui';
@@ -18,7 +15,6 @@ import { t } from 'i18next';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { generateYears } from '@learnway/shared';
-import { size } from 'lodash';
 
 export const Route = createFileRoute('/_unauth/learning_test/course/')({
   component: RouteComponent,
@@ -91,18 +87,6 @@ function RouteComponent() {
         <Link to="/learning_test/course/create/view" state={{ courseId: 5 }} className="link">
           상세 테스트
         </Link>
-        <Button
-          type="button"
-          variant="point"
-          size="sm"
-          label={t('과정조회 팝업')}
-          onClick={() => {
-            openModal({
-              content: <CourseChoiceModal tenantIds={[11]} channelUuid={'102309812093812093812'} />,
-              width: 'lg',
-            });
-          }}
-        />
         <Button
           type="button"
           variant="point"

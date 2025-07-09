@@ -10,7 +10,7 @@ import {
   MainContents,
   SubContents,
 } from '@widgets/layout';
-import { ChannelChoiceModal, ManagerChoiceModal } from '@features/shared';
+import { ChannelChoiceModal, ManagerChoiceModal } from '@shared/ui';
 import { DateRangePickerFormField } from '@features/form/ui';
 import {
   CODE_GROUP,

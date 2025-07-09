@@ -100,7 +100,7 @@ const CompanyListComponent = () => {
 
 export const CompanyList = CompanyListComponent;
 
-const searchConfig = () => ({
+const searchConfig = (): SearchBoxConfig => ({
   builders: [
     [
       {

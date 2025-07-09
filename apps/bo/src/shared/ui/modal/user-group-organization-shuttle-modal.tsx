@@ -1,7 +1,7 @@
 import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
 import { useState } from 'react';
 import { t } from 'i18next';
-import { UserGroupOrganization } from '@features/shared';
+import { UserGroupOrganization } from '@shared/ui';
 import { CombineUserGroup } from '@types';
 
 type Props = {

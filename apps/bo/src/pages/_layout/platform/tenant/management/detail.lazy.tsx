@@ -55,7 +55,7 @@ function RouteComponent() {
   const handleListButtonClick = () => {
     const listParam = routerState.location.state?.listParam;
 
-    router.navigate({ to: '/platform/tenant/management', state: { listParam: listParam } });
+    router.navigate({ to: '/platform/tenant/management', state: { listParam } });
   };
 
   const handleModifyButtonClick = () => {
