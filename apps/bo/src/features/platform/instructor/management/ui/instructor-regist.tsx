@@ -28,6 +28,7 @@ import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
 import { UserChoiceModal } from '@features/shared';
 
 import { SingleAttachmentFormField } from '@shared/ui/form/single-attachment-form-field';
+import { EnFormMode } from '@types';
 
 const EMAIL_REGEX =
   /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
@@ -71,6 +72,11 @@ const InstructorRegistComponent = (props: any, ref: any) => {
   const formConfig: DynamicFormConfig = {
     builders: [
       {
+        name: 'isView',
+        type: 'text',
+        value: props.instructorId ? EnFormMode.VIEW : EnFormMode.ADD,
+      },
+      {
         name: 'tenantId',
         type: 'dropdown',
         label: t('LABEL.form.label.tenant', '테넌트'),
@@ -80,7 +86,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         optionsConfig: {
           codeGroup: CODE_GROUP['manual.bo.my.tenant.tenantId'],
         },
-        disabled: props.instructorType === 'INTERNAL_INSTRUCTOR',
+        disabled: props.instructorId,
       },
       {
         name: 'instructorType',
@@ -91,7 +97,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
           { label: '사내', value: 'INTERNAL_INSTRUCTOR' },
           { label: '사외', value: 'EXTERNAL_INSTRUCTOR' },
         ],
-        disabled: props.instructorType === 'INTERNAL_INSTRUCTOR',
+        disabled: props.instructorId,
       },
       {
         name: 'isFulltimeInstructor',
@@ -102,7 +108,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
           { label: '비전임', value: 1 },
           { label: '전임', value: 2 },
         ],
-        disabled: props.instructorType === 'INTERNAL_INSTRUCTOR',
+        disabled: props.instructorId,
       },
       {
         name: 'roleId',
@@ -112,7 +118,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         format: 'number',
         presetOptionLabel: t('LABEL.form.label.select', '선택'),
         options: roleIdOptions,
-        disabled: props.instructorType === 'INTERNAL_INSTRUCTOR',
+        disabled: props.instructorId,
       },
       {
         label: t('역할 부여 기간(시작)'),
@@ -135,7 +141,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         format: 'string',
         value: '',
         placeholder: ' ',
-        disabled: props.instructorType === 'INTERNAL_INSTRUCTOR',
+        disabled: props.instructorId,
       },
       {
         name: 'companyName',
@@ -143,7 +149,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         label: t('회사'),
         value: '',
         placeholder: ' ',
-        disabled: props.instructorType === 'INTERNAL_INSTRUCTOR',
+        disabled: props.instructorId,
       },
       {
         name: 'profileFileUuid',
@@ -166,7 +172,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         label: t('계정(사번/이메일)'),
         value: { fieldValue: '', checkState: DuplicateState.needInput },
         placeholder: ' ',
-        disabled: props.instructorType === 'INTERNAL_INSTRUCTOR',
+        disabled: props.instructorId,
       },
       {
         label: t('연락처'),
@@ -178,7 +184,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
           nationCode: 'telCountryCode',
           number: 'telNo',
         },
-        disabled: props.instructorType === 'INTERNAL_INSTRUCTOR',
+        disabled: props.instructorId,
       },
       {
         label: '',
@@ -186,14 +192,14 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         type: 'hidden',
         format: 'string',
         value: 'KOR_82',
-        disabled: props.instructorType === 'INTERNAL_INSTRUCTOR',
+        disabled: props.instructorId,
       },
       {
         name: 'nationCd',
         type: 'text',
         label: t('국가코드'),
         value: 'ko_KR',
-        disabled: props.instructorType === 'INTERNAL_INSTRUCTOR',
+        disabled: props.instructorId,
       },
       {
         name: 'password',
@@ -213,7 +219,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         type: 'text',
         format: 'object',
         value: undefined,
-        disabled: props.instructorType === 'INTERNAL_INSTRUCTOR',
+        disabled: props.instructorId,
       },
       {
         name: 'carNumber',
@@ -239,17 +245,19 @@ const InstructorRegistComponent = (props: any, ref: any) => {
       },
       {
         name: 'carreerFileGroupUuid',
-        type: 'text',
-        format: 'string',
+        type: 'thumbnail-list',
+        format: 'array',
         label: t('강사 경력 인정 파일'),
-        value: '',
-        max: 1,
+        value: [],
+        max: 10,
         uploadConfig: {
-          affairsType: 'PMS',
-          s3Path: S3_PATH['upload/content/image'], // BE에 확인 필요
+          affairsType: 'LMS',
+          s3Path: S3_PATH['upload/content/image'], // TODO: groupUUID개발 완료 후 테스트 필요 / BE에 확인 필요
           acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
-          maxFileCount: 1,
+          maxFileCount: 10,
         },
+        description:
+          '파일 사이즈 000x000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 1개 / 파일용량 최대 50MB',
       },
       {
         name: 'carreerYear',
@@ -275,10 +283,13 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         conditions: [
           {
             fn: (values) => {
-              console.log('values=>', values);
-              if (values.employeeIdOrEmail?.fieldValue.trim().length === 0) return false;
+              const value =
+                values.instructorType === 'INTERNAL_INSTRUCTOR'
+                  ? values.employeeIdOrEmail
+                  : values.employeeIdOrEmail?.fieldValue;
+              if (value.trim().length === 0) return false;
               const pattern = new RegExp(EMAIL_REGEX, 'i');
-              return !pattern.test(values.employeeIdOrEmail?.fieldValue.trim());
+              return !pattern.test(value.trim());
             },
             message: t('이메일 형식에 맞게 입력해 주세요.'),
           },
@@ -289,24 +300,6 @@ const InstructorRegistComponent = (props: any, ref: any) => {
       nationCd: true,
       birthday: true,
       introduction: true,
-      //   password: false,
-      //   passwordConfirm: {
-      //     required: true,
-      //     conditions: [
-      //       {
-      //         fn: (values) => {
-      //           console.log('values=>', values);
-      //           if (values.instructorType === 'EXTERNAL_INSTRUCTOR') {
-      //             if (values.password !== values.passwordConfirm) {
-      //               return false;
-      //             }
-      //           }
-      //           return true;
-      //         },
-      //         message: t('비밀번호가 일치하지 않습니다.'),
-      //       },
-      //     ],
-      //   },
     },
   };
 
@@ -315,6 +308,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
     updateFormData,
     onSubmit,
     onFormChange,
+    onFormValid,
     getValues,
     setValue,
     formState,
@@ -326,8 +320,21 @@ const InstructorRegistComponent = (props: any, ref: any) => {
 
   const handleOnSubmit = async (data: any) => {
     console.log('#### handleOnSubmit', data);
-    if (!props.instructorId) handleOnInsert(data);
-    else handleOnUpdate(data);
+
+    if (!props.instructorId) {
+      if (data.instructorType === 'EXTERNAL_INSTRUCTOR') {
+        if (data.password !== data.passwordConfirm) {
+          openAlert({
+            title: '비밀번호가 불일치',
+            content: '비밀번호를 확인해주세요.',
+          });
+          return false;
+        }
+      }
+      handleOnInsert(data);
+    } else {
+      handleOnUpdate(data);
+    }
   };
 
   const handleOnInsert = async (data: any) => {
@@ -336,13 +343,16 @@ const InstructorRegistComponent = (props: any, ref: any) => {
       instructorType: data.instructorType,
       isFulltimeInstructor: data.isFulltimeInstructor === 2,
       roleId: data.roleId,
-      startDate: dayjs(data.startDate).format('YYYY-MM-DD'),
-      endDate: dayjs(data.endDate).format('YYYY-MM-DD'),
+      startDate: data.startDate !== '' ? dayjs(data.startDate).format('YYYY-MM-DD') : null,
+      endDate: data.endDate !== '' ? dayjs(data.endDate).format('YYYY-MM-DD') : null,
       instructorName: data.instructorName,
       companyName: data.companyName,
       profileFileUuid: data.profileFileUuid,
-      employeeIdOrEmail: data.employeeIdOrEmail?.fieldValue,
-      password: data.password === '' ? 'P@ssw0rd' : data.password,
+      employeeIdOrEmail:
+        data.instructorType === 'INTERNAL_INSTRUCTOR'
+          ? data.employeeIdOrEmail
+          : data.employeeIdOrEmail?.fieldValue,
+      password: data.instructorType === 'INTERNAL_INSTRUCTOR' ? null : data.password,
       telCountryCode: data.telCountryCode,
       telNo: data.telNo,
       nationCd: data.nationCd,
@@ -350,7 +360,8 @@ const InstructorRegistComponent = (props: any, ref: any) => {
       carNumber: data.carNumber,
       introduction: data.introduction,
       career: data.career,
-      carreerFileGroupUuid: data.carreerFileGroupUuid,
+      // carreerFileGroupUuid: data.carreerFileGroupUuid, // TODO: string[] 타입으로 BE확인필요
+      carreerFileGroupUuid: '',
       carreerYear: data.carreerYear,
       carreerMonth: data.carreerMonth,
     };
@@ -358,7 +369,6 @@ const InstructorRegistComponent = (props: any, ref: any) => {
     if (await openConfirm('저장 하시겠습니까?')) {
       createInstructor(payload, {
         onSuccess: async () => {
-          console.log('저장완료', payload);
           await showSaveComplete();
           router.navigate({ to: '/platform/instructor/management' });
         },
@@ -377,7 +387,8 @@ const InstructorRegistComponent = (props: any, ref: any) => {
       carNumber: data.carNumber,
       introduction: data.introduction,
       career: data.career,
-      carreerFileGroupUuid: data.carreerFileGroupUuid,
+      // carreerFileGroupUuid: data.carreerFileGroupUuid,
+      carreerFileGroupUuid: '',
       carreerYear: data.carreerYear,
       carreerMonth: data.carreerMonth,
       instructorId: props.instructorId,
@@ -385,8 +396,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
 
     if (await openConfirm('수정 하시겠습니까?')) {
       updateInstructor(payload, {
-        onSuccess: async () => {
-          console.log('수정완료', payload);
+        onSuccess: async (data: any) => {
           await showUpdateComplete();
           router.navigate({ to: '/platform/instructor/management' });
         },
@@ -416,7 +426,6 @@ const InstructorRegistComponent = (props: any, ref: any) => {
       console.log('saveData');
       const form = formRef.current;
       if (form) {
-        console.log('formValue');
         form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
       }
     },
@@ -451,8 +460,16 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         const info: any = await queryClient.fetchQuery(queryOptions.detail(props.instructorId));
         console.log('##info =>', info);
         if (info) {
-          const data = { ...info, isFulltimeInstructor: info.isFulltimeInstructor ? 2 : 1 };
-          onFormChange();
+          const data = {
+            isView: props.instructorId ? EnFormMode.VIEW : EnFormMode.ADD,
+            ...info,
+            isFulltimeInstructor: info.isFulltimeInstructor ? 2 : 1,
+            // carreerFileGroupUuid: '', // TODO: Swagger에 string타입으로 확인필요
+            carreerFileGroupUuid: [],
+            password: '',
+            passwordConfirm: '',
+          };
+
           updateFormData(data);
         }
       })();
@@ -486,7 +503,11 @@ const InstructorRegistComponent = (props: any, ref: any) => {
       {/* 강사 타입(사내) 시작 */}
       <FormDisplay
         provider={provider}
-        dependencies={[{ name: 'instructorType', value: 'INTERNAL_INSTRUCTOR' }]}
+        condition={'or'}
+        dependencies={[
+          { name: 'instructorType', value: 'INTERNAL_INSTRUCTOR' },
+          { name: 'isView', value: EnFormMode.VIEW },
+        ]}
       >
         <ContentsRow>
           <FormRow
@@ -538,7 +559,11 @@ const InstructorRegistComponent = (props: any, ref: any) => {
       {/* 강사 타입(사외) 시작 */}
       <FormDisplay
         provider={provider}
-        dependencies={[{ name: 'instructorType', value: 'EXTERNAL_INSTRUCTOR' }]}
+        condition={'and'}
+        dependencies={[
+          { name: 'instructorType', value: 'EXTERNAL_INSTRUCTOR' },
+          { name: 'isView', value: EnFormMode.ADD },
+        ]}
       >
         <ContentsRow>
           <FormRow provider={provider} name="instructorName" element={<Input />} />
@@ -568,6 +593,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         </ContentsRow>
       </FormDisplay>
       {/* 강사 타입(사외) 끝 */}
+      {/* 강사 타입(사내/사외) 시작 */}
       <ContentsRow>
         <FormRow
           provider={provider}
@@ -589,6 +615,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         <FormRow provider={provider} name="carreerYear" />
         <FormRow provider={provider} name="carreerMonth" />
       </ContentsRow>
+      {/* 강사 타입(사내/사외) 끝 */}
     </form>
   );
 };

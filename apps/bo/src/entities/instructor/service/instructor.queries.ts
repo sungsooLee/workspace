@@ -4,6 +4,7 @@ export const queryKeys = {
   rolesByTenantId: ['roles-by-tenant-id'] as const,
   list: ['instructors'] as const,
   detail: ['instructor'] as const,
+  history: ['history'] as const,
 };
 
 export const queryOptions = {
@@ -21,6 +22,16 @@ export const queryOptions = {
     queryKey: queryKeys.detail,
     queryFn: () => InstructorService.fetchOne(params),
   }),
+  history: (params: any) => ({
+    queryKey: queryKeys.history,
+    queryFn: () => {
+      const instructorId = params.instructorId;
+      delete params.instructorId;
+      return InstructorService.fetchHistory(instructorId, params);
+    },
+    cacheTime: 0,
+    staleTime: 0,
+  }),
 };
 
 export const mutateOptions = {
@@ -31,7 +42,7 @@ export const mutateOptions = {
     mutationFn: (payload: any) => {
       const instructorId = payload.instructorId;
       delete payload.instructorId;
-      InstructorService.updateInstructor(instructorId, payload);
+      return InstructorService.updateInstructor(instructorId, payload);
     },
   }),
   delete: () => ({

@@ -20,6 +20,10 @@ export default class InstructorService {
     return httpService.get(`${LMSApiPrefix()}/instructor/${params}`);
   }
 
+  static fetchHistory(instructorId: number, params: any) {
+    return httpService.get(`${LMSApiPrefix()}/instructor/${instructorId}/history`, params);
+  }
+
   static insertInstructor(params: any) {
     return httpService.post<any>(`${LMSApiPrefix()}/instructor`, params);
   }

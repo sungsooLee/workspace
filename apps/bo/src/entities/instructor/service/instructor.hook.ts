@@ -9,11 +9,6 @@ export function useFetchInstructors(param: any) {
 export function useCreateInstructor(options: any) {
   const mutation = useMutation({
     ...mutateOptions.create(),
-    onSuccess: async (data: any, variables, context) => {
-      if (options.onSuccess) {
-        options.onSuccess(data, variables, context);
-      }
-    },
     ...options,
   });
 
@@ -30,11 +25,6 @@ export function useCreateInstructor(options: any) {
 export function useUpdateInstructor(options: any) {
   const mutation = useMutation({
     ...mutateOptions.update(),
-    onSuccess: async (data: any, variables, context) => {
-      if (options.onSuccess) {
-        options.onSuccess(data, variables, context);
-      }
-    },
     ...options,
   });
 
@@ -51,11 +41,6 @@ export function useUpdateInstructor(options: any) {
 export function useDeleteInstructor(options: any) {
   const mutation = useMutation({
     ...mutateOptions.delete(),
-    onSuccess: async (data: any, variables, context) => {
-      if (options.onSuccess) {
-        options.onSuccess(data, variables, context);
-      }
-    },
     ...options,
   });
 

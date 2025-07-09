@@ -5,6 +5,7 @@ import { PageContainer, MainContents, ContentsButtons, LinkBox } from '@widgets/
 import { Button } from '@learnway/ui';
 import { InstructorRegist } from '@features/platform/instructor';
 import { useRef } from 'react';
+import { InstructorHistory } from '@features/platform/instructor/management/ui/instructor-history';
 
 export const Route = createLazyFileRoute(
   '/_layout/platform/instructor/management/instructor-regist',
@@ -64,6 +65,7 @@ function RouteComponent() {
           instructorId={instructorId}
           instructorType={instructorType}
         />
+        {instructorId && <InstructorHistory instructorId={instructorId} />}
       </MainContents>
     </PageContainer>
   );

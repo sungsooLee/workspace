@@ -165,7 +165,10 @@ const InstructorListComponent = () => {
     }),
     columnHelper.accessor('telNo', {
       header: t('연락처'),
-      cell: (info) => info.getValue(),
+      cell: (info) =>
+        info.getValue() === null
+          ? ''
+          : info.row.original.telNo?.replace(/(\d{3})(\d{4})(\d{4})/, '$1-****-$3'),
       enableGrouping: false,
     }),
     columnHelper.accessor('mappedCourseCount', {
