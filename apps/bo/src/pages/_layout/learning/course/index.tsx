@@ -73,7 +73,7 @@ function RouteComponent() {
     });
     console.log('handleCourseOpenClick.value {} => ', value);
     router.navigate({
-      to: '/learning_test/course/create/view',
+      to: '/learning/course/create/view',
       state: {
         courseType: value, // 다국어 분류 - 공통코드
       },
@@ -84,7 +84,7 @@ function RouteComponent() {
   return (
     <PageContainer>
       <ContentsButtons>
-        <Link to="/learning_test/course/create/view" state={{ courseId: 5 }} className="link">
+        <Link to="/learning/course/create/view" state={{ courseId: 5 }} className="link">
           상세 테스트
         </Link>
         <Button
@@ -266,7 +266,7 @@ const gridConfig = {
       size: 300,
       render: ({ row }: any) => (
         <Link
-          to="/learning_test/course/create/view"
+          to="/learning/course/create/view"
           state={{ courseId: row.original.courseId }}
           className="link"
         >

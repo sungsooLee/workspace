@@ -43,7 +43,7 @@ function RouteComponent() {
 
   const moveListPage = () => {
     router.navigate({
-      to: '/learning_test/course',
+      to: '/learning/course',
     });
   };
 

@@ -6,12 +6,16 @@ import {
   ModalFooter,
   ModalTitle,
   ShuttleTreeToChips,
+  ShuttleTreeToChipsV2,
+  TreeNode,
   useModal,
+  useShuttleTreeToChips,
 } from '@learnway/ui';
 import { useTranslation } from 'react-i18next';
 import styles from './category-choice-modal.module.css';
 import { useFetchTenantCategoryTreePopup } from '@entities/tenant';
 import { transformApiDataToApiTreeData } from '@features/platform-management/platform/menu-managemnet';
+import { convertArrayToTreeNodes } from '@learnway/shared';
 
 export interface CategoryChoiceModalProps {
   /** 테넌트 아이디 배열 */
@@ -30,32 +34,27 @@ const CategoryChoiceModalComponent = forwardRef<HTMLDivElement, CategoryChoiceMo
     const { t } = useTranslation();
     const { close: closeModal } = useModal();
     const { data: treeData } = useFetchTenantCategoryTreePopup(tenantIds, {
-      select: (response: any) => transformApiDataToApiTreeData(response),
-    });
-    const [selectedRows, setSelectedRows] = useState();
-    const [selectedItems, setSelectedItems] = useState<any[]>([]);
+      select: (response: any) => convertArrayToTreeNodes(response),
+    } as any);
+    const { selectedItems, handleSelectItem, cancelSelectItem, cancelAll } =
+      useShuttleTreeToChips();
 
     console.log('Category ChoiceModalComponent', { tenantIds, treeData });
-
-    const handleItemsChange = (items: any[]) => {
-      setSelectedItems(items);
-    };
 
     return (
       <ModalContainer>
         <ModalTitle>{t('카테고리 선택')}</ModalTitle>
         <ModalBody>
           <div className={styles.wrap}>
-            <ShuttleTreeToChips
-              title="source"
-              displayKey="title"
-              targetTitle="공통 카테고리 선택"
-              sourceTitle="선택 카테고리 목록"
-              treeId="category-tree"
-              sourceData={treeData}
-              // selectedItems={selectedItems}
-              initLevel={1}
-              onItemsChange={handleItemsChange}
+            <ShuttleTreeToChipsV2
+              sourceTitle="공통 카테고리 선택"
+              targetTitle="선택 카테고리 목록"
+              treeData={(treeData as unknown as TreeNode[]) || []}
+              selectedKey="name"
+              selectedItems={selectedItems}
+              handleSelectItem={handleSelectItem}
+              cancelSelectItem={cancelSelectItem}
+              cancelAll={cancelAll}
             />
           </div>
         </ModalBody>
@@ -65,7 +64,7 @@ const CategoryChoiceModalComponent = forwardRef<HTMLDivElement, CategoryChoiceMo
             label={t('확인')}
             variant={'primary'}
             size={'lg'}
-            onClick={() => closeModal(selectedRows)}
+            onClick={() => closeModal(selectedItems)}
           />
         </ModalFooter>
       </ModalContainer>

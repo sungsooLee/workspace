@@ -23,7 +23,7 @@ import { FormRow2, FormSubTitle } from '@shared/ui';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CourseTabBaseProps, TabFormRef } from '../../-common/type';
-import { Course } from '@types';
+import { Course, Group } from '@types';
 import { CategoryChoiceModal } from '@features/learning-operate/course/course-management';
 
 const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
@@ -120,11 +120,6 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                   // labelField: 'tenantName',
                   // valueField: 'tenantId',
                 }}
-                // options={[
-                //   { tenantName: 'tenant A', tenantId: 1 },
-                //   { tenantName: 'tenant B', tenantId: 2 },
-                //   { tenantName: 'tenant C', tenantId: 3 },
-                // ]}
               />
             }
           />
@@ -142,10 +137,12 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                   content: <CategoryChoiceModal tenantIds={getValues().tenantIds} />,
                   width: 'lg',
                 })}
-                transformModalData={(data: any) => ({
-                  value: data.id,
-                  label: data.name,
-                })}
+                transformModalData={(data: any[]) => {
+                  return data?.map((d: any) => ({
+                    categoryId: d.id,
+                    name: d.name,
+                  }));
+                }}
                 list={{
                   labelField: 'name',
                   valueField: 'categoryId',
@@ -155,6 +152,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             }
           />
         </ContentsRow>
+
         {/*학습대상(유저그룹)*/}
         <ContentsRow>
           <FormRow2
@@ -164,25 +162,30 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             element={
               <ChipListModalSelectorFormField
                 modalConfig={() => ({
-                  content: <UserGroupTabsChoiceModal tenantIds={getValues().tenantIds} />,
+                  content: (
+                    <UserGroupTabsChoiceModal
+                      tenantIds={getValues().tenantIds}
+                      option={getValues().targetList}
+                    />
+                  ),
                 })}
-                transformModalData={(modalData: Array<any>) => {
-                  console.log('modalData', modalData);
-                  return modalData.map((d: any) => {
-                    return {
-                      combiners: d.groups?.length
-                        ? d.groups
-                        : [
-                            {
-                              combineType: 'JOB_ROLE',
-                              combineValue: d?.userGroupIds?.[0],
-                            },
-                          ],
-                      name: d.name || 'xx',
-                      groupKey: getRandomId(),
-                    };
-                  });
-                }}
+                // transformModalData={(modalData: Array<Group>) => {
+                //   console.log('modalData', modalData);
+                //   return modalData.map((d: any) => {
+                //     return {
+                //       combiners: d.groups?.length
+                //         ? d.groups
+                //         : [
+                //             {
+                //               combineType: 'JOB_ROLE',
+                //               combineValue: d?.userGroupIds?.[0],
+                //             },
+                //           ],
+                //       name: d.name || 'xx',
+                //       groupKey: getRandomId(),
+                //     };
+                //   });
+                // }}
                 chipList={{
                   labelField: 'name',
                   valueField: 'groupKey',

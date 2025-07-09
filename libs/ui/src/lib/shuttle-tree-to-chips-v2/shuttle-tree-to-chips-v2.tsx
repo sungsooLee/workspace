@@ -199,7 +199,7 @@ interface HighlightAmpersandProps {
 const HighlightAmpersand: React.FC<HighlightAmpersandProps> = ({ text }) => {
   return (
     <span>
-      {text.split('').map((char, index) =>
+      {text?.split('').map((char, index) =>
         char === '&' ? (
           <span key={index} className="text-[#00AFD5]">
             {char}
