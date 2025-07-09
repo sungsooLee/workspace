@@ -1,17 +1,18 @@
-import { skipToken } from '@tanstack/react-query';
+import { skipToken, UseQueryOptions } from '@tanstack/react-query';
 
 import { getQuerySkipToken } from '@learnway/shared';
 
 import CompaniesService from '@entities/companies/api/companies';
 
 import TenantService from '../api/tenant';
-import { Tenant } from '@types';
+import { PaginationResponse, Tenant, TenantByRoleId } from '@types';
 
 export const tenantQueryKeys = {
   all: ['tenants'] as const,
   list: ['tenants-page'] as const,
   detail: (tenantId: number) => [...tenantQueryKeys.list, tenantId] as const,
   tenantCompanys: (tenantIds: number[]) => ['tenants-companys', ...tenantIds],
+  tenantByRoleId: (roleId: number) => ['tenants-by-role-id', roleId],
 };
 
 export const tenantQueryOptions = {
@@ -50,6 +51,10 @@ export const tenantQueryOptions = {
           },
         }
       : getQuerySkipToken<any[]>(),
+  tenantByRoleId: <T = TenantByRoleId>(roleId: number): UseQueryOptions<PaginationResponse<T>> => ({
+    queryKey: tenantQueryKeys.tenantByRoleId(roleId),
+    queryFn: async (): Promise<PaginationResponse<T>> => TenantService.fetchTenantByRoleId(roleId),
+  }),
 };
 
 export const tenantMutateOptions = {

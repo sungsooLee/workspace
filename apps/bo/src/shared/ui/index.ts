@@ -26,6 +26,7 @@ export * from './form/form-translation-box';
 export * from './form/phone-number-form-filed';
 export * from './form/single-attachment-form-field';
 export * from './form/switch-form-field';
+export * from './form/tenant-by-role-dropdown-form-field';
 export * from './form/tenant-channel-dropdown-form-field';
 export * from './form/thumbnail-list-form-field';
 export * from './layout/breadcrumbs/breadcrumbs';

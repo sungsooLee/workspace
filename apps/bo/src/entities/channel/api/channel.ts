@@ -1,5 +1,6 @@
 import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
+import { ChannelByRoleId, PaginationResponse } from '@types';
 
 export default class ChannelService {
   static async getChannelList(params: any) {
@@ -30,6 +31,18 @@ export default class ChannelService {
     return httpService.get<any>(`${PMSApiPrefix()}/channel/url/exist`, {
       channelId,
       channelMainLinkContent,
+    });
+  }
+
+  /**
+   * @description 채널 목록조회 ( 역할 기준 )
+   * @param roleId
+   * @returns ChannelByRoleId[]
+   */
+  static fetchChannelByRoleId<T = ChannelByRoleId>(roleId: number): Promise<PaginationResponse<T>> {
+    return httpService.get<PaginationResponse<T>>(`${PMSApiPrefix()}/channel/role/${roleId}`, {
+      page: 0,
+      size: 1000,
     });
   }
 }
