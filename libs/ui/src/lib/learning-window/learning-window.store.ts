@@ -10,7 +10,7 @@ export enum EnContentType {
   EXTERNAL_LINK = 'EXTERNAL_LINK',
 }
 
-export interface PlayInfo {
+export interface LearningWindowPlayInfo {
   isDirect?: boolean;
   courseId?: number;
   sequenceId?: number;
@@ -39,9 +39,11 @@ export interface ScormPlayerConfigProperties {
   scoId?: string;
 }
 export interface LearningWindowBaseInfo {
-  courseId?: number;
-  sequenceId?: number;
-  curriculumId?: number;
+  courseId: number;
+  sequenceId: number;
+  curriculumId: number;
+  moduleId?: number;
+  lessonId?: number;
 }
 
 interface PlayListItem {
@@ -81,10 +83,10 @@ interface LearningWindowStoreData {
   playIndex: number;
   baseInfo?: LearningWindowBaseInfo;
   curriculum?: Curriculum;
-  playInfo?: PlayInfo;
+  playInfo?: LearningWindowPlayInfo;
   playList?: PlayListItem[];
   setBaseInfo: (v?: LearningWindowBaseInfo) => void;
-  setPlayInfo: (v?: PlayInfo) => void;
+  setPlayInfo: (v?: LearningWindowPlayInfo) => void;
   setCurriculum: (v?: Curriculum) => void;
   setPlayList: (v?: PlayListItem[]) => void;
   clearInfo: () => void;
@@ -117,7 +119,7 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
   htmlInfo: undefined,
   funcInfo: undefined,
 
-  setPlayInfo(playInfo?: PlayInfo) {
+  setPlayInfo(playInfo?: LearningWindowPlayInfo) {
     if (!playInfo) return;
     const playList = get().playList || [];
     const index = playList?.findIndex(
@@ -212,15 +214,16 @@ export const useLearningWindow = () => {
     nowCurriculum: any,
     moduleId?: number,
     lessonId?: number,
-  ): PlayInfo | undefined => {
+  ): LearningWindowPlayInfo | undefined => {
     if (!nowCurriculum?.moduleList?.length) {
       console.error('moduleList is not set or empty', nowCurriculum);
       return undefined;
     }
 
     let module = nowCurriculum.moduleList.find((m: any) => m.moduleId === moduleId);
+    console.log('module 1', module);
     if (!module) module = nowCurriculum.moduleList[0];
-
+    console.log('module 2', module);
     if (!module?.lessonList?.length) {
       console.error('lessonList is not set or empty', module);
       return undefined;
@@ -264,13 +267,19 @@ export const useLearningWindow = () => {
     setCurriculum(curriculum);
     setPlayListByCurriculum(curriculum);
     if (_baseInfo) {
-      const playInfo = genPlayInfoByCurriculum(_baseInfo, curriculum);
-      setPlayInfo(playInfo);
+      if (_baseInfo.moduleId && _baseInfo.lessonId) {
+        handleSetPlayInfo(_baseInfo.moduleId, _baseInfo.lessonId, curriculum);
+      } else {
+        const playInfo = genPlayInfoByCurriculum(_baseInfo, curriculum);
+        setPlayInfo(playInfo);
+      }
     }
   };
 
-  const handleSetPlayInfo = (moduleId: number, lessonId: number) => {
-    const playInfo = genPlayInfoByCurriculum(_baseInfo, _curriculum, moduleId, lessonId);
+  const handleSetPlayInfo = (moduleId: number, lessonId: number, curriculum?: any) => {
+    const workCurriculum = curriculum || _curriculum;
+    const playInfo = genPlayInfoByCurriculum(_baseInfo, workCurriculum, moduleId, lessonId);
+    console.log('============', playInfo);
     setPlayInfo(playInfo);
   };
 

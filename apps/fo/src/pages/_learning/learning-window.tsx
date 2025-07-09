@@ -17,6 +17,7 @@ import {
 import { ScormRteService } from '@entities/learning-resource/api/scorm-rte';
 import { useVideoWatchLog } from '@entities/learning-resource/service/video.hook';
 import { useGetBlogResource } from '@entities/learning-resource/service/blog.hook';
+import { useGetHtml5Resource } from '@entities/learning-resource/service/html5.hook';
 
 export const Route = createFileRoute('/_learning/learning-window')({
   component: RouteComponent,
@@ -30,6 +31,7 @@ function RouteComponent() {
   const [videoConfig, setVideoConfig] = useState<any>();
   const [videoStart, setVideoStart] = useState<number>(0);
   const [blogConfig, setBlogConfig] = useState<any>();
+  const [htmlConfig, setHtmlConfig] = useState<any>();
 
   const {
     baseInfo,
@@ -37,6 +39,7 @@ function RouteComponent() {
     setVideoInfo,
     setScormInfo,
     setBlogInfo,
+    setHtmlInfo,
     setBaseInfo,
     setCurriculum,
     clearInfo,
@@ -46,6 +49,8 @@ function RouteComponent() {
   const { data: curriculum } = useGetCurriculumnDetail(baseInfo?.curriculumId);
   const { data: videoInfo } = useGetContentDetail(videoConfig?.contentUuid);
   const { data: blogInfo } = useGetBlogResource(blogConfig?.contentUuid);
+  const { data: htmlInfo } = useGetHtml5Resource(htmlConfig?.contentUuid);
+
   const { watchLog } = useVideoWatchLog();
 
   const handleVideoProgress = (state: any) => {
@@ -83,6 +88,10 @@ function RouteComponent() {
     if (!blogInfo) return;
     setBlogInfo(blogInfo);
   }, [blogInfo]);
+  useEffect(() => {
+    if (!htmlInfo) return;
+    setHtmlInfo(htmlInfo);
+  }, [htmlInfo]);
 
   useEffect(() => {
     if (!playInfo) return;
@@ -109,6 +118,11 @@ function RouteComponent() {
           contentUuid: playInfo.contentUuid,
         });
         break;
+      case EnContentType.HTML5_VIDEO:
+        setHtmlConfig({
+          contentUuid: playInfo.contentUuid,
+        });
+        break;
     }
   }, [playInfo]);
 
@@ -118,9 +132,7 @@ function RouteComponent() {
   }, [curriculum]);
 
   useEffect(() => {
-    const learningInfo = {
-      ...routerState.location.state,
-    } as LearningWindowBaseInfo;
+    const learningInfo = routerState.location.state.learningInfo as LearningWindowBaseInfo;
     console.log('state info ', learningInfo);
     if (learningInfo.curriculumId) {
       setBaseInfo(learningInfo);
