@@ -7,6 +7,8 @@ import {
   CourseConfigQueryParams,
   CoursesQueryParams,
   PaginationResponse,
+  CoursePopupQueryParams,
+  CoursePopupListItem,
 } from '../../../types';
 
 /**
@@ -114,5 +116,16 @@ export default class CourseService {
     queryParams: CourseConfigQueryParams,
   ): Promise<T> {
     return httpService.get<T>(`${LMSApiPrefix()}/course/config`, queryParams);
+  }
+
+  /**
+   * 과정 조회 팝업
+   * @param [params] - 조회 파라미터 (선택 사항).
+   * @returns 과정 목록 페이지네이션 응답 Promise.
+   */
+  static async fetchCoursePopup<T = CoursePopupListItem>(
+    queryParams: CoursePopupQueryParams,
+  ): Promise<PaginationResponse<T>> {
+    return httpService.get<PaginationResponse<T>>(`${LMSApiPrefix()}/course/popup`, queryParams);
   }
 }
