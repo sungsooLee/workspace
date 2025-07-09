@@ -54,7 +54,7 @@ export const useCourseForm = (courseType?: string) => {
   });
 
   // 현재 활성 탭
-  const [activeTab, setActiveTab] = useState('STEP5');
+  const [activeTab, setActiveTab] = useState('STEP1');
 
   // ref 설정 함수들
   const setTabRef = useCallback((tabKey: string, ref: TabFormRef | null) => {
@@ -222,6 +222,7 @@ const responseDataToFormData = (response: Course) => {
     isInstructorAssigned: true, // 강사 설정 사용 여부
     isTextbookProvided: true, // 교재 설정 사용 여부
     isRelatedPrerequisiteCourseExisted: true, // 사전/연관학습 설정 사용 여부
+    isUseOutsourcing: true, // 오토에버 위탁 전용 설정 여부
   };
 };
 

@@ -2,12 +2,11 @@ import { queryOptions } from '@entities/course/service/course.queries';
 import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
 import { CourseTypeOptionCardModal } from '@features/learning-operate/course/course-management';
 import {
+  FormRow2,
   GridExcelDownloadButton,
   GridExcelUploadButton,
-  TenantByRoleDropdownFormField,
-  TenantChannelDropdownFormField,
   SearchBoxForm,
-  FormRow2,
+  TenantChannelDropdownFormField,
 } from '@shared/ui';
 import { LMSApiPrefix } from '@learnway/config';
 import { CODE_GROUP, getCodeLabel, useDynamicForm2 } from '@learnway/hooks';
@@ -113,7 +112,7 @@ function RouteComponent() {
         <SearchBoxForm onSearch={onSubmit(handleOnSearch)}>
           <ContentsRow>
             {/*테넌트*/}
-            {/* <FormRow2
+            <FormRow2
               provider={provider}
               name={'tenantId'}
               label={t('LABEL.form.label.tenant')}
@@ -125,17 +124,6 @@ function RouteComponent() {
                   presetOptionLabel={t('LABEL.form.label.select', '선택')}
                 />
               }
-              validation={{
-                required: true,
-                format: 'object',
-              }}
-            /> */}
-            {/*테넌트 신규 폼필드*/}
-            <FormRow2
-              provider={provider}
-              name={'tenantId'}
-              label={'테넌트'}
-              element={<TenantByRoleDropdownFormField />}
               validation={{
                 required: true,
                 format: 'object',
