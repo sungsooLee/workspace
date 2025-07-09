@@ -1,8 +1,15 @@
 import { useEffect, useCallback, useImperativeHandle, forwardRef } from 'react';
 import { t } from 'i18next';
-import { Button, Divider, useModal, PreviewImage } from '@learnway/ui';
+import {
+  Button,
+  Divider,
+  useModal,
+  PreviewImage,
+  GridBox,
+  useGridBox,
+  useGridBoxConfig,
+} from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP, useFileManager } from '@learnway/hooks';
 import { EnGlobalConst, EnPageMode } from '@types';
@@ -18,7 +25,7 @@ interface TrainingPlaceListProps {
 
 const TrainingPlaceListComponent = (props: TrainingPlaceListProps, ref: any) => {
   const { open: openModal } = useModal();
-  const { provider: searchProvider, getValues, setValue } = useSearchBox(searchConfig);
+  const { provider: searchProvider, getValues, setValue } = useSearchBox(searchConfig());
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
 
   const { getFileInfo, fileDownload } = useFileManager();
@@ -185,7 +192,7 @@ const TrainingPlaceListComponent = (props: TrainingPlaceListProps, ref: any) => 
 
 export const TrainingPlaceList = forwardRef(TrainingPlaceListComponent);
 
-const searchConfig: SearchBoxConfig = {
+const searchConfig = () => ({
   builders: [
     [
       {
@@ -228,7 +235,7 @@ const searchConfig: SearchBoxConfig = {
       },
     ],
   ],
-};
+});
 
 const gridConfig: useGridBoxConfig = {
   query: queryOptions.list,
