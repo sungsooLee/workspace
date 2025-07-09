@@ -82,8 +82,8 @@ const ReviewPopupComponent = () => {
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button label={'취소'} variant="gray" size="lg"></Button>
-        <Button label={'확인'} variant={'primary'} size={'lg'}></Button>
+        <Button label={'취소'} variant="gray" size="xl2"></Button>
+        <Button label={'확인'} variant={'primary'} size={'xl2'}></Button>
       </ModalFooter>
     </ModalContainer>
   );

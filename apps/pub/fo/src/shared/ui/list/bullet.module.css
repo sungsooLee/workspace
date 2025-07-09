@@ -4,7 +4,7 @@
       li {
         @apply body-md relative pl-[12px] leading-[22px] text-[var(--gray35)];
         &::before {
-          @apply absolute left-0 top-[9px] h-[4px] w-[4px] rounded-[50%] bg-[var(--gray6)] content-[''];
+          @apply absolute left-0 top-[9px] h-[4px] w-[4px] rounded-[50%] bg-[var(--gray50)] content-[''];
         }
         & + li {
           @apply mt-[8px];
