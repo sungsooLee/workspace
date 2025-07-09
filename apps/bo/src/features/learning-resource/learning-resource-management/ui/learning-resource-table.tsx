@@ -31,7 +31,7 @@ import { useRouter } from '@tanstack/react-router';
 import { useWatch } from 'react-hook-form';
 import { useQueryClient } from '@tanstack/react-query';
 import { GridExcelDownloadButton } from '@shared/ui';
-import { CMSApiPrefix } from '@learnway/config';
+import { CMSApiPrefix, LEARNING_TYPE } from '@learnway/config';
 
 function LearningResourceTableComponent() {
   const {
@@ -163,6 +163,20 @@ function LearningResourceTableComponent() {
     },
   };
 
+  const getDetailPathByContentType = (contentType: string) => {
+    let path = '';
+    switch (contentType) {
+      case LEARNING_TYPE.VIDEO:
+        path = '/learning/learning-resource/video/view';
+        break;
+      case LEARNING_TYPE.BLOG:
+        path = '/learning/resource/blog/view';
+        break;
+      // TODO: 유형 추가
+    }
+    return path;
+  };
+
   const gridConfig: useGridBoxConfig = {
     query: learningResourceQueryOptions.getContents,
     columns: [
@@ -184,9 +198,12 @@ function LearningResourceTableComponent() {
             className="link"
             onClick={(e) => {
               e.stopPropagation();
+
+              const detailPath = getDetailPathByContentType(_.row.original.contentType);
+
               // 유형별 상세 화면으로 이동해야 함
               router.navigate({
-                to: '/learning/learning-resource/video/view',
+                to: detailPath,
                 state: {
                   contentUuid: _.row.original.contentUuid,
                 },

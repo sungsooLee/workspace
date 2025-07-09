@@ -9,6 +9,7 @@ export const queryKeys = {
   createDraftVideo: ['create-draft-video'] as const,
   s3FileDownload: ['file-s3-download'] as const,
   learningResources: ['learning-resources'] as const,
+  curriculumMapping: ['mapping-curriculum'] as const,
   mappingCourses: ['mapping-courses'] as const,
   sharedHistories: ['shared-histories'] as const,
   programGuideDownload: ['program-guide-download'] as const,
@@ -62,9 +63,13 @@ export const learningResourceQueryOptions = {
     staleTime: 0,
     enabled: false,
   }),
-  getMappingCourses: (params: any) => ({
+  getCurriculumsMapping: (contentUuid: string) => ({
+    queryKey: queryKeys.curriculumMapping,
+    queryFn: () => LearningResourceService.fetchCurriculumMapping(contentUuid),
+  }),
+  getCoursesMapping: (contentUuid: string) => ({
     queryKey: queryKeys.mappingCourses,
-    queryFn: () => LearningResourceService.fetchMappingCourses(params),
+    queryFn: () => LearningResourceService.fetchCourseMapping(contentUuid),
     cacheTime: 0,
     staleTime: 0,
     enabled: false,
