@@ -1,11 +1,16 @@
 import { queryOptions } from '@entities/course/service/course.queries';
 import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
 import { CourseTypeOptionCardModal } from '@features/learning-operate/course/course-management';
-import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
+import {
+  FormRow2,
+  GridExcelDownloadButton,
+  GridExcelUploadButton,
+  SearchBoxForm,
+  TenantChannelDropdownFormField,
+} from '@shared/ui';
 import { LMSApiPrefix } from '@learnway/config';
 import { CODE_GROUP, getCodeLabel, useDynamicForm2 } from '@learnway/hooks';
 import { Button, ContentsRow, Divider, GridBox, Input, useGridBox, useModal } from '@learnway/ui';
-import { FormRow2, SearchBoxForm, TenantChannelDropdownFormField } from '@shared/ui';
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { CourseListItem, CoursesQueryParams } from '@types';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
