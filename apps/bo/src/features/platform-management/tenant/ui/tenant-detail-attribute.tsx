@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, forwardRef, useRef, useImperativeHandle } from 'react';
+import { useState, useEffect, forwardRef, useRef, useImperativeHandle } from 'react';
 import { useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { cn } from '@learnway/shared';
@@ -11,20 +11,17 @@ import {
   Button,
   ContentsRow,
   Input,
-  DynamicFormField,
   useModal,
   CheckboxGroupFormField,
   Tooltip,
-  ContentsRowItem,
   Switch,
   RadioGroupFormField,
 } from '@learnway/ui';
 import { CODE_GROUP, DynamicFormConfig, useCodeStore, useDynamicForm } from '@learnway/hooks';
 
-import { FormRow, ContentsHistoryInfoFormField, FormSubTitle } from '@shared/ui';
+import { FormRow, FormSubTitle } from '@shared/ui';
 
 import { EnDeviceType, EnUseCategory } from '@types';
-import { TenantDetailAttributeCompany } from './tenant-detail-attribute-company';
 
 /** Hook 정의 */
 import {
@@ -32,8 +29,6 @@ import {
   useUpdateTenantAttributeCompany,
 } from '@entities/tenant/service/tenant-attribute.hook';
 import { IcoAlertCircle } from '@learnway/icons';
-import { defaultOptions } from '@uppy/core/lib/Restricter';
-import { useFetchTenant } from '@entities/tenant';
 import { FormDisplay } from '@features/form';
 
 /**

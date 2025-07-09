@@ -13,9 +13,7 @@ import {
   ShuttleGridToGridImperative,
   useModal,
 } from '@learnway/ui';
-
 import { SearchBox } from '@shared/ui/search-box';
-import { IcoRefresh02 } from '@learnway/icons';
 import { useQueryClient } from '@tanstack/react-query';
 import { usersQueryOptions } from '@entities/users/service/users.queries';
 import { useWatch } from 'react-hook-form';
@@ -88,16 +86,6 @@ const UserShuttleComponent = () => {
         />
       </ModalBody>
       <ModalFooter>
-        <Button
-          icon={<IcoRefresh02 width={16} height={16} className="icon_refresh" />}
-          variant={'gray'}
-          size={'lg'}
-          onClick={() => {
-            ref.current?.resetSelection();
-          }}
-        >
-          {t('초기화')}
-        </Button>
         <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={handleOnClose} />
         <Button
           type={'button'}
