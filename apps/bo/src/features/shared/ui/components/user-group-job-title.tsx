@@ -16,7 +16,7 @@ const UserGroupJobTitleComponent = ({
   const ref = useRef<ShuttleGridToChipsImperative>(null);
   const { data = [] } = useFetchUserGroups(tenantIds, { userGroupType: 'JOB_TITLE' });
 
-  const [option, setOption] = useState<{ id: string; name: string }[]>([]);
+  const [option, setOption] = useState<{ id: number; name: string }[]>([]);
 
   const columnHelper = createColumnHelper();
   const columns = [

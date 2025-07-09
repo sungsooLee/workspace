@@ -13,7 +13,7 @@ const UserGroupJobComponent = ({ tenantIds, handleSetOption }: UserGroupJobCompo
   const ref = useRef<ShuttleGridToChipsImperative>(null);
   const { data = [] } = useFetchUserGroups(tenantIds, { userGroupType: 'JOB' });
 
-  const [option, setOption] = useState<{ id: string; name: string }[]>([]);
+  const [option, setOption] = useState<{ id: number; name: string }[]>([]);
 
   const columnHelper = createColumnHelper();
   const columns = [

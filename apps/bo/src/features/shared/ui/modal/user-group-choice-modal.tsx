@@ -21,14 +21,9 @@ import { useWatch } from 'react-hook-form';
 import { queryOptions as departmentQueryOptions } from '@entities/department';
 import { BlackwhiteUsersParam } from '@types';
 
-const UserGroupModalComponent = ({
-  userGroupIds,
-  userGroupType,
-  groups,
-}: Pick<BlackwhiteUsersParam, 'userGroupIds' | 'userGroupType' | 'groups'>) => {
+const UserGroupModalComponent = ({ groups }: Pick<BlackwhiteUsersParam, 'groups'>) => {
   const gridConfig = {
-    query: (data: any) =>
-      queryOptions.blackwhiteUsers({ ...data, userGroupIds, userGroupType, groups }),
+    query: (data: any) => queryOptions.blackwhiteUsers({ ...data, groups }),
     columns: [],
     data: [],
     pagination: {
