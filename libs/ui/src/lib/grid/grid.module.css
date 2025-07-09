@@ -23,9 +23,6 @@
     .empty_message_container {
       @apply absolute bottom-0 left-0 right-0 flex h-[40px] items-center justify-center;
     }
-    table thead th {
-      @apply;
-    }
   }
 }
 
