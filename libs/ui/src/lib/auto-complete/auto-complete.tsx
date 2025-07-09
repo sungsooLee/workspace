@@ -32,7 +32,13 @@ export interface AutoCompleteDropdownComponentProps
 const dropdownIndicator = (props: any) => {
   return (
     <components.DropdownIndicator {...props}>
-      <IcoArrowDown width={16} height={16} stroke="#131C30" className={styles.icon_arrow} />
+      <IcoArrowDown
+        width={16}
+        height={16}
+        stroke="#fff"
+        fill="transparent"
+        className={styles.icon_arrow}
+      />
     </components.DropdownIndicator>
   );
 };
@@ -42,7 +48,7 @@ const clearIndicator = (props: any) => {
   return (
     <components.ClearIndicator {...props}>
       <Button onlyIcon className="btn_clear">
-        <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
+        <IcoDelete03 width={20} height={20} fill="#A9AFB8" stroke="none" />
       </Button>
     </components.ClearIndicator>
   );

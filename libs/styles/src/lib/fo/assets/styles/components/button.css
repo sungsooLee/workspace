@@ -57,6 +57,12 @@
   }
   &.line {
     @apply !border-[var(--blue50)] text-[var(--blue50)];
+    &:hover {
+      @apply border-[var(--blue75)] bg-[var(--blue98)] text-[var(--blue75)];
+    }
+    &:active {
+      @apply border-[var(--blue35)] bg-[var(--blue95)] text-[var(--blue35)];
+    }
   }
   &[class*='only_icon'] {
     @apply !rounded-[6px];

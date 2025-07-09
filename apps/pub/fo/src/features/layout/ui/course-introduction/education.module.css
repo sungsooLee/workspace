@@ -8,14 +8,14 @@
       .date {
         @apply label-xl-b text-[var(--gray10)];
       }
-      .filter {
-        @apply flex items-center;
-        .drop_btn {
-          @apply relative ml-[24px] min-h-min pl-[24px];
-          &::before {
-            @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray4)] content-[''];
-          }
+      .drop_btn {
+        @apply relative flex min-h-min items-center;
+        span {
+          @apply label-xl-b leading-[36px] text-[var(--gray10)];
         }
+        /* &::before {
+            @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray4)] content-[''];
+          } */
       }
     }
     .education_box {
