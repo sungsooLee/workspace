@@ -277,6 +277,7 @@ function RouteComponent() {
       setSuccessTranslationCount(0);
       if (shouldUpdateOriginalData) {
         originalDataRef.current = null;
+        setShouldUpdateOriginalData(false);
       }
     }
   }, [data?.content]);

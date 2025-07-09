@@ -3,7 +3,7 @@ import { createLazyFileRoute, useRouterState, useRouter } from '@tanstack/react-
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { Button } from '@learnway/ui';
 import { FormSubTitle } from '@shared/ui';
-import { ChannelDetail } from '@features/tenant/channel/channel-detail';
+import { ChannelDetail } from '@features/channel/channel-management/channel-detail';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';

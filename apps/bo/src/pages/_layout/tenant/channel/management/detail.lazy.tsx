@@ -9,10 +9,10 @@ import { Tabs, Button } from '@learnway/ui';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
-import { ChannelDetailBase } from '@features/tenant/channel/channel-detail-base';
-import { ChannelDetailRole } from '@features/tenant/channel/channel-detail-role';
-import { ChannelDetailHome } from '@features/tenant/channel/channel-detail-home';
-import { ChannelDetailBoard } from '@features/tenant/channel/channel-detail-board';
+import { ChannelDetailBase } from '@features/channel/channel-management/channel-detail-base';
+import { ChannelDetailRole } from '@features/channel/channel-management/channel-detail-role';
+import { ChannelDetailHome } from '@features/channel/channel-management/channel-detail-home';
+import { ChannelDetailBoard } from '@features/channel/channel-management/channel-detail-board';
 
 export const Route = createLazyFileRoute('/_layout/tenant/channel/management/detail')({
   component: RouteComponent,

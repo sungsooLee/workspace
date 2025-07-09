@@ -6,15 +6,15 @@ import { LinkBox } from '../../../../../widgets/layout/ui/container/slot/link-bo
 import { Button, ContentsRow, DynamicFormField, InputModalSelectorFormField } from '@learnway/ui';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../../shared/ui/form';
-import { MovieInfo, SharedChannelGridFormField } from '../../../../../features/learning';
+import { SharedChannelGridFormField } from '@features/form/ui';
 import { FormDisplay } from '../../../../../features/form/ui/form-display';
-import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
+import { DateRangePickerFormField, VideoDurationFormField } from '@features/form/ui';
 import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
 import React from 'react';
 import { t } from 'i18next';
-import { VideoDurationFormField } from '../../../../../features/learning/ui/resource/video-duration-form-field';
 import { ChannelChoiceModal, ManagerChoiceModal } from '../../../../../features/shared';
 import { SubTitlesFormField } from '@features/form/ui';
+import { MovieInfo } from '@features/learning-resource';
 
 export const Route = createLazyFileRoute('/_unauth/learning_test/resource/view/html-video')({
   component: RouteComponent,

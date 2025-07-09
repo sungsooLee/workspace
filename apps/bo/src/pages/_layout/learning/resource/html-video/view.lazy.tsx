@@ -5,10 +5,11 @@ import { createLazyFileRoute } from '@tanstack/react-router';
 import { ContentsButtons, MainContents, PageContainer } from '@widgets/layout';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { SubContents } from '@widgets/layout/ui/container/slot/sub-contents';
-import { ImageInfo, SharedChannelGridFormField } from '@features/learning';
+import { SharedChannelGridFormField } from '@features/form/ui';
 import styles from './test-detail.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { cn } from '@learnway/shared';
+import { ImageInfo } from '@features/learning-resource';
 
 export const Route = createLazyFileRoute('/_layout/learning/resource/html-video/view')({
   component: RouteComponent,

@@ -11,6 +11,6 @@ export default {
 type Story = StoryObj<typeof Editor>;
 
 export const TemplateEditor: any = (args: any) => {
-  return <Editor />;
+  return <Editor value={{}} />;
 };
 TemplateEditor.storyName = 'Editor';
