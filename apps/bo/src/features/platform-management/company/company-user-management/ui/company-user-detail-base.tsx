@@ -3,7 +3,7 @@ import { useWatch } from 'react-hook-form';
 import { useRouterState } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
-
+import { cn } from '@learnway/shared';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
 import {
@@ -16,8 +16,9 @@ import {
   CheckboxGroupFormField,
 } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm, CODE_GROUP } from '@learnway/hooks';
-
 import { FormSubTitle, FormRow, ContentsHistoryInfoFormField } from '@shared/ui';
+
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 
 const CompanyUserDetailBaseComponent: FC<any> = ({ userInfo }) => {
   const { provider, control, updateFormData, onSubmit, setFormError, clearFormError, getValues } =
@@ -44,15 +45,16 @@ const CompanyUserDetailBaseComponent: FC<any> = ({ userInfo }) => {
       <FormSubTitle label={'개인 정보'} lineType={'dark'} />
       <ContentsRow>
         <FormRow provider={provider} name={'name'} element={<Input disabled={true} />} />
+        <FormRow provider={provider} name={'engName'} element={<Input disabled={true} />} />
         <FormRow provider={provider} name={'employeeNumber'} element={<Input disabled={true} />} />
-        <FormRow provider={provider} name={'email'} element={<Input disabled={true} />} />
       </ContentsRow>
       <ContentsRow>
+        <FormRow provider={provider} name={'email'} element={<Input disabled={true} />} />
         <FormRow provider={provider} name={'birthday'} element={<Input disabled={true} />} />
         <FormRow provider={provider} name={'gender'} element={<Input disabled={true} />} />
-        <FormRow provider={provider} name={'area'} element={<Input disabled={true} />} />
       </ContentsRow>
       <ContentsRow>
+        <FormRow provider={provider} name={'area'} element={<Input disabled={true} />} />
         <FormRow provider={provider} name={'phoneNumber'} />
         <FormRow provider={provider} name={'officePhone'} />
       </ContentsRow>
@@ -81,12 +83,13 @@ const CompanyUserDetailBaseComponent: FC<any> = ({ userInfo }) => {
         />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name={'employmentStatus'} />
+        <FormRow provider={provider} name={'userStatus'} />
         <FormRow
           provider={provider}
           name={'employmentStatusUpdateDate'}
           element={<Input disabled={true} />}
         />
+        <div className={cn(formStyles.form_item)}></div>
       </ContentsRow>
 
       <FormSubTitle label={'직군/직무 정보'} lineType={'dark'} />
@@ -189,6 +192,13 @@ const formConfig: DynamicFormConfig = {
       name: 'name',
       type: 'text',
       label: t('이름'),
+      value: '',
+      placeholder: '',
+    },
+    {
+      name: 'engName',
+      type: 'text',
+      label: t('영문 이름'),
       value: '',
       placeholder: '',
     },
@@ -329,16 +339,13 @@ const formConfig: DynamicFormConfig = {
       placeholder: '',
     },
     {
-      name: 'employmentStatus',
+      name: 'userStatus',
       type: 'radio-group',
       label: t('재직 상태'),
-      value: 'opt1',
-      options: [
-        { label: t('재직'), value: 'opt1' },
-        { label: t('정직'), value: 'opt2' },
-        { label: t('휴직'), value: 'opt3' },
-        { label: t('퇴사'), value: 'opt4' },
-      ],
+      value: '',
+      optionConfig: {
+        codeGroup: CODE_GROUP['pms.user.Status'],
+      },
     },
     {
       name: 'employmentStatusUpdateDate',
@@ -378,13 +385,10 @@ const formConfig: DynamicFormConfig = {
       name: 'accountStatus',
       type: 'radio-group',
       label: t('계정 상태'),
-      value: 'opt1',
-      options: [
-        { label: '정상', value: 'opt1' },
-        { label: '잠김', value: 'opt2' },
-        { label: '휴면(정상)', value: 'opt3' },
-        { label: '휴면(잠김)', value: 'opt4' },
-      ],
+      value: '',
+      optionConfig: {
+        codeGroup: CODE_GROUP['pms.user.AccountStatus'],
+      },
     },
     {
       name: 'lastAccountStatusUpdateDate',

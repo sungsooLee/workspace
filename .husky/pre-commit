@@ -1,0 +1,6 @@
+# 코드 포맷팅 및 린팅 실행
+npx lint-staged
+
+# FSD 아키텍처 검사 실행 (위반 시에도 커밋은 허용, 경고만 표시)
+echo "🔍 FSD 아키텍처 검사를 실행 중입니다..."
+npm run fsd:check || echo "⚠️  FSD 위반 사항이 발견되었습니다. CONTRIBUTING.md를 참고해주세요"

@@ -3,16 +3,20 @@ import { useState } from 'react';
 import { t } from 'i18next';
 import { UserGroupOrganization } from '@features/shared';
 import { IcoRefresh02 } from '@learnway/icons';
-import { BlackwhiteUsersParam } from '@types';
+import { CombineUserGroup } from '@types';
 
 type Props = {
   tenantIds: number[];
+  option?: CombineUserGroup[];
 };
 
-const UserGroupOrganizationShuttleModalComponent = ({ tenantIds }: Props) => {
+const UserGroupOrganizationShuttleModalComponent = ({
+  tenantIds,
+  option: optionProp = [],
+}: Props) => {
   const { close: closeModal } = useModal();
 
-  const [option, setOption] = useState<BlackwhiteUsersParam>();
+  const [option, setOption] = useState<CombineUserGroup[]>(optionProp);
 
   const handleOnClose = () => {
     closeModal();
@@ -25,7 +29,7 @@ const UserGroupOrganizationShuttleModalComponent = ({ tenantIds }: Props) => {
     <ModalContainer>
       <ModalTitle>유저 그룹 조회</ModalTitle>
       <ModalBody>
-        <UserGroupOrganization tenantIds={tenantIds} handleSetOption={setOption} />
+        <UserGroupOrganization tenantIds={tenantIds} option={option} handleSetOption={setOption} />
       </ModalBody>
       <ModalFooter>
         <ModalFooter>

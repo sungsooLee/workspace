@@ -1,7 +1,15 @@
 import { memo, useState } from 'react';
 import { Button, useModal } from '@learnway/ui';
 import { isMobile } from 'react-device-detect';
-import { IcoArrowDown } from '@learnway/icons';
+import {
+  IcoArrowDown,
+  IcoCalendar01,
+  IcoLocation,
+  IcoTime,
+  IcoAvatar02,
+  IcoTeacher,
+  IcoMoney,
+} from '@learnway/icons';
 import { EducationPlacePopup } from '../../../features/layout';
 
 import definitionListStyles from '../../../pages/_layout/course-introduction/definition-list.module.css';
@@ -49,20 +57,20 @@ const EducationComponent = ({ className }: EducationProps) => {
         <div
           className={`${definitionListStyles.start} ${definitionListStyles.list} ${styles.list}`}
         >
-          <dl>
-            <dt>신청기간</dt>
-            <dd>26-01-15 10:00 ~ 26-01-14 23:59</dd>
-          </dl>
-          <dl>
-            <dt>수강인원</dt>
-            <dd>
-              494 / 500명 (잔여석 <em>6</em>)
-            </dd>
-          </dl>
-          <dl>
-            <dt>교육장소</dt>
-            <dd>
-              온라인 비대면{' '}
+          <ul>
+            <li>
+              <IcoCalendar01 width={20} height={20} stroke="#4d525c" />
+              <span>26-01-15 10:00 ~ 26-01-14 23:59</span>
+            </li>
+            <li>
+              <IcoAvatar02 width={20} height={20} viewBox="0 0 24 24" fill="#4d525c" />
+              <span>
+                493 / 500 (잔여 <em>7</em>)
+              </span>
+            </li>
+            <li>
+              <IcoLocation width={20} height={20} stroke="#4d525c" />
+              <span>온라인 비대면</span>
               <Button
                 onClick={() =>
                   openModal({
@@ -73,31 +81,25 @@ const EducationComponent = ({ className }: EducationProps) => {
               >
                 약도보기
               </Button>
-            </dd>
-          </dl>
-          <dl>
-            <dt>학습기간</dt>
-            <dd>2시간 14분</dd>
-          </dl>
+            </li>
+            <li>
+              <IcoTime width={20} height={20} fill="#4d525c" />
+              <span>2시간 33분</span>
+            </li>
+          </ul>
           {/* 추가 list */}
           {detail === true ? (
             <div className={styles.more_list}>
-              <dl>
-                <dt>강사</dt>
-                <dd>김이나</dd>
-              </dl>
-              <dl>
-                <dt>강사</dt>
-                <dd>김이나</dd>
-              </dl>
-              <dl>
-                <dt>강사</dt>
-                <dd>김이나</dd>
-              </dl>
-              <dl>
-                <dt>강사</dt>
-                <dd>김이나</dd>
-              </dl>
+              <ul>
+                <li>
+                  <IcoTeacher width={20} height={20} fill="#4d525c" />
+                  <span>현대리 사외강사</span>
+                </li>
+                <li>
+                  <IcoMoney width={20} height={20} fill="#4d525c" />
+                  <span>2시간 33분</span>
+                </li>
+              </ul>
               <dl className={styles.full}>
                 <dt>이수기준</dt>
                 <dd>

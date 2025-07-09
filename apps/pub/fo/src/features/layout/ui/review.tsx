@@ -15,6 +15,15 @@ const ReviewComponent = ({ className }: ReviewProps) => {
 
   return (
     <div className={`${styles.start} ${styles.review_wrap} ${className}`}>
+      <Popover
+        popoverContent={<ReviewOptionPopover />}
+        side="bottom"
+        align="end"
+        sideOffset={5}
+        className={styles.btn}
+      >
+        <IcoMoreVertical width={24} height={24} fill="#6b7280" />
+      </Popover>
       <div className={styles.star}>
         <IcoStar width={20} height={20} fill="#0056ff" />
         <IcoStar width={20} height={20} fill="#0056ff" />
