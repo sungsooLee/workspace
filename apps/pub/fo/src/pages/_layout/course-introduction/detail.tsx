@@ -487,7 +487,7 @@ function RouteComponent() {
                     <p>동영상</p>
                   </li>
                   <li className={listCategoryOpen === true ? packageInformationStyles.open : ''}>
-                    <IcoCategory width={20} height={20} stroke="#4d525c" />
+                    <IcoCategory width={20} height={20} fill="#4d525c" />
                     <p>Quality Service Hydrogen/Electricitysf Service Hydrogen/Electricitysf</p>
                     <Button
                       onClick={() =>
@@ -504,27 +504,27 @@ function RouteComponent() {
                     <p>온라인 비대면</p>
                   </li>
                   <li>
-                    <IcoTime width={20} height={20} stroke="#4d525c" fill="none" />
+                    <IcoTime width={20} height={20} fill="#4d525c" />
                     <p>1시간 24분</p>
                   </li>
                   <li>
-                    <IcoBuilding width={20} height={20} stroke="#4d525c" fill="none" />
+                    <IcoBuilding width={20} height={20} fill="#4d525c" />
                     <p>야나두</p>
                   </li>
                   <li>
-                    <IcoDivice width={20} height={20} stroke="#4d525c" fill="none" />
+                    <IcoDivice width={20} height={20} fill="#4d525c" />
                     <p>앱, 웹, 모바일전용, 사외IP전용</p>
                   </li>
                   <li>
-                    <IcoLevel width={20} height={20} stroke="#4d525c" fill="none" />
+                    <IcoLevel width={20} height={20} fill="#4d525c" />
                     <p>중급</p>
                   </li>
                   <li>
-                    <IcoPrize width={20} height={20} stroke="#4d525c" fill="none" />
+                    <IcoPrize width={20} height={20} fill="#4d525c" />
                     <p>발급</p>
                   </li>
                   <li className={listSubTitleOpen === true ? packageInformationStyles.open : ''}>
-                    <IcoSubtitles02 width={20} height={20} stroke="#4d525c" fill="none" />
+                    <IcoSubtitles02 width={20} height={20} fill="#4d525c" />
                     <p>
                       한국어, Aracic, Chinese Taiwan, Deutsch, English, Frensh, Indonesian,
                       Japanese, Malay, Nepali, Portuguese
@@ -536,7 +536,7 @@ function RouteComponent() {
                           : setListSubTitleOpen(true)
                       }
                     >
-                      <IcoArrowDown width={20} height={20} stroke="#4d525c" />
+                      <IcoArrowDown width={20} height={20} fill="#4d525c" />
                     </Button>
                   </li>
                 </ul>
