@@ -9,7 +9,7 @@ export interface ValidationRule {
 export interface UseInputValidationOptions {
   validationRule?: ValidationRule;
   onValidationError?: (message: string) => void;
-  label?: string;
+  label?: string | (() => string);
 }
 
 export const useInputValidation = (options: UseInputValidationOptions = {}) => {
@@ -37,7 +37,8 @@ export const useInputValidation = (options: UseInputValidationOptions = {}) => {
 
       const isValid = validationRule.regex.test(value);
       if (!isValid) {
-        const errorMessage = t(validationRule.errorMessageKey, { type: t(label ?? '') });
+        const labelText = typeof label === 'function' ? label() : label;
+        const errorMessage = t(validationRule.errorMessageKey, { type: t(labelText ?? '') });
         setError(errorMessage);
         return false;
       }
@@ -70,7 +71,8 @@ export const useInputValidation = (options: UseInputValidationOptions = {}) => {
 
       if (!allowedKeys.includes(event.key) && !validationRule.regex.test(event.key)) {
         event.preventDefault();
-        const errorMessage = t(validationRule.errorMessageKey, { type: t(label ?? '') });
+        const labelText = typeof label === 'function' ? label() : label;
+        const errorMessage = t(validationRule.errorMessageKey, { type: t(labelText ?? '') });
         setError(errorMessage);
       }
     },
@@ -84,7 +86,8 @@ export const useInputValidation = (options: UseInputValidationOptions = {}) => {
       const pastedText = event.clipboardData.getData('text');
       if (!validationRule.regex.test(pastedText)) {
         event.preventDefault();
-        const errorMessage = t(validationRule.errorMessageKey, { type: t(label ?? '') });
+        const labelText = typeof label === 'function' ? label() : label;
+        const errorMessage = t(validationRule.errorMessageKey, { type: t(labelText ?? '') });
         setError(errorMessage);
       }
     },
