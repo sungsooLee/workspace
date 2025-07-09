@@ -22,10 +22,8 @@ const CompanyOrganizationInfoUserComponent = ({
 }: {
   companyCode: string;
   deptId: number;
-  showType: string;
+  showType: EnOrganizationShowType;
 }) => {
-  const [gridConfig, setGridConfig] = useState<any>(gridConfigOrg);
-
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
 
   const getSearchParam = () => {
@@ -33,33 +31,56 @@ const CompanyOrganizationInfoUserComponent = ({
 
     return retval;
   };
-  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getSearchParam);
+  const { config: configOrigin, gridFetch: gridFetchOrigin } = useGridBox(
+    gridConfigOrg,
+    getSearchParam,
+  );
+  const { config: configPlatform, gridFetch: gridFetchPlatform } = useGridBox(
+    gridConfigPlat,
+    getSearchParam,
+  );
 
   const handleOnSearch = (data: any) => {
     if (companyCode) {
-      gridFetch(getSearchParam());
+      gridFetch();
     }
   };
 
   useEffect(() => {
+    gridFetch();
+  }, [deptId]);
+
+  const gridFetch = () => {
     switch (showType) {
       case EnOrganizationShowType.origin:
-        setGridConfig(gridConfigOrg);
+        gridFetchOrigin(getSearchParam());
         break;
       case EnOrganizationShowType.platform:
-        setGridConfig(gridConfigPlat);
+        gridFetchPlatform(getSearchParam());
+        break;
     }
-  }, [showType]);
-
-  useEffect(() => {
-    gridFetch(getSearchParam());
-  }, [deptId]);
+  };
 
   return (
     <>
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
       <Divider />
-      <GridBox config={gConfig} columns={columns} showNumberingColumn title={t('유저 목록')} />
+      {showType === EnOrganizationShowType.origin && (
+        <GridBox
+          config={configOrigin}
+          columns={columns}
+          showNumberingColumn
+          title={t('유저 목록')}
+        />
+      )}
+      {showType === EnOrganizationShowType.platform && (
+        <GridBox
+          config={configPlatform}
+          columns={columns}
+          showNumberingColumn
+          title={t('유저 목록')}
+        />
+      )}
     </>
   );
 };
