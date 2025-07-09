@@ -41,6 +41,7 @@ export interface InputProps extends Omit<NumericFormatProps, 'type'> {
   label?: string | (() => string);
   hiddenPlaceholder?: boolean;
   validation?: InputValidationConfig; // 검증 관련 설정
+  multiple?: boolean;
 }
 
 const InputComponent = forwardRef<HTMLInputElement, InputProps>(
@@ -73,6 +74,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       onFocus,
       hiddenPlaceholder,
       validation,
+      multiple,
       ...props
     },
     ref,
@@ -298,6 +300,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             }}
             maxLength={maxLength}
             accept={props.accept}
+            multiple={multiple}
           />
         ) : (
           <input

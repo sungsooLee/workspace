@@ -38,9 +38,11 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
 
   // 파일 상태 관리
   const [files, setFiles] = useState<UploadFile[]>([]);
+  console.log('🚀 ~ files:', files);
 
   // 배치 모드에서 그룹 UUID 저장 (한 번 생성 후 재사용)
   const [batchGroupUuid, setBatchGroupUuid] = useState<string | undefined>(groupUuid);
+  console.log('🚀 ~ batchGroupUuid:', batchGroupUuid);
 
   // 업로드 통계 계산
   const stats = useMemo(() => {
@@ -806,6 +808,7 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
     stats,
     inputAccept,
     groupUuid: batchGroupUuid,
+    setGroupUuid: setBatchGroupUuid,
 
     // 파일 관리
     addFiles,

@@ -25,7 +25,7 @@ export interface ThumbnailProps {
   /** 아이디 */
   id?: string;
   /** 이미지 경로 */
-  path: string;
+  path?: string;
   /** index 번호 (list type 에서 index 번호 확인시 사용) */
   indexNumber?: number;
   /** 파일 사이즈*/
@@ -134,12 +134,13 @@ const ThumbnailComponent = forwardRef<HTMLDivElement, ThumbnailProps>(
               className={cn(styles.checkbox)}
               variant="round"
               hideLabel
+              checked={selected}
               onCheckedChange={onCheckedChange}
             />
           )}
           {isHovered && (
             <>
-              {showPreviewBtn && (
+              {showPreviewBtn && path && (
                 <Button
                   className={styles.btn_delete}
                   onClick={(e) => {

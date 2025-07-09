@@ -1,15 +1,21 @@
-import React, { forwardRef, useEffect } from 'react';
+// IA011 / NLP_BO_PMS_1100_05_01
+import { forwardRef, useEffect, useState } from 'react';
 import { ImageOption, ThumbnailImageUpload } from '@learnway/ui'; // @learnway/ui에서 ThumbnailImageUpload 컴포넌트 import
-import { S3UploaderConfig, BaseFormFieldProps } from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
+import {
+  S3UploaderConfig,
+  BaseFormFieldProps,
+  ThumbnailFileValue,
+  useFileManager,
+} from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
 import { isArray } from 'lodash';
 
 /**
  * ThumbnailImageUploadFormField 컴포넌트의 props 인터페이스
  * 폼 필드로서 ThumbnailImageUpload 컴포넌트를 래핑하여 폼 시스템과 통합합니다.
  */
-interface ThumbnailImageUploadFormFieldProps extends BaseFormFieldProps<string[]> {
+interface ThumbnailImageUploadFormFieldProps extends BaseFormFieldProps<ThumbnailFileValue> {
   uploadConfig?: S3UploaderConfig;
-  imageStorageType?: 'public' | 'db-manage';
+  // imageStorageType?: 'public' | 'db-manage';
   /**
    * 더미 속성 (현재 코드에서 사용되지 않음)
    * @deprecated 이 prop은 현재 코드에서 사용되지 않습니다.
@@ -31,15 +37,39 @@ const ThumbnailImageUploadFormFieldComponent = forwardRef<
   (
     {
       imageStorageType = 'public',
-      value = [], // 폼 필드의 현재 값 (string[] 타입, 이미지 경로 배열)
+      value = {}, // 폼 필드의 현재 값 (string[] 타입, 이미지 경로 배열)
       onChange, // 폼 필드 값이 변경될 때 호출되는 콜백 함수
       uploadConfig,
       ...props // 나머지 HTMLDivElement 속성들
     },
     ref, // forwardRef로 전달받은 Ref 객체
   ) => {
+    const { getGroupInfo } = useFileManager();
+
+    // keep value
+    const [values, setValues] = useState<ThumbnailFileValue>(value);
+    console.log('🚀 ~ ThumbnailImageUploadFormFieldComponent ~ values:', values);
+
+    async function fetchGroupInfo(groupUuid: string) {
+      const groupInfo = await getGroupInfo(groupUuid);
+      setValues((prev) => ({
+        ...prev,
+        files: groupInfo.files,
+      }));
+    }
+
+    useEffect(() => {
+      if (!values.groupUuid) return;
+      if (values.files) return;
+      fetchGroupInfo(values.groupUuid);
+    }, [values.groupUuid]);
+
+    useEffect(() => {
+      onChange(values);
+    }, [values]);
+
     // 폼 필드의 'value' (string[] 타입)를 'ThumbnailImageUpload'에서 사용할 'ImageOption[]' 타입으로 변환하여 내부 상태로 관리
-    const [options, setOptions] = React.useState<ImageOption[]>(valueToOptions(value));
+    // const [options, setOptions] = useState<ImageOption[]>(valueToOptions(value));
 
     /**
      * `ThumbnailImageUpload` 컴포넌트에서 이미지 목록이 변경될 때 호출되는 핸들러입니다.
@@ -47,27 +77,29 @@ const ThumbnailImageUploadFormFieldComponent = forwardRef<
      * 폼 필드의 `onChange` 콜백을 호출하고 부모 폼 시스템에 변경된 값을 알립니다.
      * @param newOptions - `ThumbnailImageUpload`에서 전달받은 변경된 ImageOption 배열
      */
-    const handleChange = (newOptions: ImageOption[]) => {
-      // ImageOption[]을 string[]으로 변환하여 폼 필드의 onChange 콜백 호출
-      onChange?.(optionsToValue(newOptions));
-    };
+    // const handleChange = (newOptions: ImageOption[]) => {
+    //   // ImageOption[]을 string[]으로 변환하여 폼 필드의 onChange 콜백 호출
+    //   onChange?.(optionsToValue(newOptions));
+    // };
 
     /**
      * `value` prop (부모 폼으로부터 받은 이미지 경로 배열)이 변경될 때마다
      * 내부 `options` 상태를 동기화합니다.
      * 이를 통해 폼 외부에서 `value`가 변경되어도 UI가 올바르게 업데이트됩니다.
      */
-    useEffect(() => {
-      setOptions(valueToOptions(value));
-    }, [value]); // `value` prop이 변경될 때마다 실행
+    // useEffect(() => {
+    //   setOptions(valueToOptions(value));
+    // }, [value]); // `value` prop이 변경될 때마다 실행
 
     // `ThumbnailImageUpload` 컴포넌트를 렌더링하고 필요한 props를 전달합니다.
     return (
       <ThumbnailImageUpload
         ref={ref} // forwardRef로 받은 Ref를 ThumbnailImageUpload 컴포넌트에 연결
         imageStorageType={imageStorageType}
-        options={options} // 내부 상태의 ImageOption[] 배열을 options prop으로 전달
-        onChange={handleChange} // ThumbnailImageUpload의 onChange 이벤트를 커스텀 핸들러와 연결
+        values={values}
+        onChangeValues={setValues}
+        // options={options} // 내부 상태의 ImageOption[] 배열을 options prop으로 전달
+        // onChange={handleChange} // ThumbnailImageUpload의 onChange 이벤트를 커스텀 핸들러와 연결
         uploadConfig={uploadConfig}
         {...props} // ThumbnailImageUpload에 전달될 수 있는 나머지 props (예: className)
       />
