@@ -73,6 +73,9 @@
   & + &.title_mode {
     @apply mt-[24px];
   }
+  &.title_mode + &.title_mode {
+    @apply !border-0;
+  }
   [class*='nlp--contents-row-item'] {
     & > div:nth-last-child(2) {
       @apply pb-0;
