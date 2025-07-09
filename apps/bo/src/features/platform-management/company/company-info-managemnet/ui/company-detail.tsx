@@ -44,7 +44,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
   const { open: openModal, confirm: openConfirm, alert: openAlert } = useModal();
   const [tableInstance, setTableInstance] = useState<Table<any>>();
   const { provider, updateFormData, onSubmit, onFormChange, getValues, control } =
-    useDynamicForm(formConfig);
+    useDynamicForm(formConfig());
 
   const tempLoginRestrictTimeSetting = React.useRef<any>(null);
   const [loginRestrictTimeSettings, setLoginRestrictTimeSettings] = useState<any[]>([]);
@@ -321,7 +321,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
   };
 
   const duplicateCheck = async (companyCode: string) => {
-    const payload = { companyCode: companyCode };
+    const payload = { companyCode };
     const result: boolean = await CompaniesService.existsCode(payload);
 
     if (result) return DuplicateState.duplicated;
@@ -665,7 +665,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
 
 export const CompanyDetail = forwardRef(CompanyDetailComponent);
 
-const formConfig: DynamicFormConfig = {
+const formConfig = (): DynamicFormConfig => ({
   builders: [
     {
       name: 'companyType',
@@ -1193,4 +1193,4 @@ const formConfig: DynamicFormConfig = {
       ],
     },
   },
-};
+});

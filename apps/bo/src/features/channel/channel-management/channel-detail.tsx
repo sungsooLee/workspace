@@ -794,7 +794,7 @@ const formConfig: DynamicFormConfig = {
   },
 };
 
-const searchConfig = () => ({
+const searchConfig = (): SearchBoxConfig => ({
   builders: [
     [
       {

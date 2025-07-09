@@ -92,7 +92,7 @@ const CompanyOrganizationInfoUserComponent = ({
 
 export const CompanyOrganizationUserList = CompanyOrganizationInfoUserComponent;
 
-const searchConfig = () => ({
+const searchConfig = (): SearchBoxConfig => ({
   builders: [
     [
       {

@@ -206,7 +206,7 @@ const CompanyOrganizationInfoListComponent = ({
 
 export const CompanyOrganizationInfoList = CompanyOrganizationInfoListComponent;
 
-const searchConfig = () => ({
+const searchConfig = (): SearchBoxConfig => ({
   builders: [
     [
       {

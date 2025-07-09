@@ -81,7 +81,7 @@ function RouteComponent() {
 
   const getRoleOptions = async (tenantId?: number) => {
     const roles = await queryClient.fetchQuery(
-      roleManagerQueryOptions.list({ tenantId: tenantId, size: 5000 }),
+      roleManagerQueryOptions.list({ tenantId, size: 5000 }),
     );
     const roleIdOptions = roles.content.map((item: any) => ({
       label: item.name,

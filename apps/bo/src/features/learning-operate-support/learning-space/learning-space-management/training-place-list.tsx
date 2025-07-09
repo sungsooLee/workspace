@@ -192,7 +192,7 @@ const TrainingPlaceListComponent = (props: TrainingPlaceListProps, ref: any) => 
 
 export const TrainingPlaceList = forwardRef(TrainingPlaceListComponent);
 
-const searchConfig = () => ({
+const searchConfig = (): SearchBoxConfig => ({
   builders: [
     [
       {
