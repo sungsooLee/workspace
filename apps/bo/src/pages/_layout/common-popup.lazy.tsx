@@ -412,13 +412,7 @@ function RouteComponent() {
                   e.stopPropagation();
                   openModal({
                     width: 'xl',
-                    content: (
-                      <UserGroupChoiceModal
-                        userGroupIds={[4, 3, 2, 1]}
-                        userGroupType="ORGANIZATION"
-                        groups={[]}
-                      />
-                    ),
+                    content: <UserGroupChoiceModal />,
                   });
                 }}
               >
@@ -453,7 +447,20 @@ function RouteComponent() {
                 openModal({
                   width: 'xl',
                   content: (
-                    <UserGroupTabsChoiceModal tenantIds={[1, 2, 3, 4]} initialTab="ORGANIZATION" />
+                    <UserGroupTabsChoiceModal
+                      tenantIds={[1, 2, 3, 4]}
+                      option={[
+                        {
+                          combiners: [
+                            { combineName: '현대제철', combineType: 'USER_GROUP', combineValue: 1 },
+                          ],
+                          fullName: '현대제철',
+                          key: '1',
+                          id: 1,
+                        },
+                      ]}
+                      initialTab="ORGANIZATION"
+                    />
                   ),
                 });
               }}

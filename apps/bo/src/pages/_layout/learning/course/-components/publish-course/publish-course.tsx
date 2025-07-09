@@ -1,35 +1,23 @@
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import { ContentsRow, RadioGroupFormField } from '@learnway/ui';
-import { ChipListFormField, FormRow2, FormSubTitle, ThumbnailListFormField } from '@shared/ui';
-import { DateRangeFormField } from '@shared/ui/search-box';
+import { ChipListFormField, FormRow2, FormSubTitle } from '@shared/ui';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TabFormRef } from '../common/tab-form-ref';
-import { Course, CourseConfig } from '@types';
+import { CourseTabBaseProps, TabFormRef } from '../../-common/type';
+import { Course } from '@types';
+import { DateRangePickerFormField } from '@features/form/ui';
 
-interface PublishCourseProps {
-  dummy?: any;
-  // dynamicForm: UseDynamicFormResult;
-  data: { formData: Course; courseConfig: CourseConfig };
-}
-
-const PublishCourseComponent = forwardRef<TabFormRef, PublishCourseProps>(
-  ({ dummy, data: { formData, courseConfig } }, ref) => {
+const PublishCourseComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
+  ({ onSave, data: { formData, courseConfig } }, ref) => {
     const { t } = useTranslation();
-    // const { provider, getValues, fetchData } = dynamicForm;
-    const { provider, getValues, onSubmit, onFormValid, formState, updateFormData } =
-      useDynamicForm2();
-
-    const handleOnSubmit = (data: any) => {
-      console.log('data {} => ', data);
-    };
+    const { provider, getValues, onFormValid, formState, updateFormData } = useDynamicForm2();
 
     // 부모 컴포넌트에서 호출할 수 있는 유효성 검사 메서드
     useImperativeHandle(ref, () => ({
       validate: async () => {
         // 모든 필드에 대해 유효성 검사 수행
         const isValid = await onFormValid();
-        const data = getValues();
+        const data = formDataToRequestData(getValues() as Course);
         const errors = formState.errors;
 
         return {
@@ -37,6 +25,10 @@ const PublishCourseComponent = forwardRef<TabFormRef, PublishCourseProps>(
           data,
           errors,
         };
+      },
+      getValues: () => {
+        console.log('getValues', getValues());
+        return getValues();
       },
     }));
 
@@ -56,7 +48,7 @@ const PublishCourseComponent = forwardRef<TabFormRef, PublishCourseProps>(
         <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'과정 사용유무'}
+            name={'isUsed'}
             label={'과정 사용유무'}
             element={
               <RadioGroupFormField
@@ -71,25 +63,25 @@ const PublishCourseComponent = forwardRef<TabFormRef, PublishCourseProps>(
         <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'노출 기간'}
+            name={'courseValidityStartHour'}
             label={'노출 기간'}
-            element={<DateRangeFormField />}
+            element={<DateRangePickerFormField />}
           />
         </ContentsRow>
         {/*대표 이미지*/}
-        <ContentsRow>
+        {/* <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'대표 이미지'}
+            name={'thumbnailFileGroupUuid'}
             label={'대표 이미지'}
             element={<ThumbnailListFormField />}
           />
-        </ContentsRow>
+        </ContentsRow> */}
         {/*태그*/}
         <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'태그'}
+            name={'tagNames'}
             label={'태그'}
             element={
               <ChipListFormField
@@ -107,3 +99,15 @@ const PublishCourseComponent = forwardRef<TabFormRef, PublishCourseProps>(
 );
 
 export const PublishCourse = PublishCourseComponent;
+
+/**
+ * 게시설정 컴포넌트 폼 데이터를 요청 데이터로 변환하는 함수
+ *
+ * @component PublishCourse
+ * @param {Course} d - 게시설정 폼 데이터
+ * @returns {Course} 게시설정 요청 데이터
+ */
+
+export const formDataToRequestData = (d: Course) => {
+  return d;
+};

@@ -10,8 +10,8 @@ const DateRangePickerFormFieldComponent: FC<any> = ({
   maxDate,
   ...props
 }) => {
-  const [from, setFrom] = useState(value.from ?? undefined);
-  const [to, setTo] = useState(value.to ?? undefined);
+  const [from, setFrom] = useState(value?.from ?? undefined);
+  const [to, setTo] = useState(value?.to ?? undefined);
   const handleFromDate = (value: any) => {
     onChange({ from: value, to: to });
     setFrom(value);

@@ -153,13 +153,7 @@ function RouteComponent() {
                 element={
                   <ChipListModalSelectorFormField
                     modalConfig={{
-                      content: (
-                        <UserGroupChoiceModal
-                          userGroupIds={[]}
-                          userGroupType="ORGANIZATION"
-                          groups={[]}
-                        />
-                      ),
+                      content: <UserGroupChoiceModal />,
                       title: '',
                       width: 'xl',
                     }}

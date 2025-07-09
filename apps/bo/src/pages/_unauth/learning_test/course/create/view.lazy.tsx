@@ -1,9 +1,9 @@
-import { Button, Divider, Tabs } from '@learnway/ui';
+import { Button, Divider, Tabs, useModal } from '@learnway/ui';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import React, { useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { BasicInfo } from '../-components/basic-info/basic-info';
 import { CourseRegistration } from '../-components/course-registration/course-registration';
 import { Curriculum } from '../-components/curriculum/curriculum';
@@ -17,20 +17,22 @@ export const Route = createLazyFileRoute('/_unauth/learning_test/course/create/v
 
 function RouteComponent() {
   const router = useRouter();
+  const { showSaveComplete } = useModal();
+
   // 라우터 state에서 courseId 가져오기
-  const courseId = router.state.location.state?.courseId;
+  const { courseId, courseType } = router.state.location.state;
 
   // 커스텀 훅 사용
   const {
-    formData,
-    isLoading,
+    data,
     activeTab,
     setTabRef,
     loadCourseData,
     saveCurrentTab,
     changeTab,
-    setFormDataComplete,
-  } = useCourseForm();
+    loadMockData,
+    getTabValues,
+  } = useCourseForm(courseType);
 
   // 최초 데이터 로드
   useEffect(() => {
@@ -39,11 +41,15 @@ function RouteComponent() {
     }
   }, [courseId]);
 
+  const moveListPage = () => {
+    router.navigate({
+      to: '/learning_test/course',
+    });
+  };
+
   const handleListClick = () => {
     console.log('handleListClick');
-    router.navigate({
-      to: '/learning/course',
-    });
+    moveListPage();
   };
 
   const handleDeleteClick = () => {
@@ -53,14 +59,9 @@ function RouteComponent() {
   const handleSaveClick = async () => {
     console.log('data {} => ');
     const result = await saveCurrentTab();
-
     if (result.success) {
-      console.log('저장 성공:', result.data);
-      // 저장 성공 후 재조회
-      await loadCourseData(courseId);
-    } else {
-      console.error('저장 실패:', result.error);
-      // TODO: 실패 시 처리 로직 (예: 에러 메시지 표시)
+      await showSaveComplete();
+      moveListPage();
     }
   };
 
@@ -69,40 +70,38 @@ function RouteComponent() {
     changeTab(activeKey);
   };
 
-  const handleLoadDummyData = async () => {
-    await loadCourseData(courseId);
-  };
-
   const tabItems = useMemo(
     () => [
       {
         title: '기본정보 설정',
-        key: 'a',
-        content: <BasicInfo ref={(ref) => setTabRef('a', ref)} initialData={formData} />,
+        key: 'STEP1',
+        content: <BasicInfo ref={(ref) => setTabRef('STEP1', ref)} data={data} />,
       },
       {
         title: '수강신청 설정',
-        key: 'b',
-        content: <CourseRegistration ref={(ref) => setTabRef('b', ref)} initialData={formData} />,
+        key: 'STEP2',
+        content: <CourseRegistration ref={(ref) => setTabRef('STEP2', ref)} data={data} />,
       },
       {
         title: '커리큘럼 설정',
-        key: 'c',
-        content: <Curriculum ref={(ref) => setTabRef('c', ref)} initialData={formData} />,
+        key: 'STEP3',
+        content: <Curriculum ref={(ref) => setTabRef('STEP3', ref)} data={data} />,
       },
       {
         title: '상세 설정',
-        key: 'd',
-        content: <DetailInfo ref={(ref) => setTabRef('d', ref)} initialData={formData} />,
+        key: 'STEP4',
+        content: <DetailInfo ref={(ref) => setTabRef('STEP4', ref)} data={data} />,
       },
       {
-        title: '강의 설정',
-        key: 'e',
-        content: <PublishCourse ref={(ref) => setTabRef('e', ref)} initialData={formData} />,
+        title: '게시 설정',
+        key: 'STEP5',
+        content: <PublishCourse ref={(ref) => setTabRef('STEP5', ref)} data={data} />,
       },
     ],
-    [formData, setTabRef],
+    [data, setTabRef],
   );
+
+  console.log('------- view.lazy page...');
 
   return (
     <form>
@@ -112,9 +111,15 @@ function RouteComponent() {
             type="button"
             variant="point"
             size="sm"
+            label={'getTabValues'}
+            onClick={() => getTabValues()}
+          />
+          <Button
+            type="button"
+            variant="point"
+            size="sm"
             label={'SET'}
-            onClick={handleLoadDummyData}
-            disabled={isLoading}
+            onClick={() => loadMockData()}
           />
           <Button
             type="button"
@@ -122,7 +127,6 @@ function RouteComponent() {
             size="sm"
             label={'목록'}
             onClick={handleListClick}
-            disabled={isLoading}
           />
           <Divider orientation={'vertical'} />
           <Button
@@ -131,15 +135,14 @@ function RouteComponent() {
             size="sm"
             label={'삭제'}
             onClick={handleDeleteClick}
-            disabled={isLoading}
+            disabled={!courseId}
           />
           <Button
             type="button"
             variant="primary"
             size="sm"
-            label={isLoading ? '저장 중...' : '저장'}
+            label={'저장'}
             onClick={handleSaveClick}
-            disabled={isLoading}
           />
         </ContentsButtons>
         <MainContents>

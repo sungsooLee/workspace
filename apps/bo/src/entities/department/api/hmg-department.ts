@@ -14,7 +14,7 @@ export class HmgDepartmentService {
    * @returns
    */
   static getDepartmentUserList(param: any): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/department/user`, param);
+    return httpService.get<any>(`${PMSApiPrefix()}/hmg/department/user`, param);
   }
 
   static getDepartmentChildDepartmentList(param: any): Promise<any> {

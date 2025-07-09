@@ -79,6 +79,10 @@ const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaProps>(
     const handleKoreanChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
       const inputValue = event.target.value;
 
+      if (maxLength && inputValue.length > maxLength) {
+        return;
+      }
+
       if (inputValue === '' || koreanPlusRegex.test(inputValue)) {
         onChange?.(event);
       }
@@ -141,7 +145,7 @@ const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaProps>(
       }
     };
 
-    const currentLength = (value as string)?.length || 0;
+    const currentLength = Math.min((value as string)?.length || 0, maxLength || Number.MAX_SAFE_INTEGER);
 
     return (
       <div
@@ -150,6 +154,7 @@ const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaProps>(
           styles.textarea_wrap,
           disabled && styles.disabled,
           readOnly && styles.readonly,
+          error && styles.error,
           'textarea_wrap',
           className,
         )}
@@ -191,7 +196,13 @@ const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaProps>(
             maxLength={maxLength}
             disabled={disabled}
             readOnly={readOnly}
-            onChange={onChange}
+            onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
+              const inputValue = event?.target?.value || '';
+              if (maxLength && inputValue.length > maxLength) {
+                return;
+              }
+              onChange?.(event);
+            }}
             {...props}
           />
         )}

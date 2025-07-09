@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
-import { TabFormRef } from '../-components/common/tab-form-ref';
+import { TabFormRef } from '../-common/type';
 
 import {
   useCreateCourse,
@@ -12,7 +12,6 @@ import {
 import { useQueryClient } from '@tanstack/react-query';
 import { queryOptions } from '@entities/course/service/course.queries';
 import { Course, CourseConfig } from '@types';
-import { undefined } from 'zod';
 
 export const useCourseForm = (courseType?: string) => {
   // QueryClient 인스턴스
@@ -36,9 +35,8 @@ export const useCourseForm = (courseType?: string) => {
 
   // 전체 폼 데이터 상태
   const [data, setData] = useState<{ formData: Course; courseConfig: CourseConfig }>({
-    formData: {
-      courseType, // state 에 과정유형 있는 경우 설정
-      learningSpaceNameKeyIn: 'x', // 값 없으면 저장 에러, api 수정되면 삭제
+    formData: responseDataToFormData({
+      courseType,
       categories: [
         // 카테고리 팝업 api 연동되면 삭제
         {
@@ -51,7 +49,7 @@ export const useCourseForm = (courseType?: string) => {
           tenantIds: [2],
         },
       ],
-    } as Course,
+    } as Course),
     courseConfig: {} as CourseConfig,
   });
 
@@ -92,7 +90,6 @@ export const useCourseForm = (courseType?: string) => {
       return saveHookMap[tabKey as keyof typeof saveHookMap];
     },
     [
-      createCourse,
       updateCourseWizard1,
       updateCourseWizard2,
       updateCourseWizard3,
@@ -151,20 +148,17 @@ export const useCourseForm = (courseType?: string) => {
   const saveCurrentTab = useCallback(async () => {
     try {
       // 1. 유효성 검사
-      const validation = await validateTab(activeTab);
-      if (!validation.isValid) {
-        console.log(`${activeTab} 탭 유효성 검사 실패:`, validation.errors);
-        return { success: false, error: validation.errors };
+      const { isValid, data: tabData, errors } = await validateTab(activeTab);
+      if (!isValid) {
+        console.log(`${activeTab} 탭 유효성 검사 실패:`, errors);
+        throw new Error(`유효성 검사 에러 : ${errors}`);
       }
 
       // 2. API 호출 (상태 업데이트는 재조회에서 처리)
-      console.log(`${activeTab} 탭 유효성 검사 통과:`, validation.data);
-      await saveCourseData(validation.data);
-      // 3. 리턴
-      return { success: true, data: validation.data };
-    } catch (error) {
-      console.error('저장 중 오류:', error);
-      return { success: false, error };
+      console.log(`${activeTab} 탭 유효성 검사 통과:`, tabData);
+      return await saveCourseData(tabData);
+    } catch (error: any) {
+      throw new Error(`저장 중 에러 : ${error.message}`);
     }
   }, [activeTab, validateTab, saveCourseData]);
 
@@ -175,7 +169,6 @@ export const useCourseForm = (courseType?: string) => {
 
   // 테스트용
   const loadMockData = useCallback(() => {
-    // setData((prev) => ({ ...prev, formData, courseConfig }));
     setData((prev) => ({
       ...prev,
       formData: getDummyCourse2(),
@@ -188,16 +181,20 @@ export const useCourseForm = (courseType?: string) => {
     data,
     activeTab,
     tabRefs,
-
     // 액션
     setTabRef,
-    // updateFormData,
-    // setFormDataComplete,
     validateTab,
     saveCurrentTab,
     loadCourseData,
     changeTab,
     loadMockData,
+    getTabValues: () => {
+      const currentRef = tabRefs.current[activeTab];
+      if (!currentRef) {
+        return null;
+      }
+      return currentRef.getValues?.();
+    },
   };
 };
 
@@ -207,13 +204,24 @@ export const useCourseForm = (courseType?: string) => {
 const responseDataToFormData = (response: Course) => {
   return {
     ...response,
+    // step1
     primaryCategoryId: 1, // 서버에서 받으면 삭제
-    categoryIds: response?.cartegories?.map((d: any) => d.categoryId), // 카테고리 아이디
+    categoryIds: response?.categories?.map((d: any) => d.categoryId), // 카테고리 아이디
     tenantIds: response?.tenantList?.map((d: any) => d.tenantId), // 테넌트 아이디
     targetList: response?.targetList?.map((d: any) => ({
       ...d,
       name: d?.combiners?.[0]?.combineValue,
     })),
+    // step2
+    isEnrollRequired: true, // 수강신청 그룹
+    // step4
+    isLearnEnvEnabled: true, // 학습환경 설정 사용 여부
+    isLearnControlEnabled: true, // 학습제어 설정 사용 여부
+    isUsePassOption: true, // 이수기준 설정 사용 여부
+    // isCommunicationToolEnabled: true, // 커뮤니티 및 공유설정 사용 여부
+    isInstructorAssigned: true, // 강사 설정 사용 여부
+    isTextbookProvided: true, // 교재 설정 사용 여부
+    isRelatedPrerequisiteCourseExisted: true, // 사전/연관학습 설정 사용 여부
   };
 };
 
@@ -229,7 +237,7 @@ const formDataToRequestData = (formData: Record<string, any>, activeTab: string)
     primaryCategoryId: 1, // 서버에서 받으면 삭제
     coordinatorTelCountryCode: 'KOR_82',
     operatorTelCountryCode: 'KOR_82',
-  };
+  } as unknown as Course;
   // 수강신청
   return newFormData;
 };
@@ -250,7 +258,7 @@ const getDummyCourseConfig = (): CourseConfig => {
   };
 };
 
-// 더미 데이터 함수
+// 이러닝2
 const getDummyCourse = () => {
   const response = {
     courseType: 'ELEARNING2',
@@ -292,8 +300,8 @@ const getDummyCourse = () => {
   return response;
 };
 
-// 더미 데이터 함수
-const getDummyCourse2 = () => {
+// 클래스
+const getDummyCourse2 = (): Course => {
   return {
     courseType: 'CLASS',
     channelUuid: '67bbca16-4180-4982-a4e0-d192212dd7c2',
@@ -330,5 +338,5 @@ const getDummyCourse2 = () => {
     operatorTelNo: '44445555',
     operatorEmail: '운영자@email.com',
     learningSpaceNameKeyIn: 'xx',
-  };
+  } as unknown as Course;
 };

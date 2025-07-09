@@ -18,7 +18,7 @@ export type com_ever_edu_lms_space_dto_req_LearningSpaceSaveReqDto = {
     /**
      * 교육공간 코드
      */
-    learningSpaceCode: string;
+    learningSpaceCode?: string;
     /**
      * 약도 첨부파일 UUID
      */

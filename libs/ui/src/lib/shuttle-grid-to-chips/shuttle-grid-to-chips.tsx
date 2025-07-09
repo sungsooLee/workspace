@@ -37,8 +37,8 @@ export interface ShuttleGridToChipsProps<T>
    * 우측 그리드의 제목
    */
   rightTitle?: string;
-  selectedItems?: { id: string; name: string }[];
-  onSelectedChange: (newSelected: { id: string; name: string }[]) => void;
+  selectedItems?: { id: number; name: string }[];
+  onSelectedChange: (newSelected: { id: number; name: string }[]) => void;
 }
 
 /**
@@ -131,7 +131,7 @@ const ShuttleGridToChipsComponent = <T,>(
   };
 
   // 항목 제거 핸들러
-  const handleRemoveItem = (deleteId: string) => {
+  const handleRemoveItem = (deleteId: number) => {
     const newItems = selectedItems.filter(({ id }) => id !== deleteId);
     onSelectedChange(newItems);
   };

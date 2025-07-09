@@ -2,9 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type com_ever_edu_lms_search_logs_dto_req_SearchLogRequestDto = {
-    userUuid?: string;
-    tenantUuid?: string;
+export type com_ever_edu_lms_instructor_dto_req_InstructorHistorySearchReqDto = {
+    searchKey?: string;
     keyword?: string;
 };
 
