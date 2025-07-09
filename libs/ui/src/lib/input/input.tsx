@@ -125,6 +125,11 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
     const handleValidatedChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const inputValue = event.target.value;
 
+      // maxLength 체크
+      if (maxLength && inputValue.length > maxLength) {
+        return;
+      }
+
       if (validateInput(inputValue)) {
         if (hasValidationError) setHasValidationError(false);
         clearValidationError();
@@ -314,7 +319,13 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               event.preventDefault();
               event.stopPropagation();
-              handleInputChange(event?.target?.value);
+
+              const inputValue = event?.target?.value || '';
+              if (maxLength && inputValue.length > maxLength) {
+                return;
+              }
+
+              handleInputChange(inputValue);
             }}
             maxLength={maxLength}
           />
@@ -345,8 +356,10 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
               type === 'alphanumeric' ||
               type === 'url') && (
               <div className={styles.count}>
-                <span className={styles.current}>{(value?.toString() || '').length}</span> /{' '}
-                {maxLength}
+                <span className={styles.current}>
+                  {Math.min((value?.toString() || '').length, maxLength)}
+                </span>{' '}
+                / {maxLength}
               </div>
             )}
           {/* 아이콘 (돋보기, 검색) */}

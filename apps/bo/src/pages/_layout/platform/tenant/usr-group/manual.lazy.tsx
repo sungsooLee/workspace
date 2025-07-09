@@ -5,7 +5,7 @@ import { PageContainer, MainContents, ContentsButtons } from '@widgets/layout';
 
 import { Button } from '@learnway/ui';
 
-import { TenantUserGroupManualManagementList } from '@features/tenant';
+import { TenantUserGroupManualManagementList } from '@features/platform-management/tenant';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/usr-group/manual')({
   component: RouteComponent,

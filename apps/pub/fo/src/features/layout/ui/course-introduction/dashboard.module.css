@@ -13,8 +13,14 @@
   .info_box {
     @apply mt-[40px];
     &.pds {
-      button {
-        @apply min-w-[100px];
+      .tit_box {
+        .btn {
+          @apply label-xl text-[var(--gray35)];
+          .ico {
+            @apply h-[20px] w-[20px];
+            fill: #131416;
+          }
+        }
       }
     }
   }

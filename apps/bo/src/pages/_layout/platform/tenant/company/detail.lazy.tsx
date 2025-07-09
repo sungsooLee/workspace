@@ -6,7 +6,7 @@ import { PageContainer, MainContents, ContentsButtons, LinkBox } from '@widgets/
 
 import { Button } from '@learnway/ui';
 
-import { CompanyDetail } from '@features/platform/company';
+import { CompanyDetail } from '@features/platform-management/company';
 import { EnFormMode } from '@types';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/company/detail')({
@@ -44,7 +44,7 @@ function RouteComponent() {
         </Button>
       </ContentsButtons>
       <MainContents>
-        <CompanyDetail ref={formRef} mode={EnFormMode.VIEW} roleInfo={'TENANT'}/>
+        <CompanyDetail ref={formRef} mode={EnFormMode.VIEW} roleInfo={'TENANT'} />
       </MainContents>
     </PageContainer>
   );

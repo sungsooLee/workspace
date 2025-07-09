@@ -1,25 +1,18 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { useWatch } from 'react-hook-form';
-
-import { Button, DynamicFormField, ContentsRow } from '@learnway/ui';
-
-import { pageRouteConfig } from '../../../../../features/auth';
-
-import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
-import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
-import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
-
-import { FormTranslationBox } from '../../../../../features/platform/ui/platform/system/translation/form-translation-box';
-
+import { Button, ContentsRow } from '@learnway/ui';
+import { pageRouteConfig } from '@features/auth';
+import { PageContainer } from '@widgets/layout/ui/container/page-container';
+import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
+import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
+import { FormTranslationBox } from '@shared/ui/form';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { FormRow } from '../../../../../shared/ui/form';
-
-import { useWidgets } from '../../../../../entities/widgets';
-import { WidgetPreviewButton } from '../../../../../features/platform';
-
-import { WidgetComponentTable } from '../../../../../features/platform/system/widget/widget-component-table';
-import { WidgetAssignedTenantGrid } from '../../../../../features/platform/system/widget/widget-assigned-tenant-grid';
+import { FormRow } from '@shared/ui';
+import { useWidgets } from '@entities/widgets';
+import { WidgetPreviewButton } from '@features/platform';
+import { WidgetComponentTable } from '@features/platform-management/platform/widget-managemnet/ui/widget-component-table';
+import { WidgetAssignedTenantGrid } from '@features/platform-management/platform/widget-managemnet/ui/widget-assigned-tenant-grid';
 
 export const Route = createFileRoute('/_layout/platform/system/widget/view')({
   component: RouteComponent,

@@ -10,9 +10,8 @@ import {
   MainContents,
   SubContents,
 } from '@widgets/layout';
-import { MovieInfo } from '@features/learning';
 import { ChannelChoiceModal, ManagerChoiceModal } from '@features/shared';
-import { DateRangePickerFormField } from '@features/learning/ui/resource/date-range-picker-form-field';
+import { DateRangePickerFormField } from '@features/form/ui';
 import {
   CODE_GROUP,
   DynamicFormConfig,
@@ -26,6 +25,7 @@ import { useQuery } from '@tanstack/react-query';
 import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { NotFound } from '@features/layout';
 import { useEffect } from 'react';
+import { MovieInfo } from '@features/learning-resource';
 
 export const Route = createLazyFileRoute('/_layout/learning/learning-resource/video/view')({
   component: RouteComponent,
@@ -408,9 +408,12 @@ const formConfig: DynamicFormConfig = {
       name: 'tags',
       format: 'array',
       type: 'chip-list',
-      placeholder: '한글, 영문, 숫자 포함 9자 이하 태그를 입력하세요.(9자 초과할 경우 얼럿)',
+      placeholder: '한글, 영문, 숫자 포함 9자 이하 태그를 입력하세요.',
       limitPlaceholder: '여러개의 태그는 쉼표로 구분',
       tooltip: '태그는 학습자원 검색 시 활용되고, 학습자에게는 10개까지만 보여집니다.',
+      chipListConfig: {
+        showInput: true,
+      },
       value: [],
     },
     {

@@ -17,8 +17,8 @@ import { cn } from '@learnway/shared';
 import { IcoNarrowRight } from '@learnway/icons';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import popContentsStyles from '@features/tenant/management/ui/pop-contents-layout.module.css';
-import { transformMenuApiDataToTreeData } from '@features/tenant/management/service/tenant-detail-tree.service';
+import popContentsStyles from '@features/platform-management/tenant/ui/pop-contents-layout.module.css';
+import { transformMenuApiDataToTreeData } from '@features/platform-management/tenant/service/tenant-detail-tree.service';
 import { useMenuManageFetchTree } from '@entities/menu/service/menu-manage.hook';
 import {
   useFetchMenuTenantMappingTree,
@@ -36,7 +36,7 @@ import {
   genMap,
   deleteNodeByNode,
   copyTreeNode,
-} from '@features/tenant';
+} from '@features/platform-management/tenant';
 
 import { isEqual } from 'lodash';
 

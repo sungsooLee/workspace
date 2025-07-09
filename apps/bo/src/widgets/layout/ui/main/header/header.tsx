@@ -7,8 +7,7 @@ import { Navigate } from './navigate/navigate';
 import { QuickMenu } from './quick-menu/quick-menu';
 
 import styles from './header.module.css';
-import { Logo, UserAvatar, NotificationButton } from '@features/layout';
-import { Language, GnbTenantSelect, GnbRoleSelect } from '@features/platform/ui';
+import { Logo, UserAvatar, NotificationButton, GnbRoleSelect, Language } from '@features/layout';
 
 function HeaderComponent() {
   const { t } = useTranslation();
@@ -21,7 +20,6 @@ function HeaderComponent() {
           <strong className={styles.title}>{t('LABEL.common.hrdCenter')}</strong>
         </h1>
         <div className={cn(styles.option_menu, 'option_menu')}>
-          {/* <GnbTenantSelect /> */}
           <GnbRoleSelect />
         </div>
         <div className={cn(styles.nav_area, 'nav_area')}>

@@ -14,7 +14,7 @@ import {
 } from '@learnway/ui';
 import { t } from 'i18next';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
-import { SearchBox } from '../../../../shared/ui/search-box';
+import { SearchBox } from '@shared/ui';
 import { RoleInfo } from '@types';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { AuthUser } from '@learnway/auth/types';

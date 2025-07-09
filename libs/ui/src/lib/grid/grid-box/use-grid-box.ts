@@ -21,6 +21,12 @@ export const useGridBox = <T = any>(
   // 마지막 state 저장
   const lastStateRef = useRef<GridBoxState>();
 
+  // 로딩 상태 저장 (빠른 연속 클릭 방지)
+  const isLoadingRef = useRef<boolean>(false);
+
+  // 디바운스용 타이머 저장
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+
   /**
    * 서버로부터 데이터를 가져오는 함수
    * @param params - 검색 조건 (예: form 입력값)
@@ -39,6 +45,8 @@ export const useGridBox = <T = any>(
         setGridData(result);
         lastStateRef.current = queryState;
       }
+      // 로딩 완료
+      isLoadingRef.current = false;
     },
     [initialConfig, queryClient],
   );
@@ -49,9 +57,24 @@ export const useGridBox = <T = any>(
    */
   const handleGridStateChange = useCallback(
     (newState: GridBoxState) => {
-      const params = getParams?.() ?? {};
-      console.log('newState', newState);
-      fetchGridData(params, newState);
+      // 이전 타이머가 있다면 취소
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+
+      // 디바운스
+      debounceTimerRef.current = setTimeout(() => {
+        // 이미 로딩 중이면 중복 실행 방지
+        if (isLoadingRef.current) {
+          return;
+        }
+
+        // 로딩 시작
+        isLoadingRef.current = true;
+
+        const params = getParams?.() ?? {};
+        fetchGridData(params, newState);
+      }, 200);
     },
     [fetchGridData, getParams],
   );

@@ -2,16 +2,12 @@ import { useState } from 'react';
 import { createLazyFileRoute } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { Tabs } from '@learnway/ui';
-import { cn } from '@learnway/shared';
-
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-
-import { pageRouteConfig } from '../../../../features/auth';
-import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
-import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
-import { ProgramTree } from '../../../../features/platform/program/ui/program-tree';
-import { SectionLayout } from '../../../../widgets/layout/ui/container/section-layout/section-layout';
+import { pageRouteConfig } from '@features/auth';
+import { PageContainer } from '@widgets/layout/ui/container/page-container';
+import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
+import { ApiTree } from '@features/platform-management/platform/api-managemnet/ui/api-tree';
+import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 
 export const Route = createLazyFileRoute('/_layout/platform/program/')({
   component: RouteComponent,
@@ -27,7 +23,7 @@ function RouteComponent() {
   const renderTabContent = (tabKey: string) => {
     return (
       <SectionLayout contentsRatio={'half'}>
-        <ProgramTree menuScope={selectedTabKey} />
+        <ApiTree menuScope={selectedTabKey} />
       </SectionLayout>
     );
   };

@@ -8,15 +8,15 @@ import { MainContents } from '../../../../../widgets/layout/ui/container/slot/ma
 import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
 import {
   ConsignmentParametersFormField,
-  EbookInfo,
+  DateRangePickerFormField,
   SharedChannelGridFormField,
-} from '../../../../../features/learning';
-import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
+} from '@features/form/ui';
 import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
 import { FormDisplay } from '../../../../../features/form/ui/form-display';
 import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../../shared/ui/form';
 import { LinkBox } from '../../../../../widgets/layout/ui/container/slot/link-box';
 import { ChannelChoiceModal, ManagerChoiceModal } from '../../../../../features/shared';
+import { EbookInfo } from '@features/learning-resource';
 
 export const Route = createFileRoute('/_layout/learning/resource/view/consignment')({
   component: RouteComponent,

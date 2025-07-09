@@ -6,7 +6,7 @@ import {
   Textarea,
   TextareaFormField,
 } from '@learnway/ui';
-import { FormTranslationBox } from '../../../features/platform/ui/platform/system/translation/form-translation-box';
+import { FormTranslationBox } from './form-translation-box';
 import { SwitchFormField } from './switch-form-field';
 import { FormFieldConfig } from '@learnway/hooks';
 import { ChipListFormField } from './chip-list-form-field';

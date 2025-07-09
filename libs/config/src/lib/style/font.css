@@ -1,1 +1,5 @@
-@import './fonts/Pretendard-1.3.9/variable/pretendardvariable.css';
+/* BO font */
+@import './fonts/Pretendard/variable/pretendardvariable.css';
+
+/* FO font */
+@import './fonts/NanumBarunGothic/nanumbarungothic-subset.css';
