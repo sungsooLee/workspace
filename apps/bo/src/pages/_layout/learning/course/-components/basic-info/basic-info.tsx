@@ -1,5 +1,4 @@
 import { DropdownFormField } from '@features/form';
-import { CategoryChoiceModal } from '@features/learning/course';
 import {
   TrainingPlaceChoiceModal,
   UserChoiceModal,
@@ -25,6 +24,7 @@ import { useTranslation } from 'react-i18next';
 import { TabFormRef } from '../common/tab-form-ref';
 import { Course, CourseConfig } from '@types';
 import { getRandomId } from '@learnway/shared';
+import { CategoryChoiceModal } from '@features/learning-operate/course/course-management';
 
 interface BasicInfoProps {
   dummy?: any;

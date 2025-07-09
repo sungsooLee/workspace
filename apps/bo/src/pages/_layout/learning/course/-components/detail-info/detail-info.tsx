@@ -1,6 +1,4 @@
 import { DropdownFormField } from '@features/form';
-import { ChannelListModal } from '@features/learning/course/ui/modal/channel-list-modal/channel-list-modal';
-import { TeacherListModal } from '@features/learning/course/ui/modal/teacher-list-modal/teacher-list-modal';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import {
   Button,
@@ -16,6 +14,7 @@ import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TabFormRef } from '../common/tab-form-ref';
 import { Course, CourseConfig } from '@types';
+import { ChannelListModal, TeacherListModal } from '@features/learning-operate/course/course-management';
 
 interface DetailInfoProps {
   dummy?: any;
