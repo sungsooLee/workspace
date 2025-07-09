@@ -90,7 +90,7 @@ function RouteComponent() {
   return (
     <PageContainer>
       <ContentsButtons>
-        <Link to="/learning_test/course/create/view" state={{ courseId: 5 }} className="link">
+        <Link to="/learning/course/create/view" state={{ courseId: 5 }} className="link">
           상세 테스트
         </Link>
         <Button
@@ -113,24 +113,6 @@ function RouteComponent() {
         <SearchBoxForm onSearch={onSubmit(handleOnSearch)}>
           <ContentsRow>
             {/*테넌트*/}
-            {/* <FormRow2
-              provider={provider}
-              name={'tenantId'}
-              label={t('LABEL.form.label.tenant')}
-              element={
-                <DropdownFormField
-                  optionsConfig={{
-                    codeGroup: CODE_GROUP['manual.bo.my.tenant.tenantId'],
-                  }}
-                  presetOptionLabel={t('LABEL.form.label.select', '선택')}
-                />
-              }
-              validation={{
-                required: true,
-                format: 'object',
-              }}
-            /> */}
-            {/*테넌트 신규 폼필드*/}
             <FormRow2
               provider={provider}
               name={'tenantId'}

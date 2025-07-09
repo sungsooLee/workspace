@@ -28,6 +28,7 @@ export * from './form/single-attachment-form-field';
 export * from './form/switch-form-field';
 export * from './form/tenant-by-role-dropdown-form-field';
 export * from './form/tenant-channel-dropdown-form-field';
+export * from './form/tenant-by-role-channel-checkbox-form-field';
 export * from './form/thumbnail-list-form-field';
 export * from './modal/address-search-modal';
 export * from './modal/category-choice-tree-modal';
