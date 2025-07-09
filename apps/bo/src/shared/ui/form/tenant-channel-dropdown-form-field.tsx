@@ -1,13 +1,13 @@
-import { forwardRef, useMemo } from 'react';
-import { t } from 'i18next';
-import { DropdownFormField } from '../../../features/form/ui/dropdown-form-field';
-import { useFetchAuthUser } from '@learnway/auth/entities';
-import { AuthUser, RoleInfo } from '@learnway/auth/types';
-import { BaseFormFieldProps } from '@learnway/hooks';
 import { useFetchChannelByRoleId } from '@entities/channel/service/channel.hook';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+import { AuthUser } from '@learnway/auth/types';
+import { BaseFormFieldProps } from '@learnway/hooks';
+import { t } from 'i18next';
+import { forwardRef, useMemo } from 'react';
+import { DropdownFormField } from '../../../features/form/ui/dropdown-form-field';
 
-interface TenantChannelDropdownFormFieldProps extends BaseFormFieldProps<boolean> {
-  tenantId: number;
+interface TenantChannelDropdownFormFieldProps extends BaseFormFieldProps<Array<string>> {
+  tenantId: number; // -1: 전체, 0 이상이면 테넌트 필터
 }
 
 const TenantChannelDropdownFormFieldComponent = forwardRef<
@@ -17,25 +17,20 @@ const TenantChannelDropdownFormFieldComponent = forwardRef<
   const { data } = useFetchAuthUser<AuthUser>();
   const { data: channel } = useFetchChannelByRoleId(data?.activeRole?.roleId as number);
 
-  // myRole 데이터
-  // const options = useMemo(() => {
-  //   return data?.myRoles
-  //     ?.filter((d: RoleInfo) => d.tenantId === tenantId) // 테넌트 필터
-  //     ?.map((d: RoleInfo) => d.channels) // 채널만 추출
-  //     ?.flat() // 2차원 배열을 1차원 배열로
-  //     ?.map(({ uuid, name }: any) => ({
-  //       // 옵션 형식으로 변환
-  //       label: name,
-  //       value: uuid,
-  //     }));
-  // }, [data?.myRoles, tenantId]);
-
   // 채널조회 데이터
   const options = useMemo(() => {
-    return channel?.content
-      ?.filter((d) => !!d.tenantList.find((t) => t.tenantId === tenantId)) // 테넌트 필터
-      ?.map(({ channelName, channelUuid }) => ({
-        // 옵션 형식으로 변환
+    if (!channel?.content) return [];
+    if (tenantId === -1) {
+      // tenantId가 -1이면 필터 없이 전체 반환
+      return channel.content.map(({ channelName, channelUuid }) => ({
+        label: channelName,
+        value: channelUuid,
+      }));
+    }
+    // tenantId가 있으면 필터 적용
+    return channel.content
+      .filter((d) => !!d.tenantList.find((t) => t.tenantId === tenantId))
+      .map(({ channelName, channelUuid }) => ({
         label: channelName,
         value: channelUuid,
       }));

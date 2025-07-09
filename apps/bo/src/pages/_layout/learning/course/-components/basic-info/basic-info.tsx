@@ -1,13 +1,19 @@
 import { DropdownFormField } from '@features/form';
-import { TrainingPlaceChoiceModal, UserChoiceModal, UserGroupTabsChoiceModal } from '@shared/ui';
+import {
+  FormRow2,
+  TenantByRoleChannelCheckboxFormField,
+  TenantChannelDropdownFormField,
+  TrainingPlaceChoiceModal,
+  UserChoiceModal,
+  UserGroupTabsChoiceModal,
+} from '@shared/ui';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
-import { getRandomId } from '@learnway/shared';
 import {
   Button,
-  CheckboxGroupFormField,
   ChipListModalSelectorFormField,
   ContentsRow,
   EditorFormField,
+  FormSubTitle,
   Input,
   InputModalSelectorFormField,
   ListModalSelectorFormField,
@@ -15,12 +21,13 @@ import {
   RadioGroupFormField,
   TextareaFormField,
 } from '@learnway/ui';
-import { FormRow2, FormSubTitle } from '@shared/ui';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CourseTabBaseProps, TabFormRef } from '../../-common/type';
-import { Course } from '@types';
+import { Course, TenantByRoleId } from '@types';
 import { CategoryChoiceModal } from '@features/learning-operate/course/course-management';
+import { queryConfig } from '@learnway/config';
+import { tenantQueryOptions } from '@entities/tenant';
 
 const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
   ({ onSave, data: { formData, courseConfig } }, ref) => {
@@ -31,7 +38,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
 
     const channelUuid = watch('channelUuid');
 
-    console.log('----- basic', { formData, courseConfig });
+    console.log('----- basic', { formData, courseConfig, channelUuid });
 
     // 부모 컴포넌트에서 호출할 수 있는 유효성 검사 메서드
     useImperativeHandle(ref, () => ({
@@ -85,13 +92,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             provider={provider}
             name={'channelUuid'}
             label={'채널'}
-            element={
-              <DropdownFormField
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['manual.bo.my.channels'],
-                }}
-              />
-            }
+            element={<TenantChannelDropdownFormField tenantId={-1} />}
           />
         </ContentsRow>
 
@@ -103,21 +104,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             provider={provider}
             name={'tenantIds'}
             label={'테넌트'}
-            element={
-              <CheckboxGroupFormField
-                key={`tenant-${channelUuid}`}
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['manual.bo.my.tenant.tenantId'],
-                  // api: {
-                  //   fn: () => ChannelService.getChannelDetail(channelUuid),
-                  //   select: (data: any) => data?.tenantList || [],
-                  //   enabled: !!channelUuid,
-                  // },
-                  // labelField: 'tenantName',
-                  // valueField: 'tenantId',
-                }}
-              />
-            }
+            element={<TenantByRoleChannelCheckboxFormField channelUuid={getValues().channelUuid} />}
           />
         </ContentsRow>
         {/*카테고리*/}
