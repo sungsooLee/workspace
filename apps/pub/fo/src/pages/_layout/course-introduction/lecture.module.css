@@ -12,8 +12,11 @@
         .tit {
           @apply title4-b text-[var(--gray10)];
         }
-        dt {
-          @apply body-sm;
+        .info {
+          @apply body-md mr-[16px] inline-flex w-auto items-center align-top leading-[24px] text-[var(--gray35)];
+          svg {
+            @apply mr-[8px];
+          }
         }
       }
     }

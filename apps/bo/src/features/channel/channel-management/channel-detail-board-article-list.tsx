@@ -115,7 +115,7 @@ const ChannelDetailBoardArticleListComponent = ({
 
 export const ChannelDetailBoardArticleList = ChannelDetailBoardArticleListComponent;
 
-const searchConfig = () => ({
+const searchConfig = (): SearchBoxConfig => ({
   builders: [
     [
       {

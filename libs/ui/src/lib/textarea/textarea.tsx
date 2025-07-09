@@ -13,7 +13,7 @@ export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextArea
   readOnly?: boolean;
   disabled?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  label?: string;
+  label?: string | (() => string);
   placeholder?: string;
   hiddenPlaceholder?: boolean;
   inputType?: string;
@@ -65,8 +65,10 @@ const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaProps>(
     const placeholderText = useMemo(() => {
       if (hiddenPlaceholder) return '';
       if (placeholder) return t(placeholder);
-      if (props && props.label)
-        return `${t(props.label as any)} ${t('LABEL.form.input.placeholder')}`;
+      if (props && props.label) {
+        const labelText = typeof props.label === 'function' ? props.label() : props.label;
+        return `${t(labelText)} ${t('LABEL.form.input.placeholder')}`;
+      }
       return t('LABEL.form.input.placeholder');
     }, [placeholder, props?.label, hiddenPlaceholder]);
 
@@ -145,7 +147,10 @@ const TextareaComponent = forwardRef<HTMLTextAreaElement, TextareaProps>(
       }
     };
 
-    const currentLength = Math.min((value as string)?.length || 0, maxLength || Number.MAX_SAFE_INTEGER);
+    const currentLength = Math.min(
+      (value as string)?.length || 0,
+      maxLength || Number.MAX_SAFE_INTEGER,
+    );
 
     return (
       <div

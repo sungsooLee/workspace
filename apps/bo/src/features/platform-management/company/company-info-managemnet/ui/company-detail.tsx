@@ -21,8 +21,8 @@ import { DynamicFormConfig, useDynamicForm, CODE_GROUP } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString, getStringToDate, cn } from '@learnway/shared';
 import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
 import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
-import { LoginRestrictTimeSettingModal } from '@features/shared/ui/modal/login-restrict-time-setting-modal';
-import { UserGroupTabsChoiceModal, UserGroupChoiceModal } from '@features/shared';
+import { LoginRestrictTimeSettingModal } from '@shared/ui/modal/login-restrict-time-setting-modal';
+import { UserGroupTabsChoiceModal, UserGroupChoiceModal } from '@shared/ui';
 import { EnGlobalConst, EnFormMode } from '@types';
 import { useCreateCompany, useUpdateCompany, useFetchCompany } from '@entities/companies';
 import CompaniesService from '@entities/companies/api/companies';
@@ -44,7 +44,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
   const { open: openModal, confirm: openConfirm, alert: openAlert } = useModal();
   const [tableInstance, setTableInstance] = useState<Table<any>>();
   const { provider, updateFormData, onSubmit, onFormChange, getValues, control } =
-    useDynamicForm(formConfig);
+    useDynamicForm(formConfig());
 
   const tempLoginRestrictTimeSetting = React.useRef<any>(null);
   const [loginRestrictTimeSettings, setLoginRestrictTimeSettings] = useState<any[]>([]);
@@ -321,7 +321,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
   };
 
   const duplicateCheck = async (companyCode: string) => {
-    const payload = { companyCode: companyCode };
+    const payload = { companyCode };
     const result: boolean = await CompaniesService.existsCode(payload);
 
     if (result) return DuplicateState.duplicated;
@@ -665,7 +665,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
 
 export const CompanyDetail = forwardRef(CompanyDetailComponent);
 
-const formConfig: DynamicFormConfig = {
+const formConfig = (): DynamicFormConfig => ({
   builders: [
     {
       name: 'companyType',
@@ -1193,4 +1193,4 @@ const formConfig: DynamicFormConfig = {
       ],
     },
   },
-};
+});

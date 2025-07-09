@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { t } from 'i18next';
-import { ModalBody, ModalContainer, ModalTitle } from '@learnway/ui';
+import { ModalBody, ModalContainer, ModalTitle, GridBox } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { GridBox } from '@learnway/ui';
 import { EnGlobalConst } from '@types';
 import { getDateToString, DATE_TIME_FORMAT } from '@learnway/shared';
 import RoleManagerService from '@entities/role/api/role-manager';

@@ -3,12 +3,11 @@ import { useMemo } from 'react';
 import { isEqual } from 'lodash';
 import { Button, Input, useModal } from '@learnway/ui';
 import { useTranslation } from 'react-i18next';
-import { AddressSearchModal } from '@features/shared';
 import { BaseFormFieldProps } from '@learnway/hooks';
 import { InputProps } from '@learnway/ui';
 import { useWatch } from 'react-hook-form';
-
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import { AddressSearchModal } from '@shared/ui';
 
 interface AddressFormFieldProps extends BaseFormFieldProps<string> {
   fields?: {
