@@ -11,8 +11,11 @@ import {
 } from '@types';
 
 export default class LearningResourceService {
-  static fetchChannelsByTenantId(tenantId: string | number): Promise<any> {
-    const params = { page: 0, size: 2000, tenantId };
+  static fetchChannelsByTenantId(param: {
+    tenantId: string | number;
+    channelName?: string;
+  }): Promise<any> {
+    const params = { page: 0, size: 2000, ...param };
     return httpService.get(`${PMSApiPrefix()}/channel`, params);
   }
 
