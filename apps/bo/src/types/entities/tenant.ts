@@ -1,4 +1,20 @@
 export interface Tenant {
+  flatformProperties: {
+    isUseEnrollOption: boolean,
+    isUseTextBookOption: boolean,
+    isUseInstructorOption: boolean,
+    isUsePassOption: boolean,
+    isUseCommunicationOption: boolean,
+    isUseLearningEnvOption: boolean,
+    isUseLearningControlOption: boolean,
+    isUseRelatedCourseOption: boolean,
+    isUseAdminDataOption: boolean,
+    isUseCarTenantCustomOption: boolean,
+    isUseRotemTenantCustomOption: boolean,
+    isUseOutsourcingTenantCustomOption: boolean,
+    isUseWiaTenantCustomOption: boolean,
+    isUseAutoeverTenantCustomOption: boolean,
+  };
   tenantId: number;
   tenantSite: string;
   tenantName: string;
