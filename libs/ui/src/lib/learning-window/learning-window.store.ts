@@ -57,6 +57,7 @@ interface Module {
   moduleId: number;
   mappingModuleType: string;
   lessonList: Lesson[];
+  moduleName: string;
 }
 
 interface Lesson {
@@ -65,6 +66,13 @@ interface Lesson {
   orgnId?: number;
   scoId?: string;
   contentType: EnContentType;
+}
+
+interface FunctionInfomation {
+  scormInitialize: (payload: any) => void;
+  scormCommit: (payload: any) => void;
+  videoOnProgress: (payload: any) => void;
+  curriculum: (payload: any) => void;
 }
 
 interface LearningWindowStoreData {
@@ -77,9 +85,18 @@ interface LearningWindowStoreData {
   setPlayInfo: (v?: PlayInfo) => void;
   setCurriculum: (v?: Curriculum) => void;
   setPlayList: (v?: PlayListItem[]) => void;
+  clearInfo: () => void;
 
   scormInfo: any;
   setScormInfo: (v: any) => void;
+  galleryInfo: any;
+  setGalleryInfo: (v: any) => void;
+  videoInfo: any;
+  setVideoInfo: (v: any) => void;
+  blogInfo: any;
+  setBlogInfo: (v: any) => void;
+  funcInfo?: FunctionInfomation;
+  setFuncInfo: (v: FunctionInfomation) => void;
 }
 
 const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
@@ -89,10 +106,14 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
   playInfo: undefined,
   playList: undefined,
   scormInfo: undefined,
+  galleryInfo: undefined,
+  videoInfo: undefined,
+  blogInfo: undefined,
+  funcInfo: undefined,
 
   setPlayInfo(playInfo?: PlayInfo) {
     if (!playInfo) return;
-    const playList = get().playList;
+    const playList = get().playList || [];
     const index = playList?.findIndex(
       (item) => item.moduleId === playInfo.moduleId && item.lessonId === playInfo.lessonId,
     );
@@ -115,11 +136,45 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
   setScormInfo(scormInfo: any) {
     set((state) => ({ scormInfo }));
   },
+  setGalleryInfo(galleryInfo: any) {
+    set((state) => ({
+      galleryInfo,
+    }));
+  },
+
+  setVideoInfo(videoInfo: any) {
+    set((state) => ({
+      videoInfo,
+    }));
+  },
+
+  setBlogInfo(blogInfo: any) {
+    set((state) => ({
+      blogInfo,
+    }));
+  },
+  setFuncInfo(funcInfo: FunctionInfomation) {
+    set((state) => ({
+      funcInfo,
+    }));
+  },
+
+  clearInfo() {
+    set((state) => ({
+      galleryInfo: undefined,
+      scormInfo: undefined,
+      videoInfo: undefined,
+    }));
+  },
 }));
 
 export const useLearningWindow = () => {
   const {
     scormInfo,
+    galleryInfo,
+    videoInfo,
+    blogInfo,
+    funcInfo,
     playIndex: _playIndex,
     playList: _playList,
     baseInfo: _baseInfo,
@@ -131,6 +186,11 @@ export const useLearningWindow = () => {
     setPlayList,
 
     setScormInfo,
+    setGalleryInfo,
+    setVideoInfo,
+    setBlogInfo,
+    setFuncInfo,
+    clearInfo,
   } = useLearningWindowStore((state) => state);
 
   const genPlayInfoByCurriculum = (
@@ -172,16 +232,17 @@ export const useLearningWindow = () => {
 
   const setPlayListByCurriculum = (curriculum: any) => {
     const playList: any[] = [];
-    curriculum.moduleList.forEach((module: any) => {
-      module?.lessonList?.forEach((lesson: any) => {
-        playList.push({
-          moduleId: module.moduleId,
-          lessonId: lesson.lessonId,
-          lessonName: lesson.lessonName,
-          moduleName: module.moduleName,
+    curriculum?.moduleList &&
+      curriculum.moduleList.forEach((module: any) => {
+        module?.lessonList?.forEach((lesson: any) => {
+          playList.push({
+            moduleId: module.moduleId,
+            lessonId: lesson.lessonId,
+            lessonName: lesson.lessonName,
+            moduleName: module.moduleName,
+          });
         });
       });
-    });
     setPlayList(playList);
   };
 
@@ -232,13 +293,18 @@ export const useLearningWindow = () => {
     setBaseInfo,
     scormInfo,
     setScormInfo,
+    galleryInfo,
+    setGalleryInfo,
+    videoInfo,
+    setVideoInfo,
+    blogInfo,
+    setBlogInfo,
+    funcInfo,
+    setFuncInfo,
     setPlayInfo: handleSetPlayInfo,
     setCurriculum: handleSetCurriculum,
-    /**
-     * BO 미리 보기 설정용
-     */
-    directPlayInfo: setPlayInfo,
     gotoNextLesson,
     gotoBeforeLesson,
+    clearInfo,
   };
 };

@@ -6,13 +6,14 @@ import { PageContainer } from '../../../../../widgets/layout/ui/container/page-c
 import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
-import { EbookInfo, SharedChannelGridFormField } from '../../../../../features/learning';
-import { DateRangePickerFormField } from '../../../../../features/learning/ui/resource/date-range-picker-form-field';
+import { SharedChannelGridFormField } from '@features/form/ui';
+import { DateRangePickerFormField } from '@features/form/ui';
 import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
 import { FormDisplay } from '../../../../../features/form/ui/form-display';
 import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../../shared/ui/form';
 import { LinkBox } from '../../../../../widgets/layout/ui/container/slot/link-box';
-import { ChannelChoiceModal, ManagerChoiceModal } from '../../../../../features/shared';
+import { ChannelChoiceModal, ManagerChoiceModal } from '@shared/ui';
+import { EbookInfo } from '@features/learning-resource';
 
 export const Route = createFileRoute('/_layout/learning/resource/view/ebook')({
   component: RouteComponent,

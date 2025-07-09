@@ -13,6 +13,6 @@ export type com_ever_edu_lms_course_dto_res_SequenceResDto$onAdmin = {
     maxQuota?: number;
     filledQuota?: number;
     course?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin;
-    coordinatorId?: number;
+    coordinatorUuid?: string;
 };
 

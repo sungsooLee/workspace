@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_WizardStep1 } from './com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_WizardStep1';
+import type { com_ever_edu_lms_course_dto_req_CourseTargetAudienceReqDto_WizardStep1 } from './com_ever_edu_lms_course_dto_req_CourseTargetAudienceReqDto_WizardStep1';
 export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1 = {
     /**
      * 과정 생성/수정 마법사 타입 (lms.course.WizardStep)
@@ -25,9 +25,9 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1 = {
      */
     categoryIds: Array<number>;
     /**
-     * 학습대상-유저그룹(화이트 그룹리스트)
+     * 학습대상-유저그룹
      */
-    whiteList?: Array<com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto_WizardStep1>;
+    targetList?: Array<com_ever_edu_lms_course_dto_req_CourseTargetAudienceReqDto_WizardStep1>;
     /**
      * 언어 설정
      */
@@ -65,9 +65,9 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1 = {
      */
     learningSpaceNameKeyIn?: string;
     /**
-     * 담당자 ID
+     * 담당자 UUID
      */
-    coordinatorId: number;
+    coordinatorUuid: string;
     /**
      * 담당자 이름
      */
@@ -89,9 +89,9 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1 = {
      */
     coordinatorEmail: string;
     /**
-     * 운영자 ID
+     * 운영자 UUID
      */
-    operatorId: number;
+    operatorUuid: string;
     /**
      * 운영자 이름
      */
@@ -124,6 +124,7 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1 = {
      * 위탁 소유 회사 이름
      */
     outsourcingCompanyName?: string;
+    learningSpaceNameValid?: boolean;
 };
 export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1 {
     /**

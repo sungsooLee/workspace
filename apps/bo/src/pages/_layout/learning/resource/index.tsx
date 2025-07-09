@@ -6,9 +6,9 @@ import { ContentsButtons } from '../../../../widgets/layout/ui/container/slot/co
 import { MainContents } from '../../../../widgets/layout/ui/container/slot/main-contents';
 import { PageContainer } from '../../../../widgets/layout/ui/container/page-container';
 import {
-  LearningTypeChoiceModal,
   LearningResourceFileUploadModal,
-} from '../../../../features/learning';
+  LearningTypeChoiceModal,
+} from '@features/learning-resource';
 import { t } from 'i18next';
 import { SearchBox } from '../../../../shared/ui/search-box';
 import { useSearchBox } from '@learnway/hooks';

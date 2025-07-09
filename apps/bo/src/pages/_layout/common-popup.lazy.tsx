@@ -20,12 +20,13 @@ import {
   OrganizationShuttleTreeModal,
   TrainingPlaceChoiceModal,
   TrainingPlaceDetailModal,
-} from '@features/shared';
+} from '@shared/ui';
 import {
   Button,
   ChipListModalSelectorFormField,
   ContentsRow,
   Input,
+  LearningWindowLayout,
   PreviewImage,
   useModal,
 } from '@learnway/ui';
@@ -53,6 +54,7 @@ import {
   useDeployTranslation,
   useTranslation,
 } from '@entities/translation/service/translation.hook';
+import { PreviewLearningWindow } from '@features/learning-resource/learning-resource-management/ui/preview-learning-window';
 
 export const Route = createLazyFileRoute('/_layout/common-popup')({
   component: RouteComponent,
@@ -62,7 +64,6 @@ const imageFileUrl =
   'https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2';
 
 function RouteComponent() {
-  const { open } = useModal();
   const { open: openModal } = useModal();
   const [organizations, setOrganizations] = useState<any>([]);
   const { provider, onSubmit, control, getValues, updateFormData } = useDynamicForm(formConfig);
@@ -118,7 +119,7 @@ function RouteComponent() {
   };
 
   const handleAddressSearch = () => {
-    open({
+    openModal({
       width: 'sm',
       content: <AddressSearchModal onSelect={handleAddressSearchResult} />,
     });
@@ -411,13 +412,7 @@ function RouteComponent() {
                   e.stopPropagation();
                   openModal({
                     width: 'xl',
-                    content: (
-                      <UserGroupChoiceModal
-                        userGroupIds={[4, 3, 2, 1]}
-                        userGroupType="ORGANIZATION"
-                        groups={[]}
-                      />
-                    ),
+                    content: <UserGroupChoiceModal />,
                   });
                 }}
               >
@@ -452,7 +447,20 @@ function RouteComponent() {
                 openModal({
                   width: 'xl',
                   content: (
-                    <UserGroupTabsChoiceModal tenantIds={[1, 2, 3, 4]} initialTab="ORGANIZATION" />
+                    <UserGroupTabsChoiceModal
+                      tenantIds={[1, 2, 3, 4]}
+                      option={[
+                        {
+                          combiners: [
+                            { combineName: '현대제철', combineType: 'USER_GROUP', combineValue: 1 },
+                          ],
+                          fullName: '현대제철',
+                          key: '1',
+                          id: 1,
+                        },
+                      ]}
+                      initialTab="ORGANIZATION"
+                    />
                   ),
                 });
               }}
@@ -604,7 +612,30 @@ function RouteComponent() {
                   });
                 }}
               >
-                {'교육공간 등록 팝업'}
+                {'교육공간 등록 결과'}
+              </Button>
+              <span className="text-yellow-500">{'진행중'}</span>
+            </div>
+            <div className="flex gap-4">
+              <Button
+                size={'xs'}
+                className="btn_table flex-1"
+                variant={'gray2'}
+                stopPropagation
+                onClick={(e) => {
+                  openModal({
+                    width: 'full',
+                    content: (
+                      // <PreviewLearningWindow contentUuid="0d325ece-c155-4927-944d-dfc873fff97b" />
+                      <PreviewLearningWindow contentUuid="809fad98-0911-4712-a989-7848671c8e4c" />
+                    ),
+                    onClose(data: any) {
+                      console.log('컨텐츠 미리 보기 팝업', data);
+                    },
+                  });
+                }}
+              >
+                {'컨텐츠 미리 보기 팝업'}
               </Button>
               <span className="text-yellow-500">{'진행중'}</span>
             </div>

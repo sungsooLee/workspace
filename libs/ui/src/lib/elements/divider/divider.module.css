@@ -2,6 +2,9 @@
 
 .divider {
   @apply bg-[var(--gray4)];
+  &.dark {
+    @apply bg-[#D3D5DA];
+  }
 }
 
 /* 수평 구분선 */

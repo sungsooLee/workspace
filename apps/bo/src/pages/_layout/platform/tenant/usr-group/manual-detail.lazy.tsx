@@ -38,7 +38,7 @@ import {
   CompanyShuttleModal,
   GridExcelUploadButton,
   UserGroupChoiceModal,
-} from '@features/shared';
+} from '@shared/ui';
 
 import { EnTenantDetailTabKey } from '@types';
 
@@ -153,13 +153,7 @@ function RouteComponent() {
                 element={
                   <ChipListModalSelectorFormField
                     modalConfig={{
-                      content: (
-                        <UserGroupChoiceModal
-                          userGroupIds={[]}
-                          userGroupType="ORGANIZATION"
-                          groups={[]}
-                        />
-                      ),
+                      content: <UserGroupChoiceModal />,
                       title: '',
                       width: 'xl',
                     }}

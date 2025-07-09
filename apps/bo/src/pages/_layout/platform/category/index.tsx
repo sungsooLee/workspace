@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { CategoryManage } from '@features/platform/category';
+import { CategoryManage } from '@features/platform-management/platform/category-managemnet';
 import { pageRouteConfig } from '@features/auth/index';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';

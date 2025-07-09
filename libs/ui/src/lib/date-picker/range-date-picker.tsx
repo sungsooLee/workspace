@@ -2,7 +2,7 @@ import { forwardRef, useEffect, useState, ForwardRefRenderFunction, useRef } fro
 import Primitive from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './date-picker.css';
-import { IcoCalendar01 } from '@learnway/icons';
+import { IcoCalendar01, IcoClock01 } from '@learnway/icons';
 import { cn, getDatePickerPlaceholder, getDefaultLang } from '@learnway/shared';
 import { BaseFieldProps } from '../type';
 import { CustomDatePickerHeader } from './custom-date-picker-header';
@@ -200,8 +200,8 @@ const RangeDatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, RangeDa
 
   return (
     <div className={cn('nlp--datepicker-time', 'nlp--datepicker-from-to', size)} ref={ref}>
-      <div className="flex flex-row">
-        <div className="nlp--datepicker-calendar flex flex-row space-x-2">
+      <div className="datepicker_from_to">
+        <div className="nlp--datepicker-calendar">
           <Primitive
             ref={startPickerRef}
             showIcon
@@ -249,7 +249,7 @@ const RangeDatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, RangeDa
             </div>
           )}
           {showTimeStep && (
-            <div className="nlp--datepicker-time">
+            <div className={cn('nlp--datepicker-time', 'time_step')}>
               <Primitive
                 showIcon
                 shouldCloseOnSelect
@@ -259,7 +259,7 @@ const RangeDatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, RangeDa
                 showTimeSelectOnly
                 selected={startDate}
                 placeholderText={getPlaceholderByType('time-step', currentLocale)}
-                icon={<IcoCalendar01 width={16} height={16} stroke="#4C515E" fill="none" />}
+                // icon={<IcoCalendar01 width={16} height={16} stroke="#4C515E" fill="none" />}
                 isClearable={true}
                 dateFormat={currentLocale === ko ? 'aa h:mm' : 'h:mm aa'}
                 timeFormat={currentLocale === ko ? 'aa h:mm' : 'h:mm aa'}
@@ -275,7 +275,7 @@ const RangeDatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, RangeDa
           )}
         </div>
         <span className="hyphen"></span>
-        <div className="nlp--datepicker-calendar flex flex-row space-x-2">
+        <div className="nlp--datepicker-calendar">
           <Primitive
             ref={endPickerRef}
             showIcon
@@ -323,7 +323,7 @@ const RangeDatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, RangeDa
             </div>
           )}
           {showTimeStep && (
-            <div className="nlp--datepicker-time">
+            <div className={cn('nlp--datepicker-time', 'time_step')}>
               <Primitive
                 showIcon
                 shouldCloseOnSelect
@@ -333,7 +333,7 @@ const RangeDatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, RangeDa
                 showTimeSelectOnly
                 selected={endDate}
                 placeholderText={getPlaceholderByType('time-step', currentLocale)}
-                icon={<IcoCalendar01 width={16} height={16} stroke="#4C515E" fill="none" />}
+                // icon={<IcoClock01 width={16} height={16} stroke="#5C636E" fill="none" />}
                 isClearable={true}
                 dateFormat={currentLocale === ko ? 'aa h:mm' : 'h:mm aa'}
                 timeFormat={currentLocale === ko ? 'aa h:mm' : 'h:mm aa'}

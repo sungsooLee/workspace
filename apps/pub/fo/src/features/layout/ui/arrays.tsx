@@ -28,7 +28,8 @@ const ArraysButton = ({ className, arraysData }: ArraysProps) => {
         <Button
           key={index}
           className={`${selectedItem === index ? styles.active : ''}`}
-          onClick={() => handleOnChange(index)}>
+          onClick={() => handleOnChange(index)}
+        >
           {item}
         </Button>
       ))}

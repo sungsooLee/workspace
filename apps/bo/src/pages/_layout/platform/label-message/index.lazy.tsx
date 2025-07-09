@@ -14,7 +14,7 @@ import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inn
 import { IcoPlus } from '@learnway/icons';
 import { DATE_TIME_FORMAT, formatISODateString, getRowSelectionByList } from '@learnway/shared';
 import { Table } from '@tanstack/react-table';
-import { MessageDetail } from '../../../../features/platform/label-message/ui/detail';
+import { MessageDetail } from '@features/platform-management/platform/label-message-managemnet';
 
 export const Route = createLazyFileRoute('/_layout/platform/label-message/')({
   component: RouteComponent,

@@ -16,7 +16,7 @@ import {
   TenantDetailMenu,
   TenantDetailCategory,
   TenantDetailAttribute,
-} from '@features/tenant';
+} from '@features/platform-management/tenant';
 
 import { EnTenantDetailTabKey } from '@types';
 

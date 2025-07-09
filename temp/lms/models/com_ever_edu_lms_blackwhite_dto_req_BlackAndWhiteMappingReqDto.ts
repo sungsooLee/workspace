@@ -7,6 +7,7 @@ export type com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteMappingReqDto = {
     blackAndWhiteType: com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteMappingReqDto.blackAndWhiteType;
     groupMappingType: com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteMappingReqDto.groupMappingType;
     mappingId: number;
+    combineOperator: com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteMappingReqDto.combineOperator;
     combiners: Array<com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto>;
 };
 export namespace com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteMappingReqDto {
@@ -19,6 +20,10 @@ export namespace com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteMappingReqDto 
         SEQUENCE = 'SEQUENCE',
         CATEGORY = 'CATEGORY',
         CHANNEL = 'CHANNEL',
+    }
+    export enum combineOperator {
+        AND = 'AND',
+        OR = 'OR',
     }
 }
 

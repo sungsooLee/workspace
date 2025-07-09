@@ -1,16 +1,28 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import type { MutateOptions } from '@tanstack/react-query';
+import type { MutateOptions, UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
 
 import {
   tenantQueryKeys,
   tenantQueryOptions as queryOptions,
   tenantMutateOptions,
 } from './tenant.queries';
-import { Tenant } from '../../../types/entities/tenant';
+import { PaginationResponse, Tenant, TenantByRoleId } from '@types';
 
 export function useFetchTenant(tenantId?: number) {
   return useQuery(queryOptions.detail(tenantId));
 }
+
+/**
+ * 테넌트 목록 조회 ( 역할 기준 )
+ * @param roleId - 역할
+ * @param options - 추가 쿼리 옵션.
+ */
+export const useFetchTenantByRoleId = <T = TenantByRoleId>(
+  roleId: number,
+  options?: UseQueryOptions<PaginationResponse<T>, Error>,
+): UseQueryResult<PaginationResponse<T>, Error> => {
+  return useQuery({ ...queryOptions.tenantByRoleId<T>(roleId), ...options });
+};
 
 export function useCreateTenant(options: any) {
   const queryClient = useQueryClient();

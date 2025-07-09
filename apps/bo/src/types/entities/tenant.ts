@@ -1,4 +1,20 @@
 export interface Tenant {
+  flatformProperties: {
+    isUseEnrollOption: boolean,
+    isUseTextBookOption: boolean,
+    isUseInstructorOption: boolean,
+    isUsePassOption: boolean,
+    isUseCommunicationOption: boolean,
+    isUseLearningEnvOption: boolean,
+    isUseLearningControlOption: boolean,
+    isUseRelatedCourseOption: boolean,
+    isUseAdminDataOption: boolean,
+    isUseCarTenantCustomOption: boolean,
+    isUseRotemTenantCustomOption: boolean,
+    isUseOutsourcingTenantCustomOption: boolean,
+    isUseWiaTenantCustomOption: boolean,
+    isUseAutoeverTenantCustomOption: boolean,
+  };
   tenantId: number;
   tenantSite: string;
   tenantName: string;
@@ -35,4 +51,37 @@ export interface TenantCompany {
   companyId: number;
   companyCode: string;
   companyName: string;
+}
+
+// 테넌트 조회 ( 역할 기준 )
+export interface TenantByRoleId {
+  tenantId: number;
+  tenantName: string;
+  tenantSite: string;
+  isSecurityPledge: boolean;
+  fileStorageTypeChannelList: string[];
+  fileStorageTypeBase: string;
+  isUsed: boolean;
+  tenantUserList: TenantUserList[];
+  companyTenantList: CompanyTenantList[];
+  createdBy: string;
+  createdDate: string;
+  lastModifiedBy: string;
+  modifiedDate: string;
+}
+
+export interface TenantUserList {
+  tenantId: number;
+  userUuid: string;
+  userName: string;
+  deptName: string;
+  companyName: string;
+}
+
+export interface CompanyTenantList {
+  tenantId: number;
+  companyId: number;
+  companyCode: string;
+  companyName: string;
+  managerName: string;
 }

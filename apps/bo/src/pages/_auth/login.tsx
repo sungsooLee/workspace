@@ -16,7 +16,7 @@ import {
   TenantRoleModal,
   LoginErrorAlert,
 } from '@features/auth';
-import { useSetLanguage } from '@features/platform';
+import { useSetLanguage } from '@features/layout';
 
 import { FormRow } from '@shared/ui/form';
 import { AUTH_CONTAINERS } from '@widgets/layout';

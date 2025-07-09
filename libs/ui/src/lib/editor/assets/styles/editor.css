@@ -1,6 +1,6 @@
 .nlp--editor-container {
   resize: vertical;
-  @apply scrollbar max-h-[400px] overflow-y-auto;
+  @apply scrollbar max-h-[400px] min-h-[200px] overflow-y-auto;
 }
 
 .nlp--content-editable {

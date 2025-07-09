@@ -10,10 +10,10 @@
     @apply label-sm-b;
   }
   &.lg {
-    @apply label-lg-b !h-[4.8rem];
+    @apply label-lg-b !h-[4.4rem];
   }
   &.xl {
-    @apply label-xl-b;
+    @apply label-xl-b !h-[4.8rem];
   }
   &.xl2 {
     @apply h-[5.2rem] text-[1.6rem];
@@ -53,6 +53,15 @@
     }
     svg {
       @apply stroke-[var(--gray10)];
+    }
+  }
+  &.line {
+    @apply !border-[var(--blue50)] text-[var(--blue50)];
+    &:hover {
+      @apply border-[var(--blue75)] bg-[var(--blue98)] text-[var(--blue75)];
+    }
+    &:active {
+      @apply border-[var(--blue35)] bg-[var(--blue95)] text-[var(--blue35)];
     }
   }
   &[class*='only_icon'] {

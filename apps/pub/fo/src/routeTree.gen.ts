@@ -112,6 +112,7 @@ import { Route as GuideGuideIconImport } from './pages/_guide/guide/icon'
 import { Route as GuideGuideGridImport } from './pages/_guide/guide/grid'
 import { Route as GuideGuideFormImport } from './pages/_guide/guide/form'
 import { Route as GuideGuideDropDownImport } from './pages/_guide/guide/drop-down'
+import { Route as GuideGuideDividerImport } from './pages/_guide/guide/divider'
 import { Route as GuideGuideDatePickerImport } from './pages/_guide/guide/date-picker'
 import { Route as GuideGuideDataDisplayImport } from './pages/_guide/guide/data-display'
 import { Route as GuideGuideCssImport } from './pages/_guide/guide/css'
@@ -120,6 +121,7 @@ import { Route as GuideGuideChipsImport } from './pages/_guide/guide/chips'
 import { Route as GuideGuideCheckboxImport } from './pages/_guide/guide/checkbox'
 import { Route as GuideGuideCarouselImport } from './pages/_guide/guide/carousel'
 import { Route as GuideGuideButtonsImport } from './pages/_guide/guide/buttons'
+import { Route as GuideGuideBoxShadowImport } from './pages/_guide/guide/box-shadow'
 import { Route as GuideGuideBannerImport } from './pages/_guide/guide/banner'
 import { Route as GuideGuideBadgeImport } from './pages/_guide/guide/badge'
 import { Route as GuideGuideAvatarImport } from './pages/_guide/guide/avatar'
@@ -749,6 +751,12 @@ const GuideGuideDropDownRoute = GuideGuideDropDownImport.update({
   getParentRoute: () => GuideRoute,
 } as any)
 
+const GuideGuideDividerRoute = GuideGuideDividerImport.update({
+  id: '/guide/divider',
+  path: '/guide/divider',
+  getParentRoute: () => GuideRoute,
+} as any)
+
 const GuideGuideDatePickerRoute = GuideGuideDatePickerImport.update({
   id: '/guide/date-picker',
   path: '/guide/date-picker',
@@ -794,6 +802,12 @@ const GuideGuideCarouselRoute = GuideGuideCarouselImport.update({
 const GuideGuideButtonsRoute = GuideGuideButtonsImport.update({
   id: '/guide/buttons',
   path: '/guide/buttons',
+  getParentRoute: () => GuideRoute,
+} as any)
+
+const GuideGuideBoxShadowRoute = GuideGuideBoxShadowImport.update({
+  id: '/guide/box-shadow',
+  path: '/guide/box-shadow',
   getParentRoute: () => GuideRoute,
 } as any)
 
@@ -1133,6 +1147,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideGuideBannerImport
       parentRoute: typeof GuideImport
     }
+    '/_guide/guide/box-shadow': {
+      id: '/_guide/guide/box-shadow'
+      path: '/guide/box-shadow'
+      fullPath: '/guide/box-shadow'
+      preLoaderRoute: typeof GuideGuideBoxShadowImport
+      parentRoute: typeof GuideImport
+    }
     '/_guide/guide/buttons': {
       id: '/_guide/guide/buttons'
       path: '/guide/buttons'
@@ -1187,6 +1208,13 @@ declare module '@tanstack/react-router' {
       path: '/guide/date-picker'
       fullPath: '/guide/date-picker'
       preLoaderRoute: typeof GuideGuideDatePickerImport
+      parentRoute: typeof GuideImport
+    }
+    '/_guide/guide/divider': {
+      id: '/_guide/guide/divider'
+      path: '/guide/divider'
+      fullPath: '/guide/divider'
+      preLoaderRoute: typeof GuideGuideDividerImport
       parentRoute: typeof GuideImport
     }
     '/_guide/guide/drop-down': {
@@ -1676,6 +1704,7 @@ interface GuideRouteChildren {
   GuideGuideAvatarRoute: typeof GuideGuideAvatarRoute
   GuideGuideBadgeRoute: typeof GuideGuideBadgeRoute
   GuideGuideBannerRoute: typeof GuideGuideBannerRoute
+  GuideGuideBoxShadowRoute: typeof GuideGuideBoxShadowRoute
   GuideGuideButtonsRoute: typeof GuideGuideButtonsRoute
   GuideGuideCarouselRoute: typeof GuideGuideCarouselRoute
   GuideGuideCheckboxRoute: typeof GuideGuideCheckboxRoute
@@ -1684,6 +1713,7 @@ interface GuideRouteChildren {
   GuideGuideCssRoute: typeof GuideGuideCssRoute
   GuideGuideDataDisplayRoute: typeof GuideGuideDataDisplayRoute
   GuideGuideDatePickerRoute: typeof GuideGuideDatePickerRoute
+  GuideGuideDividerRoute: typeof GuideGuideDividerRoute
   GuideGuideDropDownRoute: typeof GuideGuideDropDownRoute
   GuideGuideFormRoute: typeof GuideGuideFormRoute
   GuideGuideGridRoute: typeof GuideGuideGridRoute
@@ -1725,6 +1755,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideAvatarRoute: GuideGuideAvatarRoute,
   GuideGuideBadgeRoute: GuideGuideBadgeRoute,
   GuideGuideBannerRoute: GuideGuideBannerRoute,
+  GuideGuideBoxShadowRoute: GuideGuideBoxShadowRoute,
   GuideGuideButtonsRoute: GuideGuideButtonsRoute,
   GuideGuideCarouselRoute: GuideGuideCarouselRoute,
   GuideGuideCheckboxRoute: GuideGuideCheckboxRoute,
@@ -1733,6 +1764,7 @@ const GuideRouteChildren: GuideRouteChildren = {
   GuideGuideCssRoute: GuideGuideCssRoute,
   GuideGuideDataDisplayRoute: GuideGuideDataDisplayRoute,
   GuideGuideDatePickerRoute: GuideGuideDatePickerRoute,
+  GuideGuideDividerRoute: GuideGuideDividerRoute,
   GuideGuideDropDownRoute: GuideGuideDropDownRoute,
   GuideGuideFormRoute: GuideGuideFormRoute,
   GuideGuideGridRoute: GuideGuideGridRoute,
@@ -1925,6 +1957,7 @@ export interface FileRoutesByFullPath {
   '/guide/avatar': typeof GuideGuideAvatarRoute
   '/guide/badge': typeof GuideGuideBadgeRoute
   '/guide/banner': typeof GuideGuideBannerRoute
+  '/guide/box-shadow': typeof GuideGuideBoxShadowRoute
   '/guide/buttons': typeof GuideGuideButtonsRoute
   '/guide/carousel': typeof GuideGuideCarouselRoute
   '/guide/checkbox': typeof GuideGuideCheckboxRoute
@@ -1933,6 +1966,7 @@ export interface FileRoutesByFullPath {
   '/guide/css': typeof GuideGuideCssRoute
   '/guide/data-display': typeof GuideGuideDataDisplayRoute
   '/guide/date-picker': typeof GuideGuideDatePickerRoute
+  '/guide/divider': typeof GuideGuideDividerRoute
   '/guide/drop-down': typeof GuideGuideDropDownRoute
   '/guide/form': typeof GuideGuideFormRoute
   '/guide/grid': typeof GuideGuideGridRoute
@@ -2038,6 +2072,7 @@ export interface FileRoutesByTo {
   '/guide/avatar': typeof GuideGuideAvatarRoute
   '/guide/badge': typeof GuideGuideBadgeRoute
   '/guide/banner': typeof GuideGuideBannerRoute
+  '/guide/box-shadow': typeof GuideGuideBoxShadowRoute
   '/guide/buttons': typeof GuideGuideButtonsRoute
   '/guide/carousel': typeof GuideGuideCarouselRoute
   '/guide/checkbox': typeof GuideGuideCheckboxRoute
@@ -2046,6 +2081,7 @@ export interface FileRoutesByTo {
   '/guide/css': typeof GuideGuideCssRoute
   '/guide/data-display': typeof GuideGuideDataDisplayRoute
   '/guide/date-picker': typeof GuideGuideDatePickerRoute
+  '/guide/divider': typeof GuideGuideDividerRoute
   '/guide/drop-down': typeof GuideGuideDropDownRoute
   '/guide/form': typeof GuideGuideFormRoute
   '/guide/grid': typeof GuideGuideGridRoute
@@ -2155,6 +2191,7 @@ export interface FileRoutesById {
   '/_guide/guide/avatar': typeof GuideGuideAvatarRoute
   '/_guide/guide/badge': typeof GuideGuideBadgeRoute
   '/_guide/guide/banner': typeof GuideGuideBannerRoute
+  '/_guide/guide/box-shadow': typeof GuideGuideBoxShadowRoute
   '/_guide/guide/buttons': typeof GuideGuideButtonsRoute
   '/_guide/guide/carousel': typeof GuideGuideCarouselRoute
   '/_guide/guide/checkbox': typeof GuideGuideCheckboxRoute
@@ -2163,6 +2200,7 @@ export interface FileRoutesById {
   '/_guide/guide/css': typeof GuideGuideCssRoute
   '/_guide/guide/data-display': typeof GuideGuideDataDisplayRoute
   '/_guide/guide/date-picker': typeof GuideGuideDatePickerRoute
+  '/_guide/guide/divider': typeof GuideGuideDividerRoute
   '/_guide/guide/drop-down': typeof GuideGuideDropDownRoute
   '/_guide/guide/form': typeof GuideGuideFormRoute
   '/_guide/guide/grid': typeof GuideGuideGridRoute
@@ -2270,6 +2308,7 @@ export interface FileRouteTypes {
     | '/guide/avatar'
     | '/guide/badge'
     | '/guide/banner'
+    | '/guide/box-shadow'
     | '/guide/buttons'
     | '/guide/carousel'
     | '/guide/checkbox'
@@ -2278,6 +2317,7 @@ export interface FileRouteTypes {
     | '/guide/css'
     | '/guide/data-display'
     | '/guide/date-picker'
+    | '/guide/divider'
     | '/guide/drop-down'
     | '/guide/form'
     | '/guide/grid'
@@ -2382,6 +2422,7 @@ export interface FileRouteTypes {
     | '/guide/avatar'
     | '/guide/badge'
     | '/guide/banner'
+    | '/guide/box-shadow'
     | '/guide/buttons'
     | '/guide/carousel'
     | '/guide/checkbox'
@@ -2390,6 +2431,7 @@ export interface FileRouteTypes {
     | '/guide/css'
     | '/guide/data-display'
     | '/guide/date-picker'
+    | '/guide/divider'
     | '/guide/drop-down'
     | '/guide/form'
     | '/guide/grid'
@@ -2497,6 +2539,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/avatar'
     | '/_guide/guide/badge'
     | '/_guide/guide/banner'
+    | '/_guide/guide/box-shadow'
     | '/_guide/guide/buttons'
     | '/_guide/guide/carousel'
     | '/_guide/guide/checkbox'
@@ -2505,6 +2548,7 @@ export interface FileRouteTypes {
     | '/_guide/guide/css'
     | '/_guide/guide/data-display'
     | '/_guide/guide/date-picker'
+    | '/_guide/guide/divider'
     | '/_guide/guide/drop-down'
     | '/_guide/guide/form'
     | '/_guide/guide/grid'
@@ -2632,6 +2676,7 @@ export const routeTree = rootRoute
         "/_guide/guide/avatar",
         "/_guide/guide/badge",
         "/_guide/guide/banner",
+        "/_guide/guide/box-shadow",
         "/_guide/guide/buttons",
         "/_guide/guide/carousel",
         "/_guide/guide/checkbox",
@@ -2640,6 +2685,7 @@ export const routeTree = rootRoute
         "/_guide/guide/css",
         "/_guide/guide/data-display",
         "/_guide/guide/date-picker",
+        "/_guide/guide/divider",
         "/_guide/guide/drop-down",
         "/_guide/guide/form",
         "/_guide/guide/grid",
@@ -2888,6 +2934,10 @@ export const routeTree = rootRoute
       "filePath": "_guide/guide/banner.tsx",
       "parent": "/_guide"
     },
+    "/_guide/guide/box-shadow": {
+      "filePath": "_guide/guide/box-shadow.tsx",
+      "parent": "/_guide"
+    },
     "/_guide/guide/buttons": {
       "filePath": "_guide/guide/buttons.tsx",
       "parent": "/_guide"
@@ -2918,6 +2968,10 @@ export const routeTree = rootRoute
     },
     "/_guide/guide/date-picker": {
       "filePath": "_guide/guide/date-picker.tsx",
+      "parent": "/_guide"
+    },
+    "/_guide/guide/divider": {
+      "filePath": "_guide/guide/divider.tsx",
       "parent": "/_guide"
     },
     "/_guide/guide/drop-down": {

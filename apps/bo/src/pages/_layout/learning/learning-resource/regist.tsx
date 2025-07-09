@@ -1,7 +1,10 @@
 // IA105 / NLP_BO_CMS_1058 // IA105 / NLP_BO_CMS_1017 // IA106 / NLP_BO_CMS_1060
 import { usePostDraftVideos } from '@entities/learning-resource';
-import { LearningResourceFileUploadModal, LearningTypeChoiceModal } from '@features/learning';
-import { ChannelChoiceModal } from '@features/shared';
+import {
+  LearningResourceFileUploadModal,
+  LearningTypeChoiceModal,
+} from '@features/learning-resource';
+import { ChannelChoiceModal } from '@shared/ui';
 import { getDefaultLang, LEARNING_TYPE } from '@learnway/config';
 import { useModal } from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';

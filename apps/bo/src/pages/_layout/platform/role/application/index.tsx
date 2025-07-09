@@ -22,7 +22,7 @@ import {
   roleManagerQueryOptions,
 } from '@entities/role';
 import { EnGlobalConst, LabelMessage } from '@types';
-import { RejectModal, RoleApplicationHistoryModal } from '@features/shared';
+import { RejectModal, RoleApplicationHistoryModal } from '@shared/ui';
 import { MyRoleExtendModal } from '@features/user/my-page/ui/my-role-extend-modal';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { useQueryClient } from '@tanstack/react-query';
@@ -81,7 +81,7 @@ function RouteComponent() {
 
   const getRoleOptions = async (tenantId?: number) => {
     const roles = await queryClient.fetchQuery(
-      roleManagerQueryOptions.list({ tenantId: tenantId, size: 5000 }),
+      roleManagerQueryOptions.list({ tenantId, size: 5000 }),
     );
     const roleIdOptions = roles.content.map((item: any) => ({
       label: item.name,

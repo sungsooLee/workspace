@@ -9,7 +9,7 @@ import {
   useGridBox,
   useModal,
 } from '@learnway/ui';
-import { cn, DATE_TIME_FORMAT, getDateToString, SelectOption } from '@learnway/shared';
+import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
@@ -33,11 +33,10 @@ import {
 } from '@entities/translation/service/translation.hook';
 import { t } from 'i18next';
 import { LinkBox } from '@widgets/layout/ui/container/slot/link-box';
-import { GridExcelDownloadButton, GridExcelUploadButton } from '@features/shared';
-import { TranslationStatusPopup } from '@features/platform/system/multilingual/translation-status-popup';
+import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
 import { PMSApiPrefix } from '@learnway/config';
-// import { MultilingualUpdateReqParams } from '../../../../../types/entities/multilingual';
 import { MultilingualUpdateReqParams } from '@types';
+import { TranslationStatusPopup } from '@features/platform-management/platform/multilingual-managemnet';
 
 export const Route = createLazyFileRoute('/_layout/platform/system/multilingual/')({
   component: RouteComponent,
@@ -278,6 +277,7 @@ function RouteComponent() {
       setSuccessTranslationCount(0);
       if (shouldUpdateOriginalData) {
         originalDataRef.current = null;
+        setShouldUpdateOriginalData(false);
       }
     }
   }, [data?.content]);

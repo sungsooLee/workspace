@@ -1,10 +1,7 @@
 import { memo } from 'react';
 
 import { useCurrentRoute } from '@learnway/hooks';
-
-import { Logo } from '../../../../../features/layout';
-import { Language } from '../../../../../features/platform';
-
+import { Logo, Language } from '@features/layout';
 import { AUTH_CONTAINERS } from '../auth-layout';
 
 import styles from '@learnway/styles/bo/widgets/layout/ui/auth/auth-header/auth-header.module.css';

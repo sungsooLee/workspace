@@ -2,16 +2,11 @@ import React, { useCallback } from 'react';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { useSearchBox } from '@learnway/hooks';
 import { useCreation } from 'ahooks';
-import { cn } from '@learnway/shared';
-
-import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
-import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
-
-import { widgetsQueryOptions } from '../../../../../entities/widgets';
-
-import { SearchBox } from '../../../../../shared/ui/search-box';
-
-import { WidgetPreviewButton } from '../../../../../features/platform';
+import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
+import { PageContainer } from '@widgets/layout/ui/container/page-container';
+import { widgetsQueryOptions } from '@entities/widgets';
+import { SearchBox } from '@shared/ui';
+import { WidgetPreviewButton } from '@features/platform';
 import { Divider, GridBox, useGridBox } from '@learnway/ui';
 
 export const Route = createLazyFileRoute('/_layout/platform/system/widget/')({

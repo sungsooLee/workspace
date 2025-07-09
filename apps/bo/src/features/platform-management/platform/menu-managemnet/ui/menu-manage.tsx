@@ -1,0 +1,941 @@
+import { useEffect, useRef, useState, forwardRef, useImperativeHandle, useCallback } from 'react';
+import { t } from 'i18next';
+import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { useRouter } from '@tanstack/react-router';
+import {
+  Button,
+  CheckboxGroupFormField,
+  ContentsRow,
+  findNodePath,
+  GridBox,
+  Input,
+  Textarea,
+  TreeBox,
+  TreeContainer,
+  TreeEventPayload,
+  TreeNode,
+  useModal,
+} from '@learnway/ui';
+import { IcoMinus, IcoPlus } from '@learnway/icons';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { ApiInfoModal } from './api-info-modal';
+import { MenuApiMappingModal } from './menu-api-mapping-modal';
+import {
+  findMenuPathById,
+  findNodeByMenuId,
+  transformApiDataToTreeData,
+} from '../service/menu.service';
+import {
+  queryKeys,
+  useCheckExistsMenu,
+  useCreateMenu,
+  useDeleteMenu,
+  useMenuManageDetail,
+  useMenuTree,
+  useMoveMenu,
+  useUpdateMenu,
+} from '@entities/menu';
+import { FormRow, SwitchFormField } from '@shared/ui';
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
+import { useWatch } from 'react-hook-form';
+import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
+import { isEqual } from 'lodash';
+import { useQueryClient } from '@tanstack/react-query';
+import { ApiMappingMenuDetail, MenuDetail } from '@types';
+
+const FORM_MODE = {
+  NONE: 'NONE',
+  VIEW: 'VIEW',
+  ADD: 'ADD',
+};
+
+const DEVICE_NAME = {
+  PC: 'PC',
+  Mobile: 'Mobile',
+};
+
+const columnHelper = createColumnHelper<any>();
+
+export interface MenuManageRef {
+  hasFormChanges: () => boolean;
+  setSkipConfirmation: (skip: boolean) => void;
+}
+
+export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ menuScope }, ref) => {
+  const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
+  const [parentNode, setParentNode] = useState<TreeNode | null>(null);
+
+  const [formMode, setFormMode] = useState(FORM_MODE.NONE);
+  const [treeData, setTreeData] = useState([]);
+  const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
+  const [lastCreatedMenuId, setLastCreatedMenuId] = useState<string | null>(null);
+  const [, setSkipConfirmation] = useState(false);
+  const { open: openModal, confirm: openConfirm, alert: openAlert } = useModal();
+  const prevDataRef = useRef<any>(null);
+  const router = useRouter();
+  const { showSaveComplete, showDeleteComplete, showUpdateComplete } = useModal();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { data } = useMenuTree(menuScope, 'ko');
+  const { data: detailData } = useMenuManageDetail(selectedNode?.menuId || '');
+
+  const { create: createMenu } = useCreateMenu({});
+  const { update: updateMenu } = useUpdateMenu({});
+  const { delete: deleteMenu } = useDeleteMenu({});
+  const { move: moveMenu } = useMoveMenu({});
+  const { checkExistsMenu } = useCheckExistsMenu({});
+
+  const queryClient = useQueryClient();
+
+  const duplicateCheck = async (code: string) => {
+    const result = await new Promise((resolve) => {
+      checkExistsMenu({ menuScopeCode: menuScope, menuCode: code }, { onSuccess: resolve });
+    });
+    if (result) return DuplicateState.duplicated;
+    return DuplicateState.ok;
+  };
+
+  const {
+    provider,
+    updateFormData,
+    onSubmit,
+    onFormChange,
+    clearFormError,
+    control,
+    getValues,
+    setFormError,
+  } = useDynamicForm(createFormConfig());
+  const typeWatch = useWatch({ control, name: 'deviceNames' });
+  const prevTypeWatchRef = useRef<string[]>([]);
+
+  const clearAllFormErrors = useCallback(() => {
+    createFormConfig().builders.forEach((item) => clearFormError(item.name));
+  }, [clearFormError]);
+
+  // const resetInputValidations = useCallback(() => {
+  //   clearAllFormErrors();
+  // }, [clearAllFormErrors]);
+
+  const hasFormChanges = () => {
+    const currentValues = getValues();
+
+    if (
+      (formMode === FORM_MODE.ADD || formMode === FORM_MODE.VIEW) &&
+      initialFromValuesRef.current
+    ) {
+      // 등록/수정 모드: 초기값과 현재값 비교
+      return !isEqual(initialFromValuesRef.current, currentValues);
+    }
+
+    return false;
+  };
+
+  // 외부에서 접근할 수 있도록 함수 노출
+  useImperativeHandle(ref, () => ({
+    hasFormChanges,
+    setSkipConfirmation,
+  }));
+
+  const initialFromValuesRef = useRef<any>(null);
+
+  const handleOnSubmit = (node: Record<string, any>) => {
+    const apiMappingKeys = [] as number[];
+    if (node?.apiMappingMenuList) {
+      node.apiMappingMenuList.forEach(({ i }: { i: ApiMappingMenuDetail }) => {
+        if (i.apiId) {
+          apiMappingKeys.push(i.apiId);
+        }
+      });
+    }
+    if (formMode === FORM_MODE.VIEW) {
+      const updateData = {
+        ...node,
+        menuCode: node.code && node.code.fieldValue,
+        menuId: selectedNode?.menuId,
+        isWebExposed: node.deviceNames && node.deviceNames.includes(DEVICE_NAME.PC),
+        isMobileExposed: node.deviceNames && node.deviceNames.includes(DEVICE_NAME.Mobile),
+        apiMappingMenuList: apiMappingKeys,
+        sortOrder: node.sortOrder,
+        menuScope,
+      };
+      update(updateData);
+    } else if (formMode === FORM_MODE.ADD) {
+      //
+      const createData = {
+        ...node,
+        menuCode: node.code && node.code.fieldValue,
+        parentId: parentNode?.menuId,
+        isWebExposed: node.deviceNames && node.deviceNames.includes(DEVICE_NAME.PC),
+        isMobileExposed: node.deviceNames && node.deviceNames.includes(DEVICE_NAME.Mobile),
+        apiMappingMenuList: apiMappingKeys,
+        sortOrder:
+          parentNode?.children && parentNode.children.length > 0
+            ? parentNode.children.length + 1
+            : 1,
+        menuScope,
+      };
+      create(createData);
+    }
+  };
+
+  useEffect(() => {
+    if (typeWatch && detailData && formMode !== FORM_MODE.NONE) {
+      const data = detailData as MenuDetail;
+      const { parentId } = data;
+
+      if (parentId !== null) {
+        if (typeWatch.length === 0 && prevTypeWatchRef.current.length > 0) {
+          openAlert({
+            content: t('LABEL.form.validation.selectAtLeastCount', { count: 1 }),
+          });
+          updateFormData({ ...getValues(), deviceNames: prevTypeWatchRef.current });
+        } else {
+          prevTypeWatchRef.current = typeWatch;
+        }
+      }
+    }
+  }, [typeWatch]);
+
+  useEffect(() => {
+    if (data) {
+      prevDataRef.current = data;
+
+      const transformedData = transformApiDataToTreeData(data, menuScope);
+      setTreeData(transformedData);
+
+      if (lastCreatedMenuId) {
+        // 새로 생성된 메뉴 노드 찾기
+        const newNode = findNodeByMenuId(transformedData, lastCreatedMenuId);
+        if (newNode) {
+          // 노드 경로 찾기 (부모 노드들의 키)
+          const nodePath = findNodePath(transformedData, lastCreatedMenuId);
+          if (nodePath) {
+            // 부모 노드들을 펼치기 위해 expandedKeys 업데이트
+            // 마지막 노드(새로 생성된 노드)는 제외하지 않고 모두 포함
+            setExpandedKeys((prev) => {
+              const combined = [...new Set([...prev, ...nodePath])];
+              return combined;
+            });
+            // 새 노드 선택
+            setSelectedNode(newNode);
+            setFormMode(FORM_MODE.VIEW);
+            // 처리 완료 후 ID 초기화
+            setLastCreatedMenuId(null);
+          }
+        }
+      }
+    }
+  }, [data, lastCreatedMenuId]);
+
+  useEffect(() => {
+    if (detailData && treeData) {
+      if (formMode === FORM_MODE.VIEW) {
+        const data = detailData as MenuDetail;
+        const deviceNames = [];
+        if (data.isWebExposed) deviceNames.push(DEVICE_NAME.PC);
+        if (data.isMobileExposed) deviceNames.push(DEVICE_NAME.Mobile);
+        const formData = {
+          ...data,
+          apiMappingMenuList: data?.apiMappingMenuList ?? [],
+          location: detailData.fullPath,
+          parentCode: data.parentName,
+          code: { fieldValue: data.menuCode, checkState: DuplicateState.okStart },
+          deviceNames,
+        };
+        updateFormData({ ...formData });
+        initialFromValuesRef.current = { ...formData };
+        prevTypeWatchRef.current = deviceNames;
+        setFormMode(FORM_MODE.VIEW);
+      }
+    }
+  }, [detailData, formMode]);
+
+  const handleSelectedNodeChange = async (node: TreeNode | null) => {
+    // if (!skipConfirmation && node !== selectedNode && hasFormChanges()) {
+    //   const shouldProceed = await openConfirm({
+    //     title: '저장하지 않고 이동',
+    //     content: '변경된 내용이 있습니다. 저장하지 않고 이동하시겠습니까?',
+    //   });
+
+    //   if (!shouldProceed) {
+    //     return; // 취소 시 현재 상태 유지
+    //   }
+    // }
+
+    // 모든 검증 에러 클리어
+    clearAllFormErrors();
+
+    setSelectedNode(node);
+    if (node) {
+      setFormMode(FORM_MODE.VIEW);
+    } else {
+      setFormMode(FORM_MODE.NONE);
+      initialFromValuesRef.current = null; // 폼 모드가 NONE이 될 때 초기값 클리어
+    }
+  };
+
+  const addNode = async (node: any) => {
+    // skipConfirmation이 true이거나 변경사항이 없는 경우 바로 진행
+    // if (!skipConfirmation && hasFormChanges()) {
+    //   const shouldProceed = await openConfirm({
+    //     title: '저장하지 않고 이동',
+    //     content: '변경된 내용이 있습니다. 저장하지 않고 이동하시겠습니까?',
+    //   });
+
+    //   if (!shouldProceed) {
+    //     return; // 취소 시 현재 상태 유지
+    //   }
+    // }
+
+    // 모든 검증 에러 클리어
+    clearAllFormErrors();
+
+    const initData: { [key: string]: any } = {};
+    createFormConfig().builders.forEach((item) => {
+      initData[item.name] = item.value;
+    });
+    setParentNode(node);
+    const location = findMenuPathById(treeData, node.menuId);
+    const addFormData = {
+      ...initData,
+      location,
+      // parentCode: node.menuCode,
+      parentCode: node.title,
+      deviceNames: ['PC'],
+    };
+
+    updateFormData(addFormData);
+
+    // 등록 모드에서 초기값 설정 (변경사항 감지를 위해)
+    initialFromValuesRef.current = { ...addFormData };
+
+    setFormMode(FORM_MODE.ADD);
+  };
+
+  const columns = [
+    columnHelper.accessor('apiName', {
+      cell: (info: CellContext<any, string>) => {
+        const rowData = info.row.original;
+        return (
+          <p
+            className="cursor-pointer underline"
+            onClick={() => {
+              openModal({
+                content: <ApiInfoModal apiId={rowData.apiUuid} />,
+                width: 's',
+                closeOnOutsideClick: true,
+              });
+            }}
+          >
+            {info.getValue()}
+          </p>
+        );
+      },
+      header: 'API',
+      // size: 490,
+      size: 400,
+      meta: { size: 'auto' },
+    }),
+    columnHelper.accessor('Delete', {
+      cell: (info) => {
+        return (
+          <Button
+            onClick={() => {
+              const rowData = info.row.original;
+              const currentApiList = getValues('apiMappingMenuList') || [];
+              const updatedApiList = currentApiList.filter(
+                (item: any) => item.apiId !== rowData.apiId,
+              );
+              updateFormData({ ...getValues(), apiMappingMenuList: updatedApiList });
+            }}
+            variant="gray2"
+            size={'xs'}
+            type={'button'}
+          >
+            {t('LABEL.button.delete')}
+          </Button>
+        );
+      },
+      header: t('LABEL.grid.header.remove'),
+      size: 100,
+      meta: {
+        // size: 'auto',
+        headerAlign: 'left', // 헤더만 가운데 정렬
+        cellAlign: 'center', // 셀은 오른쪽 정렬
+      },
+    }),
+  ] as ColumnDef<any, unknown>[];
+
+  const handleApiMapping = async () => {
+    const selectedApiKeys = getValues('apiMappingMenuList');
+    const keyArray =
+      selectedApiKeys && selectedApiKeys.map((item: TreeNode) => item.apiUuid.toString());
+
+    const selectApis = await openModal({
+      content: <MenuApiMappingModal menuScopeCode={menuScope} selectedApiKeys={keyArray} />,
+      width: 'xl',
+      height: 'fix',
+    });
+    updateFormData({ ...getValues(), apiMappingMenuList: [...selectApis] });
+  };
+
+  const update = (payload: any) => {
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+    openConfirm({
+      title: t('LABEL.confirm.modify.title'),
+      content: t('LABEL.confirm.modify.message'),
+      onClose: (value: boolean) => {
+        if (value) {
+          updateMenu(payload, {
+            onSuccess: async (data: any) => {
+              showUpdateComplete();
+              if (data && data.menuId) {
+                setSelectedNode(null);
+                setLastCreatedMenuId(data.menuId.toString());
+              }
+              setIsSubmitting(false);
+            },
+            onError: () => {
+              setIsSubmitting(false);
+            },
+          });
+        } else {
+          setIsSubmitting(false);
+        }
+      },
+    });
+  };
+
+  const create = (payload: any) => {
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+    openConfirm({
+      title: t('LABEL.confirm.save.title'),
+      content: t('LABEL.confirm.save.message'),
+      onClose: (value: boolean) => {
+        if (value) {
+          createMenu(payload, {
+            onSuccess: async (data: any) => {
+              showSaveComplete();
+              if (data && data.menuId) {
+                setLastCreatedMenuId(data.menuId.toString());
+              }
+              setIsSubmitting(false);
+            },
+            onError: () => {
+              setIsSubmitting(false);
+            },
+          });
+        } else {
+          setIsSubmitting(false);
+        }
+      },
+    });
+  };
+
+  const calculateSortOrder = (nodeInfo: any) => {
+    if (nodeInfo.position === 'INSIDE') {
+      // 타겟 노드의 자식으로 이동 - 항상 첫 번째 자식이 되도록
+      return 1;
+    }
+
+    const sourceNode = nodeInfo.sourceNode;
+    const targetNode = nodeInfo.targetNode;
+
+    if (!targetNode || !targetNode.sortOrder) {
+      // targetNode의 sortOrder가 없으면 targetIndex 기반으로 계산
+      return nodeInfo.position === 'BEFORE' ? nodeInfo.targetIndex + 1 : nodeInfo.targetIndex + 2;
+    }
+
+    // 같은 부모 내에서 이동하는 경우, 소스와 타겟의 sortOrder 관계를 고려
+    const sourceSortOrder = sourceNode.sortOrder || 0;
+    const targetSortOrder = targetNode.sortOrder;
+    const sameParent = sourceNode.parentKey === targetNode.parentKey;
+
+    if (nodeInfo.position === 'BEFORE') {
+      // 타겟 노드 앞에 삽입
+      if (sameParent && sourceSortOrder < targetSortOrder) {
+        // 낮은 순서 -> 높은 순서로 이동: 소스가 제거되므로 -1 보정
+        return targetSortOrder - 1;
+      }
+      return targetSortOrder;
+    } else {
+      // 타겟 노드 뒤에 삽입 (AFTER)
+      if (sameParent && sourceSortOrder < targetSortOrder) {
+        // 낮은 순서 -> 높은 순서로 이동: 소스가 제거되므로 보정 없이 타겟 순서 사용
+        return targetSortOrder;
+      }
+      return targetSortOrder + 1;
+    }
+  };
+
+  const handleTreeAction = (event: TreeEventPayload) => {
+    switch (event.type) {
+      case 'NODE_MOVE': {
+        const nodeInfo = event;
+        const sortOrder = calculateSortOrder(nodeInfo);
+
+        const payload = {
+          menuId: nodeInfo.sourceNode.menuId,
+          destinationParentId:
+            nodeInfo.position === 'INSIDE'
+              ? nodeInfo.targetNode?.menuId
+              : nodeInfo.targetNode?.parentKey,
+          sortOrder,
+          menuScopeCode: menuScope,
+        };
+
+        moveMenu(payload, {
+          onSuccess: async () => {
+            if (selectedNode?.menuId) {
+              await queryClient.invalidateQueries({
+                queryKey: [...queryKeys.detail(selectedNode.menuId)],
+              });
+            }
+          },
+        });
+
+        break;
+      }
+    }
+  };
+
+  const renderNodeButtons = (node: TreeNode, level: number) => (
+    <div className={'gap-10px flex'}>
+      <div className={'flex items-center'}>
+        <Button
+          onClick={async (e) => {
+            e.stopPropagation();
+            await addNode(node);
+          }}
+          variant="gray2"
+          size={'xs'}
+          type={'button'}
+          disabled={level >= 5}
+        >
+          {level === 0 ? t('LABEL.menu.add') : t('LABEL.menu.addSub')}
+        </Button>
+      </div>
+    </div>
+  );
+
+  const handleExpandChange = (keys: string[]) => {
+    setExpandedKeys(keys);
+  };
+
+  const handleReset = async () => {
+    const isReset = await openConfirm({
+      title: t('LABEL.confirm.reset.title'),
+    });
+    if (isReset) {
+      onFormChange();
+      if (FORM_MODE.ADD === formMode) {
+        updateFormData({ apiMappingMenuList: [] });
+      } else if (FORM_MODE.VIEW === formMode) {
+        if (initialFromValuesRef.current) updateFormData({ ...initialFromValuesRef.current });
+      }
+    }
+  };
+
+  const handleDelete = () => {
+    openConfirm({
+      title: t('LABEL.confirm.delete.title'),
+      content: t('LABEL.confirm.delete.message', { type: t('LABEL.common.code.menu') }),
+      onClose: (value: boolean) => {
+        const payload = {
+          menuId: selectedNode?.menuId,
+        };
+        if (value && payload) {
+          deleteMenu(payload, {
+            onSuccess: async () => {
+              showDeleteComplete();
+              setSelectedNode(null);
+              clearAllFormErrors();
+              const initData: { [key: string]: any } = {};
+              createFormConfig().builders.forEach((item) => {
+                initData[item.name] = item.value;
+              });
+              updateFormData({ ...initData });
+              setFormMode(FORM_MODE.NONE);
+            },
+          });
+        }
+      },
+    });
+  };
+
+  return (
+    <>
+      <TreeContainer>
+        <TreeBox
+          title={t('LABEL.menu.list')}
+          data={treeData}
+          treeId={'menu-tree'}
+          expandedKeys={expandedKeys}
+          onExpandedKeysChange={handleExpandChange}
+          renderNodeButtons={renderNodeButtons}
+          onAction={handleTreeAction}
+          type={'DRAG_DROP'}
+          selectedNode={selectedNode}
+          initLevel={1}
+          handleSelectedNodeChange={handleSelectedNodeChange}
+          maxDepth={5}
+          isSelectableNode={(node: TreeNode) => {
+            return node && node.level !== 0;
+          }}
+        />
+      </TreeContainer>
+      <div className={layoutStyles.inner}>
+        <form onSubmit={onSubmit(handleOnSubmit)}>
+          <div className={titleStyles.title_wrap}>
+            <h3 className={titleStyles.title}>{t('LABEL.menu.info')}</h3>
+            <div className={layoutStyles.btn_wrap}>
+              <Button
+                type="button"
+                variant="text"
+                size="sm"
+                onClick={handleReset}
+                disabled={formMode === FORM_MODE.NONE}
+                className={layoutStyles.btn_text}
+              >
+                {t('LABEL.button.reset')}
+              </Button>
+              <Button
+                variant="text"
+                size="sm"
+                disabled={formMode === FORM_MODE.NONE || formMode === FORM_MODE.ADD}
+                onClick={handleDelete}
+                className={layoutStyles.btn_text}
+                icon={<IcoMinus width={16} height={16} stroke={'#4C515E'} />}
+              >
+                {t('LABEL.button.delete')}
+              </Button>
+              <Button
+                type="submit"
+                variant="save"
+                size="sm"
+                disabled={formMode === FORM_MODE.NONE || isSubmitting}
+              >
+                {t('LABEL.button.save')}
+              </Button>
+            </div>
+          </div>
+          {/* 폼 필드 - location (비활성화 상태) */}
+
+          <div className={layoutStyles.inner_contents}>
+            <ContentsRow>
+              <FormRow
+                provider={provider}
+                name={'location'}
+                element={<Input disabled={true} hiddenPlaceholder={formMode === FORM_MODE.NONE} />}
+              />
+            </ContentsRow>
+
+            <ContentsRow>
+              <FormRow
+                provider={provider}
+                name={'parentCode'}
+                element={<Input disabled={true} hiddenPlaceholder={formMode === FORM_MODE.NONE} />}
+              />
+            </ContentsRow>
+
+            {/* 폼 필드 - code */}
+            <ContentsRow>
+              <FormRow
+                provider={provider}
+                name={'code'}
+                element={
+                  <DuplicateCheckInputFormField
+                    id="code"
+                    onDuplicationCheck={duplicateCheck}
+                    disabled={formMode === FORM_MODE.NONE}
+                    type={'alphanumeric'}
+                    hiddenPlaceholder={formMode === FORM_MODE.NONE}
+                    validation={{
+                      onError: (msg: string) => {
+                        setFormError('code', msg);
+                      },
+                      onSuccess: () => clearFormError('code'),
+                    }}
+                  />
+                }
+              />
+            </ContentsRow>
+
+            {/* 폼 필드 - title */}
+            <ContentsRow>
+              <FormRow
+                provider={provider}
+                name={'menuName'}
+                element={
+                  <Input
+                    disabled={formMode === FORM_MODE.NONE}
+                    hiddenPlaceholder={formMode === FORM_MODE.NONE}
+                  />
+                }
+              >
+                <Button
+                  type="button"
+                  variant="gray"
+                  size="sm"
+                  disabled={formMode !== FORM_MODE.VIEW}
+                  onClick={() => {
+                    const menuCode = getValues('menuCode');
+                    const menuName = getValues('menuName');
+                    router.navigate({
+                      to: '/platform/system/multilingual',
+                      state: {
+                        keyType: menuScope === 'FO' ? 'LEARNER_MENU' : 'HRD_CENTER_MENU',
+                        multilingualKey: menuCode,
+                        translation: menuName,
+                      },
+                    });
+                  }}
+                >
+                  {t('LABEL.button.multilingualManage')}{' '}
+                </Button>
+              </FormRow>
+            </ContentsRow>
+
+            {/* 폼 필드 - url */}
+            <ContentsRow>
+              <FormRow
+                provider={provider}
+                name={'path'}
+                element={
+                  <Input
+                    id="path"
+                    disabled={formMode === FORM_MODE.NONE}
+                    hiddenPlaceholder={formMode === FORM_MODE.NONE}
+                    type={'url'}
+                    validation={{
+                      onError: (msg) => setFormError('path', msg),
+                      onSuccess: () => clearFormError('path'),
+                    }}
+                  />
+                }
+              />
+            </ContentsRow>
+
+            {/* 폼 필드 - description */}
+            <ContentsRow>
+              <FormRow
+                provider={provider}
+                name={'menuDesc'}
+                element={
+                  <Textarea
+                    disabled={formMode === FORM_MODE.NONE}
+                    hiddenPlaceholder={formMode === FORM_MODE.NONE}
+                    inputType={'koreanPlus'}
+                  />
+                }
+              />
+            </ContentsRow>
+
+            <ContentsRow type={'horizontal'} className={'inactive'}>
+              <FormRow
+                provider={provider}
+                name={'isHiddenMenu'}
+                element={<SwitchFormField disabled={formMode === FORM_MODE.NONE} />}
+              />
+            </ContentsRow>
+
+            <ContentsRow>
+              <FormRow
+                provider={provider}
+                name={'deviceNames'}
+                element={<CheckboxGroupFormField disabled={formMode === FORM_MODE.NONE} />}
+              />
+            </ContentsRow>
+
+            <ContentsRow type={'horizontal'} className={'inactive'}>
+              <FormRow
+                provider={provider}
+                name={'isPersoninfoInclusion'}
+                element={<SwitchFormField disabled={formMode === FORM_MODE.NONE} />}
+              />
+            </ContentsRow>
+            <ContentsRow type={'horizontal'} className={'inactive'}>
+              <FormRow
+                provider={provider}
+                name={'isUsed'}
+                element={<SwitchFormField disabled={formMode === FORM_MODE.NONE} />}
+              />
+            </ContentsRow>
+            <ContentsRow>
+              <FormRow
+                provider={provider}
+                name={'apiMappingMenuList'}
+                element={
+                  <GridBox
+                    data={getValues('apiMappingMenuList') || []}
+                    columns={columns}
+                    showTotalCount={true}
+                    title={t('API')}
+                    clientSideSorting={true}
+                    customButtonNode={
+                      <Button
+                        variant="text"
+                        onClick={() => handleApiMapping()}
+                        disabled={formMode === FORM_MODE.NONE}
+                        className={layoutStyles.btn_text}
+                        icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
+                      >
+                        {t('LABEL.grid.header.add')}
+                      </Button>
+                    }
+                  />
+                }
+              />
+            </ContentsRow>
+          </div>
+        </form>
+      </div>
+    </>
+  );
+});
+
+const createFormConfig = (): DynamicFormConfig => ({
+  builders: [
+    {
+      name: 'location',
+      type: 'text',
+      label: t('LABEL.menu.location'),
+      value: '',
+    },
+    {
+      label: t('LABEL.menu.parentName'),
+      name: 'parentCode',
+      type: 'text',
+      value: '',
+    },
+    {
+      label: t('LABEL.menu.code'),
+      name: 'code',
+      type: 'custom',
+      format: 'object',
+      maxLength: 150,
+      value: { fieldValue: '', checkState: DuplicateState.needInput },
+    },
+    {
+      label: t('LABEL.menu.name'),
+      name: 'menuName',
+      type: 'text',
+      maxLength: 10,
+      value: '',
+    },
+    {
+      label: t('LABEL.menu.url'),
+      name: 'path',
+      type: 'text',
+      maxLength: 50,
+      value: '',
+    },
+    {
+      label: t('LABEL.menu.personalInfo'),
+      tooltip: t('LABEL.menu.personalInfoTooltip'),
+      name: 'isPersoninfoInclusion',
+      type: 'switch',
+      switchConfig: {
+        label: (value: boolean) =>
+          value ? t('LABEL.menu.personalInfo') : t('LABEL.menu.personalInfoNotIncluded'),
+      },
+      value: false,
+    },
+    {
+      label: t('LABEL.menu.hide'),
+      tooltip: t('LABEL.menu.hideTooltip'),
+      name: 'isHiddenMenu',
+      type: 'switch',
+      switchConfig: {
+        label: (value: boolean) => (value ? t('LABEL.common.enable') : t('LABEL.common.disable')),
+      },
+      value: false,
+    },
+    {
+      label: t('LABEL.menu.description'),
+      name: 'menuDesc',
+      type: 'textarea',
+      maxLength: 100,
+      value: '',
+    },
+
+    {
+      name: 'deviceNames',
+      type: 'checkbox-group',
+      label: t('LABEL.menu.device'),
+      format: 'array',
+      value: [],
+      options: [
+        {
+          value: DEVICE_NAME.PC,
+          label: t('LABEL.menu.pc'),
+        },
+        {
+          value: DEVICE_NAME.Mobile,
+          label: t('LABEL.menu.mobile'),
+        },
+      ],
+    },
+
+    {
+      name: 'isUsed',
+      type: 'switch',
+      label: t('사용 여부'),
+      value: true,
+      switchConfig: {
+        label: (value: boolean) => (value ? t('LABEL.common.enable') : t('LABEL.common.disable')),
+      },
+    },
+    {
+      name: 'apiMappingMenuList',
+      type: 'custom',
+      format: 'array',
+      value: [],
+    },
+  ],
+  validator: {
+    code: {
+      format: 'object',
+      required: true,
+      conditions: [
+        {
+          fn: (values) => {
+            const fieldValue = values.code.fieldValue;
+            if (fieldValue === '') return true;
+            return false;
+          },
+          message: t('LABEL.form.validation.needInput', { code: t('LABEL.cdId') }),
+        },
+        {
+          fn: (values: Record<string, any>) =>
+            values.code.checkState === DuplicateState.check ||
+            values.code.checkState === DuplicateState.needInput,
+          message: t('LABEL.form.validation.check', { code: t('LABEL.cdId') }),
+        },
+        {
+          fn: (values: Record<string, any>) => values.code.checkState === DuplicateState.duplicated,
+          message: t('LABEL.form.validation.duplicated', { code: t('LABEL.cdId') }),
+        },
+      ],
+    },
+    menuName: {
+      required: true,
+    },
+    // path: {
+    //   required: true,
+    // },
+    deviceNames: {
+      required: {
+        fn: (values) => {
+          return !values.isMobileExposed && !values.isWebExposed;
+        },
+        message: t('LABEL.form.validation.selectAtLeastCount', { count: 1 }),
+      },
+    },
+  },
+});

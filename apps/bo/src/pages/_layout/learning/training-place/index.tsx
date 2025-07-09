@@ -4,7 +4,7 @@ import { Button } from '@learnway/ui';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { TrainingPlaceList } from '@features/learning/training-place/training-place-list';
+import { TrainingPlaceList } from '@features/learning-operate-support/learning-space/learning-space-management/training-place-list';
 import { EnPageMode } from '@types';
 
 export const Route = createFileRoute('/_layout/learning/training-place/')({

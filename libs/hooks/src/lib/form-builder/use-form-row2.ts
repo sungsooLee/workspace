@@ -109,7 +109,8 @@ export const useFormRow2 = (
       errorMessage = message;
 
       if (errorMessage.indexOf('{{label}}') > -1 && formConfig.label) {
-        errorMessage = errorMessage.replace('{{label}}', t(formConfig.label));
+        const labelText = typeof formConfig.label === 'function' ? formConfig.label() : formConfig.label;
+        errorMessage = errorMessage.replace('{{label}}', t(labelText));
       }
     }
     setError({

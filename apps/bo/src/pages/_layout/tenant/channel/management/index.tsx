@@ -19,7 +19,7 @@ import {
 } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
-import { ChannelRequestChoiceModal } from '@features/shared';
+import { ChannelRequestChoiceModal } from '@shared/ui';
 import { useModal } from '@learnway/ui';
 
 import { queryOptions } from '@entities/channel/service/channel.queries';

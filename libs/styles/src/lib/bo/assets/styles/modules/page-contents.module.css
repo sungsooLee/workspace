@@ -4,6 +4,20 @@
   [role='tablist']:first-child {
     @apply mb-[32px];
   }
+  /* & > [class*='nlp--tabs'] {
+    @apply flex h-full flex-col;
+    & > [role='tablist'] {
+      @apply shrink-0;
+    }
+    div {
+      &[data-state='active'] {
+        @apply h-full flex-1;
+        & > div:not([class*='divider']) {
+          @apply h-full;
+        }
+      }
+    }
+  } */
 }
 .sub_contents {
   @apply relative ml-[32px] box-border min-w-[448px] shrink-0 pl-[32px];

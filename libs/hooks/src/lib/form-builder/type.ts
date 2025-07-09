@@ -31,7 +31,7 @@ export type BaseFormFieldConfigProps<T = string> = {
   /** 필드의 이름 (고유 값) */
   name: string;
   /** 필드의 레이블 (화면에 표시될 이름) */
-  label?: string;
+  label?: string | (() => string);
   /** 필드 설명 (추가 정보 제공) */
   description?: string;
   /** 필드의 입력란에 표시될 플레이스홀더 */
@@ -382,12 +382,12 @@ export interface FormRowProps {
  */
 export type OnValidCallback = (params: Record<string, any>) => void;
 
-export type ApiCallback<T> = (response: any) => SelectOption[];
+export type ApiCallback<T> = (response: T) => SelectOption[];
 /**
  * 동적으로 옵션을 생성할 때 사용하는 설정.
  * @template T - API 응답 데이터의 타입.
  */
-export interface OptionsConfig<T = any> {
+export interface OptionsConfig {
   codeGroup?: CODE_GROUP_TYPE; // 옵션을 가져오기 위한 코드 그룹.
   options?: SelectOption[]; // 미리 정의된 정적 옵션
   api?: ApiProps; // 옵션을 가져오기 위한 API.

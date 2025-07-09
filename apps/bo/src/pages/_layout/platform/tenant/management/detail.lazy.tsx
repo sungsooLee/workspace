@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
 
@@ -11,13 +11,10 @@ import { Tabs, Button } from '@learnway/ui';
 /* tab contents */
 import {
   TenantDetailLearningRole,
-  TenantDetailBanner,
-  TenantDetailWidget,
-  TenantDetailAttribute,
   TenantDetailCategory,
   TenantDetailMenu,
   TenantDetailBase,
-} from '@features/tenant';
+} from '@features/platform-management/tenant';
 
 import { EnTenantDetailTabKey } from '@types';
 
@@ -58,7 +55,7 @@ function RouteComponent() {
   const handleListButtonClick = () => {
     const listParam = routerState.location.state?.listParam;
 
-    router.navigate({ to: '/platform/tenant/management', state: { listParam: listParam } });
+    router.navigate({ to: '/platform/tenant/management', state: { listParam } });
   };
 
   const handleModifyButtonClick = () => {
@@ -124,41 +121,41 @@ function RouteComponent() {
       key: EnTenantDetailTabKey.base,
       content: <TenantDetailBase ref={formBaseRef} roleInfo={'PLATFORM'} />,
     },
+    // {
+    //   title: '테넌트 속성 관리',
+    //   key: EnTenantDetailTabKey.attribute,
+    //   content: <TenantDetailAttribute ref={formAttrRef} roleInfo={'PLATFORM'} />,
+    // },
     {
-      title: '테넌트 속성 관리',
-      key: EnTenantDetailTabKey.attribute,
-      content: <TenantDetailAttribute ref={formAttrRef} roleInfo={'PLATFORM'} />,
-    },
-    {
-      title: '테넌트 메뉴관리 매핑',
+      title: '테넌트 메뉴 매핑',
       key: EnTenantDetailTabKey.menu,
       content: <TenantDetailMenu ref={menuRef} roleInfo={'PLATFORM'} />,
     },
     {
-      title: '테넌트 카테고리 관리',
+      title: '테넌트 카테고리 매핑',
       key: EnTenantDetailTabKey.category,
       content: <TenantDetailCategory roleInfo={'PLATFORM'} />,
     },
     {
-      title: '테넌트 역할 관리',
+      title: '테넌트 역할 생성',
       key: EnTenantDetailTabKey.learningRole,
       content: <TenantDetailLearningRole roleInfo={'PLATFORM'} />,
     },
-    {
-      title: '테넌트 위젯 관리',
-      key: EnTenantDetailTabKey.widget,
-      content: <TenantDetailWidget roleInfo={'PLATFORM'} />,
-    },
-    {
-      title: '테넌트 배너 관리',
-      key: EnTenantDetailTabKey.banner,
-      content: <TenantDetailBanner roleInfo={'PLATFORM'} />,
-    },
-    {
-      title: '테넌트 디자인/테마 관리',
-      key: EnTenantDetailTabKey.theme,
-      content: '테넌트 디자인/테마 관리',
-    },
+    // {
+    //   title: '테넌트 위젯 관리',
+    //   key: EnTenantDetailTabKey.widget,
+    //   content: <TenantDetailWidget roleInfo={'PLATFORM'} />,
+    // },
+    // {
+    //   title: '테넌트 배너 관리',
+    //   key: EnTenantDetailTabKey.banner,
+    //   content: <TenantDetailBanner roleInfo={'PLATFORM'} />,
+    // },
+    // {
+    //   title: '테넌트 디자인/테마 관리',
+    //   key: EnTenantDetailTabKey.theme,
+    //   content: '테넌트 디자인/테마 관리',
+    // },
   ];
   return (
     <PageContainer>
@@ -185,11 +182,11 @@ function RouteComponent() {
         />
 
         <Button
-          variant="point"
+          variant="primary"
           size="sm"
           onClick={handleModifyButtonClick}
           disabled={!buttonShowTabs.includes(selectedTabKey)}
-          label={t('수정')}
+          label={t('저장')}
         />
       </ContentsButtons>
       <MainContents>

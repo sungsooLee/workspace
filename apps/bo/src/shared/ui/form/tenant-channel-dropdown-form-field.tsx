@@ -4,6 +4,7 @@ import { DropdownFormField } from '../../../features/form/ui/dropdown-form-field
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { AuthUser, RoleInfo } from '@learnway/auth/types';
 import { BaseFormFieldProps } from '@learnway/hooks';
+import { useFetchChannelByRoleId } from '@entities/channel/service/channel.hook';
 
 interface TenantChannelDropdownFormFieldProps extends BaseFormFieldProps<boolean> {
   tenantId: number;
@@ -13,26 +14,38 @@ const TenantChannelDropdownFormFieldComponent = forwardRef<
   HTMLDivElement,
   TenantChannelDropdownFormFieldProps
 >(({ value, onChange, tenantId, ...props }, ref) => {
-  const { data: { myRoles } = {} } = useFetchAuthUser<AuthUser>();
+  const { data } = useFetchAuthUser<AuthUser>();
+  const { data: channel } = useFetchChannelByRoleId(data?.activeRole?.roleId as number);
 
+  // myRole 데이터
+  // const options = useMemo(() => {
+  //   return data?.myRoles
+  //     ?.filter((d: RoleInfo) => d.tenantId === tenantId) // 테넌트 필터
+  //     ?.map((d: RoleInfo) => d.channels) // 채널만 추출
+  //     ?.flat() // 2차원 배열을 1차원 배열로
+  //     ?.map(({ uuid, name }: any) => ({
+  //       // 옵션 형식으로 변환
+  //       label: name,
+  //       value: uuid,
+  //     }));
+  // }, [data?.myRoles, tenantId]);
+
+  // 채널조회 데이터
   const options = useMemo(() => {
-    return myRoles
-      ?.filter((d: RoleInfo) => d.tenantId === tenantId) // 테넌트 필터
-      ?.map((d: RoleInfo) => d.channels) // 채널만 추출
-      ?.flat() // 2차원 배열을 1차원 배열로
-      ?.map(({ uuid, name }: any) => ({
+    return channel?.content
+      ?.filter((d) => !!d.tenantList.find((t) => t.tenantId === tenantId)) // 테넌트 필터
+      ?.map(({ channelName, channelUuid }) => ({
         // 옵션 형식으로 변환
-        label: name,
-        value: uuid,
+        label: channelName,
+        value: channelUuid,
       }));
-  }, [myRoles, tenantId]);
+  }, [channel, tenantId]);
 
-  console.log('TenantChannelDropdownFormFieldComponent => ', { options, tenantId });
   return (
     <DropdownFormField
       {...props}
       options={options}
-      value={value}
+      value={tenantId ? value : ''}
       presetOptionLabel={t('LABEL.form.label.select')}
       onChange={onChange}
     />

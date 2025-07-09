@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Editor } from '@learnway/editor';
+import { Editor } from '@learnway/ui';
 
 export default {
   title: 'Components/Editor',
@@ -15,7 +15,7 @@ const BaseEditorWrapper: React.FC<any> = (args) => {
   return (
     <div>
       <h1>Lexical Editor</h1>
-      <Editor />
+      <Editor value={{}} />
     </div>
   );
 };

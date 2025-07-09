@@ -7,6 +7,7 @@ export { ReactComponent as IcoStar } from './lib/ic_star.svg'; // 20*20 Star fil
 export { ReactComponent as IcoStar02 } from './lib/ic_star02.svg'; // Star line
 export { ReactComponent as IcoGridFilter } from './lib/ic_grid_filter.svg'; // 16*16 grid filter
 export { ReactComponent as IcoDownload } from './lib/ic_download.svg'; // 16*16 grid download
+export { ReactComponent as IcoDownload02 } from './lib/ic_download02.svg';
 export { ReactComponent as IcoMinus } from './lib/ic_minus.svg'; // 16*16 grid download
 export { ReactComponent as IcoPlus } from './lib/ic_plus.svg'; // 16*16 grid download
 export { ReactComponent as IcoSetting } from './lib/ic_setting.svg'; // 16*16 grid download
@@ -154,6 +155,7 @@ export { ReactComponent as IcoClock10Forward } from './lib/ic_clock_10_forward.s
 export { ReactComponent as IcoBackward } from './lib/ic_backward.svg';
 export { ReactComponent as IcoList } from './lib/ic_list.svg';
 export { ReactComponent as IcoAvatar } from './lib/ic_avatar.svg';
+export { ReactComponent as IcoAvatar02 } from './lib/ic_avatar_02.svg';
 export { ReactComponent as IcoSymbol } from './lib/ic_symbol.svg';
 export { ReactComponent as IcoFilePng } from './lib/ic_file_png.svg';
 export { ReactComponent as IcoBook } from './lib/ic_book.svg';
@@ -165,6 +167,12 @@ export { ReactComponent as IcoLocation } from './lib/ic_location.svg';
 export { ReactComponent as IcoPrize } from './lib/ic_prize.svg';
 export { ReactComponent as IcoSubtitles02 } from './lib/ic_subtitles_02.svg';
 export { ReactComponent as IcoTime } from './lib/ic_time.svg';
+export { ReactComponent as IcoPdf } from './lib/ic_pdf.svg';
+export { ReactComponent as IcoLock } from './lib/ic_lock.svg';
+export { ReactComponent as IcoEssential } from './lib/ic_essential.svg';
+export { ReactComponent as IcoTeacher } from './lib/ic_teacher.svg';
+export { ReactComponent as IcoMoney } from './lib/ic_money.svg';
+export { ReactComponent as IcoChair } from './lib/ic_chair.svg';
 //export Default as Information from './lib/information.svg?react';
 
 //import Information from './lib/information.svg';

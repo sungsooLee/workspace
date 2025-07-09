@@ -38,7 +38,7 @@ export interface InputProps extends Omit<NumericFormatProps, 'type'> {
   searchIconType?: 'modal' | 'search'; // 아이콘 타입 선택
   onEnterKeyDown?: () => void; // 엔터 키 입력 callback, 검색 아이콘 클릭 했을때 해당 callback 호출
   onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
-  label?: string;
+  label?: string | (() => string);
   hiddenPlaceholder?: boolean;
   validation?: InputValidationConfig; // 검증 관련 설정
 }
@@ -83,8 +83,10 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
     const placeholderText = useMemo(() => {
       if (hiddenPlaceholder) return '';
       if (placeholder) return t(placeholder);
-      if (props && props.label)
-        return `${t(props.label as any)} ${t('LABEL.form.input.placeholder')}`;
+      if (props && props.label) {
+        const labelText = typeof props.label === 'function' ? props.label() : props.label;
+        return `${t(labelText)} ${t('LABEL.form.input.placeholder')}`;
+      }
       return t('LABEL.form.input.placeholder');
     }, [placeholder, props?.label, hiddenPlaceholder]);
 
@@ -124,6 +126,11 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
     // 검증이 필요한 타입의 입력 처리
     const handleValidatedChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const inputValue = event.target.value;
+
+      // maxLength 체크
+      if (maxLength && inputValue.length > maxLength) {
+        return;
+      }
 
       if (validateInput(inputValue)) {
         if (hasValidationError) setHasValidationError(false);
@@ -314,7 +321,13 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               event.preventDefault();
               event.stopPropagation();
-              handleInputChange(event?.target?.value);
+
+              const inputValue = event?.target?.value || '';
+              if (maxLength && inputValue.length > maxLength) {
+                return;
+              }
+
+              handleInputChange(inputValue);
             }}
             maxLength={maxLength}
           />
@@ -345,8 +358,10 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
               type === 'alphanumeric' ||
               type === 'url') && (
               <div className={styles.count}>
-                <span className={styles.current}>{(value?.toString() || '').length}</span> /{' '}
-                {maxLength}
+                <span className={styles.current}>
+                  {Math.min((value?.toString() || '').length, maxLength)}
+                </span>{' '}
+                / {maxLength}
               </div>
             )}
           {/* 아이콘 (돋보기, 검색) */}

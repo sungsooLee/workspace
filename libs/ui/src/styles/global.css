@@ -1,5 +1,5 @@
 @import '../../../config/src/lib/style/theme.css';
-@import './fonts/font.css';
+@import '../../../config/src/lib/style/font.css';
 
 @tailwind base;
 @tailwind components;

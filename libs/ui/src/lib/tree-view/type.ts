@@ -226,6 +226,7 @@ export interface DropInfo {
  */
 export interface TreeBoxProps extends Omit<TreeProps, 'expandedKeys' | 'onExpandedKeysChange'> {
   showSearchKeyword?: boolean;
+  showSearchLabel?: string;
   initLevel?: number;
   closeLevel?: number;
   title?: string;

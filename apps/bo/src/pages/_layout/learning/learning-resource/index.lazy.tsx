@@ -4,7 +4,7 @@ import { Button } from '@learnway/ui';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { LearningResourceTable } from '@features/learning/ui/learning-resource';
+import { LearningResourceTable } from '@features/learning-resource';
 
 export const Route = createLazyFileRoute('/_layout/learning/learning-resource/')({
   component: RouteComponent,

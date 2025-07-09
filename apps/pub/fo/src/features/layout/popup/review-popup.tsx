@@ -1,5 +1,4 @@
 import { memo, useState } from 'react';
-import { cn } from '@learnway/shared';
 import {
   ModalBody,
   ModalContainer,
@@ -23,39 +22,24 @@ const ReviewPopupComponent = () => {
     setRating(newStates);
   };
 
+  // textarea
+  const [reviewValue, setReviewValue] = useState<string>('Text');
+  const handleReviewValueChange = (value: string) => {
+    setReviewValue(value);
+  };
+
   return (
     <ModalContainer>
-      <ModalTitle>{'후기 작성'}</ModalTitle>
+      <ModalTitle>{'후기'}</ModalTitle>
       <ModalBody>
         <div className={`${styles.start} ${styles.review_wrap}`}>
-          <div className={styles.information_box}>
-            <div className={styles.information}>
-              <span>학습 중</span>
-              <span>입문</span>
-              <span>라이브</span>
-              <span>사내/사외</span>
-              <span>근무시간내</span>
-              <span>Pc/Mobile</span>
-            </div>
-            <div className={styles.tit_box}>
-              <strong>필수 개발 과정 Spring Framework를 활용한 OpenAPI 서비스 개발</strong>
-            </div>
-            <div className={styles.date_box}>
-              <span>학습기간</span>
-              <span>2025-03-01 ~ 2025-03-31</span>
-            </div>
-          </div>
-
           <div className={styles.info_box}>
-            <div className={styles.tit_box}>
-              <strong>학습만족도</strong>
-            </div>
             <div className={styles.rating_box}>
               <p>학습은 어떠셨나요? 별점을 선택해 주세요.</p>
               <div className={styles.rating}>
                 {rating.map((isActive, index) => (
                   <Button key={index} onClick={() => ratingHandleClick(index)}>
-                    <IcoStar width={40} height={40} fill={isActive ? '#ffb902' : '#d6dae1'} />
+                    <IcoStar width={40} height={40} fill={isActive ? '#0056ff' : '#b7bbc3'} />
                   </Button>
                 ))}
               </div>
@@ -74,6 +58,10 @@ const ReviewPopupComponent = () => {
                       id="textarea"
                       resize="none"
                       placeholder=""
+                      value={reviewValue}
+                      onChange={(e) => handleReviewValueChange(e.target.value)}
+                      size="md"
+                      maxLength={100}
                       className={formStyles.textarea}
                     />
                   </div>
@@ -94,8 +82,8 @@ const ReviewPopupComponent = () => {
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button label={'취소'} variant="gray" size="lg"></Button>
-        <Button label={'확인'} variant={'primary'} size={'lg'}></Button>
+        <Button label={'취소'} variant="gray" size="xl2"></Button>
+        <Button label={'확인'} variant={'primary'} size={'xl2'}></Button>
       </ModalFooter>
     </ModalContainer>
   );

@@ -5,14 +5,18 @@ import {
   BlogCreateReq,
   BlogUpdateReq,
   BlogWatchLogReq,
+  CourseMappingStatusRes,
   GetContentDetailRes,
   PostDraftVideosParams,
   PostDraftVideosRes,
 } from '@types';
 
 export default class LearningResourceService {
-  static fetchChannelsByTenantId(tenantId: string | number): Promise<any> {
-    const params = { page: 0, size: 2000, tenantId };
+  static fetchChannelsByTenantId(param: {
+    tenantId: string | number;
+    channelName?: string;
+  }): Promise<any> {
+    const params = { page: 0, size: 2000, ...param };
     return httpService.get(`${PMSApiPrefix()}/channel`, params);
   }
 
@@ -26,6 +30,14 @@ export default class LearningResourceService {
 
   static fetchContent(contentUuid: string): Promise<GetContentDetailRes> {
     return httpService.get(`${CMSApiPrefix()}/content/${contentUuid}`);
+  }
+
+  static fetchCurriculumMapping(contentUuid: string): Promise<boolean> {
+    return httpService.get(`${CMSApiPrefix()}/content/curriculum-mapping/${contentUuid}`);
+  }
+
+  static fetchCourseMapping(contentUuid: string): Promise<CourseMappingStatusRes> {
+    return httpService.get(`${CMSApiPrefix()}/content/course-mapping/${contentUuid}`);
   }
 
   static postDraftVideos(params: PostDraftVideosParams): Promise<PostDraftVideosRes> {

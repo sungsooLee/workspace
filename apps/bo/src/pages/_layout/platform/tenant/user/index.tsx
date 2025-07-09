@@ -9,7 +9,10 @@ import { Tabs, Button } from '@learnway/ui';
 
 import { useFetchAuthUser } from '@learnway/auth/entities';
 
-import { TenantUserList, TenantUserRegistApplicationList } from '@features/tenant';
+import {
+  TenantUserList,
+  TenantUserRegistApplicationList,
+} from '@features/platform-management/tenant';
 
 import { tenantQueryOptions } from '@entities/tenant';
 
@@ -66,7 +69,7 @@ function RouteComponent() {
   ];
 
   return (
-    <PageContainer>
+    <PageContainer hideOutLine={true}>
       <ContentsButtons>
         <Button
           label={t('LABEL.button.regist')}
@@ -76,7 +79,7 @@ function RouteComponent() {
             if (companyCodes && companyCodes.length > 0) {
               router.navigate({
                 to: '/platform/tenant/user/user-regist',
-                state: { companyCodes: companyCodes },
+                state: { companyCodes },
               });
             }
           }}
@@ -87,6 +90,7 @@ function RouteComponent() {
           items={tabItems}
           type="fill"
           size="sm"
+          showContentBorder
           selectedTabKey={selectedTabKey}
           onTabChange={handleTabChange}
         />

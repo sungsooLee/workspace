@@ -4,7 +4,6 @@ import { createFileRoute } from '@tanstack/react-router';
 import {
   Button,
   ChipListModalSelectorFormField,
-  DynamicFormField,
   Input,
   InputModalSelectorFormField,
 } from '@learnway/ui';
@@ -15,7 +14,10 @@ import { SubContents } from '@widgets/layout/ui/container/slot/sub-contents';
 import { ContentsRow } from '@widgets/layout/ui/container/parts/contents-row';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { FormRow } from '@shared/ui';
-import { ManagerListModal, TeacherListModal } from '@features/learning/course';
+import {
+  ManagerListModal,
+  TeacherListModal,
+} from '@features/learning-operate/course/course-management';
 
 export const Route = createFileRoute('/_layout/learning/')({
   component: RouteComponent,
