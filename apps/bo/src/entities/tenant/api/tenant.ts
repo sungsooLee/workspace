@@ -11,7 +11,8 @@ export default class TenantService {
 
   static updateTenant(payload: any) {
     const tenantId = payload.tenantId;
-    return httpService.put<Tenant>(`${PMSApiPrefix()}/tenants/${tenantId}`, payload);
+    const reqBody = genTenantUpdate(payload);
+    return httpService.put<Tenant>(`${PMSApiPrefix()}/tenants/${tenantId}`, reqBody);
   }
 
   static deleteTenant(tenantId: number) {
@@ -62,5 +63,60 @@ function genTenantCreate(payload: any) {
     langCountryCodeTypeList: payload.langCountryCodeTypeList,
     fileStorageTypeChannelList: payload.fileStorageTypeChannelList,
     fileStorageTypeBase: payload.fileStorageTypeBase,
+    flatformProperties: {
+      isUseEnrollOption: payload.isEnrollOption,
+      isUseTextBookOption: payload.isTextBookOption,
+      isUseInstructorOption: payload.isInstructorOption,
+      isUsePassOption: payload.isPassOption,
+      isUseCommunicationOption: payload.isCommunicationOption,
+      isUseLearningEnvOption: payload.isLearningEnvOption,
+      isUseLearningControlOption: payload.isLearningControlOption,
+      isUseRelatedCourseOption: payload.isRelatedCourseOption,
+      isUseAdminDataOption: payload.isAdminDataOption,
+      isUseCarTenantCustomOption: payload.isCarTenantCustomOption,
+      isUseRotemTenantCustomOption: payload.isRotemTenantCustomOption,
+      isUseOutsourcingTenantCustomOption: payload.isOutsourcingTenantCustomOption,
+      isUseWiaTenantCustomOption: payload.isWiaTenantCustomOption,
+      isUseAutoeverTenantCustomOption: payload.isAutoeverTenantCustomOption
+    },
+  };
+}
+
+function genTenantUpdate(payload: any) {
+  return {
+    tenantId: payload.tenantId,
+    tenantName: payload.tenantName,
+    logoImageUrl: payload.logoImageUrl,
+    tenantUserList: payload.tenantUserList,
+    tenantTagList: payload.tenantTagList,
+    companyTenantList: payload.companyTenantList,
+    isSecurityPledge: payload.isSecurityPledge,
+    isUsed: payload.isUsed,
+    tenantDesc: payload.tenantDesc,
+    isPc: payload.isPc,
+    isMobile: payload.isMobile,
+    isApp: payload.isApp,
+    isCommonCategory: payload.isCommonCategory,
+    isTenantCategory: payload.isTenantCategory,
+    langCountryCodeTypeList: payload.langCountryCodeTypeList,
+    fileStorageTypeChannelList: payload.fileStorageTypeChannelList,
+    fileStorageTypeBase: payload.fileStorageTypeBase,
+    flatformProperties: {
+      tenantId: payload.tenantId,
+      isUseEnrollOption: payload.isEnrollOption,
+      isUseTextBookOption: payload.isTextBookOption,
+      isUseInstructorOption: payload.isInstructorOption,
+      isUsePassOption: payload.isPassOption,
+      isUseCommunicationOption: payload.isCommunicationOption,
+      isUseLearningEnvOption: payload.isLearningEnvOption,
+      isUseLearningControlOption: payload.isLearningControlOption,
+      isUseRelatedCourseOption: payload.isRelatedCourseOption,
+      isUseAdminDataOption: payload.isAdminDataOption,
+      isUseCarTenantCustomOption: payload.isCarTenantCustomOption,
+      isUseRotemTenantCustomOption: payload.isRotemTenantCustomOption,
+      isUseOutsourcingTenantCustomOption: payload.isOutsourcingTenantCustomOption,
+      isUseWiaTenantCustomOption: payload.isWiaTenantCustomOption,
+      isUseAutoeverTenantCustomOption: payload.isAutoeverTenantCustomOption
+    },
   };
 }

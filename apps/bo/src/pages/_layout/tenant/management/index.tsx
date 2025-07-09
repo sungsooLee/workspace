@@ -12,7 +12,7 @@ function RouteComponent() {
   return (
     <PageContainer>
       <MainContents>
-        <TenantManagmentList rootPath="/" />
+        <TenantManagmentList rootPath="/" roleInfo={'TENANT'}/>
       </MainContents>
     </PageContainer>
   );

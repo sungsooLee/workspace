@@ -76,7 +76,7 @@ const DynamicFormContainer: FC<FormRowProps> = ({
   const { guideText, infoArea, onChangeInfoArea, onChangeGuideText } = useDynamicFormContext();
   const FormConfigComponent = formFieldConfig[formConfig.type as keyof typeof formFieldConfig];
 
-  const calculatedLabel = useMemo(() => {
+  const calculatedLabel = useMemo((): string => {
     if (!formConfig.label) return '';
 
     if (typeof formConfig.label === 'function') {
