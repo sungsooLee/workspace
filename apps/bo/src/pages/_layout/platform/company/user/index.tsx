@@ -1,15 +1,18 @@
 import { useEffect, useCallback } from 'react';
+import { useWatch } from 'react-hook-form';
 import { t } from 'i18next';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { Button, Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
+import { useQueryClient } from '@tanstack/react-query';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 import { formUtils } from '@entities/form-utils';
+import { EnGlobalConst } from '@types';
+import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
 
 export const Route = createFileRoute('/_layout/platform/company/user/')({
   component: RouteComponent,
@@ -17,9 +20,12 @@ export const Route = createFileRoute('/_layout/platform/company/user/')({
 
 function RouteComponent() {
   const router = useRouter();
+  const queryClient = useQueryClient();
 
-  const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
+  const { provider: searchProvider, getValues, setValue, setOptions } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
+
+  const tenantIdWatch = useWatch({ control: searchProvider.control, name: 'tenantId' });
 
   useEffect(() => {
     gridFetch();
@@ -29,6 +35,24 @@ function RouteComponent() {
     console.log('search', data);
     gridFetch(data);
   }, []);
+
+  useEffect(() => {
+    setValue('companyId', '');
+    if (tenantIdWatch) {
+      (async () => {
+        const companys = await queryClient.fetchQuery(
+          companysQueryOptions.tenantCompany(tenantIdWatch),
+        );
+        const companyIdOptions = companys.map((item) => ({
+          label: item.name,
+          value: item.companyId,
+        }));
+        setOptions('companyId', companyIdOptions);
+      })();
+    } else {
+      setOptions('companyId', []);
+    }
+  }, [tenantIdWatch]);
 
   return (
     <PageContainer>
@@ -50,43 +74,20 @@ const searchConfig: SearchBoxConfig = {
         type: 'dropdown',
         format: 'number',
         label: t('테넌트'),
-        value: undefined,
+        value: '',
         optionsConfig: {
           codeGroup: CODE_GROUP['manual.tenant.tenantId'],
         },
-        dropdownConfig: {
-          onchange: () => {
-            return '';
-          },
-          isSearchable: true,
-          placeholder: '입력 선택',
-        },
+        presetOptionLabel: t('LABEL.form.label.select'),
       },
       {
-        name: 'name',
+        name: 'companyId',
         type: 'dropdown',
         label: t('회사'),
+        format: 'object',
         value: '',
-        optionsConfig: {
-          codeGroup: CODE_GROUP['manual.company.companyCode'],
-        },
-        dropdownConfig: {
-          onchange: () => {
-            return '';
-          },
-          placeholder: '선택',
-        },
-      },
-      {
-        name: 'type',
-        type: 'dropdown',
-        label: t('데이터 관리 방식'),
-        value: '',
-        options: [
-          { label: '전체', value: '' },
-          { label: '자동 관리', value: 'AUTOMATIC' },
-          { label: '수동 관리', value: 'MANUAL' },
-        ],
+        presetOptionLabel: t('LABEL.form.label.select'),
+        options: [],
       },
       {
         name: 'sabun',
@@ -114,21 +115,18 @@ const searchConfig: SearchBoxConfig = {
         type: 'dropdown',
         label: t('계정 상태'),
         value: '',
-        options: [
-          { label: '전체', value: '' },
-          { label: '대기', value: 'A' },
-          { label: '정상', value: 'B' },
-          { label: '휴면', value: 'C' },
-          { label: '잠김', value: 'D' },
-        ],
+        optionsConfig: {
+          codeGroup: CODE_GROUP['pms.user.AccountStatus'],
+        },
+        presetOptionLabel: t('전체'),
       },
       {
-        name: 'regStrDate', // regStrDate, regEndDate
+        name: 'regStrDate',
         type: 'date-range',
         label: t('회원가입 기간'),
         value: {
-          from: formUtils.now({ unit: 'day', offset: -30 }),
-          to: formUtils.now(),
+          from: undefined,
+          to: undefined,
         },
       },
     ],
@@ -144,7 +142,15 @@ const gridConfig: useGridBoxConfig = {
       type: 'numbering',
     },
   ],
-  data: [],
+  data: [
+    {
+      tenant: '테넌트',
+      companyType: 'CAR',
+      companyName: '회사명',
+      deptName: '부서명',
+      name: '홍길동',
+    },
+  ],
 
   pagination: {
     pageSize: 10,
@@ -166,27 +172,22 @@ const columns = [
     cell: (info) => t('pms.company.CompanyType.' + info.getValue()),
     enableGrouping: false,
   }),
-  columnHelper.accessor('company', {
+  columnHelper.accessor('companyName', {
     header: t('회사'),
     cell: (info) => info.getValue(),
     enableGrouping: false,
   }),
-  columnHelper.accessor('company', {
+  columnHelper.accessor('deptName', {
     header: t('소속'),
     cell: (info) => info.getValue(),
     enableGrouping: false,
   }),
-  columnHelper.accessor('company', {
-    header: t('직위'),
+  columnHelper.accessor('c1', {
+    header: t('호칭(직위)'),
     cell: (info) => info.getValue(),
     enableGrouping: false,
   }),
-  columnHelper.accessor('company', {
-    header: t('데이터 관리 방식'),
-    cell: (info) => info.getValue(),
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('company', {
+  columnHelper.accessor('employeeNumber', {
     header: t('사번'),
     cell: (info) => info.getValue(),
     enableGrouping: false,
@@ -206,29 +207,30 @@ const columns = [
     ),
     enableGrouping: false,
   }),
-  columnHelper.accessor('company', {
+  columnHelper.accessor('c2', {
     header: t('학습자 역할'),
     cell: (info) => info.getValue(),
     enableGrouping: false,
   }),
-  columnHelper.accessor('employmentStatus', {
+  columnHelper.accessor('userStatus', {
+    cell: (info) => t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.Status.${info.getValue()}`),
     header: t('재직여부'),
-    cell: (info) => info.getValue(),
-    enableGrouping: false,
+    size: 60,
   }),
   columnHelper.accessor('accountStatus', {
+    cell: (info) =>
+      t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.AccountStatus.${info.getValue()}`),
     header: t('계정상태'),
-    cell: (info) => info.getValue(),
-    enableGrouping: false,
+    size: 60,
   }),
   columnHelper.accessor('unlock', {
     header: t('잠김해제'),
-    cell: (info) => info.getValue(),
+    cell: (info) => <Button variant="gray" label={t('잠김해제')} />,
     enableGrouping: false,
   }),
   columnHelper.accessor('login', {
     header: t('로그인'),
-    cell: (info) => info.getValue(),
+    cell: (info) => <Button variant="gray" label={t('로그인')} />,
     enableGrouping: false,
   }),
   columnHelper.accessor('createdDate', {
@@ -238,5 +240,8 @@ const columns = [
         ? ''
         : getDateToString(new Date(info.row.original.createdDate), DATE_TIME_FORMAT.DATETIME_SEC),
     enableGrouping: false,
+    meta: {
+      cellAlign: 'center',
+    },
   }),
 ] as ColumnDef<any, unknown>[];
