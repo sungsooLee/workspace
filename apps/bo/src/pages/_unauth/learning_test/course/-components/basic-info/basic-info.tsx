@@ -1,5 +1,5 @@
 import { DropdownFormField } from '@features/form';
-import { CategoryChoiceModal } from '@features/learning/course';
+import { CategoryChoiceModal } from '@features/learning-operate/course/course-management';
 import {
   TrainingPlaceChoiceModal,
   UserChoiceModal,
@@ -42,7 +42,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
       validate: async () => {
         // 모든 필드에 대해 유효성 검사 수행
         const isValid = await onFormValid();
-        const data = formDataToRequestData(getValues());
+        const data = formDataToRequestData(getValues() as Course);
         const errors = formState.errors;
 
         return {

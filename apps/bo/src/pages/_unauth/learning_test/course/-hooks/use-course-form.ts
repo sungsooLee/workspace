@@ -49,7 +49,7 @@ export const useCourseForm = (courseType?: string) => {
           tenantIds: [2],
         },
       ],
-    }),
+    } as Course),
     courseConfig: {} as CourseConfig,
   });
 
@@ -218,7 +218,7 @@ const responseDataToFormData = (response: Course) => {
     isLearnEnvEnabled: true, // 학습환경 설정 사용 여부
     isLearnControlEnabled: true, // 학습제어 설정 사용 여부
     isUsePassOption: true, // 이수기준 설정 사용 여부
-    isCommunicationToolEnabled: true, // 커뮤니티 및 공유설정 사용 여부
+    // isCommunicationToolEnabled: true, // 커뮤니티 및 공유설정 사용 여부
     isInstructorAssigned: true, // 강사 설정 사용 여부
     isTextbookProvided: true, // 교재 설정 사용 여부
     isRelatedPrerequisiteCourseExisted: true, // 사전/연관학습 설정 사용 여부
@@ -237,7 +237,7 @@ const formDataToRequestData = (formData: Record<string, any>, activeTab: string)
     primaryCategoryId: 1, // 서버에서 받으면 삭제
     coordinatorTelCountryCode: 'KOR_82',
     operatorTelCountryCode: 'KOR_82',
-  };
+  } as unknown as Course;
   // 수강신청
   return newFormData;
 };
@@ -301,7 +301,7 @@ const getDummyCourse = () => {
 };
 
 // 클래스
-const getDummyCourse2 = () => {
+const getDummyCourse2 = (): Course => {
   return {
     courseType: 'CLASS',
     channelUuid: '67bbca16-4180-4982-a4e0-d192212dd7c2',
@@ -338,5 +338,5 @@ const getDummyCourse2 = () => {
     operatorTelNo: '44445555',
     operatorEmail: '운영자@email.com',
     learningSpaceNameKeyIn: 'xx',
-  };
+  } as unknown as Course;
 };
