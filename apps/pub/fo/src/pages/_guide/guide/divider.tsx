@@ -17,7 +17,7 @@ function RouteComponent() {
             {`// 초기 import
   import { Divider } from '@learnway/ui';
     
-  // 적용방법(예시)
+  // 적용방법(예시) 입니다.
   <Divider />`}
           </code>
         </pre>
