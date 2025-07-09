@@ -22,7 +22,7 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
 
   // 동적 필드 관리를 위한 상태
   const [dynamicBuilders, setDynamicBuilders] = useState<FormConfig[]>(finalConfig.builders);
-  console.log('🚀 ~ dynamicBuilders:', dynamicBuilders);
+  // console.log('🚀 ~ dynamicBuilders:', dynamicBuilders);
   // 동적 validator 관리를 위한 상태
   const [dynamicValidator, setDynamicValidator] = useState<any>(finalConfig.validator || {});
 

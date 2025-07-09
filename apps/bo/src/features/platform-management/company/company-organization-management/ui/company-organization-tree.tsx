@@ -66,7 +66,7 @@ const TenantCompanyOrganizationTreeComponent = ({
   roleInfo,
 }: {
   companyCode: string;
-  showType: string;
+  showType: EnOrganizationShowType;
   roleInfo: string;
 }) => {
   const { confirm: openConfirm, alert: openAlert } = useModal();

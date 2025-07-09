@@ -8,7 +8,6 @@ export type com_ever_edu_lms_blackwhite_dto_res_BlackAndWhiteDto$Combine = {
     combineValueName?: string;
     combineValueType?: string;
     combineValuePath?: string;
-    combineOperator?: com_ever_edu_lms_blackwhite_dto_res_BlackAndWhiteDto$Combine.combineOperator;
 };
 export namespace com_ever_edu_lms_blackwhite_dto_res_BlackAndWhiteDto$Combine {
     export enum combineType {
@@ -18,10 +17,6 @@ export namespace com_ever_edu_lms_blackwhite_dto_res_BlackAndWhiteDto$Combine {
         JOB_TITLE = 'JOB_TITLE',
         JOB_GROUP = 'JOB_GROUP',
         COMPANY = 'COMPANY',
-    }
-    export enum combineOperator {
-        AND = 'AND',
-        OR = 'OR',
     }
 }
 

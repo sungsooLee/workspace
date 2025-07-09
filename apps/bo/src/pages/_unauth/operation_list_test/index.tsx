@@ -8,7 +8,7 @@ import { MainContents } from '../../../widgets/layout/ui/container/slot/main-con
 import { translationQueryOptions } from '../../../entities/translation/service/translation.queries';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { SearchBox } from '../../../shared/ui/search-box';
-import { CourseTypeOptionCardModal } from '@features/learning/course';
+import { CourseTypeOptionCardModal } from '@features/learning-operate/course/course-management';
 
 export const Route = createFileRoute('/_unauth/operation_list_test/')({
   component: RouteComponent,

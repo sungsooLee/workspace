@@ -3,9 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * tagName
+ * 태그 이름 목록
  */
-export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TagNameWrapper = {
-    value?: string;
-};
-
+export type com_ever_edu_lms_tag_dto_res_TagResDto = Record<string, any>;

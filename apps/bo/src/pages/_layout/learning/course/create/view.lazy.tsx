@@ -3,7 +3,7 @@ import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import React, { useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { BasicInfo } from '../-components/basic-info/basic-info';
 import { CourseRegistration } from '../-components/course-registration/course-registration';
 import { Curriculum } from '../-components/curriculum/curriculum';
@@ -22,11 +22,17 @@ function RouteComponent() {
   // 라우터 state에서 courseId 가져오기
   const { courseId, courseType } = router.state.location.state;
 
-  console.log('Course ID', courseId);
-
   // 커스텀 훅 사용
-  const { data, activeTab, setTabRef, loadCourseData, saveCurrentTab, changeTab, loadMockData } =
-    useCourseForm(courseType);
+  const {
+    data,
+    activeTab,
+    setTabRef,
+    loadCourseData,
+    saveCurrentTab,
+    changeTab,
+    loadMockData,
+    getTabValues,
+  } = useCourseForm(courseType);
 
   // 최초 데이터 로드
   useEffect(() => {
@@ -37,7 +43,7 @@ function RouteComponent() {
 
   const moveListPage = () => {
     router.navigate({
-      to: '/learning/course',
+      to: '/learning_test/course',
     });
   };
 
@@ -53,15 +59,9 @@ function RouteComponent() {
   const handleSaveClick = async () => {
     console.log('data {} => ');
     const result = await saveCurrentTab();
-
     if (result.success) {
-      // 저장 성골 알럿
       await showSaveComplete();
-      // 저장 성공 후 목록으로 이동
       moveListPage();
-    } else {
-      console.error('저장 실패:', result.error);
-      // TODO: 실패 시 처리 로직 (예: 에러 메시지 표시)
     }
   };
 
@@ -93,7 +93,7 @@ function RouteComponent() {
         content: <DetailInfo ref={(ref) => setTabRef('STEP4', ref)} data={data} />,
       },
       {
-        title: '강의 설정',
+        title: '게시 설정',
         key: 'STEP5',
         content: <PublishCourse ref={(ref) => setTabRef('STEP5', ref)} data={data} />,
       },
@@ -101,12 +101,19 @@ function RouteComponent() {
     [data, setTabRef],
   );
 
-  console.log('------- view.lazy');
+  console.log('------- view.lazy page...');
 
   return (
     <form>
       <PageContainer>
         <ContentsButtons>
+          <Button
+            type="button"
+            variant="point"
+            size="sm"
+            label={'getTabValues'}
+            onClick={() => getTabValues()}
+          />
           <Button
             type="button"
             variant="point"

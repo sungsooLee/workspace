@@ -10,7 +10,7 @@ import React, { forwardRef, useEffect } from 'react';
 import { UseDynamicFormResult } from '@learnway/hooks';
 import { useTranslation } from 'react-i18next';
 import { FormRow, FormSubTitle } from '@shared/ui';
-import { ChannelListModal, TeacherListModal } from '@features/learning/course';
+import { ChannelListModal, TeacherListModal } from '@features/learning-operate/course/course-management';
 
 interface BasicInfoProps {
   dynamicForm: UseDynamicFormResult;

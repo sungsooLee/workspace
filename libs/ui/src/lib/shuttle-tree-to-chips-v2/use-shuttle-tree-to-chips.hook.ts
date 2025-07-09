@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { TreeNode } from '../tree-view/type';
 import { flattenNodeWithChildren } from '../tree-view/tree.service';
 
-const useShuttleTreeToChips = () => {
-  const [selectedItems, setSelectedItems] = useState<TreeNode[]>([]);
+const useShuttleTreeToChips = (initValue: TreeNode[] = []) => {
+  const [selectedItems, setSelectedItems] = useState<TreeNode[]>(initValue);
 
   // 단일 선택
   const handleSelectItem = (value: TreeNode) => {
