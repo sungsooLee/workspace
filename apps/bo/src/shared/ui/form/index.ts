@@ -6,6 +6,7 @@ export * from './chip-list-form-field';
 export * from './switch-form-field';
 export * from './form-row';
 export * from './form-row2';
+export * from './tenant-by-role-dropdown-form-field';
 export * from './tenant-channel-dropdown-form-field';
 export * from './contents-history-info-form-field';
 export * from './duplicate-check-input-form-field';

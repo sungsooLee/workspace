@@ -52,3 +52,36 @@ export interface TenantCompany {
   companyCode: string;
   companyName: string;
 }
+
+// 테넌트 조회 ( 역할 기준 )
+export interface TenantByRoleId {
+  tenantId: number;
+  tenantName: string;
+  tenantSite: string;
+  isSecurityPledge: boolean;
+  fileStorageTypeChannelList: string[];
+  fileStorageTypeBase: string;
+  isUsed: boolean;
+  tenantUserList: TenantUserList[];
+  companyTenantList: CompanyTenantList[];
+  createdBy: string;
+  createdDate: string;
+  lastModifiedBy: string;
+  modifiedDate: string;
+}
+
+export interface TenantUserList {
+  tenantId: number;
+  userUuid: string;
+  userName: string;
+  deptName: string;
+  companyName: string;
+}
+
+export interface CompanyTenantList {
+  tenantId: number;
+  companyId: number;
+  companyCode: string;
+  companyName: string;
+  managerName: string;
+}
