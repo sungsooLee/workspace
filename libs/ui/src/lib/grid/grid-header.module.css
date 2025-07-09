@@ -90,6 +90,25 @@
         &.text_center {
           @apply px-[8px];
         }
+        &.sortable {
+          @apply cursor-pointer select-none;
+          svg {
+            @apply block;
+          }
+        }
+      }
+    }
+  }
+}
+
+[class*='no_data'] {
+  table {
+    thead th {
+      &.sortable {
+        @apply cursor-auto select-none;
+        svg {
+          @apply !hidden;
+        }
       }
     }
   }

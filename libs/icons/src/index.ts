@@ -155,6 +155,7 @@ export { ReactComponent as IcoClock10Forward } from './lib/ic_clock_10_forward.s
 export { ReactComponent as IcoBackward } from './lib/ic_backward.svg';
 export { ReactComponent as IcoList } from './lib/ic_list.svg';
 export { ReactComponent as IcoAvatar } from './lib/ic_avatar.svg';
+export { ReactComponent as IcoAvatar02 } from './lib/ic_avatar_02.svg';
 export { ReactComponent as IcoSymbol } from './lib/ic_symbol.svg';
 export { ReactComponent as IcoFilePng } from './lib/ic_file_png.svg';
 export { ReactComponent as IcoBook } from './lib/ic_book.svg';
@@ -169,6 +170,8 @@ export { ReactComponent as IcoTime } from './lib/ic_time.svg';
 export { ReactComponent as IcoPdf } from './lib/ic_pdf.svg';
 export { ReactComponent as IcoLock } from './lib/ic_lock.svg';
 export { ReactComponent as IcoEssential } from './lib/ic_essential.svg';
+export { ReactComponent as IcoTeacher } from './lib/ic_teacher.svg';
+export { ReactComponent as IcoMoney } from './lib/ic_money.svg';
 //export Default as Information from './lib/information.svg?react';
 
 //import Information from './lib/information.svg';
