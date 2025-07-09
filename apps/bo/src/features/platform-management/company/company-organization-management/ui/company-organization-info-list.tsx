@@ -79,7 +79,7 @@ const CompanyOrganizationInfoListComponent = ({
   }, [deptId]);
 
   const columnHelper = createColumnHelper<any>();
-  let columns = [
+  const columns = [
     columnHelper.accessor('hrInfoManageType', {
       cell: (info) =>
         t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.HrInfoManageType.${info.getValue()}`),
