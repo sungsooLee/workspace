@@ -1,3 +1,4 @@
+import { FileInfo } from '../use-file-manager/type';
 import { S3_PATH_TYPE } from './constants';
 
 export const DEFAULT_MULTIPART_THRESHOLD = 5 * 1024 * 1024; // 5MB
@@ -52,6 +53,7 @@ export interface UploadFile {
   uploadId?: string; // 업로드 아이디
   fileUuid?: string; // 파일 UUID (임시 저장 후 받는 ID)
   groupUuid?: string; // 그룹 UUID (그룹 생성 후 받는 ID)
+  fileUrl?: string; // 파일 Url (직접 접근 가능한 파일 주소)
   key: string; // S3 업로드 KEY
   parts: UploadPart[]; // 멀티 part 시 사용
   contentType?: string;
@@ -59,6 +61,12 @@ export interface UploadFile {
   message?: string;
   basicPath: string;
   detailPath: string;
+}
+
+export interface ThumbnailFileValue {
+  groupUuid?: string;
+  files?: FileInfo[];
+  primaryUuid?: string;
 }
 
 export interface UseUploadQueueConfig {

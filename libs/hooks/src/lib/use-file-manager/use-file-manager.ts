@@ -51,6 +51,9 @@ const useFileManagerHook = () => {
   const filesDownload = async (fileUuids: string[]): Promise<void> => {
     await FileManagerService.filesDownload(fileUuids);
   };
+  const getGroupInfo = async (groupUuid: string): Promise<FileGroupInfo> => {
+    return FileManagerService.getGroupInfo(groupUuid);
+  };
   return {
     uploadImageFile,
     deleteImageFile,
@@ -61,6 +64,7 @@ const useFileManagerHook = () => {
     getFileInfo,
     fileDownload,
     filesDownload,
+    getGroupInfo,
   };
 };
 
