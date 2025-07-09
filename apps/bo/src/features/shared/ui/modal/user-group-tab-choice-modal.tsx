@@ -38,10 +38,7 @@ const UserGroupTabModalComponent = forwardRef(
     };
 
     const handleOnConfirm = () => {
-      closeModal({
-        userGroupType: selectedTabKey,
-        groups: option,
-      });
+      closeModal(option);
     };
 
     return (
