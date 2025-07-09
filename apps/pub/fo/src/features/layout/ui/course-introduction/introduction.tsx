@@ -226,6 +226,7 @@ const CourseIntroductionCompoment = () => {
             {/* bulletStyles */}
             <div className={`${bulletStyles.start} ${bulletStyles.list}`}>
               <ul>
+                <li>이수기준은 차수별로 달라질 수 있습니다.</li>
                 <li>항목의 이수기준을 교육기간 내 충족해야 수료 처리됩니다.</li>
                 <li>
                   최종평가, 과제평가가 있을 시 반드시 기한 내 제출해야 합니다. (단, 제출기회는 1회)

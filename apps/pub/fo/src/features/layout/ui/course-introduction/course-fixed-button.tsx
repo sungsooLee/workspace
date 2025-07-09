@@ -30,9 +30,11 @@ const CourseFixedButtonComponent = ({ course }: CourseFixedButton) => {
           stroke={heart === true ? '#f58b75' : '#b7bbc3'}
           fill={heart === true ? '#f58b75' : '#b7bbc3'}
         />
+        922
       </Button>
       <Button>
         <IcoShare width={20} height={20} stroke="#4c515e" />
+        공유
       </Button>
 
       {/* 수강신청 차수가 있을 때 */}
@@ -55,7 +57,7 @@ const CourseFixedButtonComponent = ({ course }: CourseFixedButton) => {
           {/* 수강신청 불가능 */}
           {/* <Button variant="line">차수개설 알림신청</Button> */}
           {/* tip */}
-          {/* <span className={styles.tip}>차수를 선택해주세요</span> */}
+          <span className={styles.tip}>차수를 선택해 주세요</span>
         </div>
       )}
     </div>
