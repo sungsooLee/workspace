@@ -390,13 +390,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                         modalConfig={{
                           title: '',
                           width: 'xl',
-                          content: (
-                            <UserGroupChoiceModal
-                              userGroupIds={[]}
-                              userGroupType="ORGANIZATION"
-                              groups={[]}
-                            />
-                          ),
+                          content: <UserGroupChoiceModal />,
                         }}
                       />
                     }
