@@ -6,7 +6,7 @@ import { FormDisplay } from '@features/form/ui/form-display';
 import { DuplicateCheckInputFormField, DuplicateState, DropdownFormField } from '@features/form';
 import { FormRow, FormSubTitle } from '@shared/ui';
 import { DynamicFormConfig, useDynamicForm, CODE_GROUP, S3_PATH } from '@learnway/hooks';
-import { AddressSearchModal } from '@features/shared/ui/modal/address-search-modal';
+import { AddressSearchModal } from '@shared/ui/modal/address-search-modal';
 import { useSpaceMutation } from '@entities/training-place';
 import { EnFormMode, EnPageMode } from '@types';
 import SpaceService from '@entities/training-place/api/space';

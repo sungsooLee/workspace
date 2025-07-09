@@ -12,7 +12,7 @@ import { t } from 'i18next';
 import React, { useState } from 'react';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
-import { SearchBox } from '../../../../shared/ui/search-box';
+import { SearchBox } from '../search-box';
 
 const ManagerChoicePopupComponent = () => {
   const { close } = useModal();

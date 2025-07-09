@@ -18,7 +18,7 @@ import { cn, getParsedDataFromString, isEmptyData } from '@learnway/shared';
 import { IcoFormRequired } from '@learnway/icons';
 import { BlogCreateReq, BlogPostRes, ContentAddInfoType, EnChannelScope } from '@types';
 import { FormRow, FormRow2 } from '@shared/ui';
-import { ChannelListChoiceModal, CompanyChoiceModal, UserChoiceModal } from '@features/shared';
+import { ChannelListChoiceModal, CompanyChoiceModal, UserChoiceModal } from '@shared/ui';
 import { SharedChannelGridFormField } from '@features/form/ui';
 import { DateRangePickerFormField } from '@features/form/ui';
 import { FormDisplay } from '@features/form';

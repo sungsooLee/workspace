@@ -42,8 +42,6 @@ import {
   useGetRoleUserGroups,
 } from '@entities/role/service/role-manage.hook';
 
-import { UserChoiceModal, UserShuttleModal } from '@features/shared';
-
 import { TenantDetailLearningRoleGrantRangeModal } from './tenant-detail-learning-role-grant-range-modal';
 import { TenantDetailLearningRoleGrantUserShuttleModal } from './tenant-detail-learning-role-grant-user-shuttle-modal';
 import { roleManagerQueryOptions } from '@entities/role/service/role-manage.queries';
