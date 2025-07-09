@@ -1,14 +1,14 @@
 import { ShuttleGridToChips, ShuttleGridToChipsImperative } from '@learnway/ui';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useFetchUserGroups } from '@entities/user-group';
-import { Group } from '@types';
+import { CombineUserGroup } from '@types';
 
 type UserGroupJobGroupComponentProps = {
   tenantIds: number[];
-  option: Group[];
-  handleSetOption: (data: Group[]) => void;
+  option: CombineUserGroup[];
+  handleSetOption: (data: CombineUserGroup[]) => void;
 };
 
 const UserGroupJobGroupComponent = ({
@@ -18,15 +18,6 @@ const UserGroupJobGroupComponent = ({
 }: UserGroupJobGroupComponentProps) => {
   const ref = useRef<ShuttleGridToChipsImperative>(null);
   const { data = [] } = useFetchUserGroups(tenantIds, { userGroupType: 'JOB_GROUP' });
-
-  const initValue = useMemo<{ id: number; name: string }[]>(
-    () =>
-      option.map(({ id, ids, fullName }) => ({
-        id: ids ? ids.reduce((acc, cur) => acc + cur, 0) : id,
-        name: fullName,
-      })),
-    [option],
-  );
 
   const [selectedItems, setSelectedItems] = useState<{ id: number; name: string }[]>([]);
 
@@ -57,7 +48,7 @@ const UserGroupJobGroupComponent = ({
   return (
     <ShuttleGridToChips
       ref={ref}
-      selectedItems={[...initValue, ...selectedItems]}
+      selectedItems={[...selectedItems]}
       onSelectedChange={handleSelecteItems}
       showNumberingColumn={false}
       gridData={data}

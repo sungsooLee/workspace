@@ -10,27 +10,49 @@ import { FormSubTitle } from '../base-form/form-sub-title';
 import { TreeBox } from '../tree-view/tree-box';
 import { TreeNode } from '../tree-view/type';
 
+type TreeData = {
+  key: string;
+  id: number;
+  parentId?: string;
+  title: string;
+  fullName: string;
+  children?: TreeData[];
+};
+
+type ApiData = {
+  [key: string]: any;
+  children?: ApiData[];
+};
+
 type ShuttleTreeToChipsV2Props = {
-  treeData: TreeNode[];
-  selectedKey: string;
+  apiData: ApiData[];
   selectedItems: TreeNode[];
   handleSelectItem: (node: TreeNode) => void;
   cancelSelectItem: (node: TreeNode) => void;
   cancelAll: () => void;
   sourceTitle: string;
   targetTitle: string;
+  idKey?: string;
+  titleKey?: string;
+  fullNameKey?: string;
 };
 
 export const ShuttleTreeToChipsV2 = ({
-  treeData,
-  selectedKey,
+  apiData,
   selectedItems,
   handleSelectItem,
   cancelSelectItem,
   cancelAll,
   sourceTitle,
   targetTitle,
+  idKey = 'id',
+  titleKey = 'name',
+  fullNameKey = 'fullName',
 }: ShuttleTreeToChipsV2Props) => {
+  const treeData = useMemo(
+    () => transformApiDataToTreeData(apiData, [idKey, titleKey, fullNameKey]),
+    [apiData, idKey, titleKey, fullNameKey],
+  );
   const isShowConditionSettingsMode = useMemo(
     () => selectedItems.filter(({ isCombined }) => !isCombined).length > 1,
     [selectedItems],
@@ -173,7 +195,7 @@ export const ShuttleTreeToChipsV2 = ({
                       disabled={item?.isCombined}
                     />
                   )}
-                  <HighlightAmpersand text={item[selectedKey]} />
+                  <HighlightAmpersand text={item[fullNameKey]} />
                 </div>
                 <Button className={styles.btn_close}>
                   <IcoXclose
@@ -210,4 +232,34 @@ const HighlightAmpersand: React.FC<HighlightAmpersandProps> = ({ text }) => {
       )}
     </span>
   );
+};
+
+type SelectedKeys = [idKey: string, nameKey: string, fullNameKey: string];
+
+const transformApiDataToTreeData = (
+  apiData: ApiData[],
+  [idKey, titleKey, fullNameKey]: SelectedKeys,
+): TreeData[] => {
+  const transform = (nodes: ApiData[], parentId?: string) => {
+    if (!nodes) return [];
+
+    return nodes.map((node) => {
+      const key = `${parentId ? `${parentId}-` : ''}${node.id.toString()}`;
+      const transformedNode: TreeData = {
+        key,
+        parentId,
+        id: node[idKey],
+        title: node[titleKey],
+        fullName: node[fullNameKey],
+      };
+
+      if (node.children && node.children.length > 0) {
+        transformedNode.children = transform(node.children, key);
+      }
+
+      return transformedNode;
+    });
+  };
+
+  return transform(apiData);
 };
