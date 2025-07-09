@@ -9,7 +9,6 @@ import {
   Input,
   Textarea,
   TreeContainer,
-  findParentNode,
 } from '@learnway/ui';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
@@ -73,7 +72,7 @@ export const CategoryManage = () => {
   } = useModal();
 
   // 추후 현재 locale 정보 값 파라미터로 넘겨주기.
-  const { data, refetch, isLoading } = useFetchCategory();
+  const { data, isLoading } = useFetchCategory();
   const { data: detailData } = useFetchCategoryDetail(selectedNode?.id);
 
   const { create } = useCreateCategory({});
@@ -184,7 +183,7 @@ export const CategoryManage = () => {
       ...initData,
       parentKey: node.menuId,
       parentMenuName: node.name,
-      location: location,
+      location,
       code: { fieldValue: '', checkState: DuplicateState.okStart },
       categoryType: 'COMMON',
     });
@@ -255,7 +254,7 @@ export const CategoryManage = () => {
     setExpandedKeys(keys);
   };
 
-  const handleDelete = (payload: any) => {
+  const handleDelete = () => {
     //TODO: 삭제 이전에 해당 메뉴 테넌트 사용 여부 체크.
     console.log(selectedNode);
     openConfirm({
@@ -266,7 +265,7 @@ export const CategoryManage = () => {
       onClose: (value: boolean) => {
         if (value) {
           deleteCategory(selectedNode?.menuId, {
-            onSuccess: async (data: any) => {
+            onSuccess: async () => {
               showDeleteComplete();
               setFormMode(FORM_MODE.NONE);
             },
@@ -381,11 +380,11 @@ export const CategoryManage = () => {
               nodeInfo.position === 'INSIDE'
                 ? nodeInfo.targetNode?.menuId
                 : nodeInfo.targetNode?.parentKey,
-            sortSeq: sortSeq,
+            sortSeq,
           };
 
           moveCategory(payload, {
-            onSuccess: async (data: any) => {
+            onSuccess: async () => {
               if (selectedNode?.categoryId) {
                 await queryClient.invalidateQueries({
                   queryKey: [...queryKeys.detail(Number(selectedNode.categoryId))],
@@ -580,25 +579,25 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'location',
       type: 'text',
-      label: t('LABEL.form.input.categoryLocation'),
+      label: () => t('LABEL.form.input.categoryLocation'),
       value: '',
     },
     {
-      label: t('LABEL.form.input.categoryParentName'),
+      label: () => t('LABEL.form.input.categoryParentName'),
       name: 'parentMenuName',
       type: 'text',
       format: 'string',
       value: '',
     },
     {
-      label: t('LABEL.form.input.categoryCode'),
+      label: () => t('LABEL.form.input.categoryCode'),
       name: 'code',
       type: 'custom',
       maxLength: 20,
       value: { fieldValue: '', checkState: DuplicateState.needInput },
     },
     {
-      label: t('LABEL.form.input.categoryCodeName'),
+      label: () => t('LABEL.form.input.categoryCodeName'),
       name: 'name',
       type: 'text',
       maxLength: 20,
@@ -612,7 +611,7 @@ const formConfig: DynamicFormConfig = {
       value: 0,
     },
     {
-      label: t('LABEL.form.input.description'),
+      label: () => t('LABEL.form.input.description'),
       name: 'categoryContent',
       type: 'textarea',
       maxLength: 50,
@@ -622,7 +621,7 @@ const formConfig: DynamicFormConfig = {
       name: 'isUsed',
       type: 'switch',
       format: 'boolean',
-      label: t('사용 여부'),
+      label: () => t('사용 여부'),
       value: false,
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),

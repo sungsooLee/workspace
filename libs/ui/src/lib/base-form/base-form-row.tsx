@@ -1,4 +1,4 @@
-import React, { Children, FC, isValidElement, memo, ReactNode, useEffect, useMemo } from 'react';
+import React, { FC, isValidElement, memo, ReactNode, useEffect, useMemo } from 'react';
 import { cn } from '@learnway/shared';
 import boStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import foStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
@@ -76,6 +76,16 @@ const DynamicFormContainer: FC<FormRowProps> = ({
   const { guideText, infoArea, onChangeInfoArea, onChangeGuideText } = useDynamicFormContext();
   const FormConfigComponent = formFieldConfig[formConfig.type as keyof typeof formFieldConfig];
 
+  const calculatedLabel = useMemo(() => {
+    if (!formConfig.label) return '';
+
+    if (typeof formConfig.label === 'function') {
+      return formConfig.label();
+    }
+
+    return formConfig.label;
+  }, [formConfig.label]);
+
   /**
    * form row 특정 아이템 추출
    * @param children
@@ -119,9 +129,9 @@ const DynamicFormContainer: FC<FormRowProps> = ({
       }}
     >
       {/* 레이블 렌더링 */}
-      {formConfig.label && (
+      {calculatedLabel && (
         <label htmlFor={name} className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
-          <span className={styles.form_text}> {t(formConfig.label as any)}</span>
+          <span className={styles.form_text}> {t(calculatedLabel)}</span>
           {isRequired && (
             <span
               className={cn(styles.status, {

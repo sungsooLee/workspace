@@ -250,7 +250,7 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
       addValidator: () => null,
     },
     onFormValid: trigger,
-    updateFormData: updateFormData,
+    updateFormData,
     onSubmit: formSubmit,
     setFormError,
     getValues,
@@ -261,6 +261,6 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
     onFormFocus: handleFocus,
     control: extendedControl,
     watch,
-    getInitByBuilders: getInitByBuilders,
+    getInitByBuilders,
   };
 };

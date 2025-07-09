@@ -70,7 +70,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
   const [treeData, setTreeData] = useState([]);
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [lastCreatedMenuId, setLastCreatedMenuId] = useState<string | null>(null);
-  const [skipConfirmation, setSkipConfirmation] = useState(false);
+  const [, setSkipConfirmation] = useState(false);
   const { open: openModal, confirm: openConfirm, alert: openAlert } = useModal();
   const prevDataRef = useRef<any>(null);
   const router = useRouter();
@@ -84,7 +84,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
   const { update: updateMenu } = useUpdateMenu({});
   const { delete: deleteMenu } = useDeleteMenu({});
   const { move: moveMenu } = useMoveMenu({});
-  const { checkExistsMenu, isLoading } = useCheckExistsMenu({});
+  const { checkExistsMenu } = useCheckExistsMenu({});
 
   const queryClient = useQueryClient();
 
@@ -105,12 +105,12 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
     control,
     getValues,
     setFormError,
-  } = useDynamicForm(formConfig);
+  } = useDynamicForm(createFormConfig());
   const typeWatch = useWatch({ control, name: 'deviceNames' });
   const prevTypeWatchRef = useRef<string[]>([]);
 
   const clearAllFormErrors = useCallback(() => {
-    formConfig.builders.forEach((item) => clearFormError(item.name));
+    createFormConfig().builders.forEach((item) => clearFormError(item.name));
   }, [clearFormError]);
 
   // const resetInputValidations = useCallback(() => {
@@ -141,10 +141,13 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
 
   const handleOnSubmit = (node: Record<string, any>) => {
     const apiMappingKeys = [] as number[];
-    node.apiMappingMenuList &&
-      node.apiMappingMenuList.forEach(
-        (i: ApiMappingMenuDetail) => i.apiId && apiMappingKeys.push(i.apiId),
-      );
+    if (node?.apiMappingMenuList) {
+      node.apiMappingMenuList.forEach(({ i }: { i: ApiMappingMenuDetail }) => {
+        if (i.apiId) {
+          apiMappingKeys.push(i.apiId);
+        }
+      });
+    }
     if (formMode === FORM_MODE.VIEW) {
       const updateData = {
         ...node,
@@ -154,7 +157,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
         isMobileExposed: node.deviceNames && node.deviceNames.includes(DEVICE_NAME.Mobile),
         apiMappingMenuList: apiMappingKeys,
         sortOrder: node.sortOrder,
-        menuScope: menuScope,
+        menuScope,
       };
       update(updateData);
     } else if (formMode === FORM_MODE.ADD) {
@@ -170,7 +173,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
           parentNode?.children && parentNode.children.length > 0
             ? parentNode.children.length + 1
             : 1,
-        menuScope: menuScope,
+        menuScope,
       };
       create(createData);
     }
@@ -238,7 +241,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
           location: detailData.fullPath,
           parentCode: data.parentName,
           code: { fieldValue: data.menuCode, checkState: DuplicateState.okStart },
-          deviceNames: deviceNames,
+          deviceNames,
         };
         updateFormData({ ...formData });
         initialFromValuesRef.current = { ...formData };
@@ -289,14 +292,14 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
     clearAllFormErrors();
 
     const initData: { [key: string]: any } = {};
-    formConfig.builders.forEach((item) => {
+    createFormConfig().builders.forEach((item) => {
       initData[item.name] = item.value;
     });
     setParentNode(node);
     const location = findMenuPathById(treeData, node.menuId);
     const addFormData = {
       ...initData,
-      location: location,
+      location,
       // parentCode: node.menuCode,
       parentCode: node.title,
       deviceNames: ['PC'],
@@ -482,12 +485,12 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
             nodeInfo.position === 'INSIDE'
               ? nodeInfo.targetNode?.menuId
               : nodeInfo.targetNode?.parentKey,
-          sortOrder: sortOrder,
+          sortOrder,
           menuScopeCode: menuScope,
         };
 
         moveMenu(payload, {
-          onSuccess: async (data: any) => {
+          onSuccess: async () => {
             if (selectedNode?.menuId) {
               await queryClient.invalidateQueries({
                 queryKey: [...queryKeys.detail(selectedNode.menuId)],
@@ -548,12 +551,12 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
         };
         if (value && payload) {
           deleteMenu(payload, {
-            onSuccess: async (data: any) => {
+            onSuccess: async () => {
               showDeleteComplete();
               setSelectedNode(null);
               clearAllFormErrors();
               const initData: { [key: string]: any } = {};
-              formConfig.builders.forEach((item) => {
+              createFormConfig().builders.forEach((item) => {
                 initData[item.name] = item.value;
               });
               updateFormData({ ...initData });
@@ -796,7 +799,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
   );
 });
 
-const formConfig: DynamicFormConfig = {
+const createFormConfig = (): DynamicFormConfig => ({
   builders: [
     {
       name: 'location',
@@ -935,4 +938,4 @@ const formConfig: DynamicFormConfig = {
       },
     },
   },
-};
+});

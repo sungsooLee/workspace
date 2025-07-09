@@ -69,7 +69,6 @@ const ApiTreeComponent: FC<any> = ({ menuScope }) => {
   const clearAllFormErrors = () => {
     formConfig.builders.forEach((item) => clearFormError(item.name));
   };
-  const { showDeleteComplete } = useModal();
 
   const apiNodeType = useWatch({ control, name: 'apiNodeType' });
 
@@ -214,12 +213,12 @@ const ApiTreeComponent: FC<any> = ({ menuScope }) => {
               nodeInfo.position === 'INSIDE'
                 ? nodeInfo.targetNode?.apiId
                 : nodeInfo.targetNode?.parentId,
-            sortOrder: sortOrder,
+            sortOrder,
             apiScopeCode: menuScope,
           };
 
           dndProgram(payload, {
-            onSuccess: async (data: any) => {
+            onSuccess: async () => {
               if (selectedNode?.apiUuid) {
                 await queryClient.invalidateQueries({
                   queryKey: [...queryKeys.all, selectedNode.apiUuid],
@@ -304,15 +303,12 @@ const ApiTreeComponent: FC<any> = ({ menuScope }) => {
     }
   };
 
-  const customDropValidator = useCallback<CustomDropValidator>(
-    ({ sourceNode, targetNode, dropPosition }) => {
-      if (dropPosition === 'INSIDE' && targetNode.apiNodeType !== 'FOLDER') {
-        return false;
-      }
-      return true;
-    },
-    [],
-  );
+  const customDropValidator = useCallback<CustomDropValidator>(({ targetNode, dropPosition }) => {
+    if (dropPosition === 'INSIDE' && targetNode.apiNodeType !== 'FOLDER') {
+      return false;
+    }
+    return true;
+  }, []);
 
   const handleDelete = async () => {
     if (selectedNode && selectedNode.isUsed) {
@@ -331,7 +327,7 @@ const ApiTreeComponent: FC<any> = ({ menuScope }) => {
         };
         if (value && payload) {
           deleteProgram(selectedNode?.apiUuid, {
-            onSuccess: async (data: any) => {
+            onSuccess: async () => {
               setSelectedNode(null);
               clearAllFormErrors();
               const initData: { [key: string]: any } = {};
@@ -532,38 +528,38 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'apiUuid',
       type: 'text',
-      label: t('apiUuid'),
+      label: () => t('apiUuid'),
       value: '',
     },
     {
       name: 'parentId',
       type: 'text',
-      label: t('parentId'),
+      label: () => t('parentId'),
       value: '',
     },
     {
       name: 'fullPath',
       type: 'text',
-      label: t('LABEL.program.location'),
+      label: () => t('LABEL.program.location'),
       value: '',
     },
     {
       name: 'parentName',
       type: 'text',
-      label: t('LABEL.program.parentApiName'),
+      label: () => t('LABEL.program.parentApiName'),
       value: '',
     },
     {
       name: 'apiId',
       type: 'number',
-      label: t('API ID'),
+      label: () => t('API ID'),
       value: '',
       placeholder: t('저장 시 자동 채번'),
     },
     {
       name: 'apiNodeType',
       type: 'radio-group',
-      label: t('LABEL.program.type'),
+      label: () => t('LABEL.program.type'),
       value: 'FOLDER',
       options: [
         {
@@ -579,21 +575,21 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'apiName',
       type: 'text',
-      label: t('LABEL.program.name'),
+      label: () => t('LABEL.program.name'),
       value: '',
       maxLength: 10,
     },
     {
       name: 'apiDesc',
       type: 'textarea',
-      label: t('LABEL.form.input.description'),
+      label: () => t('LABEL.form.input.description'),
       value: '',
       maxLength: 2000,
     },
     {
       name: 'apiMethodCode',
       type: 'radio-group',
-      label: t('LABEL.program.apiMethodType'),
+      label: () => t('LABEL.program.apiMethodType'),
       value: 'GET',
       options: [
         {
@@ -618,13 +614,13 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'apiUrl',
       type: 'text',
-      label: t('API URL'),
+      label: () => t('API URL'),
       value: '',
     },
     {
       name: 'isUsed',
       type: 'switch',
-      label: t('LABEL.program.isUsed'),
+      label: () => t('LABEL.program.isUsed'),
       value: true,
       switchConfig: {
         label: (value: boolean) => (value ? t('LABEL.common.enable') : t('LABEL.common.disable')),
