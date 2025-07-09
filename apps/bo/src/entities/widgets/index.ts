@@ -1,3 +1,3 @@
-export * from './service/widgets.queries';
+export * from './api/widgets';
 export * from './service/widgets.hook';
-
+export * from './service/widgets.queries';

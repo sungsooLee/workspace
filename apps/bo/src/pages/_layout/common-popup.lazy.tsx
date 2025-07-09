@@ -35,12 +35,8 @@ import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inn
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import { FormRow } from '@shared/ui';
 import { DynamicFormConfig, S3_PATH, useDynamicForm } from '@learnway/hooks';
-import { SubContents } from '@widgets/layout/ui/container/slot/sub-contents';
-import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
 
 import langCodes from '@entities/mock/i18n-resource-ko.json';
 import TranslationService from '@entities/translation/api/translation';
@@ -55,6 +51,7 @@ import {
   useTranslation,
 } from '@entities/translation/service/translation.hook';
 import { PreviewLearningWindow } from '@features/learning-resource/learning-resource-management/ui/preview-learning-window';
+import { MainContents, PageContainer, SubContents, ContentsButtons } from '@shared/ui';
 
 export const Route = createLazyFileRoute('/_layout/common-popup')({
   component: RouteComponent,

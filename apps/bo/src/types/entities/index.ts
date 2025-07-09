@@ -1,5 +1,6 @@
 export * from './api';
 export * from './category';
+export * from './channel';
 export * from './common-code';
 export * from './course';
 export * from './enum';

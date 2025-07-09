@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-catch */
 import { createElement } from 'react';
 // import { ErrorComponent, redirect } from '@tanstack/react-router';
 import { redirect } from '@tanstack/react-router';
@@ -9,8 +8,8 @@ import { ZodSchema } from 'zod';
 import { authUserQueryKeys } from '@learnway/auth/entities';
 import type { AuthUser } from '@learnway/auth/types';
 import { ERROR } from '@learnway/config';
-import type { PageRouteConfig } from '@learnway/shared';
 import { buildJodObject, dateDiff } from '@learnway/shared';
+import type { PageRouteConfig } from '@learnway/shared';
 
 import type { PageMeta } from '../../../types';
 import { ErrorComponent } from '@features/layout';

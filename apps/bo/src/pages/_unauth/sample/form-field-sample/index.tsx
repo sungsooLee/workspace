@@ -1,5 +1,9 @@
 import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
-import { ChannelListModal, ManagerListModal, TeacherListModal } from '@features/learning-operate/course/course-management';
+import {
+  ChannelListModal,
+  ManagerListModal,
+  TeacherListModal,
+} from '@features/learning-operate/course/course-management';
 import {
   Button,
   CheckboxGroupFormField,
@@ -16,7 +20,7 @@ import {
 } from '@learnway/ui';
 import { ChipListFormField, FormRow2, ThumbnailListFormField } from '@shared/ui';
 import { createFileRoute } from '@tanstack/react-router';
-import { ContentsButtons, MainContents, PageContainer } from '@widgets/layout';
+import { MainContents, PageContainer, ContentsButtons } from '@shared/ui';
 import { t } from 'i18next';
 import LabelMessagesService from '../../../../entities/label-messages-mock/api/label-messages';
 import { useDynamicForm2 } from '@learnway/hooks';

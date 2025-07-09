@@ -1,8 +1,7 @@
+import { SectionLayout } from '@shared/ui';
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
-
-import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 
 import { cn } from '@learnway/shared';
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
@@ -118,9 +117,9 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
 
     const payload = {
       ...formData,
-      tenantId: tenantId,
-      siteScope: siteScope,
-      parentRoleId: parentRoleId,
+      tenantId,
+      siteScope,
+      parentRoleId,
     };
     if (payload.companyScope !== EnCompanyScope.MANUAL) payload.companyIds = [];
     if (payload.channelScope !== EnChannelScope.MANUAL) payload.channelUuids = [];
@@ -171,7 +170,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
     updateFormData({
       ...initData,
       parentRoleId: node.key.toString(),
-      sortOrder: sortOrder,
+      sortOrder,
     });
     setSelectedRoleNode(node);
     setFormMode(EnFormMode.ADD);
@@ -196,7 +195,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
       const parentRoleId = roleDetail.parentRoleId ? roleDetail.parentRoleId.toString() : 'root';
       updateFormData({
         ...roleDetail,
-        parentRoleId: parentRoleId,
+        parentRoleId,
         companyIds: roleDetail.companies.map((item: any) => ({
           companyId: item.id,
           name: item.name,

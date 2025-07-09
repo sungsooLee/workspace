@@ -4,9 +4,7 @@ import { Button, Tabs, useModal } from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { CompanyInfo } from './-tabs/company-info/company-info';
 import { HrInfo } from './-tabs/hr-info/hr-info';
-import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
+import { MainContents, PageContainer, ContentsButtons } from '@shared/ui';
 
 export const Route = createFileRoute('/_unauth/platform_test/company/company/view/')({
   component: RouteComponent,

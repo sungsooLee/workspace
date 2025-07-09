@@ -2,18 +2,15 @@ import React from 'react';
 import { createLazyFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { Button, ContentsRow, DynamicFormField, InputModalSelectorFormField } from '@learnway/ui';
-import { PageContainer } from '../../../../../widgets/layout/ui/container/page-container';
-import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
-import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
-import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
-import { ChannelChoiceModal, ManagerChoiceModal } from '../../../../../features/shared';
+import { PageContainer, SubContents, ContentsButtons, LinkBox, MainContents } from '@shared/ui';
+
+import { ChannelChoiceModal, ManagerChoiceModal } from '@shared/ui';
 
 import { DateRangePickerFormField } from '@features/form/ui';
 import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
 import { FormDisplay } from '../../../../../features/form/ui/form-display';
 import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../../shared/ui/form';
 import { SubTitlesFormField } from '../../../../../features/form/ui';
-import { LinkBox } from '../../../../../widgets/layout/ui/container/slot/link-box';
 import { MovieInfo } from '@features/learning-resource';
 
 export const Route = createLazyFileRoute('/_unauth/learning_test/resource/view/video')({

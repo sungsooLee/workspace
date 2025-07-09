@@ -3,7 +3,6 @@ import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
 import {
   Button,
   Checkbox,
@@ -17,7 +16,6 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { SearchBox } from '@shared/ui/search-box';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { queryOptions as requestChannelQueryOptions } from '@entities/channel/service/request-channel.queries';
@@ -28,6 +26,7 @@ import {
   useRejectRequestChannel,
 } from '@entities/channel/service/request-channel.hook';
 import { EnGlobalConst } from '@types';
+import { MainContents, PageContainer } from '@shared/ui';
 
 export const Route = createFileRoute('/_layout/tenant/channel/request/')({
   component: RouteComponent,

@@ -1,9 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { CategoryManage } from '@features/platform-management/platform/category-managemnet';
 import { pageRouteConfig } from '@features/auth/index';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
-import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
+import { MainContents, PageContainer, SectionLayout } from '@shared/ui';
 
 // TODO
 // 삭제시 에러코드 확인하여 팝업 처리

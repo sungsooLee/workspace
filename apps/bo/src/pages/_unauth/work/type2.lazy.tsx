@@ -3,11 +3,8 @@ import { createLazyFileRoute } from '@tanstack/react-router';
 import { Button, DynamicFormField, Input } from '@learnway/ui';
 import { CODE_GROUP } from '@learnway/config';
 import { z } from '@learnway/shared';
-import { ContentsButtons } from '../../../widgets/layout/ui/container/slot/contents-buttons';
-import { MainContents } from '../../../widgets/layout/ui/container/slot/main-contents';
-import { SubContents } from '../../../widgets/layout/ui/container/slot/sub-contents';
-import { ContentsRow } from '../../../widgets/layout/ui/container/parts/contents-row';
-import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
+import { PageContainer, SubContents, ContentsButtons, MainContents, ContentsRow } from '@shared/ui';
+
 import { queryOptions as codeQueryOptions } from '../../../entities/api-mock/service/mock-code.queries';
 import { MovieInfo } from '../../../widgets/contents/movie-info';
 import { FC } from 'react';

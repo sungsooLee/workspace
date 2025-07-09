@@ -1,9 +1,9 @@
+import { SectionLayout } from '@shared/ui';
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { useRouter } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 
-import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';

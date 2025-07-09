@@ -4,12 +4,11 @@ import { Outlet, createRootRouteWithContext, useRouter } from '@tanstack/react-r
 import { ModalWrapper, ToastWrapper, useModalStore } from '@learnway/ui';
 import { useGlobalRouterEvent } from '@learnway/hooks';
 import { setupErrorToastListener } from '@learnway/shared';
-import { MinWidthRequired } from '../widgets/layout/ui/min-width-required';
+import { MinWidthRequired } from '@shared/ui';
 import { useBreakpointModalClose } from '../shared/lib/breakpoint-modal.hook';
 import { NotFound } from '@features/layout';
 import { useFetchAuthUser, useRenewalMenuStateFromRouting } from '@learnway/auth/entities';
 import { PageRouteContext } from '@learnway/shared';
-import { ServerStatus } from '../shared/ui/temp-server-status/server-status';
 
 const TanStackRouterDevtools = lazy(() =>
   import.meta.env.VITE_APP_ENV === 'local'

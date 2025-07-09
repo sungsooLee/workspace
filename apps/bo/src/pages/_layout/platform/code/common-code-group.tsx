@@ -1,7 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { GridBoxState } from '@learnway/ui';
 import { pageRouteConfig } from '@features/auth';
 import { useCodeGroupList } from '@entities/common-code/service/common-code-group.hook';
@@ -9,6 +7,7 @@ import { useState } from 'react';
 import { SearchBox } from '@shared/ui';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { CommonCodeGroupGrid } from '@features/platform-management/platform/code-managemnet/ui/common-code-group-grid';
+import { MainContents, PageContainer } from '@shared/ui';
 
 export const Route = createFileRoute('/_layout/platform/code/common-code-group')({
   component: RouteComponent,

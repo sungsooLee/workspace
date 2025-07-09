@@ -1,8 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { MyRole } from '@features/user/my-page/ui/my-role';
 import { pageRouteConfig } from '@features/auth';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
+import { MainContents, PageContainer } from '@shared/ui';
 
 export const Route = createFileRoute('/_layout/my-page/role/')({
   component: RouteComponent,

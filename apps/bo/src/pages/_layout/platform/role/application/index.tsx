@@ -11,8 +11,6 @@ import {
   useModal,
 } from '@learnway/ui';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
 import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
@@ -29,6 +27,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
 import { size } from 'lodash';
+import { MainContents, PageContainer } from '@shared/ui';
 
 export const Route = createFileRoute('/_layout/platform/role/application/')({
   component: RouteComponent,

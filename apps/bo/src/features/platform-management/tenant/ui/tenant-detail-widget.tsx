@@ -18,7 +18,7 @@ import {
 } from '@learnway/ui';
 import { FormRow, NoticeBox, FormSubTitle, SwitchFormField, FormInfoArea } from '@shared/ui';
 
-import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
+import { SectionLayout } from '@shared/ui';
 
 import styles from './main-widget.module.css';
 import dataWrapStyles from './data-wrap.module.css';
@@ -153,7 +153,7 @@ const TenantDetailWidgetComponent: FC<any> = () => {
           body.isWebExposed = body.device.includes(EnDeviceType.isPc);
           body.isMobileExposed = body.device.includes(EnDeviceType.isMobile);
           body.userGroupList = body.userGroupList.map((item: any) => item.userGroupId);
-          const payload = { tenantWidgetId: selectedOption.tenantWidgetId, body: body };
+          const payload = { tenantWidgetId: selectedOption.tenantWidgetId, body };
           updateTenantWidget(payload);
         }
       },

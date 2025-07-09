@@ -1,8 +1,8 @@
+import { SectionLayout } from '@shared/ui';
 import React, { useEffect, useState } from 'react';
 import { useWatch } from 'react-hook-form';
 import { t } from 'i18next';
 import { useQueryClient } from '@tanstack/react-query';
-import { SectionLayout } from '@widgets/layout/ui/container/section-layout/section-layout';
 
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
@@ -143,7 +143,7 @@ const TenantCompanyOrganizationTreeComponent = ({
   });
 
   const watchedDepartment = useWatch({
-    control: control,
+    control,
     name: 'managerEmployeeNumber',
   });
 
@@ -186,7 +186,7 @@ const TenantCompanyOrganizationTreeComponent = ({
   };
 
   const duplicateDeptNameCheck = async (deptName: string) => {
-    const payload: any = { deptName: deptName };
+    const payload: any = { deptName };
     if (formMode === EnFormMode.VIEW) payload.deptId = getValues().deptId;
     const result: boolean = await DepartmentService.existDepartmentName(payload);
 
@@ -284,7 +284,7 @@ const TenantCompanyOrganizationTreeComponent = ({
       const data = {
         ...departmentData,
         deptLoc: findOrganizationPathById(deptTreeData, departmentData.deptId.toString()),
-        managerEmployeeNumber: managerEmployeeNumber,
+        managerEmployeeNumber,
         deptName: {
           fieldValue: departmentData.deptName,
           checkState: DuplicateState.okStart,
@@ -335,7 +335,7 @@ const TenantCompanyOrganizationTreeComponent = ({
   const handleOnSubmit = async (data: any) => {
     console.log('### handleOnSubmit', data);
     const payload: any = {
-      companyCode: companyCode,
+      companyCode,
       sortOrder: 1,
       managerEmployeeNumberUuid: data.managerEmployeeNumber[0]?.uuid,
       deptName: data.deptName.fieldValue,
@@ -359,7 +359,7 @@ const TenantCompanyOrganizationTreeComponent = ({
     if (deptId && formMode === EnFormMode.VIEW) {
       if (await openConfirm('삭제 하시겠습니까?')) {
         const payload = {
-          companyCode: companyCode,
+          companyCode,
           deptIdList: [deptId],
         };
         deleteDepartment(payload);
@@ -431,7 +431,7 @@ const TenantCompanyOrganizationTreeComponent = ({
           if (nodeInfo.position === 'INSIDE') {
             const payload = {
               deptId: nodeInfo.sourceNode.deptId,
-              companyCode: companyCode,
+              companyCode,
               parentDeptId: nodeInfo.targetNode?.deptId,
               sortOrder: 1,
             };
@@ -440,7 +440,7 @@ const TenantCompanyOrganizationTreeComponent = ({
             const targetIndex = nodeInfo.targetIndex!;
             const payload = {
               deptId: nodeInfo.sourceNode.deptId,
-              companyCode: companyCode,
+              companyCode,
               parentDeptId: nodeInfo.targetNode?.parentKey,
               sortOrder: targetIndex + 1,
             };

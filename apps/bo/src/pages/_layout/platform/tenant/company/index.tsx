@@ -3,7 +3,7 @@ import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 
-import { PageContainer, MainContents, ContentsButtons } from '@widgets/layout';
+import { PageContainer, MainContents, ContentsButtons } from '@shared/ui';
 
 import { Button, Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
@@ -36,7 +36,7 @@ function RouteComponent() {
   const searchParam = () => {
     const data = getValues();
     const searchData = {
-      tenantId: tenantId,
+      tenantId,
       companyType: data.companyType,
       name: data.name,
       isUsed: data.isUsed,

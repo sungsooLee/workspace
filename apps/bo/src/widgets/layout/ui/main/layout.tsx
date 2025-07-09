@@ -10,7 +10,7 @@ import { Header } from './header/header';
 
 import styles from './layout.module.css';
 import { useWindowSize } from 'react-use';
-import { MinWidthRequired } from '../min-width-required';
+import { MinWidthRequired } from '../../../../shared/ui/min-width-required/min-width-required';
 
 interface LayoutComponentProps {
   children: ReactNode;

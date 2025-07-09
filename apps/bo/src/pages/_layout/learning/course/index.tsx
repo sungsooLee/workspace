@@ -1,16 +1,20 @@
 import { queryOptions } from '@entities/course/service/course.queries';
 import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
 import { CourseTypeOptionCardModal } from '@features/learning-operate/course/course-management';
-import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
+import {
+  GridExcelDownloadButton,
+  GridExcelUploadButton,
+  TenantByRoleDropdownFormField,
+  TenantChannelDropdownFormField,
+  SearchBoxForm,
+  FormRow2,
+} from '@shared/ui';
 import { LMSApiPrefix } from '@learnway/config';
 import { CODE_GROUP, getCodeLabel, useDynamicForm2 } from '@learnway/hooks';
 import { Button, ContentsRow, Divider, GridBox, Input, useGridBox, useModal } from '@learnway/ui';
-import { FormRow2, SearchBoxForm, TenantChannelDropdownFormField } from '@shared/ui';
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { CourseListItem, CoursesQueryParams } from '@types';
-import { PageContainer } from '@widgets/layout/ui/container/page-container';
-import { ContentsButtons } from '@widgets/layout/ui/container/slot/contents-buttons';
-import { MainContents } from '@widgets/layout/ui/container/slot/main-contents';
+import { PageContainer, MainContents, ContentsButtons } from '@shared/ui';
 import { t } from 'i18next';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -107,7 +111,7 @@ function RouteComponent() {
         <SearchBoxForm onSearch={onSubmit(handleOnSearch)}>
           <ContentsRow>
             {/*테넌트*/}
-            <FormRow2
+            {/* <FormRow2
               provider={provider}
               name={'tenantId'}
               label={t('LABEL.form.label.tenant')}
@@ -119,6 +123,17 @@ function RouteComponent() {
                   presetOptionLabel={t('LABEL.form.label.select', '선택')}
                 />
               }
+              validation={{
+                required: true,
+                format: 'object',
+              }}
+            /> */}
+            {/*테넌트 신규 폼필드*/}
+            <FormRow2
+              provider={provider}
+              name={'tenantId'}
+              label={'테넌트'}
+              element={<TenantByRoleDropdownFormField />}
               validation={{
                 required: true,
                 format: 'object',

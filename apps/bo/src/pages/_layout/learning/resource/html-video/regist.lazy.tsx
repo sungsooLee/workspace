@@ -8,9 +8,8 @@ import {
 } from '@learnway/ui';
 import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '@shared/ui';
 import { createLazyFileRoute, useRouterState } from '@tanstack/react-router';
-import { ContentsButtons, MainContents, PageContainer } from '@widgets/layout';
+import { MainContents, PageContainer, ContentsButtons, SubContents } from '@shared/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { SubContents } from '@widgets/layout/ui/container/slot/sub-contents';
 import { SharedChannelGridFormField } from '@features/form/ui';
 import styles from './test-detail.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
