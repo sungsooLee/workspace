@@ -14,7 +14,6 @@ const TenantByRoleChannelCheckboxFormFieldComponent = forwardRef<
   HTMLDivElement,
   TenantByRoleChannelCheckboxFormFieldProps
 >(({ value, channelUuid, onChange, ...props }, ref) => {
-  // 한 줄로 roleId만 추출
   const roleId = useFetchAuthUser<AuthUser>().data?.activeRole?.roleId;
   const { data } = useFetchChannelByRoleId(roleId as number);
   const channel = data?.content?.find((d: ChannelByRoleId) => d.channelUuid === channelUuid);
