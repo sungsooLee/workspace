@@ -1,6 +1,5 @@
 import { t } from 'i18next';
 import { isArray } from 'lodash';
-import { TreeNode } from '@learnway/ui';
 
 /**
  * 특정 키 값을 기준으로 객체를 리스트에 추가하거나 제거하는 함수
@@ -255,35 +254,35 @@ export function isEmptyData(value: unknown): boolean {
  * @param idKey 트리 노드의 key로 사용할 필드명 (기본값: 'id')
  * @returns TreeNode[] 트리 구조로 변환된 데이터
  */
-export const convertArrayToTreeNodes = (
-  apiData: any[] | any,
-  titleKey = 'name',
-  idKey = 'id',
-): TreeNode[] => {
-  // 단일 객체인 경우 배열로 변환
-  const dataArray = Array.isArray(apiData) ? apiData : [apiData];
-
-  const convert = (nodes: any[], parentId?: string): TreeNode[] => {
-    if (!Array.isArray(nodes) || nodes.length === 0) return [];
-
-    return nodes.map((node) => {
-      const nodeId = node[idKey]?.toString?.() ?? '';
-      const key = parentId ? `${parentId}-${nodeId}` : nodeId;
-
-      const treeNode: TreeNode = {
-        ...node,
-        key,
-        title: node[titleKey],
-        parentId,
-      };
-
-      if (Array.isArray(node.children) && node.children.length > 0) {
-        treeNode.children = convert(node.children, key);
-      }
-
-      return treeNode;
-    });
-  };
-
-  return convert(dataArray);
-};
+// export const convertArrayToTreeNodes = (
+//   apiData: any[] | any,
+//   titleKey = 'name',
+//   idKey = 'id',
+// ): TreeNode[] => {
+//   // 단일 객체인 경우 배열로 변환
+//   const dataArray = Array.isArray(apiData) ? apiData : [apiData];
+//
+//   const convert = (nodes: any[], parentId?: string): TreeNode[] => {
+//     if (!Array.isArray(nodes) || nodes.length === 0) return [];
+//
+//     return nodes.map((node) => {
+//       const nodeId = node[idKey]?.toString?.() ?? '';
+//       const key = parentId ? `${parentId}-${nodeId}` : nodeId;
+//
+//       const treeNode: TreeNode = {
+//         ...node,
+//         key,
+//         title: node[titleKey],
+//         parentId,
+//       };
+//
+//       if (Array.isArray(node.children) && node.children.length > 0) {
+//         treeNode.children = convert(node.children, key);
+//       }
+//
+//       return treeNode;
+//     });
+//   };
+//
+//   return convert(dataArray);
+// };

@@ -10,7 +10,6 @@ import {
   useModal,
   Panel,
   useToast,
-  Carousel,
   SelectOption,
   ChipList,
   ProgressBar,
@@ -21,7 +20,6 @@ import {
   IcoStar,
   IcoCaution,
   IcoClock01,
-  IcoAvatar,
   IcoSymbol,
   IcoBook,
   IcoBuilding,
@@ -34,6 +32,7 @@ import {
   IcoTime,
   IcoEye,
   IcoArrowDown,
+  IcoChair,
 } from '@learnway/icons';
 import {
   CourseDashboard,
@@ -47,7 +46,6 @@ import {
 
 import pageContentsStyles from '../../_page-contents.module.css';
 import pageFullInner from '../../../widgets/layout/ui/container/page-full-inner.module.css';
-import definitionListStyles from './definition-list.module.css';
 import packageInformationStyles from './package-information.module.css';
 import lectureStyles from './lecture.module.css';
 import packageSideStyles from './package-side.module.css';
@@ -183,14 +181,14 @@ function RouteComponent() {
       original: {
         number: '1차',
         date: '2026-01-15 ~ 2026-01-04',
-        definitionList: [
+        info: [
           {
-            tit: '잔여석',
+            icon: IcoChair,
             txt: '999',
           },
           {
-            tit: '장소',
-            txt: '온라인 비대면',
+            icon: IcoLocation,
+            txt: '온라인',
           },
         ],
       },
@@ -201,13 +199,13 @@ function RouteComponent() {
       original: {
         number: '2차',
         date: '2026-01-15 ~ 2026-01-04',
-        definitionList: [
+        info: [
           {
-            tit: '잔여석',
-            txt: '111',
+            icon: IcoChair,
+            txt: '999',
           },
           {
-            tit: '장소',
+            icon: IcoLocation,
             txt: '온라인 비대면',
           },
         ],
@@ -347,42 +345,6 @@ function RouteComponent() {
     { label: '타 과정에 비해 수료가 쉬운 편', value: 'E' },
   ];
 
-  // 퍼블수정 20250625 swiper (작업 진행 예정)
-  const itemSwiper = [
-    <Panel hideHeaderUnderline actions="" className={styles.card_panel} type="rounded">
-      <div className={styles.left}>
-        <strong className={styles.tit}>이 과정을 꼭 들어야 하는 이유</strong>
-        <p className={styles.txt}>
-          <IcoSymbol width={16} height={16} />
-          AI가 요약한 이 과정의 핵심 포인트
-        </p>
-        <div className={styles.chip}>
-          <ChipList options={options} hideCloseButton />
-        </div>
-      </div>
-      <div className={`${styles.right} ${styles.line}`}>
-        <strong className={styles.tit}>
-          “실무에 적용하기 유용”하다는 점에서 이 과정을 많이 추천했어요.
-        </strong>
-        <div className={styles.progress}>
-          <ProgressBar progress={89} />
-          <span>89%</span>
-        </div>
-        <div className={styles.avatar}>
-          <div className={styles.img}>
-            <Avatar imageUrl="https://github.com/shadcn.png" />
-            <Avatar imageUrl="https://github.com/shadcn.png" />
-            <Avatar imageUrl="https://github.com/shadcn.png" />
-          </div>
-          <p>
-            <em>472명</em>의 동료들이 응답
-          </p>
-        </div>
-      </div>
-    </Panel>,
-    <div>2</div>,
-  ];
-
   // 학습유형 리스트 open, close
   const [listCategoryOpen, setListCategoryOpen] = useState<boolean>(true);
   const [listSubTitleOpen, setListSubTitleOpen] = useState<boolean>(false);
@@ -395,7 +357,7 @@ function RouteComponent() {
         <div className={pageContentsStyles.main_contents}>
           <div className={styles.thumbnail_img}>
             {/* 플레이 버튼 o */}
-            <Button onClick={() => CourseCancelCompleteAlert()}>
+            <Button>
               <img src={bnrImage1} alt="" />
               <div className={styles.img_play}>
                 <img src={playImg} alt="" />
@@ -404,15 +366,6 @@ function RouteComponent() {
             {/* 플레이 버튼 x */}
             {/* <img src={bnrImage1} alt="" /> */}
           </div>
-
-          {/* 퍼블 홀딩 */}
-          {/* <Carousel
-            items={itemSwiper}
-            className={`${styles.card_swiper}`}
-            spaceBetween={0}
-            slidesPerView={1}
-            showNavigation={true}
-          /> */}
 
           <div className={styles.tab_title}>
             <div className={styles.box}>
@@ -552,7 +505,6 @@ function RouteComponent() {
                     <strong>현재 수강 신청 가능한 차수가 없습니다.</strong>
                   </div>
                 </Panel>
-
                 {/* 인원마감/대기신청 */}
                 <Panel hideHeaderUnderline type="rounded" className={styles.result_box}>
                   <div>
@@ -562,7 +514,6 @@ function RouteComponent() {
                     <p>수강신청일시는 예고없이 변경될수 있습니다.</p>
                   </div>
                 </Panel>
-
                 {/* 강의 정보 */}
                 <OptionCard
                   cols={1}
@@ -574,25 +525,20 @@ function RouteComponent() {
                     <div
                       className={`${lectureStyles.start} ${lectureStyles.course_information} ${lectureStyles.course_option}`}
                     >
-                      <div className={`${lectureStyles.box} ${packageInformationStyles.box}`}>
+                      <div className={`${lectureStyles.box}`}>
                         <p className={lectureStyles.date}>
                           <span>{original?.date}</span>
                           <span>{original?.number}</span>
                         </p>
                         <strong className={lectureStyles.tit}>{label}</strong>
                       </div>
-                      <div className={`${lectureStyles.box} ${packageInformationStyles.box}`}>
-                        {/* definitionListStyles module */}
-                        <div
-                          className={`${definitionListStyles.start} ${definitionListStyles.list}`}
-                        >
-                          {original.definitionList.map((item: any, index: number) => (
-                            <dl key={index}>
-                              <dt>{item.tit}</dt>
-                              <dd>{item.txt}</dd>
-                            </dl>
-                          ))}
-                        </div>
+                      <div className={`${lectureStyles.box} `}>
+                        {original.info.map((item: any, index: number) => (
+                          <span key={index} className={`${lectureStyles.info}`}>
+                            <item.icon width={20} height={20} />
+                            {item.txt}
+                          </span>
+                        ))}
                       </div>
                     </div>
                   )}

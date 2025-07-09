@@ -1,0 +1,4 @@
+/* divider.css */
+.divider {
+  @apply bg-[var(--gray90)];
+}

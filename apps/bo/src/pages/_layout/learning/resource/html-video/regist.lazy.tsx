@@ -18,7 +18,7 @@ import { cn } from '@learnway/shared';
 import style from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { LEARNING_TYPE } from '@learnway/config';
-import { ChannelListChoiceModal, ManagerChoiceModal } from '@features/shared';
+import { ChannelListChoiceModal, ManagerChoiceModal } from '@shared/ui';
 import { FormDisplay } from '@features/form/ui/form-display';
 import { DateRangePickerFormField } from '@features/form/ui';
 import { LearningResourceFileUploadModal } from '@features/learning-resource';

@@ -5,7 +5,7 @@ import { cn } from '@learnway/shared';
 import { Checkbox, Divider, GridBox, useGridBox, useModal } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
-import { GridExcelUploadButton } from '@features/shared';
+import { GridExcelUploadButton } from '@shared/ui';
 import { EnOrganizationShowType } from './company-organization-tree';
 import { queryOptions as departmentQuery } from '@entities/department/service/department.queries';
 import { hmgQueryOptions as hmgDepartmentQuery } from '@entities/department/service/hmg-department.queries';
@@ -206,7 +206,7 @@ const CompanyOrganizationInfoListComponent = ({
 
 export const CompanyOrganizationInfoList = CompanyOrganizationInfoListComponent;
 
-const searchConfig = () => ({
+const searchConfig = (): SearchBoxConfig => ({
   builders: [
     [
       {

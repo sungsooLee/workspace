@@ -25,7 +25,7 @@ import { DynamicFormConfig, useDynamicForm, CODE_GROUP, S3_PATH } from '@learnwa
 import { FormRow, FormSubTitle, AttachmentFormField } from '@shared/ui';
 import { FormDisplay } from '@features/form/ui/form-display';
 import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
-import { UserChoiceModal } from '@features/shared';
+import { UserChoiceModal } from '@shared/ui';
 
 import { SingleAttachmentFormField } from '@shared/ui/form/single-attachment-form-field';
 import { EnFormMode } from '@types';

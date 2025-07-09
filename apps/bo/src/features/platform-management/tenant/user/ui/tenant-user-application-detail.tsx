@@ -31,13 +31,13 @@ import { cn, DATE_TIME_FORMAT, getDateToString, getStringToDate } from '@learnwa
 import { FormRow, FormSubTitle, ContentsHistoryInfoFormField } from '@shared/ui';
 import { FormDisplay } from '@features/form/ui/form-display';
 import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
-import { LoginRestrictTimeSettingModal } from '@features/shared/ui/modal/login-restrict-time-setting-modal';
+import { LoginRestrictTimeSettingModal } from '@shared/ui/modal/login-restrict-time-setting-modal';
 import {
   UserGroupTabsChoiceModal,
   UserGroupChoiceModal,
   CompanyChoiceModal,
   OrganizationChoiceTreeModal,
-} from '@features/shared';
+} from '@shared/ui';
 import { EnFormMode, EnGlobalConst, EMAIL_REGEX } from '@types';
 
 import { useCreateCompany, useUpdateCompany, useFetchCompany } from '@entities/companies';

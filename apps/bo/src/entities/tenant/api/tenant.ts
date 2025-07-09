@@ -1,8 +1,7 @@
 import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
 
-import { Tenant } from '../../../types/entities/tenant';
-import { PageableContent } from '@types';
+import { PaginationResponse, Tenant, TenantByRoleId, PageableContent } from '@types';
 
 export default class TenantService {
   static fetchTenant(tenantId: number) {
@@ -43,6 +42,18 @@ export default class TenantService {
 
     return data.content;
   }
+
+  /**
+   * @description 테넌트 목록조회 ( 역할 기준 )
+   * @param roleId
+   * @returns TenantByRoleId[]
+   */
+  static fetchTenantByRoleId<T = TenantByRoleId>(roleId: number): Promise<PaginationResponse<T>> {
+    return httpService.get<PaginationResponse<T>>(`${PMSApiPrefix()}/tenants/role/${roleId}`, {
+      page: 0,
+      size: 1000,
+    });
+  }
 }
 
 function genTenantCreate(payload: any) {
@@ -77,7 +88,7 @@ function genTenantCreate(payload: any) {
       isUseRotemTenantCustomOption: payload.isRotemTenantCustomOption,
       isUseOutsourcingTenantCustomOption: payload.isOutsourcingTenantCustomOption,
       isUseWiaTenantCustomOption: payload.isWiaTenantCustomOption,
-      isUseAutoeverTenantCustomOption: payload.isAutoeverTenantCustomOption
+      isUseAutoeverTenantCustomOption: payload.isAutoeverTenantCustomOption,
     },
   };
 }
@@ -116,7 +127,7 @@ function genTenantUpdate(payload: any) {
       isUseRotemTenantCustomOption: payload.isRotemTenantCustomOption,
       isUseOutsourcingTenantCustomOption: payload.isOutsourcingTenantCustomOption,
       isUseWiaTenantCustomOption: payload.isWiaTenantCustomOption,
-      isUseAutoeverTenantCustomOption: payload.isAutoeverTenantCustomOption
+      isUseAutoeverTenantCustomOption: payload.isAutoeverTenantCustomOption,
     },
   };
 }

@@ -12,7 +12,7 @@ import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/
 import { FormDisplay } from '../../../../../features/form/ui/form-display';
 import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../../shared/ui/form';
 import { LinkBox } from '../../../../../widgets/layout/ui/container/slot/link-box';
-import { ChannelChoiceModal, ManagerChoiceModal } from '../../../../../features/shared';
+import { ChannelChoiceModal, ManagerChoiceModal } from '@shared/ui';
 import { BlogInfo } from '@features/learning-resource';
 
 export const Route = createLazyFileRoute('/_unauth/learning_test/resource/view/link')({

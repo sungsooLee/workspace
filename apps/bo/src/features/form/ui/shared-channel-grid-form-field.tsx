@@ -4,8 +4,8 @@ import { cn } from '@learnway/shared';
 import { BaseFormFieldProps } from '@learnway/hooks';
 import { Button, EditCheckboxCell, GridBox, useModal } from '@learnway/ui';
 import { useTranslation } from 'react-i18next';
-import { ChannelChoiceModal } from '../../shared';
 import { CellContext } from '@tanstack/react-table';
+import { ChannelChoiceModal } from '@shared/ui';
 
 interface SharedChannelGridFormFieldComponentProps extends BaseFormFieldProps<any[]> {
   onClick?: (value?: any) => void;

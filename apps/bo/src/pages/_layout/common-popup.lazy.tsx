@@ -20,7 +20,7 @@ import {
   OrganizationShuttleTreeModal,
   TrainingPlaceChoiceModal,
   TrainingPlaceDetailModal,
-} from '@features/shared';
+} from '@shared/ui';
 import {
   Button,
   ChipListModalSelectorFormField,
