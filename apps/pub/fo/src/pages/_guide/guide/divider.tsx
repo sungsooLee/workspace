@@ -30,10 +30,10 @@ function RouteComponent() {
           </div>
         </div>
 
-        <h3 className="guide_tit3">연한 타입</h3>
+        <h3 className="guide_tit3">진한 타입</h3>
         <div className="flex_box">
           <div className="desc w-full">
-            <Divider bgType={'light'} />
+            <Divider bgType={'dark'} />
           </div>
         </div>
       </div>
