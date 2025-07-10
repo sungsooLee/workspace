@@ -21,7 +21,7 @@ export interface ThumbnailImageUploadProps {
   /**
    * 썸네일 이미지 업로드 타입 (이미지 경로 올릴지 결정되는 값)
    */
-  imageStorageType?: 'public' | 'db-manage';
+  // imageStorageType?: 'public' | 'db-manage';
   /**
    * 썸네일 이미지 옵션 배열 (초기값 또는 부모로부터 제어되는 값)
    */
@@ -78,7 +78,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
   (
     {
       className,
-      imageStorageType,
+      // imageStorageType,
       // options: ownerOptions = [],
       description,
       max,
