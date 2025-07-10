@@ -17,6 +17,10 @@ import { queryOptions } from '@entities/instructor/service/instructor.queries';
 import { useQueryClient } from '@tanstack/react-query';
 import { GridExcelDownloadButton } from '@shared/ui';
 import { LMSApiPrefix } from '@learnway/config';
+import { EnPageMode } from '@types';
+import { IcoPlus } from '@learnway/icons';
+import { InstructorRegistPopup } from '../modal/instructor-regist-modal';
+import { useActiveMenuDepthState, useFetchAuthUser } from '@learnway/auth/entities';
 
 const _global = {
   linkClick: (payload: any) => {
@@ -24,13 +28,18 @@ const _global = {
   },
 };
 
+type InstructorListProps = {
+  viewMode: string;
+};
+
 /**
  * NLP_BO_LMS_0027 : 강사 목록 조회
  * @returns
  */
-const InstructorListComponent = () => {
+const InstructorListComponent = ({ viewMode }: InstructorListProps) => {
   const router = useRouter();
   const { open: openModal, alert } = useModal();
+  const [columns, setColumns] = useState() as any;
 
   const queryClient = useQueryClient();
 
@@ -78,13 +87,17 @@ const InstructorListComponent = () => {
 
   const gridConfig: useGridBoxConfig = {
     query: queryOptions.all,
-    columns: [
-      {
-        name: 'no1',
-        label: 'NO.',
-        type: 'numbering',
-      },
-    ],
+    columns:
+      viewMode === EnPageMode.PAGE
+        ? [
+            {
+              name: 'no1',
+              label: 'NO.',
+              type: 'numbering',
+              size: 48,
+            },
+          ]
+        : [],
     data: [],
     gridState: {
       page: 0,
@@ -94,6 +107,8 @@ const InstructorListComponent = () => {
   };
 
   const location = useLocation();
+  const { data: user } = useFetchAuthUser();
+  const { activeMenuDepthMenu } = useActiveMenuDepthState((state) => state);
 
   _global.linkClick = (payload: any) => {
     router.navigate({
@@ -117,6 +132,102 @@ const InstructorListComponent = () => {
   const [valuesWithLabel, setValuesWithLabel] = useState<Record<string, SelectOption>>({});
 
   useEffect(() => {
+    let columns = [
+      columnHelper.accessor('tenantName', {
+        header: t('테넌트'),
+        cell: (info) => info.getValue(),
+        enableGrouping: false,
+        size: viewMode === EnPageMode.PAGE ? 180 : 246,
+      }),
+      columnHelper.accessor('instructorType', {
+        header: t('강사 타입'),
+        cell: (info) => (info.getValue() === 'INTERNAL_INSTRUCTOR' ? '사내 강사' : '사외 강사'),
+        enableGrouping: false,
+        size: viewMode === EnPageMode.PAGE ? 180 : 246,
+      }),
+      columnHelper.accessor('instructorName', {
+        header: t('강사명'),
+        cell: (info) =>
+          viewMode === EnPageMode.PAGE ? (
+            <Button
+              className="link"
+              onClick={() => {
+                _global.linkClick(info.row.original as any);
+              }}
+              label={info.getValue() as string}
+            />
+          ) : (
+            info.getValue()
+          ),
+        size: viewMode === EnPageMode.PAGE ? 366 : 246,
+      }),
+      columnHelper.accessor('employeeIdOrEmail', {
+        header: t('이메일'),
+        cell: (info) => info.getValue(),
+        enableGrouping: false,
+        size: viewMode === EnPageMode.PAGE ? 180 : 246,
+      }),
+      columnHelper.accessor('telNo', {
+        header: t('연락처'),
+        cell: (info) =>
+          info.getValue() === null
+            ? ''
+            : info.row.original.telNo?.replace(/(\d{3})(\d{4})(\d{4})/, '$1-****-$3'),
+        enableGrouping: false,
+        size: viewMode === EnPageMode.PAGE ? 180 : 246,
+      }),
+    ] as ColumnDef<any, unknown>[];
+
+    if (viewMode === EnPageMode.PAGE) {
+      const pageColumns = [
+        columnHelper.accessor('mappedCourseCount', {
+          header: t('배정된 과정수'),
+          cell: (info) => info.getValue(),
+          enableGrouping: false,
+          size: 180,
+        }),
+        columnHelper.accessor('satisfactionScore', {
+          header: t('만족도'),
+          cell: (info) => info.getValue(),
+          enableGrouping: false,
+          size: 180,
+        }),
+      ];
+      columns = [...columns, ...pageColumns];
+    } else {
+      const modalColumns = [
+        columnHelper.accessor('mappedCourseCount', {
+          header: t('선택'),
+          cell: (info) => (
+            <Button
+              variant="primary"
+              onClick={(e) => {
+                e.stopPropagation();
+                const rowData = info.row.original;
+                openModal({
+                  width: 'md',
+                  content: (
+                    <InstructorRegistPopup
+                      instructorId={rowData.instructorId}
+                      refreshOnSearch={refreshOnSearch}
+                    />
+                  ),
+                });
+              }}
+              label={t('선택')}
+            />
+          ),
+          enableGrouping: false,
+          size: 120,
+          meta: {
+            cellAlign: 'center',
+          },
+        }),
+      ];
+      columns = [...columns, ...modalColumns];
+    }
+
+    setColumns(columns);
     gridFetch();
   }, []);
 
@@ -128,61 +239,30 @@ const InstructorListComponent = () => {
       employeeIdOrEmail: data.employeeIdOrEmail,
     };
 
-    setParams(compactValues(searchData));
+    const excelParam = {
+      downloadReason: {
+        userUuid: user?.uuid,
+        menuPath: activeMenuDepthMenu?.map((menu) => menu.menuName).join(' > '),
+        dataCount: 1500,
+        requestParameter: 'string',
+        downloadReasonType: 'AFFAIRS',
+        downloadDetailReasonType: 'AFFAIRS01',
+        downloadDetailReason: 'string',
+      },
+    };
+    setParams({
+      ...searchData,
+      ...excelParam,
+    });
     setValuesWithLabel(getValuesWithLabel());
     gridFetch(searchData);
   }, []);
 
+  const refreshOnSearch = () => {
+    handleOnSearch(getValues);
+  };
+
   const columnHelper = createColumnHelper<any>();
-
-  const columns = [
-    columnHelper.accessor('tenantName', {
-      header: t('테넌트'),
-      cell: (info) => info.getValue(),
-      enableGrouping: false,
-    }),
-    columnHelper.accessor('instructorType', {
-      header: t('강사 타입'),
-      cell: (info) => (info.getValue() === 'INTERNAL_INSTRUCTOR' ? '사내 강사' : '사외 강사'),
-      enableGrouping: false,
-    }),
-    columnHelper.accessor('instructorName', {
-      header: t('강사명'),
-      cell: (info) => (
-        <Button
-          className="link"
-          onClick={() => {
-            _global.linkClick(info.row.original as any);
-          }}
-          label={info.getValue() as string}
-        />
-      ),
-    }),
-    columnHelper.accessor('employeeIdOrEmail', {
-      header: t('이메일'),
-      cell: (info) => info.getValue(),
-      enableGrouping: false,
-    }),
-    columnHelper.accessor('telNo', {
-      header: t('연락처'),
-      cell: (info) =>
-        info.getValue() === null
-          ? ''
-          : info.row.original.telNo?.replace(/(\d{3})(\d{4})(\d{4})/, '$1-****-$3'),
-      enableGrouping: false,
-    }),
-    columnHelper.accessor('mappedCourseCount', {
-      header: t('배정된 과정수'),
-      cell: (info) => info.getValue(),
-      enableGrouping: false,
-    }),
-    columnHelper.accessor('satisfactionScore', {
-      header: t('만족도'),
-      cell: (info) => info.getValue(),
-      enableGrouping: false,
-    }),
-  ] as ColumnDef<any, unknown>[];
-
   return (
     <>
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
@@ -190,9 +270,9 @@ const InstructorListComponent = () => {
       <GridBox
         config={gConfig}
         columns={columns}
-        title="강사 목록"
+        title={viewMode === EnPageMode.PAGE ? t('강사 목록') : t('강사/튜터 목록')}
         customButtonNode={
-          <>
+          viewMode === EnPageMode.PAGE ? (
             <GridExcelDownloadButton
               method="post"
               url={`${LMSApiPrefix()}/instructor/excel`}
@@ -201,7 +281,22 @@ const InstructorListComponent = () => {
               dataCount={data?.totalElements}
               disabled={!data?.totalElements}
             />
-          </>
+          ) : (
+            <Button
+              variant="text"
+              size="sm"
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal({
+                  width: 'md',
+                  content: <InstructorRegistPopup refreshOnSearch={refreshOnSearch} />,
+                });
+              }}
+            >
+              <IcoPlus width={16} height={16} stroke="#131C30" />
+              {t('LABEL.button.add')}
+            </Button>
+          )
         }
       />
     </>
