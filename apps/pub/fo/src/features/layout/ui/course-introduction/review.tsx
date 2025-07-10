@@ -6,7 +6,6 @@ import { Review, ReviewRating } from '../../../../features/layout';
 import styles from './review.module.css';
 
 const CourseReviewCompoment = () => {
-  // 퍼블수정 20250625 swiper (작업 진행 예정)
   const itemSwiper = [<Review />, <Review />, <Review />, <Review />, <Review />, <Review />];
 
   return (

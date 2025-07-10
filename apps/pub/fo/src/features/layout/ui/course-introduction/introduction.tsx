@@ -16,7 +16,8 @@ import discriminationImg from '@learnway/styles/fo/assets/images/temp/img_discri
 import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 
 const CourseIntroductionCompoment = () => {
-  const options: SelectOption[] = [
+  // 태그
+  const tagValue: SelectOption[] = [
     { label: '스마트팩토리', value: 'A' },
     { label: '디지털혁신', value: 'B' },
     { label: '정보보안기술', value: 'C' },
@@ -119,7 +120,7 @@ const CourseIntroductionCompoment = () => {
 
       {/* chip */}
       <div className={styles.chip_box}>
-        <ChipList options={options} prefixCharacter="#" hideCloseButton />
+        <ChipList options={tagValue} prefixCharacter="#" hideCloseButton />
       </div>
 
       {/* 교육목표 */}

@@ -11,16 +11,12 @@ import {
   Panel,
   useToast,
   SelectOption,
-  ChipList,
-  ProgressBar,
-  Avatar,
 } from '@learnway/ui';
 import {
   IcoHeart,
   IcoStar,
   IcoCaution,
   IcoClock01,
-  IcoSymbol,
   IcoBook,
   IcoBuilding,
   IcoCategory,
@@ -66,33 +62,25 @@ function RouteComponent() {
   const { confirm: openConfirm } = useModal();
   const { alert: openAlert } = useModal();
 
-  // 탭
-  const [selectedTabKey, setSelectedTabKey] = useState<string>('0');
-  const [selectedTabTitle, setSelectedTabTitle] = useState<number>(0);
+  // 탭 순서
+  const [selectedTabTitle, setSelectedTabTitle] = useState<number>(0); // 탭 타이틀 순서
+  const [selectedTabContent, setSelectedTabContent] = useState<string>('0'); // 탭 컨텐츠 순서
 
   // 탭 타이틀
-  const tabTitle = [
-    { title: '대시보드', tabNumber: '0' },
-    { title: '과정소개', tabNumber: '1' },
-    { title: '교육일정', tabNumber: '1' }, // 과정소개 탭 안에서 교욱일정이 있기 때문에 tabNumber값 동일
-    { title: '후기', count: '0', tabNumber: '1' }, // 과정소개 탭 안에서 후기가 있기 때문에 tabNumber값 동일
+  const tabTitleSwiper = [
+    { title: '대시보드', selectTabNumber: '0' },
+    { title: '과정소개', selectTabNumber: '1' },
+    { title: '교육일정', selectTabNumber: '1' }, // 과정소개 탭 안에서 교욱일정이 있기 때문에 tabNumber값 동일
+    { title: '후기', selectTabNumber: '1', count: '0', new: true }, // 과정소개 탭 안에서 후기가 있기 때문에 tabNumber값 동일
   ];
-  const handleTab = (key: string, index: number) => {
-    setSelectedTabKey(key);
-    setSelectedTabTitle(index);
-  };
 
-  // 공통 컴포넌트 수정 요청중 (수정예정)
-  // toast popup
-  const { open: openToast } = useToast();
-  const handleClickToast = () => {
-    openToast({
-      title: '채널을 구독하였습니다',
-    });
+  const handleTab = (selectTabNumber: string, selectTabContentsNumber: number) => {
+    setSelectedTabContent(selectTabNumber); // 탭 타이틀 번호
+    setSelectedTabTitle(selectTabContentsNumber); // 탭 컨텐츠 번호
   };
 
   // 탭 컨텐츠
-  const items = [
+  const tabTitleContents = [
     {
       title: '대시보드',
       key: '0',
@@ -117,6 +105,15 @@ function RouteComponent() {
       ),
     },
   ];
+
+  // 공통 컴포넌트 수정 요청중 (수정예정)
+  // toast popup
+  const { open: openToast } = useToast();
+  const handleClickToast = () => {
+    openToast({
+      title: '채널을 구독하였습니다',
+    });
+  };
 
   // 퍼블수정 20250703 패키지 카드 리스트 값 추가
   // 패키지 카드
@@ -369,11 +366,17 @@ function RouteComponent() {
 
           <div className={styles.tab_title}>
             <div className={styles.box}>
-              {tabTitle.map((item, index) => (
+              {tabTitleSwiper.map((item, index) => (
+                // 클래스
+                // active : 선택 표시
+                // new : 새로운 표시
                 <Button
                   key={index}
-                  className={selectedTabTitle === index ? styles.active : ''}
-                  onClick={() => handleTab(item.tabNumber, index)}
+                  className={cn(
+                    selectedTabTitle === index ? styles.active : '',
+                    item.new && styles.new,
+                  )}
+                  onClick={() => handleTab(item.selectTabNumber, index)}
                 >
                   {item.title}
                   <em>{item.count}</em>
@@ -385,8 +388,8 @@ function RouteComponent() {
           <div className={styles.tab_wrap}>
             <Tabs
               className={styles.tab}
-              selectedTabKey={selectedTabKey}
-              items={items}
+              selectedTabKey={selectedTabContent}
+              items={tabTitleContents}
               type="line"
             />
           </div>
@@ -416,6 +419,7 @@ function RouteComponent() {
                   <IcoEye width={16} height={16} stroke="#0056ff" />
                   <span>77,500</span>
                 </div>
+                /
               </div>
               {/* 구독 */}
               <div className={packageInformationStyles.subscribe_box}>
@@ -426,7 +430,7 @@ function RouteComponent() {
                 <Button
                   className={packageInformationStyles.btn_subscribe}
                   variant="primary"
-                  size="sm"
+                  size="xl"
                   onClick={() => handleClickToast()}
                 >
                   구독하기
@@ -489,7 +493,7 @@ function RouteComponent() {
                           : setListSubTitleOpen(true)
                       }
                     >
-                      <IcoArrowDown width={20} height={20} fill="#4d525c" />
+                      <IcoArrowDown width={20} height={20} stroke="#4d525c" />
                     </Button>
                   </li>
                 </ul>

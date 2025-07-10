@@ -1,9 +1,10 @@
 .start {
   &.package_wrap {
-    @apply relative px-[20px] pb-[80px];
+    @apply relative px-[16px] pb-[120px];
     .thumbnail_img {
+      @apply flex;
       button {
-        @apply relative;
+        @apply relative !px-0;
         .img_play {
           @apply absolute left-1/2 top-1/2 h-[56px] w-[56px] -translate-x-1/2 -translate-y-1/2;
           img {
@@ -12,36 +13,54 @@
         }
       }
       img {
-        @apply w-full overflow-hidden rounded-[16px];
+        @apply w-full overflow-hidden rounded-[8px];
       }
     }
     .sub_box {
-      @apply relative mt-[16px] pb-[28px];
-      &::after {
-        @apply absolute bottom-0 left-0 -mx-[20px] h-[12px] w-[calc(100%+40px)] bg-[var(--gray2)] content-[''];
-      }
+      @apply relative mt-[16px] pb-[48px];
     }
     .tab_title {
-      @apply sticky left-0 top-[56px] z-[10] -mx-[20px] w-[calc(100%+40px)] overflow-x-scroll bg-white;
+      @apply sticky left-0 top-[56px] z-[10] -mx-[16px] w-[calc(100%+32px)] overflow-hidden bg-white;
       .box {
-        @apply flex h-auto w-fit min-w-full whitespace-nowrap border-b-[1px] border-solid border-[var(--gray3)] px-[20px];
-      }
-      button {
-        @apply button_2_r relative h-[56px] whitespace-nowrap py-[16px] text-[var(--gray7)];
-        em {
-          @apply ml-[4px] inline-block text-[var(--gray6)];
-        }
-        &.active {
-          @apply !button_2_b text-[var(--gray9)];
-          em {
-            @apply text-[var(--secondary1)];
-          }
-          &::after {
-            @apply absolute -bottom-[1px] left-0 h-[2px] w-full bg-[var(--gray9)] content-[''];
+        @apply h-auto w-full px-[16px];
+        & > div {
+          @apply relative border-b-[1px] border-solid border-[var(--gray3)];
+          & > button {
+            @apply absolute top-1/2 !m-0 w-[32px] -translate-y-1/2 translate-x-0 !rounded-none bg-inherit !p-0 shadow-none;
+            &:nth-child(1) {
+              @apply left-0 bg-[linear-gradient(to_right,white_0%,white_80%,transparent_100%)];
+            }
+            &:nth-child(2) {
+              @apply right-0 bg-[linear-gradient(to_left,white_0%,white_80%,transparent_100%)];
+            }
           }
         }
-        & + button {
-          @apply ml-[40px];
+        .tab_swiper {
+          @apply w-full;
+          [class*='swiper-slide'] {
+            @apply !w-auto;
+            button {
+              @apply title3-b relative box-border h-[45px] whitespace-nowrap !px-0 text-[var(--gray50)];
+              em {
+                @apply ml-[4px] inline-block text-[var(--gray6)];
+              }
+              &.active {
+                @apply text-[var(--gray10)];
+                em {
+                  @apply text-[var(--secondary1)];
+                }
+                &::after {
+                  @apply absolute bottom-0 left-0 h-[3px] w-full bg-[var(--gray9)] content-[''];
+                }
+              }
+              &.new {
+                @apply !pr-[7px];
+                &::before {
+                  @apply absolute right-0 top-[14px] h-[5px] w-[5px] rounded-[50%] bg-[var(--red50)] content-[''];
+                }
+              }
+            }
+          }
         }
       }
     }
