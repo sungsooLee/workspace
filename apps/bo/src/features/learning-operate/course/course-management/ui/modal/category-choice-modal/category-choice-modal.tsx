@@ -43,8 +43,9 @@ const CategoryChoiceModalComponent = forwardRef<HTMLDivElement, CategoryChoiceMo
             <ShuttleTreeToChipsV2
               sourceTitle="공통 카테고리 선택"
               targetTitle="선택 카테고리 목록"
-              apiData={(data as any) || []}
-              fullNameKey={'name'}
+              treeData={(data as any) || []}
+              // fullNameKey={'name'}
+              renderText={() => <></>}
               selectedItems={selectedItems}
               handleSelectItem={handleSelectItem}
               cancelSelectItem={cancelSelectItem}
