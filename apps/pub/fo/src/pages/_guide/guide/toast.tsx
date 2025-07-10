@@ -13,7 +13,7 @@ function RouteComponent() {
       title: '토스트 메시지입니다.',
       actionLabel: '버튼', // 오른쪽 버튼 있는 경우
       type: 'success',
-      duration: 500000,
+      // duration: 5000,
       // showCloseButton: true,
       onActionClick: () => {
         console.log('버튼 클릭');

@@ -1,6 +1,6 @@
 .start {
   &.toast_wrap {
-    @apply fixed bottom-[64px] left-1/2 z-[10000] flex -translate-x-1/2 flex-col gap-[8px];
+    @apply fixed bottom-[48px] left-1/2 z-[10000] flex -translate-x-1/2 flex-col gap-[8px];
     .content {
       @apply flex items-center;
       .type_icon {
