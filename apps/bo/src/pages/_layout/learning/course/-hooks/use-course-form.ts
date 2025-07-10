@@ -86,6 +86,25 @@ export const useCourseForm = (courseType?: string) => {
     ],
   );
 
+  // 데이터 항목 설정 정보 조회
+  const loadCourseConfig = useCallback(
+    async (courseType: string, channelUuid: string) => {
+      try {
+        // 과정 항목 설정 정보 조회
+        const courseConfig: CourseConfig = await queryClient.fetchQuery(
+          queryOptions.getCourseConfig({
+            courseType,
+            channelUuid,
+          }),
+        );
+        setData((prev) => ({ ...prev, courseConfig }));
+      } catch (error) {
+        console.error('데이터 항목 설정 정보 조회 오류:', error);
+      }
+    },
+    [queryClient],
+  );
+
   // 데이터 조회
   const loadCourseData = useCallback(
     async (courseId: number) => {
@@ -97,7 +116,7 @@ export const useCourseForm = (courseType?: string) => {
         const courseConfig: CourseConfig = await queryClient.fetchQuery(
           queryOptions.getCourseConfig({
             courseType: formData.courseType,
-            channelId: 1, //formData.channelUuid,
+            channelUuid: formData.channelUuid,
           }),
         );
         setData((prev) => ({ ...prev, formData, courseConfig }));
@@ -174,6 +193,7 @@ export const useCourseForm = (courseType?: string) => {
     validateTab,
     saveCurrentTab,
     loadCourseData,
+    loadCourseConfig,
     changeTab,
     loadMockData,
     getTabValues: () => {
