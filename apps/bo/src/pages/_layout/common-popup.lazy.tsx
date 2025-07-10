@@ -20,22 +20,23 @@ import {
   OrganizationShuttleTreeModal,
   TrainingPlaceChoiceModal,
   TrainingPlaceDetailModal,
+  FormRow,
+  MainContents,
+  PageContainer,
+  SubContents,
+  ContentsButtons,
 } from '@shared/ui';
 import {
   Button,
   ChipListModalSelectorFormField,
   ContentsRow,
-  Input,
-  LearningWindowLayout,
   PreviewImage,
   useModal,
 } from '@learnway/ui';
 import { AddressSearchFormField } from '@shared/ui/form/address-search-form-field';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
-import { FormRow } from '@shared/ui';
 import { DynamicFormConfig, S3_PATH, useDynamicForm } from '@learnway/hooks';
 
 import langCodes from '@entities/mock/i18n-resource-ko.json';
@@ -46,12 +47,8 @@ import { IcoDownload } from '@learnway/icons';
 
 import { EnFormMode } from '@types';
 
-import {
-  useDeployTranslation,
-  useTranslation,
-} from '@entities/translation/service/translation.hook';
+import { useDeployTranslation } from '@entities/translation/service/translation.hook';
 import { PreviewLearningWindow } from '@features/learning-resource/learning-resource-management/ui/preview-learning-window';
-import { MainContents, PageContainer, SubContents, ContentsButtons } from '@shared/ui';
 
 export const Route = createLazyFileRoute('/_layout/common-popup')({
   component: RouteComponent,
@@ -446,16 +443,15 @@ function RouteComponent() {
                   content: (
                     <UserGroupTabsChoiceModal
                       tenantIds={[1, 2, 3, 4]}
-                      option={[
-                        {
-                          combiners: [
-                            { combineName: '현대제철', combineType: 'USER_GROUP', combineValue: 1 },
-                          ],
-                          fullName: '현대제철',
-                          key: '1',
-                          id: 1,
-                        },
-                      ]}
+                      // option={[
+                      //   {
+                      //     combiners: [
+                      //       { combineName: '현대제철', combineType: 'USER_GROUP', combineValue: 1 },
+                      //     ],
+                      //     key: '1',
+                      //     id: 1,
+                      //   },
+                      // ]}
                       initialTab="ORGANIZATION"
                     />
                   ),
