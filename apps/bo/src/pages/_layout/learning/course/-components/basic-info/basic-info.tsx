@@ -1,12 +1,5 @@
 import { DropdownFormField } from '@features/form';
-import {
-  FormRow2,
-  TenantByRoleChannelCheckboxFormField,
-  TenantChannelDropdownFormField,
-  TrainingPlaceChoiceModal,
-  UserChoiceModal,
-  UserGroupTabsChoiceModal,
-} from '@shared/ui';
+import { CategoryChoiceModal } from '@features/learning-operate/course/course-management';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import {
   Button,
@@ -21,13 +14,18 @@ import {
   RadioGroupFormField,
   TextareaFormField,
 } from '@learnway/ui';
+import {
+  FormRow2,
+  TenantByRoleChannelCheckboxFormField,
+  TenantChannelDropdownFormField,
+  TrainingPlaceChoiceModal,
+  UserChoiceModal,
+  UserGroupTabsChoiceModal,
+} from '@shared/ui';
+import { Course } from '@types';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CourseTabBaseProps, TabFormRef } from '../../-common/type';
-import { Course, TenantByRoleId } from '@types';
-import { CategoryChoiceModal } from '@features/learning-operate/course/course-management';
-import { queryConfig } from '@learnway/config';
-import { tenantQueryOptions } from '@entities/tenant';
 
 const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
   ({ onSave, data: { formData, courseConfig } }, ref) => {
@@ -54,10 +52,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
           errors,
         };
       },
-      getValues: () => {
-        console.log('getValues', getValues());
-        return getValues();
-      },
+      getValues: () => formDataToRequestData(getValues() as Course),
     }));
 
     useEffect(() => {
@@ -373,6 +368,14 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
 );
 
 export const BasicInfo = BasicInfoComponent;
+
+/**
+ * 응답 데이터를 폼 데이터로 변환
+ */
+const responseDataToFormData = (response: Course): Course => {
+  // 리턴
+  return response;
+};
 
 /**
  * 과정 기본 정보 컴포넌트 폼 데이터를 요청 데이터로 변환하는 함수

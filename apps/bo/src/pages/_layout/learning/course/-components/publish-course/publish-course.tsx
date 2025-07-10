@@ -26,10 +26,7 @@ const PublishCourseComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
           errors,
         };
       },
-      getValues: () => {
-        console.log('getValues', getValues());
-        return getValues();
-      },
+      getValues: () => formDataToRequestData(getValues() as Course),
     }));
 
     useEffect(() => {
@@ -101,13 +98,23 @@ const PublishCourseComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
 export const PublishCourse = PublishCourseComponent;
 
 /**
- * 게시설정 컴포넌트 폼 데이터를 요청 데이터로 변환하는 함수
+ * 응답 데이터를 폼 데이터로 변환
+ */
+const responseDataToFormData = (response: Course): Course => {
+  // 리턴
+  return response;
+};
+
+/**
+ * 상세정보 컴포넌트 폼 데이터를 요청 데이터로 변환하는 함수
  *
- * @component PublishCourse
- * @param {Course} d - 게시설정 폼 데이터
- * @returns {Course} 게시설정 요청 데이터
+ * @component Curriculum
+ * @param {Course} d - 상세정보 폼 데이터
+ * @returns {Course} 상세정보 요청 데이터
  */
 
 export const formDataToRequestData = (d: Course) => {
-  return d;
+  return {
+    ...d,
+  };
 };

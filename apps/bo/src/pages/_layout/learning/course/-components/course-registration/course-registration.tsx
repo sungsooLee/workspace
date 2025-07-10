@@ -29,10 +29,7 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
           errors,
         };
       },
-      getValues: () => {
-        console.log('getValues', getValues());
-        return getValues();
-      },
+      getValues: () => formDataToRequestData(getValues() as Course),
     }));
 
     useEffect(() => {
@@ -169,6 +166,14 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
 );
 
 export const CourseRegistration = CourseRegistrationComponent;
+
+/**
+ * 응답 데이터를 폼 데이터로 변환
+ */
+const responseDataToFormData = (response: Course): Course => {
+  // 리턴
+  return response;
+};
 
 /**
  * 수강신청 컴포넌트 폼 데이터를 요청 데이터로 변환하는 함수

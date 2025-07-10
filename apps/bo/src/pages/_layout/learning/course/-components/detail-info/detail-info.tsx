@@ -40,17 +40,14 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
           errors,
         };
       },
-      getValues: () => {
-        console.log('getValues', getValues());
-        return getValues();
-      },
+      getValues: () => formDataToRequestData(getValues() as Course),
     }));
 
     useEffect(() => {
       console.log('DetailInfoComponent init');
       // 초기 데이터가 있으면 설정
       if (formData) {
-        updateFormData(formData);
+        updateFormData(responseDataToFormData(formData));
       }
     }, [formData]);
 
@@ -131,6 +128,26 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                 <RadioGroupFormField
                   optionsConfig={{
                     codeGroup: CODE_GROUP['mock.options.use'],
+                    optionsNode: [
+                      {
+                        value: true, // 사용
+                        node: (
+                          // 복습 가능 기간(개월)
+                          <FormRow2
+                            provider={provider}
+                            name={'maxReviewPeriodMonths'}
+                            element={
+                              <Input
+                                type={'number'}
+                                min={0}
+                                prefixText={'학습 종료일 기준'}
+                                suffixText="개월"
+                              />
+                            }
+                          />
+                        ),
+                      },
+                    ],
                   }}
                 />
               }
@@ -187,6 +204,26 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                 <RadioGroupFormField
                   optionsConfig={{
                     codeGroup: CODE_GROUP['mock.options.use'],
+                    optionsNode: [
+                      {
+                        value: true, // 사용
+                        node: (
+                          // 1일 진도 제한(%)
+                          <FormRow2
+                            provider={provider}
+                            name={'maxDailyLearningProgress'}
+                            element={
+                              <Input
+                                type={'number'}
+                                min={0}
+                                prefixText={'하루 기준'}
+                                suffixText="%"
+                              />
+                            }
+                          />
+                        ),
+                      },
+                    ],
                   }}
                 />
               }
@@ -306,6 +343,27 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                 <RadioGroupFormField
                   optionsConfig={{
                     codeGroup: CODE_GROUP['lms.course.RecognizedStudyMinType'],
+                    optionsNode: [
+                      {
+                        value: 'COUNT_TIME', // 회수 및 학습시간
+                        node: (
+                          <>
+                            {/* // 인정 학습 횟수 */}
+                            <FormRow2
+                              provider={provider}
+                              name={'recognizedStudyCycles'}
+                              element={<Input type={'number'} min={0} suffixText="회" />}
+                            />
+                            {/* // 인정학습시간(분) */}
+                            <FormRow2
+                              provider={provider}
+                              name={'recognizedStudyMinutes'}
+                              element={<Input type={'number'} min={0} suffixText="분" />}
+                            />
+                          </>
+                        ),
+                      },
+                    ],
                   }}
                 />
               }
@@ -319,6 +377,19 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                 <RadioGroupFormField
                   optionsConfig={{
                     codeGroup: CODE_GROUP['mock.options.use'],
+                    optionsNode: [
+                      {
+                        value: true, // 사용
+                        node: (
+                          // 인정학습점수(학습포인트)
+                          <FormRow2
+                            provider={provider}
+                            name={'recognizedStudyPoint'}
+                            element={<Input type={'number'} min={0} suffixText="포인트" />}
+                          />
+                        ),
+                      },
+                    ],
                   }}
                 />
               }
@@ -421,6 +492,19 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                 <RadioGroupFormField
                   optionsConfig={{
                     codeGroup: CODE_GROUP['lms.course.InstructorAssignType'],
+                    optionsNode: [
+                      {
+                        value: 'MANUAL', // 직접입력
+                        node: (
+                          // 강사 직접입력
+                          <FormRow2
+                            provider={provider}
+                            name={'instructorName'}
+                            element={<Input />}
+                          />
+                        ),
+                      },
+                    ],
                   }}
                 />
               }
@@ -552,6 +636,19 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
               <RadioGroupFormField
                 optionsConfig={{
                   codeGroup: CODE_GROUP['mock.options.use'],
+                  optionsNode: [
+                    {
+                      value: true, // 사용
+                      node: (
+                        // 1인당 교육비(원)
+                        <FormRow2
+                          provider={provider}
+                          name={'trainingCostPerPerson'}
+                          element={<Input type={'number'} min={0} suffixText="원" />}
+                        />
+                      ),
+                    },
+                  ],
                 }}
               />
             }
@@ -565,6 +662,19 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
               <RadioGroupFormField
                 optionsConfig={{
                   codeGroup: CODE_GROUP['mock.options.use'],
+                  optionsNode: [
+                    {
+                      value: true, // 사용
+                      node: (
+                        // 고용보험 환급비(원)
+                        <FormRow2
+                          provider={provider}
+                          name={'employmentInsuranceRefund'}
+                          element={<Input type={'number'} min={0} suffixText="원" />}
+                        />
+                      ),
+                    },
+                  ],
                 }}
               />
             }
@@ -669,6 +779,26 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
 export const DetailInfo = DetailInfoComponent;
 
 /**
+ * 응답 데이터를 폼 데이터로 변환
+ */
+const responseDataToFormData = (response: Course): Course => {
+  // 이수기준
+  response.passOption = {
+    progressMinPassScore: response.progressMinPassScore, // 진도 최소 이수 점수
+    attendanceMinPassScore: response.attendanceMinPassScore, // 출석 최소 이수 점수
+    examMinPassScore: response.examMinPassScore, // 평가 최소 이수 점수
+    asgmtMinPassScore: response.asgmtMinPassScore, // 과제 최소 이수 점수
+    totalMinPassScore: response.totalMinPassScore, // 총점 최소 이수 점수
+    progressWeights: response.progressWeights, // 진도 반영 비율
+    attendanceWeights: response.attendanceWeights, // 출석 반영 비율
+    examWeights: response.examWeights, // 평가 반영 비율
+    asgmtWeights: response.asgmtWeights, // 과제 반영 비율
+  };
+  // 리턴
+  return response;
+};
+
+/**
  * 상세정보 컴포넌트 폼 데이터를 요청 데이터로 변환하는 함수
  *
  * @component Curriculum
@@ -677,21 +807,8 @@ export const DetailInfo = DetailInfoComponent;
  */
 
 export const formDataToRequestData = (d: Course) => {
-  // 교육공간 라디오 선택에 따라 값 변경 관련 처리 (교육공간=learningSpaceType)
-  // 차세데 학습학습 플랫폼
-  if (d.learningSpaceType === 'LEARNING_WAY') {
-    d.learningSpaceId = undefined; // 교육 장소 ID
-    d.learningSpaceName = undefined; // 교육 장소(선택입력)
-    d.learningSpaceNameKeyIn = undefined; // 교육 장소 직접입력
-  }
-  // 공간선택
-  else if (d.learningSpaceType === 'REGISTERED') {
-    d.learningSpaceNameKeyIn = undefined; // 교육 장소 직접입력
-  }
-  // 직적입력
-  else if (d.learningSpaceType === 'MANUAL') {
-    d.learningSpaceId = undefined; // 교육 장소 ID
-    d.learningSpaceName = undefined; // 교육 장소(선택입력)
-  }
-  return d;
+  return {
+    ...d,
+    ...d.passOption, // 이수기준
+  };
 };

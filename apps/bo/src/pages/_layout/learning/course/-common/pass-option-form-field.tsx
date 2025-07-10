@@ -1,20 +1,9 @@
-import { forwardRef, useMemo, useState } from 'react';
+import { forwardRef, useMemo, useState, useCallback } from 'react';
 import { t } from 'i18next';
 import { BaseFormFieldProps } from '@learnway/hooks';
 import { Input } from '@learnway/ui';
 import styles from './pass-option-form-field.module.css';
-
-interface PassCriteriaData {
-  progressMinPassScore?: number; // 항목별 이수 기준 (진도)
-  attendanceMinPassScore?: number; // 항목별 이수 기준 (출석)
-  examMinPassScore?: number; // 항목별 이수 기준 (평가)
-  asgmtMinPassScore?: number; // 항목별 이수 기준 (과제)
-  totalMinPassScore?: number; // 항목별 이수 기준 (총점)
-  progressWeights?: number; // 반영 비율 (진도)
-  attendanceWeights?: number; // 반영 비율 (출석)
-  examWeights?: number; // 반영 비율 (시험)
-  asgmtWeights?: number; // 반영 비율 (과제)
-}
+import { PassCriteriaData } from '@types';
 
 interface PassOptionFormFieldProps extends BaseFormFieldProps<PassCriteriaData> {
   dummy?: boolean;
@@ -24,26 +13,36 @@ const PassOptionFormFieldComponent = forwardRef<HTMLDivElement, PassOptionFormFi
   ({ value, onChange, ...props }, ref) => {
     const [criteria, setCriteria] = useState<PassCriteriaData>(value || {});
 
-    // 이수기준 점수
-    const totalScore = useMemo(() => {
-      const progressScore =
-        ((criteria.progressMinPassScore || 0) * (criteria.progressWeights || 0)) / 100;
-      const attendanceScore =
-        ((criteria.attendanceMinPassScore || 0) * (criteria.attendanceWeights || 0)) / 100;
-      const examScore = ((criteria.examMinPassScore || 0) * (criteria.examWeights || 0)) / 100;
-      const asgmtScore = ((criteria.asgmtMinPassScore || 0) * (criteria.asgmtWeights || 0)) / 100;
-      return progressScore + attendanceScore + examScore + asgmtScore;
-    }, [criteria]);
+    // 항목별 이수 기준 점수
+    const calcTotalScore = useCallback((d: PassCriteriaData) => {
+      if (!d) {
+        return 0;
+      }
+      const scoreSum =
+        (d.progressMinPassScore || 0) +
+        (d.attendanceMinPassScore || 0) +
+        (d.examMinPassScore || 0) +
+        (d.asgmtMinPassScore || 0);
+      const weightSum =
+        (d.progressWeights || 0) +
+        (d.attendanceWeights || 0) +
+        (d.examWeights || 0) +
+        (d.asgmtWeights || 0);
+      return scoreSum * (weightSum / 100);
+    }, []);
 
     const handleCriteriaChange = (field: keyof PassCriteriaData, newValue: string) => {
       const numericValue = newValue === '' ? undefined : Number(newValue);
       const newCriteria = {
         ...criteria,
-        totalMinPassScore: totalScore,
         [field]: numericValue,
       };
-      setCriteria(newCriteria);
-      onChange?.(newCriteria);
+      const updatedCriteria = {
+        ...newCriteria,
+        totalMinPassScore: calcTotalScore(newCriteria),
+      };
+      setCriteria(updatedCriteria);
+      onChange?.(updatedCriteria);
     };
 
     return (
@@ -86,7 +85,7 @@ const PassOptionFormFieldComponent = forwardRef<HTMLDivElement, PassOptionFormFi
                   항목별 반영비율 합이 <br />
                   <strong>{'00점'}</strong> 이상입니다.
                   <br />
-                  점수 <strong>{totalScore}</strong>
+                  점수 <strong>{criteria.totalMinPassScore}</strong>
                 </p>
               </td>
             </tr>

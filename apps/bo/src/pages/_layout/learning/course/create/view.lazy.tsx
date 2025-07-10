@@ -109,8 +109,8 @@ function RouteComponent() {
             type="button"
             variant="point"
             size="sm"
-            label={'getTabValues'}
-            onClick={() => getTabValues()}
+            label={'Tab Values'}
+            onClick={() => console.log('getTabValues', getTabValues())}
           />
           <Button
             type="button"
