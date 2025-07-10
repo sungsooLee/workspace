@@ -9,6 +9,7 @@ import { Carousel } from '../carousel/carousel';
 import styles from './thumbnail-list.module.css';
 import { FileInfo } from '@learnway/hooks';
 import { DefaultThumbnail } from './default-thumbnail';
+import { Button } from '@learnway/ui';
 
 export interface ThumbnailListComponentProps
   extends Omit<ThumbnailProps, 'onCheckedChange' | 'path' | 'id'> {
@@ -130,7 +131,13 @@ const ThumbnailListComponent = forwardRef<HTMLDivElement, ThumbnailListComponent
       />
     ));
 
-    const defaultThumbnail = <DefaultThumbnail />;
+    const defaultThumbnail = (
+      <DefaultThumbnail
+        showCheckbox={showCheckbox}
+        selected={!checked}
+        onCheckedChange={() => onChecked(null)}
+      />
+    );
 
     return (
       <div
