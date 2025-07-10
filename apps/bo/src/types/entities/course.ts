@@ -419,6 +419,11 @@ export interface Course {
    * 인정학습점수(학습포인트)
    */
   recognizedStudyPoint?: number;
+
+  /**
+   * 커뮤니티 설정 리스트
+   */
+  communityList?: Array<string>;
   /**
    * 커뮤니티[공지/자료실/커뮤니티/공유] 설정 여부
    */
@@ -602,7 +607,7 @@ export interface CourseConfigQueryParams {
   /**
    * 채널id
    */
-  channelId?: number;
+  channelUuid?: string;
   /**
    * 과정유형
    */

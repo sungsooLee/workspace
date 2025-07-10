@@ -418,7 +418,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             {/* 공지사항(새소식) */}
             <FormRow2
               provider={provider}
-              name={'공지사항'}
+              name={'isNoticeEnabled'}
               label={'공지사항(새소식)'}
               element={
                 <RadioGroupFormField
@@ -431,7 +431,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             {/* 학습창 댓글 */}
             <FormRow2
               provider={provider}
-              name={'댓글'}
+              name={'isQnaBoardEnabled'}
               label={'학습창 댓글'}
               element={
                 <RadioGroupFormField
@@ -445,7 +445,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
           <ContentsRow>
             <FormRow2
               provider={provider}
-              name={'isCommunicationToolEnabled'}
+              name={'communityList'}
               label={'커뮤니티'}
               element={
                 <CheckboxGroupFormField

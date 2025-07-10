@@ -6,6 +6,8 @@ import { Course, CourseConfig } from '@types';
 export interface CourseTabBaseProps {
   /** 저장 완료 시 호출되는 콜백 함수 */
   onSave?: () => Promise<void>;
+  /** 유형과 채널 변경 시 호출되는 콜백 함수 */
+  onConfigPropChange?: (config: { courseType: string; channelUuid: string }) => void;
   /** 폼 데이터와 과정 설정 정보 */
   data: { formData: Course; courseConfig: CourseConfig };
 }
