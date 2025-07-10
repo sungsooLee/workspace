@@ -25,6 +25,7 @@ export function useAsycFetchMenus(mutationOptions = {}) {
       if (!tenantId) return [];
 
       try {
+        await queryClient.invalidateQueries({ queryKey: queryKeys.all });
         const menus = await queryClient.fetchQuery(queryOptions.all(tenantId, roleId));
         return convertHierarchyToList(
           menus,
