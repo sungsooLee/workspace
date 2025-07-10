@@ -182,7 +182,9 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
     }, [thumbnailFiles]);
 
     const disabled = useMemo(
-      () => maxFileCount <= (values.files || []).length,
+      () =>
+        maxFileCount <=
+        (values.files?.filter((file) => !file.originalFileName.startsWith('sys-')) || []).length,
       [values.files, maxFileCount],
     );
 

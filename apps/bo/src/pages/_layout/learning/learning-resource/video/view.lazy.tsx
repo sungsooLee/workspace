@@ -53,7 +53,7 @@ function RouteComponent() {
           objectName: 'contentThumbnail',
           groupUuidName: 'contentThumbnailFileGroupUuid',
           selectedFileUuidName: 'selectedContentThumbnailFileUuid',
-          isLoading: true,
+          isLoading: false,
         }),
       );
   }, [data]);
