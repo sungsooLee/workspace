@@ -1,5 +1,7 @@
 import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
+import { Department, DepartmentUser } from 'src/types/entities/department';
+import { PageableContent } from '@types';
 
 export class DepartmentService {
   /**
@@ -7,8 +9,8 @@ export class DepartmentService {
    * @param param
    * @returns
    */
-  static getDepartmentList(param: any): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/department`, param);
+  static getDepartmentList(param: any): Promise<PageableContent<Department>> {
+    return httpService.get<PageableContent<Department>>(`${PMSApiPrefix()}/department`, param);
   }
 
   /**
@@ -17,7 +19,7 @@ export class DepartmentService {
    * @returns
    */
   static getDepartmentDetail(deptId: number): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/department/${deptId}`);
+    return httpService.get<Department>(`${PMSApiPrefix()}/department/${deptId}`);
   }
 
   /**
@@ -25,16 +27,19 @@ export class DepartmentService {
    * @param param
    * @returns
    */
-  static getDepartmentUserList(param: any): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/department/user`, param);
+  static getDepartmentUserList(param: any): Promise<PageableContent<DepartmentUser>> {
+    return httpService.get<PageableContent<DepartmentUser>>(
+      `${PMSApiPrefix()}/department/user`,
+      param,
+    );
   }
   /**
    * 회사 부서 목록을 트리 구조로 조회한다.
    * @param companyCode
    * @returns
    */
-  static getDepartmentTree(companyCode: string[]): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/department/tree`, {
+  static getDepartmentTree(companyCode: string[]): Promise<Department> {
+    return httpService.get<Department>(`${PMSApiPrefix()}/department/tree`, {
       companyCodeList: companyCode,
     });
   }
@@ -44,8 +49,11 @@ export class DepartmentService {
    * @param param
    * @returns
    */
-  static getDepartmentChildDepartmentList(param: any): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/department/child`, param);
+  static getDepartmentChildDepartmentList(param: any): Promise<PageableContent<Department>> {
+    return httpService.get<PageableContent<Department>>(
+      `${PMSApiPrefix()}/department/child`,
+      param,
+    );
   }
 
   /**
@@ -54,7 +62,7 @@ export class DepartmentService {
    * @returns
    */
   static existDepartmentName(params: any) {
-    return httpService.get<any>(`${PMSApiPrefix()}/department/companyName/exist`, params);
+    return httpService.get<boolean>(`${PMSApiPrefix()}/department/companyName/exist`, params);
   }
 
   /**
@@ -63,7 +71,7 @@ export class DepartmentService {
    * @returns
    */
   static createDepartment(payload: any) {
-    return httpService.post<any>(`${PMSApiPrefix()}/department`, payload);
+    return httpService.post<Department>(`${PMSApiPrefix()}/department`, payload);
   }
 
   /**
@@ -72,7 +80,7 @@ export class DepartmentService {
    * @returns
    */
   static updateDepartment(payload: any) {
-    return httpService.put<any>(`${PMSApiPrefix()}/department/${payload.deptId}`, payload);
+    return httpService.put<Department>(`${PMSApiPrefix()}/department/${payload.deptId}`, payload);
   }
 
   /**
@@ -90,6 +98,9 @@ export class DepartmentService {
    * @returns
    */
   static moveDeparment(payload: any) {
-    return httpService.put<any>(`${PMSApiPrefix()}/department/${payload.deptId}/dnd`, payload);
+    return httpService.put<Department>(
+      `${PMSApiPrefix()}/department/${payload.deptId}/dnd`,
+      payload,
+    );
   }
 }

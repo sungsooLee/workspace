@@ -15,7 +15,7 @@ import { queryOptions as companyQueryOptions } from '@entities/companies/service
 import { EnGlobalConst } from '@types';
 
 const _global = {
-  linkClick: (companyCode: string) => {
+  linkClick: (row: any) => {
     return;
   },
 };
@@ -24,7 +24,13 @@ const _global = {
  * NLP_BO_TMS_1111_01 : 임시 회사 api 호출
  * @returns
  */
-const CompanyOrganizationListComponent = ({ rootPath, roleInfo }: { rootPath: string, roleInfo: string }) => {
+const CompanyOrganizationListComponent = ({
+  rootPath,
+  roleInfo,
+}: {
+  rootPath: string;
+  roleInfo: string;
+}) => {
   const router = useRouter();
   const routerState = useRouterState();
 
@@ -35,7 +41,7 @@ const CompanyOrganizationListComponent = ({ rootPath, roleInfo }: { rootPath: st
   const searchParam = () => {
     const data = getValues();
     const searchData = {
-      tenantId: tenantId,
+      tenantId,
       companyType: data.companyType,
       name: data.name,
       isUsed: data.isUsed,
@@ -57,14 +63,15 @@ const CompanyOrganizationListComponent = ({ rootPath, roleInfo }: { rootPath: st
   } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
 
-  _global.linkClick = (companyCode: string) => {
+  _global.linkClick = (row: any) => {
     console.log('getValues', getValues());
     router.navigate({
       to: `${rootPath}/tenant/organization/detail`,
       state: {
-        companyCode: companyCode,
+        companyCode: row.companyCode,
+        conpanyId: row.conpanyId,
         listParam: getValues(),
-        roleInfo: roleInfo,
+        roleInfo,
       },
     });
   };
@@ -196,7 +203,7 @@ const columns = [
       <Button
         className="link"
         onClick={() => {
-          _global.linkClick(info.row.original.companyCode as string);
+          _global.linkClick(info.row.original);
         }}
         label={info.getValue() as string}
       />

@@ -17,6 +17,7 @@ const CompanyOrganizationComponent = () => {
 
   const [selectedTabKey, setSelectedTabKey] = useState<string>(EnOrganizationShowType.check);
   const companyCode = routerState.location.state?.companyCode;
+  const companyId = routerState.location.state?.companyId;
   const roleInfo = routerState.location.state?.roleInfo;
 
   const menuItems = [
@@ -31,6 +32,7 @@ const CompanyOrganizationComponent = () => {
       content: (
         <TenantCompanyOrganizationTree
           companyCode={companyCode}
+          companyId={companyId}
           showType={EnOrganizationShowType.origin}
           roleInfo={roleInfo}
         />
@@ -42,6 +44,7 @@ const CompanyOrganizationComponent = () => {
       content: (
         <TenantCompanyOrganizationTree
           companyCode={companyCode}
+          companyId={companyId}
           showType={EnOrganizationShowType.platform}
           roleInfo={roleInfo}
         />
