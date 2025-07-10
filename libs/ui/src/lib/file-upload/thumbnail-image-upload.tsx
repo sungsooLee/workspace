@@ -72,6 +72,7 @@ export interface ThumbnailImageUploadProps {
    * 썸네일 변경 콜백
    */
   onChangeValues: Dispatch<SetStateAction<ThumbnailFileValue>>;
+  showDefault?: boolean;
 }
 
 const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageUploadProps>(
@@ -87,6 +88,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
       // onChange,
       values,
       onChangeValues,
+      showDefault,
       ...props
     },
     ref,
@@ -332,6 +334,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
 
           {/*썸네일 리스트*/}
           <ThumbnailList
+            showDefault={showDefault}
             files={values.files || []}
             checked={checkedFileId}
             onChecked={setCheckedFileId}

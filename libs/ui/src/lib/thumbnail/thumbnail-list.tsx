@@ -8,6 +8,7 @@ import { Carousel } from '../carousel/carousel';
 
 import styles from './thumbnail-list.module.css';
 import { FileInfo } from '@learnway/hooks';
+import { DefaultThumbnail } from './default-thumbnail';
 
 export interface ThumbnailListComponentProps
   extends Omit<ThumbnailProps, 'onCheckedChange' | 'path' | 'id'> {
@@ -51,6 +52,7 @@ export interface ThumbnailListComponentProps
    * 썸네일 목록을 클릭하면 파일 id를 전달하는 콜백 함수
    */
   onChecked: Dispatch<SetStateAction<string | null>>;
+  showDefault?: boolean;
 }
 
 /**
@@ -71,6 +73,7 @@ const ThumbnailListComponent = forwardRef<HTMLDivElement, ThumbnailListComponent
       // onCheckedChange,
       checked,
       onChecked,
+      showDefault,
       ...props
     },
     ref,
@@ -127,6 +130,8 @@ const ThumbnailListComponent = forwardRef<HTMLDivElement, ThumbnailListComponent
       />
     ));
 
+    const defaultThumbnail = <DefaultThumbnail />;
+
     return (
       <div
         {...props}
@@ -135,7 +140,7 @@ const ThumbnailListComponent = forwardRef<HTMLDivElement, ThumbnailListComponent
       >
         <Carousel
           {...props}
-          items={items}
+          items={showDefault ? [...items, defaultThumbnail] : items}
           slidesPerView={'auto'}
           spaceBetween={12}
           freeMode={true}

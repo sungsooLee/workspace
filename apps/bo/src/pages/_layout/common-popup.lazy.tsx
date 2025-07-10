@@ -703,6 +703,7 @@ const formConfig: DynamicFormConfig = {
       value: {
         groupUuid: '990245c1-3516-465d-bdd2-fb03fbcd7591',
       },
+      showDefault: true,
       uploadConfig: {
         affairType: 'CMS',
         s3Path: 'upload/content/image',
