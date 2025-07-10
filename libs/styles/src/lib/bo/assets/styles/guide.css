@@ -166,7 +166,7 @@
             @apply flex-col items-start justify-start;
           }
           .desc {
-            @apply flex items-center gap-[20px];
+            @apply flex w-auto items-center gap-[20px];
             &.col {
               @apply w-full flex-wrap justify-start;
             }
