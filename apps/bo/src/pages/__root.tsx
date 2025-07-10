@@ -59,7 +59,7 @@ function RootComponent() {
         <Suspense fallback={null}>
           {/* <ServerStatus /> */}
           <ReactQueryDevtools />
-          <TanStackRouterDevtools />
+          <TanStackRouterDevtools position="bottom-right" />
         </Suspense>
       )}
     </>
