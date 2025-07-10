@@ -22,7 +22,7 @@ import { SearchBox } from '@shared/ui/search-box';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { queryOptions as requestChannelQueryOptions } from '@entities/channel/service/request-channel.queries';
 import { formUtils } from '@entities/form-utils';
-import { RejectModal } from '@features/shared';
+import { RejectModal } from '@shared/ui';
 import {
   useApproveRequestChannel,
   useRejectRequestChannel,

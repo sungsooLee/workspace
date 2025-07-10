@@ -6,7 +6,7 @@ import { PageContainer } from '../../../../../widgets/layout/ui/container/page-c
 import { ContentsButtons } from '../../../../../widgets/layout/ui/container/slot/contents-buttons';
 import { MainContents } from '../../../../../widgets/layout/ui/container/slot/main-contents';
 import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
-import { ChannelChoiceModal, ManagerChoiceModal } from '../../../../../features/shared';
+import { ChannelChoiceModal, ManagerChoiceModal } from '@shared/ui';
 
 import { DateRangePickerFormField } from '@features/form/ui';
 import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';

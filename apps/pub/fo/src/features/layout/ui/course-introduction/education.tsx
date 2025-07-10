@@ -1,7 +1,7 @@
 import { memo, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { Button, Popover } from '@learnway/ui';
-import { IcoArrowDown, IcoArrowForward } from '@learnway/icons';
+import { IcoArrowDown } from '@learnway/icons';
 import { Arrays, Education } from '../../../../features/layout';
 
 import dropdownPopoverStyles from '../../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
@@ -62,9 +62,12 @@ const CourseEducationCompoment = () => {
 
         {/* 교육일정 접기/펼치기 */}
         <div className={styles.btn_more}>
-          <Button onClick={() => setMore((prev) => !prev)}>
+          <Button
+            onClick={() => setMore((prev) => !prev)}
+            className={more && true ? styles.active : ''}
+          >
             {more === true ? '과정 정보 접기' : '과정 정보 펼치기'}
-            <IcoArrowForward width={16} height={16} stroke="#4d525c" />
+            <IcoArrowDown width={16} height={16} stroke="#4d525c" />
           </Button>
         </div>
       </div>

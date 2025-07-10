@@ -47,7 +47,7 @@ import {
 import { useFetchTenantCategoryDetail } from '@entities/tenant/service/tenant-category.hook';
 import { useCheckExistsCategory } from '@entities/category';
 
-import { UserGroupTabsChoiceModal } from '@features/shared';
+import { UserGroupTabsChoiceModal } from '@shared/ui';
 import { EnFormMode, TenantCategoryCreate, TenantCategoryUpdate } from '@types';
 
 import { TenantCategoryDetail } from '@types';

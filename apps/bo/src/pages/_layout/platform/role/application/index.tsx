@@ -22,7 +22,7 @@ import {
   roleManagerQueryOptions,
 } from '@entities/role';
 import { EnGlobalConst, LabelMessage } from '@types';
-import { RejectModal, RoleApplicationHistoryModal } from '@features/shared';
+import { RejectModal, RoleApplicationHistoryModal } from '@shared/ui';
 import { MyRoleExtendModal } from '@features/user/my-page/ui/my-role-extend-modal';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { useQueryClient } from '@tanstack/react-query';

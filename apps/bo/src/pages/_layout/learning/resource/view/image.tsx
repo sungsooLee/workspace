@@ -15,7 +15,7 @@ import {
 import { SubContents } from '../../../../../widgets/layout/ui/container/slot/sub-contents';
 import React from 'react';
 import { t } from 'i18next';
-import { ChannelChoiceModal, ManagerChoiceModal } from '../../../../../features/shared';
+import { ChannelChoiceModal, ManagerChoiceModal } from '@shared/ui';
 import { getRandomId } from '@learnway/shared';
 
 export const Route = createFileRoute('/_layout/learning/resource/view/image')({
