@@ -1,4 +1,4 @@
-import { Dispatch, forwardRef, SetStateAction, useEffect } from 'react';
+import { Dispatch, forwardRef, SetStateAction, useCallback, useEffect } from 'react';
 import { useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import {
@@ -47,7 +47,7 @@ interface BlogDetailProps {
 const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
   ({ mode, blogInfo = {}, setThumbnailImage }, ref) => {
     const router = useRouter();
-    const { open: openModal, confirm: openConfirm } = useModal();
+    const { confirm: openConfirm } = useModal();
 
     const {
       provider,
@@ -58,7 +58,7 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
       watch,
     } = useDynamicForm(formConfig(mode));
 
-    const getHourValueFromTime = (contentTime: string | number | undefined) => {
+    const getHourValueFromTime = useCallback((contentTime: string | number | undefined) => {
       if (typeof contentTime !== 'number') {
         contentTime = isNaN(Number(contentTime)) ? 0 : Number(contentTime);
       }
@@ -68,7 +68,7 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
       const second = contentTime % 60;
 
       return { hour, minute, second };
-    };
+    }, []);
 
     const { create: createBlogContent } = useCreateBlogContent({
       onSuccess: (result: BlogPostRes) => {
