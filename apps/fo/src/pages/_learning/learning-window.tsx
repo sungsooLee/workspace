@@ -28,6 +28,7 @@ function RouteComponent() {
   const routerState = useRouterState();
 
   const [scormConfig, setScormConfig] = useState<ScormPlayerConfigProperties>();
+  const [ebookConfig, setEbookConfig] = useState<ScormPlayerConfigProperties>();
   const [videoConfig, setVideoConfig] = useState<any>();
   const [videoStart, setVideoStart] = useState<number>(0);
   const [blogConfig, setBlogConfig] = useState<any>();
@@ -40,12 +41,14 @@ function RouteComponent() {
     setScormInfo,
     setBlogInfo,
     setHtmlInfo,
+    setEbookInfo,
     setBaseInfo,
     setCurriculum,
     clearInfo,
     setFuncInfo,
   } = useLearningWindow();
   const { data: scormInfo } = useGetScormRteScoInfo(scormConfig);
+  const { data: ebookInfo } = useGetScormRteScoInfo(ebookConfig);
   const { data: curriculum } = useGetCurriculumnDetail(baseInfo?.curriculumId);
   const { data: videoInfo } = useGetContentDetail(videoConfig?.contentUuid);
   const { data: blogInfo } = useGetBlogResource(blogConfig?.contentUuid);
@@ -94,10 +97,25 @@ function RouteComponent() {
   }, [htmlInfo]);
 
   useEffect(() => {
+    if (!htmlInfo) return;
+    setEbookInfo(htmlInfo);
+  }, [ebookInfo]);
+
+  useEffect(() => {
     if (!playInfo) return;
     console.log('playInfo config', playInfo);
     clearInfo();
     switch (playInfo.contentType) {
+      case EnContentType.EBOOK:
+        setEbookConfig({
+          contentUuid: playInfo.contentUuid,
+          curriculumId: playInfo.curriculumId,
+          orgnId: playInfo.orgnId,
+          sequenceId: playInfo.sequenceId,
+          courseId: playInfo.courseId,
+          scoId: playInfo.scoId,
+        });
+        break;
       case EnContentType.SCORM:
         setScormConfig({
           contentUuid: playInfo.contentUuid,

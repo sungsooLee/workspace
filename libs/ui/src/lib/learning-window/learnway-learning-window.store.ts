@@ -144,7 +144,10 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
   funcInfo: undefined,
 
   setPlayInfo(playInfo?: LearningWindowPlayInfo) {
-    if (!playInfo) return;
+    if (!playInfo) {
+      set({ playInfo });
+      return;
+    }
     const playList = get().playList || [];
     const index = playList.findIndex(
       (item) => item.moduleId === playInfo.moduleId && item.lessonId === playInfo.lessonId,
@@ -297,6 +300,8 @@ export const useLearningWindow = () => {
   };
 
   const handleSetCurriculum = (curriculum: any) => {
+    clearInfo();
+    setPlayInfo(undefined);
     setCurriculum(curriculum);
     setPlayListByCurriculum(curriculum);
     if (_baseInfo) {
