@@ -15,6 +15,7 @@ import { SearchBox } from '@shared/ui/search-box';
 
 import { usersQueryOptions } from '@entities/users/service/users.queries';
 import { tenantQueryOptions } from '@entities/tenant';
+import { useCreation } from 'ahooks';
 
 const _global = {
   linkClick: (userUuid: string) => {
@@ -40,11 +41,93 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
     router.navigate({
       to: `${rootPath}/tenant/user/application-detail`,
       state: {
-        userUuid: userUuid,
+        userUuid,
         listParam: getValues(),
       },
     });
   };
+
+  const gridInitConfig = useCreation(
+    () => ({
+      query: usersQueryOptions.list,
+      columns: [
+        {
+          name: 'tenantName', label: t('테넌트'), size: 114
+        },
+        {
+          name: 'opt1', label: t('그룹'), size: 114
+        },
+        {
+          name: 'opt2', label: t('회사'), size: 114
+        },
+        {
+          name: 'opt3-1', label: t('실'), size: 114
+        },
+        {
+          name: 'opt3', label: t('소속'), size: 114
+        },
+        {
+          name: 'opt4', label: t('호칭(지위)'), render: (row: any) => {
+            return (
+              <Link to={row.row.original.tenantSite} className="link">
+                {row.row.original.tenantId}
+              </Link>
+            );
+          },
+          size: 114
+        },
+        {
+          name: 'opt8', label: t('이메일'), size: 114
+        },
+        {
+          name: 'employeeNumber', label: t('사번'), render: (row: any) => {
+            return (
+              <Button
+                label={`${row.getValue()}`}
+                className="link"
+                onClick={() => _global.linkClick(row.row.original.uuid)}
+              />
+            );
+          },
+          size: 114
+        },
+        {
+          name: 'name', label: t('이름'), size: 114
+        },
+        {
+          name: 'opt7', label: t('신청일'), render: (row: any) => {
+            return;
+          },
+          size: 114
+        },
+        {
+          name: 'opt9', label: t('재직여부'), render: (row: any) => {
+            return;
+          },
+          size: 88
+        },
+        {
+          name: 'opt10', label: t('승인상태'), render: (row: any) => {
+            return;
+          },
+          size: 88
+        },
+        {
+          name: 'opt11', label: t('승인일'), render: (row: any) => {
+            return;
+          },
+          size: 88
+        },
+      ],
+      data: [],
+      gridState: {
+        page: 0,
+        size: 20,
+        sort: [],
+      }
+    }),
+    []
+  )
 
   const {
     provider: searchProvider,
@@ -53,8 +136,8 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
     getValues,
     onFormChange,
     onFormValid,
-  } = useSearchBox(searchConfig);
-  const { config: gConfig, gridFetch } = useGridBox(gridConfig);
+  } = useSearchBox(searchConfig());
+  const { config: gConfig, gridFetch } = useGridBox(gridInitConfig);
 
   const tenantIdWatch = useWatch({ control: searchProvider.control, name: 'tenantId' });
 
@@ -117,14 +200,15 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
     <>
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
       <Divider />
-      <GridBox config={gConfig} columns={columns} multiple />
+      {/*<GridBox config={gConfig} columns={columns} multiple />*/}
+      <GridBox config={gConfig} multiple />
     </>
   );
 };
 
 export const TenantUserRegistApplicationList = TenantUserRegistApplicationListComponent;
 
-const searchConfig: SearchBoxConfig = {
+const searchConfig = (): SearchBoxConfig => ({
   builders: [
     [
       {
@@ -183,98 +267,98 @@ const searchConfig: SearchBoxConfig = {
   validator: {
     tenantId: true,
   },
-};
+});
 
-const gridConfig = {
-  query: usersQueryOptions.list,
-  columns: [],
-  data: [],
-
-  pagination: {
-    pageSize: 20,
-    pageIndex: 0,
-    totalRows: 0,
-  },
-};
-
-const columnHelper = createColumnHelper<any>();
-const columns = [
-  columnHelper.accessor('tenantName', {
-    cell: (info) => info.getValue(),
-    header: t('테넌트'),
-    size: 114,
-  }),
-  columnHelper.accessor('opt1', {
-    cell: (info) => info.getValue(),
-    header: t('그룹'),
-    size: 114,
-  }),
-  columnHelper.accessor('opt2', {
-    cell: (info) => info.getValue(),
-    header: t('회사'),
-    size: 114,
-  }),
-  columnHelper.accessor('opt3-1', {
-    cell: (info) => info.getValue(),
-    header: t('실'),
-    size: 114,
-  }),
-  columnHelper.accessor('opt3', {
-    cell: (info) => info.getValue(),
-    header: t('소속'),
-    size: 114,
-  }),
-  columnHelper.accessor('opt4', {
-    cell: (info) => (
-      <Link to={info.row.original.tenantSite} className="link">
-        {info.row.original.tenantId}
-      </Link>
-    ),
-    header: t('호칭(지위)'),
-    size: 114,
-  }),
-  columnHelper.accessor('opt8', {
-    cell: (info) => info.getValue(),
-    header: t('이메일'),
-    size: 114,
-  }),
-  columnHelper.accessor('employeeNumber', {
-    cell: (info) => {
-      return (
-        <Button
-          label={`${info.getValue()}`}
-          className="link"
-          onClick={() => _global.linkClick(info.row.original.uuid)}
-        />
-      );
-    },
-    header: t('사번'),
-    size: 114,
-  }),
-  columnHelper.accessor('name', {
-    cell: (info) => info.getValue(),
-    header: t('이름'),
-    size: 114,
-  }),
-  columnHelper.accessor('opt7', {
-    cell: (info) => info.getValue(),
-    header: t('신청일'),
-    size: 114,
-  }),
-
-  columnHelper.accessor('opt9', {
-    cell: (info) => info.getValue(),
-    header: t('재직여부'),
-    size: 88,
-  }),
-  columnHelper.accessor('opt10', {
-    cell: (info) => info.getValue(),
-    header: t('승인상태'),
-    size: 88,
-  }),
-  columnHelper.accessor('opt11', {
-    cell: (info) => info.getValue(),
-    header: t('승인일'),
-    size: 114,
-  }),
-] as ColumnDef<any, unknown>[];
+// const gridConfig = {
+//   query: usersQueryOptions.list,
+//   columns: [],
+//   data: [],
+//
+//   pagination: {
+//     pageSize: 20,
+//     pageIndex: 0,
+//     totalRows: 0,
+//   },
+// };
+//
+// const columnHelper = createColumnHelper<any>();
+// const columns = [
+//   columnHelper.accessor('tenantName', {
+//     cell: (info) => info.getValue(),
+//     header: t('테넌트'),
+//     size: 114,
+//   }),
+//   columnHelper.accessor('opt1', {
+//     cell: (info) => info.getValue(),
+//     header: t('그룹'),
+//     size: 114,
+//   }),
+//   columnHelper.accessor('opt2', {
+//     cell: (info) => info.getValue(),
+//     header: t('회사'),
+//     size: 114,
+//   }),
+//   columnHelper.accessor('opt3-1', {
+//     cell: (info) => info.getValue(),
+//     header: t('실'),
+//     size: 114,
+//   }),
+//   columnHelper.accessor('opt3', {
+//     cell: (info) => info.getValue(),
+//     header: t('소속'),
+//     size: 114,
+//   }),
+//   columnHelper.accessor('opt4', {
+//     cell: (info) => (
+//       <Link to={info.row.original.tenantSite} className="link">
+//         {info.row.original.tenantId}
+//       </Link>
+//     ),
+//     header: t('호칭(지위)'),
+//     size: 114,
+//   }),
+//   columnHelper.accessor('opt8', {
+//     cell: (info) => info.getValue(),
+//     header: t('이메일'),
+//     size: 114,
+//   }),
+//   columnHelper.accessor('employeeNumber', {
+//     cell: (info) => {
+//       return (
+//         <Button
+//           label={`${info.getValue()}`}
+//           className="link"
+//           onClick={() => _global.linkClick(info.row.original.uuid)}
+//         />
+//       );
+//     },
+//     header: t('사번'),
+//     size: 114,
+//   }),
+//   columnHelper.accessor('name', {
+//     cell: (info) => info.getValue(),
+//     header: t('이름'),
+//     size: 114,
+//   }),
+//   columnHelper.accessor('opt7', {
+//     cell: (info) => info.getValue(),
+//     header: t('신청일'),
+//     size: 114,
+//   }),
+//
+//   columnHelper.accessor('opt9', {
+//     cell: (info) => info.getValue(),
+//     header: t('재직여부'),
+//     size: 88,
+//   }),
+//   columnHelper.accessor('opt10', {
+//     cell: (info) => info.getValue(),
+//     header: t('승인상태'),
+//     size: 88,
+//   }),
+//   columnHelper.accessor('opt11', {
+//     cell: (info) => info.getValue(),
+//     header: t('승인일'),
+//     size: 114,
+//   }),
+// ] as ColumnDef<any, unknown>[];
