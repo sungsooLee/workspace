@@ -2,8 +2,10 @@ import { forwardRef, useMemo, useState, useCallback } from 'react';
 import { t } from 'i18next';
 import { BaseFormFieldProps } from '@learnway/hooks';
 import { Input } from '@learnway/ui';
+import { cn } from '@learnway/shared';
 import styles from './pass-option-form-field.module.css';
 import { PassCriteriaData } from '@types';
+import { NoticeBox } from '@shared/ui';
 
 interface PassOptionFormFieldProps extends BaseFormFieldProps<PassCriteriaData> {
   dummy?: boolean;
@@ -58,8 +60,8 @@ const PassOptionFormFieldComponent = forwardRef<HTMLDivElement, PassOptionFormFi
           <thead>
             <tr>
               <th scope={'col'}>구분</th>
-              <th scope={'col'}>항목별 이수 기준</th>
-              <th scope={'col'}>반영 비율</th>
+              <th scope={'col'}>항목별 이수 기준점수</th>
+              <th scope={'col'}>가중치 반영비율</th>
               <th scope={'col'}>이수기준 점수</th>
             </tr>
           </thead>
@@ -81,12 +83,21 @@ const PassOptionFormFieldComponent = forwardRef<HTMLDivElement, PassOptionFormFi
                 />
               </td>
               <td rowSpan={4}>
-                <p className={styles.info_text}>
+                <NoticeBox
+                  iconVisible={false}
+                  type={'bullet'}
+                  descriptions={[
+                    '이수 기준에 해당하는 항목만 압력 해주세요. ',
+                    '항목별 이수 기준 점수와 반영 비율을 입력 해주세요. ',
+                    '반영비율의 총합은 항상 100%가 되어야 합니다. ',
+                  ]}
+                />
+                {/* <p className={styles.info_text}>
                   항목별 반영비율 합이 <br />
                   <strong>{'00점'}</strong> 이상입니다.
                   <br />
                   점수 <strong>{criteria.totalMinPassScore}</strong>
-                </p>
+                </p> */}
               </td>
             </tr>
             <tr>
@@ -141,6 +152,26 @@ const PassOptionFormFieldComponent = forwardRef<HTMLDivElement, PassOptionFormFi
               </td>
             </tr>
           </tbody>
+          <tfoot>
+            <tr>
+              <th scope={'row'}>총점</th>
+              <td>
+                <span className={styles.info}>
+                  70<em className={styles.unit}>{'점'}</em>
+                </span>
+              </td>
+              <td>
+                <span className={cn(styles.info, styles.point)}>
+                  105<em className={styles.unit}>{'%'}</em>
+                </span>
+              </td>
+              <td>
+                <span className={styles.info}>
+                  -<em className={styles.unit}>{'점'}</em>
+                </span>
+              </td>
+            </tr>
+          </tfoot>
         </table>
       </div>
     );

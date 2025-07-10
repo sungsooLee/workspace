@@ -29,3 +29,20 @@
     }
   }
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.list {
+        ul {
+          li {
+            @apply body-sm pl-[10px];
+            &::before {
+              @apply top-[6px] h-[3px] w-[3px];
+            }
+          }
+        }
+      }
+    }
+  }
+}
