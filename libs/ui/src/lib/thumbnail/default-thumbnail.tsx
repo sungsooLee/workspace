@@ -17,7 +17,7 @@ export function DefaultThumbnail({
 
   return (
     <div
-      className={cn(styles.start, styles.thumbnail, styles.default, 'nlp--thumbnail', {
+      className={cn(styles.start, styles.thumbnail, styles.default_thumbnail, 'nlp--thumbnail', {
         [styles.active]: isHovered,
         [styles.selected]: selected,
       })}

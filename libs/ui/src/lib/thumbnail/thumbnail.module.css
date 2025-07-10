@@ -22,7 +22,7 @@
         @apply opacity-40;
       }
     }
-    &.default {
+    &.default_thumbnail {
       @apply h-[84px] min-w-[128px] bg-[url(../../assets/images/thumb/img_thumb_default.jpg)] bg-cover bg-center bg-no-repeat;
     }
   }
