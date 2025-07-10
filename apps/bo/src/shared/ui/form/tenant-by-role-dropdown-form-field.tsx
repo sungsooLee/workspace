@@ -1,4 +1,4 @@
-import { forwardRef, useMemo } from 'react';
+import { forwardRef, useEffect, useMemo } from 'react';
 import { t } from 'i18next';
 import { DropdownFormField } from '@features/form';
 import { useFetchAuthUser } from '@learnway/auth/entities';
@@ -8,7 +8,7 @@ import { useFetchTenantByRoleId } from '@entities/tenant';
 
 const TenantByRoleDropdownFormFieldComponent = forwardRef<
   HTMLInputElement,
-  BaseFormFieldProps<string>
+  BaseFormFieldProps<any>
 >(({ value, onChange, ...props }, ref) => {
   const { data } = useFetchAuthUser<AuthUser>();
   const { data: tenant } = useFetchTenantByRoleId(data?.activeRole?.roleId as number);
@@ -20,6 +20,14 @@ const TenantByRoleDropdownFormFieldComponent = forwardRef<
       value: tenantId,
     }));
   }, [data?.activeRole, tenant]);
+
+  useEffect(() => {
+    if (options && options.length === 1) {
+      onChange(options[0].value);
+      return;
+    }
+    onChange('');
+  }, [options]);
 
   return (
     <DropdownFormField
