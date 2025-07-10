@@ -10,7 +10,7 @@ export type com_ever_edu_pms_user_dto_req_SendVerifyPhoneNumberReqDto = {
     /**
      * 생년월일
      */
-    birthday?: string;
+    birthday: string;
     /**
      * 휴대전화번호
      */

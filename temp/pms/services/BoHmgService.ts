@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_pms_company_dto_res_CompanyDeptResDto } from '../models/com_ever_edu_pms_company_dto_res_CompanyDeptResDto';
+import type { com_ever_edu_pms_company_dto_res_CompanyDeptTreeResDto } from '../models/com_ever_edu_pms_company_dto_res_CompanyDeptTreeResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyDeptResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyDeptResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyDeptUserResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyDeptUserResDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -11,7 +11,18 @@ import { request as __request } from '../core/request';
 export class BoHmgService {
     /**
      * (HMG)회사 부서 유저 목록 조회
-     * 회사 부서의 (하위부서포함) 유저 목록 정보를 조회한다.
+     * 회사 부서의 (하위부서포함) 유저 목록 정보를 조회한다.<br>
+     * <pre> * 정렬
+     * 유저등록유형 : userEntity.linkageSystem
+     * 회사명 : userEntity.companyEntity.name
+     * 소속 : userEntity.deptEntity.deptName
+     * 학습자역활 : userEntity.isLeader
+     * 사번 : userEntity.employeeNumber
+     * 이름 : userEntity.name
+     * 재직여부 : userEntity.isOnLeave
+     * 계정상태 : userEntity.lockedDate
+     * </pre>
+     *
      * @param companyCode 회사코드
      * @param page Zero-based page index (0..N)
      * @param size The size of the page to be returned
@@ -23,7 +34,7 @@ export class BoHmgService {
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyDeptUserResDto OK
      * @throws ApiError
      */
-    public static getDeportmentUserList(
+    public static getDepartmentUserList(
         companyCode: string,
         page?: number,
         size: number = 10,
@@ -60,12 +71,12 @@ export class BoHmgService {
      * (HMG)회사 부서 tree 조회
      * (원본)회사 부서 목록을 트리 구조로 조회한다.
      * @param companyCodeList 회사코드 리스트
-     * @returns com_ever_edu_pms_company_dto_res_CompanyDeptResDto OK
+     * @returns com_ever_edu_pms_company_dto_res_CompanyDeptTreeResDto OK
      * @throws ApiError
      */
-    public static getDeportmentTreeList(
+    public static getDepartmentTreeList(
         companyCodeList: string,
-    ): CancelablePromise<Array<com_ever_edu_pms_company_dto_res_CompanyDeptResDto>> {
+    ): CancelablePromise<Array<com_ever_edu_pms_company_dto_res_CompanyDeptTreeResDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/hmg/department/tree',
@@ -95,7 +106,7 @@ export class BoHmgService {
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyDeptResDto OK
      * @throws ApiError
      */
-    public static getDeportmentChildList(
+    public static getDepartmentChildList(
         companyCode: string,
         page?: number,
         size: number = 10,

@@ -5,7 +5,7 @@
 /**
  * 사용자 테넌트 목록
  */
-export type com_ever_edu_global_security_AuthUser$AuthUserTenant = {
+export type com_ever_edu_pms_user_dto_res_UserResDto$UserTenantDto = {
     /**
      * 테넌트 ID
      */

@@ -2,8 +2,4 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type com_ever_edu_pms_authorization_dto_req_SearchDto = {
-    keyword?: string;
-    keywordType?: string;
-};
-
+export type com_ever_edu_pms_company_dto_res_TreeBaseDeptDto = Record<string, any>;

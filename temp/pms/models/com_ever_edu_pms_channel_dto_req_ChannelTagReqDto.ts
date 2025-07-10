@@ -3,9 +3,9 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * 역할
+ * 테넌트정산태그
  */
-export type org_springframework_security_core_GrantedAuthority = {
-    authority?: string;
+export type com_ever_edu_pms_channel_dto_req_ChannelTagReqDto = {
+    tagName?: string;
 };
 

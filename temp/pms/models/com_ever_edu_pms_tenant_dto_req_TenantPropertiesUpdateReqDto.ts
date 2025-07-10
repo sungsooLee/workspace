@@ -43,5 +43,25 @@ export type com_ever_edu_pms_tenant_dto_req_TenantPropertiesUpdateReqDto = {
      * 행정항목 설정 여부
      */
     isAdminDataOption?: boolean;
+    /**
+     * 완성차 테넌트 전용 항목 설정 여부
+     */
+    isCarTenantCustomOption?: boolean;
+    /**
+     * 로템 테넌트 전용 항목 설정 여부
+     */
+    isRotemTenantCustomOption?: boolean;
+    /**
+     * 위탁 테넌트 전용 항목 설정 여부
+     */
+    isOutsourcingTenantCustomOption?: boolean;
+    /**
+     * 위아 테넌트 전용 항목 설정 여부
+     */
+    isWiaTenantCustomOption?: boolean;
+    /**
+     * 오토에버 테넌트 전용 항목 설정 여부
+     */
+    isAutoeverTenantCustomOption?: boolean;
 };
 

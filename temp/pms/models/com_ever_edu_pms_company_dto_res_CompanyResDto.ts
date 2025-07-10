@@ -3,9 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { com_ever_edu_pms_company_dto_res_CompanyLoginRestrictionResDto } from './com_ever_edu_pms_company_dto_res_CompanyLoginRestrictionResDto';
-/**
- * 회사
- */
 export type com_ever_edu_pms_company_dto_res_CompanyResDto = {
     /**
      * 회사 ID

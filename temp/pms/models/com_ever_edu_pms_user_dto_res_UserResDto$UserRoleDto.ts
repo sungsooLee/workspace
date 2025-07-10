@@ -5,7 +5,7 @@
 /**
  * 사용자 역할 목록
  */
-export type com_ever_edu_global_security_AuthUser$AuthUserRole = {
+export type com_ever_edu_pms_user_dto_res_UserResDto$UserRoleDto = {
     /**
      * 역할 ID
      */
@@ -17,23 +17,27 @@ export type com_ever_edu_global_security_AuthUser$AuthUserRole = {
     /**
      * 사이트 구분
      */
-    siteScope?: com_ever_edu_global_security_AuthUser$AuthUserRole.siteScope;
+    siteScope?: com_ever_edu_pms_user_dto_res_UserResDto$UserRoleDto.siteScope;
+    /**
+     * 역할 타입
+     */
+    roleType?: com_ever_edu_pms_user_dto_res_UserResDto$UserRoleDto.roleType;
     /**
      * 테넌트 적용 범위
      */
-    tenantScope?: com_ever_edu_global_security_AuthUser$AuthUserRole.tenantScope;
+    tenantScope?: com_ever_edu_pms_user_dto_res_UserResDto$UserRoleDto.tenantScope;
     /**
      * 회사 적용 범위
      */
-    companyScope?: com_ever_edu_global_security_AuthUser$AuthUserRole.companyScope;
+    companyScope?: com_ever_edu_pms_user_dto_res_UserResDto$UserRoleDto.companyScope;
     /**
      * 부서 적용 범위
      */
-    deptScope?: com_ever_edu_global_security_AuthUser$AuthUserRole.deptScope;
+    deptScope?: com_ever_edu_pms_user_dto_res_UserResDto$UserRoleDto.deptScope;
     /**
      * 채널 적용 범위
      */
-    channelScope?: com_ever_edu_global_security_AuthUser$AuthUserRole.channelScope;
+    channelScope?: com_ever_edu_pms_user_dto_res_UserResDto$UserRoleDto.channelScope;
     /**
      * 테넌트 ID
      */
@@ -51,13 +55,25 @@ export type com_ever_edu_global_security_AuthUser$AuthUserRole = {
      */
     channelUuids?: Array<string>;
 };
-export namespace com_ever_edu_global_security_AuthUser$AuthUserRole {
+export namespace com_ever_edu_pms_user_dto_res_UserResDto$UserRoleDto {
     /**
      * 사이트 구분
      */
     export enum siteScope {
         FO = 'FO',
         BO = 'BO',
+    }
+    /**
+     * 역할 타입
+     */
+    export enum roleType {
+        PLATFORM_MANAGER = 'PLATFORM_MANAGER',
+        TENANT_MANAGER = 'TENANT_MANAGER',
+        CHANNEL_OWNER = 'CHANNEL_OWNER',
+        CHANNEL_MEMBER = 'CHANNEL_MEMBER',
+        CHANNEL_GUEST = 'CHANNEL_GUEST',
+        POLICY_MANAGER = 'POLICY_MANAGER',
+        TUTOR = 'TUTOR',
     }
     /**
      * 테넌트 적용 범위

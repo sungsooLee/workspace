@@ -10,11 +10,11 @@ export type com_ever_edu_pms_user_dto_req_UserRegisterReqDto = {
     /**
      * 생년월일
      */
-    birthday?: string;
+    birthday: string;
     /**
      * Email 주소
      */
-    email?: string;
+    email: string;
     /**
      * 비밀번호
      */

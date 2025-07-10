@@ -2,22 +2,21 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type com_ever_edu_pms_channel_dto_res_ChannelLearnerUserResDto = {
+/**
+ * 채널소유자 리스트
+ */
+export type com_ever_edu_pms_channel_dto_res_ChannelOwnerUserResDto = {
     /**
      * 채널ID
      */
     channelId?: number;
     /**
-     * 사용자Id
+     * 사용자 uuid
      */
-    userId?: number;
+    userUuid?: string;
     /**
      * 사용자명
      */
     userName?: string;
-    /**
-     * 학습제한여부
-     */
-    isLearnerRestraint?: boolean;
 };
 

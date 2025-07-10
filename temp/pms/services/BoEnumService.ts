@@ -36,25 +36,6 @@ export class BoEnumService {
         });
     }
     /**
-     * 플랫폼관리 > 시스템 공통코드 관리 > 전체 Enum Sync 생성/수정/삭제
-     * enum 전체를 다국어테이블과 비교해서 저장,수정,삭제한다.
-     * @returns any OK
-     * @throws ApiError
-     */
-    public static syncAllEnums(): CancelablePromise<any> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/admin/api/v1/enum/multilingual',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
      * 플랫폼관리 > 시스템 공통코드 관리 > 목록 조회
      * 등록된 모든 enum의 이름을 반환한다.
      * @param cdGroupId
