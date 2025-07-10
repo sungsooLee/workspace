@@ -14,7 +14,20 @@ function RouteComponent() {
       <p className="info">
         디자인에 맞게 커스텀 필요 (className는 제약없음)
         <br />
-        옵션은 필요시 추가
+        옵션은 필요시 추가 <br />
+        {`items={[...]}`} // 배열
+        <br />
+        {`spaceBetween={10}`}
+        <br />
+        {`slidesPerView='auto'`}
+        <br />
+        {`loop={true}`}
+        <br />
+        {`showNavigation={true}`}
+        <br />
+        {`pagination={{ clickable: true }}`}
+        <br />
+        {`autoplay={{ delay: 3000, disableOnInteraction: false }}`}
       </p>
       <div className="code_example">
         <pre className="code_block">
@@ -28,7 +41,7 @@ const carouselItems = [<h3>item A</h3>, <h3>item B</h3>, <h3>item C</h3>];
 // 적용방법(예시)
 <Carousel
   spaceBetween={8}
-  slidesPerView="auto"
+  slidesPerView='auto'
   items={carouselItems}
   loop={true}
   showNavigation={true} // 필요에 따라
@@ -43,10 +56,11 @@ const carouselItems = [<h3>item A</h3>, <h3>item B</h3>, <h3>item C</h3>];
           <div className="desc">
             <Carousel
               spaceBetween={8}
-              slidesPerView="auto"
+              slidesPerView={'auto'}
               items={carouselItems}
               loop={true}
               showNavigation={true} // 필요에 따라
+              pagination={{ clickable: true }}
             />
           </div>
         </div>
@@ -55,10 +69,11 @@ const carouselItems = [<h3>item A</h3>, <h3>item B</h3>, <h3>item C</h3>];
           <pre className="code_block">
             <code>{`<Carousel
   spaceBetween={8}
-  slidesPerView="auto"
+  slidesPerView='auto'
   items={carouselItems}
   loop={true}
   showNavigation={true}
+  pagination={{ clickable: true }}
 />`}</code>
           </pre>
         </div>

@@ -1,6 +1,6 @@
 import type { AxiosResponse } from 'axios';
 
-import { tokenService } from '@learnway/config';
+import { getConfig, tokenService } from '@learnway/config';
 
 import { AuthSSOHealthcheck, AuthUser } from '../../../types';
 import { queryOptions } from './authorization.queries';
@@ -21,15 +21,24 @@ export function removeToken() {
   tokenService.clear();
 }
 
+// TODO Active BO, FO 체크 추가
 export function convertToAuthUser(data: AxiosResponse): AuthUser {
-  console.log('convertToAuthUser', data);
+  console.log('### convertToAuthUser', data);
   const user = data.data;
   const { tenants, roles } = user;
 
-  const tenant = tenants?.find(
-    (tenant: { tenantId: any }) => tenant.tenantId === user.lastVisitedBoTenantId,
-  );
-  const role = roles?.find((role: { roleId: any }) => role.roleId === user.lastVisitedBoRoleId);
+  const APP_INFO = getConfig().APP_INFO;
+
+  console.log('### APP_INFO', APP_INFO);
+
+  const tenantId = APP_INFO === 'BO' ? user.lastVisitedBoTenantId : user.lastVisitedFoTenantId;
+  const roleId = APP_INFO === 'BO' ? user.lastVisitedBoRoleId : user.lastVisitedFoRoleId;
+
+  console.log('### LAST 테넌트 : ', tenantId);
+  console.log('### LAST 롤: ', roleId);
+
+  const tenant = tenants?.find((tenant: { tenantId: any }) => tenant.tenantId === tenantId);
+  const role = roles?.find((role: { roleId: any }) => role.roleId === roleId);
 
   return {
     ...user,

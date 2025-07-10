@@ -14,7 +14,7 @@ import {
 } from '@learnway/icons';
 import { CurriculumPopup, NextLearningPopup } from '../../../features/learning';
 
-import styles from './side-panel.module.css';
+import styles from '@learnway/styles/fo/pages/_learning/side-panel/side-panel.module.css';
 import { ChartNoAxesColumnDecreasing } from 'lucide-react';
 
 interface ChildData {

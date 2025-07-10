@@ -9,9 +9,10 @@ import styles from './navigate.module.css';
 import { cn } from '@learnway/shared';
 
 function findMenuPath(menu: Menu | undefined) {
-  if (!menu) return;
+  if (!menu) return '/';
   if (menu.path) return menu.path;
-  if (menu.children) return findMenuPath(menu?.children[0]);
+  if (menu.children?.length) return findMenuPath(menu?.children[0]);
+  return '/';
 }
 function NavigateComponent() {
   const { t } = useTranslation();

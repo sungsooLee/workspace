@@ -5,9 +5,14 @@ import type { Menu } from '../../../types';
 //import menuMock from '../../mock/menu.json';
 
 export default class MenuService {
-  static getMenus(tenantId: number, isMobile: boolean): Promise<any> {
+  static getMenus(
+    tenantId: number,
+    roleId: number | undefined = undefined,
+    isMobile: boolean,
+  ): Promise<any> {
     const url = objectToQueryString(`${PMSApiPrefix()}/menus/tenantTree`, {
       tenantId,
+      roleId,
       deviceType: isMobile ? 'mobile' : 'pc',
     });
     return httpService.get<Menu>(url);

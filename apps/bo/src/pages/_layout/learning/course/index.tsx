@@ -128,7 +128,7 @@ function RouteComponent() {
               provider={provider}
               name={'channelUuid'}
               label={t('LABEL.form.label.channel')}
-              element={<TenantChannelDropdownFormField tenantId={watch('tenantId')} />}
+              element={<TenantChannelDropdownFormField enableFilter={true} />}
               validation={{
                 required: true,
                 format: 'object',

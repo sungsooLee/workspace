@@ -137,8 +137,8 @@ export default class RoleManagerService {
    */
   static fetchRoleTree(tenantId: number, siteScope: string) {
     return httpService.get<any>(`${PMSApiPrefix()}/roles/tree`, {
-      tenantId: tenantId,
-      siteScope: siteScope,
+      tenantId,
+      siteScope,
     });
   }
 

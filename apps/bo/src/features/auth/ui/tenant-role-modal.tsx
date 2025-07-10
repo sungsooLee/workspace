@@ -103,6 +103,7 @@ const TenantRoleModalComponent = () => {
           variant={'primary'}
           size={'lg'}
           disabled={!tenantvalues}
+          // TODO 역할 완료후 적용
           // disabled={!tenantvalues || !rolevalues}
           onClick={handleOk}
         />

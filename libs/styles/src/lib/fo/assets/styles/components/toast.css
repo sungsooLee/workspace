@@ -1,0 +1,17 @@
+/* toast.css */
+.toast-viewport {
+  @apply min-w-[328px];
+  & > li {
+    @apply min-h-[56px] rounded-[12px];
+    & > div {
+      span + div {
+        @apply text-[1.4rem] leading-[1.5rem];
+      }
+    }
+    .nlp--button {
+      &.arrow {
+        @apply text-[1.4rem] leading-[1.4rem];
+      }
+    }
+  }
+}

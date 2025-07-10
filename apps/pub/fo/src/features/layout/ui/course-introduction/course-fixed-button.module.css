@@ -2,7 +2,7 @@
   &.course_button {
     @apply flex w-full bg-gradient-to-t from-white from-90% to-white/0;
     button {
-      @apply label-xs flex h-[48px] w-full !min-w-[48px] flex-[1%] flex-col justify-center rounded-[6px] border-[1px] border-solid border-[var(--gray5)] !px-0 text-center text-[var(--gray35)];
+      @apply label-xs flex h-[48px] w-full !min-w-[48px] flex-[1%] !flex-col justify-center rounded-[6px] border-[1px] border-solid border-[var(--gray5)] !px-0 text-center text-[var(--gray35)];
       & + button,
       & + .course {
         @apply !ml-[8px];

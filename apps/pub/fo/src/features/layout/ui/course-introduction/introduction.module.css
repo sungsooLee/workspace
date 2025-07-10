@@ -126,6 +126,11 @@
       @apply relative z-[1] -mt-[60px] flex h-[120px] items-center justify-center bg-gradient-to-t from-white to-transparent;
       button {
         @apply label-lg-b rounded-[8px] border-[1px] border-solid border-[var(--gray75)] bg-white p-[12px] leading-[20px] text-[var(--gray35)];
+        &.active {
+          svg {
+            @apply rotate-180;
+          }
+        }
       }
     }
   }

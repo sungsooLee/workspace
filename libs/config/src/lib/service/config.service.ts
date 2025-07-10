@@ -1,6 +1,7 @@
 import { API_FIXED_URI, API_BO_URI, API_SSO_URI } from '../const/config.constant';
 
 export interface LearnwayConfiguration {
+  APP_INFO: string;
   CODE: any;
   HTTP_PORT?: number;
   // API
