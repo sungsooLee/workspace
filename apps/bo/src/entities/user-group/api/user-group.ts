@@ -22,7 +22,7 @@ export default class UserGroupService {
   static fetchOrganizationTree(
     tenantIds: number[],
     tenantName?: string,
-  ): Promise<OrganizationTreeResponse[]> {
+  ): Promise<OrganizationTreeResponse> {
     return httpService.get(`${PMSApiPrefix()}/userGroup/organization-tree`, {
       tenantIds,
       tenantName,
