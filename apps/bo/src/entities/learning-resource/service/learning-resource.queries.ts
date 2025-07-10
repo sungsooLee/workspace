@@ -73,10 +73,10 @@ export const learningResourceQueryOptions = {
     queryFn: () => LearningResourceService.fetchCourseMapping(contentUuid),
     cacheTime: 0,
     staleTime: 0,
-    enabled: false,
+    enabled: true,
   }),
   getSharedHistories: (params: any) => ({
-    queryKey: queryKeys.mappingCourses,
+    queryKey: queryKeys.sharedHistories,
     queryFn: () => LearningResourceService.fetchSharedHistories(params),
     cacheTime: 0,
     staleTime: 0,
