@@ -42,7 +42,7 @@ export const useCourseForm = (courseType?: string) => {
   });
 
   // 현재 활성 탭
-  const [activeTab, setActiveTab] = useState('STEP1');
+  const [activeTab, setActiveTab] = useState('STEP4');
 
   // ref 설정 함수들
   const setTabRef = useCallback((tabKey: string, ref: TabFormRef | null) => {

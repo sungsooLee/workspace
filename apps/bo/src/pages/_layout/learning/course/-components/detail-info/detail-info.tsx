@@ -15,9 +15,11 @@ import { Course } from '@types';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CourseTabBaseProps, TabFormRef } from '../../-common/type';
-import { values } from 'lodash';
+import {
+  ChannelListModal,
+  TeacherListModal,
+} from '@features/learning-operate/course/course-management';
 import { PassOptionFormField } from '../../-common/pass-option-form-field';
-import { ChannelListModal, TeacherListModal } from '@features/learning-operate/course/course-management';
 
 const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
   ({ onSave, data: { formData, courseConfig } }, ref) => {
