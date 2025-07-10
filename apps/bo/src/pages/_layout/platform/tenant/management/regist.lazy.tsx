@@ -22,12 +22,20 @@ import {
   useDynamicForm,
 } from '@learnway/hooks';
 
-import { FormSubTitle, FormRow } from '@shared/ui';
+import {
+  FormSubTitle,
+  FormRow,
+  CompanyShuttleModal,
+  UserChoiceModal,
+  MainContents,
+  PageContainer,
+  LinkBox,
+  ContentsButtons,
+} from '@shared/ui';
 
 import { useCreateTenant } from '@entities/tenant/service/tenant.hook';
 import { DuplicateCheckInputFormField, DuplicateState, FormDisplay } from '@features/form';
 import { pageRouteConfig } from '@features/auth';
-import { CompanyShuttleModal, UserChoiceModal } from '@shared/ui';
 import TenantService from '@entities/tenant/api/tenant';
 import { isEqual } from 'lodash';
 import { EnDeviceType, EnUseCategory } from '@types';
@@ -35,7 +43,6 @@ import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.modu
 import { IcoAlertCircle } from '@learnway/icons';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { cn } from '@learnway/shared';
-import { MainContents, PageContainer, LinkBox, ContentsButtons } from '@shared/ui';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/management/regist')({
   component: RouteComponent,

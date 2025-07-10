@@ -10,22 +10,23 @@ import { BaseFormFieldProps } from '@learnway/hooks';
 import { useTranslation } from 'react-i18next';
 import { IcoPlus } from '@learnway/icons';
 
+// ListModalSelectorFormFieldProps: 폼 필드에서 사용할 prop 타입 정의
 export interface ListModalSelectorFormFieldProps extends BaseFormFieldProps<any[]> {
-  /** Modal component props */
+  /** 모달 컴포넌트에 전달할 설정값 */
   modalConfig: ModalConfig | (() => ModalConfig);
-  /** Button component props */
+  /** 버튼 컴포넌트에 전달할 props */
   button?: ButtonComponentProps;
-  /** List component props */
+  /** 리스트 컴포넌트에 전달할 props */
   list?: Partial<ListProps>;
-  /** modalData 에서 받은 내용의 조작을 위한 함수 - onFormChange(modalData) 시 사용 */
+  /** 모달에서 받은 데이터를 조작하는 함수 (onFormChange 시 사용) */
   transformModalData?: (modalData?: any) => void;
 }
 
 /**
  * 공통 form select chip list
- * @param value
- * @param onChange
- * @param props
+ * @param value - 현재 선택된 값 배열
+ * @param onChange - 값 변경 시 호출되는 콜백
+ * @param props - 기타 props
  * @constructor
  */
 const ListModalSelectorFormFieldComponent = forwardRef<
@@ -51,19 +52,26 @@ const ListModalSelectorFormFieldComponent = forwardRef<
     const { t } = useTranslation();
     const { open: openModal } = useModal();
 
+    // 새로운 옵션을 기존 value에 중복 없이 추가하는 함수
     const appendSelectedChipOptions = (newOption: any) => {
       const key = listProps?.valueField || 'value';
-      const isDuplicated = !!value?.find((d) => d[key] === newOption[key]); // 새로 등록하는 chip 중복 여부
-      !isDuplicated && ownerOnChange([...value, newOption]);
+      const newOptions = Array.isArray(newOption) ? newOption : [newOption];
+      const existingKeys = new Set(value.map((item) => item[key]));
+      const merged = [...value, ...newOptions.filter((option) => !existingKeys.has(option[key]))];
+
+      ownerOnChange(merged);
     };
 
+    // 추가 버튼 클릭 시 모달을 열고, 선택된 데이터를 value에 추가
     const handleButtonClick = async () => {
       const data = await openModal(modalConfig);
+      // transformModalData가 있으면 변환, 없으면 원본 사용
       const transformData = transformModalData && data ? transformModalData(data) : data;
       console.log(transformData);
       transformData && appendSelectedChipOptions(transformData);
     };
 
+    // 리스트의 항목 삭제 버튼 클릭 시 value에서 해당 항목 제거
     const handleOptionDeleteClick = (option: any) => {
       const newValue = addOrRemoveItemByKey(value, option, listProps?.valueField);
       ownerOnChange(newValue);
@@ -78,6 +86,7 @@ const ListModalSelectorFormFieldComponent = forwardRef<
           'nlp--list-modal-selector-form-field',
         )}
       >
+        {/* 추가 버튼 영역 */}
         <div className={styles.btn_wrap}>
           <Button
             className={styles.btn}
@@ -90,6 +99,7 @@ const ListModalSelectorFormFieldComponent = forwardRef<
           />
         </div>
 
+        {/* 선택된 항목 리스트 영역 */}
         <List
           {...listProps}
           checkable
@@ -102,4 +112,6 @@ const ListModalSelectorFormFieldComponent = forwardRef<
     );
   },
 );
+
+// 외부에서 사용할 수 있도록 export
 export const ListModalSelectorFormField = ListModalSelectorFormFieldComponent;

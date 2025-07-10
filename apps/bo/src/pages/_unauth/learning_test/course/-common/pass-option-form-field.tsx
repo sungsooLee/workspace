@@ -2,6 +2,7 @@ import { forwardRef, useMemo, useState } from 'react';
 import { t } from 'i18next';
 import { BaseFormFieldProps } from '@learnway/hooks';
 import { Input } from '@learnway/ui';
+import styles from './pass-option-form-field.module.css';
 
 interface PassCriteriaData {
   progressMinPassScore?: number; // 항목별 이수 기준 (진도)
@@ -46,117 +47,103 @@ const PassOptionFormFieldComponent = forwardRef<HTMLDivElement, PassOptionFormFi
     };
 
     return (
-      <table className="min-w-full border border-gray-300 text-center" ref={ref as any}>
-        <thead className="bg-gray-100">
-          <tr>
-            <th className="border border-gray-300 px-4 py-2">구분</th>
-            <th className="border border-gray-300 px-4 py-2">항목별 이수 기준</th>
-            <th className="border border-gray-300 px-4 py-2">반영 비율</th>
-            <th className="border border-gray-300 px-4 py-2">이수기준 점수</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td className="border border-gray-300 px-4 py-2">진도</td>
-            <td className="border border-gray-300 px-4 py-2">
-              <div className="flex items-center justify-center space-x-2">
+      <div className={styles.start}>
+        <table ref={ref as any}>
+          <caption>{'입력 테이블'}</caption>
+          <colgroup>
+            <col width={'10%'} />
+            <col />
+            <col />
+            <col width={'20%'} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope={'col'}>구분</th>
+              <th scope={'col'}>항목별 이수 기준</th>
+              <th scope={'col'}>반영 비율</th>
+              <th scope={'col'}>이수기준 점수</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>진도</td>
+              <td>
                 <Input
-                  className="w-20 rounded border border-gray-300 px-2 py-1"
                   suffixText="점 이상"
                   value={criteria.progressMinPassScore}
                   onChange={(e) => handleCriteriaChange('progressMinPassScore', e.target.value)}
                 />
-              </div>
-            </td>
-            <td className="border border-gray-300 px-4 py-2">
-              <div className="flex items-center justify-center space-x-2">
+              </td>
+              <td>
                 <Input
-                  className="w-20 rounded border border-gray-300 px-2 py-1"
                   suffixText="%"
                   value={criteria.progressWeights}
                   onChange={(e) => handleCriteriaChange('progressWeights', e.target.value)}
                 />
-              </div>
-            </td>
-            <td className="border border-gray-300 px-4 py-2" rowSpan={4}>
-              <div className="flex h-full flex-col justify-center">
-                <p>항목별 반영비율 합이</p>
-                <p>○○점 이상입니다.</p>
-                <p>점수 {totalScore}</p>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td className="border border-gray-300 px-4 py-2">출석</td>
-            <td className="border border-gray-300 px-4 py-2">
-              <div className="flex items-center justify-center space-x-2">
+              </td>
+              <td rowSpan={4}>
+                <p className={styles.info_text}>
+                  항목별 반영비율 합이 <br />
+                  <strong>{'00점'}</strong> 이상입니다.
+                  <br />
+                  점수 <strong>{totalScore}</strong>
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td>출석</td>
+              <td>
                 <Input
-                  className="w-20 rounded border border-gray-300 px-2 py-1"
                   suffixText="점 이상"
                   value={criteria.attendanceMinPassScore}
                   onChange={(e) => handleCriteriaChange('attendanceMinPassScore', e.target.value)}
                 />
-              </div>
-            </td>
-            <td className="border border-gray-300 px-4 py-2">
-              <div className="flex items-center justify-center space-x-2">
+              </td>
+              <td>
                 <Input
-                  className="w-20 rounded border border-gray-300 px-2 py-1"
                   suffixText="%"
                   value={criteria.attendanceWeights}
                   onChange={(e) => handleCriteriaChange('attendanceWeights', e.target.value)}
                 />
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td className="border border-gray-300 px-4 py-2">평가</td>
-            <td className="border border-gray-300 px-4 py-2">
-              <div className="flex items-center justify-center space-x-2">
+              </td>
+            </tr>
+            <tr>
+              <td>평가</td>
+              <td>
                 <Input
-                  className="w-20 rounded border border-gray-300 px-2 py-1"
                   suffixText="점 이상"
                   value={criteria.examMinPassScore}
                   onChange={(e) => handleCriteriaChange('examMinPassScore', e.target.value)}
                 />
-              </div>
-            </td>
-            <td className="border border-gray-300 px-4 py-2">
-              <div className="flex items-center justify-center space-x-2">
+              </td>
+              <td>
                 <Input
-                  className="w-20 rounded border border-gray-300 px-2 py-1"
                   suffixText="%"
                   value={criteria.examWeights}
                   onChange={(e) => handleCriteriaChange('examWeights', e.target.value)}
                 />
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td className="border border-gray-300 px-4 py-2">과제</td>
-            <td className="border border-gray-300 px-4 py-2">
-              <div className="flex items-center justify-center space-x-2">
+              </td>
+            </tr>
+            <tr>
+              <td>과제</td>
+              <td>
                 <Input
-                  className="w-20 rounded border border-gray-300 px-2 py-1"
                   suffixText="점 이상"
                   value={criteria.asgmtMinPassScore}
                   onChange={(e) => handleCriteriaChange('asgmtMinPassScore', e.target.value)}
                 />
-              </div>
-            </td>
-            <td className="border border-gray-300 px-4 py-2">
-              <div className="flex items-center justify-center space-x-2">
+              </td>
+              <td>
                 <Input
-                  className="w-20 rounded border border-gray-300 px-2 py-1"
                   suffixText="%"
                   value={criteria.asgmtWeights}
                   onChange={(e) => handleCriteriaChange('asgmtWeights', e.target.value)}
                 />
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     );
   },
 );

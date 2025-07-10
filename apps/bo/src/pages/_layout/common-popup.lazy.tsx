@@ -693,10 +693,15 @@ const formConfig: DynamicFormConfig = {
       name: 'thumbnails',
       label: t('썸네일'),
       type: 'thumbnail-list',
-      imageStorageType: 'public',
       max: 1,
-      format: 'array',
-      value: [],
+      format: 'object',
+      value: {
+        groupUuid: '990245c1-3516-465d-bdd2-fb03fbcd7591',
+      },
+      uploadConfig: {
+        affairType: 'CMS',
+        s3Path: 'upload/content/image',
+      },
       description:
         '파일 사이즈 000 x 000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 00개 / 파일용량 최대 00 MB',
     },

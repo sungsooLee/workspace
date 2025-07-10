@@ -50,11 +50,12 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
       onRejected: async (error: any) => {
         const { config, response: errorResponse } = error;
         if (error?.code === 'ERR_NETWORK' || errorResponse?.status === 500) {
-          await alert({
-            title: '시스템 에러',
-            content: '시스템 관리자에게 문의하세요',
-            type: 'error',
-          });
+          console.error('error', error);
+          // await alert({
+          //   title: '시스템 에러',
+          //   content: '시스템 관리자에게 문의하세요',
+          //   type: 'error',
+          // });
         }
         return Promise.reject(error);
       },
