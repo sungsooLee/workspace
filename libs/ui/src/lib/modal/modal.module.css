@@ -109,7 +109,7 @@
   &.m_bottom_sheet {
     @apply !min-w-auto left-0 top-0 h-full max-h-none !w-full max-w-none translate-x-0 translate-y-0 !rounded-none;
     h2 {
-      @apply title3-b z-10 h-[56px] border-0 bg-white pl-[20px] pr-[16px] text-[var(--gray9)];
+      @apply title3-b z-10 !h-[56px] border-0 bg-white pl-[20px] pr-[16px] text-[var(--gray9)];
     }
     .btn_close {
       @apply !top-[16px] z-10;

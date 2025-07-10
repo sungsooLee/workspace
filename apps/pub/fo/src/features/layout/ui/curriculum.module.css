@@ -1,56 +1,32 @@
 .start {
   &.curriculum {
-    .acc_curriculum {
-      @apply border-b-[1px] border-t-[1px] border-solid border-[var(--gray10)] py-[12px];
-      & > div {
-        & + div {
-          @apply mt-[24px];
+    .list {
+      @apply list-decimal pl-[40px] pr-[24px];
+      li {
+        @apply py-[10px];
+        &::marker {
+          @apply body-md text-[var(--gray50)];
         }
-      }
-      button {
-        &[data-state='open'] {
-          svg {
-            @apply rotate-180;
+        .box {
+          @apply grid grid-cols-[3fr_1fr] items-center justify-between;
+          p {
+            @apply body-md flex-1 text-[var(--gray50)];
           }
-        }
-        span {
-          @apply relative;
-          svg {
-            @apply absolute right-0 top-1/2 h-[24px] w-[24px] -translate-y-1/2 stroke-[var(--gray10)];
-          }
-        }
-      }
-      .title {
-        @apply py-[20px] pl-[24px];
-        p {
-          @apply body-lg-b flex items-center text-[var(--gray35)];
-          span {
-            @apply label-sm-b ml-[6px] inline-block rounded-[24px] bg-[var(--blue50)] px-[6px] py-[3px] text-white;
-          }
-        }
-      }
-      .list {
-        @apply pl-[40px] pr-[24px];
-        li {
-          @apply py-[10px];
-          .box {
-            @apply flex items-center justify-between;
-            p {
-              @apply body-md flex-1 text-[var(--gray50)];
-            }
-            div {
-              @apply flex items-center;
-              span {
-                @apply body-md flex items-center leading-[24px] text-[var(--gray50)];
-                & + span {
-                  @apply relative ml-[8px] pl-[8px];
-                  &::before {
-                    @apply absolute left-0 top-1/2 h-[16px] w-px -translate-y-1/2 bg-[var(--gray75)] content-[''];
-                  }
+          div {
+            @apply ml-[8px] flex items-center justify-end;
+            span {
+              @apply body-md flex items-center leading-[24px] text-[var(--gray50)];
+              & + span {
+                @apply relative ml-[8px] pl-[8px];
+                &::before {
+                  @apply absolute left-0 top-1/2 h-[16px] w-px -translate-y-1/2 bg-[var(--gray75)] content-[''];
                 }
-                svg {
-                  @apply mr-[2px] mt-[2px];
-                }
+              }
+              &.type {
+                @apply flex w-[100px] items-center justify-between whitespace-nowrap;
+              }
+              svg {
+                @apply mr-[2px] mt-[2px];
               }
             }
           }
