@@ -33,6 +33,9 @@
             &:nth-child(2) {
               @apply right-0 bg-[linear-gradient(to_left,white_0%,white_80%,transparent_100%)];
             }
+            &::after {
+              @apply h-[12px] w-[12px] bg-[length:12px];
+            }
           }
         }
         .tab_swiper {

@@ -322,7 +322,7 @@ function RouteComponent() {
         <Button
           onClick={() =>
             openModal({
-              width: 'sm',
+              width: 'm_full',
               content: <CourseCancelReasonPopup />,
             })
           }

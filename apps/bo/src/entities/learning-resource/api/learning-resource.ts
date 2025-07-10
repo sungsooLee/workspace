@@ -32,6 +32,10 @@ export default class LearningResourceService {
     return httpService.get(`${CMSApiPrefix()}/content/${contentUuid}`);
   }
 
+  static deleteContent(contentUuid: string): Promise<any> {
+    return httpService.delete(`${CMSApiPrefix()}/content/${contentUuid}`);
+  }
+
   static fetchCurriculumMapping(contentUuid: string): Promise<boolean> {
     return httpService.get(`${CMSApiPrefix()}/content/curriculum-mapping/${contentUuid}`);
   }

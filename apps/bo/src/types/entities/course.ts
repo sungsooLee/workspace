@@ -419,6 +419,11 @@ export interface Course {
    * 인정학습점수(학습포인트)
    */
   recognizedStudyPoint?: number;
+
+  /**
+   * 커뮤니티 설정 리스트
+   */
+  communityList?: Array<string>;
   /**
    * 커뮤니티[공지/자료실/커뮤니티/공유] 설정 여부
    */
@@ -472,13 +477,29 @@ export interface Course {
    */
   isRelatedPrerequisiteCourseExisted?: boolean;
   /**
-   * 사전 학습
+   * 사전 학습 과정 아이디 배열
    */
   preRequisiteCourseIds?: Array<number>;
   /**
-   * 연관 학습
+   * 사전 학습 과정 배열
+   */
+  preRequisiteCourseList?: Array<{
+    courseId?: number;
+    courseName?: string;
+    courseType?: string;
+  }>;
+  /**
+   * 연관 학습 과정 아이디 배열
    */
   relatedCourseIds?: Array<number>;
+  /**
+   * 연관 학습 과정 배열
+   */
+  relatedCourseList?: Array<{
+    courseId?: number;
+    courseName?: string;
+    courseType?: string;
+  }>;
   /**
    * HMG 과정 데이터 표준 분류 > 대분류
    */
@@ -570,6 +591,13 @@ export interface Course {
    * 태그 이름 목록
    */
   tagNames: Array<{ value: string }>;
+
+  // 추가 필드 //////////////////////////////////////////////////////////////////////////////////////////
+
+  /**
+   * 이수기준
+   */
+  passOption?: PassCriteriaData;
 }
 
 /**
@@ -579,7 +607,7 @@ export interface CourseConfigQueryParams {
   /**
    * 채널id
    */
-  channelId?: number;
+  channelUuid?: string;
   /**
    * 과정유형
    */
@@ -743,4 +771,19 @@ export interface CoursePopupListItem {
    * 과정 유효 종료일
    */
   courseValidityEndDate?: string;
+}
+
+/**
+ * pass-option-form-field.tsx 에서만 사용
+ */
+export interface PassCriteriaData {
+  progressMinPassScore?: number; // 항목별 이수 기준 (진도)
+  attendanceMinPassScore?: number; // 항목별 이수 기준 (출석)
+  examMinPassScore?: number; // 항목별 이수 기준 (평가)
+  asgmtMinPassScore?: number; // 항목별 이수 기준 (과제)
+  totalMinPassScore?: number; // 항목별 이수 기준 (총점)
+  progressWeights?: number; // 반영 비율 (진도)
+  attendanceWeights?: number; // 반영 비율 (출석)
+  examWeights?: number; // 반영 비율 (시험)
+  asgmtWeights?: number; // 반영 비율 (과제)
 }

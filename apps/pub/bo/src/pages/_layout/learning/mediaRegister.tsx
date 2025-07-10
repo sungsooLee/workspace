@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-imports */
 /* eslint-disable @nx/enforce-module-boundaries */
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
@@ -54,6 +55,7 @@ import {
   IcoSearch,
   IcoStatusFail,
   IcoDelete04,
+  IcoLoading,
 } from '@learnway/icons';
 import { FormSubTitle } from '../../../../../../bo/src/shared/ui/form';
 
@@ -958,23 +960,22 @@ function RouteComponent() {
               </label>
               <div className={formStyles.input_box}>
                 {/* 퍼블수정 20240317 : disabled 속성 추가 */}
-                <ThumbnailImageUpload
+                {/* <ThumbnailImageUpload
                   options={[
-                    /* 동영상 추출 전 */
                     // { id: '1', path: defaultImg },
-                    /* 동영상 추출 후 */
                     { id: '1', path: 'https://lodash.com/assets/img/lodash.svg' },
                     { id: '2', path: 'https://lodash.com/assets/img/lodash.svg' },
                     { id: '3', path: 'https://lodash.com/assets/img/lodash.svg' },
                     { id: '4', path: 'https://lodash.com/assets/img/lodash.svg' },
                     { id: '5', path: 'https://lodash.com/assets/img/lodash.svg' },
-                    { id: '6', path: defaultImg } /* default 추천 썸네일 */,
+                    { id: '6', path: defaultImg } ,
                   ]}
                   onChange={(options: ImageOption[]) => console.log('onChange', options)}
                   onCheckedChange={(options: ImageOption[]) =>
                     console.log('onCheckedChange', options)
                   }
-                />
+                /> */}
+                <IcoLoading width={24} height={24} stroke="#747d91" className={styles.icon} />
               </div>
               <p className={formStyles.guide_text}>
                 학습자원을 표현하는 썸네일을 선택하거나 업로드 하세요. (미선택 시 자동 선택)

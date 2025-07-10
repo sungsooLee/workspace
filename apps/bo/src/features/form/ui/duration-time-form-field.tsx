@@ -1,4 +1,4 @@
-import { ChangeEvent, forwardRef, useState } from 'react';
+import { ChangeEvent, forwardRef, useEffect, useState } from 'react';
 import { NumberFormatValues } from 'react-number-format';
 import { BaseFormFieldProps } from '@learnway/hooks';
 import { Input } from '@learnway/ui';
@@ -19,9 +19,9 @@ const DurationTimeFormFieldComponent = forwardRef<
   BaseFormFieldProps<TimeValueType>
 >(({ value, onChange }, ref) => {
   const [durationTime, setDurationTime] = useState<TimeValueType>({
-    hour: value?.hour ?? 0,
-    minute: value?.minute ?? 0,
-    second: value?.second ?? 0,
+    hour: 0,
+    minute: 0,
+    second: 0,
   });
 
   const handleChangeTimeValue = (key: TimeChangeKeyType) => (e: ChangeEvent<HTMLInputElement>) => {
@@ -42,6 +42,14 @@ const DurationTimeFormFieldComponent = forwardRef<
     const isInputAllowed = key === 'hour' ? floatValue >= 0 : floatValue >= 0 && floatValue <= 59;
     return isInputAllowed;
   };
+
+  useEffect(() => {
+    setDurationTime({
+      hour: value?.hour ?? 0,
+      minute: value?.minute ?? 0,
+      second: value?.second ?? 0,
+    });
+  }, [value]);
 
   return (
     <div ref={ref} className={formStyles.input_box}>

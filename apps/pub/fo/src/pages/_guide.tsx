@@ -58,6 +58,7 @@ function RouteComponent() {
         { label: 'Popover', path: '/guide/popover' },
         { label: 'Icon', path: '/guide/icon' },
         { label: 'Avatar', path: '/guide/avatar' },
+        { label: 'Toast', path: '/guide/toast' },
       ],
     },
     {

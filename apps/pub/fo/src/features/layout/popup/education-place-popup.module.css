@@ -36,6 +36,25 @@
 
 :global(body.mobile) {
   @screen mobile {
+    .start {
+      &.education_wrap {
+        strong {
+          @apply title3-b;
+        }
+        .number {
+          dt,
+          dd {
+            @apply label-lg;
+          }
+        }
+        .addr {
+          @apply label-lg;
+          button {
+            @apply label-lg ml-[8px];
+          }
+        }
+      }
+    }
     .copy {
       &::before {
         @apply left-[50%] -translate-x-[50%];

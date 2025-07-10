@@ -6,6 +6,7 @@ export const queryKeys = {
   userByUuid: ['user-by-uuid'] as const,
   contents: ['contents'] as const,
   contentDetail: ['content-detail'] as const,
+  deleteContent: ['delete-content'] as const,
   createDraftVideo: ['create-draft-video'] as const,
   s3FileDownload: ['file-s3-download'] as const,
   learningResources: ['learning-resources'] as const,
@@ -135,7 +136,7 @@ export const mutateOptions = {
   updateBlogContent: () => ({
     mutationFn: (params: BlogUpdateReq) => LearningResourceService.updateBlogContent(params),
   }),
-  saveBlogWatchLog: () => ({
-    mutationFn: (params: BlogWatchLogReq) => LearningResourceService.saveBlogWatchLog(params),
+  deleteContent: () => ({
+    mutationFn: (contentUuid: string) => LearningResourceService.deleteContent(contentUuid),
   }),
 };

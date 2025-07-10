@@ -34,7 +34,7 @@ export const queryOptions = {
   getCourseConfig: <T = CourseConfig>(queryParams: CourseConfigQueryParams) => ({
     queryKey: queryKeys.getCourseConfig(queryParams),
     queryFn: () => CourseService.fetchCourseConfig<T>(queryParams),
-    enabled: !!queryParams.channelId && !!queryParams.courseType,
+    enabled: !!queryParams.channelUuid && !!queryParams.courseType,
   }),
   // 과정 조회 팝업 조회
   getCoursePopup: <T = CoursePopupListItem>(queryParams: CoursePopupQueryParams) => ({

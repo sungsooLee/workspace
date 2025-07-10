@@ -6,22 +6,23 @@ import {
 } from '@features/learning-operate/course/course-management';
 import { LMSApiPrefix } from '@learnway/config';
 import { CODE_GROUP, getCodeLabel, useDynamicForm2 } from '@learnway/hooks';
+import { generateYears } from '@learnway/shared';
 import { Button, ContentsRow, Divider, GridBox, Input, useGridBox, useModal } from '@learnway/ui';
 import {
+  ContentsButtons,
   FormRow2,
   GridExcelDownloadButton,
   GridExcelUploadButton,
+  MainContents,
+  PageContainer,
   SearchBoxForm,
   TenantChannelDropdownFormField,
 } from '@shared/ui';
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { CourseListItem, CoursesQueryParams } from '@types';
-import { MainContents, PageContainer, ContentsButtons } from '@shared/ui';
 import { t } from 'i18next';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { generateYears } from '@learnway/shared';
-import { size } from 'lodash';
 
 export const Route = createFileRoute('/_unauth/learning_test/course/')({
   component: RouteComponent,
