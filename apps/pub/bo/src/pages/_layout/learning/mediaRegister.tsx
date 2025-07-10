@@ -960,23 +960,21 @@ function RouteComponent() {
               </label>
               <div className={formStyles.input_box}>
                 {/* 퍼블수정 20240317 : disabled 속성 추가 */}
-                <ThumbnailImageUpload
+                {/* <ThumbnailImageUpload
                   options={[
-                    /* 동영상 추출 전 */
                     // { id: '1', path: defaultImg },
-                    /* 동영상 추출 후 */
                     { id: '1', path: 'https://lodash.com/assets/img/lodash.svg' },
                     { id: '2', path: 'https://lodash.com/assets/img/lodash.svg' },
                     { id: '3', path: 'https://lodash.com/assets/img/lodash.svg' },
                     { id: '4', path: 'https://lodash.com/assets/img/lodash.svg' },
                     { id: '5', path: 'https://lodash.com/assets/img/lodash.svg' },
-                    { id: '6', path: defaultImg } /* default 추천 썸네일 */,
+                    { id: '6', path: defaultImg } ,
                   ]}
                   onChange={(options: ImageOption[]) => console.log('onChange', options)}
                   onCheckedChange={(options: ImageOption[]) =>
                     console.log('onCheckedChange', options)
                   }
-                />
+                /> */}
                 <IcoLoading width={24} height={24} stroke="#747d91" className={styles.icon} />
               </div>
               <p className={formStyles.guide_text}>

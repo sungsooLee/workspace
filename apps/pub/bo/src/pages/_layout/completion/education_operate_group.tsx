@@ -1,9 +1,12 @@
+/* eslint-disable no-restricted-imports */
 /* eslint-disable @nx/enforce-module-boundaries */
+
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { SectionLayout } from '../-components/section-layout';
 import { SplitPanel, Tabs, TreeBox, TreeContainer, TreeNode } from '@learnway/ui';
-import { MainContents } from '../../../../../../bo/src/widgets/layout/ui/container/slot/main-contents';
+// import { MainContents } from '../../../../../../bo/src/widgets/layout/ui/container/slot/main-contents';
+import { MainContents } from '../../../../../../bo/src/shared/ui/layout/slot/main-contents';
 
 /** tab contents */
 import { HeadquartersInfo } from './-contents/headquarters-info';
