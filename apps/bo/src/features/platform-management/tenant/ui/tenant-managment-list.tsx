@@ -58,7 +58,7 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
     setOptions,
     setValue,
   } = useSearchBox(searchConfig());
-  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
+  const { config: gConfig, gridFetch } = useGridBox(gridConfig(), getValues);
 
   const tenantIdWatch = useWatch({ control: searchProvider.control, name: 'tenantId' });
 
@@ -196,7 +196,7 @@ const searchConfig= (): SearchBoxConfig =>({
   },
 });
 
-const gridConfig: useGridBoxConfig = {
+const gridConfig = (): useGridBoxConfig => ({
   query: tenantQueryOptions.list,
   columns: [],
   data: [],
@@ -206,7 +206,7 @@ const gridConfig: useGridBoxConfig = {
     pageIndex: 0,
     totalRows: 0,
   },
-};
+});
 
 const columnHelper = createColumnHelper<Tenant>();
 const columns = [
