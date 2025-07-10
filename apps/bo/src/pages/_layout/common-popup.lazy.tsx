@@ -26,7 +26,7 @@ import {
   ChipListModalSelectorFormField,
   ContentsRow,
   Input,
-  LearningWindowLayout,
+  LearnwayLearningWindowLayout,
   PreviewImage,
   useModal,
 } from '@learnway/ui';

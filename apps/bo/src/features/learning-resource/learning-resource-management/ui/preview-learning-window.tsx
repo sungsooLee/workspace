@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
-import { EnContentType, LearningWindowLayout, useLearningWindow } from '@learnway/ui';
+import { EnContentType, LearnwayLearningWindowLayout, useLearningWindow } from '@learnway/ui';
 
 import { learningResourceQueryOptions, useFetchBlogContent } from '@entities/learning-resource';
 import { ContentType } from '@types';
@@ -48,7 +48,7 @@ const PreviewLearningWindowComponent: FC<any> = ({ contentUuid }: { contentUuid:
     });
   }, [data]);
 
-  return <LearningWindowLayout />;
+  return <LearnwayLearningWindowLayout />;
 };
 
 export const PreviewLearningWindow = PreviewLearningWindowComponent;

@@ -8,7 +8,7 @@ import stylesMobile from '@learnway/styles/fo/pages/_learning/learning-m.module.
 import { ScormHandler } from '../service/scorm-handler';
 import { ScormDataManager } from '../service/scorm-data-manager';
 import { ScormRteClient } from '../service/scorm-rte-client';
-import { useLearningWindow } from '../../learning-window.store';
+import { useLearningWindow } from '../../learnway-learning-window.store';
 
 const styles = isMobile ? stylesMobile : stylesWeb;
 

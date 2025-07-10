@@ -4,12 +4,12 @@ import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-rout
 import { t } from 'i18next';
 
 import { useGetCurriculumnDetail } from '@entities/curriculum';
-import { useGetScormRteScoInfo } from '@entities/scorm';
-import { useGetContentDetail } from '@entities/content';
+import { useGetScormRteScoInfo } from '@entities/learning-resource/service/scorm-rte.hook';
+import { useGetContentDetail } from '@entities/learning-resource/service/content.hook';
 
 import {
   EnContentType,
-  LearningWindowLayout,
+  LearnwayLearningWindowLayout,
   useLearningWindow,
   ScormPlayerConfigProperties,
   LearningWindowBaseInfo,
@@ -148,5 +148,5 @@ function RouteComponent() {
     });
   }, []);
 
-  return <LearningWindowLayout />;
+  return <LearnwayLearningWindowLayout />;
 }

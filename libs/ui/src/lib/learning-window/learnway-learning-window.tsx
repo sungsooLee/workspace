@@ -10,7 +10,7 @@ import { LearningWindowVideoPlayer } from './player/ui/learning-window-video-pla
 import { LearningWindowHtmlPlayer } from './player/ui/learning-window-html-player';
 import { LearningWindowEbookPlayer } from './player/ui/learning-window-ebook-player';
 
-import { EnContentType, useLearningWindow } from './learning-window.store';
+import { EnContentType, useLearningWindow } from './learnway-learning-window.store';
 
 const LearningWindowComponent: FC<any> = () => {
   const { scormInfo, videoInfo, galleryInfo, blogInfo, htmlInfo, ebookInfo, playInfo } =

@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 
 import {
   EnContentType,
-  LearningWindowLayout,
+  LearnwayLearningWindowLayout,
   useLearningWindow,
   ScormPlayerConfigProperties,
   LearningWindowBaseInfo,
@@ -13,5 +13,5 @@ export const Route = createFileRoute('/_learning/learning-window')({
 });
 
 function RouteComponent() {
-  return <LearningWindowLayout />;
+  return <LearnwayLearningWindowLayout />;
 }

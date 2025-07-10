@@ -146,7 +146,7 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
   setPlayInfo(playInfo?: LearningWindowPlayInfo) {
     if (!playInfo) return;
     const playList = get().playList || [];
-    const index = playList?.findIndex(
+    const index = playList.findIndex(
       (item) => item.moduleId === playInfo.moduleId && item.lessonId === playInfo.lessonId,
     );
     set({
@@ -195,7 +195,7 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
       ebookInfo,
     }));
   },
-  setFuncInfo(funcInfo: FunctionInfomation) {
+  setFuncInfo(funcInfo?: FunctionInfomation) {
     set((state) => ({
       funcInfo,
     }));
@@ -206,6 +206,9 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
       galleryInfo: undefined,
       scormInfo: undefined,
       videoInfo: undefined,
+      blogInfo: undefined,
+      htmlInfo: undefined,
+      ebookInfo: undefined,
     }));
   },
 }));
