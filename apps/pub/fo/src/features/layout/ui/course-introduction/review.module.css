@@ -37,6 +37,11 @@
 
     .review_box {
       @apply mt-[24px];
+      & > div {
+        & > button {
+          @apply h-[44px] w-[44px];
+        }
+      }
       .review_swiper {
         @apply w-full;
         [class*='swiper-slide'] {

@@ -45,6 +45,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
   const [langCountryCodeTypeListOptions, setLangCountryCodeTypeListOptions] = useState<any[]>();
   const [langOptions, setLangOptions] = useState<any[]>();
   const [workTenantId, setWorkTenantId] = useState<number>();
+  const [platformProperties, setPlatformProperties] = useState<any>();
 
   const { data: attributeData, refetch } = useTenantAttributeCompany(workTenantId);
 
@@ -97,14 +98,26 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
       tenantInfo.isCommonCategory && useCategory.push(EnUseCategory.isCommonCategory);
       tenantInfo.isTenantCategory && useCategory.push(EnUseCategory.isTenantCategory);
 
-      // boolean 값이 null 일 때 default = false
-      attributeData.isCarTenantCustomOption = false;
-      attributeData.isRotemTenantCustomOption = false;
-      attributeData.isOutsourcingTenantCustomOption = false;
-      attributeData.isWiaTenantCustomOption = false;
-      attributeData.isAutoeverTenantCustomOption = false;
+      initProperties(attributeData);
+      const properties = {
+        isUseEnrollOption: tenantInfo.flatformProperties.isUseEnrollOption,
+        isUseTextBookOption: tenantInfo.flatformProperties.isUseTextBookOption,
+        isUseInstructorOption: tenantInfo.flatformProperties.isUseInstructorOption,
+        isUsePassOption: tenantInfo.flatformProperties.isUsePassOption,
+        isUseCommunicationOption: tenantInfo.flatformProperties.isUseCommunicationOption,
+        isUseLearningEnvOption: tenantInfo.flatformProperties.isUseLearningEnvOption,
+        isUseLearningControlOption: tenantInfo.flatformProperties.isUseLearningControlOption,
+        isUseRelatedCourseOption: tenantInfo.flatformProperties.isUseRelatedCourseOption,
+        isUseAdminDataOption: tenantInfo.flatformProperties.isUseAdminDataOption,
+        isUseCarTenantCustomOption: tenantInfo.flatformProperties.isUseCarTenantCustomOption,
+        isUseRotemTenantCustomOption: tenantInfo.flatformProperties.isUseRotemTenantCustomOption,
+        isUseOutsourcingTenantCustomOption: tenantInfo.flatformProperties.isUseOutsourcingTenantCustomOption,
+        isUseWiaTenantCustomOption: tenantInfo.flatformProperties.isUseWiaTenantCustomOption,
+        isUseAutoeverTenantCustomOption: tenantInfo.flatformProperties.isUseAutoeverTenantCustomOption,
+      }
+      setPlatformProperties(properties);
 
-      fetchBaseData({ ...tenantInfo, device: device, useCategory: useCategory });
+      fetchBaseData({ ...tenantInfo, device, useCategory });
 
       const langValues = tenantInfo?.langCountryCodeTypeList ?? [];
       const options = langCountryCodeTypeListOptions?.filter((item: any) =>
@@ -128,9 +141,23 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
     })();
   }, []);
 
-  useEffect(() => {
-    const langValue = getValues('langCountryCodeTypeList');
-  }, [langCountryCodeTypeListOptions]);
+  function initProperties(info: any) {
+    const tenantInfo = info.tenantInfo;
+    info.isEnrollOption = tenantInfo.properties.isEnrollOption === null ? false : tenantInfo.properties.isEnrollOption;
+    info.isTextBookOption = tenantInfo.properties.isTextBookOption === null ? false : tenantInfo.properties.isTextBookOption;
+    info.isInstructorOption = tenantInfo.properties.isInstructorOption === null ? false : tenantInfo.properties.isInstructorOption;
+    info.isPassOption = tenantInfo.properties.isPassOption === null ? false : tenantInfo.properties.isPassOption;
+    info.isCommunicationOption = tenantInfo.properties.isCommunicationOption === null ? false : tenantInfo.properties.isCommunicationOption;
+    info.isLearningEnvOption = tenantInfo.properties.isLearningEnvOption === null ? false : tenantInfo.properties.isLearningEnvOption;
+    info.isLearningControlOption = tenantInfo.properties.isLearningControlOption === null ? false : tenantInfo.properties.isLearningControlOption;
+    info.isRelatedCourseOption = tenantInfo.properties.isRelatedCourseOption === null ? false : tenantInfo.properties.isRelatedCourseOption;
+    info.isAdminDataOption = tenantInfo.properties.isAdminDataOption === null ? false : tenantInfo.properties.isAdminDataOption;
+    info.isCarTenantCustomOption = tenantInfo.properties.isCarTenantCustomOption === null ? false : tenantInfo.properties.isCarTenantCustomOption;
+    info.isRotemTenantCustomOption = tenantInfo.properties.isRotemTenantCustomOption === null ? false : tenantInfo.properties.isRotemTenantCustomOption;
+    info.isOutsourcingTenantCustomOption = tenantInfo.properties.isOutsourcingTenantCustomOption === null ? false : tenantInfo.properties.isOutsourcingTenantCustomOption;
+    info.isWiaTenantCustomOption = tenantInfo.properties.isWiaTenantCustomOption === null ? false : tenantInfo.properties.isWiaTenantCustomOption;
+    info.isAutoeverTenantCustomOption = tenantInfo.properties.isAutoeverTenantCustomOption === null ? false : tenantInfo.properties.isAutoeverTenantCustomOption;
+  }
 
   return (
     <>
@@ -209,7 +236,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
               element={
                 <>
                   {t('사용')}
-                  <Switch disabled={props.roleInfo !== 'PLATFORM'} checked={true}/>
+                  <Switch disabled={true} checked={true}/>
                 </>
               }
             />
@@ -269,7 +296,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
         </FormDisplay>
 
         {
-          ( props.roleInfo === 'PLATFORM' || attributeData?.isTextBookOption ) && <>
+          ( platformProperties && platformProperties.isUseTextBookOption ) && <>
             <FormSubTitle
               label={t('교재')}
               lineType={'dark'}
@@ -308,7 +335,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
         }
 
         {
-          (props.roleInfo === 'PLATFORM' || attributeData?.isInstructorOption) && <>
+          (platformProperties && platformProperties.isUseInstructorOption) && <>
             <FormSubTitle
               label={t('강사')}
               lineType={'dark'}
@@ -375,7 +402,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
               element={
                 <>
                   {t('사용')}
-                  <Switch disabled={props.roleInfo !== 'PLATFORM'} checked={true}/>
+                  <Switch disabled={true} checked={true}/>
                 </>
               }
             />
@@ -421,7 +448,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
         </FormDisplay>
 
         {
-          (props.roleInfo === 'PLATFORM' || attributeData?.isCommunicationOption) && <>
+          (platformProperties && platformProperties.isUseCommunicationOption) && <>
             <FormSubTitle
               label={t('커뮤니티')}
               lineType={'dark'}
@@ -462,7 +489,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
         }
 
         {
-          (props.roleInfo === 'PLATFORM' || attributeData?.isLearningEnvOption) && <>
+          (platformProperties && platformProperties.isUseLearningEnvOption) && <>
             <FormSubTitle
               label={t('학습환경')}
               lineType={'dark'}
@@ -539,7 +566,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
         }
 
         {
-          (props.roleInfo === 'PLATFORM' || attributeData?.isLearningControlOption) && <>
+          (platformProperties && platformProperties.isUseLearningControlOption) && <>
             <FormSubTitle
               label={t('학습제어')}
               lineType={'dark'}
@@ -613,7 +640,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
         }
 
         {
-          (props.roleInfo === 'PLATFORM' || attributeData?.isRelatedCourseOption) && <>
+          (platformProperties && platformProperties.isUseRelatedCourseOption) && <>
             <FormSubTitle
               label={t('사전/연관학습')}
               lineType={'dark'}
@@ -661,7 +688,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
         }
 
         {
-          (props.roleInfo === 'PLATFORM' || attributeData?.isAdminDataOption) && <>
+          (platformProperties && platformProperties.isUseAdminDataOption) && <>
             <FormSubTitle
               label={t('행정 항목')}
               lineType={'dark'}
@@ -722,7 +749,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
         }
 
         {
-          (props.roleInfo === 'PLATFORM' || attributeData?.isCarTenantCustomOption) && <>
+          (platformProperties && platformProperties.isUseCarTenantCustomOption) && <>
             <FormSubTitle
               label={t('완성차 테넌트 전용 항목')}
               lineType={'dark'}
@@ -771,7 +798,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
         }
 
         {
-          (props.roleInfo === 'PLATFORM' || attributeData?.isRotemTenantCustomOption ) && <>
+          (platformProperties && platformProperties.isUseRotemTenantCustomOption ) && <>
             <FormSubTitle
               label={t('로템 테넌트 전용 항목')}
               lineType={'dark'}
@@ -820,7 +847,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
         }
 
         {
-          (props.roleInfo === 'PLATFORM' || attributeData?.isOutsourcingTenantCustomOption) && <>
+          (platformProperties && platformProperties.isUseOutsourcingTenantCustomOption) && <>
             <FormSubTitle
               label={t('위탁 테넌트 전용 항목')}
               lineType={'dark'}
@@ -869,7 +896,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
         }
 
         {
-          (props.roleInfo === 'PLATFORM' || attributeData?.isWiaTenantCustomOption) && <>
+          (platformProperties && platformProperties.isUseWiaTenantCustomOption) && <>
             <FormSubTitle
               label={t('위아 테넌트 전용 항목')}
               lineType={'dark'}
@@ -918,7 +945,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
         }
 
         {
-          (props.roleInfo === 'PLATFORM' || attributeData?.isAutoeverTenantCustomOption) && <>
+          (platformProperties && platformProperties.isUseAutoeverTenantCustomOption) && <>
             <FormSubTitle
               label={t('오토에버 테넌트 전용 항목')}
               lineType={'dark'}
@@ -1100,7 +1127,7 @@ const formConfig: DynamicFormConfig = {
       name: 'isEnrollOption', // 수강신청
       type: 'switch',
       label: '',
-      value: false,
+      value: true,
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
@@ -1127,7 +1154,7 @@ const formConfig: DynamicFormConfig = {
       name: 'isPassOption', // 이수 기준
       type: 'switch',
       label: '',
-      value: false,
+      value: true,
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },

@@ -69,9 +69,9 @@
           .contents {
             .step {
               li {
-                @apply px-[16px] py-[12px];
-                & + .active {
-                  @apply bg-[var(--secondary6)];
+                @apply cursor-pointer px-[16px] py-[12px];
+                &.active {
+                  @apply pointer-events-none bg-[var(--secondary6)];
                 }
                 .step_box {
                   @apply flex items-center;

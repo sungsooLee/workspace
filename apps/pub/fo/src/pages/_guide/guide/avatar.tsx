@@ -17,7 +17,7 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-  import { Avatar } from '@learnway/ui';`}
+import { Avatar } from '@learnway/ui';`}
           </code>
         </pre>
       </div>

@@ -42,10 +42,10 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
     router.navigate({
       to: `${rootPath}/tenant/management/detail`,
       state: {
-        tenantId: tenantId,
-        tenantName: tenantName,
+        tenantId,
+        tenantName,
         listParam: getValues(),
-        roleInfo: roleInfo
+        roleInfo
       },
     });
   };
@@ -57,8 +57,8 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
     onFormValid,
     setOptions,
     setValue,
-  } = useSearchBox(searchConfig);
-  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
+  } = useSearchBox(searchConfig());
+  const { config: gConfig, gridFetch } = useGridBox(gridConfig(), getValues);
 
   const tenantIdWatch = useWatch({ control: searchProvider.control, name: 'tenantId' });
 
@@ -121,7 +121,7 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
 
 export const TenantManagmentList = TenantManagmentListComponent;
 
-const searchConfig: SearchBoxConfig = {
+const searchConfig= (): SearchBoxConfig =>({
   builders: [
     [
       {
@@ -194,9 +194,9 @@ const searchConfig: SearchBoxConfig = {
       ],
     },
   },
-};
+});
 
-const gridConfig: useGridBoxConfig = {
+const gridConfig = (): useGridBoxConfig => ({
   query: tenantQueryOptions.list,
   columns: [],
   data: [],
@@ -206,7 +206,7 @@ const gridConfig: useGridBoxConfig = {
     pageIndex: 0,
     totalRows: 0,
   },
-};
+});
 
 const columnHelper = createColumnHelper<Tenant>();
 const columns = [

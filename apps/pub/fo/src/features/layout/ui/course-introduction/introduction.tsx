@@ -2,7 +2,7 @@ import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { ChipList, SelectOption, Avatar, Button, Accordion } from '@learnway/ui';
-import { IcoSymbol, IcoArrowForward, IcoEssential } from '@learnway/icons';
+import { IcoSymbol, IcoEssential, IcoArrowDown } from '@learnway/icons';
 import { Curriculum, PackageCardList } from '../../../../features/layout';
 
 import operatorStyles from '../../../../pages/_layout/course-introduction/operator.module.css';
@@ -16,7 +16,8 @@ import discriminationImg from '@learnway/styles/fo/assets/images/temp/img_discri
 import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 
 const CourseIntroductionCompoment = () => {
-  const options: SelectOption[] = [
+  // 태그
+  const tagValue: SelectOption[] = [
     { label: '스마트팩토리', value: 'A' },
     { label: '디지털혁신', value: 'B' },
     { label: '정보보안기술', value: 'C' },
@@ -119,7 +120,7 @@ const CourseIntroductionCompoment = () => {
 
       {/* chip */}
       <div className={styles.chip_box}>
-        <ChipList options={options} prefixCharacter="#" hideCloseButton />
+        <ChipList options={tagValue} prefixCharacter="#" hideCloseButton />
       </div>
 
       {/* 교육목표 */}
@@ -325,9 +326,12 @@ const CourseIntroductionCompoment = () => {
 
       {/* 과정 정보 접기/펼치기 */}
       <div className={styles.btn_more}>
-        <Button onClick={() => setMore((prev) => !prev)}>
+        <Button
+          onClick={() => setMore((prev) => !prev)}
+          className={more && true ? styles.active : ''}
+        >
           {more === true ? '과정 정보 접기' : '과정 정보 펼치기'}
-          <IcoArrowForward width={16} height={16} stroke="#4d525c" />
+          <IcoArrowDown width={16} height={16} stroke="#4d525c" />
         </Button>
       </div>
     </div>
