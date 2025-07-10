@@ -20,7 +20,7 @@ const LearningWindowScormPlayerComponent: FC<any> = () => {
     if (!scormInfo) return;
     if (!funcInfo) return;
 
-    console.log(scormInfo);
+    console.log('scormInfo - ', scormInfo);
 
     let itemUrl = scormInfo.itemURL;
 

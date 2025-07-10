@@ -32,11 +32,11 @@ export class ScormHandler {
     if (param !== '') this.srte.getErrorManager().setCurrentErrorCode('201');
     else if (this.srte.isInitialized()) this.srte.getErrorManager().setCurrentErrorCode('103');
     else {
-      this.srte.setWasLmsSuspendAllPushed(false);
-      this.srte.setWasQuitButtonPushed(false);
-      this.srte.setWasPreviousButtonPushed(false);
-      this.srte.setWasNextButtonPushed(false);
-      this.srte.setWasTOCPushed(false);
+      // this.srte.setWasLmsSuspendAllPushed(false);
+      // this.srte.setWasQuitButtonPushed(false);
+      // this.srte.setWasPreviousButtonPushed(false);
+      // this.srte.setWasNextButtonPushed(false);
+      // this.srte.setWasTOCPushed(false);
       //this.srte.setUserNavRequest('_none_');
 
       // build request (ClientRTS:450)

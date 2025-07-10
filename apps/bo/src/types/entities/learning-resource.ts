@@ -122,6 +122,7 @@ export interface ContentInformation {
   tags: string[]; //	태그 리스트[...]
   aiSummary?: string; //	학습자원 개요 (AI자동추출)[...]
   aiKeyword?: string; //	키워드 (AI자동추출)[...]
+  children: any[];
   resource?: {
     resourceId: number;
     startFile: string;
