@@ -6,7 +6,7 @@ import { ThumbnailList } from '../thumbnail/thumbnail-list';
 import { Button } from '../button/button';
 import { Input } from '../input/input';
 import styles from './thumbnail-image-upload.module.css';
-import { IcoUploadCloud } from '@learnway/icons';
+import { IcoLoading, IcoUploadCloud } from '@learnway/icons';
 import {
   formatFileSize,
   S3_PATH,
@@ -308,7 +308,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
               onClick={handleButtonClick}
               direction={'column'}
             >
-              <span className={styles.text}>썸네일 업로드</span>
+              <span className={styles.text}>{'썸네일 업로드'}</span>
             </Button>
             <Input
               type="file"
@@ -320,6 +320,15 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
               accept={inputAccept}
             />
           </div>
+
+          {values.isLoading && (
+            <div className={styles.loading}>
+              <span className={styles.text}>
+                <IcoLoading width={24} height={24} stroke="#747d91" className={styles.icon} />
+                {'동영상 추출중'}
+              </span>
+            </div>
+          )}
 
           {/*썸네일 리스트*/}
           <ThumbnailList

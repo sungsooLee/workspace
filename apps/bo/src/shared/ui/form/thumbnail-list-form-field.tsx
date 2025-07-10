@@ -67,6 +67,11 @@ const ThumbnailImageUploadFormFieldComponent = forwardRef<
     }, [value.groupUuid]);
 
     useEffect(() => {
+      if (value.isLoading === values.isLoading) return;
+      setValues((prev) => ({ ...prev, isLoading: value.isLoading }));
+    }, [value.isLoading]);
+
+    useEffect(() => {
       onChange(values);
     }, [values]);
 

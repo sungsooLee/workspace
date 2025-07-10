@@ -94,12 +94,6 @@ const ThumbnailListComponent = forwardRef<HTMLDivElement, ThumbnailListComponent
      * @param checkedFile - 체크 상태가 변경된 ImageOption 객체
      */
     const handleCheckChange = (_checked: CheckedState, checkedFile: FileInfo) => {
-      console.log(
-        '🚀 ~ handleCheckChange ~ checked, _checked, uuid:',
-        checked,
-        _checked,
-        checkedFile.fileUuid,
-      );
       if (!_checked && checked) return onChecked(null);
 
       if (_checked) return onChecked(checkedFile.fileUuid);
