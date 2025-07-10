@@ -3,7 +3,7 @@ import { cn } from '@learnway/shared';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
 
-import styles from './learning.module.css';
+import styles from '@learnway/styles/fo/pages/_learning/learning.module.css';
 
 export const Route = createFileRoute('/_learning/file')({
   component: RouteComponent,

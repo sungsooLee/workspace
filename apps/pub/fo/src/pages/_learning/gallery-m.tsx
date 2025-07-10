@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { Pagination, Carousel, Button } from '@learnway/ui';
 
-import styles from './learning-m.module.css';
+import styles from '@learnway/styles/fo/pages/_learning/learning-m.module.css';
 
 import { IcoArrowBackward } from '@learnway/icons';
 

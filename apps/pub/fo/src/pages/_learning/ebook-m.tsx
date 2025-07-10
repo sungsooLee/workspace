@@ -1,7 +1,7 @@
 import { isMobile } from 'react-device-detect';
 import { cn } from '@learnway/shared';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import styles from './learning-m.module.css';
+import styles from '@learnway/styles/fo/pages/_learning/learning-m.module.css';
 
 import ebookImg from '@learnway/styles/fo/assets/images/temp/img_ebook.png';
 

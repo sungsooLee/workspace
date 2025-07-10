@@ -38,9 +38,12 @@ const CarouselComponent = forwardRef<React.ElementRef<typeof Swiper>, CarouselCo
           ref={ref}
           className={cn(styles.swiper, className, 'nlp-carousel')}
           modules={[FreeMode, Pagination, Navigation, Autoplay]}
+          loop={items.length > 1} // 슬라이드 1개일 경우 루프 off
+          allowTouchMove={items.length > 1} // 슬라이드 1개일 경우 스와이프 off
+          pagination={items.length > 1 ? props.pagination : false} // 1개일때는 페이지 숨김
           navigation={false} // 초기에는 false로 설정
           onInit={(swiper) => {
-            if (showNavigation && swiper.params.navigation) {
+            if (items.length > 1 && showNavigation && swiper.params.navigation) {
               const navigation = swiper.params.navigation as NavigationOptions;
               navigation.prevEl = prevRef.current;
               navigation.nextEl = nextRef.current;

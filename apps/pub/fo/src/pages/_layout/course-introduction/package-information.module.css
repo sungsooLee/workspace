@@ -1,7 +1,7 @@
 .start {
   &.information {
     .tit {
-      @apply headline1-b block text-[var(--gray9)];
+      @apply headline1-b block text-[var(--gray10)];
     }
     .count_box {
       @apply mt-[8px] flex flex-wrap;
@@ -20,17 +20,11 @@
     }
     .subscribe_box {
       @apply mt-[16px] flex items-center border-t-[1px] border-solid border-[var(--gray3)] py-[12px];
-      .channel {
-        @apply mr-[8px] h-[36px] w-[36px];
-        img {
-          @apply h-[36px] w-[36px];
-        }
-      }
       .channel_name {
         @apply title3 flex-1 text-[var(--gray7)];
       }
       button {
-        @apply label-lg ml-[8px] !h-auto min-h-[inherit] py-[12px] leading-[20px];
+        @apply label-lg ml-[8px];
       }
     }
     .list_box {
