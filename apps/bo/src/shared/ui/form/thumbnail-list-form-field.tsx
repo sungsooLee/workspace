@@ -15,6 +15,7 @@ import { isArray, isEqual } from 'lodash';
  */
 interface ThumbnailImageUploadFormFieldProps extends BaseFormFieldProps<ThumbnailFileValue> {
   uploadConfig?: S3UploaderConfig;
+  max?: number;
   // imageStorageType?: 'public' | 'db-manage';
   /**
    * 더미 속성 (현재 코드에서 사용되지 않음)

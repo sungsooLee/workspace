@@ -81,7 +81,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
       // imageStorageType,
       // options: ownerOptions = [],
       description,
-      max,
+      max = 1,
       uploadConfig,
       // onItemClick,
       // onChange,
@@ -92,8 +92,8 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
     ref,
   ) => {
     // S3 버킷의 기본 경로 TODO: (하드코딩되어 있음, 환경 변수로....)
-    const S3_URL =
-      'http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/';
+    // const S3_URL =
+    //   'http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/';
     // 파일 입력 필드에 접근하기 위한 Ref
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -113,8 +113,8 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
       stats: { status },
       inputAccept = 'image/*',
     } = useS3Uploader({
-      s3Path: S3_PATH['upload/content/image'],
-      affairsType: 'LMS',
+      s3Path: S3_PATH['upload/content/thumbnail'],
+      affairsType: 'CMS',
       ...uploadConfig,
       maxFileCount,
     });
@@ -134,8 +134,8 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
     useEffect(() => {
       if (values.groupUuid !== groupUuid) setGroupUuid(values.groupUuid);
 
-      if ((values.primaryUuid || null) !== checkedFileId)
-        setCheckedFileId(values.primaryUuid || null);
+      if ((values.selectedFileUuid || null) !== checkedFileId)
+        setCheckedFileId(values.selectedFileUuid || null);
     }, [values]);
 
     /**
