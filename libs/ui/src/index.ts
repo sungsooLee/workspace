@@ -205,6 +205,6 @@ export * from './lib/attachment/attachment';
 export * from './lib/attachment/single-attachment';
 export * from './lib/preview-image/preview-image';
 
-export * from './lib/learning-window/learning-window-layout';
-export * from './lib/learning-window/learning-window.store';
+export * from './lib/learning-window/learnway-learning-window-layout';
+export * from './lib/learning-window/learnway-learning-window.store';
 export * from './lib/learning-window/player/service/scorm-handler';

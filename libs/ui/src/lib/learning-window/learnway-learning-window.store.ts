@@ -5,10 +5,12 @@ export enum EnContentType {
   EBOOK = 'EBOOK',
   SCORM = 'SCORM',
   IMAGE = 'IMAGE',
+  BLOG = 'BLOG',
+  HTML5_VIDEO = 'HTML5_VIDEO',
   EXTERNAL_LINK = 'EXTERNAL_LINK',
 }
 
-export interface PlayInfo {
+export interface LearningWindowPlayInfo {
   isDirect?: boolean;
   courseId?: number;
   sequenceId?: number;
@@ -36,12 +38,26 @@ export interface ScormPlayerConfigProperties {
   /** Scorm Manifest Item element Id */
   scoId?: string;
 }
+
+/**
+ * 학습창 호출 기본 정보
+ */
 export interface LearningWindowBaseInfo {
-  courseId?: number;
-  sequenceId?: number;
-  curriculumId?: number;
+  /** 과정 ID   */
+  courseId: number;
+  /** 과정 차수 ID */
+  sequenceId: number;
+  /** 커리큘럼Id */
+  curriculumId: number;
+
+  // 커리큘럼의 레슨을 직접 학습 하기 위한 정보
+  /** 커리큘럼 모듈 ID */
+  moduleId?: number;
+  /** 커리큘럼 모듈 의 레슨 ID */
+  lessonId?: number;
 }
 
+/** 이전 다음 처리를 위한 모든 레슨 순서 아이템 */
 interface PlayListItem {
   moduleId: number;
   lessonId: number;
@@ -49,10 +65,12 @@ interface PlayListItem {
   moduleName: string;
 }
 
+/** 커리큘럼 정보 */
 interface Curriculum {
   moduleList: Module[];
 }
 
+/** 모듈 정보 */
 interface Module {
   moduleId: number;
   mappingModuleType: string;
@@ -60,6 +78,7 @@ interface Module {
   moduleName: string;
 }
 
+/** 레슨 정보 */
 interface Lesson {
   lessonId: number;
   contentUuid: string;
@@ -68,21 +87,26 @@ interface Lesson {
   contentType: EnContentType;
 }
 
+/** 스콤 및 비디오 player 에서 사용할 함수 정보 */
 interface FunctionInfomation {
+  /** 스콤  Initialize 호출 함수 */
   scormInitialize: (payload: any) => void;
+  /** 스콤 Commit 호출 함수 */
   scormCommit: (payload: any) => void;
+  /** 비디오 Progress 호출 함수 */
   videoOnProgress: (payload: any) => void;
-  curriculum: (payload: any) => void;
+  /** 커리큘럼의 모든 lesson의 진척 조회 함수 */
+  lessonProgress: (payload: any) => void;
 }
 
 interface LearningWindowStoreData {
   playIndex: number;
   baseInfo?: LearningWindowBaseInfo;
   curriculum?: Curriculum;
-  playInfo?: PlayInfo;
+  playInfo?: LearningWindowPlayInfo;
   playList?: PlayListItem[];
   setBaseInfo: (v?: LearningWindowBaseInfo) => void;
-  setPlayInfo: (v?: PlayInfo) => void;
+  setPlayInfo: (v?: LearningWindowPlayInfo) => void;
   setCurriculum: (v?: Curriculum) => void;
   setPlayList: (v?: PlayListItem[]) => void;
   clearInfo: () => void;
@@ -95,6 +119,12 @@ interface LearningWindowStoreData {
   setVideoInfo: (v: any) => void;
   blogInfo: any;
   setBlogInfo: (v: any) => void;
+  htmlInfo: any;
+  setHtmlInfo: (v: any) => void;
+  /** ebookInfo 는 scormInfo 와 동일 한 값이다. (스콤 변형 형태로 컨텐츠를 제공 하는 것으로 보임) */
+  ebookInfo: any;
+  setEbookInfo: (v: any) => void;
+
   funcInfo?: FunctionInfomation;
   setFuncInfo: (v: FunctionInfomation) => void;
 }
@@ -109,12 +139,17 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
   galleryInfo: undefined,
   videoInfo: undefined,
   blogInfo: undefined,
+  htmlInfo: undefined,
+  ebookInfo: undefined,
   funcInfo: undefined,
 
-  setPlayInfo(playInfo?: PlayInfo) {
-    if (!playInfo) return;
+  setPlayInfo(playInfo?: LearningWindowPlayInfo) {
+    if (!playInfo) {
+      set({ playInfo });
+      return;
+    }
     const playList = get().playList || [];
-    const index = playList?.findIndex(
+    const index = playList.findIndex(
       (item) => item.moduleId === playInfo.moduleId && item.lessonId === playInfo.lessonId,
     );
     set({
@@ -153,7 +188,17 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
       blogInfo,
     }));
   },
-  setFuncInfo(funcInfo: FunctionInfomation) {
+  setHtmlInfo(htmlInfo: any) {
+    set((state) => ({
+      htmlInfo,
+    }));
+  },
+  setEbookInfo(ebookInfo: any) {
+    set((state) => ({
+      ebookInfo,
+    }));
+  },
+  setFuncInfo(funcInfo?: FunctionInfomation) {
     set((state) => ({
       funcInfo,
     }));
@@ -164,6 +209,9 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
       galleryInfo: undefined,
       scormInfo: undefined,
       videoInfo: undefined,
+      blogInfo: undefined,
+      htmlInfo: undefined,
+      ebookInfo: undefined,
     }));
   },
 }));
@@ -174,6 +222,8 @@ export const useLearningWindow = () => {
     galleryInfo,
     videoInfo,
     blogInfo,
+    htmlInfo,
+    ebookInfo,
     funcInfo,
     playIndex: _playIndex,
     playList: _playList,
@@ -189,6 +239,8 @@ export const useLearningWindow = () => {
     setGalleryInfo,
     setVideoInfo,
     setBlogInfo,
+    setHtmlInfo,
+    setEbookInfo,
     setFuncInfo,
     clearInfo,
   } = useLearningWindowStore((state) => state);
@@ -198,15 +250,16 @@ export const useLearningWindow = () => {
     nowCurriculum: any,
     moduleId?: number,
     lessonId?: number,
-  ): PlayInfo | undefined => {
+  ): LearningWindowPlayInfo | undefined => {
     if (!nowCurriculum?.moduleList?.length) {
       console.error('moduleList is not set or empty', nowCurriculum);
       return undefined;
     }
 
     let module = nowCurriculum.moduleList.find((m: any) => m.moduleId === moduleId);
+    console.log('module 1', module);
     if (!module) module = nowCurriculum.moduleList[0];
-
+    console.log('module 2', module);
     if (!module?.lessonList?.length) {
       console.error('lessonList is not set or empty', module);
       return undefined;
@@ -247,16 +300,24 @@ export const useLearningWindow = () => {
   };
 
   const handleSetCurriculum = (curriculum: any) => {
+    clearInfo();
+    setPlayInfo(undefined);
     setCurriculum(curriculum);
     setPlayListByCurriculum(curriculum);
     if (_baseInfo) {
-      const playInfo = genPlayInfoByCurriculum(_baseInfo, curriculum);
-      setPlayInfo(playInfo);
+      if (_baseInfo.moduleId && _baseInfo.lessonId) {
+        handleSetPlayInfo(_baseInfo.moduleId, _baseInfo.lessonId, curriculum);
+      } else {
+        const playInfo = genPlayInfoByCurriculum(_baseInfo, curriculum);
+        setPlayInfo(playInfo);
+      }
     }
   };
 
-  const handleSetPlayInfo = (moduleId: number, lessonId: number) => {
-    const playInfo = genPlayInfoByCurriculum(_baseInfo, _curriculum, moduleId, lessonId);
+  const handleSetPlayInfo = (moduleId: number, lessonId: number, curriculum?: any) => {
+    const workCurriculum = curriculum || _curriculum;
+    const playInfo = genPlayInfoByCurriculum(_baseInfo, workCurriculum, moduleId, lessonId);
+    console.log('============', playInfo);
     setPlayInfo(playInfo);
   };
 
@@ -299,6 +360,10 @@ export const useLearningWindow = () => {
     setVideoInfo,
     blogInfo,
     setBlogInfo,
+    htmlInfo,
+    setHtmlInfo,
+    ebookInfo,
+    setEbookInfo,
     funcInfo,
     setFuncInfo,
     setPlayInfo: handleSetPlayInfo,

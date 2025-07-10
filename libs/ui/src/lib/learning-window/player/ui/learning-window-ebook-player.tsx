@@ -12,17 +12,21 @@ import { useLearningWindow } from '../../learnway-learning-window.store';
 
 const styles = isMobile ? stylesMobile : stylesWeb;
 
-const LearningWindowScormPlayerComponent: FC<any> = () => {
+/**
+ * Ebook 컨텐츠는 스콤 형태에 추가 기능이 들어 있어 스콤에서 분리 되어 따로 만듬
+ * @returns
+ */
+const LearningWindowEbookPlayerComponent: FC<any> = () => {
   const [iframeUrl, setIframeUrl] = useState<string>();
-  const { playInfo, scormInfo, funcInfo } = useLearningWindow();
+  const { playInfo, ebookInfo, funcInfo } = useLearningWindow();
 
   useEffect(() => {
-    if (!scormInfo) return;
+    if (!ebookInfo) return;
     if (!funcInfo) return;
 
-    console.log('scormInfo - ', scormInfo);
+    console.log('ebookInfo', ebookInfo);
 
-    let itemUrl = scormInfo.itemURL;
+    let itemUrl = ebookInfo.itemURL || ebookInfo.startFileUrl;
 
     if ((window as any).__ENV__?.APP_ENV === 'local') {
       const url = new URL(itemUrl);
@@ -35,7 +39,7 @@ const LearningWindowScormPlayerComponent: FC<any> = () => {
 
     const scrc = new ScormRteClient(playInfo, scormRteService);
     const dm = new ScormDataManager(scrc.getErrorManager());
-    dm.fromJSON(scormInfo);
+    dm.fromJSON(ebookInfo);
 
     (window as any).API_1484_11 = new ScormHandler(scrc, dm);
 
@@ -44,21 +48,13 @@ const LearningWindowScormPlayerComponent: FC<any> = () => {
       console.log('end Player');
       delete (window as any).API_1484_11;
     };
-  }, [funcInfo, scormInfo]);
+  }, [funcInfo, ebookInfo]);
 
   return (
     <div className={`${styles.start} ${styles.iframe}`}>
-      <iframe
-        //src="http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/public/8807/resources/01/index.html"
-        //src="/public/8807/resources/01/index.html"
-        //src="/html/hkscorm/index_lms.html"
-        // src="/html/lf_new_model/resources/01/index.html"
-        src={iframeUrl}
-        title="SCORM Content"
-        className={styles.iframe}
-      />
+      <iframe src={iframeUrl} title="EBOOK Content" className={styles.iframe} />
     </div>
   );
 };
 
-export const LearningWindowScormPlayer = LearningWindowScormPlayerComponent;
+export const LearningWindowEbookPlayer = LearningWindowEbookPlayerComponent;

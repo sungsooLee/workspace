@@ -32,11 +32,11 @@ export class ScormHandler {
     if (param !== '') this.srte.getErrorManager().setCurrentErrorCode('201');
     else if (this.srte.isInitialized()) this.srte.getErrorManager().setCurrentErrorCode('103');
     else {
-      this.srte.setWasLmsSuspendAllPushed(false);
-      this.srte.setWasQuitButtonPushed(false);
-      this.srte.setWasPreviousButtonPushed(false);
-      this.srte.setWasNextButtonPushed(false);
-      this.srte.setWasTOCPushed(false);
+      // this.srte.setWasLmsSuspendAllPushed(false);
+      // this.srte.setWasQuitButtonPushed(false);
+      // this.srte.setWasPreviousButtonPushed(false);
+      // this.srte.setWasNextButtonPushed(false);
+      // this.srte.setWasTOCPushed(false);
       //this.srte.setUserNavRequest('_none_');
 
       // build request (ClientRTS:450)
@@ -170,8 +170,7 @@ export class ScormHandler {
       this.srte.getWasLmsSuspendAllPushed() ||
       this.srte.getWasQuitButtonPushed() ||
       this.srte.getWasPreviousButtonPushed() ||
-      this.srte.getWasNextButtonPushed() ||
-      this.srte.getWasTOCPushed()
+      this.srte.getWasNextButtonPushed()
     ) {
       // set adl.nav.request to this.srte.getUserNavRequest()
       this.dm.setValue('adl.nav.request', this.srte.getUserNavRequest());
@@ -231,10 +230,12 @@ export class ScormHandler {
     // now handle the event ClientRTS:734
     if (
       !(
-        this.srte.getWasLmsSuspendAllPushed() ||
-        this.srte.getWasPreviousButtonPushed() ||
-        this.srte.getWasNextButtonPushed() ||
-        this.srte.getWasTOCPushed()
+        (
+          this.srte.getWasLmsSuspendAllPushed() ||
+          this.srte.getWasPreviousButtonPushed() ||
+          this.srte.getWasNextButtonPushed()
+        )
+        //        this.srte.getWasTOCPushed()
       ) &&
       tempevent !== '_none_'
     ) {
