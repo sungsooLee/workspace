@@ -60,6 +60,7 @@ function RouteComponent() {
   useEffect(() => {
     if (!loginUser) return;
     if (loginUser.activeTenant?.tenantId) {
+      console.log('loginUser', loginUser);
       getCompanyOptions(loginUser.activeTenant?.tenantId);
       getRoleOptions(loginUser.activeTenant?.tenantId);
     }
@@ -372,12 +373,18 @@ const columns = [
         cell: (info) => info.getValue(),
         enableGrouping: false,
         size: 100,
+        meta: {
+          cellAlign: 'center',
+        },
       }),
       columnHelper.accessor('endDate', {
         header: t('역할 종료일'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
         size: 100,
+        meta: {
+          cellAlign: 'center',
+        },
       }),
     ],
   }),
@@ -428,6 +435,9 @@ const columns = [
         : getDateToString(new Date(info.row.original.createdDate), DATE_TIME_FORMAT.DATETIME_SEC),
     enableGrouping: false,
     size: 160,
+    meta: {
+      cellAlign: 'center',
+    },
   }),
   columnHelper.accessor('status', {
     header: t('역할 신청 상태'),

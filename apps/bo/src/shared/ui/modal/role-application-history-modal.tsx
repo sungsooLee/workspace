@@ -23,7 +23,7 @@ const RoleApplicationHistoryModalComponent = ({ applicationId }: { applicationId
       <ModalBody>
         <GridBox
           data={gridData}
-          columns={columns}
+          columns={columns()}
           title={t('이력 목록')}
           visibleRowCount={4}
           height={200}
@@ -37,7 +37,7 @@ export const RoleApplicationHistoryModal = RoleApplicationHistoryModalComponent;
 
 const columnHelper = createColumnHelper<any>();
 
-const columns = [
+const columns = (): ColumnDef<any, unknown>[] => [
   columnHelper.accessor('createdDate', {
     header: t('일시'), //approvedDate
     cell: (info) => {
@@ -54,6 +54,9 @@ const columns = [
     },
     enableGrouping: false,
     size: 180,
+    meta: {
+      cellAlign: 'center',
+    },
   }),
   columnHelper.accessor('createdBy', {
     header: t('이력 생성자 정보'),
@@ -91,4 +94,4 @@ const columns = [
       size: 'auto',
     },
   }),
-] as ColumnDef<any, unknown>[];
+];
