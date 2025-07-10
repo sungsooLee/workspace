@@ -1,6 +1,6 @@
 import { Button, Divider, Tabs, useModal } from '@learnway/ui';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { BasicInfo } from '../-components/basic-info/basic-info';
 import { CourseRegistration } from '../-components/course-registration/course-registration';
 import { Curriculum } from '../-components/curriculum/curriculum';
@@ -70,10 +70,13 @@ function RouteComponent() {
   };
 
   // 기본정보 설정 컴포넌트에서 유형과 채널이 변경되었을 때 호출되는 함수
-  const handleConfigPropChange = (config: { courseType: string; channelUuid: string }) => {
-    console.log('handleConfigPropChange', config);
-    loadCourseConfig(config.courseType, config.channelUuid);
-  };
+  const handleConfigPropChange = useCallback(
+    (config: { courseType: string; channelUuid: string }) => {
+      console.log('handleConfigPropChange', config);
+      loadCourseConfig(config.courseType, config.channelUuid);
+    },
+    [loadCourseConfig],
+  );
 
   const tabItems = useMemo(
     () => [
@@ -130,7 +133,7 @@ function RouteComponent() {
             variant="point"
             size="sm"
             label={'SET'}
-            onClick={() => loadMockData()}
+            onClick={() => loadMockData(1)}
           />
           <Button
             type="button"

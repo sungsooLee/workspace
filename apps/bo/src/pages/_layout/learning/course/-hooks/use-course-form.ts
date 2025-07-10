@@ -163,7 +163,10 @@ export const useCourseForm = (courseType?: string) => {
 
       // 2. API 호출 (상태 업데이트는 재조회에서 처리)
       console.log(`${activeTab} 탭 유효성 검사 통과:`, tabData);
-      return await saveCourseData(tabData);
+      await saveCourseData(tabData);
+
+      // 3. 리턴
+      return { success: true };
     } catch (error: any) {
       throw new Error(`저장 중 에러 : ${error.message}`);
     }
@@ -175,10 +178,11 @@ export const useCourseForm = (courseType?: string) => {
   }, []);
 
   // 테스트용
-  const loadMockData = useCallback(() => {
+  const loadMockData = useCallback((type: any) => {
+    const dummyData = type === 1 ? getDummyCourse() : getDummyCourse2();
     setData((prev) => ({
       ...prev,
-      formData: getDummyCourse2(),
+      formData: dummyData as Course,
       courseConfig: getDummyCourseConfig(),
     }));
   }, []);
@@ -255,12 +259,10 @@ const getDummyCourseConfig = (): CourseConfig => {
   };
 };
 
-// 이러닝2
+// 이러닝1
 const getDummyCourse = () => {
-  const response = {
-    courseType: 'ELEARNING2',
-    channelUuid: '67bbca16-4180-4982-a4e0-d192212dd7c2',
-    tenantIds: [2, 3],
+  return {
+    courseType: 'ELEARNING1',
     categories: [
       {
         categoryId: 11,
@@ -272,29 +274,26 @@ const getDummyCourse = () => {
         tenantIds: [2],
       },
     ],
-    primaryCategoryId: 1,
-    targetList: [],
+    channelUuid: 'd4bf5f43-3184-445b-8985-f316619909db',
     language: 'KO',
-    courseName: '과정명...',
-    courseSummary: '과장 요약',
+    courseName: '과정명 1111111111111111',
+    courseSummary: 'ㅁㅁ',
     courseContent:
-      '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"교육 내용","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}',
-    trainingLevelType: 'BASIC',
-    learningSpaceName: '장소',
-    operatorName: '김지훈/개발팀',
+      '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"ㅍㅍㅍㅍㅍ","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}',
+    trainingLevelType: 'NONE',
+    learningSpaceType: 'LEARNING_WAY',
+    coordinatorUuid: 'c3927f00-3f6d-11f0-9435-0218a74d52f7',
+    coordinatorName: '정민혁/개발팀',
+    coordinatorDeptName: '정민혁/개발팀',
+    coordinatorTelCountryCode: 'KOR_82',
+    coordinatorTelNo: '2233',
+    coordinatorEmail: '2222',
     operatorUuid: 'c39280c3-3f6d-11f0-9435-0218a74d52f7',
-    operatorDeptName: '개발팀',
-    coordinatorUuid: 'c3929798-3f6d-11f0-9435-0218a74d5224',
-    learningSpaceType: 'MANUAL',
-    coordinatorName: '이현주/개발팀',
-    coordinatorDeptName: '개발팀',
-    coordinatorTelNo: '33332222',
-    coordinatorEmail: '담당자@email.com',
-    operatorTelNo: '44445555',
-    operatorEmail: '운영자@email.com',
-    learningSpaceNameKeyIn: 'xx',
+    operatorName: '김지훈/개발팀',
+    operatorDeptName: '김지훈/개발팀',
+    primaryCategoryId: 11,
+    operatorTelCountryCode: 'KOR_82',
   };
-  return response;
 };
 
 // 클래스

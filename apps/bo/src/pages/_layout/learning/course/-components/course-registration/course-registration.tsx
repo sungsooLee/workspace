@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { FormDisplay } from '@features/form/ui/form-display';
 import { CourseTabBaseProps, TabFormRef } from '../../-common/type';
-import { Course } from '@types';
+import { Course, CourseConfig } from '@types';
 
 const CourseRegistrationComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
   ({ onSave, data: { formData, courseConfig } }, ref) => {
@@ -36,9 +36,9 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
       console.log('CourseRegistrationComponent init', formData);
       // 초기 데이터가 있으면 설정
       if (formData) {
-        updateFormData(responseDataToFormData(formData));
+        updateFormData(responseDataToFormData(formData, courseConfig));
       }
-    }, [formData]);
+    }, [formData, courseConfig]);
 
     console.log('CourseRegistrationComponent initialData', getValues());
 
@@ -170,10 +170,11 @@ export const CourseRegistration = CourseRegistrationComponent;
 /**
  * 응답 데이터를 폼 데이터로 변환
  */
-const responseDataToFormData = (d: Course): Course => {
+const responseDataToFormData = (d: Course, courseConfig: CourseConfig): Course => {
+  const { enrollOption } = courseConfig;
   return {
     ...d,
-    isEnrollRequired: true, // 수강신청 그룹
+    isEnrollRequired: courseConfig.enrollOption !== 'IMPOSSIBLE', // 수강신청 그룹
   };
 };
 
