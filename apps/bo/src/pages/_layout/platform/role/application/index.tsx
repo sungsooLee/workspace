@@ -20,14 +20,11 @@ import {
   roleManagerQueryOptions,
 } from '@entities/role';
 import { EnGlobalConst, LabelMessage } from '@types';
-import { RejectModal, RoleApplicationHistoryModal } from '@shared/ui';
+import { RejectModal, RoleApplicationHistoryModal, MainContents, PageContainer } from '@shared/ui';
 import { MyRoleExtendModal } from '@features/user/my-page/ui/my-role-extend-modal';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { useQueryClient } from '@tanstack/react-query';
-
 import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
-import { size } from 'lodash';
-import { MainContents, PageContainer } from '@shared/ui';
 
 export const Route = createFileRoute('/_layout/platform/role/application/')({
   component: RouteComponent,

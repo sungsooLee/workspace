@@ -1,14 +1,8 @@
-import { SectionLayout } from '@shared/ui';
 import { forwardRef, useEffect, useState } from 'react';
 import { useRouterState } from '@tanstack/react-router';
-import { createColumnHelper, ColumnDef, Table } from '@tanstack/react-table';
-import { UseFormGetValues, FieldValues } from 'react-hook-form';
+import { createColumnHelper, Table } from '@tanstack/react-table';
+import { FieldValues } from 'react-hook-form';
 import { t } from 'i18next';
-
-
-import styles from '@learnway/styles/bo/features/role/role-info.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import {
   Button,
@@ -23,30 +17,18 @@ import {
   Dropdown,
   TreeContainer,
 } from '@learnway/ui';
-import { IcoFormRequired, IcoMinus, IcoPlus } from '@learnway/icons';
-import { DynamicFormConfig, useDynamicForm, useSearchBox } from '@learnway/hooks';
-
-import { FormRow, FormSubTitle, ContentsHistoryInfoFormField } from '@shared/ui';
-
-import { SearchBox } from '@shared/ui/search-box';
-
-import {
-  getAllTreeKeys,
-  getFirstExpandKeys,
-  transformRoleApiDataToTreeData,
-} from '@features/platform-management/tenant/service/tenant-detail-tree.service';
-import {
-  useFetchRole,
-  useFetchRoleTree,
-  useRoleManager,
-  useGetRoleUserGroups,
-} from '@entities/role/service/role-manage.hook';
-
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { FormRow, FormSubTitle, SectionLayout } from '@shared/ui';
+import { transformRoleApiDataToTreeData } from '@features/platform-management/tenant/service/tenant-detail-tree.service';
+import { useFetchRoleTree, useGetRoleUserGroups } from '@entities/role/service/role-manage.hook';
 import { TenantDetailLearningRoleGrantRangeModal } from './tenant-detail-learning-role-grant-range-modal';
 import { TenantDetailLearningRoleGrantUserShuttleModal } from './tenant-detail-learning-role-grant-user-shuttle-modal';
 import { roleManagerQueryOptions } from '@entities/role/service/role-manage.queries';
 import { useSaveUsers } from '@entities/role';
 import { EnFormMode } from '@types';
+
+import styles from '@learnway/styles/bo/features/role/role-info.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 
 /**
  * 화면번호:

@@ -15,21 +15,20 @@ import {
   FormGuideText,
 } from '@learnway/ui';
 import dayjs from 'dayjs';
-import { FormRow, FormSubTitle, ContentsHistoryInfoFormField } from '@shared/ui';
+import { FormRow, FormSubTitle, UserGroupTabsChoiceModal, UserGroupChoiceModal } from '@shared/ui';
 import { FormDisplay } from '@features/form/ui/form-display';
 import { DynamicFormConfig, useDynamicForm, CODE_GROUP } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString, getStringToDate, cn } from '@learnway/shared';
 import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
 import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
 import { LoginRestrictTimeSettingModal } from '@shared/ui/modal/login-restrict-time-setting-modal';
-import { UserGroupTabsChoiceModal, UserGroupChoiceModal } from '@shared/ui';
 import { EnGlobalConst, EnFormMode } from '@types';
 import { useCreateCompany, useUpdateCompany, useFetchCompany } from '@entities/companies';
 import CompaniesService from '@entities/companies/api/companies';
+import { LoginAuthenticationSettingInformation } from './login-authentication-setting-information';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import { LoginAuthenticationSettingInformation } from './login-authentication-setting-information';
 
 const EMAIL_REGEX =
   /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;

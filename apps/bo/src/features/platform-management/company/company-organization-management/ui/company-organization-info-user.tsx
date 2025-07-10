@@ -73,7 +73,7 @@ const CompanyOrganizationInfoUserComponent = ({
       {showType === EnOrganizationShowType.origin && (
         <GridBox
           config={configOrigin}
-          columns={columns}
+          columns={columns()}
           showNumberingColumn
           title={t('유저 목록')}
         />
@@ -81,7 +81,7 @@ const CompanyOrganizationInfoUserComponent = ({
       {showType === EnOrganizationShowType.platform && (
         <GridBox
           config={configPlatform}
-          columns={columns}
+          columns={columns()}
           showNumberingColumn
           title={t('유저 목록')}
         />
@@ -148,7 +148,7 @@ const gridConfigPlat = {
 };
 
 const columnHelper = createColumnHelper<any>();
-const columns = [
+const columns = (): ColumnDef<any, unknown>[] => [
   columnHelper.accessor('hrInfoManageType', {
     cell: (info) =>
       t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.HrInfoManageType.${info.getValue()}`),
@@ -191,4 +191,4 @@ const columns = [
     header: t('계정상태'),
     size: 60,
   }),
-] as ColumnDef<any, unknown>[];
+];

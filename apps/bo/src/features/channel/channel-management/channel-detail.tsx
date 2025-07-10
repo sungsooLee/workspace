@@ -20,12 +20,11 @@ import {
   ThumbnailListFormField,
   ChipListFormField,
   ContentsHistoryInfoFormField,
-  FormInfoArea,
+  TenantChoiceModal,
+  UserChoiceModal,
   FormRow,
 } from '@shared/ui';
 import { EnGlobalConst } from '@types';
-import { FormDisplay } from '@features/form/ui/form-display';
-import { TenantChoiceModal, UserChoiceModal } from '@shared/ui';
 import {
   DynamicFormConfig,
   useDynamicForm,
@@ -36,6 +35,7 @@ import {
 import { SearchBox } from '@shared/ui/search-box';
 import { useGetRequestChannelDetail } from '@entities/channel/service/request-channel.hook';
 import { IcoPlus, IcoMinus } from '@learnway/icons';
+
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
