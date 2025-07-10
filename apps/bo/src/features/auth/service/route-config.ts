@@ -23,10 +23,11 @@ const defaultPageRouteConfig: PageRouteConfig<PageMeta> = {
 };
 
 // 사용자의 권한 여부를 확인
-function authorization({ location, context }: { location: ParsedLocation; context: any }) {
+async function authorization({ location, context }: { location: ParsedLocation; context: any }) {
   const queryClient = context.queryClient;
-  const authUser = queryClient.getQueryData(authUserQueryKeys.authUser) as AuthUser;
+  const authUser = (await queryClient.getQueryData(authUserQueryKeys.authUser)) as AuthUser;
 
+  console.log('### authorization', authUser);
   if (authUser === undefined) {
     throw ERROR.AUTHORIZATION;
   }
@@ -55,11 +56,12 @@ function authorization({ location, context }: { location: ParsedLocation; contex
 // framework 레벨에 Routing 관련 필요한 정의를 공통으로 페이지별 설정에 맞게 정의
 export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
   return {
-    beforeLoad: ({ location, context, params, search, preload, route }: any) => {
+    beforeLoad: async ({ location, context, params, search, preload, route }: any) => {
+      console.log('### beforeLoad start');
       // 인증 정보 확인
       if (routeConfig?.authorization) {
         try {
-          authorization({ location, context });
+          await authorization({ location, context });
         } catch (e) {
           if (e === ERROR.PAGE_ACCESS_RIGHTS) {
             throw redirect({ to: '/' });

@@ -48,3 +48,21 @@ export function useUpdateBlogContent(options?: any) {
     data: mutation.data,
   };
 }
+
+export function useDeleteContent(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.deleteContent(),
+    onSuccess: (data) => {
+      console.log('on success', data);
+      if (options.onSuccess) {
+        options.onSuccess(data);
+      }
+    },
+    ...options,
+  });
+
+  return {
+    ...mutation,
+    delete: (contentUuid: string) => mutation.mutate(contentUuid as any),
+  };
+}

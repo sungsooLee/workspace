@@ -89,6 +89,39 @@ const CourseIntroductionCompoment = () => {
     },
   ];
 
+  // 커리큘럼 컨텐츠 리스트
+  const CurriculumData = [
+    { txt: '현업사례로 보는 업무자동화에 파이썬이 필요한 이유', type: '이북', time: '1시간 28분' },
+    { txt: '현업사례로 보는 업무자동화에 파이썬이 필요한 이유', type: '동영상', time: '30분' },
+  ];
+
+  // 커리큘럼 아코디언
+  const [curriculumValue, setCurriculumValue] = useState<string>('a');
+  const curriculumValueItems = [
+    {
+      value: 'a',
+      title: (
+        <div className={styles.title}>
+          <p>
+            1일 업무를 10분만에 해결하는 파이썬 업무자동화<span>1시간</span>
+          </p>
+        </div>
+      ),
+      children: <Curriculum curriculumData={CurriculumData} />,
+    },
+    {
+      value: 'b',
+      title: (
+        <div className={styles.title}>
+          <p>
+            1일 업무를 10분만에 해결하는 파이썬 업무자동화<span>1시간</span>
+          </p>
+        </div>
+      ),
+      children: <Curriculum curriculumData={CurriculumData} />,
+    },
+  ];
+
   // 과정 정보 더보기
   const [more, setMore] = useState<boolean>(false);
 
@@ -129,14 +162,14 @@ const CourseIntroductionCompoment = () => {
           <strong>교육목표</strong>
         </div>
         {/* bullet number module */}
-        <div className={`${bulletStyles.start} ${bulletStyles.list_number}`}>
-          <ol>
+        <div className={`${bulletStyles.start} ${bulletStyles.list}`}>
+          <ul>
             <li>스마트팩토리 추진 사례를 통한 현업 적용과 실천 방향을 습득한다.</li>
             <li>
               스마트팩토리 생산관리 시스템(MES) 기본 지식 습득으로 협장 구축 응용력을 향상시킨다.
             </li>
             <li>스마트팩토리 MES에 대한 이해를 바탕으로 적용 방안을 활용한다.</li>
-          </ol>
+          </ul>
         </div>
       </div>
 
@@ -192,8 +225,15 @@ const CourseIntroductionCompoment = () => {
             <strong>커리큘럼</strong>
           </div>
 
-          {/* curriculum */}
-          <Curriculum />
+          <div className={styles.curriculum_box}>
+            <Accordion
+              items={curriculumValueItems}
+              value={curriculumValue}
+              className={styles.acc_curriculum}
+              onValueChange={(value) => setCurriculumValue(value as string)}
+              type="multiple"
+            />
+          </div>
         </div>
 
         {/* 이수기준 */}

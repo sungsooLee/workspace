@@ -17,14 +17,14 @@
           }
         }
         &.disabled {
-          @apply !bg-[var(--gray1)];
           svg {
-            @apply !stroke-[var(--gray5)];
+            @apply stroke-[var(--gray5)];
           }
           span {
-            @apply !text-[var(--gray5)];
+            @apply text-[var(--gray5)];
           }
           & + div {
+            @apply !bg-transparent;
             .input_file {
               @apply cursor-not-allowed;
             }

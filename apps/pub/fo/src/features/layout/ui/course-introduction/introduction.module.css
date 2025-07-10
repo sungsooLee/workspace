@@ -103,13 +103,46 @@
       @apply mt-[32px];
       & > div {
         @apply border-none p-0;
-        & > div {
+        [class*='chips_wapper'] {
           @apply gap-x-[8px] gap-y-[10px];
           span {
-            @apply !h-auto !min-h-[inherit] rounded-[24px] bg-[var(--gray95)];
+            @apply !h-auto !min-h-min rounded-[24px] bg-[var(--gray95)] px-[12px] py-[6px];
           }
           button {
-            @apply !px-0 text-[var(--gray10)];
+            @apply !h-auto !min-h-min !px-0 leading-[20px] text-[var(--gray10)];
+          }
+        }
+      }
+    }
+
+    .curriculum_box {
+      .acc_curriculum {
+        @apply border-b-[1px] border-t-[1px] border-solid border-[var(--gray10)] py-[12px];
+        & > div {
+          & + div {
+            @apply mt-[24px];
+          }
+        }
+        button {
+          &[data-state='open'] {
+            svg {
+              @apply rotate-180;
+            }
+          }
+          span {
+            @apply relative;
+            svg {
+              @apply absolute right-0 top-1/2 h-[24px] w-[24px] -translate-y-1/2 stroke-[var(--gray10)];
+            }
+          }
+        }
+        .title {
+          @apply py-[20px] pl-[24px];
+          p {
+            @apply body-lg-b flex items-center text-[var(--gray35)];
+            span {
+              @apply label-sm-b ml-[6px] inline-block rounded-[24px] bg-[var(--blue50)] px-[6px] py-[3px] text-white;
+            }
           }
         }
       }
@@ -123,7 +156,7 @@
     }
 
     .btn_more {
-      @apply relative z-[1] -mt-[60px] flex h-[120px] items-center justify-center bg-gradient-to-t from-white to-transparent;
+      @apply relative z-[1] -mt-[60px] flex h-[120px] items-end justify-center bg-gradient-to-t from-white to-transparent;
       button {
         @apply label-lg-b rounded-[8px] border-[1px] border-solid border-[var(--gray75)] bg-white p-[12px] leading-[20px] text-[var(--gray35)];
         &.active {
@@ -141,14 +174,14 @@
     .start {
       &.introduction {
         h2 {
-          @apply title_6_b;
+          @apply headline1-b;
         }
         .info_box {
-          @apply mt-[24px];
+          @apply mt-[40px];
           .tit_box {
-            @apply mb-[8px];
+            @apply mb-[16px];
             strong {
-              @apply title_7_b;
+              @apply title5-b;
             }
           }
           .evaluation_box {
@@ -168,6 +201,18 @@
           }
         }
 
+        .chip_box {
+          @apply mt-[20px];
+          & > div {
+            & > div {
+              @apply gap-x-[4px] gap-y-[6px];
+              button {
+                @apply text-[var(--label-lg)];
+              }
+            }
+          }
+        }
+
         .operator_box {
           @apply mt-[24px];
           strong {
@@ -177,6 +222,13 @@
             & + div {
               @apply mt-[8px];
             }
+          }
+        }
+
+        .btn_more {
+          @apply -mt-[80px] h-[160px];
+          button {
+            @apply label-lg-b w-full justify-center;
           }
         }
       }

@@ -385,6 +385,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                           labelField: 'deptName',
                           valueField: 'deptId',
                           hideBorder: true,
+                          wordwrap: true,
                         }}
                         modalConfig={{
                           title: '',
@@ -417,6 +418,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                           labelField: 'channelName',
                           valueField: 'channelUuid',
                           hideBorder: true,
+                          wordwrap: true,
                         }}
                         modalConfig={{
                           title: '',
