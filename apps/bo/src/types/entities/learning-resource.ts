@@ -1,11 +1,11 @@
 import {
+  ContentAddInfoType,
   ContentCreateType,
+  ContentStatusCode,
+  ContentType,
   FileStatus,
   FileType,
   ProcessingStatus,
-  ContentStatusCode,
-  ContentType,
-  ContentAddInfoType,
 } from './enum';
 
 export interface BlogCreateReq {
@@ -78,6 +78,13 @@ export interface PostDraftVideosParams {
   fileUuids: string[];
 }
 
+export interface PostDraftHtmlVideoParams {
+  tenantId: string;
+  channelUuid: string;
+  languageCountryCode: string;
+  fileUuid: string;
+}
+
 export interface Tag {
   tagId: string;
   tagName: string;
@@ -148,6 +155,15 @@ export interface PostDraftVideosRes {
     processingStatus: ProcessingStatus;
     isDrafted: boolean;
   }[];
+}
+
+export interface PostDraftHtmlVideoRes {
+  contentUuid: string;
+  fileUuid: string;
+  contentType: FileType;
+  contentStatusCode: FileStatus;
+  processingStatus: ProcessingStatus;
+  isDrafted: boolean;
 }
 
 export type MappedCourseItem = {
