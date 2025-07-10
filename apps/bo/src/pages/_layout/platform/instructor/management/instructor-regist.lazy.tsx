@@ -6,6 +6,7 @@ import { Button } from '@learnway/ui';
 import { InstructorRegist } from '@features/platform/instructor';
 import { useRef } from 'react';
 import { InstructorHistory } from '@features/platform/instructor/management/ui/instructor-history';
+import { EnPageMode } from '@types';
 
 export const Route = createLazyFileRoute(
   '/_layout/platform/instructor/management/instructor-regist',
@@ -40,12 +41,6 @@ function RouteComponent() {
             onClick={() => router.navigate({ to: '/platform/instructor/management' })}
           />
         </LinkBox>
-        {/* <Button
-          label={t('LABEL.button.reset')}
-          variant="gray2"
-          size="sm"
-          //onClick={() => router.navigate({ to: '/platform/tenant/management/regist' })}
-        /> */}
         <Button
           label={t('LABEL.button.delete')}
           variant="gray2"
@@ -61,6 +56,7 @@ function RouteComponent() {
       </ContentsButtons>
       <MainContents>
         <InstructorRegist
+          viewMode={EnPageMode.PAGE}
           ref={formRef}
           instructorId={instructorId}
           instructorType={instructorType}
